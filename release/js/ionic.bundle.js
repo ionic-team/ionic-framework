@@ -9,7 +9,7 @@
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v1.0.0-beta.14
+ * Ionic, v1.0.0-rc.0
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -25,7 +25,7 @@
 // build processes may have already created an ionic obj
 window.ionic = window.ionic || {};
 window.ionic.views = {};
-window.ionic.version = '1.0.0-beta.14';
+window.ionic.version = '1.0.0-rc.0';
 
 (function (ionic) {
 
@@ -217,6 +217,14 @@ window.ionic.version = '1.0.0-beta.14';
           });
         }
       };
+    },
+
+    contains: function(parentNode, otherNode) {
+      var current = otherNode;
+      while (current) {
+        if (current === parentNode) return true;
+        current = current.parentNode;
+      }
     },
 
     /**
@@ -429,6 +437,7 @@ window.ionic.version = '1.0.0-beta.14';
         }
       }
     }
+
   };
 
   //Shortcuts
@@ -567,6 +576,8 @@ window.ionic.version = '1.0.0-beta.14';
      * @param {function(e)} callback The function to call when the gesture
      * happens.
      * @param {DOMElement} element The angular element to listen for the event on.
+     * @param {object} options object.
+     * @returns {ionic.Gesture} The gesture object (use this to remove the gesture later on).
      */
     onGesture: function(type, callback, element, options) {
       var gesture = new ionic.Gesture(element, options);
@@ -578,13 +589,14 @@ window.ionic.version = '1.0.0-beta.14';
      * @ngdoc method
      * @name ionic.EventController#offGesture
      * @alias ionic.offGesture
-     * @description Remove an event listener for a gesture on an element.
-     * @param {string} eventType The gesture event.
-     * @param {function(e)} callback The listener that was added earlier.
-     * @param {DOMElement} element The element the listener was added on.
+     * @description Remove an event listener for a gesture created on an element.
+     * @param {ionic.Gesture} gesture The gesture that should be removed.
+     * @param {string} eventType The gesture event to remove the listener for.
+     * @param {function(e)} callback The listener to remove.
+
      */
     offGesture: function(gesture, type, callback) {
-      gesture.off(type, callback);
+      gesture && gesture.off(type, callback);
     },
 
     handlePopState: function(event) {}
@@ -1710,7 +1722,7 @@ window.ionic.version = '1.0.0-beta.14';
     defaults: {
       // set 0 for unlimited, but this can conflict with transform
       swipe_max_touches  : 1,
-      swipe_velocity     : 0.7
+      swipe_velocity     : 0.4
     },
     handler: function swipeGesture(ev, inst) {
       if(ev.eventType == ionic.Gestures.EVENT_END) {
@@ -1766,6 +1778,15 @@ window.ionic.version = '1.0.0-beta.14';
     },
     triggered: false,
     handler: function dragGesture(ev, inst) {
+
+      if (ev.srcEvent.type == 'touchstart' || ev.srcEvent.type == 'touchend') {
+        this.preventedFirstMove = false;
+
+      } else if (!this.preventedFirstMove && ev.srcEvent.type == 'touchmove') {
+        ev.srcEvent.preventDefault();
+        this.preventedFirstMove = true;
+      }
+
       // current gesture isnt drag, but dragged is true
       // this means an other gesture is busy. now call dragend
       if(ionic.Gestures.detection.current.name != this.name && this.triggered) {
@@ -2010,13 +2031,41 @@ window.ionic.version = '1.0.0-beta.14';
   var IOS = 'ios';
   var ANDROID = 'android';
   var WINDOWS_PHONE = 'windowsphone';
+  var requestAnimationFrame = ionic.requestAnimationFrame;
 
   /**
    * @ngdoc utility
    * @name ionic.Platform
    * @module ionic
+   * @description
+   * A set of utility methods that can be used to retrieve the device ready state and
+   * various other information such as what kind of platform the app is currently installed on.
+   *
+   * @usage
+   * ```js
+   * angular.module('PlatformApp', ['ionic'])
+   * .controller('PlatformCtrl', function($scope) {
+   *
+   *   ionic.Platform.ready(function(){
+   *     // will execute when device is ready, or immediately if the device is already ready.
+   *   });
+   *
+   *   var deviceInformation = ionic.Platform.device();
+   *
+   *   var isWebView = ionic.Platform.isWebView();
+   *   var isIPad = ionic.Platform.isIPad();
+   *   var isIOS = ionic.Platform.isIOS();
+   *   var isAndroid = ionic.Platform.isAndroid();
+   *   var isWindowsPhone = ionic.Platform.isWindowsPhone();
+   *
+   *   var currentPlatform = ionic.Platform.platform();
+   *   var currentPlatformVersion = ionic.Platform.version();
+   *
+   *   ionic.Platform.exit(); // stops the app
+   * });
+   * ```
    */
-  ionic.Platform = {
+  var self = ionic.Platform = {
 
     // Put navigator on platform so it can be mocked and set
     // the browser does not allow window.navigator to be set
@@ -2064,7 +2113,7 @@ window.ionic.version = '1.0.0-beta.14';
      */
     ready: function(cb) {
       // run through tasks to complete now that the device is ready
-      if (this.isReady) {
+      if (self.isReady) {
         cb();
       } else {
         // the platform isn't ready yet, add it to this array
@@ -2077,12 +2126,12 @@ window.ionic.version = '1.0.0-beta.14';
      * @private
      */
     detect: function() {
-      ionic.Platform._checkPlatforms();
+      self._checkPlatforms();
 
-      ionic.requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
         // only add to the body class if we got platform info
-        for (var i = 0; i < ionic.Platform.platforms.length; i++) {
-          document.body.classList.add('platform-' + ionic.Platform.platforms[i]);
+        for (var i = 0; i < self.platforms.length; i++) {
+          document.body.classList.add('platform-' + self.platforms[i]);
         }
       });
     },
@@ -2096,9 +2145,9 @@ window.ionic.version = '1.0.0-beta.14';
      * @param {string} grade The new grade to set.
      */
     setGrade: function(grade) {
-      var oldGrade = this.grade;
-      this.grade = grade;
-      ionic.requestAnimationFrame(function() {
+      var oldGrade = self.grade;
+      self.grade = grade;
+      requestAnimationFrame(function() {
         if (oldGrade) {
           document.body.classList.remove('grade-' + oldGrade);
         }
@@ -2116,23 +2165,23 @@ window.ionic.version = '1.0.0-beta.14';
       return window.device || {};
     },
 
-    _checkPlatforms: function(platforms) {
-      this.platforms = [];
+    _checkPlatforms: function() {
+      self.platforms = [];
       var grade = 'a';
 
-      if (this.isWebView()) {
-        this.platforms.push('webview');
-        this.platforms.push('cordova');
+      if (self.isWebView()) {
+        self.platforms.push('webview');
+        self.platforms.push('cordova');
       } else {
-        this.platforms.push('browser');
+        self.platforms.push('browser');
       }
-      if (this.isIPad()) this.platforms.push('ipad');
+      if (self.isIPad()) self.platforms.push('ipad');
 
-      var platform = this.platform();
+      var platform = self.platform();
       if (platform) {
-        this.platforms.push(platform);
+        self.platforms.push(platform);
 
-        var version = this.version();
+        var version = self.version();
         if (version) {
           var v = version.toString();
           if (v.indexOf('.') > 0) {
@@ -2140,18 +2189,18 @@ window.ionic.version = '1.0.0-beta.14';
           } else {
             v += '_0';
           }
-          this.platforms.push(platform + v.split('_')[0]);
-          this.platforms.push(platform + v);
+          self.platforms.push(platform + v.split('_')[0]);
+          self.platforms.push(platform + v);
 
-          if (this.isAndroid() && version < 4.4) {
+          if (self.isAndroid() && version < 4.4) {
             grade = (version < 4 ? 'c' : 'b');
-          } else if (this.isWindowsPhone()) {
+          } else if (self.isWindowsPhone()) {
             grade = 'b';
           }
         }
       }
 
-      this.setGrade(grade);
+      self.setGrade(grade);
     },
 
     /**
@@ -2168,10 +2217,10 @@ window.ionic.version = '1.0.0-beta.14';
      * @returns {boolean} Whether we are running on iPad.
      */
     isIPad: function() {
-      if (/iPad/i.test(ionic.Platform.navigator.platform)) {
+      if (/iPad/i.test(self.navigator.platform)) {
         return true;
       }
-      return /iPad/i.test(this.ua);
+      return /iPad/i.test(self.ua);
     },
     /**
      * @ngdoc method
@@ -2179,7 +2228,7 @@ window.ionic.version = '1.0.0-beta.14';
      * @returns {boolean} Whether we are running on iOS.
      */
     isIOS: function() {
-      return this.is(IOS);
+      return self.is(IOS);
     },
     /**
      * @ngdoc method
@@ -2187,7 +2236,7 @@ window.ionic.version = '1.0.0-beta.14';
      * @returns {boolean} Whether we are running on Android.
      */
     isAndroid: function() {
-      return this.is(ANDROID);
+      return self.is(ANDROID);
     },
     /**
      * @ngdoc method
@@ -2195,7 +2244,7 @@ window.ionic.version = '1.0.0-beta.14';
      * @returns {boolean} Whether we are running on Windows Phone.
      */
     isWindowsPhone: function() {
-      return this.is(WINDOWS_PHONE);
+      return self.is(WINDOWS_PHONE);
     },
 
     /**
@@ -2205,7 +2254,7 @@ window.ionic.version = '1.0.0-beta.14';
      */
     platform: function() {
       // singleton to get the platform name
-      if (platformName === null) this.setPlatform(this.device().platform);
+      if (platformName === null) self.setPlatform(self.device().platform);
       return platformName;
     },
 
@@ -2215,16 +2264,16 @@ window.ionic.version = '1.0.0-beta.14';
     setPlatform: function(n) {
       if (typeof n != 'undefined' && n !== null && n.length) {
         platformName = n.toLowerCase();
-      } else if(getParameterByName('ionicplatform')) {
+      } else if (getParameterByName('ionicplatform')) {
         platformName = getParameterByName('ionicplatform');
-      } else if (this.ua.indexOf('Android') > 0) {
+      } else if (self.ua.indexOf('Android') > 0) {
         platformName = ANDROID;
-      } else if (this.ua.indexOf('iPhone') > -1 || this.ua.indexOf('iPad') > -1 || this.ua.indexOf('iPod') > -1) {
+      } else if (/iPhone|iPad|iPod/.test(self.ua)) {
         platformName = IOS;
-      } else if (this.ua.indexOf('Windows Phone') > -1) {
+      } else if (self.ua.indexOf('Windows Phone') > -1) {
         platformName = WINDOWS_PHONE;
       } else {
-        platformName = ionic.Platform.navigator.platform && navigator.platform.toLowerCase().split(' ')[0] || '';
+        platformName = self.navigator.platform && navigator.platform.toLowerCase().split(' ')[0] || '';
       }
     },
 
@@ -2235,7 +2284,7 @@ window.ionic.version = '1.0.0-beta.14';
      */
     version: function() {
       // singleton to get the platform version
-      if (platformVersion === null) this.setVersion(this.device().version);
+      if (platformVersion === null) self.setVersion(self.device().version);
       return platformVersion;
     },
 
@@ -2255,14 +2304,14 @@ window.ionic.version = '1.0.0-beta.14';
       platformVersion = 0;
 
       // fallback to user-agent checking
-      var pName = this.platform();
+      var pName = self.platform();
       var versionMatch = {
         'android': /Android (\d+).(\d+)?/,
         'ios': /OS (\d+)_(\d+)?/,
         'windowsphone': /Windows Phone (\d+).(\d+)?/
       };
       if (versionMatch[pName]) {
-        v = this.ua.match(versionMatch[pName]);
+        v = self.ua.match(versionMatch[pName]);
         if (v &&  v.length > 2) {
           platformVersion = parseFloat(v[1] + '.' + v[2]);
         }
@@ -2273,19 +2322,19 @@ window.ionic.version = '1.0.0-beta.14';
     is: function(type) {
       type = type.toLowerCase();
       // check if it has an array of platforms
-      if (this.platforms) {
-        for (var x = 0; x < this.platforms.length; x++) {
-          if (this.platforms[x] === type) return true;
+      if (self.platforms) {
+        for (var x = 0; x < self.platforms.length; x++) {
+          if (self.platforms[x] === type) return true;
         }
       }
       // exact match
-      var pName = this.platform();
+      var pName = self.platform();
       if (pName) {
         return pName === type.toLowerCase();
       }
 
       // A quick hack for to check userAgent
-      return this.ua.toLowerCase().indexOf(type) >= 0;
+      return self.ua.toLowerCase().indexOf(type) >= 0;
     },
 
     /**
@@ -2294,7 +2343,7 @@ window.ionic.version = '1.0.0-beta.14';
      * @description Exit the app.
      */
     exitApp: function() {
-      this.ready(function() {
+      self.ready(function() {
         navigator.app && navigator.app.exitApp && navigator.app.exitApp();
       });
     },
@@ -2307,11 +2356,11 @@ window.ionic.version = '1.0.0-beta.14';
      */
     showStatusBar: function(val) {
       // Only useful when run within cordova
-      this._showStatusBar = val;
-      this.ready(function() {
+      self._showStatusBar = val;
+      self.ready(function() {
         // run this only when or if the platform (cordova) is ready
-        ionic.requestAnimationFrame(function() {
-          if (ionic.Platform._showStatusBar) {
+        requestAnimationFrame(function() {
+          if (self._showStatusBar) {
             // they do not want it to be full screen
             window.StatusBar && window.StatusBar.show();
             document.body.classList.remove('status-bar-hide');
@@ -2334,25 +2383,25 @@ window.ionic.version = '1.0.0-beta.14';
      */
     fullScreen: function(showFullScreen, showStatusBar) {
       // showFullScreen: default is true if no param provided
-      this.isFullScreen = (showFullScreen !== false);
+      self.isFullScreen = (showFullScreen !== false);
 
       // add/remove the fullscreen classname to the body
       ionic.DomUtil.ready(function() {
         // run this only when or if the DOM is ready
-        ionic.requestAnimationFrame(function() {
+        requestAnimationFrame(function() {
           // fixing pane height before we adjust this
-          panes = document.getElementsByClassName('pane');
+          var panes = document.getElementsByClassName('pane');
           for (var i = 0; i < panes.length; i++) {
             panes[i].style.height = panes[i].offsetHeight + "px";
           }
-          if (ionic.Platform.isFullScreen) {
+          if (self.isFullScreen) {
             document.body.classList.add('fullscreen');
           } else {
             document.body.classList.remove('fullscreen');
           }
         });
         // showStatusBar: default is false if no param provided
-        ionic.Platform.showStatusBar((showStatusBar === true));
+        self.showStatusBar((showStatusBar === true));
       });
     }
 
@@ -2365,7 +2414,7 @@ window.ionic.version = '1.0.0-beta.14';
 
   // setup listeners to know when the device is ready to go
   function onWindowLoad() {
-    if (ionic.Platform.isWebView()) {
+    if (self.isWebView()) {
       // the window and scripts are fully loaded, and a cordova/phonegap
       // object exists then let's listen for the deviceready
       document.addEventListener("deviceready", onPlatformReady, false);
@@ -2385,12 +2434,10 @@ window.ionic.version = '1.0.0-beta.14';
     window.addEventListener("load", onWindowLoad, false);
   }
 
-  window.addEventListener("load", onWindowLoad, false);
-
   function onPlatformReady() {
     // the device is all set to go, init our own stuff then fire off our event
-    ionic.Platform.isReady = true;
-    ionic.Platform.detect();
+    self.isReady = true;
+    self.detect();
     for (var x = 0; x < readyCallbacks.length; x++) {
       // fire off all the callbacks that were added before the platform was ready
       readyCallbacks[x]();
@@ -2398,7 +2445,7 @@ window.ionic.version = '1.0.0-beta.14';
     readyCallbacks = [];
     ionic.trigger('platformready', { target: document });
 
-    ionic.requestAnimationFrame(function() {
+    requestAnimationFrame(function() {
       document.body.classList.add('platform-ready');
     });
   }
@@ -2679,24 +2726,19 @@ ionic.tap = {
     ionic.requestAnimationFrame(function() {
       var focusInput = container.querySelector(':focus');
       if (ionic.tap.isTextInput(focusInput)) {
-        var clonedInput = focusInput.parentElement.querySelector('.cloned-text-input');
-        if (!clonedInput) {
-          clonedInput = document.createElement(focusInput.tagName);
-          clonedInput.placeholder = focusInput.placeholder;
-          clonedInput.type = focusInput.type;
-          clonedInput.value = focusInput.value;
-          clonedInput.style = focusInput.style;
-          clonedInput.className = focusInput.className;
-          clonedInput.classList.add('cloned-text-input');
-          clonedInput.readOnly = true;
-          if (focusInput.isContentEditable) {
-            clonedInput.contentEditable = focusInput.contentEditable;
-            clonedInput.innerHTML = focusInput.innerHTML;
-          }
-          focusInput.parentElement.insertBefore(clonedInput, focusInput);
-          focusInput.style.top = focusInput.offsetTop;
-          focusInput.classList.add('previous-input-focus');
+        var clonedInput = focusInput.cloneNode(true);
+        
+        clonedInput.value = focusInput.value;
+        clonedInput.classList.add('cloned-text-input');
+        clonedInput.readOnly = true;
+        if (focusInput.isContentEditable) {
+          clonedInput.contentEditable = focusInput.contentEditable;
+          clonedInput.innerHTML = focusInput.innerHTML;
         }
+        focusInput.parentElement.insertBefore(clonedInput, focusInput);
+        focusInput.classList.add('previous-input-focus');
+
+        clonedInput.scrollTop = focusInput.scrollTop;
       }
     });
   },
@@ -3095,6 +3137,11 @@ ionic.DomUtil.ready(function() {
     start: function(e) {
       var self = this;
 
+      var hitX = ionic.tap.pointerCoord(e).x;
+      if (hitX > 0 && hitX < 45) {
+        return;
+      }
+
       // when an element is touched/clicked, it climbs up a few
       // parents to see if it is an .item or .button element
       ionic.requestAnimationFrame(function() {
@@ -3363,6 +3410,7 @@ ionic.DomUtil.ready(function() {
       var parent = scope.$parent;
       scope.$$disconnected = true;
       scope.$broadcast('$ionic.disconnectScope');
+
       // See Scope.$destroy
       if (parent.$$childHead === scope) {
         parent.$$childHead = scope.$$nextSibling;
@@ -4257,6 +4305,12 @@ ionic.views.Scroll = ionic.views.View.inherit({
       /** duration for animations triggered by scrollTo/zoomTo */
       animationDuration: 250,
 
+      /** The velocity required to make the scroll view "slide" after touchend */
+      decelVelocityThreshold: 4,
+
+      /** The velocity required to make the scroll view "slide" after touchend when using paging */
+      decelVelocityThresholdPaging: 4,
+
       /** Enable bouncing (content can be slowly moved outside and jumps back after releasing) */
       bouncing: true,
 
@@ -4300,6 +4354,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
       // The ms interval for triggering scroll events
       scrollEventInterval: 10,
 
+      freeze: false,
+
       getContentWidth: function() {
         return Math.max(self.__content.scrollWidth, self.__content.offsetWidth);
       },
@@ -4325,6 +4381,13 @@ ionic.views.Scroll = ionic.views.View.inherit({
         self.scrollTimer = setTimeout(self.setScrollStop, 80);
       }
 
+    };
+
+    self.freeze = function(shouldFreeze) {
+      if (arguments.length) {
+        self.options.freeze = shouldFreeze;
+      }
+      return self.options.freeze;
     };
 
     self.setScrollStart = function() {
@@ -4665,7 +4728,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     };
 
     self.touchMove = function(e) {
-      if (!self.__isDown ||
+      if (self.options.freeze || !self.__isDown ||
         (!self.__isDown && e.defaultPrevented) ||
         (e.target.tagName === 'TEXTAREA' && e.target.parentElement.querySelector(':focus')) ) {
         return;
@@ -4714,7 +4777,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     self.touchEnd = function(e) {
       if (!self.__isDown) return;
 
-      self.doTouchEnd(e.timeStamp);
+      self.doTouchEnd(e, e.timeStamp);
       self.__isDown = false;
       self.__hasStarted = false;
       self.__isSelectable = true;
@@ -4724,6 +4787,24 @@ ionic.views.Scroll = ionic.views.View.inherit({
         ionic.tap.removeClonedInputs(container, self);
       }
     };
+
+    self.mouseWheel = ionic.animationFrameThrottle(function(e) {
+      var scrollParent = ionic.DomUtil.getParentOrSelfWithClass(e.target, 'ionic-scroll');
+      if (!self.options.freeze && scrollParent === self.__container) {
+
+        self.hintResize();
+        self.scrollBy(
+          (e.wheelDeltaX || e.deltaX || 0) / self.options.wheelDampen,
+          (-e.wheelDeltaY || e.deltaY || 0) / self.options.wheelDampen
+        );
+
+        self.__fadeScrollbars('in');
+        clearTimeout(self.__wheelHideBarTimeout);
+        self.__wheelHideBarTimeout = setTimeout(function() {
+          self.__fadeScrollbars('out');
+        }, 100);
+      }
+    });
 
     if ('ontouchstart' in window) {
       // Touch Events
@@ -4740,6 +4821,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       document.addEventListener("pointermove", self.touchMove, false);
       document.addEventListener("pointerup", self.touchEnd, false);
       document.addEventListener("pointercancel", self.touchEnd, false);
+      document.addEventListener("wheel", self.mouseWheel, false);
 
     } else if (window.navigator.msPointerEnabled) {
       // IE10, WP8 (Pointer Events)
@@ -4748,6 +4830,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       document.addEventListener("MSPointerMove", self.touchMove, false);
       document.addEventListener("MSPointerUp", self.touchEnd, false);
       document.addEventListener("MSPointerCancel", self.touchEnd, false);
+      document.addEventListener("wheel", self.mouseWheel, false);
 
     } else {
       // Mouse Events
@@ -4766,7 +4849,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       };
 
       self.mouseMove = function(e) {
-        if (!mousedown || (!mousedown && e.defaultPrevented)) {
+        if (self.options.freeze || !mousedown || (!mousedown && e.defaultPrevented)) {
           return;
         }
 
@@ -4786,28 +4869,10 @@ ionic.views.Scroll = ionic.views.View.inherit({
           return;
         }
 
-        self.doTouchEnd(e.timeStamp);
+        self.doTouchEnd(e, e.timeStamp);
 
         mousedown = false;
       };
-
-      self.mouseWheel = ionic.animationFrameThrottle(function(e) {
-        var scrollParent = ionic.DomUtil.getParentOrSelfWithClass(e.target, 'ionic-scroll');
-        if (scrollParent === self.__container) {
-
-          self.hintResize();
-          self.scrollBy(
-            (e.wheelDeltaX || e.deltaX || 0) / self.options.wheelDampen,
-            (-e.wheelDeltaY || e.deltaY || 0) / self.options.wheelDampen
-          );
-
-          self.__fadeScrollbars('in');
-          clearTimeout(self.__wheelHideBarTimeout);
-          self.__wheelHideBarTimeout = setTimeout(function() {
-            self.__fadeScrollbars('out');
-          }, 100);
-        }
-      });
 
       container.addEventListener("mousedown", self.mouseDown, false);
       if(self.options.preventDefault) container.addEventListener("mousemove", self.mouseMoveBubble, false);
@@ -4858,13 +4923,13 @@ ionic.views.Scroll = ionic.views.View.inherit({
     delete self.__indicatorY;
     delete self.options.el;
 
-    self.__callback = self.scrollChildIntoView = self.resetScrollView = angular.noop;
+    self.__callback = self.scrollChildIntoView = self.resetScrollView = NOOP;
 
     self.mouseMove = self.mouseDown = self.mouseUp = self.mouseWheel =
-      self.touchStart = self.touchMove = self.touchEnd = self.touchCancel = angular.noop;
+      self.touchStart = self.touchMove = self.touchEnd = self.touchCancel = NOOP;
 
     self.resize = self.scrollTo = self.zoomTo =
-      self.__scrollingComplete = angular.noop;
+      self.__scrollingComplete = NOOP;
     container = null;
   },
 
@@ -5091,7 +5156,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     this.__fadeScrollbars('out');
   },
 
-  resize: function() {
+  resize: function(continueScrolling) {
     var self = this;
     if (!self.__container || !self.options) return;
 
@@ -5101,7 +5166,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
       self.__container.clientWidth,
       self.__container.clientHeight,
       self.options.getContentWidth(),
-      self.options.getContentHeight()
+      self.options.getContentHeight(),
+      continueScrolling
     );
   },
   /*
@@ -5194,7 +5260,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
    * @param contentWidth {Integer} Outer width of inner element
    * @param contentHeight {Integer} Outer height of inner element
    */
-  setDimensions: function(clientWidth, clientHeight, contentWidth, contentHeight) {
+  setDimensions: function(clientWidth, clientHeight, contentWidth, contentHeight, continueScrolling) {
     var self = this;
 
     if (!clientWidth && !clientHeight && !contentWidth && !contentHeight) {
@@ -5224,7 +5290,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
     self.__resizeScrollbars();
 
     // Refresh scroll position
-    self.scrollTo(self.__scrollLeft, self.__scrollTop, true, null, true);
+    if (!continueScrolling) {
+      self.scrollTo(self.__scrollLeft, self.__scrollTop, true, null, true);
+    }
 
   },
 
@@ -5265,17 +5333,18 @@ ionic.views.Scroll = ionic.views.View.inherit({
    * @param showCallback {Function} Callback to execute when the refresher should be shown. This is for showing the refresher during a negative scrollTop.
    * @param hideCallback {Function} Callback to execute when the refresher should be hidden. This is for hiding the refresher when it's behind the nav bar.
    * @param tailCallback {Function} Callback to execute just before the refresher returns to it's original state. This is for zooming out the refresher.
+   * @param pullProgressCallback Callback to state the progress while pulling to refresh
    */
-  activatePullToRefresh: function(height, activateCallback, deactivateCallback, startCallback, showCallback, hideCallback, tailCallback) {
+  activatePullToRefresh: function(height, refresherMethods) {
     var self = this;
 
     self.__refreshHeight = height;
-    self.__refreshActivate = function(){ionic.requestAnimationFrame(activateCallback);};
-    self.__refreshDeactivate = function(){ionic.requestAnimationFrame(deactivateCallback);};
-    self.__refreshStart = function(){ionic.requestAnimationFrame(startCallback);};
-    self.__refreshShow = function(){ionic.requestAnimationFrame(showCallback);};
-    self.__refreshHide = function(){ionic.requestAnimationFrame(hideCallback);};
-    self.__refreshTail = function(){ionic.requestAnimationFrame(tailCallback);};
+    self.__refreshActivate = function() {ionic.requestAnimationFrame(refresherMethods.activate);};
+    self.__refreshDeactivate = function() {ionic.requestAnimationFrame(refresherMethods.deactivate);};
+    self.__refreshStart = function() {ionic.requestAnimationFrame(refresherMethods.start);};
+    self.__refreshShow = function() {ionic.requestAnimationFrame(refresherMethods.show);};
+    self.__refreshHide = function() {ionic.requestAnimationFrame(refresherMethods.hide);};
+    self.__refreshTail = function() {ionic.requestAnimationFrame(refresherMethods.tail);};
     self.__refreshTailTime = 100;
     self.__minSpinTime = 600;
   },
@@ -5306,19 +5375,19 @@ ionic.views.Scroll = ionic.views.View.inherit({
     // delay to make sure the spinner has a chance to spin for a split second before it's dismissed
     var d = new Date();
     var delay = 0;
-    if (self.refreshStartTime + self.__minSpinTime > d.getTime()){
+    if (self.refreshStartTime + self.__minSpinTime > d.getTime()) {
       delay = self.refreshStartTime + self.__minSpinTime - d.getTime();
     }
-    setTimeout(function(){
-      if (self.__refreshTail){
+    setTimeout(function() {
+      if (self.__refreshTail) {
         self.__refreshTail();
       }
-      setTimeout(function(){
+      setTimeout(function() {
         self.__refreshActive = false;
         if (self.__refreshDeactivate) {
           self.__refreshDeactivate();
         }
-        if (self.__refreshHide){
+        if (self.__refreshHide) {
           self.__refreshHide();
         }
 
@@ -5550,6 +5619,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
   doTouchStart: function(touches, timeStamp) {
     var self = this;
 
+    // remember if the deceleration was just stopped
+    self.__decStopped = !!(self.__isDecelerating || self.__isAnimating);
+
     self.hintResize();
 
     if (timeStamp instanceof Date) {
@@ -5667,6 +5739,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
     // Are we already is dragging mode?
     if (self.__isDragging) {
+        self.__decStopped = false;
 
       // Compute move distance
       var moveX = currentTouchLeft - self.__lastTouchLeft;
@@ -5746,7 +5819,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
             if (!self.__enableScrollX && self.__refreshHeight != null) {
 
               // hide the refresher when it's behind the header bar in case of header transparency
-              if (scrollTop < 0){
+              if (scrollTop < 0) {
                 self.__refreshHidden = false;
                 self.__refreshShow();
               } else {
@@ -5780,7 +5853,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
             scrollTop = 0;
 
           }
-        } else if (self.__refreshHeight && !self.__refreshHidden){
+        } else if (self.__refreshHeight && !self.__refreshHidden) {
           // if a positive scroll value and the refresher is still not hidden, hide it
           self.__refreshHide();
           self.__refreshHidden = true;
@@ -5832,7 +5905,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
   /**
    * Touch end handler for scrolling support
    */
-  doTouchEnd: function(timeStamp) {
+  doTouchEnd: function(e, timeStamp) {
     if (timeStamp instanceof Date) {
       timeStamp = timeStamp.valueOf();
     }
@@ -5886,7 +5959,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
           self.__decelerationVelocityY = movedTop / timeOffset * (1000 / 60);
 
           // How much velocity is required to start the deceleration
-          var minVelocityToStartDeceleration = self.options.paging || self.options.snapping ? 4 : 1;
+          var minVelocityToStartDeceleration = self.options.paging || self.options.snapping ? self.options.decelVelocityThresholdPaging : self.options.decelVelocityThreshold;
 
           // Verify that we have enough velocity to start deceleration
           if (Math.abs(self.__decelerationVelocityX) > minVelocityToStartDeceleration || Math.abs(self.__decelerationVelocityY) > minVelocityToStartDeceleration) {
@@ -5902,6 +5975,13 @@ ionic.views.Scroll = ionic.views.View.inherit({
       } else if ((timeStamp - self.__lastTouchMove) > 100) {
         self.__scrollingComplete();
       }
+
+    } else if (self.__decStopped) {
+      // the deceleration was stopped
+      // user flicked the scroll fast, and stop dragging, then did a touchstart to stop the srolling
+      // tell the touchend event code to do nothing, we don't want to actually send a click
+      e.isTapHandled = true;
+      self.__decStopped = false;
     }
 
     // If this was a slower move it is per default non decelerated, but this
@@ -6074,15 +6154,11 @@ ionic.views.Scroll = ionic.views.View.inherit({
     clearTimeout(self.__sizerTimeout);
 
     var sizer = function() {
-      self.resize();
-
-      // if ((self.options.scrollingX && !self.__maxScrollLeft) || (self.options.scrollingY && !self.__maxScrollTop)) {
-      //   //self.__sizerTimeout = setTimeout(sizer, 1000);
-      // }
+      self.resize(true);
     };
 
     sizer();
-    self.__sizerTimeout = setTimeout(sizer, 1000);
+    self.__sizerTimeout = setTimeout(sizer, 500);
   },
 
   /*
@@ -6118,7 +6194,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       self.__minDecelerationScrollTop = 0;
       self.__maxDecelerationScrollLeft = self.__maxScrollLeft;
       self.__maxDecelerationScrollTop = self.__maxScrollTop;
-      if (self.__refreshActive) self.__minDecelerationScrollTop = self.__refreshHeight *-1;
+      if (self.__refreshActive) self.__minDecelerationScrollTop = self.__refreshHeight * -1;
     }
 
     // Wrap class method
@@ -6359,6 +6435,7 @@ ionic.scroll = {
   var SlideDrag = function(opts) {
     this.dragThresholdX = opts.dragThresholdX || 10;
     this.el = opts.el;
+    this.item = opts.item;
     this.canSwipe = opts.canSwipe;
   };
 
@@ -6417,18 +6494,27 @@ ionic.scroll = {
     return false;
   };
 
-  SlideDrag.prototype.clean = function(e) {
+  SlideDrag.prototype.clean = function(isInstant) {
     var lastDrag = this._lastDrag;
 
     if (!lastDrag || !lastDrag.content) return;
 
     lastDrag.content.style[ionic.CSS.TRANSITION] = '';
     lastDrag.content.style[ionic.CSS.TRANSFORM] = '';
-    ionic.requestAnimationFrame(function() {
-      setTimeout(function() {
-        lastDrag.buttons && lastDrag.buttons.classList.add('invisible');
-      }, 250);
-    });
+    if (isInstant) {
+      lastDrag.content.style[ionic.CSS.TRANSITION] = 'none';
+      makeInvisible();
+      ionic.requestAnimationFrame(function() {
+        lastDrag.content.style[ionic.CSS.TRANSITION] = '';
+      });
+    } else {
+      ionic.requestAnimationFrame(function() {
+        setTimeout(makeInvisible, 250);
+      });
+    }
+    function makeInvisible() {
+      lastDrag.buttons && lastDrag.buttons.classList.add('invisible');
+    }
   };
 
   SlideDrag.prototype.drag = ionic.animationFrameThrottle(function(e) {
@@ -6465,25 +6551,26 @@ ionic.scroll = {
   });
 
   SlideDrag.prototype.end = function(e, doneCallback) {
-    var _this = this;
+    var self = this;
 
     // There is no drag, just end immediately
-    if (!this._currentDrag) {
+    if (!self._currentDrag) {
       doneCallback && doneCallback();
       return;
     }
 
     // If we are currently dragging, we want to snap back into place
     // The final resting point X will be the width of the exposed buttons
-    var restingPoint = -this._currentDrag.buttonsWidth;
+    var restingPoint = -self._currentDrag.buttonsWidth;
 
     // Check if the drag didn't clear the buttons mid-point
     // and we aren't moving fast enough to swipe open
-    if (e.gesture.deltaX > -(this._currentDrag.buttonsWidth / 2)) {
+    if (e.gesture.deltaX > -(self._currentDrag.buttonsWidth / 2)) {
 
       // If we are going left but too slow, or going right, go back to resting
       if (e.gesture.direction == "left" && Math.abs(e.gesture.velocityX) < 0.3) {
         restingPoint = 0;
+
       } else if (e.gesture.direction == "right") {
         restingPoint = 0;
       }
@@ -6492,27 +6579,27 @@ ionic.scroll = {
 
     ionic.requestAnimationFrame(function() {
       if (restingPoint === 0) {
-        _this._currentDrag.content.style[ionic.CSS.TRANSFORM] = '';
-        var buttons = _this._currentDrag.buttons;
+        self._currentDrag.content.style[ionic.CSS.TRANSFORM] = '';
+        var buttons = self._currentDrag.buttons;
         setTimeout(function() {
           buttons && buttons.classList.add('invisible');
         }, 250);
       } else {
-        _this._currentDrag.content.style[ionic.CSS.TRANSFORM] = 'translate3d(' + restingPoint + 'px, 0, 0)';
+        self._currentDrag.content.style[ionic.CSS.TRANSFORM] = 'translate3d(' + restingPoint + 'px,0,0)';
       }
-      _this._currentDrag.content.style[ionic.CSS.TRANSITION] = '';
+      self._currentDrag.content.style[ionic.CSS.TRANSITION] = '';
 
 
       // Kill the current drag
-      if (!_this._lastDrag) {
-        _this._lastDrag = {};
+      if (!self._lastDrag) {
+        self._lastDrag = {};
       }
-      angular.extend(_this._lastDrag, _this._currentDrag);
-      if (_this._currentDrag) {
-        _this._currentDrag.buttons = null;
-        _this._currentDrag.content = null;
+      ionic.extend(self._lastDrag, self._currentDrag);
+      if (self._currentDrag) {
+        self._currentDrag.buttons = null;
+        self._currentDrag.content = null;
       }
-      _this._currentDrag = null;
+      self._currentDrag = null;
 
       // We are done, notify caller
       doneCallback && doneCallback();
@@ -6520,18 +6607,20 @@ ionic.scroll = {
   };
 
   var ReorderDrag = function(opts) {
-    this.dragThresholdY = opts.dragThresholdY || 0;
-    this.onReorder = opts.onReorder;
-    this.listEl = opts.listEl;
-    this.el = opts.el;
-    this.scrollEl = opts.scrollEl;
-    this.scrollView = opts.scrollView;
+    var self = this;
+
+    self.dragThresholdY = opts.dragThresholdY || 0;
+    self.onReorder = opts.onReorder;
+    self.listEl = opts.listEl;
+    self.el = self.item = opts.el;
+    self.scrollEl = opts.scrollEl;
+    self.scrollView = opts.scrollView;
     // Get the True Top of the list el http://www.quirksmode.org/js/findpos.html
-    this.listElTrueTop = 0;
-    if (this.listEl.offsetParent) {
-      var obj = this.listEl;
+    self.listElTrueTop = 0;
+    if (self.listEl.offsetParent) {
+      var obj = self.listEl;
       do {
-        this.listElTrueTop += obj.offsetTop;
+        self.listElTrueTop += obj.offsetTop;
         obj = obj.offsetParent;
       } while (obj);
     }
@@ -6548,10 +6637,7 @@ ionic.scroll = {
   };
 
   ReorderDrag.prototype.deregister = function() {
-    this.listEl = null;
-    this.el = null;
-    this.scrollEl = null;
-    this.scrollView = null;
+    this.listEl = this.el = this.scrollEl = this.scrollView = null;
   };
 
   ReorderDrag.prototype.start = function(e) {
@@ -6634,13 +6720,14 @@ ionic.scroll = {
   // When an item is dragged, we need to reorder any items for sorting purposes
   ReorderDrag.prototype._getReorderIndex = function() {
     var self = this;
-    var placeholder = this._currentDrag.placeholder;
-    var siblings = Array.prototype.slice.call(this._currentDrag.placeholder.parentNode.children)
+
+    var placeholder = self._currentDrag.placeholder;
+    var siblings = Array.prototype.slice.call(self._currentDrag.placeholder.parentNode.children)
       .filter(function(el) {
         return el.nodeName === self.el.nodeName && el !== self.el;
       });
 
-    var dragOffsetTop = this._currentDrag.currentY;
+    var dragOffsetTop = self._currentDrag.currentY;
     var el;
     for (var i = 0, len = siblings.length; i < len; i++) {
       el = siblings[i];
@@ -6657,7 +6744,7 @@ ionic.scroll = {
         return i;
       }
     }
-    return this._currentDrag.startIndex;
+    return self._currentDrag.startIndex;
   };
 
   ReorderDrag.prototype.end = function(e, doneCallback) {
@@ -6694,7 +6781,7 @@ ionic.scroll = {
    */
   ionic.views.ListView = ionic.views.View.inherit({
     initialize: function(opts) {
-      var _this = this;
+      var self = this;
 
       opts = ionic.extend({
         onReorder: function(el, oldIndex, newIndex) {},
@@ -6705,37 +6792,37 @@ ionic.scroll = {
         }
       }, opts);
 
-      ionic.extend(this, opts);
+      ionic.extend(self, opts);
 
-      if (!this.itemHeight && this.listEl) {
-        this.itemHeight = this.listEl.children[0] && parseInt(this.listEl.children[0].style.height, 10);
+      if (!self.itemHeight && self.listEl) {
+        self.itemHeight = self.listEl.children[0] && parseInt(self.listEl.children[0].style.height, 10);
       }
 
-      //ionic.views.ListView.__super__.initialize.call(this, opts);
-
-      this.onRefresh = opts.onRefresh || function() {};
-      this.onRefreshOpening = opts.onRefreshOpening || function() {};
-      this.onRefreshHolding = opts.onRefreshHolding || function() {};
+      self.onRefresh = opts.onRefresh || function() {};
+      self.onRefreshOpening = opts.onRefreshOpening || function() {};
+      self.onRefreshHolding = opts.onRefreshHolding || function() {};
 
       window.ionic.onGesture('release', function(e) {
-        _this._handleEndDrag(e);
-      }, this.el);
+        self._handleEndDrag(e);
+      }, self.el);
 
       window.ionic.onGesture('drag', function(e) {
-        _this._handleDrag(e);
-      }, this.el);
+        self._handleDrag(e);
+      }, self.el);
       // Start the drag states
-      this._initDrag();
+      self._initDrag();
     },
 
     /**
      * Be sure to cleanup references.
      */
     deregister: function() {
-      this.el = null;
-      this.listEl = null;
-      this.scrollEl = null;
-      this.scrollView = null;
+      this.el = this.listEl = this.scrollEl = this.scrollView = null;
+
+      // ensure no scrolls have been left frozen
+      if (this.isScrollFreeze) {
+        self.scrollView.freeze(false);
+      }
     },
 
     /**
@@ -6752,28 +6839,30 @@ ionic.scroll = {
      * of active elements in order to figure out the viewport to render.
      */
     didScroll: function(e) {
-      if (this.isVirtual) {
-        var itemHeight = this.itemHeight;
+      var self = this;
+
+      if (self.isVirtual) {
+        var itemHeight = self.itemHeight;
 
         // TODO: This would be inaccurate if we are windowed
-        var totalItems = this.listEl.children.length;
+        var totalItems = self.listEl.children.length;
 
         // Grab the total height of the list
         var scrollHeight = e.target.scrollHeight;
 
         // Get the viewport height
-        var viewportHeight = this.el.parentNode.offsetHeight;
+        var viewportHeight = self.el.parentNode.offsetHeight;
 
         // scrollTop is the current scroll position
         var scrollTop = e.scrollTop;
 
         // High water is the pixel position of the first element to include (everything before
         // that will be removed)
-        var highWater = Math.max(0, e.scrollTop + this.virtualRemoveThreshold);
+        var highWater = Math.max(0, e.scrollTop + self.virtualRemoveThreshold);
 
         // Low water is the pixel position of the last element to include (everything after
         // that will be removed)
-        var lowWater = Math.min(scrollHeight, Math.abs(e.scrollTop) + viewportHeight + this.virtualAddThreshold);
+        var lowWater = Math.min(scrollHeight, Math.abs(e.scrollTop) + viewportHeight + self.virtualAddThreshold);
 
         // Compute how many items per viewport size can show
         var itemsPerViewport = Math.floor((lowWater - highWater) / itemHeight);
@@ -6784,12 +6873,12 @@ ionic.scroll = {
         var last = parseInt(Math.abs(lowWater / itemHeight), 10);
 
         // Get the items we need to remove
-        this._virtualItemsToRemove = Array.prototype.slice.call(this.listEl.children, 0, first);
+        self._virtualItemsToRemove = Array.prototype.slice.call(self.listEl.children, 0, first);
 
         // Grab the nodes we will be showing
-        var nodes = Array.prototype.slice.call(this.listEl.children, first, first + itemsPerViewport);
+        var nodes = Array.prototype.slice.call(self.listEl.children, first, first + itemsPerViewport);
 
-        this.renderViewport && this.renderViewport(highWater, lowWater, first, last);
+        self.renderViewport && self.renderViewport(highWater, lowWater, first, last);
       }
     },
 
@@ -6808,17 +6897,15 @@ ionic.scroll = {
     /**
      * Clear any active drag effects on the list.
      */
-    clearDragEffects: function() {
+    clearDragEffects: function(isInstant) {
       if (this._lastDragOp) {
-        this._lastDragOp.clean && this._lastDragOp.clean();
+        this._lastDragOp.clean && this._lastDragOp.clean(isInstant);
         this._lastDragOp.deregister && this._lastDragOp.deregister();
         this._lastDragOp = null;
       }
     },
 
     _initDrag: function() {
-      //ionic.views.ListView.__super__._initDrag.call(this);
-
       // Store the last one
       if (this._lastDragOp) {
         this._lastDragOp.deregister && this._lastDragOp.deregister();
@@ -6841,70 +6928,78 @@ ionic.scroll = {
 
 
     _startDrag: function(e) {
-      var _this = this;
+      var self = this;
 
       var didStart = false;
 
-      this._isDragging = false;
+      self._isDragging = false;
 
-      var lastDragOp = this._lastDragOp;
+      var lastDragOp = self._lastDragOp;
       var item;
 
       // If we have an open SlideDrag and we're scrolling the list. Clear it.
-      if (this._didDragUpOrDown && lastDragOp instanceof SlideDrag) {
+      if (self._didDragUpOrDown && lastDragOp instanceof SlideDrag) {
           lastDragOp.clean && lastDragOp.clean();
       }
 
       // Check if this is a reorder drag
       if (ionic.DomUtil.getParentOrSelfWithClass(e.target, ITEM_REORDER_BTN_CLASS) && (e.gesture.direction == 'up' || e.gesture.direction == 'down')) {
-        item = this._getItem(e.target);
+        item = self._getItem(e.target);
 
         if (item) {
-          this._dragOp = new ReorderDrag({
-            listEl: this.el,
+          self._dragOp = new ReorderDrag({
+            listEl: self.el,
             el: item,
-            scrollEl: this.scrollEl,
-            scrollView: this.scrollView,
+            scrollEl: self.scrollEl,
+            scrollView: self.scrollView,
             onReorder: function(el, start, end) {
-              _this.onReorder && _this.onReorder(el, start, end);
+              self.onReorder && self.onReorder(el, start, end);
             }
           });
-          this._dragOp.start(e);
+          self._dragOp.start(e);
           e.preventDefault();
         }
       }
 
       // Or check if this is a swipe to the side drag
-      else if (!this._didDragUpOrDown && (e.gesture.direction == 'left' || e.gesture.direction == 'right') && Math.abs(e.gesture.deltaX) > 5) {
+      else if (!self._didDragUpOrDown && (e.gesture.direction == 'left' || e.gesture.direction == 'right') && Math.abs(e.gesture.deltaX) > 5) {
 
         // Make sure this is an item with buttons
-        item = this._getItem(e.target);
+        item = self._getItem(e.target);
         if (item && item.querySelector('.item-options')) {
-          this._dragOp = new SlideDrag({ el: this.el, canSwipe: this.canSwipe });
-          this._dragOp.start(e);
+          self._dragOp = new SlideDrag({
+            el: self.el,
+            item: item,
+            canSwipe: self.canSwipe
+          });
+          self._dragOp.start(e);
           e.preventDefault();
+          self.isScrollFreeze = self.scrollView.freeze(true);
         }
       }
 
       // If we had a last drag operation and this is a new one on a different item, clean that last one
-      if (lastDragOp && this._dragOp && !this._dragOp.isSameItem(lastDragOp) && e.defaultPrevented) {
+      if (lastDragOp && self._dragOp && !self._dragOp.isSameItem(lastDragOp) && e.defaultPrevented) {
         lastDragOp.clean && lastDragOp.clean();
       }
     },
 
 
     _handleEndDrag: function(e) {
-      var _this = this;
+      var self = this;
 
-      this._didDragUpOrDown = false;
+      if (self.scrollView) {
+        self.isScrollFreeze = self.scrollView.freeze(false);
+      }
 
-      if (!this._dragOp) {
-        //ionic.views.ListView.__super__._handleEndDrag.call(this, e);
+      self._didDragUpOrDown = false;
+
+      if (!self._dragOp) {
         return;
       }
 
-      this._dragOp.end(e, function() {
-        _this._initDrag();
+      self._dragOp.end(e, function() {
+        self._initDrag();
       });
     },
 
@@ -6912,26 +7007,25 @@ ionic.scroll = {
      * Process the drag event to move the item to the left or right.
      */
     _handleDrag: function(e) {
-      var _this = this, content, buttons;
+      var self = this, content, buttons;
 
       if (Math.abs(e.gesture.deltaY) > 5) {
-        this._didDragUpOrDown = true;
+        self._didDragUpOrDown = true;
       }
 
       // If we get a drag event, make sure we aren't in another drag, then check if we should
       // start one
-      if (!this.isDragging && !this._dragOp) {
-        this._startDrag(e);
+      if (!self.isDragging && !self._dragOp) {
+        self._startDrag(e);
       }
 
       // No drag still, pass it up
-      if (!this._dragOp) {
-        //ionic.views.ListView.__super__._handleDrag.call(this, e);
+      if (!self._dragOp) {
         return;
       }
 
       e.gesture.srcEvent.preventDefault();
-      this._dragOp.drag(e);
+      self._dragOp.drag(e);
     }
 
   });
@@ -7824,7 +7918,7 @@ ionic.views.Slider = ionic.views.View.inherit({
  */
 
 /**
- * @license AngularJS v1.3.6
+ * @license AngularJS v1.3.13
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -7879,7 +7973,7 @@ function minErr(module, ErrorConstructor) {
       return match;
     });
 
-    message = message + '\nhttp://errors.angularjs.org/1.3.6/' +
+    message = message + '\nhttp://errors.angularjs.org/1.3.13/' +
       (module ? module + '/' : '') + code;
     for (i = 2; i < arguments.length; i++) {
       message = message + (i == 2 ? '?' : '&') + 'p' + (i - 2) + '=' +
@@ -7934,6 +8028,7 @@ function minErr(module, ErrorConstructor) {
   isWindow: true,
   isScope: true,
   isFile: true,
+  isFormData: true,
   isBlob: true,
   isBoolean: true,
   isPromiseLike: true,
@@ -8205,8 +8300,7 @@ function nextUid() {
 function setHashKey(obj, h) {
   if (h) {
     obj.$$hashKey = h;
-  }
-  else {
+  } else {
     delete obj.$$hashKey;
   }
 }
@@ -8289,6 +8383,8 @@ noop.$inject = [];
        return (transformationFn || angular.identity)(value);
      };
    ```
+  * @param {*} value to be returned.
+  * @returns {*} the value passed in.
  */
 function identity($) {return $;}
 identity.$inject = [];
@@ -8455,6 +8551,11 @@ function isFile(obj) {
 }
 
 
+function isFormData(obj) {
+  return toString.call(obj) === '[object FormData]';
+}
+
+
 function isBlob(obj) {
   return toString.call(obj) === '[object Blob]';
 }
@@ -8508,7 +8609,7 @@ function isElement(node) {
 function makeMap(str) {
   var obj = {}, items = str.split(","), i;
   for (i = 0; i < items.length; i++)
-    obj[ items[i] ] = true;
+    obj[items[i]] = true;
   return obj;
 }
 
@@ -8538,7 +8639,7 @@ function arrayRemove(array, value) {
  * Creates a deep copy of `source`, which should be an object or an array.
  *
  * * If no destination is supplied, a copy of the object or array is created.
- * * If a destination is provided, all of its elements (for array) or properties (for objects)
+ * * If a destination is provided, all of its elements (for arrays) or properties (for objects)
  *   are deleted and then all elements/properties from the source are copied to it.
  * * If `source` is not an object or array (inc. `null` and `undefined`), `source` is returned.
  * * If `source` is identical to 'destination' an exception will be thrown.
@@ -8876,7 +8977,7 @@ function toJson(obj, pretty) {
  * Deserializes a JSON string.
  *
  * @param {string} json JSON string to deserialize.
- * @returns {Object|Array|string|number} Deserialized thingy.
+ * @returns {Object|Array|string|number} Deserialized JSON string.
  */
 function fromJson(json) {
   return isString(json)
@@ -9049,7 +9150,7 @@ function getNgAttribute(element, ngAttr) {
  * {@link angular.bootstrap} instead. AngularJS applications cannot be nested within each other.
  *
  * You can specify an **AngularJS module** to be used as the root module for the application.  This
- * module will be loaded into the {@link auto.$injector} when the application is bootstrapped and
+ * module will be loaded into the {@link auto.$injector} when the application is bootstrapped. It
  * should contain the application code needed or have dependencies on other modules that will
  * contain the code. See {@link angular.module} for more information.
  *
@@ -9057,7 +9158,7 @@ function getNgAttribute(element, ngAttr) {
  * document would not be compiled, the `AppController` would not be instantiated and the `{{ a+b }}`
  * would not be resolved to `3`.
  *
- * `ngApp` is the easiest, and most common, way to bootstrap an application.
+ * `ngApp` is the easiest, and most common way to bootstrap an application.
  *
  <example module="ngAppDemo">
    <file name="index.html">
@@ -9219,7 +9320,7 @@ function angularInit(element, bootstrap) {
  * @param {DOMElement} element DOM element which is the root of angular application.
  * @param {Array<String|Function|Array>=} modules an array of modules to load into the application.
  *     Each item in the array should be the name of a predefined module or a (DI annotated)
- *     function that will be invoked by the injector as a run block.
+ *     function that will be invoked by the injector as a `config` block.
  *     See: {@link angular.module modules}
  * @param {Object=} config an object for defining configuration options for the application. The
  *     following keys are supported:
@@ -9289,8 +9390,12 @@ function bootstrap(element, modules, config) {
     forEach(extraModules, function(module) {
       modules.push(module);
     });
-    doBootstrap();
+    return doBootstrap();
   };
+
+  if (isFunction(angular.resumeDeferredBootstrap)) {
+    angular.resumeDeferredBootstrap();
+  }
 }
 
 /**
@@ -9317,7 +9422,12 @@ function reloadWithDebugInfo() {
  * @param {DOMElement} element DOM element which is the root of angular application.
  */
 function getTestability(rootElement) {
-  return angular.element(rootElement).injector().get('$$testability');
+  var injector = angular.element(rootElement).injector();
+  if (!injector) {
+    throw ngMinErr('test',
+      'no injector found for element argument to getTestability');
+  }
+  return injector.get('$$testability');
 }
 
 var SNAKE_CASE_REGEXP = /[A-Z]/g;
@@ -9930,11 +10040,11 @@ function toDebugString(obj) {
  * - `codeName` – `{string}` – Code name of the release, such as "jiggling-armfat".
  */
 var version = {
-  full: '1.3.6',    // all of these placeholder strings will be replaced by grunt's
+  full: '1.3.13',    // all of these placeholder strings will be replaced by grunt's
   major: 1,    // package task
   minor: 3,
-  dot: 6,
-  codeName: 'robofunky-danceblaster'
+  dot: 13,
+  codeName: 'meticulous-riffleshuffle'
 };
 
 
@@ -11969,7 +12079,7 @@ function createInjector(modulesToLoad, strictDi) {
       }
 
       var args = [],
-          $inject = annotate(fn, strictDi, serviceName),
+          $inject = createInjector.$$annotate(fn, strictDi, serviceName),
           length, i,
           key;
 
@@ -11998,7 +12108,7 @@ function createInjector(modulesToLoad, strictDi) {
       // Check if Type is annotated and use just the given function at n-1 as parameter
       // e.g. someModule.factory('greeter', ['$window', function(renamed$window) {}]);
       // Object creation: http://jsperf.com/create-constructor/2
-      var instance = Object.create((isArray(Type) ? Type[Type.length - 1] : Type).prototype);
+      var instance = Object.create((isArray(Type) ? Type[Type.length - 1] : Type).prototype || null);
       var returnedValue = invoke(Type, instance, locals, serviceName);
 
       return isObject(returnedValue) || isFunction(returnedValue) ? returnedValue : instance;
@@ -12008,7 +12118,7 @@ function createInjector(modulesToLoad, strictDi) {
       invoke: invoke,
       instantiate: instantiate,
       get: getService,
-      annotate: annotate,
+      annotate: createInjector.$$annotate,
       has: function(name) {
         return providerCache.hasOwnProperty(name + providerSuffix) || cache.hasOwnProperty(name);
       }
@@ -14947,7 +15057,10 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
             // support ngAttr attribute binding
             ngAttrName = directiveNormalize(name);
             if (isNgAttr = NG_ATTR_BINDING.test(ngAttrName)) {
-              name = snake_case(ngAttrName.substr(6), '-');
+              name = name.replace(PREFIX_REGEXP, '')
+                .substr(8).replace(/_(.)/g, function(match, letter) {
+                  return letter.toUpperCase();
+                });
             }
 
             var directiveNName = ngAttrName.replace(/(Start|End)$/, '');
@@ -14974,6 +15087,10 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
 
           // use class as directive
           className = node.className;
+          if (isObject(className)) {
+              // Maybe SVGAnimatedString
+              className = className.animVal;
+          }
           if (isString(className) && className !== '') {
             while (match = CLASS_DIRECTIVE_REGEXP.exec(className)) {
               nName = directiveNormalize(match[2]);
@@ -15675,8 +15792,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
           afterTemplateChildLinkFn,
           beforeTemplateCompileNode = $compileNode[0],
           origAsyncDirective = directives.shift(),
-          // The fact that we have to copy and patch the directive seems wrong!
-          derivedSyncDirective = extend({}, origAsyncDirective, {
+          derivedSyncDirective = inherit(origAsyncDirective, {
             templateUrl: null, transclude: null, replace: null, $$originalDirective: origAsyncDirective
           }),
           templateUrl = (isFunction(origAsyncDirective.templateUrl))
@@ -15859,7 +15975,10 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
 
 
     function addAttrInterpolateDirective(node, directives, value, name, allOrNothing) {
-      var interpolateFn = $interpolate(value, true);
+      var trustedContext = getTrustedContext(node, name);
+      allOrNothing = ALL_OR_NOTHING_ATTRS[name] || allOrNothing;
+
+      var interpolateFn = $interpolate(value, true, trustedContext, allOrNothing);
 
       // no interpolation found -> ignore
       if (!interpolateFn) return;
@@ -15884,15 +16003,15 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
                           "ng- versions (such as ng-click instead of onclick) instead.");
                 }
 
-                // If the attribute was removed, then we are done
-                if (!attr[name]) {
-                  return;
+                // If the attribute has changed since last $interpolate()ed
+                var newValue = attr[name];
+                if (newValue !== value) {
+                  // we need to interpolate again since the attribute value has been updated
+                  // (e.g. by another directive's compile function)
+                  // ensure unset/empty values make interpolateFn falsy
+                  interpolateFn = newValue && $interpolate(newValue, true, trustedContext, allOrNothing);
+                  value = newValue;
                 }
-
-                // we need to interpolate again, in case the attribute value has been updated
-                // (e.g. by another directive's compile function)
-                interpolateFn = $interpolate(attr[name], true, getTrustedContext(node, name),
-                    ALL_OR_NOTHING_ATTRS[name] || allOrNothing);
 
                 // if attribute was updated so that there is no interpolation going on we don't want to
                 // register any observers
@@ -16126,6 +16245,8 @@ function removeComments(jqNodes) {
   return jqNodes;
 }
 
+var $controllerMinErr = minErr('$controller');
+
 /**
  * @ngdoc provider
  * @name $controllerProvider
@@ -16213,7 +16334,12 @@ function $ControllerProvider() {
       }
 
       if (isString(expression)) {
-        match = expression.match(CNTRL_REG),
+        match = expression.match(CNTRL_REG);
+        if (!match) {
+          throw $controllerMinErr('ctrlfmt',
+            "Badly formed controller string '{0}'. " +
+            "Must match `__name__ as __id__` or `__name__`.", expression);
+        }
         constructor = match[1],
         identifier = identifier || match[3];
         expression = controllers.hasOwnProperty(constructor)
@@ -16237,7 +16363,7 @@ function $ControllerProvider() {
         // Object creation: http://jsperf.com/create-constructor/2
         var controllerPrototype = (isArray(expression) ?
           expression[expression.length - 1] : expression).prototype;
-        instance = Object.create(controllerPrototype);
+        instance = Object.create(controllerPrototype || null);
 
         if (identifier) {
           addIdentifier(locals, identifier, instance, constructor || expression.name);
@@ -16354,21 +16480,32 @@ function $ExceptionHandlerProvider() {
 
 var APPLICATION_JSON = 'application/json';
 var CONTENT_TYPE_APPLICATION_JSON = {'Content-Type': APPLICATION_JSON + ';charset=utf-8'};
-var JSON_START = /^\s*(\[|\{[^\{])/;
-var JSON_END = /[\}\]]\s*$/;
+var JSON_START = /^\[|^\{(?!\{)/;
+var JSON_ENDS = {
+  '[': /]$/,
+  '{': /}$/
+};
 var JSON_PROTECTION_PREFIX = /^\)\]\}',?\n/;
 
 function defaultHttpResponseTransform(data, headers) {
   if (isString(data)) {
-    // strip json vulnerability protection prefix
-    data = data.replace(JSON_PROTECTION_PREFIX, '');
-    var contentType = headers('Content-Type');
-    if ((contentType && contentType.indexOf(APPLICATION_JSON) === 0 && data.trim()) ||
-        (JSON_START.test(data) && JSON_END.test(data))) {
-      data = fromJson(data);
+    // Strip json vulnerability protection prefix and trim whitespace
+    var tempData = data.replace(JSON_PROTECTION_PREFIX, '').trim();
+
+    if (tempData) {
+      var contentType = headers('Content-Type');
+      if ((contentType && (contentType.indexOf(APPLICATION_JSON) === 0)) || isJsonLike(tempData)) {
+        data = fromJson(tempData);
+      }
     }
   }
+
   return data;
+}
+
+function isJsonLike(str) {
+    var jsonStart = str.match(JSON_START);
+    return jsonStart && JSON_ENDS[jsonStart[0]].test(str);
 }
 
 /**
@@ -16433,16 +16570,17 @@ function headersGetter(headers) {
  * This function is used for both request and response transforming
  *
  * @param {*} data Data to transform.
- * @param {function(string=)} headers Http headers getter fn.
+ * @param {function(string=)} headers HTTP headers getter fn.
+ * @param {number} status HTTP status code of the response.
  * @param {(Function|Array.<Function>)} fns Function or an array of functions.
  * @returns {*} Transformed data.
  */
-function transformData(data, headers, fns) {
+function transformData(data, headers, status, fns) {
   if (isFunction(fns))
-    return fns(data, headers);
+    return fns(data, headers, status);
 
   forEach(fns, function(fn) {
-    data = fn(data, headers);
+    data = fn(data, headers, status);
   });
 
   return data;
@@ -16494,7 +16632,7 @@ function $HttpProvider() {
 
     // transform outgoing request data
     transformRequest: [function(d) {
-      return isObject(d) && !isFile(d) && !isBlob(d) ? toJson(d) : d;
+      return isObject(d) && !isFile(d) && !isBlob(d) && !isFormData(d) ? toJson(d) : d;
     }],
 
     // default headers
@@ -16721,7 +16859,7 @@ function $HttpProvider() {
      *
      * Both requests and responses can be transformed using transformation functions: `transformRequest`
      * and `transformResponse`. These properties can be a single function that returns
-     * the transformed value (`{function(data, headersGetter)`) or an array of such transformation functions,
+     * the transformed value (`function(data, headersGetter, status)`) or an array of such transformation functions,
      * which allows you to `push` or `unshift` a new transformation function into the transformation chain.
      *
      * ### Default Transformations
@@ -16965,9 +17103,9 @@ function $HttpProvider() {
      *      See {@link ng.$http#overriding-the-default-transformations-per-request
      *      Overriding the Default Transformations}
      *    - **transformResponse** –
-     *      `{function(data, headersGetter)|Array.<function(data, headersGetter)>}` –
+     *      `{function(data, headersGetter, status)|Array.<function(data, headersGetter, status)>}` –
      *      transform function or an array of such functions. The transform function takes the http
-     *      response body and headers and returns its transformed (typically deserialized) version.
+     *      response body, headers and status and returns its transformed (typically deserialized) version.
      *      See {@link ng.$http#overriding-the-default-transformations-per-request
      *      Overriding the Default Transformations}
      *    - **cache** – `{boolean|Cache}` – If true, a default $http cache will be used to cache the
@@ -17090,24 +17228,23 @@ function $HttpProvider() {
 </example>
      */
     function $http(requestConfig) {
-      var config = {
-        method: 'get',
-        transformRequest: defaults.transformRequest,
-        transformResponse: defaults.transformResponse
-      };
-      var headers = mergeHeaders(requestConfig);
 
       if (!angular.isObject(requestConfig)) {
         throw minErr('$http')('badreq', 'Http request configuration must be an object.  Received: {0}', requestConfig);
       }
 
-      extend(config, requestConfig);
-      config.headers = headers;
+      var config = extend({
+        method: 'get',
+        transformRequest: defaults.transformRequest,
+        transformResponse: defaults.transformResponse
+      }, requestConfig);
+
+      config.headers = mergeHeaders(requestConfig);
       config.method = uppercase(config.method);
 
       var serverRequest = function(config) {
-        headers = config.headers;
-        var reqData = transformData(config.data, headersGetter(headers), config.transformRequest);
+        var headers = config.headers;
+        var reqData = transformData(config.data, headersGetter(headers), undefined, config.transformRequest);
 
         // strip content-type if data is undefined
         if (isUndefined(reqData)) {
@@ -17123,7 +17260,7 @@ function $HttpProvider() {
         }
 
         // send request
-        return sendReq(config, reqData, headers).then(transformResponse, transformResponse);
+        return sendReq(config, reqData).then(transformResponse, transformResponse);
       };
 
       var chain = [serverRequest, undefined];
@@ -17168,11 +17305,28 @@ function $HttpProvider() {
         if (!response.data) {
           resp.data = response.data;
         } else {
-          resp.data = transformData(response.data, response.headers, config.transformResponse);
+          resp.data = transformData(response.data, response.headers, response.status, config.transformResponse);
         }
         return (isSuccess(response.status))
           ? resp
           : $q.reject(resp);
+      }
+
+      function executeHeaderFns(headers) {
+        var headerContent, processedHeaders = {};
+
+        forEach(headers, function(headerFn, header) {
+          if (isFunction(headerFn)) {
+            headerContent = headerFn();
+            if (headerContent != null) {
+              processedHeaders[header] = headerContent;
+            }
+          } else {
+            processedHeaders[header] = headerFn;
+          }
+        });
+
+        return processedHeaders;
       }
 
       function mergeHeaders(config) {
@@ -17197,23 +17351,7 @@ function $HttpProvider() {
         }
 
         // execute if header value is a function for merged headers
-        execHeaders(reqHeaders);
-        return reqHeaders;
-
-        function execHeaders(headers) {
-          var headerContent;
-
-          forEach(headers, function(headerFn, header) {
-            if (isFunction(headerFn)) {
-              headerContent = headerFn();
-              if (headerContent != null) {
-                headers[header] = headerContent;
-              } else {
-                delete headers[header];
-              }
-            }
-          });
-        }
+        return executeHeaderFns(reqHeaders);
       }
     }
 
@@ -17356,11 +17494,12 @@ function $HttpProvider() {
      * !!! ACCESSES CLOSURE VARS:
      * $httpBackend, defaults, $log, $rootScope, defaultCache, $http.pendingRequests
      */
-    function sendReq(config, reqData, reqHeaders) {
+    function sendReq(config, reqData) {
       var deferred = $q.defer(),
           promise = deferred.promise,
           cache,
           cachedResp,
+          reqHeaders = config.headers,
           url = buildUrl(config.url, config.params);
 
       $http.pendingRequests.push(config);
@@ -19060,8 +19199,8 @@ function $LocationProvider() {
    * @param {string=} oldState History state object that was before it was changed.
    */
 
-  this.$get = ['$rootScope', '$browser', '$sniffer', '$rootElement',
-      function($rootScope, $browser, $sniffer, $rootElement) {
+  this.$get = ['$rootScope', '$browser', '$sniffer', '$rootElement', '$window',
+      function($rootScope, $browser, $sniffer, $rootElement, $window) {
     var $location,
         LocationMode,
         baseHref = $browser.baseHref(), // if base[href] is undefined, it defaults to ''
@@ -19109,7 +19248,7 @@ function $LocationProvider() {
       // TODO(vojta): rewrite link when opening in new tab/window (in legacy browser)
       // currently we open nice url link and redirect then
 
-      if (!html5Mode.rewriteLinks || event.ctrlKey || event.metaKey || event.which == 2) return;
+      if (!html5Mode.rewriteLinks || event.ctrlKey || event.metaKey || event.shiftKey || event.which == 2 || event.button == 2) return;
 
       var elm = jqLite(event.target);
 
@@ -19143,7 +19282,7 @@ function $LocationProvider() {
           if ($location.absUrl() != $browser.url()) {
             $rootScope.$apply();
             // hack to work around FF6 bug 684208 when scenario runner clicks on links
-            window.angular['ff-684208-preventDefault'] = true;
+            $window.angular['ff-684208-preventDefault'] = true;
           }
         }
       }
@@ -19151,7 +19290,7 @@ function $LocationProvider() {
 
 
     // rewrite hashbang url <> html5 url
-    if ($location.absUrl() != initialUrl) {
+    if (trimEmptyHash($location.absUrl()) != trimEmptyHash(initialUrl)) {
       $browser.url($location.absUrl(), true);
     }
 
@@ -19759,6 +19898,8 @@ Parser.prototype = {
       primary = this.arrayDeclaration();
     } else if (this.expect('{')) {
       primary = this.object();
+    } else if (this.peek().identifier && this.peek().text in CONSTANTS) {
+      primary = CONSTANTS[this.consume().text];
     } else if (this.peek().identifier) {
       primary = this.identifier();
     } else if (this.peek().constant) {
@@ -19861,7 +20002,7 @@ Parser.prototype = {
       id += this.consume().text + this.consume().text;
     }
 
-    return CONSTANTS[id] || getterFn(id, this.options, this.text);
+    return getterFn(id, this.options, this.text);
   },
 
   constant: function() {
@@ -20051,17 +20192,16 @@ Parser.prototype = {
   },
 
   fieldAccess: function(object) {
-    var expression = this.text;
-    var field = this.consume().text;
-    var getter = getterFn(field, this.options, expression);
+    var getter = this.identifier();
 
     return extend(function $parseFieldAccess(scope, locals, self) {
-      return getter(self || object(scope, locals));
+      var o = self || object(scope, locals);
+      return (o == null) ? undefined : getter(o);
     }, {
       assign: function(scope, value, locals) {
         var o = object(scope, locals);
-        if (!o) object.assign(scope, o = {});
-        return setter(o, field, value, expression);
+        if (!o) object.assign(scope, o = {}, locals);
+        return getter.assign(o, value);
       }
     });
   },
@@ -20086,7 +20226,7 @@ Parser.prototype = {
         var key = ensureSafeMemberName(indexFn(self, locals), expression);
         // prevent overwriting of Function.constructor which would break ensureSafeObject check
         var o = ensureSafeObject(obj(self, locals), expression);
-        if (!o) obj.assign(self, o = {});
+        if (!o) obj.assign(self, o = {}, locals);
         return o[key] = value;
       }
     });
@@ -20123,6 +20263,11 @@ Parser.prototype = {
       var v = fn.apply
             ? fn.apply(context, args)
             : fn(args[0], args[1], args[2], args[3], args[4]);
+
+      if (args) {
+        // Free-up the memory (arguments of the last function call).
+        args.length = 0;
+      }
 
       return ensureSafeObject(v, expressionText);
       };
@@ -20196,18 +20341,19 @@ Parser.prototype = {
 // Parser helper functions
 //////////////////////////////////////////////////
 
-function setter(obj, path, setValue, fullExp) {
+function setter(obj, locals, path, setValue, fullExp) {
   ensureSafeObject(obj, fullExp);
+  ensureSafeObject(locals, fullExp);
 
   var element = path.split('.'), key;
   for (var i = 0; element.length > 1; i++) {
     key = ensureSafeMemberName(element.shift(), fullExp);
-    var propertyObj = ensureSafeObject(obj[key], fullExp);
+    var propertyObj = (i === 0 && locals && locals[key]) || obj[key];
     if (!propertyObj) {
       propertyObj = {};
       obj[key] = propertyObj;
     }
-    obj = propertyObj;
+    obj = ensureSafeObject(propertyObj, fullExp);
   }
   key = ensureSafeMemberName(element.shift(), fullExp);
   ensureSafeObject(obj[key], fullExp);
@@ -20334,8 +20480,8 @@ function getterFn(path, options, fullExp) {
   }
 
   fn.sharedGetter = true;
-  fn.assign = function(self, value) {
-    return setter(self, path, value, path);
+  fn.assign = function(self, value, locals) {
+    return setter(self, locals, path, value, path);
   };
   getterFnCache[path] = fn;
   return fn;
@@ -20994,8 +21140,7 @@ function qFactory(nextTick, exceptionHandler) {
           'qcycle',
           "Expected promise to be resolved with value other than itself '{0}'",
           val));
-      }
-      else {
+      } else {
         this.$$resolve(val);
       }
 
@@ -21219,12 +21364,10 @@ function qFactory(nextTick, exceptionHandler) {
 function $$RAFProvider() { //rAF
   this.$get = ['$window', '$timeout', function($window, $timeout) {
     var requestAnimationFrame = $window.requestAnimationFrame ||
-                                $window.webkitRequestAnimationFrame ||
-                                $window.mozRequestAnimationFrame;
+                                $window.webkitRequestAnimationFrame;
 
     var cancelAnimationFrame = $window.cancelAnimationFrame ||
                                $window.webkitCancelAnimationFrame ||
-                               $window.mozCancelAnimationFrame ||
                                $window.webkitCancelRequestAnimationFrame;
 
     var rafSupported = !!requestAnimationFrame;
@@ -21353,7 +21496,6 @@ function $RootScopeProvider() {
          var child = parent.$new();
 
          parent.salutation = "Hello";
-         child.name = "World";
          expect(child.salutation).toEqual('Hello');
 
          child.salutation = "Welcome";
@@ -21991,7 +22133,7 @@ function $RootScopeProvider() {
           while (asyncQueue.length) {
             try {
               asyncTask = asyncQueue.shift();
-              asyncTask.scope.$eval(asyncTask.expression);
+              asyncTask.scope.$eval(asyncTask.expression, asyncTask.locals);
             } catch (e) {
               $exceptionHandler(e);
             }
@@ -22206,8 +22348,9 @@ function $RootScopeProvider() {
        *    - `string`: execute using the rules as defined in {@link guide/expression expression}.
        *    - `function(scope)`: execute the function with the current `scope` parameter.
        *
+       * @param {(object)=} locals Local variables object, useful for overriding values in scope.
        */
-      $evalAsync: function(expr) {
+      $evalAsync: function(expr, locals) {
         // if we are outside of an $digest loop and this is the first time we are scheduling async
         // task also schedule async auto-flush
         if (!$rootScope.$$phase && !asyncQueue.length) {
@@ -22218,7 +22361,7 @@ function $RootScopeProvider() {
           });
         }
 
-        asyncQueue.push({scope: this, expression: expr});
+        asyncQueue.push({scope: this, expression: expr, locals: locals});
       },
 
       $$postDigest: function(fn) {
@@ -22293,7 +22436,7 @@ function $RootScopeProvider() {
        * @kind function
        *
        * @description
-       * Schedule the invokation of $apply to occur at a later time. The actual time difference
+       * Schedule the invocation of $apply to occur at a later time. The actual time difference
        * varies across browsers, but is typically around ~10 milliseconds.
        *
        * This can be used to queue up multiple expressions which need to be evaluated in the same
@@ -23790,7 +23933,7 @@ var $compileMinErr = minErr('$compile');
  * @description
  * The `$templateRequest` service downloads the provided template using `$http` and, upon success,
  * stores the contents inside of `$templateCache`. If the HTTP request fails or the response data
- * of the HTTP request is empty then a `$compile` error will be thrown (the exception can be thwarted
+ * of the HTTP request is empty, a `$compile` error will be thrown (the exception can be thwarted
  * by setting the 2nd parameter of the function to true).
  *
  * @param {string} tpl The HTTP request template URL
@@ -23803,8 +23946,7 @@ var $compileMinErr = minErr('$compile');
 function $TemplateRequestProvider() {
   this.$get = ['$templateCache', '$http', '$q', function($templateCache, $http, $q) {
     function handleRequestFn(tpl, ignoreRequestError) {
-      var self = handleRequestFn;
-      self.totalPendingRequests++;
+      handleRequestFn.totalPendingRequests++;
 
       var transformResponse = $http.defaults && $http.defaults.transformResponse;
 
@@ -23822,13 +23964,14 @@ function $TemplateRequestProvider() {
       };
 
       return $http.get(tpl, httpOptions)
+        ['finally'](function() {
+          handleRequestFn.totalPendingRequests--;
+        })
         .then(function(response) {
-          self.totalPendingRequests--;
           return response.data;
         }, handleError);
 
       function handleError(resp) {
-        self.totalPendingRequests--;
         if (!ignoreRequestError) {
           throw $compileMinErr('tpload', 'Failed to load template: {0}', tpl);
         }
@@ -24350,18 +24493,25 @@ function $FilterProvider($provide) {
  *
  *   Can be one of:
  *
- *   - `string`: The string is evaluated as an expression and the resulting value is used for substring match against
- *     the contents of the `array`. All strings or objects with string properties in `array` that contain this string
- *     will be returned. The predicate can be negated by prefixing the string with `!`.
+ *   - `string`: The string is used for matching against the contents of the `array`. All strings or
+ *     objects with string properties in `array` that match this string will be returned. This also
+ *     applies to nested object properties.
+ *     The predicate can be negated by prefixing the string with `!`.
  *
  *   - `Object`: A pattern object can be used to filter specific properties on objects contained
  *     by `array`. For example `{name:"M", phone:"1"}` predicate will return an array of items
  *     which have property `name` containing "M" and property `phone` containing "1". A special
  *     property name `$` can be used (as in `{$:"text"}`) to accept a match against any
- *     property of the object. That's equivalent to the simple substring match with a `string`
- *     as described above. The predicate can be negated by prefixing the string with `!`.
- *     For Example `{name: "!M"}` predicate will return an array of items which have property `name`
+ *     property of the object or its nested object properties. That's equivalent to the simple
+ *     substring match with a `string` as described above. The predicate can be negated by prefixing
+ *     the string with `!`.
+ *     For example `{name: "!M"}` predicate will return an array of items which have property `name`
  *     not containing "M".
+ *
+ *     Note that a named property will match properties on the same level only, while the special
+ *     `$` property will match properties on the same level or deeper. E.g. an array item like
+ *     `{name: {first: 'John', last: 'Doe'}}` will **not** be matched by `{name: 'John'}`, but
+ *     **will** be matched by `{$: 'John'}`.
  *
  *   - `function(value, index)`: A predicate function can be used to write arbitrary filters. The
  *     function is called for each element of `array`. The final result is an array of those
@@ -24375,10 +24525,10 @@ function $FilterProvider($provide) {
  *
  *   - `function(actual, expected)`:
  *     The function will be given the object value and the predicate value to compare and
- *     should return true if the item should be included in filtered result.
+ *     should return true if both values should be considered equal.
  *
- *   - `true`: A shorthand for `function(actual, expected) { return angular.equals(expected, actual)}`.
- *     this is essentially strict comparison of expected and actual.
+ *   - `true`: A shorthand for `function(actual, expected) { return angular.equals(actual, expected)}`.
+ *     This is essentially strict comparison of expected and actual.
  *
  *   - `false|undefined`: A short hand for a function which will look for a substring match in case
  *     insensitive way.
@@ -24481,6 +24631,7 @@ function filterFilter() {
 
 // Helper functions for `filterFilter`
 function createPredicateFn(expression, comparator, matchAgainstAnyProp) {
+  var shouldMatchPrimitives = isObject(expression) && ('$' in expression);
   var predicateFn;
 
   if (comparator === true) {
@@ -24499,19 +24650,22 @@ function createPredicateFn(expression, comparator, matchAgainstAnyProp) {
   }
 
   predicateFn = function(item) {
+    if (shouldMatchPrimitives && !isObject(item)) {
+      return deepCompare(item, expression.$, comparator, false);
+    }
     return deepCompare(item, expression, comparator, matchAgainstAnyProp);
   };
 
   return predicateFn;
 }
 
-function deepCompare(actual, expected, comparator, matchAgainstAnyProp) {
+function deepCompare(actual, expected, comparator, matchAgainstAnyProp, dontMatchWholeObject) {
   var actualType = typeof actual;
   var expectedType = typeof expected;
 
   if ((expectedType === 'string') && (expected.charAt(0) === '!')) {
     return !deepCompare(actual, expected.substring(1), comparator, matchAgainstAnyProp);
-  } else if (actualType === 'array') {
+  } else if (isArray(actual)) {
     // In case `actual` is an array, consider it a match
     // if ANY of it's items matches `expected`
     return actual.some(function(item) {
@@ -24524,11 +24678,11 @@ function deepCompare(actual, expected, comparator, matchAgainstAnyProp) {
       var key;
       if (matchAgainstAnyProp) {
         for (key in actual) {
-          if ((key.charAt(0) !== '$') && deepCompare(actual[key], expected, comparator)) {
+          if ((key.charAt(0) !== '$') && deepCompare(actual[key], expected, comparator, true)) {
             return true;
           }
         }
-        return false;
+        return dontMatchWholeObject ? false : deepCompare(actual, expected, comparator, false);
       } else if (expectedType === 'object') {
         for (key in expected) {
           var expectedVal = expected[key];
@@ -24536,9 +24690,9 @@ function deepCompare(actual, expected, comparator, matchAgainstAnyProp) {
             continue;
           }
 
-          var keyIsDollar = key === '$';
-          var actualVal = keyIsDollar ? actual : actual[key];
-          if (!deepCompare(actualVal, expectedVal, comparator, keyIsDollar)) {
+          var matchAnyProperty = key === '$';
+          var actualVal = matchAnyProperty ? actual : actual[key];
+          if (!deepCompare(actualVal, expectedVal, comparator, matchAnyProperty, matchAnyProperty)) {
             return false;
           }
         }
@@ -24907,11 +25061,11 @@ var DATE_FORMATS_SPLIT = /((?:[^yMdHhmsaZEw']+)|(?:'(?:[^']|'')*')|(?:E+|y+|M+|d
  *   * `'m'`: Minute in hour (0-59)
  *   * `'ss'`: Second in minute, padded (00-59)
  *   * `'s'`: Second in minute (0-59)
- *   * `'.sss' or ',sss'`: Millisecond in second, padded (000-999)
+ *   * `'sss'`: Millisecond in second, padded (000-999)
  *   * `'a'`: AM/PM marker
  *   * `'Z'`: 4 digit (+sign) representation of the timezone offset (-1200-+1200)
- *   * `'ww'`: ISO-8601 week of year (00-53)
- *   * `'w'`: ISO-8601 week of year (0-53)
+ *   * `'ww'`: Week of year, padded (00-53). Week 01 is the week with the first Thursday of the year
+ *   * `'w'`: Week of year (0-53). Week 1 is the week with the first Thursday of the year
  *
  *   `format` string can also be one of the following predefined
  *   {@link guide/i18n localizable formats}:
@@ -25202,37 +25356,12 @@ function limitToFilter() {
       limit = int(limit);
     }
 
-    if (isString(input)) {
-      //NaN check on limit
-      if (limit) {
-        return limit >= 0 ? input.slice(0, limit) : input.slice(limit, input.length);
-      } else {
-        return "";
-      }
-    }
-
-    var out = [],
-      i, n;
-
-    // if abs(limit) exceeds maximum length, trim it
-    if (limit > input.length)
-      limit = input.length;
-    else if (limit < -input.length)
-      limit = -input.length;
-
-    if (limit > 0) {
-      i = 0;
-      n = limit;
+    //NaN check on limit
+    if (limit) {
+      return limit > 0 ? input.slice(0, limit) : input.slice(limit);
     } else {
-      i = input.length + limit;
-      n = input.length;
+      return isString(input) ? "" : [];
     }
-
-    for (; i < n; i++) {
-      out.push(input[i]);
-    }
-
-    return out;
   };
 }
 
@@ -25366,9 +25495,7 @@ function orderByFilter($parse) {
         }
         if (predicate === '') {
           // Effectively no predicate was passed so we compare identity
-          return reverseComparator(function(a, b) {
-            return compare(a, b);
-          }, descending);
+          return reverseComparator(compare, descending);
         }
         get = $parse(predicate);
         if (get.constant) {
@@ -25396,29 +25523,37 @@ function orderByFilter($parse) {
           ? function(a, b) {return comp(b,a);}
           : comp;
     }
+
+    function isPrimitive(value) {
+      switch (typeof value) {
+        case 'number': /* falls through */
+        case 'boolean': /* falls through */
+        case 'string':
+          return true;
+        default:
+          return false;
+      }
+    }
+
+    function objectToString(value) {
+      if (value === null) return 'null';
+      if (typeof value.valueOf === 'function') {
+        value = value.valueOf();
+        if (isPrimitive(value)) return value;
+      }
+      if (typeof value.toString === 'function') {
+        value = value.toString();
+        if (isPrimitive(value)) return value;
+      }
+      return '';
+    }
+
     function compare(v1, v2) {
       var t1 = typeof v1;
       var t2 = typeof v2;
-      // Prepare values for Abstract Relational Comparison
-      // (http://www.ecma-international.org/ecma-262/5.1/#sec-11.8.5):
-      // If the resulting values are identical, return 0 to prevent
-      // incorrect re-ordering.
       if (t1 === t2 && t1 === "object") {
-        // If types are both numbers, emulate abstract ToPrimitive() operation
-        // in order to get primitive values suitable for comparison
-        t1 = typeof (v1.valueOf ? v1 = v1.valueOf() : v1);
-        t2 = typeof (v2.valueOf ? v2 = v2.valueOf() : v2);
-        if (t1 === t2 && t1 === "object") {
-          // Object.prototype.valueOf will return the original object, by
-          // default. If we do not receive a primitive value, use ToString()
-          // instead.
-          t1 = typeof (v1.toString ? v1 = v1.toString() : v1);
-          t2 = typeof (v2.toString ? v2 = v2.toString() : v2);
-
-          // If the end result of toString() for each item is the same, do not
-          // perform relational comparison, and do not re-order objects.
-          if (t1 === t2 && v1 === v2 || t1 === "object") return 0;
-        }
+        v1 = objectToString(v1);
+        v2 = objectToString(v2);
       }
       if (t1 === t2) {
         if (t1 === "string") {
@@ -25462,6 +25597,9 @@ var htmlAnchorDirective = valueFn({
   compile: function(element, attr) {
     if (!attr.href && !attr.xlinkHref && !attr.name) {
       return function(scope, element) {
+        // If the linked element is not an anchor tag anymore, do nothing
+        if (element[0].nodeName.toLowerCase() !== 'a') return;
+
         // SVGAElement does not use the href attribute, but rather the 'xlinkHref' attribute.
         var href = toString.call(element.prop('href')) === '[object SVGAnimatedString]' ?
                    'xlink:href' : 'href';
@@ -26062,6 +26200,9 @@ function FormController(element, attrs, $scope, $animate, $interpolate) {
     forEach(form.$error, function(value, name) {
       form.$setValidity(name, null, control);
     });
+    forEach(form.$$success, function(value, name) {
+      form.$setValidity(name, null, control);
+    });
 
     arrayRemove(controls, control);
   };
@@ -26079,23 +26220,23 @@ function FormController(element, attrs, $scope, $animate, $interpolate) {
   addSetValidityMethod({
     ctrl: this,
     $element: element,
-    set: function(object, property, control) {
+    set: function(object, property, controller) {
       var list = object[property];
       if (!list) {
-        object[property] = [control];
+        object[property] = [controller];
       } else {
-        var index = list.indexOf(control);
+        var index = list.indexOf(controller);
         if (index === -1) {
-          list.push(control);
+          list.push(controller);
         }
       }
     },
-    unset: function(object, property, control) {
+    unset: function(object, property, controller) {
       var list = object[property];
       if (!list) {
         return;
       }
-      arrayRemove(list, control);
+      arrayRemove(list, controller);
       if (list.length === 0) {
         delete object[property];
       }
@@ -26388,19 +26529,19 @@ var formDirectiveFactory = function(isNgForm) {
                 alias = controller.$name;
 
             if (alias) {
-              setter(scope, alias, controller, alias);
+              setter(scope, null, alias, controller, alias);
               attr.$observe(attr.name ? 'name' : 'ngForm', function(newValue) {
                 if (alias === newValue) return;
-                setter(scope, alias, undefined, alias);
+                setter(scope, null, alias, undefined, alias);
                 alias = newValue;
-                setter(scope, alias, controller, alias);
+                setter(scope, null, alias, controller, alias);
                 parentFormCtrl.$$renameControl(controller, alias);
               });
             }
             formElement.on('$destroy', function() {
               parentFormCtrl.$removeControl(controller);
               if (alias) {
-                setter(scope, alias, undefined, alias);
+                setter(scope, null, alias, undefined, alias);
               }
               extend(controller, nullFormCtrl); //stop propagating child destruction handlers upwards
             });
@@ -26416,12 +26557,13 @@ var formDirectiveFactory = function(isNgForm) {
 var formDirective = formDirectiveFactory();
 var ngFormDirective = formDirectiveFactory(true);
 
-/* global VALID_CLASS: true,
-  INVALID_CLASS: true,
-  PRISTINE_CLASS: true,
-  DIRTY_CLASS: true,
-  UNTOUCHED_CLASS: true,
-  TOUCHED_CLASS: true,
+/* global VALID_CLASS: false,
+  INVALID_CLASS: false,
+  PRISTINE_CLASS: false,
+  DIRTY_CLASS: false,
+  UNTOUCHED_CLASS: false,
+  TOUCHED_CLASS: false,
+  $ngModelMinErr: false,
 */
 
 // Regex code is obtained from SO: https://stackoverflow.com/questions/3143070/javascript-regex-iso-datetime#answer-3143231
@@ -26434,9 +26576,6 @@ var DATETIMELOCAL_REGEXP = /^(\d{4})-(\d\d)-(\d\d)T(\d\d):(\d\d)(?::(\d\d)(\.\d{
 var WEEK_REGEXP = /^(\d{4})-W(\d\d)$/;
 var MONTH_REGEXP = /^(\d{4})-(\d\d)$/;
 var TIME_REGEXP = /^(\d\d):(\d\d)(?::(\d\d)(\.\d{1,3})?)?$/;
-var DEFAULT_REGEXP = /(\s+|^)default(\s+|$)/;
-
-var $ngModelMinErr = new minErr('ngModel');
 
 var inputType = {
 
@@ -26479,19 +26618,21 @@ var inputType = {
          <script>
            angular.module('textInputExample', [])
              .controller('ExampleController', ['$scope', function($scope) {
-               $scope.text = 'guest';
-               $scope.word = /^\s*\w*\s*$/;
+               $scope.example = {
+                 text: 'guest',
+                 word: /^\s*\w*\s*$/
+               };
              }]);
          </script>
          <form name="myForm" ng-controller="ExampleController">
-           Single word: <input type="text" name="input" ng-model="text"
-                               ng-pattern="word" required ng-trim="false">
+           Single word: <input type="text" name="input" ng-model="example.text"
+                               ng-pattern="example.word" required ng-trim="false">
            <span class="error" ng-show="myForm.input.$error.required">
              Required!</span>
            <span class="error" ng-show="myForm.input.$error.pattern">
              Single word only!</span>
 
-           <tt>text = {{text}}</tt><br/>
+           <tt>text = {{example.text}}</tt><br/>
            <tt>myForm.input.$valid = {{myForm.input.$valid}}</tt><br/>
            <tt>myForm.input.$error = {{myForm.input.$error}}</tt><br/>
            <tt>myForm.$valid = {{myForm.$valid}}</tt><br/>
@@ -26499,9 +26640,9 @@ var inputType = {
           </form>
         </file>
         <file name="protractor.js" type="protractor">
-          var text = element(by.binding('text'));
+          var text = element(by.binding('example.text'));
           var valid = element(by.binding('myForm.input.$valid'));
-          var input = element(by.model('text'));
+          var input = element(by.model('example.text'));
 
           it('should initialize to model', function() {
             expect(text.getText()).toContain('guest');
@@ -26563,18 +26704,20 @@ var inputType = {
        <script>
           angular.module('dateInputExample', [])
             .controller('DateController', ['$scope', function($scope) {
-              $scope.value = new Date(2013, 9, 22);
+              $scope.example = {
+                value: new Date(2013, 9, 22)
+              };
             }]);
        </script>
        <form name="myForm" ng-controller="DateController as dateCtrl">
           Pick a date in 2013:
-          <input type="date" id="exampleInput" name="input" ng-model="value"
+          <input type="date" id="exampleInput" name="input" ng-model="example.value"
               placeholder="yyyy-MM-dd" min="2013-01-01" max="2013-12-31" required />
           <span class="error" ng-show="myForm.input.$error.required">
               Required!</span>
           <span class="error" ng-show="myForm.input.$error.date">
               Not a valid date!</span>
-           <tt>value = {{value | date: "yyyy-MM-dd"}}</tt><br/>
+           <tt>value = {{example.value | date: "yyyy-MM-dd"}}</tt><br/>
            <tt>myForm.input.$valid = {{myForm.input.$valid}}</tt><br/>
            <tt>myForm.input.$error = {{myForm.input.$error}}</tt><br/>
            <tt>myForm.$valid = {{myForm.$valid}}</tt><br/>
@@ -26582,9 +26725,9 @@ var inputType = {
        </form>
      </file>
      <file name="protractor.js" type="protractor">
-        var value = element(by.binding('value | date: "yyyy-MM-dd"'));
+        var value = element(by.binding('example.value | date: "yyyy-MM-dd"'));
         var valid = element(by.binding('myForm.input.$valid'));
-        var input = element(by.model('value'));
+        var input = element(by.model('example.value'));
 
         // currently protractor/webdriver does not support
         // sending keys to all known HTML5 input controls
@@ -26654,18 +26797,20 @@ var inputType = {
       <script>
         angular.module('dateExample', [])
           .controller('DateController', ['$scope', function($scope) {
-            $scope.value = new Date(2010, 11, 28, 14, 57);
+            $scope.example = {
+              value: new Date(2010, 11, 28, 14, 57)
+            };
           }]);
       </script>
       <form name="myForm" ng-controller="DateController as dateCtrl">
         Pick a date between in 2013:
-        <input type="datetime-local" id="exampleInput" name="input" ng-model="value"
+        <input type="datetime-local" id="exampleInput" name="input" ng-model="example.value"
             placeholder="yyyy-MM-ddTHH:mm:ss" min="2001-01-01T00:00:00" max="2013-12-31T00:00:00" required />
         <span class="error" ng-show="myForm.input.$error.required">
             Required!</span>
         <span class="error" ng-show="myForm.input.$error.datetimelocal">
             Not a valid date!</span>
-        <tt>value = {{value | date: "yyyy-MM-ddTHH:mm:ss"}}</tt><br/>
+        <tt>value = {{example.value | date: "yyyy-MM-ddTHH:mm:ss"}}</tt><br/>
         <tt>myForm.input.$valid = {{myForm.input.$valid}}</tt><br/>
         <tt>myForm.input.$error = {{myForm.input.$error}}</tt><br/>
         <tt>myForm.$valid = {{myForm.$valid}}</tt><br/>
@@ -26673,9 +26818,9 @@ var inputType = {
       </form>
     </file>
     <file name="protractor.js" type="protractor">
-      var value = element(by.binding('value | date: "yyyy-MM-ddTHH:mm:ss"'));
+      var value = element(by.binding('example.value | date: "yyyy-MM-ddTHH:mm:ss"'));
       var valid = element(by.binding('myForm.input.$valid'));
-      var input = element(by.model('value'));
+      var input = element(by.model('example.value'));
 
       // currently protractor/webdriver does not support
       // sending keys to all known HTML5 input controls
@@ -26746,18 +26891,20 @@ var inputType = {
      <script>
       angular.module('timeExample', [])
         .controller('DateController', ['$scope', function($scope) {
-          $scope.value = new Date(1970, 0, 1, 14, 57, 0);
+          $scope.example = {
+            value: new Date(1970, 0, 1, 14, 57, 0)
+          };
         }]);
      </script>
      <form name="myForm" ng-controller="DateController as dateCtrl">
         Pick a between 8am and 5pm:
-        <input type="time" id="exampleInput" name="input" ng-model="value"
+        <input type="time" id="exampleInput" name="input" ng-model="example.value"
             placeholder="HH:mm:ss" min="08:00:00" max="17:00:00" required />
         <span class="error" ng-show="myForm.input.$error.required">
             Required!</span>
         <span class="error" ng-show="myForm.input.$error.time">
             Not a valid date!</span>
-        <tt>value = {{value | date: "HH:mm:ss"}}</tt><br/>
+        <tt>value = {{example.value | date: "HH:mm:ss"}}</tt><br/>
         <tt>myForm.input.$valid = {{myForm.input.$valid}}</tt><br/>
         <tt>myForm.input.$error = {{myForm.input.$error}}</tt><br/>
         <tt>myForm.$valid = {{myForm.$valid}}</tt><br/>
@@ -26765,9 +26912,9 @@ var inputType = {
      </form>
    </file>
    <file name="protractor.js" type="protractor">
-      var value = element(by.binding('value | date: "HH:mm:ss"'));
+      var value = element(by.binding('example.value | date: "HH:mm:ss"'));
       var valid = element(by.binding('myForm.input.$valid'));
-      var input = element(by.model('value'));
+      var input = element(by.model('example.value'));
 
       // currently protractor/webdriver does not support
       // sending keys to all known HTML5 input controls
@@ -26837,18 +26984,20 @@ var inputType = {
       <script>
       angular.module('weekExample', [])
         .controller('DateController', ['$scope', function($scope) {
-          $scope.value = new Date(2013, 0, 3);
+          $scope.example = {
+            value: new Date(2013, 0, 3)
+          };
         }]);
       </script>
       <form name="myForm" ng-controller="DateController as dateCtrl">
         Pick a date between in 2013:
-        <input id="exampleInput" type="week" name="input" ng-model="value"
+        <input id="exampleInput" type="week" name="input" ng-model="example.value"
             placeholder="YYYY-W##" min="2012-W32" max="2013-W52" required />
         <span class="error" ng-show="myForm.input.$error.required">
             Required!</span>
         <span class="error" ng-show="myForm.input.$error.week">
             Not a valid date!</span>
-        <tt>value = {{value | date: "yyyy-Www"}}</tt><br/>
+        <tt>value = {{example.value | date: "yyyy-Www"}}</tt><br/>
         <tt>myForm.input.$valid = {{myForm.input.$valid}}</tt><br/>
         <tt>myForm.input.$error = {{myForm.input.$error}}</tt><br/>
         <tt>myForm.$valid = {{myForm.$valid}}</tt><br/>
@@ -26856,9 +27005,9 @@ var inputType = {
       </form>
     </file>
     <file name="protractor.js" type="protractor">
-      var value = element(by.binding('value | date: "yyyy-Www"'));
+      var value = element(by.binding('example.value | date: "yyyy-Www"'));
       var valid = element(by.binding('myForm.input.$valid'));
-      var input = element(by.model('value'));
+      var input = element(by.model('example.value'));
 
       // currently protractor/webdriver does not support
       // sending keys to all known HTML5 input controls
@@ -26928,18 +27077,20 @@ var inputType = {
      <script>
       angular.module('monthExample', [])
         .controller('DateController', ['$scope', function($scope) {
-          $scope.value = new Date(2013, 9, 1);
+          $scope.example = {
+            value: new Date(2013, 9, 1)
+          };
         }]);
      </script>
      <form name="myForm" ng-controller="DateController as dateCtrl">
-       Pick a month int 2013:
-       <input id="exampleInput" type="month" name="input" ng-model="value"
+       Pick a month in 2013:
+       <input id="exampleInput" type="month" name="input" ng-model="example.value"
           placeholder="yyyy-MM" min="2013-01" max="2013-12" required />
        <span class="error" ng-show="myForm.input.$error.required">
           Required!</span>
        <span class="error" ng-show="myForm.input.$error.month">
           Not a valid month!</span>
-       <tt>value = {{value | date: "yyyy-MM"}}</tt><br/>
+       <tt>value = {{example.value | date: "yyyy-MM"}}</tt><br/>
        <tt>myForm.input.$valid = {{myForm.input.$valid}}</tt><br/>
        <tt>myForm.input.$error = {{myForm.input.$error}}</tt><br/>
        <tt>myForm.$valid = {{myForm.$valid}}</tt><br/>
@@ -26947,9 +27098,9 @@ var inputType = {
      </form>
    </file>
    <file name="protractor.js" type="protractor">
-      var value = element(by.binding('value | date: "yyyy-MM"'));
+      var value = element(by.binding('example.value | date: "yyyy-MM"'));
       var valid = element(by.binding('myForm.input.$valid'));
-      var input = element(by.model('value'));
+      var input = element(by.model('example.value'));
 
       // currently protractor/webdriver does not support
       // sending keys to all known HTML5 input controls
@@ -27025,17 +27176,19 @@ var inputType = {
          <script>
            angular.module('numberExample', [])
              .controller('ExampleController', ['$scope', function($scope) {
-               $scope.value = 12;
+               $scope.example = {
+                 value: 12
+               };
              }]);
          </script>
          <form name="myForm" ng-controller="ExampleController">
-           Number: <input type="number" name="input" ng-model="value"
+           Number: <input type="number" name="input" ng-model="example.value"
                           min="0" max="99" required>
            <span class="error" ng-show="myForm.input.$error.required">
              Required!</span>
            <span class="error" ng-show="myForm.input.$error.number">
              Not valid number!</span>
-           <tt>value = {{value}}</tt><br/>
+           <tt>value = {{example.value}}</tt><br/>
            <tt>myForm.input.$valid = {{myForm.input.$valid}}</tt><br/>
            <tt>myForm.input.$error = {{myForm.input.$error}}</tt><br/>
            <tt>myForm.$valid = {{myForm.$valid}}</tt><br/>
@@ -27043,9 +27196,9 @@ var inputType = {
           </form>
         </file>
         <file name="protractor.js" type="protractor">
-          var value = element(by.binding('value'));
+          var value = element(by.binding('example.value'));
           var valid = element(by.binding('myForm.input.$valid'));
-          var input = element(by.model('value'));
+          var input = element(by.model('example.value'));
 
           it('should initialize to model', function() {
             expect(value.getText()).toContain('12');
@@ -27113,16 +27266,18 @@ var inputType = {
          <script>
            angular.module('urlExample', [])
              .controller('ExampleController', ['$scope', function($scope) {
-               $scope.text = 'http://google.com';
+               $scope.url = {
+                 text: 'http://google.com'
+               };
              }]);
          </script>
          <form name="myForm" ng-controller="ExampleController">
-           URL: <input type="url" name="input" ng-model="text" required>
+           URL: <input type="url" name="input" ng-model="url.text" required>
            <span class="error" ng-show="myForm.input.$error.required">
              Required!</span>
            <span class="error" ng-show="myForm.input.$error.url">
              Not valid url!</span>
-           <tt>text = {{text}}</tt><br/>
+           <tt>text = {{url.text}}</tt><br/>
            <tt>myForm.input.$valid = {{myForm.input.$valid}}</tt><br/>
            <tt>myForm.input.$error = {{myForm.input.$error}}</tt><br/>
            <tt>myForm.$valid = {{myForm.$valid}}</tt><br/>
@@ -27131,9 +27286,9 @@ var inputType = {
           </form>
         </file>
         <file name="protractor.js" type="protractor">
-          var text = element(by.binding('text'));
+          var text = element(by.binding('url.text'));
           var valid = element(by.binding('myForm.input.$valid'));
-          var input = element(by.model('text'));
+          var input = element(by.model('url.text'));
 
           it('should initialize to model', function() {
             expect(text.getText()).toContain('http://google.com');
@@ -27202,16 +27357,18 @@ var inputType = {
          <script>
            angular.module('emailExample', [])
              .controller('ExampleController', ['$scope', function($scope) {
-               $scope.text = 'me@example.com';
+               $scope.email = {
+                 text: 'me@example.com'
+               };
              }]);
          </script>
            <form name="myForm" ng-controller="ExampleController">
-             Email: <input type="email" name="input" ng-model="text" required>
+             Email: <input type="email" name="input" ng-model="email.text" required>
              <span class="error" ng-show="myForm.input.$error.required">
                Required!</span>
              <span class="error" ng-show="myForm.input.$error.email">
                Not valid email!</span>
-             <tt>text = {{text}}</tt><br/>
+             <tt>text = {{email.text}}</tt><br/>
              <tt>myForm.input.$valid = {{myForm.input.$valid}}</tt><br/>
              <tt>myForm.input.$error = {{myForm.input.$error}}</tt><br/>
              <tt>myForm.$valid = {{myForm.$valid}}</tt><br/>
@@ -27220,9 +27377,9 @@ var inputType = {
            </form>
          </file>
         <file name="protractor.js" type="protractor">
-          var text = element(by.binding('text'));
+          var text = element(by.binding('email.text'));
           var valid = element(by.binding('myForm.input.$valid'));
-          var input = element(by.model('text'));
+          var input = element(by.model('email.text'));
 
           it('should initialize to model', function() {
             expect(text.getText()).toContain('me@example.com');
@@ -27269,7 +27426,9 @@ var inputType = {
          <script>
            angular.module('radioExample', [])
              .controller('ExampleController', ['$scope', function($scope) {
-               $scope.color = 'blue';
+               $scope.color = {
+                 name: 'blue'
+               };
                $scope.specialValue = {
                  "id": "12345",
                  "value": "green"
@@ -27277,20 +27436,20 @@ var inputType = {
              }]);
          </script>
          <form name="myForm" ng-controller="ExampleController">
-           <input type="radio" ng-model="color" value="red">  Red <br/>
-           <input type="radio" ng-model="color" ng-value="specialValue"> Green <br/>
-           <input type="radio" ng-model="color" value="blue"> Blue <br/>
-           <tt>color = {{color | json}}</tt><br/>
+           <input type="radio" ng-model="color.name" value="red">  Red <br/>
+           <input type="radio" ng-model="color.name" ng-value="specialValue"> Green <br/>
+           <input type="radio" ng-model="color.name" value="blue"> Blue <br/>
+           <tt>color = {{color.name | json}}</tt><br/>
           </form>
           Note that `ng-value="specialValue"` sets radio item's value to be the value of `$scope.specialValue`.
         </file>
         <file name="protractor.js" type="protractor">
           it('should change state', function() {
-            var color = element(by.binding('color'));
+            var color = element(by.binding('color.name'));
 
             expect(color.getText()).toContain('blue');
 
-            element.all(by.model('color')).get(0).click();
+            element.all(by.model('color.name')).get(0).click();
 
             expect(color.getText()).toContain('red');
           });
@@ -27320,28 +27479,30 @@ var inputType = {
          <script>
            angular.module('checkboxExample', [])
              .controller('ExampleController', ['$scope', function($scope) {
-               $scope.value1 = true;
-               $scope.value2 = 'YES'
+               $scope.checkboxModel = {
+                value1 : true,
+                value2 : 'YES'
+              };
              }]);
          </script>
          <form name="myForm" ng-controller="ExampleController">
-           Value1: <input type="checkbox" ng-model="value1"> <br/>
-           Value2: <input type="checkbox" ng-model="value2"
+           Value1: <input type="checkbox" ng-model="checkboxModel.value1"> <br/>
+           Value2: <input type="checkbox" ng-model="checkboxModel.value2"
                           ng-true-value="'YES'" ng-false-value="'NO'"> <br/>
-           <tt>value1 = {{value1}}</tt><br/>
-           <tt>value2 = {{value2}}</tt><br/>
+           <tt>value1 = {{checkboxModel.value1}}</tt><br/>
+           <tt>value2 = {{checkboxModel.value2}}</tt><br/>
           </form>
         </file>
         <file name="protractor.js" type="protractor">
           it('should change state', function() {
-            var value1 = element(by.binding('value1'));
-            var value2 = element(by.binding('value2'));
+            var value1 = element(by.binding('checkboxModel.value1'));
+            var value2 = element(by.binding('checkboxModel.value2'));
 
             expect(value1.getText()).toContain('true');
             expect(value2.getText()).toContain('YES');
 
-            element(by.model('value1')).click();
-            element(by.model('value2')).click();
+            element(by.model('checkboxModel.value1')).click();
+            element(by.model('checkboxModel.value2')).click();
 
             expect(value1.getText()).toContain('false');
             expect(value2.getText()).toContain('NO');
@@ -27938,1344 +28099,6 @@ var inputDirective = ['$browser', '$sniffer', '$filter', '$parse',
   };
 }];
 
-var VALID_CLASS = 'ng-valid',
-    INVALID_CLASS = 'ng-invalid',
-    PRISTINE_CLASS = 'ng-pristine',
-    DIRTY_CLASS = 'ng-dirty',
-    UNTOUCHED_CLASS = 'ng-untouched',
-    TOUCHED_CLASS = 'ng-touched',
-    PENDING_CLASS = 'ng-pending';
-
-/**
- * @ngdoc type
- * @name ngModel.NgModelController
- *
- * @property {string} $viewValue Actual string value in the view.
- * @property {*} $modelValue The value in the model that the control is bound to.
- * @property {Array.<Function>} $parsers Array of functions to execute, as a pipeline, whenever
-       the control reads value from the DOM. The functions are called in array order, each passing
-       its return value through to the next. The last return value is forwarded to the
-       {@link ngModel.NgModelController#$validators `$validators`} collection.
-
-Parsers are used to sanitize / convert the {@link ngModel.NgModelController#$viewValue
-`$viewValue`}.
-
-Returning `undefined` from a parser means a parse error occurred. In that case,
-no {@link ngModel.NgModelController#$validators `$validators`} will run and the `ngModel`
-will be set to `undefined` unless {@link ngModelOptions `ngModelOptions.allowInvalid`}
-is set to `true`. The parse error is stored in `ngModel.$error.parse`.
-
- *
- * @property {Array.<Function>} $formatters Array of functions to execute, as a pipeline, whenever
-       the model value changes. The functions are called in reverse array order, each passing the value through to the
-       next. The last return value is used as the actual DOM value.
-       Used to format / convert values for display in the control.
- * ```js
- * function formatter(value) {
- *   if (value) {
- *     return value.toUpperCase();
- *   }
- * }
- * ngModel.$formatters.push(formatter);
- * ```
- *
- * @property {Object.<string, function>} $validators A collection of validators that are applied
- *      whenever the model value changes. The key value within the object refers to the name of the
- *      validator while the function refers to the validation operation. The validation operation is
- *      provided with the model value as an argument and must return a true or false value depending
- *      on the response of that validation.
- *
- * ```js
- * ngModel.$validators.validCharacters = function(modelValue, viewValue) {
- *   var value = modelValue || viewValue;
- *   return /[0-9]+/.test(value) &&
- *          /[a-z]+/.test(value) &&
- *          /[A-Z]+/.test(value) &&
- *          /\W+/.test(value);
- * };
- * ```
- *
- * @property {Object.<string, function>} $asyncValidators A collection of validations that are expected to
- *      perform an asynchronous validation (e.g. a HTTP request). The validation function that is provided
- *      is expected to return a promise when it is run during the model validation process. Once the promise
- *      is delivered then the validation status will be set to true when fulfilled and false when rejected.
- *      When the asynchronous validators are triggered, each of the validators will run in parallel and the model
- *      value will only be updated once all validators have been fulfilled. As long as an asynchronous validator
- *      is unfulfilled, its key will be added to the controllers `$pending` property. Also, all asynchronous validators
- *      will only run once all synchronous validators have passed.
- *
- * Please note that if $http is used then it is important that the server returns a success HTTP response code
- * in order to fulfill the validation and a status level of `4xx` in order to reject the validation.
- *
- * ```js
- * ngModel.$asyncValidators.uniqueUsername = function(modelValue, viewValue) {
- *   var value = modelValue || viewValue;
- *
- *   // Lookup user by username
- *   return $http.get('/api/users/' + value).
- *      then(function resolved() {
- *        //username exists, this means validation fails
- *        return $q.reject('exists');
- *      }, function rejected() {
- *        //username does not exist, therefore this validation passes
- *        return true;
- *      });
- * };
- * ```
- *
- * @property {Array.<Function>} $viewChangeListeners Array of functions to execute whenever the
- *     view value has changed. It is called with no arguments, and its return value is ignored.
- *     This can be used in place of additional $watches against the model value.
- *
- * @property {Object} $error An object hash with all failing validator ids as keys.
- * @property {Object} $pending An object hash with all pending validator ids as keys.
- *
- * @property {boolean} $untouched True if control has not lost focus yet.
- * @property {boolean} $touched True if control has lost focus.
- * @property {boolean} $pristine True if user has not interacted with the control yet.
- * @property {boolean} $dirty True if user has already interacted with the control.
- * @property {boolean} $valid True if there is no error.
- * @property {boolean} $invalid True if at least one error on the control.
- * @property {string} $name The name attribute of the control.
- *
- * @description
- *
- * `NgModelController` provides API for the {@link ngModel `ngModel`} directive.
- * The controller contains services for data-binding, validation, CSS updates, and value formatting
- * and parsing. It purposefully does not contain any logic which deals with DOM rendering or
- * listening to DOM events.
- * Such DOM related logic should be provided by other directives which make use of
- * `NgModelController` for data-binding to control elements.
- * Angular provides this DOM logic for most {@link input `input`} elements.
- * At the end of this page you can find a {@link ngModel.NgModelController#custom-control-example
- * custom control example} that uses `ngModelController` to bind to `contenteditable` elements.
- *
- * @example
- * ### Custom Control Example
- * This example shows how to use `NgModelController` with a custom control to achieve
- * data-binding. Notice how different directives (`contenteditable`, `ng-model`, and `required`)
- * collaborate together to achieve the desired result.
- *
- * Note that `contenteditable` is an HTML5 attribute, which tells the browser to let the element
- * contents be edited in place by the user.  This will not work on older browsers.
- *
- * We are using the {@link ng.service:$sce $sce} service here and include the {@link ngSanitize $sanitize}
- * module to automatically remove "bad" content like inline event listener (e.g. `<span onclick="...">`).
- * However, as we are using `$sce` the model can still decide to provide unsafe content if it marks
- * that content using the `$sce` service.
- *
- * <example name="NgModelController" module="customControl" deps="angular-sanitize.js">
-    <file name="style.css">
-      [contenteditable] {
-        border: 1px solid black;
-        background-color: white;
-        min-height: 20px;
-      }
-
-      .ng-invalid {
-        border: 1px solid red;
-      }
-
-    </file>
-    <file name="script.js">
-      angular.module('customControl', ['ngSanitize']).
-        directive('contenteditable', ['$sce', function($sce) {
-          return {
-            restrict: 'A', // only activate on element attribute
-            require: '?ngModel', // get a hold of NgModelController
-            link: function(scope, element, attrs, ngModel) {
-              if (!ngModel) return; // do nothing if no ng-model
-
-              // Specify how UI should be updated
-              ngModel.$render = function() {
-                element.html($sce.getTrustedHtml(ngModel.$viewValue || ''));
-              };
-
-              // Listen for change events to enable binding
-              element.on('blur keyup change', function() {
-                scope.$evalAsync(read);
-              });
-              read(); // initialize
-
-              // Write data to the model
-              function read() {
-                var html = element.html();
-                // When we clear the content editable the browser leaves a <br> behind
-                // If strip-br attribute is provided then we strip this out
-                if ( attrs.stripBr && html == '<br>' ) {
-                  html = '';
-                }
-                ngModel.$setViewValue(html);
-              }
-            }
-          };
-        }]);
-    </file>
-    <file name="index.html">
-      <form name="myForm">
-       <div contenteditable
-            name="myWidget" ng-model="userContent"
-            strip-br="true"
-            required>Change me!</div>
-        <span ng-show="myForm.myWidget.$error.required">Required!</span>
-       <hr>
-       <textarea ng-model="userContent"></textarea>
-      </form>
-    </file>
-    <file name="protractor.js" type="protractor">
-    it('should data-bind and become invalid', function() {
-      if (browser.params.browser == 'safari' || browser.params.browser == 'firefox') {
-        // SafariDriver can't handle contenteditable
-        // and Firefox driver can't clear contenteditables very well
-        return;
-      }
-      var contentEditable = element(by.css('[contenteditable]'));
-      var content = 'Change me!';
-
-      expect(contentEditable.getText()).toEqual(content);
-
-      contentEditable.clear();
-      contentEditable.sendKeys(protractor.Key.BACK_SPACE);
-      expect(contentEditable.getText()).toEqual('');
-      expect(contentEditable.getAttribute('class')).toMatch(/ng-invalid-required/);
-    });
-    </file>
- * </example>
- *
- *
- */
-var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$parse', '$animate', '$timeout', '$rootScope', '$q', '$interpolate',
-    function($scope, $exceptionHandler, $attr, $element, $parse, $animate, $timeout, $rootScope, $q, $interpolate) {
-  this.$viewValue = Number.NaN;
-  this.$modelValue = Number.NaN;
-  this.$$rawModelValue = undefined; // stores the parsed modelValue / model set from scope regardless of validity.
-  this.$validators = {};
-  this.$asyncValidators = {};
-  this.$parsers = [];
-  this.$formatters = [];
-  this.$viewChangeListeners = [];
-  this.$untouched = true;
-  this.$touched = false;
-  this.$pristine = true;
-  this.$dirty = false;
-  this.$valid = true;
-  this.$invalid = false;
-  this.$error = {}; // keep invalid keys here
-  this.$$success = {}; // keep valid keys here
-  this.$pending = undefined; // keep pending keys here
-  this.$name = $interpolate($attr.name || '', false)($scope);
-
-
-  var parsedNgModel = $parse($attr.ngModel),
-      parsedNgModelAssign = parsedNgModel.assign,
-      ngModelGet = parsedNgModel,
-      ngModelSet = parsedNgModelAssign,
-      pendingDebounce = null,
-      ctrl = this;
-
-  this.$$setOptions = function(options) {
-    ctrl.$options = options;
-    if (options && options.getterSetter) {
-      var invokeModelGetter = $parse($attr.ngModel + '()'),
-          invokeModelSetter = $parse($attr.ngModel + '($$$p)');
-
-      ngModelGet = function($scope) {
-        var modelValue = parsedNgModel($scope);
-        if (isFunction(modelValue)) {
-          modelValue = invokeModelGetter($scope);
-        }
-        return modelValue;
-      };
-      ngModelSet = function($scope, newValue) {
-        if (isFunction(parsedNgModel($scope))) {
-          invokeModelSetter($scope, {$$$p: ctrl.$modelValue});
-        } else {
-          parsedNgModelAssign($scope, ctrl.$modelValue);
-        }
-      };
-    } else if (!parsedNgModel.assign) {
-      throw $ngModelMinErr('nonassign', "Expression '{0}' is non-assignable. Element: {1}",
-          $attr.ngModel, startingTag($element));
-    }
-  };
-
-  /**
-   * @ngdoc method
-   * @name ngModel.NgModelController#$render
-   *
-   * @description
-   * Called when the view needs to be updated. It is expected that the user of the ng-model
-   * directive will implement this method.
-   *
-   * The `$render()` method is invoked in the following situations:
-   *
-   * * `$rollbackViewValue()` is called.  If we are rolling back the view value to the last
-   *   committed value then `$render()` is called to update the input control.
-   * * The value referenced by `ng-model` is changed programmatically and both the `$modelValue` and
-   *   the `$viewValue` are different to last time.
-   *
-   * Since `ng-model` does not do a deep watch, `$render()` is only invoked if the values of
-   * `$modelValue` and `$viewValue` are actually different to their previous value. If `$modelValue`
-   * or `$viewValue` are objects (rather than a string or number) then `$render()` will not be
-   * invoked if you only change a property on the objects.
-   */
-  this.$render = noop;
-
-  /**
-   * @ngdoc method
-   * @name ngModel.NgModelController#$isEmpty
-   *
-   * @description
-   * This is called when we need to determine if the value of an input is empty.
-   *
-   * For instance, the required directive does this to work out if the input has data or not.
-   *
-   * The default `$isEmpty` function checks whether the value is `undefined`, `''`, `null` or `NaN`.
-   *
-   * You can override this for input directives whose concept of being empty is different to the
-   * default. The `checkboxInputType` directive does this because in its case a value of `false`
-   * implies empty.
-   *
-   * @param {*} value The value of the input to check for emptiness.
-   * @returns {boolean} True if `value` is "empty".
-   */
-  this.$isEmpty = function(value) {
-    return isUndefined(value) || value === '' || value === null || value !== value;
-  };
-
-  var parentForm = $element.inheritedData('$formController') || nullFormCtrl,
-      currentValidationRunId = 0;
-
-  /**
-   * @ngdoc method
-   * @name ngModel.NgModelController#$setValidity
-   *
-   * @description
-   * Change the validity state, and notify the form.
-   *
-   * This method can be called within $parsers/$formatters or a custom validation implementation.
-   * However, in most cases it should be sufficient to use the `ngModel.$validators` and
-   * `ngModel.$asyncValidators` collections which will call `$setValidity` automatically.
-   *
-   * @param {string} validationErrorKey Name of the validator. The `validationErrorKey` will be assigned
-   *        to either `$error[validationErrorKey]` or `$pending[validationErrorKey]`
-   *        (for unfulfilled `$asyncValidators`), so that it is available for data-binding.
-   *        The `validationErrorKey` should be in camelCase and will get converted into dash-case
-   *        for class name. Example: `myError` will result in `ng-valid-my-error` and `ng-invalid-my-error`
-   *        class and can be bound to as  `{{someForm.someControl.$error.myError}}` .
-   * @param {boolean} isValid Whether the current state is valid (true), invalid (false), pending (undefined),
-   *                          or skipped (null). Pending is used for unfulfilled `$asyncValidators`.
-   *                          Skipped is used by Angular when validators do not run because of parse errors and
-   *                          when `$asyncValidators` do not run because any of the `$validators` failed.
-   */
-  addSetValidityMethod({
-    ctrl: this,
-    $element: $element,
-    set: function(object, property) {
-      object[property] = true;
-    },
-    unset: function(object, property) {
-      delete object[property];
-    },
-    parentForm: parentForm,
-    $animate: $animate
-  });
-
-  /**
-   * @ngdoc method
-   * @name ngModel.NgModelController#$setPristine
-   *
-   * @description
-   * Sets the control to its pristine state.
-   *
-   * This method can be called to remove the `ng-dirty` class and set the control to its pristine
-   * state (`ng-pristine` class). A model is considered to be pristine when the control
-   * has not been changed from when first compiled.
-   */
-  this.$setPristine = function() {
-    ctrl.$dirty = false;
-    ctrl.$pristine = true;
-    $animate.removeClass($element, DIRTY_CLASS);
-    $animate.addClass($element, PRISTINE_CLASS);
-  };
-
-  /**
-   * @ngdoc method
-   * @name ngModel.NgModelController#$setDirty
-   *
-   * @description
-   * Sets the control to its dirty state.
-   *
-   * This method can be called to remove the `ng-pristine` class and set the control to its dirty
-   * state (`ng-dirty` class). A model is considered to be dirty when the control has been changed
-   * from when first compiled.
-   */
-  this.$setDirty = function() {
-    ctrl.$dirty = true;
-    ctrl.$pristine = false;
-    $animate.removeClass($element, PRISTINE_CLASS);
-    $animate.addClass($element, DIRTY_CLASS);
-    parentForm.$setDirty();
-  };
-
-  /**
-   * @ngdoc method
-   * @name ngModel.NgModelController#$setUntouched
-   *
-   * @description
-   * Sets the control to its untouched state.
-   *
-   * This method can be called to remove the `ng-touched` class and set the control to its
-   * untouched state (`ng-untouched` class). Upon compilation, a model is set as untouched
-   * by default, however this function can be used to restore that state if the model has
-   * already been touched by the user.
-   */
-  this.$setUntouched = function() {
-    ctrl.$touched = false;
-    ctrl.$untouched = true;
-    $animate.setClass($element, UNTOUCHED_CLASS, TOUCHED_CLASS);
-  };
-
-  /**
-   * @ngdoc method
-   * @name ngModel.NgModelController#$setTouched
-   *
-   * @description
-   * Sets the control to its touched state.
-   *
-   * This method can be called to remove the `ng-untouched` class and set the control to its
-   * touched state (`ng-touched` class). A model is considered to be touched when the user has
-   * first focused the control element and then shifted focus away from the control (blur event).
-   */
-  this.$setTouched = function() {
-    ctrl.$touched = true;
-    ctrl.$untouched = false;
-    $animate.setClass($element, TOUCHED_CLASS, UNTOUCHED_CLASS);
-  };
-
-  /**
-   * @ngdoc method
-   * @name ngModel.NgModelController#$rollbackViewValue
-   *
-   * @description
-   * Cancel an update and reset the input element's value to prevent an update to the `$modelValue`,
-   * which may be caused by a pending debounced event or because the input is waiting for a some
-   * future event.
-   *
-   * If you have an input that uses `ng-model-options` to set up debounced events or events such
-   * as blur you can have a situation where there is a period when the `$viewValue`
-   * is out of synch with the ngModel's `$modelValue`.
-   *
-   * In this case, you can run into difficulties if you try to update the ngModel's `$modelValue`
-   * programmatically before these debounced/future events have resolved/occurred, because Angular's
-   * dirty checking mechanism is not able to tell whether the model has actually changed or not.
-   *
-   * The `$rollbackViewValue()` method should be called before programmatically changing the model of an
-   * input which may have such events pending. This is important in order to make sure that the
-   * input field will be updated with the new model value and any pending operations are cancelled.
-   *
-   * <example name="ng-model-cancel-update" module="cancel-update-example">
-   *   <file name="app.js">
-   *     angular.module('cancel-update-example', [])
-   *
-   *     .controller('CancelUpdateController', ['$scope', function($scope) {
-   *       $scope.resetWithCancel = function(e) {
-   *         if (e.keyCode == 27) {
-   *           $scope.myForm.myInput1.$rollbackViewValue();
-   *           $scope.myValue = '';
-   *         }
-   *       };
-   *       $scope.resetWithoutCancel = function(e) {
-   *         if (e.keyCode == 27) {
-   *           $scope.myValue = '';
-   *         }
-   *       };
-   *     }]);
-   *   </file>
-   *   <file name="index.html">
-   *     <div ng-controller="CancelUpdateController">
-   *       <p>Try typing something in each input.  See that the model only updates when you
-   *          blur off the input.
-   *        </p>
-   *        <p>Now see what happens if you start typing then press the Escape key</p>
-   *
-   *       <form name="myForm" ng-model-options="{ updateOn: 'blur' }">
-   *         <p>With $rollbackViewValue()</p>
-   *         <input name="myInput1" ng-model="myValue" ng-keydown="resetWithCancel($event)"><br/>
-   *         myValue: "{{ myValue }}"
-   *
-   *         <p>Without $rollbackViewValue()</p>
-   *         <input name="myInput2" ng-model="myValue" ng-keydown="resetWithoutCancel($event)"><br/>
-   *         myValue: "{{ myValue }}"
-   *       </form>
-   *     </div>
-   *   </file>
-   * </example>
-   */
-  this.$rollbackViewValue = function() {
-    $timeout.cancel(pendingDebounce);
-    ctrl.$viewValue = ctrl.$$lastCommittedViewValue;
-    ctrl.$render();
-  };
-
-  /**
-   * @ngdoc method
-   * @name ngModel.NgModelController#$validate
-   *
-   * @description
-   * Runs each of the registered validators (first synchronous validators and then
-   * asynchronous validators).
-   * If the validity changes to invalid, the model will be set to `undefined`,
-   * unless {@link ngModelOptions `ngModelOptions.allowInvalid`} is `true`.
-   * If the validity changes to valid, it will set the model to the last available valid
-   * modelValue, i.e. either the last parsed value or the last value set from the scope.
-   */
-  this.$validate = function() {
-    // ignore $validate before model is initialized
-    if (isNumber(ctrl.$modelValue) && isNaN(ctrl.$modelValue)) {
-      return;
-    }
-
-    var viewValue = ctrl.$$lastCommittedViewValue;
-    // Note: we use the $$rawModelValue as $modelValue might have been
-    // set to undefined during a view -> model update that found validation
-    // errors. We can't parse the view here, since that could change
-    // the model although neither viewValue nor the model on the scope changed
-    var modelValue = ctrl.$$rawModelValue;
-
-    // Check if the there's a parse error, so we don't unset it accidentially
-    var parserName = ctrl.$$parserName || 'parse';
-    var parserValid = ctrl.$error[parserName] ? false : undefined;
-
-    var prevValid = ctrl.$valid;
-    var prevModelValue = ctrl.$modelValue;
-
-    var allowInvalid = ctrl.$options && ctrl.$options.allowInvalid;
-
-    ctrl.$$runValidators(parserValid, modelValue, viewValue, function(allValid) {
-      // If there was no change in validity, don't update the model
-      // This prevents changing an invalid modelValue to undefined
-      if (!allowInvalid && prevValid !== allValid) {
-        // Note: Don't check ctrl.$valid here, as we could have
-        // external validators (e.g. calculated on the server),
-        // that just call $setValidity and need the model value
-        // to calculate their validity.
-        ctrl.$modelValue = allValid ? modelValue : undefined;
-
-        if (ctrl.$modelValue !== prevModelValue) {
-          ctrl.$$writeModelToScope();
-        }
-      }
-    });
-
-  };
-
-  this.$$runValidators = function(parseValid, modelValue, viewValue, doneCallback) {
-    currentValidationRunId++;
-    var localValidationRunId = currentValidationRunId;
-
-    // check parser error
-    if (!processParseErrors(parseValid)) {
-      validationDone(false);
-      return;
-    }
-    if (!processSyncValidators()) {
-      validationDone(false);
-      return;
-    }
-    processAsyncValidators();
-
-    function processParseErrors(parseValid) {
-      var errorKey = ctrl.$$parserName || 'parse';
-      if (parseValid === undefined) {
-        setValidity(errorKey, null);
-      } else {
-        setValidity(errorKey, parseValid);
-        if (!parseValid) {
-          forEach(ctrl.$validators, function(v, name) {
-            setValidity(name, null);
-          });
-          forEach(ctrl.$asyncValidators, function(v, name) {
-            setValidity(name, null);
-          });
-          return false;
-        }
-      }
-      return true;
-    }
-
-    function processSyncValidators() {
-      var syncValidatorsValid = true;
-      forEach(ctrl.$validators, function(validator, name) {
-        var result = validator(modelValue, viewValue);
-        syncValidatorsValid = syncValidatorsValid && result;
-        setValidity(name, result);
-      });
-      if (!syncValidatorsValid) {
-        forEach(ctrl.$asyncValidators, function(v, name) {
-          setValidity(name, null);
-        });
-        return false;
-      }
-      return true;
-    }
-
-    function processAsyncValidators() {
-      var validatorPromises = [];
-      var allValid = true;
-      forEach(ctrl.$asyncValidators, function(validator, name) {
-        var promise = validator(modelValue, viewValue);
-        if (!isPromiseLike(promise)) {
-          throw $ngModelMinErr("$asyncValidators",
-            "Expected asynchronous validator to return a promise but got '{0}' instead.", promise);
-        }
-        setValidity(name, undefined);
-        validatorPromises.push(promise.then(function() {
-          setValidity(name, true);
-        }, function(error) {
-          allValid = false;
-          setValidity(name, false);
-        }));
-      });
-      if (!validatorPromises.length) {
-        validationDone(true);
-      } else {
-        $q.all(validatorPromises).then(function() {
-          validationDone(allValid);
-        }, noop);
-      }
-    }
-
-    function setValidity(name, isValid) {
-      if (localValidationRunId === currentValidationRunId) {
-        ctrl.$setValidity(name, isValid);
-      }
-    }
-
-    function validationDone(allValid) {
-      if (localValidationRunId === currentValidationRunId) {
-
-        doneCallback(allValid);
-      }
-    }
-  };
-
-  /**
-   * @ngdoc method
-   * @name ngModel.NgModelController#$commitViewValue
-   *
-   * @description
-   * Commit a pending update to the `$modelValue`.
-   *
-   * Updates may be pending by a debounced event or because the input is waiting for a some future
-   * event defined in `ng-model-options`. this method is rarely needed as `NgModelController`
-   * usually handles calling this in response to input events.
-   */
-  this.$commitViewValue = function() {
-    var viewValue = ctrl.$viewValue;
-
-    $timeout.cancel(pendingDebounce);
-
-    // If the view value has not changed then we should just exit, except in the case where there is
-    // a native validator on the element. In this case the validation state may have changed even though
-    // the viewValue has stayed empty.
-    if (ctrl.$$lastCommittedViewValue === viewValue && (viewValue !== '' || !ctrl.$$hasNativeValidators)) {
-      return;
-    }
-    ctrl.$$lastCommittedViewValue = viewValue;
-
-    // change to dirty
-    if (ctrl.$pristine) {
-      this.$setDirty();
-    }
-    this.$$parseAndValidate();
-  };
-
-  this.$$parseAndValidate = function() {
-    var viewValue = ctrl.$$lastCommittedViewValue;
-    var modelValue = viewValue;
-    var parserValid = isUndefined(modelValue) ? undefined : true;
-
-    if (parserValid) {
-      for (var i = 0; i < ctrl.$parsers.length; i++) {
-        modelValue = ctrl.$parsers[i](modelValue);
-        if (isUndefined(modelValue)) {
-          parserValid = false;
-          break;
-        }
-      }
-    }
-    if (isNumber(ctrl.$modelValue) && isNaN(ctrl.$modelValue)) {
-      // ctrl.$modelValue has not been touched yet...
-      ctrl.$modelValue = ngModelGet($scope);
-    }
-    var prevModelValue = ctrl.$modelValue;
-    var allowInvalid = ctrl.$options && ctrl.$options.allowInvalid;
-    ctrl.$$rawModelValue = modelValue;
-
-    if (allowInvalid) {
-      ctrl.$modelValue = modelValue;
-      writeToModelIfNeeded();
-    }
-
-    // Pass the $$lastCommittedViewValue here, because the cached viewValue might be out of date.
-    // This can happen if e.g. $setViewValue is called from inside a parser
-    ctrl.$$runValidators(parserValid, modelValue, ctrl.$$lastCommittedViewValue, function(allValid) {
-      if (!allowInvalid) {
-        // Note: Don't check ctrl.$valid here, as we could have
-        // external validators (e.g. calculated on the server),
-        // that just call $setValidity and need the model value
-        // to calculate their validity.
-        ctrl.$modelValue = allValid ? modelValue : undefined;
-        writeToModelIfNeeded();
-      }
-    });
-
-    function writeToModelIfNeeded() {
-      if (ctrl.$modelValue !== prevModelValue) {
-        ctrl.$$writeModelToScope();
-      }
-    }
-  };
-
-  this.$$writeModelToScope = function() {
-    ngModelSet($scope, ctrl.$modelValue);
-    forEach(ctrl.$viewChangeListeners, function(listener) {
-      try {
-        listener();
-      } catch (e) {
-        $exceptionHandler(e);
-      }
-    });
-  };
-
-  /**
-   * @ngdoc method
-   * @name ngModel.NgModelController#$setViewValue
-   *
-   * @description
-   * Update the view value.
-   *
-   * This method should be called when an input directive want to change the view value; typically,
-   * this is done from within a DOM event handler.
-   *
-   * For example {@link ng.directive:input input} calls it when the value of the input changes and
-   * {@link ng.directive:select select} calls it when an option is selected.
-   *
-   * If the new `value` is an object (rather than a string or a number), we should make a copy of the
-   * object before passing it to `$setViewValue`.  This is because `ngModel` does not perform a deep
-   * watch of objects, it only looks for a change of identity. If you only change the property of
-   * the object then ngModel will not realise that the object has changed and will not invoke the
-   * `$parsers` and `$validators` pipelines.
-   *
-   * For this reason, you should not change properties of the copy once it has been passed to
-   * `$setViewValue`. Otherwise you may cause the model value on the scope to change incorrectly.
-   *
-   * When this method is called, the new `value` will be staged for committing through the `$parsers`
-   * and `$validators` pipelines. If there are no special {@link ngModelOptions} specified then the staged
-   * value sent directly for processing, finally to be applied to `$modelValue` and then the
-   * **expression** specified in the `ng-model` attribute.
-   *
-   * Lastly, all the registered change listeners, in the `$viewChangeListeners` list, are called.
-   *
-   * In case the {@link ng.directive:ngModelOptions ngModelOptions} directive is used with `updateOn`
-   * and the `default` trigger is not listed, all those actions will remain pending until one of the
-   * `updateOn` events is triggered on the DOM element.
-   * All these actions will be debounced if the {@link ng.directive:ngModelOptions ngModelOptions}
-   * directive is used with a custom debounce for this particular event.
-   *
-   * Note that calling this function does not trigger a `$digest`.
-   *
-   * @param {string} value Value from the view.
-   * @param {string} trigger Event that triggered the update.
-   */
-  this.$setViewValue = function(value, trigger) {
-    ctrl.$viewValue = value;
-    if (!ctrl.$options || ctrl.$options.updateOnDefault) {
-      ctrl.$$debounceViewValueCommit(trigger);
-    }
-  };
-
-  this.$$debounceViewValueCommit = function(trigger) {
-    var debounceDelay = 0,
-        options = ctrl.$options,
-        debounce;
-
-    if (options && isDefined(options.debounce)) {
-      debounce = options.debounce;
-      if (isNumber(debounce)) {
-        debounceDelay = debounce;
-      } else if (isNumber(debounce[trigger])) {
-        debounceDelay = debounce[trigger];
-      } else if (isNumber(debounce['default'])) {
-        debounceDelay = debounce['default'];
-      }
-    }
-
-    $timeout.cancel(pendingDebounce);
-    if (debounceDelay) {
-      pendingDebounce = $timeout(function() {
-        ctrl.$commitViewValue();
-      }, debounceDelay);
-    } else if ($rootScope.$$phase) {
-      ctrl.$commitViewValue();
-    } else {
-      $scope.$apply(function() {
-        ctrl.$commitViewValue();
-      });
-    }
-  };
-
-  // model -> value
-  // Note: we cannot use a normal scope.$watch as we want to detect the following:
-  // 1. scope value is 'a'
-  // 2. user enters 'b'
-  // 3. ng-change kicks in and reverts scope value to 'a'
-  //    -> scope value did not change since the last digest as
-  //       ng-change executes in apply phase
-  // 4. view should be changed back to 'a'
-  $scope.$watch(function ngModelWatch() {
-    var modelValue = ngModelGet($scope);
-
-    // if scope model value and ngModel value are out of sync
-    // TODO(perf): why not move this to the action fn?
-    if (modelValue !== ctrl.$modelValue) {
-      ctrl.$modelValue = ctrl.$$rawModelValue = modelValue;
-
-      var formatters = ctrl.$formatters,
-          idx = formatters.length;
-
-      var viewValue = modelValue;
-      while (idx--) {
-        viewValue = formatters[idx](viewValue);
-      }
-      if (ctrl.$viewValue !== viewValue) {
-        ctrl.$viewValue = ctrl.$$lastCommittedViewValue = viewValue;
-        ctrl.$render();
-
-        ctrl.$$runValidators(undefined, modelValue, viewValue, noop);
-      }
-    }
-
-    return modelValue;
-  });
-}];
-
-
-/**
- * @ngdoc directive
- * @name ngModel
- *
- * @element input
- * @priority 1
- *
- * @description
- * The `ngModel` directive binds an `input`,`select`, `textarea` (or custom form control) to a
- * property on the scope using {@link ngModel.NgModelController NgModelController},
- * which is created and exposed by this directive.
- *
- * `ngModel` is responsible for:
- *
- * - Binding the view into the model, which other directives such as `input`, `textarea` or `select`
- *   require.
- * - Providing validation behavior (i.e. required, number, email, url).
- * - Keeping the state of the control (valid/invalid, dirty/pristine, touched/untouched, validation errors).
- * - Setting related css classes on the element (`ng-valid`, `ng-invalid`, `ng-dirty`, `ng-pristine`, `ng-touched`, `ng-untouched`) including animations.
- * - Registering the control with its parent {@link ng.directive:form form}.
- *
- * Note: `ngModel` will try to bind to the property given by evaluating the expression on the
- * current scope. If the property doesn't already exist on this scope, it will be created
- * implicitly and added to the scope.
- *
- * For best practices on using `ngModel`, see:
- *
- *  - [Understanding Scopes](https://github.com/angular/angular.js/wiki/Understanding-Scopes)
- *
- * For basic examples, how to use `ngModel`, see:
- *
- *  - {@link ng.directive:input input}
- *    - {@link input[text] text}
- *    - {@link input[checkbox] checkbox}
- *    - {@link input[radio] radio}
- *    - {@link input[number] number}
- *    - {@link input[email] email}
- *    - {@link input[url] url}
- *    - {@link input[date] date}
- *    - {@link input[datetime-local] datetime-local}
- *    - {@link input[time] time}
- *    - {@link input[month] month}
- *    - {@link input[week] week}
- *  - {@link ng.directive:select select}
- *  - {@link ng.directive:textarea textarea}
- *
- * # CSS classes
- * The following CSS classes are added and removed on the associated input/select/textarea element
- * depending on the validity of the model.
- *
- *  - `ng-valid`: the model is valid
- *  - `ng-invalid`: the model is invalid
- *  - `ng-valid-[key]`: for each valid key added by `$setValidity`
- *  - `ng-invalid-[key]`: for each invalid key added by `$setValidity`
- *  - `ng-pristine`: the control hasn't been interacted with yet
- *  - `ng-dirty`: the control has been interacted with
- *  - `ng-touched`: the control has been blurred
- *  - `ng-untouched`: the control hasn't been blurred
- *  - `ng-pending`: any `$asyncValidators` are unfulfilled
- *
- * Keep in mind that ngAnimate can detect each of these classes when added and removed.
- *
- * ## Animation Hooks
- *
- * Animations within models are triggered when any of the associated CSS classes are added and removed
- * on the input element which is attached to the model. These classes are: `.ng-pristine`, `.ng-dirty`,
- * `.ng-invalid` and `.ng-valid` as well as any other validations that are performed on the model itself.
- * The animations that are triggered within ngModel are similar to how they work in ngClass and
- * animations can be hooked into using CSS transitions, keyframes as well as JS animations.
- *
- * The following example shows a simple way to utilize CSS transitions to style an input element
- * that has been rendered as invalid after it has been validated:
- *
- * <pre>
- * //be sure to include ngAnimate as a module to hook into more
- * //advanced animations
- * .my-input {
- *   transition:0.5s linear all;
- *   background: white;
- * }
- * .my-input.ng-invalid {
- *   background: red;
- *   color:white;
- * }
- * </pre>
- *
- * @example
- * <example deps="angular-animate.js" animations="true" fixBase="true" module="inputExample">
-     <file name="index.html">
-       <script>
-        angular.module('inputExample', [])
-          .controller('ExampleController', ['$scope', function($scope) {
-            $scope.val = '1';
-          }]);
-       </script>
-       <style>
-         .my-input {
-           -webkit-transition:all linear 0.5s;
-           transition:all linear 0.5s;
-           background: transparent;
-         }
-         .my-input.ng-invalid {
-           color:white;
-           background: red;
-         }
-       </style>
-       Update input to see transitions when valid/invalid.
-       Integer is a valid value.
-       <form name="testForm" ng-controller="ExampleController">
-         <input ng-model="val" ng-pattern="/^\d+$/" name="anim" class="my-input" />
-       </form>
-     </file>
- * </example>
- *
- * ## Binding to a getter/setter
- *
- * Sometimes it's helpful to bind `ngModel` to a getter/setter function.  A getter/setter is a
- * function that returns a representation of the model when called with zero arguments, and sets
- * the internal state of a model when called with an argument. It's sometimes useful to use this
- * for models that have an internal representation that's different than what the model exposes
- * to the view.
- *
- * <div class="alert alert-success">
- * **Best Practice:** It's best to keep getters fast because Angular is likely to call them more
- * frequently than other parts of your code.
- * </div>
- *
- * You use this behavior by adding `ng-model-options="{ getterSetter: true }"` to an element that
- * has `ng-model` attached to it. You can also add `ng-model-options="{ getterSetter: true }"` to
- * a `<form>`, which will enable this behavior for all `<input>`s within it. See
- * {@link ng.directive:ngModelOptions `ngModelOptions`} for more.
- *
- * The following example shows how to use `ngModel` with a getter/setter:
- *
- * @example
- * <example name="ngModel-getter-setter" module="getterSetterExample">
-     <file name="index.html">
-       <div ng-controller="ExampleController">
-         <form name="userForm">
-           Name:
-           <input type="text" name="userName"
-                  ng-model="user.name"
-                  ng-model-options="{ getterSetter: true }" />
-         </form>
-         <pre>user.name = <span ng-bind="user.name()"></span></pre>
-       </div>
-     </file>
-     <file name="app.js">
-       angular.module('getterSetterExample', [])
-         .controller('ExampleController', ['$scope', function($scope) {
-           var _name = 'Brian';
-           $scope.user = {
-             name: function(newName) {
-               if (angular.isDefined(newName)) {
-                 _name = newName;
-               }
-               return _name;
-             }
-           };
-         }]);
-     </file>
- * </example>
- */
-var ngModelDirective = ['$rootScope', function($rootScope) {
-  return {
-    restrict: 'A',
-    require: ['ngModel', '^?form', '^?ngModelOptions'],
-    controller: NgModelController,
-    // Prelink needs to run before any input directive
-    // so that we can set the NgModelOptions in NgModelController
-    // before anyone else uses it.
-    priority: 1,
-    compile: function ngModelCompile(element) {
-      // Setup initial state of the control
-      element.addClass(PRISTINE_CLASS).addClass(UNTOUCHED_CLASS).addClass(VALID_CLASS);
-
-      return {
-        pre: function ngModelPreLink(scope, element, attr, ctrls) {
-          var modelCtrl = ctrls[0],
-              formCtrl = ctrls[1] || nullFormCtrl;
-
-          modelCtrl.$$setOptions(ctrls[2] && ctrls[2].$options);
-
-          // notify others, especially parent forms
-          formCtrl.$addControl(modelCtrl);
-
-          attr.$observe('name', function(newValue) {
-            if (modelCtrl.$name !== newValue) {
-              formCtrl.$$renameControl(modelCtrl, newValue);
-            }
-          });
-
-          scope.$on('$destroy', function() {
-            formCtrl.$removeControl(modelCtrl);
-          });
-        },
-        post: function ngModelPostLink(scope, element, attr, ctrls) {
-          var modelCtrl = ctrls[0];
-          if (modelCtrl.$options && modelCtrl.$options.updateOn) {
-            element.on(modelCtrl.$options.updateOn, function(ev) {
-              modelCtrl.$$debounceViewValueCommit(ev && ev.type);
-            });
-          }
-
-          element.on('blur', function(ev) {
-            if (modelCtrl.$touched) return;
-
-            if ($rootScope.$$phase) {
-              scope.$evalAsync(modelCtrl.$setTouched);
-            } else {
-              scope.$apply(modelCtrl.$setTouched);
-            }
-          });
-        }
-      };
-    }
-  };
-}];
-
-
-/**
- * @ngdoc directive
- * @name ngChange
- *
- * @description
- * Evaluate the given expression when the user changes the input.
- * The expression is evaluated immediately, unlike the JavaScript onchange event
- * which only triggers at the end of a change (usually, when the user leaves the
- * form element or presses the return key).
- *
- * The `ngChange` expression is only evaluated when a change in the input value causes
- * a new value to be committed to the model.
- *
- * It will not be evaluated:
- * * if the value returned from the `$parsers` transformation pipeline has not changed
- * * if the input has continued to be invalid since the model will stay `null`
- * * if the model is changed programmatically and not by a change to the input value
- *
- *
- * Note, this directive requires `ngModel` to be present.
- *
- * @element input
- * @param {expression} ngChange {@link guide/expression Expression} to evaluate upon change
- * in input value.
- *
- * @example
- * <example name="ngChange-directive" module="changeExample">
- *   <file name="index.html">
- *     <script>
- *       angular.module('changeExample', [])
- *         .controller('ExampleController', ['$scope', function($scope) {
- *           $scope.counter = 0;
- *           $scope.change = function() {
- *             $scope.counter++;
- *           };
- *         }]);
- *     </script>
- *     <div ng-controller="ExampleController">
- *       <input type="checkbox" ng-model="confirmed" ng-change="change()" id="ng-change-example1" />
- *       <input type="checkbox" ng-model="confirmed" id="ng-change-example2" />
- *       <label for="ng-change-example2">Confirmed</label><br />
- *       <tt>debug = {{confirmed}}</tt><br/>
- *       <tt>counter = {{counter}}</tt><br/>
- *     </div>
- *   </file>
- *   <file name="protractor.js" type="protractor">
- *     var counter = element(by.binding('counter'));
- *     var debug = element(by.binding('confirmed'));
- *
- *     it('should evaluate the expression if changing from view', function() {
- *       expect(counter.getText()).toContain('0');
- *
- *       element(by.id('ng-change-example1')).click();
- *
- *       expect(counter.getText()).toContain('1');
- *       expect(debug.getText()).toContain('true');
- *     });
- *
- *     it('should not evaluate the expression if changing from model', function() {
- *       element(by.id('ng-change-example2')).click();
-
- *       expect(counter.getText()).toContain('0');
- *       expect(debug.getText()).toContain('true');
- *     });
- *   </file>
- * </example>
- */
-var ngChangeDirective = valueFn({
-  restrict: 'A',
-  require: 'ngModel',
-  link: function(scope, element, attr, ctrl) {
-    ctrl.$viewChangeListeners.push(function() {
-      scope.$eval(attr.ngChange);
-    });
-  }
-});
-
-
-var requiredDirective = function() {
-  return {
-    restrict: 'A',
-    require: '?ngModel',
-    link: function(scope, elm, attr, ctrl) {
-      if (!ctrl) return;
-      attr.required = true; // force truthy in case we are on non input element
-
-      ctrl.$validators.required = function(modelValue, viewValue) {
-        return !attr.required || !ctrl.$isEmpty(viewValue);
-      };
-
-      attr.$observe('required', function() {
-        ctrl.$validate();
-      });
-    }
-  };
-};
-
-
-var patternDirective = function() {
-  return {
-    restrict: 'A',
-    require: '?ngModel',
-    link: function(scope, elm, attr, ctrl) {
-      if (!ctrl) return;
-
-      var regexp, patternExp = attr.ngPattern || attr.pattern;
-      attr.$observe('pattern', function(regex) {
-        if (isString(regex) && regex.length > 0) {
-          regex = new RegExp('^' + regex + '$');
-        }
-
-        if (regex && !regex.test) {
-          throw minErr('ngPattern')('noregexp',
-            'Expected {0} to be a RegExp but was {1}. Element: {2}', patternExp,
-            regex, startingTag(elm));
-        }
-
-        regexp = regex || undefined;
-        ctrl.$validate();
-      });
-
-      ctrl.$validators.pattern = function(value) {
-        return ctrl.$isEmpty(value) || isUndefined(regexp) || regexp.test(value);
-      };
-    }
-  };
-};
-
-
-var maxlengthDirective = function() {
-  return {
-    restrict: 'A',
-    require: '?ngModel',
-    link: function(scope, elm, attr, ctrl) {
-      if (!ctrl) return;
-
-      var maxlength = -1;
-      attr.$observe('maxlength', function(value) {
-        var intVal = int(value);
-        maxlength = isNaN(intVal) ? -1 : intVal;
-        ctrl.$validate();
-      });
-      ctrl.$validators.maxlength = function(modelValue, viewValue) {
-        return (maxlength < 0) || ctrl.$isEmpty(modelValue) || (viewValue.length <= maxlength);
-      };
-    }
-  };
-};
-
-var minlengthDirective = function() {
-  return {
-    restrict: 'A',
-    require: '?ngModel',
-    link: function(scope, elm, attr, ctrl) {
-      if (!ctrl) return;
-
-      var minlength = 0;
-      attr.$observe('minlength', function(value) {
-        minlength = int(value) || 0;
-        ctrl.$validate();
-      });
-      ctrl.$validators.minlength = function(modelValue, viewValue) {
-        return ctrl.$isEmpty(viewValue) || viewValue.length >= minlength;
-      };
-    }
-  };
-};
-
-
-/**
- * @ngdoc directive
- * @name ngList
- *
- * @description
- * Text input that converts between a delimited string and an array of strings. The default
- * delimiter is a comma followed by a space - equivalent to `ng-list=", "`. You can specify a custom
- * delimiter as the value of the `ngList` attribute - for example, `ng-list=" | "`.
- *
- * The behaviour of the directive is affected by the use of the `ngTrim` attribute.
- * * If `ngTrim` is set to `"false"` then whitespace around both the separator and each
- *   list item is respected. This implies that the user of the directive is responsible for
- *   dealing with whitespace but also allows you to use whitespace as a delimiter, such as a
- *   tab or newline character.
- * * Otherwise whitespace around the delimiter is ignored when splitting (although it is respected
- *   when joining the list items back together) and whitespace around each list item is stripped
- *   before it is added to the model.
- *
- * ### Example with Validation
- *
- * <example name="ngList-directive" module="listExample">
- *   <file name="app.js">
- *      angular.module('listExample', [])
- *        .controller('ExampleController', ['$scope', function($scope) {
- *          $scope.names = ['morpheus', 'neo', 'trinity'];
- *        }]);
- *   </file>
- *   <file name="index.html">
- *    <form name="myForm" ng-controller="ExampleController">
- *      List: <input name="namesInput" ng-model="names" ng-list required>
- *      <span class="error" ng-show="myForm.namesInput.$error.required">
- *        Required!</span>
- *      <br>
- *      <tt>names = {{names}}</tt><br/>
- *      <tt>myForm.namesInput.$valid = {{myForm.namesInput.$valid}}</tt><br/>
- *      <tt>myForm.namesInput.$error = {{myForm.namesInput.$error}}</tt><br/>
- *      <tt>myForm.$valid = {{myForm.$valid}}</tt><br/>
- *      <tt>myForm.$error.required = {{!!myForm.$error.required}}</tt><br/>
- *     </form>
- *   </file>
- *   <file name="protractor.js" type="protractor">
- *     var listInput = element(by.model('names'));
- *     var names = element(by.exactBinding('names'));
- *     var valid = element(by.binding('myForm.namesInput.$valid'));
- *     var error = element(by.css('span.error'));
- *
- *     it('should initialize to model', function() {
- *       expect(names.getText()).toContain('["morpheus","neo","trinity"]');
- *       expect(valid.getText()).toContain('true');
- *       expect(error.getCssValue('display')).toBe('none');
- *     });
- *
- *     it('should be invalid if empty', function() {
- *       listInput.clear();
- *       listInput.sendKeys('');
- *
- *       expect(names.getText()).toContain('');
- *       expect(valid.getText()).toContain('false');
- *       expect(error.getCssValue('display')).not.toBe('none');
- *     });
- *   </file>
- * </example>
- *
- * ### Example - splitting on whitespace
- * <example name="ngList-directive-newlines">
- *   <file name="index.html">
- *    <textarea ng-model="list" ng-list="&#10;" ng-trim="false"></textarea>
- *    <pre>{{ list | json }}</pre>
- *   </file>
- *   <file name="protractor.js" type="protractor">
- *     it("should split the text by newlines", function() {
- *       var listInput = element(by.model('list'));
- *       var output = element(by.binding('list | json'));
- *       listInput.sendKeys('abc\ndef\nghi');
- *       expect(output.getText()).toContain('[\n  "abc",\n  "def",\n  "ghi"\n]');
- *     });
- *   </file>
- * </example>
- *
- * @element input
- * @param {string=} ngList optional delimiter that should be used to split the value.
- */
-var ngListDirective = function() {
-  return {
-    restrict: 'A',
-    priority: 100,
-    require: 'ngModel',
-    link: function(scope, element, attr, ctrl) {
-      // We want to control whitespace trimming so we use this convoluted approach
-      // to access the ngList attribute, which doesn't pre-trim the attribute
-      var ngList = element.attr(attr.$attr.ngList) || ', ';
-      var trimValues = attr.ngTrim !== 'false';
-      var separator = trimValues ? trim(ngList) : ngList;
-
-      var parse = function(viewValue) {
-        // If the viewValue is invalid (say required but empty) it will be `undefined`
-        if (isUndefined(viewValue)) return;
-
-        var list = [];
-
-        if (viewValue) {
-          forEach(viewValue.split(separator), function(value) {
-            if (value) list.push(trimValues ? trim(value) : value);
-          });
-        }
-
-        return list;
-      };
-
-      ctrl.$parsers.push(parse);
-      ctrl.$formatters.push(function(value) {
-        if (isArray(value)) {
-          return value.join(ngList);
-        }
-
-        return undefined;
-      });
-
-      // Override the standard $isEmpty because an empty array means the input is empty.
-      ctrl.$isEmpty = function(value) {
-        return !value || !value.length;
-      };
-    }
-  };
-};
 
 
 var CONSTANT_VALUE_REGEXP = /^(true|false|\d+)$/;
@@ -29355,281 +28178,6 @@ var ngValueDirective = function() {
     }
   };
 };
-
-/**
- * @ngdoc directive
- * @name ngModelOptions
- *
- * @description
- * Allows tuning how model updates are done. Using `ngModelOptions` you can specify a custom list of
- * events that will trigger a model update and/or a debouncing delay so that the actual update only
- * takes place when a timer expires; this timer will be reset after another change takes place.
- *
- * Given the nature of `ngModelOptions`, the value displayed inside input fields in the view might
- * be different than the value in the actual model. This means that if you update the model you
- * should also invoke {@link ngModel.NgModelController `$rollbackViewValue`} on the relevant input field in
- * order to make sure it is synchronized with the model and that any debounced action is canceled.
- *
- * The easiest way to reference the control's {@link ngModel.NgModelController `$rollbackViewValue`}
- * method is by making sure the input is placed inside a form that has a `name` attribute. This is
- * important because `form` controllers are published to the related scope under the name in their
- * `name` attribute.
- *
- * Any pending changes will take place immediately when an enclosing form is submitted via the
- * `submit` event. Note that `ngClick` events will occur before the model is updated. Use `ngSubmit`
- * to have access to the updated model.
- *
- * `ngModelOptions` has an effect on the element it's declared on and its descendants.
- *
- * @param {Object} ngModelOptions options to apply to the current model. Valid keys are:
- *   - `updateOn`: string specifying which event should the input be bound to. You can set several
- *     events using an space delimited list. There is a special event called `default` that
- *     matches the default events belonging of the control.
- *   - `debounce`: integer value which contains the debounce model update value in milliseconds. A
- *     value of 0 triggers an immediate update. If an object is supplied instead, you can specify a
- *     custom value for each event. For example:
- *     `ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"`
- *   - `allowInvalid`: boolean value which indicates that the model can be set with values that did
- *     not validate correctly instead of the default behavior of setting the model to undefined.
- *   - `getterSetter`: boolean value which determines whether or not to treat functions bound to
-       `ngModel` as getters/setters.
- *   - `timezone`: Defines the timezone to be used to read/write the `Date` instance in the model for
- *     `<input type="date">`, `<input type="time">`, ... . Right now, the only supported value is `'UTC'`,
- *     otherwise the default timezone of the browser will be used.
- *
- * @example
-
-  The following example shows how to override immediate updates. Changes on the inputs within the
-  form will update the model only when the control loses focus (blur event). If `escape` key is
-  pressed while the input field is focused, the value is reset to the value in the current model.
-
-  <example name="ngModelOptions-directive-blur" module="optionsExample">
-    <file name="index.html">
-      <div ng-controller="ExampleController">
-        <form name="userForm">
-          Name:
-          <input type="text" name="userName"
-                 ng-model="user.name"
-                 ng-model-options="{ updateOn: 'blur' }"
-                 ng-keyup="cancel($event)" /><br />
-
-          Other data:
-          <input type="text" ng-model="user.data" /><br />
-        </form>
-        <pre>user.name = <span ng-bind="user.name"></span></pre>
-      </div>
-    </file>
-    <file name="app.js">
-      angular.module('optionsExample', [])
-        .controller('ExampleController', ['$scope', function($scope) {
-          $scope.user = { name: 'say', data: '' };
-
-          $scope.cancel = function(e) {
-            if (e.keyCode == 27) {
-              $scope.userForm.userName.$rollbackViewValue();
-            }
-          };
-        }]);
-    </file>
-    <file name="protractor.js" type="protractor">
-      var model = element(by.binding('user.name'));
-      var input = element(by.model('user.name'));
-      var other = element(by.model('user.data'));
-
-      it('should allow custom events', function() {
-        input.sendKeys(' hello');
-        input.click();
-        expect(model.getText()).toEqual('say');
-        other.click();
-        expect(model.getText()).toEqual('say hello');
-      });
-
-      it('should $rollbackViewValue when model changes', function() {
-        input.sendKeys(' hello');
-        expect(input.getAttribute('value')).toEqual('say hello');
-        input.sendKeys(protractor.Key.ESCAPE);
-        expect(input.getAttribute('value')).toEqual('say');
-        other.click();
-        expect(model.getText()).toEqual('say');
-      });
-    </file>
-  </example>
-
-  This one shows how to debounce model changes. Model will be updated only 1 sec after last change.
-  If the `Clear` button is pressed, any debounced action is canceled and the value becomes empty.
-
-  <example name="ngModelOptions-directive-debounce" module="optionsExample">
-    <file name="index.html">
-      <div ng-controller="ExampleController">
-        <form name="userForm">
-          Name:
-          <input type="text" name="userName"
-                 ng-model="user.name"
-                 ng-model-options="{ debounce: 1000 }" />
-          <button ng-click="userForm.userName.$rollbackViewValue(); user.name=''">Clear</button><br />
-        </form>
-        <pre>user.name = <span ng-bind="user.name"></span></pre>
-      </div>
-    </file>
-    <file name="app.js">
-      angular.module('optionsExample', [])
-        .controller('ExampleController', ['$scope', function($scope) {
-          $scope.user = { name: 'say' };
-        }]);
-    </file>
-  </example>
-
-  This one shows how to bind to getter/setters:
-
-  <example name="ngModelOptions-directive-getter-setter" module="getterSetterExample">
-    <file name="index.html">
-      <div ng-controller="ExampleController">
-        <form name="userForm">
-          Name:
-          <input type="text" name="userName"
-                 ng-model="user.name"
-                 ng-model-options="{ getterSetter: true }" />
-        </form>
-        <pre>user.name = <span ng-bind="user.name()"></span></pre>
-      </div>
-    </file>
-    <file name="app.js">
-      angular.module('getterSetterExample', [])
-        .controller('ExampleController', ['$scope', function($scope) {
-          var _name = 'Brian';
-          $scope.user = {
-            name: function(newName) {
-              return angular.isDefined(newName) ? (_name = newName) : _name;
-            }
-          };
-        }]);
-    </file>
-  </example>
- */
-var ngModelOptionsDirective = function() {
-  return {
-    restrict: 'A',
-    controller: ['$scope', '$attrs', function($scope, $attrs) {
-      var that = this;
-      this.$options = $scope.$eval($attrs.ngModelOptions);
-      // Allow adding/overriding bound events
-      if (this.$options.updateOn !== undefined) {
-        this.$options.updateOnDefault = false;
-        // extract "default" pseudo-event from list of events that can trigger a model update
-        this.$options.updateOn = trim(this.$options.updateOn.replace(DEFAULT_REGEXP, function() {
-          that.$options.updateOnDefault = true;
-          return ' ';
-        }));
-      } else {
-        this.$options.updateOnDefault = true;
-      }
-    }]
-  };
-};
-
-// helper methods
-function addSetValidityMethod(context) {
-  var ctrl = context.ctrl,
-      $element = context.$element,
-      classCache = {},
-      set = context.set,
-      unset = context.unset,
-      parentForm = context.parentForm,
-      $animate = context.$animate;
-
-  classCache[INVALID_CLASS] = !(classCache[VALID_CLASS] = $element.hasClass(VALID_CLASS));
-
-  ctrl.$setValidity = setValidity;
-
-  function setValidity(validationErrorKey, state, options) {
-    if (state === undefined) {
-      createAndSet('$pending', validationErrorKey, options);
-    } else {
-      unsetAndCleanup('$pending', validationErrorKey, options);
-    }
-    if (!isBoolean(state)) {
-      unset(ctrl.$error, validationErrorKey, options);
-      unset(ctrl.$$success, validationErrorKey, options);
-    } else {
-      if (state) {
-        unset(ctrl.$error, validationErrorKey, options);
-        set(ctrl.$$success, validationErrorKey, options);
-      } else {
-        set(ctrl.$error, validationErrorKey, options);
-        unset(ctrl.$$success, validationErrorKey, options);
-      }
-    }
-    if (ctrl.$pending) {
-      cachedToggleClass(PENDING_CLASS, true);
-      ctrl.$valid = ctrl.$invalid = undefined;
-      toggleValidationCss('', null);
-    } else {
-      cachedToggleClass(PENDING_CLASS, false);
-      ctrl.$valid = isObjectEmpty(ctrl.$error);
-      ctrl.$invalid = !ctrl.$valid;
-      toggleValidationCss('', ctrl.$valid);
-    }
-
-    // re-read the state as the set/unset methods could have
-    // combined state in ctrl.$error[validationError] (used for forms),
-    // where setting/unsetting only increments/decrements the value,
-    // and does not replace it.
-    var combinedState;
-    if (ctrl.$pending && ctrl.$pending[validationErrorKey]) {
-      combinedState = undefined;
-    } else if (ctrl.$error[validationErrorKey]) {
-      combinedState = false;
-    } else if (ctrl.$$success[validationErrorKey]) {
-      combinedState = true;
-    } else {
-      combinedState = null;
-    }
-    toggleValidationCss(validationErrorKey, combinedState);
-    parentForm.$setValidity(validationErrorKey, combinedState, ctrl);
-  }
-
-  function createAndSet(name, value, options) {
-    if (!ctrl[name]) {
-      ctrl[name] = {};
-    }
-    set(ctrl[name], value, options);
-  }
-
-  function unsetAndCleanup(name, value, options) {
-    if (ctrl[name]) {
-      unset(ctrl[name], value, options);
-    }
-    if (isObjectEmpty(ctrl[name])) {
-      ctrl[name] = undefined;
-    }
-  }
-
-  function cachedToggleClass(className, switchValue) {
-    if (switchValue && !classCache[className]) {
-      $animate.addClass($element, className);
-      classCache[className] = true;
-    } else if (!switchValue && classCache[className]) {
-      $animate.removeClass($element, className);
-      classCache[className] = false;
-    }
-  }
-
-  function toggleValidationCss(validationErrorKey, isValid) {
-    validationErrorKey = validationErrorKey ? '-' + snake_case(validationErrorKey, '-') : '';
-
-    cachedToggleClass(VALID_CLASS + validationErrorKey, isValid === true);
-    cachedToggleClass(INVALID_CLASS + validationErrorKey, isValid === false);
-  }
-}
-
-function isObjectEmpty(obj) {
-  if (obj) {
-    for (var prop in obj) {
-      return false;
-    }
-  }
-  return true;
-}
 
 /**
  * @ngdoc directive
@@ -29837,6 +28385,83 @@ var ngBindHtmlDirective = ['$sce', '$parse', '$compile', function($sce, $parse, 
   };
 }];
 
+/**
+ * @ngdoc directive
+ * @name ngChange
+ *
+ * @description
+ * Evaluate the given expression when the user changes the input.
+ * The expression is evaluated immediately, unlike the JavaScript onchange event
+ * which only triggers at the end of a change (usually, when the user leaves the
+ * form element or presses the return key).
+ *
+ * The `ngChange` expression is only evaluated when a change in the input value causes
+ * a new value to be committed to the model.
+ *
+ * It will not be evaluated:
+ * * if the value returned from the `$parsers` transformation pipeline has not changed
+ * * if the input has continued to be invalid since the model will stay `null`
+ * * if the model is changed programmatically and not by a change to the input value
+ *
+ *
+ * Note, this directive requires `ngModel` to be present.
+ *
+ * @element input
+ * @param {expression} ngChange {@link guide/expression Expression} to evaluate upon change
+ * in input value.
+ *
+ * @example
+ * <example name="ngChange-directive" module="changeExample">
+ *   <file name="index.html">
+ *     <script>
+ *       angular.module('changeExample', [])
+ *         .controller('ExampleController', ['$scope', function($scope) {
+ *           $scope.counter = 0;
+ *           $scope.change = function() {
+ *             $scope.counter++;
+ *           };
+ *         }]);
+ *     </script>
+ *     <div ng-controller="ExampleController">
+ *       <input type="checkbox" ng-model="confirmed" ng-change="change()" id="ng-change-example1" />
+ *       <input type="checkbox" ng-model="confirmed" id="ng-change-example2" />
+ *       <label for="ng-change-example2">Confirmed</label><br />
+ *       <tt>debug = {{confirmed}}</tt><br/>
+ *       <tt>counter = {{counter}}</tt><br/>
+ *     </div>
+ *   </file>
+ *   <file name="protractor.js" type="protractor">
+ *     var counter = element(by.binding('counter'));
+ *     var debug = element(by.binding('confirmed'));
+ *
+ *     it('should evaluate the expression if changing from view', function() {
+ *       expect(counter.getText()).toContain('0');
+ *
+ *       element(by.id('ng-change-example1')).click();
+ *
+ *       expect(counter.getText()).toContain('1');
+ *       expect(debug.getText()).toContain('true');
+ *     });
+ *
+ *     it('should not evaluate the expression if changing from model', function() {
+ *       element(by.id('ng-change-example2')).click();
+
+ *       expect(counter.getText()).toContain('0');
+ *       expect(debug.getText()).toContain('true');
+ *     });
+ *   </file>
+ * </example>
+ */
+var ngChangeDirective = valueFn({
+  restrict: 'A',
+  require: 'ngModel',
+  link: function(scope, element, attr, ctrl) {
+    ctrl.$viewChangeListeners.push(function() {
+      scope.$eval(attr.ngChange);
+    });
+  }
+});
+
 function classDirective(name, selector) {
   name = 'ngClass' + name;
   return ['$animate', function($animate) {
@@ -29978,8 +28603,9 @@ function classDirective(name, selector) {
  * new classes are added.
  *
  * @animations
- * add - happens just before the class is applied to the element
- * remove - happens just before the class is removed from the element
+ * **add** - happens just before the class is applied to the elements
+ *
+ * **remove** - happens just before the class is removed from the element
  *
  * @element ANY
  * @param {expression} ngClass {@link guide/expression Expression} to eval. The result
@@ -31321,7 +29947,7 @@ var ngIfDirective = ['$animate', function($animate) {
        <select ng-model="template" ng-options="t.name for t in templates">
         <option value="">(blank)</option>
        </select>
-       url of the template: <tt>{{template.url}}</tt>
+       url of the template: <code>{{template.url}}</code>
        <hr/>
        <div class="slide-animate-container">
          <div class="slide-animate" ng-include="template.url"></div>
@@ -31445,7 +30071,7 @@ var ngIfDirective = ['$animate', function($animate) {
  * @name ngInclude#$includeContentError
  * @eventType emit on the scope ngInclude was declared in
  * @description
- * Emitted when a template HTTP request yields an erronous response (status < 200 || status > 299)
+ * Emitted when a template HTTP request yields an erroneous response (status < 200 || status > 299)
  *
  * @param {Object} angularEvent Synthetic event object.
  * @param {String} src URL of content to load.
@@ -31585,7 +30211,7 @@ var ngIncludeFillContentDirective = ['$compile',
  * **Note**: If you have assignment in `ngInit` along with {@link ng.$filter `$filter`}, make
  * sure you have parenthesis for correct precedence:
  * <pre class="prettyprint">
- *   <div ng-init="test1 = (data | orderBy:'name')"></div>
+ * `<div ng-init="test1 = (data | orderBy:'name')"></div>`
  * </pre>
  * </div>
  *
@@ -31632,6 +30258,1466 @@ var ngInitDirective = ngDirective({
     };
   }
 });
+
+/**
+ * @ngdoc directive
+ * @name ngList
+ *
+ * @description
+ * Text input that converts between a delimited string and an array of strings. The default
+ * delimiter is a comma followed by a space - equivalent to `ng-list=", "`. You can specify a custom
+ * delimiter as the value of the `ngList` attribute - for example, `ng-list=" | "`.
+ *
+ * The behaviour of the directive is affected by the use of the `ngTrim` attribute.
+ * * If `ngTrim` is set to `"false"` then whitespace around both the separator and each
+ *   list item is respected. This implies that the user of the directive is responsible for
+ *   dealing with whitespace but also allows you to use whitespace as a delimiter, such as a
+ *   tab or newline character.
+ * * Otherwise whitespace around the delimiter is ignored when splitting (although it is respected
+ *   when joining the list items back together) and whitespace around each list item is stripped
+ *   before it is added to the model.
+ *
+ * ### Example with Validation
+ *
+ * <example name="ngList-directive" module="listExample">
+ *   <file name="app.js">
+ *      angular.module('listExample', [])
+ *        .controller('ExampleController', ['$scope', function($scope) {
+ *          $scope.names = ['morpheus', 'neo', 'trinity'];
+ *        }]);
+ *   </file>
+ *   <file name="index.html">
+ *    <form name="myForm" ng-controller="ExampleController">
+ *      List: <input name="namesInput" ng-model="names" ng-list required>
+ *      <span class="error" ng-show="myForm.namesInput.$error.required">
+ *        Required!</span>
+ *      <br>
+ *      <tt>names = {{names}}</tt><br/>
+ *      <tt>myForm.namesInput.$valid = {{myForm.namesInput.$valid}}</tt><br/>
+ *      <tt>myForm.namesInput.$error = {{myForm.namesInput.$error}}</tt><br/>
+ *      <tt>myForm.$valid = {{myForm.$valid}}</tt><br/>
+ *      <tt>myForm.$error.required = {{!!myForm.$error.required}}</tt><br/>
+ *     </form>
+ *   </file>
+ *   <file name="protractor.js" type="protractor">
+ *     var listInput = element(by.model('names'));
+ *     var names = element(by.exactBinding('names'));
+ *     var valid = element(by.binding('myForm.namesInput.$valid'));
+ *     var error = element(by.css('span.error'));
+ *
+ *     it('should initialize to model', function() {
+ *       expect(names.getText()).toContain('["morpheus","neo","trinity"]');
+ *       expect(valid.getText()).toContain('true');
+ *       expect(error.getCssValue('display')).toBe('none');
+ *     });
+ *
+ *     it('should be invalid if empty', function() {
+ *       listInput.clear();
+ *       listInput.sendKeys('');
+ *
+ *       expect(names.getText()).toContain('');
+ *       expect(valid.getText()).toContain('false');
+ *       expect(error.getCssValue('display')).not.toBe('none');
+ *     });
+ *   </file>
+ * </example>
+ *
+ * ### Example - splitting on whitespace
+ * <example name="ngList-directive-newlines">
+ *   <file name="index.html">
+ *    <textarea ng-model="list" ng-list="&#10;" ng-trim="false"></textarea>
+ *    <pre>{{ list | json }}</pre>
+ *   </file>
+ *   <file name="protractor.js" type="protractor">
+ *     it("should split the text by newlines", function() {
+ *       var listInput = element(by.model('list'));
+ *       var output = element(by.binding('list | json'));
+ *       listInput.sendKeys('abc\ndef\nghi');
+ *       expect(output.getText()).toContain('[\n  "abc",\n  "def",\n  "ghi"\n]');
+ *     });
+ *   </file>
+ * </example>
+ *
+ * @element input
+ * @param {string=} ngList optional delimiter that should be used to split the value.
+ */
+var ngListDirective = function() {
+  return {
+    restrict: 'A',
+    priority: 100,
+    require: 'ngModel',
+    link: function(scope, element, attr, ctrl) {
+      // We want to control whitespace trimming so we use this convoluted approach
+      // to access the ngList attribute, which doesn't pre-trim the attribute
+      var ngList = element.attr(attr.$attr.ngList) || ', ';
+      var trimValues = attr.ngTrim !== 'false';
+      var separator = trimValues ? trim(ngList) : ngList;
+
+      var parse = function(viewValue) {
+        // If the viewValue is invalid (say required but empty) it will be `undefined`
+        if (isUndefined(viewValue)) return;
+
+        var list = [];
+
+        if (viewValue) {
+          forEach(viewValue.split(separator), function(value) {
+            if (value) list.push(trimValues ? trim(value) : value);
+          });
+        }
+
+        return list;
+      };
+
+      ctrl.$parsers.push(parse);
+      ctrl.$formatters.push(function(value) {
+        if (isArray(value)) {
+          return value.join(ngList);
+        }
+
+        return undefined;
+      });
+
+      // Override the standard $isEmpty because an empty array means the input is empty.
+      ctrl.$isEmpty = function(value) {
+        return !value || !value.length;
+      };
+    }
+  };
+};
+
+/* global VALID_CLASS: true,
+  INVALID_CLASS: true,
+  PRISTINE_CLASS: true,
+  DIRTY_CLASS: true,
+  UNTOUCHED_CLASS: true,
+  TOUCHED_CLASS: true,
+*/
+
+var VALID_CLASS = 'ng-valid',
+    INVALID_CLASS = 'ng-invalid',
+    PRISTINE_CLASS = 'ng-pristine',
+    DIRTY_CLASS = 'ng-dirty',
+    UNTOUCHED_CLASS = 'ng-untouched',
+    TOUCHED_CLASS = 'ng-touched',
+    PENDING_CLASS = 'ng-pending';
+
+
+var $ngModelMinErr = new minErr('ngModel');
+
+/**
+ * @ngdoc type
+ * @name ngModel.NgModelController
+ *
+ * @property {string} $viewValue Actual string value in the view.
+ * @property {*} $modelValue The value in the model that the control is bound to.
+ * @property {Array.<Function>} $parsers Array of functions to execute, as a pipeline, whenever
+       the control reads value from the DOM. The functions are called in array order, each passing
+       its return value through to the next. The last return value is forwarded to the
+       {@link ngModel.NgModelController#$validators `$validators`} collection.
+
+Parsers are used to sanitize / convert the {@link ngModel.NgModelController#$viewValue
+`$viewValue`}.
+
+Returning `undefined` from a parser means a parse error occurred. In that case,
+no {@link ngModel.NgModelController#$validators `$validators`} will run and the `ngModel`
+will be set to `undefined` unless {@link ngModelOptions `ngModelOptions.allowInvalid`}
+is set to `true`. The parse error is stored in `ngModel.$error.parse`.
+
+ *
+ * @property {Array.<Function>} $formatters Array of functions to execute, as a pipeline, whenever
+       the model value changes. The functions are called in reverse array order, each passing the value through to the
+       next. The last return value is used as the actual DOM value.
+       Used to format / convert values for display in the control.
+ * ```js
+ * function formatter(value) {
+ *   if (value) {
+ *     return value.toUpperCase();
+ *   }
+ * }
+ * ngModel.$formatters.push(formatter);
+ * ```
+ *
+ * @property {Object.<string, function>} $validators A collection of validators that are applied
+ *      whenever the model value changes. The key value within the object refers to the name of the
+ *      validator while the function refers to the validation operation. The validation operation is
+ *      provided with the model value as an argument and must return a true or false value depending
+ *      on the response of that validation.
+ *
+ * ```js
+ * ngModel.$validators.validCharacters = function(modelValue, viewValue) {
+ *   var value = modelValue || viewValue;
+ *   return /[0-9]+/.test(value) &&
+ *          /[a-z]+/.test(value) &&
+ *          /[A-Z]+/.test(value) &&
+ *          /\W+/.test(value);
+ * };
+ * ```
+ *
+ * @property {Object.<string, function>} $asyncValidators A collection of validations that are expected to
+ *      perform an asynchronous validation (e.g. a HTTP request). The validation function that is provided
+ *      is expected to return a promise when it is run during the model validation process. Once the promise
+ *      is delivered then the validation status will be set to true when fulfilled and false when rejected.
+ *      When the asynchronous validators are triggered, each of the validators will run in parallel and the model
+ *      value will only be updated once all validators have been fulfilled. As long as an asynchronous validator
+ *      is unfulfilled, its key will be added to the controllers `$pending` property. Also, all asynchronous validators
+ *      will only run once all synchronous validators have passed.
+ *
+ * Please note that if $http is used then it is important that the server returns a success HTTP response code
+ * in order to fulfill the validation and a status level of `4xx` in order to reject the validation.
+ *
+ * ```js
+ * ngModel.$asyncValidators.uniqueUsername = function(modelValue, viewValue) {
+ *   var value = modelValue || viewValue;
+ *
+ *   // Lookup user by username
+ *   return $http.get('/api/users/' + value).
+ *      then(function resolved() {
+ *        //username exists, this means validation fails
+ *        return $q.reject('exists');
+ *      }, function rejected() {
+ *        //username does not exist, therefore this validation passes
+ *        return true;
+ *      });
+ * };
+ * ```
+ *
+ * @property {Array.<Function>} $viewChangeListeners Array of functions to execute whenever the
+ *     view value has changed. It is called with no arguments, and its return value is ignored.
+ *     This can be used in place of additional $watches against the model value.
+ *
+ * @property {Object} $error An object hash with all failing validator ids as keys.
+ * @property {Object} $pending An object hash with all pending validator ids as keys.
+ *
+ * @property {boolean} $untouched True if control has not lost focus yet.
+ * @property {boolean} $touched True if control has lost focus.
+ * @property {boolean} $pristine True if user has not interacted with the control yet.
+ * @property {boolean} $dirty True if user has already interacted with the control.
+ * @property {boolean} $valid True if there is no error.
+ * @property {boolean} $invalid True if at least one error on the control.
+ * @property {string} $name The name attribute of the control.
+ *
+ * @description
+ *
+ * `NgModelController` provides API for the {@link ngModel `ngModel`} directive.
+ * The controller contains services for data-binding, validation, CSS updates, and value formatting
+ * and parsing. It purposefully does not contain any logic which deals with DOM rendering or
+ * listening to DOM events.
+ * Such DOM related logic should be provided by other directives which make use of
+ * `NgModelController` for data-binding to control elements.
+ * Angular provides this DOM logic for most {@link input `input`} elements.
+ * At the end of this page you can find a {@link ngModel.NgModelController#custom-control-example
+ * custom control example} that uses `ngModelController` to bind to `contenteditable` elements.
+ *
+ * @example
+ * ### Custom Control Example
+ * This example shows how to use `NgModelController` with a custom control to achieve
+ * data-binding. Notice how different directives (`contenteditable`, `ng-model`, and `required`)
+ * collaborate together to achieve the desired result.
+ *
+ * Note that `contenteditable` is an HTML5 attribute, which tells the browser to let the element
+ * contents be edited in place by the user.  This will not work on older browsers.
+ *
+ * We are using the {@link ng.service:$sce $sce} service here and include the {@link ngSanitize $sanitize}
+ * module to automatically remove "bad" content like inline event listener (e.g. `<span onclick="...">`).
+ * However, as we are using `$sce` the model can still decide to provide unsafe content if it marks
+ * that content using the `$sce` service.
+ *
+ * <example name="NgModelController" module="customControl" deps="angular-sanitize.js">
+    <file name="style.css">
+      [contenteditable] {
+        border: 1px solid black;
+        background-color: white;
+        min-height: 20px;
+      }
+
+      .ng-invalid {
+        border: 1px solid red;
+      }
+
+    </file>
+    <file name="script.js">
+      angular.module('customControl', ['ngSanitize']).
+        directive('contenteditable', ['$sce', function($sce) {
+          return {
+            restrict: 'A', // only activate on element attribute
+            require: '?ngModel', // get a hold of NgModelController
+            link: function(scope, element, attrs, ngModel) {
+              if (!ngModel) return; // do nothing if no ng-model
+
+              // Specify how UI should be updated
+              ngModel.$render = function() {
+                element.html($sce.getTrustedHtml(ngModel.$viewValue || ''));
+              };
+
+              // Listen for change events to enable binding
+              element.on('blur keyup change', function() {
+                scope.$evalAsync(read);
+              });
+              read(); // initialize
+
+              // Write data to the model
+              function read() {
+                var html = element.html();
+                // When we clear the content editable the browser leaves a <br> behind
+                // If strip-br attribute is provided then we strip this out
+                if ( attrs.stripBr && html == '<br>' ) {
+                  html = '';
+                }
+                ngModel.$setViewValue(html);
+              }
+            }
+          };
+        }]);
+    </file>
+    <file name="index.html">
+      <form name="myForm">
+       <div contenteditable
+            name="myWidget" ng-model="userContent"
+            strip-br="true"
+            required>Change me!</div>
+        <span ng-show="myForm.myWidget.$error.required">Required!</span>
+       <hr>
+       <textarea ng-model="userContent"></textarea>
+      </form>
+    </file>
+    <file name="protractor.js" type="protractor">
+    it('should data-bind and become invalid', function() {
+      if (browser.params.browser == 'safari' || browser.params.browser == 'firefox') {
+        // SafariDriver can't handle contenteditable
+        // and Firefox driver can't clear contenteditables very well
+        return;
+      }
+      var contentEditable = element(by.css('[contenteditable]'));
+      var content = 'Change me!';
+
+      expect(contentEditable.getText()).toEqual(content);
+
+      contentEditable.clear();
+      contentEditable.sendKeys(protractor.Key.BACK_SPACE);
+      expect(contentEditable.getText()).toEqual('');
+      expect(contentEditable.getAttribute('class')).toMatch(/ng-invalid-required/);
+    });
+    </file>
+ * </example>
+ *
+ *
+ */
+var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$parse', '$animate', '$timeout', '$rootScope', '$q', '$interpolate',
+    function($scope, $exceptionHandler, $attr, $element, $parse, $animate, $timeout, $rootScope, $q, $interpolate) {
+  this.$viewValue = Number.NaN;
+  this.$modelValue = Number.NaN;
+  this.$$rawModelValue = undefined; // stores the parsed modelValue / model set from scope regardless of validity.
+  this.$validators = {};
+  this.$asyncValidators = {};
+  this.$parsers = [];
+  this.$formatters = [];
+  this.$viewChangeListeners = [];
+  this.$untouched = true;
+  this.$touched = false;
+  this.$pristine = true;
+  this.$dirty = false;
+  this.$valid = true;
+  this.$invalid = false;
+  this.$error = {}; // keep invalid keys here
+  this.$$success = {}; // keep valid keys here
+  this.$pending = undefined; // keep pending keys here
+  this.$name = $interpolate($attr.name || '', false)($scope);
+
+
+  var parsedNgModel = $parse($attr.ngModel),
+      parsedNgModelAssign = parsedNgModel.assign,
+      ngModelGet = parsedNgModel,
+      ngModelSet = parsedNgModelAssign,
+      pendingDebounce = null,
+      ctrl = this;
+
+  this.$$setOptions = function(options) {
+    ctrl.$options = options;
+    if (options && options.getterSetter) {
+      var invokeModelGetter = $parse($attr.ngModel + '()'),
+          invokeModelSetter = $parse($attr.ngModel + '($$$p)');
+
+      ngModelGet = function($scope) {
+        var modelValue = parsedNgModel($scope);
+        if (isFunction(modelValue)) {
+          modelValue = invokeModelGetter($scope);
+        }
+        return modelValue;
+      };
+      ngModelSet = function($scope, newValue) {
+        if (isFunction(parsedNgModel($scope))) {
+          invokeModelSetter($scope, {$$$p: ctrl.$modelValue});
+        } else {
+          parsedNgModelAssign($scope, ctrl.$modelValue);
+        }
+      };
+    } else if (!parsedNgModel.assign) {
+      throw $ngModelMinErr('nonassign', "Expression '{0}' is non-assignable. Element: {1}",
+          $attr.ngModel, startingTag($element));
+    }
+  };
+
+  /**
+   * @ngdoc method
+   * @name ngModel.NgModelController#$render
+   *
+   * @description
+   * Called when the view needs to be updated. It is expected that the user of the ng-model
+   * directive will implement this method.
+   *
+   * The `$render()` method is invoked in the following situations:
+   *
+   * * `$rollbackViewValue()` is called.  If we are rolling back the view value to the last
+   *   committed value then `$render()` is called to update the input control.
+   * * The value referenced by `ng-model` is changed programmatically and both the `$modelValue` and
+   *   the `$viewValue` are different to last time.
+   *
+   * Since `ng-model` does not do a deep watch, `$render()` is only invoked if the values of
+   * `$modelValue` and `$viewValue` are actually different to their previous value. If `$modelValue`
+   * or `$viewValue` are objects (rather than a string or number) then `$render()` will not be
+   * invoked if you only change a property on the objects.
+   */
+  this.$render = noop;
+
+  /**
+   * @ngdoc method
+   * @name ngModel.NgModelController#$isEmpty
+   *
+   * @description
+   * This is called when we need to determine if the value of an input is empty.
+   *
+   * For instance, the required directive does this to work out if the input has data or not.
+   *
+   * The default `$isEmpty` function checks whether the value is `undefined`, `''`, `null` or `NaN`.
+   *
+   * You can override this for input directives whose concept of being empty is different to the
+   * default. The `checkboxInputType` directive does this because in its case a value of `false`
+   * implies empty.
+   *
+   * @param {*} value The value of the input to check for emptiness.
+   * @returns {boolean} True if `value` is "empty".
+   */
+  this.$isEmpty = function(value) {
+    return isUndefined(value) || value === '' || value === null || value !== value;
+  };
+
+  var parentForm = $element.inheritedData('$formController') || nullFormCtrl,
+      currentValidationRunId = 0;
+
+  /**
+   * @ngdoc method
+   * @name ngModel.NgModelController#$setValidity
+   *
+   * @description
+   * Change the validity state, and notify the form.
+   *
+   * This method can be called within $parsers/$formatters or a custom validation implementation.
+   * However, in most cases it should be sufficient to use the `ngModel.$validators` and
+   * `ngModel.$asyncValidators` collections which will call `$setValidity` automatically.
+   *
+   * @param {string} validationErrorKey Name of the validator. The `validationErrorKey` will be assigned
+   *        to either `$error[validationErrorKey]` or `$pending[validationErrorKey]`
+   *        (for unfulfilled `$asyncValidators`), so that it is available for data-binding.
+   *        The `validationErrorKey` should be in camelCase and will get converted into dash-case
+   *        for class name. Example: `myError` will result in `ng-valid-my-error` and `ng-invalid-my-error`
+   *        class and can be bound to as  `{{someForm.someControl.$error.myError}}` .
+   * @param {boolean} isValid Whether the current state is valid (true), invalid (false), pending (undefined),
+   *                          or skipped (null). Pending is used for unfulfilled `$asyncValidators`.
+   *                          Skipped is used by Angular when validators do not run because of parse errors and
+   *                          when `$asyncValidators` do not run because any of the `$validators` failed.
+   */
+  addSetValidityMethod({
+    ctrl: this,
+    $element: $element,
+    set: function(object, property) {
+      object[property] = true;
+    },
+    unset: function(object, property) {
+      delete object[property];
+    },
+    parentForm: parentForm,
+    $animate: $animate
+  });
+
+  /**
+   * @ngdoc method
+   * @name ngModel.NgModelController#$setPristine
+   *
+   * @description
+   * Sets the control to its pristine state.
+   *
+   * This method can be called to remove the `ng-dirty` class and set the control to its pristine
+   * state (`ng-pristine` class). A model is considered to be pristine when the control
+   * has not been changed from when first compiled.
+   */
+  this.$setPristine = function() {
+    ctrl.$dirty = false;
+    ctrl.$pristine = true;
+    $animate.removeClass($element, DIRTY_CLASS);
+    $animate.addClass($element, PRISTINE_CLASS);
+  };
+
+  /**
+   * @ngdoc method
+   * @name ngModel.NgModelController#$setDirty
+   *
+   * @description
+   * Sets the control to its dirty state.
+   *
+   * This method can be called to remove the `ng-pristine` class and set the control to its dirty
+   * state (`ng-dirty` class). A model is considered to be dirty when the control has been changed
+   * from when first compiled.
+   */
+  this.$setDirty = function() {
+    ctrl.$dirty = true;
+    ctrl.$pristine = false;
+    $animate.removeClass($element, PRISTINE_CLASS);
+    $animate.addClass($element, DIRTY_CLASS);
+    parentForm.$setDirty();
+  };
+
+  /**
+   * @ngdoc method
+   * @name ngModel.NgModelController#$setUntouched
+   *
+   * @description
+   * Sets the control to its untouched state.
+   *
+   * This method can be called to remove the `ng-touched` class and set the control to its
+   * untouched state (`ng-untouched` class). Upon compilation, a model is set as untouched
+   * by default, however this function can be used to restore that state if the model has
+   * already been touched by the user.
+   */
+  this.$setUntouched = function() {
+    ctrl.$touched = false;
+    ctrl.$untouched = true;
+    $animate.setClass($element, UNTOUCHED_CLASS, TOUCHED_CLASS);
+  };
+
+  /**
+   * @ngdoc method
+   * @name ngModel.NgModelController#$setTouched
+   *
+   * @description
+   * Sets the control to its touched state.
+   *
+   * This method can be called to remove the `ng-untouched` class and set the control to its
+   * touched state (`ng-touched` class). A model is considered to be touched when the user has
+   * first focused the control element and then shifted focus away from the control (blur event).
+   */
+  this.$setTouched = function() {
+    ctrl.$touched = true;
+    ctrl.$untouched = false;
+    $animate.setClass($element, TOUCHED_CLASS, UNTOUCHED_CLASS);
+  };
+
+  /**
+   * @ngdoc method
+   * @name ngModel.NgModelController#$rollbackViewValue
+   *
+   * @description
+   * Cancel an update and reset the input element's value to prevent an update to the `$modelValue`,
+   * which may be caused by a pending debounced event or because the input is waiting for a some
+   * future event.
+   *
+   * If you have an input that uses `ng-model-options` to set up debounced events or events such
+   * as blur you can have a situation where there is a period when the `$viewValue`
+   * is out of synch with the ngModel's `$modelValue`.
+   *
+   * In this case, you can run into difficulties if you try to update the ngModel's `$modelValue`
+   * programmatically before these debounced/future events have resolved/occurred, because Angular's
+   * dirty checking mechanism is not able to tell whether the model has actually changed or not.
+   *
+   * The `$rollbackViewValue()` method should be called before programmatically changing the model of an
+   * input which may have such events pending. This is important in order to make sure that the
+   * input field will be updated with the new model value and any pending operations are cancelled.
+   *
+   * <example name="ng-model-cancel-update" module="cancel-update-example">
+   *   <file name="app.js">
+   *     angular.module('cancel-update-example', [])
+   *
+   *     .controller('CancelUpdateController', ['$scope', function($scope) {
+   *       $scope.resetWithCancel = function(e) {
+   *         if (e.keyCode == 27) {
+   *           $scope.myForm.myInput1.$rollbackViewValue();
+   *           $scope.myValue = '';
+   *         }
+   *       };
+   *       $scope.resetWithoutCancel = function(e) {
+   *         if (e.keyCode == 27) {
+   *           $scope.myValue = '';
+   *         }
+   *       };
+   *     }]);
+   *   </file>
+   *   <file name="index.html">
+   *     <div ng-controller="CancelUpdateController">
+   *       <p>Try typing something in each input.  See that the model only updates when you
+   *          blur off the input.
+   *        </p>
+   *        <p>Now see what happens if you start typing then press the Escape key</p>
+   *
+   *       <form name="myForm" ng-model-options="{ updateOn: 'blur' }">
+   *         <p>With $rollbackViewValue()</p>
+   *         <input name="myInput1" ng-model="myValue" ng-keydown="resetWithCancel($event)"><br/>
+   *         myValue: "{{ myValue }}"
+   *
+   *         <p>Without $rollbackViewValue()</p>
+   *         <input name="myInput2" ng-model="myValue" ng-keydown="resetWithoutCancel($event)"><br/>
+   *         myValue: "{{ myValue }}"
+   *       </form>
+   *     </div>
+   *   </file>
+   * </example>
+   */
+  this.$rollbackViewValue = function() {
+    $timeout.cancel(pendingDebounce);
+    ctrl.$viewValue = ctrl.$$lastCommittedViewValue;
+    ctrl.$render();
+  };
+
+  /**
+   * @ngdoc method
+   * @name ngModel.NgModelController#$validate
+   *
+   * @description
+   * Runs each of the registered validators (first synchronous validators and then
+   * asynchronous validators).
+   * If the validity changes to invalid, the model will be set to `undefined`,
+   * unless {@link ngModelOptions `ngModelOptions.allowInvalid`} is `true`.
+   * If the validity changes to valid, it will set the model to the last available valid
+   * modelValue, i.e. either the last parsed value or the last value set from the scope.
+   */
+  this.$validate = function() {
+    // ignore $validate before model is initialized
+    if (isNumber(ctrl.$modelValue) && isNaN(ctrl.$modelValue)) {
+      return;
+    }
+
+    var viewValue = ctrl.$$lastCommittedViewValue;
+    // Note: we use the $$rawModelValue as $modelValue might have been
+    // set to undefined during a view -> model update that found validation
+    // errors. We can't parse the view here, since that could change
+    // the model although neither viewValue nor the model on the scope changed
+    var modelValue = ctrl.$$rawModelValue;
+
+    // Check if the there's a parse error, so we don't unset it accidentially
+    var parserName = ctrl.$$parserName || 'parse';
+    var parserValid = ctrl.$error[parserName] ? false : undefined;
+
+    var prevValid = ctrl.$valid;
+    var prevModelValue = ctrl.$modelValue;
+
+    var allowInvalid = ctrl.$options && ctrl.$options.allowInvalid;
+
+    ctrl.$$runValidators(parserValid, modelValue, viewValue, function(allValid) {
+      // If there was no change in validity, don't update the model
+      // This prevents changing an invalid modelValue to undefined
+      if (!allowInvalid && prevValid !== allValid) {
+        // Note: Don't check ctrl.$valid here, as we could have
+        // external validators (e.g. calculated on the server),
+        // that just call $setValidity and need the model value
+        // to calculate their validity.
+        ctrl.$modelValue = allValid ? modelValue : undefined;
+
+        if (ctrl.$modelValue !== prevModelValue) {
+          ctrl.$$writeModelToScope();
+        }
+      }
+    });
+
+  };
+
+  this.$$runValidators = function(parseValid, modelValue, viewValue, doneCallback) {
+    currentValidationRunId++;
+    var localValidationRunId = currentValidationRunId;
+
+    // check parser error
+    if (!processParseErrors(parseValid)) {
+      validationDone(false);
+      return;
+    }
+    if (!processSyncValidators()) {
+      validationDone(false);
+      return;
+    }
+    processAsyncValidators();
+
+    function processParseErrors(parseValid) {
+      var errorKey = ctrl.$$parserName || 'parse';
+      if (parseValid === undefined) {
+        setValidity(errorKey, null);
+      } else {
+        setValidity(errorKey, parseValid);
+        if (!parseValid) {
+          forEach(ctrl.$validators, function(v, name) {
+            setValidity(name, null);
+          });
+          forEach(ctrl.$asyncValidators, function(v, name) {
+            setValidity(name, null);
+          });
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function processSyncValidators() {
+      var syncValidatorsValid = true;
+      forEach(ctrl.$validators, function(validator, name) {
+        var result = validator(modelValue, viewValue);
+        syncValidatorsValid = syncValidatorsValid && result;
+        setValidity(name, result);
+      });
+      if (!syncValidatorsValid) {
+        forEach(ctrl.$asyncValidators, function(v, name) {
+          setValidity(name, null);
+        });
+        return false;
+      }
+      return true;
+    }
+
+    function processAsyncValidators() {
+      var validatorPromises = [];
+      var allValid = true;
+      forEach(ctrl.$asyncValidators, function(validator, name) {
+        var promise = validator(modelValue, viewValue);
+        if (!isPromiseLike(promise)) {
+          throw $ngModelMinErr("$asyncValidators",
+            "Expected asynchronous validator to return a promise but got '{0}' instead.", promise);
+        }
+        setValidity(name, undefined);
+        validatorPromises.push(promise.then(function() {
+          setValidity(name, true);
+        }, function(error) {
+          allValid = false;
+          setValidity(name, false);
+        }));
+      });
+      if (!validatorPromises.length) {
+        validationDone(true);
+      } else {
+        $q.all(validatorPromises).then(function() {
+          validationDone(allValid);
+        }, noop);
+      }
+    }
+
+    function setValidity(name, isValid) {
+      if (localValidationRunId === currentValidationRunId) {
+        ctrl.$setValidity(name, isValid);
+      }
+    }
+
+    function validationDone(allValid) {
+      if (localValidationRunId === currentValidationRunId) {
+
+        doneCallback(allValid);
+      }
+    }
+  };
+
+  /**
+   * @ngdoc method
+   * @name ngModel.NgModelController#$commitViewValue
+   *
+   * @description
+   * Commit a pending update to the `$modelValue`.
+   *
+   * Updates may be pending by a debounced event or because the input is waiting for a some future
+   * event defined in `ng-model-options`. this method is rarely needed as `NgModelController`
+   * usually handles calling this in response to input events.
+   */
+  this.$commitViewValue = function() {
+    var viewValue = ctrl.$viewValue;
+
+    $timeout.cancel(pendingDebounce);
+
+    // If the view value has not changed then we should just exit, except in the case where there is
+    // a native validator on the element. In this case the validation state may have changed even though
+    // the viewValue has stayed empty.
+    if (ctrl.$$lastCommittedViewValue === viewValue && (viewValue !== '' || !ctrl.$$hasNativeValidators)) {
+      return;
+    }
+    ctrl.$$lastCommittedViewValue = viewValue;
+
+    // change to dirty
+    if (ctrl.$pristine) {
+      this.$setDirty();
+    }
+    this.$$parseAndValidate();
+  };
+
+  this.$$parseAndValidate = function() {
+    var viewValue = ctrl.$$lastCommittedViewValue;
+    var modelValue = viewValue;
+    var parserValid = isUndefined(modelValue) ? undefined : true;
+
+    if (parserValid) {
+      for (var i = 0; i < ctrl.$parsers.length; i++) {
+        modelValue = ctrl.$parsers[i](modelValue);
+        if (isUndefined(modelValue)) {
+          parserValid = false;
+          break;
+        }
+      }
+    }
+    if (isNumber(ctrl.$modelValue) && isNaN(ctrl.$modelValue)) {
+      // ctrl.$modelValue has not been touched yet...
+      ctrl.$modelValue = ngModelGet($scope);
+    }
+    var prevModelValue = ctrl.$modelValue;
+    var allowInvalid = ctrl.$options && ctrl.$options.allowInvalid;
+    ctrl.$$rawModelValue = modelValue;
+
+    if (allowInvalid) {
+      ctrl.$modelValue = modelValue;
+      writeToModelIfNeeded();
+    }
+
+    // Pass the $$lastCommittedViewValue here, because the cached viewValue might be out of date.
+    // This can happen if e.g. $setViewValue is called from inside a parser
+    ctrl.$$runValidators(parserValid, modelValue, ctrl.$$lastCommittedViewValue, function(allValid) {
+      if (!allowInvalid) {
+        // Note: Don't check ctrl.$valid here, as we could have
+        // external validators (e.g. calculated on the server),
+        // that just call $setValidity and need the model value
+        // to calculate their validity.
+        ctrl.$modelValue = allValid ? modelValue : undefined;
+        writeToModelIfNeeded();
+      }
+    });
+
+    function writeToModelIfNeeded() {
+      if (ctrl.$modelValue !== prevModelValue) {
+        ctrl.$$writeModelToScope();
+      }
+    }
+  };
+
+  this.$$writeModelToScope = function() {
+    ngModelSet($scope, ctrl.$modelValue);
+    forEach(ctrl.$viewChangeListeners, function(listener) {
+      try {
+        listener();
+      } catch (e) {
+        $exceptionHandler(e);
+      }
+    });
+  };
+
+  /**
+   * @ngdoc method
+   * @name ngModel.NgModelController#$setViewValue
+   *
+   * @description
+   * Update the view value.
+   *
+   * This method should be called when an input directive want to change the view value; typically,
+   * this is done from within a DOM event handler.
+   *
+   * For example {@link ng.directive:input input} calls it when the value of the input changes and
+   * {@link ng.directive:select select} calls it when an option is selected.
+   *
+   * If the new `value` is an object (rather than a string or a number), we should make a copy of the
+   * object before passing it to `$setViewValue`.  This is because `ngModel` does not perform a deep
+   * watch of objects, it only looks for a change of identity. If you only change the property of
+   * the object then ngModel will not realise that the object has changed and will not invoke the
+   * `$parsers` and `$validators` pipelines.
+   *
+   * For this reason, you should not change properties of the copy once it has been passed to
+   * `$setViewValue`. Otherwise you may cause the model value on the scope to change incorrectly.
+   *
+   * When this method is called, the new `value` will be staged for committing through the `$parsers`
+   * and `$validators` pipelines. If there are no special {@link ngModelOptions} specified then the staged
+   * value sent directly for processing, finally to be applied to `$modelValue` and then the
+   * **expression** specified in the `ng-model` attribute.
+   *
+   * Lastly, all the registered change listeners, in the `$viewChangeListeners` list, are called.
+   *
+   * In case the {@link ng.directive:ngModelOptions ngModelOptions} directive is used with `updateOn`
+   * and the `default` trigger is not listed, all those actions will remain pending until one of the
+   * `updateOn` events is triggered on the DOM element.
+   * All these actions will be debounced if the {@link ng.directive:ngModelOptions ngModelOptions}
+   * directive is used with a custom debounce for this particular event.
+   *
+   * Note that calling this function does not trigger a `$digest`.
+   *
+   * @param {string} value Value from the view.
+   * @param {string} trigger Event that triggered the update.
+   */
+  this.$setViewValue = function(value, trigger) {
+    ctrl.$viewValue = value;
+    if (!ctrl.$options || ctrl.$options.updateOnDefault) {
+      ctrl.$$debounceViewValueCommit(trigger);
+    }
+  };
+
+  this.$$debounceViewValueCommit = function(trigger) {
+    var debounceDelay = 0,
+        options = ctrl.$options,
+        debounce;
+
+    if (options && isDefined(options.debounce)) {
+      debounce = options.debounce;
+      if (isNumber(debounce)) {
+        debounceDelay = debounce;
+      } else if (isNumber(debounce[trigger])) {
+        debounceDelay = debounce[trigger];
+      } else if (isNumber(debounce['default'])) {
+        debounceDelay = debounce['default'];
+      }
+    }
+
+    $timeout.cancel(pendingDebounce);
+    if (debounceDelay) {
+      pendingDebounce = $timeout(function() {
+        ctrl.$commitViewValue();
+      }, debounceDelay);
+    } else if ($rootScope.$$phase) {
+      ctrl.$commitViewValue();
+    } else {
+      $scope.$apply(function() {
+        ctrl.$commitViewValue();
+      });
+    }
+  };
+
+  // model -> value
+  // Note: we cannot use a normal scope.$watch as we want to detect the following:
+  // 1. scope value is 'a'
+  // 2. user enters 'b'
+  // 3. ng-change kicks in and reverts scope value to 'a'
+  //    -> scope value did not change since the last digest as
+  //       ng-change executes in apply phase
+  // 4. view should be changed back to 'a'
+  $scope.$watch(function ngModelWatch() {
+    var modelValue = ngModelGet($scope);
+
+    // if scope model value and ngModel value are out of sync
+    // TODO(perf): why not move this to the action fn?
+    if (modelValue !== ctrl.$modelValue) {
+      ctrl.$modelValue = ctrl.$$rawModelValue = modelValue;
+
+      var formatters = ctrl.$formatters,
+          idx = formatters.length;
+
+      var viewValue = modelValue;
+      while (idx--) {
+        viewValue = formatters[idx](viewValue);
+      }
+      if (ctrl.$viewValue !== viewValue) {
+        ctrl.$viewValue = ctrl.$$lastCommittedViewValue = viewValue;
+        ctrl.$render();
+
+        ctrl.$$runValidators(undefined, modelValue, viewValue, noop);
+      }
+    }
+
+    return modelValue;
+  });
+}];
+
+
+/**
+ * @ngdoc directive
+ * @name ngModel
+ *
+ * @element input
+ * @priority 1
+ *
+ * @description
+ * The `ngModel` directive binds an `input`,`select`, `textarea` (or custom form control) to a
+ * property on the scope using {@link ngModel.NgModelController NgModelController},
+ * which is created and exposed by this directive.
+ *
+ * `ngModel` is responsible for:
+ *
+ * - Binding the view into the model, which other directives such as `input`, `textarea` or `select`
+ *   require.
+ * - Providing validation behavior (i.e. required, number, email, url).
+ * - Keeping the state of the control (valid/invalid, dirty/pristine, touched/untouched, validation errors).
+ * - Setting related css classes on the element (`ng-valid`, `ng-invalid`, `ng-dirty`, `ng-pristine`, `ng-touched`, `ng-untouched`) including animations.
+ * - Registering the control with its parent {@link ng.directive:form form}.
+ *
+ * Note: `ngModel` will try to bind to the property given by evaluating the expression on the
+ * current scope. If the property doesn't already exist on this scope, it will be created
+ * implicitly and added to the scope.
+ *
+ * For best practices on using `ngModel`, see:
+ *
+ *  - [Understanding Scopes](https://github.com/angular/angular.js/wiki/Understanding-Scopes)
+ *
+ * For basic examples, how to use `ngModel`, see:
+ *
+ *  - {@link ng.directive:input input}
+ *    - {@link input[text] text}
+ *    - {@link input[checkbox] checkbox}
+ *    - {@link input[radio] radio}
+ *    - {@link input[number] number}
+ *    - {@link input[email] email}
+ *    - {@link input[url] url}
+ *    - {@link input[date] date}
+ *    - {@link input[datetime-local] datetime-local}
+ *    - {@link input[time] time}
+ *    - {@link input[month] month}
+ *    - {@link input[week] week}
+ *  - {@link ng.directive:select select}
+ *  - {@link ng.directive:textarea textarea}
+ *
+ * # CSS classes
+ * The following CSS classes are added and removed on the associated input/select/textarea element
+ * depending on the validity of the model.
+ *
+ *  - `ng-valid`: the model is valid
+ *  - `ng-invalid`: the model is invalid
+ *  - `ng-valid-[key]`: for each valid key added by `$setValidity`
+ *  - `ng-invalid-[key]`: for each invalid key added by `$setValidity`
+ *  - `ng-pristine`: the control hasn't been interacted with yet
+ *  - `ng-dirty`: the control has been interacted with
+ *  - `ng-touched`: the control has been blurred
+ *  - `ng-untouched`: the control hasn't been blurred
+ *  - `ng-pending`: any `$asyncValidators` are unfulfilled
+ *
+ * Keep in mind that ngAnimate can detect each of these classes when added and removed.
+ *
+ * ## Animation Hooks
+ *
+ * Animations within models are triggered when any of the associated CSS classes are added and removed
+ * on the input element which is attached to the model. These classes are: `.ng-pristine`, `.ng-dirty`,
+ * `.ng-invalid` and `.ng-valid` as well as any other validations that are performed on the model itself.
+ * The animations that are triggered within ngModel are similar to how they work in ngClass and
+ * animations can be hooked into using CSS transitions, keyframes as well as JS animations.
+ *
+ * The following example shows a simple way to utilize CSS transitions to style an input element
+ * that has been rendered as invalid after it has been validated:
+ *
+ * <pre>
+ * //be sure to include ngAnimate as a module to hook into more
+ * //advanced animations
+ * .my-input {
+ *   transition:0.5s linear all;
+ *   background: white;
+ * }
+ * .my-input.ng-invalid {
+ *   background: red;
+ *   color:white;
+ * }
+ * </pre>
+ *
+ * @example
+ * <example deps="angular-animate.js" animations="true" fixBase="true" module="inputExample">
+     <file name="index.html">
+       <script>
+        angular.module('inputExample', [])
+          .controller('ExampleController', ['$scope', function($scope) {
+            $scope.val = '1';
+          }]);
+       </script>
+       <style>
+         .my-input {
+           -webkit-transition:all linear 0.5s;
+           transition:all linear 0.5s;
+           background: transparent;
+         }
+         .my-input.ng-invalid {
+           color:white;
+           background: red;
+         }
+       </style>
+       Update input to see transitions when valid/invalid.
+       Integer is a valid value.
+       <form name="testForm" ng-controller="ExampleController">
+         <input ng-model="val" ng-pattern="/^\d+$/" name="anim" class="my-input" />
+       </form>
+     </file>
+ * </example>
+ *
+ * ## Binding to a getter/setter
+ *
+ * Sometimes it's helpful to bind `ngModel` to a getter/setter function.  A getter/setter is a
+ * function that returns a representation of the model when called with zero arguments, and sets
+ * the internal state of a model when called with an argument. It's sometimes useful to use this
+ * for models that have an internal representation that's different than what the model exposes
+ * to the view.
+ *
+ * <div class="alert alert-success">
+ * **Best Practice:** It's best to keep getters fast because Angular is likely to call them more
+ * frequently than other parts of your code.
+ * </div>
+ *
+ * You use this behavior by adding `ng-model-options="{ getterSetter: true }"` to an element that
+ * has `ng-model` attached to it. You can also add `ng-model-options="{ getterSetter: true }"` to
+ * a `<form>`, which will enable this behavior for all `<input>`s within it. See
+ * {@link ng.directive:ngModelOptions `ngModelOptions`} for more.
+ *
+ * The following example shows how to use `ngModel` with a getter/setter:
+ *
+ * @example
+ * <example name="ngModel-getter-setter" module="getterSetterExample">
+     <file name="index.html">
+       <div ng-controller="ExampleController">
+         <form name="userForm">
+           Name:
+           <input type="text" name="userName"
+                  ng-model="user.name"
+                  ng-model-options="{ getterSetter: true }" />
+         </form>
+         <pre>user.name = <span ng-bind="user.name()"></span></pre>
+       </div>
+     </file>
+     <file name="app.js">
+       angular.module('getterSetterExample', [])
+         .controller('ExampleController', ['$scope', function($scope) {
+           var _name = 'Brian';
+           $scope.user = {
+             name: function(newName) {
+               if (angular.isDefined(newName)) {
+                 _name = newName;
+               }
+               return _name;
+             }
+           };
+         }]);
+     </file>
+ * </example>
+ */
+var ngModelDirective = ['$rootScope', function($rootScope) {
+  return {
+    restrict: 'A',
+    require: ['ngModel', '^?form', '^?ngModelOptions'],
+    controller: NgModelController,
+    // Prelink needs to run before any input directive
+    // so that we can set the NgModelOptions in NgModelController
+    // before anyone else uses it.
+    priority: 1,
+    compile: function ngModelCompile(element) {
+      // Setup initial state of the control
+      element.addClass(PRISTINE_CLASS).addClass(UNTOUCHED_CLASS).addClass(VALID_CLASS);
+
+      return {
+        pre: function ngModelPreLink(scope, element, attr, ctrls) {
+          var modelCtrl = ctrls[0],
+              formCtrl = ctrls[1] || nullFormCtrl;
+
+          modelCtrl.$$setOptions(ctrls[2] && ctrls[2].$options);
+
+          // notify others, especially parent forms
+          formCtrl.$addControl(modelCtrl);
+
+          attr.$observe('name', function(newValue) {
+            if (modelCtrl.$name !== newValue) {
+              formCtrl.$$renameControl(modelCtrl, newValue);
+            }
+          });
+
+          scope.$on('$destroy', function() {
+            formCtrl.$removeControl(modelCtrl);
+          });
+        },
+        post: function ngModelPostLink(scope, element, attr, ctrls) {
+          var modelCtrl = ctrls[0];
+          if (modelCtrl.$options && modelCtrl.$options.updateOn) {
+            element.on(modelCtrl.$options.updateOn, function(ev) {
+              modelCtrl.$$debounceViewValueCommit(ev && ev.type);
+            });
+          }
+
+          element.on('blur', function(ev) {
+            if (modelCtrl.$touched) return;
+
+            if ($rootScope.$$phase) {
+              scope.$evalAsync(modelCtrl.$setTouched);
+            } else {
+              scope.$apply(modelCtrl.$setTouched);
+            }
+          });
+        }
+      };
+    }
+  };
+}];
+
+var DEFAULT_REGEXP = /(\s+|^)default(\s+|$)/;
+
+/**
+ * @ngdoc directive
+ * @name ngModelOptions
+ *
+ * @description
+ * Allows tuning how model updates are done. Using `ngModelOptions` you can specify a custom list of
+ * events that will trigger a model update and/or a debouncing delay so that the actual update only
+ * takes place when a timer expires; this timer will be reset after another change takes place.
+ *
+ * Given the nature of `ngModelOptions`, the value displayed inside input fields in the view might
+ * be different than the value in the actual model. This means that if you update the model you
+ * should also invoke {@link ngModel.NgModelController `$rollbackViewValue`} on the relevant input field in
+ * order to make sure it is synchronized with the model and that any debounced action is canceled.
+ *
+ * The easiest way to reference the control's {@link ngModel.NgModelController `$rollbackViewValue`}
+ * method is by making sure the input is placed inside a form that has a `name` attribute. This is
+ * important because `form` controllers are published to the related scope under the name in their
+ * `name` attribute.
+ *
+ * Any pending changes will take place immediately when an enclosing form is submitted via the
+ * `submit` event. Note that `ngClick` events will occur before the model is updated. Use `ngSubmit`
+ * to have access to the updated model.
+ *
+ * `ngModelOptions` has an effect on the element it's declared on and its descendants.
+ *
+ * @param {Object} ngModelOptions options to apply to the current model. Valid keys are:
+ *   - `updateOn`: string specifying which event should the input be bound to. You can set several
+ *     events using an space delimited list. There is a special event called `default` that
+ *     matches the default events belonging of the control.
+ *   - `debounce`: integer value which contains the debounce model update value in milliseconds. A
+ *     value of 0 triggers an immediate update. If an object is supplied instead, you can specify a
+ *     custom value for each event. For example:
+ *     `ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"`
+ *   - `allowInvalid`: boolean value which indicates that the model can be set with values that did
+ *     not validate correctly instead of the default behavior of setting the model to undefined.
+ *   - `getterSetter`: boolean value which determines whether or not to treat functions bound to
+       `ngModel` as getters/setters.
+ *   - `timezone`: Defines the timezone to be used to read/write the `Date` instance in the model for
+ *     `<input type="date">`, `<input type="time">`, ... . Right now, the only supported value is `'UTC'`,
+ *     otherwise the default timezone of the browser will be used.
+ *
+ * @example
+
+  The following example shows how to override immediate updates. Changes on the inputs within the
+  form will update the model only when the control loses focus (blur event). If `escape` key is
+  pressed while the input field is focused, the value is reset to the value in the current model.
+
+  <example name="ngModelOptions-directive-blur" module="optionsExample">
+    <file name="index.html">
+      <div ng-controller="ExampleController">
+        <form name="userForm">
+          Name:
+          <input type="text" name="userName"
+                 ng-model="user.name"
+                 ng-model-options="{ updateOn: 'blur' }"
+                 ng-keyup="cancel($event)" /><br />
+
+          Other data:
+          <input type="text" ng-model="user.data" /><br />
+        </form>
+        <pre>user.name = <span ng-bind="user.name"></span></pre>
+      </div>
+    </file>
+    <file name="app.js">
+      angular.module('optionsExample', [])
+        .controller('ExampleController', ['$scope', function($scope) {
+          $scope.user = { name: 'say', data: '' };
+
+          $scope.cancel = function(e) {
+            if (e.keyCode == 27) {
+              $scope.userForm.userName.$rollbackViewValue();
+            }
+          };
+        }]);
+    </file>
+    <file name="protractor.js" type="protractor">
+      var model = element(by.binding('user.name'));
+      var input = element(by.model('user.name'));
+      var other = element(by.model('user.data'));
+
+      it('should allow custom events', function() {
+        input.sendKeys(' hello');
+        input.click();
+        expect(model.getText()).toEqual('say');
+        other.click();
+        expect(model.getText()).toEqual('say hello');
+      });
+
+      it('should $rollbackViewValue when model changes', function() {
+        input.sendKeys(' hello');
+        expect(input.getAttribute('value')).toEqual('say hello');
+        input.sendKeys(protractor.Key.ESCAPE);
+        expect(input.getAttribute('value')).toEqual('say');
+        other.click();
+        expect(model.getText()).toEqual('say');
+      });
+    </file>
+  </example>
+
+  This one shows how to debounce model changes. Model will be updated only 1 sec after last change.
+  If the `Clear` button is pressed, any debounced action is canceled and the value becomes empty.
+
+  <example name="ngModelOptions-directive-debounce" module="optionsExample">
+    <file name="index.html">
+      <div ng-controller="ExampleController">
+        <form name="userForm">
+          Name:
+          <input type="text" name="userName"
+                 ng-model="user.name"
+                 ng-model-options="{ debounce: 1000 }" />
+          <button ng-click="userForm.userName.$rollbackViewValue(); user.name=''">Clear</button><br />
+        </form>
+        <pre>user.name = <span ng-bind="user.name"></span></pre>
+      </div>
+    </file>
+    <file name="app.js">
+      angular.module('optionsExample', [])
+        .controller('ExampleController', ['$scope', function($scope) {
+          $scope.user = { name: 'say' };
+        }]);
+    </file>
+  </example>
+
+  This one shows how to bind to getter/setters:
+
+  <example name="ngModelOptions-directive-getter-setter" module="getterSetterExample">
+    <file name="index.html">
+      <div ng-controller="ExampleController">
+        <form name="userForm">
+          Name:
+          <input type="text" name="userName"
+                 ng-model="user.name"
+                 ng-model-options="{ getterSetter: true }" />
+        </form>
+        <pre>user.name = <span ng-bind="user.name()"></span></pre>
+      </div>
+    </file>
+    <file name="app.js">
+      angular.module('getterSetterExample', [])
+        .controller('ExampleController', ['$scope', function($scope) {
+          var _name = 'Brian';
+          $scope.user = {
+            name: function(newName) {
+              return angular.isDefined(newName) ? (_name = newName) : _name;
+            }
+          };
+        }]);
+    </file>
+  </example>
+ */
+var ngModelOptionsDirective = function() {
+  return {
+    restrict: 'A',
+    controller: ['$scope', '$attrs', function($scope, $attrs) {
+      var that = this;
+      this.$options = $scope.$eval($attrs.ngModelOptions);
+      // Allow adding/overriding bound events
+      if (this.$options.updateOn !== undefined) {
+        this.$options.updateOnDefault = false;
+        // extract "default" pseudo-event from list of events that can trigger a model update
+        this.$options.updateOn = trim(this.$options.updateOn.replace(DEFAULT_REGEXP, function() {
+          that.$options.updateOnDefault = true;
+          return ' ';
+        }));
+      } else {
+        this.$options.updateOnDefault = true;
+      }
+    }]
+  };
+};
+
+
+
+// helper methods
+function addSetValidityMethod(context) {
+  var ctrl = context.ctrl,
+      $element = context.$element,
+      classCache = {},
+      set = context.set,
+      unset = context.unset,
+      parentForm = context.parentForm,
+      $animate = context.$animate;
+
+  classCache[INVALID_CLASS] = !(classCache[VALID_CLASS] = $element.hasClass(VALID_CLASS));
+
+  ctrl.$setValidity = setValidity;
+
+  function setValidity(validationErrorKey, state, controller) {
+    if (state === undefined) {
+      createAndSet('$pending', validationErrorKey, controller);
+    } else {
+      unsetAndCleanup('$pending', validationErrorKey, controller);
+    }
+    if (!isBoolean(state)) {
+      unset(ctrl.$error, validationErrorKey, controller);
+      unset(ctrl.$$success, validationErrorKey, controller);
+    } else {
+      if (state) {
+        unset(ctrl.$error, validationErrorKey, controller);
+        set(ctrl.$$success, validationErrorKey, controller);
+      } else {
+        set(ctrl.$error, validationErrorKey, controller);
+        unset(ctrl.$$success, validationErrorKey, controller);
+      }
+    }
+    if (ctrl.$pending) {
+      cachedToggleClass(PENDING_CLASS, true);
+      ctrl.$valid = ctrl.$invalid = undefined;
+      toggleValidationCss('', null);
+    } else {
+      cachedToggleClass(PENDING_CLASS, false);
+      ctrl.$valid = isObjectEmpty(ctrl.$error);
+      ctrl.$invalid = !ctrl.$valid;
+      toggleValidationCss('', ctrl.$valid);
+    }
+
+    // re-read the state as the set/unset methods could have
+    // combined state in ctrl.$error[validationError] (used for forms),
+    // where setting/unsetting only increments/decrements the value,
+    // and does not replace it.
+    var combinedState;
+    if (ctrl.$pending && ctrl.$pending[validationErrorKey]) {
+      combinedState = undefined;
+    } else if (ctrl.$error[validationErrorKey]) {
+      combinedState = false;
+    } else if (ctrl.$$success[validationErrorKey]) {
+      combinedState = true;
+    } else {
+      combinedState = null;
+    }
+
+    toggleValidationCss(validationErrorKey, combinedState);
+    parentForm.$setValidity(validationErrorKey, combinedState, ctrl);
+  }
+
+  function createAndSet(name, value, controller) {
+    if (!ctrl[name]) {
+      ctrl[name] = {};
+    }
+    set(ctrl[name], value, controller);
+  }
+
+  function unsetAndCleanup(name, value, controller) {
+    if (ctrl[name]) {
+      unset(ctrl[name], value, controller);
+    }
+    if (isObjectEmpty(ctrl[name])) {
+      ctrl[name] = undefined;
+    }
+  }
+
+  function cachedToggleClass(className, switchValue) {
+    if (switchValue && !classCache[className]) {
+      $animate.addClass($element, className);
+      classCache[className] = true;
+    } else if (!switchValue && classCache[className]) {
+      $animate.removeClass($element, className);
+      classCache[className] = false;
+    }
+  }
+
+  function toggleValidationCss(validationErrorKey, isValid) {
+    validationErrorKey = validationErrorKey ? '-' + snake_case(validationErrorKey, '-') : '';
+
+    cachedToggleClass(VALID_CLASS + validationErrorKey, isValid === true);
+    cachedToggleClass(INVALID_CLASS + validationErrorKey, isValid === false);
+  }
+}
+
+function isObjectEmpty(obj) {
+  if (obj) {
+    for (var prop in obj) {
+      return false;
+    }
+  }
+  return true;
+}
 
 /**
  * @ngdoc directive
@@ -31918,6 +32004,29 @@ var ngPluralizeDirective = ['$locale', '$interpolate', function($locale, $interp
  * Creating aliases for these properties is possible with {@link ng.directive:ngInit `ngInit`}.
  * This may be useful when, for instance, nesting ngRepeats.
  *
+ * # Iterating over object properties
+ *
+ * It is possible to get `ngRepeat` to iterate over the properties of an object using the following
+ * syntax:
+ *
+ * ```js
+ * <div ng-repeat="(key, value) in myObj"> ... </div>
+ * ```
+ *
+ * You need to be aware that the JavaScript specification does not define what order
+ * it will return the keys for an object. In order to have a guaranteed deterministic order
+ * for the keys, Angular versions up to and including 1.3 **sort the keys alphabetically**.
+ *
+ * If this is not desired, the recommended workaround is to convert your object into an array
+ * that is sorted into the order that you prefer before providing it to `ngRepeat`.  You could
+ * do this with a filter such as [toArrayFilter](http://ngmodules.org/modules/angular-toArrayFilter)
+ * or implement a `$watch` on the object yourself.
+ *
+ * In version 1.4 we will remove the sorting, since it seems that browsers generally follow the
+ * strategy of providing keys in the order in which they were defined, although there are exceptions
+ * when keys are deleted and reinstated.
+ *
+ *
  * # Special repeat start and end points
  * To repeat a series of elements instead of just one parent element, ngRepeat (as well as other ng directives) supports extending
  * the range of the repeater by defining explicit start and end points by using **ng-repeat-start** and **ng-repeat-end** respectively.
@@ -32152,7 +32261,7 @@ var ngRepeatDirective = ['$parse', '$animate', function($parse, $animate) {
       var aliasAs = match[3];
       var trackByExp = match[4];
 
-      match = lhs.match(/^(?:([\$\w]+)|\(([\$\w]+)\s*,\s*([\$\w]+)\))$/);
+      match = lhs.match(/^(?:(\s*[\$\w]+)|\(\s*([\$\w]+)\s*,\s*([\$\w]+)\s*\))$/);
 
       if (!match) {
         throw ngRepeatMinErr('iidexp', "'_item_' in '_item_ in _collection_' should be an identifier or '(_key_, _value_)' expression, but got '{0}'.",
@@ -32162,7 +32271,7 @@ var ngRepeatDirective = ['$parse', '$animate', function($parse, $animate) {
       var keyIdentifier = match[2];
 
       if (aliasAs && (!/^[$a-zA-Z_][$a-zA-Z0-9_]*$/.test(aliasAs) ||
-          /^(null|undefined|this|\$index|\$first|\$middle|\$last|\$even|\$odd|\$parent)$/.test(aliasAs))) {
+          /^(null|undefined|this|\$index|\$first|\$middle|\$last|\$even|\$odd|\$parent|\$root|\$id)$/.test(aliasAs))) {
         throw ngRepeatMinErr('badident', "alias '{0}' is invalid --- must be a valid JS identifier which is not a reserved name.",
           aliasAs);
       }
@@ -32374,10 +32483,11 @@ var NG_HIDE_IN_PROGRESS_CLASS = 'ng-hide-animate';
  *
  * By default, the `.ng-hide` class will style the element with `display: none!important`. If you wish to change
  * the hide behavior with ngShow/ngHide then this can be achieved by restating the styles for the `.ng-hide`
- * class in CSS:
+ * class CSS. Note that the selector that needs to be used is actually `.ng-hide:not(.ng-hide-animate)` to cope
+ * with extra animation classes that can be added.
  *
  * ```css
- * .ng-hide {
+ * .ng-hide:not(.ng-hide-animate) {
  *   /&#42; this is just another form of hiding an element &#42;/
  *   display: block!important;
  *   position: absolute;
@@ -32715,12 +32825,12 @@ var ngHideDirective = ['$animate', function($animate) {
    </example>
  */
 var ngStyleDirective = ngDirective(function(scope, element, attr) {
-  scope.$watch(attr.ngStyle, function ngStyleWatchAction(newStyles, oldStyles) {
+  scope.$watchCollection(attr.ngStyle, function ngStyleWatchAction(newStyles, oldStyles) {
     if (oldStyles && (newStyles !== oldStyles)) {
       forEach(oldStyles, function(val, style) { element.css(style, '');});
     }
     if (newStyles) element.css(newStyles);
-  }, true);
+  });
 });
 
 /**
@@ -33061,14 +33171,15 @@ var ngOptionsMinErr = minErr('ngOptions');
  *
  * The `ngOptions` attribute can be used to dynamically generate a list of `<option>`
  * elements for the `<select>` element using the array or object obtained by evaluating the
- * `ngOptions` comprehension_expression.
+ * `ngOptions` comprehension expression.
  *
  * In many cases, `ngRepeat` can be used on `<option>` elements instead of `ngOptions` to achieve a
- * similar result. However, the `ngOptions` provides some benefits such as reducing memory and
+ * similar result. However, `ngOptions` provides some benefits such as reducing memory and
  * increasing speed by not creating a new scope for each repeated instance, as well as providing
- * more flexibility in how the `select`'s model is assigned via `select as`. `ngOptions` should be
- * used when the `select` model needs to be bound to a non-string value. This is because an option
- * element can only be bound to string values at present.
+ * more flexibility in how the `<select>`'s model is assigned via the `select` **`as`** part of the
+ * comprehension expression. `ngOptions` should be used when the `<select>` model needs to be bound
+ *  to a non-string value. This is because an option element can only be bound to string values at
+ * present.
  *
  * When an item in the `<select>` menu is selected, the array element or object property
  * represented by the selected option will be bound to the model identified by the `ngModel`
@@ -33083,28 +33194,51 @@ var ngOptionsMinErr = minErr('ngOptions');
  * array of objects. See an example [in this jsfiddle](http://jsfiddle.net/qWzTb/).
  * </div>
  *
- * ## `select as`
+ * ## `select` **`as`**
  *
- * Using `select as` will bind the result of the `select as` expression to the model, but
+ * Using `select` **`as`** will bind the result of the `select` expression to the model, but
  * the value of the `<select>` and `<option>` html elements will be either the index (for array data sources)
- * or property name (for object data sources) of the value within the collection. If a `track by` expression
+ * or property name (for object data sources) of the value within the collection. If a **`track by`** expression
  * is used, the result of that expression will be set as the value of the `option` and `select` elements.
  *
- * ### `select as` with `track by`
  *
- * Using `select as` together with `track by` is not recommended. Reasoning:
+ * ### `select` **`as`** and **`track by`**
  *
- * - Example: &lt;select ng-options="item.subItem as item.label for item in values track by item.id" ng-model="selected"&gt;
- *   values: [{id: 1, label: 'aLabel', subItem: {name: 'aSubItem'}}, {id: 2, label: 'bLabel', subItem: {name: 'bSubItem'}}],
- *   $scope.selected = {name: 'aSubItem'};
- * - track by is always applied to `value`, with the purpose of preserving the selection,
- *   (to `item` in this case)
- * - to calculate whether an item is selected we do the following:
- *   1. apply `track by` to the values in the array, e.g.
- *      In the example: [1,2]
- *   2. apply `track by` to the already selected value in `ngModel`:
- *      In the example: this is not possible, as `track by` refers to `item.id`, but the selected
- *      value from `ngModel` is `{name: aSubItem}`.
+ * <div class="alert alert-warning">
+ * Do not use `select` **`as`** and **`track by`** in the same expression. They are not designed to work together.
+ * </div>
+ *
+ * Consider the following example:
+ *
+ * ```html
+ * <select ng-options="item.subItem as item.label for item in values track by item.id" ng-model="selected">
+ * ```
+ *
+ * ```js
+ * $scope.values = [{
+ *   id: 1,
+ *   label: 'aLabel',
+ *   subItem: { name: 'aSubItem' }
+ * }, {
+ *   id: 2,
+ *   label: 'bLabel',
+ *   subItem: { name: 'bSubItem' }
+ * }];
+ *
+ * $scope.selected = { name: 'aSubItem' };
+ * ```
+ *
+ * With the purpose of preserving the selection, the **`track by`** expression is always applied to the element
+ * of the data source (to `item` in this example). To calculate whether an element is selected, we do the
+ * following:
+ *
+ * 1. Apply **`track by`** to the elements in the array. In the example: `[1, 2]`
+ * 2. Apply **`track by`** to the already selected value in `ngModel`.
+ *    In the example: this is not possible as **`track by`** refers to `item.id`, but the selected
+ *    value from `ngModel` is `{name: 'aSubItem'}`, so the **`track by`** expression is applied to
+ *    a wrong object, the selected element can't be found, `<select>` is always reset to the "not
+ *    selected" option.
+ *
  *
  * @param {string} ngModel Assignable angular expression to data-bind to.
  * @param {string=} name Property name of the form under which the control is published.
@@ -33804,6 +33938,96 @@ var styleDirective = valueFn({
   terminal: false
 });
 
+var requiredDirective = function() {
+  return {
+    restrict: 'A',
+    require: '?ngModel',
+    link: function(scope, elm, attr, ctrl) {
+      if (!ctrl) return;
+      attr.required = true; // force truthy in case we are on non input element
+
+      ctrl.$validators.required = function(modelValue, viewValue) {
+        return !attr.required || !ctrl.$isEmpty(viewValue);
+      };
+
+      attr.$observe('required', function() {
+        ctrl.$validate();
+      });
+    }
+  };
+};
+
+
+var patternDirective = function() {
+  return {
+    restrict: 'A',
+    require: '?ngModel',
+    link: function(scope, elm, attr, ctrl) {
+      if (!ctrl) return;
+
+      var regexp, patternExp = attr.ngPattern || attr.pattern;
+      attr.$observe('pattern', function(regex) {
+        if (isString(regex) && regex.length > 0) {
+          regex = new RegExp('^' + regex + '$');
+        }
+
+        if (regex && !regex.test) {
+          throw minErr('ngPattern')('noregexp',
+            'Expected {0} to be a RegExp but was {1}. Element: {2}', patternExp,
+            regex, startingTag(elm));
+        }
+
+        regexp = regex || undefined;
+        ctrl.$validate();
+      });
+
+      ctrl.$validators.pattern = function(value) {
+        return ctrl.$isEmpty(value) || isUndefined(regexp) || regexp.test(value);
+      };
+    }
+  };
+};
+
+
+var maxlengthDirective = function() {
+  return {
+    restrict: 'A',
+    require: '?ngModel',
+    link: function(scope, elm, attr, ctrl) {
+      if (!ctrl) return;
+
+      var maxlength = -1;
+      attr.$observe('maxlength', function(value) {
+        var intVal = int(value);
+        maxlength = isNaN(intVal) ? -1 : intVal;
+        ctrl.$validate();
+      });
+      ctrl.$validators.maxlength = function(modelValue, viewValue) {
+        return (maxlength < 0) || ctrl.$isEmpty(viewValue) || (viewValue.length <= maxlength);
+      };
+    }
+  };
+};
+
+var minlengthDirective = function() {
+  return {
+    restrict: 'A',
+    require: '?ngModel',
+    link: function(scope, elm, attr, ctrl) {
+      if (!ctrl) return;
+
+      var minlength = 0;
+      attr.$observe('minlength', function(value) {
+        minlength = int(value) || 0;
+        ctrl.$validate();
+      });
+      ctrl.$validators.minlength = function(modelValue, viewValue) {
+        return ctrl.$isEmpty(viewValue) || viewValue.length >= minlength;
+      };
+    }
+  };
+};
+
   if (window.angular.bootstrap) {
     //AngularJS is already loaded, so we can return here...
     console.log('WARNING: Tried to load angular more than once.');
@@ -33823,6 +34047,7 @@ var styleDirective = valueFn({
 })(window, document);
 
 !window.angular.$$csp() && window.angular.element(document).find('head').prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}</style>');
+
 /*!
  * ionic.bundle.js is a concatenation of:
  * ionic.js, angular.js, angular-animate.js,
@@ -33831,7 +34056,7 @@ var styleDirective = valueFn({
  */
 
 /**
- * @license AngularJS v1.3.6
+ * @license AngularJS v1.3.13
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -34671,7 +34896,8 @@ angular.module('ngAnimate', ['ng'])
        * promise that was returned when the animation was started.
        *
        * ```js
-       * var promise = $animate.addClass(element, 'super-long-animation').then(function() {
+       * var promise = $animate.addClass(element, 'super-long-animation');
+       * promise.then(function() {
        *   //this will still be called even if cancelled
        * });
        *
@@ -35164,8 +35390,7 @@ angular.module('ngAnimate', ['ng'])
           } else if (lastAnimation.event == 'setClass') {
             animationsToCancel.push(lastAnimation);
             cleanup(element, className);
-          }
-          else if (runningAnimations[className]) {
+          } else if (runningAnimations[className]) {
             var current = runningAnimations[className];
             if (current.event == animationEvent) {
               skipAnimation = true;
@@ -35706,7 +35931,7 @@ angular.module('ngAnimate', ['ng'])
           return;
         }
 
-        if (!staggerTime && styles) {
+        if (!staggerTime && styles && Object.keys(styles).length > 0) {
           if (!timings.transitionDuration) {
             element.css('transition', timings.animationDuration + 's linear all');
             appliedStyles.push('transition');
@@ -35976,7 +36201,7 @@ angular.module('ngAnimate', ['ng'])
  */
 
 /**
- * @license AngularJS v1.3.6
+ * @license AngularJS v1.3.13
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -36253,14 +36478,14 @@ function htmlParser(html, handler) {
     }
   }
   var index, chars, match, stack = [], last = html, text;
-  stack.last = function() { return stack[ stack.length - 1 ]; };
+  stack.last = function() { return stack[stack.length - 1]; };
 
   while (html) {
     text = '';
     chars = true;
 
     // Make sure we're not in a script or style element
-    if (!stack.last() || !specialElements[ stack.last() ]) {
+    if (!stack.last() || !specialElements[stack.last()]) {
 
       // Comment
       if (html.indexOf("<!--") === 0) {
@@ -36318,7 +36543,8 @@ function htmlParser(html, handler) {
       }
 
     } else {
-      html = html.replace(new RegExp("(.*)<\\s*\\/\\s*" + stack.last() + "[^>]*>", 'i'),
+      // IE versions 9 and 10 do not understand the regex '[^]', so using a workaround with [\W\w].
+      html = html.replace(new RegExp("([\\W\\w]*)<\\s*\\/\\s*" + stack.last() + "[^>]*>", 'i'),
         function(all, text) {
           text = text.replace(COMMENT_REGEXP, "$1").replace(CDATA_REGEXP, "$1");
 
@@ -36342,17 +36568,17 @@ function htmlParser(html, handler) {
 
   function parseStartTag(tag, tagName, rest, unary) {
     tagName = angular.lowercase(tagName);
-    if (blockElements[ tagName ]) {
-      while (stack.last() && inlineElements[ stack.last() ]) {
+    if (blockElements[tagName]) {
+      while (stack.last() && inlineElements[stack.last()]) {
         parseEndTag("", stack.last());
       }
     }
 
-    if (optionalEndTagElements[ tagName ] && stack.last() == tagName) {
+    if (optionalEndTagElements[tagName] && stack.last() == tagName) {
       parseEndTag("", tagName);
     }
 
-    unary = voidElements[ tagName ] || !!unary;
+    unary = voidElements[tagName] || !!unary;
 
     if (!unary)
       stack.push(tagName);
@@ -36377,13 +36603,13 @@ function htmlParser(html, handler) {
     if (tagName)
       // Find the closest opened tag of the same type
       for (pos = stack.length - 1; pos >= 0; pos--)
-        if (stack[ pos ] == tagName)
+        if (stack[pos] == tagName)
           break;
 
     if (pos >= 0) {
       // Close all the open elements, up the stack
       for (i = stack.length - 1; i >= pos; i--)
-        if (handler.end) handler.end(stack[ i ]);
+        if (handler.end) handler.end(stack[i]);
 
       // Remove the open elements from the stack
       stack.length = pos;
@@ -40906,7 +41132,7 @@ angular.module('ui.router.state')
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v1.0.0-beta.14
+ * Ionic, v1.0.0-rc.0
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -40968,8 +41194,8 @@ var IonicModule = angular.module('ionic', ['ngAnimate', 'ngSanitize', 'ui.router
   isDefined = angular.isDefined,
   isNumber = angular.isNumber,
   isString = angular.isString,
-  jqLite = angular.element;
-
+  jqLite = angular.element,
+  noop = angular.noop;
 
 /**
  * @ngdoc service
@@ -41067,15 +41293,26 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
   function actionSheet(opts) {
     var scope = $rootScope.$new(true);
 
-    angular.extend(scope, {
-      cancel: angular.noop,
-      destructiveButtonClicked: angular.noop,
-      buttonClicked: angular.noop,
-      $deregisterBackButton: angular.noop,
+    extend(scope, {
+      cancel: noop,
+      destructiveButtonClicked: noop,
+      buttonClicked: noop,
+      $deregisterBackButton: noop,
       buttons: [],
       cancelOnStateChange: true
     }, opts || {});
 
+    function textForIcon(text) {
+      if (text && /icon/.test(text)) {
+        scope.$actionSheetHasIcon = true;
+      }
+    }
+
+    for (var x = 0; x < scope.buttons.length; x++) {
+      textForIcon(scope.buttons[x].text);
+    }
+    textForIcon(scope.cancelText);
+    textForIcon(scope.destructiveText);
 
     // Compile the template
     var element = scope.element = $compile('<ion-action-sheet ng-class="cssClass" buttons="buttons"></ion-action-sheet>')(scope);
@@ -41085,7 +41322,7 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
 
     var stateChangeListenDone = scope.cancelOnStateChange ?
       $rootScope.$on('$stateChangeSuccess', function() { scope.cancel(); }) :
-      angular.noop;
+      noop;
 
     // removes the actionSheet from the screen
     scope.removeSheet = function(done) {
@@ -41106,7 +41343,7 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
         element.remove();
         // scope.cancel.$scope is defined near the bottom
         scope.cancel.$scope = sheetEl = null;
-        (done || angular.noop)();
+        (done || noop)();
       });
     };
 
@@ -41118,7 +41355,7 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
 
       $animate.addClass(element, 'active').then(function() {
         if (scope.removed) return;
-        (done || angular.noop)();
+        (done || noop)();
       });
       $timeout(function() {
         if (scope.removed) return;
@@ -41220,86 +41457,6 @@ jqLite.prototype.removeClass = function(cssClasses) {
   }
   return this;
 };
-
-
-/**
- * @private
- */
-IonicModule
-.factory('$$ionicAttachDrag', [function() {
-
-  return attachDrag;
-
-  function attachDrag(scope, element, options) {
-    var opts = extend({}, {
-      getDistance: function() { return opts.element.prop('offsetWidth'); },
-      onDragStart: angular.noop,
-      onDrag: angular.noop,
-      onDragEnd: angular.noop
-    }, options);
-
-    var dragStartGesture = ionic.onGesture('dragstart', handleDragStart, element[0]);
-    var dragGesture = ionic.onGesture('drag', handleDrag, element[0]);
-    var dragEndGesture = ionic.onGesture('dragend', handleDragEnd, element[0]);
-
-    scope.$on('$destroy', function() {
-      ionic.offGesture(dragStartGesture, 'dragstart', handleDragStart);
-      ionic.offGesture(dragGesture, 'drag', handleDrag);
-      ionic.offGesture(dragEndGesture, 'dragend', handleDragEnd);
-    });
-
-    var isDragging = false;
-    element.on('touchmove pointermove mousemove', function(ev) {
-      if (isDragging) ev.preventDefault();
-    });
-    element.on('touchend mouseup mouseleave', function(ev) {
-      isDragging = false;
-    });
-
-    var dragState;
-    function handleDragStart(ev) {
-      if (dragState) return;
-      if (opts.onDragStart() !== false) {
-        dragState = {
-          startX: ev.gesture.center.pageX,
-          startY: ev.gesture.center.pageY,
-          distance: opts.getDistance()
-        };
-      }
-    }
-    function handleDrag(ev) {
-      if (!dragState) return;
-      var deltaX = dragState.startX - ev.gesture.center.pageX;
-      var deltaY = dragState.startY - ev.gesture.center.pageY;
-      var isVertical = ev.gesture.direction === 'up' || ev.gesture.direction === 'down';
-
-      if (isVertical && Math.abs(deltaY) > Math.abs(deltaX) * 2) {
-        handleDragEnd(ev);
-        return;
-      }
-      if (Math.abs(deltaX) > Math.abs(deltaY) * 2) {
-        isDragging = true;
-      }
-
-      var percent = getDragPercent(ev.gesture.center.pageX);
-      opts.onDrag(percent);
-    }
-    function handleDragEnd(ev) {
-      if (!dragState) return;
-      var percent = getDragPercent(ev.gesture.center.pageX);
-      options.onDragEnd(percent, ev.gesture.velocityX);
-
-      dragState = null;
-    }
-
-    function getDragPercent(x) {
-      var delta = dragState.startX - x;
-      var percent = delta / dragState.distance;
-      return percent;
-    }
-  }
-
-}]);
 
 /**
  * @ngdoc service
@@ -41404,7 +41561,7 @@ IonicModule
         parentGet,
         unwatch;
 
-      switch(mode) {
+      switch (mode) {
         case '@':
           if (!attrs[attrName]) {
             return;
@@ -41536,6 +41693,11 @@ function($document, $ionicBody, $timeout) {
   var CSS_HIDE = 'click-block-hide';
   var cbEle, fallbackTimer, pendingShow;
 
+  function preventClick(ev) {
+    ev.preventDefault();
+    ev.stopPropagation();
+  }
+
   function addClickBlock() {
     if (pendingShow) {
       if (cbEle) {
@@ -41544,6 +41706,8 @@ function($document, $ionicBody, $timeout) {
         cbEle = $document[0].createElement('div');
         cbEle.className = 'click-block';
         $ionicBody.append(cbEle);
+        cbEle.addEventListener('touchstart', preventClick);
+        cbEle.addEventListener('mousedown', preventClick);
       }
       pendingShow = false;
     }
@@ -41558,515 +41722,15 @@ function($document, $ionicBody, $timeout) {
       pendingShow = true;
       $timeout.cancel(fallbackTimer);
       fallbackTimer = $timeout(this.hide, autoExpire || 310);
-      ionic.requestAnimationFrame(addClickBlock);
+      addClickBlock();
     },
     hide: function() {
       pendingShow = false;
       $timeout.cancel(fallbackTimer);
-      ionic.requestAnimationFrame(removeClickBlock);
+      removeClickBlock();
     }
   };
 }]);
-
-IonicModule
-.factory('$collectionDataSource', [
-  '$cacheFactory',
-  '$parse',
-  '$rootScope',
-function($cacheFactory, $parse, $rootScope) {
-  function hideWithTransform(element) {
-    element.css(ionic.CSS.TRANSFORM, 'translate3d(-2000px,-2000px,0)');
-  }
-
-  function CollectionRepeatDataSource(options) {
-    var self = this;
-    this.scope = options.scope;
-    this.transcludeFn = options.transcludeFn;
-    this.transcludeParent = options.transcludeParent;
-    this.element = options.element;
-
-    this.keyExpr = options.keyExpr;
-    this.listExpr = options.listExpr;
-    this.trackByExpr = options.trackByExpr;
-
-    this.heightGetter = options.heightGetter;
-    this.widthGetter = options.widthGetter;
-
-    this.dimensions = [];
-    this.data = [];
-
-    this.attachedItems = {};
-    this.BACKUP_ITEMS_LENGTH = 20;
-    this.backupItemsArray = [];
-  }
-  CollectionRepeatDataSource.prototype = {
-    setup: function() {
-      if (this.isSetup) return;
-      this.isSetup = true;
-      for (var i = 0; i < this.BACKUP_ITEMS_LENGTH; i++) {
-        this.detachItem(this.createItem());
-      }
-    },
-    destroy: function() {
-      this.dimensions.length = 0;
-      this.data = null;
-      this.backupItemsArray.length = 0;
-      this.attachedItems = {};
-    },
-    calculateDataDimensions: function() {
-      var locals = {};
-      this.dimensions = this.data.map(function(value, index) {
-        locals[this.keyExpr] = value;
-        locals.$index = index;
-        return {
-          width: this.widthGetter(this.scope, locals),
-          height: this.heightGetter(this.scope, locals)
-        };
-      }, this);
-      this.dimensions = this.beforeSiblings.concat(this.dimensions).concat(this.afterSiblings);
-      this.dataStartIndex = this.beforeSiblings.length;
-    },
-    createItem: function() {
-      var item = {};
-
-      item.scope = this.scope.$new();
-      this.transcludeFn(item.scope, function(clone) {
-        clone.css('position', 'absolute');
-        item.element = clone;
-      });
-      this.transcludeParent.append(item.element);
-
-      return item;
-    },
-    getItem: function(index) {
-      var item;
-      if ( (item = this.attachedItems[index]) ) {
-        //do nothing, the item is good
-      } else if ( (item = this.backupItemsArray.pop()) ) {
-        ionic.Utils.reconnectScope(item.scope);
-      } else {
-        item = this.createItem();
-      }
-      return item;
-    },
-    attachItemAtIndex: function(index) {
-      if (index < this.dataStartIndex) {
-        return this.beforeSiblings[index];
-      }
-      // Subtract so we start at the beginning of this.data, after
-      // this.beforeSiblings.
-      index -= this.dataStartIndex;
-
-      if (index > this.data.length - 1) {
-        return this.afterSiblings[index - this.dataStartIndex];
-      }
-
-      var item = this.getItem(index);
-      var value = this.data[index];
-
-      if (item.index !== index || item.scope[this.keyExpr] !== value) {
-        item.index = item.scope.$index = index;
-        item.scope[this.keyExpr] = value;
-        item.scope.$first = (index === 0);
-        item.scope.$last = (index === (this.getLength() - 1));
-        item.scope.$middle = !(item.scope.$first || item.scope.$last);
-        item.scope.$odd = !(item.scope.$even = (index&1) === 0);
-
-        //We changed the scope, so digest if needed
-        if (!$rootScope.$$phase) {
-          item.scope.$digest();
-        }
-      }
-      this.attachedItems[index] = item;
-
-      return item;
-    },
-    destroyItem: function(item) {
-      item.element.remove();
-      item.scope.$destroy();
-      item.scope = null;
-      item.element = null;
-    },
-    detachItem: function(item) {
-      delete this.attachedItems[item.index];
-
-      //If it's an outside item, only hide it. These items aren't part of collection
-      //repeat's list, only sit outside
-      if (item.isOutside) {
-        hideWithTransform(item.element);
-      // If we are at the limit of backup items, just get rid of the this element
-      } else if (this.backupItemsArray.length >= this.BACKUP_ITEMS_LENGTH) {
-        this.destroyItem(item);
-      // Otherwise, add it to our backup items
-      } else {
-        this.backupItemsArray.push(item);
-        hideWithTransform(item.element);
-        //Don't .$destroy(), just stop watchers and events firing
-        ionic.Utils.disconnectScope(item.scope);
-      }
-
-    },
-    getLength: function() {
-      return this.dimensions && this.dimensions.length || 0;
-    },
-    setData: function(value, beforeSiblings, afterSiblings) {
-      this.data = value || [];
-      this.beforeSiblings = beforeSiblings || [];
-      this.afterSiblings = afterSiblings || [];
-      this.calculateDataDimensions();
-
-      this.afterSiblings.forEach(function(item) {
-        item.element.css({position: 'absolute', top: '0', left: '0' });
-        hideWithTransform(item.element);
-      });
-    },
-  };
-
-  return CollectionRepeatDataSource;
-}]);
-
-
-IonicModule
-.factory('$collectionRepeatManager', [
-  '$rootScope',
-  '$timeout',
-function($rootScope, $timeout) {
-  /**
-   * Vocabulary: "primary" and "secondary" size/direction/position mean
-   * "y" and "x" for vertical scrolling, or "x" and "y" for horizontal scrolling.
-   */
-  function CollectionRepeatManager(options) {
-    var self = this;
-    this.dataSource = options.dataSource;
-    this.element = options.element;
-    this.scrollView = options.scrollView;
-
-    this.isVertical = !!this.scrollView.options.scrollingY;
-    this.renderedItems = {};
-    this.dimensions = [];
-    this.setCurrentIndex(0);
-
-    //Override scrollview's render callback
-    this.scrollView.__$callback = this.scrollView.__callback;
-    this.scrollView.__callback = angular.bind(this, this.renderScroll);
-
-    function getViewportSize() { return self.viewportSize; }
-    //Set getters and setters to match whether this scrollview is vertical or not
-    if (this.isVertical) {
-      this.scrollView.options.getContentHeight = getViewportSize;
-
-      this.scrollValue = function() {
-        return this.scrollView.__scrollTop;
-      };
-      this.scrollMaxValue = function() {
-        return this.scrollView.__maxScrollTop;
-      };
-      this.scrollSize = function() {
-        return this.scrollView.__clientHeight;
-      };
-      this.secondaryScrollSize = function() {
-        return this.scrollView.__clientWidth;
-      };
-      this.transformString = function(y, x) {
-        return 'translate3d('+x+'px,'+y+'px,0)';
-      };
-      this.primaryDimension = function(dim) {
-        return dim.height;
-      };
-      this.secondaryDimension = function(dim) {
-        return dim.width;
-      };
-    } else {
-      this.scrollView.options.getContentWidth = getViewportSize;
-
-      this.scrollValue = function() {
-        return this.scrollView.__scrollLeft;
-      };
-      this.scrollMaxValue = function() {
-        return this.scrollView.__maxScrollLeft;
-      };
-      this.scrollSize = function() {
-        return this.scrollView.__clientWidth;
-      };
-      this.secondaryScrollSize = function() {
-        return this.scrollView.__clientHeight;
-      };
-      this.transformString = function(x, y) {
-        return 'translate3d('+x+'px,'+y+'px,0)';
-      };
-      this.primaryDimension = function(dim) {
-        return dim.width;
-      };
-      this.secondaryDimension = function(dim) {
-        return dim.height;
-      };
-    }
-  }
-
-  CollectionRepeatManager.prototype = {
-    destroy: function() {
-      this.renderedItems = {};
-      this.render = angular.noop;
-      this.calculateDimensions = angular.noop;
-      this.dimensions = [];
-    },
-
-    /*
-     * Pre-calculate the position of all items in the data list.
-     * Do this using the provided width and height (primarySize and secondarySize)
-     * provided by the dataSource.
-     */
-    calculateDimensions: function() {
-      /*
-       * For the sake of explanations below, we're going to pretend we are scrolling
-       * vertically: Items are laid out with primarySize being height,
-       * secondarySize being width.
-       */
-      var primaryPos = 0;
-      var secondaryPos = 0;
-      var secondaryScrollSize = this.secondaryScrollSize();
-      var previousItem;
-
-      this.dataSource.beforeSiblings && this.dataSource.beforeSiblings.forEach(calculateSize, this);
-      var beforeSize = primaryPos + (previousItem ? previousItem.primarySize : 0);
-
-      primaryPos = secondaryPos = 0;
-      previousItem = null;
-
-      var dimensions = this.dataSource.dimensions.map(calculateSize, this);
-      var totalSize = primaryPos + (previousItem ? previousItem.primarySize : 0);
-
-      return {
-        beforeSize: beforeSize,
-        totalSize: totalSize,
-        dimensions: dimensions
-      };
-
-      function calculateSize(dim) {
-
-        //Each dimension is an object {width: Number, height: Number} provided by
-        //the dataSource
-        var rect = {
-          //Get the height out of the dimension object
-          primarySize: this.primaryDimension(dim),
-          //Max out the item's width to the width of the scrollview
-          secondarySize: Math.min(this.secondaryDimension(dim), secondaryScrollSize)
-        };
-
-        //If this isn't the first item
-        if (previousItem) {
-          //Move the item's x position over by the width of the previous item
-          secondaryPos += previousItem.secondarySize;
-          //If the y position is the same as the previous item and
-          //the x position is bigger than the scroller's width
-          if (previousItem.primaryPos === primaryPos &&
-              secondaryPos + rect.secondarySize > secondaryScrollSize) {
-            //Then go to the next row, with x position 0
-            secondaryPos = 0;
-            primaryPos += previousItem.primarySize;
-          }
-        }
-
-        rect.primaryPos = primaryPos;
-        rect.secondaryPos = secondaryPos;
-
-        previousItem = rect;
-        return rect;
-      }
-    },
-    resize: function() {
-      var result = this.calculateDimensions();
-      this.dimensions = result.dimensions;
-      this.viewportSize = result.totalSize;
-      this.beforeSize = result.beforeSize;
-      this.setCurrentIndex(0);
-      this.render(true);
-      this.dataSource.setup();
-    },
-    /*
-     * setCurrentIndex sets the index in the list that matches the scroller's position.
-     * Also save the position in the scroller for next and previous items (if they exist)
-     */
-    setCurrentIndex: function(index, height) {
-      var currentPos = (this.dimensions[index] || {}).primaryPos || 0;
-      this.currentIndex = index;
-
-      this.hasPrevIndex = index > 0;
-      if (this.hasPrevIndex) {
-        this.previousPos = Math.max(
-          currentPos - this.dimensions[index - 1].primarySize,
-          this.dimensions[index - 1].primaryPos
-        );
-      }
-      this.hasNextIndex = index + 1 < this.dataSource.getLength();
-      if (this.hasNextIndex) {
-        this.nextPos = Math.min(
-          currentPos + this.dimensions[index + 1].primarySize,
-          this.dimensions[index + 1].primaryPos
-        );
-      }
-    },
-    /**
-     * override the scroller's render callback to check if we need to
-     * re-render our collection
-     */
-    renderScroll: ionic.animationFrameThrottle(function(transformLeft, transformTop, zoom, wasResize) {
-      if (this.isVertical) {
-        this.renderIfNeeded(transformTop);
-      } else {
-        this.renderIfNeeded(transformLeft);
-      }
-      return this.scrollView.__$callback(transformLeft, transformTop, zoom, wasResize);
-    }),
-
-    renderIfNeeded: function(scrollPos) {
-      if ((this.hasNextIndex && scrollPos >= this.nextPos) ||
-          (this.hasPrevIndex && scrollPos < this.previousPos)) {
-           // Math.abs(transformPos - this.lastRenderScrollValue) > 100) {
-        this.render();
-      }
-    },
-    /*
-     * getIndexForScrollValue: Given the most recent data index and a new scrollValue,
-     * find the data index that matches that scrollValue.
-     *
-     * Strategy (if we are scrolling down): keep going forward in the dimensions list,
-     * starting at the given index, until an item with height matching the new scrollValue
-     * is found.
-     *
-     * This is a while loop. In the worst case it will have to go through the whole list
-     * (eg to scroll from top to bottom).  The most common case is to scroll
-     * down 1-3 items at a time.
-     *
-     * While this is not as efficient as it could be, optimizing it gives no noticeable
-     * benefit.  We would have to use a new memory-intensive data structure for dimensions
-     * to fully optimize it.
-     */
-    getIndexForScrollValue: function(i, scrollValue) {
-      var rect;
-      //Scrolling up
-      if (scrollValue <= this.dimensions[i].primaryPos) {
-        while ( (rect = this.dimensions[i - 1]) && rect.primaryPos > scrollValue) {
-          i--;
-        }
-      //Scrolling down
-      } else {
-        while ( (rect = this.dimensions[i + 1]) && rect.primaryPos < scrollValue) {
-          i++;
-        }
-      }
-      return i;
-    },
-    /*
-     * render: Figure out the scroll position, the index matching it, and then tell
-     * the data source to render the correct items into the DOM.
-     */
-    render: function(shouldRedrawAll) {
-      var self = this;
-      var i;
-      var isOutOfBounds = ( this.currentIndex >= this.dataSource.getLength() );
-      // We want to remove all the items and redraw everything if we're out of bounds
-      // or a flag is passed in.
-      if (isOutOfBounds || shouldRedrawAll) {
-        for (i in this.renderedItems) {
-          this.removeItem(i);
-        }
-        // Just don't render anything if we're out of bounds
-        if (isOutOfBounds) return;
-      }
-
-      var rect;
-      var scrollValue = this.scrollValue();
-      // Scroll size = how many pixels are visible in the scroller at one time
-      var scrollSize = this.scrollSize();
-      // We take the current scroll value and add it to the scrollSize to get
-      // what scrollValue the current visible scroll area ends at.
-      var scrollSizeEnd = scrollSize + scrollValue;
-      // Get the new start index for scrolling, based on the current scrollValue and
-      // the most recent known index
-      var startIndex = this.getIndexForScrollValue(this.currentIndex, scrollValue);
-
-      // If we aren't on the first item, add one row of items before so that when the user is
-      // scrolling up he sees the previous item
-      var renderStartIndex = Math.max(startIndex - 1, 0);
-      // Keep adding items to the 'extra row above' until we get to a new row.
-      // This is for the case where there are multiple items on one row above
-      // the current item; we want to keep adding items above until
-      // a new row is reached.
-      while (renderStartIndex > 0 &&
-         (rect = this.dimensions[renderStartIndex]) &&
-         rect.primaryPos === this.dimensions[startIndex - 1].primaryPos) {
-        renderStartIndex--;
-      }
-
-      // Keep rendering items, adding them until we are past the end of the visible scroll area
-      i = renderStartIndex;
-      while ((rect = this.dimensions[i]) && (rect.primaryPos - rect.primarySize < scrollSizeEnd)) {
-        doRender(i, rect);
-        i++;
-      }
-
-      // Render two extra items at the end as a buffer
-      if (self.dimensions[i]) {
-        doRender(i, self.dimensions[i]);
-        i++;
-      }
-      if (self.dimensions[i]) {
-        doRender(i, self.dimensions[i]);
-      }
-      var renderEndIndex = i;
-
-      // Remove any items that were rendered and aren't visible anymore
-      for (var renderIndex in this.renderedItems) {
-        if (renderIndex < renderStartIndex || renderIndex > renderEndIndex) {
-          this.removeItem(renderIndex);
-        }
-      }
-
-      this.setCurrentIndex(startIndex);
-
-      function doRender(dataIndex, rect) {
-        if (dataIndex < self.dataSource.dataStartIndex) {
-          // do nothing
-        } else {
-          self.renderItem(dataIndex, rect.primaryPos - self.beforeSize, rect.secondaryPos);
-        }
-      }
-    },
-    renderItem: function(dataIndex, primaryPos, secondaryPos) {
-      // Attach an item, and set its transform position to the required value
-      var item = this.dataSource.attachItemAtIndex(dataIndex);
-      //console.log(dataIndex, item);
-      if (item && item.element) {
-        if (item.primaryPos !== primaryPos || item.secondaryPos !== secondaryPos) {
-          item.element.css(ionic.CSS.TRANSFORM, this.transformString(
-            primaryPos, secondaryPos
-          ));
-          item.primaryPos = primaryPos;
-          item.secondaryPos = secondaryPos;
-        }
-        // Save the item in rendered items
-        this.renderedItems[dataIndex] = item;
-      } else {
-        // If an item at this index doesn't exist anymore, be sure to delete
-        // it from rendered items
-        delete this.renderedItems[dataIndex];
-      }
-    },
-    removeItem: function(dataIndex) {
-      // Detach a given item
-      var item = this.renderedItems[dataIndex];
-      if (item) {
-        item.primaryPos = item.secondaryPos = null;
-        this.dataSource.detachItem(item);
-        delete this.renderedItems[dataIndex];
-      }
-    }
-  };
-
-  return CollectionRepeatManager;
-}]);
-
 
 /**
  * @ngdoc service
@@ -42421,7 +42085,8 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
               // the forward has a history
               for (x = tmp.stack.length - 1; x >= forwardView.index; x--) {
                 // starting from the end destroy all forwards in this history from this point
-                tmp.stack[x].destroy();
+                var stack_x = tmp.stack[x];
+                stack_x && stack_x.destroy && stack_x.destroy();
                 tmp.stack.splice(x);
               }
               historyId = forwardView.historyId;
@@ -42499,7 +42164,10 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
           if (hist.stack[x].viewId == viewId) {
             action = 'dupNav';
             direction = DIRECTION_NONE;
-            hist.stack[x - 1].forwardViewId = viewHistory.forwardView = null;
+            if (x > 0) {
+              hist.stack[x - 1].forwardViewId = null;
+            }
+            viewHistory.forwardView = null;
             viewHistory.currentView.index = viewHistory.backView.index;
             viewHistory.currentView.backViewId = viewHistory.backView.backViewId;
             viewHistory.backView = getBackView(viewHistory.backView);
@@ -42518,7 +42186,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
         action: action,
         direction: direction,
         historyId: historyId,
-        enableBack: !!(viewHistory.backView && viewHistory.backView.historyId === viewHistory.currentView.historyId),
+        enableBack: this.enabledBack(viewHistory.currentView),
         isHistoryRoot: (viewHistory.currentView.index === 0),
         ele: ele
       };
@@ -42606,10 +42274,9 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
      * @description Gets the back view's title.
      * @returns {string} Returns the back view's title.
      */
-    backTitle: function() {
-      if (viewHistory.backView) {
-        return viewHistory.backView.title;
-      }
+    backTitle: function(view) {
+      var backView = (view && getViewById(view.backViewId)) || viewHistory.backView;
+      return backView && backView.title;
     },
 
     /**
@@ -42666,6 +42333,12 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
      */
     goBack: function() {
       viewHistory.backView && viewHistory.backView.go();
+    },
+
+
+    enabledBack: function(view) {
+      var backView = getBackView(view);
+      return !!(backView && backView.historyId === view.historyId);
     },
 
     /**
@@ -42751,7 +42424,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
           nextViewOptions = nextViewOptions || {};
           extend(nextViewOptions, opts);
           if (nextViewOptions.expire) {
-            nextViewExpireTimer = $timeout(function(){
+            nextViewExpireTimer = $timeout(function() {
               nextViewOptions = null;
             }, nextViewOptions.expire);
           }
@@ -42952,7 +42625,7 @@ function($rootScope, $state, $location, $document, $ionicPlatform, $ionicHistory
  * to `ios`.
  * * `ios`: iOS style transition.
  * * `android`: Android style transition.
- * * `none`: Do not preform animated transitions.
+ * * `none`: Do not perform animated transitions.
  *
  * @returns {string} value
  */
@@ -43007,6 +42680,22 @@ function($rootScope, $state, $location, $document, $ionicPlatform, $ionicHistory
  * is the default for iOS.
  * @param {boolean} value
  * @returns {boolean}
+ */
+
+/**
+ * @ngdoc method
+ * @name $ionicConfigProvider#form.checkbox
+ * @description Checkbox style. Android defaults to `square` and iOS defaults to `circle`.
+ * @param {string} value
+ * @returns {string}
+ */
+
+/**
+ * @ngdoc method
+ * @name $ionicConfigProvider#form.toggle
+ * @description Toggle item style. Android defaults to `small` and iOS defaults to `large`.
+ * @param {string} value
+ * @returns {string}
  */
 
 /**
@@ -43102,7 +42791,9 @@ IonicModule
     views: {
       maxCache: PLATFORM,
       forwardCache: PLATFORM,
-      transition: PLATFORM
+      transition: PLATFORM,
+      swipeBackEnabled: PLATFORM,
+      swipeBackHitWidth: PLATFORM
     },
     navBar: {
       alignTitle: PLATFORM,
@@ -43116,7 +42807,11 @@ IonicModule
       previousTitleText: PLATFORM
     },
     form: {
-      checkbox: PLATFORM
+      checkbox: PLATFORM,
+      toggle: PLATFORM
+    },
+    scrolling: {
+      jsScrolling: PLATFORM
     },
     tabs: {
       style: PLATFORM,
@@ -43138,7 +42833,9 @@ IonicModule
     views: {
       maxCache: 10,
       forwardCache: false,
-      transition: 'ios'
+      transition: 'ios',
+      swipeBackEnabled: true,
+      swipeBackHitWidth: 45
     },
 
     navBar: {
@@ -43149,13 +42846,18 @@ IonicModule
     },
 
     backButton: {
-      icon: 'ion-ios7-arrow-back',
+      icon: 'ion-ios-arrow-back',
       text: 'Back',
       previousTitleText: true
     },
 
     form: {
-      checkbox: 'circle'
+      checkbox: 'circle',
+      toggle: 'large'
+    },
+
+    scrolling: {
+      jsScrolling: true
     },
 
     tabs: {
@@ -43182,7 +42884,8 @@ IonicModule
   setPlatformConfig('android', {
 
     views: {
-      transition: 'android'
+      transition: 'android',
+      swipeBackEnabled: false
     },
 
     navBar: {
@@ -43192,13 +42895,14 @@ IonicModule
     },
 
     backButton: {
-      icon: 'ion-arrow-left-c',
+      icon: 'ion-android-arrow-back',
       text: false,
       previousTitleText: false
     },
 
     form: {
-      checkbox: 'square'
+      checkbox: 'square',
+      toggle: 'small'
     },
 
     tabs: {
@@ -43218,42 +42922,45 @@ IonicModule
   // iOS Transitions
   // -----------------------
   provider.transitions.views.ios = function(enteringEle, leavingEle, direction, shouldAnimate) {
-    shouldAnimate = shouldAnimate && (direction == 'forward' || direction == 'back');
 
-    function setStyles(ele, opacity, x) {
+    function setStyles(ele, opacity, x, boxShadowOpacity) {
       var css = {};
-      css[ionic.CSS.TRANSITION_DURATION] = shouldAnimate ? '' : 0;
+      css[ionic.CSS.TRANSITION_DURATION] = d.shouldAnimate ? '' : 0;
       css.opacity = opacity;
+      if (boxShadowOpacity > -1) {
+        css.boxShadow = '0 0 10px rgba(0,0,0,' + (d.shouldAnimate ? boxShadowOpacity * 0.45 : 0.3) + ')';
+      }
       css[ionic.CSS.TRANSFORM] = 'translate3d(' + x + '%,0,0)';
       ionic.DomUtil.cachedStyles(ele, css);
     }
 
-    return {
+    var d = {
       run: function(step) {
         if (direction == 'forward') {
-          setStyles(enteringEle, 1, (1 - step) * 99); // starting at 98% prevents a flicker
-          setStyles(leavingEle, (1 - 0.1 * step), step * -33);
+          setStyles(enteringEle, 1, (1 - step) * 99, 1 - step); // starting at 98% prevents a flicker
+          setStyles(leavingEle, (1 - 0.1 * step), step * -33, -1);
 
         } else if (direction == 'back') {
-          setStyles(enteringEle, (1 - 0.1 * (1 - step)), (1 - step) * -33);
-          setStyles(leavingEle, 1, step * 100);
+          setStyles(enteringEle, (1 - 0.1 * (1 - step)), (1 - step) * -33, -1);
+          setStyles(leavingEle, 1, step * 100, 1 - step);
 
         } else {
           // swap, enter, exit
-          setStyles(enteringEle, 1, 0);
-          setStyles(leavingEle, 0, 0);
+          setStyles(enteringEle, 1, 0, -1);
+          setStyles(leavingEle, 0, 0, -1);
         }
       },
-      shouldAnimate: shouldAnimate
+      shouldAnimate: shouldAnimate && (direction == 'forward' || direction == 'back')
     };
+
+    return d;
   };
 
   provider.transitions.navBar.ios = function(enteringHeaderBar, leavingHeaderBar, direction, shouldAnimate) {
-    shouldAnimate = shouldAnimate && (direction == 'forward' || direction == 'back');
 
     function setStyles(ctrl, opacity, titleX, backTextX) {
       var css = {};
-      css[ionic.CSS.TRANSITION_DURATION] = shouldAnimate ? '' : 0;
+      css[ionic.CSS.TRANSITION_DURATION] = d.shouldAnimate ? '' : 0;
       css.opacity = opacity === 1 ? '' : opacity;
 
       ctrl.setCss('buttons-left', css);
@@ -43268,23 +42975,23 @@ IonicModule
     }
 
     function enter(ctrlA, ctrlB, step) {
-      if (!ctrlA) return;
+      if (!ctrlA || !ctrlB) return;
       var titleX = (ctrlA.titleTextX() + ctrlA.titleWidth()) * (1 - step);
       var backTextX = (ctrlB && (ctrlB.titleTextX() - ctrlA.backButtonTextLeft()) * (1 - step)) || 0;
       setStyles(ctrlA, step, titleX, backTextX);
     }
 
     function leave(ctrlA, ctrlB, step) {
-      if (!ctrlA) return;
+      if (!ctrlA || !ctrlB) return;
       var titleX = (-(ctrlA.titleTextX() - ctrlB.backButtonTextLeft()) - (ctrlA.titleLeftRight())) * step;
       setStyles(ctrlA, 1 - step, titleX, 0);
     }
 
-    return {
+    var d = {
       run: function(step) {
         var enteringHeaderCtrl = enteringHeaderBar.controller();
         var leavingHeaderCtrl = leavingHeaderBar && leavingHeaderBar.controller();
-        if (direction == 'back') {
+        if (d.direction == 'back') {
           leave(enteringHeaderCtrl, leavingHeaderCtrl, 1 - step);
           enter(leavingHeaderCtrl, enteringHeaderCtrl, 1 - step);
         } else {
@@ -43292,8 +42999,11 @@ IonicModule
           leave(leavingHeaderCtrl, enteringHeaderCtrl, step);
         }
       },
-      shouldAnimate: shouldAnimate
+      direction: direction,
+      shouldAnimate: shouldAnimate && (direction == 'forward' || direction == 'back')
     };
+
+    return d;
   };
 
 
@@ -43305,12 +43015,12 @@ IonicModule
 
     function setStyles(ele, x) {
       var css = {};
-      css[ionic.CSS.TRANSITION_DURATION] = shouldAnimate ? '' : 0;
+      css[ionic.CSS.TRANSITION_DURATION] = d.shouldAnimate ? '' : 0;
       css[ionic.CSS.TRANSFORM] = 'translate3d(' + x + '%,0,0)';
       ionic.DomUtil.cachedStyles(ele, css);
     }
 
-    return {
+    var d = {
       run: function(step) {
         if (direction == 'forward') {
           setStyles(enteringEle, (1 - step) * 99); // starting at 98% prevents a flicker
@@ -43328,10 +43038,11 @@ IonicModule
       },
       shouldAnimate: shouldAnimate
     };
+
+    return d;
   };
 
   provider.transitions.navBar.android = function(enteringHeaderBar, leavingHeaderBar, direction, shouldAnimate) {
-    shouldAnimate = shouldAnimate && (direction == 'forward' || direction == 'back');
 
     function setStyles(ctrl, opacity) {
       if (!ctrl) return;
@@ -43350,7 +43061,7 @@ IonicModule
         setStyles(enteringHeaderBar.controller(), step);
         setStyles(leavingHeaderBar && leavingHeaderBar.controller(), 1 - step);
       },
-      shouldAnimate: true
+      shouldAnimate: shouldAnimate && (direction == 'forward' || direction == 'back')
     };
   };
 
@@ -43362,7 +43073,8 @@ IonicModule
     return {
       run: function(step) {
         provider.transitions.views.android(enteringEle, leavingEle, false, false).run(step);
-      }
+      },
+      shouldAnimate: false
     };
   };
 
@@ -43371,7 +43083,8 @@ IonicModule
       run: function(step) {
         provider.transitions.navBar.ios(enteringHeaderBar, leavingHeaderBar, false, false).run(step);
         provider.transitions.navBar.android(enteringHeaderBar, leavingHeaderBar, false, false).run(step);
-      }
+      },
+      shouldAnimate: false
     };
   };
 
@@ -43520,7 +43233,7 @@ var LOADING_SET_DEPRECATED = '$ionicLoading instance.setContent() has been depre
  */
 IonicModule
 .constant('$ionicLoadingConfig', {
-  template: '<i class="icon ion-loading-d"></i>'
+  template: '<ion-spinner></ion-spinner>'
 })
 .factory('$ionicLoading', [
   '$ionicLoadingConfig',
@@ -43537,8 +43250,9 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
 
   var loaderInstance;
   //default values
-  var deregisterBackAction = angular.noop;
-  var deregisterStateListener = angular.noop;
+  var deregisterBackAction = noop;
+  var deregisterStateListener1 = noop;
+  var deregisterStateListener2 = noop;
   var loadingShowDelay = $q.when();
 
   return {
@@ -43577,10 +43291,8 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
         template: LOADING_TPL,
         appendTo: $ionicBody.get()
       })
-      .then(function(loader) {
-        var self = loader;
-
-        loader.show = function(options) {
+      .then(function(self) {
+        self.show = function(options) {
           var templatePromise = options.templateUrl ?
             $ionicTemplateLoader.load(options.templateUrl) :
             //options.content: deprecated
@@ -43588,19 +43300,19 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
 
           self.scope = options.scope || self.scope;
 
-          if (!this.isShown) {
+          if (!self.isShown) {
             //options.showBackdrop: deprecated
-            this.hasBackdrop = !options.noBackdrop && options.showBackdrop !== false;
-            if (this.hasBackdrop) {
+            self.hasBackdrop = !options.noBackdrop && options.showBackdrop !== false;
+            if (self.hasBackdrop) {
               $ionicBackdrop.retain();
               $ionicBackdrop.getElement().addClass('backdrop-loading');
             }
           }
 
           if (options.duration) {
-            $timeout.cancel(this.durationTimeout);
-            this.durationTimeout = $timeout(
-              angular.bind(this, this.hide),
+            $timeout.cancel(self.durationTimeout);
+            self.durationTimeout = $timeout(
+              angular.bind(self, self.hide),
               +options.duration
             );
           }
@@ -43608,7 +43320,7 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
           deregisterBackAction();
           //Disable hardware back button while loading
           deregisterBackAction = $ionicPlatform.registerBackButtonAction(
-            angular.noop,
+            noop,
             PLATFORM_BACK_BUTTON_PRIORITY_LOADING
           );
 
@@ -43623,7 +43335,7 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
             if (self.isShown) {
               self.element.addClass('visible');
               ionic.requestAnimationFrame(function() {
-                if(self.isShown) {
+                if (self.isShown) {
                   self.element.addClass('active');
                   $ionicBody.addClass('loading-active');
                 }
@@ -43631,13 +43343,13 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
             }
           });
 
-          this.isShown = true;
+          self.isShown = true;
         };
-        loader.hide = function() {
+        self.hide = function() {
 
           deregisterBackAction();
-          if (this.isShown) {
-            if (this.hasBackdrop) {
+          if (self.isShown) {
+            if (self.hasBackdrop) {
               $ionicBackdrop.release();
               $ionicBackdrop.getElement().removeClass('backdrop-loading');
             }
@@ -43647,11 +43359,11 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
               !self.isShown && self.element.removeClass('visible');
             }, 200);
           }
-          $timeout.cancel(this.durationTimeout);
-          this.isShown = false;
+          $timeout.cancel(self.durationTimeout);
+          self.isShown = false;
         };
 
-        return loader;
+        return self;
       });
     }
     return loaderInstance;
@@ -43661,14 +43373,17 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
     options = extend({}, $ionicLoadingConfig || {}, options || {});
     var delay = options.delay || options.showDelay || 0;
 
-    //If loading.show() was called previously, cancel it and show with our new options
-    loadingShowDelay && $timeout.cancel(loadingShowDelay);
-    loadingShowDelay = $timeout(angular.noop, delay);
+    deregisterStateListener1();
+    deregisterStateListener2();
+    if (options.hideOnStateChange) {
+      deregisterStateListener1 = $rootScope.$on('$stateChangeSuccess', hideLoader);
+      deregisterStateListener2 = $rootScope.$on('$stateChangeError', hideLoader);
+    }
 
+    //If loading.show() was called previously, cancel it and show with our new options
+    $timeout.cancel(loadingShowDelay);
+    loadingShowDelay = $timeout(noop, delay);
     loadingShowDelay.then(getLoader).then(function(loader) {
-      if (options.hideOnStateChange) {
-        deregisterStateListener = $rootScope.$on('$stateChangeSuccess', hideLoader);
-      }
       return loader.show(options);
     });
 
@@ -43686,7 +43401,8 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
   }
 
   function hideLoader() {
-    deregisterStateListener();
+    deregisterStateListener1();
+    deregisterStateListener2();
     $timeout.cancel(loadingShowDelay);
     getLoader().then(function(loader) {
       loader.hide();
@@ -43846,11 +43562,9 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
 
       self._isShown = true;
       self._deregisterBackButton = $ionicPlatform.registerBackButtonAction(
-        self.hardwareBackButtonClose ? angular.bind(self, self.hide) : angular.noop,
+        self.hardwareBackButtonClose ? angular.bind(self, self.hide) : noop,
         PLATFORM_BACK_BUTTON_PRIORITY_MODAL
       );
-
-      self._isOpenPromise = $q.defer();
 
       ionic.views.Modal.prototype.show.call(self);
 
@@ -44295,12 +44009,12 @@ IonicModule
  *   var template = '<ion-popover-view><ion-header-bar> <h1 class="title">My Popover Title</h1> </ion-header-bar> <ion-content> Hello! </ion-content></ion-popover-view>';
  *
  *   $scope.popover = $ionicPopover.fromTemplate(template, {
- *     scope: $scope,
+ *     scope: $scope
  *   });
  *
  *   // .fromTemplateUrl() method
  *   $ionicPopover.fromTemplateUrl('my-popover.html', {
- *     scope: $scope,
+ *     scope: $scope
  *   }).then(function(popover) {
  *     $scope.popover = popover;
  *   });
@@ -44343,7 +44057,7 @@ function($ionicModal, $ionicPosition, $document, $window) {
   };
 
   function positionView(target, popoverEle) {
-    var targetEle = angular.element(target.target || target);
+    var targetEle = jqLite(target.target || target);
     var buttonOffset = $ionicPosition.offset(targetEle);
     var popoverWidth = popoverEle.prop('offsetWidth');
     var popoverHeight = popoverEle.prop('offsetHeight');
@@ -44363,8 +44077,9 @@ function($ionicModal, $ionicPosition, $document, $window) {
     }
 
     // If the popover when popped down stretches past bottom of screen,
-    // make it pop up
-    if (buttonOffset.top + buttonOffset.height + popoverHeight > bodyHeight) {
+    // make it pop up if there's room above
+    if (buttonOffset.top + buttonOffset.height + popoverHeight > bodyHeight &&
+        buttonOffset.top - popoverHeight > 0) {
       popoverCSS.top = buttonOffset.top - popoverHeight;
       popoverEle.addClass('popover-bottom');
     } else {
@@ -44787,7 +44502,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
         subTitle: options.subTitle,
         cssClass: options.cssClass,
         $buttonTapped: function(button, event) {
-          var result = (button.onTap || angular.noop)(event);
+          var result = (button.onTap || noop)(event);
           event = event.originalEvent || event; //jquery events
 
           if (!event.defaultPrevented) {
@@ -44810,7 +44525,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
         });
       };
       self.hide = function(callback) {
-        callback = callback || angular.noop;
+        callback = callback || noop;
         if (!self.isShown) return callback();
 
         self.isShown = false;
@@ -44845,7 +44560,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
       previousPopup.hide();
     }
 
-    var resultPromise = $timeout(angular.noop, previousPopup ? config.stackPushDelay : 0)
+    var resultPromise = $timeout(noop, previousPopup ? config.stackPushDelay : 0)
     .then(function() { return popupPromise; })
     .then(function(popup) {
       if (!previousPopup) {
@@ -44886,7 +44601,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
           $timeout(function() {
             $ionicBackdrop.release();
           }, config.stackPushDelay || 0);
-          ($ionicPopup._backButtonActionDone || angular.noop)();
+          ($ionicPopup._backButtonActionDone || noop)();
         }
         return result;
       });
@@ -45024,7 +44739,7 @@ IonicModule
       var offsetParentBCR = { top: 0, left: 0 };
       var offsetParentEl = parentOffsetEl(element[0]);
       if (offsetParentEl != $document[0]) {
-        offsetParentBCR = this.offset(angular.element(offsetParentEl));
+        offsetParentBCR = this.offset(jqLite(offsetParentEl));
         offsetParentBCR.top += offsetParentEl.clientTop - offsetParentEl.scrollTop;
         offsetParentBCR.left += offsetParentEl.clientLeft - offsetParentEl.scrollLeft;
       }
@@ -45193,10 +44908,25 @@ IonicModule
   'anchorScroll',
   /**
    * @ngdoc method
+   * @name $ionicScrollDelegate#freezeScroll
+   * @description Does not allow this scroll view to scroll either x or y.
+   * @param {boolean=} shouldFreeze Should this scroll view be prevented from scrolling or not.
+   * @returns {object} If the scroll view is being prevented from scrolling or not.
+   */
+  'freezeScroll',
+  /**
+   * @ngdoc method
+   * @name $ionicScrollDelegate#freezeAllScrolls
+   * @description Does not allow any of the app's scroll views to scroll either x or y.
+   * @param {boolean=} shouldFreeze Should all app scrolls be prevented from scrolling or not.
+   */
+  'freezeAllScrolls',
+  /**
+   * @ngdoc method
    * @name $ionicScrollDelegate#getScrollView
    * @returns {object} The scrollView associated with this delegate.
    */
-  'getScrollView',
+  'getScrollView'
   /**
    * @ngdoc method
    * @name $ionicScrollDelegate#$getByHandle
@@ -45310,7 +45040,7 @@ IonicModule
    *  - If false or 0 is given, the edge drag threshold is disabled, and dragging from anywhere on the content is allowed.
    * @returns {boolean} Whether the drag can start only from within the edge of screen threshold.
    */
-  'edgeDragThreshold',
+  'edgeDragThreshold'
   /**
    * @ngdoc method
    * @name $ionicSideMenuDelegate#$getByHandle
@@ -45337,7 +45067,7 @@ IonicModule
  * @usage
  *
  * ```html
- * <body ng-controller="MyCtrl">
+ * <ion-view>
  *   <ion-slide-box>
  *     <ion-slide>
  *       <div class="box blue">
@@ -45350,7 +45080,7 @@ IonicModule
  *       </div>
  *     </ion-slide>
  *   </ion-slide-box>
- * </body>
+ * </ion-view>
  * ```
  * ```js
  * function MyCtrl($scope, $ionicSlideBoxDelegate) {
@@ -45425,7 +45155,7 @@ IonicModule
    */
   'slidesCount',
   'count',
-  'loop',
+  'loop'
   /**
    * @ngdoc method
    * @name $ionicSlideBoxDelegate#$getByHandle
@@ -45764,10 +45494,11 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
   var isActiveTimer;
   var cachedAttr = ionic.DomUtil.cachedAttr;
   var transitionPromises = [];
+  var defaultTimeout = 1100;
 
   var ionicViewSwitcher = {
 
-    create: function(navViewCtrl, viewLocals, enteringView, leavingView) {
+    create: function(navViewCtrl, viewLocals, enteringView, leavingView, renderStart, renderEnd) {
       // get a reference to an entering/leaving element if they exist
       // loop through to see if the view is already in the navViewElement
       var enteringEle, leavingEle;
@@ -45787,11 +45518,12 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
         },
 
         loadViewElements: function(registerData) {
-          var viewEle, viewElements = navViewCtrl.getViewElements();
+          var x, l, viewEle;
+          var viewElements = navViewCtrl.getViewElements();
           var enteringEleIdentifier = getViewElementIdentifier(viewLocals, enteringView);
           var navViewActiveEleId = navViewCtrl.activeEleId();
 
-          for (var x = 0, l = viewElements.length; x < l; x++) {
+          for (x = 0, l = viewElements.length; x < l; x++) {
             viewEle = viewElements.eq(x);
 
             if (viewEle.data(DATA_ELE_IDENTIFIER) === enteringEleIdentifier) {
@@ -45805,7 +45537,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
                 enteringEle = viewEle;
               }
 
-            } else if (viewEle.data(DATA_ELE_IDENTIFIER) === navViewActiveEleId) {
+            } else if (isDefined(navViewActiveEleId) && viewEle.data(DATA_ELE_IDENTIFIER) === navViewActiveEleId) {
               leavingEle = viewEle;
             }
 
@@ -45823,15 +45555,14 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
             enteringEle.data(DATA_ELE_IDENTIFIER, enteringEleIdentifier);
           }
 
-          navViewCtrl.activeEleId(enteringEleIdentifier);
+          if (renderEnd) {
+            navViewCtrl.activeEleId(enteringEleIdentifier);
+          }
 
           registerData.ele = null;
         },
 
         render: function(registerData, callback) {
-          // disconnect the leaving scope before reconnecting or creating a scope for the entering view
-          leavingEle && ionic.Utils.disconnectScope(leavingEle.scope());
-
           if (alreadyInDom) {
             // it was already found in the DOM, just reconnect the scope
             ionic.Utils.reconnectScope(enteringEle.scope());
@@ -45874,15 +45605,15 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
           callback && callback();
         },
 
-        transition: function(direction, enableBack) {
-          var deferred = $q.defer();
-          transitionPromises.push(deferred.promise);
-
+        transition: function(direction, enableBack, allowAnimate) {
+          var deferred;
           var enteringData = getTransitionData(viewLocals, enteringEle, direction, enteringView);
           var leavingData = extend(extend({}, enteringData), getViewData(leavingView));
           enteringData.transitionId = leavingData.transitionId = transitionId;
           enteringData.fromCache = !!alreadyInDom;
           enteringData.enableBack = !!enableBack;
+          enteringData.renderStart = renderStart;
+          enteringData.renderEnd = renderEnd;
 
           cachedAttr(enteringEle.parent(), 'nav-view-transition', enteringData.transition);
           cachedAttr(enteringEle.parent(), 'nav-view-direction', enteringData.direction);
@@ -45890,74 +45621,140 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
           // cancel any previous transition complete fallbacks
           $timeout.cancel(enteringEle.data(DATA_FALLBACK_TIMER));
 
-          switcher.emit('before', enteringData, leavingData);
-
-          // 1) get the transition ready and see if it'll animate
+          // get the transition ready and see if it'll animate
           var transitionFn = $ionicConfig.transitions.views[enteringData.transition] || $ionicConfig.transitions.views.none;
-          var viewTransition = transitionFn(enteringEle, leavingEle, enteringData.direction, enteringData.shouldAnimate);
+          var viewTransition = transitionFn(enteringEle, leavingEle, enteringData.direction,
+                                            enteringData.shouldAnimate && allowAnimate && renderEnd);
 
           if (viewTransition.shouldAnimate) {
-            // 2) attach transitionend events (and fallback timer)
-            enteringEle.on(TRANSITIONEND_EVENT, transitionComplete);
-            enteringEle.data(DATA_FALLBACK_TIMER, $timeout(transitionComplete, 1000));
-            $ionicClickBlock.show();
+            // attach transitionend events (and fallback timer)
+            enteringEle.on(TRANSITIONEND_EVENT, completeOnTransitionEnd);
+            enteringEle.data(DATA_FALLBACK_TIMER, $timeout(transitionComplete, defaultTimeout));
+            $ionicClickBlock.show(defaultTimeout);
           }
 
-          // 3) stage entering element, opacity 0, no transition duration
-          navViewAttr(enteringEle, VIEW_STATUS_STAGED);
+          if (renderStart) {
+            // notify the views "before" the transition starts
+            switcher.emit('before', enteringData, leavingData);
 
-          // 4) place the elements in the correct step to begin
-          viewTransition.run(0);
+            // stage entering element, opacity 0, no transition duration
+            navViewAttr(enteringEle, VIEW_STATUS_STAGED);
 
-          // 5) wait a frame so the styles apply
-          $timeout(onReflow, 16);
+            // render the elements in the correct location for their starting point
+            viewTransition.run(0);
+          }
+
+          if (renderEnd) {
+            // create a promise so we can keep track of when all transitions finish
+            // only required if this transition should complete
+            deferred = $q.defer();
+            transitionPromises.push(deferred.promise);
+          }
+
+          if (renderStart && renderEnd) {
+            // CSS "auto" transitioned, not manually transitioned
+            // wait a frame so the styles apply before auto transitioning
+            $timeout(onReflow, 16);
+
+          } else if (!renderEnd) {
+            // just the start of a manual transition
+            // but it will not render the end of the transition
+            navViewAttr(enteringEle, 'entering');
+            navViewAttr(leavingEle, 'leaving');
+
+            // return the transition run method so each step can be ran manually
+            return {
+              run: viewTransition.run,
+              cancel: function(shouldAnimate) {
+                if (shouldAnimate) {
+                  enteringEle.on(TRANSITIONEND_EVENT, cancelOnTransitionEnd);
+                  enteringEle.data(DATA_FALLBACK_TIMER, $timeout(cancelTransition, defaultTimeout));
+                  $ionicClickBlock.show(defaultTimeout);
+                } else {
+                  cancelTransition();
+                }
+                viewTransition.shouldAnimate = shouldAnimate;
+                viewTransition.run(0);
+                viewTransition = null;
+              }
+            };
+
+          } else if (renderEnd) {
+            // just the end of a manual transition
+            // happens after the manual transition has completed
+            // and a full history change has happened
+            onReflow();
+          }
+
 
           function onReflow() {
-            // 6) remove that we're staging the entering element so it can transition
+            // remove that we're staging the entering element so it can auto transition
             navViewAttr(enteringEle, viewTransition.shouldAnimate ? 'entering' : VIEW_STATUS_ACTIVE);
             navViewAttr(leavingEle, viewTransition.shouldAnimate ? 'leaving' : VIEW_STATUS_CACHED);
 
-            // 7) start the transition
+            // start the auto transition and let the CSS take over
             viewTransition.run(1);
 
+            // trigger auto transitions on the associated nav bars
             $ionicNavBarDelegate._instances.forEach(function(instance) {
               instance.triggerTransitionStart(transitionId);
             });
 
             if (!viewTransition.shouldAnimate) {
-              // no animated transition
+              // no animated auto transition
               transitionComplete();
             }
           }
 
+          // Make sure that transitionend events bubbling up from children won't fire
+          // transitionComplete. Will only go forward if ev.target == the element listening.
+          function completeOnTransitionEnd(ev) {
+            if (ev.target !== this) return;
+            transitionComplete();
+          }
           function transitionComplete() {
             if (transitionComplete.x) return;
             transitionComplete.x = true;
 
-            enteringEle.off(TRANSITIONEND_EVENT, transitionComplete);
+            enteringEle.off(TRANSITIONEND_EVENT, completeOnTransitionEnd);
             $timeout.cancel(enteringEle.data(DATA_FALLBACK_TIMER));
             leavingEle && $timeout.cancel(leavingEle.data(DATA_FALLBACK_TIMER));
 
-            // 8) emit that the views have finished transitioning
+            // emit that the views have finished transitioning
             // each parent nav-view will update which views are active and cached
             switcher.emit('after', enteringData, leavingData);
 
-            // 9) resolve that this one transition (there could be many w/ nested views)
-            deferred.resolve(navViewCtrl);
+            // resolve that this one transition (there could be many w/ nested views)
+            deferred && deferred.resolve(navViewCtrl);
 
-            // 10) the most recent transition added has completed and all the active
+            // the most recent transition added has completed and all the active
             // transition promises should be added to the services array of promises
             if (transitionId === transitionCounter) {
               $q.all(transitionPromises).then(ionicViewSwitcher.transitionEnd);
               switcher.cleanup(enteringData);
             }
 
+            // tell the nav bars that the transition has ended
             $ionicNavBarDelegate._instances.forEach(function(instance) {
               instance.triggerTransitionEnd();
             });
 
             // remove any references that could cause memory issues
             nextTransition = nextDirection = enteringView = leavingView = enteringEle = leavingEle = null;
+          }
+
+          // Make sure that transitionend events bubbling up from children won't fire
+          // transitionComplete. Will only go forward if ev.target == the element listening.
+          function cancelOnTransitionEnd(ev) {
+            if (ev.target !== this) return;
+            cancelTransition();
+          }
+          function cancelTransition() {
+            navViewAttr(enteringEle, VIEW_STATUS_CACHED);
+            navViewAttr(leavingEle, VIEW_STATUS_ACTIVE);
+            enteringEle.off(TRANSITIONEND_EVENT, cancelOnTransitionEnd);
+            $timeout.cancel(enteringEle.data(DATA_FALLBACK_TIMER));
+            ionicViewSwitcher.transitionEnd([navViewCtrl]);
           }
 
         },
@@ -45978,6 +45775,12 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
               if (step == 'after') {
                 scope.$emit('$ionicView.leave', leavingData);
               }
+            }
+
+          } else if (scope && leavingData && leavingData.viewId) {
+            scope.$emit('$ionicNavView.' + step + 'Leave', leavingData);
+            if (step == 'after') {
+              scope.$emit('$ionicNavView.leave', leavingData);
             }
           }
         },
@@ -46026,7 +45829,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
     },
 
     transitionEnd: function(navViewCtrls) {
-      forEach(navViewCtrls, function(navViewCtrl){
+      forEach(navViewCtrls, function(navViewCtrl) {
         navViewCtrl.transitionEnd();
       });
 
@@ -46177,7 +45980,7 @@ function($provide) {
     //found nearest to body's scrollTop is set to scroll to an element
     //with that ID.
     $location.hash = function(value) {
-      if (angular.isDefined(value)) {
+      if (isDefined(value)) {
         $timeout(function() {
           var scroll = document.querySelector('.scroll-content');
           if (scroll)
@@ -46317,13 +46120,14 @@ function($scope, $element, $attrs, $q, $ionicConfig, $ionicHistory) {
   };
 
 
-  self.resetBackButton = function() {
+  self.resetBackButton = function(viewData) {
     if ($ionicConfig.backButton.previousTitleText()) {
       var previousTitleEle = getEle(PREVIOUS_TITLE);
       if (previousTitleEle) {
         previousTitleEle.classList.remove(HIDE);
 
-        var newPreviousTitleText = $ionicHistory.backTitle();
+        var view = (viewData && $ionicHistory.getViewById(viewData.viewId));
+        var newPreviousTitleText = $ionicHistory.backTitle(view);
 
         if (newPreviousTitleText !== previousTitleText) {
           previousTitleText = previousTitleEle.innerHTML = newPreviousTitleText;
@@ -46545,6 +46349,126 @@ function($scope, $element, $attrs, $q, $ionicConfig, $ionicHistory) {
 
 }]);
 
+IonicModule
+.controller('$ionInfiniteScroll', [
+  '$scope',
+  '$attrs',
+  '$element',
+  '$timeout',
+  function($scope, $attrs,  $element, $timeout) {
+  var self = this;
+  self.isLoading = false;
+
+  $scope.icon = function() {
+    return isDefined($attrs.icon) ? $attrs.icon : 'ion-load-d';
+  };
+
+  $scope.spinner = function() {
+    return isDefined($attrs.spinner) ? $attrs.spinner : '';
+  };
+
+  $scope.$on('scroll.infiniteScrollComplete', function() {
+    finishInfiniteScroll();
+  });
+
+  $scope.$on('$destroy', function() {
+    if (self.scrollCtrl && self.scrollCtrl.$element) self.scrollCtrl.$element.off('scroll', self.checkBounds);
+    if (self.scrollEl && self.scrollEl.removeEventListener) {
+      self.scrollEl.removeEventListener('scroll', self.checkBounds);
+    }
+  });
+
+  // debounce checking infinite scroll events
+  self.checkBounds = ionic.Utils.throttle(checkInfiniteBounds, 300);
+
+  function onInfinite() {
+    ionic.requestAnimationFrame(function() {
+      $element[0].classList.add('active');
+    });
+    self.isLoading = true;
+    $scope.$parent && $scope.$parent.$apply($attrs.onInfinite || '');
+  }
+
+  function finishInfiniteScroll() {
+    ionic.requestAnimationFrame(function() {
+      $element[0].classList.remove('active');
+    });
+    $timeout(function() {
+      if (self.jsScrolling) self.scrollView.resize();
+      self.checkBounds();
+    }, 30, false);
+    self.isLoading = false;
+  }
+
+  // check if we've scrolled far enough to trigger an infinite scroll
+  function checkInfiniteBounds() {
+    if (self.isLoading) return;
+    var maxScroll = {};
+
+    if (self.jsScrolling) {
+      maxScroll = self.getJSMaxScroll();
+      var scrollValues = self.scrollView.getValues();
+      if ((maxScroll.left !== -1 && scrollValues.left >= maxScroll.left) ||
+        (maxScroll.top !== -1 && scrollValues.top >= maxScroll.top)) {
+        onInfinite();
+      }
+    } else {
+      maxScroll = self.getNativeMaxScroll();
+      if ((
+        maxScroll.left !== -1 &&
+        self.scrollEl.scrollLeft >= maxScroll.left - self.scrollEl.clientWidth
+        ) || (
+        maxScroll.top !== -1 &&
+        self.scrollEl.scrollTop >= maxScroll.top - self.scrollEl.clientHeight
+        )) {
+        onInfinite();
+      }
+    }
+  }
+
+  // determine the threshold at which we should fire an infinite scroll
+  // note: this gets processed every scroll event, can it be cached?
+  self.getJSMaxScroll = function() {
+    var maxValues = self.scrollView.getScrollMax();
+    return {
+      left: self.scrollView.options.scrollingX ?
+        calculateMaxValue(maxValues.left) :
+        -1,
+      top: self.scrollView.options.scrollingY ?
+        calculateMaxValue(maxValues.top) :
+        -1
+    };
+  };
+
+  self.getNativeMaxScroll = function() {
+    var maxValues = {
+      left: self.scrollEl.scrollWidth,
+      top:  self.scrollEl.scrollHeight
+    };
+    var computedStyle = window.getComputedStyle(self.scrollEl) || {};
+    return {
+      left: computedStyle.overflowX === 'scroll' ||
+      computedStyle.overflowX === 'auto' ||
+      self.scrollEl.style['overflow-x'] === 'scroll' ?
+        calculateMaxValue(maxValues.left) : -1,
+      top: computedStyle.overflowY === 'scroll' ||
+      computedStyle.overflowY === 'auto' ||
+      self.scrollEl.style['overflow-y'] === 'scroll' ?
+        calculateMaxValue(maxValues.top) : -1
+    };
+  };
+
+  // determine pixel refresh distance based on % or value
+  function calculateMaxValue(maximum) {
+    distance = ($attrs.distance || '2.5%').trim();
+    isPercent = distance.indexOf('%') !== -1;
+    return isPercent ?
+    maximum * (1 - parseFloat(distance) / 100) :
+    maximum - parseFloat(distance);
+  }
+
+}]);
+
 
 /**
  * @ngdoc service
@@ -46715,7 +46639,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
     ionic.DomUtil.cachedAttr(containerEle, 'nav-bar', isActive ? 'active' : 'cached');
 
     var alignTitle = $attrs.alignTitle || $ionicConfig.navBar.alignTitle();
-    var headerBarEle = jqLite('<ion-header-bar>').addClass($attrs.class).attr('align-title', alignTitle);
+    var headerBarEle = jqLite('<ion-header-bar>').addClass($attrs['class']).attr('align-title', alignTitle);
     if (isDefined($attrs.noTapScroll)) headerBarEle.attr('no-tap-scroll', $attrs.noTapScroll);
     var titleEle = jqLite('<div class="title title-' + alignTitle + '">');
     var navEle = {};
@@ -46906,6 +46830,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
     self.transition(enteringHeaderBar, leavingHeaderBar, viewData);
 
     self.isInitialized = true;
+    navSwipeAttr('');
   };
 
 
@@ -46921,16 +46846,38 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
     ionic.DomUtil.cachedAttr($element, 'nav-bar-transition', viewData.navBarTransition);
     ionic.DomUtil.cachedAttr($element, 'nav-bar-direction', viewData.direction);
 
-    if (navBarTransition.shouldAnimate) {
+    if (navBarTransition.shouldAnimate && viewData.renderEnd) {
       navBarAttr(enteringHeaderBar, 'stage');
     } else {
       navBarAttr(enteringHeaderBar, 'entering');
       navBarAttr(leavingHeaderBar, 'leaving');
     }
 
-    enteringHeaderBarCtrl.resetBackButton();
+    enteringHeaderBarCtrl.resetBackButton(viewData);
 
     navBarTransition.run(0);
+
+    self.activeTransition = {
+      run: function(step) {
+        navBarTransition.shouldAnimate = false;
+        navBarTransition.direction = 'back';
+        navBarTransition.run(step);
+      },
+      cancel: function(shouldAnimate, speed) {
+        navSwipeAttr(speed);
+        navBarAttr(leavingHeaderBar, 'active');
+        navBarAttr(enteringHeaderBar, 'cached');
+        navBarTransition.shouldAnimate = shouldAnimate;
+        navBarTransition.run(0);
+        self.activeTransition = navBarTransition = null;
+      },
+      complete: function(shouldAnimate, speed) {
+        navSwipeAttr(speed);
+        navBarTransition.shouldAnimate = shouldAnimate;
+        navBarTransition.run(1);
+        queuedTransitionEnd = transitionEnd;
+      }
+    };
 
     $timeout(enteringHeaderBarCtrl.align, 16);
 
@@ -46944,23 +46891,26 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
 
       queuedTransitionEnd = function() {
         if (latestTransitionId == transitionId || !navBarTransition.shouldAnimate) {
-          for (var x = 0; x < headerBars.length; x++) {
-            headerBars[x].isActive = false;
-          }
-          enteringHeaderBar.isActive = true;
-
-          navBarAttr(enteringHeaderBar, 'active');
-          navBarAttr(leavingHeaderBar, 'cached');
-
-          queuedTransitionEnd = null;
+          transitionEnd();
         }
       };
 
       queuedTransitionStart = null;
     };
 
-    queuedTransitionStart();
+    function transitionEnd() {
+      for (var x = 0; x < headerBars.length; x++) {
+        headerBars[x].isActive = false;
+      }
+      enteringHeaderBar.isActive = true;
 
+      navBarAttr(enteringHeaderBar, 'active');
+      navBarAttr(leavingHeaderBar, 'cached');
+
+      self.activeTransition = navBarTransition = queuedTransitionEnd = null;
+    }
+
+    queuedTransitionStart();
   };
 
 
@@ -47051,6 +47001,11 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
   };
 
 
+  self.hasTabsTop = function(isTabsTop) {
+    $element[isTabsTop ? 'addClass' : 'removeClass']('nav-bar-tabs-top');
+  };
+
+
   // DEPRECATED, as of v1.0.0-beta14 -------
   self.changeTitle = function(val) {
     deprecatedWarning('changeTitle(val)', 'title(val)');
@@ -47074,7 +47029,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
   };
   function deprecatedWarning(oldMethod, newMethod) {
     var warn = console.warn || console.log;
-    warn && warn('navBarController.' + oldMethod + ' is deprecated, please use ' + newMethod + ' instead');
+    warn && warn.call(console, 'navBarController.' + oldMethod + ' is deprecated, please use ' + newMethod + ' instead');
   }
   // END DEPRECATED -------
 
@@ -47104,6 +47059,10 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
     ctrl && ionic.DomUtil.cachedAttr(ctrl.containerEle(), 'nav-bar', val);
   }
 
+  function navSwipeAttr(val) {
+    ionic.DomUtil.cachedAttr($element, 'nav-swipe', val);
+  }
+
 
   $scope.$on('$destroy', function() {
     $scope.$parent.$hasHeader = false;
@@ -47129,7 +47088,9 @@ IonicModule
   '$ionicNavViewDelegate',
   '$ionicHistory',
   '$ionicViewSwitcher',
-function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, $ionicNavViewDelegate, $ionicHistory, $ionicViewSwitcher) {
+  '$ionicConfig',
+  '$ionicScrollDelegate',
+function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, $ionicNavViewDelegate, $ionicHistory, $ionicViewSwitcher, $ionicConfig, $ionicScrollDelegate) {
 
   var DATA_ELE_IDENTIFIER = '$eleId';
   var DATA_DESTROY_ELE = '$destroyEle';
@@ -47143,8 +47104,11 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
   var navBarDelegate;
   var activeEleId;
   var navViewAttr = $ionicViewSwitcher.navViewAttr;
+  var disableRenderStartViewId, disableAnimation;
+  var transitionDuration, transitionTiming;
 
   self.scope = $scope;
+  self.element = $element;
 
   self.init = function() {
     var navViewName = $attrs.name || '';
@@ -47160,9 +47124,23 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
     $element.data('$uiView', viewData);
 
     var deregisterInstance = $ionicNavViewDelegate._registerInstance(self, $attrs.delegateHandle);
-    $scope.$on('$destroy', deregisterInstance);
+    $scope.$on('$destroy', function() {
+      deregisterInstance();
+
+      // ensure no scrolls have been left frozen
+      if (self.isSwipeFreeze) {
+        $ionicScrollDelegate.freezeAllScrolls(false);
+      }
+    });
 
     $scope.$on('$ionicHistory.deselect', self.cacheCleanup);
+    $scope.$on('$ionicTabs.top', onTabsTop);
+
+    ionic.Platform.ready(function() {
+      if (ionic.Platform.isWebView() && $ionicConfig.views.swipeBackEnabled()) {
+        self.initSwipeBack();
+      }
+    });
 
     return viewData;
   };
@@ -47178,7 +47156,10 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
     self.update(registerData);
 
     // begin rendering and transitioning
-    self.render(registerData, viewLocals, leavingView);
+    var enteringView = $ionicHistory.getViewById(registerData.viewId) || {};
+
+    var renderStart = (disableRenderStartViewId !== registerData.viewId);
+    self.render(registerData, viewLocals, enteringView, leavingView, renderStart, true);
   };
 
 
@@ -47214,19 +47195,22 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
   };
 
 
-  self.render = function(registerData, viewLocals, leavingView) {
-    var enteringView = $ionicHistory.getViewById(registerData.viewId) || {};
-
+  self.render = function(registerData, viewLocals, enteringView, leavingView, renderStart, renderEnd) {
     // register the view and figure out where it lives in the various
     // histories and nav stacks, along with how views should enter/leave
-    var switcher = $ionicViewSwitcher.create(self, viewLocals, enteringView, leavingView);
+    var switcher = $ionicViewSwitcher.create(self, viewLocals, enteringView, leavingView, renderStart, renderEnd);
 
     // init the rendering of views for this navView directive
     switcher.init(registerData, function() {
       // the view is now compiled, in the dom and linked, now lets transition the views.
       // this uses a callback incase THIS nav-view has a nested nav-view, and after the NESTED
       // nav-view links, the NESTED nav-view would update which direction THIS nav-view should use
-      switcher.transition(self.direction(), registerData.enableBack);
+
+      // kick off the transition of views
+      switcher.transition(self.direction(), registerData.enableBack, !disableAnimation);
+
+      // reset private vars for next time
+      disableRenderStartViewId = disableAnimation = null;
     });
 
   };
@@ -47238,6 +47222,7 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
       navBarDelegate = transitionData.navBarDelegate;
       var associatedNavBarCtrl = getAssociatedNavBarCtrl();
       associatedNavBarCtrl && associatedNavBarCtrl.update(transitionData);
+      navSwipeAttr('');
     }
   };
 
@@ -47266,11 +47251,22 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
         if (viewElement.data(DATA_DESTROY_ELE) || viewElement.data(DATA_NO_CACHE)) {
           // this element shouldn't stay cached
           $ionicViewSwitcher.destroyViewEle(viewElement);
+
         } else {
           // keep in the DOM, mark as cached
           navViewAttr(viewElement, VIEW_STATUS_CACHED);
+
+          // disconnect the leaving scope
+          ionic.Utils.disconnectScope(viewElement.scope());
         }
       }
+    }
+
+    navSwipeAttr('');
+
+    // ensure no scrolls have been left frozen
+    if (self.isSwipeFreeze) {
+      $ionicScrollDelegate.freezeAllScrolls(false);
     }
   };
 
@@ -47381,6 +47377,141 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
   };
 
 
+  self.initSwipeBack = function() {
+    var swipeBackHitWidth = $ionicConfig.views.swipeBackHitWidth();
+    var viewTransition, associatedNavBarCtrl, backView;
+    var deregDragStart, deregDrag, deregRelease;
+    var windowWidth, startDragX, dragPoints;
+
+    function onDragStart(ev) {
+      if (!isPrimary) return;
+
+      startDragX = getDragX(ev);
+      if (startDragX > swipeBackHitWidth) return;
+
+      backView = $ionicHistory.backView();
+
+      if (!backView || backView.historyId !== $ionicHistory.currentView().historyId) return;
+
+      if (!windowWidth) windowWidth = window.innerWidth;
+
+      self.isSwipeFreeze = $ionicScrollDelegate.freezeAllScrolls(true);
+
+      var registerData = {
+        direction: 'back'
+      };
+
+      dragPoints = [];
+
+      var switcher = $ionicViewSwitcher.create(self, registerData, backView, $ionicHistory.currentView(), true, false);
+      switcher.loadViewElements(registerData);
+      switcher.render(registerData);
+
+      viewTransition = switcher.transition('back', $ionicHistory.enabledBack(backView), true);
+
+      associatedNavBarCtrl = getAssociatedNavBarCtrl();
+
+      deregDrag = ionic.onGesture('drag', onDrag, $element[0]);
+      deregRelease = ionic.onGesture('release', onRelease, $element[0]);
+    }
+
+    function onDrag(ev) {
+      if (isPrimary && viewTransition) {
+        var dragX = getDragX(ev);
+
+        dragPoints.push({
+          t: Date.now(),
+          x: dragX
+        });
+
+        if (dragX >= windowWidth - 15) {
+          onRelease(ev);
+
+        } else {
+          var step = Math.min(Math.max(getSwipeCompletion(dragX), 0), 1);
+          viewTransition.run(step);
+          associatedNavBarCtrl && associatedNavBarCtrl.activeTransition && associatedNavBarCtrl.activeTransition.run(step);
+        }
+
+      }
+    }
+
+    function onRelease(ev) {
+      if (isPrimary && viewTransition && dragPoints && dragPoints.length > 1) {
+
+        var now = Date.now();
+        var releaseX = getDragX(ev);
+        var startDrag = dragPoints[dragPoints.length - 1];
+
+        for (var x = dragPoints.length - 2; x >= 0; x--) {
+          if (now - startDrag.t > 200) {
+            break;
+          }
+          startDrag = dragPoints[x];
+        }
+
+        var isSwipingRight = (releaseX >= dragPoints[dragPoints.length - 2].x);
+        var releaseSwipeCompletion = getSwipeCompletion(releaseX);
+        var velocity = Math.abs(startDrag.x - releaseX) / (now - startDrag.t);
+
+        // private variables because ui-router has no way to pass custom data using $state.go
+        disableRenderStartViewId = backView.viewId;
+        disableAnimation = (releaseSwipeCompletion < 0.03 || releaseSwipeCompletion > 0.97);
+
+        if (isSwipingRight && (releaseSwipeCompletion > 0.5 || velocity > 0.1)) {
+          var speed = (velocity > 0.5 || velocity < 0.05 || releaseX > windowWidth - 45) ? 'fast' : 'slow';
+          navSwipeAttr(disableAnimation ? '' : speed);
+          backView.go();
+          associatedNavBarCtrl && associatedNavBarCtrl.activeTransition && associatedNavBarCtrl.activeTransition.complete(!disableAnimation, speed);
+
+        } else {
+          navSwipeAttr(disableAnimation ? '' : 'fast');
+          disableRenderStartViewId = null;
+          viewTransition.cancel(!disableAnimation);
+          associatedNavBarCtrl && associatedNavBarCtrl.activeTransition && associatedNavBarCtrl.activeTransition.cancel(!disableAnimation, 'fast');
+          disableAnimation = null;
+        }
+
+      }
+
+      ionic.offGesture(deregDrag, 'drag', onDrag);
+      ionic.offGesture(deregRelease, 'release', onRelease);
+
+      windowWidth = viewTransition = dragPoints = null;
+
+      self.isSwipeFreeze = $ionicScrollDelegate.freezeAllScrolls(false);
+    }
+
+    function getDragX(ev) {
+      return ionic.tap.pointerCoord(ev.gesture.srcEvent).x;
+    }
+
+    function getSwipeCompletion(dragX) {
+      return (dragX - startDragX) / windowWidth;
+    }
+
+    deregDragStart = ionic.onGesture('dragstart', onDragStart, $element[0]);
+
+    $scope.$on('$destroy', function() {
+      ionic.offGesture(deregDragStart, 'dragstart', onDragStart);
+      ionic.offGesture(deregDrag, 'drag', onDrag);
+      ionic.offGesture(deregRelease, 'release', onRelease);
+      self.element = viewTransition = associatedNavBarCtrl = null;
+    });
+  };
+
+
+  function navSwipeAttr(val) {
+    ionic.DomUtil.cachedAttr($element, 'nav-swipe', val);
+  }
+
+
+  function onTabsTop(ev, isTabsTop) {
+    var associatedNavBarCtrl = getAssociatedNavBarCtrl();
+    associatedNavBarCtrl && associatedNavBarCtrl.hasTabsTop(isTabsTop);
+  }
+
+
   function getAssociatedNavBarCtrl() {
     if (navBarDelegate) {
       for (var x=0; x < $ionicNavBarDelegate._instances.length; x++) {
@@ -47393,6 +47524,322 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
   }
 
 }]);
+
+IonicModule
+.controller('$ionicRefresher', [
+  '$scope',
+  '$attrs',
+  '$element',
+  '$ionicBind',
+  '$timeout',
+  function($scope, $attrs,  $element, $ionicBind, $timeout) {
+    var self = this,
+        isDragging = false,
+        isOverscrolling = false,
+        dragOffset = 0,
+        lastOverscroll = 0,
+        ptrThreshold = 60,
+        activated = false,
+        scrollTime = 500,
+        startY = null,
+        deltaY = null,
+        canOverscroll = true,
+        scrollParent,
+        scrollChild;
+
+    if (!isDefined($attrs.pullingIcon)) {
+      $attrs.$set('pullingIcon', 'ion-android-arrow-down');
+    }
+
+    $scope.showSpinner = !isDefined($attrs.refreshingIcon) && $attrs.spinner != 'none';
+
+    $scope.showIcon = isDefined($attrs.refreshingIcon);
+
+    $ionicBind($scope, $attrs, {
+      pullingIcon: '@',
+      pullingText: '@',
+      refreshingIcon: '@',
+      refreshingText: '@',
+      spinner: '@',
+      disablePullingRotation: '@',
+      $onRefresh: '&onRefresh',
+      $onPulling: '&onPulling'
+    });
+
+    function handleTouchend() {
+      // if this wasn't an overscroll, get out immediately
+      if (!canOverscroll && !isDragging) {
+        return;
+      }
+      // reset Y
+      startY = null;
+      // the user has overscrolled but went back to native scrolling
+      if (!isDragging) {
+        dragOffset = 0;
+        isOverscrolling = false;
+        setScrollLock(false);
+        return true;
+      }
+      isDragging = false;
+      dragOffset = 0;
+
+      // the user has scroll far enough to trigger a refresh
+      if (lastOverscroll > ptrThreshold) {
+        start();
+        scrollTo(ptrThreshold, scrollTime);
+
+      // the user has overscrolled but not far enough to trigger a refresh
+      } else {
+        scrollTo(0, scrollTime, deactivate);
+        isOverscrolling = false;
+      }
+      return true;
+    }
+
+    function handleTouchmove(e) {
+      // if multitouch or regular scroll event, get out immediately
+      if (!canOverscroll || e.touches.length > 1) {
+        return;
+      }
+      //if this is a new drag, keep track of where we start
+      if (startY === null) {
+        startY = parseInt(e.touches[0].screenY, 10);
+      }
+
+      // how far have we dragged so far?
+      deltaY = parseInt(e.touches[0].screenY, 10) - startY;
+
+      // if we've dragged up and back down in to native scroll territory
+      if (deltaY - dragOffset <= 0 || scrollParent.scrollTop !== 0) {
+
+        if (isOverscrolling) {
+          isOverscrolling = false;
+          setScrollLock(false);
+        }
+
+        if (isDragging) {
+          nativescroll(scrollParent,parseInt(deltaY - dragOffset, 10) * -1);
+        }
+
+        // if we're not at overscroll 0 yet, 0 out
+        if (lastOverscroll !== 0) {
+          overscroll(0);
+        }
+
+        return true;
+
+      } else if (deltaY > 0 && scrollParent.scrollTop === 0 && !isOverscrolling) {
+        // starting overscroll, but drag started below scrollTop 0, so we need to offset the position
+        dragOffset = deltaY;
+      }
+
+      // prevent native scroll events while overscrolling
+      e.preventDefault();
+
+      // if not overscrolling yet, initiate overscrolling
+      if (!isOverscrolling) {
+        isOverscrolling = true;
+        setScrollLock(true);
+      }
+
+      isDragging = true;
+      // overscroll according to the user's drag so far
+      overscroll(parseInt((deltaY - dragOffset) / 3, 10));
+
+      // update the icon accordingly
+      if (!activated && lastOverscroll > ptrThreshold) {
+        activated = true;
+        ionic.requestAnimationFrame(activate);
+
+      } else if (activated && lastOverscroll < ptrThreshold) {
+        activated = false;
+        ionic.requestAnimationFrame(deactivate);
+      }
+    }
+
+    function handleScroll(e) {
+      // canOverscrol is used to greatly simplify the drag handler during normal scrolling
+      canOverscroll = (e.target.scrollTop === 0) || isDragging;
+    }
+
+    function overscroll(val) {
+      scrollChild.style[ionic.CSS.TRANSFORM] = 'translateY(' + val + 'px)';
+      lastOverscroll = val;
+    }
+
+    function nativescroll(target, newScrollTop) {
+      // creates a scroll event that bubbles, can be cancelled, and with its view
+      // and detail property initialized to window and 1, respectively
+      target.scrollTop = newScrollTop;
+      var e = document.createEvent("UIEvents");
+      e.initUIEvent("scroll", true, true, window, 1);
+      target.dispatchEvent(e);
+    }
+
+    function setScrollLock(enabled) {
+      // set the scrollbar to be position:fixed in preparation to overscroll
+      // or remove it so the app can be natively scrolled
+      if (enabled) {
+        ionic.requestAnimationFrame(function() {
+          scrollChild.classList.add('overscroll');
+          show();
+        });
+
+      } else {
+        ionic.requestAnimationFrame(function() {
+          scrollChild.classList.remove('overscroll');
+          hide();
+          deactivate();
+        });
+      }
+    }
+
+    $scope.$on('scroll.refreshComplete', function() {
+      // prevent the complete from firing before the scroll has started
+      $timeout(function() {
+
+        ionic.requestAnimationFrame(tail);
+
+        // scroll back to home during tail animation
+        scrollTo(0, scrollTime, deactivate);
+
+        // return to native scrolling after tail animation has time to finish
+        $timeout(function() {
+
+          if (isOverscrolling) {
+            isOverscrolling = false;
+            setScrollLock(false);
+          }
+
+        }, scrollTime);
+
+      }, scrollTime);
+    });
+
+    function scrollTo(Y, duration, callback) {
+      // scroll animation loop w/ easing
+      // credit https://gist.github.com/dezinezync/5487119
+      var start = Date.now(),
+          from = lastOverscroll;
+
+      if (from === Y) {
+        callback();
+        return; /* Prevent scrolling to the Y point if already there */
+      }
+
+      // decelerating to zero velocity
+      function easeOutCubic(t) {
+        return (--t) * t * t + 1;
+      }
+
+      // scroll loop
+      function scroll() {
+        var currentTime = Date.now(),
+          time = Math.min(1, ((currentTime - start) / duration)),
+          // where .5 would be 50% of time on a linear scale easedT gives a
+          // fraction based on the easing method
+          easedT = easeOutCubic(time);
+
+        overscroll(parseInt((easedT * (Y - from)) + from, 10));
+
+        if (time < 1) {
+          ionic.requestAnimationFrame(scroll);
+
+        } else {
+
+          if (Y < 5 && Y > -5) {
+            isOverscrolling = false;
+            setScrollLock(false);
+          }
+
+          callback && callback();
+        }
+      }
+
+      // start scroll loop
+      ionic.requestAnimationFrame(scroll);
+    }
+
+
+    self.init = function() {
+      scrollParent = $element.parent().parent()[0];
+      scrollChild = $element.parent()[0];
+
+      if (!scrollParent.classList.contains('ionic-scroll') ||
+          !scrollChild.classList.contains('scroll')) {
+        throw new Error('Refresher must be immediate child of ion-content or ion-scroll');
+      }
+
+      ionic.on('touchmove', handleTouchmove, scrollChild);
+      ionic.on('touchend', handleTouchend, scrollChild);
+      ionic.on('scroll', handleScroll, scrollParent);
+
+      // cleanup when done
+      $scope.$on('$destroy', destroy);
+    };
+
+    function destroy() {
+      ionic.off('touchmove', handleTouchmove, scrollChild);
+      ionic.off('touchend', handleTouchend, scrollChild);
+      ionic.off('scroll', handleScroll, scrollParent);
+      scrollParent = null;
+      scrollChild = null;
+    }
+
+    // DOM manipulation and broadcast methods shared by JS and Native Scrolling
+    // getter used by JS Scrolling
+    self.getRefresherDomMethods = function() {
+      return {
+        activate: activate,
+        deactivate: deactivate,
+        start: start,
+        show: show,
+        hide: hide,
+        tail: tail
+      };
+    };
+
+    function activate() {
+      $element[0].classList.add('active');
+      $scope.$onPulling();
+    }
+
+    function deactivate() {
+      // give tail 150ms to finish
+      $timeout(function() {
+        // deactivateCallback
+        $element.removeClass('active refreshing refreshing-tail');
+        if (activated) activated = false;
+      }, 150);
+    }
+
+    function start() {
+      // startCallback
+      $element[0].classList.add('refreshing');
+      $scope.$onRefresh();
+    }
+
+    function show() {
+      // showCallback
+      $element[0].classList.remove('invisible');
+    }
+
+    function  hide() {
+      // showCallback
+      $element[0].classList.add('invisible');
+    }
+
+    function tail() {
+      // tailCallback
+      $element[0].classList.add('refreshing-tail');
+    }
+
+    // for testing
+    self.__handleTouchmove = handleTouchmove;
+    self.__getScrollChild = function() { return scrollChild; };
+    self.__getScrollParent= function() { return scrollParent; };
+  }
+]);
 
 /**
  * @private
@@ -47408,7 +47855,14 @@ IonicModule
   '$document',
   '$ionicScrollDelegate',
   '$ionicHistory',
-function($scope, scrollViewOptions, $timeout, $window, $location, $document, $ionicScrollDelegate, $ionicHistory) {
+function($scope,
+         scrollViewOptions,
+         $timeout,
+         $window,
+         $location,
+         $document,
+         $ionicScrollDelegate,
+         $ionicHistory) {
 
   var self = this;
   // for testing
@@ -47432,7 +47886,7 @@ function($scope, scrollViewOptions, $timeout, $window, $location, $document, $io
     }
   );
 
-  if (!angular.isDefined(scrollViewOptions.bouncing)) {
+  if (!isDefined(scrollViewOptions.bouncing)) {
     ionic.Platform.ready(function() {
       if (scrollView.options) {
         scrollView.options.bouncing = true;
@@ -47463,31 +47917,24 @@ function($scope, scrollViewOptions, $timeout, $window, $location, $document, $io
 
   $scope.$on('$destroy', function() {
     deregisterInstance();
-    scrollView.__cleanup();
+    scrollView && scrollView.__cleanup && scrollView.__cleanup();
     ionic.off('resize', resize, $window);
     $window.removeEventListener('resize', resize);
-    scrollViewOptions = null;
-    self._scrollViewOptions.el = null;
-    self._scrollViewOptions = null;
     $element.off('scroll', scrollFunc);
-    $element = null;
-    self.$element = null;
-    element = null;
-    self.element = null;
-    self.scrollView = null;
-    scrollView = null;
+    scrollView = self.scrollView = scrollViewOptions = self._scrollViewOptions = scrollViewOptions.el = self._scrollViewOptions.el = $element = self.$element = element = null;
   });
 
   $timeout(function() {
     scrollView && scrollView.run && scrollView.run();
+    $element.triggerHandler('scroll.init');
   });
 
   self.getScrollView = function() {
-    return self.scrollView;
+    return scrollView;
   };
 
   self.getScrollPosition = function() {
-    return self.scrollView.getValues();
+    return scrollView.getValues();
   };
 
   self.resize = function() {
@@ -47497,14 +47944,12 @@ function($scope, scrollViewOptions, $timeout, $window, $location, $document, $io
   };
 
   self.scrollTop = function(shouldAnimate) {
-    ionic.DomUtil.blurAll();
     self.resize().then(function() {
       scrollView.scrollTo(0, 0, !!shouldAnimate);
     });
   };
 
   self.scrollBottom = function(shouldAnimate) {
-    ionic.DomUtil.blurAll();
     self.resize().then(function() {
       var max = scrollView.getScrollMax();
       scrollView.scrollTo(max.left, max.top, !!shouldAnimate);
@@ -47512,35 +47957,30 @@ function($scope, scrollViewOptions, $timeout, $window, $location, $document, $io
   };
 
   self.scrollTo = function(left, top, shouldAnimate) {
-    ionic.DomUtil.blurAll();
     self.resize().then(function() {
       scrollView.scrollTo(left, top, !!shouldAnimate);
     });
   };
 
   self.zoomTo = function(zoom, shouldAnimate, originLeft, originTop) {
-    ionic.DomUtil.blurAll();
     self.resize().then(function() {
       scrollView.zoomTo(zoom, !!shouldAnimate, originLeft, originTop);
     });
   };
 
   self.zoomBy = function(zoom, shouldAnimate, originLeft, originTop) {
-    ionic.DomUtil.blurAll();
     self.resize().then(function() {
       scrollView.zoomBy(zoom, !!shouldAnimate, originLeft, originTop);
     });
   };
 
   self.scrollBy = function(left, top, shouldAnimate) {
-    ionic.DomUtil.blurAll();
     self.resize().then(function() {
       scrollView.scrollBy(left, top, !!shouldAnimate);
     });
   };
 
   self.anchorScroll = function(shouldAnimate) {
-    ionic.DomUtil.blurAll();
     self.resize().then(function() {
       var hash = $location.hash();
       var elm = hash && $document[0].getElementById(hash);
@@ -47560,36 +48000,27 @@ function($scope, scrollViewOptions, $timeout, $window, $location, $document, $io
     });
   };
 
+  self.freezeScroll = scrollView.freeze;
+
+  self.freezeAllScrolls = function(shouldFreeze) {
+    for (var i = 0; i < $ionicScrollDelegate._instances.length; i++) {
+      $ionicScrollDelegate._instances[i].freezeScroll(shouldFreeze);
+    }
+  };
+
 
   /**
    * @private
    */
-  self._setRefresher = function(refresherScope, refresherElement) {
-    var refresher = self.refresher = refresherElement;
+  self._setRefresher = function(refresherScope, refresherElement, refresherMethods) {
+    self.refresher = refresherElement;
     var refresherHeight = self.refresher.clientHeight || 60;
-    scrollView.activatePullToRefresh(refresherHeight, function() {
-      // activateCallback
-      refresher.classList.add('active');
-      refresherScope.$onPulling();
-    }, function() {
-        refresher.classList.remove('active');
-        refresher.classList.remove('refreshing');
-        refresher.classList.remove('refreshing-tail');
-    }, function() {
-      // startCallback
-      refresher.classList.add('refreshing');
-      refresherScope.$onRefresh();
-    }, function() {
-      // showCallback
-      refresher.classList.remove('invisible');
-    }, function() {
-      // hideCallback
-      refresher.classList.add('invisible');
-    }, function() {
-      // tailCallback
-      refresher.classList.add('refreshing-tail');
-    });
+    scrollView.activatePullToRefresh(
+      refresherHeight,
+      refresherMethods
+    );
   };
+
 }]);
 
 IonicModule
@@ -47600,7 +48031,8 @@ IonicModule
   '$ionicPlatform',
   '$ionicBody',
   '$ionicHistory',
-function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $ionicHistory) {
+  '$ionicScrollDelegate',
+function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $ionicHistory, $ionicScrollDelegate) {
   var self = this;
   var rightShowing, leftShowing, isDragging;
   var startX, lastX, offsetX, isAsideExposed;
@@ -47742,7 +48174,19 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
     // add the CSS class "menu-open" if the percentage does not
     // equal 0, otherwise remove the class from the body element
     $ionicBody.enableClass((percentage !== 0), 'menu-open');
+
+    freezeAllScrolls(false);
   };
+
+  function freezeAllScrolls(shouldFreeze) {
+    if (shouldFreeze && !self.isScrollFreeze) {
+      $ionicScrollDelegate.freezeAllScrolls(shouldFreeze);
+
+    } else if (!shouldFreeze && self.isScrollFreeze) {
+      $ionicScrollDelegate.freezeAllScrolls(false);
+    }
+    self.isScrollFreeze = shouldFreeze;
+  }
 
   /**
    * Open the menu the given pixel amount.
@@ -47873,6 +48317,10 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
   self.exposeAside = function(shouldExposeAside) {
     if (!(self.left && self.left.isEnabled) && !(self.right && self.right.isEnabled)) return;
     self.close();
+    //Trigger a resize if it changed
+    if (isAsideExposed !== shouldExposeAside) {
+      ionic.trigger('resize', null, window);
+    }
     isAsideExposed = shouldExposeAside;
     if (self.left && self.left.isEnabled) {
       // set the left marget width if it should be exposed
@@ -47891,6 +48339,8 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
 
   // End a drag with the given event
   self._endDrag = function(e) {
+    freezeAllScrolls(false);
+
     if (isAsideExposed) return;
 
     if (isDragging) {
@@ -47903,7 +48353,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
 
   // Handle a drag event
   self._handleDrag = function(e) {
-    if (isAsideExposed) return;
+    if (isAsideExposed || !$scope.dragContent) return;
 
     // If we don't have start coords, grab and store them
     if (!startX) {
@@ -47928,6 +48378,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
 
     if (isDragging) {
       self.openAmount(offsetX + (lastX - startX));
+      freezeAllScrolls(true);
     }
   };
 
@@ -47942,7 +48393,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
   self.edgeThresholdEnabled = false;
   self.edgeDragThreshold = function(value) {
     if (arguments.length) {
-      if (angular.isNumber(value) && value > 0) {
+      if (isNumber(value) && value > 0) {
         self.edgeThreshold = value;
         self.edgeThresholdEnabled = true;
       } else {
@@ -47980,7 +48431,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
 
   $scope.sideMenuContentTranslateX = 0;
 
-  var deregisterBackButtonAction = angular.noop;
+  var deregisterBackButtonAction = noop;
   var closeSideMenu = angular.bind(self, self.close);
 
   $scope.$watch(function() {
@@ -48009,6 +48460,9 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
       self.content.element = null;
       self.content = null;
     }
+
+    // ensure scrolls are unfrozen
+    freezeAllScrolls(false);
   });
 
   self.initialize({
@@ -48021,6 +48475,434 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
   });
 
 }]);
+
+(function(ionic) {
+
+  var TRANSLATE32 = 'translate(32,32)';
+  var STROKE_OPACITY = 'stroke-opacity';
+  var ROUND = 'round';
+  var INDEFINITE = 'indefinite';
+  var DURATION = '750ms';
+  var NONE = 'none';
+  var SHORTCUTS = {
+    a: 'animate',
+    an: 'attributeName',
+    at: 'animateTransform',
+    c: 'circle',
+    da: 'stroke-dasharray',
+    os: 'stroke-dashoffset',
+    f: 'fill',
+    lc: 'stroke-linecap',
+    rc: 'repeatCount',
+    sw: 'stroke-width',
+    t: 'transform',
+    v: 'values'
+  };
+
+  var SPIN_ANIMATION = {
+    v: '0,32,32;360,32,32',
+    an: 'transform',
+    type: 'rotate',
+    rc: INDEFINITE,
+    dur: DURATION
+  };
+
+  function createSvgElement(tagName, data, parent, spinnerName) {
+    var ele = document.createElement(SHORTCUTS[tagName] || tagName);
+    var k, x, y;
+
+    for (k in data) {
+
+      if (angular.isArray(data[k])) {
+        for (x = 0; x < data[k].length; x++) {
+          if (data[k][x].fn) {
+            for (y = 0; y < data[k][x].t; y++) {
+              createSvgElement(k, data[k][x].fn(y, spinnerName), ele, spinnerName);
+            }
+          } else {
+            createSvgElement(k, data[k][x], ele, spinnerName);
+          }
+        }
+
+      } else {
+        setSvgAttribute(ele, k, data[k]);
+      }
+    }
+
+    parent.appendChild(ele);
+  }
+
+  function setSvgAttribute(ele, k, v) {
+    ele.setAttribute(SHORTCUTS[k] || k, v);
+  }
+
+  function animationValues(strValues, i) {
+    var values = strValues.split(';');
+    var back = values.slice(i);
+    var front = values.slice(0, values.length - back.length);
+    values = back.concat(front).reverse();
+    return values.join(';') + ';' + values[0];
+  }
+
+  var IOS_SPINNER = {
+    sw: 4,
+    lc: ROUND,
+    line: [{
+      fn: function(i, spinnerName) {
+        return {
+          y1: spinnerName == 'ios' ? 17 : 12,
+          y2: spinnerName == 'ios' ? 29 : 20,
+          t: TRANSLATE32 + ' rotate(' + (30 * i + (i < 6 ? 180 : -180)) + ')',
+          a: [{
+            fn: function() {
+              return {
+                an: STROKE_OPACITY,
+                dur: DURATION,
+                v: animationValues('0;.1;.15;.25;.35;.45;.55;.65;.7;.85;1', i),
+                rc: INDEFINITE
+              };
+            },
+            t: 1
+          }]
+        };
+      },
+      t: 12
+    }]
+  };
+
+  var spinners = {
+
+    android: {
+      c: [{
+        sw: 6,
+        da: 128,
+        os: 82,
+        r: 26,
+        cx: 32,
+        cy: 32,
+        f: NONE
+      }]
+    },
+
+    ios: IOS_SPINNER,
+
+    'ios-small': IOS_SPINNER,
+
+    bubbles: {
+      sw: 0,
+      c: [{
+        fn: function(i) {
+          return {
+            cx: 24 * Math.cos(2 * Math.PI * i / 8),
+            cy: 24 * Math.sin(2 * Math.PI * i / 8),
+            t: TRANSLATE32,
+            a: [{
+              fn: function() {
+                return {
+                  an: 'r',
+                  dur: DURATION,
+                  v: animationValues('1;2;3;4;5;6;7;8', i),
+                  rc: INDEFINITE
+                };
+              },
+              t: 1
+            }]
+          };
+        },
+        t: 8
+      }]
+    },
+
+    circles: {
+
+      c: [{
+        fn: function(i) {
+          return {
+            r: 5,
+            cx: 24 * Math.cos(2 * Math.PI * i / 8),
+            cy: 24 * Math.sin(2 * Math.PI * i / 8),
+            t: TRANSLATE32,
+            sw: 0,
+            a: [{
+              fn: function() {
+                return {
+                  an: 'fill-opacity',
+                  dur: DURATION,
+                  v: animationValues('.3;.3;.3;.4;.7;.85;.9;1', i),
+                  rc: INDEFINITE
+                };
+              },
+              t: 1
+            }]
+          };
+        },
+        t: 8
+      }]
+    },
+
+    crescent: {
+      c: [{
+        sw: 4,
+        da: 128,
+        os: 82,
+        r: 26,
+        cx: 32,
+        cy: 32,
+        f: NONE,
+        at: [SPIN_ANIMATION]
+      }]
+    },
+
+    dots: {
+
+      c: [{
+        fn: function(i) {
+          return {
+            cx: 16 + (16 * i),
+            cy: 32,
+            sw: 0,
+            a: [{
+              fn: function() {
+                return {
+                  an: 'fill-opacity',
+                  dur: DURATION,
+                  v: animationValues('.5;.6;.8;1;.8;.6;.5', i),
+                  rc: INDEFINITE
+                };
+              },
+              t: 1
+            }, {
+              fn: function() {
+                return {
+                  an: 'r',
+                  dur: DURATION,
+                  v: animationValues('4;5;6;5;4;3;3', i),
+                  rc: INDEFINITE
+                };
+              },
+              t: 1
+            }]
+          };
+        },
+        t: 3
+      }]
+    },
+
+    lines: {
+      sw: 7,
+      lc: ROUND,
+      line: [{
+        fn: function(i) {
+          return {
+            x1: 10 + (i * 14),
+            x2: 10 + (i * 14),
+            a: [{
+              fn: function() {
+                return {
+                  an: 'y1',
+                  dur: DURATION,
+                  v: animationValues('16;18;28;18;16', i),
+                  rc: INDEFINITE
+                };
+              },
+              t: 1
+            },{
+              fn: function() {
+                return {
+                  an: 'y2',
+                  dur: DURATION,
+                  v: animationValues('48;44;36;46;48', i),
+                  rc: INDEFINITE
+                };
+              },
+              t: 1
+            },{
+              fn: function() {
+                return {
+                  an: STROKE_OPACITY,
+                  dur: DURATION,
+                  v: animationValues('1;.8;.5;.4;1', i),
+                  rc: INDEFINITE
+                };
+              },
+              t: 1
+            }]
+          };
+        },
+        t: 4
+      }]
+    },
+
+    ripple: {
+      f: NONE,
+      'fill-rule': 'evenodd',
+      sw: 3,
+      circle: [{
+        fn: function(i) {
+          return {
+            cx: 32,
+            cy: 32,
+            a: [{
+              fn: function() {
+                return {
+                  an: 'r',
+                  begin: (i * -1) + 's',
+                  dur: '2s',
+                  v: '0;24',
+                  keyTimes: '0;1',
+                  keySplines: '0.1,0.2,0.3,1',
+                  calcMode: 'spline',
+                  rc: INDEFINITE
+                };
+              },
+              t: 1
+            },{
+              fn: function() {
+                return {
+                  an: STROKE_OPACITY,
+                  begin: (i * -1) + 's',
+                  dur: '2s',
+                  v: '.2;1;.2;0',
+                  rc: INDEFINITE
+                };
+              },
+              t: 1
+            }]
+          };
+        },
+        t: 2
+      }]
+    },
+
+    spiral: {
+      defs: [{
+        linearGradient: [{
+          id: 'sGD',
+          gradientUnits: 'userSpaceOnUse',
+          x1: 55, y1: 46, x2: 2, y2: 46,
+          stop: [{
+            offset: 0.1,
+            class: 'stop1'
+          }, {
+            offset: 1,
+            class: 'stop2'
+          }]
+        }]
+      }],
+      g: [{
+        sw: 4,
+        lc: ROUND,
+        f: NONE,
+        path: [{
+          stroke: 'url(#sGD)',
+          d: 'M4,32 c0,15,12,28,28,28c8,0,16-4,21-9'
+        }, {
+          d: 'M60,32 C60,16,47.464,4,32,4S4,16,4,32'
+        }],
+        at: [SPIN_ANIMATION]
+      }]
+    }
+
+  };
+
+  var animations = {
+
+    android: function(ele) {
+      var rIndex = 0;
+      var rotateCircle = 0;
+      var startTime;
+      var svgEle = ele.querySelector('g');
+      var circleEle = ele.querySelector('circle');
+
+      function run() {
+        var v = easeInOutCubic(Date.now() - startTime, 650);
+        var scaleX = 1;
+        var translateX = 0;
+        var dasharray = (188 - (58 * v));
+        var dashoffset = (182 - (182 * v));
+
+        if (rIndex % 2) {
+          scaleX = -1;
+          translateX = -64;
+          dasharray = (128 - (-58 * v));
+          dashoffset = (182 * v);
+        }
+
+        var rotateLine = [0, -101, -90, -11, -180, 79, -270, -191][rIndex];
+
+        setSvgAttribute(circleEle, 'da', Math.max(Math.min(dasharray, 188), 128));
+        setSvgAttribute(circleEle, 'os', Math.max(Math.min(dashoffset, 182), 0));
+        setSvgAttribute(circleEle, 't', 'scale(' + scaleX + ',1) translate(' + translateX + ',0) rotate(' + rotateLine + ',32,32)');
+
+        rotateCircle += 4.1;
+        if (rotateCircle > 359) rotateCircle = 0;
+        setSvgAttribute(svgEle, 't', 'rotate(' + rotateCircle + ',32,32)');
+
+        if (v >= 1) {
+          rIndex++;
+          if (rIndex > 7) rIndex = 0;
+          startTime = Date.now();
+        }
+
+        ionic.requestAnimationFrame(run);
+      }
+
+      return function() {
+        startTime = Date.now();
+        run();
+      };
+
+    }
+
+  };
+
+  function easeInOutCubic(t, c) {
+    t /= c / 2;
+    if (t < 1) return 1 / 2 * t * t * t;
+    t -= 2;
+    return 1 / 2 * (t * t * t + 2);
+  }
+
+
+  IonicModule
+  .controller('$ionicSpinner', [
+    '$element',
+    '$attrs',
+  function($element, $attrs) {
+    var spinnerName, spinner;
+
+    this.init = function() {
+      spinnerName = $attrs.icon || ionic.Platform.platform();
+      spinner = spinners[spinnerName];
+      if (!spinner) {
+        spinnerName = 'ios';
+        spinner = spinners.ios;
+      }
+
+      var container = document.createElement('div');
+      createSvgElement('svg', {
+        viewBox: '0 0 64 64',
+        g: [spinners[spinnerName]]
+      }, container, spinnerName);
+
+      // Specifically for animations to work,
+      // Android 4.3 and below requires the element to be
+      // added as an html string, rather than dynmically
+      // building up the svg element and appending it.
+      $element.html(container.innerHTML);
+
+      this.start();
+
+      return spinnerName;
+    };
+
+    this.start = function() {
+      animations[spinnerName] && animations[spinnerName]($element[0])();
+    };
+
+  }]);
+
+})(ionic);
 
 IonicModule
 .controller('$ionicTab', [
@@ -48097,14 +48979,14 @@ function($scope, $element, $ionicHistory) {
     if (tab.$tabSelected) {
       selectedTab = selectedTabIndex = null;
       tab.$tabSelected = false;
-      (tab.onDeselect || angular.noop)();
+      (tab.onDeselect || noop)();
       tab.$broadcast && tab.$broadcast('$ionicHistory.deselect');
     }
   };
 
   self.select = function(tab, shouldEmitEvent) {
     var tabIndex;
-    if (angular.isNumber(tab)) {
+    if (isNumber(tab)) {
       tabIndex = tab;
       if (tabIndex >= self.tabs.length) return;
       tab = self.tabs[tabIndex];
@@ -48135,7 +49017,7 @@ function($scope, $element, $ionicHistory) {
 
       //Use a funny name like $tabSelected so the developer doesn't overwrite the var in a child scope
       tab.$tabSelected = true;
-      (tab.onSelect || angular.noop)();
+      (tab.onSelect || noop)();
 
       if (shouldEmitEvent) {
         $scope.$emit('$ionicHistory.change', {
@@ -48216,20 +49098,14 @@ function($scope, $element, $attrs, $compile, $rootScope, $ionicViewSwitcher) {
         navBarItems[n] = generateNavBarItem(navElementHtml[n]);
       }
 
-      navViewCtrl.beforeEnter({
+      navViewCtrl.beforeEnter(extend(transData, {
         title: viewTitle,
-        direction: transData.direction,
-        transition: transData.transition,
-        navBarTransition: transData.navBarTransition,
-        transitionId: transData.transitionId,
-        shouldAnimate: transData.shouldAnimate,
-        enableBack: transData.enableBack,
         showBack: !attrTrue('hideBackButton'),
         navBarItems: navBarItems,
         navBarDelegate: navBarDelegateHandle || null,
         showNavBar: !attrTrue('hideNavBar'),
         hasHeaderBar: !!hasViewHeaderBar
-      });
+      }));
 
       // make sure any existing observers are cleaned up
       deregisterFns();
@@ -48306,16 +49182,17 @@ IonicModule
     restrict: 'E',
     scope: true,
     replace: true,
-    link: function($scope, $element){
+    link: function($scope, $element) {
+
       var keyUp = function(e) {
-        if(e.which == 27) {
+        if (e.which == 27) {
           $scope.cancel();
           $scope.$apply();
         }
       };
 
       var backdropClick = function(e) {
-        if(e.target == $element[0]) {
+        if (e.target == $element[0]) {
           $scope.cancel();
           $scope.$apply();
         }
@@ -48330,15 +49207,13 @@ IonicModule
     },
     template: '<div class="action-sheet-backdrop">' +
                 '<div class="action-sheet-wrapper">' +
-                  '<div class="action-sheet">' +
-                    '<div class="action-sheet-group">' +
+                  '<div class="action-sheet" ng-class="{\'action-sheet-has-icons\': $actionSheetHasIcon}">' +
+                    '<div class="action-sheet-group action-sheet-options">' +
                       '<div class="action-sheet-title" ng-if="titleText" ng-bind-html="titleText"></div>' +
-                      '<button class="button" ng-click="buttonClicked($index)" ng-repeat="button in buttons" ng-bind-html="button.text"></button>' +
+                      '<button class="button action-sheet-option" ng-click="buttonClicked($index)" ng-repeat="b in buttons" ng-bind-html="b.text"></button>' +
+                      '<button class="button destructive action-sheet-destructive" ng-if="destructiveText" ng-click="destructiveButtonClicked()" ng-bind-html="destructiveText"></button>' +
                     '</div>' +
-                    '<div class="action-sheet-group" ng-if="destructiveText">' +
-                      '<button class="button destructive" ng-click="destructiveButtonClicked()" ng-bind-html="destructiveText"></button>' +
-                    '</div>' +
-                    '<div class="action-sheet-group" ng-if="cancelText">' +
+                    '<div class="action-sheet-group action-sheet-cancel" ng-if="cancelText">' +
                       '<button class="button" ng-click="cancel()" ng-bind-html="cancelText"></button>' +
                     '</div>' +
                   '</div>' +
@@ -48402,312 +49277,938 @@ IonicModule
   };
 }]);
 
+
 /**
  * @ngdoc directive
- * @module ionic
- * @name collectionRepeat
  * @restrict A
- * @codepen mFygh
+ * @name collectionRepeat
+ * @module ionic
+ * @codepen 7ec1ec58f2489ab8f359fa1a0fe89c15
  * @description
- * `collection-repeat` is a directive that allows you to render lists with
- * thousands of items in them, and experience little to no performance penalty.
+ * `collection-repeat` allows an app to show huge lists of items much more performantly than
+ * `ng-repeat`.
  *
- * Demo:
+ * It renders into the DOM only as many items as are currently visible.
  *
- * The directive renders onto the screen only the items that should be currently visible.
- * So if you have 1,000 items in your list but only ten fit on your screen,
- * collection-repeat will only render into the DOM the ten that are in the current
- * scroll position.
+ * This means that on a phone screen that can fit eight items, only the eight items matching
+ * the current scroll position will be rendered.
  *
- * Here are a few things to keep in mind while using collection-repeat:
+ * **The Basics**:
  *
- * 1. The data supplied to collection-repeat must be an array.
- * 2. You must explicitly tell the directive what size your items will be in the DOM, using directive attributes.
- * Pixel amounts or percentages are allowed (see below).
- * 3. The elements rendered will be absolutely positioned: be sure to let your CSS work with
- * this (see below).
- * 4. Each collection-repeat list will take up all of its parent scrollView's space.
- * If you wish to have multiple lists on one page, put each list within its own
- * {@link ionic.directive:ionScroll ionScroll} container.
- * 5. You should not use the ng-show and ng-hide directives on your ion-content/ion-scroll elements that
- * have a collection-repeat inside.  ng-show and ng-hide apply the `display: none` css rule to the content's
- * style, causing the scrollView to read the width and height of the content as 0.  Resultingly,
- * collection-repeat will render elements that have just been un-hidden incorrectly.
+ * - The data given to collection-repeat must be an array.
+ * - If the `item-height` and `item-width` attributes are not supplied, it will be assumed that
+ *   every item in the list has the same dimensions as the first item.
+ * - Don't use angular one-time binding (`::`) with collection-repeat. The scope of each item is
+ *   assigned new data and re-digested as you scroll. Bindings need to update, and one-time bindings
+ *   won't.
  *
+ * **Performance Tips**:
+ *
+ * - The iOS webview has a performance bottleneck when switching out `<img src>` attributes.
+ *   To increase performance of images on iOS, cache your images in advance and,
+ *   if possible, lower the number of unique images. We're working on [a solution](https://github.com/driftyco/ionic/issues/3194).
  *
  * @usage
- *
- * #### Basic Usage (single rows of items)
- *
- * Notice two things here: we use ng-style to set the height of the item to match
- * what the repeater thinks our item height is.  Additionally, we add a css rule
- * to make our item stretch to fit the full screen (since it will be absolutely
- * positioned).
- *
- * ```html
- * <ion-content ng-controller="ContentCtrl">
- *   <div class="list">
- *     <div class="item my-item"
- *       collection-repeat="item in items"
- *       collection-item-width="'100%'"
- *       collection-item-height="getItemHeight(item, $index)"
- *       ng-style="{height: getItemHeight(item, $index)}">
- *       {% raw %}{{item}}{% endraw %}
- *     </div>
- *   </div>
- * </ion-content>
- * ```
- * ```js
- * function ContentCtrl($scope) {
- *   $scope.items = [];
- *   for (var i = 0; i < 1000; i++) {
- *     $scope.items.push('Item ' + i);
- *   }
- *
- *   $scope.getItemHeight = function(item, index) {
- *     //Make evenly indexed items be 10px taller, for the sake of example
- *     return (index % 2) === 0 ? 50 : 60;
- *   };
- * }
- * ```
- * ```css
- * .my-item {
- *   left: 0;
- *   right: 0;
- * }
- * ```
- *
- * #### Grid Usage (three items per row)
- *
+ * #### Basic Item List ([codepen](http://codepen.io/ionic/pen/0c2c35a34a8b18ad4d793fef0b081693))
  * ```html
  * <ion-content>
- *   <div class="item item-avatar my-image-item"
- *     collection-repeat="image in images"
- *     collection-item-width="'33%'"
- *     collection-item-height="'33%'">
- *     <img ng-src="{{image.src}}">
- *   </div>
+ *   <ion-item collection-repeat="item in items">
+ *     {% raw %}{{item}}{% endraw %}
+ *   </ion-item>
  * </ion-content>
  * ```
- * Percentage of total visible list dimensions. This example shows a 3 by 3 matrix that fits on the screen (3 rows and 3 colums). Note that dimensions are used in the creation of the element and therefore a measurement of the item cannnot be used as an input dimension.
- * ```css
- * .my-image-item img {
- *   height: 33%;
- *   width: 33%;
- * }
+ *
+ * #### Grid of Images ([codepen](http://codepen.io/ionic/pen/5515d4efd9d66f780e96787387f41664))
+ * ```html
+ * <ion-content>
+ *   <img collection-repeat="photo in photos"
+ *     item-width="33%"
+ *     item-height="200px"
+ *     ng-src="{% raw %}{{photo.url}}{% endraw %}">
+ * </ion-content>
  * ```
  *
- * @param {expression} collection-repeat The expression indicating how to enumerate a collection. These
- *   formats are currently supported:
+ * #### Horizontal Scroller, Dynamic Item Width ([codepen](http://codepen.io/ionic/pen/67cc56b349124a349acb57a0740e030e))
+ * ```html
+ * <ion-content>
+ *   <h2>Available Kittens:</h2>
+ *   <ion-scroll direction="x" class="available-scroller">
+ *     <div class="photo" collection-repeat="photo in main.photos"
+ *        item-height="250" item-width="photo.width + 30">
+ *        <img ng-src="{{photo.src}}">
+ *     </div>
+ *   </ion-scroll>
+ * </ion-content>
+ * ```
  *
- *   * `variable in expression` – where variable is the user defined loop variable and `expression`
- *     is a scope expression giving the collection to enumerate.
- *
- *     For example: `album in artist.albums`.
- *
- *   * `variable in expression track by tracking_expression` – You can also provide an optional tracking function
- *     which can be used to associate the objects in the collection with the DOM elements. If no tracking function
- *     is specified the collection-repeat associates elements by identity in the collection. It is an error to have
- *     more than one tracking function to resolve to the same key. (This would mean that two distinct objects are
- *     mapped to the same DOM element, which is not possible.)  Filters should be applied to the expression,
- *     before specifying a tracking expression.
- *
- *     For example: `item in items` is equivalent to `item in items track by $id(item)'. This implies that the DOM elements
- *     will be associated by item identity in the array.
- *
- *     For example: `item in items track by $id(item)`. A built in `$id()` function can be used to assign a unique
- *     `$$hashKey` property to each item in the array. This property is then used as a key to associated DOM elements
- *     with the corresponding item in the array by identity. Moving the same object in array would move the DOM
- *     element in the same way in the DOM.
- *
- *     For example: `item in items track by item.id` is a typical pattern when the items come from the database. In this
- *     case the object identity does not matter. Two objects are considered equivalent as long as their `id`
- *     property is same.
- *
- *     For example: `item in items | filter:searchText track by item.id` is a pattern that might be used to apply a filter
- *     to items in conjunction with a tracking expression.
- *
- * @param {expression} collection-item-width The width of the repeated element.  Can be a number (in pixels) or a percentage.
- * @param {expression} collection-item-height The height of the repeated element.  Can be a number (in pixels), or a percentage.
- *
+ * @param {expression} collection-repeat The expression indicating how to enumerate a collection,
+ *   of the format  `variable in expression` – where variable is the user defined loop variable
+ *   and `expression` is a scope expression giving the collection to enumerate.
+ *   For example: `album in artist.albums` or `album in artist.albums | orderBy:'name'`.
+ * @param {expression=} item-width The width of the repeated element. The expression must return
+ *   a number (pixels) or a percentage. Defaults to the width of the first item in the list.
+ *   (previously named collection-item-width)
+ * @param {expression=} item-height The height of the repeated element. The expression must return
+ *   a number (pixels) or a percentage. Defaults to the height of the first item in the list.
+ *   (previously named collection-item-height)
+ * @param {number=} item-render-buffer The number of items to load before and after the visible
+ *   items in the list. Default 3. Tip: set this higher if you have lots of images to preload, but
+ *   don't set it too high or you'll see performance loss.
+ * @param {boolean=} force-refresh-images Force images to refresh as you scroll. This fixes a problem
+ *   where, when an element is interchanged as scrolling, its image will still have the old src
+ *   while the new src loads. Setting this to true comes with a small performance loss.
  */
-var COLLECTION_REPEAT_SCROLLVIEW_XY_ERROR = "Cannot create a collection-repeat within a scrollView that is scrollable on both x and y axis.  Choose either x direction or y direction.";
-var COLLECTION_REPEAT_ATTR_HEIGHT_ERROR = "collection-repeat expected attribute collection-item-height to be a an expression that returns a number (in pixels) or percentage.";
-var COLLECTION_REPEAT_ATTR_WIDTH_ERROR = "collection-repeat expected attribute collection-item-width to be a an expression that returns a number (in pixels) or percentage.";
-var COLLECTION_REPEAT_ATTR_REPEAT_ERROR = "collection-repeat expected expression in form of '_item_ in _collection_[ track by _id_]' but got '%'";
 
 IonicModule
-.directive('collectionRepeat', [
-  '$collectionRepeatManager',
-  '$collectionDataSource',
-  '$parse',
-function($collectionRepeatManager, $collectionDataSource, $parse) {
+.directive('collectionRepeat', CollectionRepeatDirective)
+.factory('$ionicCollectionManager', RepeatManagerFactory);
+
+var ONE_PX_TRANSPARENT_IMG_SRC = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+var WIDTH_HEIGHT_REGEX = /height:.*?px;\s*width:.*?px/;
+var DEFAULT_RENDER_BUFFER = 3;
+
+CollectionRepeatDirective.$inject = ['$ionicCollectionManager', '$parse', '$window', '$$rAF', '$rootScope', '$timeout'];
+function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$rAF, $rootScope, $timeout) {
   return {
+    restrict: 'A',
     priority: 1000,
     transclude: 'element',
-    terminal: true,
     $$tlb: true,
-    require: ['^$ionicScroll', '^?ionNavView'],
-    controller: [function(){}],
-    link: function($scope, $element, $attr, ctrls, $transclude) {
-      var scrollCtrl = ctrls[0];
-      var navViewCtrl = ctrls[1];
-      var wrap = jqLite('<div style="position:relative;">');
-      $element.parent()[0].insertBefore(wrap[0], $element[0]);
-      wrap.append($element);
-
-      var scrollView = scrollCtrl.scrollView;
-      if (scrollView.options.scrollingX && scrollView.options.scrollingY) {
-        throw new Error(COLLECTION_REPEAT_SCROLLVIEW_XY_ERROR);
-      }
-
-      var isVertical = !!scrollView.options.scrollingY;
-      if (isVertical && !$attr.collectionItemHeight) {
-        throw new Error(COLLECTION_REPEAT_ATTR_HEIGHT_ERROR);
-      } else if (!isVertical && !$attr.collectionItemWidth) {
-        throw new Error(COLLECTION_REPEAT_ATTR_WIDTH_ERROR);
-      }
-
-      var heightParsed = $parse($attr.collectionItemHeight || '"100%"');
-      var widthParsed = $parse($attr.collectionItemWidth || '"100%"');
-
-      var heightGetter = function(scope, locals) {
-        var result = heightParsed(scope, locals);
-        if (isString(result) && result.indexOf('%') > -1) {
-          return Math.floor(parseInt(result) / 100 * scrollView.__clientHeight);
-        }
-        return parseInt(result);
-      };
-      var widthGetter = function(scope, locals) {
-        var result = widthParsed(scope, locals);
-        if (isString(result) && result.indexOf('%') > -1) {
-          return Math.floor(parseInt(result) / 100 * scrollView.__clientWidth);
-        }
-        return parseInt(result);
-      };
-
-      var match = $attr.collectionRepeat.match(/^\s*([\s\S]+?)\s+in\s+([\s\S]+?)(?:\s+track\s+by\s+([\s\S]+?))?\s*$/);
-      if (!match) {
-        throw new Error(COLLECTION_REPEAT_ATTR_REPEAT_ERROR
-                        .replace('%', $attr.collectionRepeat));
-      }
-      var keyExpr = match[1];
-      var listExpr = match[2];
-      var trackByExpr = match[3];
-
-      var dataSource = new $collectionDataSource({
-        scope: $scope,
-        transcludeFn: $transclude,
-        transcludeParent: $element.parent(),
-        keyExpr: keyExpr,
-        listExpr: listExpr,
-        trackByExpr: trackByExpr,
-        heightGetter: heightGetter,
-        widthGetter: widthGetter
-      });
-      var collectionRepeatManager = new $collectionRepeatManager({
-        dataSource: dataSource,
-        element: scrollCtrl.$element,
-        scrollView: scrollCtrl.scrollView,
-      });
-
-      var listExprParsed = $parse(listExpr);
-      $scope.$watchCollection(listExprParsed, function(value) {
-        if (value && !angular.isArray(value)) {
-          throw new Error("collection-repeat expects an array to repeat over, but instead got '" + typeof value + "'.");
-        }
-        rerender(value);
-      });
-
-      // Find every sibling before and after the repeated items, and pass them
-      // to the dataSource
-      var scrollViewContent = scrollCtrl.scrollView.__content;
-      function rerender(value) {
-        var beforeSiblings = [];
-        var afterSiblings = [];
-        var before = true;
-
-        forEach(scrollViewContent.children, function(node, i) {
-          if ( ionic.DomUtil.elementIsDescendant($element[0], node, scrollViewContent) ) {
-            before = false;
-          } else {
-            if (node.hasAttribute('collection-repeat-ignore')) return;
-            var width = node.offsetWidth;
-            var height = node.offsetHeight;
-            if (width && height) {
-              var element = jqLite(node);
-              (before ? beforeSiblings : afterSiblings).push({
-                width: node.offsetWidth,
-                height: node.offsetHeight,
-                element: element,
-                scope: element.isolateScope() || element.scope(),
-                isOutside: true
-              });
-            }
-          }
-        });
-
-        scrollView.resize();
-        dataSource.setData(value, beforeSiblings, afterSiblings);
-        collectionRepeatManager.resize();
-      }
-
-      var requiresRerender;
-      function rerenderOnResize() {
-        rerender(listExprParsed($scope));
-        requiresRerender = (!scrollViewContent.clientWidth && !scrollViewContent.clientHeight);
-      }
-
-      function viewEnter() {
-        if (requiresRerender) {
-          rerenderOnResize();
-        }
-      }
-
-      scrollCtrl.$element.on('scroll.resize', rerenderOnResize);
-      ionic.on('resize', rerenderOnResize, window);
-      var deregisterViewListener;
-      if (navViewCtrl) {
-        deregisterViewListener = navViewCtrl.scope.$on('$ionicView.afterEnter', viewEnter);
-      }
-
-      $scope.$on('$destroy', function() {
-        collectionRepeatManager.destroy();
-        dataSource.destroy();
-        ionic.off('resize', rerenderOnResize, window);
-        (deregisterViewListener || angular.noop)();
-      });
-    }
+    require: '^$ionicScroll',
+    link: postLink
   };
-}])
-.directive({
-  ngSrc: collectionRepeatSrcDirective('ngSrc', 'src'),
-  ngSrcset: collectionRepeatSrcDirective('ngSrcset', 'srcset'),
-  ngHref: collectionRepeatSrcDirective('ngHref', 'href')
-});
 
-// Fix for #1674
-// Problem: if an ngSrc or ngHref expression evaluates to a falsy value, it will
-// not erase the previous truthy value of the href.
-// In collectionRepeat, we re-use elements from before. So if the ngHref expression
-// evaluates to truthy for item 1 and then falsy for item 2, if an element changes
-// from representing item 1 to representing item 2, item 2 will still have
-// item 1's href value.
-// Solution:  erase the href or src attribute if ngHref/ngSrc are falsy.
-function collectionRepeatSrcDirective(ngAttrName, attrName) {
-  return [function() {
-    return {
-      priority: '99', // it needs to run after the attributes are interpolated
-      link: function(scope, element, attr) {
-        attr.$observe(ngAttrName, function(value) {
-          if (!value) {
-            element[0].removeAttribute(attrName);
-          }
+  function postLink(scope, element, attr, scrollCtrl, transclude) {
+    var scrollView = scrollCtrl.scrollView;
+    var node = element[0];
+    var containerNode = angular.element('<div class="collection-repeat-container">')[0];
+    node.parentNode.replaceChild(containerNode, node);
+
+    if (scrollView.options.scrollingX && scrollView.options.scrollingY) {
+      throw new Error("collection-repeat expected a parent x or y scrollView, not " +
+                      "an xy scrollView.");
+    }
+
+    var repeatExpr = attr.collectionRepeat;
+    var match = repeatExpr.match(/^\s*([\s\S]+?)\s+in\s+([\s\S]+?)(?:\s+track\s+by\s+([\s\S]+?))?\s*$/);
+    if (!match) {
+      throw new Error("collection-repeat expected expression in form of '_item_ in " +
+                      "_collection_[ track by _id_]' but got '" + attr.collectionRepeat + "'.");
+    }
+    var keyExpr = match[1];
+    var listExpr = match[2];
+    var listGetter = $parse(listExpr);
+    var heightData = {};
+    var widthData = {};
+    var computedStyleDimensions = {};
+    var repeatManager;
+
+    // attr.collectionBufferSize is deprecated
+    var renderBufferExpr = attr.itemRenderBuffer || attr.collectionBufferSize;
+    var renderBuffer = angular.isDefined(renderBufferExpr) ?
+      parseInt(renderBufferExpr) :
+      DEFAULT_RENDER_BUFFER;
+
+    // attr.collectionItemHeight is deprecated
+    var heightExpr = attr.itemHeight || attr.collectionItemHeight;
+    // attr.collectionItemWidth is deprecated
+    var widthExpr = attr.itemWidth || attr.collectionItemWidth;
+
+    //Height and width have four 'modes':
+    //1) Computed Mode
+    //  - Nothing is supplied, so we getComputedStyle() on one element in the list and use
+    //    that width and height value for the width and height of every item. This is re-computed
+    //    every resize.
+    //2) Constant Mode, Static Integer
+    //  - The user provides a constant number for width or height, in pixels. We parse it,
+    //    store it on the `value` field, and it never changes
+    //3) Constant Mode, Percent
+    //  - The user provides a percent string for width or height. The getter for percent is
+    //    stored on the `getValue()` field, and is re-evaluated once every resize. The result
+    //    is stored on the `value` field.
+    //4) Dynamic Mode
+    //  - The user provides a dynamic expression for the width or height.  This is re-evaluated
+    //    for every item, stored on the `.getValue()` field.
+    if (!heightExpr && !widthExpr) {
+      heightData.computed = widthData.computed = true;
+    } else {
+      if (heightExpr) {
+        parseDimensionAttr(heightExpr, heightData);
+      } else {
+        heightData.computed = true;
+      }
+      if (!widthExpr) widthExpr = '"100%"';
+      parseDimensionAttr(widthExpr, widthData);
+    }
+
+    var afterItemsContainer = angular.element(
+      scrollView.__content.querySelector('.collection-repeat-after-container')
+    );
+    if (!afterItemsContainer.length) {
+      var elementIsAfterRepeater = false;
+      var afterNodes = [].filter.call(scrollView.__content.childNodes, function(node) { if (ionic.DomUtil.contains(node, containerNode)) {
+          elementIsAfterRepeater = true;
+          return false;
+        }
+        return elementIsAfterRepeater;
+      });
+      afterItemsContainer = angular.element('<span class="collection-repeat-after-container">');
+      if (scrollView.options.scrollingX) {
+        afterItemsContainer.addClass('horizontal');
+      }
+      afterItemsContainer.append(afterNodes);
+      scrollView.__content.appendChild(afterItemsContainer[0]);
+    }
+
+    $$rAF(refreshDimensions);
+    scrollCtrl.$element.one('scroll.init', refreshDimensions);
+
+    var onWindowResize = ionic.animationFrameThrottle(validateResize);
+    angular.element($window).on('resize', onWindowResize);
+
+    scope.$on('$destroy', function() {
+      angular.element($window).off('resize', onWindowResize);
+      scrollCtrl.$element && scrollCtrl.$element.off('scroll.init', refreshDimensions);
+
+      computedStyleNode && computedStyleNode.parentNode &&
+        computedStyleNode.parentNode.removeChild(computedStyleNode);
+      computedStyleScope && computedStyleScope.$destroy();
+      computedStyleScope = computedStyleNode = null;
+
+      repeatManager && repeatManager.destroy();
+      repeatManager = null;
+    });
+
+    function getRepeatManager() {
+      return repeatManager || (repeatManager = new $ionicCollectionManager({
+        afterItemsNode: afterItemsContainer[0],
+        containerNode: containerNode,
+        heightData: heightData,
+        widthData: widthData,
+        forceRefreshImages: !!(isDefined(attr.forceRefreshImages) && attr.forceRefreshImages !== 'false'),
+        keyExpression: keyExpr,
+        renderBuffer: renderBuffer,
+        scope: scope,
+        scrollView: scrollCtrl.scrollView,
+        transclude: transclude,
+      }));
+    }
+
+    scope.$watchCollection(listGetter, function(newValue) {
+      newValue || (newValue = []);
+
+      if (!angular.isArray(newValue)) {
+        throw new Error("collection-repeat expected an array for '" + listExpr + "', " +
+          "but got a " + typeof value);
+      }
+
+      // Wait for this digest to end before refreshing everything.
+      $timeout(function() {
+        getRepeatManager().refreshData(newValue);
+        if (newValue.length) refreshDimensions();
+      }, 0, false);
+    });
+
+    // Make sure this resize actually changed the size of the screen
+    function validateResize() {
+      var h = scrollView.__clientHeight, w = scrollView.__clientWidth;
+      if (w && h && (validateResize.height !== h || validateResize.width !== w)) {
+        validateResize.height = h;
+        validateResize.width = w;
+        refreshDimensions();
+      }
+    }
+    function refreshDimensions() {
+      if (heightData.computed || widthData.computed) {
+        computeStyleDimensions();
+      }
+
+      if (heightData.computed) {
+        heightData.value = computedStyleDimensions.height;
+        if (!heightData.value) {
+          throw new Error('collection-repeat tried to compute the height of repeated elements "' +
+            repeatExpr + '", but was unable to. Please provide the "item-height" attribute. ' +
+            'http://ionicframework.com/docs/api/directive/collectionRepeat/');
+        }
+      } else if (!heightData.dynamic && heightData.getValue) {
+        // If it's a constant with a getter (eg percent), we just refresh .value after resize
+        heightData.value = heightData.getValue();
+      }
+      if (widthData.computed) {
+        widthData.value = computedStyleDimensions.width;
+        if (!widthData.value) {
+          throw new Error('collection-repeat tried to compute the width of repeated elements "' +
+            repeatExpr + '", but was unable to. Please provide the "item-width" attribute. ' +
+            'http://ionicframework.com/docs/api/directive/collectionRepeat/');
+        }
+      } else if (!widthData.dynamic && widthData.getValue) {
+        // If it's a constant with a getter (eg percent), we just refresh .value after resize
+        widthData.value = widthData.getValue();
+      }
+      // Dynamic dimensions aren't updated on resize. Since they're already dynamic anyway,
+      // .getValue() will be used.
+
+      getRepeatManager().refreshLayout();
+    }
+
+    function parseDimensionAttr(attrValue, dimensionData) {
+      if (!attrValue) return;
+
+      var parsedValue;
+      // Try to just parse the plain attr value
+      try {
+        parsedValue = $parse(attrValue);
+      } catch(e) {
+        // If the parse fails and the value has `px` or `%` in it, surround the attr in
+        // quotes, to attempt to let the user provide a simple `attr="100%"` or `attr="100px"`
+        if (attrValue.trim().match(/\d+(px|%)$/)) {
+          attrValue = '"' + attrValue + '"';
+        }
+        parsedValue = $parse(attrValue);
+      }
+
+      var withoutQuotes = attrValue.replace(/(\'|\"|px|%)/g, '').trim();
+      var isConstant = withoutQuotes.length && !/([a-zA-Z]|\$|:|\?)/.test(withoutQuotes);
+      dimensionData.attrValue = attrValue;
+
+      // If it's a constant, it's either a percent or just a constant pixel number.
+      if (isConstant) {
+        var intValue = parseInt(parsedValue());
+
+        // For percents, store the percent getter on .getValue()
+        if (attrValue.indexOf('%') > -1) {
+          var decimalValue = intValue / 100;
+          dimensionData.getValue = dimensionData === heightData ?
+            function() { return Math.floor(decimalValue * scrollView.__clientHeight); } :
+            function() { return Math.floor(decimalValue * scrollView.__clientWidth); };
+        } else {
+          // For static constants, just store the static constant.
+          dimensionData.value = intValue;
+        }
+
+      } else {
+        dimensionData.dynamic = true;
+        dimensionData.getValue = dimensionData === heightData ?
+          function heightGetter(scope, locals) {
+            var result = parsedValue(scope, locals);
+            if (result.charAt && result.charAt(result.length - 1) === '%')
+              return Math.floor(parseInt(result) / 100 * scrollView.__clientHeight);
+            return parseInt(result);
+          } :
+          function widthGetter(scope, locals) {
+            var result = parsedValue(scope, locals);
+            if (result.charAt && result.charAt(result.length - 1) === '%')
+              return Math.floor(parseInt(result) / 100 * scrollView.__clientWidth);
+            return parseInt(result);
+          };
+      }
+    }
+
+    var computedStyleNode;
+    var computedStyleScope;
+    function computeStyleDimensions() {
+      if (!computedStyleNode) {
+        transclude(computedStyleScope = scope.$new(), function(clone) {
+          clone[0].removeAttribute('collection-repeat'); // remove absolute position styling
+          computedStyleNode = clone[0];
         });
+      }
+
+      computedStyleScope[keyExpr] = (listGetter(scope) || [])[0];
+      if (!$rootScope.$$phase) computedStyleScope.$digest();
+      containerNode.appendChild(computedStyleNode);
+
+      var style = $window.getComputedStyle(computedStyleNode);
+      computedStyleDimensions.width = parseInt(style.width);
+      computedStyleDimensions.height = parseInt(style.height);
+
+      containerNode.removeChild(computedStyleNode);
+    }
+
+  }
+
+}
+
+RepeatManagerFactory.$inject = ['$rootScope', '$window', '$$rAF'];
+function RepeatManagerFactory($rootScope, $window, $$rAF) {
+  var EMPTY_DIMENSION = { primaryPos: 0, secondaryPos: 0, primarySize: 0, secondarySize: 0 };
+
+  return function RepeatController(options) {
+    var afterItemsNode = options.afterItemsNode;
+    var containerNode = options.containerNode;
+    var forceRefreshImages = options.forceRefreshImages;
+    var heightData = options.heightData;
+    var widthData = options.widthData;
+    var keyExpression = options.keyExpression;
+    var renderBuffer = options.renderBuffer;
+    var scope = options.scope;
+    var scrollView = options.scrollView;
+    var transclude = options.transclude;
+
+    var data = [];
+
+    var getterLocals = {};
+    var heightFn = heightData.getValue || function() { return heightData.value; };
+    var heightGetter = function(index, value) {
+      getterLocals[keyExpression] = value;
+      getterLocals.$index = index;
+      return heightFn(scope, getterLocals);
+    };
+
+    var widthFn = widthData.getValue || function() { return widthData.value; };
+    var widthGetter = function(index, value) {
+      getterLocals[keyExpression] = value;
+      getterLocals.$index = index;
+      return widthFn(scope, getterLocals);
+    };
+
+    var isVertical = !!scrollView.options.scrollingY;
+
+    // We say it's a grid view if we're either dynamic or not 100% width
+    var isGridView = isVertical ?
+      (widthData.dynamic || widthData.value !== scrollView.__clientWidth) :
+      (heightData.dynamic || heightData.value !== scrollView.__clientHeight);
+
+    var isStaticView = !heightData.dynamic && !widthData.dynamic;
+
+    var PRIMARY = 'PRIMARY';
+    var SECONDARY = 'SECONDARY';
+    var TRANSLATE_TEMPLATE_STR = isVertical ?
+      'translate3d(SECONDARYpx,PRIMARYpx,0)' :
+      'translate3d(PRIMARYpx,SECONDARYpx,0)';
+    var WIDTH_HEIGHT_TEMPLATE_STR = isVertical ?
+      'height: PRIMARYpx; width: SECONDARYpx;' :
+      'height: SECONDARYpx; width: PRIMARYpx;';
+
+    var estimatedHeight;
+    var estimatedWidth;
+
+    var repeaterBeforeSize = 0;
+    var repeaterAfterSize = 0;
+
+    var renderStartIndex = -1;
+    var renderEndIndex = -1;
+    var renderAfterBoundary = -1;
+    var renderBeforeBoundary = -1;
+
+    var itemsPool = [];
+    var itemsLeaving = [];
+    var itemsEntering = [];
+    var itemsShownMap = {};
+    var nextItemId = 0;
+    var estimatedItemsAcross;
+
+    // view is a mix of list/grid methods + static/dynamic methods.
+    // See bottom for implementations. Available methods:
+    //
+    // getEstimatedPrimaryPos(i), getEstimatedSecondaryPos(i), getEstimatedIndex(scrollTop),
+    // calculateDimensions(toIndex), getDimensions(index),
+    // updateRenderRange(scrollTop, scrollValueEnd), onRefreshLayout(), onRefreshData()
+    var view = isVertical ? new VerticalViewType() : new HorizontalViewType();
+    (isGridView ? GridViewType : ListViewType).call(view);
+    (isStaticView ? StaticViewType : DynamicViewType).call(view);
+
+    var contentSizeStr = isVertical ? 'getContentHeight' : 'getContentWidth';
+    var originalGetContentSize = scrollView.options[contentSizeStr];
+    scrollView.options[contentSizeStr] = angular.bind(view, view.getContentSize);
+
+    scrollView.__$callback = scrollView.__callback;
+    scrollView.__callback = function(transformLeft, transformTop, zoom, wasResize) {
+      var scrollValue = view.getScrollValue();
+      if (renderStartIndex === -1 ||
+          scrollValue + view.scrollPrimarySize > renderAfterBoundary ||
+          scrollValue < renderBeforeBoundary) {
+        render();
+      }
+      scrollView.__$callback(transformLeft, transformTop, zoom, wasResize);
+    };
+
+    var isLayoutReady = false;
+    var isDataReady = false;
+    this.refreshLayout = function(itemsAfterRepeater) {
+      estimatedHeight = heightGetter(0, data[0]);
+      estimatedWidth = widthGetter(0, data[0]);
+
+      // Get the size of every element AFTER the repeater. We have to get the margin before and
+      // after the first/last element to fix a browser bug with getComputedStyle() not counting
+      // the first/last child's margins into height.
+      var style = getComputedStyle(afterItemsNode) || {};
+      var firstStyle = afterItemsNode.firstElementChild && getComputedStyle(afterItemsNode.firstElementChild) || {};
+      var lastStyle = afterItemsNode.lastElementChild && getComputedStyle(afterItemsNode.lastElementChild) || {};
+      repeaterAfterSize = (parseInt(style[isVertical ? 'height' : 'width']) || 0) +
+        (firstStyle && parseInt(firstStyle[isVertical ? 'marginTop' : 'marginLeft']) || 0) +
+        (lastStyle && parseInt(lastStyle[isVertical ? 'marginBottom' : 'marginRight']) || 0);
+
+      // Get the offsetTop of the repeater.
+      repeaterBeforeSize = 0;
+      var current = containerNode;
+      do {
+        repeaterBeforeSize += current[isVertical ? 'offsetTop' : 'offsetLeft'];
+      } while( ionic.DomUtil.contains(scrollView.__content, current = current.offsetParent) );
+
+      (view.onRefreshLayout || angular.noop)();
+      view.refreshDirection();
+
+      // Create the pool of items for reuse, setting the size to (estimatedItemsOnScreen) * 2,
+      // plus the size of the renderBuffer.
+      if (!isLayoutReady) {
+        var poolSize = Math.max(20, renderBuffer * 3);
+        for (var i = 0; i < poolSize; i++) {
+          itemsPool.push(new RepeatItem());
+        }
+      }
+
+      isLayoutReady = true;
+      if (isLayoutReady && isDataReady) {
+        forceRerender();
       }
     };
-  }];
+
+    this.refreshData = function(newData) {
+      data = newData;
+      (view.onRefreshData || angular.noop)();
+
+      isDataReady = true;
+      if (isLayoutReady && isDataReady) {
+        scrollView.resize();
+        forceRerender();
+      }
+    };
+
+    this.destroy = function() {
+      render.destroyed = true;
+
+      itemsPool.forEach(function(item) {
+        item.scope.$destroy();
+        item.scope = item.element = item.node = item.images = null;
+      });
+      itemsPool.length = itemsEntering.length = itemsLeaving.length = 0;
+      itemsShownMap = {};
+
+      //Restore the scrollView's normal behavior and resize it to normal size.
+      scrollView.options[contentSizeStr] = originalGetContentSize;
+      scrollView.__callback = scrollView.__$callback;
+      scrollView.resize();
+
+      (view.onDestroy || angular.noop)();
+    };
+
+    function forceRerender() {
+      return render(true);
+    }
+    function render(forceRerender) {
+      if (render.destroyed) return;
+      var i;
+      var item;
+      var dim;
+      var scope;
+      var scrollValue = view.getScrollValue();
+      var scrollValueEnd = scrollValue + view.scrollPrimarySize;
+
+      view.updateRenderRange(scrollValue, scrollValueEnd);
+
+      renderStartIndex = Math.max(0, renderStartIndex - renderBuffer);
+      renderEndIndex = Math.min(data.length - 1, renderEndIndex + renderBuffer);
+
+      for (i in itemsShownMap) {
+        if (i < renderStartIndex || i > renderEndIndex) {
+          item = itemsShownMap[i];
+          delete itemsShownMap[i];
+          itemsLeaving.push(item);
+          item.isShown = false;
+          item.scope.$broadcast('$collectionRepeatChange');
+        }
+      }
+
+      // Render indicies that aren't shown yet
+      //
+      // NOTE(ajoslin): this may sound crazy, but calling any other functions during this render
+      // loop will often push the render time over the edge from less than one frame to over
+      // one frame, causing visible jank.
+      // DON'T call any other functions inside this loop unless it's vital.
+      for (i = renderStartIndex; i <= renderEndIndex; i++) {
+        // We only go forward with render if the index is in data, the item isn't already shown,
+        // or forceRerender is on.
+        if (i >= data.length || (itemsShownMap[i] && !forceRerender)) continue;
+
+        item = itemsShownMap[i] || (itemsShownMap[i] = itemsLeaving.length ? itemsLeaving.pop() :
+                                    itemsPool.length ? itemsPool.shift() :
+                                    new RepeatItem());
+        itemsEntering.push(item);
+        item.isShown = true;
+
+        scope = item.scope;
+        scope.$index = i;
+        scope[keyExpression] = data[i];
+        scope.$first = (i === 0);
+        scope.$last = (i === (data.length - 1));
+        scope.$middle = !(scope.$first || scope.$last);
+        scope.$odd = !(scope.$even = (i&1) === 0);
+
+        if (scope.$$disconnected) ionic.Utils.reconnectScope(item.scope);
+
+        dim = view.getDimensions(i);
+        if (item.secondaryPos !== dim.secondaryPos || item.primaryPos !== dim.primaryPos) {
+          item.node.style[ionic.CSS.TRANSFORM] = TRANSLATE_TEMPLATE_STR
+            .replace(PRIMARY, (item.primaryPos = dim.primaryPos))
+            .replace(SECONDARY, (item.secondaryPos = dim.secondaryPos));
+        }
+        if (item.secondarySize !== dim.secondarySize || item.primarySize !== dim.primarySize) {
+          item.node.style.cssText = item.node.style.cssText
+            .replace(WIDTH_HEIGHT_REGEX, WIDTH_HEIGHT_TEMPLATE_STR
+              .replace(PRIMARY, (item.primarySize = dim.primarySize) + 1)
+              .replace(SECONDARY, (item.secondarySize = dim.secondarySize))
+            );
+        }
+
+      }
+
+      // If we reach the end of the list, render the afterItemsNode - this contains all the
+      // elements the developer placed after the collection-repeat
+      if (renderEndIndex === data.length - 1) {
+        dim = view.getDimensions(data.length - 1) || EMPTY_DIMENSION;
+        afterItemsNode.style[ionic.CSS.TRANSFORM] = TRANSLATE_TEMPLATE_STR
+          .replace(PRIMARY, dim.primaryPos + dim.primarySize)
+          .replace(SECONDARY, 0);
+      }
+
+      while (itemsLeaving.length) {
+        item = itemsLeaving.pop();
+        ionic.Utils.disconnectScope(item.scope);
+        itemsPool.push(item);
+        item.node.style[ionic.CSS.TRANSFORM] = 'translate3d(-9999px,-9999px,0)';
+        item.primaryPos = item.secondaryPos = null;
+      }
+
+      if (forceRefreshImages) {
+        for (i = 0, ii = itemsEntering.length; i < ii && (item = itemsEntering[i]); i++) {
+          if (!item.images) continue;
+          for (var j = 0, jj = item.images.length, img; j < jj && (img = item.images[j]); j++) {
+            var src = img.src;
+            img.src = ONE_PX_TRANSPARENT_IMG_SRC;
+            img.src = src;
+          }
+        }
+      }
+      if (forceRerender) {
+        var rootScopePhase = $rootScope.$$phase;
+        while (itemsEntering.length) {
+          item = itemsEntering.pop();
+          if (!rootScopePhase) item.scope.$digest();
+        }
+      } else {
+        digestEnteringItems();
+      }
+    }
+
+    function getNextItem() {
+      if (itemsLeaving.length)
+        return itemsLeaving.pop();
+      else if (itemsPool.length)
+        return itemsPool.shift();
+      return new RepeatItem();
+    }
+
+    function digestEnteringItems() {
+      var item;
+      var scope;
+      var len;
+      if (digestEnteringItems.running) return;
+      digestEnteringItems.running = true;
+
+      $$rAF(function process() {
+        if( (len = itemsEntering.length) ) {
+          var rootScopePhase = $rootScope.$$phase;
+          var count = Math.floor(len / 1.25) || 1;
+          while (count && itemsEntering.length) {
+            item = itemsEntering.pop();
+            if (item.isShown) {
+              count--;
+              if (!rootScopePhase) item.scope.$digest();
+            }
+          }
+          $$rAF(process);
+        } else {
+          digestEnteringItems.running = false;
+        }
+      });
+    }
+
+    function RepeatItem() {
+      var self = this;
+      this.scope = scope.$new();
+      this.id = 'item'+ (nextItemId++);
+      transclude(this.scope, function(clone) {
+        self.element = clone;
+        self.element.data('$$collectionRepeatItem', self);
+        // TODO destroy
+        self.node = clone[0];
+        // Batch style setting to lower repaints
+        self.node.style[ionic.CSS.TRANSFORM] = 'translate3d(-9999px,-9999px,0)';
+        self.node.style.cssText += ' height: 0px; width: 0px;';
+        ionic.Utils.disconnectScope(self.scope);
+        containerNode.appendChild(self.node);
+        self.images = clone[0].getElementsByTagName('img');
+      });
+    }
+
+    function VerticalViewType() {
+      this.getItemPrimarySize = heightGetter;
+      this.getItemSecondarySize = widthGetter;
+
+      this.getScrollValue = function() {
+        return Math.max(0, Math.min(scrollView.__scrollTop - repeaterBeforeSize,
+          scrollView.__maxScrollTop - repeaterBeforeSize - repeaterAfterSize));
+      };
+
+      this.refreshDirection = function() {
+        this.scrollPrimarySize = scrollView.__clientHeight;
+        this.scrollSecondarySize = scrollView.__clientWidth;
+
+        this.estimatedPrimarySize = estimatedHeight;
+        this.estimatedSecondarySize = estimatedWidth;
+        this.estimatedItemsAcross = isGridView &&
+          Math.floor(scrollView.__clientWidth / estimatedWidth) ||
+          1;
+      };
+    }
+    function HorizontalViewType() {
+      this.getItemPrimarySize = widthGetter;
+      this.getItemSecondarySize = heightGetter;
+
+      this.getScrollValue = function() {
+        return Math.max(0, Math.min(scrollView.__scrollLeft - repeaterBeforeSize,
+          scrollView.__maxScrollLeft - repeaterBeforeSize - repeaterAfterSize));
+      };
+
+      this.refreshDirection = function() {
+        this.scrollPrimarySize = scrollView.__clientWidth;
+        this.scrollSecondarySize = scrollView.__clientHeight;
+
+        this.estimatedPrimarySize = estimatedWidth;
+        this.estimatedSecondarySize = estimatedHeight;
+        this.estimatedItemsAcross = isGridView &&
+          Math.floor(scrollView.__clientHeight / estimatedHeight) ||
+          1;
+      };
+    }
+
+    function GridViewType() {
+      this.getEstimatedSecondaryPos = function(index) {
+        return (index % this.estimatedItemsAcross) * this.estimatedSecondarySize;
+      };
+      this.getEstimatedPrimaryPos = function(index) {
+        return Math.floor(index / this.estimatedItemsAcross) * this.estimatedPrimarySize;
+      };
+      this.getEstimatedIndex = function(scrollValue) {
+        return Math.floor(scrollValue / this.estimatedPrimarySize) *
+          this.estimatedItemsAcross;
+      };
+    }
+
+    function ListViewType() {
+      this.getEstimatedSecondaryPos = function() {
+        return 0;
+      };
+      this.getEstimatedPrimaryPos = function(index) {
+        return index * this.estimatedPrimarySize;
+      };
+      this.getEstimatedIndex = function(scrollValue) {
+        return Math.floor((scrollValue) / this.estimatedPrimarySize);
+      };
+    }
+
+    function StaticViewType() {
+      this.getContentSize = function() {
+        return this.getEstimatedPrimaryPos(data.length - 1) + this.estimatedPrimarySize +
+          repeaterBeforeSize + repeaterAfterSize;
+      };
+      // static view always returns the same object for getDimensions, to avoid memory allocation
+      // while scrolling. This could be dangerous if this was a public function, but it's not.
+      // Only we use it.
+      var dim = {};
+      this.getDimensions = function(index) {
+        dim.primaryPos = this.getEstimatedPrimaryPos(index);
+        dim.secondaryPos = this.getEstimatedSecondaryPos(index);
+        dim.primarySize = this.estimatedPrimarySize;
+        dim.secondarySize = this.estimatedSecondarySize;
+        return dim;
+      };
+      this.updateRenderRange = function(scrollValue, scrollValueEnd) {
+        renderStartIndex = Math.max(0, this.getEstimatedIndex(scrollValue));
+
+        // Make sure the renderEndIndex takes into account all the items on the row
+        renderEndIndex = Math.min(data.length - 1,
+          this.getEstimatedIndex(scrollValueEnd) + this.estimatedItemsAcross - 1);
+
+        renderBeforeBoundary = Math.max(0,
+          this.getEstimatedPrimaryPos(renderStartIndex));
+        renderAfterBoundary = this.getEstimatedPrimaryPos(renderEndIndex) +
+          this.estimatedPrimarySize;
+      };
+    }
+
+    function DynamicViewType() {
+      var self = this;
+      var scrollViewSetDimensions = isVertical ?
+        function() {
+          scrollView.setDimensions(null, null, null, self.getContentSize(), true);
+        } :
+        function() {
+          scrollView.setDimensions(null, null, self.getContentSize(), null, true);
+        };
+      var debouncedScrollViewSetDimensions = ionic.debounce(scrollViewSetDimensions, 25, true);
+      var calculateDimensions = isGridView ? calculateDimensionsGrid : calculateDimensionsList;
+      var dimensionsIndex;
+      var dimensions = [];
+
+
+      // Get the dimensions at index. {width, height, left, top}.
+      // We start with no dimensions calculated, then any time dimensions are asked for at an
+      // index we calculate dimensions up to there.
+      function calculateDimensionsList(toIndex) {
+        var i, prevDimension, dim;
+        for (i = Math.max(0, dimensionsIndex); i <= toIndex && (dim = dimensions[i]); i++) {
+          prevDimension = dimensions[i - 1] || EMPTY_DIMENSION;
+          dim.primarySize = self.getItemPrimarySize(i, data[i]);
+          dim.secondarySize = self.scrollSecondarySize;
+          dim.primaryPos = prevDimension.primaryPos + prevDimension.primarySize;
+          dim.secondaryPos = 0;
+        }
+      }
+      function calculateDimensionsGrid(toIndex) {
+        var i, prevDimension, dim;
+        for (i = Math.max(dimensionsIndex, 0); i <= toIndex && (dim = dimensions[i]); i++) {
+          prevDimension = dimensions[i - 1] || EMPTY_DIMENSION;
+          dim.secondarySize = Math.min(
+            self.getItemSecondarySize(i, data[i]),
+            self.scrollSecondarySize
+          );
+          dim.secondaryPos = prevDimension.secondaryPos + prevDimension.secondarySize;
+
+          if (i === 0 || dim.secondaryPos + dim.secondarySize > self.scrollSecondarySize) {
+            dim.rowStartIndex = i;
+            dim.secondaryPos = 0;
+            dim.primarySize = self.getItemPrimarySize(i, data[i]);
+            dim.primaryPos = prevDimension.primaryPos + prevDimension.primarySize;
+          } else {
+            dim.rowStartIndex = prevDimension.rowStartIndex;
+            dim.primarySize = prevDimension.primarySize;
+            dim.primaryPos = prevDimension.primaryPos;
+          }
+        }
+      }
+
+      this.getContentSize = function() {
+        var dim = dimensions[dimensionsIndex] || EMPTY_DIMENSION;
+        return ((dim.primaryPos + dim.primarySize) || 0) +
+          this.getEstimatedPrimaryPos(data.length - dimensionsIndex - 1) +
+          repeaterBeforeSize + repeaterAfterSize;
+      };
+      this.onDestroy = function() {
+        dimensions.length = 0;
+      };
+
+      this.onRefreshData = function() {
+        // Make sure dimensions has as many items as data.length.
+        // This is to be sure we don't have to allocate objects while scrolling.
+        for (i = dimensions.length, len = data.length; i < len; i++) {
+          dimensions.push({});
+        }
+        dimensionsIndex = -1;
+      };
+      this.onRefreshLayout = function() {
+        dimensionsIndex = -1;
+      };
+      this.getDimensions = function(index) {
+        index = Math.min(index, data.length - 1);
+
+        if (dimensionsIndex < index) {
+          // Once we start asking for dimensions near the end of the list, go ahead and calculate
+          // everything. This is to make sure when the user gets to the end of the list, the
+          // scroll height of the list is 100% accurate (not estimated anymore).
+          if (index > data.length * 0.9) {
+            calculateDimensions(data.length - 1);
+            dimensionsIndex = data.length - 1;
+            scrollViewSetDimensions();
+          } else {
+            calculateDimensions(index);
+            dimensionsIndex = index;
+            debouncedScrollViewSetDimensions();
+          }
+
+        }
+        return dimensions[index];
+      };
+
+      var oldRenderStartIndex = -1;
+      var oldScrollValue = -1;
+      this.updateRenderRange = function(scrollValue, scrollValueEnd) {
+        var i;
+        var len;
+        var dim;
+
+        // Calculate more dimensions than we estimate we'll need, to be sure.
+        this.getDimensions( this.getEstimatedIndex(scrollValueEnd) * 2 );
+
+        // -- Calculate renderStartIndex
+        // base case: start at 0
+        if (oldRenderStartIndex === -1 || scrollValue === 0) {
+          i = 0;
+        // scrolling down
+        } else if (scrollValue >= oldScrollValue) {
+          for (i = oldRenderStartIndex, len = data.length; i < len; i++) {
+            if ((dim = this.getDimensions(i)) && dim.primaryPos + dim.primarySize >= scrollValue) {
+              break;
+            }
+          }
+        // scrolling up
+        } else {
+          for (i = oldRenderStartIndex; i >= 0; i--) {
+            if ((dim = this.getDimensions(i)) && dim.primaryPos <= scrollValue) {
+              // when grid view, make sure the render starts at the beginning of a row.
+              i = isGridView ? dim.rowStartIndex : i;
+              break;
+            }
+          }
+        }
+
+        renderStartIndex = Math.min(Math.max(0, i), data.length - 1);
+        renderBeforeBoundary = renderStartIndex !== -1 ? this.getDimensions(renderStartIndex).primaryPos : -1;
+
+        // -- Calculate renderEndIndex
+        var lastRowDim;
+        for (i = renderStartIndex + 1, len = data.length; i < len; i++) {
+          if ((dim = this.getDimensions(i)) && dim.primaryPos + dim.primarySize > scrollValueEnd) {
+
+            // Go all the way to the end of the row if we're in a grid
+            if (isGridView) {
+              lastRowDim = dim;
+              while (i < len - 1 &&
+                    (dim = this.getDimensions(i + 1)).primaryPos === lastRowDim.primaryPos) {
+                i++;
+              }
+            }
+            break;
+          }
+        }
+
+        renderEndIndex = Math.min(i, data.length - 1);
+        renderAfterBoundary = renderEndIndex !== -1 ?
+          ((dim = this.getDimensions(renderEndIndex)).primaryPos + dim.primarySize) :
+          -1;
+
+        oldScrollValue = scrollValue;
+        oldRenderStartIndex = renderStartIndex;
+      };
+    }
+
+
+  };
+
 }
+
+
 
 /**
  * @ngdoc directive
@@ -48756,7 +50257,8 @@ IonicModule
   '$timeout',
   '$controller',
   '$ionicBind',
-function($timeout, $controller, $ionicBind) {
+  '$ionicConfig',
+function($timeout, $controller, $ionicBind, $ionicConfig) {
   return {
     restrict: 'E',
     require: '^?ionNavView',
@@ -48811,7 +50313,7 @@ function($timeout, $controller, $ionicBind) {
         });
         $scope.direction = $scope.direction || 'y';
 
-        if (angular.isDefined($attr.padding)) {
+        if (isDefined($attr.padding)) {
           $scope.$watch($attr.padding, function(newVal) {
               (innerElement || $element).toggleClass('padding', !!newVal);
           });
@@ -48819,7 +50321,8 @@ function($timeout, $controller, $ionicBind) {
 
         if ($attr.scroll === "false") {
           //do nothing
-        } else if(attr.overflowScroll === "true") {
+        } else if (attr.overflowScroll === "true" || !$ionicConfig.scrolling.jsScrolling()) {
+          // use native scrolling
           $element.addClass('overflow-scroll');
         } else {
           var scrollViewOptions = {
@@ -48847,7 +50350,7 @@ function($timeout, $controller, $ionicBind) {
           });
 
           $scope.$on('$destroy', function() {
-            scrollViewOptions.scrollingComplete = angular.noop;
+            scrollViewOptions.scrollingComplete = noop;
             delete scrollViewOptions.el;
             innerElement = null;
             $element = null;
@@ -48910,7 +50413,7 @@ IonicModule
 
       function checkAsideExpose() {
         var mq = $attr.exposeAsideWhen == 'large' ? '(min-width:768px)' : $attr.exposeAsideWhen;
-        sideMenuCtrl.exposeAside( $window.matchMedia(mq).matches );
+        sideMenuCtrl.exposeAside($window.matchMedia(mq).matches);
         sideMenuCtrl.activeAsideResizing(false);
       }
 
@@ -48920,9 +50423,7 @@ IonicModule
       }
 
       var debouncedCheck = ionic.debounce(function() {
-        $scope.$apply(function(){
-          checkAsideExpose();
-        });
+        $scope.$apply(checkAsideExpose);
       }, 300, false);
 
       checkAsideExpose();
@@ -48938,7 +50439,7 @@ IonicModule
 }]);
 
 
-var GESTURE_DIRECTIVES = 'onHold onTap onTouch onRelease onDrag onDragUp onDragRight onDragDown onDragLeft onSwipe onSwipeUp onSwipeRight onSwipeDown onSwipeLeft'.split(' ');
+var GESTURE_DIRECTIVES = 'onHold onTap onDoubleTap onTouch onRelease onDrag onDragUp onDragRight onDragDown onDragLeft onSwipe onSwipeUp onSwipeRight onSwipeDown onSwipeLeft'.split(' ');
 
 GESTURE_DIRECTIVES.forEach(function(name) {
   IonicModule.directive(name, gestureDirective(name));
@@ -48974,6 +50475,22 @@ GESTURE_DIRECTIVES.forEach(function(name) {
  * @usage
  * ```html
  * <button on-tap="onTap()" class="button">Test</button>
+ * ```
+ */
+
+
+/**
+ * @ngdoc directive
+ * @name onDoubleTap
+ * @module ionic
+ * @restrict A
+ *
+ * @description
+ * Double tap touch at a location.
+ *
+ * @usage
+ * ```html
+ * <button on-double-tap="onDoubleTap()" class="button">Test</button>
  * ```
  */
 
@@ -49343,7 +50860,9 @@ function headerFooterBarDirective(isHeader) {
             });
             ctrl.align();
             $scope.$on('$ionicHeader.align', function() {
-              ionic.requestAnimationFrame(ctrl.align);
+              ionic.requestAnimationFrame(function() {
+                ctrl.align();
+              });
             });
 
           } else {
@@ -49387,7 +50906,11 @@ function headerFooterBarDirective(isHeader) {
  * bottom.
  * @param {string=} distance The distance from the bottom that the scroll must
  * reach to trigger the on-infinite expression. Default: 1%.
- * @param {string=} icon The icon to show while loading. Default: 'ion-loading-d'.
+ * @param {string=} spinner The {@link ionic.directive:ionSpinner} to show while loading. The SVG
+ * {@link ionic.directive:ionSpinner} is now the default, replacing rotating font icons.
+ * @param {string=} icon The icon to show while loading. Default: 'ion-load-d'.  This is depreicated
+ * in favor of the SVG {@link ionic.directive:ionSpinner}.
+ * @param {boolean=} immediate-check Whether to check the infinite scroll bounds immediately on load.
  *
  * @usage
  * ```html
@@ -49432,83 +50955,42 @@ function headerFooterBarDirective(isHeader) {
  */
 IonicModule
 .directive('ionInfiniteScroll', ['$timeout', function($timeout) {
-  function calculateMaxValue(distance, maximum, isPercent) {
-    return isPercent ?
-      maximum * (1 - parseFloat(distance,10) / 100) :
-      maximum - parseFloat(distance, 10);
-  }
   return {
     restrict: 'E',
-    require: ['^$ionicScroll', 'ionInfiniteScroll'],
-    template: '<i class="icon {{icon()}} icon-refreshing"></i>',
-    scope: {
-      load: '&onInfinite'
+    require: ['?^$ionicScroll', 'ionInfiniteScroll'],
+    template: function($element, $attrs) {
+      if ($attrs.icon) return '<i class="icon {{icon()}} icon-refreshing {{scrollingType}}"></i>';
+      return '<ion-spinner icon="{{spinner()}}"></ion-spinner>';
     },
-    controller: ['$scope', '$attrs', function($scope, $attrs) {
-      this.isLoading = false;
-      this.scrollView = null; //given by link function
-      this.getMaxScroll = function() {
-        var distance = ($attrs.distance || '2.5%').trim();
-        var isPercent = distance.indexOf('%') !== -1;
-        var maxValues = this.scrollView.getScrollMax();
-        return {
-          left: this.scrollView.options.scrollingX ?
-            calculateMaxValue(distance, maxValues.left, isPercent) :
-            -1,
-          top: this.scrollView.options.scrollingY ?
-            calculateMaxValue(distance, maxValues.top, isPercent) :
-            -1
-        };
-      };
-    }],
+    scope: true,
+    controller: '$ionInfiniteScroll',
     link: function($scope, $element, $attrs, ctrls) {
-      var scrollCtrl = ctrls[0];
       var infiniteScrollCtrl = ctrls[1];
-      var scrollView = infiniteScrollCtrl.scrollView = scrollCtrl.scrollView;
-
-      $scope.icon = function() {
-        return angular.isDefined($attrs.icon) ? $attrs.icon : 'ion-loading-d';
-      };
-
-      var onInfinite = function() {
-        $element[0].classList.add('active');
-        infiniteScrollCtrl.isLoading = true;
-        $scope.load();
-      };
-
-      var finishInfiniteScroll = function() {
-        $element[0].classList.remove('active');
-        $timeout(function() {
-          scrollView.resize();
-          checkBounds();
-        }, 0, false);
-        infiniteScrollCtrl.isLoading = false;
-      };
-
-      $scope.$on('scroll.infiniteScrollComplete', function() {
-        finishInfiniteScroll();
-      });
-
-      $scope.$on('$destroy', function() {
-        if(scrollCtrl && scrollCtrl.$element)scrollCtrl.$element.off('scroll', checkBounds);
-      });
-
-      var checkBounds = ionic.animationFrameThrottle(checkInfiniteBounds);
-
-      //Check bounds on start, after scrollView is fully rendered
-      $timeout(checkBounds, 0, false);
-      scrollCtrl.$element.on('scroll', checkBounds);
-
-      function checkInfiniteBounds() {
-        if (infiniteScrollCtrl.isLoading) return;
-
-        var scrollValues = scrollView.getValues();
-        var maxScroll = infiniteScrollCtrl.getMaxScroll();
-
-        if ((maxScroll.left !== -1 && scrollValues.left >= maxScroll.left) ||
-            (maxScroll.top !== -1 && scrollValues.top >= maxScroll.top)) {
-          onInfinite();
+      var scrollCtrl = infiniteScrollCtrl.scrollCtrl = ctrls[0];
+      var jsScrolling = infiniteScrollCtrl.jsScrolling = !!scrollCtrl;
+      // if this view is not beneath a scrollCtrl, it can't be injected, proceed w/ native scrolling
+      if (jsScrolling) {
+        infiniteScrollCtrl.scrollView = scrollCtrl.scrollView;
+      } else {
+        // grabbing the scrollable element, to determine dimensions, and current scroll pos
+        var scrollEl = ionic.DomUtil.getParentOrSelfWithClass($element[0].parentNode,'overflow-scroll');
+        infiniteScrollCtrl.scrollEl = scrollEl;
+        // if there's no scroll controller, and no overflow scroll div, infinite scroll wont work
+        if (!scrollEl) {
+          throw 'Infinite scroll must be used inside a scrollable div';
         }
+      }
+      //bind to appropriate scroll event
+      if (jsScrolling) {
+        $scope.scrollingType = 'js-scrolling';
+        scrollCtrl.$element.on('scroll', infiniteScrollCtrl.checkBounds);
+      } else {
+        infiniteScrollCtrl.scrollEl.addEventListener('scroll', infiniteScrollCtrl.checkBounds);
+      }
+      // Optionally check bounds on start after scrollView is fully rendered
+      var doImmediateCheck = isDefined($attrs.immediateCheck) ? $scope.$eval($attrs.immediateCheck) : true;
+      if (doImmediateCheck) {
+        $timeout(function() { infiniteScrollCtrl.checkBounds(); });
       }
     }
   };
@@ -49545,6 +51027,7 @@ var ITEM_TPL_CONTENT =
 */
 IonicModule
 .directive('ionItem', function() {
+      var nextId = 0;
   return {
     restrict: 'E',
     controller: ['$scope', '$element', function($scope, $element) {
@@ -49553,31 +51036,40 @@ IonicModule
     }],
     scope: true,
     compile: function($element, $attrs) {
-      var isAnchor = angular.isDefined($attrs.href) ||
-                     angular.isDefined($attrs.ngHref) ||
-                     angular.isDefined($attrs.uiSref);
+      var isAnchor = isDefined($attrs.href) ||
+                     isDefined($attrs.ngHref) ||
+                     isDefined($attrs.uiSref);
       var isComplexItem = isAnchor ||
         //Lame way of testing, but we have to know at compile what to do with the element
         /ion-(delete|option|reorder)-button/i.test($element.html());
 
-        if (isComplexItem) {
-          var innerElement = jqLite(isAnchor ? ITEM_TPL_CONTENT_ANCHOR : ITEM_TPL_CONTENT);
-          innerElement.append($element.contents());
+      if (isComplexItem) {
+        var innerElement = jqLite(isAnchor ? ITEM_TPL_CONTENT_ANCHOR : ITEM_TPL_CONTENT);
+        innerElement.append($element.contents());
 
-          $element.append(innerElement);
-          $element.addClass('item item-complex');
-        } else {
-          $element.addClass('item');
-        }
+        $element.append(innerElement);
+        $element.addClass('item item-complex');
+      } else {
+        $element.addClass('item');
+      }
 
-        return function link($scope, $element, $attrs) {
-          $scope.$href = function() {
-            return $attrs.href || $attrs.ngHref;
-          };
-          $scope.$target = function() {
-            return $attrs.target || '_self';
-          };
+      return function link($scope, $element, $attrs) {
+        var listCtrl;
+        $scope.$href = function() {
+          return $attrs.href || $attrs.ngHref;
         };
+        $scope.$target = function() {
+          return $attrs.target || '_self';
+        };
+
+        var content = $element[0].querySelector('.item-content');
+        if (content) {
+          $scope.$on('$collectionRepeatChange', function() {
+            content && (content.style[ionic.CSS.TRANSFORM] = 'translate3d(0,0,0)');
+          });
+        }
+      };
+
     }
   };
 });
@@ -49650,10 +51142,10 @@ IonicModule
       var input = el.querySelector('input, textarea');
       var inputLabel = el.querySelector('.input-label');
 
-      if ( !input || !inputLabel ) return;
+      if (!input || !inputLabel) return;
 
       var onInput = function() {
-        if ( input.value ) {
+        if (input.value) {
           inputLabel.classList.add('has-input');
         } else {
           inputLabel.classList.remove('has-input');
@@ -49662,8 +51154,8 @@ IonicModule
 
       input.addEventListener('input', onInput);
 
-      var ngModelCtrl = angular.element(input).controller('ngModel');
-      if ( ngModelCtrl ) {
+      var ngModelCtrl = jqLite(input).controller('ngModel');
+      if (ngModelCtrl) {
         ngModelCtrl.$render = function() {
           input.value = ngModelCtrl.$viewValue || '';
           onInput();
@@ -49870,7 +51362,7 @@ IonicModule
       var keyboardHeight = e.keyboardHeight || e.detail.keyboardHeight;
       element.css('bottom', keyboardHeight + "px");
       scrollCtrl = element.controller('$ionicScroll');
-      if ( scrollCtrl ) {
+      if (scrollCtrl) {
         scrollCtrl.scrollView.__container.style.bottom = keyboardHeight + keyboardAttachGetClientHeight(element[0]) + "px";
       }
     }
@@ -49881,7 +51373,7 @@ IonicModule
       }
 
       element.css('bottom', '');
-      if ( scrollCtrl ) {
+      if (scrollCtrl) {
         scrollCtrl.scrollView.__container.style.bottom = '';
       }
     }
@@ -49966,6 +51458,14 @@ function keyboardAttachGetClientHeight(element) {
 * </ion-list>
 * ```
 *
+*```javascript
+* app.controller('MyCtrl', function($scope) {
+*  $scope.shouldShowDelete = false;
+*  $scope.shouldShowReorder = false;
+*  $scope.listCanSwipe = true
+* });
+*```
+*
 * @param {string=} delegate-handle The handle used to identify this list with
 * {@link ionic.service:$ionicListDelegate}.
 * @param type {string=} The type of list to use (list-inset or card)
@@ -49986,15 +51486,16 @@ function($timeout) {
     controller: '$ionicList',
     compile: function($element, $attr) {
       var listEl = jqLite('<div class="list">')
-      .append( $element.contents() )
-      .addClass($attr.type);
+        .append($element.contents())
+        .addClass($attr.type);
+
       $element.append(listEl);
 
       return function($scope, $element, $attrs, ctrls) {
         var listCtrl = ctrls[0];
         var scrollCtrl = ctrls[1];
 
-        //Wait for child elements to render...
+        // Wait for child elements to render...
         $timeout(init);
 
         function init() {
@@ -50006,9 +51507,9 @@ function($timeout) {
             onReorder: function(el, oldIndex, newIndex) {
               var itemScope = jqLite(el).scope();
               if (itemScope && itemScope.$onReorder) {
-                //Make sure onReorder is called in apply cycle,
-                //but also make sure it has no conflicts by doing
-                //$evalAsync
+                // Make sure onReorder is called in apply cycle,
+                // but also make sure it has no conflicts by doing
+                // $evalAsync
                 $timeout(function() {
                   itemScope.$onReorder(oldIndex, newIndex);
                 });
@@ -50020,7 +51521,7 @@ function($timeout) {
           });
 
           $scope.$on('$destroy', function() {
-            if(listView) {
+            if (listView) {
               listView.deregister && listView.deregister();
               listView = null;
             }
@@ -50151,6 +51652,17 @@ IonicModule
  *   </ion-nav-buttons>
  * </ion-nav-bar>
  * ```
+ *
+ * ### Button Hidden On Child Views
+ * By default, the menu toggle button will only appear on a root
+ * level side-menu page. Navigating in to child views will hide the menu-
+ * toggle button. They can be made visible on child pages by setting the
+ * enable-menu-with-back-views attribute of the {@link ionic.directive:ionSideMenus}
+ * directive to true.
+ *
+ * ```html
+ * <ion-side-menus enable-menu-with-back-views="true">
+ * ```
  */
 IonicModule
 .directive('menuToggle', function() {
@@ -50186,7 +51698,7 @@ IonicModule
     restrict: 'E',
     transclude: true,
     replace: true,
-    controller: [function(){}],
+    controller: [function() {}],
     template: '<div class="modal-backdrop">' +
                 '<div class="modal-wrapper" ng-transclude></div>' +
                 '</div>'
@@ -50241,7 +51753,7 @@ IonicModule
  * </ion-nav-bar>
  * ```
  *
- * With custom inner markup and custom click action, using {@link ionic.service:$ionicNavBarDelegate}:
+ * With custom inner markup and custom click action, using {@link ionic.service:$ionicHistory}:
  *
  * ```html
  * <ion-nav-bar ng-controller="MyCtrl">
@@ -50252,9 +51764,9 @@ IonicModule
  * </ion-nav-bar>
  * ```
  * ```js
- * function MyCtrl($scope, $ionicNavBarDelegate) {
+ * function MyCtrl($scope, $ionicHistory) {
  *   $scope.myGoBack = function() {
- *     $ionicNavBarDelegate.back();
+ *     $ionicHistory.goBack();
  *   };
  * }
  * ```
@@ -50383,30 +51895,6 @@ IonicModule
  * to the top when tapped.  Set no-tap-scroll to true to disable this behavior.
  *
  * </table><br/>
- *
- * ### Alternative Usage
- *
- * Alternatively, you may put ion-nav-bar inside of each individual view's ion-view element.
- * This will allow you to have the whole navbar, not just its contents, transition every view change.
- *
- * This is similar to using a header bar inside your ion-view, except it will have all the power of a navbar.
- *
- * If you do this, simply put nav buttons inside the navbar itself; do not use `<ion-nav-buttons>`.
- *
- *
- * ```html
- * <ion-view view-title="myTitle">
- *   <ion-nav-bar class="bar-positive">
- *     <ion-nav-back-button>
- *     </ion-nav-back-button>
- *     <div class="buttons primary-buttons">
- *       <button class="button">
-            Button
- *       </button>
- *     </div>
- *   </ion-nav-bar>
- * </ion-view>
- * ```
  */
 IonicModule
 .directive('ionNavBar', function() {
@@ -50448,7 +51936,7 @@ IonicModule
  * example, a toggle button for a left side menu should be on the left side; in this case,
  * we'd recommend using `side="left"`, so it's always on the left, no matter the platform.
  *
- * Note that `ion-nav-buttons` must be immediate descendants of the `ion-view` or
+ * ***Note*** that `ion-nav-buttons` must be immediate descendants of the `ion-view` or
  * `ion-nav-bar` element (basically, don't wrap it in another div).
  *
  * @usage
@@ -50717,7 +52205,7 @@ IonicModule
  * This is good to do because the template will be cached for very fast loading, instead of
  * having to fetch them from the network.
  *
- ## Caching
+ * ## Caching
  *
  * By default, views are cached to improve performance. When a view is navigated away from, its
  * element is left in the DOM, and its scope is disconnected from the `$watch` cycle. When
@@ -50733,7 +52221,16 @@ IonicModule
  * are being disconnected from the watch cycle. Because scopes are not being destroyed and
  * recreated, controllers are not loading again on a subsequent viewing. If the app/controller
  * needs to know when a view has entered or has left, then view events emitted from the
- * {@link ionic.directive:ionView} scope, such as `$ionicView.enter`, may be useful
+ * {@link ionic.directive:ionView} scope, such as `$ionicView.enter`, may be useful.
+ *
+ * By default, when navigating back in the history, the "forward" views are removed from the cache.
+ * If you navigate forward to the same view again, it'll create a new DOM element and controller
+ * instance. Basically, any forward views are reset each time. This can be configured using the
+ * {@link ionic.provider:$ionicConfigProvider}:
+ *
+ * ```js
+ * $ionicConfigProvider.views.forwardCache(true);
+ * ```
  *
  * #### Disable cache globally
  *
@@ -50929,7 +52426,7 @@ IonicModule
   return {
     restrict: 'E',
     compile: function(element) {
-      element.append( angular.element('<div class="popover-arrow"></div>') );
+      element.append(jqLite('<div class="popover-arrow">'));
       element.addClass('popover');
     }
   };
@@ -50952,7 +52449,7 @@ IonicModule
  * <ion-radio ng-model="choice" ng-value="'B'">Choose B</ion-radio>
  * <ion-radio ng-model="choice" ng-value="'C'">Choose C</ion-radio>
  * ```
- * 
+ *
  * @param {string=} name The name of the radio input.
  * @param {expression=} value The value of the radio input.
  * @param {boolean=} disabled The state of the radio input.
@@ -50977,7 +52474,10 @@ IonicModule
       '</label>',
 
     compile: function(element, attr) {
-      if(attr.icon) element.children().eq(2).removeClass('ion-checkmark').addClass(attr.icon);
+      if (attr.icon) {
+        element.children().eq(2).removeClass('ion-checkmark').addClass(attr.icon);
+      }
+
       var input = element.find('input');
       forEach({
           'name': attr.name,
@@ -51053,59 +52553,65 @@ IonicModule
  * @param {expression=} on-pulling Called when the user starts to pull down
  * on the refresher.
  * @param {string=} pulling-icon The icon to display while the user is pulling down.
- * Default: 'ion-arrow-down-c'.
- * @param {string=} pulling-text The text to display while the user is pulling down.
- * @param {string=} refreshing-icon The icon to display after user lets go of the
- * refresher.
- * @param {string=} refreshing-text The text to display after the user lets go of
- * the refresher.
+ * Default: 'ion-android-arrow-down'.
+ * @param {string=} spinner The {@link ionic.directive:ionSpinner} icon to display
+ * after user lets go of the refresher. The SVG {@link ionic.directive:ionSpinner}
+ * is now the default, replacing rotating font icons. Set to `none` to disable both the
+ * spinner and the icon.
+ * @param {string=} refreshing-icon The font icon to display after user lets go of the
+ * refresher. This is depreicated in favor of the SVG {@link ionic.directive:ionSpinner}.
  * @param {boolean=} disable-pulling-rotation Disables the rotation animation of the pulling
  * icon when it reaches its activated threshold. To be used with a custom `pulling-icon`.
  *
  */
 IonicModule
-.directive('ionRefresher', ['$ionicBind', function($ionicBind) {
+.directive('ionRefresher', [function() {
   return {
     restrict: 'E',
     replace: true,
-    require: '^$ionicScroll',
+    require: ['?^$ionicScroll', 'ionRefresher'],
+    controller: '$ionicRefresher',
     template:
-    '<div class="scroll-refresher" collection-repeat-ignore>' +
+    '<div class="scroll-refresher invisible" collection-repeat-ignore>' +
       '<div class="ionic-refresher-content" ' +
       'ng-class="{\'ionic-refresher-with-text\': pullingText || refreshingText}">' +
         '<div class="icon-pulling" ng-class="{\'pulling-rotation-disabled\':disablePullingRotation}">' +
           '<i class="icon {{pullingIcon}}"></i>' +
         '</div>' +
         '<div class="text-pulling" ng-bind-html="pullingText"></div>' +
-        '<div class="icon-refreshing"><i class="icon {{refreshingIcon}}"></i></div>' +
+        '<div class="icon-refreshing">' +
+          '<ion-spinner ng-if="showSpinner" icon="{{spinner}}"></ion-spinner>' +
+          '<i ng-if="showIcon" class="icon {{refreshingIcon}}"></i>' +
+        '</div>' +
         '<div class="text-refreshing" ng-bind-html="refreshingText"></div>' +
       '</div>' +
     '</div>',
-    compile: function($element, $attrs) {
-      if (angular.isUndefined($attrs.pullingIcon)) {
-        $attrs.$set('pullingIcon', 'ion-ios7-arrow-down');
-      }
-      if (angular.isUndefined($attrs.refreshingIcon)) {
-        $attrs.$set('refreshingIcon', 'ion-loading-d');
-      }
-      return function($scope, $element, $attrs, scrollCtrl) {
-        $ionicBind($scope, $attrs, {
-          pullingIcon: '@',
-          pullingText: '@',
-          refreshingIcon: '@',
-          refreshingText: '@',
-          disablePullingRotation: '@',
-          $onRefresh: '&onRefresh',
-          $onPulling: '&onPulling'
-        });
+    link: function($scope, $element, $attrs, ctrls) {
 
-        scrollCtrl._setRefresher($scope, $element[0]);
+      // JS Scrolling uses the scroll controller
+      var scrollCtrl = ctrls[0],
+          refresherCtrl = ctrls[1];
+
+      if (!!scrollCtrl) {
+        $element[0].classList.add('js-scrolling');
+
+        scrollCtrl._setRefresher(
+          $scope,
+          $element[0],
+          refresherCtrl.getRefresherDomMethods()
+        );
+
         $scope.$on('scroll.refreshComplete', function() {
           $scope.$evalAsync(function() {
             scrollCtrl.scrollView.finishPullToRefresh();
           });
         });
-      };
+
+      } else {
+        // Kick off native scrolling
+        refresherCtrl.init();
+      }
+
     }
   };
 }]);
@@ -51186,7 +52692,7 @@ function($timeout, $controller, $ionicBind) {
         });
         $scope.direction = $scope.direction || 'y';
 
-        if (angular.isDefined($attr.padding)) {
+        if (isDefined($attr.padding)) {
           $scope.$watch($attr.padding, function(newVal) {
             innerElement.toggleClass('padding', !!newVal);
           });
@@ -51445,6 +52951,7 @@ function($timeout, $ionicGesture, $window) {
               $element[0].style.width = '';
               content.offsetX = 0;
             }
+            ionic.trigger('resize', null, window);
           }),
           setMarginRight: ionic.animationFrameThrottle(function(amount) {
             if (amount) {
@@ -51515,6 +53022,11 @@ IonicModule
  * directive. The `menu-close` attribute is usually added to links and buttons within
  * `ion-side-menu-content`, so that when the element is clicked, the opened side menu will
  * automatically close.
+ *
+ * "Burger Icon" toggles can be added to the header with the {@link ionic.directive:menuToggle}
+ * attribute directive. Clicking the toggle will open and close the side menu like the `menu-close`
+ * directive. The side menu will automatically hide on child pages, but can be overridden with the
+ * enable-menu-with-back-views attribute mentioned below.
  *
  * By default, side menus are hidden underneath their side menu content and can be opened by swiping
  * the content left or right or by toggling a button to show the side menu. Additionally, by adding the
@@ -51587,7 +53099,7 @@ IonicModule
           $ionicBody.enableClass(isAsideExposed, 'aside-open');
         });
 
-        $scope.$on('$ionicView.beforeEnter', function(ev, d){
+        $scope.$on('$ionicView.beforeEnter', function(ev, d) {
           if (d.historyId) {
             $scope.$activeHistoryId = d.historyId;
           }
@@ -51634,7 +53146,7 @@ IonicModule
  * @param {boolean=} does-continue Whether the slide box should loop.
  * @param {boolean=} auto-play Whether the slide box should automatically slide. Default true if does-continue is true.
  * @param {number=} slide-interval How many milliseconds to wait to change slides (if does-continue is true). Defaults to 4000.
- * @param {boolean=} show-pager Whether a pager should be shown for this slide box.
+ * @param {boolean=} show-pager Whether a pager should be shown for this slide box. Accepts expressions via `show-pager="{{shouldShow()}}"`.
  * @param {expression=} pager-click Expression to call when a pager is clicked (if show-pager is true). Is passed the 'index' variable.
  * @param {expression=} on-slide-changed Expression called whenever the slide is changed.  Is passed an '$index' variable.
  * @param {expression=} active-slide Model to bind the current slide to.
@@ -51691,7 +53203,7 @@ function($timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory) {
       slider.enableSlide($scope.$eval($attrs.disableScroll) !== true);
 
       $scope.$watch('activeSlide', function(nv) {
-        if(angular.isDefined(nv)){
+        if (isDefined(nv)) {
           slider.slide(nv);
         }
       });
@@ -51737,12 +53249,20 @@ function($timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory) {
     '</div>',
 
     link: function($scope, $element, $attr, slideBoxCtrl) {
-      // If the pager should show, append it to the slide box
-      if($scope.$eval($scope.showPager) !== false) {
-        var childScope = $scope.$new();
-        var pager = jqLite('<ion-pager></ion-pager>');
-        $element.append(pager);
-        $compile(pager)(childScope);
+      $attr.$observe('showPager', function(show) {
+        show = $scope.$eval(show);
+        getPager().toggleClass('hide', !show);
+      });
+
+      var pager;
+      function getPager() {
+        if (!pager) {
+          var childScope = $scope.$new();
+          pager = jqLite('<ion-pager></ion-pager>');
+          $element.append(pager);
+          pager = $compile(pager)(childScope);
+        }
+        return pager;
       }
     }
   };
@@ -51755,7 +53275,7 @@ function($timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory) {
       element.addClass('slider-slide');
       return function($scope, $element, $attr) {
       };
-    },
+    }
   };
 })
 
@@ -51769,8 +53289,8 @@ function($timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory) {
       var selectPage = function(index) {
         var children = $element[0].children;
         var length = children.length;
-        for(var i = 0; i < length; i++) {
-          if(i == index) {
+        for (var i = 0; i < length; i++) {
+          if (i == index) {
             children[i].classList.add('active');
           } else {
             children[i].classList.remove('active');
@@ -51792,6 +53312,200 @@ function($timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory) {
     }
   };
 
+});
+
+/**
+* @ngdoc directive
+* @name ionSpinner
+* @module ionic
+* @restrict E
+ *
+ * @description
+ * The `ionSpinner` directive provides a variety of animated spinners.
+ * Spinners enables you to give your users feedback that the app is
+ * processing/thinking/waiting/chillin' out, or whatever you'd like it to indicate.
+ * By default, the {@link ionic.directive:ionRefresher} feature uses this spinner, rather
+ * than rotating font icons (previously included in [ionicons](http://ionicons.com/)).
+ * While font icons are great for simple or stationary graphics, they're not suited to
+ * provide great animations, which is why Ionic uses SVG instead.
+ *
+ * Ionic offers ten spinners out of the box, and by default, it will use the appropriate spinner
+ * for the platform on which it's running. Under the hood, the `ionSpinner` directive dynamically
+ * builds the required SVG element, which allows Ionic to provide all ten of the animated SVGs
+ * within 3KB.
+ *
+ * <style>
+ * .spinner-table {
+ *   max-width: 280px;
+ * }
+ * .spinner-table tbody > tr > th, .spinner-table tbody > tr > td {
+ *   vertical-align: middle;
+ *   width: 42px;
+ *   height: 42px;
+ * }
+ * .spinner {
+ *   stroke: #444;
+ *   fill: #444; }
+ *   .spinner svg {
+ *     width: 28px;
+ *     height: 28px; }
+ *   .spinner.spinner-inverse {
+ *     stroke: #fff;
+ *     fill: #fff; }
+ *
+ * .spinner-android {
+ *   stroke: #4b8bf4; }
+ *
+ * .spinner-ios, .spinner-ios-small {
+ *   stroke: #69717d; }
+ *
+ * .spinner-spiral .stop1 {
+ *   stop-color: #fff;
+ *   stop-opacity: 0; }
+ * .spinner-spiral.spinner-inverse .stop1 {
+ *   stop-color: #000; }
+ * .spinner-spiral.spinner-inverse .stop2 {
+ *   stop-color: #fff; }
+ * </style>
+ *
+ * <script src="http://code.ionicframework.com/nightly/js/ionic.bundle.min.js"></script>
+ * <table class="table spinner-table" ng-app="ionic">
+ *  <tr>
+ *    <th>
+ *      <code>android</code>
+ *    </th>
+ *    <td>
+ *      <ion-spinner icon="android"></ion-spinner>
+ *    </td>
+ *  </tr>
+ *  <tr>
+ *    <th>
+ *      <code>ios</code>
+ *    </th>
+ *    <td>
+ *      <ion-spinner icon="ios"></ion-spinner>
+ *    </td>
+ *  </tr>
+ *  <tr>
+ *    <th>
+ *      <code>ios-small</code>
+ *    </th>
+ *    <td>
+ *      <ion-spinner icon="ios-small"></ion-spinner>
+ *    </td>
+ *  </tr>
+ *  <tr>
+ *    <th>
+ *      <code>bubbles</code>
+ *    </th>
+ *    <td>
+ *      <ion-spinner icon="bubbles"></ion-spinner>
+ *    </td>
+ *  </tr>
+ *  <tr>
+ *    <th>
+ *      <code>circles</code>
+ *    </th>
+ *    <td>
+ *      <ion-spinner icon="circles"></ion-spinner>
+ *    </td>
+ *  </tr>
+ *  <tr>
+ *    <th>
+ *      <code>crescent</code>
+ *    </th>
+ *    <td>
+ *      <ion-spinner icon="crescent"></ion-spinner>
+ *    </td>
+ *  </tr>
+ *  <tr>
+ *    <th>
+ *      <code>dots</code>
+ *    </th>
+ *    <td>
+ *      <ion-spinner icon="dots"></ion-spinner>
+ *    </td>
+ *  </tr>
+ *  <tr>
+ *    <th>
+ *      <code>lines</code>
+ *    </th>
+ *    <td>
+ *      <ion-spinner icon="lines"></ion-spinner>
+ *    </td>
+ *  </tr>
+ *  <tr>
+ *    <th>
+ *      <code>ripple</code>
+ *    </th>
+ *    <td>
+ *      <ion-spinner icon="ripple"></ion-spinner>
+ *    </td>
+ *  </tr>
+ *  <tr>
+ *    <th>
+ *      <code>spiral</code>
+ *    </th>
+ *    <td>
+ *      <ion-spinner icon="spiral"></ion-spinner>
+ *    </td>
+ *  </tr>
+ * </table>
+ *
+ * Each spinner uses SVG with SMIL animations, however, the Android spinner also uses JavaScript
+ * so it also works on Android 4.0-4.3. Additionally, each spinner can be styled with CSS,
+ * and scaled to any size.
+ *
+ *
+ * @usage
+ * The following code would use the default spinner for the platform it's running from. If it's neither
+ * iOS or Android, it'll default to use `ios`.
+ *
+ * ```html
+ * <ion-spinner></ion-spinner>
+ * ```
+ *
+ * By setting the `icon` attribute, you can specify which spinner to use, no matter what
+ * the platform is.
+ *
+ * ```html
+ * <ion-spinner icon="spiral"></ion-spinner>
+ * ```
+ *
+ * ## Spinner Colors
+ * Like with most of Ionic's other components, spinners can also be styled using
+ * Ionic's standard color naming convention. For example:
+ *
+ * ```html
+ * <ion-spinner class="spinner-energized"></ion-spinner>
+ * ```
+ *
+ *
+ * ## Styling SVG with CSS
+ * One cool thing about SVG is its ability to be styled with CSS! Some of the properties
+ * have different names, for example, SVG uses the term `stroke` instead of `border`, and
+ * `fill` instead of `background-color`.
+ *
+ * ```css
+ * .spinner svg {
+ *   width: 28px;
+ *   height: 28px;
+ *   stroke: #444;
+ *   fill: #444;
+ * }
+ * ```
+ *
+*/
+IonicModule
+.directive('ionSpinner', function() {
+  return {
+    restrict: 'E',
+    controller: '$ionicSpinner',
+    link: function($scope, $element, $attrs, ctrl) {
+      var spinnerName = ctrl.init();
+      $element.addClass('spinner spinner-' + spinnerName);
+    }
+  };
 });
 
 /**
@@ -51828,6 +53542,8 @@ function($timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory) {
  * @param {expression=} on-select Called when this tab is selected.
  * @param {expression=} on-deselect Called when this tab is deselected.
  * @param {expression=} ng-click By default, the tab will be selected on click. If ngClick is set, it will not.  You can explicitly switch tabs using {@link ionic.service:$ionicTabsDelegate#select $ionicTabsDelegate.select()}.
+ * @param {expression=} hidden Whether the tab is to be hidden or not.
+ * @param {expression=} disabled Whether the tab is to be disabled or not.
  */
 IonicModule
 .directive('ionTab', [
@@ -51839,7 +53555,7 @@ function($compile, $ionicConfig, $ionicBind, $ionicViewSwitcher) {
 
   //Returns ' key="value"' if value exists
   function attrStr(k, v) {
-    return angular.isDefined(v) ? ' ' + k + '="' + v + '"' : '';
+    return isDefined(v) ? ' ' + k + '="' + v + '"' : '';
   }
   return {
     restrict: 'E',
@@ -51860,6 +53576,7 @@ function($compile, $ionicConfig, $ionicBind, $ionicViewSwitcher) {
         attrStr('badge', attr.badge) +
         attrStr('badge-style', attr.badgeStyle) +
         attrStr('hidden', attr.hidden) +
+        attrStr('disabled', attr.disabled) +
         attrStr('class', attr['class']) +
         '></ion-tab-nav>';
 
@@ -51974,6 +53691,7 @@ function($compile, $ionicConfig, $ionicBind, $ionicViewSwitcher) {
         function destroyTab() {
           childScope && childScope.$destroy();
           isTabContentAttached && childElement && childElement.remove();
+          tabContentEle.innerHTML = '';
           isTabContentAttached = childScope = childElement = null;
         }
 
@@ -52002,7 +53720,7 @@ IonicModule
     require: ['^ionTabs', '^ionTab'],
     template:
     '<a ng-class="{\'tab-item-active\': isTabActive(), \'has-badge\':badge, \'tab-hidden\':isHidden()}" ' +
-      ' class="tab-item">' +
+      ' ng-disabled="disabled()" class="tab-item">' +
       '<span class="badge {{badgeStyle}}" ng-if="badge">{{badge}}</span>' +
       '<i class="icon {{getIconOn()}}" ng-if="getIconOn() && isTabActive()"></i>' +
       '<i class="icon {{getIconOff()}}" ng-if="getIconOff() && !isTabActive()"></i>' +
@@ -52015,6 +53733,7 @@ IonicModule
       iconOff: '@',
       badge: '=',
       hidden: '@',
+      disabled: '&',
       badgeStyle: '@',
       'class': '@'
     },
@@ -52064,15 +53783,18 @@ IonicModule
  * @module ionic
  * @delegate ionic.service:$ionicTabsDelegate
  * @restrict E
- * @codepen KbrzJ
+ * @codepen odqCz
  *
  * @description
  * Powers a multi-tabbed interface with a Tab Bar and a set of "pages" that can be tabbed
  * through.
  *
- * Assign any [tabs class](/docs/components#tabs) or
- * [animation class](/docs/components#animation) to the element to define
+ * Assign any [tabs class](/docs/components#tabs) to the element to define
  * its look and feel.
+ *
+ * For iOS, tabs will appear at the bottom of the screen. For Android, tabs will be at the top
+ * of the screen, below the nav-bar. This follows each OS's design specification, but can be
+ * configured with the [$ionicConfigProvider](docs/api/provider/$ionicConfigProvider/).
  *
  * See the {@link ionic.directive:ionTab} directive's documentation for more details on
  * individual tabs.
@@ -52084,15 +53806,15 @@ IonicModule
  * ```html
  * <ion-tabs class="tabs-positive tabs-icon-only">
  *
- *   <ion-tab title="Home" icon-on="ion-ios7-filing" icon-off="ion-ios7-filing-outline">
+ *   <ion-tab title="Home" icon-on="ion-ios-filing" icon-off="ion-ios-filing-outline">
  *     <!-- Tab 1 content -->
  *   </ion-tab>
  *
- *   <ion-tab title="About" icon-on="ion-ios7-clock" icon-off="ion-ios7-clock-outline">
+ *   <ion-tab title="About" icon-on="ion-ios-clock" icon-off="ion-ios-clock-outline">
  *     <!-- Tab 2 content -->
  *   </ion-tab>
  *
- *   <ion-tab title="Settings" icon-on="ion-ios7-gear" icon-off="ion-ios7-gear-outline">
+ *   <ion-tab title="Settings" icon-on="ion-ios-gear" icon-off="ion-ios-gear-outline">
  *     <!-- Tab 3 content -->
  *   </ion-tab>
  *
@@ -52137,7 +53859,20 @@ function($ionicTabsDelegate, $ionicConfig, $ionicHistory) {
           var isHidden = value.indexOf('tabs-item-hide') !== -1;
           $scope.$hasTabs = !isTabsTop && !isHidden;
           $scope.$hasTabsTop = isTabsTop && !isHidden;
+          $scope.$emit('$ionicTabs.top', $scope.$hasTabsTop);
         });
+
+        function emitLifecycleEvent(ev, data) {
+          ev.stopPropagation();
+          var selectedTab = tabsCtrl.selectedTab();
+          if (selectedTab) {
+            selectedTab.$emit(ev.name.replace('NavView', 'View'), data);
+          }
+        }
+
+        $scope.$on('$ionicNavView.beforeLeave', emitLifecycleEvent);
+        $scope.$on('$ionicNavView.afterLeave', emitLifecycleEvent);
+        $scope.$on('$ionicNavView.leave', emitLifecycleEvent);
 
         $scope.$on('$destroy', function() {
           // variable to inform child tabs that they're all being blown away
@@ -52189,9 +53924,9 @@ function($ionicTabsDelegate, $ionicConfig, $ionicHistory) {
  */
 IonicModule
 .directive('ionToggle', [
-  '$ionicGesture',
   '$timeout',
-function($ionicGesture, $timeout) {
+  '$ionicConfig',
+function($timeout, $ionicConfig) {
 
   return {
     restrict: 'E',
@@ -52226,38 +53961,36 @@ function($ionicGesture, $timeout) {
         }
       });
 
-      if(attr.toggleClass) {
+      if (attr.toggleClass) {
         element[0].getElementsByTagName('label')[0].classList.add(attr.toggleClass);
       }
 
-      return function($scope, $element, $attr) {
-         var el, checkbox, track, handle;
+      element.addClass('toggle-' + $ionicConfig.form.toggle());
 
-         el = $element[0].getElementsByTagName('label')[0];
-         checkbox = el.children[0];
-         track = el.children[1];
-         handle = track.children[0];
+      return function($scope, $element) {
+        var el = $element[0].getElementsByTagName('label')[0];
+        var checkbox = el.children[0];
+        var track = el.children[1];
+        var handle = track.children[0];
 
-         var ngModelController = jqLite(checkbox).controller('ngModel');
+        var ngModelController = jqLite(checkbox).controller('ngModel');
 
-         $scope.toggle = new ionic.views.Toggle({
-           el: el,
-           track: track,
-           checkbox: checkbox,
-           handle: handle,
-           onChange: function() {
-             if(checkbox.checked) {
-               ngModelController.$setViewValue(true);
-             } else {
-               ngModelController.$setViewValue(false);
-             }
-             $scope.$apply();
-           }
-         });
+        $scope.toggle = new ionic.views.Toggle({
+          el: el,
+          track: track,
+          checkbox: checkbox,
+          handle: handle,
+          onChange: function() {
+            if (ngModelController) {
+              ngModelController.$setViewValue(checkbox.checked);
+              $scope.$apply();
+            }
+          }
+        });
 
-         $scope.$on('$destroy', function() {
-           $scope.toggle.destroy();
-         });
+        $scope.$on('$destroy', function() {
+          $scope.toggle.destroy();
+        });
       };
     }
 
@@ -52282,7 +54015,7 @@ function($ionicGesture, $timeout) {
  * left in the DOM, and its scope is disconnected from the `$watch` cycle. When navigating to a
  * view that is already cached, its scope is reconnected, and the existing element, which was
  * left in the DOM, becomes active again. This can be disabled, or the maximum number of cached
- * views changed in {@link ionic.directive:ionicConfig}, in the view's `$state` configuration, or
+ * views changed in {@link ionic.provider:$ionicConfigProvider}, in the view's `$state` configuration, or
  * as an attribute on the view itself (see below).
  *
  * @usage
@@ -52302,7 +54035,7 @@ function($ionicGesture, $timeout) {
  *
  * ## View LifeCycle and Events
  *
- * Views can be cached, which means *controllers normally only load once*, which may
+ * Views can be cached, which means ***controllers normally only load once***, which may
  * affect your controller logic. To know when a view has entered or left, events
  * have been added that are emitted from the view's scope. These events also
  * contain data about the view, such as the title and whether the back button should
