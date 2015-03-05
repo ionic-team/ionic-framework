@@ -2,7 +2,7 @@
   "name": "ionic",
   "version": "1.0.0-beta.14",
   "codename": "magnesium-mongoose",
-  "homepage": "https://github.com/driftyco/ionic",
+  "homepage": "https://github.com/jabyrd3/ionic",
   "authors": [
     "Max Lynch <max@drifty.com>",
     "Adam Bradley <adam@drifty.com>",
@@ -10,10 +10,10 @@
   ],
   "description": "Advanced HTML5 hybrid mobile app development framework.",
   "main": [
-    "release/css/ionic.css",
-    "release/fonts/*",
-    "release/js/ionic.js",
-    "release/js/ionic-angular.js"
+    "dist/css/ionic.css",
+    "dist/fonts/*",
+    "dist/js/ionic.js",
+    "dist/js/ionic-angular.js"
   ],
   "keywords": [
     "mobile",

@@ -4,7 +4,7 @@
   "version": "1.0.0-beta.14",
   "codename": "magnesium-mongoose",
   "repository": {
-    "url": "git://github.com/driftyco/ionic.git"
+    "url": "https://github.com/driftyco/ionic.git"
   },
   "devDependencies": {
     "canonical-path": "0.0.2",
