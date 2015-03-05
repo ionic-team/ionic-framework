@@ -19,6 +19,26 @@
   @include transition(all ease-in-out 250ms);
 }
 
+// Slide left from the right, used for modals
+// -------------------------------
+
+.slide-in-left {
+  @include translate3d(100%, 0, 0);
+}
+.slide-in-left.ng-enter,
+.slide-in-left > .ng-enter {
+  @include transition(all cubic-bezier(.1, .7, .1, 1) 400ms);
+}
+.slide-in-left.ng-enter-active,
+.slide-in-left > .ng-enter-active {
+  @include translate3d(0, 0, 0);
+}
+
+.slide-in-left.ng-leave,
+.slide-in-left > .ng-leave {
+  @include transition(all ease-in-out 250ms);
+}
+
 
 // Scale Out
 // Scale from hero (1 in this case) to zero
