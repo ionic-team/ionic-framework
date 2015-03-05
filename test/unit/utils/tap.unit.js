@@ -1230,7 +1230,7 @@ describe('Ionic Tap', function() {
   it('Should isDateInput', function() {
     expect( ionic.tap.isDateInput(null) ).toEqual(false);
 
-    ele = document.createElement('input');
+    ele = { tagName: 'INPUT' };
 
     ele.type = 'date';
     expect( ionic.tap.isDateInput(ele) ).toEqual(true);
@@ -1255,7 +1255,6 @@ describe('Ionic Tap', function() {
 
     ele.type = 'text';
     expect( ionic.tap.isDateInput(ele) ).toEqual(false);
-
 
   });
 

@@ -77,10 +77,10 @@ describe('Ionic Angular Side Menu', function() {
     sideMenuController.exposeAside(true);
     expect(content.offsetX).toEqual(275);
     expect(content.getTranslateX()).toEqual(0);
-    expect(content.element.getAttribute('style').indexOf('translate3d(275px, 0px, 0px)') > -1).toEqual(true);
+    expect(content.element.getAttribute('style')).toMatch(/translate3d\(275px, 0(px)?, 0(px)?/);
     expect(content.element.style.width).toNotEqual('');
     sideMenuController.exposeAside(false);
-    expect(content.element.getAttribute('style').indexOf('translate3d(0px, 0px, 0px)') > -1).toEqual(true);
+    expect(content.element.getAttribute('style')).toMatch(/translate3d\(0(px)?, 0(px)?, 0(px)?/);
     expect(content.getTranslateX()).toEqual(0);
     expect(content.offsetX).toEqual(0);
     expect(content.element.style.width).toEqual('');
