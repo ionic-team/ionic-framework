@@ -56,7 +56,7 @@
  * to `ios`.
  * * `ios`: iOS style transition.
  * * `android`: Android style transition.
- * * `none`: Do not preform animated transitions.
+ * * `none`: Do not perform animated transitions.
  *
  * @returns {string} value
  */
