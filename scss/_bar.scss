@@ -16,8 +16,7 @@
   box-sizing: border-box;
   padding: $bar-padding-portrait;
 
-  width: 100%;
-  height: $bar-height;
+  @include size(100%, $bar-height);
   border-width: 0;
   border-style: solid;
   border-top: 1px solid transparent;
@@ -59,8 +58,7 @@
 
       input {
         padding-left: 8px;
-        width: 94%;
-        height: 28px;
+        @include size(94%, 28px);
         background: transparent;
       }
     }

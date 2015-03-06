@@ -10,8 +10,7 @@
   top: 0;
   left: 0;
   z-index: $z-index-popover;
-  width: 100%;
-  height: 100%;
+  @include square(100%);
   background-color: $popover-backdrop-bg-inactive;
 
   &.active {
@@ -27,8 +26,7 @@
   display: block;
   margin-top: 12px;
   margin-left: -$popover-width / 2;
-  height: $popover-height;
-  width: $popover-width;
+  @include size($popover-width, $popover-height);
   background-color: $popover-bg-color;
   box-shadow: $popover-box-shadow;
   opacity: 0;
@@ -98,8 +96,7 @@
       position: absolute;
       top: 12px;
       left: 5px;
-      width: 20px;
-      height: 20px;
+      @include square(20px);
       background-color: $popover-bg-color;
       border-radius: 3px;
       content: '';

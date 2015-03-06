@@ -5,8 +5,7 @@
 
 .spinner {
   svg {
-    width: $spinner-width;
-    height: $spinner-height;
+    @include size($spinner-width, $spinner-height);
   }
 
   stroke: $spinner-default-stroke;
