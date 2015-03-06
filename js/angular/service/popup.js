@@ -250,6 +250,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
      *   template: '', // String (optional). The html template to place in the popup body.
      *   templateUrl: '', // String (optional). The URL of an html template to place in the popup   body.
      *   inputType: // String (default: 'text'). The type of input to use
+     *   inputValue: // String (default: ''). A value to use for the input. 
      *   inputPlaceholder: // String (default: ''). A placeholder to use for the input.
      *   cancelText: // String (default: 'Cancel'. The text of the Cancel button.
      *   cancelType: // String (default: 'button-default'). The type of the Cancel button.
@@ -464,7 +465,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
 
   function showPrompt(opts) {
     var scope = $rootScope.$new(true);
-    scope.data = {};
+    scope.data = {response: opts.inputValue || ''};
     var text = '';
     if (opts.template && /<[a-z][\s\S]*>/i.test(opts.template) === false) {
       text = '<span>' + opts.template + '</span>';
