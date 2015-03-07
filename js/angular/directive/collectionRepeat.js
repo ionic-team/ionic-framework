@@ -145,7 +145,7 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
 
     // Dimensions are refreshed on resize or data change.
     angular.element($window).on('resize', debouncedOnResize);
-    $timeout(debouncedRefreshDimensions, 0, false);
+    $timeout(refreshDimensions, 0, false);
 
     scope.$watchCollection(listGetter, function(newValue) {
       data = newValue || (newValue = []);
