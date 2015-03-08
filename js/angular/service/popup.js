@@ -332,6 +332,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
           self.element.removeClass('popup-hidden');
           self.element.addClass('popup-showing active');
           focusInput(self.element);
+          $rootScope.$broadcast("popup.shown");
         });
       };
       self.hide = function(callback) {
