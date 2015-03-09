@@ -149,6 +149,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
              .removeClass('ng-leave ng-leave-active');
 
       self._isShown = true;
+      self._triggeredByRemoveEvent = false;
       self._deregisterBackButton = $ionicPlatform.registerBackButtonAction(
         self.hardwareBackButtonClose ? angular.bind(self, self.hide) : noop,
         PLATFORM_BACK_BUTTON_PRIORITY_MODAL
@@ -177,10 +178,11 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
     /**
      * @ngdoc method
      * @name ionicModal#hide
+     * @param {boolean} triggeredByRemoveEvent A boolean to know if the event has been triggered by a previous remove event
      * @description Hide this modal instance.
      * @returns {promise} A promise which is resolved when the modal is finished animating out.
      */
-    hide: function() {
+    hide: function(triggeredByRemoveEvent) {
       var self = this;
       var modalEl = jqLite(self.modalEl);
 
@@ -194,6 +196,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
 
       self.$el.off('click');
       self._isShown = false;
+      self._triggeredByRemoveEvent = triggeredByRemoveEvent || false;
       self.scope.$parent && self.scope.$parent.$broadcast(self.viewType + '.hidden', self);
       self._deregisterBackButton && self._deregisterBackButton();
 
@@ -220,7 +223,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
       var self = this;
       self.scope.$parent && self.scope.$parent.$broadcast(self.viewType + '.removed', self);
 
-      return self.hide().then(function() {
+      return self.hide(true).then(function() {
         self.scope.$destroy();
         self.$el.remove();
       });
@@ -233,6 +236,15 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
      */
     isShown: function() {
       return !!this._isShown;
+    },
+
+    /**
+     * @ngdoc method
+     * @name ionicModal#triggeredByRemoveEvent
+     * @returns boolean Whether this modal has been hide by a remove event.
+     */
+    triggeredByRemoveEvent: function() {
+      return this._triggeredByRemoveEvent;
     }
   });
 

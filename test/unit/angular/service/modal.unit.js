@@ -217,6 +217,24 @@ describe('Ionic Modal', function() {
     timeout.flush();
   }));
 
+  it('should set "triggeredByRemoveEvent" to true when removed', function() {
+    var template = '<div class="modal"></div>';
+    var instance = modal.fromTemplate(template, {});
+    instance.show();
+    timeout.flush();
+    instance.remove();
+    expect(instance._triggeredByRemoveEvent).toBe(true);
+  });
+
+  it('should set "triggeredByRemoveEvent" to false when hidden', function() {
+    var template = '<div class="modal"></div>';
+    var instance = modal.fromTemplate(template, {});
+    instance.show();
+    timeout.flush();
+    instance.hide();
+    expect(instance._triggeredByRemoveEvent).toBe(false);
+  });
+
   it('show should return a promise resolved on hide', function() {
     var template = '<div class="modal"></div>';
     var instance = modal.fromTemplate(template, {});
