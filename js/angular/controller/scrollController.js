@@ -83,7 +83,6 @@ function($scope,
 
   $timeout(function() {
     scrollView && scrollView.run && scrollView.run();
-    $element.triggerHandler('scroll.init');
   });
 
   self.getScrollView = function() {
