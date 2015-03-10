@@ -48,9 +48,14 @@
     "js/ionic.js"
   ],
   "dependencies": {
-    "angular": "1.3.6",
-    "angular-animate": "1.3.6",
-    "angular-sanitize": "1.3.6",
+    "angular": "1.3.13",
+    "angular-animate": "1.3.13",
+    "angular-aria": "1.3.13",
+    "angular-messages": "1.3.13",
+    "angular-mocks": "1.3.13",
+    "angular-resource": "1.3.13",
+    "angular-sanitize": "1.3.13",
+    "angular-scenario": "1.3.13",
     "angular-ui-router": "0.2.13"
   }
 }
