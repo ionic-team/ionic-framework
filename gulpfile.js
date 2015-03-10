@@ -14,6 +14,7 @@ var buildConfig = require('./config/build.config.js');
 var changelog = require('conventional-changelog');
 var es = require('event-stream');
 var irc = require('ircb');
+var jsStringEscape = require('js-string-escape');
 var marked = require('marked');
 var mkdirp = require('mkdirp');
 var twitter = require('node-twitter-api');
@@ -163,7 +164,23 @@ gulp.task('vendor', function() {
 });
 
 gulp.task('scripts', function() {
-  return gulp.src(buildConfig.ionicFiles)
+  function isWorkerFile(file) {
+    return file.path.match('js/workers/');
+  }
+  function transformWorkerFile() {
+    return es.map(function(file, cb) {
+      var contents = file.contents.toString();
+      var name = path.basename(file.path).replace(path.extname(file.path), '');
+      contents = "ionic.WORKER_SCRIPTS['" + name + "'] = '" + jsStringEscape(contents) + "'";
+      file.contents = new Buffer(contents);
+      cb(null, file);
+    });
+  }
+
+  return gulp.src(
+    buildConfig.ionicFiles.concat(buildConfig.workerFiles)
+  )
+    .pipe(gulpif(isWorkerFile, transformWorkerFile()))
     .pipe(gulpif(IS_RELEASE_BUILD, stripDebug()))
     .pipe(template({ pkg: pkg }))
     .pipe(concat('ionic.js'))

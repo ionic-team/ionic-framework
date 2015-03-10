@@ -34,6 +34,10 @@ module.exports = {
   closureStart: '(function() {\n',
   closureEnd: '\n})();',
 
+  workerFiles: [
+    'js/workers/**/*.js'
+  ],
+
   ionicFiles: [
     // Base
     'js/ionic.js',
@@ -51,6 +55,7 @@ module.exports = {
     'js/utils/list.js',
     'js/utils/keyboard.js',
     'js/utils/viewport.js',
+    'js/utils/workers.js',
 
     // Views
     'js/views/view.js',
