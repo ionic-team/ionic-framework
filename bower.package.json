@@ -1,0 +1,38 @@
+{
+  "name": "ionic-bower",
+  "private": false,
+  "version": "1.0.0-beta.14",
+  "codename": "magnesium-mongoose",
+  "repository": {
+    "url": "git://github.com/driftyco/ionic-bower.git"
+  },
+  "licenses": [
+    {
+      "type": "MIT"
+    }
+  ],
+  "jspm": {
+    "main": "js/ionic-angular",
+    "shim": {
+        "js/ionic-angular": {
+            "deps": [
+                "../css/ionic.css!",
+                "./ionic",
+                "angular",
+                "angular-animate",
+                "angular-sanitize",
+                "angular-ui-router"
+            ]
+        }
+    },
+    "dependencies": {
+        "css": "0.1.0",
+        "angular": "1.3.12",
+        "angular-animate": "1.3.12",
+        "angular-sanitize": "1.3.12",
+        "angular-ui-router": "0.2.13",
+        "ionicons": "github:driftyco/ionicons@^2.0.1"
+    }
+  }
+
+}
