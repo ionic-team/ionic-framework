@@ -10,6 +10,7 @@
   var IOS = 'ios';
   var ANDROID = 'android';
   var WINDOWS_PHONE = 'windowsphone';
+  var BLACKBERRY = 'blackberry10';
   var requestAnimationFrame = ionic.requestAnimationFrame;
 
   /**
@@ -36,6 +37,7 @@
    *   var isIOS = ionic.Platform.isIOS();
    *   var isAndroid = ionic.Platform.isAndroid();
    *   var isWindowsPhone = ionic.Platform.isWindowsPhone();
+   *   var isBlackberry = ionic.Platform.isBlackberry();
    *
    *   var currentPlatform = ionic.Platform.platform();
    *   var currentPlatformVersion = ionic.Platform.version();
@@ -225,6 +227,14 @@
     isWindowsPhone: function() {
       return self.is(WINDOWS_PHONE);
     },
+    /**
+     * @ngdoc method
+     * @name ionic.Platform#isBlackberry
+     * @returns {boolean} Whether we are running on BlackBerry.
+     */
+    isBlackberry: function() {
+      return self.is(BLACKBERRY);
+    },
 
     /**
      * @ngdoc method
@@ -251,6 +261,8 @@
         platformName = IOS;
       } else if (self.ua.indexOf('Windows Phone') > -1) {
         platformName = WINDOWS_PHONE;
+      } else if (self.ua.indexOf('BB10') > -1) {
+        platformName = BLACKBERRY;
       } else {
         platformName = self.navigator.platform && navigator.platform.toLowerCase().split(' ')[0] || '';
       }
@@ -287,7 +299,8 @@
       var versionMatch = {
         'android': /Android (\d+).(\d+)?/,
         'ios': /OS (\d+)_(\d+)?/,
-        'windowsphone': /Windows Phone (\d+).(\d+)?/
+        'windowsphone': /Windows Phone (\d+).(\d+)?/,
+        'blackberry': /Version\/(\d+).(\d+)?/
       };
       if (versionMatch[pName]) {
         v = self.ua.match(versionMatch[pName]);
