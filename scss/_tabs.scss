@@ -18,8 +18,7 @@
 
   z-index: $z-index-tabs;
 
-  width: 100%;
-  height: $tabs-height;
+  @include size(100%, $tabs-height);
 
   border-style: solid;
   border-top-width: 1px;

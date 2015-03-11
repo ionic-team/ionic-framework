@@ -69,8 +69,7 @@
 
   display: inline-block;
   box-sizing: border-box;
-  width: $toggle-width;
-  height: $toggle-height;
+  @include size($toggle-width, $toggle-height);
   border: solid $toggle-border-width $toggle-off-border-color;
   border-radius: $toggle-border-radius;
   background-color: $toggle-off-bg-color;
@@ -92,8 +91,7 @@
   @include transition-property((background-color, transform));
   position: absolute;
   display: block;
-  width: $toggle-handle-width;
-  height: $toggle-handle-height;
+  @include size($toggle-handle-width, $toggle-handle-height);
   border-radius: $toggle-handle-radius;
   background-color: $toggle-handle-off-bg-color;
   top: $toggle-border-width + $toggle-hit-area-expansion;
@@ -146,8 +144,7 @@
 
   .track {
     border: 0;
-    width: 34px;
-    height: 15px;
+    @include size(34px, 15px);
     background: #9e9e9e;
   }
   input:checked + .track {
@@ -156,8 +153,7 @@
   .handle {
     top: 2px;
     left: 4px;
-    width: 21px;
-    height: 21px;
+    @include square(21px);
     box-shadow: 0 2px 5px rgba(0,0,0,.25);
   }
   input:checked + .track .handle {

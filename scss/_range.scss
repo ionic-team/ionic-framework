@@ -11,8 +11,7 @@
   margin-bottom: 5px;
   padding-right: 2px;
   padding-left: 1px;
-  width: auto;
-  height: $range-slider-height + 15;
+  @include size(auto, $range-slider-height + 15);
   outline: none;
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $range-default-track-bg), color-stop(100%, $range-default-track-bg));
   background: linear-gradient(to right, $range-default-track-bg 0%, $range-default-track-bg 100%);
@@ -23,8 +22,7 @@
 
   &::-webkit-slider-thumb {
     position: relative;
-    width: $range-slider-width;
-    height: $range-slider-height;
+    @include size($range-slider-width, $range-slider-height);
     border-radius: $range-slider-border-radius;
     background-color: $toggle-handle-off-bg-color;
     box-shadow: $range-slider-box-shadow;
@@ -38,8 +36,7 @@
     position: absolute;
     top: ($range-slider-height / 2) - ($range-track-height / 2);
     left: -2001px;
-    width: 2000px;
-    height: $range-track-height;
+    @include size(2000px, $range-track-height);
     background: $dark;
     content: ' ';
   }

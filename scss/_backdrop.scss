@@ -5,8 +5,7 @@
   left: 0;
   z-index: $z-index-backdrop;
 
-  width: 100%;
-  height: 100%;
+  @include square(100%);
 
   background-color: $loading-backdrop-bg-color;
 
