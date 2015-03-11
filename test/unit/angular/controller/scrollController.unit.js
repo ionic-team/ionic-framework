@@ -95,16 +95,6 @@ describe('$ionicScroll Controller', function() {
     expect(ctrl.scrollView.run).toHaveBeenCalled();
   });
 
-
-  it('should unbind window event listener on scope destroy', inject(function($window) {
-    spyOn(ionic, 'on');
-    spyOn(ionic, 'off');
-    setup();
-    expect(ionic.on).toHaveBeenCalledWith('resize', jasmine.any(Function), $window);
-    scope.$destroy();
-    expect(ionic.off).toHaveBeenCalledWith('resize', jasmine.any(Function), $window);
-  }));
-
   it('should listen to scroll event and call $onScroll', function() {
     setup();
     scope.$onScroll = jasmine.createSpy();

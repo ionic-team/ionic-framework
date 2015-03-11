@@ -292,10 +292,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
   self.exposeAside = function(shouldExposeAside) {
     if (!(self.left && self.left.isEnabled) && !(self.right && self.right.isEnabled)) return;
     self.close();
-    //Trigger a resize if it changed
-    if (isAsideExposed !== shouldExposeAside) {
-      ionic.trigger('resize', null, window);
-    }
+
     isAsideExposed = shouldExposeAside;
     if (self.left && self.left.isEnabled) {
       // set the left marget width if it should be exposed

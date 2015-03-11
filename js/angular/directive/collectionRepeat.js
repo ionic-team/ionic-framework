@@ -140,11 +140,9 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
 
     initDimensions();
 
-    var debouncedRefreshDimensions = ionic.animationFrameThrottle(refreshDimensions);
-    var debouncedOnResize = ionic.animationFrameThrottle(validateResize);
-
     // Dimensions are refreshed on resize or data change.
-    angular.element($window).on('resize', debouncedOnResize);
+    angular.element($window).on('resize', validateResize);
+    var unlistenToExposeAside = $rootScope.$on('$ionicExposeAside', validateResize);
     $timeout(refreshDimensions, 0, false);
 
     scope.$watchCollection(listGetter, function(newValue) {
@@ -162,7 +160,8 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
     });
 
     scope.$on('$destroy', function() {
-      angular.element($window).off('resize', debouncedOnResize);
+      angular.element($window).off('resize', validateResize);
+      unlistenToExposeAside();
 
       computedStyleNode && computedStyleNode.parentNode &&
         computedStyleNode.parentNode.removeChild(computedStyleNode);
