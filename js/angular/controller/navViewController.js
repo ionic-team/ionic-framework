@@ -58,6 +58,10 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
     $scope.$on('$ionicTabs.top', onTabsTop);
     $scope.$on('$ionicSubheader', onBarSubheader);
 
+    $scope.$on('$ionicTabs.beforeLeave', onTabsLeave);
+    $scope.$on('$ionicTabs.afterLeave', onTabsLeave);
+    $scope.$on('$ionicTabs.leave', onTabsLeave);
+
     ionic.Platform.ready(function() {
       if (ionic.Platform.isWebView() && $ionicConfig.views.swipeBackEnabled()) {
         self.initSwipeBack();
@@ -193,6 +197,21 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
   };
 
 
+  function onTabsLeave(ev, data) {
+    var viewElements = $element.children();
+    var viewElement, viewScope;
+
+    for (var x = 0, l = viewElements.length; x < l; x++) {
+      viewElement = viewElements.eq(x);
+      if (navViewAttr(viewElement) == VIEW_STATUS_ACTIVE) {
+        viewScope = viewElement.scope();
+        viewScope && viewScope.$emit(ev.name.replace('Tabs', 'View'), data);
+        break;
+      }
+    }
+  }
+
+
   self.cacheCleanup = function() {
     var viewElements = $element.children();
     for (var x = 0, l = viewElements.length; x < l; x++) {
@@ -216,7 +235,6 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
         viewScope && viewScope.$broadcast('$ionicView.clearCache');
       }
     }
-
   };
 
 
