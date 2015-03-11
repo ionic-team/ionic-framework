@@ -368,11 +368,6 @@
       ionic.DomUtil.ready(function() {
         // run this only when or if the DOM is ready
         requestAnimationFrame(function() {
-          // fixing pane height before we adjust this
-          var panes = document.getElementsByClassName('pane');
-          for (var i = 0; i < panes.length; i++) {
-            panes[i].style.height = panes[i].offsetHeight + "px";
-          }
           if (self.isFullScreen) {
             document.body.classList.add('fullscreen');
           } else {
