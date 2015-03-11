@@ -23,7 +23,11 @@
   @include transition(all cubic-bezier(.36, .66, .04, 1) 500ms);
   position: absolute;
   bottom: 0;
+  left: 0;
+  right: 0;
   width: 100%;
+  max-width: 500px;
+  margin: auto;
 }
 
 .action-sheet-up {
