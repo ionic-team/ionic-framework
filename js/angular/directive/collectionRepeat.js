@@ -483,6 +483,18 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
         repeaterBeforeSize += current[isVertical ? 'offsetTop' : 'offsetLeft'];
       } while( ionic.DomUtil.contains(scrollView.__content, current = current.offsetParent) );
 
+      var containerPrevNode = containerNode.previousElementSibling;
+      var beforeStyle = containerPrevNode ?  $window.getComputedStyle(containerPrevNode) : {};
+      var beforeMargin = parseInt(beforeStyle[isVertical ? 'marginBottom' : 'marginRight'] || 0);
+
+      // Because we position the collection container with position: relative, it doesn't take
+      // into account where to position itself relative to the previous element's marginBottom.
+      // To compensate, we translate the container up by the previous element's margin.
+      containerNode.style[ionic.CSS.TRANSFORM] = TRANSLATE_TEMPLATE_STR
+        .replace(PRIMARY, -beforeMargin)
+        .replace(SECONDARY, 0);
+      repeaterBeforeSize -= beforeMargin;
+
       if (!scrollView.__clientHeight || !scrollView.__clientWidth) {
         scrollView.__clientWidth = scrollView.__container.clientWidth;
         scrollView.__clientHeight = scrollView.__container.clientHeight;
