@@ -67,12 +67,13 @@ IonicModule
         var content = $element[0].querySelector('.item-content');
         if (content) {
           $scope.$on('$collectionRepeatLeave', function() {
-            if (content) {
+            if (content && content.$$ionicOptionsOpen) {
               content.style[ionic.CSS.TRANSFORM] = '';
               content.style[ionic.CSS.TRANSITION] = 'none';
               $$rAF(function() {
                 content.style[ionic.CSS.TRANSITION] = '';
               });
+              content.$$ionicOptionsOpen = false;
             }
           });
         }

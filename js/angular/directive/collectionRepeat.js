@@ -666,27 +666,19 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
 
     function digestEnteringItems() {
       var item;
-      var scope;
-      var len;
       if (digestEnteringItems.running) return;
       digestEnteringItems.running = true;
 
       $$rAF(function process() {
-        if( (len = itemsEntering.length) ) {
-          var rootScopePhase = $rootScope.$$phase;
-          var count = Math.floor(len / 1.25) || 1;
-          while (count && itemsEntering.length) {
-            item = itemsEntering.pop();
-            if (item.isShown) {
-              count--;
-              if (!rootScopePhase) item.scope.$digest();
-              item.scope.$broadcast('$collectionRepeatLeave');
-            }
+        var rootScopePhase = $rootScope.$$phase;
+        while (itemsEntering.length) {
+          item = itemsEntering.pop();
+          if (item.isShown) {
+            if (!rootScopePhase) item.scope.$digest();
+            item.scope.$broadcast('$collectionRepeatLeave');
           }
-          $$rAF(process);
-        } else {
-          digestEnteringItems.running = false;
         }
+        digestEnteringItems.running = false;
       });
     }
 
