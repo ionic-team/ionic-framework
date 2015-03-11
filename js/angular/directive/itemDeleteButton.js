@@ -33,7 +33,7 @@ IonicModule
 .directive('ionDeleteButton', function() {
   return {
     restrict: 'E',
-    require: ['^ionItem', '^?ionList'],
+    require: ['^^ionItem', '^?ionList'],
     //Run before anything else, so we can move it before other directives process
     //its location (eg ngIf relies on the location of the directive in the dom)
     priority: Number.MAX_VALUE,
@@ -48,8 +48,13 @@ IonicModule
         container.append($element);
         itemCtrl.$element.append(container).addClass('item-left-editable');
 
-        if (listCtrl && listCtrl.showDelete()) {
-          container.addClass('visible active');
+        init();
+        $scope.$on('$ionic.reconnectScope', init);
+        function init() {
+          listCtrl = listCtrl || $element.controller('ionList');
+          if (listCtrl && listCtrl.showDelete()) {
+            container.addClass('visible active');
+          }
         }
       };
     }

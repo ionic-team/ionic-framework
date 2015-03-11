@@ -300,8 +300,8 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
         parsedValue = $parse(attrValue);
       }
 
-      var withoutQuotes = attrValue.replace(/(\'|\"|px|%)/g, '').trim();
-      var isConstant = withoutQuotes.length && !/([a-zA-Z]|\$|:|\?)/.test(withoutQuotes);
+      var constantAttrValue = attrValue.replace(/(\'|\"|px|%)/g, '').trim();
+      var isConstant = constantAttrValue.length && !/([a-zA-Z]|\$|:|\?)/.test(constantAttrValue);
       dimensionData.attrValue = attrValue;
 
       // If it's a constant, it's either a percent or just a constant pixel number.
@@ -560,7 +560,6 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
           delete itemsShownMap[i];
           itemsLeaving.push(item);
           item.isShown = false;
-          item.scope.$broadcast('$collectionRepeatChange');
         }
       }
 
@@ -669,6 +668,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
             if (item.isShown) {
               count--;
               if (!rootScopePhase) item.scope.$digest();
+              item.scope.$broadcast('$collectionRepeatLeave');
             }
           }
           $$rAF(process);

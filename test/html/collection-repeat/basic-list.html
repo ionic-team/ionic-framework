@@ -13,12 +13,15 @@
 
   <body ng-controller="MainCtrl">
     <ion-header-bar class="bar-positive">
+      <button class="button" ng-click="$root.showDelete = !$root.showDelete">Toggle Delete</button>
       <h1 class="title">Basic List: Static Dimensions</h1>
     </ion-header-bar>
     <ion-content>
       <h4>WHATS UP</h4>
-      <ion-list can-swipe="true">
+      <ion-list can-swipe="true" show-delete="$root.showDelete">
         <ion-item class="item" collection-repeat="item in items">
+          <ion-option-button>Button</ion-option-button>
+          <ion-delete-button  class="ion-minus-circled" ng-click="items.splice($index, 1)"></ion-delete-button>
           <h2>{{item.text}}</h2>
         </ion-item>
       </ion-list>
