@@ -56,6 +56,7 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
 
     $scope.$on('$ionicHistory.deselect', self.cacheCleanup);
     $scope.$on('$ionicTabs.top', onTabsTop);
+    $scope.$on('$ionicSubheader', onBarSubheader);
 
     ionic.Platform.ready(function() {
       if (ionic.Platform.isWebView() && $ionicConfig.views.swipeBackEnabled()) {
@@ -432,6 +433,10 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
     associatedNavBarCtrl && associatedNavBarCtrl.hasTabsTop(isTabsTop);
   }
 
+  function onBarSubheader(ev, isBarSubheader) {
+    var associatedNavBarCtrl = getAssociatedNavBarCtrl();
+    associatedNavBarCtrl && associatedNavBarCtrl.hasBarSubheader(isBarSubheader);
+  }
 
   function getAssociatedNavBarCtrl() {
     if (navBarDelegate) {

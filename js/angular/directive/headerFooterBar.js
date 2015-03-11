@@ -137,6 +137,7 @@ function headerFooterBarDirective(isHeader) {
               var isSubheader = value.indexOf('bar-subheader') !== -1;
               $scope.$hasHeader = isShown && !isSubheader;
               $scope.$hasSubheader = isShown && isSubheader;
+              $scope.$emit('$ionicSubheader', $scope.$hasSubheader);
             });
             $scope.$on('$destroy', function() {
               delete $scope.$hasHeader;
