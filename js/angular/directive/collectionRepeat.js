@@ -629,6 +629,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
 
       while (itemsLeaving.length) {
         item = itemsLeaving.pop();
+        item.scope.$broadcast('$collectionRepeatLeave');
         ionic.Utils.disconnectScope(item.scope);
         itemsPool.push(item);
         item.node.style[ionic.CSS.TRANSFORM] = 'translate3d(-9999px,-9999px,0)';
@@ -675,7 +676,6 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
           item = itemsEntering.pop();
           if (item.isShown) {
             if (!rootScopePhase) item.scope.$digest();
-            item.scope.$broadcast('$collectionRepeatLeave');
           }
         }
         digestEnteringItems.running = false;
