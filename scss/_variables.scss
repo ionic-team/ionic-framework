@@ -559,7 +559,7 @@ $menu-side-shadow:                -1px 0px 2px rgba(0, 0, 0, 0.2), 1px 0px 2px r
 // -------------------------------
 
 $modal-bg-color:                  #fff !default;
-$modal-backdrop-bg-active:        rgba(0,0,0,0.5) !default;
+$modal-backdrop-bg-active:        #000 !default;
 $modal-backdrop-bg-inactive:      rgba(0,0,0,0) !default;
 
 $modal-inset-mode-break-point:    680px !default;  // @media min-width

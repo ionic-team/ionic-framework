@@ -5,13 +5,18 @@
  * Modals are independent windows that slide in from off-screen.
  */
 
-.modal-backdrop {
+.modal-backdrop,
+.modal-backdrop-bg {
   position: fixed;
   top: 0;
   left: 0;
   z-index: $z-index-modal;
   width: 100%;
   height: 100%;
+}
+
+.modal-backdrop-bg {
+  pointer-events: none;
 }
 
 .modal {
@@ -43,7 +48,7 @@
   }
 
   // remove ios header padding from inset header
-  .platform-ios.platform-cordova .modal-wrapper .modal{
+  .platform-ios.platform-cordova .modal-wrapper .modal {
     .bar-header:not(.bar-subheader) {
       height: $bar-height;
       > * {
@@ -69,13 +74,14 @@
     }
   }
 
-  .modal-backdrop {
-    @include transition(background-color 300ms ease-in-out);
-    background-color: $modal-backdrop-bg-inactive;
+  .modal-backdrop-bg {
+    @include transition(opacity 300ms ease-in-out);
+    background-color: $modal-backdrop-bg-active;
+    opacity: 0;
+  }
 
-    &.active {
-      background-color: $modal-backdrop-bg-active;
-    }
+  .active .modal-backdrop-bg {
+    opacity: 0.5;
   }
 }
 
