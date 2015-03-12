@@ -36,7 +36,7 @@ describe('Ionic Popover', function() {
 
     var done = false;
 
-    var instance = popover.fromTemplateUrl('popover.html', function(instance) {
+    popover.fromTemplateUrl('popover.html').then(function(instance) {
       done = true;
       instance.show();
       expect(instance.el.classList.contains('popover-backdrop')).toBe(true);
@@ -200,6 +200,16 @@ describe('Ionic Popover', function() {
     instance.show();
     timeout.flush();
     expect(instance.scope.$parent.$broadcast).toHaveBeenCalledWith('popover.shown', instance);
+  });
+
+  it('should set custom options', function() {
+    var template = '<div class="popover"></div>';
+    var instance = popover.fromTemplate(template, {
+      animation: 'custom-animation'
+    });
+    instance.show();
+    timeout.flush();
+    expect(instance.$el[0].querySelector('.popover').classList.contains('custom-animation')).toBe(true);
   });
 
   it('should broadcast "popover.hidden" on hide with self', function() {

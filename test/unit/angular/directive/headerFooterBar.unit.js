@@ -97,7 +97,7 @@ describe('bar directives', function() {
           this.align = jasmine.createSpy('align');
         };
         inject(function($compile, $rootScope) {
-          el = angular.element('<'+data.tag+' '+(attrs||'')+'></'+data.tag+'><div class="tabs-top"></div>');
+          el = angular.element('<'+data.tag+' '+(attrs||'')+'></'+data.tag+'>');
           el = $compile(el)($rootScope.$new());
           $rootScope.$apply();
         });
@@ -159,10 +159,16 @@ describe('bar directives', function() {
           scope.$apply('$hasTabs = false');
           expect(el.hasClass('has-tabs')).toBe(false);
         });
-        it('.has-tabs-top', function() {
+        it('.has-tabs-top', inject(function($document, $timeout) {
+          $document[0].body.appendChild(angular.element('<div class="tabs-top"></div>')[0]);
           var el = setup();
-          expect(el.hasClass('has-tabs-top')).toBe(true);
-        });
+          $document[0].body.appendChild(el[0]);
+          expect(el.hasClass('has-tabs-top')).toBe(false);
+          if (data.tag === 'ion-header-bar') {
+            $timeout.flush();
+            expect(el.hasClass('has-tabs-top')).toBe(true);
+          }
+        }));
       }
 
       it('should compile to ' + data.className, function() {

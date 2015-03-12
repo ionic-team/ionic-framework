@@ -1,11 +1,11 @@
-[![Build Status](https://circleci.com/gh/driftyco/ionic.png?circle-token=7388822b8691078560c4f057d8eb0df0e8d7f1b5)](https://circleci.com/gh/driftyco/ionic)
+[![Circle CI](https://circleci.com/gh/driftyco/ionic.svg?style=svg)](https://circleci.com/gh/driftyco/ionic)
 
 
 [![Issues Ready](https://badge.waffle.io/driftyco/ionic.png?label=ready&title=Ready)](https://waffle.io/driftyco/ionic)
 
 The best place to start with Ionic is our [documentation page](http://ionicframework.com/docs/).
 
-Ionic currently best supports iOS 6+ and Android 4.1+, with scaled-down support for Android 2.3.
+Ionic currently best supports iOS 7+ and Android 4.1+.
 
 # What is Ionic?
 
@@ -66,25 +66,7 @@ For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/`
 
 ## Authors
 
-**Max Lynch**
-
-+ <https://twitter.com/maxlynch>
-+ <https://github.com/mlynch>
-
-**Ben Sperry**
-
-+ <https://twitter.com/benjsperry>
-+ <https://github.com/bensperry>
-
-**Adam Bradley**
-
-+ <https://twitter.com/adamdbradley>
-+ <https://github.com/adamdbradley>
-
-**Andrew Joslin**
-
-+ <https://twitter.com/andrewtjoslin>
-+ <https://github.com/ajoslin>
+Originally created by [Adam Bradley](http://twitter.com/adamdbradley), [Ben Sperry](http://twitter.com/benjsperry), and [Max Lynch](http://twitter.com/maxlynch), Ionic has seen hundreds of great [contributors](https://github.com/driftyco/ionic/graphs/contributors) from around the world, including Ionic Team Members [Andrew Joslin](http://twitter.com/andrewtjoslin), [Perry Govier](http://twitter.com/perrygovier), and [Mike Hartington](http://twitter.com/mhartington).
 
 ## Development
 
@@ -120,7 +102,7 @@ For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/`
 
 ### Commit Conventions
 
-* Uses http://github.com/ajoslin/conventional-changelog conventions
+* Uses these [commit conventions](http://github.com/ajoslin/conventional-changelog)
 
 ### Pushing New Release of Ionic
 

@@ -15,7 +15,7 @@
  * <ion-radio ng-model="choice" ng-value="'B'">Choose B</ion-radio>
  * <ion-radio ng-model="choice" ng-value="'C'">Choose C</ion-radio>
  * ```
- * 
+ *
  * @param {string=} name The name of the radio input.
  * @param {expression=} value The value of the radio input.
  * @param {boolean=} disabled The state of the radio input.
@@ -40,7 +40,10 @@ IonicModule
       '</label>',
 
     compile: function(element, attr) {
-      if(attr.icon) element.children().eq(2).removeClass('ion-checkmark').addClass(attr.icon);
+      if (attr.icon) {
+        element.children().eq(2).removeClass('ion-checkmark').addClass(attr.icon);
+      }
+
       var input = element.find('input');
       forEach({
           'name': attr.name,

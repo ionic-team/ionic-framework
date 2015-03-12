@@ -4,36 +4,44 @@ IonicModule
   '$ionicBody',
   '$timeout',
 function($document, $ionicBody, $timeout) {
-  var fallbackTimer, isAttached;
   var CSS_HIDE = 'click-block-hide';
-  var pendingShow;
+  var cbEle, fallbackTimer, pendingShow;
 
-  var cb = $document[0].createElement('div');
-  cb.className = 'click-block';
+  function preventClick(ev) {
+    ev.preventDefault();
+    ev.stopPropagation();
+  }
+
+  function addClickBlock() {
+    if (pendingShow) {
+      if (cbEle) {
+        cbEle.classList.remove(CSS_HIDE);
+      } else {
+        cbEle = $document[0].createElement('div');
+        cbEle.className = 'click-block';
+        $ionicBody.append(cbEle);
+        cbEle.addEventListener('touchstart', preventClick);
+        cbEle.addEventListener('mousedown', preventClick);
+      }
+      pendingShow = false;
+    }
+  }
+
+  function removeClickBlock() {
+    cbEle && cbEle.classList.add(CSS_HIDE);
+  }
 
   return {
     show: function(autoExpire) {
       pendingShow = true;
-      // cancel the fallback timer
       $timeout.cancel(fallbackTimer);
-
-      ionic.requestAnimationFrame(function() {
-        if (pendingShow) {
-          if (isAttached) {
-            cb.classList.remove(CSS_HIDE);
-          } else {
-            $ionicBody.append(cb);
-            isAttached = true;
-          }
-        }
-      });
-
       fallbackTimer = $timeout(this.hide, autoExpire || 310);
+      addClickBlock();
     },
     hide: function() {
       pendingShow = false;
       $timeout.cancel(fallbackTimer);
-      cb.classList.add(CSS_HIDE);
+      removeClickBlock();
     }
   };
 }]);

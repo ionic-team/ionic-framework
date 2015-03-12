@@ -1,18 +1,23 @@
 IonicModule
 .controller('$ionicTabs', [
   '$scope',
-  '$ionicHistory',
   '$element',
-function($scope, $ionicHistory, $element) {
-  var _selectedTab = null;
+  '$ionicHistory',
+function($scope, $element, $ionicHistory) {
   var self = this;
+  var selectedTab = null;
+  var previousSelectedTab = null;
+  var selectedTabIndex;
   self.tabs = [];
 
   self.selectedIndex = function() {
-    return self.tabs.indexOf(_selectedTab);
+    return self.tabs.indexOf(selectedTab);
   };
   self.selectedTab = function() {
-    return _selectedTab;
+    return selectedTab;
+  };
+  self.previousSelectedTab = function() {
+    return previousSelectedTab;
   };
 
   self.add = function(tab) {
@@ -42,16 +47,17 @@ function($scope, $ionicHistory, $element) {
 
   self.deselect = function(tab) {
     if (tab.$tabSelected) {
-      _selectedTab = null;
+      previousSelectedTab = selectedTab;
+      selectedTab = selectedTabIndex = null;
       tab.$tabSelected = false;
-      (tab.onDeselect || angular.noop)();
+      (tab.onDeselect || noop)();
       tab.$broadcast && tab.$broadcast('$ionicHistory.deselect');
     }
   };
 
   self.select = function(tab, shouldEmitEvent) {
     var tabIndex;
-    if (angular.isNumber(tab)) {
+    if (isNumber(tab)) {
       tabIndex = tab;
       if (tabIndex >= self.tabs.length) return;
       tab = self.tabs[tabIndex];
@@ -63,19 +69,26 @@ function($scope, $ionicHistory, $element) {
       shouldEmitEvent = !!(tab.navViewName || tab.uiSref);
     }
 
-    if (_selectedTab && _selectedTab.$historyId == tab.$historyId) {
+    if (selectedTab && selectedTab.$historyId == tab.$historyId) {
       if (shouldEmitEvent) {
         $ionicHistory.goToHistoryRoot(tab.$historyId);
       }
-    } else {
+
+    } else if (selectedTabIndex !== tabIndex) {
       forEach(self.tabs, function(tab) {
         self.deselect(tab);
       });
 
-      _selectedTab = tab;
+      selectedTab = tab;
+      selectedTabIndex = tabIndex;
+
+      if (self.$scope && self.$scope.$parent) {
+        self.$scope.$parent.$activeHistoryId = tab.$historyId;
+      }
+
       //Use a funny name like $tabSelected so the developer doesn't overwrite the var in a child scope
       tab.$tabSelected = true;
-      (tab.onSelect || angular.noop)();
+      (tab.onSelect || noop)();
 
       if (shouldEmitEvent) {
         $scope.$emit('$ionicHistory.change', {

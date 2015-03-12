@@ -33,7 +33,7 @@
  * ```
  */
 IonicModule
-.service('$ionicListDelegate', delegateService([
+.service('$ionicListDelegate', ionic.DelegateService([
   /**
    * @ngdoc method
    * @name $ionicListDelegate#showReorder

@@ -3,34 +3,30 @@ name: contacts
 component: collectionRepeat
 ---
 
-<div ng-controller="ContactsCtrl">
+<div ng-controller="MainCtrl">
   <ion-header-bar class="bar-positive">
-    <h1 class="title">1000 Contacts</h1>
-    <div class="button" ng-click="scrollBottom()">
-      Bottom
-    </div>
+    <h1 class="title">3000 Contacts B</h1>
+    <button class="button clear" ng-click="data.search = ''">Clear</button>
   </ion-header-bar>
-  <ion-header-bar class="bar-light bar-subheader">
-    <input type="search"
-      placeholder="Filter contacts..."
-      ng-model="search"
-      ng-change="scrollTop()">
-    <button ng-if="search.length"
-      class="button button-icon ion-android-close input-button"
-      ng-click="clearSearch()">
-    </button>
+  <ion-header-bar class="bar-subheader item-input-inset">
+    <label class="item-input-wrapper">
+      <input type="text" ng-model="data.search" placeholder="Filter Contacts..." type="search">
+    </label>
   </ion-header-bar>
-  <ion-content>
-    <div class="list">
-      <a class="item contact-item"
-        collection-repeat="item in getContacts()"
-        collection-item-height="getItemHeight(item)"
-        collection-item-width="100 + '%'"
-        ng-style="{'line-height': getItemHeight(item) + 'px'}"
-        ng-class="{'item-divider': item.isLetter}">
-        <i ng-if="!item.isLetter" class="icon" ng-class="['ion-ios7-person','ion-person','ion-android-contact','ion-android-social-user','ion-person-stalker'][$index % 5]"></i>
-        {{item.letter || (item.first_name+' '+item.last_name)}}
-      </a>
+  <ion-content direction="y">
+    <ion-list>
+      <div collection-repeat="item in contacts | filter:data.search | orderBy:'last_name' | ionLetterDividers:'last_name'"
+        divider-collection-repeat
+        force-refresh-images>
+        <ion-item>
+          <h2>{{item.first_name+' '+item.last_name}}</h2>
+          <p>{{$index}}</p>
+        </ion-item>
+      </ion-item>
     </div>
   </ion-content>
 </div>
+<script>
+</script>
+</body>
+</html>

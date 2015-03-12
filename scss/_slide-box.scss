@@ -5,40 +5,24 @@
  */
 
 .slider {
+  position: relative;
+  visibility: hidden;
+  // Make sure items don't scroll over ever
   overflow: hidden;
 }
 
 .slider-slides {
-  width: 100%;
-  @include translate3d(0,0,0);
-  -webkit-transition: linear -webkit-transform;
-  transition: linear transform;
+  position: relative;
+  height: 100%;
 }
 
-ion-slide {
-  display: block;
-}
 .slider-slide {
+  position: relative;
+  display: block;
+  float: left;
   width: 100%;
-  @include translate3d(0,0,0);
-
-  &:not([slide-display]) {
-    // This !important flag is here because it lets the end-developer specify display styles
-    // for slides as specifically as he wants, but still not show the slides that should be hidden.
-    display: none !important;
-  }
-  &[slide-display="previous"] {
-    position: absolute;
-    top: 0;
-    left: 0;
-    @include translate3d(-100%,0,0);
-  }
-  &[slide-display="next"] {
-    position: absolute;
-    top: 0;
-    left: 0;
-    @include translate3d(100%,0,0);
-  }
+  height: 100%;
+  vertical-align: top;
 }
 
 .slider-slide-image {
@@ -54,20 +38,13 @@ ion-slide {
   width: 100%;
   height: 15px;
   text-align: center;
-  z-index: 2;
-
-  @include display-flex();
-  @include align-items(center);
-  @include justify-content(center);
 
   .slider-pager-page {
+    display: inline-block;
     margin: 0px 3px;
     width: 15px;
-    height: 15px;
-    border-radius: 15px;
-    background-color: black;
+    color: #000;
     text-decoration: none;
-    cursor: pointer;
 
     opacity: 0.3;
 

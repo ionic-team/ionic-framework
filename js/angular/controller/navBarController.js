@@ -48,7 +48,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
     ionic.DomUtil.cachedAttr(containerEle, 'nav-bar', isActive ? 'active' : 'cached');
 
     var alignTitle = $attrs.alignTitle || $ionicConfig.navBar.alignTitle();
-    var headerBarEle = jqLite('<ion-header-bar>').addClass($attrs.class).attr('align-title', alignTitle);
+    var headerBarEle = jqLite('<ion-header-bar>').addClass($attrs['class']).attr('align-title', alignTitle);
     if (isDefined($attrs.noTapScroll)) headerBarEle.attr('no-tap-scroll', $attrs.noTapScroll);
     var titleEle = jqLite('<div class="title title-' + alignTitle + '">');
     var navEle = {};
@@ -239,31 +239,54 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
     self.transition(enteringHeaderBar, leavingHeaderBar, viewData);
 
     self.isInitialized = true;
+    navSwipeAttr('');
   };
 
 
   self.transition = function(enteringHeaderBar, leavingHeaderBar, viewData) {
     var enteringHeaderBarCtrl = enteringHeaderBar.controller();
-    var transitionFn = $ionicConfig.transitions.navBar[viewData.transition];
+    var transitionFn = $ionicConfig.transitions.navBar[viewData.navBarTransition] || $ionicConfig.transitions.navBar.none;
     var transitionId = viewData.transitionId;
 
     enteringHeaderBarCtrl.beforeEnter(viewData);
 
     var navBarTransition = transitionFn(enteringHeaderBar, leavingHeaderBar, viewData.direction, viewData.shouldAnimate && self.isInitialized);
 
-    ionic.DomUtil.cachedAttr($element, 'nav-bar-transition', viewData.transition);
+    ionic.DomUtil.cachedAttr($element, 'nav-bar-transition', viewData.navBarTransition);
     ionic.DomUtil.cachedAttr($element, 'nav-bar-direction', viewData.direction);
 
-    if (navBarTransition.shouldAnimate) {
+    if (navBarTransition.shouldAnimate && viewData.renderEnd) {
       navBarAttr(enteringHeaderBar, 'stage');
     } else {
       navBarAttr(enteringHeaderBar, 'entering');
       navBarAttr(leavingHeaderBar, 'leaving');
     }
 
-    enteringHeaderBarCtrl.resetBackButton();
+    enteringHeaderBarCtrl.resetBackButton(viewData);
 
     navBarTransition.run(0);
+
+    self.activeTransition = {
+      run: function(step) {
+        navBarTransition.shouldAnimate = false;
+        navBarTransition.direction = 'back';
+        navBarTransition.run(step);
+      },
+      cancel: function(shouldAnimate, speed) {
+        navSwipeAttr(speed);
+        navBarAttr(leavingHeaderBar, 'active');
+        navBarAttr(enteringHeaderBar, 'cached');
+        navBarTransition.shouldAnimate = shouldAnimate;
+        navBarTransition.run(0);
+        self.activeTransition = navBarTransition = null;
+      },
+      complete: function(shouldAnimate, speed) {
+        navSwipeAttr(speed);
+        navBarTransition.shouldAnimate = shouldAnimate;
+        navBarTransition.run(1);
+        queuedTransitionEnd = transitionEnd;
+      }
+    };
 
     $timeout(enteringHeaderBarCtrl.align, 16);
 
@@ -277,23 +300,26 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
 
       queuedTransitionEnd = function() {
         if (latestTransitionId == transitionId || !navBarTransition.shouldAnimate) {
-          for (var x = 0; x < headerBars.length; x++) {
-            headerBars[x].isActive = false;
-          }
-          enteringHeaderBar.isActive = true;
-
-          navBarAttr(enteringHeaderBar, 'active');
-          navBarAttr(leavingHeaderBar, 'cached');
-
-          queuedTransitionEnd = null;
+          transitionEnd();
         }
       };
 
       queuedTransitionStart = null;
     };
 
-    queuedTransitionStart();
+    function transitionEnd() {
+      for (var x = 0; x < headerBars.length; x++) {
+        headerBars[x].isActive = false;
+      }
+      enteringHeaderBar.isActive = true;
 
+      navBarAttr(enteringHeaderBar, 'active');
+      navBarAttr(leavingHeaderBar, 'cached');
+
+      self.activeTransition = navBarTransition = queuedTransitionEnd = null;
+    }
+
+    queuedTransitionStart();
   };
 
 
@@ -384,6 +410,14 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
   };
 
 
+  self.hasTabsTop = function(isTabsTop) {
+    $element[isTabsTop ? 'addClass' : 'removeClass']('nav-bar-tabs-top');
+  };
+
+  self.hasBarSubheader = function(isBarSubheader) {
+    $element[isBarSubheader ? 'addClass' : 'removeClass']('nav-bar-has-subheader');
+  };
+
   // DEPRECATED, as of v1.0.0-beta14 -------
   self.changeTitle = function(val) {
     deprecatedWarning('changeTitle(val)', 'title(val)');
@@ -407,7 +441,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
   };
   function deprecatedWarning(oldMethod, newMethod) {
     var warn = console.warn || console.log;
-    warn && warn('navBarController.' + oldMethod + ' is deprecated, please use ' + newMethod + ' instead');
+    warn && warn.call(console, 'navBarController.' + oldMethod + ' is deprecated, please use ' + newMethod + ' instead');
   }
   // END DEPRECATED -------
 
@@ -435,6 +469,10 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
 
   function navBarAttr(ctrl, val) {
     ctrl && ionic.DomUtil.cachedAttr(ctrl.containerEle(), 'nav-bar', val);
+  }
+
+  function navSwipeAttr(val) {
+    ionic.DomUtil.cachedAttr($element, 'nav-swipe', val);
   }
 
 

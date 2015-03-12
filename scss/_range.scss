@@ -4,7 +4,7 @@
  * --------------------------------------------------
  */
 
-input[type="range"] {
+ .range input{
   display: inline-block;
   overflow: hidden;
   margin-top: 5px;
@@ -119,4 +119,3 @@ input[type="range"] {
   padding-right: 5px;
   padding-left: 0;
 }
-

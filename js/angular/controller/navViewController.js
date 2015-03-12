@@ -9,13 +9,15 @@ IonicModule
   '$ionicNavViewDelegate',
   '$ionicHistory',
   '$ionicViewSwitcher',
-function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, $ionicNavViewDelegate, $ionicHistory, $ionicViewSwitcher) {
+  '$ionicConfig',
+  '$ionicScrollDelegate',
+function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, $ionicNavViewDelegate, $ionicHistory, $ionicViewSwitcher, $ionicConfig, $ionicScrollDelegate) {
 
   var DATA_ELE_IDENTIFIER = '$eleId';
   var DATA_DESTROY_ELE = '$destroyEle';
+  var DATA_NO_CACHE = '$noCache';
   var VIEW_STATUS_ACTIVE = 'active';
   var VIEW_STATUS_CACHED = 'cached';
-  var HISTORY_AFTER_ROOT = 'after-root';
 
   var self = this;
   var direction;
@@ -23,8 +25,11 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
   var navBarDelegate;
   var activeEleId;
   var navViewAttr = $ionicViewSwitcher.navViewAttr;
+  var disableRenderStartViewId, disableAnimation;
+  var transitionDuration, transitionTiming;
 
   self.scope = $scope;
+  self.element = $element;
 
   self.init = function() {
     var navViewName = $attrs.name || '';
@@ -40,9 +45,28 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
     $element.data('$uiView', viewData);
 
     var deregisterInstance = $ionicNavViewDelegate._registerInstance(self, $attrs.delegateHandle);
-    $scope.$on('$destroy', deregisterInstance);
+    $scope.$on('$destroy', function() {
+      deregisterInstance();
+
+      // ensure no scrolls have been left frozen
+      if (self.isSwipeFreeze) {
+        $ionicScrollDelegate.freezeAllScrolls(false);
+      }
+    });
 
     $scope.$on('$ionicHistory.deselect', self.cacheCleanup);
+    $scope.$on('$ionicTabs.top', onTabsTop);
+    $scope.$on('$ionicSubheader', onBarSubheader);
+
+    $scope.$on('$ionicTabs.beforeLeave', onTabsLeave);
+    $scope.$on('$ionicTabs.afterLeave', onTabsLeave);
+    $scope.$on('$ionicTabs.leave', onTabsLeave);
+
+    ionic.Platform.ready(function() {
+      if (ionic.Platform.isWebView() && $ionicConfig.views.swipeBackEnabled()) {
+        self.initSwipeBack();
+      }
+    });
 
     return viewData;
   };
@@ -58,7 +82,10 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
     self.update(registerData);
 
     // begin rendering and transitioning
-    self.render(registerData, viewLocals, leavingView);
+    var enteringView = $ionicHistory.getViewById(registerData.viewId) || {};
+
+    var renderStart = (disableRenderStartViewId !== registerData.viewId);
+    self.render(registerData, viewLocals, enteringView, leavingView, renderStart, true);
   };
 
 
@@ -94,19 +121,22 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
   };
 
 
-  self.render = function(registerData, viewLocals, leavingView) {
-    var enteringView = $ionicHistory.getViewById(registerData.viewId) || {};
-
+  self.render = function(registerData, viewLocals, enteringView, leavingView, renderStart, renderEnd) {
     // register the view and figure out where it lives in the various
     // histories and nav stacks, along with how views should enter/leave
-    var switcher = $ionicViewSwitcher.create(self, viewLocals, enteringView, leavingView);
+    var switcher = $ionicViewSwitcher.create(self, viewLocals, enteringView, leavingView, renderStart, renderEnd);
 
     // init the rendering of views for this navView directive
     switcher.init(registerData, function() {
       // the view is now compiled, in the dom and linked, now lets transition the views.
       // this uses a callback incase THIS nav-view has a nested nav-view, and after the NESTED
       // nav-view links, the NESTED nav-view would update which direction THIS nav-view should use
-      switcher.transition(self.direction(), registerData.enableBack);
+
+      // kick off the transition of views
+      switcher.transition(self.direction(), registerData.enableBack, !disableAnimation);
+
+      // reset private vars for next time
+      disableRenderStartViewId = disableAnimation = null;
     });
 
   };
@@ -118,6 +148,7 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
       navBarDelegate = transitionData.navBarDelegate;
       var associatedNavBarCtrl = getAssociatedNavBarCtrl();
       associatedNavBarCtrl && associatedNavBarCtrl.update(transitionData);
+      navSwipeAttr('');
     }
   };
 
@@ -132,34 +163,53 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
 
   self.transitionEnd = function() {
     var viewElements = $element.children();
-    var viewElementsLength = viewElements.length;
-    var x, viewElement;
-    var isHistoryRoot;
+    var x, l, viewElement;
 
-    for (x = 0; x < viewElementsLength; x++) {
+    for (x = 0, l = viewElements.length; x < l; x++) {
       viewElement = viewElements.eq(x);
 
       if (viewElement.data(DATA_ELE_IDENTIFIER) === activeEleId) {
         // this is the active element
         navViewAttr(viewElement, VIEW_STATUS_ACTIVE);
-        isHistoryRoot = $ionicViewSwitcher.isHistoryRoot(viewElement);
 
-      } else if (navViewAttr(viewElement) === 'leaving' || navViewAttr(viewElement) === VIEW_STATUS_ACTIVE) {
-        // this is a leaving element or was the former active element
-        navViewAttr(viewElement, VIEW_STATUS_CACHED);
-      }
-    }
+      } else if (navViewAttr(viewElement) === 'leaving' || navViewAttr(viewElement) === VIEW_STATUS_ACTIVE || navViewAttr(viewElement) === VIEW_STATUS_CACHED) {
+        // this is a leaving element or was the former active element, or is an cached element
+        if (viewElement.data(DATA_DESTROY_ELE) || viewElement.data(DATA_NO_CACHE)) {
+          // this element shouldn't stay cached
+          $ionicViewSwitcher.destroyViewEle(viewElement);
 
-    if (isHistoryRoot) {
-      for (x = 0; x < viewElementsLength; x++) {
-        viewElement = viewElements.eq(x);
+        } else {
+          // keep in the DOM, mark as cached
+          navViewAttr(viewElement, VIEW_STATUS_CACHED);
 
-        if ($ionicViewSwitcher.isHistoryRoot(viewElement) && navViewAttr(viewElement) !== VIEW_STATUS_ACTIVE) {
-          $ionicViewSwitcher.historyCursorAttr(viewElement, HISTORY_AFTER_ROOT);
+          // disconnect the leaving scope
+          ionic.Utils.disconnectScope(viewElement.scope());
         }
       }
     }
+
+    navSwipeAttr('');
+
+    // ensure no scrolls have been left frozen
+    if (self.isSwipeFreeze) {
+      $ionicScrollDelegate.freezeAllScrolls(false);
+    }
   };
+
+
+  function onTabsLeave(ev, data) {
+    var viewElements = $element.children();
+    var viewElement, viewScope;
+
+    for (var x = 0, l = viewElements.length; x < l; x++) {
+      viewElement = viewElements.eq(x);
+      if (navViewAttr(viewElement) == VIEW_STATUS_ACTIVE) {
+        viewScope = viewElement.scope();
+        viewScope && viewScope.$emit(ev.name.replace('Tabs', 'View'), data);
+        break;
+      }
+    }
+  }
 
 
   self.cacheCleanup = function() {
@@ -185,7 +235,6 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
         viewScope && viewScope.$broadcast('$ionicView.clearCache');
       }
     }
-
   };
 
 
@@ -267,6 +316,145 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
     return direction;
   };
 
+
+  self.initSwipeBack = function() {
+    var swipeBackHitWidth = $ionicConfig.views.swipeBackHitWidth();
+    var viewTransition, associatedNavBarCtrl, backView;
+    var deregDragStart, deregDrag, deregRelease;
+    var windowWidth, startDragX, dragPoints;
+
+    function onDragStart(ev) {
+      if (!isPrimary) return;
+
+      startDragX = getDragX(ev);
+      if (startDragX > swipeBackHitWidth) return;
+
+      backView = $ionicHistory.backView();
+
+      if (!backView || backView.historyId !== $ionicHistory.currentView().historyId) return;
+
+      if (!windowWidth) windowWidth = window.innerWidth;
+
+      self.isSwipeFreeze = $ionicScrollDelegate.freezeAllScrolls(true);
+
+      var registerData = {
+        direction: 'back'
+      };
+
+      dragPoints = [];
+
+      var switcher = $ionicViewSwitcher.create(self, registerData, backView, $ionicHistory.currentView(), true, false);
+      switcher.loadViewElements(registerData);
+      switcher.render(registerData);
+
+      viewTransition = switcher.transition('back', $ionicHistory.enabledBack(backView), true);
+
+      associatedNavBarCtrl = getAssociatedNavBarCtrl();
+
+      deregDrag = ionic.onGesture('drag', onDrag, $element[0]);
+      deregRelease = ionic.onGesture('release', onRelease, $element[0]);
+    }
+
+    function onDrag(ev) {
+      if (isPrimary && viewTransition) {
+        var dragX = getDragX(ev);
+
+        dragPoints.push({
+          t: Date.now(),
+          x: dragX
+        });
+
+        if (dragX >= windowWidth - 15) {
+          onRelease(ev);
+
+        } else {
+          var step = Math.min(Math.max(getSwipeCompletion(dragX), 0), 1);
+          viewTransition.run(step);
+          associatedNavBarCtrl && associatedNavBarCtrl.activeTransition && associatedNavBarCtrl.activeTransition.run(step);
+        }
+
+      }
+    }
+
+    function onRelease(ev) {
+      if (isPrimary && viewTransition && dragPoints && dragPoints.length > 1) {
+
+        var now = Date.now();
+        var releaseX = getDragX(ev);
+        var startDrag = dragPoints[dragPoints.length - 1];
+
+        for (var x = dragPoints.length - 2; x >= 0; x--) {
+          if (now - startDrag.t > 200) {
+            break;
+          }
+          startDrag = dragPoints[x];
+        }
+
+        var isSwipingRight = (releaseX >= dragPoints[dragPoints.length - 2].x);
+        var releaseSwipeCompletion = getSwipeCompletion(releaseX);
+        var velocity = Math.abs(startDrag.x - releaseX) / (now - startDrag.t);
+
+        // private variables because ui-router has no way to pass custom data using $state.go
+        disableRenderStartViewId = backView.viewId;
+        disableAnimation = (releaseSwipeCompletion < 0.03 || releaseSwipeCompletion > 0.97);
+
+        if (isSwipingRight && (releaseSwipeCompletion > 0.5 || velocity > 0.1)) {
+          var speed = (velocity > 0.5 || velocity < 0.05 || releaseX > windowWidth - 45) ? 'fast' : 'slow';
+          navSwipeAttr(disableAnimation ? '' : speed);
+          backView.go();
+          associatedNavBarCtrl && associatedNavBarCtrl.activeTransition && associatedNavBarCtrl.activeTransition.complete(!disableAnimation, speed);
+
+        } else {
+          navSwipeAttr(disableAnimation ? '' : 'fast');
+          disableRenderStartViewId = null;
+          viewTransition.cancel(!disableAnimation);
+          associatedNavBarCtrl && associatedNavBarCtrl.activeTransition && associatedNavBarCtrl.activeTransition.cancel(!disableAnimation, 'fast');
+          disableAnimation = null;
+        }
+
+      }
+
+      ionic.offGesture(deregDrag, 'drag', onDrag);
+      ionic.offGesture(deregRelease, 'release', onRelease);
+
+      windowWidth = viewTransition = dragPoints = null;
+
+      self.isSwipeFreeze = $ionicScrollDelegate.freezeAllScrolls(false);
+    }
+
+    function getDragX(ev) {
+      return ionic.tap.pointerCoord(ev.gesture.srcEvent).x;
+    }
+
+    function getSwipeCompletion(dragX) {
+      return (dragX - startDragX) / windowWidth;
+    }
+
+    deregDragStart = ionic.onGesture('dragstart', onDragStart, $element[0]);
+
+    $scope.$on('$destroy', function() {
+      ionic.offGesture(deregDragStart, 'dragstart', onDragStart);
+      ionic.offGesture(deregDrag, 'drag', onDrag);
+      ionic.offGesture(deregRelease, 'release', onRelease);
+      self.element = viewTransition = associatedNavBarCtrl = null;
+    });
+  };
+
+
+  function navSwipeAttr(val) {
+    ionic.DomUtil.cachedAttr($element, 'nav-swipe', val);
+  }
+
+
+  function onTabsTop(ev, isTabsTop) {
+    var associatedNavBarCtrl = getAssociatedNavBarCtrl();
+    associatedNavBarCtrl && associatedNavBarCtrl.hasTabsTop(isTabsTop);
+  }
+
+  function onBarSubheader(ev, isBarSubheader) {
+    var associatedNavBarCtrl = getAssociatedNavBarCtrl();
+    associatedNavBarCtrl && associatedNavBarCtrl.hasBarSubheader(isBarSubheader);
+  }
 
   function getAssociatedNavBarCtrl() {
     if (navBarDelegate) {

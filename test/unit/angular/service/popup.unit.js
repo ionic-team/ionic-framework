@@ -52,6 +52,13 @@ describe('$ionicPopup service', function() {
       var popupBody = popup.element[0].querySelector('.popup-body');
       expect(popupBody).toBe(null);
     });
+    it('should set the specified custom CSS class to popup container', function() {
+      var popup = TestUtil.unwrapPromise($ionicPopup._createPopup({
+        template: 'Hello, friend!',
+        cssClass: 'mycustomclass'
+      }));
+      expect(popup.element.hasClass('mycustomclass')).toBe(true);
+    });
 
     describe('$buttonTapped', function() {
       var popup;

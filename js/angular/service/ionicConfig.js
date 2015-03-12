@@ -3,23 +3,21 @@
  * @name $ionicConfigProvider
  * @module ionic
  * @description
- * Ionic automatically takes platform configurations into account to adjust things like
- * what transition style to use, and if tab icons should show on the top or bottom.
- * For example, iOS will move forward by transitioning the entering view from right to
- * center, and the leaving view from center to left. However, Android will transition
- * with the entering view going from bottom to center, covering the previous view which
- * remains stationary. Platform transitions are automatically applied by default, but
- * config variables. It should be noted that when a platform is not iOS or Android, then
- * it'll default to iOS. So if you are developing on a desktop browser it'd going to
- * take on iOS default configs.
+ * Ionic automatically takes platform configurations into account to adjust things like what
+ * transition style to use and whether tab icons should show on the top or bottom. For example,
+ * iOS will move forward by transitioning the entering view from right to center and the leaving
+ * view from center to left. However, Android will transition with the entering view going from
+ * bottom to center, covering the previous view, which remains stationary. It should be noted
+ * that when a platform is not iOS or Android, then it'll default to iOS. So if you are
+ * developing on a desktop browser, it's going to take on iOS default configs.
  *
- * These configs can be changed using the `$ionicConfigProvider` during the
- * configuration phase of your app. Additionally, `$ionicConfig` can also set and get
- * config values during the run phase and within the app itself.
+ * These configs can be changed using the `$ionicConfigProvider` during the configuration phase
+ * of your app. Additionally, `$ionicConfig` can also set and get config values during the run
+ * phase and within the app itself.
  *
  * By default, all base config variables are set to `'platform'`, which means it'll take on the
- * default config of the platform it's running on. Config variables can be set
- * at this level so all platforms follow the same setting, rather than its platform config.
+ * default config of the platform on which it's running. Config variables can be set at this
+ * level so all platforms follow the same setting, rather than its platform config.
  * The following code would set the same config variable for all platforms:
  *
  * ```js
@@ -38,7 +36,7 @@
  * var myApp = angular.module('reallyCoolApp', ['ionic']);
  *
  * myApp.config(function($ionicConfigProvider) {
- *   $ionicConfigProvider.views.maxCache(20);
+ *   $ionicConfigProvider.views.maxCache(5);
  *
  *   // note that you can also chain configs
  *   $ionicConfigProvider.backButton.text('Go Back').icon('ion-chevron-left');
@@ -58,7 +56,7 @@
  * to `ios`.
  * * `ios`: iOS style transition.
  * * `android`: Android style transition.
- * * `none`: Do not preform animated transitions.
+ * * `none`: Do not perform animated transitions.
  *
  * @returns {string} value
  */
@@ -66,13 +64,13 @@
 /**
  * @ngdoc method
  * @name $ionicConfigProvider#views.maxCache
- * @description Maximum number of view elements to cache in the DOM. When the max number is
- * exceeded, the view with the longest time period since it was accessed is removed. Views
- * which stay in the DOM essentially caches the view's scope, current state and scroll position.
- * However, the scope is disconnected from the cycle when it is cached, and reconnected when it enters again.
- * When the maximum cached is `0`, then after each view transition, the leaving view's element will
- * be removed from the DOM, and the next time the same view is shown it will have to
- * re-compile, attach to the DOM, and link the element again.
+ * @description  Maximum number of view elements to cache in the DOM. When the max number is
+ * exceeded, the view with the longest time period since it was accessed is removed. Views that
+ * stay in the DOM cache the view's scope, current state, and scroll position. The scope is
+ * disconnected from the `$watch` cycle when it is cached and reconnected when it enters again.
+ * When the maximum cache is `0`, the leaving view's element will be removed from the DOM after
+ * each view transition, and the next time the same view is shown, it will have to re-compile,
+ * attach to the DOM, and link the element again. This disables caching, in effect.
  * @param {number} maxNumber Maximum number of views to retain. Default `10`.
  * @returns {number} How many views Ionic will hold onto until the a view is removed.
  */
@@ -80,11 +78,11 @@
 /**
  * @ngdoc method
  * @name $ionicConfigProvider#views.forwardCache
- * @description When navigating between views, by default, views that were recently visited
- * are cached, and the same data and DOM elements are referenced when navigating back. However,
- * when navigating back in the history, the "forward" view is removed so its not cached. If
- * you navigate forward to the same view again it'll create a new DOM element, re-compiled and
- * link. Basically any forward views are reset each time. Set this config to `true` to have
+ * @description  By default, when navigating, views that were recently visited are cached, and
+ * the same instance data and DOM elements are referenced when navigating back. However, when
+ * navigating back in the history, the "forward" views are removed from the cache. If you
+ * navigate forward to the same view again, it'll create a new DOM element and controller
+ * instance. Basically, any forward views are reset each time. Set this config to `true` to have
  * forward views cached and not reset on each load.
  * @param {boolean} value
  * @returns {boolean}
@@ -113,6 +111,22 @@
  * is the default for iOS.
  * @param {boolean} value
  * @returns {boolean}
+ */
+
+/**
+ * @ngdoc method
+ * @name $ionicConfigProvider#form.checkbox
+ * @description Checkbox style. Android defaults to `square` and iOS defaults to `circle`.
+ * @param {string} value
+ * @returns {string}
+ */
+
+/**
+ * @ngdoc method
+ * @name $ionicConfigProvider#form.toggle
+ * @description Toggle item style. Android defaults to `small` and iOS defaults to `large`.
+ * @param {string} value
+ * @returns {string}
  */
 
 /**
@@ -208,12 +222,15 @@ IonicModule
     views: {
       maxCache: PLATFORM,
       forwardCache: PLATFORM,
-      transition: PLATFORM
+      transition: PLATFORM,
+      swipeBackEnabled: PLATFORM,
+      swipeBackHitWidth: PLATFORM
     },
     navBar: {
       alignTitle: PLATFORM,
       positionPrimaryButtons: PLATFORM,
-      positionSecondaryButtons: PLATFORM
+      positionSecondaryButtons: PLATFORM,
+      transition: PLATFORM
     },
     backButton: {
       icon: PLATFORM,
@@ -221,7 +238,11 @@ IonicModule
       previousTitleText: PLATFORM
     },
     form: {
-      checkbox: PLATFORM
+      checkbox: PLATFORM,
+      toggle: PLATFORM
+    },
+    scrolling: {
+      jsScrolling: PLATFORM
     },
     tabs: {
       style: PLATFORM,
@@ -243,23 +264,31 @@ IonicModule
     views: {
       maxCache: 10,
       forwardCache: false,
-      transition: 'ios'
+      transition: 'ios',
+      swipeBackEnabled: true,
+      swipeBackHitWidth: 45
     },
 
     navBar: {
       alignTitle: 'center',
       positionPrimaryButtons: 'left',
-      positionSecondaryButtons: 'right'
+      positionSecondaryButtons: 'right',
+      transition: 'view'
     },
 
     backButton: {
-      icon: 'ion-ios7-arrow-back',
+      icon: 'ion-ios-arrow-back',
       text: 'Back',
       previousTitleText: true
     },
 
     form: {
-      checkbox: 'circle'
+      checkbox: 'circle',
+      toggle: 'large'
+    },
+
+    scrolling: {
+      jsScrolling: true
     },
 
     tabs: {
@@ -286,7 +315,8 @@ IonicModule
   setPlatformConfig('android', {
 
     views: {
-      transition: 'android'
+      transition: 'android',
+      swipeBackEnabled: false
     },
 
     navBar: {
@@ -302,7 +332,8 @@ IonicModule
     },
 
     form: {
-      checkbox: 'square'
+      checkbox: 'square',
+      toggle: 'small'
     },
 
     tabs: {
@@ -322,43 +353,46 @@ IonicModule
   // iOS Transitions
   // -----------------------
   provider.transitions.views.ios = function(enteringEle, leavingEle, direction, shouldAnimate) {
-    shouldAnimate = shouldAnimate && (direction == 'forward' || direction == 'back');
 
-    function setStyles(ele, opacity, x) {
+    function setStyles(ele, opacity, x, boxShadowOpacity) {
       var css = {};
-      css[ionic.CSS.TRANSITION_DURATION] = shouldAnimate ? '' : 0;
+      css[ionic.CSS.TRANSITION_DURATION] = d.shouldAnimate ? '' : 0;
       css.opacity = opacity;
+      if (boxShadowOpacity > -1) {
+        css.boxShadow = '0 0 10px rgba(0,0,0,' + (d.shouldAnimate ? boxShadowOpacity * 0.45 : 0.3) + ')';
+      }
       css[ionic.CSS.TRANSFORM] = 'translate3d(' + x + '%,0,0)';
       ionic.DomUtil.cachedStyles(ele, css);
     }
 
-    return {
+    var d = {
       run: function(step) {
         if (direction == 'forward') {
-          setStyles(enteringEle, 1, (1 - step) * 99); // starting at 98% prevents a flicker
-          setStyles(leavingEle, (1 - 0.1 * step), step * -33);
+          setStyles(enteringEle, 1, (1 - step) * 99, 1 - step); // starting at 98% prevents a flicker
+          setStyles(leavingEle, (1 - 0.1 * step), step * -33, -1);
 
         } else if (direction == 'back') {
-          setStyles(enteringEle, (1 - 0.1 * (1 - step)), (1 - step) * -33);
-          setStyles(leavingEle, 1, step * 100);
+          setStyles(enteringEle, (1 - 0.1 * (1 - step)), (1 - step) * -33, -1);
+          setStyles(leavingEle, 1, step * 100, 1 - step);
 
         } else {
           // swap, enter, exit
-          setStyles(enteringEle, 1, 0);
-          setStyles(leavingEle, 0, 0);
+          setStyles(enteringEle, 1, 0, -1);
+          setStyles(leavingEle, 0, 0, -1);
         }
       },
-      shouldAnimate: shouldAnimate
+      shouldAnimate: shouldAnimate && (direction == 'forward' || direction == 'back')
     };
+
+    return d;
   };
 
   provider.transitions.navBar.ios = function(enteringHeaderBar, leavingHeaderBar, direction, shouldAnimate) {
-    shouldAnimate = shouldAnimate && (direction == 'forward' || direction == 'back');
 
     function setStyles(ctrl, opacity, titleX, backTextX) {
       var css = {};
-      css[ionic.CSS.TRANSITION_DURATION] = shouldAnimate ? '' : 0;
-      css.opacity = opacity;
+      css[ionic.CSS.TRANSITION_DURATION] = d.shouldAnimate ? '' : 0;
+      css.opacity = opacity === 1 ? '' : opacity;
 
       ctrl.setCss('buttons-left', css);
       ctrl.setCss('buttons-right', css);
@@ -372,23 +406,23 @@ IonicModule
     }
 
     function enter(ctrlA, ctrlB, step) {
-      if (!ctrlA) return;
+      if (!ctrlA || !ctrlB) return;
       var titleX = (ctrlA.titleTextX() + ctrlA.titleWidth()) * (1 - step);
       var backTextX = (ctrlB && (ctrlB.titleTextX() - ctrlA.backButtonTextLeft()) * (1 - step)) || 0;
       setStyles(ctrlA, step, titleX, backTextX);
     }
 
     function leave(ctrlA, ctrlB, step) {
-      if (!ctrlA) return;
+      if (!ctrlA || !ctrlB) return;
       var titleX = (-(ctrlA.titleTextX() - ctrlB.backButtonTextLeft()) - (ctrlA.titleLeftRight())) * step;
       setStyles(ctrlA, 1 - step, titleX, 0);
     }
 
-    return {
+    var d = {
       run: function(step) {
         var enteringHeaderCtrl = enteringHeaderBar.controller();
         var leavingHeaderCtrl = leavingHeaderBar && leavingHeaderBar.controller();
-        if (direction == 'back') {
+        if (d.direction == 'back') {
           leave(enteringHeaderCtrl, leavingHeaderCtrl, 1 - step);
           enter(leavingHeaderCtrl, enteringHeaderCtrl, 1 - step);
         } else {
@@ -396,8 +430,11 @@ IonicModule
           leave(leavingHeaderCtrl, enteringHeaderCtrl, step);
         }
       },
-      shouldAnimate: shouldAnimate
+      direction: direction,
+      shouldAnimate: shouldAnimate && (direction == 'forward' || direction == 'back')
     };
+
+    return d;
   };
 
 
@@ -407,40 +444,56 @@ IonicModule
   provider.transitions.views.android = function(enteringEle, leavingEle, direction, shouldAnimate) {
     shouldAnimate = shouldAnimate && (direction == 'forward' || direction == 'back');
 
-    function setStyles(ele, opacity, y) {
+    function setStyles(ele, x) {
       var css = {};
-      css[ionic.CSS.TRANSITION_DURATION] = shouldAnimate ? '' : 0;
-      css.opacity = opacity;
-      css[ionic.CSS.TRANSFORM] = 'translate3d(0,' + y + 'px,0)';
+      css[ionic.CSS.TRANSITION_DURATION] = d.shouldAnimate ? '' : 0;
+      css[ionic.CSS.TRANSFORM] = 'translate3d(' + x + '%,0,0)';
       ionic.DomUtil.cachedStyles(ele, css);
     }
 
-    var startX = Math.max(window.innerHeight, screen.height) * 0.15;
-
-    return {
+    var d = {
       run: function(step) {
         if (direction == 'forward') {
-          setStyles(enteringEle, step, (1 - step) * startX);
-          setStyles(leavingEle, 1, 0);
+          setStyles(enteringEle, (1 - step) * 99); // starting at 98% prevents a flicker
+          setStyles(leavingEle, step * -100);
 
         } else if (direction == 'back') {
-          setStyles(enteringEle, 1, 0);
-          setStyles(leavingEle, (1 - step), step * startX);
+          setStyles(enteringEle, (1 - step) * -100);
+          setStyles(leavingEle, step * 100);
 
         } else {
           // swap, enter, exit
-          setStyles(enteringEle, 1, 0);
-          setStyles(leavingEle, 0, 0);
+          setStyles(enteringEle, 0);
+          setStyles(leavingEle, 0);
         }
       },
       shouldAnimate: shouldAnimate
     };
+
+    return d;
   };
 
   provider.transitions.navBar.android = function(enteringHeaderBar, leavingHeaderBar, direction, shouldAnimate) {
-    return provider.transitions.views.android(enteringHeaderBar.containerEle(),
-                                              leavingHeaderBar && leavingHeaderBar.containerEle(),
-                                              direction, shouldAnimate);
+
+    function setStyles(ctrl, opacity) {
+      if (!ctrl) return;
+      var css = {};
+      css.opacity = opacity === 1 ? '' : opacity;
+
+      ctrl.setCss('buttons-left', css);
+      ctrl.setCss('buttons-right', css);
+      ctrl.setCss('back-button', css);
+      ctrl.setCss('back-text', css);
+      ctrl.setCss('title', css);
+    }
+
+    return {
+      run: function(step) {
+        setStyles(enteringHeaderBar.controller(), step);
+        setStyles(leavingHeaderBar && leavingHeaderBar.controller(), 1 - step);
+      },
+      shouldAnimate: shouldAnimate && (direction == 'forward' || direction == 'back')
+    };
   };
 
 
@@ -451,7 +504,8 @@ IonicModule
     return {
       run: function(step) {
         provider.transitions.views.android(enteringEle, leavingEle, false, false).run(step);
-      }
+      },
+      shouldAnimate: false
     };
   };
 
@@ -460,7 +514,8 @@ IonicModule
       run: function(step) {
         provider.transitions.navBar.ios(enteringHeaderBar, leavingHeaderBar, false, false).run(step);
         provider.transitions.navBar.android(enteringHeaderBar, leavingHeaderBar, false, false).run(step);
-      }
+      },
+      shouldAnimate: false
     };
   };
 

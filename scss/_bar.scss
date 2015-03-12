@@ -39,7 +39,6 @@
     background-size: 100% 1px;
     background-repeat: no-repeat;
   }
-  pointer-events: auto;
 
   &.bar-clear {
     border: none;
@@ -144,6 +143,7 @@
     white-space: nowrap;
 
     font-size: $bar-title-font-size;
+    font-weight: $headings-font-weight;
 
     line-height: $bar-height;
 
@@ -209,13 +209,13 @@
       display: block;
       margin-right: 5px;
       padding: 0;
-      opacity: 0.8;
       white-space: nowrap;
+      font-weight: 400;
     }
 
     &.back-button.active,
     &.back-button.activated {
-      opacity: 1;
+      opacity: 0.2;
     }
   }
 
@@ -241,9 +241,11 @@
   }
   .buttons-left span {
     margin-right: 5px;
+    display: inherit;
   }
   .buttons-right span {
     margin-left: 5px;
+    display: inherit;
   }
 
   // Place the last button in a bar on the right of the bar
@@ -256,6 +258,26 @@
     top: 5px;
     right: 5px;
     bottom: 5px;
+  }
+
+}
+
+.platform-android {
+
+  .nav-bar-has-subheader .bar {
+    border-bottom: 0;
+  }
+
+  .bar {
+
+    .back-button .icon:before {
+      font-size: 24px;
+    }
+
+    .title {
+      font-size: 19px;
+      line-height: $bar-height;
+    }
   }
 
 }
@@ -323,7 +345,12 @@
   border-bottom-width: 1px;
   &.has-tabs-top{
     border-bottom-width: 0px;
+    background-image: none;
   }
+}
+.tabs-top .bar-header{
+  border-bottom-width: 0px;
+  background-image: none;
 }
 
 // Footer at bottom
@@ -332,6 +359,8 @@
   border-top-width: 1px;
   border-bottom-width: 0;
   background-position: top;
+
+  height: $bar-footer-height;
 
   &.item-input-inset {
     position: absolute;
@@ -346,10 +375,14 @@
 .bar-subheader {
   top: $bar-height;
   display: block;
+
+  height: $bar-subheader-height;
 }
 .bar-subfooter {
-  bottom: $bar-height;
+  bottom: $bar-footer-height;
   display: block;
+
+  height: $bar-subfooter-height;
 }
 
 .nav-bar-block {
@@ -357,12 +390,15 @@
   top: 0;
   right: 0;
   left: 0;
-  pointer-events: none;
   z-index: $z-index-bar;
 }
 
 .bar .back-button.hide,
 .bar .buttons .hide {
   display: none;
+}
+
+.nav-bar-tabs-top .bar {
+  background-image: none;
 }
 

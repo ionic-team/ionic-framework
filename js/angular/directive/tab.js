@@ -32,6 +32,8 @@
  * @param {expression=} on-select Called when this tab is selected.
  * @param {expression=} on-deselect Called when this tab is deselected.
  * @param {expression=} ng-click By default, the tab will be selected on click. If ngClick is set, it will not.  You can explicitly switch tabs using {@link ionic.service:$ionicTabsDelegate#select $ionicTabsDelegate.select()}.
+ * @param {expression=} hidden Whether the tab is to be hidden or not.
+ * @param {expression=} disabled Whether the tab is to be disabled or not.
  */
 IonicModule
 .directive('ionTab', [
@@ -43,7 +45,7 @@ function($compile, $ionicConfig, $ionicBind, $ionicViewSwitcher) {
 
   //Returns ' key="value"' if value exists
   function attrStr(k, v) {
-    return angular.isDefined(v) ? ' ' + k + '="' + v + '"' : '';
+    return isDefined(v) ? ' ' + k + '="' + v + '"' : '';
   }
   return {
     restrict: 'E',
@@ -64,6 +66,7 @@ function($compile, $ionicConfig, $ionicBind, $ionicViewSwitcher) {
         attrStr('badge', attr.badge) +
         attrStr('badge-style', attr.badgeStyle) +
         attrStr('hidden', attr.hidden) +
+        attrStr('disabled', attr.disabled) +
         attrStr('class', attr['class']) +
         '></ion-tab-nav>';
 
@@ -97,6 +100,7 @@ function($compile, $ionicConfig, $ionicBind, $ionicViewSwitcher) {
         var tabsCtrl = ctrls[0];
         var tabCtrl = ctrls[1];
         var isTabContentAttached = false;
+        $scope.$tabSelected = false;
 
         $ionicBind($scope, $attr, {
           onSelect: '&',
@@ -178,6 +182,7 @@ function($compile, $ionicConfig, $ionicBind, $ionicViewSwitcher) {
         function destroyTab() {
           childScope && childScope.$destroy();
           isTabContentAttached && childElement && childElement.remove();
+          tabContentEle.innerHTML = '';
           isTabContentAttached = childScope = childElement = null;
         }
 

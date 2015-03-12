@@ -36,7 +36,7 @@
  * ```
  */
 IonicModule
-.service('$ionicSideMenuDelegate', delegateService([
+.service('$ionicSideMenuDelegate', ionic.DelegateService([
   /**
    * @ngdoc method
    * @name $ionicSideMenuDelegate#toggleLeft
@@ -99,7 +99,7 @@ IonicModule
    *  - If false or 0 is given, the edge drag threshold is disabled, and dragging from anywhere on the content is allowed.
    * @returns {boolean} Whether the drag can start only from within the edge of screen threshold.
    */
-  'edgeDragThreshold',
+  'edgeDragThreshold'
   /**
    * @ngdoc method
    * @name $ionicSideMenuDelegate#$getByHandle

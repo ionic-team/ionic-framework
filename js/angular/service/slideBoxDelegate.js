@@ -11,7 +11,7 @@
  * @usage
  *
  * ```html
- * <body ng-controller="MyCtrl">
+ * <ion-view>
  *   <ion-slide-box>
  *     <ion-slide>
  *       <div class="box blue">
@@ -24,71 +24,82 @@
  *       </div>
  *     </ion-slide>
  *   </ion-slide-box>
- * </body>
+ * </ion-view>
  * ```
  * ```js
  * function MyCtrl($scope, $ionicSlideBoxDelegate) {
  *   $scope.nextSlide = function() {
- *     $ionicSlideBoxDelegate.select( $ionicSlideBoxDelegate.next() );
+ *     $ionicSlideBoxDelegate.next();
  *   }
  * }
  * ```
  */
 IonicModule
-.service('$ionicSlideBoxDelegate', delegateService([
+.service('$ionicSlideBoxDelegate', ionic.DelegateService([
   /**
    * @ngdoc method
-   * @name $ionicSlideBoxDelegate#select
-   * @param {number} slideIndex The index to select.
+   * @name $ionicSlideBoxDelegate#update
+   * @description
+   * Update the slidebox (for example if using Angular with ng-repeat,
+   * resize it for the elements inside).
    */
+  'update',
+  /**
+   * @ngdoc method
+   * @name $ionicSlideBoxDelegate#slide
+   * @param {number} to The index to slide to.
+   * @param {number=} speed The number of milliseconds for the change to take.
+   */
+  'slide',
   'select',
   /**
    * @ngdoc method
-   * @name $ionicSlideBoxDelegate#selected
-   * @returns `slideIndex` The index of the currently selected slide.
+   * @name $ionicSlideBoxDelegate#enableSlide
+   * @param {boolean=} shouldEnable Whether to enable sliding the slidebox.
+   * @returns {boolean} Whether sliding is enabled.
    */
-  'selected',
-  /**
-   * @ngdoc method
-   * @name $ionicSlideBoxDelegate#loop
-   * @description Sets/gets the looping state of the slidebox (whether going next from the last slide will go back to the first slide, and vice versa).
-   * @param {boolean=} shouldLoop Set whether the slidebox should loop.
-   * @returns `isLoop` Whether looping is currently enabled.
-   */
- 'loop',
+  'enableSlide',
   /**
    * @ngdoc method
    * @name $ionicSlideBoxDelegate#previous
-   * @returns `slideIndex` The index of the previous slide. Wraps around if loop is enabled.
+   * @description Go to the previous slide. Wraps around if at the beginning.
    */
   'previous',
   /**
    * @ngdoc method
    * @name $ionicSlideBoxDelegate#next
-   * @returns `slideIndex` The index of the next slide. Wraps around if loop is enabled.
+   * @description Go to the next slide. Wraps around if at the end.
    */
   'next',
   /**
    * @ngdoc method
-   * @name $ionicSlideBoxDelegate#autoPlay
-   * @description Set whether the slidebox should automatically play, and at what rate.
-   * @param {*} autoPlayInterval How many milliseconds delay until changing to the next slide.
-   * Set to zero or false to stop autoPlay.
+   * @name $ionicSlideBoxDelegate#stop
+   * @description Stop sliding. The slideBox will not move again until
+   * explicitly told to do so.
    */
+  'stop',
   'autoPlay',
   /**
    * @ngdoc method
-   * @name $ionicSlideBoxDelegate#enableSlide
-   * @param {boolean=} shouldEnable Whether to enable sliding the slidebox.
-   * @returns `boolean` Whether sliding is enabled.
+   * @name $ionicSlideBoxDelegate#start
+   * @description Start sliding again if the slideBox was stopped.
    */
-  'enableSlide',
+  'start',
   /**
    * @ngdoc method
-   * @name $ionicSlideBoxDelegate#count
-   * @returns `number` The number of slides there are currently.
+   * @name $ionicSlideBoxDelegate#currentIndex
+   * @returns number The index of the current slide.
    */
+  'currentIndex',
+  'selected',
+  /**
+   * @ngdoc method
+   * @name $ionicSlideBoxDelegate#slidesCount
+   * @returns number The number of slides there are currently.
+   */
+  'slidesCount',
   'count',
+  'loop'
   /**
    * @ngdoc method
    * @name $ionicSlideBoxDelegate#$getByHandle
@@ -97,16 +108,7 @@ IonicModule
    * {@link ionic.directive:ionSlideBox} directives with `delegate-handle` matching
    * the given handle.
    *
-   * Example: `$ionicSlideBoxDelegate.$getByHandle('my-handle').select(0);`
+   * Example: `$ionicSlideBoxDelegate.$getByHandle('my-handle').stop();`
    */
-
-   // DEPRECATED, as of v1.0.0-beta14 -------
-   'update',
-   'currentIndex',
-   'slide',
-   'slidesCount',
-   'stop',
-   'start'
-   // END DEPRECATED -------
 ]));
 

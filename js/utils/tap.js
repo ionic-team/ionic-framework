@@ -79,7 +79,7 @@ var tapLastTouchTarget;
 var tapTouchMoveListener = 'touchmove';
 
 // how much the coordinates can be off between start/end, but still a click
-var TAP_RELEASE_TOLERANCE = 6; // default tolerance
+var TAP_RELEASE_TOLERANCE = 12; // default tolerance
 var TAP_RELEASE_BUTTON_TOLERANCE = 50; // button elements should have a larger tolerance
 
 var tapEventListeners = {
@@ -162,12 +162,20 @@ ionic.tap = {
     return !!ele &&
            (ele.tagName == 'TEXTAREA' ||
             ele.contentEditable === 'true' ||
-            (ele.tagName == 'INPUT' && !(/^(radio|checkbox|range|file|submit|reset)$/i).test(ele.type)));
+            (ele.tagName == 'INPUT' && !(/^(radio|checkbox|range|file|submit|reset|color|image|button)$/i).test(ele.type)));
   },
 
   isDateInput: function(ele) {
     return !!ele &&
             (ele.tagName == 'INPUT' && (/^(date|time|datetime-local|month|week)$/i).test(ele.type));
+  },
+
+  isKeyboardElement: function(ele) {
+    if ( !ionic.Platform.isIOS() || ionic.Platform.isIPad() ) {
+      return ionic.tap.isTextInput(ele) && !ionic.tap.isDateInput(ele);
+    } else {
+      return ionic.tap.isTextInput(ele) || ( !!ele && ele.tagName == "SELECT");
+    }
   },
 
   isLabelWithTextInput: function(ele) {
@@ -181,38 +189,33 @@ ionic.tap = {
     return ionic.tap.isTextInput(ele) || ionic.tap.isLabelWithTextInput(ele);
   },
 
-  cloneFocusedInput: function(container, scrollIntance) {
+  cloneFocusedInput: function(container) {
     if (ionic.tap.hasCheckedClone) return;
     ionic.tap.hasCheckedClone = true;
 
     ionic.requestAnimationFrame(function() {
       var focusInput = container.querySelector(':focus');
       if (ionic.tap.isTextInput(focusInput)) {
-        var clonedInput = focusInput.parentElement.querySelector('.cloned-text-input');
-        if (!clonedInput) {
-          clonedInput = document.createElement(focusInput.tagName);
-          clonedInput.placeholder = focusInput.placeholder;
-          clonedInput.type = focusInput.type;
-          clonedInput.value = focusInput.value;
-          clonedInput.style = focusInput.style;
-          clonedInput.className = focusInput.className;
-          clonedInput.classList.add('cloned-text-input');
-          clonedInput.readOnly = true;
-          if (focusInput.isContentEditable) {
-            clonedInput.contentEditable = focusInput.contentEditable;
-            clonedInput.innerHTML = focusInput.innerHTML;
-          }
-          focusInput.parentElement.insertBefore(clonedInput, focusInput);
-          focusInput.style.top = focusInput.offsetTop;
-          focusInput.classList.add('previous-input-focus');
+        var clonedInput = focusInput.cloneNode(true);
+
+        clonedInput.value = focusInput.value;
+        clonedInput.classList.add('cloned-text-input');
+        clonedInput.readOnly = true;
+        if (focusInput.isContentEditable) {
+          clonedInput.contentEditable = focusInput.contentEditable;
+          clonedInput.innerHTML = focusInput.innerHTML;
         }
+        focusInput.parentElement.insertBefore(clonedInput, focusInput);
+        focusInput.classList.add('previous-input-focus');
+
+        clonedInput.scrollTop = focusInput.scrollTop;
       }
     });
   },
 
   hasCheckedClone: false,
 
-  removeClonedInputs: function(container, scrollIntance) {
+  removeClonedInputs: function(container) {
     ionic.tap.hasCheckedClone = false;
 
     ionic.requestAnimationFrame(function() {
@@ -514,7 +517,7 @@ function tapFocusOutActive() {
 
 function tapFocusIn(e) {
   // Because a text input doesn't preventDefault (so the caret still works) there's a chance
-  // that it's mousedown event 300ms later will change the focus to another element after
+  // that its mousedown event 300ms later will change the focus to another element after
   // the keyboard shows up.
 
   if (tapEnabledTouchEvents &&

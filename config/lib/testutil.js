@@ -55,3 +55,7 @@ var TestUtil = {
     }
   }
 };
+
+beforeEach(module('ng', function($compileProvider) {
+  $compileProvider.debugInfoEnabled(false);
+}));

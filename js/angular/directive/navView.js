@@ -72,21 +72,30 @@
  *
  * ## Caching
  *
- * By default views are cached to improve performance. When a view is navigated away from,
- * its element is left in the DOM, and its scope is disconnected from the cycle. When navigating
- * to a view which is already cached, its scope is then reconnected, and the existing element which
- * was left in the DOM becomes the active view. This also allows for scroll position of previous
- * views to be maintained.
+ * By default, views are cached to improve performance. When a view is navigated away from, its
+ * element is left in the DOM, and its scope is disconnected from the `$watch` cycle. When
+ * navigating to a view that is already cached, its scope is then reconnected, and the existing
+ * element that was left in the DOM becomes the active view. This also allows for the scroll
+ * position of previous views to be maintained.
  *
- * Caching can be disabled and enabled in multiple ways. By default, Ionic will cache a maximum
- * of 10 views, and not only can this be configured, but apps can also explicitly state
- * which views should and should not be cached.
+ * Caching can be disabled and enabled in multiple ways. By default, Ionic will cache a maximum of
+ * 10 views, and not only can this be configured, but apps can also explicitly state which views
+ * should and should not be cached.
  *
- * Note that because we are caching these views, we aren’t destroying scopes. Instead, scopes are
- * being disconnected from the watch cycle. Because scopes are not being destroyed and recreated,
- * then controllers are not loading again on a subsequent viewing. If the app/controller needs to
- * know when a view has entered or has left, then view events emitted from the
+ * Note that because we are caching these views, *we aren’t destroying scopes*. Instead, scopes
+ * are being disconnected from the watch cycle. Because scopes are not being destroyed and
+ * recreated, controllers are not loading again on a subsequent viewing. If the app/controller
+ * needs to know when a view has entered or has left, then view events emitted from the
  * {@link ionic.directive:ionView} scope, such as `$ionicView.enter`, may be useful.
+ *
+ * By default, when navigating back in the history, the "forward" views are removed from the cache.
+ * If you navigate forward to the same view again, it'll create a new DOM element and controller
+ * instance. Basically, any forward views are reset each time. This can be configured using the
+ * {@link ionic.provider:$ionicConfigProvider}:
+ *
+ * ```js
+ * $ionicConfigProvider.views.forwardCache(true);
+ * ```
  *
  * #### Disable cache globally
  *

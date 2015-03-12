@@ -87,31 +87,43 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
    *     Return true to close the action sheet, or false to keep it opened.
    *  -  `{boolean=}` `cancelOnStateChange` Whether to cancel the actionSheet when navigating
    *     to a new state.  Default true.
+   *  - `{string}` `cssClass` The custom CSS class name.
    *
    * @returns {function} `hideSheet` A function which, when called, hides & cancels the action sheet.
    */
   function actionSheet(opts) {
     var scope = $rootScope.$new(true);
 
-    angular.extend(scope, {
-      cancel: angular.noop,
-      destructiveButtonClicked: angular.noop,
-      buttonClicked: angular.noop,
-      $deregisterBackButton: angular.noop,
+    extend(scope, {
+      cancel: noop,
+      destructiveButtonClicked: noop,
+      buttonClicked: noop,
+      $deregisterBackButton: noop,
       buttons: [],
       cancelOnStateChange: true
     }, opts || {});
 
+    function textForIcon(text) {
+      if (text && /icon/.test(text)) {
+        scope.$actionSheetHasIcon = true;
+      }
+    }
+
+    for (var x = 0; x < scope.buttons.length; x++) {
+      textForIcon(scope.buttons[x].text);
+    }
+    textForIcon(scope.cancelText);
+    textForIcon(scope.destructiveText);
 
     // Compile the template
-    var element = scope.element = $compile('<ion-action-sheet buttons="buttons"></ion-action-sheet>')(scope);
+    var element = scope.element = $compile('<ion-action-sheet ng-class="cssClass" buttons="buttons"></ion-action-sheet>')(scope);
 
     // Grab the sheet element for animation
     var sheetEl = jqLite(element[0].querySelector('.action-sheet-wrapper'));
 
     var stateChangeListenDone = scope.cancelOnStateChange ?
       $rootScope.$on('$stateChangeSuccess', function() { scope.cancel(); }) :
-      angular.noop;
+      noop;
 
     // removes the actionSheet from the screen
     scope.removeSheet = function(done) {
@@ -132,7 +144,7 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
         element.remove();
         // scope.cancel.$scope is defined near the bottom
         scope.cancel.$scope = sheetEl = null;
-        (done || angular.noop)();
+        (done || noop)();
       });
     };
 
@@ -144,7 +156,7 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
 
       $animate.addClass(element, 'active').then(function() {
         if (scope.removed) return;
-        (done || angular.noop)();
+        (done || noop)();
       });
       $timeout(function() {
         if (scope.removed) return;

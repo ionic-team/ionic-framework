@@ -74,7 +74,7 @@ function($timeout, $controller, $ionicBind) {
         });
         $scope.direction = $scope.direction || 'y';
 
-        if (angular.isDefined($attr.padding)) {
+        if (isDefined($attr.padding)) {
           $scope.$watch($attr.padding, function(newVal) {
             innerElement.toggleClass('padding', !!newVal);
           });
@@ -98,7 +98,8 @@ function($timeout, $controller, $ionicBind) {
           scrollingY: $scope.direction.indexOf('y') >= 0,
           zooming: $scope.$eval($scope.zooming) === true,
           maxZoom: $scope.$eval($scope.maxZoom) || 3,
-          minZoom: $scope.$eval($scope.minZoom) || 0.5
+          minZoom: $scope.$eval($scope.minZoom) || 0.5,
+          preventDefault: true
         };
         if (isPaging) {
           scrollViewOptions.speedMultiplier = 0.8;

@@ -1,173 +1,455 @@
-describe('collectionRepeat directive', function() {
+describe('collectionRepeat', function() {
 
-  var dataSource, repeatManager;
+  var el;
   beforeEach(module('ionic', function($provide) {
-    $provide.value(
-      '$collectionDataSource',
-      jasmine.createSpy('$dataSource').andCallFake(function(opts) {
-        dataSource = {
-          options: opts,
-          setData: jasmine.createSpy('setData')
-        };
-        return dataSource;
-      })
-    );
-    $provide.value(
-      '$collectionRepeatManager',
-      jasmine.createSpy('$repeatManager').andCallFake(function(opts) {
-        repeatManager = {
-          options: opts,
-          resize: jasmine.createSpy('resize')
-        };
-        return repeatManager;
-      })
-    );
+    $provide.decorator('$$rAF', function($delegate) {
+      return function mockRaf(callback) { callback(); };
+    });
+    spyOn(ionic, 'animationFrameThrottle').andCallFake(function(cb) {
+      return function fakeThrottled() {
+        cb.apply(this, arguments);
+      };
+    });
+    spyOn(ionic, 'debounce').andCallFake(function(cb) { return cb; });
   }));
 
-  function setup(attrs, scrollViewOpts) {
-    var el;
+  var scrollView;
+  var repeaterScope;
+  function setup(listData, attrs, scrollViewData) {
+    var content = angular.element('<content>')
+    scrollView = angular.extend({
+      __content: content[0],
+      __clientHeight: 100,
+      __clientWidth: 50,
+
+      __scrollTop: 0,
+      __scrollLeft: 0,
+      __maxScrollTop: 100,
+      __maxScrollLeft: 50,
+
+      options: {
+        scrollingY: true
+      },
+      __callback: angular.noop,
+      resize: angular.noop,
+      setDimensions: angular.noop
+    }, scrollViewData || {});
+    var scrollCtrl = {
+      scrollView: scrollView,
+      $element: content
+    };
+
+    var list = [];
+    if (angular.isNumber(listData)) {
+      for (var i = 0; i < listData; i++) list.push(i);
+    } else if (angular.isArray(listData)) {
+      list = listData;
+    }
+
+    var element;
     inject(function($compile, $rootScope) {
-      var content = $compile('<ion-content>')($rootScope.$new());
-      $rootScope.$apply();
-      angular.extend(
-        content.controller('$ionicScroll').scrollView.options,
-        scrollViewOpts || {}
+      repeaterScope = $rootScope.$new();
+      attrs = attrs || '';
+      if (!/item-height/.test(attrs)) attrs += ' item-height="25px"';
+      if (!/item-render-buffer/.test(attrs)) attrs += ' item-render-buffer="0"';
+      element = angular.element(
+        '<div collection-repeat="item in list" '+(attrs)+'>{{item}}</div>'
       );
-      el = angular.element('<div ' + (attrs||'') + '></div>');
-      content.append(el);
-      $compile(el)(content.scope());
+      content.append(element);
+      content.data('$$ionicScrollController', scrollCtrl);
+      $rootScope.list = list;
+      $compile(element)(repeaterScope);
       $rootScope.$apply();
     });
-    return el;
+    return element;
   }
 
-  describe('errors', function() {
-    it('should error if scrollView is x and y', function() {
-      expect(function() {
-        setup('collection-repeat', {scrollingX:true, scrollingY:true});
-      }).toThrow(COLLECTION_REPEAT_SCROLLVIEW_XY_ERROR);
-    });
-    it('should error if scrollView is x and no width', function() {
-      expect(function() {
-        setup('collection-repeat collection-item-height', {
-          scrollingX:true,
-          scrollingY:false
-        });
-      }).toThrow(COLLECTION_REPEAT_ATTR_WIDTH_ERROR);
-    });
-    it('should error if scrollView is y and no height', function() {
-      expect(function() {
-        setup('collection-repeat collection-item-width', {
-          scrollingX:false,
-          scrollingY:true
-        });
-      }).toThrow(COLLECTION_REPEAT_ATTR_HEIGHT_ERROR);
-    });
-    it('should error if no repeat expression', function() {
-      expect(function() {
-        setup('collection-repeat="bad" collection-item-height="1"');
-      }).toThrow(COLLECTION_REPEAT_ATTR_REPEAT_ERROR.replace('%', 'bad'));
-    });
+  afterEach(function() {
+    repeaterScope && repeaterScope.$destroy();
+    repeaterScope = null;
   });
 
-  describe('widthGetter & heightGetter', function() {
-    it('should work with given amounts parsed to int', function() {
-      var el = setup('collection-repeat="a in b" collection-item-height="\'5\'" collection-item-width="\'10\'"');
-      expect(dataSource.options.heightGetter()).toBe(5);
-      expect(dataSource.options.widthGetter()).toBe(10);
-    });
-    it('should default width of y-scroller to 100%', function() {
-      var el = setup('collection-repeat="a in b" collection-item-height="5"');
-      el.controller('$ionicScroll').scrollView.__clientWidth = 200;
-      expect(dataSource.options.widthGetter()).toBe(200);
-    });
-    it('should default height of x-scroller to 100%', function() {
-      var el = setup('collection-repeat="a in b" collection-item-width="5"', {
-        scrollingX: true,
-        scrollingY: false
+  function scrollTo(n) {
+    if (scrollView.options.scrollingY) {
+      scrollView.__scrollTop = n;
+      scrollView.__maxScrollTop = scrollView.options.getContentHeight() - scrollView.__clientHeight;
+    } else {
+      scrollView.__scrollLeft = n;
+      scrollView.__maxScrollLeft = scrollView.options.getContentWidth() - scrollView.__clientWidth;
+    }
+    scrollView.__callback();
+  }
+
+  function getItems() {
+    return [].slice.call(scrollView.__content.querySelectorAll('[collection-repeat]'))
+      .map(function(node) {
+        return angular.element(node).data('$$collectionRepeatItem')
+      })
+      // make sure we didn't get anything that doesn't actually have the data
+      .filter(function(item) {
+        return !!item;
       });
-      el.controller('$ionicScroll').scrollView.__clientHeight = 199;
-      expect(dataSource.options.heightGetter()).toBe(199);
+  }
+  function activeItems() {
+    var items = getItems().filter(function(item) {
+      return item.isShown;
     });
-    it('should work with user-inputted percentage height', function() {
-      var el = setup('collection-repeat="a in b" collection-item-height="\'23%\'"');
-      el.controller('$ionicScroll').scrollView.__clientHeight = 300;
-      expect(dataSource.options.heightGetter()).toEqual(0.23 * 300);
+    //1. Group items by their primary position (row),
+    //2. Sort those groups by secondary position (column),
+    //3. Concat them all together.
+    var activeItems = {};
+    items.forEach(function(item) {
+      (activeItems[item.primaryPos] || (activeItems[item.primaryPos] = [])).push(item);
     });
-    it('should work with user-inputted percentage width', function() {
-      var el = setup('collection-repeat="a in b" collection-item-width="\'23%\'"', {
-        scrollingX: true,
-        scrollingY: false
+
+    var result = [];
+    Object.keys(activeItems)
+      .sort(function(pos1, pos2) {
+        return (+pos1) > (+pos2) ? 1 : -1;
+      })
+      .forEach(function(primaryPos) {
+        var sortedRow = activeItems[primaryPos].sort(function(a,b) {
+          return a.secondaryPos > b.secondaryPos ? 1 : -1;
+        });
+        result = result.concat(sortedRow);
       });
-      el.controller('$ionicScroll').scrollView.__clientWidth = 300;
-      expect(dataSource.options.widthGetter()).toEqual(0.23 * 300);
+    return result;
+  }
+  function activeItemContents() {
+    return activeItems().map(function(item) {
+      return item.node.innerHTML.trim();
     });
-  });
+  }
+  function activeItemIds() {
+    return activeItems().map(function(item) {
+      return item.id;
+    });
+  }
 
-  it('should error if list is not an array and is truthy', function() {
-    var el = setup('collection-repeat="item in items" collection-item-height="50"');
+  function activeItemDimensions() {
+    return activeItems().map(function(item) {
+      return scrollView.options.scrollingX ?  (
+        'x:' + item.primaryPos + ',y:' + item.secondaryPos +
+        ',w:' + item.primarySize + ',h:' + item.secondarySize
+      ) : (
+        'x:' + item.secondaryPos + ',y:' + item.primaryPos +
+        ',w:' + item.secondarySize + ',h:' + item.primarySize
+      );
+    });
+  }
+
+  it('should error with direction="xy" parent', function() {
     expect(function() {
-      el.scope().$apply('items = "string"');
+      setup(10, '', {
+        options: { scrollingX: true, scrollingY: true }
+      });
     }).toThrow();
+  });
+
+  it('should error without proper collection-repeat expression', inject(function($compile, $rootScope) {
     expect(function() {
-      el.scope().$apply('items = 123');
+      $compile('<ion-content>' +
+               '<div collection-repeat="bad"></div>' +
+               '</ion-content>')($rootScope);
     }).toThrow();
-    expect(function() {
-      el.scope().$apply('items = {}');
-    }).toThrow();
-  });
-
-  it('should rerender on list change', function() {
-    var el = setup('collection-repeat="item in items" collection-item-height="50"');
-    var scrollView = el.controller('$ionicScroll').scrollView;
-    spyOn(scrollView, 'resize');
-    dataSource.setData.reset();
-    repeatManager.resize.reset();
-
-    el.scope().$apply('items = [ 1,2,3 ]');
-    expect(dataSource.setData).toHaveBeenCalledWith(el.scope().items, [], []);
-    expect(repeatManager.resize.callCount).toBe(1);
-    expect(scrollView.resize.callCount).toBe(1);
-    el.scope().$apply('items = null');
-    expect(dataSource.setData).toHaveBeenCalledWith(null, [], []);
-    expect(repeatManager.resize.callCount).toBe(2);
-    expect(scrollView.resize.callCount).toBe(2);
-  });
-
-  it('should rerender on window resize', function() {
-    var el = setup('collection-repeat="item in items" collection-item-height="50"');
-    var scrollView = el.controller('$ionicScroll').scrollView;
-    spyOn(scrollView, 'resize');
-    dataSource.setData.reset();
-    repeatManager.resize.reset();
-
-    el.scope().items = [1,2,3];
-
-    ionic.trigger('resize', { target: window });
-    expect(dataSource.setData).toHaveBeenCalledWith(el.scope().items, [], []);
-    expect(repeatManager.resize.callCount).toBe(1);
-    expect(scrollView.resize.callCount).toBe(1);
-  });
-
-  it('should rerender on scrollCtrl resize', inject(function($timeout) {
-    var el = setup('collection-repeat="item in items" collection-item-height="50"');
-    var scrollCtrl = el.controller('$ionicScroll');
-    repeatManager.resize.reset();
-
-    scrollCtrl.resize();
-    $timeout.flush();
-    expect(repeatManager.resize.callCount).toBe(1);
   }));
 
-  it('$destroy', function() {
-    var el = setup('collection-repeat="item in items" collection-item-height="50"');
-    dataSource.destroy = jasmine.createSpy('dataSourceDestroy');
-    repeatManager.destroy = jasmine.createSpy('repeatManagerDestroy');
-    spyOn(ionic, 'off');
+  it('should destroy and restore normal scrollView behavior', inject(function($compile, $rootScope) {
+    var scope = $rootScope.$new();
+    var content = $compile('<ion-content>')(scope);
+    var scrollView = content.data('$$ionicScrollController').scrollView;
 
-    el.scope().$destroy();
-    expect(dataSource.destroy).toHaveBeenCalled();
-    expect(repeatManager.destroy).toHaveBeenCalled();
-    expect(ionic.off).toHaveBeenCalledWith('resize', jasmine.any(Function), window);
+    var originalCallback = scrollView.__callback;
+    var originalGetContentHeight = scrollView.options.getContentHeight;
+
+    var repeater = angular.element(
+      '<div collection-repeat="item in items" item-height="5" item-width="5"></div>'
+    );
+    content.append(repeater);
+    $compile(repeater)(content.scope());
+    $rootScope.$apply();
+    content.triggerHandler('scroll.init');
+    $rootScope.$apply();
+
+    expect(scrollView.__callback).not.toBe(originalCallback);
+    expect(scrollView.options.getContentHeight).not.toBe(originalGetContentHeight);
+
+    scope.$destroy();
+
+    expect(scrollView.__callback).toBe(originalCallback);
+    expect(scrollView.options.getContentHeight).toBe(originalGetContentHeight);
+  }));
+
+  describe('automatic dimensions', function() {
+    it('should use computed width/height', inject(function($window) {
+      spyOn($window, 'getComputedStyle').andReturn({
+        height: '50px',
+        width: '50px'
+      });
+      setup(5, 'item-height="" item-width=""', {
+        __clientHeight: 75,
+        __clientWidth: 100
+      });
+
+      expect(activeItems().length).toBe(4);
+      expect(activeItemDimensions()).toEqual([
+        'x:0,y:0,w:50,h:50',
+        'x:50,y:0,w:50,h:50',
+        'x:0,y:50,w:50,h:50',
+        'x:50,y:50,w:50,h:50'
+      ]);
+    }));
+
+    it('should error if computed height is 0', inject(function($window) {
+      spyOn($window, 'getComputedStyle').andReturn({
+        height: '0px',
+        width: '100px'
+      });
+      expect(function() {
+        setup(5, 'item-height="" item-width=""');
+      }).toThrow();
+    }));
+
+    it('should error if computed width is 0', inject(function($window) {
+      spyOn($window, 'getComputedStyle').andReturn({
+        height: '100px',
+        width: '0px'
+      });
+      expect(function() {
+        setup(5, 'item-height="" item-width=""');
+      }).toThrow();
+    }));
   });
+
+  describe('horizontal static list', function() {
+    function setupHorizontal() {
+      setup(10, 'item-height="100%" item-width="30"', {
+        options: {
+          scrollingX: true,
+          scrollingY: false
+        },
+        __clientWidth: 80,
+        __clientHeight: 25
+      });
+    }
+    it('should show initial screen of items', function() {
+      setupHorizontal();
+      expect(activeItems().length).toBe(3);
+      expect(activeItemContents()).toEqual(['0','1','2'])
+    });
+    it('should switch out as you scroll', function() {
+      setupHorizontal();
+      expect(activeItems().length).toBe(3);
+      expect(activeItemContents()).toEqual(['0','1','2'])
+      expect(activeItemIds()).toEqual(['item0','item1','item2']);
+
+      // Item 0 gets sent down to the bottom after scrolling past it
+      scrollTo(31);
+      expect(activeItems().length).toBe(3);
+      expect(activeItemContents()).toEqual(['1','2','3'])
+      expect(activeItemIds()).toEqual(['item1','item2','item0']);
+
+      // Item 1 gets sent down
+      scrollTo(61);
+      expect(activeItems().length).toBe(3);
+      expect(activeItemContents()).toEqual(['2','3','4'])
+      expect(activeItemIds()).toEqual(['item2','item0','item1']);
+    });
+    it('should start with the same items when resizing', inject(function($window) {
+      setupHorizontal();
+      scrollTo(31);
+      scrollTo(61);
+
+      expect(activeItems().length).toBe(3);
+      expect(activeItemContents()).toEqual(['2','3','4'])
+      expect(activeItemIds()).toEqual(['item2','item0','item1']);
+
+      scrollView.__clientWidth = 50;
+      scrollView.__clientHeight = 40;
+      angular.element($window).triggerHandler('resize');
+
+      expect(activeItems().length).toBe(2);
+      expect(activeItemContents()).toEqual(['2','3'])
+      expect(activeItemIds()).toEqual(['item2','item0']);
+    }));
+  });
+
+  describe('vertical static list', function() {
+    beforeEach(function() {
+      setup(10);
+    });
+
+    it('should show initial screen of items', function() {
+      expect(activeItems().length).toBe(5);
+      expect(activeItemContents()).toEqual(['0','1','2','3','4'])
+    });
+
+    it('should switch out as you scroll', function() {
+      expect(activeItems().length).toBe(5);
+      expect(activeItemContents()).toEqual(['0','1','2','3','4'])
+      expect(activeItemIds()).toEqual(['item0','item1','item2','item3','item4']);
+
+      // Item 0 gets sent down to the bottom after scrolling past it
+      scrollTo(26);
+      expect(activeItems().length).toBe(5);
+      expect(activeItemContents()).toEqual(['1','2','3','4','5'])
+      expect(activeItemIds()).toEqual(['item1','item2','item3','item4','item0']);
+
+      // Item 1 gets sent down
+      scrollTo(51);
+      expect(activeItems().length).toBe(5);
+      expect(activeItemContents()).toEqual(['2','3','4','5','6'])
+      expect(activeItemIds()).toEqual(['item2','item3','item4','item0','item1']);
+
+      // scroll to bottom incrementally
+      // items are traded our until it's the first case again
+      scrollTo(76);
+      scrollTo(101);
+      scrollTo(126);
+      expect(activeItems().length).toBe(5);
+      expect(activeItemContents()).toEqual(['5','6','7','8','9'])
+      expect(activeItemIds()).toEqual(['item0','item1','item2','item3','item4']);
+    });
+
+    it('should start with the same items when resizing', inject(function($window) {
+      scrollTo(26);
+      scrollTo(51);
+
+      expect(activeItems().length).toBe(5);
+      expect(activeItemContents()).toEqual(['2','3','4','5','6'])
+      expect(activeItemIds()).toEqual(['item2','item3','item4','item0','item1']);
+
+      scrollView.__clientWidth = 200;
+      scrollView.__clientHeight = 40;
+      angular.element($window).triggerHandler('resize');
+
+      expect(activeItems().length).toBe(2);
+      expect(activeItemContents()).toEqual(['2','3'])
+      expect(activeItemIds()).toEqual(['item2','item3']);
+    }));
+
+  });
+
+  describe('vertical static grid', function() {
+    beforeEach(function() {
+      setup(10, 'item-width="33%" item-height="25"', {
+        __clientWidth: 120,
+        __clientHeight: 30
+      });
+    });
+
+    it('should show initial screen of items', function() {
+      expect(activeItems().length).toBe(3 * 2);
+      expect(activeItemContents()).toEqual(['0','1','2','3','4','5'])
+    });
+
+    it('should switch out as you scroll', function() {
+      expect(activeItems().length).toBe(6);
+      expect(activeItemContents()).toEqual(['0','1','2','3','4','5'])
+      expect(activeItemIds().sort()).toEqual(['item0','item1','item2','item3','item4','item5']);
+
+      scrollTo(26);
+      expect(activeItems().length).toBe(6);
+      expect(activeItemContents()).toEqual(['3','4','5','6','7','8'])
+      expect(activeItemIds().sort()).toEqual(['item0','item1','item2','item3','item4','item5']);
+
+      scrollTo(51);
+      expect(activeItems().length).toBe(4);
+      expect(activeItemContents()).toEqual(['6','7','8','9'])
+      expect(activeItemIds().sort()).toEqual(['item0','item1','item2','item5']);
+    });
+
+    it('should start with the same items when resizing', inject(function($window) {
+      scrollTo(26);
+
+      expect(activeItems().length).toBe(6);
+      expect(activeItemContents()).toEqual(['3','4','5','6','7','8'])
+      expect(activeItemIds().sort()).toEqual(['item0','item1','item2','item3','item4','item5']);
+
+      scrollView.__clientWidth = 200;
+      scrollView.__clientHeight = 20;
+      angular.element($window).triggerHandler('resize');
+
+      expect(activeItems().length).toBe(3);
+      expect(activeItemContents()).toEqual(['3','4','5'])
+      expect(activeItemIds().sort()).toEqual(['item3','item4','item5']);
+    }));
+  });
+
+  describe('vertical dynamic grid', function() {
+    beforeEach(function() {
+      // Odd rows 25 height, even rows 50 height
+      setup(10, 'item-width="(16 * (1+($index % 5))) + \'%\'" ' +
+                'item-height="($index % 2) ? 25 : 50"', {
+        __clientWidth: 100,
+        __clientHeight: 60
+      });
+    });
+
+    it('should show initial screen of items', function() {
+      // row 0, index 0: 50 height, 3 items (widths 16%, 32%, 48%)
+      // row 1, index 3: 25 height, 2 items (widths 64%)
+      expect(activeItems().length).toBe(4);
+      expect(activeItemContents()).toEqual(['0','1','2','3'])
+
+      var dim = activeItemDimensions();
+      //Row 0
+      expect(dim[0]).toBe('x:0,y:0,w:16,h:50');
+      expect(dim[1]).toBe('x:16,y:0,w:32,h:50');
+      expect(dim[2]).toBe('x:48,y:0,w:48,h:50');
+      // Row 1
+      expect(dim[3]).toBe('x:0,y:50,w:64,h:25');
+    });
+
+    it('should switch out as you scroll', function() {
+      // Scroll past row 0, height 50
+      scrollTo(51);
+      // row 1, index 3: 25 height, 1 item (width 64%)
+      // row 2, index 4: 50 height, 2 items (width 80%, 16%)
+      expect(activeItems().length).toBe(3);
+      expect(activeItemContents()).toEqual(['3','4','5'])
+      expect(activeItemIds().sort()).toEqual(['item1','item2','item3']);
+
+      var dim = activeItemDimensions();
+      //Row 1
+      expect(dim[0]).toBe('x:0,y:50,w:64,h:25');
+      //Row 2
+      expect(dim[1]).toBe('x:0,y:75,w:80,h:50');
+      expect(dim[2]).toBe('x:80,y:75,w:16,h:50');
+
+      // row 3, index 6: 50 height, 2 items (width 32%, 48%)
+
+      //Scroll past row 2 and row 3 to the end
+      scrollTo(176);
+      // row 4, index 8: 50 height, 1 item (width 64%)
+      // row 5, index 9: 25 height, 2 items (width 80%, 16%)
+      expect(activeItems().length).toBe(2);
+      expect(activeItemContents()).toEqual(['8', '9'])
+
+      var dim = activeItemDimensions();
+      //Row 3
+      expect(dim[0]).toBe('x:0,y:175,w:64,h:50');
+      //Row 4
+      expect(dim[1]).toBe('x:0,y:225,w:80,h:25');
+    });
+
+    it('should start with the same items when resizing', inject(function($window) {
+      // Scroll past row 0, height 50
+      scrollTo(51);
+      // row 1, index 3: 25 height, 1 item (width 64%)
+      // row 2, index 4: 50 height, 2 items (width 80%, 16%)
+      expect(activeItems().length).toBe(3);
+      expect(activeItemContents()).toEqual(['3','4','5'])
+      expect(activeItemIds().sort()).toEqual(['item1','item2','item3']);
+
+      scrollView.__clientWidth = 50;
+      scrollView.__clientHeight = 50;
+      angular.element($window).triggerHandler('resize');
+
+      expect(activeItems().length).toBe(3);
+      expect(activeItemContents()).toEqual(['3','4','5'])
+      expect(activeItemIds().sort()).toEqual(['item1','item2','item3']);
+    }));
+  });
+
 });

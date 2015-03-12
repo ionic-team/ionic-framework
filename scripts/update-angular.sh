@@ -9,18 +9,24 @@ function run {
   cd $SCRIPT_DIR/../config/lib/js/angular/
   rm -rf *.js
 
-  wget http://code.angularjs.org/$VERSION/angular{,-sanitize,-animate,-resource}{.min.js,.js}
+  wget https://code.angularjs.org/$VERSION/angular{,-sanitize,-animate,-resource,-aria,-messages}{.min.js,.js}
 
   # # no min versions of mocks and scenario
-  wget http://code.angularjs.org/$VERSION/angular{-scenario,-mocks}.js
+  wget https://code.angularjs.org/$VERSION/angular{-scenario,-mocks}.js
 
   cd $PROJECT_DIR
 
-  echo "Setting bower.json angular versions to ~$VERSION"
+  echo "Setting bower.json angular versions to $VERSION"
 
-  replaceJsonProp "bower.json" "angular" "~$VERSION"
-  replaceJsonProp "bower.json" "angular-animate" "~$VERSION"
-  replaceJsonProp "bower.json" "angular-sanitize" "~$VERSION"
+  replaceJsonProp "bower.json" "angular" "$VERSION"
+  replaceJsonProp "bower.json" "angular-animate" "$VERSION"
+  replaceJsonProp "bower.json" "angular-aria" "$VERSION"
+  replaceJsonProp "bower.json" "angular-messages" "$VERSION"
+  replaceJsonProp "bower.json" "angular-mocks" "$VERSION"
+  replaceJsonProp "bower.json" "angular-resource" "$VERSION"
+  replaceJsonProp "bower.json" "angular-sanitize" "$VERSION"
+  replaceJsonProp "bower.json" "angular-scenario" "$VERSION"
+
 }
 
 source $(dirname $0)/utils.inc
