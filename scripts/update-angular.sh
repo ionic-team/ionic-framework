@@ -20,12 +20,7 @@ function run {
 
   replaceJsonProp "bower.json" "angular" "$VERSION"
   replaceJsonProp "bower.json" "angular-animate" "$VERSION"
-  replaceJsonProp "bower.json" "angular-aria" "$VERSION"
-  replaceJsonProp "bower.json" "angular-messages" "$VERSION"
-  replaceJsonProp "bower.json" "angular-mocks" "$VERSION"
-  replaceJsonProp "bower.json" "angular-resource" "$VERSION"
   replaceJsonProp "bower.json" "angular-sanitize" "$VERSION"
-  replaceJsonProp "bower.json" "angular-scenario" "$VERSION"
 
 }
 
