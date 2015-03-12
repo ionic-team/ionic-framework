@@ -148,7 +148,7 @@
       self.platforms = [];
       var grade = 'a';
 
-      if (this.isWebView()) {
+      if (self.isWebView()) {
         self.platforms.push('webview');
         if(!(!window.cordova && !window.PhoneGap && !window.phonegap)) {
           self.platforms.push('cordova');
