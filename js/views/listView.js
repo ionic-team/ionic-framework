@@ -5,6 +5,7 @@
   var ITEM_CONTENT_CLASS = 'item-content';
   var ITEM_SLIDING_CLASS = 'item-sliding';
   var ITEM_OPTIONS_CLASS = 'item-options';
+  var ITEM_OPTIONS_SLIDE_CLASS = 'item-options-swipe';
   var ITEM_PLACEHOLDER_CLASS = 'item-placeholder';
   var ITEM_REORDERING_CLASS = 'item-reordering';
   var ITEM_REORDER_BTN_CLASS = 'item-reorder';
@@ -32,7 +33,7 @@
   SlideDrag.prototype = new DragOp();
 
   SlideDrag.prototype.start = function(e) {
-    var content, buttons, offsetX, buttonsWidth;
+    var content, buttons, offsetX, buttonsWidth, sidesAllowed;
 
     if (!this.canSwipe()) {
       return;
@@ -58,7 +59,7 @@
     offsetX = parseFloat(content.style[ionic.CSS.TRANSFORM].replace('translate3d(', '').split(',')[0]) || 0;
 
     // Grab the buttons
-    buttons = content.parentNode.querySelector('.' + ITEM_OPTIONS_CLASS);
+    buttons = content.parentNode.querySelector('.' + ITEM_OPTIONS_CLASS) || content.parentNode.querySelector('.' + ITEM_OPTIONS_SLIDE_CLASS + '.' + e.gesture.direction);
     if (!buttons) {
       return;
     }
@@ -70,7 +71,8 @@
       buttons: buttons,
       buttonsWidth: buttonsWidth,
       content: content,
-      startOffsetX: offsetX
+      startOffsetX: offsetX,
+      direction: e.gesture.direction
     };
   };
 
@@ -127,7 +129,11 @@
       buttonsWidth = this._currentDrag.buttonsWidth;
 
       // Grab the new X point, capping it at zero
-      var newX = Math.min(0, this._currentDrag.startOffsetX + e.gesture.deltaX);
+      var newX = this._currentDrag.startOffsetX + e.gesture.deltaX;
+
+      if (this._currentDrag.buttons.className === ITEM_OPTIONS_CLASS) {
+        newX = Math.min(0, newX);
+      }
 
       // If the new X position is past the buttons, we need to slow down the drag (rubber band style)
       if (newX < -buttonsWidth) {
@@ -135,8 +141,36 @@
         newX = Math.min(-buttonsWidth, -buttonsWidth + (((e.gesture.deltaX + buttonsWidth) * 0.4)));
       }
 
+      // If the new X position is past the buttons, we need to slow down the drag (rubber band style)
+      if (newX > buttonsWidth) {
+        // Calculate the new X position, capped at the top of the buttons
+        newX = Math.max(buttonsWidth, buttonsWidth + (e.gesture.deltaX * 0.4));
+      }
+
+      // check if passing start point and need to reverse direction
+      if (this._currentDrag.buttons.className.indexOf(ITEM_OPTIONS_SLIDE_CLASS) >= 0 && (newX >= 0 && this._currentDrag.currentX < 0) || (newX <= 0 && this._currentDrag.currentX > 0)) {
+        this._currentDrag.buttons.classList.add('invisible');
+
+        if (newX > this._currentDrag.currentX) {
+          this._currentDrag.side = 'right';
+        }
+        if (newX < this._currentDrag.currentX) {
+          this._currentDrag.side = 'left';
+        }
+
+        var buttons = this._currentDrag.content.parentNode.querySelector('.' + ITEM_OPTIONS_SLIDE_CLASS + '.' + this._currentDrag.side);
+        if (!buttons) {
+          newX = 0;
+        } else {
+          buttons.classList.remove('invisible');
+          this._currentDrag.buttons = buttons;
+          this._currentDrag.buttonsWidth = buttons.offsetWidth;
+        }
+      }
+
       this._currentDrag.content.style[ionic.CSS.TRANSFORM] = 'translate3d(' + newX + 'px, 0, 0)';
       this._currentDrag.content.style[ionic.CSS.TRANSITION] = 'none';
+      this._currentDrag.currentX = newX;
     }
   });
 
@@ -151,7 +185,10 @@
 
     // If we are currently dragging, we want to snap back into place
     // The final resting point X will be the width of the exposed buttons
-    var restingPoint = -self._currentDrag.buttonsWidth;
+    var restingPoint = -this._currentDrag.buttonsWidth;
+    if (this._currentDrag.direction === 'right' && this._currentDrag.buttons.className.indexOf(ITEM_OPTIONS_SLIDE_CLASS) >= 0) {
+      restingPoint = this._currentDrag.buttonsWidth;
+    }
 
     // Check if the drag didn't clear the buttons mid-point
     // and we aren't moving fast enough to swipe open
@@ -160,8 +197,8 @@
       // If we are going left but too slow, or going right, go back to resting
       if (e.gesture.direction == "left" && Math.abs(e.gesture.velocityX) < 0.3) {
         restingPoint = 0;
-
-      } else if (e.gesture.direction == "right") {
+      //} else if (e.gesture.direction == "right") {
+      } else if (e.gesture.direction == "right" && (Math.abs(e.gesture.velocityX) < 0.3 || this._currentDrag.buttons.className === ITEM_OPTIONS_CLASS)) {
         restingPoint = 0;
       }
 
@@ -192,7 +229,7 @@
       self._currentDrag = null;
 
       // We are done, notify caller
-      doneCallback && doneCallback();
+      doneCallback && doneCallback((restingPoint !== 0));
     });
   };
 
@@ -391,6 +428,7 @@
       self.onRefresh = opts.onRefresh || function() {};
       self.onRefreshOpening = opts.onRefreshOpening || function() {};
       self.onRefreshHolding = opts.onRefreshHolding || function() {};
+      self.onSwipe = opts.onSwipe || function() {};
 
       window.ionic.onGesture('release', function(e) {
         self._handleEndDrag(e);
@@ -556,7 +594,7 @@
 
         // Make sure this is an item with buttons
         item = self._getItem(e.target);
-        if (item && item.querySelector('.item-options')) {
+        if (item && (item.querySelector('.item-options') || item.querySelector('.item-options-swipe'))) {
           self._dragOp = new SlideDrag({
             el: self.el,
             item: item,
@@ -588,7 +626,13 @@
         return;
       }
 
-      self._dragOp.end(e, function() {
+      this._dragOp.end(e, function(dragged) {
+        if (dragged) {
+          var button = self._dragOp.item.querySelector('.item-options-swipe.sliding ion-option-swipe');
+          if (button) {
+            self.onItemSwipe(button);
+          }
+        }
         self._initDrag();
       });
     },
