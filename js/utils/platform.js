@@ -10,8 +10,6 @@
   var IOS = 'ios';
   var ANDROID = 'android';
   var WINDOWS_PHONE = 'windowsphone';
-  var FIREFOX = 'firefox';
-  var DESKTOP = 'browser';
   var requestAnimationFrame = ionic.requestAnimationFrame;
 
   /**
@@ -227,15 +225,6 @@
     isWindowsPhone: function() {
       return self.is(WINDOWS_PHONE);
     },
-    
-    isFirefox: function() {
-      return self.is(FIREFOX);
-    },
-    
-    isDesktop: function(){
-      return self.is(DESKTOP);
-    },
-    
 
     /**
      * @ngdoc method
