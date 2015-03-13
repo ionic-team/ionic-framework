@@ -40,7 +40,7 @@
    *   var currentPlatform = ionic.Platform.platform();
    *   var currentPlatformVersion = ionic.Platform.version();
    *
-   *   ionic.Platform.exit(); // stops the app
+   *   ionic.Platform.exitApp(); // stops the app
    * });
    * ```
    */
