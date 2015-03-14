@@ -351,7 +351,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
         }
 
         // add the new view
-        viewHistory.views[viewId] = this.createView({
+        var newView = viewHistory.views[viewId] = this.createView({
           viewId: viewId,
           index: hist.stack.length,
           historyId: hist.historyId,
@@ -362,9 +362,14 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
           stateParams: getCurrentStateParams(),
           url: url
         });
-
-        // add the new view to this history's stack
-        hist.stack.push(viewHistory.views[viewId]);
+        //Check whether the view should be added to the history stack
+        if(!nextViewOptions.disableHistory) {
+          // add the new view to this history's stack
+          hist.stack.push(viewHistory.views[viewId]);
+        } else {
+          //Route the new views back button to the back of the current view
+          newView.backViewId = currentView.backViewId;
+        }
       }
 
       $timeout.cancel(nextViewExpireTimer);
