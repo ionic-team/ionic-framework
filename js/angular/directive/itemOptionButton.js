@@ -1,5 +1,5 @@
 var ITEM_TPL_OPTION_BUTTONS =
-  '<div class="item-options invisible">' +
+  '<div class="item-options left invisible">' +
   '</div>';
 /**
 * @ngdoc directive

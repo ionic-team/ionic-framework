@@ -813,3 +813,35 @@ button.item.item-button-right {
     }
   }
 }
+
+/**
+ * The hidden swipe left and right options before a list item
+ * with dragging.
+ */
+.item-options-swipe {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: $z-index-item-options;
+  height: 100%;
+
+  .button {
+    height: 100%;
+    width:100%;
+    border: none;
+    border-radius: 0;
+    @include display-inline-flex();
+    @include align-items(center);
+  }
+  .button:before {
+    margin: 0 auto;
+  }
+}
+
+.item-options-swipe.left {
+  .button {
+    flex-direction: row-reverse;
+  }
+}
+

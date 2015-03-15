@@ -59,7 +59,7 @@
     offsetX = parseFloat(content.style[ionic.CSS.TRANSFORM].replace('translate3d(', '').split(',')[0]) || 0;
 
     // Grab the buttons
-    buttons = content.parentNode.querySelector('.' + ITEM_OPTIONS_CLASS) || content.parentNode.querySelector('.' + ITEM_OPTIONS_SLIDE_CLASS + '.' + e.gesture.direction);
+    buttons = content.parentNode.querySelector('.' + ITEM_OPTIONS_CLASS + '.' + e.gesture.direction) || content.parentNode.querySelector('.' + ITEM_OPTIONS_SLIDE_CLASS + '.' + e.gesture.direction);
     if (!buttons) {
       return;
     }
@@ -148,23 +148,25 @@
       }
 
       // check if passing start point and need to reverse direction
-      if (this._currentDrag.buttons.className.indexOf(ITEM_OPTIONS_SLIDE_CLASS) >= 0 && (newX >= 0 && this._currentDrag.currentX < 0) || (newX <= 0 && this._currentDrag.currentX > 0)) {
+      if ((newX >= 0 && this._currentDrag.currentX <= 0) || (newX <= 0 && this._currentDrag.currentX >= 0)) {
         this._currentDrag.buttons.classList.add('invisible');
 
+        var newDirection = '';
         if (newX > this._currentDrag.currentX) {
-          this._currentDrag.side = 'right';
+          newDirection = 'right';
         }
         if (newX < this._currentDrag.currentX) {
-          this._currentDrag.side = 'left';
+          newDirection = 'left';
         }
 
-        var buttons = this._currentDrag.content.parentNode.querySelector('.' + ITEM_OPTIONS_SLIDE_CLASS + '.' + this._currentDrag.side);
+        var buttons = this._currentDrag.content.parentNode.querySelector('.' + ITEM_OPTIONS_CLASS + '.' + e.gesture.direction) || this._currentDrag.content.parentNode.querySelector('.' + ITEM_OPTIONS_SLIDE_CLASS + '.' + e.gesture.direction);
         if (!buttons) {
           newX = 0;
         } else {
           buttons.classList.remove('invisible');
           this._currentDrag.buttons = buttons;
           this._currentDrag.buttonsWidth = buttons.offsetWidth;
+          this._currentDrag.direction = newDirection;
         }
       }
 
@@ -185,8 +187,11 @@
 
     // If we are currently dragging, we want to snap back into place
     // The final resting point X will be the width of the exposed buttons
-    var restingPoint = -this._currentDrag.buttonsWidth;
-    if (this._currentDrag.direction === 'right' && this._currentDrag.buttons.className.indexOf(ITEM_OPTIONS_SLIDE_CLASS) >= 0) {
+    var restingPoint = 0;
+    if (this._currentDrag.direction === 'left' && e.gesture.direction === 'left') {
+      restingPoint = -this._currentDrag.buttonsWidth;
+    }
+    if (this._currentDrag.direction === 'right' && e.gesture.direction === 'right') {
       restingPoint = this._currentDrag.buttonsWidth;
     }
 
