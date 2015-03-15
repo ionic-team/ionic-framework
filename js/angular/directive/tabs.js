@@ -85,9 +85,9 @@ function($ionicTabsDelegate, $ionicConfig, $ionicHistory) {
 
         function emitLifecycleEvent(ev, data) {
           ev.stopPropagation();
-          var selectedTab = tabsCtrl.selectedTab();
-          if (selectedTab) {
-            selectedTab.$emit(ev.name.replace('NavView', 'View'), data);
+          var previousSelectedTab = tabsCtrl.previousSelectedTab();
+          if (previousSelectedTab) {
+            previousSelectedTab.$broadcast(ev.name.replace('NavView', 'Tabs'), data);
           }
         }
 

@@ -276,6 +276,7 @@
 }
 .collection-repeat-container {
   position: relative;
+  z-index: 1; //make sure it's above the after-container
 }
 .collection-repeat-after-container {
   z-index: 0;

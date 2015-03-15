@@ -63,7 +63,7 @@ function run {
     ;;
   3)
     # Update demos
-    ./scripts/demo/publish.sh --version-name="$VERSION_NAME"
+    # ./scripts/demo/publish.sh --version-name="$VERSION_NAME"
     ;;
   4)
     # Update cdn

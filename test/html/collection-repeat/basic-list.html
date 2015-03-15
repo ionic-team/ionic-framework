@@ -13,12 +13,16 @@
 
   <body ng-controller="MainCtrl">
     <ion-header-bar class="bar-positive">
+      <button class="button" ng-click="$root.showDelete = !$root.showDelete">Toggle Delete</button>
       <h1 class="title">Basic List: Static Dimensions</h1>
+      <button class="button" ng-click="clearList()">Clear List</button>
     </ion-header-bar>
     <ion-content>
-      <h4>WHATS UP</h4>
-      <ion-list can-swipe="true">
+      <h4 style="margin: 80px;">I have 80px margin</h4>
+      <ion-list can-swipe="true" show-delete="$root.showDelete">
         <ion-item class="item" collection-repeat="item in items">
+          <ion-option-button>Button</ion-option-button>
+          <ion-delete-button  class="ion-minus-circled" ng-click="items.splice($index, 1)"></ion-delete-button>
           <h2>{{item.text}}</h2>
         </ion-item>
       </ion-list>
@@ -37,10 +41,18 @@ function MainCtrl($scope, $timeout) {
       image: 'http://placekitten.com/'+(100+50%i)+'/'+(100+50%i)
     });
   }
+  init();
 
-  $timeout(function() {
-    for (var i = 0; i < 100; i++) addImage();
-  }, 1000);
+  $scope.clearList = function() {
+    $scope.items.length = 0;
+    init();
+  };
+
+  function init() {
+    $timeout(function() {
+      for (var i = 0; i < 100; i++) addImage();
+    }, 1000);
+  }
 }
   </script>
   <style>

@@ -1215,6 +1215,15 @@ describe('Ionic Tap', function() {
     ele.type = 'checkbox';
     expect( ionic.tap.isTextInput(ele) ).toEqual(false);
 
+    ele.type = 'color';
+    expect( ionic.tap.isTextInput(ele) ).toEqual(false);
+
+    ele.type = 'button';
+    expect( ionic.tap.isTextInput(ele) ).toEqual(false);
+
+    ele.type = 'image';
+    expect( ionic.tap.isTextInput(ele) ).toEqual(false);
+
     ele = document.createElement('select');
     expect( ionic.tap.isTextInput(ele) ).toEqual(false);
 
@@ -1255,7 +1264,80 @@ describe('Ionic Tap', function() {
 
     ele.type = 'text';
     expect( ionic.tap.isDateInput(ele) ).toEqual(false);
+  });
 
+  it('Should isKeyboardElement on date and select on iPhone', function() {
+    expect( ionic.tap.isKeyboardElement(null) ).toEqual(false);
+
+    ionic.Platform.setPlatform('ios');
+    ionic.Platform.ua = 'iPhone';
+
+    var ele = document.createElement('input');
+    ele.type = 'date';
+    expect( ionic.tap.isKeyboardElement(ele) ).toEqual(true);
+
+    ele.type = 'datetime-local';
+    expect( ionic.tap.isKeyboardElement(ele) ).toEqual(true);
+
+    ele.type = 'month';
+    expect( ionic.tap.isKeyboardElement(ele) ).toEqual(true);
+
+    ele.type = 'week';
+    expect( ionic.tap.isKeyboardElement(ele) ).toEqual(true);
+
+    ele.type = 'time';
+    expect( ionic.tap.isKeyboardElement(ele) ).toEqual(true);
+
+    ele = document.createElement('select');
+    expect ( ionic.tap.isKeyboardElement(ele)).toEqual(true);
+
+  });
+
+  it('Should not isKeyboardElement on date and select on Android and iPad', function() {
+    expect( ionic.tap.isKeyboardElement(null) ).toEqual(false);
+
+    ionic.Platform.setPlatform('android');
+
+    var ele = document.createElement('input');
+    ele.type = 'date';
+    expect( ionic.tap.isKeyboardElement(ele) ).toEqual(false);
+
+    ele.type = 'datetime-local';
+    expect( ionic.tap.isKeyboardElement(ele) ).toEqual(false);
+
+    ele.type = 'month';
+    expect( ionic.tap.isKeyboardElement(ele) ).toEqual(false);
+
+    ele.type = 'week';
+    expect( ionic.tap.isKeyboardElement(ele) ).toEqual(false);
+
+    ele.type = 'time';
+    expect( ionic.tap.isKeyboardElement(ele) ).toEqual(false);
+
+    ele = document.createElement('select');
+    expect ( ionic.tap.isKeyboardElement(ele)).toEqual(false);
+
+    ionic.Platform.setPlatform('ios');
+    ionic.Platform.ua = 'iPad';
+
+    ele = document.createElement('input');
+    ele.type = 'date';
+    expect( ionic.tap.isKeyboardElement(ele) ).toEqual(false);
+
+    ele.type = 'datetime-local';
+    expect( ionic.tap.isKeyboardElement(ele) ).toEqual(false);
+
+    ele.type = 'month';
+    expect( ionic.tap.isKeyboardElement(ele) ).toEqual(false);
+
+    ele.type = 'week';
+    expect( ionic.tap.isKeyboardElement(ele) ).toEqual(false);
+
+    ele.type = 'time';
+    expect( ionic.tap.isKeyboardElement(ele) ).toEqual(false);
+
+    ele = document.createElement('select');
+    expect ( ionic.tap.isKeyboardElement(ele)).toEqual(false);
   });
 
   it('Should isLabelWithTextInput', function() {

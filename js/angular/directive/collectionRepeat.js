@@ -138,14 +138,21 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
 
     var afterItemsContainer = initAfterItemsContainer();
 
+    var changeValidator = makeChangeValidator();
     initDimensions();
 
-    var debouncedRefreshDimensions = ionic.animationFrameThrottle(refreshDimensions);
-    var debouncedOnResize = ionic.animationFrameThrottle(validateResize);
-
     // Dimensions are refreshed on resize or data change.
-    angular.element($window).on('resize', debouncedOnResize);
+    scrollCtrl.$element.on('scroll.resize', refreshDimensions);
+
+    angular.element($window).on('resize', onResize);
+    var unlistenToExposeAside = $rootScope.$on('$ionicExposeAside', onResize);
     $timeout(refreshDimensions, 0, false);
+
+    function onResize() {
+      if (changeValidator.resizeRequiresRefresh(scrollView.__clientWidth, scrollView.__clientHeight)) {
+        refreshDimensions();
+      }
+    }
 
     scope.$watchCollection(listGetter, function(newValue) {
       data = newValue || (newValue = []);
@@ -153,16 +160,17 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
         throw new Error("collection-repeat expected an array for '" + listExpr + "', " +
           "but got a " + typeof value);
       }
-
       // Wait for this digest to end before refreshing everything.
       scope.$$postDigest(function() {
-        getRepeatManager().refreshData(newValue);
-        refreshDimensions();
+        getRepeatManager().setData(data);
+        if (changeValidator.dataChangeRequiresRefresh(data)) refreshDimensions();
       });
     });
 
     scope.$on('$destroy', function() {
-      angular.element($window).off('resize', debouncedOnResize);
+      angular.element($window).off('resize', onResize);
+      unlistenToExposeAside();
+      scrollCtrl.$element && scrollCtrl.$element.off('scroll.resize', refreshDimensions);
 
       computedStyleNode && computedStyleNode.parentNode &&
         computedStyleNode.parentNode.removeChild(computedStyleNode);
@@ -172,6 +180,35 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
       repeatManager && repeatManager.destroy();
       repeatManager = null;
     });
+
+    function makeChangeValidator() {
+      var self;
+      return (self = {
+        dataLength: 0,
+        width: 0,
+        height: 0,
+        // A resize triggers a refresh only if we have data, the scrollView has size,
+        // and the size has changed.
+        resizeRequiresRefresh: function(newWidth, newHeight) {
+          var requiresRefresh = self.dataLength && newWidth && newHeight &&
+            (newWidth !== self.width || newHeight !== self.height);
+
+          self.width = newWidth;
+          self.height = newHeight;
+
+          return !!requiresRefresh;
+        },
+        // A change in data only triggers a refresh if the data has length, or if the data's
+        // length is less than before.
+        dataChangeRequiresRefresh: function(newData) {
+          var requiresRefresh = newData.length > 0 || newData.length < self.dataLength;
+
+          self.dataLength = newData.length;
+
+          return !!requiresRefresh;
+        }
+      });
+    }
 
     function getRepeatManager() {
       return repeatManager || (repeatManager = new $ionicCollectionManager({
@@ -241,23 +278,14 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
       }
     }
 
-    // Make sure this resize actually changed the size of the screen
-    function validateResize() {
-      var h = scrollView.__clientHeight, w = scrollView.__clientWidth;
-      if (w && h && (validateResize.height !== h || validateResize.width !== w)) {
-        validateResize.height = h;
-        validateResize.width = w;
-        refreshDimensions();
-      }
-    }
     function refreshDimensions() {
-      if (!data.length) return;
+      var hasData = data.length > 0;
 
-      if (heightData.computed || widthData.computed) {
+      if (hasData && (heightData.computed || widthData.computed)) {
         computeStyleDimensions();
       }
 
-      if (heightData.computed) {
+      if (hasData && heightData.computed) {
         heightData.value = computedStyleDimensions.height;
         if (!heightData.value) {
           throw new Error('collection-repeat tried to compute the height of repeated elements "' +
@@ -268,7 +296,8 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
         // If it's a constant with a getter (eg percent), we just refresh .value after resize
         heightData.value = heightData.getValue();
       }
-      if (widthData.computed) {
+
+      if (hasData && widthData.computed) {
         widthData.value = computedStyleDimensions.width;
         if (!widthData.value) {
           throw new Error('collection-repeat tried to compute the width of repeated elements "' +
@@ -301,8 +330,8 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
         parsedValue = $parse(attrValue);
       }
 
-      var withoutQuotes = attrValue.replace(/(\'|\"|px|%)/g, '').trim();
-      var isConstant = withoutQuotes.length && !/([a-zA-Z]|\$|:|\?)/.test(withoutQuotes);
+      var constantAttrValue = attrValue.replace(/(\'|\"|px|%)/g, '').trim();
+      var isConstant = constantAttrValue.length && !/([a-zA-Z]|\$|:|\?)/.test(constantAttrValue);
       dimensionData.attrValue = attrValue;
 
       // If it's a constant, it's either a percent or just a constant pixel number.
@@ -484,6 +513,18 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
         repeaterBeforeSize += current[isVertical ? 'offsetTop' : 'offsetLeft'];
       } while( ionic.DomUtil.contains(scrollView.__content, current = current.offsetParent) );
 
+      var containerPrevNode = containerNode.previousElementSibling;
+      var beforeStyle = containerPrevNode ?  $window.getComputedStyle(containerPrevNode) : {};
+      var beforeMargin = parseInt(beforeStyle[isVertical ? 'marginBottom' : 'marginRight'] || 0);
+
+      // Because we position the collection container with position: relative, it doesn't take
+      // into account where to position itself relative to the previous element's marginBottom.
+      // To compensate, we translate the container up by the previous element's margin.
+      containerNode.style[ionic.CSS.TRANSFORM] = TRANSLATE_TEMPLATE_STR
+        .replace(PRIMARY, -beforeMargin)
+        .replace(SECONDARY, 0);
+      repeaterBeforeSize -= beforeMargin;
+
       if (!scrollView.__clientHeight || !scrollView.__clientWidth) {
         scrollView.__clientWidth = scrollView.__container.clientWidth;
         scrollView.__clientHeight = scrollView.__container.clientHeight;
@@ -514,7 +555,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
       }
     };
 
-    this.refreshData = function(newData) {
+    this.setData = function(newData) {
       data = newData;
       (view.onRefreshData || angular.noop)();
       isDataReady = true;
@@ -561,7 +602,6 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
           delete itemsShownMap[i];
           itemsLeaving.push(item);
           item.isShown = false;
-          item.scope.$broadcast('$collectionRepeatChange');
         }
       }
 
@@ -619,6 +659,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
 
       while (itemsLeaving.length) {
         item = itemsLeaving.pop();
+        item.scope.$broadcast('$collectionRepeatLeave');
         ionic.Utils.disconnectScope(item.scope);
         itemsPool.push(item);
         item.node.style[ionic.CSS.TRANSFORM] = 'translate3d(-9999px,-9999px,0)';
@@ -656,26 +697,18 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
 
     function digestEnteringItems() {
       var item;
-      var scope;
-      var len;
       if (digestEnteringItems.running) return;
       digestEnteringItems.running = true;
 
       $$rAF(function process() {
-        if( (len = itemsEntering.length) ) {
-          var rootScopePhase = $rootScope.$$phase;
-          var count = Math.floor(len / 1.25) || 1;
-          while (count && itemsEntering.length) {
-            item = itemsEntering.pop();
-            if (item.isShown) {
-              count--;
-              if (!rootScopePhase) item.scope.$digest();
-            }
+        var rootScopePhase = $rootScope.$$phase;
+        while (itemsEntering.length) {
+          item = itemsEntering.pop();
+          if (item.isShown) {
+            if (!rootScopePhase) item.scope.$digest();
           }
-          $$rAF(process);
-        } else {
-          digestEnteringItems.running = false;
         }
+        digestEnteringItems.running = false;
       });
     }
 

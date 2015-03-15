@@ -6,6 +6,7 @@ IonicModule
 function($scope, $element, $ionicHistory) {
   var self = this;
   var selectedTab = null;
+  var previousSelectedTab = null;
   var selectedTabIndex;
   self.tabs = [];
 
@@ -14,6 +15,9 @@ function($scope, $element, $ionicHistory) {
   };
   self.selectedTab = function() {
     return selectedTab;
+  };
+  self.previousSelectedTab = function() {
+    return previousSelectedTab;
   };
 
   self.add = function(tab) {
@@ -43,6 +47,7 @@ function($scope, $element, $ionicHistory) {
 
   self.deselect = function(tab) {
     if (tab.$tabSelected) {
+      previousSelectedTab = selectedTab;
       selectedTab = selectedTabIndex = null;
       tab.$tabSelected = false;
       (tab.onDeselect || noop)();
