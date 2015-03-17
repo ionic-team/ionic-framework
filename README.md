@@ -1,6 +1,5 @@
-# ionic2
-Ionic2 WIP Repo
 
-it's a thing
+#### Build
 
-Learn it
+- JSCS
+- JSHint (or TypeScript variant)
