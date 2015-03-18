@@ -1,0 +1,121 @@
+$modal-z-index: 10 !default;
+
+$modal-bg-color:                  #fff !default;
+$modal-backdrop-bg-active:        #000 !default;
+$modal-backdrop-bg-inactive:      rgba(0,0,0,0) !default;
+
+$modal-inset-mode-break-point:    680px !default;  // @media min-width
+$modal-inset-mode-top:            20% !default;
+$modal-inset-mode-right:          20% !default;
+$modal-inset-mode-bottom:         20% !default;
+$modal-inset-mode-left:           20% !default;
+$modal-inset-mode-min-height:     240px !default;
+
+// TODO: REMOVE THESE
+$bar-height: 40;
+$bar-subheader-height: 40;
+$tabs-height: 40;
+
+/**
+ * Modals
+ * --------------------------------------------------
+ * Modals are independent windows that slide in from off-screen.
+ */
+
+.modal-backdrop,
+.modal-backdrop-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: $modal-z-index;
+  width: 100%;
+  height: 100%;
+}
+
+.modal-backdrop-bg {
+  pointer-events: none;
+}
+
+modal {
+  display: block;
+  position: absolute;
+  top: 0;
+  z-index: $modal-z-index;
+  overflow: hidden;
+  min-height: 100%;
+  width: 100%;
+  background-color: $modal-bg-color;
+}
+
+@media (min-width: $modal-inset-mode-break-point) {
+  // inset mode is when the modal doesn't fill the entire
+  // display but instead is centered within a large display
+  .modal {
+    top: $modal-inset-mode-top;
+    right: $modal-inset-mode-right;
+    bottom: $modal-inset-mode-bottom;
+    left: $modal-inset-mode-left;
+    overflow: visible;
+    min-height: $modal-inset-mode-min-height;
+    width: (100% - $modal-inset-mode-left - $modal-inset-mode-right);
+  }
+
+  .modal.ng-leave-active {
+    bottom: 0;
+  }
+
+  // remove ios header padding from inset header
+  .platform-ios.platform-cordova .modal-wrapper .modal {
+    .bar-header:not(.bar-subheader) {
+      height: $bar-height;
+      > * {
+        margin-top: 0;
+      }
+    }
+    .tabs-top > .tabs,
+    .tabs.tabs-top {
+      top: $bar-height;
+    }
+    .has-header,
+    .bar-subheader {
+      top: $bar-height;
+    }
+    .has-subheader {
+      top: $bar-height + $bar-subheader-height;
+    }
+    .has-tabs-top {
+      top: $bar-height + $tabs-height;
+    }
+    .has-header.has-subheader.has-tabs-top {
+      top: $bar-height + $bar-subheader-height + $tabs-height;
+    }
+  }
+
+  .modal-backdrop-bg {
+    @include transition(opacity 300ms ease-in-out);
+    background-color: $modal-backdrop-bg-active;
+    opacity: 0;
+  }
+
+  .active .modal-backdrop-bg {
+    opacity: 0.5;
+  }
+}
+
+// disable clicks on all but the modal
+.modal-open {
+  pointer-events: none;
+
+  .modal,
+  .modal-backdrop {
+    pointer-events: auto;
+  }
+  // prevent clicks on modal when loading overlay is active though
+  &.loading-active {
+    .modal,
+    .modal-backdrop {
+      pointer-events: none;
+    }
+  }
+}
+
