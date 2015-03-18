@@ -1,12 +1,10 @@
-/*! normalize.css v3.0.2 | MIT License | github.com/necolas/normalize.css */
+/*! Ionic fork of normalize.css v3.0.2 | MIT License | github.com/necolas/normalize.css */
 
-// 1. Apply border-box so it can be inherited
-// 2. Prevent iOS text size adjust after orientation change, without disabling
+// 1. Prevent iOS text size adjust after orientation change, without disabling
 //    user zoom.
 html {
-  box-sizing: border-box;
-  -ms-text-size-adjust: 100%; // 2
-  -webkit-text-size-adjust: 100%; // 2
+  -ms-text-size-adjust: 100%; // 1
+  -webkit-text-size-adjust: 100%; // 1
 }
 *,
 *:before,
@@ -45,13 +43,13 @@ template {
 // ==========================================================================
 
 // Remove the gray background color from active links in IE 10.
-a {
+[ionic] a {
   background-color: transparent;
 }
 
 // Improve readability when focused and also mouse hovered in all browsers.
-a:active,
-a:hover {
+[ionic] a:active,
+[ionic] a:hover {
   outline: 0;
 }
 
@@ -59,27 +57,10 @@ a:hover {
 // Text-level semantics
 // ==========================================================================
 
-// Address styling not present in IE 8/9/10/11, Safari, and Chrome.
-abbr[title] {
-  border-bottom: 1px dotted;
-}
-
 // Address style set to `bolder` in Firefox 4+, Safari, and Chrome.
 b,
 strong {
   font-weight: bold;
-}
-
-// Address styling not present in Safari and Chrome.
-dfn {
-  font-style: italic;
-}
-
-// Address variable `h1` font-size and margin within `section` and `article`
-// contexts in Firefox 4+, Safari, and Chrome.
-h1 {
-  font-size: 2em;
-  margin: 0.67em 0;
 }
 
 // Address inconsistent and variable font size in all browsers.
@@ -109,12 +90,12 @@ sub {
 // ==========================================================================
 
 // Remove border when inside `a` element in IE 8/9/10.
-img {
+[ionic] img {
   border: 0;
 }
 
 // Correct overflow not hidden in IE 9/10/11.
-svg:not(:root) {
+[ionic] svg:not(:root) {
   overflow: hidden;
 }
 
@@ -123,12 +104,12 @@ svg:not(:root) {
 // ==========================================================================
 
 // Address margin not present in IE 8/9 and Safari.
-figure {
+[ionic] figure {
   margin: 1em 40px;
 }
 
 // Address differences between Firefox and other browsers.
-hr {
+[ionic] hr {
   -moz-box-sizing: content-box;
   box-sizing: content-box;
   height: 0;
@@ -204,10 +185,7 @@ html input[disabled] {
   cursor: default;
 }
 
-//
 // Remove inner padding and border in Firefox 4+.
-//
-
 button::-moz-focus-inner,
 input::-moz-focus-inner {
   border: 0;
@@ -220,7 +198,6 @@ input {
   line-height: normal;
 }
 
-//t you don't attempt to style these elements.
 // Firefox's implementation doesn't respect box-sizing, padding, or width.
 // 1. Address box sizing set to `content-box` in IE 8/9/10.
 // 2. Remove excess padding in IE 8/9/10.

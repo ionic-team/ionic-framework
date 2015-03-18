@@ -20,5 +20,5 @@
 
 
 // Components (Conditional Includes)
-@if $include-button { @import "../components/button/button" }
-@if $include-tabbar { @import "../components/tabbar/tabbar" }
+@import "../components/button/button";
+@import "../components/tabbar/tabbar";
