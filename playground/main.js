@@ -4,7 +4,7 @@ import {Tabbar} from 'ionic/components/tabbar/tabbar';
 
 @Component({ selector: 'playground-main' })
 @Template({ 
-  url: 'app.html',
+  url: 'main.html',
   directives: [Tabbar]
 })
 class PlaygroundMain {}
