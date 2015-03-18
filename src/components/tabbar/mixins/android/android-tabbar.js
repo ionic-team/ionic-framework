@@ -5,13 +5,5 @@ import {TabbarConfig} from '../../tabbar';
 TabbarConfig.platform('android')
   .template('./android-template.html')
   .mixin(function(tabbar) {
-    // Draggable(tabbar)
-    // tabbarInstance.setAsHeader()
-
-    tabbar.extend({
-      press() {
-        alert('pressing from android mixin');
-      }
-    });
   });
 

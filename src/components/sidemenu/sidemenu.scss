@@ -1,0 +1,20 @@
+ion-side-menu {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 304px;
+
+  background: rgba(255,0,0,0.5);
+  border-right: 1px solid black;
+
+  transition: transform 0.3s;
+
+  transform: translate3d(0, -304px, 0);
+  &.open {
+    transform: translate3d(0,0,0);
+  }
+  &.no-animate {
+    transition-duration: 0s;
+  }
+}

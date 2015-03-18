@@ -76,21 +76,20 @@ gulp.task('playgroundFiles', function() {
 
 gulp.task('playgroundJs', function() {
   return gulp.src(config.src.playgroundJs)
-   .pipe(traceurCompile())
+    .pipe(rename({extname: ''})) //hack, see: https://github.com/sindresorhus/gulp-traceur/issues/54
+    .pipe(plumber())
+    .pipe(traceur({
+        modules: 'instantiate',
+        moduleName: true,
+        annotations: true,
+        types: true
+    }))
+    .pipe(rename({extname: '.js'})) //hack, see: https://github.com/sindresorhus/gulp-traceur/issues/54
     .pipe(gulp.dest(config.dist));
 });
 
 function traceurCompile() {
   return lazypipe()
-    .pipe(rename, {extname: ''}) //hack, see: https://github.com/sindresorhus/gulp-traceur/issues/54
-    .pipe(plumber)
-    .pipe(traceur, {
-        modules: 'instantiate',
-        moduleName: true,
-        annotations: true,
-        types: true
-    })
-    .pipe(rename, {extname: '.js'}) //hack, see: https://github.com/sindresorhus/gulp-traceur/issues/54
     ();
 }
 gulp.task('js', function () {
@@ -99,7 +98,15 @@ gulp.task('js', function () {
       // Forces the files to register themselves with 'ionic' prefix
       file.dirname = 'ionic/' + file.dirname;
     }))
-    .pipe(traceurCompile())
+    .pipe(rename({extname: ''})) //hack, see: https://github.com/sindresorhus/gulp-traceur/issues/54
+    .pipe(plumber())
+    .pipe(traceur({
+        modules: 'instantiate',
+        moduleName: true,
+        annotations: true,
+        types: true
+    }))
+    .pipe(rename({extname: '.js'})) //hack, see: https://github.com/sindresorhus/gulp-traceur/issues/54
     // compiled js files in playground go to the playground root, everything else goes in /ionic
     .pipe(gulp.dest('dist'));
 });
