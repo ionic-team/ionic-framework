@@ -1,5 +1,6 @@
 import * as Platform from './platform';
 
+var id = 0;
 export function IonConfigService() {
 
   function Config() {
@@ -7,6 +8,7 @@ export function IonConfigService() {
     for (var key in Config._platforms) {
       this._platforms[key] = Config._platforms[key]._clone();
     }
+    this.id = id++;
   }
   Config._platforms = {};
   Config.platform = platformFn.bind(Config);

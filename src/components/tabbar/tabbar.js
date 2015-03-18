@@ -13,11 +13,11 @@ export var TabbarConfig = new IonConfigService();
   services: [TabbarConfig]
 })
 @Template({
-  inline: `<button (click)="press()">Tabbar: {{title}}</button>`
+  inline: `<button (click)="press()">Tabbar: {{title}} {{$config.id}}</button>`
 })
 export class Tabbar extends Ion {
   constructor(
-    @Inject(TabbarConfig) config
+    config: TabbarConfig
   ) {
     this.$config = config;
     super();
