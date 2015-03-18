@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+  <link rel="stylesheet" href="/css/ionic.css">
+  <link rel="stylesheet" href="/layouts/view.css">
+
+  <!-- ES6-related imports -->
+  <script src="/lib/traceur-runtime.js"></script>
+  <script src="/lib/es6-module-loader-sans-promises.src.js"></script>
+  <script src="/lib/extension-register.js"></script>
+  <script>
+      register(System);
+  </script>
+
+  <!-- Third party imports -->
+  <script src="/lib/angular2.js"></script>
+  <script src="/lib/zone.js"></script>
+</head>
+<body ion-app>
+
+  Loading...
+
+</body>
+<!-- Application bootstrap logic -->
+<script>
+  System.baseURL = 'http://localhost:9000/';
+  System.register({
+    map: {
+      'ionic': '../ionic'
+    }
+  });
+  System.import('views/main');
+</script>
+</html>
