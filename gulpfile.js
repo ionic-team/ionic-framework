@@ -25,6 +25,7 @@ var config = {
     'node_modules/es6-module-loader/dist/es6-module-loader-sans-promises.src.js',
     'node_modules/systemjs/lib/extension-register.js',
     'node_modules/angular2/node_modules/zone.js/zone.js',
+    'node_modules/hammerjs/hammer.js'
   ]
 };
 

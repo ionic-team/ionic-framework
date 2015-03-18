@@ -19,6 +19,7 @@
   "dependencies": {
     "angular2": "2.0.0-alpha.13",
     "es6-module-loader": "~0.11.0",
+    "hammerjs": "^2.0.4",
     "systemjs": "~0.11.0",
     "zone.js": "0.4.1"
   }

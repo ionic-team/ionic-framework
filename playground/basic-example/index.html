@@ -16,9 +16,10 @@
         register(System);
     </script>
 
-    <!-- Angular2-related imports -->
+    <!-- Third party imports -->
     <script src="/lib/angular2.js"></script>
     <script src="/lib/zone.js"></script>
+    <!-- <script src="/lib/hammer.js"></script> -->
 
 </head>
 <body>
@@ -29,13 +30,18 @@
 
 <!-- Application bootstrap logic -->
 <script>
-  System.baseURL = 'http://localhost:9000/basic-example/';
+  System.baseURL = 'http://localhost:9000/';
+  //System.register('hammerjs', function() {
+  //  return {
+  //    Hammer: window.Hammer
+  //  }
+  //});
   System.register({
     map: {
       'ionic': '../ionic'
     }
   });
-  System.import('main');
+  System.import('basic-example/main');
 </script>
 
 </html>
