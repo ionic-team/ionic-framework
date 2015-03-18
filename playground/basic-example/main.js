@@ -10,6 +10,10 @@ import 'ionic/components/tabbar/mixins/android/android-tabbar';
   url: 'main.html',
   directives: [Tabbar]
 })
-class PlaygroundMain {}
+class PlaygroundMain {
+  constructor() {
+    console.log('Playground Start')
+  }
+}
 
 bootstrap(PlaygroundMain)
