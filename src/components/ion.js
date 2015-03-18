@@ -7,9 +7,9 @@ export class Ion {
     var platformName = Platform.getPlatform();
     var platformConfig = this.$config._platforms[platformName];
     if (platformConfig) {
-      platformConfig._mixins.forEach(mixin => {
-        mixin(this);
-      });
+      for (var i = 0, ii = platformConfig._mixins.length; i < ii; i++)
+        platformConfig._mixins[i](this);
+      }
     }
   }
 
