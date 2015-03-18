@@ -1,9 +1,13 @@
 @charset "UTF-8";
 
 
+// Mixins
+@import
+  "mixins/flex";
+
+
 // Globals
 @import
-  "mixins",
   "globals",
   "includes";
 
