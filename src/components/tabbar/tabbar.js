@@ -8,7 +8,16 @@ import {Ion} from '../ion';
   }
 })
 @Template({
-  inline: `<div>Tabbar: {{title}}</div>`
+  inline: `<button (click)="press()">Tabbar: {{title}}</button>`
 })
 export class Tabbar extends Ion {
+  constructor() {
+
+    // Test that Ion#assign works
+    this.assign({
+      press: () => {
+        alert('pressed!');
+      }
+    });
+  }
 }
