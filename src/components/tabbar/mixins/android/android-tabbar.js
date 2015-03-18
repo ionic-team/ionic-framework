@@ -14,5 +14,3 @@ TabbarConfig.platform('android')
       }
     });
   });
-
-export var a = 2;
