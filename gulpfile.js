@@ -17,6 +17,7 @@ var config = {
   src: {
     js: ['src/**/*.js', '!src/**/*.spec.js'],
     html: 'src/**/*.html',
+    scss: 'src/**/*.scss',
     playgroundJs: 'playground/**/*.js',
     playgroundFiles: ['playground/**/*', '!playground/**/*.js'],
   },
@@ -29,7 +30,7 @@ var config = {
   ]
 };
 
-gulp.task('default', ['js', 'html', 'libs', 'playgroundJs', 'playgroundFiles']);
+gulp.task('default', ['js', 'html', 'sass', 'libs', 'playgroundJs', 'playgroundFiles']);
 
 gulp.task('watch', ['default'], function () {
   var http = require('http');
@@ -40,6 +41,7 @@ gulp.task('watch', ['default'], function () {
 
   gulp.watch(config.src.html, ['html']);
   gulp.watch(config.src.js, ['js']);
+  gulp.watch(config.src.sass, ['sass']);
   gulp.watch(config.src.playgroundJs, ['playgroundJs']);
   gulp.watch(config.src.playgroundFiles, ['playgroundFiles']);
 

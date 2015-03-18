@@ -3,7 +3,8 @@
 
 // Mixins
 @import
-  "mixins/flex";
+  "mixins/flex",
+  "mixins/transition";
 
 
 // Globals
@@ -17,4 +18,5 @@
 @import "components";
 @import "../../components/button/button";
 @import "../../components/tabbar/tabbar";
+@import "../../components/modal/modal";
 
