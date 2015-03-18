@@ -1,6 +1,17 @@
+import * as Platform from '../platform';
 
 var ILLEGAL_ASSIGN_FIELDS = {};
 export class Ion {
+
+  constructor() {
+    var platformName = Platform.getPlatform();
+    var platformConfig = this.$config._platforms[platformName];
+    if (platformConfig) {
+      platformConfig._mixins.forEach(mixin => {
+        mixin(this);
+      });
+    }
+  }
 
   assign() {
     for (var i = 0, ii = arguments.length; i < ii; i++) {
