@@ -2,7 +2,7 @@ import {Component, Template} from 'angular2/angular2';
 import {Ion} from '../ion';
 
 @Component({
-  selector: 'ion-modal'
+  selector: 'ion-modal-wrapper'
 })
 @Template({
   inline: `
@@ -11,11 +11,27 @@ import {Ion} from '../ion';
       <div class="modal-wrapper"><content></content></div>
     </div>`
 })
-export class Modal extends Ion {
+class ModalWrapper extends Ion {
   constructor() {
   }
   show() {
   }
   hide() {
   }
+}
+
+@Component({
+  selector: 'ion-modal'
+})
+@Template({
+  directives: [ModalWrapper],
+  inline: `
+    <ion-modal-wrapper>
+      <div class="modal">
+        <content></content>
+      </div>
+    </ion-modal-wrapper>`
+})
+export class Modal extends Ion {
+  constructor() {}
 }
