@@ -9,16 +9,16 @@
     <meta charset="UTF-8">
 
     <!-- ES6-related imports -->
-    <script src="lib/traceur-runtime.js"></script>
-    <script src="lib/es6-module-loader-sans-promises.src.js"></script>
-    <script src="lib/extension-register.js"></script>
+    <script src="/lib/traceur-runtime.js"></script>
+    <script src="/lib/es6-module-loader-sans-promises.src.js"></script>
+    <script src="/lib/extension-register.js"></script>
     <script>
         register(System);
     </script>
 
     <!-- Angular2-related imports -->
-    <script src="lib/angular2.js"></script>
-    <script src="lib/zone.js"></script>
+    <script src="/lib/angular2.js"></script>
+    <script src="/lib/zone.js"></script>
 
 </head>
 <body>
@@ -29,7 +29,13 @@
 
 <!-- Application bootstrap logic -->
 <script>
-  System.import('./main');
+  System.baseURL = 'http://localhost:9000/basic-example/';
+  System.register({
+    map: {
+      'ionic': '../ionic'
+    }
+  });
+  System.import('main');
 </script>
 
 </html>

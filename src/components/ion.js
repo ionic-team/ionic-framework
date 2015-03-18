@@ -7,13 +7,13 @@ export class Ion {
     var platformName = Platform.getPlatform();
     var platformConfig = this.$config._platforms[platformName];
     if (platformConfig) {
-      for (var i = 0, ii = platformConfig._mixins.length; i < ii; i++)
+      for (var i = 0, ii = platformConfig._mixins.length; i < ii; i++) {
         platformConfig._mixins[i](this);
       }
     }
   }
 
-  assign() {
+  extend() {
     for (var i = 0, ii = arguments.length; i < ii; i++) {
       var obj = arguments[i];
       if (obj) {

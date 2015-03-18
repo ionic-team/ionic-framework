@@ -8,9 +8,10 @@ TabbarConfig.platform('android')
     // Draggable(tabbar)
     // tabbarInstance.setAsHeader()
 
-    tabbar.assign({
+    tabbar.extend({
       press() {
         alert('pressing from android mixin');
       }
     });
   });
+
