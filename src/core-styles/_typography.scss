@@ -1,0 +1,57 @@
+
+// Typography
+// --------------------------------------------------
+
+$font-family-sans-serif:          "Helvetica Neue", "Roboto", sans-serif !default;
+$font-family-light-sans-serif:    "HelveticaNeue-Light", "Roboto-Light", sans-serif-light !default;
+$font-family-serif:               serif !default;
+$font-family-monospace:           monospace !default;
+
+$font-family-base:                $font-family-sans-serif !default;
+$font-size-base:                  14px !default;
+$font-size-large:                 18px !default;
+$font-size-small:                 11px !default;
+
+$line-height-base:                1.428571429 !default; // 20/14
+$line-height-computed:            floor($font-size-base * $line-height-base) !default; // ~20px
+
+
+
+// Headings
+// -------------------------
+
+$headings-font-family:            $font-family-base !default;
+$headings-font-weight:            500 !default;
+$headings-line-height:            1.2 !default;
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-weight: $headings-font-weight;
+  font-family: $headings-font-family;
+  line-height: $headings-line-height;
+}
+
+h1, .h1,
+h2, .h2,
+h3, .h3 {
+  margin-top: $line-height-computed;
+  margin-bottom: ($line-height-computed / 2);
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+h4, .h4,
+h5, .h5,
+h6, .h6 {
+  margin-top: ($line-height-computed / 2);
+  margin-bottom: ($line-height-computed / 2);
+}
+
+h1, .h1 { font-size: floor($font-size-base * 2.60); } // ~36px
+h2, .h2 { font-size: floor($font-size-base * 2.15); } // ~30px
+h3, .h3 { font-size: ceil($font-size-base * 1.70); } // ~24px
+h4, .h4 { font-size: ceil($font-size-base * 1.25); } // ~18px
+h5, .h5 { font-size:  $font-size-base; }
+h6, .h6 { font-size: ceil($font-size-base * 0.85); } // ~12px

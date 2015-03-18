@@ -10,6 +10,7 @@ var plumber = require('gulp-plumber');
 var rename = require('gulp-rename');
 var traceur = require('gulp-traceur');
 var lazypipe = require('lazypipe');
+var sass = require('gulp-sass');
 
 var config = {
   dist: 'dist',
@@ -44,6 +45,21 @@ gulp.task('watch', ['default'], function () {
   var app = connect().use(serveStatic(__dirname + '/' + config.dist));  // serve everything that is static
   http.createServer(app).listen(port);
   console.log('Serving `dist` on http://localhost:' + port);
+});
+
+gulp.task('sass-watch', ['sass'], function () {
+  gulp.watch('src/**/*.scss', ['sass']);
+});
+
+gulp.task('sass', function(done) {
+  gulp.src('src/core-styles/ionic.scss')
+    .pipe(sass({
+      onError: function(err) {
+        console.log(err);
+      }
+    }))
+    .pipe(gulp.dest('dist/css'))
+    .on('end', done);
 });
 
 gulp.task('clean', function(done) {
@@ -102,12 +118,12 @@ gulp.task('angular2', function () {
     'node_modules/angular2/es6/prod/*.es6',
     'node_modules/angular2/es6/prod/src/**/*.es6'
   ], {
-    base: 'node_modules/angular2/es6/prod' 
+    base: 'node_modules/angular2/es6/prod'
   })
     .pipe(rename(function(path){
         path.dirname = 'angular2/' + path.dirname; //this is not ideal... but not sure how to change angular's file structure
         path.extname = ''; //hack, see: https://github.com/sindresorhus/gulp-traceur/issues/54
-    })) 
+    }))
     .pipe(traceur({ modules: 'instantiate', moduleName: true}))
     .pipe(concat('angular2.js'))
     .pipe(gulp.dest('dist/lib'));
