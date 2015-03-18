@@ -1,0 +1,96 @@
+<link href="view.css" rel="stylesheet">
+<link href="transition.css" rel="stylesheet">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+<body>
+
+  <div class="view zoom-slide-transition">
+
+    <div class="container shared-view">
+      <div class="tool-bar">
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="view" id="view1">
+        <div class="container">
+
+          <div class="tool-bar">
+            View
+          </div>
+
+          <div class="content">
+            <div class="scroll-content">
+              <p>View</p>
+              <p><button id="fromViewToTabs">Go To Tabs</button></p>
+              <f></f><f></f><f></f><f></f><f></f><f></f><f></f>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="view hide" id="view2">
+
+        <div class="tool-bar">
+          Tabs
+        </div>
+
+        <div class="tool-bar tool-bar-bottom nav-bar">
+          <button class="nav-item">1</button>
+          <button class="nav-item">2</button>
+          <button class="nav-item">3</button>
+        </div>
+
+        <div class="container">
+
+          <div class="view">
+            <div class="container">
+              <div class="content">
+                <p>tab1</p>
+                <p>
+                  <button id="fromTabsToView">Go To View</button>
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+
+
+<script src="jquery.min.js"></script>
+<script>
+  $('#fromViewToTabs').click(function() {
+    $('#view1').attr('class', 'view view-center');
+    $('#view2').attr('class', 'view view-bottom-right');
+
+    setTimeout(function(){
+      $('#view1').attr('class', 'view view-zoom-out');
+      $('#view2').attr('class', 'view view-center');
+    }, 32);
+  });
+
+  $('#fromTabsToView').click(function() {
+    $('#view1').attr('class', 'view view-zoom-out');
+    $('#view2').attr('class', 'view view-center');
+
+    setTimeout(function(){
+      $('#view1').attr('class', 'view view-center');
+      $('#view2').attr('class', 'view view-bottom-right');
+
+      $('#view1 .scroll-content').css({
+        top: (Math.random() / 10000) + 'px'
+      });
+
+    }, 32);
+  });
+</script>

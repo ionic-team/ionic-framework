@@ -3,7 +3,7 @@
 // http://philipwalton.github.io/solved-by-flexbox/
 // https://github.com/philipwalton/solved-by-flexbox
 
-@mixin display-flex {
+@mixin flex-display {
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
@@ -12,7 +12,7 @@
   display: flex;
 }
 
-@mixin display-inline-flex {
+@mixin flex-display-inline {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -moz-inline-flex;

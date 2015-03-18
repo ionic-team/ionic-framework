@@ -1,0 +1,88 @@
+<link href="../../dist/css/ionic.css" rel="stylesheet">
+<link href="view.css" rel="stylesheet">
+<link href="transition.css" rel="stylesheet">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+<body ionic>
+
+  <div class="view ios-transition">
+
+    <div class="container shared-view">
+      <div class="tool-bar">
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="view" id="view1">
+        <div class="container">
+
+          <div class="tool-bar">
+            iOS View 1
+          </div>
+
+          <div class="content">
+            <div class="scroll-content">
+              <p>view1</p>
+              <p><button id="fromView1ToView2">iOS Transition to View 2</button></p>
+              <p>The header bg should NOT transition</p>
+              <p>Only the header text should transition</p>
+              <p>This should be tall and scrollable</p>
+              <p>Entire webpage should not bounce when you reach the top/bottom</p>
+              <f></f><f></f><f></f><f></f><f></f><f></f><f></f>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="view hide" id="view2">
+        <div class="container">
+
+          <div class="tool-bar">
+            iOS View 2
+          </div>
+
+          <div class="content">
+            <div class="scroll-content">
+              <p>view2</p>
+              <p><button id="fromView2ToView1">iOS Transition to View 1</button></p>
+              <p>This is a short view and should not be scrollable</p>
+              <p>When returning to view 1, make sure it can still scroll without
+                having to click view 1</p>
+              <p>Entire webpage should not bounce when trying to scroll</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+
+
+<script src="jquery.min.js"></script>
+<script>
+  $('#fromView1ToView2').click(function() {
+    $('#view1').attr('class', 'view view-center');
+    $('#view2').attr('class', 'view view-right');
+
+    setTimeout(function(){
+      $('#view1').attr('class', 'view view-left');
+      $('#view2').attr('class', 'view view-center');
+    }, 32);
+  });
+
+  $('#fromView2ToView1').click(function() {
+    $('#view1').attr('class', 'view view-left');
+    $('#view2').attr('class', 'view view-center');
+
+    setTimeout(function(){
+      $('#view1').attr('class', 'view view-center');
+      $('#view2').attr('class', 'view view-right');
+    }, 32);
+  });
+</script>

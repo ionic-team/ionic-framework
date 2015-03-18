@@ -53,7 +53,7 @@ gulp.task('sass-watch', ['sass'], function () {
 });
 
 gulp.task('sass', function(done) {
-  gulp.src('src/core-styles/ionic.scss')
+  gulp.src('src/core/styles/ionic.scss')
     .pipe(sass({
       onError: function(err) {
         console.log(err);

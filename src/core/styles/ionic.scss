@@ -8,17 +8,13 @@
 
 // Globals
 @import
-  "globals",
-  "includes";
-
-
-// Core
-@import
   "normalize",
-  "scaffolding",
-  "typography";
+  "globals",
+  "scaffolding";
 
 
 // Components (Conditional Includes)
-@import "../components/button/button";
-@import "../components/tabbar/tabbar";
+@import "components";
+@import "../../components/button/button";
+@import "../../components/tabbar/tabbar";
+
