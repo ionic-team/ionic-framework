@@ -1,4 +1,4 @@
-
+/*
 import {TabbarConfig} from '/components/tabbar/tabbar';
 import {Draggable} from '/behaviors/draggable';
 
@@ -15,6 +15,5 @@ TabbarConfig.platform('android')
     });
   });
 
-/*
   <ion-tabs config-platform-android />
 */

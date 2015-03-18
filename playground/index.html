@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- ES6-related imports -->
+    <script src="lib/traceur-runtime.js"></script>
+    <script src="lib/es6-module-loader-sans-promises.src.js"></script>
+    <script src="lib/extension-register.js"></script>
+    <script>
+        register(System);
+        <!-- TODO: how to get rid of this line? -->
+    </script>
+
+    <!-- Angular2-related imports -->
+    <script src="lib/angular2.js"></script>
+    <script src="lib/zone.js"></script>
+
+</head>
+<body>
+    <playground-main>
+        Loading...
+    </playground-main>
+</body>
+
+<!-- Application bootstrap logic -->
+<script>
+  System.import('./main');
+</script>
+
+</html>
