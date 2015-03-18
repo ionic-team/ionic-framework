@@ -6,7 +6,7 @@ import {Ion} from '../ion';
 })
 @Template({
   inline: `
-    <div class="modal-backdrop">
+    <div class="modal-backdrop active">
       <div class="modal-backdrop-bg"></div>
       <div class="modal-wrapper"><content></content></div>
     </div>`
