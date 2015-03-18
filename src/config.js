@@ -1,6 +1,5 @@
 import * as Platform from './platform';
 
-var i = 0;
 export function IonConfigService() {
 
   function Config() {
@@ -19,7 +18,6 @@ export function IonConfigService() {
 
   return Config;
 }
-
 
 class SubConfig {
   constructor(name, mixins = [], template = '') {
