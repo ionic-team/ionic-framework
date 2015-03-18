@@ -15,6 +15,10 @@ class PlaygroundMain {
   constructor() {
     console.log('Playground Start')
   }
+
+  showModal() {
+    Modal.show()
+  }
 }
 
 bootstrap(PlaygroundMain)

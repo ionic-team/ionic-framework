@@ -1,4 +1,4 @@
-import {Component, Template} from 'angular2/angular2';
+import {NgElement, Component, Template} from 'angular2/angular2';
 import {Ion} from '../ion';
 
 @Component({
@@ -12,9 +12,12 @@ import {Ion} from '../ion';
     </div>`
 })
 class ModalWrapper extends Ion {
-  constructor() {
+  constructor(@NgElement() el : NgElement) {
+    this.element = el
+    console.log('element', el)
   }
   show() {
+    this.element.domElement.classList.add('active')
   }
   hide() {
   }
@@ -34,4 +37,8 @@ class ModalWrapper extends Ion {
 })
 export class Modal extends Ion {
   constructor() {}
+
+  static show() {
+    console.log('Showing modal')
+  }
 }
