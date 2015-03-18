@@ -11,4 +11,4 @@ import 'ionic/components/tabbar/mixins/android/android-tabbar';
 })
 class PlaygroundMain {}
 
-bootstrap(PlaygroundMain);
+bootstrap(PlaygroundMain)

@@ -15,7 +15,7 @@ var sass = require('gulp-sass');
 var config = {
   dist: 'dist',
   src: {
-    js: 'src/**/*.js',
+    js: ['src/**/*.js', '!src/**/*.spec.js'],
     html: 'src/**/*.html',
     playgroundJs: 'playground/**/*.js',
     playgroundFiles: ['playground/**/*', '!playground/**/*.js'],
