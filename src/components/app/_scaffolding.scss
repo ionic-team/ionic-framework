@@ -1,14 +1,14 @@
 
-[ionic] {
+[ion-app] {
   @include flex-display();
   @include flex-direction(row);
 
   overflow: hidden;
+  height: 100%;
   max-width: 100%;
   max-height: 100%;
   margin: 0;
   padding: 0;
-  height: 100%;
 
   .view {
     position: relative;
@@ -26,7 +26,6 @@
 
   .tool-bar {
     display: block;
-    min-height: 50px;
   }
 
   .tool-bar-top {
@@ -68,4 +67,3 @@
   }
 
 }
-

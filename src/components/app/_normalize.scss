@@ -43,13 +43,13 @@ template {
 // ==========================================================================
 
 // Remove the gray background color from active links in IE 10.
-[ionic] a {
+[ion-app] a {
   background-color: transparent;
 }
 
 // Improve readability when focused and also mouse hovered in all browsers.
-[ionic] a:active,
-[ionic] a:hover {
+[ion-app] a:active,
+[ion-app] a:hover {
   outline: 0;
 }
 
@@ -90,12 +90,12 @@ sub {
 // ==========================================================================
 
 // Remove border when inside `a` element in IE 8/9/10.
-[ionic] img {
+[ion-app] img {
   border: 0;
 }
 
 // Correct overflow not hidden in IE 9/10/11.
-[ionic] svg:not(:root) {
+svg:not(:root) {
   overflow: hidden;
 }
 
@@ -104,12 +104,12 @@ sub {
 // ==========================================================================
 
 // Address margin not present in IE 8/9 and Safari.
-[ionic] figure {
+figure {
   margin: 1em 40px;
 }
 
 // Address differences between Firefox and other browsers.
-[ionic] hr {
+hr {
   -moz-box-sizing: content-box;
   box-sizing: content-box;
   height: 0;
