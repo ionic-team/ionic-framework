@@ -6,11 +6,13 @@ var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var del = require('del');
 var concat = require('gulp-concat');
+var debug = require('gulp-debug');
 var plumber = require('gulp-plumber');
 var rename = require('gulp-rename');
 var traceur = require('gulp-traceur');
 var lazypipe = require('lazypipe');
 var sass = require('gulp-sass');
+var wrap = require("gulp-wrap");
 var config = require('./scripts/build/config');
 var karma = require('karma').server;
 
@@ -128,4 +130,15 @@ gulp.task('angular2', function () {
     .pipe(traceur({ modules: 'instantiate', moduleName: true}))
     .pipe(concat('angular2.js'))
     .pipe(gulp.dest('dist/lib'));
+});
+
+
+gulp.task('demo', function () {
+  gulp.src(["./src/components/*/examples/*/index.html"])
+    .pipe(debug({title: 'Generating:'}))
+    .pipe(wrap({ src: './scripts/examples/template/index.html'}))
+    .pipe(rename(function(file) {
+      file.dirname = file.dirname.replace("/examples/","/");
+    }))
+    .pipe(gulp.dest("./dist/examples"));
 });
