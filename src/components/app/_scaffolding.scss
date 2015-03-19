@@ -27,18 +27,6 @@ html {
     width: 100%;
   }
 
-  .tool-bar {
-    display: block;
-  }
-
-  .tool-bar-top {
-    @include flex-order(20);
-  }
-
-  .tool-bar-bottom {
-    @include flex-order(80);
-  }
-
   .view > .container {
     position: relative;
     overflow: hidden;

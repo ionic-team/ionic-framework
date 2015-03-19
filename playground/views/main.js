@@ -1,6 +1,7 @@
 import {bootstrap} from 'angular2/core';
 import {Component, Template} from 'angular2/angular2';
-import {View, Content} from 'ionic/components/view/view';
+import {View} from 'ionic/components/view/view';
+import {Content} from 'ionic/components/view/content';
 
 
 @Component({ selector: '[ion-app]' })
@@ -10,8 +11,7 @@ import {View, Content} from 'ionic/components/view/view';
 })
 class IonicApp {
   constructor() {
-    console.log('IonicApp Start');
-    this.attrTitle = 'banana title';
+    console.log('IonicApp Start')
   }
 }
 

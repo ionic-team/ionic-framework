@@ -2,38 +2,15 @@ body {
   text-align: center;
 }
 
-.tool-bar button {
-  /*position: absolute;
-  right: 0;*/
-}
-
 .tab-bar .tab-item {
   color: blue;
 }
 
-.tool-bar {
+.bar {
   min-height: 50px;
   background: linear-gradient(45deg, #4c4c4c 0%,#595959 12%,#666666 25%,#474747 39%,#2c2c2c 50%,#000000 51%,#111111 60%,#2b2b2b 76%,#1c1c1c 91%,#131313 100%);
   color: white;
 }
-
-.nav-bar {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -moz-flex;
-  display: -ms-flexbox;
-  display: flex;
-
-  -webkit-justify-content: center;
-  -webkit-align-items: center;
-}
-
-.nav-bar > .nav-item {
-  -webkit-flex: 1;
-  max-width: 120px;
-}
-
 .view > .container > .content {
   background: linear-gradient(135deg, #f2f6f8 0%,#d8e1e7 50%,#b5c6d0 51%,#e0eff9 100%);
 }
