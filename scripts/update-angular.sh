@@ -9,7 +9,7 @@ function run {
   cd $SCRIPT_DIR/../config/lib/js/angular/
   rm -rf *.js
 
-  wget https://code.angularjs.org/$VERSION/angular{,-sanitize,-animate,-resource}{.min.js,.js}
+  wget https://code.angularjs.org/$VERSION/angular{,-sanitize,-animate,-resource,-aria,-messages}{.min.js,.js}
 
   # # no min versions of mocks and scenario
   wget https://code.angularjs.org/$VERSION/angular{-scenario,-mocks}.js
@@ -21,6 +21,7 @@ function run {
   replaceJsonProp "bower.json" "angular" "$VERSION"
   replaceJsonProp "bower.json" "angular-animate" "$VERSION"
   replaceJsonProp "bower.json" "angular-sanitize" "$VERSION"
+
 }
 
 source $(dirname $0)/utils.inc

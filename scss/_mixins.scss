@@ -150,6 +150,15 @@
     background-color: $on-bg-color;
   }
 }
+@mixin toggle-small-style($on-bg-color) {
+  // the track when the toggle is "on"
+  & input:checked + .track {
+    background-color: rgba($on-bg-color, .5);
+  }
+  & input:checked + .track .handle {
+    background-color: $on-bg-color;
+  }
+}
 
 
 // Clearfix

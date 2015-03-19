@@ -13,7 +13,7 @@ IonicModule
         parentGet,
         unwatch;
 
-      switch(mode) {
+      switch (mode) {
         case '@':
           if (!attrs[attrName]) {
             return;

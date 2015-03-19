@@ -241,9 +241,11 @@
   }
   .buttons-left span {
     margin-right: 5px;
+    display: inherit;
   }
   .buttons-right span {
     margin-left: 5px;
+    display: inherit;
   }
 
   // Place the last button in a bar on the right of the bar
@@ -256,6 +258,26 @@
     top: 5px;
     right: 5px;
     bottom: 5px;
+  }
+
+}
+
+.platform-android {
+
+  .nav-bar-has-subheader .bar {
+    background-image: none;
+  }
+
+  .bar {
+
+    .back-button .icon:before {
+      font-size: 24px;
+    }
+
+    .title {
+      font-size: 19px;
+      line-height: $bar-height;
+    }
   }
 
 }
@@ -326,6 +348,10 @@
     background-image: none;
   }
 }
+.tabs-top .bar-header{
+  border-bottom-width: 0px;
+  background-image: none;
+}
 
 // Footer at bottom
 .bar-footer {
@@ -371,3 +397,8 @@
 .bar .buttons .hide {
   display: none;
 }
+
+.nav-bar-tabs-top .bar {
+  background-image: none;
+}
+

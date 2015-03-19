@@ -281,8 +281,8 @@ $tab-item-max-width:              150px !default;
 
 $tabs-off-opacity:                0.4 !default;
 $tabs-striped-off-opacity:        $tabs-off-opacity !default;
-$tabs-striped-off-color: #000;
-$tabs-striped-border-width: 2px;
+$tabs-striped-off-color:          #000 !default;
+$tabs-striped-border-width:       2px !default;
 
 
 // Items
@@ -446,8 +446,8 @@ $progress-margin:                 15px auto !default;
 // Toggle
 // -------------------------------
 
-$toggle-width:                    54px !default;
-$toggle-height:                   32px !default;
+$toggle-width:                    51px !default;
+$toggle-height:                   31px !default;
 $toggle-border-width:             2px !default;
 $toggle-border-radius:            20px !default;
 
@@ -456,8 +456,8 @@ $toggle-handle-height:            $toggle-handle-width !default;
 $toggle-handle-radius:            $toggle-handle-width !default;
 $toggle-handle-dragging-bg-color: darken(#fff, 5%) !default;
 
-$toggle-off-bg-color:             #E5E5E5 !default;
-$toggle-off-border-color:         #E5E5E5 !default;
+$toggle-off-bg-color:             #fff !default;
+$toggle-off-border-color:         #e6e6e6 !default;
 
 $toggle-on-light-bg:              $button-light-border !default;
 $toggle-on-light-border:          $toggle-on-light-bg !default;
@@ -477,13 +477,13 @@ $toggle-on-royal-bg:              $royal !default;
 $toggle-on-royal-border:          $toggle-on-royal-bg !default;
 $toggle-on-dark-bg:               $dark !default;
 $toggle-on-dark-border:           $toggle-on-dark-bg !default;
-$toggle-on-default-bg:            $positive !default;
+$toggle-on-default-bg:            #4cd964 !default;
 $toggle-on-default-border:        $toggle-on-default-bg !default;
 
 $toggle-handle-off-bg-color:      $light !default;
 $toggle-handle-on-bg-color:       $toggle-handle-off-bg-color !default;
 
-$toggle-transition-duration:      .2s !default;
+$toggle-transition-duration:      .3s !default;
 
 $toggle-hit-area-expansion:   5px;
 
@@ -559,7 +559,7 @@ $menu-side-shadow:                -1px 0px 2px rgba(0, 0, 0, 0.2), 1px 0px 2px r
 // -------------------------------
 
 $modal-bg-color:                  #fff !default;
-$modal-backdrop-bg-active:        rgba(0,0,0,0.5) !default;
+$modal-backdrop-bg-active:        #000 !default;
 $modal-backdrop-bg-inactive:      rgba(0,0,0,0) !default;
 
 $modal-inset-mode-break-point:    680px !default;  // @media min-width
@@ -603,12 +603,13 @@ $grid-responsive-lg-break:        1023px !default; // smaller than landscape tab
 // Action Sheets
 // -------------------------------
 
-$sheet-bg-color:                  rgba(255, 255, 255, 0.6) !default;
-$sheet-opacity:                   0.95 !default;
+$sheet-margin:                    8px !default;
+$sheet-border-radius:             4px !default;
 
-$sheet-border-radius:             3px 3px 3px 3px !default;
-$sheet-border-radius-top:         3px 3px 0px 0px !default;
-$sheet-border-radius-bottom:      0px 0px 3px 3px !default;
+$sheet-options-bg-color:          #f1f2f3 !default;
+$sheet-options-bg-active-color:   #e4e5e7 !default;
+$sheet-options-text-color:        #007aff !default;
+$sheet-options-border-color:      #d1d3d6 !default;
 
 
 // Popups
@@ -677,6 +678,43 @@ $badge-dark-text:                 $button-dark-text !default;
 
 $badge-default-bg:                transparent !default;
 $badge-default-text:              #AAAAAA !default;
+
+
+// Spinners
+// -------------------------------
+
+$spinner-width:                   28px !default;
+$spinner-height:                  28px !default;
+
+$spinner-light-stroke:            $light !default;
+$spinner-light-fill:              $light !default;
+
+$spinner-stable-stroke:           $stable !default;
+$spinner-stable-fill:             $stable !default;
+
+$spinner-positive-stroke:         $positive !default;
+$spinner-positive-fill:           $positive !default;
+
+$spinner-calm-stroke:             $calm !default;
+$spinner-calm-fill:               $calm !default;
+
+$spinner-balanced-stroke:         $balanced !default;
+$spinner-balanced-fill:           $balanced !default;
+
+$spinner-assertive-stroke:        $assertive !default;
+$spinner-assertive-fill:          $assertive !default;
+
+$spinner-energized-stroke:        $energized !default;
+$spinner-energized-fill:          $energized !default;
+
+$spinner-royal-stroke:            $royal !default;
+$spinner-royal-fill:              $royal !default;
+
+$spinner-dark-stroke:             $dark !default;
+$spinner-dark-fill:               $dark !default;
+
+$spinner-default-stroke:          $dark !default;
+$spinner-default-fill:            $dark !default;
 
 
 // Z-Indexes

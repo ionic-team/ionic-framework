@@ -25,6 +25,22 @@ describe('ionList directive', function() {
     expect(el.children().html()).toBe('<hello></hello>');
   });
 
+  it('should provide gesture prevent_default_directions if native scrolling', function() {
+    spyOn(window.ionic,'onGesture');
+
+    var el = setup('', '<hello></hello>');
+    flush();
+    expect(window.ionic.onGesture).toHaveBeenCalled();
+    args = window.ionic.onGesture.mostRecentCall.args;
+    expect(args[3]).toEqual({});
+
+    var el = setup('class="overflow-scroll"', '<hello></hello>');
+    flush();
+    var gestureOpts = {prevent_default_directions: ['left','right']};
+    args = window.ionic.onGesture.mostRecentCall.args;
+    expect(args[3]).toEqual(gestureOpts);
+  });
+
   it('should give options to listView after init', function() {
     var options;
     spyOn(ionic.views, 'ListView').andCallFake(function(o) {

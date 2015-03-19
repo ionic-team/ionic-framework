@@ -313,7 +313,8 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
               // the forward has a history
               for (x = tmp.stack.length - 1; x >= forwardView.index; x--) {
                 // starting from the end destroy all forwards in this history from this point
-                tmp.stack[x].destroy();
+                var stack_x = tmp.stack[x];
+                stack_x && stack_x.destroy && stack_x.destroy();
                 tmp.stack.splice(x);
               }
               historyId = forwardView.historyId;
@@ -391,7 +392,10 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
           if (hist.stack[x].viewId == viewId) {
             action = 'dupNav';
             direction = DIRECTION_NONE;
-            hist.stack[x - 1].forwardViewId = viewHistory.forwardView = null;
+            if (x > 0) {
+              hist.stack[x - 1].forwardViewId = null;
+            }
+            viewHistory.forwardView = null;
             viewHistory.currentView.index = viewHistory.backView.index;
             viewHistory.currentView.backViewId = viewHistory.backView.backViewId;
             viewHistory.backView = getBackView(viewHistory.backView);
@@ -410,7 +414,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
         action: action,
         direction: direction,
         historyId: historyId,
-        enableBack: !!(viewHistory.backView && viewHistory.backView.historyId === viewHistory.currentView.historyId),
+        enableBack: this.enabledBack(viewHistory.currentView),
         isHistoryRoot: (viewHistory.currentView.index === 0),
         ele: ele
       };
@@ -498,10 +502,9 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
      * @description Gets the back view's title.
      * @returns {string} Returns the back view's title.
      */
-    backTitle: function() {
-      if (viewHistory.backView) {
-        return viewHistory.backView.title;
-      }
+    backTitle: function(view) {
+      var backView = (view && getViewById(view.backViewId)) || viewHistory.backView;
+      return backView && backView.title;
     },
 
     /**
@@ -558,6 +561,12 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
      */
     goBack: function() {
       viewHistory.backView && viewHistory.backView.go();
+    },
+
+
+    enabledBack: function(view) {
+      var backView = getBackView(view);
+      return !!(backView && backView.historyId === view.historyId);
     },
 
     /**
@@ -643,7 +652,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
           nextViewOptions = nextViewOptions || {};
           extend(nextViewOptions, opts);
           if (nextViewOptions.expire) {
-            nextViewExpireTimer = $timeout(function(){
+            nextViewExpireTimer = $timeout(function() {
               nextViewOptions = null;
             }, nextViewOptions.expire);
           }

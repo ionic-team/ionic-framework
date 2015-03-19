@@ -7,6 +7,11 @@ function($document, $ionicBody, $timeout) {
   var CSS_HIDE = 'click-block-hide';
   var cbEle, fallbackTimer, pendingShow;
 
+  function preventClick(ev) {
+    ev.preventDefault();
+    ev.stopPropagation();
+  }
+
   function addClickBlock() {
     if (pendingShow) {
       if (cbEle) {
@@ -15,6 +20,8 @@ function($document, $ionicBody, $timeout) {
         cbEle = $document[0].createElement('div');
         cbEle.className = 'click-block';
         $ionicBody.append(cbEle);
+        cbEle.addEventListener('touchstart', preventClick);
+        cbEle.addEventListener('mousedown', preventClick);
       }
       pendingShow = false;
     }
@@ -29,12 +36,12 @@ function($document, $ionicBody, $timeout) {
       pendingShow = true;
       $timeout.cancel(fallbackTimer);
       fallbackTimer = $timeout(this.hide, autoExpire || 310);
-      ionic.requestAnimationFrame(addClickBlock);
+      addClickBlock();
     },
     hide: function() {
       pendingShow = false;
       $timeout.cancel(fallbackTimer);
-      ionic.requestAnimationFrame(removeClickBlock);
+      removeClickBlock();
     }
   };
 }]);

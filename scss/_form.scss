@@ -53,7 +53,7 @@ textarea {
 
   input {
     @include border-radius(0);
-    @include flex(1, 0, 220px);
+    @include flex(1, 220px);
     @include appearance(none);
     margin: 0;
     padding-right: 24px;
@@ -110,7 +110,6 @@ textarea {
 }
 
 .input-label {
-  @include flex(1, 0, 100px);
   display: table;
   padding: 7px 10px 7px 0px;
   max-width: 200px;
@@ -214,10 +213,13 @@ input[type="color"] {
   }
 }
 
-input,
-textarea {
-  width: 100%;
+.item-input {
+  input,
+  textarea {
+    width: 100%;
+  }
 }
+
 textarea {
   padding-left: 0;
   @include placeholder($input-color-placeholder, -3px);
@@ -255,14 +257,16 @@ input[type="checkbox"] {
 }
 
 // Reset width of input images, buttons, radios, checkboxes
-input[type="file"],
-input[type="image"],
-input[type="submit"],
-input[type="reset"],
-input[type="button"],
-input[type="radio"],
-input[type="checkbox"] {
-  width: auto; // Override of generic input selector
+.item-input {
+  input[type="file"],
+  input[type="image"],
+  input[type="submit"],
+  input[type="reset"],
+  input[type="button"],
+  input[type="radio"],
+  input[type="checkbox"] {
+    width: auto; // Override of generic input selector
+  }
 }
 
 // Set the height of file to match text inputs

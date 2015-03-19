@@ -194,15 +194,26 @@ describe('$ionicLoading service', function() {
     }));
   });
 
-  it('should use options.hideOnStateChange', inject(function($ionicLoading, $rootScope, $timeout) {
+  it('should use options.hideOnStateChange to hide on $stateChangeSuccess', inject(function($ionicLoading, $rootScope, $timeout) {
     var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
     $ionicLoading.show({
       hideOnStateChange: true,
       template: ''
     });
     spyOn(loader, 'hide');
-    $timeout.flush();
     $rootScope.$broadcast('$stateChangeSuccess');
+    $rootScope.$apply();
+    expect(loader.hide).toHaveBeenCalled();
+  }));
+
+  it('should use options.hideOnStateChange to hide on $stateChangeError', inject(function($ionicLoading, $rootScope, $timeout) {
+    var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
+    $ionicLoading.show({
+      hideOnStateChange: true,
+      template: ''
+    });
+    spyOn(loader, 'hide');
+    $rootScope.$broadcast('$stateChangeError');
     $rootScope.$apply();
     expect(loader.hide).toHaveBeenCalled();
   }));
@@ -213,7 +224,6 @@ describe('$ionicLoading service', function() {
       template: ''
     });
     spyOn(loader, 'hide');
-    $timeout.flush();
     $rootScope.$broadcast('$stateChangeSuccess');
     $rootScope.$apply();
     expect(loader.hide).not.toHaveBeenCalled();

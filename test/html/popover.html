@@ -106,6 +106,8 @@
       angular.module('ionicApp', ['ionic'])
 
       .controller('AppCtrl', function($scope, $ionicPopover) {
+        $scope.popover = $ionicPopover.fromTemplate('<ion-popover-view><div>hello, popover</div></ion-popover-view>');
+        $scope.popover2 = $ionicPopover.fromTemplate('<ion-popover-view><div>hello, popover2</div></ion-popover-view>');
 
         $scope.openPopover = function($event) {
           $scope.popover.show($event);

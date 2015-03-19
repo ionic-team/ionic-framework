@@ -1,5 +1,5 @@
 /**
- * @license AngularJS v1.3.6
+ * @license AngularJS v1.3.13
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -105,7 +105,8 @@ function $AriaProvider() {
    *  - **ariaMultiline** – `{boolean}` – Enables/disables aria-multiline tags
    *  - **ariaValue** – `{boolean}` – Enables/disables aria-valuemin, aria-valuemax and aria-valuenow tags
    *  - **tabindex** – `{boolean}` – Enables/disables tabindex tags
-   *  - **bindKeypress** – `{boolean}` – Enables/disables keypress event binding on ng-click
+   *  - **bindKeypress** – `{boolean}` – Enables/disables keypress event binding on `&lt;div&gt;` and
+   *    `&lt;li&gt;` elements with ng-click
    *
    * @description
    * Enables/disables various ARIA attributes
@@ -302,21 +303,35 @@ ngAriaModule.directive('ngShow', ['$aria', function($aria) {
     }
   };
 })
-.directive('ngClick',['$aria', function($aria) {
+.directive('ngClick',['$aria', '$parse', function($aria, $parse) {
   return {
     restrict: 'A',
-    link: function(scope, elem, attr) {
-      if ($aria.config('tabindex') && !elem.attr('tabindex')) {
-        elem.attr('tabindex', 0);
-      }
+    compile: function(elem, attr) {
+      var fn = $parse(attr.ngClick, /* interceptorFn */ null, /* expensiveChecks */ true);
+      return function(scope, elem, attr) {
 
-      if ($aria.config('bindKeypress') && !elem.attr('ng-keypress')) {
-        elem.on('keypress', function(event) {
-          if (event.keyCode === 32 || event.keyCode === 13) {
-            scope.$eval(attr.ngClick);
+        function isNodeOneOf(elem, nodeTypeArray) {
+          if (nodeTypeArray.indexOf(elem[0].nodeName) !== -1) {
+            return true;
           }
-        });
-      }
+        }
+
+        if ($aria.config('tabindex') && !elem.attr('tabindex')) {
+          elem.attr('tabindex', 0);
+        }
+
+        if ($aria.config('bindKeypress') && !attr.ngKeypress && isNodeOneOf(elem, ['DIV', 'LI'])) {
+          elem.on('keypress', function(event) {
+            if (event.keyCode === 32 || event.keyCode === 13) {
+              scope.$apply(callback);
+            }
+
+            function callback() {
+              fn(scope, { $event: event });
+            }
+          });
+        }
+      };
     }
   };
 }])

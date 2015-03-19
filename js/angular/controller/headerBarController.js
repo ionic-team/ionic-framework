@@ -122,13 +122,14 @@ function($scope, $element, $attrs, $q, $ionicConfig, $ionicHistory) {
   };
 
 
-  self.resetBackButton = function() {
+  self.resetBackButton = function(viewData) {
     if ($ionicConfig.backButton.previousTitleText()) {
       var previousTitleEle = getEle(PREVIOUS_TITLE);
       if (previousTitleEle) {
         previousTitleEle.classList.remove(HIDE);
 
-        var newPreviousTitleText = $ionicHistory.backTitle();
+        var view = (viewData && $ionicHistory.getViewById(viewData.viewId));
+        var newPreviousTitleText = $ionicHistory.backTitle(view);
 
         if (newPreviousTitleText !== previousTitleText) {
           previousTitleText = previousTitleEle.innerHTML = newPreviousTitleText;

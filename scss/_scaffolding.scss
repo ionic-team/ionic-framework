@@ -41,6 +41,7 @@ body,
   text-rendering: optimizeLegibility;
   -webkit-backface-visibility: hidden;
   -webkit-user-drag: none;
+  -ms-content-zooming: none;
 }
 
 body.grade-b,
@@ -66,7 +67,8 @@ body.grade-c {
   margin-top: -1px;
 
   // Prevents any distortion of lines
-  padding-top:1px;
+  padding-top: 1px;
+  margin-bottom: -1px;
 
   width: auto;
   height: auto;
@@ -95,11 +97,6 @@ body.grade-c {
   @include touch-callout(none);
   @include text-size-adjust(none);
   @include transform-origin(left, top);
-}
-
-// hide webkit scrollbars
-::-webkit-scrollbar {
-  display:none;
 }
 
 // Scroll bar styles
@@ -157,114 +154,11 @@ body.grade-c {
   }
 }
 
-@keyframes refresh-spin {
-  0% { transform: translate3d(0,0,0) rotate(0); }
-  100% { transform: translate3d(0,0,0) rotate(180deg); }
-}
-
-@-webkit-keyframes refresh-spin {
-  0% {-webkit-transform: translate3d(0,0,0) rotate(0); }
-  100% {-webkit-transform: translate3d(0,0,0) rotate(180deg); }
-}
-
-@keyframes refresh-spin-back {
-  0% { transform: translate3d(0,0,0) rotate(180deg); }
-  100% { transform: translate3d(0,0,0) rotate(0); }
-}
-
-@-webkit-keyframes refresh-spin-back {
-  0% {-webkit-transform: translate3d(0,0,0) rotate(180deg); }
-  100% {-webkit-transform: translate3d(0,0,0) rotate(0); }
-}
-
-// Scroll refresher (for pull to refresh)
-.scroll-refresher {
-  position: absolute;
-  top: -60px;
-  right: 0;
-  left: 0;
-  overflow: hidden;
-  margin: auto;
-  height: 60px;
-
-  .ionic-refresher-content {
-    position: absolute;
-    bottom: 15px;
-    left: 0;
-    width: 100%;
-    color: $scroll-refresh-icon-color;
-    text-align: center;
-
-    font-size: 30px;
-
-    .text-refreshing,
-    .text-pulling {
-      font-size: 16px;
-      line-height: 16px;
-    }
-    &.ionic-refresher-with-text {
-      bottom: 10px;
-    }
-  }
-
-  .icon-refreshing,
-  .icon-pulling {
-    width: 100%;
-    -webkit-backface-visibility: hidden;
-    -webkit-transform-style: preserve-3d;
-    backface-visibility: hidden;
-    transform-style: preserve-3d;
-  }
-  .icon-pulling {
-    @include animation-name(refresh-spin-back);
-    @include animation-duration(200ms);
-    @include animation-timing-function(linear);
-    @include animation-fill-mode(none);
-    -webkit-transform: translate3d(0,0,0) rotate(0deg);
-    transform: translate3d(0,0,0) rotate(0deg);
-  }
-  .icon-refreshing,
-  .text-refreshing {
-    display: none;
-  }
-  .icon-refreshing {
-    @include animation-duration(1.5s);
-  }
-
-  &.active {
-    .icon-pulling:not(.pulling-rotation-disabled) {
-      @include animation-name(refresh-spin);
-      -webkit-transform: translate3d(0,0,0) rotate(-180deg);
-      transform: translate3d(0,0,0) rotate(-180deg);
-    }
-    &.refreshing {
-      @include transition(transform .2s);
-      @include transition(-webkit-transform .2s);
-      -webkit-transform: scale(1,1);
-      transform: scale(1,1);
-      .icon-pulling,
-      .text-pulling {
-        display: none;
-      }
-      .icon-refreshing,
-      .text-refreshing {
-        display: block;
-      }
-      &.refreshing-tail{
-        -webkit-transform: scale(0,0);
-        transform: scale(0,0);
-      }
-    }
-  }
-}
-
 ion-infinite-scroll {
   height: 60px;
   width: 100%;
-  opacity: 0;
   display: block;
 
-  @include transition(opacity 0.25s);
   @include display-flex();
   @include flex-direction(row);
   @include justify-content(center);
@@ -275,9 +169,17 @@ ion-infinite-scroll {
     font-size: 30px;
     color: $scroll-refresh-icon-color;
   }
-
-  &.active {
-    opacity: 1;
+  .icon:before,
+  .spinner{
+    -webkit-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
+  }
+  &:not(.active){
+    .spinner,
+    .icon:before{
+      -webkit-transform: translate3d(-1000px,0,0);
+      transform: translate3d(-1000px,0,0);
+    }
   }
 }
 
@@ -330,6 +232,10 @@ ion-infinite-scroll {
 .has-tabs,
 .bar-footer.has-tabs {
   bottom: $tabs-height;
+  &.pane{
+    bottom: $tabs-height;
+    height:auto;
+  }
 }
 
 .has-footer.has-tabs {

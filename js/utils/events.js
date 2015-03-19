@@ -127,6 +127,8 @@
      * @param {function(e)} callback The function to call when the gesture
      * happens.
      * @param {DOMElement} element The angular element to listen for the event on.
+     * @param {object} options object.
+     * @returns {ionic.Gesture} The gesture object (use this to remove the gesture later on).
      */
     onGesture: function(type, callback, element, options) {
       var gesture = new ionic.Gesture(element, options);
@@ -138,13 +140,14 @@
      * @ngdoc method
      * @name ionic.EventController#offGesture
      * @alias ionic.offGesture
-     * @description Remove an event listener for a gesture on an element.
-     * @param {string} eventType The gesture event.
-     * @param {function(e)} callback The listener that was added earlier.
-     * @param {DOMElement} element The element the listener was added on.
+     * @description Remove an event listener for a gesture created on an element.
+     * @param {ionic.Gesture} gesture The gesture that should be removed.
+     * @param {string} eventType The gesture event to remove the listener for.
+     * @param {function(e)} callback The listener to remove.
+
      */
     offGesture: function(gesture, type, callback) {
-      gesture.off(type, callback);
+      gesture && gesture.off(type, callback);
     },
 
     handlePopState: function(event) {}
