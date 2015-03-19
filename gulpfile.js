@@ -11,28 +11,12 @@ var rename = require('gulp-rename');
 var traceur = require('gulp-traceur');
 var lazypipe = require('lazypipe');
 var sass = require('gulp-sass');
-
-var config = {
-  dist: 'dist',
-  src: {
-    js: ['src/**/*.js', '!src/**/*.spec.js'],
-    html: 'src/**/*.html',
-    scss: 'src/components/**/*.scss',
-    playgroundJs: 'playground/**/*.js',
-    playgroundFiles: ['playground/**/*', '!playground/**/*.js'],
-  },
-  lib: [
-    'node_modules/gulp-traceur/node_modules/traceur/bin/traceur-runtime.js',
-    'node_modules/es6-module-loader/dist/es6-module-loader-sans-promises.src.js',
-    'node_modules/systemjs/lib/extension-register.js',
-    'node_modules/angular2/node_modules/zone.js/zone.js',
-    'node_modules/hammerjs/hammer.js'
-  ]
-};
+var config = require('./scripts/build/config');
+var karma = require('karma').server;
 
 gulp.task('default', ['js', 'html', 'sass', 'libs', 'playgroundJs', 'playgroundFiles']);
 
-gulp.task('watch', ['default'], function () {
+gulp.task('watch', ['default'], function() {
   var http = require('http');
   var connect = require('connect');
   var serveStatic = require('serve-static');
@@ -48,6 +32,13 @@ gulp.task('watch', ['default'], function () {
   var app = connect().use(serveStatic(__dirname + '/' + config.dist));  // serve everything that is static
   http.createServer(app).listen(port);
   console.log('Serving `dist` on http://localhost:' + port);
+});
+
+gulp.task('karma', function() {
+  return karma.start({ configFile: __dirname + '/scripts/test/karma.conf.js' });
+});
+gulp.task('karma-watch', function() {
+  return karma.start({ configFile: __dirname + '/scripts/test/karma-watch.conf.js' });
 });
 
 gulp.task('sass-watch', ['sass'], function () {

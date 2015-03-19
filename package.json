@@ -11,6 +11,7 @@
     "gulp-rename": "~1.2.0",
     "gulp-sass": "^1.3.3",
     "gulp-traceur": "0.16.*",
+    "karma": "^0.12.31",
     "lazypipe": "^0.2.2",
     "open": "0.0.5",
     "serve-static": "~1.8.1",
@@ -20,7 +21,11 @@
     "angular2": "2.0.0-alpha.13",
     "es6-module-loader": "~0.11.0",
     "hammerjs": "^2.0.4",
+    "jasmine-core": "^2.2.0",
+    "karma-chrome-launcher": "^0.1.7",
+    "karma-jasmine": "^0.3.5",
     "systemjs": "~0.11.0",
+    "traceur": "0.0.87",
     "zone.js": "0.4.1"
   }
 }
