@@ -1,7 +1,6 @@
 import {bootstrap} from 'angular2/core';
 import {Component, Template} from 'angular2/angular2';
 import {Modal} from 'ionic/components/modal/modal';
-import {SideMenu, SideMenuParent} from 'ionic/components/sidemenu/sidemenu';
 import {Switch} from 'ionic/components/switch/switch';
 import {SideMenu, SideMenuParent} from 'ionic/components';
 

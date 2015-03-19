@@ -1,4 +1,5 @@
 import {NgElement, Component, Template, Parent} from 'angular2/angular2';
+import {History} from '../../history';
 import {Ion} from '../ion';
 
 
@@ -24,7 +25,7 @@ import {Ion} from '../ion';
     </div>
     `
 })
-export class Tabs extends Ion {
+export class Tabs extends View {
 
   constructor(@NgElement() ele:NgElement) {
     ele.domElement.classList.add('view');
@@ -36,6 +37,11 @@ export class Tabs extends Ion {
   add(tab) {
     this.tabs.push(tab);
     tab.show(this.tabs.length === 1);
+
+  }
+
+  selectTab(tab) {
+    this.showHistory(tab.history);
   }
 
 }
@@ -58,10 +64,11 @@ export class Tabs extends Ion {
     </div>
     `
 })
-export class Tab extends Ion {
+export class Tab extends View {
 
   constructor(@NgElement() ele:NgElement, @Parent() tabs: Tabs) {
     this.ele = ele;
+    this.history = new History();
 
     ele.domElement.classList.add('view');
     ele.domElement.classList.add('tab-view');
