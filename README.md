@@ -5,7 +5,7 @@
 
 The best place to start with Ionic is our [documentation page](http://ionicframework.com/docs/).
 
-Ionic currently best supports iOS 7+ and Android 4.1+.
+Ionic currently best supports iOS 6+ and Android 4.1+, with scaled-down support for Android 2.3.
 
 # What is Ionic?
 
@@ -66,7 +66,25 @@ For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/`
 
 ## Authors
 
-Originally created by [Adam Bradley](http://twitter.com/adamdbradley), [Ben Sperry](http://twitter.com/benjsperry), and [Max Lynch](http://twitter.com/maxlynch), Ionic has seen hundreds of great [contributors](https://github.com/driftyco/ionic/graphs/contributors) from around the world, including Ionic Team Members [Andrew Joslin](http://twitter.com/andrewtjoslin), [Perry Govier](http://twitter.com/perrygovier), and [Mike Hartington](http://twitter.com/mhartington).
+**Max Lynch**
+
++ <https://twitter.com/maxlynch>
++ <https://github.com/mlynch>
+
+**Ben Sperry**
+
++ <https://twitter.com/benjsperry>
++ <https://github.com/bensperry>
+
+**Adam Bradley**
+
++ <https://twitter.com/adamdbradley>
++ <https://github.com/adamdbradley>
+
+**Andrew Joslin**
+
++ <https://twitter.com/andrewtjoslin>
++ <https://github.com/ajoslin>
 
 ## Development
 
@@ -102,7 +120,7 @@ Originally created by [Adam Bradley](http://twitter.com/adamdbradley), [Ben Sper
 
 ### Commit Conventions
 
-* Uses these [commit conventions](http://github.com/ajoslin/conventional-changelog)
+* Uses http://github.com/ajoslin/conventional-changelog conventions
 
 ### Pushing New Release of Ionic
 

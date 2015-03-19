@@ -474,7 +474,6 @@ button.item.item-button-right {
     max-width: $item-avatar-width;
     max-height: $item-avatar-height;
     width: 100%;
-    height: 100%;
     border-radius: $item-avatar-border-radius;
   }
 }
@@ -492,7 +491,6 @@ button.item.item-button-right {
     max-width: $item-avatar-width;
     max-height: $item-avatar-height;
     width: 100%;
-    height: 100%;
     border-radius: $item-avatar-border-radius;
   }
 }
@@ -515,7 +513,6 @@ button.item.item-button-right {
     max-width: $item-thumbnail-width;
     max-height: $item-thumbnail-height;
     width: 100%;
-    height: 100%;
   }
 }
 .item-avatar.item-complex,
@@ -539,7 +536,6 @@ button.item.item-button-right {
     max-width: $item-thumbnail-width;
     max-height: $item-thumbnail-height;
     width: 100%;
-    height: 100%;
   }
 }
 .item-avatar-right.item-complex,
@@ -637,6 +633,12 @@ button.item.item-button-right {
   @include translate3d($item-left-edit-open-width, 0, 0);
 }
 
+.list-right-editing .item-right-editable .item-content,
+.item-right-editing.item-right-editable .item-content {
+  // actively editing the left side of the item
+  @include translate3d(-$item-right-edit-open-width, 0, 0);
+}
+
 .item-remove-animate {
   &.ng-leave {
     @include transition-duration( $item-remove-transition-duration );
@@ -725,11 +727,11 @@ button.item.item-button-right {
 // -------------------------------
 
 .item-right-edit {
-  @include transition(all $item-edit-transition-function $item-edit-transition-duration);
+  @include transition(all $item-edit-transition-function $item-edit-transition-duration / 2);
   position: absolute;
   top: 0;
   right: 0;
-  z-index: $z-index-item-reorder;
+  z-index: 0;
   width: $item-right-edit-open-width *  1.5;
   height: 100%;
   background: inherit;
@@ -749,16 +751,20 @@ button.item.item-button-right {
     }
   }
 
-  display: block;
+  display: none;
   opacity: 0;
-  @include translate3d($item-right-edit-open-width *  1.5, 0, 0);
+  @include translate3d($item-right-edit-open-width / 2, 0, 0);
   &.visible {
     display: block;
+    z-index: $z-index-item-reorder;
     &.active {
       opacity: 1;
       @include translate3d(0, 0, 0);
     }
   }
+}
+.list-right-editing .item-right-edit {
+  @include transition-delay($item-edit-transition-duration / 2);
 }
 
 
@@ -780,7 +786,7 @@ button.item.item-button-right {
   box-shadow: 0px 0px 10px 0px #aaa;
 
   .item-reorder {
-    z-index: $z-index-item-reordering;
+    z-index: 1;
   }
 }
 

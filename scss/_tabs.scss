@@ -295,27 +295,25 @@ ion-tabs {
     .tab-item{
       background: transparent;
       // animate the top bar, leave bottom for platform consistency
-      -webkit-transition: color .1s ease;
-      -moz-transition: color .1s ease;
-      -ms-transition: color .1s ease;
-      -o-transition: color .1s ease;
-      transition: color .1s ease;
+      -webkit-transition: all .1s ease;
+      -moz-transition: all .1s ease;
+      -ms-transition: all .1s ease;
+      -o-transition: all .1s ease;
+      transition: all .1s ease;
       &.tab-item-active,
       &.active,
       &.activated {
-        margin-top: $tabs-striped-border-width - 1px;
+        margin-top: 0;
+        margin-bottom: -$tabs-striped-border-width;
         border-width: 0px 0px $tabs-striped-border-width 0px !important;
         border-style: solid;
-        > .badge, > i{
-          margin-top: -$tabs-striped-border-width + 1px;
-        }
       }
       .badge{
-        -webkit-transition: color .2s ease;
-        -moz-transition: color .2s ease;
-        -ms-transition: color .2s ease;
-        -o-transition: color .2s ease;
-        transition: color .2s ease;
+        -webkit-transition: all .2s ease;
+        -moz-transition: all .2s ease;
+        -ms-transition: all .2s ease;
+        -o-transition: all .2s ease;
+        transition: all .2s ease;
       }
     }
   }

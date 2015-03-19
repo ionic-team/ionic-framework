@@ -24,9 +24,9 @@
  */
 IonicModule
 .directive('ionToggle', [
+  '$ionicGesture',
   '$timeout',
-  '$ionicConfig',
-function($timeout, $ionicConfig) {
+function($ionicGesture, $timeout) {
 
   return {
     restrict: 'E',
@@ -61,36 +61,38 @@ function($timeout, $ionicConfig) {
         }
       });
 
-      if (attr.toggleClass) {
+      if(attr.toggleClass) {
         element[0].getElementsByTagName('label')[0].classList.add(attr.toggleClass);
       }
 
-      element.addClass('toggle-' + $ionicConfig.form.toggle());
+      return function($scope, $element, $attr) {
+         var el, checkbox, track, handle;
 
-      return function($scope, $element) {
-        var el = $element[0].getElementsByTagName('label')[0];
-        var checkbox = el.children[0];
-        var track = el.children[1];
-        var handle = track.children[0];
+         el = $element[0].getElementsByTagName('label')[0];
+         checkbox = el.children[0];
+         track = el.children[1];
+         handle = track.children[0];
 
-        var ngModelController = jqLite(checkbox).controller('ngModel');
+         var ngModelController = jqLite(checkbox).controller('ngModel');
 
-        $scope.toggle = new ionic.views.Toggle({
-          el: el,
-          track: track,
-          checkbox: checkbox,
-          handle: handle,
-          onChange: function() {
-            if (ngModelController) {
-              ngModelController.$setViewValue(checkbox.checked);
-              $scope.$apply();
-            }
-          }
-        });
+         $scope.toggle = new ionic.views.Toggle({
+           el: el,
+           track: track,
+           checkbox: checkbox,
+           handle: handle,
+           onChange: function() {
+             if(checkbox.checked) {
+               ngModelController.$setViewValue(true);
+             } else {
+               ngModelController.$setViewValue(false);
+             }
+             $scope.$apply();
+           }
+         });
 
-        $scope.$on('$destroy', function() {
-          $scope.toggle.destroy();
-        });
+         $scope.$on('$destroy', function() {
+           $scope.toggle.destroy();
+         });
       };
     }
 

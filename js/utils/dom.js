@@ -87,14 +87,6 @@
       };
     },
 
-    contains: function(parentNode, otherNode) {
-      var current = otherNode;
-      while (current) {
-        if (current === parentNode) return true;
-        current = current.parentNode;
-      }
-    },
-
     /**
      * @ngdoc method
      * @name ionic.DomUtil#getPositionInParent
@@ -305,7 +297,6 @@
         }
       }
     }
-
   };
 
   //Shortcuts

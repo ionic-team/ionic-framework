@@ -1,0 +1,26 @@
+---
+name: contacts
+component: collectionRepeat
+---
+
+.button.button-icon.input-button {
+  position: absolute;
+  right: 0;
+  top: 5px;
+  color: #bbb;
+}
+.contact-item i.icon {
+  display: inline-block;
+  height: 60px;
+  width: 40px;
+  float: left;
+  margin-right: 15px;
+  font-size: 30px;
+  text-align: center;
+}
+.list .item.contact-item {
+  left: 0;
+  right: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}

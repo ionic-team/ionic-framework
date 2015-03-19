@@ -45,8 +45,7 @@ IonicModule
   '$timeout',
   '$controller',
   '$ionicBind',
-  '$ionicConfig',
-function($timeout, $controller, $ionicBind, $ionicConfig) {
+function($timeout, $controller, $ionicBind) {
   return {
     restrict: 'E',
     require: '^?ionNavView',
@@ -101,7 +100,7 @@ function($timeout, $controller, $ionicBind, $ionicConfig) {
         });
         $scope.direction = $scope.direction || 'y';
 
-        if (isDefined($attr.padding)) {
+        if (angular.isDefined($attr.padding)) {
           $scope.$watch($attr.padding, function(newVal) {
               (innerElement || $element).toggleClass('padding', !!newVal);
           });
@@ -109,8 +108,7 @@ function($timeout, $controller, $ionicBind, $ionicConfig) {
 
         if ($attr.scroll === "false") {
           //do nothing
-        } else if (attr.overflowScroll === "true" || !$ionicConfig.scrolling.jsScrolling()) {
-          // use native scrolling
+        } else if(attr.overflowScroll === "true") {
           $element.addClass('overflow-scroll');
         } else {
           var scrollViewOptions = {
@@ -138,7 +136,7 @@ function($timeout, $controller, $ionicBind, $ionicConfig) {
           });
 
           $scope.$on('$destroy', function() {
-            scrollViewOptions.scrollingComplete = noop;
+            scrollViewOptions.scrollingComplete = angular.noop;
             delete scrollViewOptions.el;
             innerElement = null;
             $element = null;

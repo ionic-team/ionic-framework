@@ -95,6 +95,16 @@ describe('$ionicScroll Controller', function() {
     expect(ctrl.scrollView.run).toHaveBeenCalled();
   });
 
+
+  it('should unbind window event listener on scope destroy', inject(function($window) {
+    spyOn(ionic, 'on');
+    spyOn(ionic, 'off');
+    setup();
+    expect(ionic.on).toHaveBeenCalledWith('resize', jasmine.any(Function), $window);
+    scope.$destroy();
+    expect(ionic.off).toHaveBeenCalledWith('resize', jasmine.any(Function), $window);
+  }));
+
   it('should listen to scroll event and call $onScroll', function() {
     setup();
     scope.$onScroll = jasmine.createSpy();
@@ -232,41 +242,19 @@ describe('$ionicScroll Controller', function() {
     expect(ctrl.scrollView.activatePullToRefresh).not.toHaveBeenCalled();
   });
 
-  it('should activatePullToRefresh and work when setRefresher', inject(function($compile) {
-    var refresherEl,
-        activateCB,
-        deactivateCB,
-        startCB,
-        showCB,
-        hideCB,
-        tailCB,
-        onPullProgressCB;
+  it('should activatePullToRefresh and work when setRefresher', function() {
+    var startCb, refreshingCb, doneCb, refresherEl;
     setup({
-      el: angular.element('<div><ion-refresher class="refresher"></ion-refresher></div>')[0]
+      el: angular.element('<div><div class="scroll-refresher"></div></div>')[0]
     });
-
-    $compile(ctrl.element)(scope);
-    scope.$apply();
-
-    spyOn(ctrl.scrollView, 'activatePullToRefresh').andCallFake(function(height, start, done, refreshing,  show, hide, tail, onPull) {
-      activateCB = start;
-      deactivateCB = done;
-      startCB = refreshing;
-      showCB = show;
-      hideCB = hide;
-      tailCB = tail;
-      onPullProgressCB = onPull;
+    spyOn(ctrl.scrollView, 'activatePullToRefresh').andCallFake(function(height, start, refreshing, done, show, hide) {
+      startCb = start;
+      refreshingCb = refreshing;
+      doneCb = done;
+      showCb = show;
+      hideCb = hide;
     });
-
-    var refresher = ctrl.refresher;
-    var refreshCtrl = angular.element(refresher).controller('ionRefresher');
-    var dm = refreshCtrl.getRefresherDomMethods()
-
-    ctrl._setRefresher(
-      scope,
-      ctrl.element,
-      dm
-    );
+    ctrl._setRefresher(scope, ctrl.element);
 
     var scrollOnRefreshSpy = jasmine.createSpy('scroll.onRefresh');
 
@@ -274,29 +262,31 @@ describe('$ionicScroll Controller', function() {
     scope.$onPulling = jasmine.createSpy('onPulling');
 
     timeout.flush();
+    var refresher = ctrl.refresher;
 
     expect(refresher.classList.contains('active')).toBe(false);
     expect(refresher.classList.contains('refreshing')).toBe(false);
 
-    dm.activate();
+    startCb();
     expect(refresher.classList.contains('active')).toBe(true);
     expect(refresher.classList.contains('refreshing')).toBe(false);
     expect(scope.$onPulling).toHaveBeenCalled();
+
+    refreshingCb();
+    expect(refresher.classList.contains('refreshing')).toBe(false);
+
     expect(scope.$onRefresh).not.toHaveBeenCalled();
 
-    dm.start();
-    expect(refresher.classList.contains('refreshing')).toBe(true);
+    doneCb();
     expect(scope.$onRefresh).toHaveBeenCalled();
 
-    dm.deactivate();
-    timeout.flush();
     expect(refresher.classList.contains('active')).toBe(false);
 
-    dm.show();
+    showCb();
     expect(refresher.classList.contains('invisible')).toBe(false);
 
-    dm.hide();
+    hideCb();
     expect(refresher.classList.contains('invisible')).toBe(true);
-  }));
+  });
 
 });

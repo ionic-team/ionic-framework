@@ -25,7 +25,6 @@
   var SlideDrag = function(opts) {
     this.dragThresholdX = opts.dragThresholdX || 10;
     this.el = opts.el;
-    this.item = opts.item;
     this.canSwipe = opts.canSwipe;
   };
 
@@ -84,27 +83,18 @@
     return false;
   };
 
-  SlideDrag.prototype.clean = function(isInstant) {
+  SlideDrag.prototype.clean = function(e) {
     var lastDrag = this._lastDrag;
 
     if (!lastDrag || !lastDrag.content) return;
 
     lastDrag.content.style[ionic.CSS.TRANSITION] = '';
     lastDrag.content.style[ionic.CSS.TRANSFORM] = '';
-    if (isInstant) {
-      lastDrag.content.style[ionic.CSS.TRANSITION] = 'none';
-      makeInvisible();
-      ionic.requestAnimationFrame(function() {
-        lastDrag.content.style[ionic.CSS.TRANSITION] = '';
-      });
-    } else {
-      ionic.requestAnimationFrame(function() {
-        setTimeout(makeInvisible, 250);
-      });
-    }
-    function makeInvisible() {
-      lastDrag.buttons && lastDrag.buttons.classList.add('invisible');
-    }
+    ionic.requestAnimationFrame(function() {
+      setTimeout(function() {
+        lastDrag.buttons && lastDrag.buttons.classList.add('invisible');
+      }, 250);
+    });
   };
 
   SlideDrag.prototype.drag = ionic.animationFrameThrottle(function(e) {
@@ -135,34 +125,31 @@
         newX = Math.min(-buttonsWidth, -buttonsWidth + (((e.gesture.deltaX + buttonsWidth) * 0.4)));
       }
 
-      this._currentDrag.content.$$ionicOptionsOpen = newX !== 0;
-
       this._currentDrag.content.style[ionic.CSS.TRANSFORM] = 'translate3d(' + newX + 'px, 0, 0)';
       this._currentDrag.content.style[ionic.CSS.TRANSITION] = 'none';
     }
   });
 
   SlideDrag.prototype.end = function(e, doneCallback) {
-    var self = this;
+    var _this = this;
 
     // There is no drag, just end immediately
-    if (!self._currentDrag) {
+    if (!this._currentDrag) {
       doneCallback && doneCallback();
       return;
     }
 
     // If we are currently dragging, we want to snap back into place
     // The final resting point X will be the width of the exposed buttons
-    var restingPoint = -self._currentDrag.buttonsWidth;
+    var restingPoint = -this._currentDrag.buttonsWidth;
 
     // Check if the drag didn't clear the buttons mid-point
     // and we aren't moving fast enough to swipe open
-    if (e.gesture.deltaX > -(self._currentDrag.buttonsWidth / 2)) {
+    if (e.gesture.deltaX > -(this._currentDrag.buttonsWidth / 2)) {
 
       // If we are going left but too slow, or going right, go back to resting
       if (e.gesture.direction == "left" && Math.abs(e.gesture.velocityX) < 0.3) {
         restingPoint = 0;
-
       } else if (e.gesture.direction == "right") {
         restingPoint = 0;
       }
@@ -171,27 +158,27 @@
 
     ionic.requestAnimationFrame(function() {
       if (restingPoint === 0) {
-        self._currentDrag.content.style[ionic.CSS.TRANSFORM] = '';
-        var buttons = self._currentDrag.buttons;
+        _this._currentDrag.content.style[ionic.CSS.TRANSFORM] = '';
+        var buttons = _this._currentDrag.buttons;
         setTimeout(function() {
           buttons && buttons.classList.add('invisible');
         }, 250);
       } else {
-        self._currentDrag.content.style[ionic.CSS.TRANSFORM] = 'translate3d(' + restingPoint + 'px,0,0)';
+        _this._currentDrag.content.style[ionic.CSS.TRANSFORM] = 'translate3d(' + restingPoint + 'px, 0, 0)';
       }
-      self._currentDrag.content.style[ionic.CSS.TRANSITION] = '';
+      _this._currentDrag.content.style[ionic.CSS.TRANSITION] = '';
 
 
       // Kill the current drag
-      if (!self._lastDrag) {
-        self._lastDrag = {};
+      if (!_this._lastDrag) {
+        _this._lastDrag = {};
       }
-      ionic.extend(self._lastDrag, self._currentDrag);
-      if (self._currentDrag) {
-        self._currentDrag.buttons = null;
-        self._currentDrag.content = null;
+      angular.extend(_this._lastDrag, _this._currentDrag);
+      if (_this._currentDrag) {
+        _this._currentDrag.buttons = null;
+        _this._currentDrag.content = null;
       }
-      self._currentDrag = null;
+      _this._currentDrag = null;
 
       // We are done, notify caller
       doneCallback && doneCallback();
@@ -199,20 +186,18 @@
   };
 
   var ReorderDrag = function(opts) {
-    var self = this;
-
-    self.dragThresholdY = opts.dragThresholdY || 0;
-    self.onReorder = opts.onReorder;
-    self.listEl = opts.listEl;
-    self.el = self.item = opts.el;
-    self.scrollEl = opts.scrollEl;
-    self.scrollView = opts.scrollView;
+    this.dragThresholdY = opts.dragThresholdY || 0;
+    this.onReorder = opts.onReorder;
+    this.listEl = opts.listEl;
+    this.el = opts.el;
+    this.scrollEl = opts.scrollEl;
+    this.scrollView = opts.scrollView;
     // Get the True Top of the list el http://www.quirksmode.org/js/findpos.html
-    self.listElTrueTop = 0;
-    if (self.listEl.offsetParent) {
-      var obj = self.listEl;
+    this.listElTrueTop = 0;
+    if (this.listEl.offsetParent) {
+      var obj = this.listEl;
       do {
-        self.listElTrueTop += obj.offsetTop;
+        this.listElTrueTop += obj.offsetTop;
         obj = obj.offsetParent;
       } while (obj);
     }
@@ -229,7 +214,10 @@
   };
 
   ReorderDrag.prototype.deregister = function() {
-    this.listEl = this.el = this.scrollEl = this.scrollView = null;
+    this.listEl = null;
+    this.el = null;
+    this.scrollEl = null;
+    this.scrollView = null;
   };
 
   ReorderDrag.prototype.start = function(e) {
@@ -312,14 +300,13 @@
   // When an item is dragged, we need to reorder any items for sorting purposes
   ReorderDrag.prototype._getReorderIndex = function() {
     var self = this;
-
-    var placeholder = self._currentDrag.placeholder;
-    var siblings = Array.prototype.slice.call(self._currentDrag.placeholder.parentNode.children)
+    var placeholder = this._currentDrag.placeholder;
+    var siblings = Array.prototype.slice.call(this._currentDrag.placeholder.parentNode.children)
       .filter(function(el) {
         return el.nodeName === self.el.nodeName && el !== self.el;
       });
 
-    var dragOffsetTop = self._currentDrag.currentY;
+    var dragOffsetTop = this._currentDrag.currentY;
     var el;
     for (var i = 0, len = siblings.length; i < len; i++) {
       el = siblings[i];
@@ -336,7 +323,7 @@
         return i;
       }
     }
-    return self._currentDrag.startIndex;
+    return this._currentDrag.startIndex;
   };
 
   ReorderDrag.prototype.end = function(e, doneCallback) {
@@ -373,7 +360,7 @@
    */
   ionic.views.ListView = ionic.views.View.inherit({
     initialize: function(opts) {
-      var self = this;
+      var _this = this;
 
       opts = ionic.extend({
         onReorder: function(el, oldIndex, newIndex) {},
@@ -384,43 +371,37 @@
         }
       }, opts);
 
-      ionic.extend(self, opts);
+      ionic.extend(this, opts);
 
-      if (!self.itemHeight && self.listEl) {
-        self.itemHeight = self.listEl.children[0] && parseInt(self.listEl.children[0].style.height, 10);
+      if (!this.itemHeight && this.listEl) {
+        this.itemHeight = this.listEl.children[0] && parseInt(this.listEl.children[0].style.height, 10);
       }
 
-      self.onRefresh = opts.onRefresh || function() {};
-      self.onRefreshOpening = opts.onRefreshOpening || function() {};
-      self.onRefreshHolding = opts.onRefreshHolding || function() {};
+      //ionic.views.ListView.__super__.initialize.call(this, opts);
 
-      var gestureOpts = {};
-      // don't prevent native scrolling
-      if (ionic.DomUtil.getParentOrSelfWithClass(self.el,'overflow-scroll')) {
-        gestureOpts.prevent_default_directions = ['left','right'];
-      }
+      this.onRefresh = opts.onRefresh || function() {};
+      this.onRefreshOpening = opts.onRefreshOpening || function() {};
+      this.onRefreshHolding = opts.onRefreshHolding || function() {};
 
       window.ionic.onGesture('release', function(e) {
-        self._handleEndDrag(e);
-      }, self.el, gestureOpts);
+        _this._handleEndDrag(e);
+      }, this.el);
 
       window.ionic.onGesture('drag', function(e) {
-        self._handleDrag(e);
-      }, self.el, gestureOpts);
+        _this._handleDrag(e);
+      }, this.el);
       // Start the drag states
-      self._initDrag();
+      this._initDrag();
     },
 
     /**
      * Be sure to cleanup references.
      */
     deregister: function() {
-      this.el = this.listEl = this.scrollEl = this.scrollView = null;
-
-      // ensure no scrolls have been left frozen
-      if (this.isScrollFreeze) {
-        self.scrollView.freeze(false);
-      }
+      this.el = null;
+      this.listEl = null;
+      this.scrollEl = null;
+      this.scrollView = null;
     },
 
     /**
@@ -437,30 +418,28 @@
      * of active elements in order to figure out the viewport to render.
      */
     didScroll: function(e) {
-      var self = this;
-
-      if (self.isVirtual) {
-        var itemHeight = self.itemHeight;
+      if (this.isVirtual) {
+        var itemHeight = this.itemHeight;
 
         // TODO: This would be inaccurate if we are windowed
-        var totalItems = self.listEl.children.length;
+        var totalItems = this.listEl.children.length;
 
         // Grab the total height of the list
         var scrollHeight = e.target.scrollHeight;
 
         // Get the viewport height
-        var viewportHeight = self.el.parentNode.offsetHeight;
+        var viewportHeight = this.el.parentNode.offsetHeight;
 
         // scrollTop is the current scroll position
         var scrollTop = e.scrollTop;
 
         // High water is the pixel position of the first element to include (everything before
         // that will be removed)
-        var highWater = Math.max(0, e.scrollTop + self.virtualRemoveThreshold);
+        var highWater = Math.max(0, e.scrollTop + this.virtualRemoveThreshold);
 
         // Low water is the pixel position of the last element to include (everything after
         // that will be removed)
-        var lowWater = Math.min(scrollHeight, Math.abs(e.scrollTop) + viewportHeight + self.virtualAddThreshold);
+        var lowWater = Math.min(scrollHeight, Math.abs(e.scrollTop) + viewportHeight + this.virtualAddThreshold);
 
         // Compute how many items per viewport size can show
         var itemsPerViewport = Math.floor((lowWater - highWater) / itemHeight);
@@ -471,12 +450,12 @@
         var last = parseInt(Math.abs(lowWater / itemHeight), 10);
 
         // Get the items we need to remove
-        self._virtualItemsToRemove = Array.prototype.slice.call(self.listEl.children, 0, first);
+        this._virtualItemsToRemove = Array.prototype.slice.call(this.listEl.children, 0, first);
 
         // Grab the nodes we will be showing
-        var nodes = Array.prototype.slice.call(self.listEl.children, first, first + itemsPerViewport);
+        var nodes = Array.prototype.slice.call(this.listEl.children, first, first + itemsPerViewport);
 
-        self.renderViewport && self.renderViewport(highWater, lowWater, first, last);
+        this.renderViewport && this.renderViewport(highWater, lowWater, first, last);
       }
     },
 
@@ -495,15 +474,17 @@
     /**
      * Clear any active drag effects on the list.
      */
-    clearDragEffects: function(isInstant) {
+    clearDragEffects: function() {
       if (this._lastDragOp) {
-        this._lastDragOp.clean && this._lastDragOp.clean(isInstant);
+        this._lastDragOp.clean && this._lastDragOp.clean();
         this._lastDragOp.deregister && this._lastDragOp.deregister();
         this._lastDragOp = null;
       }
     },
 
     _initDrag: function() {
+      //ionic.views.ListView.__super__._initDrag.call(this);
+
       // Store the last one
       if (this._lastDragOp) {
         this._lastDragOp.deregister && this._lastDragOp.deregister();
@@ -526,78 +507,70 @@
 
 
     _startDrag: function(e) {
-      var self = this;
+      var _this = this;
 
       var didStart = false;
 
-      self._isDragging = false;
+      this._isDragging = false;
 
-      var lastDragOp = self._lastDragOp;
+      var lastDragOp = this._lastDragOp;
       var item;
 
       // If we have an open SlideDrag and we're scrolling the list. Clear it.
-      if (self._didDragUpOrDown && lastDragOp instanceof SlideDrag) {
+      if (this._didDragUpOrDown && lastDragOp instanceof SlideDrag) {
           lastDragOp.clean && lastDragOp.clean();
       }
 
       // Check if this is a reorder drag
       if (ionic.DomUtil.getParentOrSelfWithClass(e.target, ITEM_REORDER_BTN_CLASS) && (e.gesture.direction == 'up' || e.gesture.direction == 'down')) {
-        item = self._getItem(e.target);
+        item = this._getItem(e.target);
 
         if (item) {
-          self._dragOp = new ReorderDrag({
-            listEl: self.el,
+          this._dragOp = new ReorderDrag({
+            listEl: this.el,
             el: item,
-            scrollEl: self.scrollEl,
-            scrollView: self.scrollView,
+            scrollEl: this.scrollEl,
+            scrollView: this.scrollView,
             onReorder: function(el, start, end) {
-              self.onReorder && self.onReorder(el, start, end);
+              _this.onReorder && _this.onReorder(el, start, end);
             }
           });
-          self._dragOp.start(e);
+          this._dragOp.start(e);
           e.preventDefault();
         }
       }
 
       // Or check if this is a swipe to the side drag
-      else if (!self._didDragUpOrDown && (e.gesture.direction == 'left' || e.gesture.direction == 'right') && Math.abs(e.gesture.deltaX) > 5) {
+      else if (!this._didDragUpOrDown && (e.gesture.direction == 'left' || e.gesture.direction == 'right') && Math.abs(e.gesture.deltaX) > 5) {
 
         // Make sure this is an item with buttons
-        item = self._getItem(e.target);
+        item = this._getItem(e.target);
         if (item && item.querySelector('.item-options')) {
-          self._dragOp = new SlideDrag({
-            el: self.el,
-            item: item,
-            canSwipe: self.canSwipe
-          });
-          self._dragOp.start(e);
+          this._dragOp = new SlideDrag({ el: this.el, canSwipe: this.canSwipe });
+          this._dragOp.start(e);
           e.preventDefault();
-          self.isScrollFreeze = self.scrollView.freeze(true);
         }
       }
 
       // If we had a last drag operation and this is a new one on a different item, clean that last one
-      if (lastDragOp && self._dragOp && !self._dragOp.isSameItem(lastDragOp) && e.defaultPrevented) {
+      if (lastDragOp && this._dragOp && !this._dragOp.isSameItem(lastDragOp) && e.defaultPrevented) {
         lastDragOp.clean && lastDragOp.clean();
       }
     },
 
 
     _handleEndDrag: function(e) {
-      var self = this;
+      var _this = this;
 
-      if (self.scrollView) {
-        self.isScrollFreeze = self.scrollView.freeze(false);
-      }
+      this._didDragUpOrDown = false;
 
-      self._didDragUpOrDown = false;
-
-      if (!self._dragOp) {
+      if (!this._dragOp) {
+        //ionic.views.ListView.__super__._handleEndDrag.call(this, e);
         return;
       }
 
-      self._dragOp.end(e, function() {
-        self._initDrag();
+      this._dragOp.end(e, function() {
+        _this._initDrag();
       });
     },
 
@@ -605,25 +578,26 @@
      * Process the drag event to move the item to the left or right.
      */
     _handleDrag: function(e) {
-      var self = this, content, buttons;
+      var _this = this, content, buttons;
 
       if (Math.abs(e.gesture.deltaY) > 5) {
-        self._didDragUpOrDown = true;
+        this._didDragUpOrDown = true;
       }
 
       // If we get a drag event, make sure we aren't in another drag, then check if we should
       // start one
-      if (!self.isDragging && !self._dragOp) {
-        self._startDrag(e);
+      if (!this.isDragging && !this._dragOp) {
+        this._startDrag(e);
       }
 
       // No drag still, pass it up
-      if (!self._dragOp) {
+      if (!this._dragOp) {
+        //ionic.views.ListView.__super__._handleDrag.call(this, e);
         return;
       }
 
       e.gesture.srcEvent.preventDefault();
-      self._dragOp.drag(e);
+      this._dragOp.drag(e);
     }
 
   });
