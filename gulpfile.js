@@ -17,7 +17,7 @@ var config = {
   src: {
     js: ['src/**/*.js', '!src/**/*.spec.js'],
     html: 'src/**/*.html',
-    scss: 'src/**/*.scss',
+    scss: 'src/components/**/*.scss',
     playgroundJs: 'playground/**/*.js',
     playgroundFiles: ['playground/**/*', '!playground/**/*.js'],
   },
@@ -41,7 +41,7 @@ gulp.task('watch', ['default'], function () {
 
   gulp.watch(config.src.html, ['html']);
   gulp.watch(config.src.js, ['js']);
-  gulp.watch(config.src.sass, ['sass']);
+  gulp.watch(config.src.scss, ['sass']);
   gulp.watch(config.src.playgroundJs, ['playgroundJs']);
   gulp.watch(config.src.playgroundFiles, ['playgroundFiles']);
 

@@ -3,8 +3,12 @@ body {
 }
 
 .tool-bar button {
-  position: absolute;
-  right: 0;
+  /*position: absolute;
+  right: 0;*/
+}
+
+.tab-bar .tab-item {
+  color: blue;
 }
 
 .tool-bar {

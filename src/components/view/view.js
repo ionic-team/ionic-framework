@@ -37,6 +37,7 @@ export class View extends Ion {
 })
 export class Content extends Ion {
   constructor(@NgElement() ele:NgElement) {
+    console.log('content!')
     ele.domElement.classList.add('content');
   }
 }
