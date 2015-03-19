@@ -66,6 +66,7 @@ describe('Ionic Toggle', function() {
     expect(toggle.val()).toBe(true);
     ionic.trigger('click', {target: label});
     expect(toggle.val()).toBe(false);
+
   });
 
   it('Should have toggle class', function() {
@@ -78,20 +79,5 @@ describe('Ionic Toggle', function() {
     var label = el.find('label');
     expect(label.hasClass('toggle-dark')).toEqual(true);
   });
-
-  it('Should add config class', inject(function($ionicConfig){
-    el = compile('<ion-toggle>')(rootScope);
-    expect(el.hasClass('toggle-large')).toBe(true);
-
-    $ionicConfig.form.toggle('small');
-    el = compile('<ion-toggle>')(rootScope);
-    expect(el.hasClass('toggle-small')).toBe(true);
-
-    $ionicConfig.form.toggle('whatever');
-    el = compile('<ion-toggle>')(rootScope);
-    expect(el.hasClass('toggle-large')).toBe(false);
-    expect(el.hasClass('toggle-sall')).toBe(false);
-    expect(el.hasClass('toggle-whatever')).toBe(true);
-  }));
 
 });

@@ -51,14 +51,20 @@ function($scope, $element, $attrs, $compile, $rootScope, $ionicViewSwitcher) {
         navBarItems[n] = generateNavBarItem(navElementHtml[n]);
       }
 
-      navViewCtrl.beforeEnter(extend(transData, {
+      navViewCtrl.beforeEnter({
         title: viewTitle,
+        direction: transData.direction,
+        transition: transData.transition,
+        navBarTransition: transData.navBarTransition,
+        transitionId: transData.transitionId,
+        shouldAnimate: transData.shouldAnimate,
+        enableBack: transData.enableBack,
         showBack: !attrTrue('hideBackButton'),
         navBarItems: navBarItems,
         navBarDelegate: navBarDelegateHandle || null,
         showNavBar: !attrTrue('hideNavBar'),
         hasHeaderBar: !!hasViewHeaderBar
-      }));
+      });
 
       // make sure any existing observers are cleaned up
       deregisterFns();

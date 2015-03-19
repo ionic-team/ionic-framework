@@ -56,7 +56,7 @@
  * to `ios`.
  * * `ios`: iOS style transition.
  * * `android`: Android style transition.
- * * `none`: Do not perform animated transitions.
+ * * `none`: Do not preform animated transitions.
  *
  * @returns {string} value
  */
@@ -111,22 +111,6 @@
  * is the default for iOS.
  * @param {boolean} value
  * @returns {boolean}
- */
-
-/**
- * @ngdoc method
- * @name $ionicConfigProvider#form.checkbox
- * @description Checkbox style. Android defaults to `square` and iOS defaults to `circle`.
- * @param {string} value
- * @returns {string}
- */
-
-/**
- * @ngdoc method
- * @name $ionicConfigProvider#form.toggle
- * @description Toggle item style. Android defaults to `small` and iOS defaults to `large`.
- * @param {string} value
- * @returns {string}
  */
 
 /**
@@ -222,9 +206,7 @@ IonicModule
     views: {
       maxCache: PLATFORM,
       forwardCache: PLATFORM,
-      transition: PLATFORM,
-      swipeBackEnabled: PLATFORM,
-      swipeBackHitWidth: PLATFORM
+      transition: PLATFORM
     },
     navBar: {
       alignTitle: PLATFORM,
@@ -238,11 +220,7 @@ IonicModule
       previousTitleText: PLATFORM
     },
     form: {
-      checkbox: PLATFORM,
-      toggle: PLATFORM
-    },
-    scrolling: {
-      jsScrolling: PLATFORM
+      checkbox: PLATFORM
     },
     tabs: {
       style: PLATFORM,
@@ -264,9 +242,7 @@ IonicModule
     views: {
       maxCache: 10,
       forwardCache: false,
-      transition: 'ios',
-      swipeBackEnabled: true,
-      swipeBackHitWidth: 45
+      transition: 'ios'
     },
 
     navBar: {
@@ -277,18 +253,13 @@ IonicModule
     },
 
     backButton: {
-      icon: 'ion-ios-arrow-back',
+      icon: 'ion-ios7-arrow-back',
       text: 'Back',
       previousTitleText: true
     },
 
     form: {
-      checkbox: 'circle',
-      toggle: 'large'
-    },
-
-    scrolling: {
-      jsScrolling: true
+      checkbox: 'circle'
     },
 
     tabs: {
@@ -315,8 +286,7 @@ IonicModule
   setPlatformConfig('android', {
 
     views: {
-      transition: 'android',
-      swipeBackEnabled: false
+      transition: 'android'
     },
 
     navBar: {
@@ -326,14 +296,13 @@ IonicModule
     },
 
     backButton: {
-      icon: 'ion-android-arrow-back',
+      icon: 'ion-arrow-left-c',
       text: false,
       previousTitleText: false
     },
 
     form: {
-      checkbox: 'square',
-      toggle: 'small'
+      checkbox: 'square'
     },
 
     tabs: {
@@ -353,45 +322,42 @@ IonicModule
   // iOS Transitions
   // -----------------------
   provider.transitions.views.ios = function(enteringEle, leavingEle, direction, shouldAnimate) {
+    shouldAnimate = shouldAnimate && (direction == 'forward' || direction == 'back');
 
-    function setStyles(ele, opacity, x, boxShadowOpacity) {
+    function setStyles(ele, opacity, x) {
       var css = {};
-      css[ionic.CSS.TRANSITION_DURATION] = d.shouldAnimate ? '' : 0;
+      css[ionic.CSS.TRANSITION_DURATION] = shouldAnimate ? '' : 0;
       css.opacity = opacity;
-      if (boxShadowOpacity > -1) {
-        css.boxShadow = '0 0 10px rgba(0,0,0,' + (d.shouldAnimate ? boxShadowOpacity * 0.45 : 0.3) + ')';
-      }
       css[ionic.CSS.TRANSFORM] = 'translate3d(' + x + '%,0,0)';
       ionic.DomUtil.cachedStyles(ele, css);
     }
 
-    var d = {
+    return {
       run: function(step) {
         if (direction == 'forward') {
-          setStyles(enteringEle, 1, (1 - step) * 99, 1 - step); // starting at 98% prevents a flicker
-          setStyles(leavingEle, (1 - 0.1 * step), step * -33, -1);
+          setStyles(enteringEle, 1, (1 - step) * 99); // starting at 98% prevents a flicker
+          setStyles(leavingEle, (1 - 0.1 * step), step * -33);
 
         } else if (direction == 'back') {
-          setStyles(enteringEle, (1 - 0.1 * (1 - step)), (1 - step) * -33, -1);
-          setStyles(leavingEle, 1, step * 100, 1 - step);
+          setStyles(enteringEle, (1 - 0.1 * (1 - step)), (1 - step) * -33);
+          setStyles(leavingEle, 1, step * 100);
 
         } else {
           // swap, enter, exit
-          setStyles(enteringEle, 1, 0, -1);
-          setStyles(leavingEle, 0, 0, -1);
+          setStyles(enteringEle, 1, 0);
+          setStyles(leavingEle, 0, 0);
         }
       },
-      shouldAnimate: shouldAnimate && (direction == 'forward' || direction == 'back')
+      shouldAnimate: shouldAnimate
     };
-
-    return d;
   };
 
   provider.transitions.navBar.ios = function(enteringHeaderBar, leavingHeaderBar, direction, shouldAnimate) {
+    shouldAnimate = shouldAnimate && (direction == 'forward' || direction == 'back');
 
     function setStyles(ctrl, opacity, titleX, backTextX) {
       var css = {};
-      css[ionic.CSS.TRANSITION_DURATION] = d.shouldAnimate ? '' : 0;
+      css[ionic.CSS.TRANSITION_DURATION] = shouldAnimate ? '' : 0;
       css.opacity = opacity === 1 ? '' : opacity;
 
       ctrl.setCss('buttons-left', css);
@@ -406,23 +372,23 @@ IonicModule
     }
 
     function enter(ctrlA, ctrlB, step) {
-      if (!ctrlA || !ctrlB) return;
+      if (!ctrlA) return;
       var titleX = (ctrlA.titleTextX() + ctrlA.titleWidth()) * (1 - step);
       var backTextX = (ctrlB && (ctrlB.titleTextX() - ctrlA.backButtonTextLeft()) * (1 - step)) || 0;
       setStyles(ctrlA, step, titleX, backTextX);
     }
 
     function leave(ctrlA, ctrlB, step) {
-      if (!ctrlA || !ctrlB) return;
+      if (!ctrlA) return;
       var titleX = (-(ctrlA.titleTextX() - ctrlB.backButtonTextLeft()) - (ctrlA.titleLeftRight())) * step;
       setStyles(ctrlA, 1 - step, titleX, 0);
     }
 
-    var d = {
+    return {
       run: function(step) {
         var enteringHeaderCtrl = enteringHeaderBar.controller();
         var leavingHeaderCtrl = leavingHeaderBar && leavingHeaderBar.controller();
-        if (d.direction == 'back') {
+        if (direction == 'back') {
           leave(enteringHeaderCtrl, leavingHeaderCtrl, 1 - step);
           enter(leavingHeaderCtrl, enteringHeaderCtrl, 1 - step);
         } else {
@@ -430,11 +396,8 @@ IonicModule
           leave(leavingHeaderCtrl, enteringHeaderCtrl, step);
         }
       },
-      direction: direction,
-      shouldAnimate: shouldAnimate && (direction == 'forward' || direction == 'back')
+      shouldAnimate: shouldAnimate
     };
-
-    return d;
   };
 
 
@@ -446,12 +409,12 @@ IonicModule
 
     function setStyles(ele, x) {
       var css = {};
-      css[ionic.CSS.TRANSITION_DURATION] = d.shouldAnimate ? '' : 0;
+      css[ionic.CSS.TRANSITION_DURATION] = shouldAnimate ? '' : 0;
       css[ionic.CSS.TRANSFORM] = 'translate3d(' + x + '%,0,0)';
       ionic.DomUtil.cachedStyles(ele, css);
     }
 
-    var d = {
+    return {
       run: function(step) {
         if (direction == 'forward') {
           setStyles(enteringEle, (1 - step) * 99); // starting at 98% prevents a flicker
@@ -469,11 +432,10 @@ IonicModule
       },
       shouldAnimate: shouldAnimate
     };
-
-    return d;
   };
 
   provider.transitions.navBar.android = function(enteringHeaderBar, leavingHeaderBar, direction, shouldAnimate) {
+    shouldAnimate = shouldAnimate && (direction == 'forward' || direction == 'back');
 
     function setStyles(ctrl, opacity) {
       if (!ctrl) return;
@@ -492,7 +454,7 @@ IonicModule
         setStyles(enteringHeaderBar.controller(), step);
         setStyles(leavingHeaderBar && leavingHeaderBar.controller(), 1 - step);
       },
-      shouldAnimate: shouldAnimate && (direction == 'forward' || direction == 'back')
+      shouldAnimate: true
     };
   };
 
@@ -504,8 +466,7 @@ IonicModule
     return {
       run: function(step) {
         provider.transitions.views.android(enteringEle, leavingEle, false, false).run(step);
-      },
-      shouldAnimate: false
+      }
     };
   };
 
@@ -514,8 +475,7 @@ IonicModule
       run: function(step) {
         provider.transitions.navBar.ios(enteringHeaderBar, leavingHeaderBar, false, false).run(step);
         provider.transitions.navBar.android(enteringHeaderBar, leavingHeaderBar, false, false).run(step);
-      },
-      shouldAnimate: false
+      }
     };
   };
 

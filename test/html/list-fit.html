@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html ng-app="ionic">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+    <title>Sample UL</title>
+
+    <link  href="../../../../dist/css/ionic.css" rel="stylesheet">
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+  </head>
+
+  <body ng-controller="MainCtrl">
+    <ion-header-bar class="bar-positive">
+      <h1 class="title">Hi</h1>
+      <a class="button" ng-click="scrollBottom(true)">
+        Bottom
+      </a>
+    </ion-header-bar>
+    <ion-content>
+        <ion-refresher on-refresh="loadMore()"></ion-refresher>
+      <p>
+      Hi, I'm some text before the list.
+      </p>
+      <div class="card full">
+        Hi, I'm a card before the list.
+      </div>
+      <ion-list>
+        <ion-item
+          class="item-avatar-left item-icon-right"
+          ng-click="alert(item)"
+          collection-repeat="item in items"
+          collection-item-height="85"
+          collection-item-width="'100%'"
+          ng-style="{height: '85px'}"
+          style="left: 0; right: 0;">
+          <h2>{{item.text}}</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porttitor diam urna, vitae consectetur lectus aliquet quis.</p>
+        </ion-item>
+      </ion-list>
+      <ion-infinite-scroll on-infinite="loadMore()"></ion-infinite-scroll>
+      <div class="card full">
+        Hi, I'm a card after the list.
+      </div>
+    </ion-content>
+  <script>
+function MainCtrl($scope, $ionicScrollDelegate, $timeout, $q, $ionicLoading) {
+  $scope.items = [];
+  function addImage() {
+    var i = $scope.items.length;
+    $scope.items.push({
+      text: 'Item ' + i,
+      image: 'http://placekitten.com/'+(100+50%i)+'/'+(100+50%i)
+    });
+  }
+  for (var i = 0; i < 20; i++) addImage();
+
+  $scope.scrollBottom = $ionicScrollDelegate.scrollBottom;
+
+  $scope.loadMore = function() {
+    $timeout(function() {
+      var n = 100;//1 + Math.floor(4*Math.random());
+      for (var i = 0; i < n; i++) addImage();
+      $scope.$broadcast('scroll.infiniteScrollComplete');
+      $scope.$broadcast('scroll.refreshComplete');
+    }, 1);
+  };
+}
+  </script>
+  <style>
+.full {
+  left: 0;
+  right: 0;
+}
+</body>
+</html>

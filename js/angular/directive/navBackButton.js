@@ -36,7 +36,7 @@
  * </ion-nav-bar>
  * ```
  *
- * With custom inner markup and custom click action, using {@link ionic.service:$ionicHistory}:
+ * With custom inner markup and custom click action, using {@link ionic.service:$ionicNavBarDelegate}:
  *
  * ```html
  * <ion-nav-bar ng-controller="MyCtrl">
@@ -47,9 +47,9 @@
  * </ion-nav-bar>
  * ```
  * ```js
- * function MyCtrl($scope, $ionicHistory) {
+ * function MyCtrl($scope, $ionicNavBarDelegate) {
  *   $scope.myGoBack = function() {
- *     $ionicHistory.goBack();
+ *     $ionicNavBarDelegate.back();
  *   };
  * }
  * ```

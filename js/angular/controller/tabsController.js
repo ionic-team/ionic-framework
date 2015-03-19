@@ -6,7 +6,6 @@ IonicModule
 function($scope, $element, $ionicHistory) {
   var self = this;
   var selectedTab = null;
-  var previousSelectedTab = null;
   var selectedTabIndex;
   self.tabs = [];
 
@@ -15,9 +14,6 @@ function($scope, $element, $ionicHistory) {
   };
   self.selectedTab = function() {
     return selectedTab;
-  };
-  self.previousSelectedTab = function() {
-    return previousSelectedTab;
   };
 
   self.add = function(tab) {
@@ -47,17 +43,16 @@ function($scope, $element, $ionicHistory) {
 
   self.deselect = function(tab) {
     if (tab.$tabSelected) {
-      previousSelectedTab = selectedTab;
       selectedTab = selectedTabIndex = null;
       tab.$tabSelected = false;
-      (tab.onDeselect || noop)();
+      (tab.onDeselect || angular.noop)();
       tab.$broadcast && tab.$broadcast('$ionicHistory.deselect');
     }
   };
 
   self.select = function(tab, shouldEmitEvent) {
     var tabIndex;
-    if (isNumber(tab)) {
+    if (angular.isNumber(tab)) {
       tabIndex = tab;
       if (tabIndex >= self.tabs.length) return;
       tab = self.tabs[tabIndex];
@@ -88,7 +83,7 @@ function($scope, $element, $ionicHistory) {
 
       //Use a funny name like $tabSelected so the developer doesn't overwrite the var in a child scope
       tab.$tabSelected = true;
-      (tab.onSelect || noop)();
+      (tab.onSelect || angular.noop)();
 
       if (shouldEmitEvent) {
         $scope.$emit('$ionicHistory.change', {

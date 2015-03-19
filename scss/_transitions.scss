@@ -2,8 +2,8 @@
 // iOS View Transitions
 // -------------------------------
 
-$ios-transition-duration:              500ms !default;
-$ios-transition-timing-function:       cubic-bezier(.36, .66, .04, 1) !default;
+$ios-transition-duration:              450ms !default;
+$ios-transition-timing-function:       cubic-bezier(.3, .9, .4, 1) !default;
 $ios-transition-container-bg-color:    #000 !default;
 
 
@@ -13,8 +13,8 @@ $ios-transition-container-bg-color:    #000 !default;
   [nav-view="leaving"] {
     @include transition-duration( $ios-transition-duration );
     @include transition-timing-function( $ios-transition-timing-function );
-    -webkit-transition-property: opacity, -webkit-transform, box-shadow;
-            transition-property: opacity, transform, box-shadow;
+    -webkit-transition-property: opacity, -webkit-transform;
+            transition-property: opacity, transform;
   }
 
   &[nav-view-direction="forward"],
@@ -134,31 +134,6 @@ $android-transition-timing-function:      cubic-bezier(0.4, 0.6, 0.2, 1) !defaul
     }
   }
 
-}
-
-
-
-// Nav Swipe
-// -------------------------------
-
-[nav-swipe="fast"] {
-  [nav-view],
-  .title,
-  .buttons,
-  .back-text {
-    @include transition-duration(50ms);
-    @include transition-timing-function(linear);
-  }
-}
-
-[nav-swipe="slow"] {
-  [nav-view],
-  .title,
-  .buttons,
-  .back-text {
-    @include transition-duration(160ms);
-    @include transition-timing-function(linear);
-  }
 }
 
 

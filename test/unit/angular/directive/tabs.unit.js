@@ -387,7 +387,7 @@ describe('tabs', function() {
     });
 
     it('should compile a <ion-tab-nav> with all of the relevant attrs', function() {
-      setup('title="{{a}}" icon-on="{{b}}" icon-off="{{c}}" badge="d" badge-style="{{e}}" class="{{f}}" ng-click="click" hidden="{{g}}" disabled="h"');
+      setup('title="{{a}}" icon-on="{{b}}" icon-off="{{c}}" badge="d" badge-style="{{e}}" class="{{f}}" ng-click="click" hidden="{{g}}"');
       angular.extend(tabEl.scope(), {
         a: 'title',
         b: 'on',
@@ -395,8 +395,7 @@ describe('tabs', function() {
         d: 6,
         e: 'badger',
         f: 'someClass',
-        g: true,
-        h: true
+        g: true
       });
       tabEl.scope().$apply();
       var navItem = angular.element(tabsEl[0].querySelector('.tab-item'));
@@ -408,7 +407,6 @@ describe('tabs', function() {
       expect(navItem[0].className).toMatch(/someClass/);
       expect(navItem.attr('ng-click')).toEqual('click');
       expect(navItem.isolateScope().hidden).toEqual('true');
-      expect(navItem.isolateScope().disabled()).toEqual(true);
 
       angular.extend(tabEl.scope(), {
         a: 'title2',
@@ -417,8 +415,7 @@ describe('tabs', function() {
         d: 7,
         e: 'badger2',
         f: 'someClass2',
-        g: false,
-        h: false
+        g: false
       });
       tabEl.scope().$apply();
       expect(navItem.isolateScope().title).toEqual('title2');
@@ -428,7 +425,6 @@ describe('tabs', function() {
       expect(navItem.isolateScope().badgeStyle).toEqual('badger2');
       expect(navItem[0].className).toMatch(/someClass2/);
       expect(navItem.isolateScope().hidden).toEqual('false');
-      expect(navItem.isolateScope().disabled()).toEqual(false);
 
       expect(navItem.parent()[0]).toBe(tabsCtrl.$tabsElement[0]);
     });

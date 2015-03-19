@@ -1,9 +1,5 @@
-[true, false].forEach(function(jsScrollingEnabled) {
 describe('ionRefresher directive', function() {
   beforeEach(module('ionic'));
-  beforeEach(inject(function($ionicConfig) {
-    $ionicConfig.scrolling.jsScrolling(jsScrollingEnabled);
-  }));
   function setup(attrs, scopeProps) {
     var el;
     inject(function($compile, $rootScope) {
@@ -21,14 +17,12 @@ describe('ionRefresher directive', function() {
       el.data('$$ionicScrollController', ionicScrollCtrl);
 
       $compile(el)(scope);
-      ionic.requestAnimationFrame = function() {};
-      el.refresherCtrl = el.data('$ionRefresherController');
       $rootScope.$apply();
     });
     return el;
   }
 
-  it('should error without ionScroll or ionContent', inject(function($compile, $rootScope) {
+  it('should error without ionicScroll', inject(function($compile, $rootScope) {
     expect(function() {
       $compile('<ion-refresher>')($rootScope);
     }).toThrow();
@@ -58,7 +52,7 @@ describe('ionRefresher directive', function() {
     var el = setup();
     expect(el.controller('$ionicScroll')._setRefresher.callCount).toBe(1);
     expect(el.controller('$ionicScroll')._setRefresher).toHaveBeenCalledWith(
-      el.scope(), el[0], el.refresherCtrl.getRefresherDomMethods()
+      el.scope(), el[0]
     );
   });
 
@@ -74,9 +68,9 @@ describe('ionRefresher directive', function() {
     expect(ctrl.scrollView.finishPullToRefresh).toHaveBeenCalled();
   });
 
-  it('should not have default pullingIcon', function() {
+  it('should have default pullingIcon', function() {
     var el = setup();
-    expect(el[0].querySelector('.icon-pulling .ion-ios-arrow-down')).toBeFalsy();
+    expect(el[0].querySelector('.icon-pulling .ion-ios7-arrow-down')).toBeTruthy();
   });
   it('should allow custom pullingIcon', function() {
     var el = setup('pulling-icon="super-icon"');
@@ -84,18 +78,9 @@ describe('ionRefresher directive', function() {
     expect(el[0].querySelector('.icon-pulling .super-icon')).toBeTruthy();
   });
 
-  it('should have default spinner', function() {
+  it('should have default refreshingIcon', function() {
     var el = setup();
-    expect(el[0].querySelector('ion-spinner')).toBeTruthy();
-  });
-  it('should allow a custom spinner', function() {
-    var el = setup('spinner="android"');
-    expect(el[0].querySelector('.spinner-android')).toBeTruthy();
-  });
-  it('should allow spinner to be none', function() {
-    var el = setup('spinner="none"');
-    expect(el[0].querySelector('ion-spinner')).not.toBeTruthy();
-    expect(el[0].querySelector('.icon.icon-refreshing')).not.toBeTruthy();
+    expect(el[0].querySelector('.ion-loading-d')).toBeTruthy();
   });
   it('should allow custom refreshingIcon', function() {
     var el = setup('refreshing-icon="monkey-icon"');
@@ -116,5 +101,4 @@ describe('ionRefresher directive', function() {
     var el = setup('disable-pulling-rotation="true"');
     expect(el[0].querySelector('.pulling-rotation-disabled').innerHTML).toBeTruthy();
   });
-});
 });

@@ -3,7 +3,7 @@ IonicModule
   return {
     restrict: 'E',
     compile: function(element) {
-      element.append(jqLite('<div class="popover-arrow">'));
+      element.append( angular.element('<div class="popover-arrow"></div>') );
       element.addClass('popover');
     }
   };
