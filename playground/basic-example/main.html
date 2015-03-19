@@ -1,6 +1,17 @@
-<ion-tabbar view-title="My Tabs"></ion-tabbar>
-<ion-tabbar view-title="Tabs 2"></ion-tabbar>
-<ion-tabbar view-title="Tabs 4"></ion-tabbar>
+<ion-side-menu-parent>
+  <ion-side-menu side="left">
+    Hello ...
+    <p>...</p>
+    <p>...</p>
+    <p>...</p>
+    <p>...</p>
+    <p>...</p>
+    Side menu!
+  </ion-side-menu>
+  <div class="content">
+    <ion-tabbar view-title="My Tabs"></ion-tabbar>
+    <ion-tabbar view-title="Tabs 2"></ion-tabbar>
+    <ion-tabbar view-title="Tabs 4"></ion-tabbar>
 
 <button (click)="showModal()">Show Modal</button>
 
@@ -11,3 +22,11 @@
   <h2>I'm a modal!</h2>
 </ion-modal>
 -->
+    <button (click)="showModal()">Show Modal</button>
+    <!--
+    <ion-modal>
+      <h2>I'm a modal!</h2>
+    </ion-modal>
+    -->
+  </div>
+</ion-side-menu-content>

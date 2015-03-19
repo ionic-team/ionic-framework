@@ -1,29 +1,42 @@
 import * as Platform from './platform';
+import * as util from './util';
 
-var id = 0;
-export function IonConfigService() {
+export function IonConfig() {
 
-  function Config() {
-    this._platforms = {};
-    for (var key in Config._platforms) {
-      this._platforms[key] = Config._platforms[key]._clone();
+  // TODO automatically add platform class
+  // TODO do bindings/defaults have to be written twice?
+  // TODO maybe add config to IonicComponent annotation
+  function Config(instance) {
+    util.defaults(instance, Config._defaults || {});
+    var conditions = Config._conditions;
+    for (var i = 0, ii = conditions.length; i < ii; i++) {
+      if (conditions[i]._callback(instance)) {
+        for (var j = 0, jj = conditions[i]._mixins.length; j < jj; j++) {
+          conditions[i]._mixins[j].call(instance);
+        }
+      }
     }
-    this.id = id++;
   }
-  Config._platforms = {};
-  Config.platform = platformFn.bind(Config);
-  Config.prototype.platform = platformFn;
 
-  function platformFn(name) {
-    return this._platforms[name] || (this._platforms[name] = new SubConfig(name));
-  }
+  Config._conditions = [];
+  Config.defaults = function(defaults) {
+    Config._defaults = defaults;
+  };
+  Config.when = function when(callback) {
+    var condition = new ConfigCondition(callback);
+    Config._conditions.push(condition);
+    return condition;
+  };
+  Config.platform = function platform(name) {
+    return Config.when(() => Platform.getPlatform() === name);
+  };
 
   return Config;
 }
 
-class SubConfig {
-  constructor(name, mixins = [], template = '') {
-    this._name = name;
+class ConfigCondition {
+  constructor(callback, mixins = [], template = '') {
+    this._callback = callback;
     this._mixins = mixins;
     this._template = template;
   }
@@ -34,8 +47,5 @@ class SubConfig {
   template(url) {
     this._template = url;
     return this;
-  }
-  _clone() {
-    return new SubConfig(this._name, this._mixins.slice(), this._template);
   }
 }

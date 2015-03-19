@@ -1,31 +1,36 @@
 import {Gesture} from './gesture';
-var noop = function() {};
+import * as util from '../../util';
 
-class DragGesture extends Gesture {
-  // constructor(element, opts = {}) {
-  //   super(element, opts);
-  //   this.onDrag = opts.onDrag;
-  //   this.onDragStart = opts.onDragStart;
-  //   this.onDragEnd = opts.onDragEnd;
-  // }
-  // listen() {
-  //   super.listen();
-  //   this.hammertime.on('dragstart', this._onDragStart.bind(this));
-  //   this.hammertime.on('drag', this._onDrag.bind(this));
-  //   this.hammertime.on('dragend', this._onDragEnd.bind(this));
-  // }
-  // unlisten() {
-  //   super.unlisten();
-  //   this.hammertime.destroy();
-  // }
-
-  // _onDragStart(ev) {
-  //   (this.onDragStart || noop)(ev);
-  // }
-  // _onDrag(ev) {
-  //   (this.onDrag || noop)(ev);
-  // }
-  // _onDragEnd(ev) {
-  //   (this.onDragEnd || noop)(ev);
-  // }
+export class DragGesture extends Gesture {
+  constructor(element, opts = {}) {
+    util.extend(this, { 
+      onDrag: opts.onDrag, 
+      onDragEnd: opts.onDragEnd,
+      onDragStart: opts.onDragStart
+    });
+    super(element, opts);
+  }
+  listen() {
+    super.listen();
+    console.log('listening');
+    this.hammertime.on('panstart', ev => {
+      console.log('panstart');
+      if (this.onDragStart && this.onDragStart(ev) !== false) {
+        this.dragging = true;
+      }
+    });
+    this.hammertime.on('panmove', ev => {
+      console.log('panmove');
+      if (!this.dragging) return;
+      if (this.onDrag && this.onDrag(ev) === false) {
+        this.dragging = false;
+      }
+    });
+    this.hammertime.on('panend', ev => {
+      console.log('panend');
+      if (!this.dragging) return;
+      this.onDragEnd && this.onDragEnd(ev);
+      this.dragging = false;
+    });
+  }
 }

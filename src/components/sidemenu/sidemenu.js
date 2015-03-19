@@ -1,53 +1,99 @@
 import {Component, Template, Inject, Parent, NgElement} from 'angular2/angular2';
 import {Ion} from '../ion';
-// import {EdgeDragGesture} from '../../core/gestures/edge-drag-gesture';
+import {IonConfig} from '../../config';
+import {DragGesture} from '../../core/gestures/drag-gesture';
+import * as util from '../../util';
+
+export var sideMenuConfig = new IonConfig();
+
+sideMenuConfig.defaults({
+  side: 'left',
+  dragThreshold: '50'
+});
 
 @Component({
-  selector: 'ion-side-menu',
-  bind: {
-    side: 'side'
-  }
+  selector: 'ion-side-menu'
+  // bind: {
+  //   side: 'side',
+  //   dragThreshold: 'dragThreshold'
+  // },
 })
 @Template({
   inline: `<content></content>`
 })
 export class SideMenu extends Ion {
   constructor(
-    @Parent() sideMenuParent: SideMenuParent, 
+    @Parent() sideMenuParent: SideMenuParent,
     @NgElement() element: NgElement
   ) {
-    this.el = element;
-    // this.gesture = new EdgeDragGesture(sideMenuParent.el.domElement, this);
+    debugger;
+    this.domElement = element.domElement;
+
     this._drag = {};
-    super();
+
+    this.gesture = new DragGesture(sideMenuParent.domElement, {
+      onDrag: this.onDrag.bind(this),
+      onDragStart: this.onDragStart.bind(this),
+      onDragEnd: this.onDragEnd.bind(this)
+    });
+    this.dragMethods = {
+      getMenuStart() { return 0; },
+      getEventPos(ev) { return ev.center.x; }
+    };
+    this.gesture.listen();
+
+    this.domElement.addEventListener('transitionend', ev => {
+      this.setChanging(false);
+    })
+
+    sideMenuConfig(this);
   }
   onDragStart(ev) {
-    this._drag = {
-      width: this.el.domElement.offsetWidth
-    };
-    this.el.domElement.classList.add('no-animate');
+    if (!this.dragMethods.canStart(ev)) {
+      return false;
+    }
+
+    this.setChanging(true);
+    this.domElement.classList.add('dragging');
+    requestAnimationFrame(() => {
+      this._drag = {
+        containerWidth: window.innerWidth,
+        containerHeight: window.innerHeight,
+        width: this.domElement.offsetWidth,
+        height: this.domElement.offsetHeight,
+        pointerStart: this.dragMethods.getEventPos(ev)
+      };
+      this._drag.menuStart = this.dragMethods.getMenuStart(this._drag, ev);
+      this._drag.started = true;
+    });
   }
   onDrag(ev) {
-    var pos = this._drag.pos =  Math.max(0, Math.min(ev.center.x, this._drag.width));
-    this.el.domElement.style.transform = 'translate3d(0,' + pos + 'px,0)';
+    console.log('ondrag');
+    if (!this._drag) return;
+    this.dragMethods.onDrag(this._drag, ev);
   }
   onDragEnd(ev) {
+    if (!this._drag) return;
     var { pos, width } = this._drag;
-    this.el.domElement.style.transform = '';
-    if (pos < width / 2) {
-      this.close();
-    } else if (pos > width / 2) {
-      this.open();
-    }
-    this.el.domElement.style.transform = '';
-    this.el.domElement.classList.remove('no-animate');
+
+    this.domElement.classList.remove('dragging');
+    this.dragMethods.onEnd(this._drag, ev);
     this._drag = null;
   }
-  open() {
-    this.el.domElement.classList.add('open');
+  setChanging(isChanging) {
+    if (isChanging !== this.isChanging) {
+      this.isChanging = isChanging;
+      this.domElement.classList[isChanging ? 'add' : 'remove']('changing');
+    }
   }
-  close() {
-    this.el.domElement.classList.remove('open');
+  setOpen(isOpen) {
+    if (isOpen !== this.isOpen) {
+      this.isOpen = isOpen;
+      this.setChanging(true);
+      requestAnimationFrame(() => {
+        this.domElement.classList[isOpen ? 'add' : 'remove']('open');
+      })
+    }
   }
 }
 
@@ -57,9 +103,9 @@ export class SideMenu extends Ion {
 @Template({
   inline: '<content></content>'
 })
-export class SideMenuParent extends Ion {
+export class SideMenuParent {
   constructor(@NgElement() element: NgElement) {
-    this.el = element;
+    this.domElement = element.domElement;
     super();
   }
 }
