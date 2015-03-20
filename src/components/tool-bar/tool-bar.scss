@@ -15,32 +15,56 @@
   @include flex-order(80);
 }
 
-.bar > .title {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  @include flex-display();
-  display:none;
-}
-
-.bar > .title > .inner-title {
-  /*text-align: center;
-  @include flex-align-self(center);*/
-}
-
-.bar-accessories {
+.bar-items {
   @include flex(1);
   @include flex-display();
   @include flex-justify-content(space-between);
 }
 
-.bar > .accessory-primary {
-  /*@include flex-align-self(flex-start);*/
+.bar-items > .title {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: maroon;
+  margin: 0 140px;
+
+  @include flex(1);
+  @include flex-display();
+  @include flex-align-items(center);
 }
 
-.bar > .accessory-secondary {
-  /*@include flex-align-self(flex-end);*/
-  /*display:none;*/
+.bar-items > .title > .inner-title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  background: blue;
 }
+
+.back-button {
+  @include flex-display();
+  background: purple;
+
+  .back-button-icon {
+    background: blue;
+  }
+}
+
+.bar-items > .spacer {
+  @include flex(1);
+}
+
+.bar-android {
+
+  .spacer {
+    @include flex(none);
+  }
+
+  .title {
+    position: static;
+    margin: 0;
+  }
+
+}
+
