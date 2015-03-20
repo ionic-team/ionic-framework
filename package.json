@@ -1,8 +1,8 @@
 {
   "name": "ionic",
   "private": false,
-  "version": "1.0.0-rc.0",
-  "codename": "neodymium-newt",
+  "version": "1.0.0-rc.1",
+  "codename": "osmium-ostrich",
   "repository": {
     "url": "git://github.com/driftyco/ionic.git"
   },

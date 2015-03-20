@@ -1,3 +1,29 @@
+### 1.0.0-rc.1 "osmium-ostrich" (2015-03-16)
+
+
+#### Bug Fixes
+
+* initialize $scope.$tabSelected when nested tabs selected. ([ec7bf202](https://github.com/driftyco/ionic/commit/ec7bf2026b10c01d92d52a09abb63ad81ef46045))
+* **activator:** check classList exists ([0bed91f3](https://github.com/driftyco/ionic/commit/0bed91f3c460fb0632a922a928d63072d4f7f166), closes [#3295](https://github.com/driftyco/ionic/issues/3295))
+* **barSubheader:** fix border-bottom on android ([b2841190](https://github.com/driftyco/ionic/commit/b2841190e02cbdb5fb0367b700f67b3fbd2c731b))
+* **collectionRepeat:**
+  * properly delete items when setting size to 0 ([3dc6ab6a](https://github.com/driftyco/ionic/commit/3dc6ab6a4ab39dd07dffe6bc406f115688206f0d), closes [#3299](https://github.com/driftyco/ionic/issues/3299))
+  * fix a dom problem with margins and position:relative ([83a20c61](https://github.com/driftyco/ionic/commit/83a20c61e696c8cf9fa43a124c16fe6a1a80d6e8), closes [#3277](https://github.com/driftyco/ionic/issues/3277))
+  * fix problem with option & delete buttons ([2c2662fe](https://github.com/driftyco/ionic/commit/2c2662fe81085972254e1360cd0618468fe5e6e3), closes [#3280](https://github.com/driftyco/ionic/issues/3280))
+  * make it work performantly with exposeAsideWhen ([4f35d8e6](https://github.com/driftyco/ionic/commit/4f35d8e665cf5d886995686340ebe33b9013a3e1), closes [#3244](https://github.com/driftyco/ionic/issues/3244))
+  * fix data change while page disconnected, computed dimensions while no data ([4325025d](https://github.com/driftyco/ionic/commit/4325025deb3dc6bc85fc260c2f4e3658a32480be), closes [#3240](https://github.com/driftyco/ionic/issues/3240), [#3238](https://github.com/driftyco/ionic/issues/3238))
+* **keyboard:** shrink scrollView on date and select focus on iOS ([4636cb0e](https://github.com/driftyco/ionic/commit/4636cb0ee4541004d9b0d2895f2a11a7a112d73c))
+* **platform:** revert b1f94da27e265ca32698b86785073d53208e6679, #3279 ([1c7b2883](https://github.com/driftyco/ionic/commit/1c7b2883572e5648dd141fafe61233994116716c), closes [#3175](https://github.com/driftyco/ionic/issues/3175))
+* **scrollView:** remove bottom margin on scroll content. ([4f9d6fe7](https://github.com/driftyco/ionic/commit/4f9d6fe768910858a1df022e37e9b245af4fd67e), closes [#2910](https://github.com/driftyco/ionic/issues/2910))
+* **subHeader:** removes borders on android subheaders ([ebe32265](https://github.com/driftyco/ionic/commit/ebe32265e4c80de29d0bc32494d7ab1aff7a7e77), closes [#3265](https://github.com/driftyco/ionic/issues/3265))
+* **tabs:** correct tab leaving lifecycle events ([082f30e6](https://github.com/driftyco/ionic/commit/082f30e60d7ac7b8d0bc4e354418168171a8855b), closes [#2869](https://github.com/driftyco/ionic/issues/2869))
+
+
+#### Features
+
+* **collectionRepeat:** resize on $ionicScrollDelegate.resize() ([a3014830](https://github.com/driftyco/ionic/commit/a3014830cf89da471a345d30d4bb86c859e96d48), closes [#3292](https://github.com/driftyco/ionic/issues/3292))
+
+
 ### 1.0.0-rc.0 "neodymium-newt" (2015-03-05)
 
 

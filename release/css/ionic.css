@@ -2,7 +2,7 @@
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v1.0.0-rc.0
+ * Ionic, v1.0.0-rc.1
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -2584,6 +2584,7 @@ body.grade-b, body.grade-c {
   overflow: hidden;
   margin-top: -1px;
   padding-top: 1px;
+  margin-bottom: -1px;
   width: auto;
   height: auto; }
 
@@ -2900,7 +2901,11 @@ a.subdued {
   transition: all cubic-bezier(0.36, 0.66, 0.04, 1) 500ms;
   position: absolute;
   bottom: 0;
-  width: 100%; }
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: 500px;
+  margin: auto; }
 
 .action-sheet-up {
   -webkit-transform: translate3d(0, 0, 0);
@@ -3221,11 +3226,13 @@ a.subdued {
     right: 5px;
     bottom: 5px; }
 
+.platform-android .nav-bar-has-subheader .bar {
+  background-image: none; }
 .platform-android .bar .back-button .icon:before {
   font-size: 24px; }
 .platform-android .bar .title {
   font-size: 19px;
-  line-height: 43px; }
+  line-height: 44px; }
 
 .bar-light .button {
   border-color: #ddd;
@@ -4271,13 +4278,16 @@ ion-tabs.tabs-color-active-dark .tab-item {
  * --------------------------------------------------
  * Modals are independent windows that slide in from off-screen.
  */
-.modal-backdrop {
+.modal-backdrop, .modal-backdrop-bg {
   position: fixed;
   top: 0;
   left: 0;
   z-index: 10;
   width: 100%;
   height: 100%; }
+
+.modal-backdrop-bg {
+  pointer-events: none; }
 
 .modal {
   display: block;
@@ -4314,12 +4324,13 @@ ion-tabs.tabs-color-active-dark .tab-item {
     top: 93px; }
   .platform-ios.platform-cordova .modal-wrapper .modal .has-header.has-subheader.has-tabs-top {
     top: 137px; }
-  .modal-backdrop {
-    -webkit-transition: background-color 300ms ease-in-out;
-    transition: background-color 300ms ease-in-out;
-    background-color: rgba(0, 0, 0, 0); }
-    .modal-backdrop.active {
-      background-color: rgba(0, 0, 0, 0.5); } }
+  .modal-backdrop-bg {
+    -webkit-transition: opacity 300ms ease-in-out;
+    transition: opacity 300ms ease-in-out;
+    background-color: #000;
+    opacity: 0; }
+  .active .modal-backdrop-bg {
+    opacity: 0.5; } }
 
 .modal-open {
   pointer-events: none; }
@@ -7410,7 +7421,8 @@ a.button {
   z-index: 1; }
 
 .collection-repeat-container {
-  position: relative; }
+  position: relative;
+  z-index: 1; }
 
 .collection-repeat-after-container {
   z-index: 0;
