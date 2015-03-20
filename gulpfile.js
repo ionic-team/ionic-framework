@@ -18,7 +18,7 @@ var shell = require('gulp-shell');
 var traceur = require('gulp-traceur');
 var wrap = require("gulp-wrap");
 
-gulp.task('default', ['js', 'html', 'sass', 'libs', 'playgroundJs', 'playgroundFiles']);
+gulp.task('default', ['js', 'html', 'sass', 'libs', 'playgroundJs', 'playgroundFiles', 'demo']);
 
 gulp.task('watch', ['default'], function() {
   var http = require('http');
@@ -140,7 +140,7 @@ gulp.task('angular2', function () {
 
 gulp.task('demo', function () {
   gulp.src(["./src/components/*/examples/*/index.html"])
-    .pipe(debug({title: 'Generating:'}))
+    .pipe(debug({title: 'Generating Demo:'}))
     .pipe(wrap({ src: './scripts/examples/template/index.html'}))
     .pipe(rename(function(file) {
       file.dirname = file.dirname.replace("/examples/","/");
