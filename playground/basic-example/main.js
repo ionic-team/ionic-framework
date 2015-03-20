@@ -1,13 +1,13 @@
 import {bootstrap} from 'angular2/core';
 import {Component, Template} from 'angular2/angular2';
-import {SideMenu, SideMenuParent} from 'ionic/components';
+import {Aside, AsideParent} from 'ionic/components';
 
 // import 'ionic/components/tabbar/mixins/android/android-tabbar';
 
 @Component({ selector: '[playground-main]' })
 @Template({
   url: 'main.html',
-  directives: [SideMenu, SideMenuParent]
+  directives: [Aside, AsideParent]
 })
 class PlaygroundMain {
   constructor() {

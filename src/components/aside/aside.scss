@@ -1,7 +1,7 @@
-$side-menu-width: 304px;
-$side-menu-height: 304px;
+$aside-width: 304px;
+$aside-height: 304px;
 
-ion-side-menu {
+ion-aside {
   display: block;
   position: absolute;
 
@@ -17,45 +17,45 @@ ion-side-menu {
   }
 
   &.left {
-    width: $side-menu-width;
+    width: $aside-width;
     left: 0;
     top: 0;
     bottom: 0;
 
-    transform: translate3d(-$side-menu-width, 0, 0);
+    transform: translate3d(-$aside-width, 0, 0);
     &.open {
       transform: translate3d(0,0,0);
     }
   }
   &.right {
-    width: $side-menu-width;
+    width: $aside-width;
     right: 0;
     top: 0;
     bottom: 0;
 
-    transform: translate3d($side-menu-width,0,0);
+    transform: translate3d($aside-width,0,0);
     &.open {
       transform: translate3d(0,0,0);
     }
   }
   &.top {
-    height: $side-menu-width;
+    height: $aside-width;
     top: 0;
     left: 0;
     right: 0;
     
-    transform: translate3d(0,-$side-menu-width,0);
+    transform: translate3d(0,-$aside-width,0);
     &.open {
       transform: translate3d(0,0,0);
     }
   }
   &.bottom {
-    height: $side-menu-width;
+    height: $aside-width;
     bottom: 0;
     left: 0;
     right: 0;
 
-    transform: translate3d(0,$side-menu-width,0);
+    transform: translate3d(0,$aside-width,0);
     &.open {
       transform: translate3d(0,0,0);
     }
@@ -63,7 +63,7 @@ ion-side-menu {
 
 }
 
-ion-side-menu-parent {
+ion-aside-parent {
   position: absolute;
   top: 0;
   left: 0;

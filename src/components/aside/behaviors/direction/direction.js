@@ -1,7 +1,7 @@
-import {sideMenuConfig} from '../../sidemenu';
+import {asideConfig} from '../../sidemenu';
 import * as util from '../../../../util';
 
-sideMenuConfig.when(instance => instance.side === 'bottom')
+asideConfig.when(instance => instance.side === 'bottom')
   .mixin(function() {
 
     this.gesture.options({
@@ -30,7 +30,7 @@ sideMenuConfig.when(instance => instance.side === 'bottom')
 
   });
 
-sideMenuConfig.when(instance => instance.side === 'left')
+asideConfig.when(instance => instance.side === 'left')
   .mixin(function() {
 
     this.domElement.classList.add('left');
@@ -55,7 +55,7 @@ sideMenuConfig.when(instance => instance.side === 'left')
 
   });
 
-sideMenuConfig.when(instance => instance.side === 'right')
+asideConfig.when(instance => instance.side === 'right')
   .mixin(function() {
 
     this.domElement.classList.add('right');
@@ -78,7 +78,7 @@ sideMenuConfig.when(instance => instance.side === 'right')
 
   });
 
-sideMenuConfig.when(instance => instance.side === 'top')
+asideConfig.when(instance => instance.side === 'top')
   .mixin(function() {
 
     this.domElement.classList.add('top');

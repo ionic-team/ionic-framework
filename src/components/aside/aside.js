@@ -4,34 +4,34 @@ import {IonConfig} from '../../config';
 import {DragGesture} from '../../core/gestures/drag-gesture';
 import * as util from '../../util';
 
-export var sideMenuConfig = new IonConfig();
+export var asideConfig = new IonConfig('sidemenu')
 
 // TODO defaults or bindings?
-sideMenuConfig.defaults({
+asideConfig.defaults({
   side: 'left',
-  dragThreshold: '50'
+  dragThreshold: 50
 });
 
 @Component({
-  selector: 'ion-side-menu',
+  selector: 'ion-aside',
   bind: {
-    side: 'side',
+    edge: 'side',
     dragThreshold: 'dragThreshold'
   },
 })
 @Template({
   inline: `<content></content>`
 })
-export class SideMenu extends Ion {
+export class Aside extends Ion {
   constructor(
-    @Parent() sideMenuParent: SideMenuParent,
+    @Parent() asideParent: AsideParent,
     @NgElement() element: NgElement
   ) {
     this.domElement = element.domElement;
 
     this._drag = {};
 
-    this.gesture = new DragGesture(sideMenuParent.domElement, {
+    this.gesture = new DragGesture(asideParent.domElement, {
       onDrag: this.onDrag.bind(this),
       onDragStart: this.onDragStart.bind(this),
       onDragEnd: this.onDragEnd.bind(this)
@@ -46,7 +46,7 @@ export class SideMenu extends Ion {
       this.setChanging(false);
     })
 
-    sideMenuConfig(this);
+    asideConfig(this);
   }
   onDragStart(ev) {
     if (!this.dragMethods.canStart(ev)) {
@@ -97,12 +97,12 @@ export class SideMenu extends Ion {
 }
 
 @Component({
-  selector: 'ion-side-menu-parent'
+  selector: 'ion-aside-parent'
 })
 @Template({
   inline: '<content></content>'
 })
-export class SideMenuParent {
+export class AsideParent {
   constructor(@NgElement() element: NgElement) {
     this.domElement = element.domElement;
     super();

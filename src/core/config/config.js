@@ -1,15 +1,14 @@
-import * as Platform from './platform';
-import * as util from './util';
+import * as Platform from '../../platform';
+import * as util from '../../util';
 
-export function IonConfig(name) {
+export function IonConfig() {
 
   // TODO automatically add platform class
   // TODO do bindings/defaults have to be written twice?
   // TODO maybe add config to IonicComponent annotation
   // TODO map options to config
   function Config(instance, element) {
-    var platformName = Platform.getPlatform();
-    (element.domElement || element).classList.add(`${name}-${platformName}`);
+    (element.domElement || element).classList.add('platform-' + Platform.getPlatform());
 
     util.defaults(instance, Config._defaults || {});
     var conditions = Config._conditions;
