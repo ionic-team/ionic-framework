@@ -149,3 +149,37 @@ describe('ionOptionButton directive', function() {
     expect(optionContainer.children().hasClass('button')).toBe(true);
   }));
 });
+
+describe('ionOptionSwipe directive', function() {
+  beforeEach(module('ionic'));
+  it('should have option swipe sliding right', inject(function($compile, $rootScope) {
+    var setSpy = jasmine.createSpy('setOptionSwipe');
+    var el = angular.element('<ion-item><ion-option-swipe></ion-option-swipe></ion-item>');
+    el.data('$ionListController', {
+      showDelete: function() { return false; }
+    });
+    $compile(el)($rootScope.$new());
+    $rootScope.$apply();
+
+    var optionContainer = angular.element(el[0].querySelector('.item-options-swipe'));
+    expect(optionContainer.length).toBe(1);
+    expect(optionContainer.hasClass('invisible')).toBe(true);
+    expect(optionContainer.hasClass('right')).toBe(true);
+    expect(optionContainer.children().hasClass('button')).toBe(true);
+  }));
+  it('should have option swipe sliding left', inject(function($compile, $rootScope) {
+    var setSpy = jasmine.createSpy('setOptionSwipe');
+    var el = angular.element('<ion-item><ion-option-swipe direction="left"></ion-option-swipe></ion-item>');
+    el.data('$ionListController', {
+      showDelete: function() { return false; }
+    });
+    $compile(el)($rootScope.$new());
+    $rootScope.$apply();
+
+    var optionContainer = angular.element(el[0].querySelector('.item-options-swipe'));
+    expect(optionContainer.length).toBe(1);
+    expect(optionContainer.hasClass('invisible')).toBe(true);
+    expect(optionContainer.hasClass('left')).toBe(true);
+    expect(optionContainer.children().hasClass('button')).toBe(true);
+  }));
+});

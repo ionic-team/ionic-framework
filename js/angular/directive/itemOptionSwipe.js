@@ -39,7 +39,7 @@ IonicModule
     compile: function($element, $attr) {
       $attr.$set('class', ($attr['class'] || '') + ' button', true);
       return function($scope, $element, $attr, itemCtrl) {
-        if ($attr['direction'] === 'left') {
+        if ($attr.direction === 'left') {
           if (!itemCtrl.optionsContainerLeft) {
             itemCtrl.optionsContainerLeft = jqLite(ITEM_TPL_OPTION_SWIPE);
             itemCtrl.$element.append(itemCtrl.optionsContainerLeft);
@@ -62,7 +62,7 @@ IonicModule
 
         }
 
-        $scope.$onSwipe = $parse($attr['onSwipe']);
+        $scope.$onSwipe = $parse($attr.onItemSwipe);
 
         //Don't bubble click up to main .item
         $element.on('click', stopPropagation);

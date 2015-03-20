@@ -65,6 +65,11 @@
           <ion-delete-button class="ion-minus-circled"
                              ng-click="onItemDelete(item)">
           </ion-delete-button>
+          <ion-option-swipe class="button-assertive"
+                            on-item-swipe="dismiss(item)"
+                            direction="right">
+            Dismiss
+          </ion-option-swipe>
           <ion-option-button class="button-assertive"
                              ng-click="edit(item)">
             Edit
@@ -105,6 +110,10 @@ angular.module('ionicApp', ['ionic'])
 
   $scope.alert = window.alert.bind(window);
 
+  $scope.dismiss = function(item) {
+    alert('Dismiss Item: ' + item.id);
+    //$scope.items.splice($scope.items.indexOf(item), 1);
+  };
   $scope.edit = function(item) {
     alert('Edit Item: ' + item.id);
   };

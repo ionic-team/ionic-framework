@@ -634,7 +634,7 @@
 
       this._dragOp.end(e, function(dragged) {
         if (dragged) {
-          var button = self._dragOp.item.querySelector('.item-options-swipe.sliding ion-option-swipe');
+          var button = self._dragOp.item.querySelector('.item-options-swipe.'+self._dragOp._lastDrag.direction+' ion-option-swipe');
           if (button) {
             self.onItemSwipe(button);
           }
