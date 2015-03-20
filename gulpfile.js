@@ -3,18 +3,20 @@
 /////
 
 var gulp = require('gulp');
-var gulpif = require('gulp-if');
-var del = require('del');
+var karma = require('karma').server;
+var buildConfig = require('./scripts/build/config');
+
 var concat = require('gulp-concat');
 var debug = require('gulp-debug');
+var del = require('del');
+var exec = require('gulp-exec');
+var karma = require('karma').server;
 var plumber = require('gulp-plumber');
 var rename = require('gulp-rename');
-var traceur = require('gulp-traceur');
-var lazypipe = require('lazypipe');
 var sass = require('gulp-sass');
+var shell = require('gulp-shell');
+var traceur = require('gulp-traceur');
 var wrap = require("gulp-wrap");
-var config = require('./scripts/build/config');
-var karma = require('karma').server;
 
 gulp.task('default', ['js', 'html', 'sass', 'libs', 'playgroundJs', 'playgroundFiles']);
 
@@ -22,19 +24,22 @@ gulp.task('watch', ['default'], function() {
   var http = require('http');
   var connect = require('connect');
   var serveStatic = require('serve-static');
-  var open = require('open');
   var port = 9000;
 
-  gulp.watch(config.src.html, ['html']);
-  gulp.watch(config.src.js, ['js']);
-  gulp.watch(config.src.scss, ['sass']);
-  gulp.watch(config.src.playgroundJs, ['playgroundJs']);
-  gulp.watch(config.src.playgroundFiles, ['playgroundFiles']);
+  gulp.watch(buildConfig.src.html, ['html']);
+  gulp.watch(buildConfig.src.js, ['js']);
+  gulp.watch(buildConfig.src.scss, ['sass']);
+  gulp.watch(buildConfig.src.playgroundJs, ['playgroundJs']);
+  gulp.watch(buildConfig.src.playgroundFiles, ['playgroundFiles']);
 
-  var app = connect().use(serveStatic(__dirname + '/' + config.dist));  // serve everything that is static
+  var app = connect().use(serveStatic(__dirname + '/' + buildConfig.dist));  // serve everything that is static
   http.createServer(app).listen(port);
   console.log('Serving `dist` on http://localhost:' + port);
 });
+
+gulp.task('lint', shell.task([
+  './node_modules/.bin/standard'
+]));
 
 gulp.task('karma', function() {
   return karma.start({ configFile: __dirname + '/scripts/test/karma.conf.js' });
@@ -59,16 +64,16 @@ gulp.task('sass', function(done) {
 });
 
 gulp.task('clean', function(done) {
-  del([config.dist], done);
+  del([buildConfig.dist], done);
 });
 
 gulp.task('playgroundFiles', function() {
-  return gulp.src(config.src.playgroundFiles)
-    .pipe(gulp.dest(config.dist));
+  return gulp.src(buildConfig.src.playgroundFiles)
+    .pipe(gulp.dest(buildConfig.dist));
 });
 
 gulp.task('playgroundJs', function() {
-  return gulp.src(config.src.playgroundJs)
+  return gulp.src(buildConfig.src.playgroundJs)
     .pipe(rename({extname: ''})) //hack, see: https://github.com/sindresorhus/gulp-traceur/issues/54
     .pipe(plumber())
     .pipe(traceur({
@@ -78,7 +83,7 @@ gulp.task('playgroundJs', function() {
         types: true
     }))
     .pipe(rename({extname: '.js'})) //hack, see: https://github.com/sindresorhus/gulp-traceur/issues/54
-    .pipe(gulp.dest(config.dist));
+    .pipe(gulp.dest(buildConfig.dist));
 });
 
 function traceurCompile() {
@@ -86,7 +91,7 @@ function traceurCompile() {
     ();
 }
 gulp.task('js', function () {
-  return gulp.src(config.src.js)
+  return gulp.src(buildConfig.src.js)
     .pipe(rename(function(file) {
       // Forces the files to register themselves with 'ionic' prefix
       file.dirname = 'ionic/' + file.dirname;
@@ -106,12 +111,12 @@ gulp.task('js', function () {
 
 gulp.task('html', function () {
   // Don't do anything with html for now
-  // return gulp.src(config.src.html)
-  //   .pipe(gulp.dest(config.dist));
+  // return gulp.src(buildConfig.src.html)
+  //   .pipe(gulp.dest(buildConfig.dist));
 });
 
 gulp.task('libs', ['angular2'], function () {
-  return gulp.src(config.lib)
+  return gulp.src(buildConfig.lib)
     .pipe(gulp.dest('dist/lib'));
 });
 

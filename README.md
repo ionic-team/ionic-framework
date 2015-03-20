@@ -3,6 +3,7 @@
 
 - Run `gulp watch` to build, serve, and watch Ionic & playground
 - Run `gulp karma-watch` while gulp watch is running to watch tests. Unit tests run on compiled files in dist.
+- All test files must be suffixed with `_spec.js`.
 
 #### Problems already
 

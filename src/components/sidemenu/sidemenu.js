@@ -6,17 +6,18 @@ import * as util from '../../util';
 
 export var sideMenuConfig = new IonConfig();
 
+// TODO defaults or bindings?
 sideMenuConfig.defaults({
   side: 'left',
   dragThreshold: '50'
 });
 
 @Component({
-  selector: 'ion-side-menu'
-  // bind: {
-  //   side: 'side',
-  //   dragThreshold: 'dragThreshold'
-  // },
+  selector: 'ion-side-menu',
+  bind: {
+    side: 'side',
+    dragThreshold: 'dragThreshold'
+  },
 })
 @Template({
   inline: `<content></content>`
@@ -26,7 +27,6 @@ export class SideMenu extends Ion {
     @Parent() sideMenuParent: SideMenuParent,
     @NgElement() element: NgElement
   ) {
-    debugger;
     this.domElement = element.domElement;
 
     this._drag = {};
@@ -68,7 +68,6 @@ export class SideMenu extends Ion {
     });
   }
   onDrag(ev) {
-    console.log('ondrag');
     if (!this._drag) return;
     this.dragMethods.onDrag(this._drag, ev);
   }
