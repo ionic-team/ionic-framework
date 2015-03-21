@@ -16,11 +16,38 @@ export function clamp(min, n, max) {
   return Math.max(min, Math.min(n, max));
 }
 
-export function defaults(obj, src) {
-  for (var key in src) {
-    if (src.hasOwnProperty(key) && !obj.hasOwnProperty(key)) {
-      obj[key] = src[key];
+export function defaults(dest) {
+  let extendObj = {};
+  for (let i = arguments.length - 1; i >= 1; i--) {
+    let source = arguments[i] || {};
+    for (let key in source) {
+      if (!dest.hasOwnProperty(key) && !extendObj.hasOwnProperty(key)) {
+        extendObj[key] = source[key];
+      }
     }
   }
-  return obj;
+  for (let key in extendObj) {
+    dest[key] = extendObj[key];
+  }
+  return dest;
 }
+
+export function isString(val) {
+  return typeof val === 'string';
+}
+
+export function isFunction(val) {
+  return typeof val === 'function';
+}
+
+export function isDefined(val) {
+  return typeof val !== 'undefined';
+}
+
+export var array = {
+  unique(array) {
+    return array.filter(function(value, index) {
+      return array.indexOf(value) === index;
+    });
+  }
+};

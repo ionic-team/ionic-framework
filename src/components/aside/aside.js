@@ -4,10 +4,10 @@ import {IonConfig} from '../../config';
 import {DragGesture} from '../../core/gestures/drag-gesture';
 import * as util from '../../util';
 
-export var asideConfig = new IonConfig('sidemenu')
+export var asideConfig = new IonConfig('aside');
 
 // TODO defaults or bindings?
-asideConfig.defaults({
+asideConfig.set({
   side: 'left',
   dragThreshold: 50
 });
@@ -15,7 +15,7 @@ asideConfig.defaults({
 @Component({
   selector: 'ion-aside',
   bind: {
-    edge: 'side',
+    side: 'side',
     dragThreshold: 'dragThreshold'
   },
 })
@@ -38,7 +38,8 @@ export class Aside extends Ion {
     });
     this.dragMethods = {
       getMenuStart() { return 0; },
-      getEventPos(ev) { return ev.center.x; }
+      getEventPos(ev) { return ev.center.x; },
+      canStart() { return true; }
     };
     this.gesture.listen();
 
@@ -46,7 +47,10 @@ export class Aside extends Ion {
       this.setChanging(false);
     })
 
-    asideConfig(this);
+    // TODO: remove this. setTimeout has to be done so the bindings can be applied
+    setTimeout(() => {
+      asideConfig.invoke(this);
+    });
   }
   onDragStart(ev) {
     if (!this.dragMethods.canStart(ev)) {

@@ -1,2 +1,2 @@
-export * from './components/sidemenu/sidemenu';
-import './components/sidemenu/behaviors/direction/direction';
+export * from './components/aside/aside'
+import './components/aside/behaviors/direction/direction'

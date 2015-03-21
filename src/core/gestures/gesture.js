@@ -2,6 +2,8 @@ import * as util from '../../util';
 
 export class Gesture {
   constructor(element, opts = {}) {
+    util.defaults(opts, {
+    });
     this.element = element;
     this._options = opts;
   }
