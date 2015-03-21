@@ -312,7 +312,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
         subTitle: options.subTitle,
         cssClass: options.cssClass,
         $buttonTapped: function(button, event) {
-          var result = (button.onTap || noop)(event);
+          var result = (button.onTap || angular.noop)(event);
           event = event.originalEvent || event; //jquery events
 
           if (!event.defaultPrevented) {
@@ -335,7 +335,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
         });
       };
       self.hide = function(callback) {
-        callback = callback || noop;
+        callback = callback || angular.noop;
         if (!self.isShown) return callback();
 
         self.isShown = false;
@@ -370,7 +370,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
       previousPopup.hide();
     }
 
-    var resultPromise = $timeout(noop, previousPopup ? config.stackPushDelay : 0)
+    var resultPromise = $timeout(angular.noop, previousPopup ? config.stackPushDelay : 0)
     .then(function() { return popupPromise; })
     .then(function(popup) {
       if (!previousPopup) {
@@ -411,7 +411,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
           $timeout(function() {
             $ionicBackdrop.release();
           }, config.stackPushDelay || 0);
-          ($ionicPopup._backButtonActionDone || noop)();
+          ($ionicPopup._backButtonActionDone || angular.noop)();
         }
         return result;
       });

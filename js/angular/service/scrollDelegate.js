@@ -118,6 +118,14 @@ IonicModule
    *  - `{number}` `left` The distance the user has scrolled from the left (starts at 0).
    *  - `{number}` `top` The distance the user has scrolled from the top (starts at 0).
    */
+  'getScrollMax',
+  /**
+   * @ngdoc method
+   * @name $ionicScrollDelegate#getScrollMax
+   * @returns {object} The maximum scroll position of this view, with the following properties:
+   *  - `{number}` `left` The maximum distance the user is able to scroll from the left.
+   *  - `{number}` `top` The maximum distance the user is able to scroll from the top.
+   */
   'getScrollPosition',
   /**
    * @ngdoc method
@@ -132,25 +140,10 @@ IonicModule
   'anchorScroll',
   /**
    * @ngdoc method
-   * @name $ionicScrollDelegate#freezeScroll
-   * @description Does not allow this scroll view to scroll either x or y.
-   * @param {boolean=} shouldFreeze Should this scroll view be prevented from scrolling or not.
-   * @returns {object} If the scroll view is being prevented from scrolling or not.
-   */
-  'freezeScroll',
-  /**
-   * @ngdoc method
-   * @name $ionicScrollDelegate#freezeAllScrolls
-   * @description Does not allow any of the app's scroll views to scroll either x or y.
-   * @param {boolean=} shouldFreeze Should all app scrolls be prevented from scrolling or not.
-   */
-  'freezeAllScrolls',
-  /**
-   * @ngdoc method
    * @name $ionicScrollDelegate#getScrollView
    * @returns {object} The scrollView associated with this delegate.
    */
-  'getScrollView'
+  'getScrollView',
   /**
    * @ngdoc method
    * @name $ionicScrollDelegate#$getByHandle

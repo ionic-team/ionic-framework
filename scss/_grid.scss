@@ -18,14 +18,6 @@
   @include flex-wrap(wrap);
 }
 
-.row-no-padding {
-  padding: 0;
-
-  > .col {
-    padding: 0;
-  }
-}
-
 .row + .row {
   margin-top: ($grid-padding-width / 2) * -1;
   padding-top: 0;

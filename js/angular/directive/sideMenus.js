@@ -92,7 +92,7 @@ IonicModule
           $ionicBody.enableClass(isAsideExposed, 'aside-open');
         });
 
-        $scope.$on('$ionicView.beforeEnter', function(ev, d) {
+        $scope.$on('$ionicView.beforeEnter', function(ev, d){
           if (d.historyId) {
             $scope.$activeHistoryId = d.historyId;
           }

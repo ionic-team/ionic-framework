@@ -11,7 +11,7 @@
  * @usage
  *
  * ```html
- * <ion-view>
+ * <body ng-controller="MyCtrl">
  *   <ion-slide-box>
  *     <ion-slide>
  *       <div class="box blue">
@@ -24,7 +24,7 @@
  *       </div>
  *     </ion-slide>
  *   </ion-slide-box>
- * </ion-view>
+ * </body>
  * ```
  * ```js
  * function MyCtrl($scope, $ionicSlideBoxDelegate) {
@@ -99,7 +99,7 @@ IonicModule
    */
   'slidesCount',
   'count',
-  'loop'
+  'loop',
   /**
    * @ngdoc method
    * @name $ionicSlideBoxDelegate#$getByHandle

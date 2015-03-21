@@ -1,14 +1,13 @@
 describe('Ionic Content directive', function() {
-  var compile, scope, timeout, window, ionicConfig;
+  var compile, scope, timeout, window;
 
   beforeEach(module('ionic'));
 
-  beforeEach(inject(function($compile, $rootScope, $timeout, $window, $ionicConfig) {
+  beforeEach(inject(function($compile, $rootScope, $timeout, $window) {
     compile = $compile;
     scope = $rootScope;
     timeout = $timeout;
     window = $window;
-    ionicConfig = $ionicConfig;
     ionic.Platform.setPlatform('Android');
   }));
 
@@ -127,12 +126,6 @@ describe('Ionic Content directive', function() {
     var vals = scrollView.getValues();
     expect(vals.left).toBe(100);
     expect(vals.top).toBe(300);
-  });
-
-  it('Should allow native scrolling to be set by $ionicConfig ', function() {
-    ionicConfig.scrolling.jsScrolling(false);
-    var element = compile('<ion-content></ion-content>')(scope);
-    expect(element.hasClass('overflow-scroll')).toBe(true);
   });
 
 });

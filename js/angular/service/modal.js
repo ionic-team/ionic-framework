@@ -150,7 +150,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
 
       self._isShown = true;
       self._deregisterBackButton = $ionicPlatform.registerBackButtonAction(
-        self.hardwareBackButtonClose ? angular.bind(self, self.hide) : noop,
+        self.hardwareBackButtonClose ? angular.bind(self, self.hide) : angular.noop,
         PLATFORM_BACK_BUTTON_PRIORITY_MODAL
       );
 

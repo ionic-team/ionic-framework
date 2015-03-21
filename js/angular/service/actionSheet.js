@@ -94,26 +94,15 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
   function actionSheet(opts) {
     var scope = $rootScope.$new(true);
 
-    extend(scope, {
-      cancel: noop,
-      destructiveButtonClicked: noop,
-      buttonClicked: noop,
-      $deregisterBackButton: noop,
+    angular.extend(scope, {
+      cancel: angular.noop,
+      destructiveButtonClicked: angular.noop,
+      buttonClicked: angular.noop,
+      $deregisterBackButton: angular.noop,
       buttons: [],
       cancelOnStateChange: true
     }, opts || {});
 
-    function textForIcon(text) {
-      if (text && /icon/.test(text)) {
-        scope.$actionSheetHasIcon = true;
-      }
-    }
-
-    for (var x = 0; x < scope.buttons.length; x++) {
-      textForIcon(scope.buttons[x].text);
-    }
-    textForIcon(scope.cancelText);
-    textForIcon(scope.destructiveText);
 
     // Compile the template
     var element = scope.element = $compile('<ion-action-sheet ng-class="cssClass" buttons="buttons"></ion-action-sheet>')(scope);
@@ -123,7 +112,7 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
 
     var stateChangeListenDone = scope.cancelOnStateChange ?
       $rootScope.$on('$stateChangeSuccess', function() { scope.cancel(); }) :
-      noop;
+      angular.noop;
 
     // removes the actionSheet from the screen
     scope.removeSheet = function(done) {
@@ -144,7 +133,7 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
         element.remove();
         // scope.cancel.$scope is defined near the bottom
         scope.cancel.$scope = sheetEl = null;
-        (done || noop)();
+        (done || angular.noop)();
       });
     };
 
@@ -156,7 +145,7 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
 
       $animate.addClass(element, 'active').then(function() {
         if (scope.removed) return;
-        (done || noop)();
+        (done || angular.noop)();
       });
       $timeout(function() {
         if (scope.removed) return;

@@ -28,8 +28,7 @@ var ITEM_TPL_CONTENT =
 * ```
 */
 IonicModule
-.directive('ionItem', ['$$rAF', function($$rAF) {
-      var nextId = 0;
+.directive('ionItem', function() {
   return {
     restrict: 'E',
     controller: ['$scope', '$element', function($scope, $element) {
@@ -38,47 +37,31 @@ IonicModule
     }],
     scope: true,
     compile: function($element, $attrs) {
-      var isAnchor = isDefined($attrs.href) ||
-                     isDefined($attrs.ngHref) ||
-                     isDefined($attrs.uiSref);
+      var isAnchor = angular.isDefined($attrs.href) ||
+                     angular.isDefined($attrs.ngHref) ||
+                     angular.isDefined($attrs.uiSref);
       var isComplexItem = isAnchor ||
         //Lame way of testing, but we have to know at compile what to do with the element
         /ion-(delete|option|reorder)-button/i.test($element.html());
 
-      if (isComplexItem) {
-        var innerElement = jqLite(isAnchor ? ITEM_TPL_CONTENT_ANCHOR : ITEM_TPL_CONTENT);
-        innerElement.append($element.contents());
+        if (isComplexItem) {
+          var innerElement = jqLite(isAnchor ? ITEM_TPL_CONTENT_ANCHOR : ITEM_TPL_CONTENT);
+          innerElement.append($element.contents());
 
-        $element.append(innerElement);
-        $element.addClass('item item-complex');
-      } else {
-        $element.addClass('item');
-      }
-
-      return function link($scope, $element, $attrs) {
-        var listCtrl;
-        $scope.$href = function() {
-          return $attrs.href || $attrs.ngHref;
-        };
-        $scope.$target = function() {
-          return $attrs.target || '_self';
-        };
-
-        var content = $element[0].querySelector('.item-content');
-        if (content) {
-          $scope.$on('$collectionRepeatLeave', function() {
-            if (content && content.$$ionicOptionsOpen) {
-              content.style[ionic.CSS.TRANSFORM] = '';
-              content.style[ionic.CSS.TRANSITION] = 'none';
-              $$rAF(function() {
-                content.style[ionic.CSS.TRANSITION] = '';
-              });
-              content.$$ionicOptionsOpen = false;
-            }
-          });
+          $element.append(innerElement);
+          $element.addClass('item item-complex');
+        } else {
+          $element.addClass('item');
         }
-      };
 
+        return function link($scope, $element, $attrs) {
+          $scope.$href = function() {
+            return $attrs.href || $attrs.ngHref;
+          };
+          $scope.$target = function() {
+            return $attrs.target || '_self';
+          };
+        };
     }
   };
-}]);
+});

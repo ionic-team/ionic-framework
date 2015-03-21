@@ -49,11 +49,6 @@
     @include display-flex();
     @include flex-direction(column);
   }
-
-  input,
-  textarea {
-    width: 100%;
-  }
 }
 
 .popup-head {
