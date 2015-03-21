@@ -75,7 +75,7 @@ export function main() {
     var sub1 = rootConfig.platform('ios');
     sub1.set({ letter: 'b' });
     expect(sub1.get('letter')).toBe('b');
-    sub1.unset('letter');
+    expect( sub1.unset('letter') ).toBe(sub1);
     expect(sub1.get('letter')).toBe('a');
   });
 

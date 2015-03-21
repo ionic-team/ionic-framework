@@ -1,6 +1,8 @@
 import * as Platform from './platform';
 import * as util from './util';
 
+// TODO stop hardcoding platforms and media sizes
+
 /*
  config
    .set({ side: 'left' })
@@ -83,6 +85,7 @@ class ConfigCase {
   }
   unset(key) {
     delete this._values[key];
+    return this;
   }
   get(key) {
     return util.isDefined(this._values[key]) ? 
