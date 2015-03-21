@@ -139,7 +139,7 @@ gulp.task('angular2', function () {
 
 
 gulp.task('demo', function () {
-  gulp.src(["./src/components/*/examples/*/index.html"])
+  gulp.src(["./src/components/**/examples/**/index.html"])
     .pipe(debug({title: 'Generating Demo:'}))
     .pipe(wrap({ src: './scripts/examples/template/index.html'}))
     .pipe(rename(function(file) {
