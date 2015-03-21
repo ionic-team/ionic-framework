@@ -1,5 +1,6 @@
 import {IonConfig} from './config';
 
+// TODO stop hardcoding platforms and media sizes
 export function main() {
   var rootConfig;
   beforeEach(() => {
