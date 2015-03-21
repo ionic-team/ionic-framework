@@ -26,7 +26,7 @@ gulp.task('watch', ['default'], function() {
   var serveStatic = require('serve-static');
   var port = 9000;
 
-  gulp.watch(buildConfig.src.html, ['html']);
+  gulp.watch(buildConfig.src.html, ['html', 'demo']);
   gulp.watch(buildConfig.src.js, ['js']);
   gulp.watch(buildConfig.src.scss, ['sass']);
   gulp.watch(buildConfig.src.playgroundJs, ['playgroundJs']);
