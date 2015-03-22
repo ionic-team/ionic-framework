@@ -33,7 +33,7 @@ $colors: (
 }
 
 @each $key, $value in $colors {
-  .button.#{$key} {
+  .button-#{$key} {
     @extend .button;
     color: getcolor($key, dark);
     background: getcolor($key, base);
