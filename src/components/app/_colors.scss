@@ -3,3 +3,39 @@ $stable:                          #f8f8f8 !default;
 $positive:                        #387ef5 !default;
 $assertive:                       #ef473a !default;
 $dark:                            #444 !default;
+
+
+
+
+$colors: (
+  gray: (
+    base: #ccc,
+    light: #f2f2f2,
+    dark: #666
+  ),
+  brown: (
+    base: #ab906b,
+    light: #ecdac3,
+    dark: #5e421c
+  )
+);
+
+@function getcolor($color, $tone: base) {
+  @return map-get(map-get($colors, $color), $tone);
+}
+
+.button {
+  display: block;
+  border-radius: 4px;
+  padding: 5px;
+  margin: 5px;
+  text-align: center;
+}
+
+@each $key, $value in $colors {
+  .button.#{$key} {
+    color: getcolor($key, dark);
+    background: getcolor($key, base);
+    border-color: getcolor($key, dark);
+  }
+}
