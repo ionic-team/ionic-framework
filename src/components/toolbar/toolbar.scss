@@ -36,6 +36,7 @@
 }
 
 .bar-items > .title > .inner-title {
+  width: 100%;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -64,6 +65,7 @@
   .title {
     position: static;
     margin: 0;
+    text-align: left;
   }
 
 }

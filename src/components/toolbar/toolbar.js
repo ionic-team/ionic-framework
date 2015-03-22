@@ -9,7 +9,7 @@ import {Ion} from '../ion'
 })
 @Template({
   inline: `
-    <div class="bar bar-android">
+    <div class="bar bar-ios">
       <div class="bar-items">
         <div class="back-button">
           <div class="back-button-icon">&lt;</div>
@@ -21,6 +21,7 @@ import {Ion} from '../ion'
         <div class="title">
           <div class="inner-title">
             {{ title }}
+            <content select="ion-view-title"></content>
           </div>
         </div>
         <div class="bar-primary-item" style="background:red">
