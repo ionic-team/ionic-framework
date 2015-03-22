@@ -25,11 +25,11 @@ import {Ion} from '../ion'
           </div>
         </div>
         <div class="bar-primary-item" style="background:red">
-          PRIMARY
+          <content select="ion-nav-items[side=primary]"></content>
         </div>
         <div class="spacer"></div>
         <div class="bar-secondary-item" style="background:green">
-          SECONDARY
+          <content select="ion-nav-items[side=secondary]"></content>
         </div>
       </div>
     </div>`

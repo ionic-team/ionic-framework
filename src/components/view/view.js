@@ -12,6 +12,8 @@ import {Ion} from '../ion'
   inline: `
     <ion-toolbar [view-title]="title">
       <content select="ion-view-title"></content>
+      <content select="ion-nav-items[side=primary]"></content>
+      <content select="ion-nav-items[side=secondary]"></content>
     </ion-toolbar>
     <div class="container">
       <content></content>
