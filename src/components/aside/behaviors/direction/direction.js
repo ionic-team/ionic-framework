@@ -2,6 +2,7 @@ import {asideConfig} from '../../aside';
 import Hammer from 'hammer';
 import * as util from '../../../../util';
 
+/*
 asideConfig
   .behavior(function() {
     if (this.side !== 'bottom') return;
@@ -116,3 +117,4 @@ asideConfig
       }
     });
   });
+*/

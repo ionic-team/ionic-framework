@@ -3,10 +3,16 @@ import Hammer from 'hammer';
 
 export class Gesture {
   constructor(element, opts = {}) {
-    util.defaults(opts, {
-    });
     this.element = element;
+
+    // Map 'x' or 'y' string to hammerjs opts
+    this.direction = opts.direction || 'x';
+    opts.direction = this.direction === 'x' ?
+      Hammer.DIRECTION_HORIZONTAL :
+      Hammer.DIRECTION_VERTICAL;
+
     this._options = opts;
+
   }
   options(opts = {}) {
     util.extend(this._options, opts);
@@ -21,5 +27,6 @@ export class Gesture {
   }
   destroy() {
     this.hammertime.destroy();
+    this.hammertime = null;
   }
 }

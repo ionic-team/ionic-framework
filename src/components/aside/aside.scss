@@ -12,52 +12,52 @@ ion-aside {
   &:not(.open):not(.changing) {
     display: none;
   }
-  &.dragging {
+  &.sliding {
     transition-duration: 0s;
   }
 
   &.left {
     width: $aside-width;
-    left: 0;
+    left: -$aside-width;
     top: 0;
     bottom: 0;
 
-    transform: translate3d(-$aside-width, 0, 0);
+    transform: translate3d(0, 0, 0);
     &.open {
-      transform: translate3d(0,0,0);
+      transform: translate3d($aside-width,0,0);
     }
   }
   &.right {
     width: $aside-width;
-    right: 0;
+    left: 100%;
     top: 0;
     bottom: 0;
 
-    transform: translate3d($aside-width,0,0);
+    transform: translate3d(0,0,0);
     &.open {
-      transform: translate3d(0,0,0);
+      transform: translate3d(-$aside-width,0,0);
     }
   }
   &.top {
     height: $aside-width;
-    top: 0;
+    top: -$aside-width;
     left: 0;
     right: 0;
     
-    transform: translate3d(0,-$aside-width,0);
+    transform: translate3d(0,0,0);
     &.open {
-      transform: translate3d(0,0,0);
+      transform: translate3d(0,$aside-width,0);
     }
   }
   &.bottom {
     height: $aside-width;
-    bottom: 0;
+    top: 100%;
     left: 0;
     right: 0;
 
-    transform: translate3d(0,$aside-width,0);
+    transform: translate3d(0,0,0);
     &.open {
-      transform: translate3d(0,0,0);
+      transform: translate3d(0,-$aside-width,0);
     }
   }
 

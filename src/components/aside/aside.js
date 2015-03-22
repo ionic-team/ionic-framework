@@ -1,7 +1,7 @@
 import {Component, Template, Inject, Parent, NgElement} from 'angular2/angular2';
 import {Ion} from '../ion';
 import {IonConfig} from '../../config';
-import {DragGesture} from '../../core/gestures/drag-gesture';
+import {SlideEdgeGesture} from '../../core/gestures/slide-edge-gesture';
 import * as util from '../../util';
 
 export var asideConfig = new IonConfig('aside');
@@ -31,25 +31,24 @@ export class Aside {
 
     this._drag = {};
 
-    this.gesture = new DragGesture(asideParent.domElement, {
-      onDrag: this.onDrag.bind(this),
-      onDragStart: this.onDragStart.bind(this),
-      onDragEnd: this.onDragEnd.bind(this)
-    });
-    this.dragMethods = {
-      getMenuStart() { return 0; },
-      getEventPos(ev) { return ev.center.x; },
-      canStart() { return true; }
-    };
-    this.gesture.listen();
-
     this.domElement.addEventListener('transitionend', ev => {
       this.setChanging(false);
     })
 
+    let gestureConstructor = {
+      left: LeftAsideSlideGesture,
+      top: TopAsideSlideGesture,
+      bottom: BottomAsideSlideGesture,
+      right: RightAsideSlideGesture
+    };
+
+
     // TODO: remove this. setTimeout has to be done so the bindings can be applied
     setTimeout(() => {
-      asideConfig.invoke(this);
+      // asideConfig.invoke(this);
+      this.domElement.classList.add(this.side);
+      this.gesture = new gestureConstructor[this.side](this, asideParent.domElement);
+      this.gesture.listen();
     });
   }
   onDragStart(ev) {
@@ -83,6 +82,9 @@ export class Aside {
     this.dragMethods.onEnd(this._drag, ev);
     this._drag = null;
   }
+  setSliding(isSliding) {
+    this.domElement.classList[isSliding ? 'add' : 'remove']('sliding');
+  }
   setChanging(isChanging) {
     if (isChanging !== this.isChanging) {
       this.isChanging = isChanging;
@@ -110,5 +112,89 @@ export class AsideParent {
   constructor(@NgElement() element: NgElement) {
     this.domElement = element.domElement;
     super();
+  }
+}
+
+class AsideSlideGesture extends SlideEdgeGesture {
+  constructor(aside: Aside, slideElement: Element) {
+    this.aside = aside;
+    super(slideElement, {
+      direction: (aside.side === 'left' || aside.side === 'right') ? 'x' : 'y',
+      edge: aside.side || 'left',
+      threshold: aside.dragThreshold || 100
+    });
+  }
+  
+  canStart(ev) {
+    // Only restrict edges if the aside is closed
+    return this.aside.isOpen ? true : super.canStart(ev);
+  }
+
+  onSlideBeforeStart(slide, ev) {
+    this.aside.setSliding(true);
+    this.aside.setChanging(true);
+    return new Promise(resolve => {
+      requestAnimationFrame(resolve);
+    });
+  }
+  onSlide(slide, ev) {
+    this.aside.domElement.style.transform = 'translate3d(' + slide.distance + 'px,0,0)';
+  }
+  onSlideEnd(slide, ev) {
+    this.aside.domElement.style.transform = '';
+    this.aside.setSliding(false);
+    if (Math.abs(ev.velocityX) > 0.2 || Math.abs(slide.delta) > Math.abs(slide.max) * 0.5) {
+      this.aside.setOpen(!this.aside.isOpen);
+    }
+  }
+
+  getElementStartPos(slide, ev) {
+    return this.aside.isOpen ? slide.max : slide.min;
+  }
+  getSlideBoundaries() {
+    return {
+      min: 0,
+      max: this.aside.domElement.offsetWidth
+    };
+  }
+}
+
+class LeftAsideSlideGesture extends AsideSlideGesture {}
+
+class RightAsideSlideGesture extends LeftAsideSlideGesture {
+  getElementStartPos(slide, ev) {
+    return this.aside.isOpen ? slide.min : slide.max;
+  }
+  getSlideBoundaries() {
+    return {
+      min: -this.aside.domElement.offsetWidth,
+      max: 0
+    };
+  }
+
+}
+
+import Hammer from 'hammer';
+class TopAsideSlideGesture extends AsideSlideGesture {
+  onSlide(slide, ev) {
+    this.aside.domElement.style.transform = 'translate3d(0,' + slide.distance + 'px,0)';
+  }
+  getSlideBoundaries() {
+    return {
+      min: 0,
+      max: this.aside.domElement.offsetHeight
+    };
+  }
+}
+
+class BottomAsideSlideGesture extends TopAsideSlideGesture {
+  getElementStartPos(slide, ev) {
+    return this.aside.isOpen ? slide.min : slide.max;
+  }
+  getSlideBoundaries() {
+    return {
+      min: -this.aside.domElement.offsetHeight,
+      max: 0
+    };
   }
 }
