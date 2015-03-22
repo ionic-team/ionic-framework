@@ -28,7 +28,6 @@
   bottom: 0;
   left: 0;
   background: maroon;
-  margin: 0 140px;
 
   @include flex(1);
   @include flex-display();
@@ -37,6 +36,7 @@
 
 .bar-items > .title > .inner-title {
   width: 100%;
+  padding: 0 15px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
