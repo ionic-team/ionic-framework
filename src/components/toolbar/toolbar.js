@@ -2,7 +2,10 @@ import {NgElement, Component, Template} from 'angular2/angular2'
 import {Ion} from '../ion'
 
 @Component({
-  selector: 'ion-toolbar'
+  selector: 'ion-toolbar',
+  bind: {
+    title: 'view-title'
+  }
 })
 @Template({
   inline: `

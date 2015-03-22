@@ -10,7 +10,7 @@ import {Ion} from '../ion'
 })
 @Template({
   inline: `
-    <ion-toolbar>
+    <ion-toolbar view-title="My View Title!!">
     </ion-toolbar>
     <div class="container">
       <content></content>
