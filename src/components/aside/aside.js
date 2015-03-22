@@ -51,37 +51,6 @@ export class Aside {
       this.gesture.listen();
     });
   }
-  onDragStart(ev) {
-    if (!this.dragMethods.canStart(ev)) {
-      return false;
-    }
-
-    this.setChanging(true);
-    this.domElement.classList.add('dragging');
-    requestAnimationFrame(() => {
-      this._drag = {
-        containerWidth: window.innerWidth,
-        containerHeight: window.innerHeight,
-        width: this.domElement.offsetWidth,
-        height: this.domElement.offsetHeight,
-        pointerStart: this.dragMethods.getEventPos(ev)
-      };
-      this._drag.menuStart = this.dragMethods.getMenuStart(this._drag, ev);
-      this._drag.started = true;
-    });
-  }
-  onDrag(ev) {
-    if (!this._drag) return;
-    this.dragMethods.onDrag(this._drag, ev);
-  }
-  onDragEnd(ev) {
-    if (!this._drag) return;
-    var { pos, width } = this._drag;
-
-    this.domElement.classList.remove('dragging');
-    this.dragMethods.onEnd(this._drag, ev);
-    this._drag = null;
-  }
   setSliding(isSliding) {
     this.domElement.classList[isSliding ? 'add' : 'remove']('sliding');
   }
