@@ -8,6 +8,4 @@ var wrap = require("gulp-wrap");
 
 module.exports = function(gulp, argv) {
 
-
-
-}
+};

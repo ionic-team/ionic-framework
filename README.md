@@ -5,6 +5,15 @@
 - Run `gulp karma-watch` while gulp watch is running to watch tests. Unit tests run on compiled files in dist.
 - All test files must be suffixed with `_spec.js`.
 
+#### Examples
+
+- `npm install -g jspm`
+- `jspm install`
+- `python -m SimpleHTTPServer .`
+- `open http://localhost:8000/playground/basic-example/`
+- Follow the structure found in playground/basic-example to
+  easily create more examples.
+
 #### Problems already
 
 - If we have a `.spec.js` file as a sibling of a js file, 

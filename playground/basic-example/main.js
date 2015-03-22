@@ -1,8 +1,8 @@
 import {bootstrap} from 'angular2/core';
 import {Component, Template} from 'angular2/angular2';
-import {Aside, AsideParent} from 'ionic/components';
+import {Aside, AsideParent} from 'ionic2/components';
 
-@Component({ selector: '[playground-main]' })
+@Component({ selector: '[my-app]' })
 @Template({
   url: 'main.html',
   directives: [Aside, AsideParent]

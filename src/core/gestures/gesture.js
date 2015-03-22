@@ -1,4 +1,5 @@
 import * as util from '../../util';
+import Hammer from 'hammer';
 
 export class Gesture {
   constructor(element, opts = {}) {

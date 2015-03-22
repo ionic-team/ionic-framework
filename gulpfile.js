@@ -4,7 +4,9 @@
 
 var gulp = require('gulp');
 var karma = require('karma').server;
+var path = require('path');
 var buildConfig = require('./scripts/build/config');
+var through2 = require('through2');
 
 var concat = require('gulp-concat');
 var debug = require('gulp-debug');
@@ -16,9 +18,9 @@ var rename = require('gulp-rename');
 var sass = require('gulp-sass');
 var shell = require('gulp-shell');
 var traceur = require('gulp-traceur');
-var wrap = require("gulp-wrap");
+var template = require('gulp-template');
 
-gulp.task('default', ['js', 'html', 'sass', 'libs', 'playgroundJs', 'playgroundFiles', 'demo']);
+gulp.task('default', ['js', 'html', 'sass', 'libs', 'playgroundJs', 'playgroundFiles']);
 
 gulp.task('watch', ['default'], function() {
   var http = require('http');
@@ -26,7 +28,7 @@ gulp.task('watch', ['default'], function() {
   var serveStatic = require('serve-static');
   var port = 9000;
 
-  gulp.watch(buildConfig.src.html, ['html', 'demo']);
+  gulp.watch(buildConfig.src.html, ['html']);
   gulp.watch(buildConfig.src.js, ['js']);
   gulp.watch(buildConfig.src.scss, ['sass']);
   gulp.watch(buildConfig.src.playgroundJs, ['playgroundJs']);
@@ -137,13 +139,3 @@ gulp.task('angular2', function () {
     .pipe(gulp.dest('dist/lib'));
 });
 
-
-gulp.task('demo', function () {
-  gulp.src(["./src/components/**/examples/**/index.html"])
-    .pipe(debug({title: 'Generating Demo:'}))
-    .pipe(wrap({ src: './scripts/examples/template/index.html'}))
-    .pipe(rename(function(file) {
-      file.dirname = file.dirname.replace("/examples/","/");
-    }))
-    .pipe(gulp.dest("./dist/examples"));
-});

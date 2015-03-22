@@ -10,19 +10,19 @@ export var asideConfig = new IonConfig('aside');
 asideConfig.set({
   side: 'left',
   dragThreshold: 50
-});
+})
 
 @Component({
   selector: 'ion-aside',
   bind: {
     side: 'side',
     dragThreshold: 'dragThreshold'
-  },
+  }
 })
 @Template({
   inline: `<content></content>`
 })
-export class Aside extends Ion {
+export class Aside {
   constructor(
     @Parent() asideParent: AsideParent,
     @NgElement() element: NgElement

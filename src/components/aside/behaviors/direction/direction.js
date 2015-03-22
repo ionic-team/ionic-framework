@@ -1,4 +1,5 @@
 import {asideConfig} from '../../aside';
+import Hammer from 'hammer';
 import * as util from '../../../../util';
 
 asideConfig
@@ -34,6 +35,7 @@ asideConfig
   })
   .behavior(function() {
     if (this.side !== 'left') return;
+
 
     this.domElement.classList.add('left');
     this.gesture.options({

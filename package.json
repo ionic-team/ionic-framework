@@ -1,21 +1,15 @@
 {
   "name": "ionic2",
   "version": "0.0.0",
-  "standard": {
-    "ignore": [
-      "dist/**/*",
-      "scripts/**/*"
-    ]
-  },
   "devDependencies": {
     "connect": "^3.3.4",
     "del": "~1.1.1",
     "gulp": "~3.8.10",
     "gulp-concat": "~2.5.0",
     "gulp-debug": "~2.0.1",
-    "gulp-if": "^1.2.5",
     "gulp-eslint": "^0.7.0",
     "gulp-exec": "^2.1.1",
+    "gulp-if": "^1.2.5",
     "gulp-jscs": "^1.4.0",
     "gulp-plumber": "^1.0.0",
     "gulp-rename": "~1.2.0",
@@ -25,18 +19,33 @@
     "gulp-wrap": "~0.11.0",
     "karma": "^0.12.31",
     "serve-static": "~1.8.1",
+    "systemjs": "^0.11.3",
     "through2": "~0.6.3"
   },
   "dependencies": {
     "angular2": "2.0.0-alpha.13",
     "es6-module-loader": "~0.11.0",
+    "event-stream": "^3.3.0",
+    "gulp-template": "^3.0.0",
     "hammerjs": "^2.0.4",
     "jasmine-core": "^2.2.0",
     "karma-chrome-launcher": "^0.1.7",
     "karma-jasmine": "^0.3.5",
+    "standard": "driftyco/standard#master",
     "systemjs": "~0.11.0",
+    "through2": "^0.6.3",
     "traceur": "0.0.87",
-    "zone.js": "0.4.1",
-    "standard": "driftyco/standard#master"
+    "zone.js": "0.4.1"
+  },
+  "jspm": {
+    "directories": {
+      "lib": "src",
+      "packages": "jspm_packages"
+    },
+    "configFile": "jspm-config.js",
+    "dependencies": {
+      "angular/zone.js": "github:angular/zone.js@0.4.1",
+      "hammer": "github:hammerjs/hammer.js@^2.0.4"
+    }
   }
 }
