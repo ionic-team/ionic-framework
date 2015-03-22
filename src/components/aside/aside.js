@@ -12,6 +12,20 @@ asideConfig.set({
   dragThreshold: 50
 })
 
+// AsideParent is just a temporary directive
+@Component({
+  selector: 'ion-aside-parent'
+})
+@Template({
+  inline: '<content></content>'
+})
+export class AsideParent {
+  constructor(@NgElement() element: NgElement) {
+    this.domElement = element.domElement;
+    super();
+  }
+}
+
 @Component({
   selector: 'ion-aside',
   bind: {
@@ -68,19 +82,6 @@ export class Aside {
         this.domElement.classList[isOpen ? 'add' : 'remove']('open');
       })
     }
-  }
-}
-
-@Component({
-  selector: 'ion-aside-parent'
-})
-@Template({
-  inline: '<content></content>'
-})
-export class AsideParent {
-  constructor(@NgElement() element: NgElement) {
-    this.domElement = element.domElement;
-    super();
   }
 }
 
