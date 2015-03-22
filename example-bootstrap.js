@@ -15,6 +15,7 @@ var exampleReady = function() {
 
   scripts.forEach(function(src) {
     var script = document.createElement('script');
+    script.async = true;
     script.onload = function() {
       if (++loaded == scripts.length) exampleReady();
     };

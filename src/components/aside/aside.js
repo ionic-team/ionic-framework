@@ -43,30 +43,28 @@ export class Aside {
   ) {
     this.domElement = element.domElement;
 
-    this._drag = {};
-
     this.domElement.addEventListener('transitionend', ev => {
       this.setChanging(false);
     })
 
-    let gestureConstructor = {
-      left: LeftAsideSlideGesture,
-      top: TopAsideSlideGesture,
-      bottom: BottomAsideSlideGesture,
-      right: RightAsideSlideGesture
-    };
-
-
     // TODO: remove this. setTimeout has to be done so the bindings can be applied
     setTimeout(() => {
       // asideConfig.invoke(this);
+      let GestureConstructor = {
+        left: LeftAsideSlideGesture,
+        top: TopAsideSlideGesture,
+        bottom: BottomAsideSlideGesture,
+        right: RightAsideSlideGesture
+      }[this.side];
       this.domElement.classList.add(this.side);
-      this.gesture = new gestureConstructor[this.side](this, asideParent.domElement);
+      this.gesture = new GestureConstructor(this, asideParent.domElement);
       this.gesture.listen();
     });
   }
   setSliding(isSliding) {
-    this.domElement.classList[isSliding ? 'add' : 'remove']('sliding');
+    if (isSliding !== this.isSliding) {
+      this.domElement.classList[isSliding ? 'add' : 'remove']('sliding');
+    }
   }
   setChanging(isChanging) {
     if (isChanging !== this.isChanging) {
