@@ -169,7 +169,7 @@ $button-bar-button-icon-size:     20px !default;
 
 .button-full,
 .button-full > .button {
-  display: block;
+  @include flex-display();
   margin-right: 0;
   margin-left: 0;
   border-right-width: 0;
