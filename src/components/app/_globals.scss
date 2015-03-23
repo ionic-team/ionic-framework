@@ -1,8 +1,6 @@
 
 [ion-app] {
 
-  // User Interaction
-  // -------------------------
   -webkit-user-drag: none;
   -ms-content-zooming: none;
 
@@ -10,5 +8,15 @@
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
+
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
 
 }
