@@ -9,10 +9,11 @@
 
 - `npm install -g jspm`
 - `jspm install`
+- `gulp examples`
 - `python -m SimpleHTTPServer .`
-- `open http://localhost:8000/playground/basic-example/`
-- Follow the structure found in playground/basic-example to
-  easily create more examples.
+- `open http://localhost:9000/dist/examples/aside/basic/index.html`
+- Follow the structure found in src/components/aside/examples/basic
+  to create more examples.
 
 #### Problems already
 

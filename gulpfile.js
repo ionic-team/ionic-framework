@@ -137,13 +137,9 @@ gulp.task('angular2', function () {
 });
 
 gulp.task('examples', function() {
-  var mainFileRegex = /(main|index).html$/;
   return gulp.src('src/components/**/examples/**/*') 
-    .pipe(gulpif(mainFileRegex, wrap({
+    .pipe(gulpif(/index.html/, wrap({
       src: 'scripts/examples/index.template.html' 
-    })))
-    .pipe(gulpif(mainFileRegex, rename({
-      basename: 'index.html' 
     })))
     .pipe(rename(function(file) {
       file.dirname = file.dirname.replace('/examples/', '/');
