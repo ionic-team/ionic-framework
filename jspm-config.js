@@ -1,12 +1,12 @@
 System.config({
-  traceurOptions: {
-    annotations: true,
-    types: true,
-    memberVariables: true
-  },
   "paths": {
     "*": "*.js",
     "github:*": "/jspm_packages/github/*.js"
+  },
+  "traceurOptions": {
+    "annotations": true,
+    "types": true,
+    "memberVariables": true
   }
 });
 

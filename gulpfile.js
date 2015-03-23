@@ -12,13 +12,14 @@ var concat = require('gulp-concat');
 var debug = require('gulp-debug');
 var del = require('del');
 var exec = require('gulp-exec');
+var gulpif = require('gulp-if');
 var karma = require('karma').server;
 var plumber = require('gulp-plumber');
 var rename = require('gulp-rename');
 var sass = require('gulp-sass');
 var shell = require('gulp-shell');
 var traceur = require('gulp-traceur');
-var template = require('gulp-template');
+var wrap = require('gulp-wrap');
 
 gulp.task('default', ['js', 'html', 'sass', 'libs', 'playgroundJs', 'playgroundFiles']);
 
@@ -38,10 +39,6 @@ gulp.task('watch', ['default'], function() {
   http.createServer(app).listen(port);
   console.log('Serving `dist` on http://localhost:' + port);
 });
-
-gulp.task('lint', shell.task([
-  './node_modules/.bin/standard'
-]));
 
 gulp.task('karma', function() {
   return karma.start({ configFile: __dirname + '/scripts/test/karma.conf.js' });
@@ -139,3 +136,17 @@ gulp.task('angular2', function () {
     .pipe(gulp.dest('dist/lib'));
 });
 
+gulp.task('examples', function() {
+  var mainFileRegex = /(main|index).html$/;
+  return gulp.src('src/components/**/examples/**/*') 
+    .pipe(gulpif(mainFileRegex, wrap({
+      src: 'scripts/examples/index.template.html' 
+    })))
+    .pipe(gulpif(mainFileRegex, rename({
+      basename: 'index.html' 
+    })))
+    .pipe(rename(function(file) {
+      file.dirname = file.dirname.replace('/examples/', '/');
+    }))
+    .pipe(gulp.dest('dist/examples/'));
+});

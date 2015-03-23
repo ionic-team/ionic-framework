@@ -1,33 +1,22 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-  <link rel="stylesheet" href="/css/ionic.css">
-  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
 
-  <!-- ES6-related imports -->
-  <script src="/lib/traceur-runtime.js"></script>
-  <script src="/lib/es6-module-loader-sans-promises.src.js"></script>
-  <script src="/lib/extension-register.js"></script>
-  <script>
-      register(System);
-  </script>
-
-  <!-- Third party imports -->
-  <script src="/lib/angular2.js"></script>
-  <script src="/lib/zone.js"></script>
-  <script src="/lib/hammer.js"></script>
-
-  <meta charset="UTF-8">
-  <title>Ionic 2 Example</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="/dist/css/ionic.css" />
+    <script src="/jspm_packages/system.js"></script>
+    <script src="/jspm-config.js"></script>
+    <script src="https://cdn.rawgit.com/angular/zone.js/v0.4.1/zone.js"></script>
+    <script src="https://cdn.rawgit.com/angular/zone.js/v0.4.1/long-stack-trace-zone.js"></script>
+    <script src="https://cdn.rawgit.com/robwormald/50b6b855a6ce21af6967/raw/aa9e1c0eed78defd890ccfcc50c4b4648d4d891d/angular2.js"></script>
 </head>
-<body ion-app>
+<body>
+  <%= contents %>
 </body>
 <script>
-  System.register({
-    map: {
-      'ionic': '/ionic'
-    }
-  });
-  System.import('main.js'):
+System.import('./main');
+</script>
 </body>
+
 </html>
