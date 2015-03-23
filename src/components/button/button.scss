@@ -22,10 +22,6 @@ $button-small-height:             28px !default;
 $button-small-padding:            4px !default;
 $button-small-icon-size:          16px !default;
 
-$button-bar-button-font-size:     13px !default;
-$button-bar-button-height:        32px !default;
-$button-bar-button-padding:       8px !default;
-$button-bar-button-icon-size:     20px !default;
 
 
 // Button Mixins
@@ -74,6 +70,7 @@ $button-bar-button-icon-size:     20px !default;
 }
 
 
+
 // Button Defaults
 // --------------------------------------------------
 
@@ -118,6 +115,7 @@ $button-bar-button-icon-size:     20px !default;
 }
 
 
+
 // Button Sizes
 // --------------------------------------------------
 
@@ -134,6 +132,7 @@ $button-bar-button-icon-size:     20px !default;
   min-height: $button-large-height + 5;
   font-size: $button-large-font-size;
 }
+
 
 
 // Button Types
@@ -187,6 +186,7 @@ input.button.button-block  {
 .padding > .button.button-block:first-child {
   margin-top: 0;
 }
+
 
 
 // Button Color Generation
