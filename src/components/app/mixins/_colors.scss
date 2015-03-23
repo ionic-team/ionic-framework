@@ -1,0 +1,22 @@
+
+@function get-color($color, $tone: base) {
+  @return map-get(map-get($colors, $color), $tone);
+}
+
+
+@function inverse-tone($color) {
+  // For a lighter colored "base" the darker colored "inverse"
+  // the inverse-tone will be the "light" tone
+
+  // For a darker colored "base" the lighter colored "inverse"
+  // the inverse-tone will be the "dark" tone
+
+  $base: map-get(map-get($colors, $color), base);
+  $inverse: map-get(map-get($colors, $color), inverse);
+  $light: map-get(map-get($colors, $color), light);
+  $dark: map-get(map-get($colors, $color), dark);
+
+  $lightness: lightness($base) - lightness($inverse);
+
+  @return if($lightness < 0, $dark, $light);
+}
