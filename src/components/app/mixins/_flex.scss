@@ -52,13 +52,20 @@
   flex-wrap: $value;
 }
 
-@mixin flex($fg: 1, $fs: null, $fb: null) {
-  -webkit-box-flex: $fg;
-  -webkit-flex: $fg $fs $fb;
-  -moz-box-flex: $fg;
-  -moz-flex: $fg $fs $fb;
-  -ms-flex: $fg $fs $fb;
-  flex: $fg $fs $fb;
+@mixin flex($flex-grow: 1, $flex-shrink: null, $flex-basis: null) {
+  -webkit-box-flex: $flex-grow;
+  -webkit-flex: $flex-grow $flex-shrink $flex-basis;
+  -moz-box-flex: $flex-grow;
+  -moz-flex: $flex-grow $flex-shrink $flex-basis;
+  -ms-flex: $flex-grow $flex-shrink $flex-basis;
+  flex: $flex-grow $flex-shrink $flex-basis;
+}
+
+@mixin flex-shrink($value: 1) {
+  -webkit-flex-shrink: $value;
+  -moz-flex-shrink: $value;
+  -ms-flex-negative: $value;
+  flex-shrink: $value;
 }
 
 @mixin flex-flow($values: (row nowrap)) {

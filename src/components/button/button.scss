@@ -79,25 +79,30 @@ $button-bar-button-icon-size:     20px !default;
 
 .button {
   position: relative;
-  display: inline-block;
+
+  @include flex-display-inline();
+  @include flex-shrink(0);
+  @include flex-flow(row nowrap);
+  @include flex-align-items(center);
+  @include flex-justify-content(center);
+
   margin: 0;
   padding: 0 $button-padding;
 
   min-width: ($button-padding * 3) + $button-font-size;
   min-height: $button-height + 5px;
 
+  line-height: normal;
+  vertical-align: baseline;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
   border-width: $button-border-width;
   border-style: solid;
   border-radius: $button-border-radius;
 
-  vertical-align: top;
-  text-align: center;
-
-  text-overflow: ellipsis;
-  font-size: $button-font-size;
-  line-height: $button-height - $button-border-width + 1px;
   outline: none;
-
   cursor: pointer;
 
   &:after {
@@ -121,7 +126,6 @@ $button-bar-button-icon-size:     20px !default;
   min-width: $button-small-height;
   min-height: $button-small-height + 2;
   font-size: $button-small-font-size;
-  line-height: $button-small-height - $button-border-width - 1;
 }
 
 .button-large {
@@ -129,7 +133,6 @@ $button-bar-button-icon-size:     20px !default;
   min-width: ($button-large-padding * 3) + $button-large-font-size;
   min-height: $button-large-height + 5;
   font-size: $button-large-font-size;
-  line-height: $button-large-height - $button-border-width;
 }
 
 
