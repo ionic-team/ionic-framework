@@ -9,6 +9,9 @@ import {Template, Component, bootstrap} from 'angular2/angular2';
   inline: `<content></content>`,
   directives: [Aside, AsideParent]
 })
-class AsideApp {}
+class AsideApp {
+  openLeft() {
+  }
+}
 
 bootstrap(AsideApp);

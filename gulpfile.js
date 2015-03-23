@@ -136,7 +136,7 @@ gulp.task('angular2', function () {
     .pipe(gulp.dest('dist/lib'));
 });
 
-gulp.task('examples', function() {
+gulp.task('examples', ['sass'], function() {
   return gulp.src('src/components/**/examples/**/*') 
     .pipe(gulpif(/index.html/, wrap({
       src: 'scripts/examples/index.template.html' 
