@@ -50,27 +50,20 @@ $button-bar-button-icon-size:     20px !default;
   }
 }
 
-@mixin button-clear($color, $font-size:"") {
+@mixin button-clear($color) {
   &.button-clear {
     border-color: transparent;
     background: none;
     box-shadow: none;
     color: $color;
-
-    @if $font-size != "" {
-      font-size: $font-size;
-    }
   }
 }
 
-@mixin button-outline($color, $text-color:"") {
+@mixin button-outline($color) {
   &.button-outline {
     border-color: $color;
     background: transparent;
-    @if $text-color == "" {
-      $text-color: $color;
-    }
-    color: $text-color;
+    color: $color;
 
     &.activated {
       background-color: $color;
@@ -91,6 +84,10 @@ $button-bar-button-icon-size:     20px !default;
                             inverse-tone($color),
                             get-color($color, dark),
                             get-color($color, inverse));
+
+    @include button-clear(get-color($color, dark));
+
+    @include button-outline(get-color($color, dark));
   }
 }
 
