@@ -93,7 +93,7 @@ $button-bar-button-icon-size:     20px !default;
   min-height: $button-height + 5px;
 
   line-height: normal;
-  vertical-align: baseline;
+  vertical-align: top;
 
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -159,7 +159,7 @@ $button-bar-button-icon-size:     20px !default;
 }
 
 .button-block {
-  display: block;
+  @include flex-display();
   clear: both;
 
   &:after {
