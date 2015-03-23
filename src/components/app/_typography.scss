@@ -17,6 +17,14 @@ $headings-line-height:            1.2 !default;
 
 
 [ion-app] {
+  font-size: $font-size-base;
+  font-family: $font-family-base;
+  line-height: $line-height-computed;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
 
   h1, h2, h3, h4, h5, h6 {
     font-weight: $headings-font-weight;

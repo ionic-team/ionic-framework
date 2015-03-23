@@ -1,19 +1,6 @@
 
 [ion-app] {
 
-  // Typography
-  // -------------------------
-  @import "typography";
-  font-size: $font-size-base;
-  font-family: $font-family-base;
-  line-height: $line-height-computed;
-  -webkit-font-smoothing: antialiased;
-  font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  -webkit-text-size-adjust: none;
-  text-size-adjust: none;
-
-
   // User Interaction
   // -------------------------
   -webkit-user-drag: none;
@@ -23,4 +10,5 @@
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
+
 }
