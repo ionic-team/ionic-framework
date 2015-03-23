@@ -113,7 +113,7 @@ $button-bar-button-icon-size:     20px !default;
 }
 
 
-// Button Types
+// Button Sizes
 // --------------------------------------------------
 
 .button-small {
@@ -131,6 +131,10 @@ $button-bar-button-icon-size:     20px !default;
   font-size: $button-large-font-size;
   line-height: $button-large-height - $button-border-width;
 }
+
+
+// Button Types
+// --------------------------------------------------
 
 .button-clear {
   @include transition(opacity .1s);
