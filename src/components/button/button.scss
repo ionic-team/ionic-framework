@@ -74,24 +74,6 @@ $button-bar-button-icon-size:     20px !default;
 }
 
 
-// Button Type and Color Generation
-// --------------------------------------------------
-
-@each $color, $value in $colors {
-  .button-#{$color} {
-    @include button-default(get-color($color, base),
-                            get-color($color, dark),
-                            inverse-tone($color),
-                            get-color($color, dark),
-                            get-color($color, inverse));
-
-    @include button-clear(get-color($color, dark));
-
-    @include button-outline(get-color($color, dark));
-  }
-}
-
-
 // Button Defaults
 // --------------------------------------------------
 
@@ -169,10 +151,6 @@ $button-bar-button-icon-size:     20px !default;
   box-shadow: none;
 }
 
-.padding > .button.button-block:first-child {
-  margin-top: 0;
-}
-
 .button-block {
   display: block;
   clear: both;
@@ -190,6 +168,24 @@ $button-bar-button-icon-size:     20px !default;
   border-right-width: 0;
   border-left-width: 0;
   border-radius: 0;
+}
+
+
+// Button Color Generation
+// --------------------------------------------------
+
+@each $color, $value in $colors {
+  .button-#{$color} {
+    @include button-default(get-color($color, base),
+                            get-color($color, dark),
+                            inverse-tone($color),
+                            get-color($color, dark),
+                            get-color($color, inverse));
+
+    @include button-clear(get-color($color, dark));
+
+    @include button-outline(get-color($color, dark));
+  }
 }
 
 
@@ -213,5 +209,9 @@ button.button-full,
 .button-full > button.button,
 input.button.button-block  {
   width: 100%;
+}
+
+.padding > .button.button-block:first-child {
+  margin-top: 0;
 }
 
