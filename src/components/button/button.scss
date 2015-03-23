@@ -174,6 +174,17 @@ $button-bar-button-icon-size:     20px !default;
   border-radius: 0;
 }
 
+button.button-block,
+button.button-full,
+.button-full > button.button,
+input.button.button-block  {
+  width: 100%;
+}
+
+.padding > .button.button-block:first-child {
+  margin-top: 0;
+}
+
 
 // Button Color Generation
 // --------------------------------------------------
@@ -206,16 +217,5 @@ a.button {
   opacity: .4;
   cursor: default !important;
   pointer-events: none;
-}
-
-button.button-block,
-button.button-full,
-.button-full > button.button,
-input.button.button-block  {
-  width: 100%;
-}
-
-.padding > .button.button-block:first-child {
-  margin-top: 0;
 }
 
