@@ -71,7 +71,7 @@ require('./scripts/snapshot/snapshot.task')(gulp, argv, buildConfig);
 
 // Take es6 files from angular2's output, rename to js, and move to dist/lib/
 gulp.task('ng2-rename', function(done) {
-  exec('ls dist/angular-master', function(err) {
+  exec('test -e dist/angular-master', function(err) {
     if (err) {
       console.log('You have not installed angular master.\n' +
                   'Please run ./scripts/build/update-angular.sh.\n' +
