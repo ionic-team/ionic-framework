@@ -21,6 +21,12 @@
   @include flex-justify-content(space-between);
 }
 
+.bar-item,
+.bar-item ion-nav-items {
+  @include flex-display();
+  @include flex-align-items(center);
+}
+
 .bar-items > .title {
   position: absolute;
   top: 0;
