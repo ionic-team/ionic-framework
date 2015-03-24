@@ -20,7 +20,7 @@ import {Ion} from '../ion'
     </div>`,
   directives: [Toolbar]
 })
-export class View extends Ion {
+export class View {
   constructor(@NgElement() ele:NgElement) {
     ele.domElement.classList.add('pane')
   }

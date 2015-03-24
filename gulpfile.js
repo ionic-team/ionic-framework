@@ -2,6 +2,7 @@
 // Mostly stolen from https://github.com/pkozlowski-opensource/ng2-play
 /////
 
+var Builder = require('systemjs-builder');
 var gulp = require('gulp');
 var karma = require('karma').server;
 var path = require('path');
@@ -23,6 +24,19 @@ var wrap = require('gulp-wrap');
 var argv = require('yargs').argv;
 
 gulp.task('default', ['js', 'html', 'sass', 'libs', 'playgroundJs', 'playgroundFiles']);
+
+var NG2_PATH = 'jspm_packages/github/angular/angular@master';
+gulp.task('ng2-compile', shell.task([
+  'npm install',
+  'gulp build/transpile.js.dev.es6'
+], {
+  cwd: NG2_PATH
+}));
+gulp.task('ng2-copy', ['ng2-compile'], function() {
+  return gulp.src(NG2_PATH + '/dist/js/dev/es6/{angular2,rtts_assert}/**/*')
+    .pipe(gulpif(/es6$/, rename({ extname: '.js' })))
+    .pipe(gulp.dest('dist/lib'));
+});
 
 gulp.task('watch', ['default'], function() {
   var http = require('http');
@@ -82,10 +96,6 @@ gulp.task('playgroundJs', function() {
     .pipe(gulp.dest(buildConfig.dist));
 });
 
-function traceurCompile() {
-  return lazypipe()
-    ();
-}
 gulp.task('js', function () {
   return gulp.src(buildConfig.src.js)
     .pipe(rename(function(file) {
@@ -149,3 +159,10 @@ gulp.task('examples', ['sass'], function() {
 });
 
 require('./scripts/snapshot/snapshot.task')(gulp, argv, buildConfig);
+
+gulp.task('watch-examples', ['examples'], function() {
+  return gulp.watch([
+    'src/**/*',
+    'scripts/examples/index.template.html'
+  ], ['examples']);
+});

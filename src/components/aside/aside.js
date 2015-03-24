@@ -142,7 +142,6 @@ class RightAsideSlideGesture extends LeftAsideSlideGesture {
 
 }
 
-import Hammer from 'hammer';
 class TopAsideSlideGesture extends AsideSlideGesture {
   onSlide(slide, ev) {
     this.aside.domElement.style.transform = 'translate3d(0,' + slide.distance + 'px,0)';

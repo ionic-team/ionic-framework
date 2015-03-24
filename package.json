@@ -28,10 +28,10 @@
     "serve-static": "~1.8.1",
     "systemjs": "^0.11.3",
     "through2": "~0.6.3",
-    "yargs": "^3.6.0"
+    "yargs": "^3.6.0",
+    "systemjs-builder": "^0.9.1"
   },
   "dependencies": {
-    "angular2": "2.0.0-alpha.13",
     "es6-module-loader": "~0.11.0",
     "event-stream": "^3.3.0",
     "gulp-template": "^3.0.0",
@@ -50,7 +50,9 @@
     },
     "configFile": "jspm-config.js",
     "dependencies": {
+      "angular2": "github:angular/angular@master",
       "angular/zone.js": "github:angular/zone.js@0.4.1",
+      "events": "github:jspm/nodelibs-events@^0.1.0",
       "hammer": "github:hammerjs/hammer.js@^2.0.4"
     }
   }
