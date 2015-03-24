@@ -11660,7 +11660,8 @@ function($timeout, $controller, $ionicBind) {
           scrollbarY: '@',
           zooming: '@',
           minZoom: '@',
-          maxZoom: '@'
+          maxZoom: '@',
+          selfCentre: '@'
         });
         $scope.direction = $scope.direction || 'y';
 
@@ -11689,6 +11690,7 @@ function($timeout, $controller, $ionicBind) {
           zooming: $scope.$eval($scope.zooming) === true,
           maxZoom: $scope.$eval($scope.maxZoom) || 3,
           minZoom: $scope.$eval($scope.minZoom) || 0.5,
+          selfCentre: $scope.$eval($scope.selfCentre) === true,
           preventDefault: true
         };
         if (isPaging) {
