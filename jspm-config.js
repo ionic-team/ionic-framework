@@ -16,7 +16,7 @@ System.config({
 System.config({
   "map": {
     "angular2": "dist/lib/angular2",
-    "hammer": "/node_modules/hammerjs/hammer.js",
+    "hammer": "/node_modules/hammerjs/hammer",
     "ionic2": "/src",
     "rtts_assert": "dist/lib/rtts_assert"
   }
