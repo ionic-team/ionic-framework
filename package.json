@@ -2,6 +2,7 @@
   "name": "ionic2",
   "version": "0.0.0",
   "devDependencies": {
+    "canonical-path": "0.0.2",
     "connect": "^3.3.4",
     "del": "~1.1.1",
     "gulp": "~3.8.10",
@@ -16,11 +17,18 @@
     "gulp-sass": "^1.3.3",
     "gulp-shell": "^0.4.0",
     "gulp-traceur": "0.16.*",
+    "gulp-util": "^3.0.4",
     "gulp-wrap": "^0.11.0",
     "karma": "^0.12.31",
+    "lodash": "^2.4.1",
+    "lodash.template": "^2.4.1",
+    "node-uuid": "^1.4.1",
+    "q": "^1.2.0",
+    "request": "^2.53.0",
     "serve-static": "~1.8.1",
     "systemjs": "^0.11.3",
-    "through2": "~0.6.3"
+    "through2": "~0.6.3",
+    "yargs": "^3.6.0"
   },
   "dependencies": {
     "angular2": "2.0.0-alpha.13",

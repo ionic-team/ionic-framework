@@ -15,5 +15,6 @@ module.exports = {
     'node_modules/systemjs/lib/extension-register.js',
     'node_modules/angular2/node_modules/zone.js/zone.js',
     'node_modules/hammerjs/hammer.js'
-  ]
+  ],
+  protractorPort: 8876
 };

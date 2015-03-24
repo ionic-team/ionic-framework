@@ -20,6 +20,7 @@ var sass = require('gulp-sass');
 var shell = require('gulp-shell');
 var traceur = require('gulp-traceur');
 var wrap = require('gulp-wrap');
+var argv = require('yargs').argv;
 
 gulp.task('default', ['js', 'html', 'sass', 'libs', 'playgroundJs', 'playgroundFiles']);
 
@@ -45,10 +46,6 @@ gulp.task('karma', function() {
 });
 gulp.task('karma-watch', function() {
   return karma.start({ configFile: __dirname + '/scripts/test/karma-watch.conf.js' });
-});
-
-gulp.task('sass-watch', ['sass'], function () {
-  gulp.watch('src/**/*.scss', ['sass']);
 });
 
 gulp.task('sass', function(done) {
@@ -137,12 +134,18 @@ gulp.task('angular2', function () {
 });
 
 gulp.task('examples', ['sass'], function() {
-  return gulp.src('src/components/**/examples/**/*') 
+  var examplesSrc = path.join(__dirname, 'src/components/**/examples/**/*');
+  var templateSrc = path.join(__dirname, 'scripts/examples/index.template.html');
+  var examplesDest = path.join(__dirname, 'dist/examples/');
+
+  return gulp.src(examplesSrc)
     .pipe(gulpif(/index.html/, wrap({
-      src: 'scripts/examples/index.template.html' 
+      src: templateSrc
     })))
     .pipe(rename(function(file) {
       file.dirname = file.dirname.replace('/examples/', '/');
     }))
-    .pipe(gulp.dest('dist/examples/'));
+    .pipe(gulp.dest(examplesDest));
 });
+
+require('./scripts/snapshot/snapshot.task')(gulp, argv, buildConfig);
