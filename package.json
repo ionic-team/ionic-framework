@@ -37,6 +37,7 @@
     "jasmine-core": "^2.2.0",
     "karma-chrome-launcher": "^0.1.7",
     "karma-jasmine": "^0.3.5",
+    "rx": "^2.4.6",
     "systemjs": "~0.11.0",
     "traceur": "0.0.87",
     "zone.js": "0.4.1"

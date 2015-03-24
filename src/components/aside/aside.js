@@ -89,7 +89,7 @@ class AsideSlideGesture extends SlideEdgeGesture {
     super(slideElement, {
       direction: (aside.side === 'left' || aside.side === 'right') ? 'x' : 'y',
       edge: aside.side || 'left',
-      threshold: aside.dragThreshold || 100
+      threshold: /*aside.dragThreshold || */150
     });
   }
   

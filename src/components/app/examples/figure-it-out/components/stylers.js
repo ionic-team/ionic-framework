@@ -1,12 +1,12 @@
-import {Decorator, NgElement, Template, Component} from 'angular2/angular2';
+import {Component, NgElement, Template} from 'angular2/angular2';
 
-@Decorator({
+@Component({
   selector: '[red-bg]'
 })
 @Template({
-  inline: 'test'
+  inline: 'red template'
 })
-export class TestRedDecorator {
+export class RedBgStyler {
   constructor(
     element:NgElement
   ) {
@@ -15,11 +15,11 @@ export class TestRedDecorator {
 
 }
 
-@Decorator({
+@Component({
   selector: '[blue-bg]'
 })
 @Template({
-  inline: 'test'
+  inline: 'blue template'
 })
 export class BlueTextStyler {
   constructor(

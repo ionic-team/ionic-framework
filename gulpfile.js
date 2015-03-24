@@ -90,16 +90,7 @@ gulp.task('ng2', ['ng2-rename'], function() {
   var builder = new SystemJsBuilder();
   return builder.loadConfig('jspm-config.js')
   .then(function() {
-    builder.config({
-      map: {
-        'angular2': 'dist/lib/angular2',
-        'rtts_assert': 'dist/lib/rtts_assert'
-      },
-      paths: {
-        dist: undefined,
-      }
-    });
-    return builder.build('angular2/angular2', 'dist/lib/angular2.js');
+    return builder.build('dist/lib/angular2/angular2', 'dist/lib/angular2.js');
   });
 });
 

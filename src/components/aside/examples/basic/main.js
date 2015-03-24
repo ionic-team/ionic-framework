@@ -1,14 +1,12 @@
-import {Aside, AsideParent} from 'ionic2/components/aside/aside';
+import {ionicComponents} from 'ionic2/components';
 import {Template, Component, bootstrap} from 'angular2/angular2';
-
 
 @Component({
   selector: 'aside-app'
 })
 @Template({
-  // Inlined version of main.html
-  inline: `
-  <ion-aside-parent>
+  directives: ionicComponents,
+  inline: `<ion-aside-parent>
     <ion-aside side="left">
       LEFT
       <p>...</p>
@@ -42,13 +40,9 @@ import {Template, Component, bootstrap} from 'angular2/angular2';
     <button class="button" (click)="openLeft()">
       Open Left Menu
     </button>
-  </div>
-  `,
-  directives: [Aside, AsideParent]
+  </div>`
 })
 class AsideApp {
-  constructor() {
-  }
   openLeft() {
   }
 }
