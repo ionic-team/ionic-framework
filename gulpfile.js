@@ -64,14 +64,14 @@ gulp.task('examples', ['sass'], function() {
     .pipe(rename(function(file) {
       file.dirname = file.dirname.replace('/examples/', '/');
     }))
-    .pipe(gulp.dest(exampleDest));
+    .pipe(gulpif({ isFile: true }, gulp.dest(exampleDest)));
 });
 
 require('./scripts/snapshot/snapshot.task')(gulp, argv, buildConfig);
 
 // Take es6 files from angular2's output, rename to js, and move to dist/lib/
 gulp.task('ng2-rename', function(done) {
-  exec('test -e dist/angular-master', function(err) {
+  exec('test -e node_modules/angular-master', function(err) {
     if (err) {
       console.log('You have not installed angular master.\n' +
                   'Please run ./scripts/build/update-angular.sh.\n' +
@@ -79,7 +79,7 @@ gulp.task('ng2-rename', function(done) {
       return process.exit(1);
     }
     gulp.src([
-      'dist/angular-master/dist/js/dev/es6/{angular2,rtts_assert}/**/*.es6'
+      'node_modules/angular-master/dist/js/dev/es6/{angular2,rtts_assert}/**/*.es6'
     ])
       .pipe(rename({ extname: '.js' }))
       .pipe(gulp.dest('dist/lib'))

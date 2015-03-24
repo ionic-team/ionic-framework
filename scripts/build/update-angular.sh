@@ -1,6 +1,6 @@
 #!/bin/sh
 
-NG_FOLDER=dist/angular-master
+NG_FOLDER=node_modules/angular-master
 
 cd $(dirname $0)/../../
 
