@@ -34,7 +34,7 @@ import {Ion} from '../ion'
       </div>
     </div>`
 })
-export class ToolBar {
+export class Toolbar {
   constructor(@NgElement() ngEle:NgElement) {
     this.ele = ngEle.domElement
 
