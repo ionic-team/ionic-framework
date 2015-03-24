@@ -1,6 +1,7 @@
 import {NgElement, Component, Template, Parent} from 'angular2/angular2';
 import {History} from '../../history';
 import {Ion} from '../ion';
+import {View} from 'ionic/components/view/view';
 
 
 @Component({
@@ -25,7 +26,7 @@ import {Ion} from '../ion';
     </div>
     `
 })
-export class Tabs extends View {
+export class Tabs extends Ion {
 
   constructor(@NgElement() ele:NgElement) {
     ele.domElement.classList.add('view');
@@ -44,45 +45,4 @@ export class Tabs extends View {
     this.showHistory(tab.history);
   }
 
-}
-
-
-@Component({
-  selector: 'ion-tab',
-  bind: {
-    tabTitle: 'tab-title'
-  }
-})
-@Template({
-  inline: `
-    <div class="container">
-      <div class="content">
-        <div class="scroll-content">
-          <content></content>
-        </div>
-      </div>
-    </div>
-    `
-})
-export class Tab extends View {
-
-  constructor(@NgElement() ele:NgElement, @Parent() tabs: Tabs) {
-    this.ele = ele;
-    this.history = new History();
-
-    ele.domElement.classList.add('view');
-    ele.domElement.classList.add('tab-view');
-
-    tabs.add(this);
-
-    setTimeout(() => {
-      // HACK!!!!! "this" doesn't have tabTitle when not in setTimeout
-      console.log(this.tabTitle)
-    })
-
-  }
-
-  show(shouldShow) {
-    this.ele.domElement.classList[shouldShow ? 'remove' : 'add']('hide');
-  }
 }

@@ -1,7 +1,9 @@
 import {bootstrap} from 'angular2/core';
 import {Component, Template} from 'angular2/angular2';
-import {View, Content} from 'ionic/components/view/view';
-import {Tabs, Tab} from 'ionic/components/tabs/tabs';
+import {View} from 'ionic/components/view/view';
+import {Content} from 'ionic/components/view/content';
+import {Tabs} from 'ionic/components/tabs/tabs';
+import {Tab} from 'ionic/components/tabs/tab';
 
 @Component({ selector: '[ion-app]' })
 @Template({
@@ -10,7 +12,7 @@ import {Tabs, Tab} from 'ionic/components/tabs/tabs';
 })
 class IonicApp {
   constructor() {
-    console.log('IonicApp Start');
+    console.log('IonicApp Start')
   }
 }
 
