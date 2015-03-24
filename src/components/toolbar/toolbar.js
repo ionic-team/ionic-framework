@@ -11,13 +11,13 @@ import {Ion} from '../ion'
   inline: `
     <div class="bar bar-ios">
       <div class="bar-items">
-        <div class="back-button bar-item">
+        <button class="back-button bar-item">
           <div class="back-button-icon">&lt;</div>
           <div class="back-button-text">
             <div class="back-default">Back</div>
             <div class="back-title"></div>
           </div>
-        </div>
+        </button>
         <div class="title">
           <div class="inner-title">
             {{ title }}
