@@ -25,3 +25,28 @@
 
 - JSCS
 - JSHint (or TypeScript variant)
+
+#### Current Focus
+
+Build/Angular2
+ - Build system
+ - Repo structure overlord
+ - ES6/Angular2/Component conventions
+ - Global/Attribute config system
+ - Dynamically assign behaviors/templates per config
+
+HTML/CSS/Transitions
+ - Markup structure
+ - SCSS
+ - View transitions
+ - Core View History/Navigation system
+ - Routing
+ - Snapshot
+
+Gestures
+ - Gesture system
+ - Linear constraints
+ - Auto layout
+ - Class/inheritance system
+ - Translate native concepts to the web 
+
