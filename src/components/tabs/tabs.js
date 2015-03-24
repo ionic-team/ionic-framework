@@ -29,7 +29,7 @@ import {View} from 'ionic/components/view/view';
 export class Tabs extends Ion {
 
   constructor(@NgElement() ele:NgElement) {
-    ele.domElement.classList.add('view');
+    ele.domElement.classList.add('pane');
     ele.domElement.classList.add('tabs-container');
 
     this.tabs = [];

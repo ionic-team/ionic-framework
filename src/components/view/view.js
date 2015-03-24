@@ -22,6 +22,6 @@ import {Ion} from '../ion'
 })
 export class View extends Ion {
   constructor(@NgElement() ele:NgElement) {
-    ele.domElement.classList.add('view')
+    ele.domElement.classList.add('pane')
   }
 }

@@ -13,7 +13,7 @@ html {
   margin: 0;
   padding: 0;
 
-  .view {
+  .pane {
     position: relative;
     width: 100%;
 
@@ -22,12 +22,12 @@ html {
     @include flex(1);
   }
 
-  .view > .container.shared-view {
+  .pane > .container.shared-pane {
     position: absolute;
     width: 100%;
   }
 
-  .view > .container {
+  .pane > .container {
     position: relative;
     overflow: hidden;
 
@@ -37,12 +37,12 @@ html {
     @include flex-direction(column);
   }
 
-  .container > .view {
+  .container > .pane {
     position: absolute;
     min-height: 100%;
   }
 
-  .view > .container > .content {
+  .pane > .container > .content {
     position: relative;
     @include flex(1);
   }
