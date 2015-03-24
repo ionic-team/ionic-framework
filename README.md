@@ -8,7 +8,7 @@
 #### Building & Running
 
 - `npm install -g jspm`
-- `jspm init && jspm install`
+- `jspm init`
 - `gulp watch`
 - `python -m SimpleHTTPServer .`
 - `open http://localhost:9000/dist/examples/aside/basic/index.html`

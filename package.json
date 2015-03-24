@@ -49,17 +49,7 @@
     },
     "configFile": "jspm-config.js",
     "dependencies": {
-      "es6-module-loader": "~0.11.0",
-      "event-stream": "^3.3.0",
-      "gulp-template": "^3.0.0",
-      "hammerjs": "^2.0.4",
-      "jasmine-core": "^2.2.0",
-      "karma-chrome-launcher": "^0.1.7",
-      "karma-jasmine": "^0.3.5",
-      "systemjs": "~0.11.0",
-      "through2": "^0.6.3",
-      "traceur": "0.0.87",
-      "zone.js": "0.4.1"
+      "none": "none"
     }
   }
 }
