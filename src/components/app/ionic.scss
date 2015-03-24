@@ -20,9 +20,14 @@
 
 // Components
 @import
+  "../aside/aside",
   "../button/button",
   "../modal/modal",
-  "../aside/aside",
   "../switch/switch",
   "../tabs/tabs",
   "../toolbar/toolbar";
+
+
+// Icons
+@import
+  "../icon/icon";

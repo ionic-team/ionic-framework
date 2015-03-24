@@ -90,7 +90,9 @@ $button-small-icon-size:          16px !default;
   min-height: $button-height + 5px;
 
   line-height: normal;
-  vertical-align: top;
+
+  vertical-align: top; // the better option for most scenarios
+  vertical-align: -webkit-baseline-middle; // the best for those that support it
 
   white-space: nowrap;
   text-overflow: ellipsis;
