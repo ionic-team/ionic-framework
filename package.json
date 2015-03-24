@@ -9,7 +9,6 @@
     "gulp-concat": "~2.5.0",
     "gulp-debug": "~2.0.1",
     "gulp-eslint": "^0.7.0",
-    "gulp-exec": "^2.1.1",
     "gulp-if": "^1.2.5",
     "gulp-jscs": "^1.4.0",
     "gulp-plumber": "^1.0.0",
@@ -35,6 +34,7 @@
     "es6-module-loader": "~0.11.0",
     "event-stream": "^3.3.0",
     "gulp-template": "^3.0.0",
+    "hammerjs": "^2.0.4",
     "jasmine-core": "^2.2.0",
     "karma-chrome-launcher": "^0.1.7",
     "karma-jasmine": "^0.3.5",
@@ -50,10 +50,17 @@
     },
     "configFile": "jspm-config.js",
     "dependencies": {
-      "angular2": "github:angular/angular@master",
-      "angular/zone.js": "github:angular/zone.js@0.4.1",
-      "events": "github:jspm/nodelibs-events@^0.1.0",
-      "hammer": "github:hammerjs/hammer.js@^2.0.4"
+      "es6-module-loader": "~0.11.0",
+      "event-stream": "^3.3.0",
+      "gulp-template": "^3.0.0",
+      "hammerjs": "^2.0.4",
+      "jasmine-core": "^2.2.0",
+      "karma-chrome-launcher": "^0.1.7",
+      "karma-jasmine": "^0.3.5",
+      "systemjs": "~0.11.0",
+      "through2": "^0.6.3",
+      "traceur": "0.0.87",
+      "zone.js": "0.4.1"
     }
   }
 }

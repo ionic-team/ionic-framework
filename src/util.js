@@ -1,5 +1,9 @@
 export function noop() {}
 
+export function clamp(min, n, max) {
+  return Math.max(min, Math.min(n, max));
+}
+
 export function extend(dest) {
   for (var i = 1, ii = arguments.length; i < ii; i++) {
     var source = arguments[i] || {};
@@ -12,22 +16,14 @@ export function extend(dest) {
   return dest;
 }
 
-export function clamp(min, n, max) {
-  return Math.max(min, Math.min(n, max));
-}
-
 export function defaults(dest) {
-  let extendObj = {};
   for (let i = arguments.length - 1; i >= 1; i--) {
     let source = arguments[i] || {};
     for (let key in source) {
-      if (!dest.hasOwnProperty(key) && !extendObj.hasOwnProperty(key)) {
-        extendObj[key] = source[key];
+      if (!dest.hasOwnProperty(key)) {
+        dest[key] = source[key];
       }
     }
-  }
-  for (let key in extendObj) {
-    dest[key] = extendObj[key];
   }
   return dest;
 }
