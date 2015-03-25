@@ -28,13 +28,12 @@ export class SlideEdgeGesture extends SlideGesture {
   }
 
   _checkEdge(edge, pos) {
-    if ((edge === 'left' && pos.x > this._containerRect.left + this.threshold) ||
-        (edge === 'right' && pos.x < this._containerRect.width - this.threshold) ||
-        (edge === 'top' && pos.y > this._containerRect.top + this.threshold) ||
-        (edge === 'bottom' && pos.y < this._containerRect.height - this.threshold)) {
-      return false;
+    switch(edge) {
+      case 'left': return pos.x <= this._containerRect.left + this.threshold;
+      case 'right': return pos.x >= this._containerRect.width - this.threshold;
+      case 'top': return pos.y <= this._containerRect.top + this.threshold;
+      case 'bottom': return pos.y >= this._containerRect.height - this.threshold;
     }
-    return true;
   }
 
 }
