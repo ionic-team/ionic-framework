@@ -4,21 +4,6 @@ import {Config} from '../../core/config/config';
 import {SlideEdgeGesture} from '../../core/gestures/slide-edge-gesture';
 import * as util from '../../util';
 
-export var asideConfig = new Config('aside');
-
-// TODO defaults or bindings?
-asideConfig.set({
-  side: 'left',
-  dragThreshold: 50
-})
-
-
-class AndroidAside {}
-class IosAside {}
-
-asideConfig.platform('android').component(AndroidAside);
-asideConfig.platform('ios').component(IosAside);
-
 // AsideParent is just a temporary directive
 @Component({
   selector: 'ion-aside-parent'
@@ -56,9 +41,6 @@ export class Aside {
 
     // TODO: remove this. setTimeout has to be done so the bindings can be applied
     setTimeout(() => {
-      let Comp = asideConfig.invoke(this);
-      console.log('using', Comp);
-
       let GestureConstructor = {
         left: LeftAsideSlideGesture,
         top: TopAsideSlideGesture,

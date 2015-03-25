@@ -23,11 +23,14 @@ var traceur = require('gulp-traceur');
 var wrap = require('gulp-wrap');
 var argv = require('yargs').argv;
 
-gulp.task('default', ['sass', 'examples', 'ng2']);
+gulp.task('default', ['sass', 'e2e', 'ng2']);
 
 gulp.task('watch', ['default'], function() {
   gulp.watch(buildConfig.src.scss, ['sass']);
-  return gulp.watch(buildConfig.src.examples.concat('scripts/examples/index.template.html'), ['examples']);
+  gulp.watch([].concat(
+    buildConfig.src.js, buildConfig.src.e2e, buildConfig.src.html, 
+    'scripts/e2e/index.template.html'
+  ), ['e2e']);
 });
 
 gulp.task('karma', function() {
@@ -54,7 +57,7 @@ gulp.task('clean', function(done) {
 
 gulp.task('e2e', function() {
   var e2eSrc = path.join(__dirname, 'src/components/**/test/**/*');
-  var templateSrc = path.join(__dirname, 'scripts/examples/index.template.html');
+  var templateSrc = path.join(__dirname, 'scripts/e2e/index.template.html');
   var e2eDest = path.join(__dirname, 'dist/e2e/');
 
   return gulp.src(e2eSrc)
@@ -65,14 +68,6 @@ gulp.task('e2e', function() {
       file.dirname = file.dirname.replace('/test/', '/');
     }))
     .pipe(gulpif({ isFile: true }, gulp.dest(e2eDest)));
-});
-
-gulp.task('e2e-watch', ['e2e'], function() {
-  gulp.watch(buildConfig.src.scss, ['sass']);
-  return gulp.watch([
-    'src/components/**/test/**/*',
-    buildConfig.src.examples.concat('scripts/examples/index.template.html')
-  ], ['e2e']);
 });
 
 require('./scripts/snapshot/snapshot.task')(gulp, argv, buildConfig);
