@@ -20,7 +20,7 @@ export function defaults(dest) {
   for (let i = arguments.length - 1; i >= 1; i--) {
     let source = arguments[i] || {};
     for (let key in source) {
-      if (!dest.hasOwnProperty(key)) {
+      if (source.hasOwnProperty(key) && !dest.hasOwnProperty(key)) {
         dest[key] = source[key];
       }
     }
