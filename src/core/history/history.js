@@ -1,5 +1,5 @@
 
-export class ViewHistory {
+export class History {
   constructor() {
     this._array = [];
   }

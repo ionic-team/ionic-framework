@@ -1,0 +1,26 @@
+
+// List
+// --------------------------------------------------
+
+$list-margin: 35px 0 !default;
+
+
+
+.list {
+  margin: $list-margin;
+  padding: 0;
+  list-style-type: none;
+}
+
+.list-header {
+  position: relative;
+  margin: 35px 15px 10px;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.list-header + .list {
+  margin-top: 10px;
+}
