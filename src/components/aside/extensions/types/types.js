@@ -1,7 +1,7 @@
 import {Aside} from '../../aside';
 
-// TODO figure out if we can make all of these bindings (eg content's transform is bound to
-// aside component's `transform` propety
+// TODO figure out if we can make all of these bindings (eg can we make it so content's transform is bound to
+// aside component's `transform` property?)
 class AsideBaseType {
   constructor(aside: Aside) {
     this.aside = aside;
