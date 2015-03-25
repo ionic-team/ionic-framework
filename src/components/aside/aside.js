@@ -32,7 +32,7 @@ export class Aside {
   constructor(
     @NgElement() element: NgElement,
     @PropertySetter('style.transform') transformSetter: Function,
-    @PropertySetter('class.notransition') noTransitionSetter: Function,
+    /* propertSetter doesn't work for classes right now */
     config: AsideConfig
   ) {
     this.domElement = element.domElement
