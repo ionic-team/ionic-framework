@@ -3,10 +3,22 @@
 // --------------------------------------------------
 
 $item-min-height:         44px !default;
-$item-padding-top:        8px !default;
+$item-padding-top:        15px !default;
 $item-padding-right:      15px !default;
-$item-padding-bottom:     7px !default;
+$item-padding-bottom:     15px !default;
 $item-padding-left:       15px !default;
+
+
+//  <li class="item">
+//    <div class="item-content">
+//      <div class="item-title">
+//        Item Title
+//      </div>
+//      <div class="item-accessory">
+//        Badge
+//      </div>
+//    </div>
+//  </li>
 
 
 .item {
@@ -17,8 +29,8 @@ $item-padding-left:       15px !default;
   @include flex-align-items(center);
 
   min-height: $item-min-height;
-
-  padding-left: $item-padding-left;
+  margin: 0;
+  padding: 0;
 }
 
 .item-content {
@@ -32,9 +44,7 @@ $item-padding-left:       15px !default;
   width: 100%;
   min-height: $item-min-height;
 
-  padding-right: $item-padding-right;
-  padding-top: $item-padding-top;
-  padding-bottom: $item-padding-bottom;
+  padding: $item-padding-top $item-padding-right $item-padding-bottom $item-padding-left;
 }
 
 .item-title {

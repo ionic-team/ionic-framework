@@ -18,7 +18,7 @@
   "typography";
 
 
-// Components
+// Default Components
 @import
   "../aside/aside",
   "../button/button",
@@ -28,6 +28,16 @@
   "../switch/switch",
   "../tabs/tabs",
   "../toolbar/toolbar";
+
+
+// Android Components
+@import
+  "../item/extensions/android/item-android";
+
+
+// iOS Components
+@import
+  "../item/extensions/ios/item-ios";
 
 
 // Icons

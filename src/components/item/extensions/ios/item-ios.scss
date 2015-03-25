@@ -1,0 +1,31 @@
+
+// iOS Item
+// --------------------------------------------------
+
+$item-ios-min-height:           44px !default;
+$item-ios-padding-top:          8px !default;
+$item-ios-padding-right:        15px !default;
+$item-ios-padding-bottom:       7px !default;
+$item-ios-padding-left:         15px !default;
+$item-ios-accessory-color:      #8e8e93 !default;
+
+
+
+.list-ios {
+
+  .item {
+    min-height: $item-ios-min-height;
+    padding-left: $item-ios-padding-left;
+  }
+
+  .item-content {
+    min-height: $item-ios-min-height;
+    padding: $item-ios-padding-top $item-ios-padding-right $item-ios-padding-bottom 0;
+  }
+
+  .item-accessory {
+    color: $item-ios-accessory-color;
+    color: red;
+  }
+
+}

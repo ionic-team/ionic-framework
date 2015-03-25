@@ -8,7 +8,7 @@ exports.config = {
   // Spec patterns are relative to the location of the spec file. They may
   // include glob patterns.
   specs: [
-    path.resolve(projectRoot, 'dist/examples/**/*.scenario.js'),
+    path.resolve(projectRoot, 'dist/e2e/**/e2e.js'),
   ],
 
   // Options to be passed to Jasmine-node.
