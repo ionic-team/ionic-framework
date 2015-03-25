@@ -1,100 +1,29 @@
-import getPlatform from '../platform/platform';
+import {platform} from '../platform/platform';
+import {ConfigCase} from './config-case';
 import * as util from '../../util';
 
 // TODO stop hardcoding platforms and media sizes
 
 /*
- config
-   .set({ side: 'left' })
-   .set('threshold', 50)
-   .platform('ios')
-     .set('side', 'top')
-     .unset('threshold')
-     .media('lg')
-       .set('side', 'right')
+@ConfigPlatform({
+  for: AsideBase
+  platform: 'android', 
+  defaults: {
+    type: 'reveal'
+  }
+})
+class AndroidAside extends AsideBase {}
 
-config.platform('ios')
-  .behavior(function() {
-    do something
-  })
-  .defaults({
-    side: 'right'
-  })
-  
-config.platform('ios').media('tablet')
-  .defaults({
-    side: 'bottom'
-  });
+```@ConfigCase({
+  for: AsideBase,
+  condition: instance => instance.type === 'reveal'
+})
+class AsideReveal {
+  constructor(aside: AsideBase) {}
+}
 */
 
-
-/*
- User wants to remove the default behavior for sidemenu, but that's stuck under `.platform('ios').`
-
-config.platform('ios').media('tablet') === config.media('tablet').platform('ios')
-*/
-var QUERIES = {
-  sm: true,
-  md: true,
-  lg: true
-};
-var PLATFORMS = {
-  ios: true,
-  android: true
-};
-
-function isPlatform(key = '') {
-  return key.toLowerCase() in PLATFORMS;
-}
-function isMedia(key = '') {
-  return key.toLowerCase() in QUERIES;
-}
-class ConfigCase {
-  constructor({ root, parent, path }) {
-    this._root = root;
-    this._parent = parent;
-    this._path = path || [];
-    this._values = {};
-    this.behaviors = [];
-  }
-  platform(key = '') {
-    if (isPlatform(key)) return this._root._addCase(key, this);
-    return this;
-  }
-  media(key = '') {
-    if (isMedia(key)) return this._root._addCase(key, this);
-    return this;
-  }
-  when(condition = '') {
-    if (isPlatform(condition) || isMedia(condition)) {
-      return this._root._addCase(condition, this);
-    }
-    return this;
-  }
-  behavior(fn) {
-    this.behaviors.push(fn);
-    return this;
-  }
-  set(a, b) {
-    if (util.isString(a)) {
-      this._values[a] = b;
-    } else {
-      util.extend(this._values, a || {});
-    }
-    return this;
-  }
-  unset(key) {
-    delete this._values[key];
-    return this;
-  }
-  get(key) {
-    return util.isDefined(this._values[key]) ? 
-      this._values[key] :
-      (this._parent ? this._parent.get(key) : undefined);
-  }
-}
-
-export class IonConfig extends ConfigCase {
+export class Config extends ConfigCase {
   constructor() {
     this._root = this;
     this._cases = {};
@@ -108,7 +37,7 @@ export class IonConfig extends ConfigCase {
     return invokeConfig(this, instance);
   }
   _addCase(key, baseCase) {
-    var path = baseCase._path.slice();
+    let path = baseCase._path.slice();
     path.push(key);
 
     // Remove empties & duplicates
@@ -125,10 +54,10 @@ export class IonConfig extends ConfigCase {
   }
   _createCase(path) {
     if (!path.length) return this;
-    var pathStr = path.join(' ');
-    var configCase = this._cases[pathStr];
+    let pathStr = path.join(' ');
+    let configCase = this._cases[pathStr];
     if (!configCase) {
-      var parentPath = path.slice(0, path.length - 1);
+      let parentPath = path.slice(0, path.length - 1);
       configCase = this._cases[pathStr] = new ConfigCase({
         root: this, 
         parent: this._createCase(parentPath), 
@@ -139,11 +68,10 @@ export class IonConfig extends ConfigCase {
   }
 }
 
-export function invokeConfig(config, object, opts = {}) {
-  util.defaults(opts, { media: 'lg', platform: 'ios' });
-  var { platform, media } = opts;
+export function invokeConfig(config, object) {
+  let platformName = platform.get().name;
 
-  var passedCases = [config].concat(
+  let passedCases = [config].concat(
     Object.keys(config._cases)
       .map(name => config._cases[name])
       .filter(configCasePasses)
@@ -154,25 +82,25 @@ export function invokeConfig(config, object, opts = {}) {
 
   // Extend the given object with the values of all the passed cases, starting with the
   // most specific.
-  var defaults = [object];
-  var behaviors = [];
+  let defaults = [object];
+  // Also find the most specific case with a component that we should use.
+  let ComponentToUse;
   for (let i = 0, ii = passedCases.length; i < ii; i++) {
     defaults.push(passedCases[i]._values);
-    // Avoid allocating a new array for each passed case's array of behaviors
-    behaviors.push.apply(behaviors, passedCases[i].behaviors);
+    if (passedCases[i]._component) {
+      ComponentToUse = passedCases[i]._component;
+    }
   }
 
   util.defaults.apply(null, defaults);
 
-  for (let i = 0, ii = behaviors.length; i < ii; i++) {
-    behaviors[i].call(object, object);
-  }
+  return ComponentToUse;
 
   function configCasePasses(configCase) {
-    var path = configCase._path;
-    var key;
+    let path = configCase._path;
+    let key;
     for (let i = 0, ii = path.length; i < ii; i++) {
-      if (!(media === path[i] || platform === path[i])) return false;
+      if (platformName !== path[i]) return false;
     }
     return true;
   }

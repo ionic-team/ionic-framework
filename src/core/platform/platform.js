@@ -1,19 +1,13 @@
-var platforms = [];
-
-// TODO(ajoslin): move this to a facade somewhere else?
-var ua = window.navigator.userAgent;
+import * as util from '../../util';
 
 class Platform {
-  constructor({
-    name,
-    matcher
-  }) {
-    this.name = name;
-    this.matcher = matcher;
+  constructor(options) {
+    util.extend(this, options);
   }
 }
 
 class PlatformController {
+  current: Platform;
   constructor() {
     this.registry = [];
   }
@@ -21,10 +15,18 @@ class PlatformController {
     this.current = platform;
   }
   get() {
-    return platform;
+    return this.current;
   }
   register(platform) {
+    if (!platform instanceof Platform) {
+      platform = new Platform(platform);
+    }
     this.registry.push(platform);
+  }
+  isRegistered(platformName) {
+    return this.registry.some(platform => {
+      return platform.name === platformName;
+    });
   }
   detect() {
     for (let platform of this.registry) {
@@ -37,18 +39,23 @@ class PlatformController {
 
 export let platform = new PlatformController();
 
-platform.register(new Platform({
-  name: 'android',
-  matcher: () => {
-    return /android/i.test(ua)
-  }
-}));
-platform.register(new Platform({
-  name: 'ios',
-  matcher: () => {
-    return /iPhone|iPad|iPod/.test(ua)
-  }
-})
+// TODO(ajoslin): move this to a facade somewhere else?
+var ua = window.navigator.userAgent;
 
-function detectPlatform() {
-}
+// TODO(ajoslin): move these to their own files
+platform.register({
+  name: 'android',
+  matcher() {
+    return /android/i.test(ua);
+  }
+});
+platform.register({
+  name: 'ios',
+  // For now always default to ios
+  matcher() {
+    return true;
+  }
+});
+
+
+platform.set( platform.detect() );

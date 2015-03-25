@@ -4,12 +4,6 @@ import {PrivateComponentLoader} from 'angular2/src/core/compiler/private_compone
 import {PrivateComponentLocation} from 'angular2/src/core/compiler/private_component_location';
 import {RedBgStyler, BlueTextStyler} from './components/stylers';
 
-class Testy {
-  constructor(@Inject() element: NgElement) {
-    element.domElement.style.border = '3px solid pink;'
-  }
-}
-
 @DynamicComponent({
   selector: 'dynamic-component',
   services: [PrivateComponentLoader, PrivateComponentLocation]
@@ -20,12 +14,8 @@ class MyDynamic {
     loader:PrivateComponentLoader, 
     location:PrivateComponentLocation
   ) {
-    // loader.load(RedBgStyler, location);
-    // loader.load(BlueTextStyler, location);
-    Testy.annotations = [
-      new Component({ selector: 'testy' }),
-      new Template({ inline: 'testy-template' })
-    ];
+    loader.load(RedBgStyler, location);
+    loader.load(BlueTextStyler, location);
   }
 }
 

@@ -88,9 +88,20 @@ gulp.task('ng2-rename', function(done) {
 });
 gulp.task('ng2', ['ng2-rename'], function() {
   var builder = new SystemJsBuilder();
-  return builder.loadConfig('jspm-config.js')
-  .then(function() {
-    return builder.build('dist/lib/angular2/angular2', 'dist/lib/angular2.js');
+  builder.config({
+    traceurOptions: {
+      'sourceMaps': true,
+      'annotations': true,
+      'types': true,
+      'script': false,
+      'memberVariables': true,
+      'modules': 'instantiate'
+    },
+    baseURL: 'dist/lib',
+    map: {
+      rx: __dirname + '/node_modules/rx'
+    }
   });
+  return builder.build('angular2/angular2', 'dist/lib/angular2.js');
 });
 
