@@ -7,58 +7,29 @@
   -webkit-transition: $transition;
           transition: $transition;
 }
+
 @mixin transition-delay($transition-delay) {
   -webkit-transition-delay: $transition-delay;
           transition-delay: $transition-delay;
 }
+
 @mixin transition-duration($transition-duration) {
   -webkit-transition-duration: $transition-duration;
           transition-duration: $transition-duration;
 }
+
 @mixin transition-timing-function($transition-timing) {
    -webkit-transition-timing-function: $transition-timing;
            transition-timing-function: $transition-timing;
- }
- @mixin transition-property($property) {
+}
+
+@mixin transition-property($property) {
   -webkit-transition-property: $property;
           transition-property: $property;
 }
+
 @mixin transition-transform($properties...) {
   // special case cuz of transform vendor prefixes
   -webkit-transition: -webkit-transform $properties;
           transition: transform $properties;
 }
-
-
-// Animation Mixins
-// --------------------------------------------------
-
-@mixin animation($animation) {
- -webkit-animation: $animation;
-         animation: $animation;
-}
-@mixin animation-duration($duration) {
- -webkit-animation-duration: $duration;
-         animation-duration: $duration;
-}
-@mixin animation-direction($direction) {
- -webkit-animation-direction: $direction;
-         animation-direction: $direction;
-}
-@mixin animation-timing-function($animation-timing) {
- -webkit-animation-timing-function: $animation-timing;
-         animation-timing-function: $animation-timing;
-}
-@mixin animation-fill-mode($fill-mode) {
- -webkit-animation-fill-mode: $fill-mode;
-         animation-fill-mode: $fill-mode;
-}
-@mixin animation-name($name...) {
- -webkit-animation-name: $name;
-         animation-name: $name;
-}
-@mixin animation-iteration-count($count) {
- -webkit-animation-iteration-count: $count;
-         animation-iteration-count: $count;
-}
-
