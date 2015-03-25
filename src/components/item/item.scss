@@ -1,0 +1,62 @@
+
+// Item
+// --------------------------------------------------
+
+$item-min-height:         44px !default;
+$item-padding-top:        8px !default;
+$item-padding-right:      15px !default;
+$item-padding-bottom:     7px !default;
+$item-padding-left:       15px !default;
+
+
+.item {
+  position: relative;
+
+  @include flex-display();
+  @include flex-justify-content(space-between);
+  @include flex-align-items(center);
+
+  min-height: $item-min-height;
+
+  padding-left: $item-padding-left;
+}
+
+.item-content {
+  position: relative;
+
+  @include flex-display();
+  @include flex(1);
+  @include flex-justify-content(space-between);
+  @include flex-align-items(center);
+
+  width: 100%;
+  min-height: $item-min-height;
+
+  padding-right: $item-padding-right;
+  padding-top: $item-padding-top;
+  padding-bottom: $item-padding-bottom;
+}
+
+.item-title {
+  position: relative;
+
+  @include flex-shrink(1);
+
+  max-width: 100%;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item-accessory {
+  @include flex-display();
+  @include flex-shrink(0);
+
+  margin-left: 5px;
+  max-height: 28px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
