@@ -1,6 +1,5 @@
 import {NgElement, Component, Template} from 'angular2/angular2'
 import {Toolbar} from '../toolbar/toolbar'
-import {Ion} from '../ion'
 
 @Component({
   selector: 'ion-view',

@@ -7,5 +7,13 @@ module.exports = {
     html: 'src/**/*.html',
     scss: 'src/components/**/*.scss',
   },
+  traceurOptions: {
+    'sourceMaps': true,
+    'annotations': true,
+    'types': true,
+    'script': false,
+    'memberVariables': true,
+    'modules': 'instantiate'
+  },
   protractorPort: 8876
 };

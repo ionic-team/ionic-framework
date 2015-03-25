@@ -55,7 +55,7 @@ gulp.task('clean', function(done) {
   del([buildConfig.dist], done);
 });
 
-gulp.task('e2e', function() {
+gulp.task('e2e', ['sass'], function() {
   var e2eSrc = path.join(__dirname, 'src/components/**/test/**/*');
   var templateSrc = path.join(__dirname, 'scripts/e2e/index.template.html');
   var e2eDest = path.join(__dirname, 'dist/e2e/');
@@ -93,15 +93,8 @@ gulp.task('ng2-rename', function(done) {
 gulp.task('ng2', ['ng2-rename'], function() {
   var builder = new SystemJsBuilder();
   builder.config({
-    traceurOptions: {
-      'sourceMaps': true,
-      'annotations': true,
-      'types': true,
-      'script': false,
-      'memberVariables': true,
-      'modules': 'instantiate'
-    },
     baseURL: 'dist/lib',
+    traceurOptions: buildConfig.traceurOptions,
     map: {
       rx: __dirname + '/node_modules/rx'
     }

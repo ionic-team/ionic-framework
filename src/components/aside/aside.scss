@@ -1,21 +1,22 @@
 $aside-width: 304px;
 $aside-height: 304px;
+$aside-transition: 0.3s linear transform;
 
 ion-aside {
   display: block;
   position: absolute;
 
-  background: rgba(255,0,0,0.5);
-  border-right: 1px solid black;
+  background: #eee;
 
-  transition: transform 0.3s;
+  &.type-overlay {
+    z-index: 10;
+  }
+
+  transition: $aside-transition;
   &:not(.open):not(.changing) {
     display: none;
   }
-  &.sliding {
-    transition-duration: 0s;
-  }
-
+  
   &.left {
     width: $aside-width;
     left: -$aside-width;
@@ -23,7 +24,8 @@ ion-aside {
     bottom: 0;
 
     transform: translate3d(0, 0, 0);
-    &.open {
+    &.open,
+    &.type-reveal {
       transform: translate3d($aside-width,0,0);
     }
   }
@@ -34,7 +36,8 @@ ion-aside {
     bottom: 0;
 
     transform: translate3d(0,0,0);
-    &.open {
+    &.open,
+    &.type-reveal {
       transform: translate3d(-$aside-width,0,0);
     }
   }
@@ -45,7 +48,8 @@ ion-aside {
     right: 0;
     
     transform: translate3d(0,0,0);
-    &.open {
+    &.open,
+    &.type-reveal {
       transform: translate3d(0,$aside-width,0);
     }
   }
@@ -56,11 +60,23 @@ ion-aside {
     right: 0;
 
     transform: translate3d(0,0,0);
-    &.open {
+    &.open,
+    &.type-reveal {
       transform: translate3d(0,-$aside-width,0);
     }
   }
 
+}
+
+.aside-content {
+  transition: $aside-transition;
+  transform: translate3d(0,0,0);
+  &.aside-open-left {
+    transform: translate3d($aside-width,0,0);
+  }
+  &.aside-open-right {
+    transform: translate3d(-$aside-width,0,0);
+  }
 }
 
 ion-aside-parent {

@@ -1,4 +1,5 @@
 {
   "esnext": true,
-  "expr": true
+  "expr": true,
+  "asi": true
 }

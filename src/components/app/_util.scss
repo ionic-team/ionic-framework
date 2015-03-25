@@ -1,4 +1,8 @@
 
+.notransition {
+  transition: none !important;
+}
+
 .hide.hide.hide {
   display: none;
 }
