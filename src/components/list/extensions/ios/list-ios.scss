@@ -2,43 +2,80 @@
 // iOS List
 // --------------------------------------------------
 
-$list-ios-border-color:      #c8c7cc !default;
+$list-ios-background-color:      #fff !default;
+$list-ios-border-color:          #c8c7cc !default;
+
+$list-ios-header-margin:         35px 15px 10px 15px !default;
+$list-ios-header-font-size:      14px !default;
+$list-ios-header-color:          #6d6d72 !default;
+
+$list-ios-footer-margin:         10px 0 35px 0 !default;
+$list-ios-footer-padding:        0 15px !default;
+$list-ios-footer-font-size:      14px !default;
+$list-ios-footer-color:          #8f8f94 !default;
 
 
-.list-ios .list-content:before {
-  position: absolute;
-  top: 0;
-  right: auto;
-  bottom: auto;
-  left: 0;
+.list-ios {
 
-  width: 100%;
-  height: 1px;
-  @include transform-origin(50%, 0);
+  .list-content {
+    background: $list-ios-background-color;
+  }
 
-  background-color: $list-ios-border-color;
-  display: block;
+  .list-content:before {
+    position: absolute;
+    top: 0;
+    right: auto;
+    bottom: auto;
+    left: 0;
+    z-index: $z-index-list-border;
+    display: block;
 
-  content: '';
+    width: 100%;
+    height: 1px;
+    @include transform-origin(50%, 0);
 
-  z-index: $z-index-list-border;
-}
+    background-color: $list-ios-border-color;
 
-.list-ios .list-content:after {
-  position: absolute;
-  top: auto;
-  right: auto;
-  bottom: 0;
-  left: 0;
+    content: '';
+  }
 
-  width: 100%;
-  height: 1px;
-  @include transform-origin(50%, 0);
+  .list-content:after {
+    position: absolute;
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    z-index: $z-index-list-border;
+    display: block;
 
-  background-color: $list-ios-border-color;
-  display: block;
+    width: 100%;
+    height: 1px;
+    @include transform-origin(50%, 0);
 
-  content: '';
+    background-color: $list-ios-border-color;
 
-  z-index: $z-index-list-border;
+    content: '';
+  }
+
+  .list-header {
+    position: relative;
+    margin: $list-ios-header-margin;
+
+    font-size: $list-ios-header-font-size;
+    text-transform: uppercase;
+
+    color: $list-ios-header-color;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .list-footer {
+    margin: $list-ios-footer-margin;
+    padding: $list-ios-footer-padding;
+    font-size: $list-ios-footer-font-size;
+    color: $list-ios-footer-color;
+  }
+
 }
