@@ -15,7 +15,7 @@ import {Ion} from '../ion'
       <content select="ion-nav-items[side=primary]"></content>
       <content select="ion-nav-items[side=secondary]"></content>
     </ion-toolbar>
-    <div class="container">
+    <div class="pane-container">
       <content></content>
     </div>`,
   directives: [Toolbar]

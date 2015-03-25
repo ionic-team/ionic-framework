@@ -22,12 +22,12 @@ html {
     @include flex(1);
   }
 
-  .pane > .container.shared-pane {
+  .pane > .pane-container.pane-shared {
     position: absolute;
     width: 100%;
   }
 
-  .pane > .container {
+  .pane > .pane-container {
     position: relative;
     overflow: hidden;
 
@@ -37,12 +37,12 @@ html {
     @include flex-direction(column);
   }
 
-  .container > .pane {
+  .pane-container > .pane {
     position: absolute;
     min-height: 100%;
   }
 
-  .pane > .container > .content {
+  .pane > .pane-container > .content {
     position: relative;
     @include flex(1);
   }
