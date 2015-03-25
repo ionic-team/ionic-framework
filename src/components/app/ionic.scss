@@ -4,11 +4,13 @@
 // Mixins
 @import
   "mixins/flex",
+  "mixins/transform",
   "mixins/transition";
 
 
 // Globals
 @import
+  "z-index",
   "normalize",
   "globals",
   "colors",
@@ -32,11 +34,13 @@
 
 // Android Components
 @import
+  "../list/extensions/android/list-android",
   "../item/extensions/android/item-android";
 
 
 // iOS Components
 @import
+  "../list/extensions/ios/list-ios",
   "../item/extensions/ios/item-ios";
 
 

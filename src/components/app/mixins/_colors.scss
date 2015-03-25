@@ -1,4 +1,8 @@
 
+// Color Functions/Mixins
+// --------------------------------------------------
+
+
 @function get-color($color, $tone: base) {
   @return map-get(map-get($colors, $color), $tone);
 }

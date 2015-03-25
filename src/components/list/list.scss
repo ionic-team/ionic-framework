@@ -39,6 +39,7 @@ $list-content-margin:          10px 0 !default;
 }
 
 .list-content {
+  position: relative;
   margin: 0;
   padding: 0;
   list-style-type: none;
