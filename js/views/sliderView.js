@@ -45,7 +45,7 @@ ionic.views.Slider = ionic.views.View.inherit({
       // check slider is on cached, in which case setup will break the slider
       if ((container.offsetWidth || container.getBoundingClientRect().width) === 0) {
         var parent = element.parentNode;
-        while (parent !== document.body) {
+        while (element.parentNode && parent !== document.body) {
           if (parent['$attr-nav-view'] === 'cached') {
             return;
           }
