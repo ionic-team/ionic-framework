@@ -7,10 +7,10 @@ export class SlideEdgeGesture extends SlideGesture {
       edge: 'left',
       threshold: 50
     });
+    super(element, opts);
     // Can check corners through use of eg 'left top'
     this.edges = opts.edge.split(' ');
     this.threshold = opts.threshold;
-    super(element, opts);
   }
 
   canStart(ev) {

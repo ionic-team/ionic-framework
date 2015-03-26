@@ -4,14 +4,15 @@ import {SlideEdgeGesture} from '../../../../core/gestures/slide-edge-gesture';
 
 class AsideGesture extends SlideEdgeGesture {
   constructor(aside: Aside) {
-    this.aside = aside;
     // TODO figure out the sliding element, dont just use the parent
-    this.slideElement = aside.domElement.parentNode;
-    super(this.slideElement, {
+    let slideElement = aside.domElement.parentNode;
+    super(slideElement, {
       direction: (aside.side === 'left' || aside.side === 'right') ? 'x' : 'y',
       edge: aside.side,
       threshold: 75
     });
+    this.aside = aside;
+    this.slideElement = slideElement;
     this.listen();
   }
   

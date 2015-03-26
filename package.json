@@ -9,50 +9,26 @@
     "gulp": "~3.8.10",
     "gulp-concat": "~2.5.0",
     "gulp-debug": "~2.0.1",
-    "gulp-eslint": "^0.7.0",
     "gulp-if": "^1.2.5",
-    "gulp-jscs": "^1.4.0",
     "gulp-plumber": "^1.0.0",
     "gulp-rename": "~1.2.0",
     "gulp-sass": "^1.3.3",
-    "gulp-shell": "^0.4.0",
     "gulp-traceur": "0.16.*",
-    "gulp-util": "^3.0.4",
     "gulp-wrap": "^0.11.0",
     "karma": "^0.12.31",
+    "karma-chrome-launcher": "^0.1.7",
+    "karma-jasmine": "^0.3.5",
     "lodash": "^2.4.1",
-    "lodash.template": "^2.4.1",
     "node-uuid": "^1.4.1",
-    "q": "^1.2.0",
-    "request": "^2.53.0",
-    "serve-static": "~1.8.1",
     "systemjs": "^0.11.3",
     "systemjs-builder": "^0.9.1",
-    "through2": "~0.6.3",
     "traceur-runtime": "0.0.59",
     "yargs": "^3.6.0"
   },
   "dependencies": {
-    "es6-module-loader": "~0.11.0",
-    "event-stream": "^3.3.0",
-    "gulp-template": "^3.0.0",
     "hammerjs": "^2.0.4",
-    "jasmine-core": "^2.2.0",
-    "karma-chrome-launcher": "^0.1.7",
-    "karma-jasmine": "^0.3.5",
     "rx": "^2.4.6",
-    "systemjs": "~0.11.0",
     "traceur": "0.0.87",
     "zone.js": "0.4.1"
-  },
-  "jspm": {
-    "directories": {
-      "lib": "src",
-      "packages": "jspm_packages"
-    },
-    "configFile": "jspm-config.js",
-    "dependencies": {
-      "none": "none"
-    }
   }
 }

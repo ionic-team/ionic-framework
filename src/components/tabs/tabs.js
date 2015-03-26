@@ -1,6 +1,5 @@
 import {NgElement, Component, Template, Parent} from 'angular2/angular2';
 import {History} from '../../history';
-import {Ion} from '../ion';
 import {View} from 'ionic/components/view/view';
 
 
@@ -26,7 +25,7 @@ import {View} from 'ionic/components/view/view';
     </div>
     `
 })
-export class Tabs extends Ion {
+export class Tabs {
 
   constructor(@NgElement() ele:NgElement) {
     ele.domElement.classList.add('pane');

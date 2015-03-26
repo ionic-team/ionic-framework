@@ -3,8 +3,8 @@ import * as util from '../../util';
 
 export class SlideGesture extends DragGesture {
   constructor(element, opts = {}) {
-    this.element = element;
     super(element, opts);
+    this.element = element;
   }
 
   /*

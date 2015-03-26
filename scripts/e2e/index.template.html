@@ -1,21 +1,30 @@
+<% var PREFIX = '../../..'; %>
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
 
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="/dist/css/ionic.css" />
-    <script src="/jspm_packages/system.js"></script>
-    <script src="/node_modules/zone.js/zone.js"></script>
-    <script src="/node_modules/zone.js/long-stack-trace-zone.js"></script>
-    <script src="/dist/lib/angular2.js"></script>
-    <script src="/jspm-config.js"></script>
+    <link rel="stylesheet" href="<%= PREFIX %>/css/ionic.css" />
+    <% buildConfig.scripts.forEach(function(src) { %>
+      <script src="<%= PREFIX %>/lib/<%= src %>"></script>
+    <% }); %>
+    <script>
+      System.config({
+        baseURL: '<%= PREFIX %>/lib',
+        traceurOptions: <%= JSON.stringify(buildConfig.traceurOptions) %>,
+        map: {
+          'app': location.pathname.replace(/\/$/,''),
+          'rx/dist/rx.all': 'rx.all',
+        }
+      })
+    </script>
 </head>
 <body ion-app>
   <%= contents %>
 </body>
 <script>
-System.import('./main');
+System.import('app/main');
 </script>
 </body>
 

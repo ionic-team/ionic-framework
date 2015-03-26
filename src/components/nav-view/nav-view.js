@@ -1,6 +1,6 @@
 import {Ion} from '../ion'
 
-export class NavView extends Ion {
+export class NavView {
 
   // viewControllers: Stack<ViewController>;
   //   visibleViewController: ViewController;

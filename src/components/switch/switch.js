@@ -1,5 +1,4 @@
 import {NgElement, Component, Template} from 'angular2/angular2';
-import {Ion} from '../ion';
 
 @Component({
   selector: 'ion-switch',
@@ -20,7 +19,7 @@ import {Ion} from '../ion';
 </div>
 `
 })
-export class Switch extends IonElement {
+export class Switch {
   constructor(
     @NgElement() el : NgElement,
     @EventEmitter('change') emitChange: Function

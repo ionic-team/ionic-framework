@@ -11,7 +11,7 @@ import {Ion} from '../ion';
       <div class="modal-wrapper"><content></content></div>
     </div>`
 })
-class ModalWrapper extends Ion {
+class ModalWrapper {
   constructor(@NgElement() el : NgElement) {
     this.element = el
     console.log('element', el)
@@ -35,7 +35,7 @@ class ModalWrapper extends Ion {
       </div>
     </ion-modal-wrapper>`
 })
-export class Modal extends Ion {
+export class Modal {
   //compiler: Compiler;
 
   constructor(compiler: Compiler, @NgElement() el : NgElement) {

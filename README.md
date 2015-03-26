@@ -7,19 +7,13 @@
 
 #### Building & Running
 
-- `npm install -g jspm`
-- `jspm init`
 - `gulp watch`
-- `python -m SimpleHTTPServer .`
-- `open http://localhost:9000/dist/examples/aside/basic/index.html`
+- `python -m SimpleHTTPServer ./dist`
+- `open http://localhost:9000/e2e/aside/basic/index.html`
 - Follow the structure found in src/components/aside/examples/basic
   to create more examples.
-
-#### Problems already
-
-- If we have a `.spec.js` file as a sibling of a js file,
-  System will make that an export and ignore the `.js` file.
-  There's probably a setting in System.js somewhere to fix this.
+  * The biggest thing to remember: your app has to import its dependencies with the `app/` prefix. 
+    For example `import {Apple} from 'app/apple';` would import apple.js in your example app.
 
 #### Build
 
