@@ -47,6 +47,16 @@ $item-padding-left:       15px !default;
   padding: $item-padding-top $item-padding-right $item-padding-bottom $item-padding-left;
 }
 
+.item-media {
+  @include flex-display();
+  @include flex-shrink(0);
+  @include flex-wrap(nowrap);
+  @include flex-align-items(center);
+
+  padding-top: 7px;
+  padding-bottom: 8px;
+}
+
 .item-title {
   position: relative;
 

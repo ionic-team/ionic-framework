@@ -1,0 +1,24 @@
+
+// Checkbox
+// --------------------------------------------------
+
+
+.checkbox-on {
+  display: none;
+}
+
+.checkbox-off {
+  display: block;
+}
+
+.checkbox[aria-checked=true] {
+
+  .checkbox-on {
+    display: block;
+  }
+
+  .checkbox-off {
+    display: none;
+  }
+
+}
