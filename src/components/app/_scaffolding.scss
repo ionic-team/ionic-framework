@@ -45,6 +45,7 @@ html {
 
   .pane > .pane-container > .content {
     position: relative;
+    z-index: $z-index-content;
     @include flex(1);
   }
 
