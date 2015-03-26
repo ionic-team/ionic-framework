@@ -2,22 +2,22 @@ import {Aside} from '../../aside';
 
 // TODO use setters instead of direct dom manipulation
 let asideManipulator = {
-  setSliding(is) {
-    this.aside.domElement.classList[is ? 'add' : 'remove']('no-transition');
+  setSliding(sliding) {
+    this.aside.domElement.classList[sliding ? 'add' : 'remove']('no-transition');
   },
-  setOpen(is) {
-    this.aside.domElement.classList[is ? 'add' : 'remove']('open');
+  setOpen(open) {
+    this.aside.domElement.classList[open ? 'add' : 'remove']('open');
   },
   setTransform(t) {
     this.aside.domElement.style.transform = t;
   }
 }
 let contentManipulator = {
-  setSliding(is) {
-    this.aside.content.domElement.classList[is ? 'add' : 'remove']('no-transition');
+  setSliding(sliding) {
+    this.aside.content.domElement.classList[sliding ? 'add' : 'remove']('no-transition');
   },
-  setOpen(is) {
-    this.aside.content.domElement.classList[is ? 'add' : 'remove'](
+  setOpen(open) {
+    this.aside.content.domElement.classList[open ? 'add' : 'remove'](
       `aside-open-${this.aside.side}`
     )
   },
@@ -40,11 +40,11 @@ class AsideType {
 }
 
 export class AsideTypeOverlay extends AsideType {
-  setSliding(is) {
-    asideManipulator.setSliding.call(this, is);
+  setSliding(sliding) {
+    asideManipulator.setSliding.call(this, sliding);
   }
-  setOpen(is) {
-    asideManipulator.setOpen.call(this, is);
+  setOpen(open) {
+    asideManipulator.setOpen.call(this, open);
   }
   setTransform(t) {
     asideManipulator.setTransform.call(this, t);
@@ -52,13 +52,13 @@ export class AsideTypeOverlay extends AsideType {
 }
 
 export class AsideTypePush extends AsideType {
-  setSliding(is) {
-    asideManipulator.setSliding.call(this, is);
-    contentManipulator.setSliding.call(this, is);
+  setSliding(sliding) {
+    asideManipulator.setSliding.call(this, sliding);
+    contentManipulator.setSliding.call(this, sliding);
   }
-  setOpen(is) {
-    asideManipulator.setOpen.call(this, is);
-    contentManipulator.setOpen.call(this, is);
+  setOpen(open) {
+    asideManipulator.setOpen.call(this, open);
+    contentManipulator.setOpen.call(this, open);
   }
   setTransform(t) {
     asideManipulator.setTransform.call(this, t);
@@ -67,12 +67,12 @@ export class AsideTypePush extends AsideType {
 }
 
 export class AsideTypeReveal extends AsideType {
-  setSliding(is) {
-    contentManipulator.setSliding.call(this, is);
+  setSliding(sliding) {
+    contentManipulator.setSliding.call(this, sliding);
   }
-  setOpen(is) {
-    asideManipulator.setOpen.call(this, is);
-    contentManipulator.setOpen.call(this, is);
+  setOpen(sliding) {
+    asideManipulator.setOpen.call(this, sliding);
+    contentManipulator.setOpen.call(this, sliding);
   }
   setTransform(t) {
     contentManipulator.setTransform.call(this, t);
