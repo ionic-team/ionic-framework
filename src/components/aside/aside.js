@@ -12,9 +12,9 @@ AsideConfig.property('side')
   .when('bottom', gestures.BottomAsideGesture)
 
 AsideConfig.property('type')
-  .when('overlay', types.AsideOverlayType)
-  .when('push', types.AsidePushType)
-  .when('reveal', types.AsideRevealType)
+  .when('overlay', types.AsideTypeOverlay)
+  .when('push', types.AsideTypePush)
+  .when('reveal', types.AsideTypeReveal)
 
 @Component({
   selector: 'ion-aside',

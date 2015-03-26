@@ -1,12 +1,35 @@
 import {Aside} from '../../aside';
 
-// TODO figure out if we can make all of these bindings (eg can we make it so content's transform is bound to
-// aside component's `transform` property?)
-class AsideBaseType {
-  constructor(aside: Aside) {
+// TODO use setters instead of direct dom manipulation
+let asideManipulator = {
+  setSliding(is) {
+    this.aside.domElement.classList[is ? 'add' : 'remove']('no-transition');
+  },
+  setOpen(is) {
+    this.aside.domElement.classList[is ? 'add' : 'remove']('open');
+  },
+  setTransform(t) {
+    this.aside.domElement.style.transform = t;
+  }
+}
+let contentManipulator = {
+  setSliding(is) {
+    this.aside.content.domElement.classList[is ? 'add' : 'remove']('no-transition');
+  },
+  setOpen(is) {
+    this.aside.content.domElement.classList[is ? 'add' : 'remove'](
+      `aside-open-${this.aside.side}`
+    )
+  },
+  setTransform(t) {
+    this.aside.content.domElement.style.transform = t;
+  }
+}
+
+class AsideType {
+  constructor(aside) {
     this.aside = aside;
 
-    // TODO make this a setter
     aside.domElement.classList.add(`type-${aside.type}`);
 
     //FIXME(ajoslin): have to wait for for bindings to apply in a component
@@ -14,46 +37,44 @@ class AsideBaseType {
       this.aside.content.domElement.classList.add('aside-content')
     })
   }
-  setSliding(isSliding) {
-    this.aside.domElement.classList[isSliding ? 'add' : 'remove']('no-transition');
+}
+
+export class AsideTypeOverlay extends AsideType {
+  setSliding(is) {
+    asideManipulator.setSliding.call(this, is);
   }
-  setOpen(isOpen) {
-    this.aside.domElement.classList[isOpen ? 'add' : 'remove']('open');
+  setOpen(is) {
+    asideManipulator.setOpen.call(this, is);
   }
-  setTransform(transform) {
-    this.aside.domElement.style.transform = transform;
+  setTransform(t) {
+    asideManipulator.setTransform.call(this, t);
   }
 }
 
-export class AsideOverlayType extends AsideBaseType {}
-
-export class AsidePushType extends AsideBaseType {
-  setSliding(isSliding) {
-    super.setSliding(isSliding);
-    this.aside.content.domElement.classList[isSliding ? 'add' : 'remove']('no-transition');
+export class AsideTypePush extends AsideType {
+  setSliding(is) {
+    asideManipulator.setSliding.call(this, is);
+    contentManipulator.setSliding.call(this, is);
   }
-  setOpen(isOpen) {
-    super.setOpen(isOpen);
-    this.aside.content.domElement.classList[isOpen ? 'add' : 'remove'](
-      `aside-open-${this.aside.side}`
-    );
+  setOpen(is) {
+    asideManipulator.setOpen.call(this, is);
+    contentManipulator.setOpen.call(this, is);
   }
-  setTransform(transform) {
-    super.setTransform(transform);
-    this.aside.content.domElement.style.transform = transform;
+  setTransform(t) {
+    asideManipulator.setTransform.call(this, t);
+    contentManipulator.setTransform.call(this, t);
   }
 }
 
-export class AsideRevealType extends AsideBaseType {
-  setSliding(isSliding) {
-    this.aside.content.domElement.classList[isSliding ? 'add' : 'remove']('no-transition');
+export class AsideTypeReveal extends AsideType {
+  setSliding(is) {
+    contentManipulator.setSliding.call(this, is);
   }
-  setOpen(isOpen) {
-    this.aside.content.domElement.classList[isOpen ? 'add' : 'remove'](
-      `aside-open-${this.aside.side}`
-    );
+  setOpen(is) {
+    asideManipulator.setOpen.call(this, is);
+    contentManipulator.setOpen.call(this, is);
   }
-  setTransform(transform) {
-    this.aside.content.domElement.style.transform = transform;
+  setTransform(t) {
+    contentManipulator.setTransform.call(this, t);
   }
 }
