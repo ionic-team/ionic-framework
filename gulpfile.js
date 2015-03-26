@@ -23,12 +23,12 @@ var traceur = require('gulp-traceur');
 var wrap = require('gulp-wrap');
 var argv = require('yargs').argv;
 
-gulp.task('default', ['sass', 'e2e', 'ng2']);
+gulp.task('default', ['sass', 'fonts', 'e2e', 'ng2']);
 
 gulp.task('watch', ['default'], function() {
   gulp.watch(buildConfig.src.scss, ['sass']);
   gulp.watch([].concat(
-    buildConfig.src.js, buildConfig.src.e2e, buildConfig.src.html, 
+    buildConfig.src.js, buildConfig.src.e2e, buildConfig.src.html,
     'scripts/e2e/index.template.html'
   ), ['e2e']);
 });
@@ -49,6 +49,12 @@ gulp.task('sass', function(done) {
     }))
     .pipe(gulp.dest('dist/css'))
     .on('end', done);
+});
+
+gulp.task('fonts', function(done) {
+  gulp.src('src/components/icon/fonts/**/*')
+      .pipe(gulp.dest('dist/fonts'))
+      .on('end', done);
 });
 
 gulp.task('clean', function(done) {
