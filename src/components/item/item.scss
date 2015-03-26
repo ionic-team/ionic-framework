@@ -3,10 +3,6 @@
 // --------------------------------------------------
 
 $item-min-height:         44px !default;
-$item-padding-top:        15px !default;
-$item-padding-right:      15px !default;
-$item-padding-bottom:     15px !default;
-$item-padding-left:       15px !default;
 
 
 //  <li class="item">
@@ -44,7 +40,7 @@ $item-padding-left:       15px !default;
   width: 100%;
   min-height: $item-min-height;
 
-  padding: $item-padding-top $item-padding-right $item-padding-bottom $item-padding-left;
+  padding: 0;
 }
 
 .item-media {
@@ -53,8 +49,9 @@ $item-padding-left:       15px !default;
   @include flex-wrap(nowrap);
   @include flex-align-items(center);
 
-  padding-top: 7px;
-  padding-bottom: 8px;
+  min-height: $item-min-height;
+
+  padding: 0;
 }
 
 .item-title {
