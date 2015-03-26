@@ -1,4 +1,5 @@
 import {Aside} from '../../aside';
+//TODO: figure out way to get rid of all the ../../../../
 import {SlideEdgeGesture} from '../../../../core/gestures/slide-edge-gesture';
 
 class AsideGesture extends SlideEdgeGesture {

@@ -28,19 +28,18 @@ export function defaults(dest) {
   return dest;
 }
 
-export function isString(val) {
-  return typeof val === 'string';
+export let isString = val => typeof val === 'string';
+export let isFunction = val => typeof val === 'function';
+export let isDefined = val => typeof val === 'undefined';
+export let isObject = val => typeof val === 'object';
+
+export function pascalCaseToDashCase(str = '') {
+  return str.charAt(0).toLowerCase() + str.substring(1).replace(/[A-Z]/g, function(match) {
+    return '-' + match.toLowerCase()
+  })
 }
 
-export function isFunction(val) {
-  return typeof val === 'function';
-}
-
-export function isDefined(val) {
-  return typeof val !== 'undefined';
-}
-
-export var array = {
+export let array = {
   unique(array) {
     return array.filter(function(value, index) {
       return array.indexOf(value) === index;

@@ -8,7 +8,7 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 50;
 // we will call `__karma__.start()` later, once all the specs are loaded.
 __karma__.loaded = function() {};
 
-System.baseURL = 'http://localhost:9876/base/dist/';
+System.baseURL = 'http://localhost:9876/base/';
 
 // So that we can import packages like `core/foo`, instead of `core/src/foo`.
 // System.paths = {
@@ -37,7 +37,7 @@ Promise.all(
 });
 
 function onlySpecFiles(path) {
-  return /_spec\.js$/.test(path);
+  return /\.spec\.js$/.test(path);
 }
 function file2moduleName(filePath) {
   return filePath.replace(/\\/g, '/')

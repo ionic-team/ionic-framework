@@ -2,7 +2,7 @@ $aside-width: 304px;
 $aside-height: 304px;
 $aside-transition: 0.3s linear transform;
 
-ion-aside {
+.aside {
   display: block;
   position: absolute;
 
@@ -17,7 +17,7 @@ ion-aside {
     display: none;
   }
   
-  &.left {
+  &.aside-left {
     width: $aside-width;
     left: -$aside-width;
     top: 0;
@@ -25,11 +25,11 @@ ion-aside {
 
     transform: translate3d(0, 0, 0);
     &.open,
-    &.type-reveal {
+    &.aside-reveal {
       transform: translate3d($aside-width,0,0);
     }
   }
-  &.right {
+  &.aside-right {
     width: $aside-width;
     left: 100%;
     top: 0;
@@ -37,11 +37,11 @@ ion-aside {
 
     transform: translate3d(0,0,0);
     &.open,
-    &.type-reveal {
+    &.aside-reveal {
       transform: translate3d(-$aside-width,0,0);
     }
   }
-  &.top {
+  &.aside-top {
     height: $aside-width;
     top: -$aside-width;
     left: 0;
@@ -49,11 +49,11 @@ ion-aside {
     
     transform: translate3d(0,0,0);
     &.open,
-    &.type-reveal {
+    &.aside-reveal {
       transform: translate3d(0,$aside-width,0);
     }
   }
-  &.bottom {
+  &.aside-bottom {
     height: $aside-width;
     top: 100%;
     left: 0;
@@ -77,14 +77,4 @@ ion-aside {
   &.aside-open-right {
     transform: translate3d(-$aside-width,0,0);
   }
-}
-
-ion-aside-parent {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: block;
-  overflow:hidden;
 }

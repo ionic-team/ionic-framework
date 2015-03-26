@@ -8,12 +8,16 @@ module.exports = function(config) {
     frameworks: ['jasmine'],
 
     files: [
-      // Sources and specs.
-      // Loaded through the es6-module-loader, in `test-main.js`.
-      {pattern: 'dist/ionic/**/*.js', included: false},
-    ]
-      .concat(buildConfig.lib)
-      .concat('scripts/test/test-main.js'),
+      'node_modules/systemjs/dist/system.js',
+      'node_modules/es6-module-loader/dist/es6-module-loader.js',
+      'node_modules/traceur-runtime/index.js',
+      'node_modules/zone.js/zone.js',
+      'node_modules/zone.js/long-stack-trace-zone.js',
+      'dist/lib/angular2.js',
+      'jspm-config.js',
+      'scripts/test/test-main.js',
+      {pattern: 'src/**/*.spec.js', included: false},
+    ],
 
     exclude: [
       'src/**/examples/**'

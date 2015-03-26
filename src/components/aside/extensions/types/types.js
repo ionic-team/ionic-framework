@@ -26,7 +26,7 @@ let contentManipulator = {
   }
 }
 
-class AsideType {
+export class AsideType {
   constructor(aside) {
     this.aside = aside;
 

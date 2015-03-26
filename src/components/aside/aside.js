@@ -3,19 +3,6 @@ import {ComponentConfig} from '../../core/config/config'
 import * as types from './extensions/types/types'
 import * as gestures from  './extensions/gestures/gestures';
 
-export let AsideConfig = new ComponentConfig()
-
-AsideConfig.property('side')
-  .when('left', gestures.LeftAsideGesture)
-  .when('right', gestures.RightAsideGesture)
-  .when('top', gestures.TopAsideGesture)
-  .when('bottom', gestures.BottomAsideGesture)
-
-AsideConfig.property('type')
-  .when('overlay', types.AsideTypeOverlay)
-  .when('push', types.AsideTypePush)
-  .when('reveal', types.AsideTypeReveal)
-
 @Component({
   selector: 'ion-aside',
   bind: {
@@ -31,36 +18,35 @@ AsideConfig.property('type')
 export class Aside {
   constructor(
     @NgElement() element: NgElement,
-    @PropertySetter('style.transform') transformSetter: Function,
-    /* propertSetter doesn't work for classes right now */
-    config: AsideConfig
+    configFactory: AsideConfig
   ) {
     this.domElement = element.domElement
-
     // TODO inject constant instead of using domElement.getAttribute
     // TODO let config / platform handle defaults transparently
-    let side = this.side = this.domElement.getAttribute('side') || 'left'
-    let type = this.type = this.domElement.getAttribute('type') || 'overlay'
-    this.delegates = config.invoke(this, { side, type })
+    this.side = this.domElement.getAttribute('side') || 'left'
+    this.type = this.domElement.getAttribute('type') || 'overlay'
 
-    this.domElement.classList.add(side)
+    this.config = configFactory.create(this);
+    this.gestureDelegate = this.config.getDelegate('gesture');
+    this.typeDelegate = this.config.getDelegate('type');
+
     this.domElement.addEventListener('transitionend', ev => {
       this.setChanging(false)
     })
   }
 
   setTransform(transform) {
-    this.delegates.type.setTransform(transform)
+    this.typeDelegate.setTransform(transform)
   }
   setSliding(isSliding) {
     if (isSliding !== this.isSliding) {
-      this.delegates.type.setSliding(isSliding)
+      this.typeDelegate.setSliding(isSliding)
     }
   }
   setChanging(isChanging) {
     if (isChanging !== this.isChanging) {
       this.isChanging = isChanging
-      this.domElement.classList[isChanging ? 'add' : 'remove']('changing')
+      this.domElement.classList[isChanging ? 'add' : 'remove']('changing');
     }
   }
   setOpen(isOpen) {
@@ -68,8 +54,24 @@ export class Aside {
       this.isOpen = isOpen
       this.setChanging(true)
       requestAnimationFrame(() => {
-        this.delegates.type.setOpen(isOpen)
+        this.typeDelegate.setOpen(isOpen)
       })
     }
   }
 }
+
+export let AsideConfig = new ComponentConfig(Aside)
+
+AsideConfig.classes('side', 'type')
+
+AsideConfig.delegate('gesture')
+  .when({side: 'left'}, gestures.LeftAsideGesture)
+  .when({side: 'right'}, gestures.RightAsideGesture)
+  .when({side: 'top'}, gestures.TopAsideGesture)
+  .when({side: 'bottom'}, gestures.BottomAsideGesture)
+
+AsideConfig.delegate('type')
+  .when({type: 'overlay'}, types.AsideTypeOverlay)
+  .when({type: 'push'}, types.AsideTypePush)
+  .when({type: 'reveal'}, types.AsideTypeReveal)
+
