@@ -55,14 +55,17 @@ Gestures
 
 ```
 <nav-view>
-  <aside/>
+  <aside left/>
+  <aside right/>
+  <aside top/>
   <view cached/>
   <view cached/>
   <view cached/>
   <tabs active>
     <tab selected>
       <nav-view>
-        <aside/>
+        <aside left/>
+        <aside right/>
         <view active/>
         <view cached/>
         <view cached/>
@@ -76,7 +79,8 @@ Gestures
         <tabs cached>
           <tab deselected>
             <nav-view>
-              <aside/>
+              <aside left/>
+              <aside bottom/>
               <view active/>
               <view cached/>
               <view cached/>
