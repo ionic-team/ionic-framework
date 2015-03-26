@@ -17,8 +17,8 @@
 
 #### Problems already
 
-- If we have a `.spec.js` file as a sibling of a js file, 
-  System will make that an export and ignore the `.js` file.  
+- If we have a `.spec.js` file as a sibling of a js file,
+  System will make that an export and ignore the `.js` file.
   There's probably a setting in System.js somewhere to fix this.
 
 #### Build
@@ -48,5 +48,50 @@ Gestures
  - Linear constraints
  - Auto layout
  - Class/inheritance system
- - Translate native concepts to the web 
+ - Translate native concepts to the web
 
+
+#### Make it so
+
+```
+<nav-view>
+  <aside/>
+  <view cached/>
+  <view cached/>
+  <view cached/>
+  <tabs active>
+    <tab selected>
+      <nav-view>
+        <aside/>
+        <view active/>
+        <view cached/>
+        <view cached/>
+      </nav-view>
+    </tab>
+    <tab deselected>
+      <nav-view>
+        <aside/>
+        <view cached/>
+        <view active/>
+        <tabs cached>
+          <tab deselected>
+            <nav-view>
+              <aside/>
+              <view active/>
+              <view cached/>
+              <view cached/>
+            </nav-view>
+          </tab>
+          <tab selected>
+            <nav-view>
+              <view cached/>
+              <view active/>
+            </nav-view>
+          </tab>
+        </tab>
+      </nav-view>
+    </tab>
+  </tab>
+  <view cached/>
+</nav-view>
+```
