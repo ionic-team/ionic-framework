@@ -87,10 +87,11 @@ IonicModule
       // JS Scrolling uses the scroll controller
       var scrollCtrl = ctrls[0],
           refresherCtrl = ctrls[1];
-
-      if (!!scrollCtrl) {
+      if (!scrollCtrl || scrollCtrl.isNative()) {
+        // Kick off native scrolling
+        refresherCtrl.init();
+      } else {
         $element[0].classList.add('js-scrolling');
-
         scrollCtrl._setRefresher(
           $scope,
           $element[0],
@@ -102,10 +103,6 @@ IonicModule
             scrollCtrl.scrollView.finishPullToRefresh();
           });
         });
-
-      } else {
-        // Kick off native scrolling
-        refresherCtrl.init();
       }
 
     }

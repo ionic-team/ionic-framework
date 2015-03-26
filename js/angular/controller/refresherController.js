@@ -238,8 +238,8 @@ IonicModule
       scrollParent = $element.parent().parent()[0];
       scrollChild = $element.parent()[0];
 
-      if (!scrollParent.classList.contains('ionic-scroll') ||
-          !scrollChild.classList.contains('scroll')) {
+      if (!scrollParent || !scrollParent.classList.contains('ionic-scroll') ||
+        !scrollChild || !scrollChild.classList.contains('scroll')) {
         throw new Error('Refresher must be immediate child of ion-content or ion-scroll');
       }
 

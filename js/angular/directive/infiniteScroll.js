@@ -79,10 +79,14 @@ IonicModule
     link: function($scope, $element, $attrs, ctrls) {
       var infiniteScrollCtrl = ctrls[1];
       var scrollCtrl = infiniteScrollCtrl.scrollCtrl = ctrls[0];
-      var jsScrolling = infiniteScrollCtrl.jsScrolling = !!scrollCtrl;
+      var jsScrolling = infiniteScrollCtrl.jsScrolling = !scrollCtrl.isNative();
+
       // if this view is not beneath a scrollCtrl, it can't be injected, proceed w/ native scrolling
       if (jsScrolling) {
         infiniteScrollCtrl.scrollView = scrollCtrl.scrollView;
+        $scope.scrollingType = 'js-scrolling';
+        //bind to JS scroll events
+        scrollCtrl.$element.on('scroll', infiniteScrollCtrl.checkBounds);
       } else {
         // grabbing the scrollable element, to determine dimensions, and current scroll pos
         var scrollEl = ionic.DomUtil.getParentOrSelfWithClass($element[0].parentNode,'overflow-scroll');
@@ -91,14 +95,10 @@ IonicModule
         if (!scrollEl) {
           throw 'Infinite scroll must be used inside a scrollable div';
         }
-      }
-      //bind to appropriate scroll event
-      if (jsScrolling) {
-        $scope.scrollingType = 'js-scrolling';
-        scrollCtrl.$element.on('scroll', infiniteScrollCtrl.checkBounds);
-      } else {
+        //bind to native scroll events
         infiniteScrollCtrl.scrollEl.addEventListener('scroll', infiniteScrollCtrl.checkBounds);
       }
+
       // Optionally check bounds on start after scrollView is fully rendered
       var doImmediateCheck = isDefined($attrs.immediateCheck) ? $scope.$eval($attrs.immediateCheck) : true;
       if (doImmediateCheck) {
