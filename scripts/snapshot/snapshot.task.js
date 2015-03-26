@@ -23,6 +23,16 @@ module.exports = function(gulp, argv, buildConfig) {
     snapshot(done, configFile);
   });
 
+  gulp.task('e2e-publish', function(done) {
+    var e2ePublish = require('../e2e/e2e-publish');
+    e2ePublish({
+      domain: 'http://ionic-snapshot-go.appspot.com',
+      groupId: 'ionic2',
+      appId: 'snapshot',
+      testId: uuid.v4()
+    });
+  });
+
   var snapshotValues = _.merge({
     browser: 'chrome',
     platform: 'linux',
