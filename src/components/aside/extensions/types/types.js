@@ -11,17 +11,17 @@ class AsideBaseType {
 
     //FIXME(ajoslin): have to wait for for bindings to apply in a component
     setTimeout(() => {
-      this.aside.content.setIsAside(true);
+      this.aside.content.domElement.classList.add('aside-content')
     })
   }
   setSliding(isSliding) {
-    this.aside.noTransitionSetter(isSliding);
+    this.aside.domElement.classList[isSliding ? 'add' : 'remove']('no-transition');
   }
   setOpen(isOpen) {
-    this.aside.openSetter(isOpen);
+    this.aside.domElement.classList[isOpen ? 'add' : 'remove']('open');
   }
   setTransform(transform) {
-    this.aside.transformSetter(transform);
+    this.aside.domElement.style.transform = transform;
   }
 }
 
@@ -30,27 +30,30 @@ export class AsideOverlayType extends AsideBaseType {}
 export class AsidePushType extends AsideBaseType {
   setSliding(isSliding) {
     super.setSliding(isSliding);
-    this.aside.content.noTransitionSetter(isSliding);
+    this.aside.content.domElement.classList[isSliding ? 'add' : 'remove']('no-transition');
   }
   setOpen(isOpen) {
     super.setOpen(isOpen);
-    this.aside.content.asideOpenSetter(isOpen, this.aside.side);
+    this.aside.content.domElement.classList[isOpen ? 'add' : 'remove'](
+      `aside-open-${this.aside.side}`
+    );
   }
   setTransform(transform) {
     super.setTransform(transform);
-    this.aside.content.transformSetter(transform);
+    this.aside.content.domElement.style.transform = transform;
   }
 }
 
 export class AsideRevealType extends AsideBaseType {
   setSliding(isSliding) {
-    this.aside.content.noTransitionSetter(isSliding);
+    this.aside.content.domElement.classList[isSliding ? 'add' : 'remove']('no-transition');
   }
   setOpen(isOpen) {
-    super.setOpen(isOpen);
-    this.aside.content.asideOpenSetter(isOpen, this.aside.side);
+    this.aside.content.domElement.classList[isOpen ? 'add' : 'remove'](
+      `aside-open-${this.aside.side}`
+    );
   }
   setTransform(transform) {
-    this.aside.content.transformSetter(transform);
+    this.aside.content.domElement.style.transform = transform;
   }
 }

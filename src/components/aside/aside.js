@@ -36,12 +36,6 @@ export class Aside {
     config: AsideConfig
   ) {
     this.domElement = element.domElement
-    this.transformSetter = transformSetter
-
-    // this.noTransitionSetter = noTransitionSetter
-    this.noTransitionSetter = is => { this.domElement.classList[is?'add':'remove']('notransition') }
-
-    this.openSetter = is => { this.domElement.classList[is?'add':'remove']('open') }
 
     // TODO inject constant instead of using domElement.getAttribute
     // TODO let config / platform handle defaults transparently
