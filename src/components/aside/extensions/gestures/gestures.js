@@ -4,6 +4,7 @@ import {SlideEdgeGesture} from '../../../../core/gestures/slide-edge-gesture';
 class AsideGesture extends SlideEdgeGesture {
   constructor(aside: Aside) {
     this.aside = aside;
+    // TODO figure out the sliding element, dont just use the parent
     this.slideElement = aside.domElement.parentNode;
     super(this.slideElement, {
       direction: (aside.side === 'left' || aside.side === 'right') ? 'x' : 'y',
@@ -18,8 +19,8 @@ class AsideGesture extends SlideEdgeGesture {
     return this.aside.isOpen ? true : super.canStart(ev);
   }
 
+  // Set CSS, then wait one frame for it to apply before sliding starts
   onSlideBeforeStart(slide, ev) {
-    console.log('beforestart');
     this.aside.setSliding(true);
     this.aside.setChanging(true);
     return new Promise(resolve => {
