@@ -48,6 +48,7 @@
  * of the refresher.
  * @param {expression=} on-pulling Called when the user starts to pull down
  * on the refresher.
+ * @param {string=} pulling-text The text to display while the user is pulling down.
  * @param {string=} pulling-icon The icon to display while the user is pulling down.
  * Default: 'ion-android-arrow-down'.
  * @param {string=} spinner The {@link ionic.directive:ionSpinner} icon to display
