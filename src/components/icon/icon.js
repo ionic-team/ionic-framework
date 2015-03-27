@@ -5,7 +5,6 @@ import {NgElement, Decorator} from 'angular2/angular2'
 })
 export class Icon {
   constructor(@NgElement() ngEle:NgElement) {
-    ngEle.domElement.setAttribute('class', 'icon ion-home')
+    ngEle.domElement.setAttribute('aria-hidden', 'hidden')
   }
-
 }

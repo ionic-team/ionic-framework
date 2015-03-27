@@ -2,8 +2,14 @@
 // iOS Checkbox
 // --------------------------------------------------
 
-.list-ios .checkbox {
+$checkbox-ios-color:          #007aff;
 
 
+.list-ios {
+
+  .media-checkbox {
+    min-width: 20px;
+    color: $checkbox-ios-color;
+  }
 
 }

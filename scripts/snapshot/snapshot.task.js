@@ -32,7 +32,7 @@ module.exports = function(gulp, argv, buildConfig) {
       platform_count: 1,
       width: 400,
       height: 800,
-      test_id: uuid.v4()
+      test_id: uuid.v4().split('-')[0]
     }
   }, argv);
 

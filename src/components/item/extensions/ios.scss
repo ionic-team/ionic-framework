@@ -15,6 +15,10 @@ $item-ios-border-color:         $list-ios-border-color !default;
     padding-left: $item-ios-padding-left;
   }
 
+  .item-media + .item-content {
+    margin-left: $item-ios-padding-left;
+  }
+
   .item-content {
     min-height: $item-ios-min-height;
     padding: 0;
