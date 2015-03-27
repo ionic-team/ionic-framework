@@ -21,12 +21,9 @@ exports.config = {
   baseUrl: 'http://localhost:' + buildConfig.protractorPort,
 
   onPrepare: function() {
-    var ionicSnapshot = require('./ionic.snapshot.js');
-    ionicSnapshot({
-      groupId: 'ionic2',
-      appId: 'snapshots',
-      accessKey: process.env.IONIC_SNAPSHOT_KEY
-    });
+    var snapshotConfig = require('./snapshot.config').config;
+    var ionicSnapshot = require('./ionic.snapshot');
+    ionicSnapshot(snapshotConfig);
   }
 
 };

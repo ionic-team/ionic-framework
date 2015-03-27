@@ -76,6 +76,7 @@ module.exports = function(options) {
     );
   }
 
+  console.log('Upload e2e tests');
   uploadFiles(inputDir, '');
 };
 

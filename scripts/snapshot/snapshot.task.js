@@ -19,18 +19,8 @@ module.exports = function(gulp, argv, buildConfig) {
   });
 
   gulp.task('snapshot', ['e2e', 'protractor-server'], function(done) {
-    var configFile = path.resolve(projectRoot, 'scripts/snapshot/protractor.config.js');
-    snapshot(done, configFile);
-  });
-
-  gulp.task('e2e-publish', function(done) {
-    var e2ePublish = require('../e2e/e2e-publish');
-    e2ePublish({
-      domain: 'http://ionic-snapshot-go.appspot.com',
-      groupId: 'ionic2',
-      appId: 'snapshot',
-      testId: uuid.v4()
-    });
+    var protractorConfigFile = path.resolve(projectRoot, 'scripts/snapshot/protractor.config.js');
+    snapshot(done, protractorConfigFile);
   });
 
   var snapshotValues = _.merge({
@@ -46,7 +36,7 @@ module.exports = function(gulp, argv, buildConfig) {
     }
   }, argv);
 
-  function snapshot(done, configFile) {
+  function snapshot(done, protractorConfigFile) {
     var protractorArgs = [
       '--browser <%= browser %>',
       '--platform <%= platform %>',
@@ -60,7 +50,9 @@ module.exports = function(gulp, argv, buildConfig) {
       return _.template(argument, snapshotValues);
     });
 
-    return protractor(done, [configFile].concat(protractorArgs));
+    e2ePublish(snapshotValues.params.test_id);
+
+    return protractor(done, [protractorConfigFile].concat(protractorArgs));
   }
 
   function protractor(done, args) {
@@ -82,4 +74,12 @@ module.exports = function(gulp, argv, buildConfig) {
       finish();
     });
   }
+
+  function e2ePublish(testId) {
+    var snapshotConfig = require('./snapshot.config').config;
+    snapshotConfig.testId = testId;
+
+    require('../e2e/e2e-publish')(snapshotConfig);
+  }
+
 };
