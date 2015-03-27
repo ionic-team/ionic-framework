@@ -122,7 +122,7 @@ $button-small-icon-size:          16px !default;
 // --------------------------------------------------
 
 .button-small {
-  padding: 2px $button-small-padding 1px;
+  padding: 0 $button-small-padding;
   min-width: $button-small-height;
   min-height: $button-small-height + 2;
   font-size: $button-small-font-size;
