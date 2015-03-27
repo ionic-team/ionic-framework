@@ -18,3 +18,9 @@ AsideConfig.delegate('type')
   .when({type: 'push'}, types.AsideTypePush)
   .when({type: 'reveal'}, types.AsideTypeReveal)
 
+
+AsideConfig.platform('android')
+  .defaults({ type: 'overlay' })
+
+AsideConfig.platform('ios')
+  .defaults({ type: 'reveal' })

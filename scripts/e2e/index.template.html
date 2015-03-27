@@ -14,7 +14,7 @@
         baseURL: '<%= PREFIX %>/lib',
         traceurOptions: <%= JSON.stringify(buildConfig.traceurOptions) %>,
         map: {
-          'app': location.pathname.replace(/\/$/,''),
+          'app': location.pathname.replace(/\/(index.html)?$/,''),
           'rx/dist/rx.all': 'rx.all',
         }
       })

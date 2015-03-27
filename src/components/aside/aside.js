@@ -1,7 +1,7 @@
 import {Component, Template, Inject, Parent, NgElement} from 'angular2/angular2'
 import {ComponentConfig} from 'ionic2/config/component-config'
-import * as types from 'ionic2/components/aside/types/types'
-import * as gestures from  'ionic2/components/aside/gestures/gestures';
+import * as types from 'ionic2/components/aside/extensions/types'
+import * as gestures from  'ionic2/components/aside/extensions/gestures';
 
 @Component({
   selector: 'ion-aside',
