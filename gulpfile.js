@@ -84,15 +84,6 @@ gulp.task('e2e', ['build'], function() {
   })
   var testTemplate = _.template( fs.readFileSync('scripts/e2e/e2e.template.js') )
 
-  function wrapContents(file, template, data) {
-    var contents = file.contents.toString();
-    contents = template(_.defaults(data || {}, {
-      contents: contents,
-      buildConfig: buildConfig,
-    }))
-    file.contents = new Buffer(contents);
-  }
-
   return gulp.src(buildConfig.src.e2e)
     .pipe(rename(function(file) {
       file.dirname = file.dirname.replace('/test/', '/')
@@ -108,9 +99,13 @@ gulp.task('e2e', ['build'], function() {
     .pipe(gulpif(/.e2e.js$/, through2.obj(function(file, enc, next) {
       var basename = path.basename(file);
       var relativePath = path.dirname(file.path.replace(/^.*?src.components/, ''))
-      wrapContents(file, testTemplate, {
-        relativePath: relativePath,
-      });
+      var contents = file.contents.toString();
+      contents = template(_.defaults(data || {}, {
+        contents: contents,
+        buildConfig: buildConfig,
+        relativePath: relativePath
+      }))
+      file.contents = new Buffer(contents);
       next(null, file);
     })))
     .pipe(gulpif({ isFile: true }, gulp.dest(buildConfig.dist + '/e2e')))
