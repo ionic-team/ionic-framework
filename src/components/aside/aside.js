@@ -3,6 +3,22 @@ import {ComponentConfig} from 'ionic2/config/component-config'
 import * as types from 'ionic2/components/aside/extensions/types'
 import * as gestures from  'ionic2/components/aside/extensions/gestures';
 
+export let AsideConfig = new ComponentConfig('aside')
+
+AsideConfig.classes('side', 'type')
+
+AsideConfig.delegate('gesture')
+  .when({side: 'left'}, gestures.LeftAsideGesture)
+  .when({side: 'right'}, gestures.RightAsideGesture)
+  .when({side: 'top'}, gestures.TopAsideGesture)
+  .when({side: 'bottom'}, gestures.BottomAsideGesture)
+
+AsideConfig.delegate('type')
+  .when({type: 'overlay'}, types.AsideTypeOverlay)
+  .when({type: 'push'}, types.AsideTypePush)
+  .when({type: 'reveal'}, types.AsideTypeReveal)
+
+
 @Component({
   selector: 'ion-aside',
   bind: {
@@ -59,19 +75,3 @@ export class Aside {
     }
   }
 }
-
-export let AsideConfig = new ComponentConfig(Aside)
-
-AsideConfig.classes('side', 'type')
-
-AsideConfig.delegate('gesture')
-  .when({side: 'left'}, gestures.LeftAsideGesture)
-  .when({side: 'right'}, gestures.RightAsideGesture)
-  .when({side: 'top'}, gestures.TopAsideGesture)
-  .when({side: 'bottom'}, gestures.BottomAsideGesture)
-
-AsideConfig.delegate('type')
-  .when({type: 'overlay'}, types.AsideTypeOverlay)
-  .when({type: 'push'}, types.AsideTypePush)
-  .when({type: 'reveal'}, types.AsideTypeReveal)
-

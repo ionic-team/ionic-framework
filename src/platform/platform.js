@@ -46,14 +46,15 @@ var ua = window.navigator.userAgent;
 platform.register({
   name: 'android',
   matcher() {
-    return /android/i.test(ua);
+    //TODO Make a better override than window
+    return window.IONIC_PLATFORM == 'android' || /android/i.test(ua);
   }
 });
 platform.register({
   name: 'ios',
   // For now always default to ios
   matcher() {
-    return true;
+    return window.IONIC_PLATFORM === 'ios';
   }
 });
 

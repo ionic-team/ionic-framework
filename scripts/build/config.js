@@ -2,9 +2,10 @@ module.exports = {
   dist: 'dist',
   distLib: 'dist/lib',
   src: {
-    test: ['src/**/test/*.spec.js'],
+    spec: ['src/**/test/*.spec.js'],
     js: ['src/**/*.js', '!src/**/test/**/*.js'],
-    e2e: ['src/components/*/test/*/**/*'],
+    e2eTest: ['src/components/*/test/*/'],
+    e2e: ['src/components/*/test/**/*'],
     html: 'src/**/*.html',
     scss: 'src/components/**/*.scss',
   },

@@ -11,9 +11,8 @@ MyConfig.delegate('gesture')
   .when({side: 'top'}, TopAsideGesture)
   .when({side: 'bottom'}, BottomAsideGesture)
 */
-export function ComponentConfig(ComponentConstructor) {
-  let componentCssName = util.pascalCaseToDashCase(ComponentConstructor.name)
-
+export function ComponentConfig(componentCssName) {
+  let platformName = platform.get().name;
   return class Config {
     static classes() {
       Config.classProperties || (Config.classProperties = [])
@@ -49,6 +48,7 @@ export function ComponentConfig(ComponentConstructor) {
 
     create(instance) {
       instance.domElement.classList.add(componentCssName)
+      instance.domElement.classList.add(`${componentCssName}-${platformName}`)
       for (let i = 0; i < (Config.classProperties || []).length; i++) {
         let propertyValue = instance[Config.classProperties[i]]
         instance.domElement.classList.add(`${componentCssName}-${propertyValue}`)
