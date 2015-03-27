@@ -1,4 +1,4 @@
-import * as util from '../../util';
+import * as util from 'ionic2/util';
 import Hammer from 'hammer';
 
 export class Gesture {

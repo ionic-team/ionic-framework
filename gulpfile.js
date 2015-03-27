@@ -19,13 +19,14 @@ var plumber = require('gulp-plumber')
 var rename = require('gulp-rename')
 var sass = require('gulp-sass')
 var shell = require('gulp-shell')
+var through2 = require('through2')
 var traceur = require('gulp-traceur')
-var wrap = require('gulp-wrap');
+var wrap = require('gulp-wrap')
 
 gulp.task('default', ['build', 'lib', 'e2e'])
 
-gulp.task('build', ['sass', 'js']);
-gulp.task('lib', ['ng2', 'fonts', 'dependencies']);
+gulp.task('build', ['sass', 'ionic-js'])
+gulp.task('lib', ['ng2', 'fonts', 'dependencies'])
 
 gulp.task('watch', ['default'], function() {
   gulp.watch(buildConfig.src.scss, ['sass'])
@@ -44,11 +45,11 @@ gulp.task('karma-watch', function() {
 
 gulp.task('dependencies', function() {
   return gulp.src(buildConfig.dependencies)
-    .pipe(gulp.dest(buildConfig.distLib));
-});
+    .pipe(gulp.dest(buildConfig.distLib))
+})
 
-gulp.task('js', function() {
-  return gulp.src('src/**/*.js')
+gulp.task('ionic-js', function() {
+  return gulp.src(buildConfig.src.js)
     .pipe(gulp.dest(buildConfig.distLib + '/ionic2'))
 })
 

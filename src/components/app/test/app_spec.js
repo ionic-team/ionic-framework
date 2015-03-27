@@ -1,4 +1,4 @@
-import {Ion} from '../ion';
+import {Ion} from 'ionic2/ion';
 
 export function main() {
   it('should be true', () => {

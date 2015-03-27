@@ -1,7 +1,6 @@
 import {NgElement, Component, Template, Parent} from 'angular2/angular2';
-import {Ion} from '../ion';
-import {Tabs} from './tabs';
-import {NavView} from '../nav-view/nav-view';
+import {Tabs} from 'ionic2/components/tabs/tabs';
+import {NavView} from 'ionic2/components/nav-view/nav-view';
 
 @Component({
   selector: 'ion-tab',

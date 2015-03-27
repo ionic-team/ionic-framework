@@ -1,4 +1,4 @@
-import * as util from '../../util';
+import * as util from 'ionic2/util';
 
 class Platform {
   constructor(options) {

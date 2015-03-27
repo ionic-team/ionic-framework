@@ -1,5 +1,4 @@
 import {Compiler, NgElement, Component, Template} from 'angular2/angular2';
-import {Ion} from '../ion';
 
 @Component({
   selector: 'ion-modal-wrapper'

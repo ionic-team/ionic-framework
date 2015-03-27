@@ -1,7 +1,5 @@
 import {NgElement, Component, Template, Parent} from 'angular2/angular2';
-import {History} from '../../history';
-import {View} from 'ionic/components/view/view';
-
+import {View} from 'ionic2/components/view/view';
 
 @Component({
   selector: 'ion-tabs'

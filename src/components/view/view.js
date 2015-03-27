@@ -1,5 +1,5 @@
 import {NgElement, Component, Template} from 'angular2/angular2'
-import {Toolbar} from '../toolbar/toolbar'
+import {Toolbar} from 'ionic2/components/toolbar/toolbar'
 
 @Component({
   selector: 'ion-view',

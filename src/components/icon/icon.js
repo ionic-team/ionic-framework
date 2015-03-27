@@ -1,5 +1,4 @@
 import {NgElement, Decorator} from 'angular2/angular2'
-import {Ion} from '../ion'
 
 @Decorator({
   selector: 'ion-icon,ionicon,icon'

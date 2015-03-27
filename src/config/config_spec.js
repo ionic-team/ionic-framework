@@ -1,4 +1,4 @@
-import {Config} from './config';
+import {Config} from 'ionic2/config/component-config';
 
 // TODO stop hardcoding platforms and media sizes
 export function main() {

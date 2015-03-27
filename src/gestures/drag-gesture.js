@@ -1,5 +1,5 @@
-import {Gesture} from './gesture';
-import * as util from '../../util';
+import {Gesture} from 'ionic2/gestures/gesture';
+import * as util from 'ionic2/util';
 import Hammer from 'hammer';
 
 /*

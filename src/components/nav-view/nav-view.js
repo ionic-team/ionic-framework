@@ -1,5 +1,3 @@
-import {Ion} from '../ion'
-
 export class NavView {
 
   // viewControllers: Stack<ViewController>;

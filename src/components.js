@@ -1,8 +1,7 @@
-//BUNDLE ONLY
+// export all components as array
 
-import {Aside, AsideParent} from './components/aside/aside';
+import {Aside} from 'ionic2/components/aside/aside';
 
 export let ionicComponents = [
   Aside,
-  AsideParent
 ];

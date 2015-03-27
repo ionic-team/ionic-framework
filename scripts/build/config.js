@@ -12,7 +12,10 @@ module.exports = {
   dependencies: [
     'node_modules/traceur/bin/traceur.js',
     'node_modules/es6-module-loader/dist/es6-module-loader.js',
+    'node_modules/es6-module-loader/dist/es6-module-loader.js.map',
     'node_modules/systemjs/dist/system.js',
+    'node_modules/systemjs/dist/system.js.map',
+    'node_modules/systemjs/dist/system.src.js',
     'node_modules/zone.js/zone.js',
     'node_modules/zone.js/long-stack-trace-zone.js',
     'node_modules/hammerjs/hammer.js',
@@ -25,7 +28,7 @@ module.exports = {
     'zone.js',
     'long-stack-trace-zone.js',
     'hammer.js',
-    'angular2.js'
+    'angular2.js',
   ],
 
   traceurOptions: {

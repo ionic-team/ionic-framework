@@ -2,7 +2,7 @@ import {DynamicComponent, Component, Template, bootstrap, NgElement} from 'angul
 import {Inject} from 'angular2/di';
 import {PrivateComponentLoader} from 'angular2/src/core/compiler/private_component_loader';
 import {PrivateComponentLocation} from 'angular2/src/core/compiler/private_component_location';
-import {RedBgStyler, BlueTextStyler} from './components/stylers';
+import {RedBgStyler, BlueTextStyler} from 'ionic2/components/stylers';
 
 @DynamicComponent({
   selector: 'dynamic-component',

@@ -1,7 +1,7 @@
-import {Aside} from '../../aside';
+import {Aside} from 'ionic2/components/aside/aside';
 
 // TODO use setters instead of direct dom manipulation
-let asideManipulator = {
+const asideManipulator = {
   setSliding(sliding) {
     this.aside.domElement.classList[sliding ? 'add' : 'remove']('no-transition');
   },
@@ -12,7 +12,7 @@ let asideManipulator = {
     this.aside.domElement.style.transform = t;
   }
 }
-let contentManipulator = {
+const contentManipulator = {
   setSliding(sliding) {
     this.aside.content.domElement.classList[sliding ? 'add' : 'remove']('no-transition');
   },
