@@ -37,15 +37,15 @@
 
 // Android Components
 @import
-  "../list/extensions/android/list-android",
-  "../item/extensions/android/item-android";
+  "../list/extensions/android",
+  "../item/extensions/android";
 
 
 // iOS Components
 @import
-  "../checkbox/extensions/ios/checkbox-ios",
-  "../list/extensions/ios/list-ios",
-  "../item/extensions/ios/item-ios";
+  "../checkbox/extensions/ios",
+  "../list/extensions/ios",
+  "../item/extensions/ios";
 
 
 // Icons
