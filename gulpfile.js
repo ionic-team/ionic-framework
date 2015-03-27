@@ -2,15 +2,15 @@
 // Mostly stolen from https://github.com/pkozlowski-opensource/ng2-play
 /////
 
-var _ = require('lodash');
+var _ = require('lodash')
 var buildConfig = require('./scripts/build/config')
 var SystemJsBuilder = require('systemjs-builder')
 var exec = require('child_process').exec
-var fs = require('fs');
+var fs = require('fs')
 var gulp = require('gulp')
 var karma = require('karma').server
 var path = require('path')
-var VinylFile = require('vinyl');
+var VinylFile = require('vinyl')
 
 var argv = require('yargs').argv
 var concat = require('gulp-concat')
@@ -89,7 +89,7 @@ gulp.task('e2e', ['build'], function() {
       file.dirname = file.dirname.replace('/test/', '/')
     }))
     .pipe(gulpif(/main.html$/, through2.obj(function(file, enc, next) {
-      var indexClone = _.clone(file);
+      var indexClone = _.clone(file)
       this.push(new VinylFile(_.assign(indexClone, {
         contents: new Buffer(indexContents),
         path: file.path.replace(/main.html$/, 'index.html'),
@@ -97,16 +97,15 @@ gulp.task('e2e', ['build'], function() {
       next(null, file)
     })))
     .pipe(gulpif(/.e2e.js$/, through2.obj(function(file, enc, next) {
-      var basename = path.basename(file);
       var relativePath = path.dirname(file.path.replace(/^.*?src.components/, ''))
-      var contents = file.contents.toString();
-      contents = template(_.defaults(data || {}, {
+      var contents = file.contents.toString()
+      contents = testTemplate({
         contents: contents,
         buildConfig: buildConfig,
         relativePath: relativePath
-      }))
-      file.contents = new Buffer(contents);
-      next(null, file);
+      })
+      file.contents = new Buffer(contents)
+      next(null, file)
     })))
     .pipe(gulpif({ isFile: true }, gulp.dest(buildConfig.dist + '/e2e')))
 })
