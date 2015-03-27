@@ -23,6 +23,7 @@
     "systemjs": "^0.11.3",
     "systemjs-builder": "^0.9.1",
     "traceur-runtime": "0.0.59",
+    "vinyl": "^0.4.6",
     "yargs": "^3.6.0"
   },
   "dependencies": {

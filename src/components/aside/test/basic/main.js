@@ -4,13 +4,13 @@ import {View} from 'ionic2/components/view/view';
 import {Template, Component, bootstrap} from 'angular2/angular2';
 
 @Component({
-  selector: 'aside-app'
+  selector: '[ion-app]'
 })
 @Template({
   directives: [Aside, Content, View],
   url: 'main.html'
 })
-class AsideApp {
+class App {
 }
 
-bootstrap(AsideApp);
+bootstrap(App);
