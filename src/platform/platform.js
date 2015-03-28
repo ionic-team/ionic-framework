@@ -54,7 +54,15 @@ platform.register({
   name: 'ios',
   // For now always default to ios
   matcher() {
-    return window.IONIC_PLATFORM === 'ios';
+    return window.IONIC_PLATFORM === 'ios' || /ipad|iphone|ipod/i.test(ua);
+  }
+});
+
+// Last case is a catch-all
+platform.register({
+  name: 'default',
+  matcher() {
+    return true;
   }
 });
 

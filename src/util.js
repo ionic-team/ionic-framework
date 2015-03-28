@@ -34,14 +34,14 @@ export let isDefined = val => typeof val === 'undefined';
 export let isObject = val => typeof val === 'object';
 
 export function pascalCaseToDashCase(str = '') {
-  return str.charAt(0).toLowerCase() + str.substring(1).replace(/[A-Z]/g, function(match) {
+  return str.charAt(0).toLowerCase() + str.substring(1).replace(/[A-Z]/g, match => {
     return '-' + match.toLowerCase()
   })
 }
 
 export let array = {
   unique(array) {
-    return array.filter(function(value, index) {
+    return array.filter((value, index) => {
       return array.indexOf(value) === index;
     });
   }
