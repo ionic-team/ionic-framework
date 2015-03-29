@@ -4,7 +4,7 @@ html {
 
 [ion-app] {
   @include flex-display();
-  @include flex-direction(row);
+  @include flex-direction(column);
 
   overflow: hidden;
   height: 100%;
