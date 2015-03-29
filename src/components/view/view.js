@@ -22,5 +22,6 @@ import {Toolbar} from 'ionic2/components/toolbar/toolbar'
 export class View {
   constructor(@NgElement() ele:NgElement) {
     ele.domElement.classList.add('pane')
+    console.log('View constructed', ele.domElement);
   }
 }
