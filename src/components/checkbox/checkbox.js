@@ -1,7 +1,7 @@
-import {Component, Template, NgElement, PropertySetter} from 'angular2/angular2';
-import {ComponentConfig} from 'ionic2/config/component-config';
+import {Component, Template, NgElement, PropertySetter} from 'angular2/angular2'
+import {ComponentConfig} from 'ionic2/config/component-config'
 
-export let CheckboxConfig = new ComponentConfig('checkbox');
+export let CheckboxConfig = new ComponentConfig('checkbox')
 
 @Component({
   selector: 'ion-checkbox',
@@ -9,7 +9,7 @@ export let CheckboxConfig = new ComponentConfig('checkbox');
     checked: 'checked'
   },
   events: {
-    'click': 'onClick'
+    'click': 'onClick()'
   },
   services: [CheckboxConfig]
 })
@@ -30,21 +30,36 @@ export let CheckboxConfig = new ComponentConfig('checkbox');
 })
 export class Checkbox {
   constructor(
-    @PropertySetter('attr.role') setRole: Function,
-    @PropertySetter('attr.aria-checked') setChecked: Function,
-    @PropertySetter('attr.aria-invalid') setInvalid: Function,
-    @PropertySetter('attr.aria-disabled') setDisabled: Function,
     configFactory: CheckboxConfig,
-    element: NgElement
+    element: NgElement,
+    @PropertySetter('attr.role') setAriaRole: Function,
+    @PropertySetter('attr.aria-checked') setAriaChecked: Function,
+    @PropertySetter('attr.aria-invalid') setAriaInvalid: Function,
+    @PropertySetter('attr.aria-disabled') setAriaDisabled: Function
   ) {
-    this.domElement = element.domElement;
-    this.domElement.classList.add('item');
-    this.config = configFactory.create(this);
+    this.domElement = element.domElement
+    this.domElement.classList.add('item')
+    this.config = configFactory.create(this)
 
-    setRole('checkbox');
-    setChecked('true')
-    setInvalid('false');
-    setDisabled('false');
+    setAriaRole('checkbox')
+    setAriaInvalid('false')
+    setAriaDisabled('false')
+
+    this.setAriaRole = setAriaRole
+    this.setAriaChecked = setAriaChecked
+    this.setAriaInvalid = setAriaInvalid
+    this.setAriaDisabled = setAriaDisabled
+  }
+
+  set checked(checked) {
+    this._checked = checked
+    this.setAriaChecked(checked)
+  }
+  get checked() {
+    return this._checked
+  }
+  onClick() {
+    this.checked = !this.checked;
   }
 }
 
