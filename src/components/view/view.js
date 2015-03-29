@@ -24,5 +24,10 @@ export class View {
   constructor(@NgElement() ele:NgElement, @Parent() nav: NavView) {
     ele.domElement.classList.add('pane')
     console.log('View constructed', ele.domElement, nav);
+
+    // TODO: Figure out better way to do this
+    if(nav) {
+      nav.push(this, true)
+    }
   }
 }

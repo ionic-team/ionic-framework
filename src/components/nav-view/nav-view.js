@@ -1,5 +1,6 @@
 import {Component, Template, Inject, Parent, NgElement} from 'angular2/angular2'
 import {ComponentConfig} from 'ionic2/config/component-config'
+import {Log} from 'ionic2/util'
 
 @Component({
   selector: 'ion-nav',
@@ -24,11 +25,13 @@ export class NavView {
    * @param shouldAnimate whether to animate
    */
   push(view, shouldAnimate) {
-    this.views.push(view)
+    this._views.push(view)
 
     if(shouldAnimate) {
-      this.animateIn(view)
+      this._animateIn(view)
     }
+
+    Log.log('NAV: PUSH', view, 'Animate?', shouldAnimate)
   }
 
   /**
@@ -37,10 +40,10 @@ export class NavView {
    * @param shouldAnimate whether to animate
    */
   pop(shouldAnimate) {
-    last = stack.pop()
+    last = this._views.pop()
 
     if(shouldAnimate) {
-      this.animateOut(last)
+      this._animateOut(last)
     }
 
     return last
@@ -58,6 +61,7 @@ export class NavView {
 
   // Animate a new view *in*
   _animateIn(view) {
+
   }
 
   // Animate an old view *out*
