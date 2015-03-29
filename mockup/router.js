@@ -21,7 +21,26 @@
 @Route({
 })
 class App extends Ionic {
-  
+  constructor(nav: Navigation) {
+     nav.urls({
+        url: '/contacts/:contact',
+        navigate: (url, params) => {
+           if(params.contactId) {
+              // Explicit routing
+              var contactList = new ContactList();
+              rootNav.push(contactList, false // whether to animate);
+              var contactPage = new ContactPage(params.contactId);
+              rootNav.push(contactPage);
+              
+              // Now the user has a 2 history navigation:
+              // root -> contact list -> contact page
+              //
+              // But note, it was up to the developer to construct the appropriate history
+           }
+        }
+     })
+     
+  }
 }
 
 @Route({
