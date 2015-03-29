@@ -56,7 +56,7 @@ gulp.task('dependencies', function() {
 })
 
 gulp.task('ionic-js', function() {
-  return gulp.src(buildConfig.src.js)
+  return gulp.src(['src/**/*.js', '!src/**/test/*/**/*.js'])
     .pipe(gulp.dest(buildConfig.distLib + '/ionic2'))
 })
 

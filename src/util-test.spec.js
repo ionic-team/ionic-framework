@@ -1,6 +1,6 @@
 import * as util from 'ionic2/util';
 
-export function main() {
+export function run() {
   describe('extend', function() {
 
     it('should extend simple', () => {

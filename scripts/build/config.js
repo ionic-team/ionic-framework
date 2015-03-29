@@ -5,7 +5,7 @@ module.exports = {
     spec: ['src/**/test/*.spec.js'],
     js: ['src/**/*.js', '!src/**/test/**/*.js'],
     e2eTest: ['src/components/*/test/*/'],
-    e2e: ['src/components/*/test/**/*'],
+    e2e: ['src/components/*/test/*/**/*'],
     html: 'src/**/*.html',
     scss: 'src/components/**/*.scss',
   },

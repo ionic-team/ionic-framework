@@ -9,7 +9,7 @@ export let CheckboxConfig = new ComponentConfig('checkbox')
     checked: 'checked'
   },
   events: {
-    'click': 'onClick()'
+    '^click': 'onClick()'
   },
   services: [CheckboxConfig]
 })

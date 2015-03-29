@@ -3,25 +3,16 @@ var buildConfig = require('../build/config');
 module.exports = function(config) {
   config.set({
     singleRun: true,
-    basePath: '../..',
+    basePath: '../../dist/lib',
 
     frameworks: ['jasmine'],
 
-    files: [
-      'node_modules/systemjs/dist/system.js',
-      'node_modules/es6-module-loader/dist/es6-module-loader.js',
-      'node_modules/traceur-runtime/index.js',
-      'node_modules/zone.js/zone.js',
-      'node_modules/zone.js/long-stack-trace-zone.js',
-      'dist/lib/angular2.js',
-      'jspm-config.js',
-      'scripts/test/test-main.js',
-      {pattern: 'src/**/*.spec.js', included: false},
-    ],
+    files: buildConfig.scripts.concat([
+      {pattern: 'ionic2/**/*.js', included: false},
+      '../../scripts/test/test-main.js',
+    ]),
 
-    exclude: [
-      'src/**/examples/**'
-    ],
+    exclude: buildConfig.src.e2e,
 
     logLevel: 'warn',
 
