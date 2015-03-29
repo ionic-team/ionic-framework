@@ -1,0 +1,38 @@
+
+// iOS Switch
+// --------------------------------------------------
+
+$switch-ios-width:                      52px !default;
+$switch-ios-height:                     32px !default;
+$switch-ios-slider-off-background:      #fff !default;
+$switch-ios-slider-on-background:       #4cd964 !default;
+$switch-ios-toggle-on-background:       #fff !default;
+
+
+.switch-ios {
+
+  .switch-toggle {
+    width: $switch-ios-width;
+    height: $switch-ios-height;
+    border-radius: $switch-ios-height / 2;
+
+    background: #e5e5e5;
+  }
+
+  .switch-toggle:before {
+    background: $switch-ios-slider-off-background;
+  }
+
+  .switch-toggle:after {
+    box-shadow: 0 2px 5px rgba(0,0,0,.4);
+  }
+
+  &[aria-checked=true] .switch-toggle {
+    background: $switch-ios-slider-on-background;
+  }
+
+  &[aria-checked=true] .switch-toggle:before {
+    @include scale(0);
+  }
+
+}

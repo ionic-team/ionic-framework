@@ -1,16 +1,28 @@
 
-<div class="item switch"
-     role="checkbox"
-     aria-label="Airplane Mode"
-     aria-checked="true"
-     aria-invalid="false">
+<div class="pane">
 
-  <div class="item-container">
+  <div class="pane-container">
 
-    <div class="item-media"></div>
+    <div class="content" style="background: #efeff4">
 
-    <div class="item-content">
-      Airplane Mode
+      <ion-list>
+
+        <ion-list-header>Some Switches</ion-list-header>
+
+        <ion-switch [checked]="true">
+          Apples
+        </ion-switch>
+
+        <ion-switch>
+          Bananas
+        </ion-switch>
+
+        <ion-switch [disabled]="true">
+          Oranges
+        </ion-switch>
+
+      </ion-list>
+
     </div>
 
   </div>

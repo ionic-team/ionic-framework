@@ -1,71 +1,64 @@
-import {NgElement, Component, Template} from 'angular2/angular2';
+import {Component, Template, NgElement, PropertySetter} from 'angular2/angular2'
+import {ComponentConfig} from 'ionic2/config/component-config'
+
+export let SwitchConfig = new ComponentConfig('switch')
 
 @Component({
   selector: 'ion-switch',
   bind: {
     checked: 'checked'
-  }
+  },
+  events: {
+    'click': 'onClick()'
+  },
+  services: [SwitchConfig]
 })
 @Template({
   inline: `
-<div class="item item-switch">
-  <div ng-transclude></div>
-  <label class="switch">
-    <input type="checkbox" (click)="onClick(input)" #input>
-    <div class="track">
-      <div class="handle"></div>
+  <div class="item-content">
+
+    <div class="item-title">
+      <content></content>
     </div>
-  </label>
-</div>
-`
+
+    <div class="item-media media-switch">
+      <div class="switch-toggle"></div>
+    </div>
+
+  </div>`
 })
 export class Switch {
   constructor(
-    @NgElement() el : NgElement,
-    @EventEmitter('change') emitChange: Function
+    configFactory: SwitchConfig,
+    element: NgElement,
+    @PropertySetter('attr.role') setAriaRole: Function,
+    @PropertySetter('attr.aria-checked') setAriaChecked: Function,
+    @PropertySetter('attr.aria-invalid') setAriaInvalid: Function,
+    @PropertySetter('attr.aria-disabled') setAriaDisabled: Function
   ) {
-    this.ngElement = el;
-    this.emitChange = emitChange;
+    this.domElement = element.domElement
+    this.domElement.classList.add('item')
+    this.config = configFactory.create(this)
+
+    setAriaRole('checkbox')
+    setAriaInvalid('false')
+    setAriaDisabled('false')
+
+    this.setAriaRole = setAriaRole
+    this.setAriaChecked = setAriaChecked
+    this.setAriaInvalid = setAriaInvalid
+    this.setAriaDisabled = setAriaDisabled
+  }
+
+  set checked(checked) {
+    this._checked = checked
+    this.setAriaChecked(checked)
+  }
+  get checked() {
+    return this._checked
   }
   onClick() {
-    this.emitChange(this.checked);
+    this.checked = !this.checked;
   }
 }
 
-/*
-<ion-view>
-
-  <aside/>
-
-  <tabs>
-    <my-page-3 title="My Page 3" />
-    <tab>
-      static content
-    </tab>
-  </tabs>
-
-</ion-view>
-
-@Component({
-  selector: 'my-page-3',
-  defaults: {
-    title: 'My Page 3',
-    icon: 'Super icon'
-  },
-})
-@Template( {
-  url: 'my-page-3.html'
-})
-@Route({
-  name: 'my-page-3'
-})
-class MyPage3 extends TabComponent {
-
-}
-
-
-1) Sign in page, 1 view
-2) Navigate to a tabs view, 3 tabs, all have the same side menu
-3) Tab 2, page 2 navigates to nested tabs with it's own side menu
-
-*/
