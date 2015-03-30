@@ -1,6 +1,5 @@
 import {NgElement, Component, Template, Parent} from 'angular2/angular2'
 import {Toolbar} from 'ionic2/components/toolbar/toolbar'
-import {NavView} from 'ionic2/components/nav-view/nav-view'
 
 @Component({
   selector: 'ion-view',
@@ -21,13 +20,8 @@ import {NavView} from 'ionic2/components/nav-view/nav-view'
   directives: [Toolbar]
 })
 export class View {
-  constructor(@NgElement() ele:NgElement, @Parent() nav: NavView) {
+  constructor(@NgElement() ele:NgElement) {
     ele.domElement.classList.add('pane')
     console.log('View constructed', ele.domElement, nav);
-
-    // TODO: Figure out better way to do this
-    if(nav) {
-      nav.push(this, true)
-    }
   }
 }
