@@ -1,6 +1,6 @@
 import * as util from 'ionic2/util'
 
-const queryPlatform = (util.readQueryParams()['ionic-platform'] || '').toLowerCase()
+const queryPlatform = (util.readQueryParams()['ionicplatform'] || '').toLowerCase()
 
 class Platform {
   constructor(options) {

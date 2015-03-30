@@ -166,4 +166,3 @@ gulp.task('ng2', ['ng2-rename'], function() {
   })
   return builder.build('angular2/angular2', buildConfig.distLib + '/angular2.js')
 })
-
