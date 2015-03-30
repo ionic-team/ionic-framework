@@ -28,7 +28,7 @@ Promise.all(
       if (module.hasOwnProperty('run')) {
         module.run();
       } else {
-        throw new Error('Module ' + path + ' does not implement run() method.');
+        console.warn('WARNING: Module ' + path + ' does not implement a run() method. No tests run.');
       }
     });
   }))
