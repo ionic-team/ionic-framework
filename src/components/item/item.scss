@@ -57,6 +57,7 @@ $item-min-height:         44px !default;
 .item-title {
   position: relative;
 
+  @include flex(1);
   @include flex-shrink(1);
 
   max-width: 100%;

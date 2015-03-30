@@ -2,7 +2,7 @@
 // Switch
 // --------------------------------------------------
 
-$switch-padding-right:             15px !default;
+$switch-padding:                   0 15px !default;
 $switch-width:                     52px !default;
 $switch-height:                    32px !default;
 $switch-border-width:              2px !default;
@@ -12,7 +12,7 @@ $switch-toggle-on-background:      #fff !default;
 
 
 .switch .item-media {
-  padding-right: $switch-padding-right;
+  padding: $switch-padding;
 }
 
 .switch-toggle {

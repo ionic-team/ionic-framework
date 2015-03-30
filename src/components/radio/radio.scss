@@ -1,0 +1,45 @@
+
+// Radio
+// --------------------------------------------------
+
+$radio-padding:                   0 15px !default;
+
+
+.radio .item-media {
+  padding: $radio-padding;
+}
+
+.radio-on {
+  display: none;
+}
+
+.radio-off {
+  display: block;
+}
+
+.radio[aria-checked=true] {
+
+  .radio-on {
+    display: block;
+  }
+
+  .radio-off {
+    display: none;
+  }
+
+}
+
+.radio[aria-disabled=true] {
+  pointer-events: none;
+  opacity: 0.5;
+  color: gray;
+
+  .media-radio {
+    color: inherit;
+  }
+}
+
+.radio .item-media,
+.radio .item-content {
+  pointer-events: none;
+}
