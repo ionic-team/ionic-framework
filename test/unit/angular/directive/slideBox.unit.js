@@ -70,4 +70,41 @@ describe('ionSlideBox with active slide', function() {
    scope.$apply();
    expect($ionicSlideBoxDelegate.currentIndex()).toBe(2);
   }));
+  it('Should create and show pager unless told not to', inject(function($rootScope, $compile, $timeout) {
+    el = $compile('<ion-slide-box>' +
+      '<ion-slide>' +
+        '<div class="box blue">' +
+          '<h1>BLUE {{slideBox.slideIndex}}</h1>' +
+        '</div>' +
+      '</ion-slide>' +
+      '<ion-slide>' +
+        '<div class="box yellow">' +
+          '<h1>YELLOW {{slideBox.slideIndex}}</h1>' +
+        '</div>' +
+      '</ion-slide>' +
+    '</ion-slide-box>')($rootScope.$new());
+
+    var scope = el.scope();
+    scope.$apply();
+    expect(el.find('.slider-pager').length).toBe(1);
+    expect(el.find('.slider-pager.hide').length).toBe(0);
+  }));
+  it('Should create and show pager unless told not to', inject(function($rootScope, $compile, $timeout) {
+    el = $compile('<ion-slide-box show-pager="false">' +
+      '<ion-slide>' +
+        '<div class="box blue">' +
+          '<h1>BLUE {{slideBox.slideIndex}}</h1>' +
+        '</div>' +
+      '</ion-slide>' +
+      '<ion-slide>' +
+        '<div class="box yellow">' +
+          '<h1>YELLOW {{slideBox.slideIndex}}</h1>' +
+        '</div>' +
+      '</ion-slide>' +
+    '</ion-slide-box>')($rootScope.$new());
+
+    var scope = el.scope();
+    scope.$apply();
+    expect(el.find('.slider-pager.hide').length).toBe(1);
+  }));
 });
