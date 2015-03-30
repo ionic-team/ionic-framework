@@ -1,0 +1,37 @@
+
+// Alert
+// --------------------------------------------------
+
+$alert-width:                    270px !default;
+$alert-min-height:               100px !default;
+$alert-padding:                  15px !default;
+$alert-background-color:         #fff !default;
+
+
+.pane > .pane-container.alert-container {
+  position: absolute;
+  z-index: $z-index-alert;
+  display: block;
+
+  top: 40%;
+  left: 50%;
+  width: $alert-width;
+  margin-left: -$alert-width / 2;
+
+  background: $alert-background-color;
+}
+
+.alert-content {
+  margin: 0;
+  padding: $alert-padding;
+  min-height: $alert-min-height;
+}
+
+.alert-action {
+  @include flex-display();
+
+  .button {
+    @include flex-display();
+    @include flex(1);
+  }
+}
