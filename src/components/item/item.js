@@ -6,13 +6,11 @@ import {NgElement, Component, Template} from 'angular2/angular2'
 @Template({
   inline: `<div class="item-content">
             <div class="item-media">
-              Icon
             </div>
             <div class="item-title">
-              Item Title
+              <content></content>
             </div>
             <div class="item-accessory">
-              Right
             </div>
           </div>`
 })
