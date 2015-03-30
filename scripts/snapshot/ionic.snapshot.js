@@ -19,7 +19,7 @@ var IonicSnapshot = function(options) {
     self.platformId = browser.params.platform_id;
     self.platformIndex = browser.params.platform_index;
     self.platformCount = browser.params.platform_count;
-    self.sleepBetweenSpecs = options.sleepBetweenSpecs || 400;
+    self.sleepBetweenSpecs = options.sleepBetweenSpecs || 600;
     self.width = browser.params.width || -1;
     self.height = browser.params.height || -1;
     self.highestMismatch = 0;
@@ -73,9 +73,9 @@ var IonicSnapshot = function(options) {
 
       browser.getCurrentUrl().then(function(currentUrl) {
 
-        // browser.sleep(self.sleepBetweenSpecs).then(function(){
+        browser.sleep(self.sleepBetweenSpecs).then(function(){
 
-          browser.takeScreenshot().then(function(pngBase64){
+          browser.takeScreenshot().then(function(pngBase64) {
             var specIdString = '[' + (spec.id+1) + '/' + self.testData.total_specs + ']';
             log(specIdString, spec.getFullName());
 
@@ -106,7 +106,7 @@ var IonicSnapshot = function(options) {
             d.fulfill();
           });
 
-        //});
+        });
 
       });
 
