@@ -38,7 +38,7 @@ module.exports = function(options) {
     };
 
     request.post({
-        url: options.domain + '/e2e/upload-url',
+        url: 'http://' + options.domain + '/e2e/upload-url',
         formData: formData
       },
       function(err, httpResponse, body) {
@@ -76,7 +76,7 @@ module.exports = function(options) {
     );
   }
 
-  console.log('Upload e2e tests');
+  console.log('Uploading e2e tests:', options.testId);
   uploadFiles(inputDir, '');
 };
 

@@ -56,7 +56,7 @@ module.exports = function(gulp, argv, buildConfig) {
   }
 
   function protractor(done, args) {
-    console.log('Start protractor');
+    console.log('Start protractor:', snapshotValues.params.test_id);
 
     var child = cp.spawn('protractor', args, {
       stdio: [process.stdin, process.stdout, 'pipe']
