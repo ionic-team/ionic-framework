@@ -85,7 +85,6 @@ gulp.task('e2e', ['ionic-js', 'sass'], function() {
   var indexContents = _.template( fs.readFileSync('scripts/e2e/index.template.html') )({
     buildConfig: buildConfig
   });
-  var platformJsTemplate = _.template( fs.readFileSync('scripts/e2e/platform.template.js') )
   var testTemplate = _.template( fs.readFileSync('scripts/e2e/e2e.template.js') )
 
   var platforms = [
@@ -94,76 +93,47 @@ gulp.task('e2e', ['ionic-js', 'sass'], function() {
     'ios',
   ]
 
-  return gulp.src(buildConfig.src.e2eTest)
-    .pipe(through2.obj(function(file, enc, next) {
-      var self = this
-      gulp.src(file.path + '/**/*', {
-        base: file.path
-      })
-        .pipe(gulpif(/main.html$/, processMainHtml()))
-        .on('data', function(file) {
-          if (file.stat && !file.stat.isFile()) return;
-
-          file.path = file.path.replace(/(\\|\/)test/, '')
-          file.base = path.join(__dirname, 'src', 'components');
-          var dirname = path.dirname(file.path)
-          var basename = path.basename(file.path);
-
-          platforms.forEach(function(platform) {
-            var platformDir = dirname + '-' + platform;
-            var platformFilePath = file.path.replace(dirname, platformDir);
-            self.push(new VinylFile({
-              path: platformFilePath,
-              base: file.base,
-              contents: file.contents.slice()
-            }));
-
-            // Add a new platform.js file beside each index.html
-            if (basename === 'index.html') {
-              self.push(new VinylFile({
-                path: platformFilePath.replace(/index.html$/, 'platform.js'),
-                base: file.base,
-                contents: new Buffer(platformJsTemplate({
-                  platform: platform
-                }))
-              }))
-            }
-          })
-        })
-        .on('end', next)
-
-      function processMainHtml() {
-        return through2.obj(function(file, enc, next) {
-          this.push(new VinylFile({
-            base: file.base,
-            contents: new Buffer(indexContents),
-            path: file.path.replace(/main.html$/, 'index.html'),
-          }))
-          next(null, file)
-        })
-      }
+  // Get each test folder with gulp.src
+  return gulp.src(buildConfig.src.e2e)
+    .pipe(rename(function(file) {
+      file.dirname = file.dirname.replace(path.sep + 'test' + path.sep, path.sep)
     }))
-    .pipe(gulp.dest(buildConfig.dist + '/e2e'));
-    // .pipe(gulpif(/main.html$/, through2.obj(function(file, enc, next) {
-    //   var indexClone = _.clone(file)
-    //   this.push(new VinylFile(_.assign(indexClone, {
-    //     contents: new Buffer(indexContents),
-    //     path: file.path.replace(/main.html$/, 'index.html'),
-    //   })))
-    //   next(null, file)
-    // })))
-    // .pipe(gulpif(/e2e.js$/, through2.obj(function(file, enc, next) {
-    //   var relativePath = path.dirname(file.path.replace(/^.*?src.components/, ''))
-    //   var contents = file.contents.toString()
-    //   contents = testTemplate({
-    //     contents: contents,
-    //     buildConfig: buildConfig,
-    //     relativePath: relativePath
-    //   })
-    //   file.contents = new Buffer(contents)
-    //   next(null, file)
-    // })))
-    // .pipe(gulpif({ isFile: true }, gulp.dest(buildConfig.dist + '/e2e')))
+    .pipe(gulpif(/main.html$/, processMainHtml()))
+    .pipe(gulpif(/e2e.js$/, createPlatformTests()))
+    .pipe(gulp.dest(buildConfig.dist + '/e2e'))
+
+    function processMainHtml() {
+      return through2.obj(function(file, enc, next) {
+        this.push(new VinylFile({
+          base: file.base,
+          contents: new Buffer(indexContents),
+          path: file.path.replace(/main.html$/, 'index.html'),
+        }))
+        next(null, file)
+      })
+    }
+    function createPlatformTests(file) {
+      return through2.obj(function(file, enc, next) {
+        var self = this
+        var relativePath = path.dirname(file.path.replace(/^.*?src(\/|\\)components(\/|\\)/, ''))
+        var contents = file.contents.toString()
+        platforms.forEach(function(platform) {
+          var platformContents = testTemplate({
+            contents: contents,
+            buildConfig: buildConfig,
+            relativePath: relativePath,
+            platform: platform
+          })
+          self.push(new VinylFile({
+            base: file.base,
+            contents: new Buffer(platformContents),
+            path: file.path.replace(/e2e.js$/, platform + '.e2e.js')
+          }))
+        })
+        next()
+      })
+    }
+
 })
 
 // Take es6 files from angular2's output, rename to js, and move to dist/lib/

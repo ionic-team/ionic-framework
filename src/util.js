@@ -28,10 +28,10 @@ export function defaults(dest) {
   return dest;
 }
 
-export let isString = val => typeof val === 'string';
-export let isFunction = val => typeof val === 'function';
-export let isDefined = val => typeof val === 'undefined';
-export let isObject = val => typeof val === 'object';
+export let isString = val => typeof val === 'string'
+export let isFunction = val => typeof val === 'function'
+export let isDefined = val => typeof val === 'undefined'
+export let isObject = val => typeof val === 'object'
 
 export function pascalCaseToDashCase(str = '') {
   return str.charAt(0).toLowerCase() + str.substring(1).replace(/[A-Z]/g, match => {
@@ -42,10 +42,10 @@ export function pascalCaseToDashCase(str = '') {
 export let array = {
   unique(array) {
     return array.filter((value, index) => {
-      return array.indexOf(value) === index;
-    });
+      return array.indexOf(value) === index
+    })
   }
-};
+}
 
 export class Log {
   static log(...args) {
@@ -63,4 +63,19 @@ export class Log {
   static error(...args) {
     console.error.apply(console, args)
   }
+}
+
+export function readQueryParams() {
+  var queryParams = {}
+  const startIndex = window.location.href.indexOf('?')
+  if (startIndex !== -1) {
+    const queries = window.location.href.slice(startIndex + 1).split('&')
+    if (queries.length) {
+      queries.forEach((param) => {
+        var split = param.split('=')
+        queryParams[split[0]] = split[1]
+      })
+    }
+  }
+  return queryParams
 }

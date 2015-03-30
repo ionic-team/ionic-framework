@@ -27,16 +27,10 @@
 }
 
 .checkbox[aria-disabled=true] {
-  pointer-events: none;
   opacity: 0.5;
   color: gray;
 
   .media-checkbox {
     color: inherit;
   }
-}
-
-.checkbox .item-media,
-.checkbox .item-content {
-  pointer-events: none;
 }
