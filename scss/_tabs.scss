@@ -4,8 +4,6 @@
  * A navigation bar with any number of tab items supported.
  */
 
-$tabs-margin-top: -0.1em;
-
 .tabs {
   @include display-flex();
   @include flex-direction(horizontal);
