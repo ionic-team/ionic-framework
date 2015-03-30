@@ -4,6 +4,8 @@
  * A navigation bar with any number of tab items supported.
  */
 
+$tabs-margin-top: -0.1em;
+
 .tabs {
   @include display-flex();
   @include flex-direction(horizontal);
@@ -323,7 +325,7 @@ ion-tabs {
           &.tab-item-active,
           &.active,
           &.activated {
-            > .tab-title, > i{
+             .tab-title, i{
             display:block;
             margin-top: -$tabs-striped-border-width + 1px;
           }
@@ -336,7 +338,7 @@ ion-tabs {
           &.tab-item-active,
           &.active,
           &.activated {
-            > .tab-title, > i {
+            .tab-title, i {
               margin-top: -0.1em;
           }
         }
