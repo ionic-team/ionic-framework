@@ -71,45 +71,42 @@ var IonicSnapshot = function(options) {
     self.flow.execute(function(){
       var d = protractor.promise.defer();
 
-      browser.waitForAngular().then(function(){
+      browser.getCurrentUrl().then(function(currentUrl) {
 
-        browser.getCurrentUrl().then(function(currentUrl) {
+        // browser.sleep(self.sleepBetweenSpecs).then(function(){
 
-          browser.sleep(self.sleepBetweenSpecs).then(function(){
+          browser.takeScreenshot().then(function(pngBase64){
+            var specIdString = '[' + (spec.id+1) + '/' + self.testData.total_specs + ']';
+            log(specIdString, spec.getFullName());
 
-            browser.takeScreenshot().then(function(pngBase64){
-              var specIdString = '[' + (spec.id+1) + '/' + self.testData.total_specs + ']';
-              log(specIdString, spec.getFullName());
+            self.testData.spec_index = spec.id;
+            self.testData.description = spec.getFullName();
+            self.testData.highest_mismatch = self.highestMismatch;
+            self.testData.png_base64 = pngBase64;
+            self.testData.url = currentUrl;
+            pngBase64 = null;
 
-              self.testData.spec_index = spec.id;
-              self.testData.description = spec.getFullName();
-              self.testData.highest_mismatch = self.highestMismatch;
-              self.testData.png_base64 = pngBase64;
-              self.testData.url = currentUrl;
-              pngBase64 = null;
+            var requestDeferred = q.defer();
+            self.screenshotRequestPromises.push(requestDeferred.promise);
 
-              var requestDeferred = q.defer();
-              self.screenshotRequestPromises.push(requestDeferred.promise);
-
-              request.post(
-                'http://' + self.domain + '/screenshot',
-                { form: self.testData },
-                function (error, response, body) {
-                  log(specIdString, 'reportSpecResults:', body);
-                  try {
-                    var rspData = JSON.parse(body);
-                    self.highestMismatch = Math.max(self.highestMismatch, rspData.Mismatch);
-                  } catch(e) {
-                    log(specIdString, colors.red('reportSpecResults', 'error posting screenshot:'), e);
-                  }
-                  requestDeferred.resolve();
+            request.post(
+              'http://' + self.domain + '/screenshot',
+              { form: self.testData },
+              function (error, response, body) {
+                log(specIdString, 'reportSpecResults:', body);
+                try {
+                  var rspData = JSON.parse(body);
+                  self.highestMismatch = Math.max(self.highestMismatch, rspData.Mismatch);
+                } catch(e) {
+                  log(specIdString, colors.red('reportSpecResults', 'error posting screenshot:'), e);
                 }
-              );
-              d.fulfill();
-            });
+                requestDeferred.resolve();
+              }
+            );
+            d.fulfill();
           });
 
-        });
+        //});
 
       });
 
