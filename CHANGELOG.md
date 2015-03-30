@@ -1,3 +1,20 @@
+### 1.0.0-rc.2 "palladium-platypus" (2015-03-30)
+
+
+#### Bug Fixes
+
+* **activator:** adds activated class to buttons in nav-bar and header-bars ([36df5086](https://github.com/driftyco/ionic/commit/36df50863853dcf4faee77cbf40c93c4556c11c1), closes [#3348](https://github.com/driftyco/ionic/issues/3348))
+* **keyboard:** enable keyboard accessory bar more quickly after focus ([7bf1207a](https://github.com/driftyco/ionic/commit/7bf1207a54bb482d1fdb2cf13620ef2837ffab18), closes [#3113](https://github.com/driftyco/ionic/issues/3113))
+* **popover:** fix popover position on Internet Explorer ([893fcbec](https://github.com/driftyco/ionic/commit/893fcbec5f97eb487d602ab2c19459924c0098b0), closes [#2861](https://github.com/driftyco/ionic/issues/2861))
+* **popup:** prevent scrollbars from showing on desktop unecessarily. ([b8df44d4](https://github.com/driftyco/ionic/commit/b8df44d4c44e47516032b96cac79147eb48afe4c), closes [#3204](https://github.com/driftyco/ionic/issues/3204))
+* **scrolling:** Prevent gestures from breaking native scrolling ([e917cae3](https://github.com/driftyco/ionic/commit/e917cae3346ba3e78e5a4126704bdc102e33ae95))
+
+
+#### Features
+
+* **scrolling:** add native scroll delegate ([bda4de1c](https://github.com/driftyco/ionic/commit/bda4de1c30bc799e2b48f769d472f391282c7e49))
+
+
 ### 1.0.0-rc.1 "osmium-ostrich" (2015-03-16)
 
 
