@@ -1,3 +1,35 @@
 
 // Action Menu
 // --------------------------------------------------
+
+$action-menu-group-margin:               15px !default;
+$action-menu-background-color:           rgba(243,243,243,.95) !default;
+$action-menu-button-text-color:          #007aff !default;
+
+
+.action-menu-container {
+  position: absolute;
+  z-index: $z-index-action-menu;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.action-menu-group {
+  margin: $action-menu-group-margin;
+}
+
+.action-menu-group .action-menu-label {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: $action-menu-background-color;
+}
+
+.action-menu-group .action-menu-button {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: $action-menu-background-color;
+  color: $action-menu-button-text-color;
+}
