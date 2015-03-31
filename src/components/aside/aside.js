@@ -77,7 +77,7 @@ new IonicComponent(Aside, {
       [instance => instance.side == 'top', gestures.TopAsideGesture],
       [instance => instance.side == 'bottom', gestures.BottomAsideGesture],
       [instance => instance.side == 'right', gestures.RightAsideGesture],
-      [instance => instance.side == 'left', gestures.LeftAsideGesture]
+      [instance => instance.side == 'left', gestures.LeftAsideGesture],
     ],
     type: [
       [instance => instance.type == 'overlay', types.AsideTypeOverlay],
@@ -86,4 +86,3 @@ new IonicComponent(Aside, {
     ]
   }
 })
-

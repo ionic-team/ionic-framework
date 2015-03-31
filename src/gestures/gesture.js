@@ -18,6 +18,10 @@ export class Gesture {
     util.extend(this._options, opts);
   }
 
+  on(...args) {
+    return this.hammertime.on.apply(this.hammertime, args)
+  }
+
   listen() {
     this.hammertime = Hammer(this.element, this._options);
   }
@@ -26,7 +30,7 @@ export class Gesture {
     this.hammertime = null;
   }
   destroy() {
-    this.hammertime.destroy();
-    this.hammertime = null;
+    this.unlisten()
   }
 }
+

@@ -13,18 +13,18 @@ export class DragGesture extends Gesture {
   }
   listen() {
     super.listen();
-    this.hammertime.on('panstart', ev => {
+    this.on('panstart', ev => {
       if (this.onDragStart(ev) !== false) {
         this.dragging = true;
       }
     });
-    this.hammertime.on('panmove', ev => {
+    this.on('panmove', ev => {
       if (!this.dragging) return;
       if (this.onDrag(ev) === false) {
         this.dragging = false;
       }
     });
-    this.hammertime.on('panend', ev => {
+    this.on('panend', ev => {
       if (!this.dragging) return;
       this.onDragEnd(ev);
       this.dragging = false;

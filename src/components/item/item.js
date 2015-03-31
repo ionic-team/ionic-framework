@@ -1,4 +1,5 @@
 import {NgElement, Component, Template} from 'angular2/angular2'
+import {IonicComponent} from 'ionic2/config/component'
 
 @Component({
   selector: 'ion-item'
@@ -16,6 +17,8 @@ import {NgElement, Component, Template} from 'angular2/angular2'
 })
 export class Item {
   constructor(@NgElement() ele:NgElement) {
-    ele.domElement.classList.add('item')
+    Item.config.invoke(this)
   }
 }
+
+new IonicComponent(Item, {})
