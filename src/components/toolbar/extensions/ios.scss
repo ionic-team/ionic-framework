@@ -64,4 +64,9 @@ $toolbar-ios-button-background-color:       transparent !default;
     background: $toolbar-ios-button-background-color;
   }
 
+  .back-button-icon {
+    margin-right: 5px;
+    min-width: 12px;
+  }
+
 }

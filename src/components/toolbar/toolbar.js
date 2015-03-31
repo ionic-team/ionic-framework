@@ -14,7 +14,7 @@ export let ToolbarConfig = new ComponentConfig('toolbar')
   inline: `
     <div class="bar-items">
       <button class="button back-button bar-item">
-        <div class="back-button-icon">&lt;</div>
+        <icon class="back-button-icon ion-ios-arrow-back"></icon>
         <div class="back-button-text">
           <div class="back-default">Back</div>
           <div class="back-title"></div>
