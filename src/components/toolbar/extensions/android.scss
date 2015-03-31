@@ -1,0 +1,18 @@
+
+// Android Toolbar
+// --------------------------------------------------
+
+
+.toolbar-android {
+
+  .spacer {
+    @include flex(none);
+  }
+
+  .title {
+    position: static;
+    margin: 0;
+    text-align: left;
+  }
+
+}

@@ -41,7 +41,8 @@
 // Android Components
 @import
   "../list/extensions/android",
-  "../item/extensions/android";
+  "../item/extensions/android",
+  "../toolbar/extensions/android";
 
 
 // iOS Components
@@ -50,7 +51,8 @@
   "../list/extensions/ios",
   "../item/extensions/ios",
   "../radio/extensions/ios",
-  "../switch/extensions/ios";
+  "../switch/extensions/ios",
+  "../toolbar/extensions/ios";
 
 
 // Icons

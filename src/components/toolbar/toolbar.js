@@ -8,39 +8,38 @@ import {NgElement, Component, Template} from 'angular2/angular2'
 })
 @Template({
   inline: `
-    <div class="bar bar-ios">
-      <div class="bar-items">
-        <button class="back-button bar-item">
-          <div class="back-button-icon">&lt;</div>
-          <div class="back-button-text">
-            <div class="back-default">Back</div>
-            <div class="back-title"></div>
-          </div>
-        </button>
-        <div class="title">
-          <div class="inner-title">
-            {{ title }}
-            <content select="ion-view-title"></content>
-          </div>
+    <div class="bar-items">
+      <button class="button back-button bar-item">
+        <div class="back-button-icon">&lt;</div>
+        <div class="back-button-text">
+          <div class="back-default">Back</div>
+          <div class="back-title"></div>
         </div>
-        <div class="bar-item bar-primary-item" style="background:red">
-          <content select="ion-nav-items[side=primary]"></content>
+      </button>
+      <div class="title">
+        <div class="inner-title">
+          {{ title }}
+          <content select="ion-view-title"></content>
         </div>
-        <div class="spacer"></div>
-        <div class="bar-item bar-secondary-item" style="background:green">
-          <content select="ion-nav-items[side=secondary]"></content>
-        </div>
+      </div>
+      <div class="bar-item bar-primary-item">
+        <content select="ion-nav-items[side=primary]"></content>
+      </div>
+      <div class="spacer"></div>
+      <div class="bar-item bar-secondary-item">
+        <content select="ion-nav-items[side=secondary]"></content>
       </div>
     </div>`
 })
 export class Toolbar {
   constructor(@NgElement() ngEle:NgElement) {
     this.ele = ngEle.domElement
+    this.ele.classList.add('toolbar')
+    this.ele.classList.add('toolbar-ios')
 
     window.requestAnimationFrame(() => {
       this.alignTitle()
     })
-
   }
 
   alignTitle(ele) {

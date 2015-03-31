@@ -2,7 +2,7 @@
 // Toolbar
 // --------------------------------------------------
 
-.bar {
+.toolbar {
   position: relative;
   @include flex-display();
   @include flex-direction(row);
@@ -19,8 +19,8 @@
 }
 
 .bar-items {
-  @include flex(1);
   @include flex-display();
+  @include flex(1);
   @include flex-justify-content(space-between);
 }
 
@@ -36,10 +36,9 @@
   right: 0;
   bottom: 0;
   left: 0;
-  background: maroon;
 
-  @include flex(1);
   @include flex-display();
+  @include flex(1);
   @include flex-align-items(center);
 }
 
@@ -49,33 +48,15 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  background: blue;
 }
 
 .back-button {
   @include flex-display();
-  background: purple;
 
   .back-button-icon {
-    background: orange;
   }
 }
 
 .bar-items > .spacer {
   @include flex(1);
 }
-
-.bar-android {
-
-  .spacer {
-    @include flex(none);
-  }
-
-  .title {
-    position: static;
-    margin: 0;
-    text-align: left;
-  }
-
-}
-

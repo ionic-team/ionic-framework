@@ -1,0 +1,53 @@
+
+// iOS Toolbar
+// --------------------------------------------------
+
+$toolbar-ios-height:                  44px !default;
+$toolbar-ios-background:              #f7f7f8 !default;
+$toolbar-ios-border-color:            #c4c4c4 !default;
+
+$toolbar-ios-title-font-size:         17px !default;
+$toolbar-ios-button-font-size:        17px !default;
+$toolbar-ios-button-color:            #007aff !default;
+
+
+.toolbar-ios {
+  height: $toolbar-ios-height;
+  background: $toolbar-ios-background;
+
+  &:after {
+    position: absolute;
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    z-index: $z-index-toolbar-border;
+    display: block;
+
+    width: 100%;
+    height: 1px;
+
+    background-color: $toolbar-ios-border-color;
+
+    @include transform-origin(50%, 100%);
+
+    content: '';
+  }
+
+  .title {
+    font-size: $toolbar-ios-title-font-size;
+    text-align: center;
+  }
+
+  .button {
+    font-size: $toolbar-ios-button-font-size;
+    color: $toolbar-ios-button-color;
+    border: none;
+    padding: 0;
+    margin: 0 10px;
+    min-height: $toolbar-ios-height;
+    min-width: 0;
+    background: transparent;
+  }
+
+}
