@@ -44,7 +44,7 @@ class PlatformController {
   detect() {
     for (let name in this.registry) {
       if (this.registry[name].matcher()) {
-        return platform
+        return this.registry[name]
       }
     }
     return this.defaultPlatform
@@ -74,7 +74,7 @@ platform.register({
 
 // Last case is a catch-all
 platform.setDefaultPlatform({
-  name: 'default'
+  name: 'base'
 })
 
 platform.set( platform.detect() )

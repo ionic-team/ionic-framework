@@ -1,5 +1,4 @@
 import {Component, Template, Inject, Parent, NgElement} from 'angular2/angular2'
-import {ComponentConfig} from 'ionic2/config/component-config'
 import * as types from 'ionic2/components/aside/extensions/types'
 import * as gestures from  'ionic2/components/aside/extensions/gestures';
 import {IonicComponent} from 'ionic2/config/component'
@@ -58,15 +57,26 @@ export class Aside {
   }
 }
 
+@Component({
+  selector: 'ion-aside',
+  bind: {
+    content: 'content',
+    side: 'side',
+    dragThreshold: 'dragThreshold'
+  }
+})
+
 new IonicComponent(Aside, {
   bind: {
     side: {
-      default: 'left'
+      value: 'left'
     },
     type: {
-      ios: 'reveal',
-      android: 'overlay',
-      default: 'overlay',
+      defaults: {
+        ios: 'reveal',
+        android: 'overlay',
+        base: 'overlay',
+      }
     },
     dragThreshold: {},
     content: {},

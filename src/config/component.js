@@ -4,6 +4,10 @@ import {platform} from 'ionic2/platform/platform'
 let platforms = Object.keys(platform.registry)
 let platformName = platform.getName()
 
+// Low-level: how the user will override
+// BackButton.config.bind.icon.value = 'ion-chevron-right'
+// BackButton.config._computeDefaultValue(BackButton.config.bind.icon)
+
 export class IonicComponent {
   constructor(ComponentClass, {
     bind,
@@ -18,8 +22,8 @@ export class IonicComponent {
       let binding = bind[attrName]
       if (util.isObject(binding)) {
         binding.property || (binding.property = attrName)
+        this._computeDefaultValue(binding)
         // TODO recompute defaultValue when user possibly adds a binding
-        binding._defaultValue = binding[platformName] || binding.default;
       }
     }
 
@@ -29,6 +33,8 @@ export class IonicComponent {
     // }
   }
   _computeDefaultValue(binding = {}) {
+    let defaults = binding.defaults || {}
+    binding._defaultValue = binding.value || defaults[platformName] || defaults.base;
   }
 
   invoke(instance) {
@@ -50,13 +56,11 @@ export class IonicComponent {
         let cases = (config.delegates || {})[delegateName] || []
         for (let i = 0; i < cases.length; i++) {
           let delegateCase = cases[i]
-          try {
-            if (util.isArray(delegateCase)) {
-              if (delegateCase[0](instance)) return new delegateCase[1](instance)
-            } else {
-              return new delegateCase(instance)
-            }
-          }catch(e){debugger;}
+          if (util.isArray(delegateCase)) {
+            if (delegateCase[0](instance)) return new delegateCase[1](instance)
+          } else {
+            return new delegateCase(instance)
+          }
         }
       }
     }
