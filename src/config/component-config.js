@@ -17,6 +17,7 @@ export function ComponentConfig(componentCssName) {
     static classes() {
       Config.classProperties || (Config.classProperties = [])
       Config.classProperties.push.apply(Config.classProperties, arguments)
+      return Config
     }
     static delegate(delegateName) {
       let self = {
@@ -26,6 +27,13 @@ export function ComponentConfig(componentCssName) {
         }
       }
       return self
+    }
+    static platform(name, Class) {
+      Config.platformFns = Config.platformFns || []
+      if (name === platformName) {
+        Config.platformFns.unshift(Class)
+      }
+      return Config
     }
     static addCase(delegateName, condition, DelegateConstructor) {
       Config.registry || (Config.registry = {})
@@ -52,6 +60,9 @@ export function ComponentConfig(componentCssName) {
       for (let i = 0; i < (Config.classProperties || []).length; i++) {
         let propertyValue = instance[Config.classProperties[i]]
         instance.domElement.classList.add(`${componentCssName}-${propertyValue}`)
+      }
+      for (let i = 0; i < (Config.platformFns || []).length; i++) {
+        new Config.platformFns[i](instance)
       }
       return {
         getDelegate(delegateName) {
