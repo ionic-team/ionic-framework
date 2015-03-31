@@ -51,37 +51,65 @@ export class Toolbar {
     if (this.textAlign !== 'center') return
 
     let barItemElements = ele.querySelectorAll('.bar-item')
-    let x, barItemElement
-    let leftMargin = 0
-    let rightMargin = ele.offsetWidth
-    let centerPoint = ele.offsetWidth / 2
+
+    let x, barItem
+    let barItemKeys = []
+    let barItems = {}
 
     for (x = 0; x < (barItemElements && barItemElements.length); x++) {
-      barItemElement = barItemElements[x]
+      barItem = barItemElements[x]
 
-      let itemRightPoint = barItemElement.offsetLeft + barItemElement.offsetWidth
-      if (itemRightPoint < centerPoint) {
-        if (itemRightPoint > leftMargin) {
-          leftMargin = itemRightPoint
-        }
-      } else if (barItemElement.offsetLeft < rightMargin) {
-        rightMargin = barItemElement.offsetLeft
+      barItemKeys.push(barItem.offsetLeft)
+
+      barItems[barItem.offsetLeft] = {
+        left: barItem.offsetLeft,
+        right: barItem.offsetLeft + barItem.offsetWidth
       }
     }
 
-    let centeredMargin = Math.max(leftMargin, ele.offsetWidth - rightMargin) + 'px'
-    let newMargin = '0 ' + centeredMargin
+    barItemKeys.sort((a, b) => a - b)
+
+    let largestGap = null
+
+    for (x = 1; x < barItemKeys.length; x++) {
+      let leftItem = barItems[barItemKeys[x - 1]]
+      let rightItem = barItems[barItemKeys[x]]
+
+      let gapWidth = rightItem.left - leftItem.right
+
+      if (!largestGap || gapWidth > largestGap.width) {
+        largestGap = {
+          width: gapWidth,
+          left: leftItem.right,
+          right: rightItem.left
+        }
+      }
+    }
+
+    let marginLeft = 0
+    let marginRight = 0
+
+    if (largestGap) {
+      marginLeft = largestGap.left
+      marginRight = largestGap.right
+    }
+
+    let barWidth = ele.offsetWidth
+    let centeredMargin = Math.max(marginLeft, barWidth - marginRight)
+    let newMargin = `0 ${centeredMargin}px`
 
     if (newMargin !== this.titleMargin) {
       this.titleEle.style.margin = this.titleMargin = newMargin
-      this.titleEle.style.textAlign = ''
+      if (this.titleTextAlgin !== '') {
+        this.titleEle.style.textAlign = this.titleTextAlgin = ''
+      }
 
       // if an ellipsis is being shown, open up the right side
       // as far as it can before hitting right side buttons
       window.requestAnimationFrame(() => {
         if (this.titleEle.offsetWidth < this.titleEle.scrollWidth) {
-          this.titleEle.style.margin = `0 ${ele.offsetWidth - rightMargin}px 0 ${centeredMargin}`
-          this.titleEle.style.textAlign = 'left'
+          this.titleEle.style.margin = `0 ${barWidth - marginRight}px 0 ${centeredMargin}px`
+          this.titleEle.style.textAlign = this.titleTextAlgin = 'left'
         }
         if (!this.isTitleVisible) {
           this.titleEle.style.opacity = 1
