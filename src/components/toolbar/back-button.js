@@ -8,7 +8,7 @@ import {IonicComponent} from 'ionic2/config/component'
   inline: `
     <icon [class-name]="'back-button-icon ' + icon"></icon>
     <div class="back-button-text">
-      <div class="back-default"></div>
+      <div class="back-default">{{ text }}</div>
       <div class="back-title"></div>
     </div>`
 })
@@ -31,6 +31,13 @@ new IonicComponent(BackButton, {
         ios: 'ion-ios-arrow-back',
         android: 'ion-android-arrow-back',
         base: 'ion-chevron-left'
+      }
+    },
+    text: {
+      defaults: {
+        ios: 'Back',
+        android: '',
+        base: ''
       }
     }
   }
