@@ -1,14 +1,17 @@
 
 // Typography
 // -------------------------
+// All font sizes use rem units
+
 
 $font-family-sans-serif:          "Helvetica Neue", "Roboto", sans-serif !default;
 $font-family-light-sans-serif:    "HelveticaNeue-Light", "Roboto-Light", sans-serif-light !default;
 
 $font-family-base:                $font-family-sans-serif !default;
-$font-size-base:                  14px !default;
+$font-size-root:                  62.5% !default;
+$font-size-base:                  1.4rem !default; // 1.4rem == 14px
 
-$line-height-base:                1.428571429 !default; // 20/14
+$line-height-base:                1.4 !default;
 $line-height-computed:            floor($font-size-base * $line-height-base) !default; // ~20px
 
 $headings-font-family:            $font-family-base !default;
@@ -16,40 +19,71 @@ $headings-font-weight:            500 !default;
 $headings-line-height:            1.2 !default;
 
 
+html {
+  font-size: $font-size-root;
+}
+
+
 [ion-app] {
   font-size: $font-size-base;
   font-family: $font-family-base;
-  line-height: $line-height-computed;
 
   h1, h2, h3, h4, h5, h6 {
     font-weight: $headings-font-weight;
     font-family: $headings-font-family;
     line-height: $headings-line-height;
-  }
-
-  h1,
-  h2,
-  h3 {
-    margin-top: $line-height-computed;
-    margin-bottom: ($line-height-computed / 2);
+    margin-top: 1.6rem;
+    margin-bottom: 1rem;
 
     &:first-child {
-      margin-top: 0;
+      margin-top: -0.4rem;
     }
   }
 
-  h4,
-  h5,
-  h6 {
-    margin-top: ($line-height-computed / 2);
-    margin-bottom: ($line-height-computed / 2);
+  h1 + h2,
+  h1 + h3,
+  h2 + h3 {
+    margin-top: -0.4rem;
   }
 
-  h1 { font-size: floor($font-size-base * 2.60); } // ~36px
-  h2 { font-size: floor($font-size-base * 2.15); } // ~30px
-  h3 { font-size: ceil($font-size-base * 1.70); } // ~24px
-  h4 { font-size: ceil($font-size-base * 1.25); } // ~18px
-  h5 { font-size: $font-size-base; }
-  h6 { font-size: ceil($font-size-base * 0.85); } // ~12px
+  h1 {
+    font-size: 3.6rem;
+    margin-top: 2rem;
+  }
+  h2 {
+    font-size: 3rem;
+    margin-top: 1.8rem;
+  }
+  h3 {
+    font-size: 2.4rem;
+  }
+  h4 {
+    font-size: 2rem;
+  }
+  h5 {
+    font-size: 1.6rem;
+  }
+  h6 {
+    font-size: 1.4rem;
+  }
 
+  small {
+    font-size: 75%;
+  }
+
+  sub,
+  sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+  }
+
+  sup {
+    top: -0.5em;
+  }
+
+  sub {
+    bottom: -0.25em;
+  }
 }

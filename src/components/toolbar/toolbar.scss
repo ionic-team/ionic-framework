@@ -30,7 +30,7 @@
   @include flex-align-items(center);
 }
 
-.bar-items > .title {
+.bar-title {
   position: absolute;
   top: 0;
   right: 0;
@@ -42,7 +42,7 @@
   @include flex-align-items(center);
 }
 
-.bar-items > .title > .inner-title {
+.bar-inner-title {
   width: 100%;
   padding: 0 15px;
   overflow: hidden;
@@ -57,6 +57,6 @@
   }
 }
 
-.bar-items > .spacer {
+.bar-spacer {
   @include flex(1);
 }

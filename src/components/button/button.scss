@@ -7,17 +7,17 @@ $button-clear-padding:            6px !default;
 $button-border-radius:            2px !default;
 $button-border-width:             1px !default;
 
-$button-font-size:                16px !default;
+$button-font-size:                1.6rem !default;
 $button-height:                   42px !default;
 $button-padding:                  12px !default;
 $button-icon-size:                24px !default;
 
-$button-large-font-size:          20px !default;
+$button-large-font-size:          2rem !default;
 $button-large-height:             54px !default;
 $button-large-padding:            16px !default;
 $button-large-icon-size:          32px !default;
 
-$button-small-font-size:          12px !default;
+$button-small-font-size:          1.2rem !default;
 $button-small-height:             28px !default;
 $button-small-padding:            4px !default;
 $button-small-icon-size:          16px !default;
@@ -86,7 +86,7 @@ $button-small-icon-size:          16px !default;
   margin: 0;
   padding: 0 $button-padding;
 
-  min-width: ($button-padding * 3) + $button-font-size;
+  min-width: ($button-padding * 4);
   min-height: $button-height + 5px;
 
   line-height: normal;
@@ -130,7 +130,7 @@ $button-small-icon-size:          16px !default;
 
 .button-large {
   padding: 0 $button-large-padding;
-  min-width: ($button-large-padding * 3) + $button-large-font-size;
+  min-width: ($button-large-padding * 4);
   min-height: $button-large-height + 5;
   font-size: $button-large-font-size;
 }

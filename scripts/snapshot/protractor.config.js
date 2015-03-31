@@ -9,6 +9,7 @@ exports.config = {
   // include glob patterns.
   specs: [
     path.resolve(projectRoot, 'dist/e2e/**/*e2e.js'),
+    //path.resolve(projectRoot, 'dist/e2e/toolbar/**/*e2e.js'),
   ],
 
   // Options to be passed to Jasmine-node.
