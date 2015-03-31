@@ -11,7 +11,7 @@ class Platform {
 class PlatformController {
   current: Platform;
   constructor() {
-    this.registry = []
+    this.registry = {}
   }
 
   set(platform) {
@@ -21,10 +21,13 @@ class PlatformController {
   get() {
     return this.current
   }
+  getName() {
+    return this.current && this.current.name
+  }
 
   register(platform) {
     if (!platform instanceof Platform) platform = new Platform(platform)
-    this.registry.push(platform)
+    this.registry[platform.name] = platform
   }
 
   setDefaultPlatform(platform) {
@@ -39,8 +42,8 @@ class PlatformController {
   }
 
   detect() {
-    for (let platform of this.registry) {
-      if (platform.matcher()) {
+    for (let name in this.registry) {
+      if (this.registry[name].matcher()) {
         return platform
       }
     }

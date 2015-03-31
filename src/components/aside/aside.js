@@ -2,22 +2,7 @@ import {Component, Template, Inject, Parent, NgElement} from 'angular2/angular2'
 import {ComponentConfig} from 'ionic2/config/component-config'
 import * as types from 'ionic2/components/aside/extensions/types'
 import * as gestures from  'ionic2/components/aside/extensions/gestures';
-
-export let AsideConfig = new ComponentConfig('aside')
-
-AsideConfig.classes('side', 'type')
-
-AsideConfig.delegate('gesture')
-  .when({side: 'left'}, gestures.LeftAsideGesture)
-  .when({side: 'right'}, gestures.RightAsideGesture)
-  .when({side: 'top'}, gestures.TopAsideGesture)
-  .when({side: 'bottom'}, gestures.BottomAsideGesture)
-
-AsideConfig.delegate('type')
-  .when({type: 'overlay'}, types.AsideTypeOverlay)
-  .when({type: 'push'}, types.AsideTypePush)
-  .when({type: 'reveal'}, types.AsideTypeReveal)
-
+import {IonicComponent} from 'ionic2/config/component'
 
 @Component({
   selector: 'ion-aside',
@@ -25,26 +10,23 @@ AsideConfig.delegate('type')
     content: 'content',
     side: 'side',
     dragThreshold: 'dragThreshold'
-  },
-  services: [AsideConfig]
+  }
 })
 @Template({
   inline: `<content></content>`
 })
 export class Aside {
   constructor(
-    @NgElement() element: NgElement,
-    configFactory: AsideConfig
+    @NgElement() element: NgElement
   ) {
     this.domElement = element.domElement
-    // TODO inject constant instead of using domElement.getAttribute
-    // TODO let config / platform handle defaults transparently
-    this.side = this.domElement.getAttribute('side') || 'left'
-    this.type = this.domElement.getAttribute('type') || 'overlay'
 
-    this.config = configFactory.create(this);
-    this.gestureDelegate = this.config.getDelegate('gesture');
-    this.typeDelegate = this.config.getDelegate('type');
+    // FIXME(ajoslin): have to wait for setTimeout for bindings to apply.
+    setTimeout(() => {
+      this.config = Aside.config.invoke(this)
+      this.gestureDelegate = this.config.getDelegate('gesture');
+      this.typeDelegate = this.config.getDelegate('type');
+    })
 
     this.domElement.addEventListener('transitionend', ev => {
       this.setChanging(false)
@@ -75,3 +57,33 @@ export class Aside {
     }
   }
 }
+
+new IonicComponent(Aside, {
+  bind: {
+    side: {
+      default: 'left'
+    },
+    type: {
+      ios: 'reveal',
+      android: 'overlay',
+      default: 'overlay',
+    },
+    dragThreshold: {},
+    content: {},
+  },
+  delegates: {
+    gesture: [
+      [instance => instance.side == 'top', gestures.TopAsideGesture],
+      [instance => instance.side == 'bottom', gestures.BottomAsideGesture],
+      [instance => instance.side == 'right', gestures.RightAsideGesture],
+      [instance => instance.side == 'left', gestures.LeftAsideGesture]
+    ],
+    type: [
+      [instance => instance.type == 'overlay', types.AsideTypeOverlay],
+      [instance => instance.type == 'reveal', types.AsideTypeReveal],
+      [instance => instance.type == 'push', types.AsideTypePush],
+    ]
+  }
+})
+
+

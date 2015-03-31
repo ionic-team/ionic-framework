@@ -28,10 +28,11 @@ export function defaults(dest) {
   return dest;
 }
 
-export let isString = val => typeof val === 'string'
-export let isFunction = val => typeof val === 'function'
-export let isDefined = val => typeof val === 'undefined'
-export let isObject = val => typeof val === 'object'
+export const isString = val => typeof val === 'string'
+export const isFunction = val => typeof val === 'function'
+export const isDefined = val => typeof val === 'undefined'
+export const isObject = val => typeof val === 'object'
+export const isArray = Array.isArray
 
 export function pascalCaseToDashCase(str = '') {
   return str.charAt(0).toLowerCase() + str.substring(1).replace(/[A-Z]/g, match => {
