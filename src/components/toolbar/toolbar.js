@@ -1,4 +1,5 @@
 import {NgElement, Component, Template} from 'angular2/angular2'
+import {BackButton} from 'ionic2/components/toolbar/back-button'
 import {ComponentConfig} from 'ionic2/config/component-config'
 
 export let ToolbarConfig = new ComponentConfig('toolbar')
@@ -13,13 +14,7 @@ export let ToolbarConfig = new ComponentConfig('toolbar')
 @Template({
   inline: `
     <div class="bar-items">
-      <button class="button back-button bar-item">
-        <icon class="back-button-icon ion-ios-arrow-back"></icon>
-        <div class="back-button-text">
-          <div class="back-default">Back</div>
-          <div class="back-title"></div>
-        </div>
-      </button>
+      <button class="button back-button bar-item"></button>
       <div class="bar-title">
         <div class="bar-inner-title">
           {{ title }}
@@ -33,7 +28,8 @@ export let ToolbarConfig = new ComponentConfig('toolbar')
       <div class="bar-item bar-secondary-item">
         <content select="ion-nav-items[side=secondary]"></content>
       </div>
-    </div>`
+    </div>`,
+  directives: [BackButton]
 })
 export class Toolbar {
   constructor(@NgElement() ngEle:NgElement, configFactory: ToolbarConfig) {

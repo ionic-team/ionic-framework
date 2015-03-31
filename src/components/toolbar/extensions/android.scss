@@ -5,14 +5,18 @@
 $toolbar-android-height:                  6.4rem !default;
 $toolbar-android-background:              #f7f7f8 !default;
 
-$toolbar-android-title-font-size:         1.7rem !default;
-$toolbar-android-button-font-size:        1.7rem !default;
+$toolbar-android-title-font-size:         2rem !default;
+$toolbar-android-button-font-size:        2rem !default;
 $toolbar-android-button-text-color:       #007aff !default;
 
 
 .toolbar-android {
   height: $toolbar-android-height;
   background: $toolbar-android-background;
+
+  .bar-inner-title {
+    font-size: $toolbar-android-title-font-size;
+  }
 
   .button {
     font-size: $toolbar-android-button-font-size;

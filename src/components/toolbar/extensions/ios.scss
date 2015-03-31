@@ -8,7 +8,7 @@ $toolbar-ios-border-color:                  #c4c4c4 !default;
 
 $toolbar-ios-title-font-size:               1.7rem !default;
 $toolbar-ios-button-font-size:              1.7rem !default;
-$toolbar-ios-button-text-color:                  #007aff !default;
+$toolbar-ios-button-text-color:             #007aff !default;
 $toolbar-ios-button-background-color:       transparent !default;
 
 
@@ -62,11 +62,6 @@ $toolbar-ios-button-background-color:       transparent !default;
     min-height: $toolbar-ios-height;
     min-width: 0;
     background: $toolbar-ios-button-background-color;
-  }
-
-  .back-button-icon {
-    margin-right: 5px;
-    min-width: 12px;
   }
 
 }

@@ -54,9 +54,11 @@ $toolbar-background:              #f7f7f8 !default;
 
 .back-button {
   @include flex-display();
+}
 
-  .back-button-icon {
-  }
+.back-button-icon {
+  margin-right: 5px;
+  min-width: 12px;
 }
 
 .toolbar .button {
