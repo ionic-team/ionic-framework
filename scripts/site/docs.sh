@@ -36,7 +36,6 @@ function run {
   else
     git add -A
     git commit -am "docs: update for $VERSION"
-    git push -q origin master
     source deploy.sh
 
     echo "-- Updated docs for $VERSION_NAME succesfully!"
