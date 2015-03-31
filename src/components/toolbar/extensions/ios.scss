@@ -35,22 +35,22 @@ $toolbar-ios-button-background-color:       transparent !default;
     content: '';
   }
 
+  .bar-primary-item {
+    @include flex-order(2);
+  }
+
   .bar-title {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    @include flex-order(3);
+    font-size: $toolbar-ios-title-font-size;
+    text-align: center;
   }
 
   .bar-inner-title {
-    font-size: $toolbar-ios-title-font-size;
-    text-align: center;
     opacity: 0;
   }
 
-  .bar-spacer {
-    @include flex(1);
+  .bar-secondary-item {
+    @include flex-order(4);
   }
 
   .button {

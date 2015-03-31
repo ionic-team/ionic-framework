@@ -34,14 +34,26 @@ $toolbar-background:              #f7f7f8 !default;
   @include flex-align-items(center);
 }
 
-.bar-spacer {
-  @include flex(none);
+.toolbar .button {
+  background: transparent;
+  border: none;
+}
+
+.back-button {
+  @include flex-display();
+  @include flex-order(1);
+}
+
+.back-button-icon {
+  margin-right: 5px;
+  min-width: 12px;
 }
 
 .bar-title {
   @include flex-display();
   @include flex(1);
   @include flex-align-items(center);
+  @include flex-order(2);
 }
 
 .bar-inner-title {
@@ -52,16 +64,10 @@ $toolbar-background:              #f7f7f8 !default;
   text-overflow: ellipsis;
 }
 
-.back-button {
-  @include flex-display();
+.bar-primary-item {
+  @include flex-order(3);
 }
 
-.back-button-icon {
-  margin-right: 5px;
-  min-width: 12px;
-}
-
-.toolbar .button {
-  background: transparent;
-  border: none;
+.bar-secondary-item {
+  @include flex-order(4);
 }
