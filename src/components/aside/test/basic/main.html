@@ -1,21 +1,19 @@
 <ion-view>
-  <ion-aside side="left" [content]="content" type="overlay" style="text-align:center;">
-    Overlay!
+  <ion-aside [content]="content" style="text-align:center;">
+    Left!
     <p>...</p>
     <p>...</p>
     <p>...</p>
-    This is android-ey.
   </ion-aside>
 
   <ion-content #content>
     HELLO, content!
   </ion-content>
 
-  <ion-aside side="right" [content]="content" type="reveal" style="text-align:center;">
-    Reveal!
+  <ion-aside side="right" [content]="content" style="text-align:center;">
+    Right!
     <p>...</p>
     <p>...</p>
     <p>...</p>
-    This is iOS-ey.
   </ion-aside>
 </ion-view>

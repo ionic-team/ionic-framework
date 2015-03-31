@@ -57,15 +57,6 @@ export class Aside {
   }
 }
 
-@Component({
-  selector: 'ion-aside',
-  bind: {
-    content: 'content',
-    side: 'side',
-    dragThreshold: 'dragThreshold'
-  }
-})
-
 new IonicComponent(Aside, {
   bind: {
     side: {
@@ -95,5 +86,4 @@ new IonicComponent(Aside, {
     ]
   }
 })
-
 
