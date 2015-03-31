@@ -2,12 +2,16 @@
 // Toolbar
 // --------------------------------------------------
 
+$toolbar-background:              #f7f7f8 !default;
+
+
 .toolbar {
   position: relative;
   @include flex-display();
   @include flex-direction(row);
   @include flex-align-items(center);
   @include flex-justify-content(space-between);
+  background: $toolbar-background;
 }
 
 .bar-top {
@@ -30,13 +34,11 @@
   @include flex-align-items(center);
 }
 
-.bar-title {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+.bar-spacer {
+  @include flex(none);
+}
 
+.bar-title {
   @include flex-display();
   @include flex(1);
   @include flex-align-items(center);
@@ -57,6 +59,7 @@
   }
 }
 
-.bar-spacer {
-  @include flex(1);
+.toolbar .button {
+  background: transparent;
+  border: none;
 }

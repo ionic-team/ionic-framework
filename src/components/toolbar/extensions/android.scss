@@ -7,33 +7,23 @@ $toolbar-android-background:              #f7f7f8 !default;
 
 $toolbar-android-title-font-size:         1.7rem !default;
 $toolbar-android-button-font-size:        1.7rem !default;
-$toolbar-android-button-color:            #007aff !default;
+$toolbar-android-button-text-color:       #007aff !default;
 
 
 .toolbar-android {
   height: $toolbar-android-height;
   background: $toolbar-android-background;
 
-  .bar-spacer {
-    @include flex(none);
-  }
-
-  .bar-title {
-    position: static;
-    margin: 0;
-    text-align: left;
-  }
-
   .button {
     font-size: $toolbar-android-button-font-size;
-    color: $toolbar-android-button-color;
+    color: $toolbar-android-button-text-color;
     border: none;
+
     padding: 0;
     margin: 0 10px;
+
     min-height: $toolbar-android-height;
     min-width: 0;
-    background: transparent;
   }
 
 }
-
