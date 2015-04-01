@@ -1,45 +1,49 @@
-import {NgElement, Component, Template, Parent} from 'angular2/angular2';
-import {View} from 'ionic2/components/view/view';
+import {NgElement, Component, Template, Foreach, Parent} from 'angular2/angular2';
+import {ComponentConfig} from 'ionic2/config/component-config';
+
+export let TabsConfig = new ComponentConfig('tabs');
+
 
 @Component({
-  selector: 'ion-tabs'
+  selector: 'ion-tabs',
+  bind: {
+    tabBarPlacement: 'tab-bar-placement'
+  },
+  services: [TabsConfig]
 })
 @Template({
   inline: `
-    <div class="tool-bar">
-      Tabs
+
+    <div class="toolbar tab-bar toolbar-ios toolbar-bottom">
+      <div class="tab-bar-content">
+        <a class="tab-bar-item" class="tab-active" href="#">
+          Tab 1
+        </a>
+        <a class="tab-bar-item" href="#">
+          Tab 2
+        </a>
+        <a class="tab-bar-item" href="#">
+          Tab 3
+        </a>
+      </div>
     </div>
 
-    <div class="tool-bar tab-bar">
-      <a class="tab-item">1</a>
-      <a class="tab-item">2</a>
-      <a class="tab-item">3</a>
+    <div class="pane-container">
+      <div class="content">
+        <content></content>
+      </div>
     </div>
-
-    <div class="container">
-
-      <content select="ion-tab"></content>
-
-    </div>
-    `
+  `,
 })
 export class Tabs {
+  constructor(
+    configFactory: TabsConfig,
+    element: NgElement
+  ) {
+    this.domElement = element.domElement
+    this.domElement.classList.add('pane')
+    configFactory.create(this)
 
-  constructor(@NgElement() ele:NgElement) {
-    ele.domElement.classList.add('pane');
-    ele.domElement.classList.add('tabs-container');
-
-    this.tabs = [];
+    this.tabBarPlacement = this.tabBarPlacement || 'bottom'
   }
-
-  add(tab) {
-    this.tabs.push(tab);
-    tab.show(this.tabs.length === 1);
-
-  }
-
-  selectTab(tab) {
-    this.showHistory(tab.history);
-  }
-
 }

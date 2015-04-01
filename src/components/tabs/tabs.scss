@@ -1,2 +1,22 @@
 
+// Tabs
+// --------------------------------------------------
 
+
+.tabs {
+  background: red;
+}
+
+.toolbar.tab-bar {
+  @include flex-justify-content(center);
+}
+
+.tab-bar-content {
+  @include flex-display();
+}
+
+.tab-bar-item {
+  @include flex(1);
+  min-width: 100px;
+  text-align: center;
+}

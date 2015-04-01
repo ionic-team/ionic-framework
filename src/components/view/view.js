@@ -7,14 +7,14 @@ export let ViewConfig = new ComponentConfig('view')
 @Component({
   selector: 'ion-view',
   bind: {
-    title: 'view-title'
+    title: 'nav-title'
   },
   services: [ViewConfig]
 })
 @Template({
   inline: `
-    <ion-toolbar [view-title]="title">
-      <content select="ion-view-title"></content>
+    <ion-toolbar [nav-title]="title">
+      <content select="ion-nav-title"></content>
       <content select="ion-nav-items[side=primary]"></content>
       <content select="ion-nav-items[side=secondary]"></content>
     </ion-toolbar>

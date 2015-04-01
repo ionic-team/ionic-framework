@@ -14,22 +14,22 @@ $toolbar-background:              #f7f7f8 !default;
   background: $toolbar-background;
 }
 
-.bar-top {
+.toolbar-top {
   @include flex-order(20);
 }
 
-.bar-bottom {
+.toolbar-bottom {
   @include flex-order(80);
 }
 
-.bar-items {
+.toolbar-items {
   @include flex-display();
   @include flex(1);
   @include flex-justify-content(space-between);
 }
 
-.bar-item,
-.bar-item ion-nav-items {
+.toolbar-item,
+.toolbar-item ion-nav-items {
   @include flex-display();
   @include flex-align-items(center);
 }
@@ -49,14 +49,14 @@ $toolbar-background:              #f7f7f8 !default;
   min-width: 12px;
 }
 
-.bar-title {
+.toolbar-title {
   @include flex-display();
   @include flex(1);
   @include flex-align-items(center);
   @include flex-order(2);
 }
 
-.bar-inner-title {
+.toolbar-inner-title {
   width: 100%;
   padding: 0 15px;
   overflow: hidden;
@@ -64,10 +64,10 @@ $toolbar-background:              #f7f7f8 !default;
   text-overflow: ellipsis;
 }
 
-.bar-primary-item {
+.toolbar-primary-item {
   @include flex-order(3);
 }
 
-.bar-secondary-item {
+.toolbar-secondary-item {
   @include flex-order(4);
 }

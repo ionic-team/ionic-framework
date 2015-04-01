@@ -8,24 +8,24 @@ export let ToolbarConfig = new ComponentConfig('toolbar')
 @Component({
   selector: 'ion-toolbar',
   bind: {
-    title: 'view-title'
+    title: 'nav-title'
   },
   services: [ToolbarConfig]
 })
 @Template({
   inline: `
-    <div class="bar-items">
+    <div class="toolbar-items">
       <button class="button back-button bar-item"></button>
-      <div class="bar-title">
-        <div class="bar-inner-title">
+      <div class="toolbar-title">
+        <div class="toolbar-inner-title">
           {{ title }}
-          <content select="ion-view-title"></content>
+          <content select="ion-nav-title"></content>
         </div>
       </div>
-      <div class="bar-item bar-primary-item">
+      <div class="toolbar-item bar-primary-item">
         <content select="ion-nav-items[side=primary]"></content>
       </div>
-      <div class="bar-item bar-secondary-item">
+      <div class="toolbar-item bar-secondary-item">
         <content select="ion-nav-items[side=secondary]"></content>
       </div>
     </div>`,
@@ -45,7 +45,7 @@ export class Toolbar {
 
   alignTitle() {
     let ele = this.domElement
-    this.titleEle = this.titleEle || ele.querySelector('.bar-inner-title')
+    this.titleEle = this.titleEle || ele.querySelector('.toolbar-inner-title')
 
     this.textAlign = this.textAlign || window.getComputedStyle(this.titleEle).textAlign
 
