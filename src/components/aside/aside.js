@@ -1,6 +1,7 @@
 import {Component, Template, Inject, Parent, NgElement} from 'angular2/angular2'
 import * as types from 'ionic2/components/aside/extensions/types'
 import * as gestures from  'ionic2/components/aside/extensions/gestures';
+import {dom} from 'ionic2/util'
 import {IonicComponent} from 'ionic2/config/component'
 
 @Component({
@@ -50,7 +51,7 @@ export class Aside {
     if (isOpen !== this.isOpen) {
       this.isOpen = isOpen
       this.setChanging(true)
-      requestAnimationFrame(() => {
+      return dom.rafPromise().then(() => {
         this.typeDelegate.setOpen(isOpen)
       })
     }

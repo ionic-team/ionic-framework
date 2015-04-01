@@ -1,5 +1,3 @@
-import * as util from 'ionic2/util';
-
 export class Ion {}
 
 // export class IonElement extends Ion {

@@ -17,7 +17,32 @@ $item-min-height:         44px !default;
   padding: 0;
 }
 
+ion-primary-swipe-buttons,
 .item-content {
+  transition: transform 0.3s;
+}
+
+ion-primary-swipe-buttons {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+  transform: translate3d(-100%,0,0);
+
+  &:not(.open):not(.changing) {
+    display: none;
+  }
+  &.open {
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+.item-content {
+  // TODO add proper bg to cover up swipe buttons
+  background: white;
+  transform: translate3d(0,0,0);
+
   position: relative;
 
   @include flex-display();
@@ -36,6 +61,7 @@ $item-min-height:         44px !default;
   @include flex-shrink(0);
   @include flex-wrap(nowrap);
   @include flex-align-items(center);
+  @include flex-order(1);
 
   min-height: $item-min-height;
 
@@ -47,6 +73,7 @@ $item-min-height:         44px !default;
 
   @include flex(1);
   @include flex-shrink(1);
+  @include flex-order(2);
 
   max-width: 100%;
 
@@ -58,6 +85,7 @@ $item-min-height:         44px !default;
 .item-accessory {
   @include flex-display();
   @include flex-shrink(0);
+  @include flex-order(3);
 
   margin-left: 5px;
   max-height: 28px;

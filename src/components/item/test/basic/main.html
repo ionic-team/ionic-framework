@@ -1,65 +1,19 @@
-<div class="pane" style="background: #efeff4">
+<ion-view view-title="List of Items">
+  <ion-list>
+    <ion-list-header>
+      List Header
+    </ion-list-header>
 
-  <div class="pane-container">
-
-    <div class="bar">
-      iOS List/Item Default CSS Tests
-    </div>
-
-    <div class="content">
-
-      <div class="list list-ios">
-
-        <div class="list-header">
-          List Header
+    <ion-item *for="#item of items">
+      <ion-primary-swipe-buttons>
+        <div style="width: 200px; background: red; height: 100%">
         </div>
+      </ion-primary-swipe-buttons>
+      Item {{item}}
+      <ion-item-accessory>
+        Label {{item}}
+      </ion-item-accessory>
+    </ion-item>
 
-        <ul class="list-content">
-
-          <li class="item">
-            <div class="item-content">
-              <div class="item-title">
-                Item 1
-              </div>
-              <div class="item-accessory">
-                Label
-              </div>
-            </div>
-          </li>
-
-          <li class="item">
-            <div class="item-content">
-              <div class="item-title">
-                Item 2
-              </div>
-              <div class="item-accessory">
-                Label
-              </div>
-            </div>
-          </li>
-
-          <li class="item">
-            <div class="item-content">
-              <div class="item-title">
-                Item 3
-              </div>
-              <div class="item-accessory">
-                Label
-              </div>
-            </div>
-          </li>
-
-        </ul>
-
-        <div class="list-footer">
-          List Footer
-        </div>
-
-      </div>
-
-
-    </div>
-
-  </div>
-
-</div>
+  </ion-list>
+</ion-view>

@@ -1,6 +1,6 @@
-/////
+//
 // Mostly stolen from https://github.com/pkozlowski-opensource/ng2-play
-/////
+//
 
 var _ = require('lodash')
 var buildConfig = require('./scripts/build/config')
