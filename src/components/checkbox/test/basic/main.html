@@ -1,30 +1,26 @@
 
-<div class="pane">
+<ion-view view-title="Checkboxes">
 
-  <div class="pane-container">
+  <ion-content>
 
-    <div class="content" style="background: #efeff4">
+    <div class="list-header">Some Checkboxes</div>
 
-      <ion-list>
+    <ion-list>
 
-        <ion-list-header>Some Checkboxes</ion-list-header>
+      <ion-checkbox [checked]="true">
+        Apples
+      </ion-checkbox>
 
-        <ion-checkbox [checked]="true">
-          Apples
-        </ion-checkbox>
+      <ion-checkbox>
+        Bananas
+      </ion-checkbox>
 
-        <ion-checkbox>
-          Bananas
-        </ion-checkbox>
+      <ion-checkbox [disabled]="true">
+        Oranges
+      </ion-checkbox>
 
-        <ion-checkbox [disabled]="true">
-          Oranges
-        </ion-checkbox>
+    </ion-list>
 
-      </ion-list>
+  </ion-content>
 
-    </div>
-
-  </div>
-
-</div>
+</ion-view>

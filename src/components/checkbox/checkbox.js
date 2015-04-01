@@ -31,13 +31,13 @@ export let CheckboxConfig = new ComponentConfig('checkbox')
 export class Checkbox {
   constructor(
     configFactory: CheckboxConfig,
-    element: NgElement,
+    @NgElement() ngElement: NgElement,
     @PropertySetter('attr.role') setAriaRole: Function,
     @PropertySetter('attr.aria-checked') setAriaChecked: Function,
     @PropertySetter('attr.aria-invalid') setAriaInvalid: Function,
     @PropertySetter('attr.aria-disabled') setAriaDisabled: Function
   ) {
-    this.domElement = element.domElement
+    this.domElement = ngElement.domElement
     this.domElement.classList.add('item')
     this.config = configFactory.create(this)
 

@@ -2,7 +2,9 @@
 // Content
 // --------------------------------------------------
 
+$content-background-color:         #fff !default;
 
-.content {
-  background-color: white;
+
+.pane-container {
+  background-color: $content-background-color;
 }

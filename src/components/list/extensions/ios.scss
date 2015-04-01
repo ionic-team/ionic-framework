@@ -9,19 +9,14 @@ $list-ios-header-margin:         35px 15px 10px 15px !default;
 $list-ios-header-font-size:      1.4rem !default;
 $list-ios-header-color:          #6d6d72 !default;
 
-$list-ios-footer-margin:         10px 0 35px 0 !default;
 $list-ios-footer-padding:        0 15px !default;
 $list-ios-footer-font-size:      1.4rem !default;
 $list-ios-footer-color:          #8f8f94 !default;
 
 
-.list-ios {
+.view-ios {
 
-  .list-content {
-    background: $list-ios-background-color;
-  }
-
-  .list-content:before {
+  .list:before {
     position: absolute;
     top: 0;
     right: auto;
@@ -39,7 +34,7 @@ $list-ios-footer-color:          #8f8f94 !default;
     content: '';
   }
 
-  .list-content:after {
+  .list:after {
     position: absolute;
     top: auto;
     right: auto;
@@ -72,7 +67,6 @@ $list-ios-footer-color:          #8f8f94 !default;
   }
 
   .list-footer {
-    margin: $list-ios-footer-margin;
     padding: $list-ios-footer-padding;
     font-size: $list-ios-footer-font-size;
     color: $list-ios-footer-color;

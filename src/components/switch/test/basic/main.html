@@ -1,30 +1,26 @@
 
-<div class="pane">
+<ion-view view-title="Switches">
 
-  <div class="pane-container">
+  <ion-content>
 
-    <div class="content" style="background: #efeff4">
+    <div class="list-header">Some Switches</div>
 
-      <ion-list>
+    <ion-list>
 
-        <ion-list-header>Some Switches</ion-list-header>
+      <ion-switch [checked]="true">
+        Apples
+      </ion-switch>
 
-        <ion-switch [checked]="true">
-          Apples
-        </ion-switch>
+      <ion-switch>
+        Bananas
+      </ion-switch>
 
-        <ion-switch>
-          Bananas
-        </ion-switch>
+      <ion-switch [disabled]="true">
+        Oranges
+      </ion-switch>
 
-        <ion-switch [disabled]="true">
-          Oranges
-        </ion-switch>
+    </ion-list>
 
-      </ion-list>
+  </ion-content>
 
-    </div>
-
-  </div>
-
-</div>
+</ion-view>

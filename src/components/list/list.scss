@@ -2,50 +2,29 @@
 // List
 // --------------------------------------------------
 
-$list-margin: 35px             0 !default;
-$list-content-margin:          10px 0 !default;
-
-
-//  <div class="list">
-//    <div class="list-header">
-//      List Header
-//    </div>
-//    <ul class="list-content">
-//      ...
-//    </ul>
-//    <div class="list-footer">
-//      List Footer
-//    </div>
-//  </div>
-
-
-.list {
-  position: relative;
-  display: block;
-  margin: $list-margin;
-  width: 100%;
-}
 
 .list-header {
   position: relative;
-
+  margin-top: 35px;
+  margin-bottom: 10px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.list-header + .list-content {
-  margin: $list-content-margin;
-}
-
-.list-content {
+.list {
   position: relative;
-  margin: 0;
+  display: block;
+  margin: 35px 0;
   padding: 0;
+  width: 100%;
   list-style-type: none;
 }
 
 .list-footer {
-  margin: 10px 0;
+  margin: -25px 0 10px;
 }
 
+.list-header + .list {
+  margin-top: 0;
+}

@@ -46,7 +46,7 @@ $toolbar-ios-button-background-color:       transparent !default;
   }
 
   .bar-inner-title {
-    opacity: 0;
+    opacity: 0; // JS will set to 1 after adjusting alignment
   }
 
   .bar-secondary-item {

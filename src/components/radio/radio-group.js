@@ -8,17 +8,7 @@ export let RadioConfig = new ComponentConfig('radio');
   services: [RadioConfig]
 })
 @Template({
-  inline: `
-    <header class="list-header">
-      <content select="ion-list-header"></content>
-    </header>
-    <div class="list-content radio-group radio-group-ios">
-      <content></content>
-    </div>
-    <footer class="list-footer">
-      <content select="ion-list-footer"></content>
-    </footer>
-  `
+  inline: `<content></content>`
 })
 export class RadioGroup {
   constructor(
@@ -27,7 +17,7 @@ export class RadioGroup {
   ) {
     this.domElement = element.domElement
     this.domElement.classList.add('list')
-    this.domElement.classList.add('list-ios')
+    this.domElement.classList.add('radio-group')
     configFactory.create(this)
   }
 }

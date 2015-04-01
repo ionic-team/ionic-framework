@@ -34,8 +34,7 @@
   "../radio/radio",
   "../switch/switch",
   "../tabs/tabs",
-  "../toolbar/toolbar",
-  "../view/view";
+  "../toolbar/toolbar";
 
 
 // Android Components
@@ -48,6 +47,7 @@
 // iOS Components
 @import
   "../checkbox/extensions/ios",
+  "../content/extensions/ios",
   "../list/extensions/ios",
   "../item/extensions/ios",
   "../radio/extensions/ios",
