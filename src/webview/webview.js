@@ -20,3 +20,5 @@
 // platformVersion: returns 8.2
 
 // webview: returns cordova, trigger.io, browser
+
+// isWebview:  true if its cordova, trigger. False if its browser
