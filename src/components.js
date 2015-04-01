@@ -1,5 +1,3 @@
-// export all components as array
-
 export * from 'ionic2/components/aside/aside'
 export * from 'ionic2/components/checkbox/checkbox'
 export * from 'ionic2/components/content/content'
