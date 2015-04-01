@@ -1,0 +1,66 @@
+
+// Util Mixins/Functions
+
+
+
+// Appearance Mixin
+// --------------------------------------------------
+
+@mixin appearance($val) {
+  -webkit-appearance: $val;
+  -moz-appearance: $val;
+  -ms-appearance: $val;
+  appearance: $val;
+}
+
+
+// User Select Mixin
+// --------------------------------------------------
+
+@mixin user-select($select) {
+  -webkit-user-select: $select;
+  -moz-user-select: $select;
+  -ms-user-select: $select;
+  user-select: $select;
+}
+
+
+// Background Sizing Mixin
+// --------------------------------------------------
+
+@mixin background-size($size) {
+  -webkit-background-size: $size;
+  background-size: $size;
+}
+
+
+// String Replace Function
+// --------------------------------------------------
+
+@function str-replace($string, $search, $replace: '') {
+  $index: str-index($string, $search);
+
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+
+  @return $string;
+}
+
+
+// URL Encode Function
+// --------------------------------------------------
+
+@function url-encode($val) {
+  $val: str-replace($val, ' ', '%20');
+  @return $val;
+}
+
+
+// SVG Background Image Mixin
+// --------------------------------------------------
+
+@mixin svg-background-image($svg) {
+  $url: url-encode($svg);
+  background-image: url("data:image/svg+xml;charset=utf-8,#{$url}");
+}

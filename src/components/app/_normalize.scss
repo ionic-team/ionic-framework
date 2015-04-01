@@ -193,16 +193,6 @@ input[type="number"]::-webkit-outer-spin-button {
   height: auto;
 }
 
-// 1. Address `appearance` set to `searchfield` in Safari and Chrome.
-// 2. Address `box-sizing` set to `border-box` in Safari and Chrome
-//    (include `-moz` to future-proof).
-input[type="search"] {
-  -webkit-appearance: textfield; // 1
-  -moz-box-sizing: content-box;
-  -webkit-box-sizing: content-box; // 2
-  box-sizing: content-box;
-}
-
 // Remove inner padding and search cancel button in Safari and Chrome on OS X.
 // Safari (but not Chrome) clips the cancel button when the search input has
 // padding (and `textfield` appearance).

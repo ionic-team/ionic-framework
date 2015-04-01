@@ -1,0 +1,35 @@
+
+// Search Bar
+// --------------------------------------------------
+
+$search-bar-min-height:         44px !default;
+
+
+.search-bar {
+  position: relative;
+  @include flex-display();
+  @include flex-align-items(center);
+  width: 100%;
+  min-height: $search-bar-min-height;
+}
+
+.search-bar-input-container {
+  position: relative;
+  display: block;
+  @include flex-shrink(1);
+  width: 100%;
+}
+
+.search-bar-input {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: none;
+  font-family: inherit;
+  @include appearance(none);
+  outline: 0;
+}
+
+.search-bar-cancel {
+  display: none;
+}

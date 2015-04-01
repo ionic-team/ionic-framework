@@ -1,6 +1,7 @@
 import {NgElement, Component, Template} from 'angular2/angular2'
 import {BackButton} from 'ionic2/components/toolbar/back-button'
 import {ComponentConfig} from 'ionic2/config/component-config'
+import {raf} from 'ionic2/util/dom'
 
 export let ToolbarConfig = new ComponentConfig('toolbar')
 
@@ -64,7 +65,7 @@ export class Toolbar {
 
     this.titleEle.style.margin = `0 ${centerMargin}px 0 0`
 
-    window.requestAnimationFrame(() => {
+    raf(() => {
       if (this.titleEle.offsetWidth < this.titleEle.scrollWidth) {
         this.titleEle.style.margin = ''
         this.titleEle.style.textAlign = 'left'

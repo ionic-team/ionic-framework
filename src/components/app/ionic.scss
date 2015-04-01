@@ -5,7 +5,8 @@
 @import
   "mixins/flex",
   "mixins/transform",
-  "mixins/transition";
+  "mixins/transition",
+  "mixins/util";
 
 
 // Globals
@@ -32,6 +33,7 @@
   "../list/list",
   "../modal/modal",
   "../radio/radio",
+  "../search-bar/search-bar",
   "../switch/switch",
   "../tabs/tabs",
   "../toolbar/toolbar";
@@ -51,6 +53,7 @@
   "../list/extensions/ios",
   "../item/extensions/ios",
   "../radio/extensions/ios",
+  "../search-bar/extensions/ios",
   "../switch/extensions/ios",
   "../toolbar/extensions/ios";
 
