@@ -35,21 +35,21 @@ $toolbar-ios-button-background-color:       transparent !default;
     content: '';
   }
 
-  .bar-primary-item {
+  .toolbar-primary-item {
     @include flex-order(2);
   }
 
-  .bar-title {
+  .toolbar-title {
     @include flex-order(3);
     font-size: $toolbar-ios-title-font-size;
     text-align: center;
   }
 
-  .bar-inner-title {
+  .toolbar-inner-title {
     opacity: 0; // JS will set to 1 after adjusting alignment
   }
 
-  .bar-secondary-item {
+  .toolbar-secondary-item {
     @include flex-order(4);
   }
 

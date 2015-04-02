@@ -27,6 +27,7 @@
   "../alert/alert",
   "../aside/aside",
   "../button/button",
+  "../card/card",
   "../checkbox/checkbox",
   "../content/content",
   "../item/item",
@@ -49,6 +50,7 @@
 
 // iOS Components
 @import
+  "../card/extensions/ios",
   "../checkbox/extensions/ios",
   "../content/extensions/ios",
   "../list/extensions/ios",

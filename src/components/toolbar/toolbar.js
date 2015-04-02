@@ -15,17 +15,17 @@ export let ToolbarConfig = new ComponentConfig('toolbar')
 @Template({
   inline: `
     <div class="toolbar-items">
-      <button class="button back-button bar-item"></button>
+      <button class="button back-button toolbar-item"></button>
       <div class="toolbar-title">
         <div class="toolbar-inner-title">
           {{ title }}
           <content select="ion-nav-title"></content>
         </div>
       </div>
-      <div class="toolbar-item bar-primary-item">
+      <div class="toolbar-item toolbar-primary-item">
         <content select="ion-nav-items[side=primary]"></content>
       </div>
-      <div class="toolbar-item bar-secondary-item">
+      <div class="toolbar-item toolbar-secondary-item">
         <content select="ion-nav-items[side=secondary]"></content>
       </div>
     </div>`,

@@ -2,11 +2,14 @@
 // List
 // --------------------------------------------------
 
+$list-margin-top:             35px !default;
+$list-margin-bottom:          10px !default;
+
 
 .list-header {
   position: relative;
-  margin-top: 35px;
-  margin-bottom: 10px;
+  margin-top: $list-margin-top;
+  margin-bottom: $list-margin-bottom;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -15,14 +18,14 @@
 .list {
   position: relative;
   display: block;
-  margin: 35px 0;
+  margin: $list-margin-top 0;
   padding: 0;
   width: 100%;
   list-style-type: none;
 }
 
-.list-footer {
-  margin: -25px 0 10px;
+.list + .list-footer {
+  margin: ($list-margin-bottom - $list-margin-top) 0 $list-margin-bottom;
 }
 
 .list-header + .list {

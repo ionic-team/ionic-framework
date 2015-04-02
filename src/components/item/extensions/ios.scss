@@ -18,6 +18,7 @@ $item-ios-border-color:          $list-ios-border-color !default;
   .item {
     background: $item-ios-background-color;
     min-height: $item-ios-min-height;
+    padding-left: $item-ios-padding-left;
   }
 
   .item-media + .item-content {
@@ -26,7 +27,7 @@ $item-ios-border-color:          $list-ios-border-color !default;
 
   .item-content {
     min-height: $item-ios-min-height;
-    padding: 0 0 0 $item-ios-padding-left;
+    padding: 0;
 
     &:after {
       position: absolute;

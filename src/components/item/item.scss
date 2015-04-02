@@ -61,7 +61,6 @@ ion-primary-swipe-buttons {
   @include flex-shrink(0);
   @include flex-wrap(nowrap);
   @include flex-align-items(center);
-  @include flex-order(1);
 
   min-height: $item-min-height;
 
@@ -73,7 +72,6 @@ ion-primary-swipe-buttons {
 
   @include flex(1);
   @include flex-shrink(1);
-  @include flex-order(2);
 
   max-width: 100%;
 
@@ -85,7 +83,6 @@ ion-primary-swipe-buttons {
 .item-accessory {
   @include flex-display();
   @include flex-shrink(0);
-  @include flex-order(3);
 
   margin-left: 5px;
   max-height: 28px;

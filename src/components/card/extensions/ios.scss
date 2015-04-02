@@ -1,0 +1,40 @@
+
+// iOS Card
+// --------------------------------------------------
+
+$card-ios-background-color:          #fff !default;
+$card-ios-box-shadow:                0 1px 2px rgba(0,0,0,.3) !default;
+$card-ios-border-radius:             2px !default;
+$card-ios-font-size:                 1.4rem !default;
+$card-ios-item-content-padding:      15px !default;
+
+.view-ios .card {
+  background: $card-ios-background-color;
+  box-shadow: $card-ios-box-shadow;
+  border-radius: $card-ios-border-radius;
+  font-size: $card-ios-font-size;
+
+  .item,
+  .item-content {
+    padding: 0;
+    background: transparent;
+  }
+
+  .item:last-of-type .item-content:after {
+    background: transparent;
+  }
+
+  .card-header {
+    font-size: 1.7rem;
+  }
+
+  .card-footer {
+    color: #6d6d72;
+  }
+
+  .item-content {
+    padding: $card-ios-item-content-padding
+  }
+
+}
+

@@ -16,7 +16,7 @@ export let TabsConfig = new ComponentConfig('tabs');
 
     <div class="toolbar tab-bar toolbar-ios toolbar-bottom">
       <div class="tab-bar-content">
-        <a class="tab-bar-item" class="tab-active" href="#">
+        <a class="tab-bar-item tab-active" href="#">
           Tab 1
         </a>
         <a class="tab-bar-item" href="#">
