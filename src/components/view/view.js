@@ -1,6 +1,9 @@
-import {NgElement, Component, Template, Parent} from 'angular2/angular2'
+import {NgElement, Component, Template, Parent, Ancestor} from 'angular2/angular2'
 import {Toolbar} from 'ionic2/components/toolbar/toolbar'
 import {ComponentConfig} from 'ionic2/config/component-config'
+
+import {Tabs, NavViewport, NavView} from 'ionic2/components'
+import {Optional} from 'angular2/src/di/annotations'
 
 export let ViewConfig = new ComponentConfig('view')
 

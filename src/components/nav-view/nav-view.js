@@ -1,5 +1,6 @@
-import {DynamicComponent, Parent, NgElement} from 'angular2/angular2'
-import {NavViewport} from 'ionic2/components'
+import {DynamicComponent, Ancestor, NgElement} from 'angular2/angular2'
+import {Optional} from 'angular2/src/di/annotations'
+import {NavViewport, Tabs} from 'ionic2/components'
 import {PrivateComponentLoader} from 'angular2/src/core/compiler/private_component_loader'
 import {PrivateComponentLocation} from 'angular2/src/core/compiler/private_component_location'
 
@@ -13,12 +14,15 @@ export class NavView {
   constructor(
     loader: PrivateComponentLoader,
     location: PrivateComponentLocation,
-    @Parent() viewport: NavViewport,
-    @NgElement() element: NgElement
+    @NgElement() element: NgElement,
+
+    // FIXME: this is temporary until ng2 lets us inject tabs as a NavViewport
+    @Optional() @Ancestor() viewportNav: NavViewport,
+    @Optional() @Ancestor() viewportTabs: Tabs
   ) {
     this.loader = loader
     this.location = location
-    this.viewport = viewport
+    this.viewport = viewportTabs || viewportNav
     this.domElement = element.domElement
   }
 

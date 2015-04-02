@@ -1,33 +1,41 @@
-import {Component, Template, For} from 'angular2/angular2'
+import {Component, Template, For, NgElement} from 'angular2/angular2'
 import {ComponentConfig} from 'ionic2/config/component-config'
 import {NavView} from 'ionic2/components/nav-view/nav-view'
-import {array as arrayUtil, dom as domUtil} from 'ionic2/util'
+import {array as arrayUtil, dom as domUtil, isFunction} from 'ionic2/util'
 
 @Component({
   selector: 'ion-nav-viewport',
   bind: {
-    initialComponent: 'initialComponent'
+    initial: 'initial'
   },
 })
 @Template({
   inline: `
-  <section class="nav-view" *for="#item of _ngForLoopArray" [item]="item">
+  <section class="nav-view" *for="#item of getRawNavStack()" [item]="item">
   </section>
   `,
   directives: [NavView, For]
 })
 export class NavViewport {
-  constructor() {
-    // stack is our public stack of items. This is synchronous and says an item
+  constructor(
+    element: NgElement
+  ) {
+    this.domElement = element.domElement
+    this.domElement.classList.add('nav-viewport')
+    // stack is our sane stack of items. This is synchronous and says an item
     // is removed even if it's still animating out.
-    this.stack = []
+    this._stack = []
 
-    // _ngForLoopArray is our loop that actually adds/removes components. It doesn't
+    // _ngForLoopArray is actually adds/removes components from the dom. It won't 
     // remove a component until it's done animating out.
     this._ngForLoopArray = []
   }
 
-  set initialComponent(Class) {
+  getRawNavStack() {
+    return this._ngForLoopArray
+  }
+
+  set initial(Class) {
     if (!this.initialized) {
       this.initialized = true
       this.push(Class)
@@ -40,18 +48,25 @@ export class NavViewport {
    * @param view the new view
    * @param shouldAnimate whether to animate
    */
+  // TODO don't push same component twice if one is already pushing
   // TODO only animate if state hasn't changed
   // TODO make sure the timing is together
   // TODO allow starting an animation in the middle (eg gestures). Leave
   // most of this up to the animation's implementation.
-  push(Class, opts = {}) {
-    let item = new NavItem(Class, opts)
-    this.stack.push(item)
-    this._ngForLoopArray.push(item)
-    return item.waitForSetup().then(() => {
-      let current = this.getPrevious(item)
-      current && current.leaveReverse()
-      return item.enter()
+  push(Class: Function, { sync = this._stack.length === 0 } = {}) {
+    let pushedItem = new NavItem(Class)
+    this._stack.push(pushedItem)
+    this._ngForLoopArray.push(pushedItem)
+
+    return pushedItem.waitForSetup().then(() => {
+      let current = this.getPrevious(pushedItem)
+      if (sync) {
+        current && current.leaveSync()
+        pushedItem.enterSync()
+      } else {
+        current && current.leaveReverse()
+        return pushedItem.enter()
+      }
     })
   }
 
@@ -60,18 +75,23 @@ export class NavViewport {
    *
    * @param shouldAnimate whether to animate
    */
-  pop() {
-    let current = this.stack.pop()
-    let previous = this.stack[this.stack.length - 1]
-    previous.enterReverse()
-    return current.leave().then(() => {
-      // The animation is done, remove it from the dom
+  pop({ sync = false } = {}) {
+    let current = this._stack.pop()
+    let previous = this._stack[this._stack.length - 1]
+    if (sync) {
+      previous && previous.enterSync()
+      return Promise.resolve(remove())
+    } else {
+      previous && previous.enterReverse()
+      return current.leave().then(remove)
+    }
+    function remove() {
       arrayUtil.remove(this._ngForLoopArray, current)
-    })
+    }
   }
 
   getPrevious(item) {
-    return this.stack[ this.stack.indexOf(item) - 1 ]
+    return this._stack[ this._stack.indexOf(item) - 1 ]
   }
 
   // Animate a new view *in*
@@ -124,6 +144,14 @@ class NavItem {
         this.setAnimation(null)
       })
     })
+  }
+  enterSync() {
+    this.setAnimation(null)
+    return this.setShown(true)
+  }
+  leaveSync() {
+    this.setAnimation(null)
+    return this.setShown(false)
   }
   enter() {
     return this._animate({ isShown: true, animation: 'enter' })

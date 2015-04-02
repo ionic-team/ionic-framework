@@ -98,16 +98,16 @@ gulp.task('e2e', ['ionic-js', 'sass'], function() {
     .pipe(rename(function(file) {
       file.dirname = file.dirname.replace(path.sep + 'test' + path.sep, path.sep)
     }))
-    .pipe(gulpif(/main.html$/, processMainHtml()))
+    .pipe(gulpif(/main.js$/, processMain()))
     .pipe(gulpif(/e2e.js$/, createPlatformTests()))
     .pipe(gulp.dest(buildConfig.dist + '/e2e'))
 
-    function processMainHtml() {
+    function processMain() {
       return through2.obj(function(file, enc, next) {
         this.push(new VinylFile({
           base: file.base,
           contents: new Buffer(indexContents),
-          path: file.path.replace(/main.html$/, 'index.html'),
+          path: file.path.replace(/main.js$/, 'index.html'),
         }))
         next(null, file)
       })

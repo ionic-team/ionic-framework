@@ -1,5 +1,7 @@
-import {NgElement, Component, Template} from 'angular2/angular2'
+import {NgElement, Component, Template, Ancestor} from 'angular2/angular2'
+import {Optional} from 'angular2/src/di/annotations'
 import {BackButton} from 'ionic2/components/toolbar/back-button'
+import {Tabs, NavViewport, NavView} from 'ionic2/components'
 import {ComponentConfig} from 'ionic2/config/component-config'
 import {raf} from 'ionic2/util/dom'
 
@@ -32,7 +34,10 @@ export let ToolbarConfig = new ComponentConfig('toolbar')
   directives: [BackButton]
 })
 export class Toolbar {
-  constructor(@NgElement() ngEle:NgElement, configFactory: ToolbarConfig) {
+  constructor(
+    @NgElement() ngEle:NgElement, 
+    configFactory: ToolbarConfig
+  ) {
     this.domElement = ngEle.domElement
 
     this.config = configFactory.create(this);
@@ -74,6 +79,12 @@ export class Toolbar {
         this.titleEle.style.opacity = this.isTitleVisible = 1
       }
     })
+  }
+
+  back() {
+    if (this.viewport && this.viewport._stack.length) {
+      this.viewport.pop()
+    }
   }
 
 }
