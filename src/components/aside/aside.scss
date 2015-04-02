@@ -8,7 +8,7 @@ $aside-transition: 0.3s linear transform;
 
   background: #eee;
 
-  &.type-overlay {
+  &[type=overlay] {
     z-index: 10;
   }
 

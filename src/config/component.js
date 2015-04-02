@@ -38,7 +38,7 @@ export class IonicComponent {
   }
 
   invoke(instance) {
-    let config = this
+    const config = this
     instance.domElement.classList.add(this.componentCssName)
     instance.domElement.classList.add(`${this.componentCssName}-${platformName}`)
 
@@ -53,13 +53,16 @@ export class IonicComponent {
 
     return {
       getDelegate(delegateName) {
-        let cases = (config.delegates || {})[delegateName] || []
+        let cases = (config.delegates || {})[delegateName] || [];
         for (let i = 0; i < cases.length; i++) {
-          let delegateCase = cases[i]
+          let delegateCase = cases[i];
           if (util.isArray(delegateCase)) {
-            if (delegateCase[0](instance)) return new delegateCase[1](instance)
+            let [ check, DelegateConstructor ] = delegateCase;
+            if (check(instance)) {
+              return new DelegateConstructor(instance);
+            }
           } else {
-            return new delegateCase(instance)
+            return new delegateCase(instance);
           }
         }
       }

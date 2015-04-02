@@ -27,14 +27,12 @@ const contentManipulator = {
 }
 
 export class AsideType {
-  constructor(aside) {
+  constructor(aside: Aside) {
     this.aside = aside;
-
-    aside.domElement.classList.add(`type-${aside.type}`);
 
     //FIXME(ajoslin): have to wait for for bindings to apply in a component
     setTimeout(() => {
-      this.aside.content.domElement.classList.add('aside-content')
+      aside.content.domElement.classList.add('aside-content')
     })
   }
 }

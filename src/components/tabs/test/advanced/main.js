@@ -1,13 +1,13 @@
 import {Component, Template, bootstrap} from 'angular2/angular2'
-import {NavViewport} from 'ionic2/components'
+import {NavViewport, Aside} from 'ionic2/components'
 import {SignInPage} from 'app/pages/sign-in'
 
 @Component({
   selector: '[ion-app]'
 })
 @Template({
-  inline: '<ion-nav-viewport [initial]="initial"></ion-nav-viewport>',
-  directives: [NavViewport]
+  url: 'main.html',
+  directives: [NavViewport, Aside]
 })
 class App {
   constructor() {
