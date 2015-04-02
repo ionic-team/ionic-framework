@@ -2,14 +2,14 @@
 var buildConfig = require('../build/config');
 var path = require('canonical-path');
 var projectRoot = path.resolve(__dirname, '../..');
+var snapshotConfig = require('./snapshot.config').config;
 
 exports.config = {
 
   // Spec patterns are relative to the location of the spec file. They may
   // include glob patterns.
   specs: [
-    path.resolve(projectRoot, 'dist/e2e/**/*e2e.js'),
-    //path.resolve(projectRoot, 'dist/e2e/toolbar/**/*e2e.js'),
+    path.resolve(projectRoot, snapshotConfig.specs)
   ],
 
   // Options to be passed to Jasmine-node.
@@ -26,7 +26,6 @@ exports.config = {
       patchProtractorWait(global.browser);
     });
 
-    var snapshotConfig = require('./snapshot.config').config;
     var ionicSnapshot = require('./ionic.snapshot');
     ionicSnapshot(snapshotConfig);
   }

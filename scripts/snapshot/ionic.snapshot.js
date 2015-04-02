@@ -6,7 +6,7 @@ var IonicSnapshot = function(options) {
   var _ = require('lodash');
   var request = require('request');
   var colors = require('gulp-util').colors;
-  var log = console.log.bind(console, '[' + colors.cyan('IonicReporter') + ']');
+  var log = console.log.bind(console, colors.cyan('Snapshot') + ':');
 
   var IonicReporter = function(options) {
     var self = this;
@@ -24,6 +24,8 @@ var IonicSnapshot = function(options) {
     self.height = browser.params.height || -1;
     self.highestMismatch = 0;
     self.screenshotRequestPromises = [];
+    self.results = {};
+    self.mismatches = [];
 
     self.flow = protractor.promise.controlFlow();
 
@@ -51,7 +53,29 @@ var IonicSnapshot = function(options) {
       });
     });
     process.on('exit', function() {
-      log(colors.green('Highest Mismatch:'), self.highestMismatch, '%');
+      if (self.highestMismatch > 1) {
+        log(colors.red('Highest Mismatch: ' + self.highestMismatch + '%'));
+      } else if (self.highestMismatch > 0) {
+        log(colors.yellow('Highest Mismatch: ' + self.highestMismatch + '%'));
+      } else {
+        log(colors.green('No Mismatches!!'));
+      }
+
+      if (!self.mismatches.length) return;
+
+      self.mismatches.sort();
+
+      for (var x = 0; x < self.mismatches.length; x++) {
+        var result = self.results[self.mismatches[x]];
+
+        if (result.mismatch > 1) {
+          log(colors.red('Mismatch:'), colors.red(result.mismatch + '%'), result.name);
+        } else {
+          log(colors.yellow('Mismatch:'), colors.yellow(result.mismatch + '%'), result.name);
+        }
+
+        log('         ', colors.gray(result.compareUrl));
+      }
     });
 
     log('init:', _.pick(self, ['testId', 'appId', 'width', 'height', 'platformId']));
@@ -93,10 +117,33 @@ var IonicSnapshot = function(options) {
               'http://' + self.domain + '/screenshot',
               { form: self.testData },
               function (error, response, body) {
-                log(specIdString, 'reportSpecResults:', body);
                 try {
                   var rspData = JSON.parse(body);
                   self.highestMismatch = Math.max(self.highestMismatch, rspData.Mismatch);
+
+                  var mismatch = Math.round(rspData.Mismatch * 100) / 100;
+
+                  if (rspData.Mismatch > 1) {
+                    log(specIdString, colors.red('Mismatch: ' + mismatch + '%'));
+                  } else if (rspData.Mismatch > 0) {
+                    log(specIdString, colors.yellow('Mismatch: ' + mismatch + '%'));
+                  } else {
+                    log(specIdString, colors.green('Mismatch: ' + mismatch + '%'));
+                  }
+
+                  var resultKey = (((rspData.Mismatch * 1000) + 1000000) + '').split('.')[0] + '-' + spec.id;
+                  self.results[resultKey] = {
+                    index: spec.id,
+                    name: spec.getFullName(),
+                    mismatch: mismatch,
+                    compareUrl: rspData.CompareUrl,
+                    screenshotUrl: rspData.ScreenshotUrl,
+                  };
+
+                  if (rspData.IsMismatch) {
+                    self.mismatches.push(resultKey);
+                  }
+
                 } catch(e) {
                   log(specIdString, colors.red('reportSpecResults', 'error posting screenshot:'), e);
                 }

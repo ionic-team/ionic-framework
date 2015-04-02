@@ -27,7 +27,7 @@ module.exports = function(gulp, argv, buildConfig) {
     browser: 'chrome',
     platform: 'linux',
     params: {
-      platform_id: 'chrome_local_test',
+      platform_id: 'chrome_local',
       platform_index: 0,
       platform_count: 1,
       width: 400,
