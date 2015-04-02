@@ -60,7 +60,6 @@ var ua = window.navigator.userAgent
 platform.register({
   name: 'android',
   matcher() {
-    //TODO Make a better override than window
     return queryPlatform == 'android' || /android/i.test(ua)
   }
 })

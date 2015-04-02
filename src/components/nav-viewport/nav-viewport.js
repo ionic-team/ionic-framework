@@ -6,31 +6,32 @@ import {array as arrayUtil, dom as domUtil} from 'ionic2/util'
 @Component({
   selector: 'ion-nav-viewport',
   bind: {
-    initial: 'initial'
+    initialComponent: 'initialComponent'
   },
 })
 @Template({
   inline: `
-  <section class="nav-view" *for="#item of creator._array" [item]="item">
+  <section class="nav-view" *for="#item of _ngForLoopArray" [item]="item">
   </section>
   `,
   directives: [NavView, For]
 })
 export class NavViewport {
   constructor() {
+    // stack is our public stack of items. This is synchronous and says an item
+    // is removed even if it's still animating out.
     this.stack = []
-    this.creator =  new ItemCreator()
+
+    // _ngForLoopArray is our loop that actually adds/removes components. It doesn't
+    // remove a component until it's done animating out.
+    this._ngForLoopArray = []
   }
 
-  set initial(Class) {
+  set initialComponent(Class) {
     if (!this.initialized) {
       this.initialized = true
       this.push(Class)
     }
-  }
-
-  getAnimation(opts) {
-    return 'fade'
   }
 
   /**
@@ -46,10 +47,11 @@ export class NavViewport {
   push(Class, opts = {}) {
     let item = new NavItem(Class, opts)
     this.stack.push(item)
-    return this.creator.instantiate(item).then(() => {
+    this._ngForLoopArray.push(item)
+    return item.waitForSetup().then(() => {
       let current = this.getPrevious(item)
-      current && current.pushLeave()
-      return item.pushEnter()
+      current && current.leaveReverse()
+      return item.enter()
     })
   }
 
@@ -61,9 +63,10 @@ export class NavViewport {
   pop() {
     let current = this.stack.pop()
     let previous = this.stack[this.stack.length - 1]
-    previous.popEnter()
-    current.popLeave().then(() => {
-      this.creator.destroy(current)
+    previous.enterReverse()
+    return current.leave().then(() => {
+      // The animation is done, remove it from the dom
+      arrayUtil.remove(this._ngForLoopArray, current)
     })
   }
 
@@ -135,17 +138,17 @@ class NavItem {
       })
     })
   }
-  pushEnter() {
-    return this._animate({ isShown: true, animation: 'push-enter' })
+  enter() {
+    return this._animate({ isShown: true, animation: 'enter' })
   }
-  popEnter() {
-    return this._animate({ isShown: true, animation: 'pop-enter' })
+  enterReverse() {
+    return this._animate({ isShown: true, animation: 'enter-reverse' })
   }
-  pushLeave() {
-    return this._animate({ isShown: false, animation: 'push-leave' })
+  leave() {
+    return this._animate({ isShown: false, animation: 'leave' })
   }
-  popLeave() {
-    return this._animate({ isShown: false, animation: 'pop-leave' })
+  leaveReverse() {
+    return this._animate({ isShown: false, animation: 'leave-reverse' })
   }
 }
 

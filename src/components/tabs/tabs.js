@@ -1,19 +1,15 @@
-import {NgElement, Component, Template, Foreach, Parent} from 'angular2/angular2';
-import {ComponentConfig} from 'ionic2/config/component-config';
-
-export let TabsConfig = new ComponentConfig('tabs');
-
+import {NgElement, Component, Template, Foreach, Parent} from 'angular2/angular2'
+import {NavViewport} from 'ionic2/components'
+import {IonicComponent} from 'ionic2/config/component'
 
 @Component({
   selector: 'ion-tabs',
   bind: {
-    tabBarPlacement: 'tab-bar-placement'
+    placement: 'placement'
   },
-  services: [TabsConfig]
 })
 @Template({
   inline: `
-
     <div class="toolbar tab-bar toolbar-ios toolbar-bottom">
       <div class="tab-bar-content">
         <a class="tab-bar-item tab-active" href="#">
@@ -27,23 +23,28 @@ export let TabsConfig = new ComponentConfig('tabs');
         </a>
       </div>
     </div>
-
-    <div class="pane-container">
-      <div class="content">
-        <content></content>
-      </div>
-    </div>
   `,
+  directives: []
 })
-export class Tabs {
+export class Tabs extends NavViewport {
   constructor(
-    configFactory: TabsConfig,
     element: NgElement
   ) {
+    super()
     this.domElement = element.domElement
     this.domElement.classList.add('pane')
-    configFactory.create(this)
-
-    this.tabBarPlacement = this.tabBarPlacement || 'bottom'
+    this.config = Tabs.config.invoke(this)
   }
 }
+
+new IonicComponent(Tabs, {
+  bind: {
+    placement: {
+      defaults: {
+        ios: 'bottom',
+        android: 'top',
+        base: 'bottom'
+      }
+    }
+  }
+})

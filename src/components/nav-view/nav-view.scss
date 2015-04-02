@@ -11,28 +11,28 @@
   }
   &[animate] {
     display: block;
-    transition: 1s linear;
+    transition: 0.3s linear;
   }
 
-  &[animate=push-enter] {
+  &[animate=enter] {
     transform: translate3d(100%,0,0);
     &.start {
       transform: translate3d(0,0,0);
     }
   }
-  &[animate=pop-enter] {
+  &[animate=enter-reverse] {
     transform: translate3d(-100%,0,0);
     &.start {
       transform: translate3d(0,0,0);
     }
   }
-  &[animate=push-leave] {
+  &[animate=leave-reverse] {
     transform: translate3d(0,0,0);
     &.start {
       transform: translate3d(-100%,0,0);
     }
   }
-  &[animate=pop-leave] {
+  &[animate=leave] {
     transform: translate3d(0,0,0);
     &.start {
       transform: translate3d(100%,0,0);
