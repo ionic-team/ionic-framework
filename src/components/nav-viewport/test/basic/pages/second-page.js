@@ -15,7 +15,7 @@ export class SecondPage {
   ) {
     this.viewport = viewport
   }
-  prevPage() {
+  pop() {
     this.viewport.pop()
   }
 }

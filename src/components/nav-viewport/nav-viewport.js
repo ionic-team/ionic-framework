@@ -1,7 +1,7 @@
 import {Component, Template, For} from 'angular2/angular2'
 import {ComponentConfig} from 'ionic2/config/component-config'
 import {NavView} from 'ionic2/components/nav-view/nav-view'
-import * as util from 'ionic2/util'
+import {array as arrayUtil, dom as domUtil} from 'ionic2/util'
 
 @Component({
   selector: 'ion-nav-viewport',
@@ -11,15 +11,15 @@ import * as util from 'ionic2/util'
 })
 @Template({
   inline: `
-  <section class="nav-view" *for="#item of stack.rawItems()" [item]="item">
+  <section class="nav-view" *for="#item of creator._array" [item]="item">
   </section>
   `,
   directives: [NavView, For]
 })
 export class NavViewport {
-  constructor(
-  ) {
-    this.stack = new NavStack();
+  constructor() {
+    this.stack = []
+    this.creator =  new ItemCreator()
   }
 
   set initial(Class) {
@@ -39,9 +39,18 @@ export class NavViewport {
    * @param view the new view
    * @param shouldAnimate whether to animate
    */
+  // TODO only animate if state hasn't changed
+  // TODO make sure the timing is together
+  // TODO allow starting an animation in the middle (eg gestures). Leave
+  // most of this up to the animation's implementation.
   push(Class, opts = {}) {
-    //TODO animation
-    return this.stack.push(Class)
+    let item = new NavItem(Class, opts)
+    this.stack.push(item)
+    return this.creator.instantiate(item).then(() => {
+      let current = this.getPrevious(item)
+      current && current.pushLeave()
+      return item.pushEnter()
+    })
   }
 
   /**
@@ -50,8 +59,16 @@ export class NavViewport {
    * @param shouldAnimate whether to animate
    */
   pop() {
-    // TODO animation
-    return this.stack.pop()
+    let current = this.stack.pop()
+    let previous = this.stack[this.stack.length - 1]
+    previous.popEnter()
+    current.popLeave().then(() => {
+      this.creator.destroy(current)
+    })
+  }
+
+  getPrevious(item) {
+    return this.stack[ this.stack.indexOf(item) - 1 ]
   }
 
   // Animate a new view *in*
@@ -65,79 +82,70 @@ export class NavViewport {
 
 }
 
-class NavStack {
-  constructor(navView) {
-    // array to communicate with angular for loop. When an element is in this array, it really
-    // exists in the DOM.
+class ItemCreator {
+  constructor() {
     this._array = []
   }
-  rawItems() {
-    return this._array
+  instantiate(navItem) {
+    this._array.push(navItem)
+    return navItem.waitForSetup()
   }
-
-  push(ComponentClass) {
-    const item = new NavStackItem(ComponentClass)
-    let last = this._array[this._array.length - 1]
-
-    this._array.push(item)
-    return item.setupPromise.then(() => {
-      // Once the item is successfully instantiated, add it to our public history
-      item.animateIn()
-      last && last.animateOut()
-    })
-  }
-
-  pop() {
-    // public registry: instantly remove to make the removal seem 'synchronous' for our data
-    const current = this._array[this._array.length - 1]
-    const previous = this._array[this._array.length - 2]
-    current.animateOut().then(() => {
-      util.array.remove(current)
-    })
-    return previous && previous.animateIn()
+  destroy(navItem) {
+    return arrayUtil.remove(this._array, navItem)
   }
 }
 
-class NavStackItem {
+class NavItem {
   constructor(ComponentClass) {
-    this.setupPromise = new Promise((resolve) => {
-      this.finishSetup = (navView, componentInstance) => {
-        this.navView = navView
-        this.instance = componentInstance
-        resolve()
-      }
-    })
     this.Class = ComponentClass
+    this._setupPromise = new Promise((resolve) => {
+      this._resolveSetupPromise = resolve
+    })
   }
-  setInstance(instance) {
-    this.instance = instance
+  waitForSetup() {
+    return this._setupPromise
   }
-  setNavView(navView) {
+  finishSetup(navView, componentInstance) {
     this.navView = navView
+    this.instance = componentInstance
+    this._resolveSetupPromise()
   }
-
-  animateIn() {
-    this.navView.domElement.classList.remove('out')
-    this.navView.domElement.classList.add('in')
-    return new Promise(resolve => {
-      this.navView.domElement.addEventListener('transitionend', (ev) => {
-        if (ev.target !== this.navView.domElement) {
-          return
-        }
-        resolve()
+  setAnimation(state) {
+    if (!state) {
+      this.navView.domElement.removeAttribute('animate')
+      this.navView.domElement.classList.remove('start')
+    } else {
+      this.navView.domElement.setAttribute('animate', state)
+    }
+  }
+  setShown(isShown) {
+    this.navView.domElement.classList[isShown?'add':'remove']('shown')
+  }
+  startAnimation() {
+    this.navView.domElement.classList.add('start')
+  }
+  _animate({ isShown, animation }) {
+    this.setAnimation(animation)
+    this.setShown(isShown)
+    // We have to wait two rafs for the element to show. Yawn.
+    return domUtil.rafPromise().then(domUtil.rafPromise).then(() => {
+      this.startAnimation()
+      return domUtil.transitionEndPromise(this.navView.domElement).then(() => {
+        this.setAnimation(null)
       })
     })
   }
-  animateOut() {
-    this.navView.domElement.classList.add('out')
-    this.navView.domElement.classList.remove('in')
-    return new Promise(resolve => {
-      this.navView.domElement.addEventListener('transitionend', (ev) => {
-        if (ev.target !== this.navView.domElement) {
-          return
-        }
-        resolve()
-      })
-    })
+  pushEnter() {
+    return this._animate({ isShown: true, animation: 'push-enter' })
+  }
+  popEnter() {
+    return this._animate({ isShown: true, animation: 'pop-enter' })
+  }
+  pushLeave() {
+    return this._animate({ isShown: false, animation: 'push-leave' })
+  }
+  popLeave() {
+    return this._animate({ isShown: false, animation: 'pop-leave' })
   }
 }
+

@@ -32,3 +32,21 @@ if (window.ontransitionend === undefined && window.onwebkittransitionend !== und
   css.transition = 'transition'
   css.transitionEnd = 'tranistionend'
 }
+
+export function transitionEndPromise(el:Element) {
+  return new Promise(resolve => { 
+    css.transitionEnd.split(' ').forEach(eventName => {
+      el.addEventListener(css.transitionEnd, onTransitionEnd)
+    })
+    function onTransitionEnd(ev) {
+      // Don't allow bubbled transitionend events
+      if (ev.target !== el) {
+        return
+      }
+      css.transitionEnd.split(' ').forEach(eventName => {
+        el.removeEventListener(css.transitionEnd, onTransitionEnd)
+      })
+      resolve(ev)
+    }
+  })
+}
