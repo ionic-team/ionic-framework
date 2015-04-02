@@ -1,0 +1,79 @@
+
+// iOS Action Menu
+// --------------------------------------------------
+
+$action-menu-ios-group-margin:             8px !default;
+$action-menu-ios-background-color:         rgba(243,243,243,.95) !default;
+
+$action-menu-ios-border-color:             #d2d2d6 !default;
+$action-menu-ios-border-radius:            4px !default;
+
+$action-menu-ios-label-color:              #8a8a8a !default;
+$action-menu-ios-label-font-size:          1.3rem !default;
+
+$action-menu-ios-button-color:             #007aff !default;
+$action-menu-ios-button-font-size:         2rem !default;
+
+
+.action-menu-ios {
+  text-align: center;
+
+  .action-menu-group {
+    margin: $action-menu-ios-group-margin;
+  }
+
+  .action-menu-label,
+  .action-menu-button {
+    position: relative;
+    @include flex-display();
+    @include flex-justify-content(center);
+    @include flex-align-items(center);
+
+    border: 0;
+    min-height: 44px;
+
+    background: $action-menu-ios-background-color;
+    font-weight: 400;
+
+    &:after {
+      position: absolute;
+      top: auto;
+      right: auto;
+      bottom: 0;
+      left: 0;
+      z-index: $z-index-list-border;
+      display: block;
+
+      width: 100%;
+      height: 1px;
+      @include transform-origin(50%, 0);
+
+      background-color: $action-menu-ios-border-color;
+
+      content: '';
+    }
+  }
+
+  .action-menu-label {
+    font-size: $action-menu-ios-label-font-size;
+    color: $action-menu-ios-label-color;
+  }
+
+  .action-menu-button {
+    font-size: $action-menu-ios-button-font-size;
+    color: $action-menu-ios-button-color;
+  }
+
+  .action-menu-label:first-child,
+  .action-menu-button:first-child {
+    border-top-left-radius: $action-menu-ios-border-radius;
+    border-top-right-radius: $action-menu-ios-border-radius;
+  }
+
+  .action-menu-label:last-child,
+  .action-menu-button:last-child {
+    border-bottom-left-radius: $action-menu-ios-border-radius;
+    border-bottom-right-radius: $action-menu-ios-border-radius;
+  }
+
+}

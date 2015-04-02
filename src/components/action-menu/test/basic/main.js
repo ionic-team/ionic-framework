@@ -1,12 +1,12 @@
 import {bootstrap} from 'angular2/core';
 import {Component, Template} from 'angular2/angular2';
-import {View} from 'ionic2/components/view/view';
-import {Content} from 'ionic2/components/content/content';
+import {ActionMenu} from 'ionic2/components/action-menu/action-menu';
+
 
 @Component({ selector: '[ion-app]' })
 @Template({
   url: 'main.html',
-  directives: [View, Content]
+  directives: [ActionMenu]
 })
 class IonicApp {
   constructor() {

@@ -2,33 +2,20 @@
 // Alert
 // --------------------------------------------------
 
-$alert-width:                    270px !default;
-$alert-min-height:               100px !default;
-$alert-padding:                  15px !default;
-$alert-background-color:         #fff !default;
 
-
-.pane > .pane-container.alert-container {
+.alert-container {
   position: absolute;
   z-index: $z-index-alert;
   display: block;
 
-  top: 40%;
+  top: 35%;
   left: 50%;
-  width: $alert-width;
-  margin-left: -$alert-width / 2;
-
-  background: $alert-background-color;
 }
 
-.alert-content {
-  margin: 0;
-  padding: $alert-padding;
-  min-height: $alert-min-height;
-}
-
-.alert-action {
+.alert-buttons {
   @include flex-display();
+  @include flex-justify-content(center);
+  overflow: hidden;
 
   .button {
     @include flex-display();

@@ -1,0 +1,63 @@
+
+// Alert
+// --------------------------------------------------
+
+$alert-ios-width:                    270px !default;
+$alert-ios-min-height:               100px !default;
+$alert-ios-padding:                  15px !default;
+$alert-ios-background-color:         #e8e8e8 !default;
+$alert-ios-border-radius:            15px !default;
+$alert-ios-button-color:             #007aff !default;
+$alert-ios-button-font-size:         2rem !default;
+
+
+.alert-ios {
+
+  .alert-container {
+    width: $alert-ios-width;
+    margin-left: -$alert-ios-width / 2;
+  }
+
+  .alert-content {
+    position: relative;
+    padding: $alert-ios-padding;
+    min-height: $alert-ios-min-height;
+    border-top-left-radius: $alert-ios-border-radius;
+    border-top-right-radius: $alert-ios-border-radius;
+    background: $alert-ios-background-color;
+
+    &:after {
+      position: absolute;
+      top: auto;
+      right: auto;
+      bottom: 0;
+      left: 0;
+      z-index: $z-index-list-border;
+      display: block;
+
+      width: 100%;
+      height: 1px;
+      @include transform-origin(50%, 0);
+
+      background-color: #b5b5b5;
+
+      content: '';
+    }
+  }
+
+  .alert-buttons {
+    min-height: 44px;
+    background: $alert-ios-background-color;
+    border-bottom-left-radius: $alert-ios-border-radius;
+    border-bottom-right-radius: $alert-ios-border-radius;
+
+    .button {
+      border: 0;
+      background: transparent;
+      font-size: $alert-ios-button-font-size;
+      font-weight: 400;
+      color: $alert-ios-button-color;
+    }
+  }
+
+}
