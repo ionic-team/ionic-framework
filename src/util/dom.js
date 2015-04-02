@@ -37,7 +37,6 @@ export function transitionEndPromise(el:Element) {
   return new Promise(resolve => { 
     css.transitionEnd.split(' ').forEach(eventName => {
       el.addEventListener(eventName, onTransitionEnd)
-      console.log('eventListener', eventName, onTransitionEnd)
     })
     function onTransitionEnd(ev) {
       // Don't allow bubbled transitionend events

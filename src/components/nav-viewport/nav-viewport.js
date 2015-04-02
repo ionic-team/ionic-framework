@@ -85,19 +85,6 @@ export class NavViewport {
 
 }
 
-class ItemCreator {
-  constructor() {
-    this._array = []
-  }
-  instantiate(navItem) {
-    this._array.push(navItem)
-    return navItem.waitForSetup()
-  }
-  destroy(navItem) {
-    return arrayUtil.remove(this._array, navItem)
-  }
-}
-
 class NavItem {
   constructor(ComponentClass) {
     this.Class = ComponentClass
