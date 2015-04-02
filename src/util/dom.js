@@ -30,13 +30,14 @@ if (window.ontransitionend === undefined && window.onwebkittransitionend !== und
   css.prefix = ''
   css.transform = 'transform'
   css.transition = 'transition'
-  css.transitionEnd = 'tranistionend'
+  css.transitionEnd = 'transitionend'
 }
 
 export function transitionEndPromise(el:Element) {
   return new Promise(resolve => { 
     css.transitionEnd.split(' ').forEach(eventName => {
-      el.addEventListener(css.transitionEnd, onTransitionEnd)
+      el.addEventListener(eventName, onTransitionEnd)
+      console.log('eventListener', eventName, onTransitionEnd)
     })
     function onTransitionEnd(ev) {
       // Don't allow bubbled transitionend events
