@@ -35,5 +35,11 @@
     "rx": "^2.4.6",
     "traceur": "0.0.87",
     "zone.js": "0.4.1"
+  },
+  "registry": "jspm",
+  "directories": {
+    "baseURL": "n",
+    "lib": "n",
+    "packages": "n/jspm_packages"
   }
 }

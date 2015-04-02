@@ -10,14 +10,11 @@ export class ItemPrimarySwipeButtons {
     @NgElement() element: NgElement,
     @Parent() item: Item
   ) {
+    item.primarySwipeButtons = this
     this.domElement = element.domElement
     this.parentItem = item
     this.gesture = new ItemSlideGesture(this)
     this.gesture.listen()
-
-    this.domElement.addEventListener('transitionend', () => {
-      this.domElement.classList.remove('changing')
-    })
   }
 
   setOpen(isOpen) {

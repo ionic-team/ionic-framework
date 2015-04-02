@@ -1,0 +1,16 @@
+.nav-view {
+  opacity: 0;
+  transition: 0.25s;
+  width: 100%;
+  height: 100%;
+}
+
+.nav-view.in {
+  opacity: 1;
+}
+.nav-view.out {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}

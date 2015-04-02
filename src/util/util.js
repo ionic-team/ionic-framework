@@ -55,6 +55,22 @@ export class Log {
   }
 }
 
+export let array = {
+  find(arr, cb) {
+    for (let i = 0, ii = arr.length; i < ii; i++) {
+      if (cb(arr[i], i)) return arr[i];
+    }
+  },
+  remove(arr, item) {
+    const index = arr.indexOf(item)
+    if (index === -1) {
+      return false
+    }
+    arr.splice(index, 1)
+    return true
+  }
+}
+
 export function readQueryParams() {
   var queryParams = {}
   const startIndex = window.location.href.indexOf('?')

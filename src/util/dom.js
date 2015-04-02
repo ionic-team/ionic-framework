@@ -12,7 +12,6 @@ export const raf = nativeRaf || function(callback) {
 export const rafCancel = nativeRaf ? nativeCancelRaf : function(id) {
   return window.cancelTimeout(id)
 }
-
 export function rafPromise() {
   return new Promise(resolve => raf(resolve))
 }
@@ -25,9 +24,11 @@ export let css = {}
 if (window.ontransitionend === undefined && window.onwebkittransitionend !== undefined) {
   css.prefix = 'webkit'
   css.transition = 'webkitTransition'
+  css.transform = 'webkitTransform'
   css.transitionEnd = 'webkitTransitionEnd transitionend'
 } else {
   css.prefix = ''
+  css.transform = 'transform'
   css.transition = 'transition'
   css.transitionEnd = 'tranistionend'
 }

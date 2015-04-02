@@ -1,5 +1,5 @@
 import {Component, Template, Parent} from 'angular2/angular2'
-import {NavView} from 'ionic2/components/nav-view/nav-view'
+import {NavViewport} from 'ionic2/components'
 import {View} from 'ionic2/components/view/view'
 import {SecondPage} from 'app/pages/second-page'
 
@@ -12,12 +12,12 @@ import {SecondPage} from 'app/pages/second-page'
 })
 export class FirstPage {
   constructor(
-    @Parent() navView: NavView
+    @Parent() viewport: NavViewport
   ) {
-    this.navView = navView
+    this.viewport = viewport
   }
 
   nextPage() {
-    this.navView.push(SecondPage)
+    this.viewport.push(SecondPage)
   }
 }

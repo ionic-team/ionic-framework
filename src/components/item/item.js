@@ -27,20 +27,82 @@ import {
     <content select="ion-secondary-options"></content>
     <content select="ion-secondary-swipe-buttons"></content>
   `,
-  direcetives: [
+  directives: [
     ItemPrimarySwipeButtons, 
-    ItemSecondarySwipeButtons, 
-    ItemPrimaryOptions,
-    ItemSecondaryOptions
+    // ItemSecondarySwipeButtons, 
+    // ItemPrimaryOptions,
+    // ItemSecondaryOptions
   ]
 })
 export class Item {
   constructor(
     @NgElement() ele:NgElement
   ) {
+    this._isOpen = false
+    this._isSlideActive = false
+    this._isTransitioning = false
+    this._transform = ''
+
     this.domElement = ele.domElement
+    this.swipeButtons = {}
+    this.optionButtons = {}
     Item.config.invoke(this)
   }
 }
 
 new IonicComponent(Item, {})
+
+
+function clsSetter(el, name) {
+  return (isSet) => el.classList[isSet?'add':'remove'](name)
+}
+
+import {dom} from 'ionic2/util'
+
+class Slideable {
+  constructor(slideElement: Element) {
+  }
+
+  // override
+  onTransform(str: String) {}
+  // override
+  onTransitionActive(active: Boolean) {}
+  //override
+  onSlideActive(active: boolean) {}
+
+  transform(str: String) {
+    if (arguments.length && str !== this._transform) {
+      this.onTransform()
+    }
+  }
+
+  isTransitionActive(active: Boolean) {
+    if (arguments.length && active !== this._isTransitionActive) {
+      this._isTransitionActive = active
+      this.onSetTransitionActive(active)
+    }
+    return this._isTransitioning
+  }
+
+  isSlideActive(active: Boolean) {
+    if (arguments.length && active !== this._isSlideActive) {
+      this._isSlideActive = active
+      this.onSetDragActive(active)
+    }
+    return this._isSlideActive
+  }
+
+  isOpen(open: Boolean) {
+    if (arguments.length && open !== this._isOpen) {
+      this.isTransitionActive(true)
+      dom.rafPromise().then(() => {
+        this.isOpen = isOpen
+        this.onSetIsOpen(open)
+      })
+    }
+  }
+
+}
+
+class ItemSlideGesture {
+}
