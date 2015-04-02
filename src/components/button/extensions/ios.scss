@@ -1,14 +1,12 @@
 
-// iOS Buttons
+// iOS Button Variables
 // --------------------------------------------------
 
-$button-ios-font-size:              1.4rem !default;
-$button-ios-padding:                0 10px !default;
-$button-ios-height:                 29px !default;
-$button-ios-text-color:             #007aff !default;
-$button-ios-border-width:           1px !default;
-$button-ios-border-color:           #007aff !default;
-$button-ios-border-radius:          5px !default;
+$button-ios-font-size:                1.4rem !default;
+$button-ios-padding:                  0 10px !default;
+$button-ios-height:                   29px !default;
+$button-ios-border-width:             1px !default;
+$button-ios-border-radius:            5px !default;
 
 $button-ios-large-font-size:          2rem !default;
 $button-ios-large-height:             54px !default;
@@ -21,18 +19,57 @@ $button-ios-small-padding:            4px !default;
 $button-ios-small-icon-size:          16px !default;
 
 
+// iOS Button Mixins
+// --------------------------------------------------
+
+@mixin button-default($bg-color, $border-color, $active-bg-color, $active-border-color, $color) {
+  background-color: $bg-color;
+  border-color: $border-color;
+  color: $color;
+
+  &:hover,
+  &.hover {
+    opacity: 0.8;
+    color: $color;
+    text-decoration: none;
+  }
+
+  &.activated {
+    border-color: darken($border-color, 10%);
+    background-color: $active-bg-color;
+  }
+}
+
+@mixin button-clear($color) {
+  &.button-clear {
+    border-color: transparent;
+    background: none;
+    color: $color;
+  }
+}
+
+@mixin button-outline($color) {
+  &.button-outline {
+    border-color: $color;
+    background: transparent;
+    color: $color;
+
+    &.activated {
+      background-color: $color;
+      color: #fff;
+    }
+  }
+}
+
+
+// iOS Button
+// --------------------------------------------------
+
 .button-ios {
   padding: $button-ios-padding;
-
   height: $button-ios-height;
   font-size: $button-ios-font-size;
-
-  border: $button-ios-border-width solid $button-ios-border-color;
   border-radius: $button-ios-border-radius;
-  color: $button-ios-text-color;
-
-
-
 
 
   &.button-large {
@@ -45,9 +82,29 @@ $button-ios-small-icon-size:          16px !default;
 
   &.button-small {
     padding: 0 $button-ios-small-padding;
-    min-width: $button-ios-small-height;
+    min-width: ($button-ios-small-padding * 4);
     min-height: $button-ios-small-height + 2;
     font-size: $button-ios-small-font-size;
+  }
+
+}
+
+
+// iOS Button Color Generation
+// --------------------------------------------------
+
+@each $color, $value in $colors {
+
+  .button-ios.button-#{$color} {
+    @include button-default(get-color($color, base),
+                            get-color($color, dark),
+                            inverse-tone($color),
+                            get-color($color, dark),
+                            get-color($color, inverse));
+
+    @include button-clear(get-color($color, dark));
+
+    @include button-outline(get-color($color, dark));
   }
 
 }
