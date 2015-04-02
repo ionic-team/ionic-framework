@@ -1,0 +1,53 @@
+
+// iOS Buttons
+// --------------------------------------------------
+
+$button-ios-font-size:              1.4rem !default;
+$button-ios-padding:                0 10px !default;
+$button-ios-height:                 29px !default;
+$button-ios-text-color:             #007aff !default;
+$button-ios-border-width:           1px !default;
+$button-ios-border-color:           #007aff !default;
+$button-ios-border-radius:          5px !default;
+
+$button-ios-large-font-size:          2rem !default;
+$button-ios-large-height:             54px !default;
+$button-ios-large-padding:            16px !default;
+$button-ios-large-icon-size:          32px !default;
+
+$button-ios-small-font-size:          1.2rem !default;
+$button-ios-small-height:             28px !default;
+$button-ios-small-padding:            4px !default;
+$button-ios-small-icon-size:          16px !default;
+
+
+.button-ios {
+  padding: $button-ios-padding;
+
+  height: $button-ios-height;
+  font-size: $button-ios-font-size;
+
+  border: $button-ios-border-width solid $button-ios-border-color;
+  border-radius: $button-ios-border-radius;
+  color: $button-ios-text-color;
+
+
+
+
+
+  &.button-large {
+    padding: 0 $button-ios-large-padding;
+    min-width: ($button-ios-large-padding * 4);
+    min-height: $button-ios-large-height + 5;
+    font-size: $button-ios-large-font-size;
+  }
+
+
+  &.button-small {
+    padding: 0 $button-ios-small-padding;
+    min-width: $button-ios-small-height;
+    min-height: $button-ios-small-height + 2;
+    font-size: $button-ios-small-font-size;
+  }
+
+}

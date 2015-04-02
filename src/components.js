@@ -1,6 +1,7 @@
 export * from 'ionic2/components/action-menu/action-menu'
 export * from 'ionic2/components/alert/alert'
 export * from 'ionic2/components/aside/aside'
+export * from 'ionic2/components/button/button'
 export * from 'ionic2/components/checkbox/checkbox'
 export * from 'ionic2/components/content/content'
 export * from 'ionic2/components/icon/icon'

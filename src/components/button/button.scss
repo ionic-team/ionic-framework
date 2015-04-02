@@ -1,76 +1,4 @@
 
-// Button Variables
-// -------------------------------
-
-$button-block-margin:             10px !default;
-$button-clear-padding:            6px !default;
-$button-border-radius:            2px !default;
-$button-border-width:             1px !default;
-
-$button-font-size:                1.6rem !default;
-$button-height:                   42px !default;
-$button-padding:                  12px !default;
-$button-icon-size:                24px !default;
-
-$button-large-font-size:          2rem !default;
-$button-large-height:             54px !default;
-$button-large-padding:            16px !default;
-$button-large-icon-size:          32px !default;
-
-$button-small-font-size:          1.2rem !default;
-$button-small-height:             28px !default;
-$button-small-padding:            4px !default;
-$button-small-icon-size:          16px !default;
-
-
-
-// Button Mixins
-// --------------------------------------------------
-
-@mixin button-default($bg-color, $border-color, $active-bg-color, $active-border-color, $color) {
-  background-color: $bg-color;
-  border-color: $border-color;
-  color: $color;
-
-  &:hover,
-  &.hover {
-    opacity: 0.8;
-    color: $color;
-    text-decoration: none;
-  }
-
-  &.activated {
-    border-color: darken($border-color, 10%);
-    background-color: $active-bg-color;
-    box-shadow: inset 0 1px 4px rgba(0,0,0,0.1);
-  }
-}
-
-@mixin button-clear($color) {
-  &.button-clear {
-    border-color: transparent;
-    background: none;
-    box-shadow: none;
-    color: $color;
-  }
-}
-
-@mixin button-outline($color) {
-  &.button-outline {
-    border-color: $color;
-    background: transparent;
-    color: $color;
-
-    &.activated {
-      background-color: $color;
-      box-shadow: none;
-      color: #fff;
-    }
-  }
-}
-
-
-
 // Button Defaults
 // --------------------------------------------------
 
@@ -83,23 +11,23 @@ $button-small-icon-size:          16px !default;
   @include flex-align-items(center);
   @include flex-justify-content(center);
 
+  padding: 0 8px;
   margin: 0;
-  padding: 0 $button-padding;
+  border: 1px solid #ccc;
+  line-height: 1;
+  min-height: 28px;
 
-  min-width: ($button-padding * 4);
-  min-height: $button-height + 5px;
+  background: #fff;
+  @include appearance(none);
 
-  line-height: normal;
-
+  text-align: center;
   vertical-align: top; // the better option for most scenarios
   vertical-align: -webkit-baseline-middle; // the best for those that support it
 
+  font-family: inherit;
   white-space: nowrap;
   text-overflow: ellipsis;
-
-  border-width: $button-border-width;
-  border-style: solid;
-  border-radius: $button-border-radius;
+  overflow: hidden;
 
   outline: none;
   cursor: pointer;
@@ -118,35 +46,12 @@ $button-small-icon-size:          16px !default;
 
 
 
-// Button Sizes
-// --------------------------------------------------
-
-.button-small {
-  padding: 0 $button-small-padding;
-  min-width: $button-small-height;
-  min-height: $button-small-height + 2;
-  font-size: $button-small-font-size;
-}
-
-.button-large {
-  padding: 0 $button-large-padding;
-  min-width: ($button-large-padding * 4);
-  min-height: $button-large-height + 5;
-  font-size: $button-large-font-size;
-}
-
-
-
 // Button Types
 // --------------------------------------------------
 
 .button-clear {
-  @include transition(opacity .1s);
-  padding: 0 $button-clear-padding;
-  max-height: $button-height;
   border-color: transparent;
   background: none;
-  box-shadow: none;
 
   &.activated {
     opacity: 0.3;
@@ -154,9 +59,7 @@ $button-small-icon-size:          16px !default;
 }
 
 .button-outline {
-  @include transition(opacity .1s);
   background: none;
-  box-shadow: none;
 }
 
 .button-block {
@@ -175,7 +78,6 @@ $button-small-icon-size:          16px !default;
   margin-left: 0;
   border-right-width: 0;
   border-left-width: 0;
-  border-radius: 0;
 }
 
 button.button-block,
@@ -187,25 +89,6 @@ input.button.button-block  {
 
 .padding > .button.button-block:first-child {
   margin-top: 0;
-}
-
-
-
-// Button Color Generation
-// --------------------------------------------------
-
-@each $color, $value in $colors {
-  .button-#{$color} {
-    @include button-default(get-color($color, base),
-                            get-color($color, dark),
-                            inverse-tone($color),
-                            get-color($color, dark),
-                            get-color($color, inverse));
-
-    @include button-clear(get-color($color, dark));
-
-    @include button-outline(get-color($color, dark));
-  }
 }
 
 
