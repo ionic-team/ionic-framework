@@ -91,6 +91,19 @@ input.button.button-block  {
   margin-top: 0;
 }
 
+.icon-left:before {
+  font-size: 1.5em;
+  margin-top: -0.1em;
+  margin-right: 0.25em;
+}
+
+.icon-right:before {
+  @include flex-order(2);
+  font-size: 1.5em;
+  margin-top: -0.1em;
+  margin-left: 0.25em;
+}
+
 
 
 // Button Misc
