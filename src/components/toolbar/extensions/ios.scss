@@ -45,12 +45,12 @@ $toolbar-ios-button-background-color:       transparent !default;
     background: $toolbar-ios-button-background-color;
   }
 
-  // tab-bar bottom, border top (default)
+  // toolbar top, border bottom (default)
   &:after {
     position: absolute;
-    top: 0;
+    top: auto;
     right: auto;
-    bottom: auto;
+    bottom: 0;
     left: 0;
     z-index: $z-index-toolbar-border;
     display: block;
@@ -65,10 +65,10 @@ $toolbar-ios-button-background-color:       transparent !default;
     content: '';
   }
 
-  // tab-bar bottom, border top
-  &.toolbar-top:after {
-    top: auto;
-    bottom: 0;
+  // toolbar bottom, border top
+  &.toolbar-bottom:after {
+    top: 0;
+    bottom: auto;
   }
 
 }
