@@ -1,6 +1,6 @@
 import {bootstrap} from 'angular2/core'
 import {Component, Template} from 'angular2/angular2'
-import {NavViewport} from 'ionic2/components'
+import {NavViewport} from 'ionic2/components/nav-viewport/nav-viewport'
 import {Log} from 'ionic2/util'
 import {FirstPage} from 'app/pages/first-page'
 

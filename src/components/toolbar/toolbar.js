@@ -1,7 +1,6 @@
 import {NgElement, Component, Template, Ancestor} from 'angular2/angular2'
 import {Optional} from 'angular2/src/di/annotations'
 import {BackButton} from 'ionic2/components/toolbar/back-button'
-import {Tabs, NavViewport, NavView} from 'ionic2/components'
 import {ComponentConfig} from 'ionic2/config/component-config'
 import {raf} from 'ionic2/util/dom'
 

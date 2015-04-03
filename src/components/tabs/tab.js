@@ -6,7 +6,9 @@ import {
   PropertySetter, 
   For
 } from 'angular2/angular2';
-import {NavViewport, NavView, Tabs} from 'ionic2/components'
+import {NavViewport} from 'ionic2/components/nav-viewport/nav-viewport'
+import {NavView} from 'ionic2/components/nav-view/nav-view'
+import {Tabs} from 'ionic2/components/tabs/tabs'
 import {IonicComponent} from 'ionic2/config/component'
 
 

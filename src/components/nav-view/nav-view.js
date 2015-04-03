@@ -1,6 +1,7 @@
 import {DynamicComponent, Ancestor, NgElement} from 'angular2/angular2'
 import {Optional} from 'angular2/src/di/annotations'
-import {NavViewport, Tabs} from 'ionic2/components'
+import {NavViewport} from 'ionic2/components/nav-viewport/nav-viewport'
+import {Tabs} from 'ionic2/components/tabs/tabs'
 import {PrivateComponentLoader} from 'angular2/src/core/compiler/private_component_loader'
 import {PrivateComponentLocation} from 'angular2/src/core/compiler/private_component_location'
 
