@@ -68,15 +68,22 @@ $button-ios-small-icon-size:          16px !default;
 .button-ios {
   padding: $button-ios-padding;
   min-height: $button-ios-height;
-  font-size: $button-ios-font-size;
   border-radius: $button-ios-border-radius;
+  font-size: $button-ios-font-size;
 
+  &.button-icon {
+    font-size: $button-ios-font-size + 1.5;
+  }
 
   &.button-large {
     padding: 0 $button-ios-large-padding;
     min-width: ($button-ios-large-padding * 4);
     min-height: $button-ios-large-height + 5;
     font-size: $button-ios-large-font-size;
+
+    &.button-icon {
+      font-size: $button-ios-large-font-size + 1.7;
+    }
   }
 
 
@@ -85,6 +92,10 @@ $button-ios-small-icon-size:          16px !default;
     min-width: ($button-ios-small-padding * 4);
     min-height: $button-ios-small-height + 2;
     font-size: $button-ios-small-font-size;
+
+    &.button-icon {
+      font-size: $button-ios-small-font-size + 1.2;
+    }
   }
 
 }
