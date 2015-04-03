@@ -3,6 +3,7 @@
 // --------------------------------------------------
 
 $item-min-height:         44px !default;
+$item-padding:            15px !default;
 
 
 .item {
@@ -38,6 +39,10 @@ ion-primary-swipe-buttons {
   }
 }
 
+
+// Item Content
+// --------------------------------------------------
+
 .item-content {
   // TODO add proper bg to cover up swipe buttons
   background: white;
@@ -69,6 +74,13 @@ ion-primary-swipe-buttons {
   text-overflow: ellipsis;
 }
 
+.item-content {
+  h1, h2, h3, h4, h5, h6 {
+    align-self: flex-start;
+  }
+}
+
+
 
 // Item Media (Icons, checkboxes, images, etc.)
 // --------------------------------------------------
@@ -80,22 +92,37 @@ ion-primary-swipe-buttons {
   @include flex-align-items(center);
 
   min-height: $item-min-height;
-
   padding: 0;
-}
-
-
-// Item Accessory
-// --------------------------------------------------
-
-.item-accessory {
-  @include flex-display();
-  @include flex-shrink(0);
-
-  margin-left: 5px;
-  max-height: 28px;
 
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.item-media + .item-label {
+  padding-left: $item-padding;
+}
+
+.item-media:last-child {
+  padding-right: $item-padding;
+}
+
+.item-note {
+  color: #aaa;
+  font-size: 1.4rem;
+}
+
+.item-avatar {
+  padding-top: ($item-padding / 2) - 1;
+  padding-bottom: ($item-padding / 2) + 1;
+
+  img {
+    max-width: 40px;
+    max-height: 40px;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+}
+
+

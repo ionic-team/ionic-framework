@@ -1,0 +1,30 @@
+
+// Badge
+// --------------------------------------------------
+
+$badge-font-size:                 1.3rem !default;
+$badge-font-weight:               bold !default;
+$badge-border-radius:             10px !default;
+
+
+.badge {
+  display: inline-block;
+
+  padding: 3px 8px;
+  min-width: 10px;
+  border-radius: $badge-border-radius;
+
+  vertical-align: baseline;
+  text-align: center;
+  white-space: nowrap;
+
+  font-size: $badge-font-size;
+  font-weight: $badge-font-weight;
+  line-height: 1;
+
+  background: #ccc;
+
+  &:empty {
+    display: none;
+  }
+}

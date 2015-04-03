@@ -6,46 +6,44 @@
 
 $colors: (
 
+
+  // Brand colors
+  // ----------------------
   primary: (
     base: #387ef5,
-    inverse: #fff,
-    light: #145fd7,
-    dark: #145fd7
+    inverse: #fff
   ),
 
   secondary: (
-    base: #387ef5,
-    inverse: #fff,
-    light: #145fd7,
-    dark: #145fd7
+    base: #33d066,
+    inverse: #fff
   ),
 
+
+  // Action Colors
+  // ----------------------
+  danger: (
+    base: #ec3d3d,
+    inverse: #fff,
+  ),
+
+
+  // Shade Colors
+  // ----------------------
   light: (
     base: #fff,
     inverse: #444,
-    light: #fafafa,
-    dark: #ddd
   ),
 
   stable: (
-    base: #f8f8f8,
+    base: #f4f4f4,
     inverse: #444,
-    light: #e5e5e5,
-    dark: #b2b2b2
-  ),
-
-  assertive: (
-    base: #ef473a,
-    inverse: #fff,
-    light: #f37369,
-    dark: #cc2311
   ),
 
   dark: (
     base: #444,
     inverse: #fff,
-    light: #262626,
-    dark: #000
   ),
+
 
 ) !default;

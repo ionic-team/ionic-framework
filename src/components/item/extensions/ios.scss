@@ -48,6 +48,10 @@ $item-ios-border-color:          $list-ios-border-color !default;
     }
   }
 
+  .item:last-of-type .item-content:after {
+    background: none;
+  }
+
   .item-accessory {
     color: $item-ios-accessory-color;
   }

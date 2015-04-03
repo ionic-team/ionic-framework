@@ -34,7 +34,7 @@ $list-ios-footer-color:          #8f8f94 !default;
     content: '';
   }
 
-  .list:after {
+  .item:last-of-type:after {
     position: absolute;
     top: auto;
     right: auto;
