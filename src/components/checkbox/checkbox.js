@@ -22,7 +22,7 @@ export let CheckboxConfig = new ComponentConfig('checkbox')
 
   <div class="item-content">
 
-    <div class="item-title">
+    <div class="item-label">
       <content></content>
     </div>
 

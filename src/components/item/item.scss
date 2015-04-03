@@ -56,18 +56,7 @@ ion-primary-swipe-buttons {
   padding: 0;
 }
 
-.item-media {
-  @include flex-display();
-  @include flex-shrink(0);
-  @include flex-wrap(nowrap);
-  @include flex-align-items(center);
-
-  min-height: $item-min-height;
-
-  padding: 0;
-}
-
-.item-title {
+.item-label {
   position: relative;
 
   @include flex(1);
@@ -79,6 +68,25 @@ ion-primary-swipe-buttons {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+
+// Item Media (Icons, checkboxes, images, etc.)
+// --------------------------------------------------
+
+.item-media {
+  @include flex-display();
+  @include flex-shrink(0);
+  @include flex-wrap(nowrap);
+  @include flex-align-items(center);
+
+  min-height: $item-min-height;
+
+  padding: 0;
+}
+
+
+// Item Accessory
+// --------------------------------------------------
 
 .item-accessory {
   @include flex-display();

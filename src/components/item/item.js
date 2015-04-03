@@ -20,7 +20,7 @@ import {
       <div class="item-accessory">
         <content select="ion-item-accessory"></content>
       </div>
-      <div class="item-title">
+      <div class="item-label">
         <content></content>
       </div>
     </div>
@@ -28,8 +28,8 @@ import {
     <content select="ion-secondary-swipe-buttons"></content>
   `,
   directives: [
-    ItemPrimarySwipeButtons, 
-    // ItemSecondarySwipeButtons, 
+    ItemPrimarySwipeButtons,
+    // ItemSecondarySwipeButtons,
     // ItemPrimaryOptions,
     // ItemSecondaryOptions
   ]

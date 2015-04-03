@@ -6,6 +6,20 @@
 
 $colors: (
 
+  primary: (
+    base: #387ef5,
+    inverse: #fff,
+    light: #145fd7,
+    dark: #145fd7
+  ),
+
+  secondary: (
+    base: #387ef5,
+    inverse: #fff,
+    light: #145fd7,
+    dark: #145fd7
+  ),
+
   light: (
     base: #fff,
     inverse: #444,
@@ -18,13 +32,6 @@ $colors: (
     inverse: #444,
     light: #e5e5e5,
     dark: #b2b2b2
-  ),
-
-  positive: (
-    base: #387ef5,
-    inverse: #fff,
-    light: #145fd7,
-    dark: #145fd7
   ),
 
   assertive: (
