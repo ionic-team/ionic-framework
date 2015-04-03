@@ -1,17 +1,19 @@
-var _ = require('lodash');
-var http = require('http');
-var connect = require('connect');
-var serveStatic = require('serve-static');
-var cp = require('child_process');
-var path = require('canonical-path');
-var uuid = require('node-uuid');
-
-var projectRoot = path.resolve(__dirname, '../..');
-
 
 module.exports = function(gulp, argv, buildConfig) {
 
+  var snapshotConfig = require('./snapshot.config').config;
+  var _ = require('lodash');
+  var http = require('http');
+  var connect = require('connect');
+  var serveStatic = require('serve-static');
+  var cp = require('child_process');
+  var path = require('canonical-path');
+  var uuid = require('node-uuid');
+
+  var projectRoot = path.resolve(__dirname, '../..');
   var protractorHttpServer;
+  var snapshotValues = _.merge(snapshotConfig.platformDefauls, argv);
+
   gulp.task('protractor-server', function() {
     var app = connect().use(serveStatic(projectRoot + '/' + buildConfig.dist));  // serve everything that is static
     protractorHttpServer = http.createServer(app).listen(buildConfig.protractorPort);
@@ -23,20 +25,9 @@ module.exports = function(gulp, argv, buildConfig) {
     snapshot(done, protractorConfigFile);
   });
 
-  var snapshotValues = _.merge({
-    browser: 'chrome',
-    platform: 'linux',
-    params: {
-      platform_id: 'chrome_local',
-      platform_index: 0,
-      platform_count: 1,
-      width: 400,
-      height: 800,
-      test_id: uuid.v4().split('-')[0]
-    }
-  }, argv);
-
   function snapshot(done, protractorConfigFile) {
+    snapshotValues.params.test_id = uuid.v4().split('-')[0];
+
     var protractorArgs = [
       '--browser <%= browser %>',
       '--platform <%= platform %>',
@@ -56,8 +47,6 @@ module.exports = function(gulp, argv, buildConfig) {
   }
 
   function protractor(done, args) {
-    console.log('Start protractor:', snapshotValues.params.test_id);
-
     var child = cp.spawn('protractor', args, {
       stdio: [process.stdin, process.stdout, 'pipe']
     });
@@ -76,9 +65,7 @@ module.exports = function(gulp, argv, buildConfig) {
   }
 
   function e2ePublish(testId) {
-    var snapshotConfig = require('./snapshot.config').config;
     snapshotConfig.testId = testId;
-
     require('../e2e/e2e-publish')(snapshotConfig);
   }
 

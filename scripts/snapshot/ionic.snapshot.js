@@ -6,7 +6,7 @@ var IonicSnapshot = function(options) {
   var _ = require('lodash');
   var request = require('request');
   var colors = require('gulp-util').colors;
-  var log = console.log.bind(console, colors.cyan('Snapshot') + ':');
+  var log = console.log.bind(console);
 
   var IonicReporter = function(options) {
     var self = this;
@@ -15,17 +15,18 @@ var IonicSnapshot = function(options) {
     self.domain = options.domain || 'ionic-snapshot-go.appspot.com';
     self.groupId = options.groupId || 'test_group';
     self.appId = options.appId || 'test_app';
+    self.sleepBetweenSpecs = options.sleepBetweenSpecs || 750;
     self.testId = browser.params.test_id || 'test_id';
     self.platformId = browser.params.platform_id;
     self.platformIndex = browser.params.platform_index;
     self.platformCount = browser.params.platform_count;
-    self.sleepBetweenSpecs = options.sleepBetweenSpecs || 750;
     self.width = browser.params.width || -1;
     self.height = browser.params.height || -1;
-    self.highestMismatch = 0;
+
     self.screenshotRequestPromises = [];
     self.results = {};
     self.mismatches = [];
+    self.highestMismatch = 0;
 
     self.flow = protractor.promise.controlFlow();
 
@@ -78,7 +79,9 @@ var IonicSnapshot = function(options) {
       }
     });
 
-    log('init:', _.pick(self, ['testId', 'appId', 'width', 'height', 'platformId']));
+    log(colors.green('Start Snapshot:'),
+        self.groupId, self.appId, self.testId, self.platformId, '(' + self.width + 'x' + self.height + ')');
+
   };
 
   IonicReporter.prototype.reportSpecResults = function(spec) {
@@ -101,7 +104,6 @@ var IonicSnapshot = function(options) {
 
           browser.takeScreenshot().then(function(pngBase64) {
             var specIdString = '[' + (spec.id+1) + '/' + self.testData.total_specs + ']';
-            log(specIdString, spec.getFullName());
 
             self.testData.spec_index = spec.id;
             self.testData.description = spec.getFullName();
@@ -124,11 +126,11 @@ var IonicSnapshot = function(options) {
                   var mismatch = Math.round(rspData.Mismatch * 100) / 100;
 
                   if (rspData.Mismatch > 1) {
-                    log(specIdString, colors.red('Mismatch: ' + mismatch + '%'));
+                    log(specIdString, colors.red('Mismatch: ' + mismatch + '%'), colors.gray(spec.getFullName()));
                   } else if (rspData.Mismatch > 0) {
-                    log(specIdString, colors.yellow('Mismatch: ' + mismatch + '%'));
+                    log(specIdString, colors.yellow('Mismatch: ' + mismatch + '%'), colors.gray(spec.getFullName()));
                   } else {
-                    log(specIdString, colors.green('Mismatch: ' + mismatch + '%'));
+                    log(specIdString, colors.green('Mismatch: ' + mismatch + '%'), colors.gray(spec.getFullName()));
                   }
 
                   var resultKey = (((rspData.Mismatch * 1000) + 1000000) + '').split('.')[0] + '-' + spec.id;
