@@ -1,0 +1,38 @@
+
+// Material Design Button Variables
+// --------------------------------------------------
+
+$button-material-font-size:                1.4rem !default;
+$button-material-padding:                  0 0.6rem !default;
+$button-material-box-shadow:               0 2px 5px 0 rgba(0, 0, 0, 0.26) !default;
+$button-material-border-radius:            3px !default;
+
+
+// Material Design Button
+// --------------------------------------------------
+
+
+.button.button-android {
+  border: 0;
+  border-radius: $button-material-border-radius;
+
+  padding: $button-material-padding;
+  text-transform: uppercase;
+
+  font-weight: 500;
+  font-size: $button-material-font-size;
+  box-shadow: $button-material-box-shadow;
+
+
+  &.button-icon {
+    font-size: $button-icon-size;
+  }
+
+  &.button-large.button-icon {
+    font-size: $button-large-icon-size;
+  }
+
+  &.button-small.button-icon {
+    font-size: $button-small-icon-size;
+  }
+}

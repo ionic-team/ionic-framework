@@ -21,7 +21,7 @@
   "typography";
 
 
-// Default Components
+// Core Components
 @import
   "../action-menu/action-menu",
   "../alert/alert",
@@ -42,13 +42,6 @@
   "../toolbar/toolbar";
 
 
-// Android Components
-@import
-  "../list/extensions/android",
-  "../item/extensions/android",
-  "../toolbar/extensions/android";
-
-
 // iOS Components
 @import
   "../action-menu/extensions/ios",
@@ -63,6 +56,14 @@
   "../search-bar/extensions/ios",
   "../switch/extensions/ios",
   "../toolbar/extensions/ios";
+
+
+// Material Design Components
+@import
+  "../button/extensions/android",
+  "../list/extensions/android",
+  "../item/extensions/android",
+  "../toolbar/extensions/android";
 
 
 // Icons

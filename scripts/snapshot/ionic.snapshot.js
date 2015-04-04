@@ -80,7 +80,7 @@ var IonicSnapshot = function(options) {
     });
 
     log(colors.green('Start Snapshot:'),
-        self.groupId, self.appId, self.testId, self.platformId, '(' + self.width + 'x' + self.height + ')');
+        self.groupId, self.appId, self.platformId, self.testId, '(' + self.width + 'x' + self.height + ')');
 
   };
 

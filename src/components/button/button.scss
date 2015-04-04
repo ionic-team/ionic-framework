@@ -1,5 +1,27 @@
 
-// Button Defaults
+// Core Button Variables
+// --------------------------------------------------
+
+$button-font-size:                1.4rem !default;
+$button-margin:                   0.4rem 0 !default;
+$button-padding:                  0 1.4rem !default;
+$button-height:                   4.2rem !default;
+$button-border-width:             1px !default;
+$button-border-radius:            4px !default;
+$button-icon-size:                3rem !default;
+
+$button-large-font-size:          2rem !default;
+$button-large-height:             5.4rem !default;
+$button-large-padding:            1.4rem !default;
+$button-large-icon-size:          3.6rem !default;
+
+$button-small-font-size:          1.3rem !default;
+$button-small-height:             2.8rem !default;
+$button-small-padding:            1.1rem !default;
+$button-small-icon-size:          2.1rem !default;
+
+
+// Core Button
 // --------------------------------------------------
 
 .button {
@@ -11,20 +33,18 @@
   @include flex-align-items(center);
   @include flex-justify-content(center);
 
-  padding: 0 8px;
-  margin: 0;
-  border: 1px solid #ccc;
+  margin: $button-margin;
   line-height: 1;
-  min-height: 28px;
 
-  background: #fff;
   @include appearance(none);
 
-  text-align: center;
   vertical-align: top; // the better option for most scenarios
   vertical-align: -webkit-baseline-middle; // the best for those that support it
 
   font-family: inherit;
+  font-variant: inherit;
+  font-style: inherit;
+
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -41,12 +61,52 @@
     left: -6px;
     content: ' ';
   }
-
 }
 
 
+// Core Button Styling
+// --------------------------------------------------
 
-// Button Types
+.button {
+  border: 1px solid #ccc;
+  padding: $button-padding;
+  min-height: $button-height;
+  background: #fff;
+
+  text-align: center;
+  font-size: $button-font-size;
+  border: transparent;
+  border-radius: $button-border-radius;
+
+  &.button-icon {
+    font-size: $button-icon-size;
+  }
+
+  &.button-large {
+    padding: 0 $button-large-padding;
+    min-width: ($button-large-padding * 4);
+    min-height: $button-large-height;
+    font-size: $button-large-font-size;
+
+    &.button-icon {
+      font-size: $button-large-icon-size;
+    }
+  }
+
+  &.button-small {
+    padding: 0 $button-small-padding;
+    min-width: ($button-small-padding * 3);
+    min-height: $button-small-height;
+    font-size: $button-small-font-size;
+
+    &.button-icon {
+      font-size: $button-small-icon-size;
+    }
+  }
+}
+
+
+// Core Button Types
 // --------------------------------------------------
 
 .button-clear {
@@ -65,6 +125,8 @@
 .button-block {
   @include flex-display();
   clear: both;
+  margin-right: 0;
+  margin-left: 0;
 
   &:after {
     clear: both;
@@ -76,8 +138,12 @@
   @include flex-display();
   margin-right: 0;
   margin-left: 0;
-  border-right-width: 0;
-  border-left-width: 0;
+  border-radius: 0;
+
+  &.button-outline.button-outline {
+    border-right-width: 0;
+    border-left-width: 0;
+  }
 }
 
 button.button-block,
@@ -105,7 +171,6 @@ input.button.button-block  {
 }
 
 
-
 // Button Misc
 // --------------------------------------------------
 
@@ -120,3 +185,59 @@ a.button {
   pointer-events: none;
 }
 
+
+// Core Button Mixins
+// --------------------------------------------------
+
+@mixin button-default($bg-color, $fg-color) {
+  background-color: $bg-color;
+  color: $fg-color;
+
+  &:hover,
+  &.hover {
+    opacity: 0.88;
+    color: $fg-color;
+    text-decoration: none;
+  }
+
+  &.activated {
+    opacity: 1;
+    background-color: darken($bg-color, 12%);
+  }
+}
+
+@mixin button-clear($fg-color) {
+  &.button-clear {
+    background: none;
+    color: $fg-color;
+  }
+}
+
+@mixin button-outline($fg-color) {
+  &.button-outline {
+    border: 1px solid $fg-color;
+    background: transparent;
+    color: $fg-color;
+
+    &.activated {
+      background-color: rgba(red($fg-color), green($fg-color), blue($fg-color), 0.15);
+    }
+  }
+}
+
+
+// Core Button Color Generation
+// --------------------------------------------------
+
+@each $color, $value in $colors {
+
+  .button-#{$color} {
+    @include button-default(get-color($color, base),
+                            get-color($color, inverse));
+
+    @include button-clear(get-color($color, base));
+
+    @include button-outline(get-color($color, base));
+  }
+
+}
