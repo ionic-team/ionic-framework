@@ -16,7 +16,7 @@ export let AlertConfig = new ComponentConfig('alert')
         Do you like cookies?
       </div>
 
-      <div class="alert-buttons">
+      <div class="alert-actions">
         <button class="button">OK</button>
       </div>
 

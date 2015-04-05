@@ -15,7 +15,7 @@ $alert-ios-button-font-size:         2rem !default;
 
   .alert-container {
     width: $alert-ios-width;
-    margin-left: -$alert-ios-width / 2;
+    background: transparent;
   }
 
   .alert-content {
@@ -45,13 +45,14 @@ $alert-ios-button-font-size:         2rem !default;
     }
   }
 
-  .alert-buttons {
+  .alert-actions {
     min-height: 44px;
     background: $alert-ios-background-color;
     border-bottom-left-radius: $alert-ios-border-radius;
     border-bottom-right-radius: $alert-ios-border-radius;
 
     .button {
+      @include flex(1);
       border: 0;
       background: transparent;
       font-size: $alert-ios-button-font-size;
