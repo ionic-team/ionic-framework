@@ -51,6 +51,7 @@ $button-small-icon-size:          2.1rem !default;
 
   outline: none;
   cursor: pointer;
+  @include user-select(none);
 
   &:after {
     // used to create a larger button "hit" area

@@ -22,7 +22,7 @@ export class TabsPage {
 //
 @Component({ selector: 't1p1' })
 @Template({
-  inline: '<ion-view>Tab 1 Page 1.<br/><br/><button (click)="next()">Next</button></ion-view>',
+  inline: '<ion-view nav-title="Tab 1 Page 1">Tab 1 Page 1.<br/><br/><button (click)="next()">Next</button></ion-view>',
   directives: [View]
 })
 class Tab1Page1 {
@@ -36,7 +36,7 @@ class Tab1Page1 {
 
 @Component({ selector: 't1p2' })
 @Template({
-  inline: '<ion-view>Tab 1<br/>Page 2.<br/></br><button (click)="pop()">Pop</button></ion-view>',
+  inline: '<ion-view nav-title="Tab 1 Page 2">Tab 1<br/>Page 2.<br/></br><button (click)="pop()">Pop</button></ion-view>',
   directives: [View]
 })
 class Tab1Page2 {
@@ -50,7 +50,7 @@ class Tab1Page2 {
 //
 @Component({ selector: 't2p1' })
 @Template({
-  inline: '<ion-view><br/><br/>Tab 2 Page 1. <button (click)="next()">Next</button></ion-view>',
+  inline: '<ion-view nav-title="Tab 2 Page 1"><br/><br/>Tab 2 Page 1. <button (click)="next()">Next</button></ion-view>',
   directives: [View]
 })
 class Tab2Page1 {
@@ -64,7 +64,7 @@ class Tab2Page1 {
 
 @Component({ selector: 't2p2' })
 @Template({
-  inline: '<ion-view><br/><br/>Tab 2<br/>Page 2. <button (click)="pop()">Pop</button></ion-view>',
+  inline: '<ion-view nav-title="Tab 2 Page 2"><br/><br/>Tab 2<br/>Page 2. <button (click)="pop()">Pop</button></ion-view>',
   directives: [View]
 })
 class Tab2Page2 {

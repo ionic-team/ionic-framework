@@ -2,23 +2,79 @@
 // Tabs
 // --------------------------------------------------
 
+$tab-bar-item-padding:             10px !default;
+$tab-bar-item-min-width:           100px !default;
 
-.tabs {
-
-}
 
 .toolbar.tab-bar {
   @include flex-justify-content(center);
 }
 
-.tab-bar-content {
+.tab-bar-container {
   @include flex-display();
+  height: 100%;
+  overflow: hidden;
 }
 
 .tab-bar-item {
+  @include flex-display();
+  @include flex-justify-content(center);
+  @include flex-direction(column);
   @include flex(1);
-  min-width: 100px;
+  @include flex-align-self(center);
+
+  padding: $tab-bar-item-padding;
+  min-width: $tab-bar-item-min-width;
   text-align: center;
+
+  cursor: pointer;
+  @include user-select(none);
+}
+
+.tab-bar-icon-bottom .tab-bar-item {
+  .tab-bar-item-icon {
+    @include flex-order(10);
+  }
+}
+
+.tab-bar-icon-left .tab-bar-item {
+  @include flex-direction(row);
+
+  .tab-bar-item-icon {
+    text-align: right;
+    padding-right: 5px;
+  }
+}
+
+.tab-bar-icon-right .tab-bar-item {
+  @include flex-direction(row);
+
+  .tab-bar-item-icon {
+    @include flex-order(10);
+    text-align: left;
+    padding-left: 5px;
+  }
+}
+
+.tab-bar-item-text,
+.tab-bar-item-icon {
+  @include flex-align-self(center);
+
+  min-width: 26px;
+  max-width: 100%;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.tab-bar-icon-only .tab-bar-item-text,
+.tab-bar-text-only .tab-bar-item-icon {
+  display: none;
+}
+
+.tab-bar-item:hover {
+  opacity: 0.6;
 }
 
 .tab-bar-item.active {

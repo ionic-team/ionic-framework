@@ -10,12 +10,13 @@ import {IonicComponent} from 'ionic2/config/component'
 @Template({
   inline: `
     <div class="toolbar tab-bar toolbar-ios toolbar-bottom">
-      <div class="tab-bar-content">
+      <div class="tab-bar-container">
         <a *for="#tab of tabs"
-          class="tab-bar-item tab-active" 
+          class="tab-bar-item tab-active"
           [class.active]="tab.isSelected"
-          (click)="onClickTabItem($event, tab)">
-          {{tab.title}}
+          (^click)="onClickTabItem($event, tab)">
+            <icon class="tab-bar-item-icon ion-home"></icon>
+            <span class="tab-bar-item-text">{{tab.title}}</span>
         </a>
       </div>
     </div>
