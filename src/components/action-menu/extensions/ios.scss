@@ -18,6 +18,10 @@ $action-menu-ios-button-font-size:         2rem !default;
 .action-menu-ios {
   text-align: center;
 
+  .action-menu-container {
+    padding: 0 $action-menu-ios-group-margin;
+  }
+
   .action-menu-group {
     margin-top: $action-menu-ios-group-margin;
     margin-bottom: $action-menu-ios-group-margin;
