@@ -19,7 +19,8 @@ $action-menu-ios-button-font-size:         2rem !default;
   text-align: center;
 
   .action-menu-group {
-    margin: $action-menu-ios-group-margin;
+    margin-top: $action-menu-ios-group-margin;
+    margin-bottom: $action-menu-ios-group-margin;
   }
 
   .action-menu-label,
@@ -29,6 +30,7 @@ $action-menu-ios-button-font-size:         2rem !default;
     @include flex-justify-content(center);
     @include flex-align-items(center);
 
+    margin: 0;
     border: 0;
     min-height: 44px;
 
@@ -57,11 +59,13 @@ $action-menu-ios-button-font-size:         2rem !default;
   .action-menu-label {
     font-size: $action-menu-ios-label-font-size;
     color: $action-menu-ios-label-color;
+    border-radius: 0;
   }
 
   .action-menu-button {
     font-size: $action-menu-ios-button-font-size;
     color: $action-menu-ios-button-color;
+    border-radius: 0;
   }
 
   .action-menu-label:first-child,

@@ -2,8 +2,10 @@
 // Action Menu
 // --------------------------------------------------
 
-$action-menu-background-color:           rgba(243,243,243,.95) !default;
-$action-menu-button-text-color:          #007aff !default;
+$action-menu-width:                     100% !default;
+$action-menu-max-width:                 520px !default;
+$action-menu-background-color:          rgba(243,243,243,.95) !default;
+$action-menu-button-text-color:         #007aff !default;
 
 
 .action-menu-container {
@@ -12,6 +14,13 @@ $action-menu-button-text-color:          #007aff !default;
   left: 0;
   bottom: 0;
   width: 100%;
+}
+
+.action-menu-group {
+  width: $action-menu-width;
+  max-width: $action-menu-max-width;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .action-menu-group .action-menu-label {

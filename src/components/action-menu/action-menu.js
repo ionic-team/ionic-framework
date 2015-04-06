@@ -9,25 +9,26 @@ export let ActionMenuConfig = new ComponentConfig('action-menu')
 })
 @Template({
   inline: `
-    <div class="pane-backdrop"></div>
-    <div class="action-menu-container">
+    <div class="overlay-backdrop"></div>
+    <div class="overlay-container">
+      <div class="action-menu-container">
 
-      <div class="action-menu-group">
-        <div class="action-menu-label">Action Menu Label</div>
-        <button class="button action-menu-button">Button 1</button>
-        <button class="button action-menu-button">Button 2</button>
+        <div class="action-menu-group">
+          <div class="action-menu-label">Action Menu Label</div>
+          <button class="button action-menu-button">Button 1</button>
+          <button class="button action-menu-button">Button 2</button>
+        </div>
+
+        <div class="action-menu-group">
+          <div class="action-menu-label">Action Menu Label</div>
+          <button class="button action-menu-button">Button 1</button>
+          <button class="button action-menu-button">Button 2</button>
+        </div>
+
+        <div class="action-menu-group">
+          <button class="button action-menu-button">Button 1</button>
+        </div>
       </div>
-
-      <div class="action-menu-group">
-        <div class="action-menu-label">Action Menu Label</div>
-        <button class="button action-menu-button">Button 1</button>
-        <button class="button action-menu-button">Button 2</button>
-      </div>
-
-      <div class="action-menu-group">
-        <button class="button action-menu-button">Button 1</button>
-      </div>
-
     </div>`
 })
 export class ActionMenu {
