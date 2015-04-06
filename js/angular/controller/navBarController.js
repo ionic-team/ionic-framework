@@ -358,6 +358,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
   self.visibleBar = function(shouldShow) {
     if (shouldShow && !isVisible) {
       $element.removeClass(CSS_HIDE);
+      self.align();
     } else if (!shouldShow && isVisible) {
       $element.addClass(CSS_HIDE);
     }
