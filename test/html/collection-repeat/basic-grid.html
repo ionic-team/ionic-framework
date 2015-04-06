@@ -19,7 +19,7 @@
       <ion-list can-swipe="true">
         <ion-item class="item"
           collection-repeat="item in items"
-          collection-item-height="75 + ($index % 40)*2"
+          collection-item-height="65 + (($index % 3) * 10)"
           collection-item-width="(10 + ($index % 10))+ '%'">
           <h2>{{item.text}}</h2>
         </ion-item>

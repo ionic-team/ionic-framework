@@ -409,7 +409,7 @@ describe('collectionRepeat', function() {
       var dim = activeItemDimensions();
       //Row 0
       expect(dim[0]).toBe('x:0,y:0,w:16,h:50');
-      expect(dim[1]).toBe('x:16,y:0,w:32,h:50');
+      expect(dim[1]).toBe('x:16,y:0,w:32,h:25');
       expect(dim[2]).toBe('x:48,y:0,w:48,h:50');
       // Row 1
       expect(dim[3]).toBe('x:0,y:50,w:64,h:25');
@@ -429,21 +429,17 @@ describe('collectionRepeat', function() {
       expect(dim[0]).toBe('x:0,y:50,w:64,h:25');
       //Row 2
       expect(dim[1]).toBe('x:0,y:75,w:80,h:50');
-      expect(dim[2]).toBe('x:80,y:75,w:16,h:50');
+      expect(dim[2]).toBe('x:80,y:75,w:16,h:25');
 
       // row 3, index 6: 50 height, 2 items (width 32%, 48%)
 
       //Scroll past row 2 and row 3 to the end
       scrollTo(176);
-      // row 4, index 8: 50 height, 1 item (width 64%)
-      // row 5, index 9: 25 height, 2 items (width 80%, 16%)
       expect(activeItems().length).toBe(2);
-      expect(activeItemContents()).toEqual(['8', '9']);
+      expect(activeItemContents()).toEqual(['8','9']);
 
       dim = activeItemDimensions();
-      //Row 3
       expect(dim[0]).toBe('x:0,y:175,w:64,h:50');
-      //Row 4
       expect(dim[1]).toBe('x:0,y:225,w:80,h:25');
     });
 
