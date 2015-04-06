@@ -2,13 +2,13 @@
 // Alert
 // --------------------------------------------------
 
-$alert-width:                  40% !default;
-$alert-min-width:              280px !default;
-$alert-max-width:              460px !default;
-$alert-content-min-height:     80px !default;
+$alert-width:                       40% !default;
+$alert-min-width:                   270px !default;
+$alert-max-width:                   460px !default;
+$alert-content-margin:              24px !default;
 
 
-.alert {
+.alert .overlay-container {
   @include flex-display();
   @include flex-justify-content(center);
   @include flex-align-items(center);
@@ -26,9 +26,14 @@ $alert-content-min-height:     80px !default;
   background: white;
 }
 
+.alert-header {
+  margin: $alert-content-margin;
+  font-size: 2rem;
+  font-weight: 400;
+}
+
 .alert-content {
-  padding: 15px;
-  min-height: $alert-content-min-height;
+  margin: $alert-content-margin;
 }
 
 .alert-actions {

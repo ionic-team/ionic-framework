@@ -9,17 +9,19 @@ export let AlertConfig = new ComponentConfig('alert')
 })
 @Template({
   inline: `
-    <div class="pane-backdrop"></div>
-    <div class="alert-container">
-
-      <div class="alert-content">
-        Do you like cookies?
+    <div class="overlay-backdrop"></div>
+    <div class="overlay-container">
+      <div class="alert-container">
+        <div class="alert-header">
+          Do you like cookies?
+        </div>
+        <div class="alert-content">
+          Seriously, who does not like cookies.
+        </div>
+        <div class="alert-actions">
+          <button class="button">OK</button>
+        </div>
       </div>
-
-      <div class="alert-actions">
-        <button class="button">OK</button>
-      </div>
-
     </div>`
 })
 export class Alert {

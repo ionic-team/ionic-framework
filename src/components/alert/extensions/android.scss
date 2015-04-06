@@ -1,8 +1,8 @@
 
-// Alert
+// Android Alert
 // --------------------------------------------------
 
-$alert-android-padding:                  24px !default;
+$alert-android-content-margin:           24px !default;
 $alert-android-background-color:         #fff !default;
 $alert-android-border-radius:            4px !default;
 $alert-android-box-shadow:               0px 27px 24px 0 rgba(0, 0, 0, 0.2) !default;
@@ -11,24 +11,27 @@ $alert-android-box-shadow:               0px 27px 24px 0 rgba(0, 0, 0, 0.2) !def
 .alert-android {
 
   .alert-container {
-    background: transparent;
     box-shadow: $alert-android-box-shadow;
+    border-radius: $alert-android-border-radius;
+    overflow: hidden;
+  }
+
+  .alert-header {
+    margin: $alert-android-content-margin;
+    font-size: 2rem;
+    font-weight: 400;
   }
 
   .alert-content {
     position: relative;
-    padding: $alert-android-padding;
-    border-top-left-radius: $alert-android-border-radius;
-    border-top-right-radius: $alert-android-border-radius;
+    margin: $alert-android-content-margin;
     background: $alert-android-background-color;
   }
 
   .alert-actions {
     min-height: 44px;
     background: $alert-android-background-color;
-    border-bottom-left-radius: $alert-android-border-radius;
-    border-bottom-right-radius: $alert-android-border-radius;
-    padding: 12px 18px;
+    margin: $alert-android-content-margin;
 
     .button {
       border: 0;
