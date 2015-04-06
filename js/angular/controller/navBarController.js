@@ -55,7 +55,6 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
     var lastViewItemEle = {};
     var leftButtonsEle, rightButtonsEle;
 
-    //navEle[BACK_BUTTON] = self.createBackButtonElement(headerBarEle);
     navEle[BACK_BUTTON] = createNavElement(BACK_BUTTON);
     navEle[BACK_BUTTON] && headerBarEle.append(navEle[BACK_BUTTON]);
 
@@ -79,6 +78,8 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
     $element.append($compile(containerEle)($scope.$new()));
 
     var headerBarCtrl = headerBarEle.data('$ionHeaderBarController');
+    headerBarCtrl.backButtonIcon = $ionicConfig.backButton.icon();
+    headerBarCtrl.backButtonText = $ionicConfig.backButton.text();
 
     var headerBarInstance = {
       isActive: isActive,
