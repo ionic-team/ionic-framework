@@ -1,0 +1,28 @@
+
+// iOS Toolbar
+// --------------------------------------------------
+
+$tab-bar-ios-item-padding:             3px 10px !default;
+$tab-bar-ios-item-font-size:           11px !default;
+$tab-bar-ios-item-icon-size:           28px !default;
+
+
+.tabs-ios {
+
+  .tab-bar-item {
+    padding: $tab-bar-ios-item-padding;
+  }
+
+  .tab-bar-item-text {
+    font-size: $tab-bar-ios-item-font-size;
+  }
+
+  .tab-bar-item-icon {
+    font-size: $tab-bar-ios-item-icon-size;
+  }
+
+  > .tab-bar.toolbar-bottom {
+    @include hairline(top, $toolbar-ios-border-color);
+  }
+
+}

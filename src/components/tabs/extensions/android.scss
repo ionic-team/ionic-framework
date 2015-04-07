@@ -1,0 +1,14 @@
+
+// Android Toolbar
+// --------------------------------------------------
+
+$tab-bar-android-item-padding:             4px 10px !default;
+
+
+.tabs-android {
+
+  .tab-bar-item {
+    padding: $tab-bar-item-padding;
+  }
+
+}

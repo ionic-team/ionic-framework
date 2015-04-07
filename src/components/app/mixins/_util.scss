@@ -64,3 +64,48 @@
   $url: url-encode($svg);
   background-image: url("data:image/svg+xml;charset=utf-8,#{$url}");
 }
+
+
+// Hairline
+// --------------------------------------------------
+
+@mixin hairline($placement, $line-color, $z-index: 999) {
+
+  @if $placement == top {
+
+    &:before {
+      position: absolute;
+      top: 0;
+      right: auto;
+      bottom: auto;
+      left: 0;
+      z-index: $z-index;
+      display: block;
+      width: 100%;
+      height: 1px;
+      @include transform-origin(50%, 0%);
+      background-color: $line-color;
+      content: '';
+    }
+
+  } @else if $placement == bottom {
+
+    &:after {
+      position: absolute;
+      top: auto;
+      right: auto;
+      bottom: 0;
+      left: 0;
+      z-index: $z-index;
+      display: block;
+      width: 100%;
+      height: 1px;
+      @include transform-origin(50%, 0%);
+      background-color: $line-color;
+      content: '';
+    }
+
+  }
+
+
+}

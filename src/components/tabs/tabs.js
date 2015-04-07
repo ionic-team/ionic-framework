@@ -9,7 +9,9 @@ import {IonicComponent} from 'ionic2/config/component'
 })
 @Template({
   inline: `
-    <div class="toolbar tab-bar toolbar-ios toolbar-bottom">
+    <div class="toolbar tab-bar"
+         [class.toolbar-top]="placement=='top'"
+         [class.toolbar-bottom]="placement=='bottom'">
       <div class="tab-bar-container">
         <a *for="#tab of tabs"
           class="tab-bar-item"

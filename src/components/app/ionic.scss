@@ -45,6 +45,7 @@
 
 // iOS Components
 @import
+  "../toolbar/extensions/ios",
   "../action-menu/extensions/ios",
   "../alert/extensions/ios",
   "../button/extensions/ios",
@@ -55,7 +56,7 @@
   "../radio/extensions/ios",
   "../search-bar/extensions/ios",
   "../switch/extensions/ios",
-  "../toolbar/extensions/ios";
+  "../tabs/extensions/ios";
 
 
 // Material Design Components
@@ -64,6 +65,7 @@
   "../button/extensions/android",
   "../list/extensions/android",
   "../item/extensions/android",
+  "../tabs/extensions/android",
   "../toolbar/extensions/android";
 
 

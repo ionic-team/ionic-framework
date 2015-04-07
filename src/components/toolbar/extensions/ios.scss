@@ -45,27 +45,10 @@ $toolbar-ios-button-background-color:       transparent !default;
     background: $toolbar-ios-button-background-color;
   }
 
-  // toolbar top, border bottom (default)
-  &:after {
-    position: absolute;
-    top: auto;
-    right: auto;
-    bottom: 0;
-    left: 0;
-    z-index: $z-index-toolbar-border;
-    display: block;
+  // toolbar on top, border on bottom (default)
+  @include hairline(bottom, $toolbar-ios-border-color);
 
-    width: 100%;
-    height: 1px;
-
-    background-color: $toolbar-ios-border-color;
-
-    @include transform-origin(50%, 100%);
-
-    content: '';
-  }
-
-  // toolbar bottom, border top
+  // toolbar on bottom, border on top
   &.toolbar-bottom:after {
     top: 0;
     bottom: auto;

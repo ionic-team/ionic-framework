@@ -28,24 +28,7 @@ $item-ios-border-color:          $list-ios-border-color !default;
   .item-content {
     min-height: $item-ios-min-height;
     padding: 0;
-
-    &:after {
-      position: absolute;
-      top: auto;
-      right: auto;
-      bottom: 0;
-      left: 0;
-      z-index: $z-index-list-border;
-      display: block;
-
-      width: 100%;
-      height: 1px;
-      @include transform-origin(50%, 0);
-
-      background-color: $item-ios-border-color;
-
-      content: '';
-    }
+    @include hairline(bottom, $item-ios-border-color, $z-index-list-border);
   }
 
   .item:last-of-type .item-content:after {
