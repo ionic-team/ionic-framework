@@ -29,12 +29,13 @@ export let ToolbarConfig = new ComponentConfig('toolbar')
       <div class="toolbar-item toolbar-secondary-item">
         <content select="ion-nav-items[side=secondary]"></content>
       </div>
-    </div>`,
+    </div>
+    <div class="shared-toolbar"></div>`,
   directives: [BackButton]
 })
 export class Toolbar {
   constructor(
-    @NgElement() ngEle:NgElement, 
+    @NgElement() ngEle:NgElement,
     configFactory: ToolbarConfig
   ) {
     this.domElement = ngEle.domElement

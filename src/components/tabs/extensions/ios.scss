@@ -3,8 +3,8 @@
 // --------------------------------------------------
 
 $tab-bar-ios-item-padding:             3px 10px !default;
-$tab-bar-ios-item-font-size:           11px !default;
-$tab-bar-ios-item-icon-size:           28px !default;
+$tab-bar-ios-item-font-size:           1.1rem !default;
+$tab-bar-ios-item-icon-size:           2.8rem !default;
 
 
 .tabs-ios {
@@ -23,6 +23,10 @@ $tab-bar-ios-item-icon-size:           28px !default;
 
   > .tab-bar.toolbar-bottom {
     @include hairline(top, $toolbar-ios-border-color);
+  }
+
+  > .tab-bar.toolbar-top {
+    @include hairline(bottom, $toolbar-ios-border-color);
   }
 
 }

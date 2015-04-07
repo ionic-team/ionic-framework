@@ -2,13 +2,23 @@
 // Android Toolbar
 // --------------------------------------------------
 
-$tab-bar-android-item-padding:             4px 10px !default;
+$tab-bar-android-item-padding:              4px 10px !default;
+$tab-bar-android-active-border-width:       3px !default;
+$tab-bar-android-active-border-color:       red !default;
 
 
 .tabs-android {
 
   .tab-bar-item {
     padding: $tab-bar-item-padding;
+  }
+
+  .tab-bar .tab-bar-item {
+    border-bottom: $tab-bar-android-active-border-width solid transparent;
+  }
+
+  .tab-bar .tab-active {
+    border-bottom-color: $tab-bar-android-active-border-color;
   }
 
 }

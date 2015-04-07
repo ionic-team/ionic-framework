@@ -22,16 +22,20 @@ import {IonicComponent} from 'ionic2/config/component'
         </a>
       </div>
     </div>
-    <content></content>
+    <div class="pane-container tabs-container">
+      <content></content>
+    </div>
   `,
   directives: [For]
 })
 export class Tabs  {
   constructor(
-    element: NgElement
+    @NgElement() ngElement: NgElement
   ) {
-    this.domElement = element.domElement
+    this.domElement = ngElement.domElement
+
     this.domElement.classList.add('pane')
+
     this.config = Tabs.config.invoke(this)
 
     this.tabs = []

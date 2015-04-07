@@ -71,3 +71,12 @@ $toolbar-background:              #f7f7f8 !default;
 .toolbar-secondary-item {
   @include flex-order(4);
 }
+
+
+
+.shared-toolbar {
+  display: none;
+  width: 100%;
+  height: 44px;
+  background: red;
+}

@@ -13,7 +13,7 @@ export let ViewConfig = new ComponentConfig('view')
 })
 @Template({
   inline: `
-    <ion-toolbar [nav-title]="title">
+    <ion-toolbar class="view-toolbar" [nav-title]="title">
       <content select="ion-nav-title"></content>
       <content select="ion-nav-items[side=primary]"></content>
       <content select="ion-nav-items[side=secondary]"></content>
