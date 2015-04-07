@@ -15,7 +15,7 @@ class AsideGesture extends SlideEdgeGesture {
     this.slideElement = slideElement;
     this.listen();
   }
-  
+
   canStart(ev) {
     // Only restrict edges if the aside is closed
     return this.aside.isOpen ? true : super.canStart(ev);
@@ -89,4 +89,3 @@ export class BottomAsideGesture extends TopAsideGesture {
     };
   }
 }
-

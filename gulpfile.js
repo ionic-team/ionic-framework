@@ -1,7 +1,3 @@
-//
-// Mostly stolen from https://github.com/pkozlowski-opensource/ng2-play
-//
-
 var _ = require('lodash')
 var buildConfig = require('./scripts/build/config')
 var SystemJsBuilder = require('systemjs-builder')
@@ -55,9 +51,33 @@ gulp.task('dependencies', function() {
     .pipe(gulp.dest(buildConfig.distLib))
 })
 
-gulp.task('ionic-js', function() {
-  return gulp.src(['src/**/*.js', '!src/**/test/*/**/*.js'])
-    .pipe(gulp.dest(buildConfig.distLib + '/ionic2'))
+gulp.task('ionic-compile', function() {
+  var builder = new SystemJsBuilder()
+  builder.config({
+    traceurOptions: buildConfig.traceurOptions,
+    meta: {
+      'angular2/angular2': { build: false },
+      'angular2/src/di/annotations': { build: false },
+      'angular2/src/core/compiler/private_component_loader': { build: false },
+      'angular2/src/core/compiler/private_component_location': { build: false },
+      'hammer': { build: false },
+    },
+    map: {
+      'ionic2': 'src'
+    }
+  })
+  return builder.build('ionic2/ionic2', buildConfig.distLib + '/ionic2.js')
+})
+
+gulp.task('ionic-js', ['ionic-compile'], function() {
+  return gulp.src(buildConfig.distLib + '/ionic2.js')
+    .pipe(through2.obj(function(file, enc, next) {
+      var contents = file.contents.toString()
+      contents = contents.replace(/"src\//g, '"ionic2/')
+      file.contents = new Buffer(contents)
+      next(null, file)
+    }))
+    .pipe(gulp.dest(buildConfig.distLib))
 })
 
 gulp.task('sass', function(done) {

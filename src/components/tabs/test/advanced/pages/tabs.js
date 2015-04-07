@@ -1,6 +1,6 @@
 import {Component, Template, Parent} from 'angular2/angular2'
-import {View, Tabs, Tab} from 'ionic2/components'
-import {NavViewport} from 'ionic2/components'
+import {View, Tabs, Tab, Aside} from 'ionic2/components'
+import {NavView} from 'ionic2/components'
 
 @Component({
   selector: 'tabs-page'
@@ -26,11 +26,11 @@ export class TabsPage {
   directives: [View]
 })
 class Tab1Page1 {
-  constructor(@Parent() tab: Tab) {
-    this.tab = tab
+  constructor(navView: NavView) {
+    this.navView = navView
   }
   next() {
-    this.tab.push(Tab1Page2)
+    this.navView.push(Tab1Page2)
   }
 }
 
@@ -40,8 +40,10 @@ class Tab1Page1 {
   directives: [View]
 })
 class Tab1Page2 {
-  constructor(@Parent() tab: Tab) { this.tab = tab }
-  pop() { this.tab.pop() }
+  constructor(navView: NavView) {
+    this.navView = navView
+  }
+  pop() { this.navView.pop() }
 }
 
 
@@ -50,15 +52,22 @@ class Tab1Page2 {
 //
 @Component({ selector: 't2p1' })
 @Template({
-  inline: '<ion-view nav-title="Tab 2 Page 1"><br/><br/>Tab 2 Page 1. <button (click)="next()">Next</button></ion-view>',
-  directives: [View]
+  inline: `
+    <ion-aside side="left" [content]="view">Hello, I'm a deeper aside.</ion-aside>
+    <ion-view nav-title="Tab 2 Page 1" #view>
+      <br/><br/>Tab 2 Page 1.
+      <button (click)="next()">Next</button>
+      <br/><span style="color:red">I've got an aside on the left.</span>
+    </ion-view>
+  `,
+  directives: [View, Aside]
 })
 class Tab2Page1 {
-  constructor(@Parent() tab: Tab) {
-    this.tab = tab
+  constructor(navView: NavView) {
+    this.navView = navView
   }
   next() {
-    this.tab.push(Tab2Page2)
+    this.navView.push(Tab1Page2)
   }
 }
 
@@ -68,6 +77,8 @@ class Tab2Page1 {
   directives: [View]
 })
 class Tab2Page2 {
-  constructor(@Parent() tab: Tab) { this.tab = tab }
-  pop() { this.tab.pop() }
+  constructor(navView: NavView) {
+    this.navView = navView
+  }
+  pop() { this.navView.pop() }
 }

@@ -17,17 +17,20 @@ export class DragGesture extends Gesture {
       if (this.onDragStart(ev) !== false) {
         this.dragging = true;
       }
-    });
+      // ev.stopPropagation();
+    })
     this.on('panmove', ev => {
       if (!this.dragging) return;
       if (this.onDrag(ev) === false) {
         this.dragging = false;
       }
+      // ev.stopPropagation()
     });
     this.on('panend', ev => {
       if (!this.dragging) return;
       this.onDragEnd(ev);
       this.dragging = false;
+      // ev.stopPropagation()
     });
   }
   onDrag() {}

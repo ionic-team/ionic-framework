@@ -3,7 +3,7 @@ import {NavViewport, Aside} from 'ionic2/components'
 import {SignInPage} from 'app/pages/sign-in'
 
 @Component({
-  selector: '[ion-app]'
+  selector: '[ion-app]',
 })
 @Template({
   url: 'main.html',

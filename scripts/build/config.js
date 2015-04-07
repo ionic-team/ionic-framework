@@ -29,6 +29,7 @@ module.exports = {
     'long-stack-trace-zone.js',
     'hammer.js',
     'angular2.js',
+    'ionic2.js',
   ],
 
   traceurOptions: {

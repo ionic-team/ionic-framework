@@ -1,5 +1,5 @@
-import {Component, Template, Parent} from 'angular2/angular2'
-import {View, NavViewport} from 'ionic2/components'
+import {Component, Template} from 'angular2/angular2'
+import {View, NavView} from 'ionic2/components'
 import {TabsPage} from 'app/pages/tabs'
 
 @Component({
@@ -11,11 +11,11 @@ import {TabsPage} from 'app/pages/tabs'
 })
 export class SignInPage {
   constructor(
-    @Parent() viewport: NavViewport
+    navView: NavView
   ) {
-    this.viewport = viewport
+    this.navView = navView
   }
   signIn() {
-    this.viewport.push(TabsPage)
+    this.navView.push(TabsPage)
   }
 }

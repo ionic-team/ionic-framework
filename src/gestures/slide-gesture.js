@@ -40,7 +40,7 @@ export class SlideGesture extends DragGesture {
       this.slide.min = min;
       this.slide.max = max;
       this.slide.elementStartPos = this.getElementStartPos(this.slide, ev);
-      this.slide.pointerStartPos = ev.center[this.direction];
+      this.slide.pointerStartPos = ev.gesture.center[this.direction];
       this.slide.started = true;
       this.onSlideStart(this.slide, ev);
     }).catch(() => {
@@ -49,7 +49,7 @@ export class SlideGesture extends DragGesture {
   }
   onDrag(ev) {
     if (!this.slide || !this.slide.started) return;
-    this.slide.pos = ev.center[this.direction];
+    this.slide.pos = ev.gesture.center[this.direction];
     this.slide.distance = util.clamp(
       this.slide.min,
       this.slide.pos - this.slide.pointerStartPos + this.slide.elementStartPos,

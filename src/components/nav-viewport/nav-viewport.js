@@ -1,13 +1,13 @@
 import {Component, Template, For, NgElement} from 'angular2/angular2'
 import {ComponentConfig} from 'ionic2/config/component-config'
 import {NavView} from 'ionic2/components/nav-view/nav-view'
-import {array as arrayUtil, dom as domUtil, isFunction} from 'ionic2/util'
+import * as util from 'ionic2/util'
 
 @Component({
   selector: 'ion-nav-viewport',
   bind: {
     initial: 'initial'
-  },
+  }
 })
 @Template({
   inline: `
@@ -26,7 +26,7 @@ export class NavViewport {
     // is removed even if it's still animating out.
     this._stack = []
 
-    // _ngForLoopArray is actually adds/removes components from the dom. It won't 
+    // _ngForLoopArray is actually adds/removes components from the dom. It won't
     // remove a component until it's done animating out.
     this._ngForLoopArray = []
   }
@@ -41,6 +41,7 @@ export class NavViewport {
       this.push(Class)
     }
   }
+  //TODO let the view handle enter/leave so splitview can override
 
   /**
    * Push a new view into the history stack.
@@ -54,19 +55,15 @@ export class NavViewport {
   // TODO allow starting an animation in the middle (eg gestures). Leave
   // most of this up to the animation's implementation.
   push(Class: Function, { sync = this._stack.length === 0 } = {}) {
+    let opts = {sync}
     let pushedItem = new NavItem(Class)
     this._stack.push(pushedItem)
     this._ngForLoopArray.push(pushedItem)
 
     return pushedItem.waitForSetup().then(() => {
       let current = this.getPrevious(pushedItem)
-      if (sync) {
-        current && current.leaveSync()
-        pushedItem.enterSync()
-      } else {
-        current && current.leaveReverse()
-        return pushedItem.enter()
-      }
+      current && current.leave( util.extend({reverse:true}, opts) )
+      return pushedItem.enter(opts)
     })
   }
 
@@ -76,18 +73,12 @@ export class NavViewport {
    * @param shouldAnimate whether to animate
    */
   pop({ sync = false } = {}) {
+    let opts = {sync}
     let current = this._stack.pop()
     let previous = this._stack[this._stack.length - 1]
-    if (sync) {
-      previous && previous.enterSync()
-      return Promise.resolve(remove())
-    } else {
-      previous && previous.enterReverse()
-      return current.leave().then(remove)
-    }
-    function remove() {
-      arrayUtil.remove(this._ngForLoopArray, current)
-    }
+
+    previous && previous.enter( util.extend({reverse:true}, opts) )
+    return current && current.leave(opts).then(remove)
   }
 
   getPrevious(item) {
@@ -102,7 +93,6 @@ export class NavViewport {
   // Animate an old view *out*
   _animateOut(view) {
   }
-
 }
 
 class NavItem {
@@ -137,33 +127,28 @@ class NavItem {
   _animate({ isShown, animation }) {
     this.setAnimation(animation)
     this.setShown(isShown)
-    // We have to wait two rafs for the element to show. Yawn.
-    return domUtil.rafPromise().then(domUtil.rafPromise).then(() => {
-      this.startAnimation()
-      return domUtil.transitionEndPromise(this.navView.domElement).then(() => {
-        this.setAnimation(null)
+    if (animation) {
+      // We have to wait two rafs for the element to show. Yawn.
+      return util.dom.rafPromise().then(util.dom.rafPromise).then(() => {
+        this.startAnimation()
+        return util.dom.transitionEndPromise(this.navView.domElement).then(() => {
+          this.setAnimation(null)
+        })
       })
+    } else {
+      return Promise.resolve()
+    }
+  }
+  enter({ reverse = false, sync = false } = {}) {
+    return this._animate({
+      isShown: true,
+      animation: sync ? null : (reverse ? 'enter-reverse' : 'enter')
     })
   }
-  enterSync() {
-    this.setAnimation(null)
-    return this.setShown(true)
-  }
-  leaveSync() {
-    this.setAnimation(null)
-    return this.setShown(false)
-  }
-  enter() {
-    return this._animate({ isShown: true, animation: 'enter' })
-  }
-  enterReverse() {
-    return this._animate({ isShown: true, animation: 'enter-reverse' })
-  }
-  leave() {
-    return this._animate({ isShown: false, animation: 'leave' })
-  }
-  leaveReverse() {
-    return this._animate({ isShown: false, animation: 'leave-reverse' })
+  leave({ reverse = false, sync = false } = {}) {
+    return this._animate({
+      isShown: false,
+      animation: sync ? null : (reverse ? 'leave-reverse' : 'leave')
+    })
   }
 }
-

@@ -15,7 +15,7 @@ export class SlideEdgeGesture extends SlideGesture {
 
   canStart(ev) {
     this._containerRect = this.getContainerDimensions();
-    return this.edges.every(edge => this._checkEdge(edge, ev.center));
+    return this.edges.every(edge => this._checkEdge(edge, ev.gesture.center));
   }
 
   getContainerDimensions() {

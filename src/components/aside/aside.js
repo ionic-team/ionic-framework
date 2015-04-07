@@ -1,8 +1,12 @@
-import {Component, Template, Inject, Parent, NgElement} from 'angular2/angular2'
+import {Component, Template, Inject, Parent, NgElement, EventEmitter} from 'angular2/angular2'
 import * as types from 'ionic2/components/aside/extensions/types'
-import * as gestures from  'ionic2/components/aside/extensions/gestures';
+import * as gestures from  'ionic2/components/aside/extensions/gestures'
 import {dom} from 'ionic2/util'
 import {IonicComponent} from 'ionic2/config/component'
+
+/**
+ * TODO (?) add docs about how to have a root aside and a nested aside, then hide the root one
+ */
 
 @Component({
   selector: 'ion-aside',

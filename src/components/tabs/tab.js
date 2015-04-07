@@ -46,5 +46,4 @@ export class Tab extends NavViewport {
   }
 }
 
-new IonicComponent(Tab, {
-})
+new IonicComponent(Tab, {})
