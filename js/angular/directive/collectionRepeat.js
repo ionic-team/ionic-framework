@@ -268,16 +268,15 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
       //4) Dynamic Mode
       //  - The user provides a dynamic expression for the width or height.  This is re-evaluated
       //    for every item, stored on the `.getValue()` field.
-      if (!heightExpr && !widthExpr) {
-        heightData.computed = widthData.computed = true;
+      if (heightExpr) {
+        parseDimensionAttr(heightExpr, heightData);
       } else {
-        if (heightExpr) {
-          parseDimensionAttr(heightExpr, heightData);
-        } else {
-          heightData.computed = true;
-        }
-        if (!widthExpr) widthExpr = '"100%"';
+        heightData.computed = true;
+      }
+      if (widthExpr) {
         parseDimensionAttr(widthExpr, widthData);
+      } else {
+        widthData.computed = true;
       }
     }
 

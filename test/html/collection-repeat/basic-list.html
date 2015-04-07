@@ -19,8 +19,8 @@
     </ion-header-bar>
     <ion-content>
       <h4 style="margin: 80px;">I have 80px margin</h4>
-      <ion-list can-swipe="true" show-delete="$root.showDelete">
-        <ion-item class="item" collection-repeat="item in items">
+      <ion-list>
+        <ion-item class="item card" collection-repeat="item in items" item-height="50px">
           <ion-option-button>Button</ion-option-button>
           <ion-delete-button  class="ion-minus-circled" ng-click="items.splice($index, 1)"></ion-delete-button>
           <h2>{{item.text}}</h2>

@@ -1,5 +1,4 @@
 describe('collectionRepeat', function() {
-
   var el;
   beforeEach(module('ionic', function($provide) {
     $provide.decorator('$$rAF', function($delegate) {
@@ -222,6 +221,10 @@ describe('collectionRepeat', function() {
     }));
 
     it('should refresh layout on scrollCtrl.resize', inject(function($timeout, $window) {
+      spyOn($window, 'getComputedStyle').andReturn({
+        width: '1px',
+        height: '50px'
+      });
       var el = setup(10, 'item-height="20px"', {
         __clientHeight: 50,
         __clientWidth: 1
@@ -289,16 +292,20 @@ describe('collectionRepeat', function() {
   });
 
   describe('vertical static list', function() {
-    beforeEach(function() {
+    beforeEach(inject(function($window) {
+      spyOn($window, 'getComputedStyle').andReturn({
+        width: '50px',
+        height: '50px'
+      });
       setup(10);
-    });
+    }));
 
     it('should show initial screen of items', function() {
       expect(activeItems().length).toBe(5);
       expect(activeItemContents()).toEqual(['0','1','2','3','4']);
     });
 
-    it('should switch out as you scroll', function() {
+    it('should switch out as you scroll', inject(function($window) {
       expect(activeItems().length).toBe(5);
       expect(activeItemContents()).toEqual(['0','1','2','3','4']);
       expect(activeItemIds()).toEqual(['item0','item1','item2','item3','item4']);
@@ -323,7 +330,7 @@ describe('collectionRepeat', function() {
       expect(activeItems().length).toBe(5);
       expect(activeItemContents()).toEqual(['5','6','7','8','9']);
       expect(activeItemIds()).toEqual(['item0','item1','item2','item3','item4']);
-    });
+    }));
 
     it('should start with the same items when resizing', inject(function($window) {
       scrollTo(26);
@@ -338,8 +345,8 @@ describe('collectionRepeat', function() {
       angular.element($window).triggerHandler('resize');
 
       expect(activeItems().length).toBe(2);
-      expect(activeItemContents()).toEqual(['2','3']);
-      expect(activeItemIds()).toEqual(['item2','item3']);
+      expect(activeItemContents()).toEqual(['8','9']);
+      expect(activeItemIds()).toEqual(['item1','item0']);
     }));
 
   });
