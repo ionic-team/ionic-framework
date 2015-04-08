@@ -4,7 +4,9 @@ import {IonicComponent} from 'ionic2/config/component'
 @Component({
   selector: 'ion-tabs',
   bind: {
-    placement: 'placement'
+    placement: 'placement',
+    tabBarIcons: 'tab-bar-icons',
+    tabBarText: 'tab-bar-text'
   }
 })
 @Template({
@@ -17,8 +19,8 @@ import {IonicComponent} from 'ionic2/config/component'
           class="tab-bar-item"
           [class.tab-active]="tab.isSelected"
           (^click)="onClickTabItem($event, tab)">
-            <icon class="tab-bar-item-icon ion-home"></icon>
-            <span class="tab-bar-item-text">{{tab.title}}</span>
+            <icon class="tab-bar-item-icon ion-home" [hidden]="tabBarIcons=='none'"></icon>
+            <span class="tab-bar-item-text" [hidden]="tabBarText=='none'">{{tab.title}}</span>
         </a>
       </div>
     </div>
@@ -78,6 +80,14 @@ new IonicComponent(Tabs, {
         android: 'top',
         base: 'bottom'
       }
-    }
+    },
+    tabBarIcons: {
+      defaults: {
+        ios: 'top',
+        android: 'none',
+        base: 'top'
+      }
+    },
+    tabBarText: {}
   }
 })

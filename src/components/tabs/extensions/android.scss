@@ -5,12 +5,16 @@
 $tab-bar-android-item-padding:              4px 10px !default;
 $tab-bar-android-active-border-width:       3px !default;
 $tab-bar-android-active-border-color:       red !default;
+$tab-bar-android-text-transform:            uppercase !default;
+$tab-bar-android-text-font-weight:          500 !default;
 
 
 .tabs-android {
 
   .tab-bar-item {
     padding: $tab-bar-item-padding;
+    text-transform: $tab-bar-android-text-transform;
+    font-weight: $tab-bar-android-text-font-weight;
   }
 
   .tab-bar .tab-bar-item {
