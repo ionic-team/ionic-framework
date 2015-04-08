@@ -109,7 +109,7 @@ gulp.task('e2e', ['ionic-js', 'sass'], function() {
 
   var platforms = [
     'android',
-    'default',
+    'core',
     'ios',
   ]
 
@@ -174,7 +174,7 @@ gulp.task('ng2-rename', function(done) {
   })
 })
 
-// We use SystemJsBuilder to build ng2 because it will properly 
+// We use SystemJsBuilder to build ng2 because it will properly
 gulp.task('ng2', ['ng2-rename'], function() {
   var builder = new SystemJsBuilder()
   builder.config({
