@@ -7,10 +7,10 @@ import {IonicComponent} from 'ionic2/config/component'
 @Template({
   inline: `
     <icon [class-name]="'back-button-icon ' + icon"></icon>
-    <div class="back-button-text">
-      <div class="back-default">{{ text }}</div>
-      <div class="back-title"></div>
-    </div>`
+    <span class="back-button-text">
+      <span class="back-default">{{ text }}</span>
+      <span class="back-title"></span>
+    </span>`
 })
 export class BackButton {
   constructor(

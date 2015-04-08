@@ -7,7 +7,7 @@ import {NavView} from 'ionic2/components'
 })
 @Template({
   url: 'pages/tabs.html',
-  directives: [Tabs, Tab]
+  directives: [Tabs, Tab, View]
 })
 export class TabsPage {
   constructor() {
@@ -22,7 +22,14 @@ export class TabsPage {
 //
 @Component({ selector: 't1p1' })
 @Template({
-  inline: '<ion-view nav-title="Tab 1 Page 1">Tab 1 Page 1.<br/><br/><button (click)="next()">Next</button></ion-view>',
+  inline: `<ion-view nav-title="Tab 1 Page 1">
+              <ion-content class="padding">
+                <p>Tab 1 Page 1.</p>
+                <button class="button button-primary" (click)="next()">
+                  Go to Tab 1, Page 2 (push)
+                </button>
+              </ion-content>
+            </ion-view>`,
   directives: [View]
 })
 class Tab1Page1 {
@@ -36,7 +43,14 @@ class Tab1Page1 {
 
 @Component({ selector: 't1p2' })
 @Template({
-  inline: '<ion-view nav-title="Tab 1 Page 2">Tab 1<br/>Page 2.<br/></br><button (click)="pop()">Pop</button></ion-view>',
+  inline: `<ion-view nav-title="Tab 1 Page 2">
+              <ion-content class="padding">
+                <p>Tab 1 Page 2.</p>
+                <button class="button button-primary" (click)="pop()">
+                  Back to Tab 1, Page 1 (pop)
+                </button>
+              </ion-content>
+            </ion-view>`,
   directives: [View]
 })
 class Tab1Page2 {
@@ -53,11 +67,17 @@ class Tab1Page2 {
 @Component({ selector: 't2p1' })
 @Template({
   inline: `
-    <ion-aside side="left" [content]="view">Hello, I'm a deeper aside.</ion-aside>
+    <ion-aside side="left" [content]="view">
+      Left aside for Tab 2 Page 1
+    </ion-aside>
     <ion-view nav-title="Tab 2 Page 1" #view>
-      <br/><br/>Tab 2 Page 1.
-      <button (click)="next()">Next</button>
-      <br/><span style="color:red">I've got an aside on the left.</span>
+      <ion-content class="padding">
+        <p>Tab 2 Page 1.</p>
+        <button class="button button-primary" (click)="next()">
+          Go to Tab 2 Page 2 (push)
+        </button>
+        <br/><span style="color:red">I have got an aside on the left.</span>
+      </ion-content>
     </ion-view>
   `,
   directives: [View, Aside]
@@ -67,14 +87,34 @@ class Tab2Page1 {
     this.navView = navView
   }
   next() {
-    this.navView.push(Tab1Page2)
+    this.navView.push(Tab2Page2)
   }
 }
 
 @Component({ selector: 't2p2' })
 @Template({
-  inline: '<ion-view nav-title="Tab 2 Page 2"><br/><br/>Tab 2<br/>Page 2. <button (click)="pop()">Pop</button></ion-view>',
-  directives: [View]
+  inline: `
+    <ion-aside side="left" [content]="view">
+      Left aside for Tab 2 Page 2
+    </ion-aside>
+    <ion-tabs #view>
+      <ion-tab tab-title="Nested Tab 1">
+        <ion-view nav-title="Nested Tab 1">
+          <ion-content class="padding">
+            Nested Tab 1, static content
+          </ion-content>
+        </ion-view>
+      </ion-tab>
+      <ion-tab tab-title="Nested Tab 2">
+        <ion-view nav-title="Nested Tab 2">
+          <ion-content class="padding">
+            Nested Tab 2, static content
+          </ion-content>
+        </ion-view>
+      </ion-tab>
+    </ion-tabs>
+  `,
+  directives: [View, Aside, Tabs, Tab]
 })
 class Tab2Page2 {
   constructor(navView: NavView) {

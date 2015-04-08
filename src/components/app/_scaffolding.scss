@@ -13,6 +13,12 @@ html {
   margin: 0;
   padding: 0;
 
+  .nav-viewport {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
   .pane {
     position: relative;
     height: 100%;
@@ -21,11 +27,6 @@ html {
     @include flex-display();
     @include flex-direction(column);
     @include flex(1);
-  }
-
-  .pane > .pane-container.pane-shared {
-    position: absolute;
-    width: 100%;
   }
 
   .pane > .pane-container {

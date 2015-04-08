@@ -1,8 +1,6 @@
-.nav-viewport {
-  flex: 1;
-  position: relative;
-  display: flex;
-}
+
+$transition-duration: 1000ms;
+
 
 .nav-view {
   position: absolute;
@@ -17,7 +15,7 @@
   }
   &[animate] {
     display: block;
-    transition: 0.3s linear;
+    transition: $transition-duration linear;
   }
 
   &[animate=enter] {
