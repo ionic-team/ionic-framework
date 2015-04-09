@@ -1,4 +1,4 @@
-import {NgElement, Component, Template, Parent, For} from 'angular2/angular2'
+import {NgElement, Component, Template, For} from 'angular2/angular2'
 import {IonicComponent} from 'ionic2/config/component'
 
 @Component({
@@ -19,14 +19,15 @@ import {IonicComponent} from 'ionic2/config/component'
           class="tab-bar-item"
           [class.tab-active]="tab.isSelected"
           (^click)="onClickTabItem($event, tab)">
-            <icon class="tab-bar-item-icon ion-home" [hidden]="tabBarIcons=='none'"></icon>
+            <icon class="tab-bar-item-icon ion-home"
+              [hidden]="tabBarIcons=='none'"
+              [class.tab-bar-icon-bottom]="tabBarIcons=='bottom'"
+              [class.tab-bar-icon-top]="tabBarIcons=='top'"></icon>
             <span class="tab-bar-item-text" [hidden]="tabBarText=='none'">{{tab.title}}</span>
         </a>
       </div>
     </div>
-    <div class="pane-container tabs-container">
-      <content></content>
-    </div>
+    <content></content>
   `,
   directives: [For]
 })

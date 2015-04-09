@@ -97,7 +97,7 @@ class Tab2Page1 {
     <ion-aside side="left" [content]="view">
       Left aside for Tab 2 Page 2
     </ion-aside>
-    <ion-tabs #view>
+    <ion-tabs #view class="view-cover">
       <ion-tab tab-title="Nested Tab 1">
         <ion-view nav-title="Nested Tab 1">
           <ion-content class="padding">

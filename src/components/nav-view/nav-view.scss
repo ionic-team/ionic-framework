@@ -3,13 +3,8 @@ $transition-duration: 1000ms;
 
 
 .nav-view {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-
   display: none;
+
   &.shown {
     display: block;
   }
