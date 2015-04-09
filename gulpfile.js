@@ -73,7 +73,9 @@ gulp.task('ionic-js', ['ionic-compile'], function() {
   return gulp.src(buildConfig.distLib + '/ionic2.js')
     .pipe(through2.obj(function(file, enc, next) {
       var contents = file.contents.toString()
-      contents = contents.replace(/"src\//g, '"ionic2/')
+      contents = contents
+        .replace(/"src\//g, '"ionic2/')
+        .replace(new RegExp(' = void 0 in ','g'), ' in ');
       file.contents = new Buffer(contents)
       next(null, file)
     }))

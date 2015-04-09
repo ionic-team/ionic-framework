@@ -14,9 +14,11 @@ html {
   padding: 0;
 
   .nav-viewport {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+    /* position: absolute; */
+    /* width: 100%; */
+    /* height: 100%; */
+      position: relative;
+      flex: 1;
   }
 
   .pane {

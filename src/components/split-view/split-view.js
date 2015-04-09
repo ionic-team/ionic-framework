@@ -2,6 +2,9 @@ import {Component, Parent, Decorator, Template, NgElement} from 'angular2/angula
 import {NavViewport} from 'ionic2/components/nav-viewport/nav-viewport'
 import {View} from 'ionic2/components/view/view'
 import {NavView} from 'ionic2/components/nav-view/nav-view'
+import * as util from 'ionic2/util'
+
+// TODO consider more explicit API, a la tabs
 
 /**
  * SplitViewportDecorator is temporary until the SplitView is able to query
@@ -23,18 +26,34 @@ class SplitViewportDecorator {
   selector: 'ion-split-view',
   bind: {
     defaultView: 'defaultView',
-    viewTitle: 'viewTitle'
-  }
+    navTitle: 'navTitle'
+  },
 })
 @Template({
   inline: `
-  <ion-view [view-title]="viewTitle">
-    <div class="split-pane-container">
+  <ion-view [nav-title]="navTitle" class="split-view">
+    <div class="pane-container">
       <content></content>
     </div>
   </ion-view>
   <ion-nav-viewport split-viewport>
   </ion-nav-viewport>
+<style>
+ion-split-view {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+ion-split-view > .view.split-view {
+  max-width: 300px;
+  border-right: 1px solid black;
+  z-index: 1;
+}
+ion-split-view > ion-nav-viewport[split-viewport] {
+  flex: 1;
+}
+
+</style>
   `,
   directives: [SplitViewportDecorator, NavViewport, View]
 })
@@ -45,34 +64,57 @@ export class SplitView {
   ) {
     this.domElement = element.domElement
     this.navView = navView
+
+    // TODO mq.addEventListener() doesn't work with zone.js
+    // let checkScreen = () => {
+    //   const mq = window.matchMedia('(min-width: 720px)')
+    //   this.setEnabled(mq.matches)
+    // }
+    // window.addEventListener('resize', checkScreen)
+    // checkScreen()
+    this.setEnabled(true)
   }
 
-  set defaultView(def) {
-    this.splitViewport.push(def)
+  // Sets the first view to be shown in the viewport to the right of the splitView.
+  set defaultView(DefaultClass) {
+    this.splitViewport.push(DefaultClass, {sync: true})
+  }
+
+  isActive(Class) {
+    for (let item of this.splitViewport._stack) {
+      if (item.Class === Class) return true
+    }
+    return false
   }
 
   setNavViewport(viewport) {
     this.splitViewport = viewport
 
-    this.navView.push = function(Class, opts) {
-      opts = opts || {}
-      util.defaults(opts, { sync: true })
-      if (this.splitViewport._stack.indexOf(Class) !== -1) {
-        this.splitViewport.popTo(0)
-      } else {
-        while (this.splitViewport._stack.length) {
-          this.splitViewport.pop({sync: true})
+    this.navView.__$push = this.navView.push
+    this.navView.push = (Class, opts) => {
+      if (this.isEnabled) {
+        opts = opts || {}
+        util.defaults(opts, { sync: true })
+        if (this.splitViewport.containsClass(Class)) {
+          return this.splitViewport.popTo(0)
+        } else {
+          this.splitViewport.popAll()
+          return this.splitViewport.push(Class, opts)
         }
-        this.splitViewport.push(Class, opts)
+      } else {
+        return this.navView.__$push(Class, opts)
       }
-    }
+    };
 
   }
 
   // TODO set enabled depending on some condition (media query in this case)
   setEnabled(isEnabled) {
-    this.isSplitView = isEnabled
-    if (isEnabled) {
+    if (isEnabled !== this.isEnabled) {
+      if (isEnabled) {
+        this.splitViewport
+      }
+      this.isEnabled = isEnabled
     }
   }
 }

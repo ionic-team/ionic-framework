@@ -35,11 +35,9 @@ export class Tabs  {
     @NgElement() ngElement: NgElement
   ) {
     this.domElement = ngElement.domElement
-
     this.domElement.classList.add('pane')
 
     this.config = Tabs.config.invoke(this)
-
     this.tabs = []
   }
 
@@ -55,10 +53,7 @@ export class Tabs  {
     if (this.selectedTab !== tab) {
       this.select(tab)
     } else if (tab._stack.length >= 2) {
-      while (tab._stack.length > 2) {
-        tab.pop({ sync: true }) // pop with no animation
-      }
-      tab.pop() //pop last one with animation
+      tab.popTo(0)
     }
   }
 
