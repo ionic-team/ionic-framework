@@ -26,3 +26,4 @@ temp
 dist
 
 .idea
+/src/components/split-view/test/settings/main.js

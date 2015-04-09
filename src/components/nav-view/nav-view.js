@@ -30,7 +30,9 @@ export class NavView {
   set item(navItem) {
     if (this.initialized) return;
     this.initialized = true;
+    this.Class = navItem.Class;
     this.loader.load(navItem.Class, this.location).then(instance => {
+      this.instance = instance
       navItem.finishSetup(this, instance)
     })
   }
@@ -45,16 +47,12 @@ export class NavView {
   /**
    * Go back
    */
-  pop() {
-    return this.viewport.pop()
+  pop(opts) {
+    return this.viewport.pop(opts)
   }
 
-  popTo(index: Number) {
-    if (this._stack.length < index + 1) return
-    while (tab._stack.length > index + 1) {
-      tab.pop({ sync: true }) // pop with no animation
-    }
-    return tab.pop() //pop last one with animation
+  popTo(index, opts) {
+    return this.viewport.popTo(index, opts)
   }
 }
 

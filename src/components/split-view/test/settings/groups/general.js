@@ -6,7 +6,7 @@ import {View} from 'ionic2/components'
 })
 @Template({
   inline: `
-<ion-view view-title="General">
+<ion-view nav-title="General Stuff">
   General Settings
 </ion-view>
   `,
