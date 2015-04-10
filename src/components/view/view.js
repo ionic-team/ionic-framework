@@ -32,7 +32,14 @@ export class View {
 
 
 
-    /*** HACK HACK HACK!!!!!!!!! *****/
+    /*** TODO: MAKE MORE GOOD!! HACK HACK HACK!!!!!!!!! *****/
+    /*
+      Take the toolbar info from this view and view's context
+      and transplate it to go to it's associated toolbar container
+      Both ion-nav-view and ion-tabs components provide the toolbar container
+      Trick is that it's context needs to still be available after the DOM
+      element was moved to another location.
+    */
     setTimeout(() => {
       var toolbar = this.domElement.querySelector('ion-toolbar')
       if (!toolbar) return
