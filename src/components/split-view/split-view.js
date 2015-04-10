@@ -1,7 +1,7 @@
 import {Component, Parent, Decorator, Template, NgElement} from 'angular2/angular2'
 import {NavViewport} from 'ionic2/components/nav-viewport/nav-viewport'
 import {View} from 'ionic2/components/view/view'
-import {NavView} from 'ionic2/components/nav-view/nav-view'
+import {NavView} from 'ionic2/components/nav-pane/nav-pane'
 import * as util from 'ionic2/util'
 
 // TODO consider more explicit API, a la tabs
@@ -60,10 +60,10 @@ ion-split-view > ion-nav-viewport[split-viewport] {
 export class SplitView {
   constructor(
     element: NgElement,
-    @Parent() navView: NavView
+    @Parent() navPane: NavPane
   ) {
     this.domElement = element.domElement
-    this.navView = navView
+    this.navPane = navPane
 
     // TODO mq.addEventListener() doesn't work with zone.js
     // let checkScreen = () => {
@@ -90,8 +90,8 @@ export class SplitView {
   setNavViewport(viewport) {
     this.splitViewport = viewport
 
-    this.navView.__$push = this.navView.push
-    this.navView.push = (Class, opts) => {
+    this.navPane.__$push = this.navPane.push
+    this.navPane.push = (Class, opts) => {
       if (this.isEnabled) {
         opts = opts || {}
         util.defaults(opts, { sync: true })
@@ -102,7 +102,7 @@ export class SplitView {
           return this.splitViewport.push(Class, opts)
         }
       } else {
-        return this.navView.__$push(Class, opts)
+        return this.navPane.__$push(Class, opts)
       }
     };
 

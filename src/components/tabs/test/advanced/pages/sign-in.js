@@ -1,5 +1,5 @@
 import {Component, Template} from 'angular2/angular2'
-import {View, NavView} from 'ionic2/components'
+import {View, NavPane, Content} from 'ionic2/components'
 import {TabsPage} from 'app/pages/tabs'
 
 @Component({
@@ -7,15 +7,19 @@ import {TabsPage} from 'app/pages/tabs'
 })
 @Template({
   url: 'pages/sign-in.html',
-  directives: [View]
+  directives: [View, Content]
 })
 export class SignInPage {
   constructor(
-    navView: NavView
+    navPane: NavPane
   ) {
-    this.navView = navView
+    this.navPane = navPane
+    this.instanceVal = Math.random()
   }
   signIn() {
-    this.navView.push(TabsPage)
+    this.navPane.push(TabsPage)
+  }
+  instanceCheck() {
+    window.alert("Instance: " + this.instanceVal)
   }
 }

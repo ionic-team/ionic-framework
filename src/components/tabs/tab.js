@@ -1,13 +1,13 @@
 import {
-  NgElement, 
-  Component, 
-  Template, 
-  Ancestor, 
-  PropertySetter, 
+  NgElement,
+  Component,
+  Template,
+  Ancestor,
+  PropertySetter,
   For
 } from 'angular2/angular2';
 import {NavViewport} from 'ionic2/components/nav-viewport/nav-viewport'
-import {NavView} from 'ionic2/components/nav-view/nav-view'
+import {NavPane} from 'ionic2/components/nav-pane/nav-pane'
 import {Tabs} from 'ionic2/components/tabs/tabs'
 import {IonicComponent} from 'ionic2/config/component'
 
@@ -21,10 +21,25 @@ import {IonicComponent} from 'ionic2/config/component'
 })
 @Template({
   inline: `
-  <section class="nav-view" *for="#item of getRawNavStack()" [item]="item">
-  </section>
+
+  <header class="toolbar-container">
+    <!-- COLLECTION OF TOOLBARS FOR EACH OF ITS VIEWS WITHIN THIS NAV-VIEWPORT -->
+    <!-- TOOLBARS FOR EACH VIEW SHOULD HAVE THE SAME CONTEXT AS ITS VIEW -->
+  </header>
+
+  <nav class="nav-tab-bar">
+    <!-- SHARED TAB BAR FOR EACH TAB CONTAINER -->
+
+  </nav>
+
+  <div class="nav-pane-container">
+    <!-- COLLECTION OF PANES WITHIN THIS NAV-VIEWPORT, EACH PANE AS ONE VIEW -->
+    <!-- EACH VIEW HAS A TOOLBAR WHICH NEEDS TO HAVE THE SAME CONTEXT -->
+    <section class="nav-pane" *for="#item of getRawNavStack()" [item]="item"></section>
+  </div>
+
   `,
-  directives: [For, NavView]
+  directives: [For, NavPane]
 })
 export class Tab extends NavViewport {
   constructor(

@@ -1,13 +1,13 @@
 import {Component, Template, Parent} from 'angular2/angular2'
-import {View, Tabs, Tab, Aside} from 'ionic2/components'
-import {NavView} from 'ionic2/components'
+import {View, Tabs, Tab, Aside, Content} from 'ionic2/components'
+import {NavPane} from 'ionic2/components'
 
 @Component({
   selector: 'tabs-page'
 })
 @Template({
   url: 'pages/tabs.html',
-  directives: [Tabs, Tab, View]
+  directives: [Tabs, Tab, View, Content]
 })
 export class TabsPage {
   constructor() {
@@ -28,16 +28,17 @@ export class TabsPage {
                 <button class="button button-primary" (click)="next()">
                   Go to Tab 1, Page 2 (push)
                 </button>
+                <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
               </ion-content>
             </ion-view>`,
-  directives: [View]
+  directives: [View, Content]
 })
 class Tab1Page1 {
-  constructor(navView: NavView) {
-    this.navView = navView
+  constructor(navPane: NavPane) {
+    this.navPane = navPane
   }
   next() {
-    this.navView.push(Tab1Page2)
+    this.navPane.push(Tab1Page2)
   }
 }
 
@@ -49,15 +50,16 @@ class Tab1Page1 {
                 <button class="button button-primary" (click)="pop()">
                   Back to Tab 1, Page 1 (pop)
                 </button>
+                <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
               </ion-content>
             </ion-view>`,
-  directives: [View]
+  directives: [View, Content]
 })
 class Tab1Page2 {
-  constructor(navView: NavView) {
-    this.navView = navView
+  constructor(navPane: NavPane) {
+    this.navPane = navPane
   }
-  pop() { this.navView.pop() }
+  pop() { this.navPane.pop() }
 }
 
 
@@ -77,17 +79,18 @@ class Tab1Page2 {
           Go to Tab 2 Page 2 (push)
         </button>
         <br/><span style="color:red">I have got an aside on the left.</span>
+        <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
       </ion-content>
     </ion-view>
   `,
-  directives: [View, Aside]
+  directives: [View, Aside, Content]
 })
 class Tab2Page1 {
-  constructor(navView: NavView) {
-    this.navView = navView
+  constructor(navPane: NavPane) {
+    this.navPane = navPane
   }
   next() {
-    this.navView.push(Tab2Page2)
+    this.navPane.push(Tab2Page2)
   }
 }
 
@@ -102,6 +105,7 @@ class Tab2Page1 {
         <ion-view nav-title="Nested Tab 1">
           <ion-content class="padding">
             Nested Tab 1, static content
+            <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
           </ion-content>
         </ion-view>
       </ion-tab>
@@ -109,16 +113,17 @@ class Tab2Page1 {
         <ion-view nav-title="Nested Tab 2">
           <ion-content class="padding">
             Nested Tab 2, static content
+            <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
           </ion-content>
         </ion-view>
       </ion-tab>
     </ion-tabs>
   `,
-  directives: [View, Aside, Tabs, Tab]
+  directives: [View, Aside, Tabs, Tab, Content]
 })
 class Tab2Page2 {
-  constructor(navView: NavView) {
-    this.navView = navView
+  constructor(navPane: NavPane) {
+    this.navPane = navPane
   }
-  pop() { this.navView.pop() }
+  pop() { this.navPane.pop() }
 }

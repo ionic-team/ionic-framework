@@ -16,7 +16,7 @@ export let ToolbarConfig = new ComponentConfig('toolbar')
 @Template({
   inline: `
     <div class="toolbar-items">
-      <button class="button back-button toolbar-item"></button>
+      <button class="button back-button toolbar-item" style="display:none"></button>
       <div class="toolbar-title">
         <div class="toolbar-inner-title">
           {{ title }}

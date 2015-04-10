@@ -1,6 +1,6 @@
 import {Component, Template, For, NgElement} from 'angular2/angular2'
 import {ComponentConfig} from 'ionic2/config/component-config'
-import {NavView} from 'ionic2/components/nav-view/nav-view'
+import {NavPane} from 'ionic2/components/nav-pane/nav-pane'
 import * as util from 'ionic2/util'
 
 @Component({
@@ -11,10 +11,20 @@ import * as util from 'ionic2/util'
 })
 @Template({
   inline: `
-  <section class="nav-view" *for="#item of getRawNavStack()" [item]="item">
-  </section>
+
+  <header class="toolbar-container">
+    <!-- COLLECTION OF TOOLBARS FOR EACH OF ITS VIEWS WITHIN THIS NAV-VIEWPORT -->
+    <!-- TOOLBARS FOR EACH VIEW SHOULD HAVE THE SAME CONTEXT AS ITS VIEW -->
+  </header>
+
+  <div class="nav-pane-container">
+    <!-- COLLECTION OF PANES WITHIN THIS NAV-VIEWPORT, EACH PANE AS ONE VIEW -->
+    <!-- EACH VIEW HAS A TOOLBAR WHICH NEEDS TO HAVE THE SAME CONTEXT -->
+    <section class="nav-pane" *for="#item of getRawNavStack()" [item]="item"></section>
+  </div>
+
   `,
-  directives: [NavView, For]
+  directives: [NavPane, For]
 })
 export class NavViewport {
   constructor(
@@ -141,7 +151,7 @@ export class NavViewport {
 
   _destroy(navItem) {
     console.warn(
-`Component "${navItem.Class.name}" was popped from the nav stack, But we're keeping its element in the DOM for now because of an ng2 bug.`
+`Component "${navItem.Class.name}" was popped from the nav stack, But were keeping its element in the DOM for now because of an ng2 bug.`
     );
     //util.array.remove(this._ngForLoopArray, navItem)
   }
@@ -161,24 +171,24 @@ class NavItem {
   waitForSetup() {
     return this._setupPromise
   }
-  finishSetup(navView, componentInstance) {
-    this.navView = navView
+  finishSetup(navPane, componentInstance) {
+    this.navPane = navPane
     this.instance = componentInstance
     this._resolveSetupPromise()
   }
   setAnimation(state) {
     if (!state) {
-      this.navView.domElement.removeAttribute('animate')
-      this.navView.domElement.classList.remove('start')
+      this.navPane.domElement.removeAttribute('animate')
+      this.navPane.domElement.classList.remove('start')
     } else {
-      this.navView.domElement.setAttribute('animate', state)
+      this.navPane.domElement.setAttribute('animate', state)
     }
   }
   setShown(isShown) {
-    this.navView.domElement.classList[isShown?'add':'remove']('shown')
+    this.navPane.domElement.classList[isShown?'add':'remove']('shown')
   }
   startAnimation() {
-    this.navView.domElement.classList.add('start')
+    this.navPane.domElement.classList.add('start')
   }
   _animate({ isShown, animation }) {
     this.setAnimation(animation)
@@ -187,7 +197,7 @@ class NavItem {
       // We have to wait two rafs for the element to show. Yawn.
       return util.dom.rafPromise().then(util.dom.rafPromise).then(() => {
         this.startAnimation()
-        return util.dom.transitionEndPromise(this.navView.domElement).then(() => {
+        return util.dom.transitionEndPromise(this.navPane.domElement).then(() => {
           this.setAnimation(null)
         })
       })

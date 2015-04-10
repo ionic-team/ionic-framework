@@ -6,7 +6,6 @@ $toolbar-background:              #f7f7f8 !default;
 
 
 .toolbar {
-  position: relative;
   @include flex-display();
   @include flex-direction(row);
   @include flex-align-items(center);

@@ -1,9 +1,30 @@
-<ion-view nav-title="Sign In">
+<ion-view nav-title="Toolbar Instance: {{ instanceVal }}">
+
+  <ion-nav-items side="primary">
+    <button class="button" (click)="instanceCheck()">
+      <icon class="ion-star"></icon>
+    </button>
+  </ion-nav-items>
 
   <ion-content class="padding">
-    <button class="button button-primary" (click)="signIn()">
-      Sign In
-    </button>
+
+    <p>
+      Content Instance: {{ instanceVal }}
+    </p>
+
+    <p>
+      <button class="button button-primary" (click)="signIn()">
+        Sign In
+      </button>
+    </p>
+
+    <p>
+      <button class="button" (click)="instanceCheck()">
+        <icon class="ion-star"></icon>
+      </button>
+    </p>
+    <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
+
   </ion-content>
 
 </ion-view>

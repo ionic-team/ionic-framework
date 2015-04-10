@@ -11,9 +11,9 @@ import {IonicComponent} from 'ionic2/config/component'
 })
 @Template({
   inline: `
-    <div class="toolbar tab-bar"
-         [class.toolbar-top]="placement=='top'"
-         [class.toolbar-bottom]="placement=='bottom'">
+    <div class="tab-bar"
+         [class.tab-bar-top]="placement=='top'"
+         [class.tab-bar-bottom]="placement=='bottom'">
       <div class="tab-bar-container">
         <a *for="#tab of tabs"
           class="tab-bar-item"

@@ -6,12 +6,12 @@ import {PrivateComponentLoader} from 'angular2/src/core/compiler/private_compone
 import {PrivateComponentLocation} from 'angular2/src/core/compiler/private_component_location'
 
 @DynamicComponent({
-  selector: '.nav-view',
+  selector: '.nav-pane',
   bind: {
     item: 'item'
   }
 })
-export class NavView {
+export class NavPane {
   constructor(
     loader: PrivateComponentLoader,
     location: PrivateComponentLocation,
@@ -31,6 +31,7 @@ export class NavView {
     if (this.initialized) return;
     this.initialized = true;
     this.Class = navItem.Class;
+
     this.loader.load(navItem.Class, this.location).then(instance => {
       this.instance = instance
       navItem.finishSetup(this, instance)
