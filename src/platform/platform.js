@@ -73,7 +73,7 @@ platform.register({
 
 // Last case is a catch-all
 platform.setDefaultPlatform({
-  name: 'base'
+  name: 'core'
 })
 
 platform.set( platform.detect() )

@@ -30,14 +30,14 @@ new IonicComponent(BackButton, {
       defaults: {
         ios: 'ion-ios-arrow-back',
         android: 'ion-android-arrow-back',
-        base: 'ion-chevron-left'
+        core: 'ion-chevron-left'
       }
     },
     text: {
       defaults: {
         ios: 'Back',
         android: '',
-        base: ''
+        core: ''
       }
     }
   }

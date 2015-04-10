@@ -92,14 +92,14 @@ new IonicComponent(Tabs, {
       defaults: {
         ios: 'bottom',
         android: 'top',
-        base: 'bottom'
+        core: 'bottom'
       }
     },
     tabBarIcons: {
       defaults: {
         ios: 'top',
         android: 'none',
-        base: 'top'
+        core: 'top'
       }
     },
     tabBarText: {}

@@ -71,7 +71,7 @@ new IonicComponent(Aside, {
       defaults: {
         ios: 'reveal',
         android: 'overlay',
-        base: 'overlay',
+        core: 'overlay',
       }
     },
     dragThreshold: {},
