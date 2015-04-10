@@ -14,7 +14,7 @@ html {
   padding: 0;
 
   .nav-viewport {
-    // container of many nav-views, which each contain one view
+    // container of many .nav-views, each .nav-view contains one view
     position: absolute;
     top: 0;
     right: 0;
@@ -22,18 +22,9 @@ html {
     left: 0;
     width: 100%;
     height: 100%;
-    height: 100vh;
 
-    display: flex;
-    flex-direction: column;
-  }
-
-  .toolbar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    min-height: 50px;
+    @include flex-display();
+    @include flex-direction(column);
   }
 
   .toolbar-container {
@@ -43,19 +34,40 @@ html {
     min-height: 50px;
   }
 
+  .toolbar {
+    // one view's toolbar, sibling to many view toolbars insde of .toolbar-container
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
   .nav-pane-container {
     // container of many .nav-pane's, each one containing one view
+    position: relative;
+    @include flex(1);
+  }
+
+  .tab-pane-container {
+    // container of each content for each tab component within a tabs component
     position: relative;
     width: 100%;
     height: 100%;
   }
 
   .nav-pane {
-    // container of one view
+    // container of one .pane,
     position: absolute;
     width: 100%;
     height: 100%;
     background: white;
+  }
+
+  .nav-pane-cover-parent {
+    // .nav-pane that should completely cover siblings and parent
+    top: -50px;
+    height: 100vh;
   }
 
   .pane {

@@ -30,7 +30,7 @@ export let ToolbarConfig = new ComponentConfig('toolbar')
         <content select="ion-nav-items[side=secondary]"></content>
       </div>
     </div>
-    <div class="shared-toolbar"></div>`,
+  `,
   directives: [BackButton]
 })
 export class Toolbar {

@@ -11,9 +11,12 @@ import {IonicComponent} from 'ionic2/config/component'
 })
 @Template({
   inline: `
-    <div class="tab-bar"
-         [class.tab-bar-top]="placement=='top'"
-         [class.tab-bar-bottom]="placement=='bottom'">
+    <header class="toolbar-container">
+      <!-- COLLECTION OF TOOLBARS FOR EACH OF ITS VIEWS WITHIN THIS NAV-VIEWPORT -->
+      <!-- TOOLBARS FOR EACH VIEW SHOULD HAVE THE SAME CONTEXT AS ITS VIEW -->
+    </header>
+
+    <nav class="tab-bar">
       <div class="tab-bar-container">
         <a *for="#tab of tabs"
           class="tab-bar-item"
@@ -26,8 +29,11 @@ import {IonicComponent} from 'ionic2/config/component'
             <span class="tab-bar-item-text" [hidden]="tabBarText=='none'">{{tab.title}}</span>
         </a>
       </div>
-    </div>
-    <content></content>
+    </nav>
+
+    <section class="tab-pane-container">
+      <content></content>
+    </section>
   `,
   directives: [For]
 })
@@ -36,7 +42,11 @@ export class Tabs  {
     @NgElement() ngElement: NgElement
   ) {
     this.domElement = ngElement.domElement
-    this.domElement.classList.add('pane')
+
+    // should be used to cover up sibling .nav-pane's and it's parent
+    this.domElement.classList.add('nav-pane-cover-parent')
+
+    // .tab-bar-top/bottom should be added to the entire element when specified
 
     this.config = Tabs.config.invoke(this)
     this.tabs = []

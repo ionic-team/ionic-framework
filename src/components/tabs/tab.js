@@ -21,23 +21,11 @@ import {IonicComponent} from 'ionic2/config/component'
 })
 @Template({
   inline: `
-
-  <header class="toolbar-container">
-    <!-- COLLECTION OF TOOLBARS FOR EACH OF ITS VIEWS WITHIN THIS NAV-VIEWPORT -->
-    <!-- TOOLBARS FOR EACH VIEW SHOULD HAVE THE SAME CONTEXT AS ITS VIEW -->
-  </header>
-
-  <nav class="nav-tab-bar">
-    <!-- SHARED TAB BAR FOR EACH TAB CONTAINER -->
-
-  </nav>
-
-  <div class="nav-pane-container">
-    <!-- COLLECTION OF PANES WITHIN THIS NAV-VIEWPORT, EACH PANE AS ONE VIEW -->
-    <!-- EACH VIEW HAS A TOOLBAR WHICH NEEDS TO HAVE THE SAME CONTEXT -->
-    <section class="nav-pane" *for="#item of getRawNavStack()" [item]="item"></section>
-  </div>
-
+    <div class="nav-pane-container">
+      <!-- COLLECTION OF PANES WITHIN THIS NAV-VIEWPORT, EACH PANE AS ONE VIEW -->
+      <!-- EACH VIEW HAS A TOOLBAR WHICH NEEDS TO HAVE THE SAME CONTEXT -->
+      <section class="nav-pane" *for="#item of getRawNavStack()" [item]="item"></section>
+    </div>
   `,
   directives: [For, NavPane]
 })

@@ -2,12 +2,22 @@
 // Tabs
 // --------------------------------------------------
 
+$tab-bar-min-height:               66px !default;
+$tab-bar-background-color:         #f7f7f8 !default;
 $tab-bar-item-padding:             10px !default;
 $tab-bar-item-min-width:           100px !default;
 
 
-.toolbar.tab-bar {
+.tabs {
+  @include flex-display();
+  @include flex-direction(column);
+  height: 100%;
+}
+
+.tab-bar {
   @include flex-justify-content(center);
+  min-height: $tab-bar-min-height;
+  background: $tab-bar-background-color;
 }
 
 .tab-bar-container {
