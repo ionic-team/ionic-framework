@@ -4,8 +4,10 @@
 
 $tab-bar-min-height:               66px !default;
 $tab-bar-background-color:         #f7f7f8 !default;
+
 $tab-bar-item-padding:             10px !default;
-$tab-bar-item-min-width:           100px !default;
+$tab-bar-item-min-width:           80px !default;
+$tab-bar-item-max-width:           160px !default;
 
 
 .tabs {
@@ -22,6 +24,7 @@ $tab-bar-item-min-width:           100px !default;
 
 .tab-bar-container {
   @include flex-display();
+  @include flex-justify-content(center);
   height: 100%;
   overflow: hidden;
 }
@@ -35,8 +38,9 @@ $tab-bar-item-min-width:           100px !default;
 
   padding: $tab-bar-item-padding;
   min-width: $tab-bar-item-min-width;
-  text-align: center;
+  max-width: $tab-bar-item-max-width;
 
+  text-align: center;
   cursor: pointer;
   @include user-select(none);
 }
