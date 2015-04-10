@@ -2,12 +2,18 @@
 // iOS Toolbar
 // --------------------------------------------------
 
+$tab-bar-ios-min-height:               52px !default;
+
 $tab-bar-ios-item-padding:             3px 10px !default;
 $tab-bar-ios-item-font-size:           1.1rem !default;
 $tab-bar-ios-item-icon-size:           2.8rem !default;
 
 
 .tabs-ios {
+
+  .tab-bar-container {
+    min-height: $tab-bar-ios-min-height;
+  }
 
   .tab-bar-item {
     padding: $tab-bar-ios-item-padding;
@@ -21,12 +27,16 @@ $tab-bar-ios-item-icon-size:           2.8rem !default;
     font-size: $tab-bar-ios-item-icon-size;
   }
 
-  > .tab-bar.toolbar-bottom {
+  &.tab-bar-bottom > .tab-bar-container {
     @include hairline(top, $toolbar-ios-border-color);
   }
 
-  > .tab-bar.toolbar-top {
+  &.tab-bar-top > .tab-bar-container {
     @include hairline(bottom, $toolbar-ios-border-color);
+  }
+
+  &.tab-bar-top > .toolbar-container .toolbar {
+    @include hairline(bottom, none);
   }
 
 }

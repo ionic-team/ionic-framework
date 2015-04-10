@@ -70,39 +70,50 @@
 // --------------------------------------------------
 
 @mixin hairline($placement, $line-color, $z-index: 999) {
+  // use $line-color: none to override existing hairline settings
 
   @if $placement == top {
 
     &:before {
-      position: absolute;
-      top: 0;
-      right: auto;
-      bottom: auto;
-      left: 0;
-      z-index: $z-index;
-      display: block;
-      width: 100%;
-      height: 1px;
-      @include transform-origin(50%, 0%);
-      background-color: $line-color;
-      content: '';
+      @if $line-color == none {
+        background-color: inherit;
+
+      } @else {
+        position: absolute;
+        top: 0;
+        right: auto;
+        bottom: auto;
+        left: 0;
+        z-index: $z-index;
+        display: block;
+        width: 100%;
+        height: 1px;
+        @include transform-origin(50%, 0%);
+        background-color: $line-color;
+        content: '';
+      }
     }
 
   } @else if $placement == bottom {
 
     &:after {
-      position: absolute;
-      top: auto;
-      right: auto;
-      bottom: 0;
-      left: 0;
-      z-index: $z-index;
-      display: block;
-      width: 100%;
-      height: 1px;
-      @include transform-origin(50%, 0%);
-      background-color: $line-color;
-      content: '';
+      @if $line-color == none {
+        background-color: inherit;
+
+      } @else {
+        position: absolute;
+        top: auto;
+        right: auto;
+        bottom: 0;
+        left: 0;
+        z-index: $z-index;
+        display: block;
+        width: 100%;
+        height: 1px;
+        @include transform-origin(50%, 0%);
+        background-color: $line-color;
+        content: '';
+      }
     }
 
   }

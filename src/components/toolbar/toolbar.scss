@@ -14,11 +14,11 @@ $toolbar-background:              #f7f7f8 !default;
 }
 
 .toolbar-top {
-  @include flex-order(20);
+  @include flex-order($flex-order-toolbar-top);
 }
 
 .toolbar-bottom {
-  @include flex-order(80);
+  @include flex-order($flex-order-toolbar-bottom);
 }
 
 .toolbar-items {

@@ -12,12 +12,12 @@ import {IonicComponent} from 'ionic2/config/component'
 @Template({
   inline: `
     <header class="toolbar-container">
-      <!-- COLLECTION OF TOOLBARS FOR EACH OF ITS VIEWS WITHIN THIS NAV-VIEWPORT -->
+      <!-- COLLECTION OF TOOLBARS FOR EACH VIEW WITHIN EACH TAB-VIEWPORT -->
       <!-- TOOLBARS FOR EACH VIEW SHOULD HAVE THE SAME CONTEXT AS ITS VIEW -->
     </header>
 
-    <nav class="tab-bar">
-      <div class="tab-bar-container">
+    <nav class="tab-bar-container">
+      <div class="tab-bar">
         <a *for="#tab of tabs"
           class="tab-bar-item"
           [class.tab-active]="tab.isSelected"
@@ -47,6 +47,14 @@ export class Tabs  {
     this.domElement.classList.add('nav-pane-cover-parent')
 
     // .tab-bar-top/bottom should be added to the entire element when specified
+    // TODO: MAKE MORE GOOD!!!
+    setTimeout(() => {
+      if (this.placement == 'top') {
+        this.domElement.classList.add('tab-bar-top')
+      } else {
+        this.domElement.classList.add('tab-bar-bottom')
+      }
+    })
 
     this.config = Tabs.config.invoke(this)
     this.tabs = []

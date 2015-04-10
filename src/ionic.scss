@@ -12,6 +12,7 @@
 // Globals
 @import
   "components/app/z-index",
+  "components/app/flex-order",
   "components/app/normalize",
   "components/app/globals",
   "components/app/colors",
@@ -69,12 +70,12 @@
   "components/toolbar/extensions/android";
 
 
+// Icons
+@import
+  "components/icon/icon";
+
+
 // Web View Adaptors
 @import
   "webview/cordova/cordova",
   "webview/node-webkit/node-webkit";
-
-
-// Icons
-@import
-  "components/icon/icon";

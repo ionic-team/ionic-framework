@@ -47,6 +47,7 @@ html {
     // container of many .nav-pane's, each one containing one view
     position: relative;
     @include flex(1);
+    @include flex-order($flex-order-view-content);
   }
 
   .tab-pane-container {
@@ -54,6 +55,7 @@ html {
     position: relative;
     width: 100%;
     height: 100%;
+    @include flex-order($flex-order-view-content);
   }
 
   .nav-pane {
