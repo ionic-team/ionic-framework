@@ -15,7 +15,7 @@
  *
  * For iOS, tabs will appear at the bottom of the screen. For Android, tabs will be at the top
  * of the screen, below the nav-bar. This follows each OS's design specification, but can be
- * configured with the [$ionicConfigProvider](docs/api/provider/$ionicConfigProvider/).
+ * configured with the {@link ionic.provider:$ionicConfigProvider}.
  *
  * See the {@link ionic.directive:ionTab} directive's documentation for more details on
  * individual tabs.
