@@ -42,6 +42,25 @@ export class IonicComponent {
     instance.domElement.classList.add(this.componentCssName)
     instance.domElement.classList.add(`${this.componentCssName}-${platformName}`)
 
+
+    /****** TODO: HACK!!! MAKE MORE GOOD!!! ********/
+    /*
+      Manually assigning "md" for android platform, but we need
+      to be able to set which "mode" to use for each platform.
+
+      ios platform == ios mode
+      android platform == md mode (material design mode)
+      everything else == core mode
+
+      Uber hack below until we come up with a pretty "mode" API
+    */
+    if (platformName == 'android') {
+      instance.domElement.classList.add(`${this.componentCssName}-md`)
+    }
+    /****** TODO: HACK!!! MAKE MORE GOOD!!! ********/
+
+
+
     for (let attrName in this.bind) {
       let binding = this.bind[attrName]
       let defaultValue = binding._defaultValue

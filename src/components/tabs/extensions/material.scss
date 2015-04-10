@@ -1,0 +1,33 @@
+
+// Material Design Toolbar
+// --------------------------------------------------
+
+$tab-bar-material-min-height:                40px !default;
+$tab-bar-material-item-padding:              4px 10px !default;
+$tab-bar-material-active-border-width:       3px !default;
+$tab-bar-material-active-border-color:       red !default;
+$tab-bar-material-text-transform:            uppercase !default;
+$tab-bar-material-text-font-weight:          500 !default;
+
+
+.tabs-md {
+
+  .tab-bar-container {
+    min-height: $tab-bar-material-min-height;
+  }
+
+  .tab-bar-item {
+    padding: $tab-bar-material-item-padding;
+    text-transform: $tab-bar-material-text-transform;
+    font-weight: $tab-bar-material-text-font-weight;
+  }
+
+  .tab-bar .tab-bar-item {
+    border-bottom: $tab-bar-material-active-border-width solid transparent;
+  }
+
+  .tab-bar .tab-active {
+    border-bottom-color: $tab-bar-material-active-border-color;
+  }
+
+}

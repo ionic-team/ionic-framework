@@ -62,12 +62,10 @@
 
 // Material Design Components
 @import
-  "components/alert/extensions/android",
-  "components/button/extensions/android",
-  "components/list/extensions/android",
-  "components/item/extensions/android",
-  "components/tabs/extensions/android",
-  "components/toolbar/extensions/android";
+  "components/alert/extensions/material",
+  "components/button/extensions/material",
+  "components/tabs/extensions/material",
+  "components/toolbar/extensions/material";
 
 
 // Icons
