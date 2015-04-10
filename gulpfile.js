@@ -83,7 +83,7 @@ gulp.task('ionic-js', ['ionic-compile'], function() {
 })
 
 gulp.task('sass', function(done) {
-  gulp.src('src/components/app/ionic.scss')
+  gulp.src('src/ionic.scss')
     .pipe(sass({
       onError: function(err) {
         console.log(err)

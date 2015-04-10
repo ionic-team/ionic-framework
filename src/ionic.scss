@@ -24,56 +24,57 @@
 
 // Core Components
 @import
-  "components/app/action-menu/action-menu",
-  "components/app/alert/alert",
-  "components/app/aside/aside",
-  "components/app/badge/badge",
-  "components/app/button/button",
-  "components/app/card/card",
-  "components/app/checkbox/checkbox",
-  "components/app/content/content",
-  "components/app/item/item",
-  "components/app/list/list",
-  "components/app/modal/modal",
-  "components/app/nav-pane/nav-pane",
-  "components/app/radio/radio",
-  "components/app/search-bar/search-bar",
-  "components/app/switch/switch",
-  "components/app/tabs/tabs",
-  "components/app/toolbar/toolbar";
+  "components/action-menu/action-menu",
+  "components/alert/alert",
+  "components/aside/aside",
+  "components/badge/badge",
+  "components/button/button",
+  "components/card/card",
+  "components/checkbox/checkbox",
+  "components/content/content",
+  "components/item/item",
+  "components/list/list",
+  "components/modal/modal",
+  "components/nav-pane/nav-pane",
+  "components/radio/radio",
+  "components/search-bar/search-bar",
+  "components/switch/switch",
+  "components/tabs/tabs",
+  "components/toolbar/toolbar";
 
 
 // iOS Components
 @import
-  "components/app/toolbar/extensions/ios",
-  "components/app/action-menu/extensions/ios",
-  "components/app/alert/extensions/ios",
-  "components/app/button/extensions/ios",
-  "components/app/card/extensions/ios",
-  "components/app/checkbox/extensions/ios",
-  "components/app/list/extensions/ios",
-  "components/app/item/extensions/ios",
-  "components/app/radio/extensions/ios",
-  "components/app/search-bar/extensions/ios",
-  "components/app/switch/extensions/ios",
-  "components/app/tabs/extensions/ios";
+  "components/toolbar/extensions/ios",
+  "components/action-menu/extensions/ios",
+  "components/alert/extensions/ios",
+  "components/button/extensions/ios",
+  "components/card/extensions/ios",
+  "components/checkbox/extensions/ios",
+  "components/list/extensions/ios",
+  "components/item/extensions/ios",
+  "components/radio/extensions/ios",
+  "components/search-bar/extensions/ios",
+  "components/switch/extensions/ios",
+  "components/tabs/extensions/ios";
 
 
 // Material Design Components
 @import
-  "components/app/alert/extensions/android",
-  "components/app/button/extensions/android",
-  "components/app/list/extensions/android",
-  "components/app/item/extensions/android",
-  "components/app/tabs/extensions/android",
-  "components/app/toolbar/extensions/android";
+  "components/alert/extensions/android",
+  "components/button/extensions/android",
+  "components/list/extensions/android",
+  "components/item/extensions/android",
+  "components/tabs/extensions/android",
+  "components/toolbar/extensions/android";
 
 
 // Web View Adaptors
 @import
-  "webview/cordova/cordova";
+  "webview/cordova/cordova",
+  "webview/node-webkit/node-webkit";
 
 
 // Icons
 @import
-  "components/app/icon/icon";
+  "components/icon/icon";
