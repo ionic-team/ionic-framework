@@ -137,6 +137,11 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
         $ionicBody.append(self.el);
       }
 
+      // if modal was closed while the keyboard was up, reset scroll view on
+      // next show since we can only resize it once it's visible
+      var scrollCtrl = modalEl.data('$$ionicScrollController');
+      scrollCtrl && scrollCtrl.resize();
+
       if (target && self.positionView) {
         self.positionView(target, modalEl);
         // set up a listener for in case the window size changes
