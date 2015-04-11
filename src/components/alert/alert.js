@@ -1,11 +1,9 @@
 import {NgElement, Component, Template, Parent} from 'angular2/angular2'
-import {ComponentConfig} from 'ionic2/config/component-config'
+import {IonicComponent} from 'ionic2/config/component'
 
-export let AlertConfig = new ComponentConfig('alert')
 
 @Component({
-  selector: 'ion-alert',
-  services: [AlertConfig]
+  selector: 'ion-alert'
 })
 @Template({
   inline: `
@@ -26,12 +24,16 @@ export let AlertConfig = new ComponentConfig('alert')
 })
 export class Alert {
   constructor(
-    configFactory: AlertConfig,
     @NgElement() ngElement:NgElement
   ) {
     this.domElement = ngElement.domElement
     this.domElement.classList.add('pane')
     this.domElement.classList.add('pane-overlay')
-    this.config = configFactory.create(this)
+
+    this.config = Alert.config.invoke(this)
   }
 }
+
+new IonicComponent(Alert, {
+  bind: {}
+})
