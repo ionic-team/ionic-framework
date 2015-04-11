@@ -1,5 +1,6 @@
 import {Component, Template, NgElement, PropertySetter} from 'angular2/angular2'
 import {ComponentConfig} from 'ionic2/config/component-config'
+import {IonicComponent} from 'ionic2/config/component'
 
 export let CheckboxConfig = new ComponentConfig('checkbox')
 
@@ -16,8 +17,8 @@ export let CheckboxConfig = new ComponentConfig('checkbox')
 @Template({
   inline: `
   <div class="item-media media-checkbox">
-    <icon class="ion-ios-circle-outline checkbox-off"></icon>
-    <icon class="ion-ios-checkmark checkbox-on"></icon>
+    <icon class="checkbox-off"></icon>
+    <icon class="checkbox-on"></icon>
   </div>
 
   <div class="item-content">
@@ -39,7 +40,8 @@ export class Checkbox {
   ) {
     this.domElement = ngElement.domElement
     this.domElement.classList.add('item')
-    this.config = configFactory.create(this)
+
+    this.config = Checkbox.config.invoke(this)
 
     setAriaRole('checkbox')
     setAriaInvalid('false')
@@ -49,6 +51,10 @@ export class Checkbox {
     this.setAriaChecked = setAriaChecked
     this.setAriaInvalid = setAriaInvalid
     this.setAriaDisabled = setAriaDisabled
+
+    // TODO: FIXME!! MAKE MORE GOOD!!!!
+    this.domElement.querySelector('.checkbox-off').classList.add(this.iconOff)
+    this.domElement.querySelector('.checkbox-on').classList.add(this.iconOn)
   }
 
   set checked(checked) {
@@ -63,3 +69,21 @@ export class Checkbox {
   }
 }
 
+new IonicComponent(Checkbox, {
+  bind: {
+    iconOff: {
+      defaults: {
+        ios: 'ion-ios-circle-outline',
+        android: 'ion-android-checkbox-outline-blank',
+        core: 'ion-android-checkbox-outline-blank'
+      }
+    },
+    iconOn: {
+      defaults: {
+        ios: 'ion-ios-checkmark',
+        android: 'ion-android-checkbox',
+        core: 'ion-android-checkbox',
+      }
+    }
+  }
+})

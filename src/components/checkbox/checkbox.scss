@@ -2,8 +2,11 @@
 // Checkbox
 // --------------------------------------------------
 
+
 .checkbox {
   display: block;
+  cursor: pointer;
+  @include user-select(none);
 }
 
 .checkbox-on {
