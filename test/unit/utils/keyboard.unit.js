@@ -79,7 +79,7 @@ Switching inputs fires focusOut on iOS, doesn't on Android
 
 describe('Ionic Keyboard', function() {
   var window;
-
+/*
   beforeEach(inject(function($window) {
     window = $window;
     window._setTimeout = window.setTimeout;
@@ -101,7 +101,6 @@ describe('Ionic Keyboard', function() {
     window.setTimeout = window._setTimeout;
   });
 
-  /*
   it('Should keyboardShow', function(){
     var element = document.createElement('textarea');
     var elementTop = 100;
@@ -112,7 +111,6 @@ describe('Ionic Keyboard', function() {
 
     expect( details.keyboardHeight ).toEqual(200);
   });
-  */
 
   it('Should keyboardHasPlugin', function() {
     expect( keyboardHasPlugin() ).toEqual(false);
@@ -140,7 +138,6 @@ describe('Ionic Keyboard', function() {
     expect( keyboardGetHeight() ).toEqual(275);
   });
 
-  /*
   it('keyboardGetHeight() should = (keyboardViewportHeight - window.innerHeight) if Android and not fullscreen', function(){
     ionic.Platform.setPlatform('android');
     expect( ionic.Platform.isFullScreen ).toEqual(false);
@@ -167,7 +164,6 @@ describe('Ionic Keyboard', function() {
 
     expect( keyboardGetHeight() ).toEqual(206);
   });
-  */
 
   it('keyboardGetHeight() should = 216 if iOS Safari', function(){
     ionic.Platform.setPlatform('iOS');
@@ -190,7 +186,6 @@ describe('Ionic Keyboard', function() {
     expect( keyboardGetHeight() ).toEqual(275);
   });
 
-  /*
 
   it('keyboardUpdateViewportHeight() should update when window.innerHeight > keyboardViewportHeight', function(){
     window.innerHeight = 460;
@@ -199,7 +194,6 @@ describe('Ionic Keyboard', function() {
 
     expect( keyboardViewportHeight ).toEqual(460);
   });
-  */
 
   it('keyboardUpdateViewportHeight() should not update when window.innerHeight < keyboardViewportHeight', function(){
     window.innerHeight = 100;
@@ -209,7 +203,6 @@ describe('Ionic Keyboard', function() {
     expect( keyboardViewportHeight ).toEqual(320);
   });
 
-  /*
 
   it('Should scroll input into view if it is under the keyboard', function(){
     var element = document.createElement('textarea');
