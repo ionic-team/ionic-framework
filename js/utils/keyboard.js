@@ -410,8 +410,8 @@ function keyboardWaitForResize(callback, isOpening) {
   clearInterval(waitForResizeTimer);
   var count = 0;
   var maxCount;
-  var initialHeight;
-  var viewportHeight = initialHeight = getViewportHeight();
+  var initialHeight = getViewportHeight();
+  var viewportHeight = initialHeight;
 
   //console.log("waitForResize initial viewport height: " + viewportHeight);
   //var start = Date.now();
