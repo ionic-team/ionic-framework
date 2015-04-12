@@ -34,6 +34,7 @@
  * @param {expression=} pager-click Expression to call when a pager is clicked (if show-pager is true). Is passed the 'index' variable.
  * @param {expression=} on-slide-changed Expression called whenever the slide is changed.  Is passed an '$index' variable.
  * @param {expression=} active-slide Model to bind the current slide to.
+ * @param {expression=} on-last-slide-slided Expression called when the last slide is slided but not looping to first slide.
  */
 IonicModule
 .directive('ionSlideBox', [
@@ -54,7 +55,8 @@ function($timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory) {
       pagerClick: '&',
       disableScroll: '@',
       onSlideChanged: '&',
-      activeSlide: '=?'
+      activeSlide: '=?',
+      onSlideResisted: '&',
     },
     controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
       var _this = this;
@@ -80,6 +82,11 @@ function($timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory) {
           $scope.$parent.$broadcast('slideBox.slideChanged', slideIndex);
           $scope.activeSlide = slideIndex;
           // Try to trigger a digest
+          $timeout(function() {});
+        },
+        slideResisted: function() {
+          $scope.onSlideResisted();
+          $scope.$parent.$broadcast('slideBox.slideResisted');
           $timeout(function() {});
         }
       });

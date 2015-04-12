@@ -345,15 +345,17 @@ ionic.views.Slider = ionic.views.View.inherit({
             translate(circle(index+1), delta.x + slidePos[circle(index+1)], 0);
 
           } else {
-
-            delta.x =
-              delta.x /
-                ( (!index && delta.x > 0 ||         // if first slide and sliding left
+            var resistance = (!index && delta.x > 0 ||         // if first slide and sliding left
                   index == slides.length - 1 &&     // or if last slide and sliding right
                   delta.x < 0                       // and if sliding at all
-                ) ?
-                ( Math.abs(delta.x) / width + 1 )      // determine resistance level
-                : 1 );                                 // no resistance if false
+                );
+
+            if(resistance){
+              delta.xBeforeResistance = delta.x;
+              // determine resistance level
+              // no resistance if false
+              delta.x = delta.x / ( Math.abs(delta.x) / width + 1 ); 
+            }
 
             // translate 1:1
             translate(index-1, delta.x + slidePos[index-1], 0);
@@ -369,11 +371,14 @@ ionic.views.Slider = ionic.views.View.inherit({
         // measure duration
         var duration = +new Date() - start.time;
 
+        // if slide duration is less than 250ms and slide amt is greater than 20px
+        var isValidFastSlide = Number(duration) < 250 && Math.abs(delta.x) > 20;
+
+        // if slided amt (or amt before resistence) past half of the width
+        var isValidSlowSlide = Math.abs(delta.x) > width/2;
+
         // determine if slide attempt triggers next/prev slide
-        var isValidSlide =
-              Number(duration) < 250 &&         // if slide duration is less than 250ms
-              Math.abs(delta.x) > 20 ||         // and if slide amt is greater than 20px
-              Math.abs(delta.x) > width/2;      // or if slide amt is greater than half the width
+        var isValidSlide = isValidFastSlide || isValidSlowSlide;
 
         // determine if slide attempt is past start and end
         var isPastBounds = (!index && delta.x > 0) ||      // if first slide and slide amt is greater than 0
@@ -435,6 +440,20 @@ ionic.views.Slider = ionic.views.View.inherit({
               move(index-1, -width, speed);
               move(index, 0, speed);
               move(index+1, width, speed);
+
+              if (delta.xBeforeResistance) {
+                // if slide duration is less than 250ms and slide amt is greater than 20px
+                var isValidFastSlideBeforeResistance = Number(duration) < 250 && Math.abs(delta.xBeforeResistance) > 20;
+
+                // if slided amt (or amt before resistence) past half of the width
+                var isValidSlowSlideBeforeResistance = Math.abs(delta.xBeforeResistance) > width/2;
+
+                var isValidSlideBeforeResistance = isValidFastSlideBeforeResistance || isValidSlowSlideBeforeResistance;
+                
+                if (isValidSlideBeforeResistance) {
+                  offloadFn(options.slideResisted && options.slideResisted());
+                }
+              }
             }
 
           }
