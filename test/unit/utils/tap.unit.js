@@ -94,6 +94,8 @@ describe('Ionic Tap', function() {
 
     deregisterTap = ionic.tap.register(document.createElement('div'));
     ionic.scroll = { isScrolling: false };
+    ionic.Platform.setPlatform(null);
+    ionic.Platform._checkPlatforms();
   });
 
   afterEach(function(){
@@ -1270,7 +1272,6 @@ describe('Ionic Tap', function() {
     expect( ionic.tap.isKeyboardElement(null) ).toEqual(false);
 
     ionic.Platform.setPlatform('ios');
-    ionic.Platform.ua = 'iPhone';
 
     var ele = document.createElement('input');
     ele.type = 'date';
