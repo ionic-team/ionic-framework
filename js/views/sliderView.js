@@ -182,6 +182,7 @@ ionic.views.Slider = ionic.views.View.inherit({
       style.MozTransform =
       style.OTransform = 'translateX(' + dist + 'px)';
 
+      offloadFn(options.transitionCallback && options.transitionCallback(index, dist, speed));
     }
 
     function animate(from, to, speed) {

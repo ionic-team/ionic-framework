@@ -54,6 +54,7 @@ function($timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory) {
       pagerClick: '&',
       disableScroll: '@',
       onSlideChanged: '&',
+      onSlideMove: '&',
       activeSlide: '=?'
     },
     controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
@@ -81,6 +82,13 @@ function($timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory) {
           $scope.activeSlide = slideIndex;
           // Try to trigger a digest
           $timeout(function() {});
+        },
+        transitionCallback: function(slideIndex, distance, duration) {
+          $scope.onSlideMove({
+            index: slideIndex, $index: slideIndex,
+            distance: distance, $distance: distance,
+            duration: duration, $duration: duration
+          });
         }
       });
 
