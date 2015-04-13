@@ -35,7 +35,7 @@ function($document, $ionicBody, $timeout) {
     show: function(autoExpire) {
       pendingShow = true;
       $timeout.cancel(fallbackTimer);
-      fallbackTimer = $timeout(this.hide, autoExpire || 310);
+      fallbackTimer = $timeout(this.hide, autoExpire || 310, false);
       addClickBlock();
     },
     hide: function() {

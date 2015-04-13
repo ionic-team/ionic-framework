@@ -1,8 +1,6 @@
 describe('$ionicBackdrop service', function() {
-  beforeEach(module('ionic'));
-
-  beforeEach(inject(function($animate) {
-    ionic.requestAnimationFrame = function(cb) { cb(); };
+  beforeEach(module('ionic', function($provide) {
+    $provide.value('$$rAF', function(cb) { cb(); });
   }));
 
   it('should add active on retain', inject(function($ionicBackdrop) {
