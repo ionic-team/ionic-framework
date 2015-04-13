@@ -1,7 +1,7 @@
 import {Component, Parent, Decorator, Template, NgElement} from 'angular2/angular2'
 import {NavViewport} from 'ionic2/components/nav-viewport/nav-viewport'
 import {View} from 'ionic2/components/view/view'
-import {NavView} from 'ionic2/components/nav-pane/nav-pane'
+import {NavPane} from 'ionic2/components/nav-pane/nav-pane'
 import * as util from 'ionic2/util'
 
 // TODO consider more explicit API, a la tabs
@@ -48,9 +48,11 @@ ion-split-view > .view.split-view {
   max-width: 300px;
   border-right: 1px solid black;
   z-index: 1;
+  background: white;
 }
-ion-split-view > ion-nav-viewport[split-viewport] {
-  flex: 1;
+ion-split-view > [split-viewport] {
+  left: 300px !important;
+  width: calc(100% - 300px);
 }
 
 </style>

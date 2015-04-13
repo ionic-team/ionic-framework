@@ -12,5 +12,5 @@ import {View} from 'ionic2/components'
   `,
   directives: [View]
 })
-export class SettingsGeneral {
+export class GeneralPage {
 }

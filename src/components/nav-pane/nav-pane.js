@@ -21,8 +21,8 @@ export class NavPane {
     @Optional() @Parent() viewportNav: NavViewport,
     @Optional() @Parent() viewportTab: Tab
   ) {
-    this.loader = loader
-    this.location = location
+    this._loader = loader
+    this._location = location
     this.viewport = viewportTab || viewportNav
     this.domElement = element.domElement
   }
@@ -32,7 +32,7 @@ export class NavPane {
     this.initialized = true;
     this.Class = navItem.Class;
 
-    this.loader.load(navItem.Class, this.location).then(instance => {
+    this._loader.load(navItem.Class, this._location).then(instance => {
       this.instance = instance
       navItem.finishSetup(this, instance)
     })
@@ -58,23 +58,4 @@ export class NavPane {
 }
 
 /*
-beforePush()
-beforePop()
-beforeReenter()
-beforePushedOut()
-
-beforeEnter()
-afterEnter()
-beforeLeave()
-afterLeave()
-
-splitView:
-
- beforeEnter: setup this view as the side view, next view in main area.
-
- - any time a push happens in this view, bring the new component into the main view.
- - any time a pop happens in this view, actually pop the stack (if we can).
-
- any time a push happens in the main view, act normally.
- the main view thinks it is the first component in the stack (does it have its own nav-viewport?)
- */
+ Ideal API: inject a tN

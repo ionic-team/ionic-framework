@@ -1,17 +1,37 @@
-import {Component, Template, For, NgElement} from 'angular2/angular2'
+import {Component, Template, For, NgElement, bind} from 'angular2/angular2'
 import {ComponentConfig} from 'ionic2/config/component-config'
 import {NavPane} from 'ionic2/components/nav-pane/nav-pane'
 import * as util from 'ionic2/util'
+
+class NavStack {
+  constructor(navViewport: NavViewport) {
+    this._viewport = navViewport
+  }
+  push(Class, opts = {}) {
+    return this._viewport.push(Class, opts)
+  }
+  pop(opts = {}) {
+    return this._viewport.pop(Class, opts)
+  }
+  popTo(index, opts = {}) {
+    return this._viewport.popTo(index, opts)
+  }
+  size()  {
+    return this._viewport._stack.length
+  }
+}
 
 @Component({
   selector: 'ion-nav-viewport',
   bind: {
     initial: 'initial'
-  }
+  },
+  services: [
+    NavStack
+  ]
 })
 @Template({
   inline: `
-
   <header class="toolbar-container">
     <!-- COLLECTION OF TOOLBARS FOR EACH OF ITS VIEWS WITHIN THIS NAV-VIEWPORT -->
     <!-- TOOLBARS FOR EACH VIEW SHOULD HAVE THE SAME CONTEXT AS ITS VIEW -->
@@ -20,9 +40,8 @@ import * as util from 'ionic2/util'
   <div class="nav-pane-container">
     <!-- COLLECTION OF PANES WITHIN THIS NAV-VIEWPORT, EACH PANE AS ONE VIEW -->
     <!-- EACH VIEW HAS A TOOLBAR WHICH NEEDS TO HAVE THE SAME CONTEXT -->
-    <section class="nav-pane" *for="#item of getRawNavStack()" [item]="item"></section>
+    <section class="nav-pane" *for="#item of _ngForLoopArray" [item]="item"></section>
   </div>
-
   `,
   directives: [NavPane, For]
 })
@@ -32,17 +51,14 @@ export class NavViewport {
   ) {
     this.domElement = element.domElement
     this.domElement.classList.add('nav-viewport')
-    // stack is our sane stack of items. This is synchronous and says an item
+
+    // this is our sane stack of items. This is synchronous and says an item
     // is removed even if it's still animating out.
     this._stack = []
 
     // _ngForLoopArray is actually adds/removes components from the dom. It won't
     // remove a component until it's done animating out.
     this._ngForLoopArray = []
-  }
-
-  getRawNavStack() {
-    return this._ngForLoopArray
   }
 
   containsClass(Class) {

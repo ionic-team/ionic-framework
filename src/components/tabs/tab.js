@@ -24,7 +24,7 @@ import {IonicComponent} from 'ionic2/config/component'
     <div class="nav-pane-container">
       <!-- COLLECTION OF PANES WITHIN THIS NAV-VIEWPORT, EACH PANE AS ONE VIEW -->
       <!-- EACH VIEW HAS A TOOLBAR WHICH NEEDS TO HAVE THE SAME CONTEXT -->
-      <section class="nav-pane" *for="#item of getRawNavStack()" [item]="item"></section>
+      <section class="nav-pane" *for="#item of _ngForLoopArray" [item]="item"></section>
     </div>
   `,
   directives: [For, NavPane]
