@@ -145,10 +145,13 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
       if (target && self.positionView) {
         self.positionView(target, modalEl);
         // set up a listener for in case the window size changes
-        ionic.on('resize',function() {
-          ionic.off('resize',null,window);
-          self.positionView(target,modalEl);
-        },window);
+        if (!self.resizeHandler) {
+          self.resizeHandler = function() {
+            self.positionView(target, modalEl);
+          };
+        }
+
+        ionic.on('resize',self.resizeHandler,window);
       }
 
       modalEl.addClass('ng-enter active')
@@ -164,7 +167,6 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
 
       $timeout(function() {
         modalEl.addClass('ng-enter-active');
-        ionic.trigger('resize');
         self.scope.$parent && self.scope.$parent.$broadcast(self.viewType + '.shown', self);
         self.el.classList.add('active');
         self.scope.$broadcast('$ionicHeader.align');
@@ -211,7 +213,8 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
 
       // clean up event listeners
       if (self.positionView) {
-        ionic.off('resize',null,window);
+        ionic.off('resize',self.resizeHandler,window);
+        self.resizeHandler = null;
       }
 
       return $timeout(function() {
