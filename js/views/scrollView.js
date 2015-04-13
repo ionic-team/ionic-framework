@@ -692,7 +692,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
             //update scroll view
             self.resize();
-          })
+          });
         }
 
         self.isShrunkForKeyboard = true;
