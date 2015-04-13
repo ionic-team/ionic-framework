@@ -364,16 +364,15 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
 
   function showPopup(options) {
     var popupPromise = $ionicPopup._createPopup(options);
-    var previousPopup = popupStack[0];
 
-    if (previousPopup) {
-      previousPopup.hide();
-    }
-
-    var resultPromise = $timeout(noop, previousPopup ? config.stackPushDelay : 0)
+    var resultPromise = $timeout(noop, 0)
     .then(function() { return popupPromise; })
     .then(function(popup) {
-      if (!previousPopup) {
+      var previousPopup = popupStack[0];
+
+      if (previousPopup) {
+        previousPopup.hide();
+       } else {
         //Add popup-open & backdrop if this is first popup
         $ionicBody.addClass('popup-open');
         $ionicBackdrop.retain();
