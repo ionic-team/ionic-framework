@@ -1,7 +1,14 @@
 describe('Ionic Element Activator', function() {
-
+  var timeout, rAF;
   beforeEach(function() {
+    timeout = window.setTimeout;
+    rAF = ionic.requestAnimationFrame;
     window.setTimeout = ionic.requestAnimationFrame = function(cb) { cb(); };
+  });
+
+  afterEach(function(){
+    window.setTimeout = timeout;
+    ionic.requestAnimationFrame = rAF;
   });
 
   it('should not active an <a> if ionic.tap.requiresNativeClick is true', function() {

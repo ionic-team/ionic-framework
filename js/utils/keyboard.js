@@ -64,7 +64,7 @@
 /**
  * The current viewport height.
  */
-var keyboardCurrentViewportHeight;
+var keyboardCurrentViewportHeight = 0;
 
 /**
  * The viewport height when in portrait orientation.
@@ -442,7 +442,7 @@ function keyboardWaitForResize(callback, isOpening) {
     }
 
     // infer the keyboard height from the resize if not using the keyboard plugin
-    if ( !keyboardHasPlugin() ) {
+    if (!keyboardHasPlugin()) {
       ionic.keyboard.height = Math.abs(initialHeight - window.innerHeight);
     }
 
@@ -459,6 +459,8 @@ function keyboardWaitForResize(callback, isOpening) {
     callback();
 
   }, 50);
+
+  return maxCount; //for tests
 }
 
 /**
@@ -540,18 +542,18 @@ function keyboardShow() {
 /* eslint no-unused-vars:0 */
 function keyboardGetHeight() {
   // check if we already have a keyboard height from the plugin or resize calculations
-  if ( ionic.keyboard.height ) {
+  if (ionic.keyboard.height) {
     return ionic.keyboard.height;
   }
 
-  if ( ionic.Platform.isAndroid() ) {
+  if (ionic.Platform.isAndroid()) {
     // should be using the plugin, no way to know how big the keyboard is, so guess
     if ( ionic.Platform.isFullScreen ) {
       return 275;
     }
     // otherwise just calculate it
     var contentHeight = window.innerHeight;
-    if ( contentHeight < keyboardCurrentViewportHeight ) {
+    if (contentHeight < keyboardCurrentViewportHeight) {
       return keyboardCurrentViewportHeight - contentHeight;
     } else {
       return 0;
@@ -561,12 +563,12 @@ function keyboardGetHeight() {
   // fallback for when it's the webview without the plugin
   // or for just the standard web browser
   // TODO: have these be based on device
-  if( ionic.Platform.isIOS() ) {
-    if ( ionic.keyboard.isLandscape ) {
+  if (ionic.Platform.isIOS()) {
+    if (ionic.keyboard.isLandscape) {
       return 206;
     }
 
-    if ( !ionic.Platform.isWebView() ) {
+    if (!ionic.Platform.isWebView()) {
       return 216;
     }
 
@@ -578,15 +580,15 @@ function keyboardGetHeight() {
 }
 
 function isPortraitViewportHeight(viewportHeight) {
-  return !ionic.keyboard.isLandscape &&
+  return !!(!ionic.keyboard.isLandscape &&
          keyboardPortraitViewportHeight &&
-         ( Math.abs(keyboardPortraitViewportHeight - viewportHeight) < 2 );
+         (Math.abs(keyboardPortraitViewportHeight - viewportHeight) < 2));
 }
 
 function isLandscapeViewportHeight(viewportHeight) {
-  return ionic.keyboard.isLandscape &&
+  return !!(ionic.keyboard.isLandscape &&
          keyboardLandscapeViewportHeight &&
-         ( Math.abs(keyboardLandscapeViewportHeight - viewportHeight) < 2 );
+         (Math.abs(keyboardLandscapeViewportHeight - viewportHeight) < 2));
 }
 
 function keyboardUpdateViewportHeight() {
@@ -611,7 +613,7 @@ function keyboardUpdateViewportHeight() {
   }
 }
 
-function keyboardInitViewportHeight(e) {
+function keyboardInitViewportHeight() {
   var viewportHeight = getViewportHeight();
   //console.log("Keyboard init VP: " + viewportHeight + " " + window.innerWidth);
   // can't just use window.innerHeight in case the keyboard is opened immediately
@@ -620,15 +622,12 @@ function keyboardInitViewportHeight(e) {
   }
   //console.log("ionic.keyboard.isLandscape is: " + ionic.keyboard.isLandscape);
 
-  // initialize or update the current viewport height values if coming from a
-  // resume event
-  if ((e && viewportHeight != keyboardCurrentViewportHeight) || !e) {
-    keyboardCurrentViewportHeight = viewportHeight;
-    if (ionic.keyboard.isLandscape && !keyboardLandscapeViewportHeight) {
-      keyboardLandscapeViewportHeight = keyboardCurrentViewportHeight;
-    } else if (!ionic.keyboard.isLandscape && !keyboardPortraitViewportHeight) {
-      keyboardPortraitViewportHeight = keyboardCurrentViewportHeight;
-    }
+  // initialize or update the current viewport height values
+  keyboardCurrentViewportHeight = viewportHeight;
+  if (ionic.keyboard.isLandscape && !keyboardLandscapeViewportHeight) {
+    keyboardLandscapeViewportHeight = keyboardCurrentViewportHeight;
+  } else if (!ionic.keyboard.isLandscape && !keyboardPortraitViewportHeight) {
+    keyboardPortraitViewportHeight = keyboardCurrentViewportHeight;
   }
 }
 

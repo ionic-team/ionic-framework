@@ -51,7 +51,7 @@ describe('Ionic Scroll Directive', function() {
   });
 
   it('Should set start x and y', function() {
-    element = compile('<ion-content start-x="100" start-y="300" has-header="true"></ion-scroll>')(scope);
+    element = compile('<ion-content start-x="100" start-y="300" has-header="true"></ion-content>')(scope);
     scope.$apply();
     var scrollView = element.controller('$ionicScroll').scrollView;
     var vals = scrollView.getValues();

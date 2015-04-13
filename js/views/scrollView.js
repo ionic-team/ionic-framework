@@ -646,7 +646,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
      * into view.
      */
     self.scrollChildIntoView = function(e) {
-      console.log("scrollChildIntoView at: " + Date.now());
+      //console.log("scrollChildIntoView at: " + Date.now());
 
       // D
       var scrollBottomOffsetToTop = container.getBoundingClientRect().bottom;
@@ -694,7 +694,6 @@ ionic.views.Scroll = ionic.views.View.inherit({
         }
 
         self.isShrunkForKeyboard = true;
-
       }
 
       /*

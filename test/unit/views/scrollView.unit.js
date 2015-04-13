@@ -28,56 +28,57 @@ describe('Scroll View', function() {
       scrollbarsX: true,
       scrollingX: true,
       scrollbarsY: true,
-      scrollingY: true,
+      scrollingY: true
     });
 
     expect(sc.children[1].classList.contains('scroll-bar')).toBe(true);
     expect(sc.children[2].classList.contains('scroll-bar')).toBe(true);
   });
 
-  /*
-  it('Should resize when the keyboard is showing', function() {
-    var element = document.createElement('textarea');
+  it('Should shrink on scrollChildIntoView if not already', function() {
     ionic.Platform.setPlatform('ios');
-    s.appendChild(element);
+
+    var input = document.createElement('input');
+    s.appendChild(input);
     document.body.appendChild(sc);
 
     var sv = new ionic.views.Scroll({
-      el: sc,
+      el: sc
     });
 
-    var scHeight = 500;
-    sc.style.height = scHeight + "px";
+    sc.style.height =  "500px";
     sc.style.display = "block";
 
-    var viewportHeight = 480;
-    var scBottom = 460;
+    var _scrollGetBoundingClientRect = sc.getBoundingClientRect;
+    var _RAF = ionic.requestAnimationFrame;
 
-    //hack to get this to work
     sc.getBoundingClientRect = function(){
-      return { bottom: scBottom };
+      return { bottom: 520 };
+    };
+    ionic.requestAnimationFrame = function(cb){ cb(); };
+
+    var details = {
+      target: input,
+      elementTop: 500,
+      elementBottom: 510,
+      keyboardHeight: 300,
+      viewportHeight: 568,
+      windowHeight: 268,
+      isElementUnderKeyboard: true
     };
 
-    var keyboardHeight  = 200;
-    details = {
-      contentHeight: 260,
-      elementBottom: 400,
-      elementTop: 300,
-      isElementUnderKeyboard: true,
-      keyboardHeight: keyboardHeight,
-      keyboardTopOffset: 40,
-      target: element,
-      viewportHeight: viewportHeight
-    };
-
-    var scOffsetToBottom = viewportHeight - scBottom;
-
-    expect( sv.isScrolledIntoView ).toBeFalsy();
+    spyOn(sv, 'resize');
+    expect(sv.isShrunkForKeyboard).toBeUndefined();
     ionic.trigger('scrollChildIntoView', details, true);
-    expect( sv.isScrolledIntoView ).toEqual(true);
-    expect( sc.style.height ).toEqual(scHeight - keyboardHeight + scOffsetToBottom + "px");
-    expect( sc.clientHeight ).toEqual(scHeight - keyboardHeight + scOffsetToBottom);
-  });
-  */
+    expect(sv.resize).toHaveBeenCalled();
+    expect(sv.isShrunkForKeyboard).toBe(true);
+    expect(sc.style.height).toEqual("248px");
 
+    ionic.trigger('scrollChildIntoView', details, true);
+    //already shrunk, so shouldn't resize again
+    expect(sv.resize.calls.length).toBe(1);
+
+    ionic.requestAnimationFrame = _RAF;
+    sc.getBoundingClientRect = _scrollGetBoundingClientRect;
+  });
 });
