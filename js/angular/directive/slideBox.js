@@ -129,7 +129,10 @@ function($timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory, $ionicScroll
           return $ionicHistory.isActiveScope($scope);
         }
       );
-      $scope.$on('$destroy', deregisterInstance);
+      $scope.$on('$destroy', function() {
+        deregisterInstance();
+        slider.kill();
+      });
 
       this.slidesCount = function() {
         return slider.slidesCount();
