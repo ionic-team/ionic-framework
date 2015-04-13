@@ -54,6 +54,7 @@ function($timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory) {
       pagerClick: '&',
       disableScroll: '@',
       onSlideChanged: '&',
+      direction: '=?',
       activeSlide: '=?'
     },
     controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
@@ -67,6 +68,7 @@ function($timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory) {
         el: $element[0],
         auto: slideInterval,
         continuous: continuous,
+        direction: $scope.direction,
         startSlide: $scope.activeSlide,
         slidesChanged: function() {
           $scope.currentSlide = slider.currentIndex();
