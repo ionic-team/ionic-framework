@@ -59,15 +59,11 @@ if (argv.dist) {
   buildConfig.dist = argv.dist;
 }
 
-gulp.task('default', ['build']);
-gulp.task('build', ['bundle', 'sass']);
-gulp.task('validate', ['jshint', 'ddescribe-iit', 'karma']);
-
 var IS_WATCH = false;
-gulp.task('watch', ['build'], function() {
+gulp.task('watch', gulp.series('build'), function() {
   IS_WATCH = true;
-  gulp.watch('js/**/*.js', ['bundle']);
-  gulp.watch('scss/**/*.scss', ['sass']);
+  gulp.watch('js/**/*.js', gulp.series('bundle'));
+  gulp.watch('scss/**/*.scss', gulp.series('sass'));
 });
 
 gulp.task('changelog', function() {
@@ -103,12 +99,12 @@ function makeChangelog(options) {
   return deferred.promise;
 }
 
-gulp.task('bundle', [
+gulp.task('bundle', gulp.series(
   'scripts',
   'scripts-ng',
   'vendor',
   'version',
-], function() {
+), function() {
   gulp.src(buildConfig.ionicBundleFiles.map(function(src) {
       return src.replace(/.js$/, '.min.js');
     }), {
@@ -378,3 +374,7 @@ function qRequest(opts) {
   });
   return deferred.promise;
 }
+
+gulp.task('build', gulp.series('bundle', 'sass'));
+gulp.task('validate', gulp.series('jshint', 'ddescribe-iit', 'karma'));
+gulp.task('default', gulp.series('build'));
