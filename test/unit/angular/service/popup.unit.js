@@ -277,8 +277,8 @@ describe('$ionicPopup service', function() {
       expect($ionicBackdrop.release).toHaveBeenCalled();
       expect(document.body.classList.contains('popup-open')).toBe(false);
     }));
-    it('template should only overwrite prompt input if it includes html', inject(function($timeout) {
-      spyOn($ionicPopup, '_createPopup');
+    it('template should only overwrite prompt input if it includes html', inject(function($timeout, $q) {
+      spyOn($ionicPopup, '_createPopup').andCallThrough();
       $ionicPopup.prompt({template: "Tacos!"});
       params = $ionicPopup._createPopup.mostRecentCall.args;
       expect(params[0].template.indexOf('<span>Tacos!</span>')).toEqual(0);
