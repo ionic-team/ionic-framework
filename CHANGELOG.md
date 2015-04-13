@@ -7,31 +7,23 @@
 * **slidebox:**
   * `show-pager` defaults to true ([95688d6a](https://github.com/driftyco/ionic/commit/95688d6a))
   * prevent scrolling while sliding ([db7f0eee](https://github.com/driftyco/ionic/commit/db7f0eee), closes [#2814](https://github.com/driftyco/ionic/issues/2814))
-
 * **fonts**
   * Add support for the Segoe UI font for Windows Phone support ([3690dbf](https://github.com/driftyco/ionic/commit/3690dbf))
-
 * **nav:**
   * back btn and bar hide/show ([0936f78c](https://github.com/driftyco/ionic/commit/0936f78c))
-
 * **backButton:**
   * dynamic icon/text updates ([a0c3c557](https://github.com/driftyco/ionic/commit/a0c3c557), closes [#3281](https://github.com/driftyco/ionic/issues/3281))
-
 * **navbar:** 
   * re-align title after show ([0e1689d5](https://github.com/driftyco/ionic/commit/0e1689d5), closes [#3064](https://github.com/driftyco/ionic/issues/3064))
-
 * **collectionRepeat:**
   * in grid, use height of tallest item in row ([40bedd7d](https://github.com/driftyco/ionic/commit/40bedd7d), closes [#3387](https://github.com/driftyco/ionic/issues/3387))
   * properly resize when aside is exposed ([6c08b780](https://github.com/driftyco/ionic/commit/6c08b780), closes [#3352](https://github.com/driftyco/ionic/issues/3352))
   * compute width when height is not given ([1e36afc6](https://github.com/driftyco/ionic/commit/1e36afc6), closes [#3357](https://github.com/driftyco/ionic/issues/3357))
-
 * **modal:** 
   * fix header bar in modals with top tabs. ([40604681](https://github.com/driftyco/ionic/commit/40604681), closes [#3347](https://github.com/driftyco/ionic/issues/3347), [#3346](https://github.com/driftyco/ionic/issues/3346))
   * prevent ghost clicks on close ([a416c66d](https://github.com/driftyco/ionic/commit/a416c66d))
-
 * **ionItem:**
   * vertically center select in an item ([6df89d78](https://github.com/driftyco/ionic/commit/6df89d78), closes [#3517](https://github.com/driftyco/ionic/issues/3517))
-
 * **keyboard:**
   * keyboard performance improvements ([70576d9](https://github.com/driftyco/ionic/commit/70576d9))
 
