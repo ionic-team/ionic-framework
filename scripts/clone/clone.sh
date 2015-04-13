@@ -18,6 +18,8 @@ function run {
     ARGS="$ARGS --depth=$DEPTH"
   fi
   git clone https://driftyco:$GH_TOKEN@github.com/$REPOSITORY $DIRECTORY $ARGS
+  git fetch
+  git fetch --tags
 }
 
 source $(dirname $0)/../utils.inc
