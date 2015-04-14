@@ -218,7 +218,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
 
       // clean up event listeners
       if (self.positionView) {
-        $window.addEventListener('resize', self._onWindowResize);
+        $window.removeEventListener('resize', self._onWindowResize);
       }
 
       return $timeout(function() {
