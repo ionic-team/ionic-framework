@@ -2,7 +2,7 @@ IonicModule
 .directive('ionModalView', function() {
   return {
     restrict: 'E',
-    compile: function(element, attr) {
+    compile: function(element) {
       element.addClass('modal');
     }
   };

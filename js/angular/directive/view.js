@@ -7,9 +7,9 @@
  *
  * @description
  * A container for view content and any navigational and header bar information. When a view
- * enters and exists its parent {@link ionic.directive:ionNavView}, the view also emits view
- * information, such as its title, whether the back button should show or not, whether the
- * corresponding {@link ionic.directive:ionNavBar} should show or not, which transition the view
+ * enters and exits its parent {@link ionic.directive:ionNavView}, the view also emits view
+ * information, such as its title, whether the back button should be displayed or not, whether the
+ * corresponding {@link ionic.directive:ionNavBar} should be displayed or not, which transition the view
  * should use to animate, and which direction to animate.
  *
  * *Views are cached to improve performance.* When a view is navigated away from, its element is

@@ -135,6 +135,14 @@ describe('Ionic Content directive', function() {
     expect(element.hasClass('overflow-scroll')).toBe(true);
   });
 
+  it('should call on-scrolling-complete attribute callback with locals', function() {
+    scope.youCompleteMe = jasmine.createSpy('scrollComplete');
+    var element = compile('<ion-content on-scroll-complete="youCompleteMe(scrollLeft, scrollTop)">')(scope);
+    scope.$apply();
+    element.controller('$ionicScroll').scrollView.__scrollingComplete();
+    expect(scope.youCompleteMe).toHaveBeenCalledWith(0, 0);
+  });
+
 });
 /* Tests #555, #1155 */
 describe('Ionic Content Directive scoping', function() {
@@ -158,4 +166,6 @@ describe('Ionic Content Directive scoping', function() {
     expect(input.scope().foo).toBe('bar');
     expect(ctrl.$scope.foo).toBe('bar');
   }));
+
+  
 });

@@ -57,11 +57,11 @@ For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/`
 
 ## Community
 
-* Follow [@ionicframework on Twitter](https://twitter.com/ionicframework).
-* Subscribe to the [Ionic Newsletter](http://ionicframework.com/subscribe/).
-* Have a question that's not a feature request or bug report? [Discuss on the Ionic Forum](http://forum.ionicframework.com/).
-* Read our [Blog](http://ionicframework.com/blog/).
-* Have a feature request or find a bug? [Submit an issue](http://ionicframework.com/submit-issue/).
+* Follow [@ionicframework on Twitter](https://twitter.com/ionicframework)
+* Subscribe to the [Ionic Newsletter](http://ionicframework.com/subscribe/)
+* Have a question that's not a feature request or bug report? [Discuss on the Ionic Forum](http://forum.ionicframework.com/)
+* Read our [Blog](http://ionicframework.com/blog/)
+* Have a feature request or find a bug? [Submit an issue](http://ionicframework.com/submit-issue/)
 
 
 ## Authors
@@ -83,13 +83,13 @@ Originally created by [Adam Bradley](http://twitter.com/adamdbradley), [Ben Sper
 ### Documentation
 
 * Documentation is generated into `dist/ionic-site`.  To test documentation properly, follow these steps:
-  1. Clone ionic-site into `./dist/ionic-site`.
+  1. Clone ionic-site into `./dist/ionic-site`
     - `git clone git@github.com:driftyco/ionic-site dist/ionic-site`
-  2. Start jekyll, telling it to rebuild whenever the site changes.
+  2. Start jekyll, telling it to rebuild whenever the site changes
     - `cd dist/ionic-site && jekyll serve -w`
-  3. Go back to project root and build the docs.
+  3. Go back to project root and build the docs
     - `gulp docs [--doc-version=(versionName|nightly)]`
-  4. Open localhost:4000 and see your changes! Re-run `gulp docs` again whenever you change something, and jekyll will update the site.
+  4. Open localhost:4000 and see your changes! Re-run `gulp docs` again whenever you change something, and jekyll will update the site
 
 ### Demos / Kitchen Sink
 

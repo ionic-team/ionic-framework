@@ -35,6 +35,7 @@ describe('Scroll View', function() {
     expect(sc.children[2].classList.contains('scroll-bar')).toBe(true);
   });
 
+  /*
   it('Should resize when the keyboard is showing', function() {
     var element = document.createElement('textarea');
     ionic.Platform.setPlatform('ios');
@@ -77,5 +78,6 @@ describe('Scroll View', function() {
     expect( sc.style.height ).toEqual(scHeight - keyboardHeight + scOffsetToBottom + "px");
     expect( sc.clientHeight ).toEqual(scHeight - keyboardHeight + scOffsetToBottom);
   });
+  */
 
 });

@@ -38,8 +38,8 @@
     initialize: function(opts) {
       ionic.extend(this, {
         animationClass: 'menu-animated',
-        onDrag: function(e) {},
-        onEndDrag: function(e) {}
+        onDrag: function() {},
+        onEndDrag: function() {}
       }, opts);
 
       ionic.onGesture('drag', ionic.proxy(this._onDrag, this), this.el);

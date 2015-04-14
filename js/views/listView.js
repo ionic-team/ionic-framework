@@ -12,13 +12,10 @@
 
   var DragOp = function() {};
   DragOp.prototype = {
-    start: function(e) {
-    },
-    drag: function(e) {
-    },
-    end: function(e) {
-    },
-    isSameItem: function(item) {
+    start: function(){},
+    drag: function(){},
+    end: function(){},
+    isSameItem: function() {
       return false;
     }
   };
@@ -274,7 +271,6 @@
   };
 
   ReorderDrag.prototype.start = function(e) {
-    var content;
 
     var startIndex = ionic.DomUtil.getChildIndex(this.el, this.el.nodeName.toLowerCase());
     var elementHeight = this.el.scrollHeight;
@@ -354,7 +350,6 @@
   ReorderDrag.prototype._getReorderIndex = function() {
     var self = this;
 
-    var placeholder = self._currentDrag.placeholder;
     var siblings = Array.prototype.slice.call(self._currentDrag.placeholder.parentNode.children)
       .filter(function(el) {
         return el.nodeName === self.el.nodeName && el !== self.el;
@@ -417,7 +412,7 @@
       var self = this;
 
       opts = ionic.extend({
-        onReorder: function(el, oldIndex, newIndex) {},
+        onReorder: function() {},
         virtualRemoveThreshold: -200,
         virtualAddThreshold: 200,
         canSwipe: function() {
@@ -438,8 +433,8 @@
 
       var gestureOpts = {};
       // don't prevent native scrolling
-      if (ionic.DomUtil.getParentOrSelfWithClass(self.el,'overflow-scroll')) {
-        gestureOpts.prevent_default_directions = ['left','right'];
+      if (ionic.DomUtil.getParentOrSelfWithClass(self.el, 'overflow-scroll')) {
+        gestureOpts.prevent_default_directions = ['left', 'right'];
       }
 
       window.ionic.onGesture('release', function(e) {
@@ -484,17 +479,11 @@
       if (self.isVirtual) {
         var itemHeight = self.itemHeight;
 
-        // TODO: This would be inaccurate if we are windowed
-        var totalItems = self.listEl.children.length;
-
         // Grab the total height of the list
         var scrollHeight = e.target.scrollHeight;
 
         // Get the viewport height
         var viewportHeight = self.el.parentNode.offsetHeight;
-
-        // scrollTop is the current scroll position
-        var scrollTop = e.scrollTop;
 
         // High water is the pixel position of the first element to include (everything before
         // that will be removed)
@@ -504,9 +493,6 @@
         // that will be removed)
         var lowWater = Math.min(scrollHeight, Math.abs(e.scrollTop) + viewportHeight + self.virtualAddThreshold);
 
-        // Compute how many items per viewport size can show
-        var itemsPerViewport = Math.floor((lowWater - highWater) / itemHeight);
-
         // Get the first and last elements in the list based on how many can fit
         // between the pixel range of lowWater and highWater
         var first = parseInt(Math.abs(highWater / itemHeight), 10);
@@ -515,17 +501,13 @@
         // Get the items we need to remove
         self._virtualItemsToRemove = Array.prototype.slice.call(self.listEl.children, 0, first);
 
-        // Grab the nodes we will be showing
-        var nodes = Array.prototype.slice.call(self.listEl.children, first, first + itemsPerViewport);
-
         self.renderViewport && self.renderViewport(highWater, lowWater, first, last);
       }
     },
 
-    didStopScrolling: function(e) {
+    didStopScrolling: function() {
       if (this.isVirtual) {
         for (var i = 0; i < this._virtualItemsToRemove.length; i++) {
-          var el = this._virtualItemsToRemove[i];
           //el.parentNode.removeChild(el);
           this.didHideItem && this.didHideItem(i);
         }
@@ -569,8 +551,6 @@
 
     _startDrag: function(e) {
       var self = this;
-
-      var didStart = false;
 
       self._isDragging = false;
 
@@ -653,7 +633,7 @@
      * Process the drag event to move the item to the left or right.
      */
     _handleDrag: function(e) {
-      var self = this, content, buttons;
+      var self = this;
 
       if (Math.abs(e.gesture.deltaY) > 5) {
         self._didDragUpOrDown = true;

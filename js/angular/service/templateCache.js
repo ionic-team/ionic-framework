@@ -71,6 +71,7 @@ function($http, $templateCache, $timeout) {
 
   // run through methods - internal method
   function run() {
+    var template;
     $ionicTemplateCache._runCount++;
 
     hasRun = true;

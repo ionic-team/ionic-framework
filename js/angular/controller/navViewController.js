@@ -26,7 +26,6 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
   var activeEleId;
   var navViewAttr = $ionicViewSwitcher.navViewAttr;
   var disableRenderStartViewId, disableAnimation;
-  var transitionDuration, transitionTiming;
 
   self.scope = $scope;
   self.element = $element;
@@ -39,7 +38,7 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
     // off the DOM so child directives can find it.
     var parent = $element.parent().inheritedData('$uiView');
     var parentViewName = ((parent && parent.state) ? parent.state.name : '');
-    if (navViewName.indexOf('@') < 0) navViewName  = navViewName + '@' + parentViewName;
+    if (navViewName.indexOf('@') < 0) navViewName = navViewName + '@' + parentViewName;
 
     var viewData = { name: navViewName, state: null };
     $element.data('$uiView', viewData);
@@ -291,13 +290,25 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
    */
   self.showBackButton = function(shouldShow) {
     var associatedNavBarCtrl = getAssociatedNavBarCtrl();
-    associatedNavBarCtrl && associatedNavBarCtrl.showActiveBackButton(shouldShow);
+    if (associatedNavBarCtrl) {
+      if (arguments.length) {
+        return associatedNavBarCtrl.showActiveBackButton(shouldShow);
+      }
+      return associatedNavBarCtrl.showActiveBackButton();
+    }
+    return true;
   };
 
 
   self.showBar = function(val) {
     var associatedNavBarCtrl = getAssociatedNavBarCtrl();
-    associatedNavBarCtrl && associatedNavBarCtrl.showBar(val);
+    if (associatedNavBarCtrl) {
+      if (arguments.length) {
+        return associatedNavBarCtrl.showBar(val);
+      }
+      return associatedNavBarCtrl.showBar();
+    }
+    return true;
   };
 
 
@@ -322,6 +333,7 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
     var viewTransition, associatedNavBarCtrl, backView;
     var deregDragStart, deregDrag, deregRelease;
     var windowWidth, startDragX, dragPoints;
+    var cancelData = {};
 
     function onDragStart(ev) {
       if (!isPrimary) return;
@@ -342,6 +354,11 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
       };
 
       dragPoints = [];
+
+      cancelData = {
+        showBar: self.showBar(),
+        showBackButton: self.showBackButton()
+      };
 
       var switcher = $ionicViewSwitcher.create(self, registerData, backView, $ionicHistory.currentView(), true, false);
       switcher.loadViewElements(registerData);
@@ -399,16 +416,18 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
         disableAnimation = (releaseSwipeCompletion < 0.03 || releaseSwipeCompletion > 0.97);
 
         if (isSwipingRight && (releaseSwipeCompletion > 0.5 || velocity > 0.1)) {
+          // complete view transition on release
           var speed = (velocity > 0.5 || velocity < 0.05 || releaseX > windowWidth - 45) ? 'fast' : 'slow';
           navSwipeAttr(disableAnimation ? '' : speed);
           backView.go();
           associatedNavBarCtrl && associatedNavBarCtrl.activeTransition && associatedNavBarCtrl.activeTransition.complete(!disableAnimation, speed);
 
         } else {
+          // cancel view transition on release
           navSwipeAttr(disableAnimation ? '' : 'fast');
           disableRenderStartViewId = null;
           viewTransition.cancel(!disableAnimation);
-          associatedNavBarCtrl && associatedNavBarCtrl.activeTransition && associatedNavBarCtrl.activeTransition.cancel(!disableAnimation, 'fast');
+          associatedNavBarCtrl && associatedNavBarCtrl.activeTransition && associatedNavBarCtrl.activeTransition.cancel(!disableAnimation, 'fast', cancelData);
           disableAnimation = null;
         }
 
@@ -458,7 +477,7 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
 
   function getAssociatedNavBarCtrl() {
     if (navBarDelegate) {
-      for (var x=0; x < $ionicNavBarDelegate._instances.length; x++) {
+      for (var x = 0; x < $ionicNavBarDelegate._instances.length; x++) {
         if ($ionicNavBarDelegate._instances[x].$$delegateHandle == navBarDelegate) {
           return $ionicNavBarDelegate._instances[x];
         }

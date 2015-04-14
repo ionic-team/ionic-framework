@@ -1,3 +1,49 @@
+<a name"1.0.0-rc.3"></a>
+### 1.0.0-rc.3 "radium-raccoon" (2015-04-13)
+
+
+#### Bug Fixes
+
+* **slidebox:**
+  * `show-pager` defaults to true ([95688d6a](https://github.com/driftyco/ionic/commit/95688d6a))
+  * prevent scrolling while sliding ([db7f0eee](https://github.com/driftyco/ionic/commit/db7f0eee), closes [#2814](https://github.com/driftyco/ionic/issues/2814))
+* **fonts**
+  * Add support for the Segoe UI font for Windows Phone support ([3690dbf](https://github.com/driftyco/ionic/commit/3690dbf))
+* **nav:**
+  * back btn and bar hide/show ([0936f78c](https://github.com/driftyco/ionic/commit/0936f78c))
+* **backButton:**
+  * dynamic icon/text updates ([a0c3c557](https://github.com/driftyco/ionic/commit/a0c3c557), closes [#3281](https://github.com/driftyco/ionic/issues/3281))
+* **navbar:** 
+  * re-align title after show ([0e1689d5](https://github.com/driftyco/ionic/commit/0e1689d5), closes [#3064](https://github.com/driftyco/ionic/issues/3064))
+* **collectionRepeat:**
+  * in grid, use height of tallest item in row ([40bedd7d](https://github.com/driftyco/ionic/commit/40bedd7d), closes [#3387](https://github.com/driftyco/ionic/issues/3387))
+  * properly resize when aside is exposed ([6c08b780](https://github.com/driftyco/ionic/commit/6c08b780), closes [#3352](https://github.com/driftyco/ionic/issues/3352))
+  * compute width when height is not given ([1e36afc6](https://github.com/driftyco/ionic/commit/1e36afc6), closes [#3357](https://github.com/driftyco/ionic/issues/3357))
+* **modal:** 
+  * fix header bar in modals with top tabs. ([40604681](https://github.com/driftyco/ionic/commit/40604681), closes [#3347](https://github.com/driftyco/ionic/issues/3347), [#3346](https://github.com/driftyco/ionic/issues/3346))
+  * prevent ghost clicks on close ([a416c66d](https://github.com/driftyco/ionic/commit/a416c66d))
+* **ionItem:**
+  * vertically center select in an item ([6df89d78](https://github.com/driftyco/ionic/commit/6df89d78), closes [#3517](https://github.com/driftyco/ionic/issues/3517))
+* **keyboard:**
+  * keyboard performance improvements ([70576d9](https://github.com/driftyco/ionic/commit/70576d9))
+
+### 1.0.0-rc.2 "palladium-platypus" (2015-03-30)
+
+
+#### Bug Fixes
+
+* **activator:** adds activated class to buttons in nav-bar and header-bars ([36df5086](https://github.com/driftyco/ionic/commit/36df50863853dcf4faee77cbf40c93c4556c11c1), closes [#3348](https://github.com/driftyco/ionic/issues/3348))
+* **keyboard:** enable keyboard accessory bar more quickly after focus ([7bf1207a](https://github.com/driftyco/ionic/commit/7bf1207a54bb482d1fdb2cf13620ef2837ffab18), closes [#3113](https://github.com/driftyco/ionic/issues/3113))
+* **popover:** fix popover position on Internet Explorer ([893fcbec](https://github.com/driftyco/ionic/commit/893fcbec5f97eb487d602ab2c19459924c0098b0), closes [#2861](https://github.com/driftyco/ionic/issues/2861))
+* **popup:** prevent scrollbars from showing on desktop unecessarily. ([b8df44d4](https://github.com/driftyco/ionic/commit/b8df44d4c44e47516032b96cac79147eb48afe4c), closes [#3204](https://github.com/driftyco/ionic/issues/3204))
+* **scrolling:** Prevent gestures from breaking native scrolling ([e917cae3](https://github.com/driftyco/ionic/commit/e917cae3346ba3e78e5a4126704bdc102e33ae95))
+
+
+#### Features
+
+* **scrolling:** add native scroll delegate ([bda4de1c](https://github.com/driftyco/ionic/commit/bda4de1c30bc799e2b48f769d472f391282c7e49))
+
+
 ### 1.0.0-rc.1 "osmium-ostrich" (2015-03-16)
 
 

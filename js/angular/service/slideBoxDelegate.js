@@ -48,7 +48,7 @@ IonicModule
    * @ngdoc method
    * @name $ionicSlideBoxDelegate#slide
    * @param {number} to The index to slide to.
-   * @param {number=} speed The number of milliseconds for the change to take.
+   * @param {number=} speed The number of milliseconds the change should take.
    */
   'slide',
   'select',
@@ -62,12 +62,14 @@ IonicModule
   /**
    * @ngdoc method
    * @name $ionicSlideBoxDelegate#previous
+   * @param {number=} speed The number of milliseconds the change should take.
    * @description Go to the previous slide. Wraps around if at the beginning.
    */
   'previous',
   /**
    * @ngdoc method
    * @name $ionicSlideBoxDelegate#next
+   * @param {number=} speed The number of milliseconds the change should take.
    * @description Go to the next slide. Wraps around if at the end.
    */
   'next',

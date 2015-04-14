@@ -1,6 +1,6 @@
 describe('keyboardAttach directive', function() {
   beforeEach(module('ionic'));
-  
+
   function setup() {
     var el, content;
     inject(function($compile, $rootScope) {
@@ -12,7 +12,7 @@ describe('keyboardAttach directive', function() {
     });
     return {el: el, content: content};
   }
-  
+
   it('should move up when window fires native.showkeyboard event', function() {
     var el = setup().el;
     ionic.Platform.isFullScreen = true;
@@ -38,13 +38,14 @@ describe('keyboardAttach directive', function() {
 
   it('should do nothing if Android and not fullscreen', function() {
     var el = setup().el;
+    ionic.Platform.setPlatform('android');
     ionic.Platform.isFullScreen = false;
     expect(el.css('bottom')).toEqual('');
     ionic.trigger('native.showkeyboard', { target: window, keyboardHeight: 33 });
     expect(el.css('bottom')).toEqual('');
     el.scope().$destroy();
   });
-  
+
   it('should remove listeners on destroy', function() {
     spyOn(ionic, 'off');
     var el = setup().el;

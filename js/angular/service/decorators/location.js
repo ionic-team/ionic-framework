@@ -14,8 +14,9 @@ function($provide) {
       if (isDefined(value)) {
         $timeout(function() {
           var scroll = document.querySelector('.scroll-content');
-          if (scroll)
+          if (scroll) {
             scroll.scrollTop = 0;
+          }
         }, 0, false);
       }
       return $location.__hash(value);

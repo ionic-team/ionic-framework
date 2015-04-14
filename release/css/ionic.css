@@ -2,7 +2,7 @@
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v1.0.0-rc.1
+ * Ionic, v1.0.0-rc.3
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -2562,7 +2562,7 @@ body, .ionic-body {
   color: #000;
   word-wrap: break-word;
   font-size: 14px;
-  font-family: "Helvetica Neue", "Roboto", sans-serif;
+  font-family: "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
   line-height: 20px;
   text-rendering: optimizeLegibility;
   -webkit-backface-visibility: hidden;
@@ -2789,7 +2789,7 @@ cite {
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   color: #000;
   font-weight: 500;
-  font-family: "Helvetica Neue", "Roboto", sans-serif;
+  font-family: "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
   line-height: 1.2; }
   h1 small, h2 small, h3 small, h4 small, h5 small, h6 small, .h1 small, .h2 small, .h3 small, .h4 small, .h5 small, .h6 small {
     font-weight: normal;
@@ -4131,7 +4131,7 @@ ion-tabs.tabs-color-active-dark .tab-item {
   white-space: nowrap;
   font-weight: 400;
   font-size: 14px;
-  font-family: "Helvetica Neue", "Roboto", sans-serif;
+  font-family: "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
   opacity: 0.7; }
   .tab-item:hover {
     cursor: pointer; }
@@ -4305,7 +4305,6 @@ ion-tabs.tabs-color-active-dark .tab-item {
     right: 20%;
     bottom: 20%;
     left: 20%;
-    overflow: visible;
     min-height: 240px;
     width: 60%; }
   .modal.ng-leave-active {
@@ -4320,7 +4319,7 @@ ion-tabs.tabs-color-active-dark .tab-item {
     top: 44px; }
   .platform-ios.platform-cordova .modal-wrapper .modal .has-subheader {
     top: 88px; }
-  .platform-ios.platform-cordova .modal-wrapper .modal .has-tabs-top {
+  .platform-ios.platform-cordova .modal-wrapper .modal .has-header.has-tabs-top {
     top: 93px; }
   .platform-ios.platform-cordova .modal-wrapper .modal .has-header.has-subheader.has-tabs-top {
     top: 137px; }
@@ -4542,7 +4541,7 @@ ion-tabs.tabs-color-active-dark .tab-item {
 
 .popup-body {
   padding: 10px;
-  overflow: scroll; }
+  overflow: auto; }
 
 .popup-buttons {
   display: -webkit-box;
@@ -5628,7 +5627,7 @@ label, input, button, select, textarea {
   line-height: 1.42857; }
 
 input, button, select, textarea {
-  font-family: "Helvetica Neue", "Roboto", sans-serif; }
+  font-family: "Helvetica Neue", "Roboto", "Segoe UI", sans-serif; }
 
 .item-input {
   display: -webkit-box;
@@ -6370,6 +6369,7 @@ input[type="radio"][disabled], input[type="checkbox"][disabled], input[type="rad
     appearance: none;
     position: absolute;
     top: 0;
+    bottom: 0;
     right: 0;
     padding: 14px 48px 16px 16px;
     max-width: 65%;

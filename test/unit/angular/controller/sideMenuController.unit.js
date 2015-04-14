@@ -302,7 +302,7 @@ describe('$ionicSideMenus controller', function() {
     expect(ctrl.getOpenPercentage()).toEqual(-100);
   });
 
-  it('should register with backButton on open and dereg on close', inject(function($ionicPlatform) {
+  it('should register with backButton on open and dereg on close', inject(function($ionicPlatform, IONIC_BACK_PRIORITY) {
     var openAmount = 0;
     var deregSpy = jasmine.createSpy('deregister');
     spyOn($ionicPlatform, 'registerBackButtonAction').andReturn(deregSpy);
@@ -314,7 +314,7 @@ describe('$ionicSideMenus controller', function() {
     ctrl.$scope.$apply();
     expect($ionicPlatform.registerBackButtonAction).toHaveBeenCalledWith(
       jasmine.any(Function),
-      PLATFORM_BACK_BUTTON_PRIORITY_SIDE_MENU
+      IONIC_BACK_PRIORITY.sideMenu
     );
     expect(deregSpy).not.toHaveBeenCalled();
     openAmount = 0;

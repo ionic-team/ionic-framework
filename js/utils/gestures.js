@@ -1,3 +1,4 @@
+/* eslint camelcase:0 */
 /**
   * Simple gesture controllers with some common gestures that emit
   * gesture events.
@@ -109,7 +110,7 @@
     // so we can't listen for events on it.
     if(element === null) {
       console.error('Null element passed to gesture (element does not exist). Not listening for gesture');
-      return;
+      return this;
     }
 
     // setup ionic.GesturesJS window events and register all gestures
@@ -152,7 +153,7 @@
      */
     on: function onEvent(gesture, handler){
       var gestures = gesture.split(' ');
-      for(var t=0; t<gestures.length; t++) {
+      for(var t = 0; t < gestures.length; t++) {
         this.element.addEventListener(gestures[t], handler, false);
       }
       return this;
@@ -167,7 +168,7 @@
      */
     off: function offEvent(gesture, handler){
       var gestures = gesture.split(' ');
-      for(var t=0; t<gestures.length; t++) {
+      for(var t = 0; t < gestures.length; t++) {
         this.element.removeEventListener(gestures[t], handler, false);
       }
       return this;
@@ -241,7 +242,7 @@
      */
     bindDom: function(element, type, handler) {
       var types = type.split(' ');
-      for(var t=0; t<types.length; t++) {
+      for(var t = 0; t < types.length; t++) {
         element.addEventListener(types[t], handler, false);
       }
     },
@@ -369,9 +370,9 @@
           'touchend touchcancel mouseup'];
       }
 
-      ionic.Gestures.EVENT_TYPES[ionic.Gestures.EVENT_START]  = types[0];
-      ionic.Gestures.EVENT_TYPES[ionic.Gestures.EVENT_MOVE]   = types[1];
-      ionic.Gestures.EVENT_TYPES[ionic.Gestures.EVENT_END]    = types[2];
+      ionic.Gestures.EVENT_TYPES[ionic.Gestures.EVENT_START] = types[0];
+      ionic.Gestures.EVENT_TYPES[ionic.Gestures.EVENT_MOVE] = types[1];
+      ionic.Gestures.EVENT_TYPES[ionic.Gestures.EVENT_END] = types[2];
     },
 
 
@@ -412,43 +413,43 @@
       }
 
       return {
-        center      : ionic.Gestures.utils.getCenter(touches),
-                    timeStamp   : new Date().getTime(),
-                    target      : ev.target,
-                    touches     : touches,
-                    eventType   : eventType,
-                    pointerType : pointerType,
-                    srcEvent    : ev,
+        center: ionic.Gestures.utils.getCenter(touches),
+        timeStamp: new Date().getTime(),
+        target: ev.target,
+        touches: touches,
+        eventType: eventType,
+        pointerType: pointerType,
+        srcEvent: ev,
 
-                    /**
-                     * prevent the browser default actions
-                     * mostly used to disable scrolling of the browser
-                     */
-                    preventDefault: function() {
-                      if(this.srcEvent.preventManipulation) {
-                        this.srcEvent.preventManipulation();
-                      }
+        /**
+         * prevent the browser default actions
+         * mostly used to disable scrolling of the browser
+         */
+        preventDefault: function() {
+          if(this.srcEvent.preventManipulation) {
+            this.srcEvent.preventManipulation();
+          }
 
-                      if(this.srcEvent.preventDefault) {
-                        // this.srcEvent.preventDefault();
-                      }
-                    },
+          if(this.srcEvent.preventDefault) {
+            // this.srcEvent.preventDefault();
+          }
+        },
 
-                    /**
-                     * stop bubbling the event up to its parents
-                     */
-                    stopPropagation: function() {
-                      this.srcEvent.stopPropagation();
-                    },
+        /**
+         * stop bubbling the event up to its parents
+         */
+        stopPropagation: function() {
+          this.srcEvent.stopPropagation();
+        },
 
-                    /**
-                     * immediately stop gesture detection
-                     * might be useful after a swipe was detected
-                     * @return {*}
-                     */
-                    stopDetect: function() {
-                      return ionic.Gestures.detection.stopDetect();
-                    }
+        /**
+         * immediately stop gesture detection
+         * might be useful after a swipe was detected
+         * @return {*}
+         */
+        stopDetect: function() {
+          return ionic.Gestures.detection.stopDetect();
+        }
       };
     }
   };
@@ -576,7 +577,7 @@
     getCenter: function getCenter(touches) {
       var valuesX = [], valuesY = [];
 
-      for(var t= 0,len=touches.length; t<len; t++) {
+      for(var t = 0, len = touches.length; t < len; t++) {
         valuesX.push(touches[t].pageX);
         valuesY.push(touches[t].pageY);
       }
@@ -644,7 +645,7 @@
     getDistance: function getDistance(touch1, touch2) {
       var x = touch2.pageX - touch1.pageX,
       y = touch2.pageY - touch1.pageY;
-      return Math.sqrt((x*x) + (y*y));
+      return Math.sqrt((x * x) + (y * y));
     },
 
 
@@ -739,10 +740,10 @@
       this.stopped = false;
 
       this.current = {
-        inst        : inst, // reference to ionic.GesturesInstance we're working for
-        startEvent  : ionic.Gestures.utils.extend({}, eventData), // start eventData for distances, timing etc
-        lastEvent   : false, // last eventData
-        name        : '' // current gesture we're in/detected, can be 'tap', 'hold' etc
+        inst: inst, // reference to ionic.GesturesInstance we're working for
+        startEvent: ionic.Gestures.utils.extend({}, eventData), // start eventData for distances, timing etc
+        lastEvent: false, // last eventData
+        name: '' // current gesture we're in/detected, can be 'tap', 'hold' etc
       };
 
       this.detect(eventData);
@@ -755,7 +756,7 @@
      */
     detect: function detect(eventData) {
       if(!this.current || this.stopped) {
-        return;
+        return null;
       }
 
       // extend event data with calculations about scale, distance etc
@@ -765,7 +766,7 @@
       var inst_options = this.current.inst.options;
 
       // call ionic.Gestures.gesture handlers
-      for(var g=0,len=this.gestures.length; g<len; g++) {
+      for(var g = 0, len = this.gestures.length; g < len; g++) {
         var gesture = this.gestures[g];
 
         // only when the instance options have enabled this gesture
@@ -784,7 +785,7 @@
       }
 
       // endevent, but not the last touch, so dont stop
-      if(eventData.eventType == ionic.Gestures.EVENT_END && !eventData.touches.length-1) {
+      if(eventData.eventType == ionic.Gestures.EVENT_END && !eventData.touches.length - 1) {
         this.stopDetect();
       }
 
@@ -825,7 +826,7 @@
       if(startEv && (ev.touches.length != startEv.touches.length || ev.touches === startEv.touches)) {
         // extend 1 level deep to get the touchlist with the touch objects
         startEv.touches = [];
-        for(var i=0,len=ev.touches.length; i<len; i++) {
+        for(var i = 0, len = ev.touches.length; i < len; i++) {
           startEv.touches.push(ionic.Gestures.utils.extend({}, ev.touches[i]));
         }
       }
@@ -836,22 +837,21 @@
           velocity = ionic.Gestures.utils.getVelocity(delta_time, delta_x, delta_y);
 
       ionic.Gestures.utils.extend(ev, {
-        deltaTime   : delta_time,
+        deltaTime: delta_time,
+        deltaX: delta_x,
+        deltaY: delta_y,
 
-        deltaX      : delta_x,
-        deltaY      : delta_y,
+        velocityX: velocity.x,
+        velocityY: velocity.y,
 
-        velocityX   : velocity.x,
-        velocityY   : velocity.y,
+        distance: ionic.Gestures.utils.getDistance(startEv.center, ev.center),
+        angle: ionic.Gestures.utils.getAngle(startEv.center, ev.center),
+        direction: ionic.Gestures.utils.getDirection(startEv.center, ev.center),
 
-        distance    : ionic.Gestures.utils.getDistance(startEv.center, ev.center),
-        angle       : ionic.Gestures.utils.getAngle(startEv.center, ev.center),
-        direction   : ionic.Gestures.utils.getDirection(startEv.center, ev.center),
+        scale: ionic.Gestures.utils.getScale(startEv.touches, ev.touches),
+        rotation: ionic.Gestures.utils.getRotation(startEv.touches, ev.touches),
 
-        scale       : ionic.Gestures.utils.getScale(startEv.touches, ev.touches),
-        rotation    : ionic.Gestures.utils.getRotation(startEv.touches, ev.touches),
-
-        startEvent  : startEv
+        startEvent: startEv
       });
 
       return ev;
@@ -1013,8 +1013,8 @@
     name: 'hold',
     index: 10,
     defaults: {
-      hold_timeout	: 500,
-      hold_threshold	: 1
+      hold_timeout: 500,
+      hold_threshold: 1
     },
     timer: null,
     handler: function holdGesture(ev, inst) {
@@ -1060,11 +1060,11 @@
     name: 'tap',
     index: 100,
     defaults: {
-      tap_max_touchtime	: 250,
-      tap_max_distance	: 10,
-      tap_always			: true,
-      doubletap_distance	: 20,
-      doubletap_interval	: 300
+      tap_max_touchtime: 250,
+      tap_max_distance: 10,
+      tap_always: true,
+      doubletap_distance: 20,
+      doubletap_interval: 300
     },
     handler: function tapGesture(ev, inst) {
       if(ev.eventType == ionic.Gestures.EVENT_END && ev.srcEvent.type != 'touchcancel') {
@@ -1107,8 +1107,8 @@
     index: 40,
     defaults: {
       // set 0 for unlimited, but this can conflict with transform
-      swipe_max_touches  : 1,
-      swipe_velocity     : 0.4
+      swipe_max_touches: 1,
+      swipe_velocity: 0.4
     },
     handler: function swipeGesture(ev, inst) {
       if(ev.eventType == ionic.Gestures.EVENT_END) {
@@ -1142,27 +1142,27 @@
     name: 'drag',
     index: 50,
     defaults: {
-      drag_min_distance : 10,
+      drag_min_distance: 10,
       // Set correct_for_drag_min_distance to true to make the starting point of the drag
       // be calculated from where the drag was triggered, not from where the touch started.
       // Useful to avoid a jerk-starting drag, which can make fine-adjustments
       // through dragging difficult, and be visually unappealing.
-      correct_for_drag_min_distance : true,
+      correct_for_drag_min_distance: true,
       // set 0 for unlimited, but this can conflict with transform
-      drag_max_touches  : 1,
+      drag_max_touches: 1,
       // prevent default browser behavior when dragging occurs
       // be careful with it, it makes the element a blocking element
       // when you are using the drag gesture, it is a good practice to set this true
-      drag_block_horizontal   : true,
-      drag_block_vertical     : true,
+      drag_block_horizontal: true,
+      drag_block_vertical: true,
       // drag_lock_to_axis keeps the drag gesture on the axis that it started on,
       // It disallows vertical directions if the initial direction was horizontal, and vice versa.
-      drag_lock_to_axis       : false,
+      drag_lock_to_axis: false,
       // drag lock only kicks in when distance > drag_lock_min_distance
       // This way, locking occurs only when the distance has become large enough to reliably determine the direction
-      drag_lock_min_distance : 25,
+      drag_lock_min_distance: 25,
       // prevent default if the gesture is going the given direction
-      prevent_default_directions : []
+      prevent_default_directions: []
     },
     triggered: false,
     handler: function dragGesture(ev, inst) {
@@ -1179,7 +1179,7 @@
       // current gesture isnt drag, but dragged is true
       // this means an other gesture is busy. now call dragend
       if(ionic.Gestures.detection.current.name != this.name && this.triggered) {
-        inst.trigger(this.name +'end', ev);
+        inst.trigger(this.name + 'end', ev);
         this.triggered = false;
         return;
       }
@@ -1210,7 +1210,7 @@
               // When a drag is triggered, set the event center to drag_min_distance pixels from the original event center.
               // Without this correction, the dragged distance would jumpstart at drag_min_distance pixels instead of at 0.
               // It might be useful to save the original start point somewhere
-              var factor = Math.abs(inst.options.drag_min_distance/ev.distance);
+              var factor = Math.abs(inst.options.drag_min_distance / ev.distance);
               ionic.Gestures.detection.current.startEvent.center.pageX += ev.deltaX * factor;
               ionic.Gestures.detection.current.startEvent.center.pageY += ev.deltaY * factor;
 
@@ -1220,7 +1220,7 @@
           }
 
           // lock drag to axis?
-          if(ionic.Gestures.detection.current.lastEvent.drag_locked_to_axis || (inst.options.drag_lock_to_axis && inst.options.drag_lock_min_distance<=ev.distance)) {
+          if(ionic.Gestures.detection.current.lastEvent.drag_locked_to_axis || (inst.options.drag_lock_to_axis && inst.options.drag_lock_min_distance <= ev.distance)) {
             ev.drag_locked_to_axis = true;
           }
           var last_direction = ionic.Gestures.detection.current.lastEvent.direction;
@@ -1236,7 +1236,7 @@
 
           // first time, trigger dragstart event
           if(!this.triggered) {
-            inst.trigger(this.name +'start', ev);
+            inst.trigger(this.name + 'start', ev);
             this.triggered = true;
           }
 
@@ -1256,7 +1256,7 @@
         case ionic.Gestures.EVENT_END:
           // trigger dragend
           if(this.triggered) {
-            inst.trigger(this.name +'end', ev);
+            inst.trigger(this.name + 'end', ev);
           }
 
           this.triggered = false;
@@ -1276,20 +1276,20 @@
     index: 45,
     defaults: {
       // factor, no scale is 1, zoomin is to 0 and zoomout until higher then 1
-      transform_min_scale     : 0.01,
+      transform_min_scale: 0.01,
       // rotation in degrees
-      transform_min_rotation  : 1,
+      transform_min_rotation: 1,
       // prevent default browser behavior when two touches are on the screen
       // but it makes the element a blocking element
       // when you are using the transform gesture, it is a good practice to set this true
-      transform_always_block  : false
+      transform_always_block: false
     },
     triggered: false,
     handler: function transformGesture(ev, inst) {
       // current gesture isnt drag, but dragged is true
       // this means an other gesture is busy. now call dragend
       if(ionic.Gestures.detection.current.name != this.name && this.triggered) {
-        inst.trigger(this.name +'end', ev);
+        inst.trigger(this.name + 'end', ev);
         this.triggered = false;
         return;
       }
@@ -1310,7 +1310,7 @@
           break;
 
         case ionic.Gestures.EVENT_MOVE:
-          var scale_threshold = Math.abs(1-ev.scale);
+          var scale_threshold = Math.abs(1 - ev.scale);
           var rotation_threshold = Math.abs(ev.rotation);
 
           // when the distance we moved is too small we skip this gesture
@@ -1325,7 +1325,7 @@
 
           // first time, trigger dragstart event
           if(!this.triggered) {
-            inst.trigger(this.name +'start', ev);
+            inst.trigger(this.name + 'start', ev);
             this.triggered = true;
           }
 
@@ -1339,14 +1339,14 @@
           // trigger pinch event
           if(scale_threshold > inst.options.transform_min_scale) {
             inst.trigger('pinch', ev);
-            inst.trigger('pinch'+ ((ev.scale < 1) ? 'in' : 'out'), ev);
+            inst.trigger('pinch' + ((ev.scale < 1) ? 'in' : 'out'), ev);
           }
           break;
 
         case ionic.Gestures.EVENT_END:
           // trigger dragend
           if(this.triggered) {
-            inst.trigger(this.name +'end', ev);
+            inst.trigger(this.name + 'end', ev);
           }
 
           this.triggered = false;
@@ -1385,7 +1385,7 @@
         ev.preventDefault();
       }
 
-      if(ev.eventType ==  ionic.Gestures.EVENT_START) {
+      if(ev.eventType == ionic.Gestures.EVENT_START) {
         inst.trigger(this.name, ev);
       }
     }
@@ -1401,7 +1401,7 @@
     name: 'release',
     index: Infinity,
     handler: function releaseGesture(ev, inst) {
-      if(ev.eventType ==  ionic.Gestures.EVENT_END) {
+      if(ev.eventType == ionic.Gestures.EVENT_END) {
         inst.trigger(this.name, ev);
       }
     }

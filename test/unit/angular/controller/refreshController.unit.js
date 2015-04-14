@@ -12,17 +12,18 @@ describe('$ionicRefresh Controller', function() {
     options.el = options.el ||
       angular.element('<ion-refresher></ion-refresher><div class="list"></div>')[0];
     scrollEl = options.parent ||
-      angular.element('<div class="ionic-scroll"><div class="scroll"></div></div>');
-    scrollEl.find('.scroll').append(options.el);
+      angular.element('<ion-content overflow-scroll="true">');
+    scrollEl.append(options.el);
 
-    inject(function($controller, $rootScope, $timeout, $compile) {
+    inject(function($rootScope, $timeout, $compile) {
       scope = $rootScope.$new();
 
       $compile(scrollEl)(scope);
       scope.$apply();
-      scope.$onRefresh = jasmine.createSpy('onRefresh');
-      scope.$onPulling = jasmine.createSpy('onPulling');
+
       refresher = scrollEl.find('.scroll-refresher')[0];
+      angular.element(refresher).scope().$onRefresh = jasmine.createSpy('onRefresh');
+      angular.element(refresher).scope().$onPulling = jasmine.createSpy('onPulling');
       ctrl = angular.element(refresher).controller('ionRefresher');
       timeout = $timeout;
     });
@@ -37,8 +38,9 @@ describe('$ionicRefresh Controller', function() {
   }
 
   it('should error if not child of scroll view', function() {
-    setup({parent: angular.element('<div></div>')});
-    expect(ctrl).toBe(undefined);
+    expect(function() {
+      setup({parent: angular.element('<div></div>')});
+    }).toThrow();
   });
 
   it('should oversroll using CSS transforms', function() {
@@ -92,15 +94,17 @@ describe('$ionicRefresh Controller', function() {
   it('should update refresher class when shared methods fire', function() {
     setup();
 
-    scope.$onRefresh = jasmine.createSpy('onRefresh');
-    scope.$onPulling = jasmine.createSpy('onPulling');
+    var refresherScope = angular.element(refresher).scope();
+
+    refresherScope.$onRefresh = jasmine.createSpy('onRefresh');
+    refresherScope.$onPulling = jasmine.createSpy('onPulling');
 
 
     expect(refresher.classList.contains('active')).toBe(false);
     expect(refresher.classList.contains('refreshing')).toBe(false);
     expect(refresher.classList.contains('invisible')).toBe(true);
-    expect(scope.$onRefresh).not.toHaveBeenCalled();
-    expect(scope.$onPulling).not.toHaveBeenCalled();
+    expect(refresherScope.$onRefresh).not.toHaveBeenCalled();
+    expect(refresherScope.$onPulling).not.toHaveBeenCalled();
 
     ctrl.getRefresherDomMethods().show();
     expect(refresher.classList.contains('invisible')).toBe(false);
@@ -108,11 +112,11 @@ describe('$ionicRefresh Controller', function() {
     ctrl.getRefresherDomMethods().activate();
     expect(refresher.classList.contains('active')).toBe(true);
     expect(refresher.classList.contains('refreshing')).toBe(false);
-    expect(scope.$onPulling).toHaveBeenCalled();
+    expect(refresherScope.$onPulling).toHaveBeenCalled();
 
     ctrl.getRefresherDomMethods().start();
     expect(refresher.classList.contains('refreshing')).toBe(true);
-    expect(scope.$onRefresh).toHaveBeenCalled();
+    expect(refresherScope.$onRefresh).toHaveBeenCalled();
 
     ctrl.getRefresherDomMethods().tail();
     expect(refresher.classList.contains('refreshing-tail')).toBe(true);

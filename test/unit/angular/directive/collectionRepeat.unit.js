@@ -1,5 +1,4 @@
 describe('collectionRepeat', function() {
-
   var el;
   beforeEach(module('ionic', function($provide) {
     $provide.decorator('$$rAF', function($delegate) {
@@ -222,6 +221,10 @@ describe('collectionRepeat', function() {
     }));
 
     it('should refresh layout on scrollCtrl.resize', inject(function($timeout, $window) {
+      spyOn($window, 'getComputedStyle').andReturn({
+        width: '1px',
+        height: '50px'
+      });
       var el = setup(10, 'item-height="20px"', {
         __clientHeight: 50,
         __clientWidth: 1
@@ -289,16 +292,20 @@ describe('collectionRepeat', function() {
   });
 
   describe('vertical static list', function() {
-    beforeEach(function() {
+    beforeEach(inject(function($window) {
+      spyOn($window, 'getComputedStyle').andReturn({
+        width: '50px',
+        height: '50px'
+      });
       setup(10);
-    });
+    }));
 
     it('should show initial screen of items', function() {
       expect(activeItems().length).toBe(5);
       expect(activeItemContents()).toEqual(['0','1','2','3','4']);
     });
 
-    it('should switch out as you scroll', function() {
+    it('should switch out as you scroll', inject(function($window) {
       expect(activeItems().length).toBe(5);
       expect(activeItemContents()).toEqual(['0','1','2','3','4']);
       expect(activeItemIds()).toEqual(['item0','item1','item2','item3','item4']);
@@ -323,7 +330,7 @@ describe('collectionRepeat', function() {
       expect(activeItems().length).toBe(5);
       expect(activeItemContents()).toEqual(['5','6','7','8','9']);
       expect(activeItemIds()).toEqual(['item0','item1','item2','item3','item4']);
-    });
+    }));
 
     it('should start with the same items when resizing', inject(function($window) {
       scrollTo(26);
@@ -338,8 +345,8 @@ describe('collectionRepeat', function() {
       angular.element($window).triggerHandler('resize');
 
       expect(activeItems().length).toBe(2);
-      expect(activeItemContents()).toEqual(['2','3']);
-      expect(activeItemIds()).toEqual(['item2','item3']);
+      expect(activeItemContents()).toEqual(['8','9']);
+      expect(activeItemIds()).toEqual(['item1','item0']);
     }));
 
   });
@@ -409,7 +416,7 @@ describe('collectionRepeat', function() {
       var dim = activeItemDimensions();
       //Row 0
       expect(dim[0]).toBe('x:0,y:0,w:16,h:50');
-      expect(dim[1]).toBe('x:16,y:0,w:32,h:50');
+      expect(dim[1]).toBe('x:16,y:0,w:32,h:25');
       expect(dim[2]).toBe('x:48,y:0,w:48,h:50');
       // Row 1
       expect(dim[3]).toBe('x:0,y:50,w:64,h:25');
@@ -429,21 +436,17 @@ describe('collectionRepeat', function() {
       expect(dim[0]).toBe('x:0,y:50,w:64,h:25');
       //Row 2
       expect(dim[1]).toBe('x:0,y:75,w:80,h:50');
-      expect(dim[2]).toBe('x:80,y:75,w:16,h:50');
+      expect(dim[2]).toBe('x:80,y:75,w:16,h:25');
 
       // row 3, index 6: 50 height, 2 items (width 32%, 48%)
 
       //Scroll past row 2 and row 3 to the end
       scrollTo(176);
-      // row 4, index 8: 50 height, 1 item (width 64%)
-      // row 5, index 9: 25 height, 2 items (width 80%, 16%)
       expect(activeItems().length).toBe(2);
-      expect(activeItemContents()).toEqual(['8', '9']);
+      expect(activeItemContents()).toEqual(['8','9']);
 
       dim = activeItemDimensions();
-      //Row 3
       expect(dim[0]).toBe('x:0,y:175,w:64,h:50');
-      //Row 4
       expect(dim[1]).toBe('x:0,y:225,w:80,h:25');
     });
 

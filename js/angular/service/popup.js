@@ -113,12 +113,14 @@ IonicModule
   '$ionicBody',
   '$compile',
   '$ionicPlatform',
-function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicBody, $compile, $ionicPlatform) {
+  'IONIC_BACK_PRIORITY',
+function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicBody, $compile, $ionicPlatform, IONIC_BACK_PRIORITY) {
   //TODO allow this to be configured
   var config = {
     stackPushDelay: 75
   };
   var popupStack = [];
+
   var $ionicPopup = {
     /**
      * @ngdoc method
@@ -288,8 +290,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
       $ionicTemplateLoader.load(options.templateUrl) :
       $q.when(options.template || options.content || '');
 
-    return $q.all([popupPromise, contentPromise])
-    .then(function(results) {
+    return $q.all([popupPromise, contentPromise]).then(function(results) {
       var self = results[0];
       var content = results[1];
       var responseDeferred = $q.defer();
@@ -322,7 +323,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
       });
 
       self.show = function() {
-        if (self.isShown) return;
+        if (self.isShown || self.removed) return;
 
         self.isShown = true;
         ionic.requestAnimationFrame(function() {
@@ -334,6 +335,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
           focusInput(self.element);
         });
       };
+
       self.hide = function(callback) {
         callback = callback || noop;
         if (!self.isShown) return callback();
@@ -343,6 +345,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
         self.element.addClass('popup-hidden');
         $timeout(callback, 250);
       };
+
       self.remove = function() {
         if (self.removed) return;
 
@@ -358,75 +361,80 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
     });
   }
 
-  function onHardwareBackButton(e) {
-    popupStack[0] && popupStack[0].responseDeferred.resolve();
+  function onHardwareBackButton() {
+    var last = popupStack[popupStack.length - 1];
+    last && last.responseDeferred.resolve();
   }
 
   function showPopup(options) {
+    var resultDeferred;
     var popupPromise = $ionicPopup._createPopup(options);
-    var previousPopup = popupStack[0];
 
-    if (previousPopup) {
-      previousPopup.hide();
+    if (popupStack.length > 0) {
+      popupStack[popupStack.length - 1].hide();
+      resultDeferred = $timeout(doShowPopup, config.stackPushDelay);
+    } else {
+      //Add popup-open & backdrop if this is first popup
+      $ionicBody.addClass('popup-open');
+      $ionicBackdrop.retain();
+      //only show the backdrop on the first popup
+      $ionicPopup._backButtonActionDone = $ionicPlatform.registerBackButtonAction(
+        onHardwareBackButton,
+        IONIC_BACK_PRIORITY.popup
+      );
+      resultDeferred = doShowPopup();
     }
 
-    var resultPromise = $timeout(noop, previousPopup ? config.stackPushDelay : 0)
-    .then(function() { return popupPromise; })
-    .then(function(popup) {
-      if (!previousPopup) {
-        //Add popup-open & backdrop if this is first popup
-        $ionicBody.addClass('popup-open');
-        $ionicBackdrop.retain();
-        //only show the backdrop on the first popup
-        $ionicPopup._backButtonActionDone = $ionicPlatform.registerBackButtonAction(
-          onHardwareBackButton,
-          PLATFORM_BACK_BUTTON_PRIORITY_POPUP
-        );
-      }
-      popupStack.unshift(popup);
-      popup.show();
-
-      //DEPRECATED: notify the promise with an object with a close method
-      popup.responseDeferred.notify({
-        close: resultPromise.close
-      });
-
-      return popup.responseDeferred.promise.then(function(result) {
-        var index = popupStack.indexOf(popup);
-        if (index !== -1) {
-          popupStack.splice(index, 1);
-        }
-        popup.remove();
-
-        var previousPopup = popupStack[0];
-        if (previousPopup) {
-          previousPopup.show();
-        } else {
-          //Remove popup-open & backdrop if this is last popup
-          $timeout(function() {
-            // wait to remove this due to a 300ms delay native
-            // click which would trigging whatever was underneath this
-            $ionicBody.removeClass('popup-open');
-          }, 400);
-          $timeout(function() {
-            $ionicBackdrop.release();
-          }, config.stackPushDelay || 0);
-          ($ionicPopup._backButtonActionDone || noop)();
-        }
-        return result;
-      });
-    });
-
-    function close(result) {
+    resultDeferred.close = function popupClose(result) {
       popupPromise.then(function(popup) {
-        if (!popup.removed) {
-          popup.responseDeferred.resolve(result);
-        }
+        if (!popup.removed) popup.responseDeferred.resolve(result);
       });
-    }
-    resultPromise.close = close;
+    };
 
-    return resultPromise;
+    return resultDeferred;
+
+    function doShowPopup() {
+      return popupPromise.then(function(popup) {
+        popupStack.push(popup);
+        popup.show();
+
+        //DEPRECATED: notify the promise with an object with a close method
+        popup.responseDeferred.notify({
+          close: resultDeferred.close
+        });
+
+        return popup.responseDeferred.promise.then(function(result) {
+          var index = popupStack.indexOf(popup);
+          if (index !== -1) {
+            popupStack.splice(index, 1);
+          }
+          popup.remove();
+
+          if (popupStack.length > 0) {
+            popupStack[popupStack.length - 1].show();
+          } else {
+            //Remove popup-open & backdrop if this is last popup
+            $timeout(function() {
+              // wait to remove this due to a 300ms delay native
+              // click which would trigging whatever was underneath this
+              if (!popupStack.length) {
+                $ionicBody.removeClass('popup-open');
+              }
+            }, 400, false);
+            $timeout(function() {
+              if (!popupStack.length) $ionicBackdrop.release();
+            }, config.stackPushDelay || 0, false);
+
+            ($ionicPopup._backButtonActionDone || noop)();
+          }
+
+          return result;
+        });
+
+      });
+
+    }
+
   }
 
   function focusInput(element) {
@@ -441,7 +449,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
       buttons: [{
         text: opts.okText || 'OK',
         type: opts.okType || 'button-positive',
-        onTap: function(e) {
+        onTap: function() {
           return true;
         }
       }]
@@ -453,11 +461,11 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
       buttons: [{
         text: opts.cancelText || 'Cancel',
         type: opts.cancelType || 'button-default',
-        onTap: function(e) { return false; }
+        onTap: function() { return false; }
       }, {
         text: opts.okText || 'OK',
         type: opts.okType || 'button-positive',
-        onTap: function(e) { return true; }
+        onTap: function() { return true; }
       }]
     }, opts || {}));
   }
@@ -477,11 +485,11 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
       buttons: [{
         text: opts.cancelText || 'Cancel',
         type: opts.cancelType || 'button-default',
-        onTap: function(e) {}
+        onTap: function() {}
       }, {
         text: opts.okText || 'OK',
         type: opts.okType || 'button-positive',
-        onTap: function(e) {
+        onTap: function() {
           return scope.data.response || '';
         }
       }]

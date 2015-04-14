@@ -1,4 +1,3 @@
-
 /**
  * @ngdoc service
  * @name $ionicListDelegate
@@ -32,8 +31,7 @@
  * }
  * ```
  */
-IonicModule
-.service('$ionicListDelegate', ionic.DelegateService([
+IonicModule.service('$ionicListDelegate', ionic.DelegateService([
   /**
    * @ngdoc method
    * @name $ionicListDelegate#showReorder

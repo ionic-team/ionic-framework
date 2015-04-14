@@ -157,29 +157,15 @@ describe('$ionicLoading service', function() {
     expect(loader.isShown).toBe(false);
     expect(loader.element.hasClass('active')).toBe(false);
   }));
-  it('show should only active after raf is still isShown', inject(function($ionicLoading) {
-    var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
-    var rafCallback;
-    ionic.requestAnimationFrame = function(cb) {
-      rafCallback = cb;
-    };
-    loader.show({});
-    expect(loader.isShown).toBe(true);
-    loader.hide();
-    expect(loader.isShown).toBe(false);
-    rafCallback();
-    expect(loader.element.hasClass('active')).toBe(false);
-    ionic.requestAnimationFrame = function(cb) { cb(); };
-  }));
 
   describe("back button", function() {
-    it('.show() should register back button action', inject(function($ionicLoading, $ionicPlatform, $timeout) {
+    it('.show() should register back button action', inject(function($ionicLoading, $ionicPlatform, $timeout, IONIC_BACK_PRIORITY) {
       spyOn($ionicPlatform, 'registerBackButtonAction');
       $ionicLoading.show();
       $timeout.flush();
       expect($ionicPlatform.registerBackButtonAction).toHaveBeenCalledWith(
         angular.noop,
-        PLATFORM_BACK_BUTTON_PRIORITY_LOADING
+        IONIC_BACK_PRIORITY.loading
       );
     }));
     it('.hide() should deregister back button action', inject(function($ionicLoading, $ionicPlatform, $timeout) {

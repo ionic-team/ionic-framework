@@ -150,7 +150,7 @@
       gesture && gesture.off(type, callback);
     },
 
-    handlePopState: function(event) {}
+    handlePopState: function() {}
   };
 
 

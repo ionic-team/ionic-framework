@@ -174,7 +174,7 @@ describe('$ionicPopup service', function() {
       document.body.classList.remove('popup-open');
     });
 
-    it('should add popup-open and retain backdrop and register back button action if no previous popup', inject(function($ionicBackdrop, $timeout, $ionicPlatform) {
+    it('should add popup-open and retain backdrop and register back button action if no previous popup', inject(function($ionicBackdrop, $timeout, $ionicPlatform, IONIC_BACK_PRIORITY) {
       spyOn($ionicPlatform, 'registerBackButtonAction').andReturn('actionReturn');
       spyOn($ionicBackdrop, 'retain');
       $ionicPopup.show();
@@ -183,7 +183,7 @@ describe('$ionicPopup service', function() {
       expect($ionicBackdrop.retain).toHaveBeenCalled();
       expect($ionicPlatform.registerBackButtonAction).toHaveBeenCalledWith(
         jasmine.any(Function),
-        PLATFORM_BACK_BUTTON_PRIORITY_POPUP
+        IONIC_BACK_PRIORITY.popup
       );
       expect($ionicPopup._backButtonActionDone).toBe('actionReturn');
     }));
@@ -277,8 +277,8 @@ describe('$ionicPopup service', function() {
       expect($ionicBackdrop.release).toHaveBeenCalled();
       expect(document.body.classList.contains('popup-open')).toBe(false);
     }));
-    it('template should only overwrite prompt input if it includes html', inject(function($timeout) {
-      spyOn($ionicPopup, '_createPopup');
+    it('template should only overwrite prompt input if it includes html', inject(function($timeout, $q) {
+      spyOn($ionicPopup, '_createPopup').andCallThrough();
       $ionicPopup.prompt({template: "Tacos!"});
       params = $ionicPopup._createPopup.mostRecentCall.args;
       expect(params[0].template.indexOf('<span>Tacos!</span>')).toEqual(0);

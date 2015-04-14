@@ -42,6 +42,11 @@ ionic.views.Slider = ionic.views.View.inherit({
 
     function setup() {
 
+      // do not setup if the container has no width
+      if (!container.offsetWidth) {
+        return;
+      }
+
       // cache slides
       slides = element.children;
       length = slides.length;
@@ -82,8 +87,8 @@ ionic.views.Slider = ionic.views.View.inherit({
 
       // reposition elements before and after index
       if (options.continuous && browser.transitions) {
-        move(circle(index-1), -width, 0);
-        move(circle(index+1), width, 0);
+        move(circle(index - 1), -width, 0);
+        move(circle(index + 1), width, 0);
       }
 
       if (!browser.transitions) element.style.left = (index * -width) + 'px';
@@ -93,17 +98,17 @@ ionic.views.Slider = ionic.views.View.inherit({
       options.slidesChanged && options.slidesChanged();
     }
 
-    function prev() {
+    function prev(slideSpeed) {
 
-      if (options.continuous) slide(index-1);
-      else if (index) slide(index-1);
+      if (options.continuous) slide(index - 1, slideSpeed);
+      else if (index) slide(index - 1, slideSpeed);
 
     }
 
-    function next() {
+    function next(slideSpeed) {
 
-      if (options.continuous) slide(index+1);
-      else if (index < slides.length - 1) slide(index+1);
+      if (options.continuous) slide(index + 1, slideSpeed);
+      else if (index < slides.length - 1) slide(index + 1, slideSpeed);
 
     }
 
@@ -121,20 +126,20 @@ ionic.views.Slider = ionic.views.View.inherit({
 
       if (browser.transitions) {
 
-        var direction = Math.abs(index-to) / (index-to); // 1: backward, -1: forward
+        var direction = Math.abs(index - to) / (index - to); // 1: backward, -1: forward
 
         // get the actual position of the slide
         if (options.continuous) {
-          var natural_direction = direction;
+          var naturalDirection = direction;
           direction = -slidePos[circle(to)] / width;
 
           // if going forward but to < index, use to = slides.length + to
           // if going backward but to > index, use to = -slides.length + to
-          if (direction !== natural_direction) to =  -direction * slides.length + to;
+          if (direction !== naturalDirection) to = -direction * slides.length + to;
 
         }
 
-        var diff = Math.abs(index-to) - 1;
+        var diff = Math.abs(index - to) - 1;
 
         // move all the slides between index and to in the right direction
         while (diff--) move( circle((to > index ? to : index) - diff - 1), width * direction, 0);
@@ -340,9 +345,9 @@ ionic.views.Slider = ionic.views.View.inherit({
           // increase resistance if first or last slide
           if (options.continuous) { // we don't add resistance at the end
 
-            translate(circle(index-1), delta.x + slidePos[circle(index-1)], 0);
+            translate(circle(index - 1), delta.x + slidePos[circle(index - 1)], 0);
             translate(index, delta.x + slidePos[index], 0);
-            translate(circle(index+1), delta.x + slidePos[circle(index+1)], 0);
+            translate(circle(index + 1), delta.x + slidePos[circle(index + 1)], 0);
 
           } else {
 
@@ -356,15 +361,16 @@ ionic.views.Slider = ionic.views.View.inherit({
                 : 1 );                                 // no resistance if false
 
             // translate 1:1
-            translate(index-1, delta.x + slidePos[index-1], 0);
+            translate(index - 1, delta.x + slidePos[index - 1], 0);
             translate(index, delta.x + slidePos[index], 0);
-            translate(index+1, delta.x + slidePos[index+1], 0);
+            translate(index + 1, delta.x + slidePos[index + 1], 0);
           }
 
+          options.onDrag && options.onDrag();
         }
 
       },
-      end: function(event) {
+      end: function() {
 
         // measure duration
         var duration = +new Date() - start.time;
@@ -373,7 +379,7 @@ ionic.views.Slider = ionic.views.View.inherit({
         var isValidSlide =
               Number(duration) < 250 &&         // if slide duration is less than 250ms
               Math.abs(delta.x) > 20 ||         // and if slide amt is greater than 20px
-              Math.abs(delta.x) > width/2;      // or if slide amt is greater than half the width
+              Math.abs(delta.x) > width / 2;      // or if slide amt is greater than half the width
 
         // determine if slide attempt is past start and end
         var isPastBounds = (!index && delta.x > 0) ||      // if first slide and slide amt is greater than 0
@@ -393,30 +399,30 @@ ionic.views.Slider = ionic.views.View.inherit({
 
               if (options.continuous) { // we need to get the next in this direction in place
 
-                move(circle(index-1), -width, 0);
-                move(circle(index+2), width, 0);
+                move(circle(index - 1), -width, 0);
+                move(circle(index + 2), width, 0);
 
               } else {
-                move(index-1, -width, 0);
+                move(index - 1, -width, 0);
               }
 
-              move(index, slidePos[index]-width, speed);
-              move(circle(index+1), slidePos[circle(index+1)]-width, speed);
-              index = circle(index+1);
+              move(index, slidePos[index] - width, speed);
+              move(circle(index + 1), slidePos[circle(index + 1)] - width, speed);
+              index = circle(index + 1);
 
             } else {
               if (options.continuous) { // we need to get the next in this direction in place
 
-                move(circle(index+1), width, 0);
-                move(circle(index-2), -width, 0);
+                move(circle(index + 1), width, 0);
+                move(circle(index - 2), -width, 0);
 
               } else {
-                move(index+1, width, 0);
+                move(index + 1, width, 0);
               }
 
-              move(index, slidePos[index]+width, speed);
-              move(circle(index-1), slidePos[circle(index-1)]+width, speed);
-              index = circle(index-1);
+              move(index, slidePos[index] + width, speed);
+              move(circle(index - 1), slidePos[circle(index - 1)] + width, speed);
+              index = circle(index - 1);
 
             }
 
@@ -426,15 +432,15 @@ ionic.views.Slider = ionic.views.View.inherit({
 
             if (options.continuous) {
 
-              move(circle(index-1), -width, speed);
+              move(circle(index - 1), -width, speed);
               move(index, 0, speed);
-              move(circle(index+1), width, speed);
+              move(circle(index + 1), width, speed);
 
             } else {
 
-              move(index-1, -width, speed);
+              move(index - 1, -width, speed);
               move(index, 0, speed);
-              move(index+1, width, speed);
+              move(index + 1, width, speed);
             }
 
           }
@@ -451,6 +457,7 @@ ionic.views.Slider = ionic.views.View.inherit({
           document.removeEventListener('mouseup', events, false);
         }
 
+        options.onDragEnd && options.onDragEnd();
       },
       transitionEnd: function(event) {
 
@@ -484,7 +491,8 @@ ionic.views.Slider = ionic.views.View.inherit({
         this.slideIsDisabled = !shouldEnable;
       }
       return !this.slideIsDisabled;
-    },
+    };
+
     this.slide = this.select = function(to, speed) {
       // cancel slideshow
       stop();
@@ -542,17 +550,8 @@ ionic.views.Slider = ionic.views.View.inherit({
       element.style.width = '';
       element.style.left = '';
 
-      // reset slides
-      var pos = slides.length;
-      while(pos--) {
-
-        var slide = slides[pos];
-        slide.style.width = '';
-        slide.style.left = '';
-
-        if (browser.transitions) translate(pos, 0, 0);
-
-      }
+      // reset slides so no refs are held on to
+      slides && (slides.length = 0);
 
       // removed event listeners
       if (browser.addEventListener) {

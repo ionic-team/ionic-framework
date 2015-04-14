@@ -7,7 +7,8 @@ IonicModule
   '$ionicBody',
   '$ionicHistory',
   '$ionicScrollDelegate',
-function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $ionicHistory, $ionicScrollDelegate) {
+  'IONIC_BACK_PRIORITY',
+function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $ionicHistory, $ionicScrollDelegate, IONIC_BACK_PRIORITY) {
   var self = this;
   var rightShowing, leftShowing, isDragging;
   var startX, lastX, offsetX, isAsideExposed;
@@ -142,7 +143,6 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
     if (self.left && percentage >= 0) {
       self.openAmount(self.left.width * p);
     } else if (self.right && percentage < 0) {
-      var maxRight = self.right.width;
       self.openAmount(self.right.width * p);
     }
 
@@ -413,7 +413,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
     if (isOpen) {
       deregisterBackButtonAction = $ionicPlatform.registerBackButtonAction(
         closeSideMenu,
-        PLATFORM_BACK_BUTTON_PRIORITY_SIDE_MENU
+        IONIC_BACK_PRIORITY.sideMenu
       );
     }
   });

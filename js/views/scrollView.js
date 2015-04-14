@@ -65,7 +65,7 @@ var zyngaCore = { effect: {} };
       var intervalHandle = null;
       var lastActive = +new Date();
 
-      return function(callback, root) {
+      return function(callback) {
         var callbackHandle = rafHandle++;
 
         // Store callback
@@ -246,8 +246,6 @@ var zyngaCore = { effect: {} };
  * License: MIT + Apache (V2)
  */
 
-var Scroller;
-
 (function(ionic) {
   var NOOP = function(){};
 
@@ -369,10 +367,10 @@ ionic.views.Scroll = ionic.views.View.inherit({
       scrollingComplete: NOOP,
 
       /** This configures the amount of change applied to deceleration when reaching boundaries  **/
-      penetrationDeceleration : 0.03,
+      penetrationDeceleration: 0.03,
 
       /** This configures the amount of change applied to acceleration when reaching boundaries  **/
-      penetrationAcceleration : 0.08,
+      penetrationAcceleration: 0.08,
 
       // The ms interval for triggering scroll events
       scrollEventInterval: 10,
@@ -639,86 +637,136 @@ ionic.views.Scroll = ionic.views.View.inherit({
     // Event Handler
     var container = self.__container;
 
+    // save height when scroll view is shrunk so we don't need to reflow
+    var scrollViewOffsetHeight;
+
+    /**
+     * Shrink the scroll view when the keyboard is up if necessary and if the
+     * focused input is below the bottom of the shrunk scroll view, scroll it
+     * into view.
+     */
     self.scrollChildIntoView = function(e) {
+      console.log("scrollChildIntoView at: " + Date.now());
 
-      //distance from bottom of scrollview to top of viewport
-      var scrollBottomOffsetToTop;
+      // D
+      var scrollBottomOffsetToTop = container.getBoundingClientRect().bottom;
+      // D - A
+      scrollViewOffsetHeight = container.offsetHeight;
+      var alreadyShrunk = self.isShrunkForKeyboard;
 
-      if ( !self.isScrolledIntoView ) {
+      var isModal = container.parentNode.classList.contains('modal');
+      // 680px is when the media query for 60% modal width kicks in
+      var isInsetModal = isModal && window.innerWidth >= 680;
+
+     /*
+      *  _______
+      * |---A---| <- top of scroll view
+      * |       |
+      * |---B---| <- keyboard
+      * |   C   | <- input
+      * |---D---| <- initial bottom of scroll view
+      * |___E___| <- bottom of viewport
+      *
+      *  All commented calculations relative to the top of the viewport (ie E
+      *  is the viewport height, not 0)
+      */
+      if (!alreadyShrunk) {
         // shrink scrollview so we can actually scroll if the input is hidden
         // if it isn't shrink so we can scroll to inputs under the keyboard
-        if ((ionic.Platform.isIOS() || ionic.Platform.isFullScreen)){
-
+        // inset modals won't shrink on Android on their own when the keyboard appears
+        if ( ionic.Platform.isIOS() || ionic.Platform.isFullScreen || isInsetModal ) {
           // if there are things below the scroll view account for them and
           // subtract them from the keyboard height when resizing
-          scrollBottomOffsetToTop = container.getBoundingClientRect().bottom;
+          // E - D                         E                         D
           var scrollBottomOffsetToBottom = e.detail.viewportHeight - scrollBottomOffsetToTop;
+
+          // 0 or D - B if D > B           E - B                     E - D
           var keyboardOffset = Math.max(0, e.detail.keyboardHeight - scrollBottomOffsetToBottom);
-          container.style.height = (container.clientHeight - keyboardOffset) + "px";
-          container.style.overflow = "visible";
-          //update scroll view
-          self.resize();
+
+          ionic.requestAnimationFrame(function(){
+            // D - A or B - A if D > B       D - A             max(0, D - B)
+            scrollViewOffsetHeight = scrollViewOffsetHeight - keyboardOffset;
+            container.style.height = scrollViewOffsetHeight + "px";
+
+            //update scroll view
+            self.resize();
+          });
         }
-        self.isScrolledIntoView = true;
+
+        self.isShrunkForKeyboard = true;
+
       }
 
-      //If the element is positioned under the keyboard...
-      if ( e.detail.isElementUnderKeyboard ) {
-        var delay;
-        // Wait on android for web view to resize
-        if ( ionic.Platform.isAndroid() && !ionic.Platform.isFullScreen ) {
-          // android y u resize so slow
-          if ( ionic.Platform.version() < 4.4) {
-            delay = 500;
-          } else {
-            // probably overkill for chrome
-            delay = 350;
+      /*
+       *  _______
+       * |---A---| <- top of scroll view
+       * |   *   | <- where we want to scroll to
+       * |--B-D--| <- keyboard, bottom of scroll view
+       * |   C   | <- input
+       * |       |
+       * |___E___| <- bottom of viewport
+       *
+       *  All commented calculations relative to the top of the viewport (ie E
+       *  is the viewport height, not 0)
+       */
+      // if the element is positioned under the keyboard scroll it into view
+      if (e.detail.isElementUnderKeyboard) {
+
+        ionic.requestAnimationFrame(function(){
+          container.scrollTop = 0;
+          // update D if we shrunk
+          if (self.isShrunkForKeyboard && !alreadyShrunk) {
+            scrollBottomOffsetToTop = container.getBoundingClientRect().bottom;
           }
-        } else {
-          delay = 80;
-        }
 
-        //Put element in middle of visible screen
-        //Wait for android to update view height and resize() to reset scroll position
-        ionic.scroll.isScrolling = true;
-        setTimeout(function(){
-          //middle of the scrollview, where we want to scroll to
-          var scrollMidpointOffset = container.clientHeight * 0.5;
+          // middle of the scrollview, this is where we want to scroll to
+          // (D - A) / 2
+          var scrollMidpointOffset = scrollViewOffsetHeight * 0.5;
+          //console.log("container.offsetHeight: " + scrollViewOffsetHeight);
 
-          scrollBottomOffsetToTop = container.getBoundingClientRect().bottom;
-          //distance from top of focused element to the bottom of the scroll view
-          var elementTopOffsetToScrollBottom = e.detail.elementTop - scrollBottomOffsetToTop;
+          // middle of the input we want to scroll into view
+          // C
+          var inputMidpoint = ((e.detail.elementBottom + e.detail.elementTop) / 2);
 
-          var scrollTop = elementTopOffsetToScrollBottom  + scrollMidpointOffset;
+          // distance from middle of input to the bottom of the scroll view
+          // C - D                                C               D
+          var inputMidpointOffsetToScrollBottom = inputMidpoint - scrollBottomOffsetToTop;
 
-          if (scrollTop > 0){
-            ionic.tap.cloneFocusedInput(container, self);
+          //C - D + (D - A)/2          C - D                     (D - A)/ 2
+          var scrollTop = inputMidpointOffsetToScrollBottom + scrollMidpointOffset;
+
+          if ( scrollTop > 0) {
+            if (ionic.Platform.isIOS()) ionic.tap.cloneFocusedInput(container, self);
             self.scrollBy(0, scrollTop, true);
             self.onScroll();
           }
-        }, delay);
+        });
       }
 
-      //Only the first scrollView parent of the element that broadcasted this event
-      //(the active element that needs to be shown) should receive this event
+      // Only the first scrollView parent of the element that broadcasted this event
+      // (the active element that needs to be shown) should receive this event
       e.stopPropagation();
     };
 
-    self.resetScrollView = function(e) {
+    self.resetScrollView = function() {
       //return scrollview to original height once keyboard has hidden
-      if (self.isScrolledIntoView) {
-        self.isScrolledIntoView = false;
+      if ( self.isShrunkForKeyboard ) {
+        self.isShrunkForKeyboard = false;
         container.style.height = "";
-        container.style.overflow = "";
-        self.resize();
-        ionic.scroll.isScrolling = false;
       }
+      self.resize();
     };
 
     //Broadcasted when keyboard is shown on some platforms.
     //See js/utils/keyboard.js
     container.addEventListener('scrollChildIntoView', self.scrollChildIntoView);
-    container.addEventListener('resetScrollView', self.resetScrollView);
+
+    // Listen on document because container may not have had the last
+    // keyboardActiveElement, for example after closing a modal with a focused
+    // input and returning to a previously resized scroll view in an ion-content.
+    // Since we can only resize scroll views that are currently visible, just resize
+    // the current scroll view when the keyboard is closed.
+    document.addEventListener('resetScrollView', self.resetScrollView);
 
     function getEventTouches(e) {
       return e.touches && e.touches.length ? e.touches : [{
@@ -936,7 +984,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     document.removeEventListener('wheel', self.mouseWheel);
 
     container.removeEventListener('scrollChildIntoView', self.scrollChildIntoView);
-    container.removeEventListener('resetScrollView', self.resetScrollView);
+    document.removeEventListener('resetScrollView', self.resetScrollView);
 
     ionic.tap.removeClonedInputs(container, self);
 
@@ -1046,7 +1094,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
    * Move and scale the scrollbars as the page scrolls.
    */
   __repositionScrollbars: function() {
-    var self = this, width, heightScale,
+    var self = this,
+        heightScale, widthScale,
         widthDiff, heightDiff,
         x, y,
         xstop = 0, ystop = 0;
@@ -1057,7 +1106,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       // Don't go all the way to the right if we have a vertical scrollbar as well
       if (self.__indicatorY) xstop = 10;
 
-      x = Math.round(self.__indicatorX.sizeRatio * self.__scrollLeft) || 0,
+      x = Math.round(self.__indicatorX.sizeRatio * self.__scrollLeft) || 0;
 
       // The the difference between the last content X position, and our overscrolled one
       widthDiff = self.__scrollLeft - (self.__maxScrollLeft - xstop);
@@ -1260,8 +1309,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
     } else {
 
       return function(left, top, zoom, wasResize) {
-        content.style.marginLeft = left ? (-left/zoom) + 'px' : '';
-        content.style.marginTop = top ? (-top/zoom) + 'px' : '';
+        content.style.marginLeft = left ? (-left / zoom) + 'px' : '';
+        content.style.marginTop = top ? (-top / zoom) + 'px' : '';
         content.style.zoom = zoom || '';
         self.__repositionScrollbars();
         if (!wasResize) {
@@ -1362,12 +1411,12 @@ ionic.views.Scroll = ionic.views.View.inherit({
     var self = this;
 
     self.__refreshHeight = height;
-    self.__refreshActivate = function() {ionic.requestAnimationFrame(refresherMethods.activate);};
-    self.__refreshDeactivate = function() {ionic.requestAnimationFrame(refresherMethods.deactivate);};
-    self.__refreshStart = function() {ionic.requestAnimationFrame(refresherMethods.start);};
-    self.__refreshShow = function() {ionic.requestAnimationFrame(refresherMethods.show);};
-    self.__refreshHide = function() {ionic.requestAnimationFrame(refresherMethods.hide);};
-    self.__refreshTail = function() {ionic.requestAnimationFrame(refresherMethods.tail);};
+    self.__refreshActivate = function() { ionic.requestAnimationFrame(refresherMethods.activate); };
+    self.__refreshDeactivate = function() { ionic.requestAnimationFrame(refresherMethods.deactivate); };
+    self.__refreshStart = function() { ionic.requestAnimationFrame(refresherMethods.start); };
+    self.__refreshShow = function() { ionic.requestAnimationFrame(refresherMethods.show); };
+    self.__refreshHide = function() { ionic.requestAnimationFrame(refresherMethods.hide); };
+    self.__refreshTail = function() { ionic.requestAnimationFrame(refresherMethods.tail); };
     self.__refreshTailTime = 100;
     self.__minSpinTime = 600;
   },
@@ -1415,8 +1464,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
         }
 
         self.scrollTo(self.__scrollLeft, self.__scrollTop, true);
-      },self.__refreshTailTime);
-    },delay);
+      }, self.__refreshTailTime);
+    }, delay);
   },
 
 
@@ -1811,7 +1860,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
           // Slow down on the edges
           if (self.options.bouncing) {
 
-            scrollLeft += (moveX / 2  * self.options.speedMultiplier);
+            scrollLeft += (moveX / 2 * self.options.speedMultiplier);
 
           } else if (scrollLeft > maxScrollLeft) {
 
@@ -2194,7 +2243,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
    * Called when a touch sequence end and the speed of the finger was high enough
    * to switch into deceleration mode.
    */
-  __startDeceleration: function(timeStamp) {
+  __startDeceleration: function() {
     var self = this;
 
     if (self.options.paging) {
@@ -2249,7 +2298,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       return shouldContinue;
     };
 
-    var completed = function(renderedFramesPerSecond, animationId, wasFinished) {
+    var completed = function() {
       self.__isDecelerating = false;
       if (self.__didDecelerationComplete) {
         self.__scrollingComplete();
@@ -2403,7 +2452,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
   __getDistance: function getDistance(touch1, touch2) {
     var x = touch2.pageX - touch1.pageX,
     y = touch2.pageY - touch1.pageY;
-    return Math.sqrt((x*x) + (y*y));
+    return Math.sqrt((x * x) + (y * y));
   },
 
 

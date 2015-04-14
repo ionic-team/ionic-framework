@@ -26,10 +26,19 @@ function($scope,
   self.__timeout = $timeout;
 
   self._scrollViewOptions = scrollViewOptions; //for testing
+  self.isNative = function() {
+    return !!scrollViewOptions.nativeScrolling;
+  };
 
   var element = self.element = scrollViewOptions.el;
   var $element = self.$element = jqLite(element);
-  var scrollView = self.scrollView = new ionic.views.Scroll(scrollViewOptions);
+  var scrollView;
+  if (self.isNative()) {
+    scrollView = self.scrollView = new ionic.views.ScrollNative(scrollViewOptions);
+  } else {
+    scrollView = self.scrollView = new ionic.views.Scroll(scrollViewOptions);
+  }
+
 
   //Attach self to element as a controller so other directives can require this controller
   //through `require: '$ionicScroll'
@@ -92,7 +101,7 @@ function($scope,
   };
 
   self.resize = function() {
-    return $timeout(resize).then(function() {
+    return $timeout(resize, 0, false).then(function() {
       $element && $element.triggerHandler('scroll.resize');
     });
   };
@@ -139,7 +148,7 @@ function($scope,
       var hash = $location.hash();
       var elm = hash && $document[0].getElementById(hash);
       if (!(hash && elm)) {
-        scrollView.scrollTo(0,0, !!shouldAnimate);
+        scrollView.scrollTo(0, 0, !!shouldAnimate);
         return;
       }
       var curElm = elm;

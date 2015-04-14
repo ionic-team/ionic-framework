@@ -1,8 +1,8 @@
 {
   "name": "ionic",
   "private": false,
-  "version": "1.0.0-rc.1",
-  "codename": "osmium-ostrich",
+  "version": "1.0.0-rc.3",
+  "codename": "radium-raccoon",
   "repository": {
     "url": "git://github.com/driftyco/ionic.git"
   },
@@ -18,11 +18,11 @@
     "github": "^0.2.1",
     "gulp": "^3.7.0",
     "gulp-concat": "^2.1.7",
+    "gulp-eslint": "^0.9.0",
     "gulp-footer": "^1.0.4",
     "gulp-header": "^1.0.2",
     "gulp-if": "0.0.5",
     "gulp-jscs": "^1.3.0",
-    "gulp-jshint": "^1.5.0",
     "gulp-minify-css": "^0.3.0",
     "gulp-rename": "^1.1.0",
     "gulp-sass": "^0.7.1",

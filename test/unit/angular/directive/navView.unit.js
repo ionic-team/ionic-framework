@@ -1044,6 +1044,7 @@ describe('Ionic nav-view', function() {
 
     expect(clearCacheCollection.length).toBe(0);
     $ionicHistory.clearCache();
+    $timeout.flush();
 
     expect(clearCacheCollection.length).toBe(2);
     expect(clearCacheCollection[0].stateName).toBe('page1');
@@ -1057,6 +1058,7 @@ describe('Ionic nav-view', function() {
     expect(divs.eq(0).text()).toBe('page3');
 
     $ionicHistory.clearCache();
+    $timeout.flush();
     expect(clearCacheCollection.length).toBe(0);
 
     var divs = elem.find('ion-nav-view').find('div');
@@ -1143,6 +1145,7 @@ describe('Ionic nav-view', function() {
     expect(tab2Ele.childElementCount).toBe(1);
 
     $ionicHistory.clearCache();
+    $timeout.flush();
 
     tab1Ele = elem[0].querySelector('ion-nav-view[name="tab1"]');
     expect(tab1Ele).toEqual(null);

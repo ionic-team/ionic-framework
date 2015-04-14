@@ -74,10 +74,31 @@ function($scope, $element, $attrs, $q, $ionicConfig, $ionicHistory) {
 
 
   self.updateBackButton = function() {
+    var ele;
     if ((isBackShown && isNavBackShown && isBackEnabled) !== isBackElementShown) {
       isBackElementShown = isBackShown && isNavBackShown && isBackEnabled;
-      var backBtnEle = getEle(BACK_BUTTON);
-      backBtnEle && backBtnEle.classList[ isBackElementShown ? 'remove' : 'add' ](HIDE);
+      ele = getEle(BACK_BUTTON);
+      ele && ele.classList[ isBackElementShown ? 'remove' : 'add' ](HIDE);
+    }
+
+    if (isBackEnabled) {
+      ele = ele || getEle(BACK_BUTTON);
+      if (ele) {
+        if (self.backButtonIcon !== $ionicConfig.backButton.icon()) {
+          ele = getEle(BACK_BUTTON + ' .icon');
+          if (ele) {
+            self.backButtonIcon = $ionicConfig.backButton.icon();
+            ele.className = 'icon ' + self.backButtonIcon;
+          }
+        }
+
+        if (self.backButtonText !== $ionicConfig.backButton.text()) {
+          ele = getEle(BACK_BUTTON + ' .back-text');
+          if (ele) {
+            ele.textContent = self.backButtonText = $ionicConfig.backButton.text();
+          }
+        }
+      }
     }
   };
 

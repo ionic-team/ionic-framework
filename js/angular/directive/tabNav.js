@@ -23,41 +23,39 @@ IonicModule
       badgeStyle: '@',
       'class': '@'
     },
-    compile: function(element, attr, transclude) {
-      return function link($scope, $element, $attrs, ctrls) {
-        var tabsCtrl = ctrls[0],
-          tabCtrl = ctrls[1];
+    link: function($scope, $element, $attrs, ctrls) {
+      var tabsCtrl = ctrls[0],
+        tabCtrl = ctrls[1];
 
-        //Remove title attribute so browser-tooltip does not apear
-        $element[0].removeAttribute('title');
+      //Remove title attribute so browser-tooltip does not apear
+      $element[0].removeAttribute('title');
 
-        $scope.selectTab = function(e) {
-          e.preventDefault();
-          tabsCtrl.select(tabCtrl.$scope, true);
-        };
-        if (!$attrs.ngClick) {
-          $element.on('click', function(event) {
-            $scope.$apply(function() {
-              $scope.selectTab(event);
-            });
+      $scope.selectTab = function(e) {
+        e.preventDefault();
+        tabsCtrl.select(tabCtrl.$scope, true);
+      };
+      if (!$attrs.ngClick) {
+        $element.on('click', function(event) {
+          $scope.$apply(function() {
+            $scope.selectTab(event);
           });
-        }
+        });
+      }
 
-        $scope.isHidden = function() {
-          if ($attrs.hidden === 'true' || $attrs.hidden === true) return true;
-          return false;
-        };
+      $scope.isHidden = function() {
+        if ($attrs.hidden === 'true' || $attrs.hidden === true) return true;
+        return false;
+      };
 
-        $scope.getIconOn = function() {
-          return $scope.iconOn || $scope.icon;
-        };
-        $scope.getIconOff = function() {
-          return $scope.iconOff || $scope.icon;
-        };
+      $scope.getIconOn = function() {
+        return $scope.iconOn || $scope.icon;
+      };
+      $scope.getIconOff = function() {
+        return $scope.iconOff || $scope.icon;
+      };
 
-        $scope.isTabActive = function() {
-          return tabsCtrl.selectedTab() === tabCtrl.$scope;
-        };
+      $scope.isTabActive = function() {
+        return tabsCtrl.selectedTab() === tabCtrl.$scope;
       };
     }
   };
