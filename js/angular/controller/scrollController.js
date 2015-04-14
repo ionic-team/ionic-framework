@@ -101,7 +101,7 @@ function($scope,
   };
 
   self.resize = function() {
-    return $timeout(resize).then(function() {
+    return $timeout(resize, 0, false).then(function() {
       $element && $element.triggerHandler('scroll.resize');
     });
   };
