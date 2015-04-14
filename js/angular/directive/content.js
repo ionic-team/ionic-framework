@@ -54,6 +54,7 @@ function($timeout, $controller, $ionicBind, $ionicConfig) {
     priority: 800,
     compile: function(element, attr) {
       var innerElement;
+      var scrollCtrl;
 
       element.addClass('scroll-content ionic-scroll');
 
@@ -143,17 +144,10 @@ function($timeout, $controller, $ionicBind, $ionicConfig) {
           }
 
           // init scroll controller with appropriate options
-          var scrollCtrl = $controller('$ionicScroll', {
+          scrollCtrl = $controller('$ionicScroll', {
             $scope: $scope,
             scrollViewOptions: scrollViewOptions
           });
-
-          function onScrollComplete() {
-            $scope.$onScrollComplete({
-              scrollTop: scrollCtrl.scrollView.__scrollTop,
-              scrollLeft: scrollCtrl.scrollView.__scrollLeft
-            });
-          }
 
           $scope.$on('$destroy', function() {
             if (scrollViewOptions) {
@@ -163,6 +157,13 @@ function($timeout, $controller, $ionicBind, $ionicConfig) {
             innerElement = null;
             $element = null;
             attr.$$element = null;
+          });
+        }
+
+        function onScrollComplete() {
+          $scope.$onScrollComplete({
+            scrollTop: scrollCtrl.scrollView.__scrollTop,
+            scrollLeft: scrollCtrl.scrollView.__scrollLeft
           });
         }
 
