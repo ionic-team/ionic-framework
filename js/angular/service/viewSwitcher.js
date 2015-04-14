@@ -3,8 +3,7 @@
  * TODO document
  */
 
-IonicModule
-.factory('$ionicViewSwitcher',[
+IonicModule.factory('$ionicViewSwitcher', [
   '$timeout',
   '$document',
   '$q',
@@ -21,7 +20,6 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
   var DATA_FALLBACK_TIMER = '$fallbackTimer';
   var DATA_VIEW = '$viewData';
   var NAV_VIEW_ATTR = 'nav-view';
-  var HISTORY_CURSOR_ATTR = 'history-cursor';
   var VIEW_STATUS_ACTIVE = 'active';
   var VIEW_STATUS_CACHED = 'cached';
   var VIEW_STATUS_STAGED = 'stage';
@@ -425,7 +423,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
 
 
   function getViewElementIdentifier(locals, view) {
-    if (viewState(locals).abstract) return viewState(locals).name;
+    if (viewState(locals)['abstract']) return viewState(locals).name;
     if (view) return view.stateId || view.viewId;
     return ionic.Utils.nextUid();
   }

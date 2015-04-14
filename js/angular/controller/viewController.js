@@ -5,8 +5,7 @@ IonicModule
   '$attrs',
   '$compile',
   '$rootScope',
-  '$ionicViewSwitcher',
-function($scope, $element, $attrs, $compile, $rootScope, $ionicViewSwitcher) {
+function($scope, $element, $attrs, $compile, $rootScope) {
   var self = this;
   var navElementHtml = {};
   var navViewCtrl;

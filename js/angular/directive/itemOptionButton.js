@@ -27,8 +27,7 @@ var ITEM_TPL_OPTION_BUTTONS =
 * </ion-list>
 * ```
 */
-IonicModule
-.directive('ionOptionButton', ['$compile', function($compile) {
+IonicModule.directive('ionOptionButton', [function() {
   function stopPropagation(e) {
     e.stopPropagation();
   }

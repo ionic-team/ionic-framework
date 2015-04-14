@@ -69,10 +69,10 @@ function($timeout, $controller, $ionicBind, $ionicConfig) {
       }
 
       return { pre: prelink };
-      function prelink($scope, $element, $attr, navViewCtrl) {
+      function prelink($scope, $element, $attr) {
         var parentScope = $scope.$parent;
         $scope.$watch(function() {
-          return (parentScope.$hasHeader ? ' has-header' : '')  +
+          return (parentScope.$hasHeader ? ' has-header' : '') +
             (parentScope.$hasSubheader ? ' has-subheader' : '') +
             (parentScope.$hasFooter ? ' has-footer' : '') +
             (parentScope.$hasSubfooter ? ' has-subfooter' : '') +
@@ -122,7 +122,7 @@ function($timeout, $controller, $ionicBind, $ionicConfig) {
               delegateHandle: attr.delegateHandle,
               startX: $scope.$eval($scope.startX) || 0,
               startY: $scope.$eval($scope.startY) || 0,
-              nativeScrolling:true
+              nativeScrolling: true
             };
 
           } else {

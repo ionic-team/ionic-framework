@@ -69,7 +69,10 @@ IonicModule
 
         // prevent clicks from bubbling up to the item
         if(!$attr.ngClick && !$attr.onClick && !$attr.onclick){
-          $element[0].onclick = function(e){e.stopPropagation(); return false;};
+          $element[0].onclick = function(e){
+            e.stopPropagation();
+            return false;
+          };
         }
 
         var container = jqLite(ITEM_TPL_REORDER_BUTTON);

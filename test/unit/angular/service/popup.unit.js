@@ -174,7 +174,7 @@ describe('$ionicPopup service', function() {
       document.body.classList.remove('popup-open');
     });
 
-    it('should add popup-open and retain backdrop and register back button action if no previous popup', inject(function($ionicBackdrop, $timeout, $ionicPlatform) {
+    it('should add popup-open and retain backdrop and register back button action if no previous popup', inject(function($ionicBackdrop, $timeout, $ionicPlatform, IONIC_BACK_PRIORITY) {
       spyOn($ionicPlatform, 'registerBackButtonAction').andReturn('actionReturn');
       spyOn($ionicBackdrop, 'retain');
       $ionicPopup.show();
@@ -183,7 +183,7 @@ describe('$ionicPopup service', function() {
       expect($ionicBackdrop.retain).toHaveBeenCalled();
       expect($ionicPlatform.registerBackButtonAction).toHaveBeenCalledWith(
         jasmine.any(Function),
-        PLATFORM_BACK_BUTTON_PRIORITY_POPUP
+        IONIC_BACK_PRIORITY.popup
       );
       expect($ionicPopup._backButtonActionDone).toBe('actionReturn');
     }));

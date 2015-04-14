@@ -29,7 +29,6 @@ var ITEM_TPL_CONTENT =
 */
 IonicModule
 .directive('ionItem', ['$$rAF', function($$rAF) {
-      var nextId = 0;
   return {
     restrict: 'E',
     controller: ['$scope', '$element', function($scope, $element) {
@@ -56,7 +55,6 @@ IonicModule
       }
 
       return function link($scope, $element, $attrs) {
-        var listCtrl;
         $scope.$href = function() {
           return $attrs.href || $attrs.ngHref;
         };

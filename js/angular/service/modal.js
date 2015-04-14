@@ -74,7 +74,8 @@ IonicModule
   '$log',
   '$ionicClickBlock',
   '$window',
-function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTemplateLoader, $$q, $log, $ionicClickBlock, $window) {
+  'IONIC_BACK_PRIORITY',
+function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTemplateLoader, $$q, $log, $ionicClickBlock, $window, IONIC_BACK_PRIORITY) {
 
   /**
    * @ngdoc controller
@@ -122,7 +123,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
       var self = this;
 
       if (self.scope.$$destroyed) {
-        $log.error('Cannot call ' +  self.viewType + '.show() after remove(). Please create a new ' +  self.viewType + ' instance.');
+        $log.error('Cannot call ' + self.viewType + '.show() after remove(). Please create a new ' + self.viewType + ' instance.');
         return $$q.when();
       }
 
@@ -148,8 +149,8 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
         self.positionView(target, modalEl);
         // set up a listener for in case the window size changes
 
-        self._onWindowResize = function(ev) {
-          if (self._isShown) self.positionView(target,modalEl);
+        self._onWindowResize = function() {
+          if (self._isShown) self.positionView(target, modalEl);
         };
         $window.addEventListener('resize', self._onWindowResize);
       }
@@ -161,7 +162,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
       self._isShown = true;
       self._deregisterBackButton = $ionicPlatform.registerBackButtonAction(
         self.hardwareBackButtonClose ? angular.bind(self, self.hide) : noop,
-        PLATFORM_BACK_BUTTON_PRIORITY_MODAL
+        IONIC_BACK_PRIORITY.modal
       );
 
       ionic.views.Modal.prototype.show.call(self);

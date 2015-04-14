@@ -34,12 +34,11 @@
  */
 IonicModule
 .factory('$ionicBackdrop', [
-  '$document', '$timeout', '$$rAF', '$$q',
-function($document, $timeout, $$rAF, $$q) {
+  '$document', '$timeout', '$$rAF',
+function($document, $timeout, $$rAF) {
 
   var el = jqLite('<div class="backdrop">');
   var backdropHolds = 0;
-  var backdropIsActive = false;
 
   $document[0].body.appendChild(el[0]);
 

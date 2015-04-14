@@ -49,7 +49,7 @@ function($timeout, $controller, $ionicBind) {
     restrict: 'E',
     scope: true,
     controller: function() {},
-    compile: function(element, attr) {
+    compile: function(element) {
       element.addClass('scroll-view ionic-scroll');
 
       //We cannot transclude here because it breaks element.data() inheritance on compile
@@ -59,8 +59,6 @@ function($timeout, $controller, $ionicBind) {
 
       return { pre: prelink };
       function prelink($scope, $element, $attr) {
-        var scrollView, scrollCtrl;
-
         $ionicBind($scope, $attr, {
           direction: '@',
           paging: '@',
@@ -86,7 +84,7 @@ function($timeout, $controller, $ionicBind) {
         if(!$scope.direction) { $scope.direction = 'y'; }
         var isPaging = $scope.$eval($scope.paging) === true;
 
-        var scrollViewOptions= {
+        var scrollViewOptions = {
           el: $element[0],
           delegateHandle: $attr.delegateHandle,
           locking: ($attr.locking || 'true') === 'true',
@@ -106,11 +104,10 @@ function($timeout, $controller, $ionicBind) {
           scrollViewOptions.bouncing = false;
         }
 
-        scrollCtrl = $controller('$ionicScroll', {
+        $controller('$ionicScroll', {
           $scope: $scope,
           scrollViewOptions: scrollViewOptions
         });
-        scrollView = $scope.$parent.scrollView = scrollCtrl.scrollView;
       }
     }
   };

@@ -50,8 +50,7 @@ IonicModule
 .directive('ionTabs', [
   '$ionicTabsDelegate',
   '$ionicConfig',
-  '$ionicHistory',
-function($ionicTabsDelegate, $ionicConfig, $ionicHistory) {
+function($ionicTabsDelegate, $ionicConfig) {
   return {
     restrict: 'E',
     scope: true,

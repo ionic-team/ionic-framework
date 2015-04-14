@@ -75,7 +75,6 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
       }
 
       $location.url(this.url);
-      return;
     }
 
     return null;
@@ -313,8 +312,8 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
               // the forward has a history
               for (x = tmp.stack.length - 1; x >= forwardView.index; x--) {
                 // starting from the end destroy all forwards in this history from this point
-                var stack_x = tmp.stack[x];
-                stack_x && stack_x.destroy && stack_x.destroy();
+                var stackItem = tmp.stack[x];
+                stackItem && stackItem.destroy && stackItem.destroy();
                 tmp.stack.splice(x);
               }
               historyId = forwardView.historyId;
@@ -664,7 +663,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
     },
 
     isAbstractEle: function(ele, viewLocals) {
-      if (viewLocals && viewLocals.$$state && viewLocals.$$state.self.abstract) {
+      if (viewLocals && viewLocals.$$state && viewLocals.$$state.self['abstract']) {
         return true;
       }
       return !!(ele && (isAbstractTag(ele) || isAbstractTag(ele.children())));
@@ -727,7 +726,8 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
   '$document',
   '$ionicPlatform',
   '$ionicHistory',
-function($rootScope, $state, $location, $document, $ionicPlatform, $ionicHistory) {
+  'IONIC_BACK_PRIORITY',
+function($rootScope, $state, $location, $document, $ionicPlatform, $ionicHistory, IONIC_BACK_PRIORITY) {
 
   // always reset the keyboard state when change stage
   $rootScope.$on('$ionicView.beforeEnter', function() {
@@ -735,7 +735,7 @@ function($rootScope, $state, $location, $document, $ionicPlatform, $ionicHistory
   });
 
   $rootScope.$on('$ionicHistory.change', function(e, data) {
-    if (!data) return;
+    if (!data) return null;
 
     var viewHistory = $ionicHistory.viewHistory();
 
@@ -792,7 +792,7 @@ function($rootScope, $state, $location, $document, $ionicPlatform, $ionicHistory
   }
   $ionicPlatform.registerBackButtonAction(
     onHardwareBackButton,
-    PLATFORM_BACK_BUTTON_PRIORITY_VIEW
+    IONIC_BACK_PRIORITY.view
   );
 
 }]);

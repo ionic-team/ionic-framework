@@ -25,7 +25,7 @@ var concat = require('gulp-concat');
 var footer = require('gulp-footer');
 var gulpif = require('gulp-if');
 var header = require('gulp-header');
-var jshint = require('gulp-jshint');
+var eslint = require('gulp-eslint');
 var jscs = require('gulp-jscs');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
@@ -61,7 +61,7 @@ if (argv.dist) {
 
 gulp.task('default', ['build']);
 gulp.task('build', ['bundle', 'sass']);
-gulp.task('validate', ['jshint', 'ddescribe-iit', 'karma']);
+gulp.task('validate', ['eslint', 'ddescribe-iit', 'karma']);
 
 var IS_WATCH = false;
 gulp.task('watch', ['build'], function() {
@@ -135,16 +135,11 @@ gulp.task('jscs', function() {
     }));
 });
 
-gulp.task('jshint', function() {
+gulp.task('eslint', function() {
   return gulp.src(['js/**/*.js'])
-    .pipe(jshint('.jshintrc'))
-    .pipe(jshint.reporter(require('jshint-summary')({
-      fileColCol: ',bold',
-      positionCol: ',bold',
-      codeCol: 'green,bold',
-      reasonCol: 'cyan'
-    })))
-    .pipe(jshint.reporter('fail'));
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failOnError());
 });
 
 gulp.task('ddescribe-iit', function() {

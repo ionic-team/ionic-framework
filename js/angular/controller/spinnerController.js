@@ -228,7 +228,7 @@
                 };
               },
               t: 1
-            },{
+            }, {
               fn: function() {
                 return {
                   an: 'y2',
@@ -238,7 +238,7 @@
                 };
               },
               t: 1
-            },{
+            }, {
               fn: function() {
                 return {
                   an: STROKE_OPACITY,
@@ -278,7 +278,7 @@
                 };
               },
               t: 1
-            },{
+            }, {
               fn: function() {
                 return {
                   an: STROKE_OPACITY,

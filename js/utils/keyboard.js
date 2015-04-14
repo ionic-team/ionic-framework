@@ -286,7 +286,7 @@ function keyboardFocusIn(e) {
   // an exact keyboard height
   // if the keyboard is already open, go ahead and scroll the input into view
   // if necessary
-  if (!ionic.keyboard.isOpen && !keyboardHasPlugin())  {
+  if (!ionic.keyboard.isOpen && !keyboardHasPlugin()) {
     keyboardWaitForResize(keyboardShow, true);
 
   } else if (ionic.keyboard.isOpen) {
@@ -299,7 +299,7 @@ function keyboardFocusIn(e) {
  * calls keyboardWaitForResize with keyboardHide as the callback after a small
  * timeout.
  */
-function keyboardFocusOut(e) {
+function keyboardFocusOut() {
   clearTimeout(keyboardFocusOutTimer);
   //console.log("keyboardFocusOut fired at: " + Date.now());
   //console.log("keyboardFocusOut event type: " + e.type);
@@ -537,6 +537,7 @@ function keyboardShow() {
   return details;
 }
 
+/* eslint no-unused-vars:0 */
 function keyboardGetHeight() {
   // check if we already have a keyboard height from the plugin or resize calculations
   if ( ionic.keyboard.height ) {

@@ -356,14 +356,16 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
         dimensionData.getValue = dimensionData === heightData ?
           function heightGetter(scope, locals) {
             var result = parsedValue(scope, locals);
-            if (result.charAt && result.charAt(result.length - 1) === '%')
+            if (result.charAt && result.charAt(result.length - 1) === '%') {
               return Math.floor(parseInt(result) / 100 * scrollView.__clientHeight);
+            }
             return parseInt(result);
           } :
           function widthGetter(scope, locals) {
             var result = parsedValue(scope, locals);
-            if (result.charAt && result.charAt(result.length - 1) === '%')
+            if (result.charAt && result.charAt(result.length - 1) === '%') {
               return Math.floor(parseInt(result) / 100 * scrollView.__clientWidth);
+            }
             return parseInt(result);
           };
       }
@@ -461,7 +463,6 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
     var itemsEntering = [];
     var itemsShownMap = {};
     var nextItemId = 0;
-    var estimatedItemsAcross;
 
     var scrollViewSetDimensions = isVertical ?
       function() { scrollView.setDimensions(null, null, null, view.getContentSize(), true); } :
@@ -484,7 +485,6 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
     scrollView.__$callback = scrollView.__callback;
     scrollView.__callback = function(transformLeft, transformTop, zoom, wasResize) {
       var scrollValue = view.getScrollValue();
-      if(window.d)dump('_-callback render', scrollValue, view.scrollPrimarySize + renderAfterBoundary);
       if (renderStartIndex === -1 ||
           scrollValue + view.scrollPrimarySize > renderAfterBoundary ||
           scrollValue < renderBeforeBoundary) {
@@ -495,7 +495,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
 
     var isLayoutReady = false;
     var isDataReady = false;
-    this.refreshLayout = function(itemsAfterRepeater) {
+    this.refreshLayout = function() {
       if (data.length) {
         estimatedHeight = heightGetter(0, data[0]);
         estimatedWidth = widthGetter(0, data[0]);
@@ -523,7 +523,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
       } while( ionic.DomUtil.contains(scrollView.__content, current = current.offsetParent) );
 
       var containerPrevNode = containerNode.previousElementSibling;
-      var beforeStyle = containerPrevNode ?  $window.getComputedStyle(containerPrevNode) : {};
+      var beforeStyle = containerPrevNode ? $window.getComputedStyle(containerPrevNode) : {};
       var beforeMargin = parseInt(beforeStyle[isVertical ? 'marginBottom' : 'marginRight'] || 0);
 
       // Because we position the collection container with position: relative, it doesn't take
@@ -594,6 +594,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
     function render(forceRerender) {
       if (render.destroyed) return;
       var i;
+      var ii;
       var item;
       var dim;
       var scope;
@@ -637,7 +638,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
         scope.$first = (i === 0);
         scope.$last = (i === (data.length - 1));
         scope.$middle = !(scope.$first || scope.$last);
-        scope.$odd = !(scope.$even = (i&1) === 0);
+        scope.$odd = !(scope.$even = (i & 1) === 0);
 
         if (scope.$$disconnected) ionic.Utils.reconnectScope(item.scope);
 
@@ -697,14 +698,6 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
       }
     }
 
-    function getNextItem() {
-      if (itemsLeaving.length)
-        return itemsLeaving.pop();
-      else if (itemsPool.length)
-        return itemsPool.shift();
-      return new RepeatItem();
-    }
-
     function digestEnteringItems() {
       var item;
       if (digestEnteringItems.running) return;
@@ -725,7 +718,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
     function RepeatItem() {
       var self = this;
       this.scope = scope.$new();
-      this.id = 'item'+ (nextItemId++);
+      this.id = 'item' + (nextItemId++);
       transclude(this.scope, function(clone) {
         self.element = clone;
         self.element.data('$$collectionRepeatItem', self);
@@ -899,9 +892,11 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
       };
 
       this.onRefreshData = function() {
+        var i;
+        var ii;
         // Make sure dimensions has as many items as data.length.
         // This is to be sure we don't have to allocate objects while scrolling.
-        for (i = dimensions.length, len = data.length; i < len; i++) {
+        for (i = dimensions.length, ii = data.length; i < ii; i++) {
           dimensions.push({});
         }
         dimensionsIndex = -1;

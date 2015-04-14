@@ -40,7 +40,7 @@
       ionic.offGesture(this.dragReleaseGesture, 'release', this.releaseHandler);
     },
 
-    tap: function(e) {
+    tap: function() {
       if(this.el.getAttribute('disabled') !== 'disabled') {
         this.val( !this.checkbox.checked );
       }
@@ -71,12 +71,8 @@
       // Stop any parent dragging
       e.gesture.srcEvent.preventDefault();
 
-      ionic.requestAnimationFrame(function(amount) {
+      ionic.requestAnimationFrame(function () {
         if (!self._dragInfo) { return; }
-
-        var slidePageLeft = self.track.offsetLeft + (self.handle.offsetWidth / 2);
-        var slidePageRight = self.track.offsetLeft + self.track.offsetWidth - (self.handle.offsetWidth / 2);
-        var dx = e.gesture.deltaX;
 
         var px = e.gesture.touches[0].pageX - self._dragInfo.left;
         var mx = self._dragInfo.width - self.triggerThreshold;
@@ -99,11 +95,11 @@
       });
     },
 
-    endDrag: function(e) {
+    endDrag: function() {
       this._dragInfo = null;
     },
 
-    hold: function(e) {
+    hold: function() {
       this.el.classList.add('dragging');
     },
     release: function(e) {

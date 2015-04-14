@@ -65,7 +65,7 @@ var zyngaCore = { effect: {} };
       var intervalHandle = null;
       var lastActive = +new Date();
 
-      return function(callback, root) {
+      return function(callback) {
         var callbackHandle = rafHandle++;
 
         // Store callback
@@ -246,8 +246,6 @@ var zyngaCore = { effect: {} };
  * License: MIT + Apache (V2)
  */
 
-var Scroller;
-
 (function(ionic) {
   var NOOP = function(){};
 
@@ -369,10 +367,10 @@ ionic.views.Scroll = ionic.views.View.inherit({
       scrollingComplete: NOOP,
 
       /** This configures the amount of change applied to deceleration when reaching boundaries  **/
-      penetrationDeceleration : 0.03,
+      penetrationDeceleration: 0.03,
 
       /** This configures the amount of change applied to acceleration when reaching boundaries  **/
-      penetrationAcceleration : 0.08,
+      penetrationAcceleration: 0.08,
 
       // The ms interval for triggering scroll events
       scrollEventInterval: 10,
@@ -750,7 +748,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       e.stopPropagation();
     };
 
-    self.resetScrollView = function(e) {
+    self.resetScrollView = function() {
       //return scrollview to original height once keyboard has hidden
       if ( self.isShrunkForKeyboard ) {
         self.isShrunkForKeyboard = false;
@@ -1096,7 +1094,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
    * Move and scale the scrollbars as the page scrolls.
    */
   __repositionScrollbars: function() {
-    var self = this, width, heightScale,
+    var self = this,
+        heightScale, widthScale,
         widthDiff, heightDiff,
         x, y,
         xstop = 0, ystop = 0;
@@ -1107,7 +1106,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       // Don't go all the way to the right if we have a vertical scrollbar as well
       if (self.__indicatorY) xstop = 10;
 
-      x = Math.round(self.__indicatorX.sizeRatio * self.__scrollLeft) || 0,
+      x = Math.round(self.__indicatorX.sizeRatio * self.__scrollLeft) || 0;
 
       // The the difference between the last content X position, and our overscrolled one
       widthDiff = self.__scrollLeft - (self.__maxScrollLeft - xstop);
@@ -1310,8 +1309,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
     } else {
 
       return function(left, top, zoom, wasResize) {
-        content.style.marginLeft = left ? (-left/zoom) + 'px' : '';
-        content.style.marginTop = top ? (-top/zoom) + 'px' : '';
+        content.style.marginLeft = left ? (-left / zoom) + 'px' : '';
+        content.style.marginTop = top ? (-top / zoom) + 'px' : '';
         content.style.zoom = zoom || '';
         self.__repositionScrollbars();
         if (!wasResize) {
@@ -1412,12 +1411,12 @@ ionic.views.Scroll = ionic.views.View.inherit({
     var self = this;
 
     self.__refreshHeight = height;
-    self.__refreshActivate = function() {ionic.requestAnimationFrame(refresherMethods.activate);};
-    self.__refreshDeactivate = function() {ionic.requestAnimationFrame(refresherMethods.deactivate);};
-    self.__refreshStart = function() {ionic.requestAnimationFrame(refresherMethods.start);};
-    self.__refreshShow = function() {ionic.requestAnimationFrame(refresherMethods.show);};
-    self.__refreshHide = function() {ionic.requestAnimationFrame(refresherMethods.hide);};
-    self.__refreshTail = function() {ionic.requestAnimationFrame(refresherMethods.tail);};
+    self.__refreshActivate = function() { ionic.requestAnimationFrame(refresherMethods.activate); };
+    self.__refreshDeactivate = function() { ionic.requestAnimationFrame(refresherMethods.deactivate); };
+    self.__refreshStart = function() { ionic.requestAnimationFrame(refresherMethods.start); };
+    self.__refreshShow = function() { ionic.requestAnimationFrame(refresherMethods.show); };
+    self.__refreshHide = function() { ionic.requestAnimationFrame(refresherMethods.hide); };
+    self.__refreshTail = function() { ionic.requestAnimationFrame(refresherMethods.tail); };
     self.__refreshTailTime = 100;
     self.__minSpinTime = 600;
   },
@@ -1465,8 +1464,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
         }
 
         self.scrollTo(self.__scrollLeft, self.__scrollTop, true);
-      },self.__refreshTailTime);
-    },delay);
+      }, self.__refreshTailTime);
+    }, delay);
   },
 
 
@@ -1861,7 +1860,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
           // Slow down on the edges
           if (self.options.bouncing) {
 
-            scrollLeft += (moveX / 2  * self.options.speedMultiplier);
+            scrollLeft += (moveX / 2 * self.options.speedMultiplier);
 
           } else if (scrollLeft > maxScrollLeft) {
 
@@ -2244,7 +2243,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
    * Called when a touch sequence end and the speed of the finger was high enough
    * to switch into deceleration mode.
    */
-  __startDeceleration: function(timeStamp) {
+  __startDeceleration: function() {
     var self = this;
 
     if (self.options.paging) {
@@ -2299,7 +2298,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       return shouldContinue;
     };
 
-    var completed = function(renderedFramesPerSecond, animationId, wasFinished) {
+    var completed = function() {
       self.__isDecelerating = false;
       if (self.__didDecelerationComplete) {
         self.__scrollingComplete();
@@ -2453,7 +2452,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
   __getDistance: function getDistance(touch1, touch2) {
     var x = touch2.pageX - touch1.pageX,
     y = touch2.pageY - touch1.pageY;
-    return Math.sqrt((x*x) + (y*y));
+    return Math.sqrt((x * x) + (y * y));
   },
 
 

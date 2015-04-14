@@ -57,7 +57,8 @@ IonicModule
   '$ionicTemplateLoader',
   '$ionicPlatform',
   '$ionicBody',
-function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicPlatform, $ionicBody) {
+  'IONIC_BACK_PRIORITY',
+function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicPlatform, $ionicBody, IONIC_BACK_PRIORITY) {
 
   return {
     show: actionSheet
@@ -169,7 +170,7 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
       function() {
         $timeout(scope.cancel);
       },
-      PLATFORM_BACK_BUTTON_PRIORITY_ACTION_SHEET
+      IONIC_BACK_PRIORITY.actionSheet
     );
 
     // called when the user presses the cancel button

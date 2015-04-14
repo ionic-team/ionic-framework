@@ -128,7 +128,7 @@ describe('Ionic Popover', function() {
     expect(instance.isShown()).toBe(false);
   }));
 
-  it('should not close on hardware back button if option', inject(function($ionicPlatform) {
+  it('should not close on hardware back button if option', inject(function($ionicPlatform, IONIC_BACK_PRIORITY) {
     var template = '<div class="popover"></div>';
     var instance = popover.fromTemplate(template, {
       hardwareBackButtonClose: false
@@ -136,7 +136,10 @@ describe('Ionic Popover', function() {
     spyOn($ionicPlatform, 'registerBackButtonAction').andCallThrough();
     instance.show();
     timeout.flush();
-    expect($ionicPlatform.registerBackButtonAction).toHaveBeenCalledWith(jasmine.any(Function), PLATFORM_BACK_BUTTON_PRIORITY_MODAL);
+    expect($ionicPlatform.registerBackButtonAction).toHaveBeenCalledWith(
+      jasmine.any(Function),
+      IONIC_BACK_PRIORITY.modal
+    );
 
     ionicPlatform.hardwareBackButtonClick();
 

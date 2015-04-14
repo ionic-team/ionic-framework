@@ -29,7 +29,7 @@
 
 IonicModule
 .directive('keyboardAttach', function() {
-  return function(scope, element, attrs) {
+  return function(scope, element) {
     ionic.on('native.keyboardshow', onShow, window);
     ionic.on('native.keyboardhide', onHide, window);
 

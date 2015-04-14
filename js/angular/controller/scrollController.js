@@ -148,7 +148,7 @@ function($scope,
       var hash = $location.hash();
       var elm = hash && $document[0].getElementById(hash);
       if (!(hash && elm)) {
-        scrollView.scrollTo(0,0, !!shouldAnimate);
+        scrollView.scrollTo(0, 0, !!shouldAnimate);
         return;
       }
       var curElm = elm;

@@ -43,7 +43,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
   };
 
 
-  self.createHeaderBar = function(isActive, navBarClass) {
+  self.createHeaderBar = function(isActive) {
     var containerEle = jqLite('<div class="nav-bar-block">');
     ionic.DomUtil.cachedAttr(containerEle, 'nav-bar', isActive ? 'active' : 'cached');
 

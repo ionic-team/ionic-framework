@@ -113,7 +113,8 @@ IonicModule
   '$ionicBody',
   '$compile',
   '$ionicPlatform',
-function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicBody, $compile, $ionicPlatform) {
+  'IONIC_BACK_PRIORITY',
+function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicBody, $compile, $ionicPlatform, IONIC_BACK_PRIORITY) {
   //TODO allow this to be configured
   var config = {
     stackPushDelay: 75
@@ -360,7 +361,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
     });
   }
 
-  function onHardwareBackButton(e) {
+  function onHardwareBackButton() {
     var last = popupStack[popupStack.length - 1];
     last && last.responseDeferred.resolve();
   }
@@ -379,7 +380,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
       //only show the backdrop on the first popup
       $ionicPopup._backButtonActionDone = $ionicPlatform.registerBackButtonAction(
         onHardwareBackButton,
-        PLATFORM_BACK_BUTTON_PRIORITY_POPUP
+        IONIC_BACK_PRIORITY.popup
       );
       resultDeferred = doShowPopup();
     }
@@ -448,7 +449,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
       buttons: [{
         text: opts.okText || 'OK',
         type: opts.okType || 'button-positive',
-        onTap: function(e) {
+        onTap: function() {
           return true;
         }
       }]
@@ -460,11 +461,11 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
       buttons: [{
         text: opts.cancelText || 'Cancel',
         type: opts.cancelType || 'button-default',
-        onTap: function(e) { return false; }
+        onTap: function() { return false; }
       }, {
         text: opts.okText || 'OK',
         type: opts.okType || 'button-positive',
-        onTap: function(e) { return true; }
+        onTap: function() { return true; }
       }]
     }, opts || {}));
   }
@@ -484,11 +485,11 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
       buttons: [{
         text: opts.cancelText || 'Cancel',
         type: opts.cancelType || 'button-default',
-        onTap: function(e) {}
+        onTap: function() {}
       }, {
         text: opts.okText || 'OK',
         type: opts.okType || 'button-positive',
-        onTap: function(e) {
+        onTap: function() {
           return scope.data.response || '';
         }
       }]

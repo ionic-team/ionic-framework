@@ -13,10 +13,10 @@
 
       self.__scrollTop = self.el.scrollTop;
       self.__scrollLeft = self.el.scrollLeft;
-      self.__clientHeight = self.__content.clientHeight,
-      self.__clientWidth = self.__content.clientWidth,
-      self.__maxScrollTop = Math.max((self.__contentHeight) - self.__clientHeight, 0),
-      self.__maxScrollLeft = Math.max((self.__contentWidth) - self.__clientWidth, 0),
+      self.__clientHeight = self.__content.clientHeight;
+      self.__clientWidth = self.__content.clientWidth;
+      self.__maxScrollTop = Math.max((self.__contentHeight) - self.__clientHeight, 0);
+      self.__maxScrollLeft = Math.max((self.__contentWidth) - self.__clientWidth, 0);
 
       self.options = {
 
@@ -39,7 +39,7 @@
       /**
        * Sets isScrolling to true, and automatically deactivates if not called again in 80ms.
        */
-      self.onScroll = function(event) {
+      self.onScroll = function() {
         if (!ionic.scroll.isScrolling) {
           ionic.scroll.isScrolling = true;
         }
@@ -56,10 +56,10 @@
     },
 
     /**  Methods not used in native scrolling */
-    __callback: function() {depreciated('__callback');},
-    zoomTo: function() {depreciated('zoomTo');},
-    zoomBy: function() {depreciated('zoomBy');},
-    activatePullToRefresh: function() {depreciated('activatePullToRefresh');},
+    __callback: function() { depreciated('__callback'); },
+    zoomTo: function() { depreciated('zoomTo'); },
+    zoomBy: function() { depreciated('zoomBy'); },
+    activatePullToRefresh: function() { depreciated('activatePullToRefresh'); },
 
     /**
      * Returns the scroll position and zooming values
@@ -297,7 +297,7 @@
       // should be unnecessary in native scrolling, but keep in case bugs show up
       self.scrollChildIntoView = NOOP;
 
-      self.resetScrollView = function(e) {
+      self.resetScrollView = function() {
         //return scrollview to original height once keyboard has hidden
         if (self.isScrolledIntoView) {
           self.isScrolledIntoView = false;

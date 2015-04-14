@@ -159,13 +159,13 @@ describe('$ionicLoading service', function() {
   }));
 
   describe("back button", function() {
-    it('.show() should register back button action', inject(function($ionicLoading, $ionicPlatform, $timeout) {
+    it('.show() should register back button action', inject(function($ionicLoading, $ionicPlatform, $timeout, IONIC_BACK_PRIORITY) {
       spyOn($ionicPlatform, 'registerBackButtonAction');
       $ionicLoading.show();
       $timeout.flush();
       expect($ionicPlatform.registerBackButtonAction).toHaveBeenCalledWith(
         angular.noop,
-        PLATFORM_BACK_BUTTON_PRIORITY_LOADING
+        IONIC_BACK_PRIORITY.loading
       );
     }));
     it('.hide() should deregister back button action', inject(function($ionicLoading, $ionicPlatform, $timeout) {

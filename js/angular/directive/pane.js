@@ -11,7 +11,7 @@ IonicModule
 .directive('ionPane', function() {
   return {
     restrict: 'E',
-    link: function(scope, element, attr) {
+    link: function(scope, element) {
       element.addClass('pane');
     }
   };
