@@ -70,9 +70,11 @@ IonicModule
   '$timeout',
   '$ionicPlatform',
   '$ionicTemplateLoader',
-  '$q',
+  '$$q',
   '$log',
-function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTemplateLoader, $q, $log) {
+  '$ionicClickBlock',
+  '$window',
+function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTemplateLoader, $$q, $log, $ionicClickBlock, $window) {
 
   /**
    * @ngdoc controller
@@ -121,29 +123,37 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
 
       if (self.scope.$$destroyed) {
         $log.error('Cannot call ' +  self.viewType + '.show() after remove(). Please create a new ' +  self.viewType + ' instance.');
-        return;
+        return $$q.when();
       }
 
       var modalEl = jqLite(self.modalEl);
 
       self.el.classList.remove('hide');
       $timeout(function() {
+        if (!self._isShown) return;
         $ionicBody.addClass(self.viewType + '-open');
-      }, 400);
+      }, 400, false);
 
       if (!self.el.parentElement) {
         modalEl.addClass(self.animation);
         $ionicBody.append(self.el);
       }
 
+      // if modal was closed while the keyboard was up, reset scroll view on
+      // next show since we can only resize it once it's visible
+      var scrollCtrl = modalEl.data('$$ionicScrollController');
+      scrollCtrl && scrollCtrl.resize();
+
       if (target && self.positionView) {
         self.positionView(target, modalEl);
         // set up a listener for in case the window size changes
-        ionic.on('resize',function() {
-          ionic.off('resize',null,window);
-          self.positionView(target,modalEl);
-        },window);
+
+        self._onWindowResize = function(ev) {
+          if (self._isShown) self.positionView(target,modalEl);
+        };
+        $window.addEventListener('resize', self._onWindowResize);
       }
+
 
       modalEl.addClass('ng-enter active')
              .removeClass('ng-leave ng-leave-active');
@@ -157,6 +167,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
       ionic.views.Modal.prototype.show.call(self);
 
       $timeout(function() {
+        if (!self._isShown) return;
         modalEl.addClass('ng-enter-active');
         ionic.trigger('resize');
         self.scope.$parent && self.scope.$parent.$broadcast(self.viewType + '.shown', self);
@@ -165,6 +176,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
       }, 20);
 
       return $timeout(function() {
+        if (!self._isShown) return;
         //After animating in, allow hide on backdrop click
         self.$el.on('click', function(e) {
           if (self.backdropClickToClose && e.target === self.el) {
@@ -184,13 +196,18 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
       var self = this;
       var modalEl = jqLite(self.modalEl);
 
+      // on iOS, clicks will sometimes bleed through/ghost click on underlying
+      // elements
+      $ionicClickBlock.show(600);
+
       self.el.classList.remove('active');
       modalEl.addClass('ng-leave');
 
       $timeout(function() {
+        if (self._isShown) return;
         modalEl.addClass('ng-leave-active')
                .removeClass('ng-enter ng-enter-active active');
-      }, 20);
+      }, 20, false);
 
       self.$el.off('click');
       self._isShown = false;
@@ -201,7 +218,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
 
       // clean up event listeners
       if (self.positionView) {
-        ionic.off('resize',null,window);
+        $window.addEventListener('resize', self._onWindowResize);
       }
 
       return $timeout(function() {

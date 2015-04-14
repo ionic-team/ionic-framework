@@ -48,6 +48,7 @@
  * of the refresher.
  * @param {expression=} on-pulling Called when the user starts to pull down
  * on the refresher.
+ * @param {string=} pulling-text The text to display while the user is pulling down.
  * @param {string=} pulling-icon The icon to display while the user is pulling down.
  * Default: 'ion-android-arrow-down'.
  * @param {string=} spinner The {@link ionic.directive:ionSpinner} icon to display
@@ -87,10 +88,11 @@ IonicModule
       // JS Scrolling uses the scroll controller
       var scrollCtrl = ctrls[0],
           refresherCtrl = ctrls[1];
-
-      if (!!scrollCtrl) {
+      if (!scrollCtrl || scrollCtrl.isNative()) {
+        // Kick off native scrolling
+        refresherCtrl.init();
+      } else {
         $element[0].classList.add('js-scrolling');
-
         scrollCtrl._setRefresher(
           $scope,
           $element[0],
@@ -102,10 +104,6 @@ IonicModule
             scrollCtrl.scrollView.finishPullToRefresh();
           });
         });
-
-      } else {
-        // Kick off native scrolling
-        refresherCtrl.init();
       }
 
     }

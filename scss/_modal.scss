@@ -38,7 +38,6 @@
     right: $modal-inset-mode-right;
     bottom: $modal-inset-mode-bottom;
     left: $modal-inset-mode-left;
-    overflow: visible;
     min-height: $modal-inset-mode-min-height;
     width: (100% - $modal-inset-mode-left - $modal-inset-mode-right);
   }
@@ -66,7 +65,7 @@
     .has-subheader {
       top: $bar-height + $bar-subheader-height;
     }
-    .has-tabs-top {
+    .has-header.has-tabs-top {
       top: $bar-height + $tabs-height;
     }
     .has-header.has-subheader.has-tabs-top {

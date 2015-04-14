@@ -109,37 +109,55 @@ function($timeout, $controller, $ionicBind, $ionicConfig) {
 
         if ($attr.scroll === "false") {
           //do nothing
-        } else if (attr.overflowScroll === "true" || !$ionicConfig.scrolling.jsScrolling()) {
-          // use native scrolling
-          $element.addClass('overflow-scroll');
         } else {
-          var scrollViewOptions = {
-            el: $element[0],
-            delegateHandle: attr.delegateHandle,
-            locking: (attr.locking || 'true') === 'true',
-            bouncing: $scope.$eval($scope.hasBouncing),
-            startX: $scope.$eval($scope.startX) || 0,
-            startY: $scope.$eval($scope.startY) || 0,
-            scrollbarX: $scope.$eval($scope.scrollbarX) !== false,
-            scrollbarY: $scope.$eval($scope.scrollbarY) !== false,
-            scrollingX: $scope.direction.indexOf('x') >= 0,
-            scrollingY: $scope.direction.indexOf('y') >= 0,
-            scrollEventInterval: parseInt($scope.scrollEventInterval, 10) || 10,
-            scrollingComplete: function() {
-              $scope.$onScrollComplete({
-                scrollTop: this.__scrollTop,
-                scrollLeft: this.__scrollLeft
-              });
-            }
-          };
+          var scrollViewOptions = {};
+
+          if (attr.overflowScroll === "true" || !$ionicConfig.scrolling.jsScrolling()) {
+            // use native scrolling
+            $element.addClass('overflow-scroll');
+
+            scrollViewOptions = {
+              el: $element[0],
+              delegateHandle: attr.delegateHandle,
+              startX: $scope.$eval($scope.startX) || 0,
+              startY: $scope.$eval($scope.startY) || 0,
+              nativeScrolling:true
+            };
+
+          } else {
+            // Use JS scrolling
+            scrollViewOptions = {
+              el: $element[0],
+              delegateHandle: attr.delegateHandle,
+              locking: (attr.locking || 'true') === 'true',
+              bouncing: $scope.$eval($scope.hasBouncing),
+              startX: $scope.$eval($scope.startX) || 0,
+              startY: $scope.$eval($scope.startY) || 0,
+              scrollbarX: $scope.$eval($scope.scrollbarX) !== false,
+              scrollbarY: $scope.$eval($scope.scrollbarY) !== false,
+              scrollingX: $scope.direction.indexOf('x') >= 0,
+              scrollingY: $scope.direction.indexOf('y') >= 0,
+              scrollEventInterval: parseInt($scope.scrollEventInterval, 10) || 10,
+              scrollingComplete: function() {
+                $scope.$onScrollComplete({
+                  scrollTop: this.__scrollTop,
+                  scrollLeft: this.__scrollLeft
+                });
+              }
+            };
+          }
+
+          // init scroll controller with appropriate options
           $controller('$ionicScroll', {
             $scope: $scope,
             scrollViewOptions: scrollViewOptions
           });
 
           $scope.$on('$destroy', function() {
-            scrollViewOptions.scrollingComplete = noop;
-            delete scrollViewOptions.el;
+            if (scrollViewOptions) {
+              scrollViewOptions.scrollingComplete = noop;
+              delete scrollViewOptions.el;
+            }
             innerElement = null;
             $element = null;
             attr.$$element = null;

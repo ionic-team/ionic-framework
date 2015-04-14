@@ -145,7 +145,10 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
     scrollCtrl.$element.on('scroll.resize', refreshDimensions);
 
     angular.element($window).on('resize', onResize);
-    var unlistenToExposeAside = $rootScope.$on('$ionicExposeAside', onResize);
+    var unlistenToExposeAside = $rootScope.$on('$ionicExposeAside', ionic.animationFrameThrottle(function() {
+      scrollCtrl.scrollView.resize();
+      onResize();
+    }));
     $timeout(refreshDimensions, 0, false);
 
     function onResize() {
@@ -221,7 +224,7 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
         renderBuffer: renderBuffer,
         scope: scope,
         scrollView: scrollCtrl.scrollView,
-        transclude: transclude,
+        transclude: transclude
       }));
     }
 
@@ -265,16 +268,15 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
       //4) Dynamic Mode
       //  - The user provides a dynamic expression for the width or height.  This is re-evaluated
       //    for every item, stored on the `.getValue()` field.
-      if (!heightExpr && !widthExpr) {
-        heightData.computed = widthData.computed = true;
+      if (heightExpr) {
+        parseDimensionAttr(heightExpr, heightData);
       } else {
-        if (heightExpr) {
-          parseDimensionAttr(heightExpr, heightData);
-        } else {
-          heightData.computed = true;
-        }
-        if (!widthExpr) widthExpr = '"100%"';
+        heightData.computed = true;
+      }
+      if (widthExpr) {
         parseDimensionAttr(widthExpr, widthData);
+      } else {
+        widthData.computed = true;
       }
     }
 
@@ -394,7 +396,7 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
 
 RepeatManagerFactory.$inject = ['$rootScope', '$window', '$$rAF'];
 function RepeatManagerFactory($rootScope, $window, $$rAF) {
-  var EMPTY_DIMENSION = { primaryPos: 0, secondaryPos: 0, primarySize: 0, secondarySize: 0 };
+  var EMPTY_DIMENSION = { primaryPos: 0, secondaryPos: 0, primarySize: 0, secondarySize: 0, rowPrimarySize: 0 };
 
   return function RepeatController(options) {
     var afterItemsNode = options.afterItemsNode;
@@ -482,6 +484,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
     scrollView.__$callback = scrollView.__callback;
     scrollView.__callback = function(transformLeft, transformTop, zoom, wasResize) {
       var scrollValue = view.getScrollValue();
+      if(window.d)dump('_-callback render', scrollValue, view.scrollPrimarySize + renderAfterBoundary);
       if (renderStartIndex === -1 ||
           scrollValue + view.scrollPrimarySize > renderAfterBoundary ||
           scrollValue < renderBeforeBoundary) {
@@ -641,6 +644,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
         if (item.secondarySize !== dim.secondarySize || item.primarySize !== dim.primarySize) {
           item.node.style.cssText = item.node.style.cssText
             .replace(WIDTH_HEIGHT_REGEX, WIDTH_HEIGHT_TEMPLATE_STR
+              //TODO fix item.primarySize + 1 hack
               .replace(PRIMARY, (item.primarySize = dim.primarySize) + 1)
               .replace(SECONDARY, (item.secondarySize = dim.secondarySize))
             );
@@ -858,14 +862,22 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
           dim.secondaryPos = prevDimension.secondaryPos + prevDimension.secondarySize;
 
           if (i === 0 || dim.secondaryPos + dim.secondarySize > self.scrollSecondarySize) {
-            dim.rowStartIndex = i;
             dim.secondaryPos = 0;
             dim.primarySize = self.getItemPrimarySize(i, data[i]);
-            dim.primaryPos = prevDimension.primaryPos + prevDimension.primarySize;
+            dim.primaryPos = prevDimension.primaryPos + prevDimension.rowPrimarySize;
+
+            dim.rowStartIndex = i;
+            dim.rowPrimarySize = dim.primarySize;
           } else {
-            dim.rowStartIndex = prevDimension.rowStartIndex;
-            dim.primarySize = prevDimension.primarySize;
+            dim.primarySize = self.getItemPrimarySize(i, data[i]);
             dim.primaryPos = prevDimension.primaryPos;
+            dim.rowStartIndex = prevDimension.rowStartIndex;
+
+            dimensions[dim.rowStartIndex].rowPrimarySize = dim.rowPrimarySize = Math.max(
+              dimensions[dim.rowStartIndex].rowPrimarySize,
+              dim.primarySize
+            );
+            dim.rowPrimarySize = Math.max(dim.primarySize, dim.rowPrimarySize);
           }
         }
       }
@@ -929,7 +941,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
         // scrolling down
         } else if (scrollValue >= oldScrollValue) {
           for (i = oldRenderStartIndex, len = data.length; i < len; i++) {
-            if ((dim = this.getDimensions(i)) && dim.primaryPos + dim.primarySize >= scrollValue) {
+            if ((dim = this.getDimensions(i)) && dim.primaryPos + dim.rowPrimarySize >= scrollValue) {
               break;
             }
           }
@@ -950,7 +962,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
         // -- Calculate renderEndIndex
         var lastRowDim;
         for (i = renderStartIndex + 1, len = data.length; i < len; i++) {
-          if ((dim = this.getDimensions(i)) && dim.primaryPos + dim.primarySize > scrollValueEnd) {
+          if ((dim = this.getDimensions(i)) && dim.primaryPos + dim.rowPrimarySize > scrollValueEnd) {
 
             // Go all the way to the end of the row if we're in a grid
             if (isGridView) {
@@ -966,7 +978,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
 
         renderEndIndex = Math.min(i, data.length - 1);
         renderAfterBoundary = renderEndIndex !== -1 ?
-          ((dim = this.getDimensions(renderEndIndex)).primaryPos + dim.primarySize) :
+          ((dim = this.getDimensions(renderEndIndex)).primaryPos + (dim.rowPrimarySize || dim.primarySize)) :
           -1;
 
         oldScrollValue = scrollValue;
@@ -978,5 +990,3 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
   };
 
 }
-
-

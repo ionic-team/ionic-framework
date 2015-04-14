@@ -55,7 +55,6 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
     var lastViewItemEle = {};
     var leftButtonsEle, rightButtonsEle;
 
-    //navEle[BACK_BUTTON] = self.createBackButtonElement(headerBarEle);
     navEle[BACK_BUTTON] = createNavElement(BACK_BUTTON);
     navEle[BACK_BUTTON] && headerBarEle.append(navEle[BACK_BUTTON]);
 
@@ -79,6 +78,8 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
     $element.append($compile(containerEle)($scope.$new()));
 
     var headerBarCtrl = headerBarEle.data('$ionHeaderBarController');
+    headerBarCtrl.backButtonIcon = $ionicConfig.backButton.icon();
+    headerBarCtrl.backButtonText = $ionicConfig.backButton.text();
 
     var headerBarInstance = {
       isActive: isActive,
@@ -272,13 +273,24 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
         navBarTransition.direction = 'back';
         navBarTransition.run(step);
       },
-      cancel: function(shouldAnimate, speed) {
+      cancel: function(shouldAnimate, speed, cancelData) {
         navSwipeAttr(speed);
         navBarAttr(leavingHeaderBar, 'active');
         navBarAttr(enteringHeaderBar, 'cached');
         navBarTransition.shouldAnimate = shouldAnimate;
         navBarTransition.run(0);
         self.activeTransition = navBarTransition = null;
+
+        var runApply;
+        if (cancelData.showBar !== self.showBar()) {
+          self.showBar(cancelData.showBar);
+        }
+        if (cancelData.showBackButton !== self.showBackButton()) {
+          self.showBackButton(cancelData.showBackButton);
+        }
+        if (runApply) {
+          $scope.$apply();
+        }
       },
       complete: function(shouldAnimate, speed) {
         navSwipeAttr(speed);
@@ -346,6 +358,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
   self.visibleBar = function(shouldShow) {
     if (shouldShow && !isVisible) {
       $element.removeClass(CSS_HIDE);
+      self.align();
     } else if (!shouldShow && isVisible) {
       $element.addClass(CSS_HIDE);
     }
@@ -373,10 +386,12 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
    * to show.
    */
   self.showBackButton = function(shouldShow) {
-    for (var x = 0; x < headerBars.length; x++) {
-      headerBars[x].controller().showNavBack(!!shouldShow);
+    if (arguments.length) {
+      for (var x = 0; x < headerBars.length; x++) {
+        headerBars[x].controller().showNavBack(!!shouldShow);
+      }
+      $scope.$isBackButtonShown = !!shouldShow;
     }
-    $scope.$isBackButtonShown = !!shouldShow;
     return $scope.$isBackButtonShown;
   };
 
@@ -388,7 +403,12 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
    */
   self.showActiveBackButton = function(shouldShow) {
     var headerBar = getOnScreenHeaderBar();
-    headerBar && headerBar.controller().showBack(shouldShow);
+    if (headerBar) {
+      if (arguments.length) {
+        return headerBar.controller().showBack(shouldShow);
+      }
+      return headerBar.controller().showBack();
+    }
   };
 
 

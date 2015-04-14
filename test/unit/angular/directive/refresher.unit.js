@@ -8,21 +8,19 @@ describe('ionRefresher directive', function() {
     var el;
     inject(function($compile, $rootScope) {
       var scope = $rootScope.$new();
-      var ionicScrollCtrl = {
-        _setRefresher: jasmine.createSpy('setRefresher'),
-        scrollView: {
-          finishPullToRefresh: jasmine.createSpy('finishPullToRefresh')
-        }
-      };
 
       angular.extend(scope, scopeProps || {});
 
-      el = angular.element('<ion-refresher '+(attrs||'')+'></ion-refresher>');
-      el.data('$$ionicScrollController', ionicScrollCtrl);
+      parent = angular.element('<ion-content><ion-refresher '+(attrs||'')+'>');
 
-      $compile(el)(scope);
+      //el.data('$$ionicScrollController', ionicScrollCtrl);
+
+      $compile(parent)(scope);
+      el = parent.find('.scroll-refresher');
       ionic.requestAnimationFrame = function() {};
       el.refresherCtrl = el.data('$ionRefresherController');
+      spyOn(el.controller('$ionicScroll'),'_setRefresher');
+
       $rootScope.$apply();
     });
     return el;
@@ -54,18 +52,15 @@ describe('ionRefresher directive', function() {
     expect(spyMe).toHaveBeenCalled();
   });
 
-  it('should setRefresher on scrollCtrl', function() {
-    var el = setup();
-    expect(el.controller('$ionicScroll')._setRefresher.callCount).toBe(1);
-    expect(el.controller('$ionicScroll')._setRefresher).toHaveBeenCalledWith(
-      el.scope(), el[0], el.refresherCtrl.getRefresherDomMethods()
-    );
-  });
-
   it('should listen for scroll.refreshComplete', function() {
+    // this is only for js scrolling
+    if (!jsScrollingEnabled) return;
+
     var el = setup();
     el.addClass('active');
     var ctrl = el.controller('$ionicScroll');
+    spyOn(ctrl.scrollView, 'finishPullToRefresh');
+
     expect(ctrl.scrollView.finishPullToRefresh).not.toHaveBeenCalled();
     el.scope().$broadcast('scroll.refreshComplete');
     expect(el.hasClass('active')).toBe(true);

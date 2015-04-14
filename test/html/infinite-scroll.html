@@ -25,7 +25,9 @@
 
   <script>
   angular.module('ionicApp', ['ionic'])
-
+      .config(function($ionicConfigProvider) {
+        if(!ionic.Platform.isIOS())$ionicConfigProvider.scrolling.jsScrolling(false);
+      })
   .controller('MyCtrl', ['$scope', '$timeout', function($scope, $timeout) {
 
     $scope.data = { items: [] };

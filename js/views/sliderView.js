@@ -42,15 +42,9 @@ ionic.views.Slider = ionic.views.View.inherit({
 
     function setup() {
 
-      // check slider is on cached, in which case setup will break the slider
-      if ((container.offsetWidth || container.getBoundingClientRect().width) === 0) {
-        var parent = element.parentNode;
-        while (element.parentNode && parent !== document.body) {
-          if (parent['$attr-nav-view'] === 'cached') {
-            return;
-          }
-          parent = parent.parentNode;
-        }
+      // do not setup if the container has no width
+      if (!container.offsetWidth) {
+        return;
       }
 
       // cache slides
@@ -104,17 +98,17 @@ ionic.views.Slider = ionic.views.View.inherit({
       options.slidesChanged && options.slidesChanged();
     }
 
-    function prev() {
+    function prev(slideSpeed) {
 
-      if (options.continuous) slide(index-1);
-      else if (index) slide(index-1);
+      if (options.continuous) slide(index-1, slideSpeed);
+      else if (index) slide(index-1, slideSpeed);
 
     }
 
-    function next() {
+    function next(slideSpeed) {
 
-      if (options.continuous) slide(index+1);
-      else if (index < slides.length - 1) slide(index+1);
+      if (options.continuous) slide(index+1, slideSpeed);
+      else if (index < slides.length - 1) slide(index+1, slideSpeed);
 
     }
 
@@ -372,6 +366,7 @@ ionic.views.Slider = ionic.views.View.inherit({
             translate(index+1, delta.x + slidePos[index+1], 0);
           }
 
+          options.onDrag && options.onDrag();
         }
 
       },
@@ -462,6 +457,7 @@ ionic.views.Slider = ionic.views.View.inherit({
           document.removeEventListener('mouseup', events, false);
         }
 
+        options.onDragEnd && options.onDragEnd();
       },
       transitionEnd: function(event) {
 
@@ -553,17 +549,8 @@ ionic.views.Slider = ionic.views.View.inherit({
       element.style.width = '';
       element.style.left = '';
 
-      // reset slides
-      var pos = slides.length;
-      while(pos--) {
-
-        var slide = slides[pos];
-        slide.style.width = '';
-        slide.style.left = '';
-
-        if (browser.transitions) translate(pos, 0, 0);
-
-      }
+      // reset slides so no refs are held on to
+      slides && (slides.length = 0);
 
       // removed event listeners
       if (browser.addEventListener) {
