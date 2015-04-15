@@ -7,7 +7,7 @@
   (function() {
 
     // transform
-    var i, keys = ['webkitTransform', 'transform', '-webkit-transform', 'webkit-transform',
+    var i, keys = ['transform', 'webkitTransform', '-webkit-transform', 'webkit-transform',
                    '-moz-transform', 'moz-transform', 'MozTransform', 'mozTransform', 'msTransform'];
 
     for (i = 0; i < keys.length; i++) {
