@@ -96,12 +96,11 @@ describe('Ionic Popover', function() {
 
   it('expect hide to remove event listeners', inject(function($window) {
     var instance = popover.fromTemplate('<div class="popover">hi</div>');
-    spyOn($window,'removeEventListener');
     instance.show();
     timeout.flush();
+    spyOn(ionic,'off');
     instance.hide();
-    timeout.flush();
-    expect($window.removeEventListener).toHaveBeenCalled();
+    expect(ionic.off).toHaveBeenCalled();
   }));
 
   it('should animate leave and destroy scope on remove', inject(function($animate) {

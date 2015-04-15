@@ -152,7 +152,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
         self._onWindowResize = function() {
           if (self._isShown) self.positionView(target, modalEl);
         };
-        $window.addEventListener('resize', self._onWindowResize);
+        ionic.on('resize', self._onWindowResize, window);
       }
 
 
@@ -219,7 +219,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
 
       // clean up event listeners
       if (self.positionView) {
-        $window.removeEventListener('resize', self._onWindowResize);
+        ionic.off('resize', self._onWindowResize, window);
       }
 
       return $timeout(function() {
