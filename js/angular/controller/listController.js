@@ -91,7 +91,7 @@ function($scope, $attrs, $ionicListDelegate, $ionicHistory) {
   $scope.$on('$destroy', deregisterInstance);
 
   self.showReorder = function(show) {
-    if(arguments.length) {
+    if (arguments.length) {
       isReorderShown = !!show;
     }
     return isReorderShown;
