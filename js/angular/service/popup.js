@@ -376,6 +376,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
     } else {
       //Add popup-open & backdrop if this is first popup
       $ionicBody.addClass('popup-open');
+      console.log("RETAIN");
       $ionicBackdrop.retain();
       //only show the backdrop on the first popup
       $ionicPopup._backButtonActionDone = $ionicPlatform.registerBackButtonAction(
@@ -409,6 +410,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
             popupStack.splice(index, 1);
           }
           popup.remove();
+          $ionicBackdrop.release();
 
           if (popupStack.length > 0) {
             popupStack[popupStack.length - 1].show();
@@ -421,9 +423,6 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
                 $ionicBody.removeClass('popup-open');
               }
             }, 400, false);
-            $timeout(function() {
-              if (!popupStack.length) $ionicBackdrop.release();
-            }, config.stackPushDelay || 0, false);
 
             ($ionicPopup._backButtonActionDone || noop)();
           }
