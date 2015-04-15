@@ -512,7 +512,7 @@ function keyboardShow() {
     target: keyboardActiveElement,
     elementTop: Math.round(elementBounds.top),
     elementBottom: Math.round(elementBounds.bottom),
-    keyboardHeight: ionic.keyboard.height,
+    keyboardHeight: keyboardGetHeight(),
     viewportHeight: keyboardCurrentViewportHeight
   };
 
@@ -643,7 +643,7 @@ function getViewportHeight() {
       (ionic.keyboard.isOpen || ionic.keyboard.isOpening) &&
       !ionic.keyboard.isClosing) {
 
-     return windowHeight + ionic.keyboard.height;
+     return windowHeight + keyboardGetHeight();
   }
   return windowHeight;
 }
