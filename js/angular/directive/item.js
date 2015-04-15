@@ -45,9 +45,9 @@ IonicModule
         innerElement.addClass('item-content');
 
         if (isDefined($attrs.href) || isDefined($attrs.ngHref)) {
-          innerElement.attr('ng-href', '{{$href()}}')
+          innerElement.attr('ng-href', '{{$href()}}');
           if (isDefined($attrs.target)) {
-            innerElement.attr('target', '{{$target()}}')
+            innerElement.attr('target', '{{$target()}}');
           }
         }
 
