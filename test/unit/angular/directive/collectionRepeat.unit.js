@@ -233,7 +233,7 @@ describe('collectionRepeat', function() {
       expect(activeItems().length).toEqual(3);
 
       scrollView.__clientHeight = 30;
-      scrollCtrl.$element.triggerHandler('scroll.resize');
+      scrollCtrl.$element.triggerHandler('scroll-resize');
       expect(activeItems().length).toEqual(2);
     }));
   });

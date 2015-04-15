@@ -142,7 +142,7 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
     initDimensions();
 
     // Dimensions are refreshed on resize or data change.
-    scrollCtrl.$element.on('scroll.resize', refreshDimensions);
+    scrollCtrl.$element.on('scroll-resize', refreshDimensions);
 
     angular.element($window).on('resize', onResize);
     var unlistenToExposeAside = $rootScope.$on('$ionicExposeAside', ionic.animationFrameThrottle(function() {
@@ -173,7 +173,7 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
     scope.$on('$destroy', function() {
       angular.element($window).off('resize', onResize);
       unlistenToExposeAside();
-      scrollCtrl.$element && scrollCtrl.$element.off('scroll.resize', refreshDimensions);
+      scrollCtrl.$element && scrollCtrl.$element.off('scroll-resize', refreshDimensions);
 
       computedStyleNode && computedStyleNode.parentNode &&
         computedStyleNode.parentNode.removeChild(computedStyleNode);
