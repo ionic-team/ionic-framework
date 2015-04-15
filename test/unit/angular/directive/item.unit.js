@@ -34,9 +34,9 @@ describe('ionItem directive', function() {
       expect(el.children().attr('href')).toBe('something/44');
     });
   });
-  it('complex item should have target self by default', function() {
+  it('complex item should not have target by default', function() {
     var el = setup('href="foo"');
-    expect(el.find('a').attr('target')).toBe('_self');
+    expect(el.find('a').attr('target')).toBeUndefined();
   });
   it('complex item should have target if specified', function() {
     var el = setup('href="foo" target="bar"');
