@@ -59,7 +59,7 @@ IonicModule.service('$ionicListDelegate', ionic.DelegateService([
    * @name $ionicListDelegate#closeOptionButtons
    * @description Closes any option buttons on the list that are swiped open.
    */
-  'closeOptionButtons',
+  'closeOptionButtons'
   /**
    * @ngdoc method
    * @name $ionicListDelegate#$getByHandle
@@ -91,7 +91,7 @@ function($scope, $attrs, $ionicListDelegate, $ionicHistory) {
   $scope.$on('$destroy', deregisterInstance);
 
   self.showReorder = function(show) {
-    if (arguments.length) {
+    if(arguments.length) {
       isReorderShown = !!show;
     }
     return isReorderShown;

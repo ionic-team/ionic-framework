@@ -61,7 +61,7 @@ if (argv.dist) {
 
 gulp.task('default', ['build']);
 gulp.task('build', ['bundle', 'sass']);
-gulp.task('validate', ['eslint', 'ddescribe-iit', 'karma']);
+gulp.task('validate', ['jscs', 'eslint', 'ddescribe-iit', 'karma']);
 
 var IS_WATCH = false;
 gulp.task('watch', ['build'], function() {

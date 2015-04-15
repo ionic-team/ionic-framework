@@ -323,7 +323,7 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
       // Try to just parse the plain attr value
       try {
         parsedValue = $parse(attrValue);
-      } catch(e) {
+      } catch (e) {
         // If the parse fails and the value has `px` or `%` in it, surround the attr in
         // quotes, to attempt to let the user provide a simple `attr="100%"` or `attr="100px"`
         if (attrValue.trim().match(/\d+(px|%)$/)) {
@@ -520,7 +520,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
       var current = containerNode;
       do {
         repeaterBeforeSize += current[isVertical ? 'offsetTop' : 'offsetLeft'];
-      } while( ionic.DomUtil.contains(scrollView.__content, current = current.offsetParent) );
+      } while ( ionic.DomUtil.contains(scrollView.__content, current = current.offsetParent) );
 
       var containerPrevNode = containerNode.previousElementSibling;
       var beforeStyle = containerPrevNode ? $window.getComputedStyle(containerPrevNode) : {};
