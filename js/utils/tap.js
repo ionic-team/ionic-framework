@@ -372,6 +372,9 @@ function tapMouseDown(e) {
 }
 
 function tapMouseUp(e) {
+  if (e.isIonicTap || tapIgnoreEvent(e)){ 
+    return;
+  }
   //console.log("mouseup " + Date.now());
   if (tapEnabledTouchEvents) {
     e.stopPropagation();
