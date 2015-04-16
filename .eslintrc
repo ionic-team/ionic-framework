@@ -15,7 +15,15 @@
     "extend": true,
     "deprecated": true,
     "cordova": true,
-    "DocumentTouch": true
+    "DocumentTouch": true,
+    "describe": true,
+    "ddescribe": true,
+    "it": true,
+    "iit": true,
+    "inject": true,
+    "beforeEach": true,
+    "afterEach": true,
+    "expect": true
   },
   "rules": {
     "quotes": false,
