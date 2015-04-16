@@ -204,7 +204,7 @@ describe('$ionicPopup service', function() {
         show: jasmine.createSpy('show'),
         responseDeferred: $q.defer()
       };
-      spyOn($ionicPopup, '_createPopup').andReturn($q.when(fakePopup));
+      spyOn($ionicPopup, '_createPopup').andReturn(fakePopup);
       expect($ionicPopup._popupStack.length).toBe(0);
       $ionicPopup.show();
       expect(fakePopup.show).not.toHaveBeenCalled();
@@ -215,9 +215,9 @@ describe('$ionicPopup service', function() {
     }));
 
     it('should have close function which resolves promise with argument', inject(function($ionicPopup, $q, $rootScope) {
-      var popup = TestUtil.unwrapPromise($ionicPopup._createPopup());
-      spyOn($ionicPopup, '_createPopup').andReturn($q.when(popup));
-      var result = $ionicPopup.show();
+      var popup = TestUtil.unwrapPromise($ionicPopup._createPopup({template: 'foo'}));
+      spyOn($ionicPopup, '_createPopup').andReturn(popup);
+     var result = $ionicPopup.show();
       spyOn(popup.responseDeferred, 'resolve');
       result.close('foobar');
       $rootScope.$apply();
@@ -230,7 +230,7 @@ describe('$ionicPopup service', function() {
         remove: jasmine.createSpy('remove'),
         responseDeferred: $q.defer()
       };
-      spyOn($ionicPopup, '_createPopup').andReturn($q.when(fakePopup));
+      spyOn($ionicPopup, '_createPopup').andReturn(fakePopup);
       var result = $ionicPopup.show();
       $timeout.flush();
       expect(fakePopup.remove).not.toHaveBeenCalled();
@@ -251,7 +251,7 @@ describe('$ionicPopup service', function() {
         show: jasmine.createSpy('show'),
         hide: jasmine.createSpy('hide')
       };
-      spyOn($ionicPopup, '_createPopup').andReturn($q.when(fakePopup));
+      spyOn($ionicPopup, '_createPopup').andReturn(fakePopup);
       $ionicPopup._popupStack.unshift(previousPopup);
       $ionicPopup.show();
       fakePopup.responseDeferred.resolve();
@@ -268,7 +268,7 @@ describe('$ionicPopup service', function() {
       var backDoneSpy = jasmine.createSpy('backDone');
       spyOn($ionicPlatform, 'registerBackButtonAction').andReturn(backDoneSpy);
       spyOn($ionicBackdrop, 'release');
-      spyOn($ionicPopup, '_createPopup').andReturn($q.when(fakePopup));
+      spyOn($ionicPopup, '_createPopup').andReturn(fakePopup);
       $ionicPopup.show();
       fakePopup.responseDeferred.resolve();
       $timeout.flush();
