@@ -97,6 +97,9 @@
  * @param {boolean=} cache-view If this view should be allowed to be cached or not.
  * Please see the _Caching_ section in {@link ionic.directive:ionNavView} for
  * more info. Default `true`
+ * @param {boolean=} can-swipe-back If this view should be allowed to use the swipe to go back gesture or not.
+ * This does not enable the swipe to go back feature if it is not available for the platform it's running
+ * from, or there isn't a previous view. Default `true`
  * @param {boolean=} hide-back-button Whether to hide the back button on the parent
  * {@link ionic.directive:ionNavBar} by default.
  * @param {boolean=} hide-nav-bar Whether to hide the parent

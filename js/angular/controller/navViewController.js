@@ -343,7 +343,9 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
 
       backView = $ionicHistory.backView();
 
-      if (!backView || backView.historyId !== $ionicHistory.currentView().historyId) return;
+      var currentView = $ionicHistory.currentView();
+
+      if (!backView || backView.historyId !== currentView.historyId || currentView.canSwipeBack === false) return;
 
       if (!windowWidth) windowWidth = window.innerWidth;
 
@@ -360,7 +362,7 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
         showBackButton: self.showBackButton()
       };
 
-      var switcher = $ionicViewSwitcher.create(self, registerData, backView, $ionicHistory.currentView(), true, false);
+      var switcher = $ionicViewSwitcher.create(self, registerData, backView, currentView, true, false);
       switcher.loadViewElements(registerData);
       switcher.render(registerData);
 

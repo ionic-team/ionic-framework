@@ -359,7 +359,8 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
           stateId: currentStateId,
           stateName: this.currentStateName(),
           stateParams: getCurrentStateParams(),
-          url: url
+          url: url,
+          canSwipeBack: canSwipeBack(ele, viewLocals)
         });
 
         // add the new view to this history's stack
@@ -715,6 +716,16 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
 
   function isAbstractTag(ele) {
     return ele && ele.length && /ion-side-menus|ion-tabs/i.test(ele[0].tagName);
+  }
+
+  function canSwipeBack(ele, viewLocals) {
+    if (viewLocals && viewLocals.$$state && viewLocals.$$state.self.canSwipeBack === false) {
+      return false;
+    }
+    if (ele && ele.attr('can-swipe-back') === 'false') {
+      return false;
+    }
+    return true;
   }
 
 }])
