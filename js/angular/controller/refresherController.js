@@ -78,6 +78,12 @@ IonicModule
         startY = parseInt(e.touches[0].screenY, 10);
       }
 
+      // kitkat fix for touchcancel events http://updates.html5rocks.com/2014/05/A-More-Compatible-Smoother-Touch
+      if (ionic.Platform.isAndroid() && ionic.Platform.version() === 4.4 && scrollParent.scrollTop === 0) {
+        isDragging = true;
+        e.preventDefault();
+      }
+
       // how far have we dragged so far?
       deltaY = parseInt(e.touches[0].screenY, 10) - startY;
 
