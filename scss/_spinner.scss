@@ -73,4 +73,28 @@
       stop-color: $spinner-light-fill;
     }
   }
+  &.spinner-stable .stop2 {
+    stop-color: $spinner-stable-fill;
+  }
+  &.spinner-positive .stop2 {
+    stop-color: $spinner-positive-fill;
+  }
+  &.spinner-calm .stop2 {
+    stop-color: $spinner-calm-fill;
+  }
+  &.spinner-balanced .stop2 {
+    stop-color: $spinner-balanced-fill;
+  }
+  &.spinner-assertive .stop2 {
+    stop-color: $spinner-assertive-fill;
+  }
+  &.spinner-energized .stop2 {
+    stop-color: $spinner-energized-fill;
+  }
+  &.spinner-royal .stop2 {
+    stop-color: $spinner-royal-fill;
+  }
+  &.spinner-dark .stop2 {
+    stop-color: $spinner-dark-fill;
+  }
 }
