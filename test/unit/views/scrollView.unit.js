@@ -73,6 +73,7 @@ describe('Scroll View', function() {
     expect(sv.resize).toHaveBeenCalled();
     expect(sv.isShrunkForKeyboard).toBe(true);
     expect(sc.style.height).toEqual("248px");
+    expect(sc.style.overflow).toEqual("visible");
 
     ionic.trigger('scrollChildIntoView', details, true);
     //already shrunk, so shouldn't resize again
