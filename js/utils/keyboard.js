@@ -118,6 +118,16 @@ var KEYBOARD_OPEN_CSS = 'keyboard-open';
 var SCROLL_CONTAINER_CSS = 'scroll-content';
 
 /**
+ * Debounced keyboardFocusIn function
+ */
+var debouncedKeyboardFocusIn = ionic.debounce(keyboardFocusIn, 200, true);
+
+/**
+ * Debounced keyboardNativeShow function
+ */
+var debouncedKeyboardNativeShow = ionic.debounce(keyboardNativeShow, 100, true);
+
+/**
  * Ionic keyboard namespace.
  * @namespace keyboard
  */
@@ -151,6 +161,11 @@ ionic.keyboard = {
   isLandscape: false,
 
   /**
+   * Whether the keyboard event listeners have been added or not
+   */
+  isInitialized: false,
+
+  /**
    * Hide the keyboard, if it is open.
    */
   hide: function() {
@@ -168,6 +183,38 @@ ionic.keyboard = {
     if (keyboardHasPlugin()) {
       cordova.plugins.Keyboard.show();
     }
+  },
+
+  /**
+   * Remove all keyboard related event listeners, effectively disabling Ionic's
+   * keyboard adjustments.
+   */
+  disable: function() {
+    if (keyboardHasPlugin()) {
+      window.removeEventListener('native.keyboardshow', debouncedKeyboardNativeShow );
+      window.removeEventListener('native.keyboardhide', keyboardFocusOut);
+    } else {
+      document.body.removeEventListener('focusout', keyboardFocusOut);
+    }
+
+    document.body.removeEventListener('ionic.focusin', debouncedKeyboardFocusIn);
+    document.body.removeEventListener('focusin', debouncedKeyboardFocusIn);
+
+    window.removeEventListener('orientationchange', keyboardOrientationChange);
+
+    if ( window.navigator.msPointerEnabled ) {
+      document.removeEventListener("MSPointerDown", keyboardInit);
+    } else {
+      document.removeEventListener('touchstart', keyboardInit);
+    }
+    ionic.keyboard.isInitialized = false;
+  },
+
+  /**
+   * Alias for keyboardInit, initialize all keyboard related event listeners.
+   */
+  enable: function() {
+    keyboardInit();
   }
 };
 
@@ -181,13 +228,14 @@ keyboardCurrentViewportHeight = getViewportHeight();
 
 /**
  * Event handler for first touch event, initializes all event listeners
- * for keyboard related events.
+ * for keyboard related events. Also aliased by ionic.keyboard.enable.
  */
 function keyboardInit() {
-  var debouncedKeyboardFocusIn = ionic.debounce(keyboardFocusIn, 200, true);
+
+  if (ionic.keyboard.isInitialized) return;
 
   if (keyboardHasPlugin()) {
-    window.addEventListener('native.keyboardshow', ionic.debounce(keyboardNativeShow, 100, true));
+    window.addEventListener('native.keyboardshow', debouncedKeyboardNativeShow);
     window.addEventListener('native.keyboardhide', keyboardFocusOut);
   } else {
     document.body.addEventListener('focusout', keyboardFocusOut);
@@ -201,6 +249,8 @@ function keyboardInit() {
   } else {
     document.removeEventListener('touchstart', keyboardInit);
   }
+
+  ionic.keyboard.isInitialized = true;
 }
 
 /**

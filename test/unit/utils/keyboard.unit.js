@@ -502,5 +502,17 @@ describe('Ionic Keyboard', function() {
 
     ionic.Platform.isFullScreen = true;
     expect(getViewportHeight()).toBe(268);
-  })
+  });
+
+  it('enable() should set isInitialized to true', function(){
+    expect(ionic.keyboard.isInitialized).toBe(false);
+    ionic.keyboard.enable();
+    expect(ionic.keyboard.isInitialized).toBe(true);
+  });
+
+  it('disable() should set isInitialized to false', function(){
+    expect(ionic.keyboard.isInitialized).toBe(true);
+    ionic.keyboard.disable();
+    expect(ionic.keyboard.isInitialized).toBe(false);
+  });
 });
