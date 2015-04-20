@@ -59,6 +59,7 @@ export class View {
       if (!navViewportEle) return
 
       var toolbarContainer = navViewportEle.querySelector('.toolbar-container')
+      if (!toolbarContainer) return
 
       toolbarContainer.appendChild(toolbar)
     })
