@@ -31,6 +31,11 @@ var ITEM_TPL_DELETE_BUTTON =
 */
 IonicModule
 .directive('ionDeleteButton', function() {
+
+  function stopPropagation(ev) {
+    ev.stopPropagation();
+  }
+
   return {
     restrict: 'E',
     require: ['^^ionItem', '^?ionList'],
@@ -47,6 +52,9 @@ IonicModule
         var container = jqLite(ITEM_TPL_DELETE_BUTTON);
         container.append($element);
         itemCtrl.$element.append(container).addClass('item-left-editable');
+
+        //Don't bubble click up to main .item
+        $element.on('click', stopPropagation);
 
         init();
         $scope.$on('$ionic.reconnectScope', init);
