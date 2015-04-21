@@ -394,7 +394,11 @@
     var spinnerName, spinner;
 
     this.init = function() {
-      spinnerName = $attrs.icon || ionic.Platform.platform();
+      var override = null;
+      if (ionic.Platform.platform() === 'windowsphone') {
+        override = 'android';
+      }
+      spinnerName = $attrs.icon || override || ionic.Platform.platform();
       spinner = spinners[spinnerName];
       if (!spinner) {
         spinnerName = 'ios';
