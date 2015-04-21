@@ -1,28 +1,4 @@
 
-// platformReady: Cordova said it's ready
-
-// domReady: DOM is ready
-
-// ready: if cordova, it's the same as platformReady, if browser, same as dom ready
-
-// windowLoad: All scripts have been loaded, window ready
-
-// fullScreen
-
-// showStatusBar
-
-// exitApp
-
-// is: is('ios') type of check
-
-// platformName:  returns ios
-
-// platformVersion: returns 8.2
-
-// webview: returns cordova, trigger.io, browser
-
-// isWebview:  true if its cordova, trigger. False if its browser
-
 import * as util from 'ionic2/util'
 
 class WebView {
@@ -32,42 +8,63 @@ class WebView {
 }
 
 let registry = {}
+let defaultWebView;
+let activeWebView;
 
 class WebViewController {
-  current: WebView;
 
   constructor() {
-    let defaultProperties = {
-      name: null,
-      isWebView: false
-    }
-    for (let target in defaultProperties) {
-      this.__defineGetter__(target, () => {
-        return this.proxy(target, null, defaultProperties[target])
-      })
-    }
-
-    let defaultMethods = {
-      exitApp: util.noop,
-      showStatusBar: util.noop,
-      fullScreen: util.noop
-    }
-    for (let target in defaultMethods) {
-      this[target] = () => {
-        return this.proxy(target, null, defaultMethods[target])
+    let self = this
+    let proxyMethods = 'ready fullScreen showStatusBar exitApp'.split(' ')
+    for (let x = 0; x < proxyMethods.length; x++) {
+      this[proxyMethods[x]] = function() {
+        return self.proxy(proxyMethods[x], arguments)
       }
     }
   }
 
+  proxy(target, args) {
+    let webview = this.get()
+    if (webview && webview[target]) {
+      return webview[target].apply(this, args)
+    }
+    return new Promise(resolve => {}, reject => {
+      reject()
+    })
+  }
+
+  is(name) {
+    return this.getName() === name
+  }
+
+  isWebView() {
+    return !!this.get().isWebView
+  }
+
+  getName() {
+    return this.get().name
+  }
+
   get() {
-    if (util.isUndefined(this.current)) {
+    if (util.isUndefined(activeWebView)) {
       this.set(this.detect())
     }
-    return this.current
+    return activeWebView || defaultWebView
   }
 
   set(webview) {
-    this.current = webview
+    activeWebView = webview
+  }
+
+  setDefault(webview) {
+    if (!webview instanceof WebView) webview = new WebView(webview)
+    defaultWebView = webview
+  }
+
+  register(webview) {
+    if (!webview instanceof WebView) webview = new WebView(webview)
+    webview.isWebView = true
+    registry[webview.name] = webview
   }
 
   detect() {
@@ -79,40 +76,14 @@ class WebViewController {
     return null
   }
 
-  proxy(target, args, fallback) {
-    let webview = this.get()
-    if (webview && webview[target]) {
-      if (util.isFunction(webview[target])) {
-        return webview[target].apply(this, args)
-      }
-      return webview[target]
-    }
-    return fallback
-  }
-
-  register(webview) {
-    if (!webview instanceof WebView) webview = new WebView(webview)
-    registry[webview.name] = webview
-  }
-
 }
 
 export let webview = new WebViewController()
 
-webview.register({
-  name: 'cordova',
-  isMatch() {
-    return true;//util.isDefined(window.cordova)
-  }
+
+webview.setDefault({
+  name: 'default',
+  ready: util.dom.windowLoad
 })
-webview.register({
-  name: 'node-webkit',
-  isMatch() {
-    // if (util.isDefined(process) && util.isDefined(require)) {
-    //   try {
-    //     return util.isDefined(require('nw.gui'));
-    //   } catch (e) {}
-    // }
-    return false
-  }
-})
+
+

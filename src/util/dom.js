@@ -6,7 +6,7 @@ const nativeCancelRaf = window.cancelAnimationFrame ||
   window.webkitCancelAnimationFrame ||
   window.webkitCancelRequestAnimationFrame
 
-export const raf = nativeRaf || function(callback) { 
+export const raf = nativeRaf || function(callback) {
   return window.setTimeout(callback, 16.6667)
 }
 export const rafCancel = nativeRaf ? nativeCancelRaf : function(id) {
@@ -34,7 +34,7 @@ if (window.ontransitionend === undefined && window.onwebkittransitionend !== und
 }
 
 export function transitionEndPromise(el:Element) {
-  return new Promise(resolve => { 
+  return new Promise(resolve => {
     css.transitionEnd.split(' ').forEach(eventName => {
       el.addEventListener(eventName, onTransitionEnd)
     })
@@ -47,6 +47,42 @@ export function transitionEndPromise(el:Element) {
         el.removeEventListener(css.transitionEnd, onTransitionEnd)
       })
       resolve(ev)
+    }
+  })
+}
+
+export function ready() {
+  return new Promise(resolve => {
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      setTimeout(resolve)
+
+    } else {
+
+      function completed() {
+        resolve()
+        document.removeEventListener('DOMContentLoaded', completed, false)
+        window.removeEventListener('load', completed, false)
+      }
+
+      document.addEventListener('DOMContentLoaded', completed, false)
+      window.addEventListener('load', completed, false)
+    }
+  })
+}
+
+export function windowLoad() {
+  return new Promise(resolve => {
+    if (document.readyState === 'complete') {
+      setTimeout(resolve)
+
+    } else {
+
+      function completed() {
+        resolve()
+        window.removeEventListener('load', completed, false)
+      }
+
+      window.addEventListener('load', completed, false)
     }
   })
 }
