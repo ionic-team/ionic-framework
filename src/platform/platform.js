@@ -21,6 +21,7 @@ class PlatformController {
   get() {
     return this.current
   }
+
   getName() {
     return this.current && this.current.name
   }
@@ -43,7 +44,7 @@ class PlatformController {
 
   detect() {
     for (let name in this.registry) {
-      if (this.registry[name].matcher()) {
+      if (this.registry[name].isMatch()) {
         return this.registry[name]
       }
     }
@@ -59,14 +60,13 @@ var ua = window.navigator.userAgent
 // TODO(ajoslin): move these to their own files
 platform.register({
   name: 'android',
-  matcher() {
+  isMatch() {
     return queryPlatform == 'android' || /android/i.test(ua)
   }
 })
 platform.register({
   name: 'ios',
-  // For now always default to ios
-  matcher() {
+  isMatch() {
     return queryPlatform === 'ios' || /ipad|iphone|ipod/i.test(ua)
   }
 })
