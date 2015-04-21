@@ -127,6 +127,10 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
         return $$q.when();
       }
 
+      // on iOS, clicks will sometimes bleed through/ghost click on underlying
+      // elements
+      $ionicClickBlock.show(600);
+
       var modalEl = jqLite(self.modalEl);
 
       self.el.classList.remove('hide');
@@ -154,7 +158,6 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
         };
         ionic.on('resize', self._onWindowResize, window);
       }
-
 
       modalEl.addClass('ng-enter active')
              .removeClass('ng-leave ng-leave-active');
