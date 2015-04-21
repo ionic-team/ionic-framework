@@ -29,6 +29,8 @@
     background-color: $toggle-handle-off-bg-color;
     box-shadow: $range-slider-box-shadow;
     cursor: pointer;
+    outline: none;
+    border: none;
     -webkit-appearance: none;
     border: 0;
   }
