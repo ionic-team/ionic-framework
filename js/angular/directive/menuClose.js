@@ -35,7 +35,7 @@ IonicModule
             disableAnimate: true,
             expire: 300
           });
-          sideMenuCtrl.close();
+          if (!sideMenuCtrl.isAsideExposed()) { sideMenuCtrl.close(); }
         }
       });
     }
