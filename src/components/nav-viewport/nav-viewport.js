@@ -1,5 +1,4 @@
 import {Component, Template, For, NgElement, bind} from 'angular2/angular2'
-import {ComponentConfig} from 'ionic2/config/component-config'
 import {NavPane} from 'ionic2/components/nav-pane/nav-pane'
 import * as util from 'ionic2/util'
 

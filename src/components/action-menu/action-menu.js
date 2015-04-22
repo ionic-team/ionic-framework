@@ -1,13 +1,11 @@
 import {NgElement, Component, Template, Parent} from 'angular2/angular2'
-import {ComponentConfig} from 'ionic2/config/component-config'
+import {IonicComponent} from 'ionic2/config/component'
 import {Icon} from 'ionic2/components/icon/icon'
 import {Item} from 'ionic2/components/item/item'
 
-export let ActionMenuConfig = new ComponentConfig('action-menu')
 
 @Component({
-  selector: 'ion-action-menu',
-  services: [ActionMenuConfig]
+  selector: 'ion-action-menu'
 })
 @Template({
   inline: `
@@ -41,10 +39,11 @@ export let ActionMenuConfig = new ComponentConfig('action-menu')
 })
 export class ActionMenu {
   constructor(
-    configFactory: ActionMenuConfig,
     @NgElement() ngElement:NgElement
   ) {
     this.domElement = ngElement.domElement
-    this.config = configFactory.create(this)
+    this.config = ActionMenu.config.invoke(this)
   }
 }
+
+new IonicComponent(ActionMenu, {})

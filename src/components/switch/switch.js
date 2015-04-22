@@ -1,7 +1,6 @@
 import {Component, Template, NgElement, PropertySetter} from 'angular2/angular2'
-import {ComponentConfig} from 'ionic2/config/component-config'
+import {IonicComponent} from 'ionic2/config/component'
 
-export let SwitchConfig = new ComponentConfig('switch')
 
 @Component({
   selector: 'ion-switch',
@@ -10,8 +9,7 @@ export let SwitchConfig = new ComponentConfig('switch')
   },
   events: {
     'click': 'onClick()'
-  },
-  services: [SwitchConfig]
+  }
 })
 @Template({
   inline: `
@@ -29,30 +27,27 @@ export let SwitchConfig = new ComponentConfig('switch')
 })
 export class Switch {
   constructor(
-    configFactory: SwitchConfig,
     element: NgElement,
     @PropertySetter('attr.role') setAriaRole: Function,
-    @PropertySetter('attr.aria-checked') setAriaChecked: Function,
-    @PropertySetter('attr.aria-invalid') setAriaInvalid: Function,
-    @PropertySetter('attr.aria-disabled') setAriaDisabled: Function
+    @PropertySetter('attr.aria-checked') setChecked: Function,
+    @PropertySetter('attr.aria-invalid') setInvalid: Function,
+    @PropertySetter('attr.aria-disabled') setDisabled: Function
   ) {
     this.domElement = element.domElement
+    this.config = Switch.config.invoke(this)
+
     this.domElement.classList.add('item')
-    this.config = configFactory.create(this)
 
     setAriaRole('checkbox')
-    setAriaInvalid('false')
-    setAriaDisabled('false')
+    setInvalid('false')
+    setDisabled('false')
 
-    this.setAriaRole = setAriaRole
-    this.setAriaChecked = setAriaChecked
-    this.setAriaInvalid = setAriaInvalid
-    this.setAriaDisabled = setAriaDisabled
+    this.setChecked = setChecked
   }
 
   set checked(checked) {
     this._checked = checked
-    this.setAriaChecked(checked)
+    this.setChecked(checked)
   }
   get checked() {
     return this._checked
@@ -62,3 +57,4 @@ export class Switch {
   }
 }
 
+new IonicComponent(Switch, {})
