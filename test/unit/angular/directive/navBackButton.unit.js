@@ -41,7 +41,7 @@ describe('ionNavBackButton directive', function() {
   it('should add ng-click if one wasnt provided', inject(function($compile, $rootScope, $ionicConfig) {
     $ionicConfig.backButton.icon('none');
     setup();
-    expect( outputEle.attr('ng-click') ).toBe('$ionicGoBack($event)');
+    expect( outputEle.attr('ng-click') ).toBe('$ionicGoBack()');
   }));
 
   it('should add custom ng-click that was provided', inject(function($compile, $rootScope, $ionicConfig) {
