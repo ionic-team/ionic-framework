@@ -16,18 +16,23 @@ import {IonicComponent} from 'ionic2/config/component'
       <!-- TOOLBARS FOR EACH VIEW SHOULD HAVE THE SAME CONTEXT AS ITS VIEW -->
     </header>
 
-    <nav class="tab-bar-container">
+    <nav class="tab-bar-container"
+         role="tablist"
+         [attr.aria-activedescendant]="'tab-content-' + selectedTab.tabId">
       <div class="tab-bar">
-        <a *for="#tab of tabs"
+        <button *for="#tab of tabs"
+          role="tab"
           class="tab-bar-item"
-          [class.tab-active]="tab.isSelected"
+          [attr.id]="'tab-item-' + tab.tabId"
+          [attr.aria-controls]="'tab-content-' + tab.tabId"
+          [attr.aria-selected]="tab.isSelected"
           (^click)="onClickTabItem($event, tab)">
             <icon class="tab-bar-item-icon ion-home"
               [hidden]="tabBarIcons=='none'"
               [class.tab-bar-icon-bottom]="tabBarIcons=='bottom'"
               [class.tab-bar-icon-top]="tabBarIcons=='top'"></icon>
             <span class="tab-bar-item-text" [hidden]="tabBarText=='none'">{{tab.title}}</span>
-        </a>
+        </button>
       </div>
     </nav>
 

@@ -44,6 +44,7 @@ $tab-bar-item-max-width:           160px !default;
   @include flex-direction(column);
   @include flex(1);
   @include flex-align-self(center);
+  @include flex-align-items(center);
 
   padding: $tab-bar-item-padding;
   min-width: $tab-bar-item-min-width;
@@ -52,6 +53,10 @@ $tab-bar-item-max-width:           160px !default;
   text-align: center;
   cursor: pointer;
   @include user-select(none);
+  outline: 0;
+
+  border: 0;
+  background: none;
 }
 
 .tab-bar-icon-bottom .tab-bar-item {
@@ -100,6 +105,6 @@ $tab-bar-item-max-width:           160px !default;
   opacity: 0.6;
 }
 
-.tab-bar-item.tab-active {
+.tab-bar-item[aria-selected="true"] {
   color: red;
 }

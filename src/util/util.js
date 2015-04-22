@@ -41,6 +41,11 @@ export function pascalCaseToDashCase(str = '') {
   })
 }
 
+let _uid = 0
+export function uid() {
+  return _uid++
+}
+
 export class Log {
   static log(...args) {
     console.log.apply(console, args)
