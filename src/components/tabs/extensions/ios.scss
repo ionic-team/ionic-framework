@@ -27,15 +27,15 @@ $tab-bar-ios-item-icon-size:           2.8rem !default;
     font-size: $tab-bar-ios-item-icon-size;
   }
 
-  &.tab-bar-bottom > .tab-bar-container {
+  &[tab-bar-placement="bottom"] > .tab-bar-container {
     @include hairline(top, $toolbar-ios-border-color);
   }
 
-  &.tab-bar-top > .tab-bar-container {
+  &[tab-bar-placement="top"] > .tab-bar-container {
     @include hairline(bottom, $toolbar-ios-border-color);
   }
 
-  &.tab-bar-top > .toolbar-container .toolbar {
+  &[tab-bar-placement="top"] > .toolbar-container .toolbar {
     @include hairline(bottom, none);
   }
 

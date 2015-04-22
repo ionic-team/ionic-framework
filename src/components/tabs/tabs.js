@@ -1,10 +1,10 @@
-import {NgElement, Component, Template, For} from 'angular2/angular2'
+import {NgElement, Component, Template, For, PropertySetter} from 'angular2/angular2'
 import {IonicComponent} from 'ionic2/config/component'
 
 @Component({
   selector: 'ion-tabs',
   bind: {
-    placement: 'placement',
+    tabBarPlacement: 'tab-bar-placement',
     tabBarIcons: 'tab-bar-icons',
     tabBarText: 'tab-bar-text'
   }
@@ -18,7 +18,7 @@ import {IonicComponent} from 'ionic2/config/component'
 
     <nav class="tab-bar-container"
          role="tablist"
-         [attr.aria-activedescendant]="'tab-content-' + selectedTab.tabId">
+         [attr.aria-activedescendant]="'tab-item-' + selectedTab.tabId">
       <div class="tab-bar">
         <button *for="#tab of tabs"
           role="tab"
@@ -47,19 +47,6 @@ export class Tabs  {
     @NgElement() ngElement: NgElement
   ) {
     this.domElement = ngElement.domElement
-
-    // should be used to cover up sibling .nav-pane's and it's parent
-    this.domElement.classList.add('nav-pane-cover-parent')
-
-    // .tab-bar-top/bottom should be added to the entire element when specified
-    // TODO: MAKE MORE GOOD!!!
-    setTimeout(() => {
-      if (this.placement == 'top') {
-        this.domElement.classList.add('tab-bar-top')
-      } else {
-        this.domElement.classList.add('tab-bar-bottom')
-      }
-    })
 
     this.config = Tabs.config.invoke(this)
     this.tabs = []
@@ -93,14 +80,14 @@ export class Tabs  {
 
 new IonicComponent(Tabs, {
   bind: {
-    placement: {
+    'tab-bar-placement': {
       defaults: {
         ios: 'bottom',
         android: 'top',
         core: 'bottom'
       }
     },
-    tabBarIcons: {
+    'tab-bar-icons': {
       defaults: {
         ios: 'top',
         android: 'none',

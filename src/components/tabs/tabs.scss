@@ -16,11 +16,11 @@ $tab-bar-item-max-width:           160px !default;
   height: 100%;
 }
 
-.tab-bar-top > .tab-bar-container {
+[tab-bar-placement="top"] > .tab-bar-container {
   @include flex-order($flex-order-tab-bar-top);
 }
 
-.tab-bar-bottom > .tab-bar-container {
+[tab-bar-placement="bottom"] > .tab-bar-container {
   @include flex-order($flex-order-tab-bar-bottom);
 }
 
