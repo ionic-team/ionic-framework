@@ -79,6 +79,10 @@ textarea {
     min-width: 14px;
   }
 }
+// prevent flex-shrink on WP
+.platform-windowsphone .item-input input{
+  flex-shrink: 1;
+}
 
 .item-input-inset {
   @include display-flex();
