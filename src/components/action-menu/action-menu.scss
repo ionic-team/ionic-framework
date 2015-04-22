@@ -14,21 +14,14 @@ $action-menu-button-text-color:         #007aff !default;
   left: 0;
   bottom: 0;
   width: 100%;
+
+  .list,
+  .list-header {
+    width: $action-menu-width;
+    max-width: $action-menu-max-width;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
 }
 
-.action-menu-group {
-  width: $action-menu-width;
-  max-width: $action-menu-max-width;
-  margin-right: auto;
-  margin-left: auto;
-}
-
-.action-menu-group .action-menu-label {
-  display: block;
-  width: 100%;
-}
-
-.action-menu-group .action-menu-button {
-  display: block;
-  width: 100%;
-}

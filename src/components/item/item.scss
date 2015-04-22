@@ -13,9 +13,13 @@ $item-padding:            15px !default;
   @include flex-justify-content(space-between);
   @include flex-align-items(center);
 
+  width: 100%;
   min-height: $item-min-height;
   margin: 0;
   padding: 0;
+  border: 0;
+  outline: none;
+  text-align: initial;
 }
 
 ion-primary-swipe-buttons,

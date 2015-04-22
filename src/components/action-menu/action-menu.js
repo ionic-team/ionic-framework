@@ -1,5 +1,7 @@
 import {NgElement, Component, Template, Parent} from 'angular2/angular2'
 import {ComponentConfig} from 'ionic2/config/component-config'
+import {Icon} from 'ionic2/components/icon/icon'
+import {Item} from 'ionic2/components/item/item'
 
 export let ActionMenuConfig = new ComponentConfig('action-menu')
 
@@ -13,23 +15,29 @@ export let ActionMenuConfig = new ComponentConfig('action-menu')
     <div class="overlay-container">
       <div class="action-menu-container">
 
-        <div class="action-menu-group">
-          <div class="action-menu-label">Action Menu Label</div>
-          <button class="button action-menu-button">Button 1</button>
-          <button class="button action-menu-button">Button 2</button>
+        <div class="list-header">Action Menu List Header</div>
+        <div class="list">
+          <button ion-item class="item">
+            Button 1
+          </button>
+          <button ion-item class="item">
+            Button 2
+          </button>
         </div>
 
-        <div class="action-menu-group">
-          <div class="action-menu-label">Action Menu Label</div>
-          <button class="button action-menu-button">Button 1</button>
-          <button class="button action-menu-button">Button 2</button>
+        <div class="list-header">Action Menu Label</div>
+        <div class="list">
+          <button ion-item class="item">Button 1</button>
+          <button ion-item class="item">Button 2</button>
         </div>
 
-        <div class="action-menu-group">
-          <button class="button action-menu-button">Button 1</button>
+        <div class="list">
+          <button ion-item class="item">Button 1</button>
         </div>
+
       </div>
-    </div>`
+    </div>`,
+  directives: [Item,Icon]
 })
 export class ActionMenu {
   constructor(
@@ -37,8 +45,6 @@ export class ActionMenu {
     @NgElement() ngElement:NgElement
   ) {
     this.domElement = ngElement.domElement
-    this.domElement.classList.add('pane')
-    this.domElement.classList.add('pane-overlay')
     this.config = configFactory.create(this)
   }
 }

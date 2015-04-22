@@ -8,7 +8,7 @@ import {
 } from 'ionic2/components/item/item-swipe-buttons'
 
 @Component({
-  selector: 'ion-item'
+  selector: 'ion-item,[ion-item]'
 })
 @Template({
   inline: `
