@@ -5,8 +5,7 @@ import {IonicComponent} from 'ionic2/config/component'
   selector: 'ion-tabs',
   bind: {
     tabBarPlacement: 'tab-bar-placement',
-    tabBarIcons: 'tab-bar-icons',
-    tabBarText: 'tab-bar-text'
+    tabBarIcons: 'tab-bar-icons'
   }
 })
 @Template({
@@ -16,22 +15,18 @@ import {IonicComponent} from 'ionic2/config/component'
       <!-- TOOLBARS FOR EACH VIEW SHOULD HAVE THE SAME CONTEXT AS ITS VIEW -->
     </header>
 
-    <nav class="tab-bar-container"
-         role="tablist"
+    <nav class="tab-bar-container" role="tablist"
          [attr.aria-activedescendant]="'tab-item-' + selectedTab.tabId">
       <div class="tab-bar">
-        <button *for="#tab of tabs"
+        <button *for="#t of tabs"
           role="tab"
           class="tab-bar-item"
-          [attr.id]="'tab-item-' + tab.tabId"
-          [attr.aria-controls]="'tab-content-' + tab.tabId"
-          [attr.aria-selected]="tab.isSelected"
-          (^click)="onClickTabItem($event, tab)">
-            <icon class="tab-bar-item-icon ion-home"
-              [hidden]="tabBarIcons=='none'"
-              [class.tab-bar-icon-bottom]="tabBarIcons=='bottom'"
-              [class.tab-bar-icon-top]="tabBarIcons=='top'"></icon>
-            <span class="tab-bar-item-text" [hidden]="tabBarText=='none'">{{tab.title}}</span>
+          [attr.id]="'tab-item-' + t.tabId"
+          [attr.aria-controls]="'tab-content-' + t.tabId"
+          [attr.aria-selected]="t.isSelected"
+          (^click)="onClickTabItem($event, t)">
+            <icon class="tab-bar-item-icon ion-home" [hidden]="!t.icon"></icon>
+            <span class="tab-bar-item-text" [hidden]="!t.title">{{t.title}}</span>
         </button>
       </div>
     </nav>
@@ -50,6 +45,9 @@ export class Tabs  {
 
     this.config = Tabs.config.invoke(this)
     this.tabs = []
+    setTimeout(() => {
+      console.log(this)
+    },500)
   }
 
   addTab(tab) {
@@ -80,20 +78,19 @@ export class Tabs  {
 
 new IonicComponent(Tabs, {
   bind: {
-    'tab-bar-placement': {
+    tabBarPlacement: {
       defaults: {
         ios: 'bottom',
         android: 'top',
         core: 'bottom'
       }
     },
-    'tab-bar-icons': {
+    tabBarIcons: {
       defaults: {
         ios: 'top',
-        android: 'none',
+        android: 'top',
         core: 'top'
       }
-    },
-    tabBarText: {}
+    }
   }
 })

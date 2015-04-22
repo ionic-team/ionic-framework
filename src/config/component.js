@@ -66,7 +66,7 @@ export class IonicComponent {
       let defaultValue = binding._defaultValue
       if (!instance[binding.property] && defaultValue) {
         instance[binding.property] = defaultValue
-        instance.domElement.setAttribute(attrName, defaultValue)
+        instance.domElement.setAttribute(util.pascalCaseToDashCase(attrName), defaultValue)
       }
     }
 

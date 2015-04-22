@@ -2,7 +2,6 @@
 // Tabs
 // --------------------------------------------------
 
-$tab-bar-min-height:               10px !default;
 $tab-bar-background-color:         #f7f7f8 !default;
 
 $tab-bar-item-padding:             10px !default;
@@ -27,7 +26,6 @@ $tab-bar-item-max-width:           160px !default;
 .tab-bar-container {
   @include flex-justify-content(center);
   position: relative;
-  min-height: $tab-bar-min-height;
   background: $tab-bar-background-color;
 }
 
@@ -59,13 +57,13 @@ $tab-bar-item-max-width:           160px !default;
   background: none;
 }
 
-.tab-bar-icon-bottom .tab-bar-item {
+[tab-bar-icons="bottom"] > .tab-bar-container .tab-bar-item {
   .tab-bar-item-icon {
     @include flex-order(10);
   }
 }
 
-.tab-bar-icon-left .tab-bar-item {
+[tab-bar-icons="left"] > .tab-bar-container .tab-bar-item {
   @include flex-direction(row);
 
   .tab-bar-item-icon {
@@ -74,7 +72,7 @@ $tab-bar-item-max-width:           160px !default;
   }
 }
 
-.tab-bar-icon-right .tab-bar-item {
+[tab-bar-icons="right"] > .tab-bar-container .tab-bar-item {
   @include flex-direction(row);
 
   .tab-bar-item-icon {
