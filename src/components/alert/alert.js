@@ -27,13 +27,8 @@ export class Alert {
     @NgElement() ngElement:NgElement
   ) {
     this.domElement = ngElement.domElement
-    this.domElement.classList.add('pane')
-    this.domElement.classList.add('pane-overlay')
-
     this.config = Alert.config.invoke(this)
   }
 }
 
-new IonicComponent(Alert, {
-  bind: {}
-})
+new IonicComponent(Alert, {})

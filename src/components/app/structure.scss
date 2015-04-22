@@ -59,7 +59,7 @@ html {
   }
 
   .nav-pane {
-    // container of one .pane,
+    // container of one ion-view
     position: absolute;
     width: 100%;
     height: 100%;
@@ -72,7 +72,7 @@ html {
     height: 100vh;
   }
 
-  .pane {
+  ion-view {
     // user created view, contained by .nav-pane
     position: absolute;
     top: 0;

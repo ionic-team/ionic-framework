@@ -26,8 +26,6 @@ export class View {
     this.domElement = ngElement.domElement
     this.config = View.config.invoke(this)
 
-    this.domElement.classList.add('pane')
-
 
     /*** TODO: MAKE MORE GOOD!! HACK HACK HACK!!!!!!!!! *****/
     /*
