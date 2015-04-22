@@ -98,6 +98,11 @@ body.grade-c {
   @include text-size-adjust(none);
   @include transform-origin(left, top);
 }
+/**
+ * Set ms-viewport to prevent MS "page squish" and allow fluid scrolling
+ * https://msdn.microsoft.com/en-us/library/ie/hh869615(v=vs.85).aspx
+ */
+@-ms-viewport { width: device-width; }
 
 // Scroll bar styles
 .scroll-bar {
