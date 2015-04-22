@@ -119,6 +119,9 @@
   &::-webkit-slider-thumb:before {
     background: $track-bg-color;
   }
+  &::-ms-fill-lower{
+    background: $track-bg-color;
+  }
 }
 
 

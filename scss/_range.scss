@@ -33,7 +33,7 @@
     border: 0;
   }
 
-  &::-webkit-slider-thumb:before {
+  &::-webkit-slider-thumb:before{
     /* what creates the colorful line on the left side of the slider */
     position: absolute;
     top: ($range-slider-height / 2) - ($range-track-height / 2);
@@ -54,7 +54,32 @@
     //background: red;
     //opacity: .5;
   }
-
+   &::-ms-track{
+     background: transparent;
+     border-color: transparent;
+     border-width: 11px 0 16px;
+     color:transparent;
+     margin-top:20px;
+   }
+   &::-ms-thumb {
+     width: $range-slider-width;
+     height: $range-slider-height;
+     border-radius: $range-slider-border-radius;
+     background-color: $toggle-handle-off-bg-color;
+     border-color:$toggle-handle-off-bg-color;
+     box-shadow: $range-slider-box-shadow;
+     margin-left:1px;
+     margin-right:1px;
+     outline:none;
+   }
+   &::-ms-fill-lower{
+     height: $range-track-height;
+     background:$dark;
+   }
+   &::-ms-fill-upper {
+     height: $range-track-height;
+     background:$range-default-track-bg;
+   }
 }
 
 .range {
@@ -118,4 +143,11 @@
 .range input + .range-label {
   padding-right: 5px;
   padding-left: 0;
+}
+
+// WP range height must be auto
+.platform-windowsphone{
+  .range input{
+    height:auto;
+  }
 }
