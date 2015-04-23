@@ -38,3 +38,30 @@ $content-padding:    10px !default;
 .padding-horizontal {
   padding-left: $content-padding;
 }
+
+
+// Focus Outline
+// --------------------------------------------------
+// When a keydown event happens then .key-input is added
+// to the body element so focusable elements have an outline.
+// On a mousedown or touchstart event the .key-input class
+// is removed
+
+:focus,
+:active {
+  outline: none;
+}
+
+.key-input {
+
+  :focus {
+    outline-offset: -1px;
+    outline: thin dotted;
+  }
+
+  .button:focus {
+    outline-offset: -2px;
+    outline: 2px solid red;
+  }
+
+}

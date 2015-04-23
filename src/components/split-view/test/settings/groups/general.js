@@ -1,5 +1,5 @@
 import {Component, Template} from 'angular2/angular2'
-import {View} from 'ionic2/components'
+import {View} from 'ionic2/ionic2'
 
 @Component({
   selector: 'settings-general'

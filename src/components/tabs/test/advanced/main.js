@@ -1,6 +1,7 @@
 import {Component, Template, bootstrap} from 'angular2/angular2'
-import {NavViewport, Aside} from 'ionic2/components'
+import {NavViewport, Aside} from 'ionic2/ionic2'
 import {SignInPage} from 'app/pages/sign-in'
+
 
 @Component({
   selector: '[ion-app]',

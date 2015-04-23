@@ -1,6 +1,5 @@
 import {Component, Template, Parent} from 'angular2/angular2'
-import {NavViewport} from 'ionic2/components'
-import {View} from 'ionic2/components/view/view'
+import {NavViewport, View} from 'ionic2/ionic2'
 import {SecondPage} from 'app/pages/second-page'
 
 @Component({

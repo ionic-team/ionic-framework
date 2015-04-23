@@ -1,6 +1,6 @@
 import {bootstrap} from 'angular2/core'
 import {Component, Template, For} from 'angular2/angular2'
-import {Item, View, List} from 'ionic2/components'
+import {Item, View, List} from 'ionic2/ionic2'
 
 import {ItemPrimarySwipeButtons} from 'ionic2/components/item/item-swipe-buttons'
 
