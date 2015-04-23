@@ -2,9 +2,6 @@
 ### 1.0.0-rc.4 "sulfur-suricate" (2015-04-20)
 
 
-### 1.0.0-rc.4 "sulfur-suricate" (2015-04-20)
-
-
 #### Bug Fixes
 
 
