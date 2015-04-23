@@ -8,7 +8,7 @@
 #### Building & Running
 
 - `gulp watch`
-- `python -m SimpleHTTPServer ./dist`
+- `httpster`
 - `open http://localhost:9000/e2e/aside/basic/index.html`
 - Follow the structure found in src/components/aside/examples/basic
   to create more examples.
