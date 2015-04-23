@@ -51,7 +51,6 @@ $tab-bar-item-max-width:           160px !default;
   text-align: center;
   cursor: pointer;
   @include user-select(none);
-  outline: 0;
 
   border: 0;
   background: none;
