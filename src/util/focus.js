@@ -1,17 +1,22 @@
 import {dom} from 'ionic2/util'
 
+/* Focus Outline
+ * --------------------------------------------------
+ * When a keydown event happens, from a tab key, then the
+ * 'key-input' class is added to the body element so focusable
+ * elements have an outline. On a mousedown or touchstart
+ * event then the 'key-input' class is removed.
+ */
+
 
 let isKeyInputEnabled = false
 
-function keyDown() {
-  if (!isKeyInputEnabled) {
+function keyDown(ev) {
+  if (!isKeyInputEnabled && ev.keyCode == 9) {
     isKeyInputEnabled = true
     dom.raf(enableKeyInput)
   }
 }
-dom.ready().then(function() {
-  document.addEventListener('keydown', keyDown)
-})
 
 
 function enableKeyInput() {
@@ -32,3 +37,7 @@ function pointerDown() {
   dom.raf(enableKeyInput)
 }
 
+
+dom.ready().then(function() {
+  document.addEventListener('keydown', keyDown)
+})
