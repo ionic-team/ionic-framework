@@ -1,12 +1,12 @@
 <ion-view nav-title="Login">
-  <form (submit)="doLogin()" [control-group]="loginForm">
+  <form (^submit)="doLogin($event)" [control-group]="loginForm">
     <ion-input>
       <input control="email" type="email" placeholder="Your email">
     </ion-input>
     <ion-input>
       <input control="password" type="email" placeholder="Your email">
     </ion-input>
-    <button type="button" (click)="doLogin()">Log in</button>
+    <button type="submit">Log in</button>
 
     {{loginForm.controls.email.value}}
   </form>

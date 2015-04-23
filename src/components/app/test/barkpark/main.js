@@ -24,22 +24,11 @@ export class LoginPage {
       email: ['', Validators.required],
       password: ['', Validators.required],
     });
-
-    /*
-    this.loginForm = new FormControlGroup('form', [
-      new FormControl('email'),
-      new FormControl('password')
-    ]);
-    */
-
-    /*
-    this.loginForm.readFrom({
-    });
-    */
   }
 
-  doLogin() {
+  doLogin(event) {
     Log.log('Doing login')
+    event.preventDefault();
     //this.viewport.push(SecondPage)
   }
 }
