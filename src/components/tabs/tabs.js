@@ -42,12 +42,9 @@ export class Tabs  {
     @NgElement() ngElement: NgElement
   ) {
     this.domElement = ngElement.domElement
-
     this.config = Tabs.config.invoke(this)
+
     this.tabs = []
-    setTimeout(() => {
-      console.log(this)
-    },500)
   }
 
   addTab(tab) {
