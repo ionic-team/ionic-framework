@@ -343,6 +343,14 @@ IonicModule
 
   });
 
+  // Windows Phone
+  // -------------------------
+  setPlatformConfig('windowsphone', {
+    scrolling: {
+      jsScrolling: false
+    }
+  });
+
 
   provider.transitions = {
     views: {},
