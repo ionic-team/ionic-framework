@@ -24,6 +24,12 @@
  * Be aware that this directive gets its own child scope. If you do not understand why this
  * is important, you can read [https://docs.angularjs.org/guide/scope](https://docs.angularjs.org/guide/scope).
  *
+ * If content is added or removed, hidden or shown that changes the expected height, you must trigger a resize of the scroller.
+ * Do this by giving the ion-conent a delegate-handle and then after the code changes the content : 
+ * 
+ * var scr=$ionicScrollDelegate.$getByHandle('the delegate-handle value'); 
+ * scr.scrollTo(0,scr.getScrollPosition().top,true); 
+ *
  * @param {string=} delegate-handle The handle used to identify this scrollView
  * with {@link ionic.service:$ionicScrollDelegate}.
  * @param {string=} direction Which way to scroll. 'x' or 'y' or 'xy'. Default 'y'.
