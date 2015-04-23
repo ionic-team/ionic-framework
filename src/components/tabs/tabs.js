@@ -25,7 +25,7 @@ import {IonicComponent} from 'ionic2/config/component'
           [attr.aria-controls]="'tab-content-' + t.tabId"
           [attr.aria-selected]="t.isSelected"
           (^click)="onClickTabItem($event, t)">
-            <icon class="tab-bar-item-icon ion-home" [hidden]="!t.icon"></icon>
+            <icon [class-name]="'tab-bar-item-icon ' + t.icon" [hidden]="!t.icon"></icon>
             <span class="tab-bar-item-text" [hidden]="!t.title">{{t.title}}</span>
         </button>
       </div>
