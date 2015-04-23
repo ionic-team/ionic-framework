@@ -18,6 +18,9 @@
  * directive, and infinite scrolling with the {@link ionic.directive:ionInfiniteScroll}
  * directive.
  *
+ * If there is any dynamic content inside the ion-content, be sure to call `.resize()` with {@link ionic.service:$ionicScrollDelegate}
+ * after the content as been added.
+ *
  * Be aware that this directive gets its own child scope. If you do not understand why this
  * is important, you can read [https://docs.angularjs.org/guide/scope](https://docs.angularjs.org/guide/scope).
  *
