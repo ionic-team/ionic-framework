@@ -6,11 +6,6 @@ import {Log} from 'ionic2/util'
 
 import {NavViewport, View} from 'ionic2/ionic2'
 
-class LoginForm {
-  email: string;
-  password: string;
-}
-
 @Component({
   selector: 'login-page'
 })
@@ -24,7 +19,6 @@ export class LoginPage {
     Log.log('LOGIN PAGE')
 
     var fb = new FormBuilder()
-    var loginFormModel = new LoginForm()
 
     this.loginForm = fb.group({
       email: ['', Validators.required],
@@ -46,7 +40,6 @@ export class LoginPage {
 
   doLogin() {
     Log.log('Doing login')
-    return false
     //this.viewport.push(SecondPage)
   }
 }
