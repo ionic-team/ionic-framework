@@ -42,10 +42,10 @@ $content-padding:    10px !default;
 
 // Focus Outline
 // --------------------------------------------------
-// When a keydown event happens then .key-input is added
-// to the body element so focusable elements have an outline.
-// On a mousedown or touchstart event the .key-input class
-// is removed
+// When a keydown event happens, from a tab key, then the
+// 'key-input' class is added to the body element so focusable
+// elements have an outline. On a mousedown or touchstart
+// event then the 'key-input' class is removed.
 
 :focus,
 :active {
