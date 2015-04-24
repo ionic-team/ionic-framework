@@ -13,5 +13,5 @@ export class Button {
   }
 }
 new IonicComponent(Button, {
-  propClasses: ['primary', 'secondary', 'danger', 'light', 'stable', 'dark']
+  propClasses: ['primary', 'secondary', 'danger', 'light', 'stable', 'dark', 'block']
 })
