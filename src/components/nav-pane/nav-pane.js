@@ -1,15 +1,23 @@
-import {DynamicComponent, Parent, NgElement} from 'angular2/angular2'
+import {DynamicComponent, Parent, NgElement, bind} from 'angular2/angular2'
 import {Optional} from 'angular2/src/di/annotations'
 import {NavViewport} from 'ionic2/components/nav-viewport/nav-viewport'
 import {Tab} from 'ionic2/components/tabs/tab'
 import {PrivateComponentLoader} from 'angular2/src/core/compiler/private_component_loader'
 import {PrivateComponentLocation} from 'angular2/src/core/compiler/private_component_location'
+import {extend} from 'ionic2/util'
+
+class NavData = {
+  constructor(data = {}) {
+    extend(this, data)
+  }
+} 
 
 @DynamicComponent({
   selector: '.nav-pane',
   bind: {
     item: 'item'
-  }
+  },
+  services: [NavData]
 })
 export class NavPane {
   constructor(

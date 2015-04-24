@@ -4,7 +4,7 @@ import {FormBuilder, Validators, FormDirectives, CongrolGroup} from 'angular2/fo
 
 import {Log} from 'ionic2/util'
 
-import {NavViewport, View, Button, Input} from 'ionic2/ionic2'
+import {NavViewport, View, Button, Input, Tabs, Tab, Content, NavPane, Aside} from 'ionic2/ionic2'
 
 @Component({
   selector: 'login-page'
@@ -15,6 +15,7 @@ import {NavViewport, View, Button, Input} from 'ionic2/ionic2'
 })
 export class LoginPage {
   constructor( @Parent() viewport: NavViewport ) { //, fb: FormBuilder ) {
+
     this.viewport = viewport
     Log.log('LOGIN PAGE')
 
@@ -34,6 +35,7 @@ export class LoginPage {
   }
   doSignup(event) {
     this.viewport.push(SignupPage)
+
   }
 }
 
@@ -46,6 +48,7 @@ export class LoginPage {
 })
 export class SignupPage {
   constructor( @Parent() viewport: NavViewport ) { //, fb: FormBuilder ) {
+
     this.viewport = viewport
     Log.log('SIGNUP PAGE')
 
@@ -65,7 +68,87 @@ export class SignupPage {
     Log.log('Doing signup')
     event.preventDefault();
     console.log(this.signupForm.value);
+
+    this.viewport.push(AppPage)
     //this.viewport.push(SecondPage)
+  }
+}
+
+
+
+@Component({
+  selector: 'app-page'
+})
+@Template({
+  url: 'pages/app.html',
+  directives: [View, FormDirectives, Button, Input, Tabs, Tab]
+})
+export class AppPage {
+  constructor( @Parent() viewport: NavViewport ) { //, fb: FormBuilder ) {
+    this.viewport = viewport
+    this.streamTab = StreamTab
+  }
+}
+
+@Component({ selector: 'stream-tab' })
+@Template({
+  url: 'pages/tabs/home.html',
+  directives: [View, Content]
+})
+class StreamTab {
+  constructor(navPane: NavPane) {
+    this.navPane = navPane
+  }
+  selectPost(post) {
+    this.navPane.push(PostDetail, {
+      post
+    }, {
+      transition: '3dflip'
+    })
+  }
+}
+
+@Component({ selector: 'post-detail-tab' })
+@Template({
+  url: 'pages/posts/detail.html',
+  directives: [View, Content]
+})
+class PostDetail {
+  constructor(navPane: NavPane) {
+    this.navPane = navPane
+  }
+  selectItem() {
+    this.navPane.push(PostDetailTab)
+  }
+}
+
+//
+// tab 2
+//
+@Component({ selector: 't2p1' })
+@Template({
+  inline: `
+    <ion-aside side="left" [content]="view">
+      Left aside for Tab 2 Page 1
+    </ion-aside>
+    <ion-view nav-title="Tab 2 Page 1" #view>
+      <ion-content class="padding">
+        <p>Tab 2 Page 1.</p>
+        <button class="button button-primary" (click)="next()">
+          Go to Tab 2 Page 2 (push)
+        </button>
+        <br/><span style="color:red">I have got an aside on the left.</span>
+        <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
+      </ion-content>
+    </ion-view>
+  `,
+  directives: [View, Aside, Content]
+})
+class Tab2Page1 {
+  constructor(navPane: NavPane) {
+    this.navPane = navPane
+  }
+  next() {
   }
 }
 
@@ -76,7 +159,7 @@ export class SignupPage {
 })
 class IonicApp {
   constructor() {
-    this.firstPage = LoginPage
+    this.firstPage = AppPage//LoginPage
     console.log('IonicApp Start')
   }
 }

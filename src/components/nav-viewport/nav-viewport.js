@@ -88,12 +88,12 @@ export class NavViewport {
   // TODO make sure the timing is together
   // TODO allow starting an animation in the middle (eg gestures). Leave
   // most of this up to the animation's implementation.
-  push(Class: Function, opts = {}) {
+  push(Class: Function, data = {}, opts = {}) {
     util.defaults(opts, {
       sync: this._stack.length === 0
     })
 
-    let pushedItem = new NavItem(Class)
+    let pushedItem = new NavItem(Class, data)
     this._stack.push(pushedItem)
     this._ngForLoopArray.push(pushedItem)
 
@@ -177,8 +177,9 @@ export class NavViewport {
 }
 
 class NavItem {
-  constructor(ComponentClass) {
+  constructor(ComponentClass, data = {}) {
     this.Class = ComponentClass
+    this.data = data
     this._setupPromise = new Promise((resolve) => {
       this._resolveSetupPromise = resolve
     })
