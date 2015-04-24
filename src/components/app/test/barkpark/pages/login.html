@@ -1,13 +1,14 @@
-<ion-view nav-title="Login">
+<ion-view nav-title="Login" style="padding: 20px">
   <form (^submit)="doLogin($event)" [control-group]="loginForm">
     <ion-input>
       <input control="email" type="email" placeholder="Your email">
     </ion-input>
     <ion-input>
-      <input control="password" type="email" placeholder="Your email">
+      <input control="password" type="email" placeholder="Your password">
     </ion-input>
-    <button type="submit">Log in</button>
-
-    {{loginForm.controls.email.value}}
+    <button ion-button stable type="submit">Log in</button>
+    <div>
+      Or <button ion-button primary (click)="doSignup()">Create an account</button>
+    </div>
   </form>
 </ion-view>

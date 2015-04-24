@@ -4,14 +4,14 @@ import {FormBuilder, Validators, FormDirectives, CongrolGroup} from 'angular2/fo
 
 import {Log} from 'ionic2/util'
 
-import {NavViewport, View} from 'ionic2/ionic2'
+import {NavViewport, View, Button} from 'ionic2/ionic2'
 
 @Component({
   selector: 'login-page'
 })
 @Template({
   url: 'pages/login.html',
-  directives: [View, FormDirectives]
+  directives: [View, FormDirectives, Button]
 })
 export class LoginPage {
   constructor( @Parent() viewport: NavViewport ) { //, fb: FormBuilder ) {
@@ -29,6 +29,42 @@ export class LoginPage {
   doLogin(event) {
     Log.log('Doing login')
     event.preventDefault();
+    console.log(this.loginForm.value);
+    //this.viewport.push(SecondPage)
+  }
+  doSignup(event) {
+    this.viewport.push(SignupPage)
+  }
+}
+
+@Component({
+  selector: 'signup-page'
+})
+@Template({
+  url: 'pages/signup.html',
+  directives: [View, FormDirectives]
+})
+export class SignupPage {
+  constructor( @Parent() viewport: NavViewport ) { //, fb: FormBuilder ) {
+    this.viewport = viewport
+    Log.log('SIGNUP PAGE')
+
+    var fb = new FormBuilder()
+
+    this.loginForm = fb.group({
+      name: ['', Validators.required],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+    });
+  }
+
+  doLogin(event) {
+    this.viewport.pop()
+  }
+  doSignup(event) {
+    Log.log('Doing login')
+    event.preventDefault();
+    console.log(this.loginForm.value);
     //this.viewport.push(SecondPage)
   }
 }
