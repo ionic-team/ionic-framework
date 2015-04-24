@@ -551,7 +551,7 @@ ionic.views.Slider = ionic.views.View.inherit({
       element.style.left = '';
 
       // reset slides so no refs are held on to
-      slides && (slides.length = 0);
+      if (slides && slides.length) slides = undefined;
 
       // removed event listeners
       if (browser.addEventListener) {
