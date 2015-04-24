@@ -104,6 +104,7 @@ class StreamTab {
     ];
   }
   selectPost(post) {
+    console.log('Select post', post);
     this.navPane.push(PostDetail, {
       post
     }, {
@@ -114,12 +115,13 @@ class StreamTab {
 
 @Component({ selector: 'post-detail-tab' })
 @Template({
-  url: 'pages/posts/detail.html',
+  url: 'pages/post/detail.html',
   directives: [View, Content]
 })
 class PostDetail {
   constructor(navPane: NavPane) {
     this.navPane = navPane
+    this.title = 'Hello'
   }
   selectItem() {
     this.navPane.push(PostDetailTab)
