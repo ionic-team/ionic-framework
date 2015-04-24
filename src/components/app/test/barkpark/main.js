@@ -1,5 +1,5 @@
 import {bootstrap} from 'angular2/core'
-import {Component, Template, Parent} from 'angular2/angular2'
+import {For, Component, Template, Parent} from 'angular2/angular2'
 import {FormBuilder, Validators, FormDirectives, CongrolGroup} from 'angular2/forms';
 
 import {Log} from 'ionic2/util'
@@ -93,11 +93,15 @@ export class AppPage {
 @Component({ selector: 'stream-tab' })
 @Template({
   url: 'pages/tabs/home.html',
-  directives: [View, Content]
+  directives: [For, View, Content]
 })
 class StreamTab {
   constructor(navPane: NavPane) {
-    this.navPane = navPane
+    this.navPane = navPane;
+    this.posts = [
+      {'title': 'Just barked my first bark'},
+      {'title': 'Went poopy' }
+    ];
   }
   selectPost(post) {
     this.navPane.push(PostDetail, {
@@ -122,36 +126,10 @@ class PostDetail {
   }
 }
 
-//
-// tab 2
-//
-@Component({ selector: 't2p1' })
-@Template({
-  inline: `
-    <ion-aside side="left" [content]="view">
-      Left aside for Tab 2 Page 1
-    </ion-aside>
-    <ion-view nav-title="Tab 2 Page 1" #view>
-      <ion-content class="padding">
-        <p>Tab 2 Page 1.</p>
-        <button class="button button-primary" (click)="next()">
-          Go to Tab 2 Page 2 (push)
-        </button>
-        <br/><span style="color:red">I have got an aside on the left.</span>
-        <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
-      </ion-content>
-    </ion-view>
-  `,
-  directives: [View, Aside, Content]
-})
-class Tab2Page1 {
-  constructor(navPane: NavPane) {
-    this.navPane = navPane
-  }
-  next() {
-  }
-}
 
+/**
+ * Main app entry point
+ */
 @Component({ selector: '[ion-app]' })
 @Template({
   directives: [NavViewport],
