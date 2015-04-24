@@ -11,7 +11,7 @@ import {NavViewport, View, Button, Input} from 'ionic2/ionic2'
 })
 @Template({
   url: 'pages/login.html',
-  directives: [View, FormDirectives, Button]
+  directives: [View, FormDirectives, Button, Input]
 })
 export class LoginPage {
   constructor( @Parent() viewport: NavViewport ) { //, fb: FormBuilder ) {
@@ -42,7 +42,7 @@ export class LoginPage {
 })
 @Template({
   url: 'pages/signup.html',
-  directives: [View, FormDirectives, Button]
+  directives: [View, FormDirectives, Button, Input]
 })
 export class SignupPage {
   constructor( @Parent() viewport: NavViewport ) { //, fb: FormBuilder ) {
