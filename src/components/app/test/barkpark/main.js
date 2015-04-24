@@ -42,7 +42,7 @@ export class LoginPage {
 })
 @Template({
   url: 'pages/signup.html',
-  directives: [View, FormDirectives]
+  directives: [View, FormDirectives, Button]
 })
 export class SignupPage {
   constructor( @Parent() viewport: NavViewport ) { //, fb: FormBuilder ) {
@@ -51,7 +51,7 @@ export class SignupPage {
 
     var fb = new FormBuilder()
 
-    this.loginForm = fb.group({
+    this.signupForm = fb.group({
       name: ['', Validators.required],
       email: ['', Validators.required],
       password: ['', Validators.required],
@@ -62,9 +62,9 @@ export class SignupPage {
     this.viewport.pop()
   }
   doSignup(event) {
-    Log.log('Doing login')
+    Log.log('Doing signup')
     event.preventDefault();
-    console.log(this.loginForm.value);
+    console.log(this.signupForm.value);
     //this.viewport.push(SecondPage)
   }
 }
