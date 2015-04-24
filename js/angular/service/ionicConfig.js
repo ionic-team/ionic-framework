@@ -399,7 +399,7 @@ IonicModule
 
     function setStyles(ctrl, opacity, titleX, backTextX) {
       var css = {};
-      css[ionic.CSS.TRANSITION_DURATION] = d.shouldAnimate ? '' : 0;
+      css[ionic.CSS.TRANSITION_DURATION] = d.shouldAnimate ? '' : '0ms';
       css.opacity = opacity === 1 ? '' : opacity;
 
       ctrl.setCss('buttons-left', css);
