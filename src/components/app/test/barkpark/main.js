@@ -4,7 +4,7 @@ import {FormBuilder, Validators, FormDirectives, CongrolGroup} from 'angular2/fo
 
 import {Log} from 'ionic2/util'
 
-import {NavViewport, View, Button} from 'ionic2/ionic2'
+import {NavViewport, View, Button, Input} from 'ionic2/ionic2'
 
 @Component({
   selector: 'login-page'

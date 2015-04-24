@@ -4,8 +4,10 @@
 // Mixins
 @import
   "components/app/mixins/flex",
+  "components/app/mixins/form",
   "components/app/mixins/transform",
   "components/app/mixins/transition",
+  "components/app/mixins/typography",
   "components/app/mixins/util";
 
 
@@ -34,7 +36,7 @@
   "components/checkbox/checkbox",
   "components/content/content",
   "components/item/item",
-  "components/input/input",
+  "components/form/form",
   "components/layout/layout",
   "components/list/list",
   "components/modal/modal",

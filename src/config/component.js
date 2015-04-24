@@ -18,8 +18,6 @@ export class IonicComponent {
     ComponentClass.config = this
     this.componentCssName = util.pascalCaseToDashCase(ComponentClass.name)
 
-    console.log(propClasses);
-
     this.bind = bind || (bind = {})
     for (let attrName in bind) {
       let binding = bind[attrName]

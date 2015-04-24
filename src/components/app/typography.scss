@@ -10,9 +10,13 @@ $font-family-light-sans-serif:    "HelveticaNeue-Light", "Roboto-Light", sans-se
 $font-family-base:                $font-family-sans-serif !default;
 $font-size-root:                  62.5% !default;
 $font-size-base:                  1.4rem !default; // 1.4rem == 14px
+$font-size-small:                 1rem !default;
 
 $line-height-base:                1.4 !default;
-$line-height-computed:            floor($font-size-base * $line-height-base) !default; // ~20px
+//$line-height-computed:            floor($font-size-base * $line-height-base) !default; // ~20px
+$line-height-computed: 3rem;
+$line-height-large:               1.33 !default;
+$line-height-small:               1.5 !default;
 
 $headings-font-family:            $font-family-base !default;
 $headings-font-weight:            500 !default;
