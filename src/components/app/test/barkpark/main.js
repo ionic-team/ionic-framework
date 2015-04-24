@@ -4,7 +4,7 @@ import {FormBuilder, Validators, FormDirectives, CongrolGroup} from 'angular2/fo
 
 import {Log} from 'ionic2/util'
 
-import {NavViewport, View, Button, Input, Tabs, Tab, Content, NavPane, Aside} from 'ionic2/ionic2'
+import {List, Item, NavViewport, View, Button, Input, Tabs, Tab, Content, NavPane, Aside} from 'ionic2/ionic2'
 
 @Component({
   selector: 'login-page'
@@ -93,7 +93,7 @@ export class AppPage {
 @Component({ selector: 'stream-tab' })
 @Template({
   url: 'pages/tabs/home.html',
-  directives: [For, View, Content]
+  directives: [For, View, Content, List, Item]
 })
 class StreamTab {
   constructor(navPane: NavPane) {
