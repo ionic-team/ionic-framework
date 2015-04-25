@@ -28,8 +28,13 @@ class IonicApp {
     q.then(()=> {
       console.log('animation complete')
     });
+  }
 
+  percent(ev) {
+    let ratio = parseFloat(ev.srcElement.value) / 100;
+    console.log('percent ratio', ratio)
 
+    this.animation.percent(ratio)
   }
 
   stop() {

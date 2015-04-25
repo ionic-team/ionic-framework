@@ -635,8 +635,6 @@ export function animationProcess(action, elements, elementsIndex, options, prope
             parsePropertyValue(), calculateUnitRatios(), Element-Specific Units
           **********************************************************************/
 
-          /* Note: IE8 rounds to the nearest pixel when returning CSS values, thus we perform conversions using a measurement
-             of 100 (instead of 1) to give our ratios a precision of at least 2 decimal values. */
           var measurement = 100,
               unitRatios = {};
 

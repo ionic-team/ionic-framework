@@ -12,6 +12,9 @@
 
   </div>
 
+  <p>
+    <input type="range" (input)="percent($event)" value="0" min="0" max="100" style="width:180px">
+  </p>
 
   <p>
     <button class="button button-primary" (click)="start($event)">Collide Start</button>
@@ -22,7 +25,7 @@
     <button class="button button-primary" (click)="velocityStart($event)">Velocity Start</button>
   </p>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.2/velocity.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.2/velocity.js"></script>
 
 </body>
 </html>

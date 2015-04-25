@@ -1,24 +1,23 @@
 import {Collide} from './collide'
 import {animationStart} from './animation-start'
 import {animationStop} from './animation-stop'
+import {animationPercent} from './animation-percent'
 import {startTick} from './tick'
 
 
 export class Animation {
   constructor() {
-    this._elements = null
+    this._elements = null;
 
-    this._options = {}
-    this._properties = {}
-
-    this.isRunning = false
+    this._options = {};
+    this._properties = {};
   }
 
   elements(ele) {
     if (!ele) {
-      this._elements = null
+      this._elements = null;
     } else {
-      this._elements = !ele.length ? [ele] : ele
+      this._elements = !ele.length ? [ele] : ele;
     }
   }
 
@@ -28,17 +27,21 @@ export class Animation {
   *************/
 
   start() {
-    let promise = animationStart(this._elements, this._options, this._properties)
+    let promise = animationStart(this._elements, this._options, this._properties);
 
     startTick();
 
-    return promise
+    return promise;
   }
 
   stop() {
-    let promise = animationStop(this._elements, this._options, this._properties)
+    let promise = animationStop(this._elements, this._options, this._properties);
 
-    return promise
+    return promise;
+  }
+
+  percent(ratio) {
+    animationPercent(ratio, this._elements, this._options, this._properties);
   }
 
 
@@ -46,23 +49,23 @@ export class Animation {
      Options
   ***********************/
   options(val) {
-    this._options = val || {}
+    this._options = val || {};
   }
 
   option(key, val) {
-    this._options[key] = val
+    this._options[key] = val;
   }
 
   removeOption(key) {
-    delete this._options[key]
+    delete this._options[key];
   }
 
   duration(val) {
-    this._options.duration = val
+    this._options.duration = val;
   }
 
   easing(val) {
-    this._options.easing = val
+    this._options.easing = val;
   }
 
 
@@ -71,15 +74,24 @@ export class Animation {
   **************************/
 
   properties(val) {
-    this._properties = val || {}
+    this._properties = val || {};
   }
 
   property(key, val) {
-    this._properties[key] = val
+    this._properties[key] = val;
   }
 
   removeProperty(key) {
-    delete this._properties[key]
+    delete this._properties[key];
+  }
+
+
+  /**************************
+     Misc
+  **************************/
+
+  debug(val) {
+    Collide.debug = !!val;
   }
 
 }
