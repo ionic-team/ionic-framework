@@ -1,11 +1,12 @@
-import {bootstrap} from 'angular2/core'
-import {For, Component, Template, Parent} from 'angular2/angular2'
-import {FormBuilder, Validators, FormDirectives, CongrolGroup} from 'angular2/forms';
+import {
+  For, Component, Template, Parent, bootstrap,
+  FormBuilder, Validators, FormDirectives, CongrolGroup
+} from 'angular2/angular2'
 
-import {Log} from 'ionic2/util'
-import {Router} from 'ionic2/routing/router'
+import {Log} from 'ionic/util'
+import {Router} from 'ionic/routing/router'
 
-import {List, Item, NavViewport, View, Button, Input, Tabs, Tab, Content, NavPane, Aside} from 'ionic2/ionic2'
+import {List, Item, NavViewport, View, Button, Input, Tabs, Tab, Content, NavPane, Aside} from 'ionic/ionic'
 
 @Component({
   selector: 'login-page'
