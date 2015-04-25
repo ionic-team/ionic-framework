@@ -4,7 +4,7 @@ import {IonicComponent} from 'ionic/config/component'
 
 @Component({
   selector: 'ion-checkbox',
-  bind: {
+  properties: {
     checked: 'checked'
   },
   events: {
@@ -66,7 +66,7 @@ export class Checkbox {
 }
 
 new IonicComponent(Checkbox, {
-  bind: {
+  properties: {
     iconOff: {
       defaults: {
         ios: 'ion-ios-circle-outline',

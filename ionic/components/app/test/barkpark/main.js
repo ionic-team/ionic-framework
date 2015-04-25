@@ -176,3 +176,5 @@ class IonicApp {
     }, 2000);
   }
 }
+
+bootstrap(IonicApp);

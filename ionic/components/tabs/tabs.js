@@ -3,7 +3,7 @@ import {IonicComponent} from 'ionic/config/component'
 
 @Component({
   selector: 'ion-tabs',
-  bind: {
+  properties: {
     tabBarPlacement: 'tab-bar-placement',
     tabBarIcons: 'tab-bar-icons'
   }
@@ -74,7 +74,7 @@ export class Tabs  {
 }
 
 new IonicComponent(Tabs, {
-  bind: {
+  properties: {
     tabBarPlacement: {
       defaults: {
         ios: 'bottom',

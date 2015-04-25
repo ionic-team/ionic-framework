@@ -3,22 +3,24 @@ import {
   Parent,
   NgElement,
   DynamicComponentLoader,
-  DynamicComponentLocation,
-  Optional
+  ElementRef
 } from 'angular2/angular2'
+import {Optional} from 'angular2/src/di/annotations'
 import {NavViewport} from 'ionic/components/nav-viewport/nav-viewport'
 import {Tab} from 'ionic/components/tabs/tab'
 
+console.log('names',DynamicComponent.name, Parent.name, NgElement.name, DynamicComponentLoader.name, ElementRef, Optional)
+
 @DynamicComponent({
   selector: '.nav-pane',
-  bind: {
+  properties: {
     item: 'item'
   }
 })
 export class NavPane {
   constructor(
     loader: DynamicComponentLoader,
-    location: DynamicComponentLocation,
+    location: ElementRef,
     @NgElement() element: NgElement,
 
     // FIXME: this is temporary until ng2 lets us inject tabs as a NavViewport
@@ -36,7 +38,7 @@ export class NavPane {
     this.initialized = true;
     this.Class = navItem.Class;
 
-    this._loader.load(navItem.Class, this._location).then(instance => {
+    this._loader.loadIntoExistingLocation(navItem.Class, this._location).then(instance => {
       this.instance = instance
       navItem.finishSetup(this, instance)
     })

@@ -5,7 +5,7 @@ import {IonicComponent} from 'ionic/config/component'
 
 @Component({
   selector: 'ion-view',
-  bind: {
+  properties: {
     title: 'nav-title'
   }
 })

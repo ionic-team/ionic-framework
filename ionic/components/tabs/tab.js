@@ -15,7 +15,7 @@ import {IonicComponent} from 'ionic/config/component'
 
 @Component({
   selector: 'ion-tab',
-  bind: {
+  properties: {
     title: 'tab-title',
     icon: 'tab-icon',
     initial: 'initial'

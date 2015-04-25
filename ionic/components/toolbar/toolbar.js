@@ -1,12 +1,11 @@
-import {NgElement, Component, View as NgView, Ancestor} from 'angular2/angular2'
-import {Optional} from 'angular2/src/di/annotations'
+import {NgElement, Component, View as NgView, Ancestor, Optional} from 'angular2/angular2'
 import {BackButton} from 'ionic/components/toolbar/back-button'
 import {IonicComponent} from 'ionic/config/component'
 import {raf} from 'ionic/util/dom'
 
 @Component({
   selector: 'ion-toolbar',
-  bind: {
+  properties: {
     title: 'nav-title'
   }
 })

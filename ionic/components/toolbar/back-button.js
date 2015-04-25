@@ -25,7 +25,7 @@ export class BackButton {
 }
 
 new IonicComponent(BackButton, {
-  bind: {
+  properties: {
     icon: {
       defaults: {
         ios: 'ion-ios-arrow-back',

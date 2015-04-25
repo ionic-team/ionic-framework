@@ -4,7 +4,7 @@ import {IonicComponent} from 'ionic/config/component'
 
 @Component({
   selector: 'ion-switch',
-  bind: {
+  properties: {
     checked: 'checked'
   },
   events: {

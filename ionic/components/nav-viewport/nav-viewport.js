@@ -22,7 +22,7 @@ class NavStack {
 
 @Component({
   selector: 'ion-nav-viewport',
-  bind: {
+  properties: {
     initial: 'initial'
   },
   services: [

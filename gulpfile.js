@@ -75,7 +75,7 @@ gulp.task('clean', function(done) {
   del([buildConfig.dist], done)
 })
 
-gulp.task('e2e', ['ionic-js', 'sass'], function() {
+gulp.task('e2e', ['ionic-js', 'sass', 'ng2-copy'], function() {
   var indexContents = _.template( fs.readFileSync('scripts/e2e/index.template.html') )({
     buildConfig: buildConfig
   });
@@ -118,9 +118,11 @@ gulp.task('e2e', ['ionic-js', 'sass'], function() {
             'ionic/ionic': { build: false },
           },
           map: {
-            hammer: 'node_modules/hammerjs/hammer'
+            hammer: 'node_modules/hammerjs/hammer',
+            rx: 'node_modules/rx'
           },
           paths: {
+            'angular2/*': 'dist/lib/angular2/*.js',
             'app/*': path.dirname(file.path) + '/*.js'
           },
         });
@@ -162,7 +164,12 @@ gulp.task('e2e', ['ionic-js', 'sass'], function() {
 
 })
 
-gulp.task('ng2', ['lib'], function() {
+gulp.task('ng2-copy', function() {
+  return gulp.src('node_modules/angular2/es6/prod/**/*.es6')
+    .pipe(rename({ extname: '.js' }))
+    .pipe(gulp.dest(path.join(buildConfig.distLib, 'angular2')));
+});
+gulp.task('ng2', ['lib', 'ng2-copy'], function() {
   var builder = new SystemJsBuilder({
     paths: {
       "angular2/*": "node_modules/angular2/es6/prod/*.es6",

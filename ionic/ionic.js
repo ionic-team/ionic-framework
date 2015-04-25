@@ -1,3 +1,11 @@
+import {NgElement} from 'angular2/angular2'
+Object.defineProperties(NgElement.prototype, {
+  domElement: {
+    get: function() {
+      return this._view.render.delegate.boundElements[this._boundElementIndex];
+    }
+  }
+});
 
 export * from 'ionic/components'
 export * from 'ionic/platform/platform'

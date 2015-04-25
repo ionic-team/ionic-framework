@@ -4,7 +4,7 @@ import {IonicComponent} from 'ionic/config/component'
 
 @Component({
   selector: 'ion-search-bar',
-  bind: {
+  properties: {
     cancelText: 'cancel-text',
     placeholderText: 'placeholder-text'
   }
@@ -25,7 +25,7 @@ export class SearchBar {
 }
 
 new IonicComponent(SearchBar, {
-  bind: {
+  properties: {
     cancelText: {
       defaults: {
         ios: 'Cancel',

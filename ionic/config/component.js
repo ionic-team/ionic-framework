@@ -106,7 +106,7 @@ export class IonicComponent {
 /*
 @IonicComponent({
   selector: 'ion-back-button',
-  bind: {
+  properties: {
     icon: {
       ios: 'ion-back-ios',
       android: 'ion-back-android',
