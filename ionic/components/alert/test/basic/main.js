@@ -1,9 +1,9 @@
-import {Component, View, bootstrap} from 'angular2/angular2';
-import {Alert} from 'ionic/ionic';
+import {Component, View as NgView, bootstrap} from 'angular2/angular2';
+import {Alert} from 'ionic/components/alert/alert';
 
 
 @Component({ selector: '[ion-app]' })
-@View({
+@NgView({
   templateUrl: 'main.html',
   directives: [Alert]
 })

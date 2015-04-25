@@ -1,4 +1,4 @@
-import {NgElement, Component, View} from 'angular2/angular2'
+import {NgElement, Component, View as NgView} from 'angular2/angular2'
 import {IonicComponent} from 'ionic/config/component'
 import {
   ItemPrimaryOptions, ItemSecondaryOptions
@@ -8,9 +8,9 @@ import {
 } from 'ionic/components/item/item-swipe-buttons'
 
 @Component({
-  selector: 'ion-item'
+  selector: 'ion-item,[ion-item]'
 })
-@View({
+@NgView({
   template: `
     <content select="ion-primary-options"></content>
     <content select="ion-primary-swipe-buttons"></content>

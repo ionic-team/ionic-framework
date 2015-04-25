@@ -1,23 +1,22 @@
-import {NgElement, Component, View} from 'angular2/angular2'
-import {ComponentConfig} from 'ionic/config/component-config';
+import {NgElement, Component, View as NgView} from 'angular2/angular2'
+import {IonicComponent} from 'ionic/config/component'
 
-export let RadioConfig = new ComponentConfig('radio');
 
 @Component({
-  selector: 'ion-radio-group',
-  injectables: [RadioConfig]
+  selector: 'ion-radio-group'
 })
-@View({
+@NgView({
   template: `<content></content>`
 })
 export class RadioGroup {
   constructor(
-    configFactory: RadioConfig,
     element: NgElement
   ) {
     this.domElement = element.domElement
+    this.config = RadioGroup.config.invoke(this)
+
     this.domElement.classList.add('list')
-    this.domElement.classList.add('radio-group')
-    configFactory.create(this)
   }
 }
+
+new IonicComponent(RadioGroup, {})

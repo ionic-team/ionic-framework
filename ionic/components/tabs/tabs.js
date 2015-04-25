@@ -1,33 +1,33 @@
-import {NgElement, Component, View, For} from 'angular2/angular2'
+import {NgElement, Component, View as NgView, For, PropertySetter} from 'angular2/angular2'
 import {IonicComponent} from 'ionic/config/component'
 
 @Component({
   selector: 'ion-tabs',
   bind: {
-    placement: 'placement',
-    tabBarIcons: 'tab-bar-icons',
-    tabBarText: 'tab-bar-text'
+    tabBarPlacement: 'tab-bar-placement',
+    tabBarIcons: 'tab-bar-icons'
   }
 })
-@View({
+@NgView({
   template: `
     <header class="toolbar-container">
       <!-- COLLECTION OF TOOLBARS FOR EACH VIEW WITHIN EACH TAB-VIEWPORT -->
       <!-- TOOLBARS FOR EACH VIEW SHOULD HAVE THE SAME CONTEXT AS ITS VIEW -->
     </header>
 
-    <nav class="tab-bar-container">
+    <nav class="tab-bar-container" role="tablist"
+         [attr.aria-activedescendant]="'tab-item-' + selectedTab.tabId">
       <div class="tab-bar">
-        <a *for="#tab of tabs"
+        <button *for="#t of tabs"
+          role="tab"
           class="tab-bar-item"
-          [class.tab-active]="tab.isSelected"
-          (^click)="onClickTabItem($event, tab)">
-            <icon class="tab-bar-item-icon ion-home"
-              [hidden]="tabBarIcons=='none'"
-              [class.tab-bar-icon-bottom]="tabBarIcons=='bottom'"
-              [class.tab-bar-icon-top]="tabBarIcons=='top'"></icon>
-            <span class="tab-bar-item-text" [hidden]="tabBarText=='none'">{{tab.title}}</span>
-        </a>
+          [attr.id]="'tab-item-' + t.tabId"
+          [attr.aria-controls]="'tab-content-' + t.tabId"
+          [attr.aria-selected]="t.isSelected"
+          (^click)="onClickTabItem($event, t)">
+            <icon [class-name]="'tab-bar-item-icon ' + t.icon" [hidden]="!t.icon"></icon>
+            <span class="tab-bar-item-text" [hidden]="!t.title">{{t.title}}</span>
+        </button>
       </div>
     </nav>
 
@@ -42,21 +42,8 @@ export class Tabs  {
     @NgElement() ngElement: NgElement
   ) {
     this.domElement = ngElement.domElement
-
-    // should be used to cover up sibling .nav-pane's and it's parent
-    this.domElement.classList.add('nav-pane-cover-parent')
-
-    // .tab-bar-top/bottom should be added to the entire element when specified
-    // TODO: MAKE MORE GOOD!!!
-    setTimeout(() => {
-      if (this.placement == 'top') {
-        this.domElement.classList.add('tab-bar-top')
-      } else {
-        this.domElement.classList.add('tab-bar-bottom')
-      }
-    })
-
     this.config = Tabs.config.invoke(this)
+
     this.tabs = []
   }
 
@@ -88,7 +75,7 @@ export class Tabs  {
 
 new IonicComponent(Tabs, {
   bind: {
-    placement: {
+    tabBarPlacement: {
       defaults: {
         ios: 'bottom',
         android: 'top',
@@ -98,10 +85,9 @@ new IonicComponent(Tabs, {
     tabBarIcons: {
       defaults: {
         ios: 'top',
-        android: 'none',
+        android: 'top',
         core: 'top'
       }
-    },
-    tabBarText: {}
+    }
   }
 })

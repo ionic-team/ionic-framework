@@ -1,5 +1,5 @@
 import {Component, View as NgView, bootstrap} from 'angular2/angular2'
-import {View, Tabs, Tab} from 'ionic/components'
+import {View, Tabs, Tab} from 'ionic/ionic'
 import {webview} from 'ionic/webview/webview'
 import {cordova} from 'ionic/webview/cordova/cordova'
 import {nodeWebkit} from 'ionic/webview/node-webkit/node-webkit'

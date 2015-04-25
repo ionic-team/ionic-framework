@@ -11,7 +11,8 @@ let platformName = platform.getName()
 export class IonicComponent {
   constructor(ComponentClass, {
     bind,
-    delegates
+    delegates,
+    propClasses
   }) {
     // TODO give errors if not providing valid delegates
     ComponentClass.config = this
@@ -27,7 +28,9 @@ export class IonicComponent {
       }
     }
 
+
     this.delegates = delegates || (delegates = {})
+    this.propClasses = propClasses || (propClasses = []);
     // for (let delegateName of delegates) {
     //   let delegate = delegates[delegateName]
     // }
@@ -42,6 +45,13 @@ export class IonicComponent {
     instance.domElement.classList.add(this.componentCssName)
     instance.domElement.classList.add(`${this.componentCssName}-${platformName}`)
 
+    // For each property class, check if it exists on the element and add the
+    // corresponding classname for it
+    for (let propClass of this.propClasses) {
+      if(instance.domElement.hasAttribute(propClass)) {
+        instance.domElement.classList.add(`${this.componentCssName}-${propClass}`)
+      }
+    }
 
     /****** TODO: HACK!!! MAKE MORE GOOD!!! ********/
     /*
@@ -60,13 +70,16 @@ export class IonicComponent {
     /****** TODO: HACK!!! MAKE MORE GOOD!!! ********/
 
 
+    // Check and apply and property classes (properties that should be
+    // converted to class names). For example, <button primary> should
+    // add the class button-primary
 
     for (let attrName in this.bind) {
       let binding = this.bind[attrName]
       let defaultValue = binding._defaultValue
       if (!instance[binding.property] && defaultValue) {
         instance[binding.property] = defaultValue
-        instance.domElement.setAttribute(attrName, defaultValue)
+        instance.domElement.setAttribute(util.pascalCaseToDashCase(attrName), defaultValue)
       }
     }
 

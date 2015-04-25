@@ -1,18 +1,14 @@
-import {
-  For, Component, Template, Parent, bootstrap,
-  FormBuilder, Validators, FormDirectives, CongrolGroup
-} from 'angular2/angular2'
-
-import {Log} from 'ionic/util'
 import {Router} from 'ionic/routing/router'
-
+import {For, Component, View as NgView, Parent, bootstrap} from 'angular2/angular2'
+import {FormBuilder, Validators, FormDirectives, ControlGroup} from 'angular2/forms';
+import {Log} from 'ionic/util'
 import {List, Item, NavViewport, View, Button, Input, Tabs, Tab, Content, NavPane, Aside} from 'ionic/ionic'
 
 @Component({
   selector: 'login-page'
 })
-@Template({
-  url: 'pages/login.html',
+@NgView({
+  templateUrl: 'pages/login.html',
   directives: [View, FormDirectives, Button, Input]
 })
 export class LoginPage {
@@ -44,8 +40,8 @@ export class LoginPage {
 @Component({
   selector: 'signup-page'
 })
-@Template({
-  url: 'pages/signup.html',
+@NgView({
+  templateUrl: 'pages/signup.html',
   directives: [View, FormDirectives, Button, Input]
 })
 export class SignupPage {
@@ -81,8 +77,8 @@ export class SignupPage {
 @Component({
   selector: 'app-page'
 })
-@Template({
-  url: 'pages/app.html',
+@NgView({
+  templateUrl: 'pages/app.html',
   directives: [View, FormDirectives, Button, Input, Tabs, Tab]
 })
 export class AppPage {
@@ -93,8 +89,8 @@ export class AppPage {
 }
 
 @Component({ selector: 'stream-tab' })
-@Template({
-  url: 'pages/tabs/home.html',
+@NgView({
+  templateUrl: 'pages/tabs/home.html',
   directives: [For, View, Content, List, Item]
 })
 class StreamTab {
@@ -116,8 +112,8 @@ class StreamTab {
 }
 
 @Component({ selector: 'post-detail-tab' })
-@Template({
-  url: 'pages/post/detail.html',
+@NgView({
+  templateUrl: 'pages/post/detail.html',
   directives: [View, Content]
 })
 class PostDetail {
@@ -131,8 +127,8 @@ class PostDetail {
 }
 
 @Component({ selector: 'splash-page' })
-@Template({
-  url: 'pages/splash.html',
+@NgView({
+  templateUrl: 'pages/splash.html',
   directives: [View, Content]
 })
 class SplashPage {
@@ -142,14 +138,13 @@ class SplashPage {
 }
 
 
-
 /**
  * Main app entry point
  */
 @Component({ selector: '[ion-app]' })
-@Template({
+@NgView({
   directives: [NavViewport],
-  url: 'main.html'
+  templateUrl: 'main.html'
 })
 class IonicApp {
   constructor() {
@@ -179,10 +174,5 @@ class IonicApp {
       })
       */
     }, 2000);
-
-    console.log('IonicApp Start')
   }
 }
-
-bootstrap(IonicApp)
-

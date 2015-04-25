@@ -1,13 +1,11 @@
-import {NgElement, Component, View} from 'angular2/angular2'
-import {ComponentConfig} from 'ionic/config/component-config';
+import {NgElement, Component, View as NgView} from 'angular2/angular2'
+import {IonicComponent} from 'ionic/config/component'
 
-export let RadioConfig = new ComponentConfig('radio');
 
 @Component({
-  selector: 'ion-radio',
-  injectables: [RadioConfig]
+  selector: 'ion-radio'
 })
-@View({
+@NgView({
   template: `
     <div class="item-content">
 
@@ -25,13 +23,14 @@ export let RadioConfig = new ComponentConfig('radio');
 })
 export class RadioButton {
   constructor(
-    configFactory: RadioConfig,
     element: NgElement
   ) {
     this.domElement = element.domElement
+    this.config = RadioButton.config.invoke(this)
+
     this.domElement.classList.add('item')
     this.domElement.setAttribute('aria-checked', true)
-
-    configFactory.create(this)
   }
 }
+
+new IonicComponent(RadioButton, {})

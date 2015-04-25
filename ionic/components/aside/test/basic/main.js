@@ -1,4 +1,6 @@
-import {Aside, Content, View} from 'ionic/ionic';
+import {Aside} from 'ionic/components/aside/aside';
+import {Content} from 'ionic/components/content/content';
+import {View} from 'ionic/components/view/view';
 import {View as NgView, Component, bootstrap} from 'angular2/angular2';
 
 @Component({

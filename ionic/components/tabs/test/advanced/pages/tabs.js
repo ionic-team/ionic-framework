@@ -1,5 +1,6 @@
 import {Component, View as NgView, Parent} from 'angular2/angular2'
-import {View, Tabs, Tab, Aside, Content, NavPane} from 'ionic/components'
+import {View, Tabs, Tab, Aside, Content, NavPane} from 'ionic/ionic'
+
 
 @Component({
   selector: 'tabs-page'

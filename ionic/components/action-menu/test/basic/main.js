@@ -1,9 +1,9 @@
-import {Component, View, bootstrap} from 'angular2/angular2';
-import {ActionMenu} from 'ionic/ionic';
+import {Component, View as NgView, bootstrap} from 'angular2/angular2';
+import {ActionMenu} from 'ionic/components/action-menu/action-menu';
 
 
 @Component({ selector: '[ion-app]' })
-@View({
+@NgView({
   templateUrl: 'main.html',
   directives: [ActionMenu]
 })

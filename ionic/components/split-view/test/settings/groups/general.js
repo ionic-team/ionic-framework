@@ -1,10 +1,10 @@
-import {Component, View} from 'angular2/angular2'
-import {View} from 'ionic/components'
+import {Component, View as NgView} from 'angular2/angular2'
+import {View} from 'ionic/ionic'
 
 @Component({
   selector: 'settings-general'
 })
-@View({
+@NgView({
   template: `
 <ion-view nav-title="General Stuff">
   General Settings

@@ -1,5 +1,5 @@
 import {Component, View as NgView, Parent} from 'angular2/angular2'
-import {NavViewport, View} from 'ionic/components'
+import {NavViewport, View} from 'ionic/ionic'
 import {SecondPage} from 'app/pages/second-page'
 
 @Component({

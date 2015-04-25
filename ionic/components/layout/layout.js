@@ -1,10 +1,10 @@
-import {NgElement, Component, View, Parent} from 'angular2/angular2'
+import {NgElement, Component, View as NgView, Parent} from 'angular2/angular2'
 
 
 @Component({
   selector: 'layout,[layout]'
 })
-@View({
+@NgView({
   template: `
     <content></content>
     <object class="ele-qry" data="about:blank"></object>

@@ -1,11 +1,11 @@
-import {NgElement, Component, View, Parent} from 'angular2/angular2'
+import {NgElement, Component, View as NgView, Parent} from 'angular2/angular2'
 import {IonicComponent} from 'ionic/config/component'
 
 
 @Component({
   selector: 'ion-alert'
 })
-@View({
+@NgView({
   template: `
     <div class="overlay-backdrop"></div>
     <div class="overlay-container">
@@ -27,13 +27,8 @@ export class Alert {
     @NgElement() ngElement:NgElement
   ) {
     this.domElement = ngElement.domElement
-    this.domElement.classList.add('pane')
-    this.domElement.classList.add('pane-overlay')
-
     this.config = Alert.config.invoke(this)
   }
 }
 
-new IonicComponent(Alert, {
-  bind: {}
-})
+new IonicComponent(Alert, {})

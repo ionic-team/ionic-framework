@@ -1,15 +1,13 @@
 import {NgElement, Component, View as NgView, Parent, Ancestor} from 'angular2/angular2'
 import {Toolbar} from 'ionic/components/toolbar/toolbar'
-import {ComponentConfig} from 'ionic/config/component-config'
+import {IonicComponent} from 'ionic/config/component'
 
-export let ViewConfig = new ComponentConfig('view')
 
 @Component({
   selector: 'ion-view',
   bind: {
     title: 'nav-title'
-  },
-  injectables: [ViewConfig]
+  }
 })
 @NgView({
   template: `
@@ -23,12 +21,11 @@ export let ViewConfig = new ComponentConfig('view')
 })
 export class View {
   constructor(
-    configFactory: ViewConfig,
     @NgElement() ngElement:NgElement
   ) {
     this.domElement = ngElement.domElement
-    this.domElement.classList.add('pane')
-    this.config = configFactory.create(this)
+    this.config = View.config.invoke(this)
+
 
     /*** TODO: MAKE MORE GOOD!! HACK HACK HACK!!!!!!!!! *****/
     /*
@@ -65,3 +62,5 @@ export class View {
 
   }
 }
+
+new IonicComponent(View, {})

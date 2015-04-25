@@ -1,4 +1,11 @@
-import {DynamicComponent, Parent, NgElement, DynamicComponentLocation, DynamicComponentLoader, Optional} from 'angular2/angular2'
+import {
+  DynamicComponent,
+  Parent,
+  NgElement,
+  DynamicComponentLoader,
+  DynamicComponentLocation,
+  Optional
+} from 'angular2/angular2'
 import {NavViewport} from 'ionic/components/nav-viewport/nav-viewport'
 import {Tab} from 'ionic/components/tabs/tab'
 
@@ -53,3 +60,6 @@ export class NavPane {
     return this.viewport.popTo(index, opts)
   }
 }
+
+/*
+ Ideal API: inject a tN

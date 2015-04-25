@@ -1,5 +1,5 @@
 import {Component, View as NgView} from 'angular2/angular2'
-import {View, NavPane, Content} from 'ionic/components'
+import {View, NavPane, Content} from 'ionic/ionic'
 import {TabsPage} from 'app/pages/tabs'
 
 @Component({

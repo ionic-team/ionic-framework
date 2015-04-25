@@ -1,5 +1,5 @@
 import {Component, View as NgView, bootstrap} from 'angular2/angular2';
-import {View, Tabs, Tab} from 'ionic/components';
+import {View, Tabs, Tab} from 'ionic/ionic';
 
 
 @Component({ selector: '[ion-app]' })

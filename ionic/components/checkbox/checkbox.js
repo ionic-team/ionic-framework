@@ -1,8 +1,6 @@
-import {Component, View, NgElement, PropertySetter} from 'angular2/angular2'
-import {ComponentConfig} from 'ionic/config/component-config'
+import {Component, View as NgView, NgElement, PropertySetter} from 'angular2/angular2'
 import {IonicComponent} from 'ionic/config/component'
 
-export let CheckboxConfig = new ComponentConfig('checkbox')
 
 @Component({
   selector: 'ion-checkbox',
@@ -11,10 +9,9 @@ export let CheckboxConfig = new ComponentConfig('checkbox')
   },
   events: {
     '^click': 'onClick()'
-  },
-  injectables: [CheckboxConfig]
+  }
 })
-@View({
+@NgView({
   template: `
   <div class="item-media media-checkbox">
     <icon class="checkbox-off"></icon>
@@ -31,7 +28,6 @@ export let CheckboxConfig = new ComponentConfig('checkbox')
 })
 export class Checkbox {
   constructor(
-    configFactory: CheckboxConfig,
     @NgElement() ngElement: NgElement,
     @PropertySetter('attr.role') setAriaRole: Function,
     @PropertySetter('attr.aria-checked') setAriaChecked: Function,
