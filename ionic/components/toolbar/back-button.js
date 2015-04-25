@@ -1,11 +1,11 @@
-import {NgElement, Component, Template} from 'angular2/angular2'
-import {IonicComponent} from 'ionic2/config/component'
+import {NgElement, Component, View} from 'angular2/angular2'
+import {IonicComponent} from 'ionic/config/component'
 
 @Component({
   selector: '.back-button',
 })
-@Template({
-  inline: `
+@View({
+  template: `
     <icon [class-name]="'back-button-icon ' + icon"></icon>
     <span class="back-button-text">
       <span class="back-default">{{ text }}</span>

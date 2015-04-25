@@ -1,15 +1,10 @@
-import {bootstrap} from 'angular2/core';
-import {Component, Template} from 'angular2/angular2';
-import {View} from 'ionic2/components/view/view';
-import {Content} from 'ionic2/components/content/content';
-import {Icon} from 'ionic2/components/icon/icon';
-import {RadioGroup} from 'ionic2/components/radio/radio-group';
-import {RadioButton} from 'ionic2/components/radio/radio-button';
+import {Component, View as NgView, bootstrap} from 'angular2/angular2';
+import {View, Content, Icon, RadioGroup, RadioButton} from 'ionic/components';
 
 
 @Component({ selector: '[ion-app]' })
-@Template({
-  url: 'main.html',
+@NgView({
+  templateUrl: 'main.html',
   directives: [View, Content, RadioGroup, RadioButton]
 })
 class IonicApp {

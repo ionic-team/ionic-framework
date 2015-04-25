@@ -1,17 +1,17 @@
-import {NgElement, Component, Template} from 'angular2/angular2'
-import {IonicComponent} from 'ionic2/config/component'
+import {NgElement, Component, View} from 'angular2/angular2'
+import {IonicComponent} from 'ionic/config/component'
 import {
   ItemPrimaryOptions, ItemSecondaryOptions
-} from 'ionic2/components/item/item-options'
+} from 'ionic/components/item/item-options'
 import {
   ItemPrimarySwipeButtons, ItemSecondarySwipeButtons
-} from 'ionic2/components/item/item-swipe-buttons'
+} from 'ionic/components/item/item-swipe-buttons'
 
 @Component({
-  selector: 'ion-item,[ion-item]'
+  selector: 'ion-item'
 })
-@Template({
-  inline: `
+@View({
+  template: `
     <content select="ion-primary-options"></content>
     <content select="ion-primary-swipe-buttons"></content>
     <div class="item-content">
@@ -57,7 +57,7 @@ function clsSetter(el, name) {
   return (isSet) => el.classList[isSet?'add':'remove'](name)
 }
 
-import {dom} from 'ionic2/util'
+import {dom} from 'ionic/util'
 
 class Slideable {
   constructor(slideElement: Element) {

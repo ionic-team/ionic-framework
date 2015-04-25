@@ -1,8 +1,8 @@
-import {Component, Parent, Decorator, Template, NgElement} from 'angular2/angular2'
-import {NavViewport} from 'ionic2/components/nav-viewport/nav-viewport'
-import {View} from 'ionic2/components/view/view'
-import {NavPane} from 'ionic2/components/nav-pane/nav-pane'
-import * as util from 'ionic2/util'
+import {Component, Parent, Decorator, View as NgView, NgElement} from 'angular2/angular2'
+import {NavViewport} from 'ionic/components/nav-viewport/nav-viewport'
+import {View} from 'ionic/components/view/view'
+import {NavPane} from 'ionic/components/nav-pane/nav-pane'
+import * as util from 'ionic/util'
 
 // TODO consider more explicit API, a la tabs
 
@@ -29,8 +29,8 @@ class SplitViewportDecorator {
     navTitle: 'navTitle'
   },
 })
-@Template({
-  inline: `
+@NgView({
+  template: `
   <ion-view [nav-title]="navTitle" class="split-view">
     <div class="pane-container">
       <content></content>

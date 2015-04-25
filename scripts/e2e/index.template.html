@@ -2,25 +2,18 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-
+    <meta charset="UTF-8" />
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+
     <link rel="stylesheet" href="<%= PREFIX %>/css/ionic.css" />
-    <% buildConfig.scripts.forEach(function(src) { %>
-      <script src="<%= PREFIX %>/lib/<%= src %>"></script>
+    <% buildConfig.scripts.forEach(function(script) {
+      var src = script.to || script; %><script src="<%= PREFIX %>/lib/<%= src %>"></script>
     <% }); %>
-    <script>
-      System.config({
-        baseURL: '<%= PREFIX %>/lib',
-        traceurOptions: <%= JSON.stringify(buildConfig.traceurOptions) %>,
-        map: {
-          'app': location.pathname.replace(/\/(index.html)?$/,''),
-          'rx/dist/rx.all': 'rx.all',
-        }
-      })
-      System.import('app/main');
-    </script>
+    <script src="main.js"></script>
 </head>
 <body ion-app>
 </body>
+<script>
+ System.import('app/main').catch(console.error.bind(console));
+</script>
 </html>

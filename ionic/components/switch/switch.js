@@ -1,6 +1,7 @@
-import {Component, Template, NgElement, PropertySetter} from 'angular2/angular2'
-import {IonicComponent} from 'ionic2/config/component'
+import {Component, View, NgElement, PropertySetter} from 'angular2/angular2'
+import {ComponentConfig} from 'ionic/config/component-config'
 
+export let SwitchConfig = new ComponentConfig('switch')
 
 @Component({
   selector: 'ion-switch',
@@ -9,10 +10,11 @@ import {IonicComponent} from 'ionic2/config/component'
   },
   events: {
     'click': 'onClick()'
-  }
+  },
+  injectables: [SwitchConfig]
 })
-@Template({
-  inline: `
+@View({
+  template: `
   <div class="item-content">
 
     <div class="item-title">
@@ -27,27 +29,30 @@ import {IonicComponent} from 'ionic2/config/component'
 })
 export class Switch {
   constructor(
+    configFactory: SwitchConfig,
     element: NgElement,
     @PropertySetter('attr.role') setAriaRole: Function,
-    @PropertySetter('attr.aria-checked') setChecked: Function,
-    @PropertySetter('attr.aria-invalid') setInvalid: Function,
-    @PropertySetter('attr.aria-disabled') setDisabled: Function
+    @PropertySetter('attr.aria-checked') setAriaChecked: Function,
+    @PropertySetter('attr.aria-invalid') setAriaInvalid: Function,
+    @PropertySetter('attr.aria-disabled') setAriaDisabled: Function
   ) {
     this.domElement = element.domElement
-    this.config = Switch.config.invoke(this)
-
     this.domElement.classList.add('item')
+    this.config = configFactory.create(this)
 
     setAriaRole('checkbox')
-    setInvalid('false')
-    setDisabled('false')
+    setAriaInvalid('false')
+    setAriaDisabled('false')
 
-    this.setChecked = setChecked
+    this.setAriaRole = setAriaRole
+    this.setAriaChecked = setAriaChecked
+    this.setAriaInvalid = setAriaInvalid
+    this.setAriaDisabled = setAriaDisabled
   }
 
   set checked(checked) {
     this._checked = checked
-    this.setChecked(checked)
+    this.setAriaChecked(checked)
   }
   get checked() {
     return this._checked
@@ -57,4 +62,3 @@ export class Switch {
   }
 }
 
-new IonicComponent(Switch, {})

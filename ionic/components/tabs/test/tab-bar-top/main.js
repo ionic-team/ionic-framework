@@ -1,11 +1,9 @@
-import {bootstrap} from 'angular2/core';
-import {Component, Template} from 'angular2/angular2';
-import {View, Tabs, Tab} from 'ionic2/ionic2';
-
+import {Component, View as NgView, bootstrap} from 'angular2/angular2';
+import {View, Tabs, Tab} from 'ionic/components';
 
 @Component({ selector: '[ion-app]' })
-@Template({
-  url: 'main.html',
+@View({
+  templateUrl: 'main.html',
   directives: [View, Tabs, Tab]
 })
 class IonicApp {

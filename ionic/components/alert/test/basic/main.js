@@ -1,11 +1,10 @@
-import {bootstrap} from 'angular2/core';
-import {Component, Template} from 'angular2/angular2';
-import {Alert} from 'ionic2/components/alert/alert';
+import {Component, View, bootstrap} from 'angular2/angular2';
+import {Alert} from 'ionic/ionic';
 
 
 @Component({ selector: '[ion-app]' })
-@Template({
-  url: 'main.html',
+@View({
+  templateUrl: 'main.html',
   directives: [Alert]
 })
 class IonicApp {

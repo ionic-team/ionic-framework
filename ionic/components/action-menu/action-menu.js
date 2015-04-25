@@ -1,49 +1,44 @@
-import {NgElement, Component, Template, Parent} from 'angular2/angular2'
-import {IonicComponent} from 'ionic2/config/component'
-import {Icon} from 'ionic2/components/icon/icon'
-import {Item} from 'ionic2/components/item/item'
+import {NgElement, Component, View, Parent} from 'angular2/angular2'
+import {ComponentConfig} from 'ionic/config/component-config'
 
+export let ActionMenuConfig = new ComponentConfig('action-menu')
 
 @Component({
-  selector: 'ion-action-menu'
+  selector: 'ion-action-menu',
+  injectables: [ActionMenuConfig]
 })
-@Template({
-  inline: `
+@View({
+  template: `
     <div class="overlay-backdrop"></div>
     <div class="overlay-container">
       <div class="action-menu-container">
 
-        <div class="list-header">Action Menu List Header</div>
-        <div class="list">
-          <button ion-item class="item">
-            Button 1
-          </button>
-          <button ion-item class="item">
-            Button 2
-          </button>
+        <div class="action-menu-group">
+          <div class="action-menu-label">Action Menu Label</div>
+          <button class="button action-menu-button">Button 1</button>
+          <button class="button action-menu-button">Button 2</button>
         </div>
 
-        <div class="list-header">Action Menu Label</div>
-        <div class="list">
-          <button ion-item class="item">Button 1</button>
-          <button ion-item class="item">Button 2</button>
+        <div class="action-menu-group">
+          <div class="action-menu-label">Action Menu Label</div>
+          <button class="button action-menu-button">Button 1</button>
+          <button class="button action-menu-button">Button 2</button>
         </div>
 
-        <div class="list">
-          <button ion-item class="item">Button 1</button>
+        <div class="action-menu-group">
+          <button class="button action-menu-button">Button 1</button>
         </div>
-
       </div>
-    </div>`,
-  directives: [Item,Icon]
+    </div>`
 })
 export class ActionMenu {
   constructor(
+    configFactory: ActionMenuConfig,
     @NgElement() ngElement:NgElement
   ) {
     this.domElement = ngElement.domElement
-    this.config = ActionMenu.config.invoke(this)
+    this.domElement.classList.add('pane')
+    this.domElement.classList.add('pane-overlay')
+    this.config = configFactory.create(this)
   }
 }
-
-new IonicComponent(ActionMenu, {})

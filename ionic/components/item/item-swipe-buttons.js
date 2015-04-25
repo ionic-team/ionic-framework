@@ -1,6 +1,6 @@
 import {Parent, NgElement, Decorator} from 'angular2/angular2'
-import {Item} from 'ionic2/components/item/item'
-import {SlideGesture} from 'ionic2/gestures/slide-gesture'
+import {Item} from 'ionic/components/item/item'
+import {SlideGesture} from 'ionic/gestures/slide-gesture'
 
 @Decorator({
   selector: 'ion-primary-swipe-buttons'

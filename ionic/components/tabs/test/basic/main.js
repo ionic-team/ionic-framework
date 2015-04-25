@@ -1,15 +1,14 @@
-import {bootstrap} from 'angular2/core'
-import {Component, Template} from 'angular2/angular2'
-import {View, Tabs, Tab} from 'ionic2/ionic2'
-import {webview} from 'ionic2/webview/webview'
-import {cordova} from 'ionic2/webview/cordova/cordova'
-import {nodeWebkit} from 'ionic2/webview/node-webkit/node-webkit'
-import * as util from 'ionic2/util'
+import {Component, View as NgView, bootstrap} from 'angular2/angular2'
+import {View, Tabs, Tab} from 'ionic/components'
+import {webview} from 'ionic/webview/webview'
+import {cordova} from 'ionic/webview/cordova/cordova'
+import {nodeWebkit} from 'ionic/webview/node-webkit/node-webkit'
+import * as util from 'ionic/util'
 
 
 @Component({ selector: '[ion-app]' })
-@Template({
-  url: 'main.html',
+@NgView({
+  templateUrl: 'main.html',
   directives: [View, Tabs, Tab]
 })
 class IonicApp {

@@ -1,6 +1,6 @@
-import {Aside} from 'ionic2/components/aside/aside';
+import {Aside} from 'ionic/components/aside/aside';
 //TODO: figure out way to get rid of all the ../../../../
-import {SlideEdgeGesture} from 'ionic2/gestures/slide-edge-gesture';
+import {SlideEdgeGesture} from 'ionic/gestures/slide-edge-gesture';
 
 class AsideGesture extends SlideEdgeGesture {
   constructor(aside: Aside) {

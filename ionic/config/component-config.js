@@ -1,5 +1,5 @@
-import {platform} from 'ionic2/platform/platform'
-import * as util from 'ionic2/util'
+import {platform} from 'ionic/platform/platform'
+import * as util from 'ionic/util'
 
 
 /*

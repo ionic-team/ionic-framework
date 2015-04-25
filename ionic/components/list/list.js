@@ -1,20 +1,21 @@
-import {NgElement, Component, Template} from 'angular2/angular2'
-import {IonicComponent} from 'ionic2/config/component'
+import {NgElement, Component, View} from 'angular2/angular2'
+import {ComponentConfig} from 'ionic/config/component-config';
 
+export let ListConfig = new ComponentConfig('list')
 
 @Component({
-  selector: 'ion-list'
+  selector: 'ion-list',
+  injectables: [ListConfig]
 })
-@Template({
-  inline: `<content></content>`
+@View({
+  template: `<content></content>`
 })
 export class List {
   constructor(
+    configFactory: ListConfig,
     ngElement: NgElement
   ) {
     this.domElement = ngElement.domElement;
-    this.config = List.config.invoke(this)
+    configFactory.create(this);
   }
 }
-
-new IonicComponent(List, {})

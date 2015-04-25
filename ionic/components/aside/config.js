@@ -1,7 +1,7 @@
-import {ComponentConfig} from 'ionic2/config/component-config'
-import {Aside} from 'ionic2/components/aside/aside';
-import * as asideTypes from 'ionic2/components/aside/types/types'
-import * as asideGestures from  'ionic2/components/aside/gestures/gestures';
+import {ComponentConfig} from 'ionic/config/component-config'
+import {Aside} from 'ionic/components/aside/aside';
+import * as asideTypes from 'ionic/components/aside/types/types'
+import * as asideGestures from  'ionic/components/aside/gestures/gestures';
 
 export let AsideConfig = new ComponentConfig(Aside)
 

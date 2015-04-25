@@ -1,5 +1,5 @@
-import {SlideGesture} from 'ionic2/gestures/slide-gesture';
-import * as util from 'ionic2/util';
+import {SlideGesture} from 'ionic/gestures/slide-gesture';
+import * as util from 'ionic/util';
 
 export class SlideEdgeGesture extends SlideGesture {
   constructor(element: Element, opts: Object = {}) {

@@ -1,9 +1,9 @@
-import {Component, Template} from 'angular2/angular2'
-import {View, NavPane} from 'ionic2/ionic2'
+import {Component, View} from 'angular2/angular2'
+import {View, NavPane} from 'ionic/components'
 
 @Component({ selector: 'privacy-settings' })
-@Template({
-  inline: `
+@View({
+  template: `
 <ion-view nav-title="Privacy">
   Privacy
 <button class="button button-primary" (click)="next()">
@@ -22,8 +22,8 @@ export class PrivacyPage {
 }
 
 @Component({ selector: 'privp1' })
-@Template({
-  inline: `
+@View({
+  template: `
 <ion-view nav-title="Privacy Page 1">
 This is page 1
 <br/>
@@ -51,8 +51,8 @@ class PrivacyP1 {
 }
 
 @Component({ selector: 'privp2' })
-@Template({
-  inline: `
+@View({
+  template: `
 <ion-view nav-title="Privacy Page 2">
 Page 2 here
 <br/>

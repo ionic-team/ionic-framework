@@ -1,11 +1,10 @@
-import {bootstrap} from 'angular2/core'
-import {Component, Template} from 'angular2/angular2'
-import {Button} from 'ionic2/components/button/button'
+import {Component, View, bootstrap} from 'angular2/angular2'
+import {Button} from 'ionic/ionic'
 
 
 @Component({ selector: '[ion-app]' })
-@Template({
-  url: 'main.html',
+@View({
+  templateUrl: 'main.html',
   directives: [Button]
 })
 class IonicApp {}

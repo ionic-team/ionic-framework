@@ -1,5 +1,5 @@
 
-import * as util from 'ionic2/util'
+import * as util from 'ionic/util'
 
 class WebView {
   constructor(options) {

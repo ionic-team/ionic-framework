@@ -1,12 +1,11 @@
-import {Component, Template, Parent} from 'angular2/angular2'
-import {View, Tabs, Tab, Aside, Content, NavPane} from 'ionic2/ionic2'
-
+import {Component, View as NgView, Parent} from 'angular2/angular2'
+import {View, Tabs, Tab, Aside, Content, NavPane} from 'ionic/components'
 
 @Component({
   selector: 'tabs-page'
 })
-@Template({
-  url: 'pages/tabs.html',
+@NgView({
+  templateUrl: 'pages/tabs.html',
   directives: [Tabs, Tab, View, Content]
 })
 export class TabsPage {
@@ -21,8 +20,8 @@ export class TabsPage {
 // tab 1
 //
 @Component({ selector: 't1p1' })
-@Template({
-  inline: `<ion-view nav-title="Tab 1 Page 1">
+@NgView({
+  template: `<ion-view nav-title="Tab 1 Page 1">
               <ion-content class="padding">
                 <p>Tab 1 Page 1.</p>
                 <button class="button button-primary" (click)="next()">
@@ -43,8 +42,8 @@ class Tab1Page1 {
 }
 
 @Component({ selector: 't1p2' })
-@Template({
-  inline: `<ion-view nav-title="Tab 1 Page 2">
+@NgView({
+  template: `<ion-view nav-title="Tab 1 Page 2">
               <ion-content class="padding">
                 <p>Tab 1 Page 2.</p>
                 <button class="button button-primary" (click)="pop()">
@@ -67,8 +66,8 @@ class Tab1Page2 {
 // tab 2
 //
 @Component({ selector: 't2p1' })
-@Template({
-  inline: `
+@NgView({
+  template: `
     <ion-aside side="left" [content]="view">
       Left aside for Tab 2 Page 1
     </ion-aside>
@@ -95,8 +94,8 @@ class Tab2Page1 {
 }
 
 @Component({ selector: 't2p2' })
-@Template({
-  inline: `
+@NgView({
+  template: `
     <ion-aside side="left" [content]="view">
       Left aside for Tab 2 Page 2
     </ion-aside>

@@ -1,10 +1,10 @@
-import {NgElement, Component, Template, PropertySetter} from 'angular2/angular2';
+import {NgElement, Component, View, PropertySetter} from 'angular2/angular2';
 
 @Component({
   selector: 'ion-content'
 })
-@Template({
-  inline: `
+@View({
+  template: `
     <div class="scroll-content">
       <content></content>
     </div>`

@@ -1,5 +1,5 @@
-import {Component, Template, Inject, Parent, NgElement} from 'angular2/angular2'
-import {Log} from 'ionic2/util'
+import {Component, View, Inject, Parent, NgElement} from 'angular2/angular2'
+import {Log} from 'ionic/util'
 
 /**
  * A simple routing system that detects a URL and calls

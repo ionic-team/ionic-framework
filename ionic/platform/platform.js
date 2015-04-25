@@ -1,4 +1,4 @@
-import * as util from 'ionic2/util'
+import * as util from 'ionic/util'
 
 const queryPlatform = (util.readQueryParams()['ionicplatform'] || '').toLowerCase()
 
@@ -9,7 +9,6 @@ class Platform {
 }
 
 class PlatformController {
-  current: Platform;
   constructor() {
     this.registry = {}
   }

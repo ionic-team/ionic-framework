@@ -1,4 +1,4 @@
-import {Aside} from 'ionic2/components/aside/aside';
+import {Aside} from 'ionic/components/aside/aside';
 
 // TODO use setters instead of direct dom manipulation
 const asideManipulator = {

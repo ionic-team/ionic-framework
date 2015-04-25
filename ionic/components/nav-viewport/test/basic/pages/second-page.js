@@ -1,12 +1,11 @@
-import {Component, Template, Parent} from 'angular2/angular2'
-import {NavViewport} from 'ionic2/components'
-import {View} from 'ionic2/components/view/view'
+import {Component, View as NgView, Parent} from 'angular2/angular2'
+import {NavViewport, View} from 'ionic/components'
 
 @Component({
   selector: 'second-page'
 })
-@Template({
-  url: 'pages/second-page.html',
+@NgView({
+  templateUrl: 'pages/second-page.html',
   directives: [View]
 })
 export class SecondPage {

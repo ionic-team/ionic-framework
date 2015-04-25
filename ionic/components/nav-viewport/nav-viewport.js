@@ -1,6 +1,7 @@
-import {Component, Template, For, NgElement, bind} from 'angular2/angular2'
-import {NavPane} from 'ionic2/components/nav-pane/nav-pane'
-import * as util from 'ionic2/util'
+import {Component, View, For, NgElement, bind} from 'angular2/angular2'
+import {ComponentConfig} from 'ionic/config/component-config'
+import {NavPane} from 'ionic/components/nav-pane/nav-pane'
+import * as util from 'ionic/util'
 
 class NavStack {
   constructor(navViewport: NavViewport) {
@@ -25,12 +26,12 @@ class NavStack {
   bind: {
     initial: 'initial'
   },
-  services: [
+  injectables: [
     NavStack
   ]
 })
-@Template({
-  inline: `
+@View({
+  template: `
   <header class="toolbar-container">
     <!-- COLLECTION OF TOOLBARS FOR EACH OF ITS VIEWS WITHIN THIS NAV-VIEWPORT -->
     <!-- TOOLBARS FOR EACH VIEW SHOULD HAVE THE SAME CONTEXT AS ITS VIEW -->
@@ -88,12 +89,12 @@ export class NavViewport {
   // TODO make sure the timing is together
   // TODO allow starting an animation in the middle (eg gestures). Leave
   // most of this up to the animation's implementation.
-  push(Class: Function, data = {}, opts = {}) {
+  push(Class: Function, opts = {}) {
     util.defaults(opts, {
       sync: this._stack.length === 0
     })
 
-    let pushedItem = new NavItem(Class, data)
+    let pushedItem = new NavItem(Class)
     this._stack.push(pushedItem)
     this._ngForLoopArray.push(pushedItem)
 
@@ -177,9 +178,8 @@ export class NavViewport {
 }
 
 class NavItem {
-  constructor(ComponentClass, data = {}) {
+  constructor(ComponentClass) {
     this.Class = ComponentClass
-    this.data = data
     this._setupPromise = new Promise((resolve) => {
       this._resolveSetupPromise = resolve
     })

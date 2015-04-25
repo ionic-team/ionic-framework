@@ -1,14 +1,12 @@
-import {Aside} from 'ionic2/components/aside/aside';
-import {Content} from 'ionic2/components/content/content';
-import {View} from 'ionic2/components/view/view';
-import {Template, Component, bootstrap} from 'angular2/angular2';
+import {Aside, Content, View} from 'ionic/ionic';
+import {View as NgView, Component, bootstrap} from 'angular2/angular2';
 
 @Component({
   selector: '[ion-app]'
 })
-@Template({
+@NgView({
   directives: [Aside, Content, View],
-  url: 'main.html'
+  templateUrl: 'main.html'
 })
 class App {
 }

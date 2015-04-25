@@ -1,17 +1,19 @@
-import {NgElement, Component, Template, Ancestor} from 'angular2/angular2'
-import {Optional} from 'angular2/src/di/annotations'
-import {BackButton} from 'ionic2/components/toolbar/back-button'
-import {IonicComponent} from 'ionic2/config/component'
-import {raf} from 'ionic2/util/dom'
+import {NgElement, Component, View, Ancestor, Optional} from 'angular2/angular2'
+import {BackButton} from 'ionic/components/toolbar/back-button'
+import {ComponentConfig} from 'ionic/config/component-config'
+import {raf} from 'ionic/util/dom'
+
+export let ToolbarConfig = new ComponentConfig('toolbar')
 
 @Component({
   selector: 'ion-toolbar',
   bind: {
     title: 'nav-title'
-  }
+  },
+  injectables: [ToolbarConfig]
 })
-@Template({
-  inline: `
+@View({
+  template: `
     <div class="toolbar-items">
       <button class="button back-button toolbar-item" style="display:none"></button>
       <div class="toolbar-title">
@@ -32,10 +34,12 @@ import {raf} from 'ionic2/util/dom'
 })
 export class Toolbar {
   constructor(
-    @NgElement() ngEle:NgElement
+    @NgElement() ngEle:NgElement,
+    configFactory: ToolbarConfig
   ) {
     this.domElement = ngEle.domElement
-    this.config = Toolbar.config.invoke(this)
+
+    this.config = configFactory.create(this);
 
     // TODO: make more better plz
     setTimeout(() => {
@@ -83,5 +87,3 @@ export class Toolbar {
   }
 
 }
-
-new IonicComponent(Toolbar, {})

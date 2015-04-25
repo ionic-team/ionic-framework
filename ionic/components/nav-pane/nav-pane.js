@@ -1,9 +1,6 @@
-import {DynamicComponent, Parent, NgElement} from 'angular2/angular2'
-import {Optional} from 'angular2/src/di/annotations'
-import {NavViewport} from 'ionic2/components/nav-viewport/nav-viewport'
-import {Tab} from 'ionic2/components/tabs/tab'
-import {PrivateComponentLoader} from 'angular2/src/core/compiler/private_component_loader'
-import {PrivateComponentLocation} from 'angular2/src/core/compiler/private_component_location'
+import {DynamicComponent, Parent, NgElement, DynamicComponentLocation, DynamicComponentLoader, Optional} from 'angular2/angular2'
+import {NavViewport} from 'ionic/components/nav-viewport/nav-viewport'
+import {Tab} from 'ionic/components/tabs/tab'
 
 @DynamicComponent({
   selector: '.nav-pane',
@@ -13,8 +10,8 @@ import {PrivateComponentLocation} from 'angular2/src/core/compiler/private_compo
 })
 export class NavPane {
   constructor(
-    loader: PrivateComponentLoader,
-    location: PrivateComponentLocation,
+    loader: DynamicComponentLoader,
+    location: DynamicComponentLocation,
     @NgElement() element: NgElement,
 
     // FIXME: this is temporary until ng2 lets us inject tabs as a NavViewport
@@ -56,6 +53,3 @@ export class NavPane {
     return this.viewport.popTo(index, opts)
   }
 }
-
-/*
- Ideal API: inject a tN

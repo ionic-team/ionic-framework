@@ -1,8 +1,8 @@
-import {Component, Template, Inject, Parent, NgElement, EventEmitter} from 'angular2/angular2'
-import * as types from 'ionic2/components/aside/extensions/types'
-import * as gestures from  'ionic2/components/aside/extensions/gestures'
-import {dom} from 'ionic2/util'
-import {IonicComponent} from 'ionic2/config/component'
+import {Component, View, Inject, Parent, NgElement, EventEmitter} from 'angular2/angular2'
+import * as types from 'ionic/components/aside/extensions/types'
+import * as gestures from  'ionic/components/aside/extensions/gestures'
+import {dom} from 'ionic/util'
+import {IonicComponent} from 'ionic/config/component'
 
 /**
  * TODO (?) add docs about how to have a root aside and a nested aside, then hide the root one
@@ -16,8 +16,8 @@ import {IonicComponent} from 'ionic2/config/component'
     dragThreshold: 'dragThreshold'
   }
 })
-@Template({
-  inline: `<content></content>`
+@View({
+  template: `<content></content>`
 })
 export class Aside {
   constructor(

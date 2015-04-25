@@ -9,14 +9,14 @@ class MyView1 extends View {
 }
 
 @Template({
-  inline: '<div>blah blah</div>'
+  template: '<div>blah blah</div>'
 })
 class MyView2 extends View {
   constructor(navView) {}
 }
 
 @Route({
-  url: '/myview4'
+  templateUrl: '/myview4'
 })
 class MyView4 extends View {
   constructor(navView) {}
@@ -42,8 +42,8 @@ navView.push({
 })
 
 navView.push({
-  url: '/whateves',
-  inline: '<div>crazy dynamic template</div>'
+  templateUrl: '/whateves',
+  template: '<div>crazy dynamic template</div>'
 })
 ```
 
@@ -71,7 +71,7 @@ bottom-to-center: Always bottom to center
 
 ### Simple webdev:
 
-1. Give markup a url: Saving the file, CMS url, or creating an endpoint serversize (django, RoR, etc)
+1. Give markup a templateUrl: Saving the file, CMS url, or creating an endpoint serversize (django, RoR, etc)
 2. In the markup, add a link all the linked pages using `href=url`
 
 Pros: Simple. Its how the web works.

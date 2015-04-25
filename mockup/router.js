@@ -23,7 +23,7 @@
 class App extends Ionic {
   constructor(nav: Navigation) {
      nav.urls({
-        url: '/contacts/:contact',
+        templateUrl: '/contacts/:contact',
         navigate: (url, params) => {
            if(params.contactId) {
               // Explicit routing
@@ -45,7 +45,7 @@ class App extends Ionic {
 
 @Route({
   name: 'login'
-  url: '/login' // Optional
+  templateUrl: '/login' // Optional
 })
 class LoginPage extends View {
 }

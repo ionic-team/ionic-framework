@@ -2,32 +2,19 @@
 const nativeRaf= window.requestAnimationFrame ||
    window.webkitRequestAnimationFrame ||
    window.mozRequestAnimationFrame
-
 const nativeCancelRaf = window.cancelAnimationFrame ||
   window.webkitCancelAnimationFrame ||
   window.webkitCancelRequestAnimationFrame
 
 export const raf = nativeRaf || function(callback) {
-    let timeCurrent = (new Date()).getTime(),
-        timeDelta;
-
-    /* Dynamically set delay on a per-tick basis to match 60fps. */
-    /* Technique by Erik Moller. MIT license: https://gist.github.com/paulirish/1579671 */
-    timeDelta = Math.max(0, 16 - (timeCurrent - timeLast));
-    timeLast = timeCurrent + timeDelta;
-
-    return setTimeout(function() { callback(timeCurrent + timeDelta); }, timeDelta);
+  return window.setTimeout(callback, 16.6667)
 }
-
 export const rafCancel = nativeRaf ? nativeCancelRaf : function(id) {
   return window.cancelTimeout(id)
 }
-
 export function rafPromise() {
   return new Promise(resolve => raf(resolve))
 }
-
-export const isSVG = val => window.SVGElement && (val instanceof window.SVGElement)
 
 
 // We only need to test for webkit in our supported browsers. Webkit is the only browser still

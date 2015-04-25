@@ -2,43 +2,46 @@ module.exports = {
   dist: 'dist',
   distLib: 'dist/lib',
   src: {
-    spec: ['src/**/test/*.spec.js'],
-    js: ['src/**/*.js', '!src/**/test/**/*.js'],
-    e2e: ['src/components/*/test/*/**/*'],
-    html: 'src/**/*.html',
-    scss: 'src/**/*.scss',
+    spec: ['ionic/**/test/*.spec.js'],
+    js: ['ionic/**/*.js', '!src/**/test/**/*.js'],
+
+    // Get all the non-js files and main.js
+    e2e: ['ionic/components/*/test/**/*'],
+    html: 'ionic/**/*.html',
+    scss: 'ionic/**/*.scss',
   },
 
-  dependencies: [
-    'node_modules/traceur/bin/traceur.js',
-    'node_modules/es6-module-loader/dist/es6-module-loader.js',
-    'node_modules/es6-module-loader/dist/es6-module-loader.js.map',
-    'node_modules/systemjs/dist/system.js',
-    'node_modules/systemjs/dist/system.js.map',
-    'node_modules/systemjs/dist/system.src.js',
-    'node_modules/zone.js/zone.js',
-    'node_modules/zone.js/long-stack-trace-zone.js',
-    'node_modules/hammerjs/hammer.js',
-    'node_modules/rx/dist/rx.all.js',
-  ],
   scripts: [
-    'traceur.js',
-    'es6-module-loader.js',
-    'system.js',
-    'zone.js',
-    'long-stack-trace-zone.js',
-    'hammer.js',
+    {
+      from: 'node_modules/gulp-traceur/node_modules/traceur/bin/traceur.js',
+      to: 'traceur.js',
+    }, {
+      from: 'node_modules/es6-module-loader/dist/es6-module-loader.src.js',
+      to: 'es6-module-loader.src.js'
+    }, {
+      from: 'node_modules/systemjs/dist/system.src.js',
+      to: 'system.src.js'
+    }, {
+      from: 'scripts/e2e/system-init.js',
+      to: 'system-init.js'
+    }, {
+      from: 'node_modules/angular2/node_modules/zone.js/zone.js',
+      to: 'zone.js'
+    }, {
+      from: 'node_modules/angular2/node_modules/zone.js/long-stack-trace-zone.js',
+      to: 'long-stack-trace-zone.js'
+    },
     'angular2.js',
     'ionic2.js',
   ],
 
   traceurOptions: {
-    'sourceMaps': true,
-    'annotations': true,
-    'types': true,
-    'script': false,
-    'memberVariables': true,
-    'modules': 'instantiate'
+    sourceMaps: true,
+    annotations: true,
+    types: true,
+    memberVariables: true,
+    modules: 'instantiate',
   },
+
   protractorPort: 8876
-}
+};
