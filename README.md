@@ -13,7 +13,7 @@
 - Follow the structure found in src/components/aside/examples/basic
   to create more examples.
   * The biggest thing to remember: your app has to import its dependencies with the `app/` prefix. 
-    For example `import {Apple} from 'app/apple';` would import apple.js in your example app.
+    For example `import {Apple} from 'apple';` would import apple.js in your example app.
 
 #### Build
 

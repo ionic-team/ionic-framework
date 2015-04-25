@@ -1,32 +1,31 @@
-import {Component, View as NgView, For, NgElement, bind} from 'angular2/angular2'
-import {NavPane} from 'ionic/components/nav-pane/nav-pane'
-import * as util from 'ionic/util'
+import {
+  Component,
+  View as NgView,
+  For,
+  NgElement,
+  ComponentInjector
+} from 'angular2/angular2';
+import {bind} from 'angular2/di';
+import {NavPane} from 'ionic/components/nav-pane/nav-pane';
+import * as util from 'ionic/util';
 
-class NavStack {
-  constructor(navViewport: NavViewport) {
-    this._viewport = navViewport
+export class TestNav {
+  constructor(v) {
+    this.value = v;
   }
-  push(Class, opts = {}) {
-    return this._viewport.push(Class, opts)
-  }
-  pop(opts = {}) {
-    return this._viewport.pop(Class, opts)
-  }
-  popTo(index, opts = {}) {
-    return this._viewport.popTo(index, opts)
-  }
-  size()  {
-    return this._viewport._stack.length
-  }
-}
+};
 
+console.log(ComponentInjector)
 @Component({
-  selector: 'ion-nav-viewport',
+  selector: 'ion-nav',
   properties: {
     initial: 'initial'
   },
-  services: [
-    NavStack
+  injectables: [
+    bind(TestNav).toFactory((e) => {
+      debugger;
+      return e;
+    }, [Nav])
   ]
 })
 @NgView({
@@ -44,12 +43,12 @@ class NavStack {
   `,
   directives: [NavPane, For]
 })
-export class NavViewport {
+export class Nav {
   constructor(
     element: NgElement
   ) {
     this.domElement = element.domElement
-    this.domElement.classList.add('nav-viewport')
+    this.domElement.classList.add('nav')
 
     // this is our sane stack of items. This is synchronous and says an item
     // is removed even if it's still animating out.

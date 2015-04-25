@@ -9,11 +9,13 @@
     <% buildConfig.scripts.forEach(function(script) {
       var src = script.to || script; %><script src="<%= PREFIX %>/lib/<%= src %>"></script>
     <% }); %>
-    <script src="main.js"></script>
 </head>
 <body ion-app>
 </body>
 <script>
- System.import('app/main').catch(console.error.bind(console));
+ System.config({
+   traceurOptions: {annotations: true, types: true}
+  });
+ System.import('main').catch(console.error.bind(console));
 </script>
 </html>

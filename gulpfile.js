@@ -87,17 +87,13 @@ gulp.task('e2e', ['ionic-js', 'sass', 'ng2-copy'], function() {
     'ios',
   ]
 
-  function testPathToDistPath(path) {
-    return ;
-  }
-
   // Get each test folder with gulp.src
   return gulp.src(buildConfig.src.e2e)
     .pipe(cached('e2e'))
-    .pipe(gulpif(/main.js$/, processMain()))
     .pipe(rename(function(file) {
       file.dirname = file.dirname.replace(path.sep + 'test' + path.sep, path.sep)
     }))
+    .pipe(gulpif(/main.js$/, processMain()))
     .pipe(gulpif(/e2e.js$/, createPlatformTests()))
     .pipe(gulp.dest(buildConfig.dist + '/e2e'))
 
@@ -109,35 +105,36 @@ gulp.task('e2e', ['ionic-js', 'sass', 'ng2-copy'], function() {
           contents: new Buffer(indexContents),
           path: path.join(path.dirname(file.path), 'index.html'),
         }));
+        next(null, file);
 
-        var builder = new SystemJsBuilder({
-          baseURL: __dirname,
-          traceurOptions: { annotations: true, types: true },
-          meta: {
-            'angular2/angular2': { build: false },
-            'ionic/ionic': { build: false },
-          },
-          map: {
-            hammer: 'node_modules/hammerjs/hammer',
-            rx: 'node_modules/rx'
-          },
-          paths: {
-            'angular2/*': 'dist/lib/angular2/*.js',
-            'app/*': path.dirname(file.path) + '/*.js'
-          },
-        });
-        builder.build('app/main').then(function(output) {
-          self.push(new VinylFile({
-            base: file.base,
-            contents: new Buffer(output.source),
-            path: file.path,
-          }));
-          next();
-        })
-          .catch(function(err) {
-          console.log('error', err);
-          throw new Error(err);
-        });
+        // var builder = new SystemJsBuilder({
+        //   baseURL: __dirname,
+        //   traceurOptions: { annotations: true, types: true },
+        //   meta: {
+        //     'angular2/angular2': { build: false },
+        //     'ionic/ionic': { build: false },
+        //   },
+        //   map: {
+        //     hammer: 'node_modules/hammerjs/hammer',
+        //     rx: 'node_modules/rx'
+        //   },
+        //   paths: {
+        //     'angular2/*': 'dist/lib/angular2/*.js',
+        //     'app/*': path.dirname(file.path) + '/*.js'
+        //   },
+        // });
+        // builder.build('app/main').then(function(output) {
+        //   self.push(new VinylFile({
+        //     base: file.base,
+        //     contents: new Buffer(output.source),
+        //     path: file.path,
+        //   }));
+        //   next();
+        // })
+        // .catch(function(err) {
+        //   console.log('error', err);
+        //   throw new Error(err);
+        // });
       })
     }
     function createPlatformTests(file) {
@@ -176,7 +173,11 @@ gulp.task('ng2', ['lib', 'ng2-copy'], function() {
       "rx/*": "node_modules/angular2/node_modules/rx/*.js"
     }
   });
-  return builder.build('angular2/angular2', path.join(buildConfig.distLib, 'angular2.js'));
+  return builder.build('angular2/angular2', path.join(buildConfig.distLib, 'angular2.js')).then(function() {
+    return builder.build('angular2/di', path.join(buildConfig.distLib, 'angular2-di.js'));
+  });
+});
+gulp.task('ng2-di', ['ng2'], function() {
 });
 
 gulp.task('ionic-js', function() {
@@ -187,7 +188,7 @@ gulp.task('ionic-js', function() {
     },
     meta: {
       'angular2/angular2': { build: false },
-      'angular2/src/di/annotations': { build: false }
+      'angular2/di': { build: false },
     },
     paths: {
       "hammer": 'node_modules/hammerjs/*.js',

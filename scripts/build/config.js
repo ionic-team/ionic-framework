@@ -32,6 +32,7 @@ module.exports = {
       to: 'long-stack-trace-zone.js'
     },
     'angular2.js',
+    'angular2-di.js',
     'ionic2.js',
   ],
 

@@ -1,5 +1,5 @@
 import {Component, Parent, Decorator, View as NgView, NgElement} from 'angular2/angular2'
-import {NavViewport} from 'ionic/components/nav-viewport/nav-viewport'
+import {Nav} from 'ionic/components/nav/nav'
 import {View} from 'ionic/components/view/view'
 import {NavPane} from 'ionic/components/nav-pane/nav-pane'
 import * as util from 'ionic/util'
@@ -11,14 +11,14 @@ import * as util from 'ionic/util'
  * its children for viewports.
  */
 @Decorator({
-  selector: 'ion-nav-viewport[split-viewport]'
+  selector: 'ion-nav[split-viewport]'
 })
 class SplitViewportDecorator {
   constructor(
     @Parent() splitView: SplitView,
-    navViewport: NavViewport
+    navViewport: Nav
   ) {
-    splitView.setNavViewport(navViewport)
+    splitView.setNav(navViewport)
   }
 }
 
@@ -36,8 +36,8 @@ class SplitViewportDecorator {
       <content></content>
     </div>
   </ion-view>
-  <ion-nav-viewport split-viewport>
-  </ion-nav-viewport>
+  <ion-nav split-viewport>
+  </ion-nav>
 <style>
 ion-split-view {
   width: 100%;
@@ -57,7 +57,7 @@ ion-split-view > [split-viewport] {
 
 </style>
   `,
-  directives: [SplitViewportDecorator, NavViewport, View]
+  directives: [SplitViewportDecorator, Nav, View]
 })
 export class SplitView {
   constructor(
@@ -89,7 +89,7 @@ export class SplitView {
     return false
   }
 
-  setNavViewport(viewport) {
+  setNav(viewport) {
     this.splitViewport = viewport
 
     this.navPane.__$push = this.navPane.push

@@ -6,7 +6,7 @@ import {
   PropertySetter,
   For
 } from 'angular2/angular2';
-import {NavViewport} from 'ionic/components/nav-viewport/nav-viewport'
+import {Nav} from 'ionic/components/nav/nav'
 import {NavPane} from 'ionic/components/nav-pane/nav-pane'
 import {Tabs} from 'ionic/components/tabs/tabs'
 import * as util from 'ionic/util'
@@ -31,7 +31,7 @@ import {IonicComponent} from 'ionic/config/component'
   `,
   directives: [For, NavPane]
 })
-export class Tab extends NavViewport {
+export class Tab extends Nav {
   constructor(
     element: NgElement,
     @Ancestor() tabs: Tabs,

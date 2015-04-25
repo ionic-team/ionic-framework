@@ -2,7 +2,7 @@ import {Router} from 'ionic/routing/router'
 import {For, Component, View as NgView, Parent, bootstrap} from 'angular2/angular2'
 import {FormBuilder, Validators, FormDirectives, ControlGroup} from 'angular2/forms';
 import {Log} from 'ionic/util'
-import {List, Item, NavViewport, View, Button, Input, Tabs, Tab, Content, NavPane, Aside} from 'ionic/ionic'
+import {List, Item, Nav, View, Button, Input, Tabs, Tab, Content, NavPane, Aside} from 'ionic/ionic'
 
 @Component({
   selector: 'login-page'
@@ -12,7 +12,7 @@ import {List, Item, NavViewport, View, Button, Input, Tabs, Tab, Content, NavPan
   directives: [View, FormDirectives, Button, Input]
 })
 export class LoginPage {
-  constructor( @Parent() viewport: NavViewport ) { //, fb: FormBuilder ) {
+  constructor( @Parent() viewport: Nav ) { //, fb: FormBuilder ) {
 
     this.viewport = viewport
     Log.log('LOGIN PAGE')
@@ -45,7 +45,7 @@ export class LoginPage {
   directives: [View, FormDirectives, Button, Input]
 })
 export class SignupPage {
-  constructor( @Parent() viewport: NavViewport ) { //, fb: FormBuilder ) {
+  constructor( @Parent() viewport: Nav ) { //, fb: FormBuilder ) {
 
     this.viewport = viewport
     Log.log('SIGNUP PAGE')
@@ -82,7 +82,7 @@ export class SignupPage {
   directives: [View, FormDirectives, Button, Input, Tabs, Tab]
 })
 export class AppPage {
-  constructor( @Parent() viewport: NavViewport ) { //, fb: FormBuilder ) {
+  constructor( @Parent() viewport: Nav ) { //, fb: FormBuilder ) {
     this.viewport = viewport
     this.streamTab = StreamTab
   }
@@ -143,7 +143,7 @@ class SplashPage {
  */
 @Component({ selector: '[ion-app]' })
 @NgView({
-  directives: [NavViewport],
+  directives: [Nav],
   templateUrl: 'main.html'
 })
 class IonicApp {

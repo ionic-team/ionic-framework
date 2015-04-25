@@ -5,11 +5,9 @@ import {
   DynamicComponentLoader,
   ElementRef
 } from 'angular2/angular2'
-import {Optional} from 'angular2/src/di/annotations'
-import {NavViewport} from 'ionic/components/nav-viewport/nav-viewport'
+import {Optional} from 'angular2/di'
+import {Nav} from 'ionic/components/nav/nav'
 import {Tab} from 'ionic/components/tabs/tab'
-
-console.log('names',DynamicComponent.name, Parent.name, NgElement.name, DynamicComponentLoader.name, ElementRef, Optional)
 
 @DynamicComponent({
   selector: '.nav-pane',
@@ -23,8 +21,8 @@ export class NavPane {
     location: ElementRef,
     @NgElement() element: NgElement,
 
-    // FIXME: this is temporary until ng2 lets us inject tabs as a NavViewport
-    @Optional() @Parent() viewportNav: NavViewport,
+    // FIXME: this is temporary until ng2 lets us inject tabs as a Nav
+    @Optional() @Parent() viewportNav: Nav,
     @Optional() @Parent() viewportTab: Tab
   ) {
     this._loader = loader

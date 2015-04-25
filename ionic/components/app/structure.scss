@@ -13,7 +13,7 @@ html {
   margin: 0;
   padding: 0;
 
-  .nav-viewport {
+  .nav {
     // container of many .nav-views, each .nav-view contains one view
     position: absolute;
     top: 0;
@@ -28,7 +28,7 @@ html {
   }
 
   .toolbar-container {
-    // container of many toolbars for each view in the .nav-viewport
+    // container of many toolbars for each view in the .nav
     position: relative;
     width: 100%;
     min-height: 50px;

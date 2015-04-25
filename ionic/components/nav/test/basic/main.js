@@ -1,11 +1,11 @@
 import {Component, View as NgView, bootstrap} from 'angular2/angular2'
-import {NavViewport} from 'ionic/components/nav-viewport/nav-viewport'
+import {Nav} from 'ionic/components/nav/nav'
 import {Log} from 'ionic/util'
-import {FirstPage} from 'app/pages/first-page'
+import {FirstPage} from 'pages/first-page'
 
 @Component({ selector: '[ion-app]' })
 @NgView({
-  directives: [NavViewport],
+  directives: [Nav],
   templateUrl: 'main.html'
 })
 class IonicApp {
