@@ -10,8 +10,15 @@ import {completeCall} from './complete-call'
     Tick
 ************/
 
+export function startTick() {
+  if (!Collide.State.isTicking && Collide.State.calls && Collide.State.calls.length) {
+    Collide.State.isTicking = true;
+    tick();
+  }
+}
+
 /* Note: All calls to Collide are pushed to the Collide.State.calls array, which is fully iterated through upon each tick. */
-export function tick(timestamp) {
+function tick(timestamp) {
   /* An empty timestamp argument indicates that this is the first tick occurence since ticking was turned on.
      We leverage this metadata to fully ignore the first tick pass since RAF's initial pass is fired whenever
      the browser's next tick sync time occurs, which results in the first elements subjected to Collide

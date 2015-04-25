@@ -1,6 +1,7 @@
 import {Collide} from './collide'
 import {animationStart} from './animation-start'
 import {animationStop} from './animation-stop'
+import {startTick} from './tick'
 
 
 export class Animation {
@@ -29,7 +30,7 @@ export class Animation {
   start() {
     let promise = animationStart(this._elements, this._options, this._properties)
 
-    Collide.startTick();
+    startTick();
 
     return promise
   }

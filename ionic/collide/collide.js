@@ -55,17 +55,6 @@ export let Collide = {
   /* Set to 1 or 2 (most verbose) to output debug info to console. */
   debug: false,
 
-  startTick: function() {
-    /* If the animation tick isn't running, start it.
-       Collide shuts it off when there are no active calls to process. */
-    if (Collide.State.isTicking === false) {
-      Collide.State.isTicking = true;
-
-      /* Start the tick loop. */
-      tick();
-    }
-  },
-
   /* initialize element data */
   initData: function(element) {
     element.$collide = {

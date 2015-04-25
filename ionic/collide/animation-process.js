@@ -4,7 +4,6 @@ import * as util from 'ionic/util/util'
 import {Collide} from './collide'
 import {CSS} from './css'
 import {getEasing} from './easing'
-import {tick} from './tick'
 
 const data = Collide.data;
 

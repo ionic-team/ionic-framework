@@ -12,22 +12,34 @@ class IonicApp {
     @NgElement ngElement:NgElement
   ) {
 
-    this.trans = new Animation( ngElement.domElement.querySelector('.square') )
+    this.animation = new Animation();
+    this.animation.elements( ngElement.domElement.querySelectorAll('.square') );
 
-    this.trans.duration(500)
-    this.trans.easing('linear')
+    this.animation.duration(500)
+    this.animation.easing('linear')
 
-    this.trans.property('opacity', 0)
+    this.animation.property('opacity', 0)
 
   }
 
   start() {
-    this.trans.start()
+    let q = this.animation.start();
+
+    q.then(()=> {
+      console.log('animation complete')
+    });
+
+
   }
 
   stop() {
-    this.trans.stop()
+    this.animation.stop()
   }
+
+  velocityStart() {
+    Velocity(document.querySelectorAll('.square'), { opacity: 0 }, 500); // Velocity
+  }
+
 }
 
 

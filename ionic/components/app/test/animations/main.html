@@ -1,12 +1,28 @@
+<html>
+<head>
+  <title>Collide Tests</title>
+</head>
+<body>
 
-<div animation>
+  <div style="position: absolute; top: 20px; left: 300px;">
 
-  <div class="square" style="position:absolute; width:100px; height:100px; background:red; top: 100px; left: 100px;"></div>
-  <div class="square" style="position:absolute; width:100px; height:100px; background:green; top: 100px; left: 200px;"></div>
-  <div class="square" style="position:absolute; width:100px; height:100px; background:blue; top: 100px; left: 300px;"></div>
+    <div class="red square" style="position:absolute; width:100px; height:100px; background:red; top: 0; left: 0;"></div>
+    <div class="green square" style="position:absolute; width:100px; height:100px; background:green; top: 0; left: 100px;"></div>
+    <div class="blue square" style="position:absolute; width:100px; height:100px; background:blue; top: 0; left: 200px;"></div>
 
-  <button class="button button-primary" (click)="start($event)">Start</button>
-  <button class="button button-primary" (click)="stop($event)">Stop</button>
+  </div>
 
-</div>
 
+  <p>
+    <button class="button button-primary" (click)="start($event)">Collide Start</button>
+  </p>
+
+
+  <p>
+    <button class="button button-primary" (click)="velocityStart($event)">Velocity Start</button>
+  </p>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.2/velocity.js"></script>
+
+</body>
+</html>
