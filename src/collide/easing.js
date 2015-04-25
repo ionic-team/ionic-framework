@@ -1,6 +1,7 @@
 /* Ported from Velocity.js, MIT License. Julian Shapiro http://twitter.com/shapiro */
 
 import * as util from 'ionic2/util/util'
+import {Collide} from 'ionic2/collide/collide'
 
 
 /**************
@@ -228,7 +229,7 @@ var generateSpringRK4 = (function () {
 
 
 /* default easings. */
-let easings = {
+Collide.Easings = {
   linear: function(p) { return p; },
   swing: function(p) { return 0.5 - Math.cos( p * Math.PI ) / 2 },
   spring: function(p) { return 1 - (Math.cos(p * 4.5 * Math.PI) * Math.exp(-p * 6)); }
@@ -267,7 +268,7 @@ let easings = {
   ];
 
   for (let x = 0; x < penner.length; x++) {
-    easings[ penner[x][0] ] = generateBezier.apply(null, penner[x][1]);
+    Collide.Easings[ penner[x][0] ] = generateBezier.apply(null, penner[x][1]);
   }
 
 })();
@@ -281,7 +282,7 @@ export function getEasing(value, duration) {
      or it can be a two-/four-item array of integers to be converted into a bezier/spring function. */
   if (util.isString(value)) {
     /* Ensure that the easing has been assigned to standard easings object. */
-    if (!easings[value]) {
+    if (!Collide.Easings[value]) {
       easing = false;
     }
 

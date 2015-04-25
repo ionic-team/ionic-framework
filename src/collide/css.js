@@ -510,7 +510,7 @@ export var CSS = {
           }
 
           /* Check if the browser supports this property as prefixed. */
-          if (typeof prefixElement.style[propertyPrefixed] === 'string') {
+          if (typeof Collide.State.prefixElement.style[propertyPrefixed] === 'string') {
             /* Cache the match. */
             CSS.Names.prefixMatches[property] = propertyPrefixed;
 
@@ -865,7 +865,7 @@ export var CSS = {
   /* Note: Collide applies transform properties in the same order that they are chronogically introduced to the element's CSS styles. */
   flushTransformCache: function(element) {
     var transformString = '';
-    var transformCache = eleData(element).transformCache;
+    var transformCache = data(element).transformCache;
 
     var transformValue,
         perspective;
@@ -894,5 +894,3 @@ export var CSS = {
 };
 
 const vendorPrefixes = [ '', 'Webkit', 'ms' ];
-
-var prefixElement = document.createElement("div");

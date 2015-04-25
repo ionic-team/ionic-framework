@@ -1,6 +1,4 @@
-import {initTransition} from 'ionic2/collide/init-transition'
-import {processTransition} from 'ionic2/collide/process-transition'
-
+import {transitionAction} from 'ionic2/collide/transition-action'
 
 
 export class Transition {
@@ -25,12 +23,17 @@ export class Transition {
   }
 
   start() {
-    console.log('start')
-    initTransition('start', this.elements, this.options, this.propertiesMap)
+    var p = transitionAction('start', this.elements, this.options, this.propertiesMap)
+
+    p.then(() => {
+      console.log('start success done')
+    }).catch(() => {
+      console.log('start error done')
+    })
   }
 
   stop() {
-    console.log('stop')
+    transitionAction('stop', this.elements, this.options, this.propertiesMap)
   }
 
   properties(val) {

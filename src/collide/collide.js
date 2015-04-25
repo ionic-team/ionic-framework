@@ -1,10 +1,36 @@
 import {dom} from 'ionic2/util'
 
 
-export const Collide = {
+export let Collide = {
 
+  /* Container for page-wide Collide state data. */
+  State: {
+    /* Create a cached element for re-use when checking for CSS property prefixes. */
+    prefixElement: document.createElement('div'),
+
+    /* Cache every prefix match to avoid repeating lookups. */
+    prefixMatches: {},
+
+    /* Cache the anchor used for animating window scrolling. */
+    scrollAnchor: null,
+
+    /* Cache the browser-specific property names associated with the scroll anchor. */
+    scrollPropertyLeft: null,
+    scrollPropertyTop: null,
+
+    /* Keep track of whether our RAF tick is running. */
+    isTicking: false,
+
+    /* Container for every in-progress call to Collide. */
+    calls: []
+  },
+
+  CSS: {},
+  Easings: {},
+
+  /* Collide option defaults, which can be overriden by the user. */
   defaults: {
-    queue: "",
+    queue: '',
     duration: 400,
     easing: 'swing',
     begin: undefined,
@@ -14,32 +40,20 @@ export const Collide = {
     visibility: undefined,
     loop: false,
     delay: false,
-    cacheValues: true
+    /* Advanced: Set to false to prevent property values from being cached between consecutive Collide-initiated chain calls. */
+    _cacheValues: true
   },
 
-  data: function(element, key, value) {
-    if (value === undefined) {
+  /* Used for getting/setting Collide's hooked CSS properties. */
+  hook: null, /* Defined below. */
 
-      if (key === undefined) {
-        // get data object: Data(element)
-        return element.$collide;
-      }
+  /* Collide-wide animation time remapping for testing purposes. */
+  mock: false,
 
-      if (element.$collide) {
-        // get data by key: Data(element, key)
-        return element.$collide[key];
-      }
+  /* Set to 1 or 2 (most verbose) to output debug info to console. */
+  debug: false,
 
-    } else if (key !== undefined) {
-      // set data: Data(element, key, value)
-      if (!element.$collide) {
-        element.$collide = {};
-      }
-      element.$collide[key] = value;
-    }
-
-  },
-
+  /* initialize element data */
   initData: function(element) {
     element.$collide = {
       /* Store whether this is an SVG element, since its properties are retrieved and updated differently than standard HTML elements. */
@@ -66,6 +80,31 @@ export const Collide = {
     };
   },
 
+  /* get/set element data */
+  data: function(element, key, value) {
+    if (value === undefined) {
+
+      if (key === undefined) {
+        // get data object: Data(element)
+        return element.$collide;
+      }
+
+      if (element.$collide) {
+        // get data by key: Data(element, key)
+        return element.$collide[key];
+      }
+
+    } else if (key !== undefined) {
+      // set data: Data(element, key, value)
+      if (!element.$collide) {
+        element.$collide = {};
+      }
+      element.$collide[key] = value;
+    }
+
+  },
+
+  /* get/set element queue data */
   queue: function (element, type, data) {
     function $makeArray (arr, results) {
       let ret = results || [];
@@ -99,6 +138,7 @@ export const Collide = {
     return q;
   },
 
+  /* dequeue element */
   dequeue: function (element, type) {
     type = type || 'collide';
 
@@ -120,5 +160,4 @@ export const Collide = {
     }
   }
 
-}
-
+};
