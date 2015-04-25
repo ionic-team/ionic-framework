@@ -1,5 +1,5 @@
 import {Component, Decorator, View as NgView, NgElement, bootstrap} from 'angular2/angular2';
-import {Transition, IOSTransition} from 'ionic/ionic';
+import {Animation} from 'ionic/ionic';
 
 
 
@@ -12,7 +12,7 @@ class IonicApp {
     @NgElement ngElement:NgElement
   ) {
 
-    this.trans = new Transition( ngElement.domElement.querySelector('.square') )
+    this.trans = new Animation( ngElement.domElement.querySelector('.square') )
 
     this.trans.duration(500)
     this.trans.easing('linear')

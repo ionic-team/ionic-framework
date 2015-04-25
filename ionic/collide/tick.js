@@ -1,9 +1,9 @@
-/* Ported from Velocity.js, MIT License. Julian Shapiro http://twitter.com/shapiro */
+/* Forked from Collide.js, MIT License. Julian Shapiro http://twitter.com/shapiro */
 
-import {Collide} from 'ionic/collide/collide'
-import {CSS} from 'ionic/collide/css'
-import {completeCall} from 'ionic/collide/complete-call'
 import {dom} from 'ionic/util'
+import {Collide} from './collide'
+import {CSS} from './css'
+import {completeCall} from './complete-call'
 
 
 /************

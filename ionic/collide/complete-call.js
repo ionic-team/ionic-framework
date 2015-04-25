@@ -1,7 +1,7 @@
-/* Ported from Velocity.js, MIT License. Julian Shapiro http://twitter.com/shapiro */
+/* Forked from Velocity.js, MIT License. Julian Shapiro http://twitter.com/shapiro */
 
-import {Collide} from 'ionic/collide/collide'
-import {CSS} from 'ionic/collide/css'
+import {Collide} from './collide'
+import {CSS} from './css'
 
 
 /***************************
@@ -136,7 +136,7 @@ export function completeCall (callIndex, isStopped) {
 
     /* Fire the next call in the queue so long as this call's queue wasn't set to false (to trigger a parallel animation),
        which would have already caused the next call to fire. Note: Even if the end of the animation queue has been reached,
-       Collide.dequeue() must still be called in order to completely clear jQuery's animation queue. */
+       Collide.dequeue() must still be called in order to completely clear animation queue. */
     if (opts.queue !== false) {
       Collide.dequeue(element, opts.queue);
     }

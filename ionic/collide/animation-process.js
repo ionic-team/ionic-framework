@@ -1,10 +1,10 @@
-/* Ported from Velocity.js, MIT License. Julian Shapiro http://twitter.com/shapiro */
+/* Forked from Velocity.js, MIT License. Julian Shapiro http://twitter.com/shapiro */
 
 import * as util from 'ionic/util/util'
-import {Collide} from 'ionic/collide/collide'
-import {CSS} from 'ionic/collide/css'
-import {getEasing} from 'ionic/collide/easing'
-import {tick} from 'ionic/collide/tick'
+import {Collide} from './collide'
+import {CSS} from './css'
+import {getEasing} from './easing'
+import {tick} from './tick'
 
 const data = Collide.data;
 
@@ -18,7 +18,7 @@ const data = Collide.data;
    3) Pushing: Consolidation of the tween data followed by its push onto the global in-progress calls container.
 */
 
-export function elementProcess(action, elements, elementsIndex, options, propertiesMap) {
+export function animationProcess(action, elements, elementsIndex, options, propertiesMap, callUnitConversionData, call) {
   var resolve;
   var promise = new Promise(function(res) {
     resolve = res;
@@ -26,31 +26,6 @@ export function elementProcess(action, elements, elementsIndex, options, propert
 
   var element = elements[elementsIndex];
   var elementsLength = elements.length;
-
-
-  /**************************
-      Call-Wide Variables
-  **************************/
-
-  /* A container for CSS unit conversion ratios (e.g. %, rem, and em ==> px) that is used to cache ratios across all elements
-     being animated in a single Collide call. Calculating unit ratios necessitates DOM querying and updating, and is therefore
-     avoided (via caching) wherever possible. This container is call-wide instead of page-wide to avoid the risk of using stale
-     conversion metrics across Collide animations that are not immediately consecutively chained. */
-  var callUnitConversionData = {
-        lastParent: null,
-        lastPosition: null,
-        lastFontSize: null,
-        lastPercentToPxWidth: null,
-        lastPercentToPxHeight: null,
-        lastEmToPx: null,
-        remToPx: null,
-        vwToPx: null,
-        vhToPx: null
-      };
-
-  /* A container for all the ensuing tween data and metadata associated with this call. This container gets pushed to the page-wide
-     Collide.State.calls array that is processed during animation ticking. */
-  var call = [];
 
 
   /*************************
@@ -84,8 +59,6 @@ export function elementProcess(action, elements, elementsIndex, options, propert
   ******************/
 
   /* Since queue:false doesn't respect the item's existing queue, we avoid injecting its delay here (it's set later on). */
-  /* Note: Collide rolls its own delay function since jQuery doesn't have a utility alias for $.fn.delay()
-     (and thus requires jQuery element creation, which we avoid since its overhead includes DOM querying). */
   if (parseFloat(opts.delay) && opts.queue !== false) {
     Collide.queue(element, opts.queue, function(next) {
       // This is a flag used to indicate to the upcoming completeCall() function that this queue entry was initiated by Collide.
@@ -195,21 +168,19 @@ export function elementProcess(action, elements, elementsIndex, options, propert
       /* Scroll also uniquely takes an optional 'container' option, which indicates the parent element that should be scrolled --
          as opposed to the browser window itself. This is useful for scrolling toward an element that's inside an overflowing parent element. */
       if (opts.container) {
-        /* Ensure that either a jQuery object or a raw DOM element was passed in. */
-        if (util.isWrapped(opts.container) || util.isNode(opts.container)) {
-          /* Extract the raw DOM element from the jQuery wrapper. */
-          opts.container = opts.container[0] || opts.container;
+        /* Ensure that a raw DOM element was passed in. */
+        if (opts.container.nodeType) {
           /* Note: Unlike other properties in Collide, the browser's scroll position is never cached since it so frequently changes
              (due to the user's natural interaction with the page). */
           scrollPositionCurrent = opts.container['scroll' + scrollDirection]; /* GET */
 
-          /* $.position() values are relative to the container's currently viewable area (without taking into account the container's true dimensions
-             -- say, for example, if the container was not overflowing). Thus, the scroll end value is the sum of the child element's position *and*
-             the scroll container's current scroll position. */
-          scrollPositionEnd = (scrollPositionCurrent + $(element).position()[scrollDirection.toLowerCase()]) + scrollOffset; /* GET */
+          /* CSS.position(element) values are relative to the container's currently viewable area (without taking into
+             account the container's true dimensions, for example, if the container was not overflowing). Thus, the scroll end
+             value is the sum of the child element's position *and* the scroll container's current scroll position. */
+          scrollPositionEnd = (scrollPositionCurrent + CSS.position(element)[scrollDirection.toLowerCase()]) + scrollOffset; /* GET */
 
         } else {
-          /* If a value other than a jQuery object or a raw DOM element was passed in, default to null so that this option is ignored. */
+          /* If a value other than a raw DOM element was passed in, default to null so that this option is ignored. */
           opts.container = null;
         }
 
@@ -217,12 +188,13 @@ export function elementProcess(action, elements, elementsIndex, options, propert
         /* If the window itself is being scrolled -- not a containing element -- perform a live scroll position lookup using
            the appropriate cached property names (which differ based on browser type). */
         scrollPositionCurrent = Collide.State.scrollAnchor[Collide.State['scrollProperty' + scrollDirection]]; /* GET */
+
         /* When scrolling the browser window, cache the alternate axis's current value since window.scrollTo() doesn't let us change only one value at a time. */
         scrollPositionCurrentAlternate = Collide.State.scrollAnchor[Collide.State['scrollProperty' + (scrollDirection === 'Left' ? 'Top' : 'Left')]]; /* GET */
 
-        /* Unlike $.position(), $.offset() values are relative to the browser window's true dimensions -- not merely its currently viewable area --
-           and therefore end values do not need to be compounded onto current values. */
-        scrollPositionEnd = $(element).offset()[scrollDirection.toLowerCase()] + scrollOffset; /* GET */
+        /* Unlike CSS.position(element), CSS.offset(element) values are relative to the browser window's true dimensions
+           -- not merely its currently viewable area -- and therefore end values do not need to be compounded onto current values. */
+        scrollPositionEnd = CSS.offset(element)[scrollDirection.toLowerCase()] + scrollOffset; /* GET */
       }
 
       /* Since there's only one format that scroll's associated tweensContainer can take, we create it manually. */
@@ -242,6 +214,8 @@ export function elementProcess(action, elements, elementsIndex, options, propert
         },
         element: element
       };
+
+      if (Collide.debug) console.log("tweensContainer (scroll): ", tweensContainer.scroll, element);
 
 
     /******************************************
@@ -319,6 +293,8 @@ export function elementProcess(action, elements, elementsIndex, options, propert
             if (!util.isEmptyObject(options)) {
                 lastTweensContainer[lastTween].easing = opts.easing;
             }
+
+            if (Collide.debug) console.log("reverse tweensContainer (" + lastTween + "): " + JSON.stringify(lastTweensContainer[lastTween]), element);
           }
         }
 
@@ -361,7 +337,7 @@ export function elementProcess(action, elements, elementsIndex, options, propert
       /* Property map values can either take the form of 1) a single value representing the end value,
          or 2) an array in the form of [ endValue, [, easing] [, startValue] ].
          The optional third parameter is a forcefed startValue to be used instead of querying the DOM for
-         the element's current value. Read Velocity's docmentation to learn more about forcefeeding: VelocityJS.org/#forcefeeding */
+         the element's current value. */
       function parsePropertyValue(valueData, skipResolvingEasing) {
         var endValue = undefined,
             easing = undefined,
@@ -482,7 +458,7 @@ export function elementProcess(action, elements, elementsIndex, options, propert
         /* Note: Since SVG elements have some of their properties directly applied as HTML attributes,
            there is no way to check for their explicit browser support, and so we skip skip this check for them. */
         if (!data(element).isSVG && rootProperty !== 'tween' && CSS.Names.prefixCheck(rootProperty)[1] === false && CSS.Normalizations.registered[rootProperty] === undefined) {
-          //if (Collide.debug) console.log('Skipping [' + rootProperty + '] due to a lack of browser support.');
+          if (Collide.debug) console.log('Skipping [' + rootProperty + '] due to a lack of browser support.');
           continue;
         }
 
@@ -729,7 +705,7 @@ export function elementProcess(action, elements, elementsIndex, options, propert
           unitRatios.vwToPx = callUnitConversionData.vwToPx;
           unitRatios.vhToPx = callUnitConversionData.vhToPx;
 
-          //if (Collide.debug >= 1) console.log('Unit ratios: ' + JSON.stringify(unitRatios), element);
+          if (Collide.debug >= 1) console.log('Unit ratios: ' + JSON.stringify(unitRatios), element);
 
           return unitRatios;
 
@@ -842,7 +818,7 @@ export function elementProcess(action, elements, elementsIndex, options, propert
           easing: easing
         };
 
-        //if (Collide.debug) console.log('tweensContainer (' + property + '): ' + JSON.stringify(tweensContainer[property]), element);
+        if (Collide.debug) console.log('tweensContainer (' + property + '): ' + JSON.stringify(tweensContainer[property]), element);
       }
 
       /* Along with its property data, store a reference to the element itself onto tweensContainer. */
@@ -877,14 +853,6 @@ export function elementProcess(action, elements, elementsIndex, options, propert
         /* Add the current call plus its associated metadata (the element set and the call's options) onto the global call container.
            Anything on this call container is subjected to tick() processing. */
         Collide.State.calls.push([ call, elements, opts, null, resolve ]);
-
-        /* If the animation tick isn't running, start it. (Collide shuts it off when there are no active calls to process.) */
-        if (Collide.State.isTicking === false) {
-          Collide.State.isTicking = true;
-
-          /* Start the tick loop. */
-          tick();
-        }
 
       } else {
         elementsIndex++;
@@ -930,13 +898,11 @@ export function elementProcess(action, elements, elementsIndex, options, propert
 
   /* To fire the first non-custom-queue entry on an element, the element
      must be dequeued if its queue stack consists *solely* of the current call. (This can be determined by checking
-     for the 'inprogress' item that jQuery prepends to active queue stack arrays.) Regardless, whenever the element's
-     queue is further appended with additional items -- including $.delay()'s or even $.animate() calls, the queue's
+     for the 'inprogress' item that is prepended to active queue stack arrays.) Regardless, whenever the element's
+     queue is further appended with additional items -- including delay()'s calls, the queue's
      first entry is automatically fired. This behavior contrasts that of custom queues, which never auto-fire. */
   /* Note: When an element set is being subjected to a non-parallel Collide call, the animation will not begin until
      each one of the elements in the set has reached the end of its individually pre-existing queue chain. */
-  /* Note: Unfortunately, most people don't fully grasp jQuery's powerful, yet quirky, Collide.queue() function.
-     Lean more here: http://stackoverflow.com/questions/1058158/can-somebody-explain-jquery-queue-to-me */
   if ((opts.queue === '' || opts.queue === 'fx') && Collide.queue(element)[0] !== 'inprogress') {
     Collide.dequeue(element);
   }

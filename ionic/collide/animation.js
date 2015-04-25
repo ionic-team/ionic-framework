@@ -1,0 +1,84 @@
+import {Collide} from './collide'
+import {animationStart} from './animation-start'
+import {animationStop} from './animation-stop'
+
+
+export class Animation {
+  constructor() {
+    this._elements = null
+
+    this._options = {}
+    this._properties = {}
+
+    this.isRunning = false
+  }
+
+  elements(ele) {
+    if (!ele) {
+      this._elements = null
+    } else {
+      this._elements = !ele.length ? [ele] : ele
+    }
+  }
+
+
+  /*************
+     Actions
+  *************/
+
+  start() {
+    let promise = animationStart(this._elements, this._options, this._properties)
+
+    Collide.startTick();
+
+    return promise
+  }
+
+  stop() {
+    let promise = animationStop(this._elements, this._options, this._properties)
+
+    return promise
+  }
+
+
+  /***********************
+     Options
+  ***********************/
+  options(val) {
+    this._options = val || {}
+  }
+
+  option(key, val) {
+    this._options[key] = val
+  }
+
+  removeOption(key) {
+    delete this._options[key]
+  }
+
+  duration(val) {
+    this._options.duration = val
+  }
+
+  easing(val) {
+    this._options.easing = val
+  }
+
+
+  /**************************
+     Properties
+  **************************/
+
+  properties(val) {
+    this._properties = val || {}
+  }
+
+  property(key, val) {
+    this._properties[key] = val
+  }
+
+  removeProperty(key) {
+    delete this._properties[key]
+  }
+
+}

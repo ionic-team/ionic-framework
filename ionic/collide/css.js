@@ -1,6 +1,6 @@
-/* Ported from Velocity.js, MIT License. Julian Shapiro http://twitter.com/shapiro */
+/* Forked from Collide.js, MIT License. Julian Shapiro http://twitter.com/shapiro */
 
-import {Collide} from 'ionic/collide/collide'
+import {Collide} from './collide'
 
 const data = Collide.data;
 
@@ -9,9 +9,8 @@ const data = Collide.data;
     CSS Stack
 *****************/
 
-/* The CSS object is a highly condensed and performant CSS stack that fully replaces jQuery's.
-   It handles the validation, getting, and setting of both standard CSS properties and CSS property hooks. */
-/* Note: A 'CSS' shorthand is aliased so that our code is easier to read. */
+/* The CSS object handles the validation, getting, and setting of both standard
+   CSS properties and CSS property hooks. */
 export var CSS = {
 
 
@@ -690,14 +689,10 @@ export var CSS = {
       if (computedValue === 'auto' && /^(top|right|bottom|left)$/i.test(property)) {
         var position = computePropertyValue(element, 'position'); /* GET */
 
-        /* For absolute positioning, jQuery's $.position() only returns values for top and left;
+        /* For absolute positioning, CSS.position(element) only returns values for top and left;
            right and bottom will have their 'auto' value reverted to 0. */
-        /* Note: A jQuery object must be created here since jQuery doesn't have a low-level alias for $.position().
-           Not a big deal since we're currently in a GET batch anyway. */
         if (position === 'fixed' || (position === 'absolute' && /top|left/i.test(property))) {
-          /* Note: jQuery strips the pixel unit from its returned values; we re-add it here to conform with computePropertyValue's behavior. */
-          // TODO!!!!
-          computedValue = $(element).position()[property] + 'px'; /* GET */
+          computedValue = CSS.position(element)[property] + 'px'; /* GET */
         }
       }
 
@@ -785,6 +780,8 @@ export var CSS = {
       propertyValue = 0;
     }
 
+    if (Collide.debug >= 2) console.log('Get ' + property + ': ' + propertyValue);
+
     return propertyValue;
   },
 
@@ -853,7 +850,7 @@ export var CSS = {
           element.style[propertyName] = propertyValue;
         }
 
-        //if (Collide.debug >= 2) console.log('Set ' + property + ' (' + propertyName + '): ' + propertyValue);
+        if (Collide.debug >= 2) console.log('Set ' + property + ' (' + propertyName + '): ' + propertyValue);
       }
     }
 
@@ -889,6 +886,44 @@ export var CSS = {
     }
 
     CSS.setPropertyValue(element, 'transform', transformString);
+  },
+
+  offset: function(element) {
+    var box = element.getBoundingClientRect ? element.getBoundingClientRect() : { top: 0, left: 0 };
+
+    return {
+      top: box.top + (window.pageYOffset || document.scrollTop  || 0)  - (document.clientTop  || 0),
+      left: box.left + (window.pageXOffset || document.scrollLeft  || 0) - (document.clientLeft || 0)
+    };
+  },
+
+  position: function(element) {
+    function offsetParent() {
+      var offsetParent = this.offsetParent || document;
+
+      while (offsetParent && (!offsetParent.nodeType.toLowerCase === 'html' && offsetParent.style.position === 'static')) {
+        offsetParent = offsetParent.offsetParent;
+      }
+
+      return offsetParent || document;
+    }
+
+    var offsetParent = offsetParent.apply(element),
+        offset = this.offset(element),
+        parentOffset = /^(?:body|html)$/i.test(offsetParent.nodeName) ? { top: 0, left: 0 } : this.offset(offsetParent)
+
+    offset.top -= parseFloat(element.style.marginTop) || 0;
+    offset.left -= parseFloat(element.style.marginLeft) || 0;
+
+    if (offsetParent.style) {
+      parentOffset.top += parseFloat(offsetParent.style.borderTopWidth) || 0
+      parentOffset.left += parseFloat(offsetParent.style.borderLeftWidth) || 0
+    }
+
+    return {
+      top: offset.top - parentOffset.top,
+      left: offset.left - parentOffset.left
+    };
   }
 
 };
