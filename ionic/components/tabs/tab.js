@@ -1,17 +1,16 @@
 import {
-  NgElement,
   Component,
+  NgElement,
   View as NgView,
   Ancestor,
   PropertySetter,
   For
 } from 'angular2/angular2';
-import {Nav} from 'ionic/components/nav/nav'
-import {NavPane} from 'ionic/components/nav-pane/nav-pane'
-import {Tabs} from 'ionic/components/tabs/tabs'
-import * as util from 'ionic/util'
-import {IonicComponent} from 'ionic/config/component'
-
+import {NavControllerBase} from 'ionic/components/nav/nav-controller';
+import {NavItem} from 'ionic/components/nav/nav-item';
+import {Tabs} from 'ionic/components/tabs/tabs';
+import * as util from 'ionic/util';
+import {IonicComponent} from 'ionic/config/component';
 
 @Component({
   selector: 'ion-tab',
@@ -19,19 +18,26 @@ import {IonicComponent} from 'ionic/config/component'
     title: 'tab-title',
     icon: 'tab-icon',
     initial: 'initial'
-  }
+  },
 })
 @NgView({
   template: `
-    <div class="nav-pane-container">
+    <header class="toolbar-container">
+      <ion-toolbar class="view-toolbar">
+        <ion-nav-title>
+          Test Nonfunctional Toolbar
+        </ion-nav-title>
+      </ion-toolbar>
+    </header>
+    <div class="nav-item-container">
       <!-- COLLECTION OF PANES WITHIN THIS NAV-VIEWPORT, EACH PANE AS ONE VIEW -->
       <!-- EACH VIEW HAS A TOOLBAR WHICH NEEDS TO HAVE THE SAME CONTEXT -->
-      <section class="nav-pane" *for="#item of _ngForLoopArray" [item]="item"></section>
+      <ion-nav-item class="nav-pane" *for="#item of _ngForLoopArray" [item]="item"></section>
     </div>
   `,
-  directives: [For, NavPane]
+  directives: [For, NavItem]
 })
-export class Tab extends Nav {
+export class Tab extends NavControllerBase {
   constructor(
     element: NgElement,
     @Ancestor() tabs: Tabs,
@@ -40,8 +46,8 @@ export class Tab extends Nav {
     @PropertySetter('attr.id') setId: Function,
     @PropertySetter('attr.aria-labelledby') setLabelby: Function
   ) {
-    super(element)
-    this.config = Tab.config.invoke(this)
+    super(element);
+    this.config = Tab.config.invoke(this);
     this.setHidden = setHidden
 
     this.tabId = util.uid()

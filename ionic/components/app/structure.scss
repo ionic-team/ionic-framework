@@ -43,7 +43,7 @@ html {
     height: 100%;
   }
 
-  .nav-pane-container {
+  .nav-item-container {
     // container of many .nav-pane's, each one containing one view
     position: relative;
     @include flex(1);

@@ -37,10 +37,11 @@ import {IonicComponent} from 'ionic/config/component'
   `,
   directives: [For]
 })
-export class Tabs  {
+export class Tabs {
   constructor(
     @NgElement() ngElement: NgElement
   ) {
+    console.log("Tabs");
     this.domElement = ngElement.domElement
     this.config = Tabs.config.invoke(this)
 
