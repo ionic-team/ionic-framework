@@ -813,3 +813,19 @@ button.item.item-button-right {
     }
   }
 }
+
+.item-swiping-left {
+  .item-options {
+    ion-option-backdrop.item-backdrop-swipe-right {
+      display: none;
+    }
+  }
+}
+
+.item-swiping-right {
+  .item-options {
+    ion-option-backdrop.item-backdrop-swipe-left {
+      display: none;
+    }
+  }
+}
