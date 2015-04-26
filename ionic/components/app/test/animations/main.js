@@ -8,17 +8,16 @@ import {Animation} from 'ionic/ionic';
   templateUrl: 'main.html'
 })
 class IonicApp {
-  constructor(
-    @NgElement ngElement:NgElement
-  ) {
+  constructor() {
 
     this.animation = new Animation();
-    this.animation.elements( ngElement.domElement.querySelectorAll('.square') );
+    this.animation.elements( document.querySelectorAll('.square') );
+    this.animation.debug(2);
 
-    this.animation.duration(500)
-    this.animation.easing('linear')
+    this.animation.duration(500);
+    this.animation.easing('swing');
 
-    this.animation.property('opacity', 0)
+    this.animation.property('opacity', 0);
 
   }
 
@@ -32,17 +31,17 @@ class IonicApp {
 
   percent(ev) {
     let ratio = parseFloat(ev.srcElement.value) / 100;
-    console.log('percent ratio', ratio)
+    console.log('percent ratio', ratio);
 
-    this.animation.percent(ratio)
+    this.animation.percent(ratio);
   }
 
   stop() {
-    this.animation.stop()
+    this.animation.stop();
   }
 
   velocityStart() {
-    Velocity(document.querySelectorAll('.square'), { opacity: 0 }, 500); // Velocity
+    Velocity(document.querySelectorAll('.square'), { opacity: 0 }, 500);
   }
 
 }

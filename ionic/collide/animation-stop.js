@@ -5,10 +5,6 @@ import {Collide} from './collide'
 
 export function animationStop(elements, options, propertiesMap) {
 
-  if (!elements || !elements.length) {
-    return Promise.resolve();
-  }
-
   var eleData;
 
 
@@ -120,6 +116,5 @@ export function animationStop(elements, options, propertiesMap) {
           completeCall(j, true);
       });
 
-      return Promise.reject();
   }
 };

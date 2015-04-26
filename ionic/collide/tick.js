@@ -25,6 +25,9 @@ function tick(timestamp) {
      calls being animated out of sync with any elements animated immediately thereafter. In short, we ignore
      the first RAF tick pass so that elements being immediately consecutively animated -- instead of simultaneously animated
      by the same Collide call -- are properly batched into the same initial RAF tick and consequently remain in sync thereafter. */
+
+  var percentCompleteStop = false;
+
   if (timestamp) {
     /* We ignore RAF's high resolution timestamp since it can be significantly offset when the browser is
        under high stress; we opt for choppiness over allowing the browser to drop huge chunks of frames. */
@@ -79,8 +82,16 @@ function tick(timestamp) {
       /* The tween's completion percentage is relative to the tween's start time, not the tween's start value
          (which would result in unpredictable tween durations since JavaScript's timers are not particularly accurate).
          Accordingly, we ensure that percentComplete does not exceed 1. */
-      var percentComplete = Math.min((timeCurrent - timeStart) / opts.duration, 1);
+      debugger
+      var percentComplete;
+      if (opts.percentComplete !== undefined) {
+        percentCompleteStop = true;
+        percentComplete = opts.percentComplete;
+        opts.percentComplete = undefined;
 
+      } else {
+        percentComplete = Math.min((timeCurrent - timeStart) / opts.duration, 1);
+      }
 
       /**********************
          Element Iteration
@@ -265,7 +276,7 @@ function tick(timestamp) {
   } // END: if (timestamp)
 
   /* Note: completeCall() sets the isTicking flag to false when the last call on Collide.State.calls has completed. */
-  if (Collide.State.isTicking) {
+  if (Collide.State.isTicking || percentCompleteStop) {
     dom.raf(tick);
   }
 

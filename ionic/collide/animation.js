@@ -1,14 +1,12 @@
 import {Collide} from './collide'
 import {animationStart} from './animation-start'
 import {animationStop} from './animation-stop'
-import {animationPercent} from './animation-percent'
 import {startTick} from './tick'
 
 
 export class Animation {
   constructor() {
     this._elements = null;
-
     this._options = {};
     this._properties = {};
   }
@@ -35,13 +33,12 @@ export class Animation {
   }
 
   stop() {
-    let promise = animationStop(this._elements, this._options, this._properties);
-
-    return promise;
+    animationStop(this._elements, this._options, this._properties);
   }
 
   percent(ratio) {
-    animationPercent(ratio, this._elements, this._options, this._properties);
+    this._options.percentComplete = parseFloat(ratio);
+    animationStart(this._elements, this._options, this._properties);
   }
 
 
