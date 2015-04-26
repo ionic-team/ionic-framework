@@ -61,8 +61,8 @@ export function completeCall(callIndex, isStopped) {
         eleData.rootPropertyValueCache = {};
 
         /* If any 3D transform subproperty is at its default value (regardless of unit type), remove it. */
-        for (var x = 0, transforms3DLength = CSS.Lists.transforms3D.length; i < transforms3DLength; i++) {
-          var transformName = CSS.Lists.transforms3D[x];
+        for (var j = 0, transforms3DLength = CSS.Lists.transforms3D.length; j < transforms3DLength; j++) {
+          var transformName = CSS.Lists.transforms3D[j];
           var defaultValue = /^scale/.test(transformName) ? 1 : 0;
           var currentValue = eleData.transformCache[transformName];
 
