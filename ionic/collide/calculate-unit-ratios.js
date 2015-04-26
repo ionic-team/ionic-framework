@@ -61,8 +61,8 @@ export function calculateUnitRatios(element, callUnitConversionData) {
        Similarly, since width/height can be artificially constrained by their min-/max- equivalents, these are controlled for as well. */
     /* Note: Overflow must be also be controlled for per-axis since the overflow property overwrites its per-axis values. */
     var cssPropNames = [ 'overflow', 'overflowX', 'overflowY' ];
-    for (var x = 0; x < overflows.length; x++) {
-      Collide.CSS.setPropertyValue(dummy, cssPropNames[x], 'hidden');
+    for (var i = 0; i < overflows.length; i++) {
+      Collide.CSS.setPropertyValue(dummy, cssPropNames[i], 'hidden');
     }
 
     Collide.CSS.setPropertyValue(dummy, 'position', sameRatioIndicators.position);
@@ -71,8 +71,8 @@ export function calculateUnitRatios(element, callUnitConversionData) {
 
     /* width and height act as our proxy properties for measuring the horizontal and vertical % ratios. */
     cssPropNames = [ 'minWidth', 'maxWidth', 'width', 'minHeight', 'maxHeight', 'height' ];
-    for (var x = 0; x < overflows.length; x++) {
-      Collide.CSS.setPropertyValue(dummy, cssPropNames[x], measurement + '%');
+    for (var i = 0; i < overflows.length; i++) {
+      Collide.CSS.setPropertyValue(dummy, cssPropNames[i], measurement + '%');
     }
 
     /* paddingLeft arbitrarily acts as our proxy property for the em ratio. */

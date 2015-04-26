@@ -267,8 +267,8 @@ Collide.Easings = {
     [ "easeInOutCirc", [ 0.785, 0.135, 0.15, 0.86 ] ]
   ];
 
-  for (let x = 0; x < penner.length; x++) {
-    Collide.Easings[ penner[x][0] ] = generateBezier.apply(null, penner[x][1]);
+  for (var i = 0, l = penner.length; i < l; i++) {
+    Collide.Easings[ penner[i][0] ] = generateBezier.apply(null, penner[i][1]);
   }
 
 })();

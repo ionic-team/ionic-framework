@@ -13,8 +13,8 @@ export function animationStop(elements, options, propertiesMap) {
   *******************/
 
   /* Clear the currently-active delay on each targeted element. */
-  for (var x = 0; x < elements.length; x++) {
-    eleData = Collide.data(elements[x]);
+  for (var i = 0, l = elements.length; i < l; i++) {
+    eleData = Collide.data(elements[i]);
 
     if (eleData && eleData.delayTimer) {
       /* Stop the timer from triggering its cached next() function. */
@@ -42,10 +42,10 @@ export function animationStop(elements, options, propertiesMap) {
      regardless of the element's current queue state. */
 
   /* Iterate through every active call. */
-  for (var x = 0, callsLength = Collide.State.calls.length; x < callsLength; x++) {
+  for (var i = 0, l = Collide.State.calls.length; i < l; i++) {
 
     /* Inactive calls are set to false by the logic inside completeCall(). Skip them. */
-    activeCall = Collide.State.calls[x];
+    activeCall = Collide.State.calls[i];
     if (activeCall) {
 
       /* Iterate through the active call's targeted elements. */
@@ -107,7 +107,7 @@ export function animationStop(elements, options, propertiesMap) {
 
     }
 
-  } // END: for (var x = 0, l = Collide.State.calls.length; x < l; x++) {
+  } // END: for (var i = 0, l = Collide.State.calls.length; x < l; x++) {
 
   /* Prematurely call completeCall() on each matched active call. Pass an additional flag for 'stop' to indicate
      that the complete callback and display:none setting should be skipped since we're completing prematurely. */
