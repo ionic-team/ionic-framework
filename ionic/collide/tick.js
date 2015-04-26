@@ -1,4 +1,4 @@
-/* Forked from Collide.js, MIT License. Julian Shapiro http://twitter.com/shapiro */
+/* Forked from VelocityJS: https://github.com/julianshapiro/velocity | MIT License. Julian Shapiro http://twitter.com/shapiro */
 
 import {dom} from 'ionic/util'
 import {Collide} from './collide'
@@ -29,6 +29,8 @@ function tick(timestamp) {
   var percentCompleteStop = false;
 
   if (timestamp) {
+    console.debug('tick, calls', Collide.State.calls.length)
+
     /* We ignore RAF's high resolution timestamp since it can be significantly offset when the browser is
        under high stress; we opt for choppiness over allowing the browser to drop huge chunks of frames. */
     var timeCurrent = (new Date).getTime();
@@ -82,7 +84,6 @@ function tick(timestamp) {
       /* The tween's completion percentage is relative to the tween's start time, not the tween's start value
          (which would result in unpredictable tween durations since JavaScript's timers are not particularly accurate).
          Accordingly, we ensure that percentComplete does not exceed 1. */
-      debugger
       var percentComplete;
       if (opts.percentComplete !== undefined) {
         percentCompleteStop = true;
@@ -276,7 +277,7 @@ function tick(timestamp) {
   } // END: if (timestamp)
 
   /* Note: completeCall() sets the isTicking flag to false when the last call on Collide.State.calls has completed. */
-  if (Collide.State.isTicking || percentCompleteStop) {
+  if (Collide.State.isTicking) {
     dom.raf(tick);
   }
 

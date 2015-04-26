@@ -1,4 +1,4 @@
-/* Forked from Collide.js, MIT License. Julian Shapiro http://twitter.com/shapiro */
+/* Forked from VelocityJS: https://github.com/julianshapiro/velocity | MIT License. Julian Shapiro http://twitter.com/shapiro */
 
 import {Collide} from './collide'
 import {animationProcess} from './animation-process'
@@ -50,7 +50,7 @@ export function animationStart(elements, options, propertiesMap) {
 
   if (elements && elements.length) {
     for (var i = 0, l = elements.length; i < l; i++) {
-      if (elements[i] && elements[i].parentElement) {
+      if (elements[i]) {
 
         promises.push(
           animationProcess('start', elements, i, options, propertiesMap, callUnitConversionData, call)

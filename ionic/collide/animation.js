@@ -39,6 +39,8 @@ export class Animation {
   percent(ratio) {
     this._options.percentComplete = parseFloat(ratio);
     animationStart(this._elements, this._options, this._properties);
+
+    startTick();
   }
 
 

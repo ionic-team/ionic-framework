@@ -1,4 +1,4 @@
-/* Forked from Collide.js, MIT License. Julian Shapiro http://twitter.com/shapiro */
+/* Forked from VelocityJS: https://github.com/julianshapiro/velocity | MIT License. Julian Shapiro http://twitter.com/shapiro */
 
 import {dom} from 'ionic/util'
 

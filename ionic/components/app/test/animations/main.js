@@ -10,22 +10,40 @@ import {Animation} from 'ionic/ionic';
 class IonicApp {
   constructor() {
 
-    this.animation = new Animation();
-    this.animation.elements( document.querySelectorAll('.square') );
-    this.animation.debug(2);
-
-    this.animation.duration(500);
-    this.animation.easing('swing');
-
-    this.animation.property('opacity', 0);
 
   }
 
-  start() {
-    let q = this.animation.start();
+  fadeOut() {
+    let animation = new Animation();
+    animation.elements( document.querySelectorAll('.square') );
+    animation.debug(2);
+
+    animation.duration(500);
+    animation.easing('swing');
+
+    animation.property('opacity', 0);
+
+    let q = animation.start();
 
     q.then(()=> {
-      console.log('animation complete')
+      console.log('fade out complete')
+    });
+  }
+
+  fadeIn() {
+    let animation = new Animation();
+    animation.elements( document.querySelectorAll('.square') );
+    animation.debug(2);
+
+    animation.duration(500);
+    animation.easing('swing');
+
+    animation.property('opacity', 1);
+
+    let q = animation.start();
+
+    q.then(()=> {
+      console.log('fade in complete')
     });
   }
 
@@ -41,7 +59,7 @@ class IonicApp {
   }
 
   velocityStart() {
-    Velocity(document.querySelectorAll('.square'), { opacity: 0 }, 500);
+    window.Velocity(document.querySelectorAll('.square'), { opacity: 0 }, 500);
   }
 
 }

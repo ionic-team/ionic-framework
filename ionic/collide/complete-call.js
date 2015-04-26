@@ -1,4 +1,4 @@
-/* Forked from Velocity.js, MIT License. Julian Shapiro http://twitter.com/shapiro */
+/* Forked from VelocityJS: https://github.com/julianshapiro/velocity | MIT License. Julian Shapiro http://twitter.com/shapiro */
 
 import {Collide} from './collide'
 import {CSS} from './css'
@@ -9,7 +9,7 @@ import {CSS} from './css'
 ***************************/
 
 /* Note: Unlike tick(), which processes all active calls at once, call completion is handled on a per-call basis. */
-export function completeCall (callIndex, isStopped) {
+export function completeCall(callIndex, isStopped) {
 
   /* Ensure the call exists. */
   if (!Collide.State.calls[callIndex]) {
@@ -88,7 +88,7 @@ export function completeCall (callIndex, isStopped) {
       try {
         opts.complete.call(elements, elements);
       } catch (error) {
-        setTimeout(function() { throw error; }, 1);
+        setTimeout(function() { throw error; });
       }
     }
 
