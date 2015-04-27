@@ -1,6 +1,6 @@
 <ion-view nav-title="Pull to refresh">
 
-  <ion-content ion-refresher>
+  <ion-content ion-refresher (refreshing)="doRefresh()">
 
     <div id="counter"></div>
 

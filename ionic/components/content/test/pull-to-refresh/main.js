@@ -17,6 +17,10 @@ class IonicApp {
   ) {
     console.log('IonicApp Start')
   }
+
+  doRefresh() {
+    console.log('DOREFRESH')
+  }
 }
 
 bootstrap(IonicApp)
