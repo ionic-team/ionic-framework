@@ -26,8 +26,6 @@ function tick(timestamp) {
      the first RAF tick pass so that elements being immediately consecutively animated -- instead of simultaneously animated
      by the same Collide call -- are properly batched into the same initial RAF tick and consequently remain in sync thereafter. */
 
-  var percentCompleteStop = false;
-
   if (timestamp) {
     /* We ignore RAF's high resolution timestamp since it can be significantly offset when the browser is
        under high stress; we opt for choppiness over allowing the browser to drop huge chunks of frames. */
@@ -84,13 +82,11 @@ function tick(timestamp) {
          Accordingly, we ensure that percentComplete does not exceed 1. */
       var percentComplete;
       if (opts.percentComplete !== undefined) {
-        percentCompleteStop = true;
         percentComplete = opts.percentComplete;
-        opts.percentComplete = undefined;
-
       } else {
         percentComplete = Math.min((timeCurrent - timeStart) / opts.duration, 1);
       }
+
 
       /**********************
          Element Iteration
@@ -266,7 +262,7 @@ function tick(timestamp) {
       }
 
       /* If this call has finished tweening, pass its index to completeCall() to handle call cleanup. */
-      if (percentComplete === 1) {
+      if (percentComplete === 1 || opts.percentComplete !== undefined) {
         completeCall(i);
       }
 
