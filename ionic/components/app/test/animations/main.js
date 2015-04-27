@@ -14,16 +14,17 @@ class IonicApp {
   }
 
   fadeOut() {
-    let animation = new Animation();
-    animation.elements( document.querySelectorAll('.square') );
-    animation.debug(2);
+    this.animation = new Animation();
+    this.animation.elements( document.querySelectorAll('.square') );
+    this.animation.debug(2);
 
-    animation.duration(500);
-    animation.easing('swing');
+    this.animation.duration(500);
+    this.animation.easing('swing');
 
-    animation.property('opacity', 0);
+    this.animation.property('opacity', 0);
+    this.animation.property('translateX', '100px');
 
-    let q = animation.start();
+    let q = this.animation.start();
 
     q.then(()=> {
       console.log('fade out complete')
@@ -31,20 +32,25 @@ class IonicApp {
   }
 
   fadeIn() {
-    let animation = new Animation();
-    animation.elements( document.querySelectorAll('.square') );
-    animation.debug(2);
+    this.animation = new Animation();
+    this.animation.elements( document.querySelectorAll('.square') );
+    this.animation.debug(2);
 
-    animation.duration(500);
-    animation.easing('swing');
+    this.animation.duration(2500);
+    this.animation.easing('swing');
 
-    animation.property('opacity', 1);
+    this.animation.property('opacity', 1);
+    this.animation.property('translateX', '0px');
 
-    let q = animation.start();
+    let q = this.animation.start();
 
     q.then(()=> {
       console.log('fade in complete')
     });
+  }
+
+  stop() {
+    this.animation.stop();
   }
 
   percent(ev) {
@@ -59,7 +65,15 @@ class IonicApp {
   }
 
   velocityStart() {
-    window.Velocity(document.querySelectorAll('.square'), { opacity: 0 }, 500);
+    var elements = document.querySelectorAll('.square');
+    Velocity(elements, {
+      opacity: 0,
+      translateX: '100px'
+    }, 5000);
+
+    setTimeout(function() {
+      Velocity(elements, "stop");
+    }, 1000)
   }
 
 }

@@ -1,4 +1,4 @@
-/* Forked from VelocityJS: https://github.com/julianshapiro/velocity | MIT License. Julian Shapiro http://twitter.com/shapiro */
+/* Forked from VelocityJS, MIT License: https://github.com/julianshapiro/velocity | Julian Shapiro http://twitter.com/shapiro */
 
 import {Collide} from './collide'
 
@@ -89,26 +89,6 @@ export var CSS = {
       var rootProperty,
           hookTemplate,
           hookNames;
-
-      /* In IE, color values inside compound-value properties are positioned at the end the value instead of at the beginning.
-         Thus, we re-arrange the templates accordingly. */
-      // if (IE) {
-      //     for (rootProperty in CSS.Hooks.templates) {
-      //         hookTemplate = CSS.Hooks.templates[rootProperty];
-      //         hookNames = hookTemplate[0].split(' ');
-
-      //         var defaultValues = hookTemplate[1].match(CSS.RegEx.valueSplit);
-
-      //         if (hookNames[0] === 'Color') {
-      //             // Reposition both the hook's name and its default value to the end of their respective strings.
-      //             hookNames.push(hookNames.shift());
-      //             defaultValues.push(defaultValues.shift());
-
-      //             // Replace the existing template for the hook's root property.
-      //             CSS.Hooks.templates[rootProperty] = [ hookNames.join(' '), defaultValues.join(' ') ];
-      //         }
-      //     }
-      // }
 
       /* Hook registration. */
       for (rootProperty in CSS.Hooks.templates) {
@@ -308,9 +288,9 @@ export var CSS = {
       /* Note: Batched normalizations extend the CSS.Normalizations.registered object. */
       register: function() {
 
-        /*****************
+        /****************************************
             CSS Batched Registration Transforms
-        *****************/
+        ****************************************/
 
         /* Transforms are the subproperties contained by the CSS 'transform' property. Transforms must undergo normalization
            so that they can be referenced in a properties map by their individual names. */
@@ -384,9 +364,9 @@ export var CSS = {
           })();
         }
 
-        /*************
+        /************************************
             CSS Batched Registration Colors
-        *************/
+        ************************************/
 
         /* Since Collide only animates a single numeric value per property, color animation is achieved by hooking the individual RGBA components of CSS color properties.
            Accordingly, color values must be normalized (e.g. '#ff0000', 'red', and 'rgb(255, 0, 0)' ==> '255 0 0 1') so that their components can be injected/extracted by CSS.Hooks logic. */
@@ -929,3 +909,7 @@ export var CSS = {
 };
 
 const vendorPrefixes = [ '', 'Webkit', 'ms' ];
+
+/* Register hooks and normalizations. */
+CSS.Hooks.register();
+CSS.Normalizations.register();

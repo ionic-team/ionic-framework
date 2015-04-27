@@ -1,4 +1,4 @@
-/* Forked from VelocityJS: https://github.com/julianshapiro/velocity | MIT License. Julian Shapiro http://twitter.com/shapiro */
+/* Forked from VelocityJS, MIT License: https://github.com/julianshapiro/velocity | Julian Shapiro http://twitter.com/shapiro */
 
 import {Collide} from './collide'
 import {CSS} from './css'

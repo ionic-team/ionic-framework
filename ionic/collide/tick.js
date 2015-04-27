@@ -1,4 +1,4 @@
-/* Forked from VelocityJS: https://github.com/julianshapiro/velocity | MIT License. Julian Shapiro http://twitter.com/shapiro */
+/* Forked from VelocityJS, MIT License: https://github.com/julianshapiro/velocity | Julian Shapiro http://twitter.com/shapiro */
 
 import {dom} from 'ionic/util'
 import {Collide} from './collide'
@@ -29,8 +29,6 @@ function tick(timestamp) {
   var percentCompleteStop = false;
 
   if (timestamp) {
-    console.debug('tick, calls', Collide.State.calls.length)
-
     /* We ignore RAF's high resolution timestamp since it can be significantly offset when the browser is
        under high stress; we opt for choppiness over allowing the browser to drop huge chunks of frames. */
     var timeCurrent = (new Date).getTime();

@@ -33,7 +33,7 @@ export class Animation {
   }
 
   stop() {
-    animationStop(this._elements, this._options, this._properties);
+    animationStop(this._elements, 'stop');
   }
 
   percent(ratio) {
