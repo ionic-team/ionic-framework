@@ -2,7 +2,7 @@
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v1.0.0-rc.4
+ * Ionic, v1.0.0-rc.5
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -18,7 +18,7 @@
 // build processes may have already created an ionic obj
 window.ionic = window.ionic || {};
 window.ionic.views = {};
-window.ionic.version = '1.0.0-rc.4';
+window.ionic.version = '1.0.0-rc.5';
 
 (function (ionic) {
 
@@ -3569,6 +3569,16 @@ var KEYBOARD_OPEN_CSS = 'keyboard-open';
 var SCROLL_CONTAINER_CSS = 'scroll-content';
 
 /**
+ * Debounced keyboardFocusIn function
+ */
+var debouncedKeyboardFocusIn = ionic.debounce(keyboardFocusIn, 200, true);
+
+/**
+ * Debounced keyboardNativeShow function
+ */
+var debouncedKeyboardNativeShow = ionic.debounce(keyboardNativeShow, 100, true);
+
+/**
  * Ionic keyboard namespace.
  * @namespace keyboard
  */
@@ -3602,6 +3612,11 @@ ionic.keyboard = {
   isLandscape: false,
 
   /**
+   * Whether the keyboard event listeners have been added or not
+   */
+  isInitialized: false,
+
+  /**
    * Hide the keyboard, if it is open.
    */
   hide: function() {
@@ -3619,6 +3634,38 @@ ionic.keyboard = {
     if (keyboardHasPlugin()) {
       cordova.plugins.Keyboard.show();
     }
+  },
+
+  /**
+   * Remove all keyboard related event listeners, effectively disabling Ionic's
+   * keyboard adjustments.
+   */
+  disable: function() {
+    if (keyboardHasPlugin()) {
+      window.removeEventListener('native.keyboardshow', debouncedKeyboardNativeShow );
+      window.removeEventListener('native.keyboardhide', keyboardFocusOut);
+    } else {
+      document.body.removeEventListener('focusout', keyboardFocusOut);
+    }
+
+    document.body.removeEventListener('ionic.focusin', debouncedKeyboardFocusIn);
+    document.body.removeEventListener('focusin', debouncedKeyboardFocusIn);
+
+    window.removeEventListener('orientationchange', keyboardOrientationChange);
+
+    if ( window.navigator.msPointerEnabled ) {
+      document.removeEventListener("MSPointerDown", keyboardInit);
+    } else {
+      document.removeEventListener('touchstart', keyboardInit);
+    }
+    ionic.keyboard.isInitialized = false;
+  },
+
+  /**
+   * Alias for keyboardInit, initialize all keyboard related event listeners.
+   */
+  enable: function() {
+    keyboardInit();
   }
 };
 
@@ -3632,13 +3679,14 @@ keyboardCurrentViewportHeight = getViewportHeight();
 
 /**
  * Event handler for first touch event, initializes all event listeners
- * for keyboard related events.
+ * for keyboard related events. Also aliased by ionic.keyboard.enable.
  */
 function keyboardInit() {
-  var debouncedKeyboardFocusIn = ionic.debounce(keyboardFocusIn, 200, true);
+
+  if (ionic.keyboard.isInitialized) return;
 
   if (keyboardHasPlugin()) {
-    window.addEventListener('native.keyboardshow', ionic.debounce(keyboardNativeShow, 100, true));
+    window.addEventListener('native.keyboardshow', debouncedKeyboardNativeShow);
     window.addEventListener('native.keyboardhide', keyboardFocusOut);
   } else {
     document.body.addEventListener('focusout', keyboardFocusOut);
@@ -3652,6 +3700,8 @@ function keyboardInit() {
   } else {
     document.removeEventListener('touchstart', keyboardInit);
   }
+
+  ionic.keyboard.isInitialized = true;
 }
 
 /**
@@ -3698,6 +3748,7 @@ function keyboardFocusIn(e) {
       e.target.readOnly ||
       !ionic.tap.isKeyboardElement(e.target) ||
       !(scrollView = inputScrollView(e.target))) {
+    keyboardActiveElement = null;
     return;
   }
 
@@ -3928,9 +3979,11 @@ function keyboardHide() {
   ionic.keyboard.isOpen = false;
   ionic.keyboard.isClosing = false;
 
-  ionic.trigger('resetScrollView', {
-    target: keyboardActiveElement
-  }, true);
+  if (keyboardActiveElement) {
+    ionic.trigger('resetScrollView', {
+      target: keyboardActiveElement
+    }, true);
+  }
 
   ionic.requestAnimationFrame(function(){
     document.body.classList.remove(KEYBOARD_OPEN_CSS);
@@ -3950,6 +4003,8 @@ function keyboardHide() {
     if (keyboardHasPlugin()) cordova.plugins.Keyboard.close();
     keyboardActiveElement && keyboardActiveElement.blur();
   }
+
+  keyboardActiveElement = null;
 }
 
 /**
@@ -3958,36 +4013,42 @@ function keyboardHide() {
  * the currently focused input into view if necessary.
  */
 function keyboardShow() {
-  var elementBounds = keyboardActiveElement.getBoundingClientRect();
-  var details = {
-    target: keyboardActiveElement,
-    elementTop: Math.round(elementBounds.top),
-    elementBottom: Math.round(elementBounds.bottom),
-    keyboardHeight: keyboardGetHeight(),
-    viewportHeight: keyboardCurrentViewportHeight
-  };
-
-  details.windowHeight = details.viewportHeight - details.keyboardHeight;
-  //console.log("keyboardShow viewportHeight: " + details.viewportHeight +
-  //", windowHeight: " + details.windowHeight +
-  //", keyboardHeight: " + details.keyboardHeight);
-
-  // figure out if the element is under the keyboard
-  details.isElementUnderKeyboard = (details.elementBottom > details.windowHeight);
-  //console.log("isUnderKeyboard: " + details.isElementUnderKeyboard);
-  //console.log("elementBottom: " + details.elementBottom);
 
   ionic.keyboard.isOpen = true;
   ionic.keyboard.isOpening = false;
 
-  // send event so the scroll view adjusts
-  ionic.trigger('scrollChildIntoView', details, true);
+  var details = {
+    keyboardHeight: keyboardGetHeight(),
+    viewportHeight: keyboardCurrentViewportHeight
+  };
+
+  if (keyboardActiveElement) {
+    details.target = keyboardActiveElement;
+
+    var elementBounds = keyboardActiveElement.getBoundingClientRect();
+
+    details.elementTop = Math.round(elementBounds.top);
+    details.elementBottom = Math.round(elementBounds.bottom);
+
+    details.windowHeight = details.viewportHeight - details.keyboardHeight;
+    //console.log("keyboardShow viewportHeight: " + details.viewportHeight +
+    //", windowHeight: " + details.windowHeight +
+    //", keyboardHeight: " + details.keyboardHeight);
+
+    // figure out if the element is under the keyboard
+    details.isElementUnderKeyboard = (details.elementBottom > details.windowHeight);
+    //console.log("isUnderKeyboard: " + details.isElementUnderKeyboard);
+    //console.log("elementBottom: " + details.elementBottom);
+
+    // send event so the scroll view adjusts
+    ionic.trigger('scrollChildIntoView', details, true);
+  }
 
   setTimeout(function(){
     document.body.classList.add(KEYBOARD_OPEN_CSS);
   }, 400);
 
-  return details;
+  return details; //for testing
 }
 
 /* eslint no-unused-vars:0 */
@@ -4055,9 +4116,11 @@ function keyboardUpdateViewportHeight() {
     keyboardPortraitViewportHeight = keyboardCurrentViewportHeight;
   }
 
-  ionic.trigger('resetScrollView', {
-    target: keyboardActiveElement
-  }, true);
+  if (keyboardActiveElement) {
+    ionic.trigger('resetScrollView', {
+      target: keyboardActiveElement
+    }, true);
+  }
 
   if (ionic.keyboard.isOpen && ionic.tap.isTextInput(keyboardActiveElement)) {
     keyboardShow();
@@ -8413,7 +8476,7 @@ ionic.views.Slider = ionic.views.View.inherit({
       element.style.left = '';
 
       // reset slides so no refs are held on to
-      slides && (slides.length = 0);
+      slides && (slides.length = []);
 
       // removed event listeners
       if (browser.addEventListener) {
