@@ -1,7 +1,7 @@
 {
   "name": "ionic",
   "private": false,
-  "version": "1.0.0-rc.4",
+  "version": "1.0.0-rc.5",
   "codename": "sulfur-suricate",
   "repository": {
     "url": "git://github.com/driftyco/ionic.git"
