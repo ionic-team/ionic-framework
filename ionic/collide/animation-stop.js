@@ -1,6 +1,7 @@
 /* Forked from VelocityJS, MIT License: https://github.com/julianshapiro/velocity | Julian Shapiro http://twitter.com/shapiro */
 
 import {Collide} from './collide'
+import {completeCall} from './complete-call'
 
 
 export function animationStop(elements, action) {
