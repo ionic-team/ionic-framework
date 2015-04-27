@@ -22,7 +22,7 @@ function run {
   VERSION=$(readJsonProp "package.json" "version")
 
   if [[ "$OLD_VERSION" != "$VERSION" ]]; then
-    ./scripts/bump/release.sh --new-version="$VERSION" --old-version="$OLD_VERSION"
+    ./scripts/bump/release.sh --new-version="$VERSION"
     IS_RELEASE=true
     VERSION_NAME=$(readJsonProp "package.json" "version")
   else
@@ -67,7 +67,7 @@ function run {
     ;;
   4)
     # Update cdn
-    ./scripts/cdn/publish.sh --version-name="$VERSION_NAME"
+    ./scripts/cdn/publish.sh --version-name="$VERSION_NAME" --old-version="$OLD_VERSION"
     ;;
   5)
     # Update bower
