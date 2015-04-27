@@ -1,8 +1,8 @@
-import {Router} from 'ionic/routing/router'
+//import {Router} from 'ionic/routing/router'
 import {For, Component, View as NgView, Parent, bootstrap} from 'angular2/angular2'
 import {FormBuilder, Validators, FormDirectives, ControlGroup} from 'angular2/forms';
 import {Log} from 'ionic/util'
-import {List, Item, Nav, View, Button, Input, Tabs, Tab, Content, NavPane, Aside} from 'ionic/ionic'
+import {Router, List, Item, Nav, View, Button, Input, Tabs, Tab, Content, Aside} from 'ionic/ionic'
 
 @Component({
   selector: 'login-page'
@@ -94,8 +94,9 @@ export class AppPage {
   directives: [For, View, Content, List, Item]
 })
 class StreamTab {
-  constructor(navPane: NavPane) {
-    this.navPane = navPane;
+  constructor(@Parent() viewport: Nav) {
+    //this.navPane = navPane;
+    this.navPane = viewport;
     this.posts = [
       {'title': 'Just barked my first bark'},
       {'title': 'Went poopy' }
@@ -117,8 +118,8 @@ class StreamTab {
   directives: [View, Content]
 })
 class PostDetail {
-  constructor(navPane: NavPane) {
-    this.navPane = navPane
+  constructor(@Parent() viewport: Nav) {
+    this.navPane = viewport;
     this.title = 'Hello'
   }
   selectItem() {
@@ -132,8 +133,9 @@ class PostDetail {
   directives: [View, Content]
 })
 class SplashPage {
-  constructor(navPane: NavPane) {
-    window.navPane = navPane;
+  constructor(@Parent() viewport: Nav) {
+    this.navPane = viewport;
+    window.navPane = viewport;
   }
 }
 
@@ -151,29 +153,22 @@ class IonicApp {
     this.firstPage = SplashPage//AppPage//LoginPage
 
     setTimeout(function() {
-      // TODO: HACK
       var nav = window.navPane;
 
       var route = new Router()
 
-      route.on('/login', (e) => {
-        console.log('ROUTE: Login page')
-        nav.push(LoginPage, {
-          sync: true
+      route.on('/login', (data) => {
+        nav.push(LoginPage, null, {
+          animate: false
         })
       })
-      route.on('/post/:id', (match) => {
-        console.log('ROUTE: Post page', match)
-        nav.push(PostDetail);
+
+      route.on('/post/:id', (data) => {
+        console.log('ROUTE: Post page', data)
+        nav.push(PostDetail, data);
       })
 
-      /*
-      route.on('/signup', (e) => {
-        console.log('ROUTE: Signup page')
-        nav.push(SignupPage)
-      })
-      */
-    }, 2000);
+    }, 200);
   }
 }
 

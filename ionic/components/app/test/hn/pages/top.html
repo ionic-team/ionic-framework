@@ -1,0 +1,10 @@
+<ion-view view-title="Top">
+  <ion-content>
+  <!--<h1>That's so <i>HACKER NEWS</i></h1>-->
+    <ion-list>
+      <ion-item *for="#story of stories">
+        {{story.title}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

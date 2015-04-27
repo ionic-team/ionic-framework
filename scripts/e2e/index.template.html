@@ -7,7 +7,13 @@
 
     <link rel="stylesheet" href="<%= PREFIX %>/css/ionic.css" />
     <% buildConfig.scripts.forEach(function(script) {
-      var src = script.to || script; %><script src="<%= PREFIX %>/lib/<%= src %>"></script>
+      var src = script.to || script; 
+      if (!/http/.test(src)) {
+      %>
+        <script src="<%= PREFIX %>/lib/<%= src %>"></script>
+      <% } else { %>
+        <script src="<%= src %>"></script>
+      <% } %>
     <% }); %>
 </head>
 <body ion-app>

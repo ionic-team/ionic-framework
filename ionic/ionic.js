@@ -9,6 +9,7 @@ Object.defineProperties(NgElement.prototype, {
 
 export * from 'ionic/components'
 export * from 'ionic/platform/platform'
+export * from 'ionic/routing/router'
 export * from 'ionic/webview/webview'
 export * from 'ionic/webview/cordova/cordova'
 export * from 'ionic/webview/node-webkit/node-webkit'
