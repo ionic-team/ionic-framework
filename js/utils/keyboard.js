@@ -297,6 +297,7 @@ function keyboardFocusIn(e) {
       e.target.readOnly ||
       !ionic.tap.isKeyboardElement(e.target) ||
       !(scrollView = inputScrollView(e.target))) {
+    keyboardActiveElement = null;
     return;
   }
 
@@ -527,9 +528,11 @@ function keyboardHide() {
   ionic.keyboard.isOpen = false;
   ionic.keyboard.isClosing = false;
 
-  ionic.trigger('resetScrollView', {
-    target: keyboardActiveElement
-  }, true);
+  if (keyboardActiveElement) {
+    ionic.trigger('resetScrollView', {
+      target: keyboardActiveElement
+    }, true);
+  }
 
   ionic.requestAnimationFrame(function(){
     document.body.classList.remove(KEYBOARD_OPEN_CSS);
@@ -549,6 +552,8 @@ function keyboardHide() {
     if (keyboardHasPlugin()) cordova.plugins.Keyboard.close();
     keyboardActiveElement && keyboardActiveElement.blur();
   }
+
+  keyboardActiveElement = null;
 }
 
 /**
@@ -557,36 +562,42 @@ function keyboardHide() {
  * the currently focused input into view if necessary.
  */
 function keyboardShow() {
-  var elementBounds = keyboardActiveElement.getBoundingClientRect();
-  var details = {
-    target: keyboardActiveElement,
-    elementTop: Math.round(elementBounds.top),
-    elementBottom: Math.round(elementBounds.bottom),
-    keyboardHeight: keyboardGetHeight(),
-    viewportHeight: keyboardCurrentViewportHeight
-  };
-
-  details.windowHeight = details.viewportHeight - details.keyboardHeight;
-  //console.log("keyboardShow viewportHeight: " + details.viewportHeight +
-  //", windowHeight: " + details.windowHeight +
-  //", keyboardHeight: " + details.keyboardHeight);
-
-  // figure out if the element is under the keyboard
-  details.isElementUnderKeyboard = (details.elementBottom > details.windowHeight);
-  //console.log("isUnderKeyboard: " + details.isElementUnderKeyboard);
-  //console.log("elementBottom: " + details.elementBottom);
 
   ionic.keyboard.isOpen = true;
   ionic.keyboard.isOpening = false;
 
-  // send event so the scroll view adjusts
-  ionic.trigger('scrollChildIntoView', details, true);
+  var details = {
+    keyboardHeight: keyboardGetHeight(),
+    viewportHeight: keyboardCurrentViewportHeight
+  };
+
+  if (keyboardActiveElement) {
+    details.target = keyboardActiveElement;
+
+    var elementBounds = keyboardActiveElement.getBoundingClientRect();
+
+    details.elementTop = Math.round(elementBounds.top);
+    details.elementBottom = Math.round(elementBounds.bottom);
+
+    details.windowHeight = details.viewportHeight - details.keyboardHeight;
+    //console.log("keyboardShow viewportHeight: " + details.viewportHeight +
+    //", windowHeight: " + details.windowHeight +
+    //", keyboardHeight: " + details.keyboardHeight);
+
+    // figure out if the element is under the keyboard
+    details.isElementUnderKeyboard = (details.elementBottom > details.windowHeight);
+    //console.log("isUnderKeyboard: " + details.isElementUnderKeyboard);
+    //console.log("elementBottom: " + details.elementBottom);
+
+    // send event so the scroll view adjusts
+    ionic.trigger('scrollChildIntoView', details, true);
+  }
 
   setTimeout(function(){
     document.body.classList.add(KEYBOARD_OPEN_CSS);
   }, 400);
 
-  return details;
+  return details; //for testing
 }
 
 /* eslint no-unused-vars:0 */
@@ -654,9 +665,11 @@ function keyboardUpdateViewportHeight() {
     keyboardPortraitViewportHeight = keyboardCurrentViewportHeight;
   }
 
-  ionic.trigger('resetScrollView', {
-    target: keyboardActiveElement
-  }, true);
+  if (keyboardActiveElement) {
+    ionic.trigger('resetScrollView', {
+      target: keyboardActiveElement
+    }, true);
+  }
 
   if (ionic.keyboard.isOpen && ionic.tap.isTextInput(keyboardActiveElement)) {
     keyboardShow();
