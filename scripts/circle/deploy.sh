@@ -22,7 +22,7 @@ function run {
   VERSION=$(readJsonProp "package.json" "version")
 
   if [[ "$OLD_VERSION" != "$VERSION" ]]; then
-    ./scripts/bump/release.sh --new-version="$VERSION"
+    ./scripts/bump/release.sh --new-version="$VERSION" --old-version="$OLD_VERSION"
     IS_RELEASE=true
     VERSION_NAME=$(readJsonProp "package.json" "version")
   else

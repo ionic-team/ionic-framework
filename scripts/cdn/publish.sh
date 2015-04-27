@@ -2,6 +2,7 @@
 # Version name is "nightly" or a version number
 ARG_DEFS=(
   "--version-name=(.*)"
+  "--old-version=(.*)"
 )
 
 echo "##### "
