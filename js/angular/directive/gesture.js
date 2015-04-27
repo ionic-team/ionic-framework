@@ -93,11 +93,11 @@ GESTURE_DIRECTIVES.forEach(function(name) {
  * @restrict A
  *
  * @description
- * Called when a drag gesture has started
+ * Called when a drag gesture has started.
  *
  * @usage
  * ```html
- * <button on-drag="onDragStart()" class="button">Test</button>
+ * <button on-drag-start="onDragStart()" class="button">Test</button>
  * ```
  */
 
@@ -126,11 +126,11 @@ GESTURE_DIRECTIVES.forEach(function(name) {
  * @restrict A
  *
  * @description
- * Called when a drag gesture has ended
+ * Called when a drag gesture has ended.
  *
  * @usage
  * ```html
- * <button on-drag="onDragEnd()" class="button">Test</button>
+ * <button on-drag-end="onDragEnd()" class="button">Test</button>
  * ```
  */
 
