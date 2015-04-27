@@ -152,7 +152,7 @@ class IonicApp {
   constructor() {
     this.firstPage = SplashPage//AppPage//LoginPage
 
-    setTimeout(function() {
+    setTimeout(() => {
       var nav = window.navPane;
 
       var route = new Router()
