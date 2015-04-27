@@ -5,8 +5,11 @@ machine:
     version: 2.1.2
 checkout:
   post:
+    # Make sure that the git repo that circleCI clones is not cloned shallow
+    # (by default, it only clones the last 25 commits - aka shallow)
+    # copy/pasted from circleCI support)
     - "[[ ! -s \"$(git rev-parse --git-dir)/shallow\" ]] || git fetch --unshallow"
-dependencies: 
+dependencies:
   post:
     - bower install
 test:
