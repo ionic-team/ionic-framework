@@ -14,6 +14,7 @@ export * from 'ionic/components/list/list'
 export * from 'ionic/components/nav-pane/nav-pane' //TODO remove
 export * from 'ionic/components/nav/nav'
 export * from 'ionic/components/nav/nav-item'
+export * from 'ionic/components/nav/decorators'
 export * from 'ionic/components/radio/radio-button'
 export * from 'ionic/components/radio/radio-group'
 export * from 'ionic/components/search-bar/search-bar'

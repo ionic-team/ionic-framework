@@ -11,19 +11,12 @@ export class Router {
     let path = hash.slice(1);
 
     let routeParams = {};
-    let found = false
 
     for(let route of this.routes) {
-      // Either we have a direct string match, or 
-      // we need to check the route more deeply
-      // Example: /tab/home
-      if(route.url == path) {
-        found = true
-      } else if((routeParams = this.matchRoute(route, path))) {
-        found = true;
-      }
 
-      if(found) {
+      routeParams = route.match(path);
+
+      if(routeParams !== false) {
         route.exec(this.buildRouteParams(routeParams));
         return
       }
@@ -32,10 +25,58 @@ export class Router {
     return this.noMatch();
   }
 
-  // Check a specific route against a given path
-  matchRoute(route, path) {
+  buildRouteParams(routeParams) {
+    routeParams._route = {
+      path: window.location.hash.slice(1)
+    }
+    return routeParams;
+  }
+
+  noMatch() {
+    // otherwise()?
+    return {}
+  }
+
+  on(path, cb) {
+    let route = new Route(path, cb);
+    this.routes.push(route);
+    this.match();
+    return route;
+  }
+
+  otherwise(path) {
+    let routeParams = {}
+    for(let route of this.routes) {
+      if((routeParams = route.match(path)) !== false) {
+        console.log('OTHERWISE: route matched:', route.url);
+        route.exec(routeParams)
+      }
+    }
+  }
+}
+
+export class Route {
+  constructor(url, handler) {
+    this.url = url;
+    this.handler = handler;
+  }
+  match(path) {
+    let routeParams = {}
+
+    // Either we have a direct string match, or 
+    // we need to check the route more deeply
+    // Example: /tab/home
+    if(this.url == path) {
+      return {}
+    } else if((routeParams = this._matchParams(path))) {
+      return routeParams
+    }
+    return false
+  }
+
+  _matchParams(path) {
     var parts = path.split('/');
-    var routeParts = route.url.split('/');
+    var routeParts = this.url.split('/');
 
     // Our aggregated route params that matched our route path.
     // This is used for things like /post/:id
@@ -63,32 +104,6 @@ export class Router {
       
     }
     return routeParams;
-  }
-
-  buildRouteParams(routeParams) {
-    routeParams._route = {
-      path: window.location.hash.slice(1)
-    }
-    return routeParams;
-  }
-
-  noMatch() {
-    // otherwise()?
-    return {}
-  }
-
-  on(path, cb) {
-    let route = new Route(path, cb);
-    this.routes.push(route);
-    this.match();
-    return route;
-  }
-}
-
-export class Route {
-  constructor(url, handler) {
-    this.url = url;
-    this.handler = handler;
   }
   exec(matchParams) {
     this.handler(matchParams)

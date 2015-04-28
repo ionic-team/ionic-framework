@@ -168,6 +168,8 @@ class IonicApp {
         nav.push(PostDetail, data);
       })
 
+      route.otherwise('/login');
+
     }, 200);
   }
 }
