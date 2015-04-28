@@ -55,7 +55,7 @@ IonicModule
  *   <!-- Right menu -->
  *   <ion-side-menu side="right">
  *   </ion-side-menu>
- * 
+ *
  *   <ion-side-menu-content>
  *   <!-- Main content, usually <ion-nav-view> -->
  *   </ion-side-menu-content>
