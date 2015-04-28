@@ -18,11 +18,16 @@ export class Router {
 
       if(routeParams !== false) {
         route.exec(this.buildRouteParams(routeParams));
+        this.emit(route.url)
         return
       }
     }
 
     return this.noMatch();
+  }
+
+  emit(path) {
+    window.location.hash = path
   }
 
   buildRouteParams(routeParams) {
@@ -50,6 +55,7 @@ export class Router {
       if((routeParams = route.match(path)) !== false) {
         console.log('OTHERWISE: route matched:', route.url);
         route.exec(routeParams)
+        this.emit(route.url)
       }
     }
   }

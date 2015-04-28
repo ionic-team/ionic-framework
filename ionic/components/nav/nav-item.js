@@ -43,7 +43,9 @@ export class NavItem {
     this.Class = data.Class;
     this._item = data;
 
-    util.extend(this.params, data.params);
+    if(data.parms) {
+      util.extend(this.params, data.params);
+    }
 
     this._loader.loadIntoExistingLocation(data.Class, this._elementRef).then(instance => {
       this.instance = instance
