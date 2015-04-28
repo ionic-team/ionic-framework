@@ -54,7 +54,9 @@ function($timeout, $ionicConfig) {
         'ng-disabled': attr.ngDisabled,
         'ng-true-value': attr.ngTrueValue,
         'ng-false-value': attr.ngFalseValue,
-        'ng-change': attr.ngChange
+        'ng-change': attr.ngChange,
+        'ng-required': attr.ngRequired,
+        'required': attr.required
       }, function(value, name) {
         if (isDefined(value)) {
           input.attr(name, value);

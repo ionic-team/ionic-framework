@@ -52,7 +52,9 @@ IonicModule
           'ng-value': attr.ngValue,
           'ng-model': attr.ngModel,
           'ng-disabled': attr.ngDisabled,
-          'ng-change': attr.ngChange
+          'ng-change': attr.ngChange,
+          'ng-required': attr.ngRequired,
+          'required': attr.required
       }, function(value, name) {
         if (isDefined(value)) {
             input.attr(name, value);
