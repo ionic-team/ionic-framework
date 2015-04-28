@@ -38,9 +38,9 @@ IonicModule
  * - {@link ionic.directive:exposeAsideWhen}
  *
  * @usage
- * To use side menus, add an `<ion-side-menus>` parent element,
- * an `<ion-side-menu-content>` for the center content,
- * and one or more `<ion-side-menu>` directives.
+ * To use side menus, add an `<ion-side-menus>` parent element. This will encompass all pages that have a
+ * side menu, and have at least 2 child elements: 1 `<ion-side-menu-content>` for the center content,
+ * and one or more `<ion-side-menu>` directives for each side menu(left/right) that you wish to place.
  *
  * ```html
  * <ion-side-menus>
@@ -55,6 +55,10 @@ IonicModule
  *   <!-- Right menu -->
  *   <ion-side-menu side="right">
  *   </ion-side-menu>
+ * 
+ *   <ion-side-menu-content>
+ *   <!-- Main content, usually <ion-nav-view> -->
+ *   </ion-side-menu-content>
  * </ion-side-menus>
  * ```
  * ```js
