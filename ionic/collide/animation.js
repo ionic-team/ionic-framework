@@ -10,11 +10,20 @@ const data = Collide.data;
 
 export class Animation {
   constructor() {
+    this.parent = null;
     this._elements = null;
     this._options = {};
     this._properties = {};
     this._resolve = null;
     this._call = null;
+
+    this.children = [];
+  }
+
+  addChild(animation) {
+    animation.parent = this;
+    this.children.push(animation);
+    return this;
   }
 
   elements(ele) {
@@ -23,6 +32,7 @@ export class Animation {
     } else {
       this._elements = !ele.length ? [ele] : ele;
     }
+    return this;
   }
 
   _setupElements(clearCache, onNextFrame) {
@@ -36,89 +46,108 @@ export class Animation {
       this.stop();
     }
 
-    this._promise = new Promise(res => {
-      this._resolve = res;
-    });
+    if (this._elements && this._elements.length) {
+      this._promise = new Promise(res => {
+        this._resolve = res;
+      });
 
-    this._call = null;
+      this._call = null;
 
-    // in the next frame, do all the DOM GETs to load element info
-    this._nextAF = dom.raf(() => {
-      /**********************************
-         Animation Call-Wide Variables
-      **********************************/
+      // in the next frame, do all the DOM GETs to load element info
+      this._nextAF = dom.raf(() => {
+        /**********************************
+           Animation Call-Wide Variables
+        **********************************/
 
-      /* A container for CSS unit conversion ratios (e.g. %, rem, and em ==> px) that is used to cache ratios across all elements
-         being animated in a single Collide call. Calculating unit ratios necessitates DOM querying and updating, and is therefore
-         avoided (via caching) wherever possible. This container is call-wide instead of page-wide to avoid the risk of using stale
-         conversion metrics across Collide animations that are not immediately consecutively chained. */
-      this._unitConversion = {
-        lastParent: null,
-        lastPosition: null,
-        lastFontSize: null,
-        lastPercentToPxWidth: null,
-        lastPercentToPxHeight: null,
-        lastEmToPx: null,
-        remToPx: null,
-        vwToPx: null,
-        vhToPx: null
-      };
+        /* A container for CSS unit conversion ratios (e.g. %, rem, and em ==> px) that is used to cache ratios across all elements
+           being animated in a single Collide call. Calculating unit ratios necessitates DOM querying and updating, and is therefore
+           avoided (via caching) wherever possible. This container is call-wide instead of page-wide to avoid the risk of using stale
+           conversion metrics across Collide animations that are not immediately consecutively chained. */
+        this._unitConversion = {
+          lastParent: null,
+          lastPosition: null,
+          lastFontSize: null,
+          lastPercentToPxWidth: null,
+          lastPercentToPxHeight: null,
+          lastEmToPx: null,
+          remToPx: null,
+          vwToPx: null,
+          vhToPx: null
+        };
 
-      this._call = [];
+        this._call = [];
 
-      this._options = util.extend({}, Collide.defaults, this._options);
+        var opts = util.extend({}, Collide.defaults);
 
-      // get the elements ready
-      for (var i = 0, ii = this._elements.length; i < ii; i++) {
-        processElement('start', this, i, clearCache);
-      }
+        if (this.parent && this.parent._options) {
+          opts = util.extend(opts, this.parent._options);
+        }
 
-      onNextFrame();
-    });
+        this._options = util.extend(opts, this._options);
+
+        // get the elements ready
+        for (var i = 0, ii = this._elements.length; i < ii; i++) {
+          processElement('start', this, i, clearCache);
+        }
+
+        onNextFrame();
+      });
+
+    } else {
+      this._promise = Promise.resolve();
+    }
 
   }
 
   _queueAnimation() {
-    /* Switch on the element's animating flag. */
-    if (this._call === null) return;
+    if (this._elements) {
+      if (this._call === null) return;
 
-    var eleData;
-    for (var i = 0, ii = this._elements.length, element; i < ii && (element = this._elements[i]); i++) {
-      eleData = data(element);
-      if (eleData) {
-        eleData.isAnimating = true;
+      var eleData;
+      for (var i = 0, ii = this._elements.length, element; i < ii && (element = this._elements[i]); i++) {
+        eleData = data(element);
+        if (eleData) {
+          eleData.isAnimating = true;
+        }
+
+        /*********************
+            Auto-Dequeuing
+        *********************/
+
+        /* To fire the first non-custom-queue entry on an element, the element
+           must be dequeued if its queue stack consists *solely* of the current call. (This can be determined by checking
+           for the 'inprogress' item that is prepended to active queue stack arrays.) Regardless, whenever the element's
+           queue is further appended with additional items -- including delay()'s calls, the queue's
+           first entry is automatically fired. This behavior contrasts that of custom queues, which never auto-fire. */
+        /* Note: When an element set is being subjected to a non-parallel Collide call, the animation will not begin until
+           each one of the elements in the set has reached the end of its individually pre-existing queue chain. */
+        if (this._options.queue === '' && Collide.queue(element)[0] !== 'inprogress') {
+          Collide.dequeue(element);
+        }
       }
 
-      /*********************
-          Auto-Dequeuing
-      *********************/
-
-      /* To fire the first non-custom-queue entry on an element, the element
-         must be dequeued if its queue stack consists *solely* of the current call. (This can be determined by checking
-         for the 'inprogress' item that is prepended to active queue stack arrays.) Regardless, whenever the element's
-         queue is further appended with additional items -- including delay()'s calls, the queue's
-         first entry is automatically fired. This behavior contrasts that of custom queues, which never auto-fire. */
-      /* Note: When an element set is being subjected to a non-parallel Collide call, the animation will not begin until
-         each one of the elements in the set has reached the end of its individually pre-existing queue chain. */
-      if (this._options.queue === '' && Collide.queue(element)[0] !== 'inprogress') {
-        Collide.dequeue(element);
-      }
+      /* Once the final element in this call's element set has been processed, push the call array onto
+         Collide.State.calls for the animation tick to immediately begin processing. */
+      /* Add the current call plus its associated metadata (the element set and the call's options) onto the global call container.
+         Anything on this call container is subjected to tick() processing. */
+      Collide.State.calls.push([ this._call,
+                                 this._elements,
+                                 this._options,
+                                 null,
+                                 this._resolve ]);
     }
-
-    /* Once the final element in this call's element set has been processed, push the call array onto
-       Collide.State.calls for the animation tick to immediately begin processing. */
-    /* Add the current call plus its associated metadata (the element set and the call's options) onto the global call container.
-       Anything on this call container is subjected to tick() processing. */
-    Collide.State.calls.push([ this._call,
-                               this._elements,
-                               this._options,
-                               null,
-                               this._resolve ]);
 
     startTick();
   }
 
   start() {
+    var promises = [];
+    for (var i = 0; i < this.children.length; i++) {
+      promises.push(
+        this.children[i].start()
+      );
+    }
+
     var clearCache = (this._aniType !== 'start');
 
     this._setupElements(clearCache, () => {
@@ -126,38 +155,54 @@ export class Animation {
       this._queueAnimation();
     });
 
-    return this._promise;
+    promises.push(this._promise);
+
+    return Promise.all(promises);
   }
 
   ready() {
+    var promises = [];
+    for (var i = 0; i < this.children.length; i++) {
+      promises.push(
+        this.children[i].ready()
+      );
+    }
+
     var clearCache = (this._aniType !== 'percent');
 
     this._setupElements(clearCache, () => {
       this._aniType = 'percent';
     });
 
-    return this._promise;
+    promises.push(this._promise);
+
+    return Promise.all(promises);
   }
 
   percent(percentComplete) {
     // go to and stop at a specific point in the animation
+
     if (this._aniType = 'percent') {
       this._options.percentComplete = percentComplete;
 
-      this._queueAnimation();
+      for (var i = 0; i < this.children.length; i++) {
+        this.children[i].percent(percentComplete);
+      }
 
-      startTick();
+      this._queueAnimation();
     }
   }
 
   stop() {
     // immediately stop where it's at
     animationStop(this._elements, 'stop');
+    return this;
   }
 
   finish() {
     // immediately go to the end of the animation
     animationStop(this._elements, 'finish');
+    return this;
   }
 
   isAnimating() {
@@ -179,48 +224,57 @@ export class Animation {
   ************/
   options(val) {
     this._options = val || {};
+    return this;
   }
 
   option(key, val) {
     this._options[key] = val;
+    return this;
   }
 
   removeOption(key) {
     delete this._options[key];
+    return this;
   }
 
   duration(val) {
     this._options.duration = val;
+    return this;
   }
 
   easing(val) {
     this._options.easing = val;
+    return this;
   }
 
 
-  /**************************
+  /***************
      Properties
-  **************************/
+  ***************/
 
   properties(val) {
     this._properties = val || {};
+    return this;
   }
 
   property(key, val) {
     this._properties[key] = val;
+    return this;
   }
 
   removeProperty(key) {
     delete this._properties[key];
+    return this;
   }
 
 
-  /**************************
+  /*********
      Misc
-  **************************/
+  *********/
 
   debug(val) {
     Collide.debug = !!val;
+    return this;
   }
 
 }

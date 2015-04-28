@@ -11,26 +11,42 @@ let scale = 0.6;
   templateUrl: 'main.html'
 })
 class IonicApp {
-  constructor() {
-
-  }
 
   fadeOut() {
     console.debug('fadeOut');
-    this.animation = new Animation();
-    this.animation.elements( document.querySelectorAll('.square') );
 
-    this.animation.duration(1000);
-    this.animation.easing('linear');
+    var animation = new Animation();
 
-    this.animation.property('opacity', opacity);
-    this.animation.property('translateX', translateX);
-    this.animation.property('translateY', translateX);
-    this.animation.property('rotateZ', rotateZ);
-    this.animation.property('scale', scale);
+    animation.duration(1000);
+    animation.easing('linear');
 
 
-    let q = this.animation.start();
+    var row1 = new Animation();
+    row1.elements( document.querySelectorAll('.square') );
+
+    row1.property('opacity', opacity)
+        .property('translateX', translateX)
+        .property('translateY', translateX)
+        .property('rotateZ', rotateZ)
+        .property('scale', scale);
+
+    animation.addChild(row1);
+
+
+    var row2 = new Animation();
+    row2.elements( document.querySelectorAll('.square2') );
+
+    row2.property('opacity', opacity);
+    row2.property('translateX', '-100px');
+    row2.property('translateY', '-100px');
+    row2.property('rotateZ', '-180deg');
+    row2.property('scale', 0.4);
+
+    animation.addChild(row2);
+
+
+
+    let q = animation.start();
 
     q.then(()=> {
       console.log('fade out complete')
@@ -39,19 +55,38 @@ class IonicApp {
 
   fadeIn() {
     console.debug('fadeIn');
-    this.animation = new Animation();
-    this.animation.elements( document.querySelectorAll('.square') );
 
-    this.animation.duration(1000);
-    this.animation.easing('linear');
+    var animation = new Animation();
+    animation.elements();
 
-    this.animation.property('opacity', 1);
-    this.animation.property('translateX', 0);
-    this.animation.property('translateY', 0);
-    this.animation.property('rotateZ', 0);
-    this.animation.property('scale', 1);
+    animation.duration(1000);
+    animation.easing('linear');
 
-    let q = this.animation.start();
+
+    var row1 = new Animation();
+    row1.elements( document.querySelectorAll('.square') );
+
+    row1.property('opacity', 1);
+    row1.property('translateX', 0);
+    row1.property('translateY', 0);
+    row1.property('rotateZ', 0);
+    row1.property('scale', 1);
+
+    animation.addChild(row1);
+
+
+    var row2 = new Animation();
+    row2.elements( document.querySelectorAll('.square2') );
+
+    row2.property('opacity', 1);
+    row2.property('translateX', 0);
+    row2.property('translateY', 0);
+    row2.property('rotateZ', 0);
+    row2.property('scale', 1);
+
+    animation.addChild(row2);
+
+    let q = animation.start();
 
     q.then(()=> {
       console.log('fade in complete')
@@ -67,13 +102,30 @@ class IonicApp {
 
     if (!this.percentAnimation) {
       this.percentAnimation = new Animation();
-      this.percentAnimation.elements( document.querySelectorAll('.square') );
 
-      this.percentAnimation.property('opacity', opacity);
-      this.percentAnimation.property('translateX', translateX);
-      this.percentAnimation.property('translateY', translateX);
-      this.percentAnimation.property('rotateZ', rotateZ);
-      this.percentAnimation.property('scale', scale);
+      var row1 = new Animation();
+      row1.elements( document.querySelectorAll('.square') );
+
+      row1.property('opacity', 1);
+      row1.property('translateX', 0);
+      row1.property('translateY', 0);
+      row1.property('rotateZ', 0);
+      row1.property('scale', 1);
+
+      this.percentAnimation.addChild(row1);
+
+
+      var row2 = new Animation();
+      row2.elements( document.querySelectorAll('.square2') );
+
+      row2.property('opacity', 1);
+      row2.property('translateX', 0);
+      row2.property('translateY', 0);
+      row2.property('rotateZ', 0);
+      row2.property('scale', 1);
+
+      this.percentAnimation.addChild(row2);
+
 
       this.percentAnimation.ready();
     }
