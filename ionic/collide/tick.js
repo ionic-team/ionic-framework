@@ -65,6 +65,10 @@ function tick(timestamp) {
           firstTick = !!timeStart,
           tweenDummyValue = null;
 
+      if (!call) {
+        continue;
+      }
+
       /* If timeStart is undefined, then this is the first time that this call has been processed by tick().
          We assign timeStart now so that its value is as close to the real animation start time as possible.
          (Conversely, had timeStart been defined when this call was added to Collide.State.calls, the delay
@@ -79,7 +83,7 @@ function tick(timestamp) {
 
       var percentComplete;
       if (opts.percentComplete !== undefined) {
-        percentComplete = Math.max(Math.min(opts.percentComplete, 1), 0);
+        percentComplete = Math.max(Math.min(parseFloat(opts.percentComplete), 1), 0);
 
       } else {
         /* The tween's completion percentage is relative to the tween's start time, not the tween's start value

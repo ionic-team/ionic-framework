@@ -155,7 +155,7 @@ export function completeCall(callIndex, isStopped) {
   /* Iterate through the calls array to determine if this was the final in-progress animation.
      If so, set a flag to end ticking and clear the calls array. */
   for (var j = 0, jj = Collide.State.calls.length; j < jj; j++) {
-    if (Collide.State.calls[j] !== false) {
+    if (Collide.State.calls[j] !== false && Collide.State.calls[j][0]) {
       remainingCallsExist = true;
       break;
     }

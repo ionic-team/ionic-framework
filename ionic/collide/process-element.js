@@ -613,8 +613,6 @@ export function processElement(action, animation, elementIndex, clearCache) {
         };
 
         if (Collide.debug) console.log('tweensContainer (' + property + '): ' + JSON.stringify(tweensContainer[property]), element);
-
-        console.log('processElement parsePropertyValue: startValue', startValue, 'currentValue', currentValue, 'endValue',  endValue);
       }
 
       /* Along with its property data, store a reference to the element itself onto tweensContainer. */
