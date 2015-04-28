@@ -19,14 +19,16 @@ const data = Collide.data;
    3) Pushing: Consolidation of the tween data followed by its push onto the global in-progress calls container.
 */
 
-export function animationProcess(action, elements, elementsIndex, options, propertiesMap, callUnitConversionData, call) {
-  var resolve;
-  var promise = new Promise(function(res) {
-    resolve = res;
-  });
-
-  var element = elements[elementsIndex];
+export function processElement(action, animation, elementIndex, clearCache) {
+  var elements = animation._elements;
   var elementsLength = elements.length;
+  var element = elements[elementIndex];
+
+  var opts = animation._options;
+  var propertiesMap = animation._properties;
+  var callUnitConversionData = animation._unitConversion;
+  var call = animation._call;
+  var resolve = animation._resolve;
 
 
   /*************************
@@ -36,9 +38,6 @@ export function animationProcess(action, elements, elementsIndex, options, prope
   /***************************
     Element-Wide Variables
   ***************************/
-
-  /* The runtime opts object is the extension of the current call's options and Collide's page-wide option defaults. */
-  var opts = util.extend({}, Collide.defaults, options);
 
   /* A container for the processed data associated with each property in the propertyMap.
      (Each property in the map produces its own 'tween'.) */
@@ -143,7 +142,7 @@ export function animationProcess(action, elements, elementsIndex, options, prope
     *******************/
 
     /* The begin callback is fired once per call -- not once per elemenet -- and is passed the full raw DOM element set as both its context and its first argument. */
-    if (opts.begin && elementsIndex === 0) {
+    if (opts.begin && elementIndex === 0) {
       /* We throw callbacks in a setTimeout so that thrown errors don't halt the execution of Collide itself. */
       try {
         opts.begin.call(elements, elements);
@@ -219,94 +218,6 @@ export function animationProcess(action, elements, elementsIndex, options, prope
       if (Collide.debug) console.log("tweensContainer (scroll): ", tweensContainer.scroll, element);
 
 
-    /******************************************
-       Tween Data Construction (for Reverse)
-    ******************************************/
-
-    /* Reverse acts like a 'start' action in that a property map is animated toward. The only difference is
-       that the property map used for reverse is the inverse of the map used in the previous call. Thus, we manipulate
-       the previous call to construct our new map: use the previous map's end values as our new map's start values. Copy over all other data. */
-    /* Note: Reverse can be directly called via the 'reverse' parameter, or it can be indirectly triggered via the loop option. (Loops are composed of multiple reverses.) */
-    /* Note: Reverse calls do not need to be consecutively chained onto a currently-animating element in order to operate on cached values;
-       there is no harm to reverse being called on a potentially stale data cache since reverse's behavior is simply defined
-       as reverting to the element's values as they were prior to the previous *Collide* call. */
-    } else if (action === 'reverse') {
-      /* Abort if there is no prior animation data to reverse to. */
-      if (!data(element).tweensContainer) {
-        /* Dequeue the element so that this queue entry releases itself immediately, allowing subsequent queue entries to run. */
-        Collide.dequeue(element, opts.queue);
-        return;
-
-      } else {
-        /*********************
-           Options Parsing
-        *********************/
-
-        /* If the element was hidden via the display option in the previous call,
-           revert display to 'auto' prior to reversal so that the element is visible again. */
-        if (data(element).opts.display === 'none') {
-          data(element).opts.display = 'auto';
-        }
-
-        if (data(element).opts.visibility === 'hidden') {
-          data(element).opts.visibility = 'visible';
-        }
-
-        /* If the loop option was set in the previous call, disable it so that 'reverse' calls aren't recursively generated.
-           Further, remove the previous call's callback options; typically, users do not want these to be refired. */
-        data(element).opts.loop = false;
-        data(element).opts.begin = null;
-        data(element).opts.complete = null;
-
-        /* Since we're extending an opts object that has already been extended with the defaults options object,
-           we remove non-explicitly-defined properties that are auto-assigned values. */
-        if (!options.easing) {
-          delete opts.easing;
-        }
-
-        if (!options.duration) {
-          delete opts.duration;
-        }
-
-        /* The opts object used for reversal is an extension of the options object optionally passed into this
-           reverse call plus the options used in the previous Collide call. */
-        opts = util.extend({}, data(element).opts, opts);
-
-        /*************************************
-           Tweens Container Reconstruction
-        *************************************/
-
-        /* Create a deepy copy (indicated via the true flag) of the previous call's tweensContainer. */
-        var lastTweensContainer = util.extend(true, {}, data(element).tweensContainer);
-
-        /* Manipulate the previous tweensContainer by replacing its end values and currentValues with its start values. */
-        for (var lastTween in lastTweensContainer) {
-          /* In addition to tween data, tweensContainers contain an element property that we ignore here. */
-          if (lastTween !== 'element') {
-            var lastStartValue = lastTweensContainer[lastTween].startValue;
-
-            lastTweensContainer[lastTween].startValue = lastTweensContainer[lastTween].currentValue = lastTweensContainer[lastTween].endValue;
-            lastTweensContainer[lastTween].endValue = lastStartValue;
-
-            /* Easing is the only option that embeds into the individual tween data (since it can be defined on a per-property basis).
-               Accordingly, every property's easing value must be updated when an options object is passed in with a reverse call.
-               The side effect of this extensibility is that all per-property easing values are forcefully reset to the new value. */
-            if (!util.isEmptyObject(options)) {
-                lastTweensContainer[lastTween].easing = opts.easing;
-            }
-
-            if (Collide.debug) console.log("reverse tweensContainer (" + lastTween + "): " + JSON.stringify(lastTweensContainer[lastTween]), element);
-          }
-        }
-
-        tweensContainer = lastTweensContainer;
-      }
-
-
-    /*********************************
-      Start: Tween Data Construction
-    *********************************/
-
     } else if (action === 'start') {
 
       /****************************
@@ -325,8 +236,11 @@ export function animationProcess(action, elements, elementsIndex, options, prope
       /* The per-element isAnimating flag is used to indicate whether it's safe (i.e. the data isn't stale)
          to transfer over end values to use as start values. If it's set to true and there is a previous
          Collide call to pull values from, do so. */
-      if (data(element).tweensContainer && data(element).isAnimating === true) {
-        lastTweensContainer = data(element).tweensContainer;
+      var eleData = data(element);
+      if (clearCache) {
+        eleData.tweensContainer = undefined;
+      } else if (eleData.tweensContainer && eleData.isAnimating === true) {
+        lastTweensContainer = eleData.tweensContainer;
       }
 
 
@@ -379,11 +293,11 @@ export function animationProcess(action, elements, elementsIndex, options, prope
         /* If functions were passed in as values, pass the function the current element as its context,
            plus the element's index and the element set's size as arguments. Then, assign the returned value. */
         if (typeof endValue === 'function') {
-          endValue = endValue.call(element, elementsIndex, elementsLength);
+          endValue = endValue.call(element, elementIndex, elementsLength);
         }
 
         if (typeof startValue === 'function') {
-          startValue = startValue.call(element, elementsIndex, elementsLength);
+          startValue = startValue.call(element, elementIndex, elementsLength);
         }
 
         /* Allow startValue to be left as undefined to indicate to the ensuing code that its value was not forcefed. */
@@ -412,17 +326,17 @@ export function animationProcess(action, elements, elementsIndex, options, prope
 
             /* Inject the RGB component tweens into propertiesMap. */
             for (var i = 0; i < colorComponents.length; i++) {
-                var dataArray = [ endValueRGB[i] ];
+              var dataArray = [ endValueRGB[i] ];
 
-                if (easing) {
-                    dataArray.push(easing);
-                }
+              if (easing) {
+                dataArray.push(easing);
+              }
 
-                if (startValueRGB !== undefined) {
-                    dataArray.push(startValueRGB[i]);
-                }
+              if (startValueRGB !== undefined) {
+                dataArray.push(startValueRGB[i]);
+              }
 
-                propertiesMap[property + colorComponents[i]] = dataArray;
+              propertiesMap[property + colorComponents[i]] = dataArray;
             }
 
             /* Remove the intermediary shorthand property entry now that we've processed it. */
@@ -470,10 +384,12 @@ export function animationProcess(action, elements, elementsIndex, options, prope
           startValue = 0;
         }
 
+
         /* If values have been transferred from the previous Collide call, extract the endValue and rootPropertyValue
            for all of the current call's properties that were *also* animated in the previous call. */
         /* Note: Value transferring can optionally be disabled by the user via the _cacheValues option. */
         if (opts._cacheValues && lastTweensContainer && lastTweensContainer[property]) {
+
           if (startValue === undefined) {
             startValue = lastTweensContainer[property].endValue + lastTweensContainer[property].unitType;
           }
@@ -680,6 +596,7 @@ export function animationProcess(action, elements, elementsIndex, options, prope
             break;
         }
 
+        var currentValue = startValue;
 
         /*********************************************
           parsePropertyValue(), tweensContainer Push
@@ -689,13 +606,15 @@ export function animationProcess(action, elements, elementsIndex, options, prope
         tweensContainer[property] = {
           rootPropertyValue: rootPropertyValue,
           startValue: startValue,
-          currentValue: startValue,
+          currentValue: currentValue,
           endValue: endValue,
           unitType: endValueUnitType,
           easing: easing
         };
 
         if (Collide.debug) console.log('tweensContainer (' + property + '): ' + JSON.stringify(tweensContainer[property]), element);
+
+        console.log('processElement parsePropertyValue: startValue', startValue, 'currentValue', currentValue, 'endValue',  endValue);
       }
 
       /* Along with its property data, store a reference to the element itself onto tweensContainer. */
@@ -719,20 +638,6 @@ export function animationProcess(action, elements, elementsIndex, options, prope
       if (opts.queue === '') {
         data(element).tweensContainer = tweensContainer;
         data(element).opts = opts;
-      }
-
-      /* Switch on the element's animating flag. */
-      data(element).isAnimating = true;
-
-      /* Once the final element in this call's element set has been processed, push the call array onto
-         Collide.State.calls for the animation tick to immediately begin processing. */
-      if (elementsIndex === elementsLength - 1) {
-        /* Add the current call plus its associated metadata (the element set and the call's options) onto the global call container.
-           Anything on this call container is subjected to tick() processing. */
-        Collide.State.calls.push([ call, elements, opts, null, resolve ]);
-
-      } else {
-        elementsIndex++;
       }
     }
 
@@ -768,21 +673,4 @@ export function animationProcess(action, elements, elementsIndex, options, prope
     });
   }
 
-
-  /*********************
-      Auto-Dequeuing
-  *********************/
-
-  /* To fire the first non-custom-queue entry on an element, the element
-     must be dequeued if its queue stack consists *solely* of the current call. (This can be determined by checking
-     for the 'inprogress' item that is prepended to active queue stack arrays.) Regardless, whenever the element's
-     queue is further appended with additional items -- including delay()'s calls, the queue's
-     first entry is automatically fired. This behavior contrasts that of custom queues, which never auto-fire. */
-  /* Note: When an element set is being subjected to a non-parallel Collide call, the animation will not begin until
-     each one of the elements in the set has reached the end of its individually pre-existing queue chain. */
-  if ((opts.queue === '' || opts.queue === 'fx') && Collide.queue(element)[0] !== 'inprogress') {
-    Collide.dequeue(element);
-  }
-
-  return promise;
 }

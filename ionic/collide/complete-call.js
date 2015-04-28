@@ -61,7 +61,7 @@ export function completeCall(callIndex, isStopped) {
         eleData.rootPropertyValueCache = {};
 
         /* If any 3D transform subproperty is at its default value (regardless of unit type), remove it. */
-        for (var j = 0, transforms3DLength = CSS.Lists.transforms3D.length; j < transforms3DLength; j++) {
+        for (var j = 0, jj = CSS.Lists.transforms3D.length; j < jj; j++) {
           var transformName = CSS.Lists.transforms3D[j];
           var defaultValue = /^scale/.test(transformName) ? 1 : 0;
           var currentValue = eleData.transformCache[transformName];
@@ -154,7 +154,7 @@ export function completeCall(callIndex, isStopped) {
 
   /* Iterate through the calls array to determine if this was the final in-progress animation.
      If so, set a flag to end ticking and clear the calls array. */
-  for (var j = 0, callsLength = Collide.State.calls.length; j < callsLength; j++) {
+  for (var j = 0, jj = Collide.State.calls.length; j < jj; j++) {
     if (Collide.State.calls[j] !== false) {
       remainingCallsExist = true;
       break;

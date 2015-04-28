@@ -50,7 +50,7 @@ export class Tab extends NavControllerBase {
     this.config = Tab.config.invoke(this);
     this.setHidden = setHidden
 
-    this.tabId = util.uid()
+    this.tabId = util.nextUid()
     setId('tab-content-' + this.tabId)
     setLabelby('tab-item-' + this.tabId)
     setRole('tabpanel')

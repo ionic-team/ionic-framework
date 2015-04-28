@@ -4,16 +4,33 @@ export function clamp(min, n, max) {
   return Math.max(min, Math.min(n, max));
 }
 
-export function extend(dest) {
-  for (var i = 1, ii = arguments.length; i < ii; i++) {
-    var source = arguments[i] || {};
-    for (var key in source) {
-      if (source.hasOwnProperty(key)) {
-        dest[key] = source[key];
+export function extend(dst) {
+  return baseExtend(dst, [].slice.call(arguments, 1), false);
+}
+
+export function merge(dst) {
+  return baseExtend(dst, [].slice.call(arguments, 1), true);
+}
+
+function baseExtend(dst, objs, deep) {
+  for (var i = 0, ii = objs.length; i < ii; ++i) {
+    var obj = objs[i];
+    if (!isObject(obj) && !isFunction(obj)) continue;
+    var keys = Object.keys(obj);
+    for (var j = 0, jj = keys.length; j < jj; j++) {
+      var key = keys[j];
+      var src = obj[key];
+
+      if (deep && isObject(src)) {
+        if (!isObject(dst[key])) dst[key] = isArray(src) ? [] : {};
+        baseExtend(dst[key], [src], true);
+      } else {
+        dst[key] = src;
       }
     }
   }
-  return dest;
+
+  return dst;
 }
 
 export function defaults(dest) {
@@ -41,9 +58,9 @@ export function pascalCaseToDashCase(str = '') {
   })
 }
 
-let _uid = 0
-export function uid() {
-  return _uid++
+let uid = 0
+export function nextUid() {
+  return ++uid;
 }
 
 export class Log {

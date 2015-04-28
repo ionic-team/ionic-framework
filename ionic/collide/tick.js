@@ -77,13 +77,14 @@ function tick(timestamp) {
         timeStart = Collide.State.calls[i][3] = timeCurrent - 16;
       }
 
-      /* The tween's completion percentage is relative to the tween's start time, not the tween's start value
-         (which would result in unpredictable tween durations since JavaScript's timers are not particularly accurate).
-         Accordingly, we ensure that percentComplete does not exceed 1. */
       var percentComplete;
       if (opts.percentComplete !== undefined) {
-        percentComplete = opts.percentComplete;
+        percentComplete = Math.max(Math.min(opts.percentComplete, 1), 0);
+
       } else {
+        /* The tween's completion percentage is relative to the tween's start time, not the tween's start value
+           (which would result in unpredictable tween durations since JavaScript's timers are not particularly accurate).
+           Accordingly, we ensure that percentComplete does not exceed 1. */
         percentComplete = Math.min((timeCurrent - timeStart) / opts.duration, 1);
       }
 
@@ -93,13 +94,14 @@ function tick(timestamp) {
       **********************/
 
       /* For every call, iterate through each of the elements in its set. */
-      for (var j = 0, callLength = call.length; j < callLength; j++) {
-        var tweensContainer = call[j],
-            element = tweensContainer.element;
+      for (var j = 0, jj = call.length; j < jj; j++) {
+        var tweensContainer = call[j];
+        var element = tweensContainer.element;
+        var eleData = Collide.data(element);
 
         /* Check to see if this element has been deleted midway through the animation by checking for the
            continued existence of its data cache. If it's gone, skip animating this element. */
-        if (!Collide.data(element)) {
+        if (!eleData) {
           continue;
         }
 
@@ -114,7 +116,6 @@ function tick(timestamp) {
            (Otherwise, display's 'none' value is set in completeCall() once the animation has completed.) */
         if (opts.display !== undefined && opts.display !== null && opts.display !== 'none') {
           if (opts.display === 'flex') {
-            var flexValues = [ '-webkit-box', '-moz-box', '-ms-flexbox', '-webkit-flex' ];
 
             for (var f = 0; f < flexValues.length; f++) {
               CSS.setPropertyValue(element, 'display', flexValues[f]);
@@ -139,11 +140,13 @@ function tick(timestamp) {
 
           /* Note: In addition to property tween data, tweensContainer contains a reference to its associated element. */
           if (property !== 'element') {
-            var tween = tweensContainer[property],
-                currentValue,
-                /* Easing can either be a pre-genereated function or a string that references a pre-registered easing
-                   on the Collide.Easings object. In either case, return the appropriate easing *function*. */
-                easing = typeof tween.easing === 'string' ? Collide.Easings[tween.easing] : tween.easing;
+            var tween = tweensContainer[property];
+
+            var currentValue;
+
+            /* Easing can either be a pre-genereated function or a string that references a pre-registered easing
+               on the Collide.Easings object. In either case, return the appropriate easing *function*. */
+            var easing = (typeof tween.easing === 'string' ? Collide.Easings[tween.easing] : tween.easing);
 
             /******************************
                Current Value Calculation
@@ -185,7 +188,7 @@ function tick(timestamp) {
                  subsequently chained animations using the same hookRoot but a different hook can use this cached rootPropertyValue. */
               if (CSS.Hooks.registered[property]) {
                 var hookRoot = CSS.Hooks.getRoot(property),
-                    rootPropertyValueCache = Collide.data(element).rootPropertyValueCache[hookRoot];
+                    rootPropertyValueCache = eleData.rootPropertyValueCache[hookRoot];
 
                 if (rootPropertyValueCache) {
                   tween.rootPropertyValue = rootPropertyValueCache;
@@ -214,9 +217,9 @@ function tick(timestamp) {
               if (CSS.Hooks.registered[property]) {
                 /* Since adjustedSetData contains normalized data ready for DOM updating, the rootPropertyValue needs to be re-extracted from its normalized form. ?? */
                 if (CSS.Normalizations.registered[hookRoot]) {
-                  Collide.data(element).rootPropertyValueCache[hookRoot] = CSS.Normalizations.registered[hookRoot]('extract', null, adjustedSetData[1]);
+                  eleData.rootPropertyValueCache[hookRoot] = CSS.Normalizations.registered[hookRoot]('extract', null, adjustedSetData[1]);
                 } else {
-                  Collide.data(element).rootPropertyValueCache[hookRoot] = adjustedSetData[1];
+                  eleData.rootPropertyValueCache[hookRoot] = adjustedSetData[1];
                 }
               }
 
@@ -239,7 +242,7 @@ function tick(timestamp) {
           CSS.flushTransformCache(element);
         }
 
-      } // END: for (var j = 0, callLength = call.length; j < callLength; j++)
+      } // END: for (var j = 0, jj = call.length; j < jj; j++)
 
 
       /* The non-'none' display value is only applied to an element once -- when its associated call is first ticked through.
@@ -276,3 +279,5 @@ function tick(timestamp) {
   }
 
 };
+
+const flexValues = [ '-webkit-box', '-moz-box', '-ms-flexbox', '-webkit-flex' ];
