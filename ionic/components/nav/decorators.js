@@ -23,3 +23,11 @@ export class PushToNav {
     console.log('PUSH TO NAV', this.navTag);
   }
 }
+
+@Decorator({
+  selector: '[href]'
+})
+export class HrefNav {
+  constructor(element: NgElement) {
+  }
+}

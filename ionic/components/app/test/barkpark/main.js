@@ -29,6 +29,7 @@ export class LoginPage {
     Log.log('Doing login')
     event.preventDefault();
     console.log(this.loginForm.value);
+
     //this.viewport.push(SecondPage)
   }
   doSignup(event) {
@@ -155,12 +156,23 @@ class IonicApp {
     setTimeout(() => {
       var nav = window.navPane;
 
-      var route = new Router()
+      var route = Router;//new Router()
+
+      /*
+      route.map('login', {
+        url: '/login',
+        paramResolver(urlParts) {
+          return Login(urlParts.id);
+        }
+      })
+      */
 
       route.on('/login', (data) => {
+
         nav.push(LoginPage, null, {
           animate: false
         })
+
       })
 
       route.on('/post/:id', (data) => {

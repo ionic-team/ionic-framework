@@ -1,8 +1,10 @@
 <ion-view view-title="Top">
   <ion-content>
-  <!--<h1>That's so <i>HACKER NEWS</i></h1>-->
+    <button pop>Back</button>
+    <button (click)="throwMe()">xxxx</button>
+    Loaded {{stories.length}} stories
     <ion-list>
-      <ion-item *for="#story of stories" push-to="single">
+      <ion-item *for="#story of stories">
         {{story.title}}
       </ion-item>
     </ion-list>

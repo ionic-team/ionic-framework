@@ -1,5 +1,4 @@
-
-export class Router {
+export class RouterSingleton {
   constructor() {
     this.routes = []
   }
@@ -18,7 +17,7 @@ export class Router {
 
       if(routeParams !== false) {
         route.exec(this.buildRouteParams(routeParams));
-        this.emit(route.url)
+        this.emit(route.url);
         return
       }
     }
@@ -116,3 +115,5 @@ export class Route {
   }
 }
 
+var Router = new RouterSingleton();
+export { Router };

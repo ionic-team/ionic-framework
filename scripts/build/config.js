@@ -34,7 +34,8 @@ module.exports = {
     'angular2.js',
     'angular2-di.js',
     'ionic2.js',
-    'https://cdn.firebase.com/js/client/2.2.4/firebase.js'
+//    'https://cdn.firebase.com/js/client/2.2.4/firebase.js'
+//    'https://cdn.firebase.com/js/client/2.2.4/firebase-debug.js'
   ],
 
   traceurOptions: {

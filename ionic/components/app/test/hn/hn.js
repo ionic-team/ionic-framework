@@ -1,7 +1,7 @@
 import {Promise} from 'angular2/src/facade/async';
 console.log(Promise);
 
-var APIUrl = 'https://hacker-news.firebaseio.com/v0';
+var APIUrl = 'https://hacker-news.firebaseio.com/v0/';
 export class HackerNewsClient {
   constructor() {
     this.fb = new Firebase(APIUrl);
