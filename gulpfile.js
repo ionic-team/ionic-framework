@@ -225,6 +225,7 @@ gulp.task('version', function() {
     .pipe(gulp.dest(buildConfig.dist));
 });
 
+/*
 gulp.task('release-tweet', function(done) {
   var oauth = {
     consumerKey: process.env.TWITTER_CONSUMER_KEY,
@@ -245,7 +246,9 @@ gulp.task('release-tweet', function(done) {
     done
   );
 });
+ */
 
+/*
 gulp.task('release-irc', function(done) {
   var client = irc({
     host: 'irc.freenode.net',
@@ -260,6 +263,7 @@ gulp.task('release-irc', function(done) {
     });
   });
 });
+*/
 
 gulp.task('release-github', function(done) {
   var github = new GithubApi({

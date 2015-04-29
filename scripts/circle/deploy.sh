@@ -37,8 +37,8 @@ function run {
       ./scripts/release/publish.sh
       node_modules/.bin/gulp release-discourse
       node_modules/.bin/gulp release-github
-      node_modules/.bin/gulp release-tweet
-      node_modules/.bin/gulp release-irc
+      # node_modules/.bin/gulp release-tweet
+      # node_modules/.bin/gulp release-irc
     fi
     ;;
   1)
