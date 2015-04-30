@@ -1,8 +1,17 @@
-import {NgElement} from 'angular2/angular2'
+// HACKYFILLS (hack + polyfill)
+import {NgElement, ViewContainerRef} from 'angular2/angular2'
 Object.defineProperties(NgElement.prototype, {
   domElement: {
     get: function() {
       return this._view.render.delegate.boundElements[this._boundElementIndex];
+    }
+  }
+});
+
+Object.defineProperties(ViewContainerRef.prototype, {
+  domElement: {
+    get: function() {
+      return this._defaultProtoView.render.delegate.element;
     }
   }
 });

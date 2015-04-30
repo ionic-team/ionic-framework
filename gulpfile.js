@@ -36,9 +36,13 @@ gulp.task('lib', ['fonts', 'dependencies'])
 gulp.task('watch', ['default'], function() {
   gulp.watch(buildConfig.src.scss, ['sass'])
   gulp.watch([].concat(
-    buildConfig.src.js, buildConfig.src.e2e, buildConfig.src.html,
+    buildConfig.src.js, buildConfig.src.html,
     'scripts/e2e/index.template.html'
   ), ['e2e'])
+  gulp.watch([].concat(
+    buildConfig.src.e2e, buildConfig.src.html,
+    'scripts/e2e/index.template.html'
+  ), ['ionic-js'])
 })
 
 gulp.task('karma', function() {
@@ -75,7 +79,7 @@ gulp.task('clean', function(done) {
   del([buildConfig.dist], done)
 })
 
-gulp.task('e2e', ['ionic-js', 'sass', 'ng2-copy'], function() {
+gulp.task('e2e', ['ionic-js', 'sass'], function() {
   var indexContents = _.template( fs.readFileSync('scripts/e2e/index.template.html') )({
     buildConfig: buildConfig
   });

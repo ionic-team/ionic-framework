@@ -1,4 +1,4 @@
-import {Component, View as NgView, NgElement, PropertySetter} from 'angular2/angular2'
+import {Component, View as NgView, NgElement} from 'angular2/angular2'
 import {IonicComponent} from 'ionic/config/component'
 
 
@@ -28,14 +28,19 @@ import {IonicComponent} from 'ionic/config/component'
 })
 export class Checkbox {
   constructor(
-    @NgElement() ngElement: NgElement,
-    @PropertySetter('attr.role') setAriaRole: Function,
-    @PropertySetter('attr.aria-checked') setAriaChecked: Function,
-    @PropertySetter('attr.aria-invalid') setAriaInvalid: Function,
-    @PropertySetter('attr.aria-disabled') setAriaDisabled: Function
+    @NgElement() ngElement: NgElement
+    // @PropertySetter('attr.role') setAriaRole: Function,
+    // @PropertySetter('attr.aria-checked') setAriaChecked: Function,
+    // @PropertySetter('attr.aria-invalid') setAriaInvalid: Function,
+    // @PropertySetter('attr.aria-disabled') setAriaDisabled: Function
   ) {
     this.domElement = ngElement.domElement
     this.domElement.classList.add('item')
+
+    let setAriaRole = (v) => this.domElement.setAttribute('aria-role', v)
+    let setAriaChecked = (v) => this.domElement.setAttribute('aria-checked', v)
+    let setAriaInvalid = (v) => this.domElement.setAttribute('aria-invalid', v)
+    let setAriaDisabled = (v) => this.domElement.setAttribute('aria-disabled', v)
 
     this.config = Checkbox.config.invoke(this)
 

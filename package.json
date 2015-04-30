@@ -33,7 +33,7 @@
     "yargs": "^3.6.0"
   },
   "dependencies": {
-    "angular2": "2.0.0-alpha.20",
+    "angular2": "2.0.0-alpha.21",
     "es6-module-loader": "^0.16.5",
     "hammerjs": "^2.0.4",
     "rtts_assert": "^2.0.0-alpha.20",

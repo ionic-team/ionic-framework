@@ -2,8 +2,17 @@
 // Toolbar
 // --------------------------------------------------
 
-$toolbar-background:              #f7f7f8 !default;
-
+$toolbar-background: #f7f7f8 !default;
+$toolbar-order-core: (
+    back-button: 1,
+    title: 2,
+    primary: 3,
+    secondary: 4
+);
+$toolbar-primary-flex-order: 1;
+$toolbar-primary-flex-order: 1;
+$toolbar-title-flex-order: 5;
+$toolbar-secondary-flex-order: 10;
 
 .toolbar {
   @include flex-display();
@@ -13,48 +22,28 @@ $toolbar-background:              #f7f7f8 !default;
   background: $toolbar-background;
 }
 
-.toolbar-top {
+.toolbar[placement="top"] {
   @include flex-order($flex-order-toolbar-top);
 }
-
-.toolbar-bottom {
+.toolbar[placement="bottom"] {
   @include flex-order($flex-order-toolbar-bottom);
 }
 
-.toolbar-items {
-  @include flex-display();
-  @include flex(1);
-  @include flex-justify-content(space-between);
+// buttons are primary by default
+.toolbar .button,
+.toolbar [side="primary"] {
+  @include flex-order(map-get($toolbar-order-core, 'primary'));
 }
 
-.toolbar-item,
-.toolbar-item ion-nav-items {
-  @include flex-display();
-  @include flex-align-items(center);
-}
-
-.toolbar .button {
-  background: transparent;
-  border: none;
-}
-
-.back-button {
-  @include flex-display();
-  @include flex-order(1);
-}
-
-.back-button-icon {
-  margin-right: 5px;
-  min-width: 12px;
+.toolbar [side="secondary"] {
+  @include flex-order(map-get($toolbar-order-core, 'secondary'));
 }
 
 .toolbar-title {
   @include flex-display();
   @include flex(1);
-  @include flex-align-items(center);
-  @include flex-order(2);
+  @include flex-order(map-get($toolbar-order-core, 'title'));
 }
-
 .toolbar-inner-title {
   width: 100%;
   padding: 0 15px;
@@ -62,12 +51,16 @@ $toolbar-background:              #f7f7f8 !default;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-
-.toolbar-primary-item {
-  @include flex-order(3);
+// Override [ion-app] h1 margin-top
+h1.toolbar-title {
+  margin: 0;
 }
 
-.toolbar-secondary-item {
-  @include flex-order(4);
+.toolbar-back-button {
+  @include flex-order(map-get($toolbar-order-core, 'back-button'));
 }
 
+.toolbar .button {
+  background: transparent;
+  border: none;
+}

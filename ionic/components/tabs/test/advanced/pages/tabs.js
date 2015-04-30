@@ -2,16 +2,16 @@ import {
   Component,
   View as NgView,
   Parent,
-} from 'angular2/angular2'
+} from 'angular2/angular2';
 import {
   View,
   Tabs,
   Tab,
   Aside,
   Content,
-  Nav,
-  NavItem,
-} from 'ionic/ionic'
+  NavController,
+} from 'ionic/ionic';
+import {Toolbar, ToolbarTitle} from 'ionic/components/toolbar/toolbar';
 
 @Component({
   selector: 'tabs-page'
@@ -20,10 +20,10 @@ import {
   templateUrl: 'pages/tabs.html',
   directives: [Tabs, Tab, View, Content]
 })
+
 export class TabsPage {
   constructor(
-    navItem: NavItem,
-    nav: Nav
+    nav: NavController
   ) {
     this.tab1Initial = Tab1Page1
     this.tab2Initial = Tab2Page1
@@ -36,18 +36,22 @@ export class TabsPage {
 //
 @Component({ selector: 't1p1' })
 @NgView({
-  template: `<ion-content class="padding">
-                <p>Tab 1 Page 1.</p>
-                <button class="button button-primary" (click)="next()">
-                  Go to Tab 1, Page 2 (push)
-                </button>
-                <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
-              </ion-content>`,
-  directives: [View, Content]
+  template: `
+  <header *ion-toolbar>
+    <h1 class="toolbar-title">Tabs 1 Page 1</h1>
+  </header>
+  <ion-content class="padding">
+    <p>Tab 1 Page 1.</p>
+    <button class="button button-primary" (click)="next()">
+      Go to Tab 1, Page 2 (push)
+    </button>
+    <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
+  </ion-content>`,
+  directives: [Content, Toolbar, ToolbarTitle]
 })
 class Tab1Page1 {
   // TODO change to 'Nav' injection when we're allowed to inject a tab as a nav.
-  constructor(nav: Tab) {
+  constructor(nav: NavController) {
     this.nav = nav;
   }
   next() {
@@ -57,19 +61,22 @@ class Tab1Page1 {
 
 @Component({ selector: 't1p2' })
 @NgView({
-  template: `<ion-content class="padding">
-                <p>Tab 1 Page 2.</p>
-                <button class="button button-primary" (click)="pop()">
-                  Back to Tab 1, Page 1 (pop)
-                </button>
-                <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
-              </ion-content>
-            `,
-  directives: [View, Content]
+  template: `
+  <header *ion-toolbar>
+    <h1 class="toolbar-title">Tabs 1 Page 2</h1>
+  </header>
+  <ion-content class="padding">
+    <p>Tab 1 Page 2.</p>
+    <button class="button button-primary" (click)="pop()">
+      Back to Tab 1, Page 1 (pop)
+    </button>
+    <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
+  </ion-content>`,
+  directives: [Content]
 })
 class Tab1Page2 {
   // TODO change to 'Nav' injection when we're allowed to inject a tab as a nav.
-  constructor(nav: Tab) {
+  constructor(nav: NavController) {
     this.nav = nav;
   }
   pop() { this.nav.pop(); }
@@ -98,7 +105,7 @@ class Tab1Page2 {
 })
 class Tab2Page1 {
   // TODO change to 'Nav' injection when we're allowed to inject a tab as a nav.
-  constructor(nav: Tab) {
+  constructor(nav: NavController) {
     this.nav = nav
   }
   next() {
@@ -131,7 +138,7 @@ class Tab2Page1 {
 })
 class Tab2Page2 {
   // TODO change to 'Nav' injection when we're allowed to inject a tab as a nav.
-  constructor(nav: Tab) {
+  constructor(nav: NavController) {
     this.nav = nav
   }
   pop() { this.nav.pop() }

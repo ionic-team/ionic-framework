@@ -1,20 +1,24 @@
 import {NgElement} from 'angular2/angular2';
 import * as util from 'ionic/util';
 
-export class NavControllerBase {
+/*
+ * Used be tabs and nav
+ */
+export class NavBase {
   constructor(
     element: NgElement
   ) {
-    this.domElement = element.domElement
-    this.domElement.classList.add('nav')
+    this.domElement = element.domElement;
+    this.domElement.classList.add('nav');
 
     // this is our sane stack of items. This is synchronous and says an item
     // is removed even if it's still animating out.
-    this._stack = []
+    this._stack = [];
 
-    // _ngForLoopArray is what adds/removes components from the dom. It won't
-    // remove a component until it's done animating out.
-    this._ngForLoopArray = []
+    // The _ng* arrays are what add/remove components from the dom.
+    // These arrays won't remove a component until they're
+    // done animating out.
+    this._ngNavItems = [];
   }
 
   containsClass(Class) {
@@ -52,7 +56,7 @@ export class NavControllerBase {
 
     let pushedItem = new NavStackData(Class, params)
     this._stack.push(pushedItem)
-    this._ngForLoopArray.push(pushedItem)
+    this._ngNavItems.push(pushedItem)
 
     return pushedItem.waitForSetup().then(() => {
       let current = this._getPrevious(pushedItem)
@@ -71,14 +75,18 @@ export class NavControllerBase {
       sync: false
     })
     let current = this._stack.pop()
-    let dest = this.peek()
+    let dest = this.last()
 
     dest && dest.enterReverse(opts)
-    return current && current.leave(opts).then(() => this._destroy(current))
+    return current && current.leave(opts)
+      .then(() => this._destroy(current))
   }
 
-  peek() {
+  last() {
     return this._stack[this._stack.length - 1]
+  }
+  length() {
+    return this._stack.length;
   }
 
   popAll() {
@@ -112,7 +120,7 @@ export class NavControllerBase {
 
   setStack(stack) {
     this._stack = stack.slice()
-    this._ngForLoopArray = stack.slice()
+    this._ngNavItems = stack.slice()
   }
 
   remove(index) {
@@ -123,13 +131,18 @@ export class NavControllerBase {
 
   _destroy(navItem) {
     console.warn(
-`Component "${navItem.Class.name}" was popped from the nav stack, But were keeping its element in the DOM for now because of an ng2 bug.`
+`Component "${navItem.Class.name}" was popped from the nav stack, but wer'e keeping its element in the DOM for now because of an ng2 bug.`
     );
-    //util.array.remove(this._ngForLoopArray, navItem)
+    // util.array.remove(this._ngNavItems, navItem)
   }
 
   _getPrevious(item) {
     return this._stack[ this._stack.indexOf(item) - 1 ]
+  }
+
+  getToolbars(pos: String) {
+    let last = this.last();
+    return last && last.navItem && last.navItem._toolbars[pos] || [];
   }
 }
 

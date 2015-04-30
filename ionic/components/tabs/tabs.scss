@@ -23,17 +23,11 @@ $tab-bar-item-max-width:           160px !default;
   @include flex-order($flex-order-tab-bar-bottom);
 }
 
-.tab-bar-container {
-  @include flex-justify-content(center);
-  position: relative;
-  background: $tab-bar-background-color;
-}
-
 .tab-bar {
   @include flex-display();
   @include flex-justify-content(center);
-  height: 100%;
   overflow: hidden;
+  background: $tab-bar-background-color;
 }
 
 .tab-bar-item {

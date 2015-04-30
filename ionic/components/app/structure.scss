@@ -32,6 +32,10 @@ html {
     position: relative;
     width: 100%;
     min-height: 50px;
+    @include flex-order($flex-order-toolbar-top);
+  }
+  footer.toolbar-container {
+    @include flex-order($flex-order-toolbar-bottom);
   }
 
   .toolbar {
@@ -44,7 +48,7 @@ html {
   }
 
   .nav-item-container {
-    // container of many .nav-pane's, each one containing one view
+    // container of many .nav-item's, each one containing one view
     position: relative;
     @include flex(1);
     @include flex-order($flex-order-view-content);
@@ -58,28 +62,20 @@ html {
     @include flex-order($flex-order-view-content);
   }
 
-  .nav-pane {
-    // container of one ion-view
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: white;
-  }
-
-  .nav-pane-cover-parent {
-    // .nav-pane that should completely cover siblings and parent
+  .nav-item-cover-parent {
+    // .nav-item that should completely cover siblings and parent
     top: -50px;
     height: 100vh;
   }
 
-  ion-view {
-    // user created view, contained by .nav-pane
+  .nav-item,
+  .nav-item-child {
+    // user created view, contained by .nav-item
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    display: block;
   }
 
   ion-content {

@@ -1,6 +1,12 @@
 
 // iOS Toolbar
 // --------------------------------------------------
+$toolbar-order-ios: (
+    back-button: 1,
+    primary: 2,
+    title: 3,
+    secondary: 4
+);
 
 $toolbar-ios-height:                        4.4rem !default;
 $toolbar-ios-background:                    #f7f7f8 !default;
@@ -16,22 +22,23 @@ $toolbar-ios-button-background-color:       transparent !default;
   height: $toolbar-ios-height;
   background: $toolbar-ios-background;
 
-  .toolbar-primary-item {
-    @include flex-order(2);
+  .toolbar [side="primary"] {
+    @include flex-order(map-get($toolbar-order-ios, 'primary'));
   }
-
+  .toolbar [side="secondary"] {
+    @include flex-order(map-get($toolbar-order-ios, 'secondary'));
+  }
   .toolbar-title {
-    @include flex-order(3);
+    @include flex-order(map-get($toolbar-order-ios, 'title'));
     font-size: $toolbar-ios-title-font-size;
     text-align: center;
   }
-
-  .toolbar-inner-title {
-    opacity: 0; // JS will set to 1 after adjusting alignment
+  .toolbar-back-button {
+    @include flex-order(map-get($toolbar-order-ios, 'back-button'));
   }
 
-  .toolbar-secondary-item {
-    @include flex-order(4);
+  .toolbar-title-hide {
+    opacity: 0;
   }
 
   .button {

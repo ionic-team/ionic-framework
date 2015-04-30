@@ -1,27 +1,32 @@
-import {Component, View as NgView, Ancestor} from 'angular2/angular2'
-import {NavPane, Content, Nav} from 'ionic/ionic'
-import {TabsPage} from 'pages/tabs'
+import {
+  Component,
+  View as NgView,
+  Ancestor,
+} from 'angular2/angular2';
+import {
+  NavItem,
+  Content,
+  NavController,
+  Toolbar,
+  ToolbarTitle,
+} from 'ionic/ionic';
+import {TabsPage} from 'pages/tabs';
 
-@Component({
-  selector: 'sign-in-page'
-})
+@Component()
 @NgView({
   templateUrl: 'pages/sign-in.html',
-  directives: [Content]
+  directives: [Content, Toolbar, ToolbarTitle]
 })
 export class SignInPage {
   constructor(
-    nav: Nav
+    nav: NavController
   ) {
     this.nav = nav;
-    this.instanceVal = Math.random()
   }
   signIn() {
+    console.log('click');
     this.nav.push(TabsPage, {
       my: 'param'
     })
-  }
-  instanceCheck() {
-    window.alert("Instance: " + this.instanceVal)
   }
 }

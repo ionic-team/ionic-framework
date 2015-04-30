@@ -1,4 +1,4 @@
-import {Component, View as NgView, NgElement, PropertySetter} from 'angular2/angular2'
+import {Component, View as NgView, NgElement} from 'angular2/angular2'
 import {IonicComponent} from 'ionic/config/component'
 
 
@@ -27,14 +27,19 @@ import {IonicComponent} from 'ionic/config/component'
 })
 export class Switch {
   constructor(
-    element: NgElement,
-    @PropertySetter('attr.role') setAriaRole: Function,
-    @PropertySetter('attr.aria-checked') setChecked: Function,
-    @PropertySetter('attr.aria-invalid') setInvalid: Function,
-    @PropertySetter('attr.aria-disabled') setDisabled: Function
+    element: NgElement
+    // @PropertySetter('attr.role') setAriaRole: Function,
+    // @PropertySetter('attr.aria-checked') setChecked: Function,
+    // @PropertySetter('attr.aria-invalid') setInvalid: Function,
+    // @PropertySetter('attr.aria-disabled') setDisabled: Function
   ) {
     this.domElement = element.domElement
     this.config = Switch.config.invoke(this)
+
+    let setAriaRole = (v) => this.domElement.setAttribute('aria-role', v)
+    let setAriaChecked = (v) => this.domElement.setAttribute('aria-checked', v)
+    let setAriaInvalid = (v) => this.domElement.setAttribute('aria-invalid', v)
+    let setAriaDisabled = (v) => this.domElement.setAttribute('aria-disabled', v)
 
     this.domElement.classList.add('item')
 

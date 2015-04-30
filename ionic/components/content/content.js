@@ -1,4 +1,8 @@
-import {NgElement, Component, View as NgView, PropertySetter} from 'angular2/angular2';
+import {
+  NgElement,
+  Component,
+  View as NgView,
+} from 'angular2/angular2';
 
 @Component({
   selector: 'ion-content'
@@ -13,6 +17,7 @@ export class Content {
   constructor(
     @NgElement() element:NgElement
   ) {
+    console.log('constructing content', element.domElement);
     this.domElement = element.domElement;
     this.domElement.classList.add('content');
   }
