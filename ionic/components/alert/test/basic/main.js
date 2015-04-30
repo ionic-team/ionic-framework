@@ -11,6 +11,12 @@ class IonicApp {
   constructor() {
     console.log('IonicApp Start')
   }
+  showAlert() {
+    console.log('Show alert');
+
+    Alert.open({
+    });
+  }
 }
 
 bootstrap(IonicApp)

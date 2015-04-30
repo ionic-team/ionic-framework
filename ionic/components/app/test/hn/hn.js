@@ -4,7 +4,7 @@ console.log(Promise);
 var APIUrl = 'https://hacker-news.firebaseio.com/v0/';
 export class HackerNewsClient {
   constructor() {
-    this.fb = new Firebase(APIUrl);
+    //this.fb = new Firebase(APIUrl);
   }
 
   getTopStories(cb) {

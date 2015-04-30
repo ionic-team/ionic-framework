@@ -32,57 +32,45 @@ export class HNTopStories {
       url: "http://minusbat.livejournal.com/180556.html"
     }];
 
-    var APIUrl = 'https://hacker-news.firebaseio.com/v0';
+      var APIUrl = 'https://hacker-news.firebaseio.com/v0';
+      this.fb = new window.Firebase(APIUrl);
 
-    var s = document.createElement('script');
-    s.src = 'https://cdn.firebase.com/js/client/2.2.4/firebase.js';
-    s.async = true;
-    s.onload = doStuff.bind(this);
-    document.head.appendChild(s);
-    console.log('loading firebase');
+      this.fb = new window.Firebase(APIUrl);
+      this.fb.child('topstories').limitToFirst(20).once('value', (snapshot) => {
 
-  function doStuff() {
-    console.log('done loading firebase');
+        let items = snapshot.val();
 
-    this.fb = new window.Firebase(APIUrl);
-    this.fb.child('topstories').limitToFirst(20).once('value', (snapshot) => {
+        console.log('Fetched', items.length, 'items');
 
-      let items = snapshot.val();
+        for(var itemID of items) {
 
-      console.log('Fetched', items.length, 'items');
-      debugger;
+          this.fb.child("item").child(itemID).on('value', (data) => {
+            //setTimeout(() => {
+              //console.log('SUB THIS', this);
+              //console.log(itemID, data.val());
+              //console.log('ADDED');
+              //self.stories.push(data.val());
+              //throw new Error("stack test");
+              debugger;
+              console.log('GOT ITEM', data.val());
+              self.stories.push({title: 'asdf'});
+            //});
 
-      for(var itemID of items) {
-
-        this.fb.child("item").child(itemID).on('value', (data) => {
-          //setTimeout(() => {
-            //console.log('SUB THIS', this);
-            //console.log(itemID, data.val());
-            //console.log('ADDED');
-            //self.stories.push(data.val());
-            //throw new Error("stack test");
-            debugger;
-            console.log('GOT ITEM', data.val());
-            self.stories.push({title: 'asdf'});
-          //});
-
-          //console.log(data.val());
-        });
-      }
-    });
-
+            //console.log(data.val());
+          });
+        }
+      });
 
     //doStuffEnd
   }
 
-    /*
-    HackerNews.getTopStories((val) => {
-      new Promise((resolve, reject) => {
-        console.log('PROMISES!', val);
-        this.stories.push(val);
-        resolve();
-      });
+  /*
+  HackerNews.getTopStories((val) => {
+    new Promise((resolve, reject) => {
+      console.log('PROMISES!', val);
+      this.stories.push(val);
+      resolve();
     });
-    */
-  }
+  });
+  */
 }
