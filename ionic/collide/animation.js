@@ -27,11 +27,16 @@ export class Animation {
   }
 
   elements(ele) {
-    if (!ele) {
-      this._elements = null;
+    if (ele && ele.length > 0) {
+      this._elements = ele;
+
+    } else if (ele && ele.nodeType) {
+      this._elements = [ele];
+
     } else {
-      this._elements = !ele.length ? [ele] : ele;
+      this._elements = null;
     }
+
     return this;
   }
 
@@ -55,6 +60,7 @@ export class Animation {
 
       // in the next frame, do all the DOM GETs to load element info
       this._nextAF = dom.raf(() => {
+
         /**********************************
            Animation Call-Wide Variables
         **********************************/
@@ -101,33 +107,37 @@ export class Animation {
 
   _queueAnimation() {
     if (this._elements) {
-      if (this._call === null) return;
+
+      if (this._call === null) {
+        return;
+      }
 
       var eleData;
       for (var i = 0, ii = this._elements.length, element; i < ii && (element = this._elements[i]); i++) {
-        eleData = data(element);
-        if (eleData) {
-          eleData.isAnimating = true;
-        }
+        if (element) {
+          eleData = data(element);
+          if (eleData) {
+            eleData.isAnimating = true;
+          }
 
-        /*********************
-            Auto-Dequeuing
-        *********************/
+          /*********************
+              Auto-Dequeuing
+          *********************/
 
-        /* To fire the first non-custom-queue entry on an element, the element
-           must be dequeued if its queue stack consists *solely* of the current call. (This can be determined by checking
-           for the 'inprogress' item that is prepended to active queue stack arrays.) Regardless, whenever the element's
-           queue is further appended with additional items -- including delay()'s calls, the queue's
-           first entry is automatically fired. This behavior contrasts that of custom queues, which never auto-fire. */
-        /* Note: When an element set is being subjected to a non-parallel Collide call, the animation will not begin until
-           each one of the elements in the set has reached the end of its individually pre-existing queue chain. */
-        if (this._options.queue === '' && Collide.queue(element)[0] !== 'inprogress') {
-          Collide.dequeue(element);
+          /* To fire the first non-custom-queue entry on an element, the element
+             must be dequeued if its queue stack consists *solely* of the current call. (This can be determined by checking
+             for the 'inprogress' item that is prepended to active queue stack arrays.) Regardless, whenever the element's
+             queue is further appended with additional items -- including delay()'s calls, the queue's
+             first entry is automatically fired. This behavior contrasts that of custom queues, which never auto-fire. */
+          /* Note: When an element set is being subjected to a non-parallel Collide call, the animation will not begin until
+             each one of the elements in the set has reached the end of its individually pre-existing queue chain. */
+          if (this._options.queue === '' && Collide.queue(element)[0] !== 'inprogress') {
+            Collide.dequeue(element);
+          }
         }
       }
 
-      /* Once the final element in this call's element set has been processed, push the call array onto
-         Collide.State.calls for the animation tick to immediately begin processing. */
+      /* Push the call array onto Collide.State.calls for the animation tick to immediately begin processing. */
       /* Add the current call plus its associated metadata (the element set and the call's options) onto the global call container.
          Anything on this call container is subjected to tick() processing. */
       Collide.State.calls.push([ this._call,
@@ -252,13 +262,12 @@ export class Animation {
      Properties
   ***************/
 
-  properties(val) {
-    this._properties = val || {};
-    return this;
-  }
-
-  property(key, val) {
-    this._properties[key] = val;
+  to() {
+    if (arguments.length > 1) {
+      this._properties[ arguments[0] ] = arguments[1];
+    } else {
+      this._properties = arguments[0] || {};
+    }
     return this;
   }
 

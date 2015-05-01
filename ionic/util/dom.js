@@ -1,11 +1,11 @@
 
-const nativeRaf= window.requestAnimationFrame ||
+const nativeRaf = window.requestAnimationFrame ||
    window.webkitRequestAnimationFrame ||
-   window.mozRequestAnimationFrame
+   window.mozRequestAnimationFrame;
 
 const nativeCancelRaf = window.cancelAnimationFrame ||
   window.webkitCancelAnimationFrame ||
-  window.webkitCancelRequestAnimationFrame
+  window.webkitCancelRequestAnimationFrame;
 
 export const raf = nativeRaf || function(callback) {
     let timeCurrent = (new Date()).getTime(),
@@ -20,65 +20,65 @@ export const raf = nativeRaf || function(callback) {
 }
 
 export const rafCancel = nativeRaf ? nativeCancelRaf : function(id) {
-  return window.cancelTimeout(id)
+  return window.cancelTimeout(id);
 }
 
 export function rafPromise() {
-  return new Promise(resolve => raf(resolve))
+  return new Promise(resolve => raf(resolve));
 }
 
-export const isSVG = val => window.SVGElement && (val instanceof window.SVGElement)
+export const isSVG = val => window.SVGElement && (val instanceof window.SVGElement);
 
 
 // We only need to test for webkit in our supported browsers. Webkit is the only browser still
 // using prefixes.
 // Code adapted from angular-animate.js
-export let css = {}
+export let css = {};
 if (window.ontransitionend === undefined && window.onwebkittransitionend !== undefined) {
-  css.prefix = 'webkit'
-  css.transition = 'webkitTransition'
-  css.transform = 'webkitTransform'
-  css.transitionEnd = 'webkitTransitionEnd transitionend'
+  css.prefix = 'webkit';
+  css.transition = 'webkitTransition';
+  css.transform = 'webkitTransform';
+  css.transitionEnd = 'webkitTransitionEnd transitionend';
 } else {
-  css.prefix = ''
-  css.transform = 'transform'
-  css.transition = 'transition'
-  css.transitionEnd = 'transitionend'
+  css.prefix = '';
+  css.transform = 'transform';
+  css.transition = 'transition';
+  css.transitionEnd = 'transitionend';
 }
 
 export function transitionEndPromise(el:Element) {
   return new Promise(resolve => {
     css.transitionEnd.split(' ').forEach(eventName => {
-      el.addEventListener(eventName, onTransitionEnd)
+      el.addEventListener(eventName, onTransitionEnd);
     })
     function onTransitionEnd(ev) {
       // Don't allow bubbled transitionend events
       if (ev.target !== el) {
-        return
+        return;
       }
       css.transitionEnd.split(' ').forEach(eventName => {
         el.removeEventListener(css.transitionEnd, onTransitionEnd)
       })
-      resolve(ev)
+      resolve(ev);
     }
-  })
+  });
 }
 
 export function ready() {
   return new Promise(resolve => {
     if (document.readyState === 'complete' || document.readyState === 'interactive') {
-      setTimeout(resolve)
+      setTimeout(resolve);
 
     } else {
 
       function completed() {
-        resolve()
-        document.removeEventListener('DOMContentLoaded', completed, false)
-        window.removeEventListener('load', completed, false)
+        resolve();
+        document.removeEventListener('DOMContentLoaded', completed, false);
+        window.removeEventListener('load', completed, false);
       }
 
-      document.addEventListener('DOMContentLoaded', completed, false)
-      window.addEventListener('load', completed, false)
+      document.addEventListener('DOMContentLoaded', completed, false);
+      window.addEventListener('load', completed, false);
     }
   })
 }
@@ -86,16 +86,15 @@ export function ready() {
 export function windowLoad() {
   return new Promise(resolve => {
     if (document.readyState === 'complete') {
-      setTimeout(resolve)
+      setTimeout(resolve);
 
     } else {
-
       function completed() {
-        resolve()
-        window.removeEventListener('load', completed, false)
+        resolve();
+        window.removeEventListener('load', completed, false);
       }
 
-      window.addEventListener('load', completed, false)
+      window.addEventListener('load', completed, false);
     }
-  })
+  });
 }
