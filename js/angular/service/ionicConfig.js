@@ -90,6 +90,15 @@
 
 /**
  * @ngdoc method
+ * @name $ionicConfigProvider#scrolling.jsScrolling
+ * @description  Whether to use JS or Native scrolling. Defaults to JS scrolling. Setting this to
+ * `false` has the same effect as setting each `ion-content` to have `overflow-scroll='true'`.
+ * @param {boolean} value Defaults to `true`
+ * @returns {boolean}
+ */
+
+/**
+ * @ngdoc method
  * @name $ionicConfigProvider#backButton.icon
  * @description Back button icon.
  * @param {string} value

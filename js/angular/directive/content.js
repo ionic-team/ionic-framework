@@ -32,7 +32,7 @@
  * of the content.  Defaults to true on iOS, false on Android.
  * @param {boolean=} scroll Whether to allow scrolling of content.  Defaults to true.
  * @param {boolean=} overflow-scroll Whether to use overflow-scrolling instead of
- * Ionic scroll.
+ * Ionic scroll. See {@link ionic.provider:$ionicConfigProvider} to set this as the global default.
  * @param {boolean=} scrollbar-x Whether to show the horizontal scrollbar. Default true.
  * @param {boolean=} scrollbar-y Whether to show the vertical scrollbar. Default true.
  * @param {string=} start-x Initial horizontal scroll position. Default 0.
