@@ -1,5 +1,5 @@
 import {Component, View as NgView, bootstrap} from 'angular2/angular2'
-import {Nav, Aside} from 'ionic/ionic'
+import {Nav} from 'ionic/ionic'
 import {SignInPage} from 'pages/sign-in'
 
 
@@ -8,7 +8,7 @@ import {SignInPage} from 'pages/sign-in'
 })
 @NgView({
   templateUrl: 'main.html',
-  directives: [Nav, Aside]
+  directives: [Nav]
 })
 class App {
   constructor() {

@@ -4,7 +4,7 @@ import {
   Decorator,
   View as NgView,
   Viewport,
-  ViewContainerRef,
+  //ViewContainerRef,
   onDestroy,
   Ancestor,
   ElementRef,
@@ -24,33 +24,33 @@ import {platform} from 'ionic/platform/platform';
 })
 export class Toolbar {
   constructor(
-    viewContainer: ViewContainerRef,
+    //viewContainer: ViewContainerRef,
     elementRef: ElementRef,
     @Ancestor() navCtrl: NavController,
     element: NgElement
     // context: Object TODO wait for angular to implement this
   ) {
-    this.viewContainer = viewContainer;
+    //this.viewContainer = viewContainer;
     this.elementRef = elementRef;
     this.navCtrl = navCtrl;
 
     // TODO use config to add these classes
-    this.viewContainer.domElement.classList.add('toolbar');
-    this.viewContainer.domElement.classList.add(`toolbar-${platform.getName()}`);
+    // this.viewContainer.domElement.classList.add('toolbar');
+    // this.viewContainer.domElement.classList.add(`toolbar-${platform.getName()}`);
 
     // TODO Make a better way than this
-    if (/header/i.test(this.viewContainer.domElement.tagName)) {
-      this.placement = 'top';
-    } else {
-      this.placement = 'bottom';
-    }
+    // if (/header/i.test(this.viewContainer.domElement.tagName)) {
+    //   this.placement = 'top';
+    // } else {
+    //   this.placement = 'bottom';
+    // }
   }
 
   set placement(pos) {
-    this.viewContainer.domElement.classList.add(`toolbar-${pos}`);
+    //this.viewContainer.domElement.classList.add(`toolbar-${pos}`);
     this._placement = pos;
     this.navCtrl.addToolbar(this._placement, this);
-    this.viewContainer.domElement.setAttribute('placement', pos);
+    //this.viewContainer.domElement.setAttribute('placement', pos);
   }
 
   onDestroy() {
@@ -133,17 +133,17 @@ export class ToolbarTitle {
 })
 export class ToolbarContainer {
   constructor(
-    viewContainer: ViewContainerRef,
+    //viewContainer: ViewContainerRef,
     element: NgElement
   ) {
-    this.viewContainer = viewContainer;
+    //this.viewContainer = viewContainer;
     this.domElement = element.domElement;
   }
 
   set toolbar(bar: Toolbar) {
     if (bar) {
       // TODO create with correct context
-      this.viewContainer.create(-1, bar.viewContainer._defaultProtoView, bar.elementRef.elementInjector);
+      //this.viewContainer.create(-1, bar.viewContainer._defaultProtoView, bar.elementRef.elementInjector);
       console.log('creating viewportContainer', performance.now())
     }
   }

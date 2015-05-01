@@ -15,7 +15,7 @@ Object.defineProperties(ViewContainerRef.prototype, {
     }
   }
 });
-
+console.log(ViewContainerRef)
 export * from 'ionic/components'
 export * from 'ionic/platform/platform'
 export * from 'ionic/routing/router'

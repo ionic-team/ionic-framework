@@ -38,7 +38,7 @@ module.exports = function(options) {
     };
 
     request.post({
-        templateUrl: 'http://' + options.domain + '/e2e/upload-url',
+        uri: 'http://' + options.domain + '/e2e/upload-url',
         formData: formData
       },
       function(err, httpResponse, body) {
@@ -61,7 +61,7 @@ module.exports = function(options) {
     };
 
     request.post({
-        templateUrl: uploadUrl,
+        uri: uploadUrl,
         formData: formData
       },
       function(err, httpResponse, body) {

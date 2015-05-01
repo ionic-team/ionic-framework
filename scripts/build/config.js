@@ -6,7 +6,7 @@ module.exports = {
     js: ['ionic/**/*.js', '!src/**/test/**/*.js'],
 
     // Get all the non-js files and main.js
-    e2e: ['ionic/components/*/test/**/*'],
+    e2e: ['ionic/components/*/test/*/**/*'],
     html: 'ionic/**/*.html',
     scss: 'ionic/**/*.scss',
   },
