@@ -267,6 +267,9 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
     if (viewLocals && viewLocals.$$controller) {
       viewLocals.$scope = viewScope;
       var controller = $controller(viewLocals.$$controller, viewLocals);
+      if (viewLocals.$$controllerAs) {
+        viewScope[viewLocals.$$controllerAs] = controller;
+      }
       $element.children().data('$ngControllerController', controller);
     }
 
