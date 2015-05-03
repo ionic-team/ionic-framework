@@ -14,7 +14,8 @@ echo "Running npm install in angular2..."
 npm install
 
 echo "Running gulp to build source..."
-gulp build/transpile.js.dev.es6
+gulp clean
+gulp build.js
 
 echo "--"
 echo "-- DONE, gulp will work now --"

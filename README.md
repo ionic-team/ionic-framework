@@ -8,3 +8,8 @@
   to create more examples.
   * The biggest thing to remember: your app has to import its dependencies with the `app/` prefix.
     For example `import {Apple} from 'apple';` would import apple.js in your example app.
+
+
+#### Update Angular
+
+    ./scripts/build/update-angular.sh

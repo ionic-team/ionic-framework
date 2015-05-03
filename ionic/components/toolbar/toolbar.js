@@ -2,9 +2,10 @@ import {
   NgElement,
   Component,
   Decorator,
-  View as NgView,
   Viewport,
-  //ViewContainerRef,
+  View as NgView,
+  ViewContainer,
+  //ProtoViewRef,
   onDestroy,
   Ancestor,
   ElementRef,
@@ -16,6 +17,12 @@ import {NavController} from 'ionic/components/nav/nav-item';
 import {raf} from 'ionic/util/dom';
 import {platform} from 'ionic/platform/platform';
 
+
+// FYI for later:
+// https://github.com/angular/angular/commit/3aac2fefd7f93c74abfa5ee58aa0ea8d4840b519
+
+
+
 @Viewport({
   selector: '[ion-toolbar]',
   properties: {
@@ -23,34 +30,38 @@ import {platform} from 'ionic/platform/platform';
   }
 })
 export class Toolbar {
+
   constructor(
-    //viewContainer: ViewContainerRef,
+    viewContainer: ViewContainer,
+    //protoViewRef: ProtoViewRef,
     elementRef: ElementRef,
     @Ancestor() navCtrl: NavController,
     element: NgElement
     // context: Object TODO wait for angular to implement this
   ) {
-    //this.viewContainer = viewContainer;
+    this.viewContainer = viewContainer;
     this.elementRef = elementRef;
     this.navCtrl = navCtrl;
 
+    console.log('Toolbar!');
+
     // TODO use config to add these classes
-    // this.viewContainer.domElement.classList.add('toolbar');
-    // this.viewContainer.domElement.classList.add(`toolbar-${platform.getName()}`);
+    this.viewContainer.domElement.classList.add('toolbar');
+    this.viewContainer.domElement.classList.add(`toolbar-${platform.getName()}`);
 
     // TODO Make a better way than this
-    // if (/header/i.test(this.viewContainer.domElement.tagName)) {
-    //   this.placement = 'top';
-    // } else {
-    //   this.placement = 'bottom';
-    // }
+    if (/header/i.test(this.viewContainer.domElement.tagName)) {
+      this.placement = 'top';
+    } else {
+      this.placement = 'bottom';
+    }
   }
 
   set placement(pos) {
-    //this.viewContainer.domElement.classList.add(`toolbar-${pos}`);
+    this.viewContainer.domElement.classList.add(`toolbar-${pos}`);
     this._placement = pos;
     this.navCtrl.addToolbar(this._placement, this);
-    //this.viewContainer.domElement.setAttribute('placement', pos);
+    this.viewContainer.domElement.setAttribute('placement', pos);
   }
 
   onDestroy() {

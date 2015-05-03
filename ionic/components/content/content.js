@@ -17,7 +17,6 @@ export class Content {
   constructor(
     @NgElement() element:NgElement
   ) {
-    console.log('constructing content', element.domElement);
     this.domElement = element.domElement;
     this.domElement.classList.add('content');
   }
