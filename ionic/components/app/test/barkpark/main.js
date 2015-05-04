@@ -2,7 +2,7 @@
 import {For, Component, View, Parent, bootstrap} from 'angular2/angular2'
 import {FormBuilder, Validators, FormDirectives, ControlGroup} from 'angular2/forms';
 import {Log} from 'ionic/util'
-import {Router, List, Item, Nav, Button, Input, Tabs, Tab, Content, Aside} from 'ionic/ionic'
+import {Router, List, Item, Nav, NavController, Button, Input, Tabs, Tab, Content, Aside} from 'ionic/ionic'
 
 @Component({
   selector: 'login-page'
@@ -12,7 +12,7 @@ import {Router, List, Item, Nav, Button, Input, Tabs, Tab, Content, Aside} from 
   directives: [FormDirectives, Button, Input]
 })
 export class LoginPage {
-  constructor( @Parent() viewport: Nav ) { //, fb: FormBuilder ) {
+  constructor( @Parent() viewport: NavController ) { //, fb: FormBuilder ) {
 
     this.viewport = viewport
     Log.log('LOGIN PAGE')
@@ -46,7 +46,7 @@ export class LoginPage {
   directives: [FormDirectives, Button, Input]
 })
 export class SignupPage {
-  constructor( @Parent() viewport: Nav ) { //, fb: FormBuilder ) {
+  constructor( @Parent() viewport: NavController ) { //, fb: FormBuilder ) {
 
     this.viewport = viewport
     Log.log('SIGNUP PAGE')
@@ -83,7 +83,7 @@ export class SignupPage {
   directives: [FormDirectives, Button, Input, Tabs, Tab]
 })
 export class AppPage {
-  constructor( @Parent() viewport: Nav ) { //, fb: FormBuilder ) {
+  constructor( @Parent() viewport: NavController ) { //, fb: FormBuilder ) {
     this.viewport = viewport
     this.streamTab = StreamTab
   }
@@ -95,9 +95,8 @@ export class AppPage {
   directives: [For, Content, List, Item]
 })
 class StreamTab {
-  constructor(@Parent() viewport: Nav) {
-    //this.navPane = navPane;
-    this.navPane = viewport;
+  constructor(@Parent() nav: NavController) {
+    this.nav = viewport;
     this.posts = [
       {'title': 'Just barked my first bark'},
       {'title': 'Went poopy' }
@@ -105,7 +104,7 @@ class StreamTab {
   }
   selectPost(post) {
     console.log('Select post', post);
-    this.navPane.push(PostDetail, {
+    this.nav.push(PostDetail, {
       post
     }, {
       transition: '3dflip'
@@ -119,12 +118,12 @@ class StreamTab {
   directives: [Content]
 })
 class PostDetail {
-  constructor(@Parent() viewport: Nav) {
-    this.navPane = viewport;
+  constructor(@Parent() nav: NavController) {
+    this.nav = viewport;
     this.title = 'Hello'
   }
   selectItem() {
-    this.navPane.push(PostDetailTab)
+    this.nav.push(PostDetailTab)
   }
 }
 
@@ -134,9 +133,9 @@ class PostDetail {
   directives: [Content]
 })
 class SplashPage {
-  constructor(@Parent() viewport: Nav) {
-    this.navPane = viewport;
-    window.navPane = viewport;
+  constructor(@Parent() nav: NavController) {
+    this.nav = nav;
+    window.nav = nav;
   }
 }
 
@@ -154,7 +153,7 @@ class IonicApp {
     this.firstPage = SplashPage//AppPage//LoginPage
 
     setTimeout(() => {
-      var nav = window.navPane;
+      var nav = window.nav;
 
       var route = Router;//new Router()
 
