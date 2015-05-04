@@ -1,6 +1,16 @@
 // HACKYFILLS (hack + polyfill)
 import {NgElement, ViewContainer} from 'angular2/angular2'
+
+//import {DomRenderedElement} from 'ionic/util/render/dom';
+
 Object.defineProperties(NgElement.prototype, {
+  /*
+  renderElement: {
+    get: function() {
+      return new DomRenderedElement(this._view.render.delegate.boundElements[this._boundElementIndex]);
+    }
+  },
+  */
   domElement: {
     get: function() {
       return this._view.render.delegate.boundElements[this._boundElementIndex];
@@ -8,6 +18,7 @@ Object.defineProperties(NgElement.prototype, {
   }
 });
 
+/*
 Object.defineProperties(ViewContainer.prototype, {
   domElement: {
     get: function() {
@@ -15,6 +26,7 @@ Object.defineProperties(ViewContainer.prototype, {
     }
   }
 });
+*/
 
 export * from 'ionic/components'
 export * from 'ionic/platform/platform'
