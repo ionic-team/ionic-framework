@@ -131,7 +131,7 @@ export class NavBase {
 
   _destroy(navItem) {
     console.warn(
-`Component "${navItem.Class.name}" was popped from the nav stack, but wer'e keeping its element in the DOM for now because of an ng2 bug.`
+`Component "${navItem.Class.name}" was popped from the nav stack, but we are keeping its element in the DOM for now because of an ng2 bug.`
     );
     // util.array.remove(this._ngNavItems, navItem)
   }

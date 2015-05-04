@@ -144,17 +144,17 @@ export class ToolbarTitle {
 })
 export class ToolbarContainer {
   constructor(
-    //viewContainer: ViewContainerRef,
+    viewContainer: ViewContainer,
     element: NgElement
   ) {
-    //this.viewContainer = viewContainer;
+    this.viewContainer = viewContainer;
     this.domElement = element.domElement;
   }
 
   set toolbar(bar: Toolbar) {
     if (bar) {
       // TODO create with correct context
-      //this.viewContainer.create(-1, bar.viewContainer._defaultProtoView, bar.elementRef.elementInjector);
+      this.viewContainer.create(-1, bar.viewContainer.defaultProtoView, bar.elementRef.elementInjector);
       console.log('creating viewportContainer', performance.now())
     }
   }

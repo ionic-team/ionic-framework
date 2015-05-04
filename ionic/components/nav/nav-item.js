@@ -33,11 +33,6 @@ export class NavController {
   }
 
   addToolbar(placement: String, toolbar: Toolbar) {
-    if (!this.navItem._toolbars[placement]) {
-      return console.error(
-        `Toolbar must have a placement of top or bottom, found toolbar ${toolbar} with placement ${placement}!`
-      );
-    }
     this.navItem._toolbars[placement].push(toolbar);
   }
 

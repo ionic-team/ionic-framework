@@ -35,8 +35,7 @@ export class NavInjectable {}
 @NgView({
   template: `
   <header class="toolbar-container" [class.hide]="getToolbars('top').length == 0">
-    <div *for="#toolbar of getToolbars('top')" [toolbar-create]="toolbar">
-    </div>
+    <div *for="#toolbar of getToolbars('top')" [toolbar-create]="toolbar"></div>
   </header>
   <section class="nav-item-container">
     <div class="nav-item"
@@ -44,8 +43,7 @@ export class NavInjectable {}
          [item]="item"></div>
   </section>
   <footer class="toolbar-container" [class.hide]="getToolbars('bottom').length == 0">
-    <div *for="#toolbar of getToolbars('bottom')" [toolbar-create]="toolbar">
-    </div>
+    <div *for="#toolbar of getToolbars('bottom')" [toolbar-create]="toolbar"></div>
   </footer>
   `,
   directives: [NavItem, For, If, ToolbarContainer]
