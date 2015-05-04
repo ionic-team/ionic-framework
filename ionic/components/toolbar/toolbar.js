@@ -4,7 +4,7 @@ import {
   Decorator,
   Viewport,
   View,
-  ViewContainer,
+  ViewContainerRef,
   //ProtoViewRef,
   onDestroy,
   Ancestor,
@@ -16,7 +16,6 @@ import {IonicComponent} from 'ionic/config/component';
 import {NavController} from 'ionic/components/nav/nav-item';
 import {raf} from 'ionic/util/dom';
 import {Platform} from 'ionic/platform/platform';
-
 
 // FYI for later:
 // https://github.com/angular/angular/commit/3aac2fefd7f93c74abfa5ee58aa0ea8d4840b519
@@ -32,7 +31,7 @@ import {Platform} from 'ionic/platform/platform';
 export class Toolbar {
 
   constructor(
-    viewContainer: ViewContainer,
+    viewContainer: ViewContainerRef,
     //protoViewRef: ProtoViewRef,
     elementRef: ElementRef,
     @Ancestor() navCtrl: NavController,
@@ -144,7 +143,7 @@ export class ToolbarTitle {
 })
 export class ToolbarContainer {
   constructor(
-    viewContainer: ViewContainer,
+    viewContainer: ViewContainerRef,
     element: NgElement
   ) {
     this.viewContainer = viewContainer;
@@ -154,7 +153,7 @@ export class ToolbarContainer {
   set toolbar(bar: Toolbar) {
     if (bar) {
       // TODO create with correct context
-      this.viewContainer.create(-1, bar.viewContainer.defaultProtoView, bar.elementRef.elementInjector);
+      this.viewContainer.create(-1, bar.viewContainer._defaultProtoView, bar.elementRef.elementInjector);
       console.log('creating viewportContainer', performance.now())
     }
   }
