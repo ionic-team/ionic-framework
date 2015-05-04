@@ -9,7 +9,6 @@ export class NavBase {
     element: NgElement
   ) {
     this.domElement = element.domElement;
-    this.domElement.classList.add('nav');
 
     // this is our sane stack of items. This is synchronous and says an item
     // is removed even if it's still animating out.

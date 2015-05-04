@@ -13,8 +13,8 @@ html {
   margin: 0;
   padding: 0;
 
-  .nav {
-    // container of many .nav-views, each .nav-view contains one view
+  ion-nav {
+    // container of header.toolbar-container, footer.toolbar-container and .nav-item-container
     position: absolute;
     top: 0;
     right: 0;
@@ -34,6 +34,7 @@ html {
     min-height: 50px;
     @include flex-order($flex-order-toolbar-top);
   }
+
   footer.toolbar-container {
     @include flex-order($flex-order-toolbar-bottom);
   }
