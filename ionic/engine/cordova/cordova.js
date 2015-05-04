@@ -1,32 +1,33 @@
-import {webview} from '../webview'
+import {engine} from '../engine';
 
-webview.register({
+
+engine.register({
   name: 'cordova',
   isMatch() {
-    return !(!window.cordova && !window.PhoneGap && !window.phonegap)
+    return !(!window.cordova && !window.PhoneGap && !window.phonegap);
   },
   ready() {
     return new Promise(resolve => {
-      setTimeout(resolve, 1000)
-    })
+      setTimeout(resolve, 1000);
+    });
   },
   fullScreen(shouldShow) {
     return new Promise(resolve => {
       setTimeout(function() {
-        resolve(shouldShow)
-      }, 1000)
-    })
+        resolve(shouldShow);
+      }, 1000);
+    });
   },
   showStatusBar(shouldShow) {
     return new Promise(resolve => {
       setTimeout(function() {
-        resolve(shouldShow)
-      }, 1000)
-    })
+        resolve(shouldShow);
+      }, 1000);
+    });
   },
   exitApp() {
     return new Promise(resolve => {
-      setTimeout(resolve, 1000)
-    })
+      setTimeout(resolve, 1000);
+    });
   }
-})
+});

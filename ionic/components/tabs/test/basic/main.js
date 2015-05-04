@@ -1,8 +1,6 @@
 import {Component, View as NgView, bootstrap} from 'angular2/angular2'
 import {View, Tabs, Tab} from 'ionic/ionic'
-import {webview} from 'ionic/webview/webview'
-import {cordova} from 'ionic/webview/cordova/cordova'
-import {nodeWebkit} from 'ionic/webview/node-webkit/node-webkit'
+import {engine} from 'ionic/engine/engine'
 import * as util from 'ionic/util'
 
 
@@ -13,23 +11,23 @@ import * as util from 'ionic/util'
 })
 class IonicApp {
   constructor() {
-    console.log('IonicApp Start')
+    console.log('IonicApp Start');
 
-    console.log(webview.getName(), webview.is('cordova'))
+    console.log(engine.getName(), engine.is('cordova'));
 
-    webview.ready().then(() => {
-      console.log('webviewready')
-    })
+    engine.ready().then(() => {
+      console.log('engine ready')
+    });
 
-    webview.fullScreen(true).then((isShown) => {
+    engine.fullScreen(true).then((isShown) => {
       console.log('fullScreen', isShown)
-    })
+    });
 
-    webview.showStatusBar(true).then((isShown) => {
+    engine.showStatusBar(true).then((isShown) => {
       console.log('showStatusBar', isShown)
-    })
+    });
 
   }
 }
 
-bootstrap(IonicApp)
+bootstrap(IonicApp);
