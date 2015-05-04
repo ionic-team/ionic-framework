@@ -59,12 +59,15 @@ export class IonicComponent {
       }
     }
 
+    // TODO: This worked fine for property-only buttons, but breaks with
+    // class, etc.
+    //
     // If we want to enhance a raw element (for example, a button),
     // only do it if we also have a matching prop class
-    if(!foundMatchingPropClass && this.enhanceRawElement) {
+    //if(!foundMatchingPropClass && this.enhanceRawElement) {
       // Don't enhace this raw element
-      return;
-    }
+      //return;
+    //}
 
     // Add the base element classes (ex, button and button-ios)
     dom.addClasses(instance.domElement, this.componentCssName, `${this.componentCssName}-${platformMode}`);

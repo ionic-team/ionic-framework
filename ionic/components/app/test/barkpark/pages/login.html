@@ -1,4 +1,9 @@
-<div>
+<header *ion-toolbar>
+  <h1 class="toolbar-title">
+    Login
+  </h1>
+</header>
+<ion-content class="padding">
   <form (^submit)="doLogin($event)" [control-group]="loginForm">
     <ion-input>
       <input control="email" type="email" placeholder="Your email">
@@ -11,4 +16,4 @@
       <button ion-button primary block (click)="doSignup()">Create an account</button>
     </div>
   </form>
-</div>
+</ion-content>
