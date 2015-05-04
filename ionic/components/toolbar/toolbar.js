@@ -14,7 +14,7 @@ import {
 import {BackButton} from 'ionic/components/toolbar/back-button';
 import {IonicComponent} from 'ionic/config/component';
 import {NavController} from 'ionic/components/nav/nav-item';
-import {raf} from 'ionic/util/dom';
+import {dom} from 'ionic/util'
 import {Platform} from 'ionic/platform/platform';
 
 // FYI for later:
@@ -45,8 +45,8 @@ export class Toolbar {
     console.log('Toolbar!');
 
     // TODO use config to add these classes
-    // this.viewContainer.domElement.classList.add('toolbar');
-    // this.viewContainer.domElement.classList.add(`toolbar-${Platform.getMode()}`);
+    // dom.addClass(this.viewContainer.domElement, 'toolbar');
+    // dom.addClass(this.viewContainer.domElement, `toolbar-${Platform.getMode()}`);
 
     // TODO Make a better way than this
     // if (/header/i.test(this.viewContainer.domElement.tagName)) {
@@ -118,7 +118,7 @@ export class ToolbarTitle {
 
       titleElement.style.margin = `0 ${centerMargin}px 0 0`;
 
-      raf(() => {
+      dom.raf(() => {
         if (titleElement.offsetWidth < titleElement.scrollWidth) {
           this.titleElement.style.margin = ''
           this.titleElement.style.textAlign = 'left'

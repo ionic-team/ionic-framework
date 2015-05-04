@@ -2,21 +2,23 @@
 import {For, Component, View, Parent, bootstrap} from 'angular2/angular2'
 import {FormBuilder, Validators, FormDirectives, ControlGroup} from 'angular2/forms';
 import {Log} from 'ionic/util'
-import {Router, List, Item, Nav, NavController, Toolbar, ToolbarTitle,
-  Button, Input, Tabs, Tab, Content, Aside} from 'ionic/ionic'
 
-@Component({
-  selector: 'login-page'
-})
+import {
+  Router, Routable, List, Item, Nav, NavController,
+  Toolbar, ToolbarTitle, Button, Input, Tabs,
+  Tab, Content, Aside
+} from 'ionic/ionic'
+
+@Component()
 @View({
   templateUrl: 'pages/login.html',
   directives: [FormDirectives, Button, Input, Content, Toolbar, ToolbarTitle]
 })
 export class LoginPage {
-  constructor( @Parent() viewport: NavController ) { //, fb: FormBuilder ) {
+  constructor( @Parent() viewport: NavController ) {
 
     this.viewport = viewport
-    Log.log('LOGIN PAGE')
+    Log.log('LOGIN PAGE', this)
 
     var fb = new FormBuilder()
 
@@ -24,6 +26,7 @@ export class LoginPage {
       email: ['', Validators.required],
       password: ['', Validators.required],
     });
+
   }
 
   doLogin(event) {
@@ -33,11 +36,16 @@ export class LoginPage {
 
     //this.viewport.push(SecondPage)
   }
+
   doSignup(event) {
     this.viewport.push(SignupPage)
-
   }
 }
+
+new Routable(LoginPage, {
+  url: '/login',
+  tag: 'login'
+})
 
 @Component({
   selector: 'signup-page'

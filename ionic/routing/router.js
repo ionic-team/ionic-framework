@@ -1,8 +1,32 @@
-export class RouterSingleton {
+/**
+ * The RouterController handles checking for matches of
+ * each registered route, and triggering callbacks, gathering
+ * route param data, etc.
+ */
+export class RouterController {
   constructor() {
     this.routes = []
   }
 
+  // Build route params to send to the matching route.
+  _buildRouteParams(routeParams) {
+    routeParams._route = {
+      path: window.location.hash.slice(1)
+    }
+    return routeParams;
+  }
+
+  // Called when there is no match
+  _noMatch() {
+    // otherwise()?
+    return {}
+  }
+
+  /**
+   * Check the current hash/location for a match with
+   * registered routes. If a match is found, execute the
+   * first one and then return.
+   */
   match() {
     let hash = window.location.hash;
 
@@ -16,8 +40,14 @@ export class RouterSingleton {
       routeParams = route.match(path);
 
       if(routeParams !== false) {
-        route.exec(this.buildRouteParams(routeParams));
-        this.emit(route.url);
+        route.exec(this._buildRouteParams(routeParams));
+
+        // If the route has a registered URL and isn't set to quiet mode,
+        // emit the new URL into the address bar
+        if(route.url && !route.quiet) {
+          this.emit(route.url);
+        }
+
         return
       }
     }
@@ -25,22 +55,20 @@ export class RouterSingleton {
     return this.noMatch();
   }
 
+  /**
+   * Emit the current path to the address bar, either
+   * as part of the hash or pop/push state if using
+   * html5 routing style.
+   */
   emit(path) {
     window.location.hash = path
   }
 
-  buildRouteParams(routeParams) {
-    routeParams._route = {
-      path: window.location.hash.slice(1)
-    }
-    return routeParams;
-  }
-
-  noMatch() {
-    // otherwise()?
-    return {}
-  }
-
+  /**
+   * Register a new route.
+   * @param path the path to watch for
+   * @param cb the callback to execute
+   */
   on(path, cb) {
     let route = new Route(path, cb);
     this.routes.push(route);
@@ -48,6 +76,11 @@ export class RouterSingleton {
     return route;
   }
 
+
+  /**
+   * If no routes match, trigger the one that matches
+   * the "otherwise" condition.
+   */
   otherwise(path) {
     let routeParams = {}
     for(let route of this.routes) {
@@ -68,7 +101,7 @@ export class Route {
   match(path) {
     let routeParams = {}
 
-    // Either we have a direct string match, or 
+    // Either we have a direct string match, or
     // we need to check the route more deeply
     // Example: /tab/home
     if(this.url == path) {
@@ -106,7 +139,7 @@ export class Route {
       } else if(pp !== rp) {
         return false;
       }
-      
+
     }
     return routeParams;
   }
@@ -115,5 +148,20 @@ export class Route {
   }
 }
 
-var Router = new RouterSingleton();
-export { Router };
+/**
+ * Routable is metadata added to routable things in Ionic.
+ * This makes it easy to auto emit URLs for routables pushed
+ * onto the stack.
+ */
+export class Routable {
+  constructor(componentClass, routeInfo) {
+    this.componentClass = componentClass;
+    this.routeInfo = routeInfo;
+
+    componentClass._route = this;
+  }
+}
+
+var Router = new RouterController();
+
+export { Router, Route, Routable };
