@@ -184,7 +184,7 @@ class NavStackData {
     return this.enter( util.extend({reverse: true}, opts) )
   }
 
-  enter({ reverse = false, animate = true } = {}) {
+  enter({ reverse = false, animate = false } = {}) {
     return this._animate({
       isShown: true,
       animation: animate ? (reverse ? 'enter-reverse' : 'enter') : null
