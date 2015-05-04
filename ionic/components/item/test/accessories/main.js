@@ -1,14 +1,14 @@
-import {Component, View as NgView, For, bootstrap} from 'angular2/angular2'
-import {Item, View, List} from 'ionic/ionic'
+import {Component, View, For, bootstrap} from 'angular2/angular2'
+import {Item, List} from 'ionic/ionic'
 
 import {ItemPrimarySwipeButtons} from 'ionic/components/item/item-swipe-buttons'
 
 @Component({
   selector: '[ion-app]'
 })
-@NgView({
+@View({
   templateUrl: 'main.html',
-  directives: [Item, View, List, For, ItemPrimarySwipeButtons]
+  directives: [Item, List, For, ItemPrimarySwipeButtons]
 })
 class App{
   constructor() {

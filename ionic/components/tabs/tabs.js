@@ -1,4 +1,4 @@
-import {NgElement, Component, View as NgView, For, PropertySetter, Query} from 'angular2/angular2';
+import {NgElement, Component, View, For, PropertySetter, Query} from 'angular2/angular2';
 import {QueryList} from 'angular2/src/core/compiler/query_list';
 import {IonicComponent} from 'ionic/config/component';
 import {Toolbar} from 'ionic/components/toolbar/toolbar';
@@ -11,7 +11,7 @@ import {Tab} from 'ionic/components/tabs/tab';
     tabBarIcons: 'tab-bar-icons'
   }
 })
-@NgView({
+@View({
   //[attr.aria-activedescendant]="'tab-item-' + selectedTab.tabId"
   template: `
       <!-- TODO: Once the reprojected toolbar preserves the context of the Tabs, then

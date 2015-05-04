@@ -1,4 +1,4 @@
-import {Component, View as NgView, Inject, Parent, NgElement, EventEmitter} from 'angular2/angular2'
+import {Component, View, Inject, Parent, NgElement, EventEmitter} from 'angular2/angular2'
 import * as types from 'ionic/components/aside/extensions/types'
 import * as gestures from  'ionic/components/aside/extensions/gestures'
 import {dom} from 'ionic/util'
@@ -16,7 +16,7 @@ import {IonicComponent} from 'ionic/config/component'
     dragThreshold: 'dragThreshold'
   }
 })
-@NgView({
+@View({
   template: `<content></content>`
 })
 export class Aside {

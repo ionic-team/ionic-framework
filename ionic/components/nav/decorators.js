@@ -1,6 +1,6 @@
 import {
   Decorator,
-  View as NgView,
+  View,
   For,
   NgElement,
   Parent,

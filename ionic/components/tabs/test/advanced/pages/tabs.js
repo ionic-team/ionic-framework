@@ -1,10 +1,9 @@
 import {
   Component,
-  View as NgView,
+  View,
   Parent,
 } from 'angular2/angular2';
 import {
-  View,
   Tabs,
   Tab,
   Aside,
@@ -16,9 +15,9 @@ import {Toolbar, ToolbarTitle} from 'ionic/components/toolbar/toolbar';
 @Component({
   selector: 'tabs-page'
 })
-@NgView({
+@View({
   templateUrl: 'pages/tabs.html',
-  directives: [Tabs, Tab, View, Content]
+  directives: [Tabs, Tab, Content]
 })
 
 export class TabsPage {
@@ -35,7 +34,7 @@ export class TabsPage {
 // tab 1
 //
 @Component({ selector: 't1p1' })
-@NgView({
+@View({
   template: `
   <header *ion-toolbar>
     <h1 class="toolbar-title">Tabs 1 Page 1</h1>
@@ -60,7 +59,7 @@ class Tab1Page1 {
 }
 
 @Component({ selector: 't1p2' })
-@NgView({
+@View({
   template: `
   <header *ion-toolbar>
     <h1 class="toolbar-title">Tabs 1 Page 2</h1>
@@ -87,7 +86,7 @@ class Tab1Page2 {
 // tab 2
 //
 @Component({ selector: 't2p1' })
-@NgView({
+@View({
   template: `
     <ion-aside side="left" [content]="view">
       Left aside for Tab 2 Page 1
@@ -101,7 +100,7 @@ class Tab1Page2 {
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
     </ion-content>
   `,
-  directives: [View, Aside, Content]
+  directives: [Aside, Content]
 })
 class Tab2Page1 {
   // TODO change to 'Nav' injection when we're allowed to inject a tab as a nav.
@@ -114,7 +113,7 @@ class Tab2Page1 {
 }
 
 @Component({ selector: 't2p2' })
-@NgView({
+@View({
   template: `
     <ion-aside side="left" [content]="view">
       Left aside for Tab 2 Page 2
@@ -134,7 +133,7 @@ class Tab2Page1 {
       </ion-tab>
     </ion-tabs>
   `,
-  directives: [View, Aside, Tabs, Tab, Content]
+  directives: [Aside, Tabs, Tab, Content]
 })
 class Tab2Page2 {
   // TODO change to 'Nav' injection when we're allowed to inject a tab as a nav.

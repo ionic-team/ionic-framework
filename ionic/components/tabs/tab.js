@@ -1,7 +1,7 @@
 import {
   Component,
   NgElement,
-  View as NgView,
+  View,
   Ancestor,
   For,
   If,
@@ -34,7 +34,7 @@ class TabNavInjectable {}
     bind(NavInjectable).toClass(TabNavInjectable)
   ]
 })
-@NgView({
+@View({
   template: `
   <header class="toolbar-container" [class.hide]="nav.getToolbars('top').length == 0">
     <div *for="#toolbar of nav.getToolbars('top')" [toolbar-create]="toolbar">

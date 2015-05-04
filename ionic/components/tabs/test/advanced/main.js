@@ -1,4 +1,4 @@
-import {Component, View as NgView, bootstrap} from 'angular2/angular2'
+import {Component, View, bootstrap} from 'angular2/angular2'
 import {Nav} from 'ionic/ionic'
 import {SignInPage} from 'pages/sign-in'
 
@@ -6,7 +6,7 @@ import {SignInPage} from 'pages/sign-in'
 @Component({
   selector: '[ion-app]',
 })
-@NgView({
+@View({
   templateUrl: 'main.html',
   directives: [Nav]
 })

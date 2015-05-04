@@ -1,4 +1,4 @@
-// import {NgElement, Component, View as NgView, Parent} from 'angular2/angular2'
+// import {NgElement, Component, View, Parent} from 'angular2/angular2'
 // import {IonicComponent} from 'ionic/config/component'
 // import {Icon} from 'ionic/components/icon/icon'
 // import {Item} from 'ionic/components/item/item'
@@ -7,7 +7,7 @@
 // @Component({
 //   selector: 'ion-action-menu'
 // })
-// @NgView({
+// @View({
 //   template: `
 //     <div class="overlay-backdrop"></div>
 //     <div class="overlay-container">

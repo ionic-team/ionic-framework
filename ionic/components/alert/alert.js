@@ -1,11 +1,11 @@
-// import {NgElement, Component, View as NgView, Parent} from 'angular2/angular2'
+// import {NgElement, Component, View, Parent} from 'angular2/angular2'
 // import {IonicComponent} from 'ionic/config/component'
 
 
 // @Component({
 //   selector: 'ion-alert'
 // })
-// @NgView({
+// @View({
 //   template: `
 //     <div class="overlay-backdrop"></div>
 //     <div class="overlay-container">

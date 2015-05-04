@@ -1,4 +1,4 @@
-import {Component, View as NgView, NgElement} from 'angular2/angular2'
+import {Component, View, NgElement} from 'angular2/angular2'
 import {IonicComponent} from 'ionic/config/component'
 
 
@@ -11,7 +11,7 @@ import {IonicComponent} from 'ionic/config/component'
     '^click': 'onClick()'
   }
 })
-@NgView({
+@View({
   template: `
   <div class="item-media media-checkbox">
     <icon class="checkbox-off"></icon>

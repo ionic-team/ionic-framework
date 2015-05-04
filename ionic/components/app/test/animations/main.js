@@ -1,4 +1,4 @@
-import {Component, Decorator, View as NgView, NgElement, bootstrap} from 'angular2/angular2';
+import {Component, Decorator, View, NgElement, bootstrap} from 'angular2/angular2';
 import {Animation} from 'ionic/ionic';
 
 let opacity = 0.2;
@@ -7,7 +7,7 @@ let translateX = '100px';
 let scale = 0.6;
 
 @Component({ selector: '[ion-app]' })
-@NgView({
+@View({
   templateUrl: 'main.html'
 })
 class IonicApp {

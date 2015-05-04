@@ -1,10 +1,10 @@
-import {Component, View as NgView, bootstrap} from 'angular2/angular2';
-import {View} from 'ionic/components/view/view';
+import {Component, View, bootstrap} from 'angular2/angular2';
+
 
 @Component({ selector: '[ion-app]' })
-@NgView({
+@View({
   templateUrl: 'main.html',
-  directives: [View]
+  directives: []
 })
 class IonicApp {
   constructor() {

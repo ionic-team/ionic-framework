@@ -1,4 +1,4 @@
-import {Component, View as NgView, Inject, Parent, NgElement} from 'angular2/angular2'
+import {Component, View, Inject, Parent, NgElement} from 'angular2/angular2'
 import {Log} from 'ionic/util'
 
 /**

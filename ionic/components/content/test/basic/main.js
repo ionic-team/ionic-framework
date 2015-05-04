@@ -1,14 +1,13 @@
-import {Component, View as NgView, bootstrap} from 'angular2/angular2';
-import {View} from 'ionic/components/view/view';
+import {Component, View, bootstrap} from 'angular2/angular2';
 import {Content} from 'ionic/components/content/content';
 import {Icon} from 'ionic/components/icon/icon';
 import {Checkbox} from 'ionic/components/checkbox/checkbox';
 import {List} from 'ionic/components/list/list';
 
 @Component({ selector: '[ion-app]' })
-@NgView({
+@View({
   templateUrl: 'main.html',
-  directives: [View, Content, Icon, Checkbox, List]
+  directives: [Content, Icon, Checkbox, List]
 })
 class IonicApp {
   constructor() {

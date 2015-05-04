@@ -1,14 +1,14 @@
-import {Descendent, NgElement, Component, View as NgView, bootstrap} from 'angular2/angular2';
+import {Descendent, NgElement, Component, View, bootstrap} from 'angular2/angular2';
 import {bind} from 'angular2/di';
-import {View, Content, Nav, NavPane} from 'ionic/ionic';
+import {Content, Nav, NavPane} from 'ionic/ionic';
 
 import {HackerNews} from 'hn';
 import {HNTopStories} from 'pages/top';
 
 @Component({ selector: '[ion-app]' })
-@NgView({
+@View({
   templateUrl: 'main.html',
-  directives: [View, Content, Nav, NavPane]
+  directives: [Content, Nav, NavPane]
 })
 export class HNApp {
   constructor(

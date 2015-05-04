@@ -7,7 +7,7 @@ import {
   DynamicComponentLoader,
   ElementRef,
   Query,
-  View as NgView,
+  View,
 } from 'angular2/angular2';
 
 import {
@@ -59,7 +59,7 @@ export class NavController {
     NavController
   ]
 })
-@NgView({
+@View({
   // See below for this.
   template: '<div class="nav-item-child"></div>',
   directives: [NavItemDynamicComponent]

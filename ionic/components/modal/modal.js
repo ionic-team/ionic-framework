@@ -1,9 +1,9 @@
-import {Compiler, NgElement, Component, View as NgView} from 'angular2/angular2';
+import {Compiler, NgElement, Component, View} from 'angular2/angular2';
 
 @Component({
   selector: 'ion-modal-wrapper'
 })
-@NgView({
+@View({
   template: `
     <div class="modal-backdrop active">
       <div class="modal-backdrop-bg"></div>
@@ -25,7 +25,7 @@ class ModalWrapper {
 @Component({
   selector: 'ion-modal'
 })
-@NgView({
+@View({
   directives: [ModalWrapper],
   template: `
     <ion-modal-wrapper>

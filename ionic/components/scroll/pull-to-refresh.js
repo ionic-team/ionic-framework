@@ -1,4 +1,4 @@
-import {NgElement, EventEmitter, Decorator, Component, View as NgView, PropertySetter} from 'angular2/angular2';
+import {NgElement, EventEmitter, Decorator, Component, View, PropertySetter} from 'angular2/angular2';
 
 @Decorator({
   selector: '[ion-refresher]'

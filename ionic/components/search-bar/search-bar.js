@@ -1,4 +1,4 @@
-import {NgElement, Component, View as NgView} from 'angular2/angular2'
+import {NgElement, Component, View} from 'angular2/angular2'
 import {IonicComponent} from 'ionic/config/component'
 
 
@@ -9,7 +9,7 @@ import {IonicComponent} from 'ionic/config/component'
     placeholderText: 'placeholder-text'
   }
 })
-@NgView({
+@View({
   template: `<div class="search-bar-input-container">
              <input class="search-bar-input" type="search" [attr.placeholder]="placeholderText">
            </div>

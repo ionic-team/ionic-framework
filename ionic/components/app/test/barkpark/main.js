@@ -1,15 +1,15 @@
 //import {Router} from 'ionic/routing/router'
-import {For, Component, View as NgView, Parent, bootstrap} from 'angular2/angular2'
+import {For, Component, View, Parent, bootstrap} from 'angular2/angular2'
 import {FormBuilder, Validators, FormDirectives, ControlGroup} from 'angular2/forms';
 import {Log} from 'ionic/util'
-import {Router, List, Item, Nav, View, Button, Input, Tabs, Tab, Content, Aside} from 'ionic/ionic'
+import {Router, List, Item, Nav, Button, Input, Tabs, Tab, Content, Aside} from 'ionic/ionic'
 
 @Component({
   selector: 'login-page'
 })
-@NgView({
+@View({
   templateUrl: 'pages/login.html',
-  directives: [View, FormDirectives, Button, Input]
+  directives: [FormDirectives, Button, Input]
 })
 export class LoginPage {
   constructor( @Parent() viewport: Nav ) { //, fb: FormBuilder ) {
@@ -41,9 +41,9 @@ export class LoginPage {
 @Component({
   selector: 'signup-page'
 })
-@NgView({
+@View({
   templateUrl: 'pages/signup.html',
-  directives: [View, FormDirectives, Button, Input]
+  directives: [FormDirectives, Button, Input]
 })
 export class SignupPage {
   constructor( @Parent() viewport: Nav ) { //, fb: FormBuilder ) {
@@ -78,9 +78,9 @@ export class SignupPage {
 @Component({
   selector: 'app-page'
 })
-@NgView({
+@View({
   templateUrl: 'pages/app.html',
-  directives: [View, FormDirectives, Button, Input, Tabs, Tab]
+  directives: [FormDirectives, Button, Input, Tabs, Tab]
 })
 export class AppPage {
   constructor( @Parent() viewport: Nav ) { //, fb: FormBuilder ) {
@@ -90,9 +90,9 @@ export class AppPage {
 }
 
 @Component({ selector: 'stream-tab' })
-@NgView({
+@View({
   templateUrl: 'pages/tabs/home.html',
-  directives: [For, View, Content, List, Item]
+  directives: [For, Content, List, Item]
 })
 class StreamTab {
   constructor(@Parent() viewport: Nav) {
@@ -114,9 +114,9 @@ class StreamTab {
 }
 
 @Component({ selector: 'post-detail-tab' })
-@NgView({
+@View({
   templateUrl: 'pages/post/detail.html',
-  directives: [View, Content]
+  directives: [Content]
 })
 class PostDetail {
   constructor(@Parent() viewport: Nav) {
@@ -129,9 +129,9 @@ class PostDetail {
 }
 
 @Component({ selector: 'splash-page' })
-@NgView({
+@View({
   templateUrl: 'pages/splash.html',
-  directives: [View, Content]
+  directives: [Content]
 })
 class SplashPage {
   constructor(@Parent() viewport: Nav) {
@@ -145,7 +145,7 @@ class SplashPage {
  * Main app entry point
  */
 @Component({ selector: '[ion-app]' })
-@NgView({
+@View({
   directives: [Nav],
   templateUrl: 'main.html'
 })

@@ -1,13 +1,13 @@
 import {
   NgElement,
   Component,
-  View as NgView,
+  View,
 } from 'angular2/angular2';
 
 @Component({
   selector: 'ion-content'
 })
-@NgView({
+@View({
   template: `
     <div class="scroll-content">
       <content></content>

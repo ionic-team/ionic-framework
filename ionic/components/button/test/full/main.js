@@ -1,9 +1,9 @@
-import {Component, View as NgView, bootstrap} from 'angular2/angular2'
+import {Component, View, bootstrap} from 'angular2/angular2'
 import {Button} from 'ionic/components/button/button'
 
 
 @Component({ selector: '[ion-app]' })
-@NgView({
+@View({
   templateUrl: 'main.html',
   directives: [Button]
 })

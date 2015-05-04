@@ -1,12 +1,13 @@
-import {For, Ancestor, Descendent, Parent, NgElement, Component, View as NgView, bootstrap} from 'angular2/angular2';
-import {PushToNav, View, Content, Nav, NavPane, List, Item} from 'ionic/ionic';
+
+import {For, Ancestor, Descendent, Parent, NgElement, Component, View, bootstrap} from 'angular2/angular2';
+import {PushToNav, Content, Nav, NavPane, List, Item} from 'ionic/ionic';
 
 import {HackerNews} from 'hn'
 
 @Component({ selector: 'top-stories' })
-@NgView({
+@View({
   templateUrl: 'pages/top.html',
-  directives: [View, Content, For, List, Item, PushToNav]
+  directives: [Content, For, List, Item, PushToNav]
 })
 export class HNTopStories {
   constructor(@Ancestor() viewport: Nav) {//, @Ancestor() app: HNApp) {
@@ -72,7 +73,7 @@ export class HNTopStories {
 
 
     //doStuffEnd
-  } 
+  }
 
     /*
     HackerNews.getTopStories((val) => {

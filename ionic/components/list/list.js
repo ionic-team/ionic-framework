@@ -1,11 +1,11 @@
-import {NgElement, Component, View as NgView} from 'angular2/angular2'
+import {NgElement, Component, View} from 'angular2/angular2'
 import {IonicComponent} from 'ionic/config/component'
 
 
 @Component({
   selector: 'ion-list'
 })
-@NgView({
+@View({
   template: `<content></content>`
 })
 export class List {

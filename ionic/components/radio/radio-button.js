@@ -1,11 +1,11 @@
-import {NgElement, Component, View as NgView} from 'angular2/angular2'
+import {NgElement, Component, View} from 'angular2/angular2'
 import {IonicComponent} from 'ionic/config/component'
 
 
 @Component({
   selector: 'ion-radio'
 })
-@NgView({
+@View({
   template: `
     <div class="item-content">
 

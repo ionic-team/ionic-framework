@@ -1,6 +1,6 @@
 import {
   Component,
-  View as NgView,
+  View,
   Ancestor,
 } from 'angular2/angular2';
 import {
@@ -13,7 +13,7 @@ import {
 import {TabsPage} from 'pages/tabs';
 
 @Component()
-@NgView({
+@View({
   templateUrl: 'pages/sign-in.html',
   directives: [Content, Toolbar, ToolbarTitle]
 })

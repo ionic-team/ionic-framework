@@ -1,6 +1,5 @@
-import {Component, Parent, Decorator, View as NgView, NgElement} from 'angular2/angular2'
+import {Component, Parent, Decorator, View, NgElement} from 'angular2/angular2'
 import {Nav} from 'ionic/components/nav/nav'
-import {View} from 'ionic/components/view/view'
 import {NavPane} from 'ionic/components/nav-pane/nav-pane'
 import * as util from 'ionic/util'
 
@@ -29,7 +28,7 @@ class SplitViewportDecorator {
     navTitle: 'navTitle'
   },
 })
-@NgView({
+@View({
   template: `
   <ion-view [nav-title]="navTitle" class="split-view">
     <div class="pane-container">
@@ -57,7 +56,7 @@ ion-split-view > [split-viewport] {
 
 </style>
   `,
-  directives: [SplitViewportDecorator, Nav, View]
+  directives: [SplitViewportDecorator, Nav]
 })
 export class SplitView {
   constructor(

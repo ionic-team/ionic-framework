@@ -1,8 +1,8 @@
-import {Component, View as NgView} from 'angular2/angular2'
-import {View, NavPane} from 'ionic/ionic'
+import {Component, View} from 'angular2/angular2'
+import {NavPane} from 'ionic/ionic'
 
 @Component({ selector: 'privacy-settings' })
-@NgView({
+@View({
   template: `
 <ion-view nav-title="Privacy">
   Privacy
@@ -10,7 +10,7 @@ import {View, NavPane} from 'ionic/ionic'
   Next
 </button>
 </ion-view>`,
-  directives: [View]
+  directives: []
 })
 export class PrivacyPage {
   constructor(navPane: NavPane) {
@@ -22,7 +22,7 @@ export class PrivacyPage {
 }
 
 @Component({ selector: 'privp1' })
-@NgView({
+@View({
   template: `
 <ion-view nav-title="Privacy Page 1">
 This is page 1
@@ -36,7 +36,7 @@ This is page 1
 </button>
 </ion-view>
 `,
-  directives: [View]
+  directives: []
 })
 class PrivacyP1 {
   constructor(navPane: NavPane) {
@@ -51,7 +51,7 @@ class PrivacyP1 {
 }
 
 @Component({ selector: 'privp2' })
-@NgView({
+@View({
   template: `
 <ion-view nav-title="Privacy Page 2">
 Page 2 here
@@ -62,7 +62,7 @@ Page 2 here
 <br/>
 </ion-view>
 `,
-  directives: [View]
+  directives: []
 })
 class PrivacyP2 {
   constructor(navPane: NavPane) {

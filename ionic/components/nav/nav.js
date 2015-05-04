@@ -1,6 +1,6 @@
 import {
   Component,
-  View as NgView,
+  View,
   If,
   For,
   NgElement,
@@ -32,7 +32,7 @@ export class NavInjectable {}
     NavInjectable
   ]
 })
-@NgView({
+@View({
   template: `
   <header class="toolbar-container" [class.hide]="getToolbars('top').length == 0">
     <div *for="#toolbar of getToolbars('top')" [toolbar-create]="toolbar"></div>

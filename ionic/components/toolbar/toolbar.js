@@ -3,7 +3,7 @@ import {
   Component,
   Decorator,
   Viewport,
-  View as NgView,
+  View,
   ViewContainer,
   //ProtoViewRef,
   onDestroy,
@@ -76,7 +76,7 @@ export class Toolbar {
   //   'window:resize': 'align()',
   // }
 })
-@NgView({
+@View({
   template: `
   <div class="toolbar-inner-title toolbar-title-hide">
     <content></content>
@@ -166,7 +166,7 @@ export class ToolbarContainer {
 //     title: 'nav-title'
 //   }
 // })
-// @NgView({
+// @View({
 //   template: `
 //     <div class="toolbar-items">
 //       <button class="button back-button toolbar-item" style="display:none"></button>
