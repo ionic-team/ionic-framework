@@ -47,7 +47,7 @@ export class Toolbar {
 
     // TODO use config to add these classes
     this.viewContainer.domElement.classList.add('toolbar');
-    this.viewContainer.domElement.classList.add(`toolbar-${platform.getName()}`);
+    this.viewContainer.domElement.classList.add(`toolbar-${platform.getMode()}`);
 
     // TODO Make a better way than this
     if (/header/i.test(this.viewContainer.domElement.tagName)) {

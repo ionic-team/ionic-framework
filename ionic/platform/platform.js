@@ -1,78 +1,81 @@
 import * as util from 'ionic/util'
 
-const queryPlatform = (util.readQueryParams()['ionicplatform'] || '').toLowerCase()
 
-class Platform {
-  constructor(options) {
-    util.extend(this, options)
-  }
-}
+let registry = {};
+let defaultPlatform;
+let activePlatform;
 
 class PlatformController {
-  constructor() {
-    this.registry = {}
-  }
-
-  set(platform) {
-    this.current = platform
-  }
 
   get() {
-    return this.current
+    if (util.isUndefined(activePlatform)) {
+      this.set(this.detect());
+    }
+    return activePlatform || defaultPlatform;
   }
 
   getName() {
-    return this.current && this.current.name
+    return this.get().name;
+  }
+
+  getMode() {
+    let plt = this.get();
+    return plt.mode || plt.name;
   }
 
   register(platform) {
-    if (!platform instanceof Platform) platform = new Platform(platform)
-    this.registry[platform.name] = platform
+    registry[platform.name] = platform;
   }
 
-  setDefaultPlatform(platform) {
-    if (!platform instanceof Platform) platform = new Platform(platform)
-    this.defaultPlatform = platform
+  set(platform) {
+    activePlatform = platform;
+  }
+
+  setDefault(platform) {
+    defaultPlatform = platform;
   }
 
   isRegistered(platformName) {
-    return this.registry.some(platform => {
-      return platform.name === platformName
+    return registry.some(platform => {
+      return platform.name === platformName;
     })
   }
 
   detect() {
-    for (let name in this.registry) {
-      if (this.registry[name].isMatch()) {
-        return this.registry[name]
+    for (let name in registry) {
+      if (registry[name].isMatch()) {
+        return registry[name]
       }
     }
-    return this.defaultPlatform
+    return null;
   }
 }
 
-export let platform = new PlatformController()
+export let platform = new PlatformController();
 
-// TODO(ajoslin): move this to a facade somewhere else?
-var ua = window.navigator.userAgent
 
-// TODO(ajoslin): move these to their own files
+const ua = window.navigator.userAgent;
+const queryPlatform = (util.getQuerystring('ionicplatform')).toLowerCase()
+
+
 platform.register({
   name: 'android',
+  mode: 'md',
   isMatch() {
     return queryPlatform == 'android' || /android/i.test(ua)
   }
-})
+});
+
 platform.register({
   name: 'ios',
   isMatch() {
     return queryPlatform === 'ios' || /ipad|iphone|ipod/i.test(ua)
   }
-})
+});
 
 // Last case is a catch-all
-platform.setDefaultPlatform({
+platform.setDefault({
   name: 'core'
-})
+});
 
-platform.set( platform.detect() )
+platform.set( platform.detect() );

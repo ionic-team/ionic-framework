@@ -1,8 +1,7 @@
 import * as util from 'ionic/util'
 import {platform} from 'ionic/platform/platform'
 
-let platforms = Object.keys(platform.registry)
-let platformName = platform.getName()
+let platformMode = platform.getMode()
 
 // Low-level: how the user will override
 // BackButton.config.bind.icon.value = 'ion-chevron-right'
@@ -37,13 +36,13 @@ export class IonicComponent {
   }
   _computeDefaultValue(binding = {}) {
     let defaults = binding.defaults || {}
-    binding._defaultValue = binding.value || defaults[platformName] || defaults.base;
+    binding._defaultValue = binding.value || defaults[platformMode] || defaults.base;
   }
 
   invoke(instance) {
     const config = this
     instance.domElement.classList.add(this.componentCssName)
-    instance.domElement.classList.add(`${this.componentCssName}-${platformName}`)
+    instance.domElement.classList.add(`${this.componentCssName}-${platformMode}`)
 
     // For each property class, check if it exists on the element and add the
     // corresponding classname for it
@@ -52,22 +51,6 @@ export class IonicComponent {
         instance.domElement.classList.add(`${this.componentCssName}-${propClass}`)
       }
     }
-
-    /****** TODO: HACK!!! MAKE MORE GOOD!!! ********/
-    /*
-      Manually assigning "md" for android platform, but we need
-      to be able to set which "mode" to use for each platform.
-
-      ios platform == ios mode
-      android platform == md mode (material design mode)
-      everything else == core mode
-
-      Uber hack below until we come up with a pretty "mode" API
-    */
-    if (platformName == 'android') {
-      instance.domElement.classList.add(`${this.componentCssName}-md`)
-    }
-    /****** TODO: HACK!!! MAKE MORE GOOD!!! ********/
 
 
     // Check and apply and property classes (properties that should be

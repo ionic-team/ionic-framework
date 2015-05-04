@@ -94,17 +94,20 @@ export let array = {
   }
 }
 
-export function readQueryParams() {
-  var queryParams = {}
-  const startIndex = window.location.href.indexOf('?')
+export function getQuerystring(key) {
+  var queryParams = {};
+  const startIndex = window.location.href.indexOf('?');
   if (startIndex !== -1) {
-    const queries = window.location.href.slice(startIndex + 1).split('&')
+    const queries = window.location.href.slice(startIndex + 1).split('&');
     if (queries.length) {
       queries.forEach((param) => {
         var split = param.split('=')
         queryParams[split[0]] = split[1]
-      })
+      });
     }
   }
-  return queryParams
+  if (key) {
+    return queryParams[key] || '';
+  }
+  return queryParams;
 }
