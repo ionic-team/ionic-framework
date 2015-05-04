@@ -1,4 +1,5 @@
 import * as util from 'ionic/util'
+import {dom} from 'ionic/util'
 import {Platform} from 'ionic/platform/platform'
 
 let platformMode = Platform.getMode();
@@ -41,14 +42,14 @@ export class IonicComponent {
 
   invoke(instance) {
     const config = this
-    instance.domElement.classList.add(this.componentCssName)
-    instance.domElement.classList.add(`${this.componentCssName}-${platformMode}`)
+
+    dom.addClasses(instance.domElement, this.componentCssName, `${this.componentCssName}-${platformMode}`);
 
     // For each property class, check if it exists on the element and add the
     // corresponding classname for it
     for (let propClass of this.propClasses) {
-      if(instance.domElement.hasAttribute(propClass)) {
-        instance.domElement.classList.add(`${this.componentCssName}-${propClass}`)
+      if(dom.hasAttribute(instance.domElement, propClass)) {
+        dom.addClass(instance.domElement, `${this.componentCssName}-${propClass}`);
       }
     }
 

@@ -3,20 +3,21 @@ import {NgElement, ViewContainer} from 'angular2/angular2'
 
 //import {DomRenderedElement} from 'ionic/util/render/dom';
 
+/*
 Object.defineProperties(NgElement.prototype, {
-  /*
   renderElement: {
     get: function() {
       return new DomRenderedElement(this._view.render.delegate.boundElements[this._boundElementIndex]);
     }
   },
-  */
   domElement: {
     get: function() {
+      console.log('GETTING DOM ELEMENT');
       return this._view.render.delegate.boundElements[this._boundElementIndex];
     }
   }
 });
+*/
 
 /*
 Object.defineProperties(ViewContainer.prototype, {

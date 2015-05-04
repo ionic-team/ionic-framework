@@ -98,3 +98,17 @@ export function windowLoad() {
     }
   });
 }
+
+export function hasAttribute(el: Element, attributeName) {
+  return el.hasAttribute(attributeName);
+}
+
+export function addClass(el: Element, className) {
+  el.classList.add(className);
+}
+
+export function addClasses(el: Element, ...classNames) {
+  for(let c of classNames) {
+    el.classList.add(c);
+  }
+}

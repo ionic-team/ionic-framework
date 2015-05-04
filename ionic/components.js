@@ -2,7 +2,7 @@
 // export * from 'ionic/components/action-menu/action-menu'
 // export * from 'ionic/components/alert/alert'
 export * from 'ionic/components/aside/aside'
-// export * from 'ionic/components/button/button'
+export * from 'ionic/components/button/button'
 // export * from 'ionic/components/checkbox/checkbox'
 export * from 'ionic/components/content/content'
 // export * from 'ionic/components/icon/icon'
