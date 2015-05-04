@@ -23,7 +23,7 @@ function generateBezier (mX1, mY1, mX2, mY2) {
       SUBDIVISION_MAX_ITERATIONS = 10,
       kSplineTableSize = 11,
       kSampleStepSize = 1.0 / (kSplineTableSize - 1.0),
-      float32ArraySupported = "Float32Array" in window;
+      float32ArraySupported = 'Float32Array' in window;
 
   /* Must contain four arguments. */
   if (arguments.length !== 4) {
@@ -32,7 +32,7 @@ function generateBezier (mX1, mY1, mX2, mY2) {
 
   /* Arguments must be numbers. */
   for (var i = 0; i < 4; ++i) {
-    if (typeof arguments[i] !== "number" || isNaN(arguments[i]) || !isFinite(arguments[i])) {
+    if (typeof arguments[i] !== 'number' || isNaN(arguments[i]) || !isFinite(arguments[i])) {
       return false;
     }
   }
@@ -134,7 +134,7 @@ function generateBezier (mX1, mY1, mX2, mY2) {
 
   f.getControlPoints = function() { return [{ x: mX1, y: mY1 }, { x: mX2, y: mY2 }]; };
 
-  var str = "generateBezier(" + [mX1, mY1, mX2, mY2] + ")";
+  var str = 'generateBezier(' + [mX1, mY1, mX2, mY2] + ')';
   f.toString = function () { return str; };
 
   return f;
@@ -240,38 +240,42 @@ Collide.Easings = {
 (function() {
 
   let penner = [
-    [ "ease", [ 0.25, 0.1, 0.25, 1.0 ] ],
-    [ "ease-in", [ 0.42, 0.0, 1.00, 1.0 ] ],
-    [ "ease-out", [ 0.00, 0.0, 0.58, 1.0 ] ],
-    [ "ease-in-out", [ 0.42, 0.0, 0.58, 1.0 ] ],
-    [ "easeInSine", [ 0.47, 0, 0.745, 0.715 ] ],
-    [ "easeOutSine", [ 0.39, 0.575, 0.565, 1 ] ],
-    [ "easeInOutSine", [ 0.445, 0.05, 0.55, 0.95 ] ],
-    [ "easeInQuad", [ 0.55, 0.085, 0.68, 0.53 ] ],
-    [ "easeOutQuad", [ 0.25, 0.46, 0.45, 0.94 ] ],
-    [ "easeInOutQuad", [ 0.455, 0.03, 0.515, 0.955 ] ],
-    [ "easeInCubic", [ 0.55, 0.055, 0.675, 0.19 ] ],
-    [ "easeOutCubic", [ 0.215, 0.61, 0.355, 1 ] ],
-    [ "easeInOutCubic", [ 0.645, 0.045, 0.355, 1 ] ],
-    [ "easeInQuart", [ 0.895, 0.03, 0.685, 0.22 ] ],
-    [ "easeOutQuart", [ 0.165, 0.84, 0.44, 1 ] ],
-    [ "easeInOutQuart", [ 0.77, 0, 0.175, 1 ] ],
-    [ "easeInQuint", [ 0.755, 0.05, 0.855, 0.06 ] ],
-    [ "easeOutQuint", [ 0.23, 1, 0.32, 1 ] ],
-    [ "easeInOutQuint", [ 0.86, 0, 0.07, 1 ] ],
-    [ "easeInExpo", [ 0.95, 0.05, 0.795, 0.035 ] ],
-    [ "easeOutExpo", [ 0.19, 1, 0.22, 1 ] ],
-    [ "easeInOutExpo", [ 1, 0, 0, 1 ] ],
-    [ "easeInCirc", [ 0.6, 0.04, 0.98, 0.335 ] ],
-    [ "easeOutCirc", [ 0.075, 0.82, 0.165, 1 ] ],
-    [ "easeInOutCirc", [ 0.785, 0.135, 0.15, 0.86 ] ]
+    [ 'ease', [ 0.25, 0.1, 0.25, 1 ] ],
+    [ 'ease-in', [ 0.42, 0.0, 1.00, 1 ] ],
+    [ 'ease-out', [ 0.00, 0.0, 0.58, 1 ] ],
+    [ 'ease-in-out', [ 0.42, 0.0, 0.58, 1 ] ],
+    [ 'easeInSine', [ 0.47, 0, 0.745, 0.715 ] ],
+    [ 'easeOutSine', [ 0.39, 0.575, 0.565, 1 ] ],
+    [ 'easeInOutSine', [ 0.445, 0.05, 0.55, 0.95 ] ],
+    [ 'easeInQuad', [ 0.55, 0.085, 0.68, 0.53 ] ],
+    [ 'easeOutQuad', [ 0.25, 0.46, 0.45, 0.94 ] ],
+    [ 'easeInOutQuad', [ 0.455, 0.03, 0.515, 0.955 ] ],
+    [ 'easeInCubic', [ 0.55, 0.055, 0.675, 0.19 ] ],
+    [ 'easeOutCubic', [ 0.215, 0.61, 0.355, 1 ] ],
+    [ 'easeInOutCubic', [ 0.645, 0.045, 0.355, 1 ] ],
+    [ 'easeInQuart', [ 0.895, 0.03, 0.685, 0.22 ] ],
+    [ 'easeOutQuart', [ 0.165, 0.84, 0.44, 1 ] ],
+    [ 'easeInOutQuart', [ 0.77, 0, 0.175, 1 ] ],
+    [ 'easeInQuint', [ 0.755, 0.05, 0.855, 0.06 ] ],
+    [ 'easeOutQuint', [ 0.23, 1, 0.32, 1 ] ],
+    [ 'easeInOutQuint', [ 0.86, 0, 0.07, 1 ] ],
+    [ 'easeInExpo', [ 0.95, 0.05, 0.795, 0.035 ] ],
+    [ 'easeOutExpo', [ 0.19, 1, 0.22, 1 ] ],
+    [ 'easeInOutExpo', [ 1, 0, 0, 1 ] ],
+    [ 'easeInCirc', [ 0.6, 0.04, 0.98, 0.335 ] ],
+    [ 'easeOutCirc', [ 0.075, 0.82, 0.165, 1 ] ],
+    [ 'easeInOutCirc', [ 0.785, 0.135, 0.15, 0.86 ] ]
   ];
 
   for (var i = 0, l = penner.length; i < l; i++) {
-    Collide.Easings[ penner[i][0] ] = generateBezier.apply(null, penner[i][1]);
+    addEasing(penner[i][0], penner[i][1]);
   }
 
 })();
+
+export function addEasing(name, values) {
+  Collide.Easings[name] = generateBezier.apply(null, values);
+};
 
 
 /* Determine the appropriate easing type given an easing input. */
@@ -303,10 +307,10 @@ export function getEasing(value, duration) {
     easing = false;
   }
 
-  /* Revert to the fall back to "swing" */
+  /* Revert to the fall back to 'swing' */
   if (easing === false) {
     easing = 'swing';
   }
 
   return easing;
-}
+};

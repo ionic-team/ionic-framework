@@ -46,22 +46,22 @@ export class Toolbar {
     console.log('Toolbar!');
 
     // TODO use config to add these classes
-    this.viewContainer.domElement.classList.add('toolbar');
-    this.viewContainer.domElement.classList.add(`toolbar-${Platform.getMode()}`);
+    // this.viewContainer.domElement.classList.add('toolbar');
+    // this.viewContainer.domElement.classList.add(`toolbar-${Platform.getMode()}`);
 
     // TODO Make a better way than this
-    if (/header/i.test(this.viewContainer.domElement.tagName)) {
-      this.placement = 'top';
-    } else {
-      this.placement = 'bottom';
-    }
+    // if (/header/i.test(this.viewContainer.domElement.tagName)) {
+       this.placement = 'top';
+    // } else {
+    //   this.placement = 'bottom';
+    // }
   }
 
   set placement(pos) {
-    this.viewContainer.domElement.classList.add(`toolbar-${pos}`);
+    //this.viewContainer.domElement.classList.add(`toolbar-${pos}`);
     this._placement = pos;
     this.navCtrl.addToolbar(this._placement, this);
-    this.viewContainer.domElement.setAttribute('placement', pos);
+    //this.viewContainer.domElement.setAttribute('placement', pos);
   }
 
   onDestroy() {
@@ -86,17 +86,17 @@ export class ToolbarTitle {
   constructor(
     element: NgElement
   ) {
-    this.domElement = element.domElement;
+    // this.domElement = element.domElement;
 
-    // TODO find better way to get parent toolbar
-    let current = this.domElement;
-    while (current = current.parentNode) {
-      if (current.classList.contains('toolbar')) {
-        break;
-      }
-    }
-    this.toolbarElement = current;
-    this.align();
+    // // TODO find better way to get parent toolbar
+    // let current = this.domElement;
+    // while (current = current.parentNode) {
+    //   if (current.classList.contains('toolbar')) {
+    //     break;
+    //   }
+    // }
+    // this.toolbarElement = current;
+    // this.align();
   }
 
   align() {

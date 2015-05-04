@@ -11,8 +11,8 @@ import {FirstPage} from 'pages/first-page'
 class IonicApp {
   constructor() {
     this.initial = FirstPage
-    console.log('IonicApp Start')
+    console.log('IonicApp Start');
   }
 }
 
-bootstrap(IonicApp)
+bootstrap(IonicApp);

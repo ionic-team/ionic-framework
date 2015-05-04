@@ -14,10 +14,10 @@ export class NavBase {
     // is removed even if it's still animating out.
     this._stack = [];
 
-    // The _ng* arrays are what add/remove components from the dom.
+    // The navItems array is what add/remove components from the dom.
     // These arrays won't remove a component until they're
     // done animating out.
-    this._ngNavItems = [];
+    this.navItems = [];
   }
 
   containsClass(Class) {
@@ -32,47 +32,32 @@ export class NavBase {
   set initial(Class) {
     if (!this.initialized) {
       this.initialized = true
-      this.push(Class)
+      this.push(Class, {}, {
+        animation: 'none'
+      });
     }
   }
-  //TODO let the view handle enter/leave so splitview can override
 
   /**
    * Push a new view into the history stack.
-   *
-   * @param view the new view
-   * @param shouldAnimate whether to animate
    */
-  // TODO don't push same component twice if one is already pushing
-  // TODO only animate if state hasn't changed
-  // TODO make sure the timing is together
-  // TODO allow starting an animation in the middle (eg gestures). Leave
-  // most of this up to the animation's implementation.
   push(Class: Function, params = {}, opts = {}) {
-    util.defaults(opts, {
-      sync: this._stack.length === 0
-    })
+    let pushedItem = new NavStackData(Class, params);
 
-    let pushedItem = new NavStackData(Class, params)
-    this._stack.push(pushedItem)
-    this._ngNavItems.push(pushedItem)
+    this._stack.push(pushedItem);
+    this.navItems.push(pushedItem);
 
-    return pushedItem.waitForSetup().then(() => {
-      let current = this._getPrevious(pushedItem)
-      current && current.leaveReverse(opts)
-      return pushedItem.enter(opts)
-    })
+    return pushedItem.setup().then(() => {
+      let current = this._getPrevious(pushedItem);
+      current && current.leaveReverse(opts);
+      return pushedItem.enter(opts);
+    });
   }
 
   /**
    * Pop a view off the history
-   *
-   * @param shouldAnimate whether to animate
    */
   pop(opts = {}) {
-    util.defaults(opts, {
-      sync: false
-    })
     let current = this._stack.pop()
     let dest = this.last()
 
@@ -84,6 +69,7 @@ export class NavBase {
   last() {
     return this._stack[this._stack.length - 1]
   }
+
   length() {
     return this._stack.length;
   }
@@ -101,7 +87,7 @@ export class NavBase {
   popTo(index, opts = {}) {
     // Abort if we're already here.
     if (this._stack.length <= index + 1) {
-      return Promise.resolve()
+      return Promise.resolve();
     }
 
     // Save the current navItem, and remove all the other ones in front of our
@@ -119,7 +105,7 @@ export class NavBase {
 
   setStack(stack) {
     this._stack = stack.slice()
-    this._ngNavItems = stack.slice()
+    this.navItems = stack.slice()
   }
 
   remove(index) {
@@ -129,10 +115,7 @@ export class NavBase {
   }
 
   _destroy(navItem) {
-    console.warn(
-`Component "${navItem.Class.name}" was popped from the nav stack, but we are keeping its element in the DOM for now because of an ng2 bug.`
-    );
-    // util.array.remove(this._ngNavItems, navItem)
+    util.array.remove(this.navItems, navItem)
   }
 
   _getPrevious(item) {
@@ -147,20 +130,23 @@ export class NavBase {
 
 class NavStackData {
   constructor(ComponentClass, params = {}) {
-    this.Class = ComponentClass
-    this.params = params
+    this.Class = ComponentClass;
+    this.params = params;
     this._setupPromise = new Promise((resolve) => {
-      this._resolveSetupPromise = resolve
-    })
+      this._resolveSetupPromise = resolve;
+    });
   }
-  waitForSetup() {
-    return this._setupPromise
+
+  setup() {
+    return this._setupPromise;
   }
+
   finishSetup(navItem, componentInstance) {
     this.navItem = navItem
     this.instance = componentInstance
     this._resolveSetupPromise()
   }
+
   setAnimation(state) {
     if (!state) {
       this.navItem.domElement.removeAttribute('animate')
@@ -169,12 +155,15 @@ class NavStackData {
       this.navItem.domElement.setAttribute('animate', state)
     }
   }
+
   setShown(isShown) {
     this.navItem.domElement.classList[isShown?'add':'remove']('shown')
   }
+
   startAnimation() {
     this.navItem.domElement.classList.add('start')
   }
+
   _animate({ isShown, animation }) {
     this.setAnimation(animation)
     this.setShown(isShown)
@@ -190,22 +179,27 @@ class NavStackData {
       return Promise.resolve()
     }
   }
+
   enterReverse(opts) {
     return this.enter( util.extend({reverse: true}, opts) )
   }
+
   enter({ reverse = false, sync = false } = {}) {
     return this._animate({
       isShown: true,
       animation: sync ? null : (reverse ? 'enter-reverse' : 'enter')
     })
   }
+
   leave({ reverse = false, sync = false } = {}) {
     return this._animate({
       isShown: false,
       animation: sync ? null : (reverse ? 'leave-reverse' : 'leave')
     })
   }
+
   leaveReverse(opts) {
     return this.leave( util.extend({reverse: true}, opts) )
   }
+
 }

@@ -39,7 +39,7 @@ export class NavInjectable {}
   </header>
   <section class="nav-item-container">
     <div class="nav-item"
-         *for="#item of _ngNavItems"
+         *for="#item of navItems"
          [item]="item"></div>
   </section>
   <footer class="toolbar-container" [class.hide]="getToolbars('bottom').length == 0">

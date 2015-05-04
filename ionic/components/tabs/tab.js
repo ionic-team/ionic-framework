@@ -42,7 +42,7 @@ class TabNavInjectable {}
   </header>
   <section class="nav-item-container">
     <div class="nav-item"
-         *for="#item of nav._ngNavItems"
+         *for="#item of nav.navItems"
          [item]="item"></div>
   </section>
   <footer class="toolbar-container" [class.hide]="nav.getToolbars('bottom').length == 0">
