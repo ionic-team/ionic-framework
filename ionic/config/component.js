@@ -11,6 +11,7 @@ let platformMode = Platform.getMode();
 export class IonicComponent {
   constructor(ComponentClass, {
     bind,
+    enhanceRawElement,
     delegates,
     propClasses
   }) {
@@ -31,6 +32,11 @@ export class IonicComponent {
 
     this.delegates = delegates || (delegates = {})
     this.propClasses = propClasses || (propClasses = []);
+
+    // Whether to support raw element enhancement (for example, supporting <button>).
+    // We only do this if there is a matching style property on the element
+    this.enhanceRawElement = enhanceRawElement || false;
+
     // for (let delegateName of delegates) {
     //   let delegate = delegates[delegateName]
     // }
@@ -41,18 +47,27 @@ export class IonicComponent {
   }
 
   invoke(instance) {
-    const config = this
-
-    dom.addClasses(instance.domElement, this.componentCssName, `${this.componentCssName}-${platformMode}`);
+    const config = this;
 
     // For each property class, check if it exists on the element and add the
-    // corresponding classname for it
+    // corresponding classname for it, otherwise add it
+    let foundMatchingPropClass = false;
     for (let propClass of this.propClasses) {
       if(dom.hasAttribute(instance.domElement, propClass)) {
         dom.addClass(instance.domElement, `${this.componentCssName}-${propClass}`);
+        foundMatchingPropClass = true;
       }
     }
 
+    // If we want to enhance a raw element (for example, a button),
+    // only do it if we also have a matching prop class
+    if(!foundMatchingPropClass && this.enhanceRawElement) {
+      // Don't enhace this raw element
+      return;
+    }
+
+    // Add the base element classes (ex, button and button-ios)
+    dom.addClasses(instance.domElement, this.componentCssName, `${this.componentCssName}-${platformMode}`);
 
     // Check and apply and property classes (properties that should be
     // converted to class names). For example, <button primary> should
