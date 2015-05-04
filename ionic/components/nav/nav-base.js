@@ -184,17 +184,17 @@ class NavStackData {
     return this.enter( util.extend({reverse: true}, opts) )
   }
 
-  enter({ reverse = false, sync = false } = {}) {
+  enter({ reverse = false, animate = true } = {}) {
     return this._animate({
       isShown: true,
-      animation: sync ? null : (reverse ? 'enter-reverse' : 'enter')
+      animation: animate ? (reverse ? 'enter-reverse' : 'enter') : null
     })
   }
 
-  leave({ reverse = false, sync = false } = {}) {
+  leave({ reverse = false, animate = false } = {}) {
     return this._animate({
       isShown: false,
-      animation: sync ? null : (reverse ? 'leave-reverse' : 'leave')
+      animation: animate ? (reverse ? 'leave-reverse' : 'leave') : null
     })
   }
 
