@@ -1,7 +1,7 @@
 import * as util from 'ionic/util'
-import {platform} from 'ionic/platform/platform'
+import {Platform} from 'ionic/platform/platform'
 
-let platformMode = platform.getMode()
+let platformMode = Platform.getMode();
 
 // Low-level: how the user will override
 // BackButton.config.bind.icon.value = 'ion-chevron-right'

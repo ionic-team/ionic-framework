@@ -1,6 +1,6 @@
 import {Component, View, bootstrap} from 'angular2/angular2'
 import {Tabs, Tab} from 'ionic/ionic'
-import {engine} from 'ionic/engine/engine'
+import {Engine} from 'ionic/engine/engine'
 import * as util from 'ionic/util'
 
 
@@ -13,18 +13,18 @@ class IonicApp {
   constructor() {
     console.log('IonicApp Start');
 
-    console.log(engine.getName(), engine.is('cordova'));
+    console.log(Engine.getName(), Engine.is('cordova'));
 
-    engine.ready().then(() => {
-      console.log('engine ready')
+    Engine.ready().then(() => {
+      console.log('Engine ready')
     });
 
-    engine.fullScreen(true).then((isShown) => {
-      console.log('fullScreen', isShown)
+    Engine.fullScreen(true).then((isShown) => {
+      console.log('Engine fullScreen', isShown)
     });
 
-    engine.showStatusBar(true).then((isShown) => {
-      console.log('showStatusBar', isShown)
+    Engine.showStatusBar(true).then((isShown) => {
+      console.log('Engine showStatusBar', isShown)
     });
 
   }

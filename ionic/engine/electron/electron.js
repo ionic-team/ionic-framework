@@ -1,8 +1,8 @@
 import * as util from 'ionic/util';
-import {engine} from '../engine';
+import {Engine} from '../engine';
 
 
-engine.register({
+Engine.register({
   name: 'electron',
   isMatch() {
     try {

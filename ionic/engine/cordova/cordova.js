@@ -1,7 +1,7 @@
-import {engine} from '../engine';
+import {Engine} from '../engine';
 
 
-engine.register({
+Engine.register({
   name: 'cordova',
   isMatch() {
     return !(!window.cordova && !window.PhoneGap && !window.phonegap);

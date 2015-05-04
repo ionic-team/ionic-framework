@@ -51,14 +51,14 @@ class PlatformController {
   }
 }
 
-export let platform = new PlatformController();
+export let Platform = new PlatformController();
 
 
 const ua = window.navigator.userAgent;
 const queryPlatform = (util.getQuerystring('ionicplatform')).toLowerCase()
 
 
-platform.register({
+Platform.register({
   name: 'android',
   mode: 'md',
   isMatch() {
@@ -66,7 +66,7 @@ platform.register({
   }
 });
 
-platform.register({
+Platform.register({
   name: 'ios',
   isMatch() {
     return queryPlatform === 'ios' || /ipad|iphone|ipod/i.test(ua)
@@ -74,8 +74,8 @@ platform.register({
 });
 
 // Last case is a catch-all
-platform.setDefault({
+Platform.setDefault({
   name: 'core'
 });
 
-platform.set( platform.detect() );
+Platform.set( Platform.detect() );

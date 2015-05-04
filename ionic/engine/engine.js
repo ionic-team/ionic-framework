@@ -42,16 +42,16 @@ class EngineController {
     return activeEngine || defaultEngine;
   }
 
-  set(eng) {
-    activeEngine = eng;
+  set(engine) {
+    activeEngine = engine;
   }
 
-  setDefault(eng) {
-    defaultEngine = eng;
+  setDefault(engine) {
+    defaultEngine = engine;
   }
 
-  register(eng) {
-    registry[eng.name] = eng;
+  register(engine) {
+    registry[engine.name] = engine;
   }
 
   detect() {
@@ -65,9 +65,9 @@ class EngineController {
 
 }
 
-export let engine = new EngineController();
+export let Engine = new EngineController();
 
-engine.setDefault({
+Engine.setDefault({
   name: 'default',
   ready: util.dom.windowLoad
 });
