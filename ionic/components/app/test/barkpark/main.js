@@ -2,7 +2,7 @@
 import {For, Component, View, Parent, bootstrap} from 'angular2/angular2'
 import {FormBuilder, Validators, FormDirectives, ControlGroup} from 'angular2/forms';
 import {Log} from 'ionic/util'
-import {Router, List, Item, Nav, NavController, Button, Input, Tabs, Tab, Content, Aside} from 'ionic/ionic'
+import {Router, List, Item, Nav ,NavController, Button, Input, Tabs, Tab, Content, Aside} from 'ionic/ionic'
 
 @Component({
   selector: 'login-page'
@@ -127,7 +127,7 @@ class PostDetail {
   }
 }
 
-@Component({ selector: 'splash-page' })
+@Component()
 @View({
   templateUrl: 'pages/splash.html',
   directives: [Content]
