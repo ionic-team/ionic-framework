@@ -1,4 +1,4 @@
-export function noop() {}
+export function noop() {};
 
 export function clamp(min, n, max) {
   return Math.max(min, Math.min(n, max));
@@ -54,27 +54,27 @@ export const isArray = Array.isArray
 
 export function pascalCaseToDashCase(str = '') {
   return str.charAt(0).toLowerCase() + str.substring(1).replace(/[A-Z]/g, match => {
-    return '-' + match.toLowerCase()
-  })
+    return '-' + match.toLowerCase();
+  });
 }
 
-let uid = 0
+let uid = 0;
 export function nextUid() {
   return ++uid;
 }
 
 export class Log {
   static log(...args) {
-    console.log.apply(console, args)
+    console.log.apply(console, args);
   }
   static info(...args) {
-    console.info.apply(console, args)
+    console.info.apply(console, args);
   }
   static warn(...args) {
-    console.warn.apply(console, args)
+    console.warn.apply(console, args);
   }
   static error(...args) {
-    console.error.apply(console, args)
+    console.error.apply(console, args);
   }
 }
 
@@ -85,12 +85,12 @@ export let array = {
     }
   },
   remove(arr, item) {
-    const index = arr.indexOf(item)
+    const index = arr.indexOf(item);
     if (index === -1) {
-      return false
+      return false;
     }
-    arr.splice(index, 1)
-    return true
+    arr.splice(index, 1);
+    return true;
   }
 }
 
@@ -101,8 +101,8 @@ export function getQuerystring(key) {
     const queries = window.location.href.slice(startIndex + 1).split('&');
     if (queries.length) {
       queries.forEach((param) => {
-        var split = param.split('=')
-        queryParams[split[0]] = split[1]
+        var split = param.split('=');
+        queryParams[split[0]] = split[1];
       });
     }
   }
