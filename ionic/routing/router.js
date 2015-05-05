@@ -52,7 +52,7 @@ export class RouterController {
       }
     }
 
-    return this.noMatch();
+    return this._noMatch();
   }
 
   /**
