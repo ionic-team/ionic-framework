@@ -7,18 +7,15 @@ export class DomRenderedElement extends RenderedElement {
     super(domElement)
   }
 
-  addClass(className) {
-    this.element.classList.add(classList);
-  }
   removeClass(className) {
     this.element.classList.remove(classList);
   }
-  addClasses(...classNames) {
+  addClass(...classNames) {
     for(let c of classNames) {
       this.element.classList.add(c);
     }
   }
-  removeClasses(...classNames) {
+  removeClass(...classNames) {
     for(let c of classes) {
       this.element.classList.remove(c);
     }

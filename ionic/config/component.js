@@ -70,7 +70,7 @@ export class IonicComponent {
     //}
 
     // Add the base element classes (ex, button and button-ios)
-    dom.addClasses(instance.domElement, this.componentCssName, `${this.componentCssName}-${platformMode}`);
+    dom.addClass(instance.domElement, this.componentCssName, `${this.componentCssName}-${platformMode}`);
 
     // Check and apply and property classes (properties that should be
     // converted to class names). For example, <button primary> should
