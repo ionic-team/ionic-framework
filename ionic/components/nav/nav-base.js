@@ -186,15 +186,6 @@ export class NavBase {
 
           // resolve that this push has completed
           resolve();
-
-          // on the next frame, hide the item that's cached
-          util.dom.raf(() => {
-            // ensure it's state is still cached
-            if (leavingItem.state === CACHED_STATE && leavingItem.navItem) {
-              // CSS default is display:none, so setting to '' does the trick
-              leavingItem.navItem.domElement.style.display = '';
-            }
-          });
         });
 
       });

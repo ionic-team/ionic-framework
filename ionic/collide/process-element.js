@@ -255,7 +255,7 @@ export function processElement(action, animation, elementIndex, clearCache) {
          the element's current value. */
       function parsePropertyValue(valueData, skipResolvingEasing) {
         var endValue = valueData[0];
-        var easing = skipResolvingEasing ? valueData[1] : getEasing(valueData[1], opts.duration);
+        var easing = skipResolvingEasing ? valueData[1] : getEasing(valueData[1] || opts.easing, opts.duration);
         var startValue = valueData[2];
 
         /* Default to the call's easing if a per-property easing type was not defined. */
