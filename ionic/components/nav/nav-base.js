@@ -47,11 +47,18 @@ export class NavBase {
     }
   }
 
-  getActiveItem() {
+  getActive() {
     for (let i = 0, ii = this.navItems.length; i < ii; i++) {
       if (this.navItems[i].state === ACTIVE_STATE) {
         return this.navItems[i];
       }
+    }
+    return null;
+  }
+
+  getPrevious(item) {
+    if (item) {
+      return this._stack[ this._stack.indexOf(item) - 1 ];
     }
     return null;
   }
@@ -97,7 +104,7 @@ export class NavBase {
     }
 
     // the active item is going to be the leaving one (if one exists)
-    let leavingItem = this.getActiveItem() || {};
+    let leavingItem = this.getActive() || {};
 
     // create a new NavStackItem
     let enteringItem = new NavStackItem(Class, params);
@@ -111,7 +118,6 @@ export class NavBase {
 
     // start the transition
     this.transition(enteringItem, leavingItem, opts).then(() => {
-      console.log('push completed');
       resolve();
     });
 
@@ -133,12 +139,11 @@ export class NavBase {
 
     // get the active item and set that it is staged to be leaving
     // was probably the one popped from the stack
-    let leavingItem = this.getActiveItem() || {};
+    let leavingItem = this.getActive() || {};
 
     // start the transition
     this.transition(enteringItem, leavingItem, opts).then(() => {
       // transition completed, destroy the leaving item
-      console.log('pop completed');
       this._destroy(leavingItem);
       resolve();
     });
@@ -189,6 +194,8 @@ export class NavBase {
 
           // allow clicks again
           ClickBlock(false);
+
+          console.log('transition, canSwipeBack()', this.canSwipeBack());
 
           // resolve that this push has completed
           resolve();
@@ -248,23 +255,24 @@ export class NavBase {
     util.array.remove(this.navItems, navItem);
   }
 
-  getPrevious(item) {
-    return this._stack[ this._stack.indexOf(item) - 1 ];
-  }
-
   getToolbars(pos: String) {
     let last = this.last();
     return last && last.navItem && last.navItem._toolbars[pos] || [];
+  }
+
+  canSwipeBack() {
+    return !!this.getPrevious(this.getActive());
   }
 }
 
 
 class NavStackItem {
+
   constructor(ComponentClass, params = {}) {
     this.Class = ComponentClass;
     this.params = params;
     this._setupPromise = new Promise((resolve) => {
-      this._resolveSetupPromise = resolve;
+      this._resolveSetup = resolve;
     });
   }
 
@@ -273,64 +281,9 @@ class NavStackItem {
   }
 
   finishSetup(navItem, componentInstance) {
-    this.navItem = navItem
-    this.instance = componentInstance
-    this._resolveSetupPromise()
-  }
-
-  setAnimation(state) {
-    if (!state) {
-      this.navItem.domElement.removeAttribute('animate')
-      this.navItem.domElement.classList.remove('start')
-    } else {
-      this.navItem.domElement.setAttribute('animate', state)
-    }
-  }
-
-  setShown(isShown) {
-    this.navItem.domElement.classList[isShown?'add':'remove']('shown')
-  }
-
-  startAnimation() {
-    this.navItem.domElement.classList.add('start')
-  }
-
-  _animate({ isShown, animation }) {
-    this.setAnimation(animation)
-    this.setShown(isShown)
-    if (animation) {
-      // We have to wait two rafs for the element to show. Yawn.
-      return util.dom.rafPromise().then(util.dom.rafPromise).then(() => {
-        this.startAnimation()
-        return util.dom.transitionEndPromise(this.navItem.domElement).then(() => {
-          this.setAnimation(null)
-        })
-      })
-    } else {
-      return Promise.resolve()
-    }
-  }
-
-  enterReverse(opts) {
-    return this.enter( util.extend({reverse: true}, opts) )
-  }
-
-  enter({ reverse = false, animate = false } = {}) {
-    return this._animate({
-      isShown: true,
-      animation: animate ? (reverse ? 'enter-reverse' : 'enter') : null
-    })
-  }
-
-  leave({ reverse = false, animate = false } = {}) {
-    return this._animate({
-      isShown: false,
-      animation: animate ? (reverse ? 'leave-reverse' : 'leave') : null
-    })
-  }
-
-  leaveReverse(opts) {
-    return this.leave( util.extend({reverse: true}, opts) )
+    this.navItem = navItem;
+    this.instance = componentInstance;
+    this._resolveSetup();
   }
 
 }

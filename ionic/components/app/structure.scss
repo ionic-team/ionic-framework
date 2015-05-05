@@ -69,6 +69,12 @@ html {
     height: 100vh;
   }
 
+  .nav-item {
+    // by default .nav-item is hidden
+    // and the transition animation will display it
+    display: none;
+  }
+
   .nav-item,
   .nav-item-child {
     // user created view, contained by .nav-item
