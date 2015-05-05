@@ -1,0 +1,30 @@
+$item-input-padding: 6px 0 5px 0px;
+
+ion-input {
+  display: block;
+
+
+  position: relative;
+  overflow: hidden;
+
+  @include flex-display();
+  @include flex-align-items(center);
+
+  .item-label {
+    padding: $item-input-padding;
+  }
+
+  input, textarea {
+    width: 100%;
+    //font-size: 1.6rem;
+
+    border-radius: 0;
+
+    @include flex(1, 220px);
+    @include appearance(none);
+
+    margin: 0;
+    padding-right: 24px;
+    background-color: transparent;
+  }
+}

@@ -5,7 +5,7 @@
 $list-ios-background-color:      #fff !default;
 $list-ios-border-color:          #c8c7cc !default;
 
-$list-ios-header-margin:         35px 15px 10px 15px !default;
+  $list-ios-header-margin:       35px 15px 10px 15px !default;
 $list-ios-header-font-size:      1.4rem !default;
 $list-ios-header-color:          #6d6d72 !default;
 
@@ -17,9 +17,14 @@ $list-ios-footer-color:          #8f8f94 !default;
 .platform-ios {
 
   .list {
+  }
+
+  // Add the hairline to the top of the first item
+  .item:first-of-type {
     @include hairline(top, $list-ios-border-color, $z-index-list-border);
   }
 
+  // Add the hairline to the bottom of the last item
   .item:last-of-type {
     @include hairline(bottom, $list-ios-border-color, $z-index-list-border);
   }

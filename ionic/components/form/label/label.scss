@@ -1,0 +1,11 @@
+$input-label-color: #000;
+
+ion-label {
+  display: table;
+  padding: 9px 10px 7px 0px;
+  max-width: 200px;
+  width: 35%;
+  color: $input-label-color;
+  font-size: 1.6rem;
+  white-space: nowrap;
+}

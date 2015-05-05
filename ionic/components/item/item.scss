@@ -67,6 +67,7 @@ ion-primary-swipe-buttons {
 .item-label {
   position: relative;
 
+  @include flex-display();
   @include flex(1);
   @include flex-shrink(1);
 
@@ -127,5 +128,3 @@ ion-primary-swipe-buttons {
     border-radius: 50%;
   }
 }
-
-

@@ -187,12 +187,12 @@ input[type="search"],
 input[type="tel"],
 input[type="color"] {
   display: block;
-  padding-top: 2px;
+  //padding-top: 2px;
   padding-left: 0;
-  height: $line-height-computed + $font-size-base;
+  height: 3.8rem;//$line-height-computed + $font-size-base;
   color: $input-color;
   vertical-align: middle;
-  font-size: $font-size-base;
+  font-size: 1.6rem;//$font-size-base;
   line-height: $font-size-base + 2;
 }
 
@@ -306,4 +306,3 @@ input[type="radio"][readonly],
 input[type="checkbox"][readonly] {
   background-color: transparent;
 }
-

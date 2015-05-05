@@ -11,9 +11,9 @@ $item-ios-border-color:          $list-ios-border-color !default;
 
 .platform-ios {
 
-  .list-header {
-    margin-left: $item-ios-padding-left;
-  }
+  //.list-header {
+    //margin-left: $item-ios-padding-left;
+  //}
 
   .item {
     background: $item-ios-background-color;

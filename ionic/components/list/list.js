@@ -3,7 +3,7 @@ import {IonicComponent} from 'ionic/config/component'
 
 
 @Component({
-  selector: 'ion-list'
+  selector: 'ion-list, [ion-list]'
 })
 @View({
   template: `<content></content>`
@@ -17,4 +17,6 @@ export class List {
   }
 }
 
-new IonicComponent(List, {})
+new IonicComponent(List, {
+  propClasses: ['inset']
+})
