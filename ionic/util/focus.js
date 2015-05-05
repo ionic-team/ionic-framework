@@ -1,4 +1,4 @@
-import {dom} from 'ionic/util'
+import {raf, ready} from './dom'
 
 /* Focus Outline
  * --------------------------------------------------
@@ -14,7 +14,7 @@ let isKeyInputEnabled = false
 function keyDown(ev) {
   if (!isKeyInputEnabled && ev.keyCode == 9) {
     isKeyInputEnabled = true
-    dom.raf(enableKeyInput)
+    raf(enableKeyInput)
   }
 }
 
@@ -34,10 +34,10 @@ function enableKeyInput() {
 
 function pointerDown() {
   isKeyInputEnabled = false
-  dom.raf(enableKeyInput)
+  raf(enableKeyInput)
 }
 
 
-dom.ready().then(function() {
+ready().then(function() {
   document.addEventListener('keydown', keyDown)
 })

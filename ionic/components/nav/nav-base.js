@@ -1,6 +1,6 @@
 import {NgElement} from 'angular2/angular2';
 import * as util from 'ionic/util';
-import {Transition} from 'ionic/ionic';
+import {Transition, ClickBlock} from 'ionic/ionic';
 
 
 const STAGED_STATE = 'staged';
@@ -150,6 +150,9 @@ export class NavBase {
     let resolve;
     let promise = new Promise(res => { resolve = res; });
 
+    // block possible clicks during transition
+    ClickBlock(opts.animation !== 'none', 520);
+
     // wait for the new item to complete setup
     enteringItem.setup().then(() => {
 
@@ -183,6 +186,9 @@ export class NavBase {
           // transition has completed, update each item's state
           enteringItem.state = ACTIVE_STATE;
           leavingItem.state = CACHED_STATE;
+
+          // allow clicks again
+          ClickBlock(false);
 
           // resolve that this push has completed
           resolve();

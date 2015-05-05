@@ -9,14 +9,14 @@ $aside-transition: 0.3s linear transform;
   background: #eee;
 
   &[type=overlay] {
-    z-index: 10;
+    z-index: $z-index-aside-overlay;
   }
 
   transition: $aside-transition;
   &:not(.open):not(.changing) {
     display: none;
   }
-  
+
   &[side=left] {
     width: $aside-width;
     left: -$aside-width;
@@ -46,7 +46,7 @@ $aside-transition: 0.3s linear transform;
     top: -$aside-width;
     left: 0;
     right: 0;
-    
+
     transform: translate3d(0,0,0);
     &.open,
     &[type=reveal] {

@@ -32,6 +32,8 @@ Object.defineProperties(ViewContainer.prototype, {
 export * from 'ionic/components'
 export * from 'ionic/platform/platform'
 export * from 'ionic/routing/router'
+
+export * from 'ionic/util/click-block'
 export * from 'ionic/util/focus'
 
 export * from 'ionic/engine/engine'

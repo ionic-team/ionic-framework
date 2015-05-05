@@ -1,4 +1,3 @@
-$modal-z-index: 10 !default;
 
 $modal-bg-color:                  #fff !default;
 $modal-backdrop-bg-active:        #000 !default;
@@ -27,7 +26,7 @@ $tabs-height: 40;
   position: fixed;
   top: 0;
   left: 0;
-  z-index: $modal-z-index;
+  z-index: $z-index-modal;
   width: 100%;
   height: 100%;
 }
@@ -40,7 +39,7 @@ modal {
   display: block;
   position: absolute;
   top: 0;
-  z-index: $modal-z-index;
+  z-index: $z-index-modal;
   overflow: hidden;
   min-height: 100%;
   width: 100%;

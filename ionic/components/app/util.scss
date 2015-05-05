@@ -78,3 +78,25 @@ $content-padding:    10px !default;
   }
 
 }
+
+
+// Click Block
+// --------------------------------------------------
+// Fill the screen to block clicks (a better pointer-events: none) for the body
+// to avoid full-page reflows and paints which can cause flickers
+
+.click-block {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  z-index: $z-index-click-block;
+  @include translate3d(-9999px, 0, 0);
+  overflow: hidden;
+}
+
+.click-block-active {
+  @include translate3d(0, 0, 0);
+}
