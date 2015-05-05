@@ -1,10 +1,19 @@
 
-<h1 style="background:green">Second Page</h1>
+<header *ion-toolbar>
 
-<p>
-  <button (click)="pop()">Pop (Go back to 1st)</button>
-</p>
+  <h1 class="toolbar-title">Second Page</h1>
 
-<p>
-  <button (click)="push()">Push (Go to 3rd)</button>
-</p>
+</header>
+
+
+<ion-content class="padding" style="background:green">
+
+  <p>
+    <button (click)="pop()">Pop (Go back to 1st)</button>
+  </p>
+
+  <p>
+    <button (click)="push()">Push (Go to 3rd)</button>
+  </p>
+
+</ion-content>
