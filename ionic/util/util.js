@@ -1,18 +1,36 @@
+// Simple noop function
 export function noop() {};
 
+/**
+ * Given a min and max, restrict the given number
+ * to the range.
+ * @param min the minimum
+ * @param n the value
+ * @param max the maximum
+ */
 export function clamp(min, n, max) {
   return Math.max(min, Math.min(n, max));
 }
 
+/**
+ * Extend the destination with an arbitrary number of other objects.
+ * @param dst the destination
+ * @param ... the param objects
+ */
 export function extend(dst) {
-  return baseExtend(dst, [].slice.call(arguments, 1), false);
+  return _baseExtend(dst, [].slice.call(arguments, 1), false);
 }
 
+/**
+ * Do a deep extend (merge).
+ * @param dst the destination
+ * @param ... the param objects
+ */
 export function merge(dst) {
-  return baseExtend(dst, [].slice.call(arguments, 1), true);
+  return _baseExtend(dst, [].slice.call(arguments, 1), true);
 }
 
-function baseExtend(dst, objs, deep) {
+function _baseExtend(dst, objs, deep) {
   for (var i = 0, ii = objs.length; i < ii; ++i) {
     var obj = objs[i];
     if (!isObject(obj) && !isFunction(obj)) continue;
@@ -23,7 +41,7 @@ function baseExtend(dst, objs, deep) {
 
       if (deep && isObject(src)) {
         if (!isObject(dst[key])) dst[key] = isArray(src) ? [] : {};
-        baseExtend(dst[key], [src], true);
+        _baseExtend(dst[key], [src], true);
       } else {
         dst[key] = src;
       }
@@ -33,6 +51,11 @@ function baseExtend(dst, objs, deep) {
   return dst;
 }
 
+/**
+ * Apply default arguments if they don't exist in
+ * the first object.
+ * @param the destination to apply defaults to.
+ */
 export function defaults(dest) {
   for (let i = arguments.length - 1; i >= 1; i--) {
     let source = arguments[i] || {};
@@ -52,6 +75,9 @@ export const isUndefined = val => typeof val === 'undefined'
 export const isObject = val => typeof val === 'object'
 export const isArray = Array.isArray
 
+/**
+ * Convert a string in the format thisIsAString to a slug format this-is-a-string
+ */
 export function pascalCaseToDashCase(str = '') {
   return str.charAt(0).toLowerCase() + str.substring(1).replace(/[A-Z]/g, match => {
     return '-' + match.toLowerCase();
@@ -63,6 +89,9 @@ export function nextUid() {
   return ++uid;
 }
 
+/**
+ * A simple logger class.
+ */
 export class Log {
   static log(...args) {
     console.log.apply(console, args);
@@ -94,6 +123,10 @@ export let array = {
   }
 }
 
+/**
+ * Grab the query string param value for the given key.
+ * @param key the key to look for
+ */
 export function getQuerystring(key) {
   var queryParams = {};
   const startIndex = window.location.href.indexOf('?');
