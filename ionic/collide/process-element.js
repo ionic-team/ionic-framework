@@ -20,7 +20,7 @@ const data = Collide.data;
 */
 
 export function processElement(action, animation, elementIndex, clearCache) {
-  var elements = animation._elements;
+  var elements = animation._ele;
   var elementsLength = elements.length;
   var element = elements[elementIndex];
 
@@ -254,36 +254,9 @@ export function processElement(action, animation, elementIndex, clearCache) {
          The optional third parameter is a forcefed startValue to be used instead of querying the DOM for
          the element's current value. */
       function parsePropertyValue(valueData, skipResolvingEasing) {
-        var endValue = undefined,
-            easing = undefined,
-            startValue = undefined;
-
-        /* Handle the array format, which can be structured as one of three potential overloads:
-           A) [ endValue, easing, startValue ], B) [ endValue, easing ], or C) [ endValue, startValue ] */
-        if (Array.isArray(valueData)) {
-          /* endValue is always the first item in the array. Don't bother validating endValue's value now
-             since the ensuing property cycling logic does that. */
-          endValue = valueData[0];
-
-          /* Two-item array format: If the second item is a number, function, or hex string, treat it as a
-             start value since easings can only be non-hex strings or arrays. */
-          if ((!Array.isArray(valueData[1]) && /^[\d-]/.test(valueData[1])) || typeof valueData[1] === 'function' || CSS.RegEx.isHex.test(valueData[1])) {
-              startValue = valueData[1];
-
-          /* Two or three-item array: If the second item is a non-hex string or an array, treat it as an easing. */
-          } else if ((util.isString(valueData[1]) && !CSS.RegEx.isHex.test(valueData[1])) || Array.isArray(valueData[1])) {
-            easing = skipResolvingEasing ? valueData[1] : getEasing(valueData[1], opts.duration);
-
-            /* Don't bother validating startValue's value now since the ensuing property cycling logic inherently does that. */
-            if (valueData[2] !== undefined) {
-              startValue = valueData[2];
-            }
-          }
-
-        } else {
-          /* Handle the single-value format. */
-          endValue = valueData;
-        }
+        var endValue = valueData[0];
+        var easing = skipResolvingEasing ? valueData[1] : getEasing(valueData[1], opts.duration);
+        var startValue = valueData[2];
 
         /* Default to the call's easing if a per-property easing type was not defined. */
         if (!skipResolvingEasing) {

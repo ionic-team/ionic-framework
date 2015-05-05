@@ -9,32 +9,45 @@ const data = Collide.data;
 
 
 export class Animation {
-  constructor() {
+  constructor(ele) {
     this.parent = null;
-    this._elements = null;
     this._options = {};
     this._properties = {};
     this._resolve = null;
     this._call = null;
 
     this.children = [];
+
+    this.elements(ele);
   }
 
-  addChild(animation) {
-    animation.parent = this;
-    this.children.push(animation);
+  addChild(childAnimation) {
+    childAnimation.parent = this;
+    this.children.push(childAnimation);
+    return this;
+  }
+
+  setChildren(childAnimations) {
+    for (let i = 0; i < childAnimations.length; i++) {
+      this.addChild(childAnimations[i]);
+    }
     return this;
   }
 
   elements(ele) {
-    if (ele && ele.length > 0) {
-      this._elements = ele;
+    this._ele = [];
 
-    } else if (ele && ele.nodeType) {
-      this._elements = [ele];
+    if (ele) {
+      if (typeof ele === 'string') {
+        ele = document.querySelectorAll(ele);
+      }
 
-    } else {
-      this._elements = null;
+      if (ele.length) {
+        this._ele = ele;
+
+      } else if (ele.nodeType) {
+        this._ele.push(ele);
+      }
     }
 
     return this;
@@ -51,8 +64,8 @@ export class Animation {
       this.stop();
     }
 
-    if (this._elements && this._elements.length) {
-      this._promise = new Promise(res => {
+    if (this._ele.length) {
+      let promise = new Promise(res => {
         this._resolve = res;
       });
 
@@ -85,35 +98,35 @@ export class Animation {
 
         var opts = util.extend({}, Collide.defaults);
 
-        if (this.parent && this.parent._options) {
+        if (this.parent) {
           opts = util.extend(opts, this.parent._options);
         }
 
         this._options = util.extend(opts, this._options);
 
         // get the elements ready
-        for (var i = 0, ii = this._elements.length; i < ii; i++) {
+        for (var i = 0, ii = this._ele.length; i < ii; i++) {
           processElement('start', this, i, clearCache);
         }
 
         onNextFrame();
       });
 
-    } else {
-      this._promise = Promise.resolve();
+      return promise;
     }
 
+    return Promise.resolve();
   }
 
   _queueAnimation() {
-    if (this._elements) {
+    if (this._ele.length) {
 
       if (this._call === null) {
         return;
       }
 
       var eleData;
-      for (var i = 0, ii = this._elements.length, element; i < ii && (element = this._elements[i]); i++) {
+      for (var i = 0, ii = this._ele.length, element; i < ii && (element = this._ele[i]); i++) {
         if (element) {
           eleData = data(element);
           if (eleData) {
@@ -141,7 +154,7 @@ export class Animation {
       /* Add the current call plus its associated metadata (the element set and the call's options) onto the global call container.
          Anything on this call container is subjected to tick() processing. */
       Collide.State.calls.push([ this._call,
-                                 this._elements,
+                                 this._ele,
                                  this._options,
                                  null,
                                  this._resolve ]);
@@ -160,12 +173,12 @@ export class Animation {
 
     var clearCache = (this._aniType !== 'start');
 
-    this._setupElements(clearCache, () => {
+    var promise = this._setupElements(clearCache, () => {
       this._aniType = 'start';
       this._queueAnimation();
     });
 
-    promises.push(this._promise);
+    promises.push(promise);
 
     return Promise.all(promises);
   }
@@ -178,25 +191,25 @@ export class Animation {
       );
     }
 
-    var clearCache = (this._aniType !== 'percent');
+    var clearCache = (this._aniType !== 'progress');
 
-    this._setupElements(clearCache, () => {
-      this._aniType = 'percent';
+    var promise = this._setupElements(clearCache, () => {
+      this._aniType = 'progress';
     });
 
-    promises.push(this._promise);
+    promises.push(promise);
 
     return Promise.all(promises);
   }
 
-  percent(percentComplete) {
+  progress(value) {
     // go to and stop at a specific point in the animation
 
-    if (this._aniType = 'percent') {
-      this._options.percentComplete = percentComplete;
+    if (this._aniType = 'progress') {
+      this._options.percentComplete = value;
 
       for (var i = 0; i < this.children.length; i++) {
-        this.children[i].percent(percentComplete);
+        this.children[i].progress(value);
       }
 
       this._queueAnimation();
@@ -205,21 +218,21 @@ export class Animation {
 
   stop() {
     // immediately stop where it's at
-    animationStop(this._elements, 'stop');
+    animationStop(this._ele, 'stop');
     return this;
   }
 
   finish() {
     // immediately go to the end of the animation
-    animationStop(this._elements, 'finish');
+    animationStop(this._ele, 'finish');
     return this;
   }
 
   isAnimating() {
     var eleData;
-    if (this._elements) {
-      for (var i = 0, ii = this._elements.length; i < ii; i++) {
-        eleData = data(this._elements[i]);
+    if (this._ele) {
+      for (var i = 0, ii = this._ele.length; i < ii; i++) {
+        eleData = data(this._ele[i]);
         if (eleData && eleData.isAnimating) {
           return true;
         }
@@ -242,11 +255,6 @@ export class Animation {
     return this;
   }
 
-  removeOption(key) {
-    delete this._options[key];
-    return this;
-  }
-
   duration(val) {
     this._options.duration = val;
     return this;
@@ -257,23 +265,40 @@ export class Animation {
     return this;
   }
 
+  display(val) {
+    this._options.display = val;
+    return this;
+  }
+
 
   /***************
      Properties
   ***************/
 
+  from(propertyName, value) {
+    // [endValue, easing, startValue]
+    let prop = this.getProperty(propertyName);
+    prop[2] = value;
+    return this;
+  }
+
   to() {
+    // [endValue, easing, startValue]
     if (arguments.length > 1) {
-      this._properties[ arguments[0] ] = arguments[1];
+      let prop = this.getProperty(arguments[0]);
+      prop[0] = arguments[1];
     } else {
       this._properties = arguments[0] || {};
     }
     return this;
   }
 
-  removeProperty(key) {
-    delete this._properties[key];
-    return this;
+  getProperty(propertyName) {
+    // [endValue, easing, startValue]
+    if (!this._properties[propertyName]) {
+      this._properties[propertyName] = [null, null, null];
+    }
+    return this._properties[propertyName];
   }
 
 
