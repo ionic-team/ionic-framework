@@ -29,6 +29,8 @@ class PlatformController {
 
   set(platform) {
     activePlatform = platform;
+
+    this._applyBodyClasses();
   }
 
   setDefault(platform) {
@@ -48,6 +50,16 @@ class PlatformController {
       }
     }
     return null;
+  }
+
+  _applyBodyClasses() {
+    if(!activePlatform) {
+      return;
+    }
+
+    util.dom.raf(() => {
+      document.body.classList.add('platform-' + activePlatform.name);
+    });
   }
 }
 

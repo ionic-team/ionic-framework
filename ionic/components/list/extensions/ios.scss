@@ -14,7 +14,7 @@ $list-ios-footer-font-size:      1.4rem !default;
 $list-ios-footer-color:          #8f8f94 !default;
 
 
-.view-ios {
+.platform-ios {
 
   .list {
     @include hairline(top, $list-ios-border-color, $z-index-list-border);
