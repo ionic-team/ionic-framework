@@ -18,9 +18,12 @@
         <ion-label>Note</ion-label>
         <textarea control="note" type="text" placeholder="A description"></textarea>
       </ion-input>
+      <ion-switch [checked]="true">
+        Ice cream?
+      </ion-switch>
     </ion-list>
     <ion-list inset>
-      <ion-item button>
+      <ion-item full>
         <button ion-button danger clear>
           Delete Account
         </button>

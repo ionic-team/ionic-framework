@@ -27,7 +27,7 @@ import {IonicComponent} from 'ionic/config/component'
 })
 export class Switch {
   constructor(
-    element: NgElement
+    @NgElement() element:NgElement
     // @PropertySetter('attr.role') setAriaRole: Function,
     // @PropertySetter('attr.aria-checked') setChecked: Function,
     // @PropertySetter('attr.aria-invalid') setInvalid: Function,

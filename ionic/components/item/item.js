@@ -55,7 +55,7 @@ export class Item {
 }
 
 new IonicComponent(Item, {
-  propClasses: ['button']
+  propClasses: ['full']
 })
 
 
