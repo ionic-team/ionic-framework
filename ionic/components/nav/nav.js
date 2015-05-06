@@ -34,15 +34,13 @@ export class NavInjectable {}
 })
 @View({
   template: `
-  <header class="toolbar-container" [class.hide]="getToolbars('top').length == 0">
+  <header class="toolbar-container" [class.hide]="hideHeader">
     <div *for="#toolbar of getToolbars('top')" [toolbar-create]="toolbar"></div>
   </header>
   <section class="nav-item-container">
-    <div class="nav-item"
-         *for="#item of navItems"
-         [item]="item"></div>
+    <div class="nav-item" *for="#item of navItems" [item]="item"></div>
   </section>
-  <footer class="toolbar-container" [class.hide]="getToolbars('bottom').length == 0">
+  <footer class="toolbar-container" [class.hide]="hideFooter">
     <div *for="#toolbar of getToolbars('bottom')" [toolbar-create]="toolbar"></div>
   </footer>
   `,

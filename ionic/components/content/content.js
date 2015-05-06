@@ -6,9 +6,9 @@ import {
 
 @Component({
   selector: 'ion-content',
-  hostProperties: {
-    contentClass: 'class.content'
-  }
+  // hostProperties: {
+  //   contentClass: 'class.content'
+  // }
 })
 @View({
   template: `
@@ -18,7 +18,7 @@ import {
 })
 export class Content {
   constructor() {
-    this.contentClass = true;
+    //this.contentClass = true;
     console.log('Content!');
   }
 }

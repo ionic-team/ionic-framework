@@ -6,7 +6,7 @@ import {SecondPage} from 'pages/second-page'
 @Component()
 @View({
   templateUrl: 'pages/first-page.html',
-  directives: [Toolbar, Content]
+  directives: [Toolbar]
 })
 export class FirstPage {
   constructor(

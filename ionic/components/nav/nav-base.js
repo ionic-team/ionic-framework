@@ -258,6 +258,14 @@ export class NavBase {
     return last && last.navItem && last.navItem._toolbars[pos] || [];
   }
 
+  get hideHeader() {
+    return !this.getToolbars('top').length;
+  }
+
+  get hideFooter() {
+    return !this.getToolbars('bottom').length;
+  }
+
   canSwipeBack() {
     return !!this.getPrevious(this.getActive());
   }
@@ -269,6 +277,7 @@ class NavStackItem {
   constructor(ComponentClass, params = {}) {
     this.Class = ComponentClass;
     this.params = params;
+    this.id = util.nextUid();
     this._setupPromise = new Promise((resolve) => {
       this._resolveSetup = resolve;
     });
