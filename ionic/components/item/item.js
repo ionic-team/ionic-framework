@@ -54,7 +54,9 @@ export class Item {
   }
 }
 
-new IonicComponent(Item, {})
+new IonicComponent(Item, {
+  propClasses: ['button']
+})
 
 
 function clsSetter(el, name) {

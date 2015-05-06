@@ -14,5 +14,5 @@ export class Button {
 }
 new IonicComponent(Button, {
   enhanceRawElement: true,
-  propClasses: ['primary', 'secondary', 'danger', 'light', 'stable', 'dark', 'block']
+  propClasses: ['primary', 'secondary', 'danger', 'light', 'stable', 'dark', 'block', 'clear', 'full', 'icon']
 })

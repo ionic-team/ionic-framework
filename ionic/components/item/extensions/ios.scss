@@ -39,4 +39,12 @@ $item-ios-border-color:          $list-ios-border-color !default;
     color: $item-ios-accessory-color;
   }
 
+  .item-button {
+    // No left ios-style padding
+    padding-left: 0;
+    button {
+      width: 100%;
+      font-size: 1.3em;
+    }
+  }
 }
