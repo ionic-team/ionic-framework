@@ -5,7 +5,10 @@ import {
 } from 'angular2/angular2';
 
 @Component({
-  selector: 'ion-content'
+  selector: 'ion-content',
+  hostProperties: {
+    contentClass: 'class.content'
+  }
 })
 @View({
   template: `
@@ -14,10 +17,7 @@ import {
     </div>`
 })
 export class Content {
-  constructor(
-    @NgElement() element:NgElement
-  ) {
-    this.domElement = element.domElement;
-    this.domElement.classList.add('content');
+  constructor() {
+    this.contentClass = true;
   }
 }

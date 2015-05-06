@@ -1,12 +1,12 @@
 import {Component, View, Parent} from 'angular2/angular2'
-import {NavController, Toolbar} from 'ionic/ionic'
+import {NavController, Toolbar, Content} from 'ionic/ionic'
 import {SecondPage} from 'pages/second-page'
 
 
 @Component()
 @View({
   templateUrl: 'pages/first-page.html',
-  directives: [Toolbar]
+  directives: [Toolbar, Content]
 })
 export class FirstPage {
   constructor(
