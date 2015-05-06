@@ -1,3 +1,10 @@
-.platform-ios .content {
-  background-color: #efeff4;
+
+// iOS Content
+// --------------------------------------------------
+
+$content-ios-background-color:       #efeff4 !default;
+
+
+.platform-ios ion-content {
+  background-color: $content-ios-background-color;
 }
