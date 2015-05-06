@@ -195,8 +195,6 @@ export class NavBase {
           // allow clicks again
           ClickBlock(false);
 
-          console.log('transition, canSwipeBack()', this.canSwipeBack());
-
           // resolve that this push has completed
           resolve();
         });

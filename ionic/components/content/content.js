@@ -19,5 +19,6 @@ import {
 export class Content {
   constructor() {
     this.contentClass = true;
+    console.log('Content!');
   }
 }
