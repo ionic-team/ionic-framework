@@ -20,6 +20,10 @@ class IonicApp {
       note : ['', Validators.required]
     });
   }
+
+  deleteClicked() {
+    alert('Deleting');
+  }
 }
 
 bootstrap(IonicApp)

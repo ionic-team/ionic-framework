@@ -4,7 +4,8 @@ ion-label {
   display: table;
   padding: 9px 10px 7px 0px;
   max-width: 200px;
-  width: 35%;
+  width: 30%;
+  min-width: 100px;
   color: $input-label-color;
   font-size: 1.6rem;
   white-space: nowrap;
