@@ -30,6 +30,7 @@ Object.defineProperties(ViewContainerRef.prototype, {
 
 
 export * from 'ionic/components'
+export * from 'ionic/directives'
 export * from 'ionic/platform/platform'
 export * from 'ionic/routing/router'
 
