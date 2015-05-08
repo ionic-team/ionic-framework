@@ -23,7 +23,8 @@ ion-segment {
     background: none;
 
     &.active {
-      background: red;
+      background-color: get-color(primary, base);
+      color: white;
     }
 
     &:first-child {

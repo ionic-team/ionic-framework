@@ -5,8 +5,16 @@
     > .button {
       border-width: 2px;
 
+      color: get-color(primary, base);
+
+      min-height: 3.7rem;
+
+      &.active {
+        color: #fff;
+      }
+
       border-style: solid;
-      border-color: red;
+      border-color: get-color(primary, base);
 
       &:first-child {
         border-right-width: 0px;
