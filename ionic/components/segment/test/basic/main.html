@@ -1,13 +1,29 @@
 <ion-content class="padding">
+
   <ion-segment>
-    <button ion-button class="active">
+    <ion-segment-button value="standard" ion-button>
+      Standard
+    </ion-segment-button>
+    <ion-segment-button value="hybrid" ion-button>
+      Hybrid
+    </ion-segment-button>
+    <ion-segment-button value="sat" ion-button>
+      Satellite
+    </ion-segment-button>
+    <!--
+    <button ion-button class="active" [segment-value]="standard">
       Standard
     </button>
-    <button ion-button>
+
+    <button ion-button [segment-value]="hybrid">
       Hybrid
     </button>
-    <button ion-button>
+
+    <button #sat ion-button [segment-value]="sat">
       Satellite
     </button>
+  -->
+
   </ion-segment>
+
 </ion-content>

@@ -108,3 +108,15 @@ export function addClass(el: Element, ...classNames) {
     el.classList.add(c);
   }
 }
+
+export function getChildIndex(el: Element) {
+  let child;
+  let parent = el.parentNode;
+  for(let i = 0, j = parent.children.length; i < j; i++) {
+    child = parent.children[i];
+    if(child === el) {
+      return i;
+    }
+  }
+  return -1;
+}

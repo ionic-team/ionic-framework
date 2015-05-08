@@ -1,4 +1,6 @@
-ion-segment {
+ion-segment { display: block; }
+
+.ion-segment {
   @include flex-display();
   @include flex(1);
   width: 100%;
@@ -27,10 +29,10 @@ ion-segment {
       color: white;
     }
 
-    &:first-child {
+    &:first-of-type {
       border-radius: $button-border-radius 0px 0px $button-border-radius;
     }
-    &:last-child {
+    &:last-of-type {
       border-right-width: 1px;
       border-radius: 0px $button-border-radius $button-border-radius 0px;
     }
