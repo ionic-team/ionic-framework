@@ -45,6 +45,7 @@ export class Segment {
 
   writeValue(value) {
     console.log('SEGMENT WRITE VALUE', value);
+    this.value = value;
   }
 
   bindButton(segmentValue) {
@@ -64,6 +65,8 @@ export class Segment {
     segmentButton.setActive(true);
 
     this.value = segmentButton.value;
+    this.controlDirective._control().updateValue(this.value);
+    console.log('New value', this.value);
   }
 }
 
