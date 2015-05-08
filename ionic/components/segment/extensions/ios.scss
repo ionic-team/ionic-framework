@@ -1,0 +1,19 @@
+.platform-ios {
+
+  ion-segment {
+
+    > .button {
+      border-width: 2px;
+
+      border-style: solid;
+      border-color: red;
+
+      &:first-child {
+        border-right-width: 0px;
+      }
+      &:last-child {
+        border-left-width: 0px;
+      }
+    }
+  }
+}

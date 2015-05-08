@@ -1,3 +1,37 @@
-.ion-segment {
-  
+ion-segment {
+  @include flex-display();
+  @include flex(1);
+  width: 100%;
+
+  > .button {
+
+    @include flex(1);
+    display: block;
+
+    overflow: hidden;
+
+    padding: 0 16px;
+
+    width: 0;
+
+    border-width: 1px 0px 1px 1px;
+    border-radius: 0;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    background: none;
+
+    &.active {
+      background: red;
+    }
+
+    &:first-child {
+      border-radius: $button-border-radius 0px 0px $button-border-radius;
+    }
+    &:last-child {
+      border-right-width: 1px;
+      border-radius: 0px $button-border-radius $button-border-radius 0px;
+    }
+  }
 }
