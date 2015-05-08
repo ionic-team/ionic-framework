@@ -36,37 +36,65 @@ export class Segment {
     this.elementRef = elementRef;
     this.renderer = renderer;
     this.controlDirective = cd;
-    console.log('Segment with cd', cd);
 
     cd.valueAccessor = this; //ControlDirective should inject CheckboxControlDirective
 
     this.buttons = [];
   }
 
+  /**
+   * Much like ngModel, this is called from our valueAccessor for the attached
+   * ControlDirective to update the value internally.
+   */
   writeValue(value) {
-    console.log('SEGMENT WRITE VALUE', value);
     this.value = value;
+
+    setTimeout(() => {
+      this.selectFromValue(value);
+    })
   }
 
-  bindButton(segmentValue) {
-    this.buttons.push(segmentValue);
-    let index = this.buttons.length;
-    console.log('Bound button', index);
-  }
-
+  /**
+   * Called by child SegmentButtons to bind themselves to
+   * the Segment.
+   */
   register(segmentButton) {
     this.buttons.push(segmentButton);
+
+    // If we don't have a default value, and this is the
+    // first button added, select it
+    if(!this.value && this.buttons.length === 1) {
+      setTimeout(() => {
+        // We need to defer so the control directive can initialize
+        this.selected(segmentButton);
+      })
+    }
   }
 
-  selected(event, segmentButton) {
+  /**
+   * Select the button with the given value.
+   */
+  selectFromValue(value) {
+    for(let button of this.buttons) {
+      if(button.value === value) {
+        this.selected(button);
+      }
+    }
+  }
+
+
+  /**
+   * Indicate a button should be selected.
+   */
+  selected(segmentButton) {
     for(let button of this.buttons) {
       button.setActive(false);
     }
     segmentButton.setActive(true);
 
     this.value = segmentButton.value;
+    // TODO: Better way to do this?
     this.controlDirective._control().updateValue(this.value);
-    console.log('New value', this.value);
   }
 }
 
@@ -85,13 +113,6 @@ new IonicComponent(Segment, {
 @View({
   template: '<content></content>'
 })
-/*
-@Directive({
-  hostListeners: {
-    mouseover: 'buttonClicked'
-  }
-})
-*/
 export class SegmentButton {
   constructor(
     @Ancestor() segment: Segment,
@@ -115,7 +136,7 @@ export class SegmentButton {
   }
 
   buttonClicked(event) {
-    this.segment.selected(event, this);
+    this.segment.selected(this, event);
   }
 
 }

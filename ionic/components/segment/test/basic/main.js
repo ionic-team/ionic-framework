@@ -12,7 +12,7 @@ class IonicApp {
 
     var fb = new FormBuilder();
     this.form = fb.group({
-      mapStyle: ['', Validators.required]
+      mapStyle: ['hybrid', Validators.required]
     });
   }
 
