@@ -556,6 +556,15 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
 
     /**
      * @ngdoc method
+     * @name $ionicHistory#forcedNav
+     * @description Forces the next transition to have the specified direction/action.
+     */
+    forcedNav: function(force){
+      forcedNav = force;
+    },
+
+    /**
+     * @ngdoc method
      * @name $ionicHistory#goBack
      * @param {number=} backCount Optional negative integer setting how many views to go
      * back. By default it'll go back one view by using the value `-1`. To go back two
