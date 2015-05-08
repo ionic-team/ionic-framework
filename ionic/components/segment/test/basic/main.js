@@ -9,6 +9,16 @@ import {IONIC_DIRECTIVES} from 'ionic/ionic'
 })
 class IonicApp {
   constructor() {
+
+    var fb = new FormBuilder();
+    this.form = fb.group({
+      mapStyle: ['', Validators.required]
+    });
+  }
+
+  doSubmit(event) {
+    console.log('Submitting form', this.form.value);
+    event.preventDefault();
   }
 }
 

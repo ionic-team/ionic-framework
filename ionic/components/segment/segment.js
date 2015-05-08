@@ -1,4 +1,5 @@
 import {NgElement, Renderer, ElementRef, Component, DefaultValueAccessor, View, Ancestor, Optional, Decorator, Directive} from 'angular2/angular2'
+import {ControlGroup, ControlDirective} from 'angular2/forms'
 import {dom} from 'ionic/util';
 import {IonicComponent} from 'ionic/config/component'
 import {Button} from 'ionic/components/button/button'
@@ -15,20 +16,35 @@ import {Button} from 'ionic/components/button/button'
     <content></content>
   </div>
   `,
-  directives: [Button, SegmentButton]
+  directives: [Button, SegmentButton],
+  properties: {
+    value: 'value'
+  },
+  hostProperties: {
+    value: 'value'
+  }
 })
 export class Segment {
   constructor(
     @NgElement() ngElement:NgElement,
     elementRef: ElementRef,
-    renderer: Renderer
+    renderer: Renderer,
+    cd:ControlDirective
   ) {
     this.domElement = ngElement.domElement
     this.config = Segment.config.invoke(this)
     this.elementRef = elementRef;
     this.renderer = renderer;
+    this.controlDirective = cd;
+    console.log('Segment with cd', cd);
+
+    cd.valueAccessor = this; //ControlDirective should inject CheckboxControlDirective
 
     this.buttons = [];
+  }
+
+  writeValue(value) {
+    console.log('SEGMENT WRITE VALUE', value);
   }
 
   bindButton(segmentValue) {
@@ -46,6 +62,8 @@ export class Segment {
       button.setActive(false);
     }
     segmentButton.setActive(true);
+
+    this.value = segmentButton.value;
   }
 }
 

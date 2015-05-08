@@ -1,29 +1,32 @@
 <ion-content class="padding">
+  <form (^submit)="doSubmit($event)" [control-group]="form">
 
-  <ion-segment>
-    <ion-segment-button value="standard" ion-button>
-      Standard
-    </ion-segment-button>
-    <ion-segment-button value="hybrid" ion-button>
-      Hybrid
-    </ion-segment-button>
-    <ion-segment-button value="sat" ion-button>
-      Satellite
-    </ion-segment-button>
-    <!--
-    <button ion-button class="active" [segment-value]="standard">
-      Standard
-    </button>
+    <ion-segment control="mapStyle">
+      <ion-segment-button value="standard" ion-button>
+        Standard
+      </ion-segment-button>
+      <ion-segment-button value="hybrid" ion-button>
+        Hybrid
+      </ion-segment-button>
+      <ion-segment-button value="sat" ion-button>
+        Satellite
+      </ion-segment-button>
+      <!--
+      <button ion-button class="active" [segment-value]="standard">
+        Standard
+      </button>
 
-    <button ion-button [segment-value]="hybrid">
-      Hybrid
-    </button>
+      <button ion-button [segment-value]="hybrid">
+        Hybrid
+      </button>
 
-    <button #sat ion-button [segment-value]="sat">
-      Satellite
-    </button>
-  -->
+      <button #sat ion-button [segment-value]="sat">
+        Satellite
+      </button>
+    -->
 
-  </ion-segment>
+    </ion-segment>
+    <button type="submit" button primary>Submit</button>
+  </form>
 
 </ion-content>
