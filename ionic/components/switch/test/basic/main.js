@@ -12,7 +12,9 @@ class IonicApp {
 
     var fb = new FormBuilder();
     this.form = fb.group({
-      enableFun: ['', Validators.required]
+      enableFun: ['', Validators.required],
+      enableIceCream: [false, Validators.required],
+      enablePizza: [true, Validators.required]
     });
   }
 

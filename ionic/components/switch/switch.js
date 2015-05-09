@@ -70,7 +70,8 @@ export class Switch {
    * ControlDirective to update the value internally.
    */
   writeValue(value) {
-    this.checked = value;
+    // Convert it to a boolean
+    this.checked = !!value;
   }
 
 
