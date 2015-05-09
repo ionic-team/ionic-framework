@@ -3,15 +3,18 @@
   .ion-segment {
 
     > .button {
-      border-width: 2px;
+      border-width: 1px;
+
+      @include transition(100ms all linear);
 
       color: get-color(primary, base);
 
-      min-height: 3.7rem;
-      line-height: 3.7rem;
+      min-height: 3.3rem;
+      line-height: 3.3rem;
 
       &.active {
-        color: #fff;
+        background-color: get-color(primary, base);
+        color: white;
       }
 
       border-style: solid;

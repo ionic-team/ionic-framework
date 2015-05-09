@@ -137,6 +137,7 @@ export class SegmentButton {
 
   buttonClicked(event) {
     this.segment.selected(this, event);
+    event.preventDefault();
   }
 
 }
