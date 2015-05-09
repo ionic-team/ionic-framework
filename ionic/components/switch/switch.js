@@ -1,15 +1,21 @@
-import {Component, View, NgElement} from 'angular2/angular2'
+import {NgElement, Renderer, ElementRef, Component, DefaultValueAccessor, View, Ancestor, Optional, Decorator, Directive} from 'angular2/angular2'
+import {ControlGroup, ControlDirective} from 'angular2/forms'
+import {dom} from 'ionic/util';
 import {IonicComponent} from 'ionic/config/component'
+import {Button} from 'ionic/components/button/button'
 
 
 @Component({
   selector: 'ion-switch',
   properties: {
     checked: 'checked'
-  },
+  }
+  /*
+  TODO: For some reason this triggers a 'TypeError: array.map is not a function'
   events: {
     'click': 'onClick()'
   }
+  */
 })
 @View({
   template: `
@@ -43,11 +49,11 @@ export class Switch {
 
     this.domElement.classList.add('item')
 
-    setAriaRole('checkbox')
-    setInvalid('false')
-    setDisabled('false')
-
-    this.setChecked = setChecked
+    // TODO: These rely on the commented-out PropertySetter's above
+    //setAriaRole('checkbox')
+    //setInvalid('false')
+    //setDisabled('false')
+    //this.setChecked = setChecked
   }
 
   set checked(checked) {

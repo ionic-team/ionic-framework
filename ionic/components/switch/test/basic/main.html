@@ -1,26 +1,15 @@
+<ion-content>
 
-<ion-view nav-title="Switches">
-
-  <ion-content>
-
+  <form (^submit)="doSubmit($event)" [control-group]="form">
     <div class="list-header">Some Switches</div>
 
     <ion-list>
 
-      <ion-switch [checked]="true">
-        Apples
-      </ion-switch>
-
-      <ion-switch>
-        Bananas
-      </ion-switch>
-
-      <ion-switch [disabled]="true">
-        Oranges
+      <ion-switch control="enableFun">
+        Enable Fun?
       </ion-switch>
 
     </ion-list>
+  </form>
 
-  </ion-content>
-
-</ion-view>
+</ion-content>

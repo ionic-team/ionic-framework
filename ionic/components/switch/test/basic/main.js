@@ -1,16 +1,24 @@
-import {Component, View, bootstrap} from 'angular2/angular2';
-import {Content} from 'ionic/components/content/content';
-import {Switch} from 'ionic/components/switch/switch';
-import {List} from 'ionic/components/list/list';
+import {Component, View, bootstrap} from 'angular2/angular2'
+import {FormBuilder, Validators, FormDirectives, ControlGroup} from 'angular2/forms';
+import {IONIC_DIRECTIVES} from 'ionic/ionic'
 
 @Component({ selector: '[ion-app]' })
 @View({
   templateUrl: 'main.html',
-  directives: [Content, Switch, List]
+  directives: [FormDirectives].concat(IONIC_DIRECTIVES)
 })
 class IonicApp {
   constructor() {
-    console.log('IonicApp Start')
+
+    var fb = new FormBuilder();
+    this.form = fb.group({
+      enableFun: ['', Validators.required]
+    });
+  }
+
+  doSubmit(event) {
+    console.log('Submitting form', this.form.value);
+    event.preventDefault();
   }
 }
 
