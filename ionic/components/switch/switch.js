@@ -4,12 +4,14 @@ import {dom} from 'ionic/util';
 import {IonicComponent} from 'ionic/config/component'
 import {Button} from 'ionic/components/button/button'
 
-
 @Component({
   selector: 'ion-switch',
   properties: {
     checked: 'checked'
-  }
+  },
+  hostListeners: {
+    'click': 'switchClicked($event)'
+  },
   /*
   TODO: For some reason this triggers a 'TypeError: array.map is not a function'
   events: {
@@ -25,7 +27,7 @@ import {Button} from 'ionic/components/button/button'
       <content></content>
     </div>
 
-    <div class="item-media media-switch">
+    <div class="item-media media-switch" (^click)="onClick($event)">
       <div class="switch-toggle"></div>
     </div>
 
@@ -33,19 +35,26 @@ import {Button} from 'ionic/components/button/button'
 })
 export class Switch {
   constructor(
-    @NgElement() element:NgElement
+    @NgElement() element:NgElement,
+    cd: ControlDirective
     // @PropertySetter('attr.role') setAriaRole: Function,
-    // @PropertySetter('attr.aria-checked') setChecked: Function,
+    // @PropertySetter('attr.aria-checked') setChecked: Function
     // @PropertySetter('attr.aria-invalid') setInvalid: Function,
     // @PropertySetter('attr.aria-disabled') setDisabled: Function
   ) {
     this.domElement = element.domElement
     this.config = Switch.config.invoke(this)
+    this.controlDirective = cd;
+    cd.valueAccessor = this;
 
+    // TODO: These are temporary until we figure out what to do
+    // with @PropertSetter
     let setAriaRole = (v) => this.domElement.setAttribute('aria-role', v)
     let setAriaChecked = (v) => this.domElement.setAttribute('aria-checked', v)
     let setAriaInvalid = (v) => this.domElement.setAttribute('aria-invalid', v)
     let setAriaDisabled = (v) => this.domElement.setAttribute('aria-disabled', v)
+
+    //let setChecked = (v) => this.domElement.setAttribute('checked', v);
 
     this.domElement.classList.add('item')
 
@@ -53,17 +62,27 @@ export class Switch {
     //setAriaRole('checkbox')
     //setInvalid('false')
     //setDisabled('false')
-    //this.setChecked = setChecked
+    this.setCheckedProperty = setAriaChecked
   }
+
+  /**
+   * Much like ngModel, this is called from our valueAccessor for the attached
+   * ControlDirective to update the value internally.
+   */
+  writeValue(value) {
+    this.checked = value;
+  }
+
 
   set checked(checked) {
     this._checked = checked
-    this.setChecked(checked)
+    this.setCheckedProperty(checked)
+    this.controlDirective._control().updateValue(this._checked);
   }
   get checked() {
     return this._checked
   }
-  onClick() {
+  switchClicked(event) {
     this.checked = !this.checked;
   }
 }
