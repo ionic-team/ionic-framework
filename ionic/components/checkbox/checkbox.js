@@ -1,4 +1,5 @@
-import {Component, View, NgElement} from 'angular2/angular2'
+import {NgElement, Renderer, ElementRef, Component, DefaultValueAccessor, View, Ancestor, Optional, Decorator, Directive} from 'angular2/angular2'
+import {ControlGroup, ControlDirective} from 'angular2/forms'
 import {IonicComponent} from 'ionic/config/component'
 
 
@@ -7,8 +8,8 @@ import {IonicComponent} from 'ionic/config/component'
   properties: {
     checked: 'checked'
   },
-  events: {
-    '^click': 'onClick()'
+  hostListeners: {
+    '^click': 'onClick($event)'
   }
 })
 @View({
@@ -28,7 +29,8 @@ import {IonicComponent} from 'ionic/config/component'
 })
 export class Checkbox {
   constructor(
-    @NgElement() ngElement: NgElement
+    @NgElement() ngElement: NgElement,
+    cd: ControlDirective
     // @PropertySetter('attr.role') setAriaRole: Function,
     // @PropertySetter('attr.aria-checked') setAriaChecked: Function,
     // @PropertySetter('attr.aria-invalid') setAriaInvalid: Function,
@@ -36,13 +38,15 @@ export class Checkbox {
   ) {
     this.domElement = ngElement.domElement
     this.domElement.classList.add('item')
+    this.controlDirective = cd;
+    cd.valueAccessor = this;
 
     let setAriaRole = (v) => this.domElement.setAttribute('aria-role', v)
     let setAriaChecked = (v) => this.domElement.setAttribute('aria-checked', v)
     let setAriaInvalid = (v) => this.domElement.setAttribute('aria-invalid', v)
     let setAriaDisabled = (v) => this.domElement.setAttribute('aria-disabled', v)
 
-    this.config = Checkbox.config.invoke(this)
+    Checkbox.config.invoke(this);
 
     setAriaRole('checkbox')
     setAriaInvalid('false')
@@ -53,14 +57,26 @@ export class Checkbox {
     this.setAriaInvalid = setAriaInvalid
     this.setAriaDisabled = setAriaDisabled
 
+    this.setCheckedProperty = setAriaChecked
+
     // TODO: FIXME!! MAKE MORE GOOD!!!!
     this.domElement.querySelector('.checkbox-off').classList.add(this.iconOff)
     this.domElement.querySelector('.checkbox-on').classList.add(this.iconOn)
   }
 
+  /**
+   * Much like ngModel, this is called from our valueAccessor for the attached
+   * ControlDirective to update the value internally.
+   */
+  writeValue(value) {
+    // Convert it to a boolean
+    this.checked = !!value;
+  }
+
   set checked(checked) {
     this._checked = checked
-    this.setAriaChecked(checked)
+    this.setCheckedProperty(checked)
+    this.controlDirective._control().updateValue(this._checked);
   }
   get checked() {
     return this._checked

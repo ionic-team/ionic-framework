@@ -1,26 +1,11 @@
-
-<ion-view nav-title="Checkboxes">
-
-  <ion-content>
-
-    <div class="list-header">Some Checkboxes</div>
+<ion-content>
+  <form (^submit)="doSubmit($event)" [control-group]="form">
 
     <ion-list>
-
-      <ion-checkbox [checked]="true">
+      <div class="list-header">Some Switches</div>
+      <ion-checkbox control="addCats">
         Apples
       </ion-checkbox>
-
-      <ion-checkbox>
-        Bananas
-      </ion-checkbox>
-
-      <ion-checkbox [disabled]="true">
-        Oranges
-      </ion-checkbox>
-
     </ion-list>
-
-  </ion-content>
-
-</ion-view>
+  </form>
+</ion-content>

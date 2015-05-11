@@ -2,7 +2,6 @@ import {NgElement, Renderer, ElementRef, Component, DefaultValueAccessor, View, 
 import {ControlGroup, ControlDirective} from 'angular2/forms'
 import {dom} from 'ionic/util';
 import {IonicComponent} from 'ionic/config/component'
-import {Button} from 'ionic/components/button/button'
 
 @Component({
   selector: 'ion-switch',
@@ -27,7 +26,7 @@ import {Button} from 'ionic/components/button/button'
       <content></content>
     </div>
 
-    <div class="item-media media-switch" (^click)="onClick($event)">
+    <div class="item-media media-switch">
       <div class="switch-toggle"></div>
     </div>
 
