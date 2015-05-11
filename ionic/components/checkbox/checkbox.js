@@ -46,7 +46,7 @@ export class Checkbox {
     let setAriaInvalid = (v) => this.domElement.setAttribute('aria-invalid', v)
     let setAriaDisabled = (v) => this.domElement.setAttribute('aria-disabled', v)
 
-    Checkbox.config.invoke(this);
+    this.config = Checkbox.config.invoke(this);
 
     setAriaRole('checkbox')
     setAriaInvalid('false')
@@ -59,9 +59,9 @@ export class Checkbox {
 
     this.setCheckedProperty = setAriaChecked
 
-    // TODO: FIXME!! MAKE MORE GOOD!!!!
-    this.domElement.querySelector('.checkbox-off').classList.add(this.iconOff)
-    this.domElement.querySelector('.checkbox-on').classList.add(this.iconOn)
+    // TODO: This is a hack and not a very good one at that
+    this.domElement.querySelector('.checkbox-off').classList.add(this.config.properties.iconOff.ios);
+    this.domElement.querySelector('.checkbox-on').classList.add(this.config.properties.iconOn.ios);
   }
 
   /**

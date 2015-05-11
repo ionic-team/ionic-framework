@@ -10,6 +10,7 @@ let platformMode = Platform.getMode();
 
 export class IonicComponent {
   constructor(ComponentClass, {
+    properties,
     bind,
     enhanceRawElement,
     delegates,
@@ -18,6 +19,8 @@ export class IonicComponent {
     // TODO give errors if not providing valid delegates
     ComponentClass.config = this
     this.componentCssName = util.pascalCaseToDashCase(ComponentClass.name)
+
+    this.properties = properties || (properties = {});
 
     this.bind = bind || (bind = {})
     for (let attrName in bind) {
@@ -86,6 +89,7 @@ export class IonicComponent {
     }
 
     return {
+      properties: this.properties,
       getDelegate(delegateName) {
         let cases = (config.delegates || {})[delegateName] || [];
         for (let i = 0; i < cases.length; i++) {
