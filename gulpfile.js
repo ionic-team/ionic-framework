@@ -45,7 +45,7 @@ gulp.task('watch', function() {
 });
 
 gulp.task('clean', function(done) {
-  del(['../angular/modules/ionic, ./angular/modules/examples/src/ionic'], done);
+  del(['../angular-ionic/modules/ionic, ./angular-ionic/modules/examples/src/ionic'], done);
 });
 
 
@@ -66,7 +66,7 @@ gulp.task('ionic.examples', function() {
       file.dirname = file.dirname.replace(path.sep + 'test' + path.sep, path.sep)
     }))
     .pipe(gulpif(/index.js$/, processMain()))
-    .pipe(gulp.dest('../angular/modules/examples/src/ionic'))
+    .pipe(gulp.dest('../angular-ionic/modules/examples/src/ionic'))
 
     function processMain() {
       return through2.obj(function(file, enc, next) {
@@ -96,20 +96,20 @@ gulp.task('sass', function() {
 
 gulp.task('update.angular', function(done) {
 
-  if (!fs.existsSync('../angular')) {
-    fs.mkdirSync('../angular');
+  if (!fs.existsSync('../angular-ionic')) {
+    fs.mkdirSync('../angular-ionic');
 
     console.log('cloning angular master...');
-    exec('git clone git@github.com:angular/angular ../angular', function() {
+    exec('git clone git@github.com:angular/angular ../angular-ionic', function() {
       npmInstall();
     });
 
   } else {
     console.log('angular master: cleaning modules');
-    del(['../angular/modules'], function() {
+    del(['../angular-ionic/modules'], function() {
 
       console.log('angular master: reset --hard...');
-      exec('git reset --hard origin/master', {cwd: '../angular'}, function () {
+      exec('git reset --hard origin/master', {cwd: '../angular-ionic'}, function () {
 
         console.log('angular master: git pull origin master...');
         exec('git pull origin master', function () {
@@ -122,7 +122,7 @@ gulp.task('update.angular', function(done) {
 
   function npmInstall() {
     console.log('angular master: npm install (may take a while, chill out)...');
-    exec('npm install', {cwd: '../angular'}, function () {
+    exec('npm install', {cwd: '../angular-ionic'}, function () {
       done();
     });
   }
