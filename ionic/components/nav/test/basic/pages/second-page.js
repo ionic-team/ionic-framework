@@ -1,6 +1,6 @@
 import {Component, View, Parent} from 'angular2/angular2'
 import {NavController, Toolbar, Content} from 'ionic/ionic'
-import {ThirdPage} from 'pages/third-page'
+import {ThirdPage} from './third-page'
 
 
 @Component()

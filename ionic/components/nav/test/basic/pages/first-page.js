@@ -1,6 +1,6 @@
 import {Component, View, Parent} from 'angular2/angular2'
 import {NavController, Toolbar, Content} from 'ionic/ionic'
-import {SecondPage} from 'pages/second-page'
+import {SecondPage} from './second-page'
 
 
 @Component()

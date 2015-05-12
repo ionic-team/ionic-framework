@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+</head>
+
+<body>
+  <ion-app>
+    Loading...
+  </ion-app>
+</body>
+
+<script src="traceur-runtime.js"></script>
+<script src="es6-module-loader-sans-promises.src.js"></script>
+<script src="zone.js"></script>
+<script src="long-stack-trace-zone.js"></script>
+<script src="system.src.js"></script>
+<script src="extension-register.js"></script>
+<script src="extension-cjs.js"></script>
+<script src="Reflect.js"></script>
+<script src="runtime_paths.js"></script>
+
+<script>
+  System.import('examples/src/ionic/nav/basic/main').catch(console.error.bind(console));
+</script>
+
+</html>
