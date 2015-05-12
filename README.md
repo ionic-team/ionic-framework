@@ -16,7 +16,7 @@ _** WARNING: This is a temporary hack **_
 
 - `@Decorator` is now just `@Directive`
 - Components must use an element selector
-- NgElement is not longer a thing, it's now ElementRef. Stuff needs to be fixed.
+- `NgElement` is no longer a thing, it's now `ElementRef`. Stuff needs to be fixed.
 - All `main.js` test files were renamed to `index.js` to work with angular's build
 - imports that are relative paths should start with `./`. For example, instead of `path/module` it should be `./path/module`
 - `Component`, `Directive` and `View` should NOT be imported from `angular2/angular2`. You'll probably get "No Directive annotation found on Content" when the wrong import is referenced.
