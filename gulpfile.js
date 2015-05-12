@@ -90,7 +90,7 @@ gulp.task('sass', function() {
         console.log(err)
       }
     }))
-    .pipe(gulp.dest('dist/css'));
+    .pipe(gulp.dest('../angular-ionic/dist/js/dev/es5/css'));
 });
 
 

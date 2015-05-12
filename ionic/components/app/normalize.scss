@@ -12,6 +12,16 @@ html {
   box-sizing: border-box;
 }
 
+body {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 
 // HTML5 display definitions
 // ==========================================================================
@@ -62,7 +72,7 @@ strong {
 // ==========================================================================
 
 // Remove border when inside `a` element in IE 8/9/10.
-[ion-app] img {
+ion-app img {
   border: 0;
 }
 
