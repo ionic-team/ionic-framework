@@ -3,9 +3,9 @@
 
 _** WARNING: This is a temporary hack **_
 
-1. At the root of your `ionic2` directory/repo, run: `gulp update.angular`. This will get the latest version of Angular2 master and install it as a sibling directory `../angular` to wherever your `ionic2` directory is. (It'll take a while to npm install angular2, so go grab a beer).
+1. At the root of your `ionic2` directory/repo, run: `gulp update.angular`. This will get the latest version of Angular2 master and install it as a sibling directory `../angular-ionic` to wherever your `ionic2` directory is. (It'll take a while to npm install angular2, so go grab a beer).
 2. In the `ionic2` working directory, run `gulp watch`. This will copy ionic2 components and test files to the correct angular directories as you're developing.
-3. In another terminal, `cd` into the `../angular` directory, and run `gulp serve.js.dev`. This will build out ionic examples too.
+3. In another terminal, `cd` into the `../angular-ionic` directory, and run `gulp serve.js.dev`. This will build out ionic examples too.
 4. Go to [http://localhost:8000/examples/src/ionic/](http://localhost:8000/examples/src/ionic/)
 5. Stay cool
 
