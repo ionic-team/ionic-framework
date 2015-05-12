@@ -109,7 +109,7 @@ gulp.task('bundle', [
   'scripts',
   'scripts-ng',
   'vendor',
-  'version',
+  'version'
 ], function() {
   gulp.src(buildConfig.ionicBundleFiles.map(function(src) {
       return src.replace(/.js$/, '.min.js');

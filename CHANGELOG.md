@@ -1,3 +1,17 @@
+<a name"1.0.0"></a>
+### 1.0.0 "uranium-unicorn" (2015-05-12)
+
+#### Bug Fixes
+
+* **config:** add support for blob image protocol. ([d684d62a](https://github.com/driftyco/ionic/commit/d684d62a), closes [#3645](https://github.com/driftyco/ionic/issues/3645))
+* **fonts:** IE does not support query string cache busting in font URLs ([bd72a33](https://github.com/driftyco/ionic/commit/bd72a33))
+* **infiniteScroll:** prevent error on infinite scroll complete with native scrolling ([86565e24](https://github.com/driftyco/ionic/commit/86565e24), closes [#3682](https://github.com/driftyco/ionic/issues/3682))
+* **ionicConfig:** allow using tel for hrefs ([db730f16](https://github.com/driftyco/ionic/commit/db730f16), closes [#3647](https://github.com/driftyco/ionic/issues/3647))
+* **modal:** Prevent scroll=false content from overlapping modal content. ([4e74ead5](https://github.com/driftyco/ionic/commit/4e74ead5), closes [#3648](https://github.com/driftyco/ionic/issues/3648))
+* **scrolling:** Collection repeat requires JS scrolling ([0557c305](https://github.com/driftyco/ionic/commit/0557c305))
+
+
+
 <a name"1.0.0-rc.5"></a>
 ### 1.0.0-rc.5 "tungsten-turkey" (2015-04-27)
 

@@ -45,7 +45,8 @@ function($scope, $attrs, $element, $timeout) {
     $timeout(function() {
       if (self.jsScrolling) self.scrollView.resize();
       // only check bounds again immediately if the page isn't cached (scroll el has height)
-      if (self.scrollView.__container && self.scrollView.__container.offsetHeight > 0) {
+      if ((self.jsScrolling && self.scrollView.__container && self.scrollView.__container.offsetHeight > 0) ||
+      !self.jsScrolling) {
         self.checkBounds();
       }
     }, 30, false);

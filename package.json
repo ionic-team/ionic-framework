@@ -1,8 +1,8 @@
 {
   "name": "ionic",
   "private": false,
-  "version": "1.0.0-rc.5",
-  "codename": "tungsten-turkey",
+  "version": "1.0.0",
+  "codename": "uranium-unicorn",
   "repository": {
     "url": "git://github.com/driftyco/ionic.git"
   },
