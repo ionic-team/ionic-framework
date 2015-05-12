@@ -9,11 +9,14 @@ import {FirstPage} from './pages/first-page'
 
 @Component({ selector: 'ion-app' })
 @View({
-  templateUrl: 'main.html'
+  templateUrl: 'main.html',
+  directives: [Nav]
 })
 class IonicApp {
   constructor() {
     console.log('IonicApp Start');
+
+    this.initial = FirstPage;
   }
 }
 

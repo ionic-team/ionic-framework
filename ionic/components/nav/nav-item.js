@@ -1,127 +1,40 @@
-import {
-  Component,
-  DynamicComponent,
-  Decorator,
-  Ancestor,
-  NgElement,
-  DynamicComponentLoader,
-  ElementRef,
-  Query,
-  View,
-} from 'angular2/angular2';
+import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
 
-import {
-  Injectable,
-  bind,
-  Optional,
-} from 'angular2/di';
-
-import {Toolbar} from 'ionic/components/toolbar/toolbar';
-import {NavInjectable} from 'ionic/components/nav/nav';
 import * as util from 'ionic/util';
 
-/*
- * NavController is the public interface for pushing, popping, etc that is injected
- * by users.
- * Each nav item exposes a new NavController.
- */
-export class NavController {
-  constructor() {
-    // Contains data passed to this NavController's NavItem
-    this.params = {};
-    // this.navItem and this.nav are set by NavItem below.
-  }
 
-  addToolbar(placement: String, toolbar: Toolbar) {
-    this.navItem._toolbars[placement].push(toolbar);
-  }
-
-  removeToolbar(placement: String, toolbar: Toolbar) {
-    let bars = this.navItem._toolbars[placement];
-    bars && util.array.remove(bars, toolbar);
-  }
-
-  push() {
-    return this.nav.push.apply(this.nav, arguments);
-  }
-  pop() {
-    return this.nav.pop.apply(this.nav, arguments);
-  }
-}
-
-@Component({
-  selector: '.nav-item',
-  properties: {
-    _item: 'item'
-  },
-  injectables: [
-    // Allow all descendants to inject NavController and do nav operations.
-    NavController
-  ]
-})
-@View({
-  // See below for this.
-  template: '<div class="nav-item-child"></div>',
-  directives: [NavItemDynamicComponent]
-})
 export class NavItem {
-  constructor(
-    // TODO for now, we can't inject tab as if it's a Nav
-    navInjectable: NavInjectable,
-    navCtrl: NavController,
-    element: NgElement
-  ) {
-    this.domElement = element.domElement;
-    this._toolbars = {
-      top: [],
-      bottom: []
-    };
-    this.navCtrl = navCtrl;
-    navCtrl.nav = navInjectable.nav;
-    navCtrl.navItem = this;
+
+  constructor(nav, ComponentClass, params = {}) {
+    this.nav = nav;
+    this.Class = ComponentClass;
+    this.params = params;
+    this.id = util.nextUid();
   }
 
-  set _item(data) {
-    var navChild = this.dynamicComponentChild;
+  setup() {
+    let resolve;
+    let promise = new Promise((res) => { resolve = res; });
 
-    if (this.initialized) return;
-    this.initialized = true;
+    let injector = null;
 
-    this.Class = data.Class;
 
-    util.extend(this.navCtrl.params, data.params || {});
+    this.nav.loader.loadIntoExistingLocation(this.Class, this.nav.itemContent.elementRef, injector)
+                   .then((componentRef) => {
 
-    navChild._loader.loadIntoExistingLocation(this.Class, navChild._elementRef).then((instance) => {
-      this.instance = instance;
-      data.finishSetup(this, instance);
+      console.log('Component loadIntoExistingLocation completed')
+
+      resolve();
     });
-  }
-}
 
-/**
- * In angular 2.0.0-alpha.21, DynamicComponents are not allowed to publish injectables
- * (bug, see https://github.com/angular/angular/issues/1596).
- * To fix this problem, we have the `NavItem` above publish a `NavController ` injectable
- * so the rest of the app has access to nav operations. Then we have a DynamicComponent
- * instantiate the user's page.
- * The `NavItem` class above can be turned into a DynamicComponent and this class can be removed
- * once injectables are allowed on regular Components.
- */
-@DynamicComponent({
-  selector: '.nav-item-child',
-  properties: {
-    _item: 'item'
-  }
-})
-export class NavItemDynamicComponent {
-  constructor(
-    loader: DynamicComponentLoader,
-    elementRef: ElementRef,
-    @Ancestor() navItem: NavItem
 
-  ) {
-    this._loader = loader;
-    this._elementRef = elementRef;
-    navItem.dynamicComponentChild = this;
+    //     let vc = new ViewContainerRef(this.nav.viewManager, this.nav.elementRef);
+
+    // debugger
+    //     let view = vc.create(this.Class, -1, this.nav.itemContent.elementRef, injector);
+
+
+    return promise;
   }
+
 }

@@ -1,58 +1,76 @@
-import {
-  Component,
-  View,
-  If,
-  For,
-  NgElement,
-  Query,
-  QueryList,
-  Descendants
-} from 'angular2/angular2';
+import {Parent, Ancestor} from 'angular2/src/core/annotations_impl/visibility';
+import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
+import {View} from 'angular2/src/core/annotations_impl/view';
+import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_component_loader';
+import {ElementRef} from 'angular2/src/core/compiler/element_ref';
+
 import {NavBase} from 'ionic/components/nav/nav-base';
 import {NavItem, NavItemDynamicComponent} from 'ionic/components/nav/nav-item';
 import {ToolbarContainer} from 'ionic/components/toolbar/toolbar';
 
-/**
- * We need a way for children to get ahold of the instantiated `Nav`.
- * Until angular supports components adding themselves to the Injector,
- * Nav is going to add an instance of a "NavInjectable" class to the injector.
- * This NavInjectable will have a pointer to the Nav class on `this.nav`.
- * Now descendant components (only our private ones) will have access to NavInjectable,
- * and be able to get access to the Nav through `navInjectable.nav` (@see navItem)
- */
-export class NavInjectable {}
 
 @Component({
   selector: 'ion-nav',
   properties: {
     initial: 'initial'
-  },
-  injectables: [
-    // Add NavInjectable to the injector for this and all descendants
-    NavInjectable
-  ]
+  }
 })
 @View({
   template: `
-  <header class="toolbar-container" [class.hide]="hideHeader">
-    <div *for="#toolbar of getToolbars('top')" [toolbar-create]="toolbar"></div>
+  <header class="toolbar-container">
+    <header-container></header-container>
   </header>
   <section class="nav-item-container">
-    <div class="nav-item" *for="#item of navItems" [item]="item"></div>
+    <content-container></content-container>
   </section>
-  <footer class="toolbar-container" [class.hide]="hideFooter">
-    <div *for="#toolbar of getToolbars('bottom')" [toolbar-create]="toolbar"></div>
+  <footer class="toolbar-container">
+    <footer-container></footer-container>
   </footer>
   `,
-  directives: [NavItem, For, If, ToolbarContainer]
+  directives: [HeaderContainer, ContentContainer, FooterContainer]
 })
 export class Nav extends NavBase {
+
   constructor(
-    element: NgElement,
-    navInjectable: NavInjectable
+    loader: DynamicComponentLoader,
+    elementRef: ElementRef
   ) {
-    super(element);
-    // Add the nav to navInjectable.
-    navInjectable.nav = this;
+    super();
+    this.loader = loader;
+    this.viewManager = loader._viewManager;
+    this.elementRef = elementRef;
+  }
+
+}
+
+
+@Directive({
+  selector: 'header-container'
+})
+class HeaderContainer {
+  constructor(@Ancestor() nav: Nav) {
+    nav.itemHeader = this;
+  }
+}
+
+
+@Directive({
+  selector: 'content-container'
+})
+class ContentContainer {
+  constructor(@Ancestor() nav: Nav, elementRef: ElementRef) {
+    nav.itemContent = {
+      elementRef: elementRef
+    };
+  }
+}
+
+
+@Directive({
+  selector: 'footer-container'
+})
+class FooterContainer {
+  constructor(@Ancestor() nav: Nav) {
+    nav.footerContainer = this;
   }
 }
