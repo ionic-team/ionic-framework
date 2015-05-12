@@ -1,9 +1,16 @@
-import {NgElement, Renderer, ElementRef, Component, DefaultValueAccessor, View, Ancestor, Optional, Decorator, Directive} from 'angular2/angular2'
+import {Renderer, ElementRef} from 'angular2/angular2'
+
+import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
+import {Ancestor} from 'angular2/src/core/annotations_impl/visibility';
+import {View} from 'angular2/src/core/annotations_impl/view';
+
 import {ControlGroup, ControlDirective} from 'angular2/forms'
 import {dom} from 'ionic/util';
 import {IonicComponent} from 'ionic/config/component'
 import {Button} from 'ionic/components/button/button'
 
+
+console.log('NGELEMENT', ElementRef);
 
 @Component({
   selector: 'ion-segment',
@@ -26,12 +33,12 @@ import {Button} from 'ionic/components/button/button'
 })
 export class Segment {
   constructor(
-    @NgElement() ngElement:NgElement,
     elementRef: ElementRef,
     renderer: Renderer,
     cd:ControlDirective
   ) {
-    this.domElement = ngElement.domElement
+    console.log('ELEMENT REF INJECT', elementRef);
+    this.domElement = elementRef.domElement
     this.config = Segment.config.invoke(this)
     this.elementRef = elementRef;
     this.renderer = renderer;
@@ -116,11 +123,10 @@ new IonicComponent(Segment, {
 export class SegmentButton {
   constructor(
     @Ancestor() segment: Segment,
-    @NgElement() ngElement:NgElement,
     elementRef: ElementRef,
     renderer: Renderer
   ) {
-    this.domElement = ngElement.domElement
+    this.domElement = elementRef.domElement
     this.segment = segment;
 
     segment.register(this);

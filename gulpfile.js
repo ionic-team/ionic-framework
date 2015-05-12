@@ -20,6 +20,16 @@ var exec = require('child_process').exec;
 
 // !!! TEMP HACK !!!
 // first run ./update-angular.sh
+
+gulp.task('build', function() {
+  runSequence(
+    'clean',
+    'ionic.copy.js',
+    'ionic.examples',
+    'sass');
+
+})
+
 gulp.task('watch', function() {
 
   runSequence(
