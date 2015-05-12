@@ -3,22 +3,33 @@
 
   <ion-content>
 
-    <div class="list-header">
-      Radio Group
-    </div>
+    <form (^submit)="doSubmit($event)" [control-group]="form">
+      <div class="list-header">
+        Radio Group
+      </div>
 
-    <ion-radio-group>
+      <ion-radio-group control="preferredApple">
 
-      <ion-radio>
-        Star Wars
-      </ion-radio>
+        <ion-radio value="mac">
+          McIntosh
+        </ion-radio>
 
-      <ion-radio>
-        Star Trek
-      </ion-radio>
+        <ion-radio value="granny">
+          Granny Smith
+        </ion-radio>
 
-    </ion-radio-group>
+        <ion-radio value="gala">
+          Gala
+        </ion-radio>
 
+        <ion-radio value="fuji">
+          Fuji
+        </ion-radio>
+
+      </ion-radio-group>
+
+    </form>
+
+    Current apple: <b>{{form.controls.preferredApple.value}}</b>
   </ion-content>
-
 </ion-view>
