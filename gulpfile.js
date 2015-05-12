@@ -51,7 +51,7 @@ gulp.task('clean', function(done) {
 
 gulp.task('ionic.copy.js', function(done) {
   return gulp.src(['ionic/**/*.js', '!ionic/components/*/test/**/*'])
-             .pipe(gulp.dest('../angular/modules/ionic'));
+             .pipe(gulp.dest('../angular-ionic/modules/ionic'));
 });
 
 
