@@ -399,6 +399,7 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
 RepeatManagerFactory.$inject = ['$rootScope', '$window', '$$rAF'];
 function RepeatManagerFactory($rootScope, $window, $$rAF) {
   var EMPTY_DIMENSION = { primaryPos: 0, secondaryPos: 0, primarySize: 0, secondarySize: 0, rowPrimarySize: 0 };
+  var DEF_EST_NUM_ITEMS_ON_SCREEN = 20;
 
   return function RepeatController(options) {
     var afterItemsNode = options.afterItemsNode;
@@ -546,7 +547,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
       // Create the pool of items for reuse, setting the size to (estimatedItemsOnScreen) * 2,
       // plus the size of the renderBuffer.
       if (!isLayoutReady) {
-        var poolSize = Math.max(20, renderBuffer * 3);
+        var poolSize = Math.max(DEF_EST_NUM_ITEMS_ON_SCREEN, renderBuffer * 3);
         for (var i = 0; i < poolSize; i++) {
           itemsPool.push(new RepeatItem());
         }
@@ -566,6 +567,9 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
 
     this.setData = function(newData) {
       data = newData;
+      if (data.length < DEF_EST_NUM_ITEMS_ON_SCREEN) {
+        itemsPool.splice((data.length - 1), (DEF_EST_NUM_ITEMS_ON_SCREEN - data.length));
+      }
       (view.onRefreshData || angular.noop)();
       isDataReady = true;
     };

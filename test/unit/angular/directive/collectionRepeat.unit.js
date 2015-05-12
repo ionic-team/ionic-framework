@@ -361,6 +361,33 @@ describe('collectionRepeat', function() {
 
   });
 
+  describe('vertical static list with updating list', function() {
+    beforeEach(inject(function(_$rootScope_,$window) {
+      $rootScope = _$rootScope_;
+
+      spyOn($window, 'getComputedStyle').andReturn({
+        width: '50px',
+        height: '50px'
+      });
+      setup(3);
+    }));
+
+    it('should show initial screen of items', function() {
+      expect(activeItems().length).toBe(3);
+      expect(activeItemContents()).toEqual(['0','1','2']);
+    });
+
+    it('should show updated screen of items', function() {
+      var list = [];
+      for (var i = 0; i < 10; i++) list.push(i);
+      $rootScope.list = list;
+      $rootScope.$apply();
+      expect(activeItems().length).toBe(5);
+      expect(activeItemContents()).toEqual(['0','1','2','3','4']);
+    });
+
+  });
+
   describe('vertical static grid', function() {
     beforeEach(function() {
       setup(10, 'item-width="33%" item-height="25"', {
