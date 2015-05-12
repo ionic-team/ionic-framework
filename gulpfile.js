@@ -26,8 +26,8 @@ gulp.task('build', function() {
     'clean',
     'ionic.copy.js',
     'ionic.examples',
-    'sass');
-
+    'sass',
+    'fonts');
 })
 
 gulp.task('watch', function() {
@@ -37,6 +37,7 @@ gulp.task('watch', function() {
     'ionic.copy.js',
     'ionic.examples',
     'sass',
+    'fonts',
 
     function() {
       watch('ionic/**/*.js', function() {
@@ -104,6 +105,12 @@ gulp.task('sass', function() {
 });
 
 
+gulp.task('fonts', function() {
+  return gulp.src('ionic/components/icon/fonts/**/*')
+    .pipe(gulp.dest('../angular-ionic/dist/js/dev/es5/fonts'));
+});
+
+
 gulp.task('update.angular', function(done) {
 
   if (!fs.existsSync('../angular-ionic')) {
@@ -162,11 +169,6 @@ gulp.task('karma', function() {
 
 gulp.task('karma-watch', function() {
   return karma.start({ configFile: __dirname + '/scripts/test/karma-watch.conf.js' })
-});
-
-gulp.task('fonts', function() {
-  return gulp.src('ionic/components/icon/fonts/**/*')
-    .pipe(gulp.dest('dist/fonts'));
 });
 
 
