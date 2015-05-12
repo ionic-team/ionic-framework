@@ -1,7 +1,7 @@
+import {Renderer, ElementRef} from 'angular2/angular2'
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
-import {NgElement, Renderer, ElementRef, DefaultValueAccessor, Ancestor, Optional} from 'angular2/angular2'
 import {ControlGroup, ControlDirective} from 'angular2/forms'
 import {dom} from 'ionic/util';
 import {IonicComponent} from 'ionic/config/component'
@@ -37,14 +37,14 @@ import {IonicComponent} from 'ionic/config/component'
 })
 export class Switch {
   constructor(
-    @NgElement() element:NgElement,
+    elementRef: ElementRef,
     cd: ControlDirective
     // @PropertySetter('attr.role') setAriaRole: Function,
     // @PropertySetter('attr.aria-checked') setChecked: Function
     // @PropertySetter('attr.aria-invalid') setInvalid: Function,
     // @PropertySetter('attr.aria-disabled') setDisabled: Function
   ) {
-    this.domElement = element.domElement
+    this.domElement = elementRef.domElement
     this.config = Switch.config.invoke(this)
     this.controlDirective = cd;
     cd.valueAccessor = this;
