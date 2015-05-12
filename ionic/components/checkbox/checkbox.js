@@ -1,4 +1,9 @@
-import {NgElement, Renderer, ElementRef, Component, DefaultValueAccessor, View, Ancestor, Optional, Decorator, Directive} from 'angular2/angular2'
+import {ElementRef} from 'angular2/angular2'
+
+import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
+import {Ancestor} from 'angular2/src/core/annotations_impl/visibility';
+import {View} from 'angular2/src/core/annotations_impl/view';
+
 import {ControlGroup, ControlDirective} from 'angular2/forms'
 import {IonicComponent} from 'ionic/config/component'
 
@@ -29,14 +34,14 @@ import {IonicComponent} from 'ionic/config/component'
 })
 export class Checkbox {
   constructor(
-    @NgElement() ngElement: NgElement,
+    elementRef: ElementRef,
     cd: ControlDirective
     // @PropertySetter('attr.role') setAriaRole: Function,
     // @PropertySetter('attr.aria-checked') setAriaChecked: Function,
     // @PropertySetter('attr.aria-invalid') setAriaInvalid: Function,
     // @PropertySetter('attr.aria-disabled') setAriaDisabled: Function
   ) {
-    this.domElement = ngElement.domElement
+    this.domElement = elementRef.domElement
     this.domElement.classList.add('item')
     this.controlDirective = cd;
     cd.valueAccessor = this;
@@ -60,8 +65,8 @@ export class Checkbox {
     this.setCheckedProperty = setAriaChecked
 
     // TODO: This is a hack and not a very good one at that
-    this.domElement.querySelector('.checkbox-off').classList.add(this.config.properties.iconOff.ios);
-    this.domElement.querySelector('.checkbox-on').classList.add(this.config.properties.iconOn.ios);
+    this.domElement.querySelector('.checkbox-off').classList.add(this.config.properties.iconOff.defaults.ios);
+    this.domElement.querySelector('.checkbox-on').classList.add(this.config.properties.iconOn.defaults.ios);
   }
 
   /**
