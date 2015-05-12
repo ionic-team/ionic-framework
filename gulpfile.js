@@ -15,6 +15,7 @@ var sass = require('gulp-sass');
 var through2 = require('through2');
 var runSequence = require('run-sequence');
 var watch = require('gulp-watch');
+var exec = require('child_process').exec;
 
 
 // !!! TEMP HACK !!!
