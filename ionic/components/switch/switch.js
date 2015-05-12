@@ -1,4 +1,7 @@
-import {NgElement, Renderer, ElementRef, Component, DefaultValueAccessor, View, Ancestor, Optional, Decorator, Directive} from 'angular2/angular2'
+import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
+import {View} from 'angular2/src/core/annotations_impl/view';
+
+import {NgElement, Renderer, ElementRef, DefaultValueAccessor, Ancestor, Optional} from 'angular2/angular2'
 import {ControlGroup, ControlDirective} from 'angular2/forms'
 import {dom} from 'ionic/util';
 import {IonicComponent} from 'ionic/config/component'

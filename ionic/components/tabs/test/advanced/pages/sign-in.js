@@ -10,11 +10,11 @@ import {
   Toolbar,
   ToolbarTitle,
 } from 'ionic/ionic';
-import {TabsPage} from 'pages/tabs';
+import {TabsPage} from './tabs';
 
 @Component()
 @View({
-  templateUrl: 'pages/sign-in.html',
+  templateUrl: './pages/sign-in.html',
   directives: [Content, Toolbar, ToolbarTitle]
 })
 export class SignInPage {

@@ -1,5 +1,5 @@
 import * as util from 'ionic/util';
-import Hammer from 'hammer';
+//import Hammer from 'hammer';
 
 export class Gesture {
   constructor(element, opts = {}) {

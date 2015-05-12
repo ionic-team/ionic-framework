@@ -1,15 +1,14 @@
-import {NgElement, Decorator} from 'angular2/angular2'
+import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
+
 import {IonicComponent} from 'ionic/config/component'
 
-@Decorator({
+
+@Directive({
   selector: 'ion-label'
 })
 export class Label {
-  constructor(
-    @NgElement() ngElement:NgElement
-  ) {
-    this.domElement = ngElement.domElement
+  constructor() {
   }
 }
-new IonicComponent(Label, {
-})
+// new IonicComponent(Label, {
+// })

@@ -1,66 +1,86 @@
 var _ = require('lodash');
 var buildConfig = require('./scripts/build/config');
-var SystemJsBuilder = require('systemjs-builder');
-var exec = require('child_process').exec;
 var fs = require('fs');
 var gulp = require('gulp');
 var karma = require('karma').server;
 var path = require('path');
 var VinylFile = require('vinyl');
-
 var argv = require('yargs').argv;
-var babel = require('gulp-babel');
 var cached = require('gulp-cached');
 var concat = require('gulp-concat');
-var debug = require('gulp-debug');
 var del = require('del');
 var gulpif = require('gulp-if');
-var karma = require('karma').server;
-var plumber = require('gulp-plumber');
 var rename = require('gulp-rename');
 var sass = require('gulp-sass');
-var shell = require('gulp-shell');
 var through2 = require('through2');
-var traceur = require('gulp-traceur');
+var runSequence = require('run-sequence');
+var watch = require('gulp-watch');
 
 
-require('./scripts/snapshot/snapshot.task')(gulp, argv, buildConfig);
+// !!! TEMP HACK !!!
+// first run ./update-angular.sh
+gulp.task('watch', function() {
 
-gulp.task('default', ['clean'], function() {
-  gulp.run('build');
+  runSequence(
+    'clean',
+    'ionic.copy.js',
+    'ionic.examples',
+    'sass',
+
+    function() {
+      watch('ionic/**/*.js', function() {
+        gulp.start('ionic.copy.js');
+      });
+
+      watch('ionic/components/*/test/**/*', function() {
+        gulp.start('ionic.examples');
+      });
+
+      watch('ionic/components/**/*.scss', function() {
+        gulp.start('sass');
+      });
+    })
+
 });
 
-gulp.task('build', ['e2e', 'ionic-js', 'ng2', 'sass']);
-
-gulp.task('lib', ['fonts', 'dependencies']);
-
-gulp.task('watch', ['default'], function() {
-  gulp.watch(buildConfig.src.scss, ['sass'])
-  gulp.watch([].concat(
-    buildConfig.src.js, buildConfig.src.html,
-    'scripts/e2e/index.template.html'
-  ), ['e2e'])
-  gulp.watch([].concat(
-    buildConfig.src.e2e, buildConfig.src.html,
-    'scripts/e2e/index.template.html'
-  ), ['ionic-js'])
+gulp.task('clean', function(done) {
+  del(['../angular/modules/ionic, ./angular/modules/examples/src/ionic'], done);
 });
 
-gulp.task('karma', function() {
-  return karma.start({ configFile: __dirname + '/scripts/test/karma.conf.js' })
+
+gulp.task('ionic.copy.js', function(done) {
+  return gulp.src(['ionic/**/*.js', '!ionic/components/*/test/**/*'])
+             .pipe(gulp.dest('../angular/modules/ionic'));
 });
 
-gulp.task('karma-watch', function() {
-  return karma.start({ configFile: __dirname + '/scripts/test/karma-watch.conf.js' })
+
+gulp.task('ionic.examples', function() {
+  var indexContents = _.template( fs.readFileSync('scripts/e2e/angular.template.html') )({
+    buildConfig: buildConfig
+  });
+
+  // Get each test folder with gulp.src
+  return gulp.src('ionic/components/*/test/*/**/*')
+    .pipe(rename(function(file) {
+      file.dirname = file.dirname.replace(path.sep + 'test' + path.sep, path.sep)
+    }))
+    .pipe(gulpif(/index.js$/, processMain()))
+    .pipe(gulp.dest('../angular/modules/examples/src/ionic'))
+
+    function processMain() {
+      return through2.obj(function(file, enc, next) {
+        var self = this;
+        self.push(new VinylFile({
+          base: file.base,
+          contents: new Buffer(indexContents),
+          path: path.join(path.dirname(file.path), 'index.html'),
+        }));
+        next(null, file);
+      })
+    }
+
 });
 
-gulp.task('dependencies', function() {
-  var copyFrom = buildConfig.scripts
-    .map(function(data) {  return data.from; })
-    .filter(function(item) { return !!item; });
-  return gulp.src(copyFrom)
-    .pipe(gulp.dest(buildConfig.distLib))
-});
 
 gulp.task('sass', function() {
   return gulp.src('ionic/ionic.scss')
@@ -72,14 +92,76 @@ gulp.task('sass', function() {
     .pipe(gulp.dest('dist/css'));
 });
 
+
+gulp.task('update.angular', function(done) {
+
+  if (!fs.existsSync('../angular')) {
+    fs.mkdirSync('../angular');
+
+    console.log('cloning angular master...');
+    exec('git clone git@github.com:angular/angular ../angular', function() {
+      npmInstall();
+    });
+
+  } else {
+    console.log('angular master: cleaning modules');
+    del(['../angular/modules'], function() {
+
+      console.log('angular master: reset --hard...');
+      exec('git reset --hard origin/master', {cwd: '../angular'}, function () {
+
+        console.log('angular master: git pull origin master...');
+        exec('git pull origin master', function () {
+          npmInstall();
+        });
+      });
+
+    })
+  }
+
+  function npmInstall() {
+    console.log('angular master: npm install (may take a while, chill out)...');
+    exec('npm install', {cwd: '../angular'}, function () {
+      done();
+    });
+  }
+
+});
+
+
+
+require('./scripts/snapshot/snapshot.task')(gulp, argv, buildConfig);
+
+
+// gulp.task('watch', ['default'], function() {
+//   gulp.watch(buildConfig.src.scss, ['sass'])
+//   gulp.watch([].concat(
+//     buildConfig.src.js, buildConfig.src.html,
+//     'scripts/e2e/index.template.html'
+//   ), ['e2e'])
+//   gulp.watch([].concat(
+//     buildConfig.src.e2e, buildConfig.src.html,
+//     'scripts/e2e/index.template.html'
+//   ), ['ionic-js'])
+// });
+
+gulp.task('karma', function() {
+  return karma.start({ configFile: __dirname + '/scripts/test/karma.conf.js' })
+});
+
+gulp.task('karma-watch', function() {
+  return karma.start({ configFile: __dirname + '/scripts/test/karma-watch.conf.js' })
+});
+
 gulp.task('fonts', function() {
   return gulp.src('ionic/components/icon/fonts/**/*')
     .pipe(gulp.dest('dist/fonts'));
 });
 
-gulp.task('clean', function(done) {
-  del([buildConfig.dist], done);
-});
+
+
+
+
 
 gulp.task('e2e', ['ionic-js', 'sass'], function() {
   var indexContents = _.template( fs.readFileSync('scripts/e2e/index.template.html') )({
@@ -100,8 +182,8 @@ gulp.task('e2e', ['ionic-js', 'sass'], function() {
       file.dirname = file.dirname.replace(path.sep + 'test' + path.sep, path.sep)
     }))
     .pipe(gulpif(/main.js$/, processMain()))
-    .pipe(gulpif(/e2e.js$/, createPlatformTests()))
-    .pipe(gulp.dest(buildConfig.dist + '/e2e'))
+    //.pipe(gulpif(/e2e.js$/, createPlatformTests()))
+    //.pipe(gulp.dest(buildConfig.dist + '/e2e'))
 
     function processMain() {
       return through2.obj(function(file, enc, next) {
@@ -112,37 +194,9 @@ gulp.task('e2e', ['ionic-js', 'sass'], function() {
           path: path.join(path.dirname(file.path), 'index.html'),
         }));
         next(null, file);
-
-        // var builder = new SystemJsBuilder({
-        //   baseURL: __dirname,
-        //   traceurOptions: { annotations: true, types: true },
-        //   meta: {
-        //     'angular2/angular2': { build: false },
-        //     'ionic/ionic': { build: false },
-        //   },
-        //   map: {
-        //     hammer: 'node_modules/hammerjs/hammer',
-        //     rx: 'node_modules/rx'
-        //   },
-        //   paths: {
-        //     'angular2/*': 'dist/lib/angular2/*.js',
-        //     'app/*': path.dirname(file.path) + '/*.js'
-        //   },
-        // });
-        // builder.build('app/main').then(function(output) {
-        //   self.push(new VinylFile({
-        //     base: file.base,
-        //     contents: new Buffer(output.source),
-        //     path: file.path,
-        //   }));
-        //   next();
-        // })
-        // .catch(function(err) {
-        //   console.log('error', err);
-        //   throw new Error(err);
-        // });
       })
     }
+
     function createPlatformTests(file) {
       return through2.obj(function(file, enc, next) {
         var self = this
@@ -165,44 +219,4 @@ gulp.task('e2e', ['ionic-js', 'sass'], function() {
       })
     }
 
-});
-
-gulp.task('ng2-copy', function() {
-  return gulp.src('node_modules/angular2/es6/prod/**/*.es6')
-    .pipe(rename({ extname: '.js' }))
-    .pipe(gulp.dest(path.join(buildConfig.distLib, 'angular2')));
-});
-
-gulp.task('ng2', ['lib', 'ng2-copy'], function() {
-  var builder = new SystemJsBuilder({
-    paths: {
-      "angular2/*": "node_modules/angular2/es6/prod/*.es6",
-      "rx/*": "node_modules/angular2/node_modules/rx/*.js"
-    }
-  });
-  return builder.build('angular2/angular2', path.join(buildConfig.distLib, 'angular2.js')).then(function() {
-    return builder.build('angular2/di', path.join(buildConfig.distLib, 'angular2-di.js'));
-  });
-});
-
-gulp.task('ng2-di', ['ng2'], function() {
-});
-
-gulp.task('ionic-js', function() {
-  var builder = new SystemJsBuilder({
-    traceurOptions: {
-      annotations: true,
-      types: true,
-    },
-    meta: {
-      'angular2/angular2': { build: false },
-      'angular2/di': { build: false },
-    },
-    paths: {
-      "hammer": 'node_modules/hammerjs/*.js',
-      "angular2/*": "node_modules/angular2/es6/prod/*.es6",
-      "rx/*": "node_modules/angular2/node_modules/rx/*.js",
-    }
-  });
-  return builder.build('ionic/ionic', path.join(buildConfig.distLib, 'ionic2.js'));
 });
