@@ -1,4 +1,6 @@
-import {NgElement, Component, View} from 'angular2/angular2'
+import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
+import {View} from 'angular2/src/core/annotations_impl/view';
+
 import {IonicComponent} from 'ionic/config/component'
 
 
@@ -9,14 +11,11 @@ import {IonicComponent} from 'ionic/config/component'
   template: `<content></content>`
 })
 export class List {
-  constructor(
-    ngElement: NgElement
-  ) {
-    this.domElement = ngElement.domElement;
-    this.config = List.config.invoke(this)
+  constructor() {
+
   }
 }
 
-new IonicComponent(List, {
-  propClasses: ['inset']
-})
+// new IonicComponent(List, {
+//   propClasses: ['inset']
+// })

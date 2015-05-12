@@ -17,6 +17,7 @@
     "gulp-sass": "^1.3.3",
     "gulp-shell": "^0.4.0",
     "gulp-traceur": "^0.17.1",
+    "gulp-watch": "^4.2.4",
     "gulp-wrap": "^0.11.0",
     "karma": "^0.12.31",
     "karma-chrome-launcher": "^0.1.7",

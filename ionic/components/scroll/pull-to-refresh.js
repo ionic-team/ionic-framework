@@ -1,6 +1,9 @@
-import {NgElement, EventEmitter, Decorator, Component, View, PropertySetter} from 'angular2/angular2';
+import {NgElement, EventEmitter, PropertySetter} from 'angular2/angular2';
 
-@Decorator({
+import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
+
+
+@Directive({
   selector: '[ion-refresher]'
 })
 export class Refresher {

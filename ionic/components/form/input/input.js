@@ -1,17 +1,16 @@
-import {NgElement, Decorator} from 'angular2/angular2'
+import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
+
 import {IonicComponent} from 'ionic/config/component'
 
-@Decorator({
+
+@Directive({
   selector: 'ion-input'
 })
 export class Input {
-  constructor(
-    @NgElement() ngElement:NgElement
-  ) {
-    this.domElement = ngElement.domElement
+  constructor() {
     //this.config = Button.config.invoke(this)
     console.log('INPUT');
   }
 }
-new IonicComponent(Input, {
-})
+// new IonicComponent(Input, {
+// })

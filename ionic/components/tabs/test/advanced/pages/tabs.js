@@ -16,7 +16,7 @@ import {Toolbar, ToolbarTitle} from 'ionic/components/toolbar/toolbar';
   selector: 'tabs-page'
 })
 @View({
-  templateUrl: 'pages/tabs.html',
+  templateUrl: './pages/tabs.html',
   directives: [Tabs, Tab, Content]
 })
 

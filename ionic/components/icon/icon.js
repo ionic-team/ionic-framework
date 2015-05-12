@@ -1,10 +1,11 @@
-import {NgElement, Decorator} from 'angular2/angular2'
+import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 
-@Decorator({
+
+@Directive({
   selector: 'ion-icon,ionicon,icon'
 })
 export class Icon {
-  constructor(@NgElement() ngEle:NgElement) {
-    ngEle.domElement.setAttribute('aria-hidden', 'hidden')
+  constructor() {
+    //ngEle.domElement.setAttribute('aria-hidden', 'hidden')
   }
 }
