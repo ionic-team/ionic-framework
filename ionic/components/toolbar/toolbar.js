@@ -1,6 +1,7 @@
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
-import {ViewContainerRef} from 'angular2/angular2';
+import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
+import {ProtoViewRef} from 'angular2/src/core/compiler/view_ref';
 
 import * as dom from 'ionic/util/dom'
 import {IonicComponent} from 'ionic/config/component';
@@ -17,11 +18,13 @@ import {Platform} from 'ionic/platform/platform';
 export class Toolbar {
 
   constructor(
-    viewContainer: ViewContainerRef,
+    viewContainerRef: ViewContainerRef,
+    protoViewRef: ProtoViewRef,
     elementRef: ElementRef,
     navItem: NavItem
   ) {
-    this.viewContainer = viewContainer;
+    this.viewContainerRef = viewContainerRef;
+    this.protoViewRef = protoViewRef;
     this.elementRef = elementRef;
     this.navItem = navItem;
 

@@ -13,24 +13,25 @@ export class NavItem {
     this.params = params;
     this.id = util.nextUid();
     this.headers = [];
-    this.created = false;
   }
 
   setup() {
     if (!this.created) {
       return this.create();
     }
-
     return Promise.resolve();
   }
 
   create() {
+    this.created = true;
+
     let resolve;
     let promise = new Promise((res) => { resolve = res; });
 
     let injector = this.nav.injector.resolveAndCreateChild([
       bind(NavController).toValue(this.nav.navCtrl),
-      bind(NavParams).toValue(new NavParams(this.params))
+      bind(NavParams).toValue(new NavParams(this.params)),
+      bind(NavItem).toValue(this)
     ]);
 
     this.nav.loader.loadNextToExistingLocation(this.Class, this.nav.itemContent.elementRef, injector).then((componentRef) => {
@@ -41,21 +42,26 @@ export class NavItem {
       this.domElement.classList.add('nav-item');
       this.domElement.setAttribute('data-nav-item-id', this.id);
 
-      this.created = true;
+      for (let i = 0; i < this.headers.length; i++) {
+        this.createToolbar(this.headers[i], injector);
+      }
+
       resolve();
     });
-
-    //     let vc = new ViewContainerRef(this.nav.viewManager, this.nav.elementRef);
-
-    // debugger
-    //     let view = vc.create(this.Class, -1, this.nav.itemContent.elementRef, injector);
-
 
     return promise;
   }
 
+  createToolbar(ToolbarClass, injector) {
+    let vc = new ViewContainerRef(this.nav.viewManager, this.nav.itemHeader.elementRef);
+
+    let protoViewRef = ToolbarClass.protoViewRef;
+
+    let view = vc.create(protoViewRef, -1, this.nav.itemHeader.elementRef, injector);
+  }
+
   addToolbar(position, toolbar) {
-    headers.push(toolbar);
+    this.headers.push(toolbar);
   }
 
   destroy() {
