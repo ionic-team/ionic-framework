@@ -1,6 +1,8 @@
 import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
+import {bind} from 'angular2/di';
 
 import * as util from 'ionic/util';
+import {NavController} from './nav-controller';
 
 
 export class NavItem {
@@ -16,14 +18,16 @@ export class NavItem {
     let resolve;
     let promise = new Promise((res) => { resolve = res; });
 
-    let injector = null;
-
+    let injector = this.nav.injector.resolveAndCreateChild([
+      bind(NavController).toValue(this.nav.navCtrl)
+    ]);
 
     this.nav.loader.loadNextToExistingLocation(this.Class, this.nav.itemContent.elementRef, injector)
                    .then((componentRef) => {
 
       this.component = componentRef;
       this.domElement = componentRef.location.domElement;
+      this.domElement.classList.add('nav-item');
 
       resolve();
     });

@@ -1,13 +1,15 @@
 
 export class NavController {
-  constructor() {
+
+  constructor(nav) {
+    this._nav = nav;
   }
 
   push() {
-    return this.nav.push.apply(this.nav, arguments);
+    return this._nav.push.apply(this._nav, arguments);
   }
 
   pop() {
-    return this.nav.pop.apply(this.nav, arguments);
+    return this._nav.pop.apply(this._nav, arguments);
   }
 }

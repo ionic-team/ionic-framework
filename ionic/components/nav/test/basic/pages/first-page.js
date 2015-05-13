@@ -5,15 +5,15 @@ import {NavController} from 'ionic/ionic'
 import {SecondPage} from './second-page'
 
 
-@Component()
+@Component({selector: 'ion-view'})
 @View({
   templateUrl: 'pages/first-page.html'
 })
 export class FirstPage {
   constructor(
-    //nav: NavController
+    nav: NavController
   ) {
-    //this.nav = nav;
+    this.nav = nav;
   }
 
   push() {

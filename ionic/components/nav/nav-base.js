@@ -1,6 +1,7 @@
 import * as util from 'ionic/util';
 import {Transition, ClickBlock} from 'ionic/ionic';
-import {NavItem} from './nav-item'
+import {NavItem} from './nav-item';
+import {NavController} from './nav-controller';
 
 
 const STAGED_STATE = 'staged';
@@ -16,6 +17,7 @@ export class NavBase {
 
   constructor() {
     this.items = [];
+    this.navCtrl = new NavController(this);
   }
 
   set initial(Class) {

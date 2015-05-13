@@ -3,6 +3,7 @@ import {Component, Directive} from 'angular2/src/core/annotations_impl/annotatio
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_component_loader';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
+import {Injector} from 'angular2/di';
 
 import {NavBase} from 'ionic/components/nav/nav-base';
 import {NavItem, NavItemDynamicComponent} from 'ionic/components/nav/nav-item';
@@ -33,12 +34,14 @@ export class Nav extends NavBase {
 
   constructor(
     loader: DynamicComponentLoader,
-    elementRef: ElementRef
+    elementRef: ElementRef,
+    injector: Injector
   ) {
     super();
     this.loader = loader;
     this.viewManager = loader._viewManager;
     this.elementRef = elementRef;
+    this.injector = injector;
   }
 
 }
