@@ -17,6 +17,6 @@ export class FirstPage {
   }
 
   push() {
-    this.nav.push(SecondPage);
+    this.nav.push(SecondPage, { animation: 'none' });
   }
 }

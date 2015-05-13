@@ -12,9 +12,18 @@ export class NavItem {
     this.Class = ComponentClass;
     this.params = params;
     this.id = util.nextUid();
+    this.created = false;
   }
 
   setup() {
+    if (!this.created) {
+      return this.create();
+    }
+
+    return Promise.resolve();
+  }
+
+  create() {
     let resolve;
     let promise = new Promise((res) => { resolve = res; });
 
@@ -26,12 +35,16 @@ export class NavItem {
                    .then((componentRef) => {
 
       this.component = componentRef;
+      this.dispose = componentRef._dispose;
+
       this.domElement = componentRef.location.domElement;
       this.domElement.classList.add('nav-item');
+      this.domElement.setAttribute('data-nav-item-id', this.id);
+
+      this.created = true;
 
       resolve();
     });
-
 
     //     let vc = new ViewContainerRef(this.nav.viewManager, this.nav.elementRef);
 

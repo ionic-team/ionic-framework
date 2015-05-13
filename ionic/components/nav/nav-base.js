@@ -41,12 +41,14 @@ export class NavBase {
 
     // the active item is going to be the leaving one (if one exists)
     let leavingItem = this.getActive() || {};
+    leavingItem.shouldDestroy = false;
 
     // create a new NavStackItem
     let enteringItem = new NavItem(this, Class, params);
 
     // set that this item is staged (it's not ready to be animated in yet)
     enteringItem.state = STAGED_STATE;
+    enteringItem.shouldDestroy = false;
 
     // add the item to the stack
     this.items.push(enteringItem);
@@ -66,20 +68,18 @@ export class NavBase {
     // default the direction to "back"
     opts.direction = opts.direction || 'back';
 
-    // remove the last item
-    this.items.pop();
-
-    // the entering item is now the new last item
-    let enteringItem = this.last()
-
     // get the active item and set that it is staged to be leaving
     // was probably the one popped from the stack
     let leavingItem = this.getActive() || {};
+    leavingItem.shouldDestroy = true;
+
+    // the entering item is now the new last item
+    let enteringItem = this.getPrevious(leavingItem);
+    enteringItem.shouldDestroy = false;
 
     // start the transition
     this.transition(enteringItem, leavingItem, opts).then(() => {
       // transition completed, destroy the leaving item
-      this._destroy(leavingItem);
       resolve();
     });
 
@@ -127,6 +127,9 @@ export class NavBase {
           enteringItem.state = ACTIVE_STATE;
           leavingItem.state = CACHED_STATE;
 
+          // destroy any items that shouldn't stay around
+          this.cleanup();
+
           // allow clicks again
           ClickBlock(false);
 
@@ -142,6 +145,18 @@ export class NavBase {
   }
 
 
+  cleanup() {
+    for (let i = 0, ii = this.items.length; i < ii; i++) {
+      let item = this.items[i];
+      if (item && item.shouldDestroy) {
+        this.remove(item);
+        i = 0;
+        ii = this.items.length;
+debugger
+        item.dispose && item.dispose();
+      }
+    }
+  }
 
 
   getActive() {
@@ -196,43 +211,9 @@ export class NavBase {
     return this.items.length;
   }
 
-  popAll() {
-    while (this.items.length) {
-      const item = this.items.pop()
-      this._destroy(item)
-    }
-  }
-
-  // Pop from the current item to the item at the specified index.
-  // Removes every item in the stack between the current and the given index,
-  // then performs a normal pop.
-  popTo(index, opts = {}) {
-    // Abort if we're already here.
-    if (this.items.length <= index + 1) {
-      return Promise.resolve();
-    }
-
-    // Save the current navItem, and remove all the other ones in front of our
-    // target nav item.
-    const current = this.items.pop()
-    while (this.items.length > index + 1) {
-      const item = this.items.pop()
-      this._destroy(item)
-    }
-
-    // Now put the current navItem back on the stack and run a normal pop animation.
-    this.items.push(current)
-    return this.pop(opts)
-  }
-
   remove(index) {
     const item = this.items[index];
     this.items.splice(index, 1);
-    this._destroy(item);
-  }
-
-  _destroy(navItem) {
-    util.array.remove(this.items, navItem);
   }
 
   getToolbars(pos: String) {

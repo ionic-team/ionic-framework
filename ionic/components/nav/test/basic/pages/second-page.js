@@ -20,6 +20,6 @@ export class SecondPage {
     this.nav.pop();
   }
   push() {
-    this.nav.push(ThirdPage);
+    this.nav.push(ThirdPage, { animation: 'none' });
   }
 }
