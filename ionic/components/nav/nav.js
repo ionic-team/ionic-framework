@@ -3,6 +3,7 @@ import {Component, Directive} from 'angular2/src/core/annotations_impl/annotatio
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_component_loader';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
+import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
 import {Injector} from 'angular2/di';
 
 import {NavBase} from 'ionic/components/nav/nav-base';
@@ -19,13 +20,15 @@ import {ToolbarContainer} from 'ionic/components/toolbar/toolbar';
 @View({
   template: `
   <header class="toolbar-container">
-    <header-container></header-container>
+    <header-anchor></header-anchor>
   </header>
   <section class="nav-item-container">
-    <content-container></content-container>
+    <content-anchor></content-anchor>
   </section>
+  <footer>
+  </footer>
   `,
-  directives: [HeaderContainer, ContentContainer]
+  directives: [HeaderAnchor, ContentAnchor]
 })
 export class Nav extends NavBase {
 
@@ -45,24 +48,26 @@ export class Nav extends NavBase {
 
 
 @Component({
-  selector: 'header-container'
+  selector: 'header-anchor'
 })
-class HeaderContainer {
-  constructor(@Ancestor() nav: Nav, elementRef: ElementRef) {
-    nav.itemHeader = {
-      elementRef: elementRef
+class HeaderAnchor {
+  constructor(@Ancestor() nav: Nav, elementRef: ElementRef, viewContainerRef: ViewContainerRef) {
+    nav.headerAnchor = {
+      elementRef: elementRef,
+      viewContainerRef: viewContainerRef
     };
   }
 }
 
 
 @Component({
-  selector: 'content-container'
+  selector: 'content-anchor'
 })
-class ContentContainer {
-  constructor(@Ancestor() nav: Nav, elementRef: ElementRef) {
-    nav.itemContent = {
-      elementRef: elementRef
+class ContentAnchor {
+  constructor(@Ancestor() nav: Nav, elementRef: ElementRef, viewContainerRef: ViewContainerRef) {
+    nav.contentAnchor = {
+      elementRef: elementRef,
+      viewContainerRef: viewContainerRef
     };
   }
 }

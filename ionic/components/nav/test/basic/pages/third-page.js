@@ -1,13 +1,13 @@
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
-import {NavController, Toolbar} from 'ionic/ionic';
+import {NavController, Header} from 'ionic/ionic';
 
 
 @Component()
 @View({
   templateUrl: 'pages/third-page.html',
-  directives: [Toolbar]
+  directives: [Header]
 })
 export class ThirdPage {
   constructor(

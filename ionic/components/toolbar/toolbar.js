@@ -1,63 +1,27 @@
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
-import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
 import {ProtoViewRef} from 'angular2/src/core/compiler/view_ref';
 
-import * as dom from 'ionic/util/dom'
+import * as dom from 'ionic/util/dom';
 import {IonicComponent} from 'ionic/config/component';
 import {NavItem} from 'ionic/ionic';
 import {Platform} from 'ionic/platform/platform';
 
 
 @Directive({
-  selector: '[ion-toolbar]',
-  properties: {
-    placement: 'placement'
-  }
+  selector: '[ion-header]'
 })
-export class Toolbar {
+export class Header {
 
-  constructor(
-    viewContainerRef: ViewContainerRef,
-    protoViewRef: ProtoViewRef,
-    elementRef: ElementRef,
-    navItem: NavItem
-  ) {
-    this.viewContainerRef = viewContainerRef;
-    this.protoViewRef = protoViewRef;
-    this.elementRef = elementRef;
-    this.navItem = navItem;
-
-    console.log('Toolbar!');
-
-    // TODO use config to add these classes
-    this.elementRef.domElement.classList.add('toolbar');
-    this.elementRef.domElement.classList.add(`toolbar-${Platform.getMode()}`);
-
-    // TODO Make a better way than this
-    if (/footer/i.test(this.elementRef.domElement.tagName)) {
-      this.placement = 'bottom';
-    } else {
-      this.placement = 'top';
-    }
-  }
-
-  set placement(pos) {
-    this.elementRef.domElement.classList.add(`toolbar-${pos}`);
-    this.elementRef.domElement.setAttribute('placement', pos);
-
-    this._placement = pos;
-    this.navItem.addToolbar(this._placement, this);
+  constructor(navItem: NavItem, protoViewRef: ProtoViewRef) {
+    navItem.addHeader(protoViewRef);
   }
 
 }
 
 
 @Component({
-  selector: '.toolbar-title',
-  // events: {
-  //   'window:resize': 'align()',
-  // }
+  selector: '.toolbar-title'
 })
 @View({
   template: `
@@ -67,7 +31,7 @@ export class Toolbar {
 })
 export class ToolbarTitle {
   constructor(
-    element: NgElement
+    element: ElementRef
   ) {
     // this.domElement = element.domElement;
 
@@ -104,8 +68,8 @@ export class ToolbarTitle {
 
       dom.raf(() => {
         if (titleElement.offsetWidth < titleElement.scrollWidth) {
-          this.titleElement.style.margin = ''
-          this.titleElement.style.textAlign = 'left'
+          this.titleElement.style.margin = '';
+          this.titleElement.style.textAlign = 'left';
         }
         this._showTitle();
       })
@@ -113,32 +77,10 @@ export class ToolbarTitle {
   }
 
   _showTitle() {
-    if (this._shown) return;
-    this._shown = true;
-    this._titleElement.classList.remove('toolbar-title-hide');
-  }
-}
-
-@Decorator({
-  selector: '[toolbar-create]',
-  properties: {
-    'toolbar': 'toolbar-create'
-  },
-})
-export class ToolbarContainer {
-  constructor(
-    viewContainer: ViewContainerRef,
-    element: NgElement
-  ) {
-    this.viewContainer = viewContainer;
-    this.domElement = element.domElement;
-  }
-
-  set toolbar(bar: Toolbar) {
-    if (bar) {
-      // TODO create with correct context
-      this.viewContainer.create(-1, bar.viewContainer._defaultProtoView, bar.elementRef.elementInjector);
-      console.log('creating viewportContainer', performance.now())
+    if (!this._shown) {
+      this._shown = true;
+      this._titleElement.classList.remove('toolbar-title-hide');
     }
   }
+
 }

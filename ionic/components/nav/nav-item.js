@@ -34,7 +34,7 @@ export class NavItem {
       bind(NavItem).toValue(this)
     ]);
 
-    this.nav.loader.loadNextToExistingLocation(this.Class, this.nav.itemContent.elementRef, injector).then((componentRef) => {
+    this.nav.loader.loadNextToExistingLocation(this.Class, this.nav.contentAnchor.elementRef, injector).then((componentRef) => {
 
       // content
       this.component = componentRef;
@@ -43,7 +43,7 @@ export class NavItem {
       this.domElement.setAttribute('data-nav-item-id', this.id);
 
       for (let i = 0; i < this.headers.length; i++) {
-        this.createToolbar(this.headers[i], injector);
+        this.createHeader(this.headers[i], injector);
       }
 
       resolve();
@@ -52,16 +52,17 @@ export class NavItem {
     return promise;
   }
 
-  createToolbar(ToolbarClass, injector) {
-    let vc = new ViewContainerRef(this.nav.viewManager, this.nav.itemHeader.elementRef);
+  createHeader(toolbarProtoView, injector) {
+    let vc = this.nav.headerAnchor.viewContainerRef;
 
-    let protoViewRef = ToolbarClass.protoViewRef;
+    let atIndex = -1;
+    let context = this.nav.headerAnchor.elementRef;
 
-    let view = vc.create(protoViewRef, -1, this.nav.itemHeader.elementRef, injector);
+    let view = vc.create(toolbarProtoView, atIndex, context, injector);
   }
 
-  addToolbar(position, toolbar) {
-    this.headers.push(toolbar);
+  addHeader(toolbarProtoView) {
+    this.headers.push(toolbarProtoView);
   }
 
   destroy() {
