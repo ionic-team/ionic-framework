@@ -35,7 +35,6 @@ export class NavItem {
                    .then((componentRef) => {
 
       this.component = componentRef;
-      this.dispose = componentRef._dispose;
 
       this.domElement = componentRef.location.domElement;
       this.domElement.classList.add('nav-item');
@@ -53,6 +52,12 @@ export class NavItem {
 
 
     return promise;
+  }
+
+  destroy() {
+    this.component && this.component._dispose && this.component._dispose();
+
+    this.domElement = this.component = this.params = this.nav = null;
   }
 
 }

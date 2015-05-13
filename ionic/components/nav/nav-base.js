@@ -152,8 +152,9 @@ export class NavBase {
         this.remove(item);
         i = 0;
         ii = this.items.length;
-debugger
-        item.dispose && item.dispose();
+        util.dom.raf(() => {
+          item.destroy();
+        });
       }
     }
   }
@@ -211,9 +212,8 @@ debugger
     return this.items.length;
   }
 
-  remove(index) {
-    const item = this.items[index];
-    this.items.splice(index, 1);
+  remove(itemOrIndex) {
+    util.array.remove(this.items, itemOrIndex);
   }
 
   getToolbars(pos: String) {

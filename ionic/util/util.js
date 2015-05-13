@@ -68,12 +68,13 @@ export function defaults(dest) {
   return dest;
 }
 
-export const isString = val => typeof val === 'string'
-export const isFunction = val => typeof val === 'function'
-export const isDefined = val => typeof val !== 'undefined'
-export const isUndefined = val => typeof val === 'undefined'
-export const isObject = val => typeof val === 'object'
-export const isArray = Array.isArray
+export const isString = val => typeof val === 'string';
+export const isNumber = val => typeof val === 'number';
+export const isFunction = val => typeof val === 'function';
+export const isDefined = val => typeof val !== 'undefined';
+export const isUndefined = val => typeof val === 'undefined';
+export const isObject = val => typeof val === 'object';
+export const isArray = Array.isArray;
 
 /**
  * Convert a string in the format thisIsAString to a slug format this-is-a-string
@@ -113,9 +114,14 @@ export let array = {
       if (cb(arr[i], i)) return arr[i];
     }
   },
-  remove(arr, item) {
-    const index = arr.indexOf(item);
-    if (index === -1) {
+  remove(arr, itemOrIndex) {
+    let index = -1;
+    if (isNumber(itemOrIndex)) {
+      index = itemOrIndex;
+    } else {
+      index = arr.indexOf(itemOrIndex);
+    }
+    if (index < 0) {
       return false;
     }
     arr.splice(index, 1);
