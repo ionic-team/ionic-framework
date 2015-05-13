@@ -15,7 +15,9 @@ const CACHED_STATE = 'cached';
 
 export class NavBase {
 
-  constructor() {
+  constructor(loader, injector) {
+    this.loader = loader;
+    this.injector = injector;
     this.items = [];
     this.navCtrl = new NavController(this);
   }

@@ -25,8 +25,6 @@ import {ToolbarContainer} from 'ionic/components/toolbar/toolbar';
   <section class="nav-item-container">
     <content-anchor></content-anchor>
   </section>
-  <footer>
-  </footer>
   `,
   directives: [HeaderAnchor, ContentAnchor]
 })
@@ -34,14 +32,9 @@ export class Nav extends NavBase {
 
   constructor(
     loader: DynamicComponentLoader,
-    elementRef: ElementRef,
     injector: Injector
   ) {
-    super();
-    this.loader = loader;
-    this.viewManager = loader._viewManager;
-    this.elementRef = elementRef;
-    this.injector = injector;
+    super(loader, injector);
   }
 
 }
@@ -51,11 +44,8 @@ export class Nav extends NavBase {
   selector: 'header-anchor'
 })
 class HeaderAnchor {
-  constructor(@Ancestor() nav: Nav, elementRef: ElementRef, viewContainerRef: ViewContainerRef) {
-    nav.headerAnchor = {
-      elementRef: elementRef,
-      viewContainerRef: viewContainerRef
-    };
+  constructor(@Ancestor() nav: Nav, viewContainerRef: ViewContainerRef) {
+    nav.headerContainerRef = viewContainerRef;
   }
 }
 
@@ -64,10 +54,7 @@ class HeaderAnchor {
   selector: 'content-anchor'
 })
 class ContentAnchor {
-  constructor(@Ancestor() nav: Nav, elementRef: ElementRef, viewContainerRef: ViewContainerRef) {
-    nav.contentAnchor = {
-      elementRef: elementRef,
-      viewContainerRef: viewContainerRef
-    };
+  constructor(@Ancestor() nav: Nav, elementRef: ElementRef) {
+    nav.contentElementRef = elementRef;
   }
 }
