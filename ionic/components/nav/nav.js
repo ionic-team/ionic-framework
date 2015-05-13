@@ -24,11 +24,8 @@ import {ToolbarContainer} from 'ionic/components/toolbar/toolbar';
   <section class="nav-item-container">
     <content-container></content-container>
   </section>
-  <footer class="toolbar-container" style="display:none">
-    <footer-container></footer-container>
-  </footer>
   `,
-  directives: [HeaderContainer, ContentContainer, FooterContainer]
+  directives: [HeaderContainer, ContentContainer]
 })
 export class Nav extends NavBase {
 
@@ -65,18 +62,6 @@ class HeaderContainer {
 class ContentContainer {
   constructor(@Ancestor() nav: Nav, elementRef: ElementRef) {
     nav.itemContent = {
-      elementRef: elementRef
-    };
-  }
-}
-
-
-@Component({
-  selector: 'footer-container'
-})
-class FooterContainer {
-  constructor(@Ancestor() nav: Nav, elementRef: ElementRef) {
-    nav.footerContainer = {
       elementRef: elementRef
     };
   }

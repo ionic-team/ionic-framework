@@ -12,6 +12,7 @@ export class NavItem {
     this.Class = ComponentClass;
     this.params = params;
     this.id = util.nextUid();
+    this.headers = [];
     this.created = false;
   }
 
@@ -53,10 +54,17 @@ export class NavItem {
     return promise;
   }
 
+  addToolbar(position, toolbar) {
+    headers.push(toolbar);
+  }
+
   destroy() {
     this.component && this.component._dispose && this.component._dispose();
 
-    this.domElement = this.component = this.params = this.nav = null;
+    // just to help prevent possible large memory leaks
+    for (let prop in this) {
+      this[prop] = null;
+    }
   }
 
 }

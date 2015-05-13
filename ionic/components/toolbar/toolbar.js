@@ -1,28 +1,14 @@
-import {
-  NgElement,
-  Component,
-  Decorator,
-  Viewport,
-  View,
-  ViewContainerRef,
-  //ProtoViewRef,
-  onDestroy,
-  Ancestor,
-  ElementRef,
-  onChange,
-} from 'angular2/angular2';
-import {BackButton} from 'ionic/components/toolbar/back-button';
-import {IonicComponent} from 'ionic/config/component';
-import {NavController} from 'ionic/components/nav/nav-item';
+import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
+import {ElementRef} from 'angular2/src/core/compiler/element_ref';
+import {ViewContainerRef} from 'angular2/angular2';
+
 import * as dom from 'ionic/util/dom'
+import {IonicComponent} from 'ionic/config/component';
+import {NavItem} from 'ionic/ionic';
 import {Platform} from 'ionic/platform/platform';
 
-// FYI for later:
-// https://github.com/angular/angular/commit/3aac2fefd7f93c74abfa5ee58aa0ea8d4840b519
 
-
-
-@Viewport({
+@Directive({
   selector: '[ion-toolbar]',
   properties: {
     placement: 'placement'
@@ -32,39 +18,35 @@ export class Toolbar {
 
   constructor(
     viewContainer: ViewContainerRef,
-    //protoViewRef: ProtoViewRef,
     elementRef: ElementRef,
-    @Ancestor() navCtrl: NavController,
-    element: NgElement
-    // context: Object TODO wait for angular to implement this
+    navItem: NavItem
   ) {
     this.viewContainer = viewContainer;
     this.elementRef = elementRef;
-    this.navCtrl = navCtrl;
+    this.navItem = navItem;
 
     console.log('Toolbar!');
 
     // TODO use config to add these classes
-    dom.addClass(this.viewContainer.domElement, 'toolbar', `toolbar-${Platform.getMode()}`);
+    this.elementRef.domElement.classList.add('toolbar');
+    this.elementRef.domElement.classList.add(`toolbar-${Platform.getMode()}`);
 
     // TODO Make a better way than this
-    if (/header/i.test(this.viewContainer.domElement.tagName)) {
-       this.placement = 'top';
-    } else {
+    if (/footer/i.test(this.elementRef.domElement.tagName)) {
       this.placement = 'bottom';
+    } else {
+      this.placement = 'top';
     }
   }
 
   set placement(pos) {
-    this.viewContainer.domElement.classList.add(`toolbar-${pos}`);
+    this.elementRef.domElement.classList.add(`toolbar-${pos}`);
+    this.elementRef.domElement.setAttribute('placement', pos);
+
     this._placement = pos;
-    this.navCtrl.addToolbar(this._placement, this);
-    this.viewContainer.domElement.setAttribute('placement', pos);
+    this.navItem.addToolbar(this._placement, this);
   }
 
-  onDestroy() {
-    this.navCtrl.removeToolbar(this);
-  }
 }
 
 
