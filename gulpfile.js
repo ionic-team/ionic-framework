@@ -173,7 +173,7 @@ gulp.task('karma-watch', function() {
 
 
 
-gulp.task('e2e', ['ionic-js', 'sass'], function() {
+gulp.task('e2e', ['sass'], function() {
   var indexContents = _.template( fs.readFileSync('scripts/e2e/index.template.html') )({
     buildConfig: buildConfig
   });
@@ -193,7 +193,7 @@ gulp.task('e2e', ['ionic-js', 'sass'], function() {
     }))
     .pipe(gulpif(/main.js$/, processMain()))
     //.pipe(gulpif(/e2e.js$/, createPlatformTests()))
-    //.pipe(gulp.dest(buildConfig.dist + '/e2e'))
+    .pipe(gulp.dest(buildConfig.dist + '/e2e'));
 
     function processMain() {
       return through2.obj(function(file, enc, next) {
