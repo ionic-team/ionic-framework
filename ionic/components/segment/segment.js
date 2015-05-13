@@ -10,8 +10,6 @@ import {IonicComponent} from 'ionic/config/component'
 import {Button} from 'ionic/components/button/button'
 
 
-console.log('NGELEMENT', ElementRef);
-
 @Component({
   selector: 'ion-segment',
   hostListeners: {
