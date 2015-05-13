@@ -168,11 +168,6 @@ gulp.task('karma-watch', function() {
   return karma.start({ configFile: __dirname + '/scripts/test/karma-watch.conf.js' })
 });
 
-
-
-
-
-
 gulp.task('e2e', ['sass'], function() {
   var indexContents = _.template( fs.readFileSync('scripts/e2e/index.template.html') )({
     buildConfig: buildConfig
@@ -184,6 +179,9 @@ gulp.task('e2e', ['sass'], function() {
     'core',
     'ios',
   ];
+
+  gulp.src(['ionic/**/*.js'])
+           .pipe(gulp.dest('dist/src'));
 
   // Get each test folder with gulp.src
   return gulp.src(buildConfig.src.e2e)
