@@ -22,7 +22,7 @@ export class NavBase {
 
   set initial(Class) {
     if (!this._init) {
-      this._init = true
+      this._init = true;
       this.push(Class);
     }
   }
@@ -62,6 +62,10 @@ export class NavBase {
   }
 
   pop(opts = {}) {
+    if (this.items.length < 2) {
+      return Promise.reject();
+    }
+
     let resolve;
     let promise = new Promise(res => { resolve = res; });
 

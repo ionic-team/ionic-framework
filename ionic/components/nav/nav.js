@@ -18,7 +18,7 @@ import {ToolbarContainer} from 'ionic/components/toolbar/toolbar';
 })
 @View({
   template: `
-  <header class="toolbar-container" style="display:none">
+  <header class="toolbar-container">
     <header-container></header-container>
   </header>
   <section class="nav-item-container">

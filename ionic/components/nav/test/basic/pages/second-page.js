@@ -1,8 +1,8 @@
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
-import {NavController} from 'ionic/ionic'
-import {ThirdPage} from './third-page'
+import {NavController, NavParams} from 'ionic/ionic';
+import {ThirdPage} from './third-page';
 
 
 @Component()
@@ -12,14 +12,21 @@ import {ThirdPage} from './third-page'
 })
 export class SecondPage {
   constructor(
-    nav: NavController
+    nav: NavController,
+    params: NavParams
   ) {
-    this.nav = nav
+    this.nav = nav;
+    this.params = params;
+
+    console.log('Second page params:', params);
   }
+
   pop() {
     this.nav.pop();
   }
+
   push() {
-    this.nav.push(ThirdPage, { animation: 'none' });
+    this.nav.push(ThirdPage);
   }
+
 }

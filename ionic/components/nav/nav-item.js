@@ -28,20 +28,19 @@ export class NavItem {
     let promise = new Promise((res) => { resolve = res; });
 
     let injector = this.nav.injector.resolveAndCreateChild([
-      bind(NavController).toValue(this.nav.navCtrl)
+      bind(NavController).toValue(this.nav.navCtrl),
+      bind(NavParams).toValue(new NavParams(this.params))
     ]);
 
-    this.nav.loader.loadNextToExistingLocation(this.Class, this.nav.itemContent.elementRef, injector)
-                   .then((componentRef) => {
+    this.nav.loader.loadNextToExistingLocation(this.Class, this.nav.itemContent.elementRef, injector).then((componentRef) => {
 
+      // content
       this.component = componentRef;
-
       this.domElement = componentRef.location.domElement;
       this.domElement.classList.add('nav-item');
       this.domElement.setAttribute('data-nav-item-id', this.id);
 
       this.created = true;
-
       resolve();
     });
 
@@ -60,4 +59,10 @@ export class NavItem {
     this.domElement = this.component = this.params = this.nav = null;
   }
 
+}
+
+export class NavParams {
+  constructor(params) {
+    util.extend(this, params);
+  }
 }
