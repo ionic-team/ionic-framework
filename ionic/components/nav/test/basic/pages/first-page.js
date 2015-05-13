@@ -7,14 +7,13 @@ import {SecondPage} from './second-page'
 
 @Component()
 @View({
-  templateUrl: 'pages/first-page.html',
-  directives: []
+  templateUrl: 'pages/first-page.html'
 })
 export class FirstPage {
   constructor(
-    nav: NavController
+    //nav: NavController
   ) {
-    this.nav = nav;
+    //this.nav = nav;
   }
 
   push() {

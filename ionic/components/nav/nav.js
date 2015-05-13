@@ -17,13 +17,13 @@ import {ToolbarContainer} from 'ionic/components/toolbar/toolbar';
 })
 @View({
   template: `
-  <header class="toolbar-container">
+  <header class="toolbar-container" style="display:none">
     <header-container></header-container>
   </header>
   <section class="nav-item-container">
     <content-container></content-container>
   </section>
-  <footer class="toolbar-container">
+  <footer class="toolbar-container" style="display:none">
     <footer-container></footer-container>
   </footer>
   `,
@@ -44,17 +44,19 @@ export class Nav extends NavBase {
 }
 
 
-@Directive({
+@Component({
   selector: 'header-container'
 })
 class HeaderContainer {
-  constructor(@Ancestor() nav: Nav) {
-    nav.itemHeader = this;
+  constructor(@Ancestor() nav: Nav, elementRef: ElementRef) {
+    nav.itemHeader = {
+      elementRef: elementRef
+    };
   }
 }
 
 
-@Directive({
+@Component({
   selector: 'content-container'
 })
 class ContentContainer {
@@ -66,11 +68,13 @@ class ContentContainer {
 }
 
 
-@Directive({
+@Component({
   selector: 'footer-container'
 })
 class FooterContainer {
-  constructor(@Ancestor() nav: Nav) {
-    nav.footerContainer = this;
+  constructor(@Ancestor() nav: Nav, elementRef: ElementRef) {
+    nav.footerContainer = {
+      elementRef: elementRef
+    };
   }
 }

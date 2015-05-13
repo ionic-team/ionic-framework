@@ -19,10 +19,11 @@ export class NavItem {
     let injector = null;
 
 
-    this.nav.loader.loadIntoExistingLocation(this.Class, this.nav.itemContent.elementRef, injector)
+    this.nav.loader.loadNextToExistingLocation(this.Class, this.nav.itemContent.elementRef, injector)
                    .then((componentRef) => {
 
-      console.log('Component loadIntoExistingLocation completed')
+      this.component = componentRef;
+      this.domElement = componentRef.location.domElement;
 
       resolve();
     });

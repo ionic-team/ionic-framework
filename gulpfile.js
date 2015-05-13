@@ -18,9 +18,6 @@ var watch = require('gulp-watch');
 var exec = require('child_process').exec;
 
 
-// !!! TEMP HACK !!!
-// first run ./update-angular.sh
-
 gulp.task('build', function() {
   runSequence(
     'clean',
