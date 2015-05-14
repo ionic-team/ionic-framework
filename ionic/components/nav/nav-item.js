@@ -7,9 +7,9 @@ import {NavController} from './nav-controller';
 
 export class NavItem {
 
-  constructor(nav, ComponentClass, params = {}) {
+  constructor(nav, Component, params = {}) {
     this.nav = nav;
-    this.Class = ComponentClass;
+    this.Component = Component;
     this.params = params;
     this.id = util.nextUid();
     this.headerProtos = [];
@@ -36,7 +36,7 @@ export class NavItem {
       bind(NavItem).toValue(this)
     ]);
 
-    this.nav.loader.loadNextToExistingLocation(this.Class, this.nav.contentElementRef, injector).then((componentRef) => {
+    this.nav.loader.loadNextToExistingLocation(this.Component, this.nav.contentElementRef, injector).then((componentRef) => {
 
       // content
       this.component = componentRef;

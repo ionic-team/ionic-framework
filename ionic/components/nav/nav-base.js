@@ -29,7 +29,11 @@ export class NavBase {
     }
   }
 
-  push(Class: Function, params = {}, opts = {}) {
+  push(Component, params = {}, opts = {}) {
+    if (this.isTransitioning()) {
+      return Promise.reject();
+    }
+
     let resolve;
     let promise = new Promise(res => { resolve = res; });
 
@@ -46,7 +50,7 @@ export class NavBase {
     leavingItem.shouldDestroy = false;
 
     // create a new NavStackItem
-    let enteringItem = new NavItem(this, Class, params);
+    let enteringItem = new NavItem(this, Component, params);
 
     // set that this item is staged (it's not ready to be animated in yet)
     enteringItem.state = STAGED_STATE;
@@ -64,6 +68,10 @@ export class NavBase {
   }
 
   pop(opts = {}) {
+    if (this.isTransitioning()) {
+      return Promise.reject();
+    }
+
     // reject if there's nothing to pop to
     if (this.items.length < 2) {
       return Promise.reject();
@@ -102,13 +110,6 @@ export class NavBase {
 
     // wait for the new item to complete setup
     enteringItem.setup().then(() => {
-
-      // get any items that are already staged to leave, or are actively leaving
-      // since a different item will be leaving, reset any actively leaving items to cached
-      let leavingItems = this.getLeavingItems();
-      for (let i = 0; i < leavingItems.length; i++) {
-        leavingItems[i].state = CACHED_STATE;
-      }
 
       // set that the leaving item is stage to be leaving
       leavingItem.state = STAGED_LEAVING_STATE;
@@ -166,6 +167,19 @@ export class NavBase {
     }
   }
 
+  isTransitioning() {
+    var state;
+    for (let i = 0, ii = this.items.length; i < ii; i++) {
+      state = this.items[i].state;
+      if (state === ACTIVELY_ENTERING_STATE ||
+          state === ACTIVELY_LEAVING_STATE ||
+          state === STAGED_ENTERING_STATE ||
+          state === STAGED_LEAVING_STATE) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   getActive() {
     for (let i = 0, ii = this.items.length; i < ii; i++) {
@@ -199,16 +213,6 @@ export class NavBase {
       }
     }
     return null;
-  }
-
-  getLeavingItems() {
-    let items = [];
-    for (let i = 0, ii = this.items.length; i < ii; i++) {
-      if (this.items[i].state === ACTIVELY_LEAVING_STATE || this.items[i].state === STAGED_LEAVING_STATE) {
-        items.push(this.items[i]);
-      }
-    }
-    return items;
   }
 
   last() {
