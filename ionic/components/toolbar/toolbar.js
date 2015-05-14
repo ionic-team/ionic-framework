@@ -10,10 +10,7 @@ import {Platform} from 'ionic/platform/platform';
 
 
 @Component({
-  selector: 'ion-toolbar',
-  hostProperties: {
-    toolbarId: 'className'
-  }
+  selector: 'ion-toolbar'
 })
 @View({
   template: `
@@ -34,12 +31,7 @@ import {Platform} from 'ionic/platform/platform';
   `,
   directives: [ToolbarTitle]
 })
-export class Toolbar {
-  constructor(navItem: NavItem, elementRef: ElementRef) {
-    this.toolbarId = 'toolbar-id-' + navItem.id;
-    console.log('Toolbar constructor', this.toolbarId)
-  }
-}
+export class Toolbar {}
 
 
 @Component({

@@ -27,23 +27,40 @@ class IOSTransition extends Animation {
     this.enteringItem = navCtrl.getStagedEnteringItem();
     this.leavingItem = navCtrl.getStagedLeavingItem();
 
-    // create animation for the entering item
-    let enteringItemAnimation = new Animation(this.enteringItem.getContent());
+    // create animation for the entering content
+    let enteringContent = new Animation(this.enteringItem.getContent());
 
-    // create animation for the leaving item
+    // create animation for the entering toolbars
+    let enteringToolbars = new Animation(this.enteringItem.getToolbars());
+
+    // create animation for the leaving content
     // leavingItem could be null, but the animation instance knows to do nothing
-    let leavingItemAnimation = new Animation(this.leavingItem && this.leavingItem.getContent());
+    let leavingContent = new Animation(this.leavingItem && this.leavingItem.getContent());
+
+    // create animation for the leaving content
+    // leavingItem could be null, but the animation instance knows to do nothing
+    let leavingToolbars = new Animation(this.leavingItem && this.leavingItem.getToolbars());
 
     // entering item moves to center
     // before starting, set enteringItem to display: block
-    enteringItemAnimation
+    enteringContent
+      .display('block')
+      .to(TRANSLATE_X, 0)
+      .to(OPACITY, 1);
+
+    enteringToolbars
       .display('block')
       .to(TRANSLATE_X, 0)
       .to(OPACITY, 1);
 
     // leaving view moves off screen
     // when completed, set leavingItem to display: none
-    leavingItemAnimation
+    leavingContent
+      .from(TRANSLATE_X, 0)
+      .from(OPACITY, 1)
+      .display('none');
+
+    leavingToolbars
       .from(TRANSLATE_X, 0)
       .from(OPACITY, 1)
       .display('none');
@@ -51,28 +68,45 @@ class IOSTransition extends Animation {
     // set properties depending on direction
     if (opts.direction === 'back') {
       // back direction
-      enteringItemAnimation
+      enteringContent
         .from(TRANSLATE_X, OFF_LEFT)
         .from(OPACITY, OFF_OPACITY)
         .to(OPACITY, 1);
 
-      leavingItemAnimation
+      enteringToolbars
+        .from(TRANSLATE_X, OFF_LEFT)
+        .from(OPACITY, OFF_OPACITY)
+        .to(OPACITY, 1);
+
+      leavingContent
+        .to(TRANSLATE_X, OFF_RIGHT)
+        .to(OPACITY, 1);
+
+      leavingToolbars
         .to(TRANSLATE_X, OFF_RIGHT)
         .to(OPACITY, 1);
 
     } else {
       // forward direction
-      enteringItemAnimation
+      enteringContent
         .from(TRANSLATE_X, OFF_RIGHT)
         .from(OPACITY, 1);
 
-      leavingItemAnimation
+      enteringToolbars
+        .from(TRANSLATE_X, OFF_RIGHT)
+        .from(OPACITY, 1);
+
+      leavingContent
+        .to(TRANSLATE_X, OFF_LEFT)
+        .to(OPACITY, OFF_OPACITY);
+
+      leavingToolbars
         .to(TRANSLATE_X, OFF_LEFT)
         .to(OPACITY, OFF_OPACITY);
     }
 
     // set child animations
-    this.setChildren([enteringItemAnimation, leavingItemAnimation]);
+    this.setChildren([enteringContent, enteringToolbars, leavingContent, leavingToolbars]);
   }
 
   stage() {
