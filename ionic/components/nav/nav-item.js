@@ -13,6 +13,7 @@ export class NavItem {
     this.params = params;
     this.id = util.nextUid();
     this.headers = [];
+    this.disposals = [];
   }
 
   setup() {
@@ -42,6 +43,11 @@ export class NavItem {
       this.domElement.classList.add('nav-item');
       this.domElement.setAttribute('data-nav-item-id', this.id);
 
+      if (componentRef && componentRef._dispose) {
+        this.disposals.push(componentRef._dispose);
+      }
+
+
       // TODO: talk to misko about correct way to set context
       let context = {
         boundElementIndex: 0,
@@ -61,11 +67,21 @@ export class NavItem {
   }
 
   createHeader(toolbarProtoView, context, injector) {
-    let vc = this.nav.headerContainerRef;
+    let headerContainer = this.nav.headerContainerRef;
+
+    if (!headerContainer) return;
 
     let atIndex = -1;
 
-    let view = vc.create(toolbarProtoView, atIndex, context, injector);
+    let headerViewRef = headerContainer.create(toolbarProtoView, atIndex, context, injector);
+
+    if (headerViewRef) {
+      this.disposals.push(() => {
+        var index = headerContainer.indexOf(headerViewRef);
+        headerContainer.remove(index);
+        headerViewRef = null;
+      });
+    }
   }
 
   addHeader(toolbarProtoView) {
@@ -73,9 +89,11 @@ export class NavItem {
   }
 
   destroy() {
-    this.component && this.component._dispose && this.component._dispose();
+    for (let i = 0; i < this.disposals.length; i++) {
+      this.disposals[i]();
+    }
 
-    // just to help prevent possible large memory leaks
+    // just to help prevent any possible memory leaks
     for (let prop in this) {
       this[prop] = null;
     }
