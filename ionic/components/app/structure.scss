@@ -13,89 +13,87 @@ ion-app {
   max-height: 100%;
   margin: 0;
   padding: 0;
+}
 
-  ion-nav {
-    // container of header.toolbar-container, footer.toolbar-container and .nav-item-container
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+ion-nav {
+  // container of header.toolbar-container, footer.toolbar-container and .nav-item-container
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 
-    @include flex-display();
-    @include flex-direction(column);
-  }
+  @include flex-display();
+  @include flex-direction(column);
+}
 
-  .toolbar-container {
-    // container of many toolbars for each view in the ion-nav
-    position: relative;
-    width: 100%;
-    min-height: 50px;
-    @include flex-order($flex-order-toolbar-top);
-  }
+.toolbar-container {
+  // container of many toolbars for each view in the ion-nav
+  position: relative;
+  width: 100%;
+  min-height: 50px;
+  @include flex-order($flex-order-toolbar-top);
+}
 
-  footer.toolbar-container {
-    @include flex-order($flex-order-toolbar-bottom);
-  }
+footer.toolbar-container {
+  @include flex-order($flex-order-toolbar-bottom);
+}
 
-  ion-toolbar {
-    // one view's toolbar, sibling to many view toolbars inside of .toolbar-container
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
+ion-toolbar {
+  // one view's toolbar, sibling to many view toolbars inside of .toolbar-container
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
 
-  .nav-item-container {
-    // container of many .nav-item's, each one containing one view
-    position: relative;
-    @include flex(1);
-    @include flex-order($flex-order-view-content);
-  }
+.nav-item-container {
+  // container of many .nav-item's, each one containing one view
+  position: relative;
+  @include flex(1);
+  @include flex-order($flex-order-view-content);
+}
 
-  .tab-pane-container {
-    // container of each content for each tab component within a tabs component
-    @include flex(1);
-    position: relative;
-    width: 100%;
-    @include flex-order($flex-order-view-content);
-  }
+.tab-pane-container {
+  // container of each content for each tab component within a tabs component
+  @include flex(1);
+  position: relative;
+  width: 100%;
+  @include flex-order($flex-order-view-content);
+}
 
-  .nav-item {
-    // user created view, sibling to many .nav-item's, contained by .nav-item-container
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+.nav-item {
+  // user created view, sibling to many .nav-item's, contained by .nav-item-container
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 
-    // by default .nav-item is hidden
-    // and the transition animation will display it
-    display: none;
-  }
+  // by default .nav-item is hidden
+  // and the transition animation will display it
+  display: none;
+}
 
-  ion-content {
-    // content within the user created view, contained by .nav-item
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
+ion-content {
+  // content within the user created view, contained by .nav-item
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
 
-  .scroll-content {
-    // extra div to allow overflow scrolling
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
-  }
-
+.scroll-content {
+  // extra div to allow overflow scrolling
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 }

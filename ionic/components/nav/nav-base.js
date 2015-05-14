@@ -64,6 +64,7 @@ export class NavBase {
   }
 
   pop(opts = {}) {
+    // reject if there's nothing to pop to
     if (this.items.length < 2) {
       return Promise.reject();
     }

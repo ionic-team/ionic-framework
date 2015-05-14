@@ -28,11 +28,11 @@ class IOSTransition extends Animation {
     this.leavingItem = navCtrl.getStagedLeavingItem();
 
     // create animation for the entering item
-    let enteringItemAnimation = new Animation(this.enteringItem.domElement);
+    let enteringItemAnimation = new Animation(this.enteringItem.getContent());
 
     // create animation for the leaving item
     // leavingItem could be null, but the animation instance knows to do nothing
-    let leavingItemAnimation = new Animation(this.leavingItem && this.leavingItem.domElement);
+    let leavingItemAnimation = new Animation(this.leavingItem && this.leavingItem.getContent());
 
     // entering item moves to center
     // before starting, set enteringItem to display: block

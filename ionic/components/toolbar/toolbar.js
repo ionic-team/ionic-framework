@@ -10,14 +10,34 @@ import {Platform} from 'ionic/platform/platform';
 
 
 @Component({
-  selector: 'ion-toolbar'
+  selector: 'ion-toolbar',
+  hostProperties: {
+    toolbarId: 'className'
+  }
 })
 @View({
-  template: `<content></content>`
+  template: `
+    <div class="toolbar-inner">
+      <button class="button back-button toolbar-item" style="display:none"></button>
+      <div class="toolbar-title">
+        <div class="toolbar-inner-title">
+          <content select="ion-title"></content>
+        </div>
+      </div>
+      <div class="toolbar-item toolbar-primary-item">
+        <content select=".primary"></content>
+      </div>
+      <div class="toolbar-item toolbar-secondary-item">
+        <content select=".secondary"></content>
+      </div>
+    </div>
+  `,
+  directives: [ToolbarTitle]
 })
 export class Toolbar {
-  constructor() {
-    console.log('ion-toolbar');
+  constructor(navItem: NavItem, elementRef: ElementRef) {
+    this.toolbarId = 'toolbar-id-' + navItem.id;
+    console.log('Toolbar constructor', this.toolbarId)
   }
 }
 

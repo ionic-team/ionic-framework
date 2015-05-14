@@ -7,8 +7,6 @@ import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
 import {Injector} from 'angular2/di';
 
 import {NavBase} from 'ionic/components/nav/nav-base';
-import {NavItem, NavItemDynamicComponent} from 'ionic/components/nav/nav-item';
-import {ToolbarContainer} from 'ionic/components/toolbar/toolbar';
 
 
 @Component({
@@ -29,14 +27,9 @@ import {ToolbarContainer} from 'ionic/components/toolbar/toolbar';
   directives: [HeaderAnchor, ContentAnchor]
 })
 export class Nav extends NavBase {
-
-  constructor(
-    loader: DynamicComponentLoader,
-    injector: Injector
-  ) {
+  constructor(loader: DynamicComponentLoader, injector: Injector) {
     super(loader, injector);
   }
-
 }
 
 

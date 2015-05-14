@@ -12,7 +12,8 @@ export class NavItem {
     this.Class = ComponentClass;
     this.params = params;
     this.id = util.nextUid();
-    this.headers = [];
+    this.headerProtos = [];
+    this.toolbarViews = [];
     this.disposals = [];
   }
 
@@ -39,9 +40,10 @@ export class NavItem {
 
       // content
       this.component = componentRef;
-      this.domElement = componentRef.location.domElement;
-      this.domElement.classList.add('nav-item');
-      this.domElement.setAttribute('data-nav-item-id', this.id);
+
+      this.contentEle = componentRef.location.domElement;
+      this.contentEle.classList.add('nav-item');
+      this.contentEle.setAttribute('id', 'nav-item-' + this.id);
 
       if (componentRef && componentRef._dispose) {
         this.disposals.push(componentRef._dispose);
@@ -56,8 +58,8 @@ export class NavItem {
         }
       };
 
-      for (let i = 0; i < this.headers.length; i++) {
-        this.createHeader(this.headers[i], context, injector);
+      for (let i = 0; i < this.headerProtos.length; i++) {
+        this.createHeader(this.headerProtos[i], context, injector);
       }
 
       resolve();
@@ -73,19 +75,32 @@ export class NavItem {
 
     let atIndex = -1;
 
-    let headerViewRef = headerContainer.create(toolbarProtoView, atIndex, context, injector);
+    let headerView = headerContainer.create(toolbarProtoView, atIndex, context, injector);
 
-    if (headerViewRef) {
+    if (headerView) {
+      this.toolbarViews.push(headerView);
+
       this.disposals.push(() => {
-        var index = headerContainer.indexOf(headerViewRef);
-        headerContainer.remove(index);
-        headerViewRef = null;
+        headerContainer.remove( headerContainer.indexOf(headerView) );
       });
     }
   }
 
   addHeader(toolbarProtoView) {
-    this.headers.push(toolbarProtoView);
+    this.headerProtos.push(toolbarProtoView);
+  }
+
+  getContent() {
+    return this.contentEle;
+  }
+
+  getToolbars() {
+    let elements = [];
+    for (let i = 0; i < this.toolbarViews.length; i++) {
+      var toolbarView = this.toolbarViews[i];
+      elements.push(toolbarView._view.render._view.rootNodes[0]);
+    }
+    return elements;
   }
 
   destroy() {

@@ -1,65 +1,57 @@
 
-/// HACK
-header {
-  background: white;
-}
-
-
 // Toolbar
 // --------------------------------------------------
 
 $toolbar-background: #f7f7f8 !default;
 $toolbar-order-core: (
-    back-button: 1,
-    title: 2,
-    primary: 3,
-    secondary: 4
+  back-button: 1,
+  title: 2,
+  primary: 3,
+  secondary: 4
 );
 $toolbar-primary-flex-order: 1;
 $toolbar-primary-flex-order: 1;
 $toolbar-title-flex-order: 5;
 $toolbar-secondary-flex-order: 10;
 
-.toolbar {
-  @include flex-display();
+
+ion-toolbar {
+  /*@include flex-display();
   @include flex-direction(row);
   @include flex-align-items(center);
-  @include flex-justify-content(space-between);
+  @include flex-justify-content(space-between);*/
   background: $toolbar-background;
-}
 
-.toolbar[placement="top"] {
-  @include flex-order($flex-order-toolbar-top);
-}
-.toolbar[placement="bottom"] {
-  @include flex-order($flex-order-toolbar-bottom);
+  // by default ion-toolbar is hidden
+  // and the transition animation will display it
+  display: none;
 }
 
 // buttons are primary by default
-.toolbar .button,
-.toolbar [side="primary"] {
+ion-toolbar .button,
+ion-toolbar [side="primary"] {
   @include flex-order(map-get($toolbar-order-core, 'primary'));
 }
 
-.toolbar [side="secondary"] {
+ion-toolbar [side="secondary"] {
   @include flex-order(map-get($toolbar-order-core, 'secondary'));
 }
 
-.toolbar-title {
+.toolbar-title.toolbar-title {
+  // double selector to override the following
   @include flex-display();
   @include flex(1);
   @include flex-order(map-get($toolbar-order-core, 'title'));
+  margin: 0;
+  padding: 0;
 }
+
 .toolbar-inner-title {
   width: 100%;
   padding: 0 15px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-}
-// Override ion-app h1 margin-top
-h1.toolbar-title {
-  margin: 0;
 }
 
 .toolbar-back-button {
