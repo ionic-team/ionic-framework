@@ -42,7 +42,13 @@ export class NavItem {
       this.domElement.classList.add('nav-item');
       this.domElement.setAttribute('data-nav-item-id', this.id);
 
-      let context = this.nav.contentElementRef
+      // TODO: talk to misko about correct way to set context
+      let context = {
+        boundElementIndex: 0,
+        parentView: {
+          _view: componentRef.location.parentView._view.componentChildViews[0]
+        }
+      };
 
       for (let i = 0; i < this.headers.length; i++) {
         this.createHeader(this.headers[i], context, injector);

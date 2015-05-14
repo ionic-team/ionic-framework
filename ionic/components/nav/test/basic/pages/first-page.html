@@ -1,12 +1,14 @@
 
 <div *ion-header>
 
-    <h1 class="toolbar-title">First Page</h1>
+    <h1 class="toolbar-title">First Page: Instance {{ val }}</h1>
 
 </div>
 
 
-<ion-content class="padding" style="background:blue">
+<ion-content class="padding" style="background:lightblue">
+
+  <p>First Page: Instance {{ val }}</p>
 
   <p>
     <button (click)="push()">Push (Go to 2nd)</button>

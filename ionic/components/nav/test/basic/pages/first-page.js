@@ -15,6 +15,7 @@ export class FirstPage {
     nav: NavController
   ) {
     this.nav = nav;
+    this.val = Math.round(Math.random() * 8999) + 1000;
   }
 
   push() {
