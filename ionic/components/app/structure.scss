@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -28,7 +29,7 @@ ion-app {
   }
 
   .toolbar-container {
-    // container of many toolbars for each view in the .nav
+    // container of many toolbars for each view in the ion-nav
     position: relative;
     width: 100%;
     min-height: 50px;
@@ -39,11 +40,12 @@ ion-app {
     @include flex-order($flex-order-toolbar-bottom);
   }
 
-  .toolbar {
-    // one view's toolbar, sibling to many view toolbars insde of .toolbar-container
+  ion-toolbar {
+    // one view's toolbar, sibling to many view toolbars inside of .toolbar-container
     position: absolute;
     top: 0;
     left: 0;
+    display: block;
     width: 100%;
     height: 100%;
   }
@@ -63,29 +65,21 @@ ion-app {
     @include flex-order($flex-order-view-content);
   }
 
-  .nav-item-cover-parent {
-    // .nav-item that should completely cover siblings and parent
-    top: -50px;
-    height: 100vh;
-  }
-
   .nav-item {
-    // by default .nav-item is hidden
-    // and the transition animation will display it
-    display: none;
-  }
-
-  .nav-item,
-  .nav-item-child {
-    // user created view, contained by .nav-item
+    // user created view, sibling to many .nav-item's, contained by .nav-item-container
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+
+    // by default .nav-item is hidden
+    // and the transition animation will display it
+    display: none;
   }
 
   ion-content {
+    // content within the user created view, contained by .nav-item
     position: absolute;
     top: 0;
     left: 0;
@@ -94,6 +88,7 @@ ion-app {
   }
 
   .scroll-content {
+    // extra div to allow overflow scrolling
     position: absolute;
     top: 0;
     right: 0;

@@ -1,4 +1,5 @@
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
+import {View} from 'angular2/src/core/annotations_impl/view';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 import {ProtoViewRef} from 'angular2/src/core/compiler/view_ref';
 
@@ -8,20 +9,21 @@ import {NavItem} from 'ionic/ionic';
 import {Platform} from 'ionic/platform/platform';
 
 
-@Directive({
-  selector: '[ion-header]'
+@Component({
+  selector: 'ion-toolbar'
 })
-export class Header {
-
-  constructor(navItem: NavItem, protoViewRef: ProtoViewRef) {
-    navItem.addHeader(protoViewRef);
+@View({
+  template: `<content></content>`
+})
+export class Toolbar {
+  constructor() {
+    console.log('ion-toolbar');
   }
-
 }
 
 
 @Component({
-  selector: '.toolbar-title'
+  selector: 'ion-title'
 })
 @View({
   template: `
@@ -30,9 +32,8 @@ export class Header {
   </div>`
 })
 export class ToolbarTitle {
-  constructor(
-    element: ElementRef
-  ) {
+  constructor(element: ElementRef) {
+    console.log('ion-title');
     // this.domElement = element.domElement;
 
     // // TODO find better way to get parent toolbar
@@ -83,4 +84,19 @@ export class ToolbarTitle {
     }
   }
 
+}
+
+
+/*
+  Used to find and register headers in a view, and this directive's
+  content will be moved up to the common toolbar location, and created
+  using the same context as the view's content area.
+*/
+@Directive({
+  selector: 'template[header]'
+})
+export class Header {
+  constructor(navItem: NavItem, protoViewRef: ProtoViewRef) {
+    navItem.addHeader(protoViewRef);
+  }
 }
