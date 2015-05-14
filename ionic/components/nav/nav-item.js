@@ -94,8 +94,10 @@ export class NavItem {
     }
 
     // just to help prevent any possible memory leaks
-    for (let prop in this) {
-      this[prop] = null;
+    for (let name in this) {
+      if (this.hasOwnProperty(name)) {
+        this[name] = null;
+      }
     }
   }
 
