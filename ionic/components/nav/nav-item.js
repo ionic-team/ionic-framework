@@ -14,6 +14,7 @@ export class NavItem {
     this.id = util.nextUid();
     this.headerProtos = [];
     this.toolbarViews = [];
+    this._titleEle = undefined;
     this.disposals = [];
   }
 
@@ -101,6 +102,21 @@ export class NavItem {
       elements.push(toolbarView._view.render._view.rootNodes[0]);
     }
     return elements;
+  }
+
+  getTitle() {
+    if (this._titleEle === undefined) {
+      let toolbarElements = this.getToolbars();
+      for (let i = 0; i < toolbarElements.length; i++) {
+        var titleEle = toolbarElements[i].querySelector('ion-title');
+        if (titleEle) {
+          this._titleEle = titleEle;
+          return this._titleEle;
+        }
+      }
+      this._titleEle = null;
+    }
+    return this._titleEle;
   }
 
   destroy() {

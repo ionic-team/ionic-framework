@@ -33,6 +33,9 @@ class IOSTransition extends Animation {
     // create animation for the entering toolbars
     let enteringToolbars = new Animation(this.enteringItem.getToolbars());
 
+    // create animation for the entering title element
+    let enteringTitle = new Animation(this.enteringItem.getTitle());
+
     // create animation for the leaving content
     // leavingItem could be null, but the animation instance knows to do nothing
     let leavingContent = new Animation(this.leavingItem && this.leavingItem.getContent());
@@ -41,6 +44,9 @@ class IOSTransition extends Animation {
     // leavingItem could be null, but the animation instance knows to do nothing
     let leavingToolbars = new Animation(this.leavingItem && this.leavingItem.getToolbars());
 
+    // create animation for the entering title element
+    let leavingTitle = new Animation(this.leavingItem && this.leavingItem.getTitle());
+
     // entering item moves to center
     // before starting, set enteringItem to display: block
     enteringContent
@@ -48,10 +54,12 @@ class IOSTransition extends Animation {
       .to(TRANSLATE_X, 0)
       .to(OPACITY, 1);
 
-    enteringToolbars
-      .addStartClass('show-toolbar')
+    enteringTitle
       .to(TRANSLATE_X, 0)
       .to(OPACITY, 1);
+
+    enteringToolbars
+      .addStartClass('show-toolbar');
 
     // leaving view moves off screen
     // when completed, set leavingItem to display: none
@@ -61,7 +69,9 @@ class IOSTransition extends Animation {
       .from(OPACITY, 1);
 
     leavingToolbars
-      .removeEndClass('show-toolbar')
+      .removeEndClass('show-toolbar');
+
+    leavingTitle
       .from(TRANSLATE_X, 0)
       .from(OPACITY, 1);
 
@@ -73,16 +83,16 @@ class IOSTransition extends Animation {
         .from(OPACITY, OFF_OPACITY)
         .to(OPACITY, 1);
 
-      enteringToolbars
+      enteringTitle
         .from(TRANSLATE_X, OFF_LEFT)
-        .from(OPACITY, OFF_OPACITY)
+        .from(OPACITY, 0)
         .to(OPACITY, 1);
 
       leavingContent
         .to(TRANSLATE_X, OFF_RIGHT)
         .to(OPACITY, 1);
 
-      leavingToolbars
+      leavingTitle
         .to(TRANSLATE_X, OFF_RIGHT)
         .to(OPACITY, 1);
 
@@ -92,21 +102,20 @@ class IOSTransition extends Animation {
         .from(TRANSLATE_X, OFF_RIGHT)
         .from(OPACITY, 1);
 
-      enteringToolbars
-        .from(TRANSLATE_X, OFF_RIGHT)
-        .from(OPACITY, 1);
+      enteringTitle
+        .from(TRANSLATE_X, OFF_RIGHT);
 
       leavingContent
         .to(TRANSLATE_X, OFF_LEFT)
         .to(OPACITY, OFF_OPACITY);
 
-      leavingToolbars
+      leavingTitle
         .to(TRANSLATE_X, OFF_LEFT)
-        .to(OPACITY, OFF_OPACITY);
+        .to(OPACITY, 0);
     }
 
     // set child animations
-    this.setChildren([enteringContent, enteringToolbars, leavingContent, leavingToolbars]);
+    this.setChildren([enteringContent, enteringToolbars, enteringTitle, leavingContent, leavingToolbars, leavingTitle]);
   }
 
   stage() {

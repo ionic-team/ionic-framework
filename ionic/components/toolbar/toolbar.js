@@ -93,7 +93,7 @@ new IonicComponent(Toolbar, {});
 @Directive({
   selector: 'template[header]'
 })
-export class Header {
+export class HeaderTemplate {
   constructor(navItem: NavItem, protoViewRef: ProtoViewRef) {
     navItem.addHeader(protoViewRef);
   }
