@@ -109,6 +109,20 @@ function tick(timestamp) {
           continue;
         }
 
+        if (eleData.startAddCls) {
+          for (var k = 0; k < eleData.startAddCls.length; k++) {
+            element.classList.add(eleData.startAddCls[k]);
+          }
+          eleData.startAddCls = null;
+        }
+
+        if (eleData.startRmvCls) {
+          for (var k = 0; k < eleData.startRmvCls.length; k++) {
+            element.classList.remove(eleData.startRmvCls[k]);
+          }
+          eleData.startRmvCls = null;
+        }
+
         var transformPropertyExists = false;
 
 

@@ -23,6 +23,7 @@ export function processElement(action, animation, elementIndex, clearCache) {
   var elements = animation._ele;
   var elementsLength = elements.length;
   var element = elements[elementIndex];
+  var eleData;
 
   var opts = animation._options;
   var propertiesMap = animation._properties;
@@ -50,8 +51,15 @@ export function processElement(action, animation, elementIndex, clearCache) {
   ******************/
 
   if (data(element) === undefined) {
-    Collide.initData(element);
+    eleData = Collide.initData(element);
+  } else {
+    eleData = data(element);
   }
+
+  if (animation._addStartClasses.length) eleData.startAddCls = animation._addStartClasses.slice();
+  if (animation._removeStartClasses.length) eleData.startRmvCls = animation._removeStartClasses.slice();
+  if (animation._addEndClasses.length) eleData.endAddCls = animation._addEndClasses.slice();
+  if (animation._removeEndClasses.length) eleData.endRmvCls = animation._removeEndClasses.slice();
 
 
   /******************
@@ -236,7 +244,7 @@ export function processElement(action, animation, elementIndex, clearCache) {
       /* The per-element isAnimating flag is used to indicate whether it's safe (i.e. the data isn't stale)
          to transfer over end values to use as start values. If it's set to true and there is a previous
          Collide call to pull values from, do so. */
-      var eleData = data(element);
+      eleData = data(element);
       if (clearCache) {
         eleData.tweensContainer = undefined;
       } else if (eleData.tweensContainer && eleData.isAnimating === true) {
@@ -345,7 +353,7 @@ export function processElement(action, animation, elementIndex, clearCache) {
            Property support is determined via prefixCheck(), which returns a false flag when no supported is detected. */
         /* Note: Since SVG elements have some of their properties directly applied as HTML attributes,
            there is no way to check for their explicit browser support, and so we skip skip this check for them. */
-        if (!data(element).isSVG && rootProperty !== 'tween' && CSS.Names.prefixCheck(rootProperty)[1] === false && CSS.Normalizations.registered[rootProperty] === undefined) {
+        if (!eleData.isSVG && rootProperty !== 'tween' && CSS.Names.prefixCheck(rootProperty)[1] === false && CSS.Normalizations.registered[rootProperty] === undefined) {
           if (Collide.debug) console.log('Skipping [' + rootProperty + '] due to a lack of browser support.');
           continue;
         }
@@ -370,7 +378,7 @@ export function processElement(action, animation, elementIndex, clearCache) {
           /* The previous call's rootPropertyValue is extracted from the element's data cache since that's the
              instance of rootPropertyValue that gets freshly updated by the tweening process, whereas the rootPropertyValue
              attached to the incoming lastTweensContainer is equal to the root property's value prior to any tweening. */
-          rootPropertyValue = data(element).rootPropertyValueCache[rootProperty];
+          rootPropertyValue = eleData.rootPropertyValueCache[rootProperty];
 
         /* If values were not transferred from a previous Collide call, query the DOM as needed. */
         } else {
@@ -607,8 +615,8 @@ export function processElement(action, animation, elementIndex, clearCache) {
 
       /* Store the tweensContainer and options if we're working on the default effects queue, so that they can be used by the reverse command. */
       if (opts.queue === '') {
-        data(element).tweensContainer = tweensContainer;
-        data(element).opts = opts;
+        eleData.tweensContainer = tweensContainer;
+        eleData.opts = opts;
       }
     }
 

@@ -79,8 +79,15 @@ export let Collide = {
       rootPropertyValueCache: {},
 
       /* A cache for transform updates, which must be manually flushed via CSS.flushTransformCache(). */
-      transformCache: {}
+      transformCache: {},
+
+      startAddCls: null,
+      startRmvCls: null,
+      endAddCls: null,
+      endRmvCls: null
     };
+
+    return element.$collide;
   },
 
   /* get/set element data */

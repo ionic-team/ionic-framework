@@ -18,6 +18,12 @@ export class Animation {
 
     this.children = [];
 
+    this._addStartClasses = [];
+    this._removeStartClasses = [];
+
+    this._addEndClasses = [];
+    this._removeEndClasses = [];
+
     this.elements(ele);
   }
 
@@ -53,7 +59,7 @@ export class Animation {
     return this;
   }
 
-  _setupElements(clearCache, onNextFrame) {
+  _prepare(clearCache, onNextFrame) {
 
     // ensure another animation wasnt about to start
     if (this._nextAF) {
@@ -105,7 +111,7 @@ export class Animation {
         this._options = util.extend(opts, this._options);
 
         // get the elements ready
-        for (var i = 0, ii = this._ele.length; i < ii; i++) {
+        for (let i = 0, ii = this._ele.length; i < ii; i++) {
           processElement('start', this, i, clearCache);
         }
 
@@ -118,7 +124,7 @@ export class Animation {
     return Promise.resolve();
   }
 
-  _queueAnimation() {
+  _queue() {
     if (this._ele.length) {
 
       if (this._call === null) {
@@ -173,9 +179,9 @@ export class Animation {
 
     var clearCache = (this._aniType !== 'start');
 
-    var promise = this._setupElements(clearCache, () => {
+    var promise = this._prepare(clearCache, () => {
       this._aniType = 'start';
-      this._queueAnimation();
+      this._queue();
     });
 
     promises.push(promise);
@@ -193,7 +199,7 @@ export class Animation {
 
     var clearCache = (this._aniType !== 'progress');
 
-    var promise = this._setupElements(clearCache, () => {
+    var promise = this._prepare(clearCache, () => {
       this._aniType = 'progress';
     });
 
@@ -212,7 +218,7 @@ export class Animation {
         this.children[i].progress(value);
       }
 
-      this._queueAnimation();
+      this._queue();
     }
   }
 
@@ -225,6 +231,26 @@ export class Animation {
   finish() {
     // immediately go to the end of the animation
     animationStop(this._ele, 'finish');
+    return this;
+  }
+
+  addStartClass(className) {
+    this._addStartClasses.push(className);
+    return this;
+  }
+
+  removeStartClass(className) {
+    this._removeStartClasses.push(className);
+    return this;
+  }
+
+  addEndClass(className) {
+    this._addEndClasses.push(className);
+    return this;
+  }
+
+  removeEndClass(className) {
+    this._removeEndClasses.push(className);
     return this;
   }
 

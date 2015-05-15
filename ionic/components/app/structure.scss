@@ -76,6 +76,10 @@ ion-toolbar {
   // by default .nav-item is hidden
   // and the transition animation will display it
   display: none;
+
+  &.show-nav-item {
+    display: block;
+  }
 }
 
 ion-content {

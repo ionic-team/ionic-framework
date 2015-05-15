@@ -46,6 +46,20 @@ export function completeCall(callIndex, isStopped) {
       }
     }
 
+    if (eleData.endAddCls) {
+      for (var k = 0; k < eleData.endAddCls.length; k++) {
+        element.classList.add(eleData.endAddCls[k]);
+      }
+      eleData.endAddCls = null;
+    }
+
+    if (eleData.endRmvCls) {
+      for (var k = 0; k < eleData.endRmvCls.length; k++) {
+        element.classList.remove(eleData.endRmvCls[k]);
+      }
+      eleData.endRmvCls = null;
+    }
+
     /* If the element's queue is empty (if only the 'inprogress' item is left at position 0) or if its queue is about to run
        a non-Collide-initiated entry, turn off the isAnimating flag. A non-Collide-initiatied queue entry's logic might alter
        an element's CSS values and thereby cause Collide's cached value data to go stale. To detect if a queue entry was initiated by Collide,

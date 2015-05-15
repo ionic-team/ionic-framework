@@ -10,26 +10,26 @@ class NoneTransition {
 
     // show entering contet
     let enteringContent = enteringItem.getContent();
-    enteringContent.style.display = 'block';
+    enteringContent.classList.add('show-nav-item');
     enteringContent.style.transform = 'translateX(0%)';
 
     // show entering headers
-    let toolbarElements = enteringItem.getToolbars();
-    for (let i = 0; i < toolbarElements.length; i++) {
-      toolbarElements[i].style.display = 'block';
-      toolbarElements[i].style.transform = 'translateX(0%)';
+    let enteringToolbars = enteringItem.getToolbars();
+    for (let i = 0; i < enteringToolbars.length; i++) {
+      enteringToolbars[i].classList.add('show-toolbar');
+      enteringToolbars[i].style.transform = 'translateX(0%)';
     }
 
     // hide the leaving item
     if (leavingItem) {
       let leavingContent = leavingItem.getContent();
       if (leavingContent) {
-        leavingContent.style.display = '';
+        leavingContent.classList.remove('show-nav-item');
       }
 
-      let leavingHeaderElements = leavingItem.getToolbars();
-      for (let i = 0; i < leavingHeaderElements.length; i++) {
-        leavingHeaderElements[i].style.display = '';
+      let leavingToolbars = leavingItem.getToolbars();
+      for (let i = 0; i < leavingToolbars.length; i++) {
+        leavingToolbars[i].classList.remove('show-toolbar');
       }
     }
   }

@@ -20,15 +20,19 @@ $toolbar-secondary-flex-order: 10;
 }
 
 ion-toolbar {
-  /*@include flex-display();
   @include flex-direction(row);
   @include flex-align-items(center);
-  @include flex-justify-content(space-between);*/
+  @include flex-justify-content(space-between);
 
-  // by default ion-toolbar is hidden
-  // and the transition animation will display it
+  // by default ion-toolbar is display:none and
+  // the transition animation will add the show class
   display: none;
+
+  &.show-toolbar {
+    @include flex-display();
+  }
 }
+
 
 // buttons are primary by default
 ion-toolbar .button,
@@ -40,7 +44,7 @@ ion-toolbar [side="secondary"] {
   @include flex-order(map-get($toolbar-order-core, 'secondary'));
 }
 
-.toolbar-title.toolbar-title {
+ion-title {
   // double selector to override the following
   @include flex-display();
   @include flex(1);

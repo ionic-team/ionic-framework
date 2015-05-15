@@ -44,26 +44,26 @@ class IOSTransition extends Animation {
     // entering item moves to center
     // before starting, set enteringItem to display: block
     enteringContent
-      .display('block')
+      .addStartClass('show-nav-item')
       .to(TRANSLATE_X, 0)
       .to(OPACITY, 1);
 
     enteringToolbars
-      .display('block')
+      .addStartClass('show-toolbar')
       .to(TRANSLATE_X, 0)
       .to(OPACITY, 1);
 
     // leaving view moves off screen
     // when completed, set leavingItem to display: none
     leavingContent
+      .removeEndClass('show-nav-item')
       .from(TRANSLATE_X, 0)
-      .from(OPACITY, 1)
-      .display('none');
+      .from(OPACITY, 1);
 
     leavingToolbars
+      .removeEndClass('show-toolbar')
       .from(TRANSLATE_X, 0)
-      .from(OPACITY, 1)
-      .display('none');
+      .from(OPACITY, 1);
 
     // set properties depending on direction
     if (opts.direction === 'back') {
