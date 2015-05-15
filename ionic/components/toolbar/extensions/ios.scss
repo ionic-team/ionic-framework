@@ -44,6 +44,10 @@ $toolbar-ios-button-background-color:       transparent !default;
     @include flex-order(map-get($toolbar-order-ios, 'secondary'));
   }
 
+  .toolbar-inner-title {
+
+  }
+
   ion-title {
     @include flex-order(map-get($toolbar-order-ios, 'title'));
     font-size: $toolbar-ios-title-font-size;
@@ -53,10 +57,6 @@ $toolbar-ios-button-background-color:       transparent !default;
 
   .toolbar-back-button {
     @include flex-order(map-get($toolbar-order-ios, 'back-button'));
-  }
-
-  .toolbar-title-hide {
-    opacity: 0;
   }
 
   .button {

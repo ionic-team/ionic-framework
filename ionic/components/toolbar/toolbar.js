@@ -17,7 +17,9 @@ import {Platform} from 'ionic/platform/platform';
     <div class="toolbar-inner">
       <button class="button back-button toolbar-item" style="display:none"></button>
       <div class="toolbar-title">
-        <content select="ion-title"></content>
+        <div class="toolbar-inner-title toolbar-title-hide">
+          <content select="ion-title"></content>
+        </div>
       </div>
       <div class="toolbar-item toolbar-primary-item">
         <content select=".primary"></content>
@@ -26,47 +28,25 @@ import {Platform} from 'ionic/platform/platform';
         <content select=".secondary"></content>
       </div>
     </div>
-  `,
-  directives: [ToolbarTitle]
+  `
 })
 export class Toolbar {
   constructor(elementRef: ElementRef) {
     this.domElement = elementRef.domElement;
     this.config = Toolbar.config.invoke(this);
-  }
-}
-new IonicComponent(Toolbar, {});
 
-
-@Component({
-  selector: 'ion-title'
-})
-@View({
-  template: `
-  <div class="toolbar-inner-title">
-    <content></content>
-  </div>`
-})
-export class ToolbarTitle {
-  constructor(element: ElementRef) {
-    console.log('ion-title');
-    // this.domElement = element.domElement;
-
-    // // TODO find better way to get parent toolbar
-    // let current = this.domElement;
-    // while (current = current.parentNode) {
-    //   if (current.classList.contains('toolbar')) {
-    //     break;
-    //   }
-    // }
-    // this.toolbarElement = current;
-    // this.align();
+    // http://davidwalsh.name/detect-node-insertion
+    this.domElement.addEventListener("animationstart", (ev) => {
+      ev.stopPropagation();
+      this.alignTitle();
+    });
   }
 
-  align() {
-    if (!this.toolbarElement) return;
-    const toolbarElement = this.toolbarElement;
-    const titleElement = this._titleElement || (this._titleElement = this.domElement.querySelector('.toolbar-inner-title'));
+  alignTitle() {
+    if (!this.domElement) return;
+
+    const toolbarElement = this.domElement;
+    const titleElement = this._titleElement || (this._titleElement = toolbarElement.querySelector('.toolbar-inner-title'));
     const style = this._style || (this._style = window.getComputedStyle(titleElement));
 
     const titleOffsetWidth = titleElement.offsetWidth;
@@ -74,7 +54,7 @@ export class ToolbarTitle {
     const titleScrollWidth = titleElement.scrollWidth;
     const toolbarOffsetWidth = toolbarElement.offsetWidth;
 
-    //only align if the title is center and if it isn't already overflowing
+    // only align if the title is center and if it isn't already overflowing
     if (style.textAlign !== 'center' || titleOffsetWidth < titleScrollWidth) {
       this._showTitle();
     } else {
@@ -100,7 +80,9 @@ export class ToolbarTitle {
     }
   }
 
+
 }
+new IonicComponent(Toolbar, {});
 
 
 /*

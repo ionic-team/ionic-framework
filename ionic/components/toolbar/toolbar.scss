@@ -33,6 +33,9 @@ ion-toolbar {
   }
 }
 
+.toolbar-inner {
+  width: 100%;
+}
 
 // buttons are primary by default
 ion-toolbar .button,
@@ -45,12 +48,11 @@ ion-toolbar [side="secondary"] {
 }
 
 ion-title {
-  // double selector to override the following
-  @include flex-display();
-  @include flex(1);
-  @include flex-order(map-get($toolbar-order-core, 'title'));
-  margin: 0;
-  padding: 0;
+  display: block;
+
+  // used to notify JS when the title has been rendered
+  animation-duration: 0.001s;
+  animation-name: nodeInserted;
 }
 
 .toolbar-inner-title {
@@ -68,4 +70,8 @@ ion-title {
 .toolbar .button {
   background: transparent;
   border: none;
+}
+
+.toolbar-title-hide {
+  opacity: 0;
 }

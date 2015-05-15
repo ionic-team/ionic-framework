@@ -68,12 +68,7 @@ export class NavBase {
   }
 
   pop(opts = {}) {
-    if (this.isTransitioning()) {
-      return Promise.reject();
-    }
-
-    // reject if there's nothing to pop to
-    if (this.items.length < 2) {
+    if (this.isTransitioning() || this.items.length < 2) {
       return Promise.reject();
     }
 
