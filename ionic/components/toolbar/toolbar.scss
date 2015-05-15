@@ -15,12 +15,15 @@ $toolbar-title-flex-order: 5;
 $toolbar-secondary-flex-order: 10;
 
 
+.toolbar-container {
+  background: $toolbar-background;
+}
+
 ion-toolbar {
   /*@include flex-display();
   @include flex-direction(row);
   @include flex-align-items(center);
   @include flex-justify-content(space-between);*/
-  background: $toolbar-background;
 
   // by default ion-toolbar is hidden
   // and the transition animation will display it

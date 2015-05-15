@@ -1,11 +1,12 @@
 
 // iOS Toolbar
 // --------------------------------------------------
+
 $toolbar-order-ios: (
-    back-button: 1,
-    primary: 2,
-    title: 3,
-    secondary: 4
+  back-button: 1,
+  primary: 2,
+  title: 3,
+  secondary: 4
 );
 
 $toolbar-ios-height:                        4.4rem !default;
@@ -18,9 +19,22 @@ $toolbar-ios-button-text-color:             #007aff !default;
 $toolbar-ios-button-background-color:       transparent !default;
 
 
-.toolbar-ios {
+.toolbar-container-ios {
   height: $toolbar-ios-height;
   background: $toolbar-ios-background;
+
+  // toolbar on top, border on bottom (default)
+  @include hairline(bottom, $toolbar-ios-border-color);
+
+  // toolbar on bottom, border on top
+  &.toolbar-bottom:after {
+    top: 0;
+    bottom: auto;
+  }
+}
+
+
+.toolbar-ios {
 
   .toolbar [side="primary"] {
     @include flex-order(map-get($toolbar-order-ios, 'primary'));
@@ -28,7 +42,8 @@ $toolbar-ios-button-background-color:       transparent !default;
   .toolbar [side="secondary"] {
     @include flex-order(map-get($toolbar-order-ios, 'secondary'));
   }
-  .toolbar-title {
+
+  ion-title {
     @include flex-order(map-get($toolbar-order-ios, 'title'));
     font-size: $toolbar-ios-title-font-size;
     text-align: center;
@@ -50,15 +65,6 @@ $toolbar-ios-button-background-color:       transparent !default;
     min-height: $toolbar-ios-height;
     min-width: 0;
     background: $toolbar-ios-button-background-color;
-  }
-
-  // toolbar on top, border on bottom (default)
-  @include hairline(bottom, $toolbar-ios-border-color);
-
-  // toolbar on bottom, border on top
-  &.toolbar-bottom:after {
-    top: 0;
-    bottom: auto;
   }
 
 }

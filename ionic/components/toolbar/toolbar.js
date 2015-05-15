@@ -17,9 +17,7 @@ import {Platform} from 'ionic/platform/platform';
     <div class="toolbar-inner">
       <button class="button back-button toolbar-item" style="display:none"></button>
       <div class="toolbar-title">
-        <div class="toolbar-inner-title">
-          <content select="ion-title"></content>
-        </div>
+        <content select="ion-title"></content>
       </div>
       <div class="toolbar-item toolbar-primary-item">
         <content select=".primary"></content>
@@ -31,7 +29,13 @@ import {Platform} from 'ionic/platform/platform';
   `,
   directives: [ToolbarTitle]
 })
-export class Toolbar {}
+export class Toolbar {
+  constructor(elementRef: ElementRef) {
+    this.domElement = elementRef.domElement;
+    this.config = Toolbar.config.invoke(this);
+  }
+}
+new IonicComponent(Toolbar, {});
 
 
 @Component({
@@ -39,7 +43,7 @@ export class Toolbar {}
 })
 @View({
   template: `
-  <div class="toolbar-inner-title toolbar-title-hide">
+  <div class="toolbar-inner-title">
     <content></content>
   </div>`
 })
