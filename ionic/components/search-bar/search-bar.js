@@ -1,4 +1,4 @@
-import {ElementRef} from 'angular2/angular2'
+import {ElementRef, Pipe} from 'angular2/angular2'
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {IonicComponent} from 'ionic/config/component'
@@ -8,7 +8,9 @@ import {IonicComponent} from 'ionic/config/component'
   selector: 'ion-search-bar',
   properties: {
     cancelText: 'cancel-text',
-    placeholderText: 'placeholder-text'
+    placeholderText: 'placeholder-text',
+    list: 'list',
+    query: 'query'
   }
 })
 @View({
@@ -23,6 +25,32 @@ export class SearchBar {
   ) {
     this.domElement = elementRef.domElement
     this.config = SearchBar.config.invoke(this)
+    setTimeout(() => {
+      console.log('Search bar for list', this.list);
+      this.query = 'Cats';
+    })
+  }
+}
+
+export class SearchPipe extends Pipe {
+  constructor() {
+    super();
+    this.state = 0;
+  }
+
+  supports(newValue) {
+    return true;
+  }
+
+  transform(value) {
+    console.log('Transforming', value);
+    return value;
+    //return `${value} state:${this.state ++}`;
+  }
+
+  create(cdRef) {
+    console.log('REF', cdRef);
+    return new SearchPipe(cdRef);
   }
 }
 

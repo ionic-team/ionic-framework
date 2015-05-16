@@ -3,34 +3,13 @@
 
   <ion-content>
 
-    <ion-search-bar></ion-search-bar>
+    <ion-search-bar [query]="query" [list]="list"></ion-search-bar>
 
-    <ion-list>
+    <ion-list #list>
 
-      <div class="item">
-        <div class="item-content">
-          <div class="item-title">
-            Item
-          </div>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="item-content">
-          <div class="item-title">
-            Item
-          </div>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="item-content">
-          <div class="item-title">
-            Item
-          </div>
-        </div>
-      </div>
-
+      <ion-item *for="#item of items | search:query">
+        {{item.title}}
+      </ion-item>
     </ion-list>
 
   </ion-content>
