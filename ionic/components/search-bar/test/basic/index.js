@@ -5,6 +5,8 @@ import {View} from 'angular2/src/core/annotations_impl/view';
 import { bind } from 'angular2/di';
 import { PipeRegistry } from 'angular2/change_detection';
 
+import {FormBuilder, Validators, FormDirectives, Control, ControlGroup} from 'angular2/forms';
+
 import {Content} from 'ionic/components/content/content';
 import {List} from 'ionic/components/list/list';
 import {Item} from 'ionic/components/item/item';
@@ -19,11 +21,17 @@ function randomTitle() {
 @Component({ selector: 'ion-app' })
 @View({
   templateUrl: 'main.html',
-  directives: [Content, List, Item, SearchBar, For]
+  directives: [FormDirectives].concat([Content, List, Item, SearchBar, For])
 })
 class IonicApp {
   constructor() {
     console.log('IonicApp Start')
+
+    var fb = new FormBuilder();
+    this.form = fb.group({
+      searchQuery: ['', Validators.required]
+    });
+
 
     this.query = '';
 
