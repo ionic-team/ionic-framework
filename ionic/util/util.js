@@ -33,7 +33,7 @@ export function merge(dst) {
 function _baseExtend(dst, objs, deep) {
   for (var i = 0, ii = objs.length; i < ii; ++i) {
     var obj = objs[i];
-    if (!isObject(obj) && !isFunction(obj)) continue;
+    if (!obj || !isObject(obj) && !isFunction(obj)) continue;
     var keys = Object.keys(obj);
     for (var j = 0, jj = keys.length; j < jj; j++) {
       var key = keys[j];

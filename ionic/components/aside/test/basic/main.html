@@ -1,5 +1,6 @@
 <ion-view>
   <ion-aside [content]="content" style="background-color: red">
+    <h2 style="color: white">LEFT</h2>
     <!--
     <ion-list inset>
       <div class="list-header">
@@ -21,16 +22,11 @@
   -->
   </ion-aside>
 
-  <ion-content #content>
-
+  <ion-content #content style="background-color: blue">
+    <h2 style="color: white">HELLO</h2>
   </ion-content>
 
-  <!--
   <ion-aside side="right" [content]="content" style="background-color: green">
-    Right!
-    <p>...</p>
-    <p>...</p>
-    <p>...</p>
+    <h2 style="color: white">RIGHT</h2>
   </ion-aside>
--->
 </ion-view>

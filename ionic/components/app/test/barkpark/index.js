@@ -7,7 +7,7 @@ import {FormBuilder, Validators, FormDirectives, ControlGroup} from 'angular2/fo
 import {Log} from 'ionic/util'
 
 import {
-  Router, Routable, List, Item, Nav, NavController,
+  Router, Routable, List, Item, HeaderTemplate, Nav, NavController,
   Toolbar, ToolbarTitle, Button, Input, Tabs,
   Tab, Content, Aside
 } from 'ionic/ionic'
@@ -15,7 +15,7 @@ import {
 @Component()
 @View({
   templateUrl: 'pages/login.html',
-  directives: [FormDirectives, Button, Input, Content, Toolbar, ToolbarTitle]
+  directives: [FormDirectives, Button, Input, Content, Toolbar, HeaderTemplate]
 })
 export class LoginPage {
   constructor( @Parent() viewport: NavController ) {
@@ -58,9 +58,10 @@ new Routable(LoginPage, {
   directives: [FormDirectives, Button, Input]
 })
 export class SignupPage {
-  constructor( @Parent() viewport: NavController ) { //, fb: FormBuilder ) {
+  constructor( nav: NavController ) { //, fb: FormBuilder ) {
 
-    this.viewport = viewport
+    this.nav = nav
+
     Log.log('SIGNUP PAGE')
 
     var fb = new FormBuilder()
@@ -73,14 +74,14 @@ export class SignupPage {
   }
 
   doLogin(event) {
-    this.viewport.pop()
+    this.nav.pop()
   }
   doSignup(event) {
     Log.log('Doing signup')
     event.preventDefault();
     console.log(this.signupForm.value);
 
-    this.viewport.push(AppPage)
+    this.nav.push(AppPage)
     //this.viewport.push(SecondPage)
   }
 }
@@ -95,8 +96,8 @@ export class SignupPage {
   directives: [FormDirectives, Button, Input, Tabs, Tab]
 })
 export class AppPage {
-  constructor( @Parent() viewport: NavController ) { //, fb: FormBuilder ) {
-    this.viewport = viewport
+  constructor( nav: NavController ) { //, fb: FormBuilder ) {
+    this.nav = nav;
     this.streamTab = StreamTab
   }
 }
@@ -107,8 +108,8 @@ export class AppPage {
   directives: [For, Content, List, Item]
 })
 class StreamTab {
-  constructor(@Parent() nav: NavController) {
-    this.nav = viewport;
+  constructor(nav: NavController) {
+    this.nav = nav;
     this.posts = [
       {'title': 'Just barked my first bark'},
       {'title': 'Went poopy' }
@@ -130,8 +131,8 @@ class StreamTab {
   directives: [Content]
 })
 class PostDetail {
-  constructor(@Parent() nav: NavController) {
-    this.nav = viewport;
+  constructor(nav: NavController) {
+    this.nav = nav;
     this.title = 'Hello'
   }
   selectItem() {
@@ -145,7 +146,7 @@ class PostDetail {
   directives: [Content]
 })
 class SplashPage {
-  constructor(@Parent() nav: NavController) {
+  constructor(nav: NavController) {
     this.nav = nav;
     window.nav = nav;
   }
@@ -168,16 +169,6 @@ class IonicApp {
       var nav = window.nav;
 
       var route = Router;//new Router()
-
-      /*
-      route.map('login', {
-        url: '/login',
-        paramResolver(urlParts) {
-          return Login(urlParts.id);
-        }
-      })
-      */
-
       route.on('/login', (data) => {
 
         nav.push(LoginPage, null, {
