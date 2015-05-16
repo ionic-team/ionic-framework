@@ -27,6 +27,9 @@ export class Aside {
 
     // FIXME(ajoslin): have to wait for setTimeout for bindings to apply.
     setTimeout(() => {
+      this.side = this.side || 'left';
+      this.type = this.type || 'push';
+
       this.config = Aside.config.invoke(this)
       this.gestureDelegate = this.config.getDelegate('gesture');
       this.typeDelegate = this.config.getDelegate('type');
@@ -35,6 +38,18 @@ export class Aside {
     this.domElement.addEventListener('transitionend', ev => {
       this.setChanging(false)
     })
+  }
+
+  getContentElement() {
+    return this.content.domElement;
+  }
+
+  setOpenX(x) {
+    this.openX = x;
+  }
+
+  setOpenY(y) {
+    this.openY = y;
   }
 
   setTransform(transform) {
@@ -55,6 +70,11 @@ export class Aside {
     if (isOpen !== this.isOpen) {
       this.isOpen = isOpen
       this.setChanging(true)
+
+      // TODO: Abstract this away
+      // Set 100% X
+      //this.x = this.gestureDelegate.getSlideBoundaries().max;
+
       return dom.rafPromise().then(() => {
         this.typeDelegate.setOpen(isOpen)
       })

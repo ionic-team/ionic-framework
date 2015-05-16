@@ -1,4 +1,6 @@
-import {NgElement, Component, View} from 'angular2/angular2'
+import {Renderer, ElementRef} from 'angular2/angular2'
+import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
+import {View} from 'angular2/src/core/annotations_impl/view';
 
 import {dom} from 'ionic/util'
 import {IonicComponent} from 'ionic/config/component'
@@ -12,7 +14,7 @@ import {
 } from 'ionic/components/item/item-swipe-buttons'
 
 @Component({
-  selector: 'ion-item,[ion-item]'
+  selector: 'ion-item'//,[ion-item]'
 })
 @View({
   template: `
@@ -40,14 +42,14 @@ import {
 })
 export class Item {
   constructor(
-    @NgElement() ele:NgElement
+    elementRef: ElementRef
   ) {
     this._isOpen = false
     this._isSlideActive = false
     this._isTransitioning = false
     this._transform = ''
 
-    this.domElement = ele.domElement
+    this.domElement = elementRef.domElement
     this.swipeButtons = {}
     this.optionButtons = {}
     Item.config.invoke(this)

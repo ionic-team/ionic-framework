@@ -17,18 +17,18 @@ $aside-transition: 0.3s linear transform;
     display: none;
   }
 
-  &[side=left] {
-    width: $aside-width;
-    left: -$aside-width;
-    top: 0;
-    bottom: 0;
+  //&[side=left] {
+  width: $aside-width;
+  left: -$aside-width;
+  top: 0;
+  bottom: 0;
 
-    transform: translate3d(0, 0, 0);
-    &.open,
-    &[type=reveal] {
-      transform: translate3d($aside-width,0,0);
-    }
+  transform: translate3d(0, 0, 0);
+  &.open,
+  &[type=reveal] {
+    transform: translate3d($aside-width,0,0);
   }
+  //}
   &[side=right] {
     width: $aside-width;
     left: 100%;

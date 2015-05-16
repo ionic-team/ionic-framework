@@ -5,7 +5,7 @@ import {SlideEdgeGesture} from 'ionic/gestures/slide-edge-gesture';
 class AsideGesture extends SlideEdgeGesture {
   constructor(aside: Aside) {
     // TODO figure out the sliding element, dont just use the parent
-    let slideElement = aside.domElement.parentNode;
+    let slideElement = aside.getContentElement();
     super(slideElement, {
       direction: (aside.side === 'left' || aside.side === 'right') ? 'x' : 'y',
       edge: aside.side,
@@ -30,6 +30,7 @@ class AsideGesture extends SlideEdgeGesture {
     });
   }
   onSlide(slide, ev) {
+    this.aside.setOpenX(slide.distance);
     this.aside.setTransform('translate3d(' + slide.distance + 'px,0,0)');
   }
   onSlideEnd(slide, ev) {

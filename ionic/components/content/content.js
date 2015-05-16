@@ -16,7 +16,8 @@ import {View} from 'angular2/src/core/annotations_impl/view';
     </div>`
 })
 export class Content {
-  constructor() {
+  constructor(elementRef: ElementRef) {
+    this.domElement = elementRef.domElement;
     //this.contentClass = true;
     console.log('Content!');
   }

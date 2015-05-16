@@ -1,17 +1,18 @@
-import {Parent, NgElement, Decorator} from 'angular2/angular2'
+import {ElementRef, Parent} from 'angular2/angular2'
+import {Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {Item} from 'ionic/components/item/item'
 import {SlideGesture} from 'ionic/gestures/slide-gesture'
 
-@Decorator({
+@Directive({
   selector: 'ion-primary-swipe-buttons'
 })
 export class ItemPrimarySwipeButtons {
   constructor(
-    @NgElement() element: NgElement,
+    elementRef: ElementRef,
     @Parent() item: Item
   ) {
     item.primarySwipeButtons = this
-    this.domElement = element.domElement
+    this.domElement = elementRef.domElement
     this.parentItem = item
     this.gesture = new ItemSlideGesture(this)
     this.gesture.listen()
@@ -27,7 +28,7 @@ export class ItemPrimarySwipeButtons {
   }
 }
 
-@Decorator({
+@Directive({
   selector: 'ion-secondary-swipe-buttons'
 })
 export class ItemSecondarySwipeButtons {
@@ -38,7 +39,7 @@ class ItemSlideGesture extends SlideGesture {
     super(buttons.parentItem.domElement)
     this.buttons = buttons
   }
-  
+
   getSlideBoundaries() {
     return {
       min: -this.buttons.domElement.offsetWidth,
