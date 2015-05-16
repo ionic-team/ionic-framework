@@ -13,8 +13,8 @@ body {
 }
 
 ion-app {
-  @include flex-display();
-  @include flex-direction(column);
+  display: flex;
+  flex-direction: column;
 
   overflow: hidden;
   height: 100%;
@@ -34,8 +34,8 @@ ion-nav {
   width: 100%;
   height: 100%;
 
-  @include flex-display();
-  @include flex-direction(column);
+  display: flex;
+  flex-direction: column;
 }
 
 .toolbar-container {
@@ -43,11 +43,11 @@ ion-nav {
   position: relative;
   width: 100%;
   min-height: 4.4rem;
-  @include flex-order($flex-order-toolbar-top);
+  order: $flex-order-toolbar-top;
 }
 
 footer.toolbar-container {
-  @include flex-order($flex-order-toolbar-bottom);
+  order: $flex-order-toolbar-bottom;
 }
 
 ion-toolbar {
@@ -62,16 +62,16 @@ ion-toolbar {
 .nav-item-container {
   // container of many .nav-item's, each one containing one view
   position: relative;
-  @include flex(1);
-  @include flex-order($flex-order-view-content);
+  flex: 1;
+  order: $flex-order-view-content;
 }
 
 .tab-pane-container {
   // container of each content for each tab component within a tabs component
-  @include flex(1);
+  flex: 1;
   position: relative;
   width: 100%;
-  @include flex-order($flex-order-view-content);
+  order: $flex-order-view-content;
 }
 
 .nav-item {

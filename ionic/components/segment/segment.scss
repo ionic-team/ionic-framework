@@ -1,13 +1,13 @@
 ion-segment { display: block; }
 
 .ion-segment {
-  @include flex-display();
-  @include flex(1);
+  display: flex;
+  flex: 1;
   width: 100%;
 
   > .button {
 
-    @include flex(1);
+    flex: 1;
     display: block;
 
     overflow: hidden;

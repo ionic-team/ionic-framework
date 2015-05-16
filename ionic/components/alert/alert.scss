@@ -9,9 +9,9 @@ $alert-content-margin:              24px !default;
 
 
 .alert .overlay-container {
-  @include flex-display();
-  @include flex-justify-content(center);
-  @include flex-align-items(center);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .alert-container {
@@ -37,6 +37,6 @@ $alert-content-margin:              24px !default;
 }
 
 .alert-actions {
-  @include flex-display();
-  @include flex-justify-content(flex-end);
+  display: flex;
+  justify-content: flex-end;
 }

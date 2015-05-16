@@ -29,7 +29,7 @@ $search-bar-ios-background-size:      13px 13px !default;
     background-position: 8px center;
 
     @include svg-background-image($search-bar-ios-background-svg);
-    @include background-size($search-bar-ios-background-size);
+    background-size: $search-bar-ios-background-size;
   }
 
 }

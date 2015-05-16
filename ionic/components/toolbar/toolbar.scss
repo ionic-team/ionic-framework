@@ -20,16 +20,16 @@ $toolbar-secondary-flex-order: 10;
 }
 
 ion-toolbar {
-  @include flex-direction(row);
-  @include flex-align-items(center);
-  @include flex-justify-content(space-between);
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 
   // by default ion-toolbar is display:none and
   // the transition animation will add the show class
   display: none;
 
   &.show-toolbar {
-    @include flex-display();
+    display: flex;
   }
 }
 
@@ -40,11 +40,11 @@ ion-toolbar {
 // buttons are primary by default
 ion-toolbar .button,
 ion-toolbar [side="primary"] {
-  @include flex-order(map-get($toolbar-order-core, 'primary'));
+  order: map-get($toolbar-order-core, 'primary');
 }
 
 ion-toolbar [side="secondary"] {
-  @include flex-order(map-get($toolbar-order-core, 'secondary'));
+  order: map-get($toolbar-order-core, 'secondary');
 }
 
 ion-title {
@@ -64,7 +64,7 @@ ion-title {
 }
 
 .toolbar-back-button {
-  @include flex-order(map-get($toolbar-order-core, 'back-button'));
+  order: map-get($toolbar-order-core, 'back-button');
 }
 
 .toolbar .button {

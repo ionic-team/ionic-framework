@@ -5,7 +5,7 @@
     > .button {
       border-width: 1px;
 
-      @include transition(100ms all linear);
+      transition: 100ms all linear;
 
       color: get-color(primary, base);
 

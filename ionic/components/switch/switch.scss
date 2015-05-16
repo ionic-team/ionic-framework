@@ -34,7 +34,7 @@ $switch-toggle-on-background:      #fff !default;
   height: $switch-height - ($switch-border-width * 2);
   border-radius: $switch-height / 2;
 
-  @include transition-duration(300ms);
+  transition-duration: 300ms;
   content: ' ';
 }
 
@@ -53,13 +53,13 @@ $switch-toggle-on-background:      #fff !default;
   border-radius: $switch-height - ($switch-border-width * 2);
   background: $switch-toggle-on-background;
 
-  @include transition-duration(300ms);
+  transition-duration: 300ms;
 
   content: ' ';
 }
 
 .switch[aria-checked=true] .switch-toggle:after {
-  @include translate3d(20px,0,0);
+  transform: translate3d(20px,0,0);
 }
 
 .switch[aria-disabled=true] {

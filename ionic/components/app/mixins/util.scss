@@ -2,38 +2,6 @@
 // Util Mixins/Functions
 
 
-
-// Appearance Mixin
-// --------------------------------------------------
-
-@mixin appearance($val) {
-  -webkit-appearance: $val;
-  -moz-appearance: $val;
-  -ms-appearance: $val;
-  appearance: $val;
-}
-
-
-// User Select Mixin
-// --------------------------------------------------
-
-@mixin user-select($select) {
-  -webkit-user-select: $select;
-  -moz-user-select: $select;
-  -ms-user-select: $select;
-  user-select: $select;
-}
-
-
-// Background Sizing Mixin
-// --------------------------------------------------
-
-@mixin background-size($size) {
-  -webkit-background-size: $size;
-  background-size: $size;
-}
-
-
 // String Replace Function
 // --------------------------------------------------
 
@@ -88,7 +56,7 @@
         display: block;
         width: 100%;
         height: 1px;
-        @include transform-origin(50%, 0%);
+        transform-origin: 50% 0%;
         background-color: $line-color;
         content: '';
       }
@@ -110,13 +78,12 @@
         display: block;
         width: 100%;
         height: 1px;
-        @include transform-origin(50%, 0%);
+        transform-origin: 50% 0%;
         background-color: $line-color;
         content: '';
       }
     }
 
   }
-
 
 }

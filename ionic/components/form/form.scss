@@ -39,23 +39,23 @@ textarea {
 // -------------------------------
 
 .item-input {
-  @include flex-display();
-  @include flex-align-items(center);
+  display: flex;
+  align-items: center;
   position: relative;
   overflow: hidden;
   padding: 6px 0 5px 16px;
 
   input {
     border-radius: 0;
-    @include flex(1, 220px);
-    @include appearance(none);
+    flex: 1 220px;
+    appearance: none;
     margin: 0;
     padding-right: 24px;
     background-color: transparent;
   }
 
   .button .icon {
-    @include flex(0, 0, 24px);
+    flex: 0 0 24px;
     position: static;
     display: inline-block;
     height: auto;
@@ -65,8 +65,8 @@ textarea {
 
   .button-bar {
     border-radius: 0;
-    @include flex(1, 0, 220px);
-    @include appearance(none);
+    flex: 1 0 220px;
+    appearance: none;
   }
 
   .icon {
@@ -75,17 +75,17 @@ textarea {
 }
 
 .item-input-inset {
-  @include flex-display();
-  @include flex-align-items(center);
+  display: flex;
+  align-items: center;
   position: relative;
   overflow: hidden;
   padding: ($item-padding / 3) * 2;
 }
 
 .item-input-wrapper {
-  @include flex-display();
-  @include flex(1, 0);
-  @include flex-align-items(center);
+  display: flex;
+  flex: 1 0;
+  align-items: center;
   border-radius: 4px;
   padding-right: 8px;
   padding-left: 8px;
@@ -156,12 +156,12 @@ textarea {
     padding: 5px 0 0 0;
     opacity: 0;
     top: 10px;
-    @include transition(opacity .15s ease-in, top .2s linear);
+    transition: opacity .15s ease-in, top .2s linear;
 
     &.has-input {
       opacity: 1;
       top: 0;
-      @include transition(opacity .15s ease-in, top .2s linear);
+      transition: opacity .15s ease-in, top .2s linear;
     }
   }
 }

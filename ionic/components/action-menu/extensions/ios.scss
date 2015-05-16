@@ -32,9 +32,9 @@ $action-menu-ios-icon-font-size:           1.4em !default;
   .action-menu-label,
   .action-menu-button {
     position: relative;
-    @include flex-display();
-    @include flex-justify-content(center);
-    @include flex-align-items(center);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     margin: 0;
     border: 0;
@@ -71,8 +71,8 @@ $action-menu-ios-icon-font-size:           1.4em !default;
   }
 
   .action-menu-container icon {
-    @include flex-display();
-    @include flex-align-items(center);
+    display: flex;
+    align-items: center;
     position: absolute;
     top: 0;
     left: 0;

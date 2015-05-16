@@ -10,33 +10,33 @@ $tab-bar-item-max-width:           160px !default;
 
 
 .tabs {
-  @include flex-display();
-  @include flex-direction(column);
+  display: flex;
+  flex-direction: column;
   height: 100%;
 }
 
 [tab-bar-placement="top"] > .tab-bar-container {
-  @include flex-order($flex-order-tab-bar-top);
+  order: $flex-order-tab-bar-top;
 }
 
 [tab-bar-placement="bottom"] > .tab-bar-container {
-  @include flex-order($flex-order-tab-bar-bottom);
+  order: $flex-order-tab-bar-bottom;
 }
 
 .tab-bar {
-  @include flex-display();
-  @include flex-justify-content(center);
+  display: flex;
+  justify-content: center;
   overflow: hidden;
   background: $tab-bar-background-color;
 }
 
 .tab-bar-item {
-  @include flex-display();
-  @include flex-justify-content(center);
-  @include flex-direction(column);
-  @include flex(1);
-  @include flex-align-self(center);
-  @include flex-align-items(center);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  align-self: center;
+  align-items: center;
 
   padding: $tab-bar-item-padding;
   min-width: $tab-bar-item-min-width;
@@ -44,7 +44,7 @@ $tab-bar-item-max-width:           160px !default;
 
   text-align: center;
   cursor: pointer;
-  @include user-select(none);
+  user-select: none;
 
   border: 0;
   background: none;
@@ -52,12 +52,12 @@ $tab-bar-item-max-width:           160px !default;
 
 [tab-bar-icons="bottom"] > .tab-bar-container .tab-bar-item {
   .tab-bar-item-icon {
-    @include flex-order(10);
+    order: 10;
   }
 }
 
 [tab-bar-icons="left"] > .tab-bar-container .tab-bar-item {
-  @include flex-direction(row);
+  flex-direction: row;
 
   .tab-bar-item-icon {
     text-align: right;
@@ -66,10 +66,10 @@ $tab-bar-item-max-width:           160px !default;
 }
 
 [tab-bar-icons="right"] > .tab-bar-container .tab-bar-item {
-  @include flex-direction(row);
+  flex-direction: row;
 
   .tab-bar-item-icon {
-    @include flex-order(10);
+    order: 10;
     text-align: left;
     padding-left: 5px;
   }
@@ -77,7 +77,7 @@ $tab-bar-item-max-width:           160px !default;
 
 .tab-bar-item-text,
 .tab-bar-item-icon {
-  @include flex-align-self(center);
+  align-self: center;
 
   min-width: 26px;
   max-width: 100%;

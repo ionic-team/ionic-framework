@@ -6,7 +6,7 @@
 .checkbox {
   display: block;
   cursor: pointer;
-  @include user-select(none);
+  user-select: none;
 }
 
 .checkbox-on {

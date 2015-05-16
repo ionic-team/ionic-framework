@@ -27,16 +27,16 @@ $button-small-icon-size:          2.1rem !default;
 .button {
   position: relative;
 
-  @include flex-display-inline();
-  @include flex-shrink(0);
-  @include flex-flow(row nowrap);
-  @include flex-align-items(center);
-  @include flex-justify-content(center);
+  display: inline-flex;
+  flex-shrink: 0;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
 
   margin: $button-margin;
   line-height: 1;
 
-  @include appearance(none);
+  appearance: none;
 
   vertical-align: top; // the better option for most scenarios
   vertical-align: -webkit-baseline-middle; // the best for those that support it
@@ -50,7 +50,7 @@ $button-small-icon-size:          2.1rem !default;
   overflow: hidden;
 
   cursor: pointer;
-  @include user-select(none);
+  user-select: none;
 
   &:after {
     // used to create a larger button "hit" area
@@ -123,7 +123,7 @@ $button-small-icon-size:          2.1rem !default;
 }
 
 .button-block {
-  @include flex-display();
+  display: flex;
   clear: both;
   margin-right: 0;
   margin-left: 0;
@@ -135,7 +135,7 @@ $button-small-icon-size:          2.1rem !default;
 
 .button-full,
 .button-full > .button {
-  @include flex-display();
+  display: flex;
   margin-right: 0;
   margin-left: 0;
   border-radius: 0;
@@ -164,7 +164,7 @@ input.button.button-block  {
 }
 
 .icon-right:before {
-  @include flex-order(2);
+  order: 2;
   font-size: 1.5em;
   margin-top: -0.1em;
   margin-left: 0.25em;

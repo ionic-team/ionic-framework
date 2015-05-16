@@ -91,7 +91,7 @@ modal {
   }
 
   .modal-backdrop-bg {
-    @include transition(opacity 300ms ease-in-out);
+    transition: opacity 300ms ease-in-out;
     background-color: $modal-backdrop-bg-active;
     opacity: 0;
   }

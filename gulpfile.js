@@ -12,6 +12,7 @@ var del = require('del');
 var gulpif = require('gulp-if');
 var rename = require('gulp-rename');
 var sass = require('gulp-sass');
+var autoprefixer = require('gulp-autoprefixer');
 var through2 = require('through2');
 var runSequence = require('run-sequence');
 var watch = require('gulp-watch');
@@ -98,6 +99,7 @@ gulp.task('sass', function() {
         console.log(err)
       }
     }))
+    .pipe(autoprefixer(buildConfig.autoprefixer))
     .pipe(gulp.dest('../angular-ionic/dist/js/dev/es5/css'));
 });
 

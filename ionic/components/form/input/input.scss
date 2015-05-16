@@ -7,8 +7,8 @@ ion-input {
   position: relative;
   overflow: hidden;
 
-  @include flex-display();
-  @include flex-align-items(center);
+  display: flex;
+  align-items: center;
 
   .item-label {
     padding: $item-input-padding;
@@ -20,8 +20,8 @@ ion-input {
 
     border-radius: 0;
 
-    @include flex(1, 220px);
-    @include appearance(none);
+    flex: 1 220px;
+    appearance: none;
 
     margin: 0;
     padding-right: 24px;

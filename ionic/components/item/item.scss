@@ -9,9 +9,9 @@ $item-padding:            15px !default;
 .item {
   position: relative;
 
-  @include flex-display();
-  @include flex-justify-content(space-between);
-  @include flex-align-items(center);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
   width: 100%;
   min-height: $item-min-height;
@@ -53,10 +53,10 @@ ion-primary-swipe-buttons {
 
   position: relative;
 
-  @include flex-display();
-  @include flex(1);
-  @include flex-justify-content(space-between);
-  @include flex-align-items(center);
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  align-items: center;
 
   width: 100%;
   min-height: $item-min-height;
@@ -67,9 +67,9 @@ ion-primary-swipe-buttons {
 .item-label {
   position: relative;
 
-  @include flex-display();
-  @include flex(1);
-  @include flex-shrink(1);
+  display: flex;
+  flex: 1;
+  flex-shrink: 1;
 
   max-width: 100%;
 
@@ -90,10 +90,10 @@ ion-primary-swipe-buttons {
 // --------------------------------------------------
 
 .item-media {
-  @include flex-display();
-  @include flex-shrink(0);
-  @include flex-wrap(nowrap);
-  @include flex-align-items(center);
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: nowrap;
+  align-items: center;
 
   min-height: $item-min-height;
   padding: 0;

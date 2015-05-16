@@ -2,7 +2,7 @@
 layout,
 [layout] {
   position: relative;
-  @include flex-display();
+  display: flex;
 }
 
 [flex] {

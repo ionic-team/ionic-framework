@@ -7,6 +7,7 @@
     "del": "~1.1.1",
     "es6-module-loader": "^0.16.5",
     "gulp": "~3.8.10",
+    "gulp-autoprefixer": "^2.3.0",
     "gulp-babel": "^5.1.0",
     "gulp-cached": "^1.0.4",
     "gulp-concat": "~2.5.0",

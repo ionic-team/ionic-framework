@@ -80,12 +80,12 @@ $content-padding:    10px !default;
   left: 0;
   opacity: 0;
   z-index: $z-index-click-block;
-  @include translate3d(-9999px, 0px, 0px);
+  transform: translate3d(-9999px, 0px, 0px);
   overflow: hidden;
 }
 
 .click-block-active {
-  @include translate3d(0px, 0px, 0px);
+  transform: translate3d(0px, 0px, 0px);
 }
 
 
@@ -94,10 +94,6 @@ $content-padding:    10px !default;
 // Used by the toolbar to know when the title has been rendered
 // http://davidwalsh.name/detect-node-insertion
 
-@-webkit-keyframes nodeInserted {
-  from { opacity: 0.99; }
-  to { opacity: 1; }
-}
 @keyframes nodeInserted {
   from { opacity: 0.99; }
   to { opacity: 1; }

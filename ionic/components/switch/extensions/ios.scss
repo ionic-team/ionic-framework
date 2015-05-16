@@ -32,7 +32,7 @@ $switch-ios-toggle-on-background:       #fff !default;
   }
 
   &[aria-checked=true] .switch-toggle:before {
-    @include scale(0);
+    transform: scale(0);
   }
 
 }
