@@ -18,9 +18,9 @@ import {
   directives: [FormDirectives, Button, Input, Content, Toolbar, HeaderTemplate]
 })
 export class LoginPage {
-  constructor( @Parent() viewport: NavController ) {
+  constructor( nav: NavController ) {
 
-    this.viewport = viewport
+    this.nav = nav
     Log.log('LOGIN PAGE', this)
 
     var fb = new FormBuilder()
@@ -41,7 +41,7 @@ export class LoginPage {
   }
 
   doSignup(event) {
-    this.viewport.push(SignupPage)
+    this.nav.push(SignupPage)
   }
 }
 
