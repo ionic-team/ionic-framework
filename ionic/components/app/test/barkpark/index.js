@@ -12,10 +12,10 @@ import {
   Tab, Content, Aside
 } from 'ionic/ionic'
 
-@Component()
+@Component({selector: 'ion-view'})
 @View({
   templateUrl: 'pages/login.html',
-  directives: [FormDirectives, Button, Input, Content, Toolbar, HeaderTemplate]
+  directives: [FormDirectives, Button, Input, Content, HeaderTemplate, Toolbar]
 })
 export class LoginPage {
   constructor( nav: NavController ) {
@@ -50,9 +50,7 @@ new Routable(LoginPage, {
   tag: 'login'
 })
 
-@Component({
-  selector: 'signup-page'
-})
+@Component({selector: 'ion-view'})
 @View({
   templateUrl: 'pages/signup.html',
   directives: [FormDirectives, Button, Input]
@@ -88,9 +86,7 @@ export class SignupPage {
 
 
 
-@Component({
-  selector: 'app-page'
-})
+@Component({selector: 'ion-view'})
 @View({
   templateUrl: 'pages/app.html',
   directives: [FormDirectives, Button, Input, Tabs, Tab]
@@ -102,7 +98,7 @@ export class AppPage {
   }
 }
 
-@Component({ selector: 'stream-tab' })
+@Component({selector: 'ion-view'})
 @View({
   templateUrl: 'pages/tabs/home.html',
   directives: [For, Content, List, Item]
@@ -125,7 +121,7 @@ class StreamTab {
   }
 }
 
-@Component({ selector: 'post-detail-tab' })
+@Component({selector: 'ion-view'})
 @View({
   templateUrl: 'pages/post/detail.html',
   directives: [Content]
@@ -140,7 +136,7 @@ class PostDetail {
   }
 }
 
-@Component()
+@Component({selector: 'ion-view'})
 @View({
   templateUrl: 'pages/splash.html',
   directives: [Content, Button]
