@@ -3,15 +3,27 @@
 
   <ion-content>
 
+    <!--
   <f></f>
   <f></f>
   <f></f>
   <f></f>
   <f></f>
+-->
+    <b>Items: {{items.length}}</b>
+    <ion-list>
+      <ion-item *for="#item of items">
+        {{item.title}}
+      </ion-item>
+    </ion-list>
 
   </ion-content>
 
 </ion-view>
 <style>
-  f { display: block; height: 400px; width: 100%; background-color: #387ef5; margin-bottom: 15px; }
+  ion-content { background-color: black !important; }
+  .item { background: transparent !important; }
+  .item-content { background: transparent !important; }
+  .item-label { color: #fff; }
+  /*f { display: block; height: 400px; width: 100%; background-color: #387ef5; margin-bottom: 15px; }*/
 </style>

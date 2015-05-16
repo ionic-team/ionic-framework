@@ -1,4 +1,6 @@
-import {NgElement, Component, View} from 'angular2/angular2'
+import {ElementRef} from 'angular2/angular2'
+import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
+import {View} from 'angular2/src/core/annotations_impl/view';
 import {IonicComponent} from 'ionic/config/component'
 
 
@@ -17,9 +19,9 @@ import {IonicComponent} from 'ionic/config/component'
 })
 export class SearchBar {
   constructor(
-    ngElement: NgElement
+    elementRef: ElementRef
   ) {
-    this.domElement = ngElement.domElement
+    this.domElement = elementRef.domElement
     this.config = SearchBar.config.invoke(this)
   }
 }

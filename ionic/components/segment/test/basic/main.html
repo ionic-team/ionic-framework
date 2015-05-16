@@ -30,4 +30,16 @@
   </form>
 
   Map mode: <b>{{form.controls.mapStyle.value}}</b>
+
+  <div [switch]="form.controls.mapStyle.value">
+    <div *switch-when="'standard'">
+      <h2>Standard</h2>
+    </div>
+    <div *switch-when="'hybrid'">
+      <h2>Hybrid</h2>
+    </div>
+    <div *switch-when="'sat'">
+      <h2>Satellite!!</h2>
+    </div>
+  </div>
 </ion-content>

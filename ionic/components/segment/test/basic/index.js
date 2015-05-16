@@ -1,4 +1,4 @@
-import {bootstrap} from 'angular2/angular2'
+import {bootstrap, Switch, SwitchWhen} from 'angular2/angular2'
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
@@ -9,7 +9,7 @@ import {FormBuilder, Validators, FormDirectives, ControlGroup} from 'angular2/fo
 @Component({ selector: 'ion-app' })
 @View({
   templateUrl: 'main.html',
-  directives: [FormDirectives].concat([Segment, SegmentButton, Content, Button])
+  directives: [FormDirectives].concat([Segment, SegmentButton, Content, Button, Switch, SwitchWhen])
 })
 class IonicApp {
   constructor() {
