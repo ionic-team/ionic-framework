@@ -1,4 +1,8 @@
-import {Component, View, Inject, Parent, NgElement, EventEmitter} from 'angular2/angular2'
+import {ElementRef, Inject, Parent, EventEmitter} from 'angular2/angular2'
+
+import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
+import {View} from 'angular2/src/core/annotations_impl/view';
+
 import * as types from 'ionic/components/aside/extensions/types'
 import * as gestures from  'ionic/components/aside/extensions/gestures'
 import {dom} from 'ionic/util'
@@ -21,9 +25,9 @@ import {IonicComponent} from 'ionic/config/component'
 })
 export class Aside {
   constructor(
-    @NgElement() element: NgElement
+    elementRef: ElementRef
   ) {
-    this.domElement = element.domElement
+    this.domElement = elementRef.domElement
 
     // FIXME(ajoslin): have to wait for setTimeout for bindings to apply.
     setTimeout(() => {

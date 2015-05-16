@@ -1,5 +1,5 @@
 import * as util from 'ionic/util';
-//import Hammer from 'hammer';
+import {Hammer} from 'ionic/gestures/hammer';
 
 export class Gesture {
   constructor(element, opts = {}) {
@@ -45,4 +45,3 @@ export class Gesture {
     this.unlisten()
   }
 }
-
