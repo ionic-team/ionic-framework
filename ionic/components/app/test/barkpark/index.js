@@ -8,7 +8,7 @@ import {Log} from 'ionic/util'
 
 import {
   Router, Routable, List, Item, HeaderTemplate, Nav, NavController,
-  Toolbar, ToolbarTitle, Button, Input, Tabs,
+  Toolbar, Button, Input, Tabs,
   Tab, Content, Aside
 } from 'ionic/ionic'
 
@@ -143,12 +143,15 @@ class PostDetail {
 @Component()
 @View({
   templateUrl: 'pages/splash.html',
-  directives: [Content]
+  directives: [Content, Button]
 })
 class SplashPage {
   constructor(nav: NavController) {
     this.nav = nav;
     window.nav = nav;
+  }
+  doLogin() {
+    this.nav.push(LoginPage);
   }
 }
 
@@ -165,15 +168,13 @@ class IonicApp {
   constructor() {
     this.firstPage = SplashPage//AppPage//LoginPage
 
+    /*
     setTimeout(() => {
       var nav = window.nav;
 
       var route = Router;//new Router()
       route.on('/login', (data) => {
-
-        nav.push(LoginPage, null, {
-          animate: false
-        })
+        nav.push(LoginPage);
 
       })
 
@@ -185,6 +186,7 @@ class IonicApp {
       route.otherwise('/login');
 
     }, 200);
+    */
   }
 }
 
