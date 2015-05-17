@@ -12,13 +12,12 @@ import {IonicComponent} from 'ionic/config/component'
     cancelText: 'cancel-text',
     placeholderText: 'placeholder-text',
     list: 'list',
-    query: 'query',
-    value: 'value'
+    query: 'query'
   }
 })
 @View({
   template: `<div class="search-bar-input-container">
-             <input [value]="value" (input)="inputChanged($event)" class="search-bar-input" type="search" [attr.placeholder]="placeholderText">
+             <input (input)="inputChanged($event)" class="search-bar-input" type="search" [attr.placeholder]="placeholderText">
            </div>
            <button class="button search-bar-cancel">{{ cancelText }}</button>`
 })

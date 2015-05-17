@@ -33,7 +33,7 @@ class IonicApp {
     });
 
 
-    this.query = '';
+    this.query = 'HELLO';
 
     this.items = []
     for(let i = 0; i < 100; i++) {
@@ -41,6 +41,18 @@ class IonicApp {
         title: randomTitle()
       })
     }
+  }
+  getItems() {
+    var q = this.form.controls.searchQuery.value;
+    if(q.trim() == '') {
+      return this.items;
+    }
+    return this.items.filter((v) => {
+      if(v.title.toLowerCase().indexOf(q.toLowerCase()) >= 0) {
+        return true;
+      }
+      return false;
+    })
   }
 }
 

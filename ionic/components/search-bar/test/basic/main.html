@@ -7,7 +7,7 @@
 
     <ion-list #list>
 
-      <ion-item *for="#item of items | search:form.controls.searchControl.value">
+      <ion-item *for="#item of getItems()"><!--items | search:form.controls.searchControl.value">-->
         {{item.title}}
       </ion-item>
     </ion-list>
