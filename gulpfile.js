@@ -43,6 +43,7 @@ gulp.task('watch', function() {
       });
 
       watch('ionic/components/*/test/**/*', function() {
+        gulp.start('ionic.copy.js');
         gulp.start('ionic.examples');
       });
 

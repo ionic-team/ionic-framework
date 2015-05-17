@@ -26,7 +26,8 @@ $aside-transition: 0.3s linear transform;
   transform: translate3d(0, 0, 0);
   &.open,
   &[type=reveal] {
-    transform: translate3d($aside-width,0,0);
+    left: 0;
+    //transform: translate3d($aside-width,0,0);
   }
   //}
   &[side=right] {

@@ -69,7 +69,6 @@ export class AsideTypeReveal extends AsideType {
     contentManipulator.setSliding.call(this, sliding);
   }
   setOpen(sliding) {
-    asideManipulator.setOpen.call(this, sliding);
     contentManipulator.setOpen.call(this, sliding);
   }
   setTransform(t) {

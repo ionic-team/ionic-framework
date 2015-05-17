@@ -1,4 +1,4 @@
-import {ElementRef, Inject, Parent, EventEmitter} from 'angular2/angular2'
+import {EventEmitter, ElementRef, Inject, Parent} from 'angular2/angular2'
 
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
@@ -18,7 +18,8 @@ import {IonicComponent} from 'ionic/config/component'
     content: 'content',
     side: 'side',
     dragThreshold: 'dragThreshold'
-  }
+  },
+  events: ['opening']
 })
 @View({
   template: `<content></content>`
@@ -29,10 +30,17 @@ export class Aside {
   ) {
     this.domElement = elementRef.domElement
 
+    this.opening = new EventEmitter('opening');
+
     // FIXME(ajoslin): have to wait for setTimeout for bindings to apply.
     setTimeout(() => {
       this.side = this.side || 'left';
-      this.type = this.type || 'push';
+      this.type = this.type || 'reveal';
+
+      this.domElement.setAttribute('side', this.side);
+      this.domElement.setAttribute('type', this.type);
+
+      console.log('Aisde content', this.content);
 
       this.config = Aside.config.invoke(this)
       this.gestureDelegate = this.config.getDelegate('gesture');
@@ -48,12 +56,8 @@ export class Aside {
     return this.content.domElement;
   }
 
-  setOpenX(x) {
-    this.openX = x;
-  }
-
-  setOpenY(y) {
-    this.openY = y;
+  setOpenAmt(v) {
+    this.opening.next(v);
   }
 
   setTransform(transform) {
@@ -75,9 +79,8 @@ export class Aside {
       this.isOpen = isOpen
       this.setChanging(true)
 
-      // TODO: Abstract this away
-      // Set 100% X
-      //this.x = this.gestureDelegate.getSlideBoundaries().max;
+      // Set full or closed amount
+      this.setOpenAmt(isOpen ? 1 : 0);
 
       return dom.rafPromise().then(() => {
         this.typeDelegate.setOpen(isOpen)

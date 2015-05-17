@@ -1,0 +1,72 @@
+<ion-view>
+
+  <ion-aside id="menu" side="left" [content]="content" (opening)="onMenuOpening($event, amt)">
+    <ion-list inset [parallax]="menuOpenAmount">
+      <ion-item>
+        Search
+      </ion-item>
+      <ion-item>
+        Browse
+      </ion-item>
+      <ion-item>
+        Activity
+      </ion-item>
+      <ion-item>
+        Radio
+      </ion-item>
+      <ion-item>
+        Your Music
+      </ion-item>
+      <ion-item>
+        Settings
+      </ion-item>
+    </ion-list>
+  </ion-aside>
+
+  <ion-nav #content [initial]="firstPage">
+  </ion-nav>
+
+  <style>
+    ion-view {
+      background-color: black !important;
+    }
+    .toolbar-container {
+      background-color: #202020 !important;
+    }
+    #menu {
+      background: url('http://ionic-io-assets.s3.amazonaws.com/menu.jpg');
+      background-size: cover;
+    }
+    #menu ion-item {
+      background: transparent;
+      min-height: 55px;
+    }
+    #menu ion-item .item-content {
+      background: transparent;
+      color: rgba(255,255,255,0.8);
+      padding: 10px;
+    }
+    #menu ion-item .item-label {
+      font-size: 22px;
+    }
+    .platform-ios #menu .item-content:after {
+      background: none;
+    }
+    .platform-ios #menu .item:first-of-type:before {
+      background: none;
+    }
+    .platform-ios #menu .item:last-of-type:after {
+      background: none;
+    }
+
+    ion-nav {
+      background: black;
+    }
+
+    .nav-item {
+      background: white;
+    }
+
+  </style>
+
+</ion-view>

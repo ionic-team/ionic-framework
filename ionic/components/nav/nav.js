@@ -28,8 +28,9 @@ import {ToolbarContainer} from '../toolbar/toolbar-container';
   directives: [HeaderAnchor, ContentAnchor, ToolbarContainer]
 })
 export class Nav extends NavBase {
-  constructor(loader: DynamicComponentLoader, injector: Injector) {
+  constructor(elementRef: ElementRef, loader: DynamicComponentLoader, injector: Injector) {
     super(loader, injector);
+    this.domElement = elementRef.domElement;
   }
 }
 

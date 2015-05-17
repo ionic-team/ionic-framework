@@ -30,7 +30,7 @@ class AsideGesture extends SlideEdgeGesture {
     });
   }
   onSlide(slide, ev) {
-    this.aside.setOpenX(slide.distance);
+    this.aside.setOpenAmt(slide.distance / slide.max);
     this.aside.setTransform('translate3d(' + slide.distance + 'px,0,0)');
   }
   onSlideEnd(slide, ev) {

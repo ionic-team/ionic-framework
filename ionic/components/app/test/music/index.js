@@ -1,0 +1,104 @@
+//import {Router} from 'ionic/routing/router'
+import {ElementRef, For, Parent, bootstrap} from 'angular2/angular2'
+import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
+import {View} from 'angular2/src/core/annotations_impl/view';
+
+import {FormBuilder, Validators, FormDirectives, ControlGroup} from 'angular2/forms';
+import {Log} from 'ionic/util'
+
+import {
+  Router, Routable, List, Item, HeaderTemplate, Nav, NavController,
+  Toolbar, Button, Input, Tabs,
+  Tab, Content, Aside
+} from 'ionic/ionic'
+
+
+@Component({selector: 'ion-view'})
+@View({
+  templateUrl: 'pages/app.html',
+  directives: [Content, Button]
+})
+class AppPage {
+  constructor(nav: NavController) {
+    this.nav = nav;
+  }
+  doLogin() {
+  }
+}
+
+
+/**
+ * Main app entry point
+ */
+@Component({ selector: 'ion-app' })
+@View({
+  directives: [Nav, Aside, List, Item, ParallaxEffect],
+  templateUrl: 'main.html'
+})
+class IonicApp {
+  constructor() {
+    this.firstPage = AppPage
+
+    this.menuOpenAmount = 0;
+
+
+    /*
+    setTimeout(() => {
+      var nav = window.nav;
+
+      var route = Router;//new Router()
+      route.on('/login', (data) => {
+        nav.push(LoginPage);
+
+      })
+
+      route.on('/post/:id', (data) => {
+        console.log('ROUTE: Post page', data)
+        nav.push(PostDetail, data);
+      })
+
+      route.otherwise('/login');
+
+    }, 200);
+    */
+  }
+
+  onMenuOpening(amt) {
+    this.menuOpenAmount = amt;
+  }
+}
+
+@Directive({
+  selector: '[parallax]',
+  properties: {
+    parallax: 'parallax'
+  }
+})
+export class ParallaxEffect {
+  constructor(
+    elementRef: ElementRef
+  ) {
+    this.domElement = elementRef.domElement;
+
+    setTimeout(() => {
+      Object.observe(this, (changes) => {
+        changes.forEach((change) => {
+          if(change.name == 'parallax') {
+            this.parallaxItems();
+          }
+        });
+      });
+    });
+  }
+  parallaxItems() {
+    let list = this.domElement;
+    console.log('Moving items', this.parallax);
+    var x = Math.max(0, (1 - this.parallax) * 40);
+    list.style['opacity'] = Math.min(this.parallax, 1);
+    list.style['transform'] = 'translate3d(' + x + 'px, 0, 0)';
+  }
+}
+
+export function main() {
+  bootstrap(IonicApp);
+}
