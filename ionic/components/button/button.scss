@@ -36,7 +36,7 @@ $button-small-icon-size:          2.1rem !default;
   margin: $button-margin;
   line-height: 1;
 
-  appearance: none;
+  @include appearance(none);
 
   vertical-align: top; // the better option for most scenarios
   vertical-align: -webkit-baseline-middle; // the best for those that support it

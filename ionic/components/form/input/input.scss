@@ -21,7 +21,7 @@ ion-input {
     border-radius: 0;
 
     flex: 1 220px;
-    appearance: none;
+    @include appearance(none);
 
     margin: 0;
     padding-right: 24px;

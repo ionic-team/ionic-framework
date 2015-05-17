@@ -30,34 +30,63 @@ export function rafPromise() {
 export const isSVG = val => window.SVGElement && (val instanceof window.SVGElement);
 
 
-// We only need to test for webkit in our supported browsers. Webkit is the only browser still
-// using prefixes.
-// Code adapted from angular-animate.js
-export let css = {};
+// We only need to test for webkit in our supported browsers. Webkit is the
+// only  browser still using prefixes. Code adapted from angular-animate.js
+export let CSS = {};
 if (window.ontransitionend === undefined && window.onwebkittransitionend !== undefined) {
-  css.prefix = 'webkit';
-  css.transition = 'webkitTransition';
-  css.transform = 'webkitTransform';
-  css.transitionEnd = 'webkitTransitionEnd transitionend';
+  CSS.prefix = '-webkit-';
+  CSS.transition = 'webkitTransition';
+  CSS.transform = 'webkitTransform';
+  CSS.transitionEnd = 'webkitTransitionEnd transitionend';
 } else {
-  css.prefix = '';
-  css.transform = 'transform';
-  css.transition = 'transition';
-  css.transitionEnd = 'transitionend';
+  CSS.prefix = '';
+  CSS.transform = 'transform';
+  CSS.transition = 'transition';
+  CSS.transitionEnd = 'transitionend';
 }
 
-export function transitionEndPromise(el:Element) {
+if (window.onanimationend === undefined && window.onwebkitanimationend !== undefined) {
+  CSS.animation = 'WebkitAnimation';
+  CSS.animationStart = 'webkitAnimationStart animationstart';
+  CSS.animationEnd = 'webkitAnimationEnd animationend';
+} else {
+  CSS.animation = 'animation';
+  CSS.animationStart = 'animationstart';
+  CSS.animationEnd = 'animationend';
+}
+
+export function transitionEnd(el:Element) {
+  return cssPromise(el, CSS.transitionEnd);
+}
+
+export function animationStart(el:Element, animationName) {
+  return cssPromise(el, CSS.animationStart, animationName);
+}
+
+export function animationEnd(el:Element, animationName) {
+  return cssPromise(el, CSS.animationEnd, animationName);
+}
+
+function cssPromise(el:Element, eventNames, animationName) {
   return new Promise(resolve => {
-    css.transitionEnd.split(' ').forEach(eventName => {
-      el.addEventListener(eventName, onTransitionEnd);
+    eventNames.split(' ').forEach(eventName => {
+      el.addEventListener(eventName, onEvent);
     })
-    function onTransitionEnd(ev) {
-      // Don't allow bubbled transitionend events
-      if (ev.target !== el) {
+    function onEvent(ev) {
+      if (ev.animationName && animationName) {
+        // do not resolve if a bubbled up ev.animationName
+        // is not the same as the passed in animationName arg
+        if (ev.animationName !== animationName) {
+          return;
+        }
+      } else if (ev.target !== el) {
+        // do not resolve if the event's target element is not
+        // the same as the element the listener was added to
         return;
       }
-      css.transitionEnd.split(' ').forEach(eventName => {
-        el.removeEventListener(css.transitionEnd, onTransitionEnd)
+      ev.stopPropagation();
+      eventNames.split(' ').forEach(eventName => {
+        el.removeEventListener(eventName, onEvent);
       })
       resolve(ev);
     }

@@ -1,6 +1,14 @@
 
 // Util Mixins/Functions
 
+// Appearance (not a CSS standard, does not autoprefix)
+// --------------------------------------------------
+
+@mixin appearance($val) {
+  -webkit-appearance: $val;
+  -moz-appearance: $val;
+}
+
 
 // String Replace Function
 // --------------------------------------------------

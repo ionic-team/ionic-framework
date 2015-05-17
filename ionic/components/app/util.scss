@@ -95,6 +95,6 @@ $content-padding:    10px !default;
 // http://davidwalsh.name/detect-node-insertion
 
 @keyframes nodeInserted {
-  from { opacity: 0.99; }
-  to { opacity: 1; }
+  from { transform: scale(0.999); }
+  to { transform: scale(1); }
 }

@@ -36,10 +36,10 @@ export class Toolbar {
     this.config = Toolbar.config.invoke(this);
 
     // http://davidwalsh.name/detect-node-insertion
-    this.domElement.addEventListener("animationstart", (ev) => {
-      ev.stopPropagation();
+    dom.animationStart(this.domElement, 'nodeInserted').then(() => {
       this.alignTitle();
     });
+
   }
 
   alignTitle() {

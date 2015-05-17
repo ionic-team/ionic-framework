@@ -51,7 +51,7 @@ ion-title {
   display: block;
 
   // used to notify JS when the title has been rendered
-  animation-duration: 0.001s;
+  animation-duration: 1ms;
   animation-name: nodeInserted;
 }
 

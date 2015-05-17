@@ -26,7 +26,7 @@ $search-bar-min-height:         44px !default;
   height: 100%;
   border: none;
   font-family: inherit;
-  appearance: none;
+  @include appearance(none);
 }
 
 .search-bar-cancel {
