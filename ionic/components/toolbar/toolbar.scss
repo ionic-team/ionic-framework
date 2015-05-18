@@ -3,16 +3,12 @@
 // --------------------------------------------------
 
 $toolbar-background: #f7f7f8 !default;
-$toolbar-order-core: (
-  back-button: 1,
-  title: 2,
-  primary: 3,
-  secondary: 4
+$toolbar-order: (
+  back-button: 10,
+  title: 20,
+  primary: 30,
+  secondary: 40
 );
-$toolbar-primary-flex-order: 1;
-$toolbar-primary-flex-order: 1;
-$toolbar-title-flex-order: 5;
-$toolbar-secondary-flex-order: 10;
 
 
 .toolbar-container {
@@ -34,17 +30,31 @@ ion-toolbar {
 }
 
 .toolbar-inner {
+  display: flex;
   width: 100%;
+}
+
+ion-toolbar back-button.toolbar-item {
+  order: map-get($toolbar-order, 'back-button');
+}
+
+.toolbar-title {
+  flex: 1;
+  order: map-get($toolbar-order, 'title');
+
+  display: flex;
+  align-items: center;
+  margin: 0 0 2px;
 }
 
 // buttons are primary by default
 ion-toolbar .button,
 ion-toolbar [side="primary"] {
-  order: map-get($toolbar-order-core, 'primary');
+  order: map-get($toolbar-order, 'primary');
 }
 
 ion-toolbar [side="secondary"] {
-  order: map-get($toolbar-order-core, 'secondary');
+  order: map-get($toolbar-order, 'secondary');
 }
 
 ion-title {
@@ -61,10 +71,6 @@ ion-title {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-}
-
-.toolbar-back-button {
-  order: map-get($toolbar-order-core, 'back-button');
 }
 
 .toolbar .button {

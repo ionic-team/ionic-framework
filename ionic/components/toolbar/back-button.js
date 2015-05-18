@@ -1,26 +1,40 @@
-import {NgElement, Component, View} from 'angular2/angular2'
-import {IonicComponent} from 'ionic/config/component'
+import {Component} from 'angular2/src/core/annotations_impl/annotations';
+import {View} from 'angular2/src/core/annotations_impl/view';
+import {ElementRef} from 'angular2/src/core/compiler/element_ref';
+
+import {IonicComponent} from 'ionic/config/component';
+import {NavItem} from '../nav/nav-item';
+
 
 @Component({
-  selector: '.back-button',
+  selector: 'back-button',
+  hostListeners: {
+    '^click': 'onClick($event)'
+  },
 })
 @View({
   template: `
-    <icon [class-name]="'back-button-icon ' + icon"></icon>
+    <icon class="back-button-icon ion-ios-arrow-back"></icon>
     <span class="back-button-text">
-      <span class="back-default">{{ text }}</span>
+      <span class="back-default">Back</span>
       <span class="back-title"></span>
     </span>`
 })
 export class BackButton {
-  constructor(
-    @NgElement() ngEle:NgElement
-  ) {
-    this.domElement = ngEle.domElement
+  constructor(navItem: NavItem, @ElementRef() element:ElementRef) {
+    this.navItem = navItem;
+    this.domElement = element.domElement;
 
     setTimeout(() => {
-      this.config = BackButton.config.invoke(this)
-    })
+      // HACK!
+      this.config = BackButton.config.invoke(this);
+    });
+  }
+
+  onClick(ev) {
+    this.navItem.nav.pop();
+    ev.stopPropagation();
+    ev.preventDefault();
   }
 }
 
@@ -41,4 +55,4 @@ new IonicComponent(BackButton, {
       }
     }
   }
-})
+});

@@ -3,10 +3,10 @@
 // --------------------------------------------------
 
 $toolbar-order-ios: (
-  back-button: 1,
-  primary: 2,
-  title: 3,
-  secondary: 4
+  back-button: 10,
+  primary: 20,
+  title: 30,
+  secondary: 40
 );
 
 $toolbar-ios-height:                        4.4rem !default;
@@ -44,11 +44,14 @@ $toolbar-ios-button-background-color:       transparent !default;
     order: map-get($toolbar-order-ios, 'secondary');
   }
 
+  .toolbar-title {
+    text-align: center;
+  }
+
   ion-title {
     order: map-get($toolbar-order-ios, 'title');
     font-size: $toolbar-ios-title-font-size;
     font-weight: 500;
-    text-align: center;
   }
 
   .toolbar-back-button {
@@ -66,4 +69,8 @@ $toolbar-ios-button-background-color:       transparent !default;
     background: $toolbar-ios-button-background-color;
   }
 
+}
+
+.back-button-ios .back-button-icon {
+  padding-right: 6px;
 }

@@ -7,6 +7,7 @@ import * as dom from 'ionic/util/dom';
 import {IonicComponent} from 'ionic/config/component';
 import {NavItem} from 'ionic/ionic';
 import {Platform} from 'ionic/platform/platform';
+import {BackButton} from './back-button';
 
 
 @Component({
@@ -15,23 +16,26 @@ import {Platform} from 'ionic/platform/platform';
 @View({
   template: `
     <div class="toolbar-inner">
-      <button class="button back-button toolbar-item" style="display:none"></button>
+      <back-button class="button toolbar-item" [hidden]="!navItem.enableBack"></back-button>
       <div class="toolbar-title">
         <div class="toolbar-inner-title toolbar-title-hide">
           <content select="ion-title"></content>
         </div>
       </div>
-      <div class="toolbar-item toolbar-primary-item">
+      <!--<div class="toolbar-item toolbar-primary-item">
         <content select=".primary"></content>
       </div>
       <div class="toolbar-item toolbar-secondary-item">
         <content select=".secondary"></content>
-      </div>
+      </div>-->
     </div>
-  `
+  `,
+  directives: [BackButton]
 })
 export class Toolbar {
-  constructor(elementRef: ElementRef) {
+  constructor(navItem: NavItem, elementRef: ElementRef) {
+
+    this.navItem = navItem;
     this.domElement = elementRef.domElement;
     this.config = Toolbar.config.invoke(this);
 

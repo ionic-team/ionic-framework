@@ -16,9 +16,15 @@ export class NavItem {
     this.toolbarViews = [];
     this._titleEle = undefined;
     this.disposals = [];
+
+    // if it's possible to go back from this nav item
+    this.enableBack = false;
   }
 
-  setup() {
+  stage() {
+    // update if it's possible to go back from this nav item
+    this.enableBack = !!this.nav.getPrevious(this);
+
     if (!this.created) {
       return this.create();
     }

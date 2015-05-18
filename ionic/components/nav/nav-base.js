@@ -104,7 +104,7 @@ export class NavBase {
     ClickBlock(opts.animation !== 'none', 520);
 
     // wait for the new item to complete setup
-    enteringItem.setup().then(() => {
+    enteringItem.stage().then(() => {
 
       // set that the leaving item is stage to be leaving
       leavingItem.state = STAGED_LEAVING_STATE;
@@ -222,20 +222,4 @@ export class NavBase {
     util.array.remove(this.items, itemOrIndex);
   }
 
-  getToolbars(pos: String) {
-    let last = this.last();
-    return last && last.navItem && last.navItem._toolbars[pos] || [];
-  }
-
-  get hideHeader() {
-    return !this.getToolbars('top').length;
-  }
-
-  get hideFooter() {
-    return !this.getToolbars('bottom').length;
-  }
-
-  canSwipeBack() {
-    return !!this.getPrevious(this.getActive());
-  }
 }
