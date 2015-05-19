@@ -16,7 +16,7 @@ import {
 @Component({selector: 'ion-view'})
 @View({
   templateUrl: 'pages/app.html',
-  directives: [Content, Button]
+  directives: [Nav, List, Item, Content, Button, HeaderTemplate, Toolbar]
 })
 class AppPage {
   constructor(nav: NavController) {
@@ -93,12 +93,16 @@ export class ParallaxEffect {
   parallaxItems() {
     let list = this.domElement;
     console.log('Moving items', this.parallax);
-    var x = Math.max(0, (1 - this.parallax) * 40);
+    var x = Math.max(0, (1 - this.parallax) * 20);
+    var y = 0;//Math.max(0, (1 - this.parallax) * 10);
+    var scale = Math.min(1, (0.9 + 0.1 * this.parallax));
     list.style['opacity'] = Math.min(this.parallax, 1);
-    list.style['transform'] = 'translate3d(' + x + 'px, 0, 0)';
+    list.style['transform'] = 'translate3d(' + x + 'px, ' + y + 'px, 0) scale(' + scale + ')';
   }
 }
 
+//300
+//1 to 0.9
 export function main() {
   bootstrap(IonicApp);
 }

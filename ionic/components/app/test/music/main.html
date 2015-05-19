@@ -37,25 +37,37 @@
       background: url('http://ionic-io-assets.s3.amazonaws.com/menu.jpg');
       background-size: cover;
     }
-    #menu ion-item {
+    .platform-ios ion-list .item {
       background: transparent;
       min-height: 55px;
     }
-    #menu ion-item .item-content {
+    .platform-ios ion-list .item .item-content {
       background: transparent;
       color: rgba(255,255,255,0.8);
       padding: 10px;
     }
+    .platform-ios .toolbar-ios ion-title {
+      color: white;
+      font-size: 14px;
+      font-weight: normal;
+      letter-spacing: 2px;
+    }
     #menu ion-item .item-label {
       font-size: 22px;
+    }
+    ion-content {
+      background: transparent !important;
     }
     .platform-ios #menu .item-content:after {
       background: none;
     }
-    .platform-ios #menu .item:first-of-type:before {
-      background: none;
+    .platform-ios .item:first-of-type:before {
+      background: none !important;
     }
-    .platform-ios #menu .item:last-of-type:after {
+    .platform-ios .item:last-of-type:after {
+      background: none !important;
+    }
+    .platform-ios .toolbar-container-ios:after {
       background: none;
     }
 
