@@ -124,7 +124,7 @@ export class NavBase {
         leavingItem.state = ACTIVELY_LEAVING_STATE;
 
         // start the transition
-        transAnimation.start().then(() => {
+        transAnimation.play().then(() => {
 
           // transition has completed, update each item's state
           enteringItem.state = ACTIVE_STATE;

@@ -1,17 +1,21 @@
-import {Animation} from '../collide/animation';
-import {addEasing} from '../collide/easing';
+import {Animation} from '../animations/animation';
 import {rafPromise} from '../util/dom'
 import {Transition} from './transition'
 
 
 const EASING_FN = [.36, .66, .04, 1];
 const DURATION = 500;
-const OFF_RIGHT = '100%';
-const OFF_LEFT = '-33%';
+
+const OPACITY = 'opacity';
+const TRANSFORM = 'transform';
+
+const CENTER = 'none';
+const OFF_RIGHT = 'translate3d(100%,0px,0px)';
+const OFF_LEFT = 'translate3d(-33%,0px,0px)';
 const OFF_OPACITY = 0.8;
 
-const TRANSLATE_X = 'translateX';
-const OPACITY = 'opacity';
+const SHOW_TOOLBAR_CSS = 'show-toolbar';
+const SHOW_NAV_ITEM_CSS = 'show-nav-item';
 
 
 class IOSTransition extends Animation {
@@ -21,7 +25,6 @@ class IOSTransition extends Animation {
 
     // global duration and easing for all child animations
     this.duration(DURATION);
-    this.easing('ios');
 
     // get the entering and leaving items
     this.enteringItem = navCtrl.getStagedEnteringItem();
@@ -50,72 +53,73 @@ class IOSTransition extends Animation {
     // entering item moves to center
     // before starting, set enteringItem to display: block
     enteringContent
-      .addStartClass('show-nav-item')
-      .to(TRANSLATE_X, 0)
+      .beforePlay.addClass(SHOW_NAV_ITEM_CSS)
+      .to(TRANSFORM, CENTER)
       .to(OPACITY, 1);
 
     enteringTitle
-      .to(TRANSLATE_X, 0)
+      .to(TRANSFORM, CENTER)
       .to(OPACITY, 1);
 
     enteringToolbars
-      .addStartClass('show-toolbar');
+      .beforePlay.addClass(SHOW_TOOLBAR_CSS);
 
     // leaving view moves off screen
     // when completed, set leavingItem to display: none
     leavingContent
-      .removeEndClass('show-nav-item')
-      .from(TRANSLATE_X, 0)
+      .afterFinish.removeClass(SHOW_NAV_ITEM_CSS)
+      .from(TRANSFORM, CENTER)
       .from(OPACITY, 1);
 
     leavingToolbars
-      .removeEndClass('show-toolbar');
+      .afterFinish.removeClass(SHOW_TOOLBAR_CSS);
 
     leavingTitle
-      .from(TRANSLATE_X, 0)
+      .from(TRANSFORM, CENTER)
       .from(OPACITY, 1);
 
     // set properties depending on direction
     if (opts.direction === 'back') {
       // back direction
       enteringContent
-        .from(TRANSLATE_X, OFF_LEFT)
+        .from(TRANSFORM, OFF_LEFT)
         .from(OPACITY, OFF_OPACITY)
         .to(OPACITY, 1);
 
       enteringTitle
-        .from(TRANSLATE_X, OFF_LEFT)
+        .from(TRANSFORM, OFF_LEFT)
         .from(OPACITY, 0)
         .to(OPACITY, 1);
 
       leavingContent
-        .to(TRANSLATE_X, OFF_RIGHT)
+        .to(TRANSFORM, OFF_RIGHT)
         .to(OPACITY, 1);
 
       leavingTitle
-        .to(TRANSLATE_X, OFF_RIGHT)
+        .to(TRANSFORM, OFF_RIGHT)
         .to(OPACITY, 1);
 
     } else {
       // forward direction
       enteringContent
-        .from(TRANSLATE_X, OFF_RIGHT)
+        .from(TRANSFORM, OFF_RIGHT)
         .from(OPACITY, 1);
 
       enteringTitle
-        .from(TRANSLATE_X, OFF_RIGHT);
+        .from(TRANSFORM, OFF_RIGHT);
 
       leavingContent
-        .to(TRANSLATE_X, OFF_LEFT)
+        .to(TRANSFORM, OFF_LEFT)
         .to(OPACITY, OFF_OPACITY);
 
       leavingTitle
-        .to(TRANSLATE_X, OFF_LEFT)
+        .to(TRANSFORM, OFF_LEFT)
         .to(OPACITY, 0);
     }
 
     // set child animations
-    this.setChildren([enteringContent, enteringToolbars, enteringTitle, leavingContent, leavingToolbars, leavingTitle]);
+    this.children(enteringContent, enteringToolbars, enteringTitle, leavingContent, leavingToolbars, leavingTitle);
+
   }
 
   stage() {
@@ -123,7 +127,5 @@ class IOSTransition extends Animation {
   }
 
 }
-
-addEasing('ios', EASING_FN);
 
 Transition.register('ios', IOSTransition);

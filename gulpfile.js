@@ -25,7 +25,8 @@ gulp.task('build', function() {
     'ionic.copy.js',
     'ionic.examples',
     'sass',
-    'fonts');
+    'fonts',
+    'polyfills');
 })
 
 gulp.task('watch', function() {
@@ -36,6 +37,7 @@ gulp.task('watch', function() {
     'ionic.examples',
     'sass',
     'fonts',
+    'polyfills',
 
     function() {
       watch('ionic/**/*.js', function() {
@@ -108,6 +110,12 @@ gulp.task('sass', function() {
 gulp.task('fonts', function() {
   return gulp.src('ionic/components/icon/fonts/**/*')
     .pipe(gulp.dest('../angular-ionic/dist/js/dev/es5/fonts'));
+});
+
+
+gulp.task('polyfills', function() {
+  return gulp.src('ionic/animations/web-animations*')
+    .pipe(gulp.dest('../angular-ionic/dist/js/dev/es5/polyfills'));
 });
 
 

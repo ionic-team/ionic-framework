@@ -1,6 +1,7 @@
 <html>
 <head>
-  <title>Collide Tests</title>
+  <title>Animation Tests</title>
+  <script src="./web-animations-js/web-animations-next.dev.js"></script>
 </head>
 <body>
 
@@ -21,20 +22,13 @@
   </div>
 
   <p>
-    <input type="range" (input)="percent($event)" value="0" min="0" max="100" style="width:200px">
+    <input type="range" (input)="progress($event)" value="0" min="0" step="0.001" max="1" style="width:200px">
   </p>
 
   <p>
-    <button class="button button-primary" (click)="fadeOut($event)">Out</button>
-    <button class="button button-primary" (click)="fadeIn($event)">In</button>
+    <button class="button button-primary" (click)="play($event)">Play</button>
+    <button class="button button-primary" (click)="pause($event)">Pause</button>
   </p>
-
-
-  <!-- <p>
-    <button class="button button-primary" (click)="velocityStart($event)">Velocity Start</button>
-  </p> -->
-
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.2/velocity.js"></script>
 
 </body>
 </html>

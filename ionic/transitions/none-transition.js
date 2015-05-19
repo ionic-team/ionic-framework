@@ -1,6 +1,10 @@
 import {Transition} from './transition'
 
 
+const SHOW_TOOLBAR_CSS = 'show-toolbar';
+const SHOW_NAV_ITEM_CSS = 'show-nav-item';
+
+
 class NoneTransition {
 
   constructor(navCtrl) {
@@ -10,26 +14,24 @@ class NoneTransition {
 
     // show entering contet
     let enteringContent = enteringItem.getContent();
-    enteringContent.classList.add('show-nav-item');
-    enteringContent.style.transform = 'translateX(0%)';
+    enteringContent.classList.add(SHOW_NAV_ITEM_CSS);
 
     // show entering headers
     let enteringToolbars = enteringItem.getToolbars();
     for (let i = 0; i < enteringToolbars.length; i++) {
-      enteringToolbars[i].classList.add('show-toolbar');
-      enteringToolbars[i].style.transform = 'translateX(0%)';
+      enteringToolbars[i].classList.add(SHOW_TOOLBAR_CSS);
     }
 
     // hide the leaving item
     if (leavingItem) {
       let leavingContent = leavingItem.getContent();
       if (leavingContent) {
-        leavingContent.classList.remove('show-nav-item');
+        leavingContent.classList.remove(SHOW_NAV_ITEM_CSS);
       }
 
       let leavingToolbars = leavingItem.getToolbars();
       for (let i = 0; i < leavingToolbars.length; i++) {
-        leavingToolbars[i].classList.remove('show-toolbar');
+        leavingToolbars[i].classList.remove(SHOW_TOOLBAR_CSS);
       }
     }
   }
@@ -39,7 +41,7 @@ class NoneTransition {
     return Promise.resolve();
   }
 
-  start() {
+  play() {
     // immediately resolve
     return Promise.resolve();
   }
