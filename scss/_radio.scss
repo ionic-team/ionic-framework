@@ -29,6 +29,17 @@
   font-size: 24px;
 }
 
+.list.list-inline .item-radio {
+  .item-content {
+    padding: $item-padding - 4;
+    padding-right: $item-padding;
+  }
+
+  .radio-icon {
+    padding: floor($item-padding / 3);
+  }
+}
+
 .item-radio input {
   /* hide any radio button inputs elements (the ugly circles) */
   position: absolute;
