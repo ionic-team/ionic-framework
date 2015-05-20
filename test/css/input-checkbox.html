@@ -70,6 +70,34 @@
         <ion-checkbox ng-model="test" ng-checked="test" class="checkbox-dark">Dark Directive</ion-checkbox>
       </ul>
 
+      <h2>Inline</h2>
+      <ul class="list list-inline">
+        <li class="item item-checkbox checkbox-circle">
+           <label class="checkbox">
+             <input type="checkbox">
+           </label>
+           Flux Capacitor
+        </li>
+        <li class="item item-checkbox checkbox-square">
+           <label class="checkbox">
+             <input type="checkbox" checked>
+           </label>
+           1.21 Gigawatts
+        </li>
+        <li class="item item-checkbox checkbox-platform">
+           <label class="checkbox">
+             <input type="checkbox">
+           </label>
+           88 MPH
+        </li>
+      </ul>
+      <h2>Inline with directives</h2>
+      <ul class="list list-inline">
+        <ion-checkbox ng-model="test" ng-checked="test" class="checkbox-positive">Positive Directive</ion-checkbox>
+        <ion-checkbox ng-model="test" ng-checked="test" class="checkbox-calm">Calm Directive</ion-checkbox>
+        <ion-checkbox ng-model="test" ng-checked="test" class="checkbox-assertive">Assertive Directive</ion-checkbox>
+      </ul>
+
     </ion-content>
     <script type="text/javascript">
       angular.module('ionicApp', ['ionic'])

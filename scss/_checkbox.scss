@@ -174,3 +174,11 @@ input:checked + .checkbox-icon:after {
 .item-checkbox-right .checkbox-icon {
   float: right;
 }
+
+.list.list-inline .item-checkbox {
+  padding-left: ($item-padding * 1) + $checkbox-width;
+
+  .checkbox {
+    padding-left: 0;
+  }
+}
