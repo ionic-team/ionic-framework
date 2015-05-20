@@ -107,6 +107,11 @@
   border-width: 0;
 }
 
+.list.list-inline .item {
+  @include flex();
+  font-size: inherit;
+}
+
 // Link and Button Active States
 .item.active,
 .item.activated,
