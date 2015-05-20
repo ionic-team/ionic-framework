@@ -54,3 +54,18 @@
     }
   }
 }
+
+//Disable animate service animations
+.slider-slide,
+.slider-pager-page {
+  &.ng-enter,
+  &.ng-leave,
+  &.ng-animate {
+    -webkit-transition: none !important;
+    transition: none !important;
+  }
+  &.ng-animate {
+    -webkit-animation: none 0s;
+    animation: none 0s;
+  }
+}
