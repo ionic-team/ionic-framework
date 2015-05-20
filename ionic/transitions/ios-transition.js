@@ -59,8 +59,9 @@ class IOSTransition extends Animation {
       .to(OPACITY, 1);
 
     enteringTitle
-      .to(TRANSFORM, CENTER)
-      .to(OPACITY, 1);
+      .from(OPACITY, 0)
+      .to(OPACITY, 1)
+      .to(TRANSFORM, CENTER);
 
     enteringToolbars
       .beforePlay.addClass(SHOW_TOOLBAR_CSS);
@@ -101,9 +102,7 @@ class IOSTransition extends Animation {
         .to(OPACITY, 1);
 
       enteringTitle
-        .from(TRANSFORM, OFF_LEFT)
-        .from(OPACITY, 0)
-        .to(OPACITY, 1);
+        .from(TRANSFORM, OFF_LEFT);
 
       leavingContent
         .to(TRANSFORM, OFF_RIGHT)
@@ -111,7 +110,7 @@ class IOSTransition extends Animation {
 
       leavingTitle
         .to(TRANSFORM, OFF_RIGHT)
-        .to(OPACITY, 1);
+        .to(OPACITY, 0);
 
     } else {
       // forward direction

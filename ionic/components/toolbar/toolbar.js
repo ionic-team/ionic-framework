@@ -47,8 +47,6 @@ export class Toolbar {
   }
 
   alignTitle() {
-    if (!this.domElement) return;
-
     const toolbarEle = this.domElement;
     const innerTitleEle = this._innerTitleEle || (this._innerTitleEle = toolbarEle.querySelector('.toolbar-inner-title'));
     const titleEle = this._titleEle || (this._titleEle = innerTitleEle.querySelector('ion-title'));
@@ -58,6 +56,13 @@ export class Toolbar {
     const titleOffsetLeft = titleEle.offsetLeft;
     const titleScrollWidth = titleEle.scrollWidth;
     const toolbarOffsetWidth = toolbarEle.offsetWidth;
+
+    // TODO!!! When an element is being reused by angular2, it'll sometimes keep the
+    // styles from the original element's use, causing these calculations to be wrong
+    if (window.getComputedStyle(innerTitleEle).margin !== '0px') {
+      this._showTitle();
+      return;
+    }
 
     // only align if the title is center and if it isn't already overflowing
     if (style.textAlign !== 'center' || titleOffsetWidth < titleScrollWidth) {

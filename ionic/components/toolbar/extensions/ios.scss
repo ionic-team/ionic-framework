@@ -66,8 +66,8 @@ $toolbar-ios-button-background-color:       transparent !default;
     background: $toolbar-ios-button-background-color;
   }
 
-}
+  .back-button-icon {
+    padding-right: 6px;
+  }
 
-.back-button-ios .back-button-icon {
-  padding-right: 6px;
 }
