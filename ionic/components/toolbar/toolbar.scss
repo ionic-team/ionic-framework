@@ -59,6 +59,7 @@ ion-toolbar [side="secondary"] {
 
 ion-title {
   display: block;
+  overflow: hidden;
 
   // used to notify JS when the title has been rendered
   animation-duration: 1ms;
@@ -68,7 +69,6 @@ ion-title {
 .toolbar-inner-title {
   width: 100%;
   padding: 0 15px;
-  overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }

@@ -3,8 +3,8 @@ import {rafPromise} from '../util/dom'
 import {Transition} from './transition'
 
 
-const EASING_FN = [.36, .66, .04, 1];
 const DURATION = 500;
+const EASING = 'cubic-bezier(.36,.66,.04,1)';
 
 const OPACITY = 'opacity';
 const TRANSFORM = 'transform';
@@ -25,30 +25,31 @@ class IOSTransition extends Animation {
 
     // global duration and easing for all child animations
     this.duration(DURATION);
+    this.easing(EASING);
 
     // get the entering and leaving items
-    this.enteringItem = navCtrl.getStagedEnteringItem();
-    this.leavingItem = navCtrl.getStagedLeavingItem();
+    let enteringItem = navCtrl.getStagedEnteringItem();
+    let leavingItem = navCtrl.getStagedLeavingItem();
 
     // create animation for the entering content
-    let enteringContent = new Animation(this.enteringItem.getContent());
+    let enteringContent = new Animation(enteringItem.getContent());
 
     // create animation for the entering toolbars
-    let enteringToolbars = new Animation(this.enteringItem.getToolbars());
+    let enteringToolbars = new Animation(enteringItem.getToolbars());
 
     // create animation for the entering title element
-    let enteringTitle = new Animation(this.enteringItem.getTitle());
+    let enteringTitle = new Animation(enteringItem.getTitle());
 
     // create animation for the leaving content
     // leavingItem could be null, but the animation instance knows to do nothing
-    let leavingContent = new Animation(this.leavingItem && this.leavingItem.getContent());
+    let leavingContent = new Animation(leavingItem && leavingItem.getContent());
 
     // create animation for the leaving content
     // leavingItem could be null, but the animation instance knows to do nothing
-    let leavingToolbars = new Animation(this.leavingItem && this.leavingItem.getToolbars());
+    let leavingToolbars = new Animation(leavingItem && leavingItem.getToolbars());
 
     // create animation for the entering title element
-    let leavingTitle = new Animation(this.leavingItem && this.leavingItem.getTitle());
+    let leavingTitle = new Animation(leavingItem && leavingItem.getTitle());
 
     // entering item moves to center
     // before starting, set enteringItem to display: block
@@ -64,6 +65,13 @@ class IOSTransition extends Animation {
     enteringToolbars
       .beforePlay.addClass(SHOW_TOOLBAR_CSS);
 
+    // if the back button should show, then fade it in
+    if (enteringItem.enableBack) {
+      let enteringBackButton = new Animation(enteringItem.getBackButton())
+      enteringBackButton.from(OPACITY, 0).to(OPACITY, 1);
+      this.addChild(enteringBackButton);
+    }
+
     // leaving view moves off screen
     // when completed, set leavingItem to display: none
     leavingContent
@@ -77,6 +85,12 @@ class IOSTransition extends Animation {
     leavingTitle
       .from(TRANSFORM, CENTER)
       .from(OPACITY, 1);
+
+    if (leavingItem && leavingItem.enableBack) {
+      let leavingBackButton = new Animation(leavingItem.getBackButton())
+      leavingBackButton.from(OPACITY, 1).to(OPACITY, 0);
+      this.addChild(leavingBackButton);
+    }
 
     // set properties depending on direction
     if (opts.direction === 'back') {

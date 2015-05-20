@@ -49,28 +49,31 @@ export class Toolbar {
   alignTitle() {
     if (!this.domElement) return;
 
-    const toolbarElement = this.domElement;
-    const titleElement = this._titleElement || (this._titleElement = toolbarElement.querySelector('.toolbar-inner-title'));
-    const style = this._style || (this._style = window.getComputedStyle(titleElement));
+    const toolbarEle = this.domElement;
+    const innerTitleEle = this._innerTitleEle || (this._innerTitleEle = toolbarEle.querySelector('.toolbar-inner-title'));
+    const titleEle = this._titleEle || (this._titleEle = innerTitleEle.querySelector('ion-title'));
+    const style = this._style || (this._style = window.getComputedStyle(titleEle));
 
-    const titleOffsetWidth = titleElement.offsetWidth;
-    const titleOffsetLeft = titleElement.offsetLeft;
-    const titleScrollWidth = titleElement.scrollWidth;
-    const toolbarOffsetWidth = toolbarElement.offsetWidth;
+    const titleOffsetWidth = titleEle.offsetWidth;
+    const titleOffsetLeft = titleEle.offsetLeft;
+    const titleScrollWidth = titleEle.scrollWidth;
+    const toolbarOffsetWidth = toolbarEle.offsetWidth;
 
     // only align if the title is center and if it isn't already overflowing
     if (style.textAlign !== 'center' || titleOffsetWidth < titleScrollWidth) {
       this._showTitle();
+
     } else {
       let rightMargin = toolbarOffsetWidth - (titleOffsetLeft + titleOffsetWidth);
       let centerMargin = titleOffsetLeft - rightMargin;
 
-      titleElement.style.margin = `0 ${centerMargin}px 0 0`;
+      innerTitleEle.style.margin = `0 ${centerMargin}px 0 0`;
 
       dom.raf(() => {
-        if (titleElement.offsetWidth < titleElement.scrollWidth) {
-          this.titleElement.style.margin = '';
-          this.titleElement.style.textAlign = 'left';
+        if (titleEle.offsetWidth < titleEle.scrollWidth) {
+          // not enough room yet, just left align title
+          innerTitleEle.style.margin = '';
+          innerTitleEle.style.textAlign = 'left';
         }
         this._showTitle();
       })
@@ -80,7 +83,7 @@ export class Toolbar {
   _showTitle() {
     if (!this._shown) {
       this._shown = true;
-      this._titleElement.classList.remove('toolbar-title-hide');
+      this._innerTitleEle.classList.remove('toolbar-title-hide');
     }
   }
 

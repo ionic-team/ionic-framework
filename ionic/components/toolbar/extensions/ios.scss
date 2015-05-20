@@ -44,12 +44,9 @@ $toolbar-ios-button-background-color:       transparent !default;
     order: map-get($toolbar-order-ios, 'secondary');
   }
 
-  .toolbar-title {
-    text-align: center;
-  }
-
   ion-title {
     order: map-get($toolbar-order-ios, 'title');
+    text-align: center;
     font-size: $toolbar-ios-title-font-size;
     font-weight: 500;
   }

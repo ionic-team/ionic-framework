@@ -79,7 +79,7 @@ export class Animation {
 
   from(property, value) {
     if (!this._from) {
-      this._from = {}
+      this._from = {};
     }
     this._from[property] = value;
     return this;
@@ -87,7 +87,7 @@ export class Animation {
 
   to(property, value) {
     if (!this._to) {
-      this._to = {}
+      this._to = {};
     }
     this._to[property] = value;
     return this;
@@ -127,8 +127,7 @@ export class Animation {
     }
 
     if (!this._to) {
-      // probably just add/removing classes
-      // create bogus transition
+      // probably just add/removing classes, create bogus transition
       this._from = this._to = {'opacity': 1};
     }
 
@@ -215,7 +214,7 @@ class Animate {
     fromEffect = fromEffect || {};
     let style = null;
     for (let prop in toEffect) {
-      if (!fromEffect[prop]) {
+      if (util.isBlank(fromEffect[prop])) {
         style = style || window.getComputedStyle(ele);
         fromEffect[prop] = style[prop];
       }

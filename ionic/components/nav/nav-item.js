@@ -125,6 +125,21 @@ export class NavItem {
     return this._titleEle;
   }
 
+  getBackButton() {
+    if (this._backBtn === undefined) {
+      let toolbarElements = this.getToolbars();
+      for (let i = 0; i < toolbarElements.length; i++) {
+        var backBtn = toolbarElements[i].querySelector('back-button');
+        if (backBtn) {
+          this._backBtn = backBtn;
+          return this._backBtn;
+        }
+      }
+      this._backBtn = null;
+    }
+    return this._backBtn;
+  }
+
   destroy() {
     for (let i = 0; i < this.disposals.length; i++) {
       this.disposals[i]();
