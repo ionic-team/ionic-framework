@@ -370,10 +370,10 @@ ionic.views.Slider = ionic.views.View.inherit({
 
           var movePosition = (delta.x / width);
           if(movePosition < 0) {
-            options.onSlideMoved && options.onSlideMoved(index, circle(index+1), Math.abs(movePosition));
+            options.onSlideMoved && options.onSlideMoved(index, circle(index + 1), Math.abs(movePosition));
           }
           else {
-            options.onSlideMoved && options.onSlideMoved(index, circle(index-1), movePosition);
+            options.onSlideMoved && options.onSlideMoved(index, circle(index - 1), movePosition);
           }
         }
 
