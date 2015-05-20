@@ -32,6 +32,10 @@ export class Nav extends NavBase {
     super(loader, injector);
     this.domElement = elementRef.domElement;
   }
+
+  width() {
+    return this.domElement.offsetWidth;
+  }
 }
 
 

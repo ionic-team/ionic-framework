@@ -1,14 +1,14 @@
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
-import {NavController, HeaderTemplate, Toolbar} from 'ionic/ionic';
+import {NavController, HeaderTemplate, Toolbar, Content} from 'ionic/ionic';
 import {SecondPage} from './second-page';
 
 
 @Component({selector: 'ion-view'})
 @View({
   templateUrl: 'pages/first-page.html',
-  directives: [HeaderTemplate, Toolbar]
+  directives: [HeaderTemplate, Toolbar, Content]
 })
 export class FirstPage {
   constructor(

@@ -222,4 +222,18 @@ export class NavBase {
     util.array.remove(this.items, itemOrIndex);
   }
 
+  swipeBackStart() {
+    console.log('swipeBackStart')
+  }
+
+  swipeBackEnd(completeSwipeBack) {
+    console.log('swipeBackEnd, completeSwipeBack:', completeSwipeBack)
+  }
+
+  swipeBackProgress(value) {
+    value = Math.min(1, Math.max(0, value));
+
+    console.log('swipeBackProgress', value)
+  }
+
 }
