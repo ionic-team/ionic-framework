@@ -53,6 +53,7 @@
           </ion-header-bar>
           <ion-slide-box ng-if="!$root.hideSlideBox"
                          on-slide-changed="slideChanged(index)"
+                         on-slide-moved="slideMoved(fromSlide, toSlide, position)"
                          show-pager="{{$root.showPager}}"
                          pager-click="pagerClick(index)"
                          does-continue="true"
@@ -178,6 +179,10 @@
             $scope.rightButtons = rightButtons;
           }
         };
+
+        $scope.slideMoved = function(from, to, pos) {
+            console.log("Slide moved", from, to, pos);
+        }
       })
 
       .controller('FirstSlideCtrl', function($scope, $ionicSlideBoxDelegate) {

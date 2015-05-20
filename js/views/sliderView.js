@@ -367,6 +367,14 @@ ionic.views.Slider = ionic.views.View.inherit({
           }
 
           options.onDrag && options.onDrag();
+
+          var movePosition = delta.x  / width;
+          if(movePosition < 0) {
+            options.onSlideMoved && options.onSlideMoved(index, circle(index+1), Math.abs(movePosition));
+          }
+          else {
+            options.onSlideMoved && options.onSlideMoved(index, circle(index-1), movePosition);
+          }
         }
 
       },

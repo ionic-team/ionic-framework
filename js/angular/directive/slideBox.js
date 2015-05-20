@@ -33,6 +33,7 @@
  * @param {boolean=} show-pager Whether a pager should be shown for this slide box. Accepts expressions via `show-pager="{{shouldShow()}}"`. Defaults to true.
  * @param {expression=} pager-click Expression to call when a pager is clicked (if show-pager is true). Is passed the 'index' variable.
  * @param {expression=} on-slide-changed Expression called whenever the slide is changed.  Is passed an '$index' variable.
+ * @param {expression=} on-slide-moved Expression called whenever the current slide is moved.  Is passed a 'fromSlide' variable of the current slide index and a 'toSlide' variable with the index of the slide it's moving to. The third variable 'position' is a float value between 0 and 1 and describes the position of the movement. 0 means the slider shows the fromSlide, 1 means the slider shows the toSlide.
  * @param {expression=} active-slide Model to bind the current slide to.
  */
 IonicModule
@@ -55,6 +56,7 @@ function($timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory, $ionicScroll
       pagerClick: '&',
       disableScroll: '@',
       onSlideChanged: '&',
+      onSlideMoved: '&',
       activeSlide: '=?'
     },
     controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
@@ -82,6 +84,9 @@ function($timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory, $ionicScroll
           $scope.activeSlide = slideIndex;
           // Try to trigger a digest
           $timeout(function() {});
+        },
+        onSlideMoved: function(from, to, slidePosition) {
+          $scope.onSlideMoved({fromSlide: from, toSlide: to, position: slidePosition});
         },
         onDrag: function() {
           freezeAllScrolls(true);
