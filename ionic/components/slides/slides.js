@@ -57,7 +57,9 @@ export class Slides {
       // Continuous mode, but only if we have at least 2 slides
       this.continuous = this.slides.length > 1 ? true : false;
 
+      // Grab the wrapper element that contains the slides
       this.wrapperElement = this.domElement.children[0];
+
       this.resize();
 
       if(this.slideDelay) {
@@ -80,6 +82,10 @@ export class Slides {
     clearTimeout(this._showTimout);
   }
 
+  /**
+   * Set the pager element for handling rendering of page icons and
+   * switching slides through clicks, etc.
+   */
   setPager(pager) {
     this._pager = pager;
   }
@@ -90,45 +96,10 @@ export class Slides {
     this.containerWidth = this.domElement.offsetWidth || this.domElement.getBoundingClientRect().width;
 
     // Set the wrapper element to the total width of the child elements
-    this.wrapperElement.style.width = ((this.containerWidth * this.slides.length) + 20) + 'px';
+    this.wrapperElement.style.width = ((this.containerWidth * this.slides.length)) + 'px';
 
     // Position all the child slides
     this._bump();
-  }
-
-  // Reposition all the existing slides so they are in the right position
-  _bump() {
-    let slide;
-    let tx;
-
-    let i = this.slides.length;
-
-    while(i--) {
-      slide = this.slides[i];
-
-      slide.left  = i * -this.containerWidth;
-      slide.width = this.containerWidth;
-
-      tx = 0;
-
-      if(this.currentIndex > i) {
-        tx = -this.containerWidth;
-      } else if(this.currentIndex < i) {
-        tx = this.containerWidth;
-      }
-
-      this._move(i, tx);//this.currentIndex > i ? -this.containerWidth : (this.currentIndex < i ? this.containerWidth: 0), 0);
-    }
-
-    if(this.continuous) {
-      // If we are in continuous mode, we need to wrap the previous and
-      // last element to get a complete "circle"
-      let index1 = this._circle(this.currentIndex - 1);
-      let index2 = this._circle(this.currentIndex + 1);
-
-      this._move(index1, -this.containerWidth);//, 0);
-      this._move(index2, this.containerWidth);//, 0);
-    }
   }
 
   /**
@@ -138,30 +109,12 @@ export class Slides {
     this._append(slide);
   }
 
-  drag(dx) {
-    /*
-    console.log('Moving', dx, 'for slides', s1, s2, s3);
-    */
-
-    let index1 = this._circle(this.currentIndex - 1);
-    let index2 = this._circle(this.currentIndex);
-    let index3 = this._circle(this.currentIndex + 1);
-
-    let s1 = this.slides[index1];
-    let s2 = this.slides[index2];
-    let s3 = this.slides[index3];
-
-    if(s1) {
-      s1.translate(dx + s1.x);
-    }
-    if(s2) {
-      s2.translate(dx + s2.x);
-    }
-    if(s3) {
-      s3.translate(dx + s3.x);
-    }
-  }
-
+  /**
+   * Slide to a specific slide index.
+   *
+   * @param toIndex the index to slide to.
+   * @param isRight, whether to go right or go left, only works in continuous mode
+   */
   slide(toIndex, isRight) {
     if(toIndex === this.currentIndex) {
       return;
@@ -176,6 +129,7 @@ export class Slides {
     let speed = this.animateSpeed;
 
     // Create a multiplier depending on the direction we want to travel
+    // TODO: Verify isRight doesn't apply in non-continuous mode
     let dir = isRight ? 1 : -1;
 
     let newIndex;
@@ -203,14 +157,83 @@ export class Slides {
     console.log('Drag ended, new position:', this.currentIndex);
   }
 
+  /**
+   * Slide left, possibly wrapping around in continuous mode.
+   */
   slideLeft() {
     this.slide(this._circle(this.currentIndex - 1), false);
   }
+
+  /**
+   * Slide right, possibly wrapping around in continuous mode.
+   */
   slideRight() {
     this.slide(this._circle(this.currentIndex + 1), true);
   }
 
-  endDrag(event) {
+
+  // Reposition all the existing slides so they are in the right position
+  _bump() {
+    let slide;
+    let tx;
+
+    let i = this.slides.length;
+
+    while(i--) {
+      slide = this.slides[i];
+
+      // Set the slide's left position to a negative of the current index and its width
+      slide.left  = i * -this.containerWidth;
+      slide.width = this.containerWidth;
+
+      // Check if this slide is before or after the currently active one,
+      // since we have to position it before or after it
+      tx = 0;
+      if(this.currentIndex > i) {
+        tx = -this.containerWidth;
+      } else if(this.currentIndex < i) {
+        tx = this.containerWidth;
+      }
+
+      this._move(i, tx);
+    }
+
+    if(this.continuous) {
+      // If we are in continuous mode, we need to wrap the previous and
+      // last element to get a complete "circle"
+      let index1 = this._circle(this.currentIndex - 1);
+      let index2 = this._circle(this.currentIndex + 1);
+
+      this._move(index1, -this.containerWidth);//, 0);
+      this._move(index2, this.containerWidth);//, 0);
+    }
+  }
+
+  // Process a drag, with a deltaX value
+  _drag(dx) {
+
+    // Grab the left/center/right slides
+    let index1 = this._circle(this.currentIndex - 1);
+    let index2 = this._circle(this.currentIndex);
+    let index3 = this._circle(this.currentIndex + 1);
+
+    let s1 = this.slides[index1];
+    let s2 = this.slides[index2];
+    let s3 = this.slides[index3];
+
+    // Translate the left/center/right slides based on the deltaX of the drag
+    if(s1) {
+      s1.translate(dx + s1.x);
+    }
+    if(s2) {
+      s2.translate(dx + s2.x);
+    }
+    if(s3) {
+      s3.translate(dx + s3.x);
+    }
+  }
+
+  _endDrag(event) {
     let isRight = event.gesture.offsetDirection & Hammer.DIRECTION_RIGHT;
     console.log('Slides: ending drag', event, '\n\t', 'Right?', isRight);
 
@@ -341,7 +364,7 @@ export class SlidesGesture extends DragGesture {
     this._drag.x = x;
     this._drag.y = y;
 
-    this.slides.drag(event.gesture.deltaX);
+    this.slides._drag(event.gesture.deltaX);
   }
   onDragStart(event) {
     console.log('Drag start', event);
@@ -354,6 +377,6 @@ export class SlidesGesture extends DragGesture {
   onDragEnd(event) {
     console.log('Drag end', event);
 
-    this.slides.endDrag(event);
+    this.slides._endDrag(event);
   }
 }
