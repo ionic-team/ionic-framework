@@ -13,6 +13,22 @@ import {IonicComponent} from 'ionic/config/component'
 
 import {Hammer} from 'ionic/gestures/hammer';
 
+
+/**
+ * Slides is a slide box implementation based off of swipe.js
+ * and the ionic1 implementation.
+ *
+ * May 21st, 2015
+ * @maxlynch
+ *
+ * * TODO: Finish the slideshow, should continue on transition end or a
+ *         similar event.
+ * * TODO: Add support for 2 slide cloning
+ * * TODO: Test support for N-slide sliding (like go 2 slides ahead)
+ * * TODO: Analyze performance, add request animation frame if necessary
+ * * TODO: Test mouse support
+ * * TODO: Port over mouse handling
+ */
 @Component({
   selector: 'ion-slides'
 })
@@ -30,7 +46,7 @@ export class Slides {
     this.slides = [];
     this.currentIndex = 0;
     this.animateSpeed = 300;
-
+    this.slideDelay = 0;//3000;
 
     // Initialize our slides gesture handler
     this.gesture = new SlidesGesture(this);
@@ -43,7 +59,25 @@ export class Slides {
 
       this.wrapperElement = this.domElement.children[0];
       this.resize();
+
+      if(this.slideDelay) {
+        this.startShow();
+      }
     });
+  }
+
+  /**
+   * Start the slideshow.
+   */
+  startShow() {
+    this._showTimeout = setTimeout(this.slideRight.bind(this), this.slideDelay);
+  }
+
+  /**
+   * End the slideshow.
+   */
+  stopShow() {
+    clearTimeout(this._showTimout);
   }
 
   setPager(pager) {
