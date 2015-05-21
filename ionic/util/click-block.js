@@ -1,9 +1,9 @@
-import {raf} from './dom'
-
 
 const CSS_CLICK_BLOCK = 'click-block-active';
 const DEFAULT_EXPIRE = 330;
-let cbEle, fallbackTimerId, pendingShow;
+let cbEle, fallbackTimerId;
+let isShowing = false;
+
 
 function preventClick(ev) {
   ev.preventDefault();
@@ -11,21 +11,11 @@ function preventClick(ev) {
 }
 
 function show(expire) {
-  pendingShow = true;
   clearTimeout(fallbackTimerId);
   fallbackTimerId = setTimeout(hide, expire || DEFAULT_EXPIRE);
-  raf(addBlock);
-}
 
-function hide() {
-  pendingShow = false;
-  clearTimeout(fallbackTimerId);
-  raf(removeBlock);
-}
-
-function addBlock() {
-  if (pendingShow) {
-
+  if (!isShowing) {
+    isShowing = true;
     if (cbEle) {
       cbEle.classList.add(CSS_CLICK_BLOCK);
 
@@ -35,19 +25,20 @@ function addBlock() {
       document.body.appendChild(cbEle);
       cbEle.addEventListener('touchstart', preventClick);
       cbEle.addEventListener('mousedown', preventClick);
+      cbEle.addEventListener('pointerdown', preventClick);
+      cbEle.addEventListener('MSPointerDown', preventClick);
     }
-    pendingShow = false;
   }
 }
 
-function removeBlock() {
-  if (!pendingShow) {
-    cbEle && cbEle.classList.remove(CSS_CLICK_BLOCK);
+function hide() {
+  clearTimeout(fallbackTimerId);
+  if (isShowing) {
+    cbEle.classList.remove(CSS_CLICK_BLOCK);
+    isShowing = false;
   }
 }
 
 export let ClickBlock = function(shouldShow, expire) {
-
   (shouldShow ? show : hide)(expire);
-
 };

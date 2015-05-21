@@ -27,6 +27,7 @@ class IonicApp {
     row1
       .from('opacity', 1)
       .to('opacity', 0)
+      .to('transform', 'scale(0)')
       .beforePlay.addClass('added-before-play')
       .afterFinish.addClass('added-after-finish')
 
@@ -38,22 +39,26 @@ class IonicApp {
 
     this.animation.children(row1, row2);
 
+    this.animation.onReady = () => {
+      console.log('onReady');
+    }
+
+    this.animation.onFinish = () => {
+      console.log('onFinish');
+    }
+
   }
 
   play() {
-    console.debug('play');
-    this.animation.play();;
+    this.animation.play();
   }
 
   pause() {
-    console.debug('pause');
-
     this.animation.pause();
   }
 
   progress(ev) {
-    let value = ev.srcElement.value;
-    this.animation.progress(value);
+    this.animation.progress( ev.srcElement.value );
   }
 
 }

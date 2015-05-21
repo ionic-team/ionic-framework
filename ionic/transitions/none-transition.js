@@ -46,6 +46,8 @@ class NoneTransition {
     return Promise.resolve();
   }
 
+  dispose(){}
+
 }
 
 Transition.register('none', NoneTransition);

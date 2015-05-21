@@ -20,6 +20,7 @@ export class NavBase {
     this.injector = injector;
     this.items = [];
     this.navCtrl = new NavController(this);
+    this.swipeBackTransition = null;
   }
 
   set initial(Class) {
@@ -80,7 +81,7 @@ export class NavBase {
 
     // get the active item and set that it is staged to be leaving
     // was probably the one popped from the stack
-    let leavingItem = this.getActive() || {};
+    let leavingItem = this.getActive();
     leavingItem.shouldDestroy = true;
 
     // the entering item is now the new last item
@@ -133,6 +134,9 @@ export class NavBase {
           // destroy any items that shouldn't stay around
           this.cleanup();
 
+          // dispose all references
+          transAnimation.dispose();
+
           // allow clicks again
           ClickBlock(false);
 
@@ -145,6 +149,98 @@ export class NavBase {
     });
 
     return promise;
+  }
+
+  swipeBackStart() {
+    if (this.isTransitioning() || this.items.length < 2) {
+      return;
+    }
+
+    this.swipeBackResolve = null;
+
+    // default the direction to "back"
+    let opts = {
+      direction: 'back'
+    };
+
+    // get the active item and set that it is staged to be leaving
+    // was probably the one popped from the stack
+    let leavingItem = this.getActive();
+    leavingItem.shouldDestroy = true;
+
+    // the entering item is now the new last item
+    let enteringItem = this.getPrevious(leavingItem);
+    enteringItem.shouldDestroy = false;
+
+    // start the transition
+    // block possible clicks during transition
+    ClickBlock(true);
+
+    // wait for the new item to complete setup
+    enteringItem.stage().then(() => {
+
+      // set that the leaving item is stage to be leaving
+      leavingItem.state = STAGED_LEAVING_STATE;
+
+      // set that the new item pushed on the stack is staged to be entering
+      // setting staged state is important for the transition logic to find the correct item
+      enteringItem.state = STAGED_ENTERING_STATE;
+
+      // init the transition animation
+      this.swipeBackTransition = Transition.create(this, opts);
+      this.swipeBackTransition.easing('linear');
+
+      // wait for the items to be fully staged
+      this.swipeBackTransition.stage().then(() => {
+
+        // update the state that the items are actively entering/leaving
+        enteringItem.state = ACTIVELY_ENTERING_STATE;
+        leavingItem.state = ACTIVELY_LEAVING_STATE;
+
+        let swipeBackPromise = new Promise(res => { this.swipeBackResolve = res; });
+
+        swipeBackPromise.then(() => {
+
+          // transition has completed, update each item's state
+          enteringItem.state = ACTIVE_STATE;
+          leavingItem.state = CACHED_STATE;
+
+          // destroy any items that shouldn't stay around
+          this.cleanup();
+
+          // allow clicks again
+          ClickBlock(false);
+
+        });
+
+      });
+
+    });
+
+  }
+
+  swipeBackEnd(completeSwipeBack, progress, playbackRate) {
+    console.log('swipeBackEnd, completeSwipeBack: ', completeSwipeBack, ' progress:', progress, ' playbackRate:', playbackRate);
+
+    this.swipeBackTransition.playbackRate(playbackRate);
+
+    this.swipeBackTransition.play().then(() => {
+      this.swipeBackResolve && this.swipeBackResolve();
+
+      if (this.swipeBackTransition) {
+        this.swipeBackTransition.dispose();
+      }
+
+      this.swipeBackResolve = this.swipeBackTransition = null;
+    });
+
+  }
+
+  swipeBackProgress(progress) {
+    if (this.swipeBackTransition) {
+      ClickBlock(true, 4000);
+      this.swipeBackTransition.progress( Math.min(1, Math.max(0, progress)) );
+    }
   }
 
 
@@ -210,30 +306,8 @@ export class NavBase {
     return null;
   }
 
-  last() {
-    return this.items[this.items.length - 1]
-  }
-
-  length() {
-    return this.items.length;
-  }
-
   remove(itemOrIndex) {
     util.array.remove(this.items, itemOrIndex);
-  }
-
-  swipeBackStart() {
-    console.log('swipeBackStart')
-  }
-
-  swipeBackEnd(completeSwipeBack) {
-    console.log('swipeBackEnd, completeSwipeBack:', completeSwipeBack)
-  }
-
-  swipeBackProgress(value) {
-    value = Math.min(1, Math.max(0, value));
-
-    console.log('swipeBackProgress', value)
   }
 
 }

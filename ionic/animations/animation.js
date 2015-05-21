@@ -13,6 +13,7 @@ export class Animation {
     this._to = null;
     this._duration = null;
     this._easing = null;
+    this._rate = null;
 
     this._beforeAddCls = [];
     this._beforeRmvCls = [];
@@ -77,6 +78,21 @@ export class Animation {
     return this._easing || (this._parent && this._parent.easing());
   }
 
+  playbackRate(value) {
+    if (arguments.length) {
+      this._rate = value;
+      var i;
+      for (i = 0; i < this._children.length; i++) {
+        this._children[i].playbackRate(value);
+      }
+      for (i = 0; i < this._players.length; i++) {
+        this._players[i].playbackRate(value);
+      }
+      return this;
+    }
+    return this._rate || (this._parent && this._parent.playbackRate());
+  }
+
   from(property, value) {
     if (!this._from) {
       this._from = {};
@@ -120,9 +136,10 @@ export class Animation {
   }
 
   play() {
+    var i;
     let promises = [];
 
-    for (let i = 0; i < this._children.length; i++) {
+    for (i = 0; i < this._children.length; i++) {
       promises.push( this._children[i].play() );
     }
 
@@ -132,60 +149,57 @@ export class Animation {
     }
 
     if (!this._players.length) {
-      for (let i = 0; i < this._el.length; i++) {
-        var ele = this._el[i];
-
-        for (let j = 0; j < this._beforeAddCls.length; j++) {
-          ele.classList.add(this._beforeAddCls[j]);
-        }
-
-        for (let j = 0; j < this._beforeRmvCls.length; j++) {
-          ele.classList.remove(this._beforeRmvCls[j]);
-        }
-
-        var player = new Animate(ele, this._from, this._to, this.duration(), this.easing());
-        this._players.push(player);
-
-        promises.push(player.promise);
+      // first time played
+      for (i = 0; i < this._el.length; i++) {
+        this._players.push(
+          new Animate( this._el[i],
+                       this._from,
+                       this._to,
+                       this.duration(),
+                       this.easing(),
+                       this.playbackRate() )
+        );
       }
 
+      this._onReady();
+
     } else {
-      for (let i = 0; i < this._players.length; i++) {
+      // has been paused, now play again
+      for (i = 0; i < this._players.length; i++) {
         this._players[i].play();
       }
     }
 
-    var promise = Promise.all(promises);
+    for (i = 0; i < this._players.length; i++) {
+      promises.push(this._players[i].promise);
+    }
+
+    let promise = Promise.all(promises);
 
     promise.then(() => {
-      for (let i = 0; i < this._el.length; i++) {
-        var ele = this._el[i];
-
-        for (let j = 0; j < this._afterAddCls.length; j++) {
-          ele.classList.add(this._afterAddCls[j]);
-        }
-
-        for (let j = 0; j < this._afterRmvCls.length; j++) {
-          ele.classList.remove(this._afterRmvCls[j]);
-        }
-      }
+      this._onFinish();
     });
 
     return promise;
   }
 
   pause() {
-    for (let i = 0; i < this._children.length; i++) {
+    this._hasFinished = false;
+
+    var i;
+    for (i = 0; i < this._children.length; i++) {
       this._children[i].pause();
     }
 
-    for (let i = 0; i < this._players.length; i++) {
+    for (i = 0; i < this._players.length; i++) {
       this._players[i].pause();
     }
   }
 
   progress(value) {
-    for (let i = 0; i < this._children.length; i++) {
+    var i;
+
+    for (i = 0; i < this._children.length; i++) {
       this._children[i].progress(value);
     }
 
@@ -194,16 +208,69 @@ export class Animation {
       this.pause();
     }
 
-    for (let i = 0; i < this._players.length; i++) {
+    for (i = 0; i < this._players.length; i++) {
       this._players[i].progress(value);
     }
+  }
+
+  _onReady() {
+    if (!this._hasPlayed) {
+      this._hasPlayed = true;
+
+      var i, j, ele;
+      for (i = 0; i < this._el.length; i++) {
+        ele = this._el[i];
+
+        for (j = 0; j < this._beforeAddCls.length; j++) {
+          ele.classList.add(this._beforeAddCls[j]);
+        }
+
+        for (j = 0; j < this._beforeRmvCls.length; j++) {
+          ele.classList.remove(this._beforeRmvCls[j]);
+        }
+      }
+
+      this.onReady && this.onReady();
+    }
+  }
+
+  _onFinish() {
+    if (!this._hasFinished) {
+      this._hasFinished = true;
+
+      var i, j, ele;
+      for (i = 0; i < this._el.length; i++) {
+        ele = this._el[i];
+
+        for (j = 0; j < this._afterAddCls.length; j++) {
+          ele.classList.add(this._afterAddCls[j]);
+        }
+
+        for (j = 0; j < this._afterRmvCls.length; j++) {
+          ele.classList.remove(this._afterRmvCls[j]);
+        }
+      }
+
+      this.onFinish && this.onFinish();
+    }
+  }
+
+  dispose() {
+    var i;
+    for (i = 0; i < this._children.length; i++) {
+      this._children[i].dispose();
+    }
+    for (i = 0; i < this._players.length; i++) {
+      this._players[i].dispose();
+    }
+    this._el = this._parent = this._children = this._players = null;
   }
 
 }
 
 class Animate {
 
-  constructor(ele, fromEffect, toEffect, duration, easing) {
+  constructor(ele, fromEffect, toEffect, duration, easing, playbackRate) {
     // https://w3c.github.io/web-animations/
     // not using the direct API methods because they're still in flux
     // however, element.animate() seems locked in and uses the latest
@@ -226,6 +293,7 @@ class Animate {
     this.player = ele.animate([fromEffect, toEffect], {
       duration: duration,
       easing: easing,
+      playbackRate: playbackRate || 1,
       fill: 'both'
     });
 
@@ -262,6 +330,14 @@ class Animate {
     }
 
     player.currentTime = (this._duration * value);
+  }
+
+  playbackRate(value) {
+    this.player.playbackRate = value;
+  }
+
+  dispose() {
+    this.player = null;
   }
 
 }
