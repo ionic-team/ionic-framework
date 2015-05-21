@@ -76,7 +76,6 @@ class IOSTransition extends Animation {
     // leaving view moves off screen
     // when completed, set leavingItem to display: none
     leavingContent
-      .beforePlay.addClass(SHOW_NAV_ITEM_CSS)
       .afterFinish.removeClass(SHOW_NAV_ITEM_CSS)
       .from(TRANSFORM, CENTER)
       .from(OPACITY, 1);

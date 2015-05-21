@@ -20,7 +20,7 @@ export class NavBase {
     this.injector = injector;
     this.items = [];
     this.navCtrl = new NavController(this);
-    this.swipeBackTransition = null;
+    this.sbTransition = null;
   }
 
   set initial(Class) {
@@ -156,7 +156,7 @@ export class NavBase {
       return;
     }
 
-    this.swipeBackResolve = null;
+    this.sbResolve = null;
 
     // default the direction to "back"
     let opts = {
@@ -187,26 +187,33 @@ export class NavBase {
       enteringItem.state = STAGED_ENTERING_STATE;
 
       // init the transition animation
-      this.swipeBackTransition = Transition.create(this, opts);
-      this.swipeBackTransition.easing('linear');
+      this.sbTransition = Transition.create(this, opts);
+      this.sbTransition.easing('linear');
 
       // wait for the items to be fully staged
-      this.swipeBackTransition.stage().then(() => {
+      this.sbTransition.stage().then(() => {
 
         // update the state that the items are actively entering/leaving
         enteringItem.state = ACTIVELY_ENTERING_STATE;
         leavingItem.state = ACTIVELY_LEAVING_STATE;
 
-        let swipeBackPromise = new Promise(res => { this.swipeBackResolve = res; });
+        let swipeBackPromise = new Promise(res => { this.sbResolve = res; });
 
-        swipeBackPromise.then(() => {
+        swipeBackPromise.then((completeSwipeBack) => {
 
-          // transition has completed, update each item's state
-          enteringItem.state = ACTIVE_STATE;
-          leavingItem.state = CACHED_STATE;
+          if (completeSwipeBack) {
+            // swipe back has completed, update each item's state
+            enteringItem.state = ACTIVE_STATE;
+            leavingItem.state = CACHED_STATE;
 
-          // destroy any items that shouldn't stay around
-          this.cleanup();
+            // destroy any items that shouldn't stay around
+            this.cleanup();
+
+          } else {
+            // cancelled the swipe back, return items to original state
+            leavingItem.state = ACTIVE_STATE;
+            enteringItem.state = CACHED_STATE;
+          }
 
           // allow clicks again
           ClickBlock(false);
@@ -220,42 +227,38 @@ export class NavBase {
   }
 
   swipeBackEnd(completeSwipeBack, progress, playbackRate) {
-    console.log('swipeBackEnd, completeSwipeBack: ', completeSwipeBack, ' progress:', progress, ' playbackRate:', playbackRate);
+    // to reverse the animation use a negative playbackRate
+    if (!completeSwipeBack) playbackRate = playbackRate * -1;
 
-    this.swipeBackTransition.playbackRate(playbackRate);
+    this.sbTransition.playbackRate(playbackRate);
 
-    this.swipeBackTransition.play().then(() => {
-      this.swipeBackResolve && this.swipeBackResolve();
-
-      if (this.swipeBackTransition) {
-        this.swipeBackTransition.dispose();
-      }
-
-      this.swipeBackResolve = this.swipeBackTransition = null;
+    this.sbTransition.play().then(() => {
+      this.sbResolve && this.sbResolve(completeSwipeBack);
+      this.sbTransition && this.sbTransition.dispose();
+      this.sbResolve = this.sbTransition = null;
     });
 
   }
 
   swipeBackProgress(progress) {
-    if (this.swipeBackTransition) {
+    if (this.sbTransition) {
       ClickBlock(true, 4000);
-      this.swipeBackTransition.progress( Math.min(1, Math.max(0, progress)) );
+      this.sbTransition.progress( Math.min(1, Math.max(0, progress)) );
     }
   }
 
-
   cleanup() {
-    for (let i = 0, ii = this.items.length; i < ii; i++) {
-      let item = this.items[i];
+    this.items.forEach((item) => {
+
       if (item && item.shouldDestroy) {
         this.remove(item);
-        i = 0;
-        ii = this.items.length;
+
         util.dom.raf(() => {
           item.destroy();
         });
       }
-    }
+
+    });
   }
 
   isTransitioning() {

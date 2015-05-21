@@ -239,15 +239,33 @@ export class Animation {
       this._hasFinished = true;
 
       var i, j, ele;
-      for (i = 0; i < this._el.length; i++) {
-        ele = this._el[i];
 
-        for (j = 0; j < this._afterAddCls.length; j++) {
-          ele.classList.add(this._afterAddCls[j]);
+      if (this.playbackRate() < 0) {
+        // reverse direction
+        for (i = 0; i < this._el.length; i++) {
+          ele = this._el[i];
+
+          for (j = 0; j < this._beforeAddCls.length; j++) {
+            ele.classList.remove(this._beforeAddCls[j]);
+          }
+
+          for (j = 0; j < this._beforeRmvCls.length; j++) {
+            ele.classList.add(this._beforeRmvCls[j]);
+          }
         }
 
-        for (j = 0; j < this._afterRmvCls.length; j++) {
-          ele.classList.remove(this._afterRmvCls[j]);
+      } else {
+        // normal direction
+        for (i = 0; i < this._el.length; i++) {
+          ele = this._el[i];
+
+          for (j = 0; j < this._afterAddCls.length; j++) {
+            ele.classList.add(this._afterAddCls[j]);
+          }
+
+          for (j = 0; j < this._afterRmvCls.length; j++) {
+            ele.classList.remove(this._afterRmvCls[j]);
+          }
         }
       }
 
@@ -293,8 +311,7 @@ class Animate {
     this.player = ele.animate([fromEffect, toEffect], {
       duration: duration,
       easing: easing,
-      playbackRate: playbackRate || 1,
-      fill: 'both'
+      playbackRate: playbackRate || 1
     });
 
     this.promise = new Promise(resolve => {
