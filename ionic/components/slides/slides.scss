@@ -1,0 +1,47 @@
+$z-index-slider-pager:            1 !default;
+
+.slides {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  border: 2px dashed red;
+}
+
+.slides-view {
+  position: relative;
+  height: 100%;
+}
+
+.slide {
+  position: relative;
+  display: block;
+  float: left;
+  width: 100%;
+  height: 100%;
+  vertical-align: top;
+}
+
+.slide-pager {
+  position: absolute;
+  bottom: 20px;
+  z-index: $z-index-slider-pager;
+  width: 100%;
+  height: 15px;
+  text-align: center;
+
+  .slide-pager-page {
+    display: inline-block;
+    margin: 0px 3px;
+    width: 15px;
+    color: #000;
+    text-decoration: none;
+
+    opacity: 0.3;
+
+    &.active {
+      transition: (opacity 0.4s ease-in);
+      opacity: 1;
+    }
+  }
+}
