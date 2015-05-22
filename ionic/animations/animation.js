@@ -334,7 +334,7 @@ class Animate {
     let player = this.player;
 
     // passed a number between 0 and 1
-    value = Math.max(0, Math.min(1, parseFloat(value)));
+    value = Math.max(0, Math.min(1, value));
 
     if (value === 1) {
       player.currentTime = (this._duration * 0.9999);

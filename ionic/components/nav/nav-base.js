@@ -21,6 +21,7 @@ export class NavBase {
     this.items = [];
     this.navCtrl = new NavController(this);
     this.sbTransition = null;
+    this.sbActive = false;
   }
 
   set initial(Class) {
@@ -156,6 +157,7 @@ export class NavBase {
       return;
     }
 
+    this.sbActive = true;
     this.sbResolve = null;
 
     // default the direction to "back"
@@ -213,6 +215,9 @@ export class NavBase {
             // cancelled the swipe back, return items to original state
             leavingItem.state = ACTIVE_STATE;
             enteringItem.state = CACHED_STATE;
+
+            leavingItem.shouldDestroy = false;
+            enteringItem.shouldDestroy = false;
           }
 
           // allow clicks again
@@ -228,16 +233,27 @@ export class NavBase {
 
   swipeBackEnd(completeSwipeBack, progress, playbackRate) {
     // to reverse the animation use a negative playbackRate
-    if (!completeSwipeBack) playbackRate = playbackRate * -1;
+    if (this.sbTransition && this.sbActive) {
+      this.sbActive = false;
 
-    this.sbTransition.playbackRate(playbackRate);
+      if (progress <= 0) {
+        this.swipeBackProgress(0.0001);
+      } else if (progress >= 1) {
+        this.swipeBackProgress(0.9999);
+      }
 
-    this.sbTransition.play().then(() => {
-      this.sbResolve && this.sbResolve(completeSwipeBack);
-      this.sbTransition && this.sbTransition.dispose();
-      this.sbResolve = this.sbTransition = null;
-    });
+      if (!completeSwipeBack) {
+        playbackRate = playbackRate * -1;
+      }
 
+      this.sbTransition.playbackRate(playbackRate);
+
+      this.sbTransition.play().then(() => {
+        this.sbResolve && this.sbResolve(completeSwipeBack);
+        this.sbTransition && this.sbTransition.dispose();
+        this.sbResolve = this.sbTransition = null;
+      });
+    }
   }
 
   swipeBackProgress(progress) {

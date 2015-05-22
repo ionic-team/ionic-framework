@@ -58,7 +58,7 @@ class IonicApp {
   }
 
   progress(ev) {
-    this.animation.progress( ev.srcElement.value );
+    this.animation.progress( parseFloat(ev.srcElement.value) );
   }
 
 }
