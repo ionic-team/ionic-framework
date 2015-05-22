@@ -599,6 +599,37 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
       viewHistory.backView && viewHistory.backView.go();
     },
 
+    /**
+     * @ngdoc method
+     * @name $ionicHistory#removeBackView
+     * @description Remove the previous view from the history completely, including the 
+     * cached element and scope (if they exist).
+     */
+    removeBackView: function () {
+      var self = this;
+      var currentHistory = viewHistory.histories[this.currentHistoryId()];
+      var currentCursor = currentHistory.cursor;
+
+      var currentView = currentHistory.stack[currentCursor];
+      var backView = currentHistory.stack[currentCursor - 1];
+      var replacementView = currentHistory.stack[currentCursor - 2];
+
+      // fail if we dont have enough views in the history
+      if (!backView || !replacementView) {
+        return;
+      }
+
+      // remove the old backView and the cached element/scope
+      currentHistory.stack.splice(currentCursor - 1, 1);
+      self.clearCache([backView.viewId]);
+      // make the replacementView and currentView point to each other (bypass the old backView)
+      currentView.backViewId = replacementView.viewId;
+      currentView.index = currentView.index - 1;
+      replacementView.forwardViewId = currentView.viewId;
+      // update the cursor and set new backView
+      viewHistory.backView = replacementView;
+      currentHistory.currentCursor += -1;
+    },
 
     enabledBack: function(view) {
       var backView = getBackView(view);
