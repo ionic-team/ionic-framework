@@ -299,27 +299,27 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
         emit: function(step, enteringData, leavingData) {
           var enteringScope = enteringEle.scope(),
             leavingScope = leavingEle && leavingEle.scope();
-          
+
           if (step == 'after') {
             if (enteringScope) {
               enteringScope.$emit('$ionicView.enter', enteringData);
             }
-            
+
             if (leavingScope) {
               leavingScope.$emit('$ionicView.leave', leavingData);
-              
+
             } else if (enteringScope && leavingData && leavingData.viewId) {
               enteringScope.$emit('$ionicNavView.leave', leavingData);
             }
           }
-          
+
           if (enteringScope) {
             enteringScope.$emit('$ionicView.' + step + 'Enter', enteringData);
           }
-          
+
           if (leavingScope) {
             leavingScope.$emit('$ionicView.' + step + 'Leave', leavingData);
-            
+
           } else if (enteringScope && leavingData && leavingData.viewId) {
             enteringScope.$emit('$ionicNavView.' + step + 'Leave', leavingData);
           }
