@@ -67,11 +67,10 @@ ion-toolbar {
   order: $flex-order-view-content;
 }
 
-.tab-pane-container {
+.tab-item-container {
   // container of each content for each tab component within a tabs component
-  flex: 1;
   position: relative;
-  width: 100%;
+  flex: 1;
   order: $flex-order-view-content;
 }
 

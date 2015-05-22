@@ -9,18 +9,18 @@ $tab-bar-item-min-width:           80px !default;
 $tab-bar-item-max-width:           160px !default;
 
 
-.tabs {
+ion-tabs {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
-[tab-bar-placement="top"] > .tab-bar-container {
-  order: $flex-order-tab-bar-top;
+.tab-bar-container {
+  order: $flex-order-tab-bar-bottom;
 }
 
-[tab-bar-placement="bottom"] > .tab-bar-container {
-  order: $flex-order-tab-bar-bottom;
+[tab-bar-placement="top"] > .tab-bar-container {
+  order: $flex-order-tab-bar-top;
 }
 
 .tab-bar {

@@ -1,10 +1,10 @@
 import {Ancestor} from 'angular2/src/core/annotations_impl/visibility';
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
-import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_component_loader';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
-import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
+import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_component_loader';
 import {Injector} from 'angular2/di';
+import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
 
 import {NavBase} from './nav-base';
 import {ToolbarContainer} from '../toolbar/toolbar-container';
@@ -18,12 +18,12 @@ import {ToolbarContainer} from '../toolbar/toolbar-container';
 })
 @View({
   template: `
-  <header class="toolbar-container">
-    <template header-anchor></template>
-  </header>
-  <section class="nav-item-container">
-    <template content-anchor></template>
-  </section>
+    <header class="toolbar-container">
+      <template header-anchor></template>
+    </header>
+    <section class="nav-item-container">
+      <template content-anchor></template>
+    </section>
   `,
   directives: [HeaderAnchor, ContentAnchor, ToolbarContainer]
 })
