@@ -152,7 +152,10 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
           enteringData.renderStart = renderStart;
           enteringData.renderEnd = renderEnd;
 
-          cachedAttr(enteringEle.parent(), 'nav-view-transition', enteringData.transition);
+          // check for transition override
+          var transitionOverride = enteringEle.parent().attr('nav-view-transition');
+
+          cachedAttr(enteringEle.parent(), 'nav-view-transition', transitionOverride || enteringData.transition);
           cachedAttr(enteringEle.parent(), 'nav-view-direction', enteringData.direction);
 
           // cancel any previous transition complete fallbacks
