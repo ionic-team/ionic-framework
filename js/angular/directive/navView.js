@@ -159,7 +159,7 @@ function($state, $ionicConfig) {
 
       // check for transition override
       var transitionOverride = tElement.attr('nav-view-transition');
-      
+
       // set transition
       ionic.DomUtil.cachedAttr(tElement, 'nav-view-transition', transitionOverride || $ionicConfig.views.transition());
 
