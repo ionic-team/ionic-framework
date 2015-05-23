@@ -602,7 +602,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
     /**
      * @ngdoc method
      * @name $ionicHistory#removeBackView
-     * @description Remove the previous view from the history completely, including the 
+     * @description Remove the previous view from the history completely, including the
      * cached element and scope (if they exist).
      */
     removeBackView: function () {
