@@ -7,11 +7,11 @@ const DURATION = 500;
 const EASING = 'cubic-bezier(.36,.66,.04,1)';
 
 const OPACITY = 'opacity';
-const TRANSFORM = 'transform';
+const TRANSLATEX = 'translateX';
 
-const CENTER = 'none';
-const OFF_RIGHT = 'translate3d(100%,0px,0px)';
-const OFF_LEFT = 'translate3d(-33%,0px,0px)';
+const OFF_RIGHT = '100%';
+const OFF_LEFT = '-33%';
+const CENTER = '0%'
 const OFF_OPACITY = 0.8;
 
 const SHOW_TOOLBAR_CSS = 'show-toolbar';
@@ -55,13 +55,13 @@ class IOSTransition extends Animation {
     // before starting, set enteringItem to display: block
     enteringContent
       .beforePlay.addClass(SHOW_NAV_ITEM_CSS)
-      .to(TRANSFORM, CENTER)
+      .to(TRANSLATEX, CENTER)
       .to(OPACITY, 1);
 
     enteringTitle
       .from(OPACITY, 0)
       .to(OPACITY, 1)
-      .to(TRANSFORM, CENTER);
+      .to(TRANSLATEX, CENTER);
 
     enteringToolbars
       .beforePlay.addClass(SHOW_TOOLBAR_CSS);
@@ -77,14 +77,14 @@ class IOSTransition extends Animation {
     // when completed, set leavingItem to display: none
     leavingContent
       .afterFinish.removeClass(SHOW_NAV_ITEM_CSS)
-      .from(TRANSFORM, CENTER)
+      .from(TRANSLATEX, CENTER)
       .from(OPACITY, 1);
 
     leavingToolbars
       .afterFinish.removeClass(SHOW_TOOLBAR_CSS);
 
     leavingTitle
-      .from(TRANSFORM, CENTER)
+      .from(TRANSLATEX, CENTER)
       .from(OPACITY, 1);
 
     if (leavingItem) {
@@ -97,42 +97,41 @@ class IOSTransition extends Animation {
     if (opts.direction === 'back') {
       // back direction
       enteringContent
-        .from(TRANSFORM, OFF_LEFT)
+        .from(TRANSLATEX, OFF_LEFT)
         .from(OPACITY, OFF_OPACITY)
         .to(OPACITY, 1);
 
       enteringTitle
-        .from(TRANSFORM, OFF_LEFT);
+        .from(TRANSLATEX, OFF_LEFT);
 
       leavingContent
-        .to(TRANSFORM, OFF_RIGHT)
+        .to(TRANSLATEX, OFF_RIGHT)
         .to(OPACITY, 1);
 
       leavingTitle
-        .to(TRANSFORM, OFF_RIGHT)
+        .to(TRANSLATEX, OFF_RIGHT)
         .to(OPACITY, 0);
 
     } else {
       // forward direction
       enteringContent
-        .from(TRANSFORM, OFF_RIGHT)
+        .from(TRANSLATEX, OFF_RIGHT)
         .from(OPACITY, 1);
 
       enteringTitle
-        .from(TRANSFORM, OFF_RIGHT);
+        .from(TRANSLATEX, OFF_RIGHT);
 
       leavingContent
-        .to(TRANSFORM, OFF_LEFT)
+        .to(TRANSLATEX, OFF_LEFT)
         .to(OPACITY, OFF_OPACITY);
 
       leavingTitle
-        .to(TRANSFORM, OFF_LEFT)
+        .to(TRANSLATEX, OFF_LEFT)
         .to(OPACITY, 0);
     }
 
     // set child animations
     this.children(enteringContent, enteringToolbars, enteringTitle, leavingContent, leavingToolbars, leavingTitle);
-
   }
 
   stage() {

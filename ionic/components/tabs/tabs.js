@@ -7,7 +7,7 @@ import {Injector} from 'angular2/di';
 
 import {NavBase} from 'ionic/components/nav/nav-base';
 import {IonicComponent} from 'ionic/config/component';
-import {Tab} from 'ionic/components/tabs/tab';
+import {Tab} from './tab';
 
 
 @Component({

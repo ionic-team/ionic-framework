@@ -19,21 +19,31 @@ class IonicApp {
     this.animation = new Animation();
 
     this.animation
-      .duration(1000)
-      .easing('ease-in-out');
+      .duration(2000)
+      .easing('spring');
+
+
+    var ball = new Animation( document.querySelector('.ball') );
+    ball
+      .from('translateX', '0px')
+      .to('translateX', '250px')
+
+    this.animation.addChild(ball);
 
 
     var row1 = new Animation( document.querySelectorAll('.square') );
     row1
-      .from('opacity', 1)
-      .to('opacity', 0)
-      .to('transform', 'scale(0)')
-      .beforePlay.addClass('added-before-play')
-      .afterFinish.addClass('added-after-finish')
+      .from('opacity', 0.8)
+      .to('opacity', 0.2)
+
+    this.animation.addChild(row1);
 
     var row2 = new Animation( document.querySelectorAll('.square2') );
     row2
-      .to('transform', 'rotate(90deg) scale(0.5)')
+      .from('rotate', '0deg')
+      .from('scale', '1')
+      .to('rotate', '90deg')
+      .to('scale', '0.5')
       .beforePlay.addClass('added-before-play')
       .afterFinish.addClass('added-after-finish')
 

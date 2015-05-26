@@ -294,21 +294,25 @@ class Animate {
     // however, element.animate() seems locked in and uses the latest
     // and correct API methods under the hood, so really doesn't matter
 
-    // fromEffect must be manually computed if it wasn't provided
-    // https://github.com/web-animations/web-animations-js/issues/14
-    fromEffect = fromEffect || {};
-    let style = null;
-    for (let prop in toEffect) {
-      if (util.isBlank(fromEffect[prop])) {
-        style = style || window.getComputedStyle(ele);
-        fromEffect[prop] = style[prop];
+    fromEffect = parseEffect(fromEffect);
+    toEffect = parseEffect(toEffect);
+
+    this._duration = duration;
+
+    var effects;
+
+    if (easing in EASING_FN) {
+      effects = createEasingEffects(fromEffect, toEffect, easing);
+
+    } else {
+      effects = [ convertProperties(fromEffect), convertProperties(toEffect) ];
+
+      if (easing in CUBIC_BEZIERS) {
+        easing = 'cubic-bezier(' + CUBIC_BEZIERS[easing] + ')';
       }
     }
 
-    this._duration = duration;
-    this._easing = easing;
-
-    this.player = ele.animate([fromEffect, toEffect], {
+    this.player = ele.animate(effects, {
       duration: duration,
       easing: easing,
       playbackRate: playbackRate || 1
@@ -358,3 +362,236 @@ class Animate {
   }
 
 }
+
+function roundValue(val) {
+  return Math.round(val * 10000) / 10000;
+}
+
+function convertProperties(inputEffect) {
+  var outputEffect = {};
+  var transforms = [];
+
+  for (var property in inputEffect) {
+    var value = inputEffect[property].value;
+
+    if (TRANSFORMS.indexOf(property) > -1) {
+      transforms.push(property + '(' + value + ')');
+    } else {
+      outputEffect[property] = value;
+    }
+  }
+
+  if (transforms.length) {
+    outputEffect.transform = transforms.join(' ');
+  }
+
+  return outputEffect;
+}
+
+function createEasingEffects(fromEffect, toEffect, easing) {
+  var inputEffects = buildEffects(fromEffect, toEffect, easing);
+  var outputEffects = [];
+
+  inputEffects.forEach(function(effect) {
+    outputEffects.push( convertProperties(effect) );
+  });
+
+  return outputEffects;
+}
+
+function buildEffects(fromEffect, toEffect, easing) {
+  var increment = 0.04;
+
+  var outputEffects = [fromEffect];
+  var easingFn = EASING_FN[easing];
+
+  for(var pos = increment; pos <= (1 - increment); pos += increment) {
+
+    var tweenEffect = {};
+    var addEffect = false;
+
+    for (var property in toEffect) {
+      var toProperty = toEffect[property];
+      if (toProperty.tween) {
+
+        var fromValue = fromEffect[property].num
+        var diffValue = toProperty.num - fromValue;
+
+        tweenEffect[property] = {
+          value: roundValue(  (easingFn(pos) * diffValue) + fromValue ) + toProperty.unit
+        };
+
+        addEffect = true;
+      }
+    }
+
+    if (addEffect) {
+      outputEffects.push(tweenEffect);
+    }
+
+  }
+
+  outputEffects.push(toEffect);
+
+  return outputEffects;
+}
+
+function parseEffect(inputEffect) {
+  var val, r, num, property;
+  var outputEffect = {};
+
+  for (property in inputEffect) {
+    val = inputEffect[property];
+    r = val.toString().match(/(\d*\.?\d*)(.*)/);
+    num = parseFloat(r[1]);
+
+    outputEffect[property] = {
+      value: val,
+      num: num,
+      unit: (r[0] != r[2] ? r[2] : ''),
+      tween: !isNaN(num) && (ANIMATE_PROPERTIES.indexOf(property) > -1)
+    }
+  }
+
+  return outputEffect;
+}
+
+
+const TRANSFORMS = ['translateX', 'translateY', 'translateZ', 'scale', 'scaleX', 'scaleY', 'scaleZ',
+                    'rotate', 'rotateX', 'rotateY', 'rotateZ', 'skewX', 'skewY', 'perspective'];
+
+const ANIMATE_PROPERTIES = TRANSFORMS.concat('opacity');
+
+
+// Default easings built into the browsers
+const BUILTIN_EASING = ['linear', 'ease', 'ease-in', 'ease-out', 'ease-in-out'];
+
+
+// Robert Penner's Easing Functions
+// http://robertpenner.com/easing/
+
+const CUBIC_BEZIERS = {
+  // Cubic
+  easeInCubic: '0.55,0.055,0.675,0.19',
+  easeOutCubic: '0.215,0.61,0.355,1',
+  easeInOutCubic: '0.645,0.045,0.355,1',
+
+  // Circ
+  easeInCirc: '0.6,0.04,0.98,0.335',
+  easeOutCirc: '0.075,0.82,0.165,1',
+  easeInOutCirc: '0.785,0.135,0.15,0.86',
+
+  // Expo
+  easeInExpo: '0.95,0.05,0.795,0.035',
+  easeOutExpo: '0.19,1,0.22,1',
+  easeInOutExpo: '1,0,0,1',
+
+  // Quad
+  easeInQuad: '0.55,0.085,0.68,0.53',
+  easeOutQuad: '0.25,0.46,0.45,0.94',
+  easeInOutQuad: '0.455,0.03,0.515,0.955',
+
+  // Quart
+  easeInQuart: '0.895,0.03,0.685,0.22',
+  easeOutQuart: '0.165,0.84,0.44,1',
+  easeInOutQuart: '0.77,0,0.175,1',
+
+  // Quint
+  easeInQuint: '0.755,0.05,0.855,0.06',
+  easeOutQuint: '0.23,1,0.32,1',
+  easeInOutQuint: '0.86,0,0.07,1',
+
+  // Sine
+  easeInSine: '0.47,0,0.745,0.715',
+  easeOutSine: '0.39,0.575,0.565,1',
+  easeInOutSine : '0.445,0.05,0.55,0.95',
+
+  // Back
+  easeInBack: '0.6,-0.28,0.735,0.045',
+  easeOutBack: '0.175, 0.885,0.32,1.275',
+  easeInOutBack: '0.68,-0.55,0.265,1.55',
+};
+
+
+const EASING_FN = {
+
+  easeOutBounce: function(pos) {
+    if ((pos) < (1/2.75)) {
+      return (7.5625*pos*pos);
+    } else if (pos < (2/2.75)) {
+      return (7.5625*(pos-=(1.5/2.75))*pos + .75);
+    } else if (pos < (2.5/2.75)) {
+      return (7.5625*(pos-=(2.25/2.75))*pos + .9375);
+    }
+    return (7.5625*(pos-=(2.625/2.75))*pos + .984375);
+  },
+
+  elastic: function(pos) {
+    return -1 * Math.pow(4,-8*pos) * Math.sin((pos*6-1)*(2*Math.PI)/2) + 1;
+  },
+
+  swingFromTo: function(pos) {
+    var s = 1.70158;
+    return ((pos/=0.5) < 1) ? 0.5*(pos*pos*(((s*=(1.525))+1)*pos - s)) :
+    0.5*((pos-=2)*pos*(((s*=(1.525))+1)*pos + s) + 2);
+  },
+
+  swingFrom: function(pos) {
+    var s = 1.70158;
+    return pos*pos*((s+1)*pos - s);
+  },
+
+  swingTo: function(pos) {
+    var s = 1.70158;
+    return (pos-=1)*pos*((s+1)*pos + s) + 1;
+  },
+
+  bounce: function(pos) {
+    if (pos < (1/2.75)) {
+      return (7.5625*pos*pos);
+    } else if (pos < (2/2.75)) {
+      return (7.5625*(pos-=(1.5/2.75))*pos + .75);
+    } else if (pos < (2.5/2.75)) {
+      return (7.5625*(pos-=(2.25/2.75))*pos + .9375);
+    }
+    return (7.5625*(pos-=(2.625/2.75))*pos + .984375);
+  },
+
+  bouncePast: function(pos) {
+    if (pos < (1/2.75)) {
+      return (7.5625*pos*pos);
+    } else if (pos < (2/2.75)) {
+      return 2 - (7.5625*(pos-=(1.5/2.75))*pos + .75);
+    } else if (pos < (2.5/2.75)) {
+      return 2 - (7.5625*(pos-=(2.25/2.75))*pos + .9375);
+    }
+    return 2 - (7.5625*(pos-=(2.625/2.75))*pos + .984375);
+  },
+
+  easeFromTo: function(pos) {
+    if ((pos/=0.5) < 1) return 0.5*Math.pow(pos,4);
+    return -0.5 * ((pos-=2)*Math.pow(pos,3) - 2);
+  },
+
+  easeFrom: function(pos) {
+    return Math.pow(pos, 4)
+  },
+
+  easeTo: function(pos) {
+    return Math.pow(pos, 0.25)
+  },
+
+  /*
+   * scripty2, Thomas Fuchs (MIT Licence)
+   * https://raw.github.com/madrobby/scripty2/master/src/effects/transitions/transitions.js
+   */
+  spring: function(pos) {
+    return 1 - (Math.cos(pos * 4.5 * Math.PI) * Math.exp(-pos * 6));
+  },
+
+  sinusoidal: function(pos) {
+    return (-Math.cos(pos*Math.PI)/2) + 0.5;
+  }
+
+};
+

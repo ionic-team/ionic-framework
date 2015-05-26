@@ -24,10 +24,10 @@ export class NavBase {
     this.sbActive = false;
   }
 
-  set initial(Class) {
-    if (!this._init) {
+  set initial(Component) {
+    if (!this._init && Component) {
       this._init = true;
-      this.push(Class);
+      this.push(Component);
     }
   }
 
