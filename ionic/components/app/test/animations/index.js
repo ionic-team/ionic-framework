@@ -20,7 +20,7 @@ class IonicApp {
 
     this.animation
       .duration(2000)
-      .easing('spring');
+      .easing('spring', { damping: 6, elasticity: 10 });
 
 
     var ball = new Animation( document.querySelector('.ball') );

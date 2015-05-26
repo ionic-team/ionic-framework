@@ -70,9 +70,12 @@ export class Animation {
     return this._duration || (this._parent && this._parent.duration());
   }
 
-  easing(value) {
+  easing(name, opts) {
     if (arguments.length) {
-      this._easing = value;
+      this._easing = {
+        name: name,
+        opts: opts
+      };
       return this;
     }
     return this._easing || (this._parent && this._parent.easing());
@@ -288,7 +291,7 @@ export class Animation {
 
 class Animate {
 
-  constructor(ele, fromEffect, toEffect, duration, easing, playbackRate) {
+  constructor(ele, fromEffect, toEffect, duration, easingConfig, playbackRate) {
     // https://w3c.github.io/web-animations/
     // not using the direct API methods because they're still in flux
     // however, element.animate() seems locked in and uses the latest
@@ -299,22 +302,22 @@ class Animate {
 
     this._duration = duration;
 
-    var effects;
+    var easingName = easingConfig.name;
 
-    if (easing in EASING_FN) {
-      effects = createEasingEffects(fromEffect, toEffect, easing);
+    var effects = [ convertProperties(fromEffect) ];
 
-    } else {
-      effects = [ convertProperties(fromEffect), convertProperties(toEffect) ];
+    if (easingName in EASING_FN) {
+      insertEffects(effects, fromEffect, toEffect, easingConfig);
 
-      if (easing in CUBIC_BEZIERS) {
-        easing = 'cubic-bezier(' + CUBIC_BEZIERS[easing] + ')';
-      }
+    } else if (easingName in CUBIC_BEZIERS) {
+      easingName = 'cubic-bezier(' + CUBIC_BEZIERS[easingName] + ')';
     }
+
+    effects.push( convertProperties(toEffect) );
 
     this.player = ele.animate(effects, {
       duration: duration,
-      easing: easing,
+      easing: easingName,
       playbackRate: playbackRate || 1
     });
 
@@ -363,47 +366,11 @@ class Animate {
 
 }
 
-function roundValue(val) {
-  return Math.round(val * 10000) / 10000;
-}
+function insertEffects(effects, fromEffect, toEffect, easingConfig) {
+  easingConfig.opts = easingConfig.opts || {};
+  var increment = easingConfig.opts.increment || 0.04;
 
-function convertProperties(inputEffect) {
-  var outputEffect = {};
-  var transforms = [];
-
-  for (var property in inputEffect) {
-    var value = inputEffect[property].value;
-
-    if (TRANSFORMS.indexOf(property) > -1) {
-      transforms.push(property + '(' + value + ')');
-    } else {
-      outputEffect[property] = value;
-    }
-  }
-
-  if (transforms.length) {
-    outputEffect.transform = transforms.join(' ');
-  }
-
-  return outputEffect;
-}
-
-function createEasingEffects(fromEffect, toEffect, easing) {
-  var inputEffects = buildEffects(fromEffect, toEffect, easing);
-  var outputEffects = [];
-
-  inputEffects.forEach(function(effect) {
-    outputEffects.push( convertProperties(effect) );
-  });
-
-  return outputEffects;
-}
-
-function buildEffects(fromEffect, toEffect, easing) {
-  var increment = 0.04;
-
-  var outputEffects = [fromEffect];
-  var easingFn = EASING_FN[easing];
+  var easingFn = EASING_FN[easingConfig.name];
 
   for(var pos = increment; pos <= (1 - increment); pos += increment) {
 
@@ -418,7 +385,7 @@ function buildEffects(fromEffect, toEffect, easing) {
         var diffValue = toProperty.num - fromValue;
 
         tweenEffect[property] = {
-          value: roundValue(  (easingFn(pos) * diffValue) + fromValue ) + toProperty.unit
+          value: roundValue(  (easingFn(pos, easingConfig.opts) * diffValue) + fromValue ) + toProperty.unit
         };
 
         addEffect = true;
@@ -426,14 +393,10 @@ function buildEffects(fromEffect, toEffect, easing) {
     }
 
     if (addEffect) {
-      outputEffects.push(tweenEffect);
+      effects.push( convertProperties(tweenEffect) );
     }
 
   }
-
-  outputEffects.push(toEffect);
-
-  return outputEffects;
 }
 
 function parseEffect(inputEffect) {
@@ -456,15 +419,37 @@ function parseEffect(inputEffect) {
   return outputEffect;
 }
 
+function convertProperties(inputEffect) {
+  var outputEffect = {};
+  var transforms = [];
+
+  for (var property in inputEffect) {
+    var value = inputEffect[property].value;
+
+    if (TRANSFORMS.indexOf(property) > -1) {
+      transforms.push(property + '(' + value + ')');
+
+    } else {
+      outputEffect[property] = value;
+    }
+  }
+
+  if (transforms.length) {
+    outputEffect.transform = transforms.join(' ');
+  }
+
+  return outputEffect;
+}
+
+function roundValue(val) {
+  return Math.round(val * 10000) / 10000;
+}
+
 
 const TRANSFORMS = ['translateX', 'translateY', 'translateZ', 'scale', 'scaleX', 'scaleY', 'scaleZ',
                     'rotate', 'rotateX', 'rotateY', 'rotateZ', 'skewX', 'skewY', 'perspective'];
 
 const ANIMATE_PROPERTIES = TRANSFORMS.concat('opacity');
-
-
-// Default easings built into the browsers
-const BUILTIN_EASING = ['linear', 'ease', 'ease-in', 'ease-out', 'ease-in-out'];
 
 
 // Robert Penner's Easing Functions
@@ -515,82 +500,84 @@ const CUBIC_BEZIERS = {
 
 const EASING_FN = {
 
-  easeOutBounce: function(pos) {
-    if ((pos) < (1/2.75)) {
-      return (7.5625*pos*pos);
-    } else if (pos < (2/2.75)) {
-      return (7.5625*(pos-=(1.5/2.75))*pos + .75);
-    } else if (pos < (2.5/2.75)) {
-      return (7.5625*(pos-=(2.25/2.75))*pos + .9375);
-    }
-    return (7.5625*(pos-=(2.625/2.75))*pos + .984375);
-  },
-
   elastic: function(pos) {
-    return -1 * Math.pow(4,-8*pos) * Math.sin((pos*6-1)*(2*Math.PI)/2) + 1;
+    return -1 * Math.pow(4, -8 * pos) * Math.sin((pos * 6 - 1) * (2 * Math.PI) / 2) + 1;
   },
 
-  swingFromTo: function(pos) {
-    var s = 1.70158;
-    return ((pos/=0.5) < 1) ? 0.5*(pos*pos*(((s*=(1.525))+1)*pos - s)) :
-    0.5*((pos-=2)*pos*(((s*=(1.525))+1)*pos + s) + 2);
+  swingFromTo: function(pos, opts) {
+    var s = opts.s || 1.70158;
+    return ((pos /= 0.5) < 1) ? 0.5 * (pos * pos * (((s *= (1.525)) + 1) * pos - s)) :
+    0.5 * ((pos -= 2) * pos * (((s *= (1.525)) + 1) * pos + s) + 2);
   },
 
-  swingFrom: function(pos) {
-    var s = 1.70158;
-    return pos*pos*((s+1)*pos - s);
+  swingFrom: function(pos, opts) {
+    var s = opts.s || 1.70158;
+    return pos * pos * ((s + 1) * pos - s);
   },
 
-  swingTo: function(pos) {
-    var s = 1.70158;
-    return (pos-=1)*pos*((s+1)*pos + s) + 1;
+  swingTo: function(pos, opts) {
+    var s = opts.s || 1.70158;
+    return (pos -= 1) * pos * ((s + 1) * pos + s) + 1;
   },
 
   bounce: function(pos) {
-    if (pos < (1/2.75)) {
-      return (7.5625*pos*pos);
-    } else if (pos < (2/2.75)) {
-      return (7.5625*(pos-=(1.5/2.75))*pos + .75);
-    } else if (pos < (2.5/2.75)) {
-      return (7.5625*(pos-=(2.25/2.75))*pos + .9375);
+    if (pos < (1 / 2.75)) {
+      return (7.5625 * pos * pos);
+    } else if (pos < (2 / 2.75)) {
+      return (7.5625 * (pos -= (1.5 / 2.75)) * pos + 0.75);
+    } else if (pos < (2.5 / 2.75)) {
+      return (7.5625 * (pos -= (2.25 / 2.75)) * pos + 0.9375);
     }
-    return (7.5625*(pos-=(2.625/2.75))*pos + .984375);
+    return (7.5625 * (pos -= (2.625 / 2.75)) * pos + 0.984375);
   },
 
   bouncePast: function(pos) {
-    if (pos < (1/2.75)) {
-      return (7.5625*pos*pos);
-    } else if (pos < (2/2.75)) {
-      return 2 - (7.5625*(pos-=(1.5/2.75))*pos + .75);
-    } else if (pos < (2.5/2.75)) {
-      return 2 - (7.5625*(pos-=(2.25/2.75))*pos + .9375);
+    if (pos < (1 / 2.75)) {
+      return (7.5625 * pos * pos);
+    } else if (pos < (2 / 2.75)) {
+      return 2 - (7.5625 * (pos -= (1.5 / 2.75)) * pos + 0.75);
+    } else if (pos < (2.5 / 2.75)) {
+      return 2 - (7.5625 * (pos -= (2.25 / 2.75)) * pos + 0.9375);
     }
-    return 2 - (7.5625*(pos-=(2.625/2.75))*pos + .984375);
+    return 2 - (7.5625 * (pos -= (2.625 / 2.75)) * pos + 0.984375);
+  },
+
+  easeOutBounce: function(pos) {
+    if ((pos) < (1 / 2.75)) {
+      return (7.5625 * pos * pos);
+    } else if (pos < (2 / 2.75)) {
+      return (7.5625 * (pos -= (1.5 / 2.75)) * pos + 0.75);
+    } else if (pos < (2.5 / 2.75)) {
+      return (7.5625 * (pos -= (2.25 / 2.75)) * pos + 0.9375);
+    }
+    return (7.5625 * (pos -= (2.625 / 2.75)) * pos + 0.984375);
   },
 
   easeFromTo: function(pos) {
-    if ((pos/=0.5) < 1) return 0.5*Math.pow(pos,4);
-    return -0.5 * ((pos-=2)*Math.pow(pos,3) - 2);
+    if ((pos /= 0.5) < 1) return 0.5 * Math.pow(pos, 4);
+    return -0.5 * ((pos -= 2) * Math.pow(pos, 3) - 2);
   },
 
-  easeFrom: function(pos) {
-    return Math.pow(pos, 4)
+  easeFrom: function(pos, opts) {
+    return Math.pow(pos, opts.s || 4);
   },
 
-  easeTo: function(pos) {
-    return Math.pow(pos, 0.25)
+  easeTo: function(pos, opts) {
+    return Math.pow(pos, opts.s || 0.25);
   },
 
   /*
    * scripty2, Thomas Fuchs (MIT Licence)
    * https://raw.github.com/madrobby/scripty2/master/src/effects/transitions/transitions.js
    */
-  spring: function(pos) {
-    return 1 - (Math.cos(pos * 4.5 * Math.PI) * Math.exp(-pos * 6));
+  spring: function(pos, opts) {
+    var damping = opts.damping || 4.5;
+    var elasticity = opts.elasticity || 6;
+    return 1 - (Math.cos(pos * damping * Math.PI) * Math.exp(-pos * elasticity));
   },
 
   sinusoidal: function(pos) {
-    return (-Math.cos(pos*Math.PI)/2) + 0.5;
+    return (-Math.cos(pos * Math.PI) / 2) + 0.5;
   }
 
 };
