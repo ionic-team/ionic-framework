@@ -5,7 +5,7 @@ import {Ancestor} from 'angular2/src/core/annotations_impl/visibility';
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
-import {Content, Nav, List, Item} from 'ionic/ionic';
+import {NavController, HeaderTemplate, Toolbar, Content, List, Item} from 'ionic/ionic';
 
 import {HackerNews} from '../hn'
 
@@ -16,7 +16,7 @@ console.log('Angular directives', NgFor, Content, List, Item);
 })
 @View({
   templateUrl: 'pages/top.html',
-  directives: [Content, NgFor, List, Item]
+  directives: [HeaderTemplate, Toolbar, Content, NgFor, List, Item]
 })
 export class HNTopStories {
   constructor() {
@@ -33,7 +33,6 @@ export class HNTopStories {
       type: "story",
       url: "http://minusbat.livejournal.com/180556.html"
     }];
-    return;
 
     var APIUrl = 'https://hacker-news.firebaseio.com/v0';
 

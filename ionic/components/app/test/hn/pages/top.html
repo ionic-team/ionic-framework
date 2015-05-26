@@ -1,15 +1,7 @@
-<ion-view view-title="Top">
-  <ion-content>
+<ion-toolbar *header><ion-title>Top</ion-title></ion-toolbar>
 
-    <button pop>Back</button>
+<ion-content class="padding">
 
-    <ion-list>
+  <ion-list><ion-item *ng-for="#story of stories">{{story.title}}</ion-item></ion-list>
 
-      <item *ng-for="#story of stories">
-        {{story.title}}
-      </item>
-
-    </ion-list>
-
-  </ion-content>
-</ion-view>
+</ion-content>
