@@ -1,23 +1,25 @@
+import {NgFor, ElementRef, bootstrap} from 'angular2/angular2';
 
-import {For, Ancestor, Descendent, Parent, NgElement, Component, View, bootstrap} from 'angular2/angular2';
-import {PushToNav, Content, Nav, NavPane, List, Item} from 'ionic/ionic';
+import {Ancestor} from 'angular2/src/core/annotations_impl/visibility';
 
-import {HackerNews} from 'hn'
+import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
+import {View} from 'angular2/src/core/annotations_impl/view';
 
-@Component({ selector: 'top-stories' })
+import {Content, Nav, List, Item} from 'ionic/ionic';
+
+import {HackerNews} from '../hn'
+
+console.log('Angular directives', NgFor, Content, List, Item);
+
+@Component({
+  selector: 'top-stories'
+})
 @View({
   templateUrl: 'pages/top.html',
-  directives: [Content, For, List, Item, PushToNav]
+  directives: [Content, NgFor, List, Item]
 })
 export class HNTopStories {
-  constructor(@Ancestor() viewport: Nav) {//, @Ancestor() app: HNApp) {
-    console.log('TOP STORIES', 'Ancestor', viewport);
-
-    var self = this;
-
-    this.throwMe = function() {
-      throw new Error('stack test from throwMe');
-    };
+  constructor() {
 
     this.stories = [{
       by: "FatalLogic",
@@ -31,35 +33,27 @@ export class HNTopStories {
       type: "story",
       url: "http://minusbat.livejournal.com/180556.html"
     }];
+    return;
 
-      var APIUrl = 'https://hacker-news.firebaseio.com/v0';
-      this.fb = new window.Firebase(APIUrl);
+    var APIUrl = 'https://hacker-news.firebaseio.com/v0';
 
-      this.fb = new window.Firebase(APIUrl);
-      this.fb.child('topstories').limitToFirst(20).once('value', (snapshot) => {
+    console.log('FIREBASE', window.Firebase);
 
-        let items = snapshot.val();
+    this.fb = new window.Firebase(APIUrl);
+    this.fb.child('topstories').limitToFirst(20).once('value', (snapshot) => {
 
-        console.log('Fetched', items.length, 'items');
+      let items = snapshot.val();
 
-        for(var itemID of items) {
+      console.log('Fetched', items.length, 'items');
 
-          this.fb.child("item").child(itemID).on('value', (data) => {
-            //setTimeout(() => {
-              //console.log('SUB THIS', this);
-              //console.log(itemID, data.val());
-              //console.log('ADDED');
-              //self.stories.push(data.val());
-              //throw new Error("stack test");
-              debugger;
-              console.log('GOT ITEM', data.val());
-              self.stories.push({title: 'asdf'});
-            //});
+      for(var itemID of items) {
 
-            //console.log(data.val());
-          });
-        }
-      });
+        this.fb.child("item").child(itemID).on('value', (data) => {
+          console.log('GOT ITEM', data.val());
+          this.stories.push(data.val());
+        });
+      }
+    });
 
     //doStuffEnd
   }

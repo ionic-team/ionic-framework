@@ -1,12 +1,15 @@
 <ion-view view-title="Top">
   <ion-content>
+
     <button pop>Back</button>
-    <button (click)="throwMe()">xxxx</button>
-    Loaded {{stories.length}} stories
+
     <ion-list>
-      <ion-item *for="#story of stories">
+
+      <item *ng-for="#story of stories">
         {{story.title}}
-      </ion-item>
+      </item>
+
     </ion-list>
+
   </ion-content>
 </ion-view>

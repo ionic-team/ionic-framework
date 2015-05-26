@@ -1,22 +1,20 @@
-import {NgElement} from 'angular2/angular2';
-import {bootstrap} from 'angular2/angular2'
+import {bootstrap, ElementRef} from 'angular2/angular2'
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
-import {bind} from 'angular2/di';
-import {Content, Nav, NavPane} from 'ionic/ionic';
+import {Nav, HeaderTemplate, Toolbar, Content} from 'ionic/ionic';
 
-import {HackerNews} from 'hn';
-import {HNTopStories} from 'pages/top';
+import {HackerNews} from './hn';
+import {HNTopStories} from './pages/top';
 
 @Component({ selector: 'ion-app' })
 @View({
   templateUrl: 'main.html',
-  directives: [Content, Nav, NavPane]
+  directives: [Nav, Content, HeaderTemplate, Toolbar]
 })
 export class IonicApp {
   constructor(
-    @NgElement() element:NgElement
+    elementRef: ElementRef
   ) {
     console.log('IonicApp start: HackerNews', HackerNews)
 
@@ -27,4 +25,3 @@ export class IonicApp {
 export function main() {
   bootstrap(IonicApp);
 }
-
