@@ -208,7 +208,8 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
           direction = DIRECTION_BACK;
 
         } else if (currentView) {
-          direction = DIRECTION_EXIT;
+          // default: go back for different history
+          direction = DIRECTION_BACK;
 
           tmp = getHistoryById(backView.historyId);
           if (tmp && tmp.parentHistoryId === currentView.historyId) {
@@ -263,7 +264,8 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
 
         tmp = getHistoryById(currentView.historyId);
         if (tmp && tmp.parentHistoryId === historyId) {
-          direction = DIRECTION_EXIT;
+          // forward from tab to other page
+          direction = DIRECTION_FORWARD;
 
         } else {
           tmp = getHistoryById(historyId);
@@ -334,7 +336,8 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
             } else {
               tmp = getHistoryById(tmp.parentHistoryId);
               if (tmp && tmp.historyId === hist.historyId) {
-                direction = DIRECTION_EXIT;
+                // forward from tab to other page
+                direction = DIRECTION_FORWARD;
               }
             }
           }
@@ -602,7 +605,15 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
 
     enabledBack: function(view) {
       var backView = getBackView(view);
-      return !!(backView && backView.historyId === view.historyId);
+      if (!backView) {
+          return false;
+      }
+      if (backView && backView.historyId === view.historyId) {
+          return true;
+      }
+      var hist = getHistoryById(backView.historyId);
+      // enable back from some page to tab
+      return hist.parentHistoryId === view.historyId;
     },
 
     /**
