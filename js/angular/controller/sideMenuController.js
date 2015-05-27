@@ -11,7 +11,7 @@ IonicModule
 function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $ionicHistory, $ionicScrollDelegate, IONIC_BACK_PRIORITY) {
   var self = this;
   var rightShowing, leftShowing, isDragging;
-  var startX, lastX, offsetX, isAsideExposed;
+  var startX, lastX, offsetX, isAsideExposedLeft, isAsideExposedRight;
   var enableMenuWithBackViews = true;
 
   self.$scope = $scope;
@@ -55,7 +55,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
    * Toggle the left menu to open 100%
    */
   self.toggleLeft = function(shouldOpen) {
-    if (isAsideExposed || !self.left.isEnabled) return;
+    if (isAsideExposedLeft || !self.left.isEnabled) return;
     var openAmount = self.getOpenAmount();
     if (arguments.length === 0) {
       shouldOpen = openAmount <= 0;
@@ -72,7 +72,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
    * Toggle the right menu to open 100%
    */
   self.toggleRight = function(shouldOpen) {
-    if (isAsideExposed || !self.right.isEnabled) return;
+    if (isAsideExposedRight || !self.right.isEnabled) return;
     var openAmount = self.getOpenAmount();
     if (arguments.length === 0) {
       shouldOpen = openAmount >= 0;
@@ -285,35 +285,46 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
     return enableMenuWithBackViews;
   };
 
-  self.isAsideExposed = function() {
-    return !!isAsideExposed;
+  self.isAsideExposedLeft = function() {
+    return !!isAsideExposedLeft;
   };
 
-  self.exposeAside = function(shouldExposeAside) {
+  self.isAsideExposedRight = function() {
+    return !!isAsideExposedRight;
+  };
+
+  self.exposeAside = function(side, shouldExposeAside) {
     if (!(self.left && self.left.isEnabled) && !(self.right && self.right.isEnabled)) return;
     self.close();
 
-    isAsideExposed = shouldExposeAside;
-    if (self.left && self.left.isEnabled) {
+    if (self.left && self.left.isEnabled && side == 'left') {
       // set the left marget width if it should be exposed
       // otherwise set false so there's no left margin
-      self.content.setMarginLeft(isAsideExposed ? self.left.width : 0);
-    } else if (self.right && self.right.isEnabled) {
-      self.content.setMarginRight(isAsideExposed ? self.right.width : 0);
+      isAsideExposedLeft = shouldExposeAside;
+      self.content.setMarginLeft(isAsideExposedLeft ? self.left.width : 0);
+    }
+    if (self.right && self.right.isEnabled && side == 'right') {
+      isAsideExposedRight = shouldExposeAside;
+      self.content.setMarginRight(isAsideExposedRight ? self.right.width : 0);
     }
 
-    self.$scope.$emit('$ionicExposeAside', isAsideExposed);
+    self.$scope.$emit('$ionicExposeAside', isAsideExposedLeft || isAsideExposedRight);
   };
 
   self.activeAsideResizing = function(isResizing) {
     $ionicBody.enableClass(isResizing, 'aside-resizing');
   };
 
+  self._disallowExposedDrag = function(e) {
+    return isAsideExposedLeft  && e.gesture.direction == 'right' && !self.isOpenRight() ||
+           isAsideExposedRight && e.gesture.direction == 'left'  && !self.isOpenLeft();
+  };
+
   // End a drag with the given event
   self._endDrag = function(e) {
     freezeAllScrolls(false);
 
-    if (isAsideExposed) return;
+    if (self._disallowExposedDrag(e)) return;
 
     if (isDragging) {
       self.snapToRest(e);
@@ -325,7 +336,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
 
   // Handle a drag event
   self._handleDrag = function(e) {
-    if (isAsideExposed || !$scope.dragContent) return;
+    if (self._disallowExposedDrag(e) || !$scope.dragContent) return;
 
     // If we don't have start coords, grab and store them
     if (!startX) {
