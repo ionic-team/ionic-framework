@@ -317,7 +317,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
 
   self._disallowExposedDrag = function(e) {
     return isAsideExposedLeft && e.gesture.direction == 'right' && !self.isOpenRight() ||
-           isAsideExposedRight && e.gesture.direction == 'left'  && !self.isOpenLeft();
+           isAsideExposedRight && e.gesture.direction == 'left' && !self.isOpenLeft();
   };
 
   // End a drag with the given event
