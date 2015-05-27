@@ -18,20 +18,24 @@ import {
 })
 @View({
   template: `
+    <!--
     <content select="ion-primary-options"></content>
     <content select="ion-primary-swipe-buttons"></content>
+    -->
     <div class="item-content">
       <div class="item-media">
       </div>
       <div class="item-accessory">
-        <content select="ion-item-accessory"></content>
+        <!--<content select="ion-item-accessory"></content>-->
       </div>
       <div class="item-label">
         <content></content>
       </div>
     </div>
+    <!--
     <content select="ion-secondary-options"></content>
     <content select="ion-secondary-swipe-buttons"></content>
+    -->
   `,
   directives: [
     ItemPrimarySwipeButtons,

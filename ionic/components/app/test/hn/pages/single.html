@@ -1,5 +1,5 @@
-<ion-view [view-title]="post.title">
-  <ion-content>
-    <h2>SINGLE</h2>
-  </ion-content>
-</ion-view>
+<ion-toolbar *header><ion-title>{{post.title}}</ion-title></ion-toolbar>
+<ion-content>
+  <iframe style="width: 100%; height: 100%" src="{{post.url}}">
+  </iframe>
+</ion-content>

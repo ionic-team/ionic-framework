@@ -2,6 +2,8 @@
 
 <ion-content class="padding">
 
-  <ion-list><ion-item *ng-for="#story of stories">{{story.title}}</ion-item></ion-list>
+  <ion-list inset>
+    <ion-item *ng-for="#story of stories" (^click)="openStory(story)">{{story.title}}</ion-item>
+  </ion-list>
 
 </ion-content>

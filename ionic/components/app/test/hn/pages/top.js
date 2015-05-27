@@ -7,21 +7,39 @@ import {View} from 'angular2/src/core/annotations_impl/view';
 
 import {NavController, HeaderTemplate, Toolbar, Content, List, Item} from 'ionic/ionic';
 
-import {HackerNews} from '../hn'
+import {HackerNews} from '../hn';
+import {HNSinglePost} from './single';
 
 console.log('Angular directives', NgFor, Content, List, Item);
+
+@Component({
+  selector: 'story'
+})
+@View({
+  template: '<div class="hn-story"><content></content></div>'
+})
+export class Story {
+  constructor() {
+
+  }
+}
 
 @Component({
   selector: 'top-stories'
 })
 @View({
   templateUrl: 'pages/top.html',
-  directives: [HeaderTemplate, Toolbar, Content, NgFor, List, Item]
+  directives: [HeaderTemplate, Toolbar, Content, NgFor, List, Story, Item]
 })
 export class HNTopStories {
-  constructor() {
+  constructor(
+    nav: NavController
+  ) {
+    this.nav = nav;
 
-    this.stories = [{
+    this.stories = [
+      /*
+    {
       by: "FatalLogic",
       descendants: 77,
       id: 9444675,
@@ -32,7 +50,8 @@ export class HNTopStories {
       title: "Under Pressure",
       type: "story",
       url: "http://minusbat.livejournal.com/180556.html"
-    }];
+    }*/
+    ];
 
     var APIUrl = 'https://hacker-news.firebaseio.com/v0';
 
@@ -55,6 +74,12 @@ export class HNTopStories {
     });
 
     //doStuffEnd
+  }
+
+  openStory(story) {
+    console.log('Opening story', story);
+
+    this.nav.push(HNSinglePost, story);
   }
 
   /*
