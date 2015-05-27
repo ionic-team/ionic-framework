@@ -3,6 +3,9 @@ import {bind} from 'angular2/di';
 
 import * as util from 'ionic/util';
 import {NavController} from './nav-controller';
+import {NavView} from './nav-view';
+
+const SHOW_VIEW_CSS = 'show-view';
 
 
 export class NavItem {
@@ -15,7 +18,6 @@ export class NavItem {
     this.headerProtos = [];
     this.toolbarViews = [];
     this._titleEle = undefined;
-    this.disposals = [];
 
     // if it's possible to go back from this nav item
     this.enableBack = false;
@@ -25,13 +27,19 @@ export class NavItem {
     // update if it's possible to go back from this nav item
     this.enableBack = !!this.nav.getPrevious(this);
 
-    if (!this.created) {
-      return this.create();
-    }
-    return Promise.resolve();
+    return this.create().then(() => {
+      return new Promise(resolve => {
+        this.viewEle && this.viewEle.classList.add(SHOW_VIEW_CSS);
+        resolve();
+      });
+    });
   }
 
   create() {
+    if (this.created) {
+      return Promise.resolve();
+    }
+
     this.created = true;
 
     let resolve;
@@ -43,30 +51,16 @@ export class NavItem {
       bind(NavItem).toValue(this)
     ]);
 
-    this.nav.loader.loadNextToExistingLocation(this.Component, this.nav.contentElementRef, injector).then((componentRef) => {
+    this.nav.loader.loadNextToExistingLocation(this.Component, this.nav.viewElementRef, injector).then((componentRef) => {
 
       // content
       this.component = componentRef;
 
-      this.contentEle = componentRef.location.domElement;
-      this.contentEle.classList.add('nav-item');
-      this.contentEle.setAttribute('id', 'nav-item-' + this.id);
+      this.viewEle = componentRef.location.domElement;
+      this.viewEle.setAttribute('id', 'view-' + this.id);
 
-      if (componentRef && componentRef._dispose) {
-        this.disposals.push(componentRef._dispose);
-      }
-
-
-      // TODO: talk to misko about correct way to set context
-      let context = {
-        boundElementIndex: 0,
-        parentView: {
-          _view: componentRef.location.parentView._view.componentChildViews[0]
-        }
-      };
-
-      for (let i = 0; i < this.headerProtos.length; i++) {
-        this.createHeader(this.headerProtos[i], context, injector);
+      if (componentRef && componentRef.dispose) {
+        this._dispose = componentRef.dispose;
       }
 
       resolve();
@@ -75,44 +69,21 @@ export class NavItem {
     return promise;
   }
 
-  createHeader(toolbarProtoView, context, injector) {
-    let headerContainer = this.nav.headerContainerRef;
-
-    if (!headerContainer) return;
-
-    let atIndex = -1;
-
-    let headerView = headerContainer.create(toolbarProtoView, atIndex, context, injector);
-
-    if (headerView) {
-      this.toolbarViews.push(headerView);
-
-      this.disposals.push(() => {
-        headerContainer.remove( headerContainer.indexOf(headerView) );
-      });
-    }
+  viewElement() {
+    return this.viewEle;
   }
 
-  addHeader(toolbarProtoView) {
-    this.headerProtos.push(toolbarProtoView);
+  contentElement() {
+    return this.viewEle.querySelector('ion-content');
   }
 
-  getContent() {
-    return this.contentEle;
+  toolbarElements() {
+    return this.viewEle.querySelectorAll('ion-toolbar');
   }
 
-  getToolbars() {
-    let elements = [];
-    for (let i = 0; i < this.toolbarViews.length; i++) {
-      var toolbarView = this.toolbarViews[i];
-      elements.push(toolbarView._view.render._view.rootNodes[0]);
-    }
-    return elements;
-  }
-
-  getTitle() {
+  titleElement() {
     if (this._titleEle === undefined) {
-      let toolbarElements = this.getToolbars();
+      let toolbarElements = this.toolbarElements();
       for (let i = 0; i < toolbarElements.length; i++) {
         var titleEle = toolbarElements[i].querySelector('ion-title');
         if (titleEle) {
@@ -125,9 +96,9 @@ export class NavItem {
     return this._titleEle;
   }
 
-  getBackButton() {
+  backButtonElement() {
     if (this._backBtn === undefined) {
-      let toolbarElements = this.getToolbars();
+      let toolbarElements = this.toolbarElements();
       for (let i = 0; i < toolbarElements.length; i++) {
         var backBtn = toolbarElements[i].querySelector('back-button');
         if (backBtn) {
@@ -140,10 +111,12 @@ export class NavItem {
     return this._backBtn;
   }
 
+  cache() {
+    this.viewEle.classList.remove(SHOW_VIEW_CSS);
+  }
+
   destroy() {
-    for (let i = 0; i < this.disposals.length; i++) {
-      this.disposals[i]();
-    }
+    this._dispose && this._dispose();
 
     // just to help prevent any possible memory leaks
     for (let name in this) {

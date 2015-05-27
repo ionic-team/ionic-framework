@@ -17,15 +17,8 @@ import {ToolbarContainer} from '../toolbar/toolbar-container';
   }
 })
 @View({
-  template: `
-    <header class="toolbar-container">
-      <template header-anchor></template>
-    </header>
-    <section class="nav-item-container">
-      <template content-anchor></template>
-    </section>
-  `,
-  directives: [HeaderAnchor, ContentAnchor, ToolbarContainer]
+  template: `<template view-anchor></template>`,
+  directives: [ViewAnchor]
 })
 export class Nav extends NavBase {
   constructor(elementRef: ElementRef, loader: DynamicComponentLoader, injector: Injector) {
@@ -40,20 +33,10 @@ export class Nav extends NavBase {
 
 
 @Directive({
-  selector: '[header-anchor]'
+  selector: '[view-anchor]'
 })
-class HeaderAnchor {
-  constructor(@Ancestor() nav: Nav, viewContainerRef: ViewContainerRef) {
-    nav.headerContainerRef = viewContainerRef;
-  }
-}
-
-
-@Directive({
-  selector: '[content-anchor]'
-})
-class ContentAnchor {
+class ViewAnchor {
   constructor(@Ancestor() nav: Nav, elementRef: ElementRef) {
-    nav.contentElementRef = elementRef;
+    nav.viewElementRef = elementRef;
   }
 }

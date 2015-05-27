@@ -2,7 +2,8 @@
 // Toolbar
 // --------------------------------------------------
 
-$toolbar-background: #f7f7f8 !default;
+$toolbar-background-color:    #fff !default;
+
 $toolbar-order: (
   back-button: 10,
   title: 20,
@@ -11,22 +12,11 @@ $toolbar-order: (
 );
 
 
-.toolbar-container {
-  background: $toolbar-background;
-}
-
 ion-toolbar {
+  background: $toolbar-background-color;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-
-  // by default ion-toolbar is display:none and
-  // the transition animation will add the show class
-  display: none;
-
-  &.show-toolbar {
-    display: flex;
-  }
 }
 
 .toolbar-inner {

@@ -302,7 +302,7 @@ class Animate {
 
     this._duration = duration;
 
-    var easingName = easingConfig.name;
+    var easingName = easingConfig && easingConfig.name || 'linear';
 
     var effects = [ convertProperties(fromEffect) ];
 
@@ -316,7 +316,7 @@ class Animate {
     effects.push( convertProperties(toEffect) );
 
     this.player = ele.animate(effects, {
-      duration: duration,
+      duration: duration || 0,
       easing: easingName,
       playbackRate: playbackRate || 1
     });

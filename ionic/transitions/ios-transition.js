@@ -1,6 +1,6 @@
 import {Animation} from '../animations/animation';
-import {rafPromise} from '../util/dom'
-import {Transition} from './transition'
+import {rafPromise} from '../util/dom';
+import {Transition} from './transition';
 
 
 const DURATION = 500;
@@ -32,24 +32,24 @@ class IOSTransition extends Animation {
     let leavingItem = navCtrl.getStagedLeavingItem();
 
     // create animation for the entering content
-    let enteringContent = new Animation(enteringItem.getContent());
+    let enteringContent = new Animation(enteringItem.contentElement());
 
     // create animation for the entering toolbars
-    let enteringToolbars = new Animation(enteringItem.getToolbars());
+    let enteringToolbars = new Animation(enteringItem.toolbarElements());
 
     // create animation for the entering title element
-    let enteringTitle = new Animation(enteringItem.getTitle());
+    let enteringTitle = new Animation(enteringItem.titleElement());
 
     // create animation for the leaving content
     // leavingItem could be null, but the animation instance knows to do nothing
-    let leavingContent = new Animation(leavingItem && leavingItem.getContent());
+    let leavingContent = new Animation(leavingItem && leavingItem.contentElement());
 
     // create animation for the leaving content
     // leavingItem could be null, but the animation instance knows to do nothing
-    let leavingToolbars = new Animation(leavingItem && leavingItem.getToolbars());
+    let leavingToolbars = new Animation(leavingItem && leavingItem.toolbarElements());
 
     // create animation for the entering title element
-    let leavingTitle = new Animation(leavingItem && leavingItem.getTitle());
+    let leavingTitle = new Animation(leavingItem && leavingItem.titleElement());
 
     // entering item moves to center
     // before starting, set enteringItem to display: block
@@ -68,7 +68,7 @@ class IOSTransition extends Animation {
 
     // if the back button should show, then fade it in
     if (enteringItem.enableBack) {
-      let enteringBackButton = new Animation(enteringItem.getBackButton())
+      let enteringBackButton = new Animation(enteringItem.backButtonElement())
       enteringBackButton.from(OPACITY, 0).to(OPACITY, 1);
       this.addChild(enteringBackButton);
     }
@@ -88,7 +88,7 @@ class IOSTransition extends Animation {
       .from(OPACITY, 1);
 
     if (leavingItem) {
-      let leavingBackButton = new Animation(leavingItem.getBackButton());
+      let leavingBackButton = new Animation(leavingItem.backButtonElement());
       leavingBackButton.from(OPACITY, 1).to(OPACITY, 0);
       this.addChild(leavingBackButton);
     }

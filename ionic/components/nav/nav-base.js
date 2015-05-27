@@ -265,15 +265,15 @@ export class NavBase {
 
   cleanup() {
     this.items.forEach((item) => {
-
-      if (item && item.shouldDestroy) {
-        this.remove(item);
-
-        util.dom.raf(() => {
+      if (item) {
+        if (item.shouldDestroy) {
+          this.remove(item);
           item.destroy();
-        });
-      }
 
+        } else if(item.state !== ACTIVE_STATE) {
+          item.cache();
+        }
+      }
     });
   }
 

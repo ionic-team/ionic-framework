@@ -25,7 +25,6 @@ ion-app {
 }
 
 ion-nav {
-  // container of header.toolbar-container, footer.toolbar-container and .nav-item-container
   position: absolute;
   top: 0;
   right: 0;
@@ -33,75 +32,49 @@ ion-nav {
   left: 0;
   width: 100%;
   height: 100%;
-
-  display: flex;
-  flex-direction: column;
   overflow: hidden;
 }
 
-.toolbar-container {
-  // container of many toolbars for each view in the ion-nav
-  position: relative;
+ion-view {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 100%;
+
+  // by default this is display: none;
+  // and the transition animation will display it
+  display: none;
+  flex-direction: column;
+
+  &.show-view {
+    display: flex;
+  }
+}
+
+ion-toolbar {
+  display: flex;
   min-height: 4.4rem;
   order: $flex-order-toolbar-top;
 }
 
-footer.toolbar-container {
+.stage-off {
+  transform: translateX(9999px);
+}
+
+ion-toolbar[footer] {
   order: $flex-order-toolbar-bottom;
 }
 
-ion-toolbar {
-  // one view's toolbar, sibling to many view toolbars inside of .toolbar-container
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.nav-item-container {
-  // container of many .nav-item's, each one containing one view
-  position: relative;
-  flex: 1;
-  order: $flex-order-view-content;
-}
-
-.tab-item-container {
-  // container of each content for each tab component within a tabs component
-  position: relative;
-  flex: 1;
-  order: $flex-order-view-content;
-}
-
-.nav-item {
-  // user created view, sibling to many .nav-item's, contained by .nav-item-container
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-
-  // by default .nav-item is hidden
-  // and the transition animation will display it
-  display: none;
-
-  &.show-nav-item {
-    display: block;
-  }
-}
-
 ion-content {
-  // content within the user created view, contained by .nav-item
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  position: relative;
+  display: block;
+  flex: 1;
+  order: $flex-order-view-content;
 }
 
 .scroll-content {
-  // extra div to allow overflow scrolling
+  // extra div added by ion-content directive to allow for overflow scrolling
   position: absolute;
   top: 0;
   right: 0;

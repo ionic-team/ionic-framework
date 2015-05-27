@@ -34,7 +34,6 @@ import {BackButton} from './back-button';
 })
 export class Toolbar {
   constructor(navItem: NavItem, elementRef: ElementRef) {
-
     this.navItem = navItem;
     this.domElement = elementRef.domElement;
     this.config = Toolbar.config.invoke(this);
@@ -95,18 +94,3 @@ export class Toolbar {
 
 }
 new IonicComponent(Toolbar, {});
-
-
-/*
-  Used to find and register headers in a view, and this directive's
-  content will be moved up to the common toolbar location, and created
-  using the same context as the view's content area.
-*/
-@Directive({
-  selector: 'template[header]'
-})
-export class HeaderTemplate {
-  constructor(navItem: NavItem, protoViewRef: ProtoViewRef) {
-    navItem.addHeader(protoViewRef);
-  }
-}
