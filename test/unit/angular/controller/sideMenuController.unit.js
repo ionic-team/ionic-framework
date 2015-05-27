@@ -130,14 +130,14 @@ describe('$ionicSideMenus controller', function() {
 
   it('should not toggle left with exposed aside', function() {
     expect(ctrl.getOpenPercentage()).toEqual(0);
-    ctrl.exposeAside(true);
+    ctrl.exposeAside('left', true);
     ctrl.toggleLeft();
     expect(ctrl.getOpenPercentage()).toEqual(0);
   });
 
   it('should not toggle right with exposed aside', function() {
     expect(ctrl.getOpenPercentage()).toEqual(0);
-    ctrl.exposeAside(true);
+    ctrl.exposeAside('right', true);
     ctrl.toggleRight();
     expect(ctrl.getOpenPercentage()).toEqual(0);
   });
@@ -165,26 +165,37 @@ describe('$ionicSideMenus controller', function() {
   it('should close left menu on expose aside', function() {
     ctrl.toggleLeft();
     expect(ctrl.getOpenPercentage()).toEqual(100);
-    ctrl.exposeAside(true);
+    ctrl.exposeAside('left', true);
     expect(ctrl.getOpenPercentage()).toEqual(0);
   });
 
   it('should close right menu on expose aside', function() {
     ctrl.toggleRight();
     expect(ctrl.getOpenPercentage()).toEqual(-100);
-    ctrl.exposeAside(true);
+    ctrl.exposeAside('left', true);
     expect(ctrl.getOpenPercentage()).toEqual(0);
   });
 
-  it('should set enabled/disabled exposeAside', function() {
-    expect(ctrl.isAsideExposed()).toEqual(false);
+  it('should set enabled/disabled exposeAsideLeft', function() {
+    expect(ctrl.isAsideExposedLeft()).toEqual(false);
     ctrl.left.setIsEnabled(false);
     ctrl.right.setIsEnabled(false);
-    ctrl.exposeAside(true);
-    expect(ctrl.isAsideExposed()).toEqual(false);
+    ctrl.exposeAside('left', true);
+    expect(ctrl.isAsideExposedLeft()).toEqual(false);
     ctrl.left.setIsEnabled(true);
-    ctrl.exposeAside(true);
-    expect(ctrl.isAsideExposed()).toEqual(true);
+    ctrl.exposeAside('left', true);
+    expect(ctrl.isAsideExposedLeft()).toEqual(true);
+  });
+
+  it('should set enabled/disabled exposeAsideRight', function() {
+    expect(ctrl.isAsideExposedRight()).toEqual(false);
+    ctrl.left.setIsEnabled(false);
+    ctrl.right.setIsEnabled(false);
+    ctrl.exposeAside('right', true);
+    expect(ctrl.isAsideExposedRight()).toEqual(false);
+    ctrl.right.setIsEnabled(true);
+    ctrl.exposeAside('right', true);
+    expect(ctrl.isAsideExposedRight()).toEqual(true);
   });
 
   it('should toggle right', function() {

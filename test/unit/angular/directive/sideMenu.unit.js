@@ -24,20 +24,36 @@ describe('Ionic Angular Side Menu', function() {
     expect(deregisterSpy).toHaveBeenCalled();
   }));
 
-  it('should set $exposeAside.active', inject(function($compile, $rootScope) {
+  it('should set $exposeAside.active from left menu', inject(function($compile, $rootScope) {
     var el = $compile('<ion-side-menus><ion-side-menu></><ion-side-menu-content></ion-side-menu-content></ion-side-menus>')($rootScope.$new());
     $rootScope.$apply();
     var sideMenuController = el.controller('ionSideMenus');
-    expect(sideMenuController.isAsideExposed()).toBe(false);
+    expect(sideMenuController.isAsideExposedLeft()).toBe(false);
     expect(el.scope().$exposeAside).toBeUndefined();
 
-    sideMenuController.exposeAside(true);
+    sideMenuController.exposeAside('left', true);
     expect(el.scope().$exposeAside.active).toEqual(true);
-    expect(sideMenuController.isAsideExposed()).toBe(true);
+    expect(sideMenuController.isAsideExposedLeft()).toBe(true);
 
-    sideMenuController.exposeAside(false);
+    sideMenuController.exposeAside('left', false);
     expect(el.scope().$exposeAside.active).toEqual(false);
-    expect(sideMenuController.isAsideExposed()).toBe(false);
+    expect(sideMenuController.isAsideExposedLeft()).toBe(false);
+  }));
+
+  it('should set $exposeAside.active from right menu', inject(function($compile, $rootScope) {
+    var el = $compile('<ion-side-menus><ion-side-menu side="right"></><ion-side-menu-content></ion-side-menu-content></ion-side-menus>')($rootScope.$new());
+    $rootScope.$apply();
+    var sideMenuController = el.controller('ionSideMenus');
+    expect(sideMenuController.isAsideExposedRight()).toBe(false);
+    expect(el.scope().$exposeAside).toBeUndefined();
+
+    sideMenuController.exposeAside('right', true);
+    expect(el.scope().$exposeAside.active).toEqual(true);
+    expect(sideMenuController.isAsideExposedRight()).toBe(true);
+
+    sideMenuController.exposeAside('right', false);
+    expect(el.scope().$exposeAside.active).toEqual(false);
+    expect(sideMenuController.isAsideExposedRight()).toBe(false);
   }));
 
   it('should add/remove "aside-resizing" from the body tag when using activeAsideResizing', inject(function($compile, $rootScope, $document) {
@@ -58,10 +74,10 @@ describe('Ionic Angular Side Menu', function() {
     var sideMenuController = el.controller('ionSideMenus');
 
     spyOn(el.scope(), "$emit")
-    sideMenuController.exposeAside(true);
+    sideMenuController.exposeAside('left', true);
     expect(el.scope().$emit).toHaveBeenCalledWith("$ionicExposeAside", true);
 
-    sideMenuController.exposeAside(false);
+    sideMenuController.exposeAside('left', false);
     expect(el.scope().$emit).toHaveBeenCalledWith("$ionicExposeAside", false);
   }));
 
@@ -74,12 +90,12 @@ describe('Ionic Angular Side Menu', function() {
     expect(content.offsetX).toEqual(0);
     expect(content.getTranslateX()).toEqual(0);
     expect(content.element.style.width).toEqual('');
-    sideMenuController.exposeAside(true);
+    sideMenuController.exposeAside('left', true);
     expect(content.offsetX).toEqual(275);
     expect(content.getTranslateX()).toEqual(0);
     expect(content.element.getAttribute('style')).toMatch(/translate3d\(275px, 0(px)?, 0(px)?/);
     expect(content.element.style.width).toNotEqual('');
-    sideMenuController.exposeAside(false);
+    sideMenuController.exposeAside('left', false);
     expect(content.element.getAttribute('style')).toMatch(/translate3d\(0(px)?, 0(px)?, 0(px)?/);
     expect(content.getTranslateX()).toEqual(0);
     expect(content.offsetX).toEqual(0);
