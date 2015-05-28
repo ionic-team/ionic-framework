@@ -7,7 +7,22 @@ import {SecondPage} from './second-page';
 
 @Component({selector: 'ion-view'})
 @View({
-  templateUrl: 'pages/first-page.html',
+  template: `
+    <ion-navbar *navbar><ion-title>First Page Header: {{ val }}</ion-title></ion-navbar>
+
+    <ion-content class="padding">
+
+      <p>First Page: {{ val }}</p>
+
+      <p>
+        <button class="button" (click)="push()">Push (Go to 2nd)</button>
+      </p>
+
+      <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
+      <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
+
+    </ion-content>
+  `,
   directives: [NavbarTemplate, Navbar, Content]
 })
 export class FirstPage {

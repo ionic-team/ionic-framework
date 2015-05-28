@@ -59,6 +59,8 @@ ion-navbar {
   &.show-navbar {
     display: flex;
   }
+
+  transform: translateZ(0);
 }
 
 ion-view,
@@ -77,6 +79,8 @@ ion-view,
   &.show-view {
     display: flex;
   }
+
+  transform: translateZ(0);
 }
 
 ion-toolbar {

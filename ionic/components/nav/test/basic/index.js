@@ -8,7 +8,9 @@ import {FirstPage} from './pages/first-page';
 
 @Component({ selector: 'ion-app' })
 @View({
-  templateUrl: 'main.html',
+  template: `
+    <ion-nav [initial]="initial"></ion-nav>
+  `,
   directives: [Nav]
 })
 class IonicApp {
