@@ -1,14 +1,13 @@
-import {NgFor, ElementRef, bootstrap} from 'angular2/angular2';
-
+import {NgFor} from 'angular2/angular2';
 import {Ancestor} from 'angular2/src/core/annotations_impl/visibility';
-
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
-import {NavController, HeaderTemplate, Toolbar, Content, List, Item} from 'ionic/ionic';
+import {NavController, NavbarTemplate, Navbar, Content, List, Item} from 'ionic/ionic';
 
 import {HackerNews} from '../hn';
 import {HNSinglePost} from './single';
+
 
 console.log('Angular directives', NgFor, Content, List, Item);
 
@@ -29,7 +28,7 @@ export class Story {
 })
 @View({
   templateUrl: 'pages/top.html',
-  directives: [HeaderTemplate, Toolbar, Content, NgFor, List, Story, Item]
+  directives: [NavbarTemplate, Navbar, Content, NgFor, List, Story, Item]
 })
 export class HNTopStories {
   constructor(
