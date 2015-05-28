@@ -54,6 +54,7 @@ export class NavItem {
         this.disposals.push(componentRef.dispose);
 
         this.viewEle = componentRef.location.domElement;
+        this.viewEle.classList.add('ion-view');
 
         let context = {
           boundElementIndex: 0,

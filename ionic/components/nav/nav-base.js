@@ -132,14 +132,11 @@ export class NavBase {
           enteringItem.state = ACTIVE_STATE;
           leavingItem.state = CACHED_STATE;
 
-          // destroy any items that shouldn't stay around
-          this.cleanup();
-
-          // dispose all references
+          // dispose any items that shouldn't stay around
           transAnimation.dispose();
 
-          // allow clicks again
-          ClickBlock(false);
+          // all done!
+          this.transitionComplete();
 
           // resolve that this push has completed
           resolve();
@@ -208,9 +205,6 @@ export class NavBase {
             enteringItem.state = ACTIVE_STATE;
             leavingItem.state = CACHED_STATE;
 
-            // destroy any items that shouldn't stay around
-            this.cleanup();
-
           } else {
             // cancelled the swipe back, return items to original state
             leavingItem.state = ACTIVE_STATE;
@@ -220,8 +214,8 @@ export class NavBase {
             enteringItem.shouldDestroy = false;
           }
 
-          // allow clicks again
-          ClickBlock(false);
+          // all done!
+          this.transitionComplete();
 
         });
 
@@ -263,7 +257,8 @@ export class NavBase {
     }
   }
 
-  cleanup() {
+  transitionComplete() {
+
     this.items.forEach((item) => {
       if (item) {
         if (item.shouldDestroy) {
@@ -275,6 +270,9 @@ export class NavBase {
         }
       }
     });
+
+    // allow clicks again
+    ClickBlock(false);
   }
 
   isTransitioning() {

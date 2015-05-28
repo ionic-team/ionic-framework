@@ -61,7 +61,8 @@ ion-navbar {
   }
 }
 
-ion-view {
+ion-view,
+.ion-view {
   position: absolute;
   top: 0;
   left: 0;
@@ -100,4 +101,18 @@ ion-content {
   left: 0;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+}
+
+$swipe-handle-width:               20px !default;
+
+swipe-handle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: $swipe-handle-width;
+  height: 100%;
+  z-index: $z-index-swipe-handle;
+  background: red;
+  opacity: 0.5;
 }

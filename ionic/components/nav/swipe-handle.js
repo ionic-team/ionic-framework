@@ -3,17 +3,17 @@ import {Ancestor} from 'angular2/src/core/annotations_impl/visibility';
 import {Directive} from 'angular2/src/core/annotations_impl/annotations';
 
 import {Gesture} from 'ionic/gestures/gesture';
-import {NavItem} from '../nav/nav-item';
+import {Nav} from './nav';
 
 
 @Directive({
   selector: 'swipe-handle'
 })
 export class SwipeHandle {
-  constructor(@Ancestor() navItem: NavItem, elementRef: ElementRef) {
-    let nav = navItem.nav;
-
+  constructor(@Ancestor() nav: Nav, elementRef: ElementRef) {
     let gesture = new Gesture(elementRef.domElement);
+
+    this.hidden = true;
 
     gesture.listen();
 

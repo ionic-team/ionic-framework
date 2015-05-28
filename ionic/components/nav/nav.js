@@ -7,7 +7,8 @@ import {Injector} from 'angular2/di';
 import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
 
 import {NavBase} from './nav-base';
-import {IonicComponent} from 'ionic/config/component'
+import {SwipeHandle} from './swipe-handle';
+import {IonicComponent} from '../../config/component';
 
 
 @Component({
@@ -23,9 +24,10 @@ import {IonicComponent} from 'ionic/config/component'
     </header>
     <section class="content-container">
       <template content-anchor></template>
+      <swipe-handle></swipe-handle>
     </section>
   `,
-  directives: [NavbarAnchor, ContentAnchor]
+  directives: [NavbarAnchor, ContentAnchor, SwipeHandle]
 })
 export class Nav extends NavBase {
   constructor(elementRef: ElementRef, loader: DynamicComponentLoader, injector: Injector) {
