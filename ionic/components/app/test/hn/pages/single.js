@@ -8,7 +8,7 @@ import {NavController, NavParams, NavbarTemplate, Navbar, Content, Nav, NavPane,
 import {HackerNews} from '../hn'
 
 
-@Component({ selector: 'top-stories' })
+@Component({ selector: 'ion-view' })
 @View({
   templateUrl: 'pages/single.html',
   directives: [NavbarTemplate, Navbar, Content, NgFor, List, Item]

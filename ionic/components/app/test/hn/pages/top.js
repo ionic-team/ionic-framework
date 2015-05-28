@@ -24,7 +24,7 @@ export class Story {
 }
 
 @Component({
-  selector: 'top-stories'
+  selector: 'ion-view'
 })
 @View({
   templateUrl: 'pages/top.html',
