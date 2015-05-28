@@ -51,8 +51,6 @@ ion-title {
   // used to notify JS when the title has been rendered
   animation-duration: 1ms;
   animation-name: nodeInserted;
-
-  transform: translateZ(0);
 }
 
 .navbar-inner-title {
@@ -69,8 +67,4 @@ ion-title {
 
 .navbar-title-hide {
   opacity: 0;
-}
-
-.back-button {
-  transform: translateZ(0);
 }

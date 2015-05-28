@@ -60,7 +60,6 @@ ion-navbar {
     display: flex;
   }
 
-  transform: translateZ(0);
 }
 
 ion-view,
@@ -80,7 +79,6 @@ ion-view,
     display: flex;
   }
 
-  transform: translateZ(0);
 }
 
 ion-toolbar {
@@ -97,7 +95,6 @@ ion-content {
 }
 
 .scroll-content {
-  // extra div added by ion-content directive to allow for overflow scrolling
   position: absolute;
   top: 0;
   right: 0;
@@ -105,6 +102,7 @@ ion-content {
   left: 0;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+  will-change: scroll-position;
 }
 
 $swipe-handle-width:               20px !default;
@@ -117,4 +115,18 @@ swipe-handle {
   width: $swipe-handle-width;
   height: 100%;
   z-index: $z-index-swipe-handle;
+}
+
+
+// Hardware Acceleration
+.transitioning {
+
+  ion-view,
+  .ion-view,
+  ion-navbar,
+  .back-button,
+  ion-title {
+    will-change: transform, opacity;
+  }
+
 }

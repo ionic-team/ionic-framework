@@ -102,8 +102,12 @@ export class NavBase {
     let resolve;
     let promise = new Promise(res => { resolve = res; });
 
+    opts.isAnimated = opts.animation !== 'none';
+
     // block possible clicks during transition
-    ClickBlock(opts.animation !== 'none', 520);
+    ClickBlock(opts.isAnimated, 520);
+
+    this.transitionStart(opts);
 
     // wait for the new item to complete setup
     enteringItem.stage().then(() => {
@@ -171,9 +175,11 @@ export class NavBase {
     let enteringItem = this.getPrevious(leavingItem);
     enteringItem.shouldDestroy = false;
 
-    // start the transition
     // block possible clicks during transition
     ClickBlock(true);
+
+    // start the transition
+    this.transitionStart({ isAnimated: true });
 
     // wait for the new item to complete setup
     enteringItem.stage().then(() => {
@@ -257,6 +263,12 @@ export class NavBase {
     }
   }
 
+  transitionStart(opts) {
+    if (opts.isAnimated) {
+      this.getNavElement().classList.add('transitioning');
+    }
+  }
+
   transitionComplete() {
 
     this.items.forEach((item) => {
@@ -270,6 +282,8 @@ export class NavBase {
         }
       }
     });
+
+    this.getNavElement().classList.remove('transitioning');
 
     // allow clicks again
     ClickBlock(false);
@@ -321,6 +335,10 @@ export class NavBase {
       }
     }
     return null;
+  }
+
+  getNavElement() {
+    return this.domElement;
   }
 
   remove(itemOrIndex) {

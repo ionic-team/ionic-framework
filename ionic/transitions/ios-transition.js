@@ -24,8 +24,7 @@ class IOSTransition extends Transition {
     this.easing(EASING);
 
     // entering item moves to center
-    // before starting, set enteringItem to display: block
-    this.enteringContent
+    this.enteringView
       .to(TRANSLATEX, CENTER)
       .to(OPACITY, 1);
 
@@ -44,8 +43,7 @@ class IOSTransition extends Transition {
     }
 
     // leaving view moves off screen
-    // when completed, set leaving to display: none
-    this.leavingContent
+    this.leavingView
       .from(TRANSLATEX, CENTER)
       .from(OPACITY, 1);
 
@@ -62,7 +60,7 @@ class IOSTransition extends Transition {
     // set properties depending on direction
     if (opts.direction === 'back') {
       // back direction
-      this.enteringContent
+      this.enteringView
         .from(TRANSLATEX, OFF_LEFT)
         .from(OPACITY, OFF_OPACITY)
         .to(OPACITY, 1);
@@ -70,7 +68,7 @@ class IOSTransition extends Transition {
       this.enteringTitle
         .from(TRANSLATEX, OFF_LEFT);
 
-      this.leavingContent
+      this.leavingView
         .to(TRANSLATEX, OFF_RIGHT)
         .to(OPACITY, 1);
 
@@ -80,14 +78,14 @@ class IOSTransition extends Transition {
 
     } else {
       // forward direction
-      this.enteringContent
+      this.enteringView
         .from(TRANSLATEX, OFF_RIGHT)
         .from(OPACITY, 1);
 
       this.enteringTitle
         .from(TRANSLATEX, OFF_RIGHT);
 
-      this.leavingContent
+      this.leavingView
         .to(TRANSLATEX, OFF_LEFT)
         .to(OPACITY, OFF_OPACITY);
 
