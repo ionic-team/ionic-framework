@@ -2,14 +2,18 @@
 // iOS Content
 // --------------------------------------------------
 
-$nav-container-ios-background-color:     #000 !default;
-$content-ios-background-color:           #efeff4 !default;
+$content-container-ios-background-color:     #000 !default;
+$content-ios-background-color:               #efeff4 !default;
 
 
-.platform-ios .nav-item-container {
-  background-color: $nav-container-ios-background-color;
-}
+.nav-ios {
 
-.platform-ios ion-content {
-  background-color: $content-ios-background-color;
+  .content-container {
+    background-color: $content-container-ios-background-color;
+  }
+
+  ion-content {
+    background-color: $content-ios-background-color;
+  }
+
 }

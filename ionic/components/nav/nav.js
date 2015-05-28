@@ -1,4 +1,4 @@
-import {Ancestor} from 'angular2/src/core/annotations_impl/visibility';
+import {Parent} from 'angular2/src/core/annotations_impl/visibility';
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
@@ -47,7 +47,7 @@ new IonicComponent(Nav, {});
   selector: '[navbar-anchor]'
 })
 class NavbarAnchor {
-  constructor(@Ancestor() nav: Nav, viewContainerRef: ViewContainerRef) {
+  constructor(@Parent() nav: Nav, viewContainerRef: ViewContainerRef) {
     nav.navbarContainerRef = viewContainerRef;
   }
 }
@@ -57,7 +57,7 @@ class NavbarAnchor {
   selector: '[content-anchor]'
 })
 class ContentAnchor {
-  constructor(@Ancestor() nav: Nav, elementRef: ElementRef) {
+  constructor(@Parent() nav: Nav, elementRef: ElementRef) {
     nav.contentElementRef = elementRef;
   }
 }

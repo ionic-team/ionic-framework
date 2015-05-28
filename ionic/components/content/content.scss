@@ -2,9 +2,14 @@
 // Content
 // --------------------------------------------------
 
-$content-background-color:         #fff !default;
+$content-container-background-color:         #fff !default;
+$content-background-color:                   #fff !default;
 
 
-.nav-item-container {
+.content-container {
+  background-color: $content-container-background-color;
+}
+
+ion-content {
   background-color: $content-background-color;
 }

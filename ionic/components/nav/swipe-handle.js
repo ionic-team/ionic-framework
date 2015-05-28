@@ -1,5 +1,5 @@
 import {ElementRef} from 'angular2/angular2'
-import {Ancestor} from 'angular2/src/core/annotations_impl/visibility';
+import {Parent} from 'angular2/src/core/annotations_impl/visibility';
 import {Directive} from 'angular2/src/core/annotations_impl/annotations';
 
 import {Gesture} from 'ionic/gestures/gesture';
@@ -10,10 +10,8 @@ import {Nav} from './nav';
   selector: 'swipe-handle'
 })
 export class SwipeHandle {
-  constructor(@Ancestor() nav: Nav, elementRef: ElementRef) {
+  constructor(@Parent() nav: Nav, elementRef: ElementRef) {
     let gesture = new Gesture(elementRef.domElement);
-
-    this.hidden = true;
 
     gesture.listen();
 
