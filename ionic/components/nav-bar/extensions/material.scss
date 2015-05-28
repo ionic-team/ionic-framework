@@ -1,0 +1,33 @@
+
+// Material Design Navbar
+// --------------------------------------------------
+
+$navbar-material-height:                  6.4rem !default;
+$navbar-material-background:              #f7f7f8 !default;
+
+$navbar-material-title-font-size:         2rem !default;
+$navbar-material-button-font-size:        2rem !default;
+$navbar-material-button-text-color:       #007aff !default;
+
+
+.navbar-md {
+  height: $navbar-material-height;
+  background: $navbar-material-background;
+
+  .navbar-title {
+    font-size: $navbar-material-title-font-size;
+  }
+
+  .button {
+    font-size: $navbar-material-button-font-size;
+    color: $navbar-material-button-text-color;
+    border: none;
+
+    padding: 0;
+    margin: 0 10px;
+
+    min-height: $navbar-material-height;
+    min-width: 0;
+  }
+
+}

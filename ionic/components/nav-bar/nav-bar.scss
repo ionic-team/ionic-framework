@@ -1,10 +1,8 @@
 
-// Toolbar
+// Navbar
 // --------------------------------------------------
 
-$toolbar-background-color:    #fff !default;
-
-$toolbar-order: (
+$navbar-order: (
   back-button: 10,
   title: 20,
   primary: 30,
@@ -12,25 +10,24 @@ $toolbar-order: (
 );
 
 
-ion-toolbar {
-  background: $toolbar-background-color;
+ion-navbar {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
 }
 
-.toolbar-inner {
+.navbar-inner {
   display: flex;
   width: 100%;
 }
 
-ion-toolbar back-button.toolbar-item {
-  order: map-get($toolbar-order, 'back-button');
+ion-navbar back-button.navbar-item {
+  order: map-get($navbar-order, 'back-button');
 }
 
-.toolbar-title {
+.navbar-title {
   flex: 1;
-  order: map-get($toolbar-order, 'title');
+  order: map-get($navbar-order, 'title');
 
   display: flex;
   align-items: center;
@@ -38,13 +35,13 @@ ion-toolbar back-button.toolbar-item {
 }
 
 // buttons are primary by default
-ion-toolbar .button,
-ion-toolbar [side="primary"] {
-  order: map-get($toolbar-order, 'primary');
+ion-navbar .button,
+ion-navbar [side="primary"] {
+  order: map-get($navbar-order, 'primary');
 }
 
-ion-toolbar [side="secondary"] {
-  order: map-get($toolbar-order, 'secondary');
+ion-navbar [side="secondary"] {
+  order: map-get($navbar-order, 'secondary');
 }
 
 ion-title {
@@ -56,18 +53,18 @@ ion-title {
   animation-name: nodeInserted;
 }
 
-.toolbar-inner-title {
+.navbar-inner-title {
   width: 100%;
   padding: 0 15px;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.toolbar .button {
+.navbar .button {
   background: transparent;
   border: none;
 }
 
-.toolbar-title-hide {
+.navbar-title-hide {
   opacity: 0;
 }

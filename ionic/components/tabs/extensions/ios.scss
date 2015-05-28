@@ -1,5 +1,5 @@
 
-// iOS Toolbar
+// iOS Tab Bar
 // --------------------------------------------------
 
 $tab-bar-ios-item-padding:             3px 10px !default;
@@ -22,14 +22,14 @@ $tab-bar-ios-item-icon-size:           2.8rem !default;
   }
 
   &[tab-bar-placement="bottom"] > .tab-bar-container {
-    @include hairline(top, $toolbar-ios-border-color);
+    @include hairline(top, $navbar-ios-border-color);
   }
 
   &[tab-bar-placement="top"] > .tab-bar-container {
-    @include hairline(bottom, $toolbar-ios-border-color);
+    @include hairline(bottom, $navbar-ios-border-color);
   }
 
-  &[tab-bar-placement="top"] > .toolbar-container .toolbar {
+  &[tab-bar-placement="top"] > .navbar-container .navbar {
     @include hairline(bottom, none);
   }
 

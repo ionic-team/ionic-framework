@@ -46,18 +46,11 @@ export class Animation {
     return this;
   }
 
-  addChild(childAnimation) {
-    if (childAnimation) {
-      childAnimation.parent(this);
-      this._children.push(childAnimation);
-    }
-    return this;
-  }
-
-  children(arr) {
-    arr = Array.isArray(arr) ? arr : arguments;
-    for (let i = 0; i < arr.length; i++) {
-      this.addChild(arr[i]);
+  addAnimation(childAnimations) {
+    childAnimations = Array.isArray(childAnimations) ? childAnimations : arguments;
+    for (let i = 0; i < childAnimations.length; i++) {
+      childAnimations[i].parent(this);
+      this._children.push(childAnimations[i]);
     }
     return this;
   }
