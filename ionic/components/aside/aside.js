@@ -14,11 +14,11 @@ import {IonicComponent} from 'ionic/config/component'
 
 @Component({
   selector: 'ion-aside',
-  properties: {
-    content: 'content',
-    side: 'side',
-    dragThreshold: 'dragThreshold'
-  },
+  properties: [
+    'content',
+    'side',
+    'dragThreshold'
+  ],
   events: ['opening']
 })
 @View({

@@ -22,9 +22,9 @@ import {Button} from 'ionic/components/button/button'
   </div>
   `,
   directives: [Button, SegmentButton],
-  properties: {
-    value: 'value'
-  },
+  properties: [
+    'value'
+  ],
   hostProperties: {
     value: 'value'
   }
@@ -111,9 +111,9 @@ new IonicComponent(Segment, {
   hostListeners: {
     'click': 'buttonClicked($event)'
   },
-  properties: {
-    value: 'value'
-  }
+  properties: [
+    'value'
+  ]
 })
 @View({
   template: '<content></content>'

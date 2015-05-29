@@ -70,9 +70,9 @@ class IonicApp {
 
 @Directive({
   selector: '[parallax]',
-  properties: {
-    parallax: 'parallax'
-  }
+  properties: [
+    'parallax'
+  ]
 })
 export class ParallaxEffect {
   constructor(

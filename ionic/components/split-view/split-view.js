@@ -23,10 +23,10 @@ class SplitViewportDecorator {
 
 @Component({
   selector: 'ion-split-view',
-  properties: {
-    defaultView: 'defaultView',
-    navTitle: 'navTitle'
-  },
+  properties: [
+    'defaultView',
+    'navTitle'
+  ],
 })
 @View({
   template: `

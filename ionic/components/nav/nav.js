@@ -13,9 +13,9 @@ import {IonicComponent} from '../../config/component';
 
 @Component({
   selector: 'ion-nav',
-  properties: {
-    initial: 'initial'
-  }
+  properties: [
+    'initial'
+  ]
 })
 @View({
   template: `

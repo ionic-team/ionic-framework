@@ -10,9 +10,9 @@ import {IonicComponent} from 'ionic/config/component'
 
 @Component({
   selector: 'ion-checkbox',
-  properties: {
-    checked: 'checked'
-  },
+  properties: [
+    'checked'
+  ],
   hostListeners: {
     '^click': 'onClick($event)'
   }

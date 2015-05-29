@@ -92,9 +92,9 @@ new IonicComponent(RadioGroup, {})
   hostListeners: {
     '^click': 'buttonClicked($event)'
   },
-  properties: {
-    value: 'value'
-  }
+  properties: [
+    'value'
+  ]
 })
 @View({
   template: `
