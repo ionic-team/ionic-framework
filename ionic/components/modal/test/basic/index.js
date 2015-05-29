@@ -36,8 +36,13 @@ class IonicApp {
   selector: 'contact-modal'
 })
 @View({
-  template: '<ion-nav [initial]="initial"></ion-nav>',
-  directives: [Nav]
+  //template: '<ion-content padding><button primary (click)="close()">Close</button></ion-content>',//<ion-nav [initial]="initial"></ion-nav>',
+  template: `
+      <p>First Page: {{ val }}</p>
+      <p>
+      <button primary (click)="close()">Close</button>
+      </p>`,
+  directives: [Nav, Button, Content]
 })
 export class ContactModal {
   constructor(modalRef: ModalRef) {

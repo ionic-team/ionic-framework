@@ -146,7 +146,7 @@ export class Modal {
   selector: 'ion-modal'
 })
 @View({
-  template: '<div class="modal"><ion-modal-content></ion-modal-content></div>',
+  template: '<ion-modal-content></ion-modal-content>',
   directives: [ModalContent]
 })
 class ModalContainer {

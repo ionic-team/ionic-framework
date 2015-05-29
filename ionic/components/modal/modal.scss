@@ -45,15 +45,15 @@ ion-modal {
   width: 100%;
   background-color: $modal-bg-color;
 
-  transform: translate3d(0, 100%, 0);
-  transition: all cubic-bezier(.1, .7, .1, 1) 400ms;
+  //transform: translate3d(0, 100%, 0);
+  //transition: all cubic-bezier(.1, .7, .1, 1) 400ms;
 }
 
 // Slide up from the bottom, used for modals
 // -------------------------------
 
 ion-modal.active {
-  transform: translate3d(0, 0, 0);
+  //transform: translate3d(0, 0, 0);
 }
 
 /*
