@@ -1,6 +1,8 @@
 import * as util from 'ionic/util/util';
 
 
+let registry = {};
+
 export class Animation {
 
   constructor(el) {
@@ -26,7 +28,7 @@ export class Animation {
   elements(el) {
     if (el) {
       if (typeof el === 'string') {
-        el = document.querySelectorAll(ele);
+        el = document.querySelectorAll(el);
       }
 
       if (el.length) {
@@ -278,6 +280,21 @@ export class Animation {
       this._players[i].dispose();
     }
     this._el = this._parent = this._children = this._players = null;
+  }
+
+  /*
+   STATIC CLASSES
+   */
+  static create(element, name) {
+    let AnimationClass = registry[name];
+    if (!AnimationClass) {
+      AnimationClass = Animation;
+    }
+    return new AnimationClass(element);
+  }
+
+  static register(name, AnimationClass) {
+    registry[name] = AnimationClass;
   }
 
 }

@@ -21,5 +21,7 @@ export * from 'ionic/engine/cordova/cordova'
 export * from 'ionic/engine/electron/electron'
 
 export * from 'ionic/animations/animation'
+export * from 'ionic/animations/builtins'
+
 export * from 'ionic/transitions/transition'
 export * from 'ionic/transitions/ios-transition'
