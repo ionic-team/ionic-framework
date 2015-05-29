@@ -8,11 +8,17 @@ import {ActionMenu} from 'ionic/components/action-menu/action-menu';
 @Component({ selector: 'ion-app' })
 @View({
   templateUrl: 'main.html',
-  directives: [ActionMenu]
 })
 class IonicApp {
   constructor() {
     console.log('IonicApp Start')
+  }
+
+  openMenu() {
+    console.log('Opening ActionMenu')
+    ActionMenu.open({
+      title: 'Do you really want to?'
+    })
   }
 }
 

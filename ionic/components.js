@@ -1,5 +1,5 @@
 // DON'T reference this file in the source. Only in demos.
-// export * from 'ionic/components/action-menu/action-menu'
+export * from 'ionic/components/action-menu/action-menu'
 // export * from 'ionic/components/alert/alert'
 export * from 'ionic/components/aside/aside'
 export * from 'ionic/components/button/button'
