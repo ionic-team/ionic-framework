@@ -90,7 +90,7 @@ export class Modal {
     return this.componentLoader.loadIntoNewLocation(ModalContainer, this.elementRef).then((containerRef) => {
       var modalEl = this.domRenderer.getHostElement(containerRef.hostView.render);
 
-      document.body.appendChild(modalEl);
+      document.body.querySelector('ion-app').appendChild(modalEl);
 
       this.modalElement = modalEl;
 

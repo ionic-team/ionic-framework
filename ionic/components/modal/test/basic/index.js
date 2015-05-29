@@ -63,11 +63,7 @@ export class ContactModal {
 @Component({selector: 'ion-view'})
 @View({
   template: `
-    <ion-navbar *navbar><ion-title>First Page Header: {{ val }}</ion-title></ion-navbar>
-
-    <ion-nav-items side="primary">
-      <button primary class="button" (click)="closeModal()">Close</button>
-    </ion-nav-items>
+    <ion-navbar *navbar><ion-title>First Page Header: {{ val }}</ion-title><ion-nav-items primary><button primary class="button" (click)="closeModal()">Close</button></ion-nav-items></ion-navbar>
 
     <ion-content class="padding">
 
