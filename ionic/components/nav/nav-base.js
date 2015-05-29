@@ -104,9 +104,6 @@ export class NavBase {
 
     opts.isAnimated = opts.animation !== 'none';
 
-    // block possible clicks during transition
-    ClickBlock(opts.isAnimated, 520);
-
     this.transitionStart(opts);
 
     // wait for the new item to complete setup
@@ -174,9 +171,6 @@ export class NavBase {
     // the entering item is now the new last item
     let enteringItem = this.getPrevious(leavingItem);
     enteringItem.shouldDestroy = false;
-
-    // block possible clicks during transition
-    ClickBlock(true);
 
     // start the transition
     this.transitionStart({ isAnimated: true });
@@ -265,6 +259,8 @@ export class NavBase {
 
   transitionStart(opts) {
     if (opts.isAnimated) {
+      // block possible clicks during transition
+      ClickBlock(true, 520);
       this.getNavElement().classList.add('transitioning');
     }
   }
@@ -290,7 +286,7 @@ export class NavBase {
   }
 
   isTransitioning() {
-    var state;
+    let state;
     for (let i = 0, ii = this.items.length; i < ii; i++) {
       state = this.items[i].state;
       if (state === ACTIVELY_ENTERING_STATE ||

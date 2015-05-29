@@ -2,6 +2,7 @@ import {Component, Directive} from 'angular2/src/core/annotations_impl/annotatio
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 import {ProtoViewRef} from 'angular2/src/core/compiler/view_ref';
+import {NgZone} from 'angular2/src/core/zone/ng_zone';
 
 import * as dom from '../../util/dom';
 import {Platform} from 'ionic/platform/platform';
@@ -32,13 +33,14 @@ import {BackButton} from './back-button';
   directives: [BackButton]
 })
 export class Navbar {
-  constructor(navItem: NavItem, elementRef: ElementRef) {
+  constructor(navItem:NavItem, elementRef:ElementRef, ngZone:NgZone) {
     this.navItem = navItem;
     this.domElement = elementRef.domElement;
 
-    // http://davidwalsh.name/detect-node-insertion
-    dom.animationStart(this.domElement, 'nodeInserted').then(() => {
-      this.alignTitle();
+    ngZone.runOutsideAngular(() => {
+      setTimeout(() => {
+        this.alignTitle();
+      }, 32);
     });
   }
 
