@@ -23,10 +23,10 @@ import {BackButton} from './back-button';
         </div>
       </div>
       <div class="navbar-item navbar-primary-item">
-        <content select=".primary"></content>
+        <content select="[primary]"></content>
       </div>
       <div class="navbar-item navbar-secondary-item">
-        <content select=".secondary"></content>
+        <content select="[secondary]"></content>
       </div>
     </div>
   `,

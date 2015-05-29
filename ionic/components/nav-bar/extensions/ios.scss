@@ -33,11 +33,15 @@ $navbar-ios-button-background-color:       transparent !default;
     bottom: auto;
   }
 
-  .navbar [side="primary"] {
+  .navbar-title {
+    order: map-get($navbar-order-ios, 'title');
+  }
+
+  .navbar-primary-item {
     order: map-get($navbar-order-ios, 'primary');
   }
 
-  .navbar [side="secondary"] {
+  .navbar-secondary-item {
     order: map-get($navbar-order-ios, 'secondary');
   }
 

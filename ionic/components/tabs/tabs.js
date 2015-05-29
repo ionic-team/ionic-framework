@@ -5,7 +5,7 @@ import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_component_loader';
 import {Injector} from 'angular2/di';
 
-import {NavBase} from 'ionic/components/nav/nav-base';
+import {NavBase} from '../nav/nav-base';
 import {IonicComponent} from 'ionic/config/component';
 import {Tab} from './tab';
 

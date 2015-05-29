@@ -34,13 +34,11 @@ ion-navbar back-button.navbar-item {
   margin: 0 0 2px;
 }
 
-// buttons are primary by default
-ion-navbar .button,
-ion-navbar [side="primary"] {
+.navbar-primary-item {
   order: map-get($navbar-order, 'primary');
 }
 
-ion-navbar [side="secondary"] {
+.navbar-secondary-item {
   order: map-get($navbar-order, 'secondary');
 }
 
