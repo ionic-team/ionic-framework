@@ -130,7 +130,7 @@ function($timeout, $controller, $ionicBind, $ionicConfig) {
 
             scrollViewOptions = {
               el: $element[0],
-              delegateHandle: attr.delegateHandle,
+              delegateHandle: $attr.delegateHandle,
               startX: $scope.$eval($scope.startX) || 0,
               startY: $scope.$eval($scope.startY) || 0,
               nativeScrolling: true
@@ -140,8 +140,8 @@ function($timeout, $controller, $ionicBind, $ionicConfig) {
             // Use JS scrolling
             scrollViewOptions = {
               el: $element[0],
-              delegateHandle: attr.delegateHandle,
-              locking: (attr.locking || 'true') === 'true',
+              delegateHandle: $attr.delegateHandle,
+              locking: ($attr.locking || 'true') === 'true',
               bouncing: $scope.$eval($scope.hasBouncing),
               startX: $scope.$eval($scope.startX) || 0,
               startY: $scope.$eval($scope.startY) || 0,
@@ -167,7 +167,7 @@ function($timeout, $controller, $ionicBind, $ionicConfig) {
             }
             innerElement = null;
             $element = null;
-            attr.$$element = null;
+            $attr.$$element = null;
           });
         }
 
