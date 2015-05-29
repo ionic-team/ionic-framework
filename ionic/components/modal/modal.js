@@ -9,6 +9,8 @@ import {Parent} from 'angular2/src/core/annotations_impl/visibility';
 
 import {raf, ready} from 'ionic/util/dom'
 
+import {Animation} from '../../animations/animation';
+
 @Component({
   selector: 'ion-modal-wrapper'
 })
@@ -150,7 +152,19 @@ export class Modal {
   directives: [ModalContent]
 })
 class ModalContainer {
-  constructor() {
+  constructor(elementRef: ElementRef) {
+    this.domElement = elementRef.domElement;
+
+    this.animation = new Animation(this.domElement);
+    console.log('Animation', this.domElement);
+    var slideIn = new Animation(this.domElement);
+
+    slideIn
+      .easing('cubic-bezier(0.1, 0.7, 0.1, 1)')
+      .duration(400)
+      .from('translateY', '100%')
+      .to('translateY', '0%')
+      .play();
   }
 }
 

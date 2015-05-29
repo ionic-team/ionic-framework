@@ -28,7 +28,9 @@ class IonicApp {
 
   openModal() {
     console.log('Opening modal');
+
     Modal.show(ContactModal, this.loader, this.injector, this.domRenderer, this.elementRef);
+
   }
 }
 
@@ -36,12 +38,15 @@ class IonicApp {
   selector: 'contact-modal'
 })
 @View({
-  //template: '<ion-content padding><button primary (click)="close()">Close</button></ion-content>',//<ion-nav [initial]="initial"></ion-nav>',
+  //template: '<ion-content padding><button primary (click)="close()">Close</button></ion-content>',//
+  template: '<ion-nav [initial]="initial"></ion-nav>',
+  /*
   template: `
       <p>First Page: {{ val }}</p>
       <p>
       <button primary (click)="close()">Close</button>
       </p>`,
+      */
   directives: [Nav, Button, Content]
 })
 export class ContactModal {
@@ -81,10 +86,10 @@ export class ContactModal {
 })
 export class ModalFirstPage {
   constructor(
-    @Parent() modal: ContactModal,
+    //@Parent() modal: ContactModal,
     nav: NavController
   ) {
-    this.modal = modal;
+    //this.modal = modal;
     this.nav = nav;
     this.val = Math.round(Math.random() * 8999) + 1000;
   }
