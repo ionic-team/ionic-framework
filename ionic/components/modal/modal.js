@@ -1,13 +1,13 @@
 import {DynamicComponentLoader, ElementRef, ComponentRef, onDestroy, DomRenderer} from 'angular2/angular2';
+import {bind, Injector} from 'angular2/di';
+import {Promise} from 'angular2/src/facade/async';
+import {isPresent, Type} from 'angular2/src/facade/lang';
 
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
-
-import {Nav} from 'ionic/ionic';
+import {Parent} from 'angular2/src/core/annotations_impl/visibility';
 
 import {raf, ready} from 'ionic/util/dom'
-
-import {NavController, NavParams, NavbarTemplate, Navbar, Content} from 'ionic/ionic';
 
 @Component({
   selector: 'ion-modal-wrapper'
@@ -32,6 +32,7 @@ class ModalWrapper {
   }
 }
 
+/*
 @Component({
   selector: 'ion-modal'
 })
@@ -39,126 +40,158 @@ class ModalWrapper {
   template: `
     <!--<ion-modal-wrapper>-->
     <div class="modal">
-      <ion-nav [initial]="initial"></ion-nav>
     </div>
     <!--</ion-modal-wrapper>-->`,
-  directives: [Nav],
+  directives: []
 })
+*/
 export class Modal {
   //compiler: Compiler;
 
-  constructor(loader: DynamicComponentLoader, domRenderer: DomRenderer, elementRef: ElementRef) {
+  constructor(type: Type, loader: DynamicComponentLoader, injector: Injector, domRenderer: DomRenderer, elementRef: ElementRef) {
+    this.modalType = type;
     this.componentLoader = loader;
     this.domRenderer = domRenderer;
+    this.injector = injector;
 
     this.element = elementRef.domElement;
     this.elementRef = elementRef;
-
-    this.initial = ModalFirstPage
   }
 
 
-  static create() {
-    var m = new Modal();
-    return m;
+  static create(modalType: Type, loader: ComponentLoader, injector: Injector, renderer: DomRenderer, elementRef: ElementRef) {
+    console.log('Create', modalType, loader, injector, renderer, elementRef);
+
+    var m = new Modal(modalType, loader, injector, renderer, elementRef);
+
+    var modalPromise = new Promise(resolve => {
+
+      // Inject it into the page
+      m._inject().then(() => {
+        resolve(m);
+      })
+    })
+
+    return modalPromise;
   }
 
-  show() {
+  _inject() {
     console.log('Modal show');
 
-    return this.componentLoader.loadIntoNewLocation(Modal, this.elementRef).then((containerRef) => {
+
+    // Create the dialogRef here so that it can be injected into the content component.
+    var modalRef = new ModalRef();
+    var modalRefBinding = bind(ModalRef).toValue(modalRef);
+    var contentInjector = this.injector.resolveAndCreateChild([modalRefBinding]);
+
+    // Load the modal wrapper object and insert into the page
+    return this.componentLoader.loadIntoNewLocation(ModalContainer, this.elementRef).then((containerRef) => {
       var modalEl = this.domRenderer.getHostElement(containerRef.hostView.render);
 
       document.body.appendChild(modalEl);
 
-      raf(() => {
-        modalEl.classList.add('active');
-      });
+      this.modalElement = modalEl;
 
-      console.log('Loaded into new location', containerRef, modalEl);
+      console.log('Loaded into new location', modalEl);
+
+      modalRef.containerRef = containerRef;
+
+      // Now load the user's modal component into the Modal
+      return this.componentLoader.loadNextToExistingLocation(
+          this.modalType, containerRef.instance.contentRef, contentInjector).then(contentRef => {
+
+        modalRef.contentRef = contentRef;
+        modalRef.instance.modalRef = modalRef;
+        return modalRef;
+
+
+        // Wrap both component refs for the container and the content so that we can return
+        // the `instance` of the content but the dispose method of the container back to the
+        // opener.
+        //dialogRef.contentRef = contentRef;
+        //containerRef.instance.dialogRef = dialogRef;
+
+        //backdropRefPromise.then(backdropRef => {
+        //  dialogRef.whenClosed.then((_) => {
+        //    backdropRef.dispose();
+        //  });
+        //});
+
+        //return dialogRef;
+      });
+    });
+    //});
+  }
+
+  show() {
+    raf(() => {
+      this.modalElement.classList.add('active');
     });
   }
 
-  static show(loader: ComponentLoader, renderer: DomRenderer, elementRef: ElementRef) {
+
+  static show(modalType: Type, loader: ComponentLoader, injector: Injector, renderer: DomRenderer, elementRef: ElementRef) {
     console.log('Showing modal');
 
-    var newModal = new Modal(loader, renderer, elementRef);
-    newModal.show();
-    return newModal;
+    Modal.create(modalType, loader, injector, renderer, elementRef).then((newModal) => {
+      newModal.show();
+    });
   }
 }
 
-@Component({selector: 'ion-view'})
-@View({
-  template: `
-    <ion-navbar *navbar><ion-title>First Page Header: {{ val }}</ion-title></ion-navbar>
-
-    <ion-content class="padding">
-
-      <p>First Page: {{ val }}</p>
-
-      <p>
-        <button class="button" (click)="push()">Push (Go to 2nd)</button>
-      </p>
-
-      <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
-      <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
-
-    </ion-content>
-  `,
-  directives: [NavbarTemplate, Navbar, Content]
+/**
+ * Container for user-provided dialog content.
+ */
+@Component({
+  selector: 'ion-modal'
 })
-export class ModalFirstPage {
-  constructor(
-    nav: NavController
-  ) {
-    this.nav = nav;
-    this.val = Math.round(Math.random() * 8999) + 1000;
-  }
-
-  push() {
-    this.nav.push(ModalSecondPage, { id: 8675309, myData: [1,2,3,4] }, { animation: 'ios' });
+@View({
+  template: '<div class="modal"><ion-modal-content></ion-modal-content></div>',
+  directives: [ModalContent]
+})
+class ModalContainer {
+  constructor() {
   }
 }
 
-@Component({selector: 'ion-view'})
-@View({
-  template: `
-    <ion-navbar *navbar><ion-title>Second Page Header</ion-title></ion-navbar>
+/**
+ * Simple decorator used only to communicate an ElementRef to the parent MdDialogContainer as the location
+ * for where the dialog content will be loaded.
+ */
+@Directive({selector: 'ion-modal-content'})
+class ModalContent {
+  constructor(@Parent() modalContainer: ModalContainer, elementRef: ElementRef) {
+    modalContainer.contentRef = elementRef;
+  }
+}
 
-    <ion-content class="padding">
 
-      <p>
-        <button class="button" (click)="pop()">Pop (Go back to 1st)</button>
-      </p>
 
-      <p>
-        <button class="button" (click)="push()">Push (Go to 3rd)</button>
-      </p>
-
-      <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
-      <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
-
-    </ion-content>
-  `,
-  directives: [NavbarTemplate, Navbar, Content]
-})
-export class ModalSecondPage {
-  constructor(
-    nav: NavController,
-    params: NavParams
-  ) {
-    this.nav = nav;
-    this.params = params;
-
-    console.log('Second page params:', params);
+export class ModalRef {
+  constructor() {
+    this._contentRef = null;
+    this.containerRef = null;
+    this.isClosed = false;
   }
 
-  pop() {
-    this.nav.pop();
+  close() {
+    this.isClosed = true;
+    this.containerRef.dispose();
   }
 
-  push() {
+
+  set contentRef(value: ComponentRef) {
+    this._contentRef = value;
   }
 
+  /** Gets the component instance for the content of the dialog. */
+  get instance() {
+    if (isPresent(this._contentRef)) {
+      return this._contentRef.instance;
+    }
+
+    // The only time one could attempt to access this property before the value is set is if an access occurs during
+    // the constructor of the very instance they are trying to get (which is much more easily accessed as `this`).
+    throw "Cannot access dialog component instance *from* that component's constructor.";
+  }
 }
