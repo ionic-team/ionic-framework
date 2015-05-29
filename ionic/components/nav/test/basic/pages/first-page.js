@@ -10,13 +10,13 @@ import {SecondPage} from './second-page';
   template: '' +
     '<ion-navbar *navbar>' +
       '<ion-title>First Page</ion-title>' +
-      '<ion-nav-item primary>' +
+      '<ion-nav-items primary>' +
         '<button class="button">P1</button>' +
-      '</ion-nav-item>' +
-      '<ion-nav-item secondary>' +
+      '</ion-nav-items>' +
+      '<ion-nav-items secondary>' +
         '<button class="button">S1</button>' +
         '<button class="button">S2</button>' +
-      '</ion-nav-item>' +
+      '</ion-nav-items>' +
     '</ion-navbar>' +
     '<ion-content class="padding">' +
       '<p>First Page: {{ val }}</p>' +
