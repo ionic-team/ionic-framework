@@ -11,29 +11,6 @@ import {raf, ready} from 'ionic/util/dom'
 
 import {Animation} from '../../animations/animation';
 
-@Component({
-  selector: 'ion-modal-wrapper'
-})
-@View({
-  template: `
-    <div class="modal-backdrop active">
-      <div class="modal-backdrop-bg"></div>
-      <div class="modal-wrapper"><content></content></div>
-    </div>`
-})
-class ModalWrapper {
-  constructor(elementRef: ElementRef) {
-    this.element = elementRef.domElement;
-    console.log('element', this.element)
-  }
-  show() {
-    this.element.domElement.classList.add('active')
-  }
-  hide() {
-    this.element.domElement.classList.remove('active')
-  }
-}
-
 export class Modal {
   //compiler: Compiler;
 
