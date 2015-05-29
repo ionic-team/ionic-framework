@@ -32,6 +32,7 @@ import {IonicComponent} from '../../config/component';
 export class Nav extends NavBase {
   constructor(elementRef: ElementRef, loader: DynamicComponentLoader, injector: Injector) {
     super(loader, injector);
+    this.elementRef = elementRef;
     this.domElement = elementRef.domElement;
     this.config = Nav.config.invoke(this);
   }

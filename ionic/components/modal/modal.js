@@ -34,19 +34,6 @@ class ModalWrapper {
   }
 }
 
-/*
-@Component({
-  selector: 'ion-modal'
-})
-@View({
-  template: `
-    <!--<ion-modal-wrapper>-->
-    <div class="modal">
-    </div>
-    <!--</ion-modal-wrapper>-->`,
-  directives: []
-})
-*/
 export class Modal {
   //compiler: Compiler;
 
@@ -86,6 +73,7 @@ export class Modal {
     var modalRefBinding = bind(ModalRef).toValue(modalRef);
     var contentInjector = this.injector.resolveAndCreateChild([modalRefBinding]);
 
+    this._modalRef = modalRef;
     // Load the modal wrapper object and insert into the page
     return this.componentLoader.loadIntoNewLocation(ModalContainer, this.elementRef).then((containerRef) => {
       var modalEl = this.domRenderer.getHostElement(containerRef.hostView.render);
@@ -105,30 +93,17 @@ export class Modal {
         modalRef.contentRef = contentRef;
         modalRef.instance.modalRef = modalRef;
         return modalRef;
-
-
-        // Wrap both component refs for the container and the content so that we can return
-        // the `instance` of the content but the dispose method of the container back to the
-        // opener.
-        //dialogRef.contentRef = contentRef;
-        //containerRef.instance.dialogRef = dialogRef;
-
-        //backdropRefPromise.then(backdropRef => {
-        //  dialogRef.whenClosed.then((_) => {
-        //    backdropRef.dispose();
-        //  });
-        //});
-
-        //return dialogRef;
       });
     });
     //});
   }
 
   show() {
-    raf(() => {
-      this.modalElement.classList.add('active');
-    });
+    return this._modalRef.open();
+  }
+
+  close() {
+    return this._modalRef.close();
   }
 
 
@@ -141,9 +116,6 @@ export class Modal {
   }
 }
 
-/**
- * Container for user-provided dialog content.
- */
 @Component({
   selector: 'ion-modal'
 })
@@ -154,16 +126,19 @@ export class Modal {
 class ModalContainer {
   constructor(elementRef: ElementRef) {
     this.domElement = elementRef.domElement;
+  }
 
-    var animation = Animation.create(this.domElement, 'slide-in');
-    animation.play();
+  open() {
+    var slideIn = Animation.create(this.domElement, 'slide-in');
+    return slideIn.play();
+  }
+
+  close() {
+    var slideOut = Animation.create(this.domElement, 'slide-out');
+    return slideOut.play();
   }
 }
 
-/**
- * Simple decorator used only to communicate an ElementRef to the parent MdDialogContainer as the location
- * for where the dialog content will be loaded.
- */
 @Directive({selector: 'ion-modal-content'})
 class ModalContent {
   constructor(@Parent() modalContainer: ModalContainer, elementRef: ElementRef) {
@@ -180,9 +155,18 @@ export class ModalRef {
     this.isClosed = false;
   }
 
+  open() {
+    this.containerRef.instance.open().then(() => {
+      this.isClosed = false;
+    })
+  }
+
   close() {
-    this.isClosed = true;
-    this.containerRef.dispose();
+    // Close, then dispose y'all
+    this.containerRef.instance.close().then(() => {
+      this.isClosed = true;
+      this.containerRef.dispose();
+    })
   }
 
 

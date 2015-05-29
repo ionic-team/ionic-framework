@@ -466,6 +466,11 @@ const ANIMATE_PROPERTIES = TRANSFORMS.concat('opacity');
 // http://robertpenner.com/easing/
 
 const CUBIC_BEZIERS = {
+  ease: '0.25, 0.1, 0.25, 1.0',
+  easeIn: '0.42, 0, 1.0, 1.0',
+  easeOut: '0, 0, 0.58, 1.0',
+  easeInOut: '0.42, 0, 0.58, 1.0',
+
   // Cubic
   easeInCubic: '0.55,0.055,0.675,0.19',
   easeOutCubic: '0.215,0.61,0.355,1',
@@ -591,4 +596,3 @@ const EASING_FN = {
   }
 
 };
-

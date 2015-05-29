@@ -14,3 +14,16 @@ class SlideIn extends Animation {
 }
 
 Animation.register('slide-in', SlideIn);
+
+class SlideOut extends Animation {
+  constructor(element) {
+    super(element);
+    this
+      .easing('easeInOut')
+      .duration(250)
+      .from('translateY', '0%')
+      .to('translateY', '100%');
+  }
+}
+
+Animation.register('slide-out', SlideOut);

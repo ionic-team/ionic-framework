@@ -95,7 +95,11 @@ export class ModalFirstPage {
   }
 
   closeModal() {
-    this.modal.close();
+    // TODO(maxlynch): Figure out a much better way to get the parent ContactModal
+    var m = this.nav._nav.elementRef.parentView._view.context;
+    
+    //this.modal.close();
+    m.close();
   }
 }
 
