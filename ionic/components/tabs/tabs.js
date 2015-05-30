@@ -5,7 +5,6 @@ import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_component_loader';
 import {Injector} from 'angular2/di';
 
-import {NavBase} from '../nav/nav-base';
 import {IonicComponent} from 'ionic/config/component';
 import {Tab} from './tab';
 
@@ -19,7 +18,7 @@ import {Tab} from './tab';
 })
 @View({
   template: `
-    <nav class="toolbar-container tab-bar-container">
+    <nav class="navbar-container tab-bar-container">
       <div class="tab-bar">
         <button *ng-for="#t of tabs"
           role="tab"
@@ -29,20 +28,19 @@ import {Tab} from './tab';
           [attr.aria-selected]="t.isSelected"
           [style.color]="t.isSelected ? 'red' : ''"
           (^click)="onClickTabItem($event, t)">
-            <icon [class-name]="'tab-bar-item-icon ' + t.icon" [hidden]="!t.icon"></icon>
-            <span class="tab-bar-item-text" [hidden]="!t.title">{{t.title}}</span>
+            <icon [class-name]="'tab-bar-item-icon ' + t.tabIcon" [hidden]="!t.tabIcon"></icon>
+            <span class="tab-bar-item-text" [hidden]="!t.tabTitle">{{t.tabTitle}}</span>
         </button>
       </div>
     </nav>
-    <section class="tab-item-container">
+    <section class="content-container">
       <content></content>
     </section>
   `,
   directives: [NgFor]
 })
-export class Tabs extends NavBase {
+export class Tabs {
   constructor(elementRef: ElementRef, loader: DynamicComponentLoader, injector: Injector) {
-    super(loader, injector);
     this.domElement = elementRef.domElement;
     this.config = Tabs.config.invoke(this);
 

@@ -1,51 +1,53 @@
-import {Ancestor} from 'angular2/src/core/annotations_impl/visibility';
+import {Parent} from 'angular2/src/core/annotations_impl/visibility';
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
+import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_component_loader';
+import {Injector} from 'angular2/di';
 
-import {Tabs} from 'ionic/components/tabs/tabs';
+import {Tabs} from './tabs';
+import {Content} from '../content/content';
 import * as util from 'ionic/util';
 import {IonicComponent} from 'ionic/config/component';
+import {NavBase} from '../nav/nav-base';
 
 
-@Component({
+@Directive({
   selector: 'ion-tab',
-  properties: {
-    title: 'tab-title',
-    icon: 'tab-icon',
-    initial: 'initial'
+  properties: [
+    'initial',
+    'tabTitle',
+    'tabIcon'
+  ],
+  hostProperties: {
+    'contentId': 'attr.id',
+    'labeledBy': 'attr.aria-labelledby'
+  },
+  hostAttributes: {
+    'role': 'tabpanel'
   }
-})
-@View({
-  template: `
-    <section class="nav-item-container">
-      <template content-anchor></template>
-    </section>
-  `
 })
 export class Tab {
   constructor(
+    @Parent() tabs: Tabs,
     elementRef: ElementRef,
-    @Ancestor() tabs: Tabs
+    loader: DynamicComponentLoader,
+    injector: Injector
   ) {
-    // this.nav = new NavBase(element);
-    // this.domElement = element.domElement;
+    this.nav = new NavBase(loader, injector);
+    this.domElement = elementRef.domElement;
 
-    // let setHidden = (v) => this.domElement.classList[v?'add':'remove']('hide');
-    // let setRole = (v) => this.domElement.setAttribute('role', v);
-    // let setId = (v) => this.domElement.setAttribute('id', v);
-    // let setLabelby = (v) => this.domElement.setAttribute('aria-labelledby', v);
+    this.config = Tab.config.invoke(this);
 
-    // this.config = Tab.config.invoke(this);
-    // this.setHidden = setHidden;
+    this.tabId = util.nextUid();
+    this.contentId = 'tab-content-' + this.tabId;
+    this.labeledBy = 'tab-item-' + this.tabId;
 
-    // this.tabId = util.nextUid();
-    // setId('tab-content-' + this.tabId);
-    // setLabelby('tab-item-' + this.tabId);
-    // setRole('tabpanel');
-
-    // this.setSelected(false);
     tabs.addTab(this);
+  }
+
+  setRef(ref) {
+    this.nav.contentElementRef = ref;
   }
 
   set initial(value) {
@@ -53,10 +55,19 @@ export class Tab {
   }
 
   setSelected(isSelected) {
-    this.isSelected = !!isSelected;
-    //this.setHidden(!this.isSelected);
+    this.isSelected = isSelected;
   }
 
 }
 
 new IonicComponent(Tab, {});
+
+
+@Directive({
+  selector: '[content-anchor]'
+})
+class ContentAnchor {
+  constructor(@Parent() tab: Tab, elementRef: ElementRef) {
+    tab.setRef(elementRef);
+  }
+}

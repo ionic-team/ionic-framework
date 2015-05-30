@@ -9,12 +9,6 @@ $tab-bar-item-min-width:           80px !default;
 $tab-bar-item-max-width:           160px !default;
 
 
-ion-tabs {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
 .tab-bar-container {
   order: $flex-order-tab-bar-bottom;
 }

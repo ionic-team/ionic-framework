@@ -24,6 +24,18 @@ ion-app {
   padding: 0;
 }
 
+ion-tabs {
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 ion-nav {
   position: absolute;
   top: 0;
