@@ -1,0 +1,63 @@
+// iOS Navbar
+// --------------------------------------------------
+
+$toolbar-order-ios: (
+  primary: 20,
+  title: 30,
+  secondary: 40
+);
+
+$toolbar-ios-height:                        4.4rem !default;
+$toolbar-ios-background:                    #f7f7f8 !default;
+$toolbar-ios-border-color:                  #c4c4c4 !default;
+
+$toolbar-ios-title-font-size:               1.7rem !default;
+$toolbar-ios-button-font-size:              1.7rem !default;
+$toolbar-ios-button-text-color:             #007aff !default;
+$toolbar-ios-button-background-color:       transparent !default;
+
+
+.platform-ios .toolbar {
+
+  height: $toolbar-ios-height;
+  background: $toolbar-ios-background;
+
+  // toolbar on top, border on bottom (default)
+  @include hairline(bottom, $toolbar-ios-border-color);
+
+  // toolbar on bottom, border on top
+  &.toolbar-bottom:after {
+    top: 0;
+    bottom: auto;
+  }
+
+  .toolbar-title {
+    order: map-get($toolbar-order-ios, 'title');
+  }
+
+  .toolbar-primary-item {
+    order: map-get($toolbar-order-ios, 'primary');
+  }
+
+  .toolbar-secondary-item {
+    order: map-get($toolbar-order-ios, 'secondary');
+  }
+
+  ion-title {
+    order: map-get($toolbar-order-ios, 'title');
+    text-align: center;
+    font-size: $toolbar-ios-title-font-size;
+    font-weight: 500;
+  }
+
+  .button {
+    font-size: $toolbar-ios-button-font-size;
+    color: $toolbar-ios-button-text-color;
+    border: none;
+    padding: 0;
+    margin: 0 10px;
+    min-height: $toolbar-ios-height;
+    min-width: 0;
+    background: $toolbar-ios-button-background-color;
+  }
+}

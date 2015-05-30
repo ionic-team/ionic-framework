@@ -5,6 +5,7 @@ import {ProtoViewRef} from 'angular2/src/core/compiler/view_ref';
 import {NgZone} from 'angular2/src/core/zone/ng_zone';
 
 import * as dom from '../../util/dom';
+import {IonicComponent} from 'ionic/config/component'
 import {Platform} from 'ionic/platform/platform';
 
 
@@ -12,32 +13,25 @@ import {Platform} from 'ionic/platform/platform';
   selector: 'ion-toolbar'
 })
 @View({
-  template: `
-    <div class="toolbar-inner">
-      <div class="toolbar-title">
-        <div class="toolbar-inner-title toolbar-title-hide">
-          <content select="ion-title"></content>
-        </div>
-      </div>
-      <div class="toolbar-item toolbar-primary-item">
-        <content select="[primary]"></content>
-      </div>
-      <div class="toolbar-item toolbar-secondary-item">
-        <content select="[secondary]"></content>
-      </div>
-    </div>
-  `,
+  template: `<div class="toolbar-inner"><content></content></div>`,
+  /*
+  <div class="toolbar-title"><div class="toolbar-inner-title toolbar-title-hide"><content select="ion-title"></content></div></div><div class="toolbar-item toolbar-primary-item"><content select="[primary]"></content></div><div class="toolbar-item toolbar-secondary-item"><content select="[secondary]"></content></div></div>`,
+  */
   directives: []
 })
 export class Toolbar {
   constructor(elementRef:ElementRef, ngZone:NgZone) {
     this.domElement = elementRef.domElement;
+    Toolbar.config.invoke(this);
 
+    /*
+    TODO(mlynch): Revive this when the above content select don't throw errors.
     ngZone.runOutsideAngular(() => {
       setTimeout(() => {
         this.alignTitle();
       }, 32);
     });
+    */
   }
 
   alignTitle() {
@@ -87,6 +81,9 @@ export class Toolbar {
   }
 
 }
+
+new IonicComponent(Toolbar, {
+});
 
 
 /*

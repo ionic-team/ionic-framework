@@ -7,7 +7,7 @@ import {Ionic, Toolbar, ViewContainer, Aside, List, Item, Content, Button} from 
 @Component({ selector: 'ion-app' })
 @View({
   templateUrl: 'main.html',
-  directives: [Aside, List, ViewContainer, Item, Content, Button]
+  directives: [Aside, List, ViewContainer, Toolbar, Item, Content, Button]
 })
 export class IonicApp {
   constructor(elementRef: ElementRef) {
