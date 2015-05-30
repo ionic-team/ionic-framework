@@ -22,6 +22,13 @@ class IonicAppRoot {
     return this.rootElementRef;
   }
 
+  /**
+   * Create and append the given component into the root
+   * element of the app.
+   *
+   * @param Component the ComponentClass to create and insert
+   * @return Promise that resolves with the ContainerRef created
+   */
   appendToRoot(Component: Type) {
     var appRef = Ionic.getAppRef();
     var injector = appRef.injector;
@@ -37,7 +44,9 @@ class IonicAppRoot {
 
         document.body.querySelector('ion-app').appendChild(newEl);
 
-        resolve(newEl);
+        console.log('Injected and created', containerRef);
+
+        resolve(containerRef);//containerRef.instance, containerRef.location);
       });
     });
 

@@ -1,0 +1,63 @@
+
+// Navbar
+// --------------------------------------------------
+
+$toolbar-order: (
+  title: 20,
+  primary: 30,
+  secondary: 40
+);
+
+
+ion-toolbar {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.toolbar-inner {
+  display: flex;
+  width: 100%;
+}
+
+.toolbar-title {
+  flex: 1;
+  order: map-get($toolbar-order, 'title');
+
+  display: flex;
+  align-items: center;
+  margin: 0 0 2px;
+}
+
+.toolbar-primary-item {
+  order: map-get($toolbar-order, 'primary');
+}
+
+.toolbar-secondary-item {
+  order: map-get($toolbar-order, 'secondary');
+}
+
+ion-title {
+  display: block;
+  overflow: hidden;
+
+  // used to notify JS when the title has been rendered
+  animation-duration: 1ms;
+  animation-name: nodeInserted;
+}
+
+.toolbar-inner-title {
+  width: 100%;
+  padding: 0 15px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.toolbar .button {
+  background: transparent;
+  border: none;
+}
+
+.toolbar-title-hide {
+  opacity: 0;
+}
