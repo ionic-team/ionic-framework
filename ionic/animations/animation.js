@@ -517,27 +517,27 @@ const CUBIC_BEZIERS = {
 
 const EASING_FN = {
 
-  elastic: function(pos) {
+  'elastic': function(pos) {
     return -1 * Math.pow(4, -8 * pos) * Math.sin((pos * 6 - 1) * (2 * Math.PI) / 2) + 1;
   },
 
-  swingFromTo: function(pos, opts) {
+  'swing-from-to': function(pos, opts) {
     var s = opts.s || 1.70158;
     return ((pos /= 0.5) < 1) ? 0.5 * (pos * pos * (((s *= (1.525)) + 1) * pos - s)) :
     0.5 * ((pos -= 2) * pos * (((s *= (1.525)) + 1) * pos + s) + 2);
   },
 
-  swingFrom: function(pos, opts) {
+  'swing-from': function(pos, opts) {
     var s = opts.s || 1.70158;
     return pos * pos * ((s + 1) * pos - s);
   },
 
-  swingTo: function(pos, opts) {
+  'swing-to': function(pos, opts) {
     var s = opts.s || 1.70158;
     return (pos -= 1) * pos * ((s + 1) * pos + s) + 1;
   },
 
-  bounce: function(pos) {
+  'bounce': function(pos) {
     if (pos < (1 / 2.75)) {
       return (7.5625 * pos * pos);
     } else if (pos < (2 / 2.75)) {
@@ -548,7 +548,7 @@ const EASING_FN = {
     return (7.5625 * (pos -= (2.625 / 2.75)) * pos + 0.984375);
   },
 
-  bouncePast: function(pos) {
+  'bounce-past': function(pos) {
     if (pos < (1 / 2.75)) {
       return (7.5625 * pos * pos);
     } else if (pos < (2 / 2.75)) {
@@ -559,7 +559,7 @@ const EASING_FN = {
     return 2 - (7.5625 * (pos -= (2.625 / 2.75)) * pos + 0.984375);
   },
 
-  easeOutBounce: function(pos) {
+  'ease-out-bounce': function(pos) {
     if ((pos) < (1 / 2.75)) {
       return (7.5625 * pos * pos);
     } else if (pos < (2 / 2.75)) {
@@ -570,16 +570,16 @@ const EASING_FN = {
     return (7.5625 * (pos -= (2.625 / 2.75)) * pos + 0.984375);
   },
 
-  easeFromTo: function(pos) {
+  'ease-from-to': function(pos) {
     if ((pos /= 0.5) < 1) return 0.5 * Math.pow(pos, 4);
     return -0.5 * ((pos -= 2) * Math.pow(pos, 3) - 2);
   },
 
-  easeFrom: function(pos, opts) {
+  'ease-from': function(pos, opts) {
     return Math.pow(pos, opts.s || 4);
   },
 
-  easeTo: function(pos, opts) {
+  'ease-to': function(pos, opts) {
     return Math.pow(pos, opts.s || 0.25);
   },
 
@@ -587,13 +587,13 @@ const EASING_FN = {
    * scripty2, Thomas Fuchs (MIT Licence)
    * https://raw.github.com/madrobby/scripty2/master/src/effects/transitions/transitions.js
    */
-  spring: function(pos, opts) {
+  'spring': function(pos, opts) {
     var damping = opts.damping || 4.5;
     var elasticity = opts.elasticity || 6;
     return 1 - (Math.cos(pos * damping * Math.PI) * Math.exp(-pos * elasticity));
   },
 
-  sinusoidal: function(pos) {
+  'sinusoidal': function(pos) {
     return (-Math.cos(pos * Math.PI) / 2) + 0.5;
   }
 

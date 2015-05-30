@@ -3,7 +3,7 @@ import {Animation} from '../animations/animation';
 
 
 const DURATION = 500;
-const EASING = 'cubic-bezier(.36,.66,.04,1)';
+const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
 
 const OPACITY = 'opacity';
 const TRANSLATEX = 'translateX';
