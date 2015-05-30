@@ -37,7 +37,9 @@ class IonicAppRoot {
 
         document.body.querySelector('ion-app').appendChild(newEl);
 
-        resolve(newEl);
+        console.log('Injected and created', containerRef);
+
+        resolve(containerRef.instance, containerRef.location);
       });
     });
 

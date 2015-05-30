@@ -19,8 +19,25 @@ class IonicApp {
 
   openMenu() {
     console.log('Opening ActionMenu')
+
     ActionMenu.open({
-      title: 'Do you really want to?'
+      buttons: [
+        { text: '<b>Share</b> This' },
+        { text: 'Move' }
+      ],
+      destructiveText: 'Delete',
+      titleText: 'Modify your album',
+      cancelText: 'Cancel',
+      cancel: function() {
+        // add cancel code..
+        console.log('Canceled');
+      },
+      buttonClicked: function(index) {
+        console.log('Button clicked', index);
+        return true;
+      }
+    }).then(actionMenu => {
+      this.actionMenu = actionMenu;
     })
   }
 }
