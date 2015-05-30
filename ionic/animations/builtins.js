@@ -6,7 +6,7 @@ class SlideIn extends Animation {
   constructor(element) {
     super(element);
     this
-      .easing('cubic-bezier(0.1, 0.7, 0.1, 1)')
+      .easing('cubic-bezier(0.1,0.7,0.1,1)')
       .duration(400)
       .from('translateY', '100%')
       .to('translateY', '0%');
@@ -19,7 +19,7 @@ class SlideOut extends Animation {
   constructor(element) {
     super(element);
     this
-      .easing('easeInOut')
+      .easing('ease-out')
       .duration(250)
       .from('translateY', '0%')
       .to('translateY', '100%');

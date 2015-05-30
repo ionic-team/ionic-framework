@@ -1,13 +1,4 @@
 
-// Object.defineProperties(ViewContainerRef.prototype, {
-//   domElement: {
-//     get: function() {
-//       return this._defaultProtoView.render.delegate.element;
-//     }
-//   }
-// });
-
-
 export * from 'ionic/components'
 export * from 'ionic/directives'
 export * from 'ionic/platform/platform'
