@@ -32,8 +32,12 @@ class IonicApp {
         // add cancel code..
         console.log('Canceled');
       },
+      destructiveButtonClicked: () => {
+        console.log('Destructive clicked');
+      },
       buttonClicked: function(index) {
         console.log('Button clicked', index);
+        if(index == 1) { return false; }
         return true;
       }
     }).then(actionMenu => {

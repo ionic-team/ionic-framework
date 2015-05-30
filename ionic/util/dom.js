@@ -1,3 +1,5 @@
+// Use Angular's promise which doesn't swallow exceptions
+import {Promise} from 'angular2/src/facade/async';
 
 const nativeRaf = window.requestAnimationFrame ||
    window.webkitRequestAnimationFrame ||
