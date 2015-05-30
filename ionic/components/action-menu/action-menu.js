@@ -1,12 +1,14 @@
-import {DynamicComponentLoader, ElementRef, ComponentRef, onDestroy, DomRenderer} from 'angular2/angular2';
+import {DynamicComponentLoader, ComponentLaoder, ElementRef, ComponentRef, onDestroy, DomRenderer} from 'angular2/angular2';
 import {bind, Injector} from 'angular2/di';
 import {Promise} from 'angular2/src/facade/async';
 import {isPresent, Type} from 'angular2/src/facade/lang';
 
-import {Component, Directive, Item, Icon} from 'angular2/src/core/annotations_impl/annotations';
+import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {Parent} from 'angular2/src/core/annotations_impl/visibility';
 
+import {Item, Icon} from 'ionic/ionic'
+import {Ionic} from 'ionic/components/app/app'
 import {IonicComponent} from 'ionic/config/component'
 import {raf, ready} from 'ionic/util/dom'
 
@@ -47,15 +49,22 @@ import {Animation} from 'ionic/animations/animation';
   directives: [Item,Icon]
 })
 export class ActionMenu {
-  constructor(
-    elementRef: ElementRef
-  ) {
+  constructor(elementRef: ElementRef) {
     this.domElement = elementRef.domElement
     this.config = ActionMenu.config.invoke(this)
+    console.log('ActionMenu: Component Created', this.domElement);
   }
 
   static open(opts) {
-    console.log('Opening menu', opts);
+    console.log('Opening menu', opts, Ionic);
+
+    ActionMenu._inject();
+  }
+
+  static _inject() {
+    Ionic.appendToRoot(ActionMenu).then(() => {
+      console.log('Action Menu appended');
+    })
   }
 
 }

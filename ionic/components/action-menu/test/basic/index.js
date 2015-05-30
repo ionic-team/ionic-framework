@@ -1,4 +1,4 @@
-import {bootstrap} from 'angular2/angular2'
+import {bootstrap, ElementRef} from 'angular2/angular2'
 import {Component} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
@@ -11,10 +11,10 @@ import {ActionMenu} from 'ionic/components/action-menu/action-menu';
   templateUrl: 'main.html',
   directives: [Button, Content]
 })
-class IonicApp extends Ionic {
-  constructor() {
-    super();
+class IonicApp {
+  constructor(elementRef: ElementRef) {
     console.log('IonicApp Start')
+    Ionic.setRootElementRef(elementRef);
   }
 
   openMenu() {
@@ -27,6 +27,6 @@ class IonicApp extends Ionic {
 
 export function main() {
   bootstrap(IonicApp).then((appRef) => {
-    appRef.hostComponent.setAppRef(appRef);
+    Ionic.setAppRef(appRef);
   })
 }
