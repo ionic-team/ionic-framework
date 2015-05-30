@@ -51,7 +51,7 @@ $sheet-options-border-color:      #d1d3d6 !default;
 }
 
 .action-menu-wrapper {
-  //transform: translate3d(0, 100%, 0);
+  transform: translate3d(0, 100%, 0);
   //transition: all cubic-bezier(.36, .66, .04, 1) 500ms;
 
   position: absolute;
@@ -67,7 +67,7 @@ $sheet-options-border-color:      #d1d3d6 !default;
   transform: translate3d(0, 0, 0);
 }
 
-.action-menu {
+.action-menu-container {
   margin-left: $sheet-margin;
   margin-right: $sheet-margin;
   width: auto;

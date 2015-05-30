@@ -16,6 +16,30 @@ import * as util from 'ionic/util'
 import {Animation} from 'ionic/animations/animation';
 
 
+class ActionMenuSlideIn extends Animation {
+  constructor(element) {
+    super(element);
+    this
+      .easing('cubic-bezier(.36, .66, .04, 1)')
+      .duration(500)
+      .from('translateY', '100%')
+      .to('translateY', '0%');
+  }
+}
+Animation.register('action-menu-slide-in', ActionMenuSlideIn);
+
+class ActionMenuSlideOut extends Animation {
+  constructor(element) {
+    super(element);
+    this
+      .easing('cubic-bezier(.36, .66, .04, 1)')
+      .duration(500)
+      .from('translateY', '0%')
+      .to('translateY', '100%');
+  }
+}
+Animation.register('action-menu-slide-out', ActionMenuSlideIn);
+
 @Component({
   selector: 'ion-action-menu'
 })
@@ -23,7 +47,7 @@ import {Animation} from 'ionic/animations/animation';
   template: `
     <div class="action-menu-backdrop">
       <div class="action-menu-wrapper">
-        <div class="action-menu">
+        <div class="action-menu-container">
           <div class="action-menu-group action-menu-options">
             <div class="action-menu-title" *ng-if="titleText">{{titleText}}</div>
             <button (click)="buttonClicked(index)" *ng-for="#b of buttons; #index = index" class="button action-menu-option">{{b.text}}</button>
@@ -48,15 +72,25 @@ export class ActionMenu {
   }
 
   close() {
-    var backdrop = this.domElement.children[0].classList.remove('active');
-    var slideOut = Animation.create(this.wrapperEl, 'slide-out');
-    return slideOut.play();
+    raf(() => {
+      var backdrop = this.domElement.children[0].classList.remove('active');
+      var slideOut = Animation.create(this.wrapperEl, 'action-menu-slide-out');
+
+      return slideOut.play().then(() => {
+        this.wrapperEl.classList.remove('action-menu-up');
+      })
+    });
   }
 
   open() {
-    var backdrop = this.domElement.children[0].classList.add('active');
-    var slideIn = Animation.create(this.wrapperEl, 'slide-in');
-    return slideIn.play();
+    raf(() => {
+      var backdrop = this.domElement.children[0].classList.add('active');
+      var slideIn = Animation.create(this.wrapperEl, 'action-menu-slide-in');
+
+      return slideIn.play().then(() => {
+        this.wrapperEl.classList.add('action-menu-up');
+      })
+    });
   }
 
   setOptions(opts) {
