@@ -1,8 +1,5 @@
 <ion-aside #aside [content]="content">
   <ion-list inset>
-    <div class="list-header">
-      Ionic 2
-    </div>
     <ion-item *ng-for="#c of components" (^click)="openPage(aside, c)">
       {{c.title}}
     </ion-item>
