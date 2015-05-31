@@ -53,6 +53,10 @@ export class Aside {
   }
 
   getContentElement() {
+    if(!this.content || !this.content.domElement) {
+      console.error('Aside: make sure to specify a content target using #var on the element');
+      return null;
+    }
     return this.content.domElement;
   }
 
@@ -86,6 +90,13 @@ export class Aside {
         this.typeDelegate.setOpen(isOpen)
       })
     }
+  }
+
+  open() {
+    return this.setOpen(true);
+  }
+  close() {
+    return this.setOpen(false);
   }
 }
 

@@ -1,23 +1,16 @@
-<ion-aside [content]="content">
+<ion-aside #aside [content]="content">
   <ion-list inset>
     <div class="list-header">
       Ionic 2
     </div>
-    <ion-item>
-      Buttons
-    </ion-item>
-    <ion-item>
-      Lists
-    </ion-item>
-    <ion-item>
-      Modals
-    </ion-item>
-    <ion-item>
-      Action Menus
+    <ion-item *ng-for="#c of components" (^click)="openPage(aside, c)">
+      {{c.title}}
     </ion-item>
   </ion-list>
 </ion-aside>
 
+<ion-nav #content [initial]="firstPage"></ion-nav>
+<!--
 <ion-view #content>
   <ion-toolbar>
     <ion-title>Ionic Sink</ion-title>
@@ -27,3 +20,4 @@
   </ion-content>
 
 </ion-view>
+-->

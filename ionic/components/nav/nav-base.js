@@ -31,6 +31,16 @@ export class NavBase {
     }
   }
 
+  clear() {
+    let pops = [];
+    for(let item of this.items) {
+      pops.push(this.pop({
+        animate: false
+      }));
+    }
+    return Promise.all(pops);
+  }
+
   push(Component, params = {}, opts = {}) {
     if (this.isTransitioning()) {
       return Promise.reject();
@@ -41,6 +51,10 @@ export class NavBase {
 
     // default the direction to "forward"
     opts.direction = opts.direction || 'forward';
+
+    if(opts.animate === false) {
+      opts.animation = 'none';
+    }
 
     // do not animate if this is the first in the stack
     if (!this.items.length) {
@@ -70,8 +84,12 @@ export class NavBase {
   }
 
   pop(opts = {}) {
-    if (this.isTransitioning() || this.items.length < 2) {
+    if (this.isTransitioning() || this.items.length < 1) {
       return Promise.reject();
+    }
+
+    if(opts.animate === false) {
+      opts.animation = 'none';
     }
 
     let resolve;
@@ -86,14 +104,21 @@ export class NavBase {
     leavingItem.shouldDestroy = true;
 
     // the entering item is now the new last item
+    // Note: we might not have an entering item if this is the only
+    // item on the history stack.
     let enteringItem = this.getPrevious(leavingItem);
-    enteringItem.shouldDestroy = false;
+    if(enteringItem) {
+      enteringItem.shouldDestroy = false;
 
-    // start the transition
-    this.transition(enteringItem, leavingItem, opts).then(() => {
-      // transition completed, destroy the leaving item
+      // start the transition
+      this.transition(enteringItem, leavingItem, opts).then(() => {
+        // transition completed, destroy the leaving item
+        resolve();
+      });
+    } else {
+      this.transitionComplete();
       resolve();
-    });
+    }
 
     return promise;
   }
