@@ -22,7 +22,7 @@ import {TabButton} from './tab-button';
   template: `
     <nav class="navbar-container tab-bar-container">
       <div class="tab-bar">
-        <button *ng-for="#t of tabs" [tab]="t" class="tab-button" role="tab">
+        <button *ng-for="#t of tabs" [tab]="t" class="tab-button">
           <icon [class-name]="'tab-button-icon ' + t.tabIcon"></icon>
           <span class="tab-button-text">{{t.tabTitle}}</span>
         </button>
@@ -51,15 +51,24 @@ export class Tabs {
     this.tabs.push(tab);
   }
 
-  selectTab(tab) {
-    if (!tab || this._selected === tab) return;
+  selectTab(tabToSelect) {
+    if (typeof tabToSelect === 'number') {
+      let index = tabToSelect;
+      tabToSelect = null;
+      if (index < this.tabs.length) {
+        tabToSelect = this.tabs[index];
+      }
+    }
+    if (!tabToSelect || this._selected === tabToSelect) return;
 
     this.tabs.forEach(otherTab => {
-      otherTab.select(false);
+      if (otherTab !== tabToSelect) {
+        otherTab.select(false);
+      }
     });
 
-    tab.select(true);
-    this._selected = tab;
+    tabToSelect.select(true);
+    this._selected = tabToSelect;
   }
 
 }

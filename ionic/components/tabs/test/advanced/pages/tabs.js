@@ -1,16 +1,14 @@
-import {
-  Component,
-  View,
-  Parent,
-} from 'angular2/angular2';
+import {Component} from 'angular2/src/core/annotations_impl/annotations';
+import {View} from 'angular2/src/core/annotations_impl/view';
+
 import {
   Tabs,
   Tab,
-  Aside,
   Content,
   NavController,
 } from 'ionic/ionic';
 import {Toolbar, ToolbarTitle} from 'ionic/components/toolbar/toolbar';
+
 
 @Component({
   selector: 'tabs-page'
@@ -88,9 +86,6 @@ class Tab1Page2 {
 @Component({ selector: 't2p1' })
 @View({
   template: `
-    <ion-aside side="left" [content]="view">
-      Left aside for Tab 2 Page 1
-    </ion-aside>
     <ion-content class="padding">
       <p>Tab 2 Page 1.</p>
       <button class="button button-primary" (click)="next()">
@@ -100,7 +95,7 @@ class Tab1Page2 {
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
     </ion-content>
   `,
-  directives: [Aside, Content]
+  directives: [Content]
 })
 class Tab2Page1 {
   // TODO change to 'Nav' injection when we're allowed to inject a tab as a nav.
@@ -115,9 +110,6 @@ class Tab2Page1 {
 @Component({ selector: 't2p2' })
 @View({
   template: `
-    <ion-aside side="left" [content]="view">
-      Left aside for Tab 2 Page 2
-    </ion-aside>
     <ion-tabs #view class="view-cover">
       <ion-tab tab-title="Nested Tab 1">
         <ion-content class="padding">
@@ -133,7 +125,7 @@ class Tab2Page1 {
       </ion-tab>
     </ion-tabs>
   `,
-  directives: [Aside, Tabs, Tab, Content]
+  directives: [Tabs, Tab, Content]
 })
 class Tab2Page2 {
   // TODO change to 'Nav' injection when we're allowed to inject a tab as a nav.

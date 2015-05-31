@@ -1,32 +1,29 @@
-import {
-  Component,
-  View,
-  Ancestor,
-} from 'angular2/angular2';
-import {
-  NavItem,
-  Content,
-  NavController,
-  Toolbar,
-  ToolbarTitle,
-} from 'ionic/ionic';
+import {Component} from 'angular2/src/core/annotations_impl/annotations';
+import {View} from 'angular2/src/core/annotations_impl/view';
+
+import {NavController, NavbarTemplate, Navbar, Content} from 'ionic/ionic';
 import {TabsPage} from './tabs';
 
-@Component()
+
+@Component({selector: 'ion-view'})
 @View({
-  templateUrl: './pages/sign-in.html',
-  directives: [Content, Toolbar, ToolbarTitle]
+  template: '' +
+    '<ion-navbar *navbar>' +
+      '<ion-title>Sign In</ion-title>' +
+    '</ion-navbar>' +
+    '<ion-content class="padding">' +
+      '<p><button class="button" (click)="push()">Go to tabs</button></p>' +
+      '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
+      '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
+    '</ion-content>',
+  directives: [NavbarTemplate, Navbar, Content]
 })
 export class SignInPage {
-  constructor(
-    nav: NavController
-  ) {
+  constructor(nav: NavController) {
     this.nav = nav;
   }
-  signIn() {
-    console.log('click');
-    this.nav.push(TabsPage, {
-      my: 'param'
-    })
+
+  push() {
+    this.nav.push(TabsPage);
   }
 }

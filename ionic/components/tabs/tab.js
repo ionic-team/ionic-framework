@@ -1,6 +1,5 @@
 import {Parent} from 'angular2/src/core/annotations_impl/visibility';
-import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
-import {View} from 'angular2/src/core/annotations_impl/view';
+import {Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_component_loader';
 import {Injector} from 'angular2/di';
@@ -39,8 +38,6 @@ export class Tab {
     this.nav = new NavBase(loader, injector);
     this.domElement = elementRef.domElement;
 
-    this.config = Tab.config.invoke(this);
-
     this.id = util.nextUid();
     this.contentId = 'tab-content-' + this.id;
     this.labeledBy = 'tab-button-' + this.id;
@@ -61,16 +58,4 @@ export class Tab {
     this.ariaHidden = !isSelected;
   }
 
-}
-
-new IonicComponent(Tab, {});
-
-
-@Directive({
-  selector: '[content-anchor]'
-})
-class ContentAnchor {
-  constructor(@Parent() tab: Tab, elementRef: ElementRef) {
-    tab.setRef(elementRef);
-  }
 }

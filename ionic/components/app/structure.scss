@@ -45,10 +45,11 @@ ion-tab {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  flex-direction: column;
 
   display: none;
   &.show-tab {
-    display: block;
+    display: flex;
   }
 }
 
