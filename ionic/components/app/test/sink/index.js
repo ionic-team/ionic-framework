@@ -9,9 +9,16 @@ console.log(Query, QueryList);
 import {Ionic, Nav, Toolbar, ViewContainer, Aside, List, Item, Content, Button} from 'ionic/ionic';
 
 import {ButtonPage} from './pages/button'
+import {NavPage} from './pages/nav'
+import {ListPage} from './pages/list'
+import {CardPage} from './pages/card'
+import {FormPage} from './pages/form'
+import {SegmentPage} from './pages/segment'
+import {SearchBar} from './pages/search-bar'
+import {IconsPage} from './pages/ionicons'
+import {AsidePage} from './pages/aside'
 import {ActionMenuPage} from './pages/action-menu'
 import {ModalPage} from './pages/modal'
-import {ListPage} from './pages/list'
 
 @Component({
   selector: 'ion-app',
@@ -25,8 +32,15 @@ export class IonicApp {
     Ionic.setRootElementRef(elementRef);
 
     this.components = [
+      { title: 'Navigation', component: NavPage },
       { title: 'Buttons', component: ButtonPage },
       { title: 'Lists', component: ListPage },
+      { title: 'Cards', component: CardPage },
+      { title: 'Forms', component: FormPage },
+      { title: 'Segments', component: SegmentPage },
+      { title: 'Search Bar', component: SearchBar},
+      { title: 'Icons', component: IconsPage },
+      { title: 'Aside', component: AsidePage },
       { title: 'Action Menu', component: ActionMenuPage },
       { title: 'Modal', component: ModalPage }
     ];
