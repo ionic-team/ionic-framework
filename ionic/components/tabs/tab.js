@@ -22,6 +22,7 @@ import {NavBase} from '../nav/nav-base';
   hostProperties: {
     'contentId': 'attr.id',
     'labeledBy': 'attr.aria-labelledby',
+    'ariaHidden': 'attr.aria-hidden',
     'isSelected': 'class.show-tab'
   },
   hostAttributes: {
@@ -57,6 +58,7 @@ export class Tab {
 
   select(isSelected) {
     this.isSelected = isSelected;
+    this.ariaHidden = !isSelected;
   }
 
 }
