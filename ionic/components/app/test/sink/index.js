@@ -10,12 +10,11 @@ import {Ionic, Nav, Toolbar, ViewContainer, Aside, List, Item, Content, Button} 
 
 import {ButtonPage} from './pages/button'
 import {ActionMenuPage} from './pages/action-menu'
+import {ModalPage} from './pages/modal'
+import {ListPage} from './pages/list'
 
 @Component({
   selector: 'ion-app',
-  properties: [
-    'aside: aside'
-  ]
 })
 @View({
   templateUrl: 'main.html',
@@ -27,17 +26,17 @@ export class IonicApp {
 
     this.components = [
       { title: 'Buttons', component: ButtonPage },
-      { title: 'Action Menu', component: ActionMenuPage }
+      { title: 'Lists', component: ListPage },
+      { title: 'Action Menu', component: ActionMenuPage },
+      { title: 'Modal', component: ModalPage }
     ];
 
     this.firstPage = ButtonPage
   }
 
   openPage(aside, component) {
-    console.log('Opening', aside, component);
     aside.close();
     window.nav.clear().then(() => {
-      console.log('Cleared!');
       window.nav.push(component.component, {}, {
         animate: false
       });

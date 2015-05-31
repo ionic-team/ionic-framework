@@ -10,9 +10,18 @@ import {ActionMenu, NavbarTemplate, Navbar, NavController, Button, Content} from
 })
 @View({
   template: `
-  <ion-navbar *navbar><ion-title>Aciton Menu</ion-title></ion-navbar>
+  <ion-navbar *navbar><ion-title>Action Menu</ion-title></ion-navbar>
 
   <ion-content class="padding">
+    <h2>Action Menu</h2>
+    <p>
+      The Action Menu, similar to Action Sheet's on iOS, is a slide-up prompt
+      that displays several options for the user to choose from before an action is performed.
+    </p>
+    <p>
+      Action Menu's are great for prompting for dangerous actions (like deleting a photo album),
+      or showing a "context menu" with multiple actions the user can perform on something.
+    </p>
     <button primary (click)="openMenu()">Open Menu</button>
   </ion-content>
   `,
