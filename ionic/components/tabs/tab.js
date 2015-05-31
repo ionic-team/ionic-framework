@@ -21,7 +21,8 @@ import {NavBase} from '../nav/nav-base';
   ],
   hostProperties: {
     'contentId': 'attr.id',
-    'labeledBy': 'attr.aria-labelledby'
+    'labeledBy': 'attr.aria-labelledby',
+    'isSelected': 'class.show-tab'
   },
   hostAttributes: {
     'role': 'tabpanel'
@@ -39,9 +40,9 @@ export class Tab {
 
     this.config = Tab.config.invoke(this);
 
-    this.tabId = util.nextUid();
-    this.contentId = 'tab-content-' + this.tabId;
-    this.labeledBy = 'tab-item-' + this.tabId;
+    this.id = util.nextUid();
+    this.contentId = 'tab-content-' + this.id;
+    this.labeledBy = 'tab-button-' + this.id;
 
     tabs.addTab(this);
   }
@@ -54,7 +55,7 @@ export class Tab {
     this.nav.initial = value;
   }
 
-  setSelected(isSelected) {
+  select(isSelected) {
     this.isSelected = isSelected;
   }
 

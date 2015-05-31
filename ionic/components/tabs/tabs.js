@@ -1,35 +1,30 @@
-import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
+import {Component, onInit} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
-import {NgFor} from 'angular2/angular2';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_component_loader';
 import {Injector} from 'angular2/di';
+import {NgFor} from 'angular2/angular2';
 
-import {IonicComponent} from 'ionic/config/component';
+import {IonicComponent} from '../../config/component';
 import {Tab} from './tab';
+import {TabButton} from './tab-button';
 
 
 @Component({
   selector: 'ion-tabs',
-  properties: {
-    tabBarPlacement: 'tab-bar-placement',
-    tabBarIcons: 'tab-bar-icons'
-  }
+  properties: [
+    'tabBarPlacement',
+    'tabBarIcons'
+  ],
+  lifecycle: [onInit]
 })
 @View({
   template: `
     <nav class="navbar-container tab-bar-container">
       <div class="tab-bar">
-        <button *ng-for="#t of tabs"
-          role="tab"
-          class="tab-bar-item"
-          [attr.id]="'tab-item-' + t.tabId"
-          [attr.aria-controls]="'tab-content-' + t.tabId"
-          [attr.aria-selected]="t.isSelected"
-          [style.color]="t.isSelected ? 'red' : ''"
-          (^click)="onClickTabItem($event, t)">
-            <icon [class-name]="'tab-bar-item-icon ' + t.tabIcon" [hidden]="!t.tabIcon"></icon>
-            <span class="tab-bar-item-text" [hidden]="!t.tabTitle">{{t.tabTitle}}</span>
+        <button *ng-for="#t of tabs" [tab]="t" class="tab-button" role="tab">
+          <icon [class-name]="'tab-button-icon ' + t.tabIcon"></icon>
+          <span class="tab-button-text">{{t.tabTitle}}</span>
         </button>
       </div>
     </nav>
@@ -37,39 +32,34 @@ import {Tab} from './tab';
       <content></content>
     </section>
   `,
-  directives: [NgFor]
+  directives: [NgFor, TabButton]
 })
 export class Tabs {
   constructor(elementRef: ElementRef, loader: DynamicComponentLoader, injector: Injector) {
     this.domElement = elementRef.domElement;
     this.config = Tabs.config.invoke(this);
-
     this.tabs = [];
+  }
+
+  onInit() {
+    if (this.tabs.length > 0) {
+      this.selectTab(this.tabs[0]);
+    }
   }
 
   addTab(tab) {
     this.tabs.push(tab);
-    if (this.tabs.length == 1) {
-      this.select(tab);
-    }
   }
 
-  select(tab) {
+  selectTab(tab) {
+    if (!tab || this._selected === tab) return;
+
     this.tabs.forEach(otherTab => {
-      otherTab.setSelected(false);
+      otherTab.select(false);
     });
 
-    tab.setSelected(true);
-    this.selectedTab = tab;
-  }
-
-  onClickTabItem(ev, tab) {
-    ev.preventDefault();
-    ev.stopPropagation();
-
-    if (this.selectedTab !== tab) {
-      this.select(tab);
-    }
+    tab.select(true);
+    this._selected = tab;
   }
 
 }
