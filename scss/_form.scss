@@ -156,7 +156,7 @@ textarea {
   height: $line-height-computed + $font-size-base + 12px;
 }
 
-.item-stacked-label select {
+.item-select.item-stacked-label select {
   position: relative; 
   padding: 0px; 
   max-width: 90%; 
