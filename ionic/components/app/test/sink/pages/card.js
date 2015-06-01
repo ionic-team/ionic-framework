@@ -20,8 +20,8 @@ import {List, Item, ActionMenu, Modal, ModalRef,
       like it would be on an index card or a piece of paper.
     </p>
     <p>
-      Cards are great for displaying contextual informaion in a small amount of space,
-      like a Tweet, today's weather report, and a photo.
+      Cards are great for displaying contextual information in a small space,
+      like a Tweet, today's weather report, or a photo.
     </p>
     <div class="card">
 
