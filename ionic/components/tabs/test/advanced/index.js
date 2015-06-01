@@ -2,7 +2,7 @@ import {bootstrap} from 'angular2/angular2'
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
-import {Nav} from 'ionic/ionic';
+import {Nav, NavbarTemplate, Navbar, Content} from 'ionic/ionic';
 import {SignInPage} from './pages/sign-in';
 
 
@@ -11,7 +11,7 @@ import {SignInPage} from './pages/sign-in';
 })
 @View({
   templateUrl: 'main.html',
-  directives: [Nav]
+  directives: [Nav, NavbarTemplate, Navbar, Content]
 })
 class IonicApp {
   constructor() {

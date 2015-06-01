@@ -15,20 +15,15 @@ const CACHED_STATE = 'cached';
 
 export class NavBase {
 
-  constructor(loader, injector) {
+  constructor(elementRef, loader, injector) {
+    this.elementRef = elementRef;
     this.loader = loader;
     this.injector = injector;
     this.items = [];
     this.navCtrl = new NavController(this);
     this.sbTransition = null;
     this.sbActive = false;
-  }
-
-  set initial(Component) {
-    if (!this._init && Component) {
-      this._init = true;
-      this.push(Component);
-    }
+    this.domElement = elementRef.domElement;
   }
 
   clear() {

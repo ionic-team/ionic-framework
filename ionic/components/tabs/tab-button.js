@@ -13,9 +13,6 @@ import {Tabs} from './tabs';
     'panelId': 'attr.aria-controls',
     'tab.isSelected': 'attr.aria-selected'
   },
-  hostAttributes: {
-    'role': 'tab'
-  },
   hostListeners: {
     '^click': 'onClick($event)'
   },

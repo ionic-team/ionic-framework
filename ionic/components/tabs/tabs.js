@@ -1,9 +1,11 @@
-import {Component, onInit} from 'angular2/src/core/annotations_impl/annotations';
+import {Parent} from 'angular2/src/core/annotations_impl/visibility';
+import {Directive, Component, onInit} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_component_loader';
 import {Injector} from 'angular2/di';
 import {NgFor} from 'angular2/angular2';
+import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
 
 import {IonicComponent} from '../../config/component';
 import {Tab} from './tab';
@@ -21,9 +23,12 @@ import {Icon} from '../icon/icon';
 })
 @View({
   template: `
+    <header class="navbar-container">
+      <template navbar-anchor></template>
+    </header>
     <nav class="navbar-container tab-bar-container">
-      <div class="tab-bar">
-        <button *ng-for="#t of tabs" [tab]="t" class="tab-button">
+      <div class="tab-bar" role="tablist">
+        <button *ng-for="#t of tabs" [tab]="t" class="tab-button" role="tab">
           <icon [name]="t.tabIcon" class="tab-button-icon"></icon>
           <span class="tab-button-text">{{t.tabTitle}}</span>
         </button>
@@ -33,7 +38,7 @@ import {Icon} from '../icon/icon';
       <content></content>
     </section>
   `,
-  directives: [NgFor, TabButton, Icon]
+  directives: [NgFor, TabButton, Icon, NavbarAnchor]
 })
 export class Tabs {
   constructor(elementRef: ElementRef, loader: DynamicComponentLoader, injector: Injector) {
@@ -92,3 +97,14 @@ new IonicComponent(Tabs, {
     }
   }
 });
+
+
+@Directive({
+  selector: '[navbar-anchor]'
+})
+class NavbarAnchor {
+  constructor(@Parent() tabs: Tabs, viewContainerRef: ViewContainerRef) {
+    console.log('Tabs NavbarAnchor', viewContainerRef)
+    tabs.navbarContainerRef = viewContainerRef;
+  }
+}

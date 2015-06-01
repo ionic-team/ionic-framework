@@ -30,6 +30,7 @@ export class NavItem {
   }
 
   render() {
+    console.log('nav-item render')
     if (this.created) {
       console.log('showed existing view', this.id);
       return Promise.resolve();
@@ -47,7 +48,7 @@ export class NavItem {
     ]);
 
     this.nav.loader.loadNextToExistingLocation(this.Component, this.nav.contentElementRef, injector).then((componentRef) => {
-
+      console.log('nav-item loadNextToExistingLocation', this.nav.contentElementRef)
       let navbarContainer = this.nav.navbarContainerRef;
 
       if (componentRef && componentRef.dispose && navbarContainer) {
@@ -56,21 +57,24 @@ export class NavItem {
         this.viewEle = componentRef.location.domElement;
         this.viewEle.classList.add('ion-view');
 
-        let context = {
-          boundElementIndex: 0,
-          parentView: {
-            _view: componentRef.location.parentView._view.componentChildViews[0]
+        if (this._navbarProto) {
+          let context = {
+            boundElementIndex: 0,
+            parentView: {
+              _view: componentRef.location.parentView._view.componentChildViews[0]
+            }
+          };
+
+          let atIndex = -1;
+
+          console.log('nav-item navbarContainer.create', this._navbarProto)
+          this._navbarView = navbarContainer.create(this._navbarProto, atIndex, context, injector);
+
+          if (this._navbarView) {
+            this.disposals.push(() => {
+              navbarContainer.remove( navbarContainer.indexOf(this._navbarView) );
+            });
           }
-        };
-
-        let atIndex = -1;
-
-        this._navbarView = navbarContainer.create(this._navbarProto, atIndex, context, injector);
-
-        if (this._navbarView) {
-          this.disposals.push(() => {
-            navbarContainer.remove( navbarContainer.indexOf(this._navbarView) );
-          });
         }
       }
 
@@ -101,6 +105,7 @@ export class NavItem {
   }
 
   navbarProto(navbarProtoView) {
+    console.log('nav-item navbarProto')
     this._navbarProto = navbarProtoView;
   }
 
@@ -109,7 +114,9 @@ export class NavItem {
   }
 
   navbarElement() {
-    return this._navbarView._view.render._view.rootNodes[0];
+    if (this._navbarView && this._navbarView._view) {
+      return this._navbarView._view.render._view.rootNodes[0];
+    }
   }
 
   contentElement() {

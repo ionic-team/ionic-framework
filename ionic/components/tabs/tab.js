@@ -1,5 +1,6 @@
 import {Parent} from 'angular2/src/core/annotations_impl/visibility';
-import {Directive} from 'angular2/src/core/annotations_impl/annotations';
+import {Directive, Component} from 'angular2/src/core/annotations_impl/annotations';
+import {View} from 'angular2/src/core/annotations_impl/view';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_component_loader';
 import {Injector} from 'angular2/di';
@@ -9,9 +10,10 @@ import {Content} from '../content/content';
 import {IonicComponent} from 'ionic/config/component';
 import {NavBase} from '../nav/nav-base';
 
+
 let tabId = -1;
 
-@Directive({
+@Component({
   selector: 'ion-tab',
   properties: [
     'initial',
@@ -28,6 +30,13 @@ let tabId = -1;
     'role': 'tabpanel'
   }
 })
+@View({
+  template: `
+    <template content-anchor></template>
+    <content></content>
+  `,
+  directives: [ContentAnchor]
+})
 export class Tab {
   constructor(
     @Parent() tabs: Tabs,
@@ -35,7 +44,10 @@ export class Tab {
     loader: DynamicComponentLoader,
     injector: Injector
   ) {
-    this.nav = new NavBase(loader, injector);
+    this.navBase = new NavBase(elementRef, loader, injector);
+
+    this.navBase.navbarContainerRef = tabs.navbarContainerRef;
+
     this.domElement = elementRef.domElement;
 
     this.id = ++tabId;
@@ -43,14 +55,14 @@ export class Tab {
     this.labeledBy = 'tab-button-' + this.id;
 
     tabs.addTab(this);
+    console.log('Tab constructor')
   }
 
-  setRef(ref) {
-    this.nav.contentElementRef = ref;
-  }
-
-  set initial(value) {
-    this.nav.initial = value;
+  onInit() {
+    if (this.initial) {
+      console.log('Tab onInit')
+      this.navBase.push(this.initial);
+    }
   }
 
   select(isSelected) {
@@ -58,4 +70,14 @@ export class Tab {
     this.ariaHidden = !isSelected;
   }
 
+}
+
+
+@Directive({
+  selector: '[content-anchor]'
+})
+class ContentAnchor {
+  constructor(@Parent() tab: Tab, elementRef: ElementRef) {
+    tab.navBase.contentElementRef = elementRef;
+  }
 }

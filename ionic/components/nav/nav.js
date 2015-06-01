@@ -1,5 +1,5 @@
 import {Parent} from 'angular2/src/core/annotations_impl/visibility';
-import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
+import {Component, Directive, onInit} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_component_loader';
@@ -15,7 +15,8 @@ import {IonicComponent} from '../../config/component';
   selector: 'ion-nav',
   properties: [
     'initial'
-  ]
+  ],
+  lifecycle: [onInit]
 })
 @View({
   template: `
@@ -29,12 +30,18 @@ import {IonicComponent} from '../../config/component';
   `,
   directives: [NavbarAnchor, ContentAnchor, SwipeHandle]
 })
-export class Nav extends NavBase {
+export class Nav {
   constructor(elementRef: ElementRef, loader: DynamicComponentLoader, injector: Injector) {
-    super(loader, injector);
-    this.elementRef = elementRef;
+    this.navBase = new NavBase(elementRef, loader, injector);
+
     this.domElement = elementRef.domElement;
     this.config = Nav.config.invoke(this);
+  }
+
+  onInit() {
+    if (this.initial) {
+      this.navBase.push(this.initial);
+    }
   }
 
   width() {
@@ -42,7 +49,7 @@ export class Nav extends NavBase {
   }
 
   get swipeBackEnabled() {
-    let activeItem = this.getActive();
+    let activeItem = this.navBase.getActive();
     if (activeItem) {
       return activeItem.enableBack;
     }
@@ -57,7 +64,7 @@ new IonicComponent(Nav, {});
 })
 class NavbarAnchor {
   constructor(@Parent() nav: Nav, viewContainerRef: ViewContainerRef) {
-    nav.navbarContainerRef = viewContainerRef;
+    nav.navBase.navbarContainerRef = viewContainerRef;
   }
 }
 
@@ -67,6 +74,6 @@ class NavbarAnchor {
 })
 class ContentAnchor {
   constructor(@Parent() nav: Nav, elementRef: ElementRef) {
-    nav.contentElementRef = elementRef;
+    nav.navBase.contentElementRef = elementRef;
   }
 }

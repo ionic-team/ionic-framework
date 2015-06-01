@@ -1,4 +1,4 @@
-import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
+import {Component, Directive, onInit} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 import {ProtoViewRef} from 'angular2/src/core/compiler/view_ref';
@@ -30,14 +30,18 @@ import {BackButton} from './back-button';
       </div>
     </div>
   `,
-  directives: [BackButton]
+  directives: [BackButton],
+  lifecycle: [onInit]
 })
 export class Navbar {
   constructor(navItem:NavItem, elementRef:ElementRef, ngZone:NgZone) {
     this.navItem = navItem;
     this.domElement = elementRef.domElement;
+    this.zone = ngZone;
+  }
 
-    ngZone.runOutsideAngular(() => {
+  onInit() {
+    this.zone.runOutsideAngular(() => {
       setTimeout(() => {
         this.alignTitle();
       }, 32);
@@ -103,6 +107,7 @@ export class Navbar {
 })
 export class NavbarTemplate {
   constructor(navItem: NavItem, protoViewRef: ProtoViewRef) {
+    console.log('NavbarTemplate', protoViewRef)
     navItem.navbarProto(protoViewRef);
   }
 }
