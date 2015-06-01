@@ -40,6 +40,14 @@ export class Nav extends NavBase {
   width() {
     return this.domElement.offsetWidth;
   }
+
+  get swipeBackEnabled() {
+    let activeItem = this.getActive();
+    if (activeItem) {
+      return activeItem.enableBack;
+    }
+    return false;
+  }
 }
 new IonicComponent(Nav, {});
 

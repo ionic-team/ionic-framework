@@ -10,7 +10,7 @@ import {Tabs} from './tabs';
   properties: ['tab'],
   hostProperties: {
     'btnId': 'attr.id',
-    'ariaControls': 'attr.aria-controls',
+    'panelId': 'attr.aria-controls',
     'tab.isSelected': 'attr.aria-selected'
   },
   hostAttributes: {
@@ -28,7 +28,7 @@ export class TabButton {
 
   onInit() {
     this.btnId = 'tab-button-' + this.tab.id;
-    this.ariaControls = 'tab-content-' + this.tab.id;
+    this.panelId = 'tab-panel-' + this.tab.id;
   }
 
   onClick(ev) {

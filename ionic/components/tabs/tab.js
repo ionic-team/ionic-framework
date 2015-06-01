@@ -6,10 +6,10 @@ import {Injector} from 'angular2/di';
 
 import {Tabs} from './tabs';
 import {Content} from '../content/content';
-import * as util from 'ionic/util';
 import {IonicComponent} from 'ionic/config/component';
 import {NavBase} from '../nav/nav-base';
 
+let tabId = -1;
 
 @Directive({
   selector: 'ion-tab',
@@ -19,7 +19,7 @@ import {NavBase} from '../nav/nav-base';
     'tabIcon'
   ],
   hostProperties: {
-    'contentId': 'attr.id',
+    'panelId': 'attr.id',
     'labeledBy': 'attr.aria-labelledby',
     'ariaHidden': 'attr.aria-hidden',
     'isSelected': 'class.show-tab'
@@ -38,8 +38,8 @@ export class Tab {
     this.nav = new NavBase(loader, injector);
     this.domElement = elementRef.domElement;
 
-    this.id = util.nextUid();
-    this.contentId = 'tab-content-' + this.id;
+    this.id = ++tabId;
+    this.panelId = 'tab-panel-' + this.id;
     this.labeledBy = 'tab-button-' + this.id;
 
     tabs.addTab(this);

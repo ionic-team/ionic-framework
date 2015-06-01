@@ -7,11 +7,16 @@ import {Nav} from './nav';
 
 
 @Directive({
-  selector: 'swipe-handle'
+  selector: 'swipe-handle',
+  hostProperties: {
+    '!nav.swipeBackEnabled': 'hidden'
+  }
 })
 export class SwipeHandle {
   constructor(@Parent() nav: Nav, elementRef: ElementRef) {
     let gesture = new Gesture(elementRef.domElement);
+
+    this.nav = nav;
 
     gesture.listen();
 
@@ -23,6 +28,9 @@ export class SwipeHandle {
     let swipeableAreaWidth = null;
 
     function onDragEnd(ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+
       // TODO: POLISH THESE NUMBERS WITH GOOD MATHIFICATION
 
       let progress = (ev.gesture.center.x - startX) / swipeableAreaWidth;
@@ -57,6 +65,9 @@ export class SwipeHandle {
 
     function onDragHorizontal(ev) {
       if (startX === null) {
+        ev.preventDefault();
+        ev.stopPropagation();
+
         startX = ev.gesture.center.x;
         swipeableAreaWidth = nav.width() - startX;
 
