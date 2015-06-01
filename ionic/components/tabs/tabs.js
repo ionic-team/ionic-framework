@@ -8,6 +8,7 @@ import {NgFor} from 'angular2/angular2';
 import {IonicComponent} from '../../config/component';
 import {Tab} from './tab';
 import {TabButton} from './tab-button';
+import {Icon} from '../icon/icon';
 
 
 @Component({
@@ -23,7 +24,7 @@ import {TabButton} from './tab-button';
     <nav class="navbar-container tab-bar-container">
       <div class="tab-bar">
         <button *ng-for="#t of tabs" [tab]="t" class="tab-button">
-          <icon [class-name]="'tab-button-icon ' + t.tabIcon"></icon>
+          <icon [name]="t.tabIcon" class="tab-button-icon"></icon>
           <span class="tab-button-text">{{t.tabTitle}}</span>
         </button>
       </div>
@@ -32,7 +33,7 @@ import {TabButton} from './tab-button';
       <content></content>
     </section>
   `,
-  directives: [NgFor, TabButton]
+  directives: [NgFor, TabButton, Icon]
 })
 export class Tabs {
   constructor(elementRef: ElementRef, loader: DynamicComponentLoader, injector: Injector) {
