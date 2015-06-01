@@ -3,6 +3,7 @@ import {bind} from 'angular2/di';
 
 import * as util from 'ionic/util';
 import {NavController} from './nav-controller';
+import {Lifecycle} from 'ionic/components/view/lifecycle';
 
 
 export class NavItem {
@@ -48,7 +49,10 @@ export class NavItem {
     ]);
 
     this.nav.loader.loadNextToExistingLocation(this.Component, this.nav.contentElementRef, injector).then((componentRef) => {
-      console.log('nav-item loadNextToExistingLocation', this.nav.contentElementRef)
+
+      Lifecycle.viewLoaded(componentRef.instance);
+
+      console.log('nav-item loadNextToExistingLocation', this.nav.contentElementRef);
       let navbarContainer = this.nav.navbarContainerRef;
 
       if (componentRef && componentRef.dispose && navbarContainer) {
