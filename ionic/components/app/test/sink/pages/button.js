@@ -3,7 +3,7 @@ import {Ancestor} from 'angular2/src/core/annotations_impl/visibility';
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
-import {NavbarTemplate, Navbar, NavController, Button, Content} from 'ionic/ionic';
+import {Routable, NavbarTemplate, Navbar, NavController, Button, Content} from 'ionic/ionic';
 
 @Component({
   selector: 'ion-view'
@@ -43,3 +43,8 @@ export class ButtonPage {
     window.nav = nav;
   }
 }
+
+new Routable(ButtonPage, {
+  url: '/components/button',
+  tag: 'button'
+})
