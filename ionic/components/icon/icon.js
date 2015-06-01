@@ -7,6 +7,12 @@ import {ElementRef} from 'angular2/src/core/compiler/element_ref';
   properties: [
     'name'
   ],
+  hostProperties: {
+    'label': 'attr.aria-label'
+  },
+  hostAttributes: {
+    'role': 'img'
+  },
   lifecycle: [onInit]
 })
 export class Icon {
@@ -16,6 +22,7 @@ export class Icon {
   onInit() {
     if (this.name) {
       this.domElement.classList.add(this.name);
+      this.label = this.name;
     }
   }
 }
