@@ -1,12 +1,15 @@
-$aside-width: 304px;
-$aside-height: 304px;
-$aside-transition: 0.2s ease transform;
+$aside-width: 304px !default;
+$aside-height: 304px !default;
+$aside-transition: 0.2s ease transform !default;
+$aside-background: #fff !default;
+$aside-shadow: -1px 0px 2px rgba(0, 0, 0, 0.2), 1px 0px 2px rgba(0,0,0,0.2) !default;
 
 .aside {
   display: block;
   position: absolute;
 
-  background: #eee;
+  background: $aside-background;
+
 
   &[type=overlay] {
     z-index: $z-index-aside-overlay;
@@ -72,6 +75,7 @@ $aside-transition: 0.2s ease transform;
 .aside-content {
   transition: $aside-transition;
   transform: translate3d(0,0,0);
+  box-shadow: $aside-shadow;
   &.aside-open-left {
     transform: translate3d($aside-width,0,0);
   }
