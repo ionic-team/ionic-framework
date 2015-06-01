@@ -17,6 +17,10 @@ var through2 = require('through2');
 var runSequence = require('run-sequence');
 var watch = require('gulp-watch');
 var exec = require('child_process').exec;
+var babel = require('gulp-babel');
+var webpack = require('gulp-webpack');
+var lazypipe = require('lazypipe');
+
 
 
 gulp.task('build', function() {
@@ -75,30 +79,79 @@ function doubleCheckDistFiles() {
 }
 
 gulp.task('clean', function(done) {
-  del(['../angular-ionic/modules/ionic, ./angular-ionic/modules/examples/src/ionic'], done);
+  del(['../angular-ionic/modules/ionic, ./angular-ionic/modules/examples/src/ionic, dist/'], done);
 });
 
-
-gulp.task('ionic.copy.js', function(done) {
+gulp.task('ionic.transpile.js', function(done) {
   return gulp.src(['ionic/**/*.js', '!ionic/components/*/test/**/*'])
-             .pipe(gulp.dest('../angular-ionic/modules/ionic'));
+             .pipe(babel(babelOptions))
+            //.pipe(concat('ionic.bundle.js'))
+             .pipe(gulp.dest('dist/js/'));
 });
+
+//gulp.task('ionic.copy.js', function(done) {
+//  return gulp.src(['ionic/**/*.js', '!ionic/components/*/test/**/*'])
+//             .pipe(gulp.dest('../angular-ionic/modules/ionic'));
+//});
+  var babelOptions = {
+    optional: ['es7.decorators'],
+    plugins: [
+      './transformers/disable-define',
+      'angular2-annotations',
+      'type-assertion:after'
+    ]
+  };
+
+  var webpackOptions = {
+    module: {
+      loaders: [
+        { 
+          test: /\.es6$/,
+          loader: "babel-loader?" + JSON.stringify(babelOptions)
+        },
+        { 
+          test: /\.js$/,
+          exclude: /node_modules/,
+          loader: "babel-loader?" + JSON.stringify(babelOptions)
+        }
+      ]
+    },
+    resolve: {
+      alias: {
+        'angular2': 'angular2/es6/dev',
+        'rtts_assert': 'rtts_assert/es6'      
+      },
+      modulesDirectories: [
+        'ionic2',
+        'node_modules'
+      ],
+      extensions: ['', '.js', '.es6']
+    },
+    debug: true
+  }
 
 
 gulp.task('ionic.examples', function() {
-  var indexContents = _.template( fs.readFileSync('scripts/e2e/angular.template.html') )({
-    buildConfig: buildConfig
-  });
-
+  var buildTest = lazypipe()
+             //.pipe(babel, babelOptions)
+             .pipe(webpack, webpackOptions)
+             .pipe(createIndexHTML);
+           
   // Get each test folder with gulp.src
   return gulp.src('ionic/components/*/test/*/**/*')
+    .pipe(gulpif(/index.js$/, buildTest()))
     .pipe(rename(function(file) {
       file.dirname = file.dirname.replace(path.sep + 'test' + path.sep, path.sep)
     }))
-    .pipe(gulpif(/index.js$/, processMain()))
-    .pipe(gulp.dest('../angular-ionic/modules/examples/src/ionic'))
+    .pipe(gulp.dest('dist/examples/'))
 
-    function processMain() {
+    function createIndexHTML() {
+      var indexContents = _.template( 
+        fs.readFileSync('scripts/e2e/ionic.template.html')
+      )({
+        buildConfig: buildConfig
+      });
+
       return through2.obj(function(file, enc, next) {
         var self = this;
         self.push(new VinylFile({
@@ -109,7 +162,6 @@ gulp.task('ionic.examples', function() {
         next(null, file);
       })
     }
-
 });
 
 
