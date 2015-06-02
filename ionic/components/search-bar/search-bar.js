@@ -8,18 +8,25 @@ import {IonicComponent} from 'ionic/config/component'
 
 @Component({
   selector: 'ion-search-bar',
-  properties: {
-    cancelText: 'cancel-text',
-    placeholderText: 'placeholder-text',
-    list: 'list',
-    query: 'query'
+  properties: [
+    'cancelText: cancel-text',
+    'placeholder: placeholder',
+    'list: list',
+    'query: query'
+  ]
+  /*
+  hostProperties: {
+    'panelId': 'attr.id',
   }
+  */
 })
 @View({
-  template: `<div class="search-bar-input-container">
-             <input (input)="inputChanged($event)" class="search-bar-input" type="search" [attr.placeholder]="placeholderText">
-           </div>
-           <button class="button search-bar-cancel">{{ cancelText }}</button>`
+  template: `
+  <div class="search-bar-input-container" [class.focused]="isFocused">
+    <div class="search-bar-icon"></div>
+    <input (focus)="inputFocused()" (blur)="inputBlurred()" (input)="inputChanged($event)" class="search-bar-input" type="search" [attr.placeholder]="placeholder">
+  </div>
+  <button class="button search-bar-cancel">{{ cancelText }}</button>`
 })
 export class SearchBar {
   constructor(
@@ -50,6 +57,13 @@ export class SearchBar {
     console.log('Search changed', this.value);
     // TODO: Better way to do this?
     this.controlDirective._control().updateValue(event.target.value);
+  }
+
+  inputFocused() {
+    this.isFocused = true;
+  }
+  inputBlurred() {
+    this.isFocused = false;
   }
 }
 
@@ -86,7 +100,7 @@ new IonicComponent(SearchBar, {
         core: 'Cancel'
       }
     },
-    placeholderText: {
+    placeholder: {
       defaults: {
         ios: 'Search',
         android: 'Search',

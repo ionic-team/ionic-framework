@@ -15,6 +15,16 @@ $search-bar-ios-background-size:      13px 13px !default;
   background: $search-bar-ios-background-color;
   @include hairline(bottom, $search-bar-ios-border-color);
 
+  .search-bar-icon {
+    width: 13px;
+    height: 13px;
+    @include svg-background-image($search-bar-ios-background-svg);
+    background-size: $search-bar-ios-background-size;
+    position: absolute;
+    left: 10px;
+    top: 8px;
+  }
+
   .search-bar-input {
     height: $search-bar-ios-input-height;
     padding: 0 28px;
@@ -28,9 +38,15 @@ $search-bar-ios-background-size:      13px 13px !default;
     background-repeat: no-repeat;
     background-position: 8px center;
 
-    @include svg-background-image($search-bar-ios-background-svg);
-    background-size: $search-bar-ios-background-size;
+    transition: all .2s ease;
+
+    @include calc(padding-left, "50% - 35px");
+
   }
 
+  .search-bar-input-container.focused {
+    .search-bar-input {
+      padding-left: 28px;
+    }
+  }
 }
-

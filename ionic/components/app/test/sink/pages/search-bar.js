@@ -10,7 +10,8 @@ import {Segment, SegmentButton, SearchBar, List, Item, ActionMenu, Modal, ModalR
   console.log(NavbarTemplate, Navbar, Content, formDirectives);
 
 @Component({
-  selector: 'ion-view'
+  selector: 'ion-view',
+  appInjector: [FormBuilder]
 })
 @View({
   template: `
@@ -27,7 +28,7 @@ import {Segment, SegmentButton, SearchBar, List, Item, ActionMenu, Modal, ModalR
     </p>
 
     <form (^submit)="doSubmit($event)" [control-group]="form">
-      <ion-search-bar control="searchQuery"></ion-search-bar>
+      <ion-search-bar placeholder="Search" control="searchQuery"></ion-search-bar>
       <div>
         Query: <b>{{form.controls.searchQuery.value}}</b>
       </div>
@@ -37,9 +38,9 @@ import {Segment, SegmentButton, SearchBar, List, Item, ActionMenu, Modal, ModalR
   directives: [formDirectives, NavbarTemplate, Navbar, Content, SearchBar]
 })
 export class SearchBarPage {
-  constructor() {
-    var fb = new FormBuilder();
-    this.form = fb.group({
+  constructor(formBuilder: FormBuilder) {
+    //var fb = new FormBuilder();
+    this.form = formBuilder.group({
       searchQuery: ['', Validators.required]
     });
   }

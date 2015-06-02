@@ -1,3 +1,7 @@
+@mixin calc($property, $expression) {
+  #{$property}: -webkit-calc(#{$expression});
+  #{$property}: calc(#{$expression});
+}
 
 .no-transition {
   transition: none !important;

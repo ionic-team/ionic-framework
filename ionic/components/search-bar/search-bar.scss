@@ -11,6 +11,7 @@ $search-bar-min-height:         44px !default;
   align-items: center;
   width: 100%;
   min-height: $search-bar-min-height;
+  line-height: 3rem;
 }
 
 .search-bar-input-container {
