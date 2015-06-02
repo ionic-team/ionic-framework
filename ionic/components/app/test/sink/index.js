@@ -14,7 +14,7 @@ import {ListPage} from './pages/list'
 import {CardPage} from './pages/card'
 import {FormPage} from './pages/form'
 import {SegmentPage} from './pages/segment'
-import {SearchBar} from './pages/search-bar'
+import {SearchBarPage} from './pages/search-bar'
 import {IconsPage} from './pages/ionicons'
 import {TabsPage} from './pages/tabs'
 import {AsidePage} from './pages/aside'
@@ -40,7 +40,7 @@ export class IonicApp {
       { title: 'Cards', component: CardPage },
       { title: 'Forms', component: FormPage },
       { title: 'Segments', component: SegmentPage },
-      { title: 'Search Bar', component: SearchBar},
+      { title: 'Search Bar', component: SearchBarPage },
       { title: 'Icons', component: IconsPage },
       { title: 'Tabs', component: TabsPage },
       { title: 'Aside', component: AsidePage },

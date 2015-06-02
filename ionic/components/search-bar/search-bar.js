@@ -32,8 +32,8 @@ export class SearchBar {
     cd.valueAccessor = this; //ControlDirective should inject CheckboxControlDirective
 
     setTimeout(() => {
-      console.log('Search bar for list', this.list);
-      this.query = 'Cats';
+      //console.log('Search bar for list', this.list);
+      this.query = '';
     })
   }
 
