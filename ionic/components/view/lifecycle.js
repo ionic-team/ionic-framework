@@ -5,4 +5,10 @@ export class Lifecycle {
   static viewWillShow(component) {
     component.viewWillShow && component.viewWillShow();
   }
+  static viewEntered(component) {
+    component.viewEntered && component.viewEntered();
+  }
+  static viewDestroyed(component) {
+    component.viewDestroyed && component.viewDestroyed();
+  }
 }
