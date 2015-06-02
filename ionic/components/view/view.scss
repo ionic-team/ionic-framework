@@ -1,5 +1,6 @@
-ion-view,
-.ion-view {
+
+ion-view {
+  display: flex;
   position: absolute;
   top: 0;
   left: 0;
@@ -7,14 +8,4 @@ ion-view,
   height: 100%;
 
   background-color: white;
-
-  // by default this is display: none;
-  // and the transition animation will display it
-  //display: none;
-  flex-direction: column;
-
-  &.show-view {
-    display: flex;
-  }
-
 }

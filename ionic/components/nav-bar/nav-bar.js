@@ -107,7 +107,6 @@ export class Navbar {
 })
 export class NavbarTemplate {
   constructor(navItem: NavItem, protoViewRef: ProtoViewRef) {
-    console.log('NavbarTemplate', protoViewRef)
-    navItem.navbarProto(protoViewRef);
+    navItem.addProtoViewRef('navbar', protoViewRef)
   }
 }

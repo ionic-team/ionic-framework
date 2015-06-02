@@ -15,10 +15,11 @@ const CACHED_STATE = 'cached';
 
 export class NavBase {
 
-  constructor(elementRef, loader, injector) {
+  constructor(elementRef, loader, injector, compiler) {
     this.elementRef = elementRef;
     this.loader = loader;
     this.injector = injector;
+    this.compile = compiler.compile;
     this.items = [];
     this.navCtrl = new NavController(this);
     this.sbTransition = null;
@@ -26,14 +27,9 @@ export class NavBase {
     this.domElement = elementRef.domElement;
   }
 
-  clear() {
-    let pops = [];
-    for(let item of this.items) {
-      pops.push(this.pop({
-        animate: false
-      }));
-    }
-    return Promise.all(pops);
+  templateAnchor(viewContainerRef, elementRef) {
+    this.viewContainerRef = viewContainerRef;
+    this.elementRef = elementRef;
   }
 
   push(Component, params = {}, opts = {}) {
@@ -317,6 +313,16 @@ export class NavBase {
       }
     }
     return false;
+  }
+
+  clear() {
+    let pops = [];
+    for(let item of this.items) {
+      pops.push(this.pop({
+        animate: false
+      }));
+    }
+    return Promise.all(pops);
   }
 
   getActive() {
