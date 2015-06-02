@@ -1,9 +1,14 @@
 <ion-aside #aside [content]="content">
-  <ion-list inset>
-    <ion-item *ng-for="#c of components" (^click)="openPage(aside, c)">
-      {{c.title}}
-    </ion-item>
-  </ion-list>
+  <ion-toolbar>
+    <ion-title>Ionic 2.0</ion-title>
+  </ion-toolbar>
+  <ion-content>
+    <ion-list inset>
+      <ion-item *ng-for="#c of components" (^click)="openPage(aside, c)">
+        {{c.title}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
 </ion-aside>
 
 <ion-nav #content [initial]="firstPage"></ion-nav>

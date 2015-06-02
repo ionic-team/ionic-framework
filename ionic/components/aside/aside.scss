@@ -10,6 +10,9 @@ $aside-shadow: -1px 0px 2px rgba(0, 0, 0, 0.2), 1px 0px 2px rgba(0,0,0,0.2) !def
 
   background: $aside-background;
 
+  display: flex;
+  flex-direction: column;
+
 
   &[type=overlay] {
     z-index: $z-index-aside-overlay;
