@@ -6,7 +6,7 @@ import {Query} from 'angular2/src/core/annotations_impl/di';
 
 console.log(Query, QueryList);
 
-import {Ionic, Nav, Toolbar, ViewContainer, Aside, List, Item, Content, Button} from 'ionic/ionic';
+import {Ionic, Nav, ViewContainer, Aside, List, Item, Content, Button} from 'ionic/ionic';
 
 import {ButtonPage} from './pages/button'
 import {NavPage} from './pages/nav'
@@ -14,19 +14,22 @@ import {ListPage} from './pages/list'
 import {CardPage} from './pages/card'
 import {FormPage} from './pages/form'
 import {SegmentPage} from './pages/segment'
-import {SearchBar} from './pages/search-bar'
+import {SearchBarPage} from './pages/search-bar'
 import {IconsPage} from './pages/ionicons'
+import {TabsPage} from './pages/tabs'
 import {AsidePage} from './pages/aside'
 import {SlidePage} from './pages/slides'
 import {ActionMenuPage} from './pages/action-menu'
 import {ModalPage} from './pages/modal'
+
+console.log('Loaded', Nav, NgFor, NgIf, Aside, List, ViewContainer, Item, Content, Button);
 
 @Component({
   selector: 'ion-app',
 })
 @View({
   templateUrl: 'main.html',
-  directives: [Nav, NgFor, NgIf, Aside, List, ViewContainer, Toolbar, Item, Content, Button]
+  directives: [Nav, NgFor, NgIf, Aside, List, ViewContainer, Item, Content, Button]
 })
 export class IonicApp {
   constructor(elementRef: ElementRef) {//, @Query(Aside) nav: QueryList) {//, @Descendant() aside: Aside) {
@@ -39,8 +42,9 @@ export class IonicApp {
       { title: 'Cards', component: CardPage },
       { title: 'Forms', component: FormPage },
       { title: 'Segments', component: SegmentPage },
-      { title: 'Search Bar', component: SearchBar},
+      { title: 'Search Bar', component: SearchBarPage },
       { title: 'Icons', component: IconsPage },
+      { title: 'Tabs', component: TabsPage },
       { title: 'Aside', component: AsidePage },
       { title: 'Slides', component: SlidePage},
       { title: 'Action Menu', component: ActionMenuPage },

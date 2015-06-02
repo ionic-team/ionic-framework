@@ -17,7 +17,7 @@ $toolbar-ios-button-text-color:             #007aff !default;
 $toolbar-ios-button-background-color:       transparent !default;
 
 
-.platform-ios .toolbar {
+.platform-ios ion-toolbar {
 
   height: $toolbar-ios-height;
   background: $toolbar-ios-background;

@@ -34,6 +34,14 @@ export class FirstPage {
     this.val = Math.round(Math.random() * 8999) + 1000;
   }
 
+  viewLoaded() {
+    console.log('VIEW LOADED');
+  }
+
+  viewWillShow() {
+    console.log('VIEW WILL SHOW');
+  }
+
   push() {
     this.nav.push(SecondPage, { id: 8675309, myData: [1,2,3,4] }, { animation: 'ios' });
   }

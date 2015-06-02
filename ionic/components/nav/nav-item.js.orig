@@ -3,9 +3,12 @@ import {bind} from 'angular2/di';
 
 import * as util from 'ionic/util';
 import {NavController} from './nav-controller';
+<<<<<<< HEAD
 import {Nav} from './nav';
 import {NavPane, NavPaneSection} from './nav';
+=======
 import {Lifecycle} from 'ionic/components/view/lifecycle';
+>>>>>>> origin/master
 
 
 export class NavItem {
@@ -49,9 +52,18 @@ export class NavItem {
     // compile the Component
     this.nav.compiler.compileInHost(this.Component).then(componentProtoViewRef => {
 
+<<<<<<< HEAD
       // figure out the sturcture of this Component
       // does it have a navbar? Is it tabs? Should it not have a navbar or any toolbars?
       let itemStructure = this.getStructure(componentProtoViewRef);
+=======
+    this.nav.loader.loadNextToExistingLocation(this.Component, this.nav.contentElementRef, injector).then((componentRef) => {
+
+      Lifecycle.viewLoaded(componentRef.instance);
+
+      console.log('nav-item loadNextToExistingLocation', this.nav.contentElementRef);
+      let navbarContainer = this.nav.navbarContainerRef;
+>>>>>>> origin/master
 
       // get the appropriate NavPane which this NavItem will fit into
       this.nav.getNavPane(itemStructure).then(navPane => {
@@ -195,14 +207,14 @@ export class NavItem {
 
   titleElement() {
     if (this._titleEle === undefined) {
-      let navbarElement = this.navbarElement();
-      if (navbarElement) {
-        let titleEle = navbarElement.querySelector('ion-title');
-        if (titleEle) {
-          this._titleEle = titleEle;
-          return this._titleEle;
-        }
-      }
+      //let navbarElement = this.navbarElement();
+      //if (navbarElement) {
+        // let titleEle = navbarElement.querySelector('ion-title');
+        // if (titleEle) {
+        //   this._titleEle = titleEle;
+        //   return this._titleEle;
+        // }
+      //}
       this._titleEle = null;
     }
     return this._titleEle;

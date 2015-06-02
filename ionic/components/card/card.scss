@@ -1,6 +1,9 @@
 
 // Card
 // --------------------------------------------------
+$card-border-color:               #ccc !default;
+$card-border-radius:              2px !default;
+$card-box-shadow:                 0 1px 3px rgba(0, 0, 0, .3) !default;
 
 .card {
   position: relative;
@@ -9,4 +12,25 @@
 
 .card .item-label {
   white-space: normal;
+}
+
+.card .item {
+  &:first-child {
+    border-top-left-radius: $card-border-radius;
+    border-top-right-radius: $card-border-radius;
+
+    .item-content {
+      border-top-left-radius: $card-border-radius;
+      border-top-right-radius: $card-border-radius;
+    }
+  }
+  &:last-child {
+    border-bottom-right-radius: $card-border-radius;
+    border-bottom-left-radius: $card-border-radius;
+
+    .item-content {
+      border-bottom-right-radius: $card-border-radius;
+      border-bottom-left-radius: $card-border-radius;
+    }
+  }
 }

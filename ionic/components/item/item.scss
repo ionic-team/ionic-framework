@@ -102,6 +102,10 @@ ion-primary-swipe-buttons {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  img {
+    max-width: 100%;
+  }
 }
 
 .item-media + .item-label {
@@ -109,7 +113,7 @@ ion-primary-swipe-buttons {
 }
 
 .item-media:last-child {
-  padding-right: $item-padding;
+  //padding-right: $item-padding;
 }
 
 .item-note {

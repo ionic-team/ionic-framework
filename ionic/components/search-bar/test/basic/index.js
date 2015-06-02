@@ -1,11 +1,11 @@
-import {bootstrap, For} from 'angular2/angular2'
+import {bootstrap, NgFor} from 'angular2/angular2'
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
 import { bind } from 'angular2/di';
 import { PipeRegistry } from 'angular2/change_detection';
 
-import {FormBuilder, Validators, FormDirectives, Control, ControlGroup} from 'angular2/forms';
+import {FormBuilder, Validators, formDirectives, Control, ControlGroup} from 'angular2/forms';
 
 import {Content} from 'ionic/components/content/content';
 import {List} from 'ionic/components/list/list';
@@ -21,7 +21,7 @@ function randomTitle() {
 @Component({ selector: 'ion-app' })
 @View({
   templateUrl: 'main.html',
-  directives: [FormDirectives].concat([Content, List, Item, SearchBar, For])
+  directives: [formDirectives].concat([Content, List, Item, SearchBar, NgFor])
 })
 class IonicApp {
   constructor() {
@@ -56,15 +56,17 @@ class IonicApp {
   }
 }
 
+/*
 import { defaultPipes } from 'angular2/change_detection';
 export var pipes = Object.assign({}, defaultPipes, {
   'search': [
     new SearchPipe()
   ]
 });
+*/
 
 export function main() {
   bootstrap(IonicApp, [
-    bind(PipeRegistry).toValue(new PipeRegistry(pipes))
+    //bind(PipeRegistry).toValue(new PipeRegistry(pipes))
   ]);
 }

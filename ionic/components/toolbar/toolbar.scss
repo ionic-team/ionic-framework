@@ -10,13 +10,14 @@ $toolbar-order: (
 
 
 ion-toolbar {
+  display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  position: relative;
 }
 
 .toolbar-inner {
-  display: flex;
   width: 100%;
 }
 

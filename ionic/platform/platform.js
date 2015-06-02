@@ -32,6 +32,10 @@ class PlatformController {
     registry[platform.name] = platform;
   }
 
+  getPlatform(name) {
+    return registry[name];
+  }
+
   set(platform) {
     activePlatform = platform;
 
@@ -92,7 +96,7 @@ Platform.register({
 
 // Last case is a catch-all
 Platform.setDefault({
-  name: 'core'
+  name: 'ios'
 });
 
-Platform.set( Platform.detect() );
+Platform.set( Platform.get('ios') );//Platform.detect() );

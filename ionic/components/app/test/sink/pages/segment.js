@@ -7,8 +7,6 @@ import {FormBuilder, Validators, formDirectives, ControlGroup} from 'angular2/fo
 import {Segment, SegmentButton, List, Item, ActionMenu, Modal, ModalRef,
   NavbarTemplate, Navbar, NavController, Button, Content} from 'ionic/ionic';
 
-console.log('imporrted', formDirectives, Segment, SegmentButton);
-
 @Component({
   selector: 'ion-view'
 })

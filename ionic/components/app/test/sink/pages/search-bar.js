@@ -2,17 +2,19 @@ import {NgFor, DynamicComponentLoader, Injector, DomRenderer, ElementRef} from '
 import {Ancestor} from 'angular2/src/core/annotations_impl/visibility';
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
-import {FormBuilder, Validators, FormDirectives, ControlGroup} from 'angular2/forms';
+import {FormBuilder, Validators, formDirectives, ControlGroup} from 'angular2/forms';
 
-import {Segment, SegmentButton, List, Item, ActionMenu, Modal, ModalRef,
+import {Segment, SegmentButton, SearchBar, List, Item, ActionMenu, Modal, ModalRef,
   NavbarTemplate, Navbar, NavController, Button, Content} from 'ionic/ionic';
+
+  console.log(NavbarTemplate, Navbar, Content, formDirectives);
 
 @Component({
   selector: 'ion-view'
 })
 @View({
   template: `
-  <ion-navbar *navbar><ion-title>Cards</ion-title></ion-navbar>
+  <ion-navbar *navbar><ion-title>Search Bar</ion-title></ion-navbar>
 
   <ion-content class="padding">
     <h2>Search Bar</h2>
@@ -25,17 +27,20 @@ import {Segment, SegmentButton, List, Item, ActionMenu, Modal, ModalRef,
     </p>
 
     <form (^submit)="doSubmit($event)" [control-group]="form">
+      <ion-search-bar control="searchQuery"></ion-search-bar>
+      <div>
+        Query: <b>{{form.controls.searchQuery.value}}</b>
+      </div>
     </form>
   </ion-content>
   `,
-  directives: [NavbarTemplate, Navbar, Content, List, Item, Segment, SegmentButton]
+  directives: [formDirectives, NavbarTemplate, Navbar, Content, SearchBar]
 })
-export class SegmentPage {
+export class SearchBarPage {
   constructor() {
     var fb = new FormBuilder();
     this.form = fb.group({
-      mapStyle: ['hybrid', Validators.required]
+      searchQuery: ['', Validators.required]
     });
-
   }
 }

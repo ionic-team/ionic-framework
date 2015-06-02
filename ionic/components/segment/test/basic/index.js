@@ -1,15 +1,17 @@
-import {bootstrap, Switch, SwitchWhen} from 'angular2/angular2'
+import {bootstrap, NgSwitch, NgSwitchWhen} from 'angular2/angular2'
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
 import {Segment, SegmentButton, Content, Button} from 'ionic/ionic';
-import {FormBuilder, Validators, FormDirectives, ControlGroup} from 'angular2/forms';
+import {FormBuilder, Validators, formDirectives, ControlGroup} from 'angular2/forms';
 //import {IONIC_DIRECTIVES} from 'ionic/ionic'
+
+console.log('Loaded', formDirectives, Segment, SegmentButton, Content, Button, NgSwitch, NgSwitchWhen);
 
 @Component({ selector: 'ion-app' })
 @View({
   templateUrl: 'main.html',
-  directives: [FormDirectives].concat([Segment, SegmentButton, Content, Button, Switch, SwitchWhen])
+  directives: [formDirectives].concat([Segment, SegmentButton, Content, Button, NgSwitch, NgSwitchWhen])
 })
 class IonicApp {
   constructor() {

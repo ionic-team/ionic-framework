@@ -32,8 +32,8 @@ export class SearchBar {
     cd.valueAccessor = this; //ControlDirective should inject CheckboxControlDirective
 
     setTimeout(() => {
-      console.log('Search bar for list', this.list);
-      this.query = 'Cats';
+      //console.log('Search bar for list', this.list);
+      this.query = '';
     })
   }
 
@@ -53,6 +53,7 @@ export class SearchBar {
   }
 }
 
+/*
 export class SearchPipe extends Pipe {
   constructor() {
     super();
@@ -74,6 +75,7 @@ export class SearchPipe extends Pipe {
     return new SearchPipe(cdRef);
   }
 }
+*/
 
 new IonicComponent(SearchBar, {
   properties: {
