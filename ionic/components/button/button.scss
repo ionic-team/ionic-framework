@@ -201,6 +201,7 @@ a.button {
     text-decoration: none;
   }
 
+  &:active,
   &.activated {
     opacity: 1;
     background-color: darken($bg-color, 12%);
