@@ -53,10 +53,15 @@
     "traceur": "0.0.87",
     "zone.js": "0.4.1"
   },
-  "registry": "jspm",
-  "directories": {
-    "baseURL": "n",
-    "lib": "n",
-    "packages": "n/jspm_packages"
+  "jspm": {
+    "directories": {},
+    "dependencies": {
+      "angular2": "npm:angular2@^2.0.0-alpha.25"
+    },
+    "devDependencies": {
+      "babel": "npm:babel-core@^5.1.13",
+      "babel-runtime": "npm:babel-runtime@^5.1.13",
+      "core-js": "npm:core-js@^0.9.4"
+    }
   }
 }
