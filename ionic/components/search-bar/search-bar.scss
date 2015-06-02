@@ -11,7 +11,11 @@ $search-bar-min-height:         44px !default;
   align-items: center;
   width: 100%;
   min-height: $search-bar-min-height;
-  line-height: 3rem;
+}
+
+.search-bar-icon {
+  // Don't let them tap on the icon
+  pointer-events: none;
 }
 
 .search-bar-input-container {
@@ -21,12 +25,13 @@ $search-bar-min-height:         44px !default;
   width: 100%;
 }
 
-.search-bar-input {
+input[type="search"].search-bar-input {
   display: block;
   width: 100%;
   height: 100%;
   border: none;
   font-family: inherit;
+  line-height: 3rem;
   @include appearance(none);
 }
 
