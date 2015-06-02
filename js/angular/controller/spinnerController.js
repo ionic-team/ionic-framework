@@ -390,20 +390,13 @@
   .controller('$ionicSpinner', [
     '$element',
     '$attrs',
-  function($element, $attrs) {
+    '$ionicConfig',
+  function($element, $attrs, $ionicConfig) {
     var spinnerName, spinner;
 
     this.init = function() {
-      var override = null;
-      if (ionic.Platform.platform() === 'windowsphone') {
-        override = 'android';
-      }
-      spinnerName = $attrs.icon || override || ionic.Platform.platform();
+      spinnerName = $attrs.icon || $ionicConfig.spinner.icon();
       spinner = spinners[spinnerName];
-      if (!spinner) {
-        spinnerName = 'ios';
-        spinner = spinners.ios;
-      }
 
       var container = document.createElement('div');
       createSvgElement('svg', {
