@@ -53,6 +53,7 @@ export class SearchBar {
   }
 }
 
+/*
 export class SearchPipe extends Pipe {
   constructor() {
     super();
@@ -74,6 +75,7 @@ export class SearchPipe extends Pipe {
     return new SearchPipe(cdRef);
   }
 }
+*/
 
 new IonicComponent(SearchBar, {
   properties: {
