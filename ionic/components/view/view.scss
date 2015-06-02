@@ -13,8 +13,14 @@ ion-view,
   //display: none;
   flex-direction: column;
 
+  display: flex;
+
+  /*
+  TODO: This is probably not the most common case,
+        should be display flex first, then remove for special cases.
   &.show-view {
     display: flex;
   }
+  */
 
 }
