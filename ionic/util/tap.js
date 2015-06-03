@@ -181,7 +181,7 @@ export let Tap = {
   },
 
   isKeyboardElement: function(ele) {
-    if ( !ionic.Platform.isIOS() || ionic.Platform.isIPad() ) {
+    if ( !Platform.is('ios') || Platform.isDevice('ipad') ) {
       return Tap.isTextInput(ele) && !Tap.isDateInput(ele);
     } else {
       return Tap.isTextInput(ele) || ( !!ele && ele.tagName == "SELECT");
@@ -203,7 +203,7 @@ export let Tap = {
     if (Tap.hasCheckedClone) return;
     Tap.hasCheckedClone = true;
 
-    ionic.requestAnimationFrame(function() {
+    dom.raf(function() {
       var focusInput = container.querySelector(':focus');
       if (Tap.isTextInput(focusInput)) {
         var clonedInput = focusInput.cloneNode(true);
@@ -228,7 +228,7 @@ export let Tap = {
   removeClonedInputs: function(container) {
     Tap.hasCheckedClone = false;
 
-    ionic.requestAnimationFrame(function() {
+    dom.raf(function() {
       var clonedInputs = container.querySelectorAll('.cloned-text-input');
       var previousInputFocus = container.querySelectorAll('.previous-input-focus');
       var x;
@@ -240,7 +240,11 @@ export let Tap = {
       for (x = 0; x < previousInputFocus.length; x++) {
         previousInputFocus[x].classList.remove('previous-input-focus');
         previousInputFocus[x].style.top = '';
-        if ( ionic.keyboard.isOpen && !ionic.keyboard.isClosing ) previousInputFocus[x].focus();
+
+        // TODO(tlancina): Get this back to life
+        // if ( ionic.keyboard.isOpen && !ionic.keyboard.isClosing ) {
+        //   previousInputFocus[x].focus();
+        // }
       }
     });
   },
@@ -341,8 +345,10 @@ function tapClickGateKeeper(e) {
   }
 
   // do not allow through any click events that were not created by Tap
-  if ((ionic.scroll.isScrolling && Tap.containsOrIsTextInput(e.target)) ||
-      (!e.isIonicTap && !Tap.requiresNativeClick(e.target))) {
+
+  // TODO(mlynch): re-enable this check
+  //if ((ionic.scroll.isScrolling && Tap.containsOrIsTextInput(e.target)) || (!e.isIonicTap && !Tap.requiresNativeClick(e.target))) {
+  if (!e.isIonicTap && !Tap.requiresNativeClick(e.target)) {
     //console.log('clickPrevent', e.target.tagName);
     e.stopPropagation();
 
@@ -378,7 +384,9 @@ function tapMouseDown(e) {
   tapPointerStart = Tap.pointerCoord(e);
 
   tapEventListener('mousemove');
-  ionic.activator.start(e);
+
+  // TODO(mlynch): re-enable
+  // ionic.activator.start(e);
 }
 
 function tapMouseUp(e) {
@@ -395,14 +403,16 @@ function tapMouseUp(e) {
     tapClick(e);
   }
   tapEventListener('mousemove', false);
-  ionic.activator.end();
+  // TODO(mlynch): re-enable
+  // ionic.activator.end();
   tapPointerMoved = false;
 }
 
 function tapMouseMove(e) {
   if (tapHasPointerMoved(e)) {
     tapEventListener('mousemove', false);
-    ionic.activator.end();
+    // TODO(mlynch): re-enable
+    // ionic.activator.end();
     tapPointerMoved = true;
     return false;
   }
@@ -420,9 +430,10 @@ function tapTouchStart(e) {
   tapPointerStart = Tap.pointerCoord(e);
 
   tapEventListener(tapTouchMoveListener);
-  ionic.activator.start(e);
+  // TODO(mlynch): re-enable
+  //ionic.activator.start(e);
 
-  if (ionic.Platform.isIOS() && Tap.isLabelWithTextInput(e.target)) {
+  if (Platform.is('ios') && Tap.isLabelWithTextInput(e.target)) {
     // if the tapped element is a label, which has a child input
     // then preventDefault so iOS doesn't ugly auto scroll to the input
     // but do not prevent default on Android or else you cannot move the text caret
@@ -457,14 +468,17 @@ function tapTouchMove(e) {
   if (tapHasPointerMoved(e)) {
     tapPointerMoved = true;
     tapEventListener(tapTouchMoveListener, false);
-    ionic.activator.end();
+
+    // TODO(mlynch): re-enable
+    // ionic.activator.end();
     return false;
   }
 }
 
 function tapTouchCancel() {
   tapEventListener(tapTouchMoveListener, false);
-  ionic.activator.end();
+  // TODO(mlynch): re-enable
+  // ionic.activator.end();
   tapPointerMoved = false;
 }
 
@@ -480,7 +494,14 @@ function tapIgnoreEvent(e) {
   if (e.isTapHandled) return true;
   e.isTapHandled = true;
 
+  // TODO(mlynch): re-enable
+  /*
   if (ionic.scroll.isScrolling && Tap.containsOrIsTextInput(e.target)) {
+    e.preventDefault();
+    return true;
+  }
+  */
+  if (Tap.containsOrIsTextInput(e.target)) {
     e.preventDefault();
     return true;
   }

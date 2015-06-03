@@ -76,6 +76,23 @@ class PlatformController {
   run() {
     activePlatform && activePlatform.run();
   }
+
+  /**
+   * Check if the platform matches the provided one.
+   */
+  is(platform) {
+    if(!activePlatform) { return false; }
+
+    return activePlatform.name === platform;
+  }
+  /**
+   * Check if the loaded device matches the provided one.
+   */
+  isDevice(device) {
+    if(!activePlatform) { return false; }
+
+    return activePlatform.getDevice() === device;
+  }
 }
 
 export let Platform = new PlatformController((util.getQuerystring('ionicplatform')).toLowerCase(), window.navigator.userAgent);
@@ -90,8 +107,10 @@ Platform.register({
     }
     return /android/i.test(userAgent);
   },
+  getDevice: function() {
+    return 'android';
+  },
   run() {
-
   }
 });
 
@@ -103,16 +122,27 @@ Platform.register({
     }
     return /ipad|iphone|ipod/i.test(userAgent);
   },
+  getDevice: function() {
+    if(/ipad/i.test(userAgent)) {
+      return 'ipad';
+    }
+    if(/iphone/i.test(userAgent)) {
+      return 'iphone';
+    }
+  },
   run() {
     //Tap.run();
   }
 });
 
 // Last case is a catch-all
+// TODO(mlynch): don't default to iOS, default to core,
+// also make sure to remove getPlatform and set to detect()
 Platform.setDefault({
   name: 'ios'
 });
-
 Platform.set( Platform.getPlatform('ios') );//Platform.detect() );
 
+// If the platform needs to do some initialization (like load a custom
+// tap strategy), run it now
 Platform.run();
