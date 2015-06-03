@@ -6,6 +6,7 @@ export * from 'ionic/routing/router'
 
 export * from 'ionic/util/click-block'
 export * from 'ionic/util/focus'
+export * from 'ionic/util/tap'
 
 export * from 'ionic/engine/engine'
 export * from 'ionic/engine/cordova/cordova'

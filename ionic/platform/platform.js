@@ -1,5 +1,5 @@
 import * as util from '../util/util';
-
+import {Tap} from '../util/tap';
 
 let registry = {};
 let defaultPlatform;
@@ -61,12 +61,20 @@ class PlatformController {
     return null;
   }
 
+  is(name) {
+    return activePlatform.name === name;
+  }
+
   _applyBodyClasses() {
     if(!activePlatform) {
       return;
     }
 
     document.body.classList.add('platform-' + activePlatform.name);
+  }
+
+  run() {
+    activePlatform && activePlatform.run();
   }
 }
 
@@ -81,6 +89,9 @@ Platform.register({
       return platformQuerystring == 'android';
     }
     return /android/i.test(userAgent);
+  },
+  run() {
+
   }
 });
 
@@ -91,6 +102,9 @@ Platform.register({
       return platformQuerystring == 'ios';
     }
     return /ipad|iphone|ipod/i.test(userAgent);
+  },
+  run() {
+    //Tap.run();
   }
 });
 
@@ -99,4 +113,6 @@ Platform.setDefault({
   name: 'ios'
 });
 
-Platform.set( Platform.get('ios') );//Platform.detect() );
+Platform.set( Platform.getPlatform('ios') );//Platform.detect() );
+
+Platform.run();
