@@ -95,6 +95,8 @@ export class Slides {
     // that the user will actually see.
     this.containerWidth = this.domElement.offsetWidth || this.domElement.getBoundingClientRect().width;
 
+    console.log('Computed container width', this.containerWidth);
+
     // Set the wrapper element to the total width of the child elements
     this.wrapperElement.style.width = ((this.containerWidth * this.slides.length)) + 'px';
 

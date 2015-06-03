@@ -11,7 +11,7 @@ import {Slides, Slide, SlidePager, List, Item, ActionMenu, Modal, ModalRef,
 })
 @View({
   template: `
-  <ion-navbar *navbar><ion-title>Cards</ion-title></ion-navbar>
+  <ion-navbar *navbar><ion-title>Sink</ion-title></ion-navbar>
 
   <ion-content class="padding">
     <h2>Slides</h2>
