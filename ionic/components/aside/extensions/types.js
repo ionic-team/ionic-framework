@@ -1,4 +1,5 @@
 import {Aside} from 'ionic/components/aside/aside';
+import {CSS} from 'ionic/util/dom'
 
 // TODO use setters instead of direct dom manipulation
 const asideManipulator = {
@@ -9,7 +10,7 @@ const asideManipulator = {
     this.aside.domElement.classList[open ? 'add' : 'remove']('open');
   },
   setTransform(t) {
-    this.aside.domElement.style.transform = t;
+    this.aside.domElement.style[CSS.transform] = t;
   }
 }
 const contentManipulator = {
@@ -22,7 +23,7 @@ const contentManipulator = {
     )
   },
   setTransform(t) {
-    this.aside.content.domElement.style.transform = t;
+    this.aside.content.domElement.style[CSS.transform] = t;
   }
 }
 

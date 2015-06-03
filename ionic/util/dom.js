@@ -31,21 +31,39 @@ export function rafPromise() {
 
 export const isSVG = val => window.SVGElement && (val instanceof window.SVGElement);
 
-
-// We only need to test for webkit in our supported browsers. Webkit is the
-// only  browser still using prefixes. Code adapted from angular-animate.js
 export let CSS = {};
-if (window.ontransitionend === undefined && window.onwebkittransitionend !== undefined) {
-  CSS.prefix = '-webkit-';
-  CSS.transition = 'webkitTransition';
-  CSS.transform = 'webkitTransform';
-  CSS.transitionEnd = 'webkitTransitionEnd transitionend';
-} else {
-  CSS.prefix = '';
-  CSS.transform = 'transform';
-  CSS.transition = 'transition';
-  CSS.transitionEnd = 'transitionend';
-}
+(function() {
+  // transform
+  var i, keys = ['webkitTransform', 'transform', '-webkit-transform', 'webkit-transform',
+                 '-moz-transform', 'moz-transform', 'MozTransform', 'mozTransform', 'msTransform'];
+
+  for (i = 0; i < keys.length; i++) {
+    if (document.documentElement.style[keys[i]] !== undefined) {
+      CSS.transform = keys[i];
+      break;
+    }
+  }
+
+  // transition
+  keys = ['webkitTransition', 'mozTransition', 'msTransition', 'transition'];
+  for (i = 0; i < keys.length; i++) {
+    if (document.documentElement.style[keys[i]] !== undefined) {
+      CSS.transition = keys[i];
+      break;
+    }
+  }
+
+  // The only prefix we care about is webkit for transitions.
+  var isWebkit = CSS.transition.indexOf('webkit') > -1;
+
+  CSS.prefix = isWebkit ? '-webkit-' : '';
+
+  // transition duration
+  CSS.transitionDuration = (isWebkit ? '-webkit-' : '') + 'transition-duration';
+
+  // To be sure transitionend works everywhere, include *both* the webkit and non-webkit events
+  CSS.transitionEnd = (isWebkit ? 'webkitTransitionEnd ' : '') + 'transitionend';
+})();
 
 if (window.onanimationend === undefined && window.onwebkitanimationend !== undefined) {
   CSS.animation = 'WebkitAnimation';
