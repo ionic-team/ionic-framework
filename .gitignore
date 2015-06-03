@@ -24,6 +24,7 @@ bower_components/
 tmp
 temp
 dist
+angular2
 
 .idea
 /src/components/split-view/test/settings/main.js

@@ -10,16 +10,17 @@ System.config({
     "ionic/*": "dist/ionic/*.js",
     "github:*": "jspm_packages/github/*.js",
     "npm:*": "jspm_packages/npm/*.js",
+    "angular2/*": "angular2/dist/js/dev/es6/angular2/*.es6",
     "*": "*.js"
   }
 });
 
 System.config({
   "map": {
-    "angular2": "npm:angular2@2.0.0-alpha.25",
     "babel": "npm:babel-core@5.4.7",
     "babel-runtime": "npm:babel-runtime@5.4.7",
     "core-js": "npm:core-js@0.9.13",
+    "rx": "npm:rx@2.5.3",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
     },
@@ -152,6 +153,9 @@ System.config({
       "path": "github:jspm/nodelibs-path@0.1.0"
     },
     "npm:rx@2.5.1": {
+      "process": "github:jspm/nodelibs-process@0.1.1"
+    },
+    "npm:rx@2.5.3": {
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
     "npm:semver@2.3.2": {

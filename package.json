@@ -56,7 +56,8 @@
   "jspm": {
     "directories": {},
     "dependencies": {
-      "angular2": "npm:angular2@^2.0.0-alpha.25"
+      "angular2": "npm:angular2@^2.0.0-alpha.25",
+      "rx": "npm:rx@^2.5.3"
     },
     "devDependencies": {
       "babel": "npm:babel-core@^5.1.13",

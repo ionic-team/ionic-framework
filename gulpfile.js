@@ -23,11 +23,12 @@ var webpack = require('gulp-webpack');
 var lazypipe = require('lazypipe');
 
 
-
 gulp.task('build', function() {
   runSequence(
     'clean',
-    'ionic.copy.js',
+    'ionic.traceur',
+    'ionic.bundle.deps',
+    'ionic.bundle.js',
     'ionic.examples',
     'sass',
     'fonts',
@@ -38,6 +39,7 @@ gulp.task('watch', function() {
 
   runSequence(
     'clean',
+    'link.angular',
     'ionic.copy.js',
     'ionic.examples',
     'sass',
@@ -80,35 +82,51 @@ function doubleCheckDistFiles() {
 }
 
 gulp.task('clean', function(done) {
-  del(['../angular-ionic/modules/ionic, ./angular-ionic/modules/examples/src/ionic, dist/'], done);
+  del(['dist/'], done);
 });
 
-//gulp.task('ionic.copy.js', function(done) {
-//  return gulp.src(['ionic/**/*.js', '!ionic/components/*/test/**/*'])
-//             .pipe(gulp.dest('../angular-ionic/modules/ionic'));
-//});
-//
-  var traceurOptions = {
-    annotations: true,
-    types: true,
-    outputLanguage: 'es6'
-  }
+var traceurOptions = {
+  annotations: true,
+  types: true,
+  outputLanguage: 'es6'
+}
 
-  var babelOptions = {
-    optional: ['es7.decorators'],
-    /*plugins: [
-      './transformers/disable-define',
-      'angular2-annotations',
-      'type-assertion:after'
-    ],*/
-    modules: "system"
-  };
+var babelOptions = {
+  optional: ['es7.decorators'],
+  /*plugins: [
+    './transformers/disable-define',
+    'angular2-annotations',
+    'type-assertion:after'
+  ],*/
+  modules: "system"
+};
 
-gulp.task('ionic.traceur.es6', function(done) {
+gulp.task('ionic.traceur', function(done) {
   return gulp.src(['ionic/**/*.js', '!ionic/components/*/test/**/*'])
              .pipe(traceur(traceurOptions))
-             //.pipe(concat('ionic.bundle.js'))
              .pipe(gulp.dest('dist/ionic'));
+});
+
+gulp.task('ionic.bundle.js', function() {
+  var Builder = require('systemjs-builder');
+  var builder = new Builder();
+  return builder.loadConfig('config.js').then(function(){
+    builder.config({ baseURL: 'file:' + process.cwd() });
+    return builder.build('dist/ionic/ionic - dist/js/dependencies', 'dist/js/ionic.bundle.js');
+  }, function(error){
+    throw new Error(error);
+  })
+});
+
+gulp.task('ionic.bundle.deps', function() {
+  var Builder = require('systemjs-builder');
+  var builder = new Builder();
+  return builder.loadConfig('config.js').then(function(){
+    builder.config({ baseURL: 'file:' + process.cwd() });
+    return builder.build('dist/ionic/ionic - [dist/ionic/ionic]', 'dist/js/dependencies.js');
+  }, function(error){
+    throw new Error(error);
+  })
 });
 
 gulp.task('ionic.examples', function() {
@@ -119,13 +137,13 @@ gulp.task('ionic.examples', function() {
   // Get each test folder with gulp.src
   return gulp.src('ionic/components/*/test/*/**/*')
     .pipe(gulpif(/.js$/, buildTest()))
-    .pipe(gulpif(/index.js$/, createTest()))
+    .pipe(gulpif(/index.js$/, createIndexHTML()))
     .pipe(rename(function(file) {
       file.dirname = file.dirname.replace(path.sep + 'test' + path.sep, path.sep)
     }))
     .pipe(gulp.dest('dist/examples/'))
 
-  function createTest() {
+  function createIndexHTML() {
     var indexContents = _.template( 
       fs.readFileSync('scripts/e2e/ionic.template.html')
     )({
@@ -133,35 +151,16 @@ gulp.task('ionic.examples', function() {
     });
 
     return through2.obj(function(file, enc, next) {
-      // debugger;
-       //var Builder = require('systemjs-builder');
-       //var builder = new Builder();
-       //builder.loadConfig('config.js').then(function(){
-       //builder.config(systemjsConfig);
-        // builder.build('index'/*, path.join(path.dirname(file.path), 'index.js')*/).then(function(){
-           var self = this;
-           self.push(new VinylFile({
-             base: file.base,
-             contents: new Buffer(indexContents),
-             path: path.join(path.dirname(file.path), 'index.html'),
-           }));
-           next(null, file);
-         //});
-      //})
+      var self = this;
+      self.push(new VinylFile({
+        base: file.base,
+        contents: new Buffer(indexContents),
+        path: path.join(path.dirname(file.path), 'index.html'),
+      }));
+      next(null, file);
     });
   }
 });
-
-
-gulp.task('build.system.js', function() {
-  var Builder = require('systemjs-builder');
-  var builder = new Builder();
-  builder.loadConfig('config.js').then(function(){
-    //builder.config(systemjsConfig);
-    return builder.build('index', 'index.js');
-  })
-});
-
 
 gulp.task('sass', function() {
   return gulp.src('ionic/ionic.scss')
@@ -171,29 +170,34 @@ gulp.task('sass', function() {
       }
     }))
     .pipe(autoprefixer(buildConfig.autoprefixer))
-    .pipe(gulp.dest('../angular-ionic/dist/js/dev/es5/css'));
+    .pipe(gulp.dest('dist/css/'));
 });
-
 
 gulp.task('fonts', function() {
   return gulp.src('ionic/components/icon/fonts/**/*')
-    .pipe(gulp.dest('../angular-ionic/dist/js/dev/es5/fonts'));
+    .pipe(gulp.dest('dist/fonts'));
 });
 
 
 gulp.task('polyfills', function() {
   return gulp.src('ionic/animations/web-animations*')
-    .pipe(gulp.dest('../angular-ionic/dist/js/dev/es5/polyfills'));
+    .pipe(gulp.dest('dist/polyfills'));
 });
 
+
+gulp.task('link.angular', function() {
+  if (!fs.existsSync('../angular-ionic')) {
+    throw new Error("../angular-ionic doesn't exist. Run gulp update.angular first");
+  }
+  linkAngular();
+});
 
 gulp.task('update.angular', function(done) {
 
   if (!fs.existsSync('../angular-ionic')) {
-    fs.mkdirSync('../angular-ionic');
-
     console.log('cloning angular master...');
     exec('git clone git@github.com:angular/angular ../angular-ionic', function() {
+      linkAngular();
       npmInstall();
     });
 
@@ -221,6 +225,13 @@ gulp.task('update.angular', function(done) {
   }
 
 });
+
+function linkAngular() {
+ if (!fs.existsSync('angular2')) {
+    console.log("Symlinking ../angular-ionic to angular2");
+    fs.symlinkSync('../angular-ionic', 'angular2');
+  }
+}
 
 
 
