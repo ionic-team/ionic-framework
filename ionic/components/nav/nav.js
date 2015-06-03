@@ -135,15 +135,16 @@ export class Nav {
     }
 
     // the active item is going to be the leaving one (if one exists)
-    let leavingItem = this.getActive() || {};
+    let leavingItem = this.getActive() || new NavItem();
     leavingItem.shouldDestroy = false;
+    leavingItem.shouldCache = true;
+    leavingItem.willCache();
 
     // create a new NavStackItem
     let enteringItem = new NavItem(this, Component, params);
 
     // set that this item is staged (it's not ready to be animated in yet)
     enteringItem.state = STAGED_STATE;
-    enteringItem.shouldDestroy = false;
 
     // add the item to the stack
     this.items.push(enteringItem);
@@ -173,21 +174,22 @@ export class Nav {
 
     // get the active item and set that it is staged to be leaving
     // was probably the one popped from the stack
-    let leavingItem = this.getActive();
+    let leavingItem = this.getActive() || new NavItem();
     leavingItem.shouldDestroy = true;
+    leavingItem.shouldCache = false;
+    leavingItem.willUnload();
 
     // the entering item is now the new last item
     // Note: we might not have an entering item if this is the only
     // item on the history stack.
     let enteringItem = this.getPrevious(leavingItem);
     if(enteringItem) {
-      enteringItem.shouldDestroy = false;
-
       // start the transition
       this.transition(enteringItem, leavingItem, opts).then(() => {
         // transition completed, destroy the leaving item
         resolve();
       });
+
     } else {
       this.transitionComplete();
       resolve();
@@ -200,12 +202,17 @@ export class Nav {
     let resolve;
     let promise = new Promise(res => { resolve = res; });
 
-    opts.isAnimated = opts.animation !== 'none';
+    opts.isAnimated = (opts.animation !== 'none');
 
     this.transitionStart(opts);
 
     // wait for the new item to complete setup
     enteringItem.stage().then(() => {
+
+      enteringItem.shouldDestroy = false;
+      enteringItem.shouldCache = false;
+      enteringItem.willEnter();
+      leavingItem.willLeave();
 
       // set that the leaving item is stage to be leaving
       leavingItem.state = STAGED_LEAVING_STATE;
@@ -233,6 +240,9 @@ export class Nav {
 
           // dispose any items that shouldn't stay around
           transAnimation.dispose();
+
+          enteringItem.didEnter();
+          leavingItem.didLeave();
 
           // all done!
           this.transitionComplete();
@@ -263,12 +273,17 @@ export class Nav {
 
     // get the active item and set that it is staged to be leaving
     // was probably the one popped from the stack
-    let leavingItem = this.getActive();
+    let leavingItem = this.getActive() || new NavItem();
     leavingItem.shouldDestroy = true;
+    leavingItem.shouldCache = false;
+    leavingItem.willLeave();
+    leavingItem.willUnload();
 
     // the entering item is now the new last item
     let enteringItem = this.getPrevious(leavingItem);
     enteringItem.shouldDestroy = false;
+    enteringItem.shouldCache = false;
+    enteringItem.willEnter();
 
     // start the transition
     this.transitionStart({ isAnimated: true });
@@ -303,10 +318,17 @@ export class Nav {
             enteringItem.state = ACTIVE_STATE;
             leavingItem.state = CACHED_STATE;
 
+            enteringItem.didEnter();
+            leavingItem.didLeave();
+
           } else {
             // cancelled the swipe back, return items to original state
             leavingItem.state = ACTIVE_STATE;
             enteringItem.state = CACHED_STATE;
+
+            leavingItem.willEnter();
+            leavingItem.didEnter();
+            enteringItem.didLeave();
 
             leavingItem.shouldDestroy = false;
             enteringItem.shouldDestroy = false;
@@ -371,8 +393,9 @@ export class Nav {
           this.remove(item);
           item.destroy();
 
-        } else if(item.state !== ACTIVE_STATE) {
+        } else if (item.state === CACHED_STATE && item.shouldCache) {
           item.cache();
+          item.shouldCache = false;
         }
       }
     });

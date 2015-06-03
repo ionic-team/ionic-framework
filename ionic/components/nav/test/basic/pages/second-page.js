@@ -46,4 +46,40 @@ export class SecondPage {
     this.nav.push(ThirdPage);
   }
 
+  viewLoaded() {
+    console.log('viewLoaded second page');
+  }
+
+  viewWillEnter() {
+    console.log('viewWillEnter second page');
+  }
+
+  viewDidEnter() {
+    console.log('viewDidEnter second page');
+  }
+
+  viewWillLeave() {
+    console.log('viewWillLeave second page');
+  }
+
+  viewDidLeave() {
+    console.log('viewDidLeave second page');
+  }
+
+  viewWillCache() {
+    console.log('viewWillCache second page');
+  }
+
+  viewDidCache() {
+    console.log('viewDidCache second page');
+  }
+
+  viewWillUnload() {
+    console.log('viewWillUnload second page');
+  }
+
+  viewDidUnload() {
+    console.log('viewDidUnload second page');
+  }
+
 }

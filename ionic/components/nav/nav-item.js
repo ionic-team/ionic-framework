@@ -1,11 +1,11 @@
 import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
+import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 import {bind} from 'angular2/di';
 
 import * as util from 'ionic/util';
 import {NavController} from './nav-controller';
 import {Nav} from './nav';
 import {NavPane, NavPaneSection} from './nav';
-import {Lifecycle} from 'ionic/components/view/lifecycle';
 
 
 export class NavItem {
@@ -37,11 +37,10 @@ export class NavItem {
   }
 
   render() {
-    if (this.isRendered) {
-      console.log('showed existing view', this.id);
+
+    if (this.instance) {
       return Promise.resolve();
     }
-    this.isRendered = true;
 
     let resolve;
     let promise = new Promise((res) => { resolve = res; });
@@ -67,6 +66,9 @@ export class NavItem {
         let viewContainer = navPane.contentContainerRef;
         let hostViewRef = viewContainer.create(componentProtoViewRef, -1, null, injector);
 
+        let newLocation = new ElementRef(hostViewRef, 0);
+        this.instance = this.nav.loader._viewManager.getComponent(newLocation);
+
         this.disposals.push(() => {
           viewContainer.remove( viewContainer.indexOf(hostViewRef) );
         });
@@ -74,15 +76,24 @@ export class NavItem {
         this.viewEle = hostViewRef._view.render._view.rootNodes[0];
         this.viewEle.classList.add('nav-item');
 
+        let context = {
+          boundElementIndex: 0,
+          parentView: {
+            _view: hostViewRef._view.componentChildViews[0]
+          }
+        };
+
         // add only the sections it needs
         if (itemStructure.navbar) {
           let navbarViewContainer = navPane.sections.navbar.viewContainerRef;
-          this.navbarView = navbarViewContainer.create(this.protos.navbar, -1, null, injector);
+          this.navbarView = navbarViewContainer.create(this.protos.navbar, -1, context, injector);
 
           this.disposals.push(() => {
             navbarViewContainer.remove( navbarViewContainer.indexOf(this.navbarView) );
           });
         }
+
+        this.loaded();
 
         resolve();
       });
@@ -103,68 +114,17 @@ export class NavItem {
 
     return itemStructure;
   }
-//     if (this.created) {
-//       console.log('showed existing view', this.id);
-//       return Promise.resolve();
-//     }
-
-//     this.created = true;
-
-//     let resolve;
-//     let promise = new Promise((res) => { resolve = res; });
-
-//     let injector = this.nav.injector.resolveAndCreateChild([
-//       bind(NavController).toValue(this.nav.navCtrl),
-//       bind(NavParams).toValue(new NavParams(this.params)),
-//       bind(NavItem).toValue(this)
-//     ]);
-
-//     this.nav.loader.loadNextToExistingLocation(this.Component, this.nav.contentElementRef, injector).then((componentRef) => {
-//       let navbarContainer = this.nav.navbarContainerRef;
-
-//       if (componentRef && componentRef.dispose && navbarContainer) {
-//         this.disposals.push(componentRef.dispose);
-
-//         this.viewEle = componentRef.location.domElement;
-//         this.viewEle.classList.add('ion-view');
-
-//         if (this._navbarProto) {
-//           let context = {
-//             boundElementIndex: 0,
-//             parentView: {
-//               _view: componentRef.location.parentView._view.componentChildViews[0]
-//             }
-//           };
-
-//           let atIndex = -1;
-
-//           this._navbarView = navbarContainer.create(this._navbarProto, atIndex, context, injector);
-
-//           if (this._navbarView) {
-//             this.disposals.push(() => {
-//               navbarContainer.remove( navbarContainer.indexOf(this._navbarView) );
-//             });
-//           }
-//         }
-//       }
-
-//       console.log('created view', this.id);
-//       resolve();
-//     });
-
-//     return promise;
-
 
   cache() {
-    console.log('cached view', this.id);
+    this.didCache();
   }
 
   destroy() {
-    console.log('destroyed view', this.id);
-
     for (let i = 0; i < this.disposals.length; i++) {
       this.disposals[i]();
     }
+
+    this.didUnload();
 
     // just to help prevent any possible memory leaks
     for (let name in this) {
@@ -172,11 +132,6 @@ export class NavItem {
         this[name] = null;
       }
     }
-  }
-
-  navbarProto(navbarProtoView) {
-    console.log('nav-item navbarProto')
-    this._navbarProto = navbarProtoView;
   }
 
   viewElement() {
@@ -221,6 +176,76 @@ export class NavItem {
       this._backBtn = null;
     }
     return this._backBtn;
+  }
+
+
+  /*
+    The view has loaded. This event only happens once per view being
+    created. If a view leaves but is cached, then this will not
+    fire again on a subsequent viewing. This method is a good place
+    to put your setup code for the view; however, it is not the
+    recommended method to use when a view becomes active.
+  */
+  loaded() {
+    this.instance && this.instance.viewLoaded && this.instance.viewLoaded();
+  }
+
+  /*
+    The view is about to enter and become the active view.
+  */
+  willEnter() {
+    this.instance && this.instance.viewWillEnter && this.instance.viewWillEnter();
+  }
+
+  /*
+    The view has fully entered and is now the active view. This
+    will fire, whether it was the first load or loaded from the cache.
+  */
+  didEnter() {
+    this.instance && this.instance.viewDidEnter && this.instance.viewDidEnter();
+  }
+
+  /*
+    The view has is about to leave and no longer be the active view.
+  */
+  willLeave() {
+    this.instance && this.instance.viewWillLeave && this.instance.viewWillLeave();
+  }
+
+  /*
+    The view has finished leaving and is no longer the active view. This
+    will fire, whether it is cached or unloaded.
+  */
+  didLeave() {
+    this.instance && this.instance.viewDidLeave && this.instance.viewDidLeave();
+  }
+
+  /*
+    The view is about to become cached.
+  */
+  willCache() {
+    this.instance && this.instance.viewWillCache && this.instance.viewWillCache();
+  }
+
+  /*
+    The view is now cached.
+  */
+  didCache() {
+    this.instance && this.instance.viewDidCache && this.instance.viewDidCache();
+  }
+
+  /*
+    The view is about to be destroyed and have its elements removed.
+  */
+  willUnload() {
+    this.instance && this.instance.viewWillUnload && this.instance.viewWillUnload();
+  }
+
+  /*
+    The view has been destroyed and its elements have been removed.
+  */
+  didUnload() {
+    this.instance && this.instance.viewDidUnload && this.instance.viewDidUnload();
   }
 
 }

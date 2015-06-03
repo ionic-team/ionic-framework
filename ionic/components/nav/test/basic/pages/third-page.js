@@ -28,7 +28,45 @@ export class ThirdPage {
   ) {
     this.nav = nav
   }
+
   pop() {
     this.nav.pop()
   }
+
+  viewLoaded() {
+    console.log('viewLoaded third page');
+  }
+
+  viewWillEnter() {
+    console.log('viewWillEnter third page');
+  }
+
+  viewDidEnter() {
+    console.log('viewDidEnter third page');
+  }
+
+  viewWillLeave() {
+    console.log('viewWillLeave third page');
+  }
+
+  viewDidLeave() {
+    console.log('viewDidLeave third page');
+  }
+
+  viewWillCache() {
+    console.log('viewWillCache third page');
+  }
+
+  viewDidCache() {
+    console.log('viewDidCache third page');
+  }
+
+  viewWillUnload() {
+    console.log('viewWillUnload third page');
+  }
+
+  viewDidUnload() {
+    console.log('viewDidUnload third page');
+  }
+
 }

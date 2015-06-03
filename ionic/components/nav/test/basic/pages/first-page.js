@@ -9,7 +9,7 @@ import {SecondPage} from './second-page';
 @View({
   template: '' +
     '<ion-navbar *navbar>' +
-      '<ion-title>First Page</ion-title>' +
+      '<ion-title>First Page: {{ val }}</ion-title>' +
       '<ion-nav-items primary>' +
         '<button class="button">P1</button>' +
       '</ion-nav-items>' +
@@ -35,11 +35,39 @@ export class FirstPage {
   }
 
   viewLoaded() {
-    console.log('VIEW LOADED');
+    console.log('viewLoaded first page');
   }
 
-  viewWillShow() {
-    console.log('VIEW WILL SHOW');
+  viewWillEnter() {
+    console.log('viewWillEnter first page');
+  }
+
+  viewDidEnter() {
+    console.log('viewDidEnter first page');
+  }
+
+  viewWillLeave() {
+    console.log('viewWillLeave first page');
+  }
+
+  viewDidLeave() {
+    console.log('viewDidLeave first page');
+  }
+
+  viewWillCache() {
+    console.log('viewWillCache first page');
+  }
+
+  viewDidCache() {
+    console.log('viewDidCache first page');
+  }
+
+  viewWillUnload() {
+    console.log('viewWillUnload first page');
+  }
+
+  viewDidUnload() {
+    console.log('viewDidUnload first page');
   }
 
   push() {
