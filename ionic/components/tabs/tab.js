@@ -8,7 +8,6 @@ import {Injector} from 'angular2/di';
 import {Tabs} from './tabs';
 import {Content} from '../content/content';
 import {IonicComponent} from 'ionic/config/component';
-import {NavBase} from '../nav/nav-base';
 
 
 let tabId = -1;
