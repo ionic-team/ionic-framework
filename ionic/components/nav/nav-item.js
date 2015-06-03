@@ -5,7 +5,7 @@ import {bind} from 'angular2/di';
 import * as util from 'ionic/util';
 import {NavController} from './nav-controller';
 import {Nav} from './nav';
-import {NavPane, NavPaneSection} from './nav';
+import {TabPane, NavPane, NavPaneSection} from './nav';
 
 
 export class NavItem {
@@ -37,8 +37,8 @@ export class NavItem {
   }
 
   render() {
-
     if (this.instance) {
+      // already compiled this view
       return Promise.resolve();
     }
 
@@ -50,10 +50,10 @@ export class NavItem {
 
       // figure out the sturcture of this Component
       // does it have a navbar? Is it tabs? Should it not have a navbar or any toolbars?
-      let itemStructure = this.getStructure(componentProtoViewRef);
+      let itemStructure = getProtoViewStructure(componentProtoViewRef);
 
       // get the appropriate NavPane which this NavItem will fit into
-      this.nav.getNavPane(itemStructure).then(navPane => {
+      this.nav.getPane(itemStructure).then(navPane => {
 
         // create a new injector just for this NavItem
         let injector = this.nav.injector.resolveAndCreateChild([
@@ -84,8 +84,8 @@ export class NavItem {
         };
 
         // add only the sections it needs
-        if (itemStructure.navbar) {
-          let navbarViewContainer = navPane.sections.navbar.viewContainerRef;
+        let navbarViewContainer = navPane.sections.navbar.viewContainerRef;
+        if (navbarViewContainer && itemStructure.navbar && this.protos.navbar) {
           this.navbarView = navbarViewContainer.create(this.protos.navbar, -1, context, injector);
 
           this.disposals.push(() => {
@@ -101,18 +101,6 @@ export class NavItem {
     });
 
     return promise;
-  }
-
-  getStructure(componentProtoViewRef) {
-    // navbar - toolbar - toolbar - content - toolbar - tabbar
-    let itemStructure = {
-      navbar: true,
-      tabbar: false,
-      toolbars: [],
-      key: 'c'
-    };
-
-    return itemStructure;
   }
 
   cache() {
@@ -254,4 +242,37 @@ export class NavParams {
   constructor(params) {
     util.extend(this, params);
   }
+}
+
+function getProtoViewStructure(componentProtoViewRef) {
+  let navbar = true;
+  let tabs = false;
+  let toolbars = [];
+  let key = '_';
+
+  // componentProtoViewRef._protoView.elementBinders.forEach(rootElementBinder => {
+  //   if (!rootElementBinder.componentDirective || !rootElementBinder.nestedProtoView) return;
+
+  //   rootElementBinder.nestedProtoView.elementBinders.forEach(nestedElementBinder => {
+  //     let componentDirective = nestedElementBinder.componentDirective;
+  //     if (componentDirective && componentDirective.metadata.id == 'Tab') {
+  //       navbar = tabs = true;
+  //     }
+  //   });
+  // });
+
+  if (navbar) {
+    key += 'n'
+  }
+
+  if (toolbars.length) {
+    key += 'b' + toolbars.length;
+  }
+
+  return {
+    navbar: navbar,
+    tabs: tabs,
+    toolbars: toolbars,
+    key: key
+  };
 }

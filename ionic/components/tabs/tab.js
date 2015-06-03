@@ -2,15 +2,11 @@ import {Parent} from 'angular2/src/core/annotations_impl/visibility';
 import {Directive, Component} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
-import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_component_loader';
-import {Injector} from 'angular2/di';
 
 import {Tabs} from './tabs';
 import {Content} from '../content/content';
 import {IonicComponent} from 'ionic/config/component';
 
-
-let tabId = -1;
 
 @Component({
   selector: 'ion-tab',
@@ -31,36 +27,26 @@ let tabId = -1;
 })
 @View({
   template: `
-    <template content-anchor></template>
+    <template tab-anchor></template>
     <content></content>
   `,
-  directives: [ContentAnchor]
+  directives: [TabAnchor]
 })
 export class Tab {
-  constructor(
-    @Parent() tabs: Tabs,
-    elementRef: ElementRef,
-    loader: DynamicComponentLoader,
-    injector: Injector
-  ) {
-    this.navBase = new NavBase(elementRef, loader, injector);
-
-    this.navBase.navbarContainerRef = tabs.navbarContainerRef;
-
+  constructor(@Parent() tabs: Tabs, elementRef: ElementRef) {
     this.domElement = elementRef.domElement;
 
-    this.id = ++tabId;
+    tabs.addTab(this);
     this.panelId = 'tab-panel-' + this.id;
     this.labeledBy = 'tab-button-' + this.id;
 
-    tabs.addTab(this);
-    console.log('Tab constructor')
+    console.log('Tab constructor', this.id);
   }
 
   onInit() {
     if (this.initial) {
-      console.log('Tab onInit')
-      this.navBase.push(this.initial);
+      // console.log('Tab onInit')
+      // this.navBase.push(this.initial);
     }
   }
 
@@ -73,10 +59,10 @@ export class Tab {
 
 
 @Directive({
-  selector: '[content-anchor]'
+  selector: 'template[tab-anchor]'
 })
-class ContentAnchor {
+class TabAnchor {
   constructor(@Parent() tab: Tab, elementRef: ElementRef) {
-    tab.navBase.contentElementRef = elementRef;
+    console.log('TabAnchor constructor', tab.id)
   }
 }

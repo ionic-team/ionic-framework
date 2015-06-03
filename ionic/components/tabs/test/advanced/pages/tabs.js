@@ -5,7 +5,7 @@ import {Tabs, Tab, NavController, NavbarTemplate, Navbar, Content} from 'ionic/i
 
 
 @Component({
-  selector: 'tabs-page'
+  selector: 'ion-tabs-view'
 })
 @View({
   templateUrl: './pages/tabs.html',

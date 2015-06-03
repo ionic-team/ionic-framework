@@ -10,6 +10,7 @@ import {bind} from 'angular2/di';
 
 import {NavController} from './nav-controller';
 import {NavItem, NavParams} from './nav-item';
+import {Tabs} from '../tabs/tabs';
 import {nav} from './nav-base';
 import {SwipeHandle} from './swipe-handle';
 import {IonicComponent} from '../../config/component';
@@ -48,7 +49,7 @@ export class Nav {
     this.navPanes = {};
   }
 
-  getNavPane(itemStructure) {
+  getPane(itemStructure) {
     // this gets or creates the NavPane which similar nav items live in
     // Nav items with just a navbar/content would all use the same NavPane
     // Tabs and view's without a navbar would get a different NavPanes
@@ -100,7 +101,7 @@ export class Nav {
     return promise;
   }
 
-  addNavPane(navPane) {
+  addPane(navPane) {
     for (let np in this.navPanes) {
       if (this.navPanes[np] === null) {
         this.navPanes[np] = navPane;
@@ -510,14 +511,58 @@ class NavPaneAnchor {
   `,
   directives: [NavPaneSectionAnchor, NavPaneContentAnchor]
 })
-class NavPane {
+export class NavPane {
   constructor(@Parent() nav: Nav, viewContainerRef: ViewContainerRef) {
     this.viewContainerRef = viewContainerRef;
     this.sections = {};
-    nav.addNavPane(this);
+    nav.addPane(this);
   }
   addSection(sectionName, instance) {
     this.sections[sectionName] = instance;
+  }
+}
+
+
+
+@Component({selector:'ion-tab-pane'})
+@View({
+  template: `
+    <div class="navbar-container">
+      <template navbar-anchor></template>
+    </div>
+    <div class="tabbar-container">
+      <template tabbar-anchor></template>
+    </div>
+    <template content-anchor></template>
+  `,
+  directives: [TabPaneContentAnchor, TabPaneSectionAnchor]
+})
+export class TabPane extends NavPane {
+  constructor(@Parent() nav: Nav, viewContainerRef: ViewContainerRef) {
+    super(nav, viewContainerRef);
+  }
+}
+
+
+@Directive({
+  selector: 'template[content-anchor]'
+})
+class TabPaneContentAnchor {
+  constructor(@Parent() tabPane: TabPane, viewContainerRef: ViewContainerRef) {
+    tabPane.contentContainerRef = viewContainerRef;
+  }
+}
+
+
+// Used to dynamically create new sections for a NavPane
+// This is simply a reference point to create new sections
+// Navbar, toolbar, and tabbar sections would be created next to this
+@Directive({
+  selector: 'template[section-anchor]'
+})
+class TabSectionAnchor {
+  constructor(@Parent() tabPane: TabPane, elementRef: ElementRef) {
+    tabPane.sectionAnchorElementRef = elementRef;
   }
 }
 

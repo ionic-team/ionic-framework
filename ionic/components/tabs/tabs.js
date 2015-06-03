@@ -1,4 +1,5 @@
-import {Parent} from 'angular2/src/core/annotations_impl/visibility';
+import {Ancestor, Parent} from 'angular2/src/core/annotations_impl/visibility';
+import {Optional} from 'angular2/src/di/annotations_impl'
 import {Directive, Component, onInit} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
@@ -11,7 +12,11 @@ import {IonicComponent} from '../../config/component';
 import {Tab} from './tab';
 import {TabButton} from './tab-button';
 import {Icon} from '../icon/icon';
+import {Nav, NavPane} from '../nav/nav';
+import {NavItem} from '../nav/nav-item';
 
+
+let tabsId = -1;
 
 @Component({
   selector: 'ion-tabs',
@@ -23,9 +28,6 @@ import {Icon} from '../icon/icon';
 })
 @View({
   template: `
-    <header class="navbar-container">
-      <template navbar-anchor></template>
-    </header>
     <nav class="navbar-container tab-bar-container">
       <div class="tab-bar" role="tablist">
         <button *ng-for="#t of tabs" [tab]="t" class="tab-button" role="tab">
@@ -38,22 +40,28 @@ import {Icon} from '../icon/icon';
       <content></content>
     </section>
   `,
-  directives: [NgFor, TabButton, Icon, NavbarAnchor]
+  directives: [NgFor, TabButton, Icon]
 })
 export class Tabs {
-  constructor(elementRef: ElementRef, loader: DynamicComponentLoader, injector: Injector) {
+  constructor(elementRef: ElementRef) {
+    this.id = ++tabsId;
+    this.tabIds = 0;
+    this.tabs = [];
+
     this.domElement = elementRef.domElement;
     this.config = Tabs.config.invoke(this);
-    this.tabs = [];
+
+    console.log('Tabs constructor', this.id);
   }
 
   onInit() {
     if (this.tabs.length > 0) {
-      this.selectTab(this.tabs[0]);
+      //this.selectTab(this.tabs[0]);
     }
   }
 
   addTab(tab) {
+    tab.id = this.id + '' + (++this.tabIds);
     this.tabs.push(tab);
   }
 
@@ -78,7 +86,6 @@ export class Tabs {
   }
 
 }
-
 new IonicComponent(Tabs, {
   properties: {
     tabBarPlacement: {
@@ -97,14 +104,3 @@ new IonicComponent(Tabs, {
     }
   }
 });
-
-
-@Directive({
-  selector: '[navbar-anchor]'
-})
-class NavbarAnchor {
-  constructor(@Parent() tabs: Tabs, viewContainerRef: ViewContainerRef) {
-    console.log('Tabs NavbarAnchor', viewContainerRef)
-    tabs.navbarContainerRef = viewContainerRef;
-  }
-}
