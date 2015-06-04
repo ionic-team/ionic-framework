@@ -27,9 +27,10 @@ var cache = require('gulp-cached');
 gulp.task('clean.build', function() {
   runSequence(
     'clean',
-    'ionic.transpile',
-    'ionic.bundle.deps',
-    'ionic.examples',
+    'transpile',
+    'bundle.deps',
+    'bundle.js',
+    'examples',
     'sass',
     'fonts',
     'polyfills');
@@ -37,8 +38,9 @@ gulp.task('clean.build', function() {
 
 gulp.task('build', function() {
   runSequence(
-    'ionic.transpile',
-    'ionic.examples',
+    'transpile',
+    'bundle.js',
+    'examples',
     'sass',
     'fonts',
     'polyfills');
@@ -47,23 +49,30 @@ gulp.task('build', function() {
 gulp.task('watch', function() {
 
   runSequence(
-    'ionic.transpile',
-    'ionic.examples',
+    'transpile',
+    'bundle.js',
+    'examples',
     'sass',
     'fonts',
     'polyfills',
 
     function() {
-      watch(['ionic/**/*.js', 'ionic/components/*/test/**/*'], function() {
-        gulp.start('ionic.transpile');
-        gulp.start('ionic.examples');
+      watch(['ionic/**/*.js', '!ionic/components/*/test/**/*'], function() {
+        runSequence(
+          'transpile',
+          'bundle.js',
+          'examples'
+        )
+      });
+
+      watch('ionic/components/*/test/**/*', function() {
+        gulp.start('examples');
       });
 
       watch('ionic/components/**/*.scss', function() {
         gulp.start('sass');
       });
     })
-
 });
 
 function doubleCheckDistFiles() {
@@ -100,18 +109,22 @@ var babelOptions = {
   }
 };
 
-gulp.task('ionic.transpile', function(done) {
+gulp.task('transpile', function() {
   return gulp.src(['ionic/**/*.js', '!ionic/components/*/test/**/*'])
              .pipe(cache('transpile', { optimizeMemory: true }))
              .pipe(traceur(traceurOptions))
              .pipe(gulp.dest('dist/js/es6/ionic'))
              .pipe(babel(babelOptions))
              .pipe(gulp.dest('dist/js/es5/ionic'))
+});
+
+gulp.task('bundle.js', function() {
+  return gulp.src('dist/js/es5/ionic/**/*.js')
              .pipe(concat('ionic.bundle.js'))
              .pipe(gulp.dest('dist/js/'));
 });
 
-gulp.task('ionic.bundle.deps', function() {
+gulp.task('bundle.deps', function() {
   var Builder = require('systemjs-builder')
   var builder = new Builder();
   return builder.loadConfig('config.js').then(function(){
@@ -126,11 +139,12 @@ gulp.task('ionic.bundle.deps', function() {
     });
     return builder.build('dist/js/es6/ionic/**/* - [dist/js/es6/ionic/**/*]', 'dist/js/dependencies.js');
   }, function(error){
+    console.log("Error building dependency bundle, have you transpiled Ionic and/or built Angular2 yet?");
     throw new Error(error);
   })
 });
 
-gulp.task('ionic.examples', function() {
+gulp.task('examples', function() {
   var buildTest = lazypipe()
              .pipe(traceur, traceurOptions)
              //.pipe(babel, babelOptions) Let SystemJS load index.js at runtime, saves build time

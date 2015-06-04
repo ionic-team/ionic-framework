@@ -40,7 +40,7 @@ export class Aside {
       this.domElement.setAttribute('side', this.side);
       this.domElement.setAttribute('type', this.type);
 
-      console.log('Aisde content', this.content);
+      console.log('Aside content', this.content);
 
       this.config = Aside.config.invoke(this)
       this.gestureDelegate = this.config.getDelegate('gesture');
