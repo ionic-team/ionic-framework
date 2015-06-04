@@ -23,12 +23,20 @@ var webpack = require('gulp-webpack');
 var lazypipe = require('lazypipe');
 
 
-gulp.task('build', function() {
+gulp.task('clean.build', function() {
   runSequence(
     'clean',
-    'ionic.traceur',
+    'ionic.transpile',
     'ionic.bundle.deps',
-    'ionic.bundle.js',
+    'ionic.examples',
+    'sass',
+    'fonts',
+    'polyfills');
+})
+
+gulp.task('build', function() {
+  runSequence(
+    'ionic.transpile',
     'ionic.examples',
     'sass',
     'fonts',
@@ -39,24 +47,17 @@ gulp.task('watch', function() {
 
   runSequence(
     'clean',
-    'link.angular',
-    'ionic.copy.js',
+    'ionic.traceur',
+    'ionic.bundle.deps',
+    'ionic.bundle.js',
     'ionic.examples',
     'sass',
     'fonts',
     'polyfills',
 
     function() {
-      watch('ionic/**/*.js', function(file) {
-        var splt = file.path.split('/');
-        var filename = splt[splt.length - 1];
-
-        var dest = file.path.replace(__dirname, '../angular-ionic/modules');
-        dest = dest.replace(filename, '')
-
-        doubleCheckDistFiles();
-
-        return gulp.src(file.path).pipe(gulp.dest(dest));
+      watch('ionic/**/*.js', function() {
+        gulp.start('');
       });
 
       watch('ionic/components/*/test/**/*', function() {
@@ -98,32 +99,37 @@ var babelOptions = {
     'angular2-annotations',
     'type-assertion:after'
   ],*/
-  modules: "system"
+  modules: "system",
+  moduleIds: true,
+  getModuleId: function(name) {
+    return "ionic/" + name;
+  }
 };
 
-gulp.task('ionic.traceur', function(done) {
+gulp.task('ionic.transpile', function(done) {
   return gulp.src(['ionic/**/*.js', '!ionic/components/*/test/**/*'])
              .pipe(traceur(traceurOptions))
-             .pipe(gulp.dest('dist/ionic'));
-});
-
-gulp.task('ionic.bundle.js', function() {
-  var Builder = require('systemjs-builder');
-  var builder = new Builder();
-  return builder.loadConfig('config.js').then(function(){
-    builder.config({ baseURL: 'file:' + process.cwd() });
-    return builder.build('dist/ionic/ionic - dist/js/dependencies', 'dist/js/ionic.bundle.js');
-  }, function(error){
-    throw new Error(error);
-  })
+             .pipe(gulp.dest('dist/js/es6/ionic'))
+             .pipe(babel(babelOptions))
+             .pipe(gulp.dest('dist/js/es5/ionic'))
+             .pipe(concat('ionic.bundle.js'))
+             .pipe(gulp.dest('dist/js/'));
 });
 
 gulp.task('ionic.bundle.deps', function() {
-  var Builder = require('systemjs-builder');
+  var Builder = require('systemjs-builder')
   var builder = new Builder();
   return builder.loadConfig('config.js').then(function(){
-    builder.config({ baseURL: 'file:' + process.cwd() });
-    return builder.build('dist/ionic/ionic - [dist/ionic/ionic]', 'dist/js/dependencies.js');
+    // add ionic and angular2 build paths, since config.js is loaded at runtime from
+    // tests we don't want to put them there
+    builder.config({ 
+      baseURL: 'file:' + process.cwd(),
+      paths : {
+        "ionic/*": "dist/js/es6/ionic/*.js",
+        "angular2/*": "angular2/dist/js/dev/es6/angular2/*.es6",
+      }
+    });
+    return builder.build('dist/js/es6/ionic/**/* - [dist/js/es6/ionic/**/*]', 'dist/js/dependencies.js');
   }, function(error){
     throw new Error(error);
   })
@@ -132,7 +138,7 @@ gulp.task('ionic.bundle.deps', function() {
 gulp.task('ionic.examples', function() {
   var buildTest = lazypipe()
              .pipe(traceur, traceurOptions)
-             .pipe(babel, babelOptions)
+             //.pipe(babel, babelOptions) Let SystemJS load index.js at runtime, saves build time
            
   // Get each test folder with gulp.src
   return gulp.src('ionic/components/*/test/*/**/*')

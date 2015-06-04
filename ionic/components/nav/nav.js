@@ -8,7 +8,10 @@ import {Injector} from 'angular2/di';
 import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
 import {Compiler} from 'angular2/angular2';
 
-import {NavBase} from './nav-base';
+import {NavController} from './nav-controller';
+import {NavItem, NavParams} from './nav-item';
+import {Tabs} from '../tabs/tabs';
+//import {nav} from './nav-base';
 import {SwipeHandle} from './swipe-handle';
 import {IonicComponent} from '../../config/component';
 

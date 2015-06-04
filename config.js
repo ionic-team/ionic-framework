@@ -7,10 +7,10 @@ System.config({
     ]
   },
   "paths": {
-    "ionic/*": "dist/ionic/*.js",
+    //"ionic/*": "dist/js/es6/ionic/*.js",
     "github:*": "jspm_packages/github/*.js",
     "npm:*": "jspm_packages/npm/*.js",
-    "angular2/*": "angular2/dist/js/dev/es6/angular2/*.es6",
+    //"angular2/*": "angular2/dist/js/dev/es6/angular2/*.es6",
     "*": "*.js"
   }
 });
