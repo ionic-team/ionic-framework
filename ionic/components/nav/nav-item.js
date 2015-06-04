@@ -11,8 +11,8 @@ import {TabPane, NavPane, NavPaneSection} from './nav';
 
 export class NavItem {
 
-  constructor(nav, Component, params = {}) {
-    this.nav = nav;
+  constructor(navBase, Component, params = {}) {
+    this.navBase = navBase;
     this.Component = Component;
     this.params = params;
     this.id = util.nextUid();
@@ -32,7 +32,7 @@ export class NavItem {
 
   stage(callback) {
     // update if it's possible to go back from this nav item
-    //this.enableBack = !!this.nav.getPrevious(this);
+    //this.enableBack = !!this.navBase.getPrevious(this);
 
     if (this.instance) {
       // already compiled this view
@@ -40,29 +40,29 @@ export class NavItem {
     }
 
     // compile the Component
-    this.nav.compiler.compileInHost(this.Component).then(componentProtoViewRef => {
+    this.navBase.compiler.compileInHost(this.Component).then(componentProtoViewRef => {
 
       // figure out the sturcture of this Component
       // does it have a navbar? Is it tabs? Should it not have a navbar or any toolbars?
       let itemStructure = getProtoViewStructure(componentProtoViewRef);
 
       // get the appropriate NavPane which this NavItem will fit into
-      this.nav.getPane(itemStructure, navPane => {
+      this.navBase.getPane(itemStructure, pane => {
 
         // create a new injector just for this NavItem
-        let injector = this.nav.injector.resolveAndCreateChild([
+        let injector = this.navBase.injector.resolveAndCreateChild([
           bind(NavBase).toValue(this.navBase),
-          bind(NavController).toValue(this.nav.navCtrl),
+          bind(NavController).toValue(this.navBase.navCtrl),
           bind(NavParams).toValue(new NavParams(this.params)),
           bind(NavItem).toValue(this)
         ]);
 
         // add the content of the view to the content area
-        let viewContainer = navPane.contentContainerRef;
+        let viewContainer = pane.contentContainerRef;
         let hostViewRef = viewContainer.create(componentProtoViewRef, -1, null, injector);
 
         let newLocation = new ElementRef(hostViewRef, 0);
-        this.instance = this.nav.loader._viewManager.getComponent(newLocation);
+        this.instance = this.navBase.loader._viewManager.getComponent(newLocation);
 
         this.disposals.push(() => {
           viewContainer.remove( viewContainer.indexOf(hostViewRef) );
@@ -79,7 +79,7 @@ export class NavItem {
         };
 
         // add only the sections it needs
-        let navbarViewContainer = navPane.sections.navbar.viewContainerRef;
+        let navbarViewContainer = pane.sections.navbar.viewContainerRef;
         if (navbarViewContainer && itemStructure.navbar && this.protos.navbar) {
           this.navbarView = navbarViewContainer.create(this.protos.navbar, -1, context, injector);
 

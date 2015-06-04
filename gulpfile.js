@@ -40,12 +40,17 @@ gulp.task('watch', function() {
     'polyfills',
 
     function() {
-      watch('ionic/**/*.js', function() {
-        gulp.start('ionic.copy.js');
+      watch('ionic/**/*.js', function(file) {
+        var splt = file.path.split('/');
+        var filename = splt[splt.length - 1];
+
+        var dest = file.path.replace(__dirname, '../angular-ionic/modules');
+        dest = dest.replace(filename, '')
+
+        return gulp.src(file.path).pipe(gulp.dest(dest));
       });
 
       watch('ionic/components/*/test/**/*', function() {
-        gulp.start('ionic.copy.js');
         gulp.start('ionic.examples');
       });
 

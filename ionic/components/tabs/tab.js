@@ -35,36 +35,43 @@ import {IonicComponent} from 'ionic/config/component';
 })
 @View({
   template: `
-    <template view-anchor></template>
+    <template content-anchor></template>
     <content></content>
   `,
-  directives: [TabViewAnchor]
+  directives: [TabContentAnchor]
 })
 export class Tab {
   constructor(
       @Parent() tabs: Tabs,
       @Optional() parentNavBase: NavBase,
-      compiler:Compiler,
+      compiler: Compiler,
       elementRef: ElementRef,
       loader: DynamicComponentLoader,
-      injector: Injector
+      injector: Injector,
+      viewContainerRef: ViewContainerRef
     ) {
     this.navBase = new NavBase(parentNavBase, compiler, elementRef, loader, injector);
 
-    this.domElement = elementRef.domElement;
-    this.config = Nav.config.invoke(this);
+    this.viewContainerRef = viewContainerRef;
+
+    this.sections = parentNavBase;
+    this.navBase.panes['_n'] = this;
 
     this.isSelected = false;
     this.ariaHidden = true;
+
     tabs.addTab(this);
     this.panelId = 'tab-panel-' + this.id;
     this.labeledBy = 'tab-button-' + this.id;
 
-    console.log('Tab constructor', this.id);
+    this.domElement = elementRef.domElement;
+    this.config = Nav.config.invoke(this);
+
+    console.log('Tab constructor', this.id, ' parentNavBase:', parentNavBase);
   }
 
   onInit() {
-    //this.navBase.initial(this.initial);
+    this.navBase.initial(this.initial);
   }
 
   select(shouldSelect) {
@@ -79,18 +86,14 @@ export class Tab {
     this.ariaHidden = !shouldSelect;
   }
 
-  setPaneAnchor(elementRef) {
-    this.navBase.setPaneAnchor(elementRef);
-  }
-
 }
 
 
 @Directive({
-  selector: 'template[view-anchor]'
+  selector: 'template[content-anchor]'
 })
-class TabViewAnchor {
-  constructor(@Parent() tab: Tab, elementRef: ElementRef) {
-    tab.setPaneAnchor(elementRef);
+class TabContentAnchor {
+  constructor(@Parent() tab: Tab, viewContainerRef: ViewContainerRef) {
+    tab.contentContainerRef = viewContainerRef;
   }
 }

@@ -12,10 +12,10 @@ import {Nav} from './nav';
   template: `
     <template nav-section-anchor></template>
     <section class="content-container">
-      <template view-anchor></template>
+      <template content-anchor></template>
     </section>
   `,
-  directives: [NavPaneSectionAnchor, NavViewAnchor]
+  directives: [NavPaneSectionAnchor, NavContentAnchor]
 })
 export class NavPane {
   constructor(@Parent() nav: Nav, viewContainerRef: ViewContainerRef) {
@@ -29,9 +29,6 @@ export class NavPane {
 }
 
 
-// Used to dynamically create new sections for a NavPane
-// This is simply a reference point to create new sections
-// Navbar, toolbar, and tabbar sections would be created next to this
 @Directive({
   selector: 'template[nav-section-anchor]'
 })
@@ -42,12 +39,10 @@ class NavPaneSectionAnchor {
 }
 
 
-// Where the content of the NavItem goes next to. All NavPanes have content.
-// This is simply a reference point to where content goes
 @Directive({
-  selector: 'template[view-anchor]'
+  selector: 'template[content-anchor]'
 })
-class NavViewAnchor {
+class NavContentAnchor {
   constructor(@Parent() navPane: NavPane, viewContainerRef: ViewContainerRef) {
     navPane.contentContainerRef = viewContainerRef;
   }
