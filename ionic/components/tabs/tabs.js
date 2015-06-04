@@ -56,7 +56,7 @@ export class Tabs {
 
   onInit() {
     if (this.tabs.length > 0) {
-      //this.selectTab(this.tabs[0]);
+      this.selectTab(this.tabs[0]);
     }
   }
 
@@ -75,13 +75,10 @@ export class Tabs {
     }
     if (!tabToSelect || this._selected === tabToSelect) return;
 
-    this.tabs.forEach(otherTab => {
-      if (otherTab !== tabToSelect) {
-        otherTab.select(false);
-      }
+    this.tabs.forEach(tab => {
+      tab.select( (tab === tabToSelect) );
     });
 
-    tabToSelect.select(true);
     this._selected = tabToSelect;
   }
 

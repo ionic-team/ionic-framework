@@ -5,6 +5,7 @@ import {bind} from 'angular2/di';
 import * as util from 'ionic/util';
 import {NavController} from './nav-controller';
 import {Nav} from './nav';
+import {NavBase} from './nav-base';
 import {TabPane, NavPane, NavPaneSection} from './nav';
 
 
@@ -29,21 +30,14 @@ export class NavItem {
     this.protos[name] = protoViewRef;
   }
 
-  stage() {
+  stage(callback) {
     // update if it's possible to go back from this nav item
     //this.enableBack = !!this.nav.getPrevious(this);
 
-    return this.render();;
-  }
-
-  render() {
     if (this.instance) {
       // already compiled this view
-      return Promise.resolve();
+      return callback();
     }
-
-    let resolve;
-    let promise = new Promise((res) => { resolve = res; });
 
     // compile the Component
     this.nav.compiler.compileInHost(this.Component).then(componentProtoViewRef => {
@@ -53,10 +47,11 @@ export class NavItem {
       let itemStructure = getProtoViewStructure(componentProtoViewRef);
 
       // get the appropriate NavPane which this NavItem will fit into
-      this.nav.getPane(itemStructure).then(navPane => {
+      this.nav.getPane(itemStructure, navPane => {
 
         // create a new injector just for this NavItem
         let injector = this.nav.injector.resolveAndCreateChild([
+          bind(NavBase).toValue(this.navBase),
           bind(NavController).toValue(this.nav.navCtrl),
           bind(NavParams).toValue(new NavParams(this.params)),
           bind(NavItem).toValue(this)
@@ -95,12 +90,10 @@ export class NavItem {
 
         this.loaded();
 
-        resolve();
+        callback();
       });
 
     });
-
-    return promise;
   }
 
   cache() {

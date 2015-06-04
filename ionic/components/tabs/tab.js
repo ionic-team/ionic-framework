@@ -1,8 +1,16 @@
 import {Parent} from 'angular2/src/core/annotations_impl/visibility';
 import {Directive, Component} from 'angular2/src/core/annotations_impl/annotations';
+import {Optional} from 'angular2/src/di/annotations_impl'
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
+import {Compiler} from 'angular2/angular2';
+import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_component_loader';
+import {Injector} from 'angular2/di';
+import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
 
+import {Nav} from '../nav/nav';
+import {NavBase} from '../nav/nav-base';
+import {NavItem} from '../nav/nav-item';
 import {Tabs} from './tabs';
 import {Content} from '../content/content';
 import {IonicComponent} from 'ionic/config/component';
@@ -33,9 +41,21 @@ import {IonicComponent} from 'ionic/config/component';
   directives: [TabAnchor]
 })
 export class Tab {
-  constructor(@Parent() tabs: Tabs, elementRef: ElementRef) {
-    this.domElement = elementRef.domElement;
+  constructor(
+      @Parent() tabs: Tabs,
+      @Optional() parentNavBase: NavBase,
+      compiler:Compiler,
+      elementRef: ElementRef,
+      loader: DynamicComponentLoader,
+      injector: Injector
+    ) {
+    this.navBase = new NavBase(parentNavBase, compiler, elementRef, loader, injector);
 
+    this.domElement = elementRef.domElement;
+    this.config = Nav.config.invoke(this);
+
+    this.isSelected = false;
+    this.ariaHidden = true;
     tabs.addTab(this);
     this.panelId = 'tab-panel-' + this.id;
     this.labeledBy = 'tab-button-' + this.id;
@@ -44,15 +64,23 @@ export class Tab {
   }
 
   onInit() {
-    if (this.initial) {
-      // console.log('Tab onInit')
-      // this.navBase.push(this.initial);
-    }
+    this.navBase.initial(this.initial);
   }
 
-  select(isSelected) {
-    this.isSelected = isSelected;
-    this.ariaHidden = !isSelected;
+  select(shouldSelect) {
+    if (shouldSelect && !this.isSelected) {
+      console.log('Select tab', this.id);
+
+    } else if (!shouldSelect && this.isSelected) {
+      console.log('Deselect tab', this.id);
+    }
+
+    this.isSelected = shouldSelect;
+    this.ariaHidden = !shouldSelect;
+  }
+
+  setPaneAnchor(elementRef) {
+    this.navBase.setPaneAnchor(elementRef);
   }
 
 }
@@ -63,6 +91,6 @@ export class Tab {
 })
 class TabAnchor {
   constructor(@Parent() tab: Tab, elementRef: ElementRef) {
-    console.log('TabAnchor constructor', tab.id)
+    tab.setPaneAnchor(elementRef);
   }
 }
