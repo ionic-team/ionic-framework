@@ -47,10 +47,13 @@ gulp.task('watch', function() {
         var dest = file.path.replace(__dirname, '../angular-ionic/modules');
         dest = dest.replace(filename, '')
 
+        doubleCheckDistFiles();
+
         return gulp.src(file.path).pipe(gulp.dest(dest));
       });
 
       watch('ionic/components/*/test/**/*', function() {
+        doubleCheckDistFiles();
         gulp.start('ionic.examples');
       });
 
@@ -60,6 +63,16 @@ gulp.task('watch', function() {
     })
 
 });
+
+function doubleCheckDistFiles() {
+  if (!fs.existsSync('../angular-ionic/dist/js/dev/es5/css')) {
+    gulp.start('sass');
+  }
+
+  if (!fs.existsSync('../angular-ionic/dist/js/dev/es5/fonts')) {
+    gulp.start('fonts');
+  }
+}
 
 gulp.task('clean', function(done) {
   del(['../angular-ionic/modules/ionic, ./angular-ionic/modules/examples/src/ionic'], done);
