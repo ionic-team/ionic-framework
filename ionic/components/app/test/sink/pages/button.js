@@ -1,4 +1,4 @@
-import {NgFor} from 'angular2/angular2';
+import {NgFor, NgIf} from 'angular2/angular2';
 import {Ancestor} from 'angular2/src/core/annotations_impl/visibility';
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
@@ -23,7 +23,7 @@ import {Routable, NavbarTemplate, Navbar, NavController, Button, Content} from '
       and those that flow inline), and shapes.
     </p>
     <p>
-      <div>
+      <div (^click)="onButtonClick($event)">
         <button primary>Primary</button>
         <button secondary>Secondary</button>
         <button stable>Stable</button>
@@ -31,16 +31,29 @@ import {Routable, NavbarTemplate, Navbar, NavController, Button, Content} from '
         <button dark>Dark</button>
         <button danger>Danger</button>
       </div>
+      <div *ng-if="clicked">
+      <b>CLICKED</b>
+      </div>
     </p>
 
   </ion-content>
   `,
-  directives: [NavbarTemplate, Navbar, Content, Button]
+  directives: [NavbarTemplate, Navbar, Content, Button, NgIf]
 })
 export class ButtonPage {
   constructor(nav: NavController) {
     this.nav = nav;
     window.nav = nav;
+  }
+
+  onButtonClick(event) {
+    console.log('On button click', event);
+
+    clearTimeout(this.clickTimeout);
+    this.clicked = true;
+    this.clickTimeout = setTimeout(() => {
+      this.clicked = false;
+    }, 500);
   }
 }
 

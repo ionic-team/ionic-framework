@@ -10,7 +10,7 @@ import {Segment, SegmentButton, SearchBar, List, Item, ActionMenu, Modal, ModalR
   console.log(NavbarTemplate, Navbar, Content, formDirectives);
 
 function randomTitle() {
-  var items = ['Pizza', 'Pumpkin', 'Apple', 'Bologna'];
+  var items = ['Pizza', 'Pumpkin', 'Apple', 'Bologna', 'Durian', 'Banana', 'Meat pie'];
   return items[Math.floor(Math.random() * items.length)];
 }
 
