@@ -21,6 +21,7 @@ var babel = require('gulp-babel');
 var traceur = require('gulp-traceur');
 var webpack = require('gulp-webpack');
 var lazypipe = require('lazypipe');
+var cache = require('gulp-cached');
 
 
 gulp.task('clean.build', function() {
@@ -46,22 +47,15 @@ gulp.task('build', function() {
 gulp.task('watch', function() {
 
   runSequence(
-    'clean',
-    'ionic.traceur',
-    'ionic.bundle.deps',
-    'ionic.bundle.js',
+    'ionic.transpile',
     'ionic.examples',
     'sass',
     'fonts',
     'polyfills',
 
     function() {
-      watch('ionic/**/*.js', function() {
-        gulp.start('');
-      });
-
-      watch('ionic/components/*/test/**/*', function() {
-        doubleCheckDistFiles();
+      watch(['ionic/**/*.js', 'ionic/components/*/test/**/*'], function() {
+        gulp.start('ionic.transpile');
         gulp.start('ionic.examples');
       });
 
@@ -108,6 +102,7 @@ var babelOptions = {
 
 gulp.task('ionic.transpile', function(done) {
   return gulp.src(['ionic/**/*.js', '!ionic/components/*/test/**/*'])
+             .pipe(cache('transpile', { optimizeMemory: true }))
              .pipe(traceur(traceurOptions))
              .pipe(gulp.dest('dist/js/es6/ionic'))
              .pipe(babel(babelOptions))
@@ -142,6 +137,7 @@ gulp.task('ionic.examples', function() {
            
   // Get each test folder with gulp.src
   return gulp.src('ionic/components/*/test/*/**/*')
+    .pipe(cache('examples', { optimizeMemory: true }))
     .pipe(gulpif(/.js$/, buildTest()))
     .pipe(gulpif(/index.js$/, createIndexHTML()))
     .pipe(rename(function(file) {

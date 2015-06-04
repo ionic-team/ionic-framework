@@ -8,7 +8,7 @@
     "gulp": "~3.8.10",
     "gulp-autoprefixer": "^2.3.0",
     "gulp-babel": "^5.1.0",
-    "gulp-cached": "^1.0.4",
+    "gulp-cached": "^1.1.0",
     "gulp-concat": "~2.5.0",
     "gulp-debug": "~2.0.1",
     "gulp-if": "^1.2.5",
