@@ -52,7 +52,7 @@ $search-bar-ios-background-size:      13px 13px !default;
     transition: all .2s ease;
   }
 
-  .search-bar-input-container.focused {
+  .search-bar-input-container.left-align {
     .search-bar-icon {
       transform: translateX(0);
       -webkit-transform: translateX(0);

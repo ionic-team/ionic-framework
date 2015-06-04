@@ -22,9 +22,10 @@ import {IonicComponent} from 'ionic/config/component'
 })
 @View({
   template: `
-  <div class="search-bar-input-container" [class.focused]="isFocused">
+  <div class="search-bar-input-container" [class.left-align]="shouldLeftAlign">
     <div class="search-bar-icon"></div>
-    <input (focus)="inputFocused()" (blur)="inputBlurred()" (input)="inputChanged($event)" class="search-bar-input" type="search" [attr.placeholder]="placeholder">
+    <input (focus)="inputFocused()" (blur)="inputBlurred()"
+    (input)="inputChanged($event)" class="search-bar-input" type="search" [attr.placeholder]="placeholder">
   </div>
   <button class="button search-bar-cancel">{{ cancelText }}</button>`
 })
@@ -65,9 +66,11 @@ export class SearchBar {
 
   inputFocused() {
     this.isFocused = true;
+    this.shouldLeftAlign = true;
   }
   inputBlurred() {
     this.isFocused = false;
+    this.shouldLeftAlign = this.value.trim() != '';
   }
 }
 
