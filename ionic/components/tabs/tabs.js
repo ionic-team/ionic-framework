@@ -47,6 +47,7 @@ export class Tabs {
     this.id = ++tabsId;
     this.tabIds = 0;
     this.tabs = [];
+    this._selected = null;
 
     this.domElement = elementRef.domElement;
     this.config = Tabs.config.invoke(this);
@@ -74,6 +75,8 @@ export class Tabs {
       }
     }
     if (!tabToSelect || this._selected === tabToSelect) return;
+
+    let tabToDeselect = this._selected;
 
     this.tabs.forEach(tab => {
       tab.select( (tab === tabToSelect) );

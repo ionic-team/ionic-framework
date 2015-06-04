@@ -26,8 +26,8 @@ import {IonicComponent} from 'ionic/config/component';
   hostProperties: {
     'panelId': 'attr.id',
     'labeledBy': 'attr.aria-labelledby',
-    'ariaHidden': 'attr.aria-hidden',
-    'isSelected': 'class.show-tab'
+    '!isSelected': 'attr.aria-hidden',
+    'isSelected': 'class.tab-selected'
   },
   hostAttributes: {
     'role': 'tabpanel'
@@ -58,7 +58,6 @@ export class Tab {
     this.navBase.panes['_n'] = this;
 
     this.isSelected = false;
-    this.ariaHidden = true;
 
     tabs.addTab(this);
     this.panelId = 'tab-panel-' + this.id;
@@ -83,7 +82,6 @@ export class Tab {
     }
 
     this.isSelected = shouldSelect;
-    this.ariaHidden = !shouldSelect;
   }
 
 }
