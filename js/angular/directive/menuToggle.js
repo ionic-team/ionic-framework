@@ -14,7 +14,12 @@
  * ```html
  * <ion-nav-bar>
  *   <ion-nav-buttons side="left">
+ *    <!-- Toggle left side menu -->
  *    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+ *   </ion-nav-buttons>
+ *   <ion-nav-buttons side="right">
+ *    <!-- Toggle right side menu -->
+ *    <button menu-toggle="right" class="button button-icon icon ion-navicon"></button>
  *   </ion-nav-buttons>
  * </ion-nav-bar>
  * ```
