@@ -50,18 +50,24 @@ export class Tab {
       injector: Injector,
       viewContainerRef: ViewContainerRef
     ) {
+
     this.navBase = new NavBase(parentNavBase, compiler, elementRef, loader, injector);
+    this.parentNavBase = parentNavBase;
+
+    this.tabItem = new NavItem(parentNavBase);
+    this.tabItem.instance = this
+    tabs.addTab(this.tabItem);
+
+    this.panelId = 'tab-panel-' + this.tabItem.id;
+    this.labeledBy = 'tab-button-' + this.tabItem.id;
+
+    this.elementRef = elementRef;
 
     this.viewContainerRef = viewContainerRef;
 
     this.sections = parentNavBase.panes['_n'].sections;
     this.navBase.panes['_n'] = this;
 
-    this.isSelected = false;
-
-    tabs.addTab(this);
-    this.panelId = 'tab-panel-' + this.id;
-    this.labeledBy = 'tab-button-' + this.id;
 
     this.domElement = elementRef.domElement;
     this.config = Nav.config.invoke(this);
@@ -69,19 +75,8 @@ export class Tab {
     console.log('Tab constructor', this.id, ' parentNavBase:', parentNavBase);
   }
 
-  onInit() {
-    this.navBase.initial(this.initial);
-  }
-
-  select(shouldSelect) {
-    if (shouldSelect && !this.isSelected) {
-      console.log('Select tab', this.id);
-
-    } else if (!shouldSelect && this.isSelected) {
-      console.log('Deselect tab', this.id);
-    }
-
-    this.isSelected = shouldSelect;
+  get isSelected() {
+    return this.parentNavBase.isActive(this);
   }
 
 }

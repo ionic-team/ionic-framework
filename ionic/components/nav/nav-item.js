@@ -11,11 +11,12 @@ import {TabPane, NavPane, NavPaneSection} from './nav';
 
 export class NavItem {
 
-  constructor(navBase, Component, params = {}) {
+  constructor(navBase, ComponentClass, params = {}) {
     this.navBase = navBase;
-    this.Component = Component;
+    this.ComponentClass = ComponentClass;
     this.params = params;
-    this.id = util.nextUid();
+    this.instance = null;
+
     this._titleEle = undefined;
     this._backBtn = undefined;
     this.disposals = [];
@@ -40,7 +41,7 @@ export class NavItem {
     }
 
     // compile the Component
-    this.navBase.compiler.compileInHost(this.Component).then(componentProtoViewRef => {
+    this.navBase.compiler.compileInHost(this.ComponentClass).then(componentProtoViewRef => {
 
       // figure out the sturcture of this Component
       // does it have a navbar? Is it tabs? Should it not have a navbar or any toolbars?

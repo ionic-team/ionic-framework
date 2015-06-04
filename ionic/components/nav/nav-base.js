@@ -15,6 +15,7 @@ import {NavPane, NavBarSection} from './nav-pane';
 import {Transition, ClickBlock} from 'ionic/ionic';
 import * as util from 'ionic/util';
 
+let itemsIds = -1;
 
 export class NavBase {
 
@@ -39,6 +40,9 @@ export class NavBase {
     this.sbTransition = null;
     this.sbActive = false;
     this.panes = {};
+
+    this.id = ++itemsIds;
+    this.childIds = -1;
   }
 
   initial(initial) {
@@ -109,8 +113,8 @@ export class NavBase {
     }
   }
 
-  push(Component, params = {}, opts = {}) {
-    if (!Component || this.isTransitioning()) {
+  push(ComponentClass, params = {}, opts = {}) {
+    if (!ComponentClass || this.isTransitioning()) {
       return Promise.reject();
     }
 
@@ -136,13 +140,13 @@ export class NavBase {
     leavingItem.willCache();
 
     // create a new NavStackItem
-    let enteringItem = new NavItem(this, Component, params);
+    let enteringItem = new NavItem(this, ComponentClass, params);
 
     // set that this item is staged (it's not ready to be animated in yet)
     enteringItem.state = STAGED_STATE;
 
     // add the item to the stack
-    this.items.push(enteringItem);
+    this.add(enteringItem);
 
     // start the transition
     this.transition(enteringItem, leavingItem, opts, () => {
@@ -193,7 +197,25 @@ export class NavBase {
     return promise;
   }
 
+  switchActive(enteringItem, opts = {}) {
+    opts.animation = 'none';
+
+    let leavingItem = this.getActive() || new NavItem();
+    leavingItem.shouldDestroy = false;
+    leavingItem.shouldCache = true;
+    leavingItem.willCache();
+
+    this.transition(enteringItem, leavingItem, opts, () => {
+      // transition completed, destroy the leaving item
+      console.log('switchActive comlete')
+    });
+  }
+
   transition(enteringItem, leavingItem, opts, callback) {
+    if (!enteringItem || enteringItem === leavingItem) {
+      return callback();
+    }
+
     opts.isAnimated = (opts.animation !== 'none');
 
     this.transitionStart(opts);
@@ -409,19 +431,18 @@ export class NavBase {
     return false;
   }
 
-  clear() {
-    let pops = [];
-    for(let item of this.items) {
-      pops.push(this.pop({
-        animate: false
-      }));
-    }
-    return Promise.all(pops);
-  }
-
   getActive() {
     for (let i = 0, ii = this.items.length; i < ii; i++) {
       if (this.items[i].state === ACTIVE_STATE) {
+        return this.items[i];
+      }
+    }
+    return null;
+  }
+
+  findByInstance(instance) {
+    for (let i = 0, ii = this.items.length; i < ii; i++) {
+      if (this.items[i].instance === instance) {
         return this.items[i];
       }
     }
@@ -457,8 +478,41 @@ export class NavBase {
     return this.domElement;
   }
 
+  add(item) {
+    item.id = this.id + '' + (++this.childIds);
+    this.items.push(item);
+  }
+
   remove(itemOrIndex) {
     util.array.remove(this.items, itemOrIndex);
+  }
+
+  length() {
+    return this.items.length;
+  }
+
+  isActive(item) {
+    return (item && item.stage === ACTIVE_STATE);
+  }
+
+  clear() {
+    let pops = [];
+    for (let item of this.items) {
+      pops.push(this.pop({
+        animate: false
+      }));
+    }
+    return Promise.all(pops);
+  }
+
+  instances() {
+    let instances = [];
+    for (let item of this.items) {
+      if (item.instance) {
+        instances.push(item.instance);
+      }
+    }
+    return instances
   }
 
   width() {
