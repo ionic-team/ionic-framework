@@ -38,6 +38,10 @@ export class SearchBar {
     this.controlDirective = cd;
     cd.valueAccessor = this; //ControlDirective should inject CheckboxControlDirective
 
+    if(!this.placeholder) {
+      this.placeholder = 'Search';
+    }
+
     setTimeout(() => {
       //console.log('Search bar for list', this.list);
       this.query = '';
