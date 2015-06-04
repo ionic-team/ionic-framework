@@ -35,10 +35,10 @@ import {IonicComponent} from 'ionic/config/component';
 })
 @View({
   template: `
-    <template tab-anchor></template>
+    <template view-anchor></template>
     <content></content>
   `,
-  directives: [TabAnchor]
+  directives: [TabViewAnchor]
 })
 export class Tab {
   constructor(
@@ -64,7 +64,7 @@ export class Tab {
   }
 
   onInit() {
-    this.navBase.initial(this.initial);
+    //this.navBase.initial(this.initial);
   }
 
   select(shouldSelect) {
@@ -87,9 +87,9 @@ export class Tab {
 
 
 @Directive({
-  selector: 'template[tab-anchor]'
+  selector: 'template[view-anchor]'
 })
-class TabAnchor {
+class TabViewAnchor {
   constructor(@Parent() tab: Tab, elementRef: ElementRef) {
     tab.setPaneAnchor(elementRef);
   }

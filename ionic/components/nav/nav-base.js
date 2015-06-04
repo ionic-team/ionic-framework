@@ -11,9 +11,9 @@ import {bind} from 'angular2/di';
 
 import {NavController} from './nav-controller';
 import {NavItem, NavParams} from './nav-item';
-import {NavPane, NavBarSection} from './nav';
-import * as util from 'ionic/util';
+import {NavPane, NavBarSection} from './nav-pane';
 import {Transition, ClickBlock} from 'ionic/ionic';
+import * as util from 'ionic/util';
 
 
 export class NavBase {
