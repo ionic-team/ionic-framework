@@ -110,7 +110,7 @@ export class NavBase {
   }
 
   push(Component, params = {}, opts = {}) {
-    if (this.isTransitioning()) {
+    if (!Component || this.isTransitioning()) {
       return Promise.reject();
     }
 

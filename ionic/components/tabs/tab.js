@@ -54,7 +54,7 @@ export class Tab {
 
     this.viewContainerRef = viewContainerRef;
 
-    this.sections = parentNavBase;
+    this.sections = parentNavBase.panes['_n'].sections;
     this.navBase.panes['_n'] = this;
 
     this.isSelected = false;
