@@ -61,10 +61,6 @@ class PlatformController {
     return null;
   }
 
-  is(name) {
-    return activePlatform.name === name;
-  }
-
   _applyBodyClasses() {
     if(!activePlatform) {
       return;
