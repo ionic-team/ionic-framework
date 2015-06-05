@@ -137,9 +137,6 @@ export class NavBase {
     // create a new NavStackItem
     let enteringItem = new NavItem(this, ComponentClass, params);
 
-    // set that this item is staged (it's not ready to be animated in yet)
-    enteringItem.state = STAGED_STATE;
-
     // add the item to the stack
     this.add(enteringItem);
 
@@ -541,11 +538,10 @@ export class NavBase {
 
 }
 
+const ACTIVE_STATE = 1;
+const CACHED_STATE = 2;
+const STAGED_ENTERING_STATE = 3;
+const STAGED_LEAVING_STATE = 4;
+const ACTIVELY_ENTERING_STATE = 5;
+const ACTIVELY_LEAVING_STATE = 6;
 
-const STAGED_STATE = 'staged';
-const STAGED_ENTERING_STATE = 'staged-enter';
-const STAGED_LEAVING_STATE = 'staged-leave';
-const ACTIVELY_ENTERING_STATE = 'entering';
-const ACTIVELY_LEAVING_STATE = 'leaving';
-const ACTIVE_STATE = 'active';
-const CACHED_STATE = 'cached';

@@ -53,11 +53,15 @@ export class Tab {
 
     this.navBase = new NavBase(parentNavBase, compiler, elementRef, loader, injector);
     this.parentNavBase = parentNavBase;
+    if (parentNavBase) {
+      this.sections = parentNavBase.panes['_n'].sections;
+    }
 
     this.item = new NavItem(parentNavBase);
     this.item.setInstance(this);
     this.item.setViewElement(elementRef.domElement);
     tabs.add(this.item);
+    this.tabs = tabs;
 
     this.panelId = 'tab-panel-' + this.item.id;
     this.labeledBy = 'tab-button-' + this.item.id;
@@ -66,7 +70,6 @@ export class Tab {
 
     this.viewContainerRef = viewContainerRef;
 
-    this.sections = parentNavBase.panes['_n'].sections;
     this.navBase.panes['_n'] = this;
 
     this.domElement = elementRef.domElement;
@@ -74,7 +77,7 @@ export class Tab {
   }
 
   onInit() {
-    if ( this.parentNavBase.isActive(this.item) || this.parentNavBase.isStagedEntering(this.item) ) {
+    if ( this.tabs.navBase.isActive(this.item) || this.tabs.navBase.isStagedEntering(this.item) ) {
       this.loadInitial();
     }
   }
@@ -87,7 +90,7 @@ export class Tab {
   }
 
   get isSelected() {
-    return this.parentNavBase.isActive(this.item);
+    return this.tabs.navBase.isActive(this.item);
   }
 
 }

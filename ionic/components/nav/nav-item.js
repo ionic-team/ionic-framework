@@ -16,6 +16,7 @@ export class NavItem {
     this.ComponentClass = ComponentClass;
     this.params = params;
     this.instance = null;
+    this.state = 0;
 
     this._titleEle = undefined;
     this._backBtn = undefined;
