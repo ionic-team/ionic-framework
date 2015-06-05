@@ -28,7 +28,7 @@ ion-nav {
   height: 100%;
 }
 
-ion-nav-pane {
+ion-pane {
   position: absolute;
   top: 0;
   right: 0;
@@ -96,18 +96,6 @@ ion-content {
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   will-change: scroll-position;
-}
-
-$swipe-handle-width:               20px !default;
-
-swipe-handle {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: block;
-  width: $swipe-handle-width;
-  height: 100%;
-  z-index: $z-index-swipe-handle;
 }
 
 

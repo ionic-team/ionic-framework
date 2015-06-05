@@ -3,7 +3,7 @@ import {Ancestor} from 'angular2/src/core/annotations_impl/visibility';
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
-import {NavController, NavParams, NavbarTemplate, Navbar, Content, Nav, NavPane, List, Item} from 'ionic/ionic';
+import {NavController, NavParams, NavbarTemplate, Navbar, Content, Nav, List, Item} from 'ionic/ionic';
 
 import {HackerNews} from '../hn'
 

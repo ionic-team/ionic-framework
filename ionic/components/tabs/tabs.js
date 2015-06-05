@@ -13,7 +13,6 @@ import {IonicComponent} from '../../config/component';
 import {Tab} from './tab';
 import {TabButton} from './tab-button';
 import {Icon} from '../icon/icon';
-import {Nav, NavPane} from '../nav/nav';
 import {NavItem} from '../nav/nav-item';
 import {NavBase} from '../nav/nav-base';
 

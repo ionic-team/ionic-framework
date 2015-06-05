@@ -1,23 +1,27 @@
 import {ElementRef} from 'angular2/angular2'
-import {Parent} from 'angular2/src/core/annotations_impl/visibility';
 import {Directive} from 'angular2/src/core/annotations_impl/annotations';
+import {Optional} from 'angular2/src/di/annotations_impl';
 
 import {Gesture} from 'ionic/gestures/gesture';
-import {Nav} from './nav';
+import {NavBase} from './nav-base';
 
 
 @Directive({
-  selector: 'swipe-handle',
+  selector: '.swipe-handle',
   hostProperties: {
-    '!nav.swipeBackEnabled': 'hidden'
+    'showHandle()': 'class.show-handle'
   }
 })
 export class SwipeHandle {
-  constructor(@Parent() nav: Nav, elementRef: ElementRef) {
+  constructor(
+    @Optional() navBase: NavBase,
+    elementRef: ElementRef
+  ) {
+    if (!navBase) return;
+
+    this.navBase = navBase;
+
     let gesture = new Gesture(elementRef.domElement);
-
-    this.nav = nav;
-
     gesture.listen();
 
     gesture.on('panend', onDragEnd);
@@ -58,7 +62,7 @@ export class SwipeHandle {
         }
       }
 
-      nav.swipeBackEnd(completeSwipeBack, progress, playbackRate);
+      navBase.swipeBackEnd(completeSwipeBack, progress, playbackRate);
 
       startX = null;
     }
@@ -69,14 +73,18 @@ export class SwipeHandle {
         ev.stopPropagation();
 
         startX = ev.gesture.center.x;
-        swipeableAreaWidth = nav.width() - startX;
+        swipeableAreaWidth = navBase.width() - startX;
 
-        nav.swipeBackStart();
+        navBase.swipeBackStart();
       }
 
-      nav.swipeBackProgress( (ev.gesture.center.x - startX) / swipeableAreaWidth );
+      navBase.swipeBackProgress( (ev.gesture.center.x - startX) / swipeableAreaWidth );
     }
 
+  }
+
+  showHandle() {
+    return (this.navBase ? this.navBase.swipeBackEnabled() : false);
   }
 
 }

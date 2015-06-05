@@ -4,9 +4,7 @@ import {bind} from 'angular2/di';
 
 import * as util from 'ionic/util';
 import {NavController} from './nav-controller';
-import {Nav} from './nav';
 import {NavBase} from './nav-base';
-import {TabPane, NavPane, NavPaneSection} from './nav';
 
 
 export class NavItem {
@@ -34,7 +32,7 @@ export class NavItem {
 
   stage(callback) {
     // update if it's possible to go back from this nav item
-    //this.enableBack = !!this.navBase.getPrevious(this);
+    this.enableBack = !!this.navBase.getPrevious(this);
 
     if (this.instance) {
       // already compiled this view
@@ -48,7 +46,7 @@ export class NavItem {
       // does it have a navbar? Is it tabs? Should it not have a navbar or any toolbars?
       let itemStructure = getProtoViewStructure(componentProtoViewRef);
 
-      // get the appropriate NavPane which this NavItem will fit into
+      // get the appropriate Pane which this NavItem will fit into
       this.navBase.getPane(itemStructure, pane => {
 
         // create a new injector just for this NavItem

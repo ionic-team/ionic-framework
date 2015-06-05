@@ -5,19 +5,21 @@ import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 
 import {Nav} from './nav';
+import {SwipeHandle} from './swipe-handle';
 
 
-@Component({selector:'ion-nav-pane'})
+@Component({selector:'ion-pane'})
 @View({
   template: `
-    <template nav-section-anchor></template>
+    <template pane-anchor></template>
     <section class="content-container">
       <template content-anchor></template>
+      <div class="swipe-handle"></div>
     </section>
   `,
-  directives: [NavPaneSectionAnchor, NavContentAnchor]
+  directives: [PaneAnchor, PaneContentAnchor, SwipeHandle]
 })
-export class NavPane {
+export class Pane {
   constructor(@Parent() nav: Nav, viewContainerRef: ViewContainerRef) {
     this.viewContainerRef = viewContainerRef;
     this.sections = {};
@@ -30,11 +32,11 @@ export class NavPane {
 
 
 @Directive({
-  selector: 'template[nav-section-anchor]'
+  selector: 'template[pane-anchor]'
 })
-class NavPaneSectionAnchor {
-  constructor(@Parent() navPane: NavPane, elementRef: ElementRef) {
-    navPane.sectionAnchorElementRef = elementRef;
+class PaneAnchor {
+  constructor(@Parent() pane: Pane, elementRef: ElementRef) {
+    pane.sectionAnchorElementRef = elementRef;
   }
 }
 
@@ -42,9 +44,9 @@ class NavPaneSectionAnchor {
 @Directive({
   selector: 'template[content-anchor]'
 })
-class NavContentAnchor {
-  constructor(@Parent() navPane: NavPane, viewContainerRef: ViewContainerRef) {
-    navPane.contentContainerRef = viewContainerRef;
+class PaneContentAnchor {
+  constructor(@Parent() pane: Pane, viewContainerRef: ViewContainerRef) {
+    pane.contentContainerRef = viewContainerRef;
   }
 }
 
@@ -58,12 +60,12 @@ class NavContentAnchor {
   template: `
     <template section-anchor></template>
   `,
-  directives: [NavBarSectionAnchor]
+  directives: [PaneSectionAnchor]
 })
 export class NavBarSection {
-  constructor(@Parent() navPane: NavPane, viewContainerRef: ViewContainerRef, elementRef: ElementRef) {
-    this.navPane = navPane;
-    navPane.addSection('navbar', this);
+  constructor(@Parent() pane: Pane, viewContainerRef: ViewContainerRef, elementRef: ElementRef) {
+    this.pane = pane;
+    pane.addSection('navbar', this);
   }
 }
 
@@ -72,7 +74,7 @@ export class NavBarSection {
 @Directive({
   selector: 'template[section-anchor]'
 })
-class NavBarSectionAnchor {
+class PaneSectionAnchor {
   constructor(@Parent() navBarSection: NavBarSection, viewContainerRef: ViewContainerRef) {
     navBarSection.viewContainerRef = viewContainerRef;
   }

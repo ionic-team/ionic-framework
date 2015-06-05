@@ -1,6 +1,5 @@
 import {Component, Parent, Decorator, View, NgElement} from 'angular2/angular2'
 import {Nav} from 'ionic/components/nav/nav'
-//import {NavPane} from 'ionic/components/nav-pane/nav-pane'
 import * as util from 'ionic/util'
 
 // TODO consider more explicit API, a la tabs

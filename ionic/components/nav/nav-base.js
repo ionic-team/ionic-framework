@@ -11,22 +11,22 @@ import {bind} from 'angular2/di';
 
 import {NavController} from './nav-controller';
 import {NavItem, NavParams} from './nav-item';
-import {NavPane, NavBarSection} from './nav-pane';
+import {Pane, NavBarSection} from './pane';
 import {Transition, ClickBlock} from 'ionic/ionic';
 import * as util from 'ionic/util';
 
-let itemsIds = -1;
 
 export class NavBase {
 
   constructor(
-      parentNavBase: NavBase,
+      parent: NavBase,
       compiler: Compiler,
       elementRef: ElementRef,
       loader: DynamicComponentLoader,
       injector: Injector
     ) {
 
+    this.parent = parent;
     this.compiler = compiler;
     this.elementRef = elementRef;
     this.domElement = elementRef.domElement;
@@ -39,7 +39,7 @@ export class NavBase {
     this.sbActive = false;
     this.panes = {};
 
-    this.id = ++itemsIds;
+    this.id = ++itemIds;
     this.childIds = -1;
   }
 
@@ -52,9 +52,9 @@ export class NavBase {
   }
 
   getPane(itemStructure, callback) {
-    // this gets or creates the NavPane which similar nav items live in
-    // Nav items with just a navbar/content would all use the same NavPane
-    // Tabs and view's without a navbar would get a different NavPanes
+    // this gets or creates the Pane which similar nav items live in
+    // Nav items with just a navbar/content would all use the same Pane
+    // Tabs and view's without a navbar would get a different Panes
 
     if (this.panes[itemStructure.key]) {
       // nav pane which the entering component already exists
@@ -64,34 +64,38 @@ export class NavBase {
       // create a new nav pane
       this.panes[itemStructure.key] = null;
 
-      // add a NavPane element
-      // when the NavPane is added, it'll also add its reference to the panes object
-      this.loader.loadNextToExistingLocation(NavPane, this.anchorElementRef, null).then(() => {
+      let injector = this.injector.resolveAndCreateChild([
+        bind(NavBase).toValue(this)
+      ]);
 
-        // get the navPane reference by name
-        let navPane = this.panes[itemStructure.key];
+      // add a Pane element
+      // when the Pane is added, it'll also add its reference to the panes object
+      this.loader.loadNextToExistingLocation(Pane, this.anchorElementRef, injector).then(() => {
 
-        // get the element inside the NavPane to add sections to
-        let sectionViewContainerRef = navPane.sectionAnchorElementRef;
+        // get the pane reference by name
+        let pane = this.panes[itemStructure.key];
+
+        // get the element inside the Pane to add sections to
+        let sectionViewContainerRef = pane.sectionAnchorElementRef;
         let promises = [];
         let sectionsToAdd = []
 
-        // decide which sections should be added to this NavPane, ie: nav bars, tab bars, etc.
+        // decide which sections should be added to this Pane, ie: nav bars, tab bars, etc.
         // add only the sections it needs
         if (itemStructure.navbar) {
           sectionsToAdd.push(NavBarSection);
         }
 
-        // add the sections which this type of NavPane requires
+        // add the sections which this type of Pane requires
         sectionsToAdd.forEach(SectionClass => {
-          // as each section is compiled and added to the NavPane
-          // the section will add a reference to itself in the NavPane's sections object
+          // as each section is compiled and added to the Pane
+          // the section will add a reference to itself in the Pane's sections object
           promises.push( this.loader.loadNextToExistingLocation(SectionClass, sectionViewContainerRef, null) );
         });
 
         // wait for all of the sections to resolve
         Promise.all(promises).then(() => {
-          callback(navPane);
+          callback(pane);
         });
 
       });
@@ -99,10 +103,10 @@ export class NavBase {
     }
   }
 
-  addPane(navPane) {
+  addPane(pane) {
     for (let np in this.panes) {
       if (this.panes[np] === null) {
-        this.panes[np] = navPane;
+        this.panes[np] = pane;
         return;
       }
     }
@@ -384,6 +388,16 @@ export class NavBase {
     }
   }
 
+  swipeBackEnabled() {
+    if (this.items.length > 1) {
+      let activeItem = this.getActive();
+      if (activeItem) {
+        return activeItem.enableBack;
+      }
+    }
+    return false;
+  }
+
   transitionStart(opts) {
     if (opts.isAnimated) {
       // block possible clicks during transition
@@ -513,7 +527,7 @@ export class NavBase {
         instances.push(item.instance);
       }
     }
-    return instances
+    return instances;
   }
 
   isActive(item) {
@@ -528,14 +542,6 @@ export class NavBase {
     return this.domElement.offsetWidth;
   }
 
-  get swipeBackEnabled() {
-    // let activeItem = this.nav.getActive();
-    // if (activeItem) {
-    //   return activeItem.enableBack;
-    // }
-    return false;
-  }
-
 }
 
 const ACTIVE_STATE = 1;
@@ -545,3 +551,4 @@ const STAGED_LEAVING_STATE = 4;
 const ACTIVELY_ENTERING_STATE = 5;
 const ACTIVELY_LEAVING_STATE = 6;
 
+let itemIds = -1;

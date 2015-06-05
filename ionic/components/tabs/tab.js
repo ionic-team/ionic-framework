@@ -43,7 +43,6 @@ import {IonicComponent} from 'ionic/config/component';
 export class Tab {
   constructor(
       @Parent() tabs: Tabs,
-      @Optional() parentNavBase: NavBase,
       compiler: Compiler,
       elementRef: ElementRef,
       loader: DynamicComponentLoader,
@@ -51,13 +50,12 @@ export class Tab {
       viewContainerRef: ViewContainerRef
     ) {
 
-    this.navBase = new NavBase(parentNavBase, compiler, elementRef, loader, injector);
-    this.parentNavBase = parentNavBase;
-    if (parentNavBase) {
-      this.sections = parentNavBase.panes['_n'].sections;
+    this.navBase = new NavBase(tabs.navBase, compiler, elementRef, loader, injector);
+    if (tabs.navBase.parent) {
+      this.sections = tabs.navBase.parent.panes['_n'].sections;
     }
 
-    this.item = new NavItem(parentNavBase);
+    this.item = new NavItem(this.navBase);
     this.item.setInstance(this);
     this.item.setViewElement(elementRef.domElement);
     tabs.add(this.item);

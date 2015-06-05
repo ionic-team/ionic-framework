@@ -93,6 +93,31 @@ $content-padding:    10px !default;
 }
 
 
+// Swipe Handle
+// --------------------------------------------------
+
+$swipe-handle-width:               20px !default;
+$swipe-handle-top:                 80px !default;
+$swipe-handle-bottom:              80px !default;
+
+.swipe-handle {
+  position: absolute;
+  top: $swipe-handle-top;
+  left: 0;
+  bottom: $swipe-handle-bottom;
+  width: $swipe-handle-width;
+  z-index: $z-index-swipe-handle;
+
+  background: red;
+  opacity: 0.2;
+
+  transform: translate3d(-999px, 0px, 0px);
+  &.show-handle {
+    transform: translate3d(0px, 0px, 0px);
+  }
+}
+
+
 // Node Inserted Animation
 // --------------------------------------------------
 // Used by the toolbar to know when the title has been rendered
