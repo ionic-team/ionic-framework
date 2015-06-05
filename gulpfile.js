@@ -162,6 +162,10 @@ gulp.task('examples', function() {
   return gulp.src('ionic/components/*/test/*/**/*')
     .pipe(cache('examples', { optimizeMemory: true }))
     .pipe(gulpif(/.js$/, buildTest()))
+    .on('error', function (err) {
+            console.log(err.message);
+            this.emit('end');
+        })
     .pipe(gulpif(/index.js$/, createIndexHTML()))
     .pipe(rename(function(file) {
       file.dirname = file.dirname.replace(path.sep + 'test' + path.sep, path.sep)
