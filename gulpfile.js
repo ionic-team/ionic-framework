@@ -22,6 +22,7 @@ var traceur = require('gulp-traceur');
 var webpack = require('gulp-webpack');
 var lazypipe = require('lazypipe');
 var cache = require('gulp-cached');
+var connect = require('gulp-connect');
 
 
 gulp.task('clean.build', function() {
@@ -55,6 +56,7 @@ gulp.task('watch', function() {
     'sass',
     'fonts',
     'polyfills',
+    'serve',
 
     function() {
       watch(['ionic/**/*.js', '!ionic/components/*/test/**/*'], function() {
@@ -84,6 +86,13 @@ function doubleCheckDistFiles() {
     gulp.start('fonts');
   }
 }
+
+gulp.task('serve', function() {
+  connect.server({
+    port: 8000,
+    livereload: false
+  });
+});
 
 gulp.task('clean', function(done) {
   del(['dist/'], done);
