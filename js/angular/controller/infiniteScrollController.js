@@ -19,6 +19,14 @@ function($scope, $attrs, $element, $timeout) {
   $scope.$on('scroll.infiniteScrollComplete', function() {
     finishInfiniteScroll();
   });
+  
+  $scope.$on('scroll.checkInfiniteScroll', function () {
+    // allow for digest to apply
+    ionic.requestAnimationFrame(function() {
+      self.scrollView.resize();
+      checkInfiniteBounds();
+    });
+  });
 
   $scope.$on('$destroy', function() {
     if (self.scrollCtrl && self.scrollCtrl.$element) self.scrollCtrl.$element.off('scroll', self.checkBounds);
