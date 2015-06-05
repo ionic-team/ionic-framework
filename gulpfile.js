@@ -382,11 +382,11 @@ gulp.task('old.watch', function() {
 
       watch('ionic/components/*/test/**/*', function() {
         doubleCheckDistFiles();
-        gulp.start('ionic.examples');
+        gulp.start('old.ionic.examples');
       });
 
       watch('ionic/components/**/*.scss', function() {
-        gulp.start('sass');
+        gulp.start('old.sass');
       });
     })
 

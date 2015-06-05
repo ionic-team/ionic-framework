@@ -21,7 +21,7 @@ $navbar-ios-button-background-color:       transparent !default;
 
 .nav-ios .navbar-container {
 
-  height: $navbar-ios-height;
+  min-height: $navbar-ios-height;
   background: $navbar-ios-background;
 
   // navbar on top, border on bottom (default)
