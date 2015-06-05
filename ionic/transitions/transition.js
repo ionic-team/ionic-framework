@@ -1,5 +1,5 @@
 import {Animation} from '../animations/animation';
-import {raf, rafPromise} from '../util/dom';
+import {raf} from '../util/dom';
 
 const SHOW_NAVBAR_CSS = 'show-navbar';
 const SHOW_VIEW_CSS = 'show-view';
@@ -49,10 +49,6 @@ export class Transition extends Animation {
   }
 
   stage(callback) {
-    // if no callback was supplied then return a promise
-    if (!callback) {
-      return rafPromise();
-    }
     raf(callback);
   }
 

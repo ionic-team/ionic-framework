@@ -18,7 +18,7 @@ import {Parent} from 'angular2/src/core/annotations_impl/visibility';
 import {Item, Icon} from 'ionic/ionic'
 import {Ionic} from 'ionic/components/app/app'
 import {IonicComponent} from 'ionic/config/component'
-import {raf, rafPromise, ready} from 'ionic/util/dom'
+import {raf, ready} from 'ionic/util/dom'
 import * as util from 'ionic/util'
 
 import {Animation} from 'ionic/animations/animation';

@@ -106,7 +106,7 @@ class Slideable {
   isOpen(open: Boolean) {
     if (arguments.length && open !== this._isOpen) {
       this.isTransitionActive(true)
-      dom.rafPromise().then(() => {
+      dom.raf(() => {
         this.isOpen = isOpen
         this.onSetIsOpen(open)
       })
