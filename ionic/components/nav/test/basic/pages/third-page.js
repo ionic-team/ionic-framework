@@ -8,16 +8,12 @@ import {NavController, NavbarTemplate, Navbar, Content} from 'ionic/ionic';
 @View({
   template: `
     <ion-navbar *navbar><ion-title>Third Page Header</ion-title></ion-navbar>
-
     <ion-content class="padding">
-
       <p>
         <button class="button" (click)="pop()">Pop (Go back to 2nd)</button>
       </p>
-
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
-
     </ion-content>
   `,
   directives: [NavbarTemplate, Navbar, Content]

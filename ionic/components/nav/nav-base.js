@@ -197,7 +197,11 @@ export class NavBase {
     return promise;
   }
 
-  switchActive(enteringItem, opts = {}) {
+  select(enteringItem, opts = {}) {
+    if (!enteringItem || this.isTransitioning()) {
+      return;
+    }
+
     opts.animation = 'none';
 
     let leavingItem = this.getActive() || new NavItem();
@@ -206,8 +210,6 @@ export class NavBase {
     leavingItem.willCache();
 
     this.transition(enteringItem, leavingItem, opts, () => {
-      // transition completed, destroy the leaving item
-      console.log('switchActive comlete')
     });
   }
 
@@ -492,7 +494,7 @@ export class NavBase {
   }
 
   isActive(item) {
-    return (item && item.stage === ACTIVE_STATE);
+    return (item && item.state === ACTIVE_STATE);
   }
 
   clear() {

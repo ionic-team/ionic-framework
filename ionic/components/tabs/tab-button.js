@@ -24,14 +24,14 @@ export class TabButton {
   }
 
   onInit() {
-    this.btnId = 'tab-button-' + this.tab.id;
-    this.panelId = 'tab-panel-' + this.tab.id;
+    let id = this.tab.item.id
+    this.btnId = 'tab-button-' + id;
+    this.panelId = 'tab-panel-' + id;
   }
 
   onClick(ev) {
     ev.stopPropagation();
     ev.preventDefault();
-
-    this.tabs.selectTab(this.tab);
+    this.tabs.select(this.tab);
   }
 }

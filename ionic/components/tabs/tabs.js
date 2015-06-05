@@ -55,11 +55,11 @@ export class Tabs {
     this.config = Tabs.config.invoke(this);
   }
 
-  addTab(tabItem) {
+  add(tabItem) {
     this.navBase.add(tabItem);
 
     if (this.navBase.length() === 1) {
-      this.selectTab(tabItem.instance);
+      this.select(tabItem.instance);
     }
   }
 
@@ -67,10 +67,8 @@ export class Tabs {
     return this.navBase.instances();
   }
 
-  selectTab(tabInstance) {
-    let enteringItem = this.navBase.findByInstance(tabInstance);
-
-    this.navBase.switchActive(enteringItem);
+  select(tabInstance) {
+    this.navBase.select( this.navBase.findByInstance(tabInstance) );
   }
 
 }

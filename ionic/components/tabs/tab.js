@@ -54,12 +54,12 @@ export class Tab {
     this.navBase = new NavBase(parentNavBase, compiler, elementRef, loader, injector);
     this.parentNavBase = parentNavBase;
 
-    this.tabItem = new NavItem(parentNavBase);
-    this.tabItem.instance = this
-    tabs.addTab(this.tabItem);
+    this.item = new NavItem(parentNavBase);
+    this.item.instance = this
+    tabs.add(this.item);
 
-    this.panelId = 'tab-panel-' + this.tabItem.id;
-    this.labeledBy = 'tab-button-' + this.tabItem.id;
+    this.panelId = 'tab-panel-' + this.item.id;
+    this.labeledBy = 'tab-button-' + this.item.id;
 
     this.elementRef = elementRef;
 
@@ -68,15 +68,14 @@ export class Tab {
     this.sections = parentNavBase.panes['_n'].sections;
     this.navBase.panes['_n'] = this;
 
-
     this.domElement = elementRef.domElement;
     this.config = Nav.config.invoke(this);
 
-    console.log('Tab constructor', this.id, ' parentNavBase:', parentNavBase);
+    console.log('Tab constructor', this.item.id, ' parentNavBase:', parentNavBase);
   }
 
   get isSelected() {
-    return this.parentNavBase.isActive(this);
+    return this.parentNavBase.isActive(this.item);
   }
 
 }
