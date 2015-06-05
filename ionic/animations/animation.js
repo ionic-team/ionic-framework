@@ -134,22 +134,18 @@ export class Animation {
   }
 
   play() {
-    var i;
+    let i, l;
     let promises = [];
+    let players = this._players;
 
-    for (i = 0; i < this._children.length; i++) {
+    for (i = 0, l = this._children.length; i < l; i++) {
       promises.push( this._children[i].play() );
     }
 
-    if (!this._to) {
-      // probably just add/removing classes, create bogus transition
-      this._from = this._to = {'opacity': 1};
-    }
-
-    if (!this._players.length) {
+    if (!players.length) {
       // first time played
       for (i = 0; i < this._el.length; i++) {
-        this._players.push(
+        players.push(
           new Animate( this._el[i],
                        this._from,
                        this._to,
@@ -163,13 +159,15 @@ export class Animation {
 
     } else {
       // has been paused, now play again
-      for (i = 0; i < this._players.length; i++) {
-        this._players[i].play();
+      for (i = 0, l = players.length; i < l; i++) {
+        players[i].play();
       }
     }
 
-    for (i = 0; i < this._players.length; i++) {
-      promises.push(this._players[i].promise);
+    for (i = 0, l = players.length; i < l; i++) {
+      if (players[i].promise) {
+        promises.push(players[i].promise);
+      }
     }
 
     let promise = Promise.all(promises);
@@ -302,6 +300,13 @@ export class Animation {
 class Animate {
 
   constructor(ele, fromEffect, toEffect, duration, easingConfig, playbackRate) {
+
+    if (!toEffect) {
+      // not an actual animation that tweens between from and to properties
+      // probably just adding/removing CSS classes, so resolve it right away
+      return;
+    }
+
     // https://w3c.github.io/web-animations/
     // not using the direct API methods because they're still in flux
     // however, element.animate() seems locked in and uses the latest
@@ -340,15 +345,17 @@ class Animate {
   }
 
   play() {
-    this.player.play();
+    this.player && this.player.play();
   }
 
   pause() {
-    this.player.pause();
+    this.player && this.player.pause();
   }
 
   progress(value) {
     let player = this.player;
+
+    if (!player) return;
 
     // passed a number between 0 and 1
     value = Math.max(0, Math.min(1, value));
@@ -367,7 +374,9 @@ class Animate {
   }
 
   playbackRate(value) {
-    this.player.playbackRate = value;
+    if (this.player) {
+      this.player.playbackRate = value;
+    }
   }
 
   dispose() {
