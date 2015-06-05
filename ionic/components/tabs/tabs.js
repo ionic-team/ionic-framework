@@ -59,7 +59,7 @@ export class Tabs {
     this.navBase.add(tabItem);
 
     if (this.navBase.length() === 1) {
-      this.select(tabItem.instance);
+      this.select(0);
     }
   }
 
@@ -67,8 +67,14 @@ export class Tabs {
     return this.navBase.instances();
   }
 
-  select(tabInstance) {
-    this.navBase.select( this.navBase.findByInstance(tabInstance) );
+  select(tab) {
+    let item = null;
+    if (typeof tab === 'number') {
+      item = this.navBase.getByIndex(tab);
+    } else {
+      item = this.navBase.getByInstance(tab)
+    }
+    this.navBase.select(item);
   }
 
 }

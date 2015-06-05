@@ -27,8 +27,6 @@ export class NavBase {
       injector: Injector
     ) {
 
-    console.log('NavBase, parent NavBase:', parentNavBase);
-
     this.compiler = compiler;
     this.elementRef = elementRef;
     this.domElement = elementRef.domElement;
@@ -45,11 +43,8 @@ export class NavBase {
     this.childIds = -1;
   }
 
-  initial(initial) {
-    console.log('initial')
-    if (initial) {
-      this.push(initial);
-    }
+  initial(ComponentClass) {
+    this.push(ComponentClass);
   }
 
   setPaneAnchor(elementRef) {
@@ -198,9 +193,11 @@ export class NavBase {
   }
 
   select(enteringItem, opts = {}) {
-    if (!enteringItem || this.isTransitioning()) {
+    if (!enteringItem || !enteringItem.instance || this.isTransitioning()) {
       return;
     }
+
+    enteringItem.instance.loadInitial();
 
     opts.animation = 'none';
 
@@ -442,11 +439,20 @@ export class NavBase {
     return null;
   }
 
-  findByInstance(instance) {
-    for (let i = 0, ii = this.items.length; i < ii; i++) {
-      if (this.items[i].instance === instance) {
-        return this.items[i];
+  getByInstance(instance) {
+    if (instance) {
+      for (let i = 0, ii = this.items.length; i < ii; i++) {
+        if (this.items[i].instance === instance) {
+          return this.items[i];
+        }
       }
+    }
+    return null;
+  }
+
+  getByIndex(index) {
+    if (index < this.items.length && index > -1) {
+      return this.items[index];
     }
     return null;
   }
@@ -493,10 +499,6 @@ export class NavBase {
     return this.items.length;
   }
 
-  isActive(item) {
-    return (item && item.state === ACTIVE_STATE);
-  }
-
   clear() {
     let pops = [];
     for (let item of this.items) {
@@ -515,6 +517,14 @@ export class NavBase {
       }
     }
     return instances
+  }
+
+  isActive(item) {
+    return (item && item.state === ACTIVE_STATE);
+  }
+
+  isStagedEntering(item) {
+    return (item && item.state === STAGED_ENTERING_STATE);
   }
 
   width() {

@@ -139,7 +139,7 @@ gulp.task('bundle.deps', function() {
   return builder.loadConfig('config.js').then(function(){
     // add ionic and angular2 build paths, since config.js is loaded at runtime from
     // tests we don't want to put them there
-    builder.config({ 
+    builder.config({
       baseURL: 'file:' + process.cwd(),
       paths : {
         "ionic/*": "dist/js/es6/ionic/*.js",
@@ -157,7 +157,7 @@ gulp.task('examples', function() {
   var buildTest = lazypipe()
              .pipe(traceur, traceurOptions)
              //.pipe(babel, babelOptions) Let SystemJS load index.js at runtime, saves build time
-           
+
   // Get each test folder with gulp.src
   return gulp.src('ionic/components/*/test/*/**/*')
     .pipe(cache('examples', { optimizeMemory: true }))
@@ -169,7 +169,7 @@ gulp.task('examples', function() {
     .pipe(gulp.dest('dist/examples/'))
 
   function createIndexHTML() {
-    var indexContents = _.template( 
+    var indexContents = _.template(
       fs.readFileSync('scripts/e2e/ionic.template.html')
     )({
       buildConfig: buildConfig
@@ -399,6 +399,10 @@ function doubleCheckDistFiles() {
 
   if (!fs.existsSync('../angular-ionic/dist/js/dev/es5/fonts')) {
     gulp.start('old.fonts');
+  }
+
+  if (!fs.existsSync('../angular-ionic/dist/js/dev/es5/polyfills')) {
+    gulp.start('old.polyfills');
   }
 }
 

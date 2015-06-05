@@ -1,5 +1,5 @@
 import {Parent} from 'angular2/src/core/annotations_impl/visibility';
-import {Directive, Component} from 'angular2/src/core/annotations_impl/annotations';
+import {Directive, Component, onInit} from 'angular2/src/core/annotations_impl/annotations';
 import {Optional} from 'angular2/src/di/annotations_impl'
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
@@ -55,7 +55,8 @@ export class Tab {
     this.parentNavBase = parentNavBase;
 
     this.item = new NavItem(parentNavBase);
-    this.item.instance = this
+    this.item.setInstance(this);
+    this.item.setViewElement(elementRef.domElement);
     tabs.add(this.item);
 
     this.panelId = 'tab-panel-' + this.item.id;
@@ -70,8 +71,19 @@ export class Tab {
 
     this.domElement = elementRef.domElement;
     this.config = Nav.config.invoke(this);
+  }
 
-    console.log('Tab constructor', this.item.id, ' parentNavBase:', parentNavBase);
+  onInit() {
+    if ( this.parentNavBase.isActive(this.item) || this.parentNavBase.isStagedEntering(this.item) ) {
+      this.loadInitial();
+    }
+  }
+
+  loadInitial() {
+    if (this.initial && !this._loaded) {
+      this.navBase.initial(this.initial);
+      this._loaded = true;
+    }
   }
 
   get isSelected() {

@@ -63,14 +63,13 @@ export class NavItem {
         let hostViewRef = viewContainer.create(componentProtoViewRef, -1, null, injector);
 
         let newLocation = new ElementRef(hostViewRef, 0);
-        this.instance = this.navBase.loader._viewManager.getComponent(newLocation);
+
+        this.setInstance( this.navBase.loader._viewManager.getComponent(newLocation) );
+        this.setViewElement( hostViewRef._view.render._view.rootNodes[0] );
 
         this.disposals.push(() => {
           viewContainer.remove( viewContainer.indexOf(hostViewRef) );
         });
-
-        this.viewEle = hostViewRef._view.render._view.rootNodes[0];
-        this.viewEle.classList.add('nav-item');
 
         let context = {
           boundElementIndex: 0,
@@ -95,6 +94,15 @@ export class NavItem {
       });
 
     });
+  }
+
+  setInstance(instance) {
+    this.instance = instance;
+  }
+
+  setViewElement(viewEle) {
+    this.viewEle = viewEle;
+    viewEle && viewEle.classList.add('nav-item');
   }
 
   cache() {
