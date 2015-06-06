@@ -726,6 +726,10 @@ function keyboardHasPlugin() {
 }
 
 ionic.Platform.ready(function() {
+  
+  // if using https://github.com/apache/cordova-plugins/tree/master/keyboard
+  if (ionic.Platform.isIOS() && window.Keyboard) return;
+  
   keyboardInitViewportHeight();
 
   window.addEventListener('orientationchange', keyboardOrientationChange);
