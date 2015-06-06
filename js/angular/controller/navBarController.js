@@ -439,11 +439,11 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
       }
       $element.addClass(newAppearance);
 
-      headerBar = getOnScreenHeaderBar();
-      headerBar && headerBar.headerBarEle().attr('class','bar bar-header ' + $element.attr('class'));
+      var headerBar = getOnScreenHeaderBar();
+      headerBar && headerBar.headerBarEle().attr('class', 'bar bar-header ' + $element.attr('class'));
 
       headerBar = getOffScreenHeaderBar();
-      headerBar && headerBar.headerBarEle().attr('class','bar bar-header ' + $element.attr('class'));
+      headerBar && headerBar.headerBarEle().attr('class', 'bar bar-header ' + $element.attr('class'));
 
       $element.addClass('nav-bar-container');
     }
