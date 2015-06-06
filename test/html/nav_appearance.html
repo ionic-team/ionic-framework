@@ -1,0 +1,124 @@
+<html ng-app="nav">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <title>Navbar appearance example</title>
+
+    <link rel="stylesheet" href="../../dist/css/ionic.css">
+    <script src="../../dist/js/ionic.bundle.js"></script>
+    <script src="dom-trace.js"></script>
+  </head>
+  <body>
+
+    <div>
+      <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-icon" from-title>
+          Back
+        </ion-nav-back-button>
+      </ion-nav-bar>
+      <ion-nav-view></ion-nav-view>
+    </div>
+
+    <script id="page1.html" type="text/ng-template">
+      <ion-view title="Page 1">
+        <ion-content padding="true">
+          <button class='button button-assertive' ng-click='changeAppearance()'>
+            Change Appearance
+          </button>
+          <a href="#/page2" class="button button-positive">Page 2</a>
+          <a href="#/page3" class="button button-positive">Page 3</a>
+        </ion-content>
+      </ion-view>
+    </script>
+    <script id="page2.html" type="text/ng-template">
+      <ion-view title="Page 2">
+        <ion-content padding="true">
+          <a ng-click="goBack()" class="button button-positive">Back</a>
+          <a href="#/page3" class="button button-positive">Page 3</a>
+        </ion-content>
+      </ion-view>
+    </script>
+    <script id="page3.html" type="text/ng-template">
+      <ion-view title="Page 3">
+        <ion-content padding="true">
+          <a ng-click="goBack()" class="button button-positive">Back</a>
+          <a href="#/page1" class="button button-positive">Page 1</a>
+        </ion-content>
+      </ion-view>
+    </script>
+    <script>
+      window.cordova = {
+          yup: true
+      };
+      ionic.Platform.isReady = true;
+      angular.module('nav', ['ionic'])
+
+      .config(function($stateProvider, $urlRouterProvider) {
+
+        $stateProvider
+          .state('page1', {
+            url: "/page1",
+            templateUrl: "page1.html",
+            controller: 'Page1Ctrl'
+          })
+          .state('page2', {
+            url: "/page2",
+            templateUrl: "page2.html",
+            controller: 'Page2Ctrl'
+          })
+          .state('page3', {
+            url: "/page3",
+            templateUrl: "page3.html",
+            controller: 'Page3Ctrl'
+          })
+
+         $urlRouterProvider.otherwise("/page1");
+       })
+
+       .controller('Page1Ctrl', function($scope,$ionicNavBarDelegate) {
+         $scope.changeAppearance = changeAppearance;
+
+        $scope.$on('$ionicView.beforeEnter',function(){
+          console.log('Page 1 enter');
+          $ionicNavBarDelegate.appearance('bar-positive',true);
+        });
+
+         var appearances = ['bar-royal','bar-assertive','bar-balanced'];
+         var actualAppearance = 0;
+         function changeAppearance(){
+          $ionicNavBarDelegate.appearance(appearances[actualAppearance],true);
+          actualAppearance++;
+          if(actualAppearance > appearances.length-1){
+            actualAppearance = 0;
+          }
+         }
+       })
+
+       .controller('Page2Ctrl', function($scope, $ionicNavBarDelegate,$ionicHistory) {
+
+        $scope.$on('$ionicView.beforeEnter',function(){
+          console.log('Page 2 enter');
+          $ionicNavBarDelegate.appearance('bar-energized',true);
+        });
+
+        $scope.goBack = function() {
+          $ionicHistory.goBack();
+        };
+       })
+
+       .controller('Page3Ctrl', function($scope, $ionicNavBarDelegate,$ionicHistory) {
+
+        $scope.$on('$ionicView.beforeEnter',function(){
+          console.log('Page 3 enter');
+          $ionicNavBarDelegate.appearance('bar-balanced',true);
+        });
+
+        $scope.goBack = function() {
+          $ionicHistory.goBack();
+        };
+       })
+
+    </script>
+  </body>
+</html>
