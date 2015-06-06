@@ -22,6 +22,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
   var headerBars = [];
   var navElementHtml = {};
   var isVisible = true;
+  var initialyDefinedClasses = '';
   var queuedTransitionStart, queuedTransitionEnd, latestTransitionId;
 
   $element.parent().data(DATA_NAV_BAR_CTRL, self);
@@ -32,6 +33,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
 
 
   self.init = function() {
+    initialyDefinedClasses = $element.attr('class');
     $element.addClass('nav-bar-container');
     ionic.DomUtil.cachedAttr($element, 'nav-bar-transition', $ionicConfig.views.transition());
 
@@ -85,6 +87,9 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
       isActive: isActive,
       title: function(newTitleText) {
         headerBarCtrl.title(newTitleText);
+      },
+      appearance: function(newAppearance) {
+        headerBarCtrl.appearance(newAppearance);
       },
       setItem: function(navBarItemEle, itemType) {
         // first make sure any exiting nav bar item has been removed
@@ -421,6 +426,28 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
       $ionicHistory.currentTitle(newTitleText);
     }
     return $scope.$title;
+  };
+
+  self.appearance = function(newAppearance, shouldReplaceAll) {
+    if (isDefined(newAppearance)) {
+      newAppearance = newAppearance || '';
+      shouldReplaceAll = shouldReplaceAll || false;
+
+      $element.attr('class', '');
+      if(!shouldReplaceAll){
+        $element.addClass(initialyDefinedClasses);
+      }
+      $element.addClass(newAppearance);
+
+      headerBar = getOnScreenHeaderBar();
+      headerBar && headerBar.headerBarEle().attr('class','bar bar-header ' + $element.attr('class'));
+
+      headerBar = getOffScreenHeaderBar();
+      headerBar && headerBar.headerBarEle().attr('class','bar bar-header ' + $element.attr('class'));
+
+      $element.addClass('nav-bar-container');
+    }
+    return $element.attr('class');
   };
 
 

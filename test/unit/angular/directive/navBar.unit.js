@@ -84,6 +84,15 @@ describe('ionNavBar', function() {
       expect(ctrl.showBar()).toBe(false);
     });
 
+    it('should set appearance', function() {
+      setup();
+      expect(ctrl.appearance()).toBe('nav-bar-container');
+      ctrl.appearance('bar-positive');
+      expect(ctrl.appearance()).toBe('bar-positive nav-bar-container');
+      ctrl.appearance('bar-royal');
+      expect(ctrl.appearance()).toBe('bar-royal nav-bar-container');
+    });
+
   });
 
   describe('directive', function() {
@@ -177,6 +186,20 @@ describe('ionNavBar', function() {
       expect(el[0].querySelector('[nav-bar="active"] .title').innerText).toEqual('');
       instance.title('Night Ranger')
       expect(el[0].querySelector('[nav-bar="active"] .title').innerText).toEqual('Night Ranger');
+    }));
+
+
+    it('should set appearance and replace all class set before', inject(function($ionicNavBarDelegate) {
+      var el = setup('class="bar-positive" delegate-handle="theBestHandle"');
+      var instance = $ionicNavBarDelegate.$getByHandle('theBestHandle');
+
+      expect(instance.appearance()).toBe('bar-positive nav-bar-container');
+
+      instance.appearance('bar-royal', false);
+      expect(instance.appearance()).toBe('bar-positive bar-royal nav-bar-container');
+
+      instance.appearance('bar-royal', true);
+      expect(instance.appearance()).toBe('bar-royal nav-bar-container');
     }));
 
   });

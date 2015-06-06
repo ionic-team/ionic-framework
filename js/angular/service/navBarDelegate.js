@@ -62,6 +62,15 @@ IonicModule
    * @param {string} title The new title to show.
    */
   'title',
+    /**
+   * @ngdoc method
+   * @name $ionicNavBarDelegate#appearance
+   * @description
+   * Set the appearance for the {@link ionic.directive:ionNavBar}.
+   * @param {string} appearance The new appearance to set.
+   * @param {boolean} shouldReplaceAll Will remove any class initialy set on html.
+   */
+  'appearance',
 
   // DEPRECATED, as of v1.0.0-beta14 -------
   'changeTitle',
