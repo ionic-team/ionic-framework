@@ -8,12 +8,11 @@ import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_compone
 import {Injector} from 'angular2/di';
 import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
 
-import {Nav} from '../nav/nav';
+import {Tabs} from './tabs';
 import {NavBase} from '../nav/nav-base';
 import {NavItem} from '../nav/nav-item';
-import {Tabs} from './tabs';
 import {Content} from '../content/content';
-import {IonicComponent} from 'ionic/config/component';
+import {IonicComponent} from '../../config/component';
 
 
 @Component({
@@ -40,25 +39,26 @@ import {IonicComponent} from 'ionic/config/component';
   `,
   directives: [TabContentAnchor]
 })
-export class Tab {
-  constructor(
-      @Parent() tabs: Tabs,
-      compiler: Compiler,
-      elementRef: ElementRef,
-      loader: DynamicComponentLoader,
-      injector: Injector,
-      viewContainerRef: ViewContainerRef
-    ) {
+export class Tab extends NavBase {
 
-    this.navBase = new NavBase(tabs.navBase, compiler, elementRef, loader, injector);
-    if (tabs.navBase.parent) {
-      this.sections = tabs.navBase.parent.panes['_n'].sections;
+  constructor(
+    @Parent() tabs: Tabs,
+    compiler: Compiler,
+    elementRef: ElementRef,
+    loader: DynamicComponentLoader,
+    injector: Injector,
+    viewContainerRef: ViewContainerRef
+  ) {
+
+    super(tabs, compiler, elementRef, loader, injector);
+    if (tabs.parent) {
+      this.sections = tabs.parent.panes['_n'].sections;
     }
 
-    this.item = new NavItem(this.navBase);
+    this.item = new NavItem(this);
     this.item.setInstance(this);
     this.item.setViewElement(elementRef.domElement);
-    tabs.add(this.item);
+    tabs.addTab(this.item);
     this.tabs = tabs;
 
     this.panelId = 'tab-panel-' + this.item.id;
@@ -68,27 +68,26 @@ export class Tab {
 
     this.viewContainerRef = viewContainerRef;
 
-    this.navBase.panes['_n'] = this;
+    this.panes['_n'] = this;
 
     this.domElement = elementRef.domElement;
-    this.config = Nav.config.invoke(this);
   }
 
   onInit() {
-    if ( this.tabs.navBase.isActive(this.item) || this.tabs.navBase.isStagedEntering(this.item) ) {
+    if ( this.tabs.isActive(this.item) || this.tabs.isStagedEntering(this.item) ) {
       this.loadInitial();
     }
   }
 
   loadInitial() {
     if (this.initial && !this._loaded) {
-      this.navBase.initial(this.initial);
+      this.push(this.initial);
       this._loaded = true;
     }
   }
 
   get isSelected() {
-    return this.tabs.navBase.isActive(this.item);
+    return this.tabs.isActive(this.item);
   }
 
 }

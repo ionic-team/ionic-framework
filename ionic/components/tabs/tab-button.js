@@ -1,6 +1,5 @@
 import {Parent} from 'angular2/src/core/annotations_impl/visibility';
 import {Directive, onInit} from 'angular2/src/core/annotations_impl/annotations';
-import {View} from 'angular2/src/core/annotations_impl/view';
 
 import {Tabs} from './tabs';
 
@@ -32,6 +31,6 @@ export class TabButton {
   onClick(ev) {
     ev.stopPropagation();
     ev.preventDefault();
-    this.tabs.select(this.tab);
+    this.tabs.selectTab(this.tab);
   }
 }

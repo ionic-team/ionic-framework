@@ -9,12 +9,11 @@ import {Injector} from 'angular2/di';
 import {NgFor} from 'angular2/angular2';
 import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
 
-import {IonicComponent} from '../../config/component';
-import {Tab} from './tab';
 import {TabButton} from './tab-button';
+import {NavBase} from '../nav/nav-base';
 import {Icon} from '../icon/icon';
 import {NavItem} from '../nav/nav-item';
-import {NavBase} from '../nav/nav-base';
+import {IonicComponent} from '../../config/component';
 
 
 @Component({
@@ -40,40 +39,41 @@ import {NavBase} from '../nav/nav-base';
   `,
   directives: [NgFor, TabButton, Icon]
 })
-export class Tabs {
+export class Tabs extends NavBase {
+
   constructor(
     @Optional() parentNavBase: NavBase,
-      compiler: Compiler,
-      elementRef: ElementRef,
-      loader: DynamicComponentLoader,
-      injector: Injector
+    compiler: Compiler,
+    elementRef: ElementRef,
+    loader: DynamicComponentLoader,
+    injector: Injector
   ) {
-    this.navBase = new NavBase(parentNavBase, compiler, elementRef, loader, injector);
+    super(parentNavBase, compiler, elementRef, loader, injector);
 
     this.domElement = elementRef.domElement;
     this.config = Tabs.config.invoke(this);
   }
 
-  add(tabItem) {
-    this.navBase.add(tabItem);
+  addTab(tabItem) {
+    this.add(tabItem);
 
-    if (this.navBase.length() === 1) {
-      this.select(0);
+    if (this.length() === 1) {
+      this.selectTab(0);
     }
+  }
+
+  selectTab(tab) {
+    let item = null;
+    if (typeof tab === 'number') {
+      item = this.getByIndex(tab);
+    } else {
+      item = this.getByInstance(tab)
+    }
+    this.select(item);
   }
 
   get tabs() {
-    return this.navBase.instances();
-  }
-
-  select(tab) {
-    let item = null;
-    if (typeof tab === 'number') {
-      item = this.navBase.getByIndex(tab);
-    } else {
-      item = this.navBase.getByInstance(tab)
-    }
-    this.navBase.select(item);
+    return this.instances();
   }
 
 }

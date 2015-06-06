@@ -12,19 +12,20 @@ import {bind} from 'angular2/di';
 import {NavController} from './nav-controller';
 import {NavItem, NavParams} from './nav-item';
 import {Pane, NavBarSection} from './pane';
-import {Transition, ClickBlock} from 'ionic/ionic';
+import {Transition} from '../../transitions/transition';
+import {ClickBlock} from '../../util/click-block';
 import * as util from 'ionic/util';
 
 
 export class NavBase {
 
   constructor(
-      parent: NavBase,
-      compiler: Compiler,
-      elementRef: ElementRef,
-      loader: DynamicComponentLoader,
-      injector: Injector
-    ) {
+    parent: NavBase,
+    compiler: Compiler,
+    elementRef: ElementRef,
+    loader: DynamicComponentLoader,
+    injector: Injector
+  ) {
 
     this.parent = parent;
     this.compiler = compiler;
@@ -41,10 +42,6 @@ export class NavBase {
 
     this.id = ++itemIds;
     this.childIds = -1;
-  }
-
-  initial(ComponentClass) {
-    this.push(ComponentClass);
   }
 
   setPaneAnchor(elementRef) {
