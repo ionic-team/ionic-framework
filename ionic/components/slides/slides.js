@@ -47,6 +47,7 @@ export class Slides {
     this.currentIndex = 0;
     this.animateSpeed = 300;
     this.slideDelay = 0;//3000;
+    this.continuous = true;
 
     // Initialize our slides gesture handler
     this.gesture = new SlidesGesture(this);
@@ -55,7 +56,7 @@ export class Slides {
     // Wait a cycle for the children to exist before computing sizes
     setTimeout(() => {
       // Continuous mode, but only if we have at least 2 slides
-      this.continuous = this.slides.length > 1 ? true : false;
+      this.continuous = this.continuous && (this.slides.length > 1 ? true : false);
 
       // Grab the wrapper element that contains the slides
       this.wrapperElement = this.domElement.children[0];
@@ -111,13 +112,51 @@ export class Slides {
     this._append(slide);
   }
 
+
+  slide(to, slideSpeed) {
+    let index = this.currentIndex;
+    let width = this.containerWidth;
+
+    // do nothing if already on requested slide
+    if (index == to) return;
+
+    var direction = Math.abs(index-to) / (index-to); // 1: backward, -1: forward
+
+    // get the actual position of the slide
+    if (this.continuous) {
+      var natural_direction = direction;
+      direction = -this.slides[this._circle(to)].x / width;
+
+      // if going forward but to < index, use to = slides.length + to
+      // if going backward but to > index, use to = -slides.length + to
+      if (direction !== natural_direction) to =  -direction * this.slides.length + to;
+
+    }
+
+    var diff = Math.abs(index-to) - 1;
+
+    // move all the slides between index and to in the right direction
+    while (diff--) this._move( this._circle((to > index ? to : index) - diff - 1), width * direction, 0);
+
+    to = this._circle(to);
+
+    this._move(index, width * direction, slideSpeed || this.animateSpeed);
+    this._move(to, 0, slideSpeed || this.animateSpeed);
+
+    if (this.continuous) this._move(this._circle(to - direction), -(width * direction), 0); // we need to get the next in place
+
+    this.currentIndex = to;
+    //offloadFn(options.callback && options.callback(index, slides[index]));
+  }
+
   /**
    * Slide to a specific slide index.
    *
    * @param toIndex the index to slide to.
    * @param isRight, whether to go right or go left, only works in continuous mode
    */
-  slide(toIndex, isRight) {
+  slide2(toIndex, isRight) {
+    console.log('Sliding to', toIndex, this.currentIndex, isRight);
     if(toIndex === this.currentIndex) {
       return;
     }
@@ -130,13 +169,23 @@ export class Slides {
     let s = this.slides[c(i)];
     let speed = this.animateSpeed;
 
+    let dir = Math.abs(i-toIndex) / (i-toIndex);
+
     // Create a multiplier depending on the direction we want to travel
     // TODO: Verify isRight doesn't apply in non-continuous mode
-    let dir = isRight ? 1 : -1;
+    //let dir = isRight ? 1 : -1;
 
     let newIndex;
 
     if(this.continuous) {
+      // get the actual position of the slide
+      var natural_direction = dir;
+      dir = -this.slides[c(toIndex)].x / w;
+
+      // if going forward but to < index, use to = slides.length + to
+      // if going backward but to > index, use to = -slides.length + to
+      if (dir !== natural_direction) toIndex =  -dir * this.slides.length + toIndex;
+
       // We are in continuous mode, so wrap the other elements around
       m( c( i - dir * 1 ), - dir*w );
       m( c( i + dir * 2 ), dir*w );
@@ -163,14 +212,14 @@ export class Slides {
    * Slide left, possibly wrapping around in continuous mode.
    */
   slideLeft() {
-    this.slide(this._circle(this.currentIndex - 1), false);
+    this.slide(this._circle(this.currentIndex - 1));
   }
 
   /**
    * Slide right, possibly wrapping around in continuous mode.
    */
   slideRight() {
-    this.slide(this._circle(this.currentIndex + 1), true);
+    this.slide(this._circle(this.currentIndex + 1));
   }
 
 
