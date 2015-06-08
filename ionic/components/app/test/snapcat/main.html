@@ -26,6 +26,8 @@
 
       <ion-toolbar id="p2toolbar">
         <div class="toolbar-inner" [control-group]="filterForm">
+          <ion-title>feed</ion-title>
+          <!--
           <ion-segment control="filterControl">
             <ion-segment-button value="new" ion-button>
               New
@@ -34,6 +36,7 @@
               Best
             </ion-segment-button>
           </ion-segment>
+        -->
         </div>
       </ion-toolbar>
 
@@ -59,6 +62,35 @@
           </div>
         </div>
 
+        <div class="card">
+          <div class="card-content">
+            I see humanity now as one vast plant, needing for its highest fulfillment only love, the natural blessings of the great outdoors, and intelligent crossing and selection.
+          </div>
+          <img src="http://ionic-io-assets.s3.amazonaws.com/images/p2.png">
+          <div class="card-footer">
+            Posted 7 days ago
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            You must not lose faith in humanity. Humanity is an ocean; if a few drops of the ocean are dirty, the ocean does not become dirty.
+          </div>
+          <img src="http://ionic-io-assets.s3.amazonaws.com/images/p3.png">
+          <div class="card-footer">
+            Posted 7 days ago
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            Keep close to Nature's heart... and break clear away, once in awhile, and climb a mountain or spend a week in the woods. Wash your spirit clean.
+          </div>
+          <img src="http://ionic-io-assets.s3.amazonaws.com/images/p4.png">
+          <div class="card-footer">
+            Posted 8 days ago
+          </div>
+        </div>
       </ion-content>
 
     </ion-view>
@@ -70,6 +102,10 @@
 <style>
   ion-view {
     background-color: #F5F5F5;
+  }
+  .platform-ios ion-toolbar {
+    height: 64px !important;
+    padding-top: 20px;
   }
   ion-content {
     background-color: #F5F5F5 !important;
