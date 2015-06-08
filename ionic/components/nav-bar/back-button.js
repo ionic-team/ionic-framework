@@ -32,9 +32,11 @@ export class BackButton {
   }
 
   onClick(ev) {
-    this.navItem.nav.pop();
     ev.stopPropagation();
     ev.preventDefault();
+
+    let navItem = this.navItem;
+    navItem && navItem.nav && navItem.nav.pop();
   }
 }
 

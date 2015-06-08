@@ -10,7 +10,7 @@ import {NavBase} from './nav-base';
 export class NavItem {
 
   constructor(navBase, ComponentClass, params = {}) {
-    this.navBase = navBase;
+    this.nav = navBase;
     this.ComponentClass = ComponentClass;
     this.params = params;
     this.instance = null;
@@ -32,7 +32,7 @@ export class NavItem {
 
   stage(callback) {
     // update if it's possible to go back from this nav item
-    this.enableBack = !!this.navBase.getPrevious(this);
+    this.enableBack = this.nav && !!this.nav.getPrevious(this);
 
     if (this.instance) {
       // already compiled this view
@@ -40,19 +40,19 @@ export class NavItem {
     }
 
     // compile the Component
-    this.navBase.compiler.compileInHost(this.ComponentClass).then(componentProtoViewRef => {
+    this.nav.compiler.compileInHost(this.ComponentClass).then(componentProtoViewRef => {
 
       // figure out the sturcture of this Component
       // does it have a navbar? Is it tabs? Should it not have a navbar or any toolbars?
       let itemStructure = getProtoViewStructure(componentProtoViewRef);
 
       // get the appropriate Pane which this NavItem will fit into
-      this.navBase.getPane(itemStructure, pane => {
+      this.nav.getPane(itemStructure, pane => {
 
         // create a new injector just for this NavItem
-        let injector = this.navBase.injector.resolveAndCreateChild([
-          bind(NavBase).toValue(this.navBase),
-          bind(NavController).toValue(this.navBase.navCtrl),
+        let injector = this.nav.injector.resolveAndCreateChild([
+          bind(NavBase).toValue(this.nav),
+          bind(NavController).toValue(this.nav.navCtrl),
           bind(NavParams).toValue(new NavParams(this.params)),
           bind(NavItem).toValue(this)
         ]);
@@ -63,7 +63,7 @@ export class NavItem {
 
         let newLocation = new ElementRef(hostViewRef, 0);
 
-        this.setInstance( this.navBase.loader._viewManager.getComponent(newLocation) );
+        this.setInstance( this.nav.loader._viewManager.getComponent(newLocation) );
         this.setViewElement( hostViewRef._view.render._view.rootNodes[0] );
 
         this.disposals.push(() => {
