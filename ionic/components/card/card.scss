@@ -10,6 +10,18 @@ $card-box-shadow:                 0 1px 3px rgba(0, 0, 0, .3) !default;
   margin: 10px;
 }
 
+.card {
+
+
+  .card-content {
+    padding: 20px;
+  }
+
+  img {
+    max-width: 100%;
+  }
+}
+
 .card .item-label {
   white-space: normal;
 }

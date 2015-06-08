@@ -33,17 +33,12 @@
       <ion-content>
 
         <div class="card">
-          <div class="item">
-            <div class="item-content">
-              <div class="item-label">
-                This is a nice test. What do you
-                think about space ships and pumpkins? Of
-                rainbows and blue shoes? Of rabbits
-                and mistletoe?
-
-                <img src="p.jpg">
-              </div>
-            </div>
+          <div class="card-content">
+            I tried to keep both arts alive, but the camera won. I found that while the camera does not express the soul, perhaps a photograph can!
+          </div>
+          <img src="http://ionic-io-assets.s3.amazonaws.com/images/p.jpg">
+          <div class="card-footer">
+            Posted 5 days ago
           </div>
         </div>
 
@@ -65,11 +60,19 @@
   .card {
     box-shadow: none !important;
   }
+  .card .card-content, .card .card-footer {
+    font-family: 'lato';
+    font-size: 16px;
+    line-height: 25px;
+  }
+  .card .card-footer {
+    color: #B8B8B8;
+  }
   .card .item {
     border: none !important;
   }
-  .platform-ios .card .item-content {
-    padding: 25px;
+  .card .card-content, .card .card-footer {
+    padding: 25px !important;
   }
   .item {
     font-family: 'lato';
