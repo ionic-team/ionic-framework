@@ -225,14 +225,34 @@ export class Slides {
    * Slide left, possibly wrapping around in continuous mode.
    */
   prev() {
-    this.slide(this.currentIndex - 1);
+    if(this.continuous) {
+
+      // Always allow us to go back
+      this.slide(this.currentIndex - 1);
+
+    } else if(this.currentIndex > 0) {
+
+      // If we have one slide to the left
+      this.slide(this.currentIndex - 1);
+
+    }
   }
 
   /**
    * Slide right, possibly wrapping around in continuous mode.
    */
   next() {
-    this.slide(this.currentIndex + 1);
+    if(this.continuous) {
+
+      // Always allow us to go next
+      this.slide(this.currentIndex + 1);
+
+    } else if(this.currentIndex < this.slides.length - 1) {
+
+      // If not in continuous mode, only slide if we have a right slide
+      this.slide(this.currentIndex + 1);
+
+    }
   }
 
 
