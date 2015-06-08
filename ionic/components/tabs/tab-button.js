@@ -31,6 +31,6 @@ export class TabButton {
   onClick(ev) {
     ev.stopPropagation();
     ev.preventDefault();
-    this.tabs.selectTab(this.tab);
+    this.tabs.select(this.tab);
   }
 }

@@ -79,10 +79,14 @@ export class Tab extends NavBase {
     }
   }
 
-  loadInitial() {
-    if (this.initial && !this._loaded) {
-      this.push(this.initial);
+  loadInitial(callback) {
+    if (!this._loaded && this.initial) {
+      this.push(this.initial).then(() => {
+        callback && callback();
+      });
       this._loaded = true;
+    } else {
+      callback && callback();
     }
   }
 

@@ -190,24 +190,6 @@ export class NavBase {
     return promise;
   }
 
-  select(enteringItem, opts = {}) {
-    if (!enteringItem || !enteringItem.instance || this.isTransitioning()) {
-      return;
-    }
-
-    enteringItem.instance.loadInitial();
-
-    opts.animation = 'none';
-
-    let leavingItem = this.getActive() || new NavItem();
-    leavingItem.shouldDestroy = false;
-    leavingItem.shouldCache = true;
-    leavingItem.willCache();
-
-    this.transition(enteringItem, leavingItem, opts, () => {
-    });
-  }
-
   transition(enteringItem, leavingItem, opts, callback) {
     if (!enteringItem || enteringItem === leavingItem) {
       return callback();

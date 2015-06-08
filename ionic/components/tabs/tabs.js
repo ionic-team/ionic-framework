@@ -58,18 +58,36 @@ export class Tabs extends NavBase {
     this.add(tabItem);
 
     if (this.length() === 1) {
-      this.selectTab(0);
+      this.select(0);
     }
   }
 
-  selectTab(tab) {
-    let item = null;
+  select(tab) {
+    let enteringItem = null;
     if (typeof tab === 'number') {
-      item = this.getByIndex(tab);
+      enteringItem = this.getByIndex(tab);
     } else {
-      item = this.getByInstance(tab)
+      enteringItem = this.getByInstance(tab)
     }
-    this.select(item);
+
+    if (!enteringItem || !enteringItem.instance || this.isTransitioning()) {
+      return;
+    }
+
+    enteringItem.instance.loadInitial(() => {
+      let opts = {
+        animation: 'none'
+      };
+
+      let leavingItem = this.getActive() || new NavItem();
+      leavingItem.shouldDestroy = false;
+      leavingItem.shouldCache = true;
+      leavingItem.willCache();
+
+      this.transition(enteringItem, leavingItem, opts, () => {
+        console.log('tab selected')
+      });
+    });
   }
 
   get tabs() {
