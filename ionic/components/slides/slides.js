@@ -45,9 +45,18 @@ export class Slides {
 
     this.slides = [];
     this.currentIndex = 0;
+
+    // How quickly to animate between slides
     this.animateSpeed = 300;
+
+    // How often to switch slides automatically. Zero is no auto sliding
     this.slideDelay = 0;//3000;
+
+    // Whether to slide continuosly, where the last slide becomes the first
     this.continuous = false;
+
+    // Whether to bounce on the edges if not continuous (overscrolling)
+    this.bounce = false;
 
     // Initialize our slides gesture handler
     this.gesture = new SlidesGesture(this);
@@ -325,14 +334,56 @@ export class Slides {
   // Process a drag, with a deltaX value
   _drag(event) {
     let dx = event.gesture.deltaX;
+    let width = this.containerWidth;
+    let index = this.currentIndex;
 
+    // Check if we should run (scroll detection, etc)
     let shouldRun = this._dragPre(event);
     if(shouldRun === false) { return; }
 
-    // Grab the left/center/right slides
-    let index1 = this._circle(this.currentIndex - 1);
-    let index2 = this._circle(this.currentIndex);
-    let index3 = this._circle(this.currentIndex + 1);
+    // We're doing this
+    event.preventDefault();
+
+    let index1, index2, index3;
+
+    if(this.continuous) {
+
+      // Grab the left/center/right slides
+      index1 = this._circle(this.currentIndex - 1);
+      index2 = this.currentIndex;
+      index3 = this._circle(this.currentIndex + 1);
+
+    } else {
+
+      index1 = this.currentIndex - 1;
+      index2 = this.currentIndex;
+      index3 = this.currentIndex + 1;
+
+      var isPastBounds =
+        index == 0 && dx > 0 // if first slide and slide amt is greater than 0
+        || index == this.slides.length - 1 && dx < 0;    // or if last slide and slide amt is less than 0
+
+      console.log('Is over bounds?', isPastBounds);
+
+
+      if(this.bounce) {
+        // If we have drag bouncing/overscroll enabled,
+        // let's slow down the drag on the edges
+
+        // if first slide and sliding left
+        // or if last slide and sliding right
+        // and if sliding at all,
+        // Adjust resistance
+        dx = dx /
+          ((!index && dx > 0 || index == this.slides.length - 1 && dx < 0) ?
+            ( Math.abs(dx) / width + 1 )      // determine resistance level
+            : 1 );
+
+      } else if(isPastBounds) {
+        // We aren't overscrolling (bouncing), and we're past the bounds
+        return;
+      }
+    }
 
     let s1 = this.slides[index1];
     let s2 = this.slides[index2];
@@ -446,7 +497,7 @@ export class Slides {
   }
 
   _move(pos, translateX, speed) {
-    console.log('MOVE', pos, translateX, speed ? speed : 0);
+    //console.log('MOVE', pos, translateX, speed ? speed : 0);
     // Should already be wrapped with circle
     let slide = this.slides[pos];
     if(!slide) { return; }
