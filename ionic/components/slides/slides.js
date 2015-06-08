@@ -365,7 +365,6 @@ export class Slides {
 
       console.log('Is over bounds?', isPastBounds);
 
-
       if(this.bounce) {
         // If we have drag bouncing/overscroll enabled,
         // let's slow down the drag on the edges
@@ -381,6 +380,8 @@ export class Slides {
 
       } else if(isPastBounds) {
         // We aren't overscrolling (bouncing), and we're past the bounds
+        let slide = this.slides[index];
+        console.log('Over Bounds', dx, slide.translateX);
         return;
       }
     }
@@ -401,35 +402,40 @@ export class Slides {
     }
   }
 
-  _endDrag(event) {
-    //this._finish(event);
-    let isRight = event.gesture.offsetDirection & Hammer.DIRECTION_RIGHT;
-    console.log('Slides: ending drag', event, '\n\t', 'Right?', isRight);
-
-    if(isRight) {
-      this.next();
-    } else {
-      this.prev();
-    }
+  _endDrag(event, drag) {
+    this._finish(event, drag);
   }
 
-  _finish(event) {
+  _finish(event, drag) {
+
+    let delta = {
+      x: event.gesture.deltaX,
+      y: event.gesture.deltaY
+    }
+
+    let width = this.containerWidth;
+    let index = this.currentIndex;
+    let slides = this.slides;
+    let move = this._move.bind(this);
+    let circle = this._circle.bind(this);
+    let isScrolling = this._isScrolling;
+    let speed = this.animateSpeed;
 
     // measure duration
-    var duration = +new Date - start.time;
+    var duration = +new Date - drag.time;
 
     // determine if slide attempt triggers next/prev slide
     var isValidSlide =
           Number(duration) < 250               // if slide duration is less than 250ms
           && Math.abs(delta.x) > 20            // and if slide amt is greater than 20px
-          || Math.abs(delta.x) > width/2;      // or if slide amt is greater than half the width
+          || Math.abs(delta.x) > width/3;      // or if slide amt is greater than half the width
 
     // determine if slide attempt is past start and end
     var isPastBounds =
           !index && delta.x > 0                            // if first slide and slide amt is greater than 0
           || index == slides.length - 1 && delta.x < 0;    // or if last slide and slide amt is less than 0
 
-    if (options.continuous) isPastBounds = false;
+    if (this.continuous) isPastBounds = false;
 
     // determine direction of swipe (true:right, false:left)
     var direction = delta.x < 0;
@@ -441,7 +447,7 @@ export class Slides {
 
         if (direction) {
 
-          if (options.continuous) { // we need to get the next in this direction in place
+          if (this.continuous) { // we need to get the next in this direction in place
 
             move(circle(index-1), -width, 0);
             move(circle(index+2), width, 0);
@@ -450,12 +456,12 @@ export class Slides {
             move(index-1, -width, 0);
           }
 
-          move(index, slidePos[index]-width, speed);
-          move(circle(index+1), slidePos[circle(index+1)]-width, speed);
-          index = circle(index+1);
+          move(index, slides[index].x-width, speed);
+          move(circle(index+1), slides[circle(index+1)].x-width, speed);
+          this.currentIndex = circle(index+1);
 
         } else {
-          if (options.continuous) { // we need to get the next in this direction in place
+          if (this.continuous) { // we need to get the next in this direction in place
 
             move(circle(index+1), width, 0);
             move(circle(index-2), -width, 0);
@@ -464,17 +470,17 @@ export class Slides {
             move(index+1, width, 0);
           }
 
-          move(index, slidePos[index]+width, speed);
-          move(circle(index-1), slidePos[circle(index-1)]+width, speed);
-          index = circle(index-1);
+          move(index, slides[index].x+width, speed);
+          move(circle(index-1), slides[circle(index-1)].x+width, speed);
+          this.currentIndex = circle(index-1);
 
         }
 
-        options.callback && options.callback(index, slides[index]);
+        //options.callback && options.callback(index, slides[index]);
 
       } else {
 
-        if (options.continuous) {
+        if (this.continuous) {
 
           move(circle(index-1), -width, speed);
           move(index, 0, speed);
@@ -492,8 +498,8 @@ export class Slides {
     }
 
     // kill touchmove and touchend event listeners until touchstart called again
-    element.removeEventListener('touchmove', events, false)
-    element.removeEventListener('touchend', events, false)
+    //element.removeEventListener('touchmove', events, false)
+    //element.removeEventListener('touchend', events, false)
   }
 
   _move(pos, translateX, speed) {
@@ -627,11 +633,11 @@ export class SlidesGesture extends DragGesture {
       time: +new Date
     }
 
-    this.slides._dragStart(event);
+    this.slides._dragStart(event, this._drag);
   }
   onDragEnd(event) {
     console.log('Drag end', event);
 
-    this.slides._endDrag(event);
+    this.slides._endDrag(event, this._drag);
   }
 }
