@@ -55,7 +55,7 @@ export class Tab extends NavBase {
       this.sections = tabs.parent.panes['_n'].sections;
     }
 
-    this.item = new NavItem(this);
+    this.item = new NavItem(tabs.parent);
     this.item.setInstance(this);
     this.item.setViewElement(elementRef.domElement);
     tabs.addTab(this.item);
@@ -85,6 +85,7 @@ export class Tab extends NavBase {
         callback && callback();
       });
       this._loaded = true;
+
     } else {
       callback && callback();
     }

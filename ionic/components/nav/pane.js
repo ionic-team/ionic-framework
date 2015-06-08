@@ -5,6 +5,7 @@ import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 
 import {Nav} from './nav';
+import {NavBase} from './nav-base';
 import {SwipeHandle} from './swipe-handle';
 
 
@@ -57,25 +58,18 @@ class PaneContentAnchor {
   }
 })
 @View({
-  template: `
-    <template section-anchor></template>
-  `,
-  directives: [PaneSectionAnchor]
+  template: `<template navbar-anchor></template>`,
+  directives: [NavBarAnchor]
 })
-export class NavBarSection {
-  constructor(@Parent() pane: Pane, viewContainerRef: ViewContainerRef, elementRef: ElementRef) {
-    this.pane = pane;
-    pane.addSection('navbar', this);
-  }
-}
+export class NavBarContainer {}
 
 
-// Reference point of where the guts of the NavBar should go next to
+// Reference point of where individual view navbars will go next to
 @Directive({
-  selector: 'template[section-anchor]'
+  selector: 'template[navbar-anchor]'
 })
-class PaneSectionAnchor {
-  constructor(@Parent() navBarSection: NavBarSection, viewContainerRef: ViewContainerRef) {
-    navBarSection.viewContainerRef = viewContainerRef;
+class NavBarAnchor {
+  constructor(nav: NavBase, viewContainerRef: ViewContainerRef) {
+    nav.navbarViewContainer(viewContainerRef);
   }
 }

@@ -31,28 +31,30 @@ export class NavItem {
   }
 
   stage(callback) {
-    // update if it's possible to go back from this nav item
-    this.enableBack = this.nav && !!this.nav.getPrevious(this);
+    let nav = this.nav;
 
-    if (this.instance) {
+    // update if it's possible to go back from this nav item
+    this.enableBack = nav && !!nav.getPrevious(this);
+
+    if (this.instance || !nav) {
       // already compiled this view
       return callback();
     }
 
     // compile the Component
-    this.nav.compiler.compileInHost(this.ComponentClass).then(componentProtoViewRef => {
+    nav.compiler.compileInHost(this.ComponentClass).then(componentProtoViewRef => {
 
       // figure out the sturcture of this Component
       // does it have a navbar? Is it tabs? Should it not have a navbar or any toolbars?
       let itemStructure = getProtoViewStructure(componentProtoViewRef);
 
       // get the appropriate Pane which this NavItem will fit into
-      this.nav.getPane(itemStructure, pane => {
+      nav.getPane(itemStructure, pane => {
 
         // create a new injector just for this NavItem
-        let injector = this.nav.injector.resolveAndCreateChild([
+        let injector = nav.injector.resolveAndCreateChild([
           bind(NavBase).toValue(this.nav),
-          bind(NavController).toValue(this.nav.navCtrl),
+          bind(NavController).toValue(nav.navCtrl),
           bind(NavParams).toValue(new NavParams(this.params)),
           bind(NavItem).toValue(this)
         ]);
@@ -63,13 +65,15 @@ export class NavItem {
 
         let newLocation = new ElementRef(hostViewRef, 0);
 
-        this.setInstance( this.nav.loader._viewManager.getComponent(newLocation) );
+        this.setInstance( nav.loader._viewManager.getComponent(newLocation) );
         this.setViewElement( hostViewRef._view.render._view.rootNodes[0] );
 
         this.disposals.push(() => {
           viewContainer.remove( viewContainer.indexOf(hostViewRef) );
         });
 
+        // get the view's context so when creating the navbar
+        // it uses the same context as the content
         let context = {
           boundElementIndex: 0,
           parentView: {
@@ -77,18 +81,26 @@ export class NavItem {
           }
         };
 
-        // add only the sections it needs
-        let navbarViewContainer = pane.sections.navbar.viewContainerRef;
-        if (navbarViewContainer && itemStructure.navbar && this.protos.navbar) {
-          this.navbarView = navbarViewContainer.create(this.protos.navbar, -1, context, injector);
+        // get the item container's nav bar
+        let navbarViewContainer = nav.navbarViewContainer();
+
+        // get the item's navbar protoview
+        let navbarProtoView = this.protos.navbar;
+
+        // add a navbar view if the pane has a navbar container, and the
+        // item's instance has a navbar protoview to go to inside of it
+        if (navbarViewContainer && navbarProtoView) {
+          this.navbarView = navbarViewContainer.create(navbarProtoView, -1, context, injector);
 
           this.disposals.push(() => {
             navbarViewContainer.remove( navbarViewContainer.indexOf(this.navbarView) );
           });
         }
 
+        // this item has finished loading
         this.loaded();
 
+        // all done, fire the callback
         callback();
       });
 
@@ -128,8 +140,9 @@ export class NavItem {
   }
 
   navbarElement() {
-    if (this.navbarView && this.navbarView._view) {
-      return this.navbarView._view.render._view.rootNodes[0];
+    let navbarView = this.navbarView;
+    if (navbarView && navbarView._view) {
+      return navbarView._view.render._view.rootNodes[0];
     }
   }
 

@@ -11,7 +11,7 @@ import {bind} from 'angular2/di';
 
 import {NavController} from './nav-controller';
 import {NavItem, NavParams} from './nav-item';
-import {Pane, NavBarSection} from './pane';
+import {Pane, NavBarContainer} from './pane';
 import {Transition} from '../../transitions/transition';
 import {ClickBlock} from '../../util/click-block';
 import * as util from 'ionic/util';
@@ -80,7 +80,7 @@ export class NavBase {
         // decide which sections should be added to this Pane, ie: nav bars, tab bars, etc.
         // add only the sections it needs
         if (itemStructure.navbar) {
-          sectionsToAdd.push(NavBarSection);
+          sectionsToAdd.push(NavBarContainer);
         }
 
         // add the sections which this type of Pane requires
@@ -474,6 +474,18 @@ export class NavBase {
 
   getNavElement() {
     return this.domElement;
+  }
+
+  navbarViewContainer(nbContainer) {
+    if (nbContainer) {
+      this._nbContainer = nbContainer;
+    }
+    if (this._nbContainer) {
+      return this._nbContainer;
+    }
+    if (this.parent) {
+      return this.parent.navbarViewContainer();
+    }
   }
 
   add(item) {
