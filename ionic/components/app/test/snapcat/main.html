@@ -1,31 +1,110 @@
-<ion-slides>
+<ion-slides >
   <ion-slide>
     <ion-view>
-      <ion-toolbar>
-        <ion-title>secret</ion-title>
+
+      <ion-toolbar id="p1toolbar">
+        <div class="toolbar-inner">
+          <ion-title>secret</ion-title>
+        </div>
       </ion-toolbar>
+
       <ion-content>
-        <h2>Page 1</h2>
+        <ion-list>
+          <ion-item>
+            Activity
+          </ion-item>
+          <ion-item>
+            Chat
+          </ion-item>
+        </ion-list>
       </ion-content>
+
     </ion-view>
   </ion-slide>
   <ion-slide>
     <ion-view>
-      <ion-toolbar>
-        <ion-title>feed</ion-title>
+
+      <ion-toolbar id="p2toolbar">
+        <div class="toolbar-inner">
+          <ion-title>feed</ion-title>
+        </div>
       </ion-toolbar>
+
       <ion-content>
-        <h2>Page 2</h2>
+
+        <div class="card">
+          <div class="item">
+            <div class="item-content">
+              <div class="item-label">
+                This is a nice test. What do you
+                think about space ships and pumpkins? Of
+                rainbows and blue shoes? Of rabbits
+                and mistletoe?
+
+                <img src="p.jpg">
+              </div>
+            </div>
+          </div>
+        </div>
+
       </ion-content>
+
     </ion-view>
   </ion-slide>
 </ion-slides>
 
+<link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
 <style>
-.navbar-container {
-  background-color: #ff6600 !important;
-}
-.nav-ios ion-title {
-  color: #fff !important;
-}
+  ion-view {
+    background-color: #F5F5F5;
+  }
+  ion-content {
+    background-color: #F5F5F5 !important;
+  }
+  .card {
+    box-shadow: none !important;
+  }
+  .card .item {
+    border: none !important;
+  }
+  .platform-ios .card .item-content {
+    padding: 25px;
+  }
+  .item {
+    font-family: 'lato';
+    font-size: 16px;
+  }
+  .item-content {
+    min-height: 70px !important;
+  }
+  ion-toolbar {
+    text-align: center;
+    align-items: center;
+  }
+  ion-toolbar:after {
+    background: none !important;
+  }
+  ion-toolbar {
+    letter-spacing: 1px;
+  }
+  .platform-ios .item:first-of-type:before,
+  .platform-ios .item:last-of-type:after,
+  .platform-ios .item-content:after {
+    background-color: #F5F5F5 !important;
+  }
+  #p1toolbar {
+    background-color: #FFB400;
+  }
+  #p1toolbar ion-title {
+    color: white;
+    font-family: 'lato';
+  }
+  #p2toolbar {
+    background-color: #FF0000;
+  }
+  #p2toolbar ion-title {
+    color: white;
+    font-family: 'lato';
+  }
 </style>

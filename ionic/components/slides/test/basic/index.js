@@ -8,7 +8,7 @@ import {Slides, Slide, SlidePager, List, Item, Content, Button} from 'ionic/ioni
   selector: 'ion-app'
 })
 @View({
-  directives: [Slides, Slide, SlidePager, Content, Button],
+  directives: [Slides, Slide, SlidePager, Content, Button, List, Item],
   templateUrl: 'main.html'
 })
 class IonicApp {
