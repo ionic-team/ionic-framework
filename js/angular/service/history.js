@@ -213,7 +213,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
 
           tmp = getHistoryById(backView.historyId);
           if (tmp && tmp.parentHistoryId === currentView.historyId) {
-            direction = DIRECTION_ENTER;
+            direction = DIRECTION_BACK;
 
           } else {
             tmp = getHistoryById(currentView.historyId);
