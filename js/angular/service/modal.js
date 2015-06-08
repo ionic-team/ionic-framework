@@ -132,6 +132,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
       // on iOS, clicks will sometimes bleed through/ghost click on underlying
       // elements
       $ionicClickBlock.show(600);
+      stack.add(self);
 
       var modalEl = jqLite(self.modalEl);
 
@@ -185,7 +186,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
         if (!self._isShown) return;
         //After animating in, allow hide on backdrop click
         self.$el.on('click', function(e) {
-          if (self.backdropClickToClose && e.target === self.el) {
+          if (self.backdropClickToClose && e.target === self.el && stack.isHighest(self)) {
             self.hide();
           }
         });
@@ -205,6 +206,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
       // on iOS, clicks will sometimes bleed through/ghost click on underlying
       // elements
       $ionicClickBlock.show(600);
+      stack.remove(self);
 
       self.el.classList.remove('active');
       modalEl.addClass('ng-leave');
@@ -293,6 +295,23 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
     return modal;
   };
 
+  var modalStack = [];
+  var stack = {
+    add: function(modal) {
+      modalStack.push(modal);
+    },
+    remove: function(modal) {
+      var index = modalStack.indexOf(modal);
+      if (index > -1 && index < modalStack.length) {
+        modalStack.splice(index, 1);
+      }
+    },
+    isHighest: function(modal) {
+      var index = modalStack.indexOf(modal);
+      return (index > -1 && index === modalStack.length - 1);
+    }
+  };
+
   return {
     /**
      * @ngdoc method
@@ -328,6 +347,8 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
         cb && cb(modal);
         return modal;
       });
-    }
+    },
+
+    stack: stack
   };
 }]);
