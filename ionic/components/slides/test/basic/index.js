@@ -8,10 +8,16 @@ import {Slides, Slide, SlidePager, List, Item, Content, Button} from 'ionic/ioni
   selector: 'ion-app'
 })
 @View({
-  directives: [Slides, Slide, SlidePager, Content],
+  directives: [Slides, Slide, SlidePager, Content, Button],
   templateUrl: 'main.html'
 })
 class IonicApp {
+  next() {
+    console.log('Next');
+  }
+  prev() {
+    console.log('Prev');
+  }
 }
 
 export function main() {

@@ -47,7 +47,7 @@ export class Slides {
     this.currentIndex = 0;
     this.animateSpeed = 300;
     this.slideDelay = 0;//3000;
-    this.continuous = true;
+    this.continuous = false;
 
     // Initialize our slides gesture handler
     this.gesture = new SlidesGesture(this);
@@ -56,24 +56,37 @@ export class Slides {
     // Wait a cycle for the children to exist before computing sizes
     setTimeout(() => {
       // Continuous mode, but only if we have at least 2 slides
-      this.continuous = this.continuous && (this.slides.length > 1 ? true : false);
-
-      // Grab the wrapper element that contains the slides
-      this.wrapperElement = this.domElement.children[0];
-
-      this.resize();
-
-      if(this.slideDelay) {
-        this.startShow();
-      }
+      this.setup();
     });
+  }
+
+  setup() {
+    this.continuous = this.continuous && (this.slides.length > 1 ? true : false);
+
+    // Grab the wrapper element that contains the slides
+    this.wrapperElement = this.domElement.children[0];
+
+    this.resize();
+
+    if(this.slideDelay) {
+      this.startShow();
+    }
+
+    //special case if two slides
+    /*
+    if (this.continuous && this.slides.length < 3) {
+      this.element.appendChild(this.slides[0].clone())//cloneNode(true));
+      element.appendChild(element.children[1].cloneNode(true));
+      slides = element.children;
+    }
+    */
   }
 
   /**
    * Start the slideshow.
    */
   startShow() {
-    this._showTimeout = setTimeout(this.slideRight.bind(this), this.slideDelay);
+    this._showTimeout = setTimeout(this.next.bind(this), this.slideDelay);
   }
 
   /**
@@ -211,15 +224,15 @@ export class Slides {
   /**
    * Slide left, possibly wrapping around in continuous mode.
    */
-  slideLeft() {
-    this.slide(this._circle(this.currentIndex - 1));
+  prev() {
+    this.slide(this.currentIndex - 1);
   }
 
   /**
    * Slide right, possibly wrapping around in continuous mode.
    */
-  slideRight() {
-    this.slide(this._circle(this.currentIndex + 1));
+  next() {
+    this.slide(this.currentIndex + 1);
   }
 
 
@@ -285,14 +298,98 @@ export class Slides {
   }
 
   _endDrag(event) {
+    //this._finish(event);
     let isRight = event.gesture.offsetDirection & Hammer.DIRECTION_RIGHT;
     console.log('Slides: ending drag', event, '\n\t', 'Right?', isRight);
 
     if(isRight) {
-      this.slideRight();
+      this.next();
     } else {
-      this.slideLeft();
+      this.prev();
     }
+  }
+
+  _finish(event) {
+
+    // measure duration
+    var duration = +new Date - start.time;
+
+    // determine if slide attempt triggers next/prev slide
+    var isValidSlide =
+          Number(duration) < 250               // if slide duration is less than 250ms
+          && Math.abs(delta.x) > 20            // and if slide amt is greater than 20px
+          || Math.abs(delta.x) > width/2;      // or if slide amt is greater than half the width
+
+    // determine if slide attempt is past start and end
+    var isPastBounds =
+          !index && delta.x > 0                            // if first slide and slide amt is greater than 0
+          || index == slides.length - 1 && delta.x < 0;    // or if last slide and slide amt is less than 0
+
+    if (options.continuous) isPastBounds = false;
+
+    // determine direction of swipe (true:right, false:left)
+    var direction = delta.x < 0;
+
+    // if not scrolling vertically
+    if (!isScrolling) {
+
+      if (isValidSlide && !isPastBounds) {
+
+        if (direction) {
+
+          if (options.continuous) { // we need to get the next in this direction in place
+
+            move(circle(index-1), -width, 0);
+            move(circle(index+2), width, 0);
+
+          } else {
+            move(index-1, -width, 0);
+          }
+
+          move(index, slidePos[index]-width, speed);
+          move(circle(index+1), slidePos[circle(index+1)]-width, speed);
+          index = circle(index+1);
+
+        } else {
+          if (options.continuous) { // we need to get the next in this direction in place
+
+            move(circle(index+1), width, 0);
+            move(circle(index-2), -width, 0);
+
+          } else {
+            move(index+1, width, 0);
+          }
+
+          move(index, slidePos[index]+width, speed);
+          move(circle(index-1), slidePos[circle(index-1)]+width, speed);
+          index = circle(index-1);
+
+        }
+
+        options.callback && options.callback(index, slides[index]);
+
+      } else {
+
+        if (options.continuous) {
+
+          move(circle(index-1), -width, speed);
+          move(index, 0, speed);
+          move(circle(index+1), width, speed);
+
+        } else {
+
+          move(index-1, -width, speed);
+          move(index, 0, speed);
+          move(index+1, width, speed);
+        }
+
+      }
+
+    }
+
+    // kill touchmove and touchend event listeners until touchstart called again
+    element.removeEventListener('touchmove', events, false)
+    element.removeEventListener('touchend', events, false)
   }
 
   _move(pos, translateX, speed) {

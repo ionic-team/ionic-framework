@@ -1,4 +1,4 @@
-<ion-slides>
+<ion-slides #slides>
   <ion-slide style="background-color: blue">
     <h2>Page 1</h2>
   </ion-slide>
@@ -8,3 +8,8 @@
   <ion-pager>
   </ion-pager>
 </ion-slides>
+
+<div style="position: absolute; bottom: 10px; left: 0; width: 100%; text-align: center">
+  <button (click)="slides.prev()" primary>Prev</button>
+  <button (click)="slides.next()" primary>Next</button>
+</div>
