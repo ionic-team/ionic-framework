@@ -293,8 +293,41 @@ export class Slides {
     }
   }
 
+  _dragStart(event) {
+
+    this._isScrolling = undefined;
+
+  }
+
+
+  /**
+   * Code to run before operating on a drag.
+   */
+  _dragPre(event) {
+    let dx = event.gesture.deltaX;
+    let dy = event.gesture.deltaY;
+
+    if(this.disableScroll) {
+      event.preventDefault();
+    }
+
+    // determine if scrolling test has run - one time test
+    if(typeof this._isScrolling == 'undefined') {
+      this._isScrolling = !!(this._isScrolling || Math.abs(dx) < Math.abs(dy));
+    }
+
+    // If we're scrolling, never run the drag
+    if(this._isScrolling) {
+      return false;
+    }
+  }
+
   // Process a drag, with a deltaX value
-  _drag(dx) {
+  _drag(event) {
+    let dx = event.gesture.deltaX;
+
+    let shouldRun = this._dragPre(event);
+    if(shouldRun === false) { return; }
 
     // Grab the left/center/right slides
     let index1 = this._circle(this.currentIndex - 1);
@@ -532,7 +565,7 @@ export class SlidesGesture extends DragGesture {
     this._drag.x = x;
     this._drag.y = y;
 
-    this.slides._drag(event.gesture.deltaX);
+    this.slides._drag(event);
   }
   onDragStart(event) {
     console.log('Drag start', event);
@@ -540,7 +573,10 @@ export class SlidesGesture extends DragGesture {
     this._drag = {
       startX: event.gesture.center.x,
       startY: event.gesture.center.y,
+      time: +new Date
     }
+
+    this.slides._dragStart(event);
   }
   onDragEnd(event) {
     console.log('Drag end', event);
