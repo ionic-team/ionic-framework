@@ -1,3 +1,5 @@
+import {Component} from 'angular2/src/core/annotations_impl/annotations';
+
 import * as util from 'ionic/util'
 import {dom} from 'ionic/util'
 import {Platform} from 'ionic/platform/platform'
@@ -7,6 +9,16 @@ let platformMode = Platform.getMode();
 // Low-level: how the user will override
 // BackButton.config.bind.icon.value = 'ion-chevron-right'
 // BackButton.config._computeDefaultValue(BackButton.config.bind.icon)
+
+export class ModeComponent extends Component {
+  constructor(config) {
+    config.hostAttributes = config.hostAttributes || {};
+    let className = (config.hostAttributes['class'] || '');
+    let id = config.classId || config.selector.replace('ion-', '');
+    config.hostAttributes['class'] = (className + ' ' + id + ' ' + id + '-' + platformMode).trim();
+    super(config);
+  }
+}
 
 export class IonicComponent {
   constructor(ComponentClass, {

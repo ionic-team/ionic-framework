@@ -8,6 +8,7 @@ import {bind} from 'angular2/di';
 import {ViewController} from '../view/view-controller';
 import {Nav} from './nav';
 import {SwipeHandle} from './swipe-handle';
+import {ModeComponent} from '../../config/component';
 
 
 export class PaneController {
@@ -92,11 +93,9 @@ export class PaneController {
 
 }
 
-@Component({
+@ModeComponent({
   selector:'ion-pane',
-  hostAttributes: {
-    'class': 'nav nav-ios'
-  }
+  classId: 'nav'
 })
 @View({
   template: `

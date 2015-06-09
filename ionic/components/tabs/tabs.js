@@ -14,14 +14,16 @@ import {ViewItem} from '../view/view-item';
 import {TabButton} from './tab-button';
 import {Icon} from '../icon/icon';
 import {IonicComponent} from '../../config/component';
+import {ModeComponent} from '../../config/component';
 
 
-@Component({
+@ModeComponent({
   selector: 'ion-tabs',
   properties: [
     'tabBarPlacement',
     'tabBarIcons'
-  ]
+  ],
+  classId: 'tabs'
 })
 @View({
   template: `
@@ -51,9 +53,6 @@ export class Tabs extends ViewController {
   ) {
     super(viewController, compiler, elementRef, loader, injector);
     this.item = item;
-
-    this.domElement = elementRef.domElement;
-    this.config = Tabs.config.invoke(this);
   }
 
   addTab(tabItem) {
@@ -104,21 +103,21 @@ export class Tabs extends ViewController {
   }
 
 }
-new IonicComponent(Tabs, {
-  properties: {
-    tabBarPlacement: {
-      defaults: {
-        ios: 'bottom',
-        android: 'top',
-        core: 'bottom'
-      }
-    },
-    tabBarIcons: {
-      defaults: {
-        ios: 'top',
-        android: 'top',
-        core: 'top'
-      }
-    }
-  }
-});
+// new IonicComponent(Tabs, {
+//   properties: {
+//     tabBarPlacement: {
+//       defaults: {
+//         ios: 'bottom',
+//         android: 'top',
+//         core: 'bottom'
+//       }
+//     },
+//     tabBarIcons: {
+//       defaults: {
+//         ios: 'top',
+//         android: 'top',
+//         core: 'top'
+//       }
+//     }
+//   }
+// });
