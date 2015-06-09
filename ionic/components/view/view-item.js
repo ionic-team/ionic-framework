@@ -12,7 +12,7 @@ export class ViewItem {
   constructor(viewController, ComponentClass, params = {}) {
     this.viewController = viewController;
     this.ComponentClass = ComponentClass;
-    this.params = new NavParams(this.params);
+    this.params = new NavParams(params);
     this.instance = null;
     this.state = 0;
 

@@ -8,21 +8,14 @@ import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_compone
 import {Injector} from 'angular2/di';
 
 import {ViewController} from '../view/view-controller';
-import {IonicComponent} from '../../config/component';
 
 
-@Component({
+@Directive({
   selector: 'ion-nav',
   properties: [
     'initial'
   ],
   lifecycle: [onInit]
-})
-@View({
-  template: `
-    <template pane-anchor></template>
-  `,
-  directives: [NavPaneAnchor]
 })
 export class Nav extends ViewController {
 
@@ -34,24 +27,11 @@ export class Nav extends ViewController {
     injector: Injector
   ) {
     super(viewController, compiler, elementRef, loader, injector);
-
-    this.domElement = elementRef.domElement;
-    this.config = Nav.config.invoke(this);
+    this.panes.setAnchor(elementRef);
   }
 
   onInit() {
     this.push(this.initial);
   }
 
-}
-new IonicComponent(Nav, {});
-
-
-@Directive({
-  selector: 'template[pane-anchor]'
-})
-class NavPaneAnchor {
-  constructor(@Parent() nav: Nav, elementRef: ElementRef) {
-    nav.panes.setAnchor(elementRef);
-  }
 }

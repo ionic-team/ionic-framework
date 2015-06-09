@@ -92,9 +92,12 @@ export class PaneController {
 
 }
 
-
-
-@Component({selector:'ion-pane'})
+@Component({
+  selector:'ion-pane',
+  hostAttributes: {
+    'class': 'nav nav-ios'
+  }
+})
 @View({
   template: `
     <template pane-anchor></template>
@@ -110,6 +113,7 @@ class Pane {
     this.sections = {};
     nav.panes.add(this);
   }
+
   addSection(sectionName, instance) {
     this.sections[sectionName] = instance;
   }
