@@ -8,8 +8,8 @@ import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_compone
 import {Injector} from 'angular2/di';
 import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
 
+import {ViewController} from '../view/view-controller';
 import {Tabs} from './tabs';
-import {NavBase} from '../nav/nav-base';
 import {NavItem} from '../nav/nav-item';
 import {Content} from '../content/content';
 import {IonicComponent} from '../../config/component';
@@ -39,7 +39,7 @@ import {IonicComponent} from '../../config/component';
   `,
   directives: [TabContentAnchor]
 })
-export class Tab extends NavBase {
+export class Tab extends ViewController {
 
   constructor(
     @Parent() tabs: Tabs,
@@ -97,6 +97,6 @@ export class Tab extends NavBase {
 })
 class TabContentAnchor {
   constructor(@Parent() tab: Tab, viewContainerRef: ViewContainerRef) {
-    this.contentContainerRef = viewContainerRef;
+    tab.contentContainerRef = viewContainerRef;
   }
 }

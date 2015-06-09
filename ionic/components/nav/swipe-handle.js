@@ -2,8 +2,8 @@ import {ElementRef} from 'angular2/angular2'
 import {Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {Optional} from 'angular2/src/di/annotations_impl';
 
+import {ViewController} from '../view/view-controller';
 import {Gesture} from 'ionic/gestures/gesture';
-import {NavBase} from './nav-base';
 
 
 @Directive({
@@ -14,12 +14,12 @@ import {NavBase} from './nav-base';
 })
 export class SwipeHandle {
   constructor(
-    @Optional() navBase: NavBase,
+    @Optional() viewController: ViewController,
     elementRef: ElementRef
   ) {
-    if (!navBase) return;
+    if (!viewController) return;
 
-    this.navBase = navBase;
+    this.viewController = viewController;
 
     let gesture = new Gesture(elementRef.domElement);
     gesture.listen();
@@ -62,7 +62,7 @@ export class SwipeHandle {
         }
       }
 
-      navBase.swipeBackEnd(completeSwipeBack, progress, playbackRate);
+      viewController.swipeBackEnd(completeSwipeBack, progress, playbackRate);
 
       startX = null;
     }
@@ -73,18 +73,18 @@ export class SwipeHandle {
         ev.stopPropagation();
 
         startX = ev.gesture.center.x;
-        swipeableAreaWidth = navBase.width() - startX;
+        swipeableAreaWidth = viewController.width() - startX;
 
-        navBase.swipeBackStart();
+        viewController.swipeBackStart();
       }
 
-      navBase.swipeBackProgress( (ev.gesture.center.x - startX) / swipeableAreaWidth );
+      viewController.swipeBackProgress( (ev.gesture.center.x - startX) / swipeableAreaWidth );
     }
 
   }
 
   showHandle() {
-    return (this.navBase ? this.navBase.swipeBackEnabled() : false);
+    return (this.viewController ? this.viewController.swipeBackEnabled() : false);
   }
 
 }

@@ -7,7 +7,7 @@ import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_component_loader';
 import {Injector} from 'angular2/di';
 
-import {NavBase} from './nav-base';
+import {ViewController} from '../view/view-controller';
 import {IonicComponent} from '../../config/component';
 
 
@@ -24,16 +24,16 @@ import {IonicComponent} from '../../config/component';
   `,
   directives: [NavPaneAnchor]
 })
-export class Nav extends NavBase {
+export class Nav extends ViewController {
 
   constructor(
-    @Optional() parentNavBase: NavBase,
+    @Optional() viewController: ViewController,
     compiler: Compiler,
     elementRef: ElementRef,
     loader: DynamicComponentLoader,
     injector: Injector
   ) {
-    super(parentNavBase, compiler, elementRef, loader, injector);
+    super(viewController, compiler, elementRef, loader, injector);
 
     this.domElement = elementRef.domElement;
     this.config = Nav.config.invoke(this);

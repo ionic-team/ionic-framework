@@ -48,7 +48,7 @@ export class Animation {
     return this;
   }
 
-  addAnimation(childAnimations) {
+  add(childAnimations) {
     childAnimations = Array.isArray(childAnimations) ? childAnimations : arguments;
     for (let i = 0; i < childAnimations.length; i++) {
       childAnimations[i].parent(this);

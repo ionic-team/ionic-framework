@@ -4,8 +4,8 @@ import {Parent} from 'angular2/src/core/annotations_impl/visibility';
 import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 
+import {ViewController} from '../view/view-controller';
 import {Nav} from './nav';
-import {NavBase} from './nav-base';
 import {SwipeHandle} from './swipe-handle';
 
 
@@ -69,7 +69,7 @@ export class NavBarContainer {}
   selector: 'template[navbar-anchor]'
 })
 class NavBarAnchor {
-  constructor(nav: NavBase, viewContainerRef: ViewContainerRef) {
-    nav.navbarViewContainer(viewContainerRef);
+  constructor(viewController: ViewController, viewContainerRef: ViewContainerRef) {
+    viewController.navbarViewContainer(viewContainerRef);
   }
 }

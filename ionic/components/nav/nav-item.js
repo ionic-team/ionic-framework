@@ -2,15 +2,15 @@ import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 import {bind} from 'angular2/di';
 
-import * as util from 'ionic/util';
+import {ViewController} from '../view/view-controller';
 import {NavController} from './nav-controller';
-import {NavBase} from './nav-base';
+import * as util from 'ionic/util';
 
 
 export class NavItem {
 
-  constructor(navBase, ComponentClass, params = {}) {
-    this.nav = navBase;
+  constructor(viewController, ComponentClass, params = {}) {
+    this.viewController = viewController;
     this.ComponentClass = ComponentClass;
     this.params = params;
     this.instance = null;
@@ -31,30 +31,30 @@ export class NavItem {
   }
 
   stage(callback) {
-    let nav = this.nav;
+    let viewController = this.viewController;
 
     // update if it's possible to go back from this nav item
-    this.enableBack = nav && !!nav.getPrevious(this);
+    this.enableBack = viewController && !!viewController.getPrevious(this);
 
-    if (this.instance || !nav) {
+    if (this.instance || !viewController) {
       // already compiled this view
       return callback();
     }
 
     // compile the Component
-    nav.compiler.compileInHost(this.ComponentClass).then(componentProtoViewRef => {
+    viewController.compiler.compileInHost(this.ComponentClass).then(componentProtoViewRef => {
 
       // figure out the sturcture of this Component
       // does it have a navbar? Is it tabs? Should it not have a navbar or any toolbars?
       let itemStructure = getProtoViewStructure(componentProtoViewRef);
 
       // get the appropriate Pane which this NavItem will fit into
-      nav.getPane(itemStructure, pane => {
+      viewController.getPane(itemStructure, pane => {
 
         // create a new injector just for this NavItem
-        let injector = nav.injector.resolveAndCreateChild([
-          bind(NavBase).toValue(this.nav),
-          bind(NavController).toValue(nav.navCtrl),
+        let injector = viewController.injector.resolveAndCreateChild([
+          bind(ViewController).toValue(viewController),
+          bind(NavController).toValue(viewController.navCtrl),
           bind(NavParams).toValue(new NavParams(this.params)),
           bind(NavItem).toValue(this)
         ]);
@@ -65,7 +65,7 @@ export class NavItem {
 
         let newLocation = new ElementRef(hostViewRef, 0);
 
-        this.setInstance( nav.loader._viewManager.getComponent(newLocation) );
+        this.setInstance( viewController.loader._viewManager.getComponent(newLocation) );
         this.setViewElement( hostViewRef._view.render._view.rootNodes[0] );
 
         this.disposals.push(() => {
@@ -82,7 +82,7 @@ export class NavItem {
         };
 
         // get the item container's nav bar
-        let navbarViewContainer = nav.navbarViewContainer();
+        let navbarViewContainer = viewController.navbarViewContainer();
 
         // get the item's navbar protoview
         let navbarProtoView = this.protos.navbar;

@@ -19,7 +19,7 @@ export class Transition extends Animation {
     // create animation for the entering item's "ion-view" element
     this.enteringView = new Animation(enteringItem.viewElement());
     this.enteringView.beforePlay.addClass(SHOW_VIEW_CSS);
-    this.addAnimation(this.enteringView);
+    this.add(this.enteringView);
 
     // create animation for the entering item's "ion-navbar" element
     if (opts.navbar !== false) {
@@ -28,8 +28,8 @@ export class Transition extends Animation {
 
       // create animation for the entering item's "ion-title" element
       this.enteringTitle = new Animation(enteringItem.titleElement());
-      this.enteringNavbar.addAnimation(this.enteringTitle);
-      this.addAnimation(this.enteringNavbar);
+      this.enteringNavbar.add(this.enteringTitle);
+      this.add(this.enteringNavbar);
     }
 
     if (leavingItem) {
@@ -43,9 +43,9 @@ export class Transition extends Animation {
 
       // create animation for the leaving item's "ion-title" element
       this.leavingTitle = new Animation(leavingItem.titleElement());
-      this.leavingNavbar.addAnimation(this.leavingTitle);
+      this.leavingNavbar.add(this.leavingTitle);
 
-      this.addAnimation(this.leavingView, this.leavingNavbar);
+      this.add(this.leavingView, this.leavingNavbar);
     }
 
   }

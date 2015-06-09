@@ -39,7 +39,7 @@ class IOSTransition extends Transition {
       enteringBackButton
         .from(OPACITY, 0)
         .to(OPACITY, 1);
-      this.addAnimation(enteringBackButton);
+      this.add(enteringBackButton);
     }
 
     // leaving view moves off screen
@@ -55,7 +55,7 @@ class IOSTransition extends Transition {
     leavingBackButton
       .from(OPACITY, 1)
       .to(OPACITY, 0);
-    this.addAnimation(leavingBackButton);
+    this.add(leavingBackButton);
 
     // set properties depending on direction
     if (opts.direction === 'back') {

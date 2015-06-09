@@ -9,8 +9,8 @@ import {Injector} from 'angular2/di';
 import {NgFor} from 'angular2/angular2';
 import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
 
+import {ViewController} from '../view/view-controller';
 import {TabButton} from './tab-button';
-import {NavBase} from '../nav/nav-base';
 import {Icon} from '../icon/icon';
 import {NavItem} from '../nav/nav-item';
 import {IonicComponent} from '../../config/component';
@@ -39,17 +39,17 @@ import {IonicComponent} from '../../config/component';
   `,
   directives: [NgFor, TabButton, Icon]
 })
-export class Tabs extends NavBase {
+export class Tabs extends ViewController {
 
   constructor(
-    @Optional() parentNavBase: NavBase,
+    @Optional() viewController: ViewController,
     @Optional() navItem: NavItem,
     compiler: Compiler,
     elementRef: ElementRef,
     loader: DynamicComponentLoader,
     injector: Injector
   ) {
-    super(parentNavBase, compiler, elementRef, loader, injector);
+    super(viewController, compiler, elementRef, loader, injector);
     this.item = navItem;
 
     this.domElement = elementRef.domElement;

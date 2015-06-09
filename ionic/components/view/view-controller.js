@@ -9,18 +9,18 @@ import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
 import {Compiler} from 'angular2/angular2';
 import {bind} from 'angular2/di';
 
-import {NavController} from './nav-controller';
-import {NavItem, NavParams} from './nav-item';
-import {Pane, NavBarContainer} from './pane';
+import {NavController} from '../nav/nav-controller';
+import {NavItem, NavParams} from '../nav/nav-item';
+import {Pane, NavBarContainer} from '../nav/pane';
 import {Transition} from '../../transitions/transition';
 import {ClickBlock} from '../../util/click-block';
 import * as util from 'ionic/util';
 
 
-export class NavBase {
+export class ViewController {
 
   constructor(
-    parent: NavBase,
+    parent: ViewController,
     compiler: Compiler,
     elementRef: ElementRef,
     loader: DynamicComponentLoader,
@@ -62,7 +62,7 @@ export class NavBase {
       this.panes[itemStructure.key] = null;
 
       let injector = this.injector.resolveAndCreateChild([
-        bind(NavBase).toValue(this)
+        bind(ViewController).toValue(this)
       ]);
 
       // add a Pane element
