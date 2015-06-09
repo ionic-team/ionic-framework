@@ -74,14 +74,18 @@ export class Tab extends NavBase {
   }
 
   onInit() {
-    if ( this.tabs.isActive(this.item) || this.tabs.isStagedEntering(this.item) ) {
-      this.loadInitial();
+    if ( this.item._initial ) {
+      this.tabs.select(this);
     }
   }
 
   loadInitial(callback) {
     if (!this._loaded && this.initial) {
-      this.push(this.initial).then(() => {
+      let opts = {
+        animate: false,
+        navbar: false
+      };
+      this.push(this.initial, null, opts).then(() => {
         callback && callback();
       });
       this._loaded = true;

@@ -9,26 +9,28 @@ let registry = {};
 
 export class Transition extends Animation {
 
-  constructor(navCtrl) {
+  constructor(nav, opts) {
     super();
 
     // get the entering and leaving items
-    let enteringItem = this.entering = navCtrl.getStagedEnteringItem();
-    let leavingItem = this.leaving = navCtrl.getStagedLeavingItem();
+    let enteringItem = this.entering = nav.getStagedEnteringItem();
+    let leavingItem = this.leaving = nav.getStagedLeavingItem();
 
     // create animation for the entering item's "ion-view" element
     this.enteringView = new Animation(enteringItem.viewElement());
     this.enteringView.beforePlay.addClass(SHOW_VIEW_CSS);
+    this.addAnimation(this.enteringView);
 
     // create animation for the entering item's "ion-navbar" element
-    this.enteringNavbar = new Animation(enteringItem.navbarElement());
-    this.enteringNavbar.beforePlay.addClass(SHOW_NAVBAR_CSS);
+    if (opts.navbar !== false) {
+      this.enteringNavbar = new Animation(enteringItem.navbarElement());
+      this.enteringNavbar.beforePlay.addClass(SHOW_NAVBAR_CSS);
 
-    // create animation for the entering item's "ion-title" element
-    this.enteringTitle = new Animation(enteringItem.titleElement());
-    this.enteringNavbar.addAnimation(this.enteringTitle);
-
-    this.addAnimation(this.enteringView, this.enteringNavbar);
+      // create animation for the entering item's "ion-title" element
+      this.enteringTitle = new Animation(enteringItem.titleElement());
+      this.enteringNavbar.addAnimation(this.enteringTitle);
+      this.addAnimation(this.enteringNavbar);
+    }
 
     if (leavingItem) {
       // create animation for the entering item's "ion-view" element
@@ -56,7 +58,7 @@ export class Transition extends Animation {
   /*
    STATIC CLASSES
    */
-  static create(navCtrl, opts = {}) {
+  static create(nav, opts = {}) {
     let name = opts.animation || 'ios';
 
     let TransitionClass = registry[name];
@@ -66,7 +68,7 @@ export class Transition extends Animation {
       TransitionClass = Transition;
     }
 
-    return new TransitionClass(navCtrl, opts);
+    return new TransitionClass(nav, opts);
   }
 
   static register(name, TransitionClass) {

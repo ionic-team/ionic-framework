@@ -101,10 +101,26 @@ export class NavItem {
         this.loaded();
 
         // all done, fire the callback
-        callback();
+        if (this._wait) {
+          this._waitCallback = callback;
+        } else {
+          callback();
+        }
+
       });
 
     });
+  }
+
+  waitForResolve() {
+    this._wait = true;
+  }
+
+  resolve() {
+    if (this._wait) {
+      this._waitCallback && this._waitCallback();
+      this._wait = this._waitCallback = null;
+    }
   }
 
   setInstance(instance) {

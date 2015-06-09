@@ -43,12 +43,14 @@ export class Tabs extends NavBase {
 
   constructor(
     @Optional() parentNavBase: NavBase,
+    @Optional() navItem: NavItem,
     compiler: Compiler,
     elementRef: ElementRef,
     loader: DynamicComponentLoader,
     injector: Injector
   ) {
     super(parentNavBase, compiler, elementRef, loader, injector);
+    this.item = navItem;
 
     this.domElement = elementRef.domElement;
     this.config = Tabs.config.invoke(this);
@@ -58,7 +60,8 @@ export class Tabs extends NavBase {
     this.add(tabItem);
 
     if (this.length() === 1) {
-      this.select(0);
+      this.item && this.item.waitForResolve();
+      tabItem._initial = true;
     }
   }
 
@@ -76,7 +79,7 @@ export class Tabs extends NavBase {
 
     enteringItem.instance.loadInitial(() => {
       let opts = {
-        animation: 'none'
+        animate: false
       };
 
       let leavingItem = this.getActive() || new NavItem();
@@ -84,8 +87,13 @@ export class Tabs extends NavBase {
       leavingItem.shouldCache = true;
       leavingItem.willCache();
 
+      enteringItem.navbarView = (enteringItem.instance.getActive() || {}).navbarView;
+      if (leavingItem.instance) {
+        leavingItem.navbarView = (leavingItem.instance.getActive() || {}).navbarView;
+      }
+
       this.transition(enteringItem, leavingItem, opts, () => {
-        console.log('tab selected')
+        this.item && this.item.resolve();
       });
     });
   }

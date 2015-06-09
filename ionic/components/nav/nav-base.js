@@ -117,17 +117,13 @@ export class NavBase {
     let resolve;
     let promise = new Promise(res => { resolve = res; });
 
-    // default the direction to "forward"
-    opts.direction = opts.direction || 'forward';
-
-    if(opts.animate === false) {
-      opts.animation = 'none';
-    }
-
     // do not animate if this is the first in the stack
     if (!this.items.length) {
       opts.animation = 'none';
     }
+
+    // default the direction to "forward"
+    opts.direction = opts.direction || 'forward';
 
     // the active item is going to be the leaving one (if one exists)
     let leavingItem = this.getActive() || new NavItem();
@@ -154,10 +150,6 @@ export class NavBase {
       return Promise.reject();
     }
 
-    if(opts.animate === false) {
-      opts.animation = 'none';
-    }
-
     let resolve;
     let promise = new Promise(res => { resolve = res; });
 
@@ -175,7 +167,7 @@ export class NavBase {
     // Note: we might not have an entering item if this is the only
     // item on the history stack.
     let enteringItem = this.getPrevious(leavingItem);
-    if(enteringItem) {
+    if (enteringItem) {
       // start the transition
       this.transition(enteringItem, leavingItem, opts, () => {
         // transition completed, destroy the leaving item
@@ -195,7 +187,11 @@ export class NavBase {
       return callback();
     }
 
-    opts.isAnimated = (opts.animation !== 'none');
+    if (opts.animate === false) {
+      opts.animation = 'none';
+    }
+
+    opts.animate = (opts.animation !== 'none');
 
     this.transitionStart(opts);
 
@@ -276,7 +272,7 @@ export class NavBase {
     enteringItem.willEnter();
 
     // start the transition
-    this.transitionStart({ isAnimated: true });
+    this.transitionStart({ animate: true });
 
     // wait for the new item to complete setup
     enteringItem.stage(() => {
@@ -378,7 +374,7 @@ export class NavBase {
   }
 
   transitionStart(opts) {
-    if (opts.isAnimated) {
+    if (opts.animate) {
       // block possible clicks during transition
       ClickBlock(true, 520);
       this.getNavElement().classList.add('transitioning');

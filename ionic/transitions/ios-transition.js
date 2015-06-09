@@ -16,8 +16,8 @@ const OFF_OPACITY = 0.8;
 
 class IOSTransition extends Transition {
 
-  constructor(navCtrl, opts) {
-    super(navCtrl);
+  constructor(nav, opts) {
+    super(nav, opts);
 
     // global duration and easing for all child animations
     this.duration(DURATION);
