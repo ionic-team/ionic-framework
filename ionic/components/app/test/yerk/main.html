@@ -1,0 +1,54 @@
+<ion-tabs id="tabs">
+
+  <ion-tab tab-title="Home" tab-icon="ion-earth">
+    <ion-content class="padding">
+    </ion-content>
+  </ion-tab>
+  <ion-tab tab-title="Peek" tab-icon="ion-ios-glasses">
+    <ion-content class="padding">
+    </ion-content>
+  </ion-tab>
+  <ion-tab tab-title="Me" tab-icon="ion-ios-person">
+    <ion-content class="padding">
+    </ion-content>
+  </ion-tab>
+  <ion-tab tab-title="More" tab-icon="ion-ios-more">
+    <ion-content class="padding">
+    </ion-content>
+  </ion-tab>
+
+</ion-tabs>
+
+
+<style>
+
+  #toolbar {
+    background-color: #00E2BE;
+  }
+
+  #tabs .tab-bar {
+    background-color: #FEFEFE;
+  }
+  #tabs .tab-bar:before {
+    position: absolute;
+    top: 0;
+    right: auto;
+    bottom: auto;
+    left: 0;
+    z-index: $z-index;
+    display: block;
+    width: 100%;
+    height: 1px;
+    transform-origin: 50% 0%;
+    background-color: #00ECC4;
+    content: '';
+
+  }
+
+  #tabs .tab-button {
+    color: #C7C7C7;
+  }
+  #tabs .tab-button[aria-selected="true"] {
+    color: #00ECC4;
+  }
+</style>

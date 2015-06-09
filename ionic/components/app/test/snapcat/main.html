@@ -3,9 +3,9 @@
     <ion-view>
 
       <ion-toolbar id="p1toolbar">
-        <div class="toolbar-inner">
-          <ion-title>secret</ion-title>
-        </div>
+        <button class="toolbar-primary-item" primary><i class="icon ion-ios-heart"></i></button>
+        <ion-title>secret</ion-title>
+        <button class="toolbar-secondary-item" primary><i class="icon ion-ios-gear"></i></button>
       </ion-toolbar>
 
       <ion-content>
@@ -143,6 +143,10 @@
   }
   ion-toolbar {
     letter-spacing: 1px;
+  }
+  .platform-ios ion-toolbar .button i {
+    color: #fff !important;
+    font-size: 24px !important;
   }
   .platform-ios .item:first-of-type:before,
   .platform-ios .item:last-of-type:after,
