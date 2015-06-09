@@ -127,7 +127,7 @@ Platform.register({
     }
   },
   run() {
-    //Tap.run();
+    Tap.run();
   }
 });
 

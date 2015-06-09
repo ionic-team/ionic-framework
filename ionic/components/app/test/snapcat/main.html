@@ -1,5 +1,7 @@
-<ion-slides >
+<ion-slides>
+
   <ion-slide>
+
     <ion-view>
 
       <ion-toolbar id="p1toolbar">
@@ -20,78 +22,12 @@
       </ion-content>
 
     </ion-view>
+
   </ion-slide>
+
   <ion-slide>
-    <ion-view>
 
-      <ion-toolbar id="p2toolbar">
-        <div class="toolbar-inner" [control-group]="filterForm">
-          <ion-title>feed</ion-title>
-          <!--
-          <ion-segment control="filterControl">
-            <ion-segment-button value="new" ion-button>
-              New
-            </ion-segment-button>
-            <ion-segment-button value="best" ion-button>
-              Best
-            </ion-segment-button>
-          </ion-segment>
-        -->
-        </div>
-      </ion-toolbar>
-
-      <ion-content>
-
-        <div class="card">
-          <div class="card-content">
-            I tried to keep both arts alive, but the camera won. I found that while the camera does not express the soul, perhaps a photograph can!
-          </div>
-          <img src="http://ionic-io-assets.s3.amazonaws.com/images/p.jpg">
-          <div class="card-footer">
-            Posted 5 days ago
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-content">
-            It is good to realize that if love and peace can prevail on earth, and if we can teach our children to honor nature's gifts, the joys and beauties of the outdoors will be here forever.
-          </div>
-          <img src="http://ionic-io-assets.s3.amazonaws.com/images/p1.png">
-          <div class="card-footer">
-            Posted 6 days ago
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-content">
-            I see humanity now as one vast plant, needing for its highest fulfillment only love, the natural blessings of the great outdoors, and intelligent crossing and selection.
-          </div>
-          <img src="http://ionic-io-assets.s3.amazonaws.com/images/p2.png">
-          <div class="card-footer">
-            Posted 7 days ago
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-content">
-            You must not lose faith in humanity. Humanity is an ocean; if a few drops of the ocean are dirty, the ocean does not become dirty.
-          </div>
-          <img src="http://ionic-io-assets.s3.amazonaws.com/images/p3.png">
-          <div class="card-footer">
-            Posted 7 days ago
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-content">
-            Keep close to Nature's heart... and break clear away, once in awhile, and climb a mountain or spend a week in the woods. Wash your spirit clean.
-          </div>
-          <img src="http://ionic-io-assets.s3.amazonaws.com/images/p4.png">
-          <div class="card-footer">
-            Posted 8 days ago
-          </div>
-        </div>
-      </ion-content>
+    <ion-nav [initial]="feedPage"></ion-nav>
 
     </ion-view>
   </ion-slide>
