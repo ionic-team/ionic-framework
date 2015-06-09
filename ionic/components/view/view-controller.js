@@ -9,9 +9,10 @@ import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
 import {Compiler} from 'angular2/angular2';
 import {bind} from 'angular2/di';
 
+import {ViewItem} from './view-item';
 import {NavController} from '../nav/nav-controller';
-import {NavItem, NavParams} from '../nav/nav-item';
-import {Pane, NavBarContainer} from '../nav/pane';
+import {PaneController} from '../nav/pane';
+import {NavParams} from '../nav/nav-item';
 import {Transition} from '../../transitions/transition';
 import {ClickBlock} from '../../util/click-block';
 import * as util from 'ionic/util';
@@ -30,83 +31,18 @@ export class ViewController {
     this.parent = parent;
     this.compiler = compiler;
     this.elementRef = elementRef;
-    this.domElement = elementRef.domElement;
     this.loader = loader;
     this.injector = injector;
 
     this.items = [];
     this.navCtrl = new NavController(this);
+    this.panes = new PaneController(this);
+
     this.sbTransition = null;
     this.sbActive = false;
-    this.panes = {};
 
     this.id = ++itemIds;
     this.childIds = -1;
-  }
-
-  setPaneAnchor(elementRef) {
-    this.anchorElementRef = elementRef;
-  }
-
-  getPane(itemStructure, callback) {
-    // this gets or creates the Pane which similar nav items live in
-    // Nav items with just a navbar/content would all use the same Pane
-    // Tabs and view's without a navbar would get a different Panes
-
-    if (this.panes[itemStructure.key]) {
-      // nav pane which the entering component already exists
-      callback(this.panes[itemStructure.key]);
-
-    } else {
-      // create a new nav pane
-      this.panes[itemStructure.key] = null;
-
-      let injector = this.injector.resolveAndCreateChild([
-        bind(ViewController).toValue(this)
-      ]);
-
-      // add a Pane element
-      // when the Pane is added, it'll also add its reference to the panes object
-      this.loader.loadNextToExistingLocation(Pane, this.anchorElementRef, injector).then(() => {
-
-        // get the pane reference by name
-        let pane = this.panes[itemStructure.key];
-
-        // get the element inside the Pane to add sections to
-        let sectionViewContainerRef = pane.sectionAnchorElementRef;
-        let promises = [];
-        let sectionsToAdd = []
-
-        // decide which sections should be added to this Pane, ie: nav bars, tab bars, etc.
-        // add only the sections it needs
-        if (itemStructure.navbar) {
-          sectionsToAdd.push(NavBarContainer);
-        }
-
-        // add the sections which this type of Pane requires
-        sectionsToAdd.forEach(SectionClass => {
-          // as each section is compiled and added to the Pane
-          // the section will add a reference to itself in the Pane's sections object
-          promises.push( this.loader.loadNextToExistingLocation(SectionClass, sectionViewContainerRef, null) );
-        });
-
-        // wait for all of the sections to resolve
-        Promise.all(promises).then(() => {
-          callback(pane);
-        });
-
-      });
-
-    }
-  }
-
-  addPane(pane) {
-    for (let np in this.panes) {
-      if (this.panes[np] === null) {
-        this.panes[np] = pane;
-        return;
-      }
-    }
   }
 
   push(ComponentClass, params = {}, opts = {}) {
@@ -126,13 +62,13 @@ export class ViewController {
     opts.direction = opts.direction || 'forward';
 
     // the active item is going to be the leaving one (if one exists)
-    let leavingItem = this.getActive() || new NavItem();
+    let leavingItem = this.getActive() || new ViewItem();
     leavingItem.shouldDestroy = false;
     leavingItem.shouldCache = true;
     leavingItem.willCache();
 
     // create a new NavStackItem
-    let enteringItem = new NavItem(this, ComponentClass, params);
+    let enteringItem = new ViewItem(this, ComponentClass, params);
 
     // add the item to the stack
     this.add(enteringItem);
@@ -158,7 +94,7 @@ export class ViewController {
 
     // get the active item and set that it is staged to be leaving
     // was probably the one popped from the stack
-    let leavingItem = this.getActive() || new NavItem();
+    let leavingItem = this.getActive() || new ViewItem();
     leavingItem.shouldDestroy = true;
     leavingItem.shouldCache = false;
     leavingItem.willUnload();
@@ -259,7 +195,7 @@ export class ViewController {
 
     // get the active item and set that it is staged to be leaving
     // was probably the one popped from the stack
-    let leavingItem = this.getActive() || new NavItem();
+    let leavingItem = this.getActive() || new ViewItem();
     leavingItem.shouldDestroy = true;
     leavingItem.shouldCache = false;
     leavingItem.willLeave();
@@ -377,7 +313,7 @@ export class ViewController {
     if (opts.animate) {
       // block possible clicks during transition
       ClickBlock(true, 520);
-      this.getNavElement().classList.add('transitioning');
+      this.getContainerElement().classList.add('transitioning');
     }
   }
 
@@ -396,7 +332,7 @@ export class ViewController {
       }
     });
 
-    this.getNavElement().classList.remove('transitioning');
+    this.getContainerElement().classList.remove('transitioning');
 
     // allow clicks again
     ClickBlock(false);
@@ -468,8 +404,8 @@ export class ViewController {
     return null;
   }
 
-  getNavElement() {
-    return this.domElement;
+  getContainerElement() {
+    return this.elementRef.domElement;
   }
 
   navbarViewContainer(nbContainer) {
@@ -526,7 +462,7 @@ export class ViewController {
   }
 
   width() {
-    return this.domElement.offsetWidth;
+    return this.getContainerElement().offsetWidth;
   }
 
 }

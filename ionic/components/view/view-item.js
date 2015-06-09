@@ -3,16 +3,16 @@ import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 import {bind} from 'angular2/di';
 
 import {ViewController} from '../view/view-controller';
-import {NavController} from './nav-controller';
-import * as util from 'ionic/util';
+import {NavController} from '../nav/nav-controller';
+import {NavParams} from '../nav/nav-params';
 
 
-export class NavItem {
+export class ViewItem {
 
   constructor(viewController, ComponentClass, params = {}) {
     this.viewController = viewController;
     this.ComponentClass = ComponentClass;
-    this.params = params;
+    this.params = new NavParams(this.params);
     this.instance = null;
     this.state = 0;
 
@@ -48,15 +48,15 @@ export class NavItem {
       // does it have a navbar? Is it tabs? Should it not have a navbar or any toolbars?
       let itemStructure = getProtoViewStructure(componentProtoViewRef);
 
-      // get the appropriate Pane which this NavItem will fit into
-      viewController.getPane(itemStructure, pane => {
+      // get the appropriate Pane which this ViewItem will fit into
+      viewController.panes.get(itemStructure, pane => {
 
-        // create a new injector just for this NavItem
+        // create a new injector just for this ViewItem
         let injector = viewController.injector.resolveAndCreateChild([
           bind(ViewController).toValue(viewController),
           bind(NavController).toValue(viewController.navCtrl),
-          bind(NavParams).toValue(new NavParams(this.params)),
-          bind(NavItem).toValue(this)
+          bind(NavParams).toValue(this.params),
+          bind(ViewItem).toValue(this)
         ]);
 
         // add the content of the view to the content area
@@ -103,6 +103,7 @@ export class NavItem {
         // all done, fire the callback
         if (this._wait) {
           this._waitCallback = callback;
+
         } else {
           callback();
         }
@@ -268,11 +269,6 @@ export class NavItem {
 
 }
 
-export class NavParams {
-  constructor(params) {
-    util.extend(this, params);
-  }
-}
 
 function getProtoViewStructure(componentProtoViewRef) {
   let navbar = true;

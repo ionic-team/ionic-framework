@@ -6,7 +6,7 @@ import {NgZone} from 'angular2/src/core/zone/ng_zone';
 
 import * as dom from '../../util/dom';
 import {Platform} from 'ionic/platform/platform';
-import {NavItem} from '../nav/nav-item';
+import {ViewItem} from '../view/view-item';
 import {BackButton} from './back-button';
 
 
@@ -16,7 +16,7 @@ import {BackButton} from './back-button';
 @View({
   template: `
     <div class="navbar-inner">
-      <back-button class="button navbar-item" [hidden]="!navItem.enableBack"></back-button>
+      <back-button class="button navbar-item"></back-button>
       <div class="navbar-title">
         <div class="navbar-inner-title navbar-title-hide">
           <content select="ion-title"></content>
@@ -34,8 +34,8 @@ import {BackButton} from './back-button';
   lifecycle: [onInit]
 })
 export class Navbar {
-  constructor(navItem:NavItem, elementRef:ElementRef, ngZone:NgZone) {
-    this.navItem = navItem;
+  constructor(item: ViewItem, elementRef:ElementRef, ngZone:NgZone) {
+    this.item = item;
     this.domElement = elementRef.domElement;
     this.zone = ngZone;
   }
@@ -106,7 +106,7 @@ export class Navbar {
   selector: 'template[navbar]'
 })
 export class NavbarTemplate {
-  constructor(navItem: NavItem, protoViewRef: ProtoViewRef) {
-    navItem.addProtoViewRef('navbar', protoViewRef)
+  constructor(item: ViewItem, protoViewRef: ProtoViewRef) {
+    item.addProtoViewRef('navbar', protoViewRef);
   }
 }

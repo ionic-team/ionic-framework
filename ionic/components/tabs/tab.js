@@ -10,7 +10,7 @@ import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
 
 import {ViewController} from '../view/view-controller';
 import {Tabs} from './tabs';
-import {NavItem} from '../nav/nav-item';
+import {ViewItem} from '../view/view-item';
 import {Content} from '../content/content';
 import {IonicComponent} from '../../config/component';
 
@@ -53,14 +53,14 @@ export class Tab extends ViewController {
     super(tabs, compiler, elementRef, loader, injector);
     this.tabs = tabs;
 
-    this.item = new NavItem(tabs.parent);
-    this.item.setInstance(this);
-    this.item.setViewElement(elementRef.domElement);
-    this.panes['_n'] = this;
+    let item = this.item = new ViewItem(tabs.parent);
+    item.setInstance(this);
+    item.setViewElement(elementRef.domElement);
+    this.panes.add(this)
     tabs.addTab(this.item);
 
-    this.panelId = 'tab-panel-' + this.item.id;
-    this.labeledBy = 'tab-button-' + this.item.id;
+    this.panelId = 'tab-panel-' + item.id;
+    this.labeledBy = 'tab-button-' + item.id;
   }
 
   onInit() {

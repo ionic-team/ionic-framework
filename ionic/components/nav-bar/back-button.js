@@ -3,13 +3,16 @@ import {View} from 'angular2/src/core/annotations_impl/view';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 
 import {IonicComponent} from 'ionic/config/component';
-import {NavItem} from '../nav/nav-item';
+import {ViewItem} from '../view/view-item';
 
 
 @Component({
   selector: 'back-button',
+  hostProperties: {
+    '!item.enableBack': 'hidden'
+  },
   hostListeners: {
-    '^click': 'onClick($event)'
+    '^click': 'goBack($event)'
   },
 })
 @View({
@@ -21,8 +24,8 @@ import {NavItem} from '../nav/nav-item';
     </span>`
 })
 export class BackButton {
-  constructor(navItem: NavItem, @ElementRef() element:ElementRef) {
-    this.navItem = navItem;
+  constructor(item: ViewItem, @ElementRef() element: ElementRef) {
+    this.item = item;
     this.domElement = element.domElement;
 
     setTimeout(() => {
@@ -31,12 +34,12 @@ export class BackButton {
     });
   }
 
-  onClick(ev) {
+  goBack(ev) {
     ev.stopPropagation();
     ev.preventDefault();
 
-    let navItem = this.navItem;
-    navItem && navItem.nav && navItem.nav.pop();
+    let item = this.item;
+    item && item.viewController && item.viewController.pop();
   }
 }
 

@@ -4,9 +4,9 @@ import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 import {ProtoViewRef} from 'angular2/src/core/compiler/view_ref';
 import {NgZone} from 'angular2/src/core/zone/ng_zone';
 
-import * as dom from '../../util/dom';
 import {IonicComponent} from 'ionic/config/component'
 import {Platform} from 'ionic/platform/platform';
+import * as dom from '../../util/dom';
 
 
 @Component({
@@ -95,7 +95,7 @@ new IonicComponent(Toolbar, {
   selector: 'template[toolbar]'
 })
 export class ToolbarTemplate {
-  constructor(navItem: NavItem, protoViewRef: ProtoViewRef) {
-    navItem.toolbarProto(protoViewRef);
+  constructor(item: ViewItem, protoViewRef: ProtoViewRef) {
+    item.addProtoViewRef('toolbar', protoViewRef);
   }
 }

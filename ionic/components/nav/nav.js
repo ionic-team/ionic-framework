@@ -52,6 +52,6 @@ new IonicComponent(Nav, {});
 })
 class NavPaneAnchor {
   constructor(@Parent() nav: Nav, elementRef: ElementRef) {
-    nav.setPaneAnchor(elementRef);
+    nav.panes.setAnchor(elementRef);
   }
 }

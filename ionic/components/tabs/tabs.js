@@ -10,9 +10,9 @@ import {NgFor} from 'angular2/angular2';
 import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
 
 import {ViewController} from '../view/view-controller';
+import {ViewItem} from '../view/view-item';
 import {TabButton} from './tab-button';
 import {Icon} from '../icon/icon';
-import {NavItem} from '../nav/nav-item';
 import {IonicComponent} from '../../config/component';
 
 
@@ -43,14 +43,14 @@ export class Tabs extends ViewController {
 
   constructor(
     @Optional() viewController: ViewController,
-    @Optional() navItem: NavItem,
+    @Optional() item: ViewItem,
     compiler: Compiler,
     elementRef: ElementRef,
     loader: DynamicComponentLoader,
     injector: Injector
   ) {
     super(viewController, compiler, elementRef, loader, injector);
-    this.item = navItem;
+    this.item = item;
 
     this.domElement = elementRef.domElement;
     this.config = Tabs.config.invoke(this);
@@ -82,7 +82,7 @@ export class Tabs extends ViewController {
         animate: false
       };
 
-      let leavingItem = this.getActive() || new NavItem();
+      let leavingItem = this.getActive() || new ViewItem();
       leavingItem.shouldDestroy = false;
       leavingItem.shouldCache = true;
       leavingItem.willCache();
