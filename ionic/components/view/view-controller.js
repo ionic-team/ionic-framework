@@ -12,7 +12,7 @@ import {bind} from 'angular2/di';
 import {ViewItem} from './view-item';
 import {NavController} from '../nav/nav-controller';
 import {PaneController} from '../nav/pane';
-import {NavParams} from '../nav/nav-item';
+import {NavParams} from '../nav/nav-params';
 import {Transition} from '../../transitions/transition';
 import {ClickBlock} from '../../util/click-block';
 import * as util from 'ionic/util';
