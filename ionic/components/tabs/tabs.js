@@ -87,6 +87,7 @@ export class Tabs extends NavBase {
       leavingItem.shouldCache = true;
       leavingItem.willCache();
 
+      // set the Tab navbarView from the active view in the tab
       enteringItem.navbarView = (enteringItem.instance.getActive() || {}).navbarView;
       if (leavingItem.instance) {
         leavingItem.navbarView = (leavingItem.instance.getActive() || {}).navbarView;

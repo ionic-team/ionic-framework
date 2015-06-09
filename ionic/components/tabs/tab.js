@@ -51,26 +51,16 @@ export class Tab extends NavBase {
   ) {
 
     super(tabs, compiler, elementRef, loader, injector);
-    if (tabs.parent) {
-      this.sections = tabs.parent.panes['_n'].sections;
-    }
+    this.tabs = tabs;
 
     this.item = new NavItem(tabs.parent);
     this.item.setInstance(this);
     this.item.setViewElement(elementRef.domElement);
+    this.panes['_n'] = this;
     tabs.addTab(this.item);
-    this.tabs = tabs;
 
     this.panelId = 'tab-panel-' + this.item.id;
     this.labeledBy = 'tab-button-' + this.item.id;
-
-    this.elementRef = elementRef;
-
-    this.viewContainerRef = viewContainerRef;
-
-    this.panes['_n'] = this;
-
-    this.domElement = elementRef.domElement;
   }
 
   onInit() {
@@ -107,6 +97,6 @@ export class Tab extends NavBase {
 })
 class TabContentAnchor {
   constructor(@Parent() tab: Tab, viewContainerRef: ViewContainerRef) {
-    tab.contentContainerRef = viewContainerRef;
+    this.contentContainerRef = viewContainerRef;
   }
 }
