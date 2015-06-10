@@ -1,3 +1,11 @@
+# Ionic 2
+
+Ionic 2 is the next generation of [Ionic](http://ionicframework.com/), the popular open-source mobile app development SDK that makes it easy to build top quality mobile apps with web technologies.
+
+Ionic 2 is based on the new 2.x version of AngularJS, and comes with many significant performance, usability,
+and feature improvements.
+
+For a quick intro to Ionic 2, see the [guide](GUIDE.md).
 
 #### Building & Running
 
@@ -26,4 +34,3 @@ Note: Once you're setup, you just need to run `gulp watch`, unless you've update
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 ```
-
