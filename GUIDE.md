@@ -29,3 +29,33 @@ In Ionic 1, we used UI Router with URL routing heavily to define navigation in y
 The overwhelming feedback from Ionic 1 developers is that the routing and navigation
 system was too difficult to use in practice. It was challenging to correctly map
 URLs to views, and the navigation system didn't give the developer enough fine-grained control.
+
+With v2, we've taken a more native-friendly navigation approach with a simpler `push/pop` system.
+
+For example, in v1 we'd create a `ContactDetail` page like this:
+
+```javascript
+$stateProvider
+  .state('contact', {
+    url: "/contact/:contactId",
+    templateUrl: "templates/contact.html",
+    controller: 'ContactCtrl'
+  });
+```
+
+Then, to navigate to this, you'd do `<a ui-sref="contact({contact: contact})">{{contact.name}}</a>`
+
+In v2, this works a bit differently. Instead of navigating through URLs and routing (which is still
+  possible as we will see a bit later), we push and pop views onto the stack:
+
+`<ion-item (^click)="showContact(contact)">{{contact.name}}</ion-item>``
+
+```javascript
+class ContactsPage {
+  showContact(contact) {
+    this.nav.push(ContactDetail, {
+      contact: contact
+    });
+  }
+}
+```
