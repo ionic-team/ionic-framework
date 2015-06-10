@@ -45,6 +45,9 @@ $stateProvider
 
 Then, to navigate to this, you'd do `<a ui-sref="contact({contact: contact})">{{contact.name}}</a>`
 
+We'd also need to make sure we wired up the current `<ion-nav-view name>` which was considerably more
+challenging when using nested navigation.
+
 In v2, this works a bit differently. Instead of navigating through URLs and routing (which is still
   possible as we will see a bit later), we push and pop views onto the stack:
 
@@ -59,3 +62,19 @@ class ContactsPage {
   }
 }
 ```
+
+The really nice thing about this is you can infinitely navigate now (for example,
+  you can keep pushing new `ContactDetail` pages onto the stack), and
+control things like animation.
+
+It also makes it incredibly easy to navigate to the same page in completely different
+contexts. For example, if you were building something similar to Apple's App Store
+app where there are multiple tabs at the bottom and each tab navigates independently,
+you could navigate to an `AppDetail` page from any tab, which is exactly how the App Store app works.
+Another example could be showing a `SongDetail` page in a music app.
+
+This hits on a core change in Ionic 2: the history state of the app is now your
+responsibility as a developer. It's up to you to make sure navigation provides
+a good UX, but you have the freedom to navigate as you see fit.
+
+### Routing
