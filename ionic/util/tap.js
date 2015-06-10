@@ -536,9 +536,9 @@ function tapHandleFocus(ele) {
 
   if (triggerFocusIn) {
     tapActiveElement(ele);
-    ionic.trigger('ionic.focusin', {
-      target: ele
-    }, true);
+    // ionic.trigger('ionic.focusin', {
+    //   target: ele
+    // }, true);
   }
 }
 
@@ -570,7 +570,7 @@ function tapFocusIn(e) {
     tapTouchFocusedInput.focus();
     tapTouchFocusedInput = null;
   }
-  ionic.scroll.isScrolling = false;
+  //ionic.scroll.isScrolling = false;
 }
 
 function tapFocusOut() {
