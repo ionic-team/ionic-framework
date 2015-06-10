@@ -10,6 +10,13 @@ let platformMode = Platform.getMode();
 // BackButton.config.bind.icon.value = 'ion-chevron-right'
 // BackButton.config._computeDefaultValue(BackButton.config.bind.icon)
 
+export function Config(instance, config){
+  //todo: user config
+  for (var setting in config) {
+    instance[setting] = config[setting][platformMode];
+  }
+}
+
 export class ModeComponent extends Component {
   constructor(config) {
     config.hostAttributes = config.hostAttributes || {};

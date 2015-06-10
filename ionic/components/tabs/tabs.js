@@ -13,6 +13,7 @@ import {TabButton} from './tab-button';
 import {Icon} from '../icon/icon';
 import {IonicComponent} from '../../config/component';
 import {ModeComponent} from '../../config/component';
+import {Config} from '../../config/component';
 
 
 @ModeComponent({
@@ -21,6 +22,10 @@ import {ModeComponent} from '../../config/component';
     'tabBarPlacement',
     'tabBarIcons'
   ],
+  hostProperties: {
+    'tabBarPlacement': 'attr.tab-bar-placement',
+    'tabBarIcons': 'attr.tab-bar-icons'
+  },
   classId: 'tabs'
 })
 @View({
@@ -51,6 +56,13 @@ export class Tabs extends ViewController {
   ) {
     super(viewCtrl, compiler, elementRef, loader, injector);
     this.item = item;
+    Config(this, {
+      'tabBarPlacement': {
+        'default': 'bottom',
+        'android': 'top',
+        'ios': 'bottom'
+      }
+    });
   }
 
   addTab(tabItem) {
