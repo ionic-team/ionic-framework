@@ -36,6 +36,9 @@
 <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 
 <style>
+  ion-app {
+    font-family: 'lato' !important;
+  }
   ion-view {
     background-color: #F5F5F5;
   }
@@ -104,7 +107,27 @@
     font-family: 'lato';
   }
 
-  heart-modal ion-content {
+  heart-modal ion-view {
     background-color: #FFB400 !important;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+  }
+  heart-modal ion-view h2 {
+    font-size: 36px !important;
+  }
+  heart-modal ion-view p {
+    font-size: 18px;
+  }
+
+  heart-modal .button-icon {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+
+  heart-modal .button-icon i {
+    font-size: 18px;
+    color: #fff;
   }
 </style>

@@ -8,7 +8,7 @@ $button-padding:                  0 1.4rem !default;
 $button-height:                   4.2rem !default;
 $button-border-width:             1px !default;
 $button-border-radius:            4px !default;
-$button-icon-size:                3rem !default;
+$button-icon-size:                2.5rem !default;
 
 $button-large-font-size:          2rem !default;
 $button-large-height:             5.4rem !default;
@@ -81,6 +81,8 @@ $button-small-icon-size:          2.1rem !default;
 
   &.button-icon {
     font-size: $button-icon-size;
+    background: none;
+    border: none;
   }
 
   &.button-large {
