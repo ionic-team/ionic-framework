@@ -63,9 +63,16 @@ class ContactsPage {
 }
 ```
 
+There are also shortcut directives we can use for links much like `ui-sref`, such as
+`nav-push` and `nav-pop` which can be used like this:
+
+`<button nav-push="ContactDetail({contact: contact})">See contact</button>`
+
+`<button nav-pop>Go back</button>`
+
 The really nice thing about this is you can infinitely navigate now (for example,
   you can keep pushing new `ContactDetail` pages onto the stack), and
-control things like animation.
+control things like animation and the history stack the user has to navigate through.
 
 It also makes it incredibly easy to navigate to the same page in completely different
 contexts. For example, if you were building something similar to Apple's App Store
@@ -77,11 +84,12 @@ For example, here's how the Minecraft `AppDetail` page looks in different tabs:
 <img src="http://ionic-io-assets.s3.amazonaws.com/images/mc1.PNG" width="300" style="width: 300px">
 <img src="http://ionic-io-assets.s3.amazonaws.com/images/mc2.PNG" width="300" style="width: 300px">
 
-
-Another example could be showing a `SongDetail` page in a music app.
+Notice the page is exactly the same, but the way the user navigated to it is different.
 
 This hits on a core change in Ionic 2: the history state of the app is now your
 responsibility as a developer. It's up to you to make sure navigation provides
 a good UX, but you have the freedom to navigate as you see fit.
 
 ### Routing
+
+In Ionic
