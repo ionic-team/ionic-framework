@@ -30,7 +30,12 @@ import {Hammer} from 'ionic/gestures/hammer';
  * * TODO: Port over mouse handling
  */
 @Component({
-  selector: 'ion-slides'
+  selector: 'ion-slides',
+  properties: [
+    'loop',
+    'index',
+    'bounce'
+  ]
 })
 @View({
   template: `<div class="slides-view"><content></content></div>`,
@@ -52,9 +57,6 @@ export class Slides {
     // How often to switch slides automatically. Zero is no auto sliding
     this.slideDelay = 0;//3000;
 
-    // Whether to slide continuosly, where the last slide becomes the first
-    this.continuous = false;
-
     // Whether to bounce on the edges if not continuous (overscrolling)
     this.bounce = false;
 
@@ -62,15 +64,17 @@ export class Slides {
     this.gesture = new SlidesGesture(this);
     this.gesture.listen();
 
+
     // Wait a cycle for the children to exist before computing sizes
     setTimeout(() => {
       // Continuous mode, but only if we have at least 2 slides
       this.setup();
+
     });
   }
 
   setup() {
-    this.continuous = this.continuous && (this.slides.length > 1 ? true : false);
+    this.continuous = util.isDefined(this.loop) && (this.slides.length > 1 ? true : false);
 
     // Grab the wrapper element that contains the slides
     this.wrapperElement = this.domElement.children[0];
@@ -117,8 +121,6 @@ export class Slides {
     // Get the width of the container, which is the viewport
     // that the user will actually see.
     this.containerWidth = this.domElement.offsetWidth || this.domElement.getBoundingClientRect().width;
-
-    console.log('Computed container width', this.containerWidth);
 
     // Set the wrapper element to the total width of the child elements
     this.wrapperElement.style.width = ((this.containerWidth * this.slides.length)) + 'px';
@@ -304,8 +306,6 @@ export class Slides {
         index == 0 && dx > 0 // if first slide and slide amt is greater than 0
         || index == this.slides.length - 1 && dx < 0;    // or if last slide and slide amt is less than 0
 
-      console.log('Is over bounds?', isPastBounds);
-
       if(this.bounce) {
         // If we have drag bouncing/overscroll enabled,
         // let's slow down the drag on the edges
@@ -322,7 +322,6 @@ export class Slides {
       } else if(isPastBounds) {
         // We aren't overscrolling (bouncing), and we're past the bounds
         let slide = this.slides[index];
-        console.log('Over Bounds', dx, slide.translateX);
         return;
       }
     }
@@ -444,7 +443,6 @@ export class Slides {
   }
 
   _move(pos, translateX, speed) {
-    //console.log('MOVE', pos, translateX, speed ? speed : 0);
     // Should already be wrapped with circle
     let slide = this.slides[pos];
     if(!slide) { return; }
@@ -556,7 +554,6 @@ export class SlidesGesture extends DragGesture {
     this.slides = slides;
   }
   onDrag(event) {
-    //console.log('Drag', event);
     let x = event.gesture.center.x;
     let y = event.gesture.center.y;
 
@@ -566,7 +563,6 @@ export class SlidesGesture extends DragGesture {
     this.slides._drag(event);
   }
   onDragStart(event) {
-    console.log('Drag start', event);
 
     this._drag = {
       startX: event.gesture.center.x,
@@ -577,7 +573,6 @@ export class SlidesGesture extends DragGesture {
     this.slides._dragStart(event, this._drag);
   }
   onDragEnd(event) {
-    console.log('Drag end', event);
 
     this.slides._endDrag(event, this._drag);
   }
