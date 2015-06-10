@@ -172,65 +172,6 @@ export class Slides {
   }
 
   /**
-   * Slide to a specific slide index.
-   *
-   * @param toIndex the index to slide to.
-   * @param isRight, whether to go right or go left, only works in continuous mode
-   */
-  slide2(toIndex, isRight) {
-    console.log('Sliding to', toIndex, this.currentIndex, isRight);
-    if(toIndex === this.currentIndex) {
-      return;
-    }
-
-    // Some simple variables to reduce typing
-    let m = this._move.bind(this);
-    let c = this._circle.bind(this);
-    let i = this.currentIndex;
-    let w = this.containerWidth;
-    let s = this.slides[c(i)];
-    let speed = this.animateSpeed;
-
-    let dir = Math.abs(i-toIndex) / (i-toIndex);
-
-    // Create a multiplier depending on the direction we want to travel
-    // TODO: Verify isRight doesn't apply in non-continuous mode
-    //let dir = isRight ? 1 : -1;
-
-    let newIndex;
-
-    if(this.continuous) {
-      // get the actual position of the slide
-      var natural_direction = dir;
-      dir = -this.slides[c(toIndex)].x / w;
-
-      // if going forward but to < index, use to = slides.length + to
-      // if going backward but to > index, use to = -slides.length + to
-      if (dir !== natural_direction) toIndex =  -dir * this.slides.length + toIndex;
-
-      // We are in continuous mode, so wrap the other elements around
-      m( c( i - dir * 1 ), - dir*w );
-      m( c( i + dir * 2 ), dir*w );
-
-      newIndex = isRight ? c( i + 1 ) : c( i - 1 );
-    } else {
-      // We aren't in continuous mode, so move forward one
-      m( i - dir *1, -dir*w );
-      newIndex = c( i + dir*1 );
-    }
-
-    // Move the current slide back, animate it
-    m( i, s.x - dir*w, speed );
-
-    // Move the next appropriate side into this position, animate it
-    m( c( i + dir*1 ), this.slides[ c( i + dir*1 ) ].x - dir*w, speed );
-
-    this.currentIndex = newIndex;
-
-    console.log('Drag ended, new position:', this.currentIndex);
-  }
-
-  /**
    * Slide left, possibly wrapping around in continuous mode.
    */
   prev() {
