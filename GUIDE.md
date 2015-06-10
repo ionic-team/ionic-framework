@@ -78,6 +78,10 @@ The really nice thing about this is you can infinitely navigate now (for example
   you can keep pushing new `ContactDetail` pages onto the stack), and
 control things like animation and the history stack the user has to navigate through.
 
+You can also navigate inside of practically any container. For example, a modal window that slides up
+can have its own navigation, and two split views can navigate independently, something
+that was not possible before.
+
 It also makes it incredibly easy to navigate to the same page in completely different
 contexts. For example, if you were building something similar to Apple's App Store
 app where there are multiple tabs at the bottom and each tab navigates independently,
@@ -96,4 +100,5 @@ a good UX, but you have the freedom to navigate as you see fit.
 
 ### Routing
 
-In Ionic
+In Ionic, routing is used more for breadcrumbs and loading state than it is for active
+navigation.
