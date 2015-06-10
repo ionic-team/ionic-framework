@@ -366,7 +366,7 @@ gulp.task('old.build', function() {
     'old.ionic.examples',
     'old.sass',
     'old.fonts',
-    'old.polyfills');
+    'old.vendor');
 })
 
 gulp.task('old.watch', function() {
@@ -377,7 +377,7 @@ gulp.task('old.watch', function() {
     'old.ionic.examples',
     'old.sass',
     'old.fonts',
-    'old.polyfills',
+    'old.vendor',
 
     function() {
       watch('ionic/**/*.js', function(file) {
@@ -413,8 +413,8 @@ function doubleCheckDistFiles() {
     gulp.start('old.fonts');
   }
 
-  if (!fs.existsSync('../angular-ionic/dist/js/dev/es5/polyfills')) {
-    gulp.start('old.polyfills');
+  if (!fs.existsSync('../angular-ionic/dist/js/dev/es5/vendor')) {
+    gulp.start('old.vendor');
   }
 }
 
@@ -475,9 +475,9 @@ gulp.task('old.fonts', function() {
 });
 
 
-gulp.task('old.polyfills', function() {
-  return gulp.src('ionic/animations/web-animations*')
-    .pipe(gulp.dest('../angular-ionic/dist/js/dev/es5/polyfills'));
+gulp.task('old.vendor', function() {
+  return gulp.src(['scripts/vendor/**/*'])
+    .pipe(gulp.dest('../angular-ionic/dist/js/dev/es5/vendor'));
 });
 
 

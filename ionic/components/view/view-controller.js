@@ -150,7 +150,9 @@ export class ViewController {
         leavingItem.state = ACTIVELY_LEAVING_STATE;
 
         // start the transition
-        transAnimation.play().then(() => {
+        console.log('transition play')
+        transAnimation.play(true).then(() => {
+          console.log('transition finished')
 
           // transition has completed, update each item's state
           enteringItem.state = ACTIVE_STATE;

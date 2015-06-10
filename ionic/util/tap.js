@@ -114,8 +114,6 @@ export let Tap = {
 
   run: function() {
     dom.ready().then(() => {
-      console.log('ADAM CLICK: GOOOO!!!!');
-
       Tap.register(document);
     });
   },
