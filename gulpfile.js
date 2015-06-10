@@ -34,7 +34,7 @@ gulp.task('clean.build', function() {
     'examples',
     'sass',
     'fonts',
-    'polyfills');
+    'vendor');
 })
 
 gulp.task('build', function() {
@@ -44,7 +44,7 @@ gulp.task('build', function() {
     'examples',
     'sass',
     'fonts',
-    'polyfills');
+    'vendor');
 })
 
 gulp.task('watch', function() {
@@ -55,7 +55,7 @@ gulp.task('watch', function() {
     'examples',
     'sass',
     'fonts',
-    'polyfills',
+    'vendor',
     'serve',
 
     function() {
@@ -76,16 +76,6 @@ gulp.task('watch', function() {
       });
     })
 });
-
-function doubleCheckDistFiles() {
-  if (!fs.existsSync('../angular-ionic/dist/js/dev/es5/css')) {
-    gulp.start('sass');
-  }
-
-  if (!fs.existsSync('../angular-ionic/dist/js/dev/es5/fonts')) {
-    gulp.start('fonts');
-  }
-}
 
 gulp.task('serve', function() {
   connect.server({
@@ -216,9 +206,9 @@ gulp.task('fonts', function() {
 });
 
 
-gulp.task('polyfills', function() {
-  return gulp.src('ionic/animations/web-animations*')
-    .pipe(gulp.dest('dist/polyfills'));
+gulp.task('vendor', function() {
+  return gulp.src(['scripts/vendor/**/*'])
+    .pipe(gulp.dest('dist/vendor'));
 });
 
 
