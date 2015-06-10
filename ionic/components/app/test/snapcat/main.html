@@ -5,9 +5,9 @@
     <ion-view>
 
       <ion-toolbar id="p1toolbar">
-        <button class="toolbar-primary-item" primary><i class="icon ion-ios-heart"></i></button>
+        <button (^click)="openHeart()" class="toolbar-primary-item" primary><i class="icon ion-ios-heart"></i></button>
         <ion-title>secret</ion-title>
-        <button class="toolbar-secondary-item" primary><i class="icon ion-ios-gear"></i></button>
+        <button (^click)="openGear()" class="toolbar-secondary-item" primary><i class="icon ion-ios-gear"></i></button>
       </ion-toolbar>
 
       <ion-content>

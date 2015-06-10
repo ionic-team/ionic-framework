@@ -1,9 +1,11 @@
+import {DynamicComponentLoader, ElementRef, ComponentRef, onDestroy, DomRenderer} from 'angular2/angular2';
+import {bind, Injector} from 'angular2/di';
 import {bootstrap, NgFor} from 'angular2/angular2'
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {FormBuilder, Control, ControlGroup, Validators, formDirectives} from 'angular2/forms';
 
-import {Nav, Segment, SegmentButton, Slides, Slide, Content, Button, List, Item} from 'ionic/ionic';
+import {Modal, ModalRef, Nav, Segment, SegmentButton, Slides, Slide, Content, Button, List, Item} from 'ionic/ionic';
 import {NavController, NavbarTemplate, NavParams, Navbar} from 'ionic/ionic';
 
 @Component({ selector: 'ion-view' })
@@ -74,8 +76,60 @@ export class FeedPage {
   directives: [formDirectives, Nav, Slides, Slide, Content, Button, List, Item]
 })
 export class IonicApp {
-  constructor() {
+  constructor(loader: DynamicComponentLoader, injector: Injector, domRenderer: DomRenderer, elementRef: ElementRef) {
     this.feedPage = FeedPage
+
+    this.loader = loader;
+    this.domRenderer = domRenderer;
+    this.elementRef = elementRef;
+    this.injector = injector;
+
+    console.log('IonicApp Start', loader, domRenderer, elementRef);
+  }
+
+  openHeart() {
+    console.log('Heart');
+    //Modal.show(HeartModal, this.loader, this.injector, this.domRenderer, this.elementRef);
+  }
+
+  openGear() {
+    console.log('Gear');
+
+    Modal.show(SettingsModal, this.loader, this.injector, this.domRenderer, this.elementRef);
+  }
+}
+
+@Component({
+  selector: 'settings-modal'
+})
+@View({
+  template: '<ion-view><ion-content padding><button primary (click)="close()">Close</button></ion-content></ion-view>',
+  directives: [Nav, Button, Content]
+})
+export class SettingsModal {
+  constructor(modalRef: ModalRef) {
+    this.modalRef = modalRef;
+  }
+  close() {
+    console.log('Closing modal');
+    this.modalRef.close();
+  }
+}
+
+@Component({
+  selector: 'heart-modal'
+})
+@View({
+  template: '<ion-view><ion-content padding><button primary (click)="close()">Close</button></ion-content></ion-view>',
+  directives: [Nav, Button, Content]
+})
+export class HeartModal {
+  constructor(modalRef: ModalRef) {
+    this.modalRef = modalRef;
+  }
+  close() {
+    console.log('Closing modal');
+    this.modalRef.close();
   }
 }
 
