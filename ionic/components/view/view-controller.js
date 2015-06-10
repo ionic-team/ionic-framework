@@ -1,18 +1,11 @@
-import {Parent} from 'angular2/src/core/annotations_impl/visibility';
-import {Component, Directive, onInit} from 'angular2/src/core/annotations_impl/annotations';
-import {Optional} from 'angular2/src/di/annotations_impl'
-import {View} from 'angular2/src/core/annotations_impl/view';
+import {Compiler} from 'angular2/angular2';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_component_loader';
 import {Injector} from 'angular2/di';
-import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
-import {Compiler} from 'angular2/angular2';
-import {bind} from 'angular2/di';
 
 import {ViewItem} from './view-item';
 import {NavController} from '../nav/nav-controller';
 import {PaneController} from '../nav/pane';
-import {NavParams} from '../nav/nav-params';
 import {Transition} from '../../transitions/transition';
 import {ClickBlock} from '../../util/click-block';
 import * as util from 'ionic/util';

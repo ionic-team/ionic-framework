@@ -12,8 +12,7 @@ import {NavController, NavbarTemplate, Navbar, Content} from 'ionic/ionic';
       <p>
         <button class="button" (click)="pop()">Pop (Go back to 2nd)</button>
       </p>
-      <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
-      <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
+      <div class="yellow"><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f></div>
     </ion-content>
   `,
   directives: [NavbarTemplate, Navbar, Content]

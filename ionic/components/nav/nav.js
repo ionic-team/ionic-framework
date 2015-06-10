@@ -1,7 +1,5 @@
-import {Component, Directive, onInit} from 'angular2/src/core/annotations_impl/annotations';
-import {View} from 'angular2/src/core/annotations_impl/view';
+import {Directive, onInit} from 'angular2/src/core/annotations_impl/annotations';
 import {Optional} from 'angular2/src/di/annotations_impl';
-import {Parent} from 'angular2/src/core/annotations_impl/visibility';
 import {Compiler} from 'angular2/angular2';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_component_loader';

@@ -16,8 +16,7 @@ import {ThirdPage} from './third-page';
       <p>
         <button class="button" (click)="push()">Push (Go to 3rd)</button>
       </p>
-      <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
-      <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
+      <div class="green"><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f></div>
     </ion-content>
   `,
   directives: [NavbarTemplate, Navbar, Content]

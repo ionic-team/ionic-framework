@@ -47,7 +47,6 @@ export class ViewItem {
       // figure out the sturcture of this Component
       // does it have a navbar? Is it tabs? Should it not have a navbar or any toolbars?
       let itemStructure = this.sturcture = this.getProtoViewStructure(componentProtoViewRef);
-      console.log('Pane itemStructure', itemStructure.key);
 
       // get the appropriate Pane which this ViewItem will fit into
       viewCtrl.panes.get(itemStructure, pane => {
@@ -138,7 +137,6 @@ export class ViewItem {
         }
       });
     });
-console.log('getProtoViewStructure')
 
     if (this.viewCtrl.parentNavbar()) {
       navbar = false;
