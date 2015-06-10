@@ -67,7 +67,7 @@ There are also shortcut directives we can use for links much like `ui-sref`, suc
 `nav-push` and `nav-pop` which can be used like this:
 
 ```html
-<button nav-push="ContactDetail({contact: contact})">See contact</button>
+<button [nav-push]="myContactComponent" [push-data]="contact">See contact</button>
 ```
 
 ```html
