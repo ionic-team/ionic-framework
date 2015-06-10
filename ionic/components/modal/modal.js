@@ -8,13 +8,14 @@ import {View} from 'angular2/src/core/annotations_impl/view';
 import {Parent} from 'angular2/src/core/annotations_impl/visibility';
 
 import {raf, ready} from 'ionic/util/dom'
+import * as util from 'ionic/util'
 
 import {Animation} from '../../animations/animation';
 
 export class Modal {
   //compiler: Compiler;
 
-  constructor(type: Type, loader: DynamicComponentLoader, injector: Injector, domRenderer: DomRenderer, elementRef: ElementRef) {
+  constructor(type: Type, loader: DynamicComponentLoader, injector: Injector, domRenderer: DomRenderer, elementRef: ElementRef, opts) {
     this.modalType = type;
     this.componentLoader = loader;
     this.domRenderer = domRenderer;
@@ -22,13 +23,18 @@ export class Modal {
 
     this.element = elementRef.domElement;
     this.elementRef = elementRef;
+
+    this.opts = util.extend({
+      openAnimation: 'slide-in',
+      closeAnimation: 'slide-out'
+    }, opts || {});
   }
 
 
-  static create(modalType: Type, loader: ComponentLoader, injector: Injector, renderer: DomRenderer, elementRef: ElementRef) {
+  static create(modalType: Type, loader: ComponentLoader, injector: Injector, renderer: DomRenderer, elementRef: ElementRef, opts) {
     console.log('Create', modalType, loader, injector, renderer, elementRef);
 
-    var m = new Modal(modalType, loader, injector, renderer, elementRef);
+    var m = new Modal(modalType, loader, injector, renderer, elementRef, opts);
 
     var modalPromise = new Promise(resolve => {
 
@@ -76,18 +82,18 @@ export class Modal {
   }
 
   show() {
-    return this._modalRef.open();
+    return this._modalRef.open(this.opts.openAnimation);
   }
 
   close() {
-    return this._modalRef.close();
+    return this._modalRef.close(this.opts.closeAnimation);
   }
 
 
-  static show(modalType: Type, loader: ComponentLoader, injector: Injector, renderer: DomRenderer, elementRef: ElementRef) {
-    console.log('Showing modal');
+  static show(modalType: Type, loader: ComponentLoader, injector: Injector, renderer: DomRenderer, elementRef: ElementRef, opts) {
+    console.log('Showing modal', opts);
 
-    Modal.create(modalType, loader, injector, renderer, elementRef).then((newModal) => {
+    Modal.create(modalType, loader, injector, renderer, elementRef, opts).then((newModal) => {
       newModal.show();
     });
   }
@@ -105,13 +111,14 @@ class ModalContainer {
     this.domElement = elementRef.domElement;
   }
 
-  open() {
-    var slideIn = Animation.create(this.domElement, 'slide-in');
+  open(animation) {
+    console.log('Opening w/ anim', animation);
+    var slideIn = Animation.create(this.domElement, animation);
     return slideIn.play();
   }
 
-  close() {
-    var slideOut = Animation.create(this.domElement, 'slide-out');
+  close(animation) {
+    var slideOut = Animation.create(this.domElement, animation);
     return slideOut.play();
   }
 }
@@ -132,15 +139,15 @@ export class ModalRef {
     this.isClosed = false;
   }
 
-  open() {
-    this.containerRef.instance.open().then(() => {
+  open(animation) {
+    this.containerRef.instance.open(animation).then(() => {
       this.isClosed = false;
     })
   }
 
-  close() {
+  close(animation) {
     // Close, then dispose y'all
-    this.containerRef.instance.close().then(() => {
+    this.containerRef.instance.close(animation).then(() => {
       this.isClosed = true;
       this.containerRef.dispose();
     })

@@ -5,8 +5,35 @@ import {Component, Directive} from 'angular2/src/core/annotations_impl/annotatio
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {FormBuilder, Control, ControlGroup, Validators, formDirectives} from 'angular2/forms';
 
-import {Modal, ModalRef, Nav, Segment, SegmentButton, Slides, Slide, Content, Button, List, Item} from 'ionic/ionic';
+import {Modal, ModalRef, Nav, Segment, Animation, SegmentButton, Slides, Slide, Content, Button, List, Item} from 'ionic/ionic';
 import {NavController, NavbarTemplate, NavParams, Navbar} from 'ionic/ionic';
+
+
+class FadeIn extends Animation {
+  constructor(element) {
+    super(element);
+    this
+      .easing('ease')
+      .duration(250)
+      .from('opacity', 0)
+      .to('opacity', 1);
+  }
+}
+
+Animation.register('my-fade-in', FadeIn);
+
+class FadeOut extends Animation {
+  constructor(element) {
+    super(element);
+    this
+      .easing('ease')
+      .duration(250)
+      .from('opacity', 1)
+      .to('opacity', 0);
+  }
+}
+
+Animation.register('my-fade-out', FadeOut);
 
 @Component({ selector: 'ion-view' })
 @View({
@@ -90,12 +117,19 @@ export class IonicApp {
   openHeart() {
     console.log('Heart');
     //Modal.show(HeartModal, this.loader, this.injector, this.domRenderer, this.elementRef);
+    Modal.show(HeartModal, this.loader, this.injector, this.domRenderer, this.elementRef, {
+      openAnimation: 'my-fade-in',
+      closeAnimation: 'my-fade-out'
+    });
   }
 
   openGear() {
     console.log('Gear');
 
-    Modal.show(SettingsModal, this.loader, this.injector, this.domRenderer, this.elementRef);
+    Modal.show(SettingsModal, this.loader, this.injector, this.domRenderer, this.elementRef, {
+      //openAnimation: 'my-fade-in',
+      //closeAnimation: 'my-fade-out'
+    });
   }
 }
 
