@@ -1,7 +1,7 @@
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
-import {NavController, NavbarTemplate, Navbar, Content} from 'ionic/ionic';
+import {NavController, NavbarTemplate, Navbar, NavPush, Content} from 'ionic/ionic';
 import {SecondPage} from './second-page';
 
 
@@ -21,10 +21,11 @@ import {SecondPage} from './second-page';
     '<ion-content class="padding">' +
       '<p>First Page: {{ val }}</p>' +
       '<p><button class="button" (click)="push()">Push (Go to 2nd)</button></p>' +
+      '<p><button class="button" [push-data]="pushData" [nav-push]="pushPage">Push w/ nav-push (Go to 2nd)</button></p>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
     '</ion-content>',
-  directives: [NavbarTemplate, Navbar, Content]
+  directives: [NavbarTemplate, Navbar, NavPush, Content]
 })
 export class FirstPage {
   constructor(
@@ -32,6 +33,11 @@ export class FirstPage {
   ) {
     this.nav = nav;
     this.val = Math.round(Math.random() * 8999) + 1000;
+
+    this.pushPage = SecondPage;
+    this.pushData = {
+      id: 420
+    }
   }
 
   viewLoaded() {

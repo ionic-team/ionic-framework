@@ -1,7 +1,7 @@
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
-import {NavController, NavParams, NavbarTemplate, Navbar, Content} from 'ionic/ionic';
+import {NavController, NavPop, NavParams, NavbarTemplate, Navbar, Content} from 'ionic/ionic';
 import {ThirdPage} from './third-page';
 
 
@@ -14,12 +14,15 @@ import {ThirdPage} from './third-page';
         <button class="button" (click)="pop()">Pop (Go back to 1st)</button>
       </p>
       <p>
+        <button class="button" nav-pop>Pop with NavPop (Go back to 1st)</button>
+      </p>
+      <p>
         <button class="button" (click)="push()">Push (Go to 3rd)</button>
       </p>
       <div class="green"><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f></div>
     </ion-content>
   `,
-  directives: [NavbarTemplate, Navbar, Content]
+  directives: [NavbarTemplate, NavPop, Navbar, Content]
 })
 export class SecondPage {
   constructor(
