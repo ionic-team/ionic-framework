@@ -122,8 +122,16 @@ gulp.task('transpile', function() {
   return gulp.src(['ionic/**/*.js', '!ionic/components/*/test/**/*'])
              .pipe(cache('transpile', { optimizeMemory: true }))
              .pipe(traceur(traceurOptions))
+             .on('error', function (err) {
+               console.log("ERROR: " + err.message);
+               this.emit('end');
+             })
              .pipe(gulp.dest('dist/js/es6/ionic'))
              .pipe(babel(babelOptions))
+             .on('error', function (err) {
+               console.log("ERROR: " + err.message);
+               this.emit('end');
+             })
              .pipe(gulp.dest('dist/js/es5/ionic'))
 });
 
@@ -163,7 +171,7 @@ gulp.task('examples', function() {
     .pipe(cache('examples', { optimizeMemory: true }))
     .pipe(gulpif(/.js$/, buildTest()))
     .on('error', function (err) {
-            console.log(err.message);
+            console.log("ERROR: " + err.message);
             this.emit('end');
         })
     .pipe(gulpif(/index.js$/, createIndexHTML()))
