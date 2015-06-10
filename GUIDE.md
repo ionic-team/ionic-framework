@@ -66,9 +66,13 @@ class ContactsPage {
 There are also shortcut directives we can use for links much like `ui-sref`, such as
 `nav-push` and `nav-pop` which can be used like this:
 
-`<button nav-push="ContactDetail({contact: contact})">See contact</button>`
+```html
+<button nav-push="ContactDetail({contact: contact})">See contact</button>
+```
 
-`<button nav-pop>Go back</button>`
+```html
+<button nav-pop>Go back</button>
+```
 
 The really nice thing about this is you can infinitely navigate now (for example,
   you can keep pushing new `ContactDetail` pages onto the stack), and
