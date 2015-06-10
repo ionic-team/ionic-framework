@@ -9,8 +9,8 @@ import {NavParams} from '../nav/nav-params';
 
 export class ViewItem {
 
-  constructor(viewController, ComponentClass, params = {}) {
-    this.viewController = viewController;
+  constructor(viewCtrl, ComponentClass, params = {}) {
+    this.viewCtrl = viewCtrl;
     this.ComponentClass = ComponentClass;
     this.params = new NavParams(params);
     this.instance = null;
@@ -31,45 +31,47 @@ export class ViewItem {
   }
 
   stage(callback) {
-    let viewController = this.viewController;
+    let viewCtrl = this.viewCtrl;
 
     // update if it's possible to go back from this nav item
-    this.enableBack = viewController && !!viewController.getPrevious(this);
+    this.enableBack = viewCtrl && !!viewCtrl.getPrevious(this);
 
-    if (this.instance || !viewController) {
+    if (this.instance || !viewCtrl) {
       // already compiled this view
       return callback();
     }
 
     // compile the Component
-    viewController.compiler.compileInHost(this.ComponentClass).then(componentProtoViewRef => {
+    viewCtrl.compiler.compileInHost(this.ComponentClass).then(componentProtoViewRef => {
 
       // figure out the sturcture of this Component
       // does it have a navbar? Is it tabs? Should it not have a navbar or any toolbars?
-      let itemStructure = getProtoViewStructure(componentProtoViewRef);
+      let itemStructure = this.sturcture = this.getProtoViewStructure(componentProtoViewRef);
+      console.log('Pane itemStructure', itemStructure.key);
 
       // get the appropriate Pane which this ViewItem will fit into
-      viewController.panes.get(itemStructure, pane => {
+      viewCtrl.panes.get(itemStructure, pane => {
 
         // create a new injector just for this ViewItem
-        let injector = viewController.injector.resolveAndCreateChild([
-          bind(ViewController).toValue(viewController),
-          bind(NavController).toValue(viewController.navCtrl),
+        let injector = viewCtrl.injector.resolveAndCreateChild([
+          bind(ViewController).toValue(viewCtrl),
+          bind(NavController).toValue(viewCtrl.navCtrl),
           bind(NavParams).toValue(this.params),
           bind(ViewItem).toValue(this)
         ]);
 
         // add the content of the view to the content area
-        let viewContainer = pane.contentContainerRef;
-        let hostViewRef = viewContainer.create(componentProtoViewRef, -1, null, injector);
+        // it will already have the correct context
+        let contentContainer = pane.contentContainerRef;
+        let hostViewRef = contentContainer.create(componentProtoViewRef, -1, null, injector);
 
-        let newLocation = new ElementRef(hostViewRef, 0);
-
-        this.setInstance( viewController.loader._viewManager.getComponent(newLocation) );
+        // get the component's instance, and set it to the this ViewItem
+        this.setInstance( viewCtrl.loader._viewManager.getComponent(new ElementRef(hostViewRef, 0)) );
         this.setViewElement( hostViewRef._view.render._view.rootNodes[0] );
 
+        // remember how to dispose of this reference
         this.disposals.push(() => {
-          viewContainer.remove( viewContainer.indexOf(hostViewRef) );
+          contentContainer.remove( contentContainer.indexOf(hostViewRef) );
         });
 
         // get the view's context so when creating the navbar
@@ -82,7 +84,7 @@ export class ViewItem {
         };
 
         // get the item container's nav bar
-        let navbarViewContainer = viewController.navbarViewContainer();
+        let navbarViewContainer = viewCtrl.navbarViewContainer();
 
         // get the item's navbar protoview
         let navbarProtoView = this.protos.navbar;
@@ -111,6 +113,47 @@ export class ViewItem {
       });
 
     });
+  }
+
+
+  getProtoViewStructure(componentProtoViewRef) {
+    let navbar = false;
+    let tabs = false;
+    let toolbars = [];
+    let key = '';
+
+    componentProtoViewRef._protoView.elementBinders.forEach(rootElementBinder => {
+      if (!rootElementBinder.componentDirective || !rootElementBinder.nestedProtoView) return;
+
+      rootElementBinder.nestedProtoView.elementBinders.forEach(nestedElementBinder => {
+        if ( isComponent(nestedElementBinder, 'Tabs') ) {
+          navbar = true;
+        }
+        if (!nestedElementBinder.componentDirective && nestedElementBinder.nestedProtoView) {
+          nestedElementBinder.nestedProtoView.elementBinders.forEach(templatedElementBinder => {
+            if ( isComponent(templatedElementBinder, 'Navbar') ) {
+              navbar = true;
+            }
+          });
+        }
+      });
+    });
+console.log('getProtoViewStructure')
+
+    if (this.viewCtrl.parentNavbar()) {
+      navbar = false;
+    }
+
+    if (navbar) key += 'n'
+    if (tabs) key += 't'
+    key += 'b' + toolbars.length;
+
+    return {
+      navbar,
+      tabs,
+      toolbars,
+      key
+    };
   }
 
   waitForResolve() {
@@ -269,36 +312,6 @@ export class ViewItem {
 
 }
 
-
-function getProtoViewStructure(componentProtoViewRef) {
-  let navbar = true;
-  let tabs = false;
-  let toolbars = [];
-  let key = '_';
-
-  // componentProtoViewRef._protoView.elementBinders.forEach(rootElementBinder => {
-  //   if (!rootElementBinder.componentDirective || !rootElementBinder.nestedProtoView) return;
-
-  //   rootElementBinder.nestedProtoView.elementBinders.forEach(nestedElementBinder => {
-  //     let componentDirective = nestedElementBinder.componentDirective;
-  //     if (componentDirective && componentDirective.metadata.id == 'Tab') {
-  //       navbar = tabs = true;
-  //     }
-  //   });
-  // });
-
-  if (navbar) {
-    key += 'n'
-  }
-
-  if (toolbars.length) {
-    key += 'b' + toolbars.length;
-  }
-
-  return {
-    navbar: navbar,
-    tabs: tabs,
-    toolbars: toolbars,
-    key: key
-  };
+function isComponent(elementBinder, id) {
+  return (elementBinder && elementBinder.componentDirective && elementBinder.componentDirective.metadata.id == id);
 }

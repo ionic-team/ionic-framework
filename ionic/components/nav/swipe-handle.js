@@ -14,12 +14,12 @@ import {Gesture} from 'ionic/gestures/gesture';
 })
 export class SwipeHandle {
   constructor(
-    @Optional() viewController: ViewController,
+    @Optional() viewCtrl: ViewController,
     elementRef: ElementRef
   ) {
-    if (!viewController) return;
+    if (!viewCtrl) return;
 
-    this.viewController = viewController;
+    this.viewCtrl = viewCtrl;
 
     let gesture = new Gesture(elementRef.domElement);
     gesture.listen();
@@ -62,7 +62,7 @@ export class SwipeHandle {
         }
       }
 
-      viewController.swipeBackEnd(completeSwipeBack, progress, playbackRate);
+      viewCtrl.swipeBackEnd(completeSwipeBack, progress, playbackRate);
 
       startX = null;
     }
@@ -73,18 +73,18 @@ export class SwipeHandle {
         ev.stopPropagation();
 
         startX = ev.gesture.center.x;
-        swipeableAreaWidth = viewController.width() - startX;
+        swipeableAreaWidth = viewCtrl.width() - startX;
 
-        viewController.swipeBackStart();
+        viewCtrl.swipeBackStart();
       }
 
-      viewController.swipeBackProgress( (ev.gesture.center.x - startX) / swipeableAreaWidth );
+      viewCtrl.swipeBackProgress( (ev.gesture.center.x - startX) / swipeableAreaWidth );
     }
 
   }
 
   showHandle() {
-    return (this.viewController ? this.viewController.swipeBackEnabled() : false);
+    return (this.viewCtrl ? this.viewCtrl.swipeBackEnabled() : false);
   }
 
 }

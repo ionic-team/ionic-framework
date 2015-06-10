@@ -20,13 +20,13 @@ import {ViewController} from '../view/view-controller';
 export class Nav extends ViewController {
 
   constructor(
-    @Optional() viewController: ViewController,
+    @Optional() viewCtrl: ViewController,
     compiler: Compiler,
     elementRef: ElementRef,
     loader: DynamicComponentLoader,
     injector: Injector
   ) {
-    super(viewController, compiler, elementRef, loader, injector);
+    super(viewCtrl, compiler, elementRef, loader, injector);
     this.panes.setAnchor(elementRef);
   }
 

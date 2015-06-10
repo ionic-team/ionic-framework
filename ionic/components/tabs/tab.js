@@ -6,7 +6,6 @@ import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 import {Compiler} from 'angular2/angular2';
 import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_component_loader';
 import {Injector} from 'angular2/di';
-import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
 
 import {ViewController} from '../view/view-controller';
 import {Tabs} from './tabs';
@@ -34,10 +33,10 @@ import {IonicComponent} from '../../config/component';
 })
 @View({
   template: `
-    <template content-anchor></template>
+    <template pane-anchor></template>
     <content></content>
   `,
-  directives: [TabContentAnchor]
+  directives: [TabPaneAnchor]
 })
 export class Tab extends ViewController {
 
@@ -46,17 +45,21 @@ export class Tab extends ViewController {
     compiler: Compiler,
     elementRef: ElementRef,
     loader: DynamicComponentLoader,
-    injector: Injector,
-    viewContainerRef: ViewContainerRef
+    injector: Injector
   ) {
-
+    // A Tab is both a container of many views, and is a view itself.
+    // A Tab is one ViewItem within it's parent Tabs (which extends ViewController)
+    // A Tab is a ViewController for its child ViewItems
     super(tabs, compiler, elementRef, loader, injector);
     this.tabs = tabs;
+
+    // the navbar is already provided by the container of Tabs, which contains Tab
+    // Views which come into this Tab should not create their own navbar, but use the parent's
+    this.parentNavbar(true);
 
     let item = this.item = new ViewItem(tabs.parent);
     item.setInstance(this);
     item.setViewElement(elementRef.domElement);
-    this.panes.add(this)
     tabs.addTab(this.item);
 
     this.panelId = 'tab-panel-' + item.id;
@@ -93,10 +96,10 @@ export class Tab extends ViewController {
 
 
 @Directive({
-  selector: 'template[content-anchor]'
+  selector: 'template[pane-anchor]'
 })
-class TabContentAnchor {
-  constructor(@Parent() tab: Tab, viewContainerRef: ViewContainerRef) {
-    tab.contentContainerRef = viewContainerRef;
+class TabPaneAnchor {
+  constructor(@Parent() tab: Tab, elementRef: ElementRef) {
+    tab.panes.setAnchor(elementRef);
   }
 }

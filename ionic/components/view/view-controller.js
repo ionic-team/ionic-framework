@@ -21,14 +21,14 @@ import * as util from 'ionic/util';
 export class ViewController {
 
   constructor(
-    parent: ViewController,
+    parentViewCtrl: ViewController,
     compiler: Compiler,
     elementRef: ElementRef,
     loader: DynamicComponentLoader,
     injector: Injector
   ) {
 
-    this.parent = parent;
+    this.parent = parentViewCtrl;
     this.compiler = compiler;
     this.elementRef = elementRef;
     this.loader = loader;
@@ -418,6 +418,13 @@ export class ViewController {
     if (this.parent) {
       return this.parent.navbarViewContainer();
     }
+  }
+
+  parentNavbar() {
+    if (arguments.length) {
+      this._parentNavbar = arguments[0];
+    }
+    return this._parentNavbar;
   }
 
   add(item) {

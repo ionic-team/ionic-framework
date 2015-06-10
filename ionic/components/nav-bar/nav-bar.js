@@ -4,10 +4,9 @@ import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 import {ProtoViewRef} from 'angular2/src/core/compiler/view_ref';
 import {NgZone} from 'angular2/src/core/zone/ng_zone';
 
-import * as dom from '../../util/dom';
-import {Platform} from 'ionic/platform/platform';
 import {ViewItem} from '../view/view-item';
 import {BackButton} from './back-button';
+import * as dom from '../../util/dom';
 
 
 @Component({
@@ -34,7 +33,7 @@ import {BackButton} from './back-button';
   lifecycle: [onInit]
 })
 export class Navbar {
-  constructor(item: ViewItem, elementRef:ElementRef, ngZone:NgZone) {
+  constructor(item: ViewItem, elementRef: ElementRef, ngZone: NgZone) {
     this.item = item;
     this.domElement = elementRef.domElement;
     this.zone = ngZone;

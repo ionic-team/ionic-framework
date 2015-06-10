@@ -1,13 +1,11 @@
-import {Ancestor, Parent} from 'angular2/src/core/annotations_impl/visibility';
 import {Optional} from 'angular2/src/di/annotations_impl'
-import {Directive, Component} from 'angular2/src/core/annotations_impl/annotations';
+import {Component} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 import {Compiler} from 'angular2/angular2';
 import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_component_loader';
 import {Injector} from 'angular2/di';
 import {NgFor} from 'angular2/angular2';
-import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
 
 import {ViewController} from '../view/view-controller';
 import {ViewItem} from '../view/view-item';
@@ -44,14 +42,14 @@ import {ModeComponent} from '../../config/component';
 export class Tabs extends ViewController {
 
   constructor(
-    @Optional() viewController: ViewController,
+    @Optional() viewCtrl: ViewController,
     @Optional() item: ViewItem,
     compiler: Compiler,
     elementRef: ElementRef,
     loader: DynamicComponentLoader,
     injector: Injector
   ) {
-    super(viewController, compiler, elementRef, loader, injector);
+    super(viewCtrl, compiler, elementRef, loader, injector);
     this.item = item;
   }
 

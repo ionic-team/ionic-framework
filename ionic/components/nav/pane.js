@@ -1,4 +1,4 @@
-import {Component, Directive, onInit} from 'angular2/src/core/annotations_impl/annotations';
+import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {Parent} from 'angular2/src/core/annotations_impl/visibility';
 import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
@@ -6,15 +6,14 @@ import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 import {bind} from 'angular2/di';
 
 import {ViewController} from '../view/view-controller';
-import {Nav} from './nav';
 import {SwipeHandle} from './swipe-handle';
 import {ModeComponent} from '../../config/component';
 
 
 export class PaneController {
-  constructor(viewController: ViewController) {
+  constructor(viewCtrl: ViewController) {
     this.panes = {};
-    this.viewController = viewController;
+    this.viewCtrl = viewCtrl;
   }
 
   get(itemStructure, callback) {
@@ -23,7 +22,7 @@ export class PaneController {
     // Tabs and view's without a navbar would get a different Panes
 
     let key = itemStructure.key;
-    let viewController = this.viewController;
+    let viewCtrl = this.viewCtrl;
     let pane = this.panes[key];
 
     if (pane) {
@@ -34,13 +33,13 @@ export class PaneController {
       // create a new nav pane
       this.panes[key] = null;
 
-      let injector = viewController.injector.resolveAndCreateChild([
-        bind(ViewController).toValue(viewController)
+      let injector = viewCtrl.injector.resolveAndCreateChild([
+        bind(ViewController).toValue(viewCtrl)
       ]);
 
       // add a Pane element
       // when the Pane is added, it'll also add its reference to the panes object
-      viewController.loader.loadNextToExistingLocation(Pane, this.anchor, injector).then(() => {
+      viewCtrl.loader.loadNextToExistingLocation(Pane, this.anchor, injector).then(() => {
 
         // get the pane reference by name
         pane = this.panes[key];
@@ -63,7 +62,7 @@ export class PaneController {
           // as each section is compiled and added to the Pane
           // the section will add a reference to itself in the Pane's sections object
           promises.push(
-            viewController.loader.loadNextToExistingLocation(SectionClass, sectionAnchorElementRef)
+            viewCtrl.loader.loadNextToExistingLocation(SectionClass, sectionAnchorElementRef)
           );
         });
 
@@ -88,7 +87,6 @@ export class PaneController {
         return;
       }
     }
-    this.panes['_n'] = pane;
   }
 
 }
@@ -108,13 +106,8 @@ export class PaneController {
   directives: [PaneAnchor, PaneContentAnchor, SwipeHandle]
 })
 class Pane {
-  constructor(@Parent() nav: Nav, viewContainerRef: ViewContainerRef) {
-    this.sections = {};
-    nav.panes.add(this);
-  }
-
-  addSection(sectionName, instance) {
-    this.sections[sectionName] = instance;
+  constructor(viewCtrl: ViewController) {
+    viewCtrl.panes.add(this);
   }
 }
 
@@ -152,7 +145,7 @@ class NavBarContainer {}
   selector: 'template[navbar-anchor]'
 })
 class NavBarAnchor {
-  constructor(viewController: ViewController, viewContainerRef: ViewContainerRef) {
-    viewController.navbarViewContainer(viewContainerRef);
+  constructor(viewCtrl: ViewController, viewContainerRef: ViewContainerRef) {
+    viewCtrl.navbarViewContainer(viewContainerRef);
   }
 }

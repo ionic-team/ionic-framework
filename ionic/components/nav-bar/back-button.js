@@ -39,7 +39,7 @@ export class BackButton {
     ev.preventDefault();
 
     let item = this.item;
-    item && item.viewController && item.viewController.pop();
+    item && item.viewCtrl && item.viewCtrl.pop();
   }
 }
 
