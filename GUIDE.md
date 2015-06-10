@@ -74,8 +74,8 @@ you could navigate to an `AppDetail` page from any tab, which is exactly how the
 
 For example, here's how the Minecraft `AppDetail` page looks in different tabs:
 
-<img src="http://ionic-io-assets.s3.amazonaws.com/images/mc1.PNG" style="max-width: 300px">
-<img src="http://ionic-io-assets.s3.amazonaws.com/images/mc2.PNG" style="max-width: 300px">
+<img src="http://ionic-io-assets.s3.amazonaws.com/images/mc1.PNG" style="width: 300px">
+<img src="http://ionic-io-assets.s3.amazonaws.com/images/mc2.PNG" style="width: 300px">
 
 
 Another example could be showing a `SongDetail` page in a music app.
