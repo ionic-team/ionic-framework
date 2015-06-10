@@ -137,7 +137,7 @@ export class IonicApp {
   selector: 'settings-modal'
 })
 @View({
-  template: '<ion-view><ion-content padding><button primary (click)="close()">Close</button></ion-content></ion-view>',
+  template: '<ion-view><ion-content padding><button icon (click)="close()"><i class="icon ion-close"></i></button></ion-content></ion-view>',
   directives: [Nav, Button, Content]
 })
 export class SettingsModal {

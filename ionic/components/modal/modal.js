@@ -69,6 +69,8 @@ export class Modal {
 
       modalRef.containerRef = containerRef;
 
+      modalRef.setOptions(this.opts);
+
       // Now load the user's modal component into the Modal
       return this.componentLoader.loadNextToExistingLocation(
           this.modalType, containerRef.instance.contentRef, contentInjector).then(contentRef => {
@@ -82,11 +84,11 @@ export class Modal {
   }
 
   show() {
-    return this._modalRef.open(this.opts.openAnimation);
+    return this._modalRef.open();
   }
 
   close() {
-    return this._modalRef.close(this.opts.closeAnimation);
+    return this._modalRef.close();
   }
 
 
@@ -118,6 +120,7 @@ class ModalContainer {
   }
 
   close(animation) {
+    console.log('Closing w/ anim', animation);
     var slideOut = Animation.create(this.domElement, animation);
     return slideOut.play();
   }
@@ -139,15 +142,19 @@ export class ModalRef {
     this.isClosed = false;
   }
 
-  open(animation) {
-    this.containerRef.instance.open(animation).then(() => {
+  setOptions(opts) {
+    this.opts = opts;
+  }
+
+  open() {
+    this.containerRef.instance.open(this.opts.openAnimation).then(() => {
       this.isClosed = false;
     })
   }
 
-  close(animation) {
+  close() {
     // Close, then dispose y'all
-    this.containerRef.instance.close(animation).then(() => {
+    this.containerRef.instance.close(this.opts.closeAnimation).then(() => {
       this.isClosed = true;
       this.containerRef.dispose();
     })
