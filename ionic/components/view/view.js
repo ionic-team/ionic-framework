@@ -1,15 +1,16 @@
-import {ElementRef} from 'angular2/angular2'
-import {Component} from 'angular2/src/core/annotations_impl/annotations';
-import {View} from 'angular2/src/core/annotations_impl/view';
+import {Directive} from 'angular2/src/core/annotations_impl/annotations';
+import {ElementRef} from 'angular2/src/core/compiler/element_ref';
+import {Optional} from 'angular2/src/di/annotations_impl'
 
-@Component({
+import {ViewItem} from './view-item';
+
+
+@Directive({
   selector: 'ion-view',
 })
-@View({
-  template: `<content></content>`
-})
-export class ViewContainer {
-  constructor(elementRef: ElementRef) {
+export class IonView {
+  constructor(@Optional() item: ViewItem, elementRef: ElementRef) {
+    console.log('View constructor', item)
     this.domElement = elementRef.domElement;
   }
 }
