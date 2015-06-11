@@ -10,7 +10,7 @@ body {
   max-height: 100%;
   margin: 0;
   padding: 0;
-  word-wrap: break-word;g
+  word-wrap: break-word;
 
   touch-action: manipulation;
   -webkit-touch-callout: none;
@@ -59,9 +59,12 @@ ion-pane {
   width: 100%;
   height: 100%;
   overflow: hidden;
-
-  display: flex;
   flex-direction: column;
+
+  display:none;
+  &.show-pane {
+    display: flex;
+  }
 }
 
 .nav-item {

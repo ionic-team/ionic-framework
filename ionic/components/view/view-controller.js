@@ -75,7 +75,7 @@ export class ViewController {
   }
 
   pop(opts = {}) {
-    if (this.isTransitioning() || this.items.length < 1) {
+    if (this.isTransitioning() || this.items.length < 2) {
       return Promise.reject();
     }
 
@@ -150,9 +150,7 @@ export class ViewController {
         leavingItem.state = ACTIVELY_LEAVING_STATE;
 
         // start the transition
-        console.log('transition play')
-        transAnimation.play(true).then(() => {
-          console.log('transition finished')
+        transAnimation.play().then(() => {
 
           // transition has completed, update each item's state
           enteringItem.state = ACTIVE_STATE;
@@ -308,7 +306,6 @@ export class ViewController {
     if (opts.animate) {
       // block possible clicks during transition
       ClickBlock(true, 520);
-      this.getContainerElement().classList.add('transitioning');
     }
   }
 
@@ -326,8 +323,6 @@ export class ViewController {
         }
       }
     });
-
-    this.getContainerElement().classList.remove('transitioning');
 
     // allow clicks again
     ClickBlock(false);
@@ -399,10 +394,6 @@ export class ViewController {
     return null;
   }
 
-  getContainerElement() {
-    return this.elementRef.domElement;
-  }
-
   navbarViewContainer(nbContainer) {
     if (nbContainer) {
       this._nbContainer = nbContainer;
@@ -461,10 +452,6 @@ export class ViewController {
 
   isStagedEntering(item) {
     return (item && item.state === STAGED_ENTERING_STATE);
-  }
-
-  width() {
-    return this.getContainerElement().offsetWidth;
   }
 
 }

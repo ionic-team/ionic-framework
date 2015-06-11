@@ -105,9 +105,22 @@ export class PaneController {
   `,
   directives: [PaneAnchor, PaneContentAnchor, SwipeHandle]
 })
-class Pane {
-  constructor(viewCtrl: ViewController) {
+export class Pane {
+  constructor(viewCtrl: ViewController, elementRef: ElementRef) {
+    this.domElement = elementRef.domElement;
     viewCtrl.panes.add(this);
+  }
+
+  width() {
+    return this.domElement.offsetWidth;
+  }
+
+  isTransitioning(val) {
+    this.domElement.classList[val ? 'add' : 'remove']('transitioning');
+  }
+
+  showPane(val) {
+    this.domElement.classList[val ? 'add' : 'remove']('show-pane');
   }
 }
 

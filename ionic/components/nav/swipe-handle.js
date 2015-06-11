@@ -1,8 +1,10 @@
+import {Parent} from 'angular2/src/core/annotations_impl/visibility';
 import {ElementRef} from 'angular2/angular2'
 import {Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {Optional} from 'angular2/src/di/annotations_impl';
 
 import {ViewController} from '../view/view-controller';
+import {Pane} from './pane';
 import {Gesture} from 'ionic/gestures/gesture';
 
 
@@ -15,6 +17,7 @@ import {Gesture} from 'ionic/gestures/gesture';
 export class SwipeHandle {
   constructor(
     @Optional() viewCtrl: ViewController,
+    @Parent() pane: Pane,
     elementRef: ElementRef
   ) {
     if (!viewCtrl) return;
@@ -69,11 +72,12 @@ export class SwipeHandle {
 
     function onDragHorizontal(ev) {
       if (startX === null) {
+        // starting drag
         ev.preventDefault();
         ev.stopPropagation();
 
         startX = ev.gesture.center.x;
-        swipeableAreaWidth = viewCtrl.width() - startX;
+        swipeableAreaWidth = pane.width() - startX;
 
         viewCtrl.swipeBackStart();
       }
