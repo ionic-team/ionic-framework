@@ -1,0 +1,53 @@
+<ion-view>
+  <div id="profile" #profile>
+    <div id="face">
+    </div>
+  </div>
+  <ion-content [parallax]="profile" [counter]="counter">
+    <ion-list inset>
+      <ion-item *ng-for="#item of items">
+        {{item.title}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+  <div id="counter" #counter></div>
+</ion-view>
+
+
+<style>
+#counter {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  background: black;
+  color: #fff;
+  font-size: 11px;
+  padding: 5px;
+  border-radius: 5px;
+}
+#profile {
+  position: absolute;
+  top: 0;
+  height: 250px;
+  width: 100%;
+  background: url('http://ionic-io-assets.s3.amazonaws.com/demos/bus.jpg') no-repeat transparent;
+  background-size: cover;
+}
+#face {
+  background: url('http://ionic-io-assets.s3.amazonaws.com/demos/face.jpg') no-repeat transparent;
+  background-size: cover;
+  background-position: 50%;
+  width: 96px;
+  height: 96px;
+  border-radius: 96px;
+  border: 2px solid #fff;
+  box-shadow: 0px 0px 4px rgba(0,0,0,0.4);
+  margin: 100px auto 0 auto;
+}
+ion-content {
+  background: transparent !important;
+}
+.scroll-content {
+  padding-top: 250px;
+}
+</style>
