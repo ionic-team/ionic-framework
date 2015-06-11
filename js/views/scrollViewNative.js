@@ -50,7 +50,20 @@
         }, 80);
       };
 
-      self.freeze = NOOP;
+      self.canScroll = function(e) {
+        if (self.options.freeze) {
+          e.preventDefault();
+          return false;
+        }
+        return true;
+      };
+
+      self.freeze = function(shouldFreeze) {
+        if (arguments.length) {
+          self.options.freeze = shouldFreeze;
+        }
+        return self.options.freeze;
+      };
 
       self.__initEventHandlers();
     },
@@ -249,7 +262,6 @@
     },
 
 
-
     /*
      ---------------------------------------------------------------------------
      PRIVATE API
@@ -308,6 +320,11 @@
         }
       };
 
+      container.addEventListener('touchstart', self.canScroll);
+      container.addEventListener('scroll', self.canScroll);
+      container.addEventListener('mousewheel', self.canScroll);
+      container.addEventListener('onmousewheel', self.canScroll);
+      container.addEventListener('DOMMouseScroll', self.canScroll);
       container.addEventListener('resetScrollView', self.resetScrollView);
       container.addEventListener('scroll', self.onScroll);
 
@@ -320,6 +337,12 @@
     __cleanup: function() {
       var self = this;
       var container = self.__container;
+
+      container.removeEventListener('touchstart', self.canScroll);
+      container.removeEventListener('scroll', self.canScroll);
+      container.removeEventListener('mousewheel', self.canScroll);
+      container.removeEventListener('onmousewheel', self.canScroll);
+      container.removeEventListener('DOMMouseScroll', self.canScroll);
 
       container.removeEventListener('resetScrollView', self.resetScrollView);
       container.removeEventListener('scroll', self.onScroll);
