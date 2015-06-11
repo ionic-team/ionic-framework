@@ -10,17 +10,28 @@ body {
   max-height: 100%;
   margin: 0;
   padding: 0;
+  word-wrap: break-word;g
 
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
   -webkit-user-drag: none;
   -ms-content-zooming: none;
 
-  touch-action: manipulation;
-
+  -webkit-font-smoothing: antialiased;
   font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 
+  -webkit-text-size-adjust: none;
+  -moz-text-size-adjust: none;
   text-size-adjust: none;
+
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  -webkit-backface-visibility: hidden;
 }
 
 ion-app {
