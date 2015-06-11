@@ -3,14 +3,14 @@
     <div id="face">
     </div>
   </div>
-  <ion-content [parallax]="profile" [counter]="counter">
+  <ion-content [parallax]="profile"><!-- [counter]="counter">-->
     <ion-list inset>
       <ion-item *ng-for="#item of items">
         {{item.title}}
       </ion-item>
     </ion-list>
   </ion-content>
-  <div id="counter" #counter></div>
+  <!--<div id="counter" #counter></div>-->
 </ion-view>
 
 
@@ -28,7 +28,7 @@
 #profile {
   position: absolute;
   top: 0;
-  height: 250px;
+  height: 300px;
   width: 100%;
   background: url('http://ionic-io-assets.s3.amazonaws.com/demos/bus.jpg') no-repeat transparent;
   background-size: cover;
@@ -48,6 +48,6 @@ ion-content {
   background: transparent !important;
 }
 .scroll-content {
-  padding-top: 250px;
+  padding-top: 300px;
 }
 </style>
