@@ -10,6 +10,17 @@ body {
   max-height: 100%;
   margin: 0;
   padding: 0;
+
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-user-drag: none;
+  -ms-content-zooming: none;
+
+  touch-action: manipulation;
+
+  font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+
+  text-size-adjust: none;
 }
 
 ion-app {
