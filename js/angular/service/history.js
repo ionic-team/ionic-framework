@@ -693,7 +693,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
           extend(nextViewOptions, opts);
           if (nextViewOptions.expire) {
               deregisterStateChangeListener = $rootScope.$on('$stateChangeSuccess', function() {
-                nextViewExpireTimer = $timeout(function(){
+                nextViewExpireTimer = $timeout(function() {
                   nextViewOptions = null;
                   }, nextViewOptions.expire);
               });
