@@ -141,8 +141,9 @@
 /**
  * @ngdoc method
  * @name $ionicConfigProvider#spinner.icon
- * @description Spinner icon.
- * @param {string} value
+ * @description Default spinner icon to use.
+ * @param {string} value Can be: `android`, `ios`, `ios-small`, `bubbles`, `circles`, `crescent`,
+ * `dots`, `lines`, `ripple`, or `spiral`.
  * @returns {string}
  */
 
