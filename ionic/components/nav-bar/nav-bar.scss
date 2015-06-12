@@ -11,9 +11,21 @@ $navbar-order: (
 
 
 ion-navbar {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  min-height: 4.4rem;
+
+  display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  order: $flex-order-toolbar-top;
+
+  transform: translate3d(0px, -9999px, 0px);
+  &.show-navbar {
+    transform: translate3d(0px, 0px, 0px);
+  }
 }
 
 .navbar-inner {
@@ -29,6 +41,11 @@ ion-navbar {
   &.show-back-button {
     display: inline-flex;
   }
+}
+
+.back-button-text {
+  display: flex;
+  align-items: center;
 }
 
 .navbar-title {
@@ -55,11 +72,6 @@ ion-title {
 
 .navbar-item {
   transform: translateZ(0px);
-
-  display: none;
-  &.show-navbar-item {
-    display: block;
-  }
 }
 
 .navbar-primary-item {

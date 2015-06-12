@@ -2,7 +2,7 @@ import {Transition} from './transition';
 import {Animation} from '../animations/animation';
 
 
-const DURATION = 1000;
+const DURATION = 600;
 const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
 
 const OPACITY = 'opacity';
@@ -65,11 +65,11 @@ class IOSTransition extends Transition {
     } else {
       // forward direction
       self.enteringView
-        .from(TRANSLATEX, OFF_RIGHT)
+        .from(TRANSLATEX, '99%')
         .from(OPACITY, 1);
 
       self.enteringTitle
-        .from(TRANSLATEX, OFF_RIGHT);
+        .from(TRANSLATEX, '97%');
 
       self.leavingView
         .to(TRANSLATEX, OFF_LEFT)

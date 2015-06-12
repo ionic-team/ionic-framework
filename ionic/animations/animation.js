@@ -1,6 +1,6 @@
 import {CSS} from '../util/dom';
 
-
+const RENDER_DELAY = 36;
 let AnimationRegistry = {};
 
 export class Animation {
@@ -190,12 +190,10 @@ export class Animation {
         });
       }
 
-      if (this._duration > 36) {
+      if (this._duration > RENDER_DELAY) {
         // begin each animation when everything is rendered in their starting point
         // give the browser some time to render everything in place before starting
-        setTimeout(() => {
-          kickoff();
-        }, 36);
+        setTimeout(kickoff, RENDER_DELAY);
 
       } else {
         // no need to render everything in there place before animating in
@@ -371,7 +369,7 @@ class Animate {
 
     self.toEffect = parseEffect(toEffect);
 
-    self.shouldAnimate = (duration > 36);
+    self.shouldAnimate = (duration > RENDER_DELAY);
 
     if (!self.shouldAnimate) {
       return inlineStyle(ele, self.toEffect);

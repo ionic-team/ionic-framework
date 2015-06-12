@@ -115,10 +115,6 @@ export class Pane {
     return this.domElement.offsetWidth;
   }
 
-  isTransitioning(val) {
-    this.domElement.classList[val ? 'add' : 'remove']('transitioning');
-  }
-
   showPane(val) {
     this.domElement.classList[val ? 'add' : 'remove']('show-pane');
   }

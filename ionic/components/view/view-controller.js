@@ -34,8 +34,8 @@ export class ViewController {
     this.sbTransition = null;
     this.sbActive = false;
 
-    this.id = ++itemIds;
-    this.childIds = -1;
+    this.id = ++ctrlIds;
+    this._ids = -1;
   }
 
   push(ComponentClass, params = {}, opts = {}) {
@@ -395,7 +395,7 @@ console.log('completeSwipeBack', completeSwipeBack)
   }
 
   add(item) {
-    item.id = this.id + '' + (++this.childIds);
+    item.id = this.id + '' + (++this._ids);
     this.items.push(item);
   }
 
@@ -442,4 +442,4 @@ const CACHED_STATE = 2;
 const STAGED_ENTERING_STATE = 3;
 const STAGED_LEAVING_STATE = 4;
 
-let itemIds = -1;
+let ctrlIds = -1;

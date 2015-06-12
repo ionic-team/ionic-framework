@@ -240,7 +240,6 @@ export class ViewItem {
     The view is about to enter and become the active view.
   */
   willEnter() {
-    this.pane && this.pane.isTransitioning(true);
     this.instance && this.instance.viewWillEnter && this.instance.viewWillEnter();
   }
 
@@ -249,7 +248,6 @@ export class ViewItem {
     will fire, whether it was the first load or loaded from the cache.
   */
   didEnter() {
-    this.pane && this.pane.isTransitioning(false);
     this.pane && this.pane.showPane(true);
     this.instance && this.instance.viewDidEnter && this.instance.viewDidEnter();
   }
@@ -258,7 +256,6 @@ export class ViewItem {
     The view has is about to leave and no longer be the active view.
   */
   willLeave() {
-    this.pane && this.pane.isTransitioning(true);
     this.instance && this.instance.viewWillLeave && this.instance.viewWillLeave();
   }
 
@@ -267,7 +264,6 @@ export class ViewItem {
     will fire, whether it is cached or unloaded.
   */
   didLeave() {
-    this.pane && this.pane.isTransitioning(false);
     this.instance && this.instance.viewDidLeave && this.instance.viewDidLeave();
   }
 

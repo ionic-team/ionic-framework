@@ -25,14 +25,11 @@ $button-small-icon-size:          2.1rem !default;
 // --------------------------------------------------
 
 .button {
-  position: relative;
-
   display: inline-flex;
   flex-shrink: 0;
   flex-flow: row nowrap;
   align-items: center;
   justify-content: center;
-  z-index: $z-index-button;
 
   margin: $button-margin;
   line-height: 1;
@@ -52,16 +49,6 @@ $button-small-icon-size:          2.1rem !default;
 
   cursor: pointer;
   user-select: none;
-
-  &:after {
-    // used to create a larger button "hit" area
-    position: absolute;
-    top: -6px;
-    right: -6px;
-    bottom: -6px;
-    left: -6px;
-    content: ' ';
-  }
 }
 
 

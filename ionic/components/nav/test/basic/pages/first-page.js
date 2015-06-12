@@ -22,6 +22,7 @@ import {SecondPage} from './second-page';
       '<p>First Page: {{ val }}</p>' +
       '<p><button class="button" (click)="push()">Push (Go to 2nd)</button></p>' +
       '<p><button class="button" [push-data]="pushData" [nav-push]="pushPage">Push w/ nav-push (Go to 2nd)</button></p>' +
+      '<icon class="ion-ios-arrow-back"></icon>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
     '</ion-content>',
