@@ -140,6 +140,14 @@
 
 /**
  * @ngdoc method
+ * @name $ionicConfigProvider#spinner.icon
+ * @description Spinner icon.
+ * @param {string} value
+ * @returns {string}
+ */
+
+/**
+ * @ngdoc method
  * @name $ionicConfigProvider#tabs.style
  * @description Tab style. Android defaults to `striped` and iOS defaults to `standard`.
  * @param {string} value Available values include `striped` and `standard`.
@@ -253,6 +261,9 @@ IonicModule
     scrolling: {
       jsScrolling: PLATFORM
     },
+    spinner: {
+      icon: PLATFORM
+    },
     tabs: {
       style: PLATFORM,
       position: PLATFORM
@@ -300,6 +311,10 @@ IonicModule
       jsScrolling: true
     },
 
+    spinner: {
+      icon: 'ios'
+    },
+
     tabs: {
       style: 'standard',
       position: 'bottom'
@@ -345,6 +360,10 @@ IonicModule
       toggle: 'small'
     },
 
+    spinner: {
+      icon: 'android'
+    },
+
     tabs: {
       style: 'striped',
       position: 'top'
@@ -358,6 +377,9 @@ IonicModule
     //scrolling: {
     //  jsScrolling: false
     //}
+    spinner: {
+      icon: 'android'
+    }
   });
 
 
