@@ -40,7 +40,6 @@ export class Navbar {
   constructor(item: ViewItem, elementRef: ElementRef) {
     item.navbarElement(elementRef.domElement);
   }
-
 }
 
 @Directive({

@@ -199,29 +199,78 @@ export class ViewItem {
   navbarElement() {
     if (arguments.length) {
       this._nbEle = arguments[0];
+      return;
     }
-    return this._nbEle;
+    if (this._nbEle) {
+      // this ViewItem already has an assigned navbarElement
+      return this._nbEle;
+    }
+
+    let instance = this.instance;
+    if (instance && instance.parentNavbar && instance.parentNavbar()) {
+      // this View doesn't actually have it's own navbar
+      // for example, Tab does not have a navbar, but Tabs does
+      // so if this is true, then get the active ViewItem inside this instance
+      let activeChildViewItem = instance.getActive();
+      if (activeChildViewItem) {
+        return activeChildViewItem.navbarElement();
+      }
+    }
   }
 
   titleElement() {
     if (arguments.length) {
       this._ttEle = arguments[0];
+      return;
     }
-    return this._ttEle;
+    if (this._ttEle) {
+      return this._ttEle;
+    }
+
+    let instance = this.instance;
+    if (instance && instance.parentNavbar && instance.parentNavbar()) {
+      let activeChildViewItem = instance.getActive();
+      if (activeChildViewItem) {
+        return activeChildViewItem.titleElement();
+      }
+    }
   }
 
   backButtonElement() {
     if (arguments.length) {
       this._bbEle = arguments[0];
+      return;
     }
-    return this._bbEle;
+    if (this._bbEle) {
+      return this._bbEle;
+    }
+
+    let instance = this.instance;
+    if (instance && instance.parentNavbar && instance.parentNavbar()) {
+      let activeChildViewItem = instance.getActive();
+      if (activeChildViewItem) {
+        return activeChildViewItem.backButtonElement();
+      }
+    }
   }
 
   navbarItemElements() {
     if (arguments.length) {
       this._nbItms.push(arguments[0]);
+      return;
     }
-    return this._nbItms;
+    if (this._nbItms) {
+      return this._nbItms;
+    }
+
+
+    let instance = this.instance;
+    if (instance && instance.parentNavbar && instance.parentNavbar()) {
+      let activeChildViewItem = instance.getActive();
+      if (activeChildViewItem) {
+        return activeChildViewItem.navbarItemElements();
+      }
+    }
   }
 
 

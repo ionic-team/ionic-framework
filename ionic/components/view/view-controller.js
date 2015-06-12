@@ -212,7 +212,7 @@ export class ViewController {
       let swipeBackPromise = new Promise(res => { this.sbResolve = res; });
 
       swipeBackPromise.then((completeSwipeBack) => {
-console.log('completeSwipeBack', completeSwipeBack)
+
         if (completeSwipeBack) {
           // swipe back has completed, update each item's state
           enteringItem.state = ACTIVE_STATE;
