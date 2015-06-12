@@ -297,28 +297,31 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
         },
 
         emit: function(step, enteringData, leavingData) {
-          var scope = enteringEle.scope();
-          if (scope) {
-            scope.$emit('$ionicView.' + step + 'Enter', enteringData);
-            if (step == 'after') {
-              scope.$emit('$ionicView.enter', enteringData);
+          var enteringScope = enteringEle.scope(),
+            leavingScope = leavingEle && leavingEle.scope();
+
+          if (step == 'after') {
+            if (enteringScope) {
+              enteringScope.$emit('$ionicView.enter', enteringData);
+            }
+
+            if (leavingScope) {
+              leavingScope.$emit('$ionicView.leave', leavingData);
+
+            } else if (enteringScope && leavingData && leavingData.viewId) {
+              enteringScope.$emit('$ionicNavView.leave', leavingData);
             }
           }
 
-          if (leavingEle) {
-            scope = leavingEle.scope();
-            if (scope) {
-              scope.$emit('$ionicView.' + step + 'Leave', leavingData);
-              if (step == 'after') {
-                scope.$emit('$ionicView.leave', leavingData);
-              }
-            }
+          if (enteringScope) {
+            enteringScope.$emit('$ionicView.' + step + 'Enter', enteringData);
+          }
 
-          } else if (scope && leavingData && leavingData.viewId) {
-            scope.$emit('$ionicNavView.' + step + 'Leave', leavingData);
-            if (step == 'after') {
-              scope.$emit('$ionicNavView.leave', leavingData);
-            }
+          if (leavingScope) {
+            leavingScope.$emit('$ionicView.' + step + 'Leave', leavingData);
+
+          } else if (enteringScope && leavingData && leavingData.viewId) {
+            enteringScope.$emit('$ionicNavView.' + step + 'Leave', leavingData);
           }
         },
 
