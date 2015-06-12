@@ -38,13 +38,9 @@ ion-toolbar {
   order: map-get($toolbar-order, 'secondary');
 }
 
-ion-title {
+ion-toolbar ion-title {
   display: block;
   overflow: hidden;
-
-  // used to notify JS when the title has been rendered
-  animation-duration: 1ms;
-  animation-name: nodeInserted;
 }
 
 .toolbar-inner-title {

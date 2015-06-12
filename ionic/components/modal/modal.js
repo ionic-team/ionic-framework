@@ -115,14 +115,16 @@ class ModalContainer {
 
   open(animation) {
     console.log('Opening w/ anim', animation);
-    var slideIn = Animation.create(this.domElement, animation);
-    return slideIn.play();
+    var enterAnimation = Animation.create(this.domElement, animation);
+    enterAnimation.before.addClass('show-modal');
+    return enterAnimation.play();
   }
 
   close(animation) {
     console.log('Closing w/ anim', animation);
-    var slideOut = Animation.create(this.domElement, animation);
-    return slideOut.play();
+    var leavingAnimation = Animation.create(this.domElement, animation);
+    leavingAnimation.after.removeClass('show-modal');
+    return leavingAnimation.play();
   }
 }
 

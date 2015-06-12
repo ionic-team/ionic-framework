@@ -19,6 +19,9 @@ import {ThirdPage} from './third-page';
       <p>
         <button class="button" (click)="push()">Push (Go to 3rd)</button>
       </p>
+      <p>
+        Random: {{ val }}
+      </p>
       <div class="green"><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f></div>
     </ion-content>
   `,
@@ -31,6 +34,7 @@ export class SecondPage {
   ) {
     this.nav = nav;
     this.params = params;
+    this.val = Math.round(Math.random() * 8999) + 1000;
 
     console.log('Second page params:', params);
   }

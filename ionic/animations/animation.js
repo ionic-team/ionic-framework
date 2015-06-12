@@ -1,28 +1,30 @@
-import * as util from 'ionic/util/util';
+import {CSS} from '../util/dom';
 
 
-let registry = {};
+let AnimationRegistry = {};
 
 export class Animation {
 
   constructor(el) {
-    this._el = [];
-    this._parent = null;
-    this._children = [];
-    this._players = [];
+    const self = this;
 
-    this._from = null;
-    this._to = null;
-    this._duration = null;
-    this._easing = null;
-    this._rate = null;
+    self._el = [];
+    self._parent = null;
+    self._children = [];
+    self._animations = [];
 
-    this._beforeAddCls = [];
-    this._beforeRmvCls = [];
-    this._afterAddCls = [];
-    this._afterRmvCls = [];
+    self._from = null;
+    self._to = null;
+    self._duration = null;
+    self._easing = null;
+    self._rate = null;
 
-    this.elements(el);
+    self._bfAdd = [];
+    self._bfRmv = [];
+    self._afAdd = [];
+    self._afRmv = [];
+
+    self.elements(el);
   }
 
   elements(el) {
@@ -79,12 +81,12 @@ export class Animation {
   playbackRate(value) {
     if (arguments.length) {
       this._rate = value;
-      var i;
+      let i;
       for (i = 0; i < this._children.length; i++) {
         this._children[i].playbackRate(value);
       }
-      for (i = 0; i < this._players.length; i++) {
-        this._players[i].playbackRate(value);
+      for (i = 0; i < this._animations.length; i++) {
+        this._animations[i].playbackRate(value);
       }
       return this;
     }
@@ -107,192 +109,253 @@ export class Animation {
     return this;
   }
 
-  get beforePlay() {
+  fromTo(property, from, to) {
+    return this.from(property, from).to(property, to);
+  }
+
+  fadeIn() {
+    return this.fromTo('opacity', 0, 1);
+  }
+
+  fadeOut() {
+    return this.fromTo('opacity', 1, 0);
+  }
+
+  get before() {
     return {
       addClass: (className) => {
-        this._beforeAddCls.push(className);
+        this._bfAdd.push(className);
         return this;
       },
       removeClass: (className) => {
-        this._beforeRmvCls.push(className);
+        this._bfRmv.push(className);
         return this;
       }
     }
   }
 
-  get afterFinish() {
+  get after() {
     return {
       addClass: (className) => {
-        this._afterAddCls.push(className);
+        this._afAdd.push(className);
         return this;
       },
       removeClass: (className) => {
-        this._afterRmvCls.push(className);
+        this._afRmv.push(className);
         return this;
       }
     }
   }
 
   play() {
-    let i, l;
+    const self = this;
+    const animations = self._animations;
+    const children = self._children;
     let promises = [];
-    let players = this._players;
+    let i, l;
 
-    for (i = 0, l = this._children.length; i < l; i++) {
-      promises.push( this._children[i].play() );
-    }
+    // the actual play() method which may or may not start async
+    function beginPlay() {
+      let i, l;
+      let promises = [];
 
-    if (!players.length) {
-      // first time played
-      for (i = 0; i < this._el.length; i++) {
-        players.push(
-          new Animate( this._el[i],
-                       this._from,
-                       this._to,
-                       this.duration(),
-                       this.easing(),
-                       this.playbackRate() )
-        );
+      for (i = 0, l = children.length; i < l; i++) {
+        promises.push( children[i].play() );
       }
 
-      this._onReady();
-
-    } else {
-      // has been paused, now play again
-      for (i = 0, l = players.length; i < l; i++) {
-        players[i].play();
+      for (i = 0, l = animations.length; i < l; i++) {
+        promises.push( animations[i].play() );
       }
+
+      return Promise.all(promises);
     }
 
-    for (i = 0, l = players.length; i < l; i++) {
-      if (players[i].promise) {
-        promises.push(players[i].promise);
+    if (!self._parent) {
+      // this is the top level animation and is in full control
+      // of when the async play() should actually kick off
+
+      // stage all animations and child animations at their starting point
+      self.stage();
+
+      let resolve;
+      let promise = new Promise(res => { resolve = res; });
+
+      function kickoff() {
+        beginPlay().then(() => {
+          for (let i = 0, l = children.length; i < l; i++) {
+            children[i]._onFinish();
+          }
+          self._onFinish();
+          resolve();
+        });
       }
+
+      if (this._duration > 36) {
+        // begin each animation when everything is rendered in their starting point
+        // give the browser some time to render everything in place before starting
+        setTimeout(() => {
+          kickoff();
+        }, 36);
+
+      } else {
+        // no need to render everything in there place before animating in
+        // just kick it off immediately to render them in their "to" locations
+        kickoff();
+      }
+
+      return promise;
     }
 
-    let promise = Promise.all(promises);
-
-    promise.then(() => {
-      this._onFinish();
-    });
-
-    return promise;
+    // this is a child animation, it is told exactly when to
+    // start by the top level animation
+    return beginPlay();
   }
 
-  pause() {
-    this._hasFinished = false;
+  stage() {
+    const self = this;
 
-    var i;
-    for (i = 0; i < this._children.length; i++) {
-      this._children[i].pause();
-    }
+    if (!self._isStaged) {
+      self._isStaged = true;
 
-    for (i = 0; i < this._players.length; i++) {
-      this._players[i].pause();
-    }
-  }
+      let i, l, j, ele;
 
-  progress(value) {
-    var i;
+      for (i = 0, l = self._children.length; i < l; i++) {
+        self._children[i].stage();
+      }
 
-    for (i = 0; i < this._children.length; i++) {
-      this._children[i].progress(value);
-    }
+      for (i = 0; i < self._el.length; i++) {
+        ele = self._el[i];
 
-    if (!this._players.length) {
-      this.play();
-      this.pause();
-    }
-
-    for (i = 0; i < this._players.length; i++) {
-      this._players[i].progress(value);
-    }
-  }
-
-  _onReady() {
-    if (!this._hasPlayed) {
-      this._hasPlayed = true;
-
-      var i, j, ele;
-      for (i = 0; i < this._el.length; i++) {
-        ele = this._el[i];
-
-        for (j = 0; j < this._beforeAddCls.length; j++) {
-          ele.classList.add(this._beforeAddCls[j]);
+        for (j = 0; j < self._bfAdd.length; j++) {
+          ele.classList.add(self._bfAdd[j]);
         }
 
-        for (j = 0; j < this._beforeRmvCls.length; j++) {
-          ele.classList.remove(this._beforeRmvCls[j]);
+        for (j = 0; j < self._bfRmv.length; j++) {
+          ele.classList.remove(self._bfRmv[j]);
         }
       }
 
-      this.onReady && this.onReady();
+      if (self._to) {
+        // only animate the elements if there are defined "to" effects
+        for (i = 0; i < self._el.length; i++) {
+
+          var animation = new Animate( self._el[i],
+                                       self._from,
+                                       self._to,
+                                       self.duration(),
+                                       self.easing(),
+                                       self.playbackRate() );
+
+          if (animation.shouldAnimate) {
+            self._animations.push(animation);
+          }
+
+        }
+      }
+
+      self.onReady && self.onReady();
     }
   }
 
   _onFinish() {
-    if (!this._hasFinished) {
-      this._hasFinished = true;
+    const self = this;
+    let i, j, ele;
 
-      var i, j, ele;
+    if (!self._isFinished) {
+      self._isFinished = true;
 
-      if (this.playbackRate() < 0) {
+      if (self.playbackRate() < 0) {
         // reverse direction
-        for (i = 0; i < this._el.length; i++) {
-          ele = this._el[i];
+        for (i = 0; i < self._el.length; i++) {
+          ele = self._el[i];
 
-          for (j = 0; j < this._beforeAddCls.length; j++) {
-            ele.classList.remove(this._beforeAddCls[j]);
+          for (j = 0; j < self._bfAdd.length; j++) {
+            ele.classList.remove(self._bfAdd[j]);
           }
 
-          for (j = 0; j < this._beforeRmvCls.length; j++) {
-            ele.classList.add(this._beforeRmvCls[j]);
+          for (j = 0; j < self._bfRmv.length; j++) {
+            ele.classList.add(self._bfRmv[j]);
           }
         }
 
       } else {
         // normal direction
-        for (i = 0; i < this._el.length; i++) {
-          ele = this._el[i];
+        for (i = 0; i < self._el.length; i++) {
+          ele = self._el[i];
 
-          for (j = 0; j < this._afterAddCls.length; j++) {
-            ele.classList.add(this._afterAddCls[j]);
+          for (j = 0; j < self._afAdd.length; j++) {
+            ele.classList.add(self._afAdd[j]);
           }
 
-          for (j = 0; j < this._afterRmvCls.length; j++) {
-            ele.classList.remove(this._afterRmvCls[j]);
+          for (j = 0; j < self._afRmv.length; j++) {
+            ele.classList.remove(self._afRmv[j]);
           }
         }
       }
 
-      this.onFinish && this.onFinish();
+      self.onFinish && self.onFinish();
+    }
+  }
+
+  pause() {
+    this._hasFinished = false;
+
+    let i;
+    for (i = 0; i < this._children.length; i++) {
+      this._children[i].pause();
+    }
+
+    for (i = 0; i < this._animations.length; i++) {
+      this._animations[i].pause();
+    }
+  }
+
+  progress(value) {
+    let i;
+
+    for (i = 0; i < this._children.length; i++) {
+      this._children[i].progress(value);
+    }
+
+    if (!this._initProgress) {
+      this._initProgress = true;
+      this.play();
+      this.pause();
+    }
+
+    for (i = 0; i < this._animations.length; i++) {
+      this._animations[i].progress(value);
     }
   }
 
   dispose() {
-    var i;
+    let i;
+
     for (i = 0; i < this._children.length; i++) {
       this._children[i].dispose();
     }
-    for (i = 0; i < this._players.length; i++) {
-      this._players[i].dispose();
+    for (i = 0; i < this._animations.length; i++) {
+      this._animations[i].dispose();
     }
-    this._el = this._parent = this._children = this._players = null;
+    this._el = this._parent = this._children = this._animations = null;
   }
 
   /*
    STATIC CLASSES
    */
   static create(element, name) {
-    let AnimationClass = registry[name];
+    let AnimationClass = AnimationRegistry[name];
+
     if (!AnimationClass) {
+      // couldn't find an animation by the given name
+      // fallback to just the base Animation class
       AnimationClass = Animation;
     }
     return new AnimationClass(element);
   }
 
   static register(name, AnimationClass) {
-    registry[name] = AnimationClass;
+    AnimationRegistry[name] = AnimationClass;
   }
 
 }
@@ -300,52 +363,67 @@ export class Animation {
 class Animate {
 
   constructor(ele, fromEffect, toEffect, duration, easingConfig, playbackRate) {
-
-    if (!toEffect) {
-      // not an actual animation that tweens between from and to properties
-      // probably just adding/removing CSS classes, so resolve it right away
-      return;
-    }
-
     // https://w3c.github.io/web-animations/
     // not using the direct API methods because they're still in flux
     // however, element.animate() seems locked in and uses the latest
     // and correct API methods under the hood, so really doesn't matter
+    const self = this;
 
-    fromEffect = parseEffect(fromEffect);
-    toEffect = parseEffect(toEffect);
+    self.toEffect = parseEffect(toEffect);
 
-    this._duration = duration;
+    self.shouldAnimate = (duration > 36);
 
-    var easingName = easingConfig && easingConfig.name || 'linear';
-
-    var effects = [ convertProperties(fromEffect) ];
-
-    if (easingName in EASING_FN) {
-      insertEffects(effects, fromEffect, toEffect, easingConfig);
-
-    } else if (easingName in CUBIC_BEZIERS) {
-      easingName = 'cubic-bezier(' + CUBIC_BEZIERS[easingName] + ')';
+    if (!self.shouldAnimate) {
+      return inlineStyle(ele, self.toEffect);
     }
 
-    effects.push( convertProperties(toEffect) );
+    self.ele = ele;
+    self.resolve;
+    self.promise = new Promise(res => { self.resolve = res; });
 
-    this.player = ele.animate(effects, {
-      duration: duration || 0,
-      easing: easingName,
-      playbackRate: playbackRate || 1
-    });
+    // stage where the element will start from
+    fromEffect = parseEffect(fromEffect);
+    inlineStyle(ele, fromEffect);
 
-    this.promise = new Promise(resolve => {
-      this.player.onfinish = () => {
-        resolve();
-      };
-    });
+    self.duration = duration;
+    self.rate = playbackRate;
 
+    self.easing = easingConfig && easingConfig.name || 'linear';
+
+    self.effects = [ convertProperties(fromEffect) ];
+
+    if (self.easing in EASING_FN) {
+      insertEffects(self.effects, fromEffect, self.toEffect, easingConfig);
+
+    } else if (self.easing in CUBIC_BEZIERS) {
+      self.easing = 'cubic-bezier(' + CUBIC_BEZIERS[self.easing] + ')';
+    }
+
+    self.effects.push( convertProperties(self.toEffect) );
   }
 
   play() {
-    this.player && this.player.play();
+    const self = this;
+
+    if (self.player) {
+      self.player.play();
+
+    } else {
+      self.player = self.ele.animate(self.effects, {
+        duration: self.duration || 0,
+        easing: self.easing,
+        playbackRate: self.rate || 1
+      });
+
+      self.player.onfinish = () => {
+        // lock in where the element will stop at
+        inlineStyle(self.ele, self.rate < 0 ? self.fromEffect : self.toEffect);
+
+        self.resolve();
+      };
+    }
+
+    return self.promise;
   }
 
   pause() {
@@ -355,53 +433,55 @@ class Animate {
   progress(value) {
     let player = this.player;
 
-    if (!player) return;
+    if (player) {
+      // passed a number between 0 and 1
+      value = Math.max(0, Math.min(1, value));
 
-    // passed a number between 0 and 1
-    value = Math.max(0, Math.min(1, value));
+      if (value >= 1) {
+        player.currentTime = (this.duration * 0.999);
+        return player.play();
+      }
 
-    if (value === 1) {
-      player.currentTime = (this._duration * 0.9999);
-      player.play();
-      return;
+      if (player.playState !== 'paused') {
+        player.pause();
+      }
+
+      player.currentTime = (this.duration * value);
     }
-
-    if (player.playState !== 'paused') {
-      player.pause();
-    }
-
-    player.currentTime = (this._duration * value);
   }
 
   playbackRate(value) {
+    this.rate = value;
     if (this.player) {
       this.player.playbackRate = value;
     }
   }
 
   dispose() {
-    this.player = null;
+    this.ele = this.player = this.effects = this.toEffect = null;
   }
 
 }
 
 function insertEffects(effects, fromEffect, toEffect, easingConfig) {
   easingConfig.opts = easingConfig.opts || {};
-  var increment = easingConfig.opts.increment || 0.04;
 
-  var easingFn = EASING_FN[easingConfig.name];
+  const increment = easingConfig.opts.increment || 0.04;
+  const easingFn = EASING_FN[easingConfig.name];
 
-  for(var pos = increment; pos <= (1 - increment); pos += increment) {
+  let pos, tweenEffect, addEffect, property, toProperty, fromValue, diffValue;
 
-    var tweenEffect = {};
-    var addEffect = false;
+  for(pos = increment; pos <= (1 - increment); pos += increment) {
+    tweenEffect = {};
+    addEffect = false;
 
-    for (var property in toEffect) {
-      var toProperty = toEffect[property];
+    for (property in toEffect) {
+      toProperty = toEffect[property];
+
       if (toProperty.tween) {
 
-        var fromValue = fromEffect[property].num
-        var diffValue = toProperty.num - fromValue;
+        fromValue = fromEffect[property].num
+        diffValue = toProperty.num - fromValue;
 
         tweenEffect[property] = {
           value: roundValue(  (easingFn(pos, easingConfig.opts) * diffValue) + fromValue ) + toProperty.unit
@@ -419,8 +499,8 @@ function insertEffects(effects, fromEffect, toEffect, easingConfig) {
 }
 
 function parseEffect(inputEffect) {
-  var val, r, num, property;
-  var outputEffect = {};
+  let val, r, num, property;
+  let outputEffect = {};
 
   for (property in inputEffect) {
     val = inputEffect[property];
@@ -439,11 +519,12 @@ function parseEffect(inputEffect) {
 }
 
 function convertProperties(inputEffect) {
-  var outputEffect = {};
-  var transforms = [];
+  let outputEffect = {};
+  let transforms = [];
+  let value, property;
 
-  for (var property in inputEffect) {
-    var value = inputEffect[property].value;
+  for (property in inputEffect) {
+    value = inputEffect[property].value;
 
     if (TRANSFORMS.indexOf(property) > -1) {
       transforms.push(property + '(' + value + ')');
@@ -454,10 +535,34 @@ function convertProperties(inputEffect) {
   }
 
   if (transforms.length) {
+    transforms.push('translateZ(0px)');
     outputEffect.transform = transforms.join(' ');
   }
 
   return outputEffect;
+}
+
+function inlineStyle(ele, effect) {
+  if (ele && effect) {
+    let transforms = [];
+    let value, property;
+
+    for (property in effect) {
+      value = effect[property].value;
+
+      if (TRANSFORMS.indexOf(property) > -1) {
+        transforms.push(property + '(' + value + ')');
+
+      } else {
+        ele.style[property] = value;
+      }
+    }
+
+    if (transforms.length) {
+      transforms.push('translateZ(0px)');
+      ele.style[CSS.transform] = transforms.join(' ');
+    }
+  }
 }
 
 function roundValue(val) {
@@ -519,7 +624,7 @@ const CUBIC_BEZIERS = {
 
   // Back
   'ease-in-back': '0.6,-0.28,0.735,0.045',
-  'ease-out-back': '0.175, 0.885,0.32,1.275',
+  'ease-out-back': '0.175,0.885,0.32,1.275',
   'ease-in-out-back': '0.68,-0.55,0.265,1.55',
 };
 
@@ -531,18 +636,18 @@ const EASING_FN = {
   },
 
   'swing-from-to': function(pos, opts) {
-    var s = opts.s || 1.70158;
+    let s = opts.s || 1.70158;
     return ((pos /= 0.5) < 1) ? 0.5 * (pos * pos * (((s *= (1.525)) + 1) * pos - s)) :
     0.5 * ((pos -= 2) * pos * (((s *= (1.525)) + 1) * pos + s) + 2);
   },
 
   'swing-from': function(pos, opts) {
-    var s = opts.s || 1.70158;
+    let s = opts.s || 1.70158;
     return pos * pos * ((s + 1) * pos - s);
   },
 
   'swing-to': function(pos, opts) {
-    var s = opts.s || 1.70158;
+    let s = opts.s || 1.70158;
     return (pos -= 1) * pos * ((s + 1) * pos + s) + 1;
   },
 
@@ -597,8 +702,8 @@ const EASING_FN = {
    * https://raw.github.com/madrobby/scripty2/master/src/effects/transitions/transitions.js
    */
   'spring': function(pos, opts) {
-    var damping = opts.damping || 4.5;
-    var elasticity = opts.elasticity || 6;
+    let damping = opts.damping || 4.5;
+    let elasticity = opts.elasticity || 6;
     return 1 - (Math.cos(pos * damping * Math.PI) * Math.exp(-pos * elasticity));
   },
 

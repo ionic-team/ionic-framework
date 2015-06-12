@@ -28,7 +28,7 @@ class IonicApp {
       .from('translateX', '0px')
       .to('translateX', '250px')
 
-    this.animation.addChild(ball);
+    this.animation.add(ball);
 
 
     var row1 = new Animation( document.querySelectorAll('.square') );
@@ -36,7 +36,7 @@ class IonicApp {
       .from('opacity', 0.8)
       .to('opacity', 0.2)
 
-    this.animation.addChild(row1);
+    this.animation.add(row1);
 
     var row2 = new Animation( document.querySelectorAll('.square2') );
     row2
@@ -44,10 +44,10 @@ class IonicApp {
       .from('scale', '1')
       .to('rotate', '90deg')
       .to('scale', '0.5')
-      .beforePlay.addClass('added-before-play')
-      .afterFinish.addClass('added-after-finish')
+      .before.addClass('added-before-play')
+      .after.addClass('added-after-finish')
 
-    this.animation.children(row1, row2);
+    this.animation.add(row1, row2);
 
     this.animation.onReady = () => {
       console.log('onReady');

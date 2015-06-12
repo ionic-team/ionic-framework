@@ -186,11 +186,14 @@
       if ((finished || this._idle) && !this._finishedFlag) {
         var event = new AnimationEvent(this, this._currentTime, baseTime);
         var handlers = this._finishHandlers.concat(this.onfinish ? [this.onfinish] : []);
-        setTimeout(function() {
-          handlers.forEach(function(handler) {
-            handler.call(event.target, event);
-          });
-        }, 0);
+        // setTimeout(function() {
+        //   handlers.forEach(function(handler) {
+        //     handler.call(event.target, event);
+        //   });
+        // }, 0);
+        handlers.forEach(function(handler) {
+          handler.call(event.target, event);
+        });
       }
       this._finishedFlag = finished;
     },

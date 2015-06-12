@@ -97,8 +97,8 @@ $content-padding:    10px !default;
 // --------------------------------------------------
 
 $swipe-handle-width:               20px !default;
-$swipe-handle-top:                 80px !default;
-$swipe-handle-bottom:              80px !default;
+$swipe-handle-top:                 70px !default;
+$swipe-handle-bottom:              70px !default;
 
 .swipe-handle {
   position: absolute;
@@ -108,22 +108,11 @@ $swipe-handle-bottom:              80px !default;
   width: $swipe-handle-width;
   z-index: $z-index-swipe-handle;
 
-  background: red;
-  opacity: 0.2;
+  //background: red;
+  //opacity: 0.2;
 
   transform: translate3d(-999px, 0px, 0px);
   &.show-handle {
     transform: translate3d(0px, 0px, 0px);
   }
-}
-
-
-// Node Inserted Animation
-// --------------------------------------------------
-// Used by the toolbar to know when the title has been rendered
-// http://davidwalsh.name/detect-node-insertion
-
-@keyframes nodeInserted {
-  from { transform: scale(0.999); }
-  to { transform: scale(1); }
 }

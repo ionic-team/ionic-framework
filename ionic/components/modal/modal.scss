@@ -36,7 +36,6 @@ $tabs-height: 40;
 }
 
 ion-modal {
-  display: block;
   position: absolute;
   top: 0;
   z-index: $z-index-modal;
@@ -45,23 +44,14 @@ ion-modal {
   width: 100%;
   background-color: $modal-bg-color;
 
-  //transform: translate3d(0, 100%, 0);
-  //transition: all cubic-bezier(.1, .7, .1, 1) 400ms;
+  transform: translateZ(0px);
+
+  display: none;
+  &.show-modal {
+    display: block;
+  }
 }
 
-// Slide up from the bottom, used for modals
-// -------------------------------
-
-ion-modal.active {
-  //transform: translate3d(0, 0, 0);
-}
-
-/*
-ion-modal.slide-in-up.ng-leave,
-ion-modal.slide-in-up > .ng-leave {
-  transition: all ease-in-out 250ms;
-}
-*/
 
 
 @media (min-width: $modal-inset-mode-break-point) {

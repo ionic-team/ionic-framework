@@ -20,71 +20,76 @@ export class SwipeHandle {
     @Parent() pane: Pane,
     elementRef: ElementRef
   ) {
-    if (!viewCtrl) return;
+    if (!viewCtrl || !pane) return;
 
-    this.viewCtrl = viewCtrl;
+    const self = this;
 
-    let gesture = new Gesture(elementRef.domElement);
+    self.pane = pane;
+    self.viewCtrl = viewCtrl;
+
+    let gesture = self.gesture = new Gesture(elementRef.domElement);
     gesture.listen();
 
-    gesture.on('panend', onDragEnd);
-    gesture.on('panleft', onDragHorizontal);
-    gesture.on('panright', onDragHorizontal);
+    function dragHorizontal(ev) {
+      self.onDragHorizontal(ev);
+    }
 
-    let startX = null;
-    let swipeableAreaWidth = null;
+    gesture.on('panend', ev => { self.onDragEnd(ev); });
+    gesture.on('panleft', dragHorizontal);
+    gesture.on('panright', dragHorizontal);
 
-    function onDragEnd(ev) {
+    self.startX = null;
+    self.width = null;
+  }
+
+  onDragEnd(ev) {
+    ev.preventDefault();
+    ev.stopPropagation();
+
+    // TODO: POLISH THESE NUMBERS WITH GOOD MATHIFICATION
+    let progress = (ev.gesture.center.x - this.startX) / this.width;
+    let completeSwipeBack = (progress > 0.5);
+    let playbackRate = 4;
+
+    if (completeSwipeBack) {
+      // complete swipe back
+      if (progress > 0.9) {
+        playbackRate = 1;
+      } else if (progress > 0.8) {
+        playbackRate = 2;
+      } else if (progress > 0.7) {
+        playbackRate = 3;
+      }
+
+    } else {
+      // cancel swipe back
+      if (progress < 0.1) {
+        playbackRate = 1;
+      } else if (progress < 0.2) {
+        playbackRate = 2;
+      } else if (progress < 0.3) {
+        playbackRate = 3;
+      }
+    }
+
+    this.viewCtrl.swipeBackEnd(completeSwipeBack, progress, playbackRate);
+
+    this.startX = null;
+  }
+
+  onDragHorizontal(ev) {
+    if (this.startX === null) {
+      // starting drag
       ev.preventDefault();
       ev.stopPropagation();
 
-      // TODO: POLISH THESE NUMBERS WITH GOOD MATHIFICATION
+      this.startX = ev.gesture.center.x;
+      this.width = this.pane.width() - this.startX;
 
-      let progress = (ev.gesture.center.x - startX) / swipeableAreaWidth;
-      let completeSwipeBack = (progress > 0.5);
-      let playbackRate = 4;
-
-      if (completeSwipeBack) {
-        // complete swipe back
-        if (progress > 0.9) {
-          playbackRate = 1;
-        } else if (progress > 0.8) {
-          playbackRate = 2;
-        } else if (progress > 0.7) {
-          playbackRate = 3;
-        }
-
-      } else {
-        // cancel swipe back
-        if (progress < 0.1) {
-          playbackRate = 1;
-        } else if (progress < 0.2) {
-          playbackRate = 2;
-        } else if (progress < 0.3) {
-          playbackRate = 3;
-        }
-      }
-
-      viewCtrl.swipeBackEnd(completeSwipeBack, progress, playbackRate);
-
-      startX = null;
+      this.viewCtrl.swipeBackStart();
     }
 
-    function onDragHorizontal(ev) {
-      if (startX === null) {
-        // starting drag
-        ev.preventDefault();
-        ev.stopPropagation();
-
-        startX = ev.gesture.center.x;
-        swipeableAreaWidth = pane.width() - startX;
-
-        viewCtrl.swipeBackStart();
-      }
-
-      viewCtrl.swipeBackProgress( (ev.gesture.center.x - startX) / swipeableAreaWidth );
-    }
-
+    this.viewCtrl.swipeBackProgress( (ev.gesture.center.x - this.startX) / this.width );
   }
 
   showHandle() {

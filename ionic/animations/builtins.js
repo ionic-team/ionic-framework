@@ -8,12 +8,11 @@ class SlideIn extends Animation {
     this
       .easing('cubic-bezier(0.1,0.7,0.1,1)')
       .duration(400)
-      .from('translateY', '100%')
-      .to('translateY', '0%');
+      .fromTo('translateY', '100%', '0%');
   }
 }
-
 Animation.register('slide-in', SlideIn);
+
 
 class SlideOut extends Animation {
   constructor(element) {
@@ -21,9 +20,31 @@ class SlideOut extends Animation {
     this
       .easing('ease-out')
       .duration(250)
-      .from('translateY', '0%')
-      .to('translateY', '100%');
+      .fromTo('translateY', '0%', '100%');
   }
 }
-
 Animation.register('slide-out', SlideOut);
+
+
+class FadeIn extends Animation {
+  constructor(element) {
+    super(element);
+    this
+      .easing('ease-in')
+      .duration(400)
+      .fadeIn();
+  }
+}
+Animation.register('fade-in', FadeIn);
+
+
+class FadeOut extends Animation {
+  constructor(element) {
+    super(element);
+    this
+      .easing('ease-out')
+      .duration(250)
+      .fadeOut();
+  }
+}
+Animation.register('fade-out', FadeOut);

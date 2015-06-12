@@ -15,15 +15,13 @@ export class ViewItem {
     this.params = new NavParams(params);
     this.instance = null;
     this.state = 0;
-
-    this._titleEle = undefined;
-    this._backBtn = undefined;
     this.disposals = [];
 
     // if it's possible to go back from this nav item
     this.enableBack = false;
 
     this.protos = {};
+    this._nbItms = [];
   }
 
   addProtoViewRef(name, protoViewRef) {
@@ -92,10 +90,10 @@ export class ViewItem {
         // add a navbar view if the pane has a navbar container, and the
         // item's instance has a navbar protoview to go to inside of it
         if (navbarViewContainer && navbarProtoView) {
-          this.navbarView = navbarViewContainer.create(navbarProtoView, -1, context, injector);
+          let navbarView = navbarViewContainer.create(navbarProtoView, -1, context, injector);
 
           this.disposals.push(() => {
-            navbarViewContainer.remove( navbarViewContainer.indexOf(this.navbarView) );
+            navbarViewContainer.remove( navbarViewContainer.indexOf(navbarView) );
           });
         }
 
@@ -199,44 +197,31 @@ export class ViewItem {
   }
 
   navbarElement() {
-    let navbarView = this.navbarView;
-    if (navbarView && navbarView._view) {
-      return navbarView._view.render._view.rootNodes[0];
+    if (arguments.length) {
+      this._nbEle = arguments[0];
     }
-  }
-
-  contentElement() {
-    return this.viewEle.querySelector('ion-content');
+    return this._nbEle;
   }
 
   titleElement() {
-    if (this._titleEle === undefined) {
-      let navbarElement = this.navbarElement();
-      if (navbarElement) {
-        let titleEle = navbarElement.querySelector('ion-title');
-        if (titleEle) {
-          this._titleEle = titleEle;
-          return this._titleEle;
-        }
-      }
-      this._titleEle = null;
+    if (arguments.length) {
+      this._ttEle = arguments[0];
     }
-    return this._titleEle;
+    return this._ttEle;
   }
 
   backButtonElement() {
-    if (this._backBtn === undefined) {
-      let navbarElement = this.navbarElement();
-      if (navbarElement) {
-        let backBtn = navbarElement.querySelector('back-button');
-        if (backBtn) {
-          this._backBtn = backBtn;
-          return this._backBtn;
-        }
-      }
-      this._backBtn = null;
+    if (arguments.length) {
+      this._bbEle = arguments[0];
     }
-    return this._backBtn;
+    return this._bbEle;
+  }
+
+  navbarItemElements() {
+    if (arguments.length) {
+      this._nbItms.push(arguments[0]);
+    }
+    return this._nbItms;
   }
 
 

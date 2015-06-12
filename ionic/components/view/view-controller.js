@@ -132,42 +132,35 @@ export class ViewController {
       enteringItem.willEnter();
       leavingItem.willLeave();
 
-      // set that the leaving item is stage to be leaving
-      leavingItem.state = STAGED_LEAVING_STATE;
-
-      // set that the new item pushed on the stack is staged to be entering
-      // setting staged state is important for the transition logic to find the correct item
+      // set that the new item pushed on the stack is staged to be entering/leaving
+      // staged state is important for the transition to find the correct item
       enteringItem.state = STAGED_ENTERING_STATE;
+      leavingItem.state = STAGED_LEAVING_STATE;
 
       // init the transition animation
       let transAnimation = Transition.create(this, opts);
+      if (!opts.animate) {
+        // force it to not animate the elements, just apply the "to" styles
+        transAnimation.duration(0);
+      }
 
-      // wait for the items to be fully staged
-      transAnimation.stage(() => {
+      // start the transition
+      transAnimation.play().then(() => {
 
-        // update the state that the items are actively entering/leaving
-        enteringItem.state = ACTIVELY_ENTERING_STATE;
-        leavingItem.state = ACTIVELY_LEAVING_STATE;
+        // transition has completed, update each item's state
+        enteringItem.state = ACTIVE_STATE;
+        leavingItem.state = CACHED_STATE;
 
-        // start the transition
-        transAnimation.play().then(() => {
+        // dispose any items that shouldn't stay around
+        transAnimation.dispose();
 
-          // transition has completed, update each item's state
-          enteringItem.state = ACTIVE_STATE;
-          leavingItem.state = CACHED_STATE;
+        enteringItem.didEnter();
+        leavingItem.didLeave();
 
-          // dispose any items that shouldn't stay around
-          transAnimation.dispose();
+        // all done!
+        this.transitionComplete();
 
-          enteringItem.didEnter();
-          leavingItem.didLeave();
-
-          // all done!
-          this.transitionComplete();
-
-          callback();
-        });
-
+        callback();
       });
 
     });
@@ -206,58 +199,55 @@ export class ViewController {
     // wait for the new item to complete setup
     enteringItem.stage(() => {
 
-      // set that the leaving item is stage to be leaving
-      leavingItem.state = STAGED_LEAVING_STATE;
-
-      // set that the new item pushed on the stack is staged to be entering
-      // setting staged state is important for the transition logic to find the correct item
+      // set that the new item pushed on the stack is staged to be entering/leaving
+      // staged state is important for the transition to find the correct item
       enteringItem.state = STAGED_ENTERING_STATE;
+      leavingItem.state = STAGED_LEAVING_STATE;
 
       // init the transition animation
       this.sbTransition = Transition.create(this, opts);
       this.sbTransition.easing('linear');
+      this.sbTransition.stage();
 
-      // wait for the items to be fully staged
-      this.sbTransition.stage(() => {
+      let swipeBackPromise = new Promise(res => { this.sbResolve = res; });
 
-        // update the state that the items are actively entering/leaving
-        enteringItem.state = ACTIVELY_ENTERING_STATE;
-        leavingItem.state = ACTIVELY_LEAVING_STATE;
+      swipeBackPromise.then((completeSwipeBack) => {
+console.log('completeSwipeBack', completeSwipeBack)
+        if (completeSwipeBack) {
+          // swipe back has completed, update each item's state
+          enteringItem.state = ACTIVE_STATE;
+          leavingItem.state = CACHED_STATE;
 
-        let swipeBackPromise = new Promise(res => { this.sbResolve = res; });
+          enteringItem.didEnter();
+          leavingItem.didLeave();
 
-        swipeBackPromise.then((completeSwipeBack) => {
+        } else {
+          // cancelled the swipe back, return items to original state
+          leavingItem.state = ACTIVE_STATE;
+          enteringItem.state = CACHED_STATE;
 
-          if (completeSwipeBack) {
-            // swipe back has completed, update each item's state
-            enteringItem.state = ACTIVE_STATE;
-            leavingItem.state = CACHED_STATE;
+          leavingItem.willEnter();
+          leavingItem.didEnter();
+          enteringItem.didLeave();
 
-            enteringItem.didEnter();
-            leavingItem.didLeave();
+          leavingItem.shouldDestroy = false;
+          enteringItem.shouldDestroy = false;
+        }
 
-          } else {
-            // cancelled the swipe back, return items to original state
-            leavingItem.state = ACTIVE_STATE;
-            enteringItem.state = CACHED_STATE;
-
-            leavingItem.willEnter();
-            leavingItem.didEnter();
-            enteringItem.didLeave();
-
-            leavingItem.shouldDestroy = false;
-            enteringItem.shouldDestroy = false;
-          }
-
-          // all done!
-          this.transitionComplete();
-
-        });
+        // all done!
+        this.transitionComplete();
 
       });
 
     });
 
+  }
+
+  swipeBackProgress(progress) {
+    if (this.sbTransition) {
+      ClickBlock(true, 4000);
+      this.sbTransition.progress( Math.min(1, Math.max(0, progress)) );
+    }
   }
 
   swipeBackEnd(completeSwipeBack, progress, playbackRate) {
@@ -282,13 +272,6 @@ export class ViewController {
         this.sbTransition && this.sbTransition.dispose();
         this.sbResolve = this.sbTransition = null;
       });
-    }
-  }
-
-  swipeBackProgress(progress) {
-    if (this.sbTransition) {
-      ClickBlock(true, 4000);
-      this.sbTransition.progress( Math.min(1, Math.max(0, progress)) );
     }
   }
 
@@ -332,9 +315,7 @@ export class ViewController {
     let state;
     for (let i = 0, ii = this.items.length; i < ii; i++) {
       state = this.items[i].state;
-      if (state === ACTIVELY_ENTERING_STATE ||
-          state === ACTIVELY_LEAVING_STATE ||
-          state === STAGED_ENTERING_STATE ||
+      if (state === STAGED_ENTERING_STATE ||
           state === STAGED_LEAVING_STATE) {
         return true;
       }
@@ -460,7 +441,5 @@ const ACTIVE_STATE = 1;
 const CACHED_STATE = 2;
 const STAGED_ENTERING_STATE = 3;
 const STAGED_LEAVING_STATE = 4;
-const ACTIVELY_ENTERING_STATE = 5;
-const ACTIVELY_LEAVING_STATE = 6;
 
 let itemIds = -1;

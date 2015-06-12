@@ -1,11 +1,10 @@
-import {Component, Directive, onInit} from 'angular2/src/core/annotations_impl/annotations';
+import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 import {ProtoViewRef} from 'angular2/src/core/compiler/view_ref';
 import {NgZone} from 'angular2/src/core/zone/ng_zone';
 
 import {ViewItem} from '../view/view-item';
-import {BackButton} from './back-button';
 import * as dom from '../../util/dom';
 
 
@@ -15,9 +14,15 @@ import * as dom from '../../util/dom';
 @View({
   template: `
     <div class="navbar-inner">
-      <back-button class="button navbar-item"></back-button>
+      <button class="back-button button">
+        <icon class="back-button-icon ion-ios-arrow-back"></icon>
+        <span class="back-button-text">
+          <span class="back-default">Back</span>
+          <span class="back-title"></span>
+        </span>
+      </button>
       <div class="navbar-title">
-        <div class="navbar-inner-title navbar-title-hide">
+        <div class="navbar-inner-title">
           <content select="ion-title"></content>
         </div>
       </div>
@@ -29,70 +34,50 @@ import * as dom from '../../util/dom';
       </div>
     </div>
   `,
-  directives: [BackButton],
-  lifecycle: [onInit]
+  directives: [BackButton, Title, NavbarItem]
 })
 export class Navbar {
-  constructor(item: ViewItem, elementRef: ElementRef, ngZone: NgZone) {
+  constructor(item: ViewItem, elementRef: ElementRef) {
+    item.navbarElement(elementRef.domElement);
+  }
+
+}
+
+@Directive({
+  selector: '.back-button',
+  hostListeners: {
+    '^click': 'goBack($event)'
+  }
+})
+class BackButton {
+  constructor(item: ViewItem, elementRef: ElementRef) {
     this.item = item;
-    this.domElement = elementRef.domElement;
-    this.zone = ngZone;
+    item.backButtonElement(elementRef.domElement);
   }
 
-  onInit() {
-    this.zone.runOutsideAngular(() => {
-      setTimeout(() => {
-        this.alignTitle();
-      }, 32);
-    });
+  goBack(ev) {
+    ev.stopPropagation();
+    ev.preventDefault();
+    this.item.viewCtrl.pop();
   }
+}
 
-  alignTitle() {
-    const navbarEle = this.domElement;
-    const innerTitleEle = this._innerTitleEle || (this._innerTitleEle = navbarEle.querySelector('.navbar-inner-title'));
-    const titleEle = this._titleEle || (this._titleEle = innerTitleEle.querySelector('ion-title'));
-    const style = this._style || (this._style = window.getComputedStyle(titleEle));
-
-    const titleOffsetWidth = titleEle.offsetWidth;
-    const titleOffsetLeft = titleEle.offsetLeft;
-    const titleScrollWidth = titleEle.scrollWidth;
-    const navbarOffsetWidth = navbarEle.offsetWidth;
-
-    // TODO!!! When an element is being reused by angular2, it'll sometimes keep the
-    // styles from the original element's use, causing these calculations to be wrong
-    if (window.getComputedStyle(innerTitleEle).margin !== '0px') {
-      this._showTitle();
-      return;
-    }
-
-    // only align if the title is center and if it isn't already overflowing
-    if (style.textAlign !== 'center' || titleOffsetWidth < titleScrollWidth) {
-      this._showTitle();
-
-    } else {
-      let rightMargin = navbarOffsetWidth - (titleOffsetLeft + titleOffsetWidth);
-      let centerMargin = titleOffsetLeft - rightMargin;
-
-      innerTitleEle.style.margin = `0 ${centerMargin}px 0 0`;
-
-      dom.raf(() => {
-        if (titleEle.offsetWidth < titleEle.scrollWidth) {
-          // not enough room yet, just left align title
-          innerTitleEle.style.margin = '';
-          innerTitleEle.style.textAlign = 'left';
-        }
-        this._showTitle();
-      })
-    }
+@Directive({
+  selector: '.navbar-title'
+})
+export class Title {
+  constructor(item: ViewItem, elementRef: ElementRef) {
+    item.titleElement(elementRef.domElement);
   }
+}
 
-  _showTitle() {
-    if (!this._shown) {
-      this._shown = true;
-      this._innerTitleEle.classList.remove('navbar-title-hide');
-    }
+@Directive({
+  selector: '.navbar-item'
+})
+export class NavbarItem {
+  constructor(item: ViewItem, elementRef: ElementRef) {
+    item.navbarItemElements(elementRef.domElement);
   }
-
 }
 
 

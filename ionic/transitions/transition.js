@@ -1,57 +1,83 @@
 import {Animation} from '../animations/animation';
-import {raf} from '../util/dom';
 
 const SHOW_NAVBAR_CSS = 'show-navbar';
 const SHOW_VIEW_CSS = 'show-view';
+const SHOW_BACK_BUTTON = 'show-back-button';
+const SHOW_NAVBAR_ITEM = 'show-navbar-item';
 
+let TransitionRegistry = {};
 
-let registry = {};
 
 export class Transition extends Animation {
 
   constructor(nav, opts) {
     super();
 
+    const self = this;
+
     // get the entering and leaving items
-    let enteringItem = this.entering = nav.getStagedEnteringItem();
-    let leavingItem = this.leaving = nav.getStagedLeavingItem();
+    let enteringItem = self.entering = nav.getStagedEnteringItem();
+    let leavingItem = self.leaving = nav.getStagedLeavingItem();
 
     // create animation for the entering item's "ion-view" element
-    this.enteringView = new Animation(enteringItem.viewElement());
-    this.enteringView.beforePlay.addClass(SHOW_VIEW_CSS);
-    this.add(this.enteringView);
+    self.enteringView = new Animation(enteringItem.viewElement());
+    self.enteringView.before.addClass(SHOW_VIEW_CSS);
+    self.add(self.enteringView);
 
     // create animation for the entering item's "ion-navbar" element
     if (opts.navbar !== false) {
-      this.enteringNavbar = new Animation(enteringItem.navbarElement());
-      this.enteringNavbar.beforePlay.addClass(SHOW_NAVBAR_CSS);
+      let enteringNavbar = self.enteringNavbar = new Animation(enteringItem.navbarElement());
+      enteringNavbar.before.addClass(SHOW_NAVBAR_CSS);
+
+      if (enteringItem.enableBack) {
+        // only animate in the back button if the entering view has it enabled
+        let enteringBackButton = self.enteringBackButton = new Animation(enteringItem.backButtonElement());
+        enteringBackButton
+          .before.addClass(SHOW_BACK_BUTTON)
+          .fadeIn();
+        enteringNavbar.add(enteringBackButton);
+      }
 
       // create animation for the entering item's "ion-title" element
-      this.enteringTitle = new Animation(enteringItem.titleElement());
-      this.enteringNavbar.add(this.enteringTitle);
-      this.add(this.enteringNavbar);
+      self.enteringTitle = new Animation(enteringItem.titleElement());
+      enteringNavbar.add(self.enteringTitle);
+      self.add(enteringNavbar);
+
+      self.enteringNavbarItems = new Animation(enteringItem.navbarItemElements())
+      self.enteringNavbarItems
+        .before.addClass(SHOW_NAVBAR_ITEM)
+        .fadeIn();
+      enteringNavbar.add(self.enteringNavbarItems);
     }
 
     if (leavingItem) {
       // create animation for the entering item's "ion-view" element
-      this.leavingView = new Animation(leavingItem.viewElement());
-      this.leavingView.afterFinish.removeClass(SHOW_VIEW_CSS);
+      self.leavingView = new Animation(leavingItem.viewElement());
+      self.leavingView.after.removeClass(SHOW_VIEW_CSS);
 
       // create animation for the entering item's "ion-navbar" element
-      this.leavingNavbar = new Animation(leavingItem.navbarElement());
-      this.leavingNavbar.afterFinish.removeClass(SHOW_NAVBAR_CSS);
+      let leavingNavbar = self.leavingNavbar = new Animation(leavingItem.navbarElement());
+      leavingNavbar.after.removeClass(SHOW_NAVBAR_CSS);
+
+      let leavingBackButton = self.leavingBackButton = new Animation(leavingItem.backButtonElement());
+      leavingBackButton
+        .after.removeClass(SHOW_BACK_BUTTON)
+        .fadeOut();
+      leavingNavbar.add(leavingBackButton);
 
       // create animation for the leaving item's "ion-title" element
-      this.leavingTitle = new Animation(leavingItem.titleElement());
-      this.leavingNavbar.add(this.leavingTitle);
+      self.leavingTitle = new Animation(leavingItem.titleElement());
+      leavingNavbar.add(self.leavingTitle);
 
-      this.add(this.leavingView, this.leavingNavbar);
+      self.leavingNavbarItems = new Animation(leavingItem.navbarItemElements())
+      self.leavingNavbarItems
+        .after.removeClass(SHOW_NAVBAR_ITEM)
+        .fadeOut();
+      leavingNavbar.add(self.leavingNavbarItems);
+
+      self.add(self.leavingView, leavingNavbar);
     }
 
-  }
-
-  stage(callback) {
-    raf(callback);
   }
 
 
@@ -59,9 +85,9 @@ export class Transition extends Animation {
    STATIC CLASSES
    */
   static create(nav, opts = {}) {
-    let name = opts.animation || 'ios';
+    const name = opts.animation || 'ios';
 
-    let TransitionClass = registry[name];
+    let TransitionClass = TransitionRegistry[name];
     if (!TransitionClass) {
       // transition wasn't found, default to a 'none' transition
       // which doesn't animate anything, just shows and hides
@@ -72,7 +98,7 @@ export class Transition extends Animation {
   }
 
   static register(name, TransitionClass) {
-    registry[name] = TransitionClass;
+    TransitionRegistry[name] = TransitionClass;
   }
 
 }
