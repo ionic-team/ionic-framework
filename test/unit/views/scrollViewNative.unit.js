@@ -19,7 +19,7 @@ describe('Scroll View', function() {
     });
 
     expect(sc.addEventListener).toHaveBeenCalled();
-    expect(sc.addEventListener.callCount).toBe(4);
+    expect(sc.addEventListener.callCount).toBe(9);
     expect(sc.addEventListener.mostRecentCall.args[0]).toBe('resetScrollView');
   });
 
@@ -31,7 +31,7 @@ describe('Scroll View', function() {
     sv.__cleanup();
 
     expect(sc.removeEventListener).toHaveBeenCalled();
-    expect(sc.removeEventListener.callCount).toBe(4);
+    expect(sc.removeEventListener.callCount).toBe(9);
     expect(sc.removeEventListener.mostRecentCall.args[0]).toBe('resetScrollView');
   });
 
