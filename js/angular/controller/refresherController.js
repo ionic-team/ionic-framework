@@ -17,6 +17,7 @@ IonicModule
         startY = null,
         deltaY = null,
         canOverscroll = true,
+        isRunning = false,
         scrollParent,
         scrollChild;
 
@@ -282,6 +283,7 @@ IonicModule
     }
 
     function deactivate() {
+      isRunning = false;
       // give tail 150ms to finish
       $timeout(function() {
         // deactivateCallback
@@ -291,6 +293,10 @@ IonicModule
     }
 
     function start() {
+      if (isRunning) {
+        return;
+      }
+      isRunning = true;
       // startCallback
       $element[0].classList.add('refreshing');
       $scope.$onRefresh();
