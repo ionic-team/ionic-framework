@@ -15,5 +15,19 @@ export class Content {
     // but we should be able to stamp out this behavior with a base IonicComponent
     // or something, so all elements have a domElement reference or a getElement() method
     this.domElement = elementRef.domElement;
+
+    setTimeout(() => {
+      this.scrollElement = this.domElement.children[0];
+    });
+  }
+
+  addScrollEventListener(handler) {
+    if(!this.scrollElement) { return; }
+
+    this.scrollElement.addEventListener('scroll', handler);
+
+    return () => {
+      this.scrollElement.removeEventListener('scroll', handler);
+    }
   }
 }
