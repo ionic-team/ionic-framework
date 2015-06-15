@@ -26,7 +26,7 @@ export class Transition extends Animation {
       let enteringNavbar = this.enteringNavbar = new Animation(enteringItem.navbarElement());
       enteringNavbar.before.addClass(SHOW_NAVBAR_CSS);
 
-      if (enteringItem.enableBack) {
+      if (enteringItem.enableBack()) {
         // only animate in the back button if the entering view has it enabled
         let enteringBackButton = this.enteringBackButton = new Animation(enteringItem.backButtonElement());
         enteringBackButton

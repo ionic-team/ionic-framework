@@ -17,9 +17,6 @@ export class ViewItem {
     this.state = 0;
     this.disposals = [];
 
-    // if it's possible to go back from this nav item
-    this.enableBack = false;
-
     this.protos = {};
     this._nbItms = [];
     this._promises = [];
@@ -31,9 +28,6 @@ export class ViewItem {
 
   stage(callback) {
     let viewCtrl = this.viewCtrl;
-
-    // update if it's possible to go back from this nav item
-    this.enableBack = viewCtrl && !!viewCtrl.getPrevious(this);
 
     if (this.instance || !viewCtrl) {
       // already compiled this view
@@ -150,6 +144,14 @@ export class ViewItem {
       tabs,
       key
     };
+  }
+
+  enableBack() {
+    // update if it's possible to go back from this nav item
+    if (this.viewCtrl) {
+      return !!this.viewCtrl.getPrevious(this);
+    }
+    return false;
   }
 
   setInstance(instance) {

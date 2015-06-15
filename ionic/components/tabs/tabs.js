@@ -55,15 +55,31 @@ export class Tabs extends ViewController {
     injector: Injector
   ) {
     super(parentViewCtrl, compiler, elementRef, loader, injector);
-    this.item = viewItem;
 
-    this.item.navbarView = () => {
-      let activeTab = this.getActive();
-      if (activeTab && activeTab.instance) {
-        return activeTab.instance.navbarView();
-      }
-      return {};
-    };
+    // Tabs may also be an actual ViewItem which was navigated to
+    // if Tabs is static and not navigated to within a ViewController
+    // then skip this and don't treat it as it's own ViewItem
+    if (viewItem) {
+      this.item = viewItem;
+
+      // special overrides for the Tabs ViewItem
+      // the Tabs ViewItem does not have it's own navbar
+      // so find the navbar it should use within it's active Tab
+      viewItem.navbarView = () => {
+        let activeTab = this.getActive();
+        if (activeTab && activeTab.instance) {
+          return activeTab.instance.navbarView();
+        }
+        return {};
+      };
+
+      // a Tabs ViewItem should not have a back button
+      // enableBack back button should be determined by the
+      // the active ViewItem with a navbar
+      viewItem.enableBack = () => {
+        return false;
+      };
+    }
 
     this.childNavbar(true);
 

@@ -276,11 +276,9 @@ export class ViewController {
   }
 
   swipeBackEnabled() {
-    if (this.items.length > 1) {
-      let activeItem = this.getActive();
-      if (activeItem) {
-        return activeItem.enableBack;
-      }
+    let activeItem = this.getActive();
+    if (activeItem) {
+      return activeItem.enableBack();
     }
     return false;
   }
