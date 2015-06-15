@@ -12,60 +12,59 @@ export class Transition extends Animation {
   constructor(nav, opts) {
     super();
 
-    const self = this;
-
     // get the entering and leaving items
-    let enteringItem = self.entering = nav.getStagedEnteringItem();
-    let leavingItem = self.leaving = nav.getStagedLeavingItem();
+    let enteringItem = this.entering = nav.getStagedEnteringItem();
+    let leavingItem = this.leaving = nav.getStagedLeavingItem();
 
     // create animation for the entering item's "ion-view" element
-    self.enteringView = new Animation(enteringItem.viewElement());
-    self.enteringView.before.addClass(SHOW_VIEW_CSS);
-    self.add(self.enteringView);
+    this.enteringView = new Animation(enteringItem.viewElement());
+    this.enteringView.before.addClass(SHOW_VIEW_CSS);
+    this.add(this.enteringView);
 
     if (opts.navbar !== false) {
-      let enteringNavbar = self.enteringNavbar = new Animation(enteringItem.navbarElement());
+
+      let enteringNavbar = this.enteringNavbar = new Animation(enteringItem.navbarElement());
       enteringNavbar.before.addClass(SHOW_NAVBAR_CSS);
 
       if (enteringItem.enableBack) {
         // only animate in the back button if the entering view has it enabled
-        let enteringBackButton = self.enteringBackButton = new Animation(enteringItem.backButtonElement());
+        let enteringBackButton = this.enteringBackButton = new Animation(enteringItem.backButtonElement());
         enteringBackButton
           .before.addClass(SHOW_BACK_BUTTON)
           .fromTo('opacity', 0.02, 1)
         enteringNavbar.add(enteringBackButton);
       }
 
-      self.enteringTitle = new Animation(enteringItem.titleElement());
-      enteringNavbar.add(self.enteringTitle);
-      self.add(enteringNavbar);
+      this.enteringTitle = new Animation(enteringItem.titleElement());
+      enteringNavbar.add(this.enteringTitle);
+      this.add(enteringNavbar);
 
-      self.enteringNavbarItems = new Animation(enteringItem.navbarItemElements())
-      self.enteringNavbarItems.fromTo('opacity', 0.02, 1)
-      enteringNavbar.add(self.enteringNavbarItems);
+      this.enteringNavbarItems = new Animation(enteringItem.navbarItemElements())
+      this.enteringNavbarItems.fromTo('opacity', 0.02, 1)
+      enteringNavbar.add(this.enteringNavbarItems);
     }
 
     if (leavingItem) {
-      self.leavingView = new Animation(leavingItem.viewElement());
-      self.leavingView.after.removeClass(SHOW_VIEW_CSS);
+      this.leavingView = new Animation(leavingItem.viewElement());
+      this.leavingView.after.removeClass(SHOW_VIEW_CSS);
 
-      let leavingNavbar = self.leavingNavbar = new Animation(leavingItem.navbarElement());
+      let leavingNavbar = this.leavingNavbar = new Animation(leavingItem.navbarElement());
       leavingNavbar.after.removeClass(SHOW_NAVBAR_CSS);
 
-      let leavingBackButton = self.leavingBackButton = new Animation(leavingItem.backButtonElement());
+      let leavingBackButton = this.leavingBackButton = new Animation(leavingItem.backButtonElement());
       leavingBackButton
         .after.removeClass(SHOW_BACK_BUTTON)
         .fadeOut();
       leavingNavbar.add(leavingBackButton);
 
-      self.leavingTitle = new Animation(leavingItem.titleElement());
-      leavingNavbar.add(self.leavingTitle);
+      this.leavingTitle = new Animation(leavingItem.titleElement());
+      leavingNavbar.add(this.leavingTitle);
 
-      self.leavingNavbarItems = new Animation(leavingItem.navbarItemElements())
-      self.leavingNavbarItems.fadeOut();
-      leavingNavbar.add(self.leavingNavbarItems);
+      this.leavingNavbarItems = new Animation(leavingItem.navbarItemElements())
+      this.leavingNavbarItems.fadeOut();
+      leavingNavbar.add(this.leavingNavbarItems);
 
-      self.add(self.leavingView, leavingNavbar);
+      this.add(this.leavingView, leavingNavbar);
     }
 
   }

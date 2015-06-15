@@ -19,63 +19,61 @@ class IOSTransition extends Transition {
   constructor(nav, opts) {
     super(nav, opts);
 
-    const self = this;
-
     // global duration and easing for all child animations
-    self.duration(DURATION);
-    self.easing(EASING);
+    this.duration(DURATION);
+    this.easing(EASING);
 
     // entering item moves to center
-    self.enteringView
+    this.enteringView
       .to(TRANSLATEX, CENTER)
       .to(OPACITY, 1);
 
-    self.enteringTitle
+    this.enteringTitle
       .fadeIn()
       .to(TRANSLATEX, CENTER);
 
     // leaving view moves off screen
-    self.leavingView
+    this.leavingView
       .from(TRANSLATEX, CENTER)
       .from(OPACITY, 1);
 
-    self.leavingTitle
+    this.leavingTitle
       .from(TRANSLATEX, CENTER)
       .from(OPACITY, 1);
 
     // set properties depending on direction
     if (opts.direction === 'back') {
       // back direction
-      self.enteringView
+      this.enteringView
         .from(TRANSLATEX, OFF_LEFT)
         .from(OPACITY, OFF_OPACITY)
         .to(OPACITY, 1);
 
-      self.enteringTitle
+      this.enteringTitle
         .from(TRANSLATEX, OFF_LEFT);
 
-      self.leavingView
+      this.leavingView
         .to(TRANSLATEX, OFF_RIGHT)
         .to(OPACITY, 1);
 
-      self.leavingTitle
+      this.leavingTitle
         .to(TRANSLATEX, OFF_RIGHT)
         .to(OPACITY, 0);
 
     } else {
       // forward direction
-      self.enteringView
+      this.enteringView
         .from(TRANSLATEX, '99%')
         .from(OPACITY, 1);
 
-      self.enteringTitle
+      this.enteringTitle
         .from(TRANSLATEX, '97%');
 
-      self.leavingView
+      this.leavingView
         .to(TRANSLATEX, OFF_LEFT)
         .to(OPACITY, OFF_OPACITY);
 
-      self.leavingTitle
+      this.leavingTitle
         .to(TRANSLATEX, OFF_LEFT)
         .to(OPACITY, 0);
     }

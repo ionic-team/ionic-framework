@@ -8,8 +8,8 @@ import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_compone
 import {Injector} from 'angular2/di';
 
 import {ViewController} from '../view/view-controller';
-import {Tabs} from './tabs';
 import {ViewItem} from '../view/view-item';
+import {Tabs} from './tabs';
 import {Content} from '../content/content';
 import {IonicComponent} from '../../config/component';
 
@@ -32,10 +32,7 @@ import {IonicComponent} from '../../config/component';
   }
 })
 @View({
-  template: `
-    <template pane-anchor></template>
-    <content></content>
-  `,
+  template: '<template pane-anchor></template><content></content>',
   directives: [TabPaneAnchor]
 })
 export class Tab extends ViewController {
@@ -53,26 +50,32 @@ export class Tab extends ViewController {
     super(tabs, compiler, elementRef, loader, injector);
     this.tabs = tabs;
 
-    // the navbar is already provided by the container of Tabs, which contains Tab
-    // Views which come into this Tab should not create their own navbar, but use the parent's
-    this.parentNavbar(true);
+    this.childNavbar(true);
 
     let item = this.item = new ViewItem(tabs.parent);
     item.setInstance(this);
     item.setViewElement(elementRef.domElement);
-    tabs.addTab(this.item);
+    tabs.addTab(this);
+
+    this.navbarView = item.navbarView = () => {
+      let activeItem = this.getActive();
+      return (activeItem && activeItem.navbarView()) || {};
+    };
 
     this.panelId = 'tab-panel-' + item.id;
     this.labeledBy = 'tab-button-' + item.id;
   }
 
   onInit() {
-    if ( this.item._initial ) {
-      this.tabs.select(this);
+    if (this._initialResolve) {
+      this.tabs.select(this).then(() => {
+        this._initialResolve();
+        this._initialResolve = null;
+      });
     }
   }
 
-  loadInitial(callback) {
+  load(callback) {
     if (!this._loaded && this.initial) {
       let opts = {
         animate: false,
@@ -86,6 +89,11 @@ export class Tab extends ViewController {
     } else {
       callback && callback();
     }
+  }
+
+  queueInitial() {
+    // this Tab will be used as the initial one for the first load of Tabs
+    return new Promise(res => { this._initialResolve = res; });
   }
 
   get isSelected() {

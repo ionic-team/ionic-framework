@@ -22,6 +22,7 @@ export class ViewItem {
 
     this.protos = {};
     this._nbItms = [];
+    this._promises = [];
   }
 
   addProtoViewRef(name, protoViewRef) {
@@ -44,7 +45,7 @@ export class ViewItem {
 
       // figure out the sturcture of this Component
       // does it have a navbar? Is it tabs? Should it not have a navbar or any toolbars?
-      let itemStructure = this.sturcture = this.getProtoViewStructure(componentProtoViewRef);
+      let itemStructure = this.sturcture = this.inspectStructure(componentProtoViewRef);
 
       // get the appropriate Pane which this ViewItem will fit into
       viewCtrl.panes.get(itemStructure, pane => {
@@ -100,25 +101,25 @@ export class ViewItem {
         // this item has finished loading
         this.loaded();
 
-        // all done, fire the callback
-        if (this._wait) {
-          this._waitCallback = callback;
-
-        } else {
+        // fire callback when all child promises have been resolved
+        Promise.all(this._promises).then(() => {
           callback();
-        }
+          this._promises = [];
+        });
 
       });
 
     });
   }
 
+  addPromise(childPromise) {
+    this._promises.push(childPromise);
+  }
 
-  getProtoViewStructure(componentProtoViewRef) {
+  inspectStructure(componentProtoViewRef) {
     let navbar = false;
     let tabs = false;
-    let toolbars = [];
-    let key = '';
+    let key = '_';
 
     componentProtoViewRef._protoView.elementBinders.forEach(rootElementBinder => {
       if (!rootElementBinder.componentDirective || !rootElementBinder.nestedProtoView) return;
@@ -137,31 +138,18 @@ export class ViewItem {
       });
     });
 
-    if (this.viewCtrl.parentNavbar()) {
+    if (this.viewCtrl.childNavbar()) {
       navbar = false;
     }
 
     if (navbar) key += 'n'
     if (tabs) key += 't'
-    key += 'b' + toolbars.length;
 
     return {
       navbar,
       tabs,
-      toolbars,
       key
     };
-  }
-
-  waitForResolve() {
-    this._wait = true;
-  }
-
-  resolve() {
-    if (this._wait) {
-      this._waitCallback && this._waitCallback();
-      this._wait = this._waitCallback = null;
-    }
   }
 
   setInstance(instance) {
@@ -196,81 +184,31 @@ export class ViewItem {
     return this.viewEle;
   }
 
-  navbarElement() {
+  navbarView() {
     if (arguments.length) {
-      this._nbEle = arguments[0];
-      return;
-    }
-    if (this._nbEle) {
-      // this ViewItem already has an assigned navbarElement
-      return this._nbEle;
+      this._nbView = arguments[0];
+
+    } else if (this._nbView) {
+      return this._nbView;
     }
 
-    let instance = this.instance;
-    if (instance && instance.parentNavbar && instance.parentNavbar()) {
-      // this View doesn't actually have it's own navbar
-      // for example, Tab does not have a navbar, but Tabs does
-      // so if this is true, then get the active ViewItem inside this instance
-      let activeChildViewItem = instance.getActive();
-      if (activeChildViewItem) {
-        return activeChildViewItem.navbarElement();
-      }
-    }
+    return {};
+  }
+
+  navbarElement() {
+    return this.navbarView().element;
   }
 
   titleElement() {
-    if (arguments.length) {
-      this._ttEle = arguments[0];
-      return;
-    }
-    if (this._ttEle) {
-      return this._ttEle;
-    }
-
-    let instance = this.instance;
-    if (instance && instance.parentNavbar && instance.parentNavbar()) {
-      let activeChildViewItem = instance.getActive();
-      if (activeChildViewItem) {
-        return activeChildViewItem.titleElement();
-      }
-    }
+    return this.navbarView().titleElement;
   }
 
   backButtonElement() {
-    if (arguments.length) {
-      this._bbEle = arguments[0];
-      return;
-    }
-    if (this._bbEle) {
-      return this._bbEle;
-    }
-
-    let instance = this.instance;
-    if (instance && instance.parentNavbar && instance.parentNavbar()) {
-      let activeChildViewItem = instance.getActive();
-      if (activeChildViewItem) {
-        return activeChildViewItem.backButtonElement();
-      }
-    }
+    return this.navbarView().backButtonElement;
   }
 
   navbarItemElements() {
-    if (arguments.length) {
-      this._nbItms.push(arguments[0]);
-      return;
-    }
-    if (this._nbItms) {
-      return this._nbItms;
-    }
-
-
-    let instance = this.instance;
-    if (instance && instance.parentNavbar && instance.parentNavbar()) {
-      let activeChildViewItem = instance.getActive();
-      if (activeChildViewItem) {
-        return activeChildViewItem.navbarItemElements();
-      }
-    }
+    return this.navbarView().itemElements;
   }
 
 

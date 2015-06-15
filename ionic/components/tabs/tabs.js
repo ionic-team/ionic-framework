@@ -47,15 +47,26 @@ import {Config} from '../../config/component';
 export class Tabs extends ViewController {
 
   constructor(
-    @Optional() viewCtrl: ViewController,
-    @Optional() item: ViewItem,
+    @Optional() parentViewCtrl: ViewController,
+    @Optional() viewItem: ViewItem,
     compiler: Compiler,
     elementRef: ElementRef,
     loader: DynamicComponentLoader,
     injector: Injector
   ) {
-    super(viewCtrl, compiler, elementRef, loader, injector);
-    this.item = item;
+    super(parentViewCtrl, compiler, elementRef, loader, injector);
+    this.item = viewItem;
+
+    this.item.navbarView = () => {
+      let activeTab = this.getActive();
+      if (activeTab && activeTab.instance) {
+        return activeTab.instance.navbarView();
+      }
+      return {};
+    };
+
+    this.childNavbar(true);
+
     Config(this, {
       'tabBarPlacement': {
         'default': 'bottom',
@@ -65,12 +76,15 @@ export class Tabs extends ViewController {
     });
   }
 
-  addTab(tabItem) {
-    this.add(tabItem);
+  addTab(tab) {
+    // tab.item refers to the ViewItem of the individual Tab being added to Tabs (ViewController)
+    // this.item refers to the ViewItem instsance on Tabs
+    this.add(tab.item);
 
     if (this.length() === 1) {
-      this.item && this.item.waitForResolve();
-      tabItem._initial = true;
+      // this was the first tab added, queue this one to be loaded and selected
+      let promise = tab.queueInitial();
+      this.item && this.item.addPromise(promise);
     }
   }
 
@@ -83,28 +97,25 @@ export class Tabs extends ViewController {
     }
 
     if (!enteringItem || !enteringItem.instance || this.isTransitioning()) {
-      return;
+      return Promise.reject();
     }
 
-    enteringItem.instance.loadInitial(() => {
-      let opts = {
-        animate: false
-      };
+    return new Promise(resolve => {
+      enteringItem.instance.load(() => {
+        let opts = {
+          animate: false
+        };
 
-      let leavingItem = this.getActive() || new ViewItem();
-      leavingItem.shouldDestroy = false;
-      leavingItem.shouldCache = true;
-      leavingItem.willCache();
+        let leavingItem = this.getActive() || new ViewItem();
+        leavingItem.shouldDestroy = false;
+        leavingItem.shouldCache = true;
+        leavingItem.willCache();
 
-      // set the Tab navbarView from the active view in the tab
-      enteringItem.navbarView = (enteringItem.instance.getActive() || {}).navbarView;
-      if (leavingItem.instance) {
-        leavingItem.navbarView = (leavingItem.instance.getActive() || {}).navbarView;
-      }
-
-      this.transition(enteringItem, leavingItem, opts, () => {
-        this.item && this.item.resolve();
+        this.transition(enteringItem, leavingItem, opts, () => {
+          resolve();
+        });
       });
+
     });
   }
 
@@ -113,21 +124,3 @@ export class Tabs extends ViewController {
   }
 
 }
-// new IonicComponent(Tabs, {
-//   properties: {
-//     tabBarPlacement: {
-//       defaults: {
-//         ios: 'bottom',
-//         android: 'top',
-//         core: 'bottom'
-//       }
-//     },
-//     tabBarIcons: {
-//       defaults: {
-//         ios: 'top',
-//         android: 'top',
-//         core: 'top'
-//       }
-//     }
-//   }
-// });

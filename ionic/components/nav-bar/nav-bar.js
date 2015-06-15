@@ -1,3 +1,4 @@
+import {Parent} from 'angular2/src/core/annotations_impl/visibility';
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
@@ -38,7 +39,9 @@ import * as dom from '../../util/dom';
 })
 export class Navbar {
   constructor(item: ViewItem, elementRef: ElementRef) {
-    item.navbarElement(elementRef.domElement);
+    this.element = elementRef.domElement;
+    this.itemElements = [];
+    item.navbarView(this);
   }
 }
 
@@ -49,9 +52,9 @@ export class Navbar {
   }
 })
 class BackButton {
-  constructor(item: ViewItem, elementRef: ElementRef) {
+  constructor(@Parent() navbar: Navbar, item: ViewItem, elementRef: ElementRef) {
     this.item = item;
-    item.backButtonElement(elementRef.domElement);
+    navbar.backButtonElement = elementRef.domElement;
   }
 
   goBack(ev) {
@@ -65,8 +68,8 @@ class BackButton {
   selector: '.navbar-title'
 })
 export class Title {
-  constructor(item: ViewItem, elementRef: ElementRef) {
-    item.titleElement(elementRef.domElement);
+  constructor(@Parent() navbar: Navbar, elementRef: ElementRef) {
+    navbar.titleElement = elementRef.domElement;
   }
 }
 
@@ -74,8 +77,8 @@ export class Title {
   selector: '.navbar-item'
 })
 export class NavbarItem {
-  constructor(item: ViewItem, elementRef: ElementRef) {
-    item.navbarItemElements(elementRef.domElement);
+  constructor(@Parent() navbar: Navbar, elementRef: ElementRef) {
+    navbar.itemElements.push(elementRef.domElement);
   }
 }
 

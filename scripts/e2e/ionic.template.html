@@ -5,8 +5,7 @@
   <!-- https://www.chromium.org/developers/design-documents/chromium-graphics/how-to-get-gpu-rasterization -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-  <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <link href="/../../../../dist/css/ionic.css" rel="stylesheet">
+  <link href="/dist/css/ionic.css" rel="stylesheet">
 
   <style>
     /* hack to create tall scrollable areas for testing using <f></f> */
@@ -41,18 +40,19 @@
   </ion-app>
 
   <!-- web animations polyfill for non-chrome browsers -->
-  <script src="/../../../../dist/vendor/web-animations-js/web-animations.min.js"></script>
+  <script src="/dist/vendor/web-animations-js/web-animations.min.js"></script>
+
   <!--<script src="extension-register.js" type="text/javascript"></script>
   <script src="extension-cjs.js" type="text/javascript"></script>
   <script src="runtime_paths.js" type="text/javascript"></script> -->
-  <script src="/../../../../scripts/resources/traceur-runtime.js" type="text/javascript"></script>
-  <script src="/../../../../scripts/resources/Reflect.js" type="text/javascript"></script>
-  <script src="/../../../../scripts/resources/system.src.js"></script>
-  <script src="/../../../../config.js"></script>
-  <script src="/../../../../dist/js/dependencies.js"></script>
-  <script src="/../../../../dist/js/ionic.bundle.js"></script>
-  <script src="/../../../../scripts/resources/zone-microtask.js" type="text/javascript"></script>
-  <script src="/../../../../scripts/resources/long-stack-trace-zone.js" type="text/javascript"></script>
+  <script src="/scripts/resources/traceur-runtime.js" type="text/javascript"></script>
+  <script src="/scripts/resources/Reflect.js" type="text/javascript"></script>
+  <script src="/scripts/resources/system.src.js"></script>
+  <script src="/config.js"></script>
+  <script src="/dist/js/dependencies.js"></script>
+  <script src="/dist/js/ionic.bundle.js"></script>
+  <script src="/scripts/resources/zone-microtask.js" type="text/javascript"></script>
+  <script src="/scripts/resources/long-stack-trace-zone.js" type="text/javascript"></script>
 <!-- <script src="../../../../bundle.js"></script> -->
   <script type="text/javascript">System.import(window.location.pathname.substring(1) + 'index').then(function(m) { m.main(); }, console.error.bind(console))</script>
 </body>

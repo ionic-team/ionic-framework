@@ -60,7 +60,7 @@ export class ViewController {
     leavingItem.shouldCache = true;
     leavingItem.willCache();
 
-    // create a new NavStackItem
+    // create a new ViewItem
     let enteringItem = new ViewItem(this, ComponentClass, params);
 
     // add the item to the stack
@@ -387,11 +387,11 @@ export class ViewController {
     }
   }
 
-  parentNavbar() {
+  childNavbar() {
     if (arguments.length) {
-      this._parentNavbar = arguments[0];
+      this._childNavbar = arguments[0];
     }
-    return this._parentNavbar;
+    return this._childNavbar;
   }
 
   add(item) {
