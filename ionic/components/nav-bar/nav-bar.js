@@ -72,10 +72,8 @@ export class Navbar {
   alignTitle() {
     // called after the navbar/title has had a moment to
     // finish rendering in their correct locations
-
     const navbarEle = this._ele;
-    const innerTitleEle = this._innerTtEle || (this._innerTtEle = navbarEle.querySelector('.navbar-inner-title'));
-    const titleEle = this._ttEle || (this._ttEle = innerTitleEle.querySelector('ion-title'));
+    const titleEle = this._ttEle || (this._ttEle = navbarEle.querySelector('ion-title'));
 
     // don't bother if there's no title element
     if (!titleEle) return;
@@ -87,9 +85,8 @@ export class Navbar {
     if (titleStyle.textAlign !== 'center') return;
 
     // get all the dimensions
-    const titleOffsetWidth = titleEle.offsetWidth;
     const titleOffsetLeft = titleEle.offsetLeft;
-    const titleOffsetRight = navbarEle.offsetWidth - (titleOffsetLeft + titleOffsetWidth);
+    const titleOffsetRight = navbarEle.offsetWidth - (titleOffsetLeft + titleEle.offsetWidth);
 
     let marginLeft = 0;
     let marginRight = 0;
@@ -104,6 +101,7 @@ export class Navbar {
 
     if ((marginLeft || marginRight) && margin !== this._ttMargin) {
       // only do an update if it has to
+      const innerTitleEle = this._innerTtEle || (this._innerTtEle = navbarEle.querySelector('.navbar-inner-title'));
       innerTitleEle.style.margin = this._ttMargin = margin;
     }
   }

@@ -1,14 +1,8 @@
-
 const CSS_CLICK_BLOCK = 'click-block-active';
 const DEFAULT_EXPIRE = 330;
 let cbEle, fallbackTimerId;
 let isShowing = false;
 
-
-function preventClick(ev) {
-  ev.preventDefault();
-  ev.stopPropagation();
-}
 
 function show(expire) {
   clearTimeout(fallbackTimerId);
@@ -23,10 +17,6 @@ function show(expire) {
       cbEle = document.createElement('div');
       cbEle.className = 'click-block ' + CSS_CLICK_BLOCK;
       document.body.appendChild(cbEle);
-      cbEle.addEventListener('touchstart', preventClick);
-      cbEle.addEventListener('mousedown', preventClick);
-      cbEle.addEventListener('pointerdown', preventClick);
-      cbEle.addEventListener('MSPointerDown', preventClick);
     }
   }
 }

@@ -63,11 +63,11 @@ class IOSTransition extends Transition {
     } else {
       // forward direction
       this.enteringView
-        .from(TRANSLATEX, '99%')
+        .from(TRANSLATEX, OFF_RIGHT)
         .from(OPACITY, 1);
 
       this.enteringTitle
-        .from(TRANSLATEX, '97%');
+        .from(TRANSLATEX, OFF_RIGHT);
 
       this.leavingView
         .to(TRANSLATEX, OFF_LEFT)

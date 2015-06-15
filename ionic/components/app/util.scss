@@ -85,7 +85,9 @@ $content-padding:    10px !default;
   opacity: 0;
   z-index: $z-index-click-block;
   transform: translate3d(-9999px, 0px, 0px);
-  overflow: hidden;
+
+  //background: red;
+  //opacity: .3;
 }
 
 .click-block-active {

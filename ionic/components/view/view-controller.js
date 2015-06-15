@@ -122,8 +122,6 @@ export class ViewController {
 
     opts.animate = (opts.animation !== 'none');
 
-    this.transitionStart(opts);
-
     // wait for the new item to complete setup
     enteringItem.stage(() => {
 
@@ -142,6 +140,13 @@ export class ViewController {
       if (!opts.animate) {
         // force it to not animate the elements, just apply the "to" styles
         transAnimation.duration(0);
+      }
+
+      let duration = transAnimation.duration();
+      if (duration > 64) {
+        // block any clicks during the transition and provide a
+        // fallback to remove the clickblock if something goes wrong
+        ClickBlock(true, duration + 200);
       }
 
       // start the transition
@@ -192,9 +197,6 @@ export class ViewController {
     enteringItem.shouldDestroy = false;
     enteringItem.shouldCache = false;
     enteringItem.willEnter();
-
-    // start the transition
-    this.transitionStart({ animate: true });
 
     // wait for the new item to complete setup
     enteringItem.stage(() => {
@@ -281,13 +283,6 @@ export class ViewController {
       return activeItem.enableBack();
     }
     return false;
-  }
-
-  transitionStart(opts) {
-    if (opts.animate) {
-      // block possible clicks during transition
-      ClickBlock(true, 520);
-    }
   }
 
   transitionComplete() {

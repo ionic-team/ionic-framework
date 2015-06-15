@@ -1,6 +1,6 @@
-import {CSS} from '../util/dom';
+import {CSS, raf} from '../util/dom';
 
-const RENDER_DELAY = 36;
+const RENDER_DELAY = 32;
 let AnimationRegistry = {};
 
 /**
@@ -17,10 +17,11 @@ let AnimationRegistry = {};
   8) Run from/to animation on elements
   9) Animations finish async
  10) Set inline styles w/ the "to" effects on elements
- 11) Add after classes to elements
- 12) Remove after classes from elements
- 13) Call onFinish()
- 14) Resolve play()'s promise
+ 11) Call onFinish()
+ 12) Wait one rAF
+ 13) Add after classes to elements
+ 14) Remove after classes from elements
+ 15) Resolve play()'s promise
 **/
 
 export class Animation {
@@ -209,7 +210,10 @@ export class Animation {
             children[i]._onFinish();
           }
           self._onFinish();
-          resolve();
+          raf(() => {
+            self._onAfter();
+            resolve();
+          });
         });
       }
 
@@ -291,42 +295,47 @@ export class Animation {
 
   _onFinish() {
     // after the animations have finished
-    const self = this;
+    if (!this._isFinished) {
+      this._isFinished = true;
+      this.onFinish && this.onFinish();
+    }
+  }
+
+  _onAfter() {
+    // one requestAnimationFrame after onFinish happened
     let i, j, ele;
 
-    if (!self._isFinished) {
-      self._isFinished = true;
+    for (i = 0; i < this._children.length; i++) {
+      this._children[i]._onAfter();
+    }
 
-      if (self.playbackRate() < 0) {
-        // reverse direction
-        for (i = 0; i < self._el.length; i++) {
-          ele = self._el[i];
+    if (this.playbackRate() < 0) {
+      // reverse direction
+      for (i = 0; i < this._el.length; i++) {
+        ele = this._el[i];
 
-          for (j = 0; j < self._bfAdd.length; j++) {
-            ele.classList.remove(self._bfAdd[j]);
-          }
-
-          for (j = 0; j < self._bfRmv.length; j++) {
-            ele.classList.add(self._bfRmv[j]);
-          }
+        for (j = 0; j < this._bfAdd.length; j++) {
+          ele.classList.remove(this._bfAdd[j]);
         }
 
-      } else {
-        // normal direction
-        for (i = 0; i < self._el.length; i++) {
-          ele = self._el[i];
-
-          for (j = 0; j < self._afAdd.length; j++) {
-            ele.classList.add(self._afAdd[j]);
-          }
-
-          for (j = 0; j < self._afRmv.length; j++) {
-            ele.classList.remove(self._afRmv[j]);
-          }
+        for (j = 0; j < this._bfRmv.length; j++) {
+          ele.classList.add(this._bfRmv[j]);
         }
       }
 
-      self.onFinish && self.onFinish();
+    } else {
+      // normal direction
+      for (i = 0; i < this._el.length; i++) {
+        ele = this._el[i];
+
+        for (j = 0; j < this._afAdd.length; j++) {
+          ele.classList.add(this._afAdd[j]);
+        }
+
+        for (j = 0; j < this._afRmv.length; j++) {
+          ele.classList.remove(this._afRmv[j]);
+        }
+      }
     }
   }
 
