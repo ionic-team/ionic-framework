@@ -57,9 +57,9 @@ export class Navbar {
 
   titleElement() {
     if (arguments.length) {
-      this._tlEle = arguments[0];
+      this._nbTlEle = arguments[0];
     }
-    return this._tlEle;
+    return this._nbTlEle;
   }
 
   itemElements() {
@@ -70,7 +70,42 @@ export class Navbar {
   }
 
   alignTitle() {
-    console.log('alignTitle')
+    // called after the navbar/title has had a moment to
+    // finish rendering in their correct locations
+
+    const navbarEle = this._ele;
+    const innerTitleEle = this._innerTtEle || (this._innerTtEle = navbarEle.querySelector('.navbar-inner-title'));
+    const titleEle = this._ttEle || (this._ttEle = innerTitleEle.querySelector('ion-title'));
+
+    // don't bother if there's no title element
+    if (!titleEle) return;
+
+    // get the computed style of the title element
+    const titleStyle = this._ttStyle || (this._ttStyle = window.getComputedStyle(titleEle));
+
+    // don't bother if we're not trying to center align the title
+    if (titleStyle.textAlign !== 'center') return;
+
+    // get all the dimensions
+    const titleOffsetWidth = titleEle.offsetWidth;
+    const titleOffsetLeft = titleEle.offsetLeft;
+    const titleOffsetRight = navbarEle.offsetWidth - (titleOffsetLeft + titleOffsetWidth);
+
+    let marginLeft = 0;
+    let marginRight = 0;
+    if (titleOffsetLeft < titleOffsetRight) {
+      marginLeft = (titleOffsetRight - titleOffsetLeft) + 5;
+
+    } else if (titleOffsetLeft > titleOffsetRight) {
+      marginRight = (titleOffsetLeft - titleOffsetRight) - 5;
+    }
+
+    let margin = `0 ${marginRight}px 0 ${marginLeft}px`;
+
+    if ((marginLeft || marginRight) && margin !== this._ttMargin) {
+      // only do an update if it has to
+      innerTitleEle.style.margin = this._ttMargin = margin;
+    }
   }
 }
 

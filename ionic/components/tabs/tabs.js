@@ -70,7 +70,6 @@ export class Tabs extends ViewController {
         if (activeTab && activeTab.instance) {
           return activeTab.instance.navbarView();
         }
-        return {};
       };
 
       // a Tabs ViewItem should not have a back button

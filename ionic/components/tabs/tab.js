@@ -59,7 +59,7 @@ export class Tab extends ViewController {
 
     this.navbarView = item.navbarView = () => {
       let activeItem = this.getActive();
-      return (activeItem && activeItem.navbarView()) || {};
+      return activeItem && activeItem.navbarView();
     };
 
     this.panelId = 'tab-panel-' + item.id;
