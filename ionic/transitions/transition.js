@@ -31,7 +31,7 @@ export class Transition extends Animation {
         let enteringBackButton = this.enteringBackButton = new Animation(enteringItem.backButtonElement());
         enteringBackButton
           .before.addClass(SHOW_BACK_BUTTON)
-          .fromTo('opacity', 0.02, 1)
+          .fadeIn();
         enteringNavbar.add(enteringBackButton);
       }
 
@@ -40,11 +40,13 @@ export class Transition extends Animation {
       this.add(enteringNavbar);
 
       this.enteringNavbarItems = new Animation(enteringItem.navbarItemElements())
-      this.enteringNavbarItems.fromTo('opacity', 0.02, 1)
+      this.enteringNavbarItems.fadeIn();
       enteringNavbar.add(this.enteringNavbarItems);
     }
 
+
     if (leavingItem) {
+      // setup the leaving item if one exists (initial viewing wouldn't have a leaving item)
       this.leavingView = new Animation(leavingItem.viewElement());
       this.leavingView.after.removeClass(SHOW_VIEW_CSS);
 

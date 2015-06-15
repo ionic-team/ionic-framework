@@ -3,6 +3,26 @@ import {CSS} from '../util/dom';
 const RENDER_DELAY = 36;
 let AnimationRegistry = {};
 
+/**
+  Animation Steps/Process
+  -----------------------
+  1) Construct animation (doesn't start)
+  2) Client play()'s animation, returns promise
+  3) Add before classes to elements
+  4) Remove before classes from elements
+  5) Elements staged in "from" effect w/ inline styles
+  6) Call onReady()
+  7) Wait for RENDER_DELAY milliseconds (give browser time to render)
+  8) Call onPlay()
+  8) Run from/to animation on elements
+  9) Animations finish async
+ 10) Set inline styles w/ the "to" effects on elements
+ 11) Add after classes to elements
+ 12) Remove after classes from elements
+ 13) Call onFinish()
+ 14) Resolve play()'s promise
+**/
+
 export class Animation {
 
   constructor(el) {
@@ -159,6 +179,8 @@ export class Animation {
       let i, l;
       let promises = [];
 
+      self._onPlay();
+
       for (i = 0, l = children.length; i < l; i++) {
         promises.push( children[i].play() );
       }
@@ -210,6 +232,8 @@ export class Animation {
   }
 
   stage() {
+    // before the animations have started
+    // add the correct "from" effects and classes
     const self = this;
 
     if (!self._isStaged) {
@@ -255,7 +279,14 @@ export class Animation {
     }
   }
 
+  _onPlay() {
+    // after the render delay has happened
+    // before the animations start
+
+  }
+
   _onFinish() {
+    // after the animations have finished
     const self = this;
     let i, j, ele;
 
@@ -415,6 +446,8 @@ class Animate {
 
       self.player.onfinish = () => {
         // lock in where the element will stop at
+        // if the playbackRate is negative then it needs to return
+        // to its "from" effects
         inlineStyle(self.ele, self.rate < 0 ? self.fromEffect : self.toEffect);
 
         self.resolve();
