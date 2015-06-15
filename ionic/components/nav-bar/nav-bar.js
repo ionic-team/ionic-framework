@@ -39,9 +39,38 @@ import * as dom from '../../util/dom';
 })
 export class Navbar {
   constructor(item: ViewItem, elementRef: ElementRef) {
-    this.element = elementRef.domElement;
-    this.itemElements = [];
+    this._ele = elementRef.domElement;
+    this._itmEles = [];
     item.navbarView(this);
+  }
+
+  element() {
+    return this._ele;
+  }
+
+  backButtonElement() {
+    if (arguments.length) {
+      this._bbEle = arguments[0];
+    }
+    return this._bbEle;
+  }
+
+  titleElement() {
+    if (arguments.length) {
+      this._tlEle = arguments[0];
+    }
+    return this._tlEle;
+  }
+
+  itemElements() {
+    if (arguments.length) {
+      this._itmEles.push(arguments[0]);
+    }
+    return this._itmEles;
+  }
+
+  alignTitle() {
+    console.log('alignTitle')
   }
 }
 
@@ -54,7 +83,7 @@ export class Navbar {
 class BackButton {
   constructor(@Parent() navbar: Navbar, item: ViewItem, elementRef: ElementRef) {
     this.item = item;
-    navbar.backButtonElement = elementRef.domElement;
+    navbar.backButtonElement(elementRef.domElement);
   }
 
   goBack(ev) {
@@ -69,7 +98,7 @@ class BackButton {
 })
 export class Title {
   constructor(@Parent() navbar: Navbar, elementRef: ElementRef) {
-    navbar.titleElement = elementRef.domElement;
+    navbar.titleElement(elementRef.domElement);
   }
 }
 
@@ -78,7 +107,7 @@ export class Title {
 })
 export class NavbarItem {
   constructor(@Parent() navbar: Navbar, elementRef: ElementRef) {
-    navbar.itemElements.push(elementRef.domElement);
+    navbar.itemElements(elementRef.domElement);
   }
 }
 

@@ -60,7 +60,7 @@ export class ViewItem {
 
         // get the component's instance, and set it to the this ViewItem
         this.setInstance( viewCtrl.loader._viewManager.getComponent(new ElementRef(hostViewRef, 0)) );
-        this.setViewElement( hostViewRef._view.render._view.rootNodes[0] );
+        this.viewElement( hostViewRef._view.render._view.rootNodes[0] );
 
         // remember how to dispose of this reference
         this.disposals.push(() => {
@@ -158,11 +158,6 @@ export class ViewItem {
     this.instance = instance;
   }
 
-  setViewElement(viewEle) {
-    this.viewEle = viewEle;
-    viewEle && viewEle.classList.add('nav-item');
-  }
-
   cache() {
     this.didCache();
   }
@@ -183,34 +178,55 @@ export class ViewItem {
   }
 
   viewElement() {
-    return this.viewEle;
+    if (arguments.length) {
+      this._vwEle = arguments[0];
+      this._vwEle && this._vwEle.classList.add('nav-item');
+    }
+    return this._vwEle;
   }
 
   navbarView() {
     if (arguments.length) {
       this._nbView = arguments[0];
-
-    } else if (this._nbView) {
-      return this._nbView;
     }
-
-    return {};
+    return this._nbView;
   }
 
   navbarElement() {
-    return this.navbarView().element;
+    let navbarView = this.navbarView();
+    if (navbarView) {
+      return navbarView.element();
+    }
   }
 
   titleElement() {
-    return this.navbarView().titleElement;
+    let navbarView = this.navbarView();
+    if (navbarView) {
+      return navbarView.titleElement();
+    }
   }
 
   backButtonElement() {
-    return this.navbarView().backButtonElement;
+    let navbarView = this.navbarView();
+    if (navbarView) {
+      return navbarView.backButtonElement();
+    }
   }
 
   navbarItemElements() {
-    return this.navbarView().itemElements;
+    let navbarView = this.navbarView();
+    if (navbarView) {
+      return navbarView.itemElements();
+    }
+  }
+
+  postRender() {
+    // the elements are in the DOM and the browser
+    // has rendered them in their correct locations
+    let navbarView = this.navbarView();
+    if (navbarView) {
+      navbarView.alignTitle();
+    }
   }
 
 

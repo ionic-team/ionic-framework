@@ -179,8 +179,6 @@ export class Animation {
       let i, l;
       let promises = [];
 
-      self._onPlay();
-
       for (i = 0, l = children.length; i < l; i++) {
         promises.push( children[i].play() );
       }
@@ -203,6 +201,9 @@ export class Animation {
       let promise = new Promise(res => { resolve = res; });
 
       function kickoff() {
+        // synchronously call all onPlay()'s before play()
+        self._onPlay();
+
         beginPlay().then(() => {
           for (let i = 0, l = children.length; i < l; i++) {
             children[i]._onFinish();
@@ -232,8 +233,8 @@ export class Animation {
   }
 
   stage() {
+    // before the RENDER_DELAY
     // before the animations have started
-    // add the correct "from" effects and classes
     const self = this;
 
     if (!self._isStaged) {
@@ -280,9 +281,12 @@ export class Animation {
   }
 
   _onPlay() {
-    // after the render delay has happened
-    // before the animations start
-
+    // after the RENDER_DELAY
+    // before the animations have started
+    for (let i = 0, l = this._children.length; i < l; i++) {
+      this._children[i]._onPlay();
+    }
+    this.onPlay && this.onPlay();
   }
 
   _onFinish() {

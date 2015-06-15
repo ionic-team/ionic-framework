@@ -74,14 +74,14 @@ export class Tabs extends ViewController {
       };
 
       // a Tabs ViewItem should not have a back button
-      // enableBack back button should be determined by the
-      // the active ViewItem with a navbar
+      // enableBack back button will later be determined
+      // by the active ViewItem that has a navbar
       viewItem.enableBack = () => {
         return false;
       };
-    }
 
-    this.childNavbar(true);
+      this.childNavbar(true);
+    }
 
     Config(this, {
       'tabBarPlacement': {

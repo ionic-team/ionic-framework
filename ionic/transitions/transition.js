@@ -19,6 +19,11 @@ export class Transition extends Animation {
     // create animation for the entering item's "ion-view" element
     this.enteringView = new Animation(enteringItem.viewElement());
     this.enteringView.before.addClass(SHOW_VIEW_CSS);
+
+    this.enteringView.onPlay = () => {
+      enteringItem.postRender();
+    };
+
     this.add(this.enteringView);
 
     if (opts.navbar !== false) {
