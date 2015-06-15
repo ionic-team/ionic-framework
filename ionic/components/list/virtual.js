@@ -16,7 +16,14 @@ export class ListVirtualScroll {
     this.leavingItems = [];
 
     // Compute the initial sizes
-    this.resize();
+    setTimeout(() => {
+      this.resize();
+
+      // Simulate the first event to start layout
+      this._handleVirtualScroll({
+        target: this.content.scrollElement
+      });
+    })
 
     this.content.addScrollEventListener((event) => {
       this._handleVirtualScroll(event);
@@ -64,15 +71,17 @@ export class ListVirtualScroll {
     // virtual items we draw
     for(let i = topIndex, realIndex = 0; i < bottomIndex && i < items.length; i++, realIndex++) {
       item = items[i];
-      console.log('Drawing item', i);
+      console.log('Drawing item', i, item.title);
 
       shownItemRef = this.shownItems[i];
 
       // Is this a new item?
       if(!shownItemRef) {
         let itemView = this.viewContainer.create(this.list.itemTemplate.protoViewRef, realIndex);
+
         itemView.setLocal('\$implicit', item);
         itemView.setLocal('\$item', item);
+
         shownItemRef = new VirtualItemRef(item, i, realIndex, itemView);
 
         this.shownItems[i] = shownItemRef;
@@ -86,6 +95,7 @@ export class ListVirtualScroll {
 
     while(this.leavingItems.length) {
       let itemRef = this.leavingItems.pop();
+      console.log('Removing item', itemRef.item, itemRef.realIndex);
       this.viewContainer.remove(itemRef.realIndex);
     }
 
