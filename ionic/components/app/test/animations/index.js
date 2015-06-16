@@ -49,13 +49,17 @@ class IonicApp {
 
     this.animation.add(row1, row2);
 
-    this.animation.onReady = () => {
-      console.log('onReady');
-    }
+    this.animation.onReady(animation => {
+      console.log('onReady', animation);
+    });
 
-    this.animation.onFinish = () => {
-      console.log('onFinish');
-    }
+    this.animation.onPlay(animation => {
+      console.log('onPlay', animation);
+    });
+
+    this.animation.onFinish(animation => {
+      console.log('onFinish', animation);
+    });
 
   }
 

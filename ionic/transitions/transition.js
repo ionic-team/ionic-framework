@@ -20,9 +20,9 @@ export class Transition extends Animation {
     this.enteringView = new Animation(enteringItem.viewElement());
     this.enteringView.before.addClass(SHOW_VIEW_CSS);
 
-    this.enteringView.onPlay = () => {
+    this.enteringView.onPlay(() => {
       enteringItem.postRender();
-    };
+    });
 
     this.add(this.enteringView);
 

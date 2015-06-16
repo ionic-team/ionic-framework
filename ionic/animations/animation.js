@@ -1,6 +1,6 @@
-import {CSS, raf} from '../util/dom';
+import {CSS} from '../util/dom';
 
-const RENDER_DELAY = 32;
+const RENDER_DELAY = 36;
 let AnimationRegistry = {};
 
 /**
@@ -17,35 +17,29 @@ let AnimationRegistry = {};
   8) Run from/to animation on elements
   9) Animations finish async
  10) Set inline styles w/ the "to" effects on elements
- 11) Call onFinish()
- 12) Wait one rAF
- 13) Add after classes to elements
- 14) Remove after classes from elements
- 15) Resolve play()'s promise
+ 11) Add after classes to elements
+ 12) Remove after classes from elements
+ 13) Call onFinish()
+ 14) Resolve play()'s promise
 **/
 
 export class Animation {
 
   constructor(el) {
-    const self = this;
+    this._el = [];
+    this._children = [];
+    this._animations = [];
 
-    self._el = [];
-    self._parent = null;
-    self._children = [];
-    self._animations = [];
+    this._bfAdd = [];
+    this._bfRmv = [];
+    this._afAdd = [];
+    this._afRmv = [];
 
-    self._from = null;
-    self._to = null;
-    self._duration = null;
-    self._easing = null;
-    self._rate = null;
+    this._readyFns = [];
+    this._playFns = [];
+    this._finishFns = [];
 
-    self._bfAdd = [];
-    self._bfRmv = [];
-    self._afAdd = [];
-    self._afRmv = [];
-
-    self.elements(el);
+    this.elements(el);
   }
 
   elements(el) {
@@ -206,14 +200,8 @@ export class Animation {
         self._onPlay();
 
         beginPlay().then(() => {
-          for (let i = 0, l = children.length; i < l; i++) {
-            children[i]._onFinish();
-          }
           self._onFinish();
-          raf(() => {
-            self._onAfter();
-            resolve();
-          });
+          resolve();
         });
       }
 
@@ -239,102 +227,108 @@ export class Animation {
   stage() {
     // before the RENDER_DELAY
     // before the animations have started
-    const self = this;
-
-    if (!self._isStaged) {
-      self._isStaged = true;
+    if (!this._isStaged) {
+      this._isStaged = true;
 
       let i, l, j, ele;
 
-      for (i = 0, l = self._children.length; i < l; i++) {
-        self._children[i].stage();
+      for (i = 0, l = this._children.length; i < l; i++) {
+        this._children[i].stage();
       }
 
-      for (i = 0; i < self._el.length; i++) {
-        ele = self._el[i];
+      for (i = 0; i < this._el.length; i++) {
+        ele = this._el[i];
 
-        for (j = 0; j < self._bfAdd.length; j++) {
-          ele.classList.add(self._bfAdd[j]);
+        for (j = 0; j < this._bfAdd.length; j++) {
+          ele.classList.add(this._bfAdd[j]);
         }
 
-        for (j = 0; j < self._bfRmv.length; j++) {
-          ele.classList.remove(self._bfRmv[j]);
+        for (j = 0; j < this._bfRmv.length; j++) {
+          ele.classList.remove(this._bfRmv[j]);
         }
       }
 
-      if (self._to) {
+      if (this._to) {
         // only animate the elements if there are defined "to" effects
-        for (i = 0; i < self._el.length; i++) {
+        for (i = 0; i < this._el.length; i++) {
 
-          var animation = new Animate( self._el[i],
-                                       self._from,
-                                       self._to,
-                                       self.duration(),
-                                       self.easing(),
-                                       self.playbackRate() );
+          var animation = new Animate( this._el[i],
+                                       this._from,
+                                       this._to,
+                                       this.duration(),
+                                       this.easing(),
+                                       this.playbackRate() );
 
           if (animation.shouldAnimate) {
-            self._animations.push(animation);
+            this._animations.push(animation);
           }
 
         }
       }
 
-      self.onReady && self.onReady();
+      for (i = 0; i < this._readyFns.length; i++) {
+        this._readyFns[i](this);
+      }
     }
   }
 
   _onPlay() {
     // after the RENDER_DELAY
     // before the animations have started
-    for (let i = 0, l = this._children.length; i < l; i++) {
+    let i;
+
+    for (i = 0; i < this._children.length; i++) {
       this._children[i]._onPlay();
     }
-    this.onPlay && this.onPlay();
+
+    for (i = 0; i < this._playFns.length; i++) {
+      this._playFns[i](this);
+    }
   }
 
   _onFinish() {
     // after the animations have finished
     if (!this._isFinished) {
       this._isFinished = true;
-      this.onFinish && this.onFinish();
-    }
-  }
 
-  _onAfter() {
-    // one requestAnimationFrame after onFinish happened
-    let i, j, ele;
+      for (let i = 0, l = this._children.length; i < l; i++) {
+        this._children[i]._onFinish();
+      }
 
-    for (i = 0; i < this._children.length; i++) {
-      this._children[i]._onAfter();
-    }
+      // one requestAnimationFrame after onFinish happened
+      let i, j, ele;
 
-    if (this.playbackRate() < 0) {
-      // reverse direction
-      for (i = 0; i < this._el.length; i++) {
-        ele = this._el[i];
+      if (this.playbackRate() < 0) {
+        // reverse direction
+        for (i = 0; i < this._el.length; i++) {
+          ele = this._el[i];
 
-        for (j = 0; j < this._bfAdd.length; j++) {
-          ele.classList.remove(this._bfAdd[j]);
+          for (j = 0; j < this._bfAdd.length; j++) {
+            ele.classList.remove(this._bfAdd[j]);
+          }
+
+          for (j = 0; j < this._bfRmv.length; j++) {
+            ele.classList.add(this._bfRmv[j]);
+          }
         }
 
-        for (j = 0; j < this._bfRmv.length; j++) {
-          ele.classList.add(this._bfRmv[j]);
+      } else {
+        // normal direction
+        for (i = 0; i < this._el.length; i++) {
+          ele = this._el[i];
+
+          for (j = 0; j < this._afAdd.length; j++) {
+            ele.classList.add(this._afAdd[j]);
+          }
+
+          for (j = 0; j < this._afRmv.length; j++) {
+            ele.classList.remove(this._afRmv[j]);
+          }
         }
       }
 
-    } else {
-      // normal direction
-      for (i = 0; i < this._el.length; i++) {
-        ele = this._el[i];
-
-        for (j = 0; j < this._afAdd.length; j++) {
-          ele.classList.add(this._afAdd[j]);
-        }
-
-        for (j = 0; j < this._afRmv.length; j++) {
-          ele.classList.remove(this._afRmv[j]);
-        }
+      for (i = 0; i < this._finishFns.length; i++) {
+        this._finishFns[i](this);
       }
     }
   }
@@ -370,6 +364,18 @@ export class Animation {
     }
   }
 
+  onReady(fn) {
+    this._readyFns.push(fn);
+  }
+
+  onPlay(fn) {
+    this._playFns.push(fn);
+  }
+
+  onFinish(fn) {
+    this._finishFns.push(fn);
+  }
+
   dispose() {
     let i;
 
@@ -379,7 +385,8 @@ export class Animation {
     for (i = 0; i < this._animations.length; i++) {
       this._animations[i].dispose();
     }
-    this._el = this._parent = this._children = this._animations = null;
+
+    this._el = this._parent = this._children = this._animations = this._readyFns = this._playFns = this._finishFns = null;
   }
 
   /*
@@ -409,39 +416,37 @@ class Animate {
     // not using the direct API methods because they're still in flux
     // however, element.animate() seems locked in and uses the latest
     // and correct API methods under the hood, so really doesn't matter
-    const self = this;
+    this.toEffect = parseEffect(toEffect);
 
-    self.toEffect = parseEffect(toEffect);
+    this.shouldAnimate = (duration > RENDER_DELAY);
 
-    self.shouldAnimate = (duration > RENDER_DELAY);
-
-    if (!self.shouldAnimate) {
-      return inlineStyle(ele, self.toEffect);
+    if (!this.shouldAnimate) {
+      return inlineStyle(ele, this.toEffect);
     }
 
-    self.ele = ele;
-    self.resolve;
-    self.promise = new Promise(res => { self.resolve = res; });
+    this.ele = ele;
+    this.resolve;
+    this.promise = new Promise(res => { this.resolve = res; });
 
     // stage where the element will start from
     fromEffect = parseEffect(fromEffect);
     inlineStyle(ele, fromEffect);
 
-    self.duration = duration;
-    self.rate = playbackRate;
+    this.duration = duration;
+    this.rate = playbackRate;
 
-    self.easing = easingConfig && easingConfig.name || 'linear';
+    this.easing = easingConfig && easingConfig.name || 'linear';
 
-    self.effects = [ convertProperties(fromEffect) ];
+    this.effects = [ convertProperties(fromEffect) ];
 
-    if (self.easing in EASING_FN) {
-      insertEffects(self.effects, fromEffect, self.toEffect, easingConfig);
+    if (this.easing in EASING_FN) {
+      insertEffects(this.effects, fromEffect, this.toEffect, easingConfig);
 
-    } else if (self.easing in CUBIC_BEZIERS) {
-      self.easing = 'cubic-bezier(' + CUBIC_BEZIERS[self.easing] + ')';
+    } else if (this.easing in CUBIC_BEZIERS) {
+      this.easing = 'cubic-bezier(' + CUBIC_BEZIERS[this.easing] + ')';
     }
 
-    self.effects.push( convertProperties(self.toEffect) );
+    this.effects.push( convertProperties(this.toEffect) );
   }
 
   play() {
