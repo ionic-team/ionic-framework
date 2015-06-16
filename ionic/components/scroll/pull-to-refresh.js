@@ -7,7 +7,7 @@ import {Content} from 'ionic/ionic';
 
 @Component({
   selector: 'ion-refresher',
-  events: ['refreshing']
+  events: ['refresh']
 })
 @View({
   template: '<div class="refresher"></div>',
@@ -20,18 +20,19 @@ export class Refresher {
     this.domElement = element.domElement;
     this.domElement.classList.add('content');
 
-    //this.refreshEvent = new EventEmitter('refreshing');
+    this.refresh = new EventEmitter('refresh');
 
     setTimeout(() => {
+      this.doRefresh();
       content.scrollElement.addEventListener('scroll', function(e) {
         console.log('CONTENT: scroll', e.target.scrollTop);
       });
     }, 1000);
   }
 
-  refresh() {
+  doRefresh() {
     console.log('REFRESH');
-    this.refreshEvent.next({
+    this.refresh.next({
       amt: 0
     });
   }
