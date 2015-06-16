@@ -4,10 +4,24 @@
   var ITEM_CLASS = 'item';
   var ITEM_CONTENT_CLASS = 'item-content';
   var ITEM_SLIDING_CLASS = 'item-sliding';
-  var ITEM_OPTIONS_CLASS = 'item-options';
+  var ITEM_OPTIONS_LEFT_CLASS = 'item-options-left';
+  var ITEM_OPTIONS_RIGHT_CLASS = 'item-options-right';
   var ITEM_PLACEHOLDER_CLASS = 'item-placeholder';
   var ITEM_REORDERING_CLASS = 'item-reordering';
   var ITEM_REORDER_BTN_CLASS = 'item-reorder';
+
+  var RUBBER_COEFFICIENT = 0.4;
+  var VELOCITY_TRESHOLD = 0.3;
+
+  function grabButtons(content, cls) {
+    var buttons = content.parentNode.querySelector('.' + cls);
+    if(!buttons) {
+      return {width: 0};
+    }
+    buttons.classList.remove('invisible');
+
+    return {el: buttons, width: buttons.offsetWidth};
+  }
 
   var DragOp = function() {};
   DragOp.prototype = {
@@ -29,7 +43,7 @@
   SlideDrag.prototype = new DragOp();
 
   SlideDrag.prototype.start = function(e) {
-    var content, buttons, offsetX, buttonsWidth;
+    var content, offsetX, buttonsLeft, buttonsRight;
 
     if (!this.canSwipe()) {
       return;
@@ -55,17 +69,15 @@
     offsetX = parseFloat(content.style[ionic.CSS.TRANSFORM].replace('translate3d(', '').split(',')[0]) || 0;
 
     // Grab the buttons
-    buttons = content.parentNode.querySelector('.' + ITEM_OPTIONS_CLASS);
-    if (!buttons) {
+    buttonsLeft = grabButtons(content, ITEM_OPTIONS_LEFT_CLASS);
+    buttonsRight = grabButtons(content, ITEM_OPTIONS_RIGHT_CLASS);
+    if (!buttonsLeft.el && !buttonsRight.el) {
       return;
     }
-    buttons.classList.remove('invisible');
-
-    buttonsWidth = buttons.offsetWidth;
 
     this._currentDrag = {
-      buttons: buttons,
-      buttonsWidth: buttonsWidth,
+      buttonsLeft: buttonsLeft,
+      buttonsRight: buttonsRight,
       content: content,
       startOffsetX: offsetX
     };
@@ -100,12 +112,13 @@
       });
     }
     function makeInvisible() {
-      lastDrag.buttons && lastDrag.buttons.classList.add('invisible');
+      lastDrag.buttonsLeft.el && lastDrag.buttonsLeft.el.classList.add('invisible');
+      lastDrag.buttonsRight.el && lastDrag.buttonsRight.el.classList.add('invisible');
     }
   };
 
   SlideDrag.prototype.drag = ionic.animationFrameThrottle(function(e) {
-    var buttonsWidth;
+    var leftWidth, rightWidth;
 
     // We really aren't dragging
     if (!this._currentDrag) {
@@ -121,15 +134,20 @@
     }
 
     if (this._isDragging) {
-      buttonsWidth = this._currentDrag.buttonsWidth;
+      leftWidth = this._currentDrag.buttonsLeft.width;
+      rightWidth = this._currentDrag.buttonsRight.width;
 
-      // Grab the new X point, capping it at zero
-      var newX = Math.min(0, this._currentDrag.startOffsetX + e.gesture.deltaX);
+      // Grab the new X point, capping it at zero if applicable
+      var newX = this._currentDrag.startOffsetX + e.gesture.deltaX;
+      if (!leftWidth && newX > 0) newX = 0;
+      if (!rightWidth && newX < 0) newX = 0;
 
       // If the new X position is past the buttons, we need to slow down the drag (rubber band style)
-      if (newX < -buttonsWidth) {
-        // Calculate the new X position, capped at the top of the buttons
-        newX = Math.min(-buttonsWidth, -buttonsWidth + (((e.gesture.deltaX + buttonsWidth) * 0.4)));
+      if (newX > leftWidth) {
+        newX = Math.max(leftWidth, leftWidth + (e.gesture.deltaX - leftWidth) * RUBBER_COEFFICIENT);
+      }
+      if (newX < -rightWidth) {
+        newX = Math.min(-rightWidth, -rightWidth + (e.gesture.deltaX + rightWidth) * RUBBER_COEFFICIENT);
       }
 
       this._currentDrag.content.$$ionicOptionsOpen = newX !== 0;
@@ -140,7 +158,7 @@
   });
 
   SlideDrag.prototype.end = function(e, doneCallback) {
-    var self = this;
+    var self = this, offsetX, leftWidth, rightWidth, restingPoint, tooSlow;
 
     // There is no drag, just end immediately
     if (!self._currentDrag) {
@@ -150,28 +168,32 @@
 
     // If we are currently dragging, we want to snap back into place
     // The final resting point X will be the width of the exposed buttons
-    var restingPoint = -self._currentDrag.buttonsWidth;
+    offsetX = self._currentDrag.startOffsetX;
+    leftWidth = self._currentDrag.buttonsLeft.width;
+    rightWidth = self._currentDrag.buttonsRight.width;
 
     // Check if the drag didn't clear the buttons mid-point
     // and we aren't moving fast enough to swipe open
-    if (e.gesture.deltaX > -(self._currentDrag.buttonsWidth / 2)) {
-
-      // If we are going left but too slow, or going right, go back to resting
-      if (e.gesture.direction == "left" && Math.abs(e.gesture.velocityX) < 0.3) {
-        restingPoint = 0;
-
-      } else if (e.gesture.direction == "right") {
+    tooSlow = Math.abs(e.gesture.velocityX) < VELOCITY_TRESHOLD;
+    if (e.gesture.direction == 'left') {
+      restingPoint = -rightWidth;
+      if (e.gesture.deltaX + offsetX > -rightWidth / 2 && tooSlow) {
         restingPoint = 0;
       }
-
+    } else {
+      restingPoint = leftWidth;
+      if (e.gesture.deltaX + offsetX < leftWidth / 2 && tooSlow) {
+        restingPoint = 0;
+      }
     }
 
     ionic.requestAnimationFrame(function() {
       if (restingPoint === 0) {
         self._currentDrag.content.style[ionic.CSS.TRANSFORM] = '';
-        var buttons = self._currentDrag.buttons;
+        var drag = self._currentDrag;
         setTimeout(function() {
-          buttons && buttons.classList.add('invisible');
+          drag.buttonsLeft.el && drag.buttonsLeft.el.classList.add('invisible');
+          drag.buttonsRight.el && drag.buttonsRight.el.classList.add('invisible');
         }, 250);
       } else {
         self._currentDrag.content.style[ionic.CSS.TRANSFORM] = 'translate3d(' + restingPoint + 'px,0,0)';
@@ -544,7 +566,7 @@
 
         // Make sure this is an item with buttons
         item = self._getItem(e.target);
-        if (item && item.querySelector('.item-options')) {
+        if (item && (item.querySelector('.' + ITEM_OPTIONS_LEFT_CLASS) || item.querySelector('.' + ITEM_OPTIONS_RIGHT_CLASS))) {
           self._dragOp = new SlideDrag({
             el: self.el,
             item: item,
