@@ -27,17 +27,17 @@ export class Animation {
 
   constructor(el) {
     this._el = [];
-    this._children = [];
-    this._animations = [];
+    this._chld = [];
+    this._ani = [];
 
     this._bfAdd = [];
     this._bfRmv = [];
     this._afAdd = [];
     this._afRmv = [];
 
-    this._readyFns = [];
-    this._playFns = [];
-    this._finishFns = [];
+    this._readys = [];
+    this._plays = [];
+    this._finishes = [];
 
     this.elements(el);
   }
@@ -69,7 +69,7 @@ export class Animation {
     childAnimations = Array.isArray(childAnimations) ? childAnimations : arguments;
     for (let i = 0; i < childAnimations.length; i++) {
       childAnimations[i].parent(this);
-      this._children.push(childAnimations[i]);
+      this._chld.push(childAnimations[i]);
     }
     return this;
   }
@@ -97,11 +97,11 @@ export class Animation {
     if (arguments.length) {
       this._rate = value;
       let i;
-      for (i = 0; i < this._children.length; i++) {
-        this._children[i].playbackRate(value);
+      for (i = 0; i < this._chld.length; i++) {
+        this._chld[i].playbackRate(value);
       }
-      for (i = 0; i < this._animations.length; i++) {
-        this._animations[i].playbackRate(value);
+      for (i = 0; i < this._ani.length; i++) {
+        this._ani[i].playbackRate(value);
       }
       return this;
     }
@@ -164,8 +164,8 @@ export class Animation {
 
   play() {
     const self = this;
-    const animations = self._animations;
-    const children = self._children;
+    const animations = self._ani;
+    const children = self._chld;
     let promises = [];
     let i, l;
 
@@ -230,10 +230,10 @@ export class Animation {
     if (!this._isStaged) {
       this._isStaged = true;
 
-      let i, l, j, ele;
+      let i, l, j, ele, animation;
 
-      for (i = 0, l = this._children.length; i < l; i++) {
-        this._children[i].stage();
+      for (i = 0, l = this._chld.length; i < l; i++) {
+        this._chld[i].stage();
       }
 
       for (i = 0; i < this._el.length; i++) {
@@ -252,22 +252,22 @@ export class Animation {
         // only animate the elements if there are defined "to" effects
         for (i = 0; i < this._el.length; i++) {
 
-          var animation = new Animate( this._el[i],
-                                       this._from,
-                                       this._to,
-                                       this.duration(),
-                                       this.easing(),
-                                       this.playbackRate() );
+          animation = new Animate( this._el[i],
+                                   this._from,
+                                   this._to,
+                                   this.duration(),
+                                   this.easing(),
+                                   this.playbackRate() );
 
           if (animation.shouldAnimate) {
-            this._animations.push(animation);
+            this._ani.push(animation);
           }
 
         }
       }
 
-      for (i = 0; i < this._readyFns.length; i++) {
-        this._readyFns[i](this);
+      for (i = 0; i < this._readys.length; i++) {
+        this._readys[i](this);
       }
     }
   }
@@ -277,12 +277,12 @@ export class Animation {
     // before the animations have started
     let i;
 
-    for (i = 0; i < this._children.length; i++) {
-      this._children[i]._onPlay();
+    for (i = 0; i < this._chld.length; i++) {
+      this._chld[i]._onPlay();
     }
 
-    for (i = 0; i < this._playFns.length; i++) {
-      this._playFns[i](this);
+    for (i = 0; i < this._plays.length; i++) {
+      this._plays[i](this);
     }
   }
 
@@ -291,12 +291,11 @@ export class Animation {
     if (!this._isFinished) {
       this._isFinished = true;
 
-      for (let i = 0, l = this._children.length; i < l; i++) {
-        this._children[i]._onFinish();
-      }
-
-      // one requestAnimationFrame after onFinish happened
       let i, j, ele;
+
+      for (i = 0; i < this._chld.length; i++) {
+        this._chld[i]._onFinish();
+      }
 
       if (this.playbackRate() < 0) {
         // reverse direction
@@ -327,8 +326,8 @@ export class Animation {
         }
       }
 
-      for (i = 0; i < this._finishFns.length; i++) {
-        this._finishFns[i](this);
+      for (i = 0; i < this._finishes.length; i++) {
+        this._finishes[i](this);
       }
     }
   }
@@ -337,20 +336,20 @@ export class Animation {
     this._hasFinished = false;
 
     let i;
-    for (i = 0; i < this._children.length; i++) {
-      this._children[i].pause();
+    for (i = 0; i < this._chld.length; i++) {
+      this._chld[i].pause();
     }
 
-    for (i = 0; i < this._animations.length; i++) {
-      this._animations[i].pause();
+    for (i = 0; i < this._ani.length; i++) {
+      this._ani[i].pause();
     }
   }
 
   progress(value) {
     let i;
 
-    for (i = 0; i < this._children.length; i++) {
-      this._children[i].progress(value);
+    for (i = 0; i < this._chld.length; i++) {
+      this._chld[i].progress(value);
     }
 
     if (!this._initProgress) {
@@ -359,34 +358,34 @@ export class Animation {
       this.pause();
     }
 
-    for (i = 0; i < this._animations.length; i++) {
-      this._animations[i].progress(value);
+    for (i = 0; i < this._ani.length; i++) {
+      this._ani[i].progress(value);
     }
   }
 
   onReady(fn) {
-    this._readyFns.push(fn);
+    this._readys.push(fn);
   }
 
   onPlay(fn) {
-    this._playFns.push(fn);
+    this._plays.push(fn);
   }
 
   onFinish(fn) {
-    this._finishFns.push(fn);
+    this._finishes.push(fn);
   }
 
   dispose() {
     let i;
 
-    for (i = 0; i < this._children.length; i++) {
-      this._children[i].dispose();
+    for (i = 0; i < this._chld.length; i++) {
+      this._chld[i].dispose();
     }
-    for (i = 0; i < this._animations.length; i++) {
-      this._animations[i].dispose();
+    for (i = 0; i < this._ani.length; i++) {
+      this._ani[i].dispose();
     }
 
-    this._el = this._parent = this._children = this._animations = this._readyFns = this._playFns = this._finishFns = null;
+    this._el = this._parent = this._chld = this._ani = this._readys = this._plays = this._finishes = null;
   }
 
   /*
