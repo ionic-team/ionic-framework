@@ -1,22 +1,20 @@
-import {Descendent, NgElement, Component, View, bootstrap} from 'angular2/angular2';
-import {Content} from 'ionic/components/content/content';
-import {Icon} from 'ionic/components/icon/icon';
-import {Checkbox} from 'ionic/components/checkbox/checkbox';
-import {List} from 'ionic/components/list/list';
-import {Refresher} from 'ionic/components/scroll/pull-to-refresh';
+import {bootstrap, NgFor, ProtoViewRef, ViewContainerRef} from 'angular2/angular2'
+import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
+import {View} from 'angular2/src/core/annotations_impl/view';
+import {Parent} from 'angular2/src/core/annotations_impl/visibility';
+
+import {Refresher, Content, List, Item} from 'ionic/ionic';
+
 
 @Component({ selector: 'ion-app' })
 @View({
   templateUrl: 'main.html',
-  directives: [Content, Icon, Checkbox, List, Refresher]
+  directives: [Content, List, Item, Refresher]
 })
 class IonicApp {
-  constructor(
-    @NgElement() element:NgElement
-  ) {
+  constructor() {
     console.log('IonicApp Start')
   }
-
   doRefresh() {
     console.log('DOREFRESH')
   }
