@@ -1,8 +1,8 @@
 ion-refresher {
-  position: absolute;
+  position: fixed;
   display: block;
   height: 100px;
   width: 100%;
   background-color: red;
-  z-index: -1;
+  z-index: 0;
 }

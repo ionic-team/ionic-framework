@@ -23,7 +23,6 @@ export class Refresher {
     this.refresh = new EventEmitter('refresh');
 
     setTimeout(() => {
-      this.doRefresh();
       content.scrollElement.addEventListener('scroll', function(e) {
         console.log('CONTENT: scroll', e.target.scrollTop);
       });
