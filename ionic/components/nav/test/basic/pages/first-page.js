@@ -1,7 +1,7 @@
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
-import {NavController, NavbarTemplate, Navbar, NavPush, Content} from 'ionic/ionic';
+import {Routable, NavController, NavbarTemplate, Navbar, NavPush, Content} from 'ionic/ionic';
 import {SecondPage} from './second-page';
 
 
@@ -34,6 +34,8 @@ export class FirstPage {
   ) {
     this.nav = nav;
     this.val = Math.round(Math.random() * 8999) + 1000;
+
+    FirstPage.router.invoke(this);
 
     this.pushPage = SecondPage;
     this.pushData = {
@@ -81,3 +83,7 @@ export class FirstPage {
     this.nav.push(SecondPage, { id: 8675309, myData: [1,2,3,4] }, { animation: 'ios' });
   }
 }
+
+new Routable(FirstPage, {
+  url: '/first-page'
+})

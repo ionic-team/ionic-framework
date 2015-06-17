@@ -158,7 +158,13 @@ export class Routable {
     this.componentClass = componentClass;
     this.routeInfo = routeInfo;
 
-    componentClass._route = this;
+    console.log('New routable', componentClass, routeInfo);
+
+    componentClass.router = this;
+  }
+  invoke(componentInstance) {
+    console.log('Routable invoke', componentInstance);
+    Router.emit(this.routeInfo.url);
   }
 }
 
