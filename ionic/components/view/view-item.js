@@ -1,3 +1,4 @@
+import {EventEmitter} from 'angular2/angular2';
 import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 import {bind} from 'angular2/di';
@@ -156,6 +157,8 @@ export class ViewItem {
 
   setInstance(instance) {
     this.instance = instance;
+
+    this.instance._viewDidEnter = new EventEmitter('viewDidEnter');
   }
 
   cache() {
@@ -266,6 +269,7 @@ export class ViewItem {
       navbarView.didEnter();
     }
     this.instance && this.instance.viewDidEnter && this.instance.viewDidEnter();
+    this.instance && this.instance._viewDidEnter.next();
   }
 
   /*

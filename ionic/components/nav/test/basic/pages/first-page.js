@@ -1,5 +1,6 @@
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
+import {ObservableWrapper} from 'angular2/src/facade/async';
 
 import {Routable, Router, NavController, NavbarTemplate, Navbar, NavPush, Content} from 'ionic/ionic';
 import {SecondPage} from './second-page';
@@ -41,6 +42,13 @@ export class FirstPage {
     this.pushData = {
       id: 420
     }
+
+    setTimeout(() => {
+      console.log(this._viewDidEnter);
+      ObservableWrapper.subscribe(this._viewDidEnter, () => {
+        console.log('ENTERRRRR');
+      });
+    });
   }
 
   viewLoaded() {
