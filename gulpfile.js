@@ -141,7 +141,7 @@ gulp.task('bundle.deps', function() {
       baseURL: 'file:' + process.cwd(),
       paths : {
         "ionic/*": "dist/js/es6/ionic/*.js",
-        "angular2/*": "angular2/dist/js/dev/es6/angular2/*.es6",
+        "angular2/*": "angular2/dist/js/dev/es6/angular2/*.js",
       }
     });
     return builder.build('dist/js/es6/ionic/**/* - [dist/js/es6/ionic/**/*]', 'dist/js/dependencies.js');
