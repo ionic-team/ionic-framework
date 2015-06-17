@@ -1,7 +1,7 @@
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
-import {NavController, NavPop, NavParams, NavbarTemplate, Navbar, Content} from 'ionic/ionic';
+import {Routable, NavController, NavPop, NavParams, NavbarTemplate, Navbar, Content} from 'ionic/ionic';
 import {ThirdPage} from './third-page';
 
 
@@ -35,6 +35,8 @@ export class SecondPage {
     this.nav = nav;
     this.params = params;
     this.val = Math.round(Math.random() * 8999) + 1000;
+
+    SecondPage.router.invoke(this);
 
     console.log('Second page params:', params);
   }
@@ -84,3 +86,7 @@ export class SecondPage {
   }
 
 }
+
+new Routable(SecondPage, {
+  url: '/second-page'
+})
