@@ -76,6 +76,9 @@ export class Transition extends Animation {
 
   }
 
+  viewWidth() {
+    return this._w || (this._w = this.leaving && this.leaving.viewElement().offsetWidth);
+  }
 
   /*
    STATIC CLASSES

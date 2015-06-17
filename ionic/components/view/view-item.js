@@ -213,6 +213,13 @@ export class ViewItem {
     }
   }
 
+  backButtonTextElement() {
+    let navbarView = this.navbarView();
+    if (navbarView) {
+      return navbarView.backButtonTextElement();
+    }
+  }
+
   navbarItemElements() {
     let navbarView = this.navbarView();
     if (navbarView) {
@@ -254,6 +261,10 @@ export class ViewItem {
   */
   didEnter() {
     this.pane && this.pane.showPane(true);
+    let navbarView = this.navbarView();
+    if (navbarView) {
+      navbarView.didEnter();
+    }
     this.instance && this.instance.viewDidEnter && this.instance.viewDidEnter();
   }
 

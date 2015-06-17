@@ -18,8 +18,8 @@ import * as dom from '../../util/dom';
       <button class="back-button button">
         <icon class="back-button-icon ion-ios-arrow-back"></icon>
         <span class="back-button-text">
-          <span class="back-default">Back</span>
-          <span class="back-title"></span>
+          <span class="back-default" [inner-text]="bbDefault"></span>
+          <span class="back-title" [inner-text]="bbText"></span>
         </span>
       </button>
       <div class="navbar-title">
@@ -35,13 +35,16 @@ import * as dom from '../../util/dom';
       </div>
     </div>
   `,
-  directives: [BackButton, Title, NavbarItem]
+  directives: [BackButton, BackButtonText, Title, NavbarItem]
 })
 export class Navbar {
   constructor(item: ViewItem, elementRef: ElementRef) {
     this._ele = elementRef.domElement;
     this._itmEles = [];
     item.navbarView(this);
+
+    this.bbDefault = 'Back';
+    this.bbText = '';
   }
 
   element() {
@@ -53,6 +56,13 @@ export class Navbar {
       this._bbEle = arguments[0];
     }
     return this._bbEle;
+  }
+
+  backButtonTextElement() {
+    if (arguments.length) {
+      this._bbTxEle = arguments[0];
+    }
+    return this._bbTxEle;
   }
 
   titleElement() {
@@ -67,6 +77,13 @@ export class Navbar {
       this._itmEles.push(arguments[0]);
     }
     return this._itmEles;
+  }
+
+  titleText() {
+    if (arguments.length) {
+      this._ttTxt.push(arguments[0]);
+    }
+    return this._ttTxt;
   }
 
   alignTitle() {
@@ -105,6 +122,13 @@ export class Navbar {
       innerTitleEle.style.margin = this._ttMargin = margin;
     }
   }
+
+  didEnter() {
+    setTimeout(() => {
+      const titleEle = this._ttEle || (this._ttEle = this._ele.querySelector('ion-title'));
+      //this.titleText((titleEle && titleEle.textContent) || '');
+    }, 32);
+  }
 }
 
 @Directive({
@@ -127,9 +151,18 @@ class BackButton {
 }
 
 @Directive({
+  selector: '.back-button-text'
+})
+class BackButtonText {
+  constructor(@Parent() navbar: Navbar, elementRef: ElementRef) {
+    navbar.backButtonTextElement(elementRef.domElement);
+  }
+}
+
+@Directive({
   selector: '.navbar-title'
 })
-export class Title {
+class Title {
   constructor(@Parent() navbar: Navbar, elementRef: ElementRef) {
     navbar.titleElement(elementRef.domElement);
   }
@@ -138,7 +171,7 @@ export class Title {
 @Directive({
   selector: '.navbar-item'
 })
-export class NavbarItem {
+class NavbarItem {
   constructor(@Parent() navbar: Navbar, elementRef: ElementRef) {
     navbar.itemElements(elementRef.domElement);
   }

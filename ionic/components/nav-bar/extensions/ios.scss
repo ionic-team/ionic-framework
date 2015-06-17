@@ -54,6 +54,7 @@ $navbar-ios-button-background-color:       transparent !default;
 
   .back-button {
     order: map-get($navbar-order-ios, 'back-button');
+    overflow: inherit;
   }
 
   .button {

@@ -60,6 +60,12 @@ class IOSTransition extends Transition {
         .to(TRANSLATEX, OFF_RIGHT)
         .to(OPACITY, 0);
 
+      if (this.leaving.enableBack() && this.viewWidth() > 200) {
+        let leavingBackButtonText = new Animation(this.leaving.backButtonTextElement());
+        leavingBackButtonText.fromTo(TRANSLATEX, CENTER, (this.viewWidth() / 2) + 'px');
+        this.leavingNavbar.add(leavingBackButtonText);
+      }
+
     } else {
       // forward direction
       this.enteringView
@@ -76,6 +82,12 @@ class IOSTransition extends Transition {
       this.leavingTitle
         .to(TRANSLATEX, OFF_LEFT)
         .to(OPACITY, 0);
+
+      if (this.entering.enableBack() && this.viewWidth() > 200) {
+        let enteringBackButtonText = new Animation(this.entering.backButtonTextElement());
+        enteringBackButtonText.fromTo(TRANSLATEX, (this.viewWidth() / 2) + 'px', CENTER);
+        this.enteringNavbar.add(enteringBackButtonText);
+      }
     }
 
   }
