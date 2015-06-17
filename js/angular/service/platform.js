@@ -12,6 +12,7 @@
 IonicModule
 .constant('IONIC_BACK_PRIORITY', {
   view: 100,
+  registerBackButtonDirective: 110,
   sideMenu: 150,
   modal: 200,
   actionSheet: 300,
