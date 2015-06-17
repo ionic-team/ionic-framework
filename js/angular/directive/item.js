@@ -79,6 +79,15 @@ IonicModule
               content.$$ionicOptionsOpen = false;
             }
           });
+
+          // Prevents the click event to propagate if the option button is opened
+          $element.on('click', function(event){
+            if (content && content.$$ionicOptionsOpen) {
+              event.preventDefault();
+              content.style[ionic.CSS.TRANSFORM] = '';
+              content.$$ionicOptionsOpen = false;
+            }
+          });
         }
       };
 
