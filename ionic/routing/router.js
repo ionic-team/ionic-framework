@@ -6,6 +6,7 @@
 export class RouterController {
   constructor() {
     this.routes = []
+    console.log('Router controller built');
   }
 
   // Build route params to send to the matching route.
@@ -164,8 +165,10 @@ export class Routable {
   }
   invoke(componentInstance) {
     console.log('Routable invoke', componentInstance);
-    Router.emit(this.routeInfo.url);
+
+    return this;
   }
+
 }
 
 var Router = new RouterController();

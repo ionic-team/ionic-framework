@@ -1,7 +1,7 @@
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
-import {Routable, NavController, NavPop, NavParams, NavbarTemplate, Navbar, Content} from 'ionic/ionic';
+import {Routable, Router, NavController, NavPop, NavParams, NavbarTemplate, Navbar, Content} from 'ionic/ionic';
 import {ThirdPage} from './third-page';
 
 
@@ -36,7 +36,7 @@ export class SecondPage {
     this.params = params;
     this.val = Math.round(Math.random() * 8999) + 1000;
 
-    SecondPage.router.invoke(this);
+    this.router = SecondPage.router.invoke(this);
 
     console.log('Second page params:', params);
   }
@@ -59,6 +59,7 @@ export class SecondPage {
 
   viewDidEnter() {
     console.log('viewDidEnter second page');
+    Router.emit(this.router.routeInfo.url);
   }
 
   viewWillLeave() {

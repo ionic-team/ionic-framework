@@ -1,7 +1,7 @@
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
-import {Routable, NavController, NavbarTemplate, Navbar, NavPush, Content} from 'ionic/ionic';
+import {Routable, Router, NavController, NavbarTemplate, Navbar, NavPush, Content} from 'ionic/ionic';
 import {SecondPage} from './second-page';
 
 
@@ -35,7 +35,7 @@ export class FirstPage {
     this.nav = nav;
     this.val = Math.round(Math.random() * 8999) + 1000;
 
-    FirstPage.router.invoke(this);
+    this.router = FirstPage.router.invoke(this);
 
     this.pushPage = SecondPage;
     this.pushData = {
@@ -53,6 +53,7 @@ export class FirstPage {
 
   viewDidEnter() {
     console.log('viewDidEnter first page');
+    Router.emit(this.router.routeInfo.url);
   }
 
   viewWillLeave() {
