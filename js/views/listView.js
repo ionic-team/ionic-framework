@@ -18,7 +18,6 @@
     if(!buttons) {
       return {width: 0};
     }
-    buttons.classList.remove('invisible');
 
     return {el: buttons, width: buttons.offsetWidth};
   }
@@ -125,17 +124,27 @@
       return;
     }
 
-    // Check if we should start dragging. Check if we've dragged past the threshold,
-    // or we are starting from the open state.
-    if (!this._isDragging &&
-        ((Math.abs(e.gesture.deltaX) > this.dragThresholdX) ||
-        (Math.abs(this._currentDrag.startOffsetX) > 0))) {
-      this._isDragging = true;
+    // Check if we should start dragging.
+    if (!this._isDragging) {
+
+      // If we are starting from a closed state, display the button depending on the direction
+      if (Math.abs(this._currentDrag.startOffsetX) == 0){
+        if (this._currentDrag.buttonsLeft.el && e.gesture.direction === 'right') {
+          this._currentDrag.buttonsLeft.el.classList.remove('invisible');
+        } else if (this._currentDrag.buttonsRight.el) {
+          this._currentDrag.buttonsRight.el.classList.remove('invisible');
+        }
+      }
+
+      // Check if we've dragged past the threshold, or we are starting from the open state.
+      if ((Math.abs(e.gesture.deltaX) > this.dragThresholdX) || (Math.abs(this._currentDrag.startOffsetX) > 0)) {
+        this._isDragging = true;
+      }
     }
 
     if (this._isDragging) {
-      leftWidth = this._currentDrag.buttonsLeft.width;
-      rightWidth = this._currentDrag.buttonsRight.width;
+      leftWidth = (this._currentDrag.buttonsLeft.el && this._currentDrag.buttonsLeft.el.classList.contains('invisible')) ? 0 : this._currentDrag.buttonsLeft.width;
+      rightWidth = (this._currentDrag.buttonsRight.el && this._currentDrag.buttonsRight.el.classList.contains('invisible')) ? 0 : this._currentDrag.buttonsRight.width;
 
       // Grab the new X point, capping it at zero if applicable
       var newX = this._currentDrag.startOffsetX + e.gesture.deltaX;
@@ -169,8 +178,8 @@
     // If we are currently dragging, we want to snap back into place
     // The final resting point X will be the width of the exposed buttons
     offsetX = self._currentDrag.startOffsetX;
-    leftWidth = self._currentDrag.buttonsLeft.width;
-    rightWidth = self._currentDrag.buttonsRight.width;
+    leftWidth = (this._currentDrag.buttonsLeft.el && this._currentDrag.buttonsLeft.el.classList.contains('invisible')) ? 0 : this._currentDrag.buttonsLeft.width;
+    rightWidth = (this._currentDrag.buttonsLeft.el && this._currentDrag.buttonsRight.el.classList.contains('invisible')) ? 0 : this._currentDrag.buttonsRight.width;
 
     // Check if the drag didn't clear the buttons mid-point
     // and we aren't moving fast enough to swipe open

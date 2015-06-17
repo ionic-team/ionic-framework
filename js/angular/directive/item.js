@@ -83,9 +83,18 @@ IonicModule
           // Prevents the click event to propagate if the option button is opened
           $element.on('click', function(event){
             if (content && content.$$ionicOptionsOpen) {
+              var self = this;
               event.preventDefault();
+
               content.style[ionic.CSS.TRANSFORM] = '';
               content.$$ionicOptionsOpen = false;
+
+              setTimeout(function(){
+                var optionButtons = self.querySelectorAll('div[class*="item-options"]');
+                for(var i = 0; i < optionButtons.length; i++){
+                  optionButtons[i].classList.add('invisible');
+                }
+              }, 250);
             }
           });
         }
