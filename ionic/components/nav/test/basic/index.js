@@ -2,7 +2,7 @@ import {bootstrap, QueryList} from 'angular2/angular2'
 import {Component, Directive, onInit} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
-import {Nav, NavPush, NavPop, NavParams, Routable, Router, NavController, NavbarTemplate, Navbar, NavPush, Content} from 'ionic/ionic';
+import {Button, Nav, NavPush, NavPop, NavParams, Routable, Router, NavController, NavbarTemplate, Navbar, NavPush, Content} from 'ionic/ionic';
 
 import {SecondPage} from './pages/second-page'
 
@@ -19,7 +19,7 @@ import {SecondPage} from './pages/second-page'
       '</ion-nav-items>' +
       '<ion-nav-items secondary>' +
         '<button class="button">S1</button>' +
-        '<button class="button">S2</button>' +
+        '<button icon><i class="icon ion-navicon"></i></button>' +
       '</ion-nav-items>' +
     '</ion-navbar>' +
     '<ion-content class="padding">' +
@@ -30,7 +30,7 @@ import {SecondPage} from './pages/second-page'
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
     '</ion-content>',
-  directives: [NavbarTemplate, Navbar, NavPush, Content]
+  directives: [Button, NavbarTemplate, Navbar, NavPush, Content]
 })
 export default class FirstPage {
   constructor(
