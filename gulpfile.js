@@ -109,7 +109,7 @@ var babelOptions = {
 };
 
 gulp.task('transpile', function() {
-  return gulp.src(['ionic/**/*.js', '!ionic/components/*/test/**/*'])
+  return gulp.src(['ionic/**/*.js', '!ionic/components/*/test/**/*', '!ionic/init.js'])
              .pipe(cache('transpile', { optimizeMemory: true }))
              .pipe(traceur(traceurOptions))
              .on('error', function (err) {
@@ -126,7 +126,7 @@ gulp.task('transpile', function() {
 });
 
 gulp.task('bundle.js', function() {
-  return gulp.src('dist/js/es5/ionic/**/*.js')
+  return gulp.src(['dist/js/es5/ionic/**/*.js', 'ionic/init.js'])
              .pipe(concat('ionic.bundle.js'))
              .pipe(gulp.dest('dist/js/'));
 });
@@ -171,7 +171,7 @@ gulp.task('examples', function() {
     .pipe(gulp.dest('dist/examples/'))
 
   function createIndexHTML() {
-    var indexContents = _.template(
+    var template = _.template(
       fs.readFileSync('scripts/e2e/ionic.template.html')
     )({
       buildConfig: buildConfig
@@ -179,6 +179,15 @@ gulp.task('examples', function() {
 
     return through2.obj(function(file, enc, next) {
       var self = this;
+
+      var module = path.dirname(file.path)
+                      .replace(__dirname, '')
+                      .replace('/ionic/components/', 'dist/examples/')
+                      .replace('/test/', '/') +
+                      '/index';
+
+      var indexContents = template.replace('{{MODULE}}', module);
+
       self.push(new VinylFile({
         base: file.base,
         contents: new Buffer(indexContents),
