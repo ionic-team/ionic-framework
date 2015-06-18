@@ -8,7 +8,7 @@ export class Overlay {
 
   /* Instance Methods */
   open(animation) {
-    animation = animation || this._opts.enterAnimation;
+    animation = animation || this.options.enterAnimation;
     let enterAnimation = Animation.create(this.domElement, animation);
     ClickBlock(true, enterAnimation.duration() + 200);
 
@@ -23,7 +23,7 @@ export class Overlay {
 
   close(animation) {
     return new Promise(resolve => {
-      animation = animation || this._opts.leaveAnimation;
+      animation = animation || this.options.leaveAnimation;
       let leavingAnimation = Animation.create(this.domElement, animation);
 
       leavingAnimation.play().then(() => {
@@ -34,9 +34,9 @@ export class Overlay {
     });
   }
 
-  setOptions(opts) {
-    if (!this._opts) this._opts = {};
-    util.extend(this._opts, opts);
+  extendOptions(opts) {
+    if (!this.options) this.options = {};
+    util.extend(this.options, opts);
   }
 
   _clean() {
@@ -46,14 +46,18 @@ export class Overlay {
 
   /* Static Methods */
   static create(ComponentType: Type, opts) {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       IonicRoot.append(ComponentType).then((ref) => {
         let overlay = ref.instance;
         overlay._dispose = ref.dispose;
         overlay.domElement = ref.elementRef.domElement;
-        overlay.setOptions(opts);
+        overlay.extendOptions(opts);
         overlay.open();
         resolve(overlay);
+
+      }).catch(err => {
+        console.error('Overlay create:', err);
+        reject(err);
       });
     });
   }

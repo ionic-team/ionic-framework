@@ -78,7 +78,7 @@ class IonicAppRoot {
     let loader = rootComponent.loader;
     let elementRef = rootComponent.anchorElementRef();
 
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       rootComponent.compiler.compileInHost(ComponentType).then(componentProtoViewRef => {
 
         let containerRef = rootComponent.anchorViewContainerRef();
@@ -92,6 +92,9 @@ class IonicAppRoot {
         };
 
         resolve(hostViewRef);
+      }).catch(err => {
+        console.error('IonicAppRoot append:', err);
+        reject(err);
       });
     });
   }

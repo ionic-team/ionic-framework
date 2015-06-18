@@ -6,7 +6,7 @@ export class Modal extends Overlay {
 
   constructor() {
     super();
-    this.setOptions({
+    this.extendOptions({
       enterAnimation: 'modal-slide-in',
       leaveAnimation: 'modal-slide-out'
     });

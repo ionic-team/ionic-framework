@@ -11,23 +11,11 @@ import {ViewController} from '../view/view-controller';
 import {ViewItem} from '../view/view-item';
 import {TabButton} from './tab-button';
 import {Icon} from '../icon/icon';
-import {IonicComponent} from '../../config/component';
-import {ModeComponent} from '../../config/component';
+import {IonicComponentNEW} from '../../config/component';
 import {Config} from '../../config/component';
 
 
-@ModeComponent({
-  selector: 'ion-tabs',
-  properties: [
-    'tabBarPlacement',
-    'tabBarIcons'
-  ],
-  hostProperties: {
-    'tabBarPlacement': 'attr.tab-bar-placement',
-    'tabBarIcons': 'attr.tab-bar-icons'
-  },
-  classId: 'tabs'
-})
+@IonicComponentNEW(Tabs)
 @View({
   template: `
     <nav class="navbar-container tab-bar-container">
@@ -134,6 +122,25 @@ export class Tabs extends ViewController {
 
   get tabs() {
     return this.instances();
+  }
+
+  static get config() {
+    return {
+      selector: 'ion-tabs',
+      properties: [
+        'tabBarPlacement',
+        'tabBarIcons'
+      ],
+      hostProperties: {
+        'tabBarPlacement': 'attr.tab-bar-placement',
+        'tabBarIcons': 'attr.tab-bar-icons'
+      },
+      classId: 'tabs',
+      propertyDefaults: {
+        'tabBarPlacement': 'top',
+        'tabBarIcons': 'bottom'
+      }
+    }
   }
 
 }

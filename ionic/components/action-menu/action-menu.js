@@ -14,12 +14,12 @@ import {IonicRoot} from '../app/app';
 import * as util from 'ionic/util';
 
 import {Overlay} from '../overlay/overlay';
-import {IonicComponentNew} from '../../config/component';
+import {IonicComponentNEW} from '../../config/component';
 import {Animation} from 'ionic/animations/animation';
 import {ClickBlock} from '../../util/click-block';
 
 
-@IonicComponentNew(ActionMenu)
+@IonicComponentNEW(ActionMenu)
 @View({
   template: `
     <div class="action-menu-backdrop" (click)="cancel()"></div>
@@ -41,16 +41,13 @@ export class ActionMenu extends Overlay {
   constructor() {
     super();
 
-    this.setOptions({
+    this.extendOptions({
+      destructiveButtonClicked: util.noop,
+      buttonClicked: util.noop,
+      cancel: util.noop,
       enterAnimation: 'action-menu-slide-in',
       leaveAnimation: 'action-menu-slide-out'
     });
-
-    this.options = {
-      destructiveButtonClicked: util.noop,
-      buttonClicked: util.noop,
-      cancel: util.noop
-    };
   }
 
   cancel() {
