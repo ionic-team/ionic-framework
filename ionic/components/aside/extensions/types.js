@@ -15,15 +15,15 @@ const asideManipulator = {
 }
 const contentManipulator = {
   setSliding(sliding) {
-    this.aside.content.domElement.classList[sliding ? 'add' : 'remove']('no-transition');
+    this.aside.contentElement.classList[sliding ? 'add' : 'remove']('no-transition');
   },
   setOpen(open) {
-    this.aside.content.domElement.classList[open ? 'add' : 'remove'](
+    this.aside.contentElement.classList[open ? 'add' : 'remove'](
       `aside-open-${this.aside.side}`
     )
   },
   setTransform(t) {
-    this.aside.content.domElement.style[CSS.transform] = t;
+    this.aside.contentElement.style[CSS.transform] = t;
   }
 }
 
@@ -33,7 +33,7 @@ export class AsideType {
 
     //FIXME(ajoslin): have to wait for for bindings to apply in a component
     setTimeout(() => {
-      aside.content.domElement.classList.add('aside-content')
+      aside.contentElement.classList.add('aside-content')
     })
   }
 }

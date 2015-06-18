@@ -41,6 +41,7 @@ export class Aside {
       this.domElement.setAttribute('type', this.type);
 
       console.log('Aside content', this.content);
+      this.contentElement = (this.content instanceof Node) ? this.content : this.content.domElement;
 
       this.config = Aside.config.invoke(this)
       this.gestureDelegate = this.config.getDelegate('gesture');
@@ -53,14 +54,7 @@ export class Aside {
   }
 
   getContentElement() {
-    if(!this.content && !this.content.domElement) {
-      console.error('Aside: make sure to specify a content target using #var on the element');
-      return null;
-    }
-    if(this.content instanceof Node) {
-      return this.content;
-    }
-    return this.content.domElement;
+    return this.contentElement;
   }
 
   setOpenAmt(v) {
