@@ -36,7 +36,6 @@ export class SecondPage {
     this.params = params;
     this.val = Math.round(Math.random() * 8999) + 1000;
 
-    this.router = SecondPage.router.invoke(this);
 
     console.log('Second page params:', params);
   }
@@ -51,6 +50,7 @@ export class SecondPage {
 
   viewLoaded() {
     console.log('viewLoaded second page');
+    this.router = SecondPage.router.invoke(this);
   }
 
   viewWillEnter() {
@@ -59,7 +59,6 @@ export class SecondPage {
 
   viewDidEnter() {
     console.log('viewDidEnter second page');
-    Router.emit(this.router.routeInfo.url);
   }
 
   viewWillLeave() {

@@ -159,12 +159,19 @@ export class Routable {
     this.componentClass = componentClass;
     this.routeInfo = routeInfo;
 
-    console.log('New routable', componentClass, routeInfo);
+    //console.log('New routable', componentClass, routeInfo);
 
     componentClass.router = this;
   }
   invoke(componentInstance) {
-    console.log('Routable invoke', componentInstance);
+    // Called on viewLoaded
+
+    // Bind some lifecycle events
+    componentInstance._viewWillEnter.observer({
+      next: () => {
+        Router.emit(this.routeInfo.url);
+      }
+    });
 
     return this;
   }

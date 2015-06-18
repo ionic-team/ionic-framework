@@ -157,8 +157,10 @@ export class ViewItem {
 
   setInstance(instance) {
     this.instance = instance;
+    this.instance._viewItem = this;
 
     this.instance._viewDidEnter = new EventEmitter('viewDidEnter');
+    this.instance._viewWillEnter = new EventEmitter('viewWillEnter');
   }
 
   cache() {
@@ -256,6 +258,7 @@ export class ViewItem {
   */
   willEnter() {
     this.instance && this.instance.viewWillEnter && this.instance.viewWillEnter();
+    this.instance && this.instance._viewWillEnter.next();
   }
 
   /*

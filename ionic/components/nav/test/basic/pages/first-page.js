@@ -1,12 +1,13 @@
-import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
+import {Component, Directive, onInit} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
-import {ObservableWrapper} from 'angular2/src/facade/async';
 
 import {Routable, Router, NavController, NavbarTemplate, Navbar, NavPush, Content} from 'ionic/ionic';
 import {SecondPage} from './second-page';
 
-
-@Component({selector: 'ion-view'})
+@Component({
+  selector: 'ion-view',
+  lifecycle: [onInit]
+})
 @View({
   template: '' +
     '<ion-navbar *navbar>' +
@@ -36,22 +37,18 @@ export class FirstPage {
     this.nav = nav;
     this.val = Math.round(Math.random() * 8999) + 1000;
 
-    this.router = FirstPage.router.invoke(this);
 
     this.pushPage = SecondPage;
     this.pushData = {
       id: 420
     }
+  }
 
-    setTimeout(() => {
-      console.log(this._viewDidEnter);
-      ObservableWrapper.subscribe(this._viewDidEnter, () => {
-        console.log('ENTERRRRR');
-      });
-    });
+  onInit() {
   }
 
   viewLoaded() {
+    this.router = FirstPage.router.invoke(this);
     console.log('viewLoaded first page');
   }
 
@@ -61,7 +58,6 @@ export class FirstPage {
 
   viewDidEnter() {
     console.log('viewDidEnter first page');
-    Router.emit(this.router.routeInfo.url);
   }
 
   viewWillLeave() {
