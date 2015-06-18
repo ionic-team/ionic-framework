@@ -4,19 +4,11 @@ import {Component, Directive} from 'angular2/src/core/annotations_impl/annotatio
 import {Ancestor} from 'angular2/src/core/annotations_impl/visibility';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
-import {ControlGroup, ControlDirective} from 'angular2/forms'
-import {IonicComponent} from 'ionic/config/component'
+//import {ControlGroup, ControlDirective} from 'angular2/forms';
+import {IonicComponentNEW} from '../../config/component';
 
 
-@Component({
-  selector: 'ion-checkbox',
-  properties: [
-    'checked'
-  ],
-  hostListeners: {
-    '^click': 'onClick($event)'
-  }
-})
+@IonicComponentNEW(Checkbox)
 @View({
   template: `
   <div class="item-media media-checkbox">
@@ -25,48 +17,44 @@ import {IonicComponent} from 'ionic/config/component'
   </div>
 
   <div class="item-content">
-
     <div class="item-label">
       <content></content>
     </div>
-
   </div>`
 })
 export class Checkbox {
+
+  static get config() {
+    return {
+      selector: 'ion-checkbox',
+      properties: [
+        'checked'
+      ],
+      hostListeners: {
+        '^click': 'onClick($event)'
+      },
+      hostAttributes: {
+        'role': 'checkbox'
+      },
+      defaultProperties: {
+        'iconOff': 'ion-ios-circle-outline',
+        'iconOn': 'ion-ios-checkmark'
+      }
+    }
+  }
+
   constructor(
-    elementRef: ElementRef,
-    cd: ControlDirective
-    // @PropertySetter('attr.role') setAriaRole: Function,
-    // @PropertySetter('attr.aria-checked') setAriaChecked: Function,
-    // @PropertySetter('attr.aria-invalid') setAriaInvalid: Function,
-    // @PropertySetter('attr.aria-disabled') setAriaDisabled: Function
+    elementRef: ElementRef//,
+//    cd: ControlDirective
   ) {
     this.domElement = elementRef.domElement
     this.domElement.classList.add('item')
-    this.controlDirective = cd;
-    cd.valueAccessor = this;
-
-    let setAriaRole = (v) => this.domElement.setAttribute('aria-role', v)
-    let setAriaChecked = (v) => this.domElement.setAttribute('aria-checked', v)
-    let setAriaInvalid = (v) => this.domElement.setAttribute('aria-invalid', v)
-    let setAriaDisabled = (v) => this.domElement.setAttribute('aria-disabled', v)
-
-    this.config = Checkbox.config.invoke(this);
-
-    setAriaRole('checkbox')
-    setAriaInvalid('false')
-    setAriaDisabled('false')
-
-    this.setAriaRole = setAriaRole
-    this.setAriaChecked = setAriaChecked
-    this.setAriaInvalid = setAriaInvalid
-    this.setAriaDisabled = setAriaDisabled
-
-    this.setCheckedProperty = setAriaChecked
+    // this.controlDirective = cd;
+    // cd.valueAccessor = this;
 
     // TODO: This is a hack and not a very good one at that
-    this.domElement.querySelector('.checkbox-off').classList.add(this.config.properties.iconOff.defaults.ios);
-    this.domElement.querySelector('.checkbox-on').classList.add(this.config.properties.iconOn.defaults.ios);
+    // this.domElement.querySelector('.checkbox-off').classList.add(this.config.properties.iconOff.defaults.ios);
+    // this.domElement.querySelector('.checkbox-on').classList.add(this.config.properties.iconOn.defaults.ios);
   }
 
   /**
@@ -80,8 +68,7 @@ export class Checkbox {
 
   set checked(checked) {
     this._checked = checked
-    this.setCheckedProperty(checked)
-    this.controlDirective._control().updateValue(this._checked);
+    //this.controlDirective._control().updateValue(this._checked);
   }
   get checked() {
     return this._checked
@@ -89,23 +76,5 @@ export class Checkbox {
   onClick() {
     this.checked = !this.checked;
   }
-}
 
-new IonicComponent(Checkbox, {
-  properties: {
-    iconOff: {
-      defaults: {
-        ios: 'ion-ios-circle-outline',
-        android: 'ion-android-checkbox-outline-blank',
-        core: 'ion-android-checkbox-outline-blank'
-      }
-    },
-    iconOn: {
-      defaults: {
-        ios: 'ion-ios-checkmark',
-        android: 'ion-android-checkbox',
-        core: 'ion-android-checkbox',
-      }
-    }
-  }
-})
+}

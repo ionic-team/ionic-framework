@@ -33,6 +33,16 @@ import {IonicComponentNEW} from '../../config/component';
 })
 export class Tabs extends ViewController {
 
+  static get config() {
+    return {
+      selector: 'ion-tabs',
+      defaultProperties: {
+        'tabBarPlacement': 'bottom',
+        'tabBarIcons': 'top'
+      }
+    }
+  }
+
   constructor(
     @Optional() parentViewCtrl: ViewController,
     @Optional() viewItem: ViewItem,
@@ -118,16 +128,6 @@ export class Tabs extends ViewController {
 
   get tabs() {
     return this.instances();
-  }
-
-  static get config() {
-    return {
-      selector: 'ion-tabs',
-      defaultProperties: {
-        'tabBarPlacement': 'bottom',
-        'tabBarIcons': 'top'
-      }
-    }
   }
 
 }
