@@ -79,6 +79,7 @@ ion-pane {
 .content-container {
   position: relative;
   flex: 1;
+  order: $flex-order-view-content;
 }
 
 ion-toolbar {
@@ -91,7 +92,6 @@ ion-content {
   position: relative;
   display: block;
   flex: 1;
-  order: $flex-order-view-content;
 }
 
 .scroll-content {
