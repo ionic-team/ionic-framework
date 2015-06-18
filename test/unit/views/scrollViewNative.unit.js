@@ -14,13 +14,16 @@ describe('Scroll View', function() {
 
   it('Should bind to event listeners', function() {
     spyOn(sc,'addEventListener');
+    spyOn(document,'addEventListener');
     var sv = new ionic.views.ScrollNative({
       el: sc
     });
 
+    expect(document.addEventListener).toHaveBeenCalled();
+    expect(document.addEventListener.mostRecentCall.args[0]).toBe('resetScrollView');
     expect(sc.addEventListener).toHaveBeenCalled();
-    expect(sc.addEventListener.callCount).toBe(4);
-    expect(sc.addEventListener.mostRecentCall.args[0]).toBe('resetScrollView');
+    expect(sc.addEventListener.callCount).toBe(2);
+    expect(sc.addEventListener.mostRecentCall.args[0]).toBe('scrollChildIntoView');
   });
 
   it('Should remove event listeners on cleanup', function() {

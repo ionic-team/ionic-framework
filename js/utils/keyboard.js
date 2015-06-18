@@ -310,7 +310,7 @@ function keyboardFocusIn(e) {
   if (!e.target ||
       e.target.readOnly ||
       !ionic.tap.isKeyboardElement(e.target) ||
-      !(scrollView = inputScrollView(e.target))) {
+      !(scrollView = ionic.DomUtil.getParentWithClass(e.target, SCROLL_CONTAINER_CSS))) {
     keyboardActiveElement = null;
     return;
   }
@@ -319,12 +319,23 @@ function keyboardFocusIn(e) {
 
   // if using JS scrolling, undo the effects of native overflow scroll so the
   // scroll view is positioned correctly
-  document.body.scrollTop = 0;
-  scrollView.scrollTop = 0;
-  ionic.requestAnimationFrame(function(){
+  if (!scrollView.classList.contains("overflow-scroll")) {
     document.body.scrollTop = 0;
     scrollView.scrollTop = 0;
-  });
+    ionic.requestAnimationFrame(function(){
+      document.body.scrollTop = 0;
+      scrollView.scrollTop = 0;
+    });
+
+    // any showing part of the document that isn't within the scroll the user
+    // could touchmove and cause some ugly changes to the app, so disable
+    // any touchmove events while the keyboard is open using e.preventDefault()
+    if (window.navigator.msPointerEnabled) {
+      document.addEventListener("MSPointerMove", keyboardPreventDefault, false);
+    } else {
+      document.addEventListener('touchmove', keyboardPreventDefault, false);
+    }
+  }
 
   if (!ionic.keyboard.isOpen || ionic.keyboard.isClosing) {
     ionic.keyboard.isOpening = true;
@@ -336,14 +347,7 @@ function keyboardFocusIn(e) {
   // keyboard
   document.addEventListener('keydown', keyboardOnKeyDown, false);
 
-  // any showing part of the document that isn't within the scroll the user
-  // could touchmove and cause some ugly changes to the app, so disable
-  // any touchmove events while the keyboard is open using e.preventDefault()
-  if (window.navigator.msPointerEnabled) {
-    document.addEventListener("MSPointerMove", keyboardPreventDefault, false);
-  } else {
-    document.addEventListener('touchmove', keyboardPreventDefault, false);
-  }
+
 
   // if we aren't using the plugin and the keyboard isn't open yet, wait for the
   // window to resize so we can get an accurate estimate of the keyboard size,
@@ -723,16 +727,6 @@ function getViewportHeight() {
      return windowHeight + keyboardGetHeight();
   }
   return windowHeight;
-}
-
-function inputScrollView(ele) {
-  while(ele) {
-    if (ele.classList.contains(SCROLL_CONTAINER_CSS)) {
-      return ele;
-    }
-    ele = ele.parentElement;
-  }
-  return null;
 }
 
 function keyboardHasPlugin() {
