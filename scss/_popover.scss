@@ -113,6 +113,33 @@
       top: -6px;
     }
   }
+
+  // remove ios header padding from inset header
+  &.platform-cordova .popover-wrapper .popover {
+    .bar-header:not(.bar-subheader) {
+      height: $bar-height;
+      > * {
+        margin-top: 0;
+      }
+    }
+    .tabs-top > .tabs,
+    .tabs.tabs-top {
+      top: $bar-height;
+    }
+    .has-header,
+    .bar-subheader {
+      top: $bar-height;
+    }
+    .has-subheader {
+      top: $bar-height + $bar-subheader-height;
+    }
+    .has-header.has-tabs-top {
+      top: $bar-height + $tabs-height;
+    }
+    .has-header.has-subheader.has-tabs-top {
+      top: $bar-height + $bar-subheader-height + $tabs-height;
+    }
+  }
 }
 
 
