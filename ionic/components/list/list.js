@@ -27,9 +27,9 @@ export class List {
     this.config = List.config.invoke(this);
 
     setTimeout(() => {
-      console.log('Content', this.content);
 
       if(util.isDefined(this.virtual)) {
+        console.log('Content', this.content);
         console.log('Virtual?', this.virtual);
         console.log('Items?', this.items.length, 'of \'em');
         this._initVirtualScrolling();

@@ -53,9 +53,12 @@ export class Aside {
   }
 
   getContentElement() {
-    if(!this.content || !this.content.domElement) {
+    if(!this.content && !this.content.domElement) {
       console.error('Aside: make sure to specify a content target using #var on the element');
       return null;
+    }
+    if(this.content instanceof Node) {
+      return this.content;
     }
     return this.content.domElement;
   }
