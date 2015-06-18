@@ -192,16 +192,3 @@ export class IonicComponent {
   }
 
 }
-
-/*
-@IonicComponent({
-  selector: 'ion-back-button',
-  properties: {
-    icon: {
-      ios: 'ion-back-ios',
-      android: 'ion-back-android',
-      default: 'ion-back'
-    }
-  }
-})
-*/

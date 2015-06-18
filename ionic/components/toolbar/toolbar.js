@@ -4,7 +4,6 @@ import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 import {ProtoViewRef} from 'angular2/src/core/compiler/view_ref';
 import {NgZone} from 'angular2/src/core/zone/ng_zone';
 
-import {IonicComponent} from 'ionic/config/component'
 import {Platform} from 'ionic/platform/platform';
 import * as dom from '../../util/dom';
 
@@ -81,9 +80,6 @@ export class Toolbar {
   }
 
 }
-
-new IonicComponent(Toolbar, {
-});
 
 
 /*

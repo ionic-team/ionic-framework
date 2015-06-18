@@ -1,5 +1,4 @@
 // import {NgElement, Component, View, Parent} from 'angular2/angular2'
-// import {IonicComponent} from 'ionic/config/component'
 
 
 /*
@@ -36,5 +35,3 @@ export class Alert {
   }
 }
 */
-
-// new IonicComponent(Alert, {})

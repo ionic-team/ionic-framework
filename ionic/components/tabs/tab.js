@@ -11,7 +11,6 @@ import {ViewController} from '../view/view-controller';
 import {ViewItem} from '../view/view-item';
 import {Tabs} from './tabs';
 import {Content} from '../content/content';
-import {IonicComponent} from '../../config/component';
 
 
 @Component({
