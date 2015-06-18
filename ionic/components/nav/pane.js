@@ -7,7 +7,7 @@ import {bind} from 'angular2/di';
 
 import {ViewController} from '../view/view-controller';
 import {SwipeHandle} from './swipe-handle';
-import {ModeComponent} from '../../config/component';
+import {IonicComponentNEW} from '../../config/component';
 
 
 export class PaneController {
@@ -87,10 +87,7 @@ export class PaneController {
 
 }
 
-@ModeComponent({
-  selector:'ion-pane',
-  classId: 'nav'
-})
+@IonicComponentNEW(Pane)
 @View({
   template: `
     <template pane-anchor></template>
@@ -102,6 +99,14 @@ export class PaneController {
   directives: [PaneAnchor, PaneContentAnchor, SwipeHandle]
 })
 export class Pane {
+
+  static get config() {
+    return {
+      selector:'ion-pane',
+      classId: 'nav'
+    }
+  }
+
   constructor(viewCtrl: ViewController, elementRef: ElementRef) {
     this.domElement = elementRef.domElement;
     viewCtrl.panes.add(this);

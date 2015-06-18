@@ -1,28 +1,29 @@
 import {ElementRef} from 'angular2/angular2'
-
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {Ancestor} from 'angular2/src/core/annotations_impl/visibility';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
-import {ControlGroup, ControlDirective} from 'angular2/forms'
-import {IonicComponent} from 'ionic/config/component'
+//import {ControlGroup, ControlDirective} from 'angular2/forms'
+import {IonicDirective, IonicComponentNEW} from 'ionic/config/component';
 
 
-@Component({
-  selector: 'ion-radio-group'
-})
-@View({
-  template: `<content></content>`
-})
+@IonicDirective(RadioGroup)
 export class RadioGroup {
+
+  static get config() {
+    return {
+      selector: 'ion-radio-group'
+    }
+  }
+
   constructor(
-    elementRef: ElementRef,
-    cd:ControlDirective
+    elementRef: ElementRef//,
+    //cd:ControlDirective
   ) {
     this.domElement = elementRef.domElement
-    this.config = RadioGroup.config.invoke(this)
-    this.controlDirective = cd;
-    cd.valueAccessor = this; //ControlDirective should inject CheckboxControlDirective
+    // this.config = RadioGroup.config.invoke(this)
+    // this.controlDirective = cd;
+    // cd.valueAccessor = this; //ControlDirective should inject CheckboxControlDirective
 
     this.domElement.classList.add('list');
 
@@ -85,17 +86,8 @@ export class RadioGroup {
   }
 }
 
-new IonicComponent(RadioGroup, {})
 
-@Component({
-  selector: 'ion-radio',
-  hostListeners: {
-    '^click': 'buttonClicked($event)'
-  },
-  properties: [
-    'value'
-  ]
-})
+@IonicComponentNEW(RadioButton)
 @View({
   template: `
     <div class="item-content">
@@ -113,12 +105,24 @@ new IonicComponent(RadioGroup, {})
   `
 })
 export class RadioButton {
+
+  static get config() {
+    return {
+      selector: 'ion-radio',
+      hostListeners: {
+        '^click': 'buttonClicked($event)'
+      },
+      properties: [
+        'value'
+      ]
+    }
+  }
+
   constructor(
     @Ancestor() group: RadioGroup,
     elementRef: ElementRef
   ) {
-    this.domElement = elementRef.domElement
-    this.config = RadioButton.config.invoke(this)
+    this.domElement = elementRef.domElement;
 
     this.domElement.classList.add('item')
     this.domElement.setAttribute('aria-checked', true)
@@ -145,7 +149,3 @@ export class RadioButton {
   }
 
 }
-
-new IonicComponent(RadioButton, {
-
-})
