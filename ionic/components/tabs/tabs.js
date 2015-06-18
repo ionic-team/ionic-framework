@@ -1,5 +1,5 @@
 import {Optional} from 'angular2/src/di/annotations_impl'
-import {Component} from 'angular2/src/core/annotations_impl/annotations';
+import {Component, onInit} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 import {Compiler} from 'angular2/angular2';
@@ -12,7 +12,6 @@ import {ViewItem} from '../view/view-item';
 import {TabButton} from './tab-button';
 import {Icon} from '../icon/icon';
 import {IonicComponentNEW} from '../../config/component';
-import {Config} from '../../config/component';
 
 
 @IonicComponentNEW(Tabs)
@@ -68,13 +67,10 @@ export class Tabs extends ViewController {
       };
     }
 
-    Config(this, {
-      'tabBarPlacement': {
-        'default': 'bottom',
-        'android': 'top',
-        'ios': 'bottom'
-      }
-    });
+  }
+
+  onInit() {
+    Tabs.applyConfig(this);
   }
 
   addTab(tab) {
@@ -127,18 +123,9 @@ export class Tabs extends ViewController {
   static get config() {
     return {
       selector: 'ion-tabs',
-      properties: [
-        'tabBarPlacement',
-        'tabBarIcons'
-      ],
-      hostProperties: {
-        'tabBarPlacement': 'attr.tab-bar-placement',
-        'tabBarIcons': 'attr.tab-bar-icons'
-      },
-      classId: 'tabs',
-      propertyDefaults: {
-        'tabBarPlacement': 'top',
-        'tabBarIcons': 'bottom'
+      defaultProperties: {
+        'tabBarPlacement': 'bottom',
+        'tabBarIcons': 'top'
       }
     }
   }
