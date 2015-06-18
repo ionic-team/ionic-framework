@@ -2,6 +2,7 @@ import {Component, Directive, onInit} from 'angular2/src/core/annotations_impl/a
 import {View} from 'angular2/src/core/annotations_impl/view';
 
 import {Routable, Router, NavController, NavbarTemplate, Navbar, NavPush, Content} from 'ionic/ionic';
+import {IonicApp} from '../index';
 import {SecondPage} from './second-page';
 
 @Component({
@@ -34,6 +35,10 @@ export class FirstPage {
   constructor(
     nav: NavController
   ) {
+
+    // TODO: Shouldn't have to do this
+    Router.setNavController(nav);
+
     this.nav = nav;
     this.val = Math.round(Math.random() * 8999) + 1000;
 

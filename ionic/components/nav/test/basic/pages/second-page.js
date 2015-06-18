@@ -32,6 +32,9 @@ export class SecondPage {
     nav: NavController,
     params: NavParams
   ) {
+    // TODO: Shouldn't have to do this
+    Router.setNavController(nav);
+
     this.nav = nav;
     this.params = params;
     this.val = Math.round(Math.random() * 8999) + 1000;

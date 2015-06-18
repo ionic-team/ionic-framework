@@ -23,16 +23,63 @@ export class RouterController {
     return {}
   }
 
+  setNavController(navController) {
+    this.rootNavController = navController;
+    console.log('Root nav controller set', navController);
+    this.run();
+  }
+
+  getCurrentPath() {
+    let hash = window.location.hash;
+
+    // Grab the path without the leading hash
+    let path = hash.slice(1);
+    return path;
+  }
+
+  push(componentClass, params) {
+    if(!this.rootNavController) {
+      console.error('Router: No root nav controller to push matching route.');
+      return;
+    }
+    console.log('Router pushing', componentClass, params);
+    setTimeout(() => {
+      this.rootNavController.push(componentClass, params);
+    });
+  }
+
+  run() {
+    this.match();
+  }
+
+  /**
+   * Try to match a single route.
+   */
+  matchOne(route) {
+    console.log('Match one', route);
+    let path = this.getCurrentPath();
+    let routeParams = route.match(path);
+
+    if(routeParams !== false) {
+      route.exec(this._buildRouteParams(routeParams));
+
+      // If the route has a registered URL and isn't set to quiet mode,
+      // emit the new URL into the address bar
+      if(route.url && !route.quiet) {
+        this.emit(route.url);
+      }
+
+      return
+    }
+  }
+
   /**
    * Check the current hash/location for a match with
    * registered routes. If a match is found, execute the
    * first one and then return.
    */
   match() {
-    let hash = window.location.hash;
-
-    // Grab the path without the leading hash
-    let path = hash.slice(1);
+    let path = this.getCurrentPath();
 
     let routeParams = {};
 
@@ -43,11 +90,13 @@ export class RouterController {
       if(routeParams !== false) {
         route.exec(this._buildRouteParams(routeParams));
 
+        /*
         // If the route has a registered URL and isn't set to quiet mode,
         // emit the new URL into the address bar
         if(route.url && !route.quiet) {
           this.emit(route.url);
         }
+        */
 
         return
       }
@@ -73,7 +122,7 @@ export class RouterController {
   on(path, cb) {
     let route = new Route(path, cb);
     this.routes.push(route);
-    this.match();
+    //this.matchOne(route);
     return route;
   }
 
@@ -160,11 +209,16 @@ export class Routable {
     this.routeInfo = routeInfo;
 
     //console.log('New routable', componentClass, routeInfo);
+    Router.on(this.routeInfo.url, (routeParams) => {
+      console.log('Routable matched', routeParams, this.componentClass);
+      Router.push(this.componentClass, routeParams);
+    });
 
     componentClass.router = this;
   }
   invoke(componentInstance) {
     // Called on viewLoaded
+    this.componentInstance = componentInstance;
 
     // Bind some lifecycle events
     componentInstance._viewWillEnter.observer({

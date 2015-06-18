@@ -1,15 +1,19 @@
-import {bootstrap} from 'angular2/angular2'
+import {bootstrap, onInit, QueryList} from 'angular2/angular2'
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
+
 import {Nav} from 'ionic/components/nav/nav';
 import {FirstPage} from './pages/first-page';
+import {Router} from 'ionic/routing/router';
 
 
-@Component({ selector: 'ion-app' })
+@Component({
+  selector: 'ion-app',
+})
 @View({
   template: `
-    <ion-nav [initial]="initial"></ion-nav>
+    <ion-nav #nav [initial]="initial"></ion-nav>
   `,
   directives: [Nav]
 })
