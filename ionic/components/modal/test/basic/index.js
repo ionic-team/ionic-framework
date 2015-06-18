@@ -1,62 +1,36 @@
 import {DynamicComponentLoader, ElementRef, ComponentRef, onDestroy, DomRenderer} from 'angular2/angular2';
 import {bind, Injector} from 'angular2/di';
-import {bootstrap} from 'angular2/angular2'
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {Parent, Ancestor} from 'angular2/src/core/annotations_impl/visibility';
 
 import {Content, List, Item, Button, Modal, ModalRef} from 'ionic/ionic';
 
-import {Nav} from 'ionic/ionic';
+import {Nav, IonicComponentNEW} from 'ionic/ionic';
 import {NavController, NavParams, NavbarTemplate, Navbar} from 'ionic/ionic';
 
 
-@Component({ selector: 'ion-app' })
+@Component({ selector: 'ion-view' })
 @View({
   templateUrl: 'main.html',
   directives: [Content, List, Item, Button]
 })
-class IonicApp {
-  constructor(loader: DynamicComponentLoader, injector: Injector, domRenderer: DomRenderer, elementRef: ElementRef) {
-    this.loader = loader;
-    this.domRenderer = domRenderer;
-    this.elementRef = elementRef;
-    this.injector = injector;
-
-    console.log('IonicApp Start', loader, domRenderer, elementRef);
-  }
-
+export default class IonicApp {
   openModal() {
     console.log('Opening modal');
-
-    Modal.show(ContactModal, this.loader, this.injector, this.domRenderer, this.elementRef);
-
+    Modal.open(ContactModal);
   }
 }
 
-@Component({
-  selector: 'contact-modal'
-})
+@IonicComponentNEW(Modal)
 @View({
-  //template: '<ion-content padding><button primary (click)="close()">Close</button></ion-content>',//
   template: '<ion-nav [initial]="initial"></ion-nav>',
-  /*
-  template: `
-      <p>First Page: {{ val }}</p>
-      <p>
-      <button primary (click)="close()">Close</button>
-      </p>`,
-      */
   directives: [Nav, Button, Content]
 })
-export class ContactModal {
-  constructor(modalRef: ModalRef) {
+export class ContactModal extends Modal {
+  constructor() {
+    super();
     this.initial = ModalFirstPage;
-    this.modalRef = modalRef;
-  }
-  close() {
-    console.log('Closing modal');
-    this.modalRef.close();
   }
 }
 
@@ -97,7 +71,7 @@ export class ModalFirstPage {
   closeModal() {
     // TODO(maxlynch): Figure out a much better way to get the parent ContactModal
     var m = this.nav._nav.elementRef.parentView._view.context;
-    
+
     //this.modal.close();
     m.close();
   }
@@ -143,12 +117,4 @@ export class ModalSecondPage {
   push() {
   }
 
-}
-
-
-export function main() {
-  bootstrap(IonicApp).then((appRef) => {
-    console.log('Done bootstrapping', appRef);
-
-  })
 }

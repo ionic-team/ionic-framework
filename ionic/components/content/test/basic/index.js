@@ -1,4 +1,4 @@
-import {bootstrap, For} from 'angular2/angular2'
+import {NgFor} from 'angular2/angular2';
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
@@ -8,12 +8,13 @@ import {Checkbox} from 'ionic/components/checkbox/checkbox';
 import {List} from 'ionic/components/list/list';
 import {Item} from 'ionic/components/item/item';
 
-@Component({ selector: 'ion-app' })
+
+@Component({ selector: 'ion-view' })
 @View({
   templateUrl: 'main.html',
-  directives: [Content, Icon, Checkbox, List, Item, For]
+  directives: [Content, Icon, Checkbox, List, Item, NgFor]
 })
-class IonicApp {
+export default class IonicApp {
   constructor() {
     console.log('IonicApp Start')
 
@@ -27,9 +28,4 @@ class IonicApp {
       console.log(this.items);
     })
   }
-}
-
-
-export function main() {
-  bootstrap(IonicApp);
 }

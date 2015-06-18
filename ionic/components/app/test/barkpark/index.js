@@ -1,5 +1,5 @@
 //import {Router} from 'ionic/routing/router'
-import {For, Parent, bootstrap} from 'angular2/angular2'
+import {For, Parent} from 'angular2/angular2'
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
@@ -17,7 +17,7 @@ import {
   templateUrl: 'pages/login.html',
   directives: [FormDirectives, Button, Input, Content, HeaderTemplate, Toolbar]
 })
-export class LoginPage {
+class LoginPage {
   constructor( nav: NavController ) {
 
     this.nav = nav
@@ -141,7 +141,7 @@ class PostDetail {
   templateUrl: 'pages/splash.html',
   directives: [Content, Button]
 })
-class SplashPage {
+export default class SplashPage {
   constructor(nav: NavController) {
     this.nav = nav;
     window.nav = nav;
@@ -151,41 +151,3 @@ class SplashPage {
   }
 }
 
-
-/**
- * Main app entry point
- */
-@Component({ selector: 'ion-app' })
-@View({
-  directives: [Nav],
-  templateUrl: 'main.html'
-})
-class IonicApp {
-  constructor() {
-    this.firstPage = SplashPage//AppPage//LoginPage
-
-    /*
-    setTimeout(() => {
-      var nav = window.nav;
-
-      var route = Router;//new Router()
-      route.on('/login', (data) => {
-        nav.push(LoginPage);
-
-      })
-
-      route.on('/post/:id', (data) => {
-        console.log('ROUTE: Post page', data)
-        nav.push(PostDetail, data);
-      })
-
-      route.otherwise('/login');
-
-    }, 200);
-    */
-  }
-}
-
-export function main() {
-  bootstrap(IonicApp);
-}

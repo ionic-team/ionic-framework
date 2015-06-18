@@ -1,5 +1,5 @@
 //import {Router} from 'ionic/routing/router'
-import {ElementRef, For, Parent, bootstrap} from 'angular2/angular2'
+import {ElementRef, For, Parent} from 'angular2/angular2'
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
@@ -30,12 +30,12 @@ class AppPage {
 /**
  * Main app entry point
  */
-@Component({ selector: 'ion-app' })
+@Component({ selector: 'ion-view' })
 @View({
   directives: [Nav, Aside, List, Item, ParallaxEffect],
   templateUrl: 'main.html'
 })
-class IonicApp {
+export default class IonicApp {
   constructor() {
     this.firstPage = AppPage
 
@@ -99,10 +99,4 @@ export class ParallaxEffect {
     list.style['opacity'] = Math.min(this.parallax, 1);
     list.style['transform'] = 'translate3d(' + x + 'px, ' + y + 'px, 0) scale(' + scale + ')';
   }
-}
-
-//300
-//1 to 0.9
-export function main() {
-  bootstrap(IonicApp);
 }

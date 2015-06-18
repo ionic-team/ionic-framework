@@ -25,7 +25,7 @@ export class Nav extends ViewController {
     injector: Injector
   ) {
     super(viewCtrl, compiler, elementRef, loader, injector);
-    this.panes.setAnchor(elementRef);
+    this.anchorElementRef(elementRef);
   }
 
   onInit() {

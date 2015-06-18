@@ -10,10 +10,6 @@ $modal-inset-mode-bottom:         20% !default;
 $modal-inset-mode-left:           20% !default;
 $modal-inset-mode-min-height:     240px !default;
 
-// TODO: REMOVE THESE
-$bar-height: 40;
-$bar-subheader-height: 40;
-$tabs-height: 40;
 
 /**
  * Modals
@@ -21,19 +17,6 @@ $tabs-height: 40;
  * Modals are independent windows that slide in from off-screen.
  */
 
-.modal-backdrop,
-.modal-backdrop-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: $z-index-modal;
-  width: 100%;
-  height: 100%;
-}
-
-.modal-backdrop-bg {
-  pointer-events: none;
-}
 
 ion-modal {
   position: absolute;
@@ -44,17 +27,12 @@ ion-modal {
   width: 100%;
   background-color: $modal-bg-color;
 
-  transform: translateZ(0px);
-
-  display: none;
-  &.show-modal {
-    display: block;
-  }
+  transform: translate3d(0px, 100%, 0px);
 }
 
 
 
-@media (min-width: $modal-inset-mode-break-point) {
+/*@media (min-width: $modal-inset-mode-break-point) {
   // inset mode is when the modal doesn't fill the entire
   // display but instead is centered within a large display
   .modal {
@@ -107,21 +85,4 @@ ion-modal {
   .active .modal-backdrop-bg {
     opacity: 0.5;
   }
-}
-
-// disable clicks on all but the modal
-.modal-open {
-  pointer-events: none;
-
-  .modal,
-  .modal-backdrop {
-    pointer-events: auto;
-  }
-  // prevent clicks on modal when loading overlay is active though
-  &.loading-active {
-    .modal,
-    .modal-backdrop {
-      pointer-events: none;
-    }
-  }
-}
+}*/

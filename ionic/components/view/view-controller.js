@@ -38,8 +38,8 @@ export class ViewController {
     this._ids = -1;
   }
 
-  push(ComponentClass, params = {}, opts = {}) {
-    if (!ComponentClass || this.isTransitioning()) {
+  push(ComponentType, params = {}, opts = {}) {
+    if (!ComponentType || this.isTransitioning()) {
       return Promise.reject();
     }
 
@@ -61,7 +61,7 @@ export class ViewController {
     leavingItem.willCache();
 
     // create a new ViewItem
-    let enteringItem = new ViewItem(this, ComponentClass, params);
+    let enteringItem = new ViewItem(this, ComponentType, params);
 
     // add the item to the stack
     this.add(enteringItem);
@@ -378,6 +378,20 @@ export class ViewController {
     if (this.parent) {
       return this.parent.navbarViewContainer();
     }
+  }
+
+  anchorElementRef() {
+    if (arguments.length) {
+      this._anchorER = arguments[0];
+    }
+    return this._anchorER;
+  }
+
+  anchorViewContainerRef() {
+    if (arguments.length) {
+      this._anchorVC = arguments[0];
+    }
+    return this._anchorVC;
   }
 
   childNavbar() {

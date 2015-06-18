@@ -97,39 +97,30 @@ export class FeedPage {
   }
 }
 
-@Component({ selector: 'ion-app' })
+@Component({ selector: 'ion-view' })
 @View({
   templateUrl: 'main.html',
   directives: [formDirectives, Nav, Slides, Slide, Content, Button, List, Item]
 })
-export class IonicApp {
-  constructor(loader: DynamicComponentLoader, injector: Injector, domRenderer: DomRenderer, elementRef: ElementRef) {
-    this.feedPage = FeedPage
-
-    this.loader = loader;
-    this.domRenderer = domRenderer;
-    this.elementRef = elementRef;
-    this.injector = injector;
-
-    console.log('IonicApp Start', loader, domRenderer, elementRef);
+export default class IonicApp {
+  constructor() {
+    this.feedPage = FeedPage;
+    console.log('IonicApp Start');
   }
 
   openHeart() {
-    console.log('Heart');
-    //Modal.show(HeartModal, this.loader, this.injector, this.domRenderer, this.elementRef);
-    Modal.show(HeartModal, this.loader, this.injector, this.domRenderer, this.elementRef, {
+    console.log('openHeart');
+
+    Modal.open(HeartModal, {
       openAnimation: 'my-fade-in',
       closeAnimation: 'my-fade-out'
     });
   }
 
   openGear() {
-    console.log('Gear');
+    console.log('openGear');
 
-    Modal.show(SettingsModal, this.loader, this.injector, this.domRenderer, this.elementRef, {
-      //openAnimation: 'my-fade-in',
-      //closeAnimation: 'my-fade-out'
-    });
+    Modal.open(SettingsModal);
   }
 }
 
@@ -137,25 +128,21 @@ export class IonicApp {
   selector: 'settings-modal'
 })
 @View({
-  template: '<ion-view><ion-content padding><button primary (click)="close()">Close</button></ion-content></ion-view>',
-  directives: [Nav, Button, Content]
+  template: '<ion-modal><ion-content padding><button primary (click)="close()">Close</button></ion-content></ion-modal>',
+  directives: [Nav, Button, Content, ModalContainer]
 })
-export class SettingsModal {
-  constructor(modalRef: ModalRef) {
-    this.modalRef = modalRef;
-  }
-  close() {
-    console.log('Closing modal');
-    this.modalRef.close();
-  }
+export class SettingsModal extends Modal {
+  // constructor() {
+  //   super();
+  // }
 }
 
 @Component({
   selector: 'heart-modal'
 })
 @View({
-  template: '<ion-view><button icon (click)="close()"><i class="icon ion-close"></i></button><h2>20</h2><p>You\'re pretty awesome</p></ion-view>',
-  directives: [Nav, Button, Content]
+  template: '<ion-modal><button icon (click)="close()"><i class="icon ion-close"></i></button><h2>20</h2><p>You\'re pretty awesome</p></ion-modal>',
+  directives: [Nav, Button, Content, ModalContainer]
 })
 export class HeartModal {
   constructor(modalRef: ModalRef) {
@@ -165,8 +152,4 @@ export class HeartModal {
     console.log('Closing modal');
     this.modalRef.close();
   }
-}
-
-export function main() {
-  bootstrap(IonicApp);
 }

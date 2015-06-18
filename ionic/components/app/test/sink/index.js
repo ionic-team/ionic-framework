@@ -26,13 +26,13 @@ import {ModalPage} from './pages/modal'
 console.log('Loaded', Nav, NgFor, NgIf, Aside, List, ViewContainer, Item, Content, Button);
 
 @Component({
-  selector: 'ion-app',
+  selector: 'ion-view',
 })
 @View({
   templateUrl: 'main.html',
   directives: [Nav, NgFor, NgIf, Aside, List, ViewContainer, Item, Content, Button]
 })
-export class IonicApp {
+export default class IonicApp {
   constructor(elementRef: ElementRef) {//, @Query(Aside) nav: QueryList) {//, @Descendant() aside: Aside) {
     Ionic.setRootElementRef(elementRef);
 
@@ -64,10 +64,4 @@ export class IonicApp {
       });
     })
   }
-}
-
-export function main() {
-  bootstrap(IonicApp).then((appRef) => {
-    Ionic.setAppRef(appRef);
-  })
 }

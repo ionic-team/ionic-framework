@@ -1,0 +1,49 @@
+
+.platform-android {
+
+  .action-menu-backdrop.active {
+    background-color: rgba(0,0,0,0.2);
+  }
+
+  .action-menu {
+    margin: 0;
+
+    .action-menu-title,
+    .button {
+      text-align: left;
+      border-color: transparent;
+      font-size: 16px;
+      color: inherit;
+    }
+
+    .action-menu-title {
+      font-size: 14px;
+      padding: 16px;
+      color: #666;
+    }
+
+    .button.active,
+    .button.activated {
+      background: #e8e8e8;
+    }
+  }
+
+  .action-menu-group {
+    margin: 0;
+    border-radius: 0;
+    background-color: #fafafa;
+  }
+
+  .action-menu-cancel {
+    display: none;
+  }
+
+  .action-menu-has-icons {
+
+    .button {
+      padding-left: 56px;
+    }
+
+  }
+
+}

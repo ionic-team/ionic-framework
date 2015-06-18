@@ -108,6 +108,6 @@ export class Tab extends ViewController {
 })
 class TabPaneAnchor {
   constructor(@Parent() tab: Tab, elementRef: ElementRef) {
-    tab.panes.setAnchor(elementRef);
+    tab.anchorElementRef(elementRef);
   }
 }

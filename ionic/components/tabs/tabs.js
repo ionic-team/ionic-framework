@@ -78,8 +78,6 @@ export class Tabs extends ViewController {
       viewItem.enableBack = () => {
         return false;
       };
-
-      this.childNavbar(true);
     }
 
     Config(this, {

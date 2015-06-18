@@ -1,4 +1,4 @@
-import {Component} from 'angular2/src/core/annotations_impl/annotations';
+import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 
 import * as util from 'ionic/util'
 import {dom} from 'ionic/util'
@@ -11,7 +11,6 @@ let platformMode = Platform.getMode();
 // BackButton.config._computeDefaultValue(BackButton.config.bind.icon)
 
 export function Config(instance, config){
-  //todo: user config
   for (var setting in config) {
     instance[setting] = config[setting][platformMode];
   }
@@ -19,16 +18,33 @@ export function Config(instance, config){
 
 export class ModeComponent extends Component {
   constructor(config) {
-    config.hostAttributes = config.hostAttributes || {};
-    let className = (config.hostAttributes['class'] || '');
-    let id = config.classId || config.selector.replace('ion-', '');
-    config.hostAttributes['class'] = (className + ' ' + id + ' ' + id + '-' + platformMode).trim();
-    super(config);
+    super( appendModeConfig(config) );
   }
 }
 
+export class ModeDirective extends Directive {
+  constructor(config) {
+    super( appendModeConfig(config) );
+  }
+}
+
+export class IonicComponentNEW extends ModeComponent {
+  constructor(ComponentType) {
+    super(ComponentType && ComponentType.config);
+  }
+}
+
+function appendModeConfig(config) {
+  config = config || {};
+  config.hostAttributes = config.hostAttributes || {};
+  let className = (config.hostAttributes['class'] || '');
+  let id = config.classId || config.selector.replace('ion-', '');
+  config.hostAttributes['class'] = (className + ' ' + id + ' ' + id + '-' + platformMode).trim();
+  return config;
+}
+
 export class IonicComponent {
-  constructor(ComponentClass, {
+  constructor(ComponentType, {
     properties,
     bind,
     enhanceRawElement,
@@ -36,8 +52,8 @@ export class IonicComponent {
     propClasses
   }) {
     // TODO give errors if not providing valid delegates
-    ComponentClass.config = this
-    this.componentCssName = util.pascalCaseToDashCase(ComponentClass.name)
+    ComponentType.config = this
+    this.componentCssName = util.pascalCaseToDashCase(ComponentType.name)
 
     this.properties = properties || (properties = {});
 

@@ -1,4 +1,3 @@
-import {bootstrap} from 'angular2/angular2'
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
@@ -6,12 +5,12 @@ import {FormBuilder, Validators, FormDirectives, ControlGroup} from 'angular2/fo
 import {RadioGroup, RadioButton, Content, Button, List} from 'ionic/ionic';
 
 
-@Component({ selector: 'ion-app' })
+@Component({ selector: 'ion-view' })
 @View({
   templateUrl: 'main.html',
   directives: [FormDirectives].concat([RadioGroup, RadioButton, List, Content, Button])
 })
-class IonicApp {
+export default class IonicApp {
   constructor() {
     console.log('IonicApp Start')
 
@@ -20,9 +19,4 @@ class IonicApp {
       preferredApple: ['mac', Validators.required],
     });
   }
-}
-
-
-export function main() {
-  bootstrap(IonicApp);
 }

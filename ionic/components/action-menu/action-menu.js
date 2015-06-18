@@ -6,106 +6,70 @@
 * The ActionMenu is a modal menu with options to select based on an action.
 */
 
-import {NgIf, NgFor, DynamicComponentLoader, ComponentLaoder, ElementRef, ComponentRef, onDestroy, DomRenderer} from 'angular2/angular2';
-import {bind, Injector} from 'angular2/di';
-import {Promise} from 'angular2/src/facade/async';
-import {isPresent, Type} from 'angular2/src/facade/lang';
-
-import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
+import {NgIf, NgFor} from 'angular2/angular2';
 import {View} from 'angular2/src/core/annotations_impl/view';
-import {Parent} from 'angular2/src/core/annotations_impl/visibility';
 
-import {Item, Icon} from 'ionic/ionic'
-import {Ionic} from 'ionic/components/app/app'
-import {IonicComponent} from 'ionic/config/component'
-import {raf, ready} from 'ionic/util/dom'
-import * as util from 'ionic/util'
+import {Item, Icon} from 'ionic/ionic';
+import {IonicRoot} from '../app/app';
+import * as util from 'ionic/util';
 
+import {Overlay} from '../overlay/overlay';
+import {IonicComponentNew} from '../../config/component';
 import {Animation} from 'ionic/animations/animation';
+import {ClickBlock} from '../../util/click-block';
 
-@Component({
-  selector: 'ion-action-menu'
-})
+
+@IonicComponentNew(ActionMenu)
 @View({
   template: `
-    <div class="action-menu-backdrop">
-      <div class="action-menu-wrapper">
-        <div class="action-menu-container">
-          <div class="action-menu-group action-menu-options">
-            <div class="action-menu-title" *ng-if="options.titleText">{{options.titleText}}</div>
-            <button (click)="_buttonClicked(index)" *ng-for="#b of options.buttons; #index = index" class="button action-menu-option">{{b.text}}</button>
-            <button *ng-if="options.destructiveText" (click)="_destructiveButtonClicked()" class="button destructive action-menu-destructive">{{options.destructiveText}}</button>
-          </div>
-          <div class="action-menu-group action-menu-cancel" *ng-if="options.cancelText">
-            <button class="button" (click)="_cancel()">{{options.cancelText}}</button>
-          </div>
+    <div class="action-menu-backdrop" (click)="cancel()"></div>
+    <div class="action-menu-wrapper">
+      <div class="action-menu-container">
+        <div class="action-menu-group action-menu-options">
+          <div class="action-menu-title" *ng-if="options.titleText">{{options.titleText}}</div>
+          <button (click)="_buttonClicked(index)" *ng-for="#b of options.buttons; #index = index" class="button action-menu-option">{{b.text}}</button>
+          <button *ng-if="options.destructiveText" (click)="_destructiveButtonClicked()" class="button destructive action-menu-destructive">{{options.destructiveText}}</button>
+        </div>
+        <div class="action-menu-group action-menu-cancel" *ng-if="options.cancelText">
+          <button class="button" (click)="cancel()">{{options.cancelText}}</button>
         </div>
       </div>
     </div>`,
-  directives: [Item,Icon, NgIf, NgFor]
+  directives: [Item, Icon, NgIf, NgFor]
 })
-export class ActionMenu {
-  constructor(elementRef: ElementRef) {
-    this.domElement = elementRef.domElement
-    this.config = ActionMenu.config.invoke(this)
+export class ActionMenu extends Overlay {
+  constructor() {
+    super();
 
-    this.wrapperEl = this.domElement.querySelector('.action-menu-wrapper');
+    this.setOptions({
+      enterAnimation: 'action-menu-slide-in',
+      leaveAnimation: 'action-menu-slide-out'
+    });
 
     this.options = {
       destructiveButtonClicked: util.noop,
       buttonClicked: util.noop,
       cancel: util.noop
     };
-
-    console.log('ActionMenu: Component Created', this.domElement);
   }
 
-  /**
-   * Close the ActionMenu.
-   *
-   * @return Promise that resolves when the action menu is closed.
-   */
-  close() {
-    return new Promise(resolve => {
-      raf(() => {
-        var backdrop = this.domElement.children[0].classList.remove('active');
-        var slideOut = Animation.create(this.wrapperEl, 'action-menu-slide-out');
-
-        slideOut.play().then(() => {
-          this.wrapperEl.classList.remove('action-menu-up');
-          this._clean();
-          resolve();
-        })
-      });
-    });
+  cancel() {
+    this.options.cancel();
+    this.close();
   }
 
-  /**
-   * Open the Action Menu
-   *
-   * @return Promise that resolves when the action menu is open.
-   */
-  open() {
-    return new Promise(resolve => {
-      raf(() => {
-        var backdrop = this.domElement.children[0].classList.add('active');
-        var slideIn = Animation.create(this.wrapperEl, 'action-menu-slide-in');
-
-        slideIn.play().then(() => {
-          this.wrapperEl.classList.add('action-menu-up');
-          resolve();
-        })
-      });
-    });
+  _destructiveButtonClicked() {
+    let shouldClose = this.options.destructiveButtonClicked();
+    if (shouldClose === true) {
+      return this.close();
+    }
   }
 
-  /**
-   * Set the options (as in show())
-   *
-   * @param opts the options to set
-   */
-  setOptions(opts) {
-    util.extend(this.options, opts);
+  _buttonClicked(index) {
+    let shouldClose = this.options.buttonClicked(index);
+    if (shouldClose === true) {
+      return this.close();
+    }
   }
 
   /**
@@ -115,76 +79,46 @@ export class ActionMenu {
    * @return Promise that resolves when the action menu is open.
    */
   static open(opts) {
-    console.log('Opening menu', opts, Ionic);
-
-    var promise = new Promise(resolve => {
-      ActionMenu._inject().then((ref) => {
-        let actionMenu = ref.instance;
-        actionMenu.ref = ref;
-        actionMenu.setOptions(opts);
-        actionMenu.open();
-        resolve(actionMenu);
-      });
-    })
-
-    return promise;
+    return this.create(ActionMenu, opts);
   }
 
-  static _inject() {
-    return Ionic.appendToRoot(ActionMenu);
-  }
-
-  _clean() {
-    this.ref.dispose();
-  }
-
-  _cancel() {
-    this.options.cancel();
-    this.close().then(() => {
-    });
-  }
-
-
-  _destructiveButtonClicked() {
-    let shouldClose = this.options.destructiveButtonClicked();
-    if(shouldClose === true) {
-      return this.close()
-    }
-  }
-
-  _buttonClicked(index) {
-    let shouldClose = this.options.buttonClicked(index);
-    if(shouldClose === true) {
-      return this.close()
+  static get config() {
+    return {
+      selector: 'ion-action-menu'
     }
   }
 }
 
-new IonicComponent(ActionMenu, {})
 
 /**
  * Animations for action sheet
  */
-class ActionMenuSlideIn extends Animation {
+class ActionMenuAnimation extends Animation {
   constructor(element) {
     super(element);
-    this
-      .easing('cubic-bezier(.36, .66, .04, 1)')
-      .duration(500)
-      .from('translateY', '100%')
-      .to('translateY', '0%');
+    this.easing('cubic-bezier(.36, .66, .04, 1)').duration(400);
+
+    this.backdrop = new Animation(element.querySelector('.action-menu-backdrop'));
+    this.wrapper = new Animation(element.querySelector('.action-menu-wrapper'));
+
+    this.add(this.backdrop, this.wrapper);
+  }
+}
+
+class ActionMenuSlideIn extends ActionMenuAnimation {
+  constructor(element) {
+    super(element);
+    this.backdrop.fromTo('opacity', 0, 0.4);
+    this.wrapper.fromTo('translateY', '100%', '0%');
   }
 }
 Animation.register('action-menu-slide-in', ActionMenuSlideIn);
 
-class ActionMenuSlideOut extends Animation {
+class ActionMenuSlideOut extends ActionMenuAnimation {
   constructor(element) {
     super(element);
-    this
-      .easing('cubic-bezier(.36, .66, .04, 1)')
-      .duration(500)
-      .from('translateY', '0%')
-      .to('translateY', '100%');
+    this.backdrop.fromTo('opacity', 0.4, 0);
+    this.wrapper.fromTo('translateY', '0%', '100%');
   }
 }
 Animation.register('action-menu-slide-out', ActionMenuSlideOut);

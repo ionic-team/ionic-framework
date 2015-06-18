@@ -39,7 +39,7 @@ export class PaneController {
 
       // add a Pane element
       // when the Pane is added, it'll also add its reference to the panes object
-      viewCtrl.loader.loadNextToExistingLocation(Pane, this.anchor, injector).then(() => {
+      viewCtrl.loader.loadNextToExistingLocation(Pane, viewCtrl.anchorElementRef(), injector).then(() => {
 
         // get the pane reference by name
         pane = this.panes[key];
@@ -74,10 +74,6 @@ export class PaneController {
       });
 
     }
-  }
-
-  setAnchor(elementRef) {
-    this.anchor = elementRef;
   }
 
   add(pane) {

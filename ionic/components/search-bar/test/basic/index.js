@@ -1,4 +1,4 @@
-import {bootstrap, NgFor} from 'angular2/angular2'
+import {NgFor} from 'angular2/angular2'
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
@@ -23,7 +23,7 @@ function randomTitle() {
   templateUrl: 'main.html',
   directives: [formDirectives].concat([Content, List, Item, SearchBar, NgFor])
 })
-class IonicApp {
+export default class IonicApp {
   constructor() {
     console.log('IonicApp Start')
 
@@ -56,17 +56,3 @@ class IonicApp {
   }
 }
 
-/*
-import { defaultPipes } from 'angular2/change_detection';
-export var pipes = Object.assign({}, defaultPipes, {
-  'search': [
-    new SearchPipe()
-  ]
-});
-*/
-
-export function main() {
-  bootstrap(IonicApp, [
-    //bind(PipeRegistry).toValue(new PipeRegistry(pipes))
-  ]);
-}

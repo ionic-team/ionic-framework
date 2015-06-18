@@ -6,12 +6,12 @@ import {FormBuilder, Validators, FormDirectives, ControlGroup} from 'angular2/fo
 import {Checkbox, Content, Button, List} from 'ionic/ionic';
 //import {IONIC_DIRECTIVES} from 'ionic/ionic'
 
-@Component({ selector: 'ion-app' })
+@Component({ selector: 'ion-view' })
 @View({
   templateUrl: 'main.html',
   directives: [FormDirectives].concat([Checkbox, List, Content, Button])
 })
-class IonicApp {
+export default class IonicApp {
   constructor() {
     var fb = new FormBuilder();
     this.form = fb.group({
@@ -25,7 +25,3 @@ class IonicApp {
   }
 }
 
-
-export function main() {
-  bootstrap(IonicApp);
-}

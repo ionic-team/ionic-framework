@@ -1,4 +1,3 @@
-import {bootstrap} from 'angular2/angular2'
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
@@ -9,11 +8,11 @@ let rotateZ = '180deg';
 let translateX = '100px';
 let scale = 0.6;
 
-@Component({ selector: 'ion-app' })
+@Component({ selector: 'ion-view' })
 @View({
   templateUrl: 'main.html'
 })
-class IonicApp {
+export default class IonicApp {
 
   constructor() {
     this.animation = new Animation();
@@ -75,9 +74,4 @@ class IonicApp {
     this.animation.progress( parseFloat(ev.srcElement.value) );
   }
 
-}
-
-
-export function main() {
-  bootstrap(IonicApp);
 }

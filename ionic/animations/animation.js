@@ -424,7 +424,6 @@ class Animate {
     }
 
     this.ele = ele;
-    this.resolve;
     this.promise = new Promise(res => { this.resolve = res; });
 
     // stage where the element will start from

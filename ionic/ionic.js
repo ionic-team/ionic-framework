@@ -1,4 +1,5 @@
 
+export * from 'ionic/config/component'
 export * from 'ionic/components'
 export * from 'ionic/directives'
 export * from 'ionic/platform/platform'

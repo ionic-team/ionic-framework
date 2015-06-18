@@ -9,12 +9,12 @@ import {Modal, ModalRef, Nav, Segment, Animation,
 import {NavController, NavbarTemplate, NavParams, Navbar} from 'ionic/ionic';
 import {dom} from 'ionic/util';
 
-@Component({ selector: 'ion-app' })
+@Component({ selector: 'ion-view' })
 @View({
   templateUrl: 'main.html',
   directives: [formDirectives, Nav, Slides, Slide, Content, Button, List, Item, NgFor, ParallaxEffect]
 })
-export class IonicApp {
+export default class IonicApp {
   constructor() {
 
     this.items = [];
@@ -56,8 +56,4 @@ export class ParallaxEffect {
       console.log('Watching', this.target, this.counter);
     })
   }
-}
-
-export function main() {
-  bootstrap(IonicApp);
 }

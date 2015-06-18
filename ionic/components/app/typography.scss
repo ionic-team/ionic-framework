@@ -13,12 +13,10 @@ $font-size-base:                  1.4rem !default; // 1.4rem == 14px
 $font-size-small:                 1rem !default;
 
 $line-height-base:                1.4 !default;
-//$line-height-computed:            floor($font-size-base * $line-height-base) !default; // ~20px
-$line-height-computed: 3rem;
+$line-height-computed:            3rem !default;
 $line-height-large:               1.33 !default;
 $line-height-small:               1.5 !default;
 
-$headings-font-family:            $font-family-base !default;
 $headings-font-weight:            500 !default;
 $headings-line-height:            1.2 !default;
 
@@ -28,13 +26,13 @@ html {
 }
 
 
-ion-app {
+ion-app,
+ionic {
   font-size: $font-size-base;
   font-family: $font-family-base;
 
   h1, h2, h3, h4, h5, h6 {
     font-weight: $headings-font-weight;
-    //font-family: $headings-font-family;
     line-height: $headings-line-height;
     margin-top: 1.6rem;
     margin-bottom: 1rem;

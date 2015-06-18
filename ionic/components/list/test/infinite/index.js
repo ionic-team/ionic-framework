@@ -1,4 +1,4 @@
-import {bootstrap, NgFor, ProtoViewRef, ViewContainerRef} from 'angular2/angular2'
+import {NgFor, ProtoViewRef, ViewContainerRef} from 'angular2/angular2'
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {Parent} from 'angular2/src/core/annotations_impl/visibility';
@@ -6,12 +6,12 @@ import {Parent} from 'angular2/src/core/annotations_impl/visibility';
 import {Content, List, Item} from 'ionic/ionic';
 
 
-@Component({ selector: 'ion-app' })
+@Component({ selector: 'ion-view' })
 @View({
   templateUrl: 'main.html',
   directives: [Content, List, Item, ItemCellTemplate, NgFor]
 })
-class IonicApp {
+export default class IonicApp {
   constructor() {
     console.log('IonicApp Start')
 
@@ -41,10 +41,4 @@ export class ItemCellTemplate {
 
     list.setItemTemplate(this);
   }
-}
-
-
-
-export function main() {
-  bootstrap(IonicApp);
 }

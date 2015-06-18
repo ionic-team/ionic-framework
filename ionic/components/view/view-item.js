@@ -10,9 +10,9 @@ import {NavParams} from '../nav/nav-params';
 
 export class ViewItem {
 
-  constructor(viewCtrl, ComponentClass, params = {}) {
+  constructor(viewCtrl, ComponentType, params = {}) {
     this.viewCtrl = viewCtrl;
-    this.ComponentClass = ComponentClass;
+    this.ComponentType = ComponentType;
     this.params = new NavParams(params);
     this.instance = null;
     this.state = 0;
@@ -36,7 +36,7 @@ export class ViewItem {
     }
 
     // compile the Component
-    viewCtrl.compiler.compileInHost(this.ComponentClass).then(componentProtoViewRef => {
+    viewCtrl.compiler.compileInHost(this.ComponentType).then(componentProtoViewRef => {
 
       // figure out the sturcture of this Component
       // does it have a navbar? Is it tabs? Should it not have a navbar or any toolbars?
@@ -113,7 +113,6 @@ export class ViewItem {
 
   inspectStructure(componentProtoViewRef) {
     let navbar = false;
-    let tabs = false;
     let key = '_';
 
     componentProtoViewRef._protoView.elementBinders.forEach(rootElementBinder => {
@@ -138,11 +137,9 @@ export class ViewItem {
     }
 
     if (navbar) key += 'n'
-    if (tabs) key += 't'
 
     return {
       navbar,
-      tabs,
       key
     };
   }

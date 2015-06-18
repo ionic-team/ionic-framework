@@ -60,7 +60,8 @@ strong {
 // ==========================================================================
 
 // Remove border when inside `a` element in IE 8/9/10.
-ion-app img {
+ion-app img,
+ionic img {
   border: 0;
 }
 
