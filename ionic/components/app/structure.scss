@@ -48,6 +48,7 @@ ionic {
 
 ion-loading-icon {
   display: flex;
+  align-self: center;
   margin: auto;
 
   font-family: 'Ionicons';
@@ -56,6 +57,26 @@ ion-loading-icon {
   }
   font-size: 128px;
   color: #666666;
+
+  animation: rotation 45s infinite linear;
+  -webkit-animation: rotation 45s infinite linear;
+
+}
+@-webkit-keyframes rotation {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(359deg);
+  }
+}
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
 }
 
 ion-nav {
