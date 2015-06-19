@@ -6,7 +6,7 @@ import {View} from 'angular2/src/core/annotations_impl/view';
 import {FormBuilder, Control, ControlGroup, Validators, formDirectives} from 'angular2/forms';
 
 import {Modal, ModalRef, Nav, Segment, Animation, SegmentButton, Slides, Slide, Content, List, Item} from 'ionic/ionic';
-import {NavController, NavbarTemplate, NavParams, Navbar} from 'ionic/ionic';
+import {NavController, NavbarTemplate, NavParams, Navbar, IonicComponent} from 'ionic/ionic';
 
 
 class FadeIn extends Animation {
@@ -111,10 +111,11 @@ class IonicApp {
   openHeart() {
     console.log('openHeart');
 
-    Modal.open(HeartModal, {
-      openAnimation: 'my-fade-in',
-      closeAnimation: 'my-fade-out'
+    Modal.open(HeartModal)/*, {
+      enterAnimation: 'my-fade-in',
+      leaveAnimation: 'my-fade-out'
     });
+    */
   }
 
   openGear() {
@@ -124,33 +125,25 @@ class IonicApp {
   }
 }
 
-@Component({
-  selector: 'settings-modal'
-})
+@IonicComponent(Modal)
 @View({
-  template: '<ion-modal><ion-content padding><button primary (click)="close()">Close</button></ion-content></ion-modal>',
-  directives: [Nav, Content, ModalContainer]
+  template: '<ion-view id="settings-modal"><ion-content padding><button primary (click)="close()">Close</button></ion-content></ion-view>',
+  directives: [Nav, Content]
 })
 export class SettingsModal extends Modal {
-  // constructor() {
-  //   super();
-  // }
+  constructor() {
+    super();
+  }
 }
 
-@Component({
-  selector: 'heart-modal'
-})
+@IonicComponent(Modal)
 @View({
-  template: '<ion-modal><button icon (click)="close()"><i class="icon ion-close"></i></button><h2>20</h2><p>You\'re pretty awesome</p></ion-modal>',
-  directives: [Nav, Content, ModalContainer]
+  template: '<ion-view id="heart-modal"><button icon (^click)="close()"><i class="icon ion-close"></i></button><h2>20</h2><p>You\'re pretty awesome</p></ion-view>',
+  directives: [Nav, Content]
 })
-export class HeartModal {
-  constructor(modalRef: ModalRef) {
-    this.modalRef = modalRef;
-  }
-  close() {
-    console.log('Closing modal');
-    this.modalRef.close();
+export class HeartModal extends Modal {
+  constructor() {
+    super();
   }
 }
 

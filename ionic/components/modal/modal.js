@@ -40,7 +40,6 @@ class ModalSlideIn extends ModalAnimation {
   constructor(element) {
     super(element);
     this
-      .fadeIn()
       .fromTo('translateY', '100%', '0%');
   }
 }
@@ -50,7 +49,6 @@ class ModalSlideOut extends ModalAnimation {
   constructor(element) {
     super(element);
     this
-      .fadeOut()
       .fromTo('translateY', '0%', '100%');
   }
 }
