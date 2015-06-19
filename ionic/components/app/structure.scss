@@ -43,6 +43,16 @@ ionic {
   max-height: 100%;
   margin: 0;
   padding: 0;
+
+}
+
+ion-loading-icon {
+  display: flex;
+  margin: auto;
+  i {
+    font-size: 128px;
+    color: #666666;
+  }
 }
 
 ion-nav {
