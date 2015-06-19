@@ -6,7 +6,7 @@ import {View} from 'angular2/src/core/annotations_impl/view';
 import {FormBuilder, Validators, formDirectives, ControlGroup} from 'angular2/forms';
 
 import {List, Item, Input, ActionMenu, Modal, ModalRef,
-  NavbarTemplate, Navbar, NavController, Button, Content} from 'ionic/ionic';
+  NavbarTemplate, Navbar, NavController, Content} from 'ionic/ionic';
 
 @Component({
   selector: 'ion-view'
@@ -36,7 +36,7 @@ import {List, Item, Input, ActionMenu, Modal, ModalRef,
     </form>
   </ion-content>
   `,
-  directives: [formDirectives, NavbarTemplate, Navbar, Content, List, Item, Input, Button]
+  directives: [formDirectives, NavbarTemplate, Navbar, Content, List, Item, Input]
 })
 export class FormPage {
   constructor() {

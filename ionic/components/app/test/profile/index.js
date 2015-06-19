@@ -5,14 +5,14 @@ import {View} from 'angular2/src/core/annotations_impl/view';
 import {FormBuilder, Control, ControlGroup, Validators, formDirectives} from 'angular2/forms';
 
 import {Modal, ModalRef, Nav, Segment, Animation,
-  SegmentButton, Slides, Slide, Content, Button, List, Item} from 'ionic/ionic';
+  SegmentButton, Slides, Slide, Content, List, Item} from 'ionic/ionic';
 import {NavController, NavbarTemplate, NavParams, Navbar} from 'ionic/ionic';
 import {dom} from 'ionic/util';
 
 @Component({ selector: 'ion-view' })
 @View({
   templateUrl: 'main.html',
-  directives: [formDirectives, Nav, Slides, Slide, Content, Button, List, Item, NgFor, ParallaxEffect]
+  directives: [formDirectives, Nav, Slides, Slide, Content, List, Item, NgFor, ParallaxEffect]
 })
 export default class IonicApp {
   constructor() {

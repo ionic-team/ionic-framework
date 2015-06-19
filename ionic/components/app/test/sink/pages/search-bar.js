@@ -5,7 +5,7 @@ import {View} from 'angular2/src/core/annotations_impl/view';
 import {FormBuilder, Validators, formDirectives, ControlGroup} from 'angular2/forms';
 
 import {Segment, SegmentButton, SearchBar, List, Item, ActionMenu, Modal, ModalRef,
-  NavbarTemplate, Navbar, NavController, Button, Content} from 'ionic/ionic';
+  NavbarTemplate, Navbar, NavController, Content} from 'ionic/ionic';
 
   console.log(NavbarTemplate, Navbar, Content, formDirectives);
 

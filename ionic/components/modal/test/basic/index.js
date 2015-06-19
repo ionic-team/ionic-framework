@@ -4,7 +4,7 @@ import {Component, Directive} from 'angular2/src/core/annotations_impl/annotatio
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {Parent, Ancestor} from 'angular2/src/core/annotations_impl/visibility';
 
-import {Content, List, Item, Button, Modal, ModalRef} from 'ionic/ionic';
+import {Content, List, Item, Modal, ModalRef} from 'ionic/ionic';
 
 import {Nav, IonicComponent} from 'ionic/ionic';
 import {NavController, NavParams, NavbarTemplate, Navbar} from 'ionic/ionic';
@@ -13,7 +13,7 @@ import {NavController, NavParams, NavbarTemplate, Navbar} from 'ionic/ionic';
 @Component({ selector: 'ion-view' })
 @View({
   templateUrl: 'main.html',
-  directives: [Content, List, Item, Button]
+  directives: [Content, List, Item]
 })
 export default class IonicApp {
   openModal() {
@@ -25,7 +25,7 @@ export default class IonicApp {
 @IonicComponent(Modal)
 @View({
   template: '<ion-nav [initial]="initial"></ion-nav>',
-  directives: [Nav, Button, Content]
+  directives: [Nav, Content]
 })
 export class ContactModal extends Modal {
   constructor() {

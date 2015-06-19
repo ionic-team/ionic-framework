@@ -6,7 +6,7 @@ import {Query} from 'angular2/src/core/annotations_impl/di';
 
 console.log(Query, QueryList);
 
-import {Ionic, Nav, ViewContainer, Aside, List, Item, Content, Button} from 'ionic/ionic';
+import {Ionic, Nav, ViewContainer, Aside, List, Item, Content} from 'ionic/ionic';
 
 import {ButtonPage} from './pages/button'
 import {NavPage} from './pages/nav'
@@ -23,14 +23,14 @@ import {SlidePage} from './pages/slides'
 import {ActionMenuPage} from './pages/action-menu'
 import {ModalPage} from './pages/modal'
 
-console.log('Loaded', Nav, NgFor, NgIf, Aside, List, ViewContainer, Item, Content, Button);
+console.log('Loaded', Nav, NgFor, NgIf, Aside, List, ViewContainer, Item, Content);
 
 @Component({
   selector: 'ion-view',
 })
 @View({
   templateUrl: 'main.html',
-  directives: [Nav, NgFor, NgIf, Aside, List, ViewContainer, Item, Content, Button]
+  directives: [Nav, NgFor, NgIf, Aside, List, ViewContainer, Item, Content]
 })
 export default class IonicApp {
   constructor(elementRef: ElementRef) {//, @Query(Aside) nav: QueryList) {//, @Descendant() aside: Aside) {

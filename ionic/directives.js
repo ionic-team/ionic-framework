@@ -1,5 +1,5 @@
 import {
-  Button, List, Content,
+  List, Content,
 
   Icon,
 
@@ -9,7 +9,7 @@ import {
 } from 'ionic/ionic';
 
 var IONIC_DIRECTIVES = [
-  Button, List, Content,
+  List, Content,
 
   Icon,
 

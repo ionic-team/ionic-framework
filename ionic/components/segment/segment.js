@@ -7,7 +7,6 @@ import {View} from 'angular2/src/core/annotations_impl/view';
 import {ControlGroup, ControlDirective} from 'angular2/forms'
 import {dom} from 'ionic/util';
 import {IonicComponent} from 'ionic/config/component'
-import {Button} from 'ionic/components/button/button'
 
 
 @IonicComponent(Segment)
@@ -16,7 +15,7 @@ import {Button} from 'ionic/components/button/button'
     <content></content>
   </div>
   `,
-  directives: [Button, SegmentButton]
+  directives: [SegmentButton]
 })
 export class Segment {
 

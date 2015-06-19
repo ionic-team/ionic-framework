@@ -24,7 +24,8 @@ $button-small-icon-size:          2.1rem !default;
 // Core Button
 // --------------------------------------------------
 
-.button {
+button,
+[button] {
   display: inline-flex;
   flex-shrink: 0;
   flex-flow: row nowrap;
@@ -49,13 +50,7 @@ $button-small-icon-size:          2.1rem !default;
 
   cursor: pointer;
   user-select: none;
-}
 
-
-// Core Button Styling
-// --------------------------------------------------
-
-.button {
   border: 1px solid #ccc;
   padding: $button-padding;
   min-height: $button-height;
@@ -66,84 +61,89 @@ $button-small-icon-size:          2.1rem !default;
   border: transparent;
   border-radius: $button-border-radius;
 
-  &.button-icon {
+  &[icon] {
     font-size: $button-icon-size;
     background: none;
     border: none;
   }
 
-  &.button-large {
+  &[large] {
     padding: 0 $button-large-padding;
     min-width: ($button-large-padding * 4);
     min-height: $button-large-height;
     font-size: $button-large-font-size;
 
-    &.button-icon {
+    &[icon] {
       font-size: $button-large-icon-size;
     }
   }
 
-  &.button-small {
+  &[small] {
     padding: 0 $button-small-padding;
     min-width: ($button-small-padding * 3);
     min-height: $button-small-height;
     font-size: $button-small-font-size;
 
-    &.button-icon {
+    &[icon] {
       font-size: $button-small-icon-size;
     }
   }
-}
 
 
-// Core Button Types
-// --------------------------------------------------
+  // Core Button Types
+  // --------------------------------------------------
 
-.button-clear {
-  border-color: transparent;
-  background: none;
+  &[clear] {
+    border-color: transparent;
+    background: none;
 
-  &.activated {
-    opacity: 0.3;
+    &.activated {
+      opacity: 0.3;
+    }
   }
-}
 
-.button-outline {
-  background: none;
-}
+  &[outline] {
+    background: none;
+  }
 
-.button-block {
-  display: flex;
-  clear: both;
-  margin-right: 0;
-  margin-left: 0;
-
-  &:after {
+  &[block] {
+    display: flex;
     clear: both;
+    margin-right: 0;
+    margin-left: 0;
+    width: 100%;
+
+    &:after {
+      clear: both;
+    }
   }
+
+  &.disabled,
+  &[disabled] {
+    opacity: .4;
+    cursor: default !important;
+    pointer-events: none;
+  }
+
 }
 
-.button-full,
-.button-full > .button {
+[full],
+[full] > button,
+[full] > [button] {
   display: flex;
   margin-right: 0;
   margin-left: 0;
+  width: 100%;
   border-radius: 0;
 
-  &.button-outline.button-outline {
+  &[outline][outline] {
     border-right-width: 0;
     border-left-width: 0;
   }
 }
 
-button.button-block,
-button.button-full,
-.button-full > button.button,
-input.button.button-block  {
-  width: 100%;
-}
-
-.padding > .button.button-block:first-child {
+.padding > button[block]:first-child,
+.padding > [button][block]:first-child {
   margin-top: 0;
 }
 
@@ -164,15 +164,9 @@ input.button.button-block  {
 // Button Misc
 // --------------------------------------------------
 
-a.button {
+a[button] {
+  color: inherit;
   text-decoration: none;
-}
-
-.button.disabled,
-.button[disabled] {
-  opacity: .4;
-  cursor: default !important;
-  pointer-events: none;
 }
 
 
@@ -198,14 +192,14 @@ a.button {
 }
 
 @mixin button-clear($fg-color) {
-  &.button-clear {
+  &[clear] {
     background: none;
     color: $fg-color;
   }
 }
 
 @mixin button-outline($fg-color) {
-  &.button-outline {
+  &[outline] {
     border: 1px solid $fg-color;
     background: transparent;
     color: $fg-color;
@@ -222,7 +216,8 @@ a.button {
 
 @each $color, $value in $colors {
 
-  .button-#{$color} {
+  button[#{$color}],
+  [button][#{$color}] {
     @include button-default(get-color($color, base),
                             get-color($color, inverse));
 

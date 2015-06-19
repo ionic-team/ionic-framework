@@ -8,7 +8,7 @@ import {Log} from 'ionic/util'
 
 import {
   Router, Routable, List, Item, HeaderTemplate, Nav, NavController,
-  Toolbar, Button, Input, Tabs,
+  Toolbar, Input, Tabs,
   Tab, Content, Aside
 } from 'ionic/ionic'
 
@@ -16,7 +16,7 @@ import {
 @Component({selector: 'ion-view'})
 @View({
   templateUrl: 'pages/app.html',
-  directives: [Nav, List, Item, Content, Button, HeaderTemplate, Toolbar]
+  directives: [Nav, List, Item, Content, HeaderTemplate, Toolbar]
 })
 class AppPage {
   constructor(nav: NavController) {

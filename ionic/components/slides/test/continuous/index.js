@@ -1,14 +1,14 @@
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
-import {Slides, Slide, SlidePager, List, Item, Content, Button} from 'ionic/ionic';
+import {Slides, Slide, SlidePager, List, Item, Content} from 'ionic/ionic';
 
 
 @Component({
   selector: 'ion-view'
 })
 @View({
-  directives: [Slides, Slide, SlidePager, Content, Button, List, Item],
+  directives: [Slides, Slide, SlidePager, Content, List, Item],
   template: `
     <ion-slides #slides loop>
       <ion-slide style="background-color: blue">

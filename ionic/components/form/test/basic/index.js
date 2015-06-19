@@ -3,7 +3,7 @@ import {Component, Directive} from 'angular2/src/core/annotations_impl/annotatio
 import {View} from 'angular2/src/core/annotations_impl/view';
 
 import {FormBuilder, Validators, formDirectives, ControlGroup} from 'angular2/forms';
-//import {Button, Switch, Form, List, Label, Item, Input, Content} from 'ionic/ionic';
+//import {Switch, Form, List, Label, Item, Input, Content} from 'ionic/ionic';
 import {IONIC_DIRECTIVES} from 'ionic/ionic'
 
 console.log([formDirectives].concat(IONIC_DIRECTIVES));

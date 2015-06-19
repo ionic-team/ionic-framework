@@ -4,7 +4,7 @@ import {Component, Directive} from 'angular2/src/core/annotations_impl/annotatio
 import {View} from 'angular2/src/core/annotations_impl/view';
 
 import {Slides, Slide, SlidePager, List, Item, ActionMenu, Modal, ModalRef,
-  NavbarTemplate, Navbar, NavController, Button, Content} from 'ionic/ionic';
+  NavbarTemplate, Navbar, NavController, Content} from 'ionic/ionic';
 
 @Component({
   selector: 'ion-view'

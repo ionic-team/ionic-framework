@@ -5,7 +5,7 @@ import {View} from 'angular2/src/core/annotations_impl/view';
 import {FormBuilder, Validators, formDirectives, ControlGroup} from 'angular2/forms';
 
 import {Segment, SegmentButton, List, Item, ActionMenu, Modal, ModalRef,
-  NavbarTemplate, Navbar, NavController, Button, Content} from 'ionic/ionic';
+  NavbarTemplate, Navbar, NavController, Content} from 'ionic/ionic';
 
 @Component({
   selector: 'ion-view'
@@ -70,7 +70,7 @@ import {Segment, SegmentButton, List, Item, ActionMenu, Modal, ModalRef,
     </div>
   </ion-content>
   `,
-  directives: [NavbarTemplate, Navbar, Content, List, Item, Button, Segment, SegmentButton, formDirectives]
+  directives: [NavbarTemplate, Navbar, Content, List, Item, Segment, SegmentButton, formDirectives]
 })
 export class SegmentPage {
   constructor() {

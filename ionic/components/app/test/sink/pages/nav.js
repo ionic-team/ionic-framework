@@ -4,7 +4,7 @@ import {Component, Directive} from 'angular2/src/core/annotations_impl/annotatio
 import {View} from 'angular2/src/core/annotations_impl/view';
 
 import {List, Item, ActionMenu, Modal, ModalRef,
-  NavbarTemplate, Navbar, NavController, Button, Content} from 'ionic/ionic';
+  NavbarTemplate, Navbar, NavController, Content} from 'ionic/ionic';
 
 @Component({
   selector: 'ion-view'
@@ -26,7 +26,7 @@ import {List, Item, ActionMenu, Modal, ModalRef,
     <button primary (click)="push()">Push</button>
   </ion-content>
   `,
-  directives: [NavbarTemplate, Navbar, Content, List, Item, Button]
+  directives: [NavbarTemplate, Navbar, Content, List, Item]
 })
 export class NavPage {
   constructor(nav: NavController) {
@@ -45,7 +45,7 @@ export class NavPage {
     <button primary (click)="pop()">Pop</button>
   </ion-content>
   `,
-  directives: [NavbarTemplate, Navbar, Content, Button]
+  directives: [NavbarTemplate, Navbar, Content]
 })
 export class NavSecondPage {
   constructor(nav: NavController) {

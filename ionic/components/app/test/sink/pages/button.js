@@ -3,7 +3,7 @@ import {Ancestor} from 'angular2/src/core/annotations_impl/visibility';
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
-import {Routable, NavbarTemplate, Navbar, NavController, Button, Content} from 'ionic/ionic';
+import {Routable, NavbarTemplate, Navbar, NavController, Content} from 'ionic/ionic';
 
 @Component({
   selector: 'ion-view'
@@ -38,7 +38,7 @@ import {Routable, NavbarTemplate, Navbar, NavController, Button, Content} from '
 
   </ion-content>
   `,
-  directives: [NavbarTemplate, Navbar, Content, Button, NgIf]
+  directives: [NavbarTemplate, Navbar, Content, NgIf]
 })
 export class ButtonPage {
   constructor(nav: NavController) {

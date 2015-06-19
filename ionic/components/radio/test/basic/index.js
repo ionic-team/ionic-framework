@@ -2,13 +2,13 @@ import {Component, Directive} from 'angular2/src/core/annotations_impl/annotatio
 import {View} from 'angular2/src/core/annotations_impl/view';
 
 //import {FormBuilder, Validators, FormDirectives, ControlGroup} from 'angular2/forms';
-import {RadioGroup, RadioButton, Content, Button, List} from 'ionic/ionic';
+import {RadioGroup, RadioButton, Content, List} from 'ionic/ionic';
 
 
 @Component({ selector: 'ion-view' })
 @View({
   templateUrl: 'main.html',
-  directives: [RadioGroup, RadioButton, List, Content, Button]
+  directives: [RadioGroup, RadioButton, List, Content]
 })
 export default class IonicApp {
   constructor() {

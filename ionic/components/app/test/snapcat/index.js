@@ -5,7 +5,7 @@ import {Component, Directive} from 'angular2/src/core/annotations_impl/annotatio
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {FormBuilder, Control, ControlGroup, Validators, formDirectives} from 'angular2/forms';
 
-import {Modal, ModalRef, Nav, Segment, Animation, SegmentButton, Slides, Slide, Content, Button, List, Item} from 'ionic/ionic';
+import {Modal, ModalRef, Nav, Segment, Animation, SegmentButton, Slides, Slide, Content, List, Item} from 'ionic/ionic';
 import {NavController, NavbarTemplate, NavParams, Navbar} from 'ionic/ionic';
 
 
@@ -38,7 +38,7 @@ Animation.register('my-fade-out', FadeOut);
 @Component({ selector: 'ion-view' })
 @View({
   templateUrl: 'detail.html',
-  directives: [formDirectives, NavbarTemplate, Navbar, Content, Button, List, Item]
+  directives: [formDirectives, NavbarTemplate, Navbar, Content, List, Item]
 })
 export class DetailPage {
   constructor(params: NavParams) {
@@ -49,7 +49,7 @@ export class DetailPage {
 @Component({ selector: 'ion-view' })
 @View({
   templateUrl: 'feed.html',
-  directives: [formDirectives, NgFor, NavbarTemplate, Navbar, Segment, SegmentButton, Content, Button, List, Item]
+  directives: [formDirectives, NgFor, NavbarTemplate, Navbar, Segment, SegmentButton, Content, List, Item]
 })
 export class FeedPage {
   constructor(nav: NavController) {
@@ -100,7 +100,7 @@ export class FeedPage {
 @Component({ selector: 'ion-view' })
 @View({
   templateUrl: 'main.html',
-  directives: [formDirectives, Nav, Slides, Slide, Content, Button, List, Item]
+  directives: [formDirectives, Nav, Slides, Slide, Content, List, Item]
 })
 export default class IonicApp {
   constructor() {
@@ -129,7 +129,7 @@ export default class IonicApp {
 })
 @View({
   template: '<ion-modal><ion-content padding><button primary (click)="close()">Close</button></ion-content></ion-modal>',
-  directives: [Nav, Button, Content, ModalContainer]
+  directives: [Nav, Content, ModalContainer]
 })
 export class SettingsModal extends Modal {
   // constructor() {
@@ -142,7 +142,7 @@ export class SettingsModal extends Modal {
 })
 @View({
   template: '<ion-modal><button icon (click)="close()"><i class="icon ion-close"></i></button><h2>20</h2><p>You\'re pretty awesome</p></ion-modal>',
-  directives: [Nav, Button, Content, ModalContainer]
+  directives: [Nav, Content, ModalContainer]
 })
 export class HeartModal {
   constructor(modalRef: ModalRef) {

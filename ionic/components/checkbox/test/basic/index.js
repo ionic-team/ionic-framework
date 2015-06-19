@@ -2,13 +2,13 @@ import {Component, Directive} from 'angular2/src/core/annotations_impl/annotatio
 import {View} from 'angular2/src/core/annotations_impl/view';
 
 //import {FormBuilder, Validators, FormDirectives, ControlGroup} from 'angular2/forms';
-import {Checkbox, Content, Button, List} from 'ionic/ionic';
+import {Checkbox, Content, List} from 'ionic/ionic';
 //import {IONIC_DIRECTIVES} from 'ionic/ionic'
 
 @Component({ selector: 'ion-view' })
 @View({
   templateUrl: 'main.html',
-  directives: [Checkbox, List, Content, Button]
+  directives: [Checkbox, List, Content]
 })
 export default class IonicApp {
   constructor() {

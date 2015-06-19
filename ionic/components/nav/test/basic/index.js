@@ -2,7 +2,7 @@ import {bootstrap, QueryList} from 'angular2/angular2'
 import {Component, Directive, onInit} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
-import {Button, Nav, NavPush, NavPop, NavParams, Routable, Router, NavController, NavbarTemplate, Navbar, NavPush, Content} from 'ionic/ionic';
+import {Nav, NavPush, NavPop, NavParams, Routable, Router, NavController, NavbarTemplate, Navbar, NavPush, Content} from 'ionic/ionic';
 
 import {SecondPage} from './pages/second-page'
 
@@ -30,7 +30,7 @@ import {SecondPage} from './pages/second-page'
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
     '</ion-content>',
-  directives: [Button, NavbarTemplate, Navbar, NavPush, Content]
+  directives: [NavbarTemplate, Navbar, NavPush, Content]
 })
 export default class FirstPage {
   constructor(

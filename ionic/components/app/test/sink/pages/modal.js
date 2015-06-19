@@ -4,7 +4,7 @@ import {Component, Directive} from 'angular2/src/core/annotations_impl/annotatio
 import {View} from 'angular2/src/core/annotations_impl/view';
 
 import {ActionMenu, Modal, ModalRef,
-  NavbarTemplate, Navbar, NavController, Button, Content} from 'ionic/ionic';
+  NavbarTemplate, Navbar, NavController, Content} from 'ionic/ionic';
 
 @Component({
   selector: 'ion-view'
@@ -26,7 +26,7 @@ import {ActionMenu, Modal, ModalRef,
     <button primary (click)="openModal()">Open Modal</button>
   </ion-content>
   `,
-  directives: [NavbarTemplate, Navbar, Content, Button]
+  directives: [NavbarTemplate, Navbar, Content]
 })
 export class ModalPage {
   constructor(nav: NavController, loader: DynamicComponentLoader, injector: Injector, domRenderer: DomRenderer, elementRef: ElementRef) {
@@ -59,7 +59,7 @@ export class ModalPage {
 })
 @View({
   template: '<ion-content padding><button (click)="close()" primary>Close Modal</button></ion-content>',
-  directives: [Button, Content]
+  directives: [Content]
 })
 export class MyModal {
   constructor(modalRef: ModalRef) {

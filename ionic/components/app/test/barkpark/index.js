@@ -8,14 +8,14 @@ import {Log} from 'ionic/util'
 
 import {
   Router, Routable, List, Item, HeaderTemplate, Nav, NavController,
-  Toolbar, Button, Input, Tabs,
+  Toolbar, Input, Tabs,
   Tab, Content, Aside
 } from 'ionic/ionic'
 
 @Component({selector: 'ion-view'})
 @View({
   templateUrl: 'pages/login.html',
-  directives: [FormDirectives, Button, Input, Content, HeaderTemplate, Toolbar]
+  directives: [FormDirectives, Input, Content, HeaderTemplate, Toolbar]
 })
 class LoginPage {
   constructor( nav: NavController ) {
@@ -53,7 +53,7 @@ new Routable(LoginPage, {
 @Component({selector: 'ion-view'})
 @View({
   templateUrl: 'pages/signup.html',
-  directives: [FormDirectives, Button, Input]
+  directives: [FormDirectives, Input]
 })
 export class SignupPage {
   constructor( nav: NavController ) { //, fb: FormBuilder ) {
@@ -89,7 +89,7 @@ export class SignupPage {
 @Component({selector: 'ion-view'})
 @View({
   templateUrl: 'pages/app.html',
-  directives: [FormDirectives, Button, Input, Tabs, Tab]
+  directives: [FormDirectives, Input, Tabs, Tab]
 })
 export class AppPage {
   constructor( nav: NavController ) { //, fb: FormBuilder ) {
@@ -139,7 +139,7 @@ class PostDetail {
 @Component({selector: 'ion-view'})
 @View({
   templateUrl: 'pages/splash.html',
-  directives: [Content, Button]
+  directives: [Content]
 })
 export default class SplashPage {
   constructor(nav: NavController) {

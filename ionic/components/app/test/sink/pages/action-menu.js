@@ -3,7 +3,7 @@ import {Ancestor} from 'angular2/src/core/annotations_impl/visibility';
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
-import {ActionMenu, NavbarTemplate, Navbar, NavController, Button, Content} from 'ionic/ionic';
+import {ActionMenu, NavbarTemplate, Navbar, NavController, Content} from 'ionic/ionic';
 
 @Component({
   selector: 'ion-view'
@@ -25,7 +25,7 @@ import {ActionMenu, NavbarTemplate, Navbar, NavController, Button, Content} from
     <button primary (click)="openMenu()">Open Menu</button>
   </ion-content>
   `,
-  directives: [NavbarTemplate, Navbar, Content, Button]
+  directives: [NavbarTemplate, Navbar, Content]
 })
 export class ActionMenuPage {
   constructor(nav: NavController) {
