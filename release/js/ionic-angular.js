@@ -238,7 +238,7 @@ jqLite.prototype.addClass = function(cssClasses) {
       el = this[x];
       if (el.setAttribute) {
 
-        if (cssClasses.indexOf(' ') < 0 && el.classList.add) {
+        if (cssClasses.indexOf(' ') < 0 && el.classList && el.classList.add) {
           el.classList.add(cssClasses);
         } else {
           existingClasses = (' ' + (el.getAttribute('class') || '') + ' ')
