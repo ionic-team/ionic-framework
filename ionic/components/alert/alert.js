@@ -17,7 +17,7 @@
           Seriously, who does not like cookies.
         </div>
         <div class="alert-actions">
-          <button class="button">OK</button>
+          <button primary>OK</button>
         </div>
       </div>
     </div>`

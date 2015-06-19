@@ -27,11 +27,11 @@ import {ClickBlock} from '../../util/click-block';
       <div class="action-menu-container">
         <div class="action-menu-group action-menu-options">
           <div class="action-menu-title" *ng-if="options.titleText">{{options.titleText}}</div>
-          <button (click)="_buttonClicked(index)" *ng-for="#b of options.buttons; #index = index" class="button action-menu-option">{{b.text}}</button>
-          <button *ng-if="options.destructiveText" (click)="_destructiveButtonClicked()" class="button destructive action-menu-destructive">{{options.destructiveText}}</button>
+          <button (click)="_buttonClicked(index)" *ng-for="#b of options.buttons; #index = index" class="action-menu-option">{{b.text}}</button>
+          <button *ng-if="options.destructiveText" (click)="_destructiveButtonClicked()" class="destructive action-menu-destructive">{{options.destructiveText}}</button>
         </div>
         <div class="action-menu-group action-menu-cancel" *ng-if="options.cancelText">
-          <button class="button" (click)="cancel()">{{options.cancelText}}</button>
+          <button (click)="cancel()">{{options.cancelText}}</button>
         </div>
       </div>
     </div>`,

@@ -15,7 +15,7 @@ import {IonicComponent} from 'ionic/config/component'
     <input (focus)="inputFocused()" (blur)="inputBlurred()"
     (input)="inputChanged($event)" class="search-bar-input" type="search" [attr.placeholder]="placeholder">
   </div>
-  <button class="button search-bar-cancel">{{ cancelText }}</button>`
+  <button class="search-bar-cancel">{{ cancelText }}</button>`
 })
 export class SearchBar {
 

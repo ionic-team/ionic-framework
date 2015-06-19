@@ -10,7 +10,7 @@ import {Router, Routable, NavController, NavbarTemplate, Navbar, Content} from '
     <ion-navbar *navbar><ion-title>Third Page Header</ion-title></ion-navbar>
     <ion-content class="padding">
       <p>
-        <button class="button" (click)="pop()">Pop (Go back to 2nd)</button>
+        <button primary (click)="pop()">Pop (Go back to 2nd)</button>
       </p>
       <div class="yellow"><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f></div>
     </ion-content>

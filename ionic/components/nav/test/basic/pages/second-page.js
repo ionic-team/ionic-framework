@@ -11,13 +11,13 @@ import {ThirdPage} from './third-page';
     <ion-navbar *navbar><ion-title>Second Page Header</ion-title></ion-navbar>
     <ion-content class="padding">
       <p>
-        <button class="button" (click)="pop()">Pop (Go back to 1st)</button>
+        <button primary (click)="pop()">Pop (Go back to 1st)</button>
       </p>
       <p>
-        <button class="button" nav-pop>Pop with NavPop (Go back to 1st)</button>
+        <button primary nav-pop>Pop with NavPop (Go back to 1st)</button>
       </p>
       <p>
-        <button class="button" (click)="push()">Push (Go to 3rd)</button>
+        <button primary (click)="push()">Push (Go to 3rd)</button>
       </p>
       <p>
         Random: {{ val }}

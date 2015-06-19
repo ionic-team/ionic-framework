@@ -15,17 +15,17 @@ import {SecondPage} from './pages/second-page'
     '<ion-navbar *navbar>' +
       '<ion-title>First Page: {{ val }}</ion-title>' +
       '<ion-nav-items primary>' +
-        '<button class="button">P1</button>' +
+        '<button>P1</button>' +
       '</ion-nav-items>' +
       '<ion-nav-items secondary>' +
-        '<button class="button">S1</button>' +
+        '<button>S1</button>' +
         '<button icon><i class="icon ion-navicon"></i></button>' +
       '</ion-nav-items>' +
     '</ion-navbar>' +
     '<ion-content class="padding">' +
       '<p>First Page: {{ val }}</p>' +
-      '<p><button class="button" (click)="push()">Push (Go to 2nd)</button></p>' +
-      '<p><button class="button" [push-data]="pushData" [nav-push]="pushPage">Push w/ nav-push (Go to 2nd)</button></p>' +
+      '<p><button (click)="push()">Push (Go to 2nd)</button></p>' +
+      '<p><button [push-data]="pushData" [nav-push]="pushPage">Push w/ nav-push (Go to 2nd)</button></p>' +
       '<icon class="ion-ios-arrow-back"></icon>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +

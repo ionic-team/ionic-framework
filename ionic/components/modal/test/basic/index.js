@@ -37,14 +37,14 @@ export class ContactModal extends Modal {
 @Component({selector: 'ion-view'})
 @View({
   template: `
-    <ion-navbar *navbar><ion-title>First Page Header: {{ val }}</ion-title><ion-nav-items primary><button primary class="button" (click)="closeModal()">Close</button></ion-nav-items></ion-navbar>
+    <ion-navbar *navbar><ion-title>First Page Header: {{ val }}</ion-title><ion-nav-items primary><button primary (click)="closeModal()">Close</button></ion-nav-items></ion-navbar>
 
     <ion-content class="padding">
 
       <p>First Page: {{ val }}</p>
 
       <p>
-        <button class="button" (click)="push()">Push (Go to 2nd)</button>
+        <button primary (click)="push()">Push (Go to 2nd)</button>
       </p>
 
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
@@ -85,11 +85,11 @@ export class ModalFirstPage {
     <ion-content class="padding">
 
       <p>
-        <button class="button" (click)="pop()">Pop (Go back to 1st)</button>
+        <button primary (click)="pop()">Pop (Go back to 1st)</button>
       </p>
 
       <p>
-        <button class="button" (click)="push()">Push (Go to 3rd)</button>
+        <button primary (click)="push()">Push (Go to 3rd)</button>
       </p>
 
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
