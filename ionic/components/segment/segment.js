@@ -1,35 +1,40 @@
 import {Renderer, ElementRef} from 'angular2/angular2'
 
-import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
+import {Component, Directive, onInit} from 'angular2/src/core/annotations_impl/annotations';
 import {Ancestor} from 'angular2/src/core/annotations_impl/visibility';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
 import {ControlGroup, ControlDirective} from 'angular2/forms'
 import {dom} from 'ionic/util';
-import {IonicComponent_OLD} from 'ionic/config/component'
+import {IonicComponent} from 'ionic/config/component'
 import {Button} from 'ionic/components/button/button'
 
 
-@Component({
-  selector: 'ion-segment',
-  hostListeners: {
-    'click': 'buttonClicked($event)'
-  }
-})
+@IonicComponent(Segment)
 @View({
   template: `<div class="ion-segment">
     <content></content>
   </div>
   `,
-  directives: [Button, SegmentButton],
-  properties: [
-    'value'
-  ],
-  hostProperties: {
-    value: 'value'
-  }
+  directives: [Button, SegmentButton]
 })
 export class Segment {
+
+  static get config() {
+    return {
+      selector: 'ion-segment',
+      hostListeners: {
+        'click': 'buttonClicked($event)'
+      },
+      properties: [
+        'value'
+      ],
+      hostProperties: {
+        value: 'value'
+      }
+    }
+  }
+
   constructor(
     elementRef: ElementRef,
     renderer: Renderer,
@@ -45,6 +50,10 @@ export class Segment {
     cd.valueAccessor = this; //ControlDirective should inject CheckboxControlDirective
 
     this.buttons = [];
+  }
+
+  onInit() {
+    Segment.applyConfig(this);
   }
 
   /**
@@ -103,8 +112,6 @@ export class Segment {
   }
 }
 
-new IonicComponent_OLD(Segment, {
-});
 
 @Component({
   selector: 'ion-segment-button',

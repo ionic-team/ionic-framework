@@ -2,14 +2,14 @@ import {For, ElementRef, Inject, Parent} from 'angular2/angular2'
 
 import {Ancestor} from 'angular2/src/core/annotations_impl/visibility';
 
-import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
+import {Component, Directive, onInit} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
 import {DragGesture} from 'ionic/gestures/drag-gesture';
 import * as util from 'ionic/util';
 
 import {dom} from 'ionic/util'
-import {IonicComponent_OLD} from 'ionic/config/component'
+import {IonicComponent} from 'ionic/config/component'
 
 import {Hammer} from 'ionic/gestures/hammer';
 
@@ -29,19 +29,24 @@ import {Hammer} from 'ionic/gestures/hammer';
  * * TODO: Test mouse support
  * * TODO: Port over mouse handling
  */
-@Component({
-  selector: 'ion-slides',
-  properties: [
-    'loop',
-    'index',
-    'bounce'
-  ]
-})
+@IonicComponent(Slides)
 @View({
   template: `<div class="slides-view"><content></content></div>`,
   directives: [Slide, SlidePager]
 })
 export class Slides {
+
+  static get config() {
+    return {
+      selector: 'ion-slides',
+      properties: [
+        'loop',
+        'index',
+        'bounce'
+      ]
+    }
+  }
+
   constructor(elementRef: ElementRef) {
     // Grab the main container, and the slides-view wrapper
     this.domElement = elementRef.domElement;
@@ -63,17 +68,9 @@ export class Slides {
     // Initialize our slides gesture handler
     this.gesture = new SlidesGesture(this);
     this.gesture.listen();
-
-
-    // Wait a cycle for the children to exist before computing sizes
-    setTimeout(() => {
-      // Continuous mode, but only if we have at least 2 slides
-      this.setup();
-
-    });
   }
 
-  setup() {
+  onInit() {
     this.continuous = util.isDefined(this.loop) && (this.slides.length > 1 ? true : false);
 
     // Grab the wrapper element that contains the slides
@@ -464,14 +461,10 @@ export class Slides {
   }
 
 }
-new IonicComponent_OLD(Slides, {
-});
 
-@Component({
+
+@Directive({
   selector: 'ion-slide',
-})
-@View({
-  template: `<content></content>`
 })
 export class Slide {
   constructor(
@@ -515,8 +508,6 @@ export class Slide {
   }
 }
 
-new IonicComponent_OLD(Slide, {
-});
 
 @Component({
   selector: 'ion-pager',
@@ -543,13 +534,10 @@ export class SlidePager {
     return this.slides.slides;
   }
 }
-new IonicComponent_OLD(SlidePager, {
-});
 
 
 export class SlidesGesture extends DragGesture {
   constructor(slides) {
-    //util.defaults(opts, {});
     super(slides.domElement);
     this.slides = slides;
   }
@@ -573,7 +561,6 @@ export class SlidesGesture extends DragGesture {
     this.slides._dragStart(event, this._drag);
   }
   onDragEnd(event) {
-
     this.slides._endDrag(event, this._drag);
   }
 }

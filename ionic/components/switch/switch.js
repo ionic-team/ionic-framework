@@ -4,45 +4,37 @@ import {View} from 'angular2/src/core/annotations_impl/view';
 
 import {ControlGroup, ControlDirective} from 'angular2/forms'
 import {dom} from 'ionic/util';
-import {IonicComponent_OLD} from 'ionic/config/component'
+import {IonicComponent} from 'ionic/config/component'
 
-@Component({
-  selector: 'ion-switch',
-  properties: {
-    checked: 'checked'
-  },
-  hostListeners: {
-    'click': 'switchClicked($event)'
-  },
-  /*
-  TODO: For some reason this triggers a 'TypeError: array.map is not a function'
-  events: {
-    'click': 'onClick()'
-  }
-  */
-})
+@IonicComponent(Switch)
 @View({
   template: `
   <div class="item-content">
-
     <div class="item-title">
       <content></content>
     </div>
-
     <div class="item-media media-switch">
       <div class="switch-toggle"></div>
     </div>
-
   </div>`
 })
 export class Switch {
+
+  static get config() {
+    return {
+      selector: 'ion-switch',
+      properties: [
+        'checked'
+      ],
+      hostListeners: {
+        'click': 'switchClicked($event)'
+      }
+    }
+  }
+
   constructor(
     elementRef: ElementRef,
     cd: ControlDirective
-    // @PropertySetter('attr.role') setAriaRole: Function,
-    // @PropertySetter('attr.aria-checked') setChecked: Function
-    // @PropertySetter('attr.aria-invalid') setInvalid: Function,
-    // @PropertySetter('attr.aria-disabled') setDisabled: Function
   ) {
     this.domElement = elementRef.domElement
     this.config = Switch.config.invoke(this)
@@ -89,5 +81,3 @@ export class Switch {
     this.checked = !this.checked;
   }
 }
-
-new IonicComponent_OLD(Switch, {})
