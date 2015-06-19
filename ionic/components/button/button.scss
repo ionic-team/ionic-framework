@@ -54,7 +54,8 @@ button,
   border: 1px solid #ccc;
   padding: $button-padding;
   min-height: $button-height;
-  background: #fff;
+  // Default button has no background
+  background: transparent;
 
   text-align: center;
   font-size: $button-font-size;
