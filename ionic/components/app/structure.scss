@@ -49,10 +49,13 @@ ionic {
 ion-loading-icon {
   display: flex;
   margin: auto;
-  i {
-    font-size: 128px;
-    color: #666666;
+
+  font-family: 'Ionicons';
+  &:before {
+    content: "\f44e";
   }
+  font-size: 128px;
+  color: #666666;
 }
 
 ion-nav {
