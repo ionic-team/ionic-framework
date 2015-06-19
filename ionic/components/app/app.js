@@ -13,6 +13,7 @@ import {bind} from 'angular2/di';
 import {Injectable} from 'angular2/src/di/decorators';
 import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
 
+import {IonicConfig} from '../../config/config';
 import {ViewController} from '../view/view-controller';
 
 
@@ -28,18 +29,26 @@ class IonicRootComponent extends ViewController {
     compiler: Compiler,
     elementRef: ElementRef,
     loader: DynamicComponentLoader,
-    injector: Injector
+    parentInjector: Injector
   ) {
-    super(null, compiler, elementRef, loader, injector);
-
-    IonicRoot.component(this);
+    let injector = parentInjector;
+    let ComponentType = null;
 
     if (appModules.length) {
-      let appModule = appModules.shift();
-      if (appModule.default) {
-        this.push(appModule.default);
-      }
+      ComponentType = appModules.shift();
+
+      injector = parentInjector.resolveAndCreateChild([
+        bind(IonicConfig).toValue(ComponentType._config)
+      ]);
     }
+
+    super(null, compiler, elementRef, loader, injector);
+    IonicRoot.component(this);
+
+    if (ComponentType) {
+      this.push(ComponentType);
+    }
+
   }
 }
 
@@ -55,10 +64,21 @@ class PaneAnchor {
 
 let appModules = [];
 
+export function ionicBootstrap(ComponentType, config) {
+  ComponentType._config = config || new IonicConfig();
+  appModules.push(ComponentType);
+  bootstrap(IonicRootComponent);
+}
+
 export function load(app) {
-  if (app) {
-    appModules.push(app);
-    bootstrap(IonicRootComponent);
+  if (!app) {
+    console.error('Invalid app module');
+
+  } else if (!app.main) {
+    console.error('App module missing main()');
+
+  } else {
+    app.main();
   }
 }
 

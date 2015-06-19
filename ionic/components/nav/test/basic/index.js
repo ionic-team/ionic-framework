@@ -1,7 +1,7 @@
-import {bootstrap, QueryList} from 'angular2/angular2'
 import {Component, Directive, onInit} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
+import {ionicBootstrap, IonicConfig} from 'ionic/ionic';
 import {Nav, NavPush, NavPop, NavParams, Routable, Router, NavController, NavbarTemplate, Navbar, NavPush, Content} from 'ionic/ionic';
 
 import {SecondPage} from './pages/second-page'
@@ -24,18 +24,21 @@ import {SecondPage} from './pages/second-page'
     '</ion-navbar>' +
     '<ion-content class="padding">' +
       '<p>First Page: {{ val }}</p>' +
-      '<p><button (click)="push()">Push (Go to 2nd)</button></p>' +
-      '<p><button [push-data]="pushData" [nav-push]="pushPage">Push w/ nav-push (Go to 2nd)</button></p>' +
+      '<p><button primary (click)="push()">Push (Go to 2nd)</button></p>' +
+      '<p><button primary [push-data]="pushData" [nav-push]="pushPage">Push w/ nav-push (Go to 2nd)</button></p>' +
       '<icon class="ion-ios-arrow-back"></icon>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
     '</ion-content>',
   directives: [NavbarTemplate, Navbar, NavPush, Content]
 })
-export default class FirstPage {
+class FirstPage {
   constructor(
-    nav: NavController
+    nav: NavController,
+    myConfig: IonicConfig
   ) {
+
+    console.log('myConfig', myConfig);
 
     // TODO: Shouldn't have to do this
     Router.setNavController(nav);
@@ -98,3 +101,10 @@ export default class FirstPage {
 new Routable(FirstPage, {
   url: '/first-page'
 })
+
+
+export function main() {
+  let myConfig = new IonicConfig();
+
+  ionicBootstrap(FirstPage, myConfig);
+}
