@@ -78,7 +78,7 @@ export function load(app) {
     console.error('App module missing main()');
 
   } else {
-    app.main();
+    app.main(ionicBootstrap);
   }
 }
 

@@ -1,7 +1,7 @@
 import {Component, Directive, onInit} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
-import {ionicBootstrap, IonicConfig} from 'ionic/ionic';
+import {IonicConfig} from 'ionic/ionic';
 import {Nav, NavPush, NavPop, NavParams, Routable, Router, NavController, NavbarTemplate, Navbar, NavPush, Content} from 'ionic/ionic';
 
 import {SecondPage} from './pages/second-page'
@@ -103,7 +103,7 @@ new Routable(FirstPage, {
 })
 
 
-export function main() {
+export function main(ionicBootstrap) {
   let myConfig = new IonicConfig();
 
   ionicBootstrap(FirstPage, myConfig);
