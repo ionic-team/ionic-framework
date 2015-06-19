@@ -6,13 +6,14 @@ import {View} from 'angular2/src/core/annotations_impl/view';
 
 //import {ControlGroup, ControlDirective} from 'angular2/forms';
 import {IonicComponent} from '../../config/component';
+import {Icon} from '../icon/icon';
 
 
 @IonicComponent(Checkbox)
 @View({
   template: `
   <div class="item-media media-checkbox">
-    <icon class="checkbox-off"></icon>
+    <icon [name]="timsIcon" class="checkbox-off"></icon>
     <icon class="checkbox-on"></icon>
   </div>
 
@@ -20,7 +21,8 @@ import {IonicComponent} from '../../config/component';
     <div class="item-label">
       <content></content>
     </div>
-  </div>`
+  </div>`,
+  directives: [Icon]
 })
 export class Checkbox {
 
@@ -49,6 +51,9 @@ export class Checkbox {
   ) {
     this.domElement = elementRef.domElement
     this.domElement.classList.add('item')
+
+    this.timsIcon = 'hi-tim'
+
     // this.controlDirective = cd;
     // cd.valueAccessor = this;
 
