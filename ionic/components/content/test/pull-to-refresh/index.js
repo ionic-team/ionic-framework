@@ -1,4 +1,4 @@
-import {bootstrap, NgFor, ProtoViewRef, ViewContainerRef} from 'angular2/angular2'
+import {NgFor, ProtoViewRef, ViewContainerRef} from 'angular2/angular2'
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {Parent} from 'angular2/src/core/annotations_impl/visibility';
@@ -20,7 +20,6 @@ class IonicApp {
   }
 }
 
-
-export function main() {
-  bootstrap(IonicApp);
+export function main(ionicBootstrap) {
+  ionicBootstrap(IonicApp);
 }

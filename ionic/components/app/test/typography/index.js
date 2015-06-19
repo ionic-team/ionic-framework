@@ -6,8 +6,12 @@ import {View} from 'angular2/src/core/annotations_impl/view';
 @View({
   templateUrl: 'main.html'
 })
-export default class IonicApp {
+class IonicApp {
   constructor() {
     console.log('IonicApp Start')
   }
+}
+
+export function main(ionicBootstrap) {
+  ionicBootstrap(IonicApp);
 }

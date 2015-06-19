@@ -17,9 +17,9 @@ import {IonicComponent} from '../../config/component';
 @IonicComponent(Tabs)
 @View({
   template: `
-    <nav class="navbar-container tab-bar-container">
+    <nav class="tab-bar-container">
       <div class="tab-bar" role="tablist">
-        <button *ng-for="#t of tabs" class="tab-button" role="tab">
+        <button *ng-for="#t of tabs" [tab]="t" class="tab-button" role="tab">
           <icon [name]="t.tabIcon" class="tab-button-icon"></icon>
           <span class="tab-button-text">{{t.tabTitle}}</span>
         </button>

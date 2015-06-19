@@ -12,7 +12,7 @@ let scale = 0.6;
 @View({
   templateUrl: 'main.html'
 })
-export default class IonicApp {
+class IonicApp {
 
   constructor() {
     this.animation = new Animation();
@@ -74,4 +74,8 @@ export default class IonicApp {
     this.animation.progress( parseFloat(ev.srcElement.value) );
   }
 
+}
+
+export function main(ionicBootstrap) {
+  ionicBootstrap(IonicApp);
 }

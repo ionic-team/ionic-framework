@@ -23,7 +23,7 @@ function randomTitle() {
   templateUrl: 'main.html',
   directives: [formDirectives].concat([Content, List, Item, SearchBar, NgFor])
 })
-export default class IonicApp {
+class IonicApp {
   constructor() {
     console.log('IonicApp Start')
 
@@ -56,3 +56,6 @@ export default class IonicApp {
   }
 }
 
+export function main(ionicBootstrap) {
+  ionicBootstrap(IonicApp);
+}

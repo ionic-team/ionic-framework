@@ -10,4 +10,8 @@ import {List} from 'ionic/components/list/list';
   templateUrl: 'main.html',
   directives: [Content, List]
 })
-export default class IonicApp {}
+class IonicApp {}
+
+export function main(ionicBootstrap) {
+  ionicBootstrap(IonicApp);
+}

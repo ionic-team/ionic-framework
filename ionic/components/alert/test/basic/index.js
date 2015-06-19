@@ -1,4 +1,3 @@
-import {bootstrap} from 'angular2/angular2'
 import {Component} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
@@ -22,6 +21,6 @@ class IonicApp {
   }
 }
 
-export function main() {
-  bootstrap(IonicApp);
+export function main(ionicBootstrap) {
+  ionicBootstrap(IonicApp);
 }

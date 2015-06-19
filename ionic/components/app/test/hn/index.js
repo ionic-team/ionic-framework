@@ -30,7 +30,7 @@ export class Story {
   templateUrl: './pages/top.html',
   directives: [NavbarTemplate, Navbar, Content, NgFor, List, Story, Item]
 })
-export default class HNTopStories {
+class HNTopStories {
   constructor(
     nav: NavController
   ) {
@@ -90,4 +90,8 @@ export default class HNTopStories {
     });
   });
   */
+}
+
+export function main(ionicBootstrap) {
+  ionicBootstrap(HNTopStories);
 }

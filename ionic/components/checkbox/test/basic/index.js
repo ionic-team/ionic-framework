@@ -10,7 +10,7 @@ import {Checkbox, Content, List} from 'ionic/ionic';
   templateUrl: 'main.html',
   directives: [Checkbox, List, Content]
 })
-export default class IonicApp {
+class IonicApp {
   constructor() {
     // var fb = new FormBuilder();
     // this.form = fb.group({
@@ -24,3 +24,6 @@ export default class IonicApp {
   }
 }
 
+export function main(ionicBootstrap) {
+  ionicBootstrap(IonicApp);
+}

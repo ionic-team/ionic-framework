@@ -9,8 +9,8 @@ import {Tabs, Tab} from 'ionic/ionic';
   templateUrl: 'main.html',
   directives: [Tabs, Tab]
 })
-export default class IonicApp {
-  constructor() {
-    console.log('IonicApp Start')
-  }
+class IonicApp {}
+
+export function main(ionicBootstrap) {
+  ionicBootstrap(IonicApp);
 }

@@ -9,4 +9,8 @@ import {Content, List, Item} from 'ionic/ionic';
   templateUrl: 'main.html',
   directives: [Content, List, Item]
 })
-export default class IonicApp {}
+class IonicApp {}
+
+export function main(ionicBootstrap) {
+  ionicBootstrap(IonicApp);
+}

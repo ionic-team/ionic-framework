@@ -35,7 +35,7 @@ class AppPage {
   directives: [Nav, Aside, List, Item, ParallaxEffect],
   templateUrl: 'main.html'
 })
-export default class IonicApp {
+class IonicApp {
   constructor() {
     this.firstPage = AppPage
 
@@ -99,4 +99,8 @@ export class ParallaxEffect {
     list.style['opacity'] = Math.min(this.parallax, 1);
     list.style['transform'] = 'translate3d(' + x + 'px, ' + y + 'px, 0) scale(' + scale + ')';
   }
+}
+
+export function main(ionicBootstrap) {
+  ionicBootstrap(IonicApp);
 }

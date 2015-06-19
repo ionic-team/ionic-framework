@@ -10,7 +10,7 @@ import {Switch, Content, List} from 'ionic/ionic';
   templateUrl: 'main.html',
   directives: [FormDirectives].concat([Switch, List, Content])
 })
-export default class IonicApp {
+class IonicApp {
   constructor() {
 
     var fb = new FormBuilder();
@@ -25,4 +25,8 @@ export default class IonicApp {
     console.log('Submitting form', this.form.value);
     event.preventDefault();
   }
+}
+
+export function main(ionicBootstrap) {
+  ionicBootstrap(IonicApp);
 }

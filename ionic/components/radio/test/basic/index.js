@@ -10,7 +10,7 @@ import {RadioGroup, RadioButton, Content, List} from 'ionic/ionic';
   templateUrl: 'main.html',
   directives: [RadioGroup, RadioButton, List, Content]
 })
-export default class IonicApp {
+class IonicApp {
   constructor() {
     console.log('IonicApp Start')
 
@@ -19,4 +19,8 @@ export default class IonicApp {
     //   preferredApple: ['mac', Validators.required],
     // });
   }
+}
+
+export function main(ionicBootstrap) {
+  ionicBootstrap(IonicApp);
 }

@@ -11,7 +11,7 @@ import {Content, List, Item} from 'ionic/ionic';
   templateUrl: 'main.html',
   directives: [Content, List, Item, ItemCellTemplate, NgFor]
 })
-export default class IonicApp {
+class IonicApp {
   constructor() {
     console.log('IonicApp Start')
 
@@ -41,4 +41,8 @@ export class ItemCellTemplate {
 
     list.setItemTemplate(this);
   }
+}
+
+export function main(ionicBootstrap) {
+  ionicBootstrap(IonicApp);
 }

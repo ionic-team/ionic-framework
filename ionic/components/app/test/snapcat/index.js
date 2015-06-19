@@ -102,7 +102,7 @@ export class FeedPage {
   templateUrl: 'main.html',
   directives: [formDirectives, Nav, Slides, Slide, Content, List, Item]
 })
-export default class IonicApp {
+class IonicApp {
   constructor() {
     this.feedPage = FeedPage;
     console.log('IonicApp Start');
@@ -152,4 +152,8 @@ export class HeartModal {
     console.log('Closing modal');
     this.modalRef.close();
   }
+}
+
+export function main(ionicBootstrap) {
+  ionicBootstrap(IonicApp);
 }

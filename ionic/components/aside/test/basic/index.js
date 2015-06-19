@@ -11,4 +11,8 @@ import {Aside, List, Item, Content} from 'ionic/ionic';
   directives: [Aside, Content, List, Item],
   templateUrl: 'main.html'
 })
-export default class IonicApp {}
+class IonicApp {}
+
+export function main(ionicBootstrap) {
+  ionicBootstrap(IonicApp);
+}

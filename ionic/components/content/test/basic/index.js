@@ -14,7 +14,7 @@ import {Item} from 'ionic/components/item/item';
   templateUrl: 'main.html',
   directives: [Content, Icon, Checkbox, List, Item, NgFor]
 })
-export default class IonicApp {
+class IonicApp {
   constructor() {
     console.log('IonicApp Start')
 
@@ -28,4 +28,8 @@ export default class IonicApp {
       console.log(this.items);
     })
   }
+}
+
+export function main(ionicBootstrap) {
+  ionicBootstrap(IonicApp);
 }

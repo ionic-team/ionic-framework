@@ -17,7 +17,7 @@ import {Tabs, Tab, NavController, NavbarTemplate, Navbar, Content} from 'ionic/i
     '</ion-content>',
   directives: [NavbarTemplate, Navbar, Content]
 })
-export default class SignInPage {
+class IonicApp {
   constructor(nav: NavController) {
     this.nav = nav;
   }
@@ -182,4 +182,8 @@ class Tab2Page3 {
   constructor(nav: NavController) {
     this.nav = nav;
   }
+}
+
+export function main(ionicBootstrap) {
+  ionicBootstrap(IonicApp);
 }

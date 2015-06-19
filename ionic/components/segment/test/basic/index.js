@@ -11,7 +11,7 @@ import {FormBuilder, Validators, formDirectives, ControlGroup} from 'angular2/fo
   templateUrl: 'main.html',
   directives: [formDirectives].concat([Segment, SegmentButton, Content, NgSwitch, NgSwitchWhen])
 })
-export default class IonicApp {
+class IonicApp {
   constructor() {
 
     var fb = new FormBuilder();
@@ -24,4 +24,8 @@ export default class IonicApp {
     console.log('Submitting form', this.form.value);
     event.preventDefault();
   }
+}
+
+export function main(ionicBootstrap) {
+  ionicBootstrap(IonicApp);
 }

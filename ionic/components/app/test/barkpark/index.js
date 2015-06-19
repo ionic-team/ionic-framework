@@ -141,7 +141,7 @@ class PostDetail {
   templateUrl: 'pages/splash.html',
   directives: [Content]
 })
-export default class SplashPage {
+class SplashPage {
   constructor(nav: NavController) {
     this.nav = nav;
     window.nav = nav;
@@ -149,5 +149,9 @@ export default class SplashPage {
   doLogin() {
     this.nav.push(LoginPage);
   }
+}
+
+export function main(ionicBootstrap) {
+  ionicBootstrap(SplashPage);
 }
 

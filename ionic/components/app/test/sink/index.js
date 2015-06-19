@@ -1,4 +1,4 @@
-import {bootstrap, QueryList, ElementRef, NgFor, NgIf} from 'angular2/angular2'
+import {QueryList, ElementRef, NgFor, NgIf} from 'angular2/angular2'
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {Descendant} from 'angular2/src/core/annotations_impl/visibility';
 import {View} from 'angular2/src/core/annotations_impl/view';
@@ -32,7 +32,7 @@ console.log('Loaded', Nav, NgFor, NgIf, Aside, List, ViewContainer, Item, Conten
   templateUrl: 'main.html',
   directives: [Nav, NgFor, NgIf, Aside, List, ViewContainer, Item, Content]
 })
-export default class IonicApp {
+class IonicApp {
   constructor(elementRef: ElementRef) {//, @Query(Aside) nav: QueryList) {//, @Descendant() aside: Aside) {
     Ionic.setRootElementRef(elementRef);
 
@@ -64,4 +64,8 @@ export default class IonicApp {
       });
     })
   }
+}
+
+export function main(ionicBootstrap) {
+  ionicBootstrap(IonicApp);
 }

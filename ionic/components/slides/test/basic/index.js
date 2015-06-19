@@ -11,11 +11,15 @@ import {Slides, Slide, SlidePager, List, Item, Content} from 'ionic/ionic';
   directives: [Slides, Slide, SlidePager, Content, List, Item],
   templateUrl: 'main.html'
 })
-export default class IonicApp {
+class IonicApp {
   next() {
     console.log('Next');
   }
   prev() {
     console.log('Prev');
   }
+}
+
+export function main(ionicBootstrap) {
+  ionicBootstrap(IonicApp);
 }

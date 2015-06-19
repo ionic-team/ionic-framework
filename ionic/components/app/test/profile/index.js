@@ -14,7 +14,7 @@ import {dom} from 'ionic/util';
   templateUrl: 'main.html',
   directives: [formDirectives, Nav, Slides, Slide, Content, List, Item, NgFor, ParallaxEffect]
 })
-export default class IonicApp {
+class IonicApp {
   constructor() {
 
     this.items = [];
@@ -56,4 +56,8 @@ export class ParallaxEffect {
       console.log('Watching', this.target, this.counter);
     })
   }
+}
+
+export function main(ionicBootstrap) {
+  ionicBootstrap(IonicApp);
 }

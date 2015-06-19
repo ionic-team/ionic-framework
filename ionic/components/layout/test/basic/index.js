@@ -10,5 +10,9 @@ import {Layout} from 'ionic/components/layout/layout';
   templateUrl: 'main.html',
   directives: [Content, Layout]
 })
-export default class IonicApp {}
+class IonicApp {}
+
+export function main(ionicBootstrap) {
+  ionicBootstrap(IonicApp);
+}
 

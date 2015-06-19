@@ -10,7 +10,7 @@ import {ActionMenu} from 'ionic/components/action-menu/action-menu';
   templateUrl: 'main.html',
   directives: [Content]
 })
-export default class IonicApp {
+class IonicApp {
 
   openMenu() {
     console.log('Opening ActionMenu')
@@ -40,4 +40,8 @@ export default class IonicApp {
     })
   }
 
+}
+
+export function main(ionicBootstrap) {
+  ionicBootstrap(IonicApp);
 }

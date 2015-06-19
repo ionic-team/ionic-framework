@@ -13,8 +13,12 @@ import {ItemPrimarySwipeButtons} from 'ionic/components/item/item-swipe-buttons'
   templateUrl: 'main.html',
   directives: [Item, List, NgFor, ItemPrimarySwipeButtons]
 })
-export default class IonicApp {
+class IonicApp {
   constructor() {
     this.items = [1, 2, 3, 4, 5]
   }
+}
+
+export function main(ionicBootstrap) {
+  ionicBootstrap(IonicApp);
 }

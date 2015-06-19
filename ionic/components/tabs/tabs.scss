@@ -54,6 +54,7 @@ ion-tab {
 }
 
 .tab-bar-container {
+  position: relative;
   order: $flex-order-tab-bar-bottom;
 }
 
@@ -68,7 +69,7 @@ ion-tab {
   background: $tab-bar-background-color;
 }
 
-.tab-button {
+button.tab-button {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -88,13 +89,13 @@ ion-tab {
   background: none;
 }
 
-[tab-bar-icons="bottom"] > .tab-bar-container .tab-button {
+[tab-bar-icons="bottom"] > .tab-bar-container button.tab-button {
   .tab-button-icon {
     order: 10;
   }
 }
 
-[tab-bar-icons="left"] > .tab-bar-container .tab-button {
+[tab-bar-icons="left"] > .tab-bar-container button.tab-button {
   flex-direction: row;
 
   .tab-button-icon {
@@ -103,7 +104,7 @@ ion-tab {
   }
 }
 
-[tab-bar-icons="right"] > .tab-bar-container .tab-button {
+[tab-bar-icons="right"] > .tab-bar-container button.tab-button {
   flex-direction: row;
 
   .tab-button-icon {
@@ -130,10 +131,10 @@ ion-tab {
   display: none;
 }
 
-.tab-button:hover {
+button.tab-button:hover {
   opacity: 0.6;
 }
 
-.tab-button[aria-selected="true"] {
+button.tab-button[aria-selected="true"] {
   color: red;
 }

@@ -15,7 +15,7 @@ import {NavController, NavParams, NavbarTemplate, Navbar} from 'ionic/ionic';
   templateUrl: 'main.html',
   directives: [Content, List, Item]
 })
-export default class IonicApp {
+class IonicApp {
   openModal() {
     console.log('Opening modal');
     Modal.open(ContactModal);
@@ -117,4 +117,8 @@ export class ModalSecondPage {
   push() {
   }
 
+}
+
+export function main(ionicBootstrap) {
+  ionicBootstrap(IonicApp);
 }
