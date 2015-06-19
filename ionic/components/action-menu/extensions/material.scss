@@ -1,5 +1,5 @@
 
-.platform-android {
+.action-menu-md {
 
   .action-menu-backdrop.active {
     background-color: rgba(0,0,0,0.2);
@@ -9,7 +9,8 @@
     margin: 0;
 
     .action-menu-title,
-    .button {
+    button,
+    [button] {
       text-align: left;
       border-color: transparent;
       font-size: 16px;
@@ -22,8 +23,8 @@
       color: #666;
     }
 
-    .button.active,
-    .button.activated {
+    button.activated,
+    [button].activated {
       background: #e8e8e8;
     }
   }
@@ -40,7 +41,8 @@
 
   .action-menu-has-icons {
 
-    .button {
+    button,
+    [button] {
       padding-left: 56px;
     }
 

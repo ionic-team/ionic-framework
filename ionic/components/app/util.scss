@@ -63,7 +63,8 @@ $content-padding:    10px !default;
     outline: thin dotted;
   }
 
-  .button:focus {
+  button:focus,
+  [button]:focus {
     outline-offset: -2px;
     outline: 2px solid red;
   }

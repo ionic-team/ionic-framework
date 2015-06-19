@@ -82,7 +82,8 @@ ion-title {
   order: map-get($navbar-order, 'secondary');
 }
 
-.navbar .button {
+.navbar button,
+.navbar [button] {
   background: transparent;
   border: none;
 }

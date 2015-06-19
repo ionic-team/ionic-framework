@@ -2,7 +2,8 @@
 
   .ion-segment {
 
-    > .button {
+    > button,
+    > [button] {
       border-width: 1px;
 
       transition: 100ms all linear;

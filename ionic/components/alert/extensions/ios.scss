@@ -35,7 +35,8 @@ $alert-ios-button-font-size:         2rem !default;
   .alert-actions {
     min-height: 44px;
 
-    .button {
+    button,
+    [button] {
       flex: 1;
       border: 0;
       background: transparent;

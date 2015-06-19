@@ -18,7 +18,8 @@ $navbar-material-button-text-color:       #007aff !default;
     font-size: $navbar-material-title-font-size;
   }
 
-  .button {
+  button,
+  [button] {
     font-size: $navbar-material-button-font-size;
     color: $navbar-material-button-text-color;
     border: none;

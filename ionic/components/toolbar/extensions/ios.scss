@@ -50,7 +50,8 @@ $toolbar-ios-button-background-color:       transparent !default;
     font-weight: 500;
   }
 
-  .button {
+  button,
+  [button] {
     font-size: $toolbar-ios-button-font-size;
     color: $toolbar-ios-button-text-color;
     border: none;

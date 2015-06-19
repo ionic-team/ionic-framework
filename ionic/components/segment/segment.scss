@@ -5,7 +5,8 @@ ion-segment { display: block; }
   flex: 1;
   width: 100%;
 
-  > .button {
+  > button,
+  > [button] {
 
     flex: 1;
     display: block;

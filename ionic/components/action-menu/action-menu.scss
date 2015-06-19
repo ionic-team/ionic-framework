@@ -58,7 +58,8 @@ $action-menu-options-border-color:      #d1d3d6 !default;
   z-index: $z-index-action-menu;
   overflow: hidden;
 
-  .button {
+  button,
+  [button] {
     display: block;
     padding: 1px;
     width: 100%;
@@ -80,7 +81,8 @@ $action-menu-options-border-color:      #d1d3d6 !default;
     }
   }
 
-  .button.active, .button.activated {
+  button.activated,
+  [button].activated {
     box-shadow: none;
     border-color: $action-menu-options-border-color;
     color: $action-menu-options-text-color;
@@ -106,10 +108,12 @@ $action-menu-options-border-color:      #d1d3d6 !default;
   background-color: #fff;
   overflow: hidden;
 
-  .button {
+  button,
+  [button] {
     border-width: 1px 0px 0px 0px;
   }
-  .button:first-child:last-child {
+  button:first-child:last-child,
+  [button]:first-child:last-child {
     border-width: 0;
   }
 }
@@ -119,7 +123,8 @@ $action-menu-options-border-color:      #d1d3d6 !default;
 }
 
 .action-menu-cancel {
-  .button {
+  button,
+  [button] {
     font-weight: 500;
   }
 }

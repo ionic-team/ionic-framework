@@ -50,7 +50,8 @@ ion-toolbar ion-title {
   text-overflow: ellipsis;
 }
 
-.toolbar .button {
+.toolbar button,
+.toolbar [button] {
   background: transparent;
   border: none;
 }
