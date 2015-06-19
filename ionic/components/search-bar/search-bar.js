@@ -1,26 +1,13 @@
 import {ElementRef, Pipe} from 'angular2/angular2'
-import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
+import {Component, Directive, onInit} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
-import {ControlGroup, ControlDirective} from 'angular2/forms'
+//import {ControlGroup, ControlDirective} from 'angular2/forms'
 
-import {IonicComponent_OLD} from 'ionic/config/component'
+import {IonicComponent} from 'ionic/config/component'
 
 
-@Component({
-  selector: 'ion-search-bar',
-  properties: [
-    'cancelText: cancel-text',
-    'placeholder: placeholder',
-    'list: list',
-    'query: query'
-  ]
-  /*
-  hostProperties: {
-    'panelId': 'attr.id',
-  }
-  */
-})
+@IonicComponent(SearchBar)
 @View({
   template: `
   <div class="search-bar-input-container" [class.left-align]="shouldLeftAlign">
@@ -31,23 +18,34 @@ import {IonicComponent_OLD} from 'ionic/config/component'
   <button class="button search-bar-cancel">{{ cancelText }}</button>`
 })
 export class SearchBar {
-  constructor(
-    elementRef: ElementRef,
-    cd:ControlDirective
-  ) {
-    this.domElement = elementRef.domElement
-    this.config = SearchBar.config.invoke(this)
-    this.controlDirective = cd;
-    cd.valueAccessor = this; //ControlDirective should inject CheckboxControlDirective
 
-    if(!this.placeholder) {
-      this.placeholder = 'Search';
+  static get config() {
+    return {
+      selector: 'ion-search-bar',
+      properties: [
+        'list',
+        'query'
+      ],
+      defaultProperties: {
+        'cancelText': 'Cancel',
+        'placeholder': 'Search'
+      }
     }
+  }
 
-    setTimeout(() => {
-      //console.log('Search bar for list', this.list);
-      this.query = '';
-    })
+  constructor(
+    elementRef: ElementRef//,
+    //cd:ControlDirective
+  ) {
+    this.domElement = elementRef.domElement;
+    // this.controlDirective = cd;
+    // cd.valueAccessor = this; //ControlDirective should inject CheckboxControlDirective
+
+    this.query = '';
+  }
+
+  onInit() {
+    SearchBar.applyConfig(this);
   }
 
   /**
@@ -99,21 +97,3 @@ export class SearchPipe extends Pipe {
 }
 */
 
-new IonicComponent_OLD(SearchBar, {
-  properties: {
-    cancelText: {
-      defaults: {
-        ios: 'Cancel',
-        android: 'Cancel',
-        core: 'Cancel'
-      }
-    },
-    placeholder: {
-      defaults: {
-        ios: 'Search',
-        android: 'Search',
-        core: 'Search'
-      }
-    }
-  }
-})
