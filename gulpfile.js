@@ -239,7 +239,7 @@ gulp.task('update.angular', function(done) {
 
   } else {
     console.log('angular master: cleaning modules');
-    del(['../angular-ionic/modules'], function() {
+    del(['../angular-ionic/modules'], { force: true }, function() {
 
       console.log('angular master: reset --hard...');
       exec('git reset --hard origin/master', {cwd: '../angular-ionic'}, function () {
