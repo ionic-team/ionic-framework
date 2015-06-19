@@ -12,13 +12,12 @@ $card-box-shadow:                 0 1px 3px rgba(0, 0, 0, .3) !default;
 
 .card {
 
-
-  .card-content {
-    padding: 20px;
+  .card-header, .card-footer, .card-content {
+    padding: 15px;
   }
 
   img {
-    max-width: 100%;
+    width: 100%;
   }
 }
 

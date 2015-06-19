@@ -9,7 +9,7 @@ import {DragGesture} from 'ionic/gestures/drag-gesture';
 import * as util from 'ionic/util';
 
 import {dom} from 'ionic/util'
-import {IonicComponent} from 'ionic/config/component'
+import {IonicComponent, IonicDirective} from 'ionic/config/component'
 
 import {Hammer} from 'ionic/gestures/hammer';
 
@@ -50,8 +50,6 @@ export class Slides {
   constructor(elementRef: ElementRef) {
     // Grab the main container, and the slides-view wrapper
     this.domElement = elementRef.domElement;
-
-    this.config = Slides.config.invoke(this);
 
     this.slides = [];
     this.currentIndex = 0;
@@ -463,19 +461,23 @@ export class Slides {
 }
 
 
-@Directive({
-  selector: 'ion-slide',
-})
+@IonicDirective(Slide)
 export class Slide {
   constructor(
     @Ancestor() slides: Slides,
     elementRef: ElementRef
   ) {
     this.domElement = elementRef.domElement;
-    this.config = Slide.config.invoke(this);
 
     slides.add(this);
   }
+
+  static get config() {
+    return {
+      selector: 'ion-slide',
+    }
+  }
+
 
   translate(x, duration) {
     this._translateX = x;
@@ -523,11 +525,16 @@ export class SlidePager {
     elementRef: ElementRef
   ) {
     this.domElement = elementRef.domElement;
-    this.config = SlidePager.config.invoke(this);
 
     this.slides = slides;
 
     this.slides.setPager(this);
+  }
+
+  static get config() {
+    return {
+      selector: 'ion-pager',
+    }
   }
 
   getSlides() {
