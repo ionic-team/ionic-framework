@@ -14,12 +14,12 @@ import {IonicRoot} from '../app/app';
 import * as util from 'ionic/util';
 
 import {Overlay} from '../overlay/overlay';
-import {IonicComponentNEW} from '../../config/component';
+import {IonicComponent} from '../../config/component';
 import {Animation} from 'ionic/animations/animation';
 import {ClickBlock} from '../../util/click-block';
 
 
-@IonicComponentNEW(ActionMenu)
+@IonicComponent(ActionMenu)
 @View({
   template: `
     <div class="action-menu-backdrop" (click)="cancel()"></div>

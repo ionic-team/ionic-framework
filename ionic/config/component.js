@@ -19,7 +19,7 @@ export class IonicDirective extends Directive {
   }
 }
 
-export class IonicComponentNEW extends Component {
+export class IonicComponent extends Component {
   constructor(ComponentType) {
     super( appendModeConfig(ComponentType) );
   }
@@ -86,7 +86,7 @@ function appendModeConfig(ComponentType) {
   return config;
 }
 
-export class IonicComponent {
+export class IonicComponent_OLD {
   constructor(ComponentType, {
     properties,
     bind,

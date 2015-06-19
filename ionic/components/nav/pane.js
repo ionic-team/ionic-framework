@@ -7,7 +7,7 @@ import {bind} from 'angular2/di';
 
 import {ViewController} from '../view/view-controller';
 import {SwipeHandle} from './swipe-handle';
-import {IonicComponentNEW} from '../../config/component';
+import {IonicComponent} from '../../config/component';
 
 
 export class PaneController {
@@ -87,7 +87,7 @@ export class PaneController {
 
 }
 
-@IonicComponentNEW(Pane)
+@IonicComponent(Pane)
 @View({
   template: `
     <template pane-anchor></template>

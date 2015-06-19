@@ -2,7 +2,7 @@ import {Renderer, ElementRef} from 'angular2/angular2'
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
-import {IonicComponent} from 'ionic/config/component'
+import {IonicComponent_OLD} from 'ionic/config/component'
 import {ListVirtualScroll} from './virtual'
 
 import * as util from 'ionic/util';
@@ -49,6 +49,6 @@ export class List {
     this.itemTemplate = item;
   }
 }
-new IonicComponent(List, {
+new IonicComponent_OLD(List, {
   propClasses: ['inset']
 })

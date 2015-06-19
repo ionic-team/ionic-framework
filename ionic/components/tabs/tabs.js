@@ -11,10 +11,10 @@ import {ViewController} from '../view/view-controller';
 import {ViewItem} from '../view/view-item';
 import {TabButton} from './tab-button';
 import {Icon} from '../icon/icon';
-import {IonicComponentNEW} from '../../config/component';
+import {IonicComponent} from '../../config/component';
 
 
-@IonicComponentNEW(Tabs)
+@IonicComponent(Tabs)
 @View({
   template: `
     <nav class="navbar-container tab-bar-container">

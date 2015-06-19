@@ -4,7 +4,7 @@ import {Ancestor} from 'angular2/src/core/annotations_impl/visibility';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
 //import {ControlGroup, ControlDirective} from 'angular2/forms'
-import {IonicDirective, IonicComponentNEW} from 'ionic/config/component';
+import {IonicDirective, IonicComponent} from 'ionic/config/component';
 
 
 @IonicDirective(RadioGroup)
@@ -87,7 +87,7 @@ export class RadioGroup {
 }
 
 
-@IonicComponentNEW(RadioButton)
+@IonicComponent(RadioButton)
 @View({
   template: `
     <div class="item-content">

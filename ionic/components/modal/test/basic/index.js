@@ -6,7 +6,7 @@ import {Parent, Ancestor} from 'angular2/src/core/annotations_impl/visibility';
 
 import {Content, List, Item, Button, Modal, ModalRef} from 'ionic/ionic';
 
-import {Nav, IonicComponentNEW} from 'ionic/ionic';
+import {Nav, IonicComponent} from 'ionic/ionic';
 import {NavController, NavParams, NavbarTemplate, Navbar} from 'ionic/ionic';
 
 
@@ -22,7 +22,7 @@ export default class IonicApp {
   }
 }
 
-@IonicComponentNEW(Modal)
+@IonicComponent(Modal)
 @View({
   template: '<ion-nav [initial]="initial"></ion-nav>',
   directives: [Nav, Button, Content]

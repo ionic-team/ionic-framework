@@ -5,10 +5,10 @@ import {Ancestor} from 'angular2/src/core/annotations_impl/visibility';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
 //import {ControlGroup, ControlDirective} from 'angular2/forms';
-import {IonicComponentNEW} from '../../config/component';
+import {IonicComponent} from '../../config/component';
 
 
-@IonicComponentNEW(Checkbox)
+@IonicComponent(Checkbox)
 @View({
   template: `
   <div class="item-media media-checkbox">

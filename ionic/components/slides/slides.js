@@ -9,7 +9,7 @@ import {DragGesture} from 'ionic/gestures/drag-gesture';
 import * as util from 'ionic/util';
 
 import {dom} from 'ionic/util'
-import {IonicComponent} from 'ionic/config/component'
+import {IonicComponent_OLD} from 'ionic/config/component'
 
 import {Hammer} from 'ionic/gestures/hammer';
 
@@ -464,7 +464,7 @@ export class Slides {
   }
 
 }
-new IonicComponent(Slides, {
+new IonicComponent_OLD(Slides, {
 });
 
 @Component({
@@ -515,7 +515,7 @@ export class Slide {
   }
 }
 
-new IonicComponent(Slide, {
+new IonicComponent_OLD(Slide, {
 });
 
 @Component({
@@ -543,7 +543,7 @@ export class SlidePager {
     return this.slides.slides;
   }
 }
-new IonicComponent(SlidePager, {
+new IonicComponent_OLD(SlidePager, {
 });
 
 

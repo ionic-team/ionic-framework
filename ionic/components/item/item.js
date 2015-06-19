@@ -3,7 +3,7 @@ import {Component, Directive} from 'angular2/src/core/annotations_impl/annotatio
 import {View} from 'angular2/src/core/annotations_impl/view';
 
 import {dom} from 'ionic/util'
-import {IonicComponent} from 'ionic/config/component'
+import {IonicComponent_OLD} from 'ionic/config/component'
 
 import {
   ItemPrimaryOptions, ItemSecondaryOptions
@@ -60,7 +60,7 @@ export class Item {
   }
 }
 
-new IonicComponent(Item, {
+new IonicComponent_OLD(Item, {
   propClasses: ['full']
 })
 

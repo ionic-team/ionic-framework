@@ -6,7 +6,7 @@ import {View} from 'angular2/src/core/annotations_impl/view';
 
 import {ControlGroup, ControlDirective} from 'angular2/forms'
 import {dom} from 'ionic/util';
-import {IonicComponent} from 'ionic/config/component'
+import {IonicComponent_OLD} from 'ionic/config/component'
 import {Button} from 'ionic/components/button/button'
 
 
@@ -103,7 +103,7 @@ export class Segment {
   }
 }
 
-new IonicComponent(Segment, {
+new IonicComponent_OLD(Segment, {
 });
 
 @Component({

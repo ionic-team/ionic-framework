@@ -6,7 +6,7 @@ import {View} from 'angular2/src/core/annotations_impl/view';
 import * as types from 'ionic/components/aside/extensions/types'
 import * as gestures from  'ionic/components/aside/extensions/gestures'
 import {dom} from 'ionic/util'
-import {IonicComponent} from 'ionic/config/component'
+import {IonicComponent_OLD} from 'ionic/config/component'
 
 /**
  * TODO (?) add docs about how to have a root aside and a nested aside, then hide the root one
@@ -97,7 +97,7 @@ export class Aside {
   }
 }
 
-new IonicComponent(Aside, {
+new IonicComponent_OLD(Aside, {
   properties: {
     side: {
       value: 'left'
