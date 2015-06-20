@@ -22,6 +22,7 @@ export class Segment {
   static get config() {
     return {
       selector: 'ion-segment',
+      appInjector: [ControlDirective],
       hostListeners: {
         'click': 'buttonClicked($event)'
       },
@@ -41,7 +42,7 @@ export class Segment {
   ) {
     console.log('ELEMENT REF INJECT', elementRef);
     this.domElement = elementRef.domElement
-    this.config = Segment.config.invoke(this)
+    //this.config = Segment.config.invoke(this)
     this.elementRef = elementRef;
     this.renderer = renderer;
     this.controlDirective = cd;
@@ -107,7 +108,7 @@ export class Segment {
 
     this.value = segmentButton.value;
     // TODO: Better way to do this?
-    this.controlDirective._control().updateValue(this.value);
+    //this.controlDirective._control().updateValue(this.value);
   }
 }
 

@@ -3,8 +3,10 @@ import {ElementRef} from 'angular2/angular2'
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {Ancestor} from 'angular2/src/core/annotations_impl/visibility';
 import {View} from 'angular2/src/core/annotations_impl/view';
+import {onInit} from 'angular2/angular2';
 
-//import {ControlGroup, ControlDirective} from 'angular2/forms';
+//pretty sure this has changed in the latest angular
+import {ControlDirective} from 'angular2/forms';
 import {IonicComponent} from '../../config/component';
 import {Icon} from '../icon/icon';
 
@@ -13,8 +15,8 @@ import {Icon} from '../icon/icon';
 @View({
   template: `
   <div class="item-media media-checkbox">
-    <icon [name]="timsIcon" class="checkbox-off"></icon>
-    <icon class="checkbox-on"></icon>
+    <icon [name]="iconOff" class="checkbox-off"></icon>
+    <icon [name]="iconOn" class="checkbox-on"></icon>
   </div>
 
   <div class="item-content">
@@ -29,14 +31,19 @@ export class Checkbox {
   static get config() {
     return {
       selector: 'ion-checkbox',
-      properties: [
-        'checked'
-      ],
+      properties: [ 'checked', 'disabled', 'value' ],
+      appInjector: [ ControlDirective ],
       hostListeners: {
         '^click': 'onClick($event)'
       },
       hostAttributes: {
-        'role': 'checkbox'
+        'role': 'checkbox',
+        'class': 'item'
+      },
+      hostProperties: {
+        'checked' : 'attr.aria-checked',
+        'disabled' : 'attr.aria-disabled',
+        'value': 'attr.value'
       },
       defaultProperties: {
         'iconOff': 'ion-ios-circle-outline',
@@ -46,20 +53,14 @@ export class Checkbox {
   }
 
   constructor(
-    elementRef: ElementRef//,
-//    cd: ControlDirective
+    cd: ControlDirective
   ) {
-    this.domElement = elementRef.domElement
-    this.domElement.classList.add('item')
+    this.controlDirective = cd;
+    cd.valueAccessor = this;
+  }
 
-    this.timsIcon = 'hi-tim'
-
-    // this.controlDirective = cd;
-    // cd.valueAccessor = this;
-
-    // TODO: This is a hack and not a very good one at that
-    // this.domElement.querySelector('.checkbox-off').classList.add(this.config.properties.iconOff.defaults.ios);
-    // this.domElement.querySelector('.checkbox-on').classList.add(this.config.properties.iconOn.defaults.ios);
+  onInit() {
+    Checkbox.applyConfig(this);
   }
 
   /**

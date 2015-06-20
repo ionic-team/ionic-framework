@@ -1,10 +1,19 @@
 <ion-content>
-  <form (^submit)="doSubmit($event)" [control-group]="form">
+  <form (^submit)="doSubmit($event)" [control-group]="fruitsForm">
 
     <ion-list>
       <div class="list-header">Some Switches</div>
-      <ion-checkbox control="addCats">
+      <ion-checkbox control="appleCtrl">
         Apples
+      </ion-checkbox>
+      <ion-checkbox control="bananaCtrl">
+        Bananas
+      </ion-checkbox>
+      <ion-checkbox control="grapeCtrl">
+        Grapes
+      </ion-checkbox>
+      <ion-checkbox control="cherryCtrl">
+        Cherries
       </ion-checkbox>
     </ion-list>
   </form>
