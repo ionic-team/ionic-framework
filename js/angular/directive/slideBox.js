@@ -92,7 +92,7 @@ function($timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory, $ionicScroll
         onDragEnd: function() {
           freezeAllScrolls(false);
         },
-        rragDistancePercentage: dragDistance
+        dragDistancePercentage: $scope.dragDistance
       });
 
       function freezeAllScrolls(shouldFreeze) {
