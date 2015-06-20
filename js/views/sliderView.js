@@ -34,7 +34,7 @@ ionic.views.Slider = ionic.views.View.inherit({
     // quit if no root element
     if (!container) return;
     var element = container.children[0];
-    var slides, slidePos, width, length, dragDistancePercentage=.5;
+    var slides, slidePos, width, length, dragDistancePercentage = .5;
     options = options || {};
     var index = parseInt(options.startSlide, 10) || 0;
     var speed = options.speed || 300;
