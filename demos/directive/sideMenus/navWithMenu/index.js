@@ -30,6 +30,7 @@ angular.module('navWithMenu', ['ionic'])
         }
       }
     })
+    
     .state('app.playlists', {
       url: "/playlists",
       views: {
