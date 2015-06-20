@@ -72,6 +72,7 @@ function($timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory, $ionicScroll
         auto: slideInterval,
         continuous: continuous,
         startSlide: $scope.activeSlide,
+        dragDistancePercentage: $scope.dragDistance,
         slidesChanged: function() {
           $scope.currentSlide = slider.currentIndex();
 
@@ -91,8 +92,7 @@ function($timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory, $ionicScroll
         },
         onDragEnd: function() {
           freezeAllScrolls(false);
-        },
-        dragDistancePercentage: $scope.dragDistance
+        }
       });
 
       function freezeAllScrolls(shouldFreeze) {
