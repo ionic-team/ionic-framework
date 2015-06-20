@@ -6,6 +6,13 @@ export class NavController {
   }
 
   /**
+   * Set the history stack to match the list of component items.
+   */
+  setItems(items) {
+    return this._nav.setItems(items);
+  }
+
+  /**
    * Clear the history stack.
    */
   clear() {

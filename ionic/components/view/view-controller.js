@@ -417,6 +417,34 @@ export class ViewController {
     return this.items.length;
   }
 
+  /**
+   * Set the item stack to reflect the given component classes.
+   */
+  setItems(components) {
+    // Pop all of the current items
+    this.clear();
+
+
+    // Then, change the root
+
+    let leavingItem = this.getActive() || new ViewItem();
+    leavingItem.shouldDestroy = true;
+    leavingItem.shouldCache = false;
+    leavingItem.willUnload();
+
+    this.transitionComplete();
+
+    for(let c of components) {
+      this.push(c, {
+        animate: false
+      })
+    }
+  }
+
+  /**
+   * Pops off all the trailing items, but leaves the root.
+   * To change the root, call setRoot with the root component.
+   */
   clear() {
     let pops = [];
     for (let item of this.items) {

@@ -4,8 +4,6 @@ import {Descendant} from 'angular2/src/core/annotations_impl/visibility';
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {Query} from 'angular2/src/core/annotations_impl/di';
 
-console.log(Query, QueryList);
-
 import {Ionic, Nav, ViewContainer, Aside, List, Item, Content} from 'ionic/ionic';
 
 import {ButtonPage} from './pages/button'
@@ -23,19 +21,17 @@ import {SlidePage} from './pages/slides'
 import {ActionMenuPage} from './pages/action-menu'
 import {ModalPage} from './pages/modal'
 
-console.log('Loaded', Nav, NgFor, NgIf, Aside, List, ViewContainer, Item, Content);
+console.log('Loaded', Nav, NgFor, NgIf, Aside, List, Item, Content);
 
 @Component({
   selector: 'ion-view',
 })
 @View({
   templateUrl: 'main.html',
-  directives: [Nav, NgFor, NgIf, Aside, List, ViewContainer, Item, Content]
+  directives: [Nav, NgFor, NgIf, Aside, List, Item, Content]
 })
 class IonicApp {
   constructor(elementRef: ElementRef) {//, @Query(Aside) nav: QueryList) {//, @Descendant() aside: Aside) {
-    Ionic.setRootElementRef(elementRef);
-
     this.components = [
       { title: 'Navigation', component: NavPage },
       { title: 'Buttons', component: ButtonPage },
@@ -58,11 +54,8 @@ class IonicApp {
 
   openPage(aside, component) {
     aside.close();
-    window.nav.clear().then(() => {
-      window.nav.push(component.component, {}, {
-        animate: false
-      });
-    })
+
+    window.nav.setItems([component.component]);
   }
 }
 
