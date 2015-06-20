@@ -1,17 +1,10 @@
-import {NgFor} from 'angular2/angular2'
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
-import {View} from 'angular2/src/core/annotations_impl/view';
-
-import { bind } from 'angular2/di';
-import { PipeRegistry } from 'angular2/change_detection';
 
 import {FormBuilder, Validators, formDirectives, Control, ControlGroup} from 'angular2/forms';
 
-import {Content} from 'ionic/components/content/content';
-import {List} from 'ionic/components/list/list';
-import {Item} from 'ionic/components/item/item';
-import {SearchBar} from 'ionic/components/search-bar/search-bar';
+import {IonicView} from 'ionic/ionic';
 import {SearchPipe} from 'ionic/components/search-bar/search-bar';
+
 
 function randomTitle() {
   var items = ['Pizza', 'Pumpkin', 'Apple', 'Bologna'];
@@ -19,9 +12,8 @@ function randomTitle() {
 }
 
 @Component({ selector: 'ion-app' })
-@View({
-  templateUrl: 'main.html',
-  directives: [formDirectives].concat([Content, List, Item, SearchBar, NgFor])
+@IonicView({
+  templateUrl: 'main.html'
 })
 class IonicApp {
   constructor() {

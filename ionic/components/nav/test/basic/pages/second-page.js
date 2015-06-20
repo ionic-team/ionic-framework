@@ -1,7 +1,6 @@
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
-import {View} from 'angular2/src/core/annotations_impl/view';
 
-import {Routable, Router, NavController, NavPop, NavParams, NavbarTemplate, Navbar, Content} from 'ionic/ionic';
+import {Routable, Router, NavController, NavParams} from 'ionic/ionic';
 import {ThirdPage} from './third-page';
 
 
@@ -24,8 +23,7 @@ import {ThirdPage} from './third-page';
       </p>
       <div class="green"><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f></div>
     </ion-content>
-  `,
-  directives: [NavbarTemplate, NavPop, Navbar, Content]
+  `
 })
 export class SecondPage {
   constructor(
@@ -38,7 +36,6 @@ export class SecondPage {
     this.nav = nav;
     this.params = params;
     this.val = Math.round(Math.random() * 8999) + 1000;
-
 
     console.log('Second page params:', params);
   }

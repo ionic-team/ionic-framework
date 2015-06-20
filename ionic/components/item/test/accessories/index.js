@@ -1,17 +1,13 @@
-import {NgFor} from 'angular2/angular2';
-import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
-import {View} from 'angular2/src/core/annotations_impl/view';
+import {Component} from 'angular2/src/core/annotations_impl/annotations';
 
-import {Item, List} from 'ionic/ionic';
-import {ItemPrimarySwipeButtons} from 'ionic/components/item/item-swipe-buttons'
+import {IonicView} from 'ionic/ionic';
 
 
 @Component({
   selector: 'ion-view'
 })
-@View({
-  templateUrl: 'main.html',
-  directives: [Item, List, NgFor, ItemPrimarySwipeButtons]
+@IonicView({
+  templateUrl: 'main.html'
 })
 class IonicApp {
   constructor() {

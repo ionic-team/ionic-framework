@@ -4,28 +4,25 @@ import {Component, Directive} from 'angular2/src/core/annotations_impl/annotatio
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {Parent, Ancestor} from 'angular2/src/core/annotations_impl/visibility';
 
-import {Content, List, Item, Modal, ModalRef} from 'ionic/ionic';
+import {IonicView} from 'ionic/ionic';
 
-import {Nav, IonicComponent} from 'ionic/ionic';
-import {NavController, NavParams, NavbarTemplate, Navbar} from 'ionic/ionic';
+import {IonicComponent} from 'ionic/ionic';
+import {Modal, NavController, NavParams} from 'ionic/ionic';
 
 
 @Component({ selector: 'ion-view' })
-@View({
-  templateUrl: 'main.html',
-  directives: [Content, List, Item]
+@IonicView({
+  templateUrl: 'main.html'
 })
 class IonicApp {
   openModal() {
-    console.log('Opening modal');
     Modal.open(ContactModal);
   }
 }
 
 @IonicComponent(Modal)
-@View({
-  template: '<ion-nav [initial]="initial"></ion-nav>',
-  directives: [Nav, Content]
+@IonicView({
+  template: '<ion-nav [initial]="initial"></ion-nav>'
 })
 export class ContactModal extends Modal {
   constructor() {
@@ -35,7 +32,7 @@ export class ContactModal extends Modal {
 }
 
 @Component({selector: 'ion-view'})
-@View({
+@IonicView({
   template: `
     <ion-navbar *navbar><ion-title>First Page Header: {{ val }}</ion-title><ion-nav-items primary><button primary (click)="closeModal()">Close</button></ion-nav-items></ion-navbar>
 
@@ -51,15 +48,12 @@ export class ContactModal extends Modal {
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
 
     </ion-content>
-  `,
-  directives: [NavbarTemplate, Navbar, Content]
+  `
 })
 export class ModalFirstPage {
   constructor(
-    //@Parent() modal: ContactModal,
     nav: NavController
   ) {
-    //this.modal = modal;
     this.nav = nav;
     this.val = Math.round(Math.random() * 8999) + 1000;
   }
@@ -78,14 +72,14 @@ export class ModalFirstPage {
 }
 
 @Component({selector: 'ion-view'})
-@View({
+@IonicView({
   template: `
     <ion-navbar *navbar><ion-title>Second Page Header</ion-title></ion-navbar>
 
     <ion-content class="padding">
 
       <p>
-        <button primary (click)="pop()">Pop (Go back to 1st)</button>
+        <button primary (click)="nav.pop()">Pop (Go back to 1st)</button>
       </p>
 
       <p>
@@ -96,8 +90,7 @@ export class ModalFirstPage {
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
 
     </ion-content>
-  `,
-  directives: [NavbarTemplate, Navbar, Content]
+  `
 })
 export class ModalSecondPage {
   constructor(
@@ -108,10 +101,6 @@ export class ModalSecondPage {
     this.params = params;
 
     console.log('Second page params:', params);
-  }
-
-  pop() {
-    this.nav.pop();
   }
 
   push() {

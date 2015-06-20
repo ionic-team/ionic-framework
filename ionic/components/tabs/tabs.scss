@@ -77,6 +77,7 @@ button.tab-button {
   align-self: center;
   align-items: center;
 
+  margin: 0;
   padding: $tab-button-padding;
   min-width: $tab-button-min-width;
   max-width: $tab-button-max-width;
@@ -86,6 +87,7 @@ button.tab-button {
   user-select: none;
 
   border: 0;
+  border-radius: 0;
   background: none;
 }
 

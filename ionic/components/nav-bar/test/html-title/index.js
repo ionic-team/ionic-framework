@@ -1,11 +1,11 @@
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
-import {View} from 'angular2/src/core/annotations_impl/view';
+
+import {IonicView} from 'ionic/ionic';
 
 
 @Component({ selector: 'ion-view' })
-@View({
-  templateUrl: 'main.html',
-  directives: []
+@IonicView({
+  templateUrl: 'main.html'
 })
 class IonicApp {}
 

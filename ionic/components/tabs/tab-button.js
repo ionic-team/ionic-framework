@@ -5,7 +5,7 @@ import {Tabs} from './tabs';
 
 
 @Directive({
-  selector: '.tab-button',
+  selector: 'button.tab-button',
   properties: ['tab'],
   hostProperties: {
     'btnId': 'attr.id',

@@ -3,14 +3,11 @@ import {View} from 'angular2/src/core/annotations_impl/view';
 
 import {FormBuilder, Validators, formDirectives, ControlGroup} from 'angular2/forms';
 //import {Switch, Form, List, Label, Item, Input, Content} from 'ionic/ionic';
-import {IONIC_DIRECTIVES} from 'ionic/ionic'
 
-console.log([formDirectives].concat(IONIC_DIRECTIVES));
 
 @Component({ selector: 'ion-app' })
 @View({
-  templateUrl: 'main.html',
-  directives: [formDirectives].concat(IONIC_DIRECTIVES)
+  templateUrl: 'main.html'
 })
 class IonicApp {
   constructor() {

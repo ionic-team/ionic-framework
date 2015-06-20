@@ -1,11 +1,10 @@
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
-import {View} from 'angular2/src/core/annotations_impl/view';
 
-import {Router, Routable, NavController, NavbarTemplate, Navbar, Content} from 'ionic/ionic';
+import {Router, Routable, NavController} from 'ionic/ionic';
 
 
 @Component({selector: 'ion-view'})
-@View({
+@IonicView({
   template: `
     <ion-navbar *navbar><ion-title>Third Page Header</ion-title></ion-navbar>
     <ion-content class="padding">
@@ -14,8 +13,7 @@ import {Router, Routable, NavController, NavbarTemplate, Navbar, Content} from '
       </p>
       <div class="yellow"><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f></div>
     </ion-content>
-  `,
-  directives: [NavbarTemplate, Navbar, Content]
+  `
 })
 export class ThirdPage {
   constructor(

@@ -1,8 +1,7 @@
 import {Component, Directive, onInit} from 'angular2/src/core/annotations_impl/annotations';
-import {View} from 'angular2/src/core/annotations_impl/view';
 
-import {IonicConfig} from 'ionic/ionic';
-import {Nav, NavPush, NavPop, NavParams, Routable, Router, NavController, NavbarTemplate, Navbar, NavPush, Content} from 'ionic/ionic';
+import {IonicView, IonicConfig} from 'ionic/ionic';
+import {NavParams, Routable, Router, NavController} from 'ionic/ionic';
 
 import {SecondPage} from './pages/second-page'
 
@@ -10,7 +9,7 @@ import {SecondPage} from './pages/second-page'
   selector: 'ion-view',
   lifecycle: [onInit]
 })
-@View({
+@IonicView({
   template: '' +
     '<ion-navbar *navbar>' +
       '<ion-title>First Page: {{ val }}</ion-title>' +
@@ -29,8 +28,7 @@ import {SecondPage} from './pages/second-page'
       '<icon class="ion-ios-arrow-back"></icon>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
-    '</ion-content>',
-  directives: [NavbarTemplate, Navbar, NavPush, Content]
+    '</ion-content>'
 })
 class FirstPage {
   constructor(

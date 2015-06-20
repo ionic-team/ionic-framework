@@ -1,11 +1,10 @@
 import {Component} from 'angular2/src/core/annotations_impl/annotations';
-import {View} from 'angular2/src/core/annotations_impl/view';
 
-import {Tabs, Tab, NavController, NavbarTemplate, Navbar, Content} from 'ionic/ionic';
+import {IonicView, NavController} from 'ionic/ionic';
 
 
 @Component({selector: 'ion-view'})
-@View({
+@IonicView({
   template: '' +
     '<ion-navbar *navbar>' +
       '<ion-title>Sign In</ion-title>' +
@@ -14,8 +13,7 @@ import {Tabs, Tab, NavController, NavbarTemplate, Navbar, Content} from 'ionic/i
       '<p><button primary (click)="push()">Go to tabs</button></p>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
-    '</ion-content>',
-  directives: [NavbarTemplate, Navbar, Content]
+    '</ion-content>'
 })
 class IonicApp {
   constructor(nav: NavController) {
@@ -31,9 +29,8 @@ class IonicApp {
 @Component({
   selector: 'ion-tabs-view'
 })
-@View({
-  templateUrl: './pages/tabs.html',
-  directives: [Tabs, Tab, Content, NavbarTemplate, Navbar]
+@IonicView({
+  templateUrl: './pages/tabs.html'
 })
 
 class TabsPage {
@@ -48,7 +45,7 @@ class TabsPage {
 // tab 1
 //
 @Component({selector: 'ion-view'})
-@View({
+@IonicView({
   template: '' +
     '<ion-navbar *navbar>' +
       '<ion-title>Tabs 1 Page 1</ion-title>' +
@@ -57,8 +54,7 @@ class TabsPage {
       '<p><button primary (click)="push()">Go to Tab 1, Page 2</button></p>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
-    '</ion-content>',
-  directives: [NavbarTemplate, Navbar, Content]
+    '</ion-content>'
 })
 class Tab1Page1 {
   constructor(nav: NavController) {
@@ -71,7 +67,7 @@ class Tab1Page1 {
 }
 
 @Component({selector: 'ion-view'})
-@View({
+@IonicView({
   template: '' +
     '<ion-navbar *navbar>' +
       '<ion-title>Tabs 1 Page 2</ion-title>' +
@@ -81,8 +77,7 @@ class Tab1Page1 {
       '<p><button primary (click)="nav.pop()">Back to Tab 1, Page 1</button></p>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
-    '</ion-content>',
-  directives: [NavbarTemplate, Navbar, Content]
+    '</ion-content>'
 })
 class Tab1Page2 {
   constructor(nav: NavController) {
@@ -95,7 +90,7 @@ class Tab1Page2 {
 }
 
 @Component({selector: 'ion-view'})
-@View({
+@IonicView({
   template: '' +
     '<ion-navbar *navbar>' +
       '<ion-title>Tabs 1 Page 3</ion-title>' +
@@ -104,8 +99,7 @@ class Tab1Page2 {
       '<p><button primary (click)="nav.pop()">Back to Tab 1, Page 2</button></p>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
-    '</ion-content>',
-  directives: [NavbarTemplate, Navbar, Content]
+    '</ion-content>'
 })
 class Tab1Page3 {
   constructor(nav: NavController) {
@@ -119,7 +113,7 @@ class Tab1Page3 {
 // tab 2
 //
 @Component({selector: 'ion-view'})
-@View({
+@IonicView({
   template: '' +
     '<ion-navbar *navbar>' +
       '<ion-title>Tabs 2 Page 1</ion-title>' +
@@ -128,8 +122,7 @@ class Tab1Page3 {
       '<p><button primary (click)="push()">Go to Tab 2, Page 2</button></p>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
-    '</ion-content>',
-  directives: [NavbarTemplate, Navbar, Content]
+    '</ion-content>'
 })
 class Tab2Page1 {
   constructor(nav: NavController) {
@@ -142,7 +135,7 @@ class Tab2Page1 {
 }
 
 @Component({selector: 'ion-view'})
-@View({
+@IonicView({
   template: '' +
     '<ion-navbar *navbar>' +
       '<ion-title>Tabs 2 Page 2</ion-title>' +
@@ -152,8 +145,7 @@ class Tab2Page1 {
       '<p><button primary (click)="nav.pop()">Back to Tab 2, Page 1</button></p>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
-    '</ion-content>',
-  directives: [NavbarTemplate, Navbar, Content]
+    '</ion-content>'
 })
 class Tab2Page2 {
   constructor(nav: NavController) {
@@ -166,7 +158,7 @@ class Tab2Page2 {
 }
 
 @Component({selector: 'ion-view'})
-@View({
+@IonicView({
   template: '' +
     '<ion-navbar *navbar>' +
       '<ion-title>Tabs 2 Page 3</ion-title>' +
@@ -175,8 +167,7 @@ class Tab2Page2 {
       '<p><button primary (click)="nav.pop()">Back to Tab 2, Page 2</button></p>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
-    '</ion-content>',
-  directives: [NavbarTemplate, Navbar, Content]
+    '</ion-content>'
 })
 class Tab2Page3 {
   constructor(nav: NavController) {

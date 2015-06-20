@@ -1,14 +1,12 @@
-import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
-import {View} from 'angular2/src/core/annotations_impl/view';
+import {Component} from 'angular2/src/core/annotations_impl/annotations';
+import {FormBuilder, Validators, ControlGroup} from 'angular2/forms';
 
-import {FormBuilder, Validators, FormDirectives, ControlGroup} from 'angular2/forms';
-import {Switch, Content, List} from 'ionic/ionic';
-//import {IONIC_DIRECTIVES} from 'ionic/ionic'
+import {IonicView} from 'ionic/ionic';
+
 
 @Component({ selector: 'ion-view' })
-@View({
-  templateUrl: 'main.html',
-  directives: [FormDirectives].concat([Switch, List, Content])
+@IonicView({
+  templateUrl: 'main.html'
 })
 class IonicApp {
   constructor() {

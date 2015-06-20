@@ -1,17 +1,13 @@
+import {NgFor, NgIf} from 'angular2/angular2';
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
+import {View} from 'angular2/src/core/annotations_impl/view';
 
-import * as util from 'ionic/util'
-import {dom} from 'ionic/util'
-import {Platform} from 'ionic/platform/platform'
+import * as util from 'ionic/util';
+import {dom} from 'ionic/util';
+import {Platform} from 'ionic/platform/platform';
 
-let platformMode = Platform.getMode();
+const platformMode = Platform.getMode();
 
-
-export function Config(instance, config){
-  for (var setting in config) {
-    instance[setting] = config[setting][platformMode];
-  }
-}
 
 export class IonicDirective extends Directive {
   constructor(ComponentType) {

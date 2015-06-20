@@ -1,19 +1,16 @@
 import {Component} from 'angular2/src/core/annotations_impl/annotations';
-import {View} from 'angular2/src/core/annotations_impl/view';
 
-import {Content} from 'ionic/ionic';
+import {IonicView} from 'ionic/ionic';
 import {ActionMenu} from 'ionic/components/action-menu/action-menu';
 
 
 @Component({ selector: 'ion-view' })
-@View({
-  templateUrl: 'main.html',
-  directives: [Content]
+@IonicView({
+  templateUrl: 'main.html'
 })
 class IonicApp {
 
   openMenu() {
-    console.log('Opening ActionMenu')
 
     ActionMenu.open({
       buttons: [
@@ -24,7 +21,6 @@ class IonicApp {
       titleText: 'Modify your album',
       cancelText: 'Cancel',
       cancel: function() {
-        // add cancel code..
         console.log('Canceled');
       },
       destructiveButtonClicked: () => {
@@ -37,7 +33,8 @@ class IonicApp {
       }
     }).then(actionMenu => {
       this.actionMenu = actionMenu;
-    })
+    });
+
   }
 
 }
