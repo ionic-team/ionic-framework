@@ -1,4 +1,4 @@
-<a name"1.0.0"></a>
+<a name="1.0.0"></a>
 ### 1.0.0 "uranium-unicorn" (2015-05-12)
 
 #### Bug Fixes
@@ -12,7 +12,7 @@
 
 
 
-<a name"1.0.0-rc.5"></a>
+<a name="1.0.0-rc.5"></a>
 ### 1.0.0-rc.5 "tungsten-turkey" (2015-04-27)
 
 
@@ -43,7 +43,7 @@
 
 
 
-<a name"1.0.0-rc.4"></a>
+<a name="1.0.0-rc.4"></a>
 ### 1.0.0-rc.4 "sulfur-suricate" (2015-04-20)
 
 
@@ -91,7 +91,7 @@
   * add `speed` parameter to next()/previous() ([b3c086eb](https://github.com/driftyco/ionic/commit/b3c086eb), closes [#3493](https://github.com/driftyco/ionic/issues/3493))
 
 
-<a name"1.0.0-rc.3"></a>
+<a name="1.0.0-rc.3"></a>
 ### 1.0.0-rc.3 "radium-raccoon" (2015-04-13)
 
 
