@@ -2,19 +2,13 @@ import {Renderer, ElementRef} from 'angular2/angular2'
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
+import {ItemPrimaryOptions, ItemSecondaryOptions} from './item-options'
+import {ItemPrimarySwipeButtons, ItemSecondarySwipeButtons} from './item-swipe-buttons'
 import {dom} from 'ionic/util'
-import {IonicComponent_OLD} from 'ionic/config/component'
 
-import {
-  ItemPrimaryOptions, ItemSecondaryOptions
-} from 'ionic/components/item/item-options'
-
-import {
-  ItemPrimarySwipeButtons, ItemSecondarySwipeButtons
-} from 'ionic/components/item/item-swipe-buttons'
 
 @Component({
-  selector: 'ion-item'//,[ion-item]'
+  selector: 'ion-item'
 })
 @View({
   template: `
@@ -45,28 +39,16 @@ import {
   ]
 })
 export class Item {
-  constructor(
-    elementRef: ElementRef
-  ) {
-    this._isOpen = false
-    this._isSlideActive = false
-    this._isTransitioning = false
-    this._transform = ''
+  constructor(elementRef: ElementRef) {
+    this._isOpen = false;
+    this._isSlideActive = false;
+    this._isTransitioning = false;
+    this._transform = '';
 
-    this.domElement = elementRef.domElement
-    this.swipeButtons = {}
-    this.optionButtons = {}
-    Item.config.invoke(this)
+    this.domElement = elementRef.domElement;
+    this.swipeButtons = {};
+    this.optionButtons = {};
   }
-}
-
-new IonicComponent_OLD(Item, {
-  propClasses: ['full']
-})
-
-
-function clsSetter(el, name) {
-  return (isSet) => el.classList[isSet?'add':'remove'](name)
 }
 
 

@@ -1,56 +1,70 @@
-import {EventEmitter, ElementRef, Inject, Parent} from 'angular2/angular2'
+import {EventEmitter, ElementRef} from 'angular2/angular2'
+import {onInit} from 'angular2/src/core/annotations_impl/annotations';
 
-import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
-import {View} from 'angular2/src/core/annotations_impl/view';
-
-import * as types from 'ionic/components/aside/extensions/types'
-import * as gestures from  'ionic/components/aside/extensions/gestures'
+import {IonicDirective} from '../../config/component';
+import * as types from './extensions/types'
+import * as gestures from  './extensions/gestures'
 import {dom} from 'ionic/util'
-import {IonicComponent_OLD} from 'ionic/config/component'
 
 /**
  * TODO (?) add docs about how to have a root aside and a nested aside, then hide the root one
  */
 
-@Component({
-  selector: 'ion-aside',
-  properties: [
-    'content',
-    'side',
-    'dragThreshold'
-  ],
-  events: ['opening']
-})
-@View({
-  template: `<content></content>`
-})
+@IonicDirective(Aside)
 export class Aside {
-  constructor(
-    elementRef: ElementRef
-  ) {
+
+  static get config() {
+    return {
+      selector: 'ion-aside',
+      properties: [
+        'content',
+        'dragThreshold'
+      ],
+      defaultProperties: {
+        'side': 'left',
+        'type': 'reveal'
+      },
+      delegates: {
+        gesture: [
+          [instance => instance.side == 'top', gestures.TopAsideGesture],
+          [instance => instance.side == 'bottom', gestures.BottomAsideGesture],
+          [instance => instance.side == 'right', gestures.RightAsideGesture],
+          [instance => instance.side == 'left', gestures.LeftAsideGesture],
+        ],
+        type: [
+          [instance => instance.type == 'overlay', types.AsideTypeOverlay],
+          [instance => instance.type == 'reveal', types.AsideTypeReveal],
+          [instance => instance.type == 'push', types.AsideTypePush],
+        ]
+      },
+      events: ['opening']
+    }
+  }
+
+  constructor(elementRef: ElementRef) {
     this.domElement = elementRef.domElement
 
     this.opening = new EventEmitter('opening');
 
-    // FIXME(ajoslin): have to wait for setTimeout for bindings to apply.
-    setTimeout(() => {
-      this.side = this.side || 'left';
-      this.type = this.type || 'reveal';
-
-      this.domElement.setAttribute('side', this.side);
-      this.domElement.setAttribute('type', this.type);
-
-      console.log('Aside content', this.content);
-      this.contentElement = (this.content instanceof Node) ? this.content : this.content.domElement;
-
-      this.config = Aside.config.invoke(this)
-      this.gestureDelegate = this.config.getDelegate('gesture');
-      this.typeDelegate = this.config.getDelegate('type');
-    })
-
+    // TODO: Use Animation Class
     this.domElement.addEventListener('transitionend', ev => {
       this.setChanging(false)
     })
+  }
+
+  onInit() {
+    this.side = this.side || 'left';
+    this.type = this.type || 'reveal';
+
+    this.domElement.setAttribute('side', this.side);
+    this.domElement.setAttribute('type', this.type);
+
+    console.log('Aside content', this.content);
+    this.contentElement = (this.content instanceof Node) ? this.content : this.content.domElement;
+
+    Aside.applyConfig(this);
+    this.gestureDelegate = Aside.getDelegate(this, 'gesture');
+    this.typeDelegate = Aside.getDelegate(this, 'type');
   }
 
   getContentElement() {
@@ -64,17 +78,20 @@ export class Aside {
   setTransform(transform) {
     this.typeDelegate.setTransform(transform)
   }
+
   setSliding(isSliding) {
     if (isSliding !== this.isSliding) {
       this.typeDelegate.setSliding(isSliding)
     }
   }
+
   setChanging(isChanging) {
     if (isChanging !== this.isChanging) {
       this.isChanging = isChanging
       this.domElement.classList[isChanging ? 'add' : 'remove']('changing');
     }
   }
+
   setOpen(isOpen) {
     if (isOpen !== this.isOpen) {
       this.isOpen = isOpen
@@ -92,37 +109,8 @@ export class Aside {
   open() {
     return this.setOpen(true);
   }
+
   close() {
     return this.setOpen(false);
   }
 }
-
-new IonicComponent_OLD(Aside, {
-  properties: {
-    side: {
-      value: 'left'
-    },
-    type: {
-      defaults: {
-        ios: 'reveal',
-        android: 'overlay',
-        core: 'overlay',
-      }
-    },
-    dragThreshold: {},
-    content: {},
-  },
-  delegates: {
-    gesture: [
-      [instance => instance.side == 'top', gestures.TopAsideGesture],
-      [instance => instance.side == 'bottom', gestures.BottomAsideGesture],
-      [instance => instance.side == 'right', gestures.RightAsideGesture],
-      [instance => instance.side == 'left', gestures.LeftAsideGesture],
-    ],
-    type: [
-      [instance => instance.type == 'overlay', types.AsideTypeOverlay],
-      [instance => instance.type == 'reveal', types.AsideTypeReveal],
-      [instance => instance.type == 'push', types.AsideTypePush],
-    ]
-  }
-})
