@@ -4,6 +4,12 @@ import {Animation} from '../../animations/animation';
 
 export class Modal extends Overlay {
 
+  static get config() {
+    return {
+      selector: 'ion-modal'
+    }
+  }
+
   constructor() {
     super();
     this.extendOptions({
@@ -17,38 +23,30 @@ export class Modal extends Overlay {
     return this.create(ComponentType, opts);
   }
 
-  static get config() {
-    return {
-      selector: 'ion-modal'
-    }
-  }
-
 }
 
 
 /**
  * Animations for modals
  */
-class ModalAnimation extends Animation {
-  constructor(element) {
-    super(element);
-    this.easing('cubic-bezier(.36, .66, .04, 1)').duration(400);
-  }
-}
-
-class ModalSlideIn extends ModalAnimation {
+class ModalSlideIn extends Animation {
   constructor(element) {
     super(element);
     this
+      .easing('cubic-bezier(.36,.66,.04,1)')
+      .duration(400)
       .fromTo('translateY', '100%', '0%');
   }
 }
 Animation.register('modal-slide-in', ModalSlideIn);
 
-class ModalSlideOut extends ModalAnimation {
+
+class ModalSlideOut extends Animation {
   constructor(element) {
     super(element);
     this
+      .easing('ease-out')
+      .duration(250)
       .fromTo('translateY', '0%', '100%');
   }
 }

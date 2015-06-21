@@ -53,12 +53,6 @@ export class Aside {
   }
 
   onInit() {
-    this.side = this.side || 'left';
-    this.type = this.type || 'reveal';
-
-    this.domElement.setAttribute('side', this.side);
-    this.domElement.setAttribute('type', this.type);
-
     console.log('Aside content', this.content);
     this.contentElement = (this.content instanceof Node) ? this.content : this.content.domElement;
 

@@ -7,9 +7,10 @@ import * as util from 'ionic/util';
 export class Overlay {
 
   /* Instance Methods */
-  open(animation) {
-    animation = animation || this.options.enterAnimation;
-    let enterAnimation = Animation.create(this.domElement, animation);
+  open(opts) {
+    let animationName = (opts && opts.animation) || this.options.enterAnimation;
+    let enterAnimation = Animation.create(this.domElement, animationName);
+    enterAnimation.before.addClass('show-overlay');
     ClickBlock(true, enterAnimation.duration() + 200);
 
     return new Promise(resolve => {
@@ -21,13 +22,16 @@ export class Overlay {
     });
   }
 
-  close(animation) {
+  close(opts) {
     return new Promise(resolve => {
-      animation = animation || this.options.leaveAnimation;
-      let leavingAnimation = Animation.create(this.domElement, animation);
+      let animationName = (opts && opts.animation) || this.options.leaveAnimation;
+      let leavingAnimation = Animation.create(this.domElement, animationName);
+      leavingAnimation.after.removeClass('show-overlay');
+      ClickBlock(true, leavingAnimation.duration() + 200);
 
       leavingAnimation.play().then(() => {
         this._clean();
+        ClickBlock(false);
         leavingAnimation.dispose();
         resolve();
       })
@@ -52,7 +56,7 @@ export class Overlay {
         overlay._dispose = ref.dispose;
         overlay.domElement = ref.elementRef.domElement;
         overlay.extendOptions(opts);
-        overlay.open();
+        overlay.open(opts);
         resolve(overlay);
 
       }).catch(err => {

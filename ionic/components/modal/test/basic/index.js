@@ -7,7 +7,32 @@ import {Parent, Ancestor} from 'angular2/src/core/annotations_impl/visibility';
 import {IonicView} from 'ionic/ionic';
 
 import {IonicComponent} from 'ionic/ionic';
-import {Modal, NavController, NavParams} from 'ionic/ionic';
+import {Modal, NavController, NavParams, Animation} from 'ionic/ionic';
+
+
+class FadeIn extends Animation {
+  constructor(element) {
+    super(element);
+    this
+      .easing('ease')
+      .duration(450)
+      .fadeIn();
+  }
+}
+
+Animation.register('my-fade-in', FadeIn);
+
+class FadeOut extends Animation {
+  constructor(element) {
+    super(element);
+    this
+      .easing('ease')
+      .duration(250)
+      .fadeOut();
+  }
+}
+
+Animation.register('my-fade-out', FadeOut);
 
 
 @Component({ selector: 'ion-view' })
@@ -16,7 +41,10 @@ import {Modal, NavController, NavParams} from 'ionic/ionic';
 })
 class IonicApp {
   openModal() {
-    Modal.open(ContactModal);
+    Modal.open(ContactModal, {
+      enterAnimation: 'my-fade-in',
+      leaveAnimation: 'my-fade-out'
+    });
   }
 }
 
@@ -30,6 +58,7 @@ export class ContactModal extends Modal {
     this.initial = ModalFirstPage;
   }
 }
+
 
 @Component({selector: 'ion-view'})
 @IonicView({

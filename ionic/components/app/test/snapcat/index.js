@@ -5,8 +5,7 @@ import {Component, Directive} from 'angular2/src/core/annotations_impl/annotatio
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {FormBuilder, Control, ControlGroup, Validators, formDirectives} from 'angular2/forms';
 
-import {Modal, ModalRef, Nav, Segment, Animation, SegmentButton, Slides, Slide, Content, List, Item} from 'ionic/ionic';
-import {NavController, NavbarTemplate, NavParams, Navbar, IonicComponent} from 'ionic/ionic';
+import {IonicView, Animation, Modal, NavController, IonicComponent} from 'ionic/ionic';
 
 
 class FadeIn extends Animation {
@@ -15,8 +14,8 @@ class FadeIn extends Animation {
     this
       .easing('ease')
       .duration(250)
-      .from('opacity', 0)
-      .to('opacity', 1);
+      .fadeIn()
+      .before.addClass('show-modal');
   }
 }
 
@@ -28,17 +27,16 @@ class FadeOut extends Animation {
     this
       .easing('ease')
       .duration(250)
-      .from('opacity', 1)
-      .to('opacity', 0);
+      .fadeOut()
+      .after.removeClass('show-modal');
   }
 }
 
 Animation.register('my-fade-out', FadeOut);
 
 @Component({ selector: 'ion-view' })
-@View({
-  templateUrl: 'detail.html',
-  directives: [formDirectives, NavbarTemplate, Navbar, Content, List, Item]
+@IonicView({
+  templateUrl: 'detail.html'
 })
 export class DetailPage {
   constructor(params: NavParams) {
@@ -47,9 +45,8 @@ export class DetailPage {
 }
 
 @Component({ selector: 'ion-view' })
-@View({
-  templateUrl: 'feed.html',
-  directives: [formDirectives, NgFor, NavbarTemplate, Navbar, Segment, SegmentButton, Content, List, Item]
+@IonicView({
+  templateUrl: 'feed.html'
 })
 export class FeedPage {
   constructor(nav: NavController) {
@@ -98,9 +95,8 @@ export class FeedPage {
 }
 
 @Component({ selector: 'ion-view' })
-@View({
-  templateUrl: 'main.html',
-  directives: [formDirectives, Nav, Slides, Slide, Content, List, Item]
+@IonicView({
+  templateUrl: 'main.html'
 })
 class IonicApp {
   constructor() {
@@ -111,41 +107,35 @@ class IonicApp {
   openHeart() {
     console.log('openHeart');
 
-    Modal.open(HeartModal)/*, {
+    Modal.open(HeartModal, {
       enterAnimation: 'my-fade-in',
       leaveAnimation: 'my-fade-out'
     });
-    */
   }
 
   openGear() {
     console.log('openGear');
 
-    Modal.open(SettingsModal);
+    Modal.open(SettingsModal, {
+      enterAnimation: 'my-fade-in',
+      leaveAnimation: 'my-fade-out'
+    });
   }
 }
 
 @IonicComponent(Modal)
-@View({
-  template: '<ion-view id="settings-modal"><ion-content padding><button primary (click)="close()">Close</button></ion-content></ion-view>',
-  directives: [Nav, Content]
+@IonicView({
+  template: '<ion-view id="settings-modal"><ion-content padding><button primary (click)="close()">Close</button></ion-content></ion-view>'
 })
-export class SettingsModal extends Modal {
-  constructor() {
-    super();
-  }
-}
+export class SettingsModal extends Modal {}
+
 
 @IonicComponent(Modal)
-@View({
-  template: '<ion-view id="heart-modal"><button icon (^click)="close()"><i class="icon ion-close"></i></button><h2>20</h2><p>You\'re pretty awesome</p></ion-view>',
-  directives: [Nav, Content]
+@IonicView({
+  template: '<ion-view id="heart-modal"><button icon (^click)="close()"><i class="icon ion-close"></i></button><h2>20</h2><p>You\'re pretty awesome</p></ion-view>'
 })
-export class HeartModal extends Modal {
-  constructor() {
-    super();
-  }
-}
+export class HeartModal extends Modal {}
+
 
 export function main(ionicBootstrap) {
   ionicBootstrap(IonicApp);
