@@ -40,7 +40,7 @@ export class Checkbox {
         '(^click)': 'onClick($event)',
         '[attr.aria-checked]': 'checked',
         '[attr.aria-disabled]': 'disabled',
-        '[attr.value]': 'value'
+        '[attr.value]': 'value',
         'role': 'checkbox',
         'class': 'item'
       },
