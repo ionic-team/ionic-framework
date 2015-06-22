@@ -1,8 +1,13 @@
+
+// Aside
+// --------------------------
+
 $aside-width: 304px !default;
 $aside-height: 304px !default;
 $aside-transition: 0.2s ease transform !default;
 $aside-background: #fff !default;
 $aside-shadow: -1px 0px 2px rgba(0, 0, 0, 0.2), 1px 0px 2px rgba(0,0,0,0.2) !default;
+
 
 .aside {
   display: block;

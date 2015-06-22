@@ -1,4 +1,7 @@
 
+// Modals
+// --------------------------
+
 $modal-bg-color:                  #fff !default;
 $modal-backdrop-bg-active:        #000 !default;
 $modal-backdrop-bg-inactive:      rgba(0,0,0,0) !default;
@@ -11,17 +14,10 @@ $modal-inset-mode-left:           20% !default;
 $modal-inset-mode-min-height:     240px !default;
 
 
-/**
- * Modals
- * --------------------------------------------------
- * Modals are independent windows that slide in from off-screen.
- */
-
-
 ion-modal {
   position: absolute;
   top: 0;
-  z-index: $z-index-modal;
+  z-index: $z-index-overlay;
   overflow: hidden;
   min-height: 100%;
   width: 100%;

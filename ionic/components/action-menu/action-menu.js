@@ -38,6 +38,16 @@ import {ClickBlock} from '../../util/click-block';
   directives: [Item, Icon, NgIf, NgFor]
 })
 export class ActionMenu extends Overlay {
+
+  static get config() {
+    return {
+      selector: 'ion-action-menu',
+      hostProperties: {
+        'zIndex': 'style.z-index'
+      }
+    }
+  }
+
   constructor() {
     super();
 
@@ -79,11 +89,6 @@ export class ActionMenu extends Overlay {
     return this.create(ActionMenu, opts);
   }
 
-  static get config() {
-    return {
-      selector: 'ion-action-menu'
-    }
-  }
 }
 
 

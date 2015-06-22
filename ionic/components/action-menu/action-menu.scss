@@ -25,7 +25,7 @@ $action-menu-options-border-color:      #d1d3d6 !default;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: $z-index-action-menu;
+  z-index: $z-index-overlay;
 }
 
 .action-menu-backdrop {
@@ -55,7 +55,6 @@ $action-menu-options-border-color:      #d1d3d6 !default;
   margin-left: $action-menu-margin;
   margin-right: $action-menu-margin;
   width: auto;
-  z-index: $z-index-action-menu;
   overflow: hidden;
 
   button,

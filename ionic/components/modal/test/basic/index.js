@@ -7,7 +7,7 @@ import {Parent, Ancestor} from 'angular2/src/core/annotations_impl/visibility';
 import {IonicView} from 'ionic/ionic';
 
 import {IonicComponent} from 'ionic/ionic';
-import {Modal, NavController, NavParams, Animation} from 'ionic/ionic';
+import {Modal, NavController, NavParams, Animation, ActionMenu} from 'ionic/ionic';
 
 
 class FadeIn extends Animation {
@@ -64,18 +64,16 @@ export class ContactModal extends Modal {
 @IonicView({
   template: `
     <ion-navbar *navbar><ion-title>First Page Header: {{ val }}</ion-title><ion-nav-items primary><button primary (click)="closeModal()">Close</button></ion-nav-items></ion-navbar>
-
     <ion-content class="padding">
-
       <p>First Page: {{ val }}</p>
-
       <p>
         <button primary (click)="push()">Push (Go to 2nd)</button>
       </p>
-
+      <p>
+        <button primary (click)="openActionMenu()">Open Action Menu</button>
+      </p>
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
-
     </ion-content>
   `
 })
@@ -94,9 +92,32 @@ export class ModalFirstPage {
   closeModal() {
     // TODO(maxlynch): Figure out a much better way to get the parent ContactModal
     var m = this.nav._nav.elementRef.parentView._view.context;
-
-    //this.modal.close();
     m.close();
+  }
+
+  openActionMenu() {
+    ActionMenu.open({
+      buttons: [
+        { text: 'Share This' },
+        { text: 'Move' }
+      ],
+      destructiveText: 'Delete',
+      titleText: 'Modify your album',
+      cancelText: 'Cancel',
+      cancel: function() {
+        console.log('Canceled');
+      },
+      destructiveButtonClicked: () => {
+        console.log('Destructive clicked');
+      },
+      buttonClicked: function(index) {
+        console.log('Button clicked', index);
+        if(index == 1) { return false; }
+        return true;
+      }
+    }).then(actionMenu => {
+      this.actionMenu = actionMenu;
+    });
   }
 }
 

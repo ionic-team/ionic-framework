@@ -109,7 +109,7 @@ export class Log {
   }
 }
 
-export let array = {
+export const array = {
   find(arr, cb) {
     for (let i = 0, ii = arr.length; i < ii; i++) {
       if (cb(arr[i], i)) return arr[i];

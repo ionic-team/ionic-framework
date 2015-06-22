@@ -6,6 +6,14 @@ import * as util from 'ionic/util';
 
 export class Overlay {
 
+  constructor() {
+    this.zIndex = rootIndex;
+    for (let i = 0; i < overlayStack.length; i++) {
+      this.zIndex = overlayStack[i].zIndex + 1;
+    }
+    overlayStack.push(this);
+  }
+
   /* Instance Methods */
   open(opts) {
     let animationName = (opts && opts.animation) || this.options.enterAnimation;
@@ -45,13 +53,14 @@ export class Overlay {
 
   _clean() {
     this._dispose && this._dispose();
+    util.array.remove(overlayStack, this);
   }
 
 
   /* Static Methods */
   static create(ComponentType: Type, opts) {
     return new Promise((resolve, reject) => {
-      IonicRoot.append(ComponentType).then((ref) => {
+      IonicRoot.append(ComponentType).then(ref => {
         let overlay = ref.instance;
         overlay._dispose = ref.dispose;
         overlay.domElement = ref.elementRef.domElement;
@@ -67,3 +76,6 @@ export class Overlay {
   }
 
 }
+
+let overlayStack = [];
+const rootIndex = 100;
