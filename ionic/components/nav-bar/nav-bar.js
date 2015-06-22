@@ -133,8 +133,8 @@ export class Navbar {
 
 @Directive({
   selector: '.back-button',
-  hostListeners: {
-    '^click': 'goBack($event)'
+  host: {
+    '(^click)': 'goBack($event)'
   }
 })
 class BackButton {

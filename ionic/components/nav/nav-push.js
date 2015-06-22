@@ -10,14 +10,12 @@ import {NavController} from './nav-controller';
 
 @Directive({
   selector: '[nav-push]',
-  hostListeners: {
-    '^click': 'onClick($event)'
-  },
   properties: [
     'navPush',
     'pushData'
   ],
-  hostAttributes: {
+  host: {
+    '(^click)': 'onClick($event)',
     'role': 'link'
   }
 })
@@ -33,10 +31,8 @@ export class NavPush {
 
 @Directive({
   selector: '[nav-pop]',
-  hostListeners: {
-    '^click': 'onClick($event)'
-  },
-  hostAttributes: {
+  host: {
+    '(^click)': 'onClick($event)',
     'role': 'link'
   }
 })

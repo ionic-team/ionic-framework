@@ -23,14 +23,12 @@ export class Segment {
     return {
       selector: 'ion-segment',
       appInjector: [ControlDirective],
-      hostListeners: {
-        'click': 'buttonClicked($event)'
-      },
       properties: [
         'value'
       ],
-      hostProperties: {
-        value: 'value'
+      host: {
+        '(click)': 'buttonClicked($event)',
+        '[value]': 'value'
       }
     }
   }
@@ -113,17 +111,14 @@ export class Segment {
 }
 
 
-@Component({
+@Directive({
   selector: 'ion-segment-button',
-  hostListeners: {
-    'click': 'buttonClicked($event)'
-  },
   properties: [
     'value'
-  ]
-})
-@View({
-  template: '<content></content>'
+  ],
+  host: {
+    '(click)': 'buttonClicked($event)'
+  }
 })
 export class SegmentButton {
   constructor(

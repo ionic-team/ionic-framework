@@ -7,13 +7,11 @@ import {Tabs} from './tabs';
 @Directive({
   selector: 'button.tab-button',
   properties: ['tab'],
-  hostProperties: {
-    'btnId': 'attr.id',
-    'panelId': 'attr.aria-controls',
-    'tab.isSelected': 'attr.aria-selected'
-  },
-  hostListeners: {
-    '^click': 'onClick($event)'
+  host: {
+    '[attr.id]': 'btnId',
+    '[attr.aria-controls]': 'panelId',
+    '[attr.aria-selected]': 'tab.isSelected',
+    '(^click)': 'onClick($event)'
   },
   lifecycle: [onInit]
 })

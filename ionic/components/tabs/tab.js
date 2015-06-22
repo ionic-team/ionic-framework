@@ -20,13 +20,11 @@ import {Content} from '../content/content';
     'tabTitle',
     'tabIcon'
   ],
-  hostProperties: {
-    'panelId': 'attr.id',
-    'labeledBy': 'attr.aria-labelledby',
-    '!isSelected': 'attr.aria-hidden',
-    'isSelected': 'class.tab-selected'
-  },
-  hostAttributes: {
+  host: {
+    '[attr.id]': 'panelId',
+    '[attr.aria-labelledby]': 'labeledBy',
+    '[attr.aria-hidden]': '!isSelected',
+    '[class.tab-selected]': 'isSelected',
     'role': 'tabpanel'
   }
 })

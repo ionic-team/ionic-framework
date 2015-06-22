@@ -26,8 +26,8 @@ export class Switch {
       properties: [
         'checked'
       ],
-      hostListeners: {
-        'click': 'switchClicked($event)'
+      host: {
+        '(click)': 'switchClicked($event)'
       }
     }
   }

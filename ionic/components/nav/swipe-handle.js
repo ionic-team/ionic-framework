@@ -10,8 +10,8 @@ import {Gesture} from 'ionic/gestures/gesture';
 
 @Directive({
   selector: '.swipe-handle',
-  hostProperties: {
-    'showHandle()': 'class.show-handle'
+  host: {
+    '[class.show-handle]': 'showHandle()'
   }
 })
 export class SwipeHandle {

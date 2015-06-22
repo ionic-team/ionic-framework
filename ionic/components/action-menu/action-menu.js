@@ -42,8 +42,8 @@ export class ActionMenu extends Overlay {
   static get config() {
     return {
       selector: 'ion-action-menu',
-      hostProperties: {
-        'zIndex': 'style.z-index'
+      host: {
+        '[style.z-index]': 'zIndex'
       }
     }
   }

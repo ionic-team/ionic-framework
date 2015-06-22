@@ -109,12 +109,12 @@ export class RadioButton {
   static get config() {
     return {
       selector: 'ion-radio',
-      hostListeners: {
-        '^click': 'buttonClicked($event)'
-      },
       properties: [
         'value'
-      ]
+      ],
+      host: {
+        '(^click)': 'buttonClicked($event)'
+      }
     }
   }
 

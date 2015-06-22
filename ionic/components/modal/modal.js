@@ -7,8 +7,8 @@ export class Modal extends Overlay {
   static get config() {
     return {
       selector: 'ion-modal',
-      hostProperties: {
-        'zIndex': 'style.z-index'
+      host: {
+        '[style.z-index]': 'zIndex'
       }
     }
   }

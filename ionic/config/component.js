@@ -1,4 +1,5 @@
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
+import {DirectiveMetadata} from 'angular2/src/render/api';
 
 import * as util from 'ionic/util';
 import {Platform} from 'ionic/platform/platform';
@@ -20,10 +21,13 @@ export class IonicComponent extends Component {
 
 function appendModeConfig(ComponentType) {
   let config = ComponentType.config;
+  config.host = config.host || {};
+
+//  let host = DirectiveMetadata.parseHostConfig(config.host);
+
   const defaultProperties = config.defaultProperties;
 
   config.properties = config.properties || [];
-  config.hostProperties = config.hostProperties || {};
 
   for (let prop in defaultProperties) {
     // add the property to the component "properties"
@@ -31,7 +35,7 @@ function appendModeConfig(ComponentType) {
 
     // set the component "hostProperties", so the instance's
     // property value will be used to set the element's attribute
-    config.hostProperties[prop] = 'attr.' + util.pascalCaseToDashCase(prop);
+    config.host['[attr.' + util.pascalCaseToDashCase(prop)] = prop;
   }
 
   // called by the component's onInit when an instance has been created and properties bound
@@ -88,10 +92,8 @@ function appendModeConfig(ComponentType) {
     };
   }
 
-  config.hostAttributes = config.hostAttributes || {};
-  let className = (config.hostAttributes['class'] || '');
   let id = config.classId || config.selector.replace('ion-', '');
-  config.hostAttributes['class'] = (className + ' ' + id + ' ' + id + '-' + platformMode).trim();
+  config.host['class'] = (id + ' ' + id + '-' + platformMode);
 
   return config;
 }

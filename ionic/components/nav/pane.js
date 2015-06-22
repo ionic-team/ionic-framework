@@ -139,7 +139,7 @@ class PaneContentAnchor {
 
 @Component({
   selector: 'section',
-  hostAttributes: {
+  host: {
     'class': 'navbar-container'
   }
 })

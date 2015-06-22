@@ -7,10 +7,8 @@ import {ElementRef} from 'angular2/src/core/compiler/element_ref';
   properties: [
     'name'
   ],
-  hostProperties: {
-    'label': 'attr.aria-label'
-  },
-  hostAttributes: {
+  host: {
+    '[attr.aria-label]': 'label'
     'role': 'img'
   },
   lifecycle: [onInit]
