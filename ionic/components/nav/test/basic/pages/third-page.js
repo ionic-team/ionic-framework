@@ -1,6 +1,6 @@
-import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
+import {Component} from 'angular2/src/core/annotations_impl/annotations';
 
-import {Router, Routable, NavController} from 'ionic/ionic';
+import {IonicView, Router, Routable, NavController} from 'ionic/ionic';
 
 
 @Component({selector: 'ion-view'})

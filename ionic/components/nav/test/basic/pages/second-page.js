@@ -1,11 +1,11 @@
-import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
+import {Component} from 'angular2/src/core/annotations_impl/annotations';
 
-import {Routable, Router, NavController, NavParams} from 'ionic/ionic';
+import {IonicView, Routable, Router, NavController, NavParams} from 'ionic/ionic';
 import {ThirdPage} from './third-page';
 
 
 @Component({selector: 'ion-view'})
-@View({
+@IonicView({
   template: `
     <ion-navbar *navbar><ion-title>Second Page Header</ion-title></ion-navbar>
     <ion-content class="padding">

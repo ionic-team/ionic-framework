@@ -14,9 +14,12 @@ import {NavController} from './nav-controller';
     '^click': 'onClick($event)'
   },
   properties: [
-    'navPush: nav-push',
-    'pushData: push-data'
-  ]
+    'navPush',
+    'pushData'
+  ],
+  hostAttributes: {
+    'role': 'link'
+  }
 })
 export class NavPush {
   constructor(nav: NavController) {
@@ -32,6 +35,9 @@ export class NavPush {
   selector: '[nav-pop]',
   hostListeners: {
     '^click': 'onClick($event)'
+  },
+  hostAttributes: {
+    'role': 'link'
   }
 })
 export class NavPop {
