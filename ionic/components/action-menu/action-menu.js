@@ -86,10 +86,16 @@ export class ActionMenu extends Overlay {
    * @return Promise that resolves when the action menu is open.
    */
   static open(opts) {
-    return this.create(ActionMenu, opts);
+    return this.create(overlayType, ActionMenu, opts);
+  }
+
+  static get() {
+    return Modal.getByType(overlayType);
   }
 
 }
+
+const overlayType = 'actionmenu';
 
 
 /**

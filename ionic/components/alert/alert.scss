@@ -15,7 +15,6 @@ $alert-content-margin:              24px !default;
 }
 
 .alert-container {
-  z-index: $z-index-alert;
   display: block;
 
   width: $alert-width;

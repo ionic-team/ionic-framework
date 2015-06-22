@@ -7,7 +7,7 @@ import * as util from 'ionic/util';
 export class Overlay {
 
   constructor() {
-    this.zIndex = rootIndex;
+    this.zIndex = Root_ZIndex;
     for (let i = 0; i < overlayStack.length; i++) {
       this.zIndex = overlayStack[i].zIndex + 1;
     }
@@ -17,7 +17,7 @@ export class Overlay {
   /* Instance Methods */
   open(opts) {
     let animationName = (opts && opts.animation) || this.options.enterAnimation;
-    let enterAnimation = Animation.create(this.domElement, animationName);
+    let enterAnimation = Animation.create(this._domElement, animationName);
     enterAnimation.before.addClass('show-overlay');
     ClickBlock(true, enterAnimation.duration() + 200);
 
@@ -33,7 +33,7 @@ export class Overlay {
   close(opts) {
     return new Promise(resolve => {
       let animationName = (opts && opts.animation) || this.options.leaveAnimation;
-      let leavingAnimation = Animation.create(this.domElement, animationName);
+      let leavingAnimation = Animation.create(this._domElement, animationName);
       leavingAnimation.after.removeClass('show-overlay');
       ClickBlock(true, leavingAnimation.duration() + 200);
 
@@ -58,12 +58,13 @@ export class Overlay {
 
 
   /* Static Methods */
-  static create(ComponentType: Type, opts) {
+  static create(overlayType, ComponentType: Type, opts) {
     return new Promise((resolve, reject) => {
       IonicRoot.append(ComponentType).then(ref => {
         let overlay = ref.instance;
+        overlay._type = overlayType;
         overlay._dispose = ref.dispose;
-        overlay.domElement = ref.elementRef.domElement;
+        overlay._domElement = ref.elementRef.domElement;
         overlay.extendOptions(opts);
         overlay.open(opts);
         resolve(overlay);
@@ -75,7 +76,16 @@ export class Overlay {
     });
   }
 
+  static getByType(overlayType) {
+    for (let i = overlayStack.length - 1; i >= 0; i--) {
+      if (overlayType == overlayStack[i]._type) {
+        return overlayStack[i];
+      }
+    }
+    return null;
+  }
+
 }
 
 let overlayStack = [];
-const rootIndex = 100;
+const Root_ZIndex = 1000;

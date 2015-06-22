@@ -23,10 +23,16 @@ export class Modal extends Overlay {
 
   /* Static Methods */
   static open(ComponentType: Type, opts) {
-    return this.create(ComponentType, opts);
+    return this.create(overlayType, ComponentType, opts);
+  }
+
+  static get() {
+    return Modal.getByType(overlayType);
   }
 
 }
+
+const overlayType = 'modal';
 
 
 /**
