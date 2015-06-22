@@ -140,8 +140,7 @@ gulp.task('bundle.deps', function() {
     builder.config({
       baseURL: 'file:' + process.cwd(),
       paths : {
-        "ionic/*": "dist/js/es6/ionic/*.js",
-        "angular2/*": "angular2/dist/js/dev/es6/angular2/*.es6",
+        "ionic/*": "dist/js/es6/ionic/*.js"
       }
     });
     return builder.build('dist/js/es6/ionic/**/* - [dist/js/es6/ionic/**/*]', 'dist/js/dependencies.js');
@@ -220,71 +219,7 @@ gulp.task('vendor', function() {
     .pipe(gulp.dest('dist/vendor'));
 });
 
-
-gulp.task('link.angular', function() {
-  if (!fs.existsSync('../angular-ionic')) {
-    throw new Error("../angular-ionic doesn't exist. Run gulp update.angular first");
-  }
-  linkAngular();
-});
-
-gulp.task('update.angular', function(done) {
-
-  if (!fs.existsSync('../angular-ionic')) {
-    console.log('cloning angular master...');
-    exec('git clone git@github.com:angular/angular ../angular-ionic', function() {
-      linkAngular();
-      npmInstall();
-    });
-
-  } else {
-    console.log('angular master: cleaning modules');
-    del(['../angular-ionic/modules'], { force: true }, function() {
-
-      console.log('angular master: reset --hard...');
-      exec('git reset --hard origin/master', {cwd: '../angular-ionic'}, function () {
-
-        console.log('angular master: git pull origin master...');
-        exec('git pull origin master', function () {
-          npmInstall();
-        });
-      });
-
-    })
-  }
-
-  function npmInstall() {
-    console.log('angular master: npm install (may take a while, chill out)...');
-    exec('npm install', {cwd: '../angular-ionic'}, function () {
-      done();
-    });
-  }
-
-});
-
-function linkAngular() {
- if (!fs.existsSync('angular2')) {
-    console.log("Symlinking ../angular-ionic to angular2");
-    fs.symlinkSync('../angular-ionic', 'angular2');
-  }
-}
-
-
-
 require('./scripts/snapshot/snapshot.task')(gulp, argv, buildConfig);
-
-
-// gulp.task('watch', ['default'], function() {
-//   gulp.watch(buildConfig.src.scss, ['sass'])
-//   gulp.watch([].concat(
-//     buildConfig.src.js, buildConfig.src.html,
-//     'scripts/e2e/index.template.html'
-//   ), ['e2e'])
-//   gulp.watch([].concat(
-//     buildConfig.src.e2e, buildConfig.src.html,
-//     'scripts/e2e/index.template.html'
-//   ), ['ionic-js'])
-// });
 
 gulp.task('karma', function() {
   return karma.start({ configFile: __dirname + '/scripts/test/karma.conf.js' })
@@ -514,20 +449,6 @@ gulp.task('old.update.angular', function(done) {
   }
 
 });
-
-
-
-// gulp.task('watch', ['default'], function() {
-//   gulp.watch(buildConfig.src.scss, ['sass'])
-//   gulp.watch([].concat(
-//     buildConfig.src.js, buildConfig.src.html,
-//     'scripts/e2e/index.template.html'
-//   ), ['e2e'])
-//   gulp.watch([].concat(
-//     buildConfig.src.e2e, buildConfig.src.html,
-//     'scripts/e2e/index.template.html'
-//   ), ['ionic-js'])
-// });
 
 gulp.task('old.karma', function() {
   return karma.start({ configFile: __dirname + '/scripts/test/karma.conf.js' })

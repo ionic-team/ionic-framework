@@ -1,6 +1,4 @@
-import {NgFor, NgIf} from 'angular2/angular2';
-import {NgSwitch, NgSwitchWhen} from 'angular2/angular2'
-import {formDirectives} from 'angular2/forms';
+import {coreDirectives} from 'angular2/angular2';
 
 import {View} from 'angular2/src/core/annotations_impl/view';
 
@@ -22,8 +20,7 @@ export class IonicView extends View {
     let directives = [
 
       // Angular
-      NgFor, NgIf, formDirectives,
-      NgSwitch, NgSwitchWhen,
+      coreDirectives,
 
       // Content
       Aside, Content, Refresher,
@@ -38,8 +35,8 @@ export class IonicView extends View {
       Icon,
 
       // Form elements
-      Checkbox, Switch, Label, Input, Segment, SegmentButton,
-      RadioGroup, RadioButton, SearchBar,
+      //Checkbox, Switch, Label, Input, Segment, SegmentButton,
+      //RadioGroup, RadioButton, SearchBar,
 
       // Nav
       Nav, NavbarTemplate, Navbar, NavPush, NavPop
