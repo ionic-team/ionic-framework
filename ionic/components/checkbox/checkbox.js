@@ -32,23 +32,19 @@ export class Checkbox {
     return {
       selector: 'ion-checkbox',
       properties: [ 'checked', 'disabled', 'value' ],
-      appInjector: [ ControlDirective ],
-      hostListeners: {
-        '^click': 'onClick($event)'
-      },
-      hostAttributes: {
-        'role': 'checkbox',
-        'class': 'item'
-      },
-      hostProperties: {
-        'checked' : 'attr.aria-checked',
-        'disabled' : 'attr.aria-disabled',
-        'value': 'attr.value'
-      },
       defaultProperties: {
         'iconOff': 'ion-ios-circle-outline',
         'iconOn': 'ion-ios-checkmark'
-      }
+      },
+      host: {
+        '(^click)': 'onClick($event)',
+        '[attr.aria-checked]': 'checked',
+        '[attr.aria-disabled]': 'disabled',
+        '[attr.value]': 'value'
+        'role': 'checkbox',
+        'class': 'item'
+      },
+      appInjector: [ ControlDirective ]
     }
   }
 

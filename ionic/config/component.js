@@ -35,7 +35,7 @@ function appendModeConfig(ComponentType) {
 
     // set the component "hostProperties", so the instance's
     // property value will be used to set the element's attribute
-    config.host['[attr.' + util.pascalCaseToDashCase(prop)] = prop;
+    config.host['[attr.' + util.pascalCaseToDashCase(prop) + ']'] = prop;
   }
 
   // called by the component's onInit when an instance has been created and properties bound
