@@ -63,6 +63,7 @@ export class Overlay {
       IonicRoot.append(ComponentType).then(ref => {
         let overlay = ref.instance;
         overlay._type = overlayType;
+        overlay._handle = opts && opts.handle;
         overlay._dispose = ref.dispose;
         overlay._domElement = ref.elementRef.domElement;
         overlay.extendOptions(opts);
@@ -78,7 +79,16 @@ export class Overlay {
 
   static getByType(overlayType) {
     for (let i = overlayStack.length - 1; i >= 0; i--) {
-      if (overlayType == overlayStack[i]._type) {
+      if (overlayType === overlayStack[i]._type) {
+        return overlayStack[i];
+      }
+    }
+    return null;
+  }
+
+  static getByHandle(handle) {
+    for (let i = overlayStack.length - 1; i >= 0; i--) {
+      if (handle === overlayStack[i]._handle) {
         return overlayStack[i];
       }
     }

@@ -43,7 +43,8 @@ class IonicApp {
   openModal() {
     Modal.open(ContactModal, {
       enterAnimation: 'my-fade-in',
-      leaveAnimation: 'my-fade-out'
+      leaveAnimation: 'my-fade-out',
+      handle: 'my-awesome-modal'
     });
   }
 }
@@ -72,6 +73,9 @@ export class ContactModal extends Modal {
       <p>
         <button primary (click)="openActionMenu()">Open Action Menu</button>
       </p>
+      <p>
+        <button primary (click)="closeByHandeModal()">Close By Handle</button>
+      </p>
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
     </ion-content>
@@ -91,6 +95,11 @@ export class ModalFirstPage {
 
   closeModal() {
     let modal = Modal.get();
+    modal.close();
+  }
+
+  closeByHandeModal() {
+    let modal = Modal.getByHandle('my-awesome-modal');
     modal.close();
   }
 
