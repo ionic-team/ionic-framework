@@ -1,7 +1,8 @@
 import {EventEmitter, ElementRef} from 'angular2/angular2'
 import {onInit} from 'angular2/src/core/annotations_impl/annotations';
+import {View} from 'angular2/src/core/annotations_impl/view';
 
-import {IonicDirective} from '../../config/component';
+import {IonicComponent} from '../../config/component';
 import * as types from './extensions/types'
 import * as gestures from  './extensions/gestures'
 import {dom} from 'ionic/util'
@@ -10,7 +11,10 @@ import {dom} from 'ionic/util'
  * TODO (?) add docs about how to have a root aside and a nested aside, then hide the root one
  */
 
-@IonicDirective(Aside)
+@IonicComponent(Aside)
+@View({
+  template: `<content></content>`
+})
 export class Aside {
 
   static get config() {
