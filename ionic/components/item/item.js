@@ -4,12 +4,11 @@ import {View} from 'angular2/src/core/annotations_impl/view';
 
 import {ItemPrimaryOptions, ItemSecondaryOptions} from './item-options'
 import {ItemPrimarySwipeButtons, ItemSecondarySwipeButtons} from './item-swipe-buttons'
+import {IonicComponent} from '../../config/component'
 import {dom} from 'ionic/util'
 
 
-@Component({
-  selector: 'ion-item'
-})
+@IonicComponent(Item)
 @View({
   template: `
     <!--
@@ -30,15 +29,29 @@ import {dom} from 'ionic/util'
     <content select="ion-secondary-options"></content>
     <content select="ion-secondary-swipe-buttons"></content>
     -->
-  `,
+  `
+  /*
   directives: [
     ItemPrimarySwipeButtons,
     // ItemSecondarySwipeButtons,
     // ItemPrimaryOptions,
     // ItemSecondaryOptions
   ]
+  */
 })
 export class Item {
+  static get config() {
+    return {
+      selector: 'ion-item',
+      properties: [
+      ]
+    }
+  }
+
+  onInit() {
+    Item.applyConfig(this);
+  }
+
   constructor(elementRef: ElementRef) {
     this._isOpen = false;
     this._isSlideActive = false;

@@ -1,11 +1,6 @@
 <ion-view>
-  <ion-aside [content]="content" style="background-color: red">
-    <h2 style="color: white">LEFT</h2>
-    <!--
+  <ion-aside [content]="content">
     <ion-list inset>
-      <div class="list-header">
-        Menu
-      </div>
       <ion-item>
         About
       </ion-item>
@@ -19,11 +14,10 @@
         Potatoes
       </ion-item>
     </ion-list>
-  -->
   </ion-aside>
 
-  <ion-content #content style="background-color: blue">
-    <h2 style="color: white">HELLO</h2>
+  <ion-content #content>
+    <h2>Content</h2>
   </ion-content>
 
   <!--
