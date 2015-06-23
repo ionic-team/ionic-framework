@@ -1,38 +1,8 @@
-import {DynamicComponentLoader, ElementRef, ComponentRef, onDestroy, DomRenderer} from 'angular2/angular2';
-import {bind, Injector} from 'angular2/di';
-import {bootstrap, NgFor} from 'angular2/angular2'
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
-import {View} from 'angular2/src/core/annotations_impl/view';
 import {FormBuilder, Control, ControlGroup, Validators, formDirectives} from 'angular2/forms';
 
 import {IonicView, Animation, Modal, NavController, IonicComponent} from 'ionic/ionic';
 
-
-class FadeIn extends Animation {
-  constructor(element) {
-    super(element);
-    this
-      .easing('ease')
-      .duration(250)
-      .fadeIn()
-      .before.addClass('show-modal');
-  }
-}
-
-Animation.register('my-fade-in', FadeIn);
-
-class FadeOut extends Animation {
-  constructor(element) {
-    super(element);
-    this
-      .easing('ease')
-      .duration(250)
-      .fadeOut()
-      .after.removeClass('show-modal');
-  }
-}
-
-Animation.register('my-fade-out', FadeOut);
 
 @Component({ selector: 'ion-view' })
 @IonicView({
@@ -94,20 +64,23 @@ export class FeedPage {
   }
 }
 
-@Component({ selector: 'ion-view' })
+@Component({
+  selector: 'ion-app',
+  appInjector: [Modal]
+})
 @IonicView({
   templateUrl: 'main.html'
 })
 class IonicApp {
-  constructor() {
-    this.feedPage = FeedPage;
-    console.log('IonicApp Start');
+  constructor(Modal: Modal) {
+    this.Modal = Modal;
+    this.rootView = FeedPage;
   }
 
   openHeart() {
     console.log('openHeart');
 
-    Modal.open(HeartModal, {
+    this.Modal.open(HeartModal, {
       enterAnimation: 'my-fade-in',
       leaveAnimation: 'my-fade-out'
     });
@@ -116,7 +89,7 @@ class IonicApp {
   openGear() {
     console.log('openGear');
 
-    Modal.open(SettingsModal, {
+    this.Modal.open(SettingsModal, {
       enterAnimation: 'my-fade-in',
       leaveAnimation: 'my-fade-out'
     });
@@ -140,3 +113,30 @@ export class HeartModal extends Modal {}
 export function main(ionicBootstrap) {
   ionicBootstrap(IonicApp);
 }
+
+
+class FadeIn extends Animation {
+  constructor(element) {
+    super(element);
+    this
+      .easing('ease')
+      .duration(250)
+      .fadeIn()
+      .before.addClass('show-modal');
+  }
+}
+
+Animation.register('my-fade-in', FadeIn);
+
+class FadeOut extends Animation {
+  constructor(element) {
+    super(element);
+    this
+      .easing('ease')
+      .duration(250)
+      .fadeOut()
+      .after.removeClass('show-modal');
+  }
+}
+
+Animation.register('my-fade-out', FadeOut);

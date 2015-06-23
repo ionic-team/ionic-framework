@@ -1,4 +1,3 @@
-//import {Router} from 'ionic/routing/router'
 import {ElementRef, For, Parent} from 'angular2/angular2'
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
@@ -7,16 +6,14 @@ import {FormBuilder, Validators, FormDirectives, ControlGroup} from 'angular2/fo
 import {Log} from 'ionic/util'
 
 import {
-  Router, Routable, List, Item, HeaderTemplate, Nav, NavController,
-  Toolbar, Input, Tabs,
-  Tab, Content, Aside
+  Router, Routable, NavController,
+  IonicView
 } from 'ionic/ionic'
 
 
 @Component({selector: 'ion-view'})
-@View({
-  templateUrl: 'pages/app.html',
-  directives: [Nav, List, Item, Content, HeaderTemplate, Toolbar]
+@IonicView({
+  templateUrl: 'pages/app.html'
 })
 class AppPage {
   constructor(nav: NavController) {
@@ -30,14 +27,14 @@ class AppPage {
 /**
  * Main app entry point
  */
-@Component({ selector: 'ion-view' })
-@View({
-  directives: [Nav, Aside, List, Item, ParallaxEffect],
+@Component({ selector: 'ion-app' })
+@IonicView({
+  directives: [ParallaxEffect],
   templateUrl: 'main.html'
 })
 class IonicApp {
   constructor() {
-    this.firstPage = AppPage
+    this.rootView = AppPage
 
     this.menuOpenAmount = 0;
 

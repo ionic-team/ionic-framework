@@ -1,4 +1,3 @@
-//import {Router} from 'ionic/routing/router'
 import {For, Parent} from 'angular2/angular2'
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
@@ -7,15 +6,13 @@ import {FormBuilder, Validators, FormDirectives, ControlGroup} from 'angular2/fo
 import {Log} from 'ionic/util'
 
 import {
-  Router, Routable, List, Item, HeaderTemplate, Nav, NavController,
-  Toolbar, Input, Tabs,
-  Tab, Content, Aside
+  Router, Routable, IonicView, NavController
 } from 'ionic/ionic'
 
+
 @Component({selector: 'ion-view'})
-@View({
-  templateUrl: 'pages/login.html',
-  directives: [FormDirectives, Input, Content, HeaderTemplate, Toolbar]
+@IonicView({
+  templateUrl: 'pages/login.html'
 })
 class LoginPage {
   constructor( nav: NavController ) {
@@ -36,8 +33,6 @@ class LoginPage {
     Log.log('Doing login')
     event.preventDefault();
     console.log(this.loginForm.value);
-
-    //this.viewport.push(SecondPage)
   }
 
   doSignup(event) {
@@ -51,9 +46,8 @@ new Routable(LoginPage, {
 })
 
 @Component({selector: 'ion-view'})
-@View({
-  templateUrl: 'pages/signup.html',
-  directives: [FormDirectives, Input]
+@IonicView({
+  templateUrl: 'pages/signup.html'
 })
 export class SignupPage {
   constructor( nav: NavController ) { //, fb: FormBuilder ) {
@@ -80,16 +74,14 @@ export class SignupPage {
     console.log(this.signupForm.value);
 
     this.nav.push(AppPage)
-    //this.viewport.push(SecondPage)
   }
 }
 
 
 
 @Component({selector: 'ion-view'})
-@View({
-  templateUrl: 'pages/app.html',
-  directives: [FormDirectives, Input, Tabs, Tab]
+@IonicView({
+  templateUrl: 'pages/app.html'
 })
 export class AppPage {
   constructor( nav: NavController ) { //, fb: FormBuilder ) {
@@ -99,9 +91,8 @@ export class AppPage {
 }
 
 @Component({selector: 'ion-view'})
-@View({
-  templateUrl: 'pages/tabs/home.html',
-  directives: [For, Content, List, Item]
+@IonicView({
+  templateUrl: 'pages/tabs/home.html'
 })
 class StreamTab {
   constructor(nav: NavController) {
@@ -122,9 +113,8 @@ class StreamTab {
 }
 
 @Component({selector: 'ion-view'})
-@View({
-  templateUrl: 'pages/post/detail.html',
-  directives: [Content]
+@IonicView({
+  templateUrl: 'pages/post/detail.html'
 })
 class PostDetail {
   constructor(nav: NavController) {
@@ -137,9 +127,8 @@ class PostDetail {
 }
 
 @Component({selector: 'ion-view'})
-@View({
-  templateUrl: 'pages/splash.html',
-  directives: [Content]
+@IonicView({
+  templateUrl: 'pages/splash.html'
 })
 class SplashPage {
   constructor(nav: NavController) {
@@ -151,7 +140,20 @@ class SplashPage {
   }
 }
 
+
+@Component({
+  selector: 'ion-app'
+})
+@IonicView({
+  template: '<ion-nav [root]="rootView"></ion-nav>'
+})
+class IonicApp {
+  constructor() {
+    this.rootView = SplashPage;
+  }
+}
+
 export function main(ionicBootstrap) {
-  ionicBootstrap(SplashPage);
+  ionicBootstrap(IonicApp);
 }
 

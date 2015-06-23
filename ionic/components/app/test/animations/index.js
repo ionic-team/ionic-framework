@@ -8,7 +8,7 @@ let rotateZ = '180deg';
 let translateX = '100px';
 let scale = 0.6;
 
-@Component({ selector: 'ion-view' })
+@Component({ selector: 'ion-app' })
 @View({
   templateUrl: 'main.html'
 })

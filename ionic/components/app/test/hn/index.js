@@ -1,20 +1,15 @@
-import {NgFor} from 'angular2/angular2';
-import {Ancestor} from 'angular2/src/core/annotations_impl/visibility';
-import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
-import {View} from 'angular2/src/core/annotations_impl/view';
+import {Component} from 'angular2/src/core/annotations_impl/annotations';
 
-import {NavController, NavbarTemplate, Navbar, Content, List, Item} from 'ionic/ionic';
+import {NavController, IonicView} from 'ionic/ionic';
 
 import {HackerNews} from './hn';
 import {HNSinglePost} from './pages/single';
 
 
-console.log('Angular directives', NgFor, Content, List, Item);
-
 @Component({
   selector: 'story'
 })
-@View({
+@IonicView({
   template: '<div class="hn-story"><content></content></div>'
 })
 export class Story {
@@ -26,9 +21,8 @@ export class Story {
 @Component({
   selector: 'ion-view'
 })
-@View({
-  templateUrl: './pages/top.html',
-  directives: [NavbarTemplate, Navbar, Content, NgFor, List, Story, Item]
+@IonicView({
+  templateUrl: './pages/top.html'
 })
 class HNTopStories {
   constructor(
@@ -92,6 +86,19 @@ class HNTopStories {
   */
 }
 
+
+@Component({
+  selector: 'ion-app'
+})
+@IonicView({
+  template: '<ion-nav [root]="rootView"></ion-nav>'
+})
+class IonicApp {
+  constructor() {
+    this.rootView = HNTopStories;
+  }
+}
+
 export function main(ionicBootstrap) {
-  ionicBootstrap(HNTopStories);
+  ionicBootstrap(IonicApp);
 }

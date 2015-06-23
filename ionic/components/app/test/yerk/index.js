@@ -1,21 +1,13 @@
-import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
-import {View} from 'angular2/src/core/annotations_impl/view';
+import {Component} from 'angular2/src/core/annotations_impl/annotations';
 
-import {Tabs, Tab, Content} from 'ionic/ionic'
-import {Engine} from 'ionic/engine/engine'
-import * as util from 'ionic/util'
+import {IonicView} from 'ionic/ionic';
 
 
 @Component({ selector: 'ion-app' })
-@View({
-  templateUrl: 'main.html',
-  directives: [Tabs, Tab, Content]
+@IonicView({
+  templateUrl: 'main.html'
 })
-class IonicApp {
-  constructor() {
-    console.log('IonicApp Start');
-  }
-}
+class IonicApp {}
 
 export function main(ionicBootstrap) {
   ionicBootstrap(IonicApp);

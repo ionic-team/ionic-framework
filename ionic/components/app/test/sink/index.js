@@ -1,10 +1,6 @@
-import {QueryList, ElementRef, NgFor, NgIf} from 'angular2/angular2'
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
-import {Descendant} from 'angular2/src/core/annotations_impl/visibility';
-import {View} from 'angular2/src/core/annotations_impl/view';
-import {Query} from 'angular2/src/core/annotations_impl/di';
 
-import {Ionic, Nav, ViewContainer, Aside, List, Item, Content} from 'ionic/ionic';
+import {IonicView} from 'ionic/ionic';
 
 import {ButtonPage} from './pages/button'
 import {NavPage} from './pages/nav'
@@ -21,17 +17,15 @@ import {SlidePage} from './pages/slides'
 import {ActionMenuPage} from './pages/action-menu'
 import {ModalPage} from './pages/modal'
 
-console.log('Loaded', Nav, NgFor, NgIf, Aside, List, Item, Content);
 
 @Component({
-  selector: 'ion-view',
+  selector: 'ion-app',
 })
-@View({
-  templateUrl: 'main.html',
-  directives: [Nav, NgFor, NgIf, Aside, List, Item, Content]
+@IonicView({
+  templateUrl: 'main.html'
 })
 class IonicApp {
-  constructor(elementRef: ElementRef) {//, @Query(Aside) nav: QueryList) {//, @Descendant() aside: Aside) {
+  constructor() {
     this.components = [
       { title: 'Navigation', component: NavPage },
       { title: 'Buttons', component: ButtonPage },
@@ -49,7 +43,7 @@ class IonicApp {
       { title: 'Modal', component: ModalPage }
     ];
 
-    this.firstPage = ButtonPage
+    this.rootView = ButtonPage
   }
 
   openPage(aside, component) {

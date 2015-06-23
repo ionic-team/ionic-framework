@@ -1,18 +1,17 @@
 import {bind, Injector} from 'angular2/di';
 import {bootstrap, ElementRef, NgFor} from 'angular2/angular2'
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
-import {View} from 'angular2/src/core/annotations_impl/view';
 import {FormBuilder, Control, ControlGroup, Validators, formDirectives} from 'angular2/forms';
 
-import {Modal, ModalRef, Nav, Segment, Animation,
-  SegmentButton, Slides, Slide, Content, List, Item} from 'ionic/ionic';
-import {NavController, NavbarTemplate, NavParams, Navbar} from 'ionic/ionic';
+import {Modal, Animation, Content} from 'ionic/ionic';
+import {NavController, NavParams, IonicView} from 'ionic/ionic';
 import {dom} from 'ionic/util';
 
-@Component({ selector: 'ion-view' })
-@View({
+
+@Component({ selector: 'ion-app' })
+@IonicView({
   templateUrl: 'main.html',
-  directives: [formDirectives, Nav, Slides, Slide, Content, List, Item, NgFor, ParallaxEffect]
+  directives: [ParallaxEffect]
 })
 class IonicApp {
   constructor() {
