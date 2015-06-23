@@ -10,31 +10,6 @@ import {IonicComponent} from 'ionic/ionic';
 import {Modal, NavController, NavParams, Animation, ActionMenu} from 'ionic/ionic';
 
 
-class FadeIn extends Animation {
-  constructor(element) {
-    super(element);
-    this
-      .easing('ease')
-      .duration(450)
-      .fadeIn();
-  }
-}
-
-Animation.register('my-fade-in', FadeIn);
-
-class FadeOut extends Animation {
-  constructor(element) {
-    super(element);
-    this
-      .easing('ease')
-      .duration(250)
-      .fadeOut();
-  }
-}
-
-Animation.register('my-fade-out', FadeOut);
-
-
 @Component({
   selector: 'ion-app',
   appInjector: [Modal]
@@ -71,7 +46,10 @@ export class ContactModal extends Modal {
 
 @Component({
   selector: 'ion-view',
-  appInjector: [Modal]
+  appInjector: [
+    Modal,
+    ActionMenu
+  ]
 })
 @IonicView({
   template: `
@@ -95,11 +73,13 @@ export class ContactModal extends Modal {
 export class ModalFirstPage {
   constructor(
     nav: NavController,
-    Modal: Modal
+    Modal: Modal,
+    ActionMenu: ActionMenu
   ) {
     this.nav = nav;
     this.val = Math.round(Math.random() * 8999) + 1000;
     this.Modal = Modal;
+    this.ActionMenu = ActionMenu;
   }
 
   push() {
@@ -112,12 +92,12 @@ export class ModalFirstPage {
   }
 
   closeByHandeModal() {
-    let modal = Modal.getByHandle('my-awesome-modal');
+    let modal = this.Modal.getByHandle('my-awesome-modal');
     modal.close();
   }
 
   openActionMenu() {
-    ActionMenu.open({
+    this.ActionMenu.open({
       buttons: [
         { text: 'Share This' },
         { text: 'Move' }
@@ -146,20 +126,12 @@ export class ModalFirstPage {
 @IonicView({
   template: `
     <ion-navbar *navbar><ion-title>Second Page Header</ion-title></ion-navbar>
-
     <ion-content class="padding">
-
       <p>
         <button primary (click)="nav.pop()">Pop (Go back to 1st)</button>
       </p>
-
-      <p>
-        <button primary (click)="push()">Push (Go to 3rd)</button>
-      </p>
-
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
-
     </ion-content>
   `
 })
@@ -174,9 +146,6 @@ export class ModalSecondPage {
     console.log('Second page params:', params);
   }
 
-  push() {
-  }
-
 }
 
 export function main(ionicBootstrap) {
@@ -188,3 +157,28 @@ export function main(ionicBootstrap) {
     console.log('ionicBootstrap', app);
   });
 }
+
+
+class FadeIn extends Animation {
+  constructor(element) {
+    super(element);
+    this
+      .easing('ease')
+      .duration(450)
+      .fadeIn();
+  }
+}
+
+Animation.register('my-fade-in', FadeIn);
+
+class FadeOut extends Animation {
+  constructor(element) {
+    super(element);
+    this
+      .easing('ease')
+      .duration(250)
+      .fadeOut();
+  }
+}
+
+Animation.register('my-fade-out', FadeOut);

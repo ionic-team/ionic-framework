@@ -20,6 +20,7 @@ export class Overlay {
 
       app.appendComponent(ComponentType).then(ref => {
         let overlay = ref.instance;
+        overlay._dispose = ref.dispose;
         overlay.setApp(app);
         overlay._type = overlayType;
         overlay._handle = opts && opts.handle;
@@ -70,7 +71,7 @@ export class Overlay {
       ClickBlock(true, leavingAnimation.duration() + 200);
 
       leavingAnimation.play().then(() => {
-        this._dispose();
+        this.dispose();
         ClickBlock(false);
         leavingAnimation.dispose();
         resolve();
@@ -105,8 +106,8 @@ export class Overlay {
     util.extend(this.options, opts);
   }
 
-  _dispose() {
-    this.dispose && this.dispose();
+  dispose() {
+    this._dispose && this._dispose();
     if (this.app) {
       util.array.remove(this.app.overlays, this);
     }
