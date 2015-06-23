@@ -1,18 +1,18 @@
 <ion-content>
-  <form (^submit)="doSubmit($event)" [control-group]="fruitsForm">
+  <form (^submit)="doSubmit($event)" [ng-form-model]="fruitsForm">
 
     <ion-list>
       <div class="list-header">Some Switches</div>
-      <ion-checkbox control="appleCtrl">
+      <ion-checkbox [ng-control]="appleCtrl">
         Apples
       </ion-checkbox>
-      <ion-checkbox control="bananaCtrl">
+      <ion-checkbox [ng-control]="bananaCtrl">
         Bananas
       </ion-checkbox>
-      <ion-checkbox control="grapeCtrl">
+      <ion-checkbox [ng-control]="grapeCtrl">
         Grapes
       </ion-checkbox>
-      <ion-checkbox control="cherryCtrl">
+      <ion-checkbox [ng-control]="cherryCtrl">
         Cherries
       </ion-checkbox>
     </ion-list>

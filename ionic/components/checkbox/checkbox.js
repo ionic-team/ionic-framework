@@ -1,4 +1,6 @@
-import {ElementRef} from 'angular2/angular2'
+import {ElementRef, Renderer} from 'angular2/angular2';
+import {isPresent} from 'angular2/src/facade/lang';
+import {setProperty} from 'angular2/src/forms/directives/shared'
 
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {Ancestor} from 'angular2/src/core/annotations_impl/visibility';
@@ -6,7 +8,7 @@ import {View} from 'angular2/src/core/annotations_impl/view';
 import {onInit} from 'angular2/angular2';
 
 //pretty sure this has changed in the latest angular
-import {ControlDirective} from 'angular2/forms';
+import {NgControl} from 'angular2/forms';
 import {IonicComponent} from '../../config/component';
 import {Icon} from '../icon/icon';
 
@@ -38,21 +40,32 @@ export class Checkbox {
       },
       host: {
         '(^click)': 'onClick($event)',
+        '[checked]': 'checked',
         '[attr.aria-checked]': 'checked',
         '[attr.aria-disabled]': 'disabled',
         '[attr.value]': 'value',
         'role': 'checkbox',
-        'class': 'item'
+        'class': 'item',
+        '[class.ng-untouched]': 'ngClassUntouched',
+        '[class.ng-touched]': 'ngClassTouched',
+        '[class.ng-pristine]': 'ngClassPristine',
+        '[class.ng-dirty]': 'ngClassDirty',
+        '[class.ng-valid]': 'ngClassValid',
+        '[class.ng-invalid]': 'ngClassInvalid'
       },
-      appInjector: [ ControlDirective ]
+      appInjector: [ NgControl ]
     }
   }
 
   constructor(
-    cd: ControlDirective
+    ngControl: NgControl,
+    renderer: Renderer,
+    elementRef: ElementRef
   ) {
-    this.controlDirective = cd;
-    cd.valueAccessor = this;
+    this.ngControl = ngControl;
+    this.renderer = renderer;
+    this.elementRef = elementRef;
+    this.ngControl.valueAccessor = this;
   }
 
   onInit() {
@@ -66,10 +79,12 @@ export class Checkbox {
   writeValue(value) {
     // Convert it to a boolean
     this.checked = !!value;
+    setProperty(this.renderer, this.elementRef, "checked", value);
   }
 
   set checked(checked) {
     this._checked = checked
+    this.ngControl.control.checked = checked;
     //this.controlDirective._control().updateValue(this._checked);
   }
   get checked() {
@@ -78,5 +93,23 @@ export class Checkbox {
   onClick() {
     this.checked = !this.checked;
   }
+
+  get ngClassUntouched() {
+    return isPresent(this.ngControl.control) ? this.ngControl.control.untouched : false;
+  }
+  get ngClassTouched() {
+    return isPresent(this.ngControl.control) ? this.ngControl.control.touched : false;
+  }
+  get ngClassPristine() {
+    return isPresent(this.ngControl.control) ? this.ngControl.control.pristine : false;
+  }
+  get ngClassDirty() { return isPresent(this.ngControl.control) ? this.ngControl.control.dirty : false; }
+  get ngClassValid() { return isPresent(this.ngControl.control) ? this.ngControl.control.valid : false; }
+  get ngClassInvalid() {
+    return isPresent(this.ngControl.control) ? !this.ngControl.control.valid : false;
+  }
+
+  registerOnChange(fn): void { this.onChange = fn; }
+  registerOnTouched(fn): void { this.onTouched = fn; }
 
 }
