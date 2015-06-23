@@ -15,7 +15,7 @@ import {IonicView, NavController} from 'ionic/ionic';
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
     '</ion-content>'
 })
-class IonicApp {
+class SignIn {
   constructor(nav: NavController) {
     this.nav = nav;
   }
@@ -172,6 +172,19 @@ class Tab2Page2 {
 class Tab2Page3 {
   constructor(nav: NavController) {
     this.nav = nav;
+  }
+}
+
+
+@Component({
+  selector: 'ion-app'
+})
+@IonicView({
+  template: '<ion-nav [root]="rootView"></ion-nav>'
+})
+class IonicApp {
+  constructor() {
+    this.rootView = SignIn;
   }
 }
 

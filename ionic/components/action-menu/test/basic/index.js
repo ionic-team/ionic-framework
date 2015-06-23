@@ -4,15 +4,22 @@ import {IonicView} from 'ionic/ionic';
 import {ActionMenu} from 'ionic/components/action-menu/action-menu';
 
 
-@Component({ selector: 'ion-view' })
+@Component({
+  selector: 'ion-app',
+  appInjector: [ActionMenu]
+})
 @IonicView({
   templateUrl: 'main.html'
 })
 class IonicApp {
 
+  constructor(ActionMenu: ActionMenu) {
+    this.ActionMenu = ActionMenu;
+  }
+
   openMenu() {
 
-    ActionMenu.open({
+    this.ActionMenu.open({
       buttons: [
         { text: 'Share This' },
         { text: 'Move' }
@@ -31,6 +38,7 @@ class IonicApp {
         if(index == 1) { return false; }
         return true;
       }
+
     }).then(actionMenu => {
       this.actionMenu = actionMenu;
     });

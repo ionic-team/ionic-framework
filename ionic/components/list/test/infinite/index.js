@@ -6,7 +6,7 @@ import {Parent} from 'angular2/src/core/annotations_impl/visibility';
 import {Content, List, Item} from 'ionic/ionic';
 
 
-@Component({ selector: 'ion-view' })
+@Component({ selector: 'ion-app' })
 @View({
   templateUrl: 'main.html',
   directives: [Content, List, Item, ItemCellTemplate, NgFor]

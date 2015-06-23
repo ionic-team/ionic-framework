@@ -13,7 +13,7 @@ import {ViewController} from '../view/view-controller';
 @Component({
   selector: 'ion-nav',
   properties: [
-    'initial'
+    'root'
   ],
   lifecycle: [onInit]
 })
@@ -34,7 +34,7 @@ export class Nav extends ViewController {
   }
 
   onInit() {
-    this.push(this.initial);
+    this.push(this.root);
   }
 
 }

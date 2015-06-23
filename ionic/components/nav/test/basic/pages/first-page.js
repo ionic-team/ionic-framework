@@ -1,13 +1,12 @@
-import {Component, Directive, onInit} from 'angular2/src/core/annotations_impl/annotations';
+import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 
-import {IonicView, IonicConfig} from 'ionic/ionic';
+import {IonicView, IonicConfig, IonicApp} from 'ionic/ionic';
 import {NavParams, Routable, Router, NavController} from 'ionic/ionic';
 
-import {SecondPage} from './pages/second-page'
+import {SecondPage} from './second-page'
 
 @Component({
-  selector: 'ion-view',
-  lifecycle: [onInit]
+  selector: 'ion-view'
 })
 @IonicView({
   template: '' +
@@ -30,13 +29,15 @@ import {SecondPage} from './pages/second-page'
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
     '</ion-content>'
 })
-class FirstPage {
+export class FirstPage {
   constructor(
     nav: NavController,
-    myConfig: IonicConfig
+    app: IonicApp,
+    config: IonicConfig
   ) {
 
-    console.log('myConfig', myConfig);
+    console.log('app', app)
+    console.log('config', config)
 
     // TODO: Shouldn't have to do this
     Router.setNavController(nav);
@@ -44,14 +45,10 @@ class FirstPage {
     this.nav = nav;
     this.val = Math.round(Math.random() * 8999) + 1000;
 
-
     this.pushPage = SecondPage;
     this.pushData = {
       id: 420
     }
-  }
-
-  onInit() {
   }
 
   viewLoaded() {
@@ -99,10 +96,3 @@ class FirstPage {
 new Routable(FirstPage, {
   url: '/first-page'
 })
-
-
-export function main(ionicBootstrap) {
-  let myConfig = new IonicConfig();
-
-  ionicBootstrap(FirstPage, myConfig);
-}

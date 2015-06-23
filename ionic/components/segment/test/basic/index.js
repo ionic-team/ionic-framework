@@ -1,10 +1,10 @@
-import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
+import {Component} from 'angular2/src/core/annotations_impl/annotations';
 import {FormBuilder, Validators, ControlGroup} from 'angular2/forms';
 
 import {IonicView} from 'ionic/ionic';
 
 
-@Component({ selector: 'ion-view' })
+@Component({ selector: 'ion-app' })
 @IonicView({
   templateUrl: 'main.html'
 })

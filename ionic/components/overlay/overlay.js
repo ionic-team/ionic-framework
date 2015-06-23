@@ -1,4 +1,4 @@
-import {IonicRoot} from '../app/app';
+import {IonicApp} from '../app/app';
 import {Animation} from '../../animations/animation';
 import {ClickBlock} from '../../util/click-block';
 import * as util from 'ionic/util';
@@ -6,18 +6,50 @@ import * as util from 'ionic/util';
 
 export class Overlay {
 
-  constructor() {
-    this.zIndex = Root_ZIndex;
-    for (let i = 0; i < overlayStack.length; i++) {
-      this.zIndex = overlayStack[i].zIndex + 1;
-    }
-    overlayStack.push(this);
+  constructor(app: IonicApp) {
+    this.setApp(app);
   }
 
-  /* Instance Methods */
-  open(opts) {
+  setApp(app) {
+    this.app = app;
+  }
+
+  create(overlayType, ComponentType: Type, opts) {
+    return new Promise((resolve, reject) => {
+      let app = this.app;
+
+      app.appendComponent(ComponentType).then(ref => {
+        let overlay = ref.instance;
+        overlay.setApp(app);
+        overlay._type = overlayType;
+        overlay._handle = opts && opts.handle;
+        overlay._domElement = ref.elementRef.domElement;
+        overlay.extendOptions(opts);
+
+        overlay.zIndex = ROOT_Z_INDEX;
+        for (let i = 0; i < app.overlays.length; i++) {
+          if (app.overlays[i].zIndex >= overlay.zIndex) {
+            overlay.zIndex = app.overlays[i].zIndex + 1;
+          }
+        }
+        app.overlays.push(overlay);
+
+        overlay._open(opts);
+
+        resolve(overlay);
+
+      }).catch(err => {
+        console.error('Overlay create:', err);
+        reject(err);
+      });
+
+    });
+  }
+
+  _open(opts) {
     let animationName = (opts && opts.animation) || this.options.enterAnimation;
     let enterAnimation = Animation.create(this._domElement, animationName);
+    enterAnimation.before.addClass('ion-app');
     enterAnimation.before.addClass('show-overlay');
     ClickBlock(true, enterAnimation.duration() + 200);
 
@@ -38,7 +70,7 @@ export class Overlay {
       ClickBlock(true, leavingAnimation.duration() + 200);
 
       leavingAnimation.play().then(() => {
-        this._clean();
+        this._dispose();
         ClickBlock(false);
         leavingAnimation.dispose();
         resolve();
@@ -46,56 +78,40 @@ export class Overlay {
     });
   }
 
+  getByType(overlayType) {
+    if (this.app) {
+      for (let i = this.app.overlays.length - 1; i >= 0; i--) {
+        if (overlayType === this.app.overlays[i]._type) {
+          return this.app.overlays[i];
+        }
+      }
+    }
+    return null;
+  }
+
+  getByHandle(handle) {
+    if (this.app) {
+      for (let i = this.app.overlays.length - 1; i >= 0; i--) {
+        if (handle === this.app.overlays[i]._handle) {
+          return this.app.overlays[i];
+        }
+      }
+    }
+    return null;
+  }
+
   extendOptions(opts) {
     if (!this.options) this.options = {};
     util.extend(this.options, opts);
   }
 
-  _clean() {
-    this._dispose && this._dispose();
-    util.array.remove(overlayStack, this);
-  }
-
-
-  /* Static Methods */
-  static create(overlayType, ComponentType: Type, opts) {
-    return new Promise((resolve, reject) => {
-      IonicRoot.append(ComponentType).then(ref => {
-        let overlay = ref.instance;
-        overlay._type = overlayType;
-        overlay._handle = opts && opts.handle;
-        overlay._dispose = ref.dispose;
-        overlay._domElement = ref.elementRef.domElement;
-        overlay.extendOptions(opts);
-        overlay.open(opts);
-        resolve(overlay);
-
-      }).catch(err => {
-        console.error('Overlay create:', err);
-        reject(err);
-      });
-    });
-  }
-
-  static getByType(overlayType) {
-    for (let i = overlayStack.length - 1; i >= 0; i--) {
-      if (overlayType === overlayStack[i]._type) {
-        return overlayStack[i];
-      }
+  _dispose() {
+    this.dispose && this.dispose();
+    if (this.app) {
+      util.array.remove(this.app.overlays, this);
     }
-    return null;
-  }
-
-  static getByHandle(handle) {
-    for (let i = overlayStack.length - 1; i >= 0; i--) {
-      if (handle === overlayStack[i]._handle) {
-        return overlayStack[i];
-      }
-    }
-    return null;
   }
 
 }
 
-let overlayStack = [];
-const Root_ZIndex = 1000;
+const ROOT_Z_INDEX = 1000;

@@ -6,7 +6,6 @@ import {
   Aside, Content, Refresher,
   Slides, Slide, SlidePager,
   Tabs, Tab,
-  ActionMenu,
   List, Item,
   Icon,
   Checkbox, Switch, Label, Input, Segment, SegmentButton,
@@ -28,9 +27,6 @@ export class IonicView extends View {
       Slides, Slide, SlidePager,
       Tabs, Tab,
 
-      // Overlays
-      ActionMenu,
-
       // Media
       Icon,
 
@@ -46,3 +42,4 @@ export class IonicView extends View {
     super(config);
   }
 }
+

@@ -8,15 +8,15 @@
 
 import {NgIf, NgFor} from 'angular2/angular2';
 import {View} from 'angular2/src/core/annotations_impl/view';
+import {Injectable} from 'angular2/di';
 
-import {Item, Icon} from 'ionic/ionic';
-import {IonicRoot} from '../app/app';
+import {Icon} from 'ionic/ionic';
+import {IonicApp} from '../app/app';
 import * as util from 'ionic/util';
 
 import {Overlay} from '../overlay/overlay';
 import {IonicComponent} from '../../config/component';
 import {Animation} from 'ionic/animations/animation';
-import {ClickBlock} from '../../util/click-block';
 
 
 @IonicComponent(ActionMenu)
@@ -35,8 +35,9 @@ import {ClickBlock} from '../../util/click-block';
         </div>
       </div>
     </div>`,
-  directives: [Item, Icon, NgIf, NgFor]
+  directives: [Icon, NgIf, NgFor]
 })
+@Injectable()
 export class ActionMenu extends Overlay {
 
   static get config() {
@@ -48,8 +49,8 @@ export class ActionMenu extends Overlay {
     }
   }
 
-  constructor() {
-    super();
+  constructor(app: IonicApp) {
+    super(app);
 
     this.extendOptions({
       destructiveButtonClicked: util.noop,
@@ -85,17 +86,17 @@ export class ActionMenu extends Overlay {
    *
    * @return Promise that resolves when the action menu is open.
    */
-  static open(opts) {
-    return this.create(overlayType, ActionMenu, opts);
+  open(opts) {
+    return this.create(OVERLAY_TYPE, ActionMenu, opts);
   }
 
-  static get() {
-    return Modal.getByType(overlayType);
+  get() {
+    return Modal.getByType(OVERLAY_TYPE);
   }
 
 }
 
-const overlayType = 'actionmenu';
+const OVERLAY_TYPE = 'actionmenu';
 
 
 /**

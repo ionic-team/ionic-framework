@@ -92,7 +92,7 @@ function appendModeConfig(ComponentType) {
     };
   }
 
-  let id = config.classId || config.selector.replace('ion-', '');
+  let id = config.classId || (config.selector && config.selector.replace('ion-', ''));
   config.host['class'] = (id + ' ' + id + '-' + platformMode);
 
   return config;

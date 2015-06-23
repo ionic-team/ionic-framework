@@ -1,7 +1,8 @@
 
-export * from 'ionic/config/component'
 export * from 'ionic/config/config'
-export * from 'ionic/config/view'
+export * from 'ionic/config/ionic-directive'
+export * from 'ionic/config/ionic-view'
+
 export * from 'ionic/components'
 export * from 'ionic/platform/platform'
 export * from 'ionic/routing/router'

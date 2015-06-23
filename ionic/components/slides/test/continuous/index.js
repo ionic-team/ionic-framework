@@ -4,7 +4,7 @@ import {IonicView} from 'ionic/ionic';
 
 
 @Component({
-  selector: 'ion-view'
+  selector: 'ion-app'
 })
 @IonicView({
   template: `

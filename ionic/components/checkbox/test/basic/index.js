@@ -4,7 +4,7 @@ import {FormBuilder, Validators, formDirectives} from 'angular2/forms';
 import {IonicView} from 'ionic/ionic';
 
 
-@Component({ selector: 'ion-view' })
+@Component({ selector: 'ion-app' })
 @IonicView({
   templateUrl: 'main.html',
   directives: [formDirectives]

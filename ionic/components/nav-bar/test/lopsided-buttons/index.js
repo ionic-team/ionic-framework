@@ -3,7 +3,7 @@ import {Component, Directive} from 'angular2/src/core/annotations_impl/annotatio
 import {IonicView} from 'ionic/ionic';
 
 
-@Component({ selector: 'ion-view' })
+@Component({ selector: 'ion-app' })
 @IonicView({
   templateUrl: 'main.html'
 })

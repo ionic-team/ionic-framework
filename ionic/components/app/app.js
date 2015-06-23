@@ -1,4 +1,5 @@
 import {bootstrap} from 'angular2/angular2';
+import {AppViewManager} from 'angular2/src/core/compiler/view_manager';
 import {Component, Directive, onInit} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {ComponentRef, onDestroy, DomRenderer, ApplicationRef} from 'angular2/angular2';
@@ -17,57 +18,84 @@ import {IonicConfig} from '../../config/config';
 import {ViewController} from '../view/view-controller';
 
 
-@Component({
-  selector: 'ionic'
-})
-@View({
-  template: '<template pane-anchor></template>',
-  directives: [PaneAnchor]
-})
-class IonicRootComponent extends ViewController {
-  constructor(
-    compiler: Compiler,
-    elementRef: ElementRef,
-    loader: DynamicComponentLoader,
-    parentInjector: Injector
-  ) {
-    let injector = parentInjector;
-    let ComponentType = null;
+export class IonicApp {
 
-    if (appModules.length) {
-      ComponentType = appModules.shift();
-
-      injector = parentInjector.resolveAndCreateChild([
-        bind(IonicConfig).toValue(ComponentType._config)
-      ]);
-    }
-
-    super(null, compiler, elementRef, loader, injector);
-    IonicRoot.component(this);
-
-    if (ComponentType) {
-      this.push(ComponentType);
-    }
-
+  constructor() {
+    this.overlays = [];
   }
-}
 
-@Directive({
-  selector: 'template[pane-anchor]'
-})
-class PaneAnchor {
-  constructor(@Parent() rootCmp: IonicRootComponent, elementRef: ElementRef, viewContainerRef: ViewContainerRef) {
-    rootCmp.anchorElementRef(elementRef);
-    rootCmp.anchorViewContainerRef(viewContainerRef);
+  /**
+   * Create and append the given component into the root
+   * element of the app.
+   *
+   * @param Component the ComponentType to create and insert
+   * @return Promise that resolves with the ContainerRef created
+   */
+  appendComponent(ComponentType: Type) {
+    return new Promise((resolve, reject) => {
+      let injector = this._ref.injector;
+      let compiler = injector.get(Compiler);
+      let viewMngr = injector.get(AppViewManager);
+      let rootComponentRef = this._ref._hostComponent;
+      let viewContainerLocation = rootComponentRef.location;
+
+      compiler.compileInHost(ComponentType).then(protoViewRef => {
+
+        let atIndex = 0;
+        let context = null;
+
+        let hostViewRef = viewMngr.createViewInContainer(
+                                      viewContainerLocation,
+                                      atIndex,
+                                      protoViewRef,
+                                      context,
+                                      injector);
+
+        hostViewRef.elementRef = new ElementRef(hostViewRef, 0);
+        hostViewRef.instance = viewMngr.getComponent(hostViewRef.elementRef);
+
+        hostViewRef.dispose = () => {
+          viewMngr.destroyViewInContainer(viewContainerLocation, 0, 0, hostViewRef.viewRef);
+        };
+
+        resolve(hostViewRef);
+
+      }).catch(err => {
+        console.error('IonicApp appendComponent:', err);
+        reject(err);
+      });
+    });
   }
-}
 
-let appModules = [];
+  ref() {
+    if (arguments.length) {
+      this._ref = arguments[0];
+    }
+    return this._ref;
+  }
+
+}
 
 export function ionicBootstrap(ComponentType, config) {
-  ComponentType._config = config || new IonicConfig();
-  appModules.push(ComponentType);
-  bootstrap(IonicRootComponent);
+  return new Promise((resolve, reject) => {
+    let app = new IonicApp();
+    config = config || new IonicConfig();
+
+    let componentInjectableBindings = [
+      bind(IonicApp).toValue(app),
+      bind(IonicConfig).toValue(config)
+    ];
+
+    bootstrap(ComponentType, componentInjectableBindings).then(appRef => {
+      app.ref(appRef);
+      resolve(app);
+
+    }).catch(err => {
+      console.error('ionicBootstrap', err);
+      reject(err);
+    });
+
+  });
 }
 
 export function load(app) {
@@ -81,51 +109,3 @@ export function load(app) {
     app.main(ionicBootstrap);
   }
 }
-
-
-class IonicAppRoot {
-
-  /**
-   * Create and append the given component into the root
-   * element of the app.
-   *
-   * @param Component the ComponentType to create and insert
-   * @return Promise that resolves with the ContainerRef created
-   */
-  append(ComponentType: Type) {
-    let rootComponent = this.component();
-    let injector = rootComponent.injector;
-    let loader = rootComponent.loader;
-    let elementRef = rootComponent.anchorElementRef();
-
-    return new Promise((resolve, reject) => {
-      rootComponent.compiler.compileInHost(ComponentType).then(componentProtoViewRef => {
-
-        let containerRef = rootComponent.anchorViewContainerRef();
-        let hostViewRef = containerRef.create(componentProtoViewRef, -1, null, injector);
-
-        hostViewRef.elementRef = new ElementRef(hostViewRef, 0);
-        hostViewRef.instance = loader._viewManager.getComponent(hostViewRef.elementRef);
-
-        hostViewRef.dispose = () => {
-          containerRef.remove( containerRef.indexOf(hostViewRef) );
-        };
-
-        resolve(hostViewRef);
-      }).catch(err => {
-        console.error('IonicAppRoot append:', err);
-        reject(err);
-      });
-    });
-  }
-
-  component() {
-    if (arguments.length) {
-      this._cmp = arguments[0];
-    }
-    return this._cmp;
-  }
-
-}
-
-export let IonicRoot = new IonicAppRoot();

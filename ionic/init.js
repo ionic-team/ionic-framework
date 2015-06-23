@@ -14,7 +14,7 @@
     }
   }
 
-  var ele = document.querySelectorAll('ionic');
+  var ele = document.querySelectorAll('[module]');
   for (var i = 0; i < ele.length; i++) {
     importApp(ele[i].getAttribute('module'));
   }

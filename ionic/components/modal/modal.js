@@ -1,7 +1,11 @@
+import {Injectable} from 'angular2/di';
+
 import {Overlay} from '../overlay/overlay';
 import {Animation} from '../../animations/animation';
+import {IonicApp} from '../app/app';
 
 
+@Injectable()
 export class Modal extends Overlay {
 
   static get config() {
@@ -13,26 +17,28 @@ export class Modal extends Overlay {
     }
   }
 
-  constructor() {
-    super();
+  constructor(app: IonicApp) {
+    // a modal created by the appInjector will inject an IonicApp
+    // a modal created by the user will not
+    super(app);
+
     this.extendOptions({
       enterAnimation: 'modal-slide-in',
       leaveAnimation: 'modal-slide-out'
     });
   }
 
-  /* Static Methods */
-  static open(ComponentType: Type, opts) {
-    return this.create(overlayType, ComponentType, opts);
+  open(ComponentType: Type, opts) {
+    return this.create(OVERLAY_TYPE, ComponentType, opts);
   }
 
-  static get() {
-    return Modal.getByType(overlayType);
+  get() {
+    return this.getByType(OVERLAY_TYPE);
   }
 
 }
 
-const overlayType = 'modal';
+const OVERLAY_TYPE = 'modal';
 
 
 /**

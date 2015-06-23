@@ -4,7 +4,7 @@ import {Component, Directive} from 'angular2/src/core/annotations_impl/annotatio
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {Parent, Ancestor} from 'angular2/src/core/annotations_impl/visibility';
 
-import {IonicView} from 'ionic/ionic';
+import {IonicView, IonicConfig} from 'ionic/ionic';
 
 import {IonicComponent} from 'ionic/ionic';
 import {Modal, NavController, NavParams, Animation, ActionMenu} from 'ionic/ionic';
@@ -35,13 +35,21 @@ class FadeOut extends Animation {
 Animation.register('my-fade-out', FadeOut);
 
 
-@Component({ selector: 'ion-view' })
+@Component({
+  selector: 'ion-app',
+  appInjector: [Modal]
+})
 @IonicView({
   templateUrl: 'main.html'
 })
-class IonicApp {
+class MyApp {
+
+  constructor(Modal: Modal) {
+    this.Modal = Modal;
+  }
+
   openModal() {
-    Modal.open(ContactModal, {
+    this.Modal.open(ContactModal, {
       enterAnimation: 'my-fade-in',
       leaveAnimation: 'my-fade-out',
       handle: 'my-awesome-modal'
@@ -51,17 +59,20 @@ class IonicApp {
 
 @IonicComponent(Modal)
 @IonicView({
-  template: '<ion-nav [initial]="initial"></ion-nav>'
+  template: '<ion-nav [root]="rootView"></ion-nav>'
 })
 export class ContactModal extends Modal {
   constructor() {
     super();
-    this.initial = ModalFirstPage;
+    this.rootView = ModalFirstPage;
   }
 }
 
 
-@Component({selector: 'ion-view'})
+@Component({
+  selector: 'ion-view',
+  appInjector: [Modal]
+})
 @IonicView({
   template: `
     <ion-navbar *navbar><ion-title>First Page Header: {{ val }}</ion-title><ion-nav-items primary><button primary (click)="closeModal()">Close</button></ion-nav-items></ion-navbar>
@@ -83,10 +94,12 @@ export class ContactModal extends Modal {
 })
 export class ModalFirstPage {
   constructor(
-    nav: NavController
+    nav: NavController,
+    Modal: Modal
   ) {
     this.nav = nav;
     this.val = Math.round(Math.random() * 8999) + 1000;
+    this.Modal = Modal;
   }
 
   push() {
@@ -94,7 +107,7 @@ export class ModalFirstPage {
   }
 
   closeModal() {
-    let modal = Modal.get();
+    let modal = this.Modal.get();
     modal.close();
   }
 
@@ -167,5 +180,11 @@ export class ModalSecondPage {
 }
 
 export function main(ionicBootstrap) {
-  ionicBootstrap(IonicApp);
+  // crazy config
+  let myConfig = new IonicConfig();
+
+  ionicBootstrap(MyApp, myConfig).then(app => {
+    // crazy run
+    console.log('ionicBootstrap', app);
+  });
 }
