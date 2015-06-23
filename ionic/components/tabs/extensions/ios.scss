@@ -2,23 +2,34 @@
 // iOS Tab Bar
 // --------------------------------------------------
 
-$tab-bar-ios-item-padding:             3px 10px !default;
-$tab-bar-ios-item-font-size:           1.1rem !default;
-$tab-bar-ios-item-icon-size:           2.8rem !default;
+$tab-bar-ios-item-padding:             0px 10px !default;
+$tab-bar-ios-item-font-size:           10px !default;
+$tab-bar-ios-item-icon-size:           30px !default;
+$tab-bar-ios-height:                   49px !default;
 
 
 .tabs-ios {
 
-  .tab-bar-item {
+  .tab-bar {
+    // iOS's UITabBar is at most 49px high
+    max-height: $tab-bar-ios-height;
+    height: $tab-bar-ios-height;
+  }
+
+  .tab-button {
     padding: $tab-bar-ios-item-padding;
   }
 
-  .tab-bar-item-text {
+  .tab-button-text {
     font-size: $tab-bar-ios-item-font-size;
   }
 
-  .tab-bar-item-icon {
+  .tab-button-icon {
     font-size: $tab-bar-ios-item-icon-size;
+    height: $tab-bar-ios-item-icon-size;
+    &:before {
+      vertical-align: top;
+    }
   }
 
   &[tab-bar-placement="bottom"] > .tab-bar-container {
