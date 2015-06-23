@@ -1,4 +1,4 @@
-import {ElementRef, Renderer} from 'angular2/angular2';
+import {ElementRef, Renderer, EventEmitter, onChange} from 'angular2/angular2';
 import {isPresent} from 'angular2/src/facade/lang';
 import {setProperty} from 'angular2/src/forms/directives/shared'
 
@@ -20,7 +20,6 @@ import {Icon} from '../icon/icon';
     <icon [name]="iconOff" class="checkbox-off"></icon>
     <icon [name]="iconOn" class="checkbox-on"></icon>
   </div>
-
   <div class="item-content">
     <div class="item-label">
       <content></content>
@@ -38,8 +37,11 @@ export class Checkbox {
         'iconOff': 'ion-ios-circle-outline',
         'iconOn': 'ion-ios-checkmark'
       },
+      //events: ['change'],
       host: {
         '(^click)': 'onClick($event)',
+        //'(change)': 'onChange($event.checked)',
+        '(blur)': 'onTouched()',
         '[checked]': 'checked',
         '[attr.aria-checked]': 'checked',
         '[attr.aria-disabled]': 'disabled',
@@ -53,7 +55,8 @@ export class Checkbox {
         '[class.ng-valid]': 'ngClassValid',
         '[class.ng-invalid]': 'ngClassInvalid'
       },
-      appInjector: [ NgControl ]
+      appInjector: [ NgControl ],
+      //lifecycle: [onChange]
     }
   }
 
@@ -66,6 +69,8 @@ export class Checkbox {
     this.renderer = renderer;
     this.elementRef = elementRef;
     this.ngControl.valueAccessor = this;
+
+    //this.change = new EventEmitter("change");
   }
 
   onInit() {
@@ -79,13 +84,14 @@ export class Checkbox {
   writeValue(value) {
     // Convert it to a boolean
     this.checked = !!value;
-    setProperty(this.renderer, this.elementRef, "checked", value);
   }
 
   set checked(checked) {
-    this._checked = checked
-    this.ngControl.control.checked = checked;
-    //this.controlDirective._control().updateValue(this._checked);
+    this._checked = checked;
+    // doesn't trigger change/validation for control?
+    setProperty(this.renderer, this.elementRef, "checked", checked);
+    //this.ngControl.control.checked = checked;
+    //this.change.next(checked);
   }
   get checked() {
     return this._checked

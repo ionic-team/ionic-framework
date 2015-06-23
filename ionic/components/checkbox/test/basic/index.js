@@ -12,7 +12,8 @@ import {
   NgControl,
   ControlValueAccessor,
   NgControlName,
-  NgFormModel
+  NgFormModel,
+  FormBuilder
 } from 'angular2/forms';
 import {Checkbox, Content, List} from 'ionic/ionic';
 //import {IONIC_DIRECTIVES} from 'ionic/ionic'
@@ -59,18 +60,19 @@ class IonicApp {
     //    grapeCtrl: ['', Validators.required],
     //    cherryCtrl: ['', Validators.required]
     //  };
-     //
+    //
     //  this.fruitsForm = fb.group(this.controls);
+
     this.fruitsForm = new ControlGroup({
       "appleCtrl": new Control("APPLE", isChecked),
       "bananaCtrl": new Control("BANANA", isChecked),
       "grapeCtrl": new Control("GRAPE", isChecked),
       "cherryCtrl":  new Control("CHERRY", isChecked)
     });
-    // this.appleCtrl = new Control("APPLE", isChecked);
-    // this.bananaCtrl = new Control("BANANA", isChecked);
-    // this.grapeCtrl = new Control("GRAPE", isChecked);
-    // this.cherryCtrl = new Control("CHERRY", isChecked);
+    this.appleCtrl = "appleCtrl";
+    this.bananaCtrl = "bananaCtrl";
+    this.grapeCtrl = "grapeCtrl";
+    this.cherryCtrl = "cherryCtrl";
 
     function isChecked(ctrl) {
       if (ctrl.checked) {
@@ -81,7 +83,7 @@ class IonicApp {
         }
       }
     }
-   }
+  }
 
   doSubmit(event) {
     console.log('Submitting form', this.fruitsForm.value);
