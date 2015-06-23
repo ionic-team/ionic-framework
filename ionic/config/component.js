@@ -1,4 +1,4 @@
-import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
+import {Component, ComponentAnnotation, Directive} from 'angular2/angular2';
 import {DirectiveMetadata} from 'angular2/src/render/api';
 
 import * as util from 'ionic/util';
@@ -6,18 +6,20 @@ import {Platform} from 'ionic/platform/platform';
 
 const platformMode = Platform.getMode();
 
-
 export class IonicDirective extends Directive {
   constructor(ComponentType) {
     super( appendModeConfig(ComponentType) );
   }
 }
 
-export class IonicComponent extends Component {
-  constructor(ComponentType) {
-    super( appendModeConfig(ComponentType) );
+export let IonicComponent = (function(){
+  function IonicComponentFactory(ComponentClass) {
+    return new Component(appendModeConfig(ComponentClass));
   }
-}
+  IonicComponentFactory.prototype = Object.create(ComponentAnnotation.prototype);
+  return IonicComponentFactory;
+})();
+
 
 function appendModeConfig(ComponentType) {
   let config = ComponentType.config;

@@ -2,16 +2,15 @@ import {ElementRef, Renderer, EventEmitter, onChange} from 'angular2/angular2';
 import {isPresent} from 'angular2/src/facade/lang';
 import {setProperty} from 'angular2/src/forms/directives/shared'
 
-import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
-import {Ancestor} from 'angular2/src/core/annotations_impl/visibility';
-import {View} from 'angular2/src/core/annotations_impl/view';
+import {Component, Directive} from 'angular2/angular2';
+import {Ancestor} from 'angular2/angular2';
+import {View} from 'angular2/angular2';
 import {onInit} from 'angular2/angular2';
 
 //pretty sure this has changed in the latest angular
 import {NgControl} from 'angular2/forms';
 import {IonicComponent} from '../../config/component';
 import {Icon} from '../icon/icon';
-
 
 @IonicComponent(Checkbox)
 @View({
