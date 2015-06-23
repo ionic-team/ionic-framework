@@ -1,6 +1,6 @@
 
 export * from 'ionic/config/config'
-export * from 'ionic/config/ionic-directive'
+export * from 'ionic/config/component'
 export * from 'ionic/config/ionic-view'
 
 export * from 'ionic/components'
