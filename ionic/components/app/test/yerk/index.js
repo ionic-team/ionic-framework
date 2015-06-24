@@ -31,30 +31,32 @@ class HomeTabPage {
   }
 }
 
+@Component({selector: 'ion-view'})
+@IonicView({
+  template: '' +
+    '<ion-navbar *navbar>' +
+      '<ion-title>Peek</ion-title>' +
+    '</ion-navbar>' +
+    '<ion-content class="padding">' +
+    '</ion-content>'
+})
+class PeekTabPage {
+  constructor(nav: NavController) {
+    this.nav = nav;
+  }
+  push() {
+  }
+}
+
 
 @Component({selector: 'ion-view'})
 @IonicView({
-  template: `<ion-tabs id="tabs">
-    <ion-tab tab-title="Home" tab-icon="ion-earth"></ion-tab>
-    <ion-tab tab-title="Peek" tab-icon="ion-ios-glasses">
-      <ion-content class="padding">
-      </ion-content>
-    </ion-tab>
-    <ion-tab tab-title="Me" tab-icon="ion-ios-person">
-      <ion-content class="padding">
-      </ion-content>
-    </ion-tab>
-    <ion-tab tab-title="More" tab-icon="ion-ios-more">
-      <ion-content class="padding">
-      </ion-content>
-    </ion-tab>
-
-  </ion-tabs>
-  `
+  templateUrl: 'tabs.html'
 })
 class TabsPage {
   constructor() {
-    this.firstTabPage = HomeTabPage;
+    this.homeTab = HomeTabPage;
+    this.peekTab = PeekTabPage;
   }
 }
 
