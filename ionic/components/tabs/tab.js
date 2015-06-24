@@ -16,7 +16,7 @@ import {Content} from '../content/content';
 @Component({
   selector: 'ion-tab',
   properties: [
-    'initial',
+    'root',
     'tabTitle',
     'tabIcon'
   ],
@@ -73,12 +73,12 @@ export class Tab extends ViewController {
   }
 
   load(callback) {
-    if (!this._loaded && this.initial) {
+    if (!this._loaded && this.root) {
       let opts = {
         animate: false,
         navbar: false
       };
-      this.push(this.initial, null, opts).then(() => {
+      this.push(this.root, null, opts).then(() => {
         callback && callback();
       });
       this._loaded = true;

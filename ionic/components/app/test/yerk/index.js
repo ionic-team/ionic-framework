@@ -1,6 +1,6 @@
 import {Component} from 'angular2/src/core/annotations_impl/annotations';
 
-import {IonicView} from 'ionic/ionic';
+import {IonicView, NavController} from 'ionic/ionic';
 
 
 @Component({ selector: 'ion-app' })
@@ -20,12 +20,12 @@ class IonicApp {
       '<ion-title>Home</ion-title>' +
     '</ion-navbar>' +
     '<ion-content class="padding">' +
+      'home' +
     '</ion-content>'
 })
 class HomeTabPage {
   constructor(nav: NavController) {
     this.nav = nav;
-    console.log('Initi');
   }
   push() {
   }
@@ -38,6 +38,7 @@ class HomeTabPage {
       '<ion-title>Peek</ion-title>' +
     '</ion-navbar>' +
     '<ion-content class="padding">' +
+      'peek' +
     '</ion-content>'
 })
 class PeekTabPage {
