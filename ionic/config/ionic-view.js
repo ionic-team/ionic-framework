@@ -31,7 +31,8 @@ export class IonicView extends View {
       Icon,
 
       // Form elements
-      //Checkbox, Switch, Label, Input, Segment, SegmentButton,
+      Segment, SegmentButton,
+      //Checkbox, Switch, Label, Input
       //RadioGroup, RadioButton, SearchBar,
 
       // Nav
@@ -42,4 +43,3 @@ export class IonicView extends View {
     super(config);
   }
 }
-

@@ -1,32 +1,28 @@
-.platform-ios {
+.segment-ios .ion-segment {
+  > button,
+  > [button] {
+    border-width: 1px;
 
-  .ion-segment {
+    transition: 100ms all linear;
 
-    > button,
-    > [button] {
-      border-width: 1px;
+    color: get-color(primary, base);
 
-      transition: 100ms all linear;
+    min-height: 3.3rem;
+    line-height: 3.3rem;
 
-      color: get-color(primary, base);
+    &.active {
+      background-color: get-color(primary, base);
+      color: white;
+    }
 
-      min-height: 3.3rem;
-      line-height: 3.3rem;
+    border-style: solid;
+    border-color: get-color(primary, base);
 
-      &.active {
-        background-color: get-color(primary, base);
-        color: white;
-      }
-
-      border-style: solid;
-      border-color: get-color(primary, base);
-
-      &:first-of-type {
-        border-right-width: 0px;
-      }
-      &:last-of-type {
-        border-left-width: 0px;
-      }
+    &:first-of-type {
+      border-right-width: 0px;
+    }
+    &:last-of-type {
+      border-left-width: 0px;
     }
   }
 }

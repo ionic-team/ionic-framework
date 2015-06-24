@@ -4,6 +4,7 @@ import {Component, Directive, onInit} from 'angular2/src/core/annotations_impl/a
 import {Ancestor} from 'angular2/src/core/annotations_impl/visibility';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
+import {NgControl} from 'angular2/forms';
 import {ControlGroup, ControlDirective} from 'angular2/forms'
 import {dom} from 'ionic/util';
 import {IonicComponent} from 'ionic/config/component'
@@ -22,7 +23,7 @@ export class Segment {
   static get config() {
     return {
       selector: 'ion-segment',
-      appInjector: [ControlDirective],
+      appInjector: [ NgControl ],
       properties: [
         'value'
       ],
@@ -34,18 +35,17 @@ export class Segment {
   }
 
   constructor(
+    ngControl: NgControl,
     elementRef: ElementRef,
-    renderer: Renderer,
-    cd:ControlDirective
+    renderer: Renderer
   ) {
-    console.log('ELEMENT REF INJECT', elementRef);
+    console.log('ELEMENT REF INJECT', elementRef, ngControl);
     this.domElement = elementRef.domElement
     //this.config = Segment.config.invoke(this)
     this.elementRef = elementRef;
     this.renderer = renderer;
-    this.controlDirective = cd;
-
-    cd.valueAccessor = this; //ControlDirective should inject CheckboxControlDirective
+    this.ngControl = ngControl;
+    this.ngControl.valueAccessor = this;
 
     this.buttons = [];
   }
@@ -117,14 +117,14 @@ export class Segment {
     'value'
   ],
   host: {
-    '(click)': 'buttonClicked($event)'
+    '(click)': 'buttonClicked($event)',
+    'class.active': 'isActive'
   }
 })
 export class SegmentButton {
   constructor(
     @Ancestor() segment: Segment,
     elementRef: ElementRef,
-    renderer: Renderer
   ) {
     this.domElement = elementRef.domElement
     this.segment = segment;
@@ -133,12 +133,7 @@ export class SegmentButton {
   }
 
   setActive(isActive) {
-    // TODO: No domElement
-    if(isActive) {
-      this.domElement.classList.add('active');
-    } else {
-      this.domElement.classList.remove('active');
-    }
+    this.isActive = isActive;
   }
 
   buttonClicked(event) {
