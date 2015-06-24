@@ -155,25 +155,16 @@ export function main(ionicBootstrap) {
     'tabBarPlacement': 'adam'
   });
 
-  // myConfig.platform('ios', {
-  //   'tabBarPlacement': 'ios'
-  // });
-
-  // myConfig.device('ipad', {
-  //   'tabBarPlacement': 'ipad'
-  // });
-
-  // myConfig.platform('android', {
-  //   'tabBarPlacement': 'android'
-  // });
-
   ionicBootstrap(MyApp, myConfig).then(root => {
 
     console.log('mobile', root.platform.is('mobile'))
     console.log('ipad', root.platform.is('ipad'))
+    console.log('iphone', root.platform.is('iphone'))
+    console.log('phablet', root.platform.is('phablet'))
     console.log('tablet', root.platform.is('tablet'))
     console.log('ios', root.platform.is('ios'))
     console.log('android', root.platform.is('android'))
+    console.log('windows phone', root.platform.is('windowsphone'))
 
   });
 }

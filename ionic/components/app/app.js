@@ -42,30 +42,30 @@ export class IonicApp {
     return this._ua;
   }
 
-  matchesQuery(queryKey, queryValue) {
-    const val = this.query(queryKey);
-    return !!(val && val == queryValue);
+  matchesQuery(queryValue) {
+    let val = this.query('ionicplatform');
+    if (val) {
+      let valueSplit = val.toLowerCase().split(';');
+      for (let i = 0; i < valueSplit.length; i++) {
+        if (valueSplit[i] == queryValue) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   matchesUserAgent(userAgentExpression) {
-    const rx = new RegExp(userAgentExpression, 'i');
+    let rx = new RegExp(userAgentExpression, 'i');
     return rx.test(this._ua);
   }
 
-  matchesPlatform(platformQueryValue, platformUserAgentExpression) {
-    if (!platformUserAgentExpression) {
-      platformUserAgentExpression = platformQueryValue;
+  matchesPlatform(queryValue, userAgentExpression) {
+    if (!userAgentExpression) {
+      userAgentExpression = queryValue;
     }
-    return this.matchesQuery('ionicplatform', platformQueryValue) ||
-           this.matchesUserAgent(platformUserAgentExpression);
-  }
-
-  matchesDevice(deviceQueryValue, deviceUserAgentExpression) {
-    if (!deviceUserAgentExpression) {
-      deviceUserAgentExpression = deviceQueryValue;
-    }
-    return this.matchesQuery('ionicdevice', deviceQueryValue) ||
-           this.matchesUserAgent(deviceUserAgentExpression);
+    return this.matchesQuery(queryValue) ||
+           this.matchesUserAgent(userAgentExpression);
   }
 
   width(val) {
@@ -143,7 +143,7 @@ export function ionicBootstrap(ComponentType, config) {
       app.width(window.innerWidth);
       app.height(window.innerHeight);
 
-      let platform = Platform.getActivePlatform(app);
+      let platform = Platform.create(app);
 
       config = config || new IonicConfig();
       config.platform(platform);
@@ -159,8 +159,7 @@ export function ionicBootstrap(ComponentType, config) {
       bootstrap(ComponentType, injectableBindings).then(appRef => {
         app.ref(appRef);
 
-        let rootPlatform = platform.root();
-        rootPlatform.runAll();
+        platform.run();
 
         resolve({
           app,

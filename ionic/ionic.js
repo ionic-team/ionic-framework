@@ -6,9 +6,7 @@ export * from 'ionic/config/ionic-view'
 export * from 'ionic/components'
 
 export * from 'ionic/platform/platform'
-// export * from 'ionic/platform/core'
-// export * from 'ionic/platform/android'
-// export * from 'ionic/platform/ios'
+export * from 'ionic/platform/registry'
 
 export * from 'ionic/routing/router'
 
