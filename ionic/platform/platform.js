@@ -1,144 +1,224 @@
 import * as util from '../util/util';
 import {Tap} from '../util/tap';
 
-let registry = {};
+let platformRegistry = {};
 let defaultPlatform;
 let activePlatform;
 
-class PlatformController {
+export class Platform {
 
-  constructor(platformQuerystring, userAgent) {
-    this.pqs = platformQuerystring;
-    this.ua = userAgent;
+  load(platformName) {
+    this._c = Platform.get(platformName);
   }
 
-  get() {
-    if (util.isUndefined(activePlatform)) {
-      this.set(this.detect());
-    }
-    return activePlatform || defaultPlatform;
+  name() {
+    return this._c.name;
   }
 
-  getName() {
-    return this.get().name;
+  settings() {
+    return this._c.settings || {};
   }
 
-  getMode() {
-    let plt = this.get();
-    return plt.mode || plt.name;
-  }
-
-  register(platform) {
-    registry[platform.name] = platform;
-  }
-
-  getPlatform(name) {
-    return registry[name];
-  }
-
-  set(platform) {
-    activePlatform = platform;
-
-    this._applyBodyClasses();
-  }
-
-  setDefault(platform) {
-    defaultPlatform = platform;
-  }
-
-  isRegistered(platformName) {
-    return registry.some(platform => {
-      return platform.name === platformName;
-    })
-  }
-
-  detect() {
-    for (let name in registry) {
-      if (registry[name].isMatch(this.pqs, this.ua)) {
-        return registry[name];
-      }
-    }
-    return null;
-  }
-
-  _applyBodyClasses() {
-    if(!activePlatform) {
-      return;
-    }
-
-    document.body.classList.add('platform-' + activePlatform.name);
+  subsets() {
+    return this._c.subsets || [];
   }
 
   run() {
-    activePlatform && activePlatform.run();
+    this._c.run && this._c.run();
   }
 
-  /**
-   * Check if the platform matches the provided one.
-   */
-  is(platform) {
-    if(!activePlatform) { return false; }
-
-    return activePlatform.name === platform;
+  parent(val) {
+    if (arguments.length) {
+      this._parent = val;
+    }
+    return this._parent;
   }
-  /**
-   * Check if the loaded device matches the provided one.
-   */
-  isDevice(device) {
-    if(!activePlatform) { return false; }
 
-    return activePlatform.getDevice() === device;
+  child(val) {
+    if (arguments.length) {
+      this._child = val;
+    }
+    return this._child;
+  }
+
+  isMatch(app) {
+    if (!this._c.isMatch) {
+      return true;
+    }
+    return this._c.isMatch(app);
+  }
+
+  getRoot(app, childPlatform) {
+    if (this.isMatch(app)) {
+      let parents = Platform.getSubsetParents(this.name());
+
+      if (!parents.length) {
+        platform = new Platform();
+        platform.load(this.name());
+        platform.child(childPlatform);
+        return platform;
+      }
+
+      let platform = null;
+      let rootPlatform = null;
+
+      for (let i = 0; i < parents.length; i++) {
+        platform = new Platform();
+        platform.load(parents[i]);
+        platform.child(this);
+
+        rootPlatform = platform.getRoot(app, this);
+        if (rootPlatform) {
+          this.parent(platform);
+          return rootPlatform;
+        }
+      }
+    }
+
+    return null;
+  }
+
+
+  static getActivePlatform(app) {
+    let platform = new Platform();
+    platform.load('tablet');
+
+    let root = platform.getRoot(app, null);
+    console.log(root)
+  }
+
+  static register(platform) {
+    platformRegistry[platform.name] = platform;
+  }
+
+  static get(platformName) {
+    return platformRegistry[platformName] || {};
+  }
+
+  static getSubsetParents(subsetPlatformName) {
+    let parentPlatformNames = [];
+    let platform = null;
+
+    for (let platformName in platformRegistry) {
+      platform = platformRegistry[platformName];
+      if (platform.subsets && platform.subsets.indexOf(subsetPlatformName) > -1) {
+        parentPlatformNames.push(platformName);
+      }
+    }
+    return parentPlatformNames;
   }
 }
 
-export let Platform = new PlatformController((util.getQuerystring('ionicplatform')).toLowerCase(), window.navigator.userAgent);
+let rootPlatform = null;
+
+
+Platform.register({
+  name: 'core',
+  subsets: [
+    'mobile'
+  ],
+  settings: {
+    mode: 'a'
+  },
+  run() {
+    console.log('Core');
+  }
+});
+
+
+Platform.register({
+  name: 'mobile',
+  subsets: [
+    'android',
+    'ios'
+  ],
+  settings: {
+    mode: 'b'
+  },
+  run() {
+    console.log('Mobile');
+  }
+});
 
 
 Platform.register({
   name: 'android',
-  mode: 'md',
-  isMatch(platformQuerystring, userAgent) {
-    if (platformQuerystring) {
-      return platformQuerystring == 'android';
-    }
-    return /android/i.test(userAgent);
+  subsets: [
+    'tablet'
+  ],
+  settings: {
+    mode: 'c'
   },
-  getDevice: function() {
-    return 'android';
+  isMatch(app) {
+    return app.matchesPlatform('android');
   },
   run() {
+    console.log('Android');
   }
 });
 
+
 Platform.register({
-  name: 'ios',
-  isMatch(platformQuerystring, userAgent) {
-    if (platformQuerystring) {
-      return platformQuerystring == 'ios';
-    }
-    return /ipad|iphone|ipod/i.test(userAgent);
+  name: 'tablet',
+  settings: {
+    mode: 'd'
   },
-  getDevice: function() {
-    if(/ipad/i.test(userAgent)) {
-      return 'ipad';
-    }
-    if(/iphone/i.test(userAgent)) {
-      return 'iphone';
-    }
+  isMatch(app) {
+    return app.height() >= 800 || app.width() >= 800;
   },
   run() {
+    console.log('Tablet');
+  }
+});
+
+
+Platform.register({
+  name: 'ios',
+  subsets: [
+    'ipad',
+    'iphone'
+  ],
+  settings: {
+    mode: 'e'
+  },
+  isMatch(app) {
+    return app.matchesPlatform('ios');
+  },
+  run() {
+    console.log('iOS');
     Tap.run();
   }
 });
 
-// Last case is a catch-all
-// TODO(mlynch): don't default to iOS, default to core,
-// also make sure to remove getPlatform and set to detect()
-Platform.setDefault({
-  name: 'ios'
-});
-Platform.set( Platform.getPlatform('ios') );//Platform.detect() );
 
-// If the platform needs to do some initialization (like load a custom
-// tap strategy), run it now
-Platform.run();
+Platform.register({
+  name: 'ipad',
+  subsets: [
+    'tablet'
+  ],
+  settings: {
+    mode: 'f'
+  },
+  isMatch(app) {
+    return app.matchesDevice('ipad');
+  },
+  run() {
+    console.log('iPad');
+  }
+});
+
+
+Platform.register({
+  name: 'iphone',
+  settings: {
+    mode: 'g'
+  },
+  isMatch(app) {
+    return app.matchesDevice('iphone');
+  },
+  run() {
+    console.log('iPhone');
+  }
+});
+
+

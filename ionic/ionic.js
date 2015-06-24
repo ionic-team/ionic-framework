@@ -1,10 +1,15 @@
 
 export * from 'ionic/config/config'
-export * from 'ionic/config/ionic-directive'
+export * from 'ionic/config/component'
 export * from 'ionic/config/ionic-view'
 
 export * from 'ionic/components'
+
 export * from 'ionic/platform/platform'
+// export * from 'ionic/platform/core'
+// export * from 'ionic/platform/android'
+// export * from 'ionic/platform/ios'
+
 export * from 'ionic/routing/router'
 
 export * from 'ionic/util/click-block'

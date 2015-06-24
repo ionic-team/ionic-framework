@@ -3,8 +3,7 @@ import {DirectiveMetadata} from 'angular2/src/render/api';
 
 import * as util from 'ionic/util';
 import {Platform} from 'ionic/platform/platform';
-
-const platformMode = Platform.getMode();
+import {GlobalIonicConfig} from '../components/app/app';
 
 
 export class IonicDirective extends Directive {
@@ -22,8 +21,6 @@ export class IonicComponent extends Component {
 function appendModeConfig(ComponentType) {
   let config = ComponentType.config;
   config.host = config.host || {};
-
-//  let host = DirectiveMetadata.parseHostConfig(config.host);
 
   const defaultProperties = config.defaultProperties;
 
@@ -56,17 +53,10 @@ function appendModeConfig(ComponentType) {
         continue;
       }
 
-      // get the property values from a global user config
-      var globalPropertyValue = null;
-      if (globalPropertyValue) {
+      // get the property values from a global user/platform config
+      let configVal = GlobalIonicConfig.setting(prop);
+      if (configVal) {
         instance[prop] = globalPropertyValue;
-        continue;
-      }
-
-      // get the property values provided by this mode/platform
-      var modePropertyValue = null;
-      if (modePropertyValue) {
-        instance[prop] = modePropertyValue;
         continue;
       }
 
@@ -92,8 +82,14 @@ function appendModeConfig(ComponentType) {
     };
   }
 
+  if (!platformMode) {
+    platformMode = GlobalIonicConfig.setting('mode');
+  }
+
   let id = config.classId || (config.selector && config.selector.replace('ion-', ''));
   config.host['class'] = (id + ' ' + id + '-' + platformMode);
 
   return config;
 }
+
+let platformMode = null;

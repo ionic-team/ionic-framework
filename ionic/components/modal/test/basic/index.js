@@ -149,12 +149,32 @@ export class ModalSecondPage {
 }
 
 export function main(ionicBootstrap) {
-  // crazy config
-  let myConfig = new IonicConfig();
 
-  ionicBootstrap(MyApp, myConfig).then(app => {
-    // crazy run
-    console.log('ionicBootstrap', app);
+  let myConfig = new IonicConfig({
+    'adams': 'config',
+    'tabBarPlacement': 'adam'
+  });
+
+  // myConfig.platform('ios', {
+  //   'tabBarPlacement': 'ios'
+  // });
+
+  // myConfig.device('ipad', {
+  //   'tabBarPlacement': 'ipad'
+  // });
+
+  // myConfig.platform('android', {
+  //   'tabBarPlacement': 'android'
+  // });
+
+  ionicBootstrap(MyApp, myConfig).then(root => {
+
+    console.log('mobile', root.platform.is('mobile'))
+    console.log('ipad', root.platform.is('ipad'))
+    console.log('tablet', root.platform.is('tablet'))
+    console.log('ios', root.platform.is('ios'))
+    console.log('android', root.platform.is('android'))
+
   });
 }
 

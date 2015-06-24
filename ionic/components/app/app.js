@@ -1,27 +1,85 @@
 import {bootstrap} from 'angular2/angular2';
 import {AppViewManager} from 'angular2/src/core/compiler/view_manager';
-import {Component, Directive, onInit} from 'angular2/src/core/annotations_impl/annotations';
-import {View} from 'angular2/src/core/annotations_impl/view';
-import {ComponentRef, onDestroy, DomRenderer, ApplicationRef} from 'angular2/angular2';
-import {Promise} from 'angular2/src/facade/async';
-import {isPresent, Type} from 'angular2/src/facade/lang';
 import {Compiler} from 'angular2/angular2';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
-import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_component_loader';
-import {Injector} from 'angular2/di';
-import {Parent} from 'angular2/src/core/annotations_impl/visibility';
 import {bind} from 'angular2/di';
-import {Injectable} from 'angular2/src/di/decorators';
 import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
 
 import {IonicConfig} from '../../config/config';
-import {ViewController} from '../view/view-controller';
+import {Platform} from '../../platform/platform';
+import * as util from '../../util/util';
 
 
 export class IonicApp {
 
   constructor() {
     this.overlays = [];
+  }
+
+  config(val) {
+    if (arguments.length) {
+      this._config = val;
+    }
+    return this._config;
+  }
+
+  url(val) {
+    if (arguments.length) {
+      this._url = val;
+      this._qs = util.getQuerystring(val);
+    }
+    return this._url;
+  }
+
+  query(key) {
+    return (this._qs || {})[key];
+  }
+
+  userAgent(val) {
+    if (arguments.length) {
+      this._ua = val;
+    }
+    return this._ua;
+  }
+
+  matchesQuery(queryKey, queryValue) {
+    const val = this.query(queryKey);
+    return !!(val && val == queryValue);
+  }
+
+  matchesUserAgent(userAgentExpression) {
+    const rx = new RegExp(userAgentExpression, 'i');
+    return rx.test(this._ua);
+  }
+
+  matchesPlatform(platformQueryValue, platformUserAgentExpression) {
+    if (!platformUserAgentExpression) {
+      platformUserAgentExpression = platformQueryValue;
+    }
+    return this.matchesQuery('ionicplatform', platformQueryValue) ||
+           this.matchesUserAgent(platformUserAgentExpression);
+  }
+
+  matchesDevice(deviceQueryValue, deviceUserAgentExpression) {
+    if (!deviceUserAgentExpression) {
+      deviceUserAgentExpression = deviceQueryValue;
+    }
+    return this.matchesQuery('ionicdevice', deviceQueryValue) ||
+           this.matchesUserAgent(deviceUserAgentExpression);
+  }
+
+  width(val) {
+    if (arguments.length) {
+      this._w = val;
+    }
+    return this._w || 0;
+  }
+
+  height(val) {
+    if (arguments.length) {
+      this._h = val;
+    }
+    return this._h || 0;
   }
 
   /**
@@ -67,9 +125,9 @@ export class IonicApp {
     });
   }
 
-  ref() {
+  ref(val) {
     if (arguments.length) {
-      this._ref = arguments[0];
+      this._ref = val;
     }
     return this._ref;
   }
@@ -78,25 +136,51 @@ export class IonicApp {
 
 export function ionicBootstrap(ComponentType, config) {
   return new Promise((resolve, reject) => {
-    let app = new IonicApp();
-    config = config || new IonicConfig();
+    try {
+      let app = new IonicApp();
+      app.url(window.location.href);
+      app.userAgent(window.navigator.userAgent);
+      app.width(window.innerWidth);
+      app.height(window.innerHeight);
 
-    let componentInjectableBindings = [
-      bind(IonicApp).toValue(app),
-      bind(IonicConfig).toValue(config)
-    ];
+      let platform = Platform.getActivePlatform(app);
 
-    bootstrap(ComponentType, componentInjectableBindings).then(appRef => {
-      app.ref(appRef);
-      resolve(app);
+      config = config || new IonicConfig();
+      config.platform(platform);
 
-    }).catch(err => {
+      GlobalIonicConfig = config;
+
+      let injectableBindings = [
+        bind(IonicApp).toValue(app),
+        bind(Platform).toValue(platform),
+        bind(IonicConfig).toValue(config)
+      ];
+
+      bootstrap(ComponentType, injectableBindings).then(appRef => {
+        app.ref(appRef);
+
+        let rootPlatform = platform.root();
+        rootPlatform.runAll();
+
+        resolve({
+          app,
+          config,
+          platform
+        });
+
+      }).catch(err => {
+        console.error('ionicBootstrap', err);
+        reject(err);
+      });
+
+    } catch (err) {
       console.error('ionicBootstrap', err);
       reject(err);
-    });
-
+    }
   });
 }
+
+export let GlobalIonicConfig = null;
 
 export function load(app) {
   if (!app) {
