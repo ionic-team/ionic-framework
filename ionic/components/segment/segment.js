@@ -99,6 +99,7 @@ export class Segment {
    * Indicate a button should be selected.
    */
   selected(segmentButton) {
+    console.log('Selecting', segmentButton);
     for(let button of this.buttons) {
       button.setActive(false);
     }
@@ -118,13 +119,13 @@ export class Segment {
   ],
   host: {
     '(click)': 'buttonClicked($event)',
-    'class.active': 'isActive'
+    '[class.active]': 'isActive'
   }
 })
 export class SegmentButton {
   constructor(
     @Ancestor() segment: Segment,
-    elementRef: ElementRef,
+    elementRef: ElementRef
   ) {
     this.domElement = elementRef.domElement
     this.segment = segment;
