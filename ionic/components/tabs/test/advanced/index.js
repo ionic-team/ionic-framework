@@ -30,13 +30,13 @@ class SignIn {
   selector: 'ion-tabs-view'
 })
 @IonicView({
-  templateUrl: './pages/tabs.html'
+  templateUrl: './tabs.html'
 })
 
 class TabsPage {
   constructor(nav: NavController) {
-    this.tab1Initial = Tab1Page1
-    this.tab2Initial = Tab2Page1
+    this.tab1Root = Tab1Page1
+    this.tab2Root = Tab2Page1
   }
 }
 
