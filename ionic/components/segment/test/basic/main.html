@@ -1,17 +1,19 @@
 <ion-content class="padding">
-  <form (^submit)="doSubmit($event)" [control-group]="form">
+  <form (^submit)="doSubmit($event)">
 
-    <ion-segment control="mapStyle">
-      <ion-segment-button value="standard" button>
-        Standard
-      </ion-segment-button>
-      <ion-segment-button value="hybrid" button>
-        Hybrid
-      </ion-segment-button>
-      <ion-segment-button value="sat" button>
-        Satellite
-      </ion-segment-button>
-    </ion-segment>
+    <div ng-control-group="form">
+      <ion-segment ng-control="mapStyle">
+        <ion-segment-button value="standard" button>
+          Standard
+        </ion-segment-button>
+        <ion-segment-button value="hybrid" button>
+          Hybrid
+        </ion-segment-button>
+        <ion-segment-button value="sat" button>
+          Satellite
+        </ion-segment-button>
+      </ion-segment>
+    </div>
     <button type="submit" button primary>Submit</button>
   </form>
 
