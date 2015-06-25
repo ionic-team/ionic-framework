@@ -4,26 +4,21 @@ import {formDirectives, FormBuilder, Validators, Control, ControlGroup} from 'an
 import {IonicView} from 'ionic/ionic';
 
 
-@Component({ selector: 'ion-app' })
+@Component({
+  selector: 'ion-app',
+  appInjector: [FormBuilder]
+})
 @IonicView({
   templateUrl: 'main.html',
   directives: [formDirectives]
 })
 class IonicApp {
-  constructor() {
+  constructor(fb: FormBuilder) {
 
-    this.mapStyle = new Control("hybrid", Validators.required);
-    this.form = new ControlGroup({
-      "mapStyle": this.mapStyle
-    });
-
-    /*
-    var fb = new FormBuilder();
-    this.form = fb.group({
+    this.myForm = fb.group({
       mapStyle: ['hybrid', Validators.required]
     });
-    */
-    console.log(this.form);
+    console.log(this.myForm);
   }
 
   doSubmit(event) {

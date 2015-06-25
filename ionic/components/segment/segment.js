@@ -65,7 +65,7 @@ export class Segment {
   static get config() {
     return {
       selector: 'ion-segment',
-      appInjector: [ NgFormControl ],
+      appInjector: [ NgControl ],
       properties: [
         'value'
       ],
@@ -85,7 +85,7 @@ export class Segment {
   }
 
   constructor(
-    cd: NgFormControl,
+    cd: NgControl,
     elementRef: ElementRef,
     renderer: Renderer
   ) {
@@ -135,9 +135,9 @@ export class Segment {
    */
   selected(segmentButton) {
     for(let button of this.buttons) {
-      button.setActive(false);
+      button.isActive = false;
     }
-    segmentButton.setActive(true);
+    segmentButton.isActive = true;
 
     //this.onChange();
 
@@ -147,7 +147,7 @@ export class Segment {
       this.cd.valueAccessor.writeValue(segmentButton.value);
       this.selectFromValue(segmentButton.value);
 
-      this.cd.form.updateValue(segmentButton.value);
+      this.cd.control.updateValue(segmentButton.value);
 
       // Trigger on change
       this.change.next();
@@ -183,10 +183,6 @@ export class SegmentButton {
 
   onInit() {
     this.segment.register(this);
-  }
-
-  setActive(isActive) {
-    this.isActive = isActive;
   }
 
   buttonClicked(event) {

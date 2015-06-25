@@ -1,7 +1,6 @@
 <ion-content class="padding">
-  <form (^submit)="doSubmit($event)">
-    <div ng-control-group="form">
-      <ion-segment [ng-form-control]="mapStyle">
+  <form (^submit)="doSubmit($event)" [ng-form-model]="myForm">
+      <ion-segment ng-control="mapStyle">
         <ion-segment-button value="standard" button>
           Standard
         </ion-segment-button>
@@ -12,20 +11,19 @@
           Satellite
         </ion-segment-button>
       </ion-segment>
-    </div>
     <button type="submit" button primary>Submit</button>
   </form>
 
-  Map mode: <b>{{form.controls.mapStyle.value}}</b>
+  Map mode: <b>{{myForm.controls.mapStyle.value}}</b>
 
-  <div [switch]="form.controls.mapStyle.value">
-    <div *switch-when="'standard'">
+  <div [ng-switch]="myForm.controls.mapStyle.value">
+    <div *ng-switch-when="'standard'">
       <h2>Standard</h2>
     </div>
-    <div *switch-when="'hybrid'">
+    <div *ng-switch-when="'hybrid'">
       <h2>Hybrid</h2>
     </div>
-    <div *switch-when="'sat'">
+    <div *ng-switch-when="'sat'">
       <h2>Satellite!!</h2>
     </div>
   </div>
