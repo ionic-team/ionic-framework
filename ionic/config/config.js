@@ -32,44 +32,42 @@ export class IonicConfig {
           return this;
         }
 
-        // arg0 must be a string to get a property
-        if (isString(arg0)) {
-          // time for the big show, get the value
-          // setting('key') = get value
-          // arg0 = key
+        // time for the big show, get the value
+        // setting('key') = get value
+        // arg0 = key
 
-          if (!isDefined(s[arg0])) {
-            // if the value was already set this will all be skipped
-            // if there was no user config then it'll check each of
-            // the user config's platforms, which already contains
-            // settings from default platform configs
-            s[arg0] = null;
+        if (!isDefined(s[arg0])) {
+          // if the value was already set this will all be skipped
+          // if there was no user config then it'll check each of
+          // the user config's platforms, which already contains
+          // settings from default platform configs
+          s[arg0] = null;
 
-            // check the platform settings object for this value
-            // loop though each of the active platforms
-            let activePlatformKeys = this._platforms;
-            let platformSettings = s.platforms;
-            let platformObj = null;
-            if (platformSettings) {
-              let platformValue = undefined;
-              for (let i = 0; i < activePlatformKeys.length; i++) {
-                platformObj = platformSettings[ activePlatformKeys[i] ];
-                if (platformObj && isDefined(platformObj[arg0])) {
-                  platformValue = platformObj[arg0];
-                }
-              }
-              if (isDefined(platformValue)) {
-                s[arg0] = platformValue;
+          // check the platform settings object for this value
+          // loop though each of the active platforms
+          let activePlatformKeys = this._platforms;
+          let platformSettings = s.platforms;
+          let platformObj = null;
+          if (platformSettings) {
+            let platformValue = undefined;
+            for (let i = 0; i < activePlatformKeys.length; i++) {
+              platformObj = platformSettings[ activePlatformKeys[i] ];
+              if (platformObj && isDefined(platformObj[arg0])) {
+                platformValue = platformObj[arg0];
               }
             }
+            if (isDefined(platformValue)) {
+              s[arg0] = platformValue;
+            }
           }
-
-          // return value.
-          return s[arg0];
         }
 
-        // idk
-        return null;
+        // return key's value
+        // either it came directly from the user config
+        // or it was from the users platform configs
+        // or it was from the default platform configs
+        // in that order
+        return s[arg0];
 
 
       case 2:
@@ -112,8 +110,7 @@ export class IonicConfig {
 
     // copy default platform settings into the user config platform settings
     // user config platform settings should override default platform settings
-    this._settings.platforms = this._settings.platforms || {};
-    this._settings.platforms = extend(platform.settings(), this._settings.platforms);
+    this._settings.platforms = extend(platform.settings(), this._settings.platforms || {});
   }
 
 }
