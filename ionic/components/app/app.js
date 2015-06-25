@@ -7,6 +7,7 @@ import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
 
 import {IonicConfig} from '../../config/config';
 import {Platform} from '../../platform/platform';
+import {Registry} from '../../registry';
 import * as util from '../../util/util';
 
 
@@ -14,6 +15,25 @@ export class IonicApp {
 
   constructor() {
     this.overlays = [];
+
+    // Our component registry map
+    this.components = {};
+  }
+
+  /**
+   * Register a known component with a key, for easy lookups later.
+   */
+  register(key, component) {
+    this.components[key] = component;
+    console.log('App: Registered component', key, component);
+    // TODO(mlynch): We need to track the lifecycle of this component to remove it onDehydrate
+  }
+
+  /**
+   * Get the component for the given key.
+   */
+  getComponent(key) {
+    return this.components[key];
   }
 
   config(val) {

@@ -1,6 +1,6 @@
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 
-import {IonicView, Register, Registry} from 'ionic/ionic';
+import {IonicApp, IonicView, Register} from 'ionic/ionic';
 
 import {ButtonPage} from './pages/button'
 import {NavPage} from './pages/nav'
@@ -25,8 +25,10 @@ import {ModalPage} from './pages/modal'
   templateUrl: 'main.html',
   directives: [Register]
 })
-class IonicApp {
-  constructor() {
+class MyApp {
+  constructor(app: IonicApp) {
+    this.app = app;
+
     this.components = [
       { title: 'Navigation', component: NavPage },
       { title: 'Buttons', component: ButtonPage },
@@ -50,11 +52,11 @@ class IonicApp {
   openPage(aside, component) {
     aside.close();
 
-    let nav = Registry.get('myNav');
+    let nav = this.app.getComponent('myNav');
     nav.setItems([component.component]);
   }
 }
 
 export function main(ionicBootstrap) {
-  ionicBootstrap(IonicApp);
+  ionicBootstrap(MyApp);
 }

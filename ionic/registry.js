@@ -7,7 +7,7 @@ import {Type} from 'angular2/src/facade/lang';
 import {FormBuilder, Validators, FormDirectives, ControlGroup} from 'angular2/forms';
 import {Log} from 'ionic/util'
 
-import {ViewController, Nav} from 'ionic/ionic'
+import {IonicApp} from 'ionic/ionic'
 
 
 @Directive({
@@ -22,28 +22,13 @@ import {ViewController, Nav} from 'ionic/ionic'
   lifecycle: [onInit]
 })
 export class Register {
-  constructor() {
+  constructor(app: IonicApp) {
+    this.app = app;
   }
   onInit() {
-    console.log('Register on init', this.register, this.registerId);
-    Registry.register(this.registerId, this.register);
+    if(!this.register || !this.registerId) {
+      return;
+    }
+    this.app.register(this.registerId, this.register);
   }
 }
-
-class RegistryManager {
-  constructor() {
-    this.components = {};
-  }
-  register(key, component) {
-    this.components[key] = component;
-    console.log('Registered', this.components);
-    // TODO(mlynch): We need to track the lifecycle of this component to remove it
-  }
-  get(key) {
-    return this.components[key];
-  }
-}
-
-var Registry = new RegistryManager();
-
-export {Registry};
