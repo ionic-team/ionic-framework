@@ -4,7 +4,10 @@ export * from 'ionic/config/component'
 export * from 'ionic/config/ionic-view'
 
 export * from 'ionic/components'
+
 export * from 'ionic/platform/platform'
+export * from 'ionic/platform/registry'
+
 export * from 'ionic/routing/router'
 
 export * from 'ionic/util/click-block'

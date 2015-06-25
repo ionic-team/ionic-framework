@@ -134,20 +134,22 @@ export const array = {
  * Grab the query string param value for the given key.
  * @param key the key to look for
  */
-export function getQuerystring(key) {
+export function getQuerystring(url, key) {
   var queryParams = {};
-  const startIndex = window.location.href.indexOf('?');
-  if (startIndex !== -1) {
-    const queries = window.location.href.slice(startIndex + 1).split('&');
-    if (queries.length) {
-      queries.forEach((param) => {
-        var split = param.split('=');
-        queryParams[split[0]] = split[1];
-      });
+  if (url) {
+    const startIndex = url.indexOf('?');
+    if (startIndex !== -1) {
+      const queries = url.slice(startIndex + 1).split('&');
+      if (queries.length) {
+        queries.forEach((param) => {
+          var split = param.split('=');
+          queryParams[split[0]] = split[1];
+        });
+      }
     }
-  }
-  if (key) {
-    return queryParams[key] || '';
+    if (key) {
+      return queryParams[key] || '';
+    }
   }
   return queryParams;
 }

@@ -1,144 +1,220 @@
 import * as util from '../util/util';
-import {Tap} from '../util/tap';
 
-let registry = {};
-let defaultPlatform;
-let activePlatform;
 
-class PlatformController {
+export class Platform {
 
-  constructor(platformQuerystring, userAgent) {
-    this.pqs = platformQuerystring;
-    this.ua = userAgent;
+  constructor() {
+    this._settings = {};
+    this._platforms = [];
   }
 
-  get() {
-    if (util.isUndefined(activePlatform)) {
-      this.set(this.detect());
+  is(platformName) {
+    return (this._platforms.indexOf(platformName) > -1);
+  }
+
+  settings(val) {
+    if (arguments.length) {
+      this._settings = val;
     }
-    return activePlatform || defaultPlatform;
-  }
-
-  getName() {
-    return this.get().name;
-  }
-
-  getMode() {
-    let plt = this.get();
-    return plt.mode || plt.name;
-  }
-
-  register(platform) {
-    registry[platform.name] = platform;
-  }
-
-  getPlatform(name) {
-    return registry[name];
-  }
-
-  set(platform) {
-    activePlatform = platform;
-
-    this._applyBodyClasses();
-  }
-
-  setDefault(platform) {
-    defaultPlatform = platform;
-  }
-
-  isRegistered(platformName) {
-    return registry.some(platform => {
-      return platform.name === platformName;
-    })
-  }
-
-  detect() {
-    for (let name in registry) {
-      if (registry[name].isMatch(this.pqs, this.ua)) {
-        return registry[name];
-      }
-    }
-    return null;
-  }
-
-  _applyBodyClasses() {
-    if(!activePlatform) {
-      return;
-    }
-
-    document.body.classList.add('platform-' + activePlatform.name);
+    return this._settings;
   }
 
   run() {
-    activePlatform && activePlatform.run();
+    let config = null;
+
+    for (var i = 0; i < this._platforms.length; i++) {
+      config = Platform.get(this._platforms[i]);
+      config.run && config.run();
+    }
   }
 
-  /**
-   * Check if the platform matches the provided one.
-   */
-  is(platform) {
-    if(!activePlatform) { return false; }
-
-    return activePlatform.name === platform;
+  add(platformName) {
+    this._platforms.push(platformName);
   }
-  /**
-   * Check if the loaded device matches the provided one.
-   */
-  isDevice(device) {
-    if(!activePlatform) { return false; }
 
-    return activePlatform.getDevice() === device;
+  platforms() {
+    // get the array of active platforms, which also knows the hierarchy,
+    // with the last one the most important
+    return this._platforms;
+  }
+
+
+  /* Static Methods */
+  static create(app) {
+    let rootNode = null;
+
+    function matchPlatform(platformConfig) {
+      let platformNode = new PlatformNode();
+      platformNode.config(platformConfig);
+      let tmpPlatform = platformNode.getRoot(app, 0);
+
+      if (tmpPlatform) {
+        tmpPlatform.depth = 0;
+        let childPlatform = tmpPlatform.child();
+        while(childPlatform) {
+          tmpPlatform.depth++
+          childPlatform = childPlatform.child();
+        }
+
+        if (!rootNode || tmpPlatform.depth > rootNode.depth) {
+          rootNode = tmpPlatform;
+        }
+      }
+    }
+
+    function insertSuperset(platformNode) {
+      let supersetPlaformName = platformNode.superset();
+      if (supersetPlaformName) {
+        let supersetPlatform = new PlatformNode();
+        supersetPlatform.load(supersetPlaformName);
+        supersetPlatform.parent(platformNode.parent());
+        supersetPlatform.child(platformNode);
+        supersetPlatform.parent().child(supersetPlatform);
+        platformNode.parent(supersetPlatform);
+      }
+    }
+
+    for (let platformName in platformRegistry) {
+      matchPlatform( platformRegistry[platformName] );
+    }
+
+    let platform = new Platform();
+    if (rootNode) {
+      let platformNode = rootNode;
+      while (platformNode) {
+        insertSuperset(platformNode);
+        platformNode = platformNode.child();
+      }
+
+      platformNode = rootNode;
+      let settings = {};
+      while (platformNode) {
+        // set the array of active platforms with
+        // the last one in the array the most important
+        platform.add(platformNode.name());
+
+        // copy default platform settings into this platform settings obj
+        settings[platformNode.name()] = util.extend({}, platformNode.settings());
+
+        // go to the next child
+        platformNode = platformNode.child();
+      }
+
+      platform.settings(settings);
+    }
+
+    return platform;
+  }
+
+  static register(platform) {
+    platformRegistry[platform.name] = platform;
+  }
+
+  static get(platformName) {
+    return platformRegistry[platformName] || {};
+  }
+
+  static getSubsetParents(subsetPlatformName) {
+    let parentPlatformNames = [];
+    let platform = null;
+
+    for (let platformName in platformRegistry) {
+      platform = platformRegistry[platformName];
+      if (platform.subsets && platform.subsets.indexOf(subsetPlatformName) > -1) {
+        parentPlatformNames.push(platformName);
+      }
+    }
+    return parentPlatformNames;
   }
 }
 
-export let Platform = new PlatformController((util.getQuerystring('ionicplatform')).toLowerCase(), window.navigator.userAgent);
 
+class PlatformNode {
 
-Platform.register({
-  name: 'android',
-  mode: 'md',
-  isMatch(platformQuerystring, userAgent) {
-    if (platformQuerystring) {
-      return platformQuerystring == 'android';
-    }
-    return /android/i.test(userAgent);
-  },
-  getDevice: function() {
-    return 'android';
-  },
-  run() {
+  load(platformName) {
+    this._c = Platform.get(platformName);
   }
-});
 
-Platform.register({
-  name: 'ios',
-  isMatch(platformQuerystring, userAgent) {
-    if (platformQuerystring) {
-      return platformQuerystring == 'ios';
-    }
-    return /ipad|iphone|ipod/i.test(userAgent);
-  },
-  getDevice: function() {
-    if(/ipad/i.test(userAgent)) {
-      return 'ipad';
-    }
-    if(/iphone/i.test(userAgent)) {
-      return 'iphone';
-    }
-  },
-  run() {
-    Tap.run();
+  config(val) {
+    this._c = val;
   }
-});
 
-// Last case is a catch-all
-// TODO(mlynch): don't default to iOS, default to core,
-// also make sure to remove getPlatform and set to detect()
-Platform.setDefault({
-  name: 'ios'
-});
-Platform.set( Platform.getPlatform('ios') );//Platform.detect() );
+  settings() {
+    return this._c.settings || {};
+  }
 
-// If the platform needs to do some initialization (like load a custom
-// tap strategy), run it now
-Platform.run();
+  name() {
+    return this._c.name;
+  }
+
+  superset() {
+    return this._c.superset;
+  }
+
+  runAll() {
+    let platform = this;
+    while (platform) {
+      platform.run();
+      platform = platform.child();
+    }
+    return false;
+  }
+
+  parent(val) {
+    if (arguments.length) {
+      this._parent = val;
+    }
+    return this._parent;
+  }
+
+  child(val) {
+    if (arguments.length) {
+      this._child = val;
+    }
+    return this._child;
+  }
+
+  isMatch(app) {
+    if (typeof this._c._isMatched !== 'boolean') {
+      // only do the actual check once
+      if (!this._c.isMatch) {
+        this._c._isMatched = true;
+      } else {
+        this._c._isMatched = this._c.isMatch(app);
+      }
+    }
+    return this._c._isMatched;
+  }
+
+  getRoot(app) {
+    if (this.isMatch(app)) {
+
+      let parents = Platform.getSubsetParents(this.name());
+
+      if (!parents.length) {
+        return this;
+      }
+
+      let platform = null;
+      let rootPlatform = null;
+
+      for (let i = 0; i < parents.length; i++) {
+        platform = new PlatformNode();
+        platform.load(parents[i]);
+        platform.child(this);
+
+        rootPlatform = platform.getRoot(app);
+        if (rootPlatform) {
+          this.parent(platform);
+          return rootPlatform;
+        }
+      }
+    }
+
+    return null;
+  }
+
+}
+
+let platformRegistry = {};
+

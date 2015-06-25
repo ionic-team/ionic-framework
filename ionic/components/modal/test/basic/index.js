@@ -149,12 +149,27 @@ export class ModalSecondPage {
 }
 
 export function main(ionicBootstrap) {
-  // crazy config
+
   let myConfig = new IonicConfig();
 
-  ionicBootstrap(MyApp, myConfig).then(app => {
-    // crazy run
-    console.log('ionicBootstrap', app);
+  //myConfig.setting('someKey', 'userConfig');
+  // myConfig.setting('ios', 'someKey', 'iosConfig');
+  // myConfig.setting('ipad', 'someKey', 'ipadConfig');
+
+  ionicBootstrap(MyApp, myConfig).then(root => {
+
+    console.log('someKey', myConfig.setting('someKey'));
+    console.log(myConfig.setting('mode'));
+
+    console.log('mobile', root.platform.is('mobile'))
+    console.log('ipad', root.platform.is('ipad'))
+    console.log('iphone', root.platform.is('iphone'))
+    console.log('phablet', root.platform.is('phablet'))
+    console.log('tablet', root.platform.is('tablet'))
+    console.log('ios', root.platform.is('ios'))
+    console.log('android', root.platform.is('android'))
+    console.log('windows phone', root.platform.is('windowsphone'))
+
   });
 }
 
