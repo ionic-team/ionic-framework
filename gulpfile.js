@@ -29,7 +29,7 @@ gulp.task('clean.build', function() {
   runSequence(
     'clean',
     'transpile',
-    'bundle.deps',
+    //'bundle.deps',
     'bundle.js',
     'examples',
     'sass',
@@ -131,24 +131,24 @@ gulp.task('bundle.js', function() {
              .pipe(gulp.dest('dist/js/'));
 });
 
-gulp.task('bundle.deps', function() {
-  var Builder = require('systemjs-builder')
-  var builder = new Builder();
-  return builder.loadConfig('config.js').then(function(){
-    // add ionic and angular2 build paths, since config.js is loaded at runtime from
-    // tests we don't want to put them there
-    builder.config({
-      baseURL: 'file:' + process.cwd(),
-      paths : {
-        "ionic/*": "dist/js/es6/ionic/*.js"
-      }
-    });
-    return builder.build('dist/js/es6/ionic/**/* - [dist/js/es6/ionic/**/*]', 'dist/js/dependencies.js');
-  }, function(error){
-    console.log("Error building dependency bundle, have you transpiled Ionic and/or built Angular2 yet?");
-    throw new Error(error);
-  })
-});
+//gulp.task('bundle.deps', function() {
+//  var Builder = require('systemjs-builder')
+//  var builder = new Builder();
+//  return builder.loadConfig('config.js').then(function(){
+//    // add ionic and angular2 build paths, since config.js is loaded at runtime from
+//    // tests we don't want to put them there
+//    builder.config({
+//      baseURL: 'file:' + process.cwd(),
+//      paths : {
+//        "ionic/*": "dist/js/es6/ionic/*.js"
+//      }
+//    });
+//    return builder.build('dist/js/es6/ionic/**/* - [dist/js/es6/ionic/**/*]', 'dist/js/dependencies.js');
+//  }, function(error){
+//    console.log("Error building dependency bundle, have you transpiled Ionic and/or built Angular2 yet?");
+//    throw new Error(error);
+//  })
+//});
 
 gulp.task('examples', function() {
   var buildTest = lazypipe()
