@@ -42,7 +42,7 @@ export class IonicApp {
     return this._ua;
   }
 
-  matchesQuery(queryValue) {
+  matchQuery(queryValue) {
     let val = this.query('ionicplatform');
     if (val) {
       let valueSplit = val.toLowerCase().split(';');
@@ -55,17 +55,19 @@ export class IonicApp {
     return false;
   }
 
-  matchesUserAgent(userAgentExpression) {
-    let rx = new RegExp(userAgentExpression, 'i');
-    return rx.test(this._ua);
+  matchUserAgent(userAgentExpression) {
+    if (this._ua) {
+      let rx = new RegExp(userAgentExpression, 'i');
+      return rx.exec(this._ua);
+    }
   }
 
-  matchesPlatform(queryValue, userAgentExpression) {
+  isPlatform(queryValue, userAgentExpression) {
     if (!userAgentExpression) {
       userAgentExpression = queryValue;
     }
-    return this.matchesQuery(queryValue) ||
-           this.matchesUserAgent(userAgentExpression);
+    return (this.matchQuery(queryValue)) ||
+           (this.matchUserAgent(userAgentExpression) !== null);
   }
 
   width(val) {

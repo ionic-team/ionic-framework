@@ -55,7 +55,7 @@ Platform.register({
     mode: 'md'
   },
   isMatch(app) {
-    return app.matchesPlatform('android');
+    return app.isPlatform('android');
   }
 });
 
@@ -75,7 +75,11 @@ Platform.register({
     // SLEDGEHAMMER OVERRIDE FOR NOW
     return true;
 
-    return app.matchesPlatform('ios', 'iphone|ipad|ipod');
+    return app.isPlatform('ios', 'iphone|ipad|ipod');
+  },
+  versionParser: {
+    let val = app.matchUserAgent('OS (\d+)_(\d+)?');
+    console.log(val);
   },
   run() {
     //Tap.run();
@@ -87,7 +91,7 @@ Platform.register({
   name: 'ipad',
   superset: 'tablet',
   isMatch(app) {
-    return app.matchesPlatform('ipad');
+    return app.isPlatform('ipad');
   }
 });
 
@@ -98,7 +102,7 @@ Platform.register({
     'phablet'
   ],
   isMatch(app) {
-    return app.matchesPlatform('iphone');
+    return app.isPlatform('iphone');
   }
 });
 
@@ -114,7 +118,7 @@ Platform.register({
     mode: 'wp'
   },
   isMatch(app) {
-    return app.matchesPlatform('windowsphone', 'windows phone');
+    return app.isPlatform('windowsphone', 'windows phone');
   }
 });
 
