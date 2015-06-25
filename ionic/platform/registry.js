@@ -78,7 +78,7 @@ Platform.register({
     return app.matchesPlatform('ios', 'iphone|ipad|ipod');
   },
   run() {
-    Tap.run();
+    //Tap.run();
   }
 });
 
