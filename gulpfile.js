@@ -59,7 +59,7 @@ gulp.task('watch', function() {
     'serve',
 
     function() {
-      watch(['ionic/**/*.js', '!ionic/components/*/test/**/*'], function() {
+      watch(['ionic/**/*.js', 'ionic/components/*/test/**/*'], function() {
         runSequence(
           'transpile',
           'bundle.js',
@@ -108,6 +108,20 @@ var babelOptions = {
   }
 };
 
+var exampleBabelOptions = {
+  optional: ['es7.decorators'],
+  /*plugins: [
+    './transformers/disable-define',
+    'angular2-annotations',
+    'type-assertion:after'
+  ],*/
+  modules: "system",
+  moduleIds: true,
+  getModuleId: function(name) {
+    return "dist/examples/" + name.split('/test').join('');
+  }
+};
+
 gulp.task('transpile', function() {
   return gulp.src(['ionic/**/*.js', '!ionic/components/*/test/**/*', '!ionic/init.js'])
              .pipe(cache('transpile', { optimizeMemory: true }))
@@ -153,7 +167,7 @@ gulp.task('bundle.js', function() {
 gulp.task('examples', function() {
   var buildTest = lazypipe()
              .pipe(traceur, traceurOptions)
-             //.pipe(babel, babelOptions) Let SystemJS load index.js at runtime, saves build time
+             .pipe(babel, exampleBabelOptions)
 
   // Get each test folder with gulp.src
   return gulp.src('ionic/components/*/test/*/**/*')
