@@ -25,13 +25,14 @@ import {IonicComponent} from 'ionic/config/component'
   }
 })
 export class SegmentControlValueAccessor {
-  constructor(cd: NgControl, renderer: Renderer, elementRef: ElementRef) {
-    console.log('CoONSTRUCTING VALUE ACCESSOR', cd);
+  constructor(cd: NgControl, renderer: Renderer, elementRef: ElementRef, segment: Segment) {
+    console.log('CoONSTRUCTING VALUE ACCESSOR', cd, segment);
     this.onChange = (_) => {};
     this.onTouched = (_) => {};
     this.cd = cd;
     this.renderer = renderer;
     this.elementRef = elementRef;
+    this.segment = segment;
 
     cd.valueAccessor = this;
   }
@@ -39,9 +40,12 @@ export class SegmentControlValueAccessor {
   writeValue(value) {
     // both this.value and setProperty are required at the moment
     // remove when a proper imperative API is provided
-    console.log('WRITE VALUE', value);
+    console.log('WRITE VALUE', value, this.elementRef, this.elementRef.parentView);
     this.value = !value ? '' : value;
     this.renderer.setElementProperty(this.elementRef.parentView.render, this.elementRef.boundElementIndex, 'value', this.value);
+
+    this.segment.value = this.value;
+    this.segment.selectFromValue(value);
   }
 
   registerOnChange(fn) { console.log('REGISTER ON CHANGE'); this.onChange = fn; }
@@ -50,24 +54,7 @@ export class SegmentControlValueAccessor {
 }
 
 
-@Component({
-  selector: 'ion-segment',
-  appInjector: [ NgFormControl ],
-  properties: [
-    'value'
-  ],
-  host: {
-    '(click)': 'buttonClicked($event)',
-    '(change)': 'onChange($event)',
-    '[value]': 'value',
-    '[class.ng-untouched]': 'cd.control?.untouched == true',
-    '[class.ng-touched]': 'cd.control?.touched == true',
-    '[class.ng-pristine]': 'cd.control?.pristine == true',
-    '[class.ng-dirty]': 'cd.control?.dirty == true',
-    '[class.ng-valid]': 'cd.control?.valid == true',
-    '[class.ng-invalid]': 'cd.control?.valid == false'
-  }
-})
+@IonicComponent(Segment)
 @View({
   template: `<div class="ion-segment">
     <content></content>
@@ -80,6 +67,21 @@ export class Segment {
   static get config() {
     return {
       selector: 'ion-segment',
+      appInjector: [ NgFormControl ],
+      properties: [
+        'value'
+      ],
+      host: {
+        '(click)': 'buttonClicked($event)',
+        '(change)': 'onChange($event)',
+        '[value]': 'value',
+        '[class.ng-untouched]': 'cd.control?.untouched == true',
+        '[class.ng-touched]': 'cd.control?.touched == true',
+        '[class.ng-pristine]': 'cd.control?.pristine == true',
+        '[class.ng-dirty]': 'cd.control?.dirty == true',
+        '[class.ng-valid]': 'cd.control?.valid == true',
+        '[class.ng-invalid]': 'cd.control?.valid == false'
+      }
     }
   }
 
@@ -115,14 +117,12 @@ export class Segment {
   register(segmentButton) {
     this.buttons.push(segmentButton);
 
-    // If we don't have a default value, and this is the
-    // first button added, select it
-    if(!this.value && this.buttons.length === 1) {
-      setTimeout(() => {
-        // We need to defer so the control directive can initialize
-        this.selected(segmentButton);
-      })
+    console.log('registering', this.buttons, this.value);
+
+    if(this.value == segmentButton.value) {
+      this.selected(segmentButton);
     }
+
   }
 
   /**
@@ -142,6 +142,8 @@ export class Segment {
    * Indicate a button should be selected.
    */
   selected(segmentButton) {
+    console.log('SELECTED', segmentButton);
+    console.trace();
     for(let button of this.buttons) {
       button.setActive(false);
     }
@@ -173,7 +175,8 @@ export class Segment {
   host: {
     '(click)': 'buttonClicked($event)',
     '[class.active]': 'isActive'
-  }
+  },
+  lifecycle: [onInit]
 })
 export class SegmentButton {
   constructor(
@@ -182,8 +185,10 @@ export class SegmentButton {
   ) {
     this.domElement = elementRef.domElement
     this.segment = segment;
+  }
 
-    segment.register(this);
+  onInit() {
+    this.segment.register(this);
   }
 
   setActive(isActive) {
