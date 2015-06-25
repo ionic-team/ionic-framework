@@ -1,7 +1,6 @@
 <ion-content class="padding">
   <form (^submit)="doSubmit($event)">
-
-    <div [ng-form]="form">
+    <div ng-control-group="form">
       <ion-segment [ng-form-control]="mapStyle">
         <ion-segment-button value="standard" button>
           Standard
