@@ -1,56 +1,38 @@
 import * as util from '../util/util';
 
 
-export class Platform {
+export class PlatformCtrl {
 
   constructor() {
     this._settings = {};
     this._platforms = [];
+
+    this._registry = {};
   }
 
-  is(platformName) {
-    return (this._platforms.indexOf(platformName) > -1);
+  register(platformConfig) {
+    this._registry[platformConfig.name] = platformConfig;
   }
 
-  settings(val) {
-    if (arguments.length) {
-      this._settings = val;
-    }
-    return this._settings;
+  registry() {
+    return this._registry;
   }
 
-  run() {
-    let config = null;
-
-    for (var i = 0; i < this._platforms.length; i++) {
-      config = Platform.get(this._platforms[i]);
-      config.run && config.run();
-    }
-  }
-
-  add(platformName) {
-    this._platforms.push(platformName);
-  }
-
-  platforms() {
-    // get the array of active platforms, which also knows the hierarchy,
-    // with the last one the most important
-    return this._platforms;
-  }
-
-
-  /* Static Methods */
-  static create(app) {
+  load(app) {
     let rootPlatformNode = null;
     let engineNode = null;
+
+    // reset values
+    this._settings = {};
+    this._platforms = [];
 
     function matchPlatform(platformConfig) {
       // build a PlatformNode and assign config data to it
       // use it's getRoot method to build up its hierarchy
       // depending on which platforms match
       let platformNode = new PlatformNode();
-      platformNode.isEngine = platformConfig.isEngine;
       platformNode.config(platformConfig);
+      platformNode.isEngine = platformConfig.isEngine;
       let tmpPlatform = platformNode.getRoot(app, 0);
 
       if (tmpPlatform) {
@@ -80,9 +62,9 @@ export class Platform {
 
     // figure out the most specific platform and active engine
     let tmpPlatform = null;
-    for (let platformName in platformRegistry) {
+    for (let platformName in this._registry) {
 
-      tmpPlatform = matchPlatform( platformRegistry[platformName] );
+      tmpPlatform = matchPlatform( this._registry[platformName] );
       if (tmpPlatform) {
         // we found a platform match!
         // check if its more specific than the one we already have
@@ -103,7 +85,7 @@ export class Platform {
 
     // build a Platform instance filled with the
     // hierarchy of active platforms and settings
-    let platform = new Platform();
+
     if (rootPlatformNode) {
 
       // check if we found an engine node (cordova/node-webkit/etc)
@@ -123,45 +105,52 @@ export class Platform {
       }
 
       platformNode = rootPlatformNode;
-      let settings = {};
       while (platformNode) {
         // set the array of active platforms with
         // the last one in the array the most important
-        platform.add(platformNode.name());
+        this._platforms.push(platformNode.name());
 
         // copy default platform settings into this platform settings obj
-        settings[platformNode.name()] = util.extend({}, platformNode.settings());
+        this._settings[platformNode.name()] = util.extend({}, platformNode.settings());
 
         // go to the next platform child
         platformNode = platformNode.child();
       }
-
-      platform.settings(settings);
     }
 
-    return platform;
+    return this;
   }
 
-  static register(platform) {
-    platformRegistry[platform.name] = platform;
+  is(platformName) {
+    return (this._platforms.indexOf(platformName) > -1);
   }
 
-  static get(platformName) {
-    return platformRegistry[platformName] || {};
-  }
-
-  static getSubsetParents(subsetPlatformName) {
-    let parentPlatformNames = [];
-    let platform = null;
-
-    for (let platformName in platformRegistry) {
-      platform = platformRegistry[platformName];
-      if (platform.subsets && platform.subsets.indexOf(subsetPlatformName) > -1) {
-        parentPlatformNames.push(platformName);
-      }
+  settings(val) {
+    if (arguments.length) {
+      this._settings = val;
     }
-    return parentPlatformNames;
+    return this._settings;
   }
+
+  run() {
+    let config = null;
+
+    for (var i = 0; i < this._platforms.length; i++) {
+      config = Platform.get(this._platforms[i]);
+      config.run && config.run();
+    }
+  }
+
+  platforms() {
+    // get the array of active platforms, which also knows the hierarchy,
+    // with the last one the most important
+    return this._platforms;
+  }
+
+  get(platformName) {
+    return this._registry[platformName] || {};
+  }
+
 }
 
 
@@ -225,7 +214,7 @@ class PlatformNode {
   getRoot(app) {
     if (this.isMatch(app)) {
 
-      let parents = Platform.getSubsetParents(this.name());
+      let parents = this.getSubsetParents(this.name());
 
       if (!parents.length) {
         return this;
@@ -250,7 +239,24 @@ class PlatformNode {
     return null;
   }
 
+  getSubsetParents(subsetPlatformName) {
+    let registry = Platform.registry();
+
+    let parentPlatformNames = [];
+    let platform = null;
+
+    for (let platformName in registry) {
+      platform = registry[platformName];
+
+      if (platform.subsets && platform.subsets.indexOf(subsetPlatformName) > -1) {
+        parentPlatformNames.push(platformName);
+      }
+    }
+
+    return parentPlatformNames;
+  }
+
 }
 
-let platformRegistry = {};
+export let Platform = new PlatformCtrl();
 

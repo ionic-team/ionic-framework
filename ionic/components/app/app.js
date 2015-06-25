@@ -143,7 +143,7 @@ export function ionicBootstrap(ComponentType, config) {
       app.width(window.innerWidth);
       app.height(window.innerHeight);
 
-      let platform = Platform.create(app);
+      let platform = Platform.load(app);
 
       config = config || new IonicConfig();
 
@@ -156,7 +156,6 @@ export function ionicBootstrap(ComponentType, config) {
 
       let injectableBindings = [
         bind(IonicApp).toValue(app),
-        bind(Platform).toValue(platform),
         bind(IonicConfig).toValue(config)
       ];
 
