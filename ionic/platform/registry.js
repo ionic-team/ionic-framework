@@ -77,7 +77,7 @@ Platform.register({
 
     return app.isPlatform('ios', 'iphone|ipad|ipod');
   },
-  versionParser: {
+  versionParser(app) {
     let val = app.matchUserAgent('OS (\d+)_(\d+)?');
     console.log(val);
   },
