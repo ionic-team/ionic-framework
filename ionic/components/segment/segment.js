@@ -26,7 +26,6 @@ import {IonicComponent} from 'ionic/config/component'
 })
 export class SegmentControlValueAccessor {
   constructor(cd: NgControl, renderer: Renderer, elementRef: ElementRef, segment: Segment) {
-    console.log('CoONSTRUCTING VALUE ACCESSOR', cd, segment);
     this.onChange = (_) => {};
     this.onTouched = (_) => {};
     this.cd = cd;
@@ -40,7 +39,6 @@ export class SegmentControlValueAccessor {
   writeValue(value) {
     // both this.value and setProperty are required at the moment
     // remove when a proper imperative API is provided
-    console.log('WRITE VALUE', value, this.elementRef, this.elementRef.parentView);
     this.value = !value ? '' : value;
     this.renderer.setElementProperty(this.elementRef.parentView.render, this.elementRef.boundElementIndex, 'value', this.value);
 
@@ -48,7 +46,7 @@ export class SegmentControlValueAccessor {
     this.segment.selectFromValue(value);
   }
 
-  registerOnChange(fn) { console.log('REGISTER ON CHANGE'); this.onChange = fn; }
+  registerOnChange(fn) { this.onChange = fn; }
 
   registerOnTouched(fn) { this.onTouched = fn; }
 }
@@ -71,6 +69,7 @@ export class Segment {
       properties: [
         'value'
       ],
+      lifecycle: [onInit],
       host: {
         '(click)': 'buttonClicked($event)',
         '(change)': 'onChange($event)',
@@ -90,7 +89,6 @@ export class Segment {
     elementRef: ElementRef,
     renderer: Renderer
   ) {
-    console.log('COnstructing', cd);
     this.domElement = elementRef.domElement
     this.elementRef = elementRef;
     this.renderer = renderer;
@@ -104,10 +102,7 @@ export class Segment {
   }
 
   onInit() {
-    setTimeout(() => {
-      console.log('NGFORMCONTROL', this.cd);
-    })
-    //Segment.applyConfig(this);
+    Segment.applyConfig(this);
   }
 
   /**
@@ -139,8 +134,6 @@ export class Segment {
    * Indicate a button should be selected.
    */
   selected(segmentButton) {
-    console.log('SELECTED', segmentButton);
-    console.trace();
     for(let button of this.buttons) {
       button.setActive(false);
     }
@@ -153,7 +146,6 @@ export class Segment {
       this.value = segmentButton.value;
       this.cd.valueAccessor.writeValue(segmentButton.value);
       this.selectFromValue(segmentButton.value);
-      console.log(this.cd);
 
       this.cd.form.updateValue(segmentButton.value);
 
