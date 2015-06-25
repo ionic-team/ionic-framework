@@ -5,7 +5,7 @@
   <ion-content>
     <ion-list inset>
       <ion-item *ng-for="#c of components" (^click)="openPage(aside, c)">
-        {{c.title}}
+        <span>{{c.title}}</span>
       </ion-item>
     </ion-list>
   </ion-content>

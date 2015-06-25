@@ -2,17 +2,17 @@ import {NgFor, DynamicComponentLoader, Injector, DomRenderer, ElementRef} from '
 import {Ancestor} from 'angular2/src/core/annotations_impl/visibility';
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
-import {FormBuilder, Validators, formDirectives, ControlGroup} from 'angular2/forms';
+import {FormBuilder, Validators, formDirectives, Control, ControlGroup} from 'angular2/forms';
 
 import {Segment, SegmentButton, List, Item, ActionMenu, Modal, ModalRef,
-  NavbarTemplate, Navbar, NavController, Content} from 'ionic/ionic';
+  NavbarTemplate, Navbar, NavController, Content, IonicView} from 'ionic/ionic';
 
 @Component({
   selector: 'ion-view'
 })
-@View({
+@IonicView({
   template: `
-  <ion-navbar *navbar><ion-title>Cards</ion-title></ion-navbar>
+  <ion-navbar *navbar><ion-title>Segment</ion-title></ion-navbar>
 
   <ion-content class="padding">
     <h2>Segment</h2>
@@ -25,33 +25,21 @@ import {Segment, SegmentButton, List, Item, ActionMenu, Modal, ModalRef,
       the map display between street, hybrid, and satellite.
     </p>
 
-    <form (^submit)="doSubmit($event)" [control-group]="form">
+    <form (^submit)="doSubmit($event)">
 
-      <ion-segment control="mapStyle">
-        <ion-segment-button value="standard" ion-button>
-          Standard
-        </ion-segment-button>
-        <ion-segment-button value="hybrid" ion-button>
-          Hybrid
-        </ion-segment-button>
-        <ion-segment-button value="sat" ion-button>
-          Satellite
-        </ion-segment-button>
-        <!--
-        <button ion-button class="active" [segment-value]="standard">
-          Standard
-        </button>
-
-        <button ion-button [segment-value]="hybrid">
-          Hybrid
-        </button>
-
-        <button #sat ion-button [segment-value]="sat">
-          Satellite
-        </button>
-      -->
-
-      </ion-segment>
+      <div ng-control-group="form">
+        <ion-segment [ng-form-control]="mapStyle">
+          <ion-segment-button value="standard" button>
+            Standard
+          </ion-segment-button>
+          <ion-segment-button value="hybrid" button>
+            Hybrid
+          </ion-segment-button>
+          <ion-segment-button value="sat" button>
+            Satellite
+          </ion-segment-button>
+        </ion-segment>
+      </div>
       <button type="submit" button primary>Submit</button>
     </form>
 
@@ -70,13 +58,20 @@ import {Segment, SegmentButton, List, Item, ActionMenu, Modal, ModalRef,
     </div>
   </ion-content>
   `,
-  directives: [NavbarTemplate, Navbar, Content, List, Item, Segment, SegmentButton, formDirectives]
+  directives: [formDirectives]
 })
 export class SegmentPage {
   constructor() {
+    /*
     var fb = new FormBuilder();
     this.form = fb.group({
       mapStyle: ['hybrid', Validators.required]
+    });
+    */
+
+    this.mapStyle = new Control("hybrid", Validators.required);
+    this.form = new ControlGroup({
+      "mapStyle": this.mapStyle
     });
 
   }
