@@ -8,7 +8,7 @@ import {
   Tabs, Tab,
   List, Item,
   Icon,
-  Checkbox, Switch, Label, Input, Segment, SegmentButton,
+  Checkbox, Switch, Label, Input, Segment, SegmentButton, SegmentControlValueAccessor,
   RadioGroup, RadioButton, SearchBar,
   Nav, NavbarTemplate, Navbar, NavPush, NavPop
 } from 'ionic/ionic';
@@ -31,7 +31,7 @@ export class IonicView extends View {
       Icon,
 
       // Form elements
-      Segment, SegmentButton,
+      Segment, SegmentButton, SegmentControlValueAccessor,
       //Checkbox, Switch, Label, Input
       //RadioGroup, RadioButton, SearchBar,
 

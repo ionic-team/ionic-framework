@@ -1,5 +1,5 @@
 import {Component} from 'angular2/src/core/annotations_impl/annotations';
-import {formDirectives, FormBuilder, Validators, ControlGroup} from 'angular2/forms';
+import {formDirectives, FormBuilder, Validators, Control, ControlGroup} from 'angular2/forms';
 
 import {IonicView} from 'ionic/ionic';
 
@@ -12,10 +12,17 @@ import {IonicView} from 'ionic/ionic';
 class IonicApp {
   constructor() {
 
+    this.mapStyle = new Control("hybrid", Validators.required);
+    this.form = new ControlGroup({
+      "mapStyle": this.mapStyle
+    });
+
+    /*
     var fb = new FormBuilder();
     this.form = fb.group({
       mapStyle: ['hybrid', Validators.required]
     });
+    */
     console.log(this.form);
   }
 

@@ -9,8 +9,65 @@ import {ControlGroup, ControlDirective} from 'angular2/forms'
 import {dom} from 'ionic/util';
 import {IonicComponent} from 'ionic/config/component'
 
+@Directive({
+  selector: 'ion-segment',
+  host: {
+    '(change)': 'onChange($event.target.value)',
+    '(input)': 'onChange($event.target.value)',
+    '(blur)': 'onTouched()',
+    '[value]': 'value',
+    '[class.ng-untouched]': 'cd.control?.untouched == true',
+    '[class.ng-touched]': 'cd.control?.touched == true',
+    '[class.ng-pristine]': 'cd.control?.pristine == true',
+    '[class.ng-dirty]': 'cd.control?.dirty == true',
+    '[class.ng-valid]': 'cd.control?.valid == true',
+    '[class.ng-invalid]': 'cd.control?.valid == false'
+  }
+})
+export class SegmentControlValueAccessor {
+  constructor(cd: NgControl, renderer: Renderer, elementRef: ElementRef) {
+    console.log('CoONSTRUCTING VALUE ACCESSOR', cd);
+    this.onChange = (_) => {};
+    this.onTouched = (_) => {};
+    this.cd = cd;
+    this.renderer = renderer;
+    this.elementRef = elementRef;
 
-@IonicComponent(Segment)
+    cd.valueAccessor = this;
+  }
+
+  writeValue(value) {
+    // both this.value and setProperty are required at the moment
+    // remove when a proper imperative API is provided
+    console.log('WRITE VALUE', value);
+    this.value = !value ? '' : value;
+    this.renderer.setElementProperty(this.elementRef.parentView.render, this.elementRef.boundElementIndex, 'value', this.value);
+  }
+
+  registerOnChange(fn) { console.log('REGISTER ON CHANGE'); this.onChange = fn; }
+
+  registerOnTouched(fn) { this.onTouched = fn; }
+}
+
+
+@Component({
+  selector: 'ion-segment',
+  appInjector: [ NgFormControl ],
+  properties: [
+    'value'
+  ],
+  host: {
+    '(click)': 'buttonClicked($event)',
+    '(change)': 'onChange($event)',
+    '[value]': 'value',
+    '[class.ng-untouched]': 'cd.control?.untouched == true',
+    '[class.ng-touched]': 'cd.control?.touched == true',
+    '[class.ng-pristine]': 'cd.control?.pristine == true',
+    '[class.ng-dirty]': 'cd.control?.dirty == true',
+    '[class.ng-valid]': 'cd.control?.valid == true',
+    '[class.ng-invalid]': 'cd.control?.valid == false'
+  }
+})
 @View({
   template: `<div class="ion-segment">
     <content></content>
@@ -23,20 +80,6 @@ export class Segment {
   static get config() {
     return {
       selector: 'ion-segment',
-      appInjector: [ NgFormControl ],
-      properties: [
-        'value'
-      ],
-      host: {
-        '(click)': 'buttonClicked($event)',
-        '[value]': 'value',
-        '[class.ng-untouched]': 'cd.control?.untouched == true',
-        '[class.ng-touched]': 'cd.control?.touched == true',
-        '[class.ng-pristine]': 'cd.control?.pristine == true',
-        '[class.ng-dirty]': 'cd.control?.dirty == true',
-        '[class.ng-valid]': 'cd.control?.valid == true',
-        '[class.ng-invalid]': 'cd.control?.valid == false'
-      }
     }
   }
 
@@ -45,7 +88,7 @@ export class Segment {
     elementRef: ElementRef,
     renderer: Renderer
   ) {
-    console.log('COnstructing');
+    console.log('COnstructing', cd);
     this.domElement = elementRef.domElement
     this.elementRef = elementRef;
     this.renderer = renderer;
@@ -55,33 +98,15 @@ export class Segment {
 
     this.cd = cd;
 
-    this.onChange = (_) => {};
-    this.onTouched = (_) => {};
-    cd.valueAccessor = this;
-
     this.buttons = [];
   }
 
   onInit() {
-    console.log('NGFORMCONTROL', this.cd);
-    Segment.applyConfig(this);
-  }
-
-  writeValue(value) {
-    console.log('WRITE', value);
-    // both this.value and setProperty are required at the moment
-    // remove when a proper imperative API is provided
-    this.value = !value ? '' : value;
-    this.renderer.setElementProperty(this.elementRef.parentView.render, this.elementRef.boundElementIndex, 'value', this.value);
-
     setTimeout(() => {
-      this.selectFromValue(value);
+      console.log('NGFORMCONTROL', this.cd);
     })
+    //Segment.applyConfig(this);
   }
-
-  registerOnChange(fn) { this.onChange = fn; }
-
-  registerOnTouched(fn) { this.onTouched = fn; }
 
   /**
    * Called by child SegmentButtons to bind themselves to
@@ -122,10 +147,16 @@ export class Segment {
     }
     segmentButton.setActive(true);
 
-    this.onChange();
+    //this.onChange();
 
-    //this.writeValue(segmentButton.value);
-    //this.value = segmentButton.value;
+    //this.change.next();
+
+    setTimeout(() => {
+      this.value = segmentButton.value;
+      this.cd.valueAccessor.writeValue(segmentButton.value);
+      this.selectFromValue(segmentButton.value);
+    })
+
 
     //this.ngControl.control().updateValue(this.value);
     // TODO: Better way to do this?
