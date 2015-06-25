@@ -1,123 +1,106 @@
-import {isString, isObject, isDefined} from '../util/util';
+import {isObject, isDefined} from '../util/util';
 
 
 export class IonicConfig {
 
   constructor(settings={}) {
-    this._settings = settings;
-    this._settings.platforms = this._settings.platforms || {};
+    this.setting(settings);
   }
 
-  platform(val) {
-    if (arguments.length) {
-      this._platform = val;
-    }
-    return this._platform;
+  platform(platform) {
+    this._platform = platform;
   }
 
   setting() {
     const args = arguments;
     const arg0 = args[0];
     const arg1 = args[1];
-    const arg2 = args[2];
-    const arg3 = args[3];
-    const argLength = args.length;
 
     let s = this._settings;
 
-    if (argLength === 0) {
-      // setting() = get settings object
-      return s;
+    switch (args.length) {
 
-    } else if (argLength === 1) {
-      // setting({...}) = set settings object
-      // setting('key') = get value
+      case 0:
+        // setting() = get settings object
+        return s;
 
-      if (isObject(arg0)) {
+
+      case 1:
         // setting({...}) = set settings object
-        // arg0 = setting object
-        s = arg0;
+        // setting('key') = get value
 
-      } else if (isString(arg0)) {
+        if (isObject(arg0)) {
+          // setting({...}) = set settings object
+          // arg0 = setting object
+          this._settings = arg0;
+          break;
+        }
+
+        // time for the big show, get the value
         // setting('key') = get value
         // arg0 = key
-        return s[arg0]
-      }
-
-    } else if (argLength === 2) {
-      // setting('key', 'value') = set key/value pair
-      // arg0 = key
-      // arg1 = value
-      s[arg0] = arg1;
-
-    } else if (argLength > 2) {
-      // create platform object and platformKey object if needed
-      // arg0 = key
-      // arg1 = platform key
-      s.platforms = s.platforms || {};
-      s.platforms[arg1] = s.platforms[arg1] || {};
-
-      if (argLength === 3) {
-        // setting('key', 'ios', 'value') = set key/value pair for platform
-        // arg0 = key
-        // arg1 = platform key
-        // arg2 = value
-        s.platforms[arg1][arg0] = arg2;
-
-      } else if (argLength === 4) {
-        // setting('key', 'ios', 'ipad', 'value') = set key/value pair for platform/device
-        // arg0 = key
-        // arg1 = platform key
-        // arg2 = device key
-        // arg3 = value
-        s.platforms[arg1] = s.platforms[arg1] || {};
-      }
-
-    }
-
-    if (arguments.length > 1) {
-      this._settings[key] = val;
-
-    } else {
-      // 1) user platform settings
-      // 2) user settings
-      // 3) platform settings
-      let tmp = null;
-
-      if (this._platform) {
-        tmp = this.platformSetting( this._platform.name() );
-        if (isDefined(tmp)) {
-          return tmp;
+        if (isDefined(s[arg0])) {
+          // value found in users settings object
+          return s[arg0];
         }
-      }
 
-      tmp = this._settings[key];
-      if (util.isDefined(tmp)) {
-        return tmp;
-      }
+        // check the users platform settings object
+        // loop though each of the active platforms
+        let activePlatformKeys = this._platform.platforms();
+        let platformSettings = s.platforms;
+        if (platformSettings) {
+          let platformValue = undefined;
+          for (let i = 0; i < activePlatformKeys.length; i++) {
+            if ( platformSettings[ activePlatformKeys[i] ] ) {
+              platformValue = platformSettings[ activePlatformKeys[i] ][arg0];
+            }
+          }
+          if (isDefined(platformValue)) {
+            return platformValue;
+          }
+        }
 
-      if (this._platform) {
-        return this._platform.setting(key);
-      }
+        // check the value from the default platform settings
+        platformSettings = this._platform.settings();
+        if (isDefined(platformSettings[arg0])) {
+          return platformSettings[arg0];
+        }
 
-      return null;
+        // idk
+        return null;
+
+
+      case 2:
+        // setting('ios', {...}) = set platform config object
+        // setting('key', 'value') = set key/value pair
+
+        if (isObject(arg1)) {
+          // setting('ios', {...}) = set platform config object
+          // arg0 = platform
+          // arg1 = platform config object
+          s.platforms = s.platforms || {};
+          s.platforms[arg0] = arg1;
+          break;
+        }
+
+        // setting('key', 'value') = set key/value pair
+        // arg0 = key
+        // arg1 = value
+        s[arg0] = arg1;
+        break;
+
+
+      case 3:
+        // setting('ios', 'key', 'value') = set key/value pair for platform
+        // arg0 = platform
+        // arg1 = key
+        // arg2 = value
+        s.platforms = s.platforms || {};
+        s.platforms[arg0] = s.platforms[arg0] || {};
+        s.platforms[arg0][arg1] = args[2];
+
     }
-  }
 
-  platformSettings(platformName, platformSettings) {
-    let settings = this._settings.platforms[platformName] = this._settings.platforms[platformName] || {};
-    if (arguments.length > 1) {
-      settings = platformSettings || {};
-    }
-    return settings;
-  }
-
-  platformSetting(platformName, key, val) {
-    let settings = this._settings.platforms[platformName] = this._settings.platforms[platformName] || {};
-    if (arguments.length > 2) {
-      settings[key] = val;
-    }
-    return settings[key];
   }
 
 }

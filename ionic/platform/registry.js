@@ -8,7 +8,10 @@ Platform.register({
     'android',
     'ios',
     'windowsphone'
-  ]
+  ],
+  settings: {
+    mode: 'core'
+  }
 });
 
 
@@ -69,7 +72,7 @@ Platform.register({
     mode: 'ios'
   },
   isMatch(app) {
-    return app.matchesPlatform('ios');
+    return app.matchesPlatform('ios', 'iphone|ipad|ipod');
   },
   run() {
     Tap.run();

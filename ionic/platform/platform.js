@@ -12,6 +12,13 @@ export class Platform {
     return (this._platforms.indexOf(platformName) > -1);
   }
 
+  platforms(val) {
+    if (arguments.length) {
+      this._platforms = val;
+    }
+    return this._platforms;
+  }
+
   settings(val) {
     if (arguments.length) {
       this._settings = val;

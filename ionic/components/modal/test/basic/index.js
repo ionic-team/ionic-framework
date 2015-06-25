@@ -150,12 +150,11 @@ export class ModalSecondPage {
 
 export function main(ionicBootstrap) {
 
-  let myConfig = new IonicConfig({
-    'adams': 'config',
-    'tabBarPlacement': 'adam'
-  });
+  let myConfig = new IonicConfig();
 
   ionicBootstrap(MyApp, myConfig).then(root => {
+
+    console.log(myConfig.setting('mode'));
 
     console.log('mobile', root.platform.is('mobile'))
     console.log('ipad', root.platform.is('ipad'))
