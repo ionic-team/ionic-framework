@@ -117,12 +117,11 @@ export class Segment {
   register(segmentButton) {
     this.buttons.push(segmentButton);
 
-    console.log('registering', this.buttons, this.value);
-
+    // If this button is registered and matches our value,
+    // make sure to select it
     if(this.value == segmentButton.value) {
       this.selected(segmentButton);
     }
-
   }
 
   /**
@@ -132,11 +131,9 @@ export class Segment {
     for(let button of this.buttons) {
       if(button.value === value) {
         button.isActive = true;
-        //this.selected(button);
       }
     }
   }
-
 
   /**
    * Indicate a button should be selected.
@@ -151,12 +148,17 @@ export class Segment {
 
     //this.onChange();
 
-    //this.change.next();
 
     setTimeout(() => {
       this.value = segmentButton.value;
       this.cd.valueAccessor.writeValue(segmentButton.value);
       this.selectFromValue(segmentButton.value);
+      console.log(this.cd);
+
+      this.cd.form.updateValue(segmentButton.value);
+
+      // Trigger on change
+      this.change.next();
     })
 
 
