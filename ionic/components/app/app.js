@@ -146,7 +146,11 @@ export function ionicBootstrap(ComponentType, config) {
       let platform = Platform.create(app);
 
       config = config || new IonicConfig();
-      config.platform(platform);
+
+      // copy default platform settings into the user config platform settings
+      // user config platform settings should override default platform settings
+      config.setPlatform(platform);
+
 
       GlobalIonicConfig = config;
 

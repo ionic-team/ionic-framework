@@ -1,14 +1,10 @@
-import {isObject, isDefined} from '../util/util';
+import {isString, isObject, isDefined, extend} from '../util/util';
 
 
 export class IonicConfig {
 
-  constructor(settings={}) {
-    this.setting(settings);
-  }
-
-  platform(platform) {
-    this._platform = platform;
+  constructor(settings) {
+    this.setting(settings || {});
   }
 
   setting() {
@@ -33,37 +29,43 @@ export class IonicConfig {
           // setting({...}) = set settings object
           // arg0 = setting object
           this._settings = arg0;
-          break;
+          return this;
         }
 
-        // time for the big show, get the value
-        // setting('key') = get value
-        // arg0 = key
-        if (isDefined(s[arg0])) {
-          // value found in users settings object
-          return s[arg0];
-        }
+        // arg0 must be a string to get a property
+        if (isString(arg0)) {
+          // time for the big show, get the value
+          // setting('key') = get value
+          // arg0 = key
 
-        // check the users platform settings object
-        // loop though each of the active platforms
-        let activePlatformKeys = this._platform.platforms();
-        let platformSettings = s.platforms;
-        if (platformSettings) {
-          let platformValue = undefined;
-          for (let i = 0; i < activePlatformKeys.length; i++) {
-            if ( platformSettings[ activePlatformKeys[i] ] ) {
-              platformValue = platformSettings[ activePlatformKeys[i] ][arg0];
+          if (!isDefined(s[arg0])) {
+            // if the value was already set this will all be skipped
+            // if there was no user config then it'll check each of
+            // the user config's platforms, which already contains
+            // settings from default platform configs
+            s[arg0] = null;
+
+            // check the platform settings object for this value
+            // loop though each of the active platforms
+            let activePlatformKeys = this._platforms;
+            let platformSettings = s.platforms;
+            let platformObj = null;
+            if (platformSettings) {
+              let platformValue = undefined;
+              for (let i = 0; i < activePlatformKeys.length; i++) {
+                platformObj = platformSettings[ activePlatformKeys[i] ];
+                if (platformObj && isDefined(platformObj[arg0])) {
+                  platformValue = platformObj[arg0];
+                }
+              }
+              if (isDefined(platformValue)) {
+                s[arg0] = platformValue;
+              }
             }
           }
-          if (isDefined(platformValue)) {
-            return platformValue;
-          }
-        }
 
-        // check the value from the default platform settings
-        platformSettings = this._platform.settings();
-        if (isDefined(platformSettings[arg0])) {
-          return platformSettings[arg0];
+          // return value.
+          return s[arg0];
         }
 
         // idk
@@ -73,21 +75,20 @@ export class IonicConfig {
       case 2:
         // setting('ios', {...}) = set platform config object
         // setting('key', 'value') = set key/value pair
-
         if (isObject(arg1)) {
           // setting('ios', {...}) = set platform config object
           // arg0 = platform
           // arg1 = platform config object
           s.platforms = s.platforms || {};
           s.platforms[arg0] = arg1;
-          break;
-        }
 
-        // setting('key', 'value') = set key/value pair
-        // arg0 = key
-        // arg1 = value
-        s[arg0] = arg1;
-        break;
+        } else {
+          // setting('key', 'value') = set key/value pair
+          // arg0 = key
+          // arg1 = value
+          s[arg0] = arg1;
+        }
+        return this;
 
 
       case 3:
@@ -98,9 +99,21 @@ export class IonicConfig {
         s.platforms = s.platforms || {};
         s.platforms[arg0] = s.platforms[arg0] || {};
         s.platforms[arg0][arg1] = args[2];
+        return this;
 
     }
 
+  }
+
+  setPlatform(platform) {
+    // get the array of active platforms, which also knows the hierarchy,
+    // with the last one the most important
+    this._platforms = platform.platforms();
+
+    // copy default platform settings into the user config platform settings
+    // user config platform settings should override default platform settings
+    this._settings.platforms = this._settings.platforms || {};
+    this._settings.platforms = extend(platform.settings(), this._settings.platforms);
   }
 
 }

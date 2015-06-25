@@ -152,8 +152,13 @@ export function main(ionicBootstrap) {
 
   let myConfig = new IonicConfig();
 
+  //myConfig.setting('someKey', 'userConfig');
+  // myConfig.setting('ios', 'someKey', 'iosConfig');
+  // myConfig.setting('ipad', 'someKey', 'ipadConfig');
+
   ionicBootstrap(MyApp, myConfig).then(root => {
 
+    console.log('someKey', myConfig.setting('someKey'));
     console.log(myConfig.setting('mode'));
 
     console.log('mobile', root.platform.is('mobile'))

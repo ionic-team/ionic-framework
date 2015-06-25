@@ -12,13 +12,6 @@ export class Platform {
     return (this._platforms.indexOf(platformName) > -1);
   }
 
-  platforms(val) {
-    if (arguments.length) {
-      this._platforms = val;
-    }
-    return this._platforms;
-  }
-
   settings(val) {
     if (arguments.length) {
       this._settings = val;
@@ -37,6 +30,12 @@ export class Platform {
 
   add(platformName) {
     this._platforms.push(platformName);
+  }
+
+  platforms() {
+    // get the array of active platforms, which also knows the hierarchy,
+    // with the last one the most important
+    return this._platforms;
   }
 
 
@@ -81,17 +80,23 @@ export class Platform {
 
     let platform = new Platform();
     if (rootNode) {
-      let platformNode = rootNode.child();
+      let platformNode = rootNode;
       while (platformNode) {
         insertSuperset(platformNode);
         platformNode = platformNode.child();
       }
 
-      platformNode = rootNode.child();
+      platformNode = rootNode;
       let settings = {};
       while (platformNode) {
+        // set the array of active platforms with
+        // the last one in the array the most important
         platform.add(platformNode.name());
-        util.extend(settings, platformNode.settings());
+
+        // copy default platform settings into this platform settings obj
+        settings[platformNode.name()] = util.extend({}, platformNode.settings());
+
+        // go to the next child
         platformNode = platformNode.child();
       }
 
