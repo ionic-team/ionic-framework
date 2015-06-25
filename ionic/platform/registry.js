@@ -117,3 +117,22 @@ Platform.register({
     return app.matchesPlatform('windowsphone', 'windows phone');
   }
 });
+
+
+Platform.register({
+  name: 'cordova',
+  isEngine: true,
+  methods: {
+    onReady: function() {
+      return new Promise(resolve => {
+        setTimeout(function() {
+          resolve();
+        }, 1000);
+      });
+    }
+  },
+  isMatch(app) {
+    return true;
+    return !!(window.cordova || window.PhoneGap || window.phonegap);
+  }
+});

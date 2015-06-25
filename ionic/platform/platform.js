@@ -41,10 +41,15 @@ export class Platform {
 
   /* Static Methods */
   static create(app) {
-    let rootNode = null;
+    let rootPlatformNode = null;
+    let engineNode = null;
 
     function matchPlatform(platformConfig) {
+      // build a PlatformNode and assign config data to it
+      // use it's getRoot method to build up its hierarchy
+      // depending on which platforms match
       let platformNode = new PlatformNode();
+      platformNode.isEngine = platformConfig.isEngine;
       platformNode.config(platformConfig);
       let tmpPlatform = platformNode.getRoot(app, 0);
 
@@ -55,16 +60,15 @@ export class Platform {
           tmpPlatform.depth++
           childPlatform = childPlatform.child();
         }
-
-        if (!rootNode || tmpPlatform.depth > rootNode.depth) {
-          rootNode = tmpPlatform;
-        }
       }
+      return tmpPlatform;
     }
 
     function insertSuperset(platformNode) {
       let supersetPlaformName = platformNode.superset();
       if (supersetPlaformName) {
+        // add a platform in between two exist platforms
+        // so we can build the correct hierarchy of active platforms
         let supersetPlatform = new PlatformNode();
         supersetPlatform.load(supersetPlaformName);
         supersetPlatform.parent(platformNode.parent());
@@ -74,19 +78,51 @@ export class Platform {
       }
     }
 
+    // figure out the most specific platform and active engine
+    let tmpPlatform = null;
     for (let platformName in platformRegistry) {
-      matchPlatform( platformRegistry[platformName] );
+
+      tmpPlatform = matchPlatform( platformRegistry[platformName] );
+      if (tmpPlatform) {
+        // we found a platform match!
+        // check if its more specific than the one we already have
+
+        if (tmpPlatform.isEngine) {
+          // because it matched then this should be the active engine
+          // you cannot have more than one active engine
+          engineNode = tmpPlatform;
+
+        } else if (!rootPlatformNode || tmpPlatform.depth > rootPlatformNode.depth) {
+          // only find the root node for platforms that are not engines
+          // set this node as the root since we either don't already
+          // have one, or this one is more specific that the current one
+          rootPlatformNode = tmpPlatform;
+        }
+      }
     }
 
+    // build a Platform instance filled with the
+    // hierarchy of active platforms and settings
     let platform = new Platform();
-    if (rootNode) {
-      let platformNode = rootNode;
+    if (rootPlatformNode) {
+
+      // check if we found an engine node (cordova/node-webkit/etc)
+      if (engineNode) {
+        // add the engine to the first in the platform hierarchy
+        // the original rootPlatformNode now becomes a child
+        // of the engineNode, which is not the new root
+        engineNode.child(rootPlatformNode);
+        rootPlatformNode.parent(engineNode);
+        rootPlatformNode = engineNode;
+      }
+
+      let platformNode = rootPlatformNode;
       while (platformNode) {
         insertSuperset(platformNode);
         platformNode = platformNode.child();
       }
 
-      platformNode = rootNode;
+      platformNode = rootPlatformNode;
       let settings = {};
       while (platformNode) {
         // set the array of active platforms with
@@ -96,7 +132,7 @@ export class Platform {
         // copy default platform settings into this platform settings obj
         settings[platformNode.name()] = util.extend({}, platformNode.settings());
 
-        // go to the next child
+        // go to the next platform child
         platformNode = platformNode.child();
       }
 

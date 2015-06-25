@@ -158,9 +158,10 @@ export function main(ionicBootstrap) {
 
   ionicBootstrap(MyApp, myConfig).then(root => {
 
-    console.log('someKey', myConfig.setting('someKey'));
+    console.log('platforms', root.platform.platforms());
     console.log(myConfig.setting('mode'));
 
+    console.log('cordova', root.platform.is('cordova'))
     console.log('mobile', root.platform.is('mobile'))
     console.log('ipad', root.platform.is('ipad'))
     console.log('iphone', root.platform.is('iphone'))
