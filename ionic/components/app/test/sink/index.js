@@ -1,6 +1,6 @@
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 
-import {IonicView} from 'ionic/ionic';
+import {IonicView, Register, Registry} from 'ionic/ionic';
 
 import {ButtonPage} from './pages/button'
 import {NavPage} from './pages/nav'
@@ -22,7 +22,8 @@ import {ModalPage} from './pages/modal'
   selector: 'ion-app',
 })
 @IonicView({
-  templateUrl: 'main.html'
+  templateUrl: 'main.html',
+  directives: [Register]
 })
 class IonicApp {
   constructor() {
@@ -49,7 +50,8 @@ class IonicApp {
   openPage(aside, component) {
     aside.close();
 
-    window.nav.setItems([component.component]);
+    let nav = Registry.get('myNav');
+    nav.setItems([component.component]);
   }
 }
 

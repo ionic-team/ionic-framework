@@ -43,7 +43,6 @@ import {Routable, NavbarTemplate, Navbar, NavController, Content} from 'ionic/io
 export class ButtonPage {
   constructor(nav: NavController) {
     this.nav = nav;
-    window.nav = nav;
   }
 
   onButtonClick(event) {
