@@ -72,6 +72,9 @@ Platform.register({
     mode: 'ios'
   },
   isMatch(app) {
+    // SLEDGEHAMMER OVERRIDE FOR NOW
+    return true;
+
     return app.matchesPlatform('ios', 'iphone|ipad|ipod');
   },
   run() {
