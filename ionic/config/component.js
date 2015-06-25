@@ -1,9 +1,10 @@
-import {Component, ComponentAnnotation, Directive} from 'angular2/angular2';
+import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {DirectiveMetadata} from 'angular2/src/render/api';
 
 import * as util from 'ionic/util';
 import {Platform} from 'ionic/platform/platform';
 import {GlobalIonicConfig} from '../components/app/app';
+
 
 export class IonicDirective extends Directive {
   constructor(ComponentType) {
@@ -11,14 +12,11 @@ export class IonicDirective extends Directive {
   }
 }
 
-export let IonicComponent = (function(){
-  function IonicComponentFactory(ComponentClass) {
-    return new Component(appendModeConfig(ComponentClass));
+export class IonicComponent extends Component {
+  constructor(ComponentType) {
+    super( appendModeConfig(ComponentType) );
   }
-  IonicComponentFactory.prototype = Object.create(ComponentAnnotation.prototype);
-  return IonicComponentFactory;
-})();
-
+}
 
 function appendModeConfig(ComponentType) {
   let config = ComponentType.config;
