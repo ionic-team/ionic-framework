@@ -66,7 +66,8 @@ Platform.register({
     'iphone'
   ],
   settings: {
-    mode: 'ios'
+    mode: 'ios',
+    tapPolyfill: true
   },
   isMatch(p) {
     // SLEDGEHAMMER OVERRIDE FOR NOW
@@ -121,11 +122,9 @@ Platform.register({
   name: 'cordova',
   isEngine: true,
   methods: {
-    ready: function() {
-      return Platform.windowLoad().then(() => {
-        return new Promise(resolve => {
-          document.addEventListener("deviceready", resolve);
-        });
+    ready: function(resolve) {
+      Platform.windowLoad(() => {
+        document.addEventListener("deviceready", resolve);
       });
     }
   },

@@ -118,6 +118,23 @@ export class IonicApp {
 
 }
 
+function initApp(window, document) {
+  // create the base IonicApp
+  let app = new IonicApp();
+  app.isRTL(document.documentElement.getAttribute('dir') == 'rtl');
+  app.lang(document.documentElement.getAttribute('lang'));
+
+  // load all platform data
+  // Platform is a global singleton
+  Platform.url(window.location.href);
+  Platform.userAgent(window.navigator.userAgent);
+  Platform.width(window.innerWidth);
+  Platform.height(window.innerHeight);
+  Platform.load();
+
+  return app;
+}
+
 export function ionicBootstrap(ComponentType, config) {
   return new Promise((resolve, reject) => {
     try {
@@ -146,6 +163,11 @@ export function ionicBootstrap(ComponentType, config) {
 
       bootstrap(ComponentType, injectableBindings).then(appRef => {
         app.ref(appRef);
+
+        // prepare the ready promise to fire....when ready
+        Platform.prepareReady(config);
+
+        // resolve that the app has loaded
         resolve(app);
 
       }).catch(err => {
@@ -160,25 +182,6 @@ export function ionicBootstrap(ComponentType, config) {
   });
 }
 
-function initApp(window, document) {
-  // create the base IonicApp
-  let app = new IonicApp();
-  app.isRTL(document.documentElement.getAttribute('dir') == 'rtl');
-  app.lang(document.documentElement.getAttribute('lang'));
-
-  // load all platform data
-  // Platform is a global singleton
-  Platform.url(window.location.href);
-  Platform.userAgent(window.navigator.userAgent);
-  Platform.width(window.innerWidth);
-  Platform.height(window.innerHeight);
-  Platform.load();
-
-  return app;
-}
-
-export let GlobalIonicConfig = null;
-
 export function load(app) {
   if (!app) {
     console.error('Invalid app module');
@@ -190,3 +193,5 @@ export function load(app) {
     app.main(ionicBootstrap);
   }
 }
+
+export let GlobalIonicConfig = null;

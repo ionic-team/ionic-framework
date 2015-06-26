@@ -111,37 +111,50 @@ function cssPromise(el:Element, eventNames, animationName) {
   });
 }
 
-export function ready() {
-  return new Promise(resolve => {
-    if (document.readyState === 'complete' || document.readyState === 'interactive') {
-      resolve();
+export function ready(callback) {
+  let promise = null;
 
-    } else {
+  if (!callback) {
+    // a callback wasn't provided, so let's return a promise instead
+    promise = new Promise(resolve => { callback = resolve; });
+  }
 
-      function completed() {
-        document.removeEventListener('DOMContentLoaded', completed, false);
-        window.removeEventListener('load', completed, false);
-        resolve();
-      }
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    callback();
 
-      document.addEventListener('DOMContentLoaded', completed, false);
-      window.addEventListener('load', completed, false);
+  } else {
+    function completed() {
+      document.removeEventListener('DOMContentLoaded', completed, false);
+      window.removeEventListener('load', completed, false);
+      callback();
     }
-  })
+
+    document.addEventListener('DOMContentLoaded', completed, false);
+    window.addEventListener('load', completed, false);
+  }
+
+  return promise;
 }
 
-export function windowLoad() {
-  return new Promise(resolve => {
-    if (document.readyState === 'complete') {
-      resolve();
+export function windowLoad(callback) {
+  let promise = null;
 
-    } else {
-      function completed() {
-        window.removeEventListener('load', completed, false);
-        resolve();
-      }
+  if (!callback) {
+    // a callback wasn't provided, so let's return a promise instead
+    promise = new Promise(resolve => { callback = resolve; });
+  }
 
-      window.addEventListener('load', completed, false);
+  if (document.readyState === 'complete') {
+    callback();
+
+  } else {
+    function completed() {
+      window.removeEventListener('load', completed, false);
+      callback();
     }
-  });
+
+    window.addEventListener('load', completed, false);
+  }
+
+  return promise;
 }

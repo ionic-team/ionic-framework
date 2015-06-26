@@ -11,6 +11,8 @@ export class PlatformCtrl {
     this._default = null;
     this._vMajor = 0;
     this._vMinor = 0;
+
+    this._readyPromise = new Promise(res => { this._readyResolve = res; } );
   }
 
 
@@ -40,20 +42,35 @@ export class PlatformCtrl {
   }
 
   ready() {
-    // if a ready method was provided then it would
-    // override this default method
-    // fallback to use dom ready by default
-    return dom.ready();
+    return this._readyPromise;
+  }
+
+  prepareReady(config) {
+    let self = this;
+
+    function resolve() {
+      self._readyResolve(config);
+    }
+
+    if (this._engineReady) {
+      // the engine provide a ready promise, use this instead
+      this._engineReady(resolve);
+
+    } else {
+      // there is no custom ready method from the engine
+      // use the default dom ready
+      dom.ready(resolve);
+    }
   }
 
   domReady() {
-    // helper method so its easy to access on Platform
-    return dom.ready();
+    // convenience method so its easy to access on Platform
+    return dom.ready.apply(this, arguments);
   }
 
   windowLoad() {
-    // helper method so its easy to access on Platform
-    return dom.windowLoad();
+    // convenience method so its easy to access on Platform
+    return dom.windowLoad.apply(this, arguments);
   }
 
 
@@ -198,7 +215,10 @@ export class PlatformCtrl {
 
         // add any events which the engine would provide
         // for example, Cordova provides its own ready event
-        util.extend(this, engineNode.methods());
+        let engineMethods = engineNode.methods();
+        engineMethods._engineReady = engineMethods.ready;
+        delete engineMethods.ready;
+        util.extend(this, engineMethods);
       }
 
       let platformNode = rootPlatformNode;

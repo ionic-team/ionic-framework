@@ -1,5 +1,5 @@
-import {dom} from 'ionic/util'
-import {Platform} from 'ionic/platform/platform'
+import {dom} from './dom'
+import {Platform} from '../platform/platform'
 
 /**
  * @ngdoc page
@@ -96,27 +96,20 @@ var tapEventListeners = {
   'touchcancel': tapTouchCancel,
   'touchmove': tapTouchMove,
 
-  'pointerdown': tapTouchStart,
-  'pointerup': tapTouchEnd,
-  'pointercancel': tapTouchCancel,
-  'pointermove': tapTouchMove,
-
-  'MSPointerDown': tapTouchStart,
-  'MSPointerUp': tapTouchEnd,
-  'MSPointerCancel': tapTouchCancel,
-  'MSPointerMove': tapTouchMove,
-
   'focusin': tapFocusIn,
   'focusout': tapFocusOut
 };
 
-export let Tap = {
+Platform.ready().then(config => {
 
-  run: function() {
-    dom.ready().then(() => {
-      Tap.register(document);
-    });
-  },
+  if (config.setting('tapPolyfill')) {
+    Tap.register(document);
+  }
+
+});
+
+
+export let Tap = {
 
   register: function(ele) {
     tapDoc = ele;
@@ -125,23 +118,9 @@ export let Tap = {
     tapEventListener('mouseup');
     tapEventListener('mousedown');
 
-    if (window.navigator.pointerEnabled) {
-      tapEventListener('pointerdown');
-      tapEventListener('pointerup');
-      tapEventListener('pointcancel');
-      tapTouchMoveListener = 'pointermove';
-
-    } else if (window.navigator.msPointerEnabled) {
-      tapEventListener('MSPointerDown');
-      tapEventListener('MSPointerUp');
-      tapEventListener('MSPointerCancel');
-      tapTouchMoveListener = 'MSPointerMove';
-
-    } else {
-      tapEventListener('touchstart');
-      tapEventListener('touchend');
-      tapEventListener('touchcancel');
-    }
+    tapEventListener('touchstart');
+    tapEventListener('touchend');
+    tapEventListener('touchcancel');
 
     tapEventListener('focusin');
     tapEventListener('focusout');
@@ -179,7 +158,7 @@ export let Tap = {
   },
 
   isKeyboardElement: function(ele) {
-    if ( !Platform.is('ios') || Platform.isDevice('ipad') ) {
+    if (Platform.isDevice('ipad') ) {
       return Tap.isTextInput(ele) && !Tap.isDateInput(ele);
     } else {
       return Tap.isTextInput(ele) || ( !!ele && ele.tagName == "SELECT");
@@ -431,7 +410,7 @@ function tapTouchStart(e) {
   // TODO(mlynch): re-enable
   //ionic.activator.start(e);
 
-  if (Platform.is('ios') && Tap.isLabelWithTextInput(e.target)) {
+  if (Tap.isLabelWithTextInput(e.target)) {
     // if the tapped element is a label, which has a child input
     // then preventDefault so iOS doesn't ugly auto scroll to the input
     // but do not prevent default on Android or else you cannot move the text caret
