@@ -154,6 +154,15 @@ export class IonicApp {
     return this._ref;
   }
 
+  applyCss(platform, config) {
+    let className = document.body.className;
+    platform.platforms().forEach(platformName => {
+      className += ' platform-' + platformName;
+    });
+    className += ' mode-' + config.setting('mode');
+    document.body.className = className.trim();
+  }
+
 }
 
 export function ionicBootstrap(ComponentType, config) {
@@ -173,6 +182,7 @@ export function ionicBootstrap(ComponentType, config) {
       // user config platform settings should override default platform settings
       config.setPlatform(platform);
 
+      app.applyCss(platform, config)
 
       GlobalIonicConfig = config;
 
