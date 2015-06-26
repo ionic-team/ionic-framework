@@ -153,7 +153,10 @@ export function ionicBootstrap(ComponentType, config) {
 
       // config and platform settings have been figured out
       // apply the correct CSS to the app
-      app.applyCss(document.body, Platform, config)
+      app.applyCss(document.body, Platform, config);
+
+      // prepare the ready promise to fire....when ready
+      Platform.prepareReady(config);
 
       // add injectables that will be available to all child components
       let injectableBindings = [
@@ -163,9 +166,6 @@ export function ionicBootstrap(ComponentType, config) {
 
       bootstrap(ComponentType, injectableBindings).then(appRef => {
         app.ref(appRef);
-
-        // prepare the ready promise to fire....when ready
-        Platform.prepareReady(config);
 
         // resolve that the app has loaded
         resolve(app);
