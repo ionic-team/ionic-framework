@@ -4,7 +4,7 @@ import {Component, Directive} from 'angular2/src/core/annotations_impl/annotatio
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {Parent, Ancestor} from 'angular2/src/core/annotations_impl/visibility';
 
-import {IonicView, IonicConfig} from 'ionic/ionic';
+import {IonicView, IonicConfig, Platform} from 'ionic/ionic';
 
 import {IonicComponent} from 'ionic/ionic';
 import {Modal, NavController, NavParams, Animation, ActionMenu} from 'ionic/ionic';
@@ -17,7 +17,7 @@ import {Modal, NavController, NavParams, Animation, ActionMenu} from 'ionic/ioni
 @IonicView({
   templateUrl: 'main.html'
 })
-class MyApp {
+class MyAppCmp {
 
   constructor(Modal: Modal) {
     this.Modal = Modal;
@@ -152,25 +152,28 @@ export function main(ionicBootstrap) {
 
   let myConfig = new IonicConfig();
 
-  //myConfig.setting('someKey', 'userConfig');
+  // myConfig.setting('someKey', 'userConfig');
   // myConfig.setting('ios', 'someKey', 'iosConfig');
   // myConfig.setting('ipad', 'someKey', 'ipadConfig');
 
-  ionicBootstrap(MyApp, myConfig).then(root => {
+  ionicBootstrap(MyAppCmp, myConfig).then(app => {
 
-    console.log('platforms', root.platform.platforms());
+    console.log('platforms', Platform.platforms());
     console.log('mode', myConfig.setting('mode'));
 
-    console.log('core', root.platform.is('core'))
-    console.log('cordova', root.platform.is('cordova'))
-    console.log('mobile', root.platform.is('mobile'))
-    console.log('ipad', root.platform.is('ipad'))
-    console.log('iphone', root.platform.is('iphone'))
-    console.log('phablet', root.platform.is('phablet'))
-    console.log('tablet', root.platform.is('tablet'))
-    console.log('ios', root.platform.is('ios'))
-    console.log('android', root.platform.is('android'))
-    console.log('windows phone', root.platform.is('windowsphone'))
+    console.log('core', Platform.is('core'))
+    console.log('cordova', Platform.is('cordova'))
+    console.log('mobile', Platform.is('mobile'))
+    console.log('ipad', Platform.is('ipad'))
+    console.log('iphone', Platform.is('iphone'))
+    console.log('phablet', Platform.is('phablet'))
+    console.log('tablet', Platform.is('tablet'))
+    console.log('ios', Platform.is('ios'))
+    console.log('android', Platform.is('android'))
+    console.log('windows phone', Platform.is('windowsphone'))
+
+    console.log('isRTL', app.isRTL())
+    console.log('lang', app.lang())
 
   });
 }

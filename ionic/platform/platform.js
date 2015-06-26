@@ -10,6 +10,67 @@ export class PlatformCtrl {
     this._default = null;
   }
 
+  url(val) {
+    if (arguments.length) {
+      this._url = val;
+      this._qs = util.getQuerystring(val);
+    }
+    return this._url;
+  }
+
+  query(key) {
+    return (this._qs || {})[key];
+  }
+
+  userAgent(val) {
+    if (arguments.length) {
+      this._ua = val;
+    }
+    return this._ua;
+  }
+
+  matchQuery(queryValue) {
+    let val = this.query('ionicplatform');
+    if (val) {
+      let valueSplit = val.toLowerCase().split(';');
+      for (let i = 0; i < valueSplit.length; i++) {
+        if (valueSplit[i] == queryValue) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  matchUserAgent(userAgentExpression) {
+    if (this._ua) {
+      let rx = new RegExp(userAgentExpression, 'i');
+      return rx.exec(this._ua);
+    }
+  }
+
+  isPlatform(queryValue, userAgentExpression) {
+    if (!userAgentExpression) {
+      userAgentExpression = queryValue;
+    }
+    return (this.matchQuery(queryValue)) ||
+           (this.matchUserAgent(userAgentExpression) !== null);
+  }
+
+  width(val) {
+    if (arguments.length) {
+      this._w = val;
+    }
+    return this._w || 0;
+  }
+
+  height(val) {
+    if (arguments.length) {
+      this._h = val;
+    }
+    return this._h || 0;
+  }
+
   register(platformConfig) {
     this._registry[platformConfig.name] = platformConfig;
   }
@@ -22,46 +83,16 @@ export class PlatformCtrl {
     this._default = platformName;
   }
 
-  load(app) {
+  load() {
     let rootPlatformNode = null;
     let engineNode = null;
-
-    function matchPlatform(platformName) {
-      // build a PlatformNode and assign config data to it
-      // use it's getRoot method to build up its hierarchy
-      // depending on which platforms match
-      let platformNode = new PlatformNode(platformName);
-      let tmpPlatform = platformNode.getRoot(app, 0);
-
-      if (tmpPlatform) {
-        tmpPlatform.depth = 0;
-        let childPlatform = tmpPlatform.child();
-        while(childPlatform) {
-          tmpPlatform.depth++
-          childPlatform = childPlatform.child();
-        }
-      }
-      return tmpPlatform;
-    }
-
-    function insertSuperset(platformNode) {
-      let supersetPlaformName = platformNode.superset();
-      if (supersetPlaformName) {
-        // add a platform in between two exist platforms
-        // so we can build the correct hierarchy of active platforms
-        let supersetPlatform = new PlatformNode(supersetPlaformName);
-        supersetPlatform.parent(platformNode.parent());
-        supersetPlatform.child(platformNode);
-        supersetPlatform.parent().child(supersetPlatform);
-        platformNode.parent(supersetPlatform);
-      }
-    }
+    let self = this;
 
     // figure out the most specific platform and active engine
     let tmpPlatform = null;
     for (let platformName in this._registry) {
 
-      tmpPlatform = matchPlatform(platformName);
+      tmpPlatform = matchPlatform(platformName, this);
       if (tmpPlatform) {
         // we found a platform match!
         // check if its more specific than the one we already have
@@ -133,15 +164,6 @@ export class PlatformCtrl {
     return this._settings;
   }
 
-  run() {
-    let config = null;
-
-    for (var i = 0; i < this._platforms.length; i++) {
-      config = Platform.get(this._platforms[i]);
-      config.run && config.run();
-    }
-  }
-
   platforms() {
     // get the array of active platforms, which also knows the hierarchy,
     // with the last one the most important
@@ -152,6 +174,37 @@ export class PlatformCtrl {
     return this._registry[platformName] || {};
   }
 
+}
+
+function matchPlatform(platformName, platform) {
+  // build a PlatformNode and assign config data to it
+  // use it's getRoot method to build up its hierarchy
+  // depending on which platforms match
+  let platformNode = new PlatformNode(platformName);
+  let tmpPlatform = platformNode.getRoot(platform, 0);
+
+  if (tmpPlatform) {
+    tmpPlatform.depth = 0;
+    let childPlatform = tmpPlatform.child();
+    while(childPlatform) {
+      tmpPlatform.depth++
+      childPlatform = childPlatform.child();
+    }
+  }
+  return tmpPlatform;
+}
+
+function insertSuperset(platformNode) {
+  let supersetPlaformName = platformNode.superset();
+  if (supersetPlaformName) {
+    // add a platform in between two exist platforms
+    // so we can build the correct hierarchy of active platforms
+    let supersetPlatform = new PlatformNode(supersetPlaformName);
+    supersetPlatform.parent(platformNode.parent());
+    supersetPlatform.child(platformNode);
+    supersetPlatform.parent().child(supersetPlatform);
+    platformNode.parent(supersetPlatform);
+  }
 }
 
 
@@ -174,15 +227,6 @@ class PlatformNode {
     return this.c.superset;
   }
 
-  runAll() {
-    let platform = this;
-    while (platform) {
-      platform.run();
-      platform = platform.child();
-    }
-    return false;
-  }
-
   parent(val) {
     if (arguments.length) {
       this._parent = val;
@@ -197,19 +241,19 @@ class PlatformNode {
     return this._child;
   }
 
-  isMatch(app) {
+  isMatch(p) {
     if (typeof this.c.isMatched !== 'boolean') {
       if (!this.c.isMatch) {
         this.c.isMatched = false;
       } else {
-        this.c.isMatched = this.c.isMatch(app);
+        this.c.isMatched = this.c.isMatch(p);
       }
     }
     return this.c.isMatched;
   }
 
-  getRoot(app) {
-    if (this.isMatch(app)) {
+  getRoot(p) {
+    if (this.isMatch(p)) {
 
       let parents = this.getSubsetParents(this.name());
 
@@ -224,7 +268,7 @@ class PlatformNode {
         platform = new PlatformNode(parents[i]);
         platform.child(this);
 
-        rootPlatform = platform.getRoot(app);
+        rootPlatform = platform.getRoot(p);
         if (rootPlatform) {
           this.parent(platform);
           return rootPlatform;

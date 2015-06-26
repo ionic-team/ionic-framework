@@ -59,7 +59,7 @@ gulp.task('watch', function() {
     'serve',
 
     function() {
-      watch(['ionic/**/*.js', 'ionic/components/*/test/**/*'], function() {
+      watch(['ionic/**/*.js', '!ionic/components/*/test/**/*'], function() {
         runSequence(
           'transpile',
           'bundle.js',

@@ -43,67 +43,6 @@ export class IonicApp {
     return this._config;
   }
 
-  url(val) {
-    if (arguments.length) {
-      this._url = val;
-      this._qs = util.getQuerystring(val);
-    }
-    return this._url;
-  }
-
-  query(key) {
-    return (this._qs || {})[key];
-  }
-
-  userAgent(val) {
-    if (arguments.length) {
-      this._ua = val;
-    }
-    return this._ua;
-  }
-
-  matchQuery(queryValue) {
-    let val = this.query('ionicplatform');
-    if (val) {
-      let valueSplit = val.toLowerCase().split(';');
-      for (let i = 0; i < valueSplit.length; i++) {
-        if (valueSplit[i] == queryValue) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-
-  matchUserAgent(userAgentExpression) {
-    if (this._ua) {
-      let rx = new RegExp(userAgentExpression, 'i');
-      return rx.exec(this._ua);
-    }
-  }
-
-  isPlatform(queryValue, userAgentExpression) {
-    if (!userAgentExpression) {
-      userAgentExpression = queryValue;
-    }
-    return (this.matchQuery(queryValue)) ||
-           (this.matchUserAgent(userAgentExpression) !== null);
-  }
-
-  width(val) {
-    if (arguments.length) {
-      this._w = val;
-    }
-    return this._w || 0;
-  }
-
-  height(val) {
-    if (arguments.length) {
-      this._h = val;
-    }
-    return this._h || 0;
-  }
-
   /**
    * Create and append the given component into the root
    * element of the app.
@@ -154,13 +93,27 @@ export class IonicApp {
     return this._ref;
   }
 
-  applyCss(platform, config) {
-    let className = document.body.className;
+  applyCss(bodyEle, platform, config) {
+    let className = bodyEle.className;
     platform.platforms().forEach(platformName => {
       className += ' platform-' + platformName;
     });
     className += ' mode-' + config.setting('mode');
-    document.body.className = className.trim();
+    bodyEle.className = className.trim();
+  }
+
+  isRTL(val) {
+    if (arguments.length) {
+      this._rtl = val;
+    }
+    return this._rtl;
+  }
+
+  lang(val) {
+    if (arguments.length) {
+      this._lang = val;
+    }
+    return this._lang;
   }
 
 }
@@ -168,24 +121,24 @@ export class IonicApp {
 export function ionicBootstrap(ComponentType, config) {
   return new Promise((resolve, reject) => {
     try {
-      let app = new IonicApp();
-      app.url(window.location.href);
-      app.userAgent(window.navigator.userAgent);
-      app.width(window.innerWidth);
-      app.height(window.innerHeight);
+      // create the base IonicApp
+      let app = initApp(window, document)
 
-      let platform = Platform.load(app);
-
+      // get the user config, or create one if wasn't passed in
       config = config || new IonicConfig();
 
       // copy default platform settings into the user config platform settings
       // user config platform settings should override default platform settings
-      config.setPlatform(platform);
+      config.setPlatform(Platform);
 
-      app.applyCss(platform, config)
-
+      // make the config global
       GlobalIonicConfig = config;
 
+      // config and platform settings have been figured out
+      // apply the correct CSS to the app
+      app.applyCss(document.body, Platform, config)
+
+      // add injectables that will be available to all child components
       let injectableBindings = [
         bind(IonicApp).toValue(app),
         bind(IonicConfig).toValue(config)
@@ -193,14 +146,7 @@ export function ionicBootstrap(ComponentType, config) {
 
       bootstrap(ComponentType, injectableBindings).then(appRef => {
         app.ref(appRef);
-
-        platform.run();
-
-        resolve({
-          app,
-          config,
-          platform
-        });
+        resolve(app);
 
       }).catch(err => {
         console.error('ionicBootstrap', err);
@@ -212,6 +158,23 @@ export function ionicBootstrap(ComponentType, config) {
       reject(err);
     }
   });
+}
+
+function initApp(window, document) {
+  // create the base IonicApp
+  let app = new IonicApp();
+  app.isRTL(document.documentElement.getAttribute('dir') == 'rtl');
+  app.lang(document.documentElement.getAttribute('lang'));
+
+  // load all platform data
+  // Platform is a global singleton
+  Platform.url(window.location.href);
+  Platform.userAgent(window.navigator.userAgent);
+  Platform.width(window.innerWidth);
+  Platform.height(window.innerHeight);
+  Platform.load();
+
+  return app;
 }
 
 export let GlobalIonicConfig = null;

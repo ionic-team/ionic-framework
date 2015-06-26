@@ -17,9 +17,9 @@ Platform.register({
 
 Platform.register({
   name: 'phablet',
-  isMatch(app) {
-    let smallest = Math.min(app.width(), app.height());
-    let largest = Math.max(app.width(), app.height());
+  isMatch(p) {
+    let smallest = Math.min(p.width(), p.height());
+    let largest = Math.max(p.width(), p.height());
     // http://www.mydevice.io/devices/
     return (smallest > 390 && smallest < 520) &&
            (largest > 620 && largest < 800);
@@ -29,9 +29,9 @@ Platform.register({
 
 Platform.register({
   name: 'tablet',
-  isMatch(app) {
-    let smallest = Math.min(app.width(), app.height());
-    let largest = Math.max(app.width(), app.height());
+  isMatch(p) {
+    let smallest = Math.min(p.width(), p.height());
+    let largest = Math.max(p.width(), p.height());
     // http://www.mydevice.io/devices/
     return (smallest > 460 && smallest < 820) &&
            (largest > 780 && largest < 1400);
@@ -49,10 +49,10 @@ Platform.register({
   settings: {
     mode: 'md'
   },
-  isMatch(app) {
+  isMatch(p) {
     // "silk" is kindle fire
     let re = 'android| silk';
-    return app.isPlatform('android', re);
+    return p.isPlatform('android', re);
   }
 });
 
@@ -68,14 +68,14 @@ Platform.register({
   settings: {
     mode: 'ios'
   },
-  isMatch(app) {
+  isMatch(p) {
     // SLEDGEHAMMER OVERRIDE FOR NOW
     return true;
 
-    return app.isPlatform('ios', 'iphone|ipad|ipod');
+    return p.isPlatform('ios', 'iphone|ipad|ipod');
   },
-  versionParser(app) {
-    let val = app.matchUserAgent('OS (\d+)_(\d+)?');
+  versionParser(p) {
+    let val = p.matchUserAgent('OS (\d+)_(\d+)?');
     console.log(val);
   }
 });
@@ -84,8 +84,8 @@ Platform.register({
 Platform.register({
   name: 'ipad',
   superset: 'tablet',
-  isMatch(app) {
-    return app.isPlatform('ipad');
+  isMatch(p) {
+    return p.isPlatform('ipad');
   }
 });
 
@@ -95,8 +95,8 @@ Platform.register({
   subsets: [
     'phablet'
   ],
-  isMatch(app) {
-    return app.isPlatform('iphone');
+  isMatch(p) {
+    return p.isPlatform('iphone');
   }
 });
 
@@ -111,8 +111,8 @@ Platform.register({
   settings: {
     mode: 'wp'
   },
-  isMatch(app) {
-    return app.isPlatform('windowsphone', 'windows phone');
+  isMatch(p) {
+    return p.isPlatform('windowsphone', 'windows phone');
   }
 });
 
@@ -129,7 +129,7 @@ Platform.register({
       });
     }
   },
-  isMatch(app) {
+  isMatch(p) {
     return true;
     return !!(window.cordova || window.PhoneGap || window.phonegap);
   }
