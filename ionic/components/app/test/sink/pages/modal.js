@@ -3,13 +3,13 @@ import {Ancestor} from 'angular2/src/core/annotations_impl/visibility';
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
-import {ActionMenu, Modal, ModalRef,
-  NavbarTemplate, Navbar, NavController, Content} from 'ionic/ionic';
+import {IonicView, ActionMenu, Modal, NavbarTemplate, Navbar, NavController, Content} from 'ionic/ionic';
 
 @Component({
-  selector: 'ion-view'
+  selector: 'ion-view',
+  appInjector: [Modal]
 })
-@View({
+@IonicView({
   template: `
   <ion-navbar *navbar><ion-title>Modal</ion-title></ion-navbar>
 
@@ -29,45 +29,27 @@ import {ActionMenu, Modal, ModalRef,
   directives: [NavbarTemplate, Navbar, Content]
 })
 export class ModalPage {
-  constructor(nav: NavController, loader: DynamicComponentLoader, injector: Injector, domRenderer: DomRenderer, elementRef: ElementRef) {
-    this.loader = loader;
-    this.domRenderer = domRenderer;
-    this.elementRef = elementRef;
-    this.injector = injector;
-
-    this.nav = nav;
-    window.nav = nav;
-
-    console.log('IonicApp Start', loader, domRenderer, elementRef);
+  constructor(Modal: Modal) {
+    this.Modal = Modal;
   }
 
   openModal() {
     console.log('Opening modal');
 
-    Modal.show(MyModal, this.loader, this.injector, this.domRenderer, this.elementRef);
+    this.Modal.open(MyModal, {
+      enterAnimation: 'my-fade-in',
+      leaveAnimation: 'my-fade-out',
+      handle: 'my-awesome-modal'
+    });
   }
-
-  openMenu() {
-    console.log('Opening Modal')
-
-  }
-
 }
 
-@Component({
-  selector: 'my-modal'
-})
-@View({
+@IonicComponent(Modal)
+@IonicView({
   template: '<ion-content padding><button (click)="close()" primary>Close Modal</button></ion-content>',
-  directives: [Content]
 })
-export class MyModal {
-  constructor(modalRef: ModalRef) {
-    //this.initial = ModalFirstPage;
-    this.modalRef = modalRef;
-  }
-  close() {
-    console.log('Closing modal');
-    this.modalRef.close();
+export class MyModal extends Modal {
+  constructor() {
+    super();
   }
 }
