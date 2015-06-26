@@ -9,29 +9,68 @@ export class PlatformCtrl {
     this._platforms = [];
     this._registry = {};
     this._default = null;
+    this._vMajor = 0;
+    this._vMinor = 0;
   }
 
 
   // Methods
   // **********************************************
 
+  is(platformName) {
+    return (this._platforms.indexOf(platformName) > -1);
+  }
+
+  platforms() {
+    // get the array of active platforms, which also knows the hierarchy,
+    // with the last one the most important
+    return this._platforms;
+  }
+
+  version(asObject) {
+    let version = parseFloat(this._vMajor + '.' + this._vMinor);
+    if (asObject) {
+      return {
+        version: version,
+        major: this._vMajor,
+        minor: this._vMinor
+      }
+    }
+    return version;
+  }
+
   ready() {
-    // no ready method was provided by an engine
-    // fallback to use dom ready instead
-    // if a ready method was provide then it would
-    // override the default method
+    // if a ready method was provided then it would
+    // override this default method
+    // fallback to use dom ready by default
     return dom.ready();
   }
 
   domReady() {
+    // helper method so its easy to access on Platform
     return dom.ready();
   }
 
   windowLoad() {
+    // helper method so its easy to access on Platform
     return dom.windowLoad();
   }
 
-  // Properties
+
+  // Methods meant to be overridden by the engine
+  // **********************************************
+  // Provided NOOP methods so they do not error when
+  // called by engines (the browser) doesn't provide them
+  on() {}
+  onHardwareBackButton() {}
+  registerBackButtonAction() {}
+  exitApp() {}
+  fullScreen() {}
+  showStatusBar() {}
+
+
+
+  // Getter/Setter Methods
   // **********************************************
 
   url(val) {
@@ -193,21 +232,11 @@ export class PlatformCtrl {
     return this;
   }
 
-  is(platformName) {
-    return (this._platforms.indexOf(platformName) > -1);
-  }
-
   settings(val) {
     if (arguments.length) {
       this._settings = val;
     }
     return this._settings;
-  }
-
-  platforms() {
-    // get the array of active platforms, which also knows the hierarchy,
-    // with the last one the most important
-    return this._platforms;
   }
 
   get(platformName) {
