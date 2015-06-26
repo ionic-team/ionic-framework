@@ -1,18 +1,13 @@
 import {Platform} from './platform';
-import {Tap} from '../util/tap';
 
 
 Platform.register({
   name: 'core',
-  subsets: [
-    'android',
-    'ios',
-    'windowsphone'
-  ],
   settings: {
     mode: 'core'
   }
 });
+Platform.setDefault('core');
 
 
 Platform.register({
@@ -55,7 +50,9 @@ Platform.register({
     mode: 'md'
   },
   isMatch(app) {
-    return app.isPlatform('android');
+    // "silk" is kindle fire
+    let re = 'android| silk';
+    return app.isPlatform('android', re);
   }
 });
 
@@ -80,9 +77,6 @@ Platform.register({
   versionParser(app) {
     let val = app.matchUserAgent('OS (\d+)_(\d+)?');
     console.log(val);
-  },
-  run() {
-    //Tap.run();
   }
 });
 

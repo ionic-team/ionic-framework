@@ -6,8 +6,8 @@ export class PlatformCtrl {
   constructor() {
     this._settings = {};
     this._platforms = [];
-
     this._registry = {};
+    this._default = null;
   }
 
   register(platformConfig) {
@@ -18,21 +18,19 @@ export class PlatformCtrl {
     return this._registry;
   }
 
+  setDefault(platformName) {
+    this._default = platformName;
+  }
+
   load(app) {
     let rootPlatformNode = null;
     let engineNode = null;
 
-    // reset values
-    this._settings = {};
-    this._platforms = [];
-
-    function matchPlatform(platformConfig) {
+    function matchPlatform(platformName) {
       // build a PlatformNode and assign config data to it
       // use it's getRoot method to build up its hierarchy
       // depending on which platforms match
-      let platformNode = new PlatformNode();
-      platformNode.config(platformConfig);
-      platformNode.isEngine = platformConfig.isEngine;
+      let platformNode = new PlatformNode(platformName);
       let tmpPlatform = platformNode.getRoot(app, 0);
 
       if (tmpPlatform) {
@@ -51,8 +49,7 @@ export class PlatformCtrl {
       if (supersetPlaformName) {
         // add a platform in between two exist platforms
         // so we can build the correct hierarchy of active platforms
-        let supersetPlatform = new PlatformNode();
-        supersetPlatform.load(supersetPlaformName);
+        let supersetPlatform = new PlatformNode(supersetPlaformName);
         supersetPlatform.parent(platformNode.parent());
         supersetPlatform.child(platformNode);
         supersetPlatform.parent().child(supersetPlatform);
@@ -64,7 +61,7 @@ export class PlatformCtrl {
     let tmpPlatform = null;
     for (let platformName in this._registry) {
 
-      tmpPlatform = matchPlatform( this._registry[platformName] );
+      tmpPlatform = matchPlatform(platformName);
       if (tmpPlatform) {
         // we found a platform match!
         // check if its more specific than the one we already have
@@ -81,6 +78,10 @@ export class PlatformCtrl {
           rootPlatformNode = tmpPlatform;
         }
       }
+    }
+
+    if (!rootPlatformNode) {
+      rootPlatformNode = new PlatformNode(this._default);
     }
 
     // build a Platform instance filled with the
@@ -156,24 +157,21 @@ export class PlatformCtrl {
 
 class PlatformNode {
 
-  load(platformName) {
-    this._c = Platform.get(platformName);
-  }
-
-  config(val) {
-    this._c = val;
-  }
-
-  settings() {
-    return this._c.settings || {};
+  constructor(platformName) {
+    this.c = Platform.get(platformName);
+    this.isEngine = this.c.isEngine;
   }
 
   name() {
-    return this._c.name;
+    return this.c.name;
+  }
+
+  settings() {
+    return this.c.settings || {};
   }
 
   superset() {
-    return this._c.superset;
+    return this.c.superset;
   }
 
   runAll() {
@@ -200,15 +198,14 @@ class PlatformNode {
   }
 
   isMatch(app) {
-    if (typeof this._c._isMatched !== 'boolean') {
-      // only do the actual check once
-      if (!this._c.isMatch) {
-        this._c._isMatched = true;
+    if (typeof this.c.isMatched !== 'boolean') {
+      if (!this.c.isMatch) {
+        this.c.isMatched = false;
       } else {
-        this._c._isMatched = this._c.isMatch(app);
+        this.c.isMatched = this.c.isMatch(app);
       }
     }
-    return this._c._isMatched;
+    return this.c.isMatched;
   }
 
   getRoot(app) {
@@ -224,8 +221,7 @@ class PlatformNode {
       let rootPlatform = null;
 
       for (let i = 0; i < parents.length; i++) {
-        platform = new PlatformNode();
-        platform.load(parents[i]);
+        platform = new PlatformNode(parents[i]);
         platform.child(this);
 
         rootPlatform = platform.getRoot(app);
