@@ -4,8 +4,7 @@ import {Component, Directive} from 'angular2/src/core/annotations_impl/annotatio
 
 import {Control, ControlGroup, formDirectives} from 'angular2/forms';
 
-import {IonicView} from 'ionic/ionic';
-import {Http} from 'ionic/net/http';
+import {IonicView, Http} from 'ionic/ionic';
 
 let testUrl = 'https://ionic-api-tester.herokuapp.com/json';
 let testUrl404 = 'https://ionic-api-tester.herokuapp.com/404';
