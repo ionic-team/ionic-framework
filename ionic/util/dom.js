@@ -29,8 +29,6 @@ export function rafPromise() {
   return new Promise(resolve => raf(resolve));
 }
 
-export const isSVG = val => window.SVGElement && (val instanceof window.SVGElement);
-
 export let CSS = {};
 (function() {
   // transform
@@ -116,7 +114,7 @@ function cssPromise(el:Element, eventNames, animationName) {
 export function ready() {
   return new Promise(resolve => {
     if (document.readyState === 'complete' || document.readyState === 'interactive') {
-      setTimeout(resolve);
+      resolve();
 
     } else {
 
@@ -135,7 +133,7 @@ export function ready() {
 export function windowLoad() {
   return new Promise(resolve => {
     if (document.readyState === 'complete') {
-      setTimeout(resolve);
+      resolve();
 
     } else {
       function completed() {
@@ -146,26 +144,4 @@ export function windowLoad() {
       window.addEventListener('load', completed, false);
     }
   });
-}
-
-export function hasAttribute(el: Element, attributeName) {
-  return el.hasAttribute(attributeName);
-}
-
-export function addClass(el: Element, ...classNames) {
-  for (let c of classNames) {
-    el.classList.add(c);
-  }
-}
-
-export function getChildIndex(el: Element) {
-  let child;
-  let parent = el.parentNode;
-  for(let i = 0, j = parent.children.length; i < j; i++) {
-    child = parent.children[i];
-    if(child === el) {
-      return i;
-    }
-  }
-  return -1;
 }

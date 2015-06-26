@@ -121,8 +121,7 @@ class FadeIn extends Animation {
     this
       .easing('ease')
       .duration(250)
-      .fadeIn()
-      .before.addClass('show-modal');
+      .fadeIn();
   }
 }
 
@@ -134,8 +133,7 @@ class FadeOut extends Animation {
     this
       .easing('ease')
       .duration(250)
-      .fadeOut()
-      .after.removeClass('show-modal');
+      .fadeOut();
   }
 }
 

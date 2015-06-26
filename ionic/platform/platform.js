@@ -1,4 +1,5 @@
 import * as util from '../util/util';
+import * as dom from '../util/dom';
 
 
 export class PlatformCtrl {
@@ -9,6 +10,29 @@ export class PlatformCtrl {
     this._registry = {};
     this._default = null;
   }
+
+
+  // Methods
+  // **********************************************
+
+  ready() {
+    // no ready method was provided by an engine
+    // fallback to use dom ready instead
+    // if a ready method was provide then it would
+    // override the default method
+    return dom.ready();
+  }
+
+  domReady() {
+    return dom.ready();
+  }
+
+  windowLoad() {
+    return dom.windowLoad();
+  }
+
+  // Properties
+  // **********************************************
 
   url(val) {
     if (arguments.length) {
@@ -49,14 +73,6 @@ export class PlatformCtrl {
     }
   }
 
-  isPlatform(queryValue, userAgentExpression) {
-    if (!userAgentExpression) {
-      userAgentExpression = queryValue;
-    }
-    return (this.matchQuery(queryValue)) ||
-           (this.matchUserAgent(userAgentExpression) !== null);
-  }
-
   width(val) {
     if (arguments.length) {
       this._w = val;
@@ -71,6 +87,10 @@ export class PlatformCtrl {
     return this._h || 0;
   }
 
+
+  // Registry
+  // **********************************************
+
   register(platformConfig) {
     this._registry[platformConfig.name] = platformConfig;
   }
@@ -81,6 +101,14 @@ export class PlatformCtrl {
 
   setDefault(platformName) {
     this._default = platformName;
+  }
+
+  isPlatform(queryValue, userAgentExpression) {
+    if (!userAgentExpression) {
+      userAgentExpression = queryValue;
+    }
+    return (this.matchQuery(queryValue)) ||
+           (this.matchUserAgent(userAgentExpression) !== null);
   }
 
   load() {
@@ -128,12 +156,24 @@ export class PlatformCtrl {
         engineNode.child(rootPlatformNode);
         rootPlatformNode.parent(engineNode);
         rootPlatformNode = engineNode;
+
+        // add any events which the engine would provide
+        // for example, Cordova provides its own ready event
+        util.extend(this, engineNode.methods());
       }
 
       let platformNode = rootPlatformNode;
       while (platformNode) {
         insertSuperset(platformNode);
         platformNode = platformNode.child();
+      }
+
+      // make sure the root noot is actually the root
+      // incase a node was inserted before the root
+      platformNode = rootPlatformNode.parent();
+      while (platformNode) {
+        rootPlatformNode = platformNode;
+        platformNode = platformNode.parent();
       }
 
       platformNode = rootPlatformNode;
@@ -202,7 +242,9 @@ function insertSuperset(platformNode) {
     let supersetPlatform = new PlatformNode(supersetPlaformName);
     supersetPlatform.parent(platformNode.parent());
     supersetPlatform.child(platformNode);
-    supersetPlatform.parent().child(supersetPlatform);
+    if (supersetPlatform.parent()) {
+      supersetPlatform.parent().child(supersetPlatform);
+    }
     platformNode.parent(supersetPlatform);
   }
 }
@@ -225,6 +267,10 @@ class PlatformNode {
 
   superset() {
     return this.c.superset;
+  }
+
+  methods() {
+    return this.c.methods || {};
   }
 
   parent(val) {

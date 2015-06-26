@@ -121,16 +121,15 @@ Platform.register({
   name: 'cordova',
   isEngine: true,
   methods: {
-    onReady: function() {
-      return new Promise(resolve => {
-        setTimeout(function() {
-          resolve();
-        }, 1000);
+    ready: function() {
+      return Platform.windowLoad().then(() => {
+        return new Promise(resolve => {
+          document.addEventListener("deviceready", resolve);
+        });
       });
     }
   },
   isMatch(p) {
-    return true;
     return !!(window.cordova || window.PhoneGap || window.phonegap);
   }
 });

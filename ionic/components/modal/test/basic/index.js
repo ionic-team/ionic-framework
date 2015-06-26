@@ -175,6 +175,10 @@ export function main(ionicBootstrap) {
     console.log('isRTL', app.isRTL())
     console.log('lang', app.lang())
 
+    Platform.ready().then(() => {
+      console.log('Platform.ready')
+    });
+
   });
 }
 
