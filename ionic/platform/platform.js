@@ -7,10 +7,9 @@ export class PlatformCtrl {
   constructor() {
     this._settings = {};
     this._platforms = [];
+    this._versions = {};
     this._registry = {};
     this._default = null;
-    this._vMajor = 0;
-    this._vMinor = 0;
 
     this._readyPromise = new Promise(res => { this._readyResolve = res; } );
   }
@@ -29,16 +28,14 @@ export class PlatformCtrl {
     return this._platforms;
   }
 
-  version(asObject) {
-    let version = parseFloat(this._vMajor + '.' + this._vMinor);
-    if (asObject) {
-      return {
-        version: version,
-        major: this._vMajor,
-        minor: this._vMinor
-      }
+  versions(platformName) {
+    if (arguments.length) {
+      // get a specific platform's version
+      return this._versions[platformName];
     }
-    return version;
+
+    // get all the platforms that have a valid parsed version
+    return this._versions;
   }
 
   ready() {
@@ -109,26 +106,6 @@ export class PlatformCtrl {
     return this._ua;
   }
 
-  matchQuery(queryValue) {
-    let val = this.query('ionicplatform');
-    if (val) {
-      let valueSplit = val.toLowerCase().split(';');
-      for (let i = 0; i < valueSplit.length; i++) {
-        if (valueSplit[i] == queryValue) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-
-  matchUserAgent(userAgentExpression) {
-    if (this._ua) {
-      let rx = new RegExp(userAgentExpression, 'i');
-      return rx.exec(this._ua);
-    }
-  }
-
   width(val) {
     if (arguments.length) {
       this._w = val;
@@ -159,12 +136,40 @@ export class PlatformCtrl {
     this._default = platformName;
   }
 
+  testQuery(queryValue) {
+    let val = this.query('ionicplatform');
+    if (val) {
+      let valueSplit = val.toLowerCase().split(';');
+      for (let i = 0; i < valueSplit.length; i++) {
+        if (valueSplit[i] == queryValue) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  testUserAgent(userAgentExpression) {
+    let rx = new RegExp(userAgentExpression, 'i');
+    return rx.test(this._ua);
+  }
+
+  matchUserAgentVersion(userAgentExpression) {
+    let val = this._ua.match(userAgentExpression);
+    if (val) {
+      return {
+        major: val[1],
+        minor: val[2]
+      }
+    }
+  }
+
   isPlatform(queryValue, userAgentExpression) {
     if (!userAgentExpression) {
       userAgentExpression = queryValue;
     }
-    return (this.matchQuery(queryValue)) ||
-           (this.matchUserAgent(userAgentExpression) !== null);
+    return this.testQuery(queryValue) ||
+           this.testUserAgent(userAgentExpression);
   }
 
   load() {
@@ -244,12 +249,13 @@ export class PlatformCtrl {
         // copy default platform settings into this platform settings obj
         this._settings[platformNode.name()] = util.extend({}, platformNode.settings());
 
+        // get the platforms version if a version parser was provided
+        this._versions[platformNode.name()] = platformNode.version(this);
+
         // go to the next platform child
         platformNode = platformNode.child();
       }
     }
-
-    return this;
   }
 
   settings(val) {
@@ -345,6 +351,21 @@ class PlatformNode {
       }
     }
     return this.c.isMatched;
+  }
+
+  version(p) {
+    if (this.c.versionParser) {
+      let v = this.c.versionParser(p);
+      if (v) {
+        let str = v.major + '.' + v.minor;
+        return {
+          str: str,
+          num: parseFloat(str),
+          major: parseInt(v.major, 10),
+          minor: parseInt(v.minor, 10)
+        };
+      }
+    }
   }
 
   getRoot(p) {

@@ -95,9 +95,21 @@ export class IonicApp {
 
   applyCss(bodyEle, platform, config) {
     let className = bodyEle.className;
+
+    let versions = platform.versions();
     platform.platforms().forEach(platformName => {
-      className += ' platform-' + platformName;
+      // platform-ios platform-ios_8 platform-ios_8_3
+      let platformClass = ' platform-' + platformName;
+      className += platformClass;
+
+      let platformVersion = versions[platformName];
+      if (platformVersion) {
+        platformClass += '_' + platformVersion.major;
+        className += platformClass;
+        className += platformClass + '_' + platformVersion.minor;
+      }
     });
+
     className += ' mode-' + config.setting('mode');
     bodyEle.className = className.trim();
   }

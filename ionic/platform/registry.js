@@ -53,6 +53,9 @@ Platform.register({
     // "silk" is kindle fire
     let re = 'android| silk';
     return p.isPlatform('android', re);
+  },
+  versionParser(p) {
+    return p.matchUserAgentVersion(/Android (\d+).(\d+)?/);
   }
 });
 
@@ -71,13 +74,12 @@ Platform.register({
   },
   isMatch(p) {
     // SLEDGEHAMMER OVERRIDE FOR NOW
-    return true;
+    //return true;
 
     return p.isPlatform('ios', 'iphone|ipad|ipod');
   },
   versionParser(p) {
-    let val = p.matchUserAgent('OS (\d+)_(\d+)?');
-    console.log(val);
+    return p.matchUserAgentVersion(/OS (\d+)_(\d+)?/);
   }
 });
 
@@ -114,6 +116,9 @@ Platform.register({
   },
   isMatch(p) {
     return p.isPlatform('windowsphone', 'windows phone');
+  },
+  versionParser(p) {
+    return p.matchUserAgentVersion(/Windows Phone (\d+).(\d+)?/);
   }
 });
 
