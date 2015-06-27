@@ -173,16 +173,10 @@ ion-infinite-scroll {
     font-size: 30px;
     color: $scroll-refresh-icon-color;
   }
-  .icon:before,
-  .spinner{
-    -webkit-transform: translate3d(0,0,0);
-    transform: translate3d(0,0,0);
-  }
   &:not(.active){
     .spinner,
     .icon:before{
-      -webkit-transform: translate3d(-1000px,0,0);
-      transform: translate3d(-1000px,0,0);
+      display:none;
     }
   }
 }
