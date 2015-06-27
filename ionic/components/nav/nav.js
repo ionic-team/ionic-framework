@@ -25,12 +25,9 @@ export class Nav extends ViewController {
 
   constructor(
     @Optional() viewCtrl: ViewController,
-    compiler: Compiler,
-    elementRef: ElementRef,
-    loader: DynamicComponentLoader,
     injector: Injector
   ) {
-    super(viewCtrl, compiler, elementRef, loader, injector);
+    super(viewCtrl, injector);
   }
 
   onInit() {

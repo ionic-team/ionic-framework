@@ -46,12 +46,9 @@ export class Tabs extends ViewController {
   constructor(
     @Optional() parentViewCtrl: ViewController,
     @Optional() viewItem: ViewItem,
-    compiler: Compiler,
-    elementRef: ElementRef,
-    loader: DynamicComponentLoader,
     injector: Injector
   ) {
-    super(parentViewCtrl, compiler, elementRef, loader, injector);
+    super(parentViewCtrl, injector);
 
     // Tabs may also be an actual ViewItem which was navigated to
     // if Tabs is static and not navigated to within a ViewController

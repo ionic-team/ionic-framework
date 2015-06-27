@@ -15,20 +15,14 @@ export class ViewController {
 
   constructor(
     parentViewCtrl: ViewController,
-    compiler: Compiler,
-    elementRef: ElementRef,
-    loader: DynamicComponentLoader,
     injector: Injector
   ) {
 
     this.parent = parentViewCtrl;
-    this.compiler = compiler;
-    this.elementRef = elementRef;
-    this.loader = loader;
-    this.injector = injector;
 
-    // TODO: Make this generic?
-    this.ele = elementRef.nativeElement;
+    this.compiler = injector.get(Compiler);
+    this.loader = injector.get(DynamicComponentLoader);
+    this.injector = injector;
 
     this.items = [];
     this.navCtrl = new NavController(this);
