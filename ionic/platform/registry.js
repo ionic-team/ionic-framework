@@ -74,7 +74,7 @@ Platform.register({
   },
   isMatch(p) {
     // SLEDGEHAMMER OVERRIDE FOR NOW
-    //return true;
+    return true;
 
     return p.isPlatform('ios', 'iphone|ipad|ipod');
   },

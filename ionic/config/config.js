@@ -1,4 +1,4 @@
-import {isString, isObject, isDefined, extend} from '../util/util';
+import {isString, isObject, isDefined, isFunction, extend} from '../util/util';
 
 
 export class IonicConfig {
@@ -67,6 +67,9 @@ export class IonicConfig {
         // or it was from the users platform configs
         // or it was from the default platform configs
         // in that order
+        if (isFunction(s[arg0])) {
+          return s[arg0]();
+        }
         return s[arg0];
 
 
