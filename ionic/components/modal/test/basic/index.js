@@ -1,4 +1,4 @@
-import {DynamicComponentLoader, ElementRef, ComponentRef, onDestroy, DomRenderer} from 'angular2/angular2';
+import {ElementRef, ComponentRef, onDestroy, DomRenderer} from 'angular2/angular2';
 import {bind, Injector} from 'angular2/di';
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';

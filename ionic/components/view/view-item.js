@@ -2,6 +2,7 @@ import {EventEmitter} from 'angular2/angular2';
 import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 import {bind} from 'angular2/di';
+import {AppViewManager} from 'angular2/src/core/compiler/view_manager';
 
 import {ViewController} from '../view/view-controller';
 import {NavController} from '../nav/nav-controller';
@@ -46,6 +47,8 @@ export class ViewItem {
       viewCtrl.panes.get(itemStructure, pane => {
         this.pane = pane;
 
+        let viewMngr = viewCtrl.injector.get(AppViewManager);
+
         // create a new injector just for this ViewItem
         let injector = viewCtrl.injector.resolveAndCreateChild([
           bind(ViewController).toValue(viewCtrl),
@@ -60,7 +63,7 @@ export class ViewItem {
         let hostViewRef = contentContainer.create(componentProtoViewRef, -1, null, injector);
 
         // get the component's instance, and set it to the this ViewItem
-        this.setInstance( viewCtrl.loader._viewManager.getComponent(new ElementRef(hostViewRef, 0)) );
+        this.setInstance( viewMngr.getComponent(new ElementRef(hostViewRef, 0)) );
         this.viewElement( hostViewRef._view.render._view.rootNodes[0] );
 
         // remember how to dispose of this reference

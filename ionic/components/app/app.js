@@ -105,8 +105,7 @@ export class IonicApp {
       let platformVersion = versions[platformName];
       if (platformVersion) {
         platformClass += '_' + platformVersion.major;
-        className += platformClass;
-        className += platformClass + '_' + platformVersion.minor;
+        className += platformClass + platformClass + '_' + platformVersion.minor;
       }
     });
 
