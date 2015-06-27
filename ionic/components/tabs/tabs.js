@@ -1,9 +1,6 @@
 import {Optional} from 'angular2/src/di/annotations_impl'
 import {Component, onInit} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
-import {ElementRef} from 'angular2/src/core/compiler/element_ref';
-import {Compiler} from 'angular2/angular2';
-import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_component_loader';
 import {Injector} from 'angular2/di';
 import {NgFor} from 'angular2/angular2';
 

@@ -2,9 +2,7 @@ import {Component, Directive, onInit} from 'angular2/src/core/annotations_impl/a
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {Parent} from 'angular2/src/core/annotations_impl/visibility';
 import {Optional} from 'angular2/src/di/annotations_impl';
-import {Compiler} from 'angular2/angular2';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
-import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_component_loader';
 import {Injector} from 'angular2/di';
 
 import {ViewController} from '../view/view-controller';
@@ -24,10 +22,10 @@ import {ViewController} from '../view/view-controller';
 export class Nav extends ViewController {
 
   constructor(
-    @Optional() viewCtrl: ViewController,
+    @Optional() parentViewCtrl: ViewController,
     injector: Injector
   ) {
-    super(viewCtrl, injector);
+    super(parentViewCtrl, injector);
   }
 
   onInit() {

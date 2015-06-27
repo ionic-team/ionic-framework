@@ -1,3 +1,5 @@
+import {extend} from '../../util/util';
+
 
 export class NavController {
 
@@ -31,5 +33,11 @@ export class NavController {
    */
   pop() {
     return this._nav.pop.apply(this._nav, arguments);
+  }
+}
+
+export class NavParams {
+  constructor(params) {
+    extend(this, params);
   }
 }

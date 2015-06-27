@@ -1,8 +1,10 @@
 import {Compiler} from 'angular2/angular2';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_component_loader';
-import {Injector} from 'angular2/di';
+import {AppViewManager} from 'angular2/src/core/compiler/view_manager';
+import {Injector, bind} from 'angular2/di';
 
+import {IonicApp} from '../app/app';
 import {ViewItem} from './view-item';
 import {NavController} from '../nav/nav-controller';
 import {PaneController} from '../nav/pane';
@@ -22,10 +24,11 @@ export class ViewController {
 
     this.compiler = injector.get(Compiler);
     this.loader = injector.get(DynamicComponentLoader);
-    this.injector = injector;
+    this.viewMngr = injector.get(AppViewManager);
+
+    let ionicApp = injector.get(IonicApp);
 
     this.items = [];
-    this.navCtrl = new NavController(this);
     this.panes = new PaneController(this);
 
     this.sbTransition = null;
@@ -33,6 +36,12 @@ export class ViewController {
 
     this.id = ++ctrlIds;
     this._ids = -1;
+
+    // build a new injector for child ViewItems to use
+    this.injector = injector.resolveAndCreateChild([
+      bind(ViewController).toValue(this),
+      bind(NavController).toValue(new NavController(this))
+    ]);
   }
 
   push(ComponentType, params = {}, opts = {}) {

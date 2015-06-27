@@ -1,16 +1,12 @@
 import {Parent} from 'angular2/src/core/annotations_impl/visibility';
 import {Directive, Component, onInit} from 'angular2/src/core/annotations_impl/annotations';
-import {Optional} from 'angular2/src/di/annotations_impl'
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
-import {Compiler} from 'angular2/angular2';
-import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_component_loader';
 import {Injector} from 'angular2/di';
 
 import {ViewController} from '../view/view-controller';
 import {ViewItem} from '../view/view-item';
 import {Tabs} from './tabs';
-import {Content} from '../content/content';
 
 
 @Component({
