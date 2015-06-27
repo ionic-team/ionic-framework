@@ -39,7 +39,7 @@ import * as dom from '../../util/dom';
 })
 export class Navbar {
   constructor(item: ViewItem, elementRef: ElementRef) {
-    this.ele = elementRef.nativeElement;
+    this.eleRef = elementRef;
     this.itemEles = [];
     item.navbarView(this);
 
@@ -48,40 +48,40 @@ export class Navbar {
   }
 
   element() {
-    return this.ele;
+    return this.eleRef;
   }
 
-  backButtonElement(ele) {
+  backButtonElement(eleRef) {
     if (arguments.length) {
-      this._bbEle = ele;
+      this._bbEle = eleRef;
     }
     return this._bbEle;
   }
 
-  backButtonTextElement(ele) {
+  backButtonTextElement(eleRef) {
     if (arguments.length) {
-      this._bbTxEle = ele;
+      this._bbTxEle = eleRef;
     }
     return this._bbTxEle;
   }
 
-  titleElement(ele) {
+  titleElement(eleRef) {
     if (arguments.length) {
-      this._nbTlEle = ele;
+      this._nbTlEle = eleRef;
     }
     return this._nbTlEle;
   }
 
-  itemElements(ele) {
+  itemElements(eleRef) {
     if (arguments.length) {
-      this.itemEles.push(ele);
+      this.itemEles.push(eleRef);
     }
     return this.itemEles;
   }
 
-  titleText(ele) {
+  titleText(eleRef) {
     if (arguments.length) {
-      this._ttTxt.push(ele);
+      this._ttTxt.push(eleRef);
     }
     return this._ttTxt;
   }
@@ -89,7 +89,7 @@ export class Navbar {
   alignTitle() {
     // called after the navbar/title has had a moment to
     // finish rendering in their correct locations
-    const navbarEle = this.ele;
+    const navbarEle = this.eleRef.nativeElement;
     const titleEle = this._ttEle || (this._ttEle = navbarEle.querySelector('ion-title'));
 
     // don't bother if there's no title element
@@ -125,7 +125,7 @@ export class Navbar {
 
   didEnter() {
     setTimeout(() => {
-      const titleEle = this._ttEle || (this._ttEle = this.ele.querySelector('ion-title'));
+      const titleEle = this._ttEle || (this._ttEle = this.eleRef.nativeElement.querySelector('ion-title'));
       //this.titleText((titleEle && titleEle.textContent) || '');
     }, 32);
   }
@@ -140,7 +140,7 @@ export class Navbar {
 class BackButton {
   constructor(@Parent() navbar: Navbar, item: ViewItem, elementRef: ElementRef) {
     this.item = item;
-    navbar.backButtonElement(elementRef.nativeElement);
+    navbar.backButtonElement(elementRef);
   }
 
   goBack(ev) {
@@ -155,7 +155,7 @@ class BackButton {
 })
 class BackButtonText {
   constructor(@Parent() navbar: Navbar, elementRef: ElementRef) {
-    navbar.backButtonTextElement(elementRef.nativeElement);
+    navbar.backButtonTextElement(elementRef);
   }
 }
 
@@ -164,7 +164,7 @@ class BackButtonText {
 })
 class Title {
   constructor(@Parent() navbar: Navbar, elementRef: ElementRef) {
-    navbar.titleElement(elementRef.nativeElement);
+    navbar.titleElement(elementRef);
   }
 }
 
@@ -173,7 +173,7 @@ class Title {
 })
 class NavbarItem {
   constructor(@Parent() navbar: Navbar, elementRef: ElementRef) {
-    navbar.itemElements(elementRef.nativeElement);
+    navbar.itemElements(elementRef);
   }
 }
 

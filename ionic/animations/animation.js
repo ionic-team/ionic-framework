@@ -25,7 +25,7 @@ let AnimationRegistry = {};
 
 export class Animation {
 
-  constructor(el) {
+  constructor(ele) {
     this._el = [];
     this._chld = [];
     this._ani = [];
@@ -39,25 +39,42 @@ export class Animation {
     this._plays = [];
     this._finishes = [];
 
-    this.elements(el);
+    this.elements(ele);
   }
 
-  elements(el) {
-    if (el) {
-      if (typeof el === 'string') {
-        el = document.querySelectorAll(el);
+  elements(ele) {
+    if (ele) {
+      if (typeof ele === 'string') {
+        // string query selector
+        ele = document.querySelectorAll(ele);
       }
 
-      if (el.length) {
-        for (let i = 0; i < el.length; i++) {
-          this._el.push(el[i]);
+      if (ele.length) {
+        // array of elements
+        for (let i = 0; i < ele.length; i++) {
+          this.addElement(ele[i]);
         }
 
-      } else if (el.nodeType) {
-        this._el.push(el);
+      } else {
+        // single element
+        this.addElement(ele);
       }
     }
     return this;
+  }
+
+  addElement(ele) {
+    // ensure only HTML Element nodes
+    if (ele) {
+      if (ele.nativeElement) {
+        // angular ElementRef
+        ele = ele.nativeElement;
+      }
+
+      if (ele.nodeType === 1) {
+        this._el.push(ele);
+      }
+    }
   }
 
   parent(parentAnimation) {
