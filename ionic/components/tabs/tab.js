@@ -59,6 +59,13 @@ export class Tab extends ViewController {
       return activeItem && activeItem.navbarView();
     };
 
+    item.enableBack = () => {
+      // override ViewItem's enableBack(), should use the
+      // active child nav item's enableBack() instead
+      let activeItem = this.getActive();
+      return (activeItem && activeItem.enableBack());
+    };
+
     this.panelId = 'tab-panel-' + item.id;
     this.labeledBy = 'tab-button-' + item.id;
   }
