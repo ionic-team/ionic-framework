@@ -49,7 +49,7 @@ export class Slides {
 
   constructor(elementRef: ElementRef) {
     // Grab the main container, and the slides-view wrapper
-    this.domElement = elementRef.domElement;
+    this.ele = elementRef.nativeElement;
 
     this.slides = [];
     this.currentIndex = 0;
@@ -72,7 +72,7 @@ export class Slides {
     this.continuous = util.isDefined(this.loop) && (this.slides.length > 1 ? true : false);
 
     // Grab the wrapper element that contains the slides
-    this.wrapperElement = this.domElement.children[0];
+    this.wrapperElement = this.ele.children[0];
 
     this.resize();
 
@@ -115,7 +115,7 @@ export class Slides {
   resize() {
     // Get the width of the container, which is the viewport
     // that the user will actually see.
-    this.containerWidth = this.domElement.offsetWidth || this.domElement.getBoundingClientRect().width;
+    this.containerWidth = this.ele.offsetWidth || this.ele.getBoundingClientRect().width;
 
     // Set the wrapper element to the total width of the child elements
     this.wrapperElement.style.width = ((this.containerWidth * this.slides.length)) + 'px';
@@ -467,7 +467,7 @@ export class Slide {
     @Ancestor() slides: Slides,
     elementRef: ElementRef
   ) {
-    this.domElement = elementRef.domElement;
+    this.ele = elementRef.nativeElement;
 
     slides.add(this);
   }
@@ -484,8 +484,8 @@ export class Slide {
 
     duration = duration || 0;
 
-    this.domElement.style[dom.CSS.transition + 'Duration'] = duration + 'ms';
-    this.domElement.style[dom.CSS.transform] = 'translate3d(' + x + 'px, 0, 0)';
+    this.ele.style[dom.CSS.transition + 'Duration'] = duration + 'ms';
+    this.ele.style[dom.CSS.transform] = 'translate3d(' + x + 'px, 0, 0)';
   }
 
   get translateX() {
@@ -494,7 +494,7 @@ export class Slide {
 
   set left(x) {
     this._left = x;
-    this.domElement.style.left = x + 'px';
+    this.ele.style.left = x + 'px';
   }
   get left() {
     return this._left;
@@ -502,7 +502,7 @@ export class Slide {
 
   set width(width) {
     this._width = width;
-    this.domElement.style.width = width + 'px';
+    this.ele.style.width = width + 'px';
   }
 
   get width() {
@@ -524,7 +524,7 @@ export class SlidePager {
     @Ancestor() slides: Slides,
     elementRef: ElementRef
   ) {
-    this.domElement = elementRef.domElement;
+    this.ele = elementRef.nativeElement;
 
     this.slides = slides;
 
@@ -545,7 +545,7 @@ export class SlidePager {
 
 export class SlidesGesture extends DragGesture {
   constructor(slides) {
-    super(slides.domElement);
+    super(slides.ele);
     this.slides = slides;
   }
   onDrag(event) {

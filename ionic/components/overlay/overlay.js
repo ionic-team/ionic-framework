@@ -24,7 +24,7 @@ export class Overlay {
         overlay.setApp(app);
         overlay._type = overlayType;
         overlay._handle = opts && opts.handle;
-        overlay._domElement = ref.elementRef.domElement;
+        overlay._ele = ref.elementRef.nativeElement;
         overlay.extendOptions(opts);
 
         overlay.zIndex = ROOT_Z_INDEX;
@@ -49,7 +49,7 @@ export class Overlay {
 
   _open(opts) {
     let animationName = (opts && opts.animation) || this.options.enterAnimation;
-    let enterAnimation = Animation.create(this._domElement, animationName);
+    let enterAnimation = Animation.create(this._ele, animationName);
     enterAnimation.before.addClass('ion-app');
     enterAnimation.before.addClass('show-overlay');
     ClickBlock(true, enterAnimation.duration() + 200);
@@ -66,7 +66,7 @@ export class Overlay {
   close(opts) {
     return new Promise(resolve => {
       let animationName = (opts && opts.animation) || this.options.leaveAnimation;
-      let leavingAnimation = Animation.create(this._domElement, animationName);
+      let leavingAnimation = Animation.create(this._ele, animationName);
       leavingAnimation.after.removeClass('show-overlay');
       ClickBlock(true, leavingAnimation.duration() + 200);
 

@@ -17,8 +17,8 @@ export class Refresher {
     @Parent() content: Content,
     element: ElementRef
   ) {
-    this.domElement = element.domElement;
-    this.domElement.classList.add('content');
+    this.ele = element.nativeElement;
+    this.ele.classList.add('content');
 
     this.refresh = new EventEmitter('refresh');
 

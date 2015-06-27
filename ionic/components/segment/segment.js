@@ -89,7 +89,7 @@ export class Segment {
     elementRef: ElementRef,
     renderer: Renderer
   ) {
-    this.domElement = elementRef.domElement
+    this.ele = elementRef.nativeElement
     this.elementRef = elementRef;
     this.renderer = renderer;
 
@@ -177,7 +177,7 @@ export class SegmentButton {
     @Ancestor() segment: Segment,
     elementRef: ElementRef
   ) {
-    this.domElement = elementRef.domElement
+    this.ele = elementRef.ele
     this.segment = segment;
   }
 

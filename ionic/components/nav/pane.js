@@ -39,7 +39,10 @@ export class PaneController {
 
       // add a Pane element
       // when the Pane is added, it'll also add its reference to the panes object
-      viewCtrl.loader.loadNextToExistingLocation(Pane, viewCtrl.anchorElementRef(), injector).then(() => {
+      // viewCtrl.compiler.compileInHost(this.ComponentType).then(componentProtoViewRef => {
+
+      // });
+      viewCtrl.loader.loadNextToLocation(Pane, viewCtrl.anchorElementRef(), injector).then(() => {
 
         // get the pane reference by name
         pane = this.panes[key];
@@ -62,7 +65,7 @@ export class PaneController {
           // as each section is compiled and added to the Pane
           // the section will add a reference to itself in the Pane's sections object
           promises.push(
-            viewCtrl.loader.loadNextToExistingLocation(SectionClass, sectionAnchorElementRef)
+            viewCtrl.loader.loadNextToLocation(SectionClass, sectionAnchorElementRef)
           );
         });
 
@@ -108,16 +111,16 @@ export class Pane {
   }
 
   constructor(viewCtrl: ViewController, elementRef: ElementRef) {
-    this.domElement = elementRef.domElement;
+    this.ele = elementRef.nativeElement;
     viewCtrl.panes.add(this);
   }
 
   width() {
-    return this.domElement.offsetWidth;
+    return this.ele.offsetWidth;
   }
 
   showPane(val) {
-    this.domElement.classList[val ? 'add' : 'remove']('show-pane');
+    this.ele.classList[val ? 'add' : 'remove']('show-pane');
   }
 }
 

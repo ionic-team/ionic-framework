@@ -23,7 +23,7 @@ import {Content} from '../content/content';
   host: {
     '[attr.id]': 'panelId',
     '[attr.aria-labelledby]': 'labeledBy',
-    '[attr.aria-hidden]': '!isSelected',
+    '[attr.aria-hidden]': 'isNotSelected',
     '[class.tab-selected]': 'isSelected',
     'role': 'tabpanel'
   }
@@ -51,7 +51,7 @@ export class Tab extends ViewController {
 
     let item = this.item = new ViewItem(tabs.parent);
     item.setInstance(this);
-    item.viewElement(elementRef.domElement);
+    item.viewElement(elementRef.nativeElement);
     tabs.addTab(this);
 
     this.navbarView = item.navbarView = () => {
@@ -95,6 +95,10 @@ export class Tab extends ViewController {
 
   get isSelected() {
     return this.tabs.isActive(this.item);
+  }
+
+  get isNotSelected() {
+    return !this.tabs.isActive(this.item);
   }
 
 }

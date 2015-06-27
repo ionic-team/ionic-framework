@@ -20,7 +20,7 @@ import * as dom from '../../util/dom';
 })
 export class Toolbar {
   constructor(elementRef:ElementRef, ngZone:NgZone) {
-    this.domElement = elementRef.domElement;
+    this.ele = elementRef.nativeElement;
     Toolbar.config.invoke(this);
 
     /*
@@ -34,7 +34,7 @@ export class Toolbar {
   }
 
   alignTitle() {
-    const toolbarEle = this.domElement;
+    const toolbarEle = this.ele;
     const innerTitleEle = this._innerTitleEle || (this._innerTitleEle = toolbarEle.querySelector('.toolbar-inner-title'));
     const titleEle = this._titleEle || (this._titleEle = innerTitleEle.querySelector('ion-title'));
     const style = this._style || (this._style = window.getComputedStyle(titleEle));

@@ -47,7 +47,7 @@ class AsideGesture extends SlideEdgeGesture {
   getSlideBoundaries() {
     return {
       min: 0,
-      max: this.aside.domElement.offsetWidth
+      max: this.aside.ele.offsetWidth
     };
   }
 }
@@ -60,7 +60,7 @@ export class RightAsideGesture extends LeftAsideGesture {
   }
   getSlideBoundaries() {
     return {
-      min: -this.aside.domElement.offsetWidth,
+      min: -this.aside.ele.offsetWidth,
       max: 0
     };
   }
@@ -74,7 +74,7 @@ export class TopAsideGesture extends AsideGesture {
   getSlideBoundaries() {
     return {
       min: 0,
-      max: this.aside.domElement.offsetHeight
+      max: this.aside.ele.offsetHeight
     };
   }
 }
@@ -85,7 +85,7 @@ export class BottomAsideGesture extends TopAsideGesture {
   }
   getSlideBoundaries() {
     return {
-      min: -this.aside.domElement.offsetHeight,
+      min: -this.aside.ele.offsetHeight,
       max: 0
     };
   }

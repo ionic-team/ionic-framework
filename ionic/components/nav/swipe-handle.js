@@ -11,7 +11,7 @@ import {Gesture} from 'ionic/gestures/gesture';
 @Directive({
   selector: '.swipe-handle',
   host: {
-    '[class.show-handle]': 'showHandle()'
+    '[class.show-handle]': 'showHandle'
   }
 })
 export class SwipeHandle {
@@ -27,7 +27,7 @@ export class SwipeHandle {
     self.pane = pane;
     self.viewCtrl = viewCtrl;
 
-    let gesture = self.gesture = new Gesture(elementRef.domElement);
+    let gesture = self.gesture = new Gesture(elementRef.nativeElement);
     gesture.listen();
 
     function dragHorizontal(ev) {
@@ -92,7 +92,7 @@ export class SwipeHandle {
     this.viewCtrl.swipeBackProgress( (ev.gesture.center.x - this.startX) / this.width );
   }
 
-  showHandle() {
+  get showHandle() {
     return (this.viewCtrl ? this.viewCtrl.swipeBackEnabled() : false);
   }
 

@@ -15,11 +15,11 @@ import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 })
 export class Icon {
   constructor(elementRef: ElementRef) {
-    this.domElement = elementRef.domElement;
+    this.ele = elementRef.nativeElement;
   }
   onInit() {
     if (this.name) {
-      this.domElement.classList.add(this.name);
+      this.ele.classList.add(this.name);
       this.label = this.name;
     }
   }

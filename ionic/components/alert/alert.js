@@ -1,5 +1,3 @@
-// import {NgElement, Component, View, Parent} from 'angular2/angular2'
-
 
 /*
 @Component({
@@ -22,16 +20,5 @@
       </div>
     </div>`
 })
-export class Alert {
-  constructor(
-    @NgElement() ngElement:NgElement
-  ) {
-    this.domElement = ngElement.domElement
-    this.config = Alert.config.invoke(this)
-  }
-
-  static open(opts) {
-    let alert = new Alert();
-  }
-}
+export class Alert {}
 */

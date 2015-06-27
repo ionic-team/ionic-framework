@@ -36,21 +36,21 @@ export class Switch {
     elementRef: ElementRef,
     cd: ControlDirective
   ) {
-    this.domElement = elementRef.domElement
+    this.ele = elementRef.nativeElement
     this.config = Switch.config.invoke(this)
     this.controlDirective = cd;
     cd.valueAccessor = this;
 
     // TODO: These are temporary until we figure out what to do
     // with @PropertSetter
-    let setAriaRole = (v) => this.domElement.setAttribute('aria-role', v)
-    let setAriaChecked = (v) => this.domElement.setAttribute('aria-checked', v)
-    let setAriaInvalid = (v) => this.domElement.setAttribute('aria-invalid', v)
-    let setAriaDisabled = (v) => this.domElement.setAttribute('aria-disabled', v)
+    let setAriaRole = (v) => this.ele.setAttribute('aria-role', v)
+    let setAriaChecked = (v) => this.ele.setAttribute('aria-checked', v)
+    let setAriaInvalid = (v) => this.ele.setAttribute('aria-invalid', v)
+    let setAriaDisabled = (v) => this.ele.setAttribute('aria-disabled', v)
 
-    //let setChecked = (v) => this.domElement.setAttribute('checked', v);
+    //let setChecked = (v) => this.ele.setAttribute('checked', v);
 
-    this.domElement.classList.add('item')
+    this.ele.classList.add('item')
 
     // TODO: These rely on the commented-out PropertySetter's above
     //setAriaRole('checkbox')

@@ -75,7 +75,7 @@ export class ParallaxEffect {
   constructor(
     elementRef: ElementRef
   ) {
-    this.domElement = elementRef.domElement;
+    this.ele = elementRef.nativeElement;
 
     setTimeout(() => {
       Object.observe(this, (changes) => {
@@ -88,7 +88,7 @@ export class ParallaxEffect {
     });
   }
   parallaxItems() {
-    let list = this.domElement;
+    let list = this.ele;
     console.log('Moving items', this.parallax);
     var x = Math.max(0, (1 - this.parallax) * 20);
     var y = 0;//Math.max(0, (1 - this.parallax) * 10);

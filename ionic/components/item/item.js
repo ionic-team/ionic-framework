@@ -58,7 +58,7 @@ export class Item {
     this._isTransitioning = false;
     this._transform = '';
 
-    this.domElement = elementRef.domElement;
+    this.ele = elementRef.nativeElement;
     this.swipeButtons = {};
     this.optionButtons = {};
   }

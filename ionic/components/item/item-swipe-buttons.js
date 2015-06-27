@@ -12,7 +12,7 @@ export class ItemPrimarySwipeButtons {
     @Parent() item: Item
   ) {
     item.primarySwipeButtons = this
-    this.domElement = elementRef.domElement
+    this.ele = elementRef.nativeElement
     this.parentItem = item
     this.gesture = new ItemSlideGesture(this)
     this.gesture.listen()
@@ -22,7 +22,7 @@ export class ItemPrimarySwipeButtons {
     if (isOpen !== this.isOpen) {
       this.isOpen = isOpen
       requestAnimationFrame(() => {
-        this.domElement.classList[isOpen?'add':'remove'](isOpen)
+        this.ele.classList[isOpen?'add':'remove'](isOpen)
       })
     }
   }
@@ -36,13 +36,13 @@ export class ItemSecondarySwipeButtons {
 
 class ItemSlideGesture extends SlideGesture {
   constructor(buttons) {
-    super(buttons.parentItem.domElement)
+    super(buttons.parentItem.ele)
     this.buttons = buttons
   }
 
   getSlideBoundaries() {
     return {
-      min: -this.buttons.domElement.offsetWidth,
+      min: -this.buttons.ele.offsetWidth,
       max: 0,
     };
   }
@@ -52,18 +52,18 @@ class ItemSlideGesture extends SlideGesture {
   }
 
   onSlideBeforeStart() {
-    this.buttons.domElement.classList.add('changing')
-    this.buttons.domElement.classList.add('no-transition')
+    this.buttons.ele.classList.add('changing')
+    this.buttons.ele.classList.add('no-transition')
     return new Promise(resolve => {
       requestAnimationFrame(resolve)
     })
   }
   onSlide(slide, ev) {
-    this.buttons.domElement.style.transform = 'translate3d(' + slide.distance + 'px,0,0)';
+    this.buttons.ele.style.transform = 'translate3d(' + slide.distance + 'px,0,0)';
   }
   onSlideEnd(slide, ev) {
-    this.buttons.domElement.style.transform = ''
-    this.buttons.domElement.classList.remove('no-transition')
+    this.buttons.ele.style.transform = ''
+    this.buttons.ele.classList.remove('no-transition')
     if (Math.abs(ev.velocityX) > 0.2 || Math.abs(slide.delta) > Math.abs(slide.max) * 0.5) {
       this.buttons.setOpen(!this.buttons.isOpen);
     }

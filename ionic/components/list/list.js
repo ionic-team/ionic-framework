@@ -22,7 +22,7 @@ export class List {
   }
 
   constructor(elementRef: ElementRef) {
-    this.domElement = elementRef.domElement;
+    this.ele = elementRef.nativeElement;
   }
 
   onInit() {

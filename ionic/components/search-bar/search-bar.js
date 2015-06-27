@@ -37,7 +37,7 @@ export class SearchBar {
     elementRef: ElementRef//,
     //cd:ControlDirective
   ) {
-    this.domElement = elementRef.domElement;
+    this.ele = elementRef.nativeElement;
     // this.controlDirective = cd;
     // cd.valueAccessor = this; //ControlDirective should inject CheckboxControlDirective
 

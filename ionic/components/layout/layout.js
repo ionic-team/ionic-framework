@@ -1,4 +1,4 @@
-import {NgElement, Component, View, Parent} from 'angular2/angular2'
+import {ElementRef, Component, View, Parent} from 'angular2/angular2'
 
 
 @Component({
@@ -12,10 +12,10 @@ import {NgElement, Component, View, Parent} from 'angular2/angular2'
 })
 export class Layout {
   constructor(
-    @NgElement() ngElement:NgElement
+    @ElementRef() elementRef:ElementRef
   ) {
-    this.domElement = ngElement.domElement
-    this.eqEle = this.domElement.lastElementChild
+    this.ele = ngElement.nativeElement
+    this.eqEle = this.ele.lastElementChild
 
     window.requestAnimationFrame(() => {
       this.initLayout()
@@ -26,8 +26,8 @@ export class Layout {
     this.mqs = {}
 
 
-    for (let x = 0; x < this.domElement.attributes.length; x++) {
-      let attr = this.domElement.attributes[x]
+    for (let x = 0; x < this.ele.attributes.length; x++) {
+      let attr = this.ele.attributes[x]
       let val = attr.nodeValue
       let mqClassname = attr.nodeName
 
@@ -38,7 +38,7 @@ export class Layout {
           this.mqs[mql.media] = (mql) => {
             console.log(mql.media, mql.matches, mqClassname)
             window.requestAnimationFrame(() => {
-              this.domElement.classList[mql.matches ? 'add' : 'remove'](mqClassname)
+              this.ele.classList[mql.matches ? 'add' : 'remove'](mqClassname)
             })
           }
 

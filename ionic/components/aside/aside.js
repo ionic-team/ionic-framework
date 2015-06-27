@@ -46,19 +46,19 @@ export class Aside {
   }
 
   constructor(elementRef: ElementRef) {
-    this.domElement = elementRef.domElement
+    this.ele = elementRef.nativeElement
 
     this.opening = new EventEmitter('opening');
 
     // TODO: Use Animation Class
-    this.domElement.addEventListener('transitionend', ev => {
+    this.ele.addEventListener('transitionend', ev => {
       this.setChanging(false)
     })
   }
 
   onInit() {
     console.log('Aside content', this.content);
-    this.contentElement = (this.content instanceof Node) ? this.content : this.content.domElement;
+    this.contentElement = (this.content instanceof Node) ? this.content : this.content.ele;
 
     Aside.applyConfig(this);
     this.gestureDelegate = Aside.getDelegate(this, 'gesture');
@@ -86,7 +86,7 @@ export class Aside {
   setChanging(isChanging) {
     if (isChanging !== this.isChanging) {
       this.isChanging = isChanging
-      this.domElement.classList[isChanging ? 'add' : 'remove']('changing');
+      this.ele.classList[isChanging ? 'add' : 'remove']('changing');
     }
   }
 

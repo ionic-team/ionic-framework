@@ -67,7 +67,7 @@ export class Transition extends Animation {
       this.leavingTitle = new Animation(leavingItem.titleElement());
       leavingNavbar.add(this.leavingTitle);
 
-      this.leavingNavbarItems = new Animation(leavingItem.navbarItemElements())
+      this.leavingNavbarItems = new Animation(leavingItem.navbarItemElements());
       this.leavingNavbarItems.fadeOut();
       leavingNavbar.add(this.leavingNavbarItems);
 

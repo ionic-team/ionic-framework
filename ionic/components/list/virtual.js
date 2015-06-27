@@ -5,7 +5,7 @@ export class ListVirtualScroll {
     this.list = list;
     this.content = this.list.content;
 
-    this.viewportHeight = this.content.domElement.offsetHeight;
+    this.viewportHeight = this.content.ele.offsetHeight;
 
     this.viewContainer = this.list.itemTemplate.viewContainer;
 
@@ -31,7 +31,7 @@ export class ListVirtualScroll {
   }
 
   resize() {
-    this.viewportHeight = this.content.domElement.offsetHeight;
+    this.viewportHeight = this.content.ele.offsetHeight;
     this.viewportScrollHeight = this.content.scrollElement.scrollHeight;
 
     this.virtualHeight = this.list.items.length * this.itemHeight;
@@ -100,7 +100,7 @@ export class ListVirtualScroll {
     }
 
     console.log('VIRTUAL SCROLL: scroll(scrollTop:', st, 'topIndex:', topIndex, 'bottomIndex:', bottomIndex, ')');
-    console.log('Container has', this.list.domElement.children.length, 'children');
+    console.log('Container has', this.list.ele.children.length, 'children');
   }
 
   cellAtIndex(index) {

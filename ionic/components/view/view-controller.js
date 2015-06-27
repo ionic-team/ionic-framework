@@ -28,7 +28,7 @@ export class ViewController {
     this.injector = injector;
 
     // TODO: Make this generic?
-    this.domElement = elementRef.domElement;
+    this.ele = elementRef.nativeElement;
 
     this.items = [];
     this.navCtrl = new NavController(this);

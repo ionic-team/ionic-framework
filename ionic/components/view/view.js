@@ -10,7 +10,6 @@ import {ViewItem} from './view-item';
 })
 export class IonView {
   constructor(@Optional() item: ViewItem, elementRef: ElementRef) {
-    console.log('View constructor', item)
-    this.domElement = elementRef.domElement;
+    this.ele = elementRef.nativeElement;
   }
 }

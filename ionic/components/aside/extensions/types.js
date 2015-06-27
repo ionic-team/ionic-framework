@@ -4,13 +4,13 @@ import {CSS} from 'ionic/util/dom'
 // TODO use setters instead of direct dom manipulation
 const asideManipulator = {
   setSliding(sliding) {
-    this.aside.domElement.classList[sliding ? 'add' : 'remove']('no-transition');
+    this.aside.ele.classList[sliding ? 'add' : 'remove']('no-transition');
   },
   setOpen(open) {
-    this.aside.domElement.classList[open ? 'add' : 'remove']('open');
+    this.aside.ele.classList[open ? 'add' : 'remove']('open');
   },
   setTransform(t) {
-    this.aside.domElement.style[CSS.transform] = t;
+    this.aside.ele.style[CSS.transform] = t;
   }
 }
 const contentManipulator = {

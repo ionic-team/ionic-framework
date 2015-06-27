@@ -20,12 +20,12 @@ export class RadioGroup {
     elementRef: ElementRef//,
     //cd:ControlDirective
   ) {
-    this.domElement = elementRef.domElement
+    this.ele = elementRef.nativeElement
     // this.config = RadioGroup.config.invoke(this)
     // this.controlDirective = cd;
     // cd.valueAccessor = this; //ControlDirective should inject CheckboxControlDirective
 
-    this.domElement.classList.add('list');
+    this.ele.classList.add('list');
 
     this.buttons = [];
   }
@@ -122,10 +122,10 @@ export class RadioButton {
     @Ancestor() group: RadioGroup,
     elementRef: ElementRef
   ) {
-    this.domElement = elementRef.domElement;
+    this.ele = elementRef.ele;
 
-    this.domElement.classList.add('item')
-    this.domElement.setAttribute('aria-checked', true)
+    this.ele.classList.add('item')
+    this.ele.setAttribute('aria-checked', true)
 
     this.group = group;
 
@@ -133,13 +133,13 @@ export class RadioButton {
   }
 
   setActive(isActive) {
-    // TODO: No domElement
+    // TODO: No ele
     if(isActive) {
-      this.domElement.classList.add('active');
-      this.domElement.setAttribute('aria-checked', true)
+      this.ele.classList.add('active');
+      this.ele.setAttribute('aria-checked', true)
     } else {
-      this.domElement.classList.remove('active');
-      this.domElement.setAttribute('aria-checked', false)
+      this.ele.classList.remove('active');
+      this.ele.setAttribute('aria-checked', false)
     }
   }
 

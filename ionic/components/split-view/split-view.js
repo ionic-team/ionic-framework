@@ -1,4 +1,4 @@
-import {Component, Parent, Decorator, View, NgElement} from 'angular2/angular2'
+import {Component, Parent, Decorator, View, ElementRef} from 'angular2/angular2'
 import {Nav} from 'ionic/components/nav/nav'
 import * as util from 'ionic/util'
 
@@ -59,10 +59,10 @@ ion-split-view > [split-viewport] {
 })
 export class SplitView {
   constructor(
-    element: NgElement,
+    elementRef: ElementRef,
     @Parent() navPane: NavPane
   ) {
-    this.domElement = element.domElement
+    this.ele = elementRef.nativeElement
     this.navPane = navPane
 
     // TODO mq.addEventListener() doesn't work with zone.js

@@ -11,13 +11,13 @@ import {View} from 'angular2/src/core/annotations_impl/view';
 })
 export class Content {
   constructor(elementRef: ElementRef) {
-    // TODO(maxlynch): we need this domElement for things like aside, etc.
+    // TODO(maxlynch): we need this nativeElement for things like aside, etc.
     // but we should be able to stamp out this behavior with a base IonicComponent
-    // or something, so all elements have a domElement reference or a getElement() method
-    this.domElement = elementRef.domElement;
+    // or something, so all elements have a nativeElement reference or a getElement() method
+    this.ele = elementRef.nativeElement;
 
     setTimeout(() => {
-      this.scrollElement = this.domElement.children[0];
+      this.scrollElement = this.ele.children[0];
     });
   }
 
