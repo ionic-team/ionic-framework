@@ -69,14 +69,6 @@ export class FirstPage {
     console.log('viewDidLeave first page');
   }
 
-  viewWillCache() {
-    console.log('viewWillCache first page');
-  }
-
-  viewDidCache() {
-    console.log('viewDidCache first page');
-  }
-
   viewWillUnload() {
     console.log('viewWillUnload first page');
   }

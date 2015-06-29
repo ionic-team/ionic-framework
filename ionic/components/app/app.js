@@ -45,8 +45,10 @@ export class IonicApp {
     return this._zone;
   }
 
-  stateChange() {
-    console.log('stage change');
+  stateChange(activeView) {
+    console.log('stage change', activeView);
+
+
 
   }
 

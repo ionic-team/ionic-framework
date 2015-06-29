@@ -49,14 +49,6 @@ export class ThirdPage {
     console.log('viewDidLeave third page');
   }
 
-  viewWillCache() {
-    console.log('viewWillCache third page');
-  }
-
-  viewDidCache() {
-    console.log('viewDidCache third page');
-  }
-
   viewWillUnload() {
     console.log('viewWillUnload third page');
   }

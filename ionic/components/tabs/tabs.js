@@ -110,7 +110,6 @@ export class Tabs extends ViewController {
         let leavingItem = this.getActive() || new ViewItem();
         leavingItem.shouldDestroy = false;
         leavingItem.shouldCache = true;
-        leavingItem.willCache();
 
         this.transition(enteringItem, leavingItem, opts, () => {
           resolve();

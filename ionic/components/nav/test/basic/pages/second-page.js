@@ -68,14 +68,6 @@ export class SecondPage {
     console.log('viewDidLeave second page');
   }
 
-  viewWillCache() {
-    console.log('viewWillCache second page');
-  }
-
-  viewDidCache() {
-    console.log('viewDidCache second page');
-  }
-
   viewWillUnload() {
     console.log('viewWillUnload second page');
   }

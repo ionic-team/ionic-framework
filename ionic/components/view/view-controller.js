@@ -4,7 +4,6 @@ import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_compone
 import {AppViewManager} from 'angular2/src/core/compiler/view_manager';
 import {Injector, bind} from 'angular2/di';
 
-import {IonicApp} from '../app/app';
 import {IonicRouter} from '../../routing/router';
 import {ViewItem} from './view-item';
 import {NavController} from '../nav/nav-controller';
@@ -27,7 +26,6 @@ export class ViewController {
     this.loader = injector.get(DynamicComponentLoader);
     this.viewMngr = injector.get(AppViewManager);
     this.router = injector.get(IonicRouter);
-    this.app = injector.get(IonicApp);
 
     this.router.addViewController(this);
 
@@ -67,7 +65,6 @@ export class ViewController {
     let leavingItem = this.getActive() || new ViewItem();
     leavingItem.shouldDestroy = false;
     leavingItem.shouldCache = true;
-    leavingItem.willCache();
 
     // create a new ViewItem
     let enteringItem = new ViewItem(this, ComponentType, params);
@@ -303,13 +300,10 @@ export class ViewController {
           item.destroy();
 
         } else if (item.state === CACHED_STATE && item.shouldCache) {
-          item.cache();
           item.shouldCache = false;
         }
       }
     });
-
-    this.app.stateChange();
 
     // allow clicks again
     ClickBlock(false);

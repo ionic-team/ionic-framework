@@ -159,10 +159,6 @@ export class ViewItem {
     this.instance._viewWillEnter = new EventEmitter('viewWillEnter');
   }
 
-  cache() {
-    this.didCache();
-  }
-
   destroy() {
     for (let i = 0; i < this.disposals.length; i++) {
       this.disposals[i]();
@@ -254,7 +250,6 @@ export class ViewItem {
   */
   willEnter() {
     this.instance && this.instance.viewWillEnter && this.instance.viewWillEnter();
-    this.instance && this.instance._viewWillEnter.next();
   }
 
   /*
@@ -268,7 +263,6 @@ export class ViewItem {
       navbarView.didEnter();
     }
     this.instance && this.instance.viewDidEnter && this.instance.viewDidEnter();
-    this.instance && this.instance._viewDidEnter.next();
   }
 
   /*
@@ -284,20 +278,6 @@ export class ViewItem {
   */
   didLeave() {
     this.instance && this.instance.viewDidLeave && this.instance.viewDidLeave();
-  }
-
-  /*
-    The view is about to become cached.
-  */
-  willCache() {
-    this.instance && this.instance.viewWillCache && this.instance.viewWillCache();
-  }
-
-  /*
-    The view is now cached.
-  */
-  didCache() {
-    this.instance && this.instance.viewDidCache && this.instance.viewDidCache();
   }
 
   /*
