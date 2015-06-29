@@ -1,15 +1,13 @@
-import {Renderer, ElementRef} from 'angular2/angular2'
-import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
-import {View} from 'angular2/src/core/annotations_impl/view';
+import {ElementRef} from 'angular2/angular2';
 
-import {ItemPrimaryOptions, ItemSecondaryOptions} from './item-options'
-import {ItemPrimarySwipeButtons, ItemSecondarySwipeButtons} from './item-swipe-buttons'
-import {IonicComponent} from '../../config/component'
-import {dom} from 'ionic/util'
+import {ItemPrimaryOptions, ItemSecondaryOptions} from './item-options';
+import {ItemPrimarySwipeButtons, ItemSecondarySwipeButtons} from './item-swipe-buttons';
+import {IonicComponent, IonicView} from '../../config/annotations';
+import {dom} from 'ionic/util';
 
 
 @IonicComponent(Item)
-@View({
+@IonicView({
   template: `
     <!--
     <content select="ion-primary-options"></content>

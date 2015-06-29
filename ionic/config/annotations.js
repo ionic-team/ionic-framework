@@ -1,9 +1,51 @@
+import {coreDirectives} from 'angular2/angular2';
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
-import {DirectiveMetadata} from 'angular2/src/render/api';
+import {View} from 'angular2/src/core/annotations_impl/view';
 
 import * as util from 'ionic/util';
-import {Platform} from 'ionic/platform/platform';
 import {GlobalIonicConfig} from '../components/app/app';
+import {
+  Aside, Content, Refresher,
+  Slides, Slide, SlidePager,
+  Tabs, Tab,
+  List, Item,
+  Icon,
+  Checkbox, Switch, Label, Input,
+  Segment, SegmentButton, SegmentControlValueAccessor,
+  RadioGroup, RadioButton, SearchBar,
+  Nav, NavbarTemplate, Navbar, NavPush, NavPop
+} from 'ionic/ionic';
+
+
+export class IonicView extends View {
+  constructor(config) {
+    let directives = [
+
+      // Angular
+      coreDirectives,
+
+      // Content
+      Aside, Content, Refresher,
+      List, Item,
+      Slides, Slide, SlidePager,
+      Tabs, Tab,
+
+      // Media
+      Icon,
+
+      // Form elements
+      Segment, SegmentButton, SegmentControlValueAccessor,
+      //Checkbox, Switch, Label, Input
+      //RadioGroup, RadioButton, SearchBar,
+
+      // Nav
+      Nav, NavbarTemplate, Navbar, NavPush, NavPop
+    ];
+
+    config.directives = (config.directives || []).concat(directives);
+    super(config);
+  }
+}
 
 
 export class IonicDirective extends Directive {
@@ -19,6 +61,10 @@ export class IonicComponent extends Component {
 }
 
 function appendModeConfig(ComponentType) {
+  if (typeof ComponentType === 'object') {
+    return ComponentType;
+  }
+
   let config = ComponentType.config;
   config.host = config.host || {};
 

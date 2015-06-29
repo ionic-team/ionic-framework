@@ -1,13 +1,11 @@
-import {Renderer, ElementRef} from 'angular2/angular2'
-import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
-import {View} from 'angular2/src/core/annotations_impl/view';
+import {ElementRef} from 'angular2/angular2'
 
 import {ControlGroup, ControlDirective} from 'angular2/forms'
-import {dom} from 'ionic/util';
-import {IonicComponent} from 'ionic/config/component'
+import {IonicComponent, IonicView} from '../../config/annotations';
+
 
 @IonicComponent(Switch)
-@View({
+@IonicView({
   template: `
   <div class="item-content">
     <div class="item-title">

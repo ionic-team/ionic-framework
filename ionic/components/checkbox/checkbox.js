@@ -9,7 +9,7 @@ import {onInit} from 'angular2/angular2';
 
 //pretty sure this has changed in the latest angular
 import {NgControl} from 'angular2/forms';
-import {IonicComponent} from '../../config/component';
+import {IonicComponent} from '../../config/annotations';
 import {Icon} from '../icon/icon';
 
 

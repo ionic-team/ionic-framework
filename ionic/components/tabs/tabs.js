@@ -8,7 +8,7 @@ import {ViewController} from '../view/view-controller';
 import {ViewItem} from '../view/view-item';
 import {TabButton} from './tab-button';
 import {Icon} from '../icon/icon';
-import {IonicComponent} from '../../config/component';
+import {IonicComponent} from '../../config/annotations';
 
 
 @IonicComponent(Tabs)

@@ -15,7 +15,7 @@ import {IonicApp} from '../app/app';
 import * as util from 'ionic/util';
 
 import {Overlay} from '../overlay/overlay';
-import {IonicComponent} from '../../config/component';
+import {IonicComponent} from '../../config/annotations';
 import {Animation} from 'ionic/animations/animation';
 
 

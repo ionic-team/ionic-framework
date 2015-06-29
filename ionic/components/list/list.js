@@ -1,9 +1,8 @@
-import {ElementRef} from 'angular2/angular2'
+import {ElementRef} from 'angular2/angular2';
 import {onInit} from 'angular2/src/core/annotations_impl/annotations';
 
-import {IonicDirective} from 'ionic/config/component'
-import {ListVirtualScroll} from './virtual'
-
+import {IonicDirective} from '../../config/annotations';
+import {ListVirtualScroll} from './virtual';
 import * as util from 'ionic/util';
 
 

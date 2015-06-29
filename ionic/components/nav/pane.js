@@ -7,7 +7,7 @@ import {bind} from 'angular2/di';
 
 import {ViewController} from '../view/view-controller';
 import {SwipeHandle} from './swipe-handle';
-import {IonicComponent} from '../../config/component';
+import {IonicComponent} from '../../config/annotations';
 
 
 export class PaneController {

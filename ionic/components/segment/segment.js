@@ -1,15 +1,16 @@
 import {Renderer, ElementRef, EventEmitter} from 'angular2/angular2'
 
-import {Component, Directive, onInit} from 'angular2/src/core/annotations_impl/annotations';
+import {onInit} from 'angular2/src/core/annotations_impl/annotations';
 import {Ancestor} from 'angular2/src/core/annotations_impl/visibility';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
 import {Control, NgControl,NgFormControl} from 'angular2/forms';
 import {ControlGroup, ControlDirective} from 'angular2/forms'
 import {dom} from 'ionic/util';
-import {IonicComponent} from 'ionic/config/component'
+import {IonicDirective, IonicComponent, IonicView} from '../../config/annotations'
 
-@Directive({
+
+@IonicDirective({
   selector: 'ion-segment',
   host: {
     '(change)': 'onChange($event.target.value)',
@@ -53,7 +54,7 @@ export class SegmentControlValueAccessor {
 
 
 @IonicComponent(Segment)
-@View({
+@IonicView({
   template: `<div class="ion-segment">
     <content></content>
   </div>
@@ -161,7 +162,7 @@ export class Segment {
 }
 
 
-@Directive({
+@IonicDirective({
   selector: 'ion-segment-button',
   properties: [
     'value'

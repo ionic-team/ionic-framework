@@ -1,7 +1,6 @@
 
 export * from 'ionic/config/config'
-export * from 'ionic/config/component'
-export * from 'ionic/config/ionic-view'
+export * from 'ionic/config/annotations'
 
 export * from 'ionic/net/http'
 

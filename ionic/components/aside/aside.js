@@ -2,7 +2,7 @@ import {EventEmitter, ElementRef} from 'angular2/angular2'
 import {onInit} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
-import {IonicComponent} from '../../config/component';
+import {IonicComponent} from '../../config/annotations';
 import * as types from './extensions/types'
 import * as gestures from  './extensions/gestures'
 import {dom} from 'ionic/util'

@@ -1,16 +1,11 @@
-import {For, ElementRef, Inject, Parent} from 'angular2/angular2'
-
+import {ElementRef} from 'angular2/angular2'
 import {Ancestor} from 'angular2/src/core/annotations_impl/visibility';
 
-import {Component, Directive, onInit} from 'angular2/src/core/annotations_impl/annotations';
-import {View} from 'angular2/src/core/annotations_impl/view';
-
+import {onInit} from 'angular2/src/core/annotations_impl/annotations';
 import {DragGesture} from 'ionic/gestures/drag-gesture';
 import * as util from 'ionic/util';
-
 import {dom} from 'ionic/util'
-import {IonicComponent, IonicDirective} from 'ionic/config/component'
-
+import {IonicComponent, IonicDirective, IonicView} from '../../config/annotations';
 import {Hammer} from 'ionic/gestures/hammer';
 
 
@@ -30,7 +25,7 @@ import {Hammer} from 'ionic/gestures/hammer';
  * * TODO: Port over mouse handling
  */
 @IonicComponent(Slides)
-@View({
+@IonicView({
   template: `<div class="slides-view"><content></content></div>`,
   directives: [Slide, SlidePager]
 })
@@ -478,7 +473,6 @@ export class Slide {
     }
   }
 
-
   translate(x, duration) {
     this._translateX = x;
 
@@ -511,13 +505,12 @@ export class Slide {
 }
 
 
-@Component({
+@IonicComponent({
   selector: 'ion-pager',
 })
-@View({
+@IonicView({
   //[class.active]="$index == currentSlide}" ng-click="pagerClick($index)"><i class="icon ion-record"></i></span></div>',
-  template: `<span class="slide-pager-page" *for="#page of getSlides()">{{page.width}}<i class="icon ion-record"></i>X</span>`,
-  direcitves: [For]
+  template: `<span class="slide-pager-page" *ng-for="#page of getSlides()">{{page.width}}<i class="icon ion-record"></i>X</span>`
 })
 export class SlidePager {
   constructor(

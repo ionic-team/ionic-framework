@@ -1,21 +1,19 @@
 import {ElementRef, Pipe} from 'angular2/angular2'
-import {Component, Directive, onInit} from 'angular2/src/core/annotations_impl/annotations';
-import {View} from 'angular2/src/core/annotations_impl/view';
-
+import {onInit} from 'angular2/src/core/annotations_impl/annotations';
 //import {ControlGroup, ControlDirective} from 'angular2/forms'
 
-import {IonicComponent} from 'ionic/config/component'
+import {IonicComponent, IonicView} from '../../config/annotations';
 
 
 @IonicComponent(SearchBar)
-@View({
+@IonicView({
   template: `
   <div class="search-bar-input-container" [class.left-align]="shouldLeftAlign">
     <div class="search-bar-icon"></div>
     <input (focus)="inputFocused()" (blur)="inputBlurred()"
     (input)="inputChanged($event)" class="search-bar-input" type="search" [attr.placeholder]="placeholder">
   </div>
-  <button class="search-bar-cancel">{{ cancelText }}</button>`
+  <button class="search-bar-cancel">{{cancelText}}</button>`
 })
 export class SearchBar {
 
