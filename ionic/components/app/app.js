@@ -63,7 +63,7 @@ export class IonicApp {
                                       context,
                                       injector);
 
-        hostViewRef.elementRef = new ElementRef(hostViewRef, 0);
+        hostViewRef.elementRef = new ElementRef(hostViewRef, 0, viewMngr._renderer);
         hostViewRef.instance = viewMngr.getComponent(hostViewRef.elementRef);
 
         hostViewRef.dispose = () => {

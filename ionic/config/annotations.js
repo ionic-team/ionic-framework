@@ -61,6 +61,9 @@ export class IonicComponent extends Component {
 }
 
 function appendModeConfig(ComponentType) {
+  if (!ComponentType) {
+    return {};
+  }
   if (typeof ComponentType === 'object') {
     return ComponentType;
   }
