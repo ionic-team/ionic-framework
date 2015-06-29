@@ -89,7 +89,11 @@ export class ViewItem {
         }
 
         // this item has finished loading
-        this.loaded();
+        try {
+          this.loaded();
+        } catch (e) {
+          console.error(e);
+        }
 
         // fire callback when all child promises have been resolved
         Promise.all(this._promises).then(() => {

@@ -5,6 +5,7 @@ import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 import {bind} from 'angular2/di';
 import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
 
+import {IonicRouter} from '../../routing/router';
 import {IonicConfig} from '../../config/config';
 import {Platform} from '../../platform/platform';
 import {Registry} from '../../registry';
@@ -131,7 +132,7 @@ function initApp(window, document, config) {
   return app;
 }
 
-export function ionicBootstrap(ComponentType, config) {
+export function ionicBootstrap(ComponentType, config, router) {
   return new Promise((resolve, reject) => {
     try {
       // get the user config, or create one if wasn't passed in
@@ -154,14 +155,20 @@ export function ionicBootstrap(ComponentType, config) {
       // prepare the ready promise to fire....when ready
       Platform.prepareReady(config);
 
+      // setup router
+      router = router || new IonicRouter();
+
       // add injectables that will be available to all child components
       let injectableBindings = [
         bind(IonicApp).toValue(app),
-        bind(IonicConfig).toValue(config)
+        bind(IonicConfig).toValue(config),
+        bind(IonicRouter).toValue(router)
       ];
 
       bootstrap(ComponentType, injectableBindings).then(appRef => {
         app.ref(appRef);
+
+        router.init();
 
         // resolve that the app has loaded
         resolve(app);

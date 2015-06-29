@@ -5,6 +5,7 @@ import {AppViewManager} from 'angular2/src/core/compiler/view_manager';
 import {Injector, bind} from 'angular2/di';
 
 import {IonicApp} from '../app/app';
+import {IonicRouter} from '../../routing/router';
 import {ViewItem} from './view-item';
 import {NavController} from '../nav/nav-controller';
 import {PaneController} from '../nav/pane';
@@ -25,8 +26,9 @@ export class ViewController {
     this.compiler = injector.get(Compiler);
     this.loader = injector.get(DynamicComponentLoader);
     this.viewMngr = injector.get(AppViewManager);
+    this.router = injector.get(IonicRouter);
 
-    let ionicApp = injector.get(IonicApp);
+    this.router.addViewController(this);
 
     this.items = [];
     this.panes = new PaneController(this);

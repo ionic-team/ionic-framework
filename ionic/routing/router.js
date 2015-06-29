@@ -1,3 +1,130 @@
+import * as util from '../util/util';
+
+
+export class IonicRouter {
+  constructor(config) {
+    this._routes = [];
+    this._viewCtrls = [];
+    this.config(config);
+  }
+
+  config(config) {
+    for (let routeName in config) {
+      this.addRoute(routeName, config[routeName]);
+    }
+  }
+
+  addRoute(name, routeConfig) {
+    let route = new IonicRoute(name, routeConfig);
+    this._routes.push(route);
+  }
+
+  init() {
+    let rootViewCtrl = this.activeViewController();
+    if (rootViewCtrl) {
+      let matchedRoute = this.match() || this.otherwise();
+      this.push(rootViewCtrl, matchedRoute);
+    }
+  }
+
+  match() {
+    let path = this.getCurrentPath();
+    let route = null;
+
+    for (let i = 0, ii = this._routes.length; i < ii; i++) {
+      route = this._routes[i];
+      if (route.match(path)) {
+        return route;
+      }
+    }
+  }
+
+  otherwise(val) {
+    if (arguments.length) {
+      this._otherwise = val;
+    } else {
+      let route = null;
+      for (let i = 0, ii = this._routes.length; i < ii; i++) {
+        route = this._routes[i];
+        if (route.name === this._otherwise) {
+          return route;
+        }
+      }
+    }
+  }
+
+  push(viewCtrl, route) {
+    if (viewCtrl && route) {
+      if (route.cls) {
+        viewCtrl.push(route.cls).then(() => {
+          this.pushCompleted(route);
+        });
+
+      } else if (route.module) {
+        System.import(route.module).then((m) => {
+          if (m) {
+            route.cls = m[route.name];
+            viewCtrl.push(route.cls).then(() => {
+              this.pushCompleted(route);
+            });
+          }
+        });
+      }
+    }
+  }
+
+  pushCompleted(route) {
+    console.log('pushCompleted', route);
+  }
+
+  updateState(route) {
+
+  }
+
+  addViewController(viewCtrl) {
+    this._viewCtrls.push(viewCtrl);
+  }
+
+  activeViewController() {
+    if (this._viewCtrls.length) {
+      return this._viewCtrls[ this._viewCtrls.length - 1 ];
+    }
+    return null;
+  }
+
+  getCurrentPath() {
+    let hash = window.location.hash;
+
+    // Grab the path without the leading hash
+    let path = hash.slice(1);
+    return path;
+  }
+
+}
+
+
+export class IonicRoute {
+  constructor(name, routeConfig) {
+    this.name = name;
+    this.cls = null;
+    util.extend(this, routeConfig);
+  }
+
+  match(path) {
+    if (this.path) {
+      if (this.path == path) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+}
+
+
+
+
+
 /**
  * The RouterController handles checking for matches of
  * each registered route, and triggering callbacks, gathering
@@ -6,7 +133,6 @@
 export class RouterController {
   constructor() {
     this.routes = []
-    console.log('Router controller built');
   }
 
   // Build route params to send to the matching route.
@@ -38,14 +164,14 @@ export class RouterController {
   }
 
   push(componentClass, params) {
-    if(!this.rootNavController) {
-      console.error('Router: No root nav controller to push matching route.');
-      return;
-    }
-    console.log('Router pushing', componentClass, params);
-    setTimeout(() => {
-      this.rootNavController.push(componentClass, params);
-    });
+    // if(!this.rootNavController) {
+    //   console.error('Router: No root nav controller to push matching route.');
+    //   return;
+    // }
+    // console.log('Router pushing', componentClass, params);
+    // setTimeout(() => {
+    //   this.rootNavController.push(componentClass, params);
+    // });
   }
 
   run() {
@@ -232,6 +358,6 @@ export class Routable {
 
 }
 
-var Router_OLD = new RouterController();
+export var Router_OLD = new RouterController();
 
-export { Router_OLD, Route, Routable };
+//export { IonicRouter, Router_OLD, Route, Routable };

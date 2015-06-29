@@ -35,12 +35,7 @@ export class FirstPage {
     app: IonicApp,
     config: IonicConfig
   ) {
-
-    console.log('app', app)
-    console.log('config', config)
-
-    // TODO: Shouldn't have to do this
-    Router_OLD.setNavController(nav);
+    console.log('FirstPage constructor');
 
     this.nav = nav;
     this.val = Math.round(Math.random() * 8999) + 1000;
@@ -52,7 +47,7 @@ export class FirstPage {
   }
 
   viewLoaded() {
-    this.router = FirstPage.router.invoke(this);
+    //this.router = FirstPage.router.invoke(this);
     console.log('viewLoaded first page');
   }
 
@@ -93,6 +88,6 @@ export class FirstPage {
   }
 }
 
-new Routable(FirstPage, {
-  url: '/first-page'
-})
+// new Routable(FirstPage, {
+//   url: '/first-page'
+// })

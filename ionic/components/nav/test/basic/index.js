@@ -1,6 +1,6 @@
 import {Component, onInit} from 'angular2/src/core/annotations_impl/annotations';
 
-import {IonicView, IonicConfig} from 'ionic/ionic';
+import {IonicView, IonicConfig, IonicRouter} from 'ionic/ionic';
 import {FirstPage} from './pages/first-page'
 
 
@@ -8,34 +8,31 @@ import {FirstPage} from './pages/first-page'
   selector: 'ion-app'
 })
 @IonicView({
-  template: '<ion-nav [root]="rootView"></ion-nav>'
+  template: '<ion-nav></ion-nav>'
 })
-class MyApp {
-  constructor() {
-    this.rootView = FirstPage;
-  }
-}
+class MyApp {}
+
 
 export function main(ionicBootstrap) {
 
-  var routes = {
-    FirstPage: {
-      url: 'firstpage',
-      module: './first-page',
+  var myRouter = new IonicRouter({
+    'FirstPage': {
+      'path': '/firstpage',
+      'module': 'dist/examples/nav/basic/pages/first-page',
     },
-    SecondPage: {
-      url: 'secondpage',
-      module: './second-page'
+    'SecondPage': {
+      'path': '/secondpage',
+      'module': './second-page'
     },
-    ThirdPage: {
-      url: 'thirdpage',
-      module: './third-page'
+    'ThirdPage': {
+      'path': '/thirdpage',
+      'module': './third-page'
     },
-  };
+  });
+
+  myRouter.otherwise('FirstPage');
 
   let myConfig = new IonicConfig();
 
-  //myConfig.routes(routes);
-
-  ionicBootstrap(MyApp, myConfig, routes);
+  ionicBootstrap(MyApp, myConfig, myRouter);
 }
