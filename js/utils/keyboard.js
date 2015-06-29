@@ -96,6 +96,12 @@ var keyboardLandscapeViewportHeight = 0;
 var keyboardActiveElement;
 
 /**
+ * The previously focused input used to reset keyboard after focusing on a
+ * new non-keyboard element
+ */
+var lastKeyboardActiveElement;
+
+/**
  * The scroll view containing the currently focused input.
  */
 var scrollView;
@@ -311,6 +317,9 @@ function keyboardFocusIn(e) {
       e.target.readOnly ||
       !ionic.tap.isKeyboardElement(e.target) ||
       !(scrollView = ionic.DomUtil.getParentWithClass(e.target, SCROLL_CONTAINER_CSS))) {
+    if (keyboardActiveElement) {
+        lastKeyboardActiveElement = keyboardActiveElement;
+    }
     keyboardActiveElement = null;
     return;
   }
@@ -546,9 +555,9 @@ function keyboardHide() {
   ionic.keyboard.isOpen = false;
   ionic.keyboard.isClosing = false;
 
-  if (keyboardActiveElement) {
+  if (keyboardActiveElement || lastKeyboardActiveElement) {
     ionic.trigger('resetScrollView', {
-      target: keyboardActiveElement
+      target: keyboardActiveElement || lastKeyboardActiveElement
     }, true);
   }
 
@@ -572,6 +581,7 @@ function keyboardHide() {
   }
 
   keyboardActiveElement = null;
+  lastKeyboardActiveElement = null;
 }
 
 /**
