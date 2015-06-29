@@ -73,9 +73,6 @@ Platform.register({
     tapPolyfill: true
   },
   isMatch(p) {
-    // SLEDGEHAMMER OVERRIDE FOR NOW
-    return true;
-
     return p.isPlatform('ios', 'iphone|ipad|ipod');
   },
   versionParser(p) {

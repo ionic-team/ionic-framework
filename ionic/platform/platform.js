@@ -172,10 +172,12 @@ export class PlatformCtrl {
            this.testUserAgent(userAgentExpression);
   }
 
-  load() {
+  load(config) {
     let rootPlatformNode = null;
     let engineNode = null;
     let self = this;
+
+    this.platformOverride = config.setting('platform');
 
     // figure out the most specific platform and active engine
     let tmpPlatform = null;
@@ -281,7 +283,7 @@ function matchPlatform(platformName, platform) {
   if (tmpPlatform) {
     tmpPlatform.depth = 0;
     let childPlatform = tmpPlatform.child();
-    while(childPlatform) {
+    while (childPlatform) {
       tmpPlatform.depth++
       childPlatform = childPlatform.child();
     }
@@ -344,7 +346,9 @@ class PlatformNode {
 
   isMatch(p) {
     if (typeof this.c.isMatched !== 'boolean') {
-      if (!this.c.isMatch) {
+      if (p.platformOverride) {
+        this.c.isMatched = (p.platformOverride === this.c.name);
+      } else if (!this.c.isMatch) {
         this.c.isMatched = false;
       } else {
         this.c.isMatched = this.c.isMatch(p);

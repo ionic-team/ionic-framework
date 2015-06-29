@@ -120,20 +120,12 @@ export class IonicApp {
     return this._rtl;
   }
 
-  lang(val) {
-    if (arguments.length) {
-      this._lang = val;
-    }
-    return this._lang;
-  }
-
 }
 
-function initApp(window, document) {
+function initApp(window, document, config) {
   // create the base IonicApp
   let app = new IonicApp();
   app.isRTL(document.documentElement.getAttribute('dir') == 'rtl');
-  app.lang(document.documentElement.getAttribute('lang'));
 
   // load all platform data
   // Platform is a global singleton
@@ -141,7 +133,7 @@ function initApp(window, document) {
   Platform.userAgent(window.navigator.userAgent);
   Platform.width(window.innerWidth);
   Platform.height(window.innerHeight);
-  Platform.load();
+  Platform.load(config);
 
   return app;
 }
@@ -149,11 +141,11 @@ function initApp(window, document) {
 export function ionicBootstrap(ComponentType, config) {
   return new Promise((resolve, reject) => {
     try {
-      // create the base IonicApp
-      let app = initApp(window, document)
-
       // get the user config, or create one if wasn't passed in
       config = config || new IonicConfig();
+
+      // create the base IonicApp
+      let app = initApp(window, document, config);
 
       // copy default platform settings into the user config platform settings
       // user config platform settings should override default platform settings

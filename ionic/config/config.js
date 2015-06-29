@@ -4,7 +4,16 @@ import {isString, isObject, isDefined, isFunction, extend} from '../util/util';
 export class IonicConfig {
 
   constructor(settings) {
-    this.setting(settings || {});
+
+    // defaults
+    this._settings = {
+      platform: 'ios'
+    };
+
+    // override defaults w/ user config
+    if (settings) {
+      extend(this._settings, setting);
+    }
   }
 
   setting() {
