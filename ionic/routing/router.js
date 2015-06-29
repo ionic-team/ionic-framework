@@ -209,9 +209,9 @@ export class Routable {
     this.routeInfo = routeInfo;
 
     //console.log('New routable', componentClass, routeInfo);
-    Router.on(this.routeInfo.url, (routeParams) => {
+    Router_OLD.on(this.routeInfo.url, (routeParams) => {
       console.log('Routable matched', routeParams, this.componentClass);
-      Router.push(this.componentClass, routeParams);
+      Router_OLD.push(this.componentClass, routeParams);
     });
 
     componentClass.router = this;
@@ -223,7 +223,7 @@ export class Routable {
     // Bind some lifecycle events
     componentInstance._viewWillEnter.observer({
       next: () => {
-        Router.emit(this.routeInfo.url);
+        Router_OLD.emit(this.routeInfo.url);
       }
     });
 
@@ -232,6 +232,6 @@ export class Routable {
 
 }
 
-var Router = new RouterController();
+var Router_OLD = new RouterController();
 
-export { Router, Route, Routable };
+export { Router_OLD, Route, Routable };

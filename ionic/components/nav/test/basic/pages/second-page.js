@@ -1,6 +1,6 @@
 import {Component} from 'angular2/src/core/annotations_impl/annotations';
 
-import {IonicView, Routable, Router, NavController, NavParams} from 'ionic/ionic';
+import {IonicView, Routable, Router_OLD, NavController, NavParams} from 'ionic/ionic';
 import {ThirdPage} from './third-page';
 
 
@@ -31,7 +31,7 @@ export class SecondPage {
     params: NavParams
   ) {
     // TODO: Shouldn't have to do this
-    Router.setNavController(nav);
+    Router_OLD.setNavController(nav);
 
     this.nav = nav;
     this.params = params;

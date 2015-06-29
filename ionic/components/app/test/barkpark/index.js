@@ -5,9 +5,7 @@ import {View} from 'angular2/src/core/annotations_impl/view';
 import {FormBuilder, Validators, FormDirectives, ControlGroup} from 'angular2/forms';
 import {Log} from 'ionic/util'
 
-import {
-  Router, Routable, IonicView, NavController
-} from 'ionic/ionic'
+import {Routable, IonicView, NavController} from 'ionic/ionic'
 
 
 @Component({selector: 'ion-view'})

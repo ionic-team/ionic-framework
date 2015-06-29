@@ -1,7 +1,7 @@
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 
 import {IonicView, IonicConfig, IonicApp} from 'ionic/ionic';
-import {NavParams, Routable, Router, NavController} from 'ionic/ionic';
+import {NavParams, Routable, Router_OLD, NavController} from 'ionic/ionic';
 
 import {SecondPage} from './second-page'
 
@@ -40,7 +40,7 @@ export class FirstPage {
     console.log('config', config)
 
     // TODO: Shouldn't have to do this
-    Router.setNavController(nav);
+    Router_OLD.setNavController(nav);
 
     this.nav = nav;
     this.val = Math.round(Math.random() * 8999) + 1000;

@@ -17,6 +17,25 @@ class MyApp {
 }
 
 export function main(ionicBootstrap) {
+
+  var routes = {
+    FirstPage: {
+      url: 'firstpage',
+      module: './first-page',
+    },
+    SecondPage: {
+      url: 'secondpage',
+      module: './second-page'
+    },
+    ThirdPage: {
+      url: 'thirdpage',
+      module: './third-page'
+    },
+  };
+
   let myConfig = new IonicConfig();
-  ionicBootstrap(MyApp, myConfig);
+
+  //myConfig.routes(routes);
+
+  ionicBootstrap(MyApp, myConfig, routes);
 }

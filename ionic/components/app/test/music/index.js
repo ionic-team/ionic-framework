@@ -1,14 +1,8 @@
-import {ElementRef, For, Parent} from 'angular2/angular2'
+import {ElementRef} from 'angular2/angular2';
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
-import {View} from 'angular2/src/core/annotations_impl/view';
-
 import {FormBuilder, Validators, FormDirectives, ControlGroup} from 'angular2/forms';
-import {Log} from 'ionic/util'
 
-import {
-  Router, Routable, NavController,
-  IonicView
-} from 'ionic/ionic'
+import {Routable, NavController, IonicView} from 'ionic/ionic';
 
 
 @Component({selector: 'ion-view'})
@@ -37,27 +31,6 @@ class IonicApp {
     this.rootView = AppPage
 
     this.menuOpenAmount = 0;
-
-
-    /*
-    setTimeout(() => {
-      var nav = window.nav;
-
-      var route = Router;//new Router()
-      route.on('/login', (data) => {
-        nav.push(LoginPage);
-
-      })
-
-      route.on('/post/:id', (data) => {
-        console.log('ROUTE: Post page', data)
-        nav.push(PostDetail, data);
-      })
-
-      route.otherwise('/login');
-
-    }, 200);
-    */
   }
 
   onMenuOpening(amt) {

@@ -1,6 +1,6 @@
 import {Component} from 'angular2/src/core/annotations_impl/annotations';
 
-import {IonicView, Router, Routable, NavController} from 'ionic/ionic';
+import {IonicView, Router_OLD, Routable, NavController} from 'ionic/ionic';
 
 
 @Component({selector: 'ion-view'})
@@ -22,7 +22,7 @@ export class ThirdPage {
     this.nav = nav
 
     // TODO: Shouldn't have to do this
-    Router.setNavController(nav);
+    Router_OLD.setNavController(nav);
   }
 
   pop() {
