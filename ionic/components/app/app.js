@@ -36,13 +36,6 @@ export class IonicApp {
     return this.components[key];
   }
 
-  config(val) {
-    if (arguments.length) {
-      this._config = val;
-    }
-    return this._config;
-  }
-
   /**
    * Create and append the given component into the root
    * element of the app.
@@ -152,7 +145,7 @@ export function ionicBootstrap(ComponentType, config) {
       config.setPlatform(Platform);
 
       // make the config global
-      IonicConfig.setGlobal(config);
+      IonicConfig.global = config;
 
       // config and platform settings have been figured out
       // apply the correct CSS to the app

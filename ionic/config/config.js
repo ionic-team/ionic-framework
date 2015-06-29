@@ -1,4 +1,4 @@
-import {isString, isObject, isDefined, isFunction, extend} from '../util/util';
+import {isObject, isDefined, isFunction, extend} from '../util/util';
 
 
 export class IonicConfig {
@@ -125,7 +125,7 @@ export class IonicConfig {
     this._settings.platforms = extend(platform.settings(), this._settings.platforms || {});
   }
 
-  static setGlobal(config) {
+  static set global(config) {
     globalConfig = config;
   }
 
@@ -135,4 +135,4 @@ export class IonicConfig {
 
 }
 
-export let globalConfig = null;
+let globalConfig = null;
