@@ -1,4 +1,5 @@
 import {Animation} from '../animations/animation';
+import {IonicConfig} from  '../config/config';
 
 const SHOW_NAVBAR_CSS = 'show-navbar';
 const SHOW_VIEW_CSS = 'show-view';
@@ -84,7 +85,7 @@ export class Transition extends Animation {
    STATIC CLASSES
    */
   static create(nav, opts = {}) {
-    const name = opts.animation || 'ios';
+    const name = opts.animation || IonicConfig.global.setting('viewTransition');
 
     let TransitionClass = TransitionRegistry[name];
     if (!TransitionClass) {

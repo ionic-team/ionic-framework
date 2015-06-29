@@ -3,7 +3,7 @@ import {Component, Directive} from 'angular2/src/core/annotations_impl/annotatio
 import {View} from 'angular2/src/core/annotations_impl/view';
 
 import * as util from 'ionic/util';
-import {GlobalIonicConfig} from '../components/app/app';
+import {IonicConfig} from './config';
 import {
   Aside, Content, Refresher,
   Slides, Slide, SlidePager,
@@ -100,9 +100,9 @@ function appendModeConfig(ComponentType) {
       }
 
       // get the property values from a global user/platform config
-      let configVal = GlobalIonicConfig.setting(prop);
+      let configVal = IonicConfig.global.setting(prop);
       if (configVal) {
-        instance[prop] = globalPropertyValue;
+        instance[prop] = configVal;
         continue;
       }
 
@@ -129,7 +129,7 @@ function appendModeConfig(ComponentType) {
   }
 
   if (!platformMode) {
-    platformMode = GlobalIonicConfig.setting('mode');
+    platformMode = IonicConfig.global.setting('mode');
   }
 
   let id = config.classId || (config.selector && config.selector.replace('ion-', ''));

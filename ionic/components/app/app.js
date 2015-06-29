@@ -152,7 +152,7 @@ export function ionicBootstrap(ComponentType, config) {
       config.setPlatform(Platform);
 
       // make the config global
-      GlobalIonicConfig = config;
+      IonicConfig.setGlobal(config);
 
       // config and platform settings have been figured out
       // apply the correct CSS to the app
@@ -196,5 +196,3 @@ export function load(app) {
     app.main(ionicBootstrap);
   }
 }
-
-export let GlobalIonicConfig = null;

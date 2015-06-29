@@ -12,7 +12,7 @@ export class IonicConfig {
 
     // override defaults w/ user config
     if (settings) {
-      extend(this._settings, setting);
+      extend(this._settings, settings);
     }
   }
 
@@ -125,4 +125,14 @@ export class IonicConfig {
     this._settings.platforms = extend(platform.settings(), this._settings.platforms || {});
   }
 
+  static setGlobal(config) {
+    globalConfig = config;
+  }
+
+  static get global() {
+    return globalConfig;
+  }
+
 }
+
+export let globalConfig = null;

@@ -70,6 +70,7 @@ Platform.register({
   ],
   settings: {
     mode: 'ios',
+    viewTransition: 'ios',
     tapPolyfill: true
   },
   isMatch(p) {
