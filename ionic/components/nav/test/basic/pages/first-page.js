@@ -1,12 +1,14 @@
-import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
-
-import {IonicView, IonicConfig, IonicApp} from 'ionic/ionic';
-import {NavParams, Routable, Router_OLD, NavController} from 'ionic/ionic';
+import {IonicComponent, IonicView, IonicConfig, IonicApp} from 'ionic/ionic';
+import {NavParams, NavController} from 'ionic/ionic';
 
 import {SecondPage} from './second-page'
 
-@Component({
-  selector: 'ion-view'
+
+@IonicComponent({
+  selector: 'ion-view',
+  route: {
+    path: '/firstpage'
+  }
 })
 @IonicView({
   template: '' +

@@ -22,11 +22,11 @@ export function main(ionicBootstrap) {
     },
     'SecondPage': {
       'path': '/secondpage',
-      'module': './second-page'
+      'module': 'dist/examples/nav/basic/pages/second-page',
     },
     'ThirdPage': {
       'path': '/thirdpage',
-      'module': './third-page'
+      'module': 'dist/examples/nav/basic/pages/third-page',
     },
   });
 

@@ -27,6 +27,7 @@ export class ViewController {
     this.loader = injector.get(DynamicComponentLoader);
     this.viewMngr = injector.get(AppViewManager);
     this.router = injector.get(IonicRouter);
+    this.app = injector.get(IonicApp);
 
     this.router.addViewController(this);
 
@@ -307,6 +308,8 @@ export class ViewController {
         }
       }
     });
+
+    this.app.stateChange();
 
     // allow clicks again
     ClickBlock(false);

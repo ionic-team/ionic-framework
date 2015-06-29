@@ -1,10 +1,13 @@
-import {Component} from 'angular2/src/core/annotations_impl/annotations';
-
-import {IonicView, Routable, Router_OLD, NavController, NavParams} from 'ionic/ionic';
+import {IonicComponent, IonicView, NavController, NavParams} from 'ionic/ionic';
 import {ThirdPage} from './third-page';
 
 
-@Component({selector: 'ion-view'})
+@IonicComponent({
+  selector: 'ion-view',
+  route: {
+    path: '/secondpage'
+  }
+})
 @IonicView({
   template: `
     <ion-navbar *navbar><ion-title>Second Page Header</ion-title></ion-navbar>
@@ -30,9 +33,6 @@ export class SecondPage {
     nav: NavController,
     params: NavParams
   ) {
-    // TODO: Shouldn't have to do this
-    Router_OLD.setNavController(nav);
-
     this.nav = nav;
     this.params = params;
     this.val = Math.round(Math.random() * 8999) + 1000;
@@ -50,7 +50,6 @@ export class SecondPage {
 
   viewLoaded() {
     console.log('viewLoaded second page');
-    this.router = SecondPage.router.invoke(this);
   }
 
   viewWillEnter() {
@@ -87,6 +86,6 @@ export class SecondPage {
 
 }
 
-new Routable(SecondPage, {
-  url: '/second-page'
-})
+// new Routable(SecondPage, {
+//   url: '/second-page'
+// })

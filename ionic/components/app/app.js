@@ -4,6 +4,7 @@ import {Compiler} from 'angular2/angular2';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 import {bind} from 'angular2/di';
 import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
+import {NgZone} from 'angular2/src/core/zone/ng_zone';
 
 import {IonicRouter} from '../../routing/router';
 import {IonicConfig} from '../../config/config';
@@ -19,6 +20,34 @@ export class IonicApp {
 
     // Our component registry map
     this.components = {};
+  }
+
+  load(appRef) {
+    this.ref(appRef);
+    this.zone(this.injector().get(NgZone));
+  }
+
+  ref(val) {
+    if (arguments.length) {
+      this._ref = val;
+    }
+    return this._ref;
+  }
+
+  injector() {
+    return this._ref.injector;
+  }
+
+  zone(val) {
+    if (arguments.length) {
+      this._zone = val;
+    }
+    return this._zone;
+  }
+
+  stateChange() {
+    console.log('stage change');
+
   }
 
   /**
@@ -46,7 +75,7 @@ export class IonicApp {
    */
   appendComponent(ComponentType: Type) {
     return new Promise((resolve, reject) => {
-      let injector = this._ref.injector;
+      let injector = this.injector();
       let compiler = injector.get(Compiler);
       let viewMngr = injector.get(AppViewManager);
       let rootComponentRef = this._ref._hostComponent;
@@ -78,13 +107,6 @@ export class IonicApp {
         reject(err);
       });
     });
-  }
-
-  ref(val) {
-    if (arguments.length) {
-      this._ref = val;
-    }
-    return this._ref;
   }
 
   applyCss(bodyEle, platform, config) {
@@ -157,6 +179,7 @@ export function ionicBootstrap(ComponentType, config, router) {
 
       // setup router
       router = router || new IonicRouter();
+      router.app(app);
 
       // add injectables that will be available to all child components
       let injectableBindings = [
@@ -166,7 +189,7 @@ export function ionicBootstrap(ComponentType, config, router) {
       ];
 
       bootstrap(ComponentType, injectableBindings).then(appRef => {
-        app.ref(appRef);
+        app.load(appRef);
 
         router.init();
 

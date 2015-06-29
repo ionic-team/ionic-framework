@@ -1,9 +1,12 @@
-import {Component} from 'angular2/src/core/annotations_impl/annotations';
-
-import {IonicView, Router_OLD, Routable, NavController} from 'ionic/ionic';
+import {IonicComponent, IonicView, NavController} from 'ionic/ionic';
 
 
-@Component({selector: 'ion-view'})
+@IonicComponent({
+  selector: 'ion-view',
+  route: {
+    path: '/thirdpage'
+  }
+})
 @IonicView({
   template: `
     <ion-navbar *navbar><ion-title>Third Page Header</ion-title></ion-navbar>
@@ -20,9 +23,6 @@ export class ThirdPage {
     nav: NavController
   ) {
     this.nav = nav
-
-    // TODO: Shouldn't have to do this
-    Router_OLD.setNavController(nav);
   }
 
   pop() {
@@ -30,7 +30,6 @@ export class ThirdPage {
   }
 
   viewLoaded() {
-    this.router = ThirdPage.router.invoke(this);
     console.log('viewLoaded third page');
   }
 
@@ -69,6 +68,6 @@ export class ThirdPage {
 }
 
 
-new Routable(ThirdPage, {
-  url: '/third-page'
-})
+// new Routable(ThirdPage, {
+//   url: '/third-page'
+// })

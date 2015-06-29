@@ -8,6 +8,10 @@ export class IonicRouter {
     this.config(config);
   }
 
+  app(app) {
+    this._app = app;
+  }
+
   config(config) {
     for (let routeName in config) {
       this.addRoute(routeName, config[routeName]);
@@ -15,8 +19,10 @@ export class IonicRouter {
   }
 
   addRoute(name, routeConfig) {
-    let route = new IonicRoute(name, routeConfig);
-    this._routes.push(route);
+    if (name && routeConfig && routeConfig.path) {
+      let route = new IonicRoute(name, routeConfig);
+      this._routes.push(route);
+    }
   }
 
   init() {
@@ -54,31 +60,35 @@ export class IonicRouter {
   }
 
   push(viewCtrl, route) {
+    let self = this;
+
+    function run() {
+      self._app.zone().run(() => {
+        viewCtrl.push(route.cls).then(() => {
+          self.updateState(route);
+        });
+      });
+    }
+
     if (viewCtrl && route) {
       if (route.cls) {
-        viewCtrl.push(route.cls).then(() => {
-          this.pushCompleted(route);
-        });
+        run();
 
       } else if (route.module) {
-        System.import(route.module).then((m) => {
+        System.import(route.module).then(m => {
           if (m) {
             route.cls = m[route.name];
-            viewCtrl.push(route.cls).then(() => {
-              this.pushCompleted(route);
-            });
+            run();
           }
         });
       }
     }
   }
 
-  pushCompleted(route) {
-    console.log('pushCompleted', route);
-  }
+  updateState(activeRoute) {
+    console.log('updateState', activeRoute);
 
-  updateState(route) {
-
+    window.location.hash = activeRoute.path;
   }
 
   addViewController(viewCtrl) {
