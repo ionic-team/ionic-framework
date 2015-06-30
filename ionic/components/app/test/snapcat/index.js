@@ -1,7 +1,7 @@
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {FormBuilder, Control, ControlGroup, Validators, formDirectives} from 'angular2/forms';
 
-import {IonicView, Animation, Modal, NavController, IonicComponent} from 'ionic/ionic';
+import {IonicView, Animation, Modal, NavController, NavParams, IonicComponent} from 'ionic/ionic';
 
 
 @Component({ selector: 'ion-view' })
