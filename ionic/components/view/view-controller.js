@@ -4,6 +4,7 @@ import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_compone
 import {AppViewManager} from 'angular2/src/core/compiler/view_manager';
 import {Injector, bind} from 'angular2/di';
 
+import {IonicApp} from '../app/app';
 import {IonicRouter} from '../../routing/router';
 import {ViewItem} from './view-item';
 import {NavController} from '../nav/nav-controller';
@@ -26,6 +27,7 @@ export class ViewController {
     this.loader = injector.get(DynamicComponentLoader);
     this.viewMngr = injector.get(AppViewManager);
     this.router = injector.get(IonicRouter);
+    this.app = injector.get(IonicApp);
 
     this.router.addViewController(this);
 
@@ -72,6 +74,9 @@ export class ViewController {
     // add the item to the stack
     this.add(enteringItem);
 
+    // notify app of the state change
+    this.app.stateChange(enteringItem, this);
+
     // start the transition
     this.transition(enteringItem, leavingItem, opts, () => {
       resolve();
@@ -103,6 +108,9 @@ export class ViewController {
     // item on the history stack.
     let enteringItem = this.getPrevious(leavingItem);
     if (enteringItem) {
+      // notify app of the state change
+      this.app.stateChange(enteringItem, this);
+
       // start the transition
       this.transition(enteringItem, leavingItem, opts, () => {
         // transition completed, destroy the leaving item
@@ -228,6 +236,9 @@ export class ViewController {
 
           enteringItem.didEnter();
           leavingItem.didLeave();
+
+          // notify app of the state change
+          this.app.stateChange(enteringItem, this);
 
         } else {
           // cancelled the swipe back, return items to original state

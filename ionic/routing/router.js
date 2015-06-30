@@ -10,6 +10,8 @@ export class IonicRouter {
 
   app(app) {
     this._app = app;
+
+
   }
 
   config(config) {
@@ -20,7 +22,7 @@ export class IonicRouter {
 
   addRoute(name, routeConfig) {
     if (name && routeConfig && routeConfig.path) {
-      let route = new IonicRoute(name, routeConfig);
+      let route = new Route(name, routeConfig);
       this._routes.push(route);
     }
   }
@@ -85,10 +87,25 @@ export class IonicRouter {
     }
   }
 
-  updateState(activeRoute) {
-    console.log('updateState', activeRoute);
+  stateChange(activeView) {
+    console.log('stateChange', activeView);
 
-    window.location.hash = activeRoute.path;
+    let routeConfig = activeView.ComponentType.route;
+
+    let route = null;
+    for (let i = 0, ii = this._routes.length; i < ii; i++) {
+      route = this._routes[i];
+
+      if (route.path == routeConfig.path) {
+        return this.updateState(route);
+      }
+    }
+  }
+
+  updateState(route) {
+    console.log('updateState', route);
+
+    window.location.hash = route.path;
   }
 
   addViewController(viewCtrl) {
@@ -113,7 +130,14 @@ export class IonicRouter {
 }
 
 
-export class IonicRoute {
+export class Routable {
+  constructor(cls, routeConfig) {
+    cls.route = routeConfig;
+  }
+}
+
+
+class Route {
   constructor(name, routeConfig) {
     this.name = name;
     this.cls = null;
@@ -279,7 +303,7 @@ export class RouterController {
   }
 }
 
-export class Route {
+export class Route_OLD {
   constructor(url, handler) {
     this.url = url;
     this.handler = handler;
@@ -339,34 +363,34 @@ export class Route {
  * This makes it easy to auto emit URLs for routables pushed
  * onto the stack.
  */
-export class Routable {
-  constructor(componentClass, routeInfo) {
-    this.componentClass = componentClass;
-    this.routeInfo = routeInfo;
+// export class Routable {
+//   constructor(componentClass, routeInfo) {
+//     this.componentClass = componentClass;
+//     this.routeInfo = routeInfo;
 
-    //console.log('New routable', componentClass, routeInfo);
-    Router_OLD.on(this.routeInfo.url, (routeParams) => {
-      console.log('Routable matched', routeParams, this.componentClass);
-      Router_OLD.push(this.componentClass, routeParams);
-    });
+//     //console.log('New routable', componentClass, routeInfo);
+//     Router_OLD.on(this.routeInfo.url, (routeParams) => {
+//       console.log('Routable matched', routeParams, this.componentClass);
+//       Router_OLD.push(this.componentClass, routeParams);
+//     });
 
-    componentClass.router = this;
-  }
-  invoke(componentInstance) {
-    // Called on viewLoaded
-    this.componentInstance = componentInstance;
+//     componentClass.router = this;
+//   }
+//   invoke(componentInstance) {
+//     // Called on viewLoaded
+//     this.componentInstance = componentInstance;
 
-    // Bind some lifecycle events
-    componentInstance._viewWillEnter.observer({
-      next: () => {
-        Router_OLD.emit(this.routeInfo.url);
-      }
-    });
+//     // Bind some lifecycle events
+//     componentInstance._viewWillEnter.observer({
+//       next: () => {
+//         Router_OLD.emit(this.routeInfo.url);
+//       }
+//     });
 
-    return this;
-  }
+//     return this;
+//   }
 
-}
+// }
 
 export var Router_OLD = new RouterController();
 

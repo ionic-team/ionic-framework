@@ -1,4 +1,4 @@
-import {IonicComponent, IonicView, NavController, NavParams} from 'ionic/ionic';
+import {IonicComponent, IonicView, Routable, NavController, NavParams} from 'ionic/ionic';
 import {ThirdPage} from './third-page';
 
 
@@ -78,6 +78,6 @@ export class SecondPage {
 
 }
 
-// new Routable(SecondPage, {
-//   url: '/second-page'
-// })
+new Routable(SecondPage, {
+  path: '/secondpage'
+});

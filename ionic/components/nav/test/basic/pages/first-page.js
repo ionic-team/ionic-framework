@@ -1,14 +1,11 @@
-import {IonicComponent, IonicView, IonicConfig, IonicApp} from 'ionic/ionic';
+import {IonicComponent, IonicView, IonicConfig, IonicApp, Routable} from 'ionic/ionic';
 import {NavParams, NavController} from 'ionic/ionic';
 
 import {SecondPage} from './second-page'
 
 
 @IonicComponent({
-  selector: 'ion-view',
-  route: {
-    path: '/firstpage'
-  }
+  selector: 'ion-view'
 })
 @IonicView({
   template: '' +
@@ -49,7 +46,6 @@ export class FirstPage {
   }
 
   viewLoaded() {
-    //this.router = FirstPage.router.invoke(this);
     console.log('viewLoaded first page');
   }
 
@@ -82,6 +78,6 @@ export class FirstPage {
   }
 }
 
-// new Routable(FirstPage, {
-//   url: '/first-page'
-// })
+new Routable(FirstPage, {
+  path: '/firstpage'
+});

@@ -45,11 +45,8 @@ export class IonicApp {
     return this._zone;
   }
 
-  stateChange(activeView) {
-    console.log('stage change', activeView);
-
-
-
+  stateChange(activeView, viewCtrl) {
+    this.router.stateChange(activeView, viewCtrl);
   }
 
   /**
@@ -182,6 +179,9 @@ export function ionicBootstrap(ComponentType, config, router) {
       // setup router
       router = router || new IonicRouter();
       router.app(app);
+
+      // TODO: don't wire these together
+      app.router = router;
 
       // add injectables that will be available to all child components
       let injectableBindings = [

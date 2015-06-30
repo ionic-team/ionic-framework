@@ -1,5 +1,4 @@
-import {coreDirectives} from 'angular2/angular2';
-import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
+import {coreDirectives, Component, Directive} from 'angular2/angular2';
 import {View} from 'angular2/src/core/annotations_impl/view';
 
 import * as util from 'ionic/util';
