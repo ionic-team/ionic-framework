@@ -20,6 +20,8 @@ export class IonicApp {
 
     // Our component registry map
     this.components = {};
+
+    this._activeViewId = null;
   }
 
   load(appRef) {
@@ -46,7 +48,10 @@ export class IonicApp {
   }
 
   stateChange(activeView, viewCtrl) {
-    this.router.stateChange(activeView, viewCtrl);
+    if (this._activeViewId !== activeView.id) {
+      this.router.stateChange(activeView, viewCtrl);
+      this._activeViewId = activeView.id;
+    }
   }
 
   /**
