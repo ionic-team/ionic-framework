@@ -4,6 +4,7 @@ import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_compone
 import {AppViewManager} from 'angular2/src/core/compiler/view_manager';
 import {Injector, bind} from 'angular2/di';
 
+import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
 import {IonicRouter} from '../../routing/router';
 import {ViewItem} from './view-item';
@@ -13,13 +14,14 @@ import {Transition} from '../../transitions/transition';
 import {ClickBlock} from '../../util/click-block';
 import * as util from 'ionic/util';
 
-
-export class ViewController {
+export class ViewController extends Ion {
 
   constructor(
     parentViewCtrl: ViewController,
-    injector: Injector
+    injector: Injector,
+    elementRef: ElementRef
   ) {
+    super(elementRef);
 
     this.parent = parentViewCtrl;
 

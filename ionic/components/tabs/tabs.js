@@ -2,7 +2,7 @@ import {Optional} from 'angular2/src/di/annotations_impl'
 import {Component, onInit} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
 import {Injector} from 'angular2/di';
-import {NgFor} from 'angular2/angular2';
+import {NgFor, ElementRef} from 'angular2/angular2';
 
 import {ViewController} from '../view/view-controller';
 import {ViewItem} from '../view/view-item';
@@ -43,9 +43,10 @@ export class Tabs extends ViewController {
   constructor(
     @Optional() parentViewCtrl: ViewController,
     @Optional() viewItem: ViewItem,
-    injector: Injector
+    injector: Injector,
+    elementRef: ElementRef
   ) {
-    super(parentViewCtrl, injector);
+    super(parentViewCtrl, injector, elementRef);
 
     // Tabs may also be an actual ViewItem which was navigated to
     // if Tabs is static and not navigated to within a ViewController

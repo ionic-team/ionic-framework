@@ -23,9 +23,10 @@ export class Nav extends ViewController {
 
   constructor(
     @Optional() parentViewCtrl: ViewController,
-    injector: Injector
+    injector: Injector,
+    elementRef: ElementRef
   ) {
-    super(parentViewCtrl, injector);
+    super(parentViewCtrl, injector, elementRef);
   }
 
   onInit() {

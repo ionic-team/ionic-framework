@@ -38,7 +38,7 @@ export class Tab extends ViewController {
     // A Tab is both a container of many views, and is a view itself.
     // A Tab is one ViewItem within it's parent Tabs (which extends ViewController)
     // A Tab is a ViewController for its child ViewItems
-    super(tabs, injector);
+    super(tabs, injector, elementRef);
     this.tabs = tabs;
 
     this.childNavbar(true);

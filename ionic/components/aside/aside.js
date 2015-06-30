@@ -57,8 +57,8 @@ export class Aside {
   }
 
   onInit() {
-    console.log('Aside content', this.content);
-    this.contentElement = (this.content instanceof Node) ? this.content : this.content.ele;
+    this.contentElement = (this.content instanceof Node) ? this.content : this.content.getNativeElement();
+    console.log('Aside content', this.content, this.contentElement);
 
     Aside.applyConfig(this);
     this.gestureDelegate = Aside.getDelegate(this, 'gesture');
