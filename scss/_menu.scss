@@ -35,6 +35,7 @@
 .menu-open .menu-content .pane,
 .menu-open .menu-content .scroll-content {
   pointer-events: none;
+  overflow: hidden;
 }
 
 .grade-b .menu-content,
