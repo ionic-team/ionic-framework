@@ -17,7 +17,7 @@ import {IonicApp} from 'ionic/ionic'
     'registerId: register-id'
   ],
   host: {
-    '[register-id]': 'registerId'
+    'this.register-id': 'registerId'
   },
   lifecycle: [onInit]
 })
