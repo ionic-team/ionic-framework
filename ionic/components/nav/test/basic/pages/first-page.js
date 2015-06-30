@@ -1,7 +1,8 @@
 import {IonicComponent, IonicView, IonicConfig, IonicApp, Routable} from 'ionic/ionic';
 import {NavParams, NavController} from 'ionic/ionic';
 
-import {SecondPage} from './second-page'
+import {SecondPage} from './second-page';
+import {ThirdPage} from './third-page';
 
 
 @IonicComponent({
@@ -23,6 +24,7 @@ import {SecondPage} from './second-page'
       '<p>First Page: {{ val }}</p>' +
       '<p><button primary (click)="push()">Push (Go to 2nd)</button></p>' +
       '<p><button primary [push-data]="pushData" [nav-push]="pushPage">Push w/ nav-push (Go to 2nd)</button></p>' +
+      '<p><button primary (click)="setItems()">setItems() (Go to 3rd, no history)</button></p>' +
       '<icon class="ion-ios-arrow-back"></icon>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
@@ -43,6 +45,14 @@ export class FirstPage {
     this.pushData = {
       id: 420
     }
+  }
+
+  setItems() {
+    let items = [
+      ThirdPage
+    ];
+
+    this.nav.setItems(items);
   }
 
   viewLoaded() {

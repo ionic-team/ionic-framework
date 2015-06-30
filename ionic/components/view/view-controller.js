@@ -67,8 +67,11 @@ export class ViewController extends Ion {
 
     // the active item is going to be the leaving one (if one exists)
     let leavingItem = this.getActive() || new ViewItem();
-    leavingItem.shouldDestroy = false;
-    leavingItem.shouldCache = true;
+    leavingItem.shouldCache = (util.isBoolean(opts.cacheLeavingItem) ? opts.cacheLeavingItem : true);
+    leavingItem.shouldDestroy = !leavingItem.shouldCache;
+    if (leavingItem.shouldDestroy) {
+      leavingItem.willUnload();
+    }
 
     // create a new ViewItem
     let enteringItem = new ViewItem(this, ComponentType, params);
@@ -101,13 +104,15 @@ export class ViewController extends Ion {
     // get the active item and set that it is staged to be leaving
     // was probably the one popped from the stack
     let leavingItem = this.getActive() || new ViewItem();
-    leavingItem.shouldDestroy = true;
-    leavingItem.shouldCache = false;
-    leavingItem.willUnload();
+    leavingItem.shouldCache = (util.isBoolean(opts.cacheLeavingItem) ? opts.cacheLeavingItem : false);
+    leavingItem.shouldDestroy = !leavingItem.shouldCache;
+    if (leavingItem.shouldDestroy) {
+      leavingItem.willUnload();
+    }
 
     // the entering item is now the new last item
-    // Note: we might not have an entering item if this is the only
-    // item on the history stack.
+    // Note: we might not have an entering item if this is the
+    // only item on the history stack.
     let enteringItem = this.getPrevious(leavingItem);
     if (enteringItem) {
       // notify app of the state change
@@ -125,6 +130,51 @@ export class ViewController extends Ion {
     }
 
     return promise;
+  }
+
+  /**
+   * Set the item stack to reflect the given component classes.
+   */
+  setItems(components, opts = {}) {
+    // if animate has not been set then default to false
+    opts.animate = opts.animate || false;
+
+    // ensure leaving items are not cached, and should be destroyed
+    opts.cacheLeavingItem = false;
+
+    // get the items to auto remove without having to do a transiton for each
+    // the last item (the currently active one) will do a normal transition out
+    if (this.items.length > 1) {
+      let autoRemoveItems = this.items.slice(0, this.items.length - 1);
+      for (let i = 0; i < autoRemoveItems.length; i++) {
+        autoRemoveItems[i].shouldDestroy = true;
+        autoRemoveItems[i].shouldCache = false;
+        autoRemoveItems[i].willUnload();
+      }
+    }
+
+    let component = null;
+    let viewItem = null;
+
+    // create the ViewItems that go before the new active ViewItem in the stack
+    // but the previous views won't should render yet
+    if (components.length > 1) {
+      let newBeforeItems = components.slice(0, components.length - 1);
+      for (let j = 0; j < newBeforeItems.length; j++) {
+        component = newBeforeItems[j];
+        viewItem = new ViewItem(this, component.component || component, component.params);
+
+        // add the item to the stack
+        this.add(viewItem);
+      }
+    }
+
+    // get the component that will become the active item
+    // it'll be the last one in the given components array
+    component = components[ components.length - 1 ];
+
+    // transition the leaving and entering
+    return this.push(component.component || component, component.params, opts);
   }
 
   transition(enteringItem, leavingItem, opts, callback) {
@@ -430,44 +480,6 @@ export class ViewController extends Ion {
 
   length() {
     return this.items.length;
-  }
-
-  /**
-   * Set the item stack to reflect the given component classes.
-   */
-  setItems(components) {
-    // Pop all of the current items
-    this.clear();
-
-
-    // Then, change the root
-
-    let leavingItem = this.getActive() || new ViewItem();
-    leavingItem.shouldDestroy = true;
-    leavingItem.shouldCache = false;
-    leavingItem.willUnload();
-
-    this.transitionComplete();
-
-    for(let c of components) {
-      this.push(c, {
-        animate: false
-      })
-    }
-  }
-
-  /**
-   * Pops off all the trailing items, but leaves the root.
-   * To change the root, call setRoot with the root component.
-   */
-  clear() {
-    let pops = [];
-    for (let item of this.items) {
-      pops.push(this.pop({
-        animate: false
-      }));
-    }
-    return Promise.all(pops);
   }
 
   instances() {

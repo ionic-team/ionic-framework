@@ -146,7 +146,10 @@ export class ViewItem {
   enableBack() {
     // update if it's possible to go back from this nav item
     if (this.viewCtrl) {
-      return !!this.viewCtrl.getPrevious(this);
+      let previousItem = this.viewCtrl.getPrevious(this);
+      // the previous view may exist, but if it's about to be destroyed
+      // it shouldn't be able to go back to
+      return !!(previousItem && !previousItem.shouldDestroy);
     }
     return false;
   }

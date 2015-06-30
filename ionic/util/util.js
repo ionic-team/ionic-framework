@@ -68,6 +68,7 @@ export function defaults(dest) {
   return dest;
 }
 
+export const isBoolean = val => typeof val === 'boolean';
 export const isString = val => typeof val === 'string';
 export const isNumber = val => typeof val === 'number';
 export const isFunction = val => typeof val === 'function';
