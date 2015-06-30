@@ -27,7 +27,7 @@ $list-margin-bottom:          10px !default;
 
   list-style-type: none;
 
-  &.list-inset
+  &.list-inset,
   &[inset] {
     margin-top: 0;
     margin-left: -$content-padding;
