@@ -3,7 +3,7 @@
     <ion-title>Ionic 2.0</ion-title>
   </ion-toolbar>
   <ion-content>
-    <ion-list inset>
+    <ion-list>
       <ion-item *ng-for="#c of components" (^click)="openPage(aside, c)">
         <span>{{c.title}}</span>
       </ion-item>

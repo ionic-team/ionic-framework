@@ -16,8 +16,12 @@ $toolbar-ios-button-font-size:              1.7rem !default;
 $toolbar-ios-button-text-color:             #007aff !default;
 $toolbar-ios-button-background-color:       transparent !default;
 
+$toolbar-ios-padding: 0px 15px;
+
 
 .platform-ios ion-toolbar {
+
+  padding: $toolbar-ios-padding;
 
   height: $toolbar-ios-height;
   background: $toolbar-ios-background;
