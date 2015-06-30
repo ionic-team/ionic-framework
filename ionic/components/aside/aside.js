@@ -111,4 +111,8 @@ export class Aside {
   close() {
     return this.setOpen(false);
   }
+
+  toggle() {
+    return this.setOpen(!this.isOpen);
+  }
 }
