@@ -1,0 +1,240 @@
+body {
+  text-shadow: 1px 1px 0px rgba(0,0,0,0.5);
+  background-color: black;
+}
+#wrapper {
+  background-color: black;
+}
+#scroller {
+}
+.bg-image {
+  position: fixed;
+  width: 120%;
+  height: 120%;
+  background-size: cover;
+}
+
+.bg-fade > .ng-enter {
+  opacity: 0;
+  -webkit-transition: opacity 2s ease-in-out;
+}
+.bg-fade > .ng-enter-active {
+  opacity: 1;
+}
+.bg-fade > .ng-leave {
+  opacity: 1;
+  -webkit-transition: opacity 2s ease-in-out;
+}
+.bg-fade > .ng-leave-active {
+  opacity: 0;
+}
+
+.wunderground-logo {
+  width: 100px;
+  height: 14px;
+  background: url('../img/wunderground.png') no-repeat transparent;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  .wunderground-logo {
+    background: url('../img/wunderground@2x.png') no-repeat transparent;
+    background-size: 100px 14px;
+  }
+}
+
+h1,h2,h3,h4,h5 {
+  color: #fff;
+  font-weight: 300;
+}
+
+#main-content {
+  color: #fff;
+  padding: 10px;
+}
+
+.ion-ios7-sunny-outline {
+  color: yellow;
+}
+
+.ionic-refresher-content {
+  color: rgb(255,255,255) !important;
+  text-shadow: none;
+}
+
+/**
+ * Header
+ */
+#header {
+  background-color: transparent !important;
+  height: 44px;
+}
+#header > * {
+  margin-top: 0;
+}
+#header .title {
+  font-size: 12px;
+  line-height: 20px;
+  margin-top: 4px;
+}
+#header .title .city {
+  font-size: 16px;
+}
+
+#city-nav-icon {
+  font-size: 11px;
+  margin-right: 2px;
+}
+
+.scroll-refresher {
+  overflow: visible;
+}
+.ionic-refresher-content {
+  background-color: rgba(0,0,0,0.4);
+  height: 400px;
+  bottom: 0;
+}
+.ionic-refresher-content i {
+  margin-top: 360px;
+}
+/**
+ * Current weather
+ */
+
+#current-weather {
+  height: 180px;
+  box-sizing: content-box;
+}
+#current-weather > * {
+  color: #fff;
+}
+#current-weather .current-temp {
+  font-size: 100px;
+  font-weight: 100;
+  margin: 0;
+  padding: 0;
+  line-height: 80px;
+}
+
+
+#current-icon {
+  font-size: 42px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+#temp-hi, #temp-lo { display: inline-block; }
+#temp-lo {
+  margin-left: 10px;
+}
+
+/**
+ * Forecast and details
+ */
+.weather-box {
+  background-color: rgba(0,0,0,0.2);
+  padding: 9px;
+  margin: 10px 0px;
+  color: rgba(255,255,255,0.9);
+}
+
+.weather-box .title {
+  color: rgba(255,255,255,0.9);
+  font-weight: normal;
+  margin: 0;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #fff;
+}
+
+
+.weather-box .row {
+  border-bottom: 1px dotted rgba(255,255,255,0.3);
+  margin: 0;
+  padding: 0;
+}
+.weather-box .col {
+  text-align: center;
+}
+.weather-box .col:first-child {
+  text-align: left;
+}
+.weather-box .col:last-child {
+  text-align: right;
+}
+
+.weather-box span {
+  vertical-align: middle;
+}
+
+.weather-box .icon {
+  font-size: 42px;
+  line-height: 24px;
+  vertical-align: middle;
+}
+
+.temp-high {
+  display: inline-block;
+  width: 30px;
+  text-align: right;
+}
+.temp-low {
+  display: inline-block;
+  width: 30px;
+  text-align: right;
+  color: #4a87ee;
+}
+
+
+.no-header {
+  top: 0 !important;
+}
+
+#forecast-scroll {
+  margin: 10px 0px;
+}
+#hourly-forecast {
+  width: 2250px;
+  height: 70px;
+}
+.hourly-hour {
+  display: inline-block;
+  margin-right: 10px;
+  text-align: center;
+}
+
+#forecast .credit {
+  float: right;
+  margin-top: 4px;
+  margin-right: 4px;
+}
+#forecast .credit a {
+  color: #fff;
+}
+
+/**
+ * Settings modal
+ */
+
+#settings-modal {
+  background-color: rgba(0,0,0,0.8);
+}
+
+#settings-modal .item {
+  background-color: rgba(0,0,0,0.9);
+  border: none;
+  color: #fff;
+}
+#settings-modal .input-label {
+  color: #fff;
+}
+
+
+ion-view {
+  background-color: black !important;
+}
+ion-content {
+  background-color: black !important;
+}
+#header {
+  background: transparent;
+  color: #fff;
+}
