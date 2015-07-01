@@ -163,6 +163,9 @@ export class ViewController extends Ion {
       for (let j = 0; j < newBeforeItems.length; j++) {
         component = newBeforeItems[j];
         viewItem = new ViewItem(this, component.component || component, component.params);
+        viewItem.state = CACHED_STATE;
+        viewItem.shouldDestroy = false;
+        viewItem.shouldCache = false;
 
         // add the item to the stack
         this.add(viewItem);
@@ -362,17 +365,22 @@ export class ViewController extends Ion {
   }
 
   transitionComplete() {
+    let destroys = [];
 
-    this.items.forEach((item) => {
+    this.items.forEach(item => {
       if (item) {
         if (item.shouldDestroy) {
-          this.remove(item);
-          item.destroy();
+          destroys.push(item);
 
         } else if (item.state === CACHED_STATE && item.shouldCache) {
           item.shouldCache = false;
         }
       }
+    });
+
+    destroys.forEach(item => {
+      this.remove(item);
+      item.destroy();
     });
 
     // allow clicks again
