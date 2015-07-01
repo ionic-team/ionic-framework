@@ -539,7 +539,7 @@ ionic.views.Slider = ionic.views.View.inherit({
 
     this.slidesCount = this.count = function() {
       // return total number of slides
-      return length;
+      return element.children.length;
     };
 
     this.kill = function() {
