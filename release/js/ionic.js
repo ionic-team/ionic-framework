@@ -716,7 +716,7 @@ window.ionic.version = '1.0.1';
     // whatever lookup was done to find this element failed to find it
     // so we can't listen for events on it.
     if(element === null) {
-      void 0;
+      console.error('Null element passed to gesture (element does not exist). Not listening for gesture');
       return this;
     }
 
@@ -2885,7 +2885,7 @@ function tapMouseDown(e) {
   if (e.isIonicTap || tapIgnoreEvent(e)) return null;
 
   if (tapEnabledTouchEvents) {
-    void 0;
+    console.log('mousedown', 'stop event');
     e.stopPropagation();
 
     if ((!ionic.tap.isTextInput(e.target) || tapLastTouchTarget !== e.target) && !(/^(select|option)$/i).test(e.target.tagName)) {
@@ -3049,7 +3049,7 @@ function tapHandleFocus(ele) {
 function tapFocusOutActive() {
   var ele = tapActiveElement();
   if (ele && ((/^(input|textarea|select)$/i).test(ele.tagName) || ele.isContentEditable)) {
-    void 0;
+    console.log('tapFocusOutActive', ele.tagName);
     ele.blur();
   }
   tapActiveElement(null);
@@ -3070,7 +3070,7 @@ function tapFocusIn(e) {
     // 2) There is an active element which is a text input
     // 3) A text input was just set to be focused on by a touch event
     // 4) A new focus has been set, however the target isn't the one the touch event wanted
-    void 0;
+    console.log('focusin', 'tapTouchFocusedInput');
     tapTouchFocusedInput.focus();
     tapTouchFocusedInput = null;
   }
@@ -6866,7 +6866,7 @@ ionic.scroll = {
 (function(ionic) {
   var NOOP = function() {};
   var depreciated = function(name) {
-    void 0;
+    console.error('Method not available in native scrolling: ' + name);
   };
   ionic.views.ScrollNative = ionic.views.View.inherit({
 
@@ -8087,7 +8087,7 @@ ionic.views.Slider = ionic.views.View.inherit({
     // quit if no root element
     if (!container) return;
     var element = container.children[0];
-    var slides, slidePos, width, length;
+    var slides, slidePos, width;
     options = options || {};
     var index = parseInt(options.startSlide, 10) || 0;
     var speed = options.speed || 300;
@@ -8102,7 +8102,6 @@ ionic.views.Slider = ionic.views.View.inherit({
 
       // cache slides
       slides = element.children;
-      length = slides.length;
 
       // set continuous to false if only one slide
       if (slides.length < 2) options.continuous = false;
@@ -8592,7 +8591,7 @@ ionic.views.Slider = ionic.views.View.inherit({
 
     this.slidesCount = this.count = function() {
       // return total number of slides
-      return length;
+      return element.children.length;
     };
 
     this.kill = function() {
