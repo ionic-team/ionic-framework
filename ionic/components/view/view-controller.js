@@ -177,6 +177,13 @@ export class ViewController extends Ion {
     return this.push(component.component || component, component.params, opts);
   }
 
+  setRoot(ComponentType, params = {}, opts = {}) {
+    return this.setItems([{
+             component: ComponentType,
+             params: params
+           }], opts);
+  }
+
   transition(enteringItem, leavingItem, opts, callback) {
     if (!enteringItem || enteringItem === leavingItem) {
       return callback();

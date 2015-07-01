@@ -53,7 +53,7 @@ class MyApp {
     aside.close();
 
     let nav = this.app.getComponent('myNav');
-    nav.setItems([component.component]);
+    nav.setRoot(component.component);
   }
 }
 
