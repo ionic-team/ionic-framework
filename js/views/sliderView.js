@@ -34,7 +34,7 @@ ionic.views.Slider = ionic.views.View.inherit({
     // quit if no root element
     if (!container) return;
     var element = container.children[0];
-    var slides, slidePos, width, length;
+    var slides, slidePos, width;
     options = options || {};
     var index = parseInt(options.startSlide, 10) || 0;
     var speed = options.speed || 300;
@@ -49,7 +49,6 @@ ionic.views.Slider = ionic.views.View.inherit({
 
       // cache slides
       slides = element.children;
-      length = slides.length;
 
       // set continuous to false if only one slide
       if (slides.length < 2) options.continuous = false;
