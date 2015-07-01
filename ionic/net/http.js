@@ -44,8 +44,11 @@ export class Http {
       headers: {
         'Accept': 'application/json,text/plain,*/*',
       },
-      body: (typeof data === 'string') ? data : JSON.stringify(data)
     });
+
+    if(options.body) {
+      options.body = (typeof data === 'string') ? data : JSON.stringify(data)
+    }
 
     if(sendsJson) {
       options.headers['Content-Type'] = 'application/json';
