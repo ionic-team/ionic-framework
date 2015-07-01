@@ -1,0 +1,18 @@
+
+// Cordova
+// --------------------------------------------------
+
+.platform-cordova {
+
+
+  // iOS Cordova
+  // ------------
+  &.platform-ios .navbar-container {
+    height: 64px;
+  }
+
+  &.platform-ios ion-navbar {
+    padding-top: 20px;
+  }
+
+}
