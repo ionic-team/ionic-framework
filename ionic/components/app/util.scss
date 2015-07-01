@@ -7,6 +7,11 @@
   transition: none !important;
 }
 
+// Remove any hairline borders
+.no-border:after {
+  background: none !important;
+}
+
 .hide.hide.hide {
   display: none;
 }
