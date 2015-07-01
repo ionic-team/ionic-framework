@@ -4,7 +4,7 @@ import {Platform} from './platform';
 Platform.register({
   name: 'core',
   settings: {
-    mode: 'core'
+    mode: 'ios'
   }
 });
 Platform.setDefault('core');

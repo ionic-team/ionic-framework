@@ -6,9 +6,7 @@ export class IonicConfig {
   constructor(settings) {
 
     // defaults
-    this._settings = {
-      platform: 'ios'
-    };
+    this._settings = {};
 
     // override defaults w/ user config
     if (settings) {

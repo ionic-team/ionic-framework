@@ -183,7 +183,7 @@ export class PlatformCtrl {
     let tmpPlatform = null;
     for (let platformName in this._registry) {
 
-      tmpPlatform = matchPlatform(platformName, this);
+      tmpPlatform = this.matchPlatform(platformName);
       if (tmpPlatform) {
         // we found a platform match!
         // check if its more specific than the one we already have
@@ -260,6 +260,24 @@ export class PlatformCtrl {
     }
   }
 
+  matchPlatform(platformName) {
+    // build a PlatformNode and assign config data to it
+    // use it's getRoot method to build up its hierarchy
+    // depending on which platforms match
+    let platformNode = new PlatformNode(platformName);
+    let rootNode = platformNode.getRoot(this, 0);
+
+    if (rootNode) {
+      rootNode.depth = 0;
+      let childPlatform = rootNode.child();
+      while (childPlatform) {
+        rootNode.depth++
+        childPlatform = childPlatform.child();
+      }
+    }
+    return rootNode;
+  }
+
   settings(val) {
     if (arguments.length) {
       this._settings = val;
@@ -271,24 +289,6 @@ export class PlatformCtrl {
     return this._registry[platformName] || {};
   }
 
-}
-
-function matchPlatform(platformName, platform) {
-  // build a PlatformNode and assign config data to it
-  // use it's getRoot method to build up its hierarchy
-  // depending on which platforms match
-  let platformNode = new PlatformNode(platformName);
-  let tmpPlatform = platformNode.getRoot(platform, 0);
-
-  if (tmpPlatform) {
-    tmpPlatform.depth = 0;
-    let childPlatform = tmpPlatform.child();
-    while (childPlatform) {
-      tmpPlatform.depth++
-      childPlatform = childPlatform.child();
-    }
-  }
-  return tmpPlatform;
 }
 
 function insertSuperset(platformNode) {
@@ -346,7 +346,7 @@ class PlatformNode {
 
   isMatch(p) {
     if (typeof this.c.isMatched !== 'boolean') {
-      if (p.platformOverride) {
+      if (p.platformOverride && !this.isEngine) {
         this.c.isMatched = (p.platformOverride === this.c.name);
       } else if (!this.c.isMatch) {
         this.c.isMatched = false;
