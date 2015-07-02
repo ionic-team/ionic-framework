@@ -18,16 +18,16 @@
         <ion-scroll scroll-x="true" id="forecast-scroll">
           <div id="hourly-forecast" *ng-if="current">
             <div class="hourly-hour" *ng-for="#hour of current.hourly.data">
-              <div class="time" inner-html="hour.time"></div><!-- * 1000 | date:'h a'"></div>-->
-              <weather-icon icon="hour.icon"></weather-icon>
+              <div class="time" [inner-html]="hour.time_date"></div><!-- * 1000 | date:'h a'"></div>-->
+              <weather-icon [icon]="hour.icon"></weather-icon>
               <div class="temp">{{hour.temperature}}&deg;</div>
             </div>
           </div>
         </ion-scroll>
         <div *ng-if="current">
           <div class="row" *ng-for="#day of current.daily.data">
-            <div class="col"><span inner-html="day.time * 1000 | date:'EEE'"></span></div>
-            <div class="col"><weather-icon icon="day.icon"></weather-icon></div>
+            <div class="col"><span [inner-html]="day.time_date"></span></div>
+            <div class="col"><weather-icon [icon]="day.icon"></weather-icon></div>
             <div class="col">
               <span class="temp-high">{{day.temperatureMax}}&deg;</span>
               <span class="temp-low">{{day.temperatureMin}}&deg;</span>

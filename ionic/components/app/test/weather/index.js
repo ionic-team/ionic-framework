@@ -1,6 +1,6 @@
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
-import {NgIf, NgFor, ElementRef} from 'angular2/angular2';
+import {NgIf, NgFor, CSSClass, ElementRef} from 'angular2/angular2';
 import {FormBuilder, Control, ControlGroup, Validators, formDirectives} from 'angular2/forms';
 
 import {IonicView, Animation, Content, Scroll, Modal, NavController, NavParams, IonicComponent} from 'ionic/ionic';
@@ -17,7 +17,7 @@ console.log('Imported', Geo, Weather, Flickr);
 })
 @View({
   templateUrl: 'main.html',
-  directives: [NgIf, NgFor, Content, Scroll, CurrentWeather]
+  directives: [NgIf, NgFor, Content, Scroll, CurrentWeather, WeatherIcon]
 })
 class WeatherApp {
   constructor(Modal: Modal) {
@@ -65,15 +65,21 @@ class WeatherApp {
       this.current = resp;
 
       // TODO: This should be in a custom pipe
+      let c, d;
       for(let i = 0; i < this.current.hourly.data.length; i++) {
-        let t = this.current.hourly.data[i].temperature;
-        this.current.hourly.data[i].temperature = Math.floor(t);
+        c = this.current.hourly.data[i];
+        let t = c.temperature;
+        d = new Date(c.time * 1000);
+        c.temperature = Math.floor(t);
+        c.time_date = d.getHours() % 12 + ' ' + (d.getHours() < 12 ? 'AM' : 'PM');
       }
       for(let i = 0; i < this.current.daily.data.length; i++) {
-        let max = this.current.daily.data[i].temperatureMax;
-        let min = this.current.daily.data[i].temperatureMin;
-        this.current.daily.data[i].temperatureMax = Math.floor(max);
-        this.current.daily.data[i].temperatureMin = Math.floor(min);
+        c = this.current.daily.data[i];
+        let max = c.temperatureMax;
+        let min = c.temperatureMin;
+        c.temperatureMax = Math.floor(max);
+        c.temperatureMin = Math.floor(min);
+        c.time_date = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][new Date(c.time*1000).getDay()];
       }
       console.log('GOT CURRENT', this.current);
     }, (error) => {
@@ -136,15 +142,15 @@ export function main(ionicBootstrap) {
 
 
 let WEATHER_ICONS = {
-  'partlycloudy': 'ion-ios7-partlysunny-outline',
-  'mostlycloudy': 'ion-ios7-partlysunny-outline',
-  'cloudy': 'ion-ios7-cloudy-outline',
-  'rain': 'ion-ios7-rainy-outline',
-  'tstorms': 'ion-ios7-thunderstorm-outline',
-  'sunny': 'ion-ios7-sunny-outline',
-  'clear-day': 'ion-ios7-sunny-outline',
-  'nt_clear': 'ion-ios7-moon-outline',
-  'clear-night': 'ion-ios7-moon-outline'
+  'partlycloudy': 'ion-ios-partlysunny-outline',
+  'mostlycloudy': 'ion-ios-partlysunny-outline',
+  'cloudy': 'ion-ios-cloudy-outline',
+  'rain': 'ion-ios-rainy-outline',
+  'tstorms': 'ion-ios-thunderstorm-outline',
+  'sunny': 'ion-ios-sunny-outline',
+  'clear-day': 'ion-ios-sunny-outline',
+  'nt_clear': 'ion-ios-moon-outline',
+  'clear-night': 'ion-ios-moon-outline'
 };
 
 @Component({
@@ -155,6 +161,7 @@ let WEATHER_ICONS = {
 })
 @View({
   template: '<i class="icon" [class]="weatherIcon"></i>',
+  directives: [CSSClass]
 })
 export class WeatherIcon {
   constructor() {
@@ -162,15 +169,13 @@ export class WeatherIcon {
   onChange(data) {
     console.log('Weather icon onchange', data);
 
-    /*
-    var icon = v;
+    var icon = this.icon;
 
     if(icon in WEATHER_ICONS) {
-      $scope.weatherIcon = WEATHER_ICONS[icon];
+      this.weatherIcon = WEATHER_ICONS[icon];
     } else {
-      $scope.weatherIcon = WEATHER_ICONS['cloudy'];
+      this.weatherIcon = WEATHER_ICONS['cloudy'];
     }
-    */
   }
 }
 
