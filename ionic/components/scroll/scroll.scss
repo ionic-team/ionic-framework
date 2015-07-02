@@ -1,0 +1,25 @@
+ion-scroll {
+  position: relative;
+  display: block;
+  background-color: $content-background-color;
+  &.scroll-x .scroll-content {
+    overflow-x: auto;
+  }
+  &.scroll-y .scroll-content {
+    overflow-y: auto;
+  }
+
+  .scroll-content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    will-change: scroll-position;
+
+  }
+
+}

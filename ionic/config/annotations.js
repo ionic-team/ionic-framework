@@ -4,7 +4,7 @@ import {View} from 'angular2/src/core/annotations_impl/view';
 import * as util from 'ionic/util';
 import {IonicConfig} from './config';
 import {
-  Aside, Content, Refresher,
+  Aside, Content, Scroll, Refresher,
   Slides, Slide, SlidePager,
   Tabs, Tab,
   List, Item,
@@ -24,7 +24,7 @@ export class IonicView extends View {
       coreDirectives,
 
       // Content
-      Aside, Content, Refresher,
+      Aside, Content, Scroll, Refresher,
       List, Item,
       Slides, Slide, SlidePager,
       Tabs, Tab,

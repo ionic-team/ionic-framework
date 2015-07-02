@@ -11,5 +11,21 @@ $content-background-color:                   #fff !default;
 }
 
 ion-content {
+  position: relative;
+  display: block;
+  flex: 1;
   background-color: $content-background-color;
+
+  .scroll-content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    will-change: scroll-position;
+  }
+
 }

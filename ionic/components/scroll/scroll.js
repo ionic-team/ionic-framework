@@ -5,13 +5,24 @@ import {View} from 'angular2/src/core/annotations_impl/view';
 import {Ion} from '../ion';
 
 
+/**
+ * ion-scroll is a non-flexboxed scroll area that can
+ * scroll horizontally or vertically.
+ */
 @Component({
-  selector: 'ion-content'
+  selector: 'ion-scroll',
+  properties: [
+    'scrollX', 'scrollY'
+  ],
+  host: {
+    '[class.scroll-x]': 'scrollX',
+    '[class.scroll-y]': 'scrollY'
+  }
 })
 @View({
   template: `<div class="scroll-content"><content></content></div>`
 })
-export class Content extends Ion {
+export class Scroll extends Ion {
   constructor(elementRef: ElementRef) {
     super(elementRef);
 

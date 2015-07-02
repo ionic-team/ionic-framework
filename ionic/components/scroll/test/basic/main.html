@@ -1,0 +1,37 @@
+<ion-view nav-title="Pull to refresh">
+  <ion-toolbar>
+    <ion-title>Scroll</ion-title>
+  </ion-toolbar>
+
+  <ion-content>
+
+    <h2>Horizontal</h2>
+    <ion-scroll scroll-x="true" style="height: 200px">
+      <div style="height: 200px; width: 2500px; background: url('eight_horns.png') repeat"></div>
+    </ion-scroll>
+
+    <h2>Vertical</h2>
+    <ion-scroll scroll-y="true" style="width: 200px; height: 500px">
+      <div style="height: 2500px; width: 200px; background: url('eight_horns.png') repeat"></div>
+    </ion-scroll>
+
+    <h2>Both</h2>
+    <ion-scroll scroll-x="true" scroll-y="true" style="width: 100%; height: 500px">
+      <div style="height: 2500px; width: 2500px; background: url('eight_horns.png') repeat"></div>
+    </ion-scroll>
+
+  </ion-content>
+
+</ion-view>
+<style>
+  f { display: block; height: 400px; width: 100%; background-color: #387ef5; margin-bottom: 15px; }
+  #counter {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    background-color: rgba(0,0,0,0.4);
+    z-index: 5;
+  }
+</style>
