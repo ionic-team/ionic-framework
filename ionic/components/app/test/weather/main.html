@@ -1,6 +1,7 @@
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <link rel="stylesheet" href="style.css">
 <ion-view>
+  <background-cycler class="bg-fade" [image]="activeBgImage"></background-cycler>
+
   <ion-toolbar id="header" class="no-border">
     <ion-title>
       <span class="city"><i id="city-nav-icon" class="icon ion-navigate"></i> {{currentLocationString}}</span><br>

@@ -17,7 +17,7 @@ console.log('Imported', Geo, Weather, Flickr);
 })
 @View({
   templateUrl: 'main.html',
-  directives: [NgIf, NgFor, Content, Scroll, CurrentWeather, WeatherIcon]
+  directives: [NgIf, NgFor, Content, Scroll, CurrentWeather, WeatherIcon, BackgroundCycler]
 })
 class WeatherApp {
   constructor(Modal: Modal) {
@@ -65,13 +65,15 @@ class WeatherApp {
       this.current = resp;
 
       // TODO: This should be in a custom pipe
-      let c, d;
+      let c, d, h;
       for(let i = 0; i < this.current.hourly.data.length; i++) {
         c = this.current.hourly.data[i];
         let t = c.temperature;
         d = new Date(c.time * 1000);
         c.temperature = Math.floor(t);
-        c.time_date = d.getHours() % 12 + ' ' + (d.getHours() < 12 ? 'AM' : 'PM');
+        h = d.getHours() % 12;
+        h = (h == 0 ? 12 : h);
+        c.time_date = h + ' ' + (d.getHours() < 12 ? 'AM' : 'PM');
       }
       for(let i = 0; i < this.current.daily.data.length; i++) {
         c = this.current.daily.data[i];
@@ -166,9 +168,7 @@ let WEATHER_ICONS = {
 export class WeatherIcon {
   constructor() {
   }
-  onChange(data) {
-    console.log('Weather icon onchange', data);
-
+  onAllChangesDone(data) {
     var icon = this.icon;
 
     if(icon in WEATHER_ICONS) {
@@ -273,6 +273,33 @@ export class CurrentWeather {
     }
   }
 }
+
+@Component({
+  selector: 'background-cycler',
+  properties: [
+    'image'
+  ]
+})
+@View({
+  template: '<div class="bg-image"></div>'
+})
+export class BackgroundCycler {
+  constructor(elementRef: ElementRef) {
+    this.elementRef = elementRef;
+    this.el = elementRef.nativeElement;
+  }
+  onInit() {
+    this.imageEl = this.el.children[0];
+  }
+  onAllChangesDone() {
+    var item = this.image;
+    if(item) {
+      var url = "http://farm"+ item.farm +".static.flickr.com/"+ item.server +"/"+ item.id +"_"+ item.secret + "_z.jpg";
+      this.imageEl.style.backgroundImage = 'url(' + url + ')';
+    }
+  }
+}
+
 /*
 .directive('weatherBox', function($timeout) {
   return {
@@ -317,50 +344,5 @@ export class CurrentWeather {
   }
 })
 
-.directive('backgroundCycler', function($compile, $animate) {
-  var animate = function($scope, $element, newImageUrl) {
-    var child = $element.children()[0];
-
-    var scope = $scope.$new();
-    scope.url = newImageUrl;
-    var img = $compile('<background-image></background-image>')(scope);
-
-    $animate.enter(img, $element, null, function() {
-      console.log('Inserted');
-    });
-    if(child) {
-      $animate.leave(angular.element(child), function() {
-        console.log('Removed');
-      });
-    }
-  };
-
-  return {
-    restrict: 'E',
-    link: function($scope, $element, $attr) {
-      $scope.$watch('activeBgImage', function(v) {
-        if(!v) { return; }
-        console.log('Active bg image changed', v);
-        var item = v;
-        var url = "http://farm"+ item.farm +".static.flickr.com/"+ item.server +"/"+ item.id +"_"+ item.secret + "_z.jpg";
-        animate($scope, $element, url);
-      });
-    }
-  }
-})
-
-.directive('backgroundImage', function($compile, $animate) {
-  return {
-    restrict: 'E',
-    template: '<div class="bg-image"></div>',
-    replace: true,
-    scope: true,
-    link: function($scope, $element, $attr) {
-      if($scope.url) {
-        $element[0].style.backgroundImage = 'url(' + $scope.url + ')';
-      }
-    }
-  }
-});
 
 */

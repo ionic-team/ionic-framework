@@ -7,8 +7,13 @@ body {
 }
 #scroller {
 }
-.bg-image {
+background-cycler {
+  display: block;
   position: fixed;
+  width: 100%;
+  height: 100%;
+}
+.bg-image {
   width: 120%;
   height: 120%;
   background-size: cover;
@@ -191,10 +196,10 @@ current-weather .current-temp {
 
 #forecast-scroll {
   margin: 10px 0px;
-  height: 150px;
+  height: 85px;
 }
 #hourly-forecast {
-  width: 2250px;
+  width: 2210px;
   height: 70px;
 }
 .hourly-hour {
@@ -231,10 +236,10 @@ current-weather .current-temp {
 
 
 ion-view {
-  background-color: black !important;
+  background-color: transparent !important;
 }
 ion-content {
-  background-color: black !important;
+  background-color: transparent !important;
 }
 #header {
   background: transparent;
