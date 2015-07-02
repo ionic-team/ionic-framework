@@ -1,4 +1,4 @@
-<div id="current-weather" *ng-if="current">
+<div id="current-weather" *ng-if="current && current.currently">
   <h5><weather-icon icon="current.icon" id="current-icon"></weather-icon> {{current.currently.summary}}</h5>
   <h5>
     <span id="temp-hi"><i class="icon ion-arrow-up-c"></i> <span ng-bind="highTemp"></span>&deg;</span>

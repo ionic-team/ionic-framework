@@ -241,7 +241,7 @@ export class CurrentWeather {
 
     console.log('ALL CHANGES DONE', current);
 
-    if(current) {
+    if(current && current.currently) {
       if(units == 'f') {
         this.currentTemp = Math.floor(current.currently.temperature);
       } else {
