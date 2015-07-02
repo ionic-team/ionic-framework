@@ -61,6 +61,15 @@ describe('bar directives', function() {
         ionic.trigger('tap', { target: child[0] }, true, true);
         expect(ionic.DomUtil.rectContains).not.toHaveBeenCalled();
       });
+      it('should ignore tap if it\'s ScrollView is in frozen mode', function() {
+        var el = setup();
+        el.controller('$ionicScroll').freezeScroll(true);
+        spyOn(ionic.DomUtil, 'rectContains').andCallFake(function() {
+          return true;
+        });
+        ionic.trigger('tap', { target: el[0], touches: [{pageX:0,pageY:0}] });
+        expect(el.controller('$ionicScroll').scrollTop).not.toHaveBeenCalled();
+      });
       it('should scrollTop if tap is inside headerBar', function() {
         var el = setup();
         spyOn(ionic.DomUtil, 'rectContains').andCallFake(function() {

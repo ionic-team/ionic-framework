@@ -109,7 +109,9 @@ function tapScrollToTopDirective() {
             bounds.left, bounds.top - 20,
             bounds.left + bounds.width, bounds.top + bounds.height
           )) {
-            $ionicScrollDelegate.scrollTop(true);
+            if($ionicScrollDelegate.getScrollView().freeze() == false) {
+              $ionicScrollDelegate.scrollTop(true);
+            }
           }
         }
       }
