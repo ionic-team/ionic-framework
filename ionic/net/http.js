@@ -108,12 +108,10 @@ export class Http {
 
       var callbackId = '_' + (callbacks.counter++).toString(36);
       callbacks[callbackId] = function(data) {
-        console.log('CALLBACK DATA', data);
         callbacks[callbackId].data = data;
         callbacks[callbackId].called = true;
       };
 
-      console.log('Set up callbacks', callbacks);
 
       /*
       var jsonpDone = jsonpReq(url.replace('JSON_CALLBACK', 'angular.callbacks.' + callbackId),

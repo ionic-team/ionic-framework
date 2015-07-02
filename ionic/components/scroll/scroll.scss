@@ -1,7 +1,6 @@
 ion-scroll {
   position: relative;
   display: block;
-  background-color: $content-background-color;
   &.scroll-x .scroll-content {
     overflow-x: auto;
   }

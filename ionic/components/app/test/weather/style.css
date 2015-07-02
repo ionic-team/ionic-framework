@@ -100,14 +100,15 @@ h1,h2,h3,h4,h5 {
  * Current weather
  */
 
-#current-weather {
+current-weather {
+  display: block;
   height: 180px;
   box-sizing: content-box;
 }
-#current-weather > * {
+current-weather > * {
   color: #fff;
 }
-#current-weather .current-temp {
+current-weather .current-temp {
   font-size: 100px;
   font-weight: 100;
   margin: 0;
@@ -190,6 +191,7 @@ h1,h2,h3,h4,h5 {
 
 #forecast-scroll {
   margin: 10px 0px;
+  height: 150px;
 }
 #hourly-forecast {
   width: 2250px;

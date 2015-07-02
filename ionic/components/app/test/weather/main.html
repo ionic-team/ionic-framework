@@ -12,7 +12,62 @@
   <ion-content>
     <div id="main-content">
       <current-weather [current]="current"></current-weather>
-      <forecast></forecast>
+
+      <div id="forecast" class="weather-box">
+        <h4 class="title">Forecast</h4>
+        <ion-scroll scroll-x="true" id="forecast-scroll">
+          <div id="hourly-forecast" *ng-if="current">
+            <div class="hourly-hour" *ng-for="#hour of current.hourly.data">
+              <div class="time" inner-html="hour.time"></div><!-- * 1000 | date:'h a'"></div>-->
+              <weather-icon icon="hour.icon"></weather-icon>
+              <div class="temp">{{hour.temperature}}&deg;</div>
+            </div>
+          </div>
+        </ion-scroll>
+        <div *ng-if="current">
+          <div class="row" *ng-for="#day of current.daily.data">
+            <div class="col"><span inner-html="day.time * 1000 | date:'EEE'"></span></div>
+            <div class="col"><weather-icon icon="day.icon"></weather-icon></div>
+            <div class="col">
+              <span class="temp-high">{{day.temperatureMax}}&deg;</span>
+              <span class="temp-low">{{day.temperatureMin}}&deg;</span>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix">
+          <div class="credit">
+            Powered by <a href="http://forecast.io" target="_blank">forecast.io</a>
+          </div>
+        </div>
+      </div>
+
     </div>
   </ion-content>
 </ion-view>
+
+<style>
+.row {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 5px;
+  width: 100%; }
+
+.row + .row {
+  margin-top: -5px;
+  padding-top: 0; }
+
+.col {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -moz-box-flex: 1;
+  -moz-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  display: block;
+  padding: 5px;
+  width: 100%; }
+</style>

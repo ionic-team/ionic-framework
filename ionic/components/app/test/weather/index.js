@@ -1,9 +1,9 @@
 import {Component, Directive} from 'angular2/src/core/annotations_impl/annotations';
 import {View} from 'angular2/src/core/annotations_impl/view';
-import {NgIf} from 'angular2/angular2';
+import {NgIf, NgFor, ElementRef} from 'angular2/angular2';
 import {FormBuilder, Control, ControlGroup, Validators, formDirectives} from 'angular2/forms';
 
-import {IonicView, Animation, Modal, NavController, NavParams, IonicComponent} from 'ionic/ionic';
+import {IonicView, Animation, Content, Scroll, Modal, NavController, NavParams, IonicComponent} from 'ionic/ionic';
 
 import {Geo} from './geo';
 import {Weather} from './weather';
@@ -15,18 +15,15 @@ console.log('Imported', Geo, Weather, Flickr);
   selector: 'ion-app',
   appInjector: [Modal]
 })
-@IonicView({
+@View({
   templateUrl: 'main.html',
-  directives: [CurrentWeather]
+  directives: [NgIf, NgFor, Content, Scroll, CurrentWeather]
 })
 class WeatherApp {
   constructor(Modal: Modal) {
     this.Modal = Modal;
 
     this.currentLocationString = 'Madison, WI';
-    this.current = {
-      local_tz_short: 'CDT'
-    };
 
     this.activeBgImageIndex = 0;
 
@@ -66,6 +63,18 @@ class WeatherApp {
   getCurrent(lat, lng, locString) {
     Weather.getAtLocation(lat, lng).then((resp) => {
       this.current = resp;
+
+      // TODO: This should be in a custom pipe
+      for(let i = 0; i < this.current.hourly.data.length; i++) {
+        let t = this.current.hourly.data[i].temperature;
+        this.current.hourly.data[i].temperature = Math.floor(t);
+      }
+      for(let i = 0; i < this.current.daily.data.length; i++) {
+        let max = this.current.daily.data[i].temperatureMax;
+        let min = this.current.daily.data[i].temperatureMin;
+        this.current.daily.data[i].temperatureMax = Math.floor(max);
+        this.current.daily.data[i].temperatureMin = Math.floor(min);
+      }
       console.log('GOT CURRENT', this.current);
     }, (error) => {
       alert('Unable to get current conditions');
@@ -196,7 +205,9 @@ export class CurrentTime {
   directives: [NgIf]
 })
 export class CurrentWeather {
-  constructor() {
+  constructor(elementRef: ElementRef) {
+    this.elementRef = elementRef;
+
     /*
     $rootScope.$on('settings.changed', function(settings) {
       var units = Settings.get('tempUnits');
@@ -220,20 +231,20 @@ export class CurrentWeather {
     */
 
       // Delay so we are in the DOM and can calculate sizes
-      /*
-      $timeout(function() {
-        var windowHeight = window.innerHeight;
-        var thisHeight = $element[0].offsetHeight;
-        var headerHeight = document.querySelector('#header').offsetHeight;
-        $element[0].style.paddingTop = (windowHeight - (thisHeight)) + 'px';
-        angular.element(document.querySelector('.content')).css('-webkit-overflow-scrolling', 'auto');
-        $timeout(function() {
-          angular.element(document.querySelector('.content')).css('-webkit-overflow-scrolling', 'touch');
-        }, 50);
-      });
-      */
   }
 
+  onInit() {
+    var windowHeight = window.innerHeight;
+    var thisHeight = this.elementRef.nativeElement.offsetHeight;
+    var headerHeight = document.querySelector('#header').offsetHeight;
+    this.elementRef.nativeElement.style.paddingTop = (windowHeight - 250) + 'px';
+    /*
+    document.querySelector('.content')).css('-webkit-overflow-scrolling', 'auto');
+    $timeout(function() {
+      angular.element(document.querySelector('.content')).css('-webkit-overflow-scrolling', 'touch');
+    }, 50);
+    */
+  }
   onAllChangesDone() {
     var units = 'f';//Settings.get('tempUnits');
 
@@ -257,18 +268,7 @@ export class CurrentWeather {
     }
   }
 }
-
 /*
-.directive('forecast', function($timeout) {
-  return {
-    restrict: 'E',
-    replace: true,
-    templateUrl: 'templates/forecast.html',
-    link: function($scope, $element, $attr) {
-    }
-  }
-})
-
 .directive('weatherBox', function($timeout) {
   return {
     restrict: 'E',
