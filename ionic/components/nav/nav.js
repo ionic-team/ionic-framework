@@ -1,9 +1,10 @@
-import {Component, Directive, View, ElementRef, Parent, Optional, Injector, onInit, forwardRef} from 'angular2/angular2';
+import {Component, Directive, View, ElementRef, Parent, Optional, forwardRef, onInit, Injector} from 'angular2/angular2';
 
+import {IonicComponent} from '../../config/annotations';
 import {ViewController} from '../view/view-controller';
 
 
-@Component({
+@IonicComponent({
   selector: 'ion-nav',
   properties: [
     'root'
@@ -12,7 +13,7 @@ import {ViewController} from '../view/view-controller';
 })
 @View({
   template: '<template pane-anchor></template>',
-  directives: [forwardRef(() => PaneAnchor)]
+  directives: [forwardRef(() => NavPaneAnchor)]
 })
 export class Nav extends ViewController {
 
@@ -25,15 +26,16 @@ export class Nav extends ViewController {
   }
 
   onInit() {
-    this.push(this.root);
+    if (this.root) {
+      this.push(this.root);
+    }
   }
 
 }
 
-@Directive({
-  selector: 'template[pane-anchor]'
-})
-class PaneAnchor {
+
+@Directive({selector: 'template[pane-anchor]'})
+class NavPaneAnchor {
   constructor(@Parent() nav: Nav, elementRef: ElementRef) {
     nav.anchorElementRef(elementRef);
   }
