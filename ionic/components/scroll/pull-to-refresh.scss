@@ -1,8 +1,28 @@
 ion-refresher {
-  position: fixed;
-  display: block;
-  height: 100px;
-  width: 100%;
-  background-color: red;
-  z-index: 0;
+  position: absolute;
+  top: -60px;
+  right: 0;
+  left: 0;
+  overflow: hidden;
+  margin: auto;
+  height: 60px;
+  .refresher {
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    width: 100%;
+    color: #fff;
+    text-align: center;
+
+    font-size: 30px;
+
+    .text-refreshing,
+    .text-pulling {
+      font-size: 16px;
+      line-height: 16px;
+    }
+    &.ionic-refresher-with-text {
+      bottom: 10px;
+    }
+  }
 }

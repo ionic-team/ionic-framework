@@ -18,12 +18,12 @@ export class Refresher {
     this.ele = element.nativeElement;
     this.ele.classList.add('content');
 
+    this.content = content;
+
     this.refresh = new EventEmitter('refresh');
 
     setTimeout(() => {
-      content.scrollElement.addEventListener('scroll', function(e) {
-        console.log('CONTENT: scroll', e.target.scrollTop);
-      });
+      this.initEvents();
     }, 1000);
   }
 
@@ -32,5 +32,33 @@ export class Refresher {
     this.refresh.next({
       amt: 0
     });
+  }
+
+  initEvents() {
+
+    let sp = this.content;
+    let sc = this.content.scrollElement;
+
+    sc.addEventListener('touchmove', this._handleTouchMove);
+    sc.addEventListener('touchend', this._handleTouchEnd);
+    sc.addEventListener('scroll', this._handleScroll);
+  }
+
+  onDehydrate() {
+    console.log('DEHYDRATION');
+    let sc = this.content.scrollElement;
+    sc.removeEventListener('touchmove', this._handleTouchMove);
+    sc.removeEventListener('touchend', this._handleTouchEnd);
+    sc.removeEventListener('scroll', this._handleScroll);
+  }
+
+  _handleTouchMove(e) {
+    console.log('TOUCHMOVE', e);
+  }
+  _handleTouchEnd(e) {
+    console.log('TOUCHEND', e);
+  }
+  _handleScroll(e) {
+    console.log('SCROLL', e.target.scrollTop);
   }
 }
