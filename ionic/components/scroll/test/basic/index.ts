@@ -7,7 +7,7 @@ import {IonicView} from 'ionic/ionic';
 @IonicView({
   templateUrl: 'main.html'
 })
-class IonicApp {
+class MyApp {
   constructor() {
     console.log('IonicApp Start')
   }
@@ -17,5 +17,5 @@ class IonicApp {
 }
 
 export function main(ionicBootstrap) {
-  ionicBootstrap(IonicApp);
+  ionicBootstrap(MyApp);
 }
