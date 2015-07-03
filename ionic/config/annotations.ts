@@ -9,6 +9,7 @@ import {
   Slides, Slide, SlidePager,
   Tabs, Tab,
   List, Item,
+  Toolbar,
   Icon,
   Checkbox, Switch, Label, Input,
   Segment, SegmentButton, SegmentControlValueAccessor,
@@ -29,6 +30,7 @@ export function IonicView(config) {
       List, Item,
       Slides, Slide, SlidePager,
       Tabs, Tab,
+      Toolbar,
 
       // Media
       Icon,

@@ -1,7 +1,5 @@
 <ion-aside #aside [content]="content">
-  <ion-toolbar>
-    <ion-title>Ionic 2.0</ion-title>
-  </ion-toolbar>
+  <ion-toolbar><ion-title>Ionic 2.0</ion-title></ion-toolbar>
   <ion-content>
     <ion-list>
       <ion-item *ng-for="#c of components" (^click)="openPage(aside, c)">
@@ -22,14 +20,3 @@ my-modal {
   height: 100%;
 }
 </style>
-<!--
-<ion-view #content>
-  <ion-toolbar>
-    <ion-title>Ionic Sink</ion-title>
-  </ion-toolbar>
-  <ion-content padding>
-    <h2>Ionic Kitchen Sink</h2>
-  </ion-content>
-
-</ion-view>
--->

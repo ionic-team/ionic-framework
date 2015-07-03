@@ -130,9 +130,7 @@ class WeatherApp {
 
 @IonicView({
   template: `<ion-view id="settings-modal">
-    <ion-toolbar>
-      <ion-title>Settings</ion-title>
-    </ion-toolbar>
+    <ion-toolbar><ion-title>Settings</ion-title></ion-toolbar>
     <ion-content padding>
       <form (^submit)="doSubmit($event)" [ng-form-model]="settingsForm">
         <ion-list>
