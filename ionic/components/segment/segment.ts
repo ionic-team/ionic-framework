@@ -1,18 +1,21 @@
-import {Renderer, ElementRef, EventEmitter, onInit, Ancestor} from 'angular2/angular2';
-
+import {Renderer, ElementRef, EventEmitter, onInit, Ancestor, forwardRef} from 'angular2/angular2';
 import {Control, NgControl,NgFormControl} from 'angular2/forms';
 import {ControlGroup, ControlDirective} from 'angular2/forms'
-import {dom} from 'ionic/util';
+
 import {IonicDirective, IonicComponent, IonicView} from '../../config/annotations'
+import {dom} from 'ionic/util';
 
 
-@IonicDirective({
+@IonicComponent({
   selector: 'ion-segment',
-  //properties: ['value'],
+  appInjector: [ NgControl ],
+  properties: [
+    'value'
+  ],
+  lifecycle: [onInit],
   host: {
-    '(change)': 'onChange($event.target.value)',
-    '(input)': 'onChange($event.target.value)',
-    '(blur)': 'onTouched()',
+    '(click)': 'buttonClicked($event)',
+    '(change)': 'onChange($event)',
     //'[value]': 'value',
     /*
     '[class.ng-untouched]': 'cd.control?.untouched == true',
@@ -24,68 +27,11 @@ import {IonicDirective, IonicComponent, IonicView} from '../../config/annotation
     */
   }
 })
-export class SegmentControlValueAccessor {
-  constructor(cd: NgControl, renderer: Renderer, elementRef: ElementRef, segment: Segment) {
-    this.onChange = (_) => {};
-    this.onTouched = (_) => {};
-    this.cd = cd;
-    this.renderer = renderer;
-    this.elementRef = elementRef;
-    this.segment = segment;
-
-    cd.valueAccessor = this;
-  }
-
-  writeValue(value) {
-    // both this.value and setProperty are required at the moment
-    // remove when a proper imperative API is provided
-    this.value = !value ? '' : value;
-    this.renderer.setElementProperty(this.elementRef.parentView.render, this.elementRef.boundElementIndex, 'value', this.value);
-
-    this.segment.value = this.value;
-    this.segment.selectFromValue(value);
-  }
-
-  registerOnChange(fn) { this.onChange = fn; }
-
-  registerOnTouched(fn) { this.onTouched = fn; }
-}
-
-
-@IonicComponent(Segment)
 @IonicView({
-  template: `<div class="ion-segment">
-    <content></content>
-  </div>
-  `,
-  directives: [SegmentButton]
+  template: '<div class="ion-segment"><content></content></div>',
+  directives: [forwardRef(() => SegmentButton)]
 })
 export class Segment {
-
-  static get config() {
-    return {
-      selector: 'ion-segment',
-      appInjector: [ NgControl ],
-      properties: [
-        'value'
-      ],
-      lifecycle: [onInit],
-      host: {
-        '(click)': 'buttonClicked($event)',
-        '(change)': 'onChange($event)',
-        //'[value]': 'value',
-        /*
-        '[class.ng-untouched]': 'cd.control?.untouched == true',
-        '[class.ng-touched]': 'cd.control?.touched == true',
-        '[class.ng-pristine]': 'cd.control?.pristine == true',
-        '[class.ng-dirty]': 'cd.control?.dirty == true',
-        '[class.ng-valid]': 'cd.control?.valid == true',
-        '[class.ng-invalid]': 'cd.control?.valid == false'
-        */
-      }
-    }
-  }
-
   constructor(
     cd: NgControl,
     elementRef: ElementRef,
@@ -160,6 +106,52 @@ export class Segment {
     // TODO: Better way to do this?
     //this.controlDirective._control().updateValue(this.value);
   }
+}
+
+
+@IonicDirective({
+  selector: 'ion-segment',
+  //properties: ['value'],
+  host: {
+    '(change)': 'onChange($event.target.value)',
+    '(input)': 'onChange($event.target.value)',
+    '(blur)': 'onTouched()',
+    //'[value]': 'value',
+    /*
+    '[class.ng-untouched]': 'cd.control?.untouched == true',
+    '[class.ng-touched]': 'cd.control?.touched == true',
+    '[class.ng-pristine]': 'cd.control?.pristine == true',
+    '[class.ng-dirty]': 'cd.control?.dirty == true',
+    '[class.ng-valid]': 'cd.control?.valid == true',
+    '[class.ng-invalid]': 'cd.control?.valid == false'
+    */
+  }
+})
+export class SegmentControlValueAccessor {
+  constructor(cd: NgControl, renderer: Renderer, elementRef: ElementRef, segment: Segment) {
+    this.onChange = (_) => {};
+    this.onTouched = (_) => {};
+    this.cd = cd;
+    this.renderer = renderer;
+    this.elementRef = elementRef;
+    this.segment = segment;
+
+    cd.valueAccessor = this;
+  }
+
+  writeValue(value) {
+    // both this.value and setProperty are required at the moment
+    // remove when a proper imperative API is provided
+    this.value = !value ? '' : value;
+    this.renderer.setElementProperty(this.elementRef.parentView.render, this.elementRef.boundElementIndex, 'value', this.value);
+
+    this.segment.value = this.value;
+    this.segment.selectFromValue(value);
+  }
+
+  registerOnChange(fn) { this.onChange = fn; }
+
+  registerOnTouched(fn) { this.onTouched = fn; }
 }
 
 
