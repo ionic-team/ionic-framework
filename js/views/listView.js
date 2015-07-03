@@ -236,7 +236,7 @@
     var placeholder = this.el.cloneNode(true);
 
     placeholder.classList.add(ITEM_PLACEHOLDER_CLASS);
-
+    this.origElStyleCssTrans = this.el.style[ionic.CSS.TRANSFORM];
     this.el.parentNode.insertBefore(placeholder, this.el);
     this.el.classList.add(ITEM_REORDERING_CLASS);
 
@@ -245,6 +245,7 @@
       startIndex: startIndex,
       placeholder: placeholder,
       scrollHeight: scroll,
+      initialY: null,
       list: placeholder.parentNode
     };
 
@@ -300,19 +301,15 @@
       this._moveElement(e);
 
       this._currentDrag.currentY = scrollY + pageY - offset;
-
+      if (this._currentDrag.initialY === null )
+      	this._currentDrag.initialY = this._currentDrag.currentY; 
       // this._reorderItems();
     }
   });
 
   // When an item is dragged, we need to reorder any items for sorting purposes
-  ReorderDrag.prototype._getReorderIndex = function() {
+  ReorderDrag.prototype._getNgRepeatReorderIndex = function(siblings) {
     var self = this;
-
-    var siblings = Array.prototype.slice.call(self._currentDrag.placeholder.parentNode.children)
-      .filter(function(el) {
-        return el.nodeName === self.el.nodeName && el !== self.el;
-      });
 
     var dragOffsetTop = self._currentDrag.currentY;
     var el;
@@ -334,18 +331,91 @@
     return self._currentDrag.startIndex;
   };
 
+  ReorderDrag.prototype._getColRepeatReorderIndex = function() {
+  	this._currentDrag.startIndex = this._currentDrag.initialY;
+  	this._currentDrag.startIndex = this._currentDrag.startIndex/(this.el.clientHeight+1);
+  	this._currentDrag.startIndex = Math.max(this._currentDrag.startIndex, 0);
+
+    var finalIndex = this._currentDrag.currentY;
+    finalIndex = finalIndex/(this.el.clientHeight+1);
+    finalIndex = Math.max(finalIndex, 0);
+    var diff = Math.round(finalIndex - this._currentDrag.startIndex);
+    var adiff = Math.abs(diff);
+    this._currentDrag.startIndex = Math.floor(this._currentDrag.startIndex);
+    finalIndex = this._currentDrag.startIndex + (adiff >= 1 ? diff : 0);
+    return finalIndex;
+  }
+  
+  ReorderDrag.prototype._getColDropVirtWinIdx = function(e, siblings) {
+    var ret = -1;
+    var stackObj = [], stackDisp =[], x = e.gesture.center.pageX, y = e.gesture.center.pageY, cnt = 1;
+    var elem;
+    while ((elem = this._getParentIonItem(document.elementFromPoint(x, y))) !== null) {
+    	if (elem === this.el) {
+      	stackObj.push(elem);
+      	stackDisp.push(elem.style.display);
+      	elem.style.display = "none";
+      	continue;
+    	}
+    	break;
+    }
+    for (var i=0; i< stackObj.length; i++) 
+    	stackObj[i].style.display = stackDisp[i];
+    if (elem !== null) {
+      for (var i = 0, len = siblings.length; i < len; i++) {
+        var cmp = siblings[i];
+      	if (elem === cmp) {
+      		ret = i;
+      		break;
+      	}
+      }
+    } 
+    return ret;   
+  }
+  
+  ReorderDrag.prototype._getParentIonItem = function(elem) {
+  	if (elem.tagName === "ION-ITEM")
+  		return elem;
+  	var par = elem.parentElement;
+  	if (par)
+  		return this._getParentIonItem(par);
+  	return null;
+  }
+  
+  ReorderDrag.prototype._setRepeatReorderFromToItem = function(src, dst) {
+  	var scopeSrc = angular.element(src).scope();
+  	var scopeDst = angular.element(dst).scope();
+  	var scopeToUse = angular.isDefined(scopeDst.$repeatReorder) ? scopeDst : scopeSrc;
+  	scopeSrc.$repeatReorder.fromItem = scopeSrc[scopeSrc.$repeatReorder.keyExpression];
+  	scopeSrc.$repeatReorder.toItem = scopeToUse[scopeSrc.$repeatReorder.keyExpression];
+  }
+  
   ReorderDrag.prototype.end = function(e, doneCallback) {
     if (!this._currentDrag) {
       doneCallback && doneCallback();
       return;
     }
 
+    var self = this;
+    var siblings = Array.prototype.slice.call(self._currentDrag.placeholder.parentNode.children)
+      .filter(function(el) {
+        return el.nodeName === self.el.nodeName && el !== self.el;
+      });
     var placeholder = this._currentDrag.placeholder;
-    var finalIndex = this._getReorderIndex();
-
+    var useNg = true;
+    if (siblings.length > 0) 
+    	useNg = (siblings[0].offsetTop !== -1); 
+    var finalIndex = useNg ? this._getNgRepeatReorderIndex(siblings) : this._getColRepeatReorderIndex();
+    var toItemIdx = finalIndex; 
+    if (!useNg) { 
+    	toItemIdx = this._getColDropVirtWinIdx(e, siblings);
+	    if (toItemIdx !== -1)
+	    	this._setRepeatReorderFromToItem(this.el, siblings[toItemIdx]);
+    }
+    
     // Reposition the element
     this.el.classList.remove(ITEM_REORDERING_CLASS);
-    this.el.style[ionic.CSS.TRANSFORM] = '';
+    this.el.style[ionic.CSS.TRANSFORM] = this.origElStyleCssTrans;
 
     placeholder.parentNode.insertBefore(this.el, placeholder);
     placeholder.parentNode.removeChild(placeholder);
