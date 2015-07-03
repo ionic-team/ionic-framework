@@ -25,7 +25,9 @@ export class Flickr {
 
   static search(tags, lat, lng) {
     return new Promise((resolve, reject) => {
-      Http.get(baseUrl + '?method=flickr.groups.pools.getPhotos&group_id=1463451@N25&safe_search=1&api_key=' + FLICKR_API_KEY + '&format=json&tags=' + tags + '&lat=' + lat + '&lng=' + lng).then((val) => {
+      Http.get(baseUrl + '?method=flickr.groups.pools.getPhotos&group_id=1463451@N25&safe_search=1&api_key=' + FLICKR_API_KEY + '&jsoncallback=JSON_CALLBACK&format=json&tags=' + tags + '&lat=' + lat + '&lng=' + lng, {
+        method: 'jsonp'
+      }).then((val) => {
         resolve(val);
       }, (err) => {
         reject(httpResponse);

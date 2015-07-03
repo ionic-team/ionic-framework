@@ -1,5 +1,4 @@
 import {Component} from 'angular2/angular2';
-import {View} from 'angular2/src/core/annotations_impl/view';
 
 import {IonicView} from 'ionic/ionic';
 

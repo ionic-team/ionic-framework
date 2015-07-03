@@ -1,12 +1,6 @@
-import {ElementRef, ComponentRef, onDestroy} from 'angular2/angular2';
-import {bind, Injector} from 'angular2/di';
-import {Component, Directive} from 'angular2/angular2';
-import {View} from 'angular2/src/core/annotations_impl/view';
-import {Parent, Ancestor} from 'angular2/src/core/annotations_impl/visibility';
+import {Component} from 'angular2/angular2';
 
-import {IonicView, IonicConfig, Platform} from 'ionic/ionic';
-
-import {IonicComponent} from 'ionic/ionic';
+import {IonicComponent, IonicView, IonicConfig, Platform} from 'ionic/ionic';
 import {Modal, NavController, NavParams, Animation, ActionMenu} from 'ionic/ionic';
 
 

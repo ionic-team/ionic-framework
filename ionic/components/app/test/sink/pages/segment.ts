@@ -1,7 +1,5 @@
-import {NgFor, Injector, DomRenderer, ElementRef} from 'angular2/angular2';
-import {Ancestor} from 'angular2/src/core/annotations_impl/visibility';
-import {Component, Directive} from 'angular2/angular2';
-import {View} from 'angular2/src/core/annotations_impl/view';
+import {NgFor, Injector, DomRenderer, ElementRef, Ancestor} from 'angular2/angular2';
+import {Component, Directive, View} from 'angular2/angular2';
 import {FormBuilder, Validators, formDirectives, Control, ControlGroup} from 'angular2/forms';
 
 import {Segment, SegmentButton, List, Item, ActionMenu, Modal, ModalRef,

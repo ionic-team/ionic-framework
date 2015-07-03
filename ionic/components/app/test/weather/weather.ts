@@ -7,6 +7,8 @@ let FORECASTIO_KEY = '4cd3c5673825a361eb5ce108103ee84a';
 export class Weather {
   static getAtLocation(lat, lng) {
     let url = 'https://api.forecast.io/forecast/' + FORECASTIO_KEY + '/';
-    return Http.get(url + lat + ',' + lng);
+    return Http.get(url + lat + ',' + lng + '?callback=JSON_CALLBACK', {
+      method: 'jsonp'
+    });
   }
 }

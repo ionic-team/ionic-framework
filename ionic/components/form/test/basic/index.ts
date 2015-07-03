@@ -1,5 +1,4 @@
-import {Component, Directive} from 'angular2/angular2';
-import {View} from 'angular2/src/core/annotations_impl/view';
+import {Component, Directive, View} from 'angular2/angular2';
 
 import {FormBuilder, Validators, formDirectives, ControlGroup} from 'angular2/forms';
 //import {Switch, Form, List, Label, Item, Input, Content} from 'ionic/ionic';

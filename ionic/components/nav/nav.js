@@ -1,9 +1,4 @@
-import {Component, Directive, onInit} from 'angular2/src/core/annotations_impl/annotations';
-import {View} from 'angular2/src/core/annotations_impl/view';
-import {Parent} from 'angular2/src/core/annotations_impl/visibility';
-import {Optional} from 'angular2/src/di/annotations_impl';
-import {ElementRef} from 'angular2/src/core/compiler/element_ref';
-import {Injector} from 'angular2/di';
+import {Component, Directive, View, ElementRef, Parent, Optional, Injector, onInit, forwardRef} from 'angular2/angular2';
 
 import {ViewController} from '../view/view-controller';
 
@@ -17,7 +12,7 @@ import {ViewController} from '../view/view-controller';
 })
 @View({
   template: '<template pane-anchor></template>',
-  directives: [PaneAnchor]
+  directives: [forwardRef(() => PaneAnchor)]
 })
 export class Nav extends ViewController {
 
