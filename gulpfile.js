@@ -20,6 +20,7 @@ var exec = require('child_process').exec;
 var babel = require('gulp-babel');
 var traceur = require('gulp-traceur');
 var webpack = require('gulp-webpack');
+var tsc = require('gulp-typescript');
 var lazypipe = require('lazypipe');
 var cache = require('gulp-cached');
 var connect = require('gulp-connect');
@@ -59,7 +60,7 @@ gulp.task('watch', function() {
     'serve',
 
     function() {
-      watch(['ionic/**/*.js', '!ionic/components/*/test/**/*'], function() {
+      watch(['ionic/**/*.js', 'ionic/**/*.ts', '!ionic/components/*/test/**/*'], function() {
         runSequence(
           'transpile',
           'bundle.js',
@@ -92,7 +93,7 @@ var traceurOptions = {
   annotations: true,
   types: true,
   outputLanguage: 'es6'
-}
+};
 
 var babelOptions = {
   optional: ['es7.decorators'],
@@ -122,14 +123,32 @@ var exampleBabelOptions = {
   }
 };
 
+var tscOptions = {
+  target: 'ES6',
+  // Don't use the version of typescript that gulp-typescript depends on, we need 1.5
+  // see https://github.com/ivogabe/gulp-typescript#typescript-version
+  typescript: require('typescript'),
+  allowNonTsExtensions: true,
+  isolatedModules: true,
+  //declaration: true, //generate d.ts files
+  emitDecoratorMetadata: true,
+  experimentalDecorators: true,
+  noEmitOnError: false,  // ignore errors
+  rootDir: '.'
+}
+
 gulp.task('transpile', function() {
-  return gulp.src(['ionic/**/*.js', '!ionic/components/*/test/**/*', '!ionic/init.js'])
+  var stream = gulp.src(['ionic/**/*.ts', 'ionic/**/*.js', '!ionic/components/*/test/**/*', '!ionic/init.js'])
              .pipe(cache('transpile', { optimizeMemory: true }))
-             .pipe(traceur(traceurOptions))
-             .on('error', function (err) {
-               console.log("ERROR: " + err.message);
-               this.emit('end');
-             })
+             .pipe(tsc(tscOptions, null, tsc.reporter.nullReporter()))
+            // .on('error', function(error) {
+            //   stream.emit('error', error);
+            // })
+            // .pipe(traceur(traceurOptions))
+            // .on('error', function (err) {
+            //   console.log("ERROR: " + err.message);
+            //   this.emit('end');
+            // })
              .pipe(gulp.dest('dist/js/es6/ionic'))
              .pipe(babel(babelOptions))
              .on('error', function (err) {
@@ -137,6 +156,8 @@ gulp.task('transpile', function() {
                this.emit('end');
              })
              .pipe(gulp.dest('dist/js/es5/ionic'))
+
+  return stream;
 });
 
 gulp.task('bundle.js', function() {
@@ -166,18 +187,19 @@ gulp.task('bundle.js', function() {
 
 gulp.task('examples', function() {
   var buildTest = lazypipe()
-             .pipe(traceur, traceurOptions)
+             //.pipe(traceur, traceurOptions)
+             .pipe(tsc, tscOptions, null, tsc.reporter.nullReporter())
              .pipe(babel, exampleBabelOptions)
 
   // Get each test folder with gulp.src
   return gulp.src('ionic/components/*/test/*/**/*')
     .pipe(cache('examples', { optimizeMemory: true }))
-    .pipe(gulpif(/.js$/, buildTest()))
+    .pipe(gulpif(/.ts$/, buildTest()))
     .on('error', function (err) {
             console.log("ERROR: " + err.message);
             this.emit('end');
         })
-    .pipe(gulpif(/index.js$/, createIndexHTML()))
+    .pipe(gulpif(/index.js$/, createIndexHTML())) //TSC changes .ts to .js
     .pipe(rename(function(file) {
       file.dirname = file.dirname.replace(path.sep + 'test' + path.sep, path.sep)
     }))
