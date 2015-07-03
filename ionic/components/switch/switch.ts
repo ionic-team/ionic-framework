@@ -36,10 +36,10 @@ export class Switch {
 
     // TODO: These are temporary until we figure out what to do
     // with @PropertSetter
-    let setAriaRole = (v) => this.ele.setAttribute('aria-role', v)
-    let setAriaChecked = (v) => this.ele.setAttribute('aria-checked', v)
-    let setAriaInvalid = (v) => this.ele.setAttribute('aria-invalid', v)
-    let setAriaDisabled = (v) => this.ele.setAttribute('aria-disabled', v)
+    //let setAriaRole = (v) => { this.ele.setAttribute('aria-role', v) }
+    //let setAriaChecked = (v) => { this.ele.setAttribute('aria-checked', v) }
+    //let setAriaInvalid = (v) => { this.ele.setAttribute('aria-invalid', v) }
+    //let setAriaDisabled = (v) => { this.ele.setAttribute('aria-disabled', v) }
 
     //let setChecked = (v) => this.ele.setAttribute('checked', v);
 
@@ -49,7 +49,7 @@ export class Switch {
     //setAriaRole('checkbox')
     //setInvalid('false')
     //setDisabled('false')
-    this.setCheckedProperty = setAriaChecked
+    //this.setCheckedProperty = setAriaChecked
   }
 
   /**
@@ -63,7 +63,7 @@ export class Switch {
 
   set checked(checked) {
     this._checked = checked
-    this.setCheckedProperty(checked)
+    //this.setCheckedProperty(checked)
     this.controlDirective._control().updateValue(this._checked);
   }
 
