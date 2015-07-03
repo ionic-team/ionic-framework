@@ -9,8 +9,6 @@ import {Geo} from './geo';
 import {Weather} from './weather';
 import {Flickr} from './flickr';
 
-console.log('Imported', Geo, Weather, Flickr);
-
 @Component({
   selector: 'ion-app',
   appInjector: [Modal]
@@ -43,7 +41,7 @@ class WeatherApp {
   }
 
   showSettings() {
-    this.Modal.show(SettingsModal).then((settingsModal) => {
+    this.Modal.open(SettingsModal).then((settingsModal) => {
       this.settingsModal = settingsModal;
     });
   }
@@ -134,9 +132,39 @@ class WeatherApp {
 
 @IonicComponent(Modal)
 @IonicView({
-  template: '<ion-view id="settings-modal"><ion-content padding><button primary (click)="close()">Close</button></ion-content></ion-view>'
+  template: `<ion-view id="settings-modal">
+    <ion-toolbar>
+      <ion-title>Settings</ion-title>
+    </ion-toolbar>
+    <ion-content padding>
+      <form (^submit)="doSubmit($event)" [ng-form-model]="settingsForm">
+        <ion-list>
+          <ion-input ion-item>
+            <ion-label>Units</ion-label>
+            <!--
+            <ion-segment ng-control="units">
+              <ion-segment-button value="standard" button>
+                &deg;F
+              </ion-segment-button>
+              <ion-segment-button value="standard" button>
+                &deg;C
+              </ion-segment-button>
+            </ion-segment>
+            -->
+          </ion-input>
+        </ion-list>
+      </form>
+    </ion-content>
+  </ion-view>`,
+  directives: [formDirectives]
 })
-export class SettingsModal extends Modal {}
+export class SettingsModal extends Modal {
+  constructor(fb: FormBuilder) {
+    this.settingsForm = fb.group({
+      mapStyle: ['hybrid', Validators.required]
+    });
+  }
+}
 
 export function main(ionicBootstrap) {
   ionicBootstrap(WeatherApp);

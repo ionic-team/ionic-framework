@@ -12,17 +12,20 @@ import {IonicDirective, IonicComponent, IonicView} from '../../config/annotation
 
 @IonicDirective({
   selector: 'ion-segment',
+  //properties: ['value'],
   host: {
     '(change)': 'onChange($event.target.value)',
     '(input)': 'onChange($event.target.value)',
     '(blur)': 'onTouched()',
-    '[value]': 'value',
+    //'[value]': 'value',
+    /*
     '[class.ng-untouched]': 'cd.control?.untouched == true',
     '[class.ng-touched]': 'cd.control?.touched == true',
     '[class.ng-pristine]': 'cd.control?.pristine == true',
     '[class.ng-dirty]': 'cd.control?.dirty == true',
     '[class.ng-valid]': 'cd.control?.valid == true',
     '[class.ng-invalid]': 'cd.control?.valid == false'
+    */
   }
 })
 export class SegmentControlValueAccessor {
@@ -74,13 +77,15 @@ export class Segment {
       host: {
         '(click)': 'buttonClicked($event)',
         '(change)': 'onChange($event)',
-        '[value]': 'value',
+        //'[value]': 'value',
+        /*
         '[class.ng-untouched]': 'cd.control?.untouched == true',
         '[class.ng-touched]': 'cd.control?.touched == true',
         '[class.ng-pristine]': 'cd.control?.pristine == true',
         '[class.ng-dirty]': 'cd.control?.dirty == true',
         '[class.ng-valid]': 'cd.control?.valid == true',
         '[class.ng-invalid]': 'cd.control?.valid == false'
+        */
       }
     }
   }

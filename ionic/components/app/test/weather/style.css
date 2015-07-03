@@ -222,7 +222,11 @@ current-weather .current-temp {
  */
 
 #settings-modal {
+  background-color: rgba(0,0,0,0.8) !important;
+}
+#settings-modal ion-toolbar {
   background-color: rgba(0,0,0,0.8);
+  color: #fff;
 }
 
 #settings-modal .item {
