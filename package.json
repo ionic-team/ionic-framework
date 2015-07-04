@@ -1,8 +1,8 @@
 {
   "name": "ionic-sdk",
   "private": false,
-  "version": "1.0.0",
-  "codename": "uranium-unicorn",
+  "version": "1.0.1",
+  "codename": "vanadium-vaquita",
   "repository": {
     "url": "git://github.com/driftyco/ionic.git"
   },
