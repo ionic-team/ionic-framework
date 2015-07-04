@@ -1,5 +1,5 @@
 
-// Navbar
+// Toolbar
 // --------------------------------------------------
 
 $toolbar-order: (
@@ -10,14 +10,20 @@ $toolbar-order: (
 
 
 ion-toolbar {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 4.4rem;
+
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  position: relative;
+  order: $flex-order-toolbar-top;
 }
 
 .toolbar-inner {
+  display: flex;
   width: 100%;
 }
 
@@ -27,7 +33,24 @@ ion-toolbar {
 
   display: flex;
   align-items: center;
-  margin: 0 0 2px;
+
+  transform: translateZ(0px);
+}
+
+.toolbar-inner-title {
+  width: 100%;
+  padding: 0 15px;
+}
+
+ion-title {
+  display: block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.toolbar-item {
+  transform: translateZ(0px);
 }
 
 .toolbar-primary-item {
@@ -38,24 +61,8 @@ ion-toolbar {
   order: map-get($toolbar-order, 'secondary');
 }
 
-ion-toolbar ion-title {
-  display: block;
-  overflow: hidden;
-}
-
-.toolbar-inner-title {
-  width: 100%;
-  padding: 0 15px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
 .toolbar button,
 .toolbar [button] {
   background: transparent;
   border: none;
-}
-
-.toolbar-title-hide {
-  opacity: 0;
 }

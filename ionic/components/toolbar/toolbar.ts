@@ -10,23 +10,23 @@ import * as dom from '../../util/dom';
 })
 @View({
   template: `
-    <div class="navbar-inner">
-      <div class="navbar-title">
-        <div class="navbar-inner-title">
+    <div class="toolbar-inner">
+      <div class="toolbar-title">
+        <div class="toolbar-inner-title">
           <content select="ion-title"></content>
         </div>
       </div>
-      <div class="navbar-item navbar-primary-item">
+      <div class="toolbar-item toolbar-primary-item">
         <content select="[primary]"></content>
       </div>
-      <div class="navbar-item navbar-secondary-item">
+      <div class="toolbar-item toolbar-secondary-item">
         <content select="[secondary]"></content>
       </div>
     </div>
   `,
   directives: [
-    forwardRef(() => Title),
-    forwardRef(() => NavbarItem)
+    forwardRef(() => ToolbarTitle),
+    forwardRef(() => ToolbarItem)
   ]
 })
 export class Toolbar extends Ion {
@@ -68,8 +68,8 @@ export class Toolbar extends Ion {
   alignTitle() {
     // called after the navbar/title has had a moment to
     // finish rendering in their correct locations
-    const navbarEle = this.eleRef.nativeElement;
-    const titleEle = this._ttEle || (this._ttEle = navbarEle.querySelector('ion-title'));
+    const toolbarEle = this.eleRef.nativeElement;
+    const titleEle = this._ttEle || (this._ttEle = toolbarEle.querySelector('ion-title'));
 
     // don't bother if there's no title element
     if (!titleEle) return;
@@ -82,7 +82,7 @@ export class Toolbar extends Ion {
 
     // get all the dimensions
     const titleOffsetLeft = titleEle.offsetLeft;
-    const titleOffsetRight = navbarEle.offsetWidth - (titleOffsetLeft + titleEle.offsetWidth);
+    const titleOffsetRight = toolbarEle.offsetWidth - (titleOffsetLeft + titleEle.offsetWidth);
 
     let marginLeft = 0;
     let marginRight = 0;
@@ -97,7 +97,7 @@ export class Toolbar extends Ion {
 
     if ((marginLeft || marginRight) && margin !== this._ttMargin) {
       // only do an update if it has to
-      const innerTitleEle = this._innerTtEle || (this._innerTtEle = navbarEle.querySelector('.navbar-inner-title'));
+      const innerTitleEle = this._innerTtEle || (this._innerTtEle = toolbarEle.querySelector('.toolbar-inner-title'));
       innerTitleEle.style.margin = this._ttMargin = margin;
     }
   }
@@ -106,9 +106,9 @@ export class Toolbar extends Ion {
 
 
 @Directive({
-  selector: '.navbar-title'
+  selector: '.toolbar-title'
 })
-class Title {
+class ToolbarTitle {
   constructor(@Parent() toolbar: Toolbar, elementRef: ElementRef) {
     toolbar.titleElement(elementRef);
   }
@@ -116,9 +116,9 @@ class Title {
 
 
 @Directive({
-  selector: '.navbar-item'
+  selector: '.toolbar-item'
 })
-class NavbarItem {
+class ToolbarItem {
   constructor(@Parent() toolbar: Toolbar, elementRef: ElementRef) {
     toolbar.itemElements(elementRef);
   }

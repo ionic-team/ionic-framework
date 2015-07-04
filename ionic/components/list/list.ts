@@ -1,5 +1,6 @@
 import {ElementRef, onInit} from 'angular2/angular2';
 
+import {Ion} from '../ion';
 import {IonicDirective} from '../../config/annotations';
 import {ListVirtualScroll} from './virtual';
 import * as util from 'ionic/util';
@@ -13,13 +14,15 @@ import * as util from 'ionic/util';
     'content'
   ]
 })
-export class List {
+export class List extends Ion {
   constructor(elementRef: ElementRef) {
+    super(elementRef);
     this.ele = elementRef.nativeElement;
   }
 
   onInit() {
-    if(util.isDefined(this.virtual)) {
+    List.applyConfig(this);
+    if (util.isDefined(this.virtual)) {
       console.log('Content', this.content);
       console.log('Virtual?', this.virtual);
       console.log('Items?', this.items.length, 'of \'em');

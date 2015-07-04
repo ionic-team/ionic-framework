@@ -6,7 +6,10 @@ import {dom} from 'ionic/util';
 
 
 @Component({
-  selector: 'ion-item'
+  selector: 'ion-item',
+  host: {
+    'class': 'item'
+  }
 })
 @View({
   template: `

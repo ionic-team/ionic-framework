@@ -9,7 +9,11 @@ $item-ios-accessory-color:       #8e8e93 !default;
 $item-ios-border-color:          $list-ios-border-color !default;
 
 
-.item.item-ios {
+.list-ios {
+  margin-top: -1px;
+}
+
+.list-ios .item {
   background: $item-ios-background-color;
   min-height: $item-ios-min-height;
   padding-left: $item-ios-padding-left;

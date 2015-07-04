@@ -54,8 +54,8 @@ export class Refresher {
     this.scrollChild = sc;
 
     this._touchMoveListener = this._handleTouchMove.bind(this);
-    this._touchEndListener = this._handleTouchEnd.bind(this));
-    this._handleScrollListener = this._handleScroll.bind(this));
+    this._touchEndListener = this._handleTouchEnd.bind(this);
+    this._handleScrollListener = this._handleScroll.bind(this);
     sc.addEventListener('touchmove', this._touchMoveListener);
     sc.addEventListener('touchend', this._touchEndListener);
     sc.addEventListener('scroll', this._handleScrollListener);

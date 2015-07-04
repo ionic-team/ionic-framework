@@ -2,25 +2,10 @@
 // Navbar
 // --------------------------------------------------
 
-$navbar-order: (
-  back-button: 10,
-  title: 20,
-  primary: 30,
-  secondary: 40
-);
-
 
 ion-navbar {
+  @extend ion-toolbar;
   position: absolute;
-  width: 100%;
-  height: 100%;
-  min-height: 4.4rem;
-
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  order: $flex-order-toolbar-top;
 
   transform: translate3d(100%, 0px, 0px);
   &.show-navbar {
@@ -28,13 +13,8 @@ ion-navbar {
   }
 }
 
-.navbar-inner {
-  display: flex;
-  width: 100%;
-}
-
 .back-button {
-  order: map-get($navbar-order, 'back-button');
+  order: 10;
   transform: translateZ(0px);
 
   display: none;
@@ -46,44 +26,4 @@ ion-navbar {
 .back-button-text {
   display: flex;
   align-items: center;
-}
-
-.navbar-title {
-  flex: 1;
-  order: map-get($navbar-order, 'title');
-
-  display: flex;
-  align-items: center;
-
-  transform: translateZ(0px);
-}
-
-.navbar-inner-title {
-  width: 100%;
-  padding: 0 15px;
-}
-
-ion-title {
-  display: block;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-
-.navbar-item {
-  transform: translateZ(0px);
-}
-
-.navbar-primary-item {
-  order: map-get($navbar-order, 'primary');
-}
-
-.navbar-secondary-item {
-  order: map-get($navbar-order, 'secondary');
-}
-
-.navbar button,
-.navbar [button] {
-  background: transparent;
-  border: none;
 }

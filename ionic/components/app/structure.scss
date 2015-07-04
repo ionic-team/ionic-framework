@@ -46,39 +46,6 @@ ion-app,
 
 }
 
-@-webkit-keyframes rotation {
-  from {
-    -webkit-transform: rotate(0deg);
-  }
-  to {
-    -webkit-transform: rotate(359deg);
-  }
-}
-@keyframes rotation {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(359deg);
-  }
-}
-ion-loading-icon {
-  display: flex;
-  align-self: center;
-  margin: auto;
-
-  font-family: 'Ionicons';
-  &:before {
-    content: "\f44e";
-  }
-  font-size: 128px;
-  color: #666666;
-
-  animation: rotation 45s infinite linear;
-  -webkit-animation: rotation 45s infinite linear;
-
-}
-
 ion-nav {
   height: 100%;
 }
@@ -114,10 +81,4 @@ ion-pane {
   position: relative;
   flex: 1;
   order: $flex-order-view-content;
-}
-
-ion-toolbar {
-  display: flex;
-  min-height: 4.4rem;
-  background: white;
 }

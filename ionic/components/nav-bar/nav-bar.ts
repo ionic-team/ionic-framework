@@ -1,16 +1,18 @@
 import {Component, Directive, View, Parent, ElementRef, forwardRef} from 'angular2/angular2';
 import {ProtoViewRef} from 'angular2/src/core/compiler/view_ref';
 
+import {Ion} from '../ion';
+import {IonicComponent} from '../../config/annotations';
 import {ViewItem} from '../view/view-item';
 import * as dom from '../../util/dom';
 
 
-@Component({
+@IonicComponent({
   selector: 'ion-navbar'
 })
 @View({
   template: `
-    <div class="navbar-inner">
+    <div class="toolbar-inner">
       <button class="back-button button">
         <icon class="back-button-icon ion-ios-arrow-back"></icon>
         <span class="back-button-text">
@@ -18,15 +20,15 @@ import * as dom from '../../util/dom';
           <span class="back-title" [inner-text]="bbText"></span>
         </span>
       </button>
-      <div class="navbar-title">
-        <div class="navbar-inner-title">
+      <div class="toolbar-title">
+        <div class="toolbar-inner-title">
           <content select="ion-title"></content>
         </div>
       </div>
-      <div class="navbar-item navbar-primary-item">
+      <div class="toolbar-item toolbar-primary-item">
         <content select="[primary]"></content>
       </div>
-      <div class="navbar-item navbar-secondary-item">
+      <div class="toolbar-item toolbar-secondary-item">
         <content select="[secondary]"></content>
       </div>
     </div>
@@ -38,14 +40,19 @@ import * as dom from '../../util/dom';
     forwardRef(() => NavbarItem)
   ]
 })
-export class Navbar {
+export class Navbar extends Ion {
   constructor(item: ViewItem, elementRef: ElementRef) {
+    super(elementRef);
     this.eleRef = elementRef;
     this.itemEles = [];
     item.navbarView(this);
 
     this.bbDefault = 'Back';
     this.bbText = '';
+  }
+
+  onInit() {
+    Navbar.applyConfig(this);
   }
 
   element() {
@@ -90,8 +97,8 @@ export class Navbar {
   alignTitle() {
     // called after the navbar/title has had a moment to
     // finish rendering in their correct locations
-    const navbarEle = this.eleRef.nativeElement;
-    const titleEle = this._ttEle || (this._ttEle = navbarEle.querySelector('ion-title'));
+    const toolbarEle = this.eleRef.nativeElement;
+    const titleEle = this._ttEle || (this._ttEle = toolbarEle.querySelector('ion-title'));
 
     // don't bother if there's no title element
     if (!titleEle) return;
@@ -104,7 +111,7 @@ export class Navbar {
 
     // get all the dimensions
     const titleOffsetLeft = titleEle.offsetLeft;
-    const titleOffsetRight = navbarEle.offsetWidth - (titleOffsetLeft + titleEle.offsetWidth);
+    const titleOffsetRight = toolbarEle.offsetWidth - (titleOffsetLeft + titleEle.offsetWidth);
 
     let marginLeft = 0;
     let marginRight = 0;
@@ -119,7 +126,7 @@ export class Navbar {
 
     if ((marginLeft || marginRight) && margin !== this._ttMargin) {
       // only do an update if it has to
-      const innerTitleEle = this._innerTtEle || (this._innerTtEle = navbarEle.querySelector('.navbar-inner-title'));
+      const innerTitleEle = this._innerTtEle || (this._innerTtEle = toolbarEle.querySelector('.toolbar-inner-title'));
       innerTitleEle.style.margin = this._ttMargin = margin;
     }
   }
@@ -161,20 +168,20 @@ class BackButtonText {
 }
 
 @Directive({
-  selector: '.navbar-title'
+  selector: '.toolbar-title'
 })
 class Title {
-  constructor(@Parent() navbar: Navbar, elementRef: ElementRef) {
-    navbar.titleElement(elementRef);
+  constructor(@Parent() toolbar: Navbar, elementRef: ElementRef) {
+    toolbar.titleElement(elementRef);
   }
 }
 
 @Directive({
-  selector: '.navbar-item'
+  selector: '.toolbar-item'
 })
 class NavbarItem {
-  constructor(@Parent() navbar: Navbar, elementRef: ElementRef) {
-    navbar.itemElements(elementRef);
+  constructor(@Parent() toolbar: Navbar, elementRef: ElementRef) {
+    toolbar.itemElements(elementRef);
   }
 }
 
