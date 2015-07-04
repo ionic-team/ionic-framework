@@ -6,7 +6,7 @@ import {raf, ready, CSS} from 'ionic/util/dom'
 
 @Component({
   selector: 'ion-refresher',
-  events: ['refresh']
+  events: ['refresh', 'pulling']
 })
 @View({
   template: '<div class="refresher"></div>',
@@ -22,22 +22,16 @@ export class Refresher {
     this.content = content;
 
     this.refresh = new EventEmitter('refresh');
+    this.pulling = new EventEmitter('pulling');
 
     setTimeout(() => {
       this.initEvents();
     }, 1000);
   }
 
-  doRefresh() {
-    console.log('REFRESH');
-    this.refresh.next({
-      amt: 0
-    });
-  }
-
   initEvents() {
 
-    let sp = this.content;
+    let sp = this.content.getNativeElement();
     let sc = this.content.scrollElement;
 
     this.isDragging = false;
@@ -101,6 +95,30 @@ export class Refresher {
     }
   }
 
+  activate() {
+    this.ele.classList.add('active');
+    this.pulling.next(0);
+  }
+
+  deactivate() {
+    // give tail 150ms to finish
+    setTimeout(() => {
+      this.ele.classList.remove('active');
+      this.ele.classList.remove('refreshing');
+      this.ele.classList.remove('refreshing-tail');
+      // deactivateCallback
+      if (this.activated) this.activated = false;
+    }, 150);
+  }
+
+  start() {
+    // startCallback
+    this.ele.classList.add('refreshing');
+    this.refresh.next();
+    //$scope.$onRefresh();
+  }
+
+
   show() {
     // showCallback
     this.ele.classList.remove('invisible');
@@ -111,9 +129,52 @@ export class Refresher {
     this.ele.classList.add('invisible');
   }
 
+  scrollTo(Y, duration, callback) {
+    // scroll animation loop w/ easing
+    // credit https://gist.github.com/dezinezync/5487119
+    var start = Date.now(),
+        from = this.lastOverscroll;
+
+    if (from === Y) {
+      callback();
+      return; /* Prevent scrolling to the Y point if already there */
+    }
+
+    // decelerating to zero velocity
+    function easeOutCubic(t) {
+      return (--t) * t * t + 1;
+    }
+
+    // scroll loop
+    function scroll() {
+      var currentTime = Date.now(),
+        time = Math.min(1, ((currentTime - start) / duration)),
+        // where .5 would be 50% of time on a linear scale easedT gives a
+        // fraction based on the easing method
+        easedT = easeOutCubic(time);
+
+      this.overscroll(parseInt((easedT * (Y - from)) + from, 10));
+
+      if (time < 1) {
+        raf(scroll.bind(this));
+
+      } else {
+
+        if (Y < 5 && Y > -5) {
+          this.isOverscrolling = false;
+          this.setScrollLock(false);
+        }
+
+        callback && callback();
+      }
+    }
+
+    // start scroll loop
+    raf(scroll.bind(this));
+  }
 
   _handleTouchMove(e) {
-    console.log('TOUCHMOVE', e);
+    //console.log('TOUCHMOVE', e);
 
     // if multitouch or regular scroll event, get out immediately
     if (!this.canOverscroll || e.touches.length > 1) {
@@ -132,8 +193,10 @@ export class Refresher {
     }
     */
 
+
     // how far have we dragged so far?
     this.deltaY = parseInt(e.touches[0].screenY, 10) - this.startY;
+
 
     // if we've dragged up and back down in to native scroll territory
     if (this.deltaY - this.dragOffset <= 0 || this.scrollParent.scrollTop !== 0) {
@@ -174,14 +237,40 @@ export class Refresher {
     // update the icon accordingly
     if (!this.activated && this.lastOverscroll > this.ptrThreshold) {
       this.activated = true;
-      raf(activate)
+      raf(this.activate.bind(this));
     } else if (this.activated && this.lastOverscroll < this.ptrThreshold) {
       this.activated = false;
-      raf(deactivate);
+      raf(this.deactivate.bind(this));
     }
   }
   _handleTouchEnd(e) {
     console.log('TOUCHEND', e);
+    // if this wasn't an overscroll, get out immediately
+    if (!this.canOverscroll && !this.isDragging) {
+      return;
+    }
+    // reset Y
+    this.startY = null;
+    // the user has overscrolled but went back to native scrolling
+    if (!this.isDragging) {
+      this.dragOffset = 0;
+      this.isOverscrolling = false;
+      this.setScrollLock(false);
+    } else {
+      this.isDragging = false;
+      this.dragOffset = 0;
+
+      // the user has scroll far enough to trigger a refresh
+      if (this.lastOverscroll > this.ptrThreshold) {
+        this.start();
+        this.scrollTo(this.ptrThreshold, this.scrollTime);
+
+      // the user has overscrolled but not far enough to trigger a refresh
+      } else {
+        this.scrollTo(0, this.scrollTime, this.deactivate.bind(this));
+        this.isOverscrolling = false;
+      }
+    }
   }
   _handleScroll(e) {
     console.log('SCROLL', e.target.scrollTop);

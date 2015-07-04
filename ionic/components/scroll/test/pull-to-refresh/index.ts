@@ -14,6 +14,9 @@ class MyApp {
   doRefresh() {
     console.log('DOREFRESH')
   }
+  doPull(amt) {
+    console.log('PULLING', amt);
+  }
 }
 
 export function main(ionicBootstrap) {
