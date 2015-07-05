@@ -1,15 +1,40 @@
-import {Component, View, ElementRef, EventEmitter, Parent} from 'angular2/angular2'
+import {Component, View, NgIf, CSSClass, ElementRef, EventEmitter, Parent} from 'angular2/angular2'
 
 import {Content} from '../content/content';
 
-import {raf, ready, CSS} from 'ionic/util/dom'
+import * as util from 'ionic/util';
+import {raf, ready, CSS} from 'ionic/util/dom';
 
 @Component({
   selector: 'ion-refresher',
-  events: ['refresh', 'pulling']
+  events: ['refresh', 'starting', 'pulling'],
+  properties: [
+    'pullingIcon',
+    'pullingText',
+    'refreshingIcon',
+    'refreshingText',
+    'spinner',
+    'disablePullingRotation'
+  ],
+  host: {
+    '[class.active]': 'isActive',
+    '[class.refreshing]': 'isRefreshing',
+    '[class.refreshingTail]': 'isRefreshingTail'
+  }
 })
 @View({
-  template: '<div class="refresher"></div>',
+  template: `<div class="refresher-content refresher-with-text">
+      <div class="icon-pulling">
+        <i class="icon" [class]="pullingIcon"></i>
+      </div>
+      <div class="text-pulling" [inner-html]="pullingText"></div>
+      <div class="icon-refreshing">
+        <!--<ion-spinner ng-if="showSpinner" icon="{{spinner}}"></ion-spinner>-->
+        <i class="icon" [class]="refreshingIcon"></i>
+      </div>
+      <div class="text-refreshing" [inner-html]="refreshingText"></div>
+    </div>`,
+  directives: [NgIf, CSSClass]
 })
 export class Refresher {
   constructor(
@@ -22,6 +47,7 @@ export class Refresher {
     this.content = content;
 
     this.refresh = new EventEmitter('refresh');
+    this.starting = new EventEmitter('starting');
     this.pulling = new EventEmitter('pulling');
 
     setTimeout(() => {
@@ -46,6 +72,14 @@ export class Refresher {
     this.canOverscroll = true;
     this.scrollParent = sp;
     this.scrollChild = sc;
+
+    if(!util.isDefined(this.pullingIcon)) {
+      this.pullingIcon = 'ion-android-arrow-down';
+    }
+
+    this.showSpinner = !util.isDefined(this.refreshingIcon) && this.spinner != 'none';
+
+    this.showIcon = util.isDefined(this.refreshingIcon);
 
     this._touchMoveListener = this._handleTouchMove.bind(this);
     this._touchEndListener = this._handleTouchEnd.bind(this);
@@ -96,16 +130,17 @@ export class Refresher {
   }
 
   activate() {
-    this.ele.classList.add('active');
-    this.pulling.next(0);
+    //this.ele.classList.add('active');
+    this.isActive = true;
+    //this.starting.next();
   }
 
   deactivate() {
     // give tail 150ms to finish
     setTimeout(() => {
-      this.ele.classList.remove('active');
-      this.ele.classList.remove('refreshing');
-      this.ele.classList.remove('refreshing-tail');
+      this.isActive = false;
+      this.isRefreshing = false;
+      this.isRefreshingTail = false;
       // deactivateCallback
       if (this.activated) this.activated = false;
     }, 150);
@@ -113,7 +148,7 @@ export class Refresher {
 
   start() {
     // startCallback
-    this.ele.classList.add('refreshing');
+    this.isRefreshing = true;
     this.refresh.next();
     //$scope.$onRefresh();
   }
@@ -233,6 +268,9 @@ export class Refresher {
     this.isDragging = true;
     // overscroll according to the user's drag so far
     this.overscroll(parseInt((this.deltaY - this.dragOffset) / 3, 10));
+
+    // Pass an incremental pull amount to the EventEmitter
+    this.pulling.next(this.lastOverscroll);
 
     // update the icon accordingly
     if (!this.activated && this.lastOverscroll > this.ptrThreshold) {

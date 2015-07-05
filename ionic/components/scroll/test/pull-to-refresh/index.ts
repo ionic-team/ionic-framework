@@ -14,8 +14,11 @@ class MyApp {
   doRefresh() {
     console.log('DOREFRESH')
   }
-  doPull(amt) {
-    console.log('PULLING', amt);
+  doStarting() {
+    console.log('DOSTARTING');
+  }
+  doPulling(amt) {
+    console.log('DOPULLING', amt);
   }
 }
 
