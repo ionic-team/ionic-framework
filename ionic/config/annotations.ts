@@ -8,7 +8,7 @@ import {
   Aside, Content, Scroll, Refresher,
   Slides, Slide, SlidePager,
   Tabs, Tab,
-  List, Item,
+  List, Item, ItemGroup, ItemGroupTitle,
   Toolbar,
   Icon,
   Checkbox, Switch, Label, Input,
@@ -27,7 +27,7 @@ export function IonicView(config) {
 
       // Content
       Aside, Content, Scroll, Refresher,
-      List, Item,
+      List, Item, ItemGroup, ItemGroupTitle,
       Slides, Slide, SlidePager,
       Tabs, Tab,
       Toolbar,

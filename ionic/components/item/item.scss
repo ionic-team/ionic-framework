@@ -5,6 +5,11 @@
 $item-min-height:         44px !default;
 $item-padding:            15px !default;
 
+$item-divider-bg:                 #f5f5f5 !default;
+$item-divider-color:              #222 !default;
+$item-divider-padding:            5px 15px !default;
+
+
 
 .item {
   position: relative;
@@ -19,6 +24,27 @@ $item-padding:            15px !default;
   padding: 0;
   border: 0;
   text-align: initial;
+}
+
+.item-group {
+}
+.item-group-title {
+  display: block;
+  padding: $item-padding;
+  padding-top: ceil($item-padding / 2);
+  padding-bottom: ceil($item-padding / 2);
+  min-height: 30px;
+  background-color: $item-divider-bg;
+  color: $item-divider-color;
+  font-weight: 500;
+
+  width: 100%;
+  z-index: 100;
+
+  &.sticky {
+    position: -webkit-sticky;
+  	top: 0;
+  }
 }
 
 ion-primary-swipe-buttons,

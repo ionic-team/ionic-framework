@@ -50,3 +50,7 @@ $item-ios-border-color:          $list-ios-border-color !default;
     }
   }
 }
+
+.list-ios .item-group-title {
+  @include hairline(bottom, $item-ios-border-color, $z-index-list-border);
+}
