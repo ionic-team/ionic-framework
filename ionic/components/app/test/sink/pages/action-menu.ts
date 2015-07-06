@@ -1,14 +1,16 @@
 import {Component, Directive, View} from 'angular2/angular2';
 
-import {ActionMenu, NavbarTemplate, Navbar, NavController, Content} from 'ionic/ionic';
+import {IonicApp, ActionMenu, NavbarTemplate, Navbar, NavController, Content} from 'ionic/ionic';
 
+import {SinkPage} from '../sink-page';
 
 @Component({
   selector: 'ion-view'
 })
 @View({
   template: `
-  <ion-navbar *navbar><ion-title>Action Menu</ion-title></ion-navbar>
+  <ion-navbar *navbar><ion-nav-items primary><button icon (^click)="toggleMenu()"><i class="icon ion-navicon"></i></button></ion-nav-items><ion-title>Action Menu</ion-title></ion-navbar>
+
 
   <ion-content class="padding">
     <h2>Action Menu</h2>
@@ -25,8 +27,10 @@ import {ActionMenu, NavbarTemplate, Navbar, NavController, Content} from 'ionic/
   `,
   directives: [NavbarTemplate, Navbar, Content]
 })
-export class ActionMenuPage {
-  constructor(nav: NavController, actionMenu: ActionMenu) {
+export class ActionMenuPage extends SinkPage {
+  constructor(app: IonicApp, nav: NavController, actionMenu: ActionMenu) {
+    super(app);
+
     this.nav = nav;
     this.actionMenu = actionMenu;
   }
