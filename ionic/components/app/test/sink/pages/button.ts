@@ -17,8 +17,7 @@ import {Routable, NavbarTemplate, Navbar, NavController, Content} from 'ionic/io
       The faithful button. Not only our favorite place to click, but a true friend.
     </p>
     <p>
-      Buttons come in lots of different colors, sizes (like those that take up the full width
-      and those that flow inline), and shapes.
+      Buttons come in lots of different colors:
     </p>
     <p>
       <div (^click)="onButtonClick($event)">
@@ -29,11 +28,32 @@ import {Routable, NavbarTemplate, Navbar, NavController, Content} from 'ionic/io
         <button dark>Dark</button>
         <button danger>Danger</button>
       </div>
+    </p>
+    <p>
+      various shapes:
+    </p>
+    <p>
+      <div (^click)="onButtonClick($event)">
+        <button primary small>small</button>
+        <button dark>Medium</button>
+        <button secondary large>LARGE</button>
+      </div>
+    </p>
+    <p>
+      and with different embellishments:
+    </p>
+    <p>
+      <div (^click)="onButtonClick($event)">
+        <button primary outline>Outline</button>
+        <button dark clear>Clear</button>
+        <button danger block>Block</button>
+      </div>
+    </p>
+    </p>
       <div *ng-if="clicked">
       <b>CLICKED</b>
       </div>
     </p>
-
   </ion-content>
   `,
   directives: [NavbarTemplate, Navbar, Content, NgIf]
