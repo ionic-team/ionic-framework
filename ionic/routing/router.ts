@@ -36,11 +36,43 @@ export class IonicRouter {
     }
   }
 
-  init() {
+  init(window) {
+    this.initHistory(window);
+
     let rootViewCtrl = this.activeViewController();
     if (rootViewCtrl) {
       let matchedRoute = this.match( this.getCurrentPath() ) || this.otherwise();
       this.push(rootViewCtrl, matchedRoute);
+    }
+  }
+
+  initHistory(window) {
+    this.location = window.location;
+    this.history = window.history;
+
+    window.addEventListener('popstate', (ev) => {
+      this.onPopState(ev);
+    });
+  }
+
+  onPopState(ev) {
+    let routeName = (ev.state && ev.state.name);
+
+    console.log('onPopState', routeName);
+
+    let activeViewCtrl = this.activeViewController();
+    if (activeViewCtrl) {
+      activeViewCtrl.pop();
+    }
+  }
+
+  pushState(route) {
+    let newPath = route.path;
+    if (this.location.hash !== '#' + newPath) {
+      let state = {
+        name: route.name
+      };
+      this.history.pushState(state, '', '#' + newPath);
     }
   }
 
@@ -101,17 +133,9 @@ export class IonicRouter {
         let matchedRoute = this.match(routeConfig.path);
 
         if (matchedRoute) {
-          this.updateState(matchedRoute);
+          this.pushState(matchedRoute);
         }
       }
-    }
-  }
-
-  updateState(route) {
-    let newPath = route.path;
-    if (window.location.hash !== '#' + newPath) {
-      console.log('updateState', newPath);
-      window.location.hash = newPath;
     }
   }
 
@@ -127,7 +151,7 @@ export class IonicRouter {
   }
 
   getCurrentPath() {
-    let hash = window.location.hash;
+    let hash = this.location.hash;
     // Grab the path without the leading hash
     return hash.slice(1);
   }

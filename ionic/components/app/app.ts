@@ -205,7 +205,7 @@ export function ionicBootstrap(ComponentType, config, router) {
       bootstrap(ComponentType, injectableBindings).then(appRef => {
         app.load(appRef);
 
-        router.init();
+        router.init(window);
 
         // resolve that the app has loaded
         resolve(app);
