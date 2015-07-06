@@ -8,8 +8,11 @@ $toolbar-order: (
   secondary: 40
 );
 
+$toolbar-zindex: 2;
+
 
 ion-toolbar {
+  z-index: $toolbar-zindex;
   position: relative;
   width: 100%;
   height: 100%;

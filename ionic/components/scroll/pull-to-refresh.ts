@@ -1,4 +1,4 @@
-import {Component, View, NgIf, CSSClass, ElementRef, EventEmitter, Parent} from 'angular2/angular2'
+import {Component, View, NgIf, CSSClass, ElementRef, EventEmitter, Parent, onInit} from 'angular2/angular2'
 
 import {Content} from '../content/content';
 
@@ -20,19 +20,20 @@ import {raf, ready, CSS} from 'ionic/util/dom';
     '[class.active]': 'isActive',
     '[class.refreshing]': 'isRefreshing',
     '[class.refreshingTail]': 'isRefreshingTail'
-  }
+  },
+  lifecycle: [onInit]
 })
 @View({
-  template: `<div class="refresher-content refresher-with-text">
+  template: `<div class="refresher-content" [class.refresher-with-text]="pullingText || refreshingText">
       <div class="icon-pulling">
         <i class="icon" [class]="pullingIcon"></i>
       </div>
-      <div class="text-pulling" [inner-html]="pullingText"></div>
+      <div class="text-pulling" [inner-html]="pullingText" *ng-if="pullingText"></div>
       <div class="icon-refreshing">
         <!--<ion-spinner ng-if="showSpinner" icon="{{spinner}}"></ion-spinner>-->
         <i class="icon" [class]="refreshingIcon"></i>
       </div>
-      <div class="text-refreshing" [inner-html]="refreshingText"></div>
+      <div class="text-refreshing" [inner-html]="refreshingText" *ng-if="refreshingText"></div>
     </div>`,
   directives: [NgIf, CSSClass]
 })
@@ -49,10 +50,10 @@ export class Refresher {
     this.refresh = new EventEmitter('refresh');
     this.starting = new EventEmitter('starting');
     this.pulling = new EventEmitter('pulling');
+  }
 
-    setTimeout(() => {
-      this.initEvents();
-    }, 1000);
+  onInit() {
+    this.initEvents();
   }
 
   initEvents() {
@@ -73,9 +74,11 @@ export class Refresher {
     this.scrollParent = sp;
     this.scrollChild = sc;
 
-    if(!util.isDefined(this.pullingIcon)) {
-      this.pullingIcon = 'ion-android-arrow-down';
-    }
+    util.defaults(this, {
+      pullingIcon: 'ion-android-arrow-down',
+      refreshingIcon: 'ion-ionic'
+      //refreshingText: 'Updating'
+    })
 
     this.showSpinner = !util.isDefined(this.refreshingIcon) && this.spinner != 'none';
 
@@ -149,7 +152,7 @@ export class Refresher {
   start() {
     // startCallback
     this.isRefreshing = true;
-    this.refresh.next();
+    this.refresh.next(this);
     //$scope.$onRefresh();
   }
 
@@ -162,6 +165,29 @@ export class Refresher {
   hide() {
     // showCallback
     this.ele.classList.add('invisible');
+  }
+
+  tail() {
+    // tailCallback
+    this.ele.classList.add('refreshing-tail');
+  }
+
+  complete() {
+    setTimeout(() => {
+      raf(this.tail.bind(this));
+
+      // scroll back to home during tail animation
+      this.scrollTo(0, this.scrollTime, this.deactivate.bind(this));
+
+      // return to native scrolling after tail animation has time to finish
+      setTimeout(() => {
+        if(this.isOverscrolling) {
+          this.isOverscrolling = false;
+          this.setScrollLock(false);
+        }
+      }, this.scrollTime);
+
+    }, this.scrollTime);
   }
 
   scrollTo(Y, duration, callback) {

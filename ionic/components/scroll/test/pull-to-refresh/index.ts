@@ -11,8 +11,12 @@ class MyApp {
   constructor() {
     console.log('IonicApp Start')
   }
-  doRefresh() {
-    console.log('DOREFRESH')
+  doRefresh(refresher) {
+    console.log('DOREFRESH', refresher)
+
+    setTimeout(() => {
+      refresher.complete();
+    })
   }
   doStarting() {
     console.log('DOSTARTING');

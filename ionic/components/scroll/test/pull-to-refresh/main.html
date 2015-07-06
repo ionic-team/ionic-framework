@@ -2,7 +2,7 @@
   <ion-toolbar><ion-title>Pull To Refresh</ion-title></ion-toolbar>
 
   <ion-content>
-    <ion-refresher (starting)="doStarting()" (refresh)="doRefresh()" (pulling)="doPulling($event, amt)">
+    <ion-refresher (starting)="doStarting()" (refresh)="doRefresh($event, refresher)" (pulling)="doPulling($event, amt)">
     </ion-refresher>
     <f></f>
     <f></f>
@@ -16,7 +16,6 @@
 </ion-view>
 <style>
   f { display: block; height: 400px; width: 100%; background-color: #387ef5; margin-bottom: 15px; }
-  ion-refresher { background-color: red; }
   #counter {
     position: fixed;
     top: 0;

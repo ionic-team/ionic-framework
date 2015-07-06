@@ -74,8 +74,8 @@ ion-refresher {
     }
   }
 }
-.scroll-content.overscroll{
-  position:fixed;
+.scroll-content.overscroll {
+  overflow: visible;
 }
 /*
   -webkit-overflow-scrolling:touch;

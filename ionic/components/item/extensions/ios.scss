@@ -52,5 +52,6 @@ $item-ios-border-color:          $list-ios-border-color !default;
 }
 
 .list-ios .item-group-title {
+  // TODO: This doesn't look great when it's a header for the first item
   @include hairline(bottom, $item-ios-border-color, $z-index-list-border);
 }
