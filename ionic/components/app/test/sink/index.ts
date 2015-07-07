@@ -5,6 +5,7 @@ import {IonicApp, IonicView, Register} from 'ionic/ionic';
 import {ButtonPage} from './pages/button'
 import {NavPage} from './pages/nav'
 import {ListPage} from './pages/list'
+import {ListGroupPage} from './pages/list-group'
 import {CardPage} from './pages/card'
 import {FormPage} from './pages/form'
 import {SegmentPage} from './pages/segment'
@@ -34,6 +35,7 @@ class MyApp {
       { title: 'Navigation', component: NavPage },
       { title: 'Buttons', component: ButtonPage },
       { title: 'Lists', component: ListPage },
+      { title: 'List Groups', component: ListGroupPage },
       { title: 'Cards', component: CardPage },
       { title: 'Forms', component: FormPage },
       { title: 'Segments', component: SegmentPage },

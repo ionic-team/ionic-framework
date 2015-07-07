@@ -40,7 +40,7 @@ export class ActionMenuPage extends SinkPage {
 
     this.actionMenu.open({
       buttons: [
-        { text: '<b>Share</b> This' },
+        { text: 'Share This' },
         { text: 'Move' }
       ],
       destructiveText: 'Delete',
