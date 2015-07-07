@@ -134,9 +134,10 @@ button.tab-button {
 }
 
 button.tab-button:hover {
-  opacity: 0.6;
+  opacity: 0.8;
 }
 
 button.tab-button[aria-selected="true"] {
-  color: red;
+  // Default color is primary
+  color: get-color(primary, base);
 }
