@@ -15,18 +15,18 @@ import {SinkPage} from '../sink-page';
   <ion-content class="padding">
     <h2>Aside</h2>
     <p>
-      Asides, also known as side menus or "hamburger" menus, are menus that slide
+      Asides, also known as side menus or "hamburger" menus (mmmmm), are menus that slide
       or swipe in to show menus or information.
     </p>
     <p>
       Try it! Just swipe from the left edge of the screen to the right to expose
-      the app menu.
+      the app menu, or tap the button to toggle the menu:
     </p>
     <p>
       <div class="height: 50px; background-color: E05780; width: 5px; margin-left: -15px"></div>
     </p>
     <p>
-      <button primary (click)="openMenu()">Open Menu</button>
+      <button primary (click)="toggleMenu()">Toggle</button>
     </p>
   </ion-content>
   `,

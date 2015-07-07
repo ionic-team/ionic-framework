@@ -2,16 +2,17 @@ import {Component, Directive, View} from 'angular2/angular2';
 
 import {FormBuilder, Validators, formDirectives, ControlGroup} from 'angular2/forms';
 
-import {List, Item, Input, ActionMenu, Modal, ModalRef,
+import {IonicApp, List, Item, Input, ActionMenu, Modal, ModalRef,
   NavbarTemplate, Navbar, NavController, Content} from 'ionic/ionic';
 
+import {SinkPage} from '../sink-page';
 
 @Component({
   selector: 'ion-view'
 })
 @View({
   template: `
-  <ion-navbar *navbar><ion-title>Cards</ion-title></ion-navbar>
+  <ion-navbar *navbar><ion-nav-items primary><button icon (^click)="toggleMenu()"><i class="icon ion-navicon"></i></button></ion-nav-items><ion-title>Form</ion-title></ion-navbar>
 
   <ion-content class="padding">
     <h2>Forms</h2>
@@ -23,7 +24,7 @@ import {List, Item, Input, ActionMenu, Modal, ModalRef,
       Ionic comes with a variety of useful from controls, like
       text inputs, text areas, toggle switches, and sliders.
     </p>
-    <form (^submit)="doSubmit($event)" [control-group]="form">
+    <form (^submit)="doSubmit($event)" [ng-form-model]="form">
       <ion-input>
         <input control="email" type="email" placeholder="Your email">
       </ion-input>
@@ -37,7 +38,9 @@ import {List, Item, Input, ActionMenu, Modal, ModalRef,
   directives: [formDirectives, NavbarTemplate, Navbar, Content, List, Item, Input]
 })
 export class FormPage {
-  constructor() {
+  constructor(app: IonicApp) {
+    super(app);
+
     var fb = new FormBuilder()
 
     this.form = fb.group({

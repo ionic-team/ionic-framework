@@ -1,10 +1,11 @@
-import {Renderer, ElementRef, EventEmitter, onInit, Ancestor, forwardRef} from 'angular2/angular2';
+import {View, Renderer, ElementRef, EventEmitter, onInit, Ancestor, forwardRef} from 'angular2/angular2';
 import {Control, NgControl,NgFormControl} from 'angular2/forms';
 import {ControlGroup, ControlDirective} from 'angular2/forms'
 
 import {IonicDirective, IonicComponent, IonicView} from '../../config/annotations'
 import {dom} from 'ionic/util';
 
+console.log(forwardRef(() => SegmentButton));
 
 @IonicComponent({
   selector: 'ion-segment',
@@ -27,7 +28,7 @@ import {dom} from 'ionic/util';
     */
   }
 })
-@IonicView({
+@View({
   template: '<div class="ion-segment"><content></content></div>',
   directives: [forwardRef(() => SegmentButton)]
 })
