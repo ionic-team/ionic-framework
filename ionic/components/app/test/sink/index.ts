@@ -13,6 +13,7 @@ import {TableSearchPage} from './pages/table-search'
 import {IconsPage} from './pages/ionicons'
 import {TabsPage} from './pages/tabs'
 import {AsidePage} from './pages/aside'
+import {AnimationPage} from './pages/animation'
 import {SlidePage} from './pages/slides'
 import {ActionMenuPage} from './pages/action-menu'
 import {ModalPage} from './pages/modal'
@@ -41,6 +42,7 @@ class MyApp {
       { title: 'Icons', component: IconsPage },
       { title: 'Tabs', component: TabsPage },
       { title: 'Aside', component: AsidePage },
+      { title: 'Animation', component: AnimationPage },
       { title: 'Slides', component: SlidePage},
       { title: 'Action Menu', component: ActionMenuPage },
       { title: 'Modal', component: ModalPage }
