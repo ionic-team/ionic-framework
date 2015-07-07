@@ -1,14 +1,16 @@
 import {Component, Directive, View} from 'angular2/angular2';
 
-import {IonicView, ActionMenu, Modal, NavbarTemplate, Navbar, NavController, Content} from 'ionic/ionic';
+import {IonicApp, IonicView, ActionMenu, Modal,
+  NavbarTemplate, Navbar, NavController, Content} from 'ionic/ionic';
 
+import {SinkPage} from '../sink-page';
 
 @Component({
   selector: 'ion-view'
 })
 @IonicView({
   template: `
-  <ion-navbar *navbar><ion-title>Modal</ion-title></ion-navbar>
+  <ion-navbar *navbar><ion-nav-items primary><button icon (^click)="toggleMenu()"><i class="icon ion-navicon"></i></button></ion-nav-items><ion-title>Modal</ion-title></ion-navbar>
 
   <ion-content class="padding">
     <h2>Modal</h2>
@@ -24,19 +26,16 @@ import {IonicView, ActionMenu, Modal, NavbarTemplate, Navbar, NavController, Con
   </ion-content>
   `
 })
-export class ModalPage {
-  constructor(modal: Modal) {
+export class ModalPage extends SinkPage {
+  constructor(app: IonicApp, modal: Modal) {
+    super(app);
     this.modal = modal;
   }
 
   openModal() {
     console.log('Opening modal');
 
-    this.modal.open(MyModal, {
-      enterAnimation: 'my-fade-in',
-      leaveAnimation: 'my-fade-out',
-      handle: 'my-awesome-modal'
-    });
+    this.modal.open(MyModal);
   }
 }
 

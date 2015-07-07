@@ -23,6 +23,7 @@ import {SinkPage} from '../sink-page';
       with unicode characters.
     </p>
     <div>
+      <img src="http://ionic-io-assets.s3.amazonaws.com/v2/ionicons.png" style="max-width: 100%">
     </div>
   </ion-content>
   `,

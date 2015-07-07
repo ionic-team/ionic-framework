@@ -26,7 +26,7 @@ import {SinkPage} from '../sink-page';
     </p>
     <form (^submit)="doSubmit($event)" [ng-form-model]="form">
       <ion-input>
-        <input control="email" type="email" placeholder="Your email">
+        <input ng-control="email" type="email" placeholder="Your email">
       </ion-input>
       <ion-input>
         <input control="password" type="password" placeholder="Your password">
@@ -37,7 +37,7 @@ import {SinkPage} from '../sink-page';
   `,
   directives: [formDirectives, NavbarTemplate, Navbar, Content, List, Item, Input]
 })
-export class FormPage {
+export class FormPage extends SinkPage {
   constructor(app: IonicApp) {
     super(app);
 
