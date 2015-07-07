@@ -4,6 +4,7 @@ import {IonicApp, IonicView, Register} from 'ionic/ionic';
 
 import {ButtonPage} from './pages/button'
 import {NavPage} from './pages/nav'
+import {PullToRefreshPage} from './pages/pull-to-refresh'
 import {ListPage} from './pages/list'
 import {ListGroupPage} from './pages/list-group'
 import {CardPage} from './pages/card'
@@ -33,21 +34,22 @@ class MyApp {
 
     this.components = [
       { title: 'Navigation', component: NavPage },
+      { title: 'Tabs', component: TabsPage },
       { title: 'Buttons', component: ButtonPage },
       { title: 'Lists', component: ListPage },
       { title: 'List Groups', component: ListGroupPage },
+      { title: 'Modal', component: ModalPage },
+      { title: 'Pull to Refresh', component: PullToRefreshPage },
       { title: 'Cards', component: CardPage },
       { title: 'Forms', component: FormPage },
       { title: 'Segments', component: SegmentPage },
       { title: 'Search Bar', component: SearchBarPage },
       { title: 'Table Search', component: TableSearchPage },
       { title: 'Icons', component: IconsPage },
-      { title: 'Tabs', component: TabsPage },
       { title: 'Aside', component: AsidePage },
       { title: 'Animation', component: AnimationPage },
       { title: 'Slides', component: SlidePage},
       { title: 'Action Menu', component: ActionMenuPage },
-      { title: 'Modal', component: ModalPage }
     ];
 
     this.rootView = ButtonPage
