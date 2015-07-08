@@ -2,15 +2,11 @@ import {Injectable} from 'angular2/angular2';
 
 import {Overlay} from '../overlay/overlay';
 import {Animation} from '../../animations/animation';
-import {IonicApp} from '../app/app';
 import * as util from 'ionic/util';
 
 
 @Injectable()
 export class Modal extends Overlay {
-  constructor(app: IonicApp) {
-    super(app);
-  }
 
   open(ComponentType: Type, opts={}) {
     let defaults = {

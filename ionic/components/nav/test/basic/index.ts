@@ -1,24 +1,12 @@
-import {Component, onInit} from 'angular2/angular2';
-
-import {IonicView, IonicConfig, IonicRouter} from 'ionic/ionic';
-import {FirstPage} from './pages/first-page'
+import {App} from 'ionic/ionic';
 
 
-@Component({
-  selector: 'ion-app'
-})
-@IonicView({
-  template: '<ion-nav></ion-nav>'
-})
-class MyApp {}
-
-
-export function main(ionicBootstrap) {
-
-  var myRouter = new IonicRouter({
+@App({
+  router: {
     'FirstPage': {
       'path': '/firstpage',
       'module': 'dist/examples/nav/basic/pages/first-page',
+      'root': true
     },
     'SecondPage': {
       'path': '/secondpage',
@@ -28,11 +16,6 @@ export function main(ionicBootstrap) {
       'path': '/thirdpage',
       'module': 'dist/examples/nav/basic/pages/third-page',
     },
-  });
-
-  myRouter.otherwise('FirstPage');
-
-  let myConfig = new IonicConfig();
-
-  ionicBootstrap(MyApp, myConfig, myRouter);
-}
+  }
+})
+class MyApp {}

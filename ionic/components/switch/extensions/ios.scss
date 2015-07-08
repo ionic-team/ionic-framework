@@ -9,7 +9,7 @@ $switch-ios-slider-on-background:       #4cd964 !default;
 $switch-ios-toggle-on-background:       #fff !default;
 
 
-.switch-ios {
+.switch[mode="ios"] {
 
   .switch-toggle {
     width: $switch-ios-width;

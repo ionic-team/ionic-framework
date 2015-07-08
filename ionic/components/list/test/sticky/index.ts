@@ -1,17 +1,11 @@
-import {NgFor, ProtoViewRef, ViewContainerRef} from 'angular2/angular2'
-import {Component, Directive, View, Parent} from 'angular2/angular2';
+import {App} from 'ionic/ionic';
 
-import {Content, List, Item, ItemGroup, ItemGroupTitle} from 'ionic/ionic';
 
-@Component({ selector: 'ion-app' })
-@View({
-  templateUrl: 'main.html',
-  directives: [Content, List, Item, ItemGroup, ItemGroupTitle, NgFor]
+@App({
+  templateUrl: 'main.html'
 })
 class IonicApp {
   constructor() {
-    console.log('IonicApp Start')
-
     this.groups = [];
 
     var letters = "abcdefghijklmnopqrstuvwxyz".split('');
@@ -29,8 +23,4 @@ class IonicApp {
       });
     }
   }
-}
-
-export function main(ionicBootstrap) {
-  ionicBootstrap(IonicApp);
 }

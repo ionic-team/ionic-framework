@@ -3,7 +3,7 @@ import {Component, View, Directive} from 'angular2/angular2';
 import {FormBuilder, Validators, FormDirectives, ControlGroup} from 'angular2/forms';
 import {Log} from 'ionic/util'
 
-import {Routable, IonicView, NavController} from 'ionic/ionic'
+import {App, IonicView, NavController} from 'ionic/ionic'
 
 
 @Component({selector: 'ion-view'})
@@ -36,10 +36,6 @@ class LoginPage {
   }
 }
 
-new Routable(LoginPage, {
-  url: '/login',
-  tag: 'login'
-})
 
 @Component({selector: 'ion-view'})
 @IonicView({
@@ -137,10 +133,7 @@ class SplashPage {
 }
 
 
-@Component({
-  selector: 'ion-app'
-})
-@IonicView({
+@App({
   template: '<ion-nav [root]="rootView"></ion-nav>'
 })
 class IonicApp {
@@ -148,8 +141,3 @@ class IonicApp {
     this.rootView = SplashPage;
   }
 }
-
-export function main(ionicBootstrap) {
-  ionicBootstrap(IonicApp);
-}
-

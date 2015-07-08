@@ -4,6 +4,9 @@ import {setProperty} from 'angular2/src/forms/directives/shared'
 
 //pretty sure this has changed in the latest angular
 import {NgControl} from 'angular2/forms';
+
+import {Ion} from '../ion';
+import {IonicConfig} from '../../config/config';
 import {IonicComponent} from '../../config/annotations';
 import {Icon} from '../icon/icon';
 
@@ -53,22 +56,21 @@ import {Icon} from '../icon/icon';
   </div>`,
   directives: [Icon]
 })
-export class Checkbox {
+export class Checkbox extends Ion {
   constructor(
     ngControl: NgControl,
     renderer: Renderer,
-    elementRef: ElementRef
+    elementRef: ElementRef,
+    ionicConfig: IonicConfig
   ) {
+    super(elementRef, ionicConfig);
+
     this.ngControl = ngControl;
     this.renderer = renderer;
     this.elementRef = elementRef;
     this.ngControl.valueAccessor = this;
 
     //this.change = new EventEmitter("change");
-  }
-
-  onInit() {
-    Checkbox.applyConfig(this);
   }
 
   /**

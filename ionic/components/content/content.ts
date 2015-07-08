@@ -1,25 +1,26 @@
-import {Component, View, ElementRef, onInit} from 'angular2/angular2';
+import {Component, View, ElementRef} from 'angular2/angular2';
 
 import {Ion} from '../ion';
+import {IonicConfig} from '../../config/config';
+import {IonicComponent} from '../../config/annotations';
 
 
 @Component({
   selector: 'ion-content',
   properties: [
     'parallax'
-  ],
-  lifecycle: [onInit]
+  ]
 })
 @View({
   template: '<div class="scroll-content"><content></content></div>'
 })
 export class Content extends Ion {
-  constructor(elementRef: ElementRef) {
-    super(elementRef);
+  constructor(elementRef: ElementRef, ionicConfig: IonicConfig) {
+    super(elementRef, ionicConfig);
   }
 
-  onInit() {
-    this.scrollElement = this.elementRef.nativeElement.children[0];
+  onIonInit() {
+    this.scrollElement = this.getNativeElement().children[0];
   }
 
   addScrollEventListener(handler) {

@@ -1,7 +1,8 @@
-import {Component, Directive, View, Parent, ElementRef, forwardRef} from 'angular2/angular2';
+import {Directive, View, Parent, ElementRef, forwardRef} from 'angular2/angular2';
 import {ProtoViewRef} from 'angular2/src/core/compiler/view_ref';
 
 import {Ion} from '../ion';
+import {IonicConfig} from '../../config/config';
 import {IonicComponent} from '../../config/annotations';
 import {ViewItem} from '../view/view-item';
 import * as dom from '../../util/dom';
@@ -41,18 +42,15 @@ import * as dom from '../../util/dom';
   ]
 })
 export class Navbar extends Ion {
-  constructor(item: ViewItem, elementRef: ElementRef) {
-    super(elementRef);
+  constructor(item: ViewItem, elementRef: ElementRef, ionicConfig: IonicConfig) {
+    super(elementRef, ionicConfig);
+
     this.eleRef = elementRef;
     this.itemEles = [];
     item.navbarView(this);
 
     this.bbDefault = 'Back';
     this.bbText = '';
-  }
-
-  onInit() {
-    Navbar.applyConfig(this);
   }
 
   element() {

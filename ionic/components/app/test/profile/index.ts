@@ -2,7 +2,7 @@ import {ElementRef} from 'angular2/angular2'
 import {Component, Directive} from 'angular2/angular2';
 import {FormBuilder, Control, ControlGroup, Validators, formDirectives} from 'angular2/forms';
 
-import {Modal, Animation, Content} from 'ionic/ionic';
+import {App, Modal, Animation, Content} from 'ionic/ionic';
 import {NavController, NavParams, IonicView} from 'ionic/ionic';
 import {dom} from 'ionic/util';
 
@@ -40,8 +40,7 @@ export class ParallaxEffect {
 }
 
 
-@Component({ selector: 'ion-app' })
-@IonicView({
+@App({
   templateUrl: 'main.html',
   directives: [ParallaxEffect]
 })
@@ -55,8 +54,4 @@ class IonicApp {
       })
     }
   }
-}
-
-export function main(ionicBootstrap) {
-  ionicBootstrap(IonicApp);
 }

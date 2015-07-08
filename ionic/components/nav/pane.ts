@@ -1,6 +1,8 @@
 import {Component, Directive, View, ElementRef, Parent, Inject, forwardRef} from 'angular2/angular2';
 import {bind} from 'angular2/di';
 
+import {Ion} from '../ion';
+import {IonicConfig} from '../../config/config';
 import {ViewController} from '../view/view-controller';
 import {SwipeHandle} from './swipe-handle';
 import {IonicComponent} from '../../config/annotations';
@@ -96,7 +98,10 @@ export class PaneController {
 
 @IonicComponent({
   selector: 'ion-pane',
-  classId: 'nav'
+  classId: 'nav',
+  host: {
+    ['[class.show-page]']: 'showPane'
+  }
 })
 @View({
   template: `
@@ -108,20 +113,22 @@ export class PaneController {
   `,
   directives: [PaneAnchor, PaneContentAnchor, SwipeHandle]
 })
-export class Pane {
+export class Pane extends Ion {
   constructor(
     @Inject(forwardRef(() => ViewController)) viewCtrl: ViewController,
-    elementRef: ElementRef
+    elementRef: ElementRef,
+    ionicConfig: IonicConfig
   ) {
-    this.ele = elementRef.nativeElement;
+    super(elementRef, ionicConfig);
+
     viewCtrl.panes.add(this);
   }
 
-  width() {
-    return this.ele.offsetWidth;
+  set showPane(val) {
+    this._showPane = val;
   }
 
-  showPane(val) {
-    this.ele.classList[val ? 'add' : 'remove']('show-pane');
+  get showPane() {
+    return this._showPane;
   }
 }

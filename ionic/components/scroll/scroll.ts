@@ -1,13 +1,15 @@
-import {Component, View, ElementRef} from 'angular2/angular2';
+import {View, ElementRef} from 'angular2/angular2';
 
 import {Ion} from '../ion';
+import {IonicConfig} from '../../config/config';
+import {IonicComponent} from '../../config/annotations';
 
 
 /**
  * ion-scroll is a non-flexboxed scroll area that can
  * scroll horizontally or vertically.
  */
-@Component({
+@IonicComponent({
   selector: 'ion-scroll',
   properties: [
     'scrollX', 'scrollY'
@@ -18,14 +20,14 @@ import {Ion} from '../ion';
   }
 })
 @View({
-  template: `<div class="scroll-content"><content></content></div>`
+  template: '<div class="scroll-content"><content></content></div>'
 })
 export class Scroll extends Ion {
-  constructor(elementRef: ElementRef) {
-    super(elementRef);
+  constructor(elementRef: ElementRef, ionicConfig: IonicConfig) {
+    super(elementRef, ionicConfig);
 
     setTimeout(() => {
-      this.scrollElement = elementRef.nativeElement.children[0];
+      this.scrollElement = this.getNativeElement().children[0];
     });
   }
 

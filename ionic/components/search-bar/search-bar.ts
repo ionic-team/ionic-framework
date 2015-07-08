@@ -1,6 +1,8 @@
-import {ElementRef, onInit, Pipe} from 'angular2/angular2';
+import {ElementRef, Pipe} from 'angular2/angular2';
 //import {ControlGroup, ControlDirective} from 'angular2/forms'
 
+import {Ion} from '../ion';
+import {IonicConfig} from '../../config/config';
 import {IonicComponent, IonicView} from '../../config/annotations';
 
 
@@ -24,20 +26,17 @@ import {IonicComponent, IonicView} from '../../config/annotations';
   </div>
   <button class="search-bar-cancel">{{cancelText}}</button>`
 })
-export class SearchBar {
+export class SearchBar extends Ion {
   constructor(
-    elementRef: ElementRef//,
+    elementRef: ElementRef,
+    ionicConfig: IonicConfig//,
     //cd:ControlDirective
   ) {
-    this.ele = elementRef.nativeElement;
+    super(elementRef, ionicConfig);
     // this.controlDirective = cd;
     // cd.valueAccessor = this; //ControlDirective should inject CheckboxControlDirective
 
     this.query = '';
-  }
-
-  onInit() {
-    SearchBar.applyConfig(this);
   }
 
   /**

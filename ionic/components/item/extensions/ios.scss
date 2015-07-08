@@ -9,49 +9,50 @@ $item-ios-accessory-color:       #8e8e93 !default;
 $item-ios-border-color:          $list-ios-border-color !default;
 
 
-.list-ios {
+.list[mode="ios"] {
   margin-top: -1px;
-}
 
-.list-ios .item {
-  background: $item-ios-background-color;
-  min-height: $item-ios-min-height;
-  padding-left: $item-ios-padding-left;
+  .item {
+    background: $item-ios-background-color;
+    min-height: $item-ios-min-height;
+    padding-left: $item-ios-padding-left;
 
-  .item-media + .item-content {
-    margin-left: $item-ios-padding-left;
+    .item-media + .item-content {
+      margin-left: $item-ios-padding-left;
+    }
+
+    .item-content {
+      min-height: $item-ios-min-height;
+      padding: 0;
+      @include hairline(bottom, $item-ios-border-color, $z-index-list-border);
+    }
+
+    .item:last-of-type .item-content:after {
+      background: none;
+    }
+
+    .item-accessory {
+      color: $item-ios-accessory-color;
+    }
+
+    .item-subtitle {
+      width: 100%;
+      color: #808080;
+    }
+    .item-full {
+      // No left ios-style padding
+      padding-left: 0;
+
+      button {
+        width: 100%;
+        font-size: 1.3em;
+      }
+    }
   }
 
-  .item-content {
-    min-height: $item-ios-min-height;
-    padding: 0;
+  .item-group-title {
+    // TODO: This doesn't look great when it's a header for the first item
     @include hairline(bottom, $item-ios-border-color, $z-index-list-border);
   }
 
-  .item:last-of-type .item-content:after {
-    background: none;
-  }
-
-  .item-accessory {
-    color: $item-ios-accessory-color;
-  }
-
-  .item-subtitle {
-    width: 100%;
-    color: #808080;
-  }
-  .item-full {
-    // No left ios-style padding
-    padding-left: 0;
-
-    button {
-      width: 100%;
-      font-size: 1.3em;
-    }
-  }
-}
-
-.list-ios .item-group-title {
-  // TODO: This doesn't look great when it's a header for the first item
-  @include hairline(bottom, $item-ios-border-color, $z-index-list-border);
 }

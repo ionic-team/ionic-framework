@@ -1,12 +1,7 @@
-import {Component} from 'angular2/angular2';
-
-import {IonicView, ActionMenu} from 'ionic/ionic';
+import {App, ActionMenu} from 'ionic/ionic';
 
 
-@Component({
-  selector: 'ion-app'
-})
-@IonicView({
+@App({
   templateUrl: 'main.html'
 })
 class IonicApp {
@@ -43,8 +38,4 @@ class IonicApp {
 
   }
 
-}
-
-export function main(ionicBootstrap) {
-  ionicBootstrap(IonicApp);
 }

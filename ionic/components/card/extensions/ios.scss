@@ -8,7 +8,8 @@ $card-ios-border-radius:             2px !default;
 $card-ios-font-size:                 1.4rem !default;
 $card-ios-item-content-padding:      15px !default;
 
-.platform-ios .card {
+
+.mode-ios .card {
   background: $card-ios-background-color;
   box-shadow: $card-ios-box-shadow;
   border-radius: $card-ios-border-radius;

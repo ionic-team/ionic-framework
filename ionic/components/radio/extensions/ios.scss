@@ -5,7 +5,7 @@
 $radio-ios-color:          #007aff;
 
 
-.radio-group-ios {
+.radio-group[mode="ios"] {
 
   .media-radio {
     color: $radio-ios-color;

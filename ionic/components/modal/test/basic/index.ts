@@ -1,19 +1,37 @@
 import {Component} from 'angular2/angular2';
 
-import {IonicComponent, IonicView, IonicConfig, Platform} from 'ionic/ionic';
+import {App, IonicComponent, IonicView, IonicApp, IonicConfig, Platform} from 'ionic/ionic';
 import {Modal, NavController, NavParams, Animation, ActionMenu} from 'ionic/ionic';
 
 
-@Component({
-  selector: 'ion-app'
-})
-@IonicView({
+@App({
   templateUrl: 'main.html'
 })
 class MyAppCmp {
 
-  constructor(modal: Modal) {
+  constructor(modal: Modal, app: IonicApp, ionicConfig: IonicConfig) {
     this.modal = modal;
+
+    console.log('platforms', Platform.platforms());
+    console.log('mode', ionicConfig.setting('mode'));
+
+    console.log('core', Platform.is('core'))
+    console.log('cordova', Platform.is('cordova'))
+    console.log('mobile', Platform.is('mobile'))
+    console.log('ipad', Platform.is('ipad'))
+    console.log('iphone', Platform.is('iphone'))
+    console.log('phablet', Platform.is('phablet'))
+    console.log('tablet', Platform.is('tablet'))
+    console.log('ios', Platform.is('ios'))
+    console.log('android', Platform.is('android'))
+    console.log('windows phone', Platform.is('windowsphone'))
+
+    console.log('isRTL', app.isRTL())
+
+    Platform.ready().then(() => {
+      console.log('Platform.ready')
+    });
+
   }
 
   openModal() {
@@ -133,40 +151,6 @@ export class ModalSecondPage {
     console.log('Second page params:', params);
   }
 
-}
-
-export function main(ionicBootstrap) {
-
-  let myConfig = new IonicConfig();
-
-  // myConfig.setting('someKey', 'userConfig');
-  // myConfig.setting('ios', 'someKey', 'iosConfig');
-  // myConfig.setting('ipad', 'someKey', 'ipadConfig');
-
-  ionicBootstrap(MyAppCmp, myConfig).then(app => {
-
-    console.log('platforms', Platform.platforms());
-    console.log('mode', myConfig.setting('mode'));
-
-    console.log('core', Platform.is('core'))
-    console.log('cordova', Platform.is('cordova'))
-    console.log('mobile', Platform.is('mobile'))
-    console.log('ipad', Platform.is('ipad'))
-    console.log('iphone', Platform.is('iphone'))
-    console.log('phablet', Platform.is('phablet'))
-    console.log('tablet', Platform.is('tablet'))
-    console.log('ios', Platform.is('ios'))
-    console.log('android', Platform.is('android'))
-    console.log('windows phone', Platform.is('windowsphone'))
-
-    console.log('isRTL', app.isRTL())
-    console.log('lang', app.lang())
-
-    Platform.ready().then(() => {
-      console.log('Platform.ready')
-    });
-
-  });
 }
 
 

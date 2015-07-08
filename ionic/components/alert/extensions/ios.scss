@@ -11,7 +11,7 @@ $alert-ios-button-color:             #007aff !default;
 $alert-ios-button-font-size:         2rem !default;
 
 
-.alert-ios {
+.alert[mode="ios"] {
 
   .alert-container {
     border-radius: $alert-ios-border-radius;

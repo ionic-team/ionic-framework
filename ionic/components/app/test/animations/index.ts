@@ -1,6 +1,4 @@
-import {Component, View} from 'angular2/angular2';
-
-import {Animation} from 'ionic/ionic';
+import {App, Animation} from 'ionic/ionic';
 
 
 let opacity = 0.2;
@@ -8,8 +6,7 @@ let rotateZ = '180deg';
 let translateX = '100px';
 let scale = 0.6;
 
-@Component({ selector: 'ion-app' })
-@View({
+@App({
   templateUrl: 'main.html'
 })
 class IonicApp {
@@ -74,8 +71,4 @@ class IonicApp {
     this.animation.progress( parseFloat(ev.srcElement.value) );
   }
 
-}
-
-export function main(ionicBootstrap) {
-  ionicBootstrap(IonicApp);
 }

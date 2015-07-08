@@ -1,6 +1,8 @@
 import {View, EventEmitter, ElementRef, onInit} from 'angular2/angular2';
 
-import {IonicComponent, IonicView} from '../../config/annotations';
+import {Ion} from '../ion';
+import {IonicConfig} from '../../config/config';
+import {IonicComponent} from '../../config/annotations';
 import * as types from './extensions/types'
 import * as gestures from  './extensions/gestures'
 import {dom} from 'ionic/util'
@@ -35,28 +37,26 @@ import {dom} from 'ionic/util'
   events: ['opening']
 })
 @View({
-  template: `<content></content>`
+  template: '<content></content>'
 })
-export class Aside {
+export class Aside extends Ion {
 
-  constructor(elementRef: ElementRef) {
-    this.ele = elementRef.nativeElement
+  constructor(elementRef: ElementRef, ionicConfig: IonicConfig) {
+    super(elementRef, ionicConfig);
 
     this.opening = new EventEmitter('opening');
 
     // TODO: Use Animation Class
-    this.ele.addEventListener('transitionend', ev => {
+    this.getNativeElement().addEventListener('transitionend', ev => {
       this.setChanging(false)
     })
   }
 
-  onInit() {
+  onIonInit() {
     this.contentElement = (this.content instanceof Node) ? this.content : this.content.getNativeElement();
-    console.log('Aside content', this.content, this.contentElement);
 
-    Aside.applyConfig(this);
-    this.gestureDelegate = Aside.getDelegate(this, 'gesture');
-    this.typeDelegate = Aside.getDelegate(this, 'type');
+    this.gestureDelegate = this.getDelegate('gesture');
+    this.typeDelegate = this.getDelegate('type');
   }
 
   getContentElement() {
@@ -80,7 +80,7 @@ export class Aside {
   setChanging(isChanging) {
     if (isChanging !== this.isChanging) {
       this.isChanging = isChanging
-      this.ele.classList[isChanging ? 'add' : 'remove']('changing');
+      this.getNativeElement().classList[isChanging ? 'add' : 'remove']('changing');
     }
   }
 
@@ -109,4 +109,5 @@ export class Aside {
   toggle() {
     return this.setOpen(!this.isOpen);
   }
+
 }

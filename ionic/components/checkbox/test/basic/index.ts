@@ -14,7 +14,7 @@ import {
   NgFormModel,
   FormBuilder
 } from 'angular2/forms';
-import {Checkbox, Content, List} from 'ionic/ionic';
+import {App, Checkbox, Content, List} from 'ionic/ionic';
 //import {IONIC_DIRECTIVES} from 'ionic/ionic'
 
 // @Component({
@@ -45,8 +45,7 @@ import {Checkbox, Content, List} from 'ionic/ionic';
 //   }
 // }
 
-@Component({ selector: 'ion-app' })
-@View({
+@App({
   templateUrl: 'main.html',
   directives: [Checkbox, List, Content, NgControlName, NgFormModel]
 })
@@ -88,9 +87,4 @@ class IonicApp {
     console.log('Submitting form', this.fruitsForm.value);
     event.preventDefault();
   }
-}
-
-
-export function main(ionicBootstrap) {
-  ionicBootstrap(IonicApp);
 }

@@ -1,6 +1,7 @@
 import {Directive, View, Parent, onInit, ElementRef, forwardRef} from 'angular2/angular2';
 
 import {Ion} from '../ion';
+import {IonicConfig} from '../../config/config';
 import {IonicComponent} from '../../config/annotations';
 import * as dom from '../../util/dom';
 
@@ -30,14 +31,11 @@ import * as dom from '../../util/dom';
   ]
 })
 export class Toolbar extends Ion {
-  constructor(elementRef: ElementRef) {
-    super(elementRef);
+  constructor(elementRef: ElementRef, ionicConfig: IonicConfig) {
+    super(elementRef, ionicConfig);
+
     this.eleRef = elementRef;
     this.itemEles = [];
-  }
-
-  onInit() {
-    Toolbar.applyConfig(this);
   }
 
   element() {

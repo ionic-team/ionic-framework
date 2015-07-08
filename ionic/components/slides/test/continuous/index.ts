@@ -1,12 +1,7 @@
-import {Component} from 'angular2/angular2';
-
-import {IonicView} from 'ionic/ionic';
+import {App} from 'ionic/ionic';
 
 
-@Component({
-  selector: 'ion-app'
-})
-@IonicView({
+@App({
   template: `
     <ion-slides #slides loop>
       <ion-slide style="background-color: blue">
@@ -35,8 +30,4 @@ class IonicApp {
   prev() {
     console.log('Prev');
   }
-}
-
-export function main(ionicBootstrap) {
-  ionicBootstrap(IonicApp);
 }

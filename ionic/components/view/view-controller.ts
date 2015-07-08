@@ -3,6 +3,7 @@ import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_compone
 import {AppViewManager} from 'angular2/src/core/compiler/view_manager';
 
 import {Ion} from '../ion';
+import {IonicConfig} from '../../config/config';
 import {IonicApp} from '../app/app';
 import {IonicRouter} from '../../routing/router';
 import {ViewItem} from './view-item';
@@ -20,7 +21,7 @@ export class ViewController extends Ion {
     injector: Injector,
     elementRef: ElementRef
   ) {
-    super(elementRef);
+    super(elementRef, injector.get(IonicConfig));
 
     this.parent = parentViewCtrl;
 

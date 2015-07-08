@@ -1,4 +1,9 @@
-.segment-ios .ion-segment {
+
+// iOS Segment
+// --------------------------------------------------
+
+
+.segment[mode="ios"] .ion-segment {
   > button,
   > [button] {
     border-width: 1px;

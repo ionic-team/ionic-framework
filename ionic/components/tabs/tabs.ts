@@ -1,4 +1,4 @@
-import {Component, Directive, View, onInit, Injector, NgFor, ElementRef, Optional, Parent, forwardRef} from 'angular2/angular2';
+import {Component, Directive, View, Injector, NgFor, ElementRef, Optional, Parent, forwardRef} from 'angular2/angular2';
 
 import {ViewController} from '../view/view-controller';
 import {ViewItem} from '../view/view-item';
@@ -64,10 +64,6 @@ export class Tabs extends ViewController {
 
   }
 
-  onInit() {
-    Tabs.applyConfig(this);
-  }
-
   addTab(tab) {
     // tab.item refers to the ViewItem of the individual Tab being added to Tabs (ViewController)
     // this.item refers to the ViewItem instsance on Tabs
@@ -124,8 +120,7 @@ export class Tabs extends ViewController {
     '[attr.aria-controls]': 'panelId',
     '[attr.aria-selected]': 'tab.isSelected',
     '(^click)': 'onClick($event)'
-  },
-  lifecycle: [onInit]
+  }
 })
 class TabButton {
   constructor(@Parent() tabs: Tabs) {

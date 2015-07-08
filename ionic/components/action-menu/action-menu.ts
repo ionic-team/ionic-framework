@@ -8,7 +8,6 @@
 
 import {View, Injectable, NgFor, NgIf} from 'angular2/angular2';
 
-import {IonicApp} from '../app/app';
 import {Overlay} from '../overlay/overlay';
 import {Animation} from '../../animations/animation';
 import * as util from 'ionic/util';
@@ -56,10 +55,6 @@ class ActionMenuDirective {
 
 @Injectable()
 export class ActionMenu extends Overlay {
-  constructor(app: IonicApp) {
-    super(app);
-  }
-
   /**
    * Create and open a new Action Menu. This is the
    * public API, and most often you will only use ActionMenu.open()

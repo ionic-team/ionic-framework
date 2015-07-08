@@ -261,7 +261,9 @@ export class ViewItem {
     will fire, whether it was the first load or loaded from the cache.
   */
   didEnter() {
-    this.pane && this.pane.showPane(true);
+    if (this.pane) {
+      this.pane.showPane = true;
+    }
     let navbarView = this.navbarView();
     if (navbarView) {
       navbarView.didEnter();

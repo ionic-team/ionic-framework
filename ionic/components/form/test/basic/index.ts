@@ -1,11 +1,9 @@
-import {Component, Directive, View} from 'angular2/angular2';
-
 import {FormBuilder, Validators, formDirectives, ControlGroup} from 'angular2/forms';
-//import {Switch, Form, List, Label, Item, Input, Content} from 'ionic/ionic';
+
+import {App} from 'ionic/ionic';
 
 
-@Component({ selector: 'ion-app' })
-@View({
+@App({
   templateUrl: 'main.html'
 })
 class IonicApp {
@@ -22,8 +20,4 @@ class IonicApp {
   deleteClicked() {
     alert('Deleting');
   }
-}
-
-export function main(ionicBootstrap) {
-  ionicBootstrap(IonicApp);
 }

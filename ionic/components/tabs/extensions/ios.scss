@@ -1,5 +1,5 @@
 
-// iOS Tab Bar
+// iOS Tabs
 // --------------------------------------------------
 
 $tab-bar-ios-item-padding:             0px 10px !default;
@@ -8,7 +8,7 @@ $tab-bar-ios-item-icon-size:           30px !default;
 $tab-bar-ios-height:                   49px !default;
 
 
-.tabs-ios {
+.tabs[mode="ios"] {
 
   .tab-bar {
     // iOS's UITabBar is at most 49px high

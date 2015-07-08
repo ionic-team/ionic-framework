@@ -4,11 +4,7 @@
 
     <ion-view>
 
-      <ion-toolbar id="p1toolbar">
-        <button (^click)="openHeart()" class="toolbar-primary-item"><i class="icon ion-ios-heart"></i></button>
-        <ion-title>secret</ion-title>
-        <button (^click)="openGear()" class="toolbar-secondary-item"><i class="icon ion-ios-gear"></i></button>
-      </ion-toolbar>
+      <ion-toolbar id="p1toolbar"><button (^click)="openHeart()" class="toolbar-primary-item"><i class="icon ion-ios-heart"></i></button><ion-title>secret</ion-title><button (^click)="openGear()" class="toolbar-secondary-item"><i class="icon ion-ios-gear"></i></button></ion-toolbar>
 
       <ion-content>
         <ion-list>
@@ -44,7 +40,7 @@
   ion-view {
     background-color: #F5F5F5;
   }
-  .platform-ios ion-toolbar {
+  .mode-ios ion-toolbar {
     padding-top: 20px;
   }
   ion-content {
@@ -84,13 +80,13 @@
   ion-toolbar {
     letter-spacing: 1px;
   }
-  .platform-ios ion-toolbar button i {
+  .mode-ios ion-toolbar button i {
     color: #fff !important;
     font-size: 24px !important;
   }
-  .platform-ios .item:first-of-type:before,
-  .platform-ios .item:last-of-type:after,
-  .platform-ios .item-content:after {
+  .mode-ios .item:first-of-type:before,
+  .mode-ios .item:last-of-type:after,
+  .mode-ios .item-content:after {
     background-color: #F5F5F5 !important;
   }
   #p1toolbar {

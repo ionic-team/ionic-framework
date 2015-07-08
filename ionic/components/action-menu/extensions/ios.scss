@@ -17,7 +17,7 @@ $action-menu-ios-button-font-size:         2rem !default;
 $action-menu-ios-icon-font-size:           1.4em !default;
 
 
-.action-menu-ios {
+.action-menu[mode="ios"] {
   text-align: center;
 
   .action-menu-container {

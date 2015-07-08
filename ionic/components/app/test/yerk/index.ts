@@ -1,10 +1,9 @@
 import {Component} from 'angular2/angular2';
 
-import {IonicView, NavController} from 'ionic/ionic';
+import {App, IonicView, NavController} from 'ionic/ionic';
 
 
-@Component({ selector: 'ion-app' })
-@IonicView({
+@App({
   templateUrl: 'main.html'
 })
 class IonicApp {
@@ -59,8 +58,4 @@ class TabsPage {
     this.homeTab = HomeTabPage;
     this.peekTab = PeekTabPage;
   }
-}
-
-export function main(ionicBootstrap) {
-  ionicBootstrap(IonicApp);
 }

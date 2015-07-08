@@ -1,24 +1,17 @@
-import {Component} from 'angular2/angular2';
-
-import {IonicView} from 'ionic/ionic';
+import {App, Alert} from 'ionic/ionic';
 
 
-@Component({ selector: 'ion-app' })
-@IonicView({
+@App({
   templateUrl: 'main.html'
 })
 class IonicApp {
-  constructor() {
-    console.log('IonicApp Start')
+  constructor(alert: Alert) {
+    this.alert = alert;
   }
-  showAlert() {
-    console.log('Show alert');
 
-    Alert.open({
+  showAlert() {
+    this.alert.open({
+
     });
   }
-}
-
-export function main(ionicBootstrap) {
-  ionicBootstrap(IonicApp);
 }

@@ -1,10 +1,7 @@
-import {Component} from 'angular2/angular2';
-
-import {IonicView} from 'ionic/ionic';
+import {App} from 'ionic/ionic';
 
 
-@Component({ selector: 'ion-app' })
-@IonicView({
+@App({
   templateUrl: 'main.html'
 })
 class IonicApp {
@@ -14,8 +11,4 @@ class IonicApp {
     //   preferredApple: ['mac', Validators.required],
     // });
   }
-}
-
-export function main(ionicBootstrap) {
-  ionicBootstrap(IonicApp);
 }

@@ -5,12 +5,7 @@
 
   function importApp(module) {
     if (module) {
-      var appImport = System.import(module);
-      ionicImport.then(function(ionic) {
-        appImport.then(function(app) {
-          ionic.load(app);
-        });
-      });
+      System.import(module);
     }
   }
 

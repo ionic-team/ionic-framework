@@ -1,6 +1,6 @@
 import {Component} from 'angular2/angular2';
 
-import {IonicView, NavController} from 'ionic/ionic';
+import {App, IonicView, NavController} from 'ionic/ionic';
 
 
 @Component({selector: 'ion-view'})
@@ -176,18 +176,11 @@ class Tab2Page3 {
 }
 
 
-@Component({
-  selector: 'ion-app'
-})
-@IonicView({
+@App({
   template: '<ion-nav [root]="rootView"></ion-nav>'
 })
 class IonicApp {
   constructor() {
     this.rootView = SignIn;
   }
-}
-
-export function main(ionicBootstrap) {
-  ionicBootstrap(IonicApp);
 }

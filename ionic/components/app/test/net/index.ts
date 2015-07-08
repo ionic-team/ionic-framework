@@ -1,15 +1,14 @@
 import {Component} from 'angular2/angular2';
 import {Control, ControlGroup, formDirectives} from 'angular2/forms';
 
-import {IonicView, Http} from 'ionic/ionic';
+import {App, Http} from 'ionic/ionic';
 
 
 let testUrl = 'https://ionic-api-tester.herokuapp.com/json';
 let testUrl404 = 'https://ionic-api-tester.herokuapp.com/404';
 
 
-@Component({ selector: 'ion-app' })
-@IonicView({
+@App({
   templateUrl: 'main.html'
 })
 class IonicApp {
@@ -64,8 +63,4 @@ class IonicApp {
       this.err = err;
     })
   }
-}
-
-export function main(ionicBootstrap) {
-  ionicBootstrap(IonicApp);
 }

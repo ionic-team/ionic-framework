@@ -163,7 +163,9 @@ export function ionicBootstrap(ComponentType, config, router) {
   return new Promise((resolve, reject) => {
     try {
       // get the user config, or create one if wasn't passed in
-      config = config || new IonicConfig();
+      if (typeof config !== IonicConfig) {
+        config = new IonicConfig(config);
+      }
 
       // create the base IonicApp
       let app = initApp(window, document, config);
@@ -171,9 +173,6 @@ export function ionicBootstrap(ComponentType, config, router) {
       // copy default platform settings into the user config platform settings
       // user config platform settings should override default platform settings
       config.setPlatform(Platform);
-
-      // make the config global
-      IonicConfig.global = config;
 
       // config and platform settings have been figured out
       // apply the correct CSS to the app
@@ -183,15 +182,17 @@ export function ionicBootstrap(ComponentType, config, router) {
       Platform.prepareReady(config);
 
       // setup router
-      router = router || new IonicRouter();
+      if (typeof router !== IonicRouter) {
+        router = new IonicRouter(router);
+      }
       router.app(app);
 
       // TODO: don't wire these together
       app.router = router;
 
       // TODO: probs need a better way to inject global injectables
-      let actionMenu = new ActionMenu(app);
-      let modal = new Modal(app);
+      let actionMenu = new ActionMenu(app, config);
+      let modal = new Modal(app, config);
 
       // add injectables that will be available to all child components
       let injectableBindings = [

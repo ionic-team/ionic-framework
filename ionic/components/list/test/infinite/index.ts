@@ -1,7 +1,25 @@
-import {NgFor, ProtoViewRef, ViewContainerRef} from 'angular2/angular2'
-import {Component, Directive, View, Parent} from 'angular2/angular2';
+import {ProtoViewRef, ViewContainerRef} from 'angular2/angular2'
+import {Directive, Parent, forwardRef} from 'angular2/angular2';
 
-import {Content, List, Item} from 'ionic/ionic';
+import {App, List} from 'ionic/ionic';
+
+
+
+@App({
+  templateUrl: 'main.html',
+  directives: [forwardRef(() => ItemCellTemplate)]
+})
+class IonicApp {
+  constructor() {
+
+    this.items = []
+    for(let i = 0; i < 1000; i++) {
+      this.items.push({
+        title: 'Item ' + i
+      })
+    }
+  }
+}
 
 
 /*
@@ -21,27 +39,4 @@ export class ItemCellTemplate {
 
     list.setItemTemplate(this);
   }
-}
-
-
-@Component({ selector: 'ion-app' })
-@View({
-  templateUrl: 'main.html',
-  directives: [Content, List, Item, ItemCellTemplate, NgFor]
-})
-class IonicApp {
-  constructor() {
-    console.log('IonicApp Start')
-
-    this.items = []
-    for(let i = 0; i < 1000; i++) {
-      this.items.push({
-        title: 'Item ' + i
-      })
-    }
-  }
-}
-
-export function main(ionicBootstrap) {
-  ionicBootstrap(IonicApp);
 }

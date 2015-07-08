@@ -9,8 +9,9 @@ import * as util from 'ionic/util';
 
 export class Overlay {
 
-  constructor(app: IonicApp) {
+  constructor(app: IonicApp, ionicConfig: IonicConfig) {
     this.app = app;
+    this.ionicConfig = ionicConfig;
   }
 
   create(overlayType, ComponentType: Type, opts={}, context=null) {
@@ -21,7 +22,8 @@ export class Overlay {
       annotation.selector = 'ion-' + overlayType;
       annotation.host = {
         '[style.z-index]': 'zIndex',
-        'class': overlayType + ' ion-app'
+        'class': overlayType + ' ion-app',
+        'mode': this.ionicConfig.setting('mode')
       };
       let overlayComponent = DirectiveBinding.createFromType(ComponentType, annotation);
 

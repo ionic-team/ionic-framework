@@ -14,7 +14,7 @@ $list-ios-footer-font-size:      1.4rem !default;
 $list-ios-footer-color:          #8f8f94 !default;
 
 
-.list.list-ios {
+.list.list[mode="ios"] {
   // Add the hairline to the top of the first item
   .item:first-of-type {
     @include hairline(top, $list-ios-border-color, $z-index-list-border);

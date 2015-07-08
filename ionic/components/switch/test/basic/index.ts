@@ -1,11 +1,9 @@
-import {Component} from 'angular2/angular2';
-import {FormBuilder, Validators, ControlGroup} from 'angular2/forms';
+import {FormBuilder, Validators} from 'angular2/forms';
 
-import {IonicView} from 'ionic/ionic';
+import {App} from 'ionic/ionic';
 
 
-@Component({ selector: 'ion-app' })
-@IonicView({
+@App({
   templateUrl: 'main.html'
 })
 class IonicApp {
@@ -19,12 +17,8 @@ class IonicApp {
     });
   }
 
-  doSubmit(event) {
+  doSubmit(ev) {
     console.log('Submitting form', this.form.value);
-    event.preventDefault();
+    ev.preventDefault();
   }
-}
-
-export function main(ionicBootstrap) {
-  ionicBootstrap(IonicApp);
 }

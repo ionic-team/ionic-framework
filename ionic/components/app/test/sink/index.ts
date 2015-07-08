@@ -1,6 +1,4 @@
-import {Component, Directive} from 'angular2/angular2';
-
-import {IonicApp, IonicView, Register} from 'ionic/ionic';
+import {App, IonicApp} from 'ionic/ionic';
 
 import {ButtonPage} from './pages/button'
 import {NavPage} from './pages/nav'
@@ -21,12 +19,8 @@ import {ActionMenuPage} from './pages/action-menu'
 import {ModalPage} from './pages/modal'
 
 
-@Component({
-  selector: 'ion-app',
-})
-@IonicView({
-  templateUrl: 'main.html',
-  directives: [Register]
+@App({
+  templateUrl: 'main.html'
 })
 class MyApp {
   constructor(app: IonicApp) {
@@ -61,8 +55,4 @@ class MyApp {
     let nav = this.app.getComponent('myNav');
     nav.setRoot(component.component);
   }
-}
-
-export function main(ionicBootstrap) {
-  ionicBootstrap(MyApp);
 }

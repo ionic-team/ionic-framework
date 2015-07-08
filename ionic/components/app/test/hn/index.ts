@@ -1,6 +1,6 @@
 import {Component} from 'angular2/angular2';
 
-import {NavController, IonicView} from 'ionic/ionic';
+import {App, NavController, IonicView} from 'ionic/ionic';
 
 import {HackerNews} from './hn';
 import {HNSinglePost} from './pages/single';
@@ -87,18 +87,11 @@ class HNTopStories {
 }
 
 
-@Component({
-  selector: 'ion-app'
-})
-@IonicView({
+@App({
   template: '<ion-nav [root]="rootView"></ion-nav>'
 })
 class IonicApp {
   constructor() {
     this.rootView = HNTopStories;
   }
-}
-
-export function main(ionicBootstrap) {
-  ionicBootstrap(IonicApp);
 }

@@ -10,7 +10,7 @@ $navbar-material-button-font-size:        2rem !default;
 $navbar-material-button-text-color:       #007aff !default;
 
 
-.navbar-md {
+.navbar[mode="md"] {
   height: $navbar-material-height;
   background: $navbar-material-background;
 

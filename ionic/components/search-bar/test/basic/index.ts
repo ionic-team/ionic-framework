@@ -1,8 +1,6 @@
-import {Component, Directive} from 'angular2/angular2';
-
 import {FormBuilder, Validators, formDirectives, Control, ControlGroup} from 'angular2/forms';
 
-import {IonicView} from 'ionic/ionic';
+import {App} from 'ionic/ionic';
 import {SearchPipe} from 'ionic/components/search-bar/search-bar';
 
 
@@ -11,14 +9,11 @@ function randomTitle() {
   return items[Math.floor(Math.random() * items.length)];
 }
 
-@Component({ selector: 'ion-app' })
-@IonicView({
+@App({
   templateUrl: 'main.html'
 })
 class IonicApp {
   constructor() {
-    console.log('IonicApp Start')
-
     var fb = new FormBuilder();
     this.form = fb.group({
       searchQuery: ['', Validators.required]
@@ -34,6 +29,7 @@ class IonicApp {
       })
     }
   }
+
   getItems() {
     var q = this.form.controls.searchQuery.value;
     if(q.trim() == '') {
@@ -46,8 +42,4 @@ class IonicApp {
       return false;
     })
   }
-}
-
-export function main(ionicBootstrap) {
-  ionicBootstrap(IonicApp);
 }

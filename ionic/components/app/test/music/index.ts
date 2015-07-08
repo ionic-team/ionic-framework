@@ -1,7 +1,7 @@
 import {Component, Directive, ElementRef} from 'angular2/angular2';
 import {FormBuilder, Validators, FormDirectives, ControlGroup} from 'angular2/forms';
 
-import {Routable, NavController, IonicView} from 'ionic/ionic';
+import {App, NavController, IonicView} from 'ionic/ionic';
 
 
 @Component({selector: 'ion-view'})
@@ -53,8 +53,7 @@ export class ParallaxEffect {
 /**
  * Main app entry point
  */
-@Component({ selector: 'ion-app' })
-@IonicView({
+@App({
   directives: [ParallaxEffect],
   templateUrl: 'main.html'
 })
@@ -68,8 +67,4 @@ class IonicApp {
   onMenuOpening(amt) {
     this.menuOpenAmount = amt;
   }
-}
-
-export function main(ionicBootstrap) {
-  ionicBootstrap(IonicApp);
 }

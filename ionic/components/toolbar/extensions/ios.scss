@@ -19,7 +19,7 @@ $toolbar-ios-button-background-color:       transparent !default;
 $toolbar-ios-padding: 0px 15px;
 
 
-.mode-ios ion-toolbar {
+.toolbar[mode="ios"] {
 
   padding: $toolbar-ios-padding;
 

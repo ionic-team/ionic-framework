@@ -1,7 +1,7 @@
 import {Component, Directive} from 'angular2/angular2';
 import {FormBuilder, Control, ControlGroup, Validators, formDirectives} from 'angular2/forms';
 
-import {IonicView, Animation, Modal, NavController, NavParams, IonicComponent} from 'ionic/ionic';
+import {App, IonicView, Animation, Modal, NavController, NavParams} from 'ionic/ionic';
 
 
 @Component({ selector: 'ion-view' })
@@ -64,10 +64,7 @@ export class FeedPage {
   }
 }
 
-@Component({
-  selector: 'ion-app'
-})
-@IonicView({
+@App({
   templateUrl: 'main.html'
 })
 class IonicApp {
@@ -106,10 +103,6 @@ export class SettingsModal {}
 })
 export class HeartModal {}
 
-
-export function main(ionicBootstrap) {
-  ionicBootstrap(IonicApp);
-}
 
 
 class FadeIn extends Animation {

@@ -1,4 +1,4 @@
-import {coreDirectives, Component, Directive, View} from 'angular2/angular2'
+import {coreDirectives, Component, Directive, View, forwardRef} from 'angular2/angular2'
 
 import * as util from 'ionic/util';
 import {IonicConfig} from './config';
@@ -14,70 +14,99 @@ import {
   Checkbox, Switch, Label, Input,
   Segment, SegmentButton, SegmentControlValueAccessor,
   RadioGroup, RadioButton, SearchBar,
-  Nav, NavbarTemplate, Navbar, NavPush, NavPop
-} from 'ionic/ionic';
+  Nav, NavbarTemplate, Navbar, NavPush, NavPop,
+  Register
+} from '../ionic';
 
 
-export function IonicView(config) {
-  return function(ComponentType) {
+// TODO: Why is forwardRef() required when they're already imported above????
+export const IonicDirectives = [
+  // Angular
+  coreDirectives,
 
-    const ionicDirectives = [
-      // Angular
-      coreDirectives,
+  // Content
+  forwardRef(() => Aside),
+  forwardRef(() => Content),
+  forwardRef(() => Scroll),
+  forwardRef(() => Refresher),
 
-      // Content
-      Aside, Content, Scroll, Refresher,
-      List, Item, ItemGroup, ItemGroupTitle,
-      Slides, Slide, SlidePager,
-      Tabs, Tab,
-      Toolbar,
+  // Lists
+  forwardRef(() => List),
+  forwardRef(() => Item),
+  forwardRef(() => ItemGroup),
+  forwardRef(() => ItemGroupTitle),
 
-      // Media
-      Icon,
+  // Slides
+  forwardRef(() => Slides),
+  forwardRef(() => Slide),
+  forwardRef(() => SlidePager),
 
-      // Form elements
-      Segment, SegmentButton, SegmentControlValueAccessor,
-      //Checkbox, Switch, Label, Input
-      //RadioGroup, RadioButton, SearchBar,
+  // Tabs
+  forwardRef(() => Tabs),
+  forwardRef(() => Tab),
+  forwardRef(() => Toolbar),
 
-      // Nav
-      Nav, NavbarTemplate, Navbar, NavPush, NavPop
-    ];
-    config.directives = (config.directives || []).concat(ionicDirectives);
+  // Media
+  forwardRef(() => Icon),
 
-    var annotations = Reflect.getMetadata('annotations', ComponentType) || [];
-    annotations.push(new View(config));
-    Reflect.defineMetadata('annotations', annotations, ComponentType);
-    return ComponentType;
+  // Form elements
+  forwardRef(() => Segment),
+  forwardRef(() => SegmentButton),
+  forwardRef(() => SegmentControlValueAccessor),
+  //Checkbox, Switch, Label, Input
+  //RadioGroup, RadioButton, SearchBar,
+
+  // Nav
+  forwardRef(() => Nav),
+  forwardRef(() => NavbarTemplate),
+  forwardRef(() => Navbar),
+  forwardRef(() => NavPush),
+  forwardRef(() => NavPop),
+  forwardRef(() => Register)
+];
+
+class IonicViewImpl extends View {
+  constructor(args = {}) {
+    args.directives = (args.directives || []).concat(IonicDirectives);
+    super(args);
+  }
+}
+
+export function IonicView(args) {
+  return function(cls) {
+    var annotations = Reflect.getMetadata('annotations', cls) || [];
+    annotations.push(new IonicViewImpl(args));
+    Reflect.defineMetadata('annotations', annotations, cls);
+    return cls;
   }
 }
 
 export function IonicDirective(config) {
-  return function(ComponentType) {
-    var annotations = Reflect.getMetadata('annotations', ComponentType) || [];
-    annotations.push(new Directive(appendModeConfig(ComponentType, config)));
-    Reflect.defineMetadata('annotations', annotations, ComponentType);
-    return ComponentType;
+  return function(cls) {
+    var annotations = Reflect.getMetadata('annotations', cls) || [];
+    annotations.push(new Directive(appendConfig(cls, config)));
+    Reflect.defineMetadata('annotations', annotations, cls);
+    return cls;
   }
 }
 
 export function IonicComponent(config) {
-  return function(ComponentType) {
-    var annotations = Reflect.getMetadata('annotations', ComponentType) || [];
-    annotations.push(new Component(appendModeConfig(ComponentType, config)));
-    Reflect.defineMetadata('annotations', annotations, ComponentType);
-    return ComponentType;
+  return function(cls) {
+    var annotations = Reflect.getMetadata('annotations', cls) || [];
+    annotations.push(new Component(appendConfig(cls, config)));
+    Reflect.defineMetadata('annotations', annotations, cls);
+    return cls;
   }
 }
 
-function appendModeConfig(ComponentType, config) {
+function appendConfig(cls, config) {
   config.host = config.host || {};
 
-  const defaultProperties = config.defaultProperties;
+  cls.defaultProperties = config.defaultProperties || {};
 
   config.properties = config.properties || [];
 
-  for (let prop in defaultProperties) {
+  for (let prop in cls.defaultProperties) {
     // add the property to the component "properties"
     config.properties.push(prop);
 
@@ -86,113 +115,39 @@ function appendModeConfig(ComponentType, config) {
     config.host['[attr.' + util.pascalCaseToDashCase(prop) + ']'] = prop;
   }
 
-  // called by the component's onInit when an instance has been created and properties bound
-  ComponentType.applyConfig = (instance) => {
-    for (let prop in defaultProperties) {
-      // Priority:
-      // ---------
-      // 1) Value set from within constructor
-      // 2) Value set from the host element's attribute
-      // 3) Value set by the users global config
-      // 4) Value set by the default mode/platform config
-      // 5) Value set from the component's default
-
-      if (instance[prop]) {
-        // this property has already been set on the instance
-        // could be from the user setting the element's attribute
-        // or from the user setting it within the constructor
-        continue;
-      }
-
-      // get the property values from a global user/platform config
-      let configVal = IonicConfig.global.setting(prop);
-      if (configVal) {
-        instance[prop] = configVal;
-        continue;
-      }
-
-      // wasn't set yet, so go with property's default value
-      instance[prop] = defaultProperties[prop];
-    }
-  };
-
-  if (config.delegates) {
-    ComponentType.getDelegate = (instance, delegateName) => {
-      let cases = config.delegates[delegateName] || [];
-      for (let i = 0; i < cases.length; i++) {
-        let delegateCase = cases[i];
-        if (util.isArray(delegateCase)) {
-          let [ check, DelegateConstructor ] = delegateCase;
-          if (check(instance)) {
-            return new DelegateConstructor(instance);
-          }
-        } else {
-          return new delegateCase(instance);
-        }
-      }
-    };
-  }
+  cls.delegates = config.delegates;
 
   let componentId = config.classId || (config.selector && config.selector.replace('ion-', ''));
-  config.host['class'] = (componentId);
+  config.host['class'] = componentId;
 
-  // should be able to set map of classes to add soon:
-  // https://github.com/angular/angular/issues/2364
-  config.host['[class.' + componentId + '-ios]'] = 'cssClass';
+  // the mode will get figured out when the component is constructed
+  config.host['[attr.mode]'] = 'clsMode';
 
   return config;
 }
 
-export function App(settings) {
-  return function(ComponentClass) {
+export function App(args={}) {
+  return function(cls) {
     // get current annotations
-    let annotations = Reflect.getMetadata('annotations', ComponentClass) || [];
+    let annotations = Reflect.getMetadata('annotations', cls) || [];
 
     // create @Component
-    let selector = settings.selector || 'ion-app';
-    annotations.push(new Component({
-      selector
-    }));
+    args.selector = args.selector || 'ion-app';
+    annotations.push(new Component(args));
 
     // create @View
-    let templateUrl = settings.templateUrl;
-    let template = settings.template;
-
     // if no template was provided, default so it has a root ion-nav
-    if (!templateUrl && !template) {
-      template = '<ion-nav></ion-nav>';
+    if (!args.templateUrl && !args.template) {
+      args.template = '<ion-nav></ion-nav>';
     }
-    annotations.push(new IonicView({
-      templateUrl,
-      template
-    }));
+
+    annotations.push(new IonicViewImpl(args));
 
     // redefine with added annotations
-    Reflect.defineMetadata('annotations', annotations, ComponentClass);
+    Reflect.defineMetadata('annotations', annotations, cls);
 
+    ionicBootstrap(cls, args.config, args.router);
 
-    // create IonicConfig
-    let config = null;
-    if (typeof settings.config === IonicConfig) {
-      config = settings.config
-
-    } else if (settings.config) {
-      config = new IonicConfig(settings.config);
-    }
-
-    // create IonicRouter
-    let router = null;
-    if (typeof settings.router === IonicRouter) {
-      router = settings.router
-
-    } else if (settings.router) {
-      router = new IonicRouter(settings.router);
-    }
-
-    setTimeout(() => {
-      ionicBootstrap(ComponentClass, config, router);
-    }, 500);
-
-    return ComponentClass;
+    return cls;
   }
 }

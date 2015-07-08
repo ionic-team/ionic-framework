@@ -1,7 +1,9 @@
-import {ElementRef} from 'angular2/angular2';
+import {View, ElementRef} from 'angular2/angular2';
 import {ControlGroup, ControlDirective} from 'angular2/forms';
 
-import {IonicComponent, IonicView} from '../../config/annotations';
+import {Ion} from '../ion';
+import {IonicConfig} from '../../config/config';
+import {IonicComponent} from '../../config/annotations';
 
 
 @IonicComponent({
@@ -10,10 +12,11 @@ import {IonicComponent, IonicView} from '../../config/annotations';
     'checked'
   ],
   host: {
-    '(click)': 'switchClicked($event)'
+    '(click)': 'switchClicked($event)',
+    'class': 'item'
   }
 })
-@IonicView({
+@View({
   template: `
   <div class="item-content">
     <div class="item-title">
@@ -24,26 +27,17 @@ import {IonicComponent, IonicView} from '../../config/annotations';
     </div>
   </div>`
 })
-export class Switch {
+export class Switch extends Ion {
   constructor(
     elementRef: ElementRef,
-    cd: ControlDirective
+    ionicConfig: IonicConfig
+    //cd: ControlDirective
   ) {
-    this.ele = elementRef.nativeElement
-    this.config = Switch.config.invoke(this)
-    this.controlDirective = cd;
-    cd.valueAccessor = this;
+    super(elementRef, ionicConfig)
 
-    // TODO: These are temporary until we figure out what to do
-    // with @PropertSetter
-    //let setAriaRole = (v) => { this.ele.setAttribute('aria-role', v) }
-    //let setAriaChecked = (v) => { this.ele.setAttribute('aria-checked', v) }
-    //let setAriaInvalid = (v) => { this.ele.setAttribute('aria-invalid', v) }
-    //let setAriaDisabled = (v) => { this.ele.setAttribute('aria-disabled', v) }
-
-    //let setChecked = (v) => this.ele.setAttribute('checked', v);
-
-    this.ele.classList.add('item')
+    // this.config = Switch.config.invoke(this)
+    // this.controlDirective = cd;
+    // cd.valueAccessor = this;
 
     // TODO: These rely on the commented-out PropertySetter's above
     //setAriaRole('checkbox')
@@ -71,7 +65,7 @@ export class Switch {
     return this._checked
   }
 
-  switchClicked(event) {
+  switchClicked(ev) {
     this.checked = !this.checked;
   }
 }

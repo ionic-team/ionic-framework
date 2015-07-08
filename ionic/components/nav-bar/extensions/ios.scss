@@ -19,7 +19,7 @@ $navbar-ios-button-text-color:             #007aff !default;
 $navbar-ios-button-background-color:       transparent !default;
 
 
-.nav-ios .navbar-container {
+.nav[mode="ios"] .navbar-container {
 
   min-height: $navbar-ios-height;
   background: $navbar-ios-background;

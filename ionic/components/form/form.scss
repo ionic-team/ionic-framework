@@ -196,8 +196,8 @@ input[type="color"] {
   line-height: $font-size-base + 2;
 }
 
-.platform-ios,
-.platform-android {
+.mode-ios,
+.mode-android {
   input[type="datetime-local"],
   input[type="date"],
   input[type="month"],

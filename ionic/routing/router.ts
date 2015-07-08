@@ -1,13 +1,4 @@
-import {
-  RegExp,
-  RegExpWrapper,
-  RegExpMatcherWrapper,
-  StringWrapper,
-  isPresent,
-  isBlank,
-  BaseException,
-  normalizeBlank
-} from 'angular2/src/facade/lang';
+import {RegExpWrapper} from 'angular2/src/facade/lang';
 
 import * as util from '../util/util';
 import {PathRecognizer} from './path-recognizer';
@@ -25,14 +16,19 @@ export class IonicRouter {
   }
 
   config(config) {
-    for (let routeName in config) {
-      this.addRoute(routeName, config[routeName]);
+    if (config) {
+      for (let routeName in config) {
+        this.addRoute(routeName, config[routeName]);
+      }
     }
   }
 
   addRoute(routeName, routeConfig) {
     if (routeName && routeConfig && routeConfig.path) {
-      this._routes[routeName] = new Route(routeName, routeConfig)
+      this._routes[routeName] = new Route(routeName, routeConfig);
+      if (routeConfig.root) {
+        this.otherwise(routeName);
+      }
     }
   }
 

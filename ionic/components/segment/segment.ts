@@ -1,11 +1,12 @@
-import {View, Renderer, ElementRef, EventEmitter, onInit, Ancestor, forwardRef} from 'angular2/angular2';
+import {View, Renderer, ElementRef, EventEmitter, Ancestor, forwardRef} from 'angular2/angular2';
 import {Control, NgControl,NgFormControl} from 'angular2/forms';
 import {ControlGroup, ControlDirective} from 'angular2/forms'
 
-import {IonicDirective, IonicComponent, IonicView} from '../../config/annotations'
+import {Ion} from '../ion';
+import {IonicConfig} from '../../config/config';
+import {IonicDirective, IonicComponent} from '../../config/annotations'
 import {dom} from 'ionic/util';
 
-console.log(forwardRef(() => SegmentButton));
 
 @IonicComponent({
   selector: 'ion-segment',
@@ -13,7 +14,6 @@ console.log(forwardRef(() => SegmentButton));
   properties: [
     'value'
   ],
-  lifecycle: [onInit],
   host: {
     '(click)': 'buttonClicked($event)',
     '(change)': 'onChange($event)',
@@ -32,12 +32,15 @@ console.log(forwardRef(() => SegmentButton));
   template: '<div class="ion-segment"><content></content></div>',
   directives: [forwardRef(() => SegmentButton)]
 })
-export class Segment {
+export class Segment extends Ion {
   constructor(
     cd: NgControl,
     elementRef: ElementRef,
+    ionicConfig: IonicConfig,
     renderer: Renderer
   ) {
+    super(elementRef, ionicConfig);
+
     this.ele = elementRef.nativeElement
     this.elementRef = elementRef;
     this.renderer = renderer;
@@ -48,10 +51,6 @@ export class Segment {
     this.cd = cd;
 
     this.buttons = [];
-  }
-
-  onInit() {
-    Segment.applyConfig(this);
   }
 
   /**
@@ -164,8 +163,7 @@ export class SegmentControlValueAccessor {
   host: {
     '(click)': 'buttonClicked($event)',
     '[class.active]': 'isActive'
-  },
-  lifecycle: [onInit]
+  }
 })
 export class SegmentButton {
   constructor(
