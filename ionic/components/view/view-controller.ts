@@ -79,7 +79,7 @@ export class ViewController extends Ion {
     this.add(enteringItem);
 
     // notify app of the state change
-    this.app.stateChange(enteringItem, this);
+    this.app.stateChange('push', enteringItem);
 
     // start the transition
     this.transition(enteringItem, leavingItem, opts, () => {
@@ -115,7 +115,7 @@ export class ViewController extends Ion {
     let enteringItem = this.getPrevious(leavingItem);
     if (enteringItem) {
       // notify app of the state change
-      this.app.stateChange(enteringItem, this);
+      this.app.stateChange('pop', enteringItem);
 
       // start the transition
       this.transition(enteringItem, leavingItem, opts, () => {
@@ -299,7 +299,7 @@ export class ViewController extends Ion {
           leavingItem.didLeave();
 
           // notify app of the state change
-          this.app.stateChange(enteringItem, this);
+          this.app.stateChange('pop', enteringItem);
 
         } else {
           // cancelled the swipe back, return items to original state

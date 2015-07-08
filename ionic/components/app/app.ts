@@ -48,9 +48,9 @@ export class IonicApp {
     return this._zone;
   }
 
-  stateChange(activeView, viewCtrl) {
+  stateChange(type, activeView) {
     if (this._activeViewId !== activeView.id) {
-      this.router.stateChange(activeView, viewCtrl);
+      this.router.stateChange(type, activeView);
       this._activeViewId = activeView.id;
     }
   }
