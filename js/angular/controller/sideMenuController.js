@@ -392,6 +392,11 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
       startX <= self.edgeThreshold ||
       startX >= self.content.element.offsetWidth - self.edgeThreshold;
 
+    //Prevent draging sidemenu while draging a range input
+    if (e.target.getAttribute('type') == 'range') {
+      return false;
+    }
+
     var backView = $ionicHistory.backView();
     var menuEnabled = enableMenuWithBackViews ? true : !backView;
     if (!menuEnabled) {
