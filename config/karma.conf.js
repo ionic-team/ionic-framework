@@ -19,9 +19,11 @@ module.exports = {
   exclude: [
     'js/ext/angular/test/dom-trace.js'
   ],
-
+  preprocessors: {
+    'js/**/*.js': 'coverage'
+  },
   frameworks: ['jasmine'],
-  reporters: ['progress'],
+  reporters: ['progress', 'coverage'],
   port: 9876,
   colors: true,
   // possible values: 'OFF', 'ERROR', 'WARN', 'INFO', 'DEBUG'
@@ -29,7 +31,21 @@ module.exports = {
   autoWatch: true,
   captureTimeout: 60000,
   singleRun: false,
-
+  mochaReporter: {
+    output: 'full'
+  },
+  coverageReporter: {
+    reporters: [{
+      type: 'text'
+      }, {
+      type: 'text-summary'
+    }, {
+      type: 'cobertura',
+      file: 'coverage.xml'
+    }, {
+      type: 'lcov'
+    }]
+  },
   // Start these browsers, currently available:
   // - Chrome
   // - ChromeCanary
