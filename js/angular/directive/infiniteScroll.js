@@ -17,7 +17,8 @@
  * @param {expression} on-infinite What to call when the scroller reaches the
  * bottom.
  * @param {string=} distance The distance from the bottom that the scroll must
- * reach to trigger the on-infinite expression. Default: 2.5%.
+ * reach to trigger the on-infinite expression. This can be either a percentage
+ * or the number of pixels. Default: 2.5%.
  * @param {string=} spinner The {@link ionic.directive:ionSpinner} to show while loading. The SVG
  * {@link ionic.directive:ionSpinner} is now the default, replacing rotating font icons.
  * @param {string=} icon The icon to show while loading. Default: 'ion-load-d'.  This is depreicated
