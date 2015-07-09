@@ -32,18 +32,14 @@ export class IonicRouter {
     }
   }
 
-  init(window) {
-    this.initHistory(window);
+  load(ionicApp, ionicConfig, window) {
+    // create each of the state manager classes
+    for (let name in stateManagerClasses) {
+      stateManagers[name] = new stateManagerClasses[name](this, ionicApp, ionicConfig, window);
+    }
+    stateManagerClasses = {};
+
     this.loadByPath(this.getCurrentPath(), this.otherwise());
-  }
-
-  initHistory(window) {
-    this.location = window.location;
-    this.history = window.history;
-
-    window.addEventListener('popstate', ev => {
-      this.onPopState(ev);
-    });
   }
 
   loadByPath(path, fallbackRoute) {
@@ -54,7 +50,7 @@ export class IonicRouter {
     function zoneLoad() {
       self._app.zone().run(() => {
         activeViewCtrl.push(matchedRoute.cls);
-        self._lastPath = matchedRoute.path;
+        self.lastPath(matchedRoute.path);
       });
     }
 
@@ -74,90 +70,47 @@ export class IonicRouter {
     }
   }
 
-  onPopState(ev) {
-    let newState = ev.state || {};
-    let newStatePath = newState.path;
-    let newStateBackPath = newState.backPath;
-    let newStateForwardPath = newState.forwardPath;
-    let lastLoadedStatePath = this._lastPath;
+  getCurrentPath() {
+    // check each of the state managers and the one with the
+    // highest priority wins of knowing what path we are currently at
+    let rtnPath = null;
+    let highestPriority = -1;
+    let currentState = null;
 
-    if (newStatePath === lastLoadedStatePath) {
-      // do nothing if the last path is the same
-      // as the "new" current state
-      return;
-    }
-
-    let activeViewCtrl = this.activeViewController();
-    if (activeViewCtrl) {
-
-      if (newStateForwardPath === lastLoadedStatePath) {
-        // if the last loaded state path is the same as the new
-        // state's forward path then the user is moving back
-        activeViewCtrl.pop();
-
-      } else if (newStateBackPath === lastLoadedStatePath) {
-        // if the last loaded state path is the new state's
-        // back path, then the user is moving forward
-        this.loadByPath(newStatePath);
+    for (let name in stateManagers) {
+      currentState = stateManagers[name].getCurrentPath();
+      if (currentState.path && currentState.priority > highestPriority) {
+        rtnPath = currentState.path;
       }
-
     }
+
+    return rtnPath;
   }
 
   stateChange(type, activeView) {
-    if (activeView && activeView.ComponentType) {
+    if (activeView && activeView.cls) {
 
-      let routeConfig = activeView.ComponentType.route;
+      let routeConfig = activeView.cls.route;
       if (routeConfig) {
         let matchedRoute = this.match(routeConfig.path);
 
         if (matchedRoute) {
 
-          if (type == 'pop') {
-            // if the popstate came from the browser's back button (and not Ionic)
-            // then we shouldn't force another browser history.back()
-            // only do a history.back() if the URL hasn't been updated yet
-            if (this.isNewPath(matchedRoute.path)) {
-              this.history.back();
-            }
-
-          } else {
-            this.pushState(matchedRoute);
+          for (let name in stateManagers) {
+            stateManagers[name].stateChange(matchedRoute.path, type, activeView);
           }
 
-          this._lastPath = matchedRoute.path;
+          this.lastPath(matchedRoute.path);
         }
       }
     }
   }
 
-  pushState(route) {
-    let enteringState = {
-      path: route.path,
-      backPath: this._lastPath,
-      forwardPath: null
-    };
-
-    if (this._hasInit) {
-      // update the leaving state to know what it's forward state will be
-      let leavingState = util.extend(this.history.state, {
-        forwardPath: enteringState.path
-      });
-      if (leavingState.path !== enteringState.path) {
-        this.history.replaceState(leavingState, '', '#' + leavingState.path);
-      }
-
-      if (this.isNewPath(route.path)) {
-        // push the new state to the history stack since the path
-        // isn't already in the location hash
-        this.history.pushState(enteringState, '', '#' + enteringState.path);
-      }
-
-    } else {
-      // replace the very first load with the correct entering state info
-      this.history.replaceState(enteringState, '', '#' + enteringState.path);
-      this._hasInit = true;
+  lastPath(val) {
+    if (arguments.length) {
+      this._lastPath = val;
     }
+    return this._lastPath;
   }
 
   match(path) {
@@ -195,17 +148,19 @@ export class IonicRouter {
     }
   }
 
-  getCurrentPath() {
-    let hash = this.location.hash;
-    // Grab the path without the leading hash
-    return hash.slice(1);
+  static registerStateManager(name, StateManagerClass) {
+    stateManagerClasses[name] = StateManagerClass;
   }
 
-  isNewPath(path) {
-    return (this.location.hash !== ('#' + path));
+  static deregisterStateManager(name) {
+    delete stateManagerClasses[name];
+    delete stateManagers[name];
   }
 
 }
+
+let stateManagerClasses = {};
+let stateManagers = {};
 
 
 export class Routable {

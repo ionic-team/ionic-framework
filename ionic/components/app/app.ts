@@ -1,6 +1,5 @@
 import {bootstrap, Compiler, ElementRef, NgZone, bind, ViewRef} from 'angular2/angular2';
 import {AppViewManager} from 'angular2/src/core/compiler/view_manager';
-import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
 import {NgZone} from 'angular2/src/core/zone/ng_zone';
 
 import {IonicRouter} from '../../routing/router';
@@ -75,10 +74,10 @@ export class IonicApp {
    * Create and append the given component into the root
    * element of the app.
    *
-   * @param Component the ComponentType to create and insert
+   * @param Component the cls to create and insert
    * @return Promise that resolves with the ContainerRef created
    */
-  appendComponent(ComponentType: Type, context=null) {
+  appendComponent(cls: Type, context=null) {
     return new Promise((resolve, reject) => {
       let injector = this.injector();
       let compiler = injector.get(Compiler);
@@ -86,7 +85,7 @@ export class IonicApp {
       let rootComponentRef = this._ref._hostComponent;
       let viewContainerLocation = rootComponentRef.location;
 
-      compiler.compileInHost(ComponentType).then(protoViewRef => {
+      compiler.compileInHost(cls).then(protoViewRef => {
         let atIndex = 0;
 
         let hostViewRef = viewMngr.createViewInContainer(
@@ -159,7 +158,7 @@ function initApp(window, document, config) {
   return app;
 }
 
-export function ionicBootstrap(ComponentType, config, router) {
+export function ionicBootstrap(cls, config, router) {
   return new Promise((resolve, reject) => {
     try {
       // get the user config, or create one if wasn't passed in
@@ -203,10 +202,10 @@ export function ionicBootstrap(ComponentType, config, router) {
         bind(Modal).toValue(modal)
       ];
 
-      bootstrap(ComponentType, injectableBindings).then(appRef => {
+      bootstrap(cls, injectableBindings).then(appRef => {
         app.load(appRef);
 
-        router.init(window);
+        router.load(app, config, window);
 
         // resolve that the app has loaded
         resolve(app);
@@ -221,16 +220,4 @@ export function ionicBootstrap(ComponentType, config, router) {
       reject(err);
     }
   });
-}
-
-export function load(app) {
-  if (!app) {
-    console.error('Invalid app module');
-
-  } else if (!app.main) {
-    console.error('App module missing main()');
-
-  } else {
-    app.main(ionicBootstrap);
-  }
 }
