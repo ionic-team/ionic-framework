@@ -32,59 +32,81 @@ export class IonicRouter {
     }
   }
 
-  load(ionicApp, ionicConfig, window) {
+  load(window, ionicApp, ionicConfig) {
     // create each of the state manager classes
     for (let name in stateManagerClasses) {
-      stateManagers[name] = new stateManagerClasses[name](this, ionicApp, ionicConfig, window);
+      stateManagers[name] = new stateManagerClasses[name](window, this, ionicApp, ionicConfig);
     }
     stateManagerClasses = {};
 
-    this.loadByPath(this.getCurrentPath(), this.otherwise());
+    return new Promise(resolve => {
+      this.getCurrentPath().then(path => {
+        this.loadByPath(path, this.otherwise()).then(resolve);
+      });
+    });
   }
 
   loadByPath(path, fallbackRoute) {
-    let self = this;
-    let activeViewCtrl = self.activeViewController();
-    let matchedRoute = self.match(path) || fallbackRoute;
+    return new Promise(resolve => {
+      let self = this;
+      let activeViewCtrl = self.activeViewController();
+      let matchedRoute = self.match(path) || fallbackRoute;
 
-    function zoneLoad() {
-      self._app.zone().run(() => {
-        activeViewCtrl.push(matchedRoute.cls);
-        self.lastPath(matchedRoute.path);
-      });
-    }
-
-    if (activeViewCtrl && matchedRoute) {
-
-      if (matchedRoute.cls) {
-        zoneLoad();
-
-      } else if (matchedRoute.module) {
-        System.import(matchedRoute.module).then(m => {
-          if (m) {
-            matchedRoute.cls = m[matchedRoute.name];
-            zoneLoad();
-          }
+      function zoneLoad() {
+        self._app.zone().run(() => {
+          activeViewCtrl.push(matchedRoute.cls);
+          self.lastPath(matchedRoute.path);
+          resolve();
+        }, err => {
+          console.error(err);
         });
       }
-    }
+
+      if (activeViewCtrl && matchedRoute) {
+
+        if (matchedRoute.cls) {
+          zoneLoad();
+
+        } else if (matchedRoute.module) {
+          System.import(matchedRoute.module).then(m => {
+            if (m) {
+              matchedRoute.cls = m[matchedRoute.name];
+              zoneLoad();
+            }
+          }, err => {
+            console.error(err);
+          });
+        }
+      }
+    });
   }
 
   getCurrentPath() {
     // check each of the state managers and the one with the
     // highest priority wins of knowing what path we are currently at
-    let rtnPath = null;
-    let highestPriority = -1;
-    let currentState = null;
+    return new Promise(resolve => {
 
-    for (let name in stateManagers) {
-      currentState = stateManagers[name].getCurrentPath();
-      if (currentState.path && currentState.priority > highestPriority) {
-        rtnPath = currentState.path;
+      let promises = [];
+      for (let name in stateManagers) {
+        promises.push(stateManagers[name].getCurrentPath());
       }
-    }
 
-    return rtnPath;
+      // when all the promises have resolved then see which one wins
+      Promise.all(promises).then(results => {
+        let rtnPath = null;
+        let highestPriority = -1;
+        let state = null;
+
+        for (let i = 0; i < results.length; i++) {
+          state = results[i];
+          if (state.path && state.priority > highestPriority) {
+            rtnPath = state.path;
+          }
+        }
+
+        resolve(rtnPath);
+      });
+    });
   }
 
   stateChange(type, activeView) {

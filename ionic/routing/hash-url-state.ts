@@ -4,12 +4,10 @@ import * as util from '../util/util';
 
 class HashUrlStateManager {
 
-  constructor(router, ionicApp, ionicConfig, window) {
-    this.router = router;
-    this.ionicApp = ionicApp;
-    this.ionicConfig = ionicConfig;
+  constructor(window, router) {
     this.location = window.location;
     this.history = window.history;
+    this.router = router;
 
     window.addEventListener('popstate', ev => {
       this.onPopState(ev);
@@ -80,7 +78,7 @@ class HashUrlStateManager {
       } else if (newStateBackPath === lastLoadedStatePath) {
         // if the last loaded state path is the new state's
         // back path, then the user is moving forward
-        this.loadByPath(newStatePath);
+        this.router.loadByPath(newStatePath);
       }
 
     }
@@ -88,10 +86,12 @@ class HashUrlStateManager {
 
   getCurrentPath() {
     // Grab the path without the leading hash
-    return {
-      path: this.location.hash.slice(1),
-      priority: 0
-    }
+    return new Promise(resolve => {
+      resolve({
+        path: this.location.hash.slice(1),
+        priority: 0
+      })
+    });
   }
 
   isDifferentPath(path) {

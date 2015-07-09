@@ -205,10 +205,10 @@ export function ionicBootstrap(cls, config, router) {
       bootstrap(cls, injectableBindings).then(appRef => {
         app.load(appRef);
 
-        router.load(app, config, window);
-
-        // resolve that the app has loaded
-        resolve(app);
+        router.load(window, app, config).then(() => {
+          // resolve that the app has loaded
+          resolve(app);
+        });
 
       }).catch(err => {
         console.error('ionicBootstrap', err);
