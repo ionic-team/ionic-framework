@@ -9,20 +9,6 @@ $tab-button-min-width:             80px !default;
 $tab-button-max-width:             160px !default;
 
 
-ion-tabs-view {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: white;
-
-  display: none;
-  &.show-view {
-    display: flex;
-  }
-}
-
 ion-tabs {
   display: flex;
   flex-direction: column;
@@ -48,7 +34,7 @@ ion-tab {
   flex-direction: column;
 
   display: none;
-  &.show-tab {
+  &.show-view {
     display: flex;
   }
 }

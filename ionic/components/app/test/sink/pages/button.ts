@@ -1,16 +1,11 @@
-import {Component, View, NgIf} from 'angular2/angular2';
-
-import {IonicApp, Routable, NavbarTemplate, Navbar, NavController, Content} from 'ionic/ionic';
+import {IonicApp, IonicView, NavController} from 'ionic/ionic';
 
 import {SinkPage} from '../sink-page';
 
-@Component({
-  selector: 'ion-view'
-})
-@View({
+
+@IonicView({
   template: `
   <ion-navbar *navbar><ion-nav-items primary><button icon (^click)="toggleMenu()"><i class="icon ion-navicon"></i></button></ion-nav-items><ion-title>Buttons</ion-title></ion-navbar>
-
 
   <ion-content class="padding">
 
@@ -57,8 +52,7 @@ import {SinkPage} from '../sink-page';
       </div>
     </p>
   </ion-content>
-  `,
-  directives: [NavbarTemplate, Navbar, Content, NgIf]
+  `
 })
 export class ButtonPage extends SinkPage {
   constructor(app: IonicApp, nav: NavController) {
@@ -78,7 +72,3 @@ export class ButtonPage extends SinkPage {
 
 }
 
-new Routable(ButtonPage, {
-  url: '/components/button',
-  tag: 'button'
-})

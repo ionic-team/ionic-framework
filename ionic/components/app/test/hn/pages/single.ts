@@ -1,14 +1,10 @@
-import {Component, View, NgFor} from 'angular2/angular2';
-
-import {NavController, NavParams, NavbarTemplate, Navbar, Content, Nav, List, Item} from 'ionic/ionic';
+import {IonicView, NavController, NavParams} from 'ionic/ionic';
 
 import {HackerNews} from '../hn'
 
 
-@Component({ selector: 'ion-view' })
-@View({
-  templateUrl: 'pages/single.html',
-  directives: [NavbarTemplate, Navbar, Content, NgFor, List, Item]
+@IonicView({
+  templateUrl: 'pages/single.html'
 })
 export class HNSinglePost {
   constructor(

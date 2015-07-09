@@ -1,14 +1,8 @@
-import {IonicComponent, IonicView, Routable, NavController, NavParams} from 'ionic/ionic';
+import {IonicView, Routable, NavController, NavParams} from 'ionic/ionic';
 import {ThirdPage} from './third-page';
 import {FirstPage} from './first-page';
 
 
-@IonicComponent({
-  selector: 'ion-view',
-  route: {
-    path: '/secondpage'
-  }
-})
 @IonicView({
   template: `
     <ion-navbar *navbar><ion-title>Second Page Header</ion-title></ion-navbar>

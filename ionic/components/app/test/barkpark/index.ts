@@ -1,12 +1,9 @@
-import {Component, View, Directive} from 'angular2/angular2';
-
 import {FormBuilder, Validators, FormDirectives, ControlGroup} from 'angular2/forms';
 import {Log} from 'ionic/util'
 
 import {App, IonicView, NavController} from 'ionic/ionic'
 
 
-@Component({selector: 'ion-view'})
 @IonicView({
   templateUrl: 'pages/login.html'
 })
@@ -37,7 +34,6 @@ class LoginPage {
 }
 
 
-@Component({selector: 'ion-view'})
 @IonicView({
   templateUrl: 'pages/signup.html'
 })
@@ -71,7 +67,6 @@ export class SignupPage {
 
 
 
-@Component({selector: 'ion-view'})
 @IonicView({
   templateUrl: 'pages/app.html'
 })
@@ -82,7 +77,6 @@ export class AppPage {
   }
 }
 
-@Component({selector: 'ion-view'})
 @IonicView({
   templateUrl: 'pages/tabs/home.html'
 })
@@ -104,7 +98,6 @@ class StreamTab {
   }
 }
 
-@Component({selector: 'ion-view'})
 @IonicView({
   templateUrl: 'pages/post/detail.html'
 })
@@ -118,7 +111,6 @@ class PostDetail {
   }
 }
 
-@Component({selector: 'ion-view'})
 @IonicView({
   templateUrl: 'pages/splash.html'
 })

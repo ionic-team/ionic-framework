@@ -1,5 +1,3 @@
-import {Component} from 'angular2/angular2';
-
 import {App, IonicView, NavController} from 'ionic/ionic';
 
 
@@ -12,7 +10,7 @@ class IonicApp {
   }
 }
 
-@Component({selector: 'ion-view'})
+
 @IonicView({
   template: '' +
     '<ion-navbar *navbar>' +
@@ -30,7 +28,6 @@ class HomeTabPage {
   }
 }
 
-@Component({selector: 'ion-view'})
 @IonicView({
   template: '' +
     '<ion-navbar *navbar>' +
@@ -49,7 +46,6 @@ class PeekTabPage {
 }
 
 
-@Component({selector: 'ion-view'})
 @IonicView({
   templateUrl: 'tabs.html'
 })

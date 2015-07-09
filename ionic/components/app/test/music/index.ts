@@ -1,10 +1,9 @@
-import {Component, Directive, ElementRef} from 'angular2/angular2';
+import {Directive, ElementRef} from 'angular2/angular2';
 import {FormBuilder, Validators, FormDirectives, ControlGroup} from 'angular2/forms';
 
 import {App, NavController, IonicView} from 'ionic/ionic';
 
 
-@Component({selector: 'ion-view'})
 @IonicView({
   templateUrl: 'pages/app.html'
 })

@@ -1,16 +1,11 @@
-import {Component, Directive, View} from 'angular2/angular2';
+import {FormBuilder, Validators, formDirectives, ControlGroup} from 'angular2/angular2';
 
-import {FormBuilder, Validators, formDirectives, ControlGroup} from 'angular2/forms';
-
-import {IonicApp, List, Item, Input, ActionMenu, Modal, ModalRef,
-  NavbarTemplate, Navbar, NavController, Content} from 'ionic/ionic';
+import {IonicApp, IonicView} from 'ionic/ionic';
 
 import {SinkPage} from '../sink-page';
 
-@Component({
-  selector: 'ion-view'
-})
-@View({
+
+@IonicView({
   template: `
   <ion-navbar *navbar><ion-nav-items primary><button icon (^click)="toggleMenu()"><i class="icon ion-navicon"></i></button></ion-nav-items><ion-title>Form</ion-title></ion-navbar>
 
@@ -34,8 +29,7 @@ import {SinkPage} from '../sink-page';
       <button ion-button primary block type="submit">Submit</button>
     </form>
   </ion-content>
-  `,
-  directives: [formDirectives, NavbarTemplate, Navbar, Content, List, Item, Input]
+  `
 })
 export class FormPage extends SinkPage {
   constructor(app: IonicApp) {

@@ -2,7 +2,7 @@ import {App} from 'ionic/ionic';
 
 
 @App({
-  router: {
+  routes: {
     'FirstPage': {
       'path': '/firstpage',
       'module': 'dist/examples/nav/basic/pages/first-page',

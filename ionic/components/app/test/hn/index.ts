@@ -18,9 +18,6 @@ export class Story {
   }
 }
 
-@Component({
-  selector: 'ion-view'
-})
 @IonicView({
   templateUrl: './pages/top.html'
 })

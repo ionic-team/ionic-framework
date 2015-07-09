@@ -1,14 +1,9 @@
-import {NgFor, Component, Directive, View} from 'angular2/angular2';
-
-import {IonicApp, List, Item, ActionMenu, Modal, ModalRef,
-  NavbarTemplate, Navbar, NavController, Content, Refresher} from 'ionic/ionic';
+import {IonicApp, IonicView} from 'ionic/ionic';
 
 import {SinkPage} from '../sink-page';
 
-@Component({
-  selector: 'ion-view'
-})
-@View({
+
+@IonicView({
   template: `
   <ion-navbar *navbar><ion-nav-items primary><button icon (^click)="toggleMenu()"><i class="icon ion-navicon"></i></button></ion-nav-items><ion-title>Pull to Refresh</ion-title></ion-navbar>
 
@@ -21,8 +16,7 @@ import {SinkPage} from '../sink-page';
       </ion-item>
     </ion-list>
   </ion-content>
-  `,
-  directives: [NgFor, NavbarTemplate, Navbar, Content, List, Item, Refresher]
+  `
 })
 export class PullToRefreshPage extends SinkPage {
   constructor(app: IonicApp) {

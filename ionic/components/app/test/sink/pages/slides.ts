@@ -1,14 +1,9 @@
-import {Component, Directive, View} from 'angular2/angular2';
-
-import {IonicApp, Slides, Slide, SlidePager, List, Item, ActionMenu, Modal, ModalRef,
-  NavbarTemplate, Navbar, NavController, Content} from 'ionic/ionic';
+import {IonicApp, IonicView} from 'ionic/ionic';
 
 import {SinkPage} from '../sink-page';
 
-@Component({
-  selector: 'ion-view'
-})
-@View({
+
+@IonicView({
   template: `
   <ion-navbar *navbar><ion-nav-items primary><button icon (^click)="toggleMenu()"><i class="icon ion-navicon"></i></button></ion-nav-items><ion-title>Slides</ion-title></ion-navbar>
 
@@ -41,8 +36,7 @@ import {SinkPage} from '../sink-page';
       </ion-pager>
     </ion-slides>
   </ion-content>
-  `,
-  directives: [NavbarTemplate, Navbar, Content, Slides, Slide, SlidePager]
+  `
 })
 export class SlidePage extends SinkPage {
   constructor(app: IonicApp) {

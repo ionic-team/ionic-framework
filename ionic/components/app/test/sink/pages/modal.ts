@@ -1,13 +1,8 @@
-import {Component, Directive, View} from 'angular2/angular2';
-
-import {IonicApp, IonicView, ActionMenu, Modal,
-  NavbarTemplate, Navbar, NavController, Content} from 'ionic/ionic';
+import {IonicApp, IonicView, Modal} from 'ionic/ionic';
 
 import {SinkPage} from '../sink-page';
 
-@Component({
-  selector: 'ion-view'
-})
+
 @IonicView({
   template: `
   <ion-navbar *navbar><ion-nav-items primary><button icon (^click)="toggleMenu()"><i class="icon ion-navicon"></i></button></ion-nav-items><ion-title>Modal</ion-title></ion-navbar>

@@ -1,9 +1,7 @@
-import {Component, Directive, View} from 'angular2/angular2';
-
-import {Animation, IonicApp, List, Item, ActionMenu, Modal, ModalRef,
-  NavbarTemplate, Navbar, NavController, Content} from 'ionic/ionic';
+import {IonicView, Animation, IonicApp} from 'ionic/ionic';
 
 import {SinkPage} from '../sink-page';
+
 
 let opacity = 0.2;
 let rotateZ = '180deg';
@@ -11,10 +9,7 @@ let translateX = '100px';
 let scale = 0.6;
 
 
-@Component({
-  selector: 'ion-view'
-})
-@View({
+@IonicView({
   template: `
   <ion-navbar *navbar><ion-nav-items primary><button icon (^click)="toggleMenu()"><i class="icon ion-navicon"></i></button></ion-nav-items><ion-title>Animation</ion-title></ion-navbar>
 
@@ -34,7 +29,6 @@ let scale = 0.6;
       background: blue;
     }
   </style>
-
 
   <ion-content class="padding">
     <h2>Animation</h2>
@@ -72,8 +66,7 @@ let scale = 0.6;
     </p>
 
   </ion-content>
-  `,
-  directives: [NavbarTemplate, Navbar, Content, List, Item]
+  `
 })
 export class AnimationPage extends SinkPage {
   constructor(app: IonicApp) {

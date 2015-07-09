@@ -1,10 +1,8 @@
-import {Component, Directive} from 'angular2/angular2';
 import {FormBuilder, Control, ControlGroup, Validators, formDirectives} from 'angular2/forms';
 
 import {App, IonicView, Animation, Modal, NavController, NavParams} from 'ionic/ionic';
 
 
-@Component({ selector: 'ion-view' })
 @IonicView({
   templateUrl: 'detail.html'
 })
@@ -14,7 +12,6 @@ export class DetailPage {
   }
 }
 
-@Component({ selector: 'ion-view' })
 @IonicView({
   templateUrl: 'feed.html'
 })

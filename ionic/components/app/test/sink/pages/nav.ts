@@ -1,13 +1,7 @@
-import {Component, Directive, View} from 'angular2/angular2';
-
-import {List, Item, ActionMenu, Modal, ModalRef,
-  NavbarTemplate, Navbar, NavController, Content} from 'ionic/ionic';
+import {IonicView, NavController} from 'ionic/ionic';
 
 
-@Component({
-  selector: 'ion-view'
-})
-@View({
+@IonicView({
   template: `
   <ion-navbar *navbar><ion-title>Cards</ion-title></ion-navbar>
 
@@ -23,8 +17,7 @@ import {List, Item, ActionMenu, Modal, ModalRef,
     </p>
     <button primary (click)="push()">Push</button>
   </ion-content>
-  `,
-  directives: [NavbarTemplate, Navbar, Content, List, Item]
+  `
 })
 export class NavPage {
   constructor(nav: NavController) {
@@ -35,22 +28,17 @@ export class NavPage {
   }
 }
 
-@Component({selector: 'ion-view'})
-@View({
+
+@IonicView({
   template: `
-  <ion-navbar *navbar><ion-title>Second Page</ion-title></ion-navbar>
-  <ion-content padding>
-    <button primary (click)="pop()">Pop</button>
-  </ion-content>
-  `,
-  directives: [NavbarTemplate, Navbar, Content]
+    <ion-navbar *navbar><ion-title>Second Page</ion-title></ion-navbar>
+    <ion-content class="padding">
+      <button primary (click)="nav.pop()">Pop</button>
+    </ion-content>
+  `
 })
 export class NavSecondPage {
   constructor(nav: NavController) {
     this.nav = nav;
-  }
-
-  pop() {
-    this.nav.pop();
   }
 }

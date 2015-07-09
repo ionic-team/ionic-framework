@@ -1,13 +1,10 @@
-import {IonicComponent, IonicView, IonicConfig, IonicApp} from 'ionic/ionic';
+import {IonicView, IonicConfig, IonicApp} from 'ionic/ionic';
 import {NavParams, Routable, NavController} from 'ionic/ionic';
 
 import {SecondPage} from './second-page';
 import {ThirdPage} from './third-page';
 
 
-@IonicComponent({
-  selector: 'ion-view'
-})
 @IonicView({
   template: '' +
     '<ion-navbar *navbar>' +

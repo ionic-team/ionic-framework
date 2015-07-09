@@ -1,9 +1,7 @@
-import {NgFor, Injector} from 'angular2/angular2';
-import {Component, Directive, View} from 'angular2/angular2';
+import {Component} from 'angular2/angular2';
 import {FormBuilder, Validators, formDirectives, ControlGroup} from 'angular2/forms';
 
-import {Segment, SegmentButton, SearchBar, List, Item, ActionMenu, Modal, ModalRef,
-  NavbarTemplate, Navbar, NavController, Content} from 'ionic/ionic';
+import {IonicView} from 'ionic/ionic';
 
 
 function randomTitle() {
@@ -15,7 +13,7 @@ function randomTitle() {
   selector: 'ion-view',
   appInjector: [FormBuilder]
 })
-@View({
+@IonicView({
   template: `
   <ion-navbar *navbar><ion-title>Table Search</ion-title></ion-navbar>
 
@@ -26,14 +24,13 @@ function randomTitle() {
 
       <ion-list #list>
 
-        <ion-item *ng-for="#item of getItems()"><!--items | search:form.controls.searchControl.value">-->
+        <ion-item *ng-for="#item of getItems()"><!--items | search:form.controls.searchControl.value-->
           {{item.title}}
         </ion-item>
       </ion-list>
     </form>
   </ion-content>
-  `,
-  directives: [formDirectives].concat([Content, NavbarTemplate, Navbar, List, Item, SearchBar, NgFor])
+  `
 })
 export class TableSearchPage {
   constructor(formBuilder: FormBuilder) {
@@ -43,16 +40,16 @@ export class TableSearchPage {
       searchQuery: ['', Validators.required]
     });
 
-
     this.query = 'HELLO';
 
-    this.items = []
+    this.items = [];
     for(let i = 0; i < 100; i++) {
       this.items.push({
         title: randomTitle()
       })
     }
   }
+
   getItems() {
     var q = this.form.controls.searchQuery.value;
     if(q.trim() == '') {

@@ -1,7 +1,5 @@
-import {Component} from 'angular2/angular2';
-
-import {App, IonicComponent, IonicView, IonicApp, IonicConfig, Platform} from 'ionic/ionic';
-import {Modal, NavController, NavParams, Animation, ActionMenu} from 'ionic/ionic';
+import {App, IonicView, IonicApp, IonicConfig, Platform} from 'ionic/ionic';
+import {Modal, ActionMenu, NavController, NavParams, Animation} from 'ionic/ionic';
 
 
 @App({
@@ -53,9 +51,6 @@ export class ContactModal {
 }
 
 
-@Component({
-  selector: 'ion-view'
-})
 @IonicView({
   template: `
     <ion-navbar *navbar><ion-title>First Page Header: {{ val }}</ion-title><ion-nav-items primary><button primary (click)="closeModal()">Close</button></ion-nav-items></ion-navbar>
@@ -127,7 +122,7 @@ export class ModalFirstPage {
   }
 }
 
-@Component({selector: 'ion-view'})
+
 @IonicView({
   template: `
     <ion-navbar *navbar><ion-title>Second Page Header</ion-title></ion-navbar>

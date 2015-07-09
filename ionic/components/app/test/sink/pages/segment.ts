@@ -1,13 +1,8 @@
-import {NgFor, Injector, DomRenderer, ElementRef, Ancestor} from 'angular2/angular2';
-import {Component, Directive, View} from 'angular2/angular2';
-import {FormBuilder, Validators, formDirectives, Control, ControlGroup} from 'angular2/forms';
+import {FormBuilder, Validators, formDirectives, Control, ControlGroup} from 'angular2/angular2';
 
-import {Segment, SegmentButton, List, Item, ActionMenu, Modal, ModalRef,
-  NavbarTemplate, Navbar, NavController, Content, IonicView} from 'ionic/ionic';
+import {IonicView} from 'ionic/ionic';
 
-@Component({
-  selector: 'ion-view'
-})
+
 @IonicView({
   template: `
   <ion-navbar *navbar><ion-title>Segment</ion-title></ion-navbar>
@@ -55,8 +50,7 @@ import {Segment, SegmentButton, List, Item, ActionMenu, Modal, ModalRef,
       </div>
     </div>
   </ion-content>
-  `,
-  directives: [formDirectives]
+  `
 })
 export class SegmentPage {
   constructor() {

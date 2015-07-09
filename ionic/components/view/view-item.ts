@@ -1,15 +1,14 @@
-import {EventEmitter} from 'angular2/angular2';
-import {ElementRef} from 'angular2/src/core/compiler/element_ref';
-import {bind} from 'angular2/di';
+import {Component, EventEmitter, ElementRef, bind} from 'angular2/angular2';
+import {DirectiveBinding} from 'angular2/src/core/compiler/element_injector';
 
 import {NavParams} from '../nav/nav-controller';
 
 
 export class ViewItem {
 
-  constructor(viewCtrl, ComponentType, params = {}) {
+  constructor(viewCtrl, cls, params = {}) {
     this.viewCtrl = viewCtrl;
-    this.ComponentType = ComponentType;
+    this.cls = cls;
     this.params = new NavParams(params);
     this.instance = null;
     this.state = 0;
@@ -32,8 +31,16 @@ export class ViewItem {
       return callback();
     }
 
+    let annotation = new Component({
+      selector: 'ion-view',
+      host: {
+        'class': 'nav-item'
+      }
+    });
+    let ionViewComponent = DirectiveBinding.createFromType(this.cls, annotation);
+
     // compile the Component
-    viewCtrl.compiler.compileInHost(this.ComponentType).then(componentProtoViewRef => {
+    viewCtrl.compiler.compileInHost(ionViewComponent).then(componentProtoViewRef => {
 
       // figure out the sturcture of this Component
       // does it have a navbar? Is it tabs? Should it not have a navbar or any toolbars?
@@ -178,10 +185,9 @@ export class ViewItem {
     }
   }
 
-  viewElement() {
+  viewElement(val) {
     if (arguments.length) {
-      this._vwEle = arguments[0];
-      this._vwEle && this._vwEle.classList.add('nav-item');
+      this._vwEle = val;
     }
     return this._vwEle;
   }

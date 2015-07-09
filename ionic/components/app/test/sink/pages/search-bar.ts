@@ -1,16 +1,16 @@
-import {Component, Directive, View} from 'angular2/angular2';
+import {Component} from 'angular2/angular2';
 import {FormBuilder, Validators, formDirectives, ControlGroup} from 'angular2/forms';
 
-import {IonicApp, Segment, SegmentButton, SearchBar, List, Item, ActionMenu, Modal, ModalRef,
-  NavbarTemplate, Navbar, NavController, Content} from 'ionic/ionic';
+import {IonicApp, IonicView} from 'ionic/ionic';
 
 import {SinkPage} from '../sink-page';
+
 
 @Component({
   selector: 'ion-view',
   appInjector: [FormBuilder]
 })
-@View({
+@IonicView({
   template: `
   <ion-navbar *navbar><ion-nav-items primary><button icon (^click)="toggleMenu()"><i class="icon ion-navicon"></i></button></ion-nav-items><ion-title>Search Bar</ion-title></ion-navbar>
 
@@ -31,8 +31,7 @@ import {SinkPage} from '../sink-page';
       </div>
     </form>
   </ion-content>
-  `,
-  directives: [formDirectives, NavbarTemplate, Navbar, Content, SearchBar]
+  `
 })
 export class SearchBarPage extends SinkPage {
   constructor(app: IonicApp, formBuilder: FormBuilder) {

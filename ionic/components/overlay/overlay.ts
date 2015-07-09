@@ -18,13 +18,14 @@ export class Overlay {
     return new Promise((resolve, reject) => {
       let app = this.app;
 
-      let annotation = new Component();
-      annotation.selector = 'ion-' + overlayType;
-      annotation.host = {
-        '[style.z-index]': 'zIndex',
-        'class': overlayType + ' ion-app',
-        'mode': this.ionicConfig.setting('mode')
-      };
+      let annotation = new Component({
+        selector: 'ion-' + overlayType,
+        host: {
+          '[style.z-index]': 'zIndex',
+          'class': overlayType + ' ion-app',
+          'mode': this.ionicConfig.setting('mode')
+        }
+      });
       let overlayComponent = DirectiveBinding.createFromType(ComponentType, annotation);
 
       app.appendComponent(overlayComponent, context).then(ref => {
