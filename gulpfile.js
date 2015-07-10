@@ -69,7 +69,7 @@ var IS_WATCH = false;
 gulp.task('watch', ['build'], function() {
   IS_WATCH = true;
   gulp.watch('js/**/*.js', ['bundle']);
-  gulp.watch('scss/**/*.scss', ['sass']);
+  gulp.watch('www/**/*.scss', ['sass']);
 });
 
 gulp.task('changelog', function() {
