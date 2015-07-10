@@ -163,5 +163,6 @@
 @media (min-width: $popover-large-break-point) {
   .popover {
     width: $popover-large-width;
+    margin-left: -$popover-large-width / 2;
   }
 }
