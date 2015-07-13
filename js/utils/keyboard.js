@@ -753,11 +753,13 @@ function keyboardHasPlugin() {
 }
 
 function keyboardPlugin() {
-  plugin = cordovaPlugin()
-  if (plugin != null)
+  var plugin = cordovaPlugin();
+  if (plugin != null) {
     return plugin;
-  else
+  }
+  else {
     return forgeModule();
+  }
 }
 
 ionic.Platform.ready(function() {
