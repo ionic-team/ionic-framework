@@ -189,15 +189,25 @@ gulp.task('bundle.js', function() {
 //    throw new Error(error);
 //  })
 //});
+gulp.task('tests', function() {
+  return gulp.src('ionic/components/*/test/*/**/*.spec.ts')
+             .pipe(tsc(tscOptions, null, tscReporter))
+             .pipe(babel())
+             .pipe(rename(function(file) {
+               file.dirname = file.dirname.replace(path.sep + 'test' + path.sep, path.sep)
+             }))
+             .pipe(gulp.dest('dist/tests'))
+})
+
 
 gulp.task('examples', function() {
   var buildTest = lazypipe()
              //.pipe(traceur, traceurOptions)
-             .pipe(tsc, tscOptions, null, tsc.reporter.nullReporter())
+             .pipe(tsc, tscOptions, null, tscReporter)
              .pipe(babel, exampleBabelOptions)
 
   // Get each test folder with gulp.src
-  return gulp.src('ionic/components/*/test/*/**/*')
+  return gulp.src(['ionic/components/*/test/*/**/*', '!ionic/components/*/test/*/**/*.spec.ts'])
     .pipe(cache('examples', { optimizeMemory: true }))
     .pipe(gulpif(/.ts$/, buildTest()))
     .on('error', function (err) {
@@ -263,7 +273,8 @@ gulp.task('vendor', function() {
 require('./scripts/snapshot/snapshot.task')(gulp, argv, buildConfig);
 
 gulp.task('karma', function() {
-  return karma.start({ configFile: __dirname + '/scripts/test/karma.conf.js' })
+  //return karma.start({ configFile: __dirname + '/scripts/test/karma.conf.js' })
+  return karma.start({ configFile: __dirname + '/karma.conf.js' })
 });
 
 gulp.task('karma-watch', function() {

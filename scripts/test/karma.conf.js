@@ -3,7 +3,7 @@ var buildConfig = require('../build/config');
 module.exports = function(config) {
   config.set({
     singleRun: true,
-    basePath: '../../dist/lib',
+    basePath: '../..',
 
     frameworks: ['jasmine'],
 
