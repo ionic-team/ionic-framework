@@ -30,8 +30,8 @@ class StaticSegment {
     this.regex = escapeRegex(string);
   }
 
-  generate(params) {
-    return this.string;
+  generate() {
+    return this.regex;
   }
 }
 
@@ -48,7 +48,6 @@ class DynamicSegment {
     return normalizeBlank(StringMapWrapper.get(params, this.name));
   }
 }
-
 
 class StarSegment {
   constructor(name) {
@@ -124,8 +123,6 @@ export class PathRecognizer {
   constructor(path) {
     this.segments = [];
 
-    // TODO: use destructuring assignment
-    // see https://github.com/angular/ts2dart/issues/158
     var parsed = parsePathString(path);
     var specificity = parsed['specificity'];
     var segments = parsed['segments'];

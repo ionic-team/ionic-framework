@@ -1,5 +1,5 @@
 import {IonicView, IonicConfig, IonicApp} from 'ionic/ionic';
-import {NavParams, Routable, NavController} from 'ionic/ionic';
+import {NavParams, NavController} from 'ionic/ionic';
 
 import {SecondPage} from './second-page';
 import {ThirdPage} from './third-page';
@@ -52,39 +52,35 @@ export class FirstPage {
     this.nav.setItems(items);
   }
 
-  viewLoaded() {
-    console.log('viewLoaded first page');
-  }
+  // viewLoaded() {
+  //   console.log('viewLoaded first page');
+  // }
 
-  viewWillEnter() {
-    console.log('viewWillEnter first page');
-  }
+  // viewWillEnter() {
+  //   console.log('viewWillEnter first page');
+  // }
 
-  viewDidEnter() {
-    console.log('viewDidEnter first page');
-  }
+  // viewDidEnter() {
+  //   console.log('viewDidEnter first page');
+  // }
 
-  viewWillLeave() {
-    console.log('viewWillLeave first page');
-  }
+  // viewWillLeave() {
+  //   console.log('viewWillLeave first page');
+  // }
 
-  viewDidLeave() {
-    console.log('viewDidLeave first page');
-  }
+  // viewDidLeave() {
+  //   console.log('viewDidLeave first page');
+  // }
 
-  viewWillUnload() {
-    console.log('viewWillUnload first page');
-  }
+  // viewWillUnload() {
+  //   console.log('viewWillUnload first page');
+  // }
 
-  viewDidUnload() {
-    console.log('viewDidUnload first page');
-  }
+  // viewDidUnload() {
+  //   console.log('viewDidUnload first page');
+  // }
 
   push() {
     this.nav.push(SecondPage, { id: 8675309, myData: [1,2,3,4] }, { animation: 'ios' });
   }
 }
-
-new Routable(FirstPage, {
-  path: '/firstpage'
-});

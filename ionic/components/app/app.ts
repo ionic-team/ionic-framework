@@ -26,7 +26,11 @@ export class IonicApp {
 
   load(appRef) {
     this.ref(appRef);
-    this.zone(this.injector().get(NgZone));
+    this._zone = this.injector().get(NgZone);
+  }
+
+  title(val) {
+    document.title = val;
   }
 
   ref(val) {
@@ -40,11 +44,8 @@ export class IonicApp {
     return this._ref.injector;
   }
 
-  zone(val) {
-    if (arguments.length) {
-      this._zone = val;
-    }
-    return this._zone;
+  zoneRun(fn) {
+    this._zone.run(fn);
   }
 
   stateChange(type, activeView) {
@@ -74,10 +75,10 @@ export class IonicApp {
    * Create and append the given component into the root
    * element of the app.
    *
-   * @param Component the cls to create and insert
+   * @param Component the component to create and insert
    * @return Promise that resolves with the ContainerRef created
    */
-  appendComponent(cls: Type, context=null) {
+  appendComponent(component: Type, context=null) {
     return new Promise((resolve, reject) => {
       let injector = this.injector();
       let compiler = injector.get(Compiler);
@@ -85,7 +86,7 @@ export class IonicApp {
       let rootComponentRef = this._ref._hostComponent;
       let viewContainerLocation = rootComponentRef.location;
 
-      compiler.compileInHost(cls).then(protoViewRef => {
+      compiler.compileInHost(component).then(protoViewRef => {
         let atIndex = 0;
 
         let hostViewRef = viewMngr.createViewInContainer(
@@ -158,8 +159,8 @@ function initApp(window, document, config) {
   return app;
 }
 
-export function ionicBootstrap(cls, config, router) {
-  return new Promise((resolve, reject) => {
+export function ionicBootstrap(component, config, router) {
+  return new Promise(resolve => {
     try {
       // get the user config, or create one if wasn't passed in
       if (typeof config !== IonicConfig) {
@@ -202,7 +203,7 @@ export function ionicBootstrap(cls, config, router) {
         bind(Modal).toValue(modal)
       ];
 
-      bootstrap(cls, injectableBindings).then(appRef => {
+      bootstrap(component, injectableBindings).then(appRef => {
         app.load(appRef);
 
         router.load(window, app, config).then(() => {
@@ -212,12 +213,10 @@ export function ionicBootstrap(cls, config, router) {
 
       }).catch(err => {
         console.error('ionicBootstrap', err);
-        reject(err);
       });
 
     } catch (err) {
-      console.error('ionicBootstrap', err);
-      reject(err);
+      console.error(err);
     }
   });
 }

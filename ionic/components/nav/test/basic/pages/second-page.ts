@@ -1,4 +1,4 @@
-import {IonicView, Routable, NavController, NavParams} from 'ionic/ionic';
+import {IonicView, NavController, NavParams} from 'ionic/ionic';
 import {ThirdPage} from './third-page';
 import {FirstPage} from './first-page';
 
@@ -45,36 +45,32 @@ export class SecondPage {
     this.nav.push(ThirdPage);
   }
 
-  viewLoaded() {
-    console.log('viewLoaded second page');
-  }
+  // viewLoaded() {
+  //   console.log('viewLoaded second page');
+  // }
 
-  viewWillEnter() {
-    console.log('viewWillEnter second page');
-  }
+  // viewWillEnter() {
+  //   console.log('viewWillEnter second page');
+  // }
 
-  viewDidEnter() {
-    console.log('viewDidEnter second page');
-  }
+  // viewDidEnter() {
+  //   console.log('viewDidEnter second page');
+  // }
 
-  viewWillLeave() {
-    console.log('viewWillLeave second page');
-  }
+  // viewWillLeave() {
+  //   console.log('viewWillLeave second page');
+  // }
 
-  viewDidLeave() {
-    console.log('viewDidLeave second page');
-  }
+  // viewDidLeave() {
+  //   console.log('viewDidLeave second page');
+  // }
 
-  viewWillUnload() {
-    console.log('viewWillUnload second page');
-  }
+  // viewWillUnload() {
+  //   console.log('viewWillUnload second page');
+  // }
 
-  viewDidUnload() {
-    console.log('viewDidUnload second page');
-  }
+  // viewDidUnload() {
+  //   console.log('viewDidUnload second page');
+  // }
 
 }
-
-new Routable(SecondPage, {
-  path: '/secondpage'
-});

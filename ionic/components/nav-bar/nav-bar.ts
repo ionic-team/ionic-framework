@@ -4,6 +4,7 @@ import {ProtoViewRef} from 'angular2/src/core/compiler/view_ref';
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
 import {IonicComponent} from '../../config/annotations';
+import {IonicApp} from '../app/app';
 import {ViewItem} from '../view/view-item';
 import * as dom from '../../util/dom';
 
@@ -42,9 +43,10 @@ import * as dom from '../../util/dom';
   ]
 })
 export class Navbar extends Ion {
-  constructor(item: ViewItem, elementRef: ElementRef, ionicConfig: IonicConfig) {
+  constructor(item: ViewItem, elementRef: ElementRef, ionicConfig: IonicConfig, app: IonicApp) {
     super(elementRef, ionicConfig);
 
+    this.app = app;
     this.eleRef = elementRef;
     this.itemEles = [];
     item.navbarView(this);
@@ -130,8 +132,10 @@ export class Navbar extends Ion {
   }
 
   didEnter() {
+    const titleEle = this._ttEle || (this._ttEle = this.eleRef.nativeElement.querySelector('ion-title'));
+    this.app.title(titleEle.textContent);
+
     setTimeout(() => {
-      const titleEle = this._ttEle || (this._ttEle = this.eleRef.nativeElement.querySelector('ion-title'));
       //this.titleText((titleEle && titleEle.textContent) || '');
     }, 32);
   }

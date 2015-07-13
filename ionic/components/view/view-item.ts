@@ -6,9 +6,9 @@ import {NavParams} from '../nav/nav-controller';
 
 export class ViewItem {
 
-  constructor(viewCtrl, cls, params = {}) {
+  constructor(viewCtrl, component, params = {}) {
     this.viewCtrl = viewCtrl;
-    this.cls = cls;
+    this.component = component;
     this.params = new NavParams(params);
     this.instance = null;
     this.state = 0;
@@ -37,7 +37,7 @@ export class ViewItem {
         'class': 'nav-item'
       }
     });
-    let ionViewComponent = DirectiveBinding.createFromType(this.cls, annotation);
+    let ionViewComponent = DirectiveBinding.createFromType(this.component, annotation);
 
     // compile the Component
     viewCtrl.compiler.compileInHost(ionViewComponent).then(componentProtoViewRef => {

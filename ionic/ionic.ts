@@ -12,7 +12,7 @@ export * from 'ionic/platform/platform'
 export * from 'ionic/platform/registry'
 
 export * from 'ionic/routing/router'
-export * from 'ionic/routing/hash-url-state'
+export * from 'ionic/routing/url-state'
 
 export * from 'ionic/util/click-block'
 export * from 'ionic/util/focus'

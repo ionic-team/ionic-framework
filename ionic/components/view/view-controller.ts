@@ -49,8 +49,8 @@ export class ViewController extends Ion {
     ]);
   }
 
-  push(ComponentType, params = {}, opts = {}) {
-    if (!ComponentType || this.isTransitioning()) {
+  push(component, params = {}, opts = {}) {
+    if (!component || this.isTransitioning()) {
       return Promise.reject();
     }
 
@@ -74,7 +74,7 @@ export class ViewController extends Ion {
     }
 
     // create a new ViewItem
-    let enteringItem = new ViewItem(this, ComponentType, params);
+    let enteringItem = new ViewItem(this, component, params);
 
     // add the item to the stack
     this.add(enteringItem);
@@ -136,6 +136,10 @@ export class ViewController extends Ion {
    * Set the item stack to reflect the given component classes.
    */
   setItems(components, opts = {}) {
+    if (!components || !components.length) {
+      return Promise.resolve();
+    }
+
     // if animate has not been set then default to false
     opts.animate = opts.animate || false;
 
@@ -162,13 +166,15 @@ export class ViewController extends Ion {
       let newBeforeItems = components.slice(0, components.length - 1);
       for (let j = 0; j < newBeforeItems.length; j++) {
         component = newBeforeItems[j];
-        viewItem = new ViewItem(this, component.component || component, component.params);
-        viewItem.state = CACHED_STATE;
-        viewItem.shouldDestroy = false;
-        viewItem.shouldCache = false;
+        if (component) {
+          viewItem = new ViewItem(this, component.component || component, component.params);
+          viewItem.state = CACHED_STATE;
+          viewItem.shouldDestroy = false;
+          viewItem.shouldCache = false;
 
-        // add the item to the stack
-        this.add(viewItem);
+          // add the item to the stack
+          this.add(viewItem);
+        }
       }
     }
 
@@ -177,13 +183,13 @@ export class ViewController extends Ion {
     component = components[ components.length - 1 ];
 
     // transition the leaving and entering
-    return this.push(component.component || component, component.params, opts);
+    return this.push((component && component.component) || component, (component && component.params), opts);
   }
 
-  setRoot(ComponentType, params = {}, opts = {}) {
+  setRoot(component, params = {}, opts = {}) {
     return this.setItems([{
-             component: ComponentType,
-             params: params
+             component,
+             params
            }], opts);
   }
 
@@ -485,7 +491,7 @@ export class ViewController extends Ion {
   }
 
   add(item) {
-    item.id = this.id + '' + (++this._ids);
+    item.id = this.id + '-' + (++this._ids);
     this.items.push(item);
   }
 

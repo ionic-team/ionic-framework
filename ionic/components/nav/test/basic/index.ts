@@ -1,21 +1,25 @@
 import {App} from 'ionic/ionic';
 
+import {FirstPage} from './pages/first-page';
+import {SecondPage} from './pages/second-page';
+import {ThirdPage} from './pages/third-page';
+
 
 @App({
-  routes: {
-    'FirstPage': {
-      'path': '/firstpage',
-      'module': 'dist/examples/nav/basic/pages/first-page',
-      'root': true
+  routes: [
+    {
+      path: '/firstpage',
+      component: FirstPage,
+      root: true
     },
-    'SecondPage': {
-      'path': '/secondpage',
-      'module': 'dist/examples/nav/basic/pages/second-page',
+    {
+      path: '/secondpage',
+      component: SecondPage,
     },
-    'ThirdPage': {
-      'path': '/thirdpage',
-      'module': 'dist/examples/nav/basic/pages/third-page',
-    },
-  }
+    {
+      path: '/thirdpage',
+      component: ThirdPage,
+    }
+  ]
 })
 class MyApp {}

@@ -1,4 +1,4 @@
-import {IonicView, Routable, NavController} from 'ionic/ionic';
+import {IonicView, NavController} from 'ionic/ionic';
 
 
 @IonicView({
@@ -23,36 +23,32 @@ export class ThirdPage {
     this.nav.pop()
   }
 
-  viewLoaded() {
-    console.log('viewLoaded third page');
-  }
+  // viewLoaded() {
+  //   console.log('viewLoaded third page');
+  // }
 
-  viewWillEnter() {
-    console.log('viewWillEnter third page');
-  }
+  // viewWillEnter() {
+  //   console.log('viewWillEnter third page');
+  // }
 
-  viewDidEnter() {
-    console.log('viewDidEnter third page');
-  }
+  // viewDidEnter() {
+  //   console.log('viewDidEnter third page');
+  // }
 
-  viewWillLeave() {
-    console.log('viewWillLeave third page');
-  }
+  // viewWillLeave() {
+  //   console.log('viewWillLeave third page');
+  // }
 
-  viewDidLeave() {
-    console.log('viewDidLeave third page');
-  }
+  // viewDidLeave() {
+  //   console.log('viewDidLeave third page');
+  // }
 
-  viewWillUnload() {
-    console.log('viewWillUnload third page');
-  }
+  // viewWillUnload() {
+  //   console.log('viewWillUnload third page');
+  // }
 
-  viewDidUnload() {
-    console.log('viewDidUnload third page');
-  }
+  // viewDidUnload() {
+  //   console.log('viewDidUnload third page');
+  // }
 
 }
-
-new Routable(ThirdPage, {
-  path: '/thirdpage'
-});
