@@ -83,6 +83,7 @@ describe('Ionic Keyboard', function() {
   beforeEach(module('ionic'));
 
   beforeEach(inject(function($rootScope, $compile) {
+    window.forge = undefined
     window.cordova = undefined;
     window.device = undefined;
 
@@ -514,5 +515,37 @@ describe('Ionic Keyboard', function() {
     expect(ionic.keyboard.isInitialized).toBe(true);
     ionic.keyboard.disable();
     expect(ionic.keyboard.isInitialized).toBe(false);
+  });
+
+  it('getPlugin() should return undefined if no plugin setup', function(){
+    expect(cordovaPlugin()).toBe(undefined);
+    expect(forgeModule()).toBe(undefined);
+    expect(keyboardPlugin()).toBe(undefined);
+    expect(keyboardHasPlugin()).toBe(false);
+    expect(ionic.keyboard.getPlugin()).toBe(undefined);
+  });
+
+  it('getPlugin() should return cordova plugin if cordova plugin setup', function(){
+    cordova = {
+      'plugins': {
+        'Keyboard': {}
+      }
+    };
+    expect(cordovaPlugin()).toBe(cordova.plugins.Keyboard);
+    expect(forgeModule()).toBe(undefined);
+    expect(keyboardPlugin()).toBe(cordova.plugins.Keyboard);
+    expect(keyboardHasPlugin()).toBe(true);
+    expect(ionic.keyboard.getPlugin()).toBe(cordova.plugins.Keyboard);
+  });
+
+  it('getPlugin() should return forge module if forge module setup', function(){
+    forge = {
+      'ionic_keyboard': {}
+    };
+    expect(cordovaPlugin()).toBe(undefined);
+    expect(forgeModule()).toBe(forge.ionic_keyboard);
+    expect(keyboardPlugin()).toBe(forge.ionic_keyboard);
+    expect(keyboardHasPlugin()).toBe(true);
+    expect(ionic.keyboard.getPlugin()).toBe(forge.ionic_keyboard);
   });
 });
