@@ -1,2 +1,0 @@
-
-__karma__.start();

@@ -4,26 +4,12 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 50;
 // we will call `__karma__.start()` later, once all the specs are loaded.
 __karma__.loaded = function() {};
 
-System.config({
-  baseURL: 'http://localhost:9876/base',
-  traceurOptions: {
-    'sourceMaps': true,
-    'annotations': true,
-    'types': true,
-    'script': false,
-    'memberVariables': true,
-    'modules': 'instantiate'
-  },
-  map: {
-    'rx/dist/rx.all': 'rx.all',
-  }
-})
-
 Promise.all(
   Object.keys(window.__karma__.files) // All files served by Karma.
   .filter(onlySpecFiles)
   .map(window.file2moduleName)        // Normalize paths to module names.
   .map(function(path) {
+    debugger;
     return System.import(path).then(function(module) {
       if (module.hasOwnProperty('run')) {
         module.run();

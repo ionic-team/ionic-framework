@@ -123,6 +123,20 @@ var exampleBabelOptions = {
   }
 };
 
+var testBabelOptions = {
+  optional: ['es7.decorators'],
+  /*plugins: [
+    './transformers/disable-define',
+    'angular2-annotations',
+    'type-assertion:after'
+  ],*/
+  modules: "system",
+  moduleIds: true,
+  getModuleId: function(name) {
+    return "dist/tests/" + name.split('/test').join('');
+  }
+};
+
 var tscOptions = {
   target: 'ES6',
   // Don't use the version of typescript that gulp-typescript depends on, we need 1.5
@@ -192,7 +206,7 @@ gulp.task('bundle.js', function() {
 gulp.task('tests', function() {
   return gulp.src('ionic/components/*/test/*/**/*.spec.ts')
              .pipe(tsc(tscOptions, null, tscReporter))
-             .pipe(babel())
+             .pipe(babel(testBabelOptions))
              .pipe(rename(function(file) {
                file.dirname = file.dirname.replace(path.sep + 'test' + path.sep, path.sep)
              }))
@@ -273,8 +287,8 @@ gulp.task('vendor', function() {
 require('./scripts/snapshot/snapshot.task')(gulp, argv, buildConfig);
 
 gulp.task('karma', function() {
-  //return karma.start({ configFile: __dirname + '/scripts/test/karma.conf.js' })
-  return karma.start({ configFile: __dirname + '/karma.conf.js' })
+  return karma.start({ configFile: __dirname + '/scripts/test/karma.conf.js' })
+  //return karma.start({ configFile: __dirname + '/karma.conf.js' })
 });
 
 gulp.task('karma-watch', function() {

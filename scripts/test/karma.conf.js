@@ -2,14 +2,15 @@ var buildConfig = require('../build/config');
 
 module.exports = function(config) {
   config.set({
-    singleRun: true,
-    basePath: '../..',
+    //singleRun: true,
+    basePath: '../../',
 
     frameworks: ['jasmine'],
 
     files: buildConfig.scripts.concat([
-      {pattern: 'ionic2/**/*.js', included: false},
-      '../../scripts/test/test-main.js',
+      'dist/js/es5/ionic/**/*.js',
+      'dist/tests/**/*.spec.js',
+      'scripts/test/test-main.js'
     ]),
 
     exclude: buildConfig.src.e2e,
@@ -17,7 +18,6 @@ module.exports = function(config) {
     logLevel: 'warn',
 
     preprocessors: {
-      'modules/**/*.js': ['traceur']
     },
 
     browsers: ['Chrome'],
