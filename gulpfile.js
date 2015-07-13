@@ -136,26 +136,31 @@ var tscOptions = {
   noEmitOnError: false,  // ignore errors
   rootDir: '.'
 }
+var tscReporter = {
+    error: function (error) {
+        console.error(error.message);
+    }
+};
 
 gulp.task('transpile', function() {
   var stream = gulp.src(['ionic/**/*.ts', 'ionic/**/*.js', '!ionic/components/*/test/**/*', '!ionic/init.js'])
-             .pipe(cache('transpile', { optimizeMemory: true }))
-             .pipe(tsc(tscOptions, null, tsc.reporter.nullReporter()))
-            // .on('error', function(error) {
-            //   stream.emit('error', error);
-            // })
-            // .pipe(traceur(traceurOptions))
-            // .on('error', function (err) {
-            //   console.log("ERROR: " + err.message);
-            //   this.emit('end');
-            // })
-             .pipe(gulp.dest('dist/js/es6/ionic'))
-             .pipe(babel(babelOptions))
-             .on('error', function (err) {
-               console.log("ERROR: " + err.message);
-               this.emit('end');
-             })
-             .pipe(gulp.dest('dist/js/es5/ionic'))
+                   .pipe(cache('transpile', { optimizeMemory: true }))
+                   .pipe(tsc(tscOptions, null, tscReporter))
+                // .on('error', function(error) {
+                //   stream.emit('error', error);
+                // })
+                // .pipe(traceur(traceurOptions))
+                // .on('error', function (err) {
+                //   console.log("ERROR: " + err.message);
+                //   this.emit('end');
+                // })
+                   .pipe(gulp.dest('dist/js/es6/ionic'))
+                   .pipe(babel(babelOptions))
+                   .on('error', function (err) {
+                     console.log("ERROR: " + err.message);
+                     this.emit('end');
+                   })
+                   .pipe(gulp.dest('dist/js/es5/ionic'))
 
   return stream;
 });
