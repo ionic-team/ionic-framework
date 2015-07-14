@@ -160,9 +160,9 @@ gulp.task('transpile', function() {
   var stream = gulp.src(['ionic/**/*.ts', 'ionic/**/*.js', '!ionic/components/*/test/**/*', '!ionic/init.js'])
                    .pipe(cache('transpile', { optimizeMemory: true }))
                    .pipe(tsc(tscOptions, null, tscReporter))
-                // .on('error', function(error) {
-                //   stream.emit('error', error);
-                // })
+                   .on('error', function(error) {
+                     stream.emit('end');
+                   })
                 // .pipe(traceur(traceurOptions))
                 // .on('error', function (err) {
                 //   console.log("ERROR: " + err.message);
@@ -225,9 +225,9 @@ gulp.task('examples', function() {
     .pipe(cache('examples', { optimizeMemory: true }))
     .pipe(gulpif(/.ts$/, buildTest()))
     .on('error', function (err) {
-            console.log("ERROR: " + err.message);
-            this.emit('end');
-        })
+      console.log("ERROR: " + err.message);
+      this.emit('end');
+    })
     .pipe(gulpif(/index.js$/, createIndexHTML())) //TSC changes .ts to .js
     .pipe(rename(function(file) {
       file.dirname = file.dirname.replace(path.sep + 'test' + path.sep, path.sep)
