@@ -411,9 +411,9 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
 
       hist.cursor = viewHistory.currentView.index;
 
-      if (savedLastStateId && savedLastStateId.indexOf('tab') == 0 && currentStateId.indexOf('tab') == 0) {
-        direction = (savedLastStateId[4] < currentStateId[4]) ? DIRECTION_FORWARD : DIRECTION_BACK;
-      }
+      //if (savedLastStateId && savedLastStateId.indexOf('tab') == 0 && currentStateId.indexOf('tab') == 0) {
+      //  direction = (savedLastStateId[4] < currentStateId[4]) ? DIRECTION_FORWARD : DIRECTION_BACK;
+      //}
 
       return {
         viewId: viewId,
