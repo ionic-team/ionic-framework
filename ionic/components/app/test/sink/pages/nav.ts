@@ -3,7 +3,7 @@ import {IonicView, NavController} from 'ionic/ionic';
 
 @IonicView({
   template: `
-  <ion-navbar *navbar><ion-title>Cards</ion-title></ion-navbar>
+  <ion-navbar *navbar><ion-title>Navigation</ion-title></ion-navbar>
 
   <ion-content class="padding">
     <h2>Navigation</h2>

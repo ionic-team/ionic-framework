@@ -20,7 +20,56 @@ import {ModalPage} from './pages/modal'
 
 
 @App({
-  templateUrl: 'main.html'
+  templateUrl: 'main.html',
+  routes: [
+    {
+      path: '/nav',
+      component: NavPage,
+      root: true
+    }, {
+      path: '/buttons',
+      component: ButtonPage
+    }, {
+      path: '/lists',
+      component: ListPage
+    }, {
+      path: '/list-groups',
+      component: ListGroupPage
+    }, {
+      path: '/modal',
+      component: ModalPage
+    }, {
+      path: '/ptr',
+      component: PullToRefreshPage
+    }, {
+      path: '/cards',
+      component: CardPage
+    }, {
+      path: '/forms',
+      component: FormPage
+    }, {
+      path: '/segments',
+      component: SegmentPage
+    }, {
+      path: '/table-search',
+      component: TableSearchPage
+    }, {
+      path: '/icons',
+      component: IconsPage
+    }, {
+      path: '/aside',
+      component: AsidePage
+    }, {
+      path: '/animation',
+      component: AnimationPage
+    }, {
+      path: '/slides',
+      component: SlidePage
+    }, {
+      path: '/action-menu',
+      component: ActionMenuPage
+    }
+  ]
 })
 class MyApp {
   constructor(app: IonicApp) {
@@ -46,7 +95,7 @@ class MyApp {
       { title: 'Action Menu', component: ActionMenuPage },
     ];
 
-    this.rootView = ButtonPage
+    //this.rootView = ButtonPage
   }
 
   openPage(aside, component) {

@@ -34,7 +34,7 @@ export class IonicRouter {
   }
 
   stateChange(type, activeView) {
-    // this fires when the app's state has changed stateChange will
+    // this fires when the app's state has changed. `stateChange` will
     // tell each of the state managers that the state has changed, and
     // each state manager will decide what to do with this info
     // (the url state manager updates the url bar if a route was setup)
