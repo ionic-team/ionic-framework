@@ -71,7 +71,7 @@ export class TextInput extends IonInput {
     app: IonicApp,
     config: IonicConfig
   ) {
-    super(elementRef, app, scrollView);
+    super(elementRef, config, app, scrollView);
 
     if (container) {
       container.registerInput(this);
