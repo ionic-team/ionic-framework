@@ -11,10 +11,12 @@
 
 .checkbox-on {
   display: none;
+  pointer-events: none;
 }
 
 .checkbox-off {
   display: block;
+  pointer-events: none;
 }
 
 .checkbox[aria-checked=true] {

@@ -1,20 +1,28 @@
 <ion-content>
   <form (^submit)="doSubmit($event)" [ng-form-model]="fruitsForm">
+      <ion-checkbox icon-on="ion-android-checkmark-circle"><input #apple type="checkbox" ng-control="appleCtrl"></ion-checkbox>
 
-    <ion-list>
-      <div class="list-header">Some Switches</div>
-      <ion-checkbox [ng-control]="appleCtrl">
+      <ion-checkbox><input #banana type="checkbox" ng-control="bananaCtrl"><span>Test</span></ion-checkbox>
+
+      <!-- <ion-checkbox ng-control="appleCtrl">
         Apples
       </ion-checkbox>
-      <ion-checkbox [ng-control]="bananaCtrl">
+      <ion-checkbox ng-control="bananaCtrl">
         Bananas
       </ion-checkbox>
-      <ion-checkbox [ng-control]="grapeCtrl">
+      <ion-checkbox ng-control="grapeCtrl">
         Grapes
       </ion-checkbox>
-      <ion-checkbox [ng-control]="cherryCtrl">
+      <ion-checkbox ng-control="cherryCtrl">
         Cherries
-      </ion-checkbox>
-    </ion-list>
+      </ion-checkbox> -->
   </form>
+  appleCtrl.dirty: {{fruitsForm.controls.appleCtrl.dirty}}<br>
+  appleCtrl.value: {{fruitsForm.controls.appleCtrl.value}}<br>
+  apple.value: {{apple.value}}<br>
+  apple.checked: {{apple.checked}} <br>
+  bananaCtrl.dirty: {{fruitsForm.controls.bananaCtrl.dirty}}<br>
+  bananaCtrl.value: {{fruitsForm.controls.bananaCtrl.value}}<br>
+  banana.value: {{banana.value}}<br>
+  banana.checked: {{banana.checked}}
 </ion-content>
