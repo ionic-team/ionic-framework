@@ -188,6 +188,11 @@ IonicModule
     link: function($scope, $element, $attrs, ctrl) {
       var spinnerName = ctrl.init();
       $element.addClass('spinner spinner-' + spinnerName);
+
+      $element.on('$destroy', function onDestroy()
+      {
+        ctrl.stop();
+      });
     }
   };
 });
