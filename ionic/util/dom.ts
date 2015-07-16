@@ -158,3 +158,27 @@ export function windowLoad(callback) {
 
   return promise;
 }
+
+export function pointerCoord(ev) {
+  // get coordinates for either a mouse click
+  // or a touch depending on the given event
+  let c = { x: 0, y: 0 };
+  if (ev) {
+    const touches = ev.touches && ev.touches.length ? ev.touches : [ev];
+    const e = (ev.changedTouches && ev.changedTouches[0]) || touches[0];
+    if (e) {
+      c.x = e.clientX || e.pageX || 0;
+      c.y = e.clientY || e.pageY || 0;
+    }
+  }
+  return c;
+}
+
+export function hasPointerMoved(tolerance, startCoord, endCoord) {
+  return Math.abs(startCoord.x - endCoord.x) > tolerance ||
+         Math.abs(startCoord.y - endCoord.y) > tolerance;
+}
+
+export function hasFocus(ele) {
+  return !!(ele && (document.activeElement === ele.nativeElement || document.activeElement === ele));
+}

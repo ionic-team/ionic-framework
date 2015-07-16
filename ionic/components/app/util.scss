@@ -90,7 +90,7 @@ $content-padding:    10px !default;
   left: 0;
   opacity: 0;
   z-index: $z-index-click-block;
-  transform: translate3d(-9999px, 0px, 0px);
+  transform: translate3d(-9999px, 0px, 0px);;
 
   //background: red;
   //opacity: .3;

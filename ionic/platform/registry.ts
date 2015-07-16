@@ -71,7 +71,8 @@ Platform.register({
   settings: {
     mode: 'ios',
     viewTransition: 'ios',
-    tapPolyfill: true
+    tapPolyfill: true,
+    keyboardScrollAssist: true
   },
   isMatch(p) {
     return p.isPlatform('ios', 'iphone|ipad|ipod');

@@ -3,6 +3,10 @@ const DEFAULT_EXPIRE = 330;
 let cbEle, fallbackTimerId;
 let isShowing = false;
 
+function disableInput(ev) {
+  ev.preventDefault();
+  ev.stopPropagation();
+}
 
 function show(expire) {
   clearTimeout(fallbackTimerId);
@@ -18,6 +22,7 @@ function show(expire) {
       cbEle.className = 'click-block ' + CSS_CLICK_BLOCK;
       document.body.appendChild(cbEle);
     }
+    cbEle.addEventListener('touchmove', disableInput);
   }
 }
 
@@ -26,6 +31,7 @@ function hide() {
   if (isShowing) {
     cbEle.classList.remove(CSS_CLICK_BLOCK);
     isShowing = false;
+    cbEle.removeEventListener('touchmove', disableInput);
   }
 }
 

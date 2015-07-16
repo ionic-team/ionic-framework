@@ -103,8 +103,8 @@ var tapEventListeners = {
 Platform.ready().then(config => {
 
   if (config.setting('tapPolyfill')) {
-    console.log('Tap.register, tapPolyfill')
-    Tap.register(document);
+    // console.log('Tap.register, tapPolyfill')
+    // Tap.register(document);
   }
 
 });

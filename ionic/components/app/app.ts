@@ -11,6 +11,7 @@ import * as util from '../../util/util';
 // injectables
 import {ActionMenu} from '../action-menu/action-menu';
 import {Modal} from '../modal/modal';
+import {FocusHolder} from '../form/focus-holder';
 
 
 export class IonicApp {
@@ -27,6 +28,13 @@ export class IonicApp {
   load(appRef) {
     this.ref(appRef);
     this._zone = this.injector().get(NgZone);
+  }
+
+  focusHolder(val) {
+    if (arguments.length) {
+      this._focusHolder = val;
+    }
+    return this._focusHolder;
   }
 
   title(val) {
@@ -205,6 +213,13 @@ export function ionicBootstrap(component, config, router) {
 
       bootstrap(component, injectableBindings).then(appRef => {
         app.load(appRef);
+
+        // append the focus holder if its needed
+        if (config.setting('keyboardScrollAssist')) {
+          app.appendComponent(FocusHolder).then(ref => {
+            app.focusHolder(ref.instance);
+          });
+        }
 
         router.load(window, app, config).then(() => {
           // resolve that the app has loaded
