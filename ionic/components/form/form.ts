@@ -1,4 +1,3 @@
-import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
 import * as dom  from '../../util/dom';
 
@@ -7,15 +6,12 @@ let activeInput = null;
 let lastInput = null;
 
 
-export class IonInput extends Ion {
+export class IonInput {
   constructor(
     elementRef: ElementRef,
-    ionicConfig: IonicConfig,
     app: IonicApp,
     scrollView: Content
   ) {
-    super(elementRef, ionicConfig);
-
     this.elementRef = elementRef;
     this.app = app;
     this.scrollView = scrollView;
