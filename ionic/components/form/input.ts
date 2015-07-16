@@ -59,8 +59,7 @@ export class Input extends Ion {
     '(mousedown)': 'pointerStart($event)',
     '(mouseup)': 'pointerEnd($event)',
     '[attr.id]': 'id',
-    '[attr.aria-labelledby]': 'labelledBy',
-    '[class.disable-focus]': 'disableFocus'
+    '[attr.aria-labelledby]': 'labelledBy'
   }
 })
 export class TextInput extends IonInput {
@@ -88,26 +87,28 @@ export class TextInput extends IonInput {
 
   pointerStart(ev) {
     if (this.scrollAssist) {
+      // remember where the touchstart/mousedown started
       this.startCoord = dom.pointerCoord(ev);
-      this.disableFocus = true;
+      this.pressStart = Date.now();
     }
   }
 
   pointerEnd(ev) {
     if (this.scrollAssist) {
+
+      // get where the touchend/mouseup ended
       let endCoord = dom.pointerCoord(ev);
 
+      // focus this input if the pointer hasn't moved XX pixels
+      // and the input doesn't already have focus
       if (this.startCoord && !dom.hasPointerMoved(20, this.startCoord, endCoord) && !this.hasFocus()) {
         ev.preventDefault();
         ev.stopPropagation();
 
         this.focus();
-
-      } else {
-        this.disableFocus = false;
       }
 
-      this.startCoord = null;
+      this.startCoord = this.pressStart = null;
     }
   }
 
@@ -115,8 +116,6 @@ export class TextInput extends IonInput {
     let scrollView = this.scrollView;
 
     if (scrollView && this.scrollAssist) {
-      this.disableFocus = true;
-
       // this input is inside of a scroll view
       // scroll the input to the top
       let inputY = this.elementRef.nativeElement.offsetTop - 8;
@@ -139,27 +138,28 @@ export class TextInput extends IonInput {
 
         // all good, allow clicks again
         ClickBlock(false);
-
-        this.disableFocus = false;
       });
 
     } else {
       // not inside of a scroll view, just focus it
       this.setFocus();
-      this.disableFocus = false;
     }
 
   }
 
   receivedFocus(receivedFocus) {
+    console.log('receivedFocus: ', receivedFocus)
     let self = this;
     let scrollView = self.scrollView;
 
     self.isActiveInput(receivedFocus);
 
     function touchMove(ev) {
-      self.setFocusHolder(self.type);
-      self.deregTouchMove();
+      console.log('touchMove')
+      if (!self.isPressHold()) {
+        self.setFocusHolder(self.type);
+        self.deregTouchMove();
+      }
     }
 
     if (scrollView && this.scrollAssist) {
@@ -174,6 +174,11 @@ export class TextInput extends IonInput {
       }
     }
 
+  }
+
+  isPressHold() {
+    console.log('pressStart:', this.pressStart, '  pressStart + 500 < now:', this.pressStart + 500 < Date.now())
+    return this.pressStart && (this.pressStart + 500 < Date.now());
   }
 
 }

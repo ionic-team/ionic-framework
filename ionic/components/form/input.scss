@@ -4,12 +4,6 @@ ion-input {
   display: block;
 }
 
-input.disable-focus,
-textarea.disable-focus,
-select.disable-focus {
-  //pointer-events: none;
-}
-
 focus-holder input {
   position: fixed;
   top: 1px;

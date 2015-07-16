@@ -30,7 +30,7 @@ $toolbar-ios-padding: 0px 15px;
   @include hairline(bottom, $toolbar-ios-border-color);
 
   // toolbar on bottom, border on top
-  &.toolbar-bottom:after {
+  &[position="bottom"]:after {
     top: 0;
     bottom: auto;
   }

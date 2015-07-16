@@ -25,6 +25,10 @@ ion-toolbar {
   order: $flex-order-toolbar-top;
 }
 
+ion-toolbar[position="bottom"] {
+  order: $flex-order-toolbar-bottom;
+}
+
 .toolbar-inner {
   display: flex;
   width: 100%;
