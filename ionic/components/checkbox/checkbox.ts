@@ -29,12 +29,9 @@ import {Icon} from '../icon/icon';
   '<div class="item-media media-checkbox" (click)="onClick($event)">' +
     '<icon [name]="iconOff" class="checkbox-off"></icon>' +
     '<icon [name]="iconOn" class="checkbox-on"></icon>' +
-    '<content select="input"></content>' +
   '</div>' +
   '<div class="item-content">' +
-    '<div class="item-label">' +
-      '<content></content>' +
-    '</div>' +
+    '<content></content>' +
   '</div>'
 })
 export class Checkbox extends Ion {

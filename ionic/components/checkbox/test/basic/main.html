@@ -2,7 +2,7 @@
   <form (^submit)="doSubmit($event)" [ng-form-model]="fruitsForm">
       <ion-checkbox icon-on="ion-android-checkmark-circle"><input #apple type="checkbox" ng-control="appleCtrl"></ion-checkbox>
 
-      <ion-checkbox><input #banana type="checkbox" ng-control="bananaCtrl"><span>Test</span></ion-checkbox>
+      <ion-checkbox><label>Test</label><input #banana type="checkbox" ng-control="bananaCtrl"></ion-checkbox>
 
       <!-- <ion-checkbox ng-control="appleCtrl">
         Apples
