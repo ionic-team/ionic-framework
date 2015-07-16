@@ -6,16 +6,17 @@ $action-menu-ios-group-margin:             8px !default;
 $action-menu-ios-background-color:         rgba(243,243,243,.95) !default;
 
 $action-menu-ios-border-color:             #d2d2d6 !default;
-$action-menu-ios-border-radius:            4px !default;
+$action-menu-ios-border-radius:            10px !default;
 
-$action-menu-ios-label-color:              #8a8a8a !default;
-$action-menu-ios-label-font-size:          1.3rem !default;
+$action-menu-ios-title-color:              #8a8a8a !default;
+$action-menu-ios-title-font-size:          1.3rem !default;
 
 $action-menu-ios-button-color:             #007aff !default;
 $action-menu-ios-button-font-size:         2rem !default;
 
 $action-menu-ios-icon-font-size:           1.4em !default;
 
+$action-menu-ios-option-height:            50px !default;
 
 .action-menu[mode="ios"] {
   text-align: center;
@@ -27,18 +28,21 @@ $action-menu-ios-icon-font-size:           1.4em !default;
   .action-menu-group {
     margin-top: $action-menu-ios-group-margin;
     margin-bottom: $action-menu-ios-group-margin;
+    border-radius: $action-menu-ios-border-radius;
   }
 
-  .action-menu-label,
-  .action-menu-button {
+  .action-menu-title,
+  .action-menu-option {
     position: relative;
+    /*
     display: flex;
     justify-content: center;
     align-items: center;
+    */
 
     margin: 0;
     border: 0;
-    min-height: 44px;
+    min-height: $action-menu-ios-option-height;
 
     background: $action-menu-ios-background-color;
     font-weight: 400;
@@ -46,25 +50,26 @@ $action-menu-ios-icon-font-size:           1.4em !default;
     @include hairline(bottom, $action-menu-ios-border-color, $z-index-list-border);
   }
 
-  .action-menu-label {
-    font-size: $action-menu-ios-label-font-size;
-    color: $action-menu-ios-label-color;
+  .action-menu-title {
+    font-size: $action-menu-ios-title-font-size;
+    font-weight: bold;
+    color: $action-menu-ios-title-color;
     border-radius: 0;
   }
 
-  .action-menu-button {
+  .action-menu-option {
     font-size: $action-menu-ios-button-font-size;
     color: $action-menu-ios-button-color;
     border-radius: 0;
   }
 
-  .action-menu-label:first-child,
+  .action-menu-title:first-child,
   .action-menu-button:first-child {
     border-top-left-radius: $action-menu-ios-border-radius;
     border-top-right-radius: $action-menu-ios-border-radius;
   }
 
-  .action-menu-label:last-child,
+  .action-menu-title:last-child,
   .action-menu-button:last-child {
     border-bottom-left-radius: $action-menu-ios-border-radius;
     border-bottom-right-radius: $action-menu-ios-border-radius;
