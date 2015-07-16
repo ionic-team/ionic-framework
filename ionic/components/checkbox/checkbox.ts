@@ -8,6 +8,7 @@ import {
 } from 'angular2/angular2';
 
 import {Ion} from '../ion';
+import {IonInputContainer} from '../form/form';
 import {IonicConfig} from '../../config/config';
 import {IonicComponent, IonicView} from '../../config/annotations';
 import {Icon} from '../icon/icon';
@@ -34,7 +35,7 @@ import {Icon} from '../icon/icon';
     '<content></content>' +
   '</div>'
 })
-export class Checkbox extends Ion {
+export class Checkbox extends IonInputContainer {
 
   _checkbox: CheckboxInput;
 
@@ -52,7 +53,7 @@ export class Checkbox extends Ion {
     }
   }
 
-  registerCheckbox(checkboxDir) {
+  registerInput(checkboxDir) {
     if (this._checkbox != null) {
       throw 'Only one <input type="checkbox"> is allowed per <ion-checkbox>'
     }
@@ -73,17 +74,15 @@ export class Checkbox extends Ion {
   }
 }
 
-@Directive({
-  selector: 'input[type=checkbox]'
-})
-export class CheckboxInput {
-  constructor(
-    elementRef: ElementRef,
-    @Optional() @Parent() container: Checkbox,
-    @Optional() control: NgControl
-  ) {
-    this.elementRef = elementRef;
-    this.control = control ? control : null;
-    container && container.registerCheckbox(this);
-  }
-}
+
+// export class CheckboxInput {
+//   constructor(
+//     elementRef: ElementRef,
+//     @Optional() @Parent() container: Checkbox,
+//     @Optional() control: NgControl
+//   ) {
+//     this.elementRef = elementRef;
+//     this.control = control ? control : null;
+//     container && container.registerCheckbox(this);
+//   }
+// }

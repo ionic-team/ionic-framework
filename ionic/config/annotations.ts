@@ -11,7 +11,7 @@ import {
   List, Item, ItemGroup, ItemGroupTitle,
   Toolbar,
   Icon,
-  Checkbox, CheckboxInput, Switch,
+  Checkbox, TapInput, Switch,
   Input, TextInput, Label,
   Segment, SegmentButton, SegmentControlValueAccessor,
   RadioGroup, RadioButton, SearchBar,
@@ -56,13 +56,13 @@ export const IonicDirectives = [
   forwardRef(() => SegmentButton),
   forwardRef(() => SegmentControlValueAccessor),
   forwardRef(() => Checkbox),
-  forwardRef(() => CheckboxInput),
   //Checkbox, Switch
   //RadioGroup, RadioButton, SearchBar,
 
   // Input
   forwardRef(() => Input),
   forwardRef(() => TextInput),
+  forwardRef(() => TapInput),
   forwardRef(() => Label),
 
   // Nav
