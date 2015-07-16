@@ -360,11 +360,11 @@ ionic.views.Slider = ionic.views.View.inherit({
                    ( Math.abs(delta.x) / width + 1 )      // determine resistance level
                    : 1 );                                 // no resistance if false
              } else {
-               if(width*index-delta.x < 0) {               //We are trying scroll past left boundary
-                 delta.x = Math.min(delta.x, width*index)  //Set delta.x so we don't go past left screen
+               if(width * index - delta.x < 0) {               //We are trying scroll past left boundary
+                 delta.x = Math.min(delta.x, width * index);  //Set delta.x so we don't go past left screen
                }
-               if(Math.abs(delta.x) > width*(slides.length-index-1)){         //We are trying to scroll past right bondary
-                 delta.x = Math.max(-width*(slides.length-index-1), delta.x)  //Set delta.x so we don't go past right screen
+               if(Math.abs(delta.x) > width * (slides.length - index - 1)){         //We are trying to scroll past right bondary
+                 delta.x = Math.max( -width * (slides.length - index - 1), delta.x);  //Set delta.x so we don't go past right screen
                }
              }
 
