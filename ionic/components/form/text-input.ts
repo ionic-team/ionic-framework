@@ -2,8 +2,7 @@ import {Directive, View, Parent, Ancestor, Optional, ElementRef, Attribute, forw
 
 import {IonicDirective} from '../../config/annotations';
 import {IonicConfig} from '../../config/config';
-import {IonInput} from './form';
-import {Ion} from '../ion';
+import {IonInput, IonInputContainer} from './form';
 import {IonicApp} from '../app/app';
 import {Content} from '../content/content';
 import {ClickBlock} from '../../util/click-block';
@@ -14,32 +13,13 @@ import {Platform} from '../../platform/platform';
 @IonicDirective({
   selector: 'ion-input'
 })
-export class Input extends Ion {
+export class Input extends IonInputContainer {
 
   constructor(
     elementRef: ElementRef,
     ionicConfig: IonicConfig
   ) {
     super(elementRef, ionicConfig);
-    this.id = ++inputIds;
-  }
-
-  onInit() {
-    if (this.input) {
-      this.input.id = 'input-' + this.id;
-    }
-    if (this.label) {
-      this.label.id = 'label-' + this.id;
-      this.input.labelledBy = this.label.id;
-    }
-  }
-
-  registerInput(directive) {
-    this.input = directive;
-  }
-
-  registerLabel(directive) {
-    this.label = directive;
   }
 
 }
@@ -148,14 +128,12 @@ export class TextInput extends IonInput {
   }
 
   receivedFocus(receivedFocus) {
-    console.log('receivedFocus: ', receivedFocus)
     let self = this;
     let scrollView = self.scrollView;
 
     self.isActiveInput(receivedFocus);
 
     function touchMove(ev) {
-      console.log('touchMove')
       if (!self.isPressHold()) {
         self.setFocusHolder(self.type);
         self.deregTouchMove();
@@ -177,27 +155,9 @@ export class TextInput extends IonInput {
   }
 
   isPressHold() {
-    console.log('pressStart:', this.pressStart, '  pressStart + 500 < now:', this.pressStart + 500 < Date.now())
     return this.pressStart && (this.pressStart + 500 < Date.now());
   }
 
 }
 
-
-@Directive({
-  selector: 'label',
-  host: {
-    '[attr.id]': 'id'
-  }
-})
-export class InputLabel {
-  constructor(@Optional() @Parent() container: Input) {
-    if (container) {
-      container.registerLabel(this);
-    }
-  }
-}
-
 const SCROLL_INTO_VIEW_DURATION = 500;
-
-let inputIds = -1;

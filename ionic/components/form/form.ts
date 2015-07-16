@@ -1,9 +1,11 @@
+import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
 import * as dom  from '../../util/dom';
 
 let inputRegistry = [];
 let activeInput = null;
 let lastInput = null;
+let containerIds = -1;
 
 
 export class IonInput {
@@ -85,3 +87,33 @@ export class IonInput {
 
 }
 
+
+export class IonInputContainer extends Ion {
+
+  constructor(
+    elementRef: ElementRef,
+    ionicConfig: IonicConfig
+  ) {
+    super(elementRef, ionicConfig);
+    this.id = ++containerIds;
+  }
+
+  onInit() {
+    if (this.input) {
+      this.input.id = 'input-' + this.id;
+    }
+    if (this.label) {
+      this.label.id = 'label-' + this.id;
+      this.input.labelledBy = this.label.id;
+    }
+  }
+
+  registerInput(directive) {
+    this.input = directive;
+  }
+
+  registerLabel(directive) {
+    this.label = directive;
+  }
+
+}
