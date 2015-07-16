@@ -379,7 +379,8 @@ ionic.views.Slider = ionic.views.View.inherit({
             translate(index, delta.x + slidePos[index], 0);
             translate(circle(index + 1), delta.x + slidePos[circle(index + 1)], 0);
 
-          } if(options.bouncing){
+          } else{
+              if(options.bouncing){
                delta.x =
                  delta.x /
                    ( (!index && delta.x > 0 ||         // if first slide and sliding left
@@ -395,7 +396,7 @@ ionic.views.Slider = ionic.views.View.inherit({
                if(Math.abs(delta.x) > width*(slides.length-index-1)){         //We are trying to scroll past right bondary
                  delta.x = Math.max(-width*(slides.length-index-1), delta.x)  //Set delta.x so we don't go past right screen
                }
-             }                                 // no resistance if false
+             }
 
             // translate 1:1
             translate(index - 1, delta.x + slidePos[index - 1], 0);
