@@ -55,12 +55,14 @@ function($timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory, $ionicScroll
       pagerClick: '&',
       disableScroll: '@',
       onSlideChanged: '&',
-      activeSlide: '=?'
+      activeSlide: '=?',
+      hasBouncing: '@'
     },
     controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
       var _this = this;
 
       var continuous = $scope.$eval($scope.doesContinue) === true;
+      var bouncing = ($scope.$eval($scope.hasBouncing) !== false); //Default to true
       var shouldAutoPlay = isDefined($attrs.autoPlay) ? !!$scope.autoPlay : false;
       var slideInterval = shouldAutoPlay ? $scope.$eval($scope.slideInterval) || 4000 : 0;
 
@@ -69,6 +71,7 @@ function($timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory, $ionicScroll
         auto: slideInterval,
         continuous: continuous,
         startSlide: $scope.activeSlide,
+        bouncing: bouncing,
         slidesChanged: function() {
           $scope.currentSlide = slider.currentIndex();
 
