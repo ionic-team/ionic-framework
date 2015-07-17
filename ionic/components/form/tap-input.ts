@@ -19,7 +19,7 @@ export class TapInput extends IonInput {
     app: IonicApp,
     config: IonicConfig
   ) {
-    super(elementRef, app, IonicConfig, scrollView);
+    super(elementRef, app, config, scrollView);
 
     if (container) {
       container.registerInput(this);
