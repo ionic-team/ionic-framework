@@ -2,6 +2,7 @@ import {Directive, Parent, Optional} from 'angular2/angular2';
 
 import {Input} from './text-input';
 import {IonicConfig} from '../../config/config';
+import * as dom  from '../../util/dom';
 
 
 @Directive({
@@ -39,9 +40,6 @@ export class Label {
       let endCoord = dom.pointerCoord(ev);
 
       // focus this input if the pointer hasn't moved XX pixels
-      // and the input doesn't already have focus
-      console.log('!this.hasFocus()', !this.hasFocus());
-
       if (!dom.hasPointerMoved(20, this.startCoord, endCoord)) {
         ev.preventDefault();
         ev.stopPropagation();
@@ -49,7 +47,8 @@ export class Label {
         this.container.focus();
       }
 
-      this.startCoord null;
+      this.startCoord = null;
     }
   }
+
 }

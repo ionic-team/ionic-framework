@@ -78,8 +78,6 @@ export class TextInput extends IonInput {
 
       // focus this input if the pointer hasn't moved XX pixels
       // and the input doesn't already have focus
-      console.log('!this.hasFocus()', !this.hasFocus());
-
       if (!dom.hasPointerMoved(20, this.startCoord, endCoord) && !this.hasFocus()) {
         ev.preventDefault();
         ev.stopPropagation();
