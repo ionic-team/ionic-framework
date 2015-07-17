@@ -63,6 +63,10 @@ export class IonicApp {
     }
   }
 
+  stateClear() {
+    this.router.stateClear();
+  }
+
   /**
    * Register a known component with a key, for easy lookups later.
    */

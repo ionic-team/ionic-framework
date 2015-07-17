@@ -96,6 +96,10 @@ class UrlStateManager {
     this._currentPath = null;
   }
 
+  stateClear() {
+    this.paths([]);
+  }
+
   onLocationChange() {
     let currentPath = this.getCurrentPath();
 

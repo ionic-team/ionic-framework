@@ -53,6 +53,12 @@ export class IonicRouter {
     }
   }
 
+  stateClear() {
+    for (let name in stateManagers) {
+      stateManagers[name].stateClear();
+    }
+  }
+
   matchPaths(paths) {
     // load each of paths to a component
     let components = [];

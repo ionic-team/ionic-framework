@@ -140,6 +140,8 @@ export class ViewController extends Ion {
       return Promise.resolve();
     }
 
+    this.app.stateClear();
+
     // if animate has not been set then default to false
     opts.animate = opts.animate || false;
 
