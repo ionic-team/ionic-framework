@@ -175,8 +175,8 @@ export function pointerCoord(ev) {
 }
 
 export function hasPointerMoved(tolerance, startCoord, endCoord) {
-  return Math.abs(startCoord.x - endCoord.x) > tolerance ||
-         Math.abs(startCoord.y - endCoord.y) > tolerance;
+  return startCoord && endCoord &&
+         (Math.abs(startCoord.x - endCoord.x) > tolerance || Math.abs(startCoord.y - endCoord.y) > tolerance);
 }
 
 export function hasFocus(ele) {

@@ -38,8 +38,7 @@ export class Input extends IonInputItem {
     '(touchend)': 'pointerEnd($event)',
     '(mousedown)': 'pointerStart($event)',
     '(mouseup)': 'pointerEnd($event)',
-    '[attr.id]': 'id',
-    '[attr.aria-labelledby]': 'labelledBy'
+    '[attr.id]': 'id'
   }
 })
 export class TextInput extends IonInput {
@@ -81,7 +80,7 @@ export class TextInput extends IonInput {
       // and the input doesn't already have focus
       console.log('!this.hasFocus()', !this.hasFocus());
 
-      if (this.startCoord && !dom.hasPointerMoved(20, this.startCoord, endCoord) && !this.hasFocus()) {
+      if (!dom.hasPointerMoved(20, this.startCoord, endCoord) && !this.hasFocus()) {
         ev.preventDefault();
         ev.stopPropagation();
 
