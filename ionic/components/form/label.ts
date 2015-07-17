@@ -33,6 +33,7 @@ export class Label {
     }
 
     this.scrollAssist = config.setting('keyboardScrollAssist');
+    this.scrollAssist = true;
   }
 
   pointerStart(ev) {

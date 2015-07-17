@@ -19,7 +19,7 @@ import {Icon} from '../icon/icon';
   host: {
     '[class.item]': 'item',
     '[attr.aria-checked]': 'input.checked',
-    '(^click)': 'onClick($event)'
+    // '(^click)': 'onClick($event)'
   },
   defaultProperties: {
     'iconOff': 'ion-ios-circle-outline',
@@ -45,22 +45,31 @@ export class Checkbox extends IonInputItem {
     this.item = true;
   }
 
-  onClick(ev) {
-    // toggling with spacebar fires mouse event
-    if (ev.target.tagName === "INPUT") return;
-
-    this.input.checked = !this.input.checked;
-
-    //TODO trigger change/mouse event on the actual input to trigger
-    // form updates
-
-    // this._checkbox.dispatchEvent(e);
-    //this._checkboxDir.control.valueAccessor.writeValue(val);
-  }
+  // onClick(ev) {
+  //   debugger
+  //   // toggling with spacebar fires mouse event
+  //   if (ev.target.tagName === "INPUT") return;
+  //
+  //   this.input.checked = !this.input.checked;
+  //
+  //   //TODO trigger change/mouse event on the actual input to trigger
+  //   // form updates
+  //
+  //   // this._checkbox.dispatchEvent(e);
+  //   //this._checkboxDir.control.valueAccessor.writeValue(val);
+  // }
 
   onChangeEvent(input) {
     //TODO can we just assume this will always be true?
     this.input.checked = this.input.elementRef.nativeElement.checked;
+  }
+
+  focus() {
+    let mouseClick = new MouseEvent("click", {
+      bubbles: true,
+      cancelable: true,
+    });
+    this.input && this.input.elementRef.nativeElement.dispatchEvent(mouseClick);
   }
 }
 

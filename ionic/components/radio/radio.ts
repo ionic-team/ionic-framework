@@ -26,7 +26,7 @@ export class RadioGroup extends Ion {
     this.list = true;
   }
 
-  register(radioButton) {
+  registerButton(radioButton) {
     this.buttons.push(radioButton);
     let inputEl = radioButton.input.elementRef.nativeElement;
     if (!inputEl.hasAttribute('name')) {
@@ -51,7 +51,7 @@ export class RadioGroup extends Ion {
     '[class.item]': 'item',
     '[class.active]': 'input.checked',
     '[attr.aria-checked]': 'input.checked',
-    '(^click)': 'onClick($event)'
+    // '(^click)': 'onClick($event)'
   },
   defaultProperties: {
     'iconOff': 'ion-ios-circle-outline',
@@ -81,22 +81,30 @@ export class RadioButton extends IonInputItem {
 
   registerInput(input) {
     this.input = input;
-    this.group.register(this);
+    this.group.registerButton(this);
   }
 
-  onClick(ev) {
-    // switching between radio buttons with arrow keys fires a MouseEvent
-    if (ev.target.tagName === "INPUT") return;
-    this.input.checked = !this.input.checked;
+  // onClick(ev) {
+  //   // switching between radio buttons with arrow keys fires a MouseEvent
+  //   if (ev.target.tagName === "INPUT") return;
+  //   this.input.checked = !this.input.checked;
+  //
+  //   //let bindings update first
+  //   setTimeout(() => this.group.update(this.input));
+  //
+  //   //TODO figure out a way to trigger change on the actual input to trigger
+  //   // form updates
+  //
+  //   // this._checkbox.dispatchEvent(e);
+  //   //this._checkboxDir.control.valueAccessor.writeValue(val);
+  // }
 
-    //let bindings update first
-    setTimeout(() => this.group.update(this.input));
-
-    //TODO figure out a way to trigger change on the actual input to trigger
-    // form updates
-
-    // this._checkbox.dispatchEvent(e);
-    //this._checkboxDir.control.valueAccessor.writeValue(val);
+  focus() {
+    let mouseClick = new MouseEvent("click", {
+      bubbles: true,
+      cancelable: true,
+    });
+    this.input && this.input.elementRef.nativeElement.dispatchEvent(mouseClick);
   }
 
   onChangeEvent(input) {
