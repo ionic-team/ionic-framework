@@ -20,15 +20,15 @@ $button-material-border-radius:            3px !default;
   box-shadow: $button-material-box-shadow;
 
 
-  &.button-icon {
+  &[icon] {
     font-size: $button-icon-size;
   }
 
-  &.button-large.button-icon {
+  &[large][icon] {
     font-size: $button-large-icon-size;
   }
 
-  &.button-small.button-icon {
+  &[small][icon] {
     font-size: $button-small-icon-size;
   }
 

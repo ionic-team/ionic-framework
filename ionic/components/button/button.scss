@@ -20,6 +20,7 @@ $button-small-height:             2.8rem !default;
 $button-small-padding:            1.1rem !default;
 $button-small-icon-size:          2.1rem !default;
 
+$button-fab-size:                56px;
 
 // Core Button
 // --------------------------------------------------
@@ -126,6 +127,41 @@ button,
     pointer-events: none;
   }
 
+  // FABulous buttons (Floating action button from material)
+
+  &[fab] {
+    position: absolute;
+    width: $button-fab-size;
+    height: $button-fab-size;
+    line-height: $button-fab-size;
+    min-width: 0;
+    vertical-align: middle;
+
+    border-radius: 50%;
+    background-clip: padding-box;
+
+    overflow: hidden;
+
+    transition: .2s linear;
+    transition-property: background-color;
+
+    &[fab-center] {
+      left: 50%;
+      margin-left: -$button-fab-size/2;
+    }
+    &[fab-top] {
+      top: 15px;
+    }
+    &[fab-right] {
+      right: 15px;
+    }
+    &[fab-bottom] {
+      bottom: 15px;
+    }
+    &[fab-left] {
+      left: 15px;
+    }
+  }
 }
 
 [full],
