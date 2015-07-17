@@ -100,7 +100,7 @@ export class PaneController {
   selector: 'ion-pane',
   classId: 'nav',
   host: {
-    ['[class.show-page]']: 'showPane'
+    ['[class.show-pane]']: 'showPane'
   }
 })
 @View({
