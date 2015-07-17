@@ -25,7 +25,7 @@ export class Http {
    * @return es6 promise from the fetch.
    */
   static fetch(url, options) {
-    return fetch(url, options).then((response) => {
+    return window.fetch(url, options).then((response) => {
       // status "0" to handle local files fetching (e.g. Cordova/Phonegap etc.)
       if (response.status === 200 || response.status === 0) {
 
