@@ -76,10 +76,12 @@ ion-pane {
 .navbar-container {
   position: relative;
   min-height: 4.4rem;
+  z-index: $z-index-navbar-container;
 }
 
 .content-container {
   position: relative;
+  z-index: $z-index-content-container;
   flex: 1;
   order: $flex-order-view-content;
 }
