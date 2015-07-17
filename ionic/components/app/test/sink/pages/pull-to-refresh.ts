@@ -34,7 +34,7 @@ export class PullToRefreshPage extends SinkPage {
     console.log('DOREFRESH', refresher)
 
     this.items.unshift({
-      title: (--i)
+      title: (--this.i)
     });
 
     setTimeout(() => {
