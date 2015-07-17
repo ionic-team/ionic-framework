@@ -3,7 +3,7 @@ import {ProtoViewRef} from 'angular2/src/core/compiler/view_ref';
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
-import {IonicComponent} from '../../config/annotations';
+import {IonicComponent, IonicView} from '../../config/annotations';
 import {IonicApp} from '../app/app';
 import {ViewItem} from '../view/view-item';
 import * as dom from '../../util/dom';
@@ -12,7 +12,7 @@ import * as dom from '../../util/dom';
 @IonicComponent({
   selector: 'ion-navbar'
 })
-@View({
+@IonicView({
   template: `
     <div class="toolbar-inner">
       <button class="back-button button">
