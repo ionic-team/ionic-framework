@@ -9,12 +9,18 @@ import {RadioButton} from '../radio/radio';
 
 
 @Directive({
-  selector: 'input[type=checkbox],input[type=radio]'
+  selector: 'input[type=checkbox],input[type=radio]',
+  properties: [ 'checked', 'name' ],
+  host: {
+    '[checked]': 'checked',
+    '[attr.name]': 'name',
+    '(change)': 'onChangeEvent($event)'
+  }
 })
 export class TapInput extends IonInput {
   constructor(
-    @Optional() @Parent() checkboxContainer: Checkbox, //TODO have this be either Checkbox or Radio
-    @Optional() @Parent() radioContainer : RadioButton,
+    @Optional() @Parent() checkboxContainer: Checkbox,
+    @Optional() @Parent() radioContainer: RadioButton,
     @Optional() @Ancestor() scrollView: Content,
     @Attribute('type') type: string,
     elementRef: ElementRef,
@@ -33,6 +39,10 @@ export class TapInput extends IonInput {
     this.type = type;
     this.elementRef = elementRef;
     this.tabIndex = this.tabIndex || '';
+  }
+
+  onChangeEvent(ev) {
+    this.container && this.container.onChangeEvent(this);
   }
 
 }

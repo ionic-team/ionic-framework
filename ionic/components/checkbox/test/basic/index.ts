@@ -1,7 +1,4 @@
-import {Component, View} from 'angular2/angular2';
-
-import {Query, QueryList, NgFor} from 'angular2/angular2';
-// import {FormBuilder, Validators, NgFormControl, Control, NgControlName, NgControlGroup, ControlContainer} from 'angular2/forms';
+import {App} from 'ionic/ionic';
 import {
   Control,
   ControlGroup,
@@ -14,8 +11,6 @@ import {
   NgFormModel,
   FormBuilder
 } from 'angular2/forms';
-import {App, Checkbox, Content, List} from 'ionic/ionic';
-//import {IONIC_DIRECTIVES} from 'ionic/ionic'
 
 @App({
   templateUrl: 'main.html'

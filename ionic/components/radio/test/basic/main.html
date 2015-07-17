@@ -3,33 +3,28 @@
 
   <ion-content>
 
-    <form (^submit)="doSubmit($event)" [control-group]="form">
+    <form (^submit)="doSubmit($event)" [ng-form-model]="fruitsForm">
       <div class="list-header">
-        Radio Group
+        Fruit Group 1
       </div>
 
-      <ion-radio-group control="preferredApple">
-
-        <ion-radio value="mac">
-          McIntosh
-        </ion-radio>
-
-        <ion-radio value="granny">
-          Granny Smith
-        </ion-radio>
-
-        <ion-radio value="gala">
-          Gala
-        </ion-radio>
-
-        <ion-radio value="fuji">
-          Fuji
-        </ion-radio>
-
+      <ion-radio-group ng-control-group="fruitGroup1">
+        <ion-radio><label>APPLE</label><input #apple type="radio" ng-control="appleCtrl"></ion-radio>
+        <ion-radio><label>BANANA</label><input #banana type="radio" ng-control="bananaCtrl"></ion-radio>
       </ion-radio-group>
+
+      appleCtrl.dirty: {{fruitsForm.controls.fruitGroup1.controls.appleCtrl.dirty}}<br>
+
+      <div class="list-header">
+        Fruit Group 2
+      </div>
+      <ion-radio-group ng-control-group="fruitGroup2">
+        <ion-radio><label>GRAPE</label><input #grape name="test" type="radio" ng-control="grapeCtrl"></ion-radio>
+        <ion-radio><label>CHERRY</label><input #cherry name="test" type="radio" ng-control="cherryCtrl"></ion-radio>
+      </ion-radio-group>
+
 
     </form>
 
-    Current apple: <b>{{form.controls.preferredApple.value}}</b>
   </ion-content>
 </ion-view>

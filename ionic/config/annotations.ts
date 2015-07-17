@@ -57,8 +57,10 @@ export const IonicDirectives = [
   forwardRef(() => SegmentButton),
   forwardRef(() => SegmentControlValueAccessor),
   forwardRef(() => Checkbox),
-  //Checkbox, Switch
-  //RadioGroup, RadioButton, SearchBar,
+  forwardRef(() => RadioGroup),
+  forwardRef(() => RadioButton),
+  //Switch
+  //SearchBar,
 
   // Input
   forwardRef(() => Input),

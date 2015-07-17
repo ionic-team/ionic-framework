@@ -17,8 +17,9 @@ import {Icon} from '../icon/icon';
 @IonicComponent({
   selector: 'ion-checkbox',
   host: {
-    'class': 'item',
-    '[attr.aria-checked]': 'checked'
+    '[class.item]': 'item',
+    '[attr.aria-checked]': 'input.checked',
+    '(^click)': 'onClick($event)'
   },
   defaultProperties: {
     'iconOff': 'ion-ios-circle-outline',
@@ -27,7 +28,7 @@ import {Icon} from '../icon/icon';
 })
 @IonicView({
   template:
-  '<div class="item-media media-checkbox" (click)="onClick($event)">' +
+  '<div class="item-media media-checkbox">' +
     '<icon [name]="iconOff" class="checkbox-off"></icon>' +
     '<icon [name]="iconOn" class="checkbox-on"></icon>' +
   '</div>' +
@@ -36,41 +37,30 @@ import {Icon} from '../icon/icon';
   '</div>'
 })
 export class Checkbox extends IonInputItem {
-
-  _checkbox: CheckboxInput;
-
   constructor(
     elementRef: ElementRef,
     config: IonicConfig
   ) {
     super(elementRef, config);
+    this.item = true;
   }
 
-  onAllChangesDone() {
-    // Enforce that this directive actually contains a checkbox
-    if (this._checkbox == null) {
-      throw 'No <input type="checkbox"> found inside of <ion-checkbox>';
-    }
-  }
+  onClick(ev) {
+    // toggling with spacebar fires mouse event
+    if (ev.target.tagName === "INPUT") return;
 
-  registerInput(checkboxDir) {
-    if (this._checkbox != null) {
-      throw 'Only one <input type="checkbox"> is allowed per <ion-checkbox>'
-    }
-    this._checkbox = checkboxDir.elementRef.nativeElement;
-    this._checkboxDir = checkboxDir;
-  }
+    this.input.checked = !this.input.checked;
 
-  onClick(e) {
-    let val = !this._checkbox.checked;
-    this._checkbox.checked = val;
-    this.checked = val;
-
-    //TODO figure out a way to trigger change on the actual input to trigger
+    //TODO trigger change/mouse event on the actual input to trigger
     // form updates
 
     // this._checkbox.dispatchEvent(e);
     //this._checkboxDir.control.valueAccessor.writeValue(val);
+  }
+
+  onChangeEvent(input) {
+    //TODO can we just assume this will always be true?
+    this.input.checked = this.input.elementRef.nativeElement.checked;
   }
 }
 
