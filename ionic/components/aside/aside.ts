@@ -85,6 +85,8 @@ export class Aside extends Ion {
   }
 
   setOpen(isOpen) {
+    console.log('SET OPEN', isOpen);
+    console.trace();
     if (isOpen !== this.isOpen) {
       this.isOpen = isOpen
       this.setChanging(true)

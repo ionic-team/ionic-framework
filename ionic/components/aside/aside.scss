@@ -35,10 +35,13 @@ $aside-shadow: -1px 0px 2px rgba(0, 0, 0, 0.2), 1px 0px 2px rgba(0,0,0,0.2) !def
   bottom: 0;
 
   transform: translate3d(0, 0, 0);
-  &.open,
-  &[type=reveal] {
-    left: 0;
-    //transform: translate3d($aside-width,0,0);
+  &.open, {
+    &[type=reveal], &[type=push] {
+      left: 0;
+    }
+    &[type=overlay] {
+      transform: translate3d($aside-width,0,0);
+    }
   }
   //}
   &[side=right] {

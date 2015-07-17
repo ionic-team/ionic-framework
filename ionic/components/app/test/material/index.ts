@@ -37,7 +37,10 @@ export class FirstPage {
   template: `<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700,500' rel='stylesheet' type='text/css'>
     <ion-aside id="menu" side="left" [content]="content">
       <ion-toolbar primary><ion-title>Menu</ion-title></ion-toolbar>
-      <ion-list inset>
+      <ion-list>
+        <ion-item>Your Profile</ion-item>
+        <ion-item>Playlists</ion-item>
+        <ion-item>Artists</ion-item>
       </ion-list>
     </ion-aside>
     <ion-nav #content></ion-nav>`,
