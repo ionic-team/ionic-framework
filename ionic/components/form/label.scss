@@ -1,6 +1,11 @@
-$input-label-color: #000;
 
-ion-label {
+// Label
+// -------------------------------
+
+$input-label-color:         #000 !default;
+
+
+.input-label {
   display: table;
   padding: 9px 10px 7px 0px;
   max-width: 200px;
@@ -9,4 +14,60 @@ ion-label {
   color: $input-label-color;
   font-size: 1.6rem;
   white-space: nowrap;
+
+  pointer-events: none;
+}
+
+.placeholder-icon {
+  color: #aaa;
+  &:first-child {
+    padding-right: 6px;
+  }
+  &:last-child {
+    padding-left: 6px;
+  }
+}
+
+.item-stacked-label {
+  display: block;
+  background-color: transparent;
+  box-shadow: none;
+
+  .input-label, .icon {
+    display: inline-block;
+    padding: 4px 0 0 0px;
+    vertical-align: middle;
+  }
+}
+
+.item-stacked-label input,
+.item-stacked-label textarea {
+  border-radius: 2px;
+  padding: 4px 8px 3px 0;
+  border: none;
+  background-color: $input-bg;
+}
+.item-stacked-label input {
+  overflow: hidden;
+  height: $line-height-computed + $font-size-base + 0.5rem;
+}
+
+.item-floating-label {
+  display: block;
+  background-color: transparent;
+  box-shadow: none;
+
+  .input-label {
+    position: relative;
+    padding: 5px 0 0 0;
+    opacity: 0;
+    top: 10px;
+    transition: opacity .15s ease-in, top .2s linear;
+
+    &.has-input {
+      opacity: 1;
+      top: 0;
+      transition: opacity .15s ease-in, top .2s linear;
+    }
+  }
 }

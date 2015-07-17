@@ -1,22 +1,30 @@
+import {Directive, ElementRef} from 'angular2/angular2';
+
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
 import * as dom  from '../../util/dom';
 
+
 let inputRegistry = [];
+let itemRegistry = [];
+let inputItemIds = -1;
 let activeInput = null;
 let lastInput = null;
-let containerIds = -1;
 
 
+// Input element (not the container)
 export class IonInput {
   constructor(
     elementRef: ElementRef,
     app: IonicApp,
+    config: IonicConfig,
     scrollView: Content
   ) {
     this.elementRef = elementRef;
     this.app = app;
     this.scrollView = scrollView;
+
+    this.scrollAssist = config.setting('keyboardScrollAssist');
 
     inputRegistry.push(this);
   }
@@ -88,32 +96,36 @@ export class IonInput {
 }
 
 
-export class IonInputContainer extends Ion {
+// Container element for the label and input element
+export class IonInputItem extends Ion {
 
   constructor(
     elementRef: ElementRef,
     ionicConfig: IonicConfig
   ) {
     super(elementRef, ionicConfig);
-    this.id = ++containerIds;
+    this.id = ++inputItemIds;
+    itemRegistry.push(this);
   }
 
   onInit() {
-    if (this.input) {
-      this.input.id = 'input-' + this.id;
-    }
-    if (this.label) {
-      this.label.id = 'label-' + this.id;
+    if (this.input && this.label) {
+      this.input.id = (this.input.id || 'input-' + this.id);
+      this.label.id = (this.label.id || 'label-' + this.id);
       this.input.labelledBy = this.label.id;
     }
   }
 
-  registerInput(directive) {
-    this.input = directive;
+  registerInput(input) {
+    this.input = input;
   }
 
-  registerLabel(directive) {
-    this.label = directive;
+  registerLabel(label) {
+    this.label = label;
+  }
+
+  focus() {
+    this.input && this.input.focus();
   }
 
 }

@@ -8,7 +8,7 @@ import {
 } from 'angular2/angular2';
 
 import {Ion} from '../ion';
-import {IonInputContainer} from '../form/form';
+import {IonInputItem} from '../form/form';
 import {IonicConfig} from '../../config/config';
 import {IonicComponent, IonicView} from '../../config/annotations';
 import {Icon} from '../icon/icon';
@@ -35,15 +35,15 @@ import {Icon} from '../icon/icon';
     '<content></content>' +
   '</div>'
 })
-export class Checkbox extends IonInputContainer {
+export class Checkbox extends IonInputItem {
 
   _checkbox: CheckboxInput;
 
   constructor(
     elementRef: ElementRef,
-    ionicConfig: IonicConfig
+    config: IonicConfig
   ) {
-    super(elementRef, ionicConfig);
+    super(elementRef, config);
   }
 
   onAllChangesDone() {

@@ -2,8 +2,10 @@ import {Parent, Ancestor, Optional, ElementRef, Attribute, Directive} from 'angu
 
 import {IonInput} from './form';
 import {IonicApp} from '../app/app';
+import {IonicConfig} from '../../config/config';
 import {Content} from '../content/content';
 import {Checkbox} from '../checkbox/checkbox';
+
 
 @Directive({
   selector: 'input[type=checkbox],input[type=radio]'
@@ -14,9 +16,10 @@ export class TapInput extends IonInput {
     @Optional() @Ancestor() scrollView: Content,
     @Attribute('type') type: string,
     elementRef: ElementRef,
-    app: IonicApp
+    app: IonicApp,
+    config: IonicConfig
   ) {
-    super(elementRef, app, scrollView);
+    super(elementRef, app, IonicConfig, scrollView);
 
     if (container) {
       container.registerInput(this);

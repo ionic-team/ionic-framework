@@ -2,7 +2,7 @@ import {Directive, View, Parent, Ancestor, Optional, ElementRef, Attribute, forw
 
 import {IonicDirective} from '../../config/annotations';
 import {IonicConfig} from '../../config/config';
-import {IonInput, IonInputContainer} from './form';
+import {IonInput, IonInputItem} from './form';
 import {IonicApp} from '../app/app';
 import {Content} from '../content/content';
 import {ClickBlock} from '../../util/click-block';
@@ -13,7 +13,7 @@ import {Platform} from '../../platform/platform';
 @IonicDirective({
   selector: 'ion-input'
 })
-export class Input extends IonInputContainer {
+export class Input extends IonInputItem {
 
   constructor(
     elementRef: ElementRef,
@@ -51,7 +51,7 @@ export class TextInput extends IonInput {
     app: IonicApp,
     config: IonicConfig
   ) {
-    super(elementRef, app, scrollView);
+    super(elementRef, app, config, scrollView);
 
     if (container) {
       container.registerInput(this);
@@ -61,8 +61,6 @@ export class TextInput extends IonInput {
     this.type = type;
     this.elementRef = elementRef;
     this.tabIndex = this.tabIndex || '';
-
-    this.scrollAssist = config.setting('keyboardScrollAssist');
   }
 
   pointerStart(ev) {
@@ -81,6 +79,8 @@ export class TextInput extends IonInput {
 
       // focus this input if the pointer hasn't moved XX pixels
       // and the input doesn't already have focus
+      console.log('!this.hasFocus()', !this.hasFocus());
+
       if (this.startCoord && !dom.hasPointerMoved(20, this.startCoord, endCoord) && !this.hasFocus()) {
         ev.preventDefault();
         ev.stopPropagation();
@@ -98,7 +98,7 @@ export class TextInput extends IonInput {
     if (scrollView && this.scrollAssist) {
       // this input is inside of a scroll view
       // scroll the input to the top
-      let inputY = this.elementRef.nativeElement.offsetTop - 8;
+      let inputY = this.elementRef.nativeElement.offsetTop - 15;
 
       // do not allow any clicks while it's scrolling
       ClickBlock(true, SCROLL_INTO_VIEW_DURATION + 200);

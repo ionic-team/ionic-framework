@@ -19,9 +19,10 @@ import {ScrollTo} from '../../animations/scroll-to';
   template: '<div class="scroll-content"><content></content></div>'
 })
 export class Content extends Ion {
-  constructor(elementRef: ElementRef, ionicConfig: IonicConfig) {
-    super(elementRef, ionicConfig);
-    this.scrollPadding = false;
+  constructor(elementRef: ElementRef, config: IonicConfig) {
+    super(elementRef, config);
+
+    this.scrollPadding = config.setting('keyboardScrollAssist');
   }
 
   onIonInit() {
