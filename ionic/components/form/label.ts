@@ -1,8 +1,10 @@
 import {Directive, Parent, Optional} from 'angular2/angular2';
 
-import {Input} from './text-input';
 import {IonicConfig} from '../../config/config';
 import * as dom  from '../../util/dom';
+import {Input} from './text-input';
+import {Checkbox} from '../checkbox/checkbox';
+import {RadioButton} from '../radio/radio';
 
 
 @Directive({
@@ -17,12 +19,19 @@ import * as dom  from '../../util/dom';
   }
 })
 export class Label {
-  constructor(@Optional() @Parent() container: Input, config: IonicConfig) {
-    if (container) {
-      container.registerLabel(this);
+  constructor(
+    @Optional() @Parent() textContainer: Input,
+    @Optional() @Parent() checkboxContainer: Checkbox,
+    @Optional() @Parent() radioContainer: RadioButton,
+    config: IonicConfig
+  ) {
+    this.container = textContainer || checkboxContainer || radioContainer;
+
+    if (this.container) {
+      this.container.registerLabel(this);
       this.inputLabel = true;
     }
-    this.container = container;
+
     this.scrollAssist = config.setting('keyboardScrollAssist');
   }
 
