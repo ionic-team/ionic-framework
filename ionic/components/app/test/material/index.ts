@@ -34,7 +34,13 @@ export class FirstPage {
 }
 
 @App({
-  template: `<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700,500' rel='stylesheet' type='text/css'><ion-nav></ion-nav>`,
+  template: `<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700,500' rel='stylesheet' type='text/css'>
+    <ion-aside id="menu" side="left" [content]="content">
+      <ion-toolbar primary><ion-title>Menu</ion-title></ion-toolbar>
+      <ion-list inset>
+      </ion-list>
+    </ion-aside>
+    <ion-nav #content></ion-nav>`,
   routes: [
     {
       path: '/first',

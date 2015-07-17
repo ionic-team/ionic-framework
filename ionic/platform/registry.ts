@@ -47,7 +47,8 @@ Platform.register({
     'tablet'
   ],
   settings: {
-    mode: 'md'
+    mode: 'md',
+    type: 'overlay',
   },
   isMatch(p) {
     // "silk" is kindle fire
