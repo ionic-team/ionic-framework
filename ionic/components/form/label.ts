@@ -8,7 +8,7 @@ import {IonicConfig} from '../../config/config';
   selector: 'label',
   host: {
     '[attr.for]': 'labelFor',
-    '[class.input-label]': 'inputLabel'
+    '[class.input-label]': 'inputLabel',
     '(touchstart)': 'pointerStart($event)',
     '(touchend)': 'pointerEnd($event)',
     '(mousedown)': 'pointerStart($event)',
