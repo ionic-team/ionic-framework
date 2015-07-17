@@ -3,7 +3,7 @@ import {Component, Directive, View, Parent, ElementRef, forwardRef} from 'angula
 import {IonicConfig} from '../../config/config';
 import * as dom  from '../../util/dom';
 import {Platform} from '../../platform/platform';
-import {IonInput} from './form';
+import {IonInput} from './input';
 
 
 @Component({

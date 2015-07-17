@@ -93,4 +93,8 @@ export class SwipeHandle {
     return (this.viewCtrl ? this.viewCtrl.swipeBackEnabled() : false);
   }
 
+  onDestroy() {
+    this.gesture && self.gesture.destroy();
+  }
+
 }

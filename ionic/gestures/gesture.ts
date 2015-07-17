@@ -1,6 +1,7 @@
 import * as util from 'ionic/util';
 import {Hammer} from 'ionic/gestures/hammer';
 
+
 export class Gesture {
   constructor(element, opts = {}) {
     util.defaults(opts, {
@@ -18,6 +19,7 @@ export class Gesture {
     this._callbacks = {};
 
   }
+
   options(opts = {}) {
     util.extend(this._options, opts);
   }
@@ -31,6 +33,7 @@ export class Gesture {
   listen() {
     this.hammertime = Hammer(this.element, this._options);
   }
+
   unlisten() {
     this.hammertime.destroy();
     this.hammertime = null;
@@ -41,6 +44,7 @@ export class Gesture {
     }
     this._callbacks = {}
   }
+
   destroy() {
     this.unlisten()
   }

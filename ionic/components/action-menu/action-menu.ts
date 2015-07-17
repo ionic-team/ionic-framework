@@ -8,6 +8,7 @@
 
 import {View, Injectable, NgFor, NgIf} from 'angular2/angular2';
 
+import {TapClick} from '../button/button';
 import {Overlay} from '../overlay/overlay';
 import {Animation} from '../../animations/animation';
 import * as util from 'ionic/util';
@@ -15,7 +16,7 @@ import * as util from 'ionic/util';
 
 @View({
   template: `
-    <div class="action-menu-backdrop" (click)="_cancel()"></div>
+    <div class="action-menu-backdrop" (click)="_cancel()" tappable></div>
     <div class="action-menu-wrapper">
       <div class="action-menu-container">
         <div class="action-menu-group action-menu-options">
@@ -28,7 +29,7 @@ import * as util from 'ionic/util';
         </div>
       </div>
     </div>`,
-  directives: [NgFor, NgIf]
+  directives: [NgFor, NgIf, TapClick]
 })
 class ActionMenuDirective {
 

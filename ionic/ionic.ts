@@ -16,7 +16,6 @@ export * from 'ionic/routing/url-state'
 
 export * from 'ionic/util/click-block'
 export * from 'ionic/util/focus'
-export * from 'ionic/util/tap'
 
 export * from 'ionic/animations/animation'
 export * from 'ionic/animations/builtins'

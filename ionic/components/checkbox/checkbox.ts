@@ -8,7 +8,7 @@ import {
 } from 'angular2/angular2';
 
 import {Ion} from '../ion';
-import {IonInputItem} from '../form/form';
+import {IonInputItem} from '../form/input';
 import {IonicConfig} from '../../config/config';
 import {IonicComponent, IonicView} from '../../config/annotations';
 import {Icon} from '../icon/icon';

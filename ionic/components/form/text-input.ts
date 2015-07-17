@@ -2,7 +2,7 @@ import {Directive, View, Parent, Ancestor, Optional, ElementRef, Attribute, forw
 
 import {IonicDirective} from '../../config/annotations';
 import {IonicConfig} from '../../config/config';
-import {IonInput, IonInputItem} from './form';
+import {IonInput, IonInputItem} from './input';
 import {IonicApp} from '../app/app';
 import {Content} from '../content/content';
 import {ClickBlock} from '../../util/click-block';

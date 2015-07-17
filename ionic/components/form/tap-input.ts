@@ -1,6 +1,6 @@
 import {Parent, Ancestor, Optional, ElementRef, Attribute, Directive} from 'angular2/angular2';
 
-import {IonInput} from './form';
+import {IonInput} from './input';
 import {IonicApp} from '../app/app';
 import {IonicConfig} from '../../config/config';
 import {Content} from '../content/content';

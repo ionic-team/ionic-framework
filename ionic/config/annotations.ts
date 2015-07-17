@@ -16,6 +16,7 @@ import {
   Segment, SegmentButton, SegmentControlValueAccessor,
   RadioGroup, RadioButton, SearchBar,
   Nav, NavbarTemplate, Navbar, NavPush, NavPop,
+  TapClick, TapDisabled,
   Register
 } from '../ionic';
 
@@ -71,7 +72,11 @@ export const IonicDirectives = [
   forwardRef(() => Navbar),
   forwardRef(() => NavPush),
   forwardRef(() => NavPop),
-  forwardRef(() => Register)
+  forwardRef(() => Register),
+
+  // Gestures
+  forwardRef(() => TapClick),
+  forwardRef(() => TapDisabled),
 ];
 
 class IonicViewImpl extends View {
