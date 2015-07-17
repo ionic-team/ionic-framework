@@ -31,6 +31,7 @@ export class Animation {
     this._ani = [];
 
     this._bfAdd = [];
+    this._bfSty = {};
     this._bfRmv = [];
     this._afAdd = [];
     this._afRmv = [];
@@ -162,6 +163,9 @@ export class Animation {
       removeClass: (className) => {
         this._bfRmv.push(className);
         return this;
+      },
+      setStyles: (styles) => {
+        this._bfSty = styles;
       }
     }
   }
@@ -247,7 +251,7 @@ export class Animation {
     if (!this._isStaged) {
       this._isStaged = true;
 
-      let i, l, j, ele, animation;
+      let i, p, l, j, ele, animation;
 
       for (i = 0, l = this._chld.length; i < l; i++) {
         this._chld[i].stage();
@@ -258,6 +262,10 @@ export class Animation {
 
         for (j = 0; j < this._bfAdd.length; j++) {
           ele.classList.add(this._bfAdd[j]);
+        }
+
+        for (p in this._bfSty) {
+          ele.style[p] = this._bfSty[p];
         }
 
         for (j = 0; j < this._bfRmv.length; j++) {

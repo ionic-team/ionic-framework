@@ -2,7 +2,7 @@ import {Transition} from './transition';
 import {Animation} from '../animations/animation';
 
 
-const DURATION = 600;
+const DURATION = 6000;
 const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
 
 const OPACITY = 'opacity';
@@ -26,7 +26,8 @@ class IOSTransition extends Transition {
     // entering item moves to center
     this.enteringView
       .to(TRANSLATEX, CENTER)
-      .to(OPACITY, 1);
+      .to(OPACITY, 1)
+      .before.setStyles({ zIndex: this.entering.index });
 
     this.enteringTitle
       .fadeIn()
@@ -35,7 +36,8 @@ class IOSTransition extends Transition {
     // leaving view moves off screen
     this.leavingView
       .from(TRANSLATEX, CENTER)
-      .from(OPACITY, 1);
+      .from(OPACITY, 1)
+      .before.setStyles({ zIndex: this.leaving.index });
 
     this.leavingTitle
       .from(TRANSLATEX, CENTER)

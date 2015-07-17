@@ -170,6 +170,10 @@ export class ViewItem {
     this.instance._viewItem = this;
   }
 
+  get index() {
+    return (this.viewCtrl ? this.viewCtrl.indexOf(this) : -1);
+  }
+
   destroy() {
     for (let i = 0; i < this.disposals.length; i++) {
       this.disposals[i]();

@@ -511,6 +511,10 @@ export class ViewController extends Ion {
     util.array.remove(this.items, itemOrIndex);
   }
 
+  indexOf(item) {
+    return this.items.indexOf(item);
+  }
+
   length() {
     return this.items.length;
   }
