@@ -1,4 +1,4 @@
-import {Component, Directive, View, ElementRef, Parent, Optional, forwardRef, onInit, Injector} from 'angular2/angular2';
+import {Directive, View, ElementRef, Parent, Optional, forwardRef, Injector} from 'angular2/angular2';
 
 import {IonicComponent} from '../../config/annotations';
 import {ViewController} from '../view/view-controller';
@@ -9,7 +9,9 @@ import {ViewController} from '../view/view-controller';
   properties: [
     'root'
   ],
-  lifecycle: [onInit]
+  defaultProperties: {
+    'swipeBackEnabled': true
+  }
 })
 @View({
   template: '<template pane-anchor></template>',
@@ -25,10 +27,14 @@ export class Nav extends ViewController {
     super(parentViewCtrl, injector, elementRef);
   }
 
-  onInit() {
+  onIonInit() {
     if (this.root) {
       this.push(this.root);
     }
+
+    // default the swipe back to be enabled
+    let isSwipeBackEnabled = (this.swipeBackEnabled || '').toString() !== 'false';
+    this.isSwipeBackEnabled( isSwipeBackEnabled );
   }
 
 }

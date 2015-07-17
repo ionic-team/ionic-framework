@@ -17,7 +17,8 @@ export class SwipeHandle {
     @Parent() @Inject(forwardRef(() => Pane)) pane: Pane,
     elementRef: ElementRef
   ) {
-    if (!viewCtrl || !pane) return;
+
+    if (!viewCtrl || !viewCtrl.isSwipeBackEnabled() || !pane) return;
 
     const self = this;
 
@@ -31,7 +32,7 @@ export class SwipeHandle {
       self.onDragHorizontal(ev);
     }
 
-    gesture.on('panend', ev => { self.onDragEnd(ev); });
+    gesture.on('panend', gestureEv => { self.onDragEnd(gestureEv.gesture); });
     gesture.on('panleft', dragHorizontal);
     gesture.on('panright', dragHorizontal);
 
@@ -39,12 +40,12 @@ export class SwipeHandle {
     self.width = null;
   }
 
-  onDragEnd(ev) {
-    ev.preventDefault();
-    ev.stopPropagation();
+  onDragEnd(gesture) {
+    gesture.srcEvent.preventDefault();
+    gesture.srcEvent.stopPropagation();
 
     // TODO: POLISH THESE NUMBERS WITH GOOD MATHIFICATION
-    let progress = (ev.gesture.center.x - this.startX) / this.width;
+    let progress = (gesture.center.x - this.startX) / this.width;
     let completeSwipeBack = (progress > 0.5);
     let playbackRate = 4;
 
@@ -74,23 +75,25 @@ export class SwipeHandle {
     this.startX = null;
   }
 
-  onDragHorizontal(ev) {
+  onDragHorizontal(gestureEv) {
+    let gesture = gestureEv.gesture;
+
     if (this.startX === null) {
       // starting drag
-      ev.preventDefault();
-      ev.stopPropagation();
+      gesture.srcEvent.preventDefault();
+      gesture.srcEvent.stopPropagation();
 
-      this.startX = ev.gesture.center.x;
+      this.startX = gesture.center.x;
       this.width = this.pane.width() - this.startX;
 
       this.viewCtrl.swipeBackStart();
     }
 
-    this.viewCtrl.swipeBackProgress( (ev.gesture.center.x - this.startX) / this.width );
+    this.viewCtrl.swipeBackProgress( (gesture.center.x - this.startX) / this.width );
   }
 
   get showHandle() {
-    return (this.viewCtrl ? this.viewCtrl.swipeBackEnabled() : false);
+    return (this.viewCtrl ? this.viewCtrl.canSwipeBack() : false);
   }
 
   onDestroy() {

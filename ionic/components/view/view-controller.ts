@@ -38,6 +38,7 @@ export class ViewController extends Ion {
 
     this.sbTransition = null;
     this.sbActive = false;
+    this.sbEnabled = true;
 
     this.id = ++ctrlIds;
     this._ids = -1;
@@ -364,10 +365,19 @@ export class ViewController extends Ion {
     }
   }
 
-  swipeBackEnabled() {
-    let activeItem = this.getActive();
-    if (activeItem) {
-      return activeItem.enableBack();
+  isSwipeBackEnabled(val) {
+    if (arguments.length) {
+       this.sbEnabled = !!val;
+    }
+    return this.sbEnabled;
+  }
+
+  canSwipeBack() {
+    if (this.sbEnabled) {
+      let activeItem = this.getActive();
+      if (activeItem) {
+        return activeItem.enableBack();
+      }
     }
     return false;
   }
