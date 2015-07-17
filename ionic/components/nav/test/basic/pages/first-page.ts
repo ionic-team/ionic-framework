@@ -7,7 +7,7 @@ import {ThirdPage} from './third-page';
 
 @IonicView({
   template: '' +
-    '<ion-navbar *navbar>' +
+    '<ion-navbar *navbar primary>' +
       '<ion-title>First Page: {{ val }}</ion-title>' +
       '<ion-nav-items primary>' +
         '<button>P1</button>' +

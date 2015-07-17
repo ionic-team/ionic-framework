@@ -35,3 +35,22 @@
   display: flex;
   align-items: center;
 }
+
+// Core Nav Bar Color Generation
+// --------------------------------------------------
+
+@each $color, $value in $colors {
+
+  .navbar[#{$color}] {
+      background-color: get-color($color, base);
+
+      ion-title {
+        color: white;
+      }
+      button,
+      [button] {
+        color: white;
+      }
+  }
+
+}

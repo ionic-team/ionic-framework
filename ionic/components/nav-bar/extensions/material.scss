@@ -3,19 +3,20 @@
 // --------------------------------------------------
 
 $navbar-material-height:                  6.4rem !default;
-$navbar-material-background:              #f7f7f8 !default;
+$navbar-material-background:              #f7f7f8; //get-color(primary, base) !default;//#f7f7f8 !default;
 
 $navbar-material-title-font-size:         2rem !default;
 $navbar-material-button-font-size:        2rem !default;
 $navbar-material-button-text-color:       #007aff !default;
 
 
-.navbar[mode="md"] {
+.nav[mode="md"] .navbar-container {
   height: $navbar-material-height;
   background: $navbar-material-background;
 
-  .navbar-title {
+  ion-title {
     font-size: $navbar-material-title-font-size;
+    font-weight: bold;
   }
 
   button,

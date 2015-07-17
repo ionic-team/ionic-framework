@@ -5,7 +5,7 @@ import {FirstPage} from './first-page';
 
 @IonicView({
   template: `
-    <ion-navbar *navbar><ion-title>Second Page Header</ion-title></ion-navbar>
+    <ion-navbar *navbar primary><ion-title>Second Page Header</ion-title></ion-navbar>
     <ion-content class="padding">
       <p><button primary (click)="pop()">Pop (Go back to 1st)</button></p>
       <p><button primary nav-pop>Pop with NavPop (Go back to 1st)</button></p>

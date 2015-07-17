@@ -1,0 +1,19 @@
+$item-material-min-height:          56px;
+$item-material-font-size:           16px;
+$item-material-label-color:         #222;
+
+.list[mode="md"] {
+  .item {
+    padding-left: 16px;
+  }
+  .item-content {
+    min-height: $item-material-min-height;
+    padding-right: 16px;
+    border-bottom: 1px solid #DBDBDB;
+  }
+
+  .item-label {
+    color: $item-material-label-color;
+    font-size: $item-material-font-size;
+  }
+}

@@ -4,8 +4,8 @@
 // All font sizes use rem units
 
 
-$font-family-sans-serif:          "Helvetica Neue", "Roboto", sans-serif !default;
-$font-family-light-sans-serif:    "HelveticaNeue-Light", "Roboto-Light", sans-serif-light !default;
+$font-family-sans-serif:          -apple-system, "Helvetica Neue", "Roboto", sans-serif !default;
+$font-family-light-sans-serif:    -apple-system, "HelveticaNeue-Light", "Roboto-Light", sans-serif-light !default;
 
 $font-family-base:                $font-family-sans-serif !default;
 $font-size-root:                  62.5% !default;
