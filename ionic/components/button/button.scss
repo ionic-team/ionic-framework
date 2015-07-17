@@ -145,21 +145,29 @@ button,
     transition: .2s linear;
     transition-property: background-color;
 
+    font-size: 14px;
+
     &[fab-center] {
       left: 50%;
       margin-left: -$button-fab-size/2;
     }
     &[fab-top] {
-      top: 15px;
+      top: 16px;
     }
     &[fab-right] {
-      right: 15px;
+      right: 16px;
     }
     &[fab-bottom] {
-      bottom: 15px;
+      bottom: 16px;
     }
     &[fab-left] {
-      left: 15px;
+      left: 16px;
+    }
+
+    .icon {
+      flex: 1;
+      //width: 24px;
+      //height: 24px;
     }
   }
 }
