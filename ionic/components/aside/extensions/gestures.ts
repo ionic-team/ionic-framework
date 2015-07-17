@@ -2,18 +2,65 @@ import {Aside} from 'ionic/components/aside/aside';
 //TODO: figure out way to get rid of all the ../../../../
 import {SlideEdgeGesture} from 'ionic/gestures/slide-edge-gesture';
 
+class AsideTargetGesture extends SlideEdgeGesture {
+  constructor(aside: Aside) {
+    let asideElement = aside.getNativeElement();
+    super(asideElement, {
+      direction: (aside.side === 'left' || aside.side === 'right') ? 'x' : 'y',
+      edge: aside.side,
+      threshold: 0
+    });
+    this.aside = aside;
+  }
+  canStart(ev) {
+    return this.aside.isOpen;
+  }
+  // Set CSS, then wait one frame for it to apply before sliding starts
+  onSlideBeforeStart(slide, ev) {
+    this.aside.setSliding(true);
+    this.aside.setChanging(true);
+    return new Promise(resolve => {
+      requestAnimationFrame(resolve);
+    });
+  }
+  onSlide(slide, ev) {
+    this.aside.setOpenAmt(slide.distance / slide.max);
+    this.aside.setTransform('translate3d(' + slide.distance + 'px,0,0)');
+  }
+  onSlideEnd(slide, ev) {
+    this.aside.setTransform('');
+    this.aside.setSliding(false);
+    if (Math.abs(ev.gesture.velocityX) > 0.2 || Math.abs(slide.delta) > Math.abs(slide.max) * 0.5) {
+      this.aside.setOpen(!this.aside.isOpen);
+    }
+  }
+
+  getElementStartPos(slide, ev) {
+    return this.aside.isOpen ? slide.max : slide.min;
+  }
+  getSlideBoundaries() {
+    return {
+      min: 0,
+      max: this.aside.width()
+    };
+  }
+}
+
 class AsideGesture extends SlideEdgeGesture {
   constructor(aside: Aside) {
     // TODO figure out the sliding element, dont just use the parent
-    let slideElement = aside.getContentElement();
-    super(slideElement, {
+    let contentElement = aside.getContentElement();
+    super(contentElement, {
       direction: (aside.side === 'left' || aside.side === 'right') ? 'x' : 'y',
       edge: aside.side,
       threshold: 75
     });
     this.aside = aside;
-    this.slideElement = slideElement;
+    this.slideElement = contentElement;
     this.listen();
+
+    let contentGesture = new AsideTargetGesture(aside);
+    contentGesture.listen();
   }
 
   canStart(ev) {
