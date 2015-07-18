@@ -153,7 +153,7 @@ ionic.tap = {
   ignoreScrollStart: function(e) {
     return (e.defaultPrevented) ||  // defaultPrevented has been assigned by another component handling the event
            (/^(file|range)$/i).test(e.target.type) ||
-           (e.target.dataset ? e.target.dataset.preventScroll : e.target.getAttribute('data-prevent-scroll')) == 'true' || // manually set within an elements attributes
+           (e.target.dataset ? e.target.dataset.preventScroll : e.target.getAttribute && e.target.getAttribute('data-prevent-scroll')) == 'true' || // manually set within an elements attributes
            (!!(/^(object|embed)$/i).test(e.target.tagName)) ||  // flash/movie/object touches should not try to scroll
            ionic.tap.isElementTapDisabled(e.target); // check if this element, or an ancestor, has `data-tap-disabled` attribute
   },
@@ -254,7 +254,7 @@ ionic.tap = {
     if (ele && ele.nodeType === 1) {
       var element = ele;
       while (element) {
-        if ((element.dataset ? element.dataset.tapDisabled : element.getAttribute('data-tap-disabled')) == 'true') {
+        if ((element.dataset ? element.dataset.tapDisabled : element.getAttribute && element.getAttribute('data-tap-disabled')) == 'true') {
           return true;
         }
         element = element.parentElement;
