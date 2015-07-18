@@ -6,10 +6,15 @@ $item-material-label-color:         #222;
   .item {
     padding-left: 16px;
   }
+
   .item-content {
     min-height: $item-material-min-height;
-    padding-right: 16px;
+    padding: 16px 16px 16px 0px;
     border-bottom: 1px solid #DBDBDB;
+  }
+
+  .item-media {
+    display: block;
   }
 
   .item-label {

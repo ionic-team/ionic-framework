@@ -14,6 +14,10 @@ $navbar-material-button-text-color:       #007aff !default;
   height: $navbar-material-height;
   background: $navbar-material-background;
 
+  .toolbar-inner-title {
+    padding: 0px 16px;
+  }
+
   ion-title {
     font-size: $navbar-material-title-font-size;
     font-weight: bold;

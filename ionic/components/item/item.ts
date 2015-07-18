@@ -19,6 +19,7 @@ import {dom} from 'ionic/util';
     -->
     <div class="item-content">
       <div class="item-media">
+        <div class="item-media-placeholder"></div>
       </div>
       <div class="item-accessory">
         <!--<content select="ion-item-accessory"></content>-->

@@ -16,7 +16,8 @@ import {App, IonicView, Register} from 'ionic/ionic';
   '<ion-content>' +
     `<ion-list>
       <ion-item>
-        All Genres
+        <h3>All Genres</h3>
+        <h4>Jan 17 2015</h4>
       </ion-item>
       <ion-item>
         Alternative

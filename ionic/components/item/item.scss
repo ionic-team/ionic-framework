@@ -97,6 +97,9 @@ ion-primary-swipe-buttons {
   flex: 1;
   flex-shrink: 1;
 
+  // To enable multi-line text more easily
+  flex-direction: column;
+
   max-width: 100%;
 
   white-space: nowrap;
@@ -162,4 +165,29 @@ ion-primary-swipe-buttons {
 
 .item-full {
 
+}
+
+
+// Some testing things
+
+.item-media-placeholder {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #aaa;
+  margin-right: 16px;
+}
+
+.item-label h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 16px;
+  color: #222;
+  font-weight: normal;
+}
+.item-label h4 {
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 14px;
+  color: #858585;
 }
