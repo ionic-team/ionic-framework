@@ -2,12 +2,19 @@
 // Material Design Navbar
 // --------------------------------------------------
 
+$navbar-order-material: (
+  back-button: 10,
+  primary: 20,
+  title: 30,
+  secondary: 40
+);
+
 $navbar-material-height:                  6.4rem !default;
 $navbar-material-background:              #f7f7f8; //get-color(primary, base) !default;//#f7f7f8 !default;
 
 $navbar-material-title-font-size:         2rem !default;
-$navbar-material-button-font-size:        2rem !default;
-$navbar-material-button-text-color:       #007aff !default;
+$navbar-material-button-font-size:        24px !default;
+$navbar-material-button-text-color:       #fff !default; //#007aff !default;
 
 
 .nav[mode="md"] .navbar-container {
@@ -16,6 +23,26 @@ $navbar-material-button-text-color:       #007aff !default;
 
   .toolbar-inner-title {
     padding: 0px 16px;
+  }
+
+  .toolbar-inner {
+    padding: 0px 16px;
+  }
+
+  .toolbar-title {
+    order: map-get($navbar-order-ios, 'title');
+  }
+
+  .toolbar-primary-item {
+    order: map-get($navbar-order-ios, 'primary');
+  }
+
+  .toolbar-secondary-item {
+    order: map-get($navbar-order-ios, 'secondary');
+  }
+
+  .toolbar-primary-item ion-nav-items button:first-child {
+    margin-left: 0;
   }
 
   ion-title {

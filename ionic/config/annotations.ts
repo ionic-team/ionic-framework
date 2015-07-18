@@ -11,6 +11,7 @@ import {
   List, Item, ItemGroup, ItemGroupTitle,
   Toolbar,
   Icon,
+  IconDirective,
   Checkbox, TapInput, Switch,
   Input, TextInput, Label,
   Segment, SegmentButton, SegmentControlValueAccessor,
@@ -51,6 +52,7 @@ export const IonicDirectives = [
 
   // Media
   forwardRef(() => Icon),
+  forwardRef(() => IconDirective),
 
   // Form
   forwardRef(() => Segment),

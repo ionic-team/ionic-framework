@@ -6,11 +6,11 @@ import {App, IonicView, Register} from 'ionic/ionic';
   template: '<ion-navbar *navbar primary>' +
     '<ion-title>Heading</ion-title>' +
     '<ion-nav-items primary>' +
-      '<button>P1</button>' +
+      '<button icon><i class="icon ion-navicon"></i></button>' +
     '</ion-nav-items>' +
     '<ion-nav-items secondary>' +
-      '<button>S1</button>' +
-      '<button icon><i class="icon ion-navicon"></i></button>' +
+      '<button><ion-icon md="ion-android-search" ios="ion-ios-search-strong"></i></button>' +
+      '<button><i class="icon ion-android-more-vertical"></i></button>' +
     '</ion-nav-items>' +
   '</ion-navbar>' +
   '<ion-content>' +
