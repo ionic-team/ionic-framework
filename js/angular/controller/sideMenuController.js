@@ -405,7 +405,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
       menuEnabled &&
       !e.target.tagName.match(/input|textarea|select|object|embed/i) &&
       !e.target.isContentEditable &&
-      !(e.target.dataset ? e.target.dataset.preventScroll : e.target.getAttribute('data-prevent-scroll') == 'true');
+      !(e.target.dataset ? e.target.dataset.preventScroll : e.target.getAttribute && e.target.getAttribute('data-prevent-scroll') == 'true');
   };
 
   $scope.sideMenuContentTranslateX = 0;
