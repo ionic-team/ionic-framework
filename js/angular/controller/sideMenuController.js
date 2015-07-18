@@ -181,26 +181,26 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
 
     // Check if we can move to that side, depending if the left/right panel is enabled
     if (!(self.left && self.left.isEnabled) && amount > 0) {
-      self.content.setTranslateX(0);
+      self.content && self.content.setTranslateX(0);
       return;
     }
 
     if (!(self.right && self.right.isEnabled) && amount < 0) {
-      self.content.setTranslateX(0);
+      self.content && self.content.setTranslateX(0);
       return;
     }
 
     if (leftShowing && amount > maxLeft) {
-      self.content.setTranslateX(maxLeft);
+      self.content && self.content.setTranslateX(maxLeft);
       return;
     }
 
     if (rightShowing && amount < -maxRight) {
-      self.content.setTranslateX(-maxRight);
+      self.content && self.content.setTranslateX(-maxRight);
       return;
     }
 
-    self.content.setTranslateX(amount);
+    self.content && self.content.setTranslateX(amount);
 
     if (amount >= 0) {
       leftShowing = true;
