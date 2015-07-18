@@ -304,12 +304,12 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
     if (self.left && self.left.isEnabled) {
       // set the left marget width if it should be exposed
       // otherwise set false so there's no left margin
-      self.content.setMarginLeft(isAsideExposed ? self.left.width : 0);
+      self.content && self.content.setMarginLeft(isAsideExposed ? self.left.width : 0);
     } else if (self.right && self.right.isEnabled) {
-      self.content.setMarginRight(isAsideExposed ? self.right.width : 0);
+      self.content && self.content.setMarginRight(isAsideExposed ? self.right.width : 0);
     }
 
-    self.$scope.$emit('$ionicExposeAside', isAsideExposed);
+    self.$scope && self.$scope.$emit('$ionicExposeAside', isAsideExposed);
   };
 
   self.activeAsideResizing = function(isResizing) {
