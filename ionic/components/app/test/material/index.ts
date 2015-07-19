@@ -14,7 +14,9 @@ import {App, ActionMenu, IonicApp, IonicView, Register} from 'ionic/ionic';
     '</ion-nav-items>' +
   '</ion-navbar>' +
   '<ion-content>' +
-    `<ion-list>
+    `
+    <button primary md-ripple>Cleeek</button>
+    <ion-list>
       <ion-item>
         <h3>All Genres</h3>
         <h4>Jan 17 2015</h4>

@@ -18,7 +18,10 @@ import {
   RadioGroup, RadioButton, SearchBar,
   Nav, NavbarTemplate, Navbar, NavPush, NavPop,
   TapClick, TapDisabled,
-  Register
+  Register,
+
+  // Material
+  MaterialRipple
 } from '../ionic';
 
 
@@ -81,6 +84,9 @@ export const IonicDirectives = [
   // Gestures
   forwardRef(() => TapClick),
   forwardRef(() => TapDisabled),
+
+  // Material
+  forwardRef(() => MaterialRipple)
 ];
 
 class IonicViewImpl extends View {

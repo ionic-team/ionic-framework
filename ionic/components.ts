@@ -13,6 +13,10 @@ export * from 'ionic/components/form/text-input'
 export * from 'ionic/components/form/tap-input'
 export * from 'ionic/components/form/label'
 export * from 'ionic/components/list/list'
+
+// Material components/effects
+export * from 'ionic/components/material/ripple'
+
 export * from 'ionic/components/modal/modal'
 export * from 'ionic/components/nav/nav'
 export * from 'ionic/components/nav/nav-controller'
