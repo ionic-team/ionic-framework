@@ -1,0 +1,33 @@
+/**
+ * Portions lovingly adapted from Material Design Lite
+ * Copyright Google, 2015, Licensed under the Apache 2 license.
+ * https://github.com/google/material-design-lite
+ */
+$ripple-bg-color: black;
+$ripple-animation-curve: cubic-bezier(0, 0, 0.2, 1) !default;
+
+.md-ripple {
+
+  background: $ripple-bg-color;
+  border-radius: 50%;
+  height: 50px;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  overflow: hidden;
+
+  &.is-animating {
+    transition: transform 0.3s $ripple-animation-curve;
+    width: 0.3s $ripple-animation-curve;
+    height: 0.3s $ripple-animation-curve;
+    opacity: 0.6s $ripple-animation-curve;
+  }
+
+  &.is-visible {
+    opacity: 0.3;
+  }
+}
