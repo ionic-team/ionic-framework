@@ -28,12 +28,13 @@
       text-align: center;
       vertical-align: middle;
       font-size: 24px;
-      margin: 0 32px;
+
+      margin: 0 32px 0 16px; // gap on right, standard left padding
     }
   }
 
   .action-menu-title {
-    font-size: 14px;
+    font-size: 16px;
     padding: 16px;
     color: #666;
   }
