@@ -6,7 +6,7 @@
 * The ActionMenu is a modal menu with options to select based on an action.
 */
 
-import {View, Injectable, NgFor, NgIf} from 'angular2/angular2';
+import {View, Injectable, NgFor, NgIf, CSSClass} from 'angular2/angular2';
 
 import {TapClick} from '../button/button';
 import {Overlay} from '../overlay/overlay';
@@ -21,7 +21,7 @@ import * as util from 'ionic/util';
       <div class="action-menu-container">
         <div class="action-menu-group action-menu-options">
           <div class="action-menu-title" *ng-if="titleText">{{titleText}}</div>
-          <button (click)="_buttonClicked(index)" *ng-for="#b of buttons; #index = index" class="action-menu-option">{{b.text}}</button>
+          <button (^click)="_buttonClicked(index)" *ng-for="#b of buttons; #index = index" class="action-menu-option"><i class="icon" [class]="b.icon" *ng-if="b.icon"></i> {{b.text}}</button>
           <button *ng-if="destructiveText" (click)="_destructive()" class="destructive action-menu-destructive">{{destructiveText}}</button>
         </div>
         <div class="action-menu-group action-menu-cancel" *ng-if="cancelText">
@@ -29,7 +29,7 @@ import * as util from 'ionic/util';
         </div>
       </div>
     </div>`,
-  directives: [NgFor, NgIf, TapClick]
+  directives: [NgFor, NgIf, CSSClass, TapClick]
 })
 class ActionMenuDirective {
 

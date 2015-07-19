@@ -1,32 +1,38 @@
 
+
 .action-menu[mode="md"] {
+  margin: 0;
 
   .action-menu-backdrop.active {
     background-color: rgba(0,0,0,0.2);
   }
 
-  .action-menu {
+
+  .action-menu-container {
     margin: 0;
+  }
 
-    .action-menu-title,
-    button,
-    [button] {
-      text-align: left;
-      border-color: transparent;
-      font-size: 16px;
-      color: inherit;
-    }
+  .action-menu-title,
+  .action-menu-option {
+    text-align: left;
+    border-color: transparent;
+    font-size: 16px;
+    color: inherit;
+  }
 
-    .action-menu-title {
-      font-size: 14px;
-      padding: 16px;
-      color: #666;
-    }
+  .action-menu-title {
+    font-size: 14px;
+    padding: 16px;
+    color: #666;
+  }
 
-    button.activated,
-    [button].activated {
-      background: #e8e8e8;
-    }
+  .action-menu-option .icon {
+    font-size: 24px;
+    margin: 0 32px;
+  }
+
+  .action-menu-option.activated {
+    background: #e8e8e8;
   }
 
   .action-menu-group {
@@ -47,5 +53,4 @@
     }
 
   }
-
 }

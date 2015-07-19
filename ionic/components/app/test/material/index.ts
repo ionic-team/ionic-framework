@@ -1,6 +1,6 @@
 import {Component, Directive} from 'angular2/angular2';
 
-import {App, IonicApp, IonicView, Register} from 'ionic/ionic';
+import {App, ActionMenu, IonicApp, IonicView, Register} from 'ionic/ionic';
 
 @IonicView({
   template: '<ion-navbar *navbar primary>' +
@@ -10,7 +10,7 @@ import {App, IonicApp, IonicView, Register} from 'ionic/ionic';
     '</ion-nav-items>' +
     '<ion-nav-items secondary>' +
       '<button><ion-icon md="ion-android-search" ios="ion-ios-search-strong"></i></button>' +
-      '<button><i class="icon ion-android-more-vertical"></i></button>' +
+      '<button (^click)="showMoreMenu()"><i class="icon ion-android-more-vertical"></i></button>' +
     '</ion-nav-items>' +
   '</ion-navbar>' +
   '<ion-content>' +
@@ -30,12 +30,38 @@ import {App, IonicApp, IonicView, Register} from 'ionic/ionic';
   '</ion-content>'
 })
 export class FirstPage {
-  constructor(app: IonicApp) {
+  constructor(app: IonicApp, actionMenu: ActionMenu) {
     this.app = app;
+    this.actionMenu = actionMenu;
   }
   toggleMenu() {
     console.log('TOGGLE');
     this.app.getComponent('myAside').toggle();
+  }
+  showMoreMenu() {
+    this.actionMenu.open({
+      buttons: [
+        { icon: 'ion-android-share-alt', text: 'Share' },
+        { icon: 'ion-arrow-move', text: 'Move' }
+      ],
+      destructiveText: 'Delete',
+      titleText: 'Modify your album',
+      cancelText: 'Cancel',
+      cancel: function() {
+        console.log('Canceled');
+      },
+      destructiveButtonClicked: () => {
+        console.log('Destructive clicked');
+      },
+      buttonClicked: function(index) {
+        console.log('Button clicked', index);
+        if(index == 1) { return false; }
+        return true;
+      }
+    }).then(actionMenuRef => {
+      this.actionMenuRef = actionMenuRef;
+    });
+
   }
 }
 
