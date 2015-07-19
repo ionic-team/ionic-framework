@@ -6,9 +6,13 @@ $toolbar-material-button-font-size:        2rem !default;
 $toolbar-material-button-text-color:       #007aff !default;
 
 .toolbar[mode="md"] {
-  padding: 0px 15px;
+  padding: 0px 16px;
   height: $toolbar-material-height;
   background: $toolbar-material-background;
+
+  .toolbar-inner-title {
+    padding: 0;
+  }
 
   ion-title {
     font-size: $toolbar-material-title-font-size;
