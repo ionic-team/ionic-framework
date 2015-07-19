@@ -13,11 +13,19 @@
   }
 
   .action-menu-title,
-  .action-menu-option {
+  .action-menu-option,
+  .action-menu-destructive,
+  .action-menu-cancel button
+  {
     text-align: left;
     border-color: transparent;
     font-size: 16px;
     color: inherit;
+
+    .icon {
+      font-size: 24px;
+      margin: 0 32px;
+    }
   }
 
   .action-menu-title {
@@ -26,10 +34,6 @@
     color: #666;
   }
 
-  .action-menu-option .icon {
-    font-size: 24px;
-    margin: 0 32px;
-  }
 
   .action-menu-option.activated {
     background: #e8e8e8;
@@ -42,7 +46,14 @@
   }
 
   .action-menu-cancel {
-    display: none;
+    background-color: #fafafa;
+    width: auto;
+    border: none;
+    font-size: 16px;
+    color: inherit;
+    button {
+      font-weight: normal;
+    }
   }
 
   .action-menu-has-icons {

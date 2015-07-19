@@ -22,10 +22,10 @@ import * as util from 'ionic/util';
         <div class="action-menu-group action-menu-options">
           <div class="action-menu-title" *ng-if="titleText">{{titleText}}</div>
           <button (^click)="_buttonClicked(index)" *ng-for="#b of buttons; #index = index" class="action-menu-option"><i class="icon" [class]="b.icon" *ng-if="b.icon"></i> {{b.text}}</button>
-          <button *ng-if="destructiveText" (click)="_destructive()" class="destructive action-menu-destructive">{{destructiveText}}</button>
+          <button *ng-if="destructiveText" (click)="_destructive()" class="destructive action-menu-destructive"><i class="icon" [class]="destructiveIcon" *ng-if="destructiveIcon"></i> {{destructiveText}}</button>
         </div>
         <div class="action-menu-group action-menu-cancel" *ng-if="cancelText">
-          <button (click)="_cancel()">{{cancelText}}</button>
+          <button (click)="_cancel()"><i class="icon" [class]="cancelIcon"></i> {{cancelText}}</button>
         </div>
       </div>
     </div>`,
@@ -65,10 +65,17 @@ export class ActionMenu extends Overlay {
   open(opts={}) {
     let defaults = {
       enterAnimation: 'action-menu-slide-in',
-      leaveAnimation: 'action-menu-slide-out'
+      leaveAnimation: 'action-menu-slide-out',
     };
 
-    return this.create(OVERLAY_TYPE, ActionMenuDirective, util.extend(defaults, opts), opts);
+    let contextDefaults = {
+      cancelIcon: 'ion-close',
+      destructiveIcon: 'ion-trash-a'
+    }
+
+    let context = util.extend(contextDefaults, opts);
+
+    return this.create(OVERLAY_TYPE, ActionMenuDirective, util.extend(defaults, opts), context);
   }
 
   get() {
