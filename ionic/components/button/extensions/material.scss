@@ -43,4 +43,21 @@ $button-material-border-radius:            3px !default;
     font-size: $button-small-icon-size;
   }
 
+  @each $color, $value in $colors {
+
+    &[#{$color}] {
+
+      @if $color != "#fff" {
+        .md-ripple {
+          background-color: white;
+        }
+      }
+
+      &:active,
+      &.activated {
+        opacity: 1;
+        background-color: get-color($color, base);
+      }
+    }
+  }
 }

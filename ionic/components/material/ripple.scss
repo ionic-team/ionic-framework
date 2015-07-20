@@ -7,8 +7,7 @@ $ripple-bg-color: black;
 $ripple-animation-curve: cubic-bezier(0, 0, 0.2, 1) !default;
 
 .md-ripple {
-
-  background: #fff;//$ripple-bg-color;
+  background: $ripple-bg-color;
   border-radius: 50%;
   height: 50px;
   left: 0;
