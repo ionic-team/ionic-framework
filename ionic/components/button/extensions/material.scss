@@ -47,7 +47,7 @@ $button-material-border-radius:            3px !default;
 
     &[#{$color}] {
 
-      @if $color != "#fff" {
+      @if lightness(get-color($color, base)) < 80 {
         .md-ripple {
           background-color: white;
         }
