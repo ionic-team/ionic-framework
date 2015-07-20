@@ -85,6 +85,16 @@ $button-material-border-radius:            3px !default;
           background: transparent;
         }
       }
+
+      &[clear] {
+        box-shadow: none;
+        &:hover, &.hover {
+          background-color: rgba(158, 158, 158, 0.2);
+        }
+        &:active, &.active {
+          background-color: rgba(158, 158, 158, 0.4);
+        }
+      }
     }
   }
 }
