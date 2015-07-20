@@ -8,10 +8,34 @@ import {Platform} from '../../platform/platform';
 
 /*
 
-Ionicons Font Icon
+home: {
+  ios: 'ion-ios-home',
+  md: 'ion-md-home'
+},
+star: {
+  ios: 'ion-ios-star',
+  md: 'ion-md-star',
+}
+
+1-for-1 swap
+Map of stuff that's 1-for-1
 <icon name="home"></icon>
 <icon class="ion-ios-home"></icon>
 <icon class="ion-md-home"></icon>
+
+
+Always use the same no matter what
+Cuz it's not in the map of 1-for-1's
+<icon name="alert"></icon>
+<icon class="ion-alert"></icon>
+
+
+Different between modes
+Used different attributes
+<icon ios-name="search3" md-name="search2"></icon>
+<icon class="ion-ios-search3"></icon>
+<icon class="ion-md-search2"></icon>
+
 
 
 Ionicons SVG

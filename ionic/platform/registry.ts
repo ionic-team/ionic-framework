@@ -4,7 +4,8 @@ import {Platform} from './platform';
 Platform.register({
   name: 'core',
   settings: {
-    mode: 'ios'
+    mode: 'ios',
+    iconMode: 'ios'
   }
 });
 Platform.setDefault('core');
@@ -48,6 +49,7 @@ Platform.register({
   ],
   settings: {
     mode: 'md',
+    iconMode: 'md',
     type: 'overlay',
     keyboardScrollAssist: true
   },
@@ -72,6 +74,7 @@ Platform.register({
   ],
   settings: {
     mode: 'ios',
+    iconMode: 'ios',
     viewTransition: 'ios',
     tapPolyfill: true,
     keyboardScrollAssist: true
@@ -113,7 +116,9 @@ Platform.register({
     'tablet'
   ],
   settings: {
-    mode: 'wp'
+    mode: 'wp',
+    iconMode: 'md',
+    viewTransition: 'md',
   },
   isMatch(p) {
     return p.isPlatform('windowsphone', 'windows phone');
