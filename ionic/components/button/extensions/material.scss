@@ -53,6 +53,10 @@ $button-material-border-radius:            3px !default;
     }
   }
 
+  &[fab] {
+    border-radius: 50%;
+  }
+
   @each $color, $value in $colors {
 
     &[#{$color}] {
