@@ -43,6 +43,16 @@ $button-material-border-radius:            3px !default;
     font-size: $button-small-icon-size;
   }
 
+  &[outline] {
+    box-shadow: none;
+
+    .md-ripple {
+      &.is-visible {
+        opacity: 0.2;
+      }
+    }
+  }
+
   @each $color, $value in $colors {
 
     &[#{$color}] {
@@ -57,6 +67,23 @@ $button-material-border-radius:            3px !default;
       &.activated {
         opacity: 1;
         background-color: get-color($color, base);
+      }
+
+      &[outline] {
+        @if lightness(get-color($color, base)) >= 80 {
+          .md-ripple {
+            background-color: black;
+          }
+        } @else {
+          .md-ripple {
+            background-color: get-color($color, base);
+          }
+        }
+        &:active,
+        &.activated {
+          opacity: 1;
+          background: transparent;
+        }
       }
     }
   }
