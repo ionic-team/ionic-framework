@@ -5,7 +5,8 @@ Platform.register({
   name: 'core',
   settings: {
     mode: 'ios',
-    iconMode: 'ios'
+    iconMode: 'ios',
+    viewTransition: 'ios'
   }
 });
 Platform.setDefault('core');
@@ -51,12 +52,12 @@ Platform.register({
     mode: 'md',
     iconMode: 'md',
     type: 'overlay',
-    keyboardScrollAssist: true
+    keyboardScrollAssist: true,
+    viewTransition: 'md'
   },
   isMatch(p) {
     // "silk" is kindle fire
-    let re = 'android| silk';
-    return p.isPlatform('android', re);
+    return p.isPlatform('android', 'android| silk');
   },
   versionParser(p) {
     return p.matchUserAgentVersion(/Android (\d+).(\d+)?/);
@@ -75,9 +76,9 @@ Platform.register({
   settings: {
     mode: 'ios',
     iconMode: 'ios',
-    viewTransition: 'ios',
     tapPolyfill: true,
-    keyboardScrollAssist: true
+    keyboardScrollAssist: true,
+    viewTransition: 'ios'
   },
   isMatch(p) {
     return p.isPlatform('ios', 'iphone|ipad|ipod');

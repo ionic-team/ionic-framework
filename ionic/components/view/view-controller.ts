@@ -21,7 +21,8 @@ export class ViewController extends Ion {
     injector: Injector,
     elementRef: ElementRef
   ) {
-    super(elementRef, injector.get(IonicConfig));
+    let config = injector.get(IonicConfig);
+    super(elementRef, config);
 
     this.parent = parentViewCtrl;
 
@@ -30,6 +31,7 @@ export class ViewController extends Ion {
     this.viewMngr = injector.get(AppViewManager);
     this.router = injector.get(IonicRouter);
     this.app = injector.get(IonicApp);
+    this.config = config;
 
     this.router.addViewController(this);
 
@@ -203,6 +205,9 @@ export class ViewController extends Ion {
 
     if (opts.animate === false) {
       opts.animation = 'none';
+
+    } else if (!opts.animation) {
+      opts.animation = this.config.setting('viewTransition');
     }
 
     opts.animate = (opts.animation !== 'none');

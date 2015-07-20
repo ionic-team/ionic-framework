@@ -81,6 +81,6 @@ export class FirstPage {
   // }
 
   push() {
-    this.nav.push(SecondPage, { id: 8675309, myData: [1,2,3,4] }, { animation: 'ios' });
+    this.nav.push(SecondPage, { id: 8675309, myData: [1,2,3,4] } );
   }
 }

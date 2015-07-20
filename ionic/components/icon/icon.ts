@@ -8,13 +8,9 @@ import {Platform} from '../../platform/platform';
 
 /*
 
-home: {
-  ios: 'ion-ios-home',
+'home': {
+  ios: ['ion-ios-home', 'ion-ios-home-outline'],
   md: 'ion-md-home'
-},
-star: {
-  ios: 'ion-ios-star',
-  md: 'ion-md-star',
 }
 
 1-for-1 swap
