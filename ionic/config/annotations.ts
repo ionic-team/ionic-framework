@@ -5,7 +5,7 @@ import {IonicConfig} from './config';
 import {IonicRouter} from '../routing/router';
 import {ionicBootstrap} from '../components/app/app';
 import {
-  Aside, Content, Scroll, Refresher,
+  Aside, Button, Content, Scroll, Refresher,
   Slides, Slide, SlidePager,
   Tabs, Tab,
   List, Item, ItemGroup, ItemGroupTitle,
@@ -20,8 +20,7 @@ import {
   TapClick, TapDisabled,
   Register,
 
-  // Material
-  MaterialRipple
+  MaterialButton
 } from '../ionic';
 
 
@@ -33,6 +32,7 @@ export const IonicDirectives = [
 
   // Content
   forwardRef(() => Aside),
+  forwardRef(() => Button),
   forwardRef(() => Content),
   forwardRef(() => Scroll),
   forwardRef(() => Refresher),
@@ -86,7 +86,7 @@ export const IonicDirectives = [
   forwardRef(() => TapDisabled),
 
   // Material
-  forwardRef(() => MaterialRipple)
+  forwardRef(() => MaterialButton)
 ];
 
 class IonicViewImpl extends View {

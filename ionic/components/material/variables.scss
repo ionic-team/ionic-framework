@@ -1,3 +1,9 @@
+$animation-curve-fast-out-slow-in: cubic-bezier(0.4, 0, 0.2, 1) !default;
+$animation-curve-linear-out-slow-in: cubic-bezier(0, 0, 0.2, 1) !default;
+$animation-curve-fast-out-linear-in: cubic-bezier(0.4, 0, 1, 1) !default;
+
+$animation-curve-default: $animation-curve-fast-out-slow-in !default;
+
 $shadow-multiplier: 0.7;
 $shadow-key-umbra-opacity:      $shadow-multiplier * 0.2;
 $shadow-key-penumbra-opacity:   $shadow-multiplier * 0.14;

@@ -1,9 +1,16 @@
-import {Directive, ElementRef, Optional, Ancestor} from 'angular2/angular2';
+import {Directive, ElementRef, Optional, Ancestor, onDestroy} from 'angular2/angular2';
 
 import {IonicConfig} from '../../config/config';
 import {Gesture} from '../../gestures/gesture';
 import * as dom  from '../../util/dom';
 
+@Directive({
+  selector: 'button,[button]'
+})
+export class Button {
+  constructor(elementRef: ElementRef, config: IonicConfig) {
+  }
+}
 
 @Directive({
   selector: '[tap-disabled]'

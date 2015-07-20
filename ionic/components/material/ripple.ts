@@ -1,23 +1,17 @@
 /**
- * Portions lovingly adapted from Material Design Lite
+ * Lovingly Adapted from Material Design Lite
  * Copyright Google, 2015, Licensed under the Apache 2 license.
  * https://github.com/google/material-design-lite
  */
 
-import {Directive, ElementRef} from 'angular2/angular2';
+import {ElementRef, forwardRef} from 'angular2/angular2';
 
-@Directive({
-  selector: '[md-ripple]',
-  host: {
-    '(click)': 'elementClicked($event)'
-  }
-})
-export class MaterialRipple {
-  constructor(elementRef: ElementRef) {
-    this.elementRef = elementRef;
+import {MaterialButton} from './button';
+
+export class MaterialRippleEffect {
+  constructor(button: MaterialButton) {
+    this.elementRef = button.elementRef;
     this.element = this.elementRef.nativeElement;
-
-    console.log('Ripple', elementRef);
 
     var rippleContainer = document.createElement('span');
     rippleContainer.classList.add('md-ripple-container');

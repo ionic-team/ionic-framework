@@ -15,6 +15,7 @@ export * from 'ionic/components/form/label'
 export * from 'ionic/components/list/list'
 
 // Material components/effects
+export * from 'ionic/components/material/button'
 export * from 'ionic/components/material/ripple'
 
 export * from 'ionic/components/modal/modal'

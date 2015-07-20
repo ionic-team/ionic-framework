@@ -56,7 +56,8 @@ Platform.register({
     iconMode: 'md',
     type: 'overlay',
     keyboardScrollAssist: true,
-    viewTransition: 'md'
+    viewTransition: 'md',
+    mdRipple: true
   },
   isMatch(p) {
     // "silk" is kindle fire
@@ -83,7 +84,8 @@ Platform.register({
     iconMode: 'ios',
     tapPolyfill: true,
     keyboardScrollAssist: true,
-    viewTransition: 'ios'
+    viewTransition: 'ios',
+    mdRipple: false
   },
   isMatch(p) {
     return p.isPlatform('ios', 'iphone|ipad|ipod');
