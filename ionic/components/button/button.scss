@@ -126,6 +126,11 @@ button,
     }
   }
 
+  &[full] {
+    width: 100%;
+    border-radius: 0;
+  }
+
   &.disabled,
   &[disabled] {
     opacity: .4;
