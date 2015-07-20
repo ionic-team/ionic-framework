@@ -117,6 +117,9 @@ describe('Ionic Angular Side Menu', function() {
         tagName: 'DIV',
         dataset: {
           preventScroll: false
+        },
+        getAttribute: function(){
+          return null;
         }
       }
     };
@@ -164,6 +167,11 @@ describe('Ionic Angular Side Menu', function() {
     };
     expect(ctrl.isDraggableTarget(e)).toBe(false);
 
+    e.target.getAttribute = function(val){
+      return (val == 'type' ? 'range' : false);
+    };
+    expect(ctrl.isDraggableTarget(e)).toBe(false);
+
     e.target.getAttribute = function(){
       return null;
     };
@@ -187,6 +195,9 @@ describe('Ionic Angular Side Menu', function() {
         tagName: 'DIV',
         dataset: {
           preventScroll: false
+        },
+        getAttribute: function(){
+          return null;
         }
       }
     };
@@ -216,6 +227,36 @@ describe('Ionic Angular Side Menu', function() {
     $ionicHistory.currentView({historyId: '003'});
     $ionicHistory.backView({historyId: 'root'});
     expect(ctrl.isDraggableTarget(e)).toBe(true);
+
+    e.target.getAttribute = function(val){
+      return (val == 'type' ? 'range' : false);
+    };
+
+    ctrl.enableMenuWithBackViews(true);
+    expect(ctrl.isDraggableTarget(e)).toBe(false);
+
+    ctrl.enableMenuWithBackViews(false);
+    expect(ctrl.isDraggableTarget(e)).toBe(false);
+
+    ctrl.enableMenuWithBackViews(false);
+    $ionicHistory.currentView({historyId: 'root'});
+    $ionicHistory.backView({historyId: 'root'});
+    expect(ctrl.isDraggableTarget(e)).toBe(false);
+
+    ctrl.enableMenuWithBackViews(false);
+    $ionicHistory.currentView({historyId: 'root'});
+    $ionicHistory.backView(null);
+    expect(ctrl.isDraggableTarget(e)).toBe(false);
+
+    ctrl.enableMenuWithBackViews(true);
+    $ionicHistory.currentView({historyId: 'root'});
+    $ionicHistory.backView({historyId: 'root'});
+    expect(ctrl.isDraggableTarget(e)).toBe(false);
+
+    ctrl.enableMenuWithBackViews(false);
+    $ionicHistory.currentView({historyId: '003'});
+    $ionicHistory.backView({historyId: 'root'});
+    expect(ctrl.isDraggableTarget(e)).toBe(false);
 
   }));
 
