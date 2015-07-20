@@ -104,14 +104,14 @@ button,
   &[clear] {
     border-color: transparent;
     background: none;
-
-    &.activated {
-      opacity: 0.3;
-    }
   }
 
   &[outline] {
     background: none;
+
+    &.activated {
+      opacity: 0.3 !important;
+    }
   }
 
   &[block] {
