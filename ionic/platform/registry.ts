@@ -49,6 +49,7 @@ Platform.register({
   settings: {
     mode: 'md',
     type: 'overlay',
+    keyboardScrollAssist: true
   },
   isMatch(p) {
     // "silk" is kindle fire
