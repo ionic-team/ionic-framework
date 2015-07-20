@@ -15,7 +15,7 @@ module.exports = function(gulp, argv, buildConfig) {
   var snapshotValues = _.merge(snapshotConfig.platformDefauls, argv);
 
   gulp.task('protractor-server', function() {
-    var app = connect().use(serveStatic(projectRoot + '/' + buildConfig.dist));  // serve everything that is static
+    var app = connect().use(serveStatic(projectRoot));  // serve everything that is static
     protractorHttpServer = http.createServer(app).listen(buildConfig.protractorPort);
     console.log('Serving `dist` on http://localhost:' + buildConfig.protractorPort);
   });

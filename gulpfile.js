@@ -260,6 +260,100 @@ gulp.task('examples', function() {
   }
 });
 
+var e2eBabelOptions = {
+  optional: ['es7.decorators'],
+  modules: "system",
+  moduleIds: true,
+  getModuleId: function(name) {
+    return "dist/e2e/" + name.split('/test').join('');
+  }
+};
+
+gulp.task('e2e', function() {
+  var buildTest = lazypipe()
+             //.pipe(traceur, traceurOptions)
+             .pipe(tsc, tscOptions, null, tscReporter)
+             .pipe(babel, e2eBabelOptions)
+             
+  var buildE2ETest = lazypipe()
+             //.pipe(traceur, traceurOptions)
+             .pipe(tsc, tscOptions, null, tscReporter)
+             .pipe(babel)
+
+  var indexTemplate = _.template(
+   fs.readFileSync('scripts/e2e/ionic.template.html')
+  )({
+   buildConfig: buildConfig
+
+  })
+  var testTemplate = _.template( fs.readFileSync('scripts/e2e/e2e.template.js') )
+
+  var platforms = [
+    'android',
+    'core',
+    'ios',
+  ];
+
+  // Get each test folder with gulp.src
+  return gulp.src(['ionic/components/*/test/*/**/*', '!ionic/components/*/test/*/**/*.spec.ts'])
+    .pipe(cache('e2e', { optimizeMemory: true }))
+    .pipe(gulpif(/e2e.ts$/, buildE2ETest()))
+    .pipe(gulpif(/.ts$/, buildTest()))
+    .on('error', function (err) {
+      console.log("ERROR: " + err.message);
+      this.emit('end');
+    })
+    .pipe(gulpif(/index.js$/, createIndexHTML())) //TSC changes .ts to .js
+    .pipe(rename(function(file) {
+      file.dirname = file.dirname.replace(path.sep + 'test' + path.sep, path.sep)
+    }))
+    .pipe(gulpif(/e2e.js$/, createPlatformTests()))
+    .pipe(gulp.dest('dist/e2e/'))
+
+  function createIndexHTML() {
+    return through2.obj(function(file, enc, next) {
+      var self = this;
+
+      var module = path.dirname(file.path)
+                      .replace(__dirname, '')
+                      .replace('/ionic/components/', 'dist/e2e/')
+                      .replace('/test/', '/') +
+                      '/index';
+
+      var indexContents = indexTemplate.replace('{{MODULE}}', module);
+
+      self.push(new VinylFile({
+        base: file.base,
+        contents: new Buffer(indexContents),
+        path: path.join(path.dirname(file.path), 'index.html'),
+      }));
+      next(null, file);
+    });
+  }
+
+  function createPlatformTests(file) {
+    return through2.obj(function(file, enc, next) {
+      var self = this
+      var relativePath = path.dirname(file.path.replace(/^.*?ionic(\/|\\)components(\/|\\)/, ''))
+      var contents = file.contents.toString()
+      platforms.forEach(function(platform) {
+        var platformContents = testTemplate({
+          contents: contents,
+          buildConfig: buildConfig,
+          relativePath: relativePath,
+          platform: platform
+        })
+        self.push(new VinylFile({
+          base: file.base,
+          contents: new Buffer(platformContents),
+          path: file.path.replace(/e2e.js$/, platform + '.e2e.js')
+        }))
+      })
+      next()
+    })
+  }
+});
+
 gulp.task('sass', function() {
   return gulp.src('ionic/ionic.scss')
     .pipe(sass({
@@ -293,7 +387,7 @@ gulp.task('karma-watch', function() {
   return karma.start({ configFile: __dirname + '/scripts/test/karma-watch.conf.js' })
 });
 
-gulp.task('e2e', ['sass'], function() {
+gulp.task('e2e.old', ['sass'], function() {
   var indexContents = _.template( fs.readFileSync('scripts/e2e/index.template.html') )({
     buildConfig: buildConfig
   });
