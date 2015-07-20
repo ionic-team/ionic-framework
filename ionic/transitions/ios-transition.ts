@@ -2,7 +2,7 @@ import {Transition} from './transition';
 import {Animation} from '../animations/animation';
 
 
-const DURATION = 6000;
+const DURATION = 600;
 const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
 
 const OPACITY = 'opacity';
