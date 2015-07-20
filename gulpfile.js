@@ -33,7 +33,8 @@ gulp.task('clean.build', function() {
     'examples',
     'sass',
     'fonts',
-    'vendor');
+    'vendor',
+    'copy-scripts');
 })
 
 gulp.task('build', function() {
@@ -43,7 +44,8 @@ gulp.task('build', function() {
     'examples',
     'sass',
     'fonts',
-    'vendor');
+    'vendor',
+    'copy-scripts');
 })
 
 gulp.task('watch', function() {
@@ -55,6 +57,7 @@ gulp.task('watch', function() {
     'sass',
     'fonts',
     'vendor',
+    'copy-scripts',
     'serve',
 
     function() {
