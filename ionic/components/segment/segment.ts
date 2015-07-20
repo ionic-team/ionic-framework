@@ -143,7 +143,8 @@ export class SegmentControlValueAccessor {
     // both this.value and setProperty are required at the moment
     // remove when a proper imperative API is provided
     this.value = !value ? '' : value;
-    this.renderer.setElementProperty(this.elementRef.parentView.render, this.elementRef.boundElementIndex, 'value', this.value);
+
+    this.renderer.setElementProperty(this.elementRef, 'value', this.value);
 
     this.segment.value = this.value;
     this.segment.selectFromValue(value);

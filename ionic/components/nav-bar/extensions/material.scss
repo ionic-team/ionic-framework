@@ -10,7 +10,7 @@ $navbar-order-material: (
 );
 
 $navbar-material-height:                  6.4rem !default;
-$navbar-material-background:              #f7f7f8; //get-color(primary, base) !default;//#f7f7f8 !default;
+$navbar-material-background:              get-color(primary, base) !default;//#f7f7f8 !default;
 
 $navbar-material-title-font-size:         2rem !default;
 $navbar-material-button-font-size:        24px !default;

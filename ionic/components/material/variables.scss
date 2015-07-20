@@ -1,0 +1,6 @@
+$shadow-multiplier: 0.7;
+$shadow-key-umbra-opacity:      $shadow-multiplier * 0.2;
+$shadow-key-penumbra-opacity:   $shadow-multiplier * 0.14;
+$shadow-ambient-shadow-opacity: $shadow-multiplier * 0.12;
+
+$md-whiteframe-shadow-z1: 0px 3px 1px -2px rgba(0, 0, 0, $shadow-key-umbra-opacity), 0px 2px 2px 0px rgba(0, 0, 0, $shadow-key-penumbra-opacity), 0px 1px 5px 0px rgba(0, 0, 0, $shadow-ambient-shadow-opacity) !default;

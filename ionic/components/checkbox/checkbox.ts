@@ -29,8 +29,7 @@ import {Icon} from '../icon/icon';
 @IonicView({
   template:
   '<div class="item-media media-checkbox">' +
-    '<icon [name]="iconOff" class="checkbox-off"></icon>' +
-    '<icon [name]="iconOn" class="checkbox-on"></icon>' +
+    '<div class="media-checkbox-outline"></div>' +
   '</div>' +
   '<div class="item-content">' +
     '<content></content>' +
