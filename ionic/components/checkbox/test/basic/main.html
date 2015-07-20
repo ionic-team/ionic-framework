@@ -1,8 +1,10 @@
 <ion-content>
   <form (^submit)="doSubmit($event)" [ng-form-model]="fruitsForm">
-      <ion-checkbox icon-on="ion-android-checkmark-circle"><input #apple type="checkbox" ng-control="appleCtrl"></ion-checkbox>
+    <ion-list>
+      <ion-checkbox icon-on="ion-android-checkmark-circle"><label>Apple</label><input #apple type="checkbox" ng-control="appleCtrl"></ion-checkbox>
 
-      <ion-checkbox><label>Test</label><input #banana type="checkbox" ng-control="bananaCtrl"></ion-checkbox>
+      <ion-checkbox><label>Banana</label><input #banana type="checkbox" ng-control="bananaCtrl"></ion-checkbox>
+    <ion-list>
 
       <!-- <ion-checkbox ng-control="appleCtrl">
         Apples

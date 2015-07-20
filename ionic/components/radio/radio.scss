@@ -9,6 +9,11 @@ $radio-padding:                   0 15px !default;
   padding: $radio-padding;
 }
 
+.radio input {
+  position: relative;
+  left: -9999px;
+}
+
 .radio-on {
   display: none;
 }

@@ -9,6 +9,11 @@
   user-select: none;
 }
 
+.checkbox input {
+  position: relative;
+  left: -9999px;
+}
+
 .checkbox-on {
   display: none;
   pointer-events: none;
