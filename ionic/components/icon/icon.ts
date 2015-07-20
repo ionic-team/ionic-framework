@@ -5,6 +5,31 @@ import {IonicComponent} from '../../config/annotations';
 import {Ion} from '../ion';
 import {Platform} from '../../platform/platform';
 
+
+/*
+
+Ionicons Font Icon
+<icon name="home"></icon>
+<icon class="ion-ios-home"></icon>
+<icon class="ion-md-home"></icon>
+
+
+Ionicons SVG
+<icon svg="home"></icon>
+<icon><svg>...ios...</svg></icon>
+<icon><svg>...md...</svg></icon>
+
+
+Custom SVG File
+<icon svg-src="home.svg"></icon>
+
+
+Custom Font Icon
+<icon class="fa-home"></icon>
+
+*/
+
+
 @Directive({
   selector: 'icon',
   properties: [
