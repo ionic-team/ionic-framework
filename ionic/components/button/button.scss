@@ -2,10 +2,10 @@
 // Core Button Variables
 // --------------------------------------------------
 
-$button-font-size:                1.4rem !default;
+$button-font-size:                1.6rem !default;
 $button-margin:                   0.4rem 0 !default;
-$button-padding:                  0 1.4rem !default;
-$button-height:                   4.2rem !default;
+$button-padding:                  0 2rem !default;
+$button-height:                   4.4rem !default;
 $button-border-width:             1px !default;
 $button-border-radius:            4px !default;
 $button-icon-size:                2.5rem !default;
@@ -21,6 +21,9 @@ $button-small-padding:            1.1rem !default;
 $button-small-icon-size:          2.1rem !default;
 
 $button-fab-size:                56px;
+
+$button-round-border-radius:      64px !default;
+$button-round-padding:            0 2.6rem !default;
 
 // Core Button
 // --------------------------------------------------
@@ -128,6 +131,11 @@ button,
     opacity: .4;
     cursor: default !important;
     pointer-events: none;
+  }
+
+  &[round] {
+    border-radius: $button-round-border-radius;
+    padding: $button-round-padding;
   }
 
   // FABulous buttons (Floating action button from material)

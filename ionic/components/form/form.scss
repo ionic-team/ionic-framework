@@ -22,13 +22,11 @@ form {
 // Set font for forms
 label,
 input,
-button,
 select,
 textarea {
   @include font-shorthand($font-size-base, normal, $line-height-base); // Set size, weight, line-height here
 }
 input,
-button,
 select,
 textarea {
   font-family: $font-family-base; // And only set font-family here for those that need it (note the missing label element)
