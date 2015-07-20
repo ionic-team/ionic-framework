@@ -232,6 +232,7 @@ a[button] {
 @mixin button-default($bg-color, $fg-color) {
   background-color: $bg-color;
   color: $fg-color;
+  transition: background-color,opacity 100ms linear;
 
   &:hover,
   &.hover {
