@@ -43,15 +43,13 @@
 @each $color, $value in $colors {
 
   .navbar[#{$color}] {
-      background-color: get-color($color, base);
+    background-color: get-color($color, base);
 
-      ion-title {
-        color: white;
-      }
-      button,
-      [button] {
-        color: white;
-      }
+    ion-title,
+    button,
+    [button] {
+      color: get-color($color, inverse);
+    }
   }
 
 }

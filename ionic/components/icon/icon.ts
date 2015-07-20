@@ -68,10 +68,12 @@ export class IconDirective {
   onInit() {
     if (this.name) {
       this.ele.classList.add(this.name);
-      this.label = this.name;
+      this.label = this.name.replace('ion-', '').replace('ios-', '').replace('md-', '').replace('-', '');
     }
   }
 }
+
+
 
 @IonicComponent({
   selector: 'ion-icon',

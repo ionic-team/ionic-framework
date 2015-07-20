@@ -4,6 +4,7 @@ import {Platform} from './platform';
 Platform.register({
   name: 'core',
   settings: {
+    backButtonText: 'Back',
     mode: 'ios',
     iconMode: 'ios',
     viewTransition: 'ios'
@@ -49,6 +50,8 @@ Platform.register({
     'tablet'
   ],
   settings: {
+    backButtonText: '',
+    backButtonIcon: 'ion-android-arrow-back',
     mode: 'md',
     iconMode: 'md',
     type: 'overlay',
@@ -74,6 +77,8 @@ Platform.register({
     'iphone'
   ],
   settings: {
+    backButtonText: 'Back',
+    backButtonIcon: 'ion-ios-arrow-back',
     mode: 'ios',
     iconMode: 'ios',
     tapPolyfill: true,

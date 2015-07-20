@@ -15,8 +15,8 @@ import * as dom from '../../util/dom';
 @IonicView({
   template: `
     <div class="toolbar-inner">
-      <button class="back-button button">
-        <icon class="back-button-icon ion-ios-arrow-back"></icon>
+      <button class="back-button">
+        <icon class="back-button-icon" [name]="bbClass"></icon>
         <span class="back-button-text">
           <span class="back-default" [inner-text]="bbDefault"></span>
           <span class="back-title" [inner-text]="bbText"></span>
@@ -43,15 +43,16 @@ import * as dom from '../../util/dom';
   ]
 })
 export class Navbar extends Ion {
-  constructor(item: ViewItem, elementRef: ElementRef, ionicConfig: IonicConfig, app: IonicApp) {
-    super(elementRef, ionicConfig);
+  constructor(item: ViewItem, elementRef: ElementRef, config: IonicConfig, app: IonicApp) {
+    super(elementRef, config);
 
     this.app = app;
     this.eleRef = elementRef;
     this.itemEles = [];
     item.navbarView(this);
 
-    this.bbDefault = 'Back';
+    this.bbClass = config.setting('backButtonIcon');
+    this.bbDefault = config.setting('backButtonText');
     this.bbText = '';
   }
 
