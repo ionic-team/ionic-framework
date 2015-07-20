@@ -42,6 +42,10 @@ class MaterialTransition extends Transition {
       this.enteringView
         .from(TRANSLATEY, CENTER);
 
+      this.leavingNavbar
+        .before.addClass('transparent-navbar')
+        .after.removeClass('transparent-navbar');
+
       this.leavingTitle
         .fadeOut();
 
@@ -61,6 +65,10 @@ class MaterialTransition extends Transition {
       this.enteringView
         .from(TRANSLATEY, OFF_BOTTOM)
         .fadeIn();
+
+      this.enteringNavbar
+        .before.addClass('transparent-navbar')
+        .after.removeClass('transparent-navbar');
 
       if (this.entering.enableBack()) {
         let enteringBackButtonText = new Animation(this.entering.backButtonTextElement());

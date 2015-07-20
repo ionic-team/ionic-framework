@@ -54,6 +54,10 @@ class IOSTransition extends Transition {
       this.enteringTitle
         .from(TRANSLATEX, OFF_LEFT);
 
+      this.leavingNavbar
+        .before.addClass('transparent-navbar')
+        .after.removeClass('transparent-navbar');
+
       this.leavingView
         .to(TRANSLATEX, OFF_RIGHT)
         .to(OPACITY, 1);
@@ -73,6 +77,10 @@ class IOSTransition extends Transition {
       this.enteringView
         .from(TRANSLATEX, OFF_RIGHT)
         .from(OPACITY, 1);
+
+      this.enteringNavbar
+        .before.addClass('transparent-navbar')
+        .after.removeClass('transparent-navbar');
 
       this.enteringTitle
         .from(TRANSLATEX, OFF_RIGHT);

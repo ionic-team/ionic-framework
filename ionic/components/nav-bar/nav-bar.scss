@@ -36,6 +36,7 @@
   align-items: center;
 }
 
+
 // Core Nav Bar Color Generation
 // --------------------------------------------------
 
@@ -53,4 +54,8 @@
       }
   }
 
+}
+
+.transparent-navbar.navbar {
+  background-color: transparent;
 }
