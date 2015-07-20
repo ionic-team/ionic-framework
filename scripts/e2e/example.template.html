@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- https://www.chromium.org/developers/design-documents/chromium-graphics/how-to-get-gpu-rasterization -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+
+  <link href="/css/ionic.css" rel="stylesheet">
+
+  <style>
+    /* hack to create tall scrollable areas for testing using <f></f> */
+    f {
+      display: block;
+      margin: 15px auto;
+      max-width: 150px;
+      height: 150px;
+      background: blue;
+    }
+    f:last-of-type {
+      background: red;
+    }
+    ion-tab:nth-of-type(2) f,
+    .green f {
+      background: green;
+      max-width: 250px;
+      height: 100px;
+    }
+    ion-tab:nth-of-type(3) f,
+    .yellow f {
+      background: yellow;
+      width: 100px;
+      height: 50px;
+    }
+  </style>
+</head>
+<body>
+
+  <ion-app module="{{MODULE}}">
+    <ion-loading-icon></ion-loading-icon>
+  </ion-app>
+
+  <!-- SystemJS Loader -->
+  <script src="/lib/traceur-runtime.js"></script>
+  <script src="/lib/system.js"></script>
+  <script src="/lib/config.js"></script>
+
+  <!-- Angular bundle -->
+  <script src="/lib/angular2.dev.js"></script>
+
+  <!-- ionic bundle -->
+  <script src="/lib/ionic.bundle.js"></script>
+
+  <!-- web animations polyfill for non-chrome browsers -->
+  <script src="/lib/web-animations.min.js"></script>
+
+</body>
+</html>

@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-  
-  <link href="/dist/css/ionic.css" rel="stylesheet">
+
+  <link href="../../../css/ionic.css" rel="stylesheet">
 
   <style>
     /* hack to create tall scrollable areas for testing using <f></f> */
@@ -42,18 +42,21 @@
   </ion-app>
 
   <!-- SystemJS Loader -->
-  <script src="/scripts/resources/traceur-runtime.js"></script>
-  <script src="/scripts/resources/system.js"></script>
-  <script src="/config.js"></script>
+  <script src="../../../lib/traceur-runtime.js"></script>
+  <script src="../../../lib/system.js"></script>
+  <script src="../../../lib/config.js"></script>
 
   <!-- Angular bundle -->
-  <script src="/scripts/resources/angular2.dev.js"></script>
+  <script src="../../../lib/angular2.dev.js"></script>
+
+  <!-- test module -->
+  <script src="index.js"></script>
 
   <!-- ionic bundle -->
-  <script src="/dist/js/ionic.bundle.js"></script>
+  <script src="../../../lib/ionic.bundle.js"></script>
 
   <!-- web animations polyfill for non-chrome browsers -->
-  <script src="/dist/vendor/web-animations-js/web-animations.min.js"></script>
+  <script src="../../../lib/web-animations.min.js"></script>
 
 </body>
 </html>

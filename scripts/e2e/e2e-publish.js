@@ -79,4 +79,3 @@ module.exports = function(options) {
   console.log('Uploading e2e tests:', options.testId);
   uploadFiles(inputDir, '');
 };
-

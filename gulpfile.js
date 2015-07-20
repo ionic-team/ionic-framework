@@ -78,6 +78,7 @@ gulp.task('watch', function() {
 
 gulp.task('serve', function() {
   connect.server({
+    root: 'dist',
     port: 8000,
     livereload: false
   });
@@ -95,11 +96,6 @@ var traceurOptions = {
 
 var babelOptions = {
   optional: ['es7.decorators'],
-  /*plugins: [
-    './transformers/disable-define',
-    'angular2-annotations',
-    'type-assertion:after'
-  ],*/
   modules: "system",
   moduleIds: true,
   getModuleId: function(name) {
@@ -109,29 +105,19 @@ var babelOptions = {
 
 var exampleBabelOptions = {
   optional: ['es7.decorators'],
-  /*plugins: [
-    './transformers/disable-define',
-    'angular2-annotations',
-    'type-assertion:after'
-  ],*/
   modules: "system",
   moduleIds: true,
   getModuleId: function(name) {
-    return "dist/examples/" + name.split('/test').join('');
+    return "examples/" + name.split('/test').join('');
   }
 };
 
 var testBabelOptions = {
   optional: ['es7.decorators'],
-  /*plugins: [
-    './transformers/disable-define',
-    'angular2-annotations',
-    'type-assertion:after'
-  ],*/
   modules: "system",
   moduleIds: true,
   getModuleId: function(name) {
-    return "dist/tests/" + name.split('/test').join('');
+    return "tests/" + name.split('/test').join('');
   }
 };
 
@@ -161,11 +147,6 @@ gulp.task('transpile', function() {
                    .on('error', function(error) {
                      stream.emit('end');
                    })
-                // .pipe(traceur(traceurOptions))
-                // .on('error', function (err) {
-                //   console.log("ERROR: " + err.message);
-                //   this.emit('end');
-                // })
                    .pipe(gulp.dest('dist/js/es6/ionic'))
                    .pipe(babel(babelOptions))
                    .on('error', function (err) {
@@ -183,24 +164,6 @@ gulp.task('bundle.js', function() {
              .pipe(gulp.dest('dist/js/'));
 });
 
-//gulp.task('bundle.deps', function() {
-//  var Builder = require('systemjs-builder')
-//  var builder = new Builder();
-//  return builder.loadConfig('config.js').then(function(){
-//    // add ionic and angular2 build paths, since config.js is loaded at runtime from
-//    // tests we don't want to put them there
-//    builder.config({
-//      baseURL: 'file:' + process.cwd(),
-//      paths : {
-//        "ionic/*": "dist/js/es6/ionic/*.js"
-//      }
-//    });
-//    return builder.build('dist/js/es6/ionic/**/* - [dist/js/es6/ionic/**/*]', 'dist/js/dependencies.js');
-//  }, function(error){
-//    console.log("Error building dependency bundle, have you transpiled Ionic and/or built Angular2 yet?");
-//    throw new Error(error);
-//  })
-//});
 gulp.task('tests', function() {
   return gulp.src('ionic/components/*/test/*/**/*.spec.ts')
              .pipe(tsc(tscOptions, null, tscReporter))
@@ -214,7 +177,6 @@ gulp.task('tests', function() {
 
 gulp.task('examples', function() {
   var buildTest = lazypipe()
-             //.pipe(traceur, traceurOptions)
              .pipe(tsc, tscOptions, null, tscReporter)
              .pipe(babel, exampleBabelOptions)
 
@@ -234,7 +196,7 @@ gulp.task('examples', function() {
 
   function createIndexHTML() {
     var template = _.template(
-      fs.readFileSync('scripts/e2e/ionic.template.html')
+      fs.readFileSync('scripts/e2e/example.template.html')
     )({
       buildConfig: buildConfig
     });
@@ -244,7 +206,7 @@ gulp.task('examples', function() {
 
       var module = path.dirname(file.path)
                       .replace(__dirname, '')
-                      .replace('/ionic/components/', 'dist/examples/')
+                      .replace('/ionic/components/', 'examples/')
                       .replace('/test/', '/') +
                       '/index';
 
@@ -265,23 +227,29 @@ var e2eBabelOptions = {
   modules: "system",
   moduleIds: true,
   getModuleId: function(name) {
-    return "dist/e2e/" + name.split('/test').join('');
+    return "e2e/" + name.split('/test').join('');
   }
 };
 
-gulp.task('e2e', function() {
+gulp.task('copy-scripts', function(){
+  gulp.src(['scripts/resources/*.js', 'config.js', 'dist/js/ionic.bundle.js',
+            'dist/vendor/web-animations-js/web-animations.min.js'])
+      .pipe(gulp.dest('dist/lib'));
+})
+
+gulp.task('e2e', ['copy-scripts'], function() {
   var buildTest = lazypipe()
              //.pipe(traceur, traceurOptions)
              .pipe(tsc, tscOptions, null, tscReporter)
              .pipe(babel, e2eBabelOptions)
-             
+
   var buildE2ETest = lazypipe()
              //.pipe(traceur, traceurOptions)
              .pipe(tsc, tscOptions, null, tscReporter)
              .pipe(babel)
 
   var indexTemplate = _.template(
-   fs.readFileSync('scripts/e2e/ionic.template.html')
+   fs.readFileSync('scripts/e2e/e2e.template.html')
   )({
    buildConfig: buildConfig
 
@@ -316,7 +284,7 @@ gulp.task('e2e', function() {
 
       var module = path.dirname(file.path)
                       .replace(__dirname, '')
-                      .replace('/ionic/components/', 'dist/e2e/')
+                      .replace('/ionic/components/', 'e2e/')
                       .replace('/test/', '/') +
                       '/index';
 
