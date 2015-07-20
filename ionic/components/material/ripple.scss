@@ -20,7 +20,7 @@ $ripple-animation-curve: cubic-bezier(0, 0, 0.2, 1) !default;
   width: 50px;
   overflow: hidden;
 
-  &.is-animating {
+  &.md-ripple-animating {
     transition: transform 0.3s $ripple-animation-curve;
     width: 0.3s $ripple-animation-curve;
     height: 0.3s $ripple-animation-curve;

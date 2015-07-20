@@ -27,11 +27,14 @@ $button-fab-size:                56px;
 
 button,
 [button] {
+  position: relative;
   display: inline-flex;
   flex-shrink: 0;
   flex-flow: row nowrap;
   align-items: center;
   justify-content: center;
+
+  will-change: transform;
 
   margin: $button-margin;
   line-height: 1;
