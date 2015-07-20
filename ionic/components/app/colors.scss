@@ -14,11 +14,13 @@ $colors: (
   // ----------------------
   primary: (
     base: #387ef5,
+    light: #387ef5,
     inverse: #fff
   ),
 
   secondary: (
     base: #32db64,
+    light: #32db64,
     inverse: #fff
   ),
 
@@ -27,6 +29,7 @@ $colors: (
   // ----------------------
   danger: (
     base: #f53d3d,
+    light: #f53d3d,
     inverse: #fff,
   ),
 
@@ -35,16 +38,19 @@ $colors: (
   // ----------------------
   light: (
     base: #fff,
+    light: #ddd,
     inverse: #444,
   ),
 
   stable: (
     base: #f4f4f4,
+    light: #888,
     inverse: #444,
   ),
 
   dark: (
     base: #222,
+    light: #222,
     inverse: #fff,
   ),
 

@@ -261,7 +261,8 @@ a[button] {
     color: $fg-color;
 
     &.activated {
-      background-color: rgba(red($fg-color), green($fg-color), blue($fg-color), 0.15);
+      color: white;
+      background-color: rgb(red($fg-color), green($fg-color), blue($fg-color));//, 0.15);
     }
   }
 }
@@ -279,7 +280,7 @@ a[button] {
 
     @include button-clear(get-color($color, base));
 
-    @include button-outline(get-color($color, base));
+    @include button-outline(get-color($color, light));
   }
 
 }
