@@ -115,7 +115,7 @@ class PopupPopIn extends PopupAnimation {
     this.wrapper.fromTo('opacity', '0', '1')
     this.wrapper.fromTo('scale', '1.2', '1');
 
-    this.backdrop.fromTo('opacity', '0', '0.4')
+    this.backdrop.fromTo('opacity', '0', '0.3')
   }
 }
 Animation.register('popup-pop-in', PopupPopIn);
@@ -127,7 +127,7 @@ class PopupPopOut extends PopupAnimation {
     this.wrapper.fromTo('opacity', '1', '0')
     this.wrapper.fromTo('scale', '1', '0.8');
 
-    this.backdrop.fromTo('opacity', '0.4', '0')
+    this.backdrop.fromTo('opacity', '0.3', '0')
   }
 }
 Animation.register('popup-pop-out', PopupPopOut);
