@@ -1,12 +1,23 @@
 
+// Material Design Action Menu
+// --------------------------------------------------
+
+$action-menu-md-background-color:         #fafafa !default;
+
+$action-menu-md-height:                   4.8rem !default;
+
+$action-menu-md-title-color:              #757575 !default;
+$action-menu-md-title-font-size:          1.6rem !default;
+
+$action-menu-md-button-text-color:        #222 !default;
+$action-menu-md-button-font-size:         1.6rem !default;
+$action-menu-md-background-active:        #f1f1f1 !default;
+
+$action-menu-md-icon-font-size:           2.4rem !default;
+
 
 .action-menu[mode="md"] {
   margin: 0;
-
-  .action-menu-backdrop.active {
-    background-color: rgba(0,0,0,0.2);
-  }
-
 
   .action-menu-container {
     margin: 0;
@@ -15,59 +26,55 @@
   .action-menu-title,
   .action-menu-option,
   .action-menu-destructive,
-  .action-menu-cancel button
-  {
+  .action-menu-cancel button {
     text-align: left;
     border-color: transparent;
-    font-size: 16px;
-    color: inherit;
+    font-size: $action-menu-md-button-font-size;
+    color: $action-menu-md-button-text-color;
     box-shadow: none;
+    text-transform: none;
 
     .icon {
       display: inline-block;
-      width: 22px;
+      min-width: 24px;
       text-align: center;
       vertical-align: middle;
-      font-size: 24px;
+      font-size: $action-menu-md-icon-font-size;
 
-      margin: 0 32px 0 16px; // gap on right, standard left padding
+      margin: 0 32px 0 0; // gap on right, standard left padding
     }
   }
 
   .action-menu-title {
-    font-size: 16px;
-    padding: 16px;
-    color: #666;
+    font-size: $action-menu-md-title-font-size;
+    padding: $action-menu-md-title-font-size;
+    color: $action-menu-md-title-color;
   }
 
+  button {
+    font-weight: normal;
+    min-height: $action-menu-md-height;
 
-  .action-menu-option.activated {
-    background: #e8e8e8;
+    &:active,
+    &.activated {
+      background: $action-menu-md-background-active;
+    }
   }
 
   .action-menu-group {
     margin: 0;
     border-radius: 0;
-    background-color: #fafafa;
+    background-color: $action-menu-md-background-color;
+
+    &:last-child button {
+      margin-bottom: 8px;
+    }
   }
 
   .action-menu-cancel {
-    background-color: #fafafa;
+    background-color: $action-menu-md-background-color;
     width: auto;
     border: none;
-    font-size: 16px;
-    color: inherit;
-    button {
-      font-weight: normal;
-    }
   }
 
-  .action-menu-has-icons {
-
-    button,
-    [button] {
-      padding-left: 56px;
-    }
-
-  }
 }

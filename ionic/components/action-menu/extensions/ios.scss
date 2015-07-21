@@ -4,7 +4,6 @@
 
 $action-menu-ios-group-margin:             10px !default;
 $action-menu-ios-background-color:         rgba(243,243,243,.95) !default;
-$action-menu-ios-background-active-color:  #ebebeb !default;
 
 $action-menu-ios-height:                   5.6rem !default;
 $action-menu-ios-padding:                  1.8rem !default;
@@ -16,6 +15,7 @@ $action-menu-ios-title-font-size:          1.2rem !default;
 
 $action-menu-ios-button-text-color:        #007aff !default;
 $action-menu-ios-button-font-size:         2rem !default;
+$action-menu-ios-background-active:        #ebebeb !default;
 
 $action-menu-ios-icon-font-size:           1.4em !default;
 
@@ -38,7 +38,7 @@ $action-menu-ios-icon-font-size:           1.4em !default;
 
     &:active,
     &.activated {
-      background: $action-menu-ios-background-active-color;
+      background: $action-menu-ios-background-active;
     }
   }
 
