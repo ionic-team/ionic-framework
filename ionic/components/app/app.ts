@@ -11,6 +11,7 @@ import * as util from '../../util/util';
 // injectables
 import {ActionMenu} from '../action-menu/action-menu';
 import {Modal} from '../modal/modal';
+import {Popup} from '../popup/popup';
 import {FocusHolder} from '../form/focus-holder';
 
 
@@ -205,6 +206,7 @@ export function ionicBootstrap(component, config, router) {
       // TODO: probs need a better way to inject global injectables
       let actionMenu = new ActionMenu(app, config);
       let modal = new Modal(app, config);
+      let popup = new Popup(app, config);
 
       // add injectables that will be available to all child components
       let injectableBindings = [
@@ -212,7 +214,8 @@ export function ionicBootstrap(component, config, router) {
         bind(IonicConfig).toValue(config),
         bind(IonicRouter).toValue(router),
         bind(ActionMenu).toValue(actionMenu),
-        bind(Modal).toValue(modal)
+        bind(Modal).toValue(modal),
+        bind(Popup).toValue(popup)
       ];
 
       bootstrap(component, injectableBindings).then(appRef => {
