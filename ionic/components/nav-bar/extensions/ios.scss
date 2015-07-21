@@ -2,27 +2,12 @@
 // iOS Navbar
 // --------------------------------------------------
 
-$navbar-order-ios: (
-  back-button: 10,
-  primary: 20,
-  title: 30,
-  secondary: 40
-);
-
 $navbar-ios-height:                        4.4rem !default;
-$navbar-ios-background:                    #f7f7f8 !default;
 $navbar-ios-border-color:                  #c4c4c4 !default;
-
-$navbar-ios-title-font-size:               1.7rem !default;
-$navbar-ios-button-font-size:              1.7rem !default;
-$navbar-ios-button-text-color:             #007aff !default;
-$navbar-ios-button-background-color:       transparent !default;
 
 
 .nav[mode="ios"] .navbar-container {
-
   min-height: $navbar-ios-height;
-  background: $navbar-ios-background;
 
   // navbar on top, border on bottom (default)
   @include hairline(bottom, $navbar-ios-border-color);
@@ -32,49 +17,26 @@ $navbar-ios-button-background-color:       transparent !default;
     top: 0;
     bottom: auto;
   }
+}
 
-  .toolbar-title {
-    order: map-get($navbar-order-ios, 'title');
-  }
-
-  .toolbar-primary-item {
-    order: map-get($navbar-order-ios, 'primary');
-  }
-
-  .toolbar-secondary-item {
-    order: map-get($navbar-order-ios, 'secondary');
-  }
-
-  ion-title {
-    order: map-get($navbar-order-ios, 'title');
-    font-size: $navbar-ios-title-font-size;
-    font-weight: 500;
-    text-align: center;
-  }
-
-  .back-button {
-    order: map-get($navbar-order-ios, 'back-button');
-    overflow: inherit;
-  }
+.navbar[mode="ios"] {
 
   button,
   [button] {
-    font-size: $navbar-ios-button-font-size;
-    color: $navbar-ios-button-text-color;
-    border: none;
     padding: 0;
-    margin: 0 10px;
+    margin: 0 1rem;
+
     min-height: $navbar-ios-height;
     min-width: 0;
-    background: $navbar-ios-button-background-color;
   }
 
-  [icon] {
-    font-size: 2.5rem;
+  .back-button {
+    order: map-get($toolbar-order-ios, 'back-button');
+    overflow: inherit;
   }
 
   .back-button-icon {
-    padding-right: 6px;
+    padding-right: 0.6rem;
   }
 
 }

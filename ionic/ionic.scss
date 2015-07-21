@@ -23,6 +23,7 @@
 
 // Core Components
 @import
+  "components/toolbar/toolbar",
   "components/action-menu/action-menu",
   "components/alert/alert",
   "components/aside/aside",
@@ -48,13 +49,12 @@
   "components/segment/segment",
   "components/switch/switch",
   "components/tabs/tabs",
-  "components/toolbar/toolbar",
   "components/view/view";
 
 
 // iOS Components
 @import
-  "components/nav-bar/extensions/ios",
+  "components/toolbar/extensions/ios",
   "components/action-menu/extensions/ios",
   "components/alert/extensions/ios",
   "components/button/extensions/ios",
@@ -63,12 +63,12 @@
   "components/content/extensions/ios",
   "components/list/extensions/ios",
   "components/item/extensions/ios",
+  "components/nav-bar/extensions/ios",
   "components/radio/extensions/ios",
   "components/search-bar/extensions/ios",
   "components/segment/extensions/ios",
   "components/switch/extensions/ios",
-  "components/tabs/extensions/ios",
-  "components/toolbar/extensions/ios";
+  "components/tabs/extensions/ios";
 
 
 // Material Design Components
@@ -76,6 +76,7 @@
   "components/material/variables",
   "components/material/ripple",
 
+  "components/toolbar/extensions/material",
   "components/app/extensions/material",
   "components/action-menu/extensions/material",
   "components/alert/extensions/material",
@@ -85,8 +86,7 @@
   "components/item/extensions/material",
   "components/list/extensions/material",
   "components/nav-bar/extensions/material",
-  "components/tabs/extensions/material",
-  "components/toolbar/extensions/material";
+  "components/tabs/extensions/material";
 
 
 // Icons

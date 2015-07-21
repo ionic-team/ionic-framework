@@ -125,25 +125,25 @@ export class IonicApp {
     });
   }
 
-  applyBodyCss(bodyClassList, platform, config) {
+  applyBodyCss(bodyEle, platform, config) {
     let versions = platform.versions();
     platform.platforms().forEach(platformName => {
       // platform-ios
       let platformClass = 'platform-' + platformName;
-      bodyClassList.add(platformClass);
+      bodyEle.classList.add(platformClass);
 
       let platformVersion = versions[platformName];
       if (platformVersion) {
         // platform-ios_8
         platformClass += '_' + platformVersion.major;
-        bodyClassList.add(platformClass);
+        bodyEle.classList.add(platformClass);
 
         // platform-ios_8_3
-        bodyClassList.add(platformClass + '_' + platformVersion.minor);
+        bodyEle.classList.add(platformClass + '_' + platformVersion.minor);
       }
     });
 
-    bodyClassList.add('mode-' + config.setting('mode'));
+    bodyEle.setAttribute('mode', config.setting('mode'));
   }
 
   isRTL(val) {
@@ -188,7 +188,7 @@ export function ionicBootstrap(component, config, router) {
 
       // config and platform settings have been figured out
       // apply the correct CSS to the app
-      app.applyBodyCss(document.body.classList, Platform, config);
+      app.applyBodyCss(document.body, Platform, config);
 
       // prepare the ready promise to fire....when ready
       Platform.prepareReady(config);

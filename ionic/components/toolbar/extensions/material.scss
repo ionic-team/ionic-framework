@@ -1,14 +1,16 @@
-$toolbar-material-height:                  6.4rem !default;
-$toolbar-material-background:              get-color(primary, base) !default;//#f7f7f8 !default;
+
+// Material Design Toolbar
+// --------------------------------------------------
 
 $toolbar-material-title-font-size:         2rem !default;
-$toolbar-material-button-font-size:        2rem !default;
-$toolbar-material-button-text-color:       #007aff !default;
+$toolbar-material-button-font-size:        24px !default;
+
 
 .toolbar[mode="md"] {
-  padding: 0px 16px;
-  height: $toolbar-material-height;
-  background: $toolbar-material-background;
+
+  .toolbar-inner {
+    padding: 0px 16px;
+  }
 
   .toolbar-inner-title {
     padding: 0;
@@ -19,17 +21,19 @@ $toolbar-material-button-text-color:       #007aff !default;
     font-weight: 500;
   }
 
+  .toolbar-primary-item ion-nav-items button:first-child {
+    margin-left: 0;
+  }
+
   button,
   [button] {
-    font-size: $toolbar-material-button-font-size;
-    color: $toolbar-material-button-text-color;
-    border: none;
-    box-shadow: none;
-
     padding: 0;
-    margin: 0 10px;
+    margin: 0 1rem;
 
-    min-height: $toolbar-material-height;
     min-width: 0;
+
+    box-shadow: none;
+    font-size: $toolbar-material-button-font-size;
   }
+
 }

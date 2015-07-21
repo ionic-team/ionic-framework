@@ -10,7 +10,10 @@ import * as dom from '../../util/dom';
 
 
 @IonicComponent({
-  selector: 'ion-navbar'
+  selector: 'ion-navbar',
+  host: {
+    'class': 'toolbar'
+  }
 })
 @IonicView({
   template: `

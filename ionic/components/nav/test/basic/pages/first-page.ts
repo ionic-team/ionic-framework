@@ -9,12 +9,8 @@ import {ThirdPage} from './third-page';
   template: '' +
     '<ion-navbar *navbar primary>' +
       '<ion-title>First Page: {{ val }}</ion-title>' +
-      '<ion-nav-items primary>' +
-        '<button>P1</button>' +
-      '</ion-nav-items>' +
       '<ion-nav-items secondary>' +
         '<button>S1</button>' +
-        '<button icon><i class="icon ion-navicon"></i></button>' +
       '</ion-nav-items>' +
     '</ion-navbar>' +
     '<ion-content class="padding">' +

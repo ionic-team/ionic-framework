@@ -33,14 +33,14 @@ $tab-bar-ios-height:                   49px !default;
   }
 
   &[tab-bar-placement="bottom"] > .tab-bar-container {
-    @include hairline(top, $navbar-ios-border-color);
+    @include hairline(top, $toolbar-ios-border-color);
   }
 
   &[tab-bar-placement="top"] > .tab-bar-container {
-    @include hairline(bottom, $navbar-ios-border-color);
+    @include hairline(bottom, $toolbar-ios-border-color);
   }
 
-  &[tab-bar-placement="top"] > .navbar-container .navbar {
+  &[tab-bar-placement="top"] > .toolbar-container .toolbar {
     @include hairline(bottom, none);
   }
 

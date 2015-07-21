@@ -9,7 +9,7 @@ $card-md-font-size:                 1.4rem !default;
 $card-md-item-content-padding:      15px !default;
 
 
-.mode-md .card {
+[mode="md"] .card {
   background: $card-md-background-color;
   box-shadow: $card-md-box-shadow;
   border-radius: $card-md-border-radius;

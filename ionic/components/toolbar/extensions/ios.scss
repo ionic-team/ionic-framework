@@ -1,68 +1,76 @@
-// iOS Navbar
+
+// iOS Toolbar
 // --------------------------------------------------
 
 $toolbar-order-ios: (
+  back-button: 10,
   primary: 20,
   title: 30,
   secondary: 40
 );
 
 $toolbar-ios-height:                        4.4rem !default;
-$toolbar-ios-background:                    #f7f7f8 !default;
 $toolbar-ios-border-color:                  #c4c4c4 !default;
-
-$toolbar-ios-title-font-size:               1.7rem !default;
 $toolbar-ios-button-font-size:              1.7rem !default;
-$toolbar-ios-button-text-color:             #007aff !default;
-$toolbar-ios-button-background-color:       transparent !default;
-
-$toolbar-ios-padding: 0px 15px;
+$toolbar-ios-title-font-size:               1.7rem !default;
 
 
-.toolbar[mode="ios"] {
-
-  padding: $toolbar-ios-padding;
-
-  height: $toolbar-ios-height;
-  background: $toolbar-ios-background;
+.nav[mode="ios"] .toolbar-container {
+  min-height: $toolbar-ios-height;
 
   // toolbar on top, border on bottom (default)
   @include hairline(bottom, $toolbar-ios-border-color);
 
+
   // toolbar on bottom, border on top
-  &[position="bottom"]:after {
+  &.toolbar-bottom:after {
     top: 0;
     bottom: auto;
   }
+}
+
+.toolbar[mode="ios"] {
 
   .toolbar-title {
-    order: map-get($toolbar-order-ios, 'title');
+    order: map-get($toolbar-order-ios, title);
   }
 
   .toolbar-primary-item {
-    order: map-get($toolbar-order-ios, 'primary');
+    order: map-get($toolbar-order-ios, primary);
   }
 
   .toolbar-secondary-item {
-    order: map-get($toolbar-order-ios, 'secondary');
+    order: map-get($toolbar-order-ios, secondary);
   }
 
   ion-title {
-    order: map-get($toolbar-order-ios, 'title');
-    text-align: center;
     font-size: $toolbar-ios-title-font-size;
     font-weight: 500;
+    text-align: center;
+  }
+
+  .back-button {
+    order: map-get($toolbar-order-ios, 'back-button');
+    overflow: inherit;
   }
 
   button,
   [button] {
-    font-size: $toolbar-ios-button-font-size;
-    color: $toolbar-ios-button-text-color;
-    border: none;
     padding: 0;
-    margin: 0 10px;
-    min-height: $toolbar-ios-height;
+    margin: 0 1rem;
+
     min-width: 0;
-    background: $toolbar-ios-button-background-color;
+    min-height: $toolbar-ios-height;
+
+    font-size: $toolbar-ios-button-font-size;
   }
+
+  [icon] {
+    font-size: 2.5rem;
+  }
+
+  .back-button-icon {
+    padding-right: 0.6rem;
+  }
+
 }

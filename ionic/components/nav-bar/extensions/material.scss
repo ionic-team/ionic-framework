@@ -2,67 +2,14 @@
 // Material Design Navbar
 // --------------------------------------------------
 
-$navbar-order-material: (
-  back-button: 10,
-  primary: 20,
-  title: 30,
-  secondary: 40
-);
-
 $navbar-material-height:                  5.6rem !default;
-$navbar-material-background:              get-color(primary, base) !default;
-
-$navbar-material-title-font-size:         2rem !default;
-$navbar-material-button-font-size:        24px !default;
-$navbar-material-button-text-color:       #fff !default; //#007aff !default;
 
 
 .nav[mode="md"] .navbar-container {
-  height: $navbar-material-height;
-  background: $navbar-material-background;
+  min-height: $navbar-material-height;
+}
 
-  .toolbar-inner-title {
-    padding: 0;
-  }
-
-  .toolbar-inner {
-    padding: 0px 16px;
-  }
-
-  .toolbar-title {
-    order: map-get($navbar-order-ios, 'title');
-  }
-
-  .toolbar-primary-item {
-    order: map-get($navbar-order-ios, 'primary');
-  }
-
-  .toolbar-secondary-item {
-    order: map-get($navbar-order-ios, 'secondary');
-  }
-
-  .toolbar-primary-item ion-nav-items button:first-child {
-    margin-left: 0;
-  }
-
-  ion-title {
-    font-size: $navbar-material-title-font-size;
-    font-weight: 500;
-  }
-
-  button,
-  [button] {
-    font-size: $navbar-material-button-font-size;
-    color: $navbar-material-button-text-color;
-    border: none;
-    box-shadow: none;
-
-    padding: 0;
-    margin: 0 10px;
-
-    min-height: $navbar-material-height;
-    min-width: 0;
-  }
+.navbar[mode="md"] {
 
   .back-button {
     margin: 0;
@@ -71,8 +18,8 @@ $navbar-material-button-text-color:       #fff !default; //#007aff !default;
   .back-button-icon {
     margin: 0;
     font-weight: normal;
-    font-size: 24px;
-    min-width: 56px;
+    font-size: 2.4rem;
+    min-width: 5.6rem;
     text-align: left;
   }
 
