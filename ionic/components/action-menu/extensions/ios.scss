@@ -2,21 +2,23 @@
 // iOS Action Menu
 // --------------------------------------------------
 
-$action-menu-ios-group-margin:             8px !default;
+$action-menu-ios-group-margin:             10px !default;
 $action-menu-ios-background-color:         rgba(243,243,243,.95) !default;
+$action-menu-ios-background-active-color:  #ebebeb !default;
 
+$action-menu-ios-height:                   5.6rem !default;
+$action-menu-ios-padding:                  1.8rem !default;
 $action-menu-ios-border-color:             #d2d2d6 !default;
-$action-menu-ios-border-radius:            10px !default;
+$action-menu-ios-border-radius:            1.3rem !default;
 
-$action-menu-ios-title-color:              #8a8a8a !default;
-$action-menu-ios-title-font-size:          1.3rem !default;
+$action-menu-ios-title-color:              #5f5f5f !default;
+$action-menu-ios-title-font-size:          1.2rem !default;
 
-$action-menu-ios-button-color:             #007aff !default;
+$action-menu-ios-button-text-color:        #007aff !default;
 $action-menu-ios-button-font-size:         2rem !default;
 
 $action-menu-ios-icon-font-size:           1.4em !default;
 
-$action-menu-ios-option-height:            50px !default;
 
 .action-menu[mode="ios"] {
   text-align: center;
@@ -25,41 +27,51 @@ $action-menu-ios-option-height:            50px !default;
     padding: 0 $action-menu-ios-group-margin;
   }
 
+  button {
+    min-height: $action-menu-ios-height;
+    padding: $action-menu-ios-padding;
+
+    margin: 0;
+    border: 0;
+
+    background: transparent;
+
+    &:active,
+    &.activated {
+      background: $action-menu-ios-background-active-color;
+    }
+  }
+
   .action-menu-group {
-    margin-top: $action-menu-ios-group-margin;
-    margin-bottom: $action-menu-ios-group-margin;
+    margin-bottom: $action-menu-ios-group-margin - 2;
     border-radius: $action-menu-ios-border-radius;
+  }
+
+  .action-menu-group:last-child {
+    margin-bottom: $action-menu-ios-group-margin;
   }
 
   .action-menu-title,
   .action-menu-option {
-    position: relative;
-    /*
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    */
-
-    margin: 0;
-    border: 0;
-    min-height: $action-menu-ios-option-height;
+    min-height: $action-menu-ios-height;
 
     background: $action-menu-ios-background-color;
     font-weight: 400;
 
-    @include hairline(bottom, $action-menu-ios-border-color, $z-index-list-border);
+    @include hairline(bottom, $action-menu-ios-border-color);
   }
 
   .action-menu-title {
+    padding: 2rem;
     font-size: $action-menu-ios-title-font-size;
-    font-weight: bold;
+    font-weight: 500;
     color: $action-menu-ios-title-color;
     border-radius: 0;
   }
 
   .action-menu-option {
     font-size: $action-menu-ios-button-font-size;
-    color: $action-menu-ios-button-color;
+    color: $action-menu-ios-button-text-color;
     border-radius: 0;
   }
 

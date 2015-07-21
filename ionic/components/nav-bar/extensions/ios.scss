@@ -11,12 +11,6 @@ $navbar-ios-border-color:                  #c4c4c4 !default;
 
   // navbar on top, border on bottom (default)
   @include hairline(bottom, $navbar-ios-border-color);
-
-  // navbar on bottom, border on top
-  &.navbar-bottom:after {
-    top: 0;
-    bottom: auto;
-  }
 }
 
 .navbar[mode="ios"] {

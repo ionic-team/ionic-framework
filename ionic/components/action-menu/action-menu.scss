@@ -10,9 +10,6 @@ $action-menu-button-text-color:         #007aff !default;
 $action-menu-backdrop-color:            #000 !default;
 $action-menu-backdrop-active-opacity:   0.4 !default;
 
-$action-menu-margin:                    8px !default;
-$action-menu-border-radius:             4px !default;
-
 $action-menu-options-bg-color:          #f1f2f3 !default;
 $action-menu-options-bg-active-color:   #e4e5e7 !default;
 $action-menu-options-text-color:        #007aff !default;
@@ -52,8 +49,6 @@ $action-menu-options-border-color:      #d1d3d6 !default;
 }
 
 .action-menu-container {
-  margin-left: $action-menu-margin;
-  margin-right: $action-menu-margin;
   width: auto;
   overflow: hidden;
 
@@ -72,12 +67,6 @@ $action-menu-options-border-color:      #d1d3d6 !default;
     &:hover {
       color: $action-menu-options-text-color;
     }
-    &.destructive {
-      color: #ff3b30;
-      &:hover {
-        color: #ff3b30;
-      }
-    }
   }
 
   button.activated,
@@ -95,15 +84,13 @@ $action-menu-options-border-color:      #d1d3d6 !default;
 }
 
 .action-menu-title {
-  padding: $action-menu-margin * 2;
+  padding: 10px;
   color: #8f8f8f;
   text-align: center;
   font-size: 13px;
 }
 
 .action-menu-group {
-  margin-bottom: $action-menu-margin;
-  border-radius: $action-menu-border-radius;
   background-color: #fff;
   overflow: hidden;
 
