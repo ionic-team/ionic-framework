@@ -8,6 +8,10 @@ $popup-ios-bg-color:            #f8f8f8 !default;
     border-radius: $popup-ios-border-radius;
     background-color: $popup-ios-bg-color;
 
+    .popup-head {
+      padding-top: 24px;
+    }
+
     .popup-title {
     }
 
@@ -16,7 +20,7 @@ $popup-ios-bg-color:            #f8f8f8 !default;
       padding: 0;
       min-height: 0;
       .button {
-        min-height: 36px;
+        min-height: 42px;
         color: get-color('primary', base);
         font-size: 14px;
       }
