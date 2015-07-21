@@ -24,6 +24,10 @@ $popup-ios-bg-color:            #f8f8f8 !default;
         min-height: 42px;
         color: get-color('primary', base);
         font-size: 14px;
+
+        &:last-child {
+          font-weight: bold;
+        }
       }
     }
   }

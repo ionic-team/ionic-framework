@@ -13,6 +13,24 @@ class MyAppCmp {
   }
 
   doAlert() {
-    this.popup.alert('What!?');
+    this.popup.alert('What!?').then(() => {
+    }, () => {
+    });
+  }
+
+  doPrompt() {
+    this.popup.prompt('What is your name?').then((name, event) => {
+      console.log('Got response', name);
+    }, () => {
+      console.error('Prompt closed');
+    });
+  }
+
+  doConfirm() {
+    this.popup.confirm('Are you sure?').then((yes, event) => {
+      console.log('CONFIRMED', yes);
+    }, () => {
+      console.error('NOT CONFIRMED');
+    });
   }
 }

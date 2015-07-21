@@ -1,4 +1,4 @@
-import {Component, View, Injectable, CSSClass, NgIf, NgFor} from 'angular2/angular2';
+import {Component, View, Injectable, CSSClass, NgIf, NgFor, onInit} from 'angular2/angular2';
 
 import {Overlay} from '../overlay/overlay';
 import {Animation} from '../../animations/animation';
@@ -8,27 +8,103 @@ import * as util from 'ionic/util';
 @Injectable()
 export class Popup extends Overlay {
 
+  popup(context, opts={}) {
+    return new Promise((resolve, reject)=> {
+      let defaults = {
+        enterAnimation: 'popup-pop-in',
+        leaveAnimation: 'popup-pop-out',
+      };
+
+      context.promiseResolve = resolve;
+      context.promiseReject = reject;
+
+      return this.create(OVERLAY_TYPE, StandardPopup, util.extend(defaults, opts), context);
+    });
+  }
+
   alert(context={}, opts={}) {
     if(typeof context === 'string') {
       let button = {
-        text: 'Ok',
+        text: 'OK',
         onTap: (event, popupRef) => {
           // Allow it to close
+          //resolve();
         }
-      }
+      };
       context = {
+        cancel: () => {
+          //reject();
+        },
         title: context,
         buttons: [
           button
         ]
-      }
+      };
     }
-    let defaults = {
-      enterAnimation: 'popup-pop-in',
-      leaveAnimation: 'popup-pop-out',
-    };
 
-    return this.create(OVERLAY_TYPE, StandardPopup, util.extend(defaults, opts), context);
+    return this.popup(context, opts);
+  }
+
+  confirm(context={}, opts={}) {
+    return new Promise((resolve, reject)=> {
+      if(typeof context === 'string') {
+        let okButton = {
+          text: 'OK',
+          onTap: (event, popupRef) => {
+            // Allow it to close
+            resolve(true);
+          }
+        }
+        let cancelButton = {
+          text: 'Cancel',
+          onTap: (event, popupRef) => {
+            // Allow it to close
+            reject();
+          }
+        }
+        context = {
+          cancel: () => {
+            reject();
+          },
+          title: context,
+          buttons: [
+            cancelButton, okButton
+          ]
+        }
+      }
+      this.popup(context, opts);
+    });
+  }
+
+  prompt(context={}, opts={}) {
+    return new Promise((resolve, reject)=> {
+      if(typeof context === 'string') {
+        let okButton = {
+          text: 'Ok',
+          onTap: (event, popupRef) => {
+            // Allow it to close
+          }
+        }
+        let cancelButton = {
+          text: 'Cancel',
+          onTap: (event, popupRef) => {
+            // Allow it to close
+            reject();
+          }
+        }
+        context = {
+          cancel: () => {
+            reject();
+          },
+          title: context,
+          buttons: [
+            cancelButton, okButton
+          ]
+        }
+      }
+      this.popup(context, opts);
+    });
+
   }
 
   get(handle) {
@@ -44,10 +120,11 @@ const OVERLAY_TYPE = 'popup';
 
 
 @Component({
-  selector: 'ion-popup-default'
+  selector: 'ion-popup-default',
+  lifecycle: [onInit]
 })
 @View({
-  template: '<div class="popup-backdrop" (click)="_cancel()" tappable></div>' +
+  template: '<div class="popup-backdrop" (click)="_cancel($event)" tappable></div>' +
   '<div class="popup-wrapper">' +
     '<div class="popup-head">' +
       '<h3 class="popup-title" [inner-html]="title"></h3>' +
@@ -66,18 +143,26 @@ const OVERLAY_TYPE = 'popup';
 class StandardPopup {
   constructor(popup: Popup) {
     this.popup = popup;
+
+  }
+  onInit() {
+    console.log(this.promiseResolve);
   }
   buttonTapped(button, event) {
-    button.onTap && button.onTap(event, this);
+    let retVal = button.onTap && button.onTap(event, this);
 
     // If the event.preventDefault() called, don't close
     if(!event.defaultPrevented) {
       return this.overlayRef.close();
     }
   }
-  _cancel() {
-    this.cancel && this.cancel();
-    return this.overlayRef.close();
+  _cancel(event) {
+    this.cancel && this.cancel(event);
+
+    if(!event.defaultPrevented) {
+      this.promiseReject.resolve();
+      return this.overlayRef.close();
+    }
   }
 
   /*
@@ -113,7 +198,7 @@ class PopupPopIn extends PopupAnimation {
     super(element);
 
     this.wrapper.fromTo('opacity', '0', '1')
-    this.wrapper.fromTo('scale', '1.2', '1');
+    this.wrapper.fromTo('scale', '1.1', '1');
 
     this.backdrop.fromTo('opacity', '0', '0.3')
   }
@@ -125,7 +210,7 @@ class PopupPopOut extends PopupAnimation {
   constructor(element) {
     super(element);
     this.wrapper.fromTo('opacity', '1', '0')
-    this.wrapper.fromTo('scale', '1', '0.8');
+    this.wrapper.fromTo('scale', '1', '0.9');
 
     this.backdrop.fromTo('opacity', '0.3', '0')
   }
