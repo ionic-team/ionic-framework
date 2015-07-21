@@ -402,6 +402,8 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
         if (index !== -1) {
           popupStack.splice(index, 1);
         }
+        
+        popup.remove();
 
         if (popupStack.length > 0) {
           popupStack[popupStack.length - 1].show();
@@ -417,8 +419,6 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
           }, 400, false);
           ($ionicPopup._backButtonActionDone || noop)();
         }
-
-        popup.remove();
 
         return result;
       });
