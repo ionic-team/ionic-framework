@@ -23,6 +23,35 @@ var lazypipe = require('lazypipe');
 var cache = require('gulp-cached');
 var connect = require('gulp-connect');
 
+function getBabelOptions(moduleName) {
+  return {
+    optional: ['es7.decorators'],
+    modules: "system",
+    moduleIds: true,
+    getModuleId: function(name) {
+      return moduleName + '/' + name.split('/test').join('');
+    }
+  }
+}
+
+var tscOptions = {
+  target: 'ES6',
+  // Don't use the version of typescript that gulp-typescript depends on, we need 1.5
+  // see https://github.com/ivogabe/gulp-typescript#typescript-version
+  typescript: require('typescript'),
+  allowNonTsExtensions: true,
+  isolatedModules: true,
+  //declaration: true, //generate d.ts files
+  emitDecoratorMetadata: true,
+  experimentalDecorators: true,
+  noEmitOnError: false,  // ignore errors
+  rootDir: '.'
+}
+var tscReporter = {
+    error: function (error) {
+        console.error(error.message);
+    }
+};
 
 gulp.task('clean.build', function() {
   runSequence(
@@ -91,58 +120,6 @@ gulp.task('clean', function(done) {
   del(['dist/'], done);
 });
 
-var traceurOptions = {
-  annotations: true,
-  types: true,
-  outputLanguage: 'es6'
-};
-
-var babelOptions = {
-  optional: ['es7.decorators'],
-  modules: "system",
-  moduleIds: true,
-  getModuleId: function(name) {
-    return "ionic/" + name;
-  }
-};
-
-var exampleBabelOptions = {
-  optional: ['es7.decorators'],
-  modules: "system",
-  moduleIds: true,
-  getModuleId: function(name) {
-    return "examples/" + name.split('/test').join('');
-  }
-};
-
-var testBabelOptions = {
-  optional: ['es7.decorators'],
-  modules: "system",
-  moduleIds: true,
-  getModuleId: function(name) {
-    return "tests/" + name.split('/test').join('');
-  }
-};
-
-var tscOptions = {
-  target: 'ES6',
-  // Don't use the version of typescript that gulp-typescript depends on, we need 1.5
-  // see https://github.com/ivogabe/gulp-typescript#typescript-version
-  typescript: require('typescript'),
-  allowNonTsExtensions: true,
-  isolatedModules: true,
-  //declaration: true, //generate d.ts files
-  emitDecoratorMetadata: true,
-  experimentalDecorators: true,
-  noEmitOnError: false,  // ignore errors
-  rootDir: '.'
-}
-var tscReporter = {
-    error: function (error) {
-        console.error(error.message);
-    }
-};
-
 gulp.task('transpile', function() {
   var stream = gulp.src(['ionic/**/*.ts', 'ionic/**/*.js', '!ionic/components/*/test/**/*', '!ionic/init.js'])
                    .pipe(cache('transpile', { optimizeMemory: true }))
@@ -151,7 +128,7 @@ gulp.task('transpile', function() {
                      stream.emit('end');
                    })
                    .pipe(gulp.dest('dist/js/es6/ionic'))
-                   .pipe(babel(babelOptions))
+                   .pipe(babel(getBabelOptions('ionic')))
                    .on('error', function (err) {
                      console.log("ERROR: " + err.message);
                      this.emit('end');
@@ -170,18 +147,17 @@ gulp.task('bundle.js', function() {
 gulp.task('tests', function() {
   return gulp.src('ionic/components/*/test/*/**/*.spec.ts')
              .pipe(tsc(tscOptions, null, tscReporter))
-             .pipe(babel(testBabelOptions))
+             .pipe(babel(getBabelOptions('tests')))
              .pipe(rename(function(file) {
                file.dirname = file.dirname.replace(path.sep + 'test' + path.sep, path.sep)
              }))
              .pipe(gulp.dest('dist/tests'))
 })
 
-
 gulp.task('examples', function() {
   var buildTest = lazypipe()
              .pipe(tsc, tscOptions, null, tscReporter)
-             .pipe(babel, exampleBabelOptions)
+             .pipe(babel, getBabelOptions('examples'))
 
   // Get each test folder with gulp.src
   return gulp.src(['ionic/components/*/test/*/**/*', '!ionic/components/*/test/*/**/*.spec.ts'])
@@ -225,15 +201,6 @@ gulp.task('examples', function() {
   }
 });
 
-var e2eBabelOptions = {
-  optional: ['es7.decorators'],
-  modules: "system",
-  moduleIds: true,
-  getModuleId: function(name) {
-    return "e2e/" + name.split('/test').join('');
-  }
-};
-
 gulp.task('copy-scripts', function(){
   gulp.src(['scripts/resources/*.js', 'config.js', 'dist/js/ionic.bundle.js',
             'dist/vendor/web-animations-js/web-animations.min.js'])
@@ -244,7 +211,7 @@ gulp.task('e2e', ['copy-scripts'], function() {
   var buildTest = lazypipe()
              //.pipe(traceur, traceurOptions)
              .pipe(tsc, tscOptions, null, tscReporter)
-             .pipe(babel, e2eBabelOptions)
+             .pipe(babel, getBabelOptions('e2e'))
 
   var buildE2ETest = lazypipe()
              //.pipe(traceur, traceurOptions)
@@ -340,7 +307,6 @@ gulp.task('fonts', function() {
   return gulp.src('ionic/components/icon/fonts/**/*')
     .pipe(gulp.dest('dist/fonts'));
 });
-
 
 gulp.task('vendor', function() {
   return gulp.src(['scripts/vendor/**/*'])
