@@ -90,13 +90,21 @@ gulp.task('watch', function() {
     'serve',
 
     function() {
-      watch(['ionic/**/*.js', 'ionic/**/*.ts', '!ionic/components/*/test/**/*'], function() {
-        runSequence(
-          'transpile',
-          'bundle.js',
-          'examples'
-        )
-      });
+      watch(
+        [
+          'ionic/**/*.js',
+          'ionic/**/*.ts',
+          '!ionic/components/*/test/**/*',
+          '!ionic/util/test/*'
+        ],
+        function() {
+          runSequence(
+            'transpile',
+            'bundle.js',
+            'examples'
+          )
+        }
+      );
 
       watch('ionic/components/*/test/**/*', function() {
         gulp.start('examples');
@@ -121,7 +129,15 @@ gulp.task('clean', function(done) {
 });
 
 gulp.task('transpile', function() {
-  var stream = gulp.src(['ionic/**/*.ts', 'ionic/**/*.js', '!ionic/components/*/test/**/*', '!ionic/init.js'])
+  var stream = gulp.src(
+                      [
+                         'ionic/**/*.ts',
+                         'ionic/**/*.js',
+                         '!ionic/components/*/test/**/*',
+                         '!ionic/init.js',
+                         '!ionic/util/test/*'
+                      ]
+                   )
                    .pipe(cache('transpile', { optimizeMemory: true }))
                    .pipe(tsc(tscOptions, null, tscReporter))
                    .on('error', function(error) {
@@ -322,65 +338,4 @@ gulp.task('karma', function() {
 
 gulp.task('karma-watch', function() {
   return karma.start({ configFile: __dirname + '/scripts/test/karma-watch.conf.js' })
-});
-
-gulp.task('e2e.old', ['sass'], function() {
-  var indexContents = _.template( fs.readFileSync('scripts/e2e/index.template.html') )({
-    buildConfig: buildConfig
-  });
-  var testTemplate = _.template( fs.readFileSync('scripts/e2e/e2e.template.js') )
-
-  var platforms = [
-    'android',
-    'core',
-    'ios',
-  ];
-
-  gulp.src(['ionic/**/*.js'])
-           .pipe(gulp.dest('dist/src'));
-
-  // Get each test folder with gulp.src
-  return gulp.src(buildConfig.src.e2e)
-    .pipe(cached('e2e'))
-    .pipe(rename(function(file) {
-      file.dirname = file.dirname.replace(path.sep + 'test' + path.sep, path.sep)
-    }))
-    .pipe(gulpif(/main.js$/, processMain()))
-    //.pipe(gulpif(/e2e.js$/, createPlatformTests()))
-    .pipe(gulp.dest(buildConfig.dist + '/e2e'));
-
-    function processMain() {
-      return through2.obj(function(file, enc, next) {
-        var self = this;
-        self.push(new VinylFile({
-          base: file.base,
-          contents: new Buffer(indexContents),
-          path: path.join(path.dirname(file.path), 'index.html'),
-        }));
-        next(null, file);
-      })
-    }
-
-    function createPlatformTests(file) {
-      return through2.obj(function(file, enc, next) {
-        var self = this
-        var relativePath = path.dirname(file.path.replace(/^.*?ionic(\/|\\)components(\/|\\)/, ''))
-        var contents = file.contents.toString()
-        platforms.forEach(function(platform) {
-          var platformContents = testTemplate({
-            contents: contents,
-            buildConfig: buildConfig,
-            relativePath: relativePath,
-            platform: platform
-          })
-          self.push(new VinylFile({
-            base: file.base,
-            contents: new Buffer(platformContents),
-            path: file.path.replace(/e2e.js$/, platform + '.e2e.js')
-          }))
-        })
-        next()
-      })
-    }
-
 });
