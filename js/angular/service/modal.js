@@ -135,12 +135,12 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
       stack.add(self);
 
       var modalEl = jqLite(self.modalEl);
-      var zIndex =10;
-      for (var i = 1; i <= numberOfModals ; i++) {
+      var zIndex = 10;
+      for (var i = 1; i <= numberOfModals; i++) {
         zIndex++;
         if(modalStack.length === i){
           angular.element(self.el).css('z-index', zIndex);
-          break
+          break;
         }
       }
 
