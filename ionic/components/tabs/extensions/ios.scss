@@ -25,6 +25,10 @@ $tab-bar-ios-height:                   50px !default;
     min-height: $tab-bar-ios-item-font-size + 1;
   }
 
+  .has-title-only .tab-button-text {
+    font-size: $tab-bar-ios-item-font-size + 2;
+  }
+
   .tab-button-icon {
     font-size: $tab-bar-ios-item-icon-size;
     height: $tab-bar-ios-item-icon-size;

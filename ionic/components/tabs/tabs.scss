@@ -85,6 +85,11 @@ button.tab-button {
   .tab-button-icon {
     order: 10;
   }
+
+  .tab-button-icon {
+    margin-top: 2px;
+    margin-bottom: 0;
+  }
 }
 
 [tab-bar-icons="left"] > .tab-bar-container button.tab-button {
@@ -92,7 +97,7 @@ button.tab-button {
 
   .tab-button-icon {
     text-align: right;
-    padding-right: 5px;
+    padding-right: 8px;
   }
 }
 
@@ -102,7 +107,7 @@ button.tab-button {
   .tab-button-icon {
     order: 10;
     text-align: left;
-    padding-left: 5px;
+    padding-left: 8px;
   }
 }
 
@@ -123,6 +128,11 @@ button.tab-button {
 .has-icon .tab-button-icon,
 .has-title .tab-button-text {
   display: block;
+}
+
+.has-title-only,
+.has-title-only .tab-button-text {
+  white-space: normal;
 }
 
 button.tab-button[aria-selected="true"] {
