@@ -1,4 +1,5 @@
-import {Component, View, Injectable, CSSClass, NgIf, NgFor, onInit} from 'angular2/angular2';
+import {formDirectives, NgControl, NgControlGroup,
+  Component, View, Injectable, CSSClass, NgIf, NgFor, onInit} from 'angular2/angular2';
 
 import {Overlay} from '../overlay/overlay';
 import {Animation} from '../../animations/animation';
@@ -24,87 +25,93 @@ export class Popup extends Overlay {
 
   alert(context={}, opts={}) {
     if(typeof context === 'string') {
-      let button = {
-        text: 'OK',
-        onTap: (event, popupRef) => {
-          // Allow it to close
-          //resolve();
-        }
-      };
       context = {
-        cancel: () => {
-          //reject();
-        },
-        title: context,
-        buttons: [
-          button
-        ]
-      };
+        title: context
+      }
     }
+    let button = {
+      text: 'OK',
+      onTap: (event, popupRef) => {
+        // Allow it to close
+        //resolve();
+      }
+    };
+    context = util.extend({
+      cancel: () => {
+        //reject();
+      },
+      buttons: [
+        button
+      ]
+    }, context);
 
     return this.popup(context, opts);
   }
 
   confirm(context={}, opts={}) {
-    return new Promise((resolve, reject)=> {
-      if(typeof context === 'string') {
-        let okButton = {
-          text: 'OK',
-          onTap: (event, popupRef) => {
-            // Allow it to close
-            resolve(true);
-          }
-        }
-        let cancelButton = {
-          text: 'Cancel',
-          onTap: (event, popupRef) => {
-            // Allow it to close
-            reject();
-          }
-        }
-        context = {
-          cancel: () => {
-            reject();
-          },
-          title: context,
-          buttons: [
-            cancelButton, okButton
-          ]
-        }
+    if(typeof context === 'string') {
+      context = {
+        title: context
       }
-      this.popup(context, opts);
-    });
+    }
+    let okButton = {
+      text: 'OK',
+      onTap: (event, popupRef) => {
+        // Allow it to close
+      }
+    }
+    let cancelButton = {
+      text: 'Cancel',
+      isCancel: true,
+      onTap: (event, popupRef) => {
+        // Allow it to close
+      }
+    }
+    context = util.extend({
+      cancel: () => {
+      },
+      buttons: [
+        cancelButton, okButton
+      ]
+    }, context);
+    return this.popup(context, opts);
   }
 
   prompt(context={}, opts={}) {
-    return new Promise((resolve, reject)=> {
-      if(typeof context === 'string') {
-        let okButton = {
-          text: 'Ok',
-          onTap: (event, popupRef) => {
-            // Allow it to close
-          }
-        }
-        let cancelButton = {
-          text: 'Cancel',
-          onTap: (event, popupRef) => {
-            // Allow it to close
-            reject();
-          }
-        }
-        context = {
-          cancel: () => {
-            reject();
-          },
-          title: context,
-          buttons: [
-            cancelButton, okButton
-          ]
-        }
-      }
-      this.popup(context, opts);
-    });
+    if(typeof context === 'string') {
+      context = {
+        title: context
+      };
+    }
 
+    let okButton = {
+      text: 'Ok',
+      onTap: (event, popupRef) => {
+        // Allow it to close
+      }
+    }
+
+    let cancelButton = {
+      text: 'Cancel',
+      isCancel: true,
+      onTap: (event, popupRef) => {
+        // Allow it to close
+      }
+    }
+
+    context = util.extend({
+      showPrompt: true,
+      promptPlaceholder: '',
+      cancel: () => {
+      },
+      buttons: [
+        cancelButton, okButton
+      ]
+    }, context);
+
+    console.log('Context', context);
+
+    return this.popup(context, opts);
   }
 
   get(handle) {
@@ -131,49 +138,58 @@ const OVERLAY_TYPE = 'popup';
       '<h5 class="popup-sub-title" [inner-html]="subTitle" *ng-if="subTitle"></h5>' +
     '</div>' +
     '<div class="popup-body">' +
+      '<input type="text" *ng-if="showPrompt" placeholder="{{promptPlaceholder}}">' +
     '</div>' +
     '<div class="popup-buttons" *ng-if="buttons.length">' +
       '<button *ng-for="#button of buttons" (click)="buttonTapped(button, $event)" class="button" [class]="button.type || \'button-default\'" [inner-html]="button.text"></button>' +
     '</div>' +
   '</div>' +
 '</div>',
-  directives: [CSSClass, NgIf, NgFor]
+  directives: [formDirectives, CSSClass, NgIf, NgFor]
 })
 
 class StandardPopup {
   constructor(popup: Popup) {
     this.popup = popup;
-
   }
   onInit() {
-    console.log(this.promiseResolve);
+    console.log('INIT');
+    setTimeout(() => {
+      this.element = this.overlayRef.getElementRef().nativeElement;
+      this.promptInput = this.element.querySelector('input');
+      if(this.promptInput) {
+        this.promptInput.value = '';
+      }
+    });
   }
   buttonTapped(button, event) {
-    let retVal = button.onTap && button.onTap(event, this);
+    let promptValue = this.promptInput && this.promptInput.value;
 
-    // If the event.preventDefault() called, don't close
+    let retVal = button.onTap && button.onTap(event, this, {
+      promptValue: promptValue
+    });
+
+    // If the event.preventDefault() wasn't called, close
     if(!event.defaultPrevented) {
+      // If this is a cancel button, reject the promise
+      if(button.isCancel) {
+        this.promiseReject();
+      } else {
+        // Resolve with the prompt value
+        this.promiseResolve(promptValue);
+      }
       return this.overlayRef.close();
     }
+
   }
   _cancel(event) {
     this.cancel && this.cancel(event);
 
     if(!event.defaultPrevented) {
-      this.promiseReject.resolve();
+      this.promiseReject();
       return this.overlayRef.close();
     }
   }
-
-  /*
-  _buttonClicked(index) {
-    let shouldClose = this.buttonClicked(index);
-    if (shouldClose === true) {
-      return this.overlayRef.close();
-    }
-  }
-  */
-
 }
 
 class PopupAnimation extends Animation {

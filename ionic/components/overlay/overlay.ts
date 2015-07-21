@@ -99,6 +99,10 @@ export class OverlayRef {
     app.overlays.push(this);
   }
 
+  getElementRef() {
+    return this._elementRef;
+  }
+
   _open(opts={}) {
     return new Promise(resolve => {
       let animationName = (opts && opts.animation) || this._opts.enterAnimation;
