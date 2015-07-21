@@ -1,14 +1,24 @@
-$popup-ios-border-radius:       4px !default;
+$popup-ios-border-radius:       13px !default;
+$popup-ios-bg-color:            #f8f8f8 !default;
 
 .popup[mode="ios"] {
+
   .popup-wrapper {
+
     border-radius: $popup-ios-border-radius;
+    background-color: $popup-ios-bg-color;
+
+    .popup-title {
+    }
+
     .popup-body:empty { padding: 0; }
     .popup-buttons {
       padding: 0;
       min-height: 0;
       .button {
+        min-height: 36px;
         color: get-color('primary', base);
+        font-size: 14px;
       }
     }
   }
