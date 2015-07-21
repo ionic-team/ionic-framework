@@ -135,6 +135,14 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
       stack.add(self);
 
       var modalEl = jqLite(self.modalEl);
+      var zIndex =10;
+      for (var i = 1; i <= numberOfModals ; i++) {
+        zIndex++;
+        if(modalStack.length === i){
+          angular.element(self.el).css('z-index', zIndex);
+          break
+        }
+      }
 
       self.el.classList.remove('hide');
       $timeout(function() {
@@ -232,6 +240,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
       return $timeout(function() {
         $ionicBody.removeClass(self.viewType + '-open');
         self.el.classList.add('hide');
+        angular.element(self.el).css('z-index', '');
       }, self.hideDelay || 320);
     },
 
@@ -260,8 +269,9 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
       return !!this._isShown;
     }
   });
-
+  var numberOfModals = 0;
   var createModal = function(templateString, options) {
+    numberOfModals++;
     // Create a new scope for the modal
     var scope = options.scope && options.scope.$new() || $rootScope.$new(true);
 
