@@ -4,16 +4,36 @@
 
 $tab-bar-md-item-padding:             0 10px !default;
 $tab-bar-md-item-font-size:           1.4rem !default;
+$tab-bar-md-item-icon-size:           26px !default;
+$tab-bar-md-item-height:              4.8rem !default;
 
 
 .tabs[mode="md"] {
 
   button.tab-button {
     padding: $tab-bar-md-item-padding;
+    min-height: $tab-bar-md-item-height;
     font-size: $tab-bar-md-item-font-size;
 
     box-shadow: none;
     border-radius: 0;
+  }
+
+  .tab-button-icon {
+    font-size: $tab-bar-md-item-icon-size;
+  }
+
+  .has-title.has-icon {
+
+    .tab-button-icon {
+      padding-top: 10px;
+      padding-bottom: 6px;
+    }
+
+    .tab-button-text {
+      padding-bottom: 15px;
+    }
+
   }
 
 }
