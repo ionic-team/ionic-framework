@@ -8,21 +8,21 @@ import * as util from 'ionic/util';
 @Injectable()
 export class Popup extends Overlay {
 
-  alert(context={}) {
+  alert(context={}, opts={}) {
     if(typeof context === 'string') {
       context = {
-        text: context,
+        title: context,
         buttons: [
           { text: 'Ok' }
         ]
       }
     }
     let defaults = {
-      enterAnimation: 'modal-slide-in',
-      leaveAnimation: 'modal-slide-out',
+      enterAnimation: 'popup-pop-in',
+      leaveAnimation: 'popup-pop-out',
     };
 
-    return this.create(OVERLAY_TYPE, AlertType, util.extend(defaults, opts), context);
+    return this.create(OVERLAY_TYPE, StandardPopup, util.extend(defaults, opts), context);
   }
 
   get(handle) {
@@ -36,11 +36,13 @@ export class Popup extends Overlay {
 
 const OVERLAY_TYPE = 'popup';
 
+
 @Component({
-  selector: 'ion-popup-alert'
+  selector: 'ion-popup-default'
 })
 @View({
-  template: '<div class="popup">' +
+  template: '<div class="popup-backdrop" (click)="_cancel()" tappable></div>' +
+  '<div class="popup-wrapper">' +
     '<div class="popup-head">' +
       '<h3 class="popup-title" [inner-html]="title"></h3>' +
       '<h5 class="popup-sub-title" [inner-html]="subTitle" *ng-if="subTitle"></h5>' +
@@ -54,34 +56,67 @@ const OVERLAY_TYPE = 'popup';
 '</div>',
   directives: [CSSClass, NgIf, NgFor]
 })
-class AlertType {
-  constructor() {
-    console.log('Alert type');
+
+class StandardPopup {
+  constructor(popup: Popup) {
+    this.popup = popup;
+  }
+  buttonTapped(button, event) {
+    console.log('TAPPED', button, event);
+  }
+  _cancel() {
+    this.cancel && this.cancel();
+    return this.overlayRef.close();
+  }
+
+  /*
+  _buttonClicked(index) {
+    let shouldClose = this.buttonClicked(index);
+    if (shouldClose === true) {
+      return this.overlayRef.close();
+    }
+  }
+  */
+
+}
+
+class PopupAnimation extends Animation {
+  constructor(element) {
+    super(element);
+    this
+      .easing('ease-in-out')
+      .duration(200);
+
+    this.backdrop = new Animation(element.querySelector('.popup-backdrop'));
+    this.wrapper = new Animation(element.querySelector('.popup-wrapper'));
+
+    this.add(this.backdrop, this.wrapper);
   }
 }
 
 /**
  * Animations for modals
  */
-class ModalSlideIn extends Animation {
+class PopupPopIn extends PopupAnimation {
   constructor(element) {
     super(element);
-    this
-      .easing('cubic-bezier(.36,.66,.04,1)')
-      .duration(400)
-      .fromTo('translateY', '100%', '0%');
+
+    this.wrapper.fromTo('opacity', '0', '1')
+    this.wrapper.fromTo('scale', '1.2', '1');
+
+    this.backdrop.fromTo('opacity', '0', '0.4')
   }
 }
-Animation.register('modal-slide-in', ModalSlideIn);
+Animation.register('popup-pop-in', PopupPopIn);
 
 
-class ModalSlideOut extends Animation {
+class PopupPopOut extends PopupAnimation {
   constructor(element) {
     super(element);
-    this
-      .easing('ease-out')
-      .duration(250)
-      .fromTo('translateY', '0%', '100%');
+    this.wrapper.fromTo('opacity', '1', '0')
+    this.wrapper.fromTo('scale', '1', '0.8');
+
+    this.backdrop.fromTo('opacity', '0.4', '0')
   }
 }
-Animation.register('modal-slide-out', ModalSlideOut);
+Animation.register('popup-pop-out', PopupPopOut);

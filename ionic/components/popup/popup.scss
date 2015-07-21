@@ -2,6 +2,8 @@
 // Modals
 // --------------------------
 
+$popup-width:                     250px !default;
+
 $popup-bg-color:                  #fff !default;
 $popup-backdrop-bg-active:        #000 !default;
 $popup-backdrop-bg-inactive:      rgba(0,0,0,0) !default;
@@ -13,27 +15,26 @@ $popup-button-border-radius:      2px !default;
 $popup-button-line-height:        20px !default;
 $popup-button-min-height:         45px !default;
 
-
-ion-popup {
-  position: absolute;
-  top: 0;
-  z-index: $z-index-overlay;
-  overflow: hidden;
-  min-height: 100%;
-  width: 100%;
-  background-color: $modal-bg-color;
-
-  transform: translate3d(0px, 100%, 0px);
-  &.show-overlay {
-    transform: translate3d(0px, 0px, 0px);
-  }
-}
-
+$popup-backdrop-color:            #000 !default;
+$popup-backdrop-active-opacity:   0.4 !default;
 
 /**
  * Popups
  * --------------------------------------------------
  */
+
+ .popup-backdrop {
+   z-index: $z-index-popup-backdrop;
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-color: $popup-backdrop-color;
+   opacity: 0;
+   tranform: translateZ(0);
+ }
+
 
 ion-popup {
   position: absolute;
@@ -50,7 +51,7 @@ ion-popup {
   z-index: $z-index-overlay;
 
   // Start hidden
-  visibility: hidden;
+  //visibility: hidden;
   /*
   &.popup-showing {
     visibility: visible;
@@ -71,7 +72,8 @@ ion-popup {
   }
   */
 
-  .popup {
+  .popup-wrapper {
+    z-index: $z-index-popup-wrapper;
     width: $popup-width;
     max-width: 100%;
     max-height: 90%;
