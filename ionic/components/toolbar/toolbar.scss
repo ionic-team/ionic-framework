@@ -9,8 +9,7 @@ $toolbar-order: (
   secondary: 40
 );
 
-
-$toolbar-background:                    #f4f4f4 !default;
+$toolbar-background:                    $placeholder-background !default;
 $toolbar-button-text-color:             #007aff !default;
 $toolbar-title-text-color:              #000 !default;
 

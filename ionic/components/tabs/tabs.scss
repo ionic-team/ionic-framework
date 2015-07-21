@@ -2,8 +2,10 @@
 // Tabs
 // --------------------------------------------------
 
-$tab-bar-background-color:         #f7f7f8 !default;
+$tab-bar-background-color:         $placeholder-background !default;
 
+$tab-button-text-inactive:         #8c8c8c !default;
+$tab-button-text-active:           get-color(primary, base) !default;
 $tab-button-padding:               10px !default;
 $tab-button-min-width:             80px !default;
 $tab-button-max-width:             160px !default;
@@ -72,6 +74,8 @@ button.tab-button {
   cursor: pointer;
   user-select: none;
 
+
+  color: $tab-button-text-inactive;
   border: 0;
   border-radius: 0;
   background: none;
@@ -117,10 +121,6 @@ button.tab-button {
 .tab-bar-icon-only .tab-button-text,
 .tab-bar-text-only .tab-button-icon {
   display: none;
-}
-
-button.tab-button:hover {
-  opacity: 0.8;
 }
 
 button.tab-button[aria-selected="true"] {

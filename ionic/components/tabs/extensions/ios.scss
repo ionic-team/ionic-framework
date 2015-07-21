@@ -5,7 +5,7 @@
 $tab-bar-ios-item-padding:             0px 10px !default;
 $tab-bar-ios-item-font-size:           10px !default;
 $tab-bar-ios-item-icon-size:           30px !default;
-$tab-bar-ios-height:                   49px !default;
+$tab-bar-ios-height:                   50px !default;
 
 
 .tabs[mode="ios"] {
@@ -22,11 +22,15 @@ $tab-bar-ios-height:                   49px !default;
 
   .tab-button-text {
     font-size: $tab-bar-ios-item-font-size;
+    min-height: $tab-bar-ios-item-font-size + 1;
   }
 
   .tab-button-icon {
     font-size: $tab-bar-ios-item-icon-size;
     height: $tab-bar-ios-item-icon-size;
+    min-width: $tab-bar-ios-item-icon-size;
+    margin-bottom: 2px;
+
     &:before {
       vertical-align: top;
     }
