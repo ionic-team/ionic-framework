@@ -116,11 +116,13 @@ button.tab-button {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+
+  display: none;
 }
 
-.tab-bar-icon-only .tab-button-text,
-.tab-bar-text-only .tab-button-icon {
-  display: none;
+.has-icon .tab-button-icon,
+.has-title .tab-button-text {
+  display: block;
 }
 
 button.tab-button[aria-selected="true"] {

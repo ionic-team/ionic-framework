@@ -95,7 +95,7 @@ export class TextInput extends IonInput {
     if (scrollView && this.scrollAssist) {
       // this input is inside of a scroll view
       // scroll the input to the top
-      let inputY = this.elementRef.nativeElement.offsetTop - 15;
+      let inputY = this.elementRef.nativeElement.offsetTop - SCROLL_Y_PADDING;
 
       // do not allow any clicks while it's scrolling
       ClickBlock(true, SCROLL_INTO_VIEW_DURATION + 200);
@@ -158,3 +158,4 @@ export class TextInput extends IonInput {
 }
 
 const SCROLL_INTO_VIEW_DURATION = 500;
+const SCROLL_Y_PADDING = 28;

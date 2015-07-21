@@ -2,27 +2,23 @@
 // Material Design Tabs
 // --------------------------------------------------
 
-$tab-bar-material-item-padding:              4px 10px !default;
-$tab-bar-material-active-border-width:       3px !default;
-$tab-bar-material-active-border-color:       red !default;
-$tab-bar-material-text-transform:            uppercase !default;
-$tab-bar-material-text-font-weight:          500 !default;
+$tab-bar-md-item-padding:             0 10px !default;
+$tab-bar-md-item-font-size:           1.4rem !default;
 
 
 .tabs[mode="md"] {
 
-  .tab-bar-item {
-    padding: $tab-bar-material-item-padding;
-    text-transform: $tab-bar-material-text-transform;
-    font-weight: $tab-bar-material-text-font-weight;
+  button.tab-button {
+    padding: $tab-bar-md-item-padding;
+    font-size: $tab-bar-md-item-font-size;
+
+    box-shadow: none;
+    border-radius: 0;
+    white-space: normal;
   }
 
-  .tab-bar .tab-bar-item {
-    border-bottom: $tab-bar-material-active-border-width solid transparent;
-  }
-
-  .tab-bar .tab-active {
-    border-bottom-color: $tab-bar-material-active-border-color;
+  .tab-button-text {
+    white-space: normal;
   }
 
 }

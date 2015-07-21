@@ -27,6 +27,7 @@ $toolbar-title-text-color:              #000 !default;
   align-items: center;
   justify-content: space-between;
   order: $flex-order-toolbar-top;
+  flex: 0;
 
   background-color: $toolbar-background;
 

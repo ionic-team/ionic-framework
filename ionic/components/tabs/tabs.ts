@@ -119,6 +119,10 @@ export class Tabs extends ViewController {
     '[attr.id]': 'btnId',
     '[attr.aria-controls]': 'panelId',
     '[attr.aria-selected]': 'tab.isSelected',
+    '[class.has-title]': 'hasTitle',
+    '[class.has-icon]': 'hasIcon',
+    '[class.has-title-only]': 'hasTitleOnly',
+    '[class.has-icon-only]': 'hasIconOnly',
     '(^click)': 'onClick($event)'
   }
 })
@@ -128,9 +132,14 @@ class TabButton {
   }
 
   onInit() {
-    let id = this.tab.item.id
+    let id = this.tab.item.id;
     this.btnId = 'tab-button-' + id;
     this.panelId = 'tab-panel-' + id;
+
+    this.hasTitle = !!this.tab.tabTitle;
+    this.hasIcon = !!this.tab.tabIcon;
+    this.hasTitleOnly = (this.hasTitle && !this.hasIcon);
+    this.hasIconOnly = (this.hasIcon && !this.hasTitle);
   }
 
   onClick(ev) {
