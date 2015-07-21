@@ -29,7 +29,7 @@
     "node-libs-browser": "^0.5.2",
     "node-uuid": "^1.4.1",
     "q": "^1.4.1",
-    "request": "^2.53.0",
+    "request": "2.53.0",
     "run-sequence": "^1.1.0",
     "serve-static": "^1.9.2",
     "source-map-support": "^0.2.10",
