@@ -10,10 +10,16 @@ export class Popup extends Overlay {
 
   alert(context={}, opts={}) {
     if(typeof context === 'string') {
+      let button = {
+        text: 'Ok',
+        onTap: (event, popupRef) => {
+          // Allow it to close
+        }
+      }
       context = {
         title: context,
         buttons: [
-          { text: 'Ok' }
+          button
         ]
       }
     }
@@ -62,7 +68,12 @@ class StandardPopup {
     this.popup = popup;
   }
   buttonTapped(button, event) {
-    console.log('TAPPED', button, event);
+    button.onTap && button.onTap(event, this);
+
+    // If the event.preventDefault() called, don't close
+    if(!event.defaultPrevented) {
+      return this.overlayRef.close();
+    }
   }
   _cancel() {
     this.cancel && this.cancel();
