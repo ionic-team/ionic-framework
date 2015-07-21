@@ -3,7 +3,7 @@ import {Component, Directive, View, Injector, NgFor, ElementRef, Optional, Paren
 import {ViewController} from '../view/view-controller';
 import {ViewItem} from '../view/view-item';
 import {Icon} from '../icon/icon';
-import {IonicComponent} from '../../config/annotations';
+import {IonicComponent, IonicView} from '../../config/annotations';
 
 
 @IonicComponent({
@@ -13,7 +13,7 @@ import {IonicComponent} from '../../config/annotations';
     'tabBarIcons': 'top'
   }
 })
-@View({
+@IonicView({
   template: `
     <nav class="tab-bar-container">
       <div class="tab-bar" role="tablist">
@@ -27,7 +27,7 @@ import {IonicComponent} from '../../config/annotations';
       <content></content>
     </section>
   `,
-  directives: [NgFor, Icon, forwardRef(() => TabButton)]
+  directives: [forwardRef(() => TabButton)]
 })
 export class Tabs extends ViewController {
   constructor(

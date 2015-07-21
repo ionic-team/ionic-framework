@@ -170,12 +170,12 @@ class Tab2Page3 {
 
 
 @App({
-  routes: {
-    'SignIn': {
-      'path': '/signin',
-      'cls': SignIn,
-      'root': true
+  routes: [
+    {
+      path: '/signin',
+      component: SignIn,
+      root: true
     }
-  }
+  ]
 })
 class IonicApp {}

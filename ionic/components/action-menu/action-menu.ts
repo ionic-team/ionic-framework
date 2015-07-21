@@ -15,20 +15,25 @@ import * as util from 'ionic/util';
 
 
 @View({
-  template: `
-    <div class="action-menu-backdrop" (click)="_cancel()" tappable></div>
-    <div class="action-menu-wrapper">
-      <div class="action-menu-container">
-        <div class="action-menu-group action-menu-options">
-          <div class="action-menu-title" *ng-if="titleText">{{titleText}}</div>
-          <button (^click)="_buttonClicked(index)" *ng-for="#b of buttons; #index = index" class="action-menu-option"><i class="icon" [class]="b.icon" *ng-if="b.icon"></i> {{b.text}}</button>
-          <button *ng-if="destructiveText" (click)="_destructive()" class="destructive action-menu-destructive"><i class="icon" [class]="destructiveIcon" *ng-if="destructiveIcon"></i> {{destructiveText}}</button>
-        </div>
-        <div class="action-menu-group action-menu-cancel" *ng-if="cancelText">
-          <button (click)="_cancel()"><i class="icon" [class]="cancelIcon"></i> {{cancelText}}</button>
-        </div>
-      </div>
-    </div>`,
+  template: '' +
+    '<div class="action-menu-backdrop" (click)="_cancel()" tappable></div>' +
+    '<div class="action-menu-wrapper">' +
+      '<div class="action-menu-container">' +
+        '<div class="action-menu-group action-menu-options">' +
+          '<div class="action-menu-title" *ng-if="titleText">{{titleText}}</div>' +
+          '<button (^click)="_buttonClicked(index)" *ng-for="#b of buttons; #index = index" class="action-menu-option">' +
+            '<i class="icon" [class]="b.icon" *ng-if="b.icon"></i> ' +
+            '{{b.text}}' +
+          '</button>' +
+          '<button *ng-if="destructiveText" (click)="_destructive()" class="destructive action-menu-destructive">' +
+            '<i class="icon" [class]="destructiveIcon" *ng-if="destructiveIcon"></i> ' +
+            '{{destructiveText}}</button>' +
+        '</div>' +
+        '<div class="action-menu-group action-menu-cancel" *ng-if="cancelText">' +
+          '<button (click)="_cancel()"><i class="icon" [class]="cancelIcon"></i> {{cancelText}}</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>',
   directives: [NgFor, NgIf, CSSClass, TapClick]
 })
 class ActionMenuDirective {
