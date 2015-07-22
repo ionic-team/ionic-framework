@@ -53,7 +53,7 @@ var tscReporter = {
     }
 };
 
-gulp.task('clean.build', function() {
+gulp.task('clean.build', function(done) {
   runSequence(
     'clean',
     'transpile',
@@ -61,20 +61,24 @@ gulp.task('clean.build', function() {
     'e2e',
     'sass',
     'fonts',
-    'vendor');
+    'vendor',
+    done
+  );
 })
 
-gulp.task('build', function() {
+gulp.task('build', function(done) {
   runSequence(
     'transpile',
     'bundle.js',
     'e2e',
     'sass',
     'fonts',
-    'vendor');
+    'vendor',
+    done
+  );
 })
 
-gulp.task('watch', function() {
+gulp.task('watch', function(done) {
 
   runSequence(
     'transpile',
@@ -84,7 +88,6 @@ gulp.task('watch', function() {
     'fonts',
     'vendor',
     'serve',
-
     function() {
       watch(
         [
@@ -109,7 +112,10 @@ gulp.task('watch', function() {
       watch('ionic/**/*.scss', function() {
         gulp.start('sass');
       });
-    })
+
+      done();
+    }
+  );
 });
 
 gulp.task('serve', function() {
