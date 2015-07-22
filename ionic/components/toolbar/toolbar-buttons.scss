@@ -11,10 +11,19 @@
     margin: 0 4px;
     padding: 0 4px;
 
-    min-width: 3.2rem;
+    min-width: 2.8rem;
     min-height: 2.8rem;
 
     box-shadow: none;
+
+    &[clear] {
+      padding: 0;
+    }
+  }
+
+  icon {
+    font-size: 2.4rem;
+    padding: 0 4px;
   }
 }
 
