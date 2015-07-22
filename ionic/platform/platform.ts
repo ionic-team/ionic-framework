@@ -106,18 +106,32 @@ export class PlatformCtrl {
     return this._ua;
   }
 
-  width(val) {
-    if (arguments.length) {
-      this._w = val;
+  width() {
+    if (!this._w) {
+      this._w = window.innerWidth;
+      this._h = window.innerHeight;
     }
-    return this._w || 0;
+    return this._w;
   }
 
-  height(val) {
-    if (arguments.length) {
-      this._h = val;
+  height() {
+    if (!this._h) {
+      this._w = window.innerWidth;
+      this._h = window.innerHeight;
     }
-    return this._h || 0;
+    return this._h;
+  }
+
+  isPortrait() {
+    return this.width() < this.height();
+  }
+
+  isLandscape() {
+    return !this.isPortrait();
+  }
+
+  resetDimensions() {
+    this._w = this._h = 0;
   }
 
 

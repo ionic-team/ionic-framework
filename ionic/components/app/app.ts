@@ -165,9 +165,10 @@ function initApp(window, document, config) {
   // Platform is a global singleton
   Platform.url(window.location.href);
   Platform.userAgent(window.navigator.userAgent);
-  Platform.width(window.innerWidth);
-  Platform.height(window.innerHeight);
   Platform.load(config);
+
+  // on resize be sure to clear out existing window dimensions
+  window.addEventListener('resize', Platform.resetDimensions);
 
   return app;
 }
