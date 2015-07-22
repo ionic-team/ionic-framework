@@ -14,24 +14,16 @@ module.exports = function(gulp, argv, buildConfig) {
   var protractorHttpServer;
   var snapshotValues = _.merge(snapshotConfig.platformDefauls, argv);
 
-  gulp.task('protractor-server', protractorServerTask);
-  gulp.task('snapshot-task', snapshotTask);
-  gulp.task('snapshot', gulp.series(
-    gulp.parallel('build', 'e2e', 'protractor-server'),
-    'snapshot-task'
-  ));
-
-  function protractorServerTask(done) {
+  gulp.task('protractor-server', function() {
     var app = connect().use(serveStatic(projectRoot));  // serve everything that is static
     protractorHttpServer = http.createServer(app).listen(buildConfig.protractorPort);
     console.log('Serving `dist` on http://localhost:' + buildConfig.protractorPort);
-    done();
-  }
+  });
 
-  function snapshotTask(done) {
+  gulp.task('snapshot', ['e2e', 'protractor-server'], function(done) {
     var protractorConfigFile = path.resolve(projectRoot, 'scripts/snapshot/protractor.config.js');
     snapshot(done, protractorConfigFile);
-  }
+  });
 
   function snapshot(done, protractorConfigFile) {
     snapshotValues.params.test_id = uuid.v4().split('-')[0];
@@ -49,13 +41,12 @@ module.exports = function(gulp, argv, buildConfig) {
       return _.template(argument, snapshotValues);
     });
 
-    // e2ePublish(snapshotValues.params.test_id);
+    e2ePublish(snapshotValues.params.test_id);
 
     return protractor(done, [protractorConfigFile].concat(protractorArgs));
   }
 
   function protractor(done, args) {
-    debugger;
     var child = cp.spawn('protractor', args, {
       stdio: [process.stdin, process.stdout, 'pipe']
     });
