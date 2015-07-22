@@ -21,14 +21,10 @@ $navbar-ios-border-color:                  #c4c4c4 !default;
 
     order: map-get($toolbar-order-ios, 'back-button');
     overflow: inherit;
-
-    icon {
-      padding-right: 8px;
-    }
   }
 
   .back-button-icon {
-    padding-right: 0.6rem;
+    padding-right: 8px;
   }
 
 }

@@ -12,14 +12,16 @@ $navbar-material-height:                  5.6rem !default;
 .navbar[mode="md"] {
 
   .back-button {
-    margin: 0;
+    padding: 0;
+    margin: 0 0 0 12px;
+    box-shadow: none;
   }
 
   .back-button-icon {
     margin: 0;
     font-weight: normal;
     font-size: 2.4rem;
-    min-width: 5.6rem;
+    min-width: 44px;
     text-align: left;
   }
 

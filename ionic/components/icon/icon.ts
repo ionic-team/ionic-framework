@@ -58,16 +58,18 @@ Custom Font Icon
   ],
   host: {
     '[attr.aria-label]': 'label',
-    'role': 'img',
-    '[className]': 'className'
+    'role': 'img'
   }
 })
 export class IconDirective {
+  constructor(elementRef: ElementRef) {
+    this.ele = elementRef.nativeElement;
+  }
+
   onInit() {
-    let name = this.name || this.iconName;
-    if (name) {
-      this.className = name;
-      this.label = name.replace('ion-', '').replace('ios-', '').replace('md-', '').replace('-', '');
+    if (this.name) {
+      this.ele.classList.add(this.name);
+      this.label = this.name.replace('ion-', '').replace('ios-', '').replace('md-', '').replace('-', '');
     }
   }
 }
