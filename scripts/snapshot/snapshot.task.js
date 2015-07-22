@@ -49,13 +49,12 @@ module.exports = function(gulp, argv, buildConfig) {
       return _.template(argument, snapshotValues);
     });
 
-    // e2ePublish(snapshotValues.params.test_id);
+    e2ePublish(snapshotValues.params.test_id);
 
     return protractor(done, [protractorConfigFile].concat(protractorArgs));
   }
 
   function protractor(done, args) {
-    debugger;
     var child = cp.spawn('protractor', args, {
       stdio: [process.stdin, process.stdout, 'pipe']
     });
