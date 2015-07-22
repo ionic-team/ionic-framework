@@ -82,6 +82,14 @@ function($ionicTabsDelegate, $ionicConfig) {
           $scope.$emit('$ionicTabs.top', $scope.$hasTabsTop);
         });
 
+        $scope.$watch(function() { return tabsCtrl.show(); }, function(value, oldValue) {
+          if (value) {
+            $element.removeClass("tabs-item-hide");
+          } else {
+            $element.addClass("tabs-item-hide");
+          }
+        });
+
         function emitLifecycleEvent(ev, data) {
           ev.stopPropagation();
           var previousSelectedTab = tabsCtrl.previousSelectedTab();

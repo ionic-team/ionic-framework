@@ -8,6 +8,7 @@ function($scope, $element, $ionicHistory) {
   var selectedTab = null;
   var previousSelectedTab = null;
   var selectedTabIndex;
+  var isVisible = true;
   self.tabs = [];
 
   self.selectedIndex = function() {
@@ -23,6 +24,13 @@ function($scope, $element, $ionicHistory) {
   self.add = function(tab) {
     $ionicHistory.registerHistory(tab);
     self.tabs.push(tab);
+  };
+
+  self.show = function (shouldShow) {
+    if (arguments.length) {
+      isVisible = !!shouldShow;
+    }
+    return isVisible;
   };
 
   self.remove = function(tab) {
