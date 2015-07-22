@@ -57,24 +57,21 @@ gulp.task('clean.build', function() {
   runSequence(
     'clean',
     'transpile',
-    //'bundle.deps',
     'bundle.js',
-    'examples',
+    'e2e',
     'sass',
     'fonts',
-    'vendor',
-    'copy-scripts');
+    'vendor');
 })
 
 gulp.task('build', function() {
   runSequence(
     'transpile',
     'bundle.js',
-    'examples',
+    'e2e',
     'sass',
     'fonts',
-    'vendor',
-    'copy-scripts');
+    'vendor');
 })
 
 gulp.task('watch', function() {
@@ -82,11 +79,10 @@ gulp.task('watch', function() {
   runSequence(
     'transpile',
     'bundle.js',
-    'examples',
+    'e2e',
     'sass',
     'fonts',
     'vendor',
-    'copy-scripts',
     'serve',
 
     function() {
@@ -101,13 +97,13 @@ gulp.task('watch', function() {
           runSequence(
             'transpile',
             'bundle.js',
-            'examples'
+            'e2e'
           )
         }
       );
 
       watch('ionic/components/*/test/**/*', function() {
-        gulp.start('examples');
+        gulp.start('e2e');
       });
 
       watch('ionic/**/*.scss', function() {
@@ -169,53 +165,6 @@ gulp.task('tests', function() {
              }))
              .pipe(gulp.dest('dist/tests'))
 })
-
-gulp.task('examples', function() {
-  var buildTest = lazypipe()
-             .pipe(tsc, tscOptions, null, tscReporter)
-             .pipe(babel, getBabelOptions('examples'))
-
-  // Get each test folder with gulp.src
-  return gulp.src(['ionic/components/*/test/*/**/*', '!ionic/components/*/test/*/**/*.spec.ts'])
-    .pipe(cache('examples', { optimizeMemory: true }))
-    .pipe(gulpif(/.ts$/, buildTest()))
-    .on('error', function (err) {
-      console.log("ERROR: " + err.message);
-      this.emit('end');
-    })
-    .pipe(gulpif(/index.js$/, createIndexHTML())) //TSC changes .ts to .js
-    .pipe(rename(function(file) {
-      file.dirname = file.dirname.replace(path.sep + 'test' + path.sep, path.sep)
-    }))
-    .pipe(gulp.dest('dist/examples/'))
-
-  function createIndexHTML() {
-    var template = _.template(
-      fs.readFileSync('scripts/e2e/example.template.html')
-    )({
-      buildConfig: buildConfig
-    });
-
-    return through2.obj(function(file, enc, next) {
-      var self = this;
-
-      var module = path.dirname(file.path)
-                      .replace(__dirname, '')
-                      .replace('/ionic/components/', 'examples/')
-                      .replace('/test/', '/') +
-                      '/index';
-
-      var indexContents = template.replace('{{MODULE}}', module);
-
-      self.push(new VinylFile({
-        base: file.base,
-        contents: new Buffer(indexContents),
-        path: path.join(path.dirname(file.path), 'index.html'),
-      }));
-      next(null, file);
-    });
-  }
-});
 
 gulp.task('copy-scripts', function(){
   gulp.src(['scripts/resources/*.js', 'config.js', 'dist/js/ionic.bundle.js',
