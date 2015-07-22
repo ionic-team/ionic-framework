@@ -206,7 +206,7 @@ export class ViewItem {
   navbarElement() {
     let navbarView = this.navbarView();
     if (navbarView) {
-      return navbarView.element();
+      return navbarView.getElementRef();
     }
   }
 

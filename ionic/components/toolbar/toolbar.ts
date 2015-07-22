@@ -3,43 +3,13 @@ import {Directive, View, Parent, onInit, ElementRef, forwardRef} from 'angular2/
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
 import {IonicComponent} from '../../config/annotations';
-import * as dom from '../../util/dom';
 
 
-@IonicComponent({
-  selector: 'ion-toolbar'
-})
-@View({
-  template: `
-    <div class="toolbar-inner">
-      <div class="toolbar-title">
-        <div class="toolbar-inner-title">
-          <content select="ion-title"></content>
-        </div>
-      </div>
-      <div class="toolbar-item toolbar-primary-item">
-        <content select="[primary]"></content>
-      </div>
-      <div class="toolbar-item toolbar-secondary-item">
-        <content select="[secondary]"></content>
-      </div>
-    </div>
-  `,
-  directives: [
-    forwardRef(() => ToolbarTitle),
-    forwardRef(() => ToolbarItem)
-  ]
-})
-export class Toolbar extends Ion {
-  constructor(elementRef: ElementRef, ionicConfig: IonicConfig) {
-    super(elementRef, ionicConfig);
+export class ToolbarBase extends Ion  {
 
-    this.eleRef = elementRef;
+  constructor(elementRef: ElementRef, config: IonicConfig) {
+    super(elementRef, config);
     this.itemEles = [];
-  }
-
-  element() {
-    return this.eleRef;
   }
 
   titleElement(eleRef) {
@@ -66,7 +36,7 @@ export class Toolbar extends Ion {
   alignTitle() {
     // called after the navbar/title has had a moment to
     // finish rendering in their correct locations
-    const toolbarEle = this.eleRef.nativeElement;
+    const toolbarEle = this.getNativeElement();
     const titleEle = this._ttEle || (this._ttEle = toolbarEle.querySelector('ion-title'));
 
     // don't bother if there's no title element
@@ -98,6 +68,45 @@ export class Toolbar extends Ion {
       const innerTitleEle = this._innerTtEle || (this._innerTtEle = toolbarEle.querySelector('.toolbar-inner-title'));
       innerTitleEle.style.margin = this._ttMargin = margin;
     }
+  }
+
+}
+
+
+@IonicComponent({
+  selector: 'ion-toolbar'
+})
+@View({
+  template: `
+    <div class="toolbar-inner">
+      <div class="toolbar-title">
+        <div class="toolbar-inner-title">
+          <content select="ion-title"></content>
+        </div>
+      </div>
+      <div class="toolbar-item toolbar-primary-item">
+        <content select="[primary]"></content>
+      </div>
+      <div class="toolbar-item toolbar-secondary-item">
+        <content select="[secondary]"></content>
+      </div>
+    </div>
+  `,
+  directives: [
+    forwardRef(() => ToolbarTitle),
+    forwardRef(() => ToolbarItem)
+  ]
+})
+export class Toolbar extends ToolbarBase {
+  constructor(elementRef: ElementRef, ionicConfig: IonicConfig) {
+    super(elementRef, ionicConfig);
+    this.itemEles = [];
+  }
+
+  onIonInit() {
+    setTimeout(() => {
+      this.alignTitle()
+    }, 32);
   }
 
 }

@@ -8,12 +8,8 @@ $toolbar-material-button-font-size:        24px !default;
 
 .toolbar[mode="md"] {
 
-  .toolbar-inner {
-    padding: 0px 16px;
-  }
-
   .toolbar-inner-title {
-    padding: 0;
+    padding: 0px 16px;
   }
 
   ion-title {
@@ -27,12 +23,6 @@ $toolbar-material-button-font-size:        24px !default;
 
   button,
   [button] {
-    padding: 0;
-    margin: 0 1rem;
-
-    min-width: 0;
-
-    box-shadow: none;
     font-size: $toolbar-material-button-font-size;
   }
 

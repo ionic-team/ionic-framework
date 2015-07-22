@@ -1,0 +1,20 @@
+
+// Toolbar Buttons
+// --------------------------------------------------
+
+
+.toolbar ion-nav-items {
+  display: block;
+
+  button,
+  [button] {
+    margin: 0 4px;
+    padding: 0 4px;
+
+    min-width: 3.2rem;
+    min-height: 2.8rem;
+
+    box-shadow: none;
+  }
+}
+

@@ -1,12 +1,11 @@
 import {Directive, View, Parent, ElementRef, forwardRef} from 'angular2/angular2';
 import {ProtoViewRef} from 'angular2/src/core/compiler/view_ref';
 
-import {Ion} from '../ion';
+import {ToolbarBase} from '../toolbar/toolbar';
 import {IonicConfig} from '../../config/config';
 import {IonicComponent, IonicView} from '../../config/annotations';
 import {IonicApp} from '../app/app';
 import {ViewItem} from '../view/view-item';
-import * as dom from '../../util/dom';
 
 
 @IonicComponent({
@@ -45,22 +44,16 @@ import * as dom from '../../util/dom';
     forwardRef(() => NavbarItem)
   ]
 })
-export class Navbar extends Ion {
+export class Navbar extends ToolbarBase {
   constructor(item: ViewItem, elementRef: ElementRef, config: IonicConfig, app: IonicApp) {
     super(elementRef, config);
 
     this.app = app;
-    this.eleRef = elementRef;
-    this.itemEles = [];
     item.navbarView(this);
 
     this.bbClass = config.setting('backButtonIcon');
     this.bbDefault = config.setting('backButtonText');
     this.bbText = '';
-  }
-
-  element() {
-    return this.eleRef;
   }
 
   backButtonElement(eleRef) {
@@ -77,71 +70,9 @@ export class Navbar extends Ion {
     return this._bbTxEle;
   }
 
-  titleElement(eleRef) {
-    if (arguments.length) {
-      this._nbTlEle = eleRef;
-    }
-    return this._nbTlEle;
-  }
-
-  itemElements(eleRef) {
-    if (arguments.length) {
-      this.itemEles.push(eleRef);
-    }
-    return this.itemEles;
-  }
-
-  titleText(eleRef) {
-    if (arguments.length) {
-      this._ttTxt.push(eleRef);
-    }
-    return this._ttTxt;
-  }
-
-  alignTitle() {
-    // called after the navbar/title has had a moment to
-    // finish rendering in their correct locations
-    const toolbarEle = this.eleRef.nativeElement;
-    const titleEle = this._ttEle || (this._ttEle = toolbarEle.querySelector('ion-title'));
-
-    // don't bother if there's no title element
-    if (!titleEle) return;
-
-    // get the computed style of the title element
-    const titleStyle = this._ttStyle || (this._ttStyle = window.getComputedStyle(titleEle));
-
-    // don't bother if we're not trying to center align the title
-    if (titleStyle.textAlign !== 'center') return;
-
-    // get all the dimensions
-    const titleOffsetLeft = titleEle.offsetLeft;
-    const titleOffsetRight = toolbarEle.offsetWidth - (titleOffsetLeft + titleEle.offsetWidth);
-
-    let marginLeft = 0;
-    let marginRight = 0;
-    if (titleOffsetLeft < titleOffsetRight) {
-      marginLeft = (titleOffsetRight - titleOffsetLeft) + 5;
-
-    } else if (titleOffsetLeft > titleOffsetRight) {
-      marginRight = (titleOffsetLeft - titleOffsetRight) - 5;
-    }
-
-    let margin = `0 ${marginRight}px 0 ${marginLeft}px`;
-
-    if ((marginLeft || marginRight) && margin !== this._ttMargin) {
-      // only do an update if it has to
-      const innerTitleEle = this._innerTtEle || (this._innerTtEle = toolbarEle.querySelector('.toolbar-inner-title'));
-      innerTitleEle.style.margin = this._ttMargin = margin;
-    }
-  }
-
   didEnter() {
-    const titleEle = this._ttEle || (this._ttEle = this.eleRef.nativeElement.querySelector('ion-title'));
+    const titleEle = this._ttEle || (this._ttEle = this.getNativeElement().querySelector('ion-title'));
     this.app.title(titleEle.textContent);
-
-    setTimeout(() => {
-      //this.titleText((titleEle && titleEle.textContent) || '');
-    }, 32);
   }
 }
 

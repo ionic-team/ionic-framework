@@ -1,4 +1,4 @@
-import {Directive, View, CSSClass, onInit, ElementRef} from 'angular2/angular2';
+import {Directive, View, CSSClass, ElementRef} from 'angular2/angular2';
 
 import {IonicConfig} from '../../config/config';
 import {IonicComponent} from '../../config/annotations';
@@ -54,21 +54,20 @@ Custom Font Icon
   selector: 'icon',
   properties: [
     'name',
+    'iconName'
   ],
   host: {
     '[attr.aria-label]': 'label',
-    'role': 'img'
-  },
-  lifecycle: [onInit]
+    'role': 'img',
+    '[className]': 'className'
+  }
 })
 export class IconDirective {
-  constructor(elementRef: ElementRef) {
-    this.ele = elementRef.nativeElement;
-  }
   onInit() {
-    if (this.name) {
-      this.ele.classList.add(this.name);
-      this.label = this.name.replace('ion-', '').replace('ios-', '').replace('md-', '').replace('-', '');
+    let name = this.name || this.iconName;
+    if (name) {
+      this.className = name;
+      this.label = name.replace('ion-', '').replace('ios-', '').replace('md-', '').replace('-', '');
     }
   }
 }
