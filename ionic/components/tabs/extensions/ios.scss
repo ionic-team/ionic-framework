@@ -11,9 +11,7 @@ $tab-bar-ios-height:                   50px !default;
 .tabs[mode="ios"] {
 
   .tab-bar {
-    // iOS's UITabBar is at most 49px high
-    max-height: $tab-bar-ios-height;
-    height: $tab-bar-ios-height;
+    min-height: $tab-bar-ios-height;
   }
 
   .tab-button {
@@ -32,23 +30,22 @@ $tab-bar-ios-height:                   50px !default;
   .tab-button-icon {
     font-size: $tab-bar-ios-item-icon-size;
     height: $tab-bar-ios-item-icon-size;
-    min-width: $tab-bar-ios-item-icon-size;
-    margin-bottom: 2px;
+    min-width: $tab-bar-ios-item-icon-size + 5;
 
     &:before {
       vertical-align: top;
     }
   }
 
-  &[tab-bar-placement="bottom"] > .tab-bar-container {
+  &[tab-bar-placement="bottom"] .tab-bar-container {
     @include hairline(top, $toolbar-ios-border-color);
   }
 
-  &[tab-bar-placement="top"] > .tab-bar-container {
+  &[tab-bar-placement="top"] .tab-bar-container {
     @include hairline(bottom, $toolbar-ios-border-color);
   }
 
-  &[tab-bar-placement="top"] > .toolbar-container .toolbar {
+  &[tab-bar-placement="top"] .toolbar-container .toolbar {
     @include hairline(bottom, none);
   }
 
