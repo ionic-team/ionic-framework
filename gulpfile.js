@@ -53,243 +53,224 @@ var tscReporter = {
     }
 };
 
-gulp.task('clean.build', function() {
-  runSequence(
-    'clean',
-    'transpile',
-    //'bundle.deps',
-    'bundle.js',
-    'examples',
-    'sass',
-    'fonts',
-    'vendor',
-    'copy-scripts');
-})
+// Framework
+gulp.task('transpile', transpileTask);
+gulp.task('bundle.js', bundleJsTask);
+gulp.task('sass', sassTask);
+gulp.task('fonts', fontsTask);
 
-gulp.task('build', function() {
-  runSequence(
-    'transpile',
-    'bundle.js',
-    'examples',
-    'sass',
-    'fonts',
-    'vendor',
-    'copy-scripts');
-})
+// Karma testing
+gulp.task('tests', testsTask);
+gulp.task('karma', karmaTask);
+gulp.task('karma-watch', karmaWatchTask);
 
-gulp.task('watch', function() {
+// e2e testing
+gulp.task('e2e.copy', e2eCopyTask);
+gulp.task('e2e.template', e2eHTMLTemplateTask);
+gulp.task('e2e.transpile', e2eTranspileTask);
+gulp.task('e2e.tests', e2eTestsTask);
+gulp.task('e2e', gulp.parallel('e2e.copy', 'e2e.template', 'e2e.transpile', 'e2e.tests'));
 
-  runSequence(
-    'transpile',
-    'bundle.js',
-    'examples',
-    'sass',
-    'fonts',
-    'vendor',
-    'copy-scripts',
-    'serve',
+// Utility
+gulp.task('clean', cleanTask);
+gulp.task('vendor', vendorTask);
+gulp.task('copy-scripts', copyScriptsTask);
+gulp.task('serve', serveTask);
+gulp.task('watch-task', watchTask);
+gulp.task('watch', gulp.series('serve', 'watch-task'));
+gulp.task('examples', gulp.parallel('e2e.copy', 'e2e.template', 'e2e.transpile'));
 
-    function() {
-      watch(
-        [
-          'ionic/**/*.js',
-          'ionic/**/*.ts',
-          '!ionic/components/*/test/**/*',
-          '!ionic/util/test/*'
-        ],
-        function() {
-          runSequence(
-            'transpile',
-            'bundle.js',
-            'examples'
-          )
-        }
-      );
+// Build
+gulp.task('build', gulp.parallel(
+  gulp.series('transpile', 'bundle.js', 'copy-scripts'),
+  'sass',
+  'fonts',
+  'vendor'
+))
 
-      watch('ionic/components/*/test/**/*', function() {
-        gulp.start('examples');
-      });
+gulp.task('clean.build', gulp.series(
+  'clean',
+  'build'
+));
 
-      watch('ionic/**/*.scss', function() {
-        gulp.start('sass');
-      });
-    })
-});
+gulp.task('build.watch', gulp.series(
+  gulp.parallel('build', 'examples'),
+  'serve',
+  'watch-task'
+))
 
-gulp.task('serve', function() {
+/*****************************************************************************/
+
+function watchTask(done) {
+  watch([
+      'ionic/**/*.js',
+      'ionic/**/*.ts',
+      '!ionic/components/*/test/**/*',
+      '!ionic/util/test/*'
+    ],
+    gulp.series('transpile', 'bundle.js')
+  );
+  watch('ionic/components/*/test/**/*.ts', e2eTranspileTask);
+  watch('scripts/e2e/e2e.template.html', e2eHTMLTemplateTask);
+  watch([
+      'ionic/components/*/test/**/*',
+      '!ionic/components/*/test/**/*.ts'
+    ],
+    e2eCopyTask
+  );
+  watch('ionic/**/*.scss', sassTask);
+  done();
+}
+
+function serveTask(done) {
   connect.server({
     root: 'dist',
     port: 8000,
     livereload: false
   });
-});
+  done();
+}
 
-gulp.task('clean', function(done) {
+function cleanTask(done) {
   del(['dist/'], done);
-});
+}
 
-gulp.task('transpile', function() {
-  var stream = gulp.src(
-                      [
-                         'ionic/**/*.ts',
-                         'ionic/**/*.js',
-                         '!ionic/components/*/test/**/*',
-                         '!ionic/init.js',
-                         '!ionic/util/test/*'
-                      ]
-                   )
-                   .pipe(cache('transpile', { optimizeMemory: true }))
-                   .pipe(tsc(tscOptions, null, tscReporter))
-                   .on('error', function(error) {
-                     stream.emit('end');
-                   })
-                   .pipe(gulp.dest('dist/js/es6/ionic'))
-                   .pipe(babel(getBabelOptions('ionic')))
-                   .on('error', function (err) {
-                     console.log("ERROR: " + err.message);
-                     this.emit('end');
-                   })
-                   .pipe(gulp.dest('dist/js/es5/ionic'))
+function transpileTask() {
+  var stream = gulp.src([
+      'ionic/**/*.ts',
+      'ionic/**/*.js',
+      '!ionic/components/*/test/**/*',
+      '!ionic/init.js',
+      '!ionic/util/test/*'
+    ])
+    .pipe(cache('transpile', { optimizeMemory: true }))
+    .pipe(tsc(tscOptions, null, tscReporter))
+    .on('error', function(error) {
+      stream.emit('end');
+    })
+    .pipe(gulp.dest('dist/js/es6/ionic'))
+    .pipe(babel(getBabelOptions('ionic')))
+    .on('error', function (err) {
+      console.log("ERROR: " + err.message);
+      this.emit('end');
+    })
+    .pipe(gulp.dest('dist/js/es5/ionic'))
 
   return stream;
-});
+}
 
-gulp.task('bundle.js', function() {
+function bundleJsTask() {
   return gulp.src(['dist/js/es5/ionic/**/*.js', 'ionic/init.js'])
-             .pipe(concat('ionic.bundle.js'))
-             .pipe(gulp.dest('dist/js/'));
-});
+    .pipe(concat('ionic.bundle.js'))
+    .pipe(gulp.dest('dist/js/'));
+}
 
-gulp.task('tests', function() {
+function testsTask() {
   return gulp.src('ionic/components/*/test/*/**/*.spec.ts')
-             .pipe(tsc(tscOptions, null, tscReporter))
-             .pipe(babel(getBabelOptions('tests')))
-             .pipe(rename(function(file) {
-               file.dirname = file.dirname.replace(path.sep + 'test' + path.sep, path.sep)
-             }))
-             .pipe(gulp.dest('dist/tests'))
-})
+    .pipe(tsc(tscOptions, null, tscReporter))
+    .pipe(babel(getBabelOptions('tests')))
+    .pipe(rename(function(file) {
+      file.dirname = file.dirname.replace(path.sep + 'test' + path.sep, path.sep)
+    }))
+    .pipe(gulp.dest('dist/tests'))
+}
 
-gulp.task('examples', function() {
-  var buildTest = lazypipe()
-             .pipe(tsc, tscOptions, null, tscReporter)
-             .pipe(babel, getBabelOptions('examples'))
+function copyScriptsTask() {
+  return gulp.src([
+      'scripts/resources/*.js',
+      'config.js',
+      'dist/js/ionic.bundle.js',
+      'dist/vendor/web-animations-js/web-animations.min.js'
+    ])
+    .pipe(gulp.dest('dist/lib'));
+}
 
-  // Get each test folder with gulp.src
-  return gulp.src(['ionic/components/*/test/*/**/*', '!ionic/components/*/test/*/**/*.spec.ts'])
-    .pipe(cache('examples', { optimizeMemory: true }))
-    .pipe(gulpif(/.ts$/, buildTest()))
+
+function e2eCopyTask() {
+  return gulp.src([
+      'ionic/components/*/test/*/**/*',
+      '!ionic/components/*/test/*/**/*.ts'
+    ])
+    .pipe(rename(function(file) {
+      file.dirname = file.dirname.replace(path.sep + 'test' + path.sep, path.sep)
+    }))
+    .pipe(gulp.dest('dist/e2e'))
+}
+
+function e2eTranspileTask() {
+  return gulp.src([
+      'ionic/components/*/test/*/**/*.ts',
+      '!ionic/components/*/test/*/**/*.spec.ts',
+      '!ionic/components/*/test/*/**/e2e.ts'
+    ])
+    .pipe(cache('e2e.transpile', { optimizeMemory: true }))
+    .pipe(tsc(tscOptions, null, tscReporter))
+    .pipe(babel(getBabelOptions('e2e')))
     .on('error', function (err) {
       console.log("ERROR: " + err.message);
       this.emit('end');
     })
-    .pipe(gulpif(/index.js$/, createIndexHTML())) //TSC changes .ts to .js
     .pipe(rename(function(file) {
       file.dirname = file.dirname.replace(path.sep + 'test' + path.sep, path.sep)
     }))
-    .pipe(gulp.dest('dist/examples/'))
-
-  function createIndexHTML() {
-    var template = _.template(
-      fs.readFileSync('scripts/e2e/example.template.html')
-    )({
-      buildConfig: buildConfig
-    });
-
-    return through2.obj(function(file, enc, next) {
-      var self = this;
-
-      var module = path.dirname(file.path)
-                      .replace(__dirname, '')
-                      .replace('/ionic/components/', 'examples/')
-                      .replace('/test/', '/') +
-                      '/index';
-
-      var indexContents = template.replace('{{MODULE}}', module);
-
-      self.push(new VinylFile({
-        base: file.base,
-        contents: new Buffer(indexContents),
-        path: path.join(path.dirname(file.path), 'index.html'),
-      }));
-      next(null, file);
-    });
-  }
-});
-
-gulp.task('copy-scripts', function(){
-  gulp.src(['scripts/resources/*.js', 'config.js', 'dist/js/ionic.bundle.js',
-            'dist/vendor/web-animations-js/web-animations.min.js'])
-      .pipe(gulp.dest('dist/lib'));
-})
-
-gulp.task('e2e', ['copy-scripts'], function() {
-  var buildTest = lazypipe()
-             //.pipe(traceur, traceurOptions)
-             .pipe(tsc, tscOptions, null, tscReporter)
-             .pipe(babel, getBabelOptions('e2e'))
-
-  var buildE2ETest = lazypipe()
-             //.pipe(traceur, traceurOptions)
-             .pipe(tsc, tscOptions, null, tscReporter)
-             .pipe(babel)
-
-  var indexTemplate = _.template(
-   fs.readFileSync('scripts/e2e/e2e.template.html')
-  )({
-   buildConfig: buildConfig
-
-  })
-  var testTemplate = _.template( fs.readFileSync('scripts/e2e/e2e.template.js') )
-
-  var platforms = [
-    'android',
-    'core',
-    'ios',
-  ];
-
-  // Get each test folder with gulp.src
-  return gulp.src(['ionic/components/*/test/*/**/*', '!ionic/components/*/test/*/**/*.spec.ts'])
-    .pipe(cache('e2e', { optimizeMemory: true }))
-    .pipe(gulpif(/e2e.ts$/, buildE2ETest()))
-    .pipe(gulpif(/.ts$/, buildTest()))
-    .on('error', function (err) {
-      console.log("ERROR: " + err.message);
-      this.emit('end');
-    })
-    .pipe(gulpif(/index.js$/, createIndexHTML())) //TSC changes .ts to .js
-    .pipe(rename(function(file) {
-      file.dirname = file.dirname.replace(path.sep + 'test' + path.sep, path.sep)
-    }))
-    .pipe(gulpif(/e2e.js$/, createPlatformTests()))
     .pipe(gulp.dest('dist/e2e/'))
+}
 
-  function createIndexHTML() {
-    return through2.obj(function(file, enc, next) {
-      var self = this;
+function e2eHTMLTemplateTask() {
+  var HTMLTemplate = _.template(
+    fs.readFileSync('scripts/e2e/e2e.template.html')
+  )({
+    buildConfig: buildConfig
+  });
 
+  // we won't actually do anything with index.ts, we just know that this is the
+  // location index.html should be
+  return gulp.src('ionic/components/*/test/*/**/index.ts')
+    .pipe(cache('e2e.html.template', { optimizeMemory: true }))
+    .pipe(through2.obj(function(file, enc, next) {
       var module = path.dirname(file.path)
                       .replace(__dirname, '')
                       .replace('/ionic/components/', 'e2e/')
                       .replace('/test/', '/') +
                       '/index';
 
-      var indexContents = indexTemplate.replace('{{MODULE}}', module);
-
-      self.push(new VinylFile({
+      var templateContents = HTMLTemplate.replace('{{MODULE}}', module);
+      var indexFile = new VinylFile({
         base: file.base,
-        contents: new Buffer(indexContents),
+        contents: new Buffer(templateContents),
         path: path.join(path.dirname(file.path), 'index.html'),
-      }));
-      next(null, file);
-    });
-  }
+      })
+      next(null, indexFile);
+    }))
+    .pipe(rename(function(file) {
+      file.dirname = file.dirname.replace(path.sep + 'test' + path.sep, path.sep)
+    }))
+    .pipe(gulp.dest('dist/e2e/'))
+}
 
-  function createPlatformTests(file) {
-    return through2.obj(function(file, enc, next) {
-      var self = this
-      var relativePath = path.dirname(file.path.replace(/^.*?ionic(\/|\\)components(\/|\\)/, ''))
-      var contents = file.contents.toString()
+function e2eTestsTask() {
+  var testTemplate = _.template(fs.readFileSync('scripts/e2e/e2e.template.js'));
+  var platforms = [
+    'android',
+    'core',
+    'ios',
+  ];
+
+  return gulp.src('ionic/components/*/test/*/**/e2e.ts')
+    .pipe(cache('e2e.tests', { optimizeMemory: true }))
+    .pipe(tsc(tscOptions, null, tscReporter))
+    .pipe(babel())
+    .on('error', function (err) {
+      console.log("ERROR: " + err.message);
+      this.emit('end');
+    })
+    .pipe(rename(function(file) {
+      file.dirname = file.dirname.replace(path.sep + 'test' + path.sep, path.sep)
+    }))
+    .pipe(through2.obj(function(file, enc, next) {
+      var self = this;
+      var relativePath = path.dirname(file.path.replace(/^.*?ionic(\/|\\)components(\/|\\)/, ''));
+      var contents = file.contents.toString();
       platforms.forEach(function(platform) {
         var platformContents = testTemplate({
           contents: contents,
@@ -304,11 +285,11 @@ gulp.task('e2e', ['copy-scripts'], function() {
         }))
       })
       next()
-    })
-  }
-});
+    }))
+    .pipe(gulp.dest('dist/e2e/'))
+}
 
-gulp.task('sass', function() {
+function sassTask() {
   return gulp.src('ionic/ionic.scss')
     .pipe(sass({
       onError: function(err) {
@@ -317,25 +298,25 @@ gulp.task('sass', function() {
     }))
     .pipe(autoprefixer(buildConfig.autoprefixer))
     .pipe(gulp.dest('dist/css/'));
-});
+}
 
-gulp.task('fonts', function() {
+function fontsTask() {
   return gulp.src('ionic/components/icon/fonts/**/*')
     .pipe(gulp.dest('dist/fonts'));
-});
+}
 
-gulp.task('vendor', function() {
+function vendorTask() {
   return gulp.src(['scripts/vendor/**/*'])
     .pipe(gulp.dest('dist/vendor'));
-});
+}
 
-require('./scripts/snapshot/snapshot.task')(gulp, argv, buildConfig);
-
-gulp.task('karma', function() {
+function karmaTask() {
   return karma.start({ configFile: __dirname + '/scripts/test/karma.conf.js' })
-  //return karma.start({ configFile: __dirname + '/karma.conf.js' })
-});
+}
 
-gulp.task('karma-watch', function() {
+function karmaWatchTask() {
   return karma.start({ configFile: __dirname + '/scripts/test/karma-watch.conf.js' })
-});
+}
+
+// snapshot tasks
+require('./scripts/snapshot/snapshot.task')(gulp, argv, buildConfig);
