@@ -11,7 +11,6 @@ import {FirstPage} from './first-page';
       <p><button id="from2To1" primary nav-pop>Pop with NavPop (Go back to 1st)</button></p>
       <p><button id="from2To3" primary (click)="push()">Push (Go to 3rd)</button></p>
       <p><button primary (click)="setItems()">setItems() (Go to 3rd, FirstPage 1st in history)</button></p>
-      <p>Random: {{ val }}</p>
       <div class="green"><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f></div>
     </ion-content>
   `
@@ -23,7 +22,6 @@ export class SecondPage {
   ) {
     this.nav = nav;
     this.params = params;
-    this.val = Math.round(Math.random() * 8999) + 1000;
 
     console.log('Second page params:', params);
   }

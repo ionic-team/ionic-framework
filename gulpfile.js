@@ -61,7 +61,6 @@ gulp.task('clean.build', function(done) {
     'e2e',
     'sass',
     'fonts',
-    'vendor',
     done
   );
 })
@@ -73,7 +72,6 @@ gulp.task('build', function(done) {
     'e2e',
     'sass',
     'fonts',
-    'vendor',
     done
   );
 })
@@ -86,7 +84,6 @@ gulp.task('watch', function(done) {
     'e2e',
     'sass',
     'fonts',
-    'vendor',
     'serve',
     function() {
       watch(
@@ -173,9 +170,12 @@ gulp.task('tests', function() {
 })
 
 gulp.task('copy-scripts', function(){
-  gulp.src(['scripts/resources/*.js', 'config.js', 'dist/js/ionic.bundle.js',
-            'dist/vendor/web-animations-js/web-animations.min.js'])
-      .pipe(gulp.dest('dist/lib'));
+  gulp.src([
+    'scripts/resources/*.js',
+    'scripts/vendor/web-animations-js/web-animations.min.js',
+    'config.js',
+    'dist/js/ionic.bundle.js'
+  ]).pipe(gulp.dest('dist/lib'));
 })
 
 gulp.task('e2e', ['copy-scripts'], function() {
@@ -277,11 +277,6 @@ gulp.task('sass', function() {
 gulp.task('fonts', function() {
   return gulp.src('ionic/components/icon/fonts/**/*')
     .pipe(gulp.dest('dist/fonts'));
-});
-
-gulp.task('vendor', function() {
-  return gulp.src(['scripts/vendor/**/*'])
-    .pipe(gulp.dest('dist/vendor'));
 });
 
 require('./scripts/snapshot/snapshot.task')(gulp, argv, buildConfig);

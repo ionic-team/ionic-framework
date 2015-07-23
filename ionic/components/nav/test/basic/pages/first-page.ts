@@ -8,13 +8,13 @@ import {ThirdPage} from './third-page';
 @IonicView({
   template: '' +
     '<ion-navbar *navbar primary>' +
-      '<ion-title>First Page: {{ val }}</ion-title>' +
+      '<ion-title>First Page</ion-title>' +
       '<ion-nav-items secondary>' +
         '<button>S1</button>' +
       '</ion-nav-items>' +
     '</ion-navbar>' +
     '<ion-content class="padding">' +
-      '<p>First Page: {{ val }}</p>' +
+      '<p>First Page</p>' +
       '<p><button id="from1To2" primary (click)="push()">Push (Go to 2nd)</button></p>' +
       '<p><button primary [push-data]="pushData" [nav-push]="pushPage">Push w/ nav-push (Go to 2nd)</button></p>' +
       '<p><button primary (click)="setItems()">setItems() (Go to 3rd, no history)</button></p>' +
@@ -29,10 +29,7 @@ export class FirstPage {
     app: IonicApp,
     config: IonicConfig
   ) {
-    console.log('FirstPage constructor');
-
     this.nav = nav;
-    this.val = Math.round(Math.random() * 8999) + 1000;
 
     this.pushPage = SecondPage;
     this.pushData = {
