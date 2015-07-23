@@ -9,7 +9,7 @@ exports.config = {
   //domain: 'localhost:8080',
 
   specs: 'dist/e2e/**/*e2e.js',
-  //specs: 'dist/e2e/action-menu/**/*e2e.js',
+  //specs: 'dist/e2e/nav/basic/*e2e.js',
 
   sleepBetweenSpecs: 1200,
 

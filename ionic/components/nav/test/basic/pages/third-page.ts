@@ -6,7 +6,7 @@ import {IonicView, NavController} from 'ionic/ionic';
     <ion-navbar *navbar><ion-title>Third Page Header</ion-title></ion-navbar>
     <ion-content class="padding">
       <p>
-        <button primary (click)="pop()">Pop (Go back to 2nd)</button>
+        <button id="from3To2" primary (click)="pop()">Pop (Go back to 2nd)</button>
       </p>
       <div class="yellow"><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f></div>
     </ion-content>

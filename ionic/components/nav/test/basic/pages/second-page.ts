@@ -8,8 +8,8 @@ import {FirstPage} from './first-page';
     <ion-navbar *navbar primary><ion-title>Second Page Header</ion-title></ion-navbar>
     <ion-content class="padding">
       <p><button primary (click)="pop()">Pop (Go back to 1st)</button></p>
-      <p><button primary nav-pop>Pop with NavPop (Go back to 1st)</button></p>
-      <p><button primary (click)="push()">Push (Go to 3rd)</button></p>
+      <p><button id="from2To1" primary nav-pop>Pop with NavPop (Go back to 1st)</button></p>
+      <p><button id="from2To3" primary (click)="push()">Push (Go to 3rd)</button></p>
       <p><button primary (click)="setItems()">setItems() (Go to 3rd, FirstPage 1st in history)</button></p>
       <p>Random: {{ val }}</p>
       <div class="green"><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f></div>

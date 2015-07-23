@@ -21,12 +21,18 @@ module.exports = function(gulp, argv, buildConfig) {
   });
 
   gulp.task('snapshot', ['clean.build', 'protractor-server'], function(done) {
-    var protractorConfigFile = path.resolve(projectRoot, 'scripts/snapshot/protractor.config.js');
-    snapshot(done, protractorConfigFile);
+    snapshot(done);
   });
 
-  function snapshot(done, protractorConfigFile) {
+  gulp.task('snapshot-quick', ['e2e', 'protractor-server'], function(done) {
+    snapshot(done, true);
+  });
+
+  function snapshot(done, quickMode) {
+    var protractorConfigFile = path.resolve(projectRoot, 'scripts/snapshot/protractor.config.js');
+
     snapshotValues.params.test_id = uuid.v4().split('-')[0];
+    snapshotValues.params.upload = !quickMode;
 
     var protractorArgs = [
       '--browser <%= browser %>',
@@ -37,11 +43,14 @@ module.exports = function(gulp, argv, buildConfig) {
       '--params.width=<%= params.width %>',
       '--params.height=<%= params.height %>',
       '--params.test_id=<%= params.test_id %>',
+      '--params.upload=<%= params.upload %>',
     ].map(function(argument) {
       return _.template(argument, snapshotValues);
     });
 
-    e2ePublish(snapshotValues.params.test_id);
+    if (!quickMode) {
+      e2ePublish(snapshotValues.params.test_id);
+    }
 
     return protractor(done, [protractorConfigFile].concat(protractorArgs));
   }
@@ -65,6 +74,7 @@ module.exports = function(gulp, argv, buildConfig) {
   }
 
   function e2ePublish(testId) {
+    console.log('e2ePublish: ' + testId);
     snapshotConfig.testId = testId;
     require('../e2e/e2e-publish')(snapshotConfig);
   }

@@ -17,6 +17,7 @@ var IonicSnapshot = function(options) {
     self.appId = options.appId || 'test_app';
     self.sleepBetweenSpecs = options.sleepBetweenSpecs || 750;
     self.testId = browser.params.test_id || 'test_id';
+    self.shouldUpload = browser.params.upload !== 'false';
     self.platformId = browser.params.platform_id;
     self.platformIndex = browser.params.platform_index;
     self.platformCount = browser.params.platform_count;
@@ -54,6 +55,8 @@ var IonicSnapshot = function(options) {
       });
     });
     process.on('exit', function() {
+      if (!self.shouldUpload) return;
+
       if (self.highestMismatch > 1) {
         log(colors.red('Highest Mismatch: ' + self.highestMismatch + '%'));
       } else if (self.highestMismatch > 0) {
@@ -102,6 +105,10 @@ var IonicSnapshot = function(options) {
 
         browser.sleep(self.sleepBetweenSpecs).then(function(){
 
+          if (!self.shouldUpload) {
+            return d.fulfill();
+          }
+
           browser.takeScreenshot().then(function(pngBase64) {
             var specIdString = '[' + (spec.id+1) + '/' + self.testData.total_specs + ']';
 
@@ -109,7 +116,7 @@ var IonicSnapshot = function(options) {
             self.testData.description = spec.getFullName();
             self.testData.highest_mismatch = self.highestMismatch;
             self.testData.png_base64 = pngBase64;
-            self.testData.url = currentUrl;
+            self.testData.url = currentUrl.replace('dist/', '/');
             pngBase64 = null;
 
             var requestDeferred = q.defer();
@@ -165,6 +172,8 @@ var IonicSnapshot = function(options) {
 
   IonicReporter.prototype.reportRunnerResults = function() {
     var self = this;
+
+    if (!self.shouldUpload) return;
 
     self.flow.execute(function() {
       var d = protractor.promise.defer();

@@ -15,7 +15,7 @@ import {ThirdPage} from './third-page';
     '</ion-navbar>' +
     '<ion-content class="padding">' +
       '<p>First Page: {{ val }}</p>' +
-      '<p><button primary (click)="push()">Push (Go to 2nd)</button></p>' +
+      '<p><button id="from1To2" primary (click)="push()">Push (Go to 2nd)</button></p>' +
       '<p><button primary [push-data]="pushData" [nav-push]="pushPage">Push w/ nav-push (Go to 2nd)</button></p>' +
       '<p><button primary (click)="setItems()">setItems() (Go to 3rd, no history)</button></p>' +
       '<icon class="ion-ios-arrow-back"></icon>' +
