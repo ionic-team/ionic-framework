@@ -1,4 +1,4 @@
-import {ElementRef, Directive, Parent, Optional, Inject, forwardRef} from 'angular2/angular2';
+import {ElementRef, Directive, Parent, Optional, Inject, forwardRef, NgZone} from 'angular2/angular2';
 
 import {ViewController} from '../view/view-controller';
 import {Pane} from './pane';
@@ -15,7 +15,8 @@ export class SwipeHandle {
   constructor(
     @Optional() @Inject(forwardRef(() => ViewController)) viewCtrl: ViewController,
     @Parent() @Inject(forwardRef(() => Pane)) pane: Pane,
-    elementRef: ElementRef
+    elementRef: ElementRef,
+    ngZone: NgZone
   ) {
 
     if (!viewCtrl || !viewCtrl.isSwipeBackEnabled() || !pane) return;
@@ -24,17 +25,20 @@ export class SwipeHandle {
 
     self.pane = pane;
     self.viewCtrl = viewCtrl;
+    self.zone = ngZone;
 
-    let gesture = self.gesture = new Gesture(elementRef.nativeElement);
-    gesture.listen();
+    this.zone.runOutsideAngular(() => {
+      let gesture = self.gesture = new Gesture(elementRef.nativeElement);
+      gesture.listen();
 
-    function dragHorizontal(ev) {
-      self.onDragHorizontal(ev);
-    }
+      function dragHorizontal(ev) {
+        self.onDragHorizontal(ev);
+      }
 
-    gesture.on('panend', gestureEv => { self.onDragEnd(gestureEv.gesture); });
-    gesture.on('panleft', dragHorizontal);
-    gesture.on('panright', dragHorizontal);
+      gesture.on('panend', gestureEv => { self.onDragEnd(gestureEv.gesture); });
+      gesture.on('panleft', dragHorizontal);
+      gesture.on('panright', dragHorizontal);
+    });
 
     self.startX = null;
     self.width = null;
@@ -70,26 +74,30 @@ export class SwipeHandle {
       }
     }
 
-    this.viewCtrl.swipeBackEnd(completeSwipeBack, progress, playbackRate);
+    this.zone.run(() => {
+      this.viewCtrl.swipeBackEnd(completeSwipeBack, progress, playbackRate);
+    });
 
     this.startX = null;
   }
 
   onDragHorizontal(gestureEv) {
-    let gesture = gestureEv.gesture;
+    this.zone.run(() => {
+      let gesture = gestureEv.gesture;
 
-    if (this.startX === null) {
-      // starting drag
-      gesture.srcEvent.preventDefault();
-      gesture.srcEvent.stopPropagation();
+      if (this.startX === null) {
+        // starting drag
+        gesture.srcEvent.preventDefault();
+        gesture.srcEvent.stopPropagation();
 
-      this.startX = gesture.center.x;
-      this.width = this.pane.width() - this.startX;
+        this.startX = gesture.center.x;
+        this.width = this.pane.width() - this.startX;
 
-      this.viewCtrl.swipeBackStart();
-    }
+        this.viewCtrl.swipeBackStart();
+      }
 
-    this.viewCtrl.swipeBackProgress( (gesture.center.x - this.startX) / this.width );
+      this.viewCtrl.swipeBackProgress( (gesture.center.x - this.startX) / this.width );
+    });
   }
 
   get showHandle() {
@@ -97,7 +105,7 @@ export class SwipeHandle {
   }
 
   onDestroy() {
-    this.gesture && self.gesture.destroy();
+    this.gesture && this.gesture.destroy();
   }
 
 }
