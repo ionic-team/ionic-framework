@@ -28,7 +28,7 @@ $button-material-border-radius:            3px !default;
               background-color 0.2s $animation-curve-default,
               color 0.2s $animation-curve-default;
 
-  &:active, &.activated {
+  &.activated {
     box-shadow: $button-material-box-shadow-active;
   }
 
@@ -68,7 +68,6 @@ $button-material-border-radius:            3px !default;
         }
       }
 
-      &:active,
       &.activated {
         opacity: 1;
         background-color: get-color($color, base);
@@ -84,7 +83,7 @@ $button-material-border-radius:            3px !default;
             background-color: get-color($color, base);
           }
         }
-        &:active,
+
         &.activated {
           opacity: 1;
           background: transparent;
@@ -98,10 +97,11 @@ $button-material-border-radius:            3px !default;
           color: get-color($color, inverse);
         }
 
-        &:hover, &.hover {
+        &:hover,
+        &.hover {
           background-color: rgba(158, 158, 158, 0.2);
         }
-        &:active, &.active {
+        &:activated {
           background-color: rgba(158, 158, 158, 0.4);
         }
       }

@@ -55,7 +55,6 @@ $action-menu-md-icon-font-size:           2.4rem !default;
     font-weight: normal;
     min-height: $action-menu-md-height;
 
-    &:active,
     &.activated {
       background: $action-menu-md-background-active;
     }
