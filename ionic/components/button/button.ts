@@ -1,14 +1,24 @@
-import {Directive, ElementRef, Optional, Ancestor, onDestroy, NgZone} from 'angular2/angular2';
+import {Directive, ElementRef, Optional, Ancestor, onDestroy, NgZone, Query, QueryList} from 'angular2/angular2';
 
+import {Icon} from '../icon/icon';
 import {IonicConfig} from '../../config/config';
 import {Activator} from '../../util/activator';
 import * as dom  from '../../util/dom';
 
 
 @Directive({
-  selector: 'button,[button]'
+  selector: 'button,[button]',
+  host: {
+    '[class.icon-left]': 'icon.iconLeft',
+    '[class.icon-right]': 'icon.iconRight',
+    '[class.icon-only]': 'icon.iconOnly'
+  }
 })
-export class Button {}
+export class Button {
+  registerIcon(icon) {
+    this.icon = icon;
+  }
+}
 
 
 @Directive({

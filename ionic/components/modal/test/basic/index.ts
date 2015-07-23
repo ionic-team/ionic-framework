@@ -53,9 +53,8 @@ export class ContactModal {
 
 @IonicView({
   template: `
-    <ion-navbar *navbar><ion-title>First Page Header: {{ val }}</ion-title><ion-nav-items primary><button id="e2eCloseMenu" (click)="closeModal()">Close</button></ion-nav-items></ion-navbar>
+    <ion-navbar *navbar><ion-title>First Page Header</ion-title><ion-nav-items primary><button id="e2eCloseMenu" (click)="closeModal()">Close</button></ion-nav-items></ion-navbar>
     <ion-content class="padding">
-      <p>First Page: {{ val }}</p>
       <p>
         <button primary (click)="push()">Push (Go to 2nd)</button>
       </p>
@@ -77,7 +76,6 @@ export class ModalFirstPage {
     actionMenu: ActionMenu
   ) {
     this.nav = nav;
-    this.val = Math.round(Math.random() * 8999) + 1000;
     this.modal = modal;
     this.actionMenu = actionMenu;
   }
