@@ -22,6 +22,7 @@ var tsc = require('gulp-typescript');
 var lazypipe = require('lazypipe');
 var cache = require('gulp-cached');
 var connect = require('gulp-connect');
+var Dgeni = require('dgeni');
 
 function getBabelOptions(moduleName) {
   return {
@@ -289,3 +290,12 @@ gulp.task('karma', function() {
 gulp.task('karma-watch', function() {
   return karma.start({ configFile: __dirname + '/scripts/test/karma-watch.conf.js' })
 });
+
+gulp.task('docs', function() {
+  try {
+    var dgeni = new Dgeni([require('./scripts/docs/dgeni-config')]);
+    return dgeni.generate();
+  } catch (err) {
+    console.log(err.stack);
+  }
+})

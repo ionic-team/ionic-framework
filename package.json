@@ -5,6 +5,8 @@
     "canonical-path": "0.0.2",
     "connect": "^3.3.4",
     "del": "~1.1.1",
+    "dgeni": "^0.4.1",
+    "dgeni-packages": "^0.10.18",
     "gulp": "~3.8.10",
     "gulp-autoprefixer": "^2.3.0",
     "gulp-babel": "^5.1.0",
