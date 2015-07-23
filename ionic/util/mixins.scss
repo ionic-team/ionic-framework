@@ -1,13 +1,57 @@
 
-// Util Mixins/Functions
+// Color Mixins/Functions
+// --------------------------------------------------
 
-// Appearance (not a CSS standard, does not autoprefix)
+@function get-color($color, $tone: base) {
+  @return map-get(map-get($colors, $color), $tone);
+}
+
+@function inverse-tone($color) {
+  // For a lighter colored "base" the darker colored "inverse"
+  // the inverse-tone will be the "light" tone
+
+  // For a darker colored "base" the lighter colored "inverse"
+  // the inverse-tone will be the "dark" tone
+
+  $base: map-get(map-get($colors, $color), base);
+  $inverse: map-get(map-get($colors, $color), inverse);
+  $light: map-get(map-get($colors, $color), light);
+  $dark: map-get(map-get($colors, $color), dark);
+
+  $lightness: lightness($base) - lightness($inverse);
+
+  @return if($lightness < 0, $dark, $light);
+}
+
+
+
+// Appearance
 // --------------------------------------------------
 
 @mixin appearance($val) {
   -webkit-appearance: $val;
   -moz-appearance: $val;
 }
+
+
+
+// Input Placeholder
+// --------------------------------------------------
+
+@mixin placeholder($color: $input-color-placeholder, $text-indent: 0) {
+  &::-moz-placeholder { // Firefox 19+
+    color: $color;
+  }
+  &:-ms-input-placeholder {
+    color: $color;
+  }
+  &::-webkit-input-placeholder {
+    color: $color;
+    // Safari placeholder margin issue
+    text-indent: $text-indent;
+  }
+}
+
 
 
 // String Replace Function
@@ -24,6 +68,7 @@
 }
 
 
+
 // URL Encode Function
 // --------------------------------------------------
 
@@ -33,6 +78,7 @@
 }
 
 
+
 // SVG Background Image Mixin
 // --------------------------------------------------
 
@@ -40,6 +86,7 @@
   $url: url-encode($svg);
   background-image: url("data:image/svg+xml;charset=utf-8,#{$url}");
 }
+
 
 
 // Hairline
@@ -109,4 +156,14 @@
 
   }
 
+}
+
+
+
+// calc()
+// --------------------------------------------------
+
+@mixin calc($property, $expression) {
+  #{$property}: -webkit-calc(#{$expression});
+  #{$property}: calc(#{$expression});
 }

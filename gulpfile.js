@@ -199,8 +199,8 @@ gulp.task('e2e', ['copy-scripts'], function() {
 
   var platforms = [
     'android',
-    'core',
     'ios',
+    //'core'
   ];
 
   // Get each test folder with gulp.src

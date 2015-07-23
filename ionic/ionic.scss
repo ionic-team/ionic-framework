@@ -1,24 +1,16 @@
 @charset "UTF-8";
 
 
-// Mixins
-@import
-  "components/app/mixins/form",
-  "components/app/mixins/typography",
-  "components/app/mixins/util";
-
-
 // Globals
 @import
+  "util/mixins",
   "components/app/z-index",
   "components/app/flex-order",
   "components/app/normalize",
   "components/app/colors",
-  "components/app/mixins/colors",
-  "components/app/util",
   "components/app/structure",
   "components/app/typography",
-  "components/app/overlay";
+  "util/util";
 
 
 // Core Components

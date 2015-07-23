@@ -26,7 +26,7 @@ export class Input extends IonInputItem {
 
 
 @Directive({
-  selector: 'textarea,input[type=text],input[type=password],input[type=number],input[type=search],input[type=email],input[type=url]',
+  selector: 'textarea,input[type=text],input[type=password],input[type=number],input[type=search],input[type=email],input[type=url],input[type=tel]',
   property: [
     'tabIndex'
   ],

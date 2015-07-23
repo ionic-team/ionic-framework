@@ -253,8 +253,8 @@ a[button] {
 
 @mixin button-clear($fg-color) {
   &[clear] {
-    background: none;
     color: $fg-color;
+    background: none;
   }
 }
 
@@ -279,10 +279,17 @@ a[button] {
 
   button[#{$color}],
   [button][#{$color}] {
+
+    @if lightness(get-color($color, base)) > 90 {
+      $fg-color: get-color($color, inverse);
+    } @else {
+      $fg-color: get-color($color, base);
+    }
+
     @include button-default(get-color($color, base),
                             get-color($color, inverse));
 
-    @include button-clear(get-color($color, base));
+    @include button-clear($fg-color);
 
     @include button-outline(get-color($color, light));
   }

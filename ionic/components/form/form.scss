@@ -1,8 +1,6 @@
-/**
- * Forms
- * --------------------------------------------------
- */
 
+// Forms
+// --------------------------------------------------
 
 $input-label-color: get-color(dark, base);
 $input-color: $input-label-color;
@@ -14,6 +12,7 @@ $input-height-base: 5rem;
 $input-height-large: $input-height-base + 0.3rem;
 $input-height-small: 1.2rem;
 
+
 // Make all forms have space below them
 form {
   margin: 0 0 $line-height-base;
@@ -24,7 +23,7 @@ label,
 input,
 select,
 textarea {
-  @include font-shorthand($font-size-base, normal, $line-height-base); // Set size, weight, line-height here
+  // @include font-shorthand($font-size-base, normal, $line-height-base); // Set size, weight, line-height here
 }
 input,
 select,
