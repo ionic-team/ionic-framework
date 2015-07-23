@@ -255,6 +255,10 @@ a[button] {
   &[clear] {
     color: $fg-color;
     background: none;
+
+    &.activated {
+      opacity: 0.4;
+    }
   }
 }
 

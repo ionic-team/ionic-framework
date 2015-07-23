@@ -93,15 +93,11 @@ $button-material-border-radius:            3px !default;
       &[clear] {
         box-shadow: none;
 
-/*        @if lightness(get-color($color, base)) > 90 {
-          color: get-color($color, inverse);
-        }*/
-
         &:hover,
         &.hover {
           background-color: rgba(158, 158, 158, 0.2);
         }
-        &:activated {
+        &.activated {
           background-color: rgba(158, 158, 158, 0.4);
         }
       }
