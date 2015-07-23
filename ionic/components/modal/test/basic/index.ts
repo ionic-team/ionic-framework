@@ -53,7 +53,7 @@ export class ContactModal {
 
 @IonicView({
   template: `
-    <ion-navbar *navbar><ion-title>First Page Header: {{ val }}</ion-title><ion-nav-items primary><button primary (click)="closeModal()">Close</button></ion-nav-items></ion-navbar>
+    <ion-navbar *navbar><ion-title>First Page Header: {{ val }}</ion-title><ion-nav-items primary><button id="e2eCloseMenu" (click)="closeModal()">Close</button></ion-nav-items></ion-navbar>
     <ion-content class="padding">
       <p>First Page: {{ val }}</p>
       <p>
