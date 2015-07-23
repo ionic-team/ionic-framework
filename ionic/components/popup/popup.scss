@@ -1,6 +1,6 @@
 
-// Modals
-// --------------------------
+// Popups
+// --------------------------------------------------
 
 $popup-width:                     250px !default;
 
@@ -18,12 +18,8 @@ $popup-button-min-height:         45px !default;
 $popup-backdrop-color:            #000 !default;
 $popup-backdrop-active-opacity:   0.4 !default;
 
-/**
- * Popups
- * --------------------------------------------------
- */
 
- .popup-backdrop {
+.popup-backdrop {
    z-index: $z-index-popup-backdrop;
    position: absolute;
    top: 0;
@@ -33,8 +29,7 @@ $popup-backdrop-active-opacity:   0.4 !default;
    background-color: $popup-backdrop-color;
    opacity: 0;
    tranform: translateZ(0);
- }
-
+}
 
 ion-popup {
   position: absolute;
@@ -74,17 +69,20 @@ ion-popup {
   border-bottom: 1px solid #eee;
   text-align: center;
 }
+
 h3.popup-title {
   margin: 0;
   padding: 0;
   font-size: 15px;
 }
+
 .popup-sub-title {
   margin: 5px 0 0 0;
   padding: 0;
   font-weight: normal;
   font-size: 11px;
 }
+
 .popup-body {
   padding: 10px;
   overflow: auto;
@@ -107,17 +105,5 @@ h3.popup-title {
     &:last-child {
       margin-right: 0px;
     }
-  }
-}
-
-.popup-open {
-  pointer-events: none;
-
-  &.modal-open .modal {
-    pointer-events: none;
-  }
-
-  .popup-backdrop, .popup {
-    pointer-events: auto;
   }
 }
