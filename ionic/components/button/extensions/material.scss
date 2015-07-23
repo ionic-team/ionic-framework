@@ -44,6 +44,10 @@ $button-material-border-radius:            3px !default;
     font-size: $button-small-icon-size;
   }
 
+  &[full] {
+    border-radius: 0;
+  }
+
   &[outline] {
     box-shadow: none;
 

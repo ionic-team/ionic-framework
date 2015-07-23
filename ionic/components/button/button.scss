@@ -113,6 +113,12 @@ button,
     &.activated {
       opacity: 0.3 !important;
     }
+
+    &[full] {
+      border-radius: 0;
+      border-right-width: 0;
+      border-left-width: 0;
+    }
   }
 
   &[block] {
@@ -129,7 +135,11 @@ button,
 
   &[full] {
     width: 100%;
+    margin-right: 0;
+    margin-left: 0;
     border-radius: 0;
+    border-right-width: 0;
+    border-left-width: 0;
   }
 
   &.disabled,
@@ -187,20 +197,6 @@ button,
   }
 }
 
-[full],
-[full] > button,
-[full] > [button] {
-  display: flex;
-  margin-right: 0;
-  margin-left: 0;
-  width: 100%;
-  border-radius: 0;
-
-  &[outline][outline] {
-    border-right-width: 0;
-    border-left-width: 0;
-  }
-}
 
 .padding > button[block]:first-child,
 .padding > [button][block]:first-child {
@@ -237,6 +233,12 @@ a[button] {
   background-color: $bg-color;
   color: $fg-color;
   transition: background-color,opacity 100ms linear;
+
+  &[full][outline] {
+    border-radius: 0;
+    border-right-width: 0;
+    border-left-width: 0;
+  }
 
   &:hover,
   &.hover {
