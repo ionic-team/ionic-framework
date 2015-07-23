@@ -10,9 +10,10 @@ import {RadioButton} from '../radio/radio';
 
 @Directive({
   selector: 'input[type=checkbox],input[type=radio]',
-  properties: [ 'checked', 'name' ],
+  properties: [ 'checked', 'name', 'value' ],
   host: {
     '[checked]': 'checked',
+    '[value]': 'value',
     '[attr.name]': 'name',
     '(change)': 'onChangeEvent($event)'
   }
@@ -41,6 +42,8 @@ export class TapInput extends IonInput {
     this.tabIndex = this.tabIndex || '';
   }
 
+  //to detect switching/selecting inputs with the keyboard
+  //view -> model (Control)
   onChangeEvent(ev) {
     this.container && this.container.onChangeEvent(this);
   }

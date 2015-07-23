@@ -1,4 +1,4 @@
-import {ElementRef, Ancestor} from 'angular2/angular2';
+import {ElementRef, Ancestor, NgControl, Renderer} from 'angular2/angular2';
 
 import {IonicDirective, IonicComponent, IonicView} from '../../config/annotations';
 import {IonicConfig} from '../../config/config';
@@ -19,10 +19,20 @@ export class RadioGroup extends Ion {
   buttons: Array<RadioButton> = [];
 
   constructor(
+    cd: NgControl,
+    renderer: Renderer,
     elementRef: ElementRef,
     ionicConfig: IonicConfig
   ) {
     super(elementRef, ionicConfig);
+    this.onChange = (_) => {};
+    this.onTouched = (_) => {};
+    this.renderer = renderer;
+    this.elementRef = elementRef;
+
+    cd.valueAccessor = this;
+
+    this.value = "";
     this.list = true;
   }
 
@@ -32,17 +42,29 @@ export class RadioGroup extends Ion {
     if (!inputEl.hasAttribute('name')) {
       radioButton.input.name = this._name;
     }
-    // if (radioButton && !radioButton.hasAttribute('name')){
-    //   radioButton.setAttribute('name', this._name);
-    // }
   }
 
   update(input) {
     for (let button of this.buttons) {
-      button.input.checked = button.input.elementRef.nativeElement.checked;
+      button.input.checked = false;
+    }
+    input.checked = true;
+    this.onChange(input.value);
+  }
+
+  // Called by the model (Control) to update the view
+  writeValue(value) {
+    this.value = value;
+    for (let button of this.buttons) {
+      button.input.checked = button.input.value == value;
     }
   }
 
+  // Used by the view to update the model (Control)
+  // Up to us to call it in update()
+  registerOnChange(fn) { this.onChange = fn; }
+
+  registerOnTouched(fn) { this.onTouched = fn; }
 }
 
 @IonicComponent({
@@ -51,7 +73,6 @@ export class RadioGroup extends Ion {
     '[class.item]': 'item',
     '[class.active]': 'input.checked',
     '[attr.aria-checked]': 'input.checked',
-    // '(^click)': 'onClick($event)'
   },
   defaultProperties: {
     'iconOff': 'ion-ios-circle-outline',
@@ -84,30 +105,15 @@ export class RadioButton extends IonInputItem {
     this.group.registerButton(this);
   }
 
-  // onClick(ev) {
-  //   // switching between radio buttons with arrow keys fires a MouseEvent
-  //   if (ev.target.tagName === "INPUT") return;
-  //   this.input.checked = !this.input.checked;
-  //
-  //   //let bindings update first
-  //   setTimeout(() => this.group.update(this.input));
-  //
-  //   //TODO figure out a way to trigger change on the actual input to trigger
-  //   // form updates
-  //
-  //   // this._checkbox.dispatchEvent(e);
-  //   //this._checkboxDir.control.valueAccessor.writeValue(val);
-  // }
-
+  //from clicking the label
+  //view -> model (Control)
   focus() {
-    let mouseClick = new MouseEvent("click", {
-      bubbles: true,
-      cancelable: true,
-    });
-    this.input && this.input.elementRef.nativeElement.dispatchEvent(mouseClick);
+    this.group.update(this.input);
   }
 
-  onChangeEvent(input) {
-    this.group.update(input);
+  //from switching inputs with the keyboard
+  //view -> model (Control)
+  onChangeEvent() {
+    this.group.update(this.input);
   }
 }
