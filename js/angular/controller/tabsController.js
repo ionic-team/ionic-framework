@@ -114,4 +114,9 @@ function($scope, $element, $ionicHistory) {
     return false;
   };
 
+  self.showTabBar = function(shouldShow) {
+    if (shouldShow) $element.removeClass('tabs-item-hide');
+    else $element.addClass('tabs-item-hide');
+  };
+
 }]);

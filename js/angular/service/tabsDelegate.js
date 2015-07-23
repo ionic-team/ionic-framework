@@ -48,7 +48,7 @@ IonicModule
    * @name $ionicTabsDelegate#selectedIndex
    * @returns `number` The index of the selected tab, or -1.
    */
-  'selectedIndex'
+  'selectedIndex',
   /**
    * @ngdoc method
    * @name $ionicTabsDelegate#$getByHandle
@@ -59,5 +59,6 @@ IonicModule
    *
    * Example: `$ionicTabsDelegate.$getByHandle('my-handle').select(0);`
    */
+   'showTabBar'
 ]));
 
