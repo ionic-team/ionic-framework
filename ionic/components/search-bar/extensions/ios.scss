@@ -13,7 +13,7 @@ $search-bar-ios-background-size:      13px 13px !default;
 .search-bar[mode="ios"] {
   padding: $search-bar-ios-padding;
   background: $search-bar-ios-background-color;
-  @include hairline(bottom, $search-bar-ios-border-color);
+  border-bottom: 1px solid $search-bar-ios-border-color;
 
   .search-bar-icon {
     width: 100%;
@@ -43,22 +43,19 @@ $search-bar-ios-background-size:      13px 13px !default;
     background-repeat: no-repeat;
     background-position: 8px center;
 
-
     @include calc(padding-left, "50% - 28px");
-
-  }
-
-  .search-bar-input, .search-bar-icon {
-    //transition: all .2s ease;
   }
 
   .search-bar-input-container.left-align {
     .search-bar-icon {
       transform: translateX(0);
-      -webkit-transform: translateX(0);
     }
     .search-bar-input {
       padding-left: 28px;
     }
   }
+}
+
+.hairlines .search-bar[mode="ios"] {
+  border-bottom-width: 0.5px;
 }
