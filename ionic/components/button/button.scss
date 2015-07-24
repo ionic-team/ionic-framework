@@ -8,19 +8,14 @@ $button-padding:                  0 2rem !default;
 $button-height:                   4.4rem !default;
 $button-border-width:             1px !default;
 $button-border-radius:            4px !default;
-$button-icon-size:                2.5rem !default;
 
 $button-large-font-size:          2rem !default;
 $button-large-height:             5.4rem !default;
 $button-large-padding:            1.4rem !default;
-$button-large-icon-size:          3.6rem !default;
 
 $button-small-font-size:          1.3rem !default;
 $button-small-height:             2.8rem !default;
 $button-small-padding:            1.1rem !default;
-$button-small-icon-size:          2.1rem !default;
-
-$button-fab-size:                 56px;
 
 $button-round-border-radius:      64px !default;
 $button-round-padding:            0 2.6rem !default;
@@ -62,7 +57,7 @@ button,
   border: 1px solid #ccc;
   padding: $button-padding;
   min-height: $button-height;
-  // Default button has no background
+
   background: transparent;
 
   text-align: center;
@@ -70,21 +65,11 @@ button,
   border: transparent;
   border-radius: $button-border-radius;
 
-  &[icon] {
-    font-size: $button-icon-size;
-    background: none;
-    border: none;
-  }
-
   &[large] {
     padding: 0 $button-large-padding;
     min-width: ($button-large-padding * 4);
     min-height: $button-large-height;
     font-size: $button-large-font-size;
-
-    &[icon] {
-      font-size: $button-large-icon-size;
-    }
   }
 
   &[small] {
@@ -92,10 +77,6 @@ button,
     min-width: ($button-small-padding * 3);
     min-height: $button-small-height;
     font-size: $button-small-font-size;
-
-    &[icon] {
-      font-size: $button-small-icon-size;
-    }
   }
 
 
@@ -154,47 +135,6 @@ button,
     padding: $button-round-padding;
   }
 
-  // FABulous buttons (Floating action button from material)
-
-  &[fab] {
-    position: absolute;
-    width: $button-fab-size;
-    height: $button-fab-size;
-    line-height: $button-fab-size;
-    min-width: 0;
-    vertical-align: middle;
-
-    border-radius: 50%;
-    background-clip: padding-box;
-
-    overflow: hidden;
-
-    transition: .2s linear;
-    transition-property: background-color;
-
-    font-size: 14px;
-
-    &[fab-center] {
-      left: 50%;
-      margin-left: -$button-fab-size/2;
-    }
-    &[fab-top] {
-      top: 16px;
-    }
-    &[fab-right] {
-      right: 16px;
-    }
-    &[fab-bottom] {
-      bottom: 16px;
-    }
-    &[fab-left] {
-      left: 16px;
-    }
-
-    .icon {
-      flex: 1;
-    }
-  }
 }
 
 

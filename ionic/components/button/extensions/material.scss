@@ -33,15 +33,15 @@ $button-material-border-radius:            3px !default;
   }
 
   &[icon] {
-    font-size: $button-icon-size;
+    //font-size: $button-icon-size;
   }
 
   &[large][icon] {
-    font-size: $button-large-icon-size;
+    //font-size: $button-icon-large-size;
   }
 
   &[small][icon] {
-    font-size: $button-small-icon-size;
+    //font-size: $button-icon-small-size;
   }
 
   &[full] {

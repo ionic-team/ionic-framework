@@ -1,0 +1,43 @@
+
+// Button Icons
+// --------------------------------------------------
+
+
+button,
+[button] {
+
+  &.icon-left icon {
+    margin-left: -0.6rem;
+    padding-right: 0.6rem;
+  }
+
+  &.icon-right icon {
+    margin-right: -0.6rem;
+    padding-left: 0.6rem;
+  }
+
+  &.icon-only {
+    padding: 0;
+
+    icon {
+      padding: 0 1.6rem;
+    }
+  }
+
+  icon {
+    background: none;
+    border: none;
+  }
+
+  &[large] icon {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  &[small] icon {
+    margin-left: 0;
+    margin-right: 0;
+    font-size: 1.4em;
+  }
+
+}

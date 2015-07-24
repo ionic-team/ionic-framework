@@ -9,14 +9,20 @@ import * as dom  from '../../util/dom';
 @Directive({
   selector: 'button,[button]',
   host: {
-    '[class.icon-left]': 'icon.iconLeft',
-    '[class.icon-right]': 'icon.iconRight',
-    '[class.icon-only]': 'icon.iconOnly'
+    '[class.icon-left]': 'iconLeft',
+    '[class.icon-right]': 'iconRight',
+    '[class.icon-only]': 'iconOnly'
   }
 })
 export class Button {
+  constructor() {
+    this.iconLeft = this.iconRight = this.iconOnly = false;
+  }
+
   registerIcon(icon) {
-    this.icon = icon;
+    this.iconLeft = icon.iconLeft;
+    this.iconRight = icon.iconRight;
+    this.iconOnly = icon.iconOnly;
   }
 }
 
