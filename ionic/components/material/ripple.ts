@@ -15,6 +15,7 @@ export class MaterialRippleEffect {
 
     var rippleContainer = document.createElement('span');
     rippleContainer.classList.add('md-ripple-container');
+    rippleContainer.setAttribute('aria-hidden', 'true');
     this.rippleElement = document.createElement('span');
     this.rippleElement.classList.add('md-ripple');
     rippleContainer.appendChild(this.rippleElement);

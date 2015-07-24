@@ -59,23 +59,34 @@ Custom Font Icon
   ],
   host: {
     '[attr.aria-label]': 'label',
-    '[attr.role]': 'role',
-    '[attr.aria-hidden]': 'hidden'
+    '[attr.aria-hidden]': 'ariaHidden',
+    'role': 'img'
   }
 })
 export class IconDirective {
   constructor(elementRef: ElementRef, @Optional() @Parent() parentButton: Button) {
     var ele = this.ele = elementRef.nativeElement;
 
-    this.previousText = (ele.previousSibling && ele.previousSibling.textContent || '').trim();
-    this.nextText = (ele.nextSibling && ele.nextSibling.textContent || '').trim();
+    this.iconLeft = this.iconRight = this.iconOnly = false;
+    this.ariaHidden = true;
 
     if (parentButton) {
+      // this icon is within a button
       this.withinButton = true;
-      this.iconLeft = !!this.nextText;
-      this.iconRight = !!this.previousText;
-      this.iconOnly = !this.iconLeft && !this.iconRight;
 
+      // check if there is a sibling element (that's not aria hidden)
+      let hasNextSiblingElement = ele.nextElementSibling && ele.nextElementSibling.getAttribute('aria-hidden') !== 'true';
+
+      if (!hasNextSiblingElement) {
+        // this icon is within a button, and doesn't have a sibling element
+        // check for text nodes to the right and left of this icon element
+        this.iconLeft = (ele.nextSibling && ele.nextSibling.textContent || '').trim() !== '';
+        this.iconRight = (ele.previousSibling && ele.previousSibling.textContent || '').trim() !== '';
+        this.iconOnly = !this.iconLeft && !this.iconRight;
+      }
+
+      // tell the button there's a child icon
+      // the button will set the correct css classes on itself
       parentButton.registerIcon(this);
     }
   }
@@ -83,30 +94,18 @@ export class IconDirective {
   onInit() {
     if (!this.name) return;
 
-    // add the css class
+    // add the css class to show the icon font
     this.ele.classList.add(this.name);
 
+    // hide the icon when it's within a button
+    // and the button isn't an icon only button
+    this.ariaHidden = (this.withinButton && !this.iconOnly);
 
-    if (this.withinButton && !this.iconOnly) {
-      // icon's within a button that has text
-      this.hidden = true;
-
-    } else {
-      // either not within a button, or it's not a icon only button
-      this.role = 'img';
-      this.hidden = false;
+    if (!this.ariaHidden) {
+      // the icon is either not within a button
+      // or the icon is within a button, and its an icon only button
       this.label = this.name.replace('ion-', '').replace('ios-', '').replace('md-', '').replace('-', '');
     }
-
-
-    if (this.iconOnly) {
-      // this is an icon within a button that has not text label
-
-    } else {
-
-    }
-
-
 
   }
 

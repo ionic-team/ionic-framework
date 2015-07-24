@@ -14,19 +14,18 @@ import {IonicComponent, IonicView} from '../../config/annotations';
   }
 })
 @IonicView({
-  template: `
-    <nav class="tab-bar-container">
-      <div class="tab-bar" role="tablist">
-        <button *ng-for="#t of tabs" [tab]="t" class="tab-button" role="tab">
-          <icon [name]="t.tabIcon" class="tab-button-icon"></icon>
-          <span class="tab-button-text">{{t.tabTitle}}</span>
-        </button>
-      </div>
-    </nav>
-    <section class="content-container">
-      <content></content>
-    </section>
-  `,
+  template: '' +
+    '<nav class="tab-bar-container">' +
+      '<div class="tab-bar" role="tablist">' +
+        '<button *ng-for="#t of tabs" [tab]="t" class="tab-button" role="tab">' +
+          '<icon [name]="t.tabIcon" class="tab-button-icon"></icon>' +
+          '<span class="tab-button-text">{{t.tabTitle}}</span>' +
+        '</button>' +
+      '</div>' +
+    '</nav>' +
+    '<section class="content-container">' +
+      '<content></content>' +
+    '</section>',
   directives: [forwardRef(() => TabButton)]
 })
 export class Tabs extends ViewController {
@@ -122,8 +121,8 @@ export class Tabs extends ViewController {
     '[class.has-title]': 'hasTitle',
     '[class.has-icon]': 'hasIcon',
     '[class.has-title-only]': 'hasTitleOnly',
-    '[class.has-icon-only]': 'hasIconOnly',
-    '(^click)': 'onClick($event)'
+    '[class.icon-only]': 'hasIconOnly',
+    '(^click)': 'onClick($event)',
   }
 })
 class TabButton {
