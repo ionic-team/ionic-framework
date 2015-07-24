@@ -16,14 +16,29 @@
 
     box-shadow: none;
 
+    &.icon-only icon {
+      padding: 0 0.4rem;
+    }
+
+    &.icon-left icon {
+      margin-left: -0.2rem;
+    }
+
+    &.icon-right icon {
+      margin-right: -0.2rem;
+    }
+
     &[clear] {
-      padding: 0;
+      padding: 0 3px;
+
+      icon {
+        margin-right: 0;
+        margin-left: 0;
+      }
     }
   }
 
   icon {
-    font-size: 2.4rem;
-    padding: 0 4px;
+    font-size: 2.2rem;
   }
 }
-
