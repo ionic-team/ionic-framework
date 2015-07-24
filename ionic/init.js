@@ -1,5 +1,18 @@
 
-(function(){
+(function(document){
+
+  // hairline polyfill
+  if (window.devicePixelRatio >= 2) {
+    var harlineEle = document.createElement('div');
+    harlineEle.style.border = '.5px solid transparent';
+    document.body.appendChild(harlineEle);
+
+    if (harlineEle.offsetHeight == 1) {
+      document.body.classList.add('hairlines');
+    }
+    document.body.removeChild(harlineEle);
+  }
+
 
   var ionicImport = System.import('ionic/components/app/app');
 
@@ -14,4 +27,4 @@
     importApp(ele[i].getAttribute('module'));
   }
 
-})();
+})(document);

@@ -57,7 +57,7 @@ $action-menu-ios-icon-font-size:           1.4em !default;
     background: $action-menu-ios-background-color;
     font-weight: 400;
 
-    @include hairline(bottom, $action-menu-ios-border-color);
+    border-bottom: 1px solid $action-menu-ios-border-color;
   }
 
   .action-menu-title {
@@ -86,15 +86,11 @@ $action-menu-ios-icon-font-size:           1.4em !default;
     border-bottom-right-radius: $action-menu-ios-border-radius;
   }
 
-  .action-menu-container icon {
-    display: flex;
-    align-items: center;
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    padding: 0 10px 2px;
-    font-size: $action-menu-ios-icon-font-size;
-  }
+}
 
+.hairlines .action-menu[mode="ios"] {
+  .action-menu-title,
+  .action-menu-option {
+    border-bottom-width: 0.5px;
+  }
 }

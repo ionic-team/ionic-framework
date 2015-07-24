@@ -1,4 +1,4 @@
-import {Directive, View, Parent, ElementRef, forwardRef} from 'angular2/angular2';
+import {Directive, View, Parent, Optional, ElementRef, forwardRef} from 'angular2/angular2';
 import {ProtoViewRef} from 'angular2/src/core/compiler/view_ref';
 
 import {ToolbarBase} from '../toolbar/toolbar';
@@ -45,11 +45,16 @@ import {ViewItem} from '../view/view-item';
   ]
 })
 export class Navbar extends ToolbarBase {
-  constructor(item: ViewItem, elementRef: ElementRef, config: IonicConfig, app: IonicApp) {
+  constructor(
+    elementRef: ElementRef,
+    config: IonicConfig,
+    app: IonicApp,
+    @Optional() item: ViewItem
+  ) {
     super(elementRef, config);
 
     this.app = app;
-    item.navbarView(this);
+    item && item.navbarView(this);
 
     this.bbClass = config.setting('backButtonIcon');
     this.bbDefault = config.setting('backButtonText');
@@ -83,7 +88,7 @@ export class Navbar extends ToolbarBase {
   }
 })
 class BackButton {
-  constructor(@Parent() navbar: Navbar, item: ViewItem, elementRef: ElementRef) {
+  constructor(@Parent() navbar: Navbar, @Optional() item: ViewItem, elementRef: ElementRef) {
     this.item = item;
     navbar.backButtonElement(elementRef);
   }
@@ -91,7 +96,7 @@ class BackButton {
   goBack(ev) {
     ev.stopPropagation();
     ev.preventDefault();
-    this.item.viewCtrl.pop();
+    this.item && this.item.viewCtrl.pop();
   }
 }
 
@@ -132,7 +137,7 @@ class NavbarItem {
   selector: 'template[navbar]'
 })
 export class NavbarTemplate {
-  constructor(item: ViewItem, protoViewRef: ProtoViewRef) {
-    item.addProtoViewRef('navbar', protoViewRef);
+  constructor(@Optional() item: ViewItem, protoViewRef: ProtoViewRef) {
+    item && item.addProtoViewRef('navbar', protoViewRef);
   }
 }
