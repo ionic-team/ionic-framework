@@ -12,6 +12,12 @@ $tab-bar-ios-height:                   50px !default;
 
   .tab-bar {
     min-height: $tab-bar-ios-height;
+    border-top: 1px solid $toolbar-ios-border-color;
+  }
+
+  &[tab-bar-placement="top"] .tab-bar {
+    border-top: none;
+    border-bottom: 1px solid $toolbar-ios-border-color;
   }
 
   .tab-button {
@@ -37,16 +43,16 @@ $tab-bar-ios-height:                   50px !default;
     }
   }
 
-  &[tab-bar-placement="bottom"] .tab-bar-container {
-    @include hairline(top, $toolbar-ios-border-color);
+}
+
+.hairlines .tabs[mode="ios"] {
+
+  .tab-bar {
+    border-top-width: 0.5px;
   }
 
-  &[tab-bar-placement="top"] .tab-bar-container {
-    @include hairline(bottom, $toolbar-ios-border-color);
-  }
-
-  &[tab-bar-placement="top"] .toolbar-container .toolbar {
-    @include hairline(bottom, none);
+  &[tab-bar-placement="top"] .tab-bar {
+    border-bottom-width: 0.5px;
   }
 
 }

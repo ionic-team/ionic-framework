@@ -5,6 +5,7 @@ Platform.register({
   name: 'core',
   settings: {
     backButtonText: 'Back',
+    backButtonIcon: 'ion-ios-arrow-back',
     mode: 'ios',
     iconMode: 'ios',
     viewTransition: 'ios'

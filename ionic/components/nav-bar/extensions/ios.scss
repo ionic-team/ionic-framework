@@ -3,14 +3,10 @@
 // --------------------------------------------------
 
 $navbar-ios-height:                        4.4rem !default;
-$navbar-ios-border-color:                  #c4c4c4 !default;
 
 
 .nav[mode="ios"] .navbar-container {
   min-height: $navbar-ios-height;
-
-  // navbar on top, border on bottom (default)
-  @include hairline(bottom, $navbar-ios-border-color);
 }
 
 .navbar[mode="ios"] {
