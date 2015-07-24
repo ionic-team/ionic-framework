@@ -24,7 +24,6 @@ $item-ios-border-color:          $list-ios-border-color !default;
     .item-content {
       min-height: $item-ios-min-height;
       padding: 0;
-      @include hairline(bottom, $item-ios-border-color);
     }
 
     .item:last-of-type .item-content:after {
@@ -48,11 +47,6 @@ $item-ios-border-color:          $list-ios-border-color !default;
         font-size: 1.3em;
       }
     }
-  }
-
-  .item-group-title {
-    // TODO: This doesn't look great when it's a header for the first item
-    @include hairline(bottom, $item-ios-border-color);
   }
 
 }
