@@ -23,11 +23,12 @@
  * ```
  */
 IonicModule
-.directive('menuClose', ['$ionicHistory', function($ionicHistory) {
+.directive('menuClose', ['$ionicHistory', '$timeout', function($ionicHistory, $timeout) {
   return {
     restrict: 'AC',
     link: function($scope, $element) {
       $element.bind('click', function() {
+        var currentState = $ionicHistory.currentStateName();
         var sideMenuCtrl = $element.inheritedData('$ionSideMenusController');
         if (sideMenuCtrl) {
           $ionicHistory.nextViewOptions({
@@ -36,6 +37,15 @@ IonicModule
             expire: 300
           });
           sideMenuCtrl.close();
+          $timeout(function(){
+            if (currentState === $ionicHistory.currentStateName()) {
+              $ionicHistory.nextViewOptions({
+                historyRoot: false,
+                disableAnimate: false,
+                expire: 300
+              });
+            }
+          }, 10);
         }
       });
     }
