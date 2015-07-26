@@ -160,6 +160,7 @@ function($timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory, $ionicScroll
       }
 
       $attr.$observe('showPager', function(show) {
+        if (show === undefined) return;
         show = $scope.$eval(show);
         getPager().toggleClass('hide', !show);
       });
