@@ -1,4 +1,4 @@
-import {Directive, View, CSSClass, ElementRef, Optional, Parent} from 'angular2/angular2';
+import {Directive, View, CSSClass, ElementRef, Optional, Parent, Attribute} from 'angular2/angular2';
 
 import {IonicConfig} from '../../config/config';
 import {IonicComponent} from '../../config/annotations';
@@ -64,20 +64,30 @@ Custom Font Icon
   }
 })
 export class IconDirective {
-  constructor(elementRef: ElementRef, @Optional() @Parent() parentButton: Button) {
-    var ele = this.ele = elementRef.nativeElement;
+  constructor(
+    elementRef: ElementRef,
+    @Optional() @Parent() parentButton: Button,
+    @Attribute('forward') forward: string,
+    config: IonicConfig
+  ) {
+    let ele = this.ele = elementRef.nativeElement;
 
     this.iconLeft = this.iconRight = this.iconOnly = false;
     this.ariaHidden = true;
+
+    if (forward !== null) {
+      this.fwdIcon = config.setting('forwardIcon');
+    }
 
     if (parentButton) {
       // this icon is within a button
       this.withinButton = true;
 
       // check if there is a sibling element (that's not aria hidden)
+      let hasPreviousSiblingElement = !!ele.previousElementSibling;
       let hasNextSiblingElement = ele.nextElementSibling && ele.nextElementSibling.getAttribute('aria-hidden') !== 'true';
 
-      if (!hasNextSiblingElement) {
+      if (!hasPreviousSiblingElement && !hasNextSiblingElement) {
         // this icon is within a button, and doesn't have a sibling element
         // check for text nodes to the right and left of this icon element
         this.iconLeft = (ele.nextSibling && ele.nextSibling.textContent || '').trim() !== '';
@@ -92,6 +102,9 @@ export class IconDirective {
   }
 
   onInit() {
+    if (this.fwdIcon) {
+      this.name = this.fwdIcon;
+    }
     if (!this.name) return;
 
     // add the css class to show the icon font

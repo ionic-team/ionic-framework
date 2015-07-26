@@ -2,13 +2,102 @@
 // iOS Item
 // --------------------------------------------------
 
-$item-ios-background-color:      #fff !default;
-$item-ios-min-height:            44px !default;
-$item-ios-padding-left:          15px !default;
-$item-ios-accessory-color:       #8e8e93 !default;
-$item-ios-border-color:          $list-ios-border-color !default;
+$item-ios-font-size:              1.6rem !default;
+
+$item-ios-padding-top:            13px !default;
+$item-ios-padding-right:          15px !default;
+$item-ios-padding-bottom:         14px !default;
+$item-ios-padding-left:           15px !default;
+
+$item-ios-border-color:           $list-ios-border-color !default;
+$item-ios-avatar-size:            4rem;
+$item-ios-thumbnail-size:         8rem;
 
 
+.list[mode="ios"] {
+
+  .item {
+    font-size: $item-ios-font-size;
+    margin-top: -1px;
+
+    &:before {
+      position: absolute;
+      content: '';
+      top: 0;
+      right: 0;
+      left: $item-ios-padding-left;
+      border-top: 1px solid $item-ios-border-color;
+    }
+
+    &:after {
+      position: absolute;
+      content: '';
+      right: 0;
+      bottom: 0;
+      left: $item-ios-padding-left;
+      border-top: 1px solid $item-ios-border-color;
+    }
+
+    &:last-child:after {
+      left: 0;
+    }
+  }
+
+  .item-media,
+  .item-content,
+  .item-note {
+    margin: $item-ios-padding-top $item-ios-padding-right $item-ios-padding-bottom $item-ios-padding-left;
+  }
+
+  .item-note {
+    color: #999;
+  }
+
+  .item > icon {
+    margin-left: $item-ios-padding-left;
+    margin-right: $item-ios-padding-right;
+  }
+
+  icon[forward] {
+    font-size: 2rem;
+    color: #cfcfcf;
+  }
+
+  button {
+    margin: 0 $item-ios-padding-right 0 $item-ios-padding-left;
+    padding: 2px 6px;
+    min-height: 26px;
+  }
+
+  .badge {
+    margin-right: $item-ios-padding-right;
+  }
+
+  .avatar {
+    max-width: $item-ios-avatar-size;
+    max-height: $item-ios-avatar-size;
+    border-radius: $item-ios-avatar-size / 2;
+  }
+
+  .thumbnail {
+    max-width: $item-ios-thumbnail-size;
+    max-height: $item-ios-thumbnail-size;
+  }
+
+  .vertical-align-top {
+    button,
+    [button] {
+      margin-top: $item-ios-padding-top;
+    }
+    > icon {
+      margin-top: $item-ios-padding-top / 2;
+    }
+  }
+
+}
+
+
+/*
 .list[mode="ios"] {
   margin-top: -1px;
 
@@ -50,3 +139,4 @@ $item-ios-border-color:          $list-ios-border-color !default;
   }
 
 }
+*/

@@ -1,0 +1,58 @@
+<ion-toolbar><ion-title>Item Media</ion-title></ion-toolbar>
+
+<ion-list>
+
+  <button class="item">
+    <div class="item-media">
+      <div class="avatar"></div>
+    </div>
+    <div class="item-content">
+      Media/Avatar left, button.item
+    </div>
+  </button>
+
+  <a class="item" href="#">
+    <div class="item-content">
+      Media/Thumbnail right side, a.item
+    </div>
+    <div class="item-media">
+      <div class="thumbnail"></div>
+    </div>
+  </a>
+
+  <div class="item vertical-align-top">
+    <div class="item-media">
+      <div class="thumbnail"></div>
+    </div>
+    <div class="item-content">
+      <h3>Media w/ Multiline</h3>
+      <p>Button on right</p>
+      <p>Vertically align top</p>
+    </div>
+    <button primary outline>View</button>
+  </div>
+
+  <button class="item vertical-align-top">
+    <div class="item-media">
+      <div class="thumbnail"></div>
+    </div>
+    <div class="item-content">
+      <h3>Media w/ Multiline</h3>
+      <p>Icon on right</p>
+      <p>Vertically align top</p>
+      <p>button.item</p>
+    </div>
+    <icon name="ion-close-circled"></icon>
+  </button>
+
+</ion-list>
+
+<style>
+  .avatar,
+  .thumbnail {
+    width: 100px;
+    height: 100px;
+    background: black;
+    display: inline-block;
+  }
+</style>

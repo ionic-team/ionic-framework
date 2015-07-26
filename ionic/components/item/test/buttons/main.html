@@ -1,0 +1,104 @@
+<ion-toolbar><ion-title>Items as Links/Buttons</ion-title></ion-toolbar>
+
+<ion-list>
+
+  <a class="item" href="#">
+    <div class="item-content">
+      a.item
+    </div>
+    <icon forward></icon>
+  </a>
+
+  <a class="item activated" href="#">
+    <div class="item-content">
+      a.item.activated
+    </div>
+    <icon forward></icon>
+  </a>
+
+  <button class="item">
+    <div class="item-content">
+      button.item
+    </div>
+    <icon forward></icon>
+  </button>
+
+  <button class="item activated">
+    <div class="item-content">
+      button.item.activated
+    </div>
+    <icon forward></icon>
+  </button>
+
+  <div class="item" href="#">
+    <button primary>Edit</button>
+    <div class="item-content">
+      div.item left button[primary]
+    </div>
+  </div>
+
+  <div class="item" href="#">
+    <div class="item-content">
+      div.item right button[outline][secondary]
+    </div>
+    <button secondary outline>Open</button>
+  </div>
+
+  <div class="item" href="#">
+    <div class="item-content">
+      div.item icon only button
+    </div>
+    <button>
+      <icon name="ion-help-circled"></icon>
+    </button>
+  </div>
+
+  <div class="item" href="#">
+    <div class="item-content">
+      div.item right icon/text button
+    </div>
+    <button primary>
+      <icon name="ion-refresh"></icon>
+      Refresh
+    </button>
+  </div>
+
+  <div class="item" href="#">
+    <button primary clear>
+      <icon name="ion-wrench"></icon>
+      Fix
+    </button>
+    <div class="item-content">
+      div.item left clear button
+    </div>
+  </div>
+
+  <div class="item" href="#">
+    <div class="item-content">
+      div.item right clear button
+    </div>
+    <button secondary clear>
+      Edit
+    </button>
+  </div>
+
+  <div class="item" href="#">
+    <div class="item-content item-text-wrap">
+      This is multiline text that has a
+      long description of about how the text is really long.
+    </div>
+    <button primary outline>View</button>
+  </div>
+
+</ion-list>
+
+
+<style>
+  body {
+    //background-image: url(/ionic2-iOS-component-design.png);
+    background-repeat: no-repeat;
+    background-size: 3906px 634px;
+    background-position: -384px -53px;
+  }
+</style>
+

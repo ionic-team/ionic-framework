@@ -76,7 +76,7 @@ textarea {
   align-items: center;
   position: relative;
   overflow: hidden;
-  padding: ($item-padding / 3) * 2;
+  //padding: ($item-padding / 3) * 2;
 }
 
 .item-input-wrapper {
@@ -97,7 +97,7 @@ textarea {
 }
 
 .item-input-wrapper ~ .button {
-  margin-left: ($item-padding / 3) * 2;
+  //margin-left: ($item-padding / 3) * 2;
 }
 
 

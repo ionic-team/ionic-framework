@@ -6,6 +6,7 @@ Platform.register({
   settings: {
     backButtonText: 'Back',
     backButtonIcon: 'ion-ios-arrow-back',
+    forwardIcon: 'ion-ios-arrow-forward',
     mode: 'ios',
     iconMode: 'ios',
     viewTransition: 'ios'
@@ -53,6 +54,7 @@ Platform.register({
   settings: {
     backButtonText: '',
     backButtonIcon: 'ion-android-arrow-back',
+    forwardIcon: '',
     mode: 'md',
     iconMode: 'md',
     type: 'overlay',
@@ -82,6 +84,7 @@ Platform.register({
   settings: {
     backButtonText: 'Back',
     backButtonIcon: 'ion-ios-arrow-back',
+    forwardIcon: 'ion-ios-arrow-forward',
     mode: 'ios',
     iconMode: 'ios',
     tapPolyfill: true,
