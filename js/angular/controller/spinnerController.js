@@ -304,10 +304,10 @@
           x1: 55, y1: 46, x2: 2, y2: 46,
           stop: [{
             offset: 0.1,
-            class: 'stop1'
+            'class': 'stop1'
           }, {
             offset: 1,
-            class: 'stop2'
+            'class': 'stop2'
           }]
         }]
       }],
