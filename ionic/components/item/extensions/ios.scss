@@ -2,6 +2,7 @@
 // iOS Item
 // --------------------------------------------------
 
+$item-ios-border-color:           #c8c7cc !default;
 $item-ios-font-size:              1.6rem !default;
 
 $item-ios-padding-top:            13px !default;
@@ -9,9 +10,9 @@ $item-ios-padding-right:          15px !default;
 $item-ios-padding-bottom:         14px !default;
 $item-ios-padding-left:           15px !default;
 
-$item-ios-border-color:           $list-ios-border-color !default;
-$item-ios-avatar-size:            4rem;
-$item-ios-thumbnail-size:         8rem;
+$item-ios-avatar-size:            4rem !default;
+$item-ios-thumbnail-size:         8rem !default;
+$item-ios-note-color:             #999 !default;
 
 
 .list[mode="ios"] {
@@ -37,10 +38,6 @@ $item-ios-thumbnail-size:         8rem;
       left: $item-ios-padding-left;
       border-top: 1px solid $item-ios-border-color;
     }
-
-    &:last-child:after {
-      left: 0;
-    }
   }
 
   .text-input,
@@ -52,7 +49,7 @@ $item-ios-thumbnail-size:         8rem;
   }
 
   .item-note {
-    color: #999;
+    color: $item-ios-note-color;
   }
 
   .item > icon {

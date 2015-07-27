@@ -19,11 +19,6 @@ textarea {
 // Form Controls
 // -------------------------------
 
-textarea {
-  height: auto;
-  padding: 0;
-}
-
 .item-input {
 
   // text inputs
@@ -65,6 +60,15 @@ textarea {
   }
 }
 
+textarea {
+  height: auto;
+  padding: 0;
+}
+
+.platform-mobile textarea {
+  resize: none;
+}
+
 
 // Placeholder
 // -------------------------------
@@ -92,9 +96,3 @@ input[type="checkbox"][readonly] {
   background-color: transparent;
 }
 
-.platform-ios,
-.platform-android {
-  textarea {
-    resize: none;
-  }
-}

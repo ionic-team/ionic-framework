@@ -10,41 +10,9 @@
   list-style-type: none;
 }
 
-
-/*
-.list-header {
-  margin-top: $list-margin-top;
-  margin-bottom: $list-margin-bottom;
+.list-header,
+.list-footer {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-
-.list {
-  position: relative;
-  display: block;
-  margin: $list-margin-top 0;
-  padding: 0;
-
-  // TODO: Verify if we need this, it makes margin sizing (inset, etc.) not
-  // work and is not present in v1
-  //width: 100%;
-
-  list-style-type: none;
-
-  &[inset],
-  &.list-inset {
-    margin-top: 0;
-    margin-left: -$content-padding;
-    margin-right: -$content-padding;
-  }
-}
-
-.list + .list-footer {
-  margin: ($list-margin-bottom - $list-margin-top) 0 $list-margin-bottom;
-}
-
-.list-header + .list {
-  margin-top: 0;
-}
-*/

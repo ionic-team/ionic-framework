@@ -2,38 +2,29 @@
 // iOS List
 // --------------------------------------------------
 
-$list-ios-background-color:      #fff !default;
-$list-ios-border-color:          #c8c7cc !default;
-
-$list-ios-header-margin:         35px 15px 10px 15px !default;
-$list-ios-header-font-size:      1.4rem !default;
+$list-ios-header-padding:         30px $item-ios-padding-right 10px $item-ios-padding-left !default;
+$list-ios-header-font-size:      1.2rem !default;
 $list-ios-header-color:          #6d6d72 !default;
 
-$list-ios-footer-padding:        0 15px !default;
-$list-ios-footer-font-size:      1.4rem !default;
+$list-ios-footer-padding:        10px $item-ios-padding-right 0 $item-ios-padding-left !default;
+$list-ios-footer-font-size:      1.2rem !default;
 $list-ios-footer-color:          #8f8f94 !default;
 
 
 .list[mode="ios"] {
-/*
-  .list-header {
-    position: relative;
-    margin: $list-ios-header-margin;
 
+  .list-header {
+    padding: $list-ios-header-padding;
     font-size: $list-ios-header-font-size;
     text-transform: uppercase;
-
     color: $list-ios-header-color;
-
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
   }
 
   .list-footer {
     padding: $list-ios-footer-padding;
     font-size: $list-ios-footer-font-size;
+    text-transform: uppercase;
     color: $list-ios-footer-color;
   }
-*/
+
 }
