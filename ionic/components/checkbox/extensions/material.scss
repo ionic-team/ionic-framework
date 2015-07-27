@@ -19,6 +19,7 @@ $checkbox-md-color:          #007aff;
   .media-checkbox-outline {
     min-width: 20px;
     color: $checkbox-md-color;
+    background-color: $checkbox-md-color;
 
     position: absolute;
     top: 3px;
@@ -33,6 +34,10 @@ $checkbox-md-color:          #007aff;
     border: 2px solid rgba(0,0,0,.54);
     border-radius: 2px;
     z-index: 2;
+  }
+
+  &[aria-checked=false] .media-checkbox-outline {
+    background-color: red;
   }
 
 }

@@ -14,28 +14,6 @@
   left: -9999px;
 }
 
-.checkbox-on {
-  display: none;
-  pointer-events: none;
-}
-
-.checkbox-off {
-  display: block;
-  pointer-events: none;
-}
-
-.checkbox[aria-checked=true] {
-
-  .checkbox-on {
-    display: block;
-  }
-
-  .checkbox-off {
-    display: none;
-  }
-
-}
-
 .checkbox[aria-disabled=true] {
   opacity: 0.5;
   color: gray;

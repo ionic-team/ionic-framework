@@ -8,8 +8,14 @@ $checkbox-ios-color:          #007aff;
 .checkbox[mode="ios"] {
 
   .media-checkbox {
+    height: 20px;
     min-width: 20px;
     color: $checkbox-ios-color;
+    background-color: $checkbox-ios-color;
+  }
+
+  &[aria-checked=false] .media-checkbox {
+    background-color: red;
   }
 
 }
