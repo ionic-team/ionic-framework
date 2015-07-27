@@ -1,24 +1,100 @@
-$item-material-min-height:          56px;
-$item-material-font-size:           16px;
-$item-material-label-color:         #222;
+
+// Material Design Item
+// --------------------------------------------------
+
+$item-md-border-color:           #c8c7cc !default;
+$item-md-font-size:              1.6rem !default;
+
+$item-md-padding-top:            13px !default;
+$item-md-padding-right:          15px !default;
+$item-md-padding-bottom:         14px !default;
+$item-md-padding-left:           15px !default;
+
+$item-md-avatar-size:            4rem !default;
+$item-md-thumbnail-size:         8rem !default;
+$item-md-note-color:             #999 !default;
+
 
 .list[mode="md"] {
+
   .item {
-    padding-left: 16px;
+    font-size: $item-md-font-size;
+    margin-top: -1px;
+
+    &:before {
+      position: absolute;
+      content: '';
+      top: 0;
+      right: 0;
+      left: 0;
+      border-top: 1px solid $item-md-border-color;
+    }
+
+    &:after {
+      position: absolute;
+      content: '';
+      right: 0;
+      bottom: 0;
+      left: 0;
+      border-top: 1px solid $item-md-border-color;
+    }
   }
 
-  .item-content {
-    min-height: $item-material-min-height;
-    padding: 16px 16px 16px 0px;
-    border-bottom: 1px solid #DBDBDB;
+  .text-input,
+  .input-label,
+  .item-media,
+  .item-content,
+  .item-note {
+    margin: $item-md-padding-top $item-md-padding-right $item-md-padding-bottom $item-md-padding-left;
   }
 
-  .item-media {
-    display: block;
+  .item-note {
+    color: $item-md-note-color;
   }
 
-  .item-label {
-    color: $item-material-label-color;
-    font-size: $item-material-font-size;
+  .item > icon {
+    margin-left: $item-md-padding-left;
+    margin-right: $item-md-padding-right;
   }
+
+  icon[forward] {
+    font-size: 2rem;
+    color: #cfcfcf;
+  }
+
+  button {
+    margin: 0 $item-md-padding-right 0 $item-md-padding-left;
+    padding: 2px 6px;
+    min-height: 26px;
+  }
+
+  .badge {
+    margin-right: $item-md-padding-right;
+  }
+
+  .avatar {
+    max-width: $item-md-avatar-size;
+    max-height: $item-md-avatar-size;
+    border-radius: $item-md-avatar-size / 2;
+  }
+
+  .thumbnail {
+    max-width: $item-md-thumbnail-size;
+    max-height: $item-md-thumbnail-size;
+  }
+
+  .vertical-align-top {
+    button,
+    [button] {
+      margin-top: $item-md-padding-top;
+    }
+    > icon {
+      margin-top: $item-md-padding-top / 2;
+    }
+  }
+
+  button.item.activated {
+    box-shadow: none;
+  }
+
 }

@@ -2,39 +2,40 @@
 // Material Design Card
 // --------------------------------------------------
 
-$card-md-background-color:          #fff !default;
-$card-md-box-shadow:                $md-whiteframe-shadow-z1;
-$card-md-border-radius:             2px !default;
-$card-md-font-size:                 1.4rem !default;
-$card-md-item-content-padding:      15px !default;
+$card-md-background-color:            #fff !default;
+$card-md-box-shadow:                  0 1px 2px rgba(0,0,0,.3) !default;
+$card-md-border-radius:               2px !default;
+$card-md-font-size:                   1.4rem !default;
+
+$card-md-header-background-color:     $card-md-background-color !default;
+$card-md-header-padding:              10px;
+$card-md-footer-background-color:     $card-md-background-color !default;
+$card-md-footer-padding:              10px;
 
 
-.card[mode="md"]  {
+.card[mode="md"] {
   background: $card-md-background-color;
   box-shadow: $card-md-box-shadow;
   border-radius: $card-md-border-radius;
   font-size: $card-md-font-size;
 
-  .item,
-  .item-content {
-    padding: 0;
-    background: transparent;
+  .item::before,
+  .item::after {
+    left: 0;
   }
 
-  .item:last-of-type .item-content:after {
-    background: transparent;
+  .item:first-child:before {
+    border: none;
   }
 
   .card-header {
-    font-size: 1.7rem;
+    padding: $card-md-header-padding;
+    background-color: $card-md-footer-background-color;
   }
 
   .card-footer {
-    color: #6d6d72;
-  }
-
-  .item-content {
-    padding: $card-md-item-content-padding
+    padding: $card-md-footer-padding;
+    background-color: $card-md-footer-background-color;
   }
 
 }

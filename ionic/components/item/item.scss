@@ -18,7 +18,7 @@
 }
 
 a.item,
-button.item {
+button.item.item {
   border-radius: 0;
   margin: 0;
   color: inherit;
@@ -26,6 +26,8 @@ button.item {
   width: 100%;
   line-height: normal;
   justify-content: inherit;
+  box-shadow: none;
+  font-weight: normal;
 }
 
 .item-content {
