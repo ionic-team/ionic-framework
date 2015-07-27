@@ -89,7 +89,16 @@ $button-material-border-radius:            3px !default;
         }
 
         &.activated {
+
+          @if lightness(get-color($color, base)) > 90 {
+            $fg-color: get-color($color, inverse);
+          } @else {
+            $fg-color: get-color($color, base);
+          }
+
           opacity: 1;
+          background: transparent;
+          color: $fg-color;
         }
       }
 
@@ -98,11 +107,30 @@ $button-material-border-radius:            3px !default;
 
         &:hover,
         &.hover {
-          background-color: rgba(158, 158, 158, 0.2);
+          background-color: rgba(158, 158, 158, 0.1);
         }
         &.activated {
-          background-color: rgba(158, 158, 158, 0.4);
+          background-color: rgba(158, 158, 158, 0.2);
         }
+      }
+
+      &[round] {
+        border-radius: $button-round-border-radius;
+        padding: $button-round-padding;
+      }
+
+      &[large] {
+        padding: 0 $button-large-padding;
+        min-width: ($button-large-padding * 4);
+        min-height: $button-large-height;
+        font-size: $button-large-font-size;
+      }
+
+      &[small] {
+        padding: 0 $button-small-padding;
+        min-width: ($button-small-padding * 3);
+        min-height: $button-small-height;
+        font-size: $button-small-font-size;
       }
     }
   }

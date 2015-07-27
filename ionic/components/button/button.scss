@@ -91,10 +91,6 @@ button,
   &[outline] {
     background: none;
 
-    &.activated {
-      opacity: 0.3 !important;
-    }
-
     &[full] {
       border-radius: 0;
       border-right-width: 0;
@@ -199,7 +195,7 @@ a[button] {
 
     &.activated {
       color: white;
-      background-color: rgb(red($fg-color), green($fg-color), blue($fg-color));//, 0.15);
+      background-color: rgb(red($fg-color), green($fg-color), blue($fg-color));
     }
   }
 }
