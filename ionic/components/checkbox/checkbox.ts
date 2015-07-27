@@ -99,7 +99,6 @@ export class Checkbox extends IonInputItem {
 
   // Called by the model (Control) to update the view
   writeValue(modelValue) {
-    debugger;
     let type = typeof modelValue;
     switch (type) {
       case "boolean":
