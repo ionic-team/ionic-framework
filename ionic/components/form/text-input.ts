@@ -11,7 +11,11 @@ import {Platform} from '../../platform/platform';
 
 
 @IonicDirective({
-  selector: 'ion-input'
+  selector: 'ion-input',
+  classId: 'item-input',
+  host: {
+    'class': 'item'
+  }
 })
 export class Input extends IonInputItem {
 
@@ -38,7 +42,8 @@ export class Input extends IonInputItem {
     '(touchend)': 'pointerEnd($event)',
     '(mousedown)': 'pointerStart($event)',
     '(mouseup)': 'pointerEnd($event)',
-    '[attr.id]': 'id'
+    '[attr.id]': 'id',
+    'class': 'text-input input'
   }
 })
 export class TextInput extends IonInput {

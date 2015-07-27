@@ -16,6 +16,19 @@ focus-holder input {
   padding-bottom: 1000px;
 }
 
+.item.input {
+  align-items: flex-start;
+}
+
+.item.input input,
+.item.input textarea {
+  flex: 1;
+}
+
+.item.input textarea {
+  padding-top: 9px;
+}
+
 /*ion-input {
   display: block;
 

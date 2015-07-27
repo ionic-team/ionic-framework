@@ -15,7 +15,8 @@ import {RadioButton} from '../radio/radio';
     '[checked]': 'checked',
     '[value]': 'value',
     '[attr.name]': 'name',
-    '(change)': 'onChangeEvent($event)'
+    '(change)': 'onChangeEvent($event)',
+    'class': 'tap-input input'
   }
 })
 export class TapInput extends IonInput {

@@ -43,6 +43,8 @@ $item-ios-thumbnail-size:         8rem;
     }
   }
 
+  .text-input,
+  .input-label,
   .item-media,
   .item-content,
   .item-note {
@@ -91,6 +93,13 @@ $item-ios-thumbnail-size:         8rem;
     }
     > icon {
       margin-top: $item-ios-padding-top / 2;
+    }
+  }
+
+  .item-input {
+    &:before,
+    &:after {
+      left: 0;
     }
   }
 

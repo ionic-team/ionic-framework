@@ -60,8 +60,7 @@ strong {
 // ==========================================================================
 
 // Remove border when inside `a` element in IE 8/9/10.
-ion-app img,
-.ion-app img {
+img {
   border: 0;
 }
 
@@ -161,12 +160,6 @@ button::-moz-focus-inner,
 input::-moz-focus-inner {
   border: 0;
   padding: 0;
-}
-
-// Address Firefox 4+ setting `line-height` on `input` using `!important` in
-// the UA stylesheet.
-input {
-  line-height: normal;
 }
 
 // Firefox's implementation doesn't respect box-sizing, padding, or width.

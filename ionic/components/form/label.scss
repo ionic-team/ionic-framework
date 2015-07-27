@@ -1,53 +1,32 @@
 
 // Label
-// -------------------------------
+// --------------------------------------------------
 
-$input-label-color:         #000 !default;
+$input-label-color:         #444 !default;
 
 
 .input-label {
-  display: table;
-  padding: 9px 10px 7px 0px;
+  display: block;
   max-width: 200px;
   width: 30%;
   min-width: 100px;
   color: $input-label-color;
-  font-size: 1.6rem;
+  font-size: inherit;
   white-space: nowrap;
 }
 
-.placeholder-icon {
-  color: #aaa;
-  &:first-child {
-    padding-right: 6px;
-  }
-  &:last-child {
-    padding-left: 6px;
-  }
-}
-
 .item-stacked-label {
-  display: block;
-  background-color: transparent;
-  box-shadow: none;
+  flex-direction: column;
+  align-items: flex-start;
 
-  .input-label, .icon {
-    display: inline-block;
-    padding: 4px 0 0 0px;
-    vertical-align: middle;
+  .input-label {
+    width: auto;
+    max-width: 100%;
   }
-}
 
-.item-stacked-label input,
-.item-stacked-label textarea {
-  border-radius: 2px;
-  padding: 4px 8px 3px 0;
-  border: none;
-  background-color: $input-bg;
-}
-.item-stacked-label input {
-  overflow: hidden;
-  height: $line-height-computed + $font-size-base + 0.5rem;
+  .input-label + .input {
+    margin-top: 0;
+  }
 }
 
 .item-floating-label {

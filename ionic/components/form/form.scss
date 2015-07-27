@@ -2,191 +2,58 @@
 // Forms
 // --------------------------------------------------
 
-$input-label-color: get-color(dark, base);
-$input-color: $input-label-color;
-$input-bg: get-color(light, base);
-$input-bg-disabled: darken(get-color(stable, base), 10%);
-$input-color-placeholder: darken(get-color(stable, base), 20%);
 
-$input-height-base: 5rem;
-$input-height-large: $input-height-base + 0.3rem;
-$input-height-small: 1.2rem;
-
-
-// Make all forms have space below them
 form {
-  margin: 0 0 $line-height-base;
+  margin: 0 0 2.4rem;
 }
 
-// Set font for forms
 label,
 input,
 select,
 textarea {
-  // @include font-shorthand($font-size-base, normal, $line-height-base); // Set size, weight, line-height here
+  line-height: normal;
+  font-family: inherit;
 }
-input,
-select,
-textarea {
-  font-family: $font-family-base; // And only set font-family here for those that need it (note the missing label element)
-}
-
-
-// Input List
-// -------------------------------
-
-.item-input {
-  display: flex;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-  padding: 6px 0 5px 16px;
-
-  input {
-    border-radius: 0;
-    flex: 1 220px;
-    @include appearance(none);
-    margin: 0;
-    padding-right: 24px;
-    background-color: transparent;
-  }
-
-  .button .icon {
-    flex: 0 0 24px;
-    position: static;
-    display: inline-block;
-    height: auto;
-    text-align: center;
-    font-size: 16px;
-  }
-
-  .button-bar {
-    border-radius: 0;
-    flex: 1 0 220px;
-    @include appearance(none);
-  }
-
-  .icon {
-    min-width: 14px;
-  }
-}
-
-.item-input-inset {
-  display: flex;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-  //padding: ($item-padding / 3) * 2;
-}
-
-.item-input-wrapper {
-  display: flex;
-  flex: 1 0;
-  align-items: center;
-  border-radius: 4px;
-  padding-right: 8px;
-  padding-left: 8px;
-  background: #eee;
-}
-
-.item-input-inset .item-input-wrapper input {
-  padding-left: 4px;
-  height: 29px;
-  background: transparent;
-  line-height: 18px;
-}
-
-.item-input-wrapper ~ .button {
-  //margin-left: ($item-padding / 3) * 2;
-}
-
 
 
 // Form Controls
 // -------------------------------
 
-// Shared size and type resets
-textarea,
-input[type="text"],
-input[type="password"],
-input[type="datetime"],
-input[type="datetime-local"],
-input[type="date"],
-input[type="month"],
-input[type="time"],
-input[type="week"],
-input[type="number"],
-input[type="email"],
-input[type="url"],
-input[type="search"],
-input[type="tel"],
-input[type="color"] {
-  display: block;
-  //padding-top: 2px;
-  padding-left: 0;
-  height: 3.8rem;//$line-height-computed + $font-size-base;
-  color: $input-color;
-  vertical-align: middle;
-  font-size: 1.6rem;//$font-size-base;
-  line-height: $font-size-base + 2;
+textarea {
+  height: auto;
+  padding: 0;
 }
 
-.mode-ios,
-.mode-android {
+.item-input {
+
+  // text inputs
+  textarea,
+  input[type="text"],
+  input[type="password"],
+  input[type="datetime"],
   input[type="datetime-local"],
   input[type="date"],
   input[type="month"],
   input[type="time"],
-  input[type="week"] {
-    padding-top: 8px;
-  }
-}
-
-.item-input {
-  input,
-  textarea {
+  input[type="week"],
+  input[type="number"],
+  input[type="email"],
+  input[type="url"],
+  input[type="search"],
+  input[type="tel"],
+  input[type="color"] {
+    display: block;
+    background: transparent;
+    border: 0;
     width: 100%;
   }
-}
 
-textarea {
-  padding-left: 0;
-  @include placeholder($input-color-placeholder, -3px);
-}
+  // tap inputs
+  input[type="radio"],
+  input[type="checkbox"] {
+    margin: 0;
+  }
 
-// Reset height since textareas have rows
-textarea {
-  height: auto;
-}
-
-// Everything else
-textarea,
-input[type="text"],
-input[type="password"],
-input[type="datetime"],
-input[type="datetime-local"],
-input[type="date"],
-input[type="month"],
-input[type="time"],
-input[type="week"],
-input[type="number"],
-input[type="email"],
-input[type="url"],
-input[type="search"],
-input[type="tel"],
-input[type="color"] {
-  border: 0;
-}
-
-// Position radios and checkboxes better
-input[type="radio"],
-input[type="checkbox"] {
-  margin: 0;
-  line-height: normal;
-}
-
-// Reset width of input images, buttons, radios, checkboxes
-.item-input {
   input[type="file"],
   input[type="image"],
   input[type="submit"],
@@ -194,22 +61,8 @@ input[type="checkbox"] {
   input[type="button"],
   input[type="radio"],
   input[type="checkbox"] {
-    width: auto; // Override of generic input selector
+    width: auto;
   }
-}
-
-// Set the height of file to match text inputs
-input[type="file"] {
-  line-height: $input-height-base;
-}
-
-// Text input classes to hide text caret during scroll
-.previous-input-focus,
-.cloned-text-input + input,
-.cloned-text-input + textarea {
-  position: absolute !important;
-  left: -9999px;
-  width: 200px;
 }
 
 
@@ -228,10 +81,7 @@ textarea {
 input[disabled],
 select[disabled],
 textarea[disabled],
-input[readonly]:not(.cloned-text-input),
-textarea[readonly]:not(.cloned-text-input),
 select[readonly] {
-  background-color: $input-bg-disabled;
   cursor: not-allowed;
 }
 // Explicitly reset the colors here
@@ -240,4 +90,11 @@ input[type="checkbox"][disabled],
 input[type="radio"][readonly],
 input[type="checkbox"][readonly] {
   background-color: transparent;
+}
+
+.platform-ios,
+.platform-android {
+  textarea {
+    resize: none;
+  }
 }
