@@ -44,6 +44,8 @@ export class RadioGroup extends Ion {
     }
   }
 
+  //from clicking the label or switching inputs with keyboard
+  //view -> model (Control)
   update(input) {
     for (let button of this.buttons) {
       button.input.checked = false;
@@ -105,15 +107,9 @@ export class RadioButton extends IonInputItem {
     this.group.registerButton(this);
   }
 
-  //from clicking the label
+  //from clicking the label or switching inputs with keyboard
   //view -> model (Control)
-  focus() {
-    this.group.update(this.input);
-  }
-
-  //from switching inputs with the keyboard
-  //view -> model (Control)
-  onChangeEvent() {
+  toggle() {
     this.group.update(this.input);
   }
 }

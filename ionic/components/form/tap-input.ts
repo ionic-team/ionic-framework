@@ -15,7 +15,7 @@ import {RadioButton} from '../radio/radio';
     '[checked]': 'checked',
     '[value]': 'value',
     '[attr.name]': 'name',
-    '(change)': 'onChangeEvent($event)',
+    '(change)': 'toggle()',
     'class': 'tap-input input'
   }
 })
@@ -43,10 +43,15 @@ export class TapInput extends IonInput {
     this.tabIndex = this.tabIndex || '';
   }
 
+  onInit() {
+    console.log("tapinput oninit, " + this.id + " checked: " + this.checked);
+    console.log("tapinput oninit, " + this.id + " value: " + this.value);
+  }
+
   //to detect switching/selecting inputs with the keyboard
   //view -> model (Control)
-  onChangeEvent(ev) {
-    this.container && this.container.onChangeEvent(this);
+  toggle() {
+    this.container && this.container.toggle(this);
   }
 
 }

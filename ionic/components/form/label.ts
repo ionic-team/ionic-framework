@@ -33,7 +33,6 @@ export class Label {
     }
 
     this.scrollAssist = config.setting('keyboardScrollAssist');
-    this.scrollAssist = true; //TODO get rid of this
   }
 
   pointerStart(ev) {
@@ -44,7 +43,7 @@ export class Label {
   }
 
   pointerEnd(ev) {
-    if (this.scrollAssist && this.container) {
+    if (this.container) {
 
       // get where the touchend/mouseup ended
       let endCoord = dom.pointerCoord(ev);
@@ -54,7 +53,7 @@ export class Label {
         ev.preventDefault();
         ev.stopPropagation();
 
-        this.container.focus();
+        this.container instanceof Input ? this.container.focus() : this.container.toggle();
       }
 
       this.startCoord = null;

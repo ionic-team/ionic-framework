@@ -26,6 +26,9 @@ export class Input extends IonInputItem {
     super(elementRef, ionicConfig);
   }
 
+  focus() {
+    this.input && this.input.focus();
+  }
 }
 
 

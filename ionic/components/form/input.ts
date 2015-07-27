@@ -108,7 +108,8 @@ export class IonInputItem extends Ion {
     itemRegistry.push(this);
   }
 
-  onIonInit() {
+  onInit() {
+    super.onInit();
     if (this.input && this.label) {
       this.input.id = (this.input.id || 'input-' + this.id);
       this.label.labelFor = this.input.id;
@@ -122,9 +123,4 @@ export class IonInputItem extends Ion {
   registerLabel(label) {
     this.label = label;
   }
-
-  focus() {
-    this.input && this.input.focus();
-  }
-
 }
