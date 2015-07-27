@@ -72,7 +72,8 @@ button.item.item {
   .item-media + .item-content,
   .item-content + .item-media,
   .item-content + .item-content,
-  icon + .input {
+  icon + .input,
+  .input-label + .input {
     margin-left: 0;
   }
 
@@ -145,7 +146,8 @@ button.item.item {
 
 }
 
-.vertical-align-top {
+.vertical-align-top,
+.item.item-input {
   align-items: flex-start;
 }
 
