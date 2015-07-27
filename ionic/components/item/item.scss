@@ -86,6 +86,14 @@ button.item.item {
 
 .item icon {
   font-size: 2.4rem;
+
+  &[large] {
+    font-size: 3.2rem;
+  }
+
+  &[small] {
+    font-size: 1.8rem;
+  }
 }
 
 .list .item button.icon-only,
