@@ -71,7 +71,8 @@ button.item.item {
   .item-content + icon,
   .item-media + .item-content,
   .item-content + .item-media,
-  .item-content + .item-content {
+  .item-content + .item-content,
+  icon + .input {
     margin-left: 0;
   }
 

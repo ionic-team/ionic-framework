@@ -43,7 +43,6 @@ $item-ios-note-color:             #999 !default;
     }
   }
 
-  .text-input,
   .input-label,
   .item-content,
   .item-note {
@@ -52,6 +51,11 @@ $item-ios-note-color:             #999 !default;
 
   .item-media {
     margin: $item-ios-padding-media-top $item-ios-padding-right $item-ios-padding-media-bottom $item-ios-padding-left;
+  }
+
+  .text-input {
+    margin: $item-ios-padding-top $item-ios-padding-right $item-ios-padding-bottom $item-ios-padding-left;
+    padding: 0;
   }
 
   .item-note {
@@ -88,13 +92,6 @@ $item-ios-note-color:             #999 !default;
   .thumbnail {
     max-width: $item-ios-thumbnail-size;
     max-height: $item-ios-thumbnail-size;
-  }
-
-  .item-input {
-    &:before,
-    &:after {
-      left: 0;
-    }
   }
 
 }
