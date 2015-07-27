@@ -35,8 +35,11 @@ describe('Ionic ActionSheet Service', function() {
     $q.flush();
     expect($document[0].body.classList.contains('action-sheet-open')).toBe(false);
     expect(scope.element.hasClass('active')).toBe(false);
-    expect(scope.$destroy).toHaveBeenCalled();
-    expect(scope.element.remove).toHaveBeenCalled();
+    //Naughty, but ngAnimate can't be flushed ATM
+    $timeout(function() {
+      expect(scope.$destroy).toHaveBeenCalled();
+      expect(scope.element.remove).toHaveBeenCalled();
+    });
   }));
 
   it('destructiveButtonClicked should removeSheet if returning true', function() {
