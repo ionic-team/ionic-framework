@@ -83,16 +83,6 @@ $item-md-note-color:             #999 !default;
     max-height: $item-md-thumbnail-size;
   }
 
-  .vertical-align-top {
-    button,
-    [button] {
-      margin-top: $item-md-padding-top;
-    }
-    > icon {
-      margin-top: $item-md-padding-top / 2;
-    }
-  }
-
   button.item.activated {
     box-shadow: none;
   }

@@ -21,7 +21,7 @@ exports.config = {
       platform_index: 0,
       platform_count: 1,
       width: 400,
-      height: 800
+      height: 760
     }
   },
 

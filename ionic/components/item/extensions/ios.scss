@@ -6,12 +6,15 @@ $item-ios-border-color:           #c8c7cc !default;
 $item-ios-font-size:              1.6rem !default;
 
 $item-ios-padding-top:            13px !default;
-$item-ios-padding-right:          15px !default;
+$item-ios-padding-right:          16px !default;
 $item-ios-padding-bottom:         14px !default;
-$item-ios-padding-left:           15px !default;
+$item-ios-padding-left:           16px !default;
 
-$item-ios-avatar-size:            4rem !default;
-$item-ios-thumbnail-size:         8rem !default;
+$item-ios-padding-media-top:      10px !default;
+$item-ios-padding-media-bottom:   11px !default;
+
+$item-ios-avatar-size:            3.6rem !default;
+$item-ios-thumbnail-size:         5.6rem !default;
 $item-ios-note-color:             #999 !default;
 
 
@@ -42,10 +45,13 @@ $item-ios-note-color:             #999 !default;
 
   .text-input,
   .input-label,
-  .item-media,
   .item-content,
   .item-note {
     margin: $item-ios-padding-top $item-ios-padding-right $item-ios-padding-bottom $item-ios-padding-left;
+  }
+
+  .item-media {
+    margin: $item-ios-padding-media-top $item-ios-padding-right $item-ios-padding-media-bottom $item-ios-padding-left;
   }
 
   .item-note {
@@ -83,16 +89,6 @@ $item-ios-note-color:             #999 !default;
     max-height: $item-ios-thumbnail-size;
   }
 
-  .vertical-align-top {
-    button,
-    [button] {
-      margin-top: $item-ios-padding-top;
-    }
-    > icon {
-      margin-top: $item-ios-padding-top / 2;
-    }
-  }
-
   .item-input {
     &:before,
     &:after {
@@ -102,6 +98,16 @@ $item-ios-note-color:             #999 !default;
 
 }
 
+
+.hairlines .list[mode="ios"] .item {
+  margin-top: -0.5px;
+
+  &:before,
+  &:after {
+    border-top-width: 0.5px;
+  }
+
+}
 
 /*
 .list[mode="ios"] {

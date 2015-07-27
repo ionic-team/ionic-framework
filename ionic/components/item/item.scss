@@ -84,6 +84,10 @@ button.item.item {
   padding: 0;
 }
 
+.item icon {
+  font-size: 2.4rem;
+}
+
 .list .item button.icon-only,
 .item button.icon-only icon {
   padding: 0;
@@ -111,12 +115,13 @@ button.item.item {
     line-height: normal;
     margin: 0 0 3px 0;
     font-size: 1.4rem;
+    font-weight: normal;
   }
 
   p {
     line-height: normal;
     color: #666;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     margin: 0 0 2px;
   }
 
@@ -149,6 +154,14 @@ button.item.item {
 
 .item.item.item.no-border-bottom + .item {
   margin-top: -13px;
+}
+
+.item .item-media {
+  line-height: 1;
+
+  img {
+    display: block;
+  }
 }
 
 /*
