@@ -1,69 +1,56 @@
 
-<ion-view nav-title="Card">
+<ion-toolbar><ion-title>Basic Cards</ion-title></ion-toolbar>
 
-  <ion-content>
 
-    <div class="list-header">
-      List Header
+<ion-card>
+  <div class="card-header">
+    Card Header
+  </div>
+  <div class="item item-text-wrap">
+    <div class="item-content">
+      Keep close to Nature's heart... and break clear away, once in awhile, and climb a mountain or spend a week in the woods. Wash your spirit clean.
     </div>
+  </div>
+  <div class="card-footer">
+    Card Footer
+  </div>
+</ion-card>
 
-    <div class="card">
-      <div class="card-header">
-        New Post
-      </div>
-      <div class="card-content">
-        Keep close to Nature's heart... and break clear away, once in awhile, and climb a mountain or spend a week in the woods. Wash your spirit clean.
-      </div>
-      <div style="width:100%; height: 180px; background: gray"></div>
-      <div class="card-footer">
-        Posted 5 days ago
-      </div>
+
+<ion-card>
+
+  <div class="item">
+    <icon name="ion-location"></icon>
+    <div class="item-content">
+      All Out Card
     </div>
+    <button primary outline>View</button>
+  </div>
 
-    <div class="card">
-
-      <div class="item card-header">
-        <div class="item-content">
-          <div class="item-label">
-            Card Header
-          </div>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="item-content">
-          <div class="item-label">
-            I met her in a club down in old Soho,
-            where you drink champagne and it tastes just like Cola cola,
-            C-O-L-A cola.
-          </div>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="item-content">
-          <div class="item-label">
-            She walked up to me and she asked me to dance.
-            I asked her name and in a dark brown voice she said, "Lola",
-            L-O-L-A Lola, lo lo lo lo Lola
-          </div>
-        </div>
-      </div>
-
-      <div class="item card-footer">
-        <div class="item-content">
-          <div class="item-label">
-            Card Footer
-          </div>
-        </div>
-      </div>
-
+  <div class="item item-text-wrap">
+    <div class="item-content">
+      This is a multiline content within a card that should
+      take up multiple lines and stuff.
     </div>
+  </div>
 
-    <div class="list-footer">
-      List Footer
+  <div class="item">
+    <div class="item-content">
+      <icon small name="ion-star"></icon>
+      <span>255</span>
     </div>
+    <div class="item-content">
+      <icon small name="ion-reply"></icon>
+      <span>Reply</span>
+    </div>
+    <div class="item-content">
+      <icon small name="ion-forward"></icon>
+      Forward
+    </div>
+  </div>
 
-  </ion-content>
+  <div class="card-footer">
+    Card Footer
+  </div>
 
-</ion-view>
+</ion-card>

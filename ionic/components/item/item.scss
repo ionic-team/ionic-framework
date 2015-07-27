@@ -48,6 +48,9 @@ button.item {
     min-width: 26px;
     text-align: center;
   }
+  icon[small]:first-child {
+    min-width: 18px;
+  }
 
   &.activated {
     background-color: #d9d9d9;
@@ -65,7 +68,8 @@ button.item {
   icon + .item-content,
   .item-content + icon,
   .item-media + .item-content,
-  .item-content + .item-media {
+  .item-content + .item-media,
+  .item-content + .item-content {
     margin-left: 0;
   }
 
@@ -129,24 +133,24 @@ button.item {
   align-items: flex-start;
 }
 
+.item a {
+  text-decoration: none;
+}
+
+.item.item.item.no-border-bottom:after {
+  border: none;
+}
+
+.item.item.item.no-border-bottom + .item::before {
+  border: none;
+}
+
+.item.item.item.no-border-bottom + .item {
+  margin-top: -13px;
+}
+
 /*
-.item {
-  position: relative;
 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  width: 100%;
-  min-height: $item-min-height;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  text-align: initial;
-}
-
-.item-group {
-}
 .item-group-title {
   display: block;
   padding: $item-padding;
@@ -185,105 +189,6 @@ ion-primary-swipe-buttons {
   &.open {
     transform: translate3d(100%, 0, 0);
   }
-}
-
-
-// Item Content
-// --------------------------------------------------
-
-.item-content {
-  // TODO add proper bg to cover up swipe buttons
-  background: white;
-  transform: translate3d(0,0,0);
-
-  position: relative;
-
-  display: flex;
-  flex: 1;
-  justify-content: space-between;
-  align-items: center;
-
-  width: 100%;
-  min-height: $item-min-height;
-
-  padding: 0;
-}
-
-.item-label {
-  position: relative;
-
-  //display: flex;
-  flex: 1;
-  flex-shrink: 1;
-
-  // To enable multi-line text more easily
-  flex-direction: column;
-
-  max-width: 100%;
-
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.item-content {
-  h1, h2, h3, h4, h5, h6 {
-    align-self: flex-start;
-  }
-}
-
-
-
-// Item Media (Icons, checkboxes, images, etc.)
-// --------------------------------------------------
-
-.item-media {
-  display: flex;
-  flex-shrink: 0;
-  flex-wrap: nowrap;
-  align-items: center;
-
-  max-width: 100%;
-  min-height: $item-min-height;
-  padding: 0;
-
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-
-  img {
-    max-width: 100%;
-  }
-}
-
-.item-media + .item-label {
-  padding-left: $item-padding;
-}
-
-.item-media:last-child {
-  //padding-right: $item-padding;
-}
-
-.item-note {
-  color: #aaa;
-  font-size: 1.4rem;
-}
-
-.item-avatar {
-  padding-top: ($item-padding / 2) - 1;
-  padding-bottom: ($item-padding / 2) + 1;
-
-  img {
-    max-width: 40px;
-    max-height: 40px;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-  }
-}
-
-.item-full {
-
 }
 
 
