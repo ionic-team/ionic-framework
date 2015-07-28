@@ -1,25 +1,35 @@
+
+<ion-toolbar><ion-title>Switches</ion-title></ion-toolbar>
+
+
 <ion-content>
 
-  <form (^submit)="doSubmit($event)" [control-group]="form">
+  <form (^submit)="doSubmit($event)">
 
     <ion-list>
-      <div class="list-header">Some Switches</div>
-      <ion-switch control="enableFun">
-        Enable Fun?
-      </ion-switch>
-      <ion-switch control="enableIceCream">
-        Enable Ice Cream?
-      </ion-switch>
-      <ion-switch control="enablePizza">
-        Enable Pizza?
-      </ion-switch>
-    </ion-list>
 
-    Is fun enabled? <b>{{form.controls.enableFun.value}}</b>
-    <br>
-    Is ice cream enabled? <b>{{form.controls.enableIceCream.value}}</b>
-    <br>
-    Is pizza enabled? <b>{{form.controls.enablePizza.value}}</b>
+      <ion-switch aria-checked="true">
+        <label id="appleLabel">Apple</label>
+        <input checked="true" type="checkbox">
+      </ion-switch>
+
+      <ion-switch>
+        <label>Banana</label>
+        <input value="test" type="checkbox">
+      </ion-switch>
+
+      <ion-switch aria-checked="true">
+        <label>Cherry</label>
+        <input type="checkbox">
+      </ion-switch>
+
+      <ion-switch>
+        <label>Grape</label>
+        <input value="test" checked="checked" type="checkbox">
+      </ion-switch>
+
+    <ion-list>
+
   </form>
 
 </ion-content>

@@ -73,6 +73,8 @@ button.item.item {
   .item-content + .item-media,
   .item-content + .item-content,
   icon + .input,
+  .input + icon,
+  icon + .input-label,
   .input-label + .input {
     margin-left: 0;
   }

@@ -5,6 +5,7 @@ import * as dom  from '../../util/dom';
 import {Input} from './text-input';
 import {Checkbox} from '../checkbox/checkbox';
 import {RadioButton} from '../radio/radio';
+import {Switch} from '../switch/switch';
 
 
 @Directive({
@@ -23,9 +24,10 @@ export class Label {
     @Optional() @Parent() textContainer: Input,
     @Optional() @Parent() checkboxContainer: Checkbox,
     @Optional() @Parent() radioContainer: RadioButton,
+    @Optional() @Parent() switchContainer: Switch,
     config: IonicConfig
   ) {
-    this.container = textContainer || checkboxContainer || radioContainer;
+    this.container = textContainer || checkboxContainer || radioContainer || switchContainer;
 
     if (this.container) {
       this.container.registerLabel(this);

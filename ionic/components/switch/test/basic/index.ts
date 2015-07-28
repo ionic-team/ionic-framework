@@ -1,24 +1,32 @@
-import {FormBuilder, Validators} from 'angular2/forms';
-
 import {App} from 'ionic/ionic';
-
+import {
+  Control,
+  ControlGroup,
+  NgForm,
+  formDirectives,
+  Validators,
+  NgControl,
+  ControlValueAccessor,
+  NgControlName,
+  NgFormModel,
+  FormBuilder
+} from 'angular2/forms';
 
 @App({
   templateUrl: 'main.html'
 })
 class IonicApp {
   constructor() {
-
-    var fb = new FormBuilder();
-    this.form = fb.group({
-      enableFun: ['', Validators.required],
-      enableIceCream: [false, Validators.required],
-      enablePizza: [true, Validators.required]
+    this.fruitsForm = new ControlGroup({
+      "appleCtrl": new Control({"checked": false, "value": "apple"}),
+      "bananaCtrl": new Control(true),
+      "cherryCtrl": new Control({"checked": false, "value": 12}),
+      "grapeCtrl": new Control("grape")
     });
   }
 
   doSubmit(ev) {
-    console.log('Submitting form', this.form.value);
-    ev.preventDefault();
+    console.log('Submitting form', this.fruitsForm.value);
+    event.preventDefault();
   }
 }

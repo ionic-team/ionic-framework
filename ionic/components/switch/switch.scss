@@ -2,73 +2,29 @@
 // Switch
 // --------------------------------------------------
 
-$switch-padding:                   0 15px !default;
-$switch-width:                     52px !default;
-$switch-height:                    32px !default;
-$switch-border-width:              2px !default;
-$switch-slider-off-background:     #ccc !default;
-$switch-slider-on-background:      #387ef5 !default;
-$switch-toggle-on-background:      #fff !default;
 
-
-.switch .item-media {
-  padding: $switch-padding;
-}
-
-.switch-toggle {
+.switch {
   position: relative;
-
-  width: $switch-width;
-  height: $switch-height;
-  border-radius: $switch-height / 2;
-
-  background: $switch-slider-off-background;
+  cursor: pointer;
+  @include user-select-none();
 }
 
-.switch-toggle:before {
+.switch input {
   position: absolute;
-  left: $switch-border-width;
-  top: $switch-border-width;
-
-  width: $switch-width - ($switch-border-width * 2);
-  height: $switch-height - ($switch-border-width * 2);
-  border-radius: $switch-height / 2;
-
-  transition-duration: 300ms;
-  content: ' ';
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  border: none;
+  @include appearance(none);
 }
 
-.switch[aria-checked=true] .switch-toggle {
-  background: $switch-slider-on-background;
-}
-
-.switch .switch-toggle:after {
-  position: absolute;
-  left: $switch-border-width;
-  top: $switch-border-width;
-
-  width: $switch-height - ($switch-border-width * 2);
-  height: $switch-height - ($switch-border-width * 2);
-
-  border-radius: $switch-height - ($switch-border-width * 2);
-  background: $switch-toggle-on-background;
-
-  transition-duration: 300ms;
-
-  content: ' ';
-}
-
-.switch[aria-checked=true] .switch-toggle:after {
-  transform: translate3d(20px,0,0);
+.switch .input-label {
+  max-width: 100%;
 }
 
 .switch[aria-disabled=true] {
-  pointer-events: none;
   opacity: 0.5;
   color: gray;
-}
-
-.switch .item-media,
-.switch .item-content {
-  pointer-events: none;
 }

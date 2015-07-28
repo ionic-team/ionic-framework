@@ -2,37 +2,86 @@
 // iOS Switch
 // --------------------------------------------------
 
-$switch-ios-width:                      52px !default;
-$switch-ios-height:                     32px !default;
-$switch-ios-slider-off-background:      #fff !default;
-$switch-ios-slider-on-background:       #4cd964 !default;
-$switch-ios-toggle-on-background:       #fff !default;
+$switch-ios-width:                    51px !default;
+$switch-ios-height:                   31px !default;
+$switch-ios-border-width:             2px !default;
+$switch-ios-border-radius:            30px !default;
+
+$switch-ios-off-bg-color:             #fff !default;
+$switch-ios-off-border-color:         #e6e6e6 !default;
+
+$switch-ios-on-bg-color:              get-color(primary, base) !default;
+$switch-ios-on-border-color:          $switch-ios-on-bg-color !default;
+
+$switch-ios-handle-width:             $switch-ios-height - ($switch-ios-border-width * 2) !default;
+$switch-ios-handle-height:            $switch-ios-handle-width !default;
+$switch-ios-handle-radius:            $switch-ios-handle-width !default;
+$switch-ios-handle-dragging-bg-color: darken(#fff, 5%) !default;
+$switch-ios-handle-box-shadow:        0 3px 12px rgba(0, 0, 0, 0.16), 0 3px 1px rgba(0, 0, 0, 0.1), 0px 0px 1px rgba(0, 0, 0, 0.15) !default;
+
+$switch-ios-handle-off-bg-color:      #fff !default;
+$switch-ios-handle-on-bg-color:       #fff !default;
+
+$switch-ios-hit-area-expansion:       5px !default;
 
 
 .switch[mode="ios"] {
 
-  .switch-toggle {
+  .media-switch {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  .switch-track {
+    /*@include transition-timing-function(ease-in-out);
+    @include transition-duration($switch-ios-transition-duration);
+    @include transition-property((background-color, border));*/
+    position: relative;
     width: $switch-ios-width;
     height: $switch-ios-height;
-    border-radius: $switch-ios-height / 2;
-
-    background: #e5e5e5;
+    border: solid $switch-ios-border-width $switch-ios-off-border-color;
+    border-radius: $switch-ios-border-radius;
+    background-color: $switch-ios-off-bg-color;
+    content: ' ';
+    cursor: pointer;
+    pointer-events: none;
   }
 
-  .switch-toggle:before {
-    background: $switch-ios-slider-off-background;
+  .switch-handle {
+    //@include transition($switch-ios-transition-duration cubic-bezier(0, 1.1, 1, 1.1));
+    //@include transition-property((background-color, transform));
+
+    position: absolute;
+
+    width: $switch-ios-handle-width;
+    height: $switch-ios-handle-height;
+    border-radius: $switch-ios-handle-radius;
+    background-color: $switch-ios-handle-off-bg-color;
+    top: 0;
+    left: 0;
+    box-shadow: $switch-ios-handle-box-shadow;
+
+    &:before {
+      position: absolute;
+      top: -4px;
+      left: ( ($switch-ios-handle-width / 2) * -1) - 8;
+      padding: ($switch-ios-handle-height / 2) + 5 ($switch-ios-handle-width + 7);
+      content: '';
+    }
   }
 
-  .switch-toggle:after {
-    box-shadow: 0 2px 5px rgba(0,0,0,.4);
+  &[aria-checked=true] .switch-track {
+    background-color: $switch-ios-on-bg-color;
+    border-color: $switch-ios-on-border-color;
   }
 
-  &[aria-checked=true] .switch-toggle {
-    background: $switch-ios-slider-on-background;
+  &[aria-checked=true] .switch-handle {
+    background-color: $switch-ios-handle-on-bg-color;
+    transform: translate3d($switch-ios-width - $switch-ios-handle-width - ($switch-ios-border-width * 2), 0, 0);
   }
 
-  &[aria-checked=true] .switch-toggle:before {
-    transform: scale(0);
+  .input-label {
+    color: inherit;
   }
 
 }

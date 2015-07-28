@@ -83,6 +83,10 @@ $item-ios-note-color:             #999 !default;
     font-size: 1.3rem;
   }
 
+  .item-input .input + button {
+    margin-top: $item-ios-padding-media-top;
+  }
+
   .badge {
     margin-right: $item-ios-padding-right;
   }

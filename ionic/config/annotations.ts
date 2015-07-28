@@ -65,7 +65,7 @@ export const IonicDirectives = [
   forwardRef(() => Checkbox),
   forwardRef(() => RadioGroup),
   forwardRef(() => RadioButton),
-  //Switch
+  forwardRef(() => Switch),
   //SearchBar,
 
   // Input

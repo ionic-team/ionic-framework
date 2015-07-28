@@ -2,14 +2,12 @@
 // Label
 // --------------------------------------------------
 
-$input-label-color:         #444 !default;
+$input-label-color:         #888 !default;
 
 
 .input-label {
   display: block;
   max-width: 200px;
-  //width: 30%;
-  //min-width: 100px;
   color: $input-label-color;
   font-size: inherit;
   white-space: nowrap;

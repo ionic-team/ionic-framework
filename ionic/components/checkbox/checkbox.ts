@@ -18,7 +18,7 @@ import {Icon} from '../icon/icon';
 @IonicComponent({
   selector: 'ion-checkbox',
   host: {
-    '[class.item]': 'item',
+    'class': 'item',
     '[attr.aria-checked]': 'input.checked'
   }
 })
@@ -46,8 +46,6 @@ export class Checkbox extends IonInputItem {
     this.cd = cd;
 
     cd.valueAccessor = this;
-
-    this.item = true;
   }
 
   onInit() {

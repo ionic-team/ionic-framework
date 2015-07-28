@@ -71,7 +71,7 @@ export class RadioGroup extends Ion {
 @IonicComponent({
   selector: 'ion-radio',
   host: {
-    '[class.item]': 'item',
+    'class': 'item',
     '[attr.aria-checked]': 'input.checked',
   }
 })
@@ -91,7 +91,6 @@ export class RadioButton extends IonInputItem {
     config: IonicConfig
   ) {
     super(elementRef, config);
-    this.item = true;
     this.group = group;
   }
 
