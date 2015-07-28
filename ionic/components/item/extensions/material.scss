@@ -10,6 +10,9 @@ $item-md-padding-right:          15px !default;
 $item-md-padding-bottom:         14px !default;
 $item-md-padding-left:           15px !default;
 
+$item-md-padding-media-top:      10px !default;
+$item-md-padding-media-bottom:   11px !default;
+
 $item-md-avatar-size:            4rem !default;
 $item-md-thumbnail-size:         8rem !default;
 $item-md-note-color:             #999 !default;
@@ -40,12 +43,19 @@ $item-md-note-color:             #999 !default;
     }
   }
 
-  .text-input,
   .input-label,
-  .item-media,
   .item-content,
   .item-note {
     margin: $item-md-padding-top $item-md-padding-right $item-md-padding-bottom $item-md-padding-left;
+  }
+
+  .item-media {
+    margin: $item-md-padding-media-top $item-md-padding-right $item-md-padding-media-bottom $item-md-padding-left;
+  }
+
+  .text-input {
+    margin: $item-md-padding-top $item-md-padding-right $item-md-padding-bottom $item-md-padding-left;
+    padding: 0;
   }
 
   .item-note {
@@ -55,6 +65,10 @@ $item-md-note-color:             #999 !default;
   .item > icon {
     margin-left: $item-md-padding-left;
     margin-right: $item-md-padding-right;
+  }
+
+  .item-input > icon {
+    margin-top: $item-md-padding-media-top - 1;
   }
 
   icon[forward] {

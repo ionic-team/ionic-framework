@@ -67,6 +67,10 @@ $item-ios-note-color:             #999 !default;
     margin-right: $item-ios-padding-right;
   }
 
+  .item-input > icon {
+    margin-top: $item-ios-padding-media-top - 1;
+  }
+
   icon[forward] {
     font-size: 2rem;
     color: #cfcfcf;
