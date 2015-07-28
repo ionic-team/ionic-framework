@@ -16,13 +16,14 @@
     </ion-list>
   </ion-aside>
 
-  <ion-content #content>
+  <ion-content #content class="padding">
+
     <h2>Content</h2>
+
+    <p>
+      <button id="e2eToggleAside" primary (click)="toggleAside()">Toggle Aside</button>
+    </p>
+
   </ion-content>
 
-  <!--
-  <ion-aside side="right" [content]="content" style="background-color: green">
-    <h2 style="color: white">RIGHT</h2>
-  </ion-aside>
-  -->
 </ion-view>
