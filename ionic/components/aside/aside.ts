@@ -52,7 +52,8 @@ export class Aside extends Ion {
     })
   }
 
-  onIonInit() {
+  onInit() {
+    super.onInit();
     this.contentElement = (this.content instanceof Node) ? this.content : this.content.getNativeElement();
 
     this.gestureDelegate = this.getDelegate('gesture');

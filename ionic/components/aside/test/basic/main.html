@@ -1,5 +1,6 @@
 <ion-view>
-  <ion-aside [content]="content">
+
+  <ion-aside #aside [content]="content" [register]="aside" register-id="mainMenu">
     <ion-list inset>
       <ion-item>
         About
