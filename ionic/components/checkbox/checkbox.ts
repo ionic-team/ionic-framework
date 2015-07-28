@@ -21,15 +21,11 @@ import {Icon} from '../icon/icon';
     '[class.item]': 'item',
     '[attr.aria-checked]': 'input.checked'
   }
-  // defaultProperties: {
-  //   'iconOff': 'ion-ios-circle-outline',
-  //   'iconOn': 'ion-ios-checkmark'
-  // }
 })
 @IonicView({
   template:
   '<div class="item-media media-checkbox">' +
-    '<div class="media-checkbox-outline"></div>' +
+    '<div class="checkbox-icon"></div>' +
   '</div>' +
   '<div class="item-content">' +
     '<content></content>' +

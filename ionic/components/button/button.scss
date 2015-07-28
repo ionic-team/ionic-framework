@@ -52,7 +52,7 @@ button,
   overflow: hidden;
 
   cursor: pointer;
-  user-select: none;
+  @include user-select-none();
 
   border: 1px solid #ccc;
   padding: $button-padding;

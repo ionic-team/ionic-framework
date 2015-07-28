@@ -2,20 +2,41 @@
 // iOS Checkbox
 // --------------------------------------------------
 
-$checkbox-ios-color:          #007aff;
+$checkbox-ios-icon-size:              24px !default;
+$checkbox-ios-background-color:       get-color(primary, base) !default;
+$checkbox-ios-foreground-color:       get-color(primary, inverse) !default;
 
 
 .checkbox[mode="ios"] {
 
-  .media-checkbox {
-    height: 20px;
-    min-width: 20px;
-    color: $checkbox-ios-color;
-    background-color: $checkbox-ios-color;
+  .checkbox-icon {
+    position: relative;
+    width: $checkbox-ios-icon-size;
+    height: $checkbox-ios-icon-size;
+    border-radius: $checkbox-ios-icon-size / 2;
+    background-color: $checkbox-ios-foreground-color;
+    border: 1px solid $checkbox-ios-background-color;
   }
 
-  &[aria-checked=false] .media-checkbox {
-    background-color: red;
+  &[aria-checked=true] .checkbox-icon {
+    background-color: $checkbox-ios-background-color;
+
+    &::after {
+      position: absolute;
+      border: 1px solid $checkbox-ios-foreground-color;
+      top: 3px;
+      left: 8px;
+      width: 5px;
+      height: 12px;
+      border-left: none;
+      border-top: none;
+      content: '';
+      transform: rotate(45deg);
+    }
   }
 
+}
+
+.hairlines .checkbox[mode="ios"] .checkbox-icon {
+  border-width: 0.5px;
 }

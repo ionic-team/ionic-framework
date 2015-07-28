@@ -72,7 +72,7 @@ button.tab-button {
 
   text-align: center;
   cursor: pointer;
-  user-select: none;
+  @include user-select-none();
 
   color: $tab-button-text-inactive;
   border: 0;

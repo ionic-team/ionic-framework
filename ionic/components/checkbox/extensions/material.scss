@@ -1,43 +1,38 @@
 
-// iOS Checkbox
+// Material Design Checkbox
 // --------------------------------------------------
 
-$checkbox-md-color:          #007aff;
+$checkbox-md-icon-size:              24px !default;
+$checkbox-md-background-color:       get-color(primary, base) !default;
+$checkbox-md-foreground-color:       get-color(primary, inverse) !default;
 
 
 .checkbox[mode="md"] {
-  position: relative;
-  z-index: 1;
-  vertical-align: middle;
-  display: inline-block;
-  box-sizing: border-box;
-  width: 100%;
-  height: 24px;
-  margin: 0;
-  padding: 0;
 
-  .media-checkbox-outline {
-    min-width: 20px;
-    color: $checkbox-md-color;
-    background-color: $checkbox-md-color;
-
-    position: absolute;
-    top: 3px;
-    left: 0;
-    display: inline-block;
-    box-sizing: border-box;
-    width: 16px;
-    height: 16px;
-    margin: 0;
-    cursor: pointer;
-    overflow: hidden;
-    border: 2px solid rgba(0,0,0,.54);
-    border-radius: 2px;
-    z-index: 2;
+  .checkbox-icon {
+    position: relative;
+    width: $checkbox-md-icon-size;
+    height: $checkbox-md-icon-size;
+    border-radius: $checkbox-md-icon-size / 2;
+    background-color: $checkbox-md-foreground-color;
+    border: 1px solid $checkbox-md-background-color;
   }
 
-  &[aria-checked=false] .media-checkbox-outline {
-    background-color: red;
+  &[aria-checked=true] .checkbox-icon {
+    background-color: $checkbox-md-background-color;
+
+    &::after {
+      position: absolute;
+      border: 1px solid $checkbox-md-foreground-color;
+      top: 3px;
+      left: 8px;
+      width: 5px;
+      height: 12px;
+      border-left: none;
+      border-top: none;
+      content: '';
+      transform: rotate(45deg);
+    }
   }
 
 }
