@@ -1,24 +1,43 @@
 
-<ion-view nav-title="Radio Buttons">
+<ion-toolbar><ion-title>Radio Group</ion-title></ion-toolbar>
 
-  <ion-content>
 
-    <form (^submit)="doSubmit($event)" [ng-form-model]="fruitsForm">
+<ion-content>
+
+  <form (^submit)="doSubmit($event)" [ng-form-model]="fruitsForm">
+
+    <ion-radio-group ng-control="fruits">
+
       <div class="list-header">
         Fruits
       </div>
 
-      <ion-radio-group ng-control="fruits">
-        <ion-radio><label>APPLE</label><input value="apple" type="radio"></ion-radio>
-        <ion-radio><label>BANANA</label><input value="banana" type="radio"></ion-radio>
-        <ion-radio><label>CHERRY</label><input value="cherry" type="radio"></ion-radio>
-      </ion-radio-group>
+      <ion-radio>
+        <label>Apple</label>
+        <input value="apple" checked="true" type="radio">
+      </ion-radio>
 
-      fruits.dirty: {{fruitsForm.controls.fruits.dirty}}<br>
-      fruits.value: {{fruitsForm.controls.fruits.value}}<br>
-    </form>
-    <button (click)="setApple()">Select Apple</button>
-    <button (click)="setBanana()">Select Banana</button>
-    <button (click)="setCherry()">Select Cherry</button>
-  </ion-content>
-</ion-view>
+      <ion-radio id="e2eBanana">
+        <label>Banana</label>
+        <input value="banana" type="radio">
+      </ion-radio>
+
+      <ion-radio>
+        <label>Cherry</label>
+        <input value="cherry" type="radio">
+      </ion-radio>
+
+    </ion-radio-group>
+
+    <p>
+      <code>fruits.dirty: {{fruitsForm.controls.fruits.dirty}}</code><br>
+      <code>fruits.value: {{fruitsForm.controls.fruits.value}}</code><br>
+    </p>
+
+  </form>
+
+  <button (click)="setApple()" outline primary small>Select Apple</button>
+  <button (click)="setBanana()" outline primary small>Select Banana</button>
+  <button id="e2eSelectCherry" (click)="setCherry()" outline primary small>Select Cherry</button>
+
+</ion-content>

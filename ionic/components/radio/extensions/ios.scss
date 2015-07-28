@@ -2,13 +2,40 @@
 // iOS Radio
 // --------------------------------------------------
 
-$radio-ios-color:          #007aff;
+$radio-ios-foreground-color:       get-color(primary, base) !default;
 
 
-.radio-group[mode="ios"] {
+.radio[mode="ios"] {
 
-  .media-radio {
-    color: $radio-ios-color;
+  .radio-icon {
+    position: relative;
+    width: 16px;
+    height: 21px;
+  }
+
+  &[aria-checked=true] .radio-icon {
+    border-color: $radio-ios-foreground-color;
+
+    &::after {
+      position: absolute;
+      border: 2px solid $radio-ios-foreground-color;
+      top: 3px;
+      left: 7px;
+      width: 4px;
+      height: 10px;
+      border-left: none;
+      border-top: none;
+      content: '';
+      transform: rotate(45deg);
+    }
+  }
+
+  &[aria-checked=true] {
+    color: $radio-ios-foreground-color;
+  }
+
+  .input-label {
+    color: inherit;
   }
 
 }

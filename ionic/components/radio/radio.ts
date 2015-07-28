@@ -10,7 +10,7 @@ let groupName = -1;
 @IonicDirective({
   selector: 'ion-radio-group',
   host: {
-    '[class.list]': 'list'
+    'class': 'list'
   }
 })
 export class RadioGroup extends Ion {
@@ -33,7 +33,6 @@ export class RadioGroup extends Ion {
     cd.valueAccessor = this;
 
     this.value = "";
-    this.list = true;
   }
 
   registerButton(radioButton) {
@@ -73,22 +72,16 @@ export class RadioGroup extends Ion {
   selector: 'ion-radio',
   host: {
     '[class.item]': 'item',
-    '[class.active]': 'input.checked',
     '[attr.aria-checked]': 'input.checked',
-  },
-  defaultProperties: {
-    'iconOff': 'ion-ios-circle-outline',
-    'iconOn': 'ion-ios-checkmark'
   }
 })
 @IonicView({
   template:
-  '<div class="item-media media-radio">' +
-    '<icon [name]="iconOff" class="radio-off"></icon>' +
-    '<icon [name]="iconOn" class="radio-on"></icon>' +
-  '</div>' +
   '<div class="item-content">' +
     '<content></content>' +
+  '</div>' +
+  '<div class="item-media media-radio">' +
+    '<div class="radio-icon"></div>' +
   '</div>'
 })
 export class RadioButton extends IonInputItem {

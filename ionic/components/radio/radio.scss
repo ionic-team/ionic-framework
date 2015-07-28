@@ -2,49 +2,28 @@
 // Radio
 // --------------------------------------------------
 
-$radio-padding:                   0 15px !default;
-
-
-.radio .item-media {
-  padding: $radio-padding;
+.radio {
+  position: relative;
+  cursor: pointer;
+  @include user-select-none();
 }
 
 .radio input {
-  position: relative;
-  left: -9999px;
+  position: absolute;
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  border: none;
+  @include appearance(none);
 }
 
-.radio-on {
-  display: none;
-}
-
-.radio-off {
-  display: block;
-}
-
-.radio[aria-checked=true] {
-
-  .radio-on {
-    display: block;
-  }
-
-  .radio-off {
-    display: none;
-  }
-
+.radio .input-label {
+  max-width: 100%;
 }
 
 .radio[aria-disabled=true] {
-  pointer-events: none;
   opacity: 0.5;
   color: gray;
-
-  .media-radio {
-    color: inherit;
-  }
 }
-
-// .radio .item-media,
-// .radio .item-content {
-//   pointer-events: none;
-// }
