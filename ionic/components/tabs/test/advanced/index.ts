@@ -32,6 +32,7 @@ class TabsPage {
   constructor(nav: NavController) {
     this.tab1Root = Tab1Page1
     this.tab2Root = Tab2Page1
+    this.tab3Root = Tab3Page1
   }
 }
 
@@ -167,6 +168,20 @@ class Tab2Page3 {
     this.nav = nav;
   }
 }
+
+
+
+//
+// tab 3
+//
+@IonicView({
+  template: '' +
+    '<ion-navbar *navbar>' +
+      '<ion-title>Tabs 3</ion-title>' +
+    '</ion-navbar>' +
+    '<ion-content class="padding"><h2>Tabs 3</h2></ion-content>'
+})
+class Tab3Page1 {}
 
 
 @App({
