@@ -1,6 +1,16 @@
+
 <ion-content class="padding">
-  <button primary (click)="doAlert()">Alert</button>
-  <button primary (click)="doPrompt()">Prompt</button>
-  <button primary (click)="doConfirm()">Confirm</button>
-  <button primary (click)="doCustom()">Custom</button>
+
+  <button id="e2eOpenAlert" primary (click)="doAlert()">Alert</button>
+  <button id="e2eOpenPrompt" primary (click)="doPrompt()">Prompt</button>
+  <button id="e2eOpenConfirm" primary (click)="doConfirm()">Confirm</button>
+
+  <pre>
+    Alert Opened: {{alertOpen}}
+    Prompt Opened: {{promptOpen}}
+    Prompt Result: {{promptResult}}
+    Confirm Opened: {{confirmOpen}}
+    Confirm Result: {{confirmResult}}
+  </pre>
+
 </ion-content>
