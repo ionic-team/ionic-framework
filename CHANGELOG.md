@@ -1,3 +1,37 @@
+<a name"1.0.1"></a>
+### 1.0.1 "vanadium-vaquita" (2015-06-30)
+
+
+#### Bug Fixes
+
+* **button:** fix line-height for button-small ([753fcde](https://github.com/driftyco/ionic/commit/753fcde))
+* **ionicConfig:**
+  * remove tel from images ([d256870](https://github.com/driftyco/ionic/commit/d256870)
+  * add content scheme to whitelist ([8572f38](https://github.com/driftyco/ionic/commit/8572f38)
+* **gestures:** only preventDefault on direction if direction supplied ([56ab0f2](https://github.com/driftyco/ionic/commit/56ab0f2))
+* **history:** maintain nextViewOptions with resolves  ([cef6708](https://github.com/driftyco/ionic/commit/cef6708))
+* **item:** set complex ionItems to use scss var  ([5aaa94a](https://github.com/driftyco/ionic/commit/5aaa94a))
+* **infiniteScroll:** reduce memory used by inactive spinner ([32da5cd](https://github.com/driftyco/ionic/commit/32da5cd))
+* **loading:** reduce memory used by inactive spinner ([f622817](https://github.com/driftyco/ionic/commit/f622817))
+* **popup:** close highest overlay  ([bcfe210](https://github.com/driftyco/ionic/commit/bcfe210))
+* **scroll:** keyboard support for native scroll views ([a293a23](https://github.com/driftyco/ionic/commit/a293a23))
+* **scrollView:** fix memory leak in JS scrolling cleanup ([d6431a7](https://github.com/driftyco/ionic/commit/d6431a7))
+* **tabs:**
+  * make icons and titles stay in the same position  ([d9b3b80](https://github.com/driftyco/ionic/commit/d9b3b80))
+  * fix icons and titles position  ([f76aedb](https://github.com/driftyco/ionic/commit/f76aedb))
+* **tap:** stop cloning date inputs ([d3c3e8c](https://github.com/driftyco/ionic/commit/d3c3e8c))
+* **viewSwitcher:** broadcast view transition events in a consistent order ([f78b1b3](https://github.com/driftyco/ionic/commit/f78b1b3))
+
+
+
+#### Features
+
+* **gestures:** add dragstart and dragend gestures ([7679690](https://github.com/driftyco/ionic/commit/7679690))
+* **sideMenu:** add menu open and close events ([dbd5881](https://github.com/driftyco/ionic/commit/dbd5881))
+* **spinner:** allow ionSpinner default to be set by ionicConfigProvider ([cf338cf](https://github.com/driftyco/ionic/commit/dbd5881))
+
+
+
 <a name"1.0.0"></a>
 ### 1.0.0 "uranium-unicorn" (2015-05-12)
 

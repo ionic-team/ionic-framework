@@ -318,6 +318,30 @@ ion-tabs {
         transition: color .2s ease;
       }
     }
+   &:not(.tabs-icon-left):not(.tabs-icon-top){
+       .tab-item{
+          &.tab-item-active,
+          &.active,
+          &.activated {
+             .tab-title, i{
+            display:block;
+            margin-top: -$tabs-striped-border-width + 1px;
+          }
+        }
+      }
+    }
+    &.tabs-icon-left{
+       .tab-item{
+          margin-top: 1px;
+          &.tab-item-active,
+          &.active,
+          &.activated {
+            .tab-title, i {
+              margin-top: -0.1em;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -398,7 +422,7 @@ ion-tabs {
 .tabs-icon-right > .tabs .tab-item {
   font-size: $tabs-text-font-size-side-icon;
 
-  .icon {
+  .icon, .tab-title {
     display: inline-block;
     vertical-align: top;
     margin-top: -.1em;
@@ -494,3 +518,11 @@ ion-tabs {
   cursor: default;
   pointer-events: none;
 }
+
+.nav-bar-tabs-top.hide ~ .view-container .tabs-top .tabs{
+  top: 0
+}
+.pane[hide-nav-bar="true"] .has-tabs-top{
+  top:49px
+}
+
