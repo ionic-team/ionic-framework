@@ -1,4 +1,4 @@
-require('../../tools/transpiler/index.js').init();
+//require('../../tools/transpiler/index.js').init();
 
 var basePackage = require('dgeni-packages/base');
 var Package = require('dgeni').Package;
@@ -53,7 +53,7 @@ module.exports = new Package('typescript-parsing', [basePackage])
     getOutputPath: function() {} // These docs are not written to their own file, instead they are part of their class doc
   });
 
-  var MODULES_DOCS_PATH = 'partials/modules';
+  var MODULES_DOCS_PATH = 'docs';
 
   computePathsProcessor.pathTemplates.push({
     docTypes: ['module'],

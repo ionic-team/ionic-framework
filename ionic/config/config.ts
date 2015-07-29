@@ -1,6 +1,10 @@
+
 import {isObject, isDefined, isFunction, extend} from '../util/util';
 
-
+/**
+* This is the Ionic Config
+* @usage this is what you do to use it
+*/
 export class IonicConfig {
 
   constructor(settings) {
@@ -13,7 +17,9 @@ export class IonicConfig {
       extend(this._settings, settings);
     }
   }
-
+  /**
+  * @description The settings description
+  */
   setting() {
     const args = arguments;
     const arg0 = args[0];
@@ -113,6 +119,9 @@ export class IonicConfig {
 
   }
 
+  /**
+   * The setPlatform description
+   */
   setPlatform(platform) {
     // get the array of active platforms, which also knows the hierarchy,
     // with the last one the most important
