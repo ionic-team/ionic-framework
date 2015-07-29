@@ -2,18 +2,20 @@
 // Material Design Toolbar
 // --------------------------------------------------
 
-$toolbar-material-title-font-size:         2rem !default;
-$toolbar-material-button-font-size:        1.4rem !default;
+$toolbar-md-height:                       5.6rem !default;
+$toolbar-md-title-font-size:         2rem !default;
+$toolbar-md-button-font-size:        1.4rem !default;
 
 
 .toolbar[mode="md"] {
+  min-height: $toolbar-md-height;
 
   .toolbar-inner-title {
     padding: 0px 12px;
   }
 
   ion-title {
-    font-size: $toolbar-material-title-font-size;
+    font-size: $toolbar-md-title-font-size;
     font-weight: 500;
   }
 
@@ -23,7 +25,7 @@ $toolbar-material-button-font-size:        1.4rem !default;
 
   button,
   [button] {
-    font-size: $toolbar-material-button-font-size;
+    font-size: $toolbar-md-button-font-size;
   }
 
 }

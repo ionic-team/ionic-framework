@@ -17,6 +17,7 @@ $toolbar-ios-title-font-size:               1.7rem !default;
 
 .toolbar[mode="ios"] {
   border-bottom: 1px solid $toolbar-ios-border-color;
+  min-height: $toolbar-ios-height;
 
   .toolbar-title {
     order: map-get($toolbar-order-ios, title);
