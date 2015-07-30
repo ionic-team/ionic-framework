@@ -74,6 +74,10 @@ export class OverlayRef {
     let overlayInstance = (ref && ref.instance);
     if (!overlayInstance) return;
 
+    this._instance = overlayInstance;
+
+    overlayInstance.viewLoaded && overlayInstance.viewLoaded();
+
     this.zIndex = ROOT_Z_INDEX;
     for (let i = 0; i < app.overlays.length; i++) {
       if (app.overlays[i].zIndex >= this.zIndex) {
@@ -92,6 +96,7 @@ export class OverlayRef {
     this._handle = opts.handle || this.zIndex;
 
     this._dispose = () => {
+      this._instance = null;
       ref.dispose && ref.dispose();
       util.array.remove(app.overlays, this);
     };
@@ -105,6 +110,8 @@ export class OverlayRef {
 
   _open(opts={}) {
     return new Promise(resolve => {
+      this._instance.viewWillEnter && this._instance.viewWillEnter();
+
       let animationName = (opts && opts.animation) || this._opts.enterAnimation;
       let animation = Animation.create(this._elementRef.nativeElement, animationName);
 
@@ -115,6 +122,7 @@ export class OverlayRef {
       animation.play().then(() => {
         ClickBlock(false);
         animation.dispose();
+        this._instance.viewDidEnter && this._instance.viewDidEnter();
         resolve();
       });
     }).catch(err => {
@@ -124,6 +132,9 @@ export class OverlayRef {
 
   close(opts={}) {
     return new Promise(resolve => {
+      this._instance.viewWillLeave && this._instance.viewWillLeave();
+      this._instance.viewWillUnload && this._instance.viewWillUnload();
+
       let animationName = (opts && opts.animation) || this._opts.leaveAnimation;
       let animation = Animation.create(this._elementRef.nativeElement, animationName);
 
@@ -131,10 +142,14 @@ export class OverlayRef {
       ClickBlock(true, animation.duration() + 200);
 
       animation.play().then(() => {
+        this._instance.viewDidLeave && this._instance.viewDidLeave();
+        this._instance.viewDidUnload && this._instance.viewDidUnload();
+
         this._dispose();
 
         ClickBlock(false);
         animation.dispose();
+
         resolve();
       })
     }).catch(err => {

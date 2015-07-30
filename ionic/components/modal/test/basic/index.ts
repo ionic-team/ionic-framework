@@ -46,7 +46,29 @@ class MyAppCmp {
 })
 export class ContactModal {
   constructor() {
+    console.log('ContactModal constructor')
     this.rootView = ModalFirstPage;
+  }
+  viewLoaded() {
+    console.log('ContactModal viewLoaded');
+  }
+  viewWillEnter() {
+    console.log('ContactModal viewWillEnter');
+  }
+  viewDidEnter() {
+    console.log('ContactModal viewDidEnter');
+  }
+  viewWillLeave() {
+    console.log('ContactModal viewWillLeave');
+  }
+  viewDidLeave() {
+    console.log('ContactModal viewDidLeave');
+  }
+  viewWillUnload() {
+    console.log('ContactModal viewWillUnload');
+  }
+  viewDidUnload() {
+    console.log('ContactModal viewDidUnload');
   }
 }
 
