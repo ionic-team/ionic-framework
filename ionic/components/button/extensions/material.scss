@@ -2,34 +2,34 @@
 // Material Design Button
 // --------------------------------------------------
 
-$button-material-font-size:                1.4rem !default;
-$button-material-min-height:               3.6rem !default;
-$button-material-padding:                  0 1.6rem !default;
-$button-material-box-shadow:               0 1px 1.5px 0 rgba(0, 0, 0, 0.12),0 1px 1px 0 rgba(0, 0, 0, 0.24);//0 1px 3px 0 rgba(0, 0, 0, 0.3); //0 2px 5px 0 rgba(0, 0, 0, 0.26) !default;
-$button-material-box-shadow-active:        0 4px 5px 0 rgba(0, 0, 0, 0.14),0 1px 10px 0 rgba(0, 0, 0, 0.12),0 2px 4px -1px rgba(0, 0, 0, 0.2); //0 1px 3px 0 rgba(0, 0, 0, 0.3); //0 2px 5px 0 rgba(0, 0, 0, 0.26) !default;
-$button-material-border-radius:            3px !default;
+$button-md-font-size:                1.4rem !default;
+$button-md-min-height:               3.6rem !default;
+$button-md-padding:                  0 1.6rem !default;
+$button-md-box-shadow:               0 1px 1.5px 0 rgba(0, 0, 0, 0.12),0 1px 1px 0 rgba(0, 0, 0, 0.24);//0 1px 3px 0 rgba(0, 0, 0, 0.3); //0 2px 5px 0 rgba(0, 0, 0, 0.26) !default;
+$button-md-box-shadow-active:        0 4px 5px 0 rgba(0, 0, 0, 0.14),0 1px 10px 0 rgba(0, 0, 0, 0.12),0 2px 4px -1px rgba(0, 0, 0, 0.2); //0 1px 3px 0 rgba(0, 0, 0, 0.3); //0 2px 5px 0 rgba(0, 0, 0, 0.26) !default;
+$button-md-border-radius:            3px !default;
 
 
 [mode="md"] button,
 [mode="md"] [button] {
   border: 0;
-  border-radius: $button-material-border-radius;
+  border-radius: $button-md-border-radius;
 
-  min-height: $button-material-min-height;
+  min-height: $button-md-min-height;
 
-  padding: $button-material-padding;
+  padding: $button-md-padding;
   text-transform: uppercase;
 
   font-weight: 500;
-  font-size: $button-material-font-size;
-  box-shadow: $button-material-box-shadow;
+  font-size: $button-md-font-size;
+  box-shadow: $button-md-box-shadow;
 
   transition: box-shadow 0.2s $animation-curve-fast-out-linear-in,
               background-color 0.2s $animation-curve-default,
               color 0.2s $animation-curve-default;
 
   &.activated {
-    box-shadow: $button-material-box-shadow-active;
+    box-shadow: $button-md-box-shadow-active;
   }
 
   &[icon] {

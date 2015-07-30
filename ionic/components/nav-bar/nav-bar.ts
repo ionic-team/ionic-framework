@@ -20,8 +20,8 @@ import {ViewItem} from '../view/view-item';
       <button class="back-button">
         <icon class="back-button-icon" [name]="bbClass"></icon>
         <span class="back-button-text">
-          <span class="back-default" [inner-text]="bbDefault"></span>
-          <span class="back-title" [inner-text]="bbText"></span>
+          <span class="back-default" [text-content]="bbDefault"></span>
+          <span class="back-title" [text-content]="bbText"></span>
         </span>
       </button>
       <div class="toolbar-title">

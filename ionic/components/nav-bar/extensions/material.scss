@@ -2,14 +2,14 @@
 // Material Design Navbar
 // --------------------------------------------------
 
-$navbar-material-height:                  5.6rem !default;
+$navbar-md-height:                  5.6rem !default;
 
 
-.nav[mode="md"] .navbar-container {
-  min-height: $navbar-material-height;
-}
+.nav[mode="md"] {
 
-.navbar[mode="md"] {
+  .navbar-container {
+    min-height: $navbar-md-height;
+  }
 
   .back-button {
     padding: 0;

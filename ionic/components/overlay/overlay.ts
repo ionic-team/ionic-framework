@@ -110,7 +110,8 @@ export class OverlayRef {
 
   _open(opts={}) {
     return new Promise(resolve => {
-      this._instance.viewWillEnter && this._instance.viewWillEnter();
+      let instance = this._instance || {};
+      instance.viewWillEnter && instance.viewWillEnter();
 
       let animationName = (opts && opts.animation) || this._opts.enterAnimation;
       let animation = Animation.create(this._elementRef.nativeElement, animationName);
@@ -122,7 +123,7 @@ export class OverlayRef {
       animation.play().then(() => {
         ClickBlock(false);
         animation.dispose();
-        this._instance.viewDidEnter && this._instance.viewDidEnter();
+        instance.viewDidEnter && instance.viewDidEnter();
         resolve();
       });
     }).catch(err => {
@@ -132,8 +133,9 @@ export class OverlayRef {
 
   close(opts={}) {
     return new Promise(resolve => {
-      this._instance.viewWillLeave && this._instance.viewWillLeave();
-      this._instance.viewWillUnload && this._instance.viewWillUnload();
+      let instance = this._instance || {};
+      instance.viewWillLeave && instance.viewWillLeave();
+      instance.viewWillUnload && instance.viewWillUnload();
 
       let animationName = (opts && opts.animation) || this._opts.leaveAnimation;
       let animation = Animation.create(this._elementRef.nativeElement, animationName);
@@ -142,8 +144,8 @@ export class OverlayRef {
       ClickBlock(true, animation.duration() + 200);
 
       animation.play().then(() => {
-        this._instance.viewDidLeave && this._instance.viewDidLeave();
-        this._instance.viewDidUnload && this._instance.viewDidUnload();
+        instance.viewDidLeave && instance.viewDidLeave();
+        instance.viewDidUnload && instance.viewDidUnload();
 
         this._dispose();
 

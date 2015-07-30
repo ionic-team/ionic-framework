@@ -5,11 +5,11 @@
 $navbar-ios-height:                        4.4rem !default;
 
 
-.nav[mode="ios"] .navbar-container {
-  min-height: $navbar-ios-height;
-}
+.nav[mode="ios"] {
 
-.navbar[mode="ios"] {
+  .navbar-container {
+    min-height: $navbar-ios-height;
+  }
 
   .back-button {
     padding: 0;
