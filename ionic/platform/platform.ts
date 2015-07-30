@@ -106,6 +106,13 @@ export class PlatformCtrl {
     return this._ua;
   }
 
+  navigatorPlatform(val) {
+    if (arguments.length) {
+      this._bPlt = val;
+    }
+    return this._bPlt || '';
+  }
+
   width() {
     if (!this._w) {
       this._w = window.innerWidth;

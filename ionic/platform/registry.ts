@@ -89,7 +89,11 @@ Platform.register({
     forwardIcon: 'ion-ios-arrow-forward',
     mode: 'ios',
     iconMode: 'ios',
-    tapPolyfill: true,
+    tapPolyfill: function() {
+      // this ensures it's actually a physical iOS device
+      // and not just an a spoofed user-agent string
+      return /iphone|ipad|ipod/i.test(Platform.navigatorPlatform());
+    },
     keyboardScrollAssist: true,
     viewTransition: 'ios',
     navTitleAlign: 'center',

@@ -25,13 +25,13 @@ export class IonicConfig {
     const arg0 = args[0];
     const arg1 = args[1];
 
-    let s = this._settings;
+    let settings = this._settings;
 
     switch (args.length) {
 
       case 0:
         // setting() = get settings object
-        return s;
+        return settings;
 
 
       case 1:
@@ -49,17 +49,17 @@ export class IonicConfig {
         // setting('key') = get value
         // arg0 = key
 
-        if (!isDefined(s[arg0])) {
+        if (!isDefined(settings[arg0])) {
           // if the value was already set this will all be skipped
           // if there was no user config then it'll check each of
           // the user config's platforms, which already contains
           // settings from default platform configs
-          s[arg0] = null;
+          settings[arg0] = null;
 
           // check the platform settings object for this value
           // loop though each of the active platforms
           let activePlatformKeys = this._platforms;
-          let platformSettings = s.platforms;
+          let platformSettings = settings.platforms;
           let platformObj = null;
           if (platformSettings) {
             let platformValue = undefined;
@@ -70,7 +70,7 @@ export class IonicConfig {
               }
             }
             if (isDefined(platformValue)) {
-              s[arg0] = platformValue;
+              settings[arg0] = platformValue;
             }
           }
         }
@@ -80,10 +80,10 @@ export class IonicConfig {
         // or it was from the users platform configs
         // or it was from the default platform configs
         // in that order
-        if (isFunction(s[arg0])) {
-          return s[arg0]();
+        if (isFunction(settings[arg0])) {
+          settings[arg0] = settings[arg0]();
         }
-        return s[arg0];
+        return settings[arg0];
 
 
       case 2:
@@ -93,14 +93,14 @@ export class IonicConfig {
           // setting('ios', {...}) = set platform config object
           // arg0 = platform
           // arg1 = platform config object
-          s.platforms = s.platforms || {};
-          s.platforms[arg0] = arg1;
+          settings.platforms = settings.platforms || {};
+          settings.platforms[arg0] = arg1;
 
         } else {
           // setting('key', 'value') = set key/value pair
           // arg0 = key
           // arg1 = value
-          s[arg0] = arg1;
+          settings[arg0] = arg1;
         }
         return this;
 
@@ -110,9 +110,9 @@ export class IonicConfig {
         // arg0 = platform
         // arg1 = key
         // arg2 = value
-        s.platforms = s.platforms || {};
-        s.platforms[arg0] = s.platforms[arg0] || {};
-        s.platforms[arg0][arg1] = args[2];
+        settings.platforms = settings.platforms || {};
+        settings.platforms[arg0] = settings.platforms[arg0] || {};
+        settings.platforms[arg0][arg1] = args[2];
         return this;
 
     }
