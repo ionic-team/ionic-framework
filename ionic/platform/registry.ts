@@ -9,6 +9,7 @@ Platform.register({
     forwardIcon: 'ion-ios-arrow-forward',
     mode: 'ios',
     iconMode: 'ios',
+    navTitleAlign: 'center',
     viewTransition: 'ios'
   }
 });
@@ -59,9 +60,10 @@ Platform.register({
     iconMode: 'md',
     type: 'overlay',
     keyboardScrollAssist: true,
-    viewTransition: 'md',
     mdRipple: true,
-    tabBarPlacement: 'top'
+    tabBarPlacement: 'top',
+    navTitleAlign: 'left',
+    viewTransition: 'md'
   },
   isMatch(p) {
     // "silk" is kindle fire
@@ -90,6 +92,7 @@ Platform.register({
     tapPolyfill: true,
     keyboardScrollAssist: true,
     viewTransition: 'ios',
+    navTitleAlign: 'center',
     mdRipple: false
   },
   isMatch(p) {
