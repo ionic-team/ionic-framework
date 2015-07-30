@@ -15,12 +15,16 @@ $navbar-ios-height:                        4.4rem !default;
     padding: 0;
     margin: 0 4px;
 
+    min-height: 3.2rem;
+    line-height: 1;
+
     order: map-get($toolbar-order-ios, 'back-button');
     overflow: inherit;
   }
 
   .back-button-icon {
-    padding-right: 8px;
+    font-size: 3.2rem;
+    padding-right: 7px;
   }
 
 }

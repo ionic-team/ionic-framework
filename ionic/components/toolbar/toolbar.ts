@@ -104,8 +104,14 @@ export class Toolbar extends ToolbarBase {
   }
 
   onIonInit() {
+    // TODO: THIS IS HORRIBLE, FIX
     setTimeout(() => {
-      this.alignTitle()
+      this.alignTitle();
+
+      setTimeout(() => {
+        this.alignTitle()
+      }, 64);
+
     }, 32);
   }
 
