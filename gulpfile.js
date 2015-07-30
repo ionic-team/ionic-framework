@@ -134,6 +134,7 @@ gulp.task('transpile', function() {
                          'ionic/**/*.ts',
                          'ionic/**/*.js',
                          '!ionic/components/*/test/**/*',
+                         '!ionic/util/hairline.js',
                          '!ionic/init.js',
                          '!ionic/util/test/*'
                       ]
@@ -155,7 +156,7 @@ gulp.task('transpile', function() {
 });
 
 gulp.task('bundle.js', function() {
-  return gulp.src(['dist/js/es5/ionic/**/*.js', 'ionic/init.js'])
+  return gulp.src(['dist/js/es5/ionic/**/*.js', 'ionic/util/hairline.js', 'ionic/init.js'])
              .pipe(concat('ionic.bundle.js'))
              .pipe(gulp.dest('dist/js/'));
 });
