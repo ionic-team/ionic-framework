@@ -10,7 +10,7 @@ import {HNSinglePost} from './pages/single';
   selector: 'story'
 })
 @IonicView({
-  template: '<div class="hn-story"><content></content></div>'
+  template: '<div class="hn-story"><ng-content></ng-content></div>'
 })
 export class Story {
   constructor() {

@@ -21,7 +21,7 @@ import {Tabs} from './tabs';
   }
 })
 @View({
-  template: '<template pane-anchor></template><content></content>',
+  template: '<template pane-anchor></template><ng-content></ng-content>',
   directives: [forwardRef(() => TabPaneAnchor)]
 })
 export class Tab extends ViewController {

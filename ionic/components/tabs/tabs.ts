@@ -24,7 +24,7 @@ import {IonicComponent, IonicView} from '../../config/annotations';
       '</div>' +
     '</nav>' +
     '<section class="content-container">' +
-      '<content></content>' +
+      '<ng-content></ng-content>' +
     '</section>',
   directives: [forwardRef(() => TabButton)]
 })

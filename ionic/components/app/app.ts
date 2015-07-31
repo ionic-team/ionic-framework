@@ -1,4 +1,4 @@
-import {bootstrap, Compiler, ElementRef, NgZone, bind, ViewRef} from 'angular2/angular2';
+import {bootstrap, Compiler, ElementRef, NgZone, bind, ViewRef, DynamicComponentLoader} from 'angular2/angular2';
 import {AppViewManager} from 'angular2/src/core/compiler/view_manager';
 import {NgZone} from 'angular2/src/core/zone/ng_zone';
 
@@ -92,38 +92,13 @@ export class IonicApp {
    * @return Promise that resolves with the ContainerRef created
    */
   appendComponent(component: Type, context=null) {
-    return new Promise((resolve, reject) => {
-      let injector = this.injector();
-      let compiler = injector.get(Compiler);
-      let viewMngr = injector.get(AppViewManager);
-      let rootComponentRef = this._ref._hostComponent;
-      let viewContainerLocation = rootComponentRef.location;
+    let loader = this.injector().get(DynamicComponentLoader);
+    let rootComponentRef = this.ref()._hostComponent;
 
-      compiler.compileInHost(component).then(protoViewRef => {
-        let atIndex = 0;
-
-        let hostViewRef = viewMngr.createViewInContainer(
-                                      viewContainerLocation,
-                                      atIndex,
-                                      protoViewRef,
-                                      null,
-                                      injector);
-
-        hostViewRef.elementRef = new ElementRef(hostViewRef, 0, viewMngr._renderer);
-        hostViewRef.instance = viewMngr.getComponent(hostViewRef.elementRef);
-        util.extend(hostViewRef.instance, context);
-
-        hostViewRef.dispose = () => {
-          viewMngr.destroyViewInContainer(viewContainerLocation, 0, 0, hostViewRef.viewRef);
-        };
-
-        resolve(hostViewRef);
-
-      }).catch(err => {
-        console.error('appendComponent:', err);
-        reject(err);
-      });
-    });
+    return loader.loadNextToLocation(component, rootComponentRef.location)
+              .catch(err => {
+                console.error('appendComponent:', err);
+              });
   }
 
   applyBodyCss(bodyEle, platform, config) {

@@ -30,7 +30,7 @@ import * as util from 'ionic/util';
   ]
 })
 @View({
-  template: '<div class="slides-view"><content></content></div>'
+  template: '<div class="slides-view"><ng-content></ng-content></div>'
 })
 export class Slides {
   constructor(elementRef: ElementRef) {

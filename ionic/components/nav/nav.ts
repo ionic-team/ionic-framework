@@ -20,11 +20,11 @@ import {ViewController} from '../view/view-controller';
 export class Nav extends ViewController {
 
   constructor(
-    @Optional() AncestorViewCtrl: ViewController,
+    @Optional() ancestorViewCtrl: ViewController,
     injector: Injector,
     elementRef: ElementRef
   ) {
-    super(AncestorViewCtrl, injector, elementRef);
+    super(ancestorViewCtrl, injector, elementRef);
   }
 
   onIonInit() {

@@ -27,7 +27,7 @@ import {Icon} from '../icon/icon';
     '<div class="checkbox-icon"></div>' +
   '</div>' +
   '<div class="item-content">' +
-    '<content></content>' +
+    '<ng-content></ng-content>' +
   '</div>'
 })
 export class Checkbox extends IonInputItem {

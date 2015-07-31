@@ -24,7 +24,7 @@ import {dom} from 'ionic/util';
         <!--<content select="ion-item-accessory"></content>-->
       </div>
       <div class="item-label">
-        <content></content>
+        <ng-content></ng-content>
       </div>
     </div>
     <!--
