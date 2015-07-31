@@ -10,14 +10,7 @@
 }
 
 .checkbox input {
-  position: absolute;
-  width: 0;
-  height: 0;
-  margin: 0;
-  padding: 0;
-  opacity: 0;
-  border: none;
-  @include appearance(none);
+  display: none;
 }
 
 .checkbox .input-label {

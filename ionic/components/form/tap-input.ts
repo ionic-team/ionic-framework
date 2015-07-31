@@ -10,12 +10,15 @@ import {RadioButton} from '../radio/radio';
 
 @Directive({
   selector: 'input[type=checkbox],input[type=radio]',
-  properties: [ 'checked', 'name', 'value' ],
+  properties: [
+    'checked',
+    'name',
+    'value'
+  ],
   host: {
     '[checked]': 'checked',
     '[value]': 'value',
     '[attr.name]': 'name',
-    '(change)': 'toggle()',
     'class': 'tap-input input'
   }
 })
@@ -41,17 +44,6 @@ export class TapInput extends IonInput {
     this.type = type;
     this.elementRef = elementRef;
     this.tabIndex = this.tabIndex || '';
-  }
-
-  onInit() {
-    console.log("tapinput oninit, " + this.id + " checked: " + this.checked);
-    console.log("tapinput oninit, " + this.id + " value: " + this.value);
-  }
-
-  //to detect switching/selecting inputs with the keyboard
-  //view -> model (Control)
-  toggle() {
-    this.container && this.container.toggle(this);
   }
 
 }

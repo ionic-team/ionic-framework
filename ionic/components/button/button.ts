@@ -34,7 +34,7 @@ export class TapDisabled {}
 
 
 @Directive({
-  selector: 'a,button,[tappable]',
+  selector: 'button,[button],[tappable],ion-checkbox',
   host: {
     '(^touchstart)': 'touchStart($event)',
     '(^touchend)': 'touchEnd($event)',
@@ -143,12 +143,19 @@ export class TapClick {
     });
   }
 
-  click(ev) {
+  allowClick(ev) {
     if (!ev.isIonicTap) {
       if (this.disableClick || !this.start) {
-        ev.preventDefault();
-        ev.stopPropagation();
+        return false;
       }
+    }
+    return true;
+  }
+
+  click(ev) {
+    if (!this.allowClick(ev)) {
+      ev.preventDefault();
+      ev.stopPropagation();
     }
   }
 

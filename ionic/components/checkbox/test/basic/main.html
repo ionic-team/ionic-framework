@@ -9,10 +9,9 @@
     <ion-list>
 
       <ion-checkbox ng-control="appleCtrl">
-        <label id="appleLabel">Apple</label>
-        <input checked type="checkbox">
+        Apple
       </ion-checkbox>
-
+<!--
       <ion-checkbox ng-control="bananaCtrl">
         <label>Banana</label>
         <input value="test" type="checkbox">
@@ -26,13 +25,13 @@
       <ion-checkbox ng-control="grapeCtrl">
         <label>Grape</label>
         <input value="test" checked="checked" type="checkbox">
-      </ion-checkbox>
+      </ion-checkbox> -->
 
     <ion-list>
 
   </form>
 
-  <p>
+  <p aria-hidden="true">
     <code>appleCtrl.dirty: {{fruitsForm.controls.appleCtrl.dirty}}</code><br>
     <code>appleCtrl.value: {{fruitsForm.controls.appleCtrl.value.value}}</code><br>
     <code>appleCtrl.checked: {{fruitsForm.controls.appleCtrl.value.checked}}</code><br>
