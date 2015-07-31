@@ -1,4 +1,4 @@
-import {Directive, View, CSSClass, ElementRef, Optional, Parent, Attribute} from 'angular2/angular2';
+import {Directive, View, CSSClass, ElementRef, Optional, Ancestor, Attribute} from 'angular2/angular2';
 
 import {IonicConfig} from '../../config/config';
 import {IonicComponent} from '../../config/annotations';
@@ -66,7 +66,7 @@ Custom Font Icon
 export class IconDirective {
   constructor(
     elementRef: ElementRef,
-    @Optional() @Parent() parentButton: Button,
+    @Optional() @Ancestor() AncestorButton: Button,
     @Attribute('forward') forward: string,
     config: IonicConfig
   ) {
@@ -79,7 +79,7 @@ export class IconDirective {
       this.fwdIcon = config.setting('forwardIcon');
     }
 
-    if (parentButton) {
+    if (AncestorButton) {
       // this icon is within a button
       this.withinButton = true;
 
@@ -97,7 +97,7 @@ export class IconDirective {
 
       // tell the button there's a child icon
       // the button will set the correct css classes on itself
-      parentButton.registerIcon(this);
+      AncestorButton.registerIcon(this);
     }
   }
 

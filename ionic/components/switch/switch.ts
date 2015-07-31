@@ -4,7 +4,6 @@ import {
   ElementRef,
   Renderer,
   Optional,
-  Parent,
   NgControl
 } from 'angular2/angular2';
 

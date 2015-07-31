@@ -1,4 +1,4 @@
-import {Component, Directive, View, Parent, ElementRef, forwardRef} from 'angular2/angular2';
+import {Component, Directive, View, Ancestor, ElementRef, forwardRef} from 'angular2/angular2';
 
 import {IonicConfig} from '../../config/config';
 import * as dom  from '../../util/dom';
@@ -75,7 +75,7 @@ export class FocusHolder {
   }
 })
 class FocusInput {
-  constructor(elementRef: ElementRef, @Parent() holder: FocusHolder) {
+  constructor(elementRef: ElementRef, @Ancestor() holder: FocusHolder) {
     this.elementRef = elementRef;
     holder.register(this);
     this.holder = holder;

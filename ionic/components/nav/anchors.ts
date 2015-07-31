@@ -1,4 +1,4 @@
-import {Component, View, Directive, Parent, ElementRef, forwardRef, Inject} from 'angular2/angular2';
+import {Component, View, Directive, Ancestor, ElementRef, forwardRef, Inject} from 'angular2/angular2';
 import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
 
 import {Pane} from './pane';
@@ -8,7 +8,7 @@ import {ViewController} from '../view/view-controller';
 @Directive({selector: 'template[pane-anchor]'})
 export class PaneAnchor {
   constructor(
-    @Parent() @Inject(forwardRef(() => Pane)) pane: Pane,
+    @Ancestor() @Inject(forwardRef(() => Pane)) pane: Pane,
     elementRef: ElementRef
   ) {
     pane.sectionAnchorElementRef = elementRef;
@@ -19,7 +19,7 @@ export class PaneAnchor {
 @Directive({selector: 'template[content-anchor]'})
 export class PaneContentAnchor {
   constructor(
-    @Parent() @Inject(forwardRef(() => Pane)) pane: Pane,
+    @Ancestor() @Inject(forwardRef(() => Pane)) pane: Pane,
     viewContainerRef: ViewContainerRef
   ) {
     pane.contentContainerRef = viewContainerRef;

@@ -1,4 +1,4 @@
-import {Directive, View, Parent, Optional, ElementRef, forwardRef} from 'angular2/angular2';
+import {Directive, View, Ancestor, Optional, ElementRef, forwardRef} from 'angular2/angular2';
 import {ProtoViewRef} from 'angular2/src/core/compiler/view_ref';
 
 import {ToolbarBase} from '../toolbar/toolbar';
@@ -88,7 +88,7 @@ export class Navbar extends ToolbarBase {
   }
 })
 class BackButton {
-  constructor(@Parent() navbar: Navbar, @Optional() item: ViewItem, elementRef: ElementRef) {
+  constructor(@Ancestor() navbar: Navbar, @Optional() item: ViewItem, elementRef: ElementRef) {
     this.item = item;
     navbar.backButtonElement(elementRef);
   }
@@ -104,7 +104,7 @@ class BackButton {
   selector: '.back-button-text'
 })
 class BackButtonText {
-  constructor(@Parent() navbar: Navbar, elementRef: ElementRef) {
+  constructor(@Ancestor() navbar: Navbar, elementRef: ElementRef) {
     navbar.backButtonTextElement(elementRef);
   }
 }
@@ -113,7 +113,7 @@ class BackButtonText {
   selector: '.toolbar-title'
 })
 class Title {
-  constructor(@Parent() toolbar: Navbar, elementRef: ElementRef) {
+  constructor(@Ancestor() toolbar: Navbar, elementRef: ElementRef) {
     toolbar.titleElement(elementRef);
   }
 }
@@ -122,7 +122,7 @@ class Title {
   selector: '.toolbar-item'
 })
 class NavbarItem {
-  constructor(@Parent() toolbar: Navbar, elementRef: ElementRef) {
+  constructor(@Ancestor() toolbar: Navbar, elementRef: ElementRef) {
     toolbar.itemElements(elementRef);
   }
 }

@@ -1,7 +1,8 @@
-import {ElementRef, Parent} from 'angular2/angular2'
-import {Directive} from 'angular2/angular2';
-import {Item} from 'ionic/components/item/item'
-import {SlideGesture} from 'ionic/gestures/slide-gesture'
+import {ElementRef, Ancestor, Directive} from 'angular2/angular2';
+
+import {Item} from 'ionic/components/item/item';
+import {SlideGesture} from 'ionic/gestures/slide-gesture';
+
 
 @Directive({
   selector: 'ion-primary-swipe-buttons'
@@ -9,11 +10,11 @@ import {SlideGesture} from 'ionic/gestures/slide-gesture'
 export class ItemPrimarySwipeButtons {
   constructor(
     elementRef: ElementRef,
-    @Parent() item: Item
+    @Ancestor() item: Item
   ) {
     item.primarySwipeButtons = this
     this.ele = elementRef.nativeElement
-    this.parentItem = item
+    this.AncestorItem = item
     this.gesture = new ItemSlideGesture(this)
     this.gesture.listen()
   }
@@ -36,7 +37,7 @@ export class ItemSecondarySwipeButtons {
 
 class ItemSlideGesture extends SlideGesture {
   constructor(buttons) {
-    super(buttons.parentItem.ele)
+    super(buttons.AncestorItem.ele)
     this.buttons = buttons
   }
 

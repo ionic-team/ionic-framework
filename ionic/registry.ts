@@ -1,8 +1,4 @@
-import {ElementRef, For, Parent, onInit} from 'angular2/angular2'
-import {Component, Directive} from 'angular2/angular2';
-
-import {FormBuilder, Validators, FormDirectives, ControlGroup} from 'angular2/forms';
-import {Log} from 'ionic/util'
+import {onInit, Directive} from 'angular2/angular2';
 
 import {IonicApp} from 'ionic/ionic'
 
