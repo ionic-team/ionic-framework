@@ -1,4 +1,4 @@
-import {Directive, View, CSSClass, ElementRef, Optional, Ancestor, Attribute} from 'angular2/angular2';
+import {Directive, View, CSSClass, ElementRef, Optional, Ancestor, Attribute, Renderer} from 'angular2/angular2';
 
 import {IonicConfig} from '../../config/config';
 import {IonicComponent} from '../../config/annotations';
@@ -65,12 +65,13 @@ Custom Font Icon
 })
 export class IconDirective {
   constructor(
-    elementRef: ElementRef,
+    private _elementRef: ElementRef,
     @Optional() @Ancestor() AncestorButton: Button,
     @Attribute('forward') forward: string,
-    config: IonicConfig
+    config: IonicConfig,
+    private _renderer: Renderer
   ) {
-    let ele = this.ele = elementRef.nativeElement;
+    let ele = this.ele = _elementRef.nativeElement;
 
     this.iconLeft = this.iconRight = this.iconOnly = false;
     this.ariaHidden = true;
@@ -108,7 +109,7 @@ export class IconDirective {
     if (!this.name) return;
 
     // add the css class to show the icon font
-    this.ele.classList.add(this.name);
+    this._renderer.setElementClass(this._elementRef, this.name, true);
 
     // hide the icon when it's within a button
     // and the button isn't an icon only button

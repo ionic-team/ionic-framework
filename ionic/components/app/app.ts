@@ -95,7 +95,9 @@ export class IonicApp {
     let loader = this.injector.get(DynamicComponentLoader);
     let rootComponentRef = this.ref()._hostComponent;
 
-    return loader.loadNextToLocation(component, rootComponentRef.location, this.bindings)
+    let bindings = this.injector._proto._strategy.bindings;
+
+    return loader.loadNextToLocation(component, rootComponentRef.location)
               .catch(err => {
                 console.error('appendComponent:', err);
               });
@@ -147,18 +149,6 @@ function initApp(window, document, config) {
   window.addEventListener('resize', Platform.resetDimensions);
 
   return app;
-}
-
-@Component({
-  selector: 'test-comp'
-})
-@View({
-  template: 'test-comp text'
-})
-class TestComp {
-  constructor(config: IonicConfig) {
-    console.log('TestComp constructor')
-  }
 }
 
 export function ionicBootstrap(component, config, router) {

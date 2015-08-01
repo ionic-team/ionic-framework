@@ -46,11 +46,6 @@ export class ViewController extends Ion {
     this._ids = -1;
 
     // build a new injector for child ViewItems to use
-    this.injector = injector.resolveAndCreateChild([
-      bind(ViewController).toValue(this),
-      bind(NavController).toValue(new NavController(this))
-    ]);
-
     this.bindings = Injector.resolve([
       bind(ViewController).toValue(this),
       bind(NavController).toValue(new NavController(this))
