@@ -27,7 +27,9 @@ export class Nav extends ViewController {
     super(ancestorViewCtrl, injector, elementRef);
   }
 
-  onIonInit() {
+  onInit() {
+    super.onInit();
+
     if (this.root) {
       this.push(this.root);
     }

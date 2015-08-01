@@ -50,6 +50,11 @@ export class ViewController extends Ion {
       bind(ViewController).toValue(this),
       bind(NavController).toValue(new NavController(this))
     ]);
+
+    this.bindings = Injector.resolve([
+      bind(ViewController).toValue(this),
+      bind(NavController).toValue(new NavController(this))
+    ]);
   }
 
   push(component, params = {}, opts = {}) {

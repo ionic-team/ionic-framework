@@ -41,7 +41,7 @@ export class Tab extends ViewController {
 
     let item = this.item = new ViewItem(tabs.Ancestor);
     item.setInstance(this);
-    item.viewElement(elementRef.nativeElement);
+    item.viewElementRef(elementRef);
     tabs.addTab(this);
 
     this.navbarView = item.navbarView = () => {

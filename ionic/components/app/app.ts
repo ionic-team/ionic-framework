@@ -1,4 +1,4 @@
-import {bootstrap, Compiler, ElementRef, NgZone, bind, ViewRef, DynamicComponentLoader} from 'angular2/angular2';
+import {Component, View, bootstrap, Compiler, ElementRef, NgZone, bind, ViewRef, DynamicComponentLoader, Injector} from 'angular2/angular2';
 import {AppViewManager} from 'angular2/src/core/compiler/view_manager';
 import {NgZone} from 'angular2/src/core/zone/ng_zone';
 
@@ -28,7 +28,7 @@ export class IonicApp {
 
   load(appRef) {
     this.ref(appRef);
-    this._zone = this.injector().get(NgZone);
+    this._zone = this.injector.get(NgZone);
   }
 
   focusHolder(val) {
@@ -49,7 +49,7 @@ export class IonicApp {
     return this._ref;
   }
 
-  injector() {
+  get injector {
     return this._ref.injector;
   }
 
@@ -92,10 +92,10 @@ export class IonicApp {
    * @return Promise that resolves with the ContainerRef created
    */
   appendComponent(component: Type, context=null) {
-    let loader = this.injector().get(DynamicComponentLoader);
+    let loader = this.injector.get(DynamicComponentLoader);
     let rootComponentRef = this.ref()._hostComponent;
 
-    return loader.loadNextToLocation(component, rootComponentRef.location)
+    return loader.loadNextToLocation(component, rootComponentRef.location, this.bindings)
               .catch(err => {
                 console.error('appendComponent:', err);
               });
@@ -149,6 +149,18 @@ function initApp(window, document, config) {
   return app;
 }
 
+@Component({
+  selector: 'test-comp'
+})
+@View({
+  template: 'test-comp text'
+})
+class TestComp {
+  constructor(config: IonicConfig) {
+    console.log('TestComp constructor')
+  }
+}
+
 export function ionicBootstrap(component, config, router) {
   return new Promise(resolve => {
     try {
@@ -186,16 +198,16 @@ export function ionicBootstrap(component, config, router) {
       let popup = new Popup(app, config);
 
       // add injectables that will be available to all child components
-      let injectableBindings = [
+      app.bindings = Injector.resolve([
         bind(IonicApp).toValue(app),
         bind(IonicConfig).toValue(config),
         bind(IonicRouter).toValue(router),
         bind(ActionMenu).toValue(actionMenu),
         bind(Modal).toValue(modal),
         bind(Popup).toValue(popup)
-      ];
+      ]);
 
-      bootstrap(component, injectableBindings).then(appRef => {
+      bootstrap(component, app.bindings).then(appRef => {
         app.load(appRef);
 
         // append the focus holder if its needed

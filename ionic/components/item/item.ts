@@ -14,22 +14,22 @@ import {dom} from 'ionic/util';
 @View({
   template: `
     <!--
-    <content select="ion-primary-options"></content>
-    <content select="ion-primary-swipe-buttons"></content>
+    <ng-content select="ion-primary-options"></ng-content>
+    <ng-content select="ion-primary-swipe-buttons"></ng-content>
     -->
     <div class="item-content">
       <div class="item-media">
       </div>
       <div class="item-accessory">
-        <!--<content select="ion-item-accessory"></content>-->
+        <!--<ng-content select="ion-item-accessory"></ng-content>-->
       </div>
       <div class="item-label">
         <ng-content></ng-content>
       </div>
     </div>
     <!--
-    <content select="ion-secondary-options"></content>
-    <content select="ion-secondary-swipe-buttons"></content>
+    <ng-content select="ion-secondary-options"></ng-content>
+    <ng-content select="ion-secondary-swipe-buttons"></ng-content>
     -->
   `
   /*
