@@ -143,7 +143,8 @@ IonicModule
 .directive('ionNavView', [
   '$state',
   '$ionicConfig',
-function($state, $ionicConfig) {
+  '$ionicHistory',
+function($state, $ionicConfig, $ionicHistory) {
   // IONIC's fork of Angular UI Router, v0.2.10
   // the navView handles registering views in the history and how to transition between them
   return {
@@ -186,7 +187,12 @@ function($state, $ionicConfig) {
 
           // do not update THIS nav-view if its is not the container for the given state
           // if the viewLocals are the same as THIS latestLocals, then nothing to do
-          if (!viewLocals || (!firstTime && viewLocals === latestLocals)) return;
+          if (!viewLocals || (!firstTime && viewLocals === latestLocals)) {
+            if (latestLocals) {
+              $ionicHistory.updateCurrentView();
+            }
+            return;
+          }
 
           // update the latestLocals
           latestLocals = viewLocals;

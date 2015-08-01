@@ -173,6 +173,15 @@ describe('Ionic nav-view', function() {
         template: 'tab3page2NoCache'
       }
     }
+  },
+  paramsUiViewState = {  
+    template: '<ui-view></ui-view>'
+  },
+  paramsUiChildViewState = {
+    template: '{{state.params.current}}',
+    params: {
+      current: 'currentParamValue'
+    }
   }
   beforeEach(module(function ($stateProvider) {
     $stateProvider
@@ -207,7 +216,9 @@ describe('Ionic nav-view', function() {
       .state('tabAbstract.tab3page2', tab3page2NoCacheState)
       .state('rootView1', rootView1State)
       .state('rootView2', rootView2State)
-      .state('rootView1NoCache', rootView1NoCacheState);
+      .state('rootView1NoCache', rootView1NoCacheState)
+      .state('paramsUiState', paramsUiViewState)
+      .state('paramsUiState.child', paramsUiChildViewState);
   }));
 
   beforeEach(inject(function(_$compile_, $ionicConfig, $rootScope) {
@@ -227,6 +238,26 @@ describe('Ionic nav-view', function() {
     scope.$apply();
     expect(view.controller('ionNavView')).toBeTruthy();
   });
+
+  it('current view params should be replaced with the current $state params', inject(function($state, $ionicHistory, $q) {
+    var newParamTemplate = 'newParamValue';
+    elem.append($compile('<div><ion-nav-view></ion-nav-view></div>')(scope));
+    expect(elem.find('ion-nav-view').text()).toBe('');
+    scope.state = $state;
+
+    $state.go(paramsUiChildViewState);
+    $q.flush();
+
+    $state.go(paramsUiChildViewState, {current: 'newParamValue'});
+    $q.flush();
+
+    $state.go(aState);
+    $q.flush();
+
+    $ionicHistory.goBack();
+    $q.flush();
+    expect(elem.find('ion-nav-view').text()).toBe(newParamTemplate+aState.template+newParamTemplate);
+  }));
 
   it('anonymous ui-view should be replaced with the template of the current $state', inject(function ($state, $q) {
     elem.append($compile('<div><ui-view>ui view</ui-view></div>')(scope));

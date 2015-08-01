@@ -421,6 +421,14 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
       };
     },
 
+    updateCurrentView: function() {
+      extend(viewHistory.currentView, {
+        stateId: getCurrentStateId(),
+        stateParams: getCurrentStateParams(),
+        url: $location.url()
+      });
+    },
+
     registerHistory: function(scope) {
       scope.$historyId = ionic.Utils.nextUid();
     },
