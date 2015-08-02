@@ -1,5 +1,4 @@
-import {Component, Directive, View, ElementRef, Parent, Inject, forwardRef} from 'angular2/angular2';
-import {bind} from 'angular2/di';
+import {Component, Directive, View, ElementRef, Inject, forwardRef, Injector, bind} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
@@ -13,6 +12,10 @@ export class PaneController {
   constructor(viewCtrl: ViewController) {
     this.panes = {};
     this.viewCtrl = viewCtrl;
+
+    this.bindings = Injector.resolve([
+      bind(ViewController).toValue(viewCtrl)
+    ]);
   }
 
   get(itemStructure, callback) {
@@ -32,16 +35,8 @@ export class PaneController {
       // create a new nav pane
       this.panes[key] = null;
 
-      let injector = viewCtrl.injector.resolveAndCreateChild([
-        bind(ViewController).toValue(viewCtrl)
-      ]);
 
-      // add a Pane element
-      // when the Pane is added, it'll also add its reference to the panes object
-      // viewCtrl.compiler.compileInHost(this.ComponentType).then(componentProtoViewRef => {
-
-      // });
-      viewCtrl.loader.loadNextToLocation(Pane, viewCtrl.anchorElementRef(), injector).then(() => {
+      viewCtrl.loader.loadNextToLocation(Pane, viewCtrl.anchorElementRef(), this.bindings).then(() => {
 
         // get the pane reference by name
         pane = this.panes[key];

@@ -1,4 +1,4 @@
-import {Directive, View, ElementRef, Parent, Optional, forwardRef, Injector} from 'angular2/angular2';
+import {Directive, View, ElementRef, Ancestor, Optional, forwardRef, Injector} from 'angular2/angular2';
 
 import {IonicComponent} from '../../config/annotations';
 import {ViewController} from '../view/view-controller';
@@ -20,14 +20,15 @@ import {ViewController} from '../view/view-controller';
 export class Nav extends ViewController {
 
   constructor(
-    @Optional() parentViewCtrl: ViewController,
+    @Optional() ancestorViewCtrl: ViewController,
     injector: Injector,
     elementRef: ElementRef
   ) {
-    super(parentViewCtrl, injector, elementRef);
+    super(ancestorViewCtrl, injector, elementRef);
   }
 
   onIonInit() {
+
     if (this.root) {
       this.push(this.root);
     }
@@ -42,7 +43,7 @@ export class Nav extends ViewController {
 
 @Directive({selector: 'template[pane-anchor]'})
 class NavPaneAnchor {
-  constructor(@Parent() nav: Nav, elementRef: ElementRef) {
+  constructor(@Ancestor() nav: Nav, elementRef: ElementRef) {
     nav.anchorElementRef(elementRef);
   }
 }

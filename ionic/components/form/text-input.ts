@@ -1,4 +1,4 @@
-import {Directive, View, Parent, Ancestor, Optional, ElementRef, Attribute, forwardRef} from 'angular2/angular2';
+import {Directive, View, Ancestor, Optional, ElementRef, Attribute, forwardRef} from 'angular2/angular2';
 
 import {IonicDirective} from '../../config/annotations';
 import {IonicConfig} from '../../config/config';
@@ -51,7 +51,7 @@ export class Input extends IonInputItem {
 })
 export class TextInput extends IonInput {
   constructor(
-    @Optional() @Parent() container: Input,
+    @Optional() @Ancestor() container: Input,
     @Optional() @Ancestor() scrollView: Content,
     @Attribute('type') type: string,
     elementRef: ElementRef,

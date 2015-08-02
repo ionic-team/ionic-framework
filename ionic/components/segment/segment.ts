@@ -29,7 +29,7 @@ import {dom} from 'ionic/util';
   }
 })
 @View({
-  template: '<div class="ion-segment"><content></content></div>',
+  template: '<div class="ion-segment"><ng-content></ng-content></div>',
   directives: [forwardRef(() => SegmentButton)]
 })
 export class Segment extends Ion {

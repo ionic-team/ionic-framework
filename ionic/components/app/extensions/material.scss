@@ -1,10 +1,10 @@
 .mode-md {
-  ion-app, .ion-app {
+  ion-app {
     font-family: 'RobotoDraft','Roboto',-apple-system,'Helvetica Neue',sans-serif;
   }
 
   $content-padding: 16px;
-  
+
   .padding,
   .padding > .scroll-content {
     padding: $content-padding;

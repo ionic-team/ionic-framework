@@ -6,7 +6,7 @@ import {Component, View, ElementRef} from 'angular2/angular2'
 })
 @View({
   template: `
-    <content></content>
+    <ng-content></ng-content>
     <object class="ele-qry" data="about:blank"></object>
   `
 })

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, ElementRef, bind} from 'angular2/angular2';
+import {Component, EventEmitter, ElementRef, bind, Injector, ComponentRef} from 'angular2/angular2';
 import {DirectiveBinding} from 'angular2/src/core/compiler/element_injector';
 
 import {NavParams} from '../nav/nav-controller';
@@ -6,9 +6,9 @@ import {NavParams} from '../nav/nav-controller';
 
 export class ViewItem {
 
-  constructor(viewCtrl, component, params = {}) {
+  constructor(viewCtrl, componentType, params = {}) {
     this.viewCtrl = viewCtrl;
-    this.component = component;
+    this.componentType = componentType;
     this.params = new NavParams(params);
     this.instance = null;
     this.state = 0;
@@ -17,10 +17,16 @@ export class ViewItem {
     this.protos = {};
     this._nbItms = [];
     this._promises = [];
+
+    this.templateRefs = {};
   }
 
   addProtoViewRef(name, protoViewRef) {
     this.protos[name] = protoViewRef;
+  }
+
+  addTemplateRef(name, templateRef) {
+    this.templateRefs[name] = templateRef;
   }
 
   stage(callback) {
@@ -37,58 +43,61 @@ export class ViewItem {
         'class': 'nav-item'
       }
     });
-    let ionViewComponent = DirectiveBinding.createFromType(this.component, annotation);
+
+    let ionViewComponentType = DirectiveBinding.createFromType(this.componentType, annotation);
+
+    // create a unique token that works as a cache key
+    ionViewComponentType.token = 'ionView' + this.componentType.name;
 
     // compile the Component
-    viewCtrl.compiler.compileInHost(ionViewComponent).then(componentProtoViewRef => {
+    viewCtrl.compiler.compileInHost(ionViewComponentType).then(hostProtoViewRef => {
 
       // figure out the sturcture of this Component
       // does it have a navbar? Is it tabs? Should it not have a navbar or any toolbars?
-      let itemStructure = this.sturcture = this.inspectStructure(componentProtoViewRef);
+      let itemStructure = this.sturcture = this.inspectStructure(hostProtoViewRef);
 
       // get the appropriate Pane which this ViewItem will fit into
       viewCtrl.panes.get(itemStructure, pane => {
         this.pane = pane;
 
-        // create a new injector just for this ViewItem
-        let injector = viewCtrl.injector.resolveAndCreateChild([
+        let bindings = viewCtrl.bindings.concat(Injector.resolve([
           bind(NavParams).toValue(this.params),
           bind(ViewItem).toValue(this)
-        ]);
+        ]));
 
         // add the content of the view to the content area
         // it will already have the correct context
         let contentContainer = pane.contentContainerRef;
-        let hostViewRef = contentContainer.create(componentProtoViewRef, -1, null, injector);
 
-        // get the component's instance, and set it to the this ViewItem
-        this.setInstance( viewCtrl.viewMngr.getComponent(new ElementRef(hostViewRef, 0)) );
-        this.viewElement( hostViewRef._view.render._view.rootNodes[0] );
+        // the same guts as DynamicComponentLoader.loadNextToLocation
+        var hostViewRef =
+            contentContainer.createHostView(hostProtoViewRef, -1, bindings);
+        var newLocation = viewCtrl.viewMngr.getHostElement(hostViewRef);
+        var newComponent = viewCtrl.viewMngr.getComponent(newLocation);
 
-        // remember how to dispose of this reference
-        this.disposals.push(() => {
-          contentContainer.remove( contentContainer.indexOf(hostViewRef) );
-        });
-
-        // get the view's context so when creating the navbar
-        // it uses the same context as the content
-        let context = {
-          boundElementIndex: 0,
-          parentView: {
-            _view: hostViewRef._view.componentChildViews[0]
+        var dispose = () => {
+          var index = contentContainer.indexOf(hostViewRef);
+          if (index !== -1) {
+            contentContainer.remove(index);
           }
         };
+        this.disposals.push(dispose);
+        var viewComponetRef = new ComponentRef(newLocation, newComponent, dispose);
 
-        // get the item container's nav bar
+        // get the component's instance, and set it to the this ViewItem
+        this.setInstance(viewComponetRef.instance);
+        this.viewElementRef(viewComponetRef.location);
+
+        // // get the item container's nav bar
         let navbarViewContainer = viewCtrl.navbarViewContainer();
 
-        // get the item's navbar protoview
-        let navbarProtoView = this.protos.navbar;
+        // // get the item's navbar protoview
+        let navbarTemplateRef = this.templateRefs.navbar;
 
         // add a navbar view if the pane has a navbar container, and the
         // item's instance has a navbar protoview to go to inside of it
-        if (navbarViewContainer && navbarProtoView) {
-          let navbarView = navbarViewContainer.create(navbarProtoView, -1, context, injector);
+        if (navbarViewContainer && navbarTemplateRef) {
+          let navbarView = navbarViewContainer.createEmbeddedView(navbarTemplateRef, -1);
 
           this.disposals.push(() => {
             navbarViewContainer.remove( navbarViewContainer.indexOf(navbarView) );
@@ -189,7 +198,7 @@ export class ViewItem {
     }
   }
 
-  viewElement(val) {
+  viewElementRef(val) {
     if (arguments.length) {
       this._vwEle = val;
     }

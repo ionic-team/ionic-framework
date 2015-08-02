@@ -3,7 +3,6 @@ import {
   Directive,
   ElementRef,
   Optional,
-  Parent,
   NgControl
 } from 'angular2/angular2';
 
@@ -32,7 +31,7 @@ import {TapClick} from '../button/button';
     '<div class="checkbox-icon"></div>' +
   '</div>' +
   '<div class="item-content" id="{{labelId}}">' +
-    '<content></content>' +
+    '<ng-content></ng-content>' +
   '</div>'
 })
 export class Checkbox extends IonInputItem {

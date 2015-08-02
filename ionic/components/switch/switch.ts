@@ -4,7 +4,6 @@ import {
   ElementRef,
   Renderer,
   Optional,
-  Parent,
   NgControl
 } from 'angular2/angular2';
 
@@ -25,7 +24,7 @@ import {Icon} from '../icon/icon';
 @IonicView({
   template:
   '<div class="item-content">' +
-    '<content></content>' +
+    '<ng-content></ng-content>' +
   '</div>' +
   '<div class="item-media media-switch">' +
     '<div class="switch-track">' +

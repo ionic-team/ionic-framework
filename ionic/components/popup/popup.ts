@@ -1,5 +1,5 @@
 import {formDirectives, NgControl, NgControlGroup,
-  Component, View, Injectable, CSSClass, NgIf, NgFor, onInit} from 'angular2/angular2';
+  Component, View, Injectable, CSSClass, NgIf, NgFor} from 'angular2/angular2';
 
 import {Overlay} from '../overlay/overlay';
 import {Animation} from '../../animations/animation';
@@ -24,7 +24,7 @@ export class Popup extends Overlay {
   }
 
   alert(context={}, opts={}) {
-    if(typeof context === 'string') {
+    if (typeof context === 'string') {
       context = {
         title: context
       }
@@ -49,7 +49,7 @@ export class Popup extends Overlay {
   }
 
   confirm(context={}, opts={}) {
-    if(typeof context === 'string') {
+    if (typeof context === 'string') {
       context = {
         title: context
       }
@@ -78,7 +78,7 @@ export class Popup extends Overlay {
   }
 
   prompt(context={}, opts={}) {
-    if(typeof context === 'string') {
+    if (typeof context === 'string') {
       context = {
         title: context
       };
@@ -109,8 +109,6 @@ export class Popup extends Overlay {
       ]
     }, context);
 
-    console.log('Context', context);
-
     return this.popup(context, opts);
   }
 
@@ -127,12 +125,12 @@ const OVERLAY_TYPE = 'popup';
 
 
 @Component({
-  selector: 'ion-popup-default',
-  lifecycle: [onInit]
+  selector: 'ion-popup-default'
 })
 @View({
-  template: '<div class="popup-backdrop" (click)="_cancel($event)" tappable></div>' +
-  '<div class="popup-wrapper">' +
+  template:
+  '<backdrop (click)="_cancel($event)" tappable></backdrop>' +
+  '<popup-wrapper>' +
     '<div class="popup-head">' +
       '<h3 class="popup-title" [inner-html]="title"></h3>' +
       '<h5 class="popup-sub-title" [inner-html]="subTitle" *ng-if="subTitle"></h5>' +
@@ -143,8 +141,7 @@ const OVERLAY_TYPE = 'popup';
     '<div class="popup-buttons" *ng-if="buttons.length">' +
       '<button *ng-for="#button of buttons" (click)="buttonTapped(button, $event)" class="button" [class]="button.type || \'button-default\'" [inner-html]="button.text"></button>' +
     '</div>' +
-  '</div>' +
-'</div>',
+  '</popup-wrapper>',
   directives: [formDirectives, CSSClass, NgIf, NgFor]
 })
 
@@ -153,11 +150,10 @@ class StandardPopup {
     this.popup = popup;
   }
   onInit() {
-    console.log('INIT');
     setTimeout(() => {
       this.element = this.overlayRef.getElementRef().nativeElement;
       this.promptInput = this.element.querySelector('input');
-      if(this.promptInput) {
+      if (this.promptInput) {
         this.promptInput.value = '';
       }
     });
@@ -170,9 +166,9 @@ class StandardPopup {
     });
 
     // If the event.preventDefault() wasn't called, close
-    if(!event.defaultPrevented) {
+    if (!event.defaultPrevented) {
       // If this is a cancel button, reject the promise
-      if(button.isCancel) {
+      if (button.isCancel) {
         this.promiseReject();
       } else {
         // Resolve with the prompt value
@@ -185,7 +181,7 @@ class StandardPopup {
   _cancel(event) {
     this.cancel && this.cancel(event);
 
-    if(!event.defaultPrevented) {
+    if (!event.defaultPrevented) {
       this.promiseReject();
       return this.overlayRef.close();
     }
@@ -199,8 +195,8 @@ class PopupAnimation extends Animation {
       .easing('ease-in-out')
       .duration(200);
 
-    this.backdrop = new Animation(element.querySelector('.popup-backdrop'));
-    this.wrapper = new Animation(element.querySelector('.popup-wrapper'));
+    this.backdrop = new Animation(element.querySelector('backdrop'));
+    this.wrapper = new Animation(element.querySelector('popup-wrapper'));
 
     this.add(this.backdrop, this.wrapper);
   }

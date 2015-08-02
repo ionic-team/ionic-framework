@@ -4,5 +4,5 @@ it('should open action menu', function() {
 });
 
 it('should close with backdrop click', function() {
-  element(by.css('.action-menu-backdrop')).click();
+  element(by.css('backdrop')).click();
 });

@@ -30,8 +30,7 @@ body {
   @include user-select-none();
 }
 
-ion-app,
-.ion-app {
+ion-app {
   display: flex;
   flex-direction: column;
 

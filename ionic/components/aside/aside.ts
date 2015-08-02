@@ -37,7 +37,7 @@ import {dom} from 'ionic/util'
   events: ['opening']
 })
 @View({
-  template: '<content></content>'
+  template: '<ng-content></ng-content>'
 })
 export class Aside extends Ion {
 

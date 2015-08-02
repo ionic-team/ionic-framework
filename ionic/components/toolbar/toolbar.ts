@@ -1,4 +1,4 @@
-import {Directive, View, Parent, onInit, ElementRef, forwardRef} from 'angular2/angular2';
+import {Directive, View, Ancestor, onInit, ElementRef, forwardRef} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
@@ -79,14 +79,14 @@ export class ToolbarBase extends Ion  {
     <div class="toolbar-inner">
       <div class="toolbar-title">
         <div class="toolbar-inner-title">
-          <content select="ion-title"></content>
+          <ng-content select="ion-title"></ng-content>
         </div>
       </div>
       <div class="toolbar-item toolbar-primary-item">
-        <content select="[primary]"></content>
+        <ng-content select="[primary]"></ng-content>
       </div>
       <div class="toolbar-item toolbar-secondary-item">
-        <content select="[secondary]"></content>
+        <ng-content select="[secondary]"></ng-content>
       </div>
     </div>
   `,
@@ -120,7 +120,7 @@ export class Toolbar extends ToolbarBase {
   selector: '.toolbar-title'
 })
 class ToolbarTitle {
-  constructor(@Parent() toolbar: Toolbar, elementRef: ElementRef) {
+  constructor(@Ancestor() toolbar: Toolbar, elementRef: ElementRef) {
     toolbar.titleElement(elementRef);
   }
 }
@@ -130,7 +130,7 @@ class ToolbarTitle {
   selector: '.toolbar-item'
 })
 class ToolbarItem {
-  constructor(@Parent() toolbar: Toolbar, elementRef: ElementRef) {
+  constructor(@Ancestor() toolbar: Toolbar, elementRef: ElementRef) {
     toolbar.itemElements(elementRef);
   }
 }

@@ -18,7 +18,7 @@ export class Transition extends Animation {
     let leavingItem = this.leaving = nav.getStagedLeavingItem();
 
     // create animation for the entering item's "ion-view" element
-    this.enteringView = new Animation(enteringItem.viewElement());
+    this.enteringView = new Animation(enteringItem.viewElementRef());
     this.enteringView.before.addClass(SHOW_VIEW_CSS);
 
     this.enteringView.onPlay(() => {
@@ -53,7 +53,7 @@ export class Transition extends Animation {
 
     if (leavingItem) {
       // setup the leaving item if one exists (initial viewing wouldn't have a leaving item)
-      this.leavingView = new Animation(leavingItem.viewElement());
+      this.leavingView = new Animation(leavingItem.viewElementRef());
       this.leavingView.after.removeClass(SHOW_VIEW_CSS);
 
       let leavingNavbar = this.leavingNavbar = new Animation(leavingItem.navbarElement());
@@ -78,7 +78,8 @@ export class Transition extends Animation {
   }
 
   viewWidth() {
-    return this._w || (this._w = this.leaving && this.leaving.viewElement().offsetWidth);
+    // TODO: MAKE MORE BETTER
+    return this._w || (this._w = this.leaving && this.leaving.viewElementRef().nativeElement.offsetWidth);
   }
 
   /*

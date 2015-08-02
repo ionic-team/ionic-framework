@@ -1,5 +1,7 @@
-import {Directive, View, Parent, Optional, ElementRef, forwardRef} from 'angular2/angular2';
+import {Directive, View, Ancestor, Optional, ElementRef, forwardRef} from 'angular2/angular2';
 import {ProtoViewRef} from 'angular2/src/core/compiler/view_ref';
+
+import {TemplateRef} from 'angular2/angular2';
 
 import {ToolbarBase} from '../toolbar/toolbar';
 import {IonicConfig} from '../../config/config';
@@ -26,14 +28,14 @@ import {ViewItem} from '../view/view-item';
       </button>
       <div class="toolbar-title">
         <div class="toolbar-inner-title">
-          <content select="ion-title"></content>
+          <ng-content select="ion-title"></ng-content>
         </div>
       </div>
       <div class="toolbar-item toolbar-primary-item">
-        <content select="[primary]"></content>
+        <ng-content select="[primary]"></ng-content>
       </div>
       <div class="toolbar-item toolbar-secondary-item">
-        <content select="[secondary]"></content>
+        <ng-content select="[secondary]"></ng-content>
       </div>
     </div>
   `,
@@ -77,7 +79,7 @@ export class Navbar extends ToolbarBase {
 
   didEnter() {
     const titleEle = this._ttEle || (this._ttEle = this.getNativeElement().querySelector('ion-title'));
-    this.app.title(titleEle.textContent);
+    titleEle && this.app.title(titleEle.textContent);
   }
 }
 
@@ -88,7 +90,7 @@ export class Navbar extends ToolbarBase {
   }
 })
 class BackButton {
-  constructor(@Parent() navbar: Navbar, @Optional() item: ViewItem, elementRef: ElementRef) {
+  constructor(@Ancestor() navbar: Navbar, @Optional() item: ViewItem, elementRef: ElementRef) {
     this.item = item;
     navbar.backButtonElement(elementRef);
   }
@@ -104,7 +106,7 @@ class BackButton {
   selector: '.back-button-text'
 })
 class BackButtonText {
-  constructor(@Parent() navbar: Navbar, elementRef: ElementRef) {
+  constructor(@Ancestor() navbar: Navbar, elementRef: ElementRef) {
     navbar.backButtonTextElement(elementRef);
   }
 }
@@ -113,7 +115,7 @@ class BackButtonText {
   selector: '.toolbar-title'
 })
 class Title {
-  constructor(@Parent() toolbar: Navbar, elementRef: ElementRef) {
+  constructor(@Ancestor() toolbar: Navbar, elementRef: ElementRef) {
     toolbar.titleElement(elementRef);
   }
 }
@@ -122,7 +124,7 @@ class Title {
   selector: '.toolbar-item'
 })
 class NavbarItem {
-  constructor(@Parent() toolbar: Navbar, elementRef: ElementRef) {
+  constructor(@Ancestor() toolbar: Navbar, elementRef: ElementRef) {
     toolbar.itemElements(elementRef);
   }
 }
@@ -137,7 +139,10 @@ class NavbarItem {
   selector: 'template[navbar]'
 })
 export class NavbarTemplate {
-  constructor(@Optional() item: ViewItem, protoViewRef: ProtoViewRef) {
-    item && item.addProtoViewRef('navbar', protoViewRef);
+  constructor(
+    @Optional() item: ViewItem,
+    @Optional() templateRef: TemplateRef
+  ) {
+    item && item.addTemplateRef('navbar', templateRef);
   }
 }

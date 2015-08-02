@@ -1,8 +1,4 @@
-import {ElementRef, For, Parent, onInit} from 'angular2/angular2'
-import {Component, Directive} from 'angular2/angular2';
-
-import {FormBuilder, Validators, FormDirectives, ControlGroup} from 'angular2/forms';
-import {Log} from 'ionic/util'
+import {Directive} from 'angular2/angular2';
 
 import {IonicApp} from 'ionic/ionic'
 
@@ -15,17 +11,18 @@ import {IonicApp} from 'ionic/ionic'
   ],
   host: {
     'this.register-id': 'registerId'
-  },
-  lifecycle: [onInit]
+  }
 })
 export class Register {
+
   constructor(app: IonicApp) {
     this.app = app;
   }
+
   onInit() {
-    if(!this.register || !this.registerId) {
-      return;
+    if (this.register && this.registerId) {
+      this.app.register(this.registerId, this.register);
     }
-    this.app.register(this.registerId, this.register);
   }
+
 }

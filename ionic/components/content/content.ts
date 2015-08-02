@@ -16,7 +16,7 @@ import {ScrollTo} from '../../animations/scroll-to';
   }
 })
 @View({
-  template: '<div class="scroll-content"><content></content></div>'
+  template: '<div class="scroll-content"><ng-content></ng-content></div>'
 })
 export class Content extends Ion {
   constructor(elementRef: ElementRef, config: IonicConfig) {

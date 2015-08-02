@@ -1,4 +1,4 @@
-import {Directive, Parent, Optional} from 'angular2/angular2';
+import {Directive, Ancestor, Optional} from 'angular2/angular2';
 
 import {IonicConfig} from '../../config/config';
 import * as dom  from '../../util/dom';
@@ -21,10 +21,10 @@ import {Switch} from '../switch/switch';
 })
 export class Label {
   constructor(
-    @Optional() @Parent() textContainer: Input,
-    @Optional() @Parent() checkboxContainer: Checkbox,
-    @Optional() @Parent() radioContainer: RadioButton,
-    @Optional() @Parent() switchContainer: Switch,
+    @Optional() @Ancestor() textContainer: Input,
+    @Optional() @Ancestor() checkboxContainer: Checkbox,
+    @Optional() @Ancestor() radioContainer: RadioButton,
+    @Optional() @Ancestor() switchContainer: Switch,
     config: IonicConfig
   ) {
     this.container = textContainer || checkboxContainer || radioContainer || switchContainer;
