@@ -1,0 +1,40 @@
+
+// Material Design Popups
+// --------------------------------------------------
+
+$popup-md-border-radius:       13px !default;
+$popup-md-bg-color:            #f8f8f8 !default;
+
+
+.popup[mode="md"] {
+
+  popup-wrapper {
+    border-radius: $popup-md-border-radius;
+    background-color: $popup-md-bg-color;
+  }
+
+  .popup-head {
+    padding-top: 24px;
+  }
+
+  .popup-body:empty {
+    padding: 0;
+  }
+
+  .popup-buttons {
+    padding: 0;
+    min-height: 0;
+
+    .button {
+      min-height: 42px;
+      color: get-color('primary', base);
+      font-size: 14px;
+
+      &:last-child {
+        font-weight: bold;
+      }
+    }
+
+  }
+
+}

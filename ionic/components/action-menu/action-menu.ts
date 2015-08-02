@@ -15,9 +15,9 @@ import * as util from 'ionic/util';
 
 
 @View({
-  template: '' +
-    '<div class="action-menu-backdrop" (click)="_cancel()" tappable></div>' +
-    '<div class="action-menu-wrapper">' +
+  template:
+    '<backdrop (click)="_cancel()" tappable></backdrop>' +
+    '<action-menu-wrapper>' +
       '<div class="action-menu-container">' +
         '<div class="action-menu-group action-menu-options">' +
           '<div class="action-menu-title" *ng-if="titleText">{{titleText}}</div>' +
@@ -33,7 +33,7 @@ import * as util from 'ionic/util';
           '<button (click)="_cancel()"><i class="icon" [class]="cancelIcon"></i> {{cancelText}}</button>' +
         '</div>' +
       '</div>' +
-    '</div>',
+    '</action-menu-wrapper>',
   directives: [NgFor, NgIf, CSSClass, TapClick]
 })
 class ActionMenuDirective {
@@ -100,8 +100,8 @@ class ActionMenuAnimation extends Animation {
     super(element);
     this.easing('cubic-bezier(.36, .66, .04, 1)').duration(400);
 
-    this.backdrop = new Animation(element.querySelector('.action-menu-backdrop'));
-    this.wrapper = new Animation(element.querySelector('.action-menu-wrapper'));
+    this.backdrop = new Animation(element.querySelector('backdrop'));
+    this.wrapper = new Animation(element.querySelector('action-menu-wrapper'));
 
     this.add(this.backdrop, this.wrapper);
   }

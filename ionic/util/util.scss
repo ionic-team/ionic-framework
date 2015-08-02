@@ -85,6 +85,25 @@ $content-padding:    10px !default;
 }
 
 
+// Backdrop
+// --------------------------------------------------
+
+$backdrop-color:      #000 !default;
+
+backdrop {
+  position: absolute;
+  z-index: $z-index-backdrop;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: $backdrop-color;
+  opacity: 0;
+  tranform: translateZ(0);
+}
+
+
+
 // Click Block
 // --------------------------------------------------
 // Fill the screen to block clicks (a better pointer-events: none)

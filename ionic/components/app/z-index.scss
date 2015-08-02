@@ -21,5 +21,5 @@ $z-index-swipe-handle:           15 !default;
 $z-index-toolbar-border:         20 !default;
 $z-index-list-border:            50 !default;
 
-$z-index-popup-backdrop:         100;
-$z-index-popup-wrapper:          101;
+$z-index-backdrop:               1;
+$z-index-overlay-wrapper:        10;
