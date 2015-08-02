@@ -9,12 +9,12 @@ import * as util from 'ionic/util';
 
 export class Overlay {
 
-  constructor(app: IonicApp, ionicConfig: IonicConfig) {
+  constructor(app: IonicApp, config: IonicConfig) {
     this.app = app;
-    this.ionicConfig = ionicConfig;
+    this.mode = config.setting('mode');
   }
 
-  create(overlayType, ComponentType: Type, opts={}, context=null) {
+  create(overlayType, componentType: Type, opts={}, context=null) {
     return new Promise((resolve, reject) => {
       let app = this.app;
 
@@ -22,14 +22,17 @@ export class Overlay {
         selector: 'ion-' + overlayType,
         host: {
           '[style.z-index]': 'zIndex',
-          'class': overlayType + ' ion-app',
-          'mode': this.ionicConfig.setting('mode')
+          'mode': this.mode,
+          'class': overlayType
         }
       });
-      let overlayComponent = DirectiveBinding.createFromType(ComponentType, annotation);
+      let overlayComponentType = DirectiveBinding.createFromType(componentType, annotation);
 
-      app.appendComponent(overlayComponent, context).then(ref => {
-        let overlayRef = new OverlayRef(app, overlayType, opts, ref);
+      // create a unique token that works as a cache key
+      overlayComponentType.token = overlayType + componentType.name;
+
+      app.appendComponent(overlayComponentType).then(ref => {
+        let overlayRef = new OverlayRef(app, overlayType, opts, ref, context);
         overlayRef._open(opts).then(() => {
           resolve(overlayRef);
         });
@@ -70,10 +73,13 @@ export class Overlay {
 }
 
 export class OverlayRef {
-  constructor(app, overlayType, opts, ref) {
+  constructor(app, overlayType, opts, ref, context) {
     let overlayInstance = (ref && ref.instance);
     if (!overlayInstance) return;
 
+    if (context) {
+      util.extend(ref.instance, context);
+    }
     this._instance = overlayInstance;
 
     overlayInstance.viewLoaded && overlayInstance.viewLoaded();
@@ -90,7 +96,7 @@ export class OverlayRef {
       this.close(instanceOpts);
     };
 
-    this._elementRef = ref.elementRef;
+    this._elementRef = ref.location;
     this._type = overlayType;
     this._opts = opts;
     this._handle = opts.handle || this.zIndex;

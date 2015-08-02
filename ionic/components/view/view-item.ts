@@ -6,9 +6,9 @@ import {NavParams} from '../nav/nav-controller';
 
 export class ViewItem {
 
-  constructor(viewCtrl, component, params = {}) {
+  constructor(viewCtrl, componentType, params = {}) {
     this.viewCtrl = viewCtrl;
-    this.component = component;
+    this.componentType = componentType;
     this.params = new NavParams(params);
     this.instance = null;
     this.state = 0;
@@ -43,10 +43,14 @@ export class ViewItem {
         'class': 'nav-item'
       }
     });
-    let viewComponent = DirectiveBinding.createFromType(this.component, annotation);
+
+    let ionViewComponentType = DirectiveBinding.createFromType(this.componentType, annotation);
+
+    // create a unique token that works as a cache key
+    ionViewComponentType.token = 'ionView' + this.componentType.name;
 
     // compile the Component
-    viewCtrl.compiler.compileInHost(viewComponent).then(hostProtoViewRef => {
+    viewCtrl.compiler.compileInHost(ionViewComponentType).then(hostProtoViewRef => {
 
       // figure out the sturcture of this Component
       // does it have a navbar? Is it tabs? Should it not have a navbar or any toolbars?
@@ -69,7 +73,7 @@ export class ViewItem {
         var hostViewRef =
             contentContainer.createHostView(hostProtoViewRef, -1, bindings);
         var newLocation = viewCtrl.viewMngr.getHostElement(hostViewRef);
-        var component = viewCtrl.viewMngr.getComponent(newLocation);
+        var newComponent = viewCtrl.viewMngr.getComponent(newLocation);
 
         var dispose = () => {
           var index = contentContainer.indexOf(hostViewRef);
@@ -78,7 +82,7 @@ export class ViewItem {
           }
         };
         this.disposals.push(dispose);
-        var viewComponetRef = new ComponentRef(newLocation, component, dispose);
+        var viewComponetRef = new ComponentRef(newLocation, newComponent, dispose);
 
         // get the component's instance, and set it to the this ViewItem
         this.setInstance(viewComponetRef.instance);

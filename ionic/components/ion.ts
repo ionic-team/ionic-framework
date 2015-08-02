@@ -8,16 +8,16 @@ import * as util from 'ionic/util';
  * sending/receiving app-level events.
  */
 export class Ion {
-  constructor(elementRef: ElementRef, ionicConfig: IonicConfig) {
+  constructor(elementRef: ElementRef, config: IonicConfig) {
     this.elementRef = elementRef;
-    this.ionicConfig = ionicConfig;
-    this.clsMode = this.ionicConfig.setting('mode');
+    this.config = config;
+    this.clsMode = config.setting('mode');
   }
 
   onInit() {
     let cls = this.constructor;
 
-    if (cls.defaultProperties && this.ionicConfig) {
+    if (cls.defaultProperties && this.config) {
       for (let prop in cls.defaultProperties) {
         // Priority:
         // ---------
@@ -35,7 +35,7 @@ export class Ion {
         }
 
         // get the property values from a global user/platform config
-        let configVal = this.ionicConfig.setting(prop);
+        let configVal = this.config.setting(prop);
         if (configVal) {
           this[prop] = configVal;
           continue;

@@ -1,6 +1,4 @@
-import {Component, View, bootstrap, Compiler, ElementRef, NgZone, bind, ViewRef, DynamicComponentLoader, Injector} from 'angular2/angular2';
-import {AppViewManager} from 'angular2/src/core/compiler/view_manager';
-import {NgZone} from 'angular2/src/core/zone/ng_zone';
+import {Component, View, bootstrap, ElementRef, NgZone, bind, DynamicComponentLoader, Injector} from 'angular2/angular2';
 
 import {IonicRouter} from '../../routing/router';
 import {IonicConfig} from '../../config/config';
@@ -28,7 +26,7 @@ export class IonicApp {
 
   load(appRef) {
     this.ref(appRef);
-    this._zone = this.injector.get(NgZone);
+    this._zone = appRef.injector.get(NgZone);
   }
 
   focusHolder(val) {
@@ -49,7 +47,7 @@ export class IonicApp {
     return this._ref;
   }
 
-  get injector {
+  get injector() {
     return this._ref.injector;
   }
 
@@ -73,7 +71,6 @@ export class IonicApp {
    */
   register(key, component) {
     this.components[key] = component;
-    console.log('App: Registered component', key, component);
     // TODO(mlynch): We need to track the lifecycle of this component to remove it onDehydrate
   }
 
@@ -91,16 +88,8 @@ export class IonicApp {
    * @param Component the component to create and insert
    * @return Promise that resolves with the ContainerRef created
    */
-  appendComponent(component: Type, context=null) {
-    let loader = this.injector.get(DynamicComponentLoader);
-    let rootComponentRef = this.ref()._hostComponent;
-
-    let bindings = this.injector._proto._strategy.bindings;
-
-    return loader.loadNextToLocation(component, rootComponentRef.location)
-              .catch(err => {
-                console.error('appendComponent:', err);
-              });
+  appendComponent(componentType: Type, context=null) {
+    return this.rootAnchor.append(componentType);
   }
 
   applyBodyCss(bodyEle, platform, config) {
@@ -151,7 +140,27 @@ function initApp(window, document, config) {
   return app;
 }
 
-export function ionicBootstrap(component, config, router) {
+@Component({
+  selector: 'root-anchor'
+})
+@View({
+  template: ''
+})
+class RootAnchor {
+  constructor(app: IonicApp, elementRef: ElementRef, loader: DynamicComponentLoader) {
+    this.elementRef = elementRef;
+    this.loader = loader;
+    app.rootAnchor = this;
+  }
+
+  append(componentType) {
+    return this.loader.loadNextToLocation(componentType, this.elementRef).catch(err => {
+      console.error(err)
+    });
+  }
+}
+
+export function ionicBootstrap(rootComponentType, config, router) {
   return new Promise(resolve => {
     try {
       // get the user config, or create one if wasn't passed in
@@ -188,7 +197,7 @@ export function ionicBootstrap(component, config, router) {
       let popup = new Popup(app, config);
 
       // add injectables that will be available to all child components
-      app.bindings = Injector.resolve([
+      let appBindings = Injector.resolve([
         bind(IonicApp).toValue(app),
         bind(IonicConfig).toValue(config),
         bind(IonicRouter).toValue(router),
@@ -197,15 +206,24 @@ export function ionicBootstrap(component, config, router) {
         bind(Popup).toValue(popup)
       ]);
 
-      bootstrap(component, app.bindings).then(appRef => {
+      bootstrap(rootComponentType, appBindings).then(appRef => {
         app.load(appRef);
 
-        // append the focus holder if its needed
-        if (config.setting('keyboardScrollAssist')) {
-          app.appendComponent(FocusHolder).then(ref => {
-            app.focusHolder(ref.instance);
-          });
-        }
+        // Adding a anchor to add overlays off of...huh??
+        let elementRefs = appRef._hostComponent.hostView._view.elementRefs;
+        let lastElementRef = elementRefs[1];
+        let injector = lastElementRef.parentView._view.rootElementInjectors[0]._injector;
+        let loader = injector.get(DynamicComponentLoader);
+        loader.loadNextToLocation(RootAnchor, lastElementRef).then(() => {
+          // append the focus holder if its needed
+          if (config.setting('keyboardScrollAssist')) {
+            app.appendComponent(FocusHolder).then(ref => {
+              app.focusHolder(ref.instance);
+            });
+          }
+        }).catch(err => {
+          console.error(err)
+        });
 
         router.load(window, app, config).then(() => {
           // resolve that the app has loaded
