@@ -15,6 +15,11 @@ import {TapClick} from '../button/button';
 
 @IonicComponent({
   selector: 'ion-checkbox',
+  properties: [
+    'value',
+    'checked',
+    'disabled'
+  ],
   host: {
     'class': 'item',
     'role': 'checkbox',
@@ -22,7 +27,8 @@ import {TapClick} from '../button/button';
     '[attr.aria-disabled]': 'input.disabled',
     '[attr.aria-labelledby]': 'labelId',
     '(^click)': 'click($event)'
-  }
+  },
+  exportAs: 'checkbox'
 })
 @IonicView({
   template:
@@ -42,20 +48,14 @@ export class Checkbox extends IonInputItem {
     tapClick: TapClick
   ) {
     super(elementRef, config);
+    this.tapClick = tapClick;
+
     this.onChange = (_) => {};
     this.onTouched = (_) => {};
-    this.tapClick = tapClick;
+
     this.cd = cd;
 
     if (cd) cd.valueAccessor = this;
-  }
-
-  click(ev) {
-    if (this.tapClick.allowClick(ev)) {
-      ev.preventDefault();
-      ev.stopPropagation();
-      this.input.checked = !this.input.checked;
-    }
   }
 
   onInit() {
@@ -63,28 +63,28 @@ export class Checkbox extends IonInputItem {
     this.labelId = 'label-' + this.id;
   }
 
+  onAllChangesDone() {
+    this.input.checked = this.checked;
+    this.input.disabled = this.disabled;
+    this.input.value = this.value;
+  }
+
+  toggle() {
+    this.input.checked = this.checked = !this.input.checked;
+    this.onChange(this.checked);
+  }
+
+  click(ev) {
+    if (this.tapClick.allowClick(ev)) {
+      ev.preventDefault();
+      ev.stopPropagation();
+      this.toggle();
+    }
+  }
+
   // Called by the model (Control) to update the view
   writeValue(modelValue) {
-    let type = typeof modelValue;
-    switch (type) {
-      case "boolean":
-        // don't set input.value here, do it in onAllChangesDone
-        // because they might have set it in the view
-        this._checked = modelValue; break;
-      case "object":
-        if (modelValue.checked !== void 0) this._checked = !!modelValue.checked;
-        if (modelValue.value !== void 0) this._value = modelValue.value.toString();
-        break;
-      default:
-        // don't set input.checked here, do it in onAllChangesDone
-        // because they might have set it in the view
-        this._value = modelValue.toString();
-    }
-
-    //TODO we want to set input.checked directly after the first time
-    console.log("writeValue, " + this.input.id + " checked: " + this._checked);
-    console.log("writeValue " + this.input.id + " value: " + this._value);
-
+    this.input.checked = modelValue;
   }
 
   // Used by the view to update the model (Control)

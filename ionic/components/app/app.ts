@@ -135,7 +135,7 @@ function initApp(window, document, config) {
   Platform.load(config);
 
   // on resize be sure to clear out existing window dimensions
-  window.addEventListener('resize', Platform.resetDimensions);
+  window.addEventListener('resize', Platform.winResize);
 
   return app;
 }

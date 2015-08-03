@@ -14,6 +14,7 @@ export * from 'ionic/components/form/text-input'
 export * from 'ionic/components/form/tap-input'
 export * from 'ionic/components/form/label'
 export * from 'ionic/components/list/list'
+export * from 'ionic/components/show-hide-when/show-hide-when'
 
 // Material components/effects
 export * from 'ionic/components/material/button'

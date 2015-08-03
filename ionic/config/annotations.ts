@@ -19,6 +19,7 @@ import {
   Nav, NavbarTemplate, Navbar, NavPush, NavPop,
   TapClick, TapDisabled,
   Register,
+  ShowWhen, HideWhen,
 
   MaterialButton
 } from '../ionic';
@@ -81,6 +82,9 @@ export const IonicDirectives = [
   forwardRef(() => NavPush),
   forwardRef(() => NavPop),
   forwardRef(() => Register),
+
+  forwardRef(() => ShowWhen),
+  forwardRef(() => HideWhen),
 
   // Gestures
   forwardRef(() => TapClick),

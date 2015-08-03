@@ -10,6 +10,7 @@ export class PlatformCtrl {
     this._versions = {};
     this._registry = {};
     this._default = null;
+    this._onResizes = [];
 
     this._readyPromise = new Promise(res => { this._readyResolve = res; } );
   }
@@ -137,8 +138,25 @@ export class PlatformCtrl {
     return !this.isPortrait();
   }
 
-  resetDimensions() {
-    this._w = this._h = 0;
+  winResize() {
+    Platform._w = Platform._h = 0;
+
+    clearTimeout(Platform._resizeTimer);
+
+    Platform._resizeTimer = setTimeout(() => {
+      for (let i = 0; i < Platform._onResizes.length; i++) {
+        try {
+          Platform._onResizes[i]();
+        } catch (e) {
+          console.error(e);
+        }
+      }
+    }, 500);
+  }
+
+  onResize(cb) {
+    // TODO: Make more good
+    this._onResizes.push(cb);
   }
 
 
