@@ -24,10 +24,10 @@ var cache = require('gulp-cached');
 var connect = require('gulp-connect');
 var Dgeni = require('dgeni');
 
-function getBabelOptions(moduleName) {
+function getBabelOptions(moduleName, moduleType) {
   return {
     optional: ['es7.decorators'],
-    modules: "system",
+    modules: moduleType || "system",
     moduleIds: true,
     getModuleId: function(name) {
       return moduleName + '/' + name.split('/test').join('');
@@ -128,7 +128,7 @@ gulp.task('clean', function(done) {
   del(['dist/'], done);
 });
 
-gulp.task('transpile', function() {
+gulp.task('transpile.system', function() {
   var stream = gulp.src(
                       [
                          'ionic/**/*.ts',
@@ -150,13 +150,41 @@ gulp.task('transpile', function() {
                      console.log("ERROR: " + err.message);
                      this.emit('end');
                    })
-                   .pipe(gulp.dest('dist/js/es5/ionic'))
+                   .pipe(gulp.dest('dist/js/es5/system/ionic'))
 
   return stream;
 });
 
+gulp.task('transpile.common', function() {
+  var stream = gulp.src(
+                      [
+                         'ionic/**/*.ts',
+                         'ionic/**/*.js',
+                         '!ionic/components/*/test/**/*',
+                         '!ionic/init.js',
+                         '!ionic/util/test/*'
+                      ]
+                   )
+                   .pipe(cache('transpile', { optimizeMemory: true }))
+                   .pipe(tsc(tscOptions, null, tscReporter))
+                   .on('error', function(error) {
+                     stream.emit('end');
+                   })
+                   .pipe(gulp.dest('dist/js/es6/ionic'))
+                   .pipe(babel(getBabelOptions('ionic', 'common')))
+                   .on('error', function (err) {
+                     console.log("ERROR: " + err.message);
+                     this.emit('end');
+                   })
+                   .pipe(gulp.dest('dist/js/es5/common/ionic'))
+
+  return stream;
+});
+
+gulp.task('transpile', ['transpile.system']);
+
 gulp.task('bundle.js', function() {
-  return gulp.src(['dist/js/es5/ionic/**/*.js', 'ionic/util/hairline.js', 'ionic/init.js'])
+  return gulp.src(['dist/js/es5/system/ionic/**/*.js', 'ionic/util/hairline.js', 'ionic/init.js'])
              .pipe(concat('ionic.bundle.js'))
              .pipe(gulp.dest('dist/js/'));
 });
