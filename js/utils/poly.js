@@ -26,8 +26,8 @@
       }
     }
 
-    // The only prefix we care about is webkit for transitions.
-    var isWebkit = ionic.CSS.TRANSITION.indexOf('webkit') > -1;
+    // The only prefix we care about is webkit for transitions. msTransition does not work in certain IE's so ionic.CSS.TRANSITION can be undefined
+    var isWebkit = ionic.CSS.TRANSITION && ionic.CSS.TRANSITION.indexOf('webkit') > -1;
 
     // transition duration
     ionic.CSS.TRANSITION_DURATION = (isWebkit ? '-webkit-' : '') + 'transition-duration';
