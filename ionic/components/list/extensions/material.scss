@@ -13,14 +13,14 @@ $list-md-footer-color:          #8f8f94 !default;
 
 .list[mode="md"] {
 
-  .list-header {
+  ion-list-header {
     padding: $list-md-header-padding;
     font-size: $list-md-header-font-size;
     text-transform: uppercase;
     color: $list-md-header-color;
   }
 
-  .list-footer {
+  ion-list-footer {
     padding: $list-md-footer-padding;
     font-size: $list-md-footer-font-size;
     text-transform: uppercase;

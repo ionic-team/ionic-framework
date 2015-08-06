@@ -8,7 +8,7 @@ import {
   Aside, Button, Content, Scroll, Refresher,
   Slides, Slide, SlidePager,
   Tabs, Tab,
-  Card, List, Item, ItemGroup, ItemGroupTitle,
+  Card, List, ListHeader, Item, ItemGroup, ItemGroupTitle,
   Toolbar,
   Icon,
   IconDirective,
@@ -41,6 +41,7 @@ export const IonicDirectives = [
   // Lists
   forwardRef(() => Card),
   forwardRef(() => List),
+  forwardRef(() => ListHeader),
   forwardRef(() => Item),
   forwardRef(() => ItemGroup),
   forwardRef(() => ItemGroupTitle),

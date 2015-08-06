@@ -4,5 +4,5 @@ it('should check Banana', function() {
 });
 
 it('should check Cherry', function() {
-  element(by.css('#e2eSelectCherry')).click();
+  element(by.css('#e2eCherry')).click();
 });

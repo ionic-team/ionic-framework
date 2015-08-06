@@ -17,7 +17,7 @@ $list-ios-footer-color:           #333 !default;
 
 .list[mode="ios"] {
 
-  .list-header {
+  ion-list-header {
     padding: $list-ios-header-padding;
     font-size: $list-ios-header-font-size;
     font-weight: $list-ios-header-font-weight;
@@ -26,7 +26,7 @@ $list-ios-footer-color:           #333 !default;
     color: $list-ios-header-color;
   }
 
-  .list-footer {
+  ion-list-footer {
     padding: $list-ios-footer-padding;
     font-size: $list-ios-footer-font-size;
     font-weight: $list-ios-footer-font-weight;

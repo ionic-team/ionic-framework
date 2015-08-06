@@ -10,8 +10,9 @@
   list-style-type: none;
 }
 
-.list-header,
-.list-footer {
+ion-list-header,
+ion-list-footer {
+  display: block;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

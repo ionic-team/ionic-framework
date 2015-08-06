@@ -8,9 +8,9 @@
 
     <ion-radio-group ng-control="fruits">
 
-      <div class="list-header">
+      <ion-list-header>
         Fruits
-      </div>
+      </ion-list-header>
 
       <ion-radio value="apple" checked="true">
         Apple
@@ -20,7 +20,7 @@
         Banana
       </ion-radio>
 
-      <ion-radio value="cherry" id="my-id">
+      <ion-radio value="cherry">
         Cherry
       </ion-radio>
 
@@ -35,6 +35,6 @@
 
   <button (click)="setApple()" outline primary small>Select Apple</button>
   <button (click)="setBanana()" outline primary small>Select Banana</button>
-  <button id="e2eSelectCherry" (click)="setCherry()" outline primary small>Select Cherry</button>
+  <button id="e2eCherry" (click)="setCherry()" outline primary small>Select Cherry</button>
 
 </ion-content>

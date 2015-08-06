@@ -1,10 +1,11 @@
-import {ElementRef, Ancestor, Optional, NgControl} from 'angular2/angular2';
+import {ElementRef, Ancestor, Optional, NgControl, Query, QueryList} from 'angular2/angular2';
 
 import {IonicDirective, IonicComponent, IonicView} from '../../config/annotations';
 import {IonicConfig} from '../../config/config';
 import {Ion} from '../ion';
 import {IonInputItem} from '../form/form';
 import {TapClick} from '../button/button';
+import {ListHeader} from '../list/list';
 
 
 @IonicDirective({
@@ -12,7 +13,8 @@ import {TapClick} from '../button/button';
   host: {
     'class': 'list',
     'role': 'radiogroup',
-    '[attr.aria-activedescendant]': 'activeId'
+    '[attr.aria-activedescendant]': 'activeId',
+    '[attr.aria-describedby]': 'describedById'
   }
 })
 export class RadioGroup extends Ion {
@@ -21,7 +23,8 @@ export class RadioGroup extends Ion {
   constructor(
     elementRef: ElementRef,
     config: IonicConfig,
-    @Optional() cd: NgControl
+    @Optional() cd: NgControl,
+    @Query(ListHeader) private headerQuery: QueryList<ListHeader>
   ) {
     super(elementRef, config);
     this.id = ++radioGroupIds;
@@ -30,6 +33,17 @@ export class RadioGroup extends Ion {
     this.onTouched = (_) => {};
 
     if (cd) cd.valueAccessor = this;
+  }
+
+  onInit() {
+    let header = this.headerQuery.first;
+    if (header) {
+      debugger
+      if (!header.id) {
+        header.id = 'radio-header-' + this.id;
+      }
+      this.describedById = header.id;
+    }
   }
 
   registerRadio(radio) {

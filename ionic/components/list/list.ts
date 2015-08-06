@@ -1,4 +1,4 @@
-import {ElementRef} from 'angular2/angular2';
+import {Directive, ElementRef} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
@@ -41,4 +41,18 @@ export class List extends Ion {
   setItemTemplate(item) {
     this.itemTemplate = item;
   }
+}
+
+
+@Directive({
+  selector: 'ion-list-header',
+  properties: [
+    'id'
+  ],
+  host: {
+    '[attr.id]': 'id'
+  }
+})
+export class ListHeader {
+
 }

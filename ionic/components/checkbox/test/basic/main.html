@@ -8,7 +8,7 @@
 
     <ion-list>
 
-      <ion-checkbox value="apple" checked="true" ng-control="appleCtrl">
+      <ion-checkbox value="apple" checked="true" ng-control="appleCtrl" id="e2eAppleCheckbox">
         Apple, value=apple, init checked
       </ion-checkbox>
 
@@ -29,8 +29,8 @@
   </form>
 
   <p aria-hidden="true" class="align-center">
-    <button (click)="toggleGrapeChecked()" outline primary small>Grape Checked</button>
-    <button (click)="toggleGrapeDisabled()" outline primary small>Grape Disabled</button>
+    <button (click)="toggleGrapeChecked()" outline primary small id="e2eGrapeChecked">Grape Checked</button>
+    <button (click)="toggleGrapeDisabled()" outline primary small id="e2eGrapeDisabled">Grape Disabled</button>
     <button (click)="doSubmit($event)" outline primary small>Submit</button>
   </p>
 
