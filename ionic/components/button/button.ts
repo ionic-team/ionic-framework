@@ -34,7 +34,7 @@ export class TapDisabled {}
 
 
 @Directive({
-  selector: 'button,[button],[tappable],ion-checkbox',
+  selector: 'button,[button],[tappable],ion-checkbox,ion-radio',
   host: {
     '(^touchstart)': 'touchStart($event)',
     '(^touchend)': 'touchEnd($event)',

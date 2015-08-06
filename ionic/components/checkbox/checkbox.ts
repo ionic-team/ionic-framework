@@ -18,7 +18,8 @@ import {TapClick} from '../button/button';
   properties: [
     'value',
     'checked',
-    'disabled'
+    'disabled',
+    'id'
   ],
   host: {
     'class': 'item',
@@ -28,8 +29,7 @@ import {TapClick} from '../button/button';
     '[attr.aria-disabled]': 'disabled',
     '[attr.aria-labelledby]': 'labelId',
     '(^click)': 'click($event)'
-  },
-  exportAs: 'checkbox'
+  }
 })
 @IonicView({
   template:
@@ -42,9 +42,9 @@ import {TapClick} from '../button/button';
 })
 export class Checkbox extends IonInputItem {
   constructor(
-    @Optional() cd: NgControl,
     elementRef: ElementRef,
     config: IonicConfig,
+    @Optional() cd: NgControl,
     tapClick: TapClick
   ) {
     super(elementRef, config);
@@ -77,8 +77,8 @@ export class Checkbox extends IonInputItem {
     }
   }
 
-  writeValue(modelValue) {
-    this.checked = modelValue;
+  writeValue(value) {
+    this.checked = value;
   }
 
   // Used by the view to update the model (Control)
