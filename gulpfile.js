@@ -54,11 +54,7 @@ var tscReporter = {
 gulp.task('clean.build', function(done) {
   runSequence(
     'clean',
-    'transpile',
-    'bundle.js',
-    'e2e',
-    'sass',
-    'fonts',
+    'build',
     done
   );
 })
@@ -77,11 +73,7 @@ gulp.task('build', function(done) {
 gulp.task('watch', function(done) {
 
   runSequence(
-    'transpile',
-    'bundle.js',
-    'e2e',
-    'sass',
-    'fonts',
+    'build',
     'serve',
     function() {
       watch(
