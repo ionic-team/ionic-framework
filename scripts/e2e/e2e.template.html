@@ -35,7 +35,7 @@
 </head>
 <body>
 
-  <ion-app module="{{MODULE}}">
+  <ion-app>
     <ion-loading-icon></ion-loading-icon>
   </ion-app>
 
@@ -55,6 +55,7 @@
 
   <!-- web animations polyfill for non-chrome browsers -->
   <script src="../../../lib/web-animations.min.js"></script>
+  <script>System.import("{{MODULE}}");</script>
 
 </body>
 </html>

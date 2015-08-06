@@ -39,7 +39,6 @@ var tscOptions = {
   target: 'ES6',
   allowNonTsExtensions: true,
   isolatedModules: true,
-  //declaration: true, //generate d.ts files
   emitDecoratorMetadata: true,
   experimentalDecorators: true,
   noEmitOnError: false,  // ignore errors
@@ -123,7 +122,6 @@ function transpile(moduleType) {
       'ionic/**/*.js',
       '!ionic/components/*/test/**/*',
       '!ionic/util/hairline.js',
-      '!ionic/init.js',
       '!ionic/util/test/*'
     ])
    .pipe(cache('transpile', { optimizeMemory: true }))
@@ -147,7 +145,7 @@ gulp.task('transpile.common', function() { return transpile("common"); });
 gulp.task('transpile', ['transpile.system']);
 
 gulp.task('bundle.js', function() {
-  return gulp.src(['dist/js/es5/system/ionic/**/*.js', 'ionic/util/hairline.js', 'ionic/init.js'])
+  return gulp.src(['dist/js/es5/system/ionic/**/*.js', 'ionic/util/hairline.js'])
              .pipe(concat('ionic.bundle.js'))
              .pipe(gulp.dest('dist/js/'));
 });
