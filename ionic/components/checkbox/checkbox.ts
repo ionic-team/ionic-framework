@@ -23,8 +23,9 @@ import {TapClick} from '../button/button';
   host: {
     'class': 'item',
     'role': 'checkbox',
-    '[attr.aria-checked]': 'input.checked',
-    '[attr.aria-disabled]': 'input.disabled',
+    '[attr.tab-index]': 'tabIndex',
+    '[attr.aria-checked]': 'checked',
+    '[attr.aria-disabled]': 'disabled',
     '[attr.aria-labelledby]': 'labelId',
     '(^click)': 'click($event)'
   },
@@ -33,7 +34,6 @@ import {TapClick} from '../button/button';
 @IonicView({
   template:
   '<div class="item-media media-checkbox">' +
-    '<input type="checkbox" aria-hidden="true">' +
     '<div class="checkbox-icon"></div>' +
   '</div>' +
   '<div class="item-content" id="{{labelId}}">' +
@@ -49,6 +49,7 @@ export class Checkbox extends IonInputItem {
   ) {
     super(elementRef, config);
     this.tapClick = tapClick;
+    this.tabIndex = 0;
 
     this.onChange = (_) => {};
     this.onTouched = (_) => {};
@@ -63,14 +64,8 @@ export class Checkbox extends IonInputItem {
     this.labelId = 'label-' + this.id;
   }
 
-  onAllChangesDone() {
-    this.input.checked = this.checked;
-    this.input.disabled = this.disabled;
-    this.input.value = this.value;
-  }
-
   toggle() {
-    this.input.checked = this.checked = !this.input.checked;
+    this.checked = !this.checked;
     this.onChange(this.checked);
   }
 
@@ -82,9 +77,8 @@ export class Checkbox extends IonInputItem {
     }
   }
 
-  // Called by the model (Control) to update the view
   writeValue(modelValue) {
-    this.input.checked = modelValue;
+    this.checked = modelValue;
   }
 
   // Used by the view to update the model (Control)
