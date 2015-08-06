@@ -37,9 +37,6 @@ function getBabelOptions(moduleName, moduleType) {
 
 var tscOptions = {
   target: 'ES6',
-  // Don't use the version of typescript that gulp-typescript depends on, we need 1.5
-  // see https://github.com/ivogabe/gulp-typescript#typescript-version
-  typescript: require('typescript'),
   allowNonTsExtensions: true,
   isolatedModules: true,
   //declaration: true, //generate d.ts files
