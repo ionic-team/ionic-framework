@@ -13,7 +13,7 @@ $input-label-color:         #888 !default;
   white-space: nowrap;
 }
 
-.fixed-inline-label  {
+[fixed-label] .input-label {
   display: block;
   max-width: 200px;
   width: 30%;
@@ -23,36 +23,17 @@ $input-label-color:         #888 !default;
   white-space: nowrap;
 }
 
-.item-stacked-label {
+.item-input[stacked-label] {
   flex-direction: column;
   align-items: flex-start;
 
   .input-label {
-    width: auto;
+    align-self: stretch;
     max-width: 100%;
   }
 
   .input-label + .input {
     margin-top: 0;
-  }
-}
-
-.item-floating-label {
-  display: block;
-  background-color: transparent;
-  box-shadow: none;
-
-  .input-label {
-    position: relative;
-    padding: 5px 0 0 0;
-    opacity: 0;
-    top: 10px;
-    transition: opacity .15s ease-in, top .2s linear;
-
-    &.has-input {
-      opacity: 1;
-      top: 0;
-      transition: opacity .15s ease-in, top .2s linear;
-    }
+    padding-left: 16px;
   }
 }

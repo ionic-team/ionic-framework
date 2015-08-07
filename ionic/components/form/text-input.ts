@@ -45,7 +45,7 @@ export class Input extends IonInputItem {
     '(touchend)': 'pointerEnd($event)',
     '(mousedown)': 'pointerStart($event)',
     '(mouseup)': 'pointerEnd($event)',
-    '[attr.id]': 'id',
+    '[attr.aria-labelledby]': 'labelledBy',
     'class': 'text-input input'
   }
 })

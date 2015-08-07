@@ -111,8 +111,8 @@ export class IonInputItem extends Ion {
   onInit() {
     super.onInit();
     if (this.input && this.label) {
-      this.input.id = (this.input.id || 'input-' + this.id);
-      this.label.labelFor = this.input.id;
+      this.label.id = (this.label.id || 'label-' + this.id);
+      this.input.labelledBy = this.label.id;
     }
   }
 

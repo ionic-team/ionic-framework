@@ -1,4 +1,7 @@
-$item-input-padding: 6px 0 5px 0px;
+
+// Input
+// --------------------------------------------------
+
 
 ion-input {
   display: block;
@@ -20,8 +23,7 @@ focus-holder input {
   align-items: flex-start;
 }
 
-.item.input input,
-.item.input textarea {
+.item.input .text-input {
   flex: 1;
 }
 
@@ -29,37 +31,7 @@ focus-holder input {
   padding-top: 9px;
 }
 
-.item .item-content label.input-label {
+.item .item-content .input-label {
   margin: 0;
   padding: 0;
 }
-
-/*ion-input {
-  display: block;
-
-
-  position: relative;
-  overflow: hidden;
-
-  display: flex;
-  align-items: center;
-
-  .item-label {
-    padding: $item-input-padding;
-  }
-
-  input, textarea {
-    width: 100%;
-    //font-size: 1.6rem;
-
-    border-radius: 0;
-
-    flex: 1 220px;
-    @include appearance(none);
-
-    margin: 0;
-    padding-right: 24px;
-    background-color: transparent;
-  }
-}
-*/

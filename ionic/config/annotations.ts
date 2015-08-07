@@ -12,7 +12,7 @@ import {
   Toolbar,
   Icon,
   IconDirective,
-  Checkbox, TapInput, Switch,
+  Checkbox, Switch,
   Input, TextInput, Label,
   Segment, SegmentButton, SegmentControlValueAccessor,
   RadioGroup, RadioButton, SearchBar,
@@ -73,7 +73,6 @@ export const IonicDirectives = [
   // Input
   forwardRef(() => Input),
   forwardRef(() => TextInput),
-  forwardRef(() => TapInput),
   forwardRef(() => Label),
 
   // Nav

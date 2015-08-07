@@ -9,9 +9,12 @@ import {Switch} from '../switch/switch';
 
 
 @Directive({
-  selector: 'label',
+  selector: 'ion-label',
+  properties: [
+    'id'
+  ],
   host: {
-    '[attr.for]': 'labelFor',
+    '[attr.id]': 'id',
     '[class.input-label]': 'inputLabel',
     '(touchstart)': 'pointerStart($event)',
     '(touchend)': 'pointerEnd($event)',
@@ -22,12 +25,9 @@ import {Switch} from '../switch/switch';
 export class Label {
   constructor(
     @Optional() @Host() textContainer: Input,
-    @Optional() @Host() checkboxContainer: Checkbox,
-    @Optional() @Host() radioContainer: RadioButton,
-    @Optional() @Host() switchContainer: Switch,
     config: IonicConfig
   ) {
-    this.container = textContainer || checkboxContainer || radioContainer || switchContainer;
+    this.container = textContainer;
 
     if (this.container) {
       this.container.registerLabel(this);
@@ -54,8 +54,7 @@ export class Label {
       if (!dom.hasPointerMoved(20, this.startCoord, endCoord)) {
         ev.preventDefault();
         ev.stopPropagation();
-
-        this.container instanceof Input ? this.container.focus() : this.container.toggle();
+        this.container.focus();
       }
 
       this.startCoord = null;
