@@ -9,7 +9,6 @@ Promise.all(
   .filter(onlySpecFiles)
   .map(window.file2moduleName)        // Normalize paths to module names.
   .map(function(path) {
-    debugger;
     return System.import(path).then(function(module) {
       if (module.hasOwnProperty('run')) {
         module.run();

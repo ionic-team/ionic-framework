@@ -158,7 +158,7 @@ gulp.task('bundle', ['bundle.ionic'], function() {
 gulp.task('tests', function() {
   return gulp.src('ionic/components/*/test/*/**/*.spec.ts')
     .pipe(tsc(tscOptions, null, tscReporter))
-    .pipe(babel(getBabelOptions('tests')))
+    .pipe(babel(getBabelOptions('dist/tests')))
     .pipe(rename(function(file) {
       file.dirname = file.dirname.replace(path.sep + 'test' + path.sep, path.sep)
     }))
