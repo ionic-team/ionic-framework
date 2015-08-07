@@ -1,4 +1,4 @@
-import {Directive, View, Ancestor, onInit, ElementRef, forwardRef} from 'angular2/angular2';
+import {Directive, View, Host, ElementRef, forwardRef} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
@@ -120,7 +120,7 @@ export class Toolbar extends ToolbarBase {
   selector: '.toolbar-title'
 })
 class ToolbarTitle {
-  constructor(@Ancestor() toolbar: Toolbar, elementRef: ElementRef) {
+  constructor(@Host() toolbar: Toolbar, elementRef: ElementRef) {
     toolbar.titleElement(elementRef);
   }
 }
@@ -130,7 +130,7 @@ class ToolbarTitle {
   selector: '.toolbar-item'
 })
 class ToolbarItem {
-  constructor(@Ancestor() toolbar: Toolbar, elementRef: ElementRef) {
+  constructor(@Host() toolbar: Toolbar, elementRef: ElementRef) {
     toolbar.itemElements(elementRef);
   }
 }

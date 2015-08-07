@@ -2,7 +2,7 @@ import {
   View,
   Directive,
   ElementRef,
-  Ancestor,
+  Host,
   Optional,
   NgControl,
   Renderer,
@@ -29,7 +29,7 @@ import {pointerCoord} from '../../util/dom';
 })
 class MediaSwitch {
   constructor(
-    @Ancestor() @Inject(forwardRef(() => Switch)) swtch: Switch,
+    @Host() @Inject(forwardRef(() => Switch)) swtch: Switch,
     elementRef: ElementRef,
     config: IonicConfig
   ) {

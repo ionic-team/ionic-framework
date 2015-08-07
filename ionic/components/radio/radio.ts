@@ -1,4 +1,4 @@
-import {ElementRef, Ancestor, Optional, NgControl, Query, QueryList} from 'angular2/angular2';
+import {ElementRef, Host, Optional, NgControl, Query, QueryList} from 'angular2/angular2';
 
 import {IonicDirective, IonicComponent, IonicView} from '../../config/annotations';
 import {IonicConfig} from '../../config/config';
@@ -111,7 +111,7 @@ export class RadioGroup extends Ion {
 })
 export class RadioButton extends IonInputItem {
   constructor(
-    @Ancestor() @Optional() group: RadioGroup,
+    @Host() @Optional() group: RadioGroup,
     elementRef: ElementRef,
     config: IonicConfig,
     tapClick: TapClick

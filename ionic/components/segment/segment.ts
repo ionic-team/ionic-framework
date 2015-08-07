@@ -1,4 +1,4 @@
-import {View, Renderer, ElementRef, EventEmitter, Ancestor, forwardRef} from 'angular2/angular2';
+import {View, Renderer, ElementRef, EventEmitter, Host, forwardRef} from 'angular2/angular2';
 import {Control, NgControl,NgFormControl} from 'angular2/forms';
 import {ControlGroup, ControlDirective} from 'angular2/forms'
 
@@ -168,7 +168,7 @@ export class SegmentControlValueAccessor {
 })
 export class SegmentButton {
   constructor(
-    @Ancestor() segment: Segment,
+    @Host() segment: Segment,
     elementRef: ElementRef
   ) {
     this.ele = elementRef.ele

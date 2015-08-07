@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Optional, Ancestor, onDestroy, NgZone, Query, QueryList} from 'angular2/angular2';
+import {Directive, ElementRef, Optional, Host, onDestroy, NgZone, Query, QueryList} from 'angular2/angular2';
 
 import {Icon} from '../icon/icon';
 import {IonicConfig} from '../../config/config';
@@ -50,7 +50,7 @@ export class TapClick {
     elementRef: ElementRef,
     config: IonicConfig,
     ngZone: NgZone,
-    @Optional() @Ancestor() tapDisabled: TapDisabled
+    @Optional() @Host() tapDisabled: TapDisabled
   ) {
     this.ele = elementRef.nativeElement;
     this.tapEnabled = !tapDisabled;

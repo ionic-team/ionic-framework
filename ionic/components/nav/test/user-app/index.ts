@@ -5,7 +5,6 @@ import {
   bootstrap,
   Injectable,
   Inject,
-  Ancestor,
   forwardRef,
   Inject,
   DynamicComponentLoader,

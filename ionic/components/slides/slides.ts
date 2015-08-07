@@ -1,4 +1,4 @@
-import {Component, View, ElementRef, onInit, Ancestor, NgFor} from 'angular2/angular2';
+import {Component, View, ElementRef, onInit, Host, NgFor} from 'angular2/angular2';
 
 import {DragGesture} from 'ionic/gestures/drag-gesture';
 import {IonicComponent, IonicDirective} from '../../config/annotations';
@@ -452,7 +452,7 @@ export class Slides {
 })
 export class Slide {
   constructor(
-    @Ancestor() slides: Slides,
+    @Host() slides: Slides,
     elementRef: ElementRef
   ) {
     this.ele = elementRef.nativeElement;
@@ -502,7 +502,7 @@ export class Slide {
 })
 export class SlidePager {
   constructor(
-    @Ancestor() slides: Slides,
+    @Host() slides: Slides,
     elementRef: ElementRef
   ) {
     this.ele = elementRef.nativeElement;

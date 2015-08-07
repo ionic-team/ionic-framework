@@ -1,4 +1,4 @@
-import {Ancestor, Optional, ElementRef, Attribute, Directive} from 'angular2/angular2';
+import {Host, Optional, ElementRef, Attribute, Directive} from 'angular2/angular2';
 
 import {IonInput} from './input';
 import {IonicApp} from '../app/app';
@@ -24,9 +24,9 @@ import {RadioButton} from '../radio/radio';
 })
 export class TapInput extends IonInput {
   constructor(
-    @Optional() @Ancestor() checkboxContainer: Checkbox,
-    @Optional() @Ancestor() radioContainer: RadioButton,
-    @Optional() @Ancestor() scrollView: Content,
+    @Optional() @Host() checkboxContainer: Checkbox,
+    @Optional() @Host() radioContainer: RadioButton,
+    @Optional() @Host() scrollView: Content,
     @Attribute('type') type: string,
     elementRef: ElementRef,
     app: IonicApp,

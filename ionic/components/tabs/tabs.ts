@@ -1,4 +1,4 @@
-import {Component, Directive, View, Injector, NgFor, ElementRef, Optional, Ancestor, forwardRef} from 'angular2/angular2';
+import {Component, Directive, View, Injector, NgFor, ElementRef, Optional, Host, forwardRef} from 'angular2/angular2';
 
 import {ViewController} from '../view/view-controller';
 import {ViewItem} from '../view/view-item';
@@ -30,12 +30,12 @@ import {IonicComponent, IonicView} from '../../config/annotations';
 })
 export class Tabs extends ViewController {
   constructor(
-    @Optional() AncestorViewCtrl: ViewController,
+    @Optional() hostViewCtrl: ViewController,
     @Optional() viewItem: ViewItem,
     injector: Injector,
     elementRef: ElementRef
   ) {
-    super(AncestorViewCtrl, injector, elementRef);
+    super(hostViewCtrl, injector, elementRef);
 
     // Tabs may also be an actual ViewItem which was navigated to
     // if Tabs is static and not navigated to within a ViewController
@@ -126,7 +126,7 @@ export class Tabs extends ViewController {
   }
 })
 class TabButton {
-  constructor(@Ancestor() tabs: Tabs) {
+  constructor(@Host() tabs: Tabs) {
     this.tabs = tabs;
   }
 

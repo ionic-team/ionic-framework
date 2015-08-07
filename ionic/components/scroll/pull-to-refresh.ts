@@ -1,4 +1,4 @@
-import {Component, View, NgIf, CSSClass, ElementRef, EventEmitter, Ancestor, onInit} from 'angular2/angular2'
+import {Component, View, NgIf, CSSClass, ElementRef, EventEmitter, Host} from 'angular2/angular2'
 
 import {Content} from '../content/content';
 
@@ -20,8 +20,7 @@ import {raf, ready, CSS} from 'ionic/util/dom';
     '[class.active]': 'isActive',
     '[class.refreshing]': 'isRefreshing',
     '[class.refreshingTail]': 'isRefreshingTail'
-  },
-  lifecycle: [onInit]
+  }
 })
 @View({
   template: `<div class="refresher-content" [class.refresher-with-text]="pullingText || refreshingText">
@@ -39,7 +38,7 @@ import {raf, ready, CSS} from 'ionic/util/dom';
 })
 export class Refresher {
   constructor(
-    @Ancestor() content: Content,
+    @Host() content: Content,
     element: ElementRef
   ) {
     this.ele = element.nativeElement;
@@ -71,7 +70,7 @@ export class Refresher {
     this.startY = null;
     this.deltaY = null;
     this.canOverscroll = true;
-    this.scrollAncestor = sp;
+    this.scrollHost = sp;
     this.scrollChild = sc;
 
     util.defaults(this, {
@@ -248,7 +247,7 @@ export class Refresher {
 
     // kitkat fix for touchcancel events http://updates.html5rocks.com/2014/05/A-More-Compatible-Smoother-Touch
     /*
-    if (ionic.Platform.isAndroid() && ionic.Platform.version() === 4.4 && scrollAncestor.scrollTop === 0) {
+    if (ionic.Platform.isAndroid() && ionic.Platform.version() === 4.4 && scrollHost.scrollTop === 0) {
       isDragging = true;
       e.preventDefault();
     }
@@ -260,7 +259,7 @@ export class Refresher {
 
 
     // if we've dragged up and back down in to native scroll territory
-    if (this.deltaY - this.dragOffset <= 0 || this.scrollAncestor.scrollTop !== 0) {
+    if (this.deltaY - this.dragOffset <= 0 || this.scrollHost.scrollTop !== 0) {
 
       if (this.isOverscrolling) {
         this.isOverscrolling = false;
@@ -268,7 +267,7 @@ export class Refresher {
       }
 
       if (this.isDragging) {
-        this.nativescroll(this.scrollAncestor, parseInt(this.deltaY - this.dragOffset, 10) * -1);
+        this.nativescroll(this.scrollHost, parseInt(this.deltaY - this.dragOffset, 10) * -1);
       }
 
       // if we're not at overscroll 0 yet, 0 out
@@ -277,7 +276,7 @@ export class Refresher {
       }
       return;
 
-    } else if (this.deltaY > 0 && this.scrollAncestor.scrollTop === 0 && !this.isOverscrolling) {
+    } else if (this.deltaY > 0 && this.scrollHost.scrollTop === 0 && !this.isOverscrolling) {
       // starting overscroll, but drag started below scrollTop 0, so we need to offset the position
       this.dragOffset = this.deltaY;
     }

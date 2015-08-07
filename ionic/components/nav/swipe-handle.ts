@@ -1,4 +1,4 @@
-import {ElementRef, Directive, Ancestor, Optional, Inject, forwardRef, NgZone} from 'angular2/angular2';
+import {ElementRef, Directive, Host, Optional, Inject, forwardRef, NgZone} from 'angular2/angular2';
 
 import {ViewController} from '../view/view-controller';
 import {Pane} from './pane';
@@ -14,7 +14,7 @@ import {Gesture} from 'ionic/gestures/gesture';
 export class SwipeHandle {
   constructor(
     @Optional() @Inject(forwardRef(() => ViewController)) viewCtrl: ViewController,
-    @Ancestor() @Inject(forwardRef(() => Pane)) pane: Pane,
+    @Host() @Inject(forwardRef(() => Pane)) pane: Pane,
     elementRef: ElementRef,
     ngZone: NgZone
   ) {

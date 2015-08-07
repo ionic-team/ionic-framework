@@ -1,4 +1,4 @@
-import {Directive, Component, View, onInit, Ancestor, ElementRef, forwardRef, Injector} from 'angular2/angular2';
+import {Directive, Component, View, Host, ElementRef, forwardRef, Injector} from 'angular2/angular2';
 
 import {ViewController} from '../view/view-controller';
 import {ViewItem} from '../view/view-item';
@@ -27,19 +27,19 @@ import {Tabs} from './tabs';
 export class Tab extends ViewController {
 
   constructor(
-    @Ancestor() tabs: Tabs,
+    @Host() tabs: Tabs,
     elementRef: ElementRef,
     injector: Injector
   ) {
     // A Tab is both a container of many views, and is a view itself.
-    // A Tab is one ViewItem within it's Ancestor Tabs (which extends ViewController)
+    // A Tab is one ViewItem within it's Host Tabs (which extends ViewController)
     // A Tab is a ViewController for its child ViewItems
     super(tabs, injector, elementRef);
     this.tabs = tabs;
 
     this.childNavbar(true);
 
-    let item = this.item = new ViewItem(tabs.Ancestor);
+    let item = this.item = new ViewItem(tabs.Host);
     item.setInstance(this);
     item.viewElementRef(elementRef);
     tabs.addTab(this);
@@ -105,7 +105,7 @@ export class Tab extends ViewController {
   selector: 'template[pane-anchor]'
 })
 class TabPaneAnchor {
-  constructor(@Ancestor() tab: Tab, elementRef: ElementRef) {
+  constructor(@Host() tab: Tab, elementRef: ElementRef) {
     tab.anchorElementRef(elementRef);
   }
 }

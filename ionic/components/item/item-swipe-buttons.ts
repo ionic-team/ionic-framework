@@ -1,4 +1,4 @@
-import {ElementRef, Ancestor, Directive} from 'angular2/angular2';
+import {ElementRef, Host, Directive} from 'angular2/angular2';
 
 import {Item} from 'ionic/components/item/item';
 import {SlideGesture} from 'ionic/gestures/slide-gesture';
@@ -10,21 +10,21 @@ import {SlideGesture} from 'ionic/gestures/slide-gesture';
 export class ItemPrimarySwipeButtons {
   constructor(
     elementRef: ElementRef,
-    @Ancestor() item: Item
+    @Host() item: Item
   ) {
-    item.primarySwipeButtons = this
-    this.ele = elementRef.nativeElement
-    this.AncestorItem = item
-    this.gesture = new ItemSlideGesture(this)
-    this.gesture.listen()
+    item.primarySwipeButtons = this;
+    this.ele = elementRef.nativeElement;
+    this.item = item;
+    this.gesture = new ItemSlideGesture(this);
+    this.gesture.listen();
   }
 
   setOpen(isOpen) {
     if (isOpen !== this.isOpen) {
-      this.isOpen = isOpen
+      this.isOpen = isOpen;
       requestAnimationFrame(() => {
-        this.ele.classList[isOpen?'add':'remove'](isOpen)
-      })
+        this.ele.classList[isOpen?'add':'remove'](isOpen);
+      });
     }
   }
 }
@@ -37,7 +37,7 @@ export class ItemSecondarySwipeButtons {
 
 class ItemSlideGesture extends SlideGesture {
   constructor(buttons) {
-    super(buttons.AncestorItem.ele)
+    super(buttons.item.ele)
     this.buttons = buttons
   }
 
