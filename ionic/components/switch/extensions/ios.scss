@@ -29,7 +29,7 @@ $switch-ios-transition-duration:      200ms !default;
 
   .item-media {
     margin: 0;
-    padding: $item-ios-padding-media-top $item-ios-padding-right $item-ios-padding-media-bottom $item-ios-padding-left;
+    padding: $item-ios-padding-media-top $item-ios-padding-right $item-ios-padding-media-bottom ($item-ios-padding-left + 20);
   }
 
   .switch-icon {

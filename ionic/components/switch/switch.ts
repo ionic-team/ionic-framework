@@ -14,55 +14,81 @@ import {Ion} from '../ion';
 import {IonInputItem} from '../form/input';
 import {IonicConfig} from '../../config/config';
 import {IonicComponent, IonicView} from '../../config/annotations';
-import * as dom  from '../../util/dom';
+import {pointerCoord} from '../../util/dom';
 
 
 @Directive({
-  selector: '.media-switch'
+  selector: '.media-switch',
+  host: {
+    '(^touchstart)': 'pointerDown($event)',
+    '(^mousedown)': 'pointerDown($event)',
+    '(^touchend)': 'pointerUp($event)',
+    '(^mouseup)': 'pointerUp($event)',
+    '[class.activated]': 'isActivated'
+  }
 })
 class MediaSwitch {
   constructor(
     @Ancestor() @Inject(forwardRef(() => Switch)) swtch: Switch,
     elementRef: ElementRef,
-    renderer: Renderer,
     config: IonicConfig
   ) {
+    this.swtch = swtch;
+    let self = this;
     let element = elementRef.nativeElement;
-    let touchEnabled = config.setting('touchEnabled');
-    let startCoord = null;
-
-    function pointerDown(ev) {
-      startCoord = dom.pointerCoord(ev);
-      renderer.setElementClass(elementRef, ACTIVATED, true);
-      element.removeEventListener(touchEnabled ? TOUCHMOVE : MOUSEMOVE, pointerMove);
-      element.addEventListener(touchEnabled ? TOUCHMOVE : MOUSEMOVE, pointerMove);
-    }
 
     function pointerMove(ev) {
-      let moveCoord = dom.pointerCoord(ev);
-      console.log('pointerMove', moveCoord);
+      let currentX = pointerCoord(ev).x;
+
+      if (swtch.checked) {
+        if (currentX + 15 < self.startX) {
+          swtch.toggle();
+          self.startX = currentX;
+        }
+      } else if (currentX - 15 > self.startX) {
+        swtch.toggle();
+        self.startX = currentX;
+      }
     }
 
-    function pointerUp(ev) {
-      let endCoord = dom.pointerCoord(ev);
-      renderer.setElementClass(elementRef, ACTIVATED, false);
-      element.removeEventListener(touchEnabled ? TOUCHMOVE : MOUSEMOVE, pointerMove);
+    this.addMoveListener = function() {
+      element.addEventListener('touchmove', pointerMove);
+      element.addEventListener('mousemove', pointerMove);
+    };
 
-      swtch.toggle();
+    this.removeMoveListener = function() {
+      element.removeEventListener('touchmove', pointerMove);
+      element.removeEventListener('mousemove', pointerMove);
+    };
+  }
+
+  pointerDown(ev) {
+    this.startX = pointerCoord(ev).x;
+
+    this.removeMoveListener();
+    this.addMoveListener();
+
+    this.isActivated = true;
+  }
+
+  pointerUp(ev) {
+    let endX = pointerCoord(ev).x;
+
+    if (this.swtch.checked) {
+      if (this.startX + 4 > endX) {
+        this.swtch.toggle();
+      }
+    } else if (this.startX - 4 < endX) {
+      this.swtch.toggle();
     }
 
-    element.addEventListener(touchEnabled ? TOUCHSTART : MOUSEDOWN, pointerDown);
-    element.addEventListener(touchEnabled ? TOUCHEND : MOUSEUP, pointerUp);
-
-    this.dereg = function() {
-      element.removeEventListener(touchEnabled ? TOUCHSTART : MOUSEDOWN, pointerDown);
-      element.removeEventListener(touchEnabled ? TOUCHEND : MOUSEUP, pointerUp);
-      element.removeEventListener(touchEnabled ? TOUCHMOVE : MOUSEMOVE, pointerMove);
-    }
+    this.removeMoveListener();
+    this.isActivated = false;
   }
 
   onDestroy() {
-    this.dereg();
+    this.removeMoveListener();
+    this.swtch = this.addMoveListener = this.removeMoveListener = null;
   }
 
 }
@@ -143,11 +169,3 @@ export class Switch extends IonInputItem {
 
   registerOnTouched(fn) { this.onTouched = fn; }
 }
-
-const ACTIVATED = 'activated';
-const MOUSEDOWN = 'mousedown';
-const MOUSEMOVE = 'mousemove';
-const MOUSEUP = 'mouseup';
-const TOUCHSTART = 'touchstart';
-const TOUCHMOVE = 'touchmove';
-const TOUCHEND = 'touchend';
