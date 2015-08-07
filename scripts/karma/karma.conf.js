@@ -9,7 +9,7 @@ module.exports = function(config) {
 
     files: buildConfig.scripts.concat([
       'dist/tests/**/*.spec.js',
-      'scripts/test/test-main.js'
+      'scripts/karma/test-main.js'
     ]),
 
     exclude: buildConfig.src.e2e,
