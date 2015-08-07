@@ -3,24 +3,8 @@
 // --------------------------------------------------
 
 .radio {
-  position: relative;
   cursor: pointer;
   @include user-select-none();
-}
-
-.radio input {
-  position: absolute;
-  width: 0;
-  height: 0;
-  margin: 0;
-  padding: 0;
-  opacity: 0;
-  border: none;
-  @include appearance(none);
-}
-
-.radio .input-label {
-  max-width: 100%;
 }
 
 .radio[aria-disabled=true] {

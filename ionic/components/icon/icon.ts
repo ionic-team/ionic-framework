@@ -69,7 +69,7 @@ export class IconDirective {
     @Optional() @Ancestor() AncestorButton: Button,
     @Attribute('forward') forward: string,
     config: IonicConfig,
-    private _renderer: Renderer
+    private renderer: Renderer
   ) {
     let ele = this.ele = _elementRef.nativeElement;
 
@@ -109,7 +109,7 @@ export class IconDirective {
     if (!this.name) return;
 
     // add the css class to show the icon font
-    this._renderer.setElementClass(this._elementRef, this.name, true);
+    this.renderer.setElementClass(this._elementRef, this.name, true);
 
     // hide the icon when it's within a button
     // and the button isn't an icon only button

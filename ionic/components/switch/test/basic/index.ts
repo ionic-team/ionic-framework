@@ -18,15 +18,27 @@ import {
 class IonicApp {
   constructor() {
     this.fruitsForm = new ControlGroup({
-      "appleCtrl": new Control({"checked": false, "value": "apple"}),
+      "appleCtrl": new Control(),
       "bananaCtrl": new Control(true),
-      "cherryCtrl": new Control({"checked": false, "value": 12}),
-      "grapeCtrl": new Control("grape")
+      "cherryCtrl": new Control(false),
+      "grapeCtrl": new Control(true)
     });
+
+    this.grapeDisabled = true;
+    this.grapeChecked = true;
+  }
+
+  toggleGrapeChecked() {
+    this.grapeChecked = !this.grapeChecked;
+  }
+
+  toggleGrapeDisabled() {
+    this.grapeDisabled = !this.grapeDisabled;
   }
 
   doSubmit(ev) {
     console.log('Submitting form', this.fruitsForm.value);
-    event.preventDefault();
+    this.formResults = JSON.stringify(this.fruitsForm.value);
+    ev.preventDefault();
   }
 }

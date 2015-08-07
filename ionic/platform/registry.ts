@@ -63,7 +63,8 @@ Platform.register({
     mdRipple: true,
     tabBarPlacement: 'top',
     navTitleAlign: 'left',
-    viewTransition: 'md'
+    viewTransition: 'md',
+    touchEnabled: true
   },
   isMatch(p) {
     // "silk" is kindle fire
@@ -94,6 +95,7 @@ Platform.register({
       // and not just an a spoofed user-agent string
       return /iphone|ipad|ipod/i.test(Platform.navigatorPlatform());
     },
+    touchEnabled: true,
     keyboardScrollAssist: true,
     viewTransition: 'ios',
     navTitleAlign: 'center',

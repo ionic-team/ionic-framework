@@ -4,32 +4,95 @@
 
 <ion-content>
 
-  <form (^submit)="doSubmit($event)">
+  <form (^submit)="doSubmit($event)" [ng-form-model]="fruitsForm">
 
     <ion-list>
 
-      <ion-switch aria-checked="true">
-        <label id="appleLabel">Apple</label>
-        <input checked="true" type="checkbox">
+      <div class="item switch" mode="ios">
+        <div class="item-content">
+          Unchecked
+        </div>
+        <div class="item-media media-switch">
+          <div class="switch-icon">
+            <div class="switch-track"></div>
+            <div class="switch-handle"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item switch" mode="ios">
+        <div class="item-content">
+          Unchecked activated
+        </div>
+        <div class="item-media media-switch activated">
+          <div class="switch-icon">
+            <div class="switch-track"></div>
+            <div class="switch-handle"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item switch" mode="ios" aria-checked="true">
+        <div class="item-content">
+          Checked
+        </div>
+        <div class="item-media media-switch">
+          <div class="switch-icon">
+            <div class="switch-track"></div>
+            <div class="switch-handle"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item switch" mode="ios" aria-checked="true">
+        <div class="item-content">
+          Checked activated
+        </div>
+        <div class="item-media media-switch activated">
+          <div class="switch-icon">
+            <div class="switch-track"></div>
+            <div class="switch-handle"></div>
+          </div>
+        </div>
+      </div>
+
+      <ion-switch value="apple" checked="true" ng-control="appleCtrl" id="e2eAppleCheckbox">
+        Apple, value=apple, init checked
       </ion-switch>
 
-      <ion-switch>
-        <label>Banana</label>
-        <input value="test" type="checkbox">
+      <ion-switch ng-control="bananaCtrl">
+        Banana, init no checked/value attributes
       </ion-switch>
 
-      <ion-switch aria-checked="true">
-        <label>Cherry</label>
-        <input type="checkbox">
+      <ion-switch value="cherry" disabled="true" ng-control="cherryCtrl">
+        Cherry, value=cherry, init disabled
       </ion-switch>
 
-      <ion-switch>
-        <label>Grape</label>
-        <input value="test" checked="checked" type="checkbox">
+      <ion-switch value="grape" [checked]="grapeChecked" [disabled]="grapeDisabled" ng-control="grapeCtrl">
+        Grape, value=grape, init checked, disabled
       </ion-switch>
 
-    <ion-list>
+    </ion-list>
 
   </form>
+
+  <p aria-hidden="true" class="align-center">
+    <button (click)="toggleGrapeChecked()" outline primary small id="e2eGrapeChecked">Grape Checked</button>
+    <button (click)="toggleGrapeDisabled()" outline primary small id="e2eGrapeDisabled">Grape Disabled</button>
+    <button (click)="doSubmit($event)" outline primary small id="e2eSubmit">Submit</button>
+  </p>
+
+  <p aria-hidden="true" class="padding">
+    <code>appleCtrl.dirty: {{fruitsForm.controls.appleCtrl.dirty}}</code><br>
+    <code>appleCtrl.value: {{fruitsForm.controls.appleCtrl.value}}</code><br>
+    <code>bananaCtrl.dirty: {{fruitsForm.controls.bananaCtrl.dirty}}</code><br>
+    <code>bananaCtrl.value: {{fruitsForm.controls.bananaCtrl.value}}</code><br>
+    <code>cherry.dirty: {{fruitsForm.controls.cherryCtrl.dirty}}</code><br>
+    <code>cherry.value: {{fruitsForm.controls.cherryCtrl.value}}</code><br>
+    <code>grape.dirty: {{fruitsForm.controls.grapeCtrl.dirty}}</code><br>
+    <code>grape.value: {{fruitsForm.controls.grapeCtrl.value}}</code><br>
+  </p>
+
+  <pre aria-hidden="true" class="padding">{{formResults}}</pre>
 
 </ion-content>

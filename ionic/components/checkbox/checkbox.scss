@@ -4,17 +4,8 @@
 
 
 .checkbox {
-  position: relative;
   cursor: pointer;
   @include user-select-none();
-}
-
-.checkbox input {
-  display: none;
-}
-
-.checkbox .input-label {
-  max-width: 100%;
 }
 
 .checkbox[aria-disabled=true] {

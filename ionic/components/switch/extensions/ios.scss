@@ -3,7 +3,7 @@
 // --------------------------------------------------
 
 $switch-ios-width:                    51px !default;
-$switch-ios-height:                   31px !default;
+$switch-ios-height:                   32px !default;
 $switch-ios-border-width:             2px !default;
 $switch-ios-border-radius:            30px !default;
 
@@ -22,57 +22,72 @@ $switch-ios-handle-box-shadow:        0 3px 12px rgba(0, 0, 0, 0.16), 0 3px 1px 
 $switch-ios-handle-off-bg-color:      #fff !default;
 $switch-ios-handle-on-bg-color:       #fff !default;
 
-$switch-ios-hit-area-expansion:       5px !default;
+$switch-ios-transition-duration:      200ms !default;
 
 
 .switch[mode="ios"] {
 
-  .media-switch {
-    margin-top: 5px;
-    margin-bottom: 5px;
+  .item-media {
+    margin: 0;
+    padding: $item-ios-padding-media-top $item-ios-padding-right $item-ios-padding-media-bottom $item-ios-padding-left;
   }
 
-  .switch-track {
-    /*@include transition-timing-function(ease-in-out);
-    @include transition-duration($switch-ios-transition-duration);
-    @include transition-property((background-color, border));*/
+  .switch-icon {
     position: relative;
     width: $switch-ios-width;
     height: $switch-ios-height;
+    border-radius: $switch-ios-border-radius;
+    pointer-events: none;
+    background-color: $switch-ios-off-bg-color;
+    transition: background-color $switch-ios-transition-duration;
+  }
+
+  .switch-track {
+    background-color: $switch-ios-off-bg-color;
     border: solid $switch-ios-border-width $switch-ios-off-border-color;
     border-radius: $switch-ios-border-radius;
-    background-color: $switch-ios-off-bg-color;
-    content: ' ';
-    cursor: pointer;
-    pointer-events: none;
+    width: 100%;
+    height: 100%;
+
+    will-change: border-width, opacity;
+    transition-property: border-width, opacity;
+    transition-duration: $switch-ios-transition-duration + 50ms;
+    transition-delay: 100ms;
   }
 
   .switch-handle {
-    //@include transition($switch-ios-transition-duration cubic-bezier(0, 1.1, 1, 1.1));
-    //@include transition-property((background-color, transform));
-
     position: absolute;
+    top: $switch-ios-border-width;
+    left: $switch-ios-border-width;
 
     width: $switch-ios-handle-width;
     height: $switch-ios-handle-height;
+
     border-radius: $switch-ios-handle-radius;
     background-color: $switch-ios-handle-off-bg-color;
-    top: 0;
-    left: 0;
     box-shadow: $switch-ios-handle-box-shadow;
 
-    &:before {
-      position: absolute;
-      top: -4px;
-      left: ( ($switch-ios-handle-width / 2) * -1) - 8;
-      padding: ($switch-ios-handle-height / 2) + 5 ($switch-ios-handle-width + 7);
-      content: '';
-    }
+    will-change: width, left, transform;
+
+    transition-property: width, left, transform;
+    transition-duration: $switch-ios-transition-duration;
+  }
+
+  .activated .switch-handle {
+    width: $switch-ios-handle-width + 6;
+  }
+
+  &[aria-checked=true] .switch-icon {
+    background-color: $switch-ios-on-bg-color;
+  }
+
+  .activated .switch-track,
+  &[aria-checked=true] .switch-track {
+    border-width: $switch-ios-height / 2;
   }
 
   &[aria-checked=true] .switch-track {
-    background-color: $switch-ios-on-bg-color;
-    border-color: $switch-ios-on-border-color;
+    opacity: 0;
   }
 
   &[aria-checked=true] .switch-handle {
@@ -80,8 +95,8 @@ $switch-ios-hit-area-expansion:       5px !default;
     transform: translate3d($switch-ios-width - $switch-ios-handle-width - ($switch-ios-border-width * 2), 0, 0);
   }
 
-  .input-label {
-    color: inherit;
+  &[aria-checked=true] .activated .switch-handle {
+    left: $switch-ios-border-width - 6;
   }
 
 }

@@ -2,23 +2,87 @@ import {
   View,
   Directive,
   ElementRef,
-  Renderer,
+  Ancestor,
   Optional,
-  NgControl
+  NgControl,
+  Renderer,
+  Inject,
+  forwardRef
 } from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonInputItem} from '../form/input';
 import {IonicConfig} from '../../config/config';
 import {IonicComponent, IonicView} from '../../config/annotations';
-import {Icon} from '../icon/icon';
+import * as dom  from '../../util/dom';
+
+
+@Directive({
+  selector: '.media-switch'
+})
+class MediaSwitch {
+  constructor(
+    @Ancestor() @Inject(forwardRef(() => Switch)) swtch: Switch,
+    elementRef: ElementRef,
+    renderer: Renderer,
+    config: IonicConfig
+  ) {
+    let element = elementRef.nativeElement;
+    let touchEnabled = config.setting('touchEnabled');
+    let startCoord = null;
+
+    function pointerDown(ev) {
+      startCoord = dom.pointerCoord(ev);
+      renderer.setElementClass(elementRef, ACTIVATED, true);
+      element.removeEventListener(touchEnabled ? TOUCHMOVE : MOUSEMOVE, pointerMove);
+      element.addEventListener(touchEnabled ? TOUCHMOVE : MOUSEMOVE, pointerMove);
+    }
+
+    function pointerMove(ev) {
+      let moveCoord = dom.pointerCoord(ev);
+      console.log('pointerMove', moveCoord);
+    }
+
+    function pointerUp(ev) {
+      let endCoord = dom.pointerCoord(ev);
+      renderer.setElementClass(elementRef, ACTIVATED, false);
+      element.removeEventListener(touchEnabled ? TOUCHMOVE : MOUSEMOVE, pointerMove);
+
+      swtch.toggle();
+    }
+
+    element.addEventListener(touchEnabled ? TOUCHSTART : MOUSEDOWN, pointerDown);
+    element.addEventListener(touchEnabled ? TOUCHEND : MOUSEUP, pointerUp);
+
+    this.dereg = function() {
+      element.removeEventListener(touchEnabled ? TOUCHSTART : MOUSEDOWN, pointerDown);
+      element.removeEventListener(touchEnabled ? TOUCHEND : MOUSEUP, pointerUp);
+      element.removeEventListener(touchEnabled ? TOUCHMOVE : MOUSEMOVE, pointerMove);
+    }
+  }
+
+  onDestroy() {
+    this.dereg();
+  }
+
+}
 
 
 @IonicComponent({
   selector: 'ion-switch',
+  properties: [
+    'value',
+    'checked',
+    'disabled',
+    'id'
+  ],
   host: {
     'class': 'item',
-    //'[attr.aria-checked]': 'input.checked'
+    'role': 'checkbox',
+    '[attr.tab-index]': 'tabIndex',
+    '[attr.aria-checked]': 'checked',
+    '[attr.aria-disabled]': 'disabled',
+    '[attr.aria-labelledby]': 'labelId'
   }
 })
 @IonicView({
@@ -27,95 +91,50 @@ import {Icon} from '../icon/icon';
     '<ng-content></ng-content>' +
   '</div>' +
   '<div class="item-media media-switch">' +
-    '<div class="switch-track">' +
+    '<div class="switch-icon">' +
+      '<div class="switch-track"></div>' +
       '<div class="switch-handle"></div>' +
     '</div>' +
-  '</div>'
+  '</div>',
+  directives: [MediaSwitch]
 })
 export class Switch extends IonInputItem {
   constructor(
-    @Optional() cd: NgControl,
-    renderer: Renderer,
     elementRef: ElementRef,
-    config: IonicConfig
+    config: IonicConfig,
+    @Optional() private cd: NgControl
   ) {
     super(elementRef, config);
+    this.tabIndex = 0;
+
     this.onChange = (_) => {};
     this.onTouched = (_) => {};
-    this.renderer = renderer;
-    this.elementRef = elementRef;
-    this.cd = cd;
 
-    if(cd) cd.valueAccessor = this;
+    if (cd) cd.valueAccessor = this;
   }
 
   onInit() {
     super.onInit();
-    console.log("switch onInit")
+    this.labelId = 'label-' + this.id;
   }
 
-  onAllChangesDone() {
-    return
-    console.log("switch onAllChangesDone")
-    if (this._checked !== void 0 && this.input.checked != this._checked) {
-      if (this.input.checked !== void 0) {
-        console.warn("switch checked is set in view template and Control declaration.\n" +
-                      "Value: " + !!this._checked + " from Control takes precedence");
-      }
-      this.input.checked = !!this._checked;
-    }
-    if (this._value !== void 0 && this.input.value != this._value) {
-      if (this.input.value !== void 0) {
-        console.warn("switch value is set in view template and Control declaration.\n" +
-                      "Value: " + this._value + " from Control takes precedence");
-      }
-      this.input.value = this._value;
-    }
-    if (this.input.value === void 0) {
-      this.input.value = "on";
-    }
-    if (this.input.checked === void 0) {
-      this.input.checked = false;
-    }
-    //TODO check validity
-    this.cd.control._value = {"checked": !!this.input.checked, "value": this.input.value};
-
-    //TODO only want to call this once, we want to set input.checked directly on subsequent
-    // writeValue's
-    this.onAllChangesDone = () => {};
-    // this.onChange({"checked": this.input.checked, "value": this.input.value});
+  check(value) {
+    this.checked = !!value;
+    this.onChange(this.checked);
   }
 
-  //from clicking the label or selecting with keyboard
-  //view -> model (Control)
   toggle() {
-    this.input.checked = this._checked = !this.input.checked;
-    this.onChange({"checked": this.input.checked, "value": this.input.value});
+    this.check(!this.checked);
   }
 
-  // Called by the model (Control) to update the view
-  writeValue(modelValue) {
-    let type = typeof modelValue;
-    switch (type) {
-      case "boolean":
-        // don't set input.value here, do it in onAllChangesDone
-        // because they might have set it in the view
-        this._checked = modelValue; break;
-      case "object":
-        if (modelValue.checked !== void 0) this._checked = !!modelValue.checked;
-        if (modelValue.value !== void 0) this._value = modelValue.value.toString();
-        break;
-      default:
-        // don't set input.checked here, do it in onAllChangesDone
-        // because they might have set it in the view
-        this._value = modelValue.toString();
-    }
+  click(ev) {
+    ev.preventDefault();
+    ev.stopPropagation();
+    this.toggle();
+  }
 
-    //TODO we want to set input.checked directly after the first time
-    console.log("writeValue, " + this.input.id + " checked: " + this._checked);
-    console.log("writeValue " + this.input.id + " value: " + this._value);
-
-    // this.cd.control._value = {"checked": this.input.checked, "value": this.input.value};
+  writeValue(value) {
+    this.checked = value;
   }
 
   // Used by the view to update the model (Control)
@@ -124,3 +143,11 @@ export class Switch extends IonInputItem {
 
   registerOnTouched(fn) { this.onTouched = fn; }
 }
+
+const ACTIVATED = 'activated';
+const MOUSEDOWN = 'mousedown';
+const MOUSEMOVE = 'mousemove';
+const MOUSEUP = 'mouseup';
+const TOUCHSTART = 'touchstart';
+const TOUCHMOVE = 'touchmove';
+const TOUCHEND = 'touchend';

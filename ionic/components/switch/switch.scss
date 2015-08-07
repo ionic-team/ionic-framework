@@ -4,27 +4,16 @@
 
 
 .switch {
-  position: relative;
-  cursor: pointer;
   @include user-select-none();
 }
 
-.switch input {
-  position: absolute;
-  width: 0;
-  height: 0;
+.switch .media-switch {
+  cursor: pointer;
   margin: 0;
-  padding: 0;
-  opacity: 0;
-  border: none;
-  @include appearance(none);
-}
-
-.switch .input-label {
-  max-width: 100%;
 }
 
 .switch[aria-disabled=true] {
+  pointer-events: none;
   opacity: 0.5;
   color: gray;
 }
