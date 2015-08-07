@@ -76,7 +76,7 @@ gulp.task('watch', function(done) {
           '!ionic/util/test/*'
         ],
         function() {
-          runSequence('transpile', 'bundle.js', 'e2e');
+          runSequence('transpile', 'bundle', 'e2e');
         }
       );
 
