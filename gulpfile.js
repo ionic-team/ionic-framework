@@ -24,6 +24,7 @@ var cache = require('gulp-cached');
 var connect = require('gulp-connect');
 var Dgeni = require('dgeni');
 var insert = require('gulp-insert');
+var minimist = require('minimist');
 
 function getBabelOptions(moduleName, moduleType) {
   return {
@@ -50,6 +51,14 @@ var tscReporter = {
         console.error(error.message);
     }
 };
+
+var flagConfig = {
+  string: 'port',
+  alias: {'p': 'port'},
+  default: { port: 8000 }
+};
+
+var flags = minimist(process.argv.slice(2), flagConfig);
 
 gulp.task('build', function(done) {
   runSequence(
@@ -100,7 +109,7 @@ gulp.task('build.watch', function(done){
 gulp.task('serve', function() {
   connect.server({
     root: 'dist',
-    port: 8000,
+    port: flags.port,
     livereload: false
   });
 });
