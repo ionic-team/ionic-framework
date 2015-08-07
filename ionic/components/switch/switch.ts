@@ -63,6 +63,13 @@ class MediaSwitch {
   }
 
   pointerDown(ev) {
+    if (ev.type == 'touchstart') {
+      this.isTouch = true;
+    }
+    if (this.isTouch && ev.type == 'mousedown') {
+      return;
+    }
+
     this.startX = pointerCoord(ev).x;
 
     this.removeMoveListener();
@@ -72,6 +79,10 @@ class MediaSwitch {
   }
 
   pointerUp(ev) {
+    if (this.isTouch && ev.type == 'mouseup') {
+      return;
+    }
+
     let endX = pointerCoord(ev).x;
 
     if (this.swtch.checked) {
