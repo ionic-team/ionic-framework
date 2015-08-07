@@ -1,8 +1,1 @@
-System.config({
-  "baseURL": "/",
-  "transpiler": "traceur",
-  "paths": {
-    "*": "*.js",
-    "ionic/*": "ionic/*"
-  }
-});
+System.config({ "paths": { "ionic/*": "ionic/*" } });

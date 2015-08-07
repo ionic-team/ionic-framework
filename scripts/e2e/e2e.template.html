@@ -39,22 +39,21 @@
     <ion-loading-icon></ion-loading-icon>
   </ion-app>
 
-  <!-- SystemJS Loader -->
-  <script src="../../../lib/traceur-runtime.js"></script>
+<!--  <script src="../../../lib/traceur-runtime.js"></script>
   <script src="../../../lib/system.js"></script>
   <script src="../../../lib/e2e.config.js"></script>
 
-  <!-- Angular bundle -->
   <script src="../../../lib/angular2.dev.js"></script>
 
-  <!-- test module -->
   <script src="index.js"></script>
 
-  <!-- ionic bundle -->
   <script src="../../../lib/ionic.bundle.js"></script>
 
-  <!-- web animations polyfill for non-chrome browsers -->
-  <script src="../../../lib/web-animations.min.js"></script>
+  <script src="../../../lib/web-animations.min.js"></script> -->
+
+  <script src="../../../js/ionic.bundle.dev.js"></script>
+  
+  <script>System.config({"baseURL": "../../../"})</script>
   <script>System.import("{{MODULE}}");</script>
 
 </body>
