@@ -150,14 +150,7 @@ gulp.task('bundle.ionic', ['transpile'], function() {
 
 gulp.task('bundle', ['bundle.ionic'], function() {
   var nm = "node_modules";
-  return gulp.src([
-      'node_modules/traceur/bin/traceur-runtime.js',
-      'node_modules/systemjs/node_modules/es6-module-loader/dist/es6-module-loader.js',
-      'node_modules/systemjs/dist/system.js',
-      'node_modules/angular2-build/angular2.dev.js',
-      'dist/js/ionic.js',
-      'node_modules/web-animations-js/web-animations.min.js'
-    ])
+  return gulp.src(buildConfig.scripts)
     .pipe(concat('ionic.bundle.dev.js'))
     .pipe(gulp.dest('dist/js'));;
 })
@@ -172,16 +165,7 @@ gulp.task('tests', function() {
     .pipe(gulp.dest('dist/tests'))
 })
 
-gulp.task('copy-scripts', function(){
-  gulp.src([
-    'scripts/resources/*.js',
-    'scripts/vendor/web-animations-js/web-animations.min.js',
-    'config.js',
-    'dist/js/ionic.bundle.js'
-  ]).pipe(gulp.dest('dist/lib'));
-})
-
-gulp.task('e2e', ['copy-scripts'], function() {
+gulp.task('e2e', function() {
   var buildTest = lazypipe()
              //.pipe(traceur, traceurOptions)
              .pipe(tsc, tscOptions, null, tscReporter)

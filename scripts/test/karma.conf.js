@@ -8,7 +8,6 @@ module.exports = function(config) {
     frameworks: ['jasmine'],
 
     files: buildConfig.scripts.concat([
-      'dist/js/es5/ionic/**/*.js',
       'dist/tests/**/*.spec.js',
       'scripts/test/test-main.js'
     ]),
@@ -24,5 +23,3 @@ module.exports = function(config) {
     port: 9876
   });
 };
-
-

@@ -12,13 +12,12 @@ module.exports = {
   },
 
   scripts: [
-    'scripts/resources/traceur-runtime.js',
-    { pattern: 'jspm_packages/es6-module-loader.js', included: false },
-    'jspm_packages/system.src.js',
-    'config.js',
-    'scripts/resources/angular2.dev.js',
-    'dist/js/ionic.bundle.js',
-    'dist/vendor/web-animations-js/web-animations.min.js'
+    'node_modules/traceur/bin/traceur-runtime.js',
+    'node_modules/systemjs/node_modules/es6-module-loader/dist/es6-module-loader.js',
+    'node_modules/systemjs/dist/system.js',
+    'node_modules/angular2-bundle/angular2.dev.js',
+    'dist/js/ionic.js',
+    'node_modules/web-animations-js/web-animations.min.js'
   ],
 
   protractorPort: 8876,

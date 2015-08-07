@@ -47,7 +47,7 @@
     "yargs": "^3.6.0"
   },
   "dependencies": {
-    "angular2-build": "2.0.0-alpha.33",
+    "angular2-bundle": "tlancina/angular2-bundle",
     "systemjs": "^0.16.11",
     "traceur": "0.0.91",
     "traceur-runtime": "0.0.59",
