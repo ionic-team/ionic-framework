@@ -76,6 +76,7 @@ gulp.task('clean.build', function(done) {
 
 gulp.task('watch', function(done) {
   runSequence(
+    'build',
     'serve',
     function() {
       watch([
@@ -101,10 +102,6 @@ gulp.task('watch', function(done) {
     }
   );
 });
-
-gulp.task('build.watch', function(done){
-  runSequence('build', 'watch');
-})
 
 gulp.task('serve', function() {
   connect.server({
