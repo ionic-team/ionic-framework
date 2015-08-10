@@ -6,7 +6,6 @@ var karma = require('karma').server;
 var path = require('path');
 var VinylFile = require('vinyl');
 var argv = require('yargs').argv;
-var cached = require('gulp-cached');
 var concat = require('gulp-concat');
 var del = require('del');
 var gulpif = require('gulp-if');
@@ -47,9 +46,9 @@ var tscOptions = {
   rootDir: '.'
 }
 var tscReporter = {
-    error: function (error) {
-        console.error(error.message);
-    }
+  error: function (error) {
+    console.error(error.message);
+  }
 };
 
 var flagConfig = {
@@ -85,13 +84,42 @@ gulp.task('watch', function(done) {
           '!ionic/components/*/test/**/*',
           '!ionic/util/test/*'
         ],
-        function() {
-          runSequence('bundle', 'e2e');
+        function(file) {
+          if (file.event === "unlink") {
+            var basePath = file.base.substring(0, file.base.lastIndexOf("ionic/"));
+            var relPath = file.history[0].replace(base, "").replace(".ts", ".js");
+
+            var es6Path = basePath + "dist/js/es6/" + relPath;
+            var commonPath = basePath + "dist/js/es5/common/" + relPath;
+            var systemPath = basePath + "dist/js/es5/system/" + relPath;
+
+            delete cache.caches.transpile[file.history[0]];
+
+            del([es6Path, commonPath, systemPath], function(){
+              gulp.start('bundle');
+            });
+          } else {
+            gulp.start('bundle');
+          }
         }
       );
 
-      watch('ionic/components/*/test/**/*', function() {
-        gulp.start('e2e');
+      watch('ionic/components/*/test/**/*', function(file) {
+        if (file.event === "unlink") {
+          var paths = file.history[0].split("ionic/components/");
+          var basePath = paths[0],
+              relPath = paths[1].split("/test").join("").replace(".ts", ".js");
+
+          var distPath = basePath + "dist/e2e/" + relPath;
+
+          delete cache.caches.e2e[file.history[0]];
+
+          del([distPath], function(){
+            gulp.start('e2e');
+          });
+        } else {
+          gulp.start('e2e');
+        }
       });
 
       watch('ionic/**/*.scss', function() {
