@@ -34,7 +34,7 @@ ionic.views.Slider = ionic.views.View.inherit({
     // quit if no root element
     if (!container) return;
     var element = container.children[0];
-    var slides, slidePos, width, length;
+    var slides, slidePos, width, length, dragDistancePercentage = .5;
     options = options || {};
     var index = parseInt(options.startSlide, 10) || 0;
     var speed = options.speed || 300;
@@ -53,6 +53,11 @@ ionic.views.Slider = ionic.views.View.inherit({
 
       // set continuous to false if only one slide
       if (slides.length < 2) options.continuous = false;
+
+      // set slide distance percentage
+      if(options.hasOwnProperty('dragDistancePercentage')) {
+        dragDistancePercentage = options.dragDistancePercentage;
+      }
 
       //special case if two slides
       if (browser.transitions && options.continuous && slides.length < 3) {
@@ -379,7 +384,7 @@ ionic.views.Slider = ionic.views.View.inherit({
         var isValidSlide =
               Number(duration) < 250 &&         // if slide duration is less than 250ms
               Math.abs(delta.x) > 20 ||         // and if slide amt is greater than 20px
-              Math.abs(delta.x) > width / 2;      // or if slide amt is greater than half the width
+              Math.abs(delta.x) > width * dragDistancePercentage;      // or if slide amt is greater than the specified percentage of the width
 
         // determine if slide attempt is past start and end
         var isPastBounds = (!index && delta.x > 0) ||      // if first slide and slide amt is greater than 0
