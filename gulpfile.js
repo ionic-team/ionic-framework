@@ -168,7 +168,11 @@ function transpile(moduleType) {
 }
 
 gulp.task('transpile.system', function() { return transpile("system"); });
-gulp.task('transpile.common', function() { return transpile("common"); });
+gulp.task('transpile.common', function() {
+  // necessary for publish task, remove if we ever do incremental builds with cjs
+  cache.caches && delete cache.caches.transpile;
+  return transpile("common");
+});
 gulp.task('transpile', ['transpile.system']);
 
 gulp.task('bundle.ionic', ['transpile'], function() {
@@ -317,4 +321,16 @@ gulp.task('docs', function() {
   } catch (err) {
     console.log(err.stack);
   }
+});
+
+gulp.task('publish', function(done) {
+  runSequence(
+    'clean',
+    ['bundle', 'sass', 'fonts'],
+    'transpile.common',
+    function() {
+      var packageJSONContents = '{\n  "name": "ionic2",\n  "version": "2.0.0-alpha.1",\n  "license": "Apache-2.0",\n  "repository": {\n    "type": "git",\n    "url": "https://github.com/driftyco/ionic2.git"\n  }\n}\n';
+      fs.writeFile("dist/package.json", packageJSONContents, done);
+    }
+  )
 })
