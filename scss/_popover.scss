@@ -120,7 +120,7 @@
 .platform-android {
 
   .popover {
-    margin-top: -32px;
+    margin-top: 0;
     background-color: $popover-bg-color-android;
     box-shadow: $popover-box-shadow-android;
 
@@ -130,7 +130,7 @@
       color: #4d4d4d;
     }
     &.popover-bottom {
-      margin-top: 32px;
+      margin-top: 0;
     }
   }
 
