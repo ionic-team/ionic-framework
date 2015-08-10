@@ -98,9 +98,14 @@ function($ionicModal, $ionicPosition, $document, $window) {
     var bodyWidth = $window.innerWidth;
     var bodyHeight = $window.innerHeight;
 
-    var popoverCSS = {
-      left: buttonOffset.left + buttonOffset.width / 2 - popoverWidth / 2
-    };
+    var popoverCSS = {};
+
+    if (popoverEle.attr('left')) {
+      popoverCSS.left = parseInt(popoverEle.attr('left'));
+    } else {
+      popoverCSS.left = buttonOffset.left + buttonOffset.width / 2 - popoverWidth / 2;
+    }
+
     var arrowEle = jqLite(popoverEle[0].querySelector('.popover-arrow'));
 
     if (popoverCSS.left < POPOVER_BODY_PADDING) {
@@ -109,15 +114,23 @@ function($ionicModal, $ionicPosition, $document, $window) {
       popoverCSS.left = bodyWidth - popoverWidth - POPOVER_BODY_PADDING;
     }
 
-    // If the popover when popped down stretches past bottom of screen,
-    // make it pop up if there's room above
-    if (buttonOffset.top + buttonOffset.height + popoverHeight > bodyHeight &&
-        buttonOffset.top - popoverHeight > 0) {
-      popoverCSS.top = buttonOffset.top - popoverHeight;
-      popoverEle.addClass('popover-bottom');
+    if (popoverEle.attr('top')) {
+      popoverCSS.top = parseInt(popoverEle.attr('top'));
+
+      if(popoverCSS.top + popoverHeight > bodyHeight){
+        popoverCSS.top = bodyHeight - popoverHeight;
+      }
     } else {
-      popoverCSS.top = buttonOffset.top + buttonOffset.height;
-      popoverEle.removeClass('popover-bottom');
+      // If the popover when popped down stretches past bottom of screen,
+      // make it pop up if there's room above
+      if (buttonOffset.top + buttonOffset.height + popoverHeight > bodyHeight &&
+          buttonOffset.top - popoverHeight > 0) {
+        popoverCSS.top = buttonOffset.top + buttonOffset.height / 2 - popoverHeight;
+        popoverEle.addClass('popover-bottom');
+      } else {
+        popoverCSS.top = buttonOffset.top + buttonOffset.height / 2;
+        popoverEle.removeClass('popover-bottom');
+      }
     }
 
     arrowEle.css({
