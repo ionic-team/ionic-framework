@@ -89,9 +89,9 @@ gulp.task('watch', function(done) {
             var basePath = file.base.substring(0, file.base.lastIndexOf("ionic/"));
             var relPath = file.history[0].replace(base, "").replace(".ts", ".js");
 
-            var es6Path = basePath + "dist/js/es6/" + relPath;
-            var commonPath = basePath + "dist/js/es5/common/" + relPath;
-            var systemPath = basePath + "dist/js/es5/system/" + relPath;
+            var es6Path = basePath + "dist/src/es6/" + relPath;
+            var commonPath = basePath + "dist/src/es5/common/" + relPath;
+            var systemPath = basePath + "dist/src/es5/system/" + relPath;
 
             delete cache.caches.transpile[file.history[0]];
 
@@ -156,13 +156,13 @@ function transpile(moduleType) {
    .on('error', function(error) {
      stream.emit('end');
    })
-   .pipe(gulp.dest('dist/js/es6/ionic'))
+   .pipe(gulp.dest('dist/src/es6/ionic'))
    .pipe(babel(getBabelOptions('ionic', moduleType)))
    .on('error', function (err) {
      console.log("ERROR: " + err.message);
      this.emit('end');
    })
-   .pipe(gulp.dest('dist/js/es5/' + moduleType + '/ionic'))
+   .pipe(gulp.dest('dist/src/es5/' + moduleType + '/ionic'))
 
   return stream;
 }
@@ -173,7 +173,7 @@ gulp.task('transpile', ['transpile.system']);
 
 gulp.task('bundle.ionic', ['transpile'], function() {
   return gulp.src([
-      'dist/js/es5/system/ionic/**/*.js',
+      'dist/src/es5/system/ionic/**/*.js',
       'ionic/util/hairline.js'
     ])
     .pipe(concat('ionic.js'))
@@ -183,9 +183,8 @@ gulp.task('bundle.ionic', ['transpile'], function() {
 });
 
 gulp.task('bundle', ['bundle.ionic'], function() {
-  var nm = "node_modules";
   return gulp.src(buildConfig.scripts)
-    .pipe(concat('ionic.bundle.dev.js'))
+    .pipe(concat('ionic.bundle.js'))
     .pipe(gulp.dest('dist/js'));;
 })
 
