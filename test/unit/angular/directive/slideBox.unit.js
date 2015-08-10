@@ -107,4 +107,18 @@ describe('ionSlideBox with active slide', function() {
     scope.$apply();
     expect(el.find('.slider-pager.hide').length).toBe(1);
   }));
+  it('Should create and show correct pager with repeater', inject(function($rootScope, $compile, $timeout) {
+    el = $compile('<ion-slide-box show-pager="true">' +
+      '<ion-slide ng-repeat="key in [1,2,3]">' +
+        '<div class="box blue">' +
+          '<h1>BLUE {{key}}</h1>' +
+        '</div>' +
+      '</ion-slide>' +
+    '</ion-slide-box>')($rootScope.$new());
+
+    var scope = el.scope();
+    scope.$apply();
+    expect(3).toBe(el.find('.slider-pager').children().length);
+
+  }));
 });
