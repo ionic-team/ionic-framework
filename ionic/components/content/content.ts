@@ -32,6 +32,9 @@ export class Content extends Ion {
   addScrollEventListener(handler) {
     if(!this.scrollElement) { return; }
 
+    // ensure we're not creating duplicates
+    this.scrollElement.removeEventListener('scroll', handler);
+
     this.scrollElement.addEventListener('scroll', handler);
 
     return () => {
@@ -41,6 +44,9 @@ export class Content extends Ion {
 
   addTouchMoveListener(handler) {
     if(!this.scrollElement) { return; }
+
+    // ensure we're not creating duplicates
+    this.scrollElement.removeEventListener('touchmove', handler);
 
     this.scrollElement.addEventListener('touchmove', handler);
 

@@ -96,3 +96,35 @@ input[type="checkbox"][readonly] {
   background-color: transparent;
 }
 
+
+// Focus Utils
+// -------------------------------
+
+focus-holder input {
+  position: fixed;
+  top: 1px;
+  width: 9px;
+  left: -9999px;
+  z-index: 9999;
+}
+
+.scroll-padding.scroll-padding .scroll-content {
+  padding-bottom: 1000px;
+}
+
+/*focus-holder input[tabindex="999"] {
+  left: 0px;
+}
+
+focus-holder input[tabindex="1001"] {
+  left: 20px;
+}
+
+focus-holder input[tabindex="1002"] {
+  left: auto;
+  right: 10px;
+}
+
+focus-holder input:focus {
+  background: red;
+}*/

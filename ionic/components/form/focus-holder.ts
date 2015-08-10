@@ -1,4 +1,4 @@
-import {Component, Directive, View, Host, ElementRef, forwardRef} from 'angular2/angular2';
+import {Component, Directive, View, Host, Attribute, ElementRef, forwardRef} from 'angular2/angular2';
 
 import {IonicConfig} from '../../config/config';
 import * as dom  from '../../util/dom';
@@ -10,7 +10,7 @@ import {IonInput} from './input';
   selector: 'focus-holder'
 })
 @View({
-  template: '<input><input><input>',
+  template: '<input tabindex="999"><input tabindex="1001"><input tabindex="1002">',
   directives: [forwardRef(() => FocusInput)]
 })
 export class FocusHolder {
@@ -19,44 +19,22 @@ export class FocusHolder {
   }
 
   setFocusHolder(inputType) {
-    IonInput.clearTabIndexes();
-
-    this.i[1].tabIndex = ACTIVE_TAB_INDEX;
-    this.i[1].type = inputType;
-    this.i[1].focus();
-  }
-
-  setActiveInput(input) {
-    IonInput.clearTabIndexes();
-
-    this.i[1].tabIndex = -1;
-
-    input.tabIndex = ACTIVE_TAB_INDEX;
+    this.i[2].type = inputType;
+    this.i[2].setFocus();
   }
 
   receivedFocus(tabIndex) {
-    if (tabIndex === PREVIOUS_TAB_INDEX) {
-      // they tabbed back one input
-      // reset the focus to the center focus holder
-      this.i[1].focus();
-
+    if (tabIndex === '999') {
       // focus on the previous input
       IonInput.focusPrevious();
 
-    } else if (tabIndex === NEXT_TAB_INDEX) {
-      // they tabbed to the next input
-      // reset the focus to the center focus holder
-      this.i[1].focus();
-
+    } else if (tabIndex === '1001') {
       // focus on the next input
       IonInput.focusNext();
     }
   }
 
   register(input) {
-    // register each of the focus holder inputs
-    // assign them their correct tab indexes
-    input.tabIndex = PREVIOUS_TAB_INDEX + this.i.length;
     this.i.push(input);
   }
 }
@@ -64,33 +42,32 @@ export class FocusHolder {
 
 @Directive({
   selector: 'input',
-  properties: [
-    'tabIndex'
-  ],
   host: {
-    '[tabIndex]': 'tabIndex',
     '[type]': 'type',
-    '(focus)': 'holder.receivedFocus(tabIndex)',
+    '(focus)': 'holder.receivedFocus(tabindex)',
     '(keydown)': 'keydown($event)'
   }
 })
 class FocusInput {
-  constructor(elementRef: ElementRef, @Host() holder: FocusHolder) {
+  constructor(
+    elementRef: ElementRef,
+    @Host() holder: FocusHolder,
+    @Attribute('tabindex') tabindex: string
+  ) {
     this.elementRef = elementRef;
-    holder.register(this);
     this.holder = holder;
+    this.tabindex = tabindex;
+    this.holder.register(this);
   }
 
-  focus() {
+  setFocus() {
     this.elementRef.nativeElement.focus();
   }
 
   keydown(ev) {
     // prevent any keyboard typing when a holder has focus
-    if (ev.keyCode !== 9) {
-      ev.preventDefault();
-      ev.stopPropagation();
-    }
+    ev.preventDefault();
+    ev.stopPropagation();
   }
 
   get type() {
@@ -103,6 +80,3 @@ class FocusInput {
   }
 }
 
-const PREVIOUS_TAB_INDEX = 999;
-const ACTIVE_TAB_INDEX = 1000;
-const NEXT_TAB_INDEX = 1001;

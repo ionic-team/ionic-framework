@@ -1,74 +1,24 @@
-import {Directive, ElementRef} from 'angular2/angular2';
+import {Directive, ElementRef, Query, QueryList} from 'angular2/angular2';
 
 import {Ion} from '../ion';
+import {IonicApp} from '../app/app';
 import {IonicConfig} from '../../config/config';
-import * as dom  from '../../util/dom';
 
 
 let inputRegistry = [];
-let itemRegistry = [];
 let inputItemIds = -1;
 let activeInput = null;
 let lastInput = null;
 
 
-// Input element (not the container)
-export class IonInput {
-  constructor(
-    elementRef: ElementRef,
-    app: IonicApp,
-    config: IonicConfig,
-    scrollView: Content
-  ) {
-    this.elementRef = elementRef;
-    this.app = app;
-    this.scrollView = scrollView;
+export class IonInput extends Ion {
 
-    this.scrollAssist = config.setting('keyboardScrollAssist');
-
-    inputRegistry.push(this);
+  static registerInput(input) {
+    inputRegistry.push(input);
   }
 
-  hasFocus() {
-    return dom.hasFocus(this.elementRef);
-  }
-
-  focus() {
-    this.setFocus();
-  }
-
-  setFocus() {
-    // TODO: How do you do this w/ NG2?
-    this.elementRef.nativeElement.focus();
-  }
-
-  setFocusHolder(type) {
-    let focusHolder = this.app.focusHolder();
-    focusHolder && focusHolder.setFocusHolder(type);
-  }
-
-  isActiveInput(shouldBeActive) {
-    if (shouldBeActive) {
-      if (activeInput && activeInput !== lastInput) {
-        lastInput = activeInput;
-      }
-
-      activeInput = this;
-
-      let focusHolder = this.app.focusHolder();
-      focusHolder && focusHolder.setActiveInput(activeInput);
-
-    } else if (activeInput === this) {
-      lastInput = activeInput;
-      activeInput = null;
-    }
-  }
-
-  sibling(inc) {
-    let index = inputRegistry.indexOf(this);
-    if (index > -1) {
-      return inputRegistry[index + inc];
-    }
+  static setAsLastInput(input) {
+    lastInput = input;
   }
 
   static focusPrevious() {
@@ -82,9 +32,17 @@ export class IonInput {
   static focusMove(inc) {
     let input = activeInput || lastInput;
     if (input) {
-      let siblingInput = input.sibling(inc);
-      siblingInput && siblingInput.focus();
+
+      let index = inputRegistry.indexOf(input);
+      if (index > -1 && (index + inc) < inputRegistry.length) {
+        let siblingInput = inputRegistry[index + inc];
+        siblingInput && siblingInput.initFocus();
+      }
     }
+  }
+
+  static nextId() {
+    return ++inputItemIds;
   }
 
   static clearTabIndexes() {
@@ -93,34 +51,4 @@ export class IonInput {
     }
   }
 
-}
-
-
-// Container element for the label and input element
-export class IonInputItem extends Ion {
-
-  constructor(
-    elementRef: ElementRef,
-    ionicConfig: IonicConfig
-  ) {
-    super(elementRef, ionicConfig);
-    this.id = ++inputItemIds;
-    itemRegistry.push(this);
-  }
-
-  onInit() {
-    super.onInit();
-    if (this.input && this.label) {
-      this.label.id = (this.label.id || 'label-' + this.id);
-      this.input.labelledBy = this.label.id;
-    }
-  }
-
-  registerInput(input) {
-    this.input = input;
-  }
-
-  registerLabel(label) {
-    this.label = label;
-  }
 }

@@ -3,7 +3,6 @@ import {ElementRef, Host, Optional, NgControl, Query, QueryList} from 'angular2/
 import {IonicDirective, IonicComponent, IonicView} from '../../config/annotations';
 import {IonicConfig} from '../../config/config';
 import {Ion} from '../ion';
-import {IonInputItem} from '../form/form';
 import {TapClick} from '../button/button';
 import {ListHeader} from '../list/list';
 
@@ -38,7 +37,6 @@ export class RadioGroup extends Ion {
   onInit() {
     let header = this.headerQuery.first;
     if (header) {
-      debugger
       if (!header.id) {
         header.id = 'radio-header-' + this.id;
       }
@@ -93,6 +91,7 @@ export class RadioGroup extends Ion {
   host: {
     'class': 'item',
     'role': 'radio',
+    '[attr.id]': 'id',
     '[attr.tab-index]': 'tabIndex',
     '[attr.aria-checked]': 'checked',
     '[attr.aria-disabled]': 'disabled',
@@ -109,7 +108,7 @@ export class RadioGroup extends Ion {
     '<div class="radio-icon"></div>' +
   '</div>'
 })
-export class RadioButton extends IonInputItem {
+export class RadioButton extends Ion {
   constructor(
     @Host() @Optional() group: RadioGroup,
     elementRef: ElementRef,

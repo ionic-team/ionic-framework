@@ -7,6 +7,17 @@ ion-input {
   display: block;
 }
 
+.key-input ion-input {
+
+  &.has-focus {
+    border-color: #51a7e8;
+    box-shadow: inset 0px 0px 8px 0px #51a7e8;
+  }
+
+  :focus {
+    outline: none;
+  }
+}
 
 .item.input {
   align-items: flex-start;
@@ -14,11 +25,14 @@ ion-input {
 
 .item.input .text-input {
   flex: 1;
-
 }
 
-.text-input {
+ion-input .text-input {
   pointer-events: none;
+}
+
+ion-input.has-focus .text-input {
+  pointer-events: auto;
 }
 
 .item.input textarea {

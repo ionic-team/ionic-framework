@@ -13,7 +13,7 @@ import {
   Icon,
   IconDirective,
   Checkbox, Switch,
-  Input, TextInput, Label,
+  TextInput, TextInputElement, Label,
   Segment, SegmentButton, SegmentControlValueAccessor,
   RadioGroup, RadioButton, SearchBar,
   Nav, NavbarTemplate, Navbar, NavPush, NavPop,
@@ -60,7 +60,7 @@ export const IonicDirectives = [
   forwardRef(() => Icon),
   forwardRef(() => IconDirective),
 
-  // Form
+  // Forms
   forwardRef(() => Segment),
   forwardRef(() => SegmentButton),
   forwardRef(() => SegmentControlValueAccessor),
@@ -68,11 +68,8 @@ export const IonicDirectives = [
   forwardRef(() => RadioGroup),
   forwardRef(() => RadioButton),
   forwardRef(() => Switch),
-  //SearchBar,
-
-  // Input
-  forwardRef(() => Input),
   forwardRef(() => TextInput),
+  forwardRef(() => TextInputElement),
   forwardRef(() => Label),
 
   // Nav

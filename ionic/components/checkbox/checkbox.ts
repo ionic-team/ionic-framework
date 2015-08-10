@@ -7,7 +7,7 @@ import {
 } from 'angular2/angular2';
 
 import {Ion} from '../ion';
-import {IonInputItem} from '../form/input';
+import {IonInput} from '../form/input';
 import {IonicConfig} from '../../config/config';
 import {IonicComponent, IonicView} from '../../config/annotations';
 import {TapClick} from '../button/button';
@@ -40,7 +40,7 @@ import {TapClick} from '../button/button';
     '<ng-content></ng-content>' +
   '</div>'
 })
-export class Checkbox extends IonInputItem {
+export class Checkbox extends Ion {
   constructor(
     elementRef: ElementRef,
     config: IonicConfig,
@@ -50,6 +50,7 @@ export class Checkbox extends IonInputItem {
     super(elementRef, config);
     this.tapClick = tapClick;
     this.tabIndex = 0;
+    this.id = IonInput.nextId();
 
     this.onChange = (_) => {};
     this.onTouched = (_) => {};

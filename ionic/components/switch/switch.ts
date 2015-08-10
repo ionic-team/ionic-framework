@@ -11,7 +11,7 @@ import {
 } from 'angular2/angular2';
 
 import {Ion} from '../ion';
-import {IonInputItem} from '../form/input';
+import {IonInput} from '../form/input';
 import {IonicConfig} from '../../config/config';
 import {IonicComponent, IonicView} from '../../config/annotations';
 import {pointerCoord} from '../../util/dom';
@@ -124,7 +124,7 @@ class MediaSwitch {
 })
 @IonicView({
   template:
-  '<div class="item-content">' +
+  '<div class="item-content" id="{{labelId}}">' +
     '<ng-content></ng-content>' +
   '</div>' +
   '<div class="item-media media-switch">' +
@@ -135,13 +135,14 @@ class MediaSwitch {
   '</div>',
   directives: [MediaSwitch]
 })
-export class Switch extends IonInputItem {
+export class Switch extends Ion {
   constructor(
     elementRef: ElementRef,
     config: IonicConfig,
     @Optional() private cd: NgControl
   ) {
     super(elementRef, config);
+    this.id = IonInput.nextId();
     this.tabIndex = 0;
 
     this.onChange = (_) => {};
