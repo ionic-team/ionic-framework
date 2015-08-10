@@ -6,6 +6,7 @@
   },
   "version": "0.0.0",
   "devDependencies": {
+    "angular2-bundle": "tlancina/angular2-bundle",
     "canonical-path": "0.0.2",
     "connect": "^3.3.4",
     "del": "~1.1.1",
@@ -42,16 +43,12 @@
     "run-sequence": "^1.1.0",
     "serve-static": "^1.9.2",
     "source-map-support": "^0.2.10",
+    "systemjs": "^0.16.11",
     "through2": "^0.6.3",
+    "traceur": "0.0.91",
     "typescript": "^1.5.3",
     "vinyl": "^0.4.6",
+    "web-animations-js": "tlancina/web-animations-js",
     "yargs": "^3.6.0"
-  },
-  "dependencies": {
-    "angular2-bundle": "tlancina/angular2-bundle",
-    "systemjs": "^0.16.11",
-    "traceur": "0.0.91",
-    "traceur-runtime": "0.0.59",
-    "web-animations-js": "tlancina/web-animations-js"
   }
 }
