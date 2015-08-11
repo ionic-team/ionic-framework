@@ -79,7 +79,6 @@ gulp.task('watch', function(done) {
     'serve',
     function() {
       watch([
-          'ionic/**/*.js',
           'ionic/**/*.ts',
           '!ionic/components/*/test/**/*',
           '!ionic/util/test/*'
@@ -146,7 +145,6 @@ gulp.task('clean', function(done) {
 function transpile(moduleType) {
   var stream = gulp.src([
       'ionic/**/*.ts',
-      'ionic/**/*.js',
       '!ionic/components/*/test/**/*',
       '!ionic/util/test/*'
     ])
@@ -321,10 +319,19 @@ gulp.task('docs', function() {
   }
 });
 
+gulp.task('copy.ts', function() {
+  return gulp.src([
+      'ionic/**/*.ts',
+      '!ionic/components/*/test/**/*',
+      '!ionic/util/test/*'
+    ])
+    .pipe(gulp.dest('dist/src/typescript'));
+})
+
 gulp.task('publish', function(done) {
   runSequence(
     'clean',
-    ['bundle', 'sass', 'fonts'],
+    ['bundle', 'sass', 'fonts', 'copy.ts'],
     'transpile.common',
     function() {
       var packageJSONContents = '{\n  "name": "ionic2",\n  "version": "2.0.0-alpha.1",\n  "license": "Apache-2.0",\n  "repository": {\n    "type": "git",\n    "url": "https://github.com/driftyco/ionic2.git"\n  }\n}\n';
