@@ -148,7 +148,6 @@ function transpile(moduleType) {
       'ionic/**/*.ts',
       'ionic/**/*.js',
       '!ionic/components/*/test/**/*',
-      '!ionic/util/hairline.js',
       '!ionic/util/test/*'
     ])
    .pipe(cache('transpile', { optimizeMemory: true }))
@@ -177,8 +176,7 @@ gulp.task('transpile', ['transpile.system']);
 
 gulp.task('bundle.ionic', ['transpile'], function() {
   return gulp.src([
-      'dist/src/es5/system/ionic/**/*.js',
-      'ionic/util/hairline.js'
+      'dist/src/es5/system/ionic/**/*.js'
     ])
     .pipe(concat('ionic.js'))
     .pipe(insert.append('System.config({ "paths": { "ionic/*": "ionic/*" } });'))
