@@ -3,24 +3,43 @@
 // --------------------------------------------------
 
 @function get-color($color, $tone: base) {
-  @return map-get(map-get($colors, $color), $tone);
+  @return red;
 }
 
-@function inverse-tone($color) {
-  // For a lighter colored "base" the darker colored "inverse"
-  // the inverse-tone will be the "light" tone
+@function inverse($color-name) {
+  @if (lightness( color($color-name) ) > 70) {
+    @return #000;
+  }
+  @else {
+    @return #fff;
+  }
+}
 
-  // For a darker colored "base" the lighter colored "inverse"
-  // the inverse-tone will be the "dark" tone
+@function darken-or-lighten($color, $amount:12%) {
+  // lightness is a percent value, 0% darkest, 100% lightest
+  $lightness-percent: lightness($color);
 
-  $base: map-get(map-get($colors, $color), base);
-  $inverse: map-get(map-get($colors, $color), inverse);
-  $light: map-get(map-get($colors, $color), light);
-  $dark: map-get(map-get($colors, $color), dark);
 
-  $lightness: lightness($base) - lightness($inverse);
+  @if ($lightness-percent > 80) {
+    // really light foreground color, so really darken it up
+    @return darken($color, ($amount * 2));
+  }
 
-  @return if($lightness < 0, $dark, $light);
+  @if ($lightness-percent < 35) {
+    // dark foreground color, so light it up
+    @return lighten($color, $amount);
+  }
+
+  // default to darken
+  @return darken($color, $amount);
+}
+
+@function color($color-name) {
+  @return map-get($colors, $color-name);
+}
+
+@function auxiliary-colors() {
+  @return map-remove($colors, primary);
 }
 
 

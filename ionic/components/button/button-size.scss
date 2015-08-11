@@ -1,0 +1,31 @@
+
+// Button Sizes
+// --------------------------------------------------
+
+$button-large-font-size:          2rem !default;
+$button-large-height:             5.4rem !default;
+$button-large-padding:            1.4rem !default;
+
+$button-small-font-size:          1.3rem !default;
+$button-small-height:             2.8rem !default;
+$button-small-padding:            1.1rem !default;
+
+
+button,
+[button] {
+
+  &[large] {
+    padding: 0 $button-large-padding;
+    min-width: ($button-large-padding * 4);
+    min-height: $button-large-height;
+    font-size: $button-large-font-size;
+  }
+
+  &[small] {
+    padding: 0 $button-small-padding;
+    min-width: ($button-small-padding * 3);
+    min-height: $button-small-height;
+    font-size: $button-small-font-size;
+  }
+
+}

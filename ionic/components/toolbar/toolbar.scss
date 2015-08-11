@@ -9,10 +9,6 @@ $toolbar-order: (
   secondary: 40
 );
 
-$toolbar-background:                    $placeholder-background !default;
-$toolbar-button-text-color:             #007aff !default;
-$toolbar-title-text-color:              #000 !default;
-
 
 .toolbar {
   position: relative;
@@ -28,11 +24,11 @@ $toolbar-title-text-color:              #000 !default;
   order: $flex-order-toolbar-top;
   flex: 0;
 
-  background-color: $toolbar-background;
+  background-color: $toolbar-background-color;
 
   button,
   [button] {
-    color: $toolbar-button-text-color;
+    color: $toolbar-active-color;
     box-shadow: none;
   }
 }
@@ -66,6 +62,7 @@ ion-title {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  color: $toolbar-text-color;
 }
 
 .toolbar-item {

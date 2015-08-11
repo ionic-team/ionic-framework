@@ -1,0 +1,27 @@
+
+// Default Theme
+// ----------------------------------
+
+$colors: (
+
+  primary:    #387ef5,
+  secondary:  #32db64,
+  danger:     #f53d3d,
+  light:      #f4f4f4,
+  dark:       #222,
+
+) !default;
+
+
+$text-color:                 #000 !default;
+$background-color:           #fff !default;
+$border-color:               #ddd !default;
+
+$link-color:                 map-get($colors, primary) !default;
+$link-hover-color:           darken($link-color, 15%) !default;
+
+$toolbar-background-color:   #f9f9f9 !default;
+$toolbar-border-color:       #c4c4c4 !default;
+$toolbar-text-color:         $text-color !default;
+$toolbar-active-color:       $link-color !default;
+$toolbar-inactive-color:     #8c8c8c !default;

@@ -2,10 +2,10 @@
 // Tabs
 // --------------------------------------------------
 
-$tab-bar-background-color:         $placeholder-background !default;
+$tab-bar-background-color:         $toolbar-background-color !default;
 
-$tab-button-text-inactive:         #8c8c8c !default;
-$tab-button-text-active:           get-color(primary, base) !default;
+$tab-button-text-active:           $toolbar-active-color !default;
+$tab-button-text-inactive:         $toolbar-inactive-color !default;
 $tab-button-padding:               10px !default;
 $tab-button-min-width:             80px !default;
 $tab-button-max-width:             160px !default;

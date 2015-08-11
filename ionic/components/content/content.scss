@@ -2,8 +2,8 @@
 // Content
 // --------------------------------------------------
 
-$content-container-background-color:         #fff !default;
-$content-background-color:                   #fff !default;
+$content-container-background-color:      $background-color !default;
+$content-background-color:                $background-color !default;
 
 
 .content-container {

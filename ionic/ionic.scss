@@ -7,10 +7,15 @@
   "components/app/z-index",
   "components/app/flex-order",
   "components/app/normalize",
-  "components/app/colors",
   "components/app/structure",
   "components/app/typography",
   "util/util";
+
+
+// Default Theme
+// If a theme wasn't set then it'll use this default
+@import
+  "themes/default";
 
 
 // Core Components
@@ -21,6 +26,9 @@
   "components/aside/aside",
   "components/badge/badge",
   "components/button/button",
+  "components/button/button-clear",
+  "components/button/button-outline",
+  "components/button/button-size",
   "components/button/button-icon",
   "components/button/button-fab",
   "components/card/card",
@@ -89,3 +97,4 @@
 // Platforms
 @import
   "platform/cordova";
+

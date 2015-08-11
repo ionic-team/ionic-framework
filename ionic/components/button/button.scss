@@ -1,5 +1,5 @@
 
-// Core Button Variables
+// Button Variables
 // --------------------------------------------------
 
 $button-font-size:                1.6rem !default;
@@ -9,19 +9,16 @@ $button-height:                   4.4rem !default;
 $button-border-width:             1px !default;
 $button-border-radius:            4px !default;
 
-$button-large-font-size:          2rem !default;
-$button-large-height:             5.4rem !default;
-$button-large-padding:            1.4rem !default;
-
-$button-small-font-size:          1.3rem !default;
-$button-small-height:             2.8rem !default;
-$button-small-padding:            1.1rem !default;
-
 $button-round-border-radius:      64px !default;
 $button-round-padding:            0 2.6rem !default;
 
+$button-color:                    color(primary) !default;
+$button-color-activated:          darken-or-lighten($button-color) !default;
+$button-text-color:               inverse(primary) !default;
+$button-hover-opacity:            0.88 !default;
 
-// Core Button
+
+// Default Button
 // --------------------------------------------------
 
 button,
@@ -33,7 +30,8 @@ button,
   align-items: center;
   justify-content: center;
 
-  will-change: transform;
+  will-change: background-color, opacity;
+  transition: background-color, opacity 100ms linear;
 
   margin: $button-margin;
   line-height: 1;
@@ -58,45 +56,29 @@ button,
   padding: $button-padding;
   min-height: $button-height;
 
-  background: transparent;
-
   text-align: center;
   font-size: $button-font-size;
   border: transparent;
   border-radius: $button-border-radius;
 
-  &[large] {
-    padding: 0 $button-large-padding;
-    min-width: ($button-large-padding * 4);
-    min-height: $button-large-height;
-    font-size: $button-large-font-size;
+  background: $button-color;
+  color: $button-text-color;
+
+  &:hover,
+  &.hover {
+    opacity: $button-hover-opacity;
+    color: $button-text-color;
+    text-decoration: none;
   }
 
-  &[small] {
-    padding: 0 $button-small-padding;
-    min-width: ($button-small-padding * 3);
-    min-height: $button-small-height;
-    font-size: $button-small-font-size;
+  &.activated {
+    opacity: 1;
+    background-color: $button-color-activated;
   }
 
 
-  // Core Button Types
+  // Button Types
   // --------------------------------------------------
-
-  &[clear] {
-    border-color: transparent;
-    background: none;
-  }
-
-  &[outline] {
-    background: none;
-
-    &[full] {
-      border-radius: 0;
-      border-right-width: 0;
-      border-left-width: 0;
-    }
-  }
 
   &[block] {
     display: flex;
@@ -117,18 +99,24 @@ button,
     border-radius: 0;
     border-right-width: 0;
     border-left-width: 0;
-  }
 
-  &.disabled,
-  &[disabled] {
-    opacity: .4;
-    cursor: default !important;
-    pointer-events: none;
+    &[outline] {
+      border-radius: 0;
+      border-right-width: 0;
+      border-left-width: 0;
+    }
   }
 
   &[round] {
     border-radius: $button-round-border-radius;
     padding: $button-round-padding;
+  }
+
+  &.disabled,
+  &[disabled] {
+    opacity: 0.4;
+    cursor: default !important;
+    pointer-events: none;
   }
 
 }
@@ -139,88 +127,38 @@ button,
   margin-top: 0;
 }
 
-
-// Button Misc
-// --------------------------------------------------
-
 a[button] {
   color: inherit;
   text-decoration: none;
 }
 
 
-// Core Button Mixins
+// Default Button Color Mixin
 // --------------------------------------------------
 
-@mixin button-default($bg-color, $fg-color) {
+@mixin button-default($bg-color, $bg-color-activated, $text-color) {
   background-color: $bg-color;
-  color: $fg-color;
-  transition: background-color,opacity 100ms linear;
-
-  &[full][outline] {
-    border-radius: 0;
-    border-right-width: 0;
-    border-left-width: 0;
-  }
-
-  &:hover,
-  &.hover {
-    opacity: 0.88;
-    color: $fg-color;
-    text-decoration: none;
-  }
+  color: $text-color;
 
   &.activated {
-    opacity: 1;
-    background-color: darken($bg-color, 12%);
-  }
-}
-
-@mixin button-clear($fg-color) {
-  &[clear] {
-    color: $fg-color;
-    background: none;
-
-    &.activated {
-      opacity: 0.4;
-    }
-  }
-}
-
-@mixin button-outline($fg-color) {
-  &[outline] {
-    border: 1px solid $fg-color;
-    background: transparent;
-    color: $fg-color;
-
-    &.activated {
-      color: white;
-      background-color: rgb(red($fg-color), green($fg-color), blue($fg-color));
-    }
+    background-color: $bg-color-activated;
   }
 }
 
 
-// Core Button Color Generation
+// Generate Default Button Colors
 // --------------------------------------------------
 
-@each $color, $value in $colors {
+@each $color, $value in auxiliary-colors() {
 
   button[#{$color}],
   [button][#{$color}] {
 
-    @if lightness(get-color($color, base)) > 90 {
-      $fg-color: get-color($color, inverse);
-    } @else {
-      $fg-color: get-color($color, base);
-    }
+    $bg-color: $value;
+    $bg-color-activated: darken-or-lighten($bg-color);
+    $text-color: inverse($color);
+    @include button-default($bg-color, $bg-color-activated, $text-color);
 
-    @include button-default(get-color($color, base),
-                            get-color($color, inverse));
-
-    @include button-clear($fg-color);
-
-    @include button-outline(get-color($color, light));
   }
 
 }

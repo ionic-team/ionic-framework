@@ -1,43 +1,68 @@
 
-// iOS Checkbox
+// iOS Checkbox Structure
 // --------------------------------------------------
 
-$checkbox-ios-icon-size:              21px !default;
-$checkbox-ios-background-color:       get-color(primary, base) !default;
-$checkbox-ios-foreground-color:       get-color(primary, inverse) !default;
+$checkbox-ios-icon-size:             21px !default;
+$checkbox-ios-bg-color-off:          $background-color !default;
+$checkbox-ios-border-color-off:      $border-color !default;
+$checkbox-ios-bg-color-on:           color(primary) !default;
+$checkbox-ios-border-color-on:       color(primary) !default;
+$checkbox-ios-checkmark-color-on:    $background-color !default;
 
 
-.checkbox[mode="ios"] {
+.checkbox[mode=ios] {
 
   .checkbox-icon {
     position: relative;
     width: $checkbox-ios-icon-size;
     height: $checkbox-ios-icon-size;
     border-radius: 50%;
-    background-color: $checkbox-ios-foreground-color;
-    border: 1px solid #c4c4c4;
+    border: 1px solid $checkbox-ios-border-color-off;
+    background-color: $checkbox-ios-bg-color-off;
   }
 
   &[aria-checked=true] .checkbox-icon {
-    background-color: $checkbox-ios-background-color;
-    border-color: $checkbox-ios-background-color;
+    background-color: $checkbox-ios-bg-color-on;
+    border-color: $checkbox-ios-border-color-on;
+  }
 
-    &::after {
-      position: absolute;
-      border: 1px solid $checkbox-ios-foreground-color;
-      top: 3px;
-      left: 7px;
-      width: 4px;
-      height: 9px;
-      border-left: none;
-      border-top: none;
-      content: '';
-      transform: rotate(45deg);
+  &[aria-checked=true] .checkbox-icon::after {
+    position: absolute;
+    border: 1px solid $checkbox-ios-checkmark-color-on;
+    top: 3px;
+    left: 7px;
+    width: 4px;
+    height: 9px;
+    border-left: none;
+    border-top: none;
+    content: '';
+    transform: rotate(45deg);
+  }
+
+}
+
+
+// iOS Checkbox Color Mixin
+// --------------------------------------------------
+
+@mixin checkbox-theme-ios($color, $bg-on) {
+
+  .checkbox[mode=ios][#{$color}] {
+
+    &[aria-checked=true] .checkbox-icon {
+      background-color: $bg-on;
+      border-color: $bg-on;
     }
+
   }
 
-  .input-label {
-    color: inherit;
-  }
+}
+
+// Generate iOS Checkbox Auxiliary Colors
+// --------------------------------------------------
+
+@each $color, $value in auxiliary-colors() {
+
+  @include checkbox-theme-ios($color, $value);
 
 }

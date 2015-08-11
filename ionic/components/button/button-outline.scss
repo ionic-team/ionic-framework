@@ -1,0 +1,55 @@
+
+// Outline Button
+// --------------------------------------------------
+
+button,
+[button] {
+
+  &[outline] {
+    border: 1px solid $button-color;
+    background: $background-color;
+    color: $button-color;
+
+    &.activated {
+      opacity: 1;
+      color: $background-color;
+      background-color: $button-color;
+    }
+  }
+
+}
+
+
+// Outline Button Color Mixin
+// --------------------------------------------------
+
+@mixin button-outline($fg-color) {
+
+  &[outline] {
+    border-color: $fg-color;
+    background: $background-color;
+    color: $fg-color;
+
+    &.activated {
+      color: $background-color;
+      background-color: $fg-color;
+    }
+  }
+
+}
+
+
+// Outline Clear Button Colors
+// --------------------------------------------------
+
+@each $color, $value in auxiliary-colors() {
+
+  button[#{$color}],
+  [button][#{$color}] {
+
+    $fg-color: darken-or-lighten($value);
+    @include button-outline($fg-color);
+
+  }
+
+}

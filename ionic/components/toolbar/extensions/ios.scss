@@ -10,7 +10,7 @@ $toolbar-order-ios: (
 );
 
 $toolbar-ios-height:                        4.4rem !default;
-$toolbar-ios-border-color:                  #c4c4c4 !default;
+$toolbar-ios-border-color:                  $toolbar-border-color !default;
 $toolbar-ios-button-font-size:              1.7rem !default;
 $toolbar-ios-title-font-size:               1.7rem !default;
 

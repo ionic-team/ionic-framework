@@ -294,6 +294,17 @@ gulp.task('sass', function() {
     .pipe(gulp.dest('dist/css/'));
 });
 
+gulp.task('sass.dark', function() {
+  return gulp.src('scripts/build/ionic.dark.scss')
+    .pipe(sass({
+      onError: function(err) {
+        console.log(err)
+      }
+    }))
+    .pipe(autoprefixer(buildConfig.autoprefixer))
+    .pipe(gulp.dest('dist/css/'));
+});
+
 gulp.task('fonts', function() {
   return gulp.src('ionic/components/icon/fonts/**/*')
     .pipe(gulp.dest('dist/fonts'));
