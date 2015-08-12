@@ -354,7 +354,7 @@ gulp.task('publish', function(done) {
     ['bundle', 'sass', 'fonts', 'copy.ts', 'copy.scss'],
     'transpile.common',
     function() {
-      var packageJSONContents = '{\n  "name": "ionic2",\n  "version": "2.0.0-alpha.1",\n  "license": "Apache-2.0",\n  "repository": {\n    "type": "git",\n    "url": "https://github.com/driftyco/ionic2.git"\n  }\n}\n';
+      var packageJSONContents = '{\n  "name": "ionic-framework",\n  "version": "2.0.0-alpha.1",\n  "license": "Apache-2.0",\n  "repository": {\n    "type": "git",\n    "url": "https://github.com/driftyco/ionic2.git"\n  }\n}\n';
       fs.writeFile("dist/package.json", packageJSONContents, done);
     }
   )
