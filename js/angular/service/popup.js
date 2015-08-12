@@ -402,7 +402,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
         if (index !== -1) {
           popupStack.splice(index, 1);
         }
-        
+
         popup.remove();
 
         if (popupStack.length > 0) {
