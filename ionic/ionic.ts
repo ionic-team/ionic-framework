@@ -4,8 +4,6 @@ export * from 'ionic/config/annotations'
 
 export * from 'ionic/net/http'
 
-export * from 'ionic/registry'
-
 export * from 'ionic/components'
 
 export * from 'ionic/platform/platform'

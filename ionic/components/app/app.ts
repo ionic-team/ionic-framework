@@ -3,7 +3,6 @@ import {Component, View, bootstrap, ElementRef, NgZone, bind, DynamicComponentLo
 import {IonicRouter} from '../../routing/router';
 import {IonicConfig} from '../../config/config';
 import {Platform} from '../../platform/platform';
-import {Registry} from '../../registry';
 import * as util from '../../util/util';
 
 // injectables
