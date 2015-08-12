@@ -339,10 +339,19 @@ gulp.task('copy.ts', function() {
     .pipe(gulp.dest('dist/src/typescript'));
 })
 
+gulp.task('copy.scss', function() {
+  return gulp.src([
+      'ionic/**/*.scss',
+      '!ionic/components/*/test/**/*',
+      '!ionic/util/test/*'
+    ])
+    .pipe(gulp.dest('dist/src/scss'));
+})
+
 gulp.task('publish', function(done) {
   runSequence(
     'clean',
-    ['bundle', 'sass', 'fonts', 'copy.ts'],
+    ['bundle', 'sass', 'fonts', 'copy.ts', 'copy.scss'],
     'transpile.common',
     function() {
       var packageJSONContents = '{\n  "name": "ionic2",\n  "version": "2.0.0-alpha.1",\n  "license": "Apache-2.0",\n  "repository": {\n    "type": "git",\n    "url": "https://github.com/driftyco/ionic2.git"\n  }\n}\n';
