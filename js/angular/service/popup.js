@@ -405,8 +405,6 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
 
         popup.remove();
 
-        popup.remove();
-
         if (popupStack.length > 0) {
           popupStack[popupStack.length - 1].show();
         } else {
