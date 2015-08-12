@@ -26,7 +26,7 @@
  * takes longer than a standard transition (300ms), you'll need to set the
  * `nextViewOptions` manually as your resolve completes.
  *
- * ```JS
+ * ```js
  * $ionicHistory.nextViewOptions({
  *  historyRoot: true,
  *  disableAnimate: true,
