@@ -17,7 +17,7 @@ exports.config = {
     browser: 'chrome',
     platform: 'linux',
     params: {
-      platform_id: 'chrome_local',
+      platform_id: 'chrome_400x800',
       platform_index: 0,
       platform_count: 1,
       width: 400,
