@@ -1,6 +1,6 @@
 import {Directive} from 'angular2/angular2';
 
-import {IonicApp} from 'ionic/ionic'
+import {IonicApp} from './app';
 
 
 @Directive({
