@@ -28,8 +28,16 @@ $toolbar-order: (
 
   button,
   [button] {
+    background-color: transparent;
     color: $toolbar-active-color;
     box-shadow: none;
+
+    &.activated,
+    &:hover,
+    &.hover {
+      color: $toolbar-active-color;
+      background-color: transparent;
+    }
   }
 }
 
@@ -84,12 +92,12 @@ ion-title {
 @each $color, $value in $colors {
 
   .toolbar[#{$color}] {
-    background-color: get-color($color, base);
+    background-color: $value;
 
     ion-title,
     button,
     [button] {
-      color: get-color($color, inverse);
+      color: inverse($value);
     }
   }
 

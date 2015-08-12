@@ -134,6 +134,5 @@ button.tab-button {
 }
 
 button.tab-button[aria-selected="true"] {
-  // Default color is primary
-  color: get-color(primary, base);
+  color: $toolbar-active-color;
 }

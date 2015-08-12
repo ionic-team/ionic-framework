@@ -46,7 +46,6 @@ ion-popup {
 
 .popup-head {
   padding: 15px 10px;
-  border-bottom: 1px solid #eee;
   text-align: center;
 }
 
@@ -74,7 +73,7 @@ h3.popup-title {
   padding: 10px;
   min-height: $popup-button-min-height + 20;
 
-  .button {
+  button {
     flex: 1;
     display: block;
     min-height: $popup-button-min-height;

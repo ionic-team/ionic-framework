@@ -1,13 +1,13 @@
 
-// Color Mixins/Functions
+// Color Functions
 // --------------------------------------------------
 
 @function get-color($color, $tone: base) {
   @return red;
 }
 
-@function inverse($color-name) {
-  @if (lightness( color($color-name) ) > 70) {
+@function inverse($color-value) {
+  @if (lightness($color-value) > 70) {
     @return #000;
   }
   @else {
@@ -15,23 +15,23 @@
   }
 }
 
-@function darken-or-lighten($color, $amount:12%) {
+@function darken-or-lighten($color-value, $amount:8%) {
   // lightness is a percent value, 0% darkest, 100% lightest
-  $lightness-percent: lightness($color);
+  $lightness-percent: lightness($color-value);
 
 
   @if ($lightness-percent > 80) {
     // really light foreground color, so really darken it up
-    @return darken($color, ($amount * 2));
+    @return darken($color-value, ($amount * 2));
   }
 
   @if ($lightness-percent < 35) {
     // dark foreground color, so light it up
-    @return lighten($color, $amount);
+    @return lighten($color-value, $amount);
   }
 
   // default to darken
-  @return darken($color, $amount);
+  @return darken($color-value, $amount);
 }
 
 @function color($color-name) {
@@ -39,6 +39,7 @@
 }
 
 @function auxiliary-colors() {
+  // get a map of all the colors, except "primary"
   @return map-remove($colors, primary);
 }
 

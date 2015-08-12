@@ -12,7 +12,6 @@ $button-md-border-radius:            3px !default;
 
 [mode="md"] button,
 [mode="md"] [button] {
-  border: 0;
   border-radius: $button-md-border-radius;
 
   min-height: $button-md-min-height;
@@ -32,18 +31,6 @@ $button-md-border-radius:            3px !default;
     box-shadow: $button-md-box-shadow-active;
   }
 
-  &[icon] {
-    //font-size: $button-icon-size;
-  }
-
-  &[large][icon] {
-    //font-size: $button-icon-large-size;
-  }
-
-  &[small][icon] {
-    //font-size: $button-icon-small-size;
-  }
-
   &[full] {
     border-radius: 0;
   }
@@ -51,40 +38,63 @@ $button-md-border-radius:            3px !default;
   &[outline] {
     box-shadow: none;
 
-    .md-ripple {
+    /*.md-ripple {
       &.is-visible {
         opacity: 0.2;
       }
-    }
+    }*/
+  }
+
+  &[round] {
+    border-radius: $button-round-border-radius;
+    padding: $button-round-padding;
+  }
+
+  &[large] {
+    padding: 0 $button-large-padding;
+    min-width: ($button-large-padding * 4);
+    min-height: $button-large-height;
+    font-size: $button-large-font-size;
+  }
+
+  &[small] {
+    padding: 0 $button-small-padding;
+    min-width: ($button-small-padding * 3);
+    min-height: $button-small-height;
+    font-size: $button-small-font-size;
   }
 
   &[fab] {
     border-radius: 50%;
   }
 
-  @each $color, $value in $colors {
+
+  // Generate iOS Checkbox Auxiliary Colors
+  // --------------------------------------------------
+
+  @each $color, $value in  {
 
     &[#{$color}] {
 
       @if lightness(get-color($color, base)) < 80 {
         .md-ripple {
-          background-color: white;
+          //background-color: white;
         }
       }
 
       &.activated {
         opacity: 1;
-        background-color: get-color($color, base);
+        //background-color: get-color($color, base);
       }
 
       &[outline] {
         @if lightness(get-color($color, base)) >= 80 {
           .md-ripple {
-            background-color: black;
+            //background-color: black;
           }
         } @else {
           .md-ripple {
-            background-color: get-color($color, base);
+            //background-color: get-color($color, base);
           }
         }
 
@@ -97,8 +107,8 @@ $button-md-border-radius:            3px !default;
           }
 
           opacity: 1;
-          background: transparent;
-          color: $fg-color;
+          //background: transparent;
+          //color: $fg-color;
         }
       }
 
@@ -107,30 +117,11 @@ $button-md-border-radius:            3px !default;
 
         &:hover,
         &.hover {
-          background-color: rgba(158, 158, 158, 0.1);
+          //background-color: rgba(158, 158, 158, 0.1);
         }
         &.activated {
-          background-color: rgba(158, 158, 158, 0.2);
+          //background-color: rgba(158, 158, 158, 0.2);
         }
-      }
-
-      &[round] {
-        border-radius: $button-round-border-radius;
-        padding: $button-round-padding;
-      }
-
-      &[large] {
-        padding: 0 $button-large-padding;
-        min-width: ($button-large-padding * 4);
-        min-height: $button-large-height;
-        font-size: $button-large-font-size;
-      }
-
-      &[small] {
-        padding: 0 $button-small-padding;
-        min-width: ($button-small-padding * 3);
-        min-height: $button-small-height;
-        font-size: $button-small-font-size;
       }
     }
   }

@@ -2,7 +2,7 @@
 // iOS Item
 // --------------------------------------------------
 
-$item-ios-border-color:           #c8c7cc !default;
+$item-ios-border-color:           $list-border-color !default;
 $item-ios-font-size:              1.6rem !default;
 
 $item-ios-padding-top:            13px !default;
@@ -15,7 +15,8 @@ $item-ios-padding-media-bottom:   11px !default;
 
 $item-ios-avatar-size:            3.6rem !default;
 $item-ios-thumbnail-size:         5.6rem !default;
-$item-ios-note-color:             #999 !default;
+$item-ios-note-color:             $item-ios-border-color !default;
+$item-ios-forward-icon-color:     $item-ios-border-color !default;
 
 
 .list[mode="ios"] {
@@ -73,7 +74,7 @@ $item-ios-note-color:             #999 !default;
 
   icon[forward] {
     font-size: 2rem;
-    color: #cfcfcf;
+    color: $item-ios-forward-icon-color;
   }
 
   button {
@@ -115,46 +116,3 @@ $item-ios-note-color:             #999 !default;
 
 }
 
-/*
-.list[mode="ios"] {
-  margin-top: -1px;
-
-  .item {
-    background: $item-ios-background-color;
-    min-height: $item-ios-min-height;
-    padding-left: $item-ios-padding-left;
-
-    .item-media + .item-content {
-      margin-left: $item-ios-padding-left;
-    }
-
-    .item-content {
-      min-height: $item-ios-min-height;
-      padding: 0;
-    }
-
-    .item:last-of-type .item-content:after {
-      background: none;
-    }
-
-    .item-accessory {
-      color: $item-ios-accessory-color;
-    }
-
-    .item-subtitle {
-      width: 100%;
-      color: #808080;
-    }
-    .item-full {
-      // No left ios-style padding
-      padding-left: 0;
-
-      button {
-        width: 100%;
-        font-size: 1.3em;
-      }
-    }
-  }
-
-}
-*/

@@ -2,7 +2,7 @@
 // iOS Radio
 // --------------------------------------------------
 
-$radio-ios-foreground-color:       get-color(primary, base) !default;
+$radio-ios-active-color:       color(primary) !default;
 
 
 .radio[mode="ios"] {
@@ -13,29 +13,51 @@ $radio-ios-foreground-color:       get-color(primary, base) !default;
     height: 21px;
   }
 
-  &[aria-checked=true] .radio-icon {
-    border-color: $radio-ios-foreground-color;
-
-    &::after {
-      position: absolute;
-      border: 2px solid $radio-ios-foreground-color;
-      top: 3px;
-      left: 7px;
-      width: 4px;
-      height: 10px;
-      border-left: none;
-      border-top: none;
-      content: '';
-      transform: rotate(45deg);
-    }
+  &[aria-checked=true] .radio-icon::after {
+    position: absolute;
+    border: 2px solid $radio-ios-active-color;
+    top: 3px;
+    left: 7px;
+    width: 4px;
+    height: 10px;
+    border-left: none;
+    border-top: none;
+    content: '';
+    transform: rotate(45deg);
   }
 
   &[aria-checked=true] {
-    color: $radio-ios-foreground-color;
+    color: $radio-ios-active-color;
   }
 
-  .input-label {
-    color: inherit;
+}
+
+
+// iOS Radio Color Mixin
+// --------------------------------------------------
+
+@mixin radio-theme-ios($color-name, $color-value) {
+
+  .radio[mode=ios][#{$color-name}] {
+
+    &[aria-checked=true] .radio-icon::after {
+      border-color: $color-value;
+    }
+
+    &[aria-checked=true] {
+      color: $color-value;
+    }
+
   }
+
+}
+
+
+// Generate iOS Radio Auxiliary Colors
+// --------------------------------------------------
+
+@each $color-name, $color-value in auxiliary-colors() {
+
+  @include radio-theme-ios($color-name, $color-value);
 
 }

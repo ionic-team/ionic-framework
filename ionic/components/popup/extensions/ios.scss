@@ -2,8 +2,9 @@
 // iOS Popups
 // --------------------------------------------------
 
-$popup-ios-border-radius:       13px !default;
-$popup-ios-bg-color:            #f8f8f8 !default;
+$popup-ios-border-radius:         13px !default;
+$popup-ios-bg-color:              #f8f8f8 !default;
+$popup-ios-button-text-color:     color(primary) !default;
 
 
 .popup[mode="ios"] {
@@ -25,9 +26,9 @@ $popup-ios-bg-color:            #f8f8f8 !default;
     padding: 0;
     min-height: 0;
 
-    .button {
-      min-height: 42px;
-      color: get-color('primary', base);
+    button {
+      background-color: transparent;
+      color: $popup-ios-button-text-color;
       font-size: 14px;
 
       &:last-child {

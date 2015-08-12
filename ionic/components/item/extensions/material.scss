@@ -2,7 +2,7 @@
 // Material Design Item
 // --------------------------------------------------
 
-$item-md-border-color:           #c8c7cc !default;
+$item-md-border-color:           $list-border-color !default;
 $item-md-font-size:              1.6rem !default;
 
 $item-md-padding-top:            13px !default;
@@ -15,7 +15,8 @@ $item-md-padding-media-bottom:   11px !default;
 
 $item-md-avatar-size:            4rem !default;
 $item-md-thumbnail-size:         8rem !default;
-$item-md-note-color:             #999 !default;
+$item-md-note-color:             $item-md-border-color !default;
+$item-md-forward-icon-color:     $item-md-border-color !default;
 
 
 .list[mode="md"] {
@@ -73,7 +74,7 @@ $item-md-note-color:             #999 !default;
 
   icon[forward] {
     font-size: 2rem;
-    color: #cfcfcf;
+    color: $item-md-forward-icon-color;
   }
 
   button {

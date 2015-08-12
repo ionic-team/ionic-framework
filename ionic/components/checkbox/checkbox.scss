@@ -11,5 +11,5 @@
 .checkbox[aria-disabled=true] {
   pointer-events: none;
   opacity: 0.5;
-  color: gray;
+  color: $subdued-text-color;
 }

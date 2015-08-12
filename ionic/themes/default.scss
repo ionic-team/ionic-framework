@@ -15,7 +15,11 @@ $colors: (
 
 $text-color:                 #000 !default;
 $background-color:           #fff !default;
-$border-color:               #ddd !default;
+$subdued-text-color:         #666 !default;
+
+$list-text-color:            $text-color !default;
+$list-background-color:      $background-color !default;
+$list-border-color:          #c8c7cc !default;
 
 $link-color:                 map-get($colors, primary) !default;
 $link-hover-color:           darken($link-color, 15%) !default;

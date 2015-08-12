@@ -47,7 +47,7 @@ button,
   button[#{$color}],
   [button][#{$color}] {
 
-    $fg-color: darken-or-lighten($value);
+    $fg-color: darken-or-lighten($value, 5%);
     @include button-outline($fg-color);
 
   }

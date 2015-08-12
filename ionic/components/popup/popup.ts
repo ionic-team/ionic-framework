@@ -27,7 +27,7 @@ export class Popup extends Overlay {
     if (typeof context === 'string') {
       context = {
         title: context
-      }
+      };
     }
     let button = {
       text: 'OK',
@@ -139,7 +139,7 @@ const OVERLAY_TYPE = 'popup';
       '<input type="text" *ng-if="showPrompt" placeholder="{{promptPlaceholder}}">' +
     '</div>' +
     '<div class="popup-buttons" *ng-if="buttons.length">' +
-      '<button *ng-for="#button of buttons" (click)="buttonTapped(button, $event)" class="button" [class]="button.type || \'button-default\'" [inner-html]="button.text"></button>' +
+      '<button *ng-for="#button of buttons" (click)="buttonTapped(button, $event)" [class]="button.type || \'button-default\'" [inner-html]="button.text"></button>' +
     '</div>' +
   '</popup-wrapper>',
   directives: [formDirectives, CSSClass, NgIf, NgFor]

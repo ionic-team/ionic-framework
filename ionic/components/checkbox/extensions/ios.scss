@@ -3,8 +3,8 @@
 // --------------------------------------------------
 
 $checkbox-ios-icon-size:             21px !default;
-$checkbox-ios-bg-color-off:          $background-color !default;
-$checkbox-ios-border-color-off:      $border-color !default;
+$checkbox-ios-bg-color-off:          $list-background-color !default;
+$checkbox-ios-border-color-off:      $list-border-color !default;
 $checkbox-ios-bg-color-on:           color(primary) !default;
 $checkbox-ios-border-color-on:       color(primary) !default;
 $checkbox-ios-checkmark-color-on:    $background-color !default;
@@ -45,9 +45,9 @@ $checkbox-ios-checkmark-color-on:    $background-color !default;
 // iOS Checkbox Color Mixin
 // --------------------------------------------------
 
-@mixin checkbox-theme-ios($color, $bg-on) {
+@mixin checkbox-theme-ios($color-name, $bg-on) {
 
-  .checkbox[mode=ios][#{$color}] {
+  .checkbox[mode=ios][#{$color-name}] {
 
     &[aria-checked=true] .checkbox-icon {
       background-color: $bg-on;
@@ -58,11 +58,12 @@ $checkbox-ios-checkmark-color-on:    $background-color !default;
 
 }
 
+
 // Generate iOS Checkbox Auxiliary Colors
 // --------------------------------------------------
 
-@each $color, $value in auxiliary-colors() {
+@each $color-name, $value in auxiliary-colors() {
 
-  @include checkbox-theme-ios($color, $value);
+  @include checkbox-theme-ios($color-name, $value);
 
 }

@@ -2,12 +2,14 @@
 // Radio
 // --------------------------------------------------
 
+
 .radio {
   cursor: pointer;
   @include user-select-none();
 }
 
 .radio[aria-disabled=true] {
+  pointer-events: none;
   opacity: 0.5;
-  color: gray;
+  color: $subdued-text-color;
 }

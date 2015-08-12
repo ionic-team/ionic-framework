@@ -14,7 +14,7 @@ $button-round-padding:            0 2.6rem !default;
 
 $button-color:                    color(primary) !default;
 $button-color-activated:          darken-or-lighten($button-color) !default;
-$button-text-color:               inverse(primary) !default;
+$button-text-color:               inverse($button-color) !default;
 $button-hover-opacity:            0.88 !default;
 
 
@@ -112,7 +112,6 @@ button,
     padding: $button-round-padding;
   }
 
-  &.disabled,
   &[disabled] {
     opacity: 0.4;
     cursor: default !important;
@@ -121,15 +120,13 @@ button,
 
 }
 
+a[button] {
+  text-decoration: none;
+}
 
 .padding > button[block]:first-child,
 .padding > [button][block]:first-child {
   margin-top: 0;
-}
-
-a[button] {
-  color: inherit;
-  text-decoration: none;
 }
 
 
@@ -156,7 +153,7 @@ a[button] {
 
     $bg-color: $value;
     $bg-color-activated: darken-or-lighten($bg-color);
-    $text-color: inverse($color);
+    $text-color: inverse($bg-color);
     @include button-default($bg-color, $bg-color-activated, $text-color);
 
   }
