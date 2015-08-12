@@ -18,8 +18,8 @@ import {App} from 'ionic/ionic';
     </ion-slides>
 
     <div style="position: absolute; bottom: 10px; left: 0; width: 100%; text-align: center">
-      <button (click)="slides.prev()" primary>Prev</button>
-      <button (click)="slides.next()" primary>Next</button>
+      <button (click)="slides.prev()">Prev</button>
+      <button (click)="slides.next()">Next</button>
     </div>
   `
 })

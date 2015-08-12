@@ -78,13 +78,13 @@ export class ContactModal {
     <ion-navbar *navbar><ion-title>First Page Header</ion-title><ion-nav-items primary><button id="e2eCloseMenu" (click)="closeModal()">Close</button></ion-nav-items></ion-navbar>
     <ion-content class="padding">
       <p>
-        <button primary (click)="push()">Push (Go to 2nd)</button>
+        <button (click)="push()">Push (Go to 2nd)</button>
       </p>
       <p>
-        <button primary (click)="openActionMenu()">Open Action Menu</button>
+        <button (click)="openActionMenu()">Open Action Menu</button>
       </p>
       <p>
-        <button primary (click)="closeByHandeModal()">Close By Handle</button>
+        <button (click)="closeByHandeModal()">Close By Handle</button>
       </p>
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
@@ -148,7 +148,7 @@ export class ModalFirstPage {
     <ion-navbar *navbar><ion-title>Second Page Header</ion-title></ion-navbar>
     <ion-content class="padding">
       <p>
-        <button primary (click)="nav.pop()">Pop (Go back to 1st)</button>
+        <button (click)="nav.pop()">Pop (Go back to 1st)</button>
       </p>
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>

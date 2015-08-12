@@ -33,7 +33,7 @@ import {IonicView} from 'ionic/ionic';
           </ion-segment-button>
         </ion-segment>
       </div>
-      <button type="submit" button primary>Submit</button>
+      <button type="submit">Submit</button>
     </form>
 
     Map mode: <b>{{form.controls.mapStyle.value}}</b>

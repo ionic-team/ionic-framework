@@ -26,7 +26,7 @@ import {SinkPage} from '../sink-page';
       <ion-input>
         <input control="password" type="password" placeholder="Your password">
       </ion-input>
-      <button ion-button primary block type="submit">Submit</button>
+      <button block type="submit">Submit</button>
     </form>
   </ion-content>
   `

@@ -90,7 +90,7 @@ class IonicApp {
 }
 
 @IonicView({
-  template: '<ion-view id="settings-modal"><ion-content padding><button primary (click)="close()">Close</button></ion-content></ion-view>'
+  template: '<ion-view id="settings-modal"><ion-content padding><button (click)="close()">Close</button></ion-content></ion-view>'
 })
 export class SettingsModal {}
 

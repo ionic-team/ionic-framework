@@ -35,6 +35,7 @@ $button-md-border-radius:            3px !default;
     border-radius: 0;
   }
 
+  &[clear],
   &[outline] {
     box-shadow: none;
 

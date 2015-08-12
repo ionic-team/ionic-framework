@@ -15,7 +15,7 @@ import {IonicView, NavController} from 'ionic/ionic';
       go back in history (including swipe-to-go-back), and control the stack
       of pages the user can navigate between.
     </p>
-    <button primary (click)="push()">Push</button>
+    <button (click)="push()">Push</button>
   </ion-content>
   `
 })
@@ -33,7 +33,7 @@ export class NavPage {
   template: `
     <ion-navbar *navbar><ion-title>Second Page</ion-title></ion-navbar>
     <ion-content class="padding">
-      <button primary (click)="nav.pop()">Pop</button>
+      <button (click)="nav.pop()">Pop</button>
     </ion-content>
   `
 })

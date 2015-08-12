@@ -18,12 +18,11 @@ import {SinkPage} from '../sink-page';
     </p>
     <p>
       <div (^click)="onButtonClick($event)">
-        <button primary>Primary</button>
+        <button>Primary</button>
         <button secondary>Secondary</button>
-        <button stable>Stable</button>
+        <button danger>Danger</button>
         <button light>Light</button>
         <button dark>Dark</button>
-        <button danger>Danger</button>
       </div>
     </p>
     <p>
@@ -31,7 +30,7 @@ import {SinkPage} from '../sink-page';
     </p>
     <p>
       <div (^click)="onButtonClick($event)">
-        <button primary small>small</button>
+        <button small>small</button>
         <button dark>Medium</button>
         <button secondary large>LARGE</button>
       </div>
@@ -41,7 +40,7 @@ import {SinkPage} from '../sink-page';
     </p>
     <p>
       <div (^click)="onButtonClick($event)">
-        <button primary outline>Outline</button>
+        <button outline>Outline</button>
         <button dark clear>Clear</button>
         <button danger block>Block</button>
       </div>

@@ -86,7 +86,7 @@ class UserModal {
 @View({
   template: `
     <h1>user root component</h1>
-    <button primary (click)="openModal()">Open Modal</button>
+    <button (click)="openModal()">Open Modal</button>
     <ng-content></ng-content>
   `,
   directives: IonicDirectives.concat([UserButton])

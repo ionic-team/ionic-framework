@@ -17,7 +17,7 @@ import {SinkPage} from '../sink-page';
       out of the current context. For example, clicking the "compose" button
       on a mail app might slide up a Compose modal.
     </p>
-    <button primary (click)="openModal()">Open Modal</button>
+    <button (click)="openModal()">Open Modal</button>
   </ion-content>
   `
 })

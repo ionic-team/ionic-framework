@@ -17,7 +17,7 @@ import {SinkPage} from '../sink-page';
       Action Menu's are great for prompting for dangerous actions (like deleting a photo album),
       or showing a "context menu" with multiple actions the user can perform on something.
     </p>
-    <button primary (click)="openMenu()">Open Menu</button>
+    <button (click)="openMenu()">Open Menu</button>
   </ion-content>
   `
 })

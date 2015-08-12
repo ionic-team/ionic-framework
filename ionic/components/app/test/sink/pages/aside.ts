@@ -21,7 +21,7 @@ import {SinkPage} from '../sink-page';
       <div class="height: 50px; background-color: E05780; width: 5px; margin-left: -15px"></div>
     </p>
     <p>
-      <button primary (click)="toggleMenu()">Toggle</button>
+      <button (click)="toggleMenu()">Toggle</button>
     </p>
   </ion-content>
   `

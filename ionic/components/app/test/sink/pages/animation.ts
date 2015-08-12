@@ -38,8 +38,8 @@ let scale = 0.6;
       realistic physics effects to your app. The Animation API is a major improvement over CSS animations.
     </p>
     <p>
-      <button primary (click)="play($event)">Play</button>
-      <button primary (click)="pause($event)">Pause</button>
+      <button (click)="play($event)">Play</button>
+      <button (click)="pause($event)">Pause</button>
     </p>
     <div class="ball-container">
       <div class="ball"></div>
