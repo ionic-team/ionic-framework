@@ -55,8 +55,8 @@ $item-ios-forward-icon-color:     $item-ios-border-color !default;
   }
 
   .text-input {
-    margin: $item-ios-padding-top $item-ios-padding-right $item-ios-padding-bottom $item-ios-padding-left;
-    padding: 0;
+    margin: 0 $item-ios-padding-right 0 $item-ios-padding-left;
+    padding: $item-ios-padding-top 0 $item-ios-padding-bottom 0;
   }
 
   .item-note {
