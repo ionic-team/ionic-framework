@@ -42,6 +42,17 @@ $item-ios-forward-icon-color:     $item-ios-border-color !default;
       left: $item-ios-padding-left;
       border-top: 1px solid $item-ios-border-color;
     }
+
+    &:last-child {
+      margin-bottom: -1px;
+    }
+  }
+
+  &[inset] .item {
+    &:before,
+    &:after {
+      left: 0;
+    }
   }
 
   .input-label,
@@ -55,8 +66,8 @@ $item-ios-forward-icon-color:     $item-ios-border-color !default;
   }
 
   .text-input {
-    margin: 0 $item-ios-padding-right 0 $item-ios-padding-left;
-    padding: $item-ios-padding-top 0 $item-ios-padding-bottom 0;
+    margin: $item-ios-padding-top $item-ios-padding-right $item-ios-padding-bottom $item-ios-padding-left;
+    padding: 0;
   }
 
   .item-note {
@@ -109,10 +120,13 @@ $item-ios-forward-icon-color:     $item-ios-border-color !default;
 .hairlines .list[mode=ios] .item {
   margin-top: -0.5px;
 
+  &:last-child {
+    margin-bottom: -0.5px;
+  }
+
   &:before,
   &:after {
     border-top-width: 0.5px;
   }
-
 }
 

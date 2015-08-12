@@ -2,22 +2,18 @@
 // Card
 // --------------------------------------------------
 
+$card-inset-margin:         $list-inset-margin !default;
+
 
 .card.card {
-  margin: 10px;
+  margin: $card-inset-margin;
 }
 
 .card {
+  display: block;
 
   img {
     width: 100%;
   }
 
-}
-
-.card-header,
-.card-footer {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
 }

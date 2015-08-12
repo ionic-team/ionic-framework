@@ -17,31 +17,25 @@ import {SinkPage} from '../sink-page';
       Cards are great for displaying contextual information in a small space,
       like a Tweet, todays weather report, or a photo.
     </p>
-    <div class="card">
 
-      <div class="item card-header">
-        <div class="item-content">
-          <div class="item-label">
-            Card Header
-          </div>
-        </div>
-      </div>
+    <ion-card>
+
+      <ion-header>
+        Card Header
+      </ion-header>
 
       <div class="item">
-          <div class="item-media">
-            <img src="http://i.imgur.com/7BEPcGo.jpg">
-          </div>
-      </div>
-
-      <div class="item card-footer">
-        <div class="item-content">
-          <div class="item-label">
-            Card Footer
-          </div>
+        <div class="item-media">
+          <img src="http://i.imgur.com/7BEPcGo.jpg">
         </div>
       </div>
 
-    </div>
+      <ion-footer>
+        Card Footer
+      </ion-footer>
+
+    </ion-card>
+
   </ion-content>
   `
 })

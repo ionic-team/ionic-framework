@@ -2,18 +2,30 @@
 // List
 // --------------------------------------------------
 
+$list-inset-margin:         10px !default;
+
 
 .list {
   display: block;
   margin: 0;
   padding: 0;
   list-style-type: none;
+
+  ion-header,
+  ion-footer {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 }
 
-ion-list-header,
-ion-list-footer {
-  display: block;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+.list[inset] {
+  margin: $list-inset-margin;
+
+  border: 1px solid $list-border-color;
+}
+
+.hairlines .list[inset] {
+  border-width: 0.5px;
 }

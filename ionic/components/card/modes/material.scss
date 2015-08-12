@@ -2,7 +2,7 @@
 // Material Design Card
 // --------------------------------------------------
 
-$card-md-background-color:            #fff !default;
+$card-md-background-color:            $list-background-color !default;
 $card-md-box-shadow:                  0 1px 2px rgba(0,0,0,.3) !default;
 $card-md-border-radius:               2px !default;
 $card-md-font-size:                   1.4rem !default;
@@ -13,27 +13,39 @@ $card-md-footer-background-color:     $card-md-background-color !default;
 $card-md-footer-padding:              10px;
 
 
-.card[mode=md] {
+.card.list[mode=md] {
   background: $card-md-background-color;
   box-shadow: $card-md-box-shadow;
   border-radius: $card-md-border-radius;
   font-size: $card-md-font-size;
 
-  .item::before,
-  .item::after {
-    left: 0;
+  .item {
+
+    &:last-child {
+      margin-bottom: -1px;
+    }
+
+    &:before,
+    &:after {
+      left: 0;
+    }
+
+  }
+
+  .item:first-child {
+    margin-top: 1px;
   }
 
   .item:first-child:before {
     border: none;
   }
 
-  .card-header {
+  ion-header {
     padding: $card-md-header-padding;
     background-color: $card-md-footer-background-color;
   }
 
-  .card-footer {
+  ion-footer {
     padding: $card-md-footer-padding;
     background-color: $card-md-footer-background-color;
   }

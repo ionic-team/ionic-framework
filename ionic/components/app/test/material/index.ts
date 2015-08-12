@@ -30,18 +30,18 @@ import {App, ActionMenu, IonicApp, IonicView, Register} from 'ionic/ionic';
     </ion-list>
 
     <div class="padding">
-      <div class="card">
-        <div class="card-header">
+      <ion-card>
+        <ion-header>
           New Post
-        </div>
+        </ion-header>
         <div class="card-content">
           Keep close to Nature's heart... and break clear away, once in awhile, and climb a mountain or spend a week in the woods. Wash your spirit clean.
         </div>
         <img src="http://ionic-io-assets.s3.amazonaws.com/images/p4.png">
-        <div class="card-footer">
+        <ion-footer>
           Posted 5 days ago
-        </div>
-      </div>
+        </ion-footer>
+      </ion-card>
     </div>
 
     ` +

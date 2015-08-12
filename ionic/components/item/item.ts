@@ -12,34 +12,10 @@ import {dom} from 'ionic/util';
   }
 })
 @View({
-  template: `
-    <!--
-    <ng-content select="ion-primary-options"></ng-content>
-    <ng-content select="ion-primary-swipe-buttons"></ng-content>
-    -->
-    <div class="item-content">
-      <div class="item-media">
-      </div>
-      <div class="item-accessory">
-        <!--<ng-content select="ion-item-accessory"></ng-content>-->
-      </div>
-      <div class="item-label">
-        <ng-content></ng-content>
-      </div>
-    </div>
-    <!--
-    <ng-content select="ion-secondary-options"></ng-content>
-    <ng-content select="ion-secondary-swipe-buttons"></ng-content>
-    -->
-  `
-  /*
-  directives: [
-    ItemPrimarySwipeButtons,
-    // ItemSecondarySwipeButtons,
-    // ItemPrimaryOptions,
-    // ItemSecondaryOptions
-  ]
-  */
+  template:
+    '<div class="item-content">' +
+      '<ng-content></ng-content>'+
+    '</div>'
 })
 export class Item {
   constructor(elementRef: ElementRef) {

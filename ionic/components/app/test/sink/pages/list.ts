@@ -19,9 +19,9 @@ import {SinkPage} from '../sink-page';
 
     <ion-list inset>
 
-      <ion-list-header>
+      <ion-header>
         List Header
-      </ion-list-header>
+      </ion-header>
 
       <ion-item>
         <input control="email" type="email" placeholder="Your email">
@@ -35,9 +35,9 @@ import {SinkPage} from '../sink-page';
       </div>
       <ion-item>Item</ion-item>
 
-      <ion-list-footer>
+      <ion-footer>
         List Footer
-      </ion-list-footer>
+      </ion-footer>
 
     </ion-list>
   </ion-content>
