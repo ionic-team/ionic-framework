@@ -1,100 +1,25 @@
 @charset "UTF-8";
 
 
-// Globals
-@import
-  "util/mixins",
-  "components/app/z-index",
-  "components/app/flex-order",
-  "components/app/normalize",
-  "components/app/structure",
-  "components/app/typography",
-  "util/util";
-
-
 // Default Theme
-// If a theme wasn't set then it'll use this default
-@import
-  "themes/default";
+@import "themes/default";
 
 
 // Core Components
-@import
-  "components/toolbar/toolbar",
-  "components/toolbar/toolbar-buttons",
-  "components/action-menu/action-menu",
-  "components/aside/aside",
-  "components/badge/badge",
-  "components/button/button",
-  "components/button/button-clear",
-  "components/button/button-outline",
-  "components/button/button-size",
-  "components/button/button-icon",
-  "components/button/button-fab",
-  "components/card/card",
-  "components/checkbox/checkbox",
-  "components/content/content",
-  "components/item/item",
-  "components/form/form",
-  "components/form/label",
-  "components/text-input/text-input",
-  "components/list/list",
-  "components/modal/modal",
-  "components/nav-bar/nav-bar",
-  "components/popup/popup",
-  "components/slides/slides",
-  "components/radio/radio",
-  "components/scroll/scroll",
-  "components/scroll/pull-to-refresh",
-  "components/scroll/scroll",
-  "components/search-bar/search-bar",
-  "components/segment/segment",
-  "components/switch/switch",
-  "components/tabs/tabs",
-  "components/view/view";
+@import "ionic.core";
 
 
 // iOS Components
-@import
-  "components/item/extensions/ios",
-  "components/toolbar/extensions/ios",
-  "components/action-menu/extensions/ios",
-  "components/card/extensions/ios",
-  "components/checkbox/extensions/ios",
-  "components/content/extensions/ios",
-  "components/list/extensions/ios",
-  "components/nav-bar/extensions/ios",
-  "components/popup/extensions/ios",
-  "components/radio/extensions/ios",
-  "components/search-bar/extensions/ios",
-  "components/segment/extensions/ios",
-  "components/switch/extensions/ios",
-  "components/tabs/extensions/ios";
+@import "ionic.ios";
 
 
 // Material Design Components
-@import
-  "components/material/variables",
-  "components/material/ripple",
-
-  "components/toolbar/extensions/material",
-  "components/app/extensions/material",
-  "components/action-menu/extensions/material",
-  "components/button/extensions/material",
-  "components/card/extensions/material",
-  "components/checkbox/extensions/material",
-  "components/item/extensions/material",
-  "components/list/extensions/material",
-  "components/nav-bar/extensions/material",
-  "components/tabs/extensions/material";
+@import "ionic.material";
 
 
 // Icons
-@import
-  "components/icon/icon";
+@import "components/icon/icon";
 
 
 // Platforms
-@import
-  "platform/cordova";
-
+@import  "platform/cordova";
