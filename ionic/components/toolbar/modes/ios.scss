@@ -17,7 +17,8 @@ $toolbar-ios-title-font-size:               1.7rem !default;
 
 .nav[mode=ios] .toolbar,
 .toolbar[mode=ios] {
-  border-bottom: 1px solid $toolbar-ios-border-color;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
   min-height: $toolbar-ios-height;
 
   .toolbar-title {

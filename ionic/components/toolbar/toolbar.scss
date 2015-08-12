@@ -24,6 +24,8 @@ $toolbar-order: (
   order: $flex-order-toolbar-top;
   flex: 0;
 
+  border: 0;
+  border-color: $toolbar-border-color;
   background-color: $toolbar-background-color;
 
   button,
@@ -89,15 +91,16 @@ ion-title {
 // Toolbar Color Generation
 // --------------------------------------------------
 
-@each $color, $value in $colors {
+@each $color-name, $color-value in $colors {
 
-  .toolbar[#{$color}] {
-    background-color: $value;
+  .toolbar[#{$color-name}] {
+    background-color: $color-value;
+    border-color: darken($color-value, 15%);
 
     ion-title,
     button,
     [button] {
-      color: inverse($value);
+      color: inverse($color-value);
     }
   }
 
