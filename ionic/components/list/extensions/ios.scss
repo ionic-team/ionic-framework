@@ -15,7 +15,7 @@ $list-ios-footer-letter-spacing:  0.1rem !default;
 $list-ios-footer-color:           #333 !default;
 
 
-.list[mode="ios"] {
+.list[mode=ios] {
 
   ion-list-header {
     padding: $list-ios-header-padding;

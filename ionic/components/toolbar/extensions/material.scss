@@ -7,8 +7,8 @@ $toolbar-md-title-font-size:         2rem !default;
 $toolbar-md-button-font-size:        1.4rem !default;
 
 
-.nav[mode="md"] .toolbar,
-.toolbar[mode="md"] {
+.nav[mode=md] .toolbar,
+.toolbar[mode=md] {
   min-height: $toolbar-md-height;
 
   .toolbar-inner-title {

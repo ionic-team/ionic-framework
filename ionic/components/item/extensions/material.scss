@@ -19,7 +19,7 @@ $item-md-note-color:             $item-md-border-color !default;
 $item-md-forward-icon-color:     $item-md-border-color !default;
 
 
-.list[mode="md"] {
+.list[mode=md] {
 
   .item {
     font-size: $item-md-font-size;

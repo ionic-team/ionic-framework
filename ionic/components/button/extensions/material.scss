@@ -10,8 +10,8 @@ $button-md-box-shadow-active:        0 4px 5px 0 rgba(0, 0, 0, 0.14),0 1px 10px 
 $button-md-border-radius:            3px !default;
 
 
-[mode="md"] button,
-[mode="md"] [button] {
+[mode=md] button,
+[mode=md] [button] {
   border-radius: $button-md-border-radius;
 
   min-height: $button-md-min-height;

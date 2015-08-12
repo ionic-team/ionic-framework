@@ -6,7 +6,7 @@ $popup-md-border-radius:       13px !default;
 $popup-md-bg-color:            #f8f8f8 !default;
 
 
-.popup[mode="md"] {
+.popup[mode=md] {
 
   popup-wrapper {
     border-radius: $popup-md-border-radius;

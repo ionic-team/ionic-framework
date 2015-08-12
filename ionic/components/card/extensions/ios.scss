@@ -13,7 +13,7 @@ $card-ios-footer-background-color:     $card-ios-background-color !default;
 $card-ios-footer-padding:              10px;
 
 
-.card[mode="ios"] {
+.card[mode=ios] {
   background: $card-ios-background-color;
   box-shadow: $card-ios-box-shadow;
   border-radius: $card-ios-border-radius;

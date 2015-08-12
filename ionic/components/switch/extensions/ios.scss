@@ -8,7 +8,7 @@ $switch-ios-border-width:              2px !default;
 $switch-ios-border-radius:             30px !default;
 
 $switch-ios-off-bg-color:              $list-background-color !default;
-$switch-ios-off-border-color:          $list-border-color !default;
+$switch-ios-off-border-color:          lighten($list-border-color, 10%) !default;
 
 $switch-ios-on-bg-color:               color(primary) !default;
 $switch-ios-on-border-color:           $switch-ios-on-bg-color !default;
@@ -25,7 +25,7 @@ $switch-ios-handle-on-bg-color:        $switch-ios-off-bg-color !default;
 $switch-ios-transition-duration:       200ms !default;
 
 
-.switch[mode="ios"] {
+.switch[mode=ios] {
 
   .item-media {
     margin: 0;

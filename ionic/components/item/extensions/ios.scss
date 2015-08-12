@@ -19,7 +19,7 @@ $item-ios-note-color:             $item-ios-border-color !default;
 $item-ios-forward-icon-color:     $item-ios-border-color !default;
 
 
-.list[mode="ios"] {
+.list[mode=ios] {
 
   .item {
     font-size: $item-ios-font-size;
@@ -106,7 +106,7 @@ $item-ios-forward-icon-color:     $item-ios-border-color !default;
 }
 
 
-.hairlines .list[mode="ios"] .item {
+.hairlines .list[mode=ios] .item {
   margin-top: -0.5px;
 
   &:before,

@@ -11,7 +11,7 @@ $list-md-footer-font-size:      1.2rem !default;
 $list-md-footer-color:          #8f8f94 !default;
 
 
-.list[mode="md"] {
+.list[mode=md] {
 
   ion-list-header {
     padding: $list-md-header-padding;

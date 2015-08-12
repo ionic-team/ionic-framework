@@ -13,7 +13,7 @@ $card-md-footer-background-color:     $card-md-background-color !default;
 $card-md-footer-padding:              10px;
 
 
-.card[mode="md"] {
+.card[mode=md] {
   background: $card-md-background-color;
   box-shadow: $card-md-box-shadow;
   border-radius: $card-md-border-radius;

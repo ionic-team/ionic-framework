@@ -8,7 +8,7 @@ $tab-bar-md-item-icon-size:           26px !default;
 $tab-bar-md-item-height:              4.8rem !default;
 
 
-.tabs[mode="md"] {
+.tabs[mode=md] {
 
   button.tab-button {
     padding: $tab-bar-md-item-padding;
