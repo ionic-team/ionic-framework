@@ -10,15 +10,24 @@
 
 
 // iOS Components
-@import "ionic.ios";
+$ios-mode: true !default;
+@if ($ios-mode) {
+  @import "ionic.ios";
+}
 
 
 // Material Design Components
-@import "ionic.material";
+$material-design-mode: true !default;
+@if ($material-design-mode) {
+  @import "ionic.material";
+}
 
 
-// Icons
-@import "components/icon/icon";
+// Ionicons
+$ionicons: true !default;
+@if ($ionicons) {
+  @import "components/icon/ionicons";
+}
 
 
 // Platforms
