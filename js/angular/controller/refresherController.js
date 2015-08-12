@@ -287,7 +287,13 @@ IonicModule
     function start() {
       // startCallback
       $element[0].classList.add('refreshing');
-      $scope.$onRefresh();
+      var q = $scope.$onRefresh();
+
+      if (q && q.then) {
+        q.finally(function() {
+          $scope.$broadcast('scroll.refreshComplete');
+        });
+      }
     }
 
     function show() {
