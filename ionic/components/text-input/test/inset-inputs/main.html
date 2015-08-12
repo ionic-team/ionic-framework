@@ -4,16 +4,44 @@
 
 <ion-content>
 
+
+  <ion-list inset>
+
+    <ion-input>
+      <icon name="ion-search"></icon>
+      <input value="Input inside an inset list" type="text">
+    </ion-input>
+
+    <ion-input>
+      <input value="Input inside an inset list" type="text">
+      <icon name="ion-ios-mic"></icon>
+    </ion-input>
+
+  </ion-list>
+
+
+  <ion-list inset>
+
+    <ion-input inset>
+      <icon name="ion-search"></icon>
+      <input value="Inset input inside an inset list" type="text">
+    </ion-input>
+
+    <ion-input inset>
+      <input value="Inset input inside an inset list" type="text">
+      <icon name="ion-ios-mic"></icon>
+    </ion-input>
+
+  </ion-list>
+
+
   <ion-list>
 
     <ion-input inset>
-      <icon name="ion-home"></icon>
-      <input value="Inset text input inside a list" type="text">
-    </ion-input>
-
-    <ion-input inset>
-      <input value="Inset text input inside a list" type="text">
-    </ion-input>
+      <icon name="ion-search"></icon>
+      <input value="Inset input inside a list" type="text">
+      <button outline>Search</button>
+    </ion-input inset>
 
   </ion-list>
 
@@ -21,15 +49,16 @@
   <ion-card>
 
     <ion-input>
-      <input value="Text input inside a card" type="text">
-      <icon name="ion-home"></icon>
+      <icon name="ion-search"></icon>
+      <input value="Input inside a card" type="text">
     </ion-input>
 
     <ion-input>
-      <input value="Text input inside a card" type="text">
-      <icon name="ion-star"></icon>
+      <input value="Input inside a card" type="text">
+      <icon name="ion-ios-mic"></icon>
     </ion-input>
 
   </ion-card>
+
 
 </ion-content>

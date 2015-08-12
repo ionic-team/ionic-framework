@@ -1,0 +1,18 @@
+
+// iOS Text Input
+// --------------------------------------------------
+
+
+.list[mode=ios] {
+
+  .text-input {
+    margin: $item-ios-padding-top $item-ios-padding-right $item-ios-padding-bottom $item-ios-padding-left;
+    padding: 0;
+  }
+
+  .item-input[inset] .text-input {
+    margin: ($item-ios-padding-top / 2) $item-ios-padding-right ($item-ios-padding-bottom / 2) $item-ios-padding-left;
+    padding: ($item-ios-padding-top / 2) ($item-ios-padding-right / 2) ($item-ios-padding-bottom / 2) ($item-ios-padding-left / 2);
+  }
+
+}
