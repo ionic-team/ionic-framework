@@ -75,13 +75,15 @@ $action-menu-ios-icon-font-size:           1.4em !default;
   }
 
   .action-menu-title:first-child,
-  .action-menu-button:first-child {
+  .action-menu-button:first-child,
+  .action-menu-group button:first-child {
     border-top-left-radius: $action-menu-ios-border-radius;
     border-top-right-radius: $action-menu-ios-border-radius;
   }
 
   .action-menu-title:last-child,
-  .action-menu-button:last-child {
+  .action-menu-button:last-child,
+  .action-menu-group button:last-child {
     border-bottom-left-radius: $action-menu-ios-border-radius;
     border-bottom-right-radius: $action-menu-ios-border-radius;
   }
