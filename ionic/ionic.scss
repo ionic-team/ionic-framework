@@ -26,7 +26,7 @@ $material-design-mode: true !default;
 // Ionicons
 $ionicons: true !default;
 @if ($ionicons) {
-  @import "components/icon/ionicons";
+  @import "fonts/ionicons";
 }
 
 

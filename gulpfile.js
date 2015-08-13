@@ -306,7 +306,7 @@ gulp.task('sass.dark', function() {
 });
 
 gulp.task('fonts', function() {
-  return gulp.src('ionic/components/icon/fonts/**/*')
+  return gulp.src(['ionic/fonts/**/*.ttf', 'ionic/fonts/**/*.woff'])
     .pipe(gulp.dest('dist/fonts'));
 });
 
