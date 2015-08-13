@@ -120,7 +120,7 @@ export class MaterialRippleEffect {
     if (event && event.detail !== 2) {
       setTimeout(function() {
         this.rippleElement.classList.remove('is-visible');
-      }.bind(this), 0);
+      }.bind(this), 150);
     }
   }
 
