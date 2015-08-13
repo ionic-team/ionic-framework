@@ -1,10 +1,10 @@
-import {App, IonicApp} from 'ionic/ionic';
+import {App, IonicApp, IonicView, NavController} from 'ionic/ionic';
 
 
-@App({
-  templateUrl: 'main.html'
+@IonicView({
+  templateUrl: 'home-page.html'
 })
-class E2EApp {
+class HomePage {
 
   constructor(app: IonicApp) {
     this.app = app;
@@ -13,6 +13,18 @@ class E2EApp {
   toggleAside() {
     console.log('toggleAside')
     this.app.getComponent('mainMenu').toggle();
+  }
+
+}
+
+
+@App({
+  templateUrl: 'main.html'
+})
+class E2EApp {
+
+  constructor() {
+    this.rootView = HomePage;
   }
 
 }

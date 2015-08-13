@@ -95,7 +95,7 @@ ion-title {
 
   .toolbar[#{$color-name}] {
     background-color: $color-value;
-    border-color: darken($color-value, 15%);
+    border-color: darken($color-value, 10%);
 
     ion-title,
     button,

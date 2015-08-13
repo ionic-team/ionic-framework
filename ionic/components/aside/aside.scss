@@ -3,10 +3,11 @@
 // --------------------------------------------------
 
 $aside-width: 304px !default;
-$aside-height: 304px !default;
+$aside-small-width: $aside-width - 40px !default;
+
 $aside-transition: 0.2s ease transform !default;
-$aside-background: #fff !default;
-$aside-shadow: -1px 0px 2px rgba(0, 0, 0, 0.2), 1px 0px 2px rgba(0,0,0,0.2) !default;
+$aside-background: $background-color !default;
+$aside-shadow: -1px 0px 8px rgba(0, 0, 0, 0.2) !default;
 
 
 .aside {
@@ -14,11 +15,11 @@ $aside-shadow: -1px 0px 2px rgba(0, 0, 0, 0.2), 1px 0px 2px rgba(0,0,0,0.2) !def
   top: 0;
   bottom: 0;
 
+  left: -$aside-width;
+  width: $aside-width;
+
   display: flex;
   flex-direction: column;
-
-  width: $aside-width;
-  left: -$aside-width;
 
   background: $aside-background;
 
@@ -100,4 +101,24 @@ $aside-shadow: -1px 0px 2px rgba(0, 0, 0, 0.2), 1px 0px 2px rgba(0,0,0,0.2) !def
   &.aside-open-right {
     transform: translate3d(-$aside-width,0,0);
   }
+}
+
+
+@media (max-width: 340px) {
+
+  .aside {
+    left: -$aside-small-width;
+    width: $aside-small-width;
+  }
+
+  .aside-content {
+    &.aside-open-left {
+      transform: translate3d($aside-small-width, 0, 0);
+    }
+
+    &.aside-open-right {
+      transform: translate3d(-$aside-small-width, 0, 0);
+    }
+  }
+
 }

@@ -193,4 +193,4 @@ class Tab3Page1 {}
     }
   ]
 })
-class IonicApp {}
+class E2EApp {}

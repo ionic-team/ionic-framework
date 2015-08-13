@@ -4,7 +4,7 @@ import {App} from 'ionic/ionic';
 @App({
   templateUrl: 'main.html'
 })
-class IonicApp {}
+class E2EApp {}
 
 
 function onEvent(ev) {

@@ -1,30 +1,23 @@
-<ion-view>
 
-  <ion-aside #aside [content]="content" [register]="aside" register-id="mainMenu">
-    <ion-list>
-      <ion-item>
-        About
-      </ion-item>
-      <ion-item>
-        Specials
-      </ion-item>
-      <ion-item>
-        Beer
-      </ion-item>
-      <ion-item>
-        Potatoes
-      </ion-item>
-    </ion-list>
-  </ion-aside>
+<ion-aside #aside [content]="content" [register]="aside" register-id="mainMenu">
+  <ion-toolbar secondary>
+    <ion-title>Left Menu</ion-title>
+  </ion-toolbar>
+  <ion-list>
+    <ion-item>
+      About
+    </ion-item>
+    <ion-item>
+      Specials
+    </ion-item>
+    <ion-item>
+      Beer
+    </ion-item>
+    <ion-item>
+      Potatoes
+    </ion-item>
+  </ion-list>
+</ion-aside>
 
-  <ion-content #content class="padding">
 
-    <h2>Content</h2>
-
-    <p>
-      <button id="e2eToggleAside" (click)="toggleAside()">Toggle Aside</button>
-    </p>
-
-  </ion-content>
-
-</ion-view>
+<ion-nav [root]="rootView" #content [register]="content" register-id="myNav" swipe-back-enabled="false"></ion-nav>
