@@ -4,8 +4,7 @@
 @font-face {
  font-family: $ionicons-font-family;
  src:url("#{$ionicons-font-path}/ionicons.ttf?v=#{$ionicons-version}") format("truetype"),
-  url("#{$ionicons-font-path}/ionicons.woff?v=#{$ionicons-version}") format("woff"),
-  url("#{$ionicons-font-path}/ionicons.svg?v=#{$ionicons-version}#Ionicons") format("svg");
+  url("#{$ionicons-font-path}/ionicons.woff?v=#{$ionicons-version}") format("woff");
  font-weight: normal;
  font-style: normal;
 }

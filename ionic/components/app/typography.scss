@@ -88,3 +88,7 @@ ion-app {
     bottom: -0.25em;
   }
 }
+
+body[mode=md] ion-app {
+  font-family: "Roboto", "Helvetica Neue", sans-serif;
+}
