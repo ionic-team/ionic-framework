@@ -110,7 +110,7 @@ class ActionMenuAnimation extends Animation {
 class ActionMenuSlideIn extends ActionMenuAnimation {
   constructor(element) {
     super(element);
-    this.backdrop.fromTo('opacity', 0, 0.4);
+    this.backdrop.fromTo('opacity', 0, 0.26);
     this.wrapper.fromTo('translateY', '100%', '0%');
   }
 }
@@ -119,7 +119,7 @@ Animation.register('action-menu-slide-in', ActionMenuSlideIn);
 class ActionMenuSlideOut extends ActionMenuAnimation {
   constructor(element) {
     super(element);
-    this.backdrop.fromTo('opacity', 0.4, 0);
+    this.backdrop.fromTo('opacity', 0.26, 0);
     this.wrapper.fromTo('translateY', '0%', '100%');
   }
 }

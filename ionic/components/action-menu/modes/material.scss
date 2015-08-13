@@ -8,12 +8,14 @@ $action-menu-md-height:                   4.8rem !default;
 
 $action-menu-md-title-color:              #757575 !default;
 $action-menu-md-title-font-size:          1.6rem !default;
+$action-menu-md-title-padding:            1.9rem 1.6rem 1.7rem !default;
 
 $action-menu-md-button-text-color:        #222 !default;
 $action-menu-md-button-font-size:         1.6rem !default;
 $action-menu-md-background-active:        #f1f1f1 !default;
 
 $action-menu-md-icon-font-size:           2.4rem !default;
+$action-menu-md-icon-margin:              0 28px 0 0 !default;
 
 
 .action-menu[mode=md] {
@@ -36,18 +38,17 @@ $action-menu-md-icon-font-size:           2.4rem !default;
 
     .icon {
       display: inline-block;
+      margin: $action-menu-md-icon-margin;
       min-width: 24px;
       text-align: center;
       vertical-align: middle;
       font-size: $action-menu-md-icon-font-size;
-
-      margin: 0 32px 0 0; // gap on right, standard left padding
     }
   }
 
   .action-menu-title {
+    padding: $action-menu-md-title-padding;
     font-size: $action-menu-md-title-font-size;
-    padding: $action-menu-md-title-font-size;
     color: $action-menu-md-title-color;
   }
 
@@ -57,6 +58,7 @@ $action-menu-md-icon-font-size:           2.4rem !default;
 
     &.activated {
       background: $action-menu-md-background-active;
+      border-radius: 0;
     }
   }
 
