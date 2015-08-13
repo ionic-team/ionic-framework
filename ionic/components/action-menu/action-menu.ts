@@ -67,20 +67,19 @@ export class ActionMenu extends Overlay {
    *
    * @return Promise that resolves when the action menu is open.
    */
+
   open(opts={}) {
+    let config = this.config;
     let defaults = {
-      enterAnimation: 'action-menu-slide-in',
-      leaveAnimation: 'action-menu-slide-out',
+      enterAnimation: config.setting('actionMenuEnter'),
+      leaveAnimation: config.setting('actionMenuLeave'),
+      cancelIcon: config.setting('actionMenuCancelIcon'),
+      destructiveIcon: config.setting('actionMenuDestructiveIcon')
     };
 
-    let contextDefaults = {
-      cancelIcon: 'ion-close',
-      destructiveIcon: 'ion-trash-a'
-    }
+    let context = util.extend(defaults, opts);
 
-    let context = util.extend(contextDefaults, opts);
-
-    return this.create(OVERLAY_TYPE, ActionMenuDirective, util.extend(defaults, opts), context);
+    return this.create(OVERLAY_TYPE, ActionMenuDirective, context, context);
   }
 
   get() {
@@ -110,7 +109,7 @@ class ActionMenuAnimation extends Animation {
 class ActionMenuSlideIn extends ActionMenuAnimation {
   constructor(element) {
     super(element);
-    this.backdrop.fromTo('opacity', 0, 0.26);
+    this.backdrop.fromTo('opacity', 0, 0.4);
     this.wrapper.fromTo('translateY', '100%', '0%');
   }
 }
@@ -119,8 +118,25 @@ Animation.register('action-menu-slide-in', ActionMenuSlideIn);
 class ActionMenuSlideOut extends ActionMenuAnimation {
   constructor(element) {
     super(element);
-    this.backdrop.fromTo('opacity', 0.26, 0);
+    this.backdrop.fromTo('opacity', 0.4, 0);
     this.wrapper.fromTo('translateY', '0%', '100%');
   }
 }
 Animation.register('action-menu-slide-out', ActionMenuSlideOut);
+
+
+class ActionMenuMdSlideIn extends ActionMenuSlideIn {
+  constructor(element) {
+    super(element);
+    this.backdrop.fromTo('opacity', 0, 0.26);
+  }
+}
+Animation.register('action-menu-md-slide-in', ActionMenuMdSlideIn);
+
+class ActionMenuMdSlideOut extends ActionMenuSlideOut {
+  constructor(element) {
+    super(element);
+    this.backdrop.fromTo('opacity', 0.26, 0);
+  }
+}
+Animation.register('action-menu-md-slide-out', ActionMenuMdSlideOut);

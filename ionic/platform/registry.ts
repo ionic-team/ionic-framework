@@ -4,6 +4,8 @@ import {Platform} from './platform';
 Platform.register({
   name: 'core',
   settings: {
+    actionMenuEnter: 'action-menu-slide-in',
+    actionMenuLeave: 'action-menu-slide-out',
     backButtonText: 'Back',
     backButtonIcon: 'ion-ios-arrow-back',
     forwardIcon: 'ion-ios-arrow-forward',
@@ -53,6 +55,10 @@ Platform.register({
     'tablet'
   ],
   settings: {
+    actionMenuEnter: 'action-menu-md-slide-in',
+    actionMenuLeave: 'action-menu-md-slide-out',
+    actionMenuCancelIcon: 'ion-close',
+    actionMenuDestructiveIcon: 'ion-trash-a',
     backButtonText: '',
     backButtonIcon: 'ion-android-arrow-back',
     forwardIcon: '',
@@ -84,6 +90,10 @@ Platform.register({
     'iphone'
   ],
   settings: {
+    actionMenuEnter: 'action-menu-slide-in',
+    actionMenuLeave: 'action-menu-slide-out',
+    actionMenuCancelIcon: 'ion-close',
+    actionMenuDestructiveIcon: 'ion-trash-a',
     backButtonText: 'Back',
     backButtonIcon: 'ion-ios-arrow-back',
     forwardIcon: 'ion-ios-arrow-forward',

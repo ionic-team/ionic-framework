@@ -1,6 +1,6 @@
 
 // Aside
-// --------------------------
+// --------------------------------------------------
 
 $aside-width: 304px !default;
 $aside-height: 304px !default;
@@ -10,45 +10,43 @@ $aside-shadow: -1px 0px 2px rgba(0, 0, 0, 0.2), 1px 0px 2px rgba(0,0,0,0.2) !def
 
 
 .aside {
-  display: block;
   position: absolute;
-
-  background: $aside-background;
+  top: 0;
+  bottom: 0;
 
   display: flex;
   flex-direction: column;
 
+  width: $aside-width;
+  left: -$aside-width;
+
+  background: $aside-background;
+
+  transform: translate3d(0, 0, 0);
+  transition: $aside-transition;
 
   &[type=overlay] {
     z-index: $z-index-aside-overlay;
   }
 
-  transition: $aside-transition;
   &:not(.open):not(.changing) {
     display: none;
   }
-
-  //&[side=left] {
-  width: $aside-width;
-  left: -$aside-width;
-  top: 0;
-  bottom: 0;
-
-  transform: translate3d(0, 0, 0);
 
   &[type=reveal] {
     left: 0;
   }
 
   &.open, {
-    &[type=reveal], &[type=push] {
+    &[type=reveal],
+    &[type=push] {
       left: 0;
     }
     &[type=overlay] {
       transform: translate3d($aside-width,0,0);
     }
   }
-  //}
+
   &[side=right] {
     width: $aside-width;
     left: 100%;
@@ -61,6 +59,7 @@ $aside-shadow: -1px 0px 2px rgba(0, 0, 0, 0.2), 1px 0px 2px rgba(0,0,0,0.2) !def
       transform: translate3d(-$aside-width,0,0);
     }
   }
+
   &[side=top] {
     height: $aside-width;
     top: -$aside-width;
@@ -73,6 +72,7 @@ $aside-shadow: -1px 0px 2px rgba(0, 0, 0, 0.2), 1px 0px 2px rgba(0,0,0,0.2) !def
       transform: translate3d(0,$aside-width,0);
     }
   }
+
   &[side=bottom] {
     height: $aside-width;
     top: 100%;
@@ -91,10 +91,12 @@ $aside-shadow: -1px 0px 2px rgba(0, 0, 0, 0.2), 1px 0px 2px rgba(0,0,0,0.2) !def
 .aside-content {
   transition: $aside-transition;
   transform: translate3d(0,0,0);
+
   box-shadow: $aside-shadow;
   &.aside-open-left {
     transform: translate3d($aside-width,0,0);
   }
+
   &.aside-open-right {
     transform: translate3d(-$aside-width,0,0);
   }

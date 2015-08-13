@@ -1,4 +1,4 @@
-import {View, EventEmitter, ElementRef, onInit} from 'angular2/angular2';
+import {View, EventEmitter, ElementRef} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
