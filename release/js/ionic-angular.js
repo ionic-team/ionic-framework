@@ -2,7 +2,7 @@
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v1.0.1
+ * Ionic, v1.1.0
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -1251,11 +1251,12 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
     /**
      * @ngdoc method
      * @name $ionicHistory#clearCache
+	 * @return promise
      * @description Removes all cached views within every {@link ionic.directive:ionNavView}.
      * This both removes the view element from the DOM, and destroy it's scope.
      */
     clearCache: function(stateIds) {
-      $timeout(function() {
+      return $timeout(function() {
         $ionicNavViewDelegate._instances.forEach(function(instance) {
           instance.clearCache(stateIds);
         });
@@ -4979,7 +4980,7 @@ function($provide) {
     //found nearest to body's scrollTop is set to scroll to an element
     //with that ID.
     $location.hash = function(value) {
-      if (isDefined(value)) {
+      if (isDefined(value) && value.length > 0) {
         $timeout(function() {
           var scroll = document.querySelector('.scroll-content');
           if (scroll) {
@@ -9424,7 +9425,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
  * @param {string=} direction Which way to scroll. 'x' or 'y' or 'xy'. Default 'y'.
  * @param {boolean=} locking Whether to lock scrolling in one direction at a time. Useful to set to false when zoomed in or scrolling in two directions. Default true.
  * @param {boolean=} padding Whether to add padding to the content.
- * of the content.  Defaults to true on iOS, false on Android.
+ * Defaults to true on iOS, false on Android.
  * @param {boolean=} scroll Whether to allow scrolling of content.  Defaults to true.
  * @param {boolean=} overflow-scroll Whether to use overflow-scrolling instead of
  * Ionic scroll. See {@link ionic.provider:$ionicConfigProvider} to set this as the global default.
@@ -10881,9 +10882,20 @@ function($timeout) {
  * ```html
  * <a menu-close href="#/home" class="item">Home</a>
  * ```
+ *
+ * Note that if your destination state uses a resolve and that resolve asyncronously
+ * takes longer than a standard transition (300ms), you'll need to set the
+ * `nextViewOptions` manually as your resolve completes.
+ *
+ * ```js
+ * $ionicHistory.nextViewOptions({
+ *  historyRoot: true,
+ *  disableAnimate: true,
+ *  expire: 300
+ * });
  */
 IonicModule
-.directive('menuClose', ['$ionicHistory', function($ionicHistory) {
+.directive('menuClose', ['$ionicHistory', '$timeout', function($ionicHistory, $timeout) {
   return {
     restrict: 'AC',
     link: function($scope, $element) {
@@ -10895,6 +10907,15 @@ IonicModule
             disableAnimate: true,
             expire: 300
           });
+          // if no transition in 300ms, reset nextViewOptions
+          // the expire should take care of it, but will be cancelled in some
+          // cases. This directive is an exception to the rules of history.js
+          $timeout( function() {
+            $ionicHistory.nextViewOptions({
+              historyRoot: false,
+              disableAnimate: false
+            });
+          }, 300);
           sideMenuCtrl.close();
         }
       });
@@ -12326,21 +12347,18 @@ IonicModule
  *
  * ```html
  * <ion-side-menus>
- *   <!-- Center content -->
- *   <ion-side-menu-content ng-controller="ContentController">
- *   </ion-side-menu-content>
- *
  *   <!-- Left menu -->
  *   <ion-side-menu side="left">
- *   </ion-side-menu>
- *
- *   <!-- Right menu -->
- *   <ion-side-menu side="right">
  *   </ion-side-menu>
  *
  *   <ion-side-menu-content>
  *   <!-- Main content, usually <ion-nav-view> -->
  *   </ion-side-menu-content>
+ *
+ *   <!-- Right menu -->
+ *   <ion-side-menu side="right">
+ *   </ion-side-menu>
+ *
  * </ion-side-menus>
  * ```
  * ```js
@@ -12428,7 +12446,7 @@ IonicModule
  * @param {boolean=} show-pager Whether a pager should be shown for this slide box. Accepts expressions via `show-pager="{{shouldShow()}}"`. Defaults to true.
  * @param {expression=} pager-click Expression to call when a pager is clicked (if show-pager is true). Is passed the 'index' variable.
  * @param {expression=} on-slide-changed Expression called whenever the slide is changed.  Is passed an '$index' variable.
- * @param {expression=} active-slide Model to bind the current slide to.
+ * @param {expression=} active-slide Model to bind the current slide index to.
  */
 IonicModule
 .directive('ionSlideBox', [
@@ -12555,6 +12573,7 @@ function($timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory, $ionicScroll
       }
 
       $attr.$observe('showPager', function(show) {
+        if (show === undefined) return;
         show = $scope.$eval(show);
         getPager().toggleClass('hide', !show);
       });
