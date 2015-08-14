@@ -1,4 +1,4 @@
-import {View, EventEmitter, ElementRef} from 'angular2/angular2';
+import {forwardRef, Component, Host, View, EventEmitter, ElementRef} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
@@ -23,8 +23,8 @@ import {dom} from 'ionic/util'
   },
   delegates: {
     gesture: [
-      [instance => instance.side == 'top', gestures.TopAsideGesture],
-      [instance => instance.side == 'bottom', gestures.BottomAsideGesture],
+      //[instance => instance.side == 'top', gestures.TopAsideGesture],
+      //[instance => instance.side == 'bottom', gestures.BottomAsideGesture],
       [instance => instance.side == 'right', gestures.RightAsideGesture],
       [instance => instance.side == 'left', gestures.LeftAsideGesture],
     ],
@@ -37,7 +37,8 @@ import {dom} from 'ionic/util'
   events: ['opening']
 })
 @View({
-  template: '<ng-content></ng-content>'
+  template: '<ng-content></ng-content><ion-aside-backdrop></ion-aside-backdrop>',
+  directives: [forwardRef(() => AsideBackdrop)]
 })
 export class Aside extends Ion {
 
@@ -68,6 +69,10 @@ export class Aside extends Ion {
     this.opening.next(v);
   }
 
+  setDoneTransforming(willOpen) {
+    this.typeDelegate.setDoneTransforming(willOpen);
+  }
+
   setTransform(transform) {
     this.typeDelegate.setTransform(transform)
   }
@@ -86,8 +91,6 @@ export class Aside extends Ion {
   }
 
   setOpen(isOpen) {
-    console.log('SET OPEN', isOpen);
-    console.trace();
     if (isOpen !== this.isOpen) {
       this.isOpen = isOpen
       this.setChanging(true)
@@ -113,4 +116,39 @@ export class Aside extends Ion {
     return this.setOpen(!this.isOpen);
   }
 
+}
+
+
+@Component({
+  selector: 'ion-aside-backdrop',
+  host: {
+    '[style.width]': 'width',
+    '[style.height]': 'height',
+    '[style.backgroundColor]': 'backgroundColor',
+    '(click)': 'clicked($event)'
+  }
+})
+
+@View({
+  template: ''
+})
+export class AsideBackdrop extends Ion {
+  constructor(elementRef: ElementRef, ionicConfig: IonicConfig, @Host() aside: Aside) {
+    super(elementRef, ionicConfig);
+
+    aside.backdrop = this;
+
+    this.aside = aside;
+
+    this.backgroundColor = 'rgba(0,0,0,0)';
+  }
+  onInit() {
+    let ww = window.innerWidth;
+    let wh = window.innerHeight;
+    this.width = ww + 'px';
+    this.height = wh + 'px';
+  }
+  clicked(event) {
+    this.aside.close();
+  }
 }

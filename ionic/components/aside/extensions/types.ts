@@ -10,7 +10,11 @@ const asideManipulator = {
     this.aside.getNativeElement().classList[open ? 'add' : 'remove']('open');
   },
   setTransform(t) {
-    this.aside.getNativeElement().style[CSS.transform] = t;
+    if(t === null) {
+      this.aside.getNativeElement().style[CSS.transform] = '';
+    } else {
+      this.aside.getNativeElement().style[CSS.transform] = 'translate3d(' + t + 'px,0,0)';
+    }
   }
 }
 const contentManipulator = {
@@ -23,7 +27,29 @@ const contentManipulator = {
     )
   },
   setTransform(t) {
-    this.aside.contentElement.style[CSS.transform] = t;
+    if(t === null) {
+      this.aside.contentElement.style[CSS.transform] = '';
+    } else {
+      this.aside.contentElement.style[CSS.transform] = 'translate3d(' + t + 'px,0,0)';
+    }
+  }
+}
+
+const backdropManipulator = {
+  setSliding(sliding) {
+    this.aside.backdrop.isTransitioning = sliding;
+    //.classList[sliding ? 'add' : 'remove']('no-transition');
+  },
+  setOpen(open) {
+    let amt = open ? 0.6 : 0;
+    this.aside.backdrop.backgroundColor = 'rgba(0,0,0,' + amt + ')';
+  },
+  setTransform(t) {
+    if(t === null) {
+      t = this.aside.width();
+    }
+    let fade = 0.6 * t / this.aside.width();
+    this.aside.backdrop.backgroundColor = 'rgba(0,0,0,' + fade + ')';
   }
 }
 
@@ -31,7 +57,6 @@ export class AsideType {
   constructor(aside: Aside) {
     this.aside = aside;
 
-    //FIXME(ajoslin): have to wait for for bindings to apply in a component
     setTimeout(() => {
       aside.contentElement.classList.add('aside-content')
     })
@@ -41,12 +66,21 @@ export class AsideType {
 export class AsideTypeOverlay extends AsideType {
   setSliding(sliding) {
     asideManipulator.setSliding.call(this, sliding);
+    backdropManipulator.setSliding.call(this, sliding);
   }
   setOpen(open) {
     asideManipulator.setOpen.call(this, open);
+    backdropManipulator.setOpen.call(this, open);
   }
   setTransform(t) {
     asideManipulator.setTransform.call(this, t);
+    backdropManipulator.setTransform.call(this, t);
+  }
+  setDoneTransforming(willOpen) {
+    asideManipulator.setTransform.call(this, null);
+    backdropManipulator.setTransform.call(this, null);
+    asideManipulator.setOpen.call(this, willOpen);
+    backdropManipulator.setOpen.call(this, willOpen);
   }
 }
 
@@ -63,6 +97,12 @@ export class AsideTypePush extends AsideType {
     asideManipulator.setTransform.call(this, t);
     contentManipulator.setTransform.call(this, t);
   }
+  setDoneTransforming(willOpen) {
+    asideManipulator.setOpen.call(this, willOpen);
+    asideManipulator.setTransform.call(this, null);
+    contentManipulator.setOpen.call(this, willOpen);
+    contentManipulator.setTransform.call(this, null);
+  }
 }
 
 export class AsideTypeReveal extends AsideType {
@@ -74,5 +114,9 @@ export class AsideTypeReveal extends AsideType {
   }
   setTransform(t) {
     contentManipulator.setTransform.call(this, t);
+  }
+  setDoneTransforming(willOpen) {
+    contentManipulator.setOpen.call(this, willOpen);
+    contentManipulator.setTransform.call(this, null);
   }
 }

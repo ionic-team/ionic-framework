@@ -6,6 +6,7 @@ $aside-width: 304px !default;
 $aside-small-width: $aside-width - 40px !default;
 
 $aside-transition: 0.2s ease transform !default;
+$aside-backdrop-transition: 0.2s ease background-color !default;
 $aside-background: $background-color !default;
 $aside-shadow: -1px 0px 8px rgba(0, 0, 0, 0.2) !default;
 
@@ -26,6 +27,25 @@ $aside-shadow: -1px 0px 8px rgba(0, 0, 0, 0.2) !default;
   transform: translate3d(0, 0, 0);
   transition: $aside-transition;
 
+  &.no-transition {
+    ion-aside-backdrop {
+      transition: none;
+    }
+  }
+  
+  ion-aside-backdrop {
+    z-index: $z-index-aside-backdrop;
+    transition: $aside-backdrop-transition;
+    transform: translateX($aside-width);
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    position: fixed;
+    background-color: rgba(0,0,0,0);;
+  }
+
+
   &[type=overlay] {
     z-index: $z-index-aside-overlay;
   }
@@ -45,6 +65,10 @@ $aside-shadow: -1px 0px 8px rgba(0, 0, 0, 0.2) !default;
     }
     &[type=overlay] {
       transform: translate3d($aside-width,0,0);
+
+      ion-aside-backdrop {
+        background-color: rgba(0,0,0,0.6);
+      }
     }
   }
 
