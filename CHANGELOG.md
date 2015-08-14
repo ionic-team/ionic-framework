@@ -1,5 +1,5 @@
 <a name"1.1.0"></a>
-### 1.1.0 "xenon-xerus" (2015-06-30)
+### 1.1.0 "xenon-xerus" (2015-08-13)
 
 
 #### Bug Fixes
