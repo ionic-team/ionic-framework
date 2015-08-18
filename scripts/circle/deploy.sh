@@ -73,6 +73,10 @@ function run {
     # Update bower
     ./scripts/bower/publish.sh
     ;;
+  6)
+    # Update npm
+    ./scripts/npm/publish.sh
+    ;;  
   esac
 }
 
