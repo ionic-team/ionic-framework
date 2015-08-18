@@ -1,4 +1,4 @@
-import {Directive, Component, View, Host, ElementRef, forwardRef, Injector} from 'angular2/angular2';
+import {Directive, Component, View, Host, ElementRef, forwardRef, Injector, NgZone} from 'angular2/angular2';
 
 import {ViewController} from '../view/view-controller';
 import {ViewItem} from '../view/view-item';
@@ -29,12 +29,13 @@ export class Tab extends ViewController {
   constructor(
     @Host() tabs: Tabs,
     elementRef: ElementRef,
-    injector: Injector
+    injector: Injector,
+    zone: NgZone
   ) {
     // A Tab is both a container of many views, and is a view itself.
     // A Tab is one ViewItem within it's Host Tabs (which extends ViewController)
     // A Tab is a ViewController for its child ViewItems
-    super(tabs, injector, elementRef);
+    super(tabs, injector, elementRef, zone);
     this.tabs = tabs;
 
     this.childNavbar(true);

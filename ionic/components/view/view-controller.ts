@@ -1,4 +1,4 @@
-import {Compiler, ElementRef, Injector, bind} from 'angular2/angular2';
+import {Compiler, ElementRef, Injector, bind, NgZone} from 'angular2/angular2';
 import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_component_loader';
 import {AppViewManager} from 'angular2/src/core/compiler/view_manager';
 
@@ -19,7 +19,8 @@ export class ViewController extends Ion {
   constructor(
     parentViewCtrl: ViewController,
     injector: Injector,
-    elementRef: ElementRef
+    elementRef: ElementRef,
+    zone: NgZone
   ) {
     let config = injector.get(IonicConfig);
     super(elementRef, config);
@@ -32,6 +33,7 @@ export class ViewController extends Ion {
     this.router = injector.get(IonicRouter);
     this.app = injector.get(IonicApp);
     this.config = config;
+    this.zone = zone;
 
     this.router.addViewController(this);
 
@@ -215,51 +217,57 @@ export class ViewController extends Ion {
     // wait for the new item to complete setup
     enteringItem.stage(() => {
 
-      enteringItem.shouldDestroy = false;
-      enteringItem.shouldCache = false;
-      enteringItem.willEnter();
-      leavingItem.willLeave();
+      this.zone.runOutsideAngular(() => {
 
-      // set that the new item pushed on the stack is staged to be entering/leaving
-      // staged state is important for the transition to find the correct item
-      enteringItem.state = STAGED_ENTERING_STATE;
-      leavingItem.state = STAGED_LEAVING_STATE;
+        enteringItem.shouldDestroy = false;
+        enteringItem.shouldCache = false;
+        enteringItem.willEnter();
+        leavingItem.willLeave();
 
-      // init the transition animation
-      let transAnimation = Transition.create(this, opts);
-      if (!opts.animate) {
-        // force it to not animate the elements, just apply the "to" styles
-        transAnimation.duration(0);
-      }
+        // set that the new item pushed on the stack is staged to be entering/leaving
+        // staged state is important for the transition to find the correct item
+        enteringItem.state = STAGED_ENTERING_STATE;
+        leavingItem.state = STAGED_LEAVING_STATE;
 
-      let duration = transAnimation.duration();
-      if (duration > 64) {
-        // block any clicks during the transition and provide a
-        // fallback to remove the clickblock if something goes wrong
-        ClickBlock(true, duration + 200);
-      }
+        // init the transition animation
+        let transAnimation = Transition.create(this, opts);
+        if (!opts.animate) {
+          // force it to not animate the elements, just apply the "to" styles
+          transAnimation.duration(0);
+        }
 
-      // start the transition
-      transAnimation.play().then(() => {
+        let duration = transAnimation.duration();
+        if (duration > 64) {
+          // block any clicks during the transition and provide a
+          // fallback to remove the clickblock if something goes wrong
+          ClickBlock(true, duration + 200);
+        }
 
-        // transition has completed, update each item's state
-        enteringItem.state = ACTIVE_STATE;
-        leavingItem.state = CACHED_STATE;
+        // start the transition
+        transAnimation.play().then(() => {
 
-        // dispose any items that shouldn't stay around
-        transAnimation.dispose();
+          // transition has completed, update each item's state
+          enteringItem.state = ACTIVE_STATE;
+          leavingItem.state = CACHED_STATE;
 
-        enteringItem.didEnter();
-        leavingItem.didLeave();
+          // dispose any items that shouldn't stay around
+          transAnimation.dispose();
 
-        // all done!
-        this.transitionComplete();
+          enteringItem.didEnter();
+          leavingItem.didLeave();
 
-        callback();
+          // all done!
+          this.zone.run(() => {
+            this.transitionComplete();
+            callback();
+          });
+        });
+
       });
 
-    });
-  }
+    }
+
+  });
 
   swipeBackStart() {
     if (this.isTransitioning() || this.items.length < 2) {

@@ -1,4 +1,4 @@
-import {Component, Directive, View, Injector, NgFor, ElementRef, Optional, Host, forwardRef} from 'angular2/angular2';
+import {Component, Directive, View, Injector, NgFor, ElementRef, Optional, Host, forwardRef, NgZone} from 'angular2/angular2';
 
 import {ViewController} from '../view/view-controller';
 import {ViewItem} from '../view/view-item';
@@ -33,9 +33,10 @@ export class Tabs extends ViewController {
     @Optional() hostViewCtrl: ViewController,
     @Optional() viewItem: ViewItem,
     injector: Injector,
-    elementRef: ElementRef
+    elementRef: ElementRef,
+    zone: NgZone
   ) {
-    super(hostViewCtrl, injector, elementRef);
+    super(hostViewCtrl, injector, elementRef, zone);
 
     // Tabs may also be an actual ViewItem which was navigated to
     // if Tabs is static and not navigated to within a ViewController

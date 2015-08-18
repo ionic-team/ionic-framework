@@ -1,4 +1,4 @@
-import {Directive, View, ElementRef, Host, Optional, forwardRef, Injector} from 'angular2/angular2';
+import {Directive, View, ElementRef, Host, Optional, forwardRef, Injector, NgZone} from 'angular2/angular2';
 
 import {IonicComponent} from '../../config/annotations';
 import {ViewController} from '../view/view-controller';
@@ -22,9 +22,10 @@ export class Nav extends ViewController {
   constructor(
     @Optional() hostViewCtrl: ViewController,
     injector: Injector,
-    elementRef: ElementRef
+    elementRef: ElementRef,
+    zone: NgZone
   ) {
-    super(hostViewCtrl, injector, elementRef);
+    super(hostViewCtrl, injector, elementRef, zone);
   }
 
   onIonInit() {
