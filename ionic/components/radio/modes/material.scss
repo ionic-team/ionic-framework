@@ -1,0 +1,83 @@
+
+// Material Design Radio
+// --------------------------------------------------
+
+$radio-md-active-color:           color(primary) !default;
+
+$radio-md-icon-size:              16px !default;
+$radio-md-border-width:           2px !default;
+$radio-md-color-off:              $list-border-color !default;
+
+$radio-md-transition-duration:    280ms !default;
+$radio-md-transition-easing:      cubic-bezier(.4, 0, .2, 1) !default;
+
+
+.radio[mode=md] {
+
+  .radio-icon {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: $radio-md-icon-size;
+    height: $radio-md-icon-size;
+    margin: 0;
+    border: $radio-md-border-width solid $radio-md-color-off;
+    border-radius: 50%;
+  }
+
+  &[aria-checked=true] .radio-icon {
+    border-color: $radio-md-active-color;
+  }
+
+  .radio-icon::after {
+    position: absolute;
+    top: $radio-md-border-width;
+    left: $radio-md-border-width;
+    width: $radio-md-icon-size / 2;
+    height: $radio-md-icon-size / 2;
+    background: $radio-md-active-color;
+    border-radius: 50%;
+    content: '';
+    transition: transform $radio-md-transition-duration $radio-md-transition-easing;
+    transform: scale3d(0, 0, 0);
+  }
+
+  &[aria-checked=true] .radio-icon::after {
+    transform: scale3d(1, 1, 1);
+  }
+
+  &[aria-checked=true] {
+    color: $radio-md-active-color;
+  }
+
+}
+
+
+// Material Design Radio Color Mixin
+// --------------------------------------------------
+
+@mixin radio-theme-md($color-name, $color-value) {
+
+  .radio[mode=md][#{$color-name}] {
+
+    &[aria-checked=true] .radio-icon::after {
+      border-color: $color-value;
+    }
+
+    &[aria-checked=true] {
+      color: $color-value;
+    }
+
+  }
+
+}
+
+
+// Generate Material Design Radio Auxiliary Colors
+// --------------------------------------------------
+
+@each $color-name, $color-value in auxiliary-colors() {
+
+  @include radio-theme-md($color-name, $color-value);
+
+}
