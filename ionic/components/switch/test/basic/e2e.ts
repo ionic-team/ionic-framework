@@ -1,6 +1,6 @@
 
 it('should check apple via switch element click', function() {
-  element(by.css('#e2eAppleCheckbox')).click();
+  element(by.css('#e2eAppleCheckbox .media-switch')).click();
 });
 
 
