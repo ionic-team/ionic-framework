@@ -23,8 +23,13 @@ class HomePage {
 })
 class E2EApp {
 
-  constructor() {
+  constructor(app: IonicApp) {
+    this.app = app;
     this.rootView = HomePage;
+  }
+
+  closeMenu() {
+    this.app.getComponent('mainMenu').close();
   }
 
 }

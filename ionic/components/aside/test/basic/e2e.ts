@@ -4,6 +4,6 @@ it('should toggle open aside', function() {
 });
 
 
-it('should toggle close aside', function() {
-  element(by.css('#e2eHeaderToggleAside')).click();
+it('should close aside', function() {
+  element(by.css('#e2eCloseMenu')).click();
 });
