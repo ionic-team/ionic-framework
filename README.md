@@ -1,5 +1,8 @@
-[![Circle CI](https://circleci.com/gh/driftyco/ionic.svg?style=svg)](https://circleci.com/gh/driftyco/ionic)
+[![Join the chat at https://gitter.im/driftyco/ionic](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/driftyco/ionic?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+[![Circle CI](https://circleci.com/gh/driftyco/ionic.svg?style=svg)](https://circleci.com/gh/driftyco/ionic) [![Build Status](https://travis-ci.org/driftyco/ionic.svg?branch=master)](https://travis-ci.org/driftyco/ionic)    
+[![Bower version](https://badge.fury.io/bo/ionic.svg)](http://badge.fury.io/bo/ionic) [![NPM version](https://badge.fury.io/js/ionic-sdk.svg)](http://badge.fury.io/js/ionic-sdk) [![Downloads](http://img.shields.io/npm/dm/ionic-sdk.svg)](http://badge.fury.io/js/ionic-sdk)   
+[![Dependency Status](https://david-dm.org/driftyco/ionic.svg)](https://david-dm.org/driftyco/ionic) [![devDependency Status](https://david-dm.org/driftyco/ionic/dev-status.svg)](https://david-dm.org/driftyco/ionic#info=devDependencies) [![peerDependency Status](https://david-dm.org/driftyco/ionic/peer-status.svg)](https://david-dm.org/driftyco/ionic#info=peerDependencies)    
 
 [![Issues Ready](https://badge.waffle.io/driftyco/ionic.png?label=ready&title=Ready)](https://waffle.io/driftyco/ionic)
 
