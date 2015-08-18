@@ -2,16 +2,19 @@
 // Material Design Item
 // --------------------------------------------------
 
-$item-md-border-color:           $list-border-color !default;
+$item-md-border-color:           lighten($list-border-color, 10%) !default;
 $item-md-font-size:              1.6rem !default;
 
-$item-md-padding-top:            13px !default;
-$item-md-padding-right:          15px !default;
-$item-md-padding-bottom:         14px !default;
-$item-md-padding-left:           15px !default;
+$item-md-padding-top:            16px !default;
+$item-md-padding-right:          16px !default;
+$item-md-padding-bottom:         16px !default;
+$item-md-padding-left:           16px !default;
 
 $item-md-padding-media-top:      10px !default;
 $item-md-padding-media-bottom:   11px !default;
+
+$item-md-body-text-font-size:    1.4rem !default;
+$item-md-body-text-line-height:  1.5 !default;
 
 $item-md-avatar-size:            4rem !default;
 $item-md-thumbnail-size:         8rem !default;
@@ -48,6 +51,12 @@ $item-md-forward-icon-color:     $item-md-border-color !default;
   .item-content,
   .item-note {
     margin: $item-md-padding-top $item-md-padding-right $item-md-padding-bottom $item-md-padding-left;
+  }
+
+  .item-text-wrap,
+  .item-text-wrap .item-content {
+    font-size: $item-md-body-text-font-size;
+    line-height: $item-md-body-text-line-height;
   }
 
   .item-media {
