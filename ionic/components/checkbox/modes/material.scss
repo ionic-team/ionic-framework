@@ -1,9 +1,11 @@
 
-// Material Design Checkbox Structure
+// Material Design Checkbox
 // --------------------------------------------------
 
-$checkbox-md-icon-size:             21px !default;
+$checkbox-md-icon-size:             16px !default;
 $checkbox-md-bg-color-off:          $list-background-color !default;
+$checkbox-md-border-width:          2px !default;
+$checkbox-md-border-radius:         2px !default;
 $checkbox-md-border-color-off:      $list-border-color !default;
 $checkbox-md-bg-color-on:           color(primary) !default;
 $checkbox-md-border-color-on:       color(primary) !default;
@@ -16,8 +18,8 @@ $checkbox-md-checkmark-color-on:    $background-color !default;
     position: relative;
     width: $checkbox-md-icon-size;
     height: $checkbox-md-icon-size;
-    border-radius: 50%;
-    border: 1px solid $checkbox-md-border-color-off;
+    border-radius: $checkbox-md-border-radius;
+    border: $checkbox-md-border-width solid $checkbox-md-border-color-off;
     background-color: $checkbox-md-bg-color-off;
   }
 
@@ -28,9 +30,9 @@ $checkbox-md-checkmark-color-on:    $background-color !default;
 
   &[aria-checked=true] .checkbox-icon::after {
     position: absolute;
-    border: 1px solid $checkbox-md-checkmark-color-on;
-    top: 3px;
-    left: 7px;
+    border: 2px solid $checkbox-md-checkmark-color-on;
+    top: 0;
+    left: 3px;
     width: 4px;
     height: 9px;
     border-left: none;
