@@ -60,8 +60,12 @@ $radio-md-transition-easing:      cubic-bezier(.4, 0, .2, 1) !default;
 
   .radio[mode=md][#{$color-name}] {
 
-    &[aria-checked=true] .radio-icon::after {
+    &[aria-checked=true] .radio-icon {
       border-color: $color-value;
+    }
+
+    &[aria-checked=true] .radio-icon::after {
+      background: $color-value;
     }
 
     &[aria-checked=true] {

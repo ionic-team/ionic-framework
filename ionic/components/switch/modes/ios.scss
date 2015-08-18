@@ -43,16 +43,14 @@ $switch-ios-transition-duration:       200ms !default;
   }
 
   .switch-track {
-    background-color: $switch-ios-off-bg-color;
-    border: solid $switch-ios-border-width $switch-ios-off-border-color;
-    border-radius: $switch-ios-border-radius;
     width: 100%;
     height: 100%;
-
+    border: solid $switch-ios-border-width $switch-ios-off-border-color;
+    border-radius: $switch-ios-border-radius;
+    background-color: $switch-ios-off-bg-color;
     will-change: border-width, opacity;
     transition-property: border-width, opacity;
     transition-duration: $switch-ios-transition-duration + 50ms;
-    transition-delay: 100ms;
   }
 
   .switch-track::before {
