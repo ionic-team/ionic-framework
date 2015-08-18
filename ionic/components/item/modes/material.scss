@@ -10,8 +10,8 @@ $item-md-padding-right:          16px !default;
 $item-md-padding-bottom:         16px !default;
 $item-md-padding-left:           16px !default;
 
-$item-md-padding-media-top:      10px !default;
-$item-md-padding-media-bottom:   11px !default;
+$item-md-padding-media-top:      12px !default;
+$item-md-padding-media-bottom:   12px !default;
 
 $item-md-body-text-font-size:    1.4rem !default;
 $item-md-body-text-line-height:  1.5 !default;
@@ -85,6 +85,10 @@ $item-md-forward-icon-color:     $item-md-border-color !default;
     margin: 0 $item-md-padding-right 0 $item-md-padding-left;
     padding: 2px 6px;
     min-height: 26px;
+  }
+
+  .item-input .input + button {
+    margin-top: $item-md-padding-media-top;
   }
 
   .badge {

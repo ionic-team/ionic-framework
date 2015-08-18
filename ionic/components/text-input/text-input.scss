@@ -51,4 +51,9 @@ ion-input.has-focus .text-input {
   .text-input {
     background-color: $list-background-color;
   }
+
+  &:before,
+  &:after {
+    border: 0 !important;
+  }
 }

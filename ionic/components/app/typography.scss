@@ -25,70 +25,83 @@ html {
   font-size: $font-size-root;
 }
 
-
-ion-app {
+body {
   font-size: $font-size-base;
   font-family: $font-family-base;
+}
 
-  h1, h2, h3, h4, h5, h6 {
-    font-weight: $headings-font-weight;
-    line-height: $headings-line-height;
-    margin-top: 1.6rem;
-    margin-bottom: 1rem;
+a {
+  color: $link-color;
+  background-color: transparent;
+}
+a:hover,
+a.hover {
+  color: $link-hover-color;
+}
 
-    &:first-child {
-      margin-top: -0.3rem;
-    }
-  }
+h1, h2, h3, h4, h5, h6 {
+  font-weight: $headings-font-weight;
+  line-height: $headings-line-height;
+  margin-top: 1.6rem;
+  margin-bottom: 1rem;
 
-  h1 + h2,
-  h1 + h3,
-  h2 + h3 {
+  &:first-child {
     margin-top: -0.3rem;
-  }
-
-  h1 {
-    font-size: 3.6rem;
-    margin-top: 2rem;
-  }
-  h2 {
-    font-size: 3rem;
-    margin-top: 1.8rem;
-  }
-  h3 {
-    font-size: 2.4rem;
-  }
-  h4 {
-    font-size: 2rem;
-  }
-  h5 {
-    font-size: 1.6rem;
-  }
-  h6 {
-    font-size: 1.4rem;
-  }
-
-  small {
-    font-size: 75%;
-  }
-
-  sub,
-  sup {
-    font-size: 75%;
-    line-height: 0;
-    position: relative;
-    vertical-align: baseline;
-  }
-
-  sup {
-    top: -0.5em;
-  }
-
-  sub {
-    bottom: -0.25em;
   }
 }
 
-body[mode=md] ion-app {
+h1 + h2,
+h1 + h3,
+h2 + h3 {
+  margin-top: -0.3rem;
+}
+
+h1 {
+  font-size: 3.6rem;
+  margin-top: 2rem;
+}
+
+h2 {
+  font-size: 3rem;
+  margin-top: 1.8rem;
+}
+
+h3 {
+  font-size: 2.4rem;
+}
+
+h4 {
+  font-size: 2rem;
+}
+
+h5 {
+  font-size: 1.6rem;
+}
+
+h6 {
+  font-size: 1.4rem;
+}
+
+small {
+  font-size: 75%;
+}
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sup {
+  top: -0.5em;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+body[mode=md] {
   font-family: "Roboto", "Helvetica Neue", sans-serif;
 }
