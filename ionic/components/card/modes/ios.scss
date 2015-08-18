@@ -20,21 +20,22 @@ $card-ios-footer-padding:              10px;
   font-size: $card-ios-font-size;
   overflow: hidden;
 
-  .item {
-
-    &:last-child {
-      margin-bottom: -1px;
-    }
-
-    &:before,
-    &:after {
-      left: 0;
-    }
-
+  .item:first-child {
+    margin-top: 0;
   }
 
-  .item:first-child:before {
+  .item:last-child {
+    margin-bottom: 0;
+  }
+
+  .item:first-child:before,
+  .item:last-child:after {
     border: none;
+  }
+
+  .item::before,
+  .item::after {
+    left: 0;
   }
 
   ion-header {

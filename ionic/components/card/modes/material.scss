@@ -20,24 +20,16 @@ $card-md-footer-padding:              16px;
   font-size: $card-md-font-size;
   overflow: hidden;
 
-  .item {
-
-    &:last-child {
-      margin-bottom: -1px;
-    }
-
-    &:before,
-    &:after {
-      left: 0;
-    }
-
-  }
-
   .item:first-child {
-    margin-top: 1px;
+    margin-top: 0;
   }
 
-  .item:first-child:before {
+  .item:last-child {
+    margin-bottom: 0;
+  }
+
+  .item:first-child:before,
+  .item:last-child:after {
     border: none;
   }
 

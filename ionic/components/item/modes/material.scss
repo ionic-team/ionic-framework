@@ -33,7 +33,7 @@ $item-md-forward-icon-color:     $item-md-border-color !default;
       content: '';
       top: 0;
       right: 0;
-      left: 0;
+      left: $item-md-padding-left;
       border-top: 1px solid $item-md-border-color;
     }
 
