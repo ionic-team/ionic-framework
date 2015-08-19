@@ -7,7 +7,7 @@
     "url": "https://github.com/driftyco/ionic2.git"
   },
   "devDependencies": {
-    "angular2-bundle": "tlancina/angular2-bundle",
+    "angular2": "2.0.0-alpha.35",
     "canonical-path": "0.0.2",
     "connect": "^3.3.4",
     "del": "~1.1.1",
