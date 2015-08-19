@@ -69,6 +69,10 @@ $item-ios-forward-icon-color:     $item-ios-border-color !default;
     color: $item-ios-note-color;
   }
 
+  .item icon + .item-content {
+    margin-left: 0;
+  }
+
   .item > icon {
     margin-left: $item-ios-padding-left;
     margin-right: $item-ios-padding-right;

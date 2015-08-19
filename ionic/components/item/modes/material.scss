@@ -5,13 +5,13 @@
 $item-md-border-color:           lighten($list-border-color, 10%) !default;
 $item-md-font-size:              1.6rem !default;
 
-$item-md-padding-top:            16px !default;
+$item-md-padding-top:            13px !default;
 $item-md-padding-right:          16px !default;
-$item-md-padding-bottom:         16px !default;
+$item-md-padding-bottom:         13px !default;
 $item-md-padding-left:           16px !default;
 
-$item-md-padding-media-top:      12px !default;
-$item-md-padding-media-bottom:   12px !default;
+$item-md-padding-media-top:      8px !default;
+$item-md-padding-media-bottom:   8px !default;
 
 $item-md-body-text-font-size:    1.4rem !default;
 $item-md-body-text-line-height:  1.5 !default;
@@ -27,6 +27,7 @@ $item-md-forward-icon-color:     $item-md-border-color !default;
   .item {
     font-size: $item-md-font-size;
     margin-top: -1px;
+    text-transform: none;
 
     &:before {
       position: absolute;
@@ -73,7 +74,7 @@ $item-md-forward-icon-color:     $item-md-border-color !default;
   }
 
   .item-input > icon {
-    margin-top: $item-md-padding-media-top - 1;
+    margin-top: $item-md-padding-media-top;
   }
 
   icon[forward] {
@@ -81,7 +82,7 @@ $item-md-forward-icon-color:     $item-md-border-color !default;
     color: $item-md-forward-icon-color;
   }
 
-  button {
+  .item > button {
     margin: 0 $item-md-padding-right 0 $item-md-padding-left;
     padding: 2px 6px;
     min-height: 26px;
@@ -104,6 +105,35 @@ $item-md-forward-icon-color:     $item-md-border-color !default;
   .thumbnail {
     max-width: $item-md-thumbnail-size;
     max-height: $item-md-thumbnail-size;
+  }
+
+  h1 {
+    margin: 0 0 2px;
+    font-size: 2.4rem;
+    font-weight: normal;
+  }
+
+  h2 {
+    margin: 2px 0 2px;
+    font-size: 1.6rem;
+    font-weight: normal;
+  }
+
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: normal;
+    margin: 2px 0 2px;
+    font-size: 1.4rem;
+    font-weight: normal;
+  }
+
+  p {
+    line-height: normal;
+    color: #666;
+    font-size: 1.4rem;
+    margin: 0 0 2px;
   }
 
   button.item.activated {

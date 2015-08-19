@@ -265,9 +265,9 @@ export class ViewController extends Ion {
 
       });
 
-    }
+    });
 
-  });
+  }
 
   swipeBackStart() {
     if (this.isTransitioning() || this.items.length < 2) {

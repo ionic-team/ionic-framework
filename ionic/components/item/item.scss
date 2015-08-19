@@ -27,6 +27,7 @@ button.item.item {
   color: inherit;
   text-decoration: none;
   width: 100%;
+  min-height: 4.4rem;
   line-height: normal;
   justify-content: inherit;
   box-shadow: none;
@@ -76,7 +77,6 @@ button.item.item {
   button + .item-content,
   [button] + .item-content,
   icon + icon,
-  icon + .item-content,
   .item-content + icon,
   .item-media + .item-content,
   .item-content + .item-media,
