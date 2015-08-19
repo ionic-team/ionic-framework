@@ -13,12 +13,13 @@ $action-menu-options-text-color:        #007aff !default;
 $action-menu-options-border-color:      #d1d3d6 !default;
 
 
-.action-menu {
+ion-action-menu {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  display: block;
   z-index: $z-index-overlay;
 }
 
