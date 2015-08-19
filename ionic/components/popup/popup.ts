@@ -1,5 +1,5 @@
-import {formDirectives, NgControl, NgControlGroup,
-  Component, View, Injectable, CSSClass, NgIf, NgFor} from 'angular2/angular2';
+import {FORM_DIRECTIVES, NgControl, NgControlGroup,
+  Component, View, Injectable, NgClass, NgIf, NgFor} from 'angular2/angular2';
 
 import {Overlay} from '../overlay/overlay';
 import {Animation} from '../../animations/animation';
@@ -139,10 +139,10 @@ const OVERLAY_TYPE = 'popup';
       '<input type="text" *ng-if="showPrompt" placeholder="{{promptPlaceholder}}">' +
     '</div>' +
     '<div class="popup-buttons" *ng-if="buttons.length">' +
-      '<button *ng-for="#button of buttons" (click)="buttonTapped(button, $event)" [class]="button.type || \'button-default\'" [inner-html]="button.text"></button>' +
+      '<button *ng-for="#button of buttons" (click)="buttonTapped(button, $event)" [ng-class]="button.type || \'button-default\'" [inner-html]="button.text"></button>' +
     '</div>' +
   '</popup-wrapper>',
-  directives: [formDirectives, CSSClass, NgIf, NgFor]
+  directives: [FORM_DIRECTIVES, NgClass, NgIf, NgFor]
 })
 
 class StandardPopup {

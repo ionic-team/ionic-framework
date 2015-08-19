@@ -1,4 +1,4 @@
-import {FormBuilder, Validators, formDirectives, Control, ControlGroup} from 'angular2/angular2';
+import {FormBuilder, Validators, Control, ControlGroup} from 'angular2/angular2';
 
 import {IonicView} from 'ionic/ionic';
 

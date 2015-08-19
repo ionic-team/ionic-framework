@@ -1,4 +1,4 @@
-import {FormBuilder, Validators, FormDirectives, ControlGroup} from 'angular2/forms';
+import {FormBuilder, Validators, ControlGroup} from 'angular2/forms';
 import {Log} from 'ionic/util'
 
 import {App, IonicView, NavController} from 'ionic/ionic'

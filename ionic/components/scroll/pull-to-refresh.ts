@@ -1,4 +1,4 @@
-import {Component, View, NgIf, CSSClass, ElementRef, EventEmitter, Host} from 'angular2/angular2'
+import {Component, View, NgIf, NgClass, ElementRef, EventEmitter, Host} from 'angular2/angular2'
 
 import {Content} from '../content/content';
 
@@ -25,16 +25,16 @@ import {raf, ready, CSS} from 'ionic/util/dom';
 @View({
   template: `<div class="refresher-content" [class.refresher-with-text]="pullingText || refreshingText">
       <div class="icon-pulling">
-        <i class="icon" [class]="pullingIcon"></i>
+        <i class="icon" [ng-class]="pullingIcon"></i>
       </div>
       <div class="text-pulling" [inner-html]="pullingText" *ng-if="pullingText"></div>
       <div class="icon-refreshing">
         <!--<ion-spinner ng-if="showSpinner" icon="{{spinner}}"></ion-spinner>-->
-        <i class="icon" [class]="refreshingIcon"></i>
+        <i class="icon" [ng-class]="refreshingIcon"></i>
       </div>
       <div class="text-refreshing" [inner-html]="refreshingText" *ng-if="refreshingText"></div>
     </div>`,
-  directives: [NgIf, CSSClass]
+  directives: [NgIf, NgClass]
 })
 export class Refresher {
   constructor(

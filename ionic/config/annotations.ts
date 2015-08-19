@@ -1,4 +1,4 @@
-import {coreDirectives, formDirectives, Component, Directive, View, forwardRef} from 'angular2/angular2'
+import {CORE_DIRECTIVES, FORM_DIRECTIVES, Component, Directive, View, forwardRef} from 'angular2/angular2'
 
 import * as util from 'ionic/util';
 import {IonicConfig} from './config';
@@ -28,8 +28,8 @@ import {
 // TODO: Why is forwardRef() required when they're already imported above????
 export const IonicDirectives = [
   // Angular
-  coreDirectives,
-  formDirectives,
+  CORE_DIRECTIVES,
+  FORM_DIRECTIVES,
 
   // Content
   forwardRef(() => Aside),

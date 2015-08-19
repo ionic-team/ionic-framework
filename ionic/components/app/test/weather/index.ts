@@ -1,6 +1,6 @@
 import {Component, Directive, View} from 'angular2/angular2';
-import {NgIf, NgFor, CSSClass, ElementRef} from 'angular2/angular2';
-import {FormBuilder, Control, ControlGroup, Validators, formDirectives} from 'angular2/forms';
+import {NgIf, NgFor, NgClass, ElementRef} from 'angular2/angular2';
+import {FormBuilder, Control, ControlGroup, Validators, FORM_DIRECTIVES} from 'angular2/forms';
 
 import {App, IonicView, Animation, Content, Scroll, Modal, NavController, NavParams} from 'ionic/ionic';
 
@@ -33,7 +33,7 @@ import {Flickr} from './flickr';
       </form>
     </ion-content>
   </ion-view>`,
-  directives: [formDirectives]
+  directives: [FORM_DIRECTIVES]
 })
 export class SettingsModal {
   constructor(fb: FormBuilder) {
@@ -63,8 +63,8 @@ let WEATHER_ICONS = {
   ]
 })
 @View({
-  template: '<i class="icon" [class]="weatherIcon"></i>',
-  directives: [CSSClass]
+  template: '<i class="icon" [ng-class]="weatherIcon"></i>',
+  directives: [NgClass]
 })
 export class WeatherIcon {
   constructor() {

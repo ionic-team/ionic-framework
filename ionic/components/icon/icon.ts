@@ -1,4 +1,4 @@
-import {Directive, View, CSSClass, ElementRef, Optional, Host, Attribute, Renderer} from 'angular2/angular2';
+import {Directive, View, NgClass, ElementRef, Optional, Host, Attribute, Renderer} from 'angular2/angular2';
 
 import {IonicConfig} from '../../config/config';
 import {IonicComponent} from '../../config/annotations';
@@ -141,8 +141,8 @@ export class IconDirective {
   }
 })
 @View({
-  template: '<i class="icon" [class]="iconClass">',
-  directives: [CSSClass]
+  template: '<i class="icon" [ng-class]="iconClass">',
+  directives: [NgClass]
 })
 export class Icon extends Ion {
   constructor(elementRef: ElementRef, ionicConfig: IonicConfig) {

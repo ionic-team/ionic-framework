@@ -3,7 +3,6 @@ import {
   Control,
   ControlGroup,
   NgForm,
-  formDirectives,
   Validators,
   NgControl,
   ControlValueAccessor,

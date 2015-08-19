@@ -1,4 +1,4 @@
-import {formDirectives, FormBuilder, Validators, Control, ControlGroup} from 'angular2/forms';
+import {FORM_DIRECTIVES, FormBuilder, Validators, Control, ControlGroup} from 'angular2/forms';
 
 import {App} from 'ionic/ionic';
 
@@ -6,7 +6,7 @@ import {App} from 'ionic/ionic';
 @App({
   templateUrl: 'main.html',
   appInjector: [FormBuilder],
-  directives: [formDirectives]
+  directives: [FORM_DIRECTIVES]
 })
 class IonicApp {
   constructor(fb: FormBuilder) {
