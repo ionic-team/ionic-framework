@@ -102,6 +102,14 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
      */
     hide: hideLoader,
     /**
+     * @ngdoc method
+     * @name $ionicLoading#wrap
+     * @description Wraps a promise inside a loading indicator.
+     * @param {object} opts The options for the loading indicator.
+     * @param {promise} q The promise to wrap inside the loading indicator.
+     */
+    wrap: wrapLoader,
+    /**
      * @private for testing
      */
     _getLoader: getLoader
@@ -233,6 +241,13 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
     $timeout.cancel(loadingShowDelay);
     getLoader().then(function(loader) {
       loader.hide();
+    });
+  }
+
+  function wrapLoader(options, promise) {
+    showLoader(options);
+    return promise.finally(function() {
+      hideLoader();
     });
   }
 }]);
