@@ -30,10 +30,6 @@ import {SinkPage} from '../sink-page';
         </div>
       </div>
 
-      <ion-footer>
-        Card Footer
-      </ion-footer>
-
     </ion-card>
 
   </ion-content>

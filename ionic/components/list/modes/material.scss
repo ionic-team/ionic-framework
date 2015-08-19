@@ -3,12 +3,8 @@
 // --------------------------------------------------
 
 $list-md-header-padding:         16px $item-md-padding-right 16px $item-md-padding-left !default;
-$list-md-header-font-size:       1.6rem !default;
-$list-md-header-color:           #222 !default;
-
-$list-md-footer-padding:         16px $item-md-padding-right 16px $item-md-padding-left !default;
-$list-md-footer-font-size:       1.2rem !default;
-$list-md-footer-color:           #222 !default;
+$list-md-header-font-size:       1.4rem !default;
+$list-md-header-color:           #858585 !default;
 
 
 .list[mode=md] {
@@ -17,13 +13,6 @@ $list-md-footer-color:           #222 !default;
     padding: $list-md-header-padding;
     font-size: $list-md-header-font-size;
     color: $list-md-header-color;
-  }
-
-  ion-footer {
-    padding: $list-md-footer-padding;
-    font-size: $list-md-footer-font-size;
-    text-transform: uppercase;
-    color: $list-md-footer-color;
   }
 
 }

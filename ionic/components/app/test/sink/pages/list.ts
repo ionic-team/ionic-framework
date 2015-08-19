@@ -35,10 +35,6 @@ import {SinkPage} from '../sink-page';
       </div>
       <ion-item>Item</ion-item>
 
-      <ion-footer>
-        List Footer
-      </ion-footer>
-
     </ion-list>
   </ion-content>
   `

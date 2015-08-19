@@ -38,9 +38,9 @@ import {App, ActionMenu, IonicApp, IonicView, Register} from 'ionic/ionic';
           Keep close to Nature's heart... and break clear away, once in awhile, and climb a mountain or spend a week in the woods. Wash your spirit clean.
         </div>
         <img src="http://ionic-io-assets.s3.amazonaws.com/images/p4.png">
-        <ion-footer>
+        <ion-item>
           Posted 5 days ago
-        </ion-footer>
+        </ion-item>
       </ion-card>
     </div>
 

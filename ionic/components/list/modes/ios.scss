@@ -8,12 +8,6 @@ $list-ios-header-font-weight:     500 !default;
 $list-ios-header-letter-spacing:  0.1rem !default;
 $list-ios-header-color:           #333 !default;
 
-$list-ios-footer-padding:         10px $item-ios-padding-right 10px $item-ios-padding-left !default;
-$list-ios-footer-font-size:       1.2rem !default;
-$list-ios-footer-font-weight:     500 !default;
-$list-ios-footer-letter-spacing:  0.1rem !default;
-$list-ios-footer-color:           #333 !default;
-
 
 .list[mode=ios] {
 
@@ -24,15 +18,6 @@ $list-ios-footer-color:           #333 !default;
     letter-spacing: $list-ios-header-letter-spacing;
     text-transform: uppercase;
     color: $list-ios-header-color;
-  }
-
-  ion-footer {
-    padding: $list-ios-footer-padding;
-    font-size: $list-ios-footer-font-size;
-    font-weight: $list-ios-footer-font-weight;
-    letter-spacing: $list-ios-footer-letter-spacing;
-    text-transform: uppercase;
-    color: $list-ios-footer-color;
   }
 
   &[inset] ion-header {

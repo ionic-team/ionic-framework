@@ -9,8 +9,6 @@ $card-ios-font-size:                   1.4rem !default;
 
 $card-ios-header-background-color:     $card-ios-background-color !default;
 $card-ios-header-padding:              10px;
-$card-ios-footer-background-color:     $card-ios-background-color !default;
-$card-ios-footer-padding:              10px;
 
 
 .card.list[mode=ios] {
@@ -40,12 +38,7 @@ $card-ios-footer-padding:              10px;
 
   ion-header {
     padding: $card-ios-header-padding;
-    background-color: $card-ios-footer-background-color;
-  }
-
-  ion-footer {
-    padding: $card-ios-footer-padding;
-    background-color: $card-ios-footer-background-color;
+    background-color: $card-ios-header-background-color;
   }
 
 }

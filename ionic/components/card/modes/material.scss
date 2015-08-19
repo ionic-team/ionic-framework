@@ -11,9 +11,6 @@ $card-md-header-font-size:            2.4rem !default;
 $card-md-header-background-color:     $card-md-background-color !default;
 $card-md-header-padding:              16px;
 
-$card-md-footer-background-color:     $card-md-background-color !default;
-$card-md-footer-padding:              16px;
-
 
 .card.list[mode=md] {
   background: $card-md-background-color;
@@ -49,12 +46,7 @@ $card-md-footer-padding:              16px;
   ion-header {
     padding: $card-md-header-padding;
     font-size: $card-md-header-font-size;
-    background-color: $card-md-footer-background-color;
-  }
-
-  ion-footer {
-    padding: $card-md-footer-padding;
-    background-color: $card-md-footer-background-color;
+    background-color: $card-md-header-background-color;
   }
 
   .item > img {
