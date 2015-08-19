@@ -2,12 +2,18 @@
 // Material Design List
 // --------------------------------------------------
 
-$list-md-header-padding:         16px $item-md-padding-right 16px $item-md-padding-left !default;
+$list-md-margin-top:             16px !default;
+$list-md-margin-right:           0 !default;
+$list-md-margin-bottom:          16px !default;
+$list-md-margin-left:            0 !default;
+$list-md-header-padding:         0 $item-md-padding-right 16px $item-md-padding-left !default;
 $list-md-header-font-size:       1.4rem !default;
 $list-md-header-color:           #858585 !default;
 
 
 .list[mode=md] {
+
+  margin: $list-md-margin-top $list-md-margin-right $list-md-margin-bottom $list-md-margin-left;
 
   ion-header {
     padding: $list-md-header-padding;
@@ -15,4 +21,8 @@ $list-md-header-color:           #858585 !default;
     color: $list-md-header-color;
   }
 
+}
+
+.list[mode=md] + .list ion-header {
+  margin-top: -$list-md-margin-top;
 }
