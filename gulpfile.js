@@ -52,8 +52,8 @@ var tscReporter = {
 };
 
 var flagConfig = {
-  string: 'port',
-  alias: {'p': 'port'},
+  string: ['port', 'version'],
+  alias: {'p': 'port', 'v': 'version'},
   default: { port: 8000 }
 };
 
@@ -343,14 +343,42 @@ gulp.task('copy.scss', function() {
     .pipe(gulp.dest('dist/src/scss'));
 })
 
+gulp.task('src', function(done){
+  runSequence(
+    'clean',
+    ['bundle', 'sass', 'fonts', 'copy.ts', 'copy.scss'],
+    'transpile.common',
+    done
+  );
+})
+
 gulp.task('publish', function(done) {
+  var v = flags.version;
+  if (!v) {
+    console.error("\nERR: You need to provide a version or tag.\ngulp publish -v {version}\n");
+    return
+  }
+  if (v.indexOf("alpha") + v.indexOf("-") > -2) {
+    console.error("\n ERR: Just provide version number. Instead of 2.0.0-alpha.10, just enter 10\n");
+    return
+  }
+
   runSequence(
     'clean',
     ['bundle', 'sass', 'fonts', 'copy.ts', 'copy.scss'],
     'transpile.common',
     function() {
-      var packageJSONContents = '{\n  "name": "ionic-framework",\n  "version": "2.0.0-alpha.1",\n  "license": "Apache-2.0",\n  "repository": {\n    "type": "git",\n    "url": "https://github.com/driftyco/ionic2.git"\n  }\n}\n';
-      fs.writeFile("dist/package.json", packageJSONContents, done);
+      var packageJSONTemplate = _.template(fs.readFileSync('scripts/npm/package.json'));
+      packageJSONContents = packageJSONTemplate({ 'version': v });
+      fs.writeFileSync("dist/package.json", packageJSONContents);
+
+      // publish to npm
+      var exec = require('child_process').exec;
+      exec('cd dist && npm publish', function (err, stdout, stderr) {
+        console.log(stdout);
+        console.error(stderr);
+        done();
+      });
     }
   )
 })

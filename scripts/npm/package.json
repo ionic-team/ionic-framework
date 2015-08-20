@@ -1,0 +1,16 @@
+{
+  "name": "ionic-framework",
+  "version": "2.0.0-alpha.<%= version %>",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/driftyco/ionic2.git"
+  },
+  "dependencies": {
+    "angular2": "2.0.0-alpha.35",
+    "reflect-metadata": "0.1.0",
+    "rtts_assert": "2.0.0-alpha.35",
+    "traceur-runtime": "0.0.59",
+    "zone.js": "0.5.2"
+  }
+}
