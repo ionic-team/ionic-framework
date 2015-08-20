@@ -12,8 +12,9 @@ $card-ios-box-shadow:                  0 1px 2px rgba(0,0,0,.3) !default;
 $card-ios-border-radius:               2px !default;
 $card-ios-font-size:                   1.4rem !default;
 
-$card-ios-header-background-color:     $card-ios-background-color !default;
-$card-ios-header-padding:              10px;
+$card-ios-title-font-size:             1.8rem !default;
+$card-ios-title-padding:               8px 0 8px 0;
+$card-ios-title-text-color:            #222 !default;
 
 
 .card.list[mode=ios] {
@@ -43,9 +44,10 @@ $card-ios-header-padding:              10px;
     left: 0;
   }
 
-  ion-header {
-    padding: $card-ios-header-padding;
-    background-color: $card-ios-header-background-color;
+  .card-title {
+    padding: $card-ios-title-padding;
+    font-size: $card-ios-title-font-size;
+    color: $card-ios-title-text-color;
   }
 
 }

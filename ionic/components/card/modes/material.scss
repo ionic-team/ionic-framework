@@ -2,19 +2,22 @@
 // Material Design Card
 // --------------------------------------------------
 
-$card-md-margin-top:                  16px !default;
-$card-md-margin-right:                16px !default;
-$card-md-margin-bottom:               16px !default;
-$card-md-margin-left:                 16px !default;
+$card-md-margin-top:                  8px !default;
+$card-md-margin-right:                8px !default;
+$card-md-margin-bottom:               8px !default;
+$card-md-margin-left:                 8px !default;
 
 $card-md-background-color:            $list-background-color !default;
 $card-md-box-shadow:                  0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12) !default;
 $card-md-border-radius:               2px !default;
 $card-md-font-size:                   1.4rem !default;
 
-$card-md-header-font-size:            2.4rem !default;
-$card-md-header-background-color:     $card-md-background-color !default;
-$card-md-header-padding:              16px;
+$card-md-text-color:                  #222 !default;
+$card-md-title-font-size:             2.4rem !default;
+$card-md-title-padding:               8px 0 8px 0;
+$card-md-title-text-color:            #222 !default;
+
+$card-md-header-font-size:            1.6rem !default;
 
 
 .card.list[mode=md] {
@@ -26,18 +29,25 @@ $card-md-header-padding:              16px;
   font-size: $card-md-font-size;
   overflow: hidden;
 
+  .item:before,
+  .item:after {
+    left: 0;
+  }
+
   .item:first-child {
     margin-top: 0;
+
+    &:before {
+      border-top: none;
+    }
   }
 
   .item:last-child {
     margin-bottom: 0;
-    padding-bottom: 8px;
-  }
 
-  .item::before,
-  .item::after {
-    border: none;
+    &:after {
+      border-top: none;
+    }
   }
 
   .item-content button:first-child,
@@ -45,29 +55,27 @@ $card-md-header-padding:              16px;
     margin-left: 0;
   }
 
-  .item-content {
-    margin-top: 8px;
-    margin-bottom: 8px;
-  }
-
   ion-header {
-    padding: $card-md-header-padding;
     font-size: $card-md-header-font-size;
-    background-color: $card-md-header-background-color;
+    color: $card-md-text-color;
   }
 
-  .item > img {
-    padding-bottom: 8px;
+  .card-title {
+    padding: $card-md-title-padding;
+    font-size: $card-md-title-font-size;
+    color: $card-md-title-text-color;
   }
 
   h1 {
     margin: 0 0 2px;
     font-size: 2.4rem;
+    color: $card-md-text-color;
   }
 
   h2 {
     margin: 2px 0 2px;
     font-size: 1.6rem;
+    color: $card-md-text-color;
   }
 
   h3,
@@ -76,11 +84,14 @@ $card-md-header-padding:              16px;
   h6 {
     margin: 2px 0 2px;
     font-size: 1.4rem;
+    color: $card-md-text-color;
   }
 
   p {
     font-size: 1.4rem;
     margin: 0 0 2px;
+    line-height: 1.5;
+    color: $card-md-text-color;
   }
 
 }

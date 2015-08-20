@@ -4,7 +4,7 @@
 
 $list-ios-margin-top:                10px !default;
 $list-ios-margin-right:              0 !default;
-$list-ios-margin-bottom:             10px !default;
+$list-ios-margin-bottom:             32px !default;
 $list-ios-margin-left:               0 !default;
 
 $list-inset-ios-margin-top:           16px !default;
@@ -20,6 +20,7 @@ $list-ios-header-color:               #333 !default;
 
 
 .list[mode=ios] {
+  margin: 0 $list-ios-margin-right $list-ios-margin-bottom $list-ios-margin-left;
 
   ion-header {
     padding: $list-ios-header-padding;

@@ -43,8 +43,18 @@ $item-ios-forward-icon-color:     $item-ios-border-color !default;
       border-top: 1px solid $item-ios-border-color;
     }
 
-    &:last-child {
+    &:first-of-type {
+      &:before {
+        left: 0;
+      }
+    }
+
+    &:last-of-type {
       margin-bottom: -1px;
+
+      &:after {
+        left: 0;
+      }
     }
   }
 
