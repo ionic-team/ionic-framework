@@ -12,9 +12,13 @@ $card-ios-box-shadow:                  0 1px 2px rgba(0,0,0,.3) !default;
 $card-ios-border-radius:               2px !default;
 $card-ios-font-size:                   1.4rem !default;
 
+$card-ios-text-color:                  #666 !default;
 $card-ios-title-font-size:             1.8rem !default;
 $card-ios-title-padding:               8px 0 8px 0;
 $card-ios-title-text-color:            #222 !default;
+
+$card-ios-header-font-size:            1.6rem !default;
+$card-ios-header-padding:              16px !default;
 
 
 .card.list[mode=ios] {
@@ -44,10 +48,42 @@ $card-ios-title-text-color:            #222 !default;
     left: 0;
   }
 
+  ion-header {
+    font-size: $card-ios-header-font-size;
+    text-transform: none;
+    letter-spacing: normal;
+    padding: $card-ios-header-padding;
+  }
+
   .card-title {
     padding: $card-ios-title-padding;
     font-size: $card-ios-title-font-size;
     color: $card-ios-title-text-color;
+  }
+
+  h1 {
+    margin: 0 0 2px;
+    font-size: 2.4rem;
+  }
+
+  h2 {
+    margin: 2px 0 2px;
+    font-size: 1.6rem;
+  }
+
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 2px 0 2px;
+    font-size: 1.4rem;
+  }
+
+  p {
+    font-size: 1.4rem;
+    margin: 0 0 2px;
+    line-height: 1.5;
+    color: $card-ios-text-color;
   }
 
 }
