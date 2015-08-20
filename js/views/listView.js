@@ -345,26 +345,14 @@
     finalIndex = this._currentDrag.startIndex + (adiff >= 1 ? diff : 0);
     return finalIndex;
   }
-  
+
   ReorderDrag.prototype._getColDropVirtWinIdx = function(e, siblings) {
-    var ret = -1;
-    var stackObj = [], stackDisp =[], x = e.gesture.center.pageX, y = e.gesture.center.pageY, cnt = 1;
-    var elem;
-    while ((elem = this._getParentIonItem(document.elementFromPoint(x, y))) !== null) {
-    	if (elem === this.el) {
-      	stackObj.push(elem);
-      	stackDisp.push(elem.style.display);
-      	elem.style.display = "none";
-      	continue;
-    	}
-    	break;
-    }
-    for (var i=0; i< stackObj.length; i++) 
-    	stackObj[i].style.display = stackDisp[i];
-    if (elem !== null) {
-      for (var i = 0, len = siblings.length; i < len; i++) {
+    var ret = -1, x = e.gesture.center.pageX, y = e.gesture.center.pageY;
+    var fromToIonItems = this._getIonItemsAtPoint(x, y);
+    if (fromToIonItems.length === 2) {
+      for (var i = 0; i < siblings.length; i++) {
         var cmp = siblings[i];
-      	if (elem === cmp) {
+      	if (fromToIonItems[1] === cmp) {
       		ret = i;
       		break;
       	}
@@ -372,6 +360,29 @@
     } 
     return ret;   
   }
+  
+  ReorderDrag.prototype._getIonItemsAtPoint = function(x,y) {
+    var stackObj = [], stackDisp =[], ionItems = [];
+    while (true) {
+			var hit = document.elementFromPoint(x, y);
+			if (!hit || hit === document.documentElement)
+				break;
+			stackObj.push(hit);
+			stackDisp.push(hit.style.display);
+			hit.style.display = "none";
+			if (hit.tagName === "ION-REORDER-BUTTON") {
+				var ion = this._getParentIonItem(hit);
+				if (ion) {
+					ionItems.push(ion);
+					if (ionItems.length === 2)
+						break;
+				}
+			}
+    }
+    for (var i = 0; i < stackObj.length; i++) 
+    	stackObj[i].style.display = stackDisp[i];
+    return ionItems;
+	}
   
   ReorderDrag.prototype._getParentIonItem = function(elem) {
   	if (elem.tagName === "ION-ITEM")
