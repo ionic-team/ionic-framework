@@ -1,4 +1,4 @@
-import {Component, View, ElementRef, onInit, Host, NgFor} from 'angular2/angular2';
+import {Component, View, ElementRef, EventEmitter, onInit, Host, forwardRef, NgFor, NgIf} from 'angular2/angular2';
 
 import {DragGesture} from 'ionic/gestures/drag-gesture';
 import {IonicComponent, IonicDirective} from '../../config/annotations';
@@ -26,11 +26,13 @@ import * as util from 'ionic/util';
   properties: [
     'loop',
     'index',
-    'bounce'
+    'bounce',
+    'showPager'
   ]
 })
 @View({
-  template: '<div class="slides-view"><ng-content></ng-content></div>'
+  template: '<div class="slides-view"><ng-content></ng-content></div><ion-pager *ng-if="showPager"></ion-pager>',
+  directives: [NgIf, forwardRef(() => SlidePager)]
 })
 export class Slides {
   constructor(elementRef: ElementRef) {
@@ -48,6 +50,10 @@ export class Slides {
 
     // Whether to bounce on the edges if not continuous (overscrolling)
     this.bounce = false;
+
+    this.showPager = true;
+
+    this.changed = new EventEmitter('changed');
 
     // Initialize our slides gesture handler
     this.gesture = new SlidesGesture(this);
@@ -151,7 +157,8 @@ export class Slides {
     if (this.continuous) this._move(this._circle(to - direction), -(width * direction), 0); // we need to get the next in place
 
     this.currentIndex = to;
-    //offloadFn(options.callback && options.callback(index, slides[index]));
+
+    this._changed();
   }
 
   /**
@@ -188,6 +195,13 @@ export class Slides {
     }
   }
 
+  _changed() {
+    this._pager && this._pager.changed(this.currentIndex);
+
+    setTimeout(() => {
+      this.changed.next(this.currentIndex);
+    });
+  }
 
   // Reposition all the existing slides so they are in the right position
   _bump() {
@@ -381,6 +395,8 @@ export class Slides {
           move(circle(index+1), slides[circle(index+1)].x-width, speed);
           this.currentIndex = circle(index+1);
 
+          this._changed();
+
         } else {
           if (this.continuous) { // we need to get the next in this direction in place
 
@@ -395,6 +411,8 @@ export class Slides {
           move(circle(index-1), slides[circle(index-1)].x+width, speed);
           this.currentIndex = circle(index-1);
 
+          this._changed();
+
         }
 
         //options.callback && options.callback(index, slides[index]);
@@ -407,11 +425,15 @@ export class Slides {
           move(index, 0, speed);
           move(circle(index+1), width, speed);
 
+          this._changed();
+
         } else {
 
           move(index-1, -width, speed);
           move(index, 0, speed);
           move(index+1, width, speed);
+
+          this._changed();
         }
 
       }
@@ -492,12 +514,12 @@ export class Slide {
 }
 
 
-@Component({
+@IonicComponent({
   selector: 'ion-pager',
 })
 @View({
   //[class.active]="$index == currentSlide}" ng-click="pagerClick($index)"><i class="icon ion-record"></i></span></div>',
-  template: `<span class="slide-pager-page" *ng-for="#page of getSlides()">{{page.width}}<i class="icon ion-record"></i>X</span>`,
+  template: `<span class="slide-pager-page" *ng-for="#page of getSlides(); #i = index" [class.active]="i == slides.currentIndex"><i class="icon ion-record"></i></span>`,
   directives: [NgFor]
 })
 export class SlidePager {
@@ -510,6 +532,10 @@ export class SlidePager {
     this.slides = slides;
 
     this.slides.setPager(this);
+  }
+
+  changed() {
+    console.log('Active changed!', this.slides.currentIndex);
   }
 
   getSlides() {

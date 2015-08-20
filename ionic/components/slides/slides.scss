@@ -27,7 +27,8 @@ $z-index-slider-pager:            1 !default;
   vertical-align: top;
 }
 
-.slide-pager {
+.pager {
+  display: block;
   position: absolute;
   bottom: 20px;
   z-index: $z-index-slider-pager;
