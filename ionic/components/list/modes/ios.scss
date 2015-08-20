@@ -2,11 +2,21 @@
 // iOS List
 // --------------------------------------------------
 
-$list-ios-header-padding:         10px $item-ios-padding-right 10px $item-ios-padding-left !default;
-$list-ios-header-font-size:       1.2rem !default;
-$list-ios-header-font-weight:     500 !default;
-$list-ios-header-letter-spacing:  0.1rem !default;
-$list-ios-header-color:           #333 !default;
+$list-ios-margin-top:                10px !default;
+$list-ios-margin-right:              0 !default;
+$list-ios-margin-bottom:             10px !default;
+$list-ios-margin-left:               0 !default;
+
+$list-inset-ios-margin-top:           16px !default;
+$list-inset-ios-margin-right:         16px !default;
+$list-inset-ios-margin-bottom:        16px !default;
+$list-inset-ios-margin-left:          16px !default;
+
+$list-ios-header-padding:             10px $item-ios-padding-right 10px $item-ios-padding-left !default;
+$list-ios-header-font-size:           1.2rem !default;
+$list-ios-header-font-weight:         500 !default;
+$list-ios-header-letter-spacing:      0.1rem !default;
+$list-ios-header-color:               #333 !default;
 
 
 .list[mode=ios] {
@@ -20,8 +30,37 @@ $list-ios-header-color:           #333 !default;
     color: $list-ios-header-color;
   }
 
-  &[inset] ion-header {
-    padding-top: 10px;
+}
+
+.list[mode=ios] + .list {
+  margin-top: $list-ios-margin-top;
+}
+
+.list[mode=ios] + .list:not(.card) ion-header {
+  margin-top: -$list-ios-margin-top;
+  padding-top: 0;
+}
+
+.list[mode=ios][inset] {
+  margin: $list-inset-ios-margin-top $list-inset-ios-margin-right $list-inset-ios-margin-bottom $list-inset-ios-margin-left;
+
+  .item:first-child {
+    margin-top: 0;
+
+    &:before {
+      border-top: none;
+    }
   }
 
+  .item:last-child {
+    margin-bottom: 0;
+
+    &:after {
+      border-top: none;
+    }
+  }
+}
+
+.list[mode=ios][inset] + .list[inset] {
+  margin-top: 0;
 }

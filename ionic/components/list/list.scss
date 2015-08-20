@@ -2,8 +2,6 @@
 // List
 // --------------------------------------------------
 
-$list-inset-margin:         10px !default;
-
 
 .list {
   display: block;
@@ -20,8 +18,6 @@ $list-inset-margin:         10px !default;
 }
 
 .list[inset] {
-  margin: $list-inset-margin;
-
   border: 1px solid $list-border-color;
 }
 

@@ -220,7 +220,6 @@ gulp.task('e2e', function() {
   var platforms = [
     'android',
     'ios',
-    //'core'
   ];
 
   // Get each test folder with gulp.src
@@ -283,24 +282,20 @@ gulp.task('e2e', function() {
   }
 });
 
-gulp.task('sass', function() {
+gulp.task('sass', function(done) {
   return gulp.src('ionic/ionic.scss')
-    .pipe(sass({
-      onError: function(err) {
-        console.log(err)
-      }
-    }))
+    .pipe(sass()
+      .on('error', sass.logError)
+    )
     .pipe(autoprefixer(buildConfig.autoprefixer))
     .pipe(gulp.dest('dist/css/'));
 });
 
 gulp.task('sass.dark', function() {
   return gulp.src('scripts/build/ionic.dark.scss')
-    .pipe(sass({
-      onError: function(err) {
-        console.log(err)
-      }
-    }))
+    .pipe(sass()
+      .on('error', sass.logError)
+    )
     .pipe(autoprefixer(buildConfig.autoprefixer))
     .pipe(gulp.dest('dist/css/'));
 });

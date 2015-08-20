@@ -2,6 +2,11 @@
 // iOS Card
 // --------------------------------------------------
 
+$card-ios-margin-top:                  16px !default;
+$card-ios-margin-right:                16px !default;
+$card-ios-margin-bottom:               16px !default;
+$card-ios-margin-left:                 16px !default;
+
 $card-ios-background-color:            $list-background-color !default;
 $card-ios-box-shadow:                  0 1px 2px rgba(0,0,0,.3) !default;
 $card-ios-border-radius:               2px !default;
@@ -12,6 +17,8 @@ $card-ios-header-padding:              10px;
 
 
 .card.list[mode=ios] {
+  margin: $card-ios-margin-top $card-ios-margin-right $card-ios-margin-bottom $card-ios-margin-left;
+
   background: $card-ios-background-color;
   box-shadow: $card-ios-box-shadow;
   border-radius: $card-ios-border-radius;
@@ -41,4 +48,8 @@ $card-ios-header-padding:              10px;
     background-color: $card-ios-header-background-color;
   }
 
+}
+
+.card.list[mode=ios] + .card {
+  margin-top: 0;
 }
