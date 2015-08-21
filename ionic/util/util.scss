@@ -31,7 +31,7 @@
 $content-padding:    10px !default;
 
 
-.padding,
+[padding], .padding,
 .padding > .scroll-content {
   padding: $content-padding;
 }
