@@ -3,6 +3,7 @@ import {Component, View, ElementRef, EventEmitter, onInit, Host, forwardRef, NgF
 import {DragGesture} from 'ionic/gestures/drag-gesture';
 import {IonicComponent, IonicDirective} from '../../config/annotations';
 import {dom} from 'ionic/util';
+import {Platform} from 'ionic/platform/platform';
 import * as util from 'ionic/util';
 
 
@@ -108,6 +109,11 @@ export class Slides {
     // Get the width of the container, which is the viewport
     // that the user will actually see.
     this.containerWidth = this.ele.offsetWidth || this.ele.getBoundingClientRect().width;
+
+    // Fallback: don't allow zero width
+    if(this.containerWidth === 0) {
+      this.containerWidth = Platform.width();
+    }
 
     // Set the wrapper element to the total width of the child elements
     this.wrapperElement.style.width = ((this.containerWidth * this.slides.length)) + 'px';
@@ -535,7 +541,6 @@ export class SlidePager {
   }
 
   changed() {
-    console.log('Active changed!', this.slides.currentIndex);
   }
 
   getSlides() {
