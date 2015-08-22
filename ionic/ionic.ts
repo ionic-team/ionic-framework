@@ -9,9 +9,6 @@ export * from './components'
 export * from './platform/platform'
 export * from './platform/registry'
 
-export * from './routing/router'
-export * from './routing/url-state'
-
 export * from './util/click-block'
 export * from './util/focus'
 

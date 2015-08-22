@@ -1,6 +1,6 @@
 import {Component, View, bootstrap, ElementRef, NgZone, bind, DynamicComponentLoader, Injector} from 'angular2/angular2';
+import {routerInjectables, HashLocationStrategy, LocationStrategy, Router} from 'angular2/router';
 
-import {IonicRouter} from '../../routing/router';
 import {IonicConfig} from '../../config/config';
 import {Platform} from '../../platform/platform';
 import * as util from '../../util/util';
@@ -19,8 +19,6 @@ export class IonicApp {
 
     // Our component registry map
     this.components = {};
-
-    this._activeViewId = null;
   }
 
   load(appRef) {
@@ -52,17 +50,6 @@ export class IonicApp {
 
   zoneRun(fn) {
     this._zone.run(fn);
-  }
-
-  stateChange(type, activeView) {
-    if (this._activeViewId !== activeView.id) {
-      this.router.stateChange(type, activeView);
-      this._activeViewId = activeView.id;
-    }
-  }
-
-  stateClear() {
-    this.router.stateClear();
   }
 
   /**
@@ -175,7 +162,7 @@ class RootAnchor {
   }
 }
 
-export function ionicBootstrap(rootComponentType, config, router) {
+export function ionicBootstrap(rootComponentType, config) {
   return new Promise(resolve => {
     try {
       // get the user config, or create one if wasn't passed in
@@ -197,15 +184,6 @@ export function ionicBootstrap(rootComponentType, config, router) {
       // prepare the ready promise to fire....when ready
       Platform.prepareReady(config);
 
-      // setup router
-      if (typeof router !== IonicRouter) {
-        router = new IonicRouter(router);
-      }
-      router.app(app);
-
-      // TODO: don't wire these together
-      app.router = router;
-
       // TODO: probs need a better way to inject global injectables
       let actionMenu = new ActionMenu(app, config);
       let modal = new Modal(app, config);
@@ -215,10 +193,11 @@ export function ionicBootstrap(rootComponentType, config, router) {
       let appBindings = Injector.resolve([
         bind(IonicApp).toValue(app),
         bind(IonicConfig).toValue(config),
-        bind(IonicRouter).toValue(router),
         bind(ActionMenu).toValue(actionMenu),
         bind(Modal).toValue(modal),
-        bind(Popup).toValue(popup)
+        bind(Popup).toValue(popup),
+        routerInjectables,
+        bind(LocationStrategy).toClass(HashLocationStrategy)
       ]);
 
       bootstrap(rootComponentType, appBindings).then(appRef => {
@@ -240,10 +219,7 @@ export function ionicBootstrap(rootComponentType, config, router) {
           console.error(err)
         });
 
-        router.load(window, app, config).then(() => {
-          // resolve that the app has loaded
-          resolve(app);
-        });
+        resolve(app);
 
       }).catch(err => {
         console.error('ionicBootstrap', err);

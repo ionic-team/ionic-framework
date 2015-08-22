@@ -2,7 +2,6 @@ import {CORE_DIRECTIVES, FORM_DIRECTIVES, Component, Directive, View, forwardRef
 
 import * as util from 'ionic/util';
 import {IonicConfig} from './config';
-import {IonicRouter} from '../routing/router';
 import {ionicBootstrap} from '../components/app/app';
 import {
   Aside, Button, Content, Scroll, Refresher,
@@ -16,7 +15,7 @@ import {
   TextInput, TextInputElement, Label,
   Segment, SegmentButton, SegmentControlValueAccessor,
   RadioGroup, RadioButton, SearchBar,
-  Nav, NavbarTemplate, Navbar, NavPush, NavPop,
+  Nav, NavbarTemplate, Navbar, NavPush, NavPop, NavRouter,
   TapClick, TapDisabled,
   Register,
   ShowWhen, HideWhen,
@@ -78,6 +77,7 @@ export const IonicDirectives = [
   forwardRef(() => Navbar),
   forwardRef(() => NavPush),
   forwardRef(() => NavPop),
+  forwardRef(() => NavRouter),
   forwardRef(() => Register),
 
   forwardRef(() => ShowWhen),
@@ -172,7 +172,7 @@ export function App(args={}) {
     // redefine with added annotations
     Reflect.defineMetadata('annotations', annotations, cls);
 
-    ionicBootstrap(cls, args.config, args.routes);
+    ionicBootstrap(cls, args.config);
 
     return cls;
   }

@@ -5,7 +5,6 @@ import {AppViewManager} from 'angular2/src/core/compiler/view_manager';
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
 import {IonicApp} from '../app/app';
-import {IonicRouter} from '../../routing/router';
 import {ViewItem} from './view-item';
 import {NavController} from '../nav/nav-controller';
 import {PaneController} from '../nav/pane';
@@ -30,12 +29,9 @@ export class ViewController extends Ion {
     this.compiler = injector.get(Compiler);
     this.loader = injector.get(DynamicComponentLoader);
     this.viewMngr = injector.get(AppViewManager);
-    this.router = injector.get(IonicRouter);
     this.app = injector.get(IonicApp);
     this.config = config;
     this.zone = zone;
-
-    this.router.addViewController(this);
 
     this.items = [];
     this.panes = new PaneController(this);
@@ -54,8 +50,8 @@ export class ViewController extends Ion {
     ]);
   }
 
-  push(component, params = {}, opts = {}) {
-    if (!component || this.isTransitioning()) {
+  push(componentType, params = {}, opts = {}) {
+    if (!componentType || this.isTransitioning()) {
       return Promise.reject();
     }
 
@@ -79,13 +75,15 @@ export class ViewController extends Ion {
     }
 
     // create a new ViewItem
-    let enteringItem = new ViewItem(this, component, params);
+    let enteringItem = new ViewItem(this, componentType, params);
 
     // add the item to the stack
     this.add(enteringItem);
 
-    // notify app of the state change
-    this.app.stateChange('push', enteringItem);
+    if (this.router) {
+      // notify router of the state change
+      this.router.stateChange('push', enteringItem, params);
+    }
 
     // start the transition
     this.transition(enteringItem, leavingItem, opts, () => {
@@ -120,8 +118,10 @@ export class ViewController extends Ion {
     // only item on the history stack.
     let enteringItem = this.getPrevious(leavingItem);
     if (enteringItem) {
-      // notify app of the state change
-      this.app.stateChange('pop', enteringItem);
+      if (this.router) {
+        // notify router of the state change
+        this.router.stateChange('pop', enteringItem);
+      }
 
       // start the transition
       this.transition(enteringItem, leavingItem, opts, () => {
@@ -144,8 +144,6 @@ export class ViewController extends Ion {
     if (!components || !components.length) {
       return Promise.resolve();
     }
-
-    this.app.stateClear();
 
     // if animate has not been set then default to false
     opts.animate = opts.animate || false;
@@ -193,9 +191,9 @@ export class ViewController extends Ion {
     return this.push((component && component.component) || component, (component && component.params), opts);
   }
 
-  setRoot(component, params = {}, opts = {}) {
+  setRoot(componentType, params = {}, opts = {}) {
     return this.setItems([{
-             component,
+             componentType,
              params
            }], opts);
   }
@@ -321,8 +319,10 @@ export class ViewController extends Ion {
           enteringItem.didEnter();
           leavingItem.didLeave();
 
-          // notify app of the state change
-          this.app.stateChange('pop', enteringItem);
+          if (this.router) {
+            // notify router of the state change
+            this.router.stateChange('pop', enteringItem);
+          }
 
         } else {
           // cancelled the swipe back, return items to original state
@@ -548,6 +548,10 @@ export class ViewController extends Ion {
 
   isStagedEntering(item) {
     return (item && item.state === STAGED_ENTERING_STATE);
+  }
+
+  registerRouter(router) {
+    this.router = router;
   }
 
 }

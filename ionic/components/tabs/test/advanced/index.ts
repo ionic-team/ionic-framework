@@ -1,4 +1,4 @@
-import {Component} from 'angular2/angular2';
+import {RouteConfig, Location} from 'angular2/router';
 
 import {App, IonicView, NavController} from 'ionic/ionic';
 
@@ -24,10 +24,10 @@ class SignIn {
   }
 }
 
+
 @IonicView({
   templateUrl: './tabs.html'
 })
-
 class TabsPage {
   constructor(nav: NavController) {
     this.tab1Root = Tab1Page1
@@ -184,13 +184,9 @@ class Tab2Page3 {
 class Tab3Page1 {}
 
 
-@App({
-  routes: [
-    {
-      path: '/signin',
-      component: SignIn,
-      root: true
-    }
-  ]
-})
+@App()
+@RouteConfig([
+  { path: '/', component: SignIn, as: 'signin' },
+  { path: '/tabs', component: TabsPage, as: 'tabs' },
+])
 class E2EApp {}

@@ -37,7 +37,10 @@ export class NavController {
 }
 
 export class NavParams {
-  constructor(params) {
-    extend(this, params);
+  constructor(data) {
+    this.data = data || {};
+  }
+  get(param) {
+    return this.data[param];
   }
 }
