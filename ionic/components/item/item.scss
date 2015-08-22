@@ -176,7 +176,7 @@ button.item.item {
   border: none;
 }
 
-.item.item.item.no-border-bottom + .item::before {
+.item.item.item.no-border-bottom + .item:before {
   border: none;
 }
 

@@ -128,10 +128,7 @@ class MediaSwitch {
     '<ng-content></ng-content>' +
   '</div>' +
   '<div class="item-media media-switch">' +
-    '<div class="switch-icon">' +
-      '<div class="switch-track"></div>' +
-      '<div class="switch-handle"></div>' +
-    '</div>' +
+    '<div class="switch-icon"></div>' +
   '</div>',
   directives: [MediaSwitch]
 })

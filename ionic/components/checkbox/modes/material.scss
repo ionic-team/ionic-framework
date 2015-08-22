@@ -28,7 +28,7 @@ $checkbox-md-checkmark-color-on:    $background-color !default;
     border-color: $checkbox-md-border-color-on;
   }
 
-  &[aria-checked=true] .checkbox-icon::after {
+  &[aria-checked=true] .checkbox-icon:after {
     position: absolute;
     border: 2px solid $checkbox-md-checkmark-color-on;
     top: 0;

@@ -15,7 +15,7 @@ $switch-md-handle-off-bg-color:       $background-color !default;
 $switch-md-handle-on-bg-color:        $switch-md-active-color !default;
 $switch-md-handle-box-shadow:         0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12) !default;
 
-$switch-md-transition-duration:       280ms !default;
+$switch-md-transition-duration:       300ms !default;
 
 
 .switch[mode=md] {
@@ -25,41 +25,54 @@ $switch-md-transition-duration:       280ms !default;
     padding: 6px $item-md-padding-right 6px ($item-md-padding-left + 20);
   }
 
-  .switch-icon {
-    position: relative;
-    pointer-events: none;
-  }
 
-  .switch-track {
+  // Switch Background Track
+  // -----------------------------------------
+
+  .switch-icon {
+    // bg track, when not checked
+    position: relative;
     width: $switch-md-track-width;
     height: $switch-md-track-height;
+    pointer-events: none;
+    border-radius: $switch-md-track-height;
 
     background-color: $switch-md-track-off-bg-color;
-    border-radius: $switch-md-track-height;
+    will-change: background-color;
+    transition: background-color $switch-md-transition-duration
   }
 
-  .switch-handle {
+  &[aria-checked=true] .switch-icon {
+    // bg track, when not checked
+    background-color: $switch-md-track-on-bg-color;
+  }
+
+
+  // Switch Knob
+  // -----------------------------------------
+
+  .switch-icon:after {
+    // knob, when not checked
+    content: '';
     position: absolute;
     top: ($switch-md-handle-height - $switch-md-track-height) / -2;
-    left: 0;// ($switch-md-handle-height - $switch-md-track-height) / -2;
+    left: 0;
 
     width: $switch-md-handle-width;
     height: $switch-md-handle-height;
 
     border-radius: 50%;
-    background-color: $switch-md-handle-off-bg-color;
     box-shadow: $switch-md-handle-box-shadow;
 
-    will-change: transform;
-    transition-property: transform;
+    background-color: $switch-md-handle-off-bg-color;
+
+    will-change: transform, background-color;
+    transition-property: transform, background-color;
     transition-duration: $switch-md-transition-duration;
   }
 
-  &[aria-checked=true] .switch-track {
-    background-color: $switch-md-track-on-bg-color;
-  }
-
-  &[aria-checked=true] .switch-handle {
+  &[aria-checked=true] .switch-icon:after {
+    // knob, when not checked
     background-color: $switch-md-handle-on-bg-color;
     transform: translate3d($switch-md-track-width - $switch-md-handle-width, 0, 0);
   }
@@ -74,11 +87,11 @@ $switch-md-transition-duration:       280ms !default;
 
   .switch[mode=md][#{$color-name}] {
 
-    &[aria-checked=true] .switch-track {
-      background-color: lighten($bg-on, 20%);
+    &[aria-checked=true] .switch-icon {
+      background-color: lighten($bg-on, 25%);
     }
 
-    &[aria-checked=true] .switch-handle {
+    &[aria-checked=true] .switch-icon:after {
       background-color: $bg-on;
     }
 

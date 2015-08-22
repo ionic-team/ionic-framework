@@ -43,8 +43,8 @@ $card-ios-header-padding:              16px !default;
     border: none;
   }
 
-  .item::before,
-  .item::after {
+  .item:before,
+  .item:after {
     left: 0;
   }
 

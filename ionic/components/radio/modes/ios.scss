@@ -13,7 +13,7 @@ $radio-ios-active-color:       color(primary) !default;
     height: 21px;
   }
 
-  &[aria-checked=true] .radio-icon::after {
+  &[aria-checked=true] .radio-icon:after {
     position: absolute;
     border: 2px solid $radio-ios-active-color;
     top: 3px;
@@ -40,7 +40,7 @@ $radio-ios-active-color:       color(primary) !default;
 
   .radio[mode=ios][#{$color-name}] {
 
-    &[aria-checked=true] .radio-icon::after {
+    &[aria-checked=true] .radio-icon:after {
       border-color: $color-value;
     }
 

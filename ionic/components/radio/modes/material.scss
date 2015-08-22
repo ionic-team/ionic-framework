@@ -29,7 +29,7 @@ $radio-md-transition-easing:      cubic-bezier(.4, 0, .2, 1) !default;
     border-color: $radio-md-active-color;
   }
 
-  .radio-icon::after {
+  .radio-icon:after {
     position: absolute;
     top: $radio-md-border-width;
     left: $radio-md-border-width;
@@ -42,7 +42,7 @@ $radio-md-transition-easing:      cubic-bezier(.4, 0, .2, 1) !default;
     transform: scale3d(0, 0, 0);
   }
 
-  &[aria-checked=true] .radio-icon::after {
+  &[aria-checked=true] .radio-icon:after {
     transform: scale3d(1, 1, 1);
   }
 
@@ -64,7 +64,7 @@ $radio-md-transition-easing:      cubic-bezier(.4, 0, .2, 1) !default;
       border-color: $color-value;
     }
 
-    &[aria-checked=true] .radio-icon::after {
+    &[aria-checked=true] .radio-icon:after {
       background: $color-value;
     }
 

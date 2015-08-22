@@ -26,7 +26,7 @@ $checkbox-ios-checkmark-color-on:    $background-color !default;
     border-color: $checkbox-ios-border-color-on;
   }
 
-  &[aria-checked=true] .checkbox-icon::after {
+  &[aria-checked=true] .checkbox-icon:after {
     position: absolute;
     border: 1px solid $checkbox-ios-checkmark-color-on;
     top: 3px;
