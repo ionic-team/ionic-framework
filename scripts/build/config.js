@@ -1,3 +1,4 @@
+
 module.exports = {
   dist: 'dist',
   distLib: 'dist/lib',
@@ -18,7 +19,7 @@ module.exports = {
     'node_modules/angular2/bundles/angular2.dev.js',
     'node_modules/angular2/bundles/router.dev.js',
     'dist/js/ionic.js',
-    'node_modules/web-animations-js/web-animations.min.js'
+    'scripts/resources/web-animations-js/web-animations.min.js'
   ],
 
   protractorPort: 8876,

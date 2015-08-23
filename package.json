@@ -55,7 +55,6 @@
     "traceur": "0.0.91",
     "typescript": "^1.5.3",
     "vinyl": "^0.4.6",
-    "web-animations-js": "tlancina/web-animations-js",
     "yargs": "^3.6.0"
   }
 }
