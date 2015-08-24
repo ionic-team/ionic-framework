@@ -1,4 +1,4 @@
-import {Component, View, ElementRef} from 'angular2/angular2';
+import {Component, Directive, View, ElementRef, NgIf, ViewQuery, QueryList} from 'angular2/angular2';
 
 import {ItemPrimaryOptions, ItemSecondaryOptions} from './item-options';
 import {ItemPrimarySwipeButtons, ItemSecondarySwipeButtons} from './item-swipe-buttons';
@@ -6,16 +6,19 @@ import {dom} from 'ionic/util';
 
 
 @Component({
-  selector: 'ion-item',
+  selector: 'ion-item,[ion-item]',
   host: {
     'class': 'item'
   }
 })
 @View({
   template:
-    '<div class="item-content">' +
+    '<ng-content select="[item-left]"></ng-content>' +
+    '<ion-item-content>' +
       '<ng-content></ng-content>'+
-    '</div>'
+    '</ion-item-content>' +
+    '<ng-content select="[item-right]"></ng-content>',
+  directives: [NgIf]
 })
 export class Item {
   constructor(elementRef: ElementRef) {
@@ -28,6 +31,7 @@ export class Item {
     this.swipeButtons = {};
     this.optionButtons = {};
   }
+
 }
 
 

@@ -34,7 +34,7 @@ button.item.item {
   font-weight: normal;
 }
 
-.item-content {
+ion-item-content {
   margin: 0;
   flex: 1;
   white-space: nowrap;
@@ -42,8 +42,7 @@ button.item.item {
   text-overflow: ellipsis;
 }
 
-.item-text-wrap,
-.item-text-wrap .item-content {
+.item-text-wrap ion-item-content {
   white-space: normal;
 }
 
@@ -72,15 +71,15 @@ button.item.item {
 
 .list .item.item {
 
-  .item-content + button,
-  .item-content + [button],
-  button + .item-content,
-  [button] + .item-content,
+  ion-item-content + button,
+  ion-item-content + [button],
+  button + ion-item-content,
+  [button] + ion-item-content,
   icon + icon,
-  .item-content + icon,
-  .item-media + .item-content,
-  .item-content + .item-media,
-  .item-content + .item-content,
+  ion-item-content + icon,
+  .item-media + ion-item-content,
+  ion-item-content + .item-media,
+  ion-item-content + ion-item-content,
   icon + .input,
   .input + icon,
   icon + .input-label,

@@ -36,9 +36,9 @@ import {TapClick} from '../button/button';
   '<div class="item-media media-checkbox">' +
     '<div class="checkbox-icon"></div>' +
   '</div>' +
-  '<div class="item-content" id="{{labelId}}">' +
+  '<ion-item-content id="{{labelId}}">' +
     '<ng-content></ng-content>' +
-  '</div>'
+  '</ion-item-content>'
 })
 export class Checkbox extends Ion {
   constructor(

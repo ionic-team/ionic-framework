@@ -66,7 +66,7 @@ $item-ios-forward-icon-color:     $item-ios-border-color !default;
   }
 
   .input-label,
-  .item-content,
+  ion-item-content,
   .item-note {
     margin: $item-ios-padding-top $item-ios-padding-right $item-ios-padding-bottom $item-ios-padding-left;
   }
@@ -79,7 +79,7 @@ $item-ios-forward-icon-color:     $item-ios-border-color !default;
     color: $item-ios-note-color;
   }
 
-  .item icon + .item-content {
+  .item icon + ion-item-content {
     margin-left: 0;
   }
 

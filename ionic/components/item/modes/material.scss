@@ -49,13 +49,12 @@ $item-md-forward-icon-color:     $item-md-border-color !default;
   }
 
   .input-label,
-  .item-content,
+  ion-item-content,
   .item-note {
     margin: $item-md-padding-top $item-md-padding-right $item-md-padding-bottom $item-md-padding-left;
   }
 
-  .item-text-wrap,
-  .item-text-wrap .item-content {
+  .item-text-wrap ion-item-content {
     font-size: $item-md-body-text-font-size;
     line-height: $item-md-body-text-line-height;
   }
@@ -92,7 +91,7 @@ $item-md-forward-icon-color:     $item-md-border-color !default;
     margin-top: $item-md-padding-media-top;
   }
 
-  .item[actions] .item-content {
+  .item[actions] ion-item-content {
     margin: 8px;
   }
 

@@ -26,14 +26,12 @@ import {SinkPage} from '../sink-page';
       <ion-item>
         <input control="email" type="email" placeholder="Your email">
       </ion-item>
-      <div class="item">
-        <div class="item-content">
-          <div class="item-title">
-            Item
-          </div>
-        </div>
-      </div>
-      <ion-item>Item</ion-item>
+      <ion-item>
+        Item
+      </ion-item>
+      <ion-item>
+        Item
+      </ion-item>
 
     </ion-list>
   </ion-content>

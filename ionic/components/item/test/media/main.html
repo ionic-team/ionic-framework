@@ -8,75 +8,61 @@
 
 <ion-list>
 
-  <button class="item">
-    <div class="item-media">
+  <button ion-item>
+    <div class="item-media" item-left>
       <img class="avatar" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
     </div>
-    <div class="item-content">
-      Media/Avatar left, button.item
-    </div>
+    Media/Avatar left, button.item
   </button>
 
-  <a class="item" href="#">
-    <div class="item-content">
-      Media/Avatar right, a.item
-    </div>
-    <div class="item-media">
+  <a ion-item href="#">
+    Media/Avatar right, a.item
+    <div class="item-media" item-right>
       <img class="avatar" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
     </div>
   </a>
 
-  <div class="item">
-    <div class="item-media">
+  <ion-item>
+    <div class="item-media" item-left>
       <img class="avatar" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
     </div>
-    <div class="item-content">
-      Media/Avatar, right button
-    </div>
-    <button outline>View</button>
-  </div>
+    Media/Avatar, right button
+    <button outline item-right>View</button>
+  </ion-item>
 
-  <a class="item" href="#">
-    <div class="item-media">
+  <a ion-item href="#">
+    <div class="item-media" item-left>
       <img class="avatar" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
     </div>
-    <div class="item-content">
-      <h2>H2 Title Text</h2>
-      <p>Paragraph text</p>
-    </div>
+    <h2>H2 Title Text</h2>
+    <p>Paragraph text</p>
   </a>
 
-  <a class="item" href="#">
-    <div class="item-content">
-      Media/Thumbnail right side, a.item
-    </div>
-    <div class="item-media">
+  <a ion-item href="#">
+    Media/Thumbnail right side, a.item
+    <div class="item-media" item-right>
       <img class="thumbnail" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
     </div>
   </a>
 
-  <div class="item">
-    <div class="item-media">
+  <ion-item>
+    <div class="item-media" item-left>
       <img class="thumbnail" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
     </div>
-    <div class="item-content">
-      <h2>H2 Title Text</h2>
-      <p>Button on right</p>
-    </div>
-    <button outline>View</button>
-  </div>
+    <h2>H2 Title Text</h2>
+    <p>Button on right</p>
+    <button outline item-right>View</button>
+  </ion-item>
 
-  <button class="item">
-    <div class="item-media">
+  <button ion-item>
+    <div class="item-media" item-left>
       <img class="thumbnail" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
     </div>
-    <div class="item-content">
-      <h3>H3 Title Text</h3>
-      <p>Icon on right</p>
-      <p>Vertically align top</p>
-      <p>button.item</p>
-    </div>
-    <icon name="ion-close-circled"></icon>
+    <h3>H3 Title Text</h3>
+    <p>Icon on right</p>
+    <p>Vertically align top</p>
+    <p>button.item</p>
+    <icon name="ion-close-circled" item-right></icon>
   </button>
 
 </ion-list>

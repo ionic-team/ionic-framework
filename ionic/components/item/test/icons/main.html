@@ -2,94 +2,62 @@
 
 <ion-list>
 
-  <div class="item">
-    <div class="item-content">
-      Div with forward icon
-    </div>
-    <icon forward></icon>
-  </div>
+  <ion-item>
+    Div with forward icon
+    <icon forward item-right></icon>
+  </ion-item>
 
-  <a class="item" href="#">
-    <div class="item-content">
-      Link with forward icon
-    </div>
-    <icon forward></icon>
+  <a ion-item href="#">
+    Link with forward icon
+    <icon forward item-right></icon>
   </a>
 
-  <button class="item">
-    <div class="item-content">
-      Button with forward icon
-    </div>
-    <icon forward></icon>
+  <button ion-item>
+    Button with forward icon
+    <icon forward item-right></icon>
   </button>
 
-  <a class="item" href="#">
-    <div class="item-content">
-      Link with right side default icon
-    </div>
-    <icon name="ion-ios-information-outline"></icon>
+  <a ion-item href="#">
+    Link with right side default icon
+    <icon name="ion-ios-information-outline" item-right></icon>
   </a>
 
-  <a class="item" href="#">
-    <div class="item-content">
-      Link with right side large icon
-    </div>
-    <icon large name="ion-ios-information-outline"></icon>
+  <a ion-item href="#">
+    Link with right side large icon
+    <icon large name="ion-ios-information-outline" item-right></icon>
   </a>
 
-  <a class="item" href="#">
-    <div class="item-content">
-      Link with right side small icon
-    </div>
-    <icon small name="ion-ios-information-outline"></icon>
+  <a ion-item href="#">
+    Link with right side small icon
+    <icon small name="ion-ios-information-outline" item-right></icon>
   </a>
 
-  <button class="item">
-    <icon name="ion-star"></icon>
-    <div class="item-content">
-      Button with left side icon
-    </div>
+  <button ion-item>
+    <icon name="ion-star" item-left></icon>
+    Button with left side icon
   </button>
 
-  <button class="item">
-    <icon name="ion-flag"></icon>
-    <div class="item-content">
-      Button with both side icons
-    </div>
-    <icon name="ion-ios-checkmark"></icon>
+  <button ion-item>
+    <icon name="ion-flag" item-left></icon>
+    Button with both side icons
+    <icon name="ion-ios-checkmark" item-right></icon>
   </button>
 
-  <a class="item" href="#">
-    <div class="item-content">
-      Link with two right side icons
-    </div>
-    <icon name="ion-checkmark-circled"></icon>
-    <icon name="ion-shuffle"></icon>
+  <a ion-item href="#">
+    Link with two right side icons
+    <icon name="ion-checkmark-circled" item-right></icon>
+    <icon name="ion-shuffle" item-right></icon>
   </a>
 
-  <button class="item">
-    <icon name="ion-clipboard"></icon>
-    <icon name="ion-minus-circled"></icon>
-    <div class="item-content">
-      Button with two left side icons
-    </div>
+  <button ion-item>
+    <icon name="ion-clipboard" item-left></icon>
+    <icon name="ion-minus-circled" item-left></icon>
+    Button with two left side icons
   </button>
 
-  <button class="item">
-    <div class="item-content">
-      Red Balloons
-    </div>
-    <div class="badge">99</div>
+  <button ion-item>
+    Red Balloons
+    <div class="badge" item-right>99</div>
   </button>
 
 </ion-list>
-
-
-<style>
-  body {
-    //background-image: url(/ionic2-iOS-component-design.png);
-    background-repeat: no-repeat;
-    background-size: 3906px 634px;
-    background-position: -34px -53px;
-  }
-</style>

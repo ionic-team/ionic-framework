@@ -50,8 +50,8 @@ $card-md-header-font-size:            1.6rem !default;
     }
   }
 
-  .item-content button:first-child,
-  .item-content [button]:first-child {
+  ion-item-content button:first-child,
+  ion-item-content [button]:first-child {
     margin-left: 0;
   }
 

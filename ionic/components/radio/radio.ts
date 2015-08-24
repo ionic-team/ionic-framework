@@ -101,9 +101,9 @@ export class RadioGroup extends Ion {
 })
 @IonicView({
   template:
-  '<div class="item-content" id="{{labelId}}">' +
+  '<ion-item-content id="{{labelId}}">' +
     '<ng-content></ng-content>' +
-  '</div>' +
+  '</ion-item-content>' +
   '<div class="item-media media-radio">' +
     '<div class="radio-icon"></div>' +
   '</div>'
