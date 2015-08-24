@@ -31,9 +31,9 @@ import {App, ActionMenu, IonicApp, IonicView, Register} from 'ionic/ionic';
 
     <div class="padding">
       <ion-card>
-        <ion-header>
+        <ion-card-header>
           New Post
-        </ion-header>
+        </ion-card-header>
         <div class="card-content">
           Keep close to Nature's heart... and break clear away, once in awhile, and climb a mountain or spend a week in the woods. Wash your spirit clean.
         </div>

@@ -18,6 +18,8 @@ $card-md-title-padding:               8px 0 8px 0;
 $card-md-title-text-color:            #222 !default;
 
 $card-md-header-font-size:            1.6rem !default;
+$card-md-header-padding:              16px !default;
+$card-md-header-color:                #222 !default;
 
 
 .card.list[mode=md] {
@@ -55,9 +57,10 @@ $card-md-header-font-size:            1.6rem !default;
     margin-left: 0;
   }
 
-  ion-header {
+  ion-card-header {
+    padding: $card-md-header-padding;
     font-size: $card-md-header-font-size;
-    color: $card-md-text-color;
+    color: $card-md-header-color;
   }
 
   .card-title {

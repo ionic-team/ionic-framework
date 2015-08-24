@@ -11,3 +11,10 @@
   }
 
 }
+
+ion-card-header {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

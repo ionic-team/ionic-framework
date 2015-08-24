@@ -20,9 +20,9 @@ import {SinkPage} from '../sink-page';
 
     <ion-card>
 
-      <ion-header>
+      <ion-card-header>
         Card Header
-      </ion-header>
+      </ion-card-header>
 
       <div class="item">
         <div class="item-media">

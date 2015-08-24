@@ -37,7 +37,7 @@ $list-ios-header-color:               #333 !default;
   margin-top: $list-ios-margin-top;
 }
 
-.list[mode=ios] + .list:not(.card) ion-header {
+.list[mode=ios] + .list ion-header {
   margin-top: -$list-ios-margin-top;
   padding-top: 0;
 }

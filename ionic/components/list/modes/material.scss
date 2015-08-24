@@ -32,7 +32,7 @@ $list-md-header-color:           #858585 !default;
   margin-top: $list-md-margin-top;
 }
 
-.list[mode=md] + .list:not(.card) ion-header {
+.list[mode=md] + .list ion-header {
   margin-top: -$list-md-margin-top;
   padding-top: 0;
 }
