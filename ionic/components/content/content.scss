@@ -2,13 +2,8 @@
 // Content
 // --------------------------------------------------
 
-$content-container-background-color:      $background-color !default;
 $content-background-color:                $background-color !default;
 
-
-.content-container {
-  background-color: $content-container-background-color;
-}
 
 ion-content {
   position: relative;

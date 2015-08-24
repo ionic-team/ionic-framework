@@ -74,11 +74,18 @@ export class ViewItem {
             contentContainer.createHostView(hostProtoViewRef, -1, bindings);
         var newLocation = viewCtrl.viewMngr.getHostElement(hostViewRef);
         var newComponent = viewCtrl.viewMngr.getComponent(newLocation);
+        pane.totalItems++;
 
         var dispose = () => {
           var index = contentContainer.indexOf(hostViewRef);
           if (index !== -1) {
             contentContainer.remove(index);
+
+            // remove the pane if there are no view items left
+            pane.totalItems--;
+            if (pane.totalItems === 0) {
+              pane.dispose();
+            }
           }
         };
         this.disposals.push(dispose);
@@ -100,7 +107,10 @@ export class ViewItem {
           let navbarView = navbarViewContainer.createEmbeddedView(navbarTemplateRef, -1);
 
           this.disposals.push(() => {
-            navbarViewContainer.remove( navbarViewContainer.indexOf(navbarView) );
+            let index = navbarViewContainer.indexOf(navbarView);
+            if (index > -1) {
+              navbarViewContainer.remove(index);
+            }
           });
         }
 
@@ -280,9 +290,6 @@ export class ViewItem {
     will fire, whether it was the first load or loaded from the cache.
   */
   didEnter() {
-    if (this.pane) {
-      this.pane.showPane = true;
-    }
     let navbarView = this.navbarView();
     if (navbarView) {
       navbarView.didEnter();

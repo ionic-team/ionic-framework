@@ -10,7 +10,7 @@ import {PaneAnchor, PaneContentAnchor, NavBarContainer} from './anchors';
 
 export class PaneController {
   constructor(viewCtrl: ViewController) {
-    this.panes = {};
+    this.panes = [];
     this.viewCtrl = viewCtrl;
 
     this.bindings = Injector.resolve([
@@ -25,25 +25,32 @@ export class PaneController {
 
     let key = itemStructure.key;
     let viewCtrl = this.viewCtrl;
-    let pane = this.panes[key];
+    let pane = this.panes[this.panes.length - 1];
 
-    if (pane) {
-      // nav pane which the entering component already exists
+    if (pane && pane.key === key) {
+      // the last pane's structure is the same as the one the item needs to go in
       callback(pane);
 
     } else {
       // create a new nav pane
-      this.panes[key] = null;
+      viewCtrl.loader.loadNextToLocation(Pane, viewCtrl.anchorElementRef(), this.bindings).then((componentRef) => {
 
+        // get the pane reference
+        pane = this.newPane;
+        this.newPane = null;
 
-      viewCtrl.loader.loadNextToLocation(Pane, viewCtrl.anchorElementRef(), this.bindings).then(() => {
-
-        // get the pane reference by name
-        pane = this.panes[key];
         let sectionAnchorElementRef = pane && pane.sectionAnchorElementRef;
         if (!sectionAnchorElementRef) {
           return callback();
         }
+
+        pane.key = key;
+        pane.dispose = () => {
+          componentRef.dispose();
+          this.panes.splice(this.panes.indexOf(pane), 1);
+        };
+
+        this.panes.push(pane);
 
         let promises = [];
         let sectionsToAdd = [];
@@ -81,12 +88,7 @@ export class PaneController {
   }
 
   add(pane) {
-    for (let np in this.panes) {
-      if (this.panes[np] === null) {
-        this.panes[np] = pane;
-        return;
-      }
-    }
+    this.newPane = pane;
   }
 
 }
@@ -95,7 +97,7 @@ export class PaneController {
   selector: 'ion-pane',
   classId: 'nav',
   host: {
-    ['[class.show-pane]']: 'showPane'
+    '[style.z-index]': 'zIndex',
   }
 })
 @View({
@@ -115,15 +117,9 @@ export class Pane extends Ion {
     ionicConfig: IonicConfig
   ) {
     super(elementRef, ionicConfig);
-
     viewCtrl.panes.add(this);
+    this.totalItems = 0;
+    this.zIndex = ++viewCtrl.zIndexes;
   }
 
-  set showPane(val) {
-    this._showPane = val;
-  }
-
-  get showPane() {
-    return this._showPane;
-  }
 }

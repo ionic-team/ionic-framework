@@ -42,6 +42,7 @@ export class ViewController extends Ion {
 
     this.id = ++ctrlIds;
     this._ids = -1;
+    this.zIndexes = -1;
 
     // build a new injector for child ViewItems to use
     this.bindings = Injector.resolve([
