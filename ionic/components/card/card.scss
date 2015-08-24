@@ -5,11 +5,10 @@
 
 .card {
   display: block;
+}
 
-  img {
-    width: 100%;
-  }
-
+.card img {
+  width: 100%;
 }
 
 ion-card-header {
@@ -17,4 +16,8 @@ ion-card-header {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+ion-card-content {
+  display: block;
 }
