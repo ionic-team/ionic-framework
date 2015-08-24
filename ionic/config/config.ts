@@ -65,9 +65,21 @@ export class IonicConfig {
             let platformValue = undefined;
             for (let i = 0; i < activePlatformKeys.length; i++) {
               platformObj = platformSettings[ activePlatformKeys[i] ];
-              if (platformObj && isDefined(platformObj[arg0])) {
-                platformValue = platformObj[arg0];
+
+              if (platformObj) {
+                if (isDefined(platformObj[arg0])) {
+                  // check assigned platform settings
+                  platformValue = platformObj[arg0];
+
+                } else if (platformObj.mode) {
+                  // check the platform default mode settings
+                  platformObj = IonicConfig.modeConfig(platformObj.mode);
+                  if (platformObj) {
+                    platformValue = platformObj[arg0];
+                  }
+                }
               }
+
             }
             if (isDefined(platformValue)) {
               settings[arg0] = platformValue;
@@ -132,14 +144,20 @@ export class IonicConfig {
     this._settings.platforms = extend(platform.settings(), this._settings.platforms || {});
   }
 
-  static set global(config) {
-    globalConfig = config;
-  }
+  static modeConfig(mode, config) {
+    const args = arguments;
 
-  static get global() {
-    return globalConfig;
+    if (args.length === 2) {
+      // modeConfig('ios', {...})
+      modeConfigs[mode] = extend(modeConfigs[mode] || {}, config);
+
+    } else {
+      // modeConfig('ios')
+      return modeConfigs[mode];
+    }
+
   }
 
 }
 
-let globalConfig = null;
+let modeConfigs = {};

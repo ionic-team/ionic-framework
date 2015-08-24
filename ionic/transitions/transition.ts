@@ -86,7 +86,6 @@ export class Transition extends Animation {
    STATIC CLASSES
    */
   static create(nav, opts = {}) {
-    //const name = opts.animation || IonicConfig.global.setting('viewTransition') || 'ios';
     const name = opts.animation || 'ios';
 
     let TransitionClass = TransitionRegistry[name];

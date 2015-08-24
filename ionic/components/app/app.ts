@@ -136,8 +136,10 @@ function initApp(window, document, config) {
   Platform.navigatorPlatform(window.navigator.platform);
   Platform.load(config);
 
-  // on resize be sure to clear out existing window dimensions
-  window.addEventListener('resize', Platform.winResize);
+  setTimeout(() => {
+    // start listening for resizes XXms after the app starts
+    window.addEventListener('resize', Platform.winResize);
+  }, 2000);
 
   return app;
 }

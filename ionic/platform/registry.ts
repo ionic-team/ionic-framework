@@ -4,15 +4,7 @@ import {Platform} from './platform';
 Platform.register({
   name: 'core',
   settings: {
-    actionMenuEnter: 'action-menu-slide-in',
-    actionMenuLeave: 'action-menu-slide-out',
-    backButtonText: 'Back',
-    backButtonIcon: 'ion-ios-arrow-back',
-    forwardIcon: 'ion-ios-arrow-forward',
     mode: 'ios',
-    iconMode: 'ios',
-    navTitleAlign: 'center',
-    viewTransition: 'ios'
   }
 });
 Platform.setDefault('core');
@@ -55,21 +47,7 @@ Platform.register({
     'tablet'
   ],
   settings: {
-    actionMenuEnter: 'action-menu-md-slide-in',
-    actionMenuLeave: 'action-menu-md-slide-out',
-    actionMenuCancelIcon: 'ion-close',
-    actionMenuDestructiveIcon: 'ion-trash-a',
-    backButtonText: '',
-    backButtonIcon: 'ion-android-arrow-back',
-    forwardIcon: '',
     mode: 'md',
-    iconMode: 'md',
-    type: 'overlay',
-    keyboardScrollAssist: true,
-    mdRipple: true,
-    tabBarPlacement: 'top',
-    navTitleAlign: 'left',
-    viewTransition: 'md'
   },
   isMatch(p) {
     // "silk" is kindle fire
@@ -90,24 +68,12 @@ Platform.register({
     'iphone'
   ],
   settings: {
-    actionMenuEnter: 'action-menu-slide-in',
-    actionMenuLeave: 'action-menu-slide-out',
-    actionMenuCancelIcon: 'ion-close',
-    actionMenuDestructiveIcon: 'ion-trash-a',
-    backButtonText: 'Back',
-    backButtonIcon: 'ion-ios-arrow-back',
-    forwardIcon: 'ion-ios-arrow-forward',
     mode: 'ios',
-    iconMode: 'ios',
     tapPolyfill: function() {
       // this ensures it's actually a physical iOS device
       // and not just an a spoofed user-agent string
       return /iphone|ipad|ipod/i.test(Platform.navigatorPlatform());
     },
-    keyboardScrollAssist: true,
-    viewTransition: 'ios',
-    navTitleAlign: 'center',
-    mdRipple: false
   },
   isMatch(p) {
     return p.isPlatform('ios', 'iphone|ipad|ipod');
@@ -147,8 +113,6 @@ Platform.register({
   ],
   settings: {
     mode: 'wp',
-    iconMode: 'md',
-    viewTransition: 'md',
   },
   isMatch(p) {
     return p.isPlatform('windowsphone', 'windows phone');

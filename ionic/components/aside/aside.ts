@@ -42,8 +42,8 @@ import {dom} from 'ionic/util'
 })
 export class Aside extends Ion {
 
-  constructor(elementRef: ElementRef, ionicConfig: IonicConfig) {
-    super(elementRef, ionicConfig);
+  constructor(elementRef: ElementRef, config: IonicConfig) {
+    super(elementRef, config);
 
     this.opening = new EventEmitter('opening');
 
@@ -133,8 +133,8 @@ export class Aside extends Ion {
   template: ''
 })
 export class AsideBackdrop extends Ion {
-  constructor(elementRef: ElementRef, ionicConfig: IonicConfig, @Host() aside: Aside) {
-    super(elementRef, ionicConfig);
+  constructor(elementRef: ElementRef, config: IonicConfig, @Host() aside: Aside) {
+    super(elementRef, config);
 
     aside.backdrop = this;
 

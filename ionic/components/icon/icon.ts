@@ -77,7 +77,7 @@ export class IconDirective {
     this.ariaHidden = true;
 
     if (forward !== null) {
-      this.fwdIcon = config.setting('forwardIcon');
+      this.iconFwd = config.setting('iconForward');
     }
 
     if (hostButton) {
@@ -103,8 +103,8 @@ export class IconDirective {
   }
 
   onInit() {
-    if (this.fwdIcon) {
-      this.name = this.fwdIcon;
+    if (this.iconFwd) {
+      this.name = this.iconFwd;
     }
     if (!this.name) return;
 
