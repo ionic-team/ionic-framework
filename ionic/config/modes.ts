@@ -45,7 +45,7 @@ IonicConfig.modeConfig('md', {
 
   navTitleAlign: 'left',
   tabBarPlacement: 'top',
-  viewTransition: 'md'
+  viewTransition: 'md',
 
   type: 'overlay',
   mdRipple: true,
