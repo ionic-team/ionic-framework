@@ -3,16 +3,21 @@
 // --------------------------------------------------
 
 
-.list[mode=ios] {
+ion-list[mode=ios],
+ion-card[mode=ios] {
 
   .text-input {
-    margin: $item-ios-padding-top $item-ios-padding-right $item-ios-padding-bottom $item-ios-padding-left;
+    margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom ($item-ios-padding-left / 2);
     padding: 0;
   }
 
   .item-input[inset] .text-input {
     margin: ($item-ios-padding-top / 2) $item-ios-padding-right ($item-ios-padding-bottom / 2) $item-ios-padding-left;
     padding: ($item-ios-padding-top / 2) ($item-ios-padding-right / 2) ($item-ios-padding-bottom / 2) ($item-ios-padding-left / 2);
+  }
+
+  ion-label {
+    margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom ($item-ios-padding-left / 2);
   }
 
 }

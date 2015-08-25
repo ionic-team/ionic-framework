@@ -1,5 +1,4 @@
 *~
-.DS_Store
 *.sw[mnpcod]
 *.log
 *.tmp
@@ -7,14 +6,20 @@
 log.txt
 *.sublime-project
 *.sublime-workspace
-UserInterfaceState.xcuserstate
 
 .idea/
 .sass-cache/
+.versions/
+coverage/
+dist/
 node_modules/
 tmp/
 temp/
-dist/
+$RECYCLE.BIN/
+
+.DS_Store
+Thumbs.db
+UserInterfaceState.xcuserstate
 
 scripts/resources/web-animations-js/test/
 scripts/resources/web-animations-js/inter-*

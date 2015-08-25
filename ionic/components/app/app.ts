@@ -87,11 +87,11 @@ export class IonicApp {
 
       let platformVersion = versions[platformName];
       if (platformVersion) {
-        // platform-ios_8
-        platformClass += '_' + platformVersion.major;
+        // platform-ios9
+        platformClass += platformVersion.major;
         bodyEle.classList.add(platformClass);
 
-        // platform-ios_8_3
+        // platform-ios9_3
         bodyEle.classList.add(platformClass + '_' + platformVersion.minor);
       }
     });

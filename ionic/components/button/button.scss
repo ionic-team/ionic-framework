@@ -4,13 +4,12 @@
 
 $button-font-size:                1.6rem !default;
 $button-margin:                   0.4rem 0 !default;
-$button-padding:                  0 2rem !default;
-$button-height:                   4.4rem !default;
-$button-border-width:             1px !default;
+$button-padding:                  0 1em !default;
+$button-height:                   2.8em !default;
 $button-border-radius:            4px !default;
 
-$button-round-border-radius:      64px !default;
 $button-round-padding:            0 2.6rem !default;
+$button-round-border-radius:      64px !default;
 
 $button-color:                    color(primary) !default;
 $button-color-activated:          darken-or-lighten($button-color) !default;

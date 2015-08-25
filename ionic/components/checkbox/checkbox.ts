@@ -33,7 +33,7 @@ import {TapClick} from '../button/button';
 })
 @IonicView({
   template:
-  '<div class="item-media media-checkbox">' +
+  '<div item-left class="item-media media-checkbox">' +
     '<div class="checkbox-icon"></div>' +
   '</div>' +
   '<ion-item-content id="{{labelId}}">' +

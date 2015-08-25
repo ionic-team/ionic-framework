@@ -22,7 +22,7 @@ $switch-md-transition-duration:       300ms !default;
 
   .item-media {
     margin: 0;
-    padding: 6px $item-md-padding-right 6px ($item-md-padding-left + 20);
+    padding: 6px ($item-md-padding-right / 2) 6px $item-md-padding-left;
   }
 
 

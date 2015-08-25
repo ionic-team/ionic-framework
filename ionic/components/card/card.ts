@@ -8,10 +8,7 @@ import * as util from 'ionic/util';
 
 
 @IonicDirective({
-  selector: 'ion-card',
-  host: {
-    'class': 'list'
-  }
+  selector: 'ion-card'
 })
 export class Card extends Ion {
   constructor(elementRef: ElementRef, ionicConfig: IonicConfig) {

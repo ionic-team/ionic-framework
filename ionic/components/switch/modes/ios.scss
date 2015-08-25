@@ -26,7 +26,7 @@ $switch-ios-transition-duration:       300ms !default;
 
   .item-media {
     margin: 0;
-    padding: 6px $item-ios-padding-right 6px ($item-ios-padding-left + 20);
+    padding: 6px ($item-ios-padding-right / 2) 6px ($item-ios-padding-left);
   }
 
 

@@ -22,16 +22,18 @@
 
 a.item,
 button.item.item {
-  border-radius: 0;
   margin: 0;
-  color: inherit;
-  text-decoration: none;
+  padding: 0;
   width: 100%;
-  min-height: 4.4rem;
-  line-height: normal;
   justify-content: inherit;
-  box-shadow: none;
+  min-height: 4.4rem;
   font-weight: normal;
+  line-height: normal;
+  text-decoration: none;
+  text-transform: none;
+  color: inherit;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 ion-item-content {
@@ -46,17 +48,17 @@ ion-item-content {
   white-space: normal;
 }
 
+.list .item > icon:first-child {
+  min-width: 24px;
+  text-align: center;
+}
+
+.list .item > icon[small]:first-child {
+  min-width: 18px;
+}
+
 .list .item {
   border-radius: 0;
-
-  icon:first-child {
-    min-width: 24px;
-    text-align: center;
-  }
-
-  icon[small]:first-child {
-    min-width: 18px;
-  }
 
   &.activated {
     background-color: #d9d9d9;
@@ -69,34 +71,7 @@ ion-item-content {
 
 }
 
-.list .item.item {
-
-  ion-item-content + button,
-  ion-item-content + [button],
-  button + ion-item-content,
-  [button] + ion-item-content,
-  icon + icon,
-  ion-item-content + icon,
-  .item-media + ion-item-content,
-  ion-item-content + .item-media,
-  ion-item-content + ion-item-content,
-  icon + .input,
-  .input + icon,
-  icon + .input-label,
-  .input-label + .input {
-    margin-left: 0;
-  }
-
-}
-
-.list a.item.item,
-.list button.item.item {
-  margin-left: 0;
-  margin-right: 0;
-  padding: 0;
-}
-
-.item icon {
+.item > icon {
   font-size: 2.4rem;
 
   &[large] {
@@ -106,18 +81,6 @@ ion-item-content {
   &[small] {
     font-size: 1.8rem;
   }
-}
-
-.list .item button.icon-only,
-.item button.icon-only icon {
-  padding: 0;
-}
-
-.item > button.icon-left icon,
-.item > button.icon-right icon {
-  font-size: 1.2em;
-  margin: 0;
-  padding: 0;
 }
 
 .item {
@@ -171,10 +134,7 @@ ion-item-content {
   text-decoration: none;
 }
 
-.item.item.item.no-border-bottom:after {
-  border: none;
-}
-
+.item.item.item.no-border-bottom:after,
 .item.item.item.no-border-bottom + .item:before {
   border: none;
 }

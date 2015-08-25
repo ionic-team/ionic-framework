@@ -12,6 +12,12 @@ $card-md-padding-right:               16px !default;
 $card-md-padding-bottom:              13px !default;
 $card-md-padding-left:                16px !default;
 
+$card-md-padding-media-top:           10px !default;
+$card-md-padding-media-bottom:        10px !default;
+
+$card-md-avatar-size:                 4rem !default;
+$card-md-thumbnail-size:              8rem !default;
+
 $card-md-background-color:            $list-background-color !default;
 $card-md-box-shadow:                  0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12) !default;
 $card-md-border-radius:               2px !default;
@@ -28,45 +34,22 @@ $card-md-header-padding:              16px !default;
 $card-md-header-color:                #222 !default;
 
 
-.card.list[mode=md] {
+ion-card[mode=md] {
   margin: $card-md-margin-top $card-md-margin-right $card-md-margin-bottom $card-md-margin-left;
+  font-size: $card-md-font-size;
 
   background: $card-md-background-color;
   box-shadow: $card-md-box-shadow;
   border-radius: $card-md-border-radius;
-  font-size: $card-md-font-size;
   overflow: hidden;
 
-  .item:before,
-  .item:after {
-    left: 0;
+  .item {
+    padding-right: ($card-md-padding-right / 2);
+    padding-left: ($card-md-padding-left / 2);
   }
 
-  .item:first-child {
-    margin-top: 0;
-
-    &:before {
-      border-top: none;
-    }
-  }
-
-  .item:last-child {
-    margin-bottom: 0;
-
-    &:after {
-      border-top: none;
-    }
-  }
-
-  ion-item-content button:first-child,
-  ion-item-content [button]:first-child {
-    margin-left: 0;
-  }
-
-  ion-card-header {
-    padding: $card-md-header-padding;
-    font-size: $card-md-header-font-size;
-    color: $card-md-header-color;
+  ion-item-content {
+    padding: $card-md-padding-top ($card-md-padding-right / 2) $card-md-padding-bottom ($card-md-padding-left / 2);
   }
 
   ion-card-content {
@@ -75,21 +58,55 @@ $card-md-header-color:                #222 !default;
     line-height: $card-md-line-height;
   }
 
+  ion-card-header {
+    padding: $card-md-header-padding;
+    font-size: $card-md-header-font-size;
+    color: $card-md-header-color;
+  }
+
+  [item-left],
+  [item-right] {
+    margin: $card-md-padding-media-top ($card-md-padding-right / 2) $card-md-padding-media-bottom ($card-md-padding-left / 2);
+  }
+
+  button[item-left],
+  button[item-right],
+  [button][item-left],
+  [button][item-right], {
+    margin: 0 ($card-md-padding-right / 2) 0 ($card-md-padding-left / 2);
+    padding: 2px 6px;
+    min-height: 26px;
+    font-size: 1.3rem;
+  }
+
   .card-title {
     padding: $card-md-title-padding;
     font-size: $card-md-title-font-size;
     color: $card-md-title-text-color;
   }
 
+  .avatar {
+    max-width: $card-md-avatar-size;
+    max-height: $card-md-avatar-size;
+    border-radius: $card-md-avatar-size / 2;
+  }
+
+  .thumbnail {
+    max-width: $card-md-thumbnail-size;
+    max-height: $card-md-thumbnail-size;
+  }
+
   h1 {
     margin: 0 0 2px;
     font-size: 2.4rem;
+    font-weight: normal;
     color: $card-md-text-color;
   }
 
   h2 {
     margin: 2px 0 2px;
     font-size: 1.6rem;
+    font-weight: normal;
     color: $card-md-text-color;
   }
 
@@ -99,6 +116,7 @@ $card-md-header-color:                #222 !default;
   h6 {
     margin: 2px 0 2px;
     font-size: 1.4rem;
+    font-weight: normal;
     color: $card-md-text-color;
   }
 
@@ -106,11 +124,12 @@ $card-md-header-color:                #222 !default;
     font-size: 1.4rem;
     margin: 0 0 2px;
     line-height: 1.5;
+    font-weight: normal;
     color: $card-md-text-color;
   }
 
 }
 
-.card.list[mode=md] + .card {
+ion-card[mode=md] + ion-card {
   margin-top: 0;
 }
