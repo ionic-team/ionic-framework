@@ -8,6 +8,7 @@ import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
 import {Content} from '../content/content';
 import {ClickBlock} from '../../util/click-block';
+import {Platform} from '../../platform/platform';
 import * as dom  from '../../util/dom';
 
 
@@ -157,9 +158,16 @@ export class TextInput extends Ion {
 
     if (scrollView && this.scrollAssist) {
       // this input is inside of a scroll view
-      // scroll the input to the top
-      let inputY = (this.elementRef.nativeElement.offsetTop - SCROLL_Y_PADDING);
 
+      // find out if text input should be manually scrolled into view
+      let scrollToY = this.getScollToY();
+      if (scrollToY === 0) {
+        // the text input is in a safe position that doesn't require
+        // it to be scrolled into view, just set focus now
+        return this.setFocus();
+      }
+
+      // manually scroll the text input to the top
       // do not allow any clicks while it's scrolling
       ClickBlock(true, SCROLL_INTO_VIEW_DURATION + 200);
 
@@ -168,12 +176,13 @@ export class TextInput extends Ion {
 
       // temporarily move the focus to the focus holder so the browser
       // doesn't freak out while it's trying to get the input in place
+      // at this point the native text input still does not have focus
       this.tempFocusMove();
 
       // scroll the input into place
-      scrollView.scrollTo(0, inputY, SCROLL_INTO_VIEW_DURATION, 8).then(() => {
+      scrollView.scrollTo(0, scrollToY, SCROLL_INTO_VIEW_DURATION, 8).then(() => {
         // the scroll view is in the correct position now
-        // give the native input the focus
+        // give the native text input focus
         this.setFocus();
 
         // all good, allow clicks again
@@ -185,6 +194,69 @@ export class TextInput extends Ion {
       this.setFocus();
     }
 
+  }
+
+  getScollToY() {
+    let ele = this.elementRef.nativeElement;
+    let viewDimensions = this.scrollView.getDimensions();
+
+    // get the inputs Y position relative to the scroll view
+    let inputOffsetTop = ele.offsetTop;
+
+    // compute offset values relative to the body
+    let contentTop = viewDimensions.top;
+    let inputTop = inputOffsetTop + contentTop - viewDimensions.scrollTop;
+    let inputBottom = (inputTop + ele.offsetHeight);
+
+    // compute the safe area which is the viewable
+    // content area when the soft keyboard is up
+    let safeTop = contentTop - 1;
+    let safeBottom = (Platform.height() * 0.6);
+
+    // Text Input Scroll To Scenarios
+    // ---------------------------------------
+    // 1) Input top within safe area, bottom within safe area
+    // 2) Input top within safe area, bottom below safe area
+    // 3) Input top and bottom below safe area
+    // 4) Input top above safe area, bottom within safe area
+    // 5) Input top above safe area, bottom below safe area
+
+    if (inputTop >= safeTop && inputTop <= safeBottom) {
+      // Input top within safe area
+
+      if (inputBottom <= safeBottom) {
+        // 1) Input top within safe area, bottom within safe area
+        // no need to scroll to a position, it's good as-is
+        return 0;
+      }
+
+      // 2) Input top within safe area, bottom below safe area
+      // TODO: What if the input is still taller than safe area?
+      return inputOffsetTop;
+    }
+
+    if (inputTop > safeBottom) {
+      // 3) Input top and bottom below safe area
+      // TODO: What if the input is still taller than safe area?
+      return inputOffsetTop;
+    }
+
+    if (inputTop < safeTop) {
+      // Input top above safe area
+
+      if (inputBottom <= safeTop) {
+        // 4) Input top above safe area, bottom within safe area
+        // TODO: What if the input is still taller than safe area?
+        return inputOffsetTop;
+      }
+
+      // 5) Input top above safe area, bottom below safe area
+      // TODO: What if the input is still taller than safe area?
+      return inputOffsetTop;
+    }
+
+    // fallback for whatever reason
+    return inputOffsetTop;
   }
 
   deregListeners() {
@@ -232,4 +304,3 @@ export class TextInput extends Ion {
 }
 
 const SCROLL_INTO_VIEW_DURATION = 500;
-const SCROLL_Y_PADDING = 6;

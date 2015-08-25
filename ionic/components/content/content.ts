@@ -65,6 +65,29 @@ export class Content extends Ion {
     return this._scrollTo.start(x, y, duration, tolerance);
   }
 
+  getDimensions() {
+    let scrollElement = this.scrollElement;
+    let parentElement = scrollElement.parentElement;
+
+    return {
+      height: parentElement.offsetHeight,
+      top: parentElement.offsetTop,
+      bottom: parentElement.offsetTop + parentElement.offsetHeight,
+
+      width: parentElement.offsetWidth,
+      left: parentElement.offsetLeft,
+      right: parentElement.offsetLeft + parentElement.offsetWidth,
+
+      scrollHeight: scrollElement.scrollHeight,
+      scrollTop: scrollElement.scrollTop,
+      scrollBottom: scrollElement.scrollTop + scrollElement.scrollHeight,
+
+      scrollWidth: scrollElement.scrollWidth,
+      scrollLeft: scrollElement.scrollLeft,
+      scrollRight: scrollElement.scrollLeft + scrollElement.scrollWidth,
+    }
+  }
+
   get scrollPadding() {
     return this._sp;
   }
