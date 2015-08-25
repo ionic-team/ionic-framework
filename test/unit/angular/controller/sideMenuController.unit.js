@@ -322,6 +322,43 @@ describe('$ionicSideMenus controller', function() {
     expect(deregSpy).toHaveBeenCalled();
   }));
 
+  it('should emit $ionicSideMenuOpen on open and $ionicSideMenuClose on close', inject(function($rootScope){
+    // create spies and event listeners
+    var openSpy = jasmine.createSpy('openSpy');
+    $rootScope.$on('$ionicSideMenuOpen', openSpy);
+    var closeSpy = jasmine.createSpy('openSpy');
+    $rootScope.$on('$ionicSideMenuClose', closeSpy);
+
+    // left open
+    ctrl.toggleLeft();
+    expect(ctrl.getOpenPercentage()).toEqual(100);
+    ctrl.$scope.$apply();
+    expect(openSpy).toHaveBeenCalled();
+    expect(openSpy.mostRecentCall.args[1]).toEqual("left");
+
+    // left close
+    ctrl.toggleLeft();
+    expect(ctrl.getOpenPercentage()).toEqual(0);
+    ctrl.$scope.$apply();
+    expect(closeSpy).toHaveBeenCalled();
+    expect(closeSpy.mostRecentCall.args[1]).toEqual("left");
+
+    // right open
+    ctrl.toggleRight();
+    expect(ctrl.getOpenPercentage()).toEqual(-100);
+    ctrl.$scope.$apply();
+    expect(openSpy).toHaveBeenCalled();
+    expect(openSpy.mostRecentCall.args[1]).toEqual("right");
+
+    // right close
+    ctrl.toggleRight();
+    expect(ctrl.getOpenPercentage()).toEqual(0);
+    ctrl.$scope.$apply();
+    expect(closeSpy).toHaveBeenCalled();
+    expect(closeSpy.mostRecentCall.args[1]).toEqual("right");
+  }));
+
+
   it('should deregister back button action on $destroy', inject(function($ionicPlatform) {
     var openAmount = 0;
     var deregSpy = jasmine.createSpy('deregister');

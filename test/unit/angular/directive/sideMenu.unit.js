@@ -349,4 +349,20 @@ describe('menuClose directive', function() {
     el.triggerHandler('click');
     expect(closeSpy).toHaveBeenCalled();
   }));
+  it('should set nextViewOptions',
+    inject(function($compile, $rootScope, $ionicHistory, $timeout) {
+    var el = angular.element('<div menu-close>');
+    el.data('$ionSideMenusController', {
+      close: function() { }
+    });
+    $compile(el)($rootScope.$new());
+    $rootScope.$apply();
+    expect($ionicHistory.nextViewOptions()).toBe(undefined)
+    el.triggerHandler('click');
+    expect($ionicHistory.nextViewOptions().historyRoot).toBe(true);
+    expect($ionicHistory.nextViewOptions().disableAnimate).toBe(true);
+    $timeout.flush();
+    expect($ionicHistory.nextViewOptions().historyRoot).toBe(false);
+    expect($ionicHistory.nextViewOptions().disableAnimate).toBe(false);
+  }));
 });

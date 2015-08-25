@@ -180,6 +180,16 @@ describe('collectionRepeat', function() {
     expect(scrollView.options.getContentHeight).toBe(originalGetContentHeight);
   }));
 
+  it('should force JS scrolling', inject(function($compile, $rootScope) {
+    var scope = $rootScope.$new();
+    var content = $compile('<ion-content overflow-scroll="true">' +
+        '                     <div collection-repeat="item in items" item-height="5" item-width="5"></div>' +
+        '                   </ion-content')(scope);
+    var scrollCtrl = content.data('$$ionicScrollController');
+    $rootScope.$apply()
+    expect(scrollCtrl.isNative()).toBe(false)
+  }));
+
   describe('automatic dimensions', function() {
     it('should use computed width/height', inject(function($window) {
       spyOn($window, 'getComputedStyle').andReturn({

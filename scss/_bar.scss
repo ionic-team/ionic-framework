@@ -13,7 +13,7 @@
   left: 0;
   z-index: $z-index-bar;
 
-  box-sizing: border-box;
+  @include box-sizing(border-box);
   padding: $bar-padding-portrait;
 
   width: 100%;

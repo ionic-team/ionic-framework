@@ -66,7 +66,7 @@ For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/`
 
 ## Authors
 
-Originally created by [Adam Bradley](http://twitter.com/adamdbradley), [Ben Sperry](http://twitter.com/benjsperry), and [Max Lynch](http://twitter.com/maxlynch), Ionic has seen hundreds of great [contributors](https://github.com/driftyco/ionic/graphs/contributors) from around the world, including Ionic Team Members [Andrew Joslin](http://twitter.com/andrewtjoslin), [Perry Govier](http://twitter.com/perrygovier), and [Mike Hartington](http://twitter.com/mhartington).
+Originally created by [Adam Bradley](http://twitter.com/adamdbradley), [Ben Sperry](http://twitter.com/benjsperry), and [Max Lynch](http://twitter.com/maxlynch), Ionic has seen hundreds of great [contributors](https://github.com/driftyco/ionic/graphs/contributors) from around the world, including Ionic Team Members [Perry Govier](http://twitter.com/perrygovier), [Mike Hartington](http://twitter.com/mhartington), and [Tim Lancina](http://twitter.com/dopernicus).
 
 ## Development
 

@@ -1,8 +1,8 @@
 {
-  "name": "ionic",
+  "name": "ionic-sdk",
   "private": false,
-  "version": "1.0.0-rc.5",
-  "codename": "tungsten-turkey",
+  "version": "1.1.0",
+  "codename": "xenon-xerus",
   "repository": {
     "url": "git://github.com/driftyco/ionic.git"
   },
@@ -32,13 +32,17 @@
     "gulp-util": "^2.2.14",
     "htmlparser2": "3.7.0",
     "ircb": "^0.3.1",
+    "istanbul": "^0.3.17",
+    "istanbul-instrumenter-loader": "^0.1.3",
     "jasmine-node": "^1.14.3",
     "js-string-escape": "^1.0.0",
     "js-yaml": "^3.0.2",
     "jshint-summary": "^0.3.0",
     "karma": "^0.12.23",
     "karma-chrome-launcher": "^0.1.4",
+    "karma-coverage": "^0.4.2",
     "karma-jasmine": "~0.1.5",
+    "karma-mocha-reporter": "^1.0.2",
     "karma-phantomjs-launcher": "~0.1.2",
     "karma-sauce-launcher": "~0.2.0",
     "karma-script-launcher": "~0.1.0",
@@ -48,6 +52,7 @@
     "marked": "^0.3.2",
     "minimist": "0.0.8",
     "mkdirp": "^0.3.5",
+    "node-libs-browser": "^0.5.2",
     "node-twitter-api": "^1.2.2",
     "node-uuid": "^1.4.1",
     "protractor": "^0.23.1",
@@ -56,6 +61,7 @@
     "sauce-connect-launcher": "^0.2.2",
     "semver": "^2.2.1",
     "through": "^2.3.4",
+    "webpack": "^1.10.1",
     "winston": "^0.7.2"
   },
   "licenses": [

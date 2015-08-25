@@ -1,3 +1,70 @@
+<a name"1.1.0"></a>
+### 1.1.0 "xenon-xerus" (2015-08-13)
+
+
+#### Bug Fixes
+
+
+* **location:** Fix preventDefault logic in ionic.Gesture.gestures.Drag ([e10b5d2](https://github.com/driftyco/ionic/commit/e10b5d2))
+* **menuClose:** Prevent clicking on current page link in sidemenu from disorganizing page hierarchy. Fixes [#4132](https://github.com/driftyco/ionic/issues/4132)) ([a379bfd](https://github.com/driftyco/ionic/commit/a379bfd))
+* **select:** prevent words from being cut off ([e8724e1](https://github.com/driftyco/ionic/commit/e8724e1))
+* **tabs:** adjust tabs and content when hiding the nav bar ([7e4fb15](https://github.com/driftyco/ionic/commit/7e4fb15))
+
+
+#### Features
+
+* **angular:** Upgrade to Angular 1.4 ([355bf6a](https://github.com/driftyco/ionic/commit/355bf6a))
+* **clearCache:** clearCache returns a promise ([336c388](https://github.com/driftyco/ionic/commit/336c388))
+
+
+<a name"1.0.1"></a>
+### 1.0.1 "vanadium-vaquita" (2015-06-30)
+
+
+#### Bug Fixes
+
+* **button:** fix line-height for button-small ([753fcde](https://github.com/driftyco/ionic/commit/753fcde))
+* **ionicConfig:**
+  * remove tel from images ([d256870](https://github.com/driftyco/ionic/commit/d256870)
+  * add content scheme to whitelist ([8572f38](https://github.com/driftyco/ionic/commit/8572f38)
+* **gestures:** only preventDefault on direction if direction supplied ([56ab0f2](https://github.com/driftyco/ionic/commit/56ab0f2))
+* **history:** maintain nextViewOptions with resolves  ([cef6708](https://github.com/driftyco/ionic/commit/cef6708))
+* **item:** set complex ionItems to use scss var  ([5aaa94a](https://github.com/driftyco/ionic/commit/5aaa94a))
+* **infiniteScroll:** reduce memory used by inactive spinner ([32da5cd](https://github.com/driftyco/ionic/commit/32da5cd))
+* **loading:** reduce memory used by inactive spinner ([f622817](https://github.com/driftyco/ionic/commit/f622817))
+* **popup:** close highest overlay  ([bcfe210](https://github.com/driftyco/ionic/commit/bcfe210))
+* **scroll:** keyboard support for native scroll views ([a293a23](https://github.com/driftyco/ionic/commit/a293a23))
+* **scrollView:** fix memory leak in JS scrolling cleanup ([d6431a7](https://github.com/driftyco/ionic/commit/d6431a7))
+* **tabs:**
+  * make icons and titles stay in the same position  ([d9b3b80](https://github.com/driftyco/ionic/commit/d9b3b80))
+  * fix icons and titles position  ([f76aedb](https://github.com/driftyco/ionic/commit/f76aedb))
+* **tap:** stop cloning date inputs ([d3c3e8c](https://github.com/driftyco/ionic/commit/d3c3e8c))
+* **viewSwitcher:** broadcast view transition events in a consistent order ([f78b1b3](https://github.com/driftyco/ionic/commit/f78b1b3))
+
+
+
+#### Features
+
+* **gestures:** add dragstart and dragend gestures ([7679690](https://github.com/driftyco/ionic/commit/7679690))
+* **sideMenu:** add menu open and close events ([dbd5881](https://github.com/driftyco/ionic/commit/dbd5881))
+* **spinner:** allow ionSpinner default to be set by ionicConfigProvider ([cf338cf](https://github.com/driftyco/ionic/commit/dbd5881))
+
+
+
+<a name"1.0.0"></a>
+### 1.0.0 "uranium-unicorn" (2015-05-12)
+
+#### Bug Fixes
+
+* **config:** add support for blob image protocol. ([d684d62a](https://github.com/driftyco/ionic/commit/d684d62a), closes [#3645](https://github.com/driftyco/ionic/issues/3645))
+* **fonts:** IE does not support query string cache busting in font URLs ([bd72a33](https://github.com/driftyco/ionic/commit/bd72a33))
+* **infiniteScroll:** prevent error on infinite scroll complete with native scrolling ([86565e24](https://github.com/driftyco/ionic/commit/86565e24), closes [#3682](https://github.com/driftyco/ionic/issues/3682))
+* **ionicConfig:** allow using tel for hrefs ([db730f16](https://github.com/driftyco/ionic/commit/db730f16), closes [#3647](https://github.com/driftyco/ionic/issues/3647))
+* **modal:** Prevent scroll=false content from overlapping modal content. ([4e74ead5](https://github.com/driftyco/ionic/commit/4e74ead5), closes [#3648](https://github.com/driftyco/ionic/issues/3648))
+* **scrolling:** Collection repeat requires JS scrolling ([0557c305](https://github.com/driftyco/ionic/commit/0557c305))
+
+
+
 <a name"1.0.0-rc.5"></a>
 ### 1.0.0-rc.5 "tungsten-turkey" (2015-04-27)
 

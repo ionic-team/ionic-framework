@@ -40,6 +40,24 @@
       top: $bar-height + $bar-subheader-height + $tabs-height + $ios-statusbar-height;
     }
   }
+  .popover{
+    .bar-header:not(.bar-subheader) {
+      height: $bar-height;
+      &.item-input-inset .item-input-wrapper {
+        margin-top: -1px;
+      }
+      > * {
+        margin-top: 0;
+      }
+    }
+    .has-header,
+    .bar-subheader {
+      top: $bar-height;
+    }
+    .has-subheader {
+      top: $bar-height + $bar-subheader-height;
+    }
+  }
   &.status-bar-hide {
     // Cordova doesn't adjust the body height correctly, this makes up for it
     margin-bottom: 20px;

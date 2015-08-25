@@ -963,7 +963,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     container.removeEventListener('touchmove', self.touchMoveBubble);
     document.removeEventListener('touchmove', self.touchMove);
     document.removeEventListener('touchend', self.touchEnd);
-    document.removeEventListener('touchcancel', self.touchCancel);
+    document.removeEventListener('touchcancel', self.touchEnd);
 
     container.removeEventListener("pointerdown", self.touchStart);
     container.removeEventListener("pointermove", self.touchMoveBubble);

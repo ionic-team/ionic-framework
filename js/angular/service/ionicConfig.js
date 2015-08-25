@@ -90,6 +90,15 @@
 
 /**
  * @ngdoc method
+ * @name $ionicConfigProvider#scrolling.jsScrolling
+ * @description  Whether to use JS or Native scrolling. Defaults to JS scrolling. Setting this to
+ * `false` has the same effect as setting each `ion-content` to have `overflow-scroll='true'`.
+ * @param {boolean} value Defaults to `true`
+ * @returns {boolean}
+ */
+
+/**
+ * @ngdoc method
  * @name $ionicConfigProvider#backButton.icon
  * @description Back button icon.
  * @param {string} value
@@ -126,6 +135,15 @@
  * @name $ionicConfigProvider#form.toggle
  * @description Toggle item style. Android defaults to `small` and iOS defaults to `large`.
  * @param {string} value
+ * @returns {string}
+ */
+
+/**
+ * @ngdoc method
+ * @name $ionicConfigProvider#spinner.icon
+ * @description Default spinner icon to use.
+ * @param {string} value Can be: `android`, `ios`, `ios-small`, `bubbles`, `circles`, `crescent`,
+ * `dots`, `lines`, `ripple`, or `spiral`.
  * @returns {string}
  */
 
@@ -244,6 +262,9 @@ IonicModule
     scrolling: {
       jsScrolling: PLATFORM
     },
+    spinner: {
+      icon: PLATFORM
+    },
     tabs: {
       style: PLATFORM,
       position: PLATFORM
@@ -291,6 +312,10 @@ IonicModule
       jsScrolling: true
     },
 
+    spinner: {
+      icon: 'ios'
+    },
+
     tabs: {
       style: 'standard',
       position: 'bottom'
@@ -336,6 +361,10 @@ IonicModule
       toggle: 'small'
     },
 
+    spinner: {
+      icon: 'android'
+    },
+
     tabs: {
       style: 'striped',
       position: 'top'
@@ -349,6 +378,9 @@ IonicModule
     //scrolling: {
     //  jsScrolling: false
     //}
+    spinner: {
+      icon: 'android'
+    }
   });
 
 
@@ -619,6 +651,6 @@ IonicModule
 // http://blogs.msdn.com/b/msdn_answers/archive/2015/02/10/
 // running-cordova-apps-on-windows-and-windows-phone-8-1-using-ionic-angularjs-and-other-frameworks.aspx
 .config(['$compileProvider', function($compileProvider) {
-  $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|ghttps?|ms-appx|x-wmapp0):/);
-  $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|ms-appx|x-wmapp0):|data:image\//);
+  $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|tel|ftp|mailto|file|ghttps?|ms-appx|x-wmapp0):/);
+  $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|content|blob|ms-appx|x-wmapp0):|data:image\//);
 }]);
