@@ -1,5 +1,6 @@
-import {Directive} from 'angular2/angular2';
+import {Directive, Self, Type} from 'angular2/angular2';
 
+import {Ion} from '../ion';
 import {IonicApp} from './app';
 
 
@@ -23,6 +24,33 @@ export class Register {
     if (this.register && this.registerId) {
       this.app.register(this.registerId, this.register);
     }
+  }
+
+}
+
+
+@Directive({
+  selector: '[ref]',
+  properties: [
+    'ref'
+  ],
+  host: {
+    'this.ref': 'refId'
+  }
+})
+export class Ref {
+
+  constructor(app: IonicApp, @Self() component: any) {
+    this.app = app;
+    console.log('Register on any', component)
+  }
+
+  onInit() {
+    /*
+    if (this.register && this.registerId) {
+      this.app.register(this.registerId, this.register);
+    }
+    */
   }
 
 }

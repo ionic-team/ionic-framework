@@ -4,7 +4,7 @@ import * as util from 'ionic/util';
 import {IonicConfig} from './config';
 import {ionicBootstrap} from '../components/app/app';
 import {
-  Aside, Button, Content, Scroll, Refresher,
+  Aside, AsideToggle, Button, Content, Scroll, Refresher,
   Slides, Slide, SlidePager,
   Tabs, Tab,
   Card, List, ListHeader, Item, ItemGroup, ItemGroupTitle,
@@ -32,6 +32,8 @@ export const IonicDirectives = [
 
   // Content
   forwardRef(() => Aside),
+  forwardRef(() => AsideToggle),
+
   forwardRef(() => Button),
   forwardRef(() => Content),
   forwardRef(() => Scroll),
@@ -79,6 +81,7 @@ export const IonicDirectives = [
   forwardRef(() => NavPop),
   forwardRef(() => NavRouter),
   forwardRef(() => Register),
+  //forwardRef(() => Ref),
 
   forwardRef(() => ShowWhen),
   forwardRef(() => HideWhen),

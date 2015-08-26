@@ -1,6 +1,7 @@
 import {forwardRef, Component, Host, View, EventEmitter, ElementRef} from 'angular2/angular2';
 
 import {Ion} from '../ion';
+import {IonicApp} from '../app/app';
 import {IonicConfig} from '../../config/config';
 import {IonicComponent} from '../../config/annotations';
 import * as types from './extensions/types'
@@ -42,8 +43,13 @@ import {dom} from 'ionic/util'
 })
 export class Aside extends Ion {
 
-  constructor(elementRef: ElementRef, config: IonicConfig) {
+  constructor(app: IonicApp, elementRef: ElementRef, config: IonicConfig) {
     super(elementRef, config);
+
+    this.app = app;
+
+    // TODO(mlynch): We need to build out the ref system
+    app.register('menu', this);
 
     this.opening = new EventEmitter('opening');
 
@@ -51,6 +57,10 @@ export class Aside extends Ion {
     this.getNativeElement().addEventListener('transitionend', ev => {
       this.setChanging(false)
     })
+  }
+
+  onDestroy() {
+    app.unregister(this);
   }
 
   onInit() {

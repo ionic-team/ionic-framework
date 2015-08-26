@@ -61,6 +61,21 @@ export class IonicApp {
   }
 
   /**
+   * Unregister a known component with a key.
+   */
+  unregister(key, component) {
+    delete this.components[key];
+  }
+
+  getRegisteredComponent(cls) {
+    for(let component of this.components) {
+      if(component instanceof cls) {
+        return component;
+      }
+    }
+  }
+
+  /**
    * Get the component for the given key.
    */
   getComponent(key) {

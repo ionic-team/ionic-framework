@@ -5,16 +5,9 @@ import {App, IonicApp, IonicView, NavController} from 'ionic/ionic';
   templateUrl: 'home-page.html'
 })
 class HomePage {
-
   constructor(app: IonicApp) {
     this.app = app;
   }
-
-  toggleAside() {
-    console.log('toggleAside')
-    this.app.getComponent('mainMenu').toggle();
-  }
-
 }
 
 
@@ -27,9 +20,4 @@ class E2EApp {
     this.app = app;
     this.rootView = HomePage;
   }
-
-  closeMenu() {
-    this.app.getComponent('mainMenu').close();
-  }
-
 }
