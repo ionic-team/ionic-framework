@@ -10,10 +10,7 @@ import {ScrollTo} from '../../animations/scroll-to';
   selector: 'ion-content',
   properties: [
     'parallax'
-  ],
-  host: {
-    ['[class.scroll-padding]']: 'scrollPadding'
-  }
+  ]
 })
 @View({
   template: '<div class="scroll-content"><ng-content></ng-content></div>'
@@ -21,8 +18,6 @@ import {ScrollTo} from '../../animations/scroll-to';
 export class Content extends Ion {
   constructor(elementRef: ElementRef, config: IonicConfig) {
     super(elementRef, config);
-
-    this.scrollPadding = config.setting('keyboardScrollAssist');
   }
 
   onIonInit() {
@@ -86,14 +81,6 @@ export class Content extends Ion {
       scrollLeft: scrollElement.scrollLeft,
       scrollRight: scrollElement.scrollLeft + scrollElement.scrollWidth,
     }
-  }
-
-  get scrollPadding() {
-    return this._sp;
-  }
-
-  set scrollPadding(val) {
-    this._sp = val;
   }
 
 }

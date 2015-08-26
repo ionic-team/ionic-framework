@@ -189,7 +189,7 @@ gulp.task('bundle', ['bundle.ionic'], function() {
 })
 
 gulp.task('tests', function() {
-  return gulp.src('ionic/components/*/test/*/**/*.spec.ts')
+  return gulp.src('ionic/**/test/**/*.spec.ts')
     .pipe(tsc(tscOptions, null, tscReporter))
     .pipe(babel(getBabelOptions('dist/tests')))
     .pipe(rename(function(file) {
@@ -307,9 +307,8 @@ gulp.task('fonts', function() {
 
 require('./scripts/snapshot/snapshot.task')(gulp, argv, buildConfig);
 
-gulp.task('karma', function() {
+gulp.task('karma', ['tests'], function() {
   return karma.start({ configFile: __dirname + '/scripts/karma/karma.conf.js' })
-  //return karma.start({ configFile: __dirname + '/karma.conf.js' })
 });
 
 gulp.task('karma-watch', function() {

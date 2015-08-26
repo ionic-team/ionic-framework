@@ -160,8 +160,11 @@ export class TextInput extends Ion {
       // this input is inside of a scroll view
 
       // find out if text input should be manually scrolled into view
-      let scrollToY = this.getScollToY();
-      if (scrollToY === 0) {
+      let ele = this.elementRef.nativeElement;
+      let safeAreaBottom = (Platform.height() * 0.6);
+
+      let scrollData = this.getScollData(ele.offsetTop, ele.offsetHeight, scrollView.getDimensions(), safeAreaBottom);
+      if (scrollData.noScroll) {
         // the text input is in a safe position that doesn't require
         // it to be scrolled into view, just set focus now
         return this.setFocus();
@@ -171,16 +174,13 @@ export class TextInput extends Ion {
       // do not allow any clicks while it's scrolling
       ClickBlock(true, SCROLL_INTO_VIEW_DURATION + 200);
 
-      // used to put a lot of padding on the bottom of the scroll view
-      scrollView.scrollPadding = true;
-
       // temporarily move the focus to the focus holder so the browser
       // doesn't freak out while it's trying to get the input in place
       // at this point the native text input still does not have focus
       this.tempFocusMove();
 
       // scroll the input into place
-      scrollView.scrollTo(0, scrollToY, SCROLL_INTO_VIEW_DURATION, 8).then(() => {
+      scrollView.scrollTo(0, scrollData.scrollTo, SCROLL_INTO_VIEW_DURATION, 8).then(() => {
         // the scroll view is in the correct position now
         // give the native text input focus
         this.setFocus();
@@ -196,67 +196,70 @@ export class TextInput extends Ion {
 
   }
 
-  getScollToY() {
-    let ele = this.elementRef.nativeElement;
-    let viewDimensions = this.scrollView.getDimensions();
+  getScollData(inputOffsetTop, inputOffsetHeight, scrollViewDimensions, safeAreaBottom) {
+    // compute input's Y values relative to the body
+    let inputTop = (inputOffsetTop + scrollViewDimensions.top - scrollViewDimensions.scrollTop);
+    let inputBottom = (inputTop + inputOffsetHeight);
 
-    // get the inputs Y position relative to the scroll view
-    let inputOffsetTop = ele.offsetTop;
+    // compute the safe area which is the viewable content area when the soft keyboard is up
+    let safeAreaTop = (scrollViewDimensions.top - 1);
+    let safeAreaHeight = (safeAreaBottom - safeAreaTop);
 
-    // compute offset values relative to the body
-    let contentTop = viewDimensions.top;
-    let inputTop = inputOffsetTop + contentTop - viewDimensions.scrollTop;
-    let inputBottom = (inputTop + ele.offsetHeight);
+    let inputTopWithinSafeArea = (inputTop >= safeAreaTop && inputTop <= safeAreaBottom);
+    let inputBottomWithinSafeArea = (inputBottom >= safeAreaTop && inputBottom <= safeAreaBottom);
+    let inputBottomBelowSafeArea = (inputBottom > safeAreaBottom);
+    let inputFitsWithinSafeArea = (inputOffsetHeight <= safeAreaHeight);
+    let distanceInputBottomBelowSafeArea = (safeAreaBottom - inputBottom);
 
-    // compute the safe area which is the viewable
-    // content area when the soft keyboard is up
-    let safeTop = contentTop - 1;
-    let safeBottom = (Platform.height() * 0.6);
+    /*
+    Text Input Scroll To Scenarios
+    ---------------------------------------
+    1) Input top within safe area, bottom within safe area
+    2) Input top within safe area, bottom below safe area, room to scroll
+    3) Input top above safe area, bottom within safe area, room to scroll
+    4) Input top below safe area, no room to scroll, input smaller than safe area
+    5) Input top within safe area, bottom below safe area, no room to scroll, input smaller than safe area
+    6) Input top within safe area, bottom below safe area, no room to scroll, input larger than safe area
+    7) Input top below safe area, no room to scroll, input larger than safe area
+    */
 
-    // Text Input Scroll To Scenarios
-    // ---------------------------------------
-    // 1) Input top within safe area, bottom within safe area
-    // 2) Input top within safe area, bottom below safe area
-    // 3) Input top and bottom below safe area
-    // 4) Input top above safe area, bottom within safe area
-    // 5) Input top above safe area, bottom below safe area
+    if (inputTopWithinSafeArea && inputBottomWithinSafeArea) {
+      // Input top within safe area, bottom within safe area
+      // no need to scroll to a position, it's good as-is
+      return { noScroll: true };
+    }
 
-    if (inputTop >= safeTop && inputTop <= safeBottom) {
-      // Input top within safe area
+    // looks like we'll have to do some auto-scrolling
+    let scrollData = {
+      scrollUp: 0,
+      scrollDown: 0,
+      scrollTo: inputOffsetTop,
+      scrollPadding: 0,
+    };
 
-      if (inputBottom <= safeBottom) {
-        // 1) Input top within safe area, bottom within safe area
-        // no need to scroll to a position, it's good as-is
-        return 0;
+    if (inputTopWithinSafeArea && inputBottomBelowSafeArea) {
+      // Input top within safe area, bottom below safe area
+      let distanceInputTopIntoSafeArea = (safeAreaTop - inputTop);
+      let distanceInputBottomBelowSafeArea = (inputBottom - safeAreaBottom);
+
+      if (distanceInputBottomBelowSafeArea < distanceInputTopIntoSafeArea) {
+        // the input's top is farther into the safe area then the bottom is out of it
+        // this means we can scroll it up a little bit and the top will still be
+        // within the safe area
+        scrollData.scrollUp = distanceInputTopIntoSafeArea;
+
+      } else {
+        // the input's top is less below the safe area top than the
+        // input's bottom is below the safe area bottom. So scroll the input
+        // to be at the top of the safe area, knowing that the bottom will go below
+        scrollData.scrollUp = distanceInputTopIntoSafeArea;
       }
 
-      // 2) Input top within safe area, bottom below safe area
-      // TODO: What if the input is still taller than safe area?
-      return inputOffsetTop;
     }
 
-    if (inputTop > safeBottom) {
-      // 3) Input top and bottom below safe area
-      // TODO: What if the input is still taller than safe area?
-      return inputOffsetTop;
-    }
-
-    if (inputTop < safeTop) {
-      // Input top above safe area
-
-      if (inputBottom <= safeTop) {
-        // 4) Input top above safe area, bottom within safe area
-        // TODO: What if the input is still taller than safe area?
-        return inputOffsetTop;
-      }
-
-      // 5) Input top above safe area, bottom below safe area
-      // TODO: What if the input is still taller than safe area?
-      return inputOffsetTop;
-    }
 
     // fallback for whatever reason
-    return inputOffsetTop;
+    return scrollData;
   }
 
   deregListeners() {
