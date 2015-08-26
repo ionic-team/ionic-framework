@@ -185,7 +185,7 @@ gulp.task('bundle.ionic', ['transpile'], function() {
 gulp.task('bundle', ['bundle.ionic'], function() {
   return gulp.src(buildConfig.scripts)
     .pipe(concat('ionic.bundle.js'))
-    .pipe(gulp.dest('dist/js'));;
+    .pipe(gulp.dest('dist/js'));
 })
 
 gulp.task('tests', function() {
@@ -193,7 +193,8 @@ gulp.task('tests', function() {
     .pipe(tsc(tscOptions, null, tscReporter))
     .pipe(babel(getBabelOptions('dist/tests')))
     .pipe(rename(function(file) {
-      file.dirname = file.dirname.replace(path.sep + 'test' + path.sep, path.sep)
+      var regex = new RegExp(path.sep + 'test(' + path.sep + '|$)');
+      file.dirname = file.dirname.replace(regex, path.sep);
     }))
     .pipe(gulp.dest('dist/tests'))
 })
