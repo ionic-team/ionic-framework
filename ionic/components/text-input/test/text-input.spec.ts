@@ -1,7 +1,9 @@
-import {Ion} from 'ionic/ion';
+import {TextInput} from 'ionic/ionic';
 
 export function run() {
-  it('should be true', () => {
-    expect(true).toBe(true);
+
+  it('should not scroll', () => {
+    let input = new TextInput();
   });
+
 }

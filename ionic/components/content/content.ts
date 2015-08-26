@@ -4,6 +4,7 @@ import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
 import {IonicComponent} from '../../config/annotations';
 import {ScrollTo} from '../../animations/scroll-to';
+import {Platform} from '../../platform/platform';
 
 
 @Component({
@@ -80,6 +81,8 @@ export class Content extends Ion {
       scrollWidth: scrollElement.scrollWidth,
       scrollLeft: scrollElement.scrollLeft,
       scrollRight: scrollElement.scrollLeft + scrollElement.scrollWidth,
+
+      keyboardTop: (Platform.height() * 0.6)
     }
   }
 

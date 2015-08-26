@@ -8,7 +8,6 @@ import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
 import {Content} from '../content/content';
 import {ClickBlock} from '../../util/click-block';
-import {Platform} from '../../platform/platform';
 import * as dom  from '../../util/dom';
 
 
@@ -161,9 +160,8 @@ export class TextInput extends Ion {
 
       // find out if text input should be manually scrolled into view
       let ele = this.elementRef.nativeElement;
-      let safeAreaBottom = (Platform.height() * 0.6);
 
-      let scrollData = this.getScollData(ele.offsetTop, ele.offsetHeight, scrollView.getDimensions(), safeAreaBottom);
+      let scrollData = this.getScollData(ele.offsetTop, ele.offsetHeight, scrollView.getDimensions());
       if (scrollData.noScroll) {
         // the text input is in a safe position that doesn't require
         // it to be scrolled into view, just set focus now
@@ -196,13 +194,14 @@ export class TextInput extends Ion {
 
   }
 
-  getScollData(inputOffsetTop, inputOffsetHeight, scrollViewDimensions, safeAreaBottom) {
+  getScollData(inputOffsetTop, inputOffsetHeight, scrollViewDimensions) {
     // compute input's Y values relative to the body
     let inputTop = (inputOffsetTop + scrollViewDimensions.top - scrollViewDimensions.scrollTop);
     let inputBottom = (inputTop + inputOffsetHeight);
 
     // compute the safe area which is the viewable content area when the soft keyboard is up
     let safeAreaTop = (scrollViewDimensions.top - 1);
+    let safeAreaBottom = scrollViewDimensions.keyboardTop;
     let safeAreaHeight = (safeAreaBottom - safeAreaTop);
 
     let inputTopWithinSafeArea = (inputTop >= safeAreaTop && inputTop <= safeAreaBottom);
@@ -231,8 +230,7 @@ export class TextInput extends Ion {
 
     // looks like we'll have to do some auto-scrolling
     let scrollData = {
-      scrollUp: 0,
-      scrollDown: 0,
+      scrollAmount: 0,
       scrollTo: inputOffsetTop,
       scrollPadding: 0,
     };
@@ -246,16 +244,18 @@ export class TextInput extends Ion {
         // the input's top is farther into the safe area then the bottom is out of it
         // this means we can scroll it up a little bit and the top will still be
         // within the safe area
-        scrollData.scrollUp = distanceInputTopIntoSafeArea;
+        scrollData.scrollAmount = distanceInputTopIntoSafeArea * -1;
 
       } else {
         // the input's top is less below the safe area top than the
         // input's bottom is below the safe area bottom. So scroll the input
         // to be at the top of the safe area, knowing that the bottom will go below
-        scrollData.scrollUp = distanceInputTopIntoSafeArea;
+        scrollData.scrollAmount = distanceInputTopIntoSafeArea * -1;
       }
 
     }
+
+    scrollData.scrollTo = (inputOffsetTop + scrollData.scrollAmount);
 
 
     // fallback for whatever reason
