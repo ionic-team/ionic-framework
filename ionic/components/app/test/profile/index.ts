@@ -20,7 +20,7 @@ export class ParallaxEffect {
     elementRef: ElementRef
   ) {
     this.ele = elementRef.nativeElement;
-    this.scroller = this.ele.querySelector('.scroll-content');
+    this.scroller = this.ele.querySelector('scroll-content');
     this.scroller.addEventListener('scroll', (e) => {
       //this.counter.innerHTML = e.target.scrollTop;
       dom.raf(() => {

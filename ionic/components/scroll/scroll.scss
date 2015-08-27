@@ -1,14 +1,14 @@
 ion-scroll {
   position: relative;
   display: block;
-  &.scroll-x .scroll-content {
+  &.scroll-x scroll-content {
     overflow-x: auto;
   }
-  &.scroll-y .scroll-content {
+  &.scroll-y scroll-content {
     overflow-y: auto;
   }
 
-  .scroll-content {
+  scroll-content {
     position: absolute;
     top: 0;
     right: 0;

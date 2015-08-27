@@ -16,9 +16,6 @@ IonicConfig.modeConfig('ios', {
   iconForward: 'ion-ios-arrow-forward',
   iconMode: 'ios',
 
-  keyboardScrollAssist: true,
-  tapPolyfill: false,
-
   navTitleAlign: 'center',
   tabBarPlacement: 'bottom',
   viewTransition: 'ios',
@@ -39,9 +36,6 @@ IonicConfig.modeConfig('md', {
 
   iconForward: '',
   iconMode: 'md',
-
-  keyboardScrollAssist: true,
-  tapPolyfill: false,
 
   navTitleAlign: 'left',
   tabBarPlacement: 'top',

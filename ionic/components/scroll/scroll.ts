@@ -20,7 +20,7 @@ import {IonicComponent} from '../../config/annotations';
   }
 })
 @View({
-  template: '<div class="scroll-content"><ng-content></ng-content></div>'
+  template: '<scroll-content><ng-content></ng-content></scroll-content>'
 })
 export class Scroll extends Ion {
   constructor(elementRef: ElementRef, ionicConfig: IonicConfig) {

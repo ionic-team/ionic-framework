@@ -9,6 +9,7 @@ import {IonicApp} from '../app/app';
 import {Content} from '../content/content';
 import {ClickBlock} from '../../util/click-block';
 import * as dom  from '../../util/dom';
+import {Platform} from '../../platform/platform';
 
 
 
@@ -161,16 +162,21 @@ export class TextInput extends Ion {
       // find out if text input should be manually scrolled into view
       let ele = this.elementRef.nativeElement;
 
-      let scrollData = this.getScollData(ele.offsetTop, ele.offsetHeight, scrollView.getDimensions());
+      let keyboardHeight = this.config.setting('keyboardHeight');
+
+      let scrollData = TextInput.getScollData(ele.offsetTop, ele.offsetHeight, scrollView.getDimensions(), keyboardHeight);
       if (scrollData.noScroll) {
         // the text input is in a safe position that doesn't require
         // it to be scrolled into view, just set focus now
         return this.setFocus();
       }
 
+      // add padding to the bottom of the scroll view (if needed)
+      scrollView.addKeyboardPadding(scrollData.scrollPadding);
+
       // manually scroll the text input to the top
       // do not allow any clicks while it's scrolling
-      ClickBlock(true, SCROLL_INTO_VIEW_DURATION + 200);
+      ClickBlock(true, SCROLL_INTO_VIEW_DURATION + 100);
 
       // temporarily move the focus to the focus holder so the browser
       // doesn't freak out while it's trying to get the input in place
@@ -178,7 +184,7 @@ export class TextInput extends Ion {
       this.tempFocusMove();
 
       // scroll the input into place
-      scrollView.scrollTo(0, scrollData.scrollTo, SCROLL_INTO_VIEW_DURATION, 8).then(() => {
+      scrollView.scrollTo(0, scrollData.scrollTo, SCROLL_INTO_VIEW_DURATION, 6).then(() => {
         // the scroll view is in the correct position now
         // give the native text input focus
         this.setFocus();
@@ -194,21 +200,22 @@ export class TextInput extends Ion {
 
   }
 
-  getScollData(inputOffsetTop, inputOffsetHeight, scrollViewDimensions) {
+  static getScollData(inputOffsetTop, inputOffsetHeight, scrollViewDimensions, keyboardHeight) {
     // compute input's Y values relative to the body
-    let inputTop = (inputOffsetTop + scrollViewDimensions.top - scrollViewDimensions.scrollTop);
+    let inputTop = (inputOffsetTop + scrollViewDimensions.contentTop - scrollViewDimensions.scrollTop);
     let inputBottom = (inputTop + inputOffsetHeight);
 
     // compute the safe area which is the viewable content area when the soft keyboard is up
-    let safeAreaTop = (scrollViewDimensions.top - 1);
-    let safeAreaBottom = scrollViewDimensions.keyboardTop;
-    let safeAreaHeight = (safeAreaBottom - safeAreaTop);
+    let safeAreaTop = scrollViewDimensions.contentTop;
+    let safeAreaHeight = Platform.height() - keyboardHeight - safeAreaTop;
+    safeAreaHeight /= 2;
+    let safeAreaBottom = safeAreaTop + safeAreaHeight;
 
     let inputTopWithinSafeArea = (inputTop >= safeAreaTop && inputTop <= safeAreaBottom);
+    let inputTopAboveSafeArea = (inputTop < safeAreaTop);
+    let inputTopBelowSafeArea = (inputTop > safeAreaBottom);
     let inputBottomWithinSafeArea = (inputBottom >= safeAreaTop && inputBottom <= safeAreaBottom);
     let inputBottomBelowSafeArea = (inputBottom > safeAreaBottom);
-    let inputFitsWithinSafeArea = (inputOffsetHeight <= safeAreaHeight);
-    let distanceInputBottomBelowSafeArea = (safeAreaBottom - inputBottom);
 
     /*
     Text Input Scroll To Scenarios
@@ -231,34 +238,74 @@ export class TextInput extends Ion {
     // looks like we'll have to do some auto-scrolling
     let scrollData = {
       scrollAmount: 0,
-      scrollTo: inputOffsetTop,
+      scrollTo: 0,
       scrollPadding: 0,
     };
 
-    if (inputTopWithinSafeArea && inputBottomBelowSafeArea) {
-      // Input top within safe area, bottom below safe area
-      let distanceInputTopIntoSafeArea = (safeAreaTop - inputTop);
-      let distanceInputBottomBelowSafeArea = (inputBottom - safeAreaBottom);
+    if (inputTopBelowSafeArea || inputBottomBelowSafeArea) {
+      // Input top and bottom below safe area
+      // auto scroll the input up so at least the top of it shows
 
-      if (distanceInputBottomBelowSafeArea < distanceInputTopIntoSafeArea) {
-        // the input's top is farther into the safe area then the bottom is out of it
-        // this means we can scroll it up a little bit and the top will still be
-        // within the safe area
-        scrollData.scrollAmount = distanceInputTopIntoSafeArea * -1;
+      if (safeAreaHeight > inputOffsetHeight) {
+        // safe area height is taller than the input height, so we
+        // can bring it up the input just enough to show the input bottom
+        scrollData.scrollAmount = (safeAreaBottom - inputBottom);
 
       } else {
-        // the input's top is less below the safe area top than the
-        // input's bottom is below the safe area bottom. So scroll the input
-        // to be at the top of the safe area, knowing that the bottom will go below
-        scrollData.scrollAmount = distanceInputTopIntoSafeArea * -1;
+        // safe area height is smaller than the input height, so we can
+        // only scroll it up so the input top is at the top of the safe area
+        // however the input bottom will be below the safe area
+        scrollData.scrollAmount = (safeAreaTop - inputTop);
       }
+
+
+    } else if (inputTopAboveSafeArea) {
+      // Input top above safe area
+      // auto scroll the input down so at least the top of it shows
+      scrollData.scrollAmount = (safeAreaTop - inputTop);
 
     }
 
-    scrollData.scrollTo = (inputOffsetTop + scrollData.scrollAmount);
+    // figure out where it should scroll to for the best position to the input
+    scrollData.scrollTo = (scrollViewDimensions.scrollTop - scrollData.scrollAmount);
 
+    if (scrollData.scrollAmount < 0) {
+      // when auto-scrolling up, there also needs to be enough
+      // content padding at the bottom of the scroll view
+      // manually add it if there isn't enough scrollable area
 
-    // fallback for whatever reason
+      // figure out how many scrollable area is left to scroll up
+      let availablePadding = (scrollViewDimensions.scrollHeight - scrollViewDimensions.scrollTop) - scrollViewDimensions.contentHeight;
+
+      let paddingSpace = availablePadding + scrollData.scrollAmount;
+      if (paddingSpace < 0) {
+        // there's not enough scrollable area at the bottom, so manually add more
+        scrollData.scrollPadding = (scrollViewDimensions.contentHeight - safeAreaHeight);
+      }
+    }
+
+    // if (!window.safeAreaEle) {
+    //   window.safeAreaEle = document.createElement('div');
+    //   window.safeAreaEle.style.position = 'absolute';
+    //   window.safeAreaEle.style.background = 'rgba(0, 128, 0, 0.3)';
+    //   window.safeAreaEle.style.padding = '10px';
+    //   window.safeAreaEle.style.textShadow = '2px 2px white';
+    //   window.safeAreaEle.style.left = '0px';
+    //   window.safeAreaEle.style.right = '0px';
+    //   window.safeAreaEle.style.pointerEvents = 'none';
+    //   document.body.appendChild(window.safeAreaEle);
+    // }
+    // window.safeAreaEle.style.top = safeAreaTop + 'px';
+    // window.safeAreaEle.style.height = safeAreaHeight + 'px';
+    // window.safeAreaEle.innerHTML = `
+    //   <div>scrollTo: ${scrollData.scrollTo}</div>
+    //   <div>scrollAmount: ${scrollData.scrollAmount}</div>
+    //   <div>scrollPadding: ${scrollData.scrollPadding}</div>
+    //   <div>scrollHeight: ${scrollViewDimensions.scrollHeight}</div>
+    //   <div>scrollTop: ${scrollViewDimensions.scrollTop}</div>
+    //   <div>contentHeight: ${scrollViewDimensions.contentHeight}</div>
+    // `;
+
     return scrollData;
   }
 
@@ -268,12 +315,21 @@ export class TextInput extends Ion {
 
   setFocus() {
     this.zone.run(() => {
+      // set focus on the input element
       this.input && this.input.setFocus();
+
+      // ensure the body hasn't scrolled down
+      document.body.scrollTop = 0;
+
       IonInput.setAsLastInput(this);
     });
 
     if (this.scrollAssist && this.scrollView) {
       setTimeout(() => {
+        if (!this.scrollView.isPollingFocus) {
+          this.scrollView.pollFocus();
+        }
+
         this.deregListeners();
         this.deregScroll = this.scrollView.addScrollEventListener(this.scrollMove);
       }, 100);
@@ -306,4 +362,4 @@ export class TextInput extends Ion {
 
 }
 
-const SCROLL_INTO_VIEW_DURATION = 500;
+const SCROLL_INTO_VIEW_DURATION = 400;

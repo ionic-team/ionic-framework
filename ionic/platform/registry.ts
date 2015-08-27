@@ -5,6 +5,7 @@ Platform.register({
   name: 'core',
   settings: {
     mode: 'ios',
+    keyboardHeight: 290,
   }
 });
 Platform.setDefault('core');
@@ -20,7 +21,6 @@ Platform.register({
   isMatch(p) {
     let smallest = Math.min(p.width(), p.height());
     let largest = Math.max(p.width(), p.height());
-    // http://www.mydevice.io/devices/
     return (smallest > 390 && smallest < 520) &&
            (largest > 620 && largest < 800);
   }
@@ -32,7 +32,6 @@ Platform.register({
   isMatch(p) {
     let smallest = Math.min(p.width(), p.height());
     let largest = Math.max(p.width(), p.height());
-    // http://www.mydevice.io/devices/
     return (smallest > 460 && smallest < 820) &&
            (largest > 780 && largest < 1400);
   }
@@ -48,10 +47,11 @@ Platform.register({
   ],
   settings: {
     mode: 'md',
+    keyboardHeight: 290,
+    keyboardScrollAssist: true,
   },
   isMatch(p) {
-    // "silk" is kindle fire
-    return p.isPlatform('android', 'android| silk');
+    return p.isPlatform('android', 'android|silk');
   },
   versionParser(p) {
     return p.matchUserAgentVersion(/Android (\d+).(\d+)?/);
@@ -70,10 +70,12 @@ Platform.register({
   settings: {
     mode: 'ios',
     tapPolyfill: function() {
-      // this ensures it's actually a physical iOS device
-      // and not just an a spoofed user-agent string
       return /iphone|ipad|ipod/i.test(Platform.navigatorPlatform());
     },
+    keyboardScrollAssist: function() {
+      return /iphone|ipad|ipod/i.test(Platform.navigatorPlatform());
+    },
+    keyboardHeight: 290,
   },
   isMatch(p) {
     return p.isPlatform('ios', 'iphone|ipad|ipod');
@@ -87,6 +89,9 @@ Platform.register({
 Platform.register({
   name: 'ipad',
   superset: 'tablet',
+  settings: {
+    keyboardHeight: 500,
+  },
   isMatch(p) {
     return p.isPlatform('ipad');
   }

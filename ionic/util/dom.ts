@@ -179,3 +179,18 @@ export function hasPointerMoved(threshold, startCoord, endCoord) {
 export function hasFocus(ele) {
   return !!(ele && (document.activeElement === ele.nativeElement || document.activeElement === ele));
 }
+
+export function isTextInput(ele) {
+  return !!ele &&
+         (ele.tagName == 'TEXTAREA' ||
+          ele.contentEditable === 'true' ||
+          (ele.tagName == 'INPUT' && !(/^(radio|checkbox|range|file|submit|reset|color|image|button)$/i).test(ele.type)));
+}
+
+export function hasFocusedTextInput() {
+  let ele = document.activeElement;
+  if (isTextInput(ele)) {
+    return (ele.parentElement.querySelector(':focus') === ele);
+  }
+  return false;
+}
