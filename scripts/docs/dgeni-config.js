@@ -9,8 +9,19 @@ var path = require('path');
 // Define the dgeni package for generating the docs
 module.exports = new Package('ionic-v2-docs', [jsdocPackage, nunjucksPackage, typescriptPackage, linksPackage, gitPackage])
 
+//for debugging docs
+// .processor(function test(){
+//   return {
+//     $runAfter: ['files-written'],
+//     $process: function(docs){
+//       docs.forEach(function(doc){
+//       })
+//     }
+//   }
+// })
+
 .config(function(log) {
-  log.level = 'silly' //'warn';
+  log.level = 'error'; //'silly', 'debug', 'info', 'warn', 'error'
 })
 
 .config(function(renderDocsProcessor, versionInfo) {
@@ -22,19 +33,11 @@ module.exports = new Package('ionic-v2-docs', [jsdocPackage, nunjucksPackage, ty
 
   // Don't run unwanted processors
   readFilesProcessor.$enabled = false; // We are not using the normal file reading processor
-  // inlineTagProcessor.$enabled = false; // We are not actually processing the inline link tags
-
-  // jsdocFileReader.defaultPattern = /\.(j|t)s$/;
-  // readFilesProcessor.fileReaders = [jsdocFileReader];
   readFilesProcessor.basePath = path.resolve(__dirname, '../..');
   readTypeScriptModules.basePath = path.resolve(path.resolve(__dirname, '../..'));
-  // readFilesProcessor.sourceFiles = [
-  //   { include: 'ionic/**/*.ts', basePath: 'ionic' }
-  // ]
   readTypeScriptModules.sourceFiles = [
     'ionic/ionic.ts'
   ];
-  readTypeScriptModules.hidePrivateMembers = true;
 })
 
 .config(function(parseTagsProcessor) {
@@ -70,7 +73,10 @@ module.exports = new Package('ionic-v2-docs', [jsdocPackage, nunjucksPackage, ty
 
   // Specify how to match docs to templates.
   // In this case we just use the same static template for all docs
-  templateFinder.templatePatterns.unshift('common.template.html');
+  templateFinder.templatePatterns = [
+    '${ doc.docType }.template.html',
+    'common.template.html'
+  ]
 
   // templateFinder.templatePatterns = [
   //   '${ doc.template }',

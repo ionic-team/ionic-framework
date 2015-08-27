@@ -8,6 +8,5 @@ module.exports = new Package('links', [])
 .factory(require('./services/getLinkInfo'))
 
 .config(function(inlineTagProcessor, linkInlineTagDef) {
-  debugger;
   inlineTagProcessor.inlineTagDefinitions.push(linkInlineTagDef);
 });
