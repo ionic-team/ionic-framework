@@ -482,7 +482,8 @@ class Animate {
       self.player = self.ele.animate(self.effects, {
         duration: self.duration || 0,
         easing: self.easing,
-        playbackRate: self.rate || 1
+        playbackRate: self.rate || 1,
+        fill: 'both'
       });
 
       self.player.onfinish = () => {

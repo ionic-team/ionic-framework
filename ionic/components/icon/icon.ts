@@ -84,7 +84,7 @@ export class Icon {
     if (!this.ariaHidden) {
       // the icon is either not within a button
       // or the icon is within a button, and its an icon only button
-      this.label = this.name.replace('ion-', '').replace('ios-', '').replace('md-', '').replace('-', '');
+      this.label = this.name.replace('ion-', '').replace('ios-', '').replace('md-', '').replace('-', ' ');
     }
 
   }
