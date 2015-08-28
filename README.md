@@ -1,4 +1,4 @@
-# Ionic 2
+# Ionic 2: Developer Preview
 
 Ionic 2 is the next generation of [Ionic](http://ionicframework.com/), the open-source mobile app development SDK that makes it easy to build top quality mobile apps with web technologies.
 
