@@ -75,6 +75,8 @@ export class Overlay {
 
 export class OverlayRef {
   constructor(app, overlayType, opts, ref, context) {
+    this.app = app;
+
     let overlayInstance = (ref && ref.instance);
     if (!overlayInstance) return;
 
@@ -127,12 +129,21 @@ export class OverlayRef {
 
       ClickBlock(true, animation.duration() + 200);
 
-      animation.play().then(() => {
-        ClickBlock(false);
-        animation.dispose();
-        instance.viewDidEnter && instance.viewDidEnter();
-        resolve();
+      this.app.zoneRunOutside(() => {
+
+        animation.play().then(() => {
+
+          this.app.zoneRun(() => {
+            ClickBlock(false);
+            animation.dispose();
+            instance.viewDidEnter && instance.viewDidEnter();
+            resolve();
+          });
+
+        });
+
       });
+
     }).catch(err => {
       console.error(err);
     });

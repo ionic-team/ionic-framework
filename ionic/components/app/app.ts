@@ -84,6 +84,14 @@ export class IonicApp {
   }
 
   /**
+   * TODO
+   * @param {Function} fn  TODO
+   */
+  zoneRunOutside(fn) {
+    this._zone.runOutsideAngular(fn);
+  }
+
+  /**
    * Register a known component with a key, for easy lookups later.
    * @param {TODO} key  The key to use to register the component
    * @param {TODO} component  The component to register
