@@ -6,11 +6,18 @@ import {IonicDirective} from '../../config/annotations';
 import {ListVirtualScroll} from './virtual';
 import * as util from 'ionic/util';
 
-
+/**
+ * TODO
+ */
 @IonicDirective({
   selector: 'ion-card'
 })
 export class Card extends Ion {
+  /**
+   * TODO
+   * @param {ElementeRef} elementRef  TODO
+   * @param {IonicConfig} ionicConfig  TODO
+   */
   constructor(elementRef: ElementRef, ionicConfig: IonicConfig) {
     super(elementRef, ionicConfig);
   }
