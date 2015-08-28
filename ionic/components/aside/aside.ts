@@ -57,7 +57,6 @@ export class Aside extends Ion {
     //this.animation = new Animation(element.querySelector('backdrop'));
 
     let finishChanging = util.debounce(() => {
-      console.log('FINISH');
       this.setChanging(false);
     });
 
