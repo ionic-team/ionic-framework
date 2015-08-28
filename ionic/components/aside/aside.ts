@@ -133,7 +133,6 @@ export class Aside extends Ion {
    * @param {boolean} isChanging  TODO
    */
   setChanging(isChanging) {
-    console.log('Set changing', isChanging, this.isChanging);
 
     // Stop any last changing end operations
     clearTimeout(this.setChangeTimeout);

@@ -90,8 +90,6 @@ export class IonicApp {
    */
   register(key, component) {
     this.components[key] = component;
-    console.log('Registered', key, component);
-    // TODO(mlynch): We need to track the lifecycle of this component to remove it onDehydrate
   }
 
   /**
