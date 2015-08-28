@@ -44,3 +44,8 @@ Ionic 2 is based on the new 2.x version of AngularJS, and comes with many signif
 2. `gulp watch`
 3. Go to [http://localhost:8000/e2e/](http://localhost:8000/e2e/)
 4. Stay cool
+
+
+### Distribution
+
+ - [npm: ionic-framework](https://www.npmjs.com/package/ionic-framework)
