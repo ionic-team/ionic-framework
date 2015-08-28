@@ -8,7 +8,14 @@ import {ElementRef, forwardRef} from 'angular2/angular2';
 
 import {MaterialButton} from './button';
 
+/**
+ * TODO
+ */
 export class MaterialRippleEffect {
+  /**
+   * TODO
+   * @param {MaterialButton} button  TODO
+   */
   constructor(button: MaterialButton) {
     this.elementRef = button.elementRef;
     this.element = this.elementRef.nativeElement;
@@ -37,6 +44,10 @@ export class MaterialRippleEffect {
     this._initRipple();
   }
 
+  /**
+   * @private
+   * TODO
+   */
   _initRipple() {
     this.frameCount = 0;
     this.rippleSize = 0;
@@ -124,24 +135,44 @@ export class MaterialRippleEffect {
     }
   }
 
-
+  /**
+   * TODO
+   * @returns {TODO} TODO
+   */
   getFrameCount() {
     return this.frameCount;
   }
 
+  /**
+   * TODO
+   * @param {TODO} fC TODO
+   */
   setFrameCount(fC) {
     this.frameCount = fC;
   }
 
+  /**
+   * TODO
+   * @return {Element} TODO
+   */
   getRippleElement() {
     return this.rippleElement;
   }
 
+  /**
+   * TODO
+   * @param {number} newX  TODO
+   * @param {number} newY  TODO
+   */
   setRippleXY(newX, newY) {
     this.x = newX;
     this.y = newY;
   }
 
+  /**
+   * TODO
+   * @param {TODO} start  TODO
+   */
   setRippleStyles(start) {
     if (this.rippleElement !== null) {
       var transformString;
@@ -174,6 +205,9 @@ export class MaterialRippleEffect {
     }
   }
 
+  /**
+   * TODO
+   */
   animFrameHandler() {
     if (this.frameCount-- > 0) {
       window.requestAnimationFrame(this.animFrameHandler.bind(this));
@@ -182,5 +216,8 @@ export class MaterialRippleEffect {
     }
   }
 
+  /**
+   * TODO
+   */
   elementClicked(event) {}
 }
