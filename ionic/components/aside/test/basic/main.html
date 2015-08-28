@@ -1,26 +1,27 @@
 
-<ion-aside [content]="content">
+<ion-aside #aside [content]="content">
+
   <ion-toolbar secondary>
     <ion-title>Left Menu</ion-title>
   </ion-toolbar>
-  <ion-list>
-    <ion-item>
-      About
-    </ion-item>
-    <ion-item>
-      Specials
-    </ion-item>
-    <ion-item>
-      Beer
-    </ion-item>
-    <ion-item>
-      Potatoes
-    </ion-item>
-    <ion-item (^click)="closeMenu()" id="e2eCloseMenu">
-      Close Menu
-    </ion-item>
-  </ion-list>
+
+  <ion-content>
+
+    <ion-list>
+
+      <ion-item *ng-for="#p of pages" (^click)="openPage(aside, p)">
+        {{p.title}}
+      </ion-item>
+
+      <ion-item aside-toggle id="e2eCloseMenu">
+        Close Menu
+      </ion-item>
+
+    </ion-list>
+
+  </ion-content>
+
 </ion-aside>
 
 
-<ion-nav [root]="rootView" #content [register]="content" register-id="myNav" swipe-back-enabled="false"></ion-nav>
+<ion-nav [root]="rootView" #content [register]="content" register-id="nav" swipe-back-enabled="false"></ion-nav>

@@ -163,7 +163,8 @@ export class ViewController extends Ion {
       }
     }
 
-    let component = null;
+    let componentObj = null;
+    let componentType = null;
     let viewItem = null;
 
     // create the ViewItems that go before the new active ViewItem in the stack
@@ -171,9 +172,14 @@ export class ViewController extends Ion {
     if (components.length > 1) {
       let newBeforeItems = components.slice(0, components.length - 1);
       for (let j = 0; j < newBeforeItems.length; j++) {
-        component = newBeforeItems[j];
-        if (component) {
-          viewItem = new ViewItem(this, component.component || component, component.params);
+        componentObj = newBeforeItems[j];
+
+        if (componentObj) {
+
+          // could be an object with a componentType property, or it is a componentType
+          componentType = componentObj.componentType || componentObj;
+
+          viewItem = new ViewItem(this, componentType, componentObj.params);
           viewItem.state = CACHED_STATE;
           viewItem.shouldDestroy = false;
           viewItem.shouldCache = false;
@@ -186,10 +192,11 @@ export class ViewController extends Ion {
 
     // get the component that will become the active item
     // it'll be the last one in the given components array
-    component = components[ components.length - 1 ];
+    componentObj = components[ components.length - 1 ];
+    componentType = componentObj.componentType || componentObj;
 
     // transition the leaving and entering
-    return this.push((component && component.component) || component, (component && component.params), opts);
+    return this.push(componentType, componentObj.params, opts);
   }
 
   setRoot(componentType, params = {}, opts = {}) {
