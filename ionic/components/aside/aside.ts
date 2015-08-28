@@ -11,7 +11,6 @@ import {dom} from 'ionic/util'
 /**
  * TODO (?) add docs about how to have a root aside and a nested aside, then hide the root one
  */
-
 @IonicComponent({
   selector: 'ion-aside',
   properties: [
@@ -42,7 +41,11 @@ import {dom} from 'ionic/util'
   directives: [forwardRef(() => AsideBackdrop)]
 })
 export class Aside extends Ion {
-
+  /**
+  * TODO
+  * @param {IonicApp} app  TODO
+  * @param {ElementRef} elementRef  Reference to the element.
+  */
   constructor(app: IonicApp, elementRef: ElementRef, config: IonicConfig) {
     super(elementRef, config);
 
@@ -59,10 +62,16 @@ export class Aside extends Ion {
     })
   }
 
+  /**
+   * TODO
+   */
   onDestroy() {
     app.unregister(this);
   }
 
+  /**
+   * TODO
+   */
   onInit() {
     super.onInit();
     this.contentElement = (this.content instanceof Node) ? this.content : this.content.getNativeElement();
@@ -71,28 +80,52 @@ export class Aside extends Ion {
     this.typeDelegate = this.getDelegate('type');
   }
 
+  /**
+   * TODO
+   * @return {Element} The Aside's content element.
+   */
   getContentElement() {
     return this.contentElement;
   }
 
+  /**
+   * TODO
+   * @param {TODO} v  TODO
+   */
   setOpenAmt(v) {
     this.opening.next(v);
   }
 
+  /**
+   * TODO
+   * @param {boolean} willOpen  TODO
+   */
   setDoneTransforming(willOpen) {
     this.typeDelegate.setDoneTransforming(willOpen);
   }
 
+  /**
+   * TODO
+   * @param {TODO} transform  TODO
+   */
   setTransform(transform) {
     this.typeDelegate.setTransform(transform)
   }
 
+  /**
+   * TODO
+   * @param {boolean} isSliding  TODO
+   */
   setSliding(isSliding) {
     if (isSliding !== this.isSliding) {
       this.typeDelegate.setSliding(isSliding)
     }
   }
 
+  /**
+   * TODO
+   * @param {boolean} isChanging  TODO
+   */
   setChanging(isChanging) {
     if (isChanging !== this.isChanging) {
       this.isChanging = isChanging
@@ -100,6 +133,11 @@ export class Aside extends Ion {
     }
   }
 
+  /**
+   * Sets the state of the Aside to open or not.
+   * @param {boolean} isOpen  If the Aside is open or not.
+   * @return {Promise} TODO
+   */
   setOpen(isOpen) {
     if (isOpen !== this.isOpen) {
       this.isOpen = isOpen
@@ -114,21 +152,35 @@ export class Aside extends Ion {
     }
   }
 
+  /**
+   * TODO
+   * @return {TODO} TODO
+   */
   open() {
     return this.setOpen(true);
   }
 
+  /**
+   * TODO
+   * @return {TODO} TODO
+   */
   close() {
     return this.setOpen(false);
   }
 
+  /**
+   * TODO
+   * @return {TODO} TODO
+   */
   toggle() {
     return this.setOpen(!this.isOpen);
   }
 
 }
 
-
+/**
+ * TODO
+ */
 @Component({
   selector: 'ion-aside-backdrop',
   host: {
@@ -138,11 +190,16 @@ export class Aside extends Ion {
     '(click)': 'clicked($event)'
   }
 })
-
 @View({
   template: ''
 })
 export class AsideBackdrop extends Ion {
+  /**
+   * TODO
+   * @param {ElementReg} elementRef  TODO
+   * @param {IonicConfig} config  TODO
+   * @param {Aside} aside  TODO
+   */
   constructor(elementRef: ElementRef, config: IonicConfig, @Host() aside: Aside) {
     super(elementRef, config);
 
@@ -152,12 +209,21 @@ export class AsideBackdrop extends Ion {
 
     this.backgroundColor = 'rgba(0,0,0,0)';
   }
+
+  /**
+   * TODO
+   */
   onInit() {
     let ww = window.innerWidth;
     let wh = window.innerHeight;
     this.width = ww + 'px';
     this.height = wh + 'px';
   }
+
+  /**
+   * TODO
+   * @param {TODO} event  TODO
+   */
   clicked(event) {
     this.aside.close();
   }

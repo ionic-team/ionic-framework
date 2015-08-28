@@ -4,6 +4,9 @@ import {Ion} from '../ion';
 import {IonicApp} from './app';
 
 
+/**
+ * TODO
+ */
 @Directive({
   selector: '[register]',
   properties: [
@@ -15,11 +18,17 @@ import {IonicApp} from './app';
   }
 })
 export class Register {
-
+  /**
+   * TODO
+   * @param {Object} app  TODO
+   */
   constructor(app: IonicApp) {
     this.app = app;
   }
 
+  /**
+   * TODO
+   */
   onInit() {
     if (this.register && this.registerId) {
       this.app.register(this.registerId, this.register);
@@ -28,7 +37,9 @@ export class Register {
 
 }
 
-
+/**
+ * TODO
+ */
 @Directive({
   selector: '[ref]',
   properties: [
@@ -40,11 +51,19 @@ export class Register {
 })
 export class Ref {
 
+  /**
+   * TODO
+   * @param {TODO} app  TODO
+   * @param {TODO} component  TODO
+   */
   constructor(app: IonicApp, @Self() component: any) {
     this.app = app;
     console.log('Register on any', component)
   }
 
+  /**
+   * TODO
+   */
   onInit() {
     /*
     if (this.register && this.registerId) {

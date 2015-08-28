@@ -67,7 +67,8 @@ export class ActionMenu extends Overlay {
    * Create and open a new Action Menu. This is the
    * public API, and most often you will only use ActionMenu.open()
    *
-   * @return Promise that resolves when the action menu is open.
+   * @param {Object} [opts={}]  TODO
+   * @return {Promise} Promise that resolves when the action menu is open.
    */
   open(opts={}) {
     let config = this.config;
@@ -85,6 +86,7 @@ export class ActionMenu extends Overlay {
 
   /**
    * TODO
+   * @returns {TODO} TODO 
    */
   get() {
     return Modal.getByType(OVERLAY_TYPE);
