@@ -12,7 +12,9 @@ import * as dom  from '../../util/dom';
 import {Platform} from '../../platform/platform';
 
 
-
+/**
+ * TODO
+ */
 @Directive({
   selector: 'textarea,input[type=text],input[type=password],input[type=number],input[type=search],input[type=email],input[type=url],input[type=tel]',
   property: [
@@ -25,6 +27,12 @@ import {Platform} from '../../platform/platform';
   }
 })
 export class TextInputElement {
+  /**
+   * TODO
+   * @param {string} type  The value of the underlying element's type attribute.
+   * @param {ElementRef} elementRef  TODO
+   * @param {IonicConfig} config  TODO
+   */
   constructor(
     @Attribute('type') type: string,
     elementRef: ElementRef,
@@ -35,16 +43,25 @@ export class TextInputElement {
     this.tabIndex = this.tabIndex || '';
   }
 
+  /**
+   * Focus the input.
+   */
   setFocus() {
     this.elementRef.nativeElement.focus();
   }
 
+  /**
+   * Whether the input has focus or not.
+   * @returns {boolean}  true if the input has focus, otherwise false.
+   */
   get hasFocus() {
     return dom.hasFocus(this.elementRef);
   }
 }
 
-
+/**
+ * TODO
+ */
 @IonicDirective({
   selector: 'ion-input',
   classId: 'item-input',
@@ -63,7 +80,16 @@ export class TextInputElement {
   }
 })
 export class TextInput extends Ion {
-
+  /**
+   * TODO
+   * @param {ElementRef} elementRef  TODO
+   * @param {IonicConfig} config  TODO
+   * @param {IonicApp} app  TODO
+   * @param {NgZone} ngZone  TODO
+   * @param {Content=} scrollView  The parent scroll view.
+   * @param {QueryList<TextInputElement>} inputQry  TODO
+   * @param {QueryList<Label>} labelQry  TODO
+   */
   constructor(
     elementRef: ElementRef,
     config: IonicConfig,
@@ -86,6 +112,9 @@ export class TextInput extends Ion {
     this.labelQry = labelQry;
   }
 
+  /**
+   * TODO
+   */
   onInit() {
     super.onInit();
 
@@ -113,6 +142,10 @@ export class TextInput extends Ion {
     };
   }
 
+  /**
+   * TODO
+   * @param {Event} ev  TODO
+   */
   pointerStart(ev) {
     if (this.scrollAssist) {
       // remember where the touchstart/mousedown started
@@ -120,6 +153,10 @@ export class TextInput extends Ion {
     }
   }
 
+  /**
+   * TODO
+   * @param {Event} ev TODO
+   */
   pointerEnd(ev) {
     if (this.scrollAssist && ev.type === 'touchend') {
       // get where the touchend/mouseup ended
@@ -153,6 +190,11 @@ export class TextInput extends Ion {
     }
   }
 
+  /**
+   * TODO
+   * @returns {TODO} TODO
+   */
+   //TODO inconsistent return value, sometimes undefined
   initFocus() {
     let scrollView = this.scrollView;
 
@@ -200,6 +242,14 @@ export class TextInput extends Ion {
 
   }
 
+  /**
+   * TODO
+   * @param {TODO} inputOffsetTop  TODO
+   * @param {TODO} inputOffsetHeight  TODO
+   * @param {TODO} scrollViewDimensions  TODO
+   * @param {TODO} keyboardHeight  TODO
+   * @returns {TODO} TODO
+   */
   static getScollData(inputOffsetTop, inputOffsetHeight, scrollViewDimensions, keyboardHeight) {
     // compute input's Y values relative to the body
     let inputTop = (inputOffsetTop + scrollViewDimensions.contentTop - scrollViewDimensions.scrollTop);
@@ -309,10 +359,16 @@ export class TextInput extends Ion {
     return scrollData;
   }
 
+  /**
+   * TODO
+   */
   deregListeners() {
     this.deregScroll && this.deregScroll();
   }
 
+  /**
+   * TODO
+   */
   setFocus() {
     this.zone.run(() => {
       // set focus on the input element
@@ -336,6 +392,9 @@ export class TextInput extends Ion {
     }
   }
 
+  /**
+   * TODO
+   */
   tempFocusMove() {
     let focusHolder = this.app.focusHolder();
     focusHolder.setFocusHolder(this.type);
@@ -350,6 +409,10 @@ export class TextInput extends Ion {
     return -1;
   }
 
+  /**
+   * TODO
+   * @param {boolean} receivedFocus  TODO
+   */
   receivedFocus(receivedFocus) {
     let self = this;
     if (receivedFocus && !self.inputHasFocus) {
