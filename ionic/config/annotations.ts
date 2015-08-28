@@ -22,9 +22,12 @@ import {
   MaterialButton
 } from '../ionic';
 
-
-// TODO: Why is forwardRef() required when they're already imported above????
+/**
+ * The core Ionic directives.  Automatically available in every IonicView
+ * template.
+ */
 export const IonicDirectives = [
+// TODO: Why is forwardRef() required when they're already imported above????
   // Angular
   CORE_DIRECTIVES,
   FORM_DIRECTIVES,
@@ -99,6 +102,9 @@ class IonicViewImpl extends View {
   }
 }
 
+/**
+ * TODO
+ */
 export function IonicView(args) {
   return function(cls) {
     var annotations = Reflect.getMetadata('annotations', cls) || [];
@@ -108,6 +114,9 @@ export function IonicView(args) {
   }
 }
 
+/**
+ * TODO
+ */
 export function IonicDirective(config) {
   return function(cls) {
     var annotations = Reflect.getMetadata('annotations', cls) || [];
@@ -117,6 +126,9 @@ export function IonicDirective(config) {
   }
 }
 
+/**
+ * TODO
+ */
 export function IonicComponent(config) {
   return function(cls) {
     var annotations = Reflect.getMetadata('annotations', cls) || [];
@@ -153,6 +165,9 @@ function appendConfig(cls, config) {
   return config;
 }
 
+/**
+ * TODO
+ */
 export function App(args={}) {
   return function(cls) {
     // get current annotations

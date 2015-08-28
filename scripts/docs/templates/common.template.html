@@ -1,6 +1,6 @@
-{% macro paramList(params) -%}
-  {%- if params -%}<span class="params">(
-    {%- for param in params -%}
+{% macro paramList(paramData) -%}
+  {%- if paramData -%}<span class="params">(
+    {%- for param in paramData -%}
       <span class="param">{$ param | escape $}{% if not loop.last %}, {% endif %}</span>
     {%- endfor %})</span>
   {%- endif %}
@@ -28,7 +28,7 @@ defined in {$ githubViewLink(doc) $}
 
 {%- if doc.constructorDoc %}
   <section class="member constructor">
-    <h1 id="constructor" class="name">{$ doc.constructorDoc.name $}{$ paramList(doc.constructorDoc.params) $}</h1>
+    <h1 id="constructor" class="name">{$ doc.constructorDoc.name $}{$ paramList(doc.constructorDoc.paramData) $}</h1>
     {% marked %}
       {$ doc.constructorDoc.description $}
     {% endmarked %}

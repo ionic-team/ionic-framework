@@ -2,11 +2,14 @@
 import {isObject, isDefined, isFunction, extend} from '../util/util';
 
 /**
-* This is the Ionic Config
-* @usage this is what you do to use it
+* TODO
 */
 export class IonicConfig {
 
+ /**
+  * TODO
+  * @param  {Object} settings   The settings for your app
+  */
   constructor(settings) {
 
     // defaults
@@ -18,7 +21,7 @@ export class IonicConfig {
     }
   }
   /**
-  * @description The settings description
+  * TODO
   */
   setting() {
     const args = arguments;
@@ -132,7 +135,8 @@ export class IonicConfig {
   }
 
   /**
-   * The setPlatform description
+   * TODO
+   * @param  {Object} platform   The platform
    */
   setPlatform(platform) {
     // get the array of active platforms, which also knows the hierarchy,

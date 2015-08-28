@@ -9,12 +9,15 @@ var path = require('path');
 // Define the dgeni package for generating the docs
 module.exports = new Package('ionic-v2-docs', [jsdocPackage, nunjucksPackage, typescriptPackage, linksPackage, gitPackage])
 
-//for debugging docs
+// for debugging docs
 // .processor(function test(){
 //   return {
 //     $runAfter: ['files-written'],
 //     $process: function(docs){
 //       docs.forEach(function(doc){
+//         if (doc.constructorDoc){
+//           debugger;
+//         }
 //       })
 //     }
 //   }

@@ -58,7 +58,9 @@ class ActionMenuDirective {
   }
 }
 
-
+/**
+ * TODO
+ */
 @Injectable()
 export class ActionMenu extends Overlay {
   /**
@@ -67,7 +69,6 @@ export class ActionMenu extends Overlay {
    *
    * @return Promise that resolves when the action menu is open.
    */
-
   open(opts={}) {
     let config = this.config;
     let defaults = {
@@ -82,6 +83,9 @@ export class ActionMenu extends Overlay {
     return this.create(OVERLAY_TYPE, ActionMenuDirective, context, context);
   }
 
+  /**
+   * TODO
+   */
   get() {
     return Modal.getByType(OVERLAY_TYPE);
   }

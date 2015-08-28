@@ -11,9 +11,14 @@ import {Modal} from '../modal/modal';
 import {Popup} from '../popup/popup';
 import {FocusHolder} from '../form/focus-holder';
 
-
+/**
+ * TODO
+ */
 export class IonicApp {
 
+  /**
+   * TODO
+   */
   constructor() {
     this.overlays = [];
 
@@ -21,11 +26,20 @@ export class IonicApp {
     this.components = {};
   }
 
+  /**
+   * TODO
+   * @param {Object} appRef  TODO
+   */
   load(appRef) {
     this.ref(appRef);
     this._zone = appRef.injector.get(NgZone);
   }
 
+  /**
+   * TODO
+   * @param {TODO=} val  TODO
+   * @return {TODO} TODO
+   */
   focusHolder(val) {
     if (arguments.length) {
       this._focusHolder = val;
@@ -33,10 +47,19 @@ export class IonicApp {
     return this._focusHolder;
   }
 
+  /**
+   * Sets the document title.
+   * @param {string} val  Value to set the document title to.
+   */
   title(val) {
     document.title = val;
   }
 
+  /**
+   * TODO
+   * @param {TODO=} val  TODO
+   * @return TODO
+   */
   ref(val) {
     if (arguments.length) {
       this._ref = val;
@@ -44,16 +67,26 @@ export class IonicApp {
     return this._ref;
   }
 
+  /**
+   * TODO
+   * @return TODO
+   */
   get injector() {
     return this._ref.injector;
   }
 
+  /**
+   * TODO
+   * @param {Function} fn  TODO
+   */
   zoneRun(fn) {
     this._zone.run(fn);
   }
 
   /**
    * Register a known component with a key, for easy lookups later.
+   * @param {TODO} key  TODO
+   * @param {TODO} component  TODO
    */
   register(key, component) {
     this.components[key] = component;
@@ -62,11 +95,18 @@ export class IonicApp {
 
   /**
    * Unregister a known component with a key.
+   * @param {TODO} key  TODO
+   * @param {TODO} component  TODO
    */
-  unregister(key, component) {
+   unregister(key, component) {
     delete this.components[key];
   }
 
+  /**
+   * TODO
+   * @param {Object} cls  TODO
+   * @return TODO
+   */
   getRegisteredComponent(cls) {
     for(let component of this.components) {
       if(component instanceof cls) {
@@ -77,6 +117,8 @@ export class IonicApp {
 
   /**
    * Get the component for the given key.
+   * @param {TODO} key  TODO
+   * @return {TODO} TODO
    */
   getComponent(key) {
     return this.components[key];
@@ -86,13 +128,20 @@ export class IonicApp {
    * Create and append the given component into the root
    * element of the app.
    *
-   * @param Component the component to create and insert
-   * @return Promise that resolves with the ContainerRef created
+   * @param {TODO} componentType the component to create and insert
+   * @return {Promise} Promise that resolves with the ContainerRef created
    */
-  appendComponent(componentType: Type, context=null) {
+  appendComponent(componentType: Type) {
     return this.rootAnchor.append(componentType);
   }
 
+  /**
+   * TODO
+   *
+   * @param {Element} bodyEle  the body element
+   * @param {TODO} platform  TODO
+   * @param {TODO} config  TODO
+   */
   applyBodyCss(bodyEle, platform, config) {
     let versions = platform.versions();
     platform.platforms().forEach(platformName => {
@@ -130,6 +179,13 @@ export class IonicApp {
     bodyEle.setAttribute('mode', config.setting('mode'));
   }
 
+  /**
+   * If val is defined, specifies whether app text is RTL.  If val is undefined
+   * returns whether app text is RTL.
+   *
+   * @param {boolean=} val  Boolean specifying whether text is RTL or not.
+   * @returns {boolean} true if app text is RTL, false if otherwise.
+   */
   isRTL(val) {
     if (arguments.length) {
       this._rtl = val;
@@ -179,6 +235,13 @@ class RootAnchor {
   }
 }
 
+/**
+ * TODO
+ *
+ * @param {TODO} rootComponentType  TODO
+ * @param {TODO} config  TODO
+ * @return {Promise} TODO
+ */
 export function ionicBootstrap(rootComponentType, config) {
   return new Promise(resolve => {
     try {
