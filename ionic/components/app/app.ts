@@ -85,27 +85,27 @@ export class IonicApp {
 
   /**
    * Register a known component with a key, for easy lookups later.
-   * @param {TODO} key  TODO
-   * @param {TODO} component  TODO
+   * @param {TODO} key  The key to use to register the component
+   * @param {TODO} component  The component to register
    */
   register(key, component) {
     this.components[key] = component;
+    console.log('Registered', key, component);
     // TODO(mlynch): We need to track the lifecycle of this component to remove it onDehydrate
   }
 
   /**
    * Unregister a known component with a key.
-   * @param {TODO} key  TODO
-   * @param {TODO} component  TODO
+   * @param {TODO} key  The key to use to unregister
    */
-   unregister(key, component) {
+  unregister(key) {
     delete this.components[key];
   }
 
   /**
-   * TODO
-   * @param {Object} cls  TODO
-   * @return TODO
+   * Get a registered component with the given type (returns the first)
+   * @param {Object} cls the type to search for
+   * @return the matching component, or undefined if none was found
    */
   getRegisteredComponent(cls) {
     for(let component of this.components) {

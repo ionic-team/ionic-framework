@@ -1,5 +1,4 @@
-
-<ion-aside #aside [content]="content">
+<ion-aside #aside [content]="content" id="menu" type="overlay">
 
   <ion-toolbar secondary>
     <ion-title>Left Menu</ion-title>
@@ -13,7 +12,7 @@
         {{p.title}}
       </button>
 
-      <button ion-item aside-toggle id="e2eCloseMenu">
+      <button ion-item aside-toggle="menu" id="e2eCloseMenu">
         Close Menu
       </button>
 
@@ -24,4 +23,4 @@
 </ion-aside>
 
 
-<ion-nav [root]="rootView" #content [register]="content" register-id="nav" swipe-back-enabled="false"></ion-nav>
+<ion-nav id="nav" [root]="rootView" #content swipe-back-enabled="false"></ion-nav>

@@ -32,7 +32,7 @@ $aside-shadow: -1px 0px 8px rgba(0, 0, 0, 0.2) !default;
       transition: none;
     }
   }
-  
+
   ion-aside-backdrop {
     z-index: $z-index-aside-backdrop;
     transition: $aside-backdrop-transition;
@@ -48,11 +48,12 @@ $aside-shadow: -1px 0px 8px rgba(0, 0, 0, 0.2) !default;
 
   &[type=overlay] {
     z-index: $z-index-aside-overlay;
+
+    &:not(.open):not(.changing) {
+      display: none;
+    }
   }
 
-  &:not(.open):not(.changing) {
-    display: none;
-  }
 
   &[type=reveal] {
     left: 0;

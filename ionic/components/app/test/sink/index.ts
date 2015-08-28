@@ -94,14 +94,12 @@ class MyApp {
       { title: 'Slides', component: SlidePage},
       { title: 'Action Menu', component: ActionMenuPage },
     ];
-
-    //this.rootView = ButtonPage
   }
 
   openPage(aside, component) {
     aside.close();
 
     let nav = this.app.getComponent('myNav');
-    nav.setRoot(component.component);
+    nav.setItems([component.component]);
   }
 }

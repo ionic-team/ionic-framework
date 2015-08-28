@@ -110,6 +110,7 @@ export class AsideTypeReveal extends AsideType {
     contentManipulator.setSliding.call(this, sliding);
   }
   setOpen(sliding) {
+    console.log('Reveal setting open', sliding);
     contentManipulator.setOpen.call(this, sliding);
   }
   setTransform(t) {

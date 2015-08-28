@@ -6,7 +6,7 @@ import {App, ActionMenu, IonicApp, IonicView, Register} from 'ionic/ionic';
   template: '<ion-navbar *navbar primary>' +
     '<ion-title>Heading</ion-title>' +
     '<ion-nav-items primary>' +
-      '<button icon (^click)="toggleMenu()"><i class="icon ion-navicon"></i></button>' +
+      '<button icon aside-toggle="menu"><i class="icon ion-navicon"></i></button>' +
     '</ion-nav-items>' +
     '<ion-nav-items secondary>' +
       '<button><ion-icon md="ion-android-search" ios="ion-ios-search-strong"></i></button>' +
@@ -52,10 +52,6 @@ export class FirstPage {
     this.app = app;
     this.actionMenu = actionMenu;
   }
-  toggleMenu() {
-    console.log('TOGGLE');
-    this.app.getComponent('myAside').toggle();
-  }
   showMoreMenu() {
     this.actionMenu.open({
       buttons: [
@@ -85,7 +81,7 @@ export class FirstPage {
 
 @App({
   template: `<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700,500' rel='stylesheet' type='text/css'>
-    <ion-aside id="menu" side="left" [content]="content" [register]="aside" register-id="myAside" #aside>
+    <ion-aside id="menu" side="left" [content]="content">
       <ion-toolbar primary><ion-title>Menu</ion-title></ion-toolbar>
       <ion-list>
         <ion-item>Your Profile</ion-item>

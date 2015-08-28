@@ -6,6 +6,7 @@ import {IonicConfig} from '../../config/config';
 import {IonicComponent} from '../../config/annotations';
 import * as types from './extensions/types'
 import * as gestures from  './extensions/gestures'
+import * as util from 'ionic/util/util'
 import {dom} from 'ionic/util'
 
 /**
@@ -31,7 +32,7 @@ import {dom} from 'ionic/util'
     type: [
       [instance => instance.type == 'overlay', types.AsideTypeOverlay],
       [instance => instance.type == 'reveal', types.AsideTypeReveal],
-      [instance => instance.type == 'push', types.AsideTypePush],
+      //[instance => instance.type == 'push', types.AsideTypePush],
     ]
   },
   events: ['opening']
@@ -51,14 +52,20 @@ export class Aside extends Ion {
 
     this.app = app;
 
-    // TODO(mlynch): We need to build out the ref system
-    app.register('menu', this);
-
     this.opening = new EventEmitter('opening');
+
+    //this.animation = new Animation(element.querySelector('backdrop'));
+
+    let finishChanging = util.debounce(() => {
+      console.log('FINISH');
+      this.setChanging(false);
+    });
 
     // TODO: Use Animation Class
     this.getNativeElement().addEventListener('transitionend', ev => {
-      this.setChanging(false)
+      //this.setChanging(false)
+      clearTimeout(this.setChangeTimeout);
+      this.setChangeTimeout = setInterval(finishChanging, 500);
     })
   }
 
@@ -127,9 +134,15 @@ export class Aside extends Ion {
    * @param {boolean} isChanging  TODO
    */
   setChanging(isChanging) {
+    console.log('Set changing', isChanging, this.isChanging);
+
+    // Stop any last changing end operations
+    clearTimeout(this.setChangeTimeout);
+
     if (isChanging !== this.isChanging) {
       this.isChanging = isChanging
       this.getNativeElement().classList[isChanging ? 'add' : 'remove']('changing');
+
     }
   }
 
@@ -140,8 +153,8 @@ export class Aside extends Ion {
    */
   setOpen(isOpen) {
     if (isOpen !== this.isOpen) {
-      this.isOpen = isOpen
-      this.setChanging(true)
+      this.isOpen = isOpen;
+      this.setChanging(true);
 
       // Set full or closed amount
       this.setOpenAmt(isOpen ? 1 : 0);

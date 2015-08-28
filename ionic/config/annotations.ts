@@ -16,7 +16,7 @@ import {
   RadioGroup, RadioButton, SearchBar,
   Nav, NavbarTemplate, Navbar, NavPush, NavPop, NavRouter,
   TapClick, TapDisabled,
-  Register,
+  IdRef,
   ShowWhen, HideWhen,
 
   MaterialButton
@@ -81,7 +81,7 @@ export const IonicDirectives = [
   forwardRef(() => NavPush),
   forwardRef(() => NavPop),
   forwardRef(() => NavRouter),
-  forwardRef(() => Register),
+  forwardRef(() => IdRef),
   //forwardRef(() => Ref),
 
   forwardRef(() => ShowWhen),

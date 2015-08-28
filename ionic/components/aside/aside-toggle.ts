@@ -7,6 +7,9 @@ import {IonicApp} from '../app/app';
 */
 @Directive({
   selector: '[aside-toggle]',
+  properties: [
+    'asideToggle'
+  ],
   host: {
     '(^click)': 'toggle($event)'
   }
@@ -16,11 +19,14 @@ export class AsideToggle {
   * TODO
   * @param {IonicApp} app  TODO
   */
-  constructor(app: IonicApp) {
-    //TODO(mlynch): don't hard code this, evaluate with ref system
-    this.aside = app.getComponent('menu');
+  constructor(private app: IonicApp) {
   }
+  onInit() {
+    let toggleTarget = this.asideToggle;
 
+    // Get the component with this toggleTarget tag, or use "menu" if none
+    this.aside = this.app.getComponent(toggleTarget || 'menu');
+  }
   /**
   * TODO
   * @param {TODO} event  TODO
@@ -28,5 +34,4 @@ export class AsideToggle {
   toggle(event) {
     this.aside && this.aside.toggle();
   }
-
 }

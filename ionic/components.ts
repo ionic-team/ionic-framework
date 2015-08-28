@@ -1,6 +1,6 @@
 
 export * from 'ionic/components/app/app'
-export * from 'ionic/components/app/register'
+export * from 'ionic/components/app/id'
 export * from 'ionic/components/action-menu/action-menu'
 export * from 'ionic/components/aside/aside'
 export * from 'ionic/components/aside/aside-toggle'
