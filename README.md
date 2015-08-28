@@ -5,7 +5,7 @@ Ionic 2 is the next generation of [Ionic](http://ionicframework.com/), the open-
 Ionic 2 is based on the new 2.x version of AngularJS, and comes with many significant performance, usability, and feature improvements.
 
 
-## Current Angular 2 known issues:
+### Current Angular 2 known issues:
 
 - Angular 2 is still in alpha and is not production ready
 - Angular team has first focused on developing what the core of Angular 2 "is"
@@ -14,7 +14,7 @@ Ionic 2 is based on the new 2.x version of AngularJS, and comes with many signif
 - As Angular 2 reaches beta there will be significant performance improvements
 
 
-## CSS Attribute Selectors:
+### CSS Attribute Selectors:
 
 - Simple
 - Smaller markup
@@ -23,12 +23,12 @@ Ionic 2 is based on the new 2.x version of AngularJS, and comes with many signif
 - No performance impacts have been found
 
 
-#### Starter Project
+### Starter Project
 
 [https://github.com/driftyco/ionic2-starter](https://github.com/driftyco/ionic2-starter)
 
 
-#### Building & Running
+### Building & Running Ionic Source
 
 1. `npm install`
 2. `gulp watch`
