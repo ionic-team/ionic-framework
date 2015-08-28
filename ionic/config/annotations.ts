@@ -10,7 +10,6 @@ import {
   Card, List, ListHeader, Item, ItemGroup, ItemGroupTitle,
   Toolbar,
   Icon,
-  IconDirective,
   Checkbox, Switch,
   TextInput, TextInputElement, Label,
   Segment, SegmentButton, SegmentControlValueAccessor,
@@ -59,7 +58,6 @@ export const IonicDirectives = [
 
   // Media
   forwardRef(() => Icon),
-  forwardRef(() => IconDirective),
 
   // Forms
   forwardRef(() => Segment),

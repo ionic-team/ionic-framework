@@ -3,59 +3,15 @@ import {Directive, View, NgClass, ElementRef, Optional, Host, Attribute, Rendere
 import {IonicConfig} from '../../config/config';
 import {IonicComponent} from '../../config/annotations';
 import {Ion} from '../ion';
-import {Platform} from '../../platform/platform';
 import {Button} from '../button/button';
-
-
-/*
-
-'home': {
-  ios: ['ion-ios-home', 'ion-ios-home-outline'],
-  md: 'ion-md-home'
-}
-
-1-for-1 swap
-Map of stuff that's 1-for-1
-<icon name="home"></icon>
-<icon class="ion-ios-home"></icon>
-<icon class="ion-md-home"></icon>
-
-
-Always use the same no matter what
-Cuz it's not in the map of 1-for-1's
-<icon name="alert"></icon>
-<icon class="ion-alert"></icon>
-
-
-Different between modes
-Used different attributes
-<icon ios-name="search3" md-name="search2"></icon>
-<icon class="ion-ios-search3"></icon>
-<icon class="ion-md-search2"></icon>
-
-
-
-Ionicons SVG
-<icon svg="home"></icon>
-<icon><svg>...ios...</svg></icon>
-<icon><svg>...md...</svg></icon>
-
-
-Custom SVG File
-<icon svg-src="home.svg"></icon>
-
-
-Custom Font Icon
-<icon class="fa-home"></icon>
-
-*/
 
 
 @Directive({
   selector: 'icon',
   properties: [
     'name',
-    'iconName'
+    'ios',
+    'md'
   ],
   host: {
     '[attr.aria-label]': 'label',
@@ -63,21 +19,24 @@ Custom Font Icon
     'role': 'img'
   }
 })
-export class IconDirective {
+export class Icon {
   constructor(
-    private _elementRef: ElementRef,
+    private elementRef: ElementRef,
     @Optional() @Host() hostButton: Button,
-    @Attribute('forward') forward: string,
     config: IonicConfig,
     private renderer: Renderer
   ) {
-    let ele = this.ele = _elementRef.nativeElement;
+    let ele = elementRef.nativeElement;
 
+    this.mode = config.setting('mode');
     this.iconLeft = this.iconRight = this.iconOnly = false;
     this.ariaHidden = true;
 
-    if (forward !== null) {
-      this.iconFwd = config.setting('iconForward');
+    this.iconAttr = null;
+    for (let i = 0, l = ele.attributes.length; i < l; i++) {
+      if (ele.attributes[i].value === '') {
+        this.iconAttr = ele.attributes[i].name;
+      }
     }
 
     if (hostButton) {
@@ -103,13 +62,20 @@ export class IconDirective {
   }
 
   onInit() {
-    if (this.iconFwd) {
-      this.name = this.iconFwd;
+    if (this.mode == 'ios' && this.ios) {
+      this.name = this.ios;
+
+    } else if (this.mode == 'md' && this.md) {
+      this.name = this.md;
+
+    } else if (!this.name && this.iconAttr) {
+      this.name = this.iconAttr;
     }
+
     if (!this.name) return;
 
     // add the css class to show the icon font
-    this.renderer.setElementClass(this._elementRef, this.name, true);
+    this.renderer.setElementClass(this.elementRef, this.name, true);
 
     // hide the icon when it's within a button
     // and the button isn't an icon only button
@@ -123,36 +89,4 @@ export class IconDirective {
 
   }
 
-  onDestroy() {
-    this.ele = null;
-  }
-}
-
-
-
-@IonicComponent({
-  selector: 'ion-icon',
-  properties: [
-    'md',
-    'ios'
-  ],
-  host: {
-    'mode': 'mode'
-  }
-})
-@View({
-  template: '<i class="icon" [ng-class]="iconClass">',
-  directives: [NgClass]
-})
-export class Icon extends Ion {
-  constructor(elementRef: ElementRef, ionicConfig: IonicConfig) {
-    super(elementRef, ionicConfig);
-  }
-  onIonInit() {
-    this.iconClass = this.ios;
-    console.log('ICON', this.mode);
-    setTimeout(() => {
-      console.log('MODE', this.mode);
-    });
-  }
 }
