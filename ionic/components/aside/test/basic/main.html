@@ -9,13 +9,13 @@
 
     <ion-list>
 
-      <ion-item *ng-for="#p of pages" (^click)="openPage(aside, p)">
+      <button ion-item *ng-for="#p of pages" (^click)="openPage(aside, p)">
         {{p.title}}
-      </ion-item>
+      </button>
 
-      <ion-item aside-toggle id="e2eCloseMenu">
+      <button ion-item aside-toggle id="e2eCloseMenu">
         Close Menu
-      </ion-item>
+      </button>
 
     </ion-list>
 
