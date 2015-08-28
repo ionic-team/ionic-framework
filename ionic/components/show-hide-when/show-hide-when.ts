@@ -52,7 +52,9 @@ class DisplayWhen {
 
 }
 
-
+/**
+ * TODO
+ */
 @Directive({
   selector: '[show-when]',
   host: {
@@ -60,7 +62,11 @@ class DisplayWhen {
   }
 })
 export class ShowWhen extends DisplayWhen {
-
+  /**
+   * TODO
+   * @param {string} showWhen  The value of the element's 'show-when' attribute
+   * @param {NgZone} ngZone  TODO
+   */
   constructor(
     @Attribute('show-when') showWhen: string,
     ngZone: NgZone
@@ -74,7 +80,9 @@ export class ShowWhen extends DisplayWhen {
 
 }
 
-
+/**
+ * TODO
+ */
 @Directive({
   selector: '[hide-when]',
   host: {
@@ -82,7 +90,11 @@ export class ShowWhen extends DisplayWhen {
   }
 })
 export class HideWhen extends DisplayWhen {
-
+  /**
+   * TODO
+   * @param {string} showWhen  The value of the element's 'hide-when' attribute
+   * @param {NgZone} ngZone  TODO
+   */
   constructor(
     @Attribute('hide-when') hideWhen: string,
     ngZone: NgZone
@@ -95,4 +107,3 @@ export class HideWhen extends DisplayWhen {
   }
 
 }
-

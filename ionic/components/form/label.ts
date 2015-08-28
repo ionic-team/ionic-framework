@@ -3,7 +3,9 @@ import {Directive} from 'angular2/angular2';
 import {IonicConfig} from '../../config/config';
 import {pointerCoord, hasPointerMoved} from '../../util/dom';
 
-
+/**
+ * TODO
+ */
 @Directive({
   selector: 'ion-label',
   properties: [
@@ -19,10 +21,18 @@ import {pointerCoord, hasPointerMoved} from '../../util/dom';
   }
 })
 export class Label {
+  /**
+   * TODO
+   * @param {IonicConfig} config
+   */
   constructor(config: IonicConfig) {
     this.scrollAssist = config.setting('keyboardScrollAssist');
   }
 
+  /**
+   * TODO
+   * @param {TODO} ev  TODO
+   */
   pointerStart(ev) {
     if (this.scrollAssist) {
       // remember where the touchstart/mousedown started
@@ -30,6 +40,10 @@ export class Label {
     }
   }
 
+  /**
+   * TODO
+   * @param {TODO} ev  TODO
+   */
   pointerEnd(ev) {
     if (this.container) {
 

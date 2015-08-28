@@ -93,18 +93,19 @@ export class Content extends Ion {
   /**
    * Returns the content and scroll elements' dimensions.
    * @returns {Object} dimensions  The content and scroll elements' dimensions
-   * @returns {Number} dimensions.contentHeight  content offsetHeight
-   * @returns {Number} dimensions.contentTop  content offsetTop
-   * @returns {Number} dimensions.contentBottom  content offsetTop+offsetHeight
-   * @returns {Number} dimensions.contentWidth  content offsetWidth
-   * @returns {Number} dimensions.contentLeft  content offsetLeft
-   * @returns {Number} dimensions.contentRight  content offsetLeft + offsetWidth
-   * @returns {Number} dimensions.scrollHeight  scroll scrollHeight
-   * @returns {Number} dimensions.scrollTop  scroll scrollTop
-   * @returns {Number} dimensions.scrollBottom  scroll scrollTop + scrollHeight
-   * @returns {Number} dimensions.scrollWidth  scroll scrollWidth
-   * @returns {Number} dimensions.scrollLeft  scroll scrollLeft
-   * @returns {Number} dimensions.scrollRight  scroll scrollLeft + scrollWidth
+   * {Number} dimensions.contentHeight  content offsetHeight
+   * {Number} dimensions.contentTop  content offsetTop
+   * {Number} dimensions.contentBottom  content offsetTop+offsetHeight
+   * {Number} dimensions.contentWidth  content offsetWidth
+   * {Number} dimensions.contentLeft  content offsetLeft
+   * {Number} dimensions.contentRight  content offsetLeft + offsetWidth
+   * {Number} dimensions.scrollHeight  scroll scrollHeight
+   * {Number} dimensions.scrollTop  scroll scrollTop
+   * {Number} dimensions.scrollBottom  scroll scrollTop + scrollHeight
+   * {Number} dimensions.scrollWidth  scroll scrollWidth
+   * {Number} dimensions.scrollLeft  scroll scrollLeft
+   * {Number} dimensions.scrollRight  scroll scrollLeft + scrollWidth
+   * TODO: figure out how to get this to work
    */
   getDimensions() {
     let scrollElement = this.scrollElement;
