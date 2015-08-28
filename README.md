@@ -2,7 +2,7 @@
 
 Ionic 2 is the next generation of [Ionic](http://ionicframework.com/), the open-source mobile app development SDK that makes it easy to build top quality mobile apps with web technologies.
 
-Ionic 2 is based on the new 2.x version of AngularJS, and comes with many significant performance, usability, and feature improvements.
+Ionic 2 is based on the new [2.x version of AngularJS](https://angular.io/), and comes with many significant performance, usability, and feature improvements.
 
 [Ionic 2 Starter](https://github.com/driftyco/ionic2-starter)
 
