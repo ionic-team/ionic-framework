@@ -9,8 +9,9 @@ Ionic 2 is based on the new 2.x version of AngularJS, and comes with many signif
 
 - Angular 2 is still in alpha and is not production ready
 - Angular team has first focused on developing what the core of Angular 2 "is"
-- Filesize and start-up times have not been optimized in Ionic's developer preview yet
-- Once Angular 2 reaches beta there will be significant improvements to Ionic's current state
+- Angular 2 filesize has not been optimized for minification yet
+- Angular 2 bootstrap time has not been optimized yet
+- As Angular 2 reaches beta there will be significant performance improvements
 
 
 ## CSS Attribute Selectors:
@@ -18,7 +19,7 @@ Ionic 2 is based on the new 2.x version of AngularJS, and comes with many signif
 - Simple
 - Smaller markup
 - Easier to read and understand
-- Not an issue for today's mobile browsers
+- [Not an issue](https://twitter.com/paul_irish/status/311610425617838081) for today's mobile browsers
 - No performance impacts have been found
 
 
