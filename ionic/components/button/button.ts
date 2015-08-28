@@ -5,7 +5,9 @@ import {IonicConfig} from '../../config/config';
 import {Activator} from '../../util/activator';
 import * as dom  from '../../util/dom';
 
-
+/**
+ * TODO
+ */
 @Directive({
   selector: 'button,[button]',
   host: {
@@ -15,10 +17,17 @@ import * as dom  from '../../util/dom';
   }
 })
 export class Button {
+  /**
+   * TODO
+   */
   constructor() {
     this.iconLeft = this.iconRight = this.iconOnly = false;
   }
 
+  /**
+   * TODO
+   * @param {TODO} icon  TODO
+   */
   registerIcon(icon) {
     this.iconLeft = icon.iconLeft;
     this.iconRight = icon.iconRight;
@@ -26,13 +35,17 @@ export class Button {
   }
 }
 
-
+/**
+ * TODO
+ */
 @Directive({
   selector: '[tap-disabled]'
 })
 export class TapDisabled {}
 
-
+/**
+ * TODO
+ */
 @Directive({
   selector: 'button,[button],[tappable],ion-checkbox,ion-radio',
   host: {
@@ -45,7 +58,13 @@ export class TapDisabled {}
   }
 })
 export class TapClick {
-
+  /**
+   * TODO
+   * @param {ElementRef} elementRef  TODO
+   * @param {IonicConfig} config  TODO
+   * @param {NgZone} ngZone  TODO
+   * @param {TapDisabled=} tapDisabled  TODO
+   */
   constructor(
     elementRef: ElementRef,
     config: IonicConfig,
@@ -68,10 +87,18 @@ export class TapClick {
     };
   }
 
+  /**
+   * TODO
+   * @param {TODO} ev  TODO
+   */
   touchStart(ev) {
     this.pointerStart(ev);
   }
 
+  /**
+   * TODO
+   * @param {TODO} ev  TODO
+   */
   touchEnd(ev) {
     let self = this;
 
@@ -99,6 +126,10 @@ export class TapClick {
     this.pointerEnd();
   }
 
+  /**
+   * TODO
+   * @param {TODO} ev  TODO
+   */
   mouseDown(ev) {
     if (this.disableClick) {
       ev.preventDefault();
@@ -109,6 +140,10 @@ export class TapClick {
     }
   }
 
+  /**
+   * TODO
+   * @param {TODO} ev  TODO
+   */
   mouseUp(ev) {
     if (this.disableClick) {
       ev.preventDefault();
@@ -118,6 +153,10 @@ export class TapClick {
     this.pointerEnd();
   }
 
+  /**
+   * TODO
+   * @param {TODO} ev  TODO
+   */
   pointerStart(ev) {
     this.start = dom.pointerCoord(ev);
 
@@ -127,6 +166,9 @@ export class TapClick {
     });
   }
 
+  /**
+   * TODO
+   */
   pointerEnd() {
     this.zone.runOutsideAngular(() => {
       Activator.end();
@@ -134,6 +176,9 @@ export class TapClick {
     });
   }
 
+  /**
+   * TODO
+   */
   pointerCancel() {
     this.start = null;
 
@@ -143,6 +188,11 @@ export class TapClick {
     });
   }
 
+  /**
+   * Whether the supplied click event should be allowed or not.
+   * @param {MouseEvent} ev  The click event.
+   * @return {boolean} True if click event should be allowed, otherwise false.
+   */
   allowClick(ev) {
     if (!ev.isIonicTap) {
       if (this.disableClick || !this.start) {
@@ -152,6 +202,10 @@ export class TapClick {
     return true;
   }
 
+  /**
+   * TODO
+   * @param {MouseEvent} ev  TODO
+   */
   click(ev) {
     if (!this.allowClick(ev)) {
       ev.preventDefault();
@@ -159,6 +213,9 @@ export class TapClick {
     }
   }
 
+  /**
+   * TODO
+   */
   onDestroy() {
     this.ele = null;
   }
