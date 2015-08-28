@@ -1,6 +1,8 @@
 import {Directive, ElementRef} from 'angular2/angular2';
 
-
+/**
+ * TODO
+ */
 @Directive({
   selector: 'ion-item-group',
   host: {
@@ -8,12 +10,18 @@ import {Directive, ElementRef} from 'angular2/angular2';
   }
 })
 export class ItemGroup {
+  /**
+   * TODO
+   * @param {ElementRef} elementRef  TODO
+   */
   constructor(elementRef: ElementRef) {
     this.ele = elementRef.nativeElement;
   }
 }
 
-
+/**
+ * TODO
+ */
 @Directive({
   selector: 'ion-item-group-title',
   host: {
@@ -22,6 +30,10 @@ export class ItemGroup {
   }
 })
 export class ItemGroupTitle {
+  /**
+   * TODO
+   * @param {ElementRef} elementRef  TODO
+   */
   constructor(elementRef: ElementRef) {
     this.isSticky = true;
     this.ele = elementRef.nativeElement;

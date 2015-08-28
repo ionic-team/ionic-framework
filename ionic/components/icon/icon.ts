@@ -6,6 +6,9 @@ import {Ion} from '../ion';
 import {Button} from '../button/button';
 
 
+/**
+ * TODO
+ */
 @Directive({
   selector: 'icon',
   properties: [
@@ -20,6 +23,13 @@ import {Button} from '../button/button';
   }
 })
 export class Icon {
+  /**
+   * TODO
+   * @param {ElementRef} elementRef  TODO
+   * @param {Button} hostButton  TODO
+   * @param {IonicConfig} config  TODO
+   * @param {Renderer} renderer  TODO
+   */
   constructor(
     private elementRef: ElementRef,
     @Optional() @Host() hostButton: Button,
@@ -61,6 +71,9 @@ export class Icon {
     }
   }
 
+  /**
+   * TODO
+   */
   onInit() {
     if (this.mode == 'ios' && this.ios) {
       this.name = this.ios;

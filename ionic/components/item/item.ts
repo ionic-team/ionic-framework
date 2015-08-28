@@ -4,7 +4,9 @@ import {ItemPrimaryOptions, ItemSecondaryOptions} from './item-options';
 import {ItemPrimarySwipeButtons, ItemSecondarySwipeButtons} from './item-swipe-buttons';
 import {dom} from 'ionic/util';
 
-
+/**
+ * TODO
+ */
 @Component({
   selector: 'ion-item,[ion-item]',
   host: {
@@ -21,6 +23,10 @@ import {dom} from 'ionic/util';
   directives: [NgIf]
 })
 export class Item {
+  /**
+   * TODO
+   * @param {ElementRef} elementRef  TODO
+   */
   constructor(elementRef: ElementRef) {
     this._isOpen = false;
     this._isSlideActive = false;

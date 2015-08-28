@@ -3,11 +3,18 @@ import {ElementRef, Host, Directive} from 'angular2/angular2';
 import {Item} from 'ionic/components/item/item';
 import {SlideGesture} from 'ionic/gestures/slide-gesture';
 
-
+/**
+ * TODO
+ */
 @Directive({
   selector: 'ion-primary-swipe-buttons'
 })
 export class ItemPrimarySwipeButtons {
+  /**
+   * TODO
+   * @param {ElementRef} elementRef  TODO
+   * @param {Item} item  TODO
+   */
   constructor(
     elementRef: ElementRef,
     @Host() item: Item
@@ -19,6 +26,10 @@ export class ItemPrimarySwipeButtons {
     this.gesture.listen();
   }
 
+  /**
+   * TODO
+   * @param {boolean} isOpen  TODO
+   */
   setOpen(isOpen) {
     if (isOpen !== this.isOpen) {
       this.isOpen = isOpen;
@@ -29,6 +40,9 @@ export class ItemPrimarySwipeButtons {
   }
 }
 
+/**
+ * TODO
+ */
 @Directive({
   selector: 'ion-secondary-swipe-buttons'
 })
