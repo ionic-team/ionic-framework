@@ -86,7 +86,7 @@ export class ActionMenu extends Overlay {
 
   /**
    * TODO
-   * @returns {TODO} TODO 
+   * @returns {TODO} TODO
    */
   get() {
     return Modal.getByType(OVERLAY_TYPE);
@@ -103,7 +103,7 @@ const OVERLAY_TYPE = 'action-menu';
 class ActionMenuAnimation extends Animation {
   constructor(element) {
     super(element);
-    this.easing('cubic-bezier(.36, .66, .04, 1)').duration(400);
+    this.easing('cubic-bezier(.36, .66, .04, 1)').duration(450);
 
     this.backdrop = new Animation(element.querySelector('backdrop'));
     this.wrapper = new Animation(element.querySelector('action-menu-wrapper'));
@@ -115,7 +115,7 @@ class ActionMenuAnimation extends Animation {
 class ActionMenuSlideIn extends ActionMenuAnimation {
   constructor(element) {
     super(element);
-    this.backdrop.fromTo('opacity', 0, 0.4);
+    this.backdrop.fromTo('opacity', 0.01, 0.4);
     this.wrapper.fromTo('translateY', '100%', '0%');
   }
 }
@@ -124,7 +124,7 @@ Animation.register('action-menu-slide-in', ActionMenuSlideIn);
 class ActionMenuSlideOut extends ActionMenuAnimation {
   constructor(element) {
     super(element);
-    this.backdrop.fromTo('opacity', 0.4, 0);
+    this.backdrop.fromTo('opacity', 0.4, 0.01);
     this.wrapper.fromTo('translateY', '0%', '100%');
   }
 }
@@ -134,7 +134,7 @@ Animation.register('action-menu-slide-out', ActionMenuSlideOut);
 class ActionMenuMdSlideIn extends ActionMenuSlideIn {
   constructor(element) {
     super(element);
-    this.backdrop.fromTo('opacity', 0, 0.26);
+    this.backdrop.fromTo('opacity', 0.01, 0.26);
   }
 }
 Animation.register('action-menu-md-slide-in', ActionMenuMdSlideIn);
@@ -142,7 +142,7 @@ Animation.register('action-menu-md-slide-in', ActionMenuMdSlideIn);
 class ActionMenuMdSlideOut extends ActionMenuSlideOut {
   constructor(element) {
     super(element);
-    this.backdrop.fromTo('opacity', 0.26, 0);
+    this.backdrop.fromTo('opacity', 0.01.26, 0);
   }
 }
 Animation.register('action-menu-md-slide-out', ActionMenuMdSlideOut);
