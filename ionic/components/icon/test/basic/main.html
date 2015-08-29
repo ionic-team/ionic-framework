@@ -1,28 +1,61 @@
 
-<ion-row>
-  <ion-col>
+<ion-toolbar>
+  <ion-title>Icons</ion-title>
+</ion-toolbar>
 
-    <icon ion-home></icon>
+<ion-content>
 
-  </ion-col>
-  <ion-col>
+  <ion-list>
 
-    <icon name="ion-home"></icon>
+    <ion-item>
+      <icon ion-home item-left></icon>
+      <code>
+        &lt;icon ion-home>&lt;/icon>
+      </code>
+    </ion-item>
 
-  </ion-col>
-  <ion-col>
+    <ion-item>
+      <icon inactive ion-home item-left></icon>
+      <code>
+        &lt;icon inactive ion-home>&lt;/icon>
+      </code>
+    </ion-item>
 
-    <icon [name]="homeIcon"></icon>
+    <ion-item>
+      <icon name="ion-home" item-left></icon>
+      <code>
+        &lt;icon name="ion-home">&lt;/icon>
+      </code>
+    </ion-item>
 
-  </ion-col>
-  <ion-col>
+    <ion-item>
+      <icon [name]="homeIcon" item-left></icon>
+      <code>
+        &lt;icon [name]="homeIcon">&lt;/icon>
+      </code>
+    </ion-item>
 
-    <icon ios="ion-social-apple" md="ion-social-android"></icon>
+    <ion-item>
+      <icon ios="ion-social-apple" md="ion-social-android" item-left></icon>
+      <code>
+        &lt;icon ios="ion-social-apple" md="ion-social-android">&lt;/icon>
+      </code>
+    </ion-item>
 
-  </ion-col>
-  <ion-col>
+    <ion-item>
+      <icon inactive ios="ion-social-apple" md="ion-social-android" item-left></icon>
+      <code>
+        &lt;icon inactive ios="ion-social-apple" md="ion-social-android">&lt;/icon>
+      </code>
+    </ion-item>
 
-    <icon ion-social-twitter></icon>
+  </ion-list>
 
-  </ion-col>
-</ion-row>
+</ion-content>
+
+<style>
+  /*to ensure ng css encapsulation doesn't mess with icon attributes*/
+  code {
+    font-size: 0.8em;
+  }
+</style>

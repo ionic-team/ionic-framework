@@ -38,13 +38,15 @@ export class Icon {
   ) {
     let ele = elementRef.nativeElement;
 
-    this.mode = config.setting('mode');
+    this.mode = config.setting('iconMode');
+
     this.iconLeft = this.iconRight = this.iconOnly = false;
     this.ariaHidden = true;
+    this.isInactive = ele.hasAttribute('inactive');
 
     this.iconAttr = null;
     for (let i = 0, l = ele.attributes.length; i < l; i++) {
-      if (ele.attributes[i].value === '') {
+      if (ele.attributes[i].value === '' && /_|item-|inactive|class/.test(ele.attributes[i].name) !== true) {
         this.iconAttr = ele.attributes[i].name;
       }
     }
