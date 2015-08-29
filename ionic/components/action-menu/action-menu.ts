@@ -142,7 +142,7 @@ Animation.register('action-menu-md-slide-in', ActionMenuMdSlideIn);
 class ActionMenuMdSlideOut extends ActionMenuSlideOut {
   constructor(element) {
     super(element);
-    this.backdrop.fromTo('opacity', 0.01.26, 0);
+    this.backdrop.fromTo('opacity', 0.26, 0.01);
   }
 }
 Animation.register('action-menu-md-slide-out', ActionMenuMdSlideOut);
