@@ -89,7 +89,7 @@ export class ActionMenu extends Overlay {
    * @returns {TODO} TODO
    */
   get() {
-    return Modal.getByType(OVERLAY_TYPE);
+    return this.getByType(OVERLAY_TYPE);
   }
 
 }
