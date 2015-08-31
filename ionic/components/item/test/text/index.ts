@@ -5,5 +5,3 @@ import {App} from 'ionic/ionic';
   templateUrl: 'main.html'
 })
 class E2EApp {}
-
-document.body.style.background='#eee';

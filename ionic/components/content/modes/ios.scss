@@ -1,0 +1,10 @@
+
+// iOS Content
+// --------------------------------------------------
+
+$outer-content-md-background-color:         #efeff4 !default;
+
+
+[mode=ios] .outer-content {
+  background: $outer-content-md-background-color;
+}
