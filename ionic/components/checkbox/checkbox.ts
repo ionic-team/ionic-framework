@@ -120,7 +120,7 @@ export class Checkbox extends Ion {
   /**
    * @private
    * Angular2 Forms API method called by the the view (NgControl) to register
-   * the onTouched event handler that marks model as touched.
+   * the onTouched event handler that marks model (Control) as touched.
    * @param {Function} fn  onTouched event handler.
    */
   registerOnTouched(fn) { this.onTouched = fn; }

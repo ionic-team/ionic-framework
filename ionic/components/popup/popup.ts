@@ -6,10 +6,19 @@ import {Animation} from '../../animations/animation';
 import * as util from 'ionic/util';
 
 
+/**
+ * TODO
+ */
 @Injectable()
 export class Popup extends Overlay {
 
-  popup(context, opts={}) {
+    /**
+     * TODO
+     * @param {TODO} context  TODO
+     * @param {TODO} [opts={}]  TODO
+     * @returns {TODO} TODO
+     */
+    popup(context, opts={}) {
     return new Promise((resolve, reject)=> {
       let defaults = {
         enterAnimation: 'popup-pop-in',
@@ -23,6 +32,12 @@ export class Popup extends Overlay {
     });
   }
 
+  /**
+   * TODO
+   * @param {TODO} context  TODO
+   * @param {TODO} [opts={}]  TODO
+   * @returns {TODO} TODO
+   */
   alert(context={}, opts={}) {
     if (typeof context === 'string') {
       context = {
@@ -48,6 +63,12 @@ export class Popup extends Overlay {
     return this.popup(context, opts);
   }
 
+  /**
+   * TODO
+   * @param {TODO} context  TODO
+   * @param {TODO} [opts={}]  TODO
+   * @returns {TODO} TODO
+   */
   confirm(context={}, opts={}) {
     if (typeof context === 'string') {
       context = {
@@ -77,6 +98,12 @@ export class Popup extends Overlay {
     return this.popup(context, opts);
   }
 
+  /**
+   * TODO
+   * @param {TODO} [context={}]  TODO
+   * @param {TODO} [opts={}]  TODO
+   * @returns {TODO} TODO
+   */
   prompt(context={}, opts={}) {
     if (typeof context === 'string') {
       context = {
@@ -112,6 +139,12 @@ export class Popup extends Overlay {
     return this.popup(context, opts);
   }
 
+  /**
+   * TODO
+   * @param {TODO} context  TODO
+   * @param {TODO} [opts={}]  TODO
+   * @returns {TODO} TODO
+   */
   get(handle) {
     if (handle) {
       return this.getByHandle(handle, OVERLAY_TYPE);
