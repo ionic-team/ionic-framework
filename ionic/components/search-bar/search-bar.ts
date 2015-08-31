@@ -5,7 +5,9 @@ import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
 import {IonicComponent, IonicView} from '../../config/annotations';
 
-
+/**
+ * TODO
+ */
 @IonicComponent({
   selector: 'ion-search-bar',
   properties: [
@@ -27,12 +29,17 @@ import {IonicComponent, IonicView} from '../../config/annotations';
   <button class="search-bar-cancel">{{cancelText}}</button>`
 })
 export class SearchBar extends Ion {
+  /**
+   * TODO
+   * @param {ElementRef} elementRef  TODO
+   * @param {IonicConfig} config  TODO
+   */
   constructor(
     elementRef: ElementRef,
-    ionicConfig: IonicConfig//,
+    config: IonicConfig//,
     //cd:ControlDirective
   ) {
-    super(elementRef, ionicConfig);
+    super(elementRef, config);
     // this.controlDirective = cd;
     // cd.valueAccessor = this; //ControlDirective should inject CheckboxControlDirective
 
@@ -87,4 +94,3 @@ export class SearchPipe extends Pipe {
   }
 }
 */
-

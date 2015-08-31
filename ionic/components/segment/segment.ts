@@ -7,7 +7,9 @@ import {IonicConfig} from '../../config/config';
 import {IonicDirective, IonicComponent} from '../../config/annotations'
 import {dom} from 'ionic/util';
 
-
+/**
+ * TODO
+ */
 @IonicComponent({
   selector: 'ion-segment',
   appInjector: [ NgControl ],
@@ -33,8 +35,15 @@ import {dom} from 'ionic/util';
   directives: [forwardRef(() => SegmentButton)]
 })
 export class Segment extends Ion {
+  /**
+   * TODO
+   * @param {NgControl} ngControl  TODO
+   * @param {ElementRef} elementRef  TODO
+   * @param {IonicConfig} config  TODO
+   * @param {Renderer} renderer  TODO
+   */
   constructor(
-    cd: NgControl,
+    ngControl: NgControl,
     elementRef: ElementRef,
     ionicConfig: IonicConfig,
     renderer: Renderer
@@ -48,7 +57,7 @@ export class Segment extends Ion {
     this.change = new EventEmitter('change');
     this.input = new EventEmitter('input');
 
-    this.cd = cd;
+    this.ngControl = ngControl;
 
     this.buttons = [];
   }
@@ -56,6 +65,7 @@ export class Segment extends Ion {
   /**
    * Called by child SegmentButtons to bind themselves to
    * the Segment.
+   * @param {SegmentButton} segmentButton  The child SegmentButton to register.
    */
   register(segmentButton) {
     this.buttons.push(segmentButton);
@@ -69,6 +79,7 @@ export class Segment extends Ion {
 
   /**
    * Select the button with the given value.
+   * @param {string} value  Value of the button to select.
    */
   selectFromValue(value) {
     for(let button of this.buttons) {
@@ -80,6 +91,7 @@ export class Segment extends Ion {
 
   /**
    * Indicate a button should be selected.
+   * @param {SegmentButton} segmentButton  The button to select.
    */
   selected(segmentButton) {
     for(let button of this.buttons) {
@@ -92,10 +104,10 @@ export class Segment extends Ion {
 
     setTimeout(() => {
       this.value = segmentButton.value;
-      this.cd.valueAccessor.writeValue(segmentButton.value);
+      this.ngControl.valueAccessor.writeValue(segmentButton.value);
       this.selectFromValue(segmentButton.value);
 
-      this.cd.control.updateValue(segmentButton.value);
+      this.ngControl.control.updateValue(segmentButton.value);
 
       // Trigger on change
       this.change.next();
@@ -108,7 +120,9 @@ export class Segment extends Ion {
   }
 }
 
-
+/**
+ * TODO
+ */
 @IonicDirective({
   selector: 'ion-segment',
   //properties: ['value'],
@@ -128,15 +142,27 @@ export class Segment extends Ion {
   }
 })
 export class SegmentControlValueAccessor {
-  constructor(cd: NgControl, renderer: Renderer, elementRef: ElementRef, segment: Segment) {
+  /**
+   * TODO
+   * @param {NgControl} ngControl  TODO
+   * @param {Renderer} renderer  TODO
+   * @param {ElementRef} elementRef  TODO
+   * @param {Segment} segment  TODO
+   */
+  constructor(
+    ngControl: NgControl,
+    renderer: Renderer,
+    elementRef: ElementRef,
+    segment: Segment
+  ) {
     this.onChange = (_) => {};
     this.onTouched = (_) => {};
-    this.cd = cd;
+    this.ngControl = ngControl;
     this.renderer = renderer;
     this.elementRef = elementRef;
     this.segment = segment;
 
-    cd.valueAccessor = this;
+    ngControl.valueAccessor = this;
   }
 
   writeValue(value) {
@@ -155,7 +181,9 @@ export class SegmentControlValueAccessor {
   registerOnTouched(fn) { this.onTouched = fn; }
 }
 
-
+/**
+ * TODO
+ */
 @IonicDirective({
   selector: 'ion-segment-button',
   properties: [
@@ -167,6 +195,11 @@ export class SegmentControlValueAccessor {
   }
 })
 export class SegmentButton {
+  /**
+   * TODO
+   * @param {Segment} segment  TODO
+   * @param {ElementRef} elementRef  TODO
+   */
   constructor(
     @Host() segment: Segment,
     elementRef: ElementRef
