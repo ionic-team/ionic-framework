@@ -5,6 +5,9 @@ import {Content} from '../content/content';
 import * as util from 'ionic/util';
 import {raf, ready, CSS} from 'ionic/util/dom';
 
+/**
+ * TODO
+ */
 @Component({
   selector: 'ion-refresher',
   events: ['refresh', 'starting', 'pulling'],
@@ -37,6 +40,11 @@ import {raf, ready, CSS} from 'ionic/util/dom';
   directives: [NgIf, NgClass]
 })
 export class Refresher {
+  /**
+   * TODO
+   * @param {Content} content  TODO
+   * @param {ElementRef} elementRef  TODO
+   */
   constructor(
     @Host() content: Content,
     element: ElementRef
@@ -55,6 +63,9 @@ export class Refresher {
     this.initEvents();
   }
 
+  /**
+   * Initialize touch and scroll event listeners.
+   */
   initEvents() {
 
     let sp = this.content.getNativeElement();
@@ -99,11 +110,20 @@ export class Refresher {
     sc.removeEventListener('scroll', this._handleScrollListener);
   }
 
+  /**
+   * TODO
+   * @param {TODO} val  TODO
+   */
   overscroll(val) {
     this.scrollChild.style[CSS.transform] = 'translateY(' + val + 'px)';
     this.lastOverscroll = val;
   }
 
+  /**
+   * TODO
+   * @param {TODO} target  TODO
+   * @param {TODO} newScrollTop  TODO
+   */
   nativescroll(target, newScrollTop) {
     // creates a scroll event that bubbles, can be cancelled, and with its view
     // and detail property initialized to window and 1, respectively
@@ -113,6 +133,10 @@ export class Refresher {
     target.dispatchEvent(e);
   }
 
+  /**
+   * TODO
+   * @param {TODO} enabled  TODO
+   */
   setScrollLock(enabled) {
     // set the scrollbar to be position:fixed in preparation to overscroll
     // or remove it so the app can be natively scrolled
@@ -131,12 +155,18 @@ export class Refresher {
     }
   }
 
+  /**
+   * TODO
+   */
   activate() {
     //this.ele.classList.add('active');
     this.isActive = true;
     //this.starting.next();
   }
 
+  /**
+   * TODO
+   */
   deactivate() {
     // give tail 150ms to finish
     setTimeout(() => {
@@ -155,22 +185,33 @@ export class Refresher {
     //$scope.$onRefresh();
   }
 
-
+  /**
+   * TODO
+   */
   show() {
     // showCallback
     this.ele.classList.remove('invisible');
   }
 
+  /**
+   * TODO
+   */
   hide() {
     // showCallback
     this.ele.classList.add('invisible');
   }
 
+  /**
+   * TODO
+   */
   tail() {
     // tailCallback
     this.ele.classList.add('refreshing-tail');
   }
 
+  /**
+   * TODO
+   */
   complete() {
     setTimeout(() => {
       raf(this.tail.bind(this));
@@ -189,6 +230,12 @@ export class Refresher {
     }, this.scrollTime);
   }
 
+/**
+ * TODO
+ * @param {TODO} Y  TODO
+ * @param {TODO} duration  TODO
+ * @param {Function} callback  TODO
+ */
   scrollTo(Y, duration, callback) {
     // scroll animation loop w/ easing
     // credit https://gist.github.com/dezinezync/5487119
@@ -233,6 +280,11 @@ export class Refresher {
     raf(scroll.bind(this));
   }
 
+  /**
+   * @private
+   * TODO
+   * @param {Event} e  TODO
+   */
   _handleTouchMove(e) {
     //console.log('TOUCHMOVE', e);
 
@@ -306,6 +358,12 @@ export class Refresher {
       raf(this.deactivate.bind(this));
     }
   }
+
+  /**
+   * @private
+   * TODO
+   * @param {Event} e  TODO
+   */
   _handleTouchEnd(e) {
     console.log('TOUCHEND', e);
     // if this wasn't an overscroll, get out immediately
@@ -335,6 +393,12 @@ export class Refresher {
       }
     }
   }
+
+  /**
+   * @private
+   * TODO
+   * @param {Event} e  TODO
+   */
   _handleScroll(e) {
     console.log('SCROLL', e.target.scrollTop);
   }
