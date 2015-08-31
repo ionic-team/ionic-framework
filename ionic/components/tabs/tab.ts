@@ -5,6 +5,9 @@ import {ViewItem} from '../view/view-item';
 import {Tabs} from './tabs';
 
 
+/**
+ * TODO
+ */
 @Component({
   selector: 'ion-tab',
   properties: [
@@ -26,6 +29,13 @@ import {Tabs} from './tabs';
 })
 export class Tab extends ViewController {
 
+  /**
+   * TODO
+   * @param {Tabs} tabs  TODO
+   * @param {ElementRef} elementRef  TODO
+   * @param {Injector} injector  TODO
+   * @param {NgZone} zone  TODO
+   */
   constructor(
     @Host() tabs: Tabs,
     elementRef: ElementRef,
@@ -70,6 +80,10 @@ export class Tab extends ViewController {
     }
   }
 
+  /**
+   * TODO
+   * @param {Function} callback  TODO
+   */
   load(callback) {
     if (!this._loaded && this.root) {
       let opts = {
@@ -86,6 +100,10 @@ export class Tab extends ViewController {
     }
   }
 
+  /**
+   * TODO
+   * @returns {TODO} TODO
+   */
   queueInitial() {
     // this Tab will be used as the initial one for the first load of Tabs
     return new Promise(res => { this._initialResolve = res; });
@@ -102,10 +120,19 @@ export class Tab extends ViewController {
 }
 
 
+/**
+ * TODO
+ */
 @Directive({
   selector: 'template[pane-anchor]'
 })
 class TabPaneAnchor {
+
+  /**
+  * TODO
+  * @param {Tab} tab  TODO
+  * @param {ElementRef} elementRef  TODO
+  */
   constructor(@Host() tab: Tab, elementRef: ElementRef) {
     tab.anchorElementRef(elementRef);
   }

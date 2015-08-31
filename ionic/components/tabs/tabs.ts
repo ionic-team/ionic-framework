@@ -5,7 +5,9 @@ import {ViewItem} from '../view/view-item';
 import {Icon} from '../icon/icon';
 import {IonicComponent, IonicView} from '../../config/annotations';
 
-
+/**
+ * TODO
+ */
 @IonicComponent({
   selector: 'ion-tabs',
   defaultProperties: {
@@ -64,6 +66,10 @@ export class Tabs extends ViewController {
 
   }
 
+  /**
+   * TODO
+   * @param {Tab} tab  TODO
+   */
   addTab(tab) {
     // tab.item refers to the ViewItem of the individual Tab being added to Tabs (ViewController)
     // this.item refers to the ViewItem instsance on Tabs
@@ -76,6 +82,11 @@ export class Tabs extends ViewController {
     }
   }
 
+  /**
+   * TODO
+   * @param {Tab} tab  TODO
+   * @returns {TODO} TODO
+   */
   select(tab) {
     let enteringItem = null;
     if (typeof tab === 'number') {
@@ -112,6 +123,9 @@ export class Tabs extends ViewController {
 
 }
 
+/**
+ * TODO
+ */
 @Directive({
   selector: 'button.tab-button',
   properties: ['tab'],

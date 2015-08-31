@@ -16,7 +16,9 @@ import {IonicConfig} from '../../config/config';
 import {IonicComponent, IonicView} from '../../config/annotations';
 import {pointerCoord} from '../../util/dom';
 
-
+/**
+ * TODO
+ */
 @Directive({
   selector: '.media-switch',
   host: {
@@ -28,6 +30,12 @@ import {pointerCoord} from '../../util/dom';
   }
 })
 class MediaSwitch {
+  /**
+   * TODO
+   * @param {Switch} swtch  TODO
+   * @param {} elementRef  TODO
+   * @param {IonicConfig} config  TODO
+   */
   constructor(
     @Host() @Inject(forwardRef(() => Switch)) swtch: Switch,
     elementRef: ElementRef,
@@ -105,6 +113,9 @@ class MediaSwitch {
 }
 
 
+/**
+ * TODO
+ */
 @IonicComponent({
   selector: 'ion-switch',
   properties: [
@@ -133,10 +144,16 @@ class MediaSwitch {
   directives: [MediaSwitch]
 })
 export class Switch extends Ion {
+  /**
+   * TODO
+   * @param {ElementRef} elementRef  TODO
+   * @param {IonicConfig} config  TODO
+   * @param {NgControl=} ngControl  TODO
+   */
   constructor(
     elementRef: ElementRef,
     config: IonicConfig,
-    @Optional() private cd: NgControl
+    @Optional() private ngControl: NgControl
   ) {
     super(elementRef, config);
     this.id = IonInput.nextId();
@@ -145,7 +162,7 @@ export class Switch extends Ion {
     this.onChange = (_) => {};
     this.onTouched = (_) => {};
 
-    if (cd) cd.valueAccessor = this;
+    if (ngControl) ngControl.valueAccessor = this;
   }
 
   onInit() {
@@ -153,11 +170,18 @@ export class Switch extends Ion {
     this.labelId = 'label-' + this.id;
   }
 
+  /**
+   * Set checked state of this switch.
+   * @param {boolean} value  Boolean to set this switch's checked state to.
+   */
   check(value) {
     this.checked = !!value;
     this.onChange(this.checked);
   }
 
+  /**
+   * Toggle the checked state of this switch.
+   */
   toggle() {
     this.check(!this.checked);
   }
