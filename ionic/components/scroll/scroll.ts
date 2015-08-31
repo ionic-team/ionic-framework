@@ -4,7 +4,7 @@ import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
 import {IonicComponent} from '../../config/annotations';
 import {Gesture} from '../../gestures/gesture';
-
+import {CSS} from '../../util/dom';
 
 /**
  * ion-scroll is a non-flexboxed scroll area that can
@@ -29,7 +29,7 @@ export class Scroll extends Ion {
    * @param {ElementRef} elementRef  TODO
    * @param {IonicConfig} config  TODO
    */
-  constructor(elementRef: ElementRef, config: IonicConfig) {
+  constructor(elementRef: ElementRef, ionicConfig: IonicConfig) {
     super(elementRef, ionicConfig);
   }
 
@@ -42,7 +42,9 @@ export class Scroll extends Ion {
   }
 
   initZoomScrolling() {
-    this.scrollElement.children[0] && this.scrollElement.children[0].classList.add('ion-scroll-zoom');
+    this.zoomElement = this.scrollElement.children[0];
+
+    this.zoomElement && this.zoomElement.classList.add('ion-scroll-zoom');
 
     this.scrollElement.addEventListener('scroll', (e) => {
       console.log("Scrolling", e);
@@ -52,7 +54,7 @@ export class Scroll extends Ion {
     this.zoomGesture.listen();
 
     this.zoomGesture.on('doubletap', (e) => {
-      console.log('Double tap', e);
+      this.zoomElement.style[CSS.transform] = 'scale(3)';
     });
   }
 
