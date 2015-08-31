@@ -41,14 +41,14 @@ const backdropManipulator = {
     //.classList[sliding ? 'add' : 'remove']('no-transition');
   },
   setOpen(open) {
-    let amt = open ? 0.6 : 0;
+    let amt = open ? 0.32 : 0;
     this.aside.backdrop.backgroundColor = 'rgba(0,0,0,' + amt + ')';
   },
   setTransform(t) {
     if(t === null) {
       t = this.aside.width();
     }
-    let fade = 0.6 * t / this.aside.width();
+    let fade = 0.32 * t / this.aside.width();
     this.aside.backdrop.backgroundColor = 'rgba(0,0,0,' + fade + ')';
   }
 }

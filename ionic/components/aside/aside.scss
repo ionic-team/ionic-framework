@@ -33,18 +33,6 @@ $aside-shadow: -1px 0px 8px rgba(0, 0, 0, 0.2) !default;
     }
   }
 
-  ion-aside-backdrop {
-    z-index: $z-index-aside-backdrop;
-    transition: $aside-backdrop-transition;
-    transform: translateX($aside-width);
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    position: fixed;
-    background-color: rgba(0,0,0,0);;
-  }
-
 
   &[type=overlay] {
     z-index: $z-index-aside-overlay;
@@ -66,9 +54,10 @@ $aside-shadow: -1px 0px 8px rgba(0, 0, 0, 0.2) !default;
     }
     &[type=overlay] {
       transform: translate3d($aside-width,0,0);
+      box-shadow: 1px 2px 16px rgba(0, 0, 0, 0.3);
 
       ion-aside-backdrop {
-        background-color: rgba(0,0,0,0.6);
+        background-color: rgba(0,0,0,0.32);
       }
     }
   }
@@ -112,6 +101,18 @@ $aside-shadow: -1px 0px 8px rgba(0, 0, 0, 0.2) !default;
     }
   }
 
+}
+
+ion-aside-backdrop {
+  z-index: $z-index-aside-backdrop;
+  transition: $aside-backdrop-transition;
+  transform: translateX($aside-width);
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  position: fixed;
+  background-color: rgba(0,0,0,0);;
 }
 
 .aside-content {
