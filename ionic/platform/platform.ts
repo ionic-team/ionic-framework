@@ -2,6 +2,9 @@ import * as util from '../util/util';
 import * as dom from '../util/dom';
 
 
+/**
+ * TODO
+ */
 export class PlatformCtrl {
 
   constructor() {
@@ -19,16 +22,30 @@ export class PlatformCtrl {
   // Methods
   // **********************************************
 
+  /**
+   * TODO
+   * @param {TODO} platformName  TODO
+   * @returns {TODO} TODO
+   */
   is(platformName) {
     return (this._platforms.indexOf(platformName) > -1);
   }
 
+  /**
+   * TODO
+   * @returns {TODO} TODO
+   */
   platforms() {
     // get the array of active platforms, which also knows the hierarchy,
     // with the last one the most important
     return this._platforms;
   }
 
+  /**
+   * TODO
+   * @param {TODO} platformName  TODO
+   * @returns {TODO} TODO
+   */
   versions(platformName) {
     if (arguments.length) {
       // get a specific platform's version
@@ -39,10 +56,19 @@ export class PlatformCtrl {
     return this._versions;
   }
 
+  /**
+   * TODO
+   * @returns {TODO} TODO
+   */
   ready() {
     return this._readyPromise;
   }
 
+  /**
+   * TODO
+   * @param {TODO} config  TODO
+   * @returns {TODO} TODO
+   */
   prepareReady(config) {
     let self = this;
 
@@ -61,11 +87,19 @@ export class PlatformCtrl {
     }
   }
 
+  /**
+   * TODO
+   * @returns {TODO} TODO
+   */
   domReady() {
     // convenience method so its easy to access on Platform
     return dom.ready.apply(this, arguments);
   }
 
+  /**
+   * TODO
+   * @returns {TODO} TODO
+   */
   windowLoad() {
     // convenience method so its easy to access on Platform
     return dom.windowLoad.apply(this, arguments);
@@ -163,6 +197,10 @@ export class PlatformCtrl {
   // Registry
   // **********************************************
 
+  /**
+   * TODO
+   * @param {TODO} platformConfig  TODO
+   */
   register(platformConfig) {
     this._registry[platformConfig.name] = platformConfig;
   }
@@ -175,6 +213,11 @@ export class PlatformCtrl {
     this._default = platformName;
   }
 
+  /**
+   * TODO
+   * @param {TODO} queryValue  TODO
+   * @returns {boolean} TODO
+   */
   testQuery(queryValue) {
     let val = this.query('ionicplatform');
     if (val) {
@@ -188,11 +231,21 @@ export class PlatformCtrl {
     return false;
   }
 
+  /**
+   * TODO
+   * @param {TODO} userAgentExpression  TODO
+   * @returns {boolean} TODO
+   */
   testUserAgent(userAgentExpression) {
     let rx = new RegExp(userAgentExpression, 'i');
     return rx.test(this._ua);
   }
 
+  /**
+   * TODO
+   * @param {TODO} userAgentExpression  TODO
+   * @returns {Object} TODO
+   */
   matchUserAgentVersion(userAgentExpression) {
     let val = this._ua.match(userAgentExpression);
     if (val) {
@@ -203,6 +256,12 @@ export class PlatformCtrl {
     }
   }
 
+  /**
+   * TODO
+   * @param {TODO} queryValue  TODO
+   * @param {TODO} userAgentExpression  TODO
+   * @returns {boolean} TODO
+   */
   isPlatform(queryValue, userAgentExpression) {
     if (!userAgentExpression) {
       userAgentExpression = queryValue;
@@ -211,6 +270,10 @@ export class PlatformCtrl {
            this.testUserAgent(userAgentExpression);
   }
 
+  /**
+   * TODO
+   * @param {TODO} config  TODO
+   */
   load(config) {
     let rootPlatformNode = null;
     let engineNode = null;
@@ -299,6 +362,11 @@ export class PlatformCtrl {
     }
   }
 
+  /**
+   * TODO
+   * @param {TODO} platformName  TODO
+   * @returns {TODO} TODO
+   */
   matchPlatform(platformName) {
     // build a PlatformNode and assign config data to it
     // use it's getRoot method to build up its hierarchy
@@ -324,6 +392,11 @@ export class PlatformCtrl {
     return this._settings;
   }
 
+  /**
+   * TODO
+   * @param {TODO} platformName  TODO
+   * @returns {string} TODO
+   */
   get(platformName) {
     return this._registry[platformName] || {};
   }
@@ -458,4 +531,3 @@ class PlatformNode {
 }
 
 export let Platform = new PlatformCtrl();
-
