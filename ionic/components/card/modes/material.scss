@@ -46,6 +46,7 @@ ion-card[mode=md] {
   .item {
     padding-right: ($card-md-padding-right / 2);
     padding-left: ($card-md-padding-left / 2);
+    font-size: $item-md-font-size;
   }
 
   ion-item-content {
@@ -64,6 +65,11 @@ ion-card[mode=md] {
     color: $card-md-header-color;
   }
 
+  ion-card-header + ion-card-content,
+  .item + ion-card-content {
+    padding-top: 0;
+  }
+
   [item-left],
   [item-right] {
     margin: $card-md-padding-media-top ($card-md-padding-right / 2) $card-md-padding-media-bottom ($card-md-padding-left / 2);
@@ -77,6 +83,7 @@ ion-card[mode=md] {
     padding: 2px 6px;
     min-height: 26px;
     font-size: 1.3rem;
+    border-color: transparent;
   }
 
   .card-title {

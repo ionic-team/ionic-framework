@@ -43,6 +43,7 @@ ion-card[mode=ios] {
   .item {
     padding-right: ($card-ios-padding-right / 2);
     padding-left: ($card-ios-padding-left / 2);
+    font-size: $item-ios-font-size;
   }
 
   ion-item-content {
@@ -52,6 +53,7 @@ ion-card[mode=ios] {
   ion-card-content {
     padding: $card-ios-padding-top $card-ios-padding-right $card-ios-padding-bottom $card-ios-padding-left;
     font-size: $card-ios-font-size;
+    line-height: 1.4;
   }
 
   ion-card-header {
@@ -59,6 +61,11 @@ ion-card[mode=ios] {
     font-size: $card-ios-header-font-size;
     font-weight: $card-ios-header-font-weight;
     color: $card-ios-header-color;
+  }
+
+  ion-card-header + ion-card-content,
+  .item + ion-card-content {
+    padding-top: 0;
   }
 
   [item-left],
@@ -74,6 +81,11 @@ ion-card[mode=ios] {
     padding: 2px 6px;
     min-height: 26px;
     font-size: 1.3rem;
+  }
+
+  icon[forward] {
+    font-size: 2rem;
+    color: $item-ios-forward-icon-color;
   }
 
   .card-title {
@@ -117,7 +129,6 @@ ion-card[mode=ios] {
   p {
     font-size: 1.4rem;
     margin: 0 0 2px;
-    line-height: 1.5;
     color: $card-ios-text-color;
   }
 
