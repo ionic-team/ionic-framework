@@ -5,6 +5,7 @@ import {IonicConfig} from '../../config/config';
 import {IonicComponent} from '../../config/annotations';
 import {Gesture} from '../../gestures/gesture';
 import {CSS} from '../../util/dom';
+import {Animation} from '../../animations/animation';
 
 /**
  * ion-scroll is a non-flexboxed scroll area that can
@@ -53,9 +54,23 @@ export class Scroll extends Ion {
     this.zoomGesture = new Gesture(this.scrollElement);
     this.zoomGesture.listen();
 
-    this.zoomGesture.on('doubletap', (e) => {
-      this.zoomElement.style[CSS.transform] = 'scale(3)';
+    this.zoomAnimation = new Animation(this.zoomElement);
+    this.zoomAnimation
+      .duration(200)
+      .easing('ease-in')
+      .from('scale', '1');
+
+    this.zoomGesture.on('pinch', (e) => {
+      console.log('PINCH', e);
     });
+
+    /*
+    this.zoomGesture.on('doubletap', (e) => {
+      this.zoomAnimation.to('scale', '3');
+      this.zoomAnimation.play();
+      //this.zoomElement.style[CSS.transform] = 'scale(3)';
+    });
+    */
   }
 
   /**

@@ -1,15 +1,5 @@
-<ion-slides #slides>
-  <ion-slide style="background-color: blue">
-    <h2>Page 1</h2>
-  </ion-slide>
-  <ion-slide style="background-color: yellow">
-    <h2>Page 2</h2>
+<ion-slides [options]="extraOptions" id="slider" style="background-color: black">
+  <ion-slide *ng-for="#image of images">
+    <img data-src="{{getImageUrl(image)}}" slide-lazy>
   </ion-slide>
 </ion-slides>
-
-<!--
-<div style="position: absolute; bottom: 10px; left: 0; width: 100%; text-align: center">
-  <button (click)="slides.prev()">Prev</button>
-  <button (click)="slides.next()">Next</button>
-</div>
--->

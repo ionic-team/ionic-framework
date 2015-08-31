@@ -5,7 +5,7 @@ import {IonicConfig} from './config';
 import {ionicBootstrap} from '../components/app/app';
 import {
   Aside, AsideToggle, Button, Content, Scroll, Refresher,
-  Slides, Slide, SlidePager,
+  Slides, Slide, SlideLazy,
   Tabs, Tab,
   Card, List, ListHeader, Item, ItemGroup, ItemGroupTitle,
   Toolbar,
@@ -52,7 +52,7 @@ export const IonicDirectives = [
   // Slides
   forwardRef(() => Slides),
   forwardRef(() => Slide),
-  forwardRef(() => SlidePager),
+  forwardRef(() => SlideLazy),
 
   // Tabs
   forwardRef(() => Tabs),

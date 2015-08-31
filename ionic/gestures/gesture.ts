@@ -30,6 +30,10 @@ export class Gesture {
   }
 
   on(type, cb) {
+    if(type == 'pinch' || type == 'rotate') {
+      console.log('Enabling pinch');
+      this.hammertime.get('pinch').set({enable: true});
+    }
     this.hammertime.on(type, cb);
     (this._callbacks[type] || (this._callbacks[type] = [])).push(cb);
     //this.element.addEventListener(type, cb);

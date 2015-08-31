@@ -14,6 +14,7 @@ export * from 'ionic/components/item/item-group'
 export * from 'ionic/components/form/input'
 export * from 'ionic/components/text-input/text-input'
 export * from 'ionic/components/form/label'
+export * from 'ionic/components/image/image'
 export * from 'ionic/components/list/list'
 export * from 'ionic/components/show-hide-when/show-hide-when'
 

@@ -10,8 +10,9 @@
     "angular2": "2.0.0-alpha.35",
     "reflect-metadata": "0.1.0",
     "rtts_assert": "2.0.0-alpha.35",
-    "traceur": "0.0.91",
+    "swiper": "^3.1.2",
     "systemjs": "0.16.11",
+    "traceur": "0.0.91",
     "zone.js": "0.5.2"
   },
   "devDependencies": {
