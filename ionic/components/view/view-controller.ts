@@ -12,7 +12,9 @@ import {Transition} from '../../transitions/transition';
 import {ClickBlock} from '../../util/click-block';
 import * as util from 'ionic/util';
 
-
+/**
+ * TODO
+ */
 export class ViewController extends Ion {
 
   constructor(
@@ -51,6 +53,13 @@ export class ViewController extends Ion {
     ]);
   }
 
+  /**
+   * TODO
+   * @param {TODO} componentType  TODO
+   * @param {TODO} [params={}]  TODO
+   * @param {TODO} [opts={}]  TODO
+   * @returns {Promise} TODO
+   */
   push(componentType, params = {}, opts = {}) {
     if (!componentType || this.isTransitioning()) {
       return Promise.reject();
@@ -94,6 +103,11 @@ export class ViewController extends Ion {
     return promise;
   }
 
+  /**
+   * TODO
+   * @param {TODO} [opts={}]  TODO
+   * @returns {Promise} TODO
+   */
   pop(opts = {}) {
     if (this.isTransitioning() || this.items.length < 2) {
       return Promise.reject();
@@ -140,6 +154,9 @@ export class ViewController extends Ion {
 
   /**
    * Set the item stack to reflect the given component classes.
+   * @param {TODO} components  TODO
+   * @param {TODO} [opts={}]  TODO
+   * @returns {Promise} TODO
    */
   setItems(components, opts = {}) {
     if (!components || !components.length) {
@@ -199,6 +216,13 @@ export class ViewController extends Ion {
     return this.push(componentType, componentObj.params, opts);
   }
 
+  /**
+   * TODO
+   * @param {TODO} componentType  TODO
+   * @param {TODO} [params={}]  TODO
+   * @param {TODO} [opts={}]  TODO
+   * @returns {Promise} TODO
+   */
   setRoot(componentType, params = {}, opts = {}) {
     return this.setItems([{
              componentType,
@@ -206,6 +230,14 @@ export class ViewController extends Ion {
            }], opts);
   }
 
+  /**
+   * TODO
+   * @param {TODO} enteringItem  TODO
+   * @param {TODO} leavingItem  TODO
+   * @param {TODO} opts  TODO
+   * @param {Function} callback  TODO
+   * @returns {any} TODO
+   */
   transition(enteringItem, leavingItem, opts, callback) {
     if (!enteringItem || enteringItem === leavingItem) {
       return callback();
@@ -275,6 +307,9 @@ export class ViewController extends Ion {
 
   }
 
+  /**
+   * TODO
+   */
   swipeBackStart() {
     if (this.isTransitioning() || this.items.length < 2) {
       return;
@@ -354,6 +389,10 @@ export class ViewController extends Ion {
 
   }
 
+  /**
+   * TODO
+   * @param {TODO} progress  TODO
+   */
   swipeBackProgress(progress) {
     if (this.sbTransition) {
       ClickBlock(true, 4000);
@@ -361,6 +400,12 @@ export class ViewController extends Ion {
     }
   }
 
+  /**
+   * TODO
+   * @param {TODO} completeSwipeBack  TODO
+   * @param {TODO} progress  TODO
+   * @param {TODO} playbackRate  TODO
+   */
   swipeBackEnd(completeSwipeBack, progress, playbackRate) {
     // to reverse the animation use a negative playbackRate
     if (this.sbTransition && this.sbActive) {
@@ -386,6 +431,11 @@ export class ViewController extends Ion {
     }
   }
 
+  /**
+   * TODO
+   * @param {TODO} val  TODO
+   * @returns {TODO} TODO
+   */
   isSwipeBackEnabled(val) {
     if (arguments.length) {
        this.sbEnabled = !!val;
@@ -393,6 +443,10 @@ export class ViewController extends Ion {
     return this.sbEnabled;
   }
 
+  /**
+   * TODO
+   * @returns {TODO} TODO
+   */
   canSwipeBack() {
     if (this.sbEnabled) {
       let activeItem = this.getActive();
@@ -403,6 +457,9 @@ export class ViewController extends Ion {
     return false;
   }
 
+  /**
+   * TODO
+   */
   transitionComplete() {
     let destroys = [];
 
@@ -426,6 +483,10 @@ export class ViewController extends Ion {
     ClickBlock(false);
   }
 
+  /**
+   * TODO
+   * @returns {boolean} TODO
+   */
   isTransitioning() {
     let state;
     for (let i = 0, ii = this.items.length; i < ii; i++) {
@@ -438,6 +499,10 @@ export class ViewController extends Ion {
     return false;
   }
 
+  /**
+   * TODO
+   * @returns {TODO} TODO
+   */
   getActive() {
     for (let i = 0, ii = this.items.length; i < ii; i++) {
       if (this.items[i].state === ACTIVE_STATE) {
@@ -447,6 +512,11 @@ export class ViewController extends Ion {
     return null;
   }
 
+  /**
+   * TODO
+   * @param {TODO} instance  TODO
+   * @returns {TODO} TODO
+   */
   getByInstance(instance) {
     if (instance) {
       for (let i = 0, ii = this.items.length; i < ii; i++) {
@@ -458,6 +528,11 @@ export class ViewController extends Ion {
     return null;
   }
 
+  /**
+   * TODO
+   * @param {TODO} index  TODO
+   * @returns {TODO} TODO
+   */
   getByIndex(index) {
     if (index < this.items.length && index > -1) {
       return this.items[index];
@@ -465,6 +540,11 @@ export class ViewController extends Ion {
     return null;
   }
 
+  /**
+   * TODO
+   * @param {TODO} item  TODO
+   * @returns {TODO} TODO
+   */
   getPrevious(item) {
     if (item) {
       return this.items[ this.items.indexOf(item) - 1 ];
@@ -472,6 +552,10 @@ export class ViewController extends Ion {
     return null;
   }
 
+  /**
+   * TODO
+   * @returns {TODO} TODO
+   */
   getStagedEnteringItem() {
     for (let i = 0, ii = this.items.length; i < ii; i++) {
       if (this.items[i].state === STAGED_ENTERING_STATE) {
@@ -481,6 +565,10 @@ export class ViewController extends Ion {
     return null;
   }
 
+  /**
+   * TODO
+   * @returns {TODO} TODO
+   */
   getStagedLeavingItem() {
     for (let i = 0, ii = this.items.length; i < ii; i++) {
       if (this.items[i].state === STAGED_LEAVING_STATE) {
@@ -490,6 +578,11 @@ export class ViewController extends Ion {
     return null;
   }
 
+  /**
+   * TODO
+   * @param {TODO} nbContainer  TODO
+   * @returns {TODO} TODO
+   */
   navbarViewContainer(nbContainer) {
     if (nbContainer) {
       this._nbContainer = nbContainer;
@@ -502,6 +595,10 @@ export class ViewController extends Ion {
     }
   }
 
+  /**
+   * TODO
+   * @returns {TODO} TODO
+   */
   anchorElementRef() {
     if (arguments.length) {
       this._anchorER = arguments[0];
@@ -509,6 +606,10 @@ export class ViewController extends Ion {
     return this._anchorER;
   }
 
+  /**
+   * TODO
+   * @returns {TODO} TODO
+   */
   anchorViewContainerRef() {
     if (arguments.length) {
       this._anchorVC = arguments[0];
@@ -516,6 +617,10 @@ export class ViewController extends Ion {
     return this._anchorVC;
   }
 
+  /**
+   * TODO
+   * @returns {TODO} TODO
+   */
   childNavbar() {
     if (arguments.length) {
       this._childNavbar = arguments[0];
@@ -523,23 +628,46 @@ export class ViewController extends Ion {
     return this._childNavbar;
   }
 
+  /**
+   * TODO
+   * @param {TODO} item  TODO
+   * @returns {TODO} TODO
+   */
   add(item) {
     item.id = this.id + '-' + (++this._ids);
     this.items.push(item);
   }
 
+  /**
+   * TODO
+   * @param {TODO} itemOrIndex  TODO
+   * @returns {TODO} TODO
+   */
   remove(itemOrIndex) {
     util.array.remove(this.items, itemOrIndex);
   }
 
+  /**
+   * TODO
+   * @param {TODO} item  TODO
+   * @returns {TODO} TODO
+   */
   indexOf(item) {
     return this.items.indexOf(item);
   }
 
+  /**
+   * TODO
+   * @returns {TODO} TODO
+   */
   length() {
     return this.items.length;
   }
 
+  /**
+   * TODO
+   * @returns {TODO} TODO
+   */
   instances() {
     let instances = [];
     for (let item of this.items) {
@@ -550,14 +678,28 @@ export class ViewController extends Ion {
     return instances;
   }
 
+  /**
+   * TODO
+   * @param {TODO} item  TODO
+   * @returns {TODO} TODO
+   */
   isActive(item) {
     return (item && item.state === ACTIVE_STATE);
   }
 
+  /**
+   * TODO
+   * @param {TODO} item  TODO
+   * @returns {TODO} TODO
+   */
   isStagedEntering(item) {
     return (item && item.state === STAGED_ENTERING_STATE);
   }
 
+  /**
+   * TODO
+   * @param {TODO} router  TODO
+   */
   registerRouter(router) {
     this.router = router;
   }

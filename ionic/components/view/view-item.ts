@@ -3,7 +3,9 @@ import {DirectiveBinding} from 'angular2/src/core/compiler/element_injector';
 
 import {NavParams} from '../nav/nav-controller';
 
-
+/**
+ * TODO
+ */
 export class ViewItem {
 
   constructor(viewCtrl, componentType, params = {}) {
@@ -21,14 +23,29 @@ export class ViewItem {
     this.templateRefs = {};
   }
 
+  /**
+   * TODO
+   * @param {TODO} name  TODO
+   * @param {TODO} protoViewRef  TODO
+   */
   addProtoViewRef(name, protoViewRef) {
     this.protos[name] = protoViewRef;
   }
 
+  /**
+   * TODO
+   * @param {TODO} name  TODO
+   * @param {TODO} templateRef  TODO
+   */
   addTemplateRef(name, templateRef) {
     this.templateRefs[name] = templateRef;
   }
 
+  /**
+   * TODO
+   * @param {Function} callback  TODO
+   * @returns {TODO} TODO
+   */
   stage(callback) {
     let viewCtrl = this.viewCtrl;
 
@@ -136,10 +153,18 @@ export class ViewItem {
     });
   }
 
+  /**
+   * TODO
+   * @param {TODO} childPromise  TODO
+   */
   addPromise(childPromise) {
     this._promises.push(childPromise);
   }
 
+  /**
+   * TODO
+   * @param {TODO} componentProtoViewRef  TODO
+   */
   inspectStructure(componentProtoViewRef) {
     let navbar = false;
     let key = '_';
@@ -173,6 +198,10 @@ export class ViewItem {
     };
   }
 
+  /**
+   * TODO
+   * @returns {boolean} TODO
+   */
   enableBack() {
     // update if it's possible to go back from this nav item
     if (this.viewCtrl) {
@@ -184,6 +213,10 @@ export class ViewItem {
     return false;
   }
 
+  /**
+   * TODO
+   * @param {TODO} instance  TODO
+   */
   setInstance(instance) {
     this.instance = instance;
     this.instance._viewItem = this;
@@ -193,6 +226,9 @@ export class ViewItem {
     return (this.viewCtrl ? this.viewCtrl.indexOf(this) : -1);
   }
 
+  /**
+   * TODO
+   */
   destroy() {
     for (let i = 0; i < this.disposals.length; i++) {
       this.disposals[i]();
@@ -208,6 +244,11 @@ export class ViewItem {
     }
   }
 
+  /**
+   * TODO
+   * @param {TODO} val  TODO
+   * @returns {TODO} TODO
+   */
   viewElementRef(val) {
     if (arguments.length) {
       this._vwEle = val;
@@ -215,6 +256,10 @@ export class ViewItem {
     return this._vwEle;
   }
 
+  /**
+   * TODO
+   * @returns {TODO} TODO
+   */
   navbarView() {
     if (arguments.length) {
       this._nbView = arguments[0];
@@ -222,6 +267,10 @@ export class ViewItem {
     return this._nbView;
   }
 
+  /**
+   * TODO
+   * @returns {TODO} TODO
+   */
   navbarElement() {
     let navbarView = this.navbarView();
     if (navbarView) {
@@ -229,6 +278,10 @@ export class ViewItem {
     }
   }
 
+  /**
+   * TODO
+   * @returns {TODO} TODO
+   */
   titleElement() {
     let navbarView = this.navbarView();
     if (navbarView) {
@@ -236,6 +289,10 @@ export class ViewItem {
     }
   }
 
+  /**
+   * TODO
+   * @returns {TODO} TODO
+   */
   backButtonElement() {
     let navbarView = this.navbarView();
     if (navbarView) {
@@ -243,6 +300,10 @@ export class ViewItem {
     }
   }
 
+  /**
+   * TODO
+   * @returns {TODO} TODO
+   */
   backButtonTextElement() {
     let navbarView = this.navbarView();
     if (navbarView) {
@@ -250,6 +311,10 @@ export class ViewItem {
     }
   }
 
+  /**
+   * TODO
+   * @returns {TODO} TODO
+   */
   navbarItemElements() {
     let navbarView = this.navbarView();
     if (navbarView) {
@@ -257,6 +322,10 @@ export class ViewItem {
     }
   }
 
+  /**
+   * TODO
+   * @returns {TODO} TODO
+   */
   postRender() {
     // the elements are in the DOM and the browser
     // has rendered them in their correct locations
@@ -267,28 +336,28 @@ export class ViewItem {
   }
 
 
-  /*
-    The view has loaded. This event only happens once per view being
-    created. If a view leaves but is cached, then this will not
-    fire again on a subsequent viewing. This method is a good place
-    to put your setup code for the view; however, it is not the
-    recommended method to use when a view becomes active.
-  */
+  /**
+   * The view has loaded. This event only happens once per view being
+   * created. If a view leaves but is cached, then this will not
+   * fire again on a subsequent viewing. This method is a good place
+   * to put your setup code for the view; however, it is not the
+   * recommended method to use when a view becomes active.
+   */
   loaded() {
     this.instance && this.instance.viewLoaded && this.instance.viewLoaded();
   }
 
-  /*
-    The view is about to enter and become the active view.
-  */
+  /**
+   * The view is about to enter and become the active view.
+   */
   willEnter() {
     this.instance && this.instance.viewWillEnter && this.instance.viewWillEnter();
   }
 
-  /*
-    The view has fully entered and is now the active view. This
-    will fire, whether it was the first load or loaded from the cache.
-  */
+  /**
+   * The view has fully entered and is now the active view. This
+   * will fire, whether it was the first load or loaded from the cache.
+   */
   didEnter() {
     let navbarView = this.navbarView();
     if (navbarView) {
@@ -297,31 +366,31 @@ export class ViewItem {
     this.instance && this.instance.viewDidEnter && this.instance.viewDidEnter();
   }
 
-  /*
-    The view has is about to leave and no longer be the active view.
-  */
+  /**
+   * The view has is about to leave and no longer be the active view.
+   */
   willLeave() {
     this.instance && this.instance.viewWillLeave && this.instance.viewWillLeave();
   }
 
-  /*
-    The view has finished leaving and is no longer the active view. This
-    will fire, whether it is cached or unloaded.
-  */
+  /**
+   * The view has finished leaving and is no longer the active view. This
+   * will fire, whether it is cached or unloaded.
+   */
   didLeave() {
     this.instance && this.instance.viewDidLeave && this.instance.viewDidLeave();
   }
 
-  /*
-    The view is about to be destroyed and have its elements removed.
-  */
+  /**
+   * The view is about to be destroyed and have its elements removed.
+   */
   willUnload() {
     this.instance && this.instance.viewWillUnload && this.instance.viewWillUnload();
   }
 
-  /*
-    The view has been destroyed and its elements have been removed.
-  */
+  /**
+   * The view has been destroyed and its elements have been removed.
+   */
   didUnload() {
     this.instance && this.instance.viewDidUnload && this.instance.viewDidUnload();
   }

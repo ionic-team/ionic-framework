@@ -4,7 +4,9 @@ import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
 import {IonicComponent} from '../../config/annotations';
 
-
+/**
+ * TODO
+ */
 export class ToolbarBase extends Ion  {
 
   constructor(elementRef: ElementRef, config: IonicConfig) {
@@ -13,6 +15,11 @@ export class ToolbarBase extends Ion  {
     this.itemEles = [];
   }
 
+  /**
+   * TODO
+   * @param {TODO} eleRef  TODO
+   * @returns {TODO} TODO
+   */
   titleElement(eleRef) {
     if (arguments.length) {
       this._nbTlEle = eleRef;
@@ -20,6 +27,11 @@ export class ToolbarBase extends Ion  {
     return this._nbTlEle;
   }
 
+  /**
+   * TODO
+   * @param {TODO} eleRef  TODO
+   * @returns {TODO} TODO
+   */
   itemElements(eleRef) {
     if (arguments.length) {
       this.itemEles.push(eleRef);
@@ -27,6 +39,11 @@ export class ToolbarBase extends Ion  {
     return this.itemEles;
   }
 
+  /**
+   * TODO
+   * @param {TODO} eleRef  TODO
+   * @returns {TODO} TODO
+   */
   titleText(eleRef) {
     if (arguments.length) {
       this._ttTxt.push(eleRef);
@@ -34,6 +51,9 @@ export class ToolbarBase extends Ion  {
     return this._ttTxt;
   }
 
+  /**
+   * TODO
+   */
   alignTitle() {
     // don't bother if we're not trying to center align the title
     if (this.titleAlign !== 'center' || this.aligned) return;
@@ -70,7 +90,9 @@ export class ToolbarBase extends Ion  {
 
 }
 
-
+/**
+ * TODO
+ */
 @IonicComponent({
   selector: 'ion-toolbar'
 })
