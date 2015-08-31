@@ -7,13 +7,13 @@ IonicConfig.modeConfig('ios', {
 
   actionMenuEnter: 'action-menu-slide-in',
   actionMenuLeave: 'action-menu-slide-out',
-  actionMenuCancelIcon: 'ion-close',
-  actionMenuDestructiveIcon: 'ion-trash-a',
+  actionMenuCancelIcon: '',
+  actionMenuDestructiveIcon: '',
 
   backButtonText: 'Back',
   backButtonIcon: 'ion-ios-arrow-back',
 
-  iconForward: 'ion-ios-arrow-forward',
+  forwardIcon: 'ion-ios-arrow-forward',
   iconMode: 'ios',
 
   navTitleAlign: 'center',
@@ -28,13 +28,13 @@ IonicConfig.modeConfig('md', {
 
   actionMenuEnter: 'action-menu-md-slide-in',
   actionMenuLeave: 'action-menu-md-slide-out',
-  actionMenuCancelIcon: 'ion-close',
-  actionMenuDestructiveIcon: 'ion-trash-a',
+  actionMenuCancelIcon: 'ion-md-close',
+  actionMenuDestructiveIcon: 'ion-md-trash',
 
   backButtonText: '',
-  backButtonIcon: 'ion-android-arrow-back',
+  backButtonIcon: 'ion-md-arrow-back',
 
-  iconForward: '',
+  forwardIcon: '',
   iconMode: 'md',
 
   navTitleAlign: 'left',

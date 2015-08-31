@@ -6,6 +6,7 @@ import {App} from 'ionic/ionic';
 })
 class E2EApp {
   constructor() {
-    this.homeIcon = 'ion-home';
+    this.homeIcon = 'home';
+    this.isActive = false;
   }
 }

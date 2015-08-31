@@ -8,23 +8,30 @@
   <ion-list>
 
     <ion-item>
-      <icon ion-home item-left></icon>
+      <icon home item-left></icon>
       <code>
-        &lt;icon ion-home>&lt;/icon>
+        &lt;icon home>&lt;/icon>
       </code>
     </ion-item>
 
     <ion-item>
-      <icon inactive ion-home item-left></icon>
+      <icon home is-active="true" item-left></icon>
       <code>
-        &lt;icon inactive ion-home>&lt;/icon>
+        &lt;icon home is-active="true">&lt;/icon>
       </code>
     </ion-item>
 
     <ion-item>
-      <icon name="ion-home" item-left></icon>
+      <icon home is-active="false" item-left></icon>
       <code>
-        &lt;icon name="ion-home">&lt;/icon>
+        &lt;icon home is-active="false">&lt;/icon>
+      </code>
+    </ion-item>
+
+    <ion-item>
+      <icon name="home" item-left></icon>
+      <code>
+        &lt;icon name="home">&lt;/icon>
       </code>
     </ion-item>
 
@@ -36,6 +43,13 @@
     </ion-item>
 
     <ion-item>
+      <icon ion-social-twitter item-left></icon>
+      <code>
+        &lt;icon ion-social-twitter>&lt;/icon>
+      </code>
+    </ion-item>
+
+    <ion-item>
       <icon ios="ion-social-apple" md="ion-social-android" item-left></icon>
       <code>
         &lt;icon ios="ion-social-apple" md="ion-social-android">&lt;/icon>
@@ -43,10 +57,31 @@
     </ion-item>
 
     <ion-item>
-      <icon inactive ios="ion-social-apple" md="ion-social-android" item-left></icon>
+      <icon [is-active]="isActive" ios="ion-social-apple" md="ion-social-android" item-left></icon>
       <code>
-        &lt;icon inactive ios="ion-social-apple" md="ion-social-android">&lt;/icon>
+        &lt;icon [is-active]="isActive" ios="ion-social-apple" md="ion-social-android">&lt;/icon>
       </code>
+    </ion-item>
+
+    <ion-item>
+      <icon ios="ion-social-apple" item-left></icon>
+      <code>
+        &lt;icon ios="ion-social-apple">&lt;/icon>
+      </code>
+    </ion-item>
+
+    <ion-item>
+      <icon md="ion-social-android" item-left></icon>
+      <code>
+        &lt;icon md="ion-social-android">&lt;/icon>
+      </code>
+    </ion-item>
+
+    <ion-item>
+      <code>
+        &lt;icon forward>&lt;/icon>
+      </code>
+      <icon forward item-right></icon>
     </ion-item>
 
   </ion-list>

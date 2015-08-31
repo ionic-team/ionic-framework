@@ -14,7 +14,8 @@ import {Button} from '../button/button';
   properties: [
     'name',
     'ios',
-    'md'
+    'md',
+    'isActive'
   ],
   host: {
     '[attr.aria-label]': 'label',
@@ -42,11 +43,14 @@ export class Icon {
 
     this.iconLeft = this.iconRight = this.iconOnly = false;
     this.ariaHidden = true;
-    this.isInactive = ele.hasAttribute('inactive');
+
+    if (ele.hasAttribute('forward')) {
+      this.name = config.setting('forwardIcon');
+    }
 
     this.iconAttr = null;
     for (let i = 0, l = ele.attributes.length; i < l; i++) {
-      if (ele.attributes[i].value === '' && /_|item-|inactive|class/.test(ele.attributes[i].name) !== true) {
+      if (ele.attributes[i].value === '' && /_|item-|is-active|class/.test(ele.attributes[i].name) !== true) {
         this.iconAttr = ele.attributes[i].name;
       }
     }
@@ -83,25 +87,62 @@ export class Icon {
     } else if (this.mode == 'md' && this.md) {
       this.name = this.md;
 
-    } else if (!this.name && this.iconAttr) {
-      this.name = this.iconAttr;
+    } else {
+      this.name = (this.name ? this.name : this.iconAttr);
+
+      if (!(/^ion-/.test(this.name))) {
+        // not an exact icon being used
+        // add mode specific prefix
+        this.name = 'ion-' + this.mode + '-' + this.name;
+      }
     }
 
     if (!this.name) return;
-
-    // add the css class to show the icon font
-    this.renderer.setElementClass(this.elementRef, this.name, true);
 
     // hide the icon when it's within a button
     // and the button isn't an icon only button
     this.ariaHidden = (this.withinButton && !this.iconOnly);
 
-    if (!this.ariaHidden) {
-      // the icon is either not within a button
-      // or the icon is within a button, and its an icon only button
-      this.label = this.name.replace('ion-', '').replace('ios-', '').replace('md-', '').replace('-', ' ');
+    this.update();
+  }
+
+  get isActive() {
+    return (this._isActive === undefined || this._isActive === true || this._isActive === 'true');
+  }
+
+  set isActive(val) {
+    this._isActive = val;
+    this.update();
+  }
+
+
+  update() {
+    if (this.name && this.mode == 'ios') {
+
+      if (this.isActive) {
+        if (/-outline/.test(this.name)) {
+          this.name = this.name.replace('-outline', '');
+        }
+
+      } else if (!(/-outline/.test(this.name))) {
+        this.name += '-outline';
+      }
+
     }
 
+    if (this._name !== this.name) {
+      if (this._name) {
+        this.renderer.setElementClass(this.elementRef, this._name, false);
+      }
+      this._name = this.name;
+      this.renderer.setElementClass(this.elementRef, this.name, true);
+
+      if (!this.ariaHidden) {
+        // the icon is either not within a button
+        // or the icon is within a button, and its an icon only button
+        this.label = this.name.replace('ion-', '').replace('ios-', '').replace('md-', '').replace('-', ' ');
+      }
+    }
   }
 
 }
