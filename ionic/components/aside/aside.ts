@@ -56,20 +56,17 @@ export class Aside extends Ion {
 
     //this.animation = new Animation(element.querySelector('backdrop'));
     this.contentClickFn = (e) => {
-      console.log('Click', this.isOpen, this.isChanging);
       if(!this.isOpen || this.isChanging) { return; }
       this.close();
     };
 
 
     this.finishChanging = util.debounce(() => {
-      console.log('Done changing');
       this.setChanging(false);
     });
 
     // TODO: Use Animation Class
     this.getNativeElement().addEventListener('transitionend', ev => {
-      console.log("Transition end");
       //this.setChanging(false)
       clearTimeout(this.setChangeTimeout);
       this.setChangeTimeout = setInterval(this.finishChanging, 400);
@@ -92,7 +89,6 @@ export class Aside extends Ion {
 
     if(this.contentElement) {
       this.contentElement.addEventListener('transitionend', ev => {
-        console.log("Transition end");
         //this.setChanging(false)
         clearTimeout(this.setChangeTimeout);
         this.setChangeTimeout = setInterval(this.finishChanging, 400);
