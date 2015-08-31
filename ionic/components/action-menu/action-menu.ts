@@ -6,9 +6,10 @@
 * The ActionMenu is a modal menu with options to select based on an action.
 */
 
-import {View, Injectable, NgFor, NgIf, NgClass} from 'angular2/angular2';
+import {View, Injectable, NgFor, NgIf} from 'angular2/angular2';
 
 import {TapClick} from '../button/button';
+import {Icon} from '../icon/icon';
 import {Overlay} from '../overlay/overlay';
 import {Animation} from '../../animations/animation';
 import * as util from 'ionic/util';
@@ -22,19 +23,21 @@ import * as util from 'ionic/util';
         '<div class="action-menu-group action-menu-options">' +
           '<div class="action-menu-title" *ng-if="titleText">{{titleText}}</div>' +
           '<button (^click)="_buttonClicked(index)" *ng-for="#b of buttons; #index = index" class="action-menu-option">' +
-            '<i class="icon" [ng-class]="b.icon" *ng-if="b.icon"></i> ' +
+            '<icon class="icon" [name]="b.icon" *ng-if="b.icon"></icon> ' +
             '{{b.text}}' +
           '</button>' +
           '<button *ng-if="destructiveText" (click)="_destructive()" class="destructive action-menu-destructive">' +
-            '<i class="icon" [ng-class]="destructiveIcon" *ng-if="destructiveIcon"></i> ' +
+            '<icon class="icon" [name]="destructiveIcon" *ng-if="destructiveIcon"></icon> ' +
             '{{destructiveText}}</button>' +
         '</div>' +
         '<div class="action-menu-group action-menu-cancel" *ng-if="cancelText">' +
-          '<button (click)="_cancel()"><i class="icon" [ng-class]="cancelIcon"></i> {{cancelText}}</button>' +
+          '<button (click)="_cancel()">' +
+            '<icon class="icon" [name]="cancelIcon"></icon> ' +
+            '{{cancelText}}</button>' +
         '</div>' +
       '</div>' +
     '</action-menu-wrapper>',
-  directives: [NgFor, NgIf, NgClass, TapClick]
+  directives: [NgFor, NgIf, TapClick, Icon]
 })
 class ActionMenuDirective {
 

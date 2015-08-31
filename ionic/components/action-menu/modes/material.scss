@@ -59,6 +59,7 @@ ion-action-menu[mode=md] {
     &.activated {
       background: $action-menu-md-background-active;
       border-radius: 0;
+      box-shadow: none;
     }
   }
 
