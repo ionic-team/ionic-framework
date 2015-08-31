@@ -60,10 +60,6 @@ ion-item-content {
 .list .item {
   border-radius: 0;
 
-  &.activated {
-    background-color: #d9d9d9;
-  }
-
   transition: background 300ms ease-out;
   &:active {
     transition-duration: 0s;
