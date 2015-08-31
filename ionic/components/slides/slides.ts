@@ -54,8 +54,6 @@ export class Slides extends Ion {
     super(elementRef, config);
   }
   onInit() {
-    //this.getNativeElement().classList.add('swiper-container');
-
     var options = util.defaults({
       pagination: '.swiper-pagination',
       paginationClickable: true,
@@ -64,11 +62,13 @@ export class Slides extends Ion {
 
     var swiper = new Swiper(this.getNativeElement().children[0], options);
 
-    console.log('Build swiper', swiper, options);
-
     this.swiper = swiper;
   }
 
+  /**
+   * Update the underlying slider implementation. Call this if you've added or removed
+   * child slides.
+   */
   update() {
     setTimeout(() => {
       this.swiper.update();
@@ -96,12 +96,10 @@ export class Slide {
    * @param {ElementRef} elementRef  TODO
    */
   constructor(
-    //@Host() slides: Slides,
     elementRef: ElementRef
   ) {
     this.ele = elementRef.nativeElement;
     this.ele.classList.add('swiper-slide');
-    //slides.add(this);
   }
 }
 
