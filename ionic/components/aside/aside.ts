@@ -55,16 +55,24 @@ export class Aside extends Ion {
     this.opening = new EventEmitter('opening');
 
     //this.animation = new Animation(element.querySelector('backdrop'));
+    this.contentClickFn = (e) => {
+      console.log('Click', this.isOpen, this.isChanging);
+      if(!this.isOpen || this.isChanging) { return; }
+      this.close();
+    };
 
-    let finishChanging = util.debounce(() => {
+
+    this.finishChanging = util.debounce(() => {
+      console.log('Done changing');
       this.setChanging(false);
     });
 
     // TODO: Use Animation Class
     this.getNativeElement().addEventListener('transitionend', ev => {
+      console.log("Transition end");
       //this.setChanging(false)
       clearTimeout(this.setChangeTimeout);
-      this.setChangeTimeout = setInterval(finishChanging, 500);
+      this.setChangeTimeout = setInterval(this.finishChanging, 400);
     })
   }
 
@@ -82,8 +90,25 @@ export class Aside extends Ion {
     super.onInit();
     this.contentElement = (this.content instanceof Node) ? this.content : this.content.getNativeElement();
 
+    if(this.contentElement) {
+      this.contentElement.addEventListener('transitionend', ev => {
+        console.log("Transition end");
+        //this.setChanging(false)
+        clearTimeout(this.setChangeTimeout);
+        this.setChangeTimeout = setInterval(this.finishChanging, 400);
+      })
+      this.contentElement.addEventListener('click', this.contentClickFn);
+    } else {
+      console.error('Aside: must have a [content] element to listen for drag events on. Supply one like this:\n\n<ion-aside [content]="content"></ion-aside>\n\n<ion-content #content>');
+    }
+
+
     this.gestureDelegate = this.getDelegate('gesture');
     this.typeDelegate = this.getDelegate('type');
+  }
+
+  onDestroy() {
+    this.contentElement.removeEventListener('click', this.contentClickFn);
   }
 
   /**

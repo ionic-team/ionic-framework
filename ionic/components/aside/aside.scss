@@ -121,10 +121,12 @@ $aside-shadow: -1px 0px 8px rgba(0, 0, 0, 0.2) !default;
   box-shadow: $aside-shadow;
   &.aside-open-left {
     transform: translate3d($aside-width,0,0);
+    pointer-events: none;
   }
 
   &.aside-open-right {
     transform: translate3d(-$aside-width,0,0);
+    pointer-events: none;
   }
 }
 

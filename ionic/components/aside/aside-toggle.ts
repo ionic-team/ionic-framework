@@ -33,5 +33,6 @@ export class AsideToggle {
   */
   toggle(event) {
     this.aside && this.aside.toggle();
+    console.log('Aside toggle');
   }
 }
