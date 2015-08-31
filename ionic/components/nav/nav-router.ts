@@ -8,12 +8,22 @@ import {
 
 import {Nav} from './nav';
 
-
+/**
+ * TODO
+ */
 @Directive({
   selector: 'ion-nav'
 })
 export class NavRouter extends RouterOutlet {
 
+  /**
+   * TODO
+   * @param {ElementRef} _elementRef  TODO
+   * @param {DynamicComponentLoader} _loader  TODO
+   * @param {Router} _parentRouter  TODO
+   * @param {string} nameAttr  Value of the element's 'name' attribute
+   * @param {Nav} nav  TODO
+   */
   constructor(_elementRef: ElementRef, _loader: DynamicComponentLoader,
               _parentRouter: Router, @Attribute('name') nameAttr: string,
               nav: Nav) {
@@ -28,6 +38,11 @@ export class NavRouter extends RouterOutlet {
     nav.registerRouter(this);
   }
 
+  /**
+   * @private
+   * TODO
+   * @param {ComponentInstruction} instruction  TODO
+   */
   _activate(instruction: ComponentInstruction): Promise<any> {
     var previousInstruction = this._currentInstruction;
     this._currentInstruction = instruction;
@@ -38,6 +53,11 @@ export class NavRouter extends RouterOutlet {
     this.nav.push(componentType, instruction.params);
   }
 
+  /**
+   * TODO
+   * @param {TODO} type  TODO
+   * @param {TODO} viewItem  TODO
+   */
   stateChange(type, viewItem) {
     // stateChange is called by Ionic's ViewController
     // type could be "push" or "pop"
@@ -62,6 +82,11 @@ export class NavRouter extends RouterOutlet {
     }
   }
 
+  /**
+   * TODO
+   * @param {TODO} componentType  TODO
+   * @returns {TODO} TODO
+   */
   getPathRecognizerByComponent(componentType) {
     // given a componentType, figure out the best PathRecognizer to use
     let rules = this._parentRouter.registry._rules;

@@ -4,10 +4,18 @@ import {Overlay} from '../overlay/overlay';
 import {Animation} from '../../animations/animation';
 import * as util from 'ionic/util';
 
-
+/**
+ * TODO
+ */
 @Injectable()
 export class Modal extends Overlay {
 
+  /**
+   * TODO
+   * @param {Type} ComponentType  TODO
+   * @param {Object} [opts={}]  TODO
+   * @returns {TODO} TODO
+   */
   open(ComponentType: Type, opts={}) {
     let defaults = {
       enterAnimation: 'modal-slide-in',
@@ -17,6 +25,11 @@ export class Modal extends Overlay {
     return this.create(OVERLAY_TYPE, ComponentType, util.extend(defaults, opts));
   }
 
+  /**
+   * TODO
+   * @param {TODO} handle  TODO
+   * @returns {TODO} TODO
+   */
   get(handle) {
     if (handle) {
       return this.getByHandle(handle, OVERLAY_TYPE);

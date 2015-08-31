@@ -5,6 +5,9 @@ import {Pane} from './pane';
 import {Gesture} from 'ionic/gestures/gesture';
 
 
+/**
+ * TODO
+ */
 @Directive({
   selector: '.swipe-handle',
   host: {
@@ -12,6 +15,13 @@ import {Gesture} from 'ionic/gestures/gesture';
   }
 })
 export class SwipeHandle {
+  /**
+   * TODO
+   * @param {ViewController=} viewCtrl  TODO
+   * @param {Pane} pane  TODO
+   * @param {ElementRef} elementRef  TODO
+   * @param {NgZone} ngZone  TODO
+   */
   constructor(
     @Optional() @Inject(forwardRef(() => ViewController)) viewCtrl: ViewController,
     @Host() @Inject(forwardRef(() => Pane)) pane: Pane,

@@ -3,7 +3,9 @@ import {Directive, View, ElementRef, Host, Optional, forwardRef, Injector, NgZon
 import {IonicComponent} from '../../config/annotations';
 import {ViewController} from '../view/view-controller';
 
-
+/**
+ * TODO
+ */
 @IonicComponent({
   selector: 'ion-nav',
   properties: [
@@ -19,6 +21,13 @@ import {ViewController} from '../view/view-controller';
 })
 export class Nav extends ViewController {
 
+  /**
+   * TODO
+   * @param {ViewController} hostViewCtrl  TODO
+   * @param {Injector} injector  TODO
+   * @param {ElementRef} elementRef  TODO
+   * @param {NgZone} zone  TODO
+   */
   constructor(
     @Optional() hostViewCtrl: ViewController,
     injector: Injector,
@@ -28,6 +37,9 @@ export class Nav extends ViewController {
     super(hostViewCtrl, injector, elementRef, zone);
   }
 
+  /**
+   * TODO
+   */
   onIonInit() {
 
     if (this.root) {

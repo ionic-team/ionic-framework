@@ -7,8 +7,14 @@ import {SwipeHandle} from './swipe-handle';
 import {IonicComponent} from '../../config/annotations';
 import {PaneAnchor, PaneContentAnchor, NavBarContainer} from './anchors';
 
-
+/**
+ * TODO
+ */
 export class PaneController {
+  /**
+   * TODO
+   * @param {ViewController} viewCtrl  TODO
+   */
   constructor(viewCtrl: ViewController) {
     this.panes = [];
     this.viewCtrl = viewCtrl;
@@ -18,6 +24,11 @@ export class PaneController {
     ]);
   }
 
+  /**
+   * TODO
+   * @param {TODO} nav  TODO
+   * @param {Function} nav  TODO
+   */
   get(itemStructure, callback) {
     // this gets or creates the Pane which similar nav items live in
     // Nav items with just a navbar/content would all use the same Pane
