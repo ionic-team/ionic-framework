@@ -36,6 +36,10 @@ import * as util from 'ionic/util';
   directives: [NgIf, forwardRef(() => SlidePager)]
 })
 export class Slides {
+  /**
+   * TODO
+   * @param {ElementRef} elementRef  TODO
+   */
   constructor(elementRef: ElementRef) {
     // Grab the main container, and the slides-view wrapper
     this.ele = elementRef.nativeElement;
@@ -105,6 +109,9 @@ export class Slides {
     this._pager = pager;
   }
 
+  /**
+   * TODO
+   */
   resize() {
     // Get the width of the container, which is the viewport
     // that the user will actually see.
@@ -124,12 +131,17 @@ export class Slides {
 
   /**
    * Add a new slide to the slides.
+   * @param {Slide} slide  The slide to add.
    */
   add(slide) {
     this._append(slide);
   }
 
-
+  /**
+   * TODO
+   * @param {TODO} to  TODO
+   * @param {TODO} slideSpeed  TODO
+   */
   slide(to, slideSpeed) {
     let index = this.currentIndex;
     let width = this.containerWidth;
@@ -201,6 +213,10 @@ export class Slides {
     }
   }
 
+  /**
+   * @private
+   * TODO
+   */
   _changed() {
     this._pager && this._pager.changed(this.currentIndex);
 
@@ -209,7 +225,10 @@ export class Slides {
     });
   }
 
-  // Reposition all the existing slides so they are in the right position
+  /**
+   * @private
+   * Reposition all the existing slides so they are in the right position
+   */
   _bump() {
     let slide;
     let tx;
@@ -246,15 +265,21 @@ export class Slides {
     }
   }
 
+  /**
+   * @private
+   * TODO
+   * @param {Event} event  TODO
+   */
   _dragStart(event) {
 
     this._isScrolling = undefined;
 
   }
 
-
   /**
+   * @private
    * Code to run before operating on a drag.
+   * @param {Event} event  TODO
    */
   _dragPre(event) {
     let dx = event.gesture.deltaX;
@@ -275,7 +300,11 @@ export class Slides {
     }
   }
 
-  // Process a drag, with a deltaX value
+  /**
+   * @private
+   * Process a drag, with a deltaX value.
+   * @param {Event} event  TODO
+   */
   _drag(event) {
     let dx = event.gesture.deltaX;
     let width = this.containerWidth;
@@ -343,10 +372,22 @@ export class Slides {
     }
   }
 
+  /**
+   * @private
+   * TODO
+   * @param {Event} event  TODO
+   * @param {TODO} drag  TODO
+   */
   _endDrag(event, drag) {
     this._finish(event, drag);
   }
 
+  /**
+   * @private
+   * TODO
+   * @param {Event} event  TODO
+   * @param {TODO} drag  TODO
+   */
   _finish(event, drag) {
 
     let delta = {
@@ -451,6 +492,13 @@ export class Slides {
     //element.removeEventListener('touchend', events, false)
   }
 
+  /**
+   * @private
+   * TODO
+   * @param {TODO} pos  TODO
+   * @param {TODO} translateX  TODO
+   * @param {TODO} speed  TODO
+   */
   _move(pos, translateX, speed) {
     // Should already be wrapped with circle
     let slide = this.slides[pos];
@@ -460,25 +508,48 @@ export class Slides {
     slide.x = translateX;
   }
 
-  // A modulo "circle" to stay in the bounds of the slide array
+  /**
+   * @private
+   * A modulo "circle" to stay in the bounds of the slide array
+   * @param {TODO} i  TODO
+   * @returns {TODO} TODO
+   */
   _circle(i) {
     return (this.slides.length + (i % this.slides.length)) % this.slides.length;
   }
 
+  /**
+   * @private
+   * Add specified slide to the end of the list of slides.
+   * @param {Slide} slide  TODO
+   */
   _append(slide) {
     this.slides.push(slide);
   }
+
+  /**
+   * @private
+   * Add specified slide to the beginning of the list of slides.
+   * @param {Slide} slide  TODO
+   */
   _prepend(slide) {
     this.slides.unshift(slide);
   }
 
 }
 
-
+/**
+ * TODO
+ */
 @IonicDirective({
   selector: 'ion-slide',
 })
 export class Slide {
+  /**
+   * TODO
+   * @param {Slides} slides  The containing slidebox.
+   * @param {ElementRef} elementRef  TODO
+   */
   constructor(
     @Host() slides: Slides,
     elementRef: ElementRef
@@ -488,6 +559,11 @@ export class Slide {
     slides.add(this);
   }
 
+  /**
+   * TODO
+   * @param {TODO} x  TODO
+   * @param {TODO} duration  TODO
+   */
   translate(x, duration) {
     this._translateX = x;
 
@@ -520,6 +596,9 @@ export class Slide {
 }
 
 
+/**
+ * TODO
+ */
 @IonicComponent({
   selector: 'ion-pager',
 })
@@ -529,6 +608,11 @@ export class Slide {
   directives: [NgFor]
 })
 export class SlidePager {
+  /**
+   * TODO
+   * @param {Slides} slides  The containing slidebox.
+   * @param {ElementRef} elementRef  TODO
+   */
   constructor(
     @Host() slides: Slides,
     elementRef: ElementRef
@@ -543,13 +627,23 @@ export class SlidePager {
   changed() {
   }
 
+  /**
+   * Returns an array of slides in the slidebox.
+   * @returns {Array<Slide>} An array of slides in the slidebox.
+   */
   getSlides() {
     return this.slides.slides;
   }
 }
 
-
+/**
+ * TODO
+ */
 export class SlidesGesture extends DragGesture {
+  /**
+   * TODO
+   * @param {Slides} slides  TODO
+   */
   constructor(slides) {
     super(slides.ele);
     this.slides = slides;
