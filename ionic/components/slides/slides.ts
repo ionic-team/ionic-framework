@@ -134,7 +134,10 @@ export class Slides {
    * @param {Slide} slide  The slide to add.
    */
   add(slide) {
+    console.log('Added slide');
     this._append(slide);
+
+    this.resize();
   }
 
   /**
@@ -282,8 +285,8 @@ export class Slides {
    * @param {Event} event  TODO
    */
   _dragPre(event) {
-    let dx = event.gesture.deltaX;
-    let dy = event.gesture.deltaY;
+    let dx = event.deltaX;
+    let dy = event.deltaY;
 
     if(this.disableScroll) {
       event.preventDefault();
@@ -306,7 +309,7 @@ export class Slides {
    * @param {Event} event  TODO
    */
   _drag(event) {
-    let dx = event.gesture.deltaX;
+    let dx = event.deltaX;
     let width = this.containerWidth;
     let index = this.currentIndex;
 
@@ -391,8 +394,8 @@ export class Slides {
   _finish(event, drag) {
 
     let delta = {
-      x: event.gesture.deltaX,
-      y: event.gesture.deltaY
+      x: event.deltaX,
+      y: event.deltaY
     }
 
     let width = this.containerWidth;
@@ -632,7 +635,7 @@ export class SlidePager {
    * @returns {Array<Slide>} An array of slides in the slidebox.
    */
   getSlides() {
-    return this.slides.slides;
+    return this.slides.slides.slice(0, 10);
   }
 }
 
@@ -649,8 +652,8 @@ export class SlidesGesture extends DragGesture {
     this.slides = slides;
   }
   onDrag(event) {
-    let x = event.gesture.center.x;
-    let y = event.gesture.center.y;
+    let x = event.center.x;
+    let y = event.center.y;
 
     this._drag.x = x;
     this._drag.y = y;
@@ -660,8 +663,8 @@ export class SlidesGesture extends DragGesture {
   onDragStart(event) {
 
     this._drag = {
-      startX: event.gesture.center.x,
-      startY: event.gesture.center.y,
+      startX: event.center.x,
+      startY: event.center.y,
       time: +new Date
     }
 

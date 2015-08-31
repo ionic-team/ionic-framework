@@ -29,7 +29,7 @@ class AsideTargetGesture extends SlideEdgeGesture {
   }
   onSlideEnd(slide, ev) {
     this.aside.setSliding(false);
-    if (Math.abs(ev.gesture.velocityX) > 0.2 || Math.abs(slide.delta) > Math.abs(slide.max) * 0.5) {
+    if (Math.abs(ev.velocityX) > 0.2 || Math.abs(slide.delta) > Math.abs(slide.max) * 0.5) {
 
       this.aside.setOpen(!this.aside.isOpen);
       this.aside.setDoneTransforming(!this.aside.isOpen);
@@ -86,7 +86,7 @@ class AsideGesture extends SlideEdgeGesture {
   }
   onSlideEnd(slide, ev) {
     this.aside.setSliding(false);
-    if (Math.abs(ev.gesture.velocityX) > 0.2 || Math.abs(slide.delta) > Math.abs(slide.max) * 0.5) {
+    if (Math.abs(ev.velocityX) > 0.2 || Math.abs(slide.delta) > Math.abs(slide.max) * 0.5) {
       this.aside.setOpen(!this.aside.isOpen);
       this.aside.setDoneTransforming(!this.aside.isOpen);
     } else {

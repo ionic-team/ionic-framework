@@ -1,6 +1,11 @@
 import * as util from 'ionic/util';
 import {Hammer} from 'ionic/gestures/hammer';
 
+/**
+ * A gesture recognizer class.
+ *
+ * TODO(mlynch): Re-enable the DOM event simulation that was causing issues (or verify hammer does this already, it might);
+ */
 
 export class Gesture {
   constructor(element, opts = {}) {
@@ -25,9 +30,9 @@ export class Gesture {
   }
 
   on(type, cb) {
-    this.hammertime.on(type, util.noop);
+    this.hammertime.on(type, cb);
     (this._callbacks[type] || (this._callbacks[type] = [])).push(cb);
-    this.element.addEventListener(type, cb);
+    //this.element.addEventListener(type, cb);
   }
 
   listen() {
@@ -39,7 +44,8 @@ export class Gesture {
     this.hammertime = null;
     for (let type in this._callbacks) {
       for (let i = 0; i < this._callbacks[type].length; i++) {
-        this.element.removeEventListener(type, this._callbacks[type][i]);
+        //this.element.removeEventListener(type, this._callbacks[type][i]);
+        this.hammertime.off(type, this._callbacks[type]);
       }
     }
     this._callbacks = {}

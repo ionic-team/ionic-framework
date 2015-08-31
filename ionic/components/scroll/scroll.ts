@@ -1,8 +1,9 @@
-import {View, ElementRef} from 'angular2/angular2';
+import {View, ElementRef, onInit} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
 import {IonicComponent} from '../../config/annotations';
+import {Gesture} from '../../gestures/gesture';
 
 
 /**
@@ -12,12 +13,12 @@ import {IonicComponent} from '../../config/annotations';
 @IonicComponent({
   selector: 'ion-scroll',
   properties: [
-    'scrollX', 'scrollY'
+    'scrollX', 'scrollY', 'zoom'
   ],
   host: {
     '[class.scroll-x]': 'scrollX',
     '[class.scroll-y]': 'scrollY'
-  }
+  },
 })
 @View({
   template: '<scroll-content><ng-content></ng-content></scroll-content>'
@@ -29,10 +30,29 @@ export class Scroll extends Ion {
    * @param {IonicConfig} config  TODO
    */
   constructor(elementRef: ElementRef, config: IonicConfig) {
-    super(elementRef, config);
+    super(elementRef, ionicConfig);
+  }
 
-    setTimeout(() => {
-      this.scrollElement = this.getNativeElement().children[0];
+  onInit() {
+    this.scrollElement = this.getNativeElement().children[0];
+
+    if(this.zoom === "") {
+      this.initZoomScrolling();
+    }
+  }
+
+  initZoomScrolling() {
+    this.scrollElement.children[0] && this.scrollElement.children[0].classList.add('ion-scroll-zoom');
+
+    this.scrollElement.addEventListener('scroll', (e) => {
+      console.log("Scrolling", e);
+    });
+
+    this.zoomGesture = new Gesture(this.scrollElement);
+    this.zoomGesture.listen();
+
+    this.zoomGesture.on('doubletap', (e) => {
+      console.log('Double tap', e);
     });
   }
 
