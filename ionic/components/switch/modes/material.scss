@@ -6,7 +6,7 @@ $switch-md-active-color:              color(primary) !default;
 
 $switch-md-track-width:               36px !default;
 $switch-md-track-height:              14px !default;
-$switch-md-track-off-bg-color:        $list-border-color !default;
+$switch-md-track-off-bg-color:        $item-md-border-color !default;
 $switch-md-track-on-bg-color:         lighten($switch-md-active-color, 25%) !default;
 
 $switch-md-handle-width:              20px !default;

@@ -2,7 +2,7 @@
 // Material Design Item
 // --------------------------------------------------
 
-$item-md-border-color:           lighten($list-border-color, 10%) !default;
+$item-md-border-color:           grayscale(lighten($list-border-color, 8%)) !default;
 $item-md-font-size:              1.6rem !default;
 
 $item-md-padding-top:            13px !default;
@@ -44,9 +44,14 @@ $item-md-forward-icon-color:     $item-md-border-color !default;
       position: absolute;
       right: 0;
       bottom: 0;
-      left: 0;
+      left: $item-md-padding-left;
       border-top: 1px solid $item-md-border-color;
       content: '';
+    }
+
+    &:first-child:before,
+    &:last-child:after {
+      left: 0;
     }
   }
 
