@@ -3,6 +3,7 @@
 // --------------------------------------------------
 
 $item-ios-border-color:           $list-border-color !default;
+$item-ios-activated-bg-color:     #d9d9d9 !default;
 $item-ios-font-size:              1.6rem !default;
 
 $item-ios-padding-top:            13px !default;
@@ -37,6 +38,7 @@ $item-ios-forward-icon-color:     $item-ios-border-color !default;
       left: $item-ios-padding-left;
       border-top: 1px solid $item-ios-border-color;
       content: '';
+      pointer-events: none;
     }
 
     &:after {
@@ -46,11 +48,16 @@ $item-ios-forward-icon-color:     $item-ios-border-color !default;
       left: $item-ios-padding-left;
       border-top: 1px solid $item-ios-border-color;
       content: '';
+      pointer-events: none;
     }
 
     &:first-child:before,
     &:last-child:after {
       left: 0;
+    }
+
+    &.activated {
+      background-color: $item-ios-activated-bg-color;
     }
   }
 

@@ -18,9 +18,10 @@
 }
 
 .list[inset] {
-  border: 1px solid $list-border-color;
-}
+  border-radius: 2px;
+  overflow: hidden;
 
-.hairlines .list[inset] {
-  border-width: 0.55px;
+  ion-header {
+    background-color: $list-background-color;
+  }
 }

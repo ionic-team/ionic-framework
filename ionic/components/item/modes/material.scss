@@ -3,6 +3,7 @@
 // --------------------------------------------------
 
 $item-md-border-color:           grayscale(lighten($list-border-color, 8%)) !default;
+$item-md-activated-bg-color:     #f1f1f1 !default;
 $item-md-font-size:              1.6rem !default;
 
 $item-md-padding-top:            13px !default;
@@ -38,6 +39,7 @@ $item-md-forward-icon-color:     $item-md-border-color !default;
       left: $item-md-padding-left;
       border-top: 1px solid $item-md-border-color;
       content: '';
+      pointer-events: none;
     }
 
     &:after {
@@ -47,11 +49,16 @@ $item-md-forward-icon-color:     $item-md-border-color !default;
       left: $item-md-padding-left;
       border-top: 1px solid $item-md-border-color;
       content: '';
+      pointer-events: none;
     }
 
     &:first-child:before,
     &:last-child:after {
       left: 0;
+    }
+
+    &.activated {
+      background-color: $item-md-activated-bg-color;
     }
   }
 

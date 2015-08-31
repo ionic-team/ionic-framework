@@ -2,37 +2,70 @@
 <ion-toolbar><ion-title>Inset List</ion-title></ion-toolbar>
 
 
-<ion-list inset>
-  <ion-header>
-    Inset List Header
-  </ion-header>
-  <ion-item class="item-text-wrap">
-    Keep close to Nature's heart... and break clear away, once in awhile, and
-    climb a mountain or spend a week in the woods. Wash your spirit clean.
-  </ion-item>
-</ion-list>
+<ion-content class="outer-content">
+
+  <ion-list inset>
+
+    <ion-header>
+      Inset List Header
+    </ion-header>
+
+    <a ion-item href="#">
+      <icon alarm item-left></icon>
+      List Link Item 1
+      <icon forward item-right></icon>
+    </a>
+
+    <a ion-item href="#">
+      <icon analytics item-left></icon>
+      List Link Item 2
+      <icon forward item-right></icon>
+    </a>
+
+    <button ion-item>
+      <icon boat item-left></icon>
+      List Button Item 1
+      <icon forward item-right></icon>
+    </button>
+
+    <button ion-item>
+      <icon book item-left></icon>
+      List Button Item 2
+      <icon forward item-right></icon>
+    </button>
+
+  </ion-list>
 
 
-<ion-list inset>
+  <ion-list inset>
 
-  <ion-item>
-    <icon pin item-left></icon>
-    All Out Inset List
-    <button outline item-right>View</button>
-  </ion-item>
+    <ion-item>
+      Inset List, No Header
+      <button outline item-right>View</button>
+    </ion-item>
 
-  <ion-item class="item-text-wrap">
-    This is a multiline content within a list that should
-    take up multiple lines and stuff.
-  </ion-item>
+    <ion-item>
+      List Item 1
+    </ion-item>
 
-</ion-list>
+    <ion-item>
+      List Item 2
+    </ion-item>
+
+    <ion-item class="item-text-wrap">
+      This is a multiline content within a list that should
+      take up multiple lines and stuff.
+    </ion-item>
+
+  </ion-list>
 
 
-<ion-list inset>
+  <ion-list inset>
 
-  <ion-item>
-    Inset List, no header
-  </ion-item>
+    <ion-item>
+      Inset List, no header, no items
+    </ion-item>
 
-</ion-list>
+  </ion-list>
+
+</ion-content>
