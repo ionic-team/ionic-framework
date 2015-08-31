@@ -32,7 +32,7 @@ import {Swiper} from './swiper-widget';
     'loop',
     'index',
     'bounce',
-    'hidePager',
+    'showPager',
     'options'
   ]
 })
@@ -41,7 +41,7 @@ import {Swiper} from './swiper-widget';
     <div class="swiper-wrapper">
       <ng-content></ng-content>
     </div>
-    <div [class.hide]="hidePager" class="swiper-pagination"></div>
+    <div [class.hide]="!showPager" class="swiper-pagination"></div>
   </div>`,
   directives: [NgIf, NgClass]
 })
@@ -54,11 +54,15 @@ export class Slides extends Ion {
     super(elementRef, config);
   }
   onInit() {
+    console.log(this.bounce);
     var options = util.defaults({
       pagination: '.swiper-pagination',
       paginationClickable: true,
-      lazyLoading: true
+      lazyLoading: true,
+      //resistance: (this.bounce !== "false")
     }, this.options);
+
+    console.log(options);
 
     var swiper = new Swiper(this.getNativeElement().children[0], options);
 
@@ -72,8 +76,10 @@ export class Slides extends Ion {
   update() {
     setTimeout(() => {
       this.swiper.update();
+
+      // Don't allow pager to show with > 10 slides
       if(this.swiper.slides.length > 10) {
-        this.hidePager = true;
+        this.showPager = false;
       }
     });
   }
