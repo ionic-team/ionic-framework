@@ -126,6 +126,14 @@ export class Animation {
     return this._rate || (this._parent && this._parent.playbackRate());
   }
 
+  fill(value) {
+    if (arguments.length) {
+      this._fill = value;
+      return this;
+    }
+    return this._fill || (this._parent && this._parent.fill());
+  }
+
   from(property, value) {
     if (!this._from) {
       this._from = {};
@@ -282,7 +290,8 @@ export class Animation {
                                    this._to,
                                    this.duration(),
                                    this.easing(),
-                                   this.playbackRate() );
+                                   this.playbackRate(),
+                                   this.fill() );
 
           if (animation.shouldAnimate) {
             this._ani.push(animation);
@@ -435,7 +444,7 @@ export class Animation {
 
 class Animate {
 
-  constructor(ele, fromEffect, toEffect, duration, easingConfig, playbackRate) {
+  constructor(ele, fromEffect, toEffect, duration, easingConfig, playbackRate, fill) {
     // https://w3c.github.io/web-animations/
     // not using the direct API methods because they're still in flux
     // however, element.animate() seems locked in and uses the latest
@@ -483,7 +492,7 @@ class Animate {
         duration: self.duration || 0,
         easing: self.easing,
         playbackRate: self.rate || 1,
-        fill: 'both'
+        fill: fill || 'both'
       });
 
       self.player.onfinish = () => {
