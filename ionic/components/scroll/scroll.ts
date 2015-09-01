@@ -188,13 +188,13 @@ export class Scroll extends Ion {
         .easing('linear');
 
       let za = new Animation();
-      za.add(zi, zw);
+      za.add(zi);//, zw);
 
       if(this.scale > 1) {
         // Zoom out
 
-        zw.fromTo('translateX', posX + 'px', '0px');
-        zw.fromTo('translateY', posY + 'px', '0px');
+        //zw.fromTo('translateX', posX + 'px', '0px');
+        //zw.fromTo('translateY', posY + 'px', '0px');
 
         zi.from('scale', this.scale);
         zi.to('scale', 1);
@@ -207,8 +207,8 @@ export class Scroll extends Ion {
       } else {
         // Zoom in
 
-        zw.fromTo('translateX', posX + 'px', tx + 'px');
-        zw.fromTo('translateY', posY + 'px', ty + 'px');
+        //zw.fromTo('translateX', posX + 'px', tx + 'px');
+        //zw.fromTo('translateY', posY + 'px', ty + 'px');
 
         zi.from('scale', this.scale);
         zi.to('scale', this.maxScale);
