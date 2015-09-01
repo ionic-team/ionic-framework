@@ -135,6 +135,7 @@ class MediaSwitch {
 })
 @IonicView({
   template:
+  '<ng-content select="[item-left]"></ng-content>' +
   '<ion-item-content id="{{labelId}}">' +
     '<ng-content></ng-content>' +
   '</ion-item-content>' +
