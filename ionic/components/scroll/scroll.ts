@@ -60,7 +60,11 @@ export class Scroll extends Ion {
     this.zoomGesture.listen();
 
     let scale = 1, last_scale, deltaX, deltaY,
-    startX, startY, posX = 0, posY = 0, lastPosX = 0, lastPosY = 0;
+    startX, startY, posX = 0, posY = 0, lastPosX = 0, lastPosY = 0,
+    zoomRect, viewportWidth, viewportHeight;
+
+    viewportWidth = this.scrollElement.offsetWidth;
+    viewportHeight = this.scrollElement.offsetWidth;
 
 
     this.zoomElement.addEventListener('touchstart', (e) => {
@@ -88,25 +92,32 @@ export class Scroll extends Ion {
         posX = deltaX + lastPosX;
         posY = deltaY + lastPosY;
 
-        this.zoomElement.parentElement.style[CSS.transform] = 'translate3d(' + posX + 'px, ' + posY + 'px, 0)';
+        console.log(posX, posY);
 
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
+
+        if(posX > viewportWidth) {
+          // Too far on the left side, let the event bubble up (to enable slider on edges, for example)
+        } else if(-posX > viewportWidth) {
+          // Too far on the right side, let the event bubble up (to enable slider on edges, for example)
+        } else {
+          this.zoomElement.parentElement.style[CSS.transform] = 'translate3d(' + posX + 'px, ' + posY + 'px, 0)';
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
+
       }
     });
+
     this.zoomElement.addEventListener('touchend', (e) => {
       console.log('PANEND', e);
+
+      if(Math.abs(posX) > viewportWidth) {
+        posX = posX > 0 ? viewportWidth - 1 : -(viewportWidth - 1);
+        console.log('Setting on posx', posX);
+      }
       lastPosX = posX;
       lastPosY = posY;
-      /*
-      if(scale > 1) {
-        console.log('BLOCKING SCROLL');
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-      }
-      */
     });
 
     this.zoomGesture.on('pinchstart', (e) => {
@@ -118,6 +129,8 @@ export class Scroll extends Ion {
       scale = Math.max(1, Math.min(last_scale * e.scale, 10));
       console.log('Scaling', scale);
       this.zoomElement.style[CSS.transform] = 'scale(' + scale + ')'
+
+      zoomRect = this.zoomElement.getBoundingClientRect();
     });
 
     this.zoomGesture.on('pinchend', (e) => {
