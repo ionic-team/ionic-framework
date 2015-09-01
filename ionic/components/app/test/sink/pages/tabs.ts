@@ -66,10 +66,10 @@ class UpdatesTabPage {
     <ion-navbar *navbar><ion-nav-items primary><button icon (^click)="toggleMenu()"><i class="icon ion-navicon"></i></button></ion-nav-items><ion-title>Tabs</ion-title></ion-navbar>
 
     <ion-tabs id="tabs">
-      <ion-tab tab-title="Featured" tab-icon="ion-ios-star" [root]="featuredTab"></ion-tab>
-      <ion-tab tab-title="Top Charts" tab-icon="ion-ios-list-outline" [root]="topTab"></ion-tab>
-      <ion-tab tab-title="Search" tab-icon="ion-ios-search" [root]="searchTab"></ion-tab>
-      <ion-tab tab-title="Updates" tab-icon="ion-ios-download-outline" [root]="updatesTab"></ion-tab>
+      <ion-tab tab-title="Featured" tab-icon="star" [root]="featuredTab"></ion-tab>
+      <ion-tab tab-title="Top Charts" tab-icon="stats" [root]="topTab"></ion-tab>
+      <ion-tab tab-title="Search" tab-icon="search" [root]="searchTab"></ion-tab>
+      <ion-tab tab-title="Updates" tab-icon="cloud-download" [root]="updatesTab"></ion-tab>
     </ion-tabs>
   `
 })
