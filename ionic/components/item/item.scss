@@ -34,6 +34,7 @@ button.item.item {
   color: inherit;
   border-radius: 0;
   box-shadow: none;
+  will-change: initial;
 }
 
 ion-item-content {

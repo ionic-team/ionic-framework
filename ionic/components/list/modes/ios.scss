@@ -2,15 +2,16 @@
 // iOS List
 // --------------------------------------------------
 
-$list-ios-margin-top:                10px !default;
-$list-ios-margin-right:              0 !default;
-$list-ios-margin-bottom:             32px !default;
-$list-ios-margin-left:               0 !default;
+$list-ios-margin-top:                 10px !default;
+$list-ios-margin-right:               0 !default;
+$list-ios-margin-bottom:              32px !default;
+$list-ios-margin-left:                0 !default;
 
 $list-inset-ios-margin-top:           16px !default;
 $list-inset-ios-margin-right:         16px !default;
 $list-inset-ios-margin-bottom:        16px !default;
 $list-inset-ios-margin-left:          16px !default;
+$list-inset-ios-border-radius:        4px !default;
 
 $list-ios-header-padding:             10px $item-ios-padding-right 10px $item-ios-padding-left !default;
 $list-ios-header-font-size:           1.2rem !default;
@@ -34,7 +35,7 @@ $list-ios-header-color:               #333 !default;
 }
 
 .list[mode=ios] + .list {
-  margin-top: $list-ios-margin-top;
+  margin-top: $list-ios-margin-top + $list-ios-margin-bottom;
 }
 
 .list[mode=ios] + .list ion-header {
@@ -44,6 +45,7 @@ $list-ios-header-color:               #333 !default;
 
 .list[mode=ios][inset] {
   margin: $list-inset-ios-margin-top $list-inset-ios-margin-right $list-inset-ios-margin-bottom $list-inset-ios-margin-left;
+  border-radius: $list-inset-ios-border-radius;
 
   .item:first-child {
     margin-top: 0;
