@@ -49,6 +49,8 @@ $list-ios-header-color:               #333 !default;
 
   .item:first-child {
     margin-top: 0;
+    border-top-right-radius: $list-inset-ios-border-radius;
+    border-top-left-radius: $list-inset-ios-border-radius;
 
     &:before {
       border-top: none;
@@ -57,6 +59,8 @@ $list-ios-header-color:               #333 !default;
 
   .item:last-child {
     margin-bottom: 0;
+    border-bottom-right-radius: $list-inset-ios-border-radius;
+    border-bottom-left-radius: $list-inset-ios-border-radius;
 
     &:after {
       border-top: none;

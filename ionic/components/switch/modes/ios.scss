@@ -8,7 +8,7 @@ $switch-ios-border-width:              2px !default;
 $switch-ios-border-radius:             $switch-ios-height / 2 !default;
 
 $switch-ios-off-bg-color:              $list-background-color !default;
-$switch-ios-off-border-color:          lighten($list-border-color, 10%) !default;
+$switch-ios-off-border-color:          grayscale(lighten($list-border-color, 11%)) !default;
 
 $switch-ios-on-bg-color:               color(primary) !default;
 
