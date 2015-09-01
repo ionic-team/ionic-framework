@@ -12,13 +12,9 @@ module.exports = new Package('ionic-v2-docs', [jsdocPackage, nunjucksPackage, ty
 // for debugging docs
 // .processor(function test(){
 //   return {
-//     $runAfter: ['files-written'],
+//     $runAfter: ['readTypeScriptModules'],
+//     $runAfter: ['parsing-tags'],
 //     $process: function(docs){
-//       docs.forEach(function(doc){
-//         if (doc.constructorDoc){
-//           debugger;
-//         }
-//       })
 //     }
 //   }
 // })
@@ -59,8 +55,9 @@ module.exports = new Package('ionic-v2-docs', [jsdocPackage, nunjucksPackage, ty
 })
 
 // Configure file writing
-.config(function(writeFilesProcessor) {
-  writeFilesProcessor.outputFolder  = 'dist/docs';
+.config(function(writeFilesProcessor, versionInfo) {
+  // TODO(tlancina): Use nightly if version isn't specified by gulp task
+  writeFilesProcessor.outputFolder  = 'dist/ionic-site/docs/' + versionInfo.currentVersion.raw + '/api/';
 })
 
 // Configure rendering
@@ -91,24 +88,31 @@ module.exports = new Package('ionic-v2-docs', [jsdocPackage, nunjucksPackage, ty
 })
 
 // Configure ids and paths
-// .config(function(computeIdsProcessor, computePathsProcessor) {
-//   computeIdsProcessor.idTemplates.push({
-//     docTypes: ['guide'],
-//     getId: function(doc) {
-//       return doc.fileInfo.relativePath
-//                     // path should be relative to `modules` folder
-//                     .replace(/.*\/?modules\//, '')
-//                     // path should not include `/docs/`
-//                     .replace(/\/docs\//, '/')
-//                     // path should not have a suffix
-//                     .replace(/\.\w*$/, '');
-//     },
-//     getAliases: function(doc) { return [doc.id]; }
-//   });
-//
-//   computePathsProcessor.pathTemplates.push({
-//     docTypes: ['guide'],
-//     pathTemplate: '/${id}',
-//     outputPathTemplate: 'partials/guides/${id}.html'
-//   });
-// });
+.config(function(computeIdsProcessor, computePathsProcessor, versionInfo) {
+  // computeIdsProcessor.idTemplates.push({
+  //   docTypes: ['guide'],
+  //   getId: function(doc) {
+  //     return doc.fileInfo.relativePath
+  //                   // path should be relative to `modules` folder
+  //                   .replace(/.*\/?modules\//, '')
+  //                   // path should not include `/docs/`
+  //                   .replace(/\/docs\//, '/')
+  //                   // path should not have a suffix
+  //                   .replace(/\.\w*$/, '');
+  //   },
+  //   getAliases: function(doc) { return [doc.id]; }
+  // });
+
+  // docTypes: 'module', 'member', 'class', 'var', 'function', 'let'
+
+  computePathsProcessor.pathTemplates = [{
+    docTypes: ['class', 'var', 'function', 'let'],
+    getOutputPath: function(doc) {
+      return doc.fileInfo.relativePath
+               // strip ionic from path root
+               .replace(/^ionic\//, '')
+               // replace extension with .html
+               .replace(/\.\w*$/, '.html');
+    }
+  }];
+});
