@@ -48,10 +48,17 @@ export class Scroll extends Ion {
   }
 
   resetZoom() {
-    console.log('RESET ZOOM');
-    if(this.scale > 1) {
-      this.zoomElement && this.zoomElement.style[CSS.transform] = 'scale(1)';
+
+    if(this.zoomElement) {
+
+      this.zoomElement.parentElement.style[CSS.transform] = '';
+
+      this.zoomElement.style[CSS.transform] = 'scale(1)';
     }
+
+    this.scale = 1;
+    this.zoomLastPosX = 0;
+    this.zoomLastPosY = 0;
   }
 
   initZoomScrolling() {
@@ -68,38 +75,30 @@ export class Scroll extends Ion {
 
     this.scale = 1;
 
-    let last_scale, deltaX, deltaY,
-    startX, startY, posX = 0, posY = 0, lastPosX = 0, lastPosY = 0,
-    zoomRect, viewportWidth, viewportHeight;
+    this.zoomLastPosX = 0;
+    this.zoomLastPosY = 0;
+
+
+    let last_scale, deltaX, deltaY, startX, startY, posX = 0, posY = 0, zoomRect, viewportWidth, viewportHeight;
 
     viewportWidth = this.scrollElement.offsetWidth;
     viewportHeight = this.scrollElement.offsetWidth;
 
-
     this.zoomElement.addEventListener('touchstart', (e) => {
-      console.log('PAN START', e);
-
       startX = e.touches[0].clientX;
       startY = e.touches[0].clientY;
-
-      //lastPosX = 0;
-      //lastPosY = 0;
-
-      if(this.scale > 1) {
-        //e.preventDefault();
-        //e.stopPropagation();
-      }
     });
+
     this.zoomElement.addEventListener('touchmove', (e) => {
-      console.log('PAN', e);
       deltaX = e.touches[0].clientX - startX;
       deltaY = e.touches[0].clientY - startY;
 
       if(this.scale > 1) {
+        console.log('PAN', e);
 
         // Move image
-        posX = deltaX + lastPosX;
-        posY = deltaY + lastPosY;
+        posX = deltaX + this.zoomLastPosX;
+        posY = deltaY + this.zoomLastPosY;
 
         console.log(posX, posY);
 
@@ -109,7 +108,7 @@ export class Scroll extends Ion {
         } else if(-posX > viewportWidth) {
           // Too far on the right side, let the event bubble up (to enable slider on edges, for example)
         } else {
-          this.zoomElement.parentElement.style[CSS.transform] = 'translate3d(' + posX + 'px, ' + posY + 'px, 0)';
+          this.zoomElement.parentElement.style[CSS.transform] = 'translateX(' + posX + 'px) translateY(' + posY + 'px)';
           e.preventDefault();
           e.stopPropagation();
           return false;
@@ -125,8 +124,8 @@ export class Scroll extends Ion {
         posX = posX > 0 ? viewportWidth - 1 : -(viewportWidth - 1);
         console.log('Setting on posx', posX);
       }
-      lastPosX = posX;
-      lastPosY = posY;
+      this.zoomLastPosX = posX;
+      this.zoomLastPosY = posY;
     });
 
     this.zoomGesture.on('pinchstart', (e) => {
@@ -161,10 +160,25 @@ export class Scroll extends Ion {
       let x = e.pointers[0].clientX;
       let y = e.pointers[0].clientY;
 
-      let tx = (viewportWidth / 2) - x;
-      let ty = (viewportHeight / 2) - y;
+      let mx = viewportWidth / 2;
+      let my = viewportHeight / 2;
 
-      console.log("Double tap", e, x, y, tx, ty);
+      let tx, ty;
+
+      if(x > mx) {
+        // Greater than half
+        tx = -x;
+      } else {
+        // Less than or equal to half
+        tx = (viewportWidth - x);
+      }
+      if(y > my) {
+        ty = -y;
+      } else {
+        ty = y-my;
+      }
+
+      console.log(y);
 
       let zi = new Animation(this.zoomElement)
         .duration(this.zoomDuration)
@@ -181,12 +195,13 @@ export class Scroll extends Ion {
 
         zw.fromTo('translateX', posX + 'px', '0px');
         zw.fromTo('translateY', posY + 'px', '0px');
+
         zi.from('scale', this.scale);
         zi.to('scale', 1);
         za.play();
 
         posX = 0;
-        posy = 0;
+        posY = 0;
 
         this.scale = 1;
       } else {
@@ -194,6 +209,7 @@ export class Scroll extends Ion {
 
         zw.fromTo('translateX', posX + 'px', tx + 'px');
         zw.fromTo('translateY', posY + 'px', ty + 'px');
+
         zi.from('scale', this.scale);
         zi.to('scale', this.maxScale);
         za.play();

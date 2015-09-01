@@ -70,10 +70,13 @@ export class Slides extends Ion {
       paginationClickable: true,
       lazyLoading: true,
       onSlideChangeStart: (swiper) => {
-        console.log('Slide change!', swiper);
-        this.scrollChildren.forEach((s) => {
-          s.resetZoom();
-        });
+        console.log('Slide change!', swiper.previousIndex);
+        let so = this.scrollChildren._results[swiper.previousIndex];
+        if(so) {
+          setTimeout(() => {
+            so.resetZoom();
+          }, 300);
+        }
       },
       onSlideChangeEnd: (swiper) => {
         console.log('Slide changED!');
