@@ -16,7 +16,7 @@ import * as util from 'ionic/util';
 @IonicComponent({
   selector: 'ion-scroll',
   properties: [
-    'scrollX', 'scrollY', 'zoom'
+    'scrollX', 'scrollY', 'zoom', 'maxZoom'
   ],
   host: {
     '[class.scroll-x]': 'scrollX',
@@ -35,15 +35,13 @@ export class Scroll extends Ion {
   constructor(elementRef: ElementRef, ionicConfig: IonicConfig) {
     super(elementRef, ionicConfig);
 
-    this.zoomAmount = 1;
+    this.maxScale = 3;
   }
 
   onInit() {
     this.scrollElement = this.getNativeElement().children[0];
 
     if(util.isTrueProperty(this.zoom)) {
-      console.log('Zoom?', this.zoom);
-
       this.initZoomScrolling();
     }
   }
@@ -60,25 +58,51 @@ export class Scroll extends Ion {
     this.zoomGesture = new Gesture(this.scrollElement);
     this.zoomGesture.listen();
 
+    let scale = 1, last_scale;
+
+    this.zoomGesture.on('pinchstart', (e) => {
+      last_scale = scale;
+      console.log('Last scale', e.scale);
+    });
+
     this.zoomGesture.on('pinch', (e) => {
-      console.log('PINCH', e);
+      scale = Math.max(1, Math.min(last_scale * e.scale, 10));
+      console.log('Scaling', scale);
+      this.zoomElement.style[CSS.transform] = 'scale(' + scale + ')'
+    });
+
+    this.zoomGesture.on('pinchend', (e) => {
+      //last_scale = Math.max(1, Math.min(last_scale * e.scale, 10));
+      if(scale > this.maxScale) {
+        let za = new Animation(this.zoomElement)
+          .duration(160)
+          .easing('ease-in-out')
+          .from('scale', scale)
+          .to('scale', this.maxScale);
+          za.play();
+
+          scale = this.maxScale;
+      }
     });
 
     this.zoomGesture.on('doubletap', (e) => {
-      this.zoomAnimation = new Animation(this.zoomElement)
-        .duration(200)
-        .easing('ease-in');
+      console.log("Double tap");
+      let za = new Animation(this.zoomElement)
+        .duration(160)
+        .easing('ease-in-out');
 
-      if(this.zoomAmount > 1) {
-        this.zoomAnimation.from('scale', this.zoomAmount);
-        this.zoomAnimation.to('scale', 1);
-        this.zoomAnimation.play();
-        this.zoomAmount = 1;
+      if(scale > 1) {
+        za.from('scale', scale);
+        za.to('scale', 1);
+        za.play();
+
+        scale = 1;
       } else {
-        this.zoomAnimation.from('scale', this.zoomAmount);
-        this.zoomAnimation.to('scale', 3);
-        this.zoomAnimation.play();
-        this.zoomAmount = 3;
+        za.from('scale', scale);
+        za.to('scale', this.maxScale);
+        za.play();
+
+        scale = this.maxScale;
       }
       //this.zoomElement.style[CSS.transform] = 'scale(3)';
     });

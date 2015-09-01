@@ -20,7 +20,7 @@ class MyApp {
     Http.get(baseUrl + '?method=flickr.groups.pools.getPhotos&group_id=1463451@N25&safe_search=1&api_key=' + FLICKR_API_KEY + '&jsoncallback=JSON_CALLBACK&format=json&tags=' + tags, {
       method: 'jsonp'
     }).then((val) => {
-      this.images = val.photos.photo;
+      this.images = val.photos.photo.slice(0, 20);
       this.slider.update();
     }, (err) => {
       alert('Unable to load images');
