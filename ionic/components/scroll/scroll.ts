@@ -24,7 +24,7 @@ import * as util from 'ionic/util';
   },
 })
 @View({
-  template: '<scroll-content><ng-content></ng-content></scroll-content>'
+  template: '<scroll-content><div class="scroll-zoom-wrapper"><ng-content></ng-content></div></scroll-content>'
 })
 export class Scroll extends Ion {
   /**
@@ -36,6 +36,7 @@ export class Scroll extends Ion {
     super(elementRef, ionicConfig);
 
     this.maxScale = 3;
+    this.zoomDuration = 250;
   }
 
   onInit() {
@@ -47,7 +48,7 @@ export class Scroll extends Ion {
   }
 
   initZoomScrolling() {
-    this.zoomElement = this.scrollElement.children[0];
+    this.zoomElement = this.scrollElement.children[0].children[0];
 
     this.zoomElement && this.zoomElement.classList.add('ion-scroll-zoom');
 
@@ -58,7 +59,55 @@ export class Scroll extends Ion {
     this.zoomGesture = new Gesture(this.scrollElement);
     this.zoomGesture.listen();
 
-    let scale = 1, last_scale;
+    let scale = 1, last_scale, deltaX, deltaY,
+    startX, startY, posX = 0, posY = 0, lastPosX = 0, lastPosY = 0;
+
+
+    this.zoomElement.addEventListener('touchstart', (e) => {
+      console.log('PAN START', e);
+
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+
+      //lastPosX = 0;
+      //lastPosY = 0;
+
+      if(scale > 1) {
+        //e.preventDefault();
+        //e.stopPropagation();
+      }
+    });
+    this.zoomElement.addEventListener('touchmove', (e) => {
+      console.log('PAN', e);
+      deltaX = e.touches[0].clientX - startX;
+      deltaY = e.touches[0].clientY - startY;
+
+      if(scale > 1) {
+
+        // Move image
+        posX = deltaX + lastPosX;
+        posY = deltaY + lastPosY;
+
+        this.zoomElement.parentElement.style[CSS.transform] = 'translate3d(' + posX + 'px, ' + posY + 'px, 0)';
+
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+    });
+    this.zoomElement.addEventListener('touchend', (e) => {
+      console.log('PANEND', e);
+      lastPosX = posX;
+      lastPosY = posY;
+      /*
+      if(scale > 1) {
+        console.log('BLOCKING SCROLL');
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+      */
+    });
 
     this.zoomGesture.on('pinchstart', (e) => {
       last_scale = scale;
@@ -75,8 +124,8 @@ export class Scroll extends Ion {
       //last_scale = Math.max(1, Math.min(last_scale * e.scale, 10));
       if(scale > this.maxScale) {
         let za = new Animation(this.zoomElement)
-          .duration(160)
-          .easing('ease-in-out')
+          .duration(this.zoomDuration)
+          .easing('linear')
           .from('scale', scale)
           .to('scale', this.maxScale);
           za.play();
@@ -88,8 +137,8 @@ export class Scroll extends Ion {
     this.zoomGesture.on('doubletap', (e) => {
       console.log("Double tap");
       let za = new Animation(this.zoomElement)
-        .duration(160)
-        .easing('ease-in-out');
+        .duration(this.zoomDuration)
+        .easing('linear');
 
       if(scale > 1) {
         za.from('scale', scale);

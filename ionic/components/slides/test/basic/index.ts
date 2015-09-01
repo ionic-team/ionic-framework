@@ -21,7 +21,9 @@ class MyApp {
       method: 'jsonp'
     }).then((val) => {
       this.images = val.photos.photo.slice(0, 20);
-      this.slider.update();
+      setTimeout(() => {
+        this.slider.update();
+      });
     }, (err) => {
       alert('Unable to load images');
       console.error(err);
