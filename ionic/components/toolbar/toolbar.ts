@@ -51,12 +51,23 @@ export class ToolbarBase extends Ion  {
     return this._ttTxt;
   }
 
+  onAllChangesDone() {
+    if (this._queueAlign) {
+      this._queueAlign = false;
+      this._alignTitle();
+    }
+  }
+
   /**
    * TODO
    */
   alignTitle() {
+    this._queueAlign = (this.titleAlign === 'center');
+  }
+
+  _alignTitle() {
     // don't bother if we're not trying to center align the title
-    if (this.titleAlign !== 'center' || this.aligned) return;
+    if (this.aligned) return;
 
     // called after the navbar/title has had a moment to
     // finish rendering in their correct locations

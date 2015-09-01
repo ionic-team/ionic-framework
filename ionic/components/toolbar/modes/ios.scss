@@ -4,9 +4,10 @@
 
 $toolbar-order-ios: (
   back-button: 10,
-  primary: 20,
-  title: 30,
-  secondary: 40
+  aside-toggle: 20,
+  primary: 30,
+  title: 40,
+  secondary: 50
 );
 
 $toolbar-ios-height:                        4.4rem !default;
@@ -31,6 +32,10 @@ $toolbar-ios-title-font-size:               1.7rem !default;
 
   .toolbar-secondary-item {
     order: map-get($toolbar-order-ios, secondary);
+  }
+
+  [aside-toggle] {
+    order: map-get($toolbar-order-ios, 'aside-toggle');
   }
 
   ion-title {

@@ -28,6 +28,7 @@ button,
   icon {
     background: none;
     border: none;
+    pointer-events: none;
   }
 
   &[small] icon {

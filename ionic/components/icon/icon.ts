@@ -37,28 +37,49 @@ export class Icon {
     config: IonicConfig,
     private renderer: Renderer
   ) {
-    let ele = elementRef.nativeElement;
+    this.eleRef = elementRef;
+    this.hostButton = hostButton;
+    this.config = config;
 
     this.mode = config.setting('iconMode');
 
     this.iconLeft = this.iconRight = this.iconOnly = false;
     this.ariaHidden = true;
+  }
+
+  /**
+   * TODO
+   */
+  onInit() {
+    let ele = this.eleRef.nativeElement;
 
     if (ele.hasAttribute('forward')) {
-      this.name = config.setting('forwardIcon');
-    }
+      this.name = this.config.setting('forwardIcon');
 
-    this.iconAttr = null;
-    for (let i = 0, l = ele.attributes.length; i < l; i++) {
-      if (ele.attributes[i].value === '' && /_|item-|is-active|class/.test(ele.attributes[i].name) !== true) {
-        this.iconAttr = ele.attributes[i].name;
+    } else if (this.mode == 'ios' && this.ios) {
+      this.name = this.ios;
+
+    } else if (this.mode == 'md' && this.md) {
+      this.name = this.md;
+
+    } else if (!this.name) {
+      for (let i = 0, l = ele.attributes.length; i < l; i++) {
+        if (ele.attributes[i].value === '' && /_|item-|is-active|class/.test(ele.attributes[i].name) !== true) {
+          this.name = ele.attributes[i].name;
+          break;
+        }
       }
     }
 
-    if (hostButton) {
-      // this icon is within a button
-      this.withinButton = true;
+    if (!this.name) return;
 
+    if (!(/^ion-/.test(this.name))) {
+      // not an exact icon being used
+      // add mode specific prefix
+      this.name = 'ion-' + this.mode + '-' + this.name;
+    }
+
+    if (this.hostButton) {
       // check if there is a sibling element (that's not aria hidden)
       let hasPreviousSiblingElement = !!ele.previousElementSibling;
       let hasNextSiblingElement = ele.nextElementSibling && ele.nextElementSibling.getAttribute('aria-hidden') !== 'true';
@@ -73,35 +94,13 @@ export class Icon {
 
       // tell the button there's a child icon
       // the button will set the correct css classes on itself
-      hostButton.registerIcon(this);
-    }
-  }
-
-  /**
-   * TODO
-   */
-  onInit() {
-    if (this.mode == 'ios' && this.ios) {
-      this.name = this.ios;
-
-    } else if (this.mode == 'md' && this.md) {
-      this.name = this.md;
-
-    } else {
-      this.name = (this.name ? this.name : this.iconAttr);
-
-      if (!(/^ion-/.test(this.name))) {
-        // not an exact icon being used
-        // add mode specific prefix
-        this.name = 'ion-' + this.mode + '-' + this.name;
-      }
+      this.hostButton.registerIcon(this);
     }
 
-    if (!this.name) return;
 
     // hide the icon when it's within a button
     // and the button isn't an icon only button
-    this.ariaHidden = (this.withinButton && !this.iconOnly);
+    this.ariaHidden = (this.hostButton && !this.iconOnly);
 
     this.update();
   }

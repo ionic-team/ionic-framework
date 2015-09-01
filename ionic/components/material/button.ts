@@ -1,4 +1,4 @@
-import {ElementRef, Directive, onDestroy} from 'angular2/angular2';
+import {ElementRef, Directive} from 'angular2/angular2';
 
 import {IonicConfig} from '../../config/config';
 import {MaterialRippleEffect} from '../material/ripple';
@@ -7,8 +7,7 @@ import {MaterialRippleEffect} from '../material/ripple';
  * TODO
  */
 @Directive({
-  selector: 'button,[button]',
-  lifecycle: [onDestroy]
+  selector: 'button,[button]'
 })
 export class MaterialButton {
   /**
@@ -18,13 +17,12 @@ export class MaterialButton {
    */
   constructor(elementRef: ElementRef, config: IonicConfig) {
     this.elementRef = elementRef;
-
-    if(config.setting('mdRipple')) {
-      this.ripple = new MaterialRippleEffect(this);
-    }
+    this.config = config;
   }
 
-  onDestroy() {
-
+  onInit() {
+    if (this.config.setting('mdRipple')) {
+      //this.ripple = new MaterialRippleEffect(this);
+    }
   }
 }
