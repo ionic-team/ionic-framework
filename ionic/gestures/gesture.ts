@@ -31,7 +31,6 @@ export class Gesture {
 
   on(type, cb) {
     if(type == 'pinch' || type == 'rotate') {
-      console.log('Enabling pinch');
       this.hammertime.get('pinch').set({enable: true});
     }
     this.hammertime.on(type, cb);

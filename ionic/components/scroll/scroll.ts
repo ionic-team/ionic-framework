@@ -34,6 +34,8 @@ export class Scroll extends Ion {
    */
   constructor(elementRef: ElementRef, ionicConfig: IonicConfig) {
     super(elementRef, ionicConfig);
+
+    this.zoomAmount = 1;
   }
 
   onInit() {
@@ -47,7 +49,6 @@ export class Scroll extends Ion {
   }
 
   initZoomScrolling() {
-    console.log('Init zoom');
     this.zoomElement = this.scrollElement.children[0];
 
     this.zoomElement && this.zoomElement.classList.add('ion-scroll-zoom');
@@ -59,19 +60,26 @@ export class Scroll extends Ion {
     this.zoomGesture = new Gesture(this.scrollElement);
     this.zoomGesture.listen();
 
-    this.zoomAnimation = new Animation(this.zoomElement);
-    this.zoomAnimation
-      .duration(200)
-      .easing('ease-in')
-      .from('scale', '1');
-
     this.zoomGesture.on('pinch', (e) => {
       console.log('PINCH', e);
     });
 
     this.zoomGesture.on('doubletap', (e) => {
-      this.zoomAnimation.to('scale', '3');
-      this.zoomAnimation.play();
+      this.zoomAnimation = new Animation(this.zoomElement)
+        .duration(200)
+        .easing('ease-in');
+
+      if(this.zoomAmount > 1) {
+        this.zoomAnimation.from('scale', this.zoomAmount);
+        this.zoomAnimation.to('scale', 1);
+        this.zoomAnimation.play();
+        this.zoomAmount = 1;
+      } else {
+        this.zoomAnimation.from('scale', this.zoomAmount);
+        this.zoomAnimation.to('scale', 3);
+        this.zoomAnimation.play();
+        this.zoomAmount = 3;
+      }
       //this.zoomElement.style[CSS.transform] = 'scale(3)';
     });
   }
