@@ -1,0 +1,14 @@
+<@- if doc.properties @>
+<h2 id="properties">Properties</h2>
+<@- for property in doc.properties @>
+
+<div id="<$ property.name $>"></div>
+* <h3><$ typeList(property.returns.typeList) $> <code><$ property.name $></code></h3>
+
+  <$ property.returns.description $>
+
+  <$ property.description $>
+
+<@ endfor -@>
+</ul>
+<@- endif -@>

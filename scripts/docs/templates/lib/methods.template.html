@@ -1,0 +1,26 @@
+<@- if doc.methods @>
+## Methods
+<@- for method in doc.methods @>
+
+<div id="<$ method.name $>"></div>
+<h2>
+  <$ functionSyntax(method) $>
+</h2>
+
+<$ method.description $>
+
+<@ if method.params @>
+<$ paramTable(method.params) $>
+<@ endif @>
+
+<@ if method.this @>
+#### Method's `this`
+<$ method.this $>
+<@ endif @>
+
+<@ if method.returns @>
+* Returns: <$ typeInfo(method.returns) $>
+<@ endif @>
+
+<@ endfor -@>
+<@- endif -@>

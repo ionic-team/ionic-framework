@@ -1,0 +1,26 @@
+---
+<@ include "lib/yaml.template.html" @>
+title: "<@ if doc.title @><$ doc.title $><@ elif doc.module @><$ doc.groupType | title $>s in module ionic<@ else @>Pages<@ endif @>"
+header_sub_title: "<$ doc.components.length $> <$ doc.groupType $>s"
+doc: "<$ doc.groupType $>"
+docType: "<$ doc.groupType $>"
+---
+
+<@ block content @>
+
+<$ doc.description $>
+
+<table class="table">
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+  </tr>
+  <@ for page in doc.components @>
+  <tr>
+    <td><$ page.id | link(page.name, page) $></td>
+    <td><$ page.description | firstParagraph | marked $></td>
+  </tr>
+  <@ endfor @>
+</table>
+
+<@ endblock @>

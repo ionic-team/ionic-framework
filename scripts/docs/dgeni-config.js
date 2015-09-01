@@ -9,6 +9,8 @@ var path = require('path');
 // Define the dgeni package for generating the docs
 module.exports = new Package('ionic-v2-docs', [jsdocPackage, nunjucksPackage, typescriptPackage, linksPackage, gitPackage])
 
+.processor(require('./processors/index-page'))
+
 // for debugging docs
 // .processor(function test(){
 //   return {
@@ -74,6 +76,7 @@ module.exports = new Package('ionic-v2-docs', [jsdocPackage, nunjucksPackage, ty
   // Specify how to match docs to templates.
   // In this case we just use the same static template for all docs
   templateFinder.templatePatterns = [
+    '${ doc.template }',
     '${ doc.docType }.template.html',
     'common.template.html'
   ]
@@ -88,7 +91,7 @@ module.exports = new Package('ionic-v2-docs', [jsdocPackage, nunjucksPackage, ty
 })
 
 // Configure ids and paths
-.config(function(computeIdsProcessor, computePathsProcessor, versionInfo) {
+.config(function(computeIdsProcessor, computePathsProcessor) {
   // computeIdsProcessor.idTemplates.push({
   //   docTypes: ['guide'],
   //   getId: function(doc) {
