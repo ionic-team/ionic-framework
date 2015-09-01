@@ -8,6 +8,14 @@ ion-scroll {
     overflow-y: auto;
   }
 
+  &[center] {
+    scroll-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
   scroll-content {
     position: absolute;
     top: 0;

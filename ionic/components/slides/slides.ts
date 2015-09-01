@@ -2,6 +2,8 @@ import {Component, View, ElementRef, EventEmitter, onInit,
   Host, forwardRef, NgFor, NgIf, NgClass} from 'angular2/angular2';
 
 import {Ion} from '../ion';
+import {Animation} from 'ionic/animations/animation';
+import {Gesture} from 'ionic/gestures/gesture';
 import {DragGesture} from 'ionic/gestures/drag-gesture';
 import {IonicComponent, IonicDirective} from '../../config/annotations';
 import {IonicConfig} from '../../config/config';
@@ -94,6 +96,7 @@ export class Slides extends Ion {
  */
 @IonicDirective({
   selector: 'ion-slide',
+  properties: ['zoom']
 })
 export class Slide {
   /**
@@ -107,6 +110,49 @@ export class Slide {
     this.ele = elementRef.nativeElement;
     this.ele.classList.add('swiper-slide');
   }
+  onInit() {
+    if(this.zoom !== "false") {
+      //this.initZoom();
+    }
+  }
+  initZoom() {
+    var g = new Gesture(this.ele);
+
+    let zoomAnimation = new Animation(this.ele);
+    zoomAnimation.from('scale', '1');
+
+    g.on('doubletap', (e) => {
+      zoomAnimation.to('scale', '3');
+      zoomAnimation.play();
+    });
+  }
+
+  /*
+  initZoomScrolling() {
+    this.zoomElement = this.ele.children[0];
+
+    this.zoomElement && this.zoomElement.classList.add('ion-scroll-zoom');
+
+    this.scrollElement.addEventListener('scroll', (e) => {
+      console.log("Scrolling", e);
+    });
+
+    this.zoomGesture = new Gesture(this.scrollElement);
+    this.zoomGesture.listen();
+
+    this.zoomAnimation = new Animation(this.zoomElement);
+    this.zoomAnimation
+      .duration(200)
+      .easing('ease-in')
+      .from('scale', '1');
+
+    this.zoomGesture.on('pinch', (e) => {
+      console.log('PINCH', e);
+    });
+
+  }
+  */
+
 }
 
 @IonicDirective({

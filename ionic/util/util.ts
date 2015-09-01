@@ -102,6 +102,7 @@ export const isUndefined = val => typeof val === 'undefined';
 export const isBlank = val => val === undefined || val === null;
 export const isObject = val => typeof val === 'object';
 export const isArray = Array.isArray;
+export const isTrueProperty = val => typeof val !== 'undefined' && val !== "false";
 
 /**
  * Convert a string in the format thisIsAString to a slug format this-is-a-string

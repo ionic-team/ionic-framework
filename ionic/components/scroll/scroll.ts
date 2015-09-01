@@ -7,6 +7,8 @@ import {Gesture} from '../../gestures/gesture';
 import {CSS} from '../../util/dom';
 import {Animation} from '../../animations/animation';
 
+import * as util from 'ionic/util';
+
 /**
  * ion-scroll is a non-flexboxed scroll area that can
  * scroll horizontally or vertically.
@@ -37,12 +39,15 @@ export class Scroll extends Ion {
   onInit() {
     this.scrollElement = this.getNativeElement().children[0];
 
-    if(this.zoom === "") {
+    if(util.isTrueProperty(this.zoom)) {
+      console.log('Zoom?', this.zoom);
+
       this.initZoomScrolling();
     }
   }
 
   initZoomScrolling() {
+    console.log('Init zoom');
     this.zoomElement = this.scrollElement.children[0];
 
     this.zoomElement && this.zoomElement.classList.add('ion-scroll-zoom');
@@ -64,13 +69,11 @@ export class Scroll extends Ion {
       console.log('PINCH', e);
     });
 
-    /*
     this.zoomGesture.on('doubletap', (e) => {
       this.zoomAnimation.to('scale', '3');
       this.zoomAnimation.play();
       //this.zoomElement.style[CSS.transform] = 'scale(3)';
     });
-    */
   }
 
   /**
