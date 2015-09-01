@@ -31,11 +31,12 @@ module.exports = new Package('ionic-v2-docs', [jsdocPackage, nunjucksPackage, ty
 })
 
 //configure file reading
-.config(function(readFilesProcessor, inlineTagProcessor, readTypeScriptModules) {
+.config(function(readFilesProcessor, readTypeScriptModules) {
 
-  // Don't run unwanted processors
-  readFilesProcessor.$enabled = false; // We are not using the normal file reading processor
+  // Don't run unwanted processors since we are not using the normal file reading processor
+  readFilesProcessor.$enabled = false;
   readFilesProcessor.basePath = path.resolve(__dirname, '../..');
+
   readTypeScriptModules.basePath = path.resolve(path.resolve(__dirname, '../..'));
   readTypeScriptModules.sourceFiles = [
     'ionic/ionic.ts'
@@ -58,9 +59,8 @@ module.exports = new Package('ionic-v2-docs', [jsdocPackage, nunjucksPackage, ty
 })
 
 // Configure file writing
-.config(function(writeFilesProcessor, versionInfo) {
-  // TODO(tlancina): Use nightly if version isn't specified by gulp task
-  writeFilesProcessor.outputFolder  = 'dist/ionic-site/docs/' + versionInfo.currentVersion.raw + '/api/';
+.config(function(writeFilesProcessor) {
+  writeFilesProcessor.outputFolder  = 'dist/ionic-site'
 })
 
 // Configure rendering
@@ -104,7 +104,7 @@ module.exports = new Package('ionic-v2-docs', [jsdocPackage, nunjucksPackage, ty
 })
 
 // Configure ids and paths
-.config(function(computeIdsProcessor, computePathsProcessor) {
+.config(function(computeIdsProcessor, computePathsProcessor, versionInfo) {
   // computeIdsProcessor.idTemplates.push({
   //   docTypes: ['guide'],
   //   getId: function(doc) {
@@ -124,7 +124,9 @@ module.exports = new Package('ionic-v2-docs', [jsdocPackage, nunjucksPackage, ty
   computePathsProcessor.pathTemplates = [{
     docTypes: ['class', 'var', 'function', 'let'],
     getOutputPath: function(doc) {
-      return doc.fileInfo.relativePath
+      // TODO(tlancina): Use nightly if version isn't specified by gulp task
+      // TODO(tlancina): inject api base path
+      return 'docs/' + versionInfo.currentVersion.raw + '/api/' + doc.fileInfo.relativePath
                // strip ionic from path root
                .replace(/^ionic\//, '')
                // replace extension with .html
