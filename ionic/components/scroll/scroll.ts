@@ -52,7 +52,6 @@ export class Scroll extends Ion {
     if(this.zoomElement) {
 
       this.zoomElement.parentElement.style[CSS.transform] = '';
-
       this.zoomElement.style[CSS.transform] = 'scale(1)';
     }
 
@@ -108,6 +107,7 @@ export class Scroll extends Ion {
         } else if(-posX > viewportWidth) {
           // Too far on the right side, let the event bubble up (to enable slider on edges, for example)
         } else {
+          console.log('TRANSFORM', posX);
           this.zoomElement.parentElement.style[CSS.transform] = 'translateX(' + posX + 'px) translateY(' + posY + 'px)';
           e.preventDefault();
           e.stopPropagation();

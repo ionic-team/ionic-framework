@@ -457,6 +457,8 @@ class Animate {
       return inlineStyle(ele, this.toEffect);
     }
 
+    this.fill = fill || 'both';
+
     this.ele = ele;
     this.promise = new Promise(res => { this.resolve = res; });
 
@@ -492,7 +494,7 @@ class Animate {
         duration: self.duration || 0,
         easing: self.easing,
         playbackRate: self.rate || 1,
-        fill: fill || 'both'
+        fill: this.fill
       });
 
       self.player.onfinish = () => {

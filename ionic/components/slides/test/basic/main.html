@@ -1,6 +1,6 @@
 <ion-slides [options]="extraOptions" id="slider" style="background-color: black">
   <ion-slide *ng-for="#image of images">
-    <ion-scroll scroll-x="true" scroll-y="true" zoom center>
+    <ion-scroll scroll-x="true" scroll-y="true" center>
       <img data-src="{{getImageUrl(image)}}" slide-lazy>
     </ion-scroll>
   </ion-slide>
