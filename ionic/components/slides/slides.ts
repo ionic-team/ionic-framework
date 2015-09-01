@@ -1,4 +1,4 @@
-import {Component, View, ElementRef, EventEmitter, onInit,
+import {Component, View, ViewQuery, Query, QueryList, ElementRef, EventEmitter, onInit,
   Host, forwardRef, NgFor, NgIf, NgClass} from 'angular2/angular2';
 
 import {Ion} from '../ion';
@@ -12,6 +12,7 @@ import {Platform} from 'ionic/platform/platform';
 import * as util from 'ionic/util';
 
 import {Swiper} from './swiper-widget';
+import {Scroll} from '../scroll/scroll';
 
 /**
  * Slides is a slide box implementation based on Swiper.js
@@ -48,19 +49,35 @@ import {Swiper} from './swiper-widget';
   directives: [NgIf, NgClass]
 })
 export class Slides extends Ion {
+  scrollChildren: QueryList<Scroll>;
+
   /**
    * TODO
    * @param {ElementRef} elementRef  TODO
    */
-  constructor(elementRef: ElementRef, config: IonicConfig) {
+  constructor(elementRef: ElementRef, config: IonicConfig, @Query(Scroll, {descendants: true}) public scrollChildren: QueryList<Scroll>) {
     super(elementRef, config);
+
+    scrollChildren.onChange(() => {
+      console.log('SCROLL CHILDREN FOUND', scrollChildren.length);
+    })
   }
   onInit() {
-    console.log(this.bounce);
+    console.log(this.scrollChildren);
+
     var options = util.defaults({
       pagination: '.swiper-pagination',
       paginationClickable: true,
       lazyLoading: true,
+      onSlideChangeStart: (swiper) => {
+        console.log('Slide change!', swiper);
+        this.scrollChildren.forEach((s) => {
+          s.resetZoom();
+        });
+      },
+      onSlideChangeEnd: (swiper) => {
+        console.log('Slide changED!');
+      }
       //resistance: (this.bounce !== "false")
     }, this.options);
 

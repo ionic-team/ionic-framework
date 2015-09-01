@@ -47,6 +47,13 @@ export class Scroll extends Ion {
     }
   }
 
+  resetZoom() {
+    console.log('RESET ZOOM');
+    if(this.scale > 1) {
+      this.zoomElement && this.zoomElement.style[CSS.transform] = 'scale(1)';
+    }
+  }
+
   initZoomScrolling() {
     this.zoomElement = this.scrollElement.children[0].children[0];
 
@@ -59,7 +66,9 @@ export class Scroll extends Ion {
     this.zoomGesture = new Gesture(this.scrollElement);
     this.zoomGesture.listen();
 
-    let scale = 1, last_scale, deltaX, deltaY,
+    this.scale = 1;
+
+    let last_scale, deltaX, deltaY,
     startX, startY, posX = 0, posY = 0, lastPosX = 0, lastPosY = 0,
     zoomRect, viewportWidth, viewportHeight;
 
@@ -76,7 +85,7 @@ export class Scroll extends Ion {
       //lastPosX = 0;
       //lastPosY = 0;
 
-      if(scale > 1) {
+      if(this.scale > 1) {
         //e.preventDefault();
         //e.stopPropagation();
       }
@@ -86,7 +95,7 @@ export class Scroll extends Ion {
       deltaX = e.touches[0].clientX - startX;
       deltaY = e.touches[0].clientY - startY;
 
-      if(scale > 1) {
+      if(this.scale > 1) {
 
         // Move image
         posX = deltaX + lastPosX;
@@ -121,50 +130,78 @@ export class Scroll extends Ion {
     });
 
     this.zoomGesture.on('pinchstart', (e) => {
-      last_scale = scale;
+      last_scale = this.scale;
       console.log('Last scale', e.scale);
     });
 
     this.zoomGesture.on('pinch', (e) => {
-      scale = Math.max(1, Math.min(last_scale * e.scale, 10));
-      console.log('Scaling', scale);
-      this.zoomElement.style[CSS.transform] = 'scale(' + scale + ')'
+      this.scale = Math.max(1, Math.min(last_scale * e.scale, 10));
+      console.log('Scaling', this.scale);
+      this.zoomElement.style[CSS.transform] = 'scale(' + this.scale + ')'
 
       zoomRect = this.zoomElement.getBoundingClientRect();
     });
 
     this.zoomGesture.on('pinchend', (e) => {
       //last_scale = Math.max(1, Math.min(last_scale * e.scale, 10));
-      if(scale > this.maxScale) {
+      if(this.scale > this.maxScale) {
         let za = new Animation(this.zoomElement)
           .duration(this.zoomDuration)
           .easing('linear')
-          .from('scale', scale)
+          .from('scale', this.scale)
           .to('scale', this.maxScale);
           za.play();
 
-          scale = this.maxScale;
+          this.scale = this.maxScale;
       }
     });
 
     this.zoomGesture.on('doubletap', (e) => {
-      console.log("Double tap");
-      let za = new Animation(this.zoomElement)
+
+      let x = e.pointers[0].clientX;
+      let y = e.pointers[0].clientY;
+
+      let tx = (viewportWidth / 2) - x;
+      let ty = (viewportHeight / 2) - y;
+
+      console.log("Double tap", e, x, y, tx, ty);
+
+      let zi = new Animation(this.zoomElement)
+        .duration(this.zoomDuration)
+        .easing('linear');
+      let zw = new Animation(this.zoomElement.parentElement)
         .duration(this.zoomDuration)
         .easing('linear');
 
-      if(scale > 1) {
-        za.from('scale', scale);
-        za.to('scale', 1);
+      let za = new Animation();
+      za.add(zi, zw);
+
+      if(this.scale > 1) {
+        // Zoom out
+
+        zw.fromTo('translateX', posX + 'px', '0px');
+        zw.fromTo('translateY', posY + 'px', '0px');
+        zi.from('scale', this.scale);
+        zi.to('scale', 1);
         za.play();
 
-        scale = 1;
+        posX = 0;
+        posy = 0;
+
+        this.scale = 1;
       } else {
-        za.from('scale', scale);
-        za.to('scale', this.maxScale);
+        // Zoom in
+
+        zw.fromTo('translateX', posX + 'px', tx + 'px');
+        zw.fromTo('translateY', posY + 'px', ty + 'px');
+        zi.from('scale', this.scale);
+        zi.to('scale', this.maxScale);
         za.play();
 
-        scale = this.maxScale;
+        posX = tx;
+        posY = ty;
+
+        this.scale = this.maxScale;
       }
       //this.zoomElement.style[CSS.transform] = 'scale(3)';
     });
