@@ -120,12 +120,26 @@ export class Scroll extends Ion {
     this.zoomElement.addEventListener('touchend', (e) => {
       console.log('PANEND', e);
 
-      if(Math.abs(posX) > viewportWidth) {
-        posX = posX > 0 ? viewportWidth - 1 : -(viewportWidth - 1);
-        console.log('Setting on posx', posX);
+      if(this.scale > 1) {
+
+        if(Math.abs(posX) > viewportWidth) {
+          posX = posX > 0 ? viewportWidth - 1 : -(viewportWidth - 1);
+          console.log('Setting on posx', posX);
+        }
+
+        if(posY > viewportHeight/2) {
+          let z = new Animation(this.zoomElement.parentElement);
+          z.fromTo('translateY', posY + 'px', Math.min(viewportHeight/2 + 30, posY));
+          z.play();
+        } else {
+          let z = new Animation(this.zoomElement.parentElement);
+          z.fromTo('translateY', posY + 'px', Math.max(viewportHeight/2 - 30, posY));
+          z.play();
+        }
+
+        this.zoomLastPosX = posX;
+        this.zoomLastPosY = posY;
       }
-      this.zoomLastPosX = posX;
-      this.zoomLastPosY = posY;
     });
 
     this.zoomGesture.on('pinchstart', (e) => {
@@ -156,6 +170,7 @@ export class Scroll extends Ion {
     });
 
     this.zoomGesture.on('doubletap', (e) => {
+      console.log('Double');
 
       let x = e.pointers[0].clientX;
       let y = e.pointers[0].clientY;

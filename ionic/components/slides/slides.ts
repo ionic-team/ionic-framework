@@ -1,4 +1,4 @@
-import {Component, View, ViewQuery, Query, QueryList, ElementRef, EventEmitter, onInit,
+import {Component, View, QueryList, ElementRef, EventEmitter, onInit,
   Host, forwardRef, NgFor, NgIf, NgClass} from 'angular2/angular2';
 
 import {Ion} from '../ion';
@@ -36,7 +36,8 @@ import {Scroll} from '../scroll/scroll';
     'index',
     'bounce',
     'showPager',
-    'options'
+    'options',
+    'zoom'
   ]
 })
 @View({
@@ -49,46 +50,95 @@ import {Scroll} from '../scroll/scroll';
   directives: [NgIf, NgClass]
 })
 export class Slides extends Ion {
-  scrollChildren: QueryList<Scroll>;
 
   /**
    * TODO
    * @param {ElementRef} elementRef  TODO
    */
-  constructor(elementRef: ElementRef, config: IonicConfig, @Query(Scroll, {descendants: true}) public scrollChildren: QueryList<Scroll>) {
+  constructor(elementRef: ElementRef, config: IonicConfig) {
     super(elementRef, config);
-
-    scrollChildren.onChange(() => {
-      console.log('SCROLL CHILDREN FOUND', scrollChildren.length);
-    })
   }
   onInit() {
-    console.log(this.scrollChildren);
+
+    if(util.isTrueProperty(this.zoom)) {
+      this.enableZoom = true;
+    }
 
     var options = util.defaults({
       pagination: '.swiper-pagination',
       paginationClickable: true,
       lazyLoading: true,
-      onSlideChangeStart: (swiper) => {
-        console.log('Slide change!', swiper.previousIndex);
-        let so = this.scrollChildren._results[swiper.previousIndex];
-        if(so) {
-          setTimeout(() => {
-            so.resetZoom();
-          }, 300);
-        }
-      },
-      onSlideChangeEnd: (swiper) => {
-        console.log('Slide changED!');
-      }
-      //resistance: (this.bounce !== "false")
+      preloadImages: false
     }, this.options);
 
-    console.log(options);
+    options.onTap = (swiper, e) => {
+      this.onTap(swiper, e);
+      return this.options.onTap && this.options.onTap(swiper, e);
+    };
+    options.onDoubleTap = (swiper, e) => {
+      this.onDoubleTap(swiper, e);
+      return this.options.onDoubleTap && this.options.onDoubleTap(swiper, e);
+    };
+    options.onTransitionStart = (swiper, e) => {
+      this.onTransitionStart(swiper, e);
+      return this.options.onTransitionStart && this.options.onTransitionStart(swiper, e);
+    };
+    options.onTransitionEnd = (swiper, e) => {
+      this.onTransitionEnd(swiper, e);
+      return this.options.onTransitionEnd && this.options.onTransitionEnd(swiper, e);
+    };
+    options.onSlideChangeStart = (swiper) => {
+      console.log('Slide change!', swiper.previousIndex);
+      return this.options.onSlideChangeStart && this.options.onSlideChangeStart(swiper);
+    };
+    options.onSlideChangeEnd = (swiper) => {
+      console.log('Slide changED!');
+      return this.options.onSlideChangeEnd && this.options.onSlideChangeEnd(swiper);
+    };
+    options.onLazyImageLoad = (swiper, slide, img) => {
+      return this.options.onLazyImageLoad && this.options.onLazyImageLoad(swiper, slide, img);
+    };
+    options.onLazyImageReady = (swiper, slide, img) => {
+      return this.options.onLazyImageReady && this.options.onLazyImageReady(swiper, slide, img);
+    };
 
     var swiper = new Swiper(this.getNativeElement().children[0], options);
 
     this.swiper = swiper;
+  }
+
+  onTap(swiper, e) {
+    console.log('Slide tap', swiper, e);
+  }
+  onDoubleTap(swiper, e) {
+    console.log('Slide double tap', swiper, e);
+  }
+  onTransitionStart(swiper) {
+    console.log('Slide transition start', swiper);
+  }
+  onTransitionEnd(swiper) {
+    console.log('Slide transition end', swiper);
+  }
+  onLazyImageLoad(swiper, slide, img) {
+    console.log('Slide lazy load', swiper, slide, img);
+  }
+  onLazyImageReady(swiper, slide, img) {
+    console.log('Slide lazy ready', swiper, slide, img);
+  }
+
+  /*
+  nextButton(swiper, e) {
+    console.log('Slide next button', swiper, e);
+  }
+  prevButton() {
+    console.log('Slide prev button', swiper, e);
+  }
+  indexButton() {
+    console.log('Slide index button', swiper, e);
+  }
+  */
+
+  initZoomScrolling() {
   }
 
   /**
