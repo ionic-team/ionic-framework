@@ -9,6 +9,7 @@ import {IonicComponent, IonicDirective} from '../../config/annotations';
 import {IonicConfig} from '../../config/config';
 import {dom} from 'ionic/util';
 import {Platform} from 'ionic/platform/platform';
+import {CSS} from '../../util/dom';
 import * as util from 'ionic/util';
 
 import {Swiper} from './swiper-widget';
@@ -35,7 +36,7 @@ import {Scroll} from '../scroll/scroll';
     'loop',
     'index',
     'bounce',
-    'showPager',
+    'pager',
     'options',
     'zoom',
     'zoomDuration',
@@ -47,7 +48,7 @@ import {Scroll} from '../scroll/scroll';
     <div class="swiper-wrapper">
       <ng-content></ng-content>
     </div>
-    <div [class.hide]="!showPager" class="swiper-pagination"></div>
+    <div [class.hide]="!pager" class="swiper-pagination"></div>
   </div>`,
   directives: [NgIf, NgClass]
 })
@@ -61,6 +62,10 @@ export class Slides extends Ion {
     super(elementRef, config);
   }
   onInit() {
+    if(!this.options) {
+      this.options = {};
+    }
+
     var options = util.defaults({
       pagination: '.swiper-pagination',
       paginationClickable: true,
@@ -107,10 +112,15 @@ export class Slides extends Ion {
 
     this.swiper = swiper;
 
+    /*
+    * TODO: Finish this
     if(util.isTrueProperty(this.zoom)) {
       this.enableZoom = true;
-      this.initZoom();
+      setTimeout(() => {
+        this.initZoom();
+      })
     }
+    */
 
   }
 
@@ -164,68 +174,22 @@ export class Slides extends Ion {
     this.zoomLastPosY = 0;
 
 
-    let last_scale, deltaX, deltaY, startX, startY, posX = 0, posY = 0, zoomRect;
+    let last_scale, startX, startY, posX = 0, posY = 0, zoomRect;
 
     this.viewportWidth = this.getNativeElement().offsetWidth;
     this.viewportHeight = this.getNativeElement().offsetHeight;
 
     this.zoomElement.addEventListener('touchstart', (e) => {
-      startX = e.touches[0].clientX;
-      startY = e.touches[0].clientY;
+
+      this.onTouchStart(e);
     });
 
     this.zoomElement.addEventListener('touchmove', (e) => {
-      deltaX = e.touches[0].clientX - startX;
-      deltaY = e.touches[0].clientY - startY;
-
-      if(this.scale > 1) {
-        console.log('PAN', e);
-
-        // Move image
-        posX = deltaX + this.zoomLastPosX;
-        posY = deltaY + this.zoomLastPosY;
-
-        console.log(posX, posY);
-
-
-        if(posX > this.viewportWidth) {
-          // Too far on the left side, let the event bubble up (to enable slider on edges, for example)
-        } else if(-posX > this.viewportWidth) {
-          // Too far on the right side, let the event bubble up (to enable slider on edges, for example)
-        } else {
-          console.log('TRANSFORM', posX);
-          this.zoomElement.parentElement.style[CSS.transform] = 'translateX(' + posX + 'px) translateY(' + posY + 'px)';
-          e.preventDefault();
-          e.stopPropagation();
-          return false;
-        }
-
-      }
+      this.onTouchMove(e);
     });
 
     this.zoomElement.addEventListener('touchend', (e) => {
-      console.log('PANEND', e);
-
-      if(this.scale > 1) {
-
-        if(Math.abs(posX) > this.viewportWidth) {
-          posX = posX > 0 ? this.viewportWidth - 1 : -(this.viewportWidth - 1);
-          console.log('Setting on posx', posX);
-        }
-
-        if(posY > this.viewportHeight/2) {
-          let z = new Animation(this.zoomElement.parentElement);
-          z.fromTo('translateY', posY + 'px', Math.min(this.viewportHeight/2 + 30, posY));
-          z.play();
-        } else {
-          let z = new Animation(this.zoomElement.parentElement);
-          z.fromTo('translateY', posY + 'px', Math.max(this.viewportHeight/2 - 30, posY));
-          z.play();
-        }
-
-        this.zoomLastPosX = posX;
-        this.zoomLastPosY = posY;
-      }
+      this.onTouchEnd(e);
     });
 
     this.zoomGesture.on('pinchstart', (e) => {
@@ -270,6 +234,7 @@ export class Slides extends Ion {
   }
 
   toggleZoom(swiper, e) {
+    console.log('Try toggle zoom');
     if(!this.enableZoom) { return; }
 
     console.log('Toggling zoom', e);
@@ -299,14 +264,17 @@ export class Slides extends Ion {
     console.log(y);
     */
 
-    let zi = new Animation(this.zoomElement)
+    let zi = new Animation(this.touch.target.children[0])
       .duration(this.zoomDuration)
-      .easing('linear');
-    let zw = new Animation(this.zoomElement.parentElement)
+      .easing('linear')
+      .fill('none');
+
+    let zw = new Animation(this.touch.target.children[0])
       .duration(this.zoomDuration)
       .easing('linear');
 
     let za = new Animation();
+    za.fill('none');
     za.add(zi);//, zw);
 
     if(this.scale > 1) {
@@ -346,6 +314,106 @@ export class Slides extends Ion {
     console.log('Slide transition end', swiper);
   }
 
+  onTouchStart(e) {
+    console.log('Touch start', e);
+
+    //TODO: Support mice as well
+
+    let target = dom.closest(e.target, '.slide').children[0].children[0];
+
+    this.touch = {
+      startX: e.touches[0].clientX,
+      startY: e.touches[0].clientY,
+      deltaX: 0,
+      deltaY: 0,
+      lastX: 0,
+      lastY: 0,
+      target: target.parentElement,
+      zoomable: target,
+      zoomableWidth: target.offsetWidth,
+      zoomableHeight: target.offsetHeight
+    }
+    console.log('Target', this.touch.target);
+
+    //TODO: android prevent default
+
+  }
+
+  onTouchMove(e) {
+    this.touch.deltaX = e.touches[0].clientX - this.touch.startX;
+    this.touch.deltaY = e.touches[0].clientY - this.touch.startY;
+
+    // TODO: Make sure we need to transform (image is bigger than viewport)
+
+    let zoomableScaledWidth = this.touch.zoomableWidth * this.scale;
+    let zoomableScaledHeight = this.touch.zoomableHeight * this.scale;
+
+    let x1 = Math.min((this.viewportWidth / 2) - zoomableScaledWidth/2, 0)
+    let x2 = -x1;
+    let y1 = Math.min((this.viewportHeight / 2) - zoomableScaledHeight/2, 0)
+    let y2 = -y1;
+
+    console.log('BOUNDS', x1, x2, y1, y2);
+
+    if(this.scale <= 1) {
+      return;
+    }
+
+    console.log('PAN', e);
+
+    // Move image
+    this.touch.x = this.touch.deltaX + this.touch.lastX;
+    this.touch.y = this.touch.deltaY + this.touch.lastY;
+
+    console.log(this.touch.x, this.touch.y);
+
+    if(this.touch.x < x1) {
+      console.log('OUT ON LEFT');
+    }
+    if(this.touch.x > x2 ){
+      console.log('OUT ON RIGHT');
+    }
+
+    if(this.touch.x > this.viewportWidth) {
+      // Too far on the left side, let the event bubble up (to enable slider on edges, for example)
+    } else if(-this.touch.x > this.viewportWidth) {
+      // Too far on the right side, let the event bubble up (to enable slider on edges, for example)
+    } else {
+      console.log('TRANSFORM', this.touch.x, this.touch.y, this.touch.target);
+      //this.touch.target.style[CSS.transform] = 'translateX(' + this.touch.x + 'px) translateY(' + this.touch.y + 'px)';
+      this.touch.target.style[CSS.transform] = 'translateX(' + this.touch.x + 'px) translateY(' + this.touch.y + 'px)';
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
+
+  }
+  onTouchEnd(e) {
+    console.log('PANEND', e);
+
+    if(this.scale > 1) {
+
+      if(Math.abs(this.touch.x) > this.viewportWidth) {
+        posX = posX > 0 ? this.viewportWidth - 1 : -(this.viewportWidth - 1);
+        console.log('Setting on posx', this.touch.x);
+      }
+
+      /*
+      if(posY > this.viewportHeight/2) {
+        let z = new Animation(this.zoomElement.parentElement);
+        z.fromTo('translateY', posY + 'px', Math.min(this.viewportHeight/2 + 30, posY));
+        z.play();
+      } else {
+        let z = new Animation(this.zoomElement.parentElement);
+        z.fromTo('translateY', posY + 'px', Math.max(this.viewportHeight/2 - 30, posY));
+        z.play();
+      }
+      */
+
+      this.touch.lastX = this.touch.x;
+      this.touch.lastY = this.touch.y;
+    }
+  }
 
   /**
    * Update the underlying slider implementation. Call this if you've added or removed
@@ -357,7 +425,7 @@ export class Slides extends Ion {
 
       // Don't allow pager to show with > 10 slides
       if(this.swiper.slides.length > 10) {
-        this.showPager = false;
+        this.pager = false;
       }
     });
   }
@@ -370,9 +438,12 @@ export class Slides extends Ion {
 /**
  * TODO
  */
-@IonicDirective({
+@IonicComponent({
   selector: 'ion-slide',
   properties: ['zoom']
+})
+@View({
+  template: `<div class="slide-zoom"><ng-content></ng-content></div>`
 })
 export class Slide {
   /**
@@ -386,49 +457,6 @@ export class Slide {
     this.ele = elementRef.nativeElement;
     this.ele.classList.add('swiper-slide');
   }
-  onInit() {
-    if(this.zoom !== "false") {
-      //this.initZoom();
-    }
-  }
-  initZoom() {
-    var g = new Gesture(this.ele);
-
-    let zoomAnimation = new Animation(this.ele);
-    zoomAnimation.from('scale', '1');
-
-    g.on('doubletap', (e) => {
-      zoomAnimation.to('scale', '3');
-      zoomAnimation.play();
-    });
-  }
-
-  /*
-  initZoomScrolling() {
-    this.zoomElement = this.ele.children[0];
-
-    this.zoomElement && this.zoomElement.classList.add('ion-scroll-zoom');
-
-    this.scrollElement.addEventListener('scroll', (e) => {
-      console.log("Scrolling", e);
-    });
-
-    this.zoomGesture = new Gesture(this.scrollElement);
-    this.zoomGesture.listen();
-
-    this.zoomAnimation = new Animation(this.zoomElement);
-    this.zoomAnimation
-      .duration(200)
-      .easing('ease-in')
-      .from('scale', '1');
-
-    this.zoomGesture.on('pinch', (e) => {
-      console.log('PINCH', e);
-    });
-
-  }
-  */
-
 }
 
 @IonicDirective({

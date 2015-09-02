@@ -16,7 +16,7 @@ import * as util from 'ionic/util';
 @IonicComponent({
   selector: 'ion-scroll',
   properties: [
-    'scrollX', 'scrollY'
+    'scrollX', 'scrollY', 'zoom', 'maxZoom'
   ],
   host: {
     '[class.scroll-x]': 'scrollX',
@@ -34,6 +34,9 @@ export class Scroll extends Ion {
    */
   constructor(elementRef: ElementRef, ionicConfig: IonicConfig) {
     super(elementRef, ionicConfig);
+
+    this.maxScale = 3;
+    this.zoomDuration = 250;
   }
 
   onInit() {

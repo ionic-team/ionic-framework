@@ -494,7 +494,7 @@ class Animate {
         duration: self.duration || 0,
         easing: self.easing,
         playbackRate: self.rate || 1,
-        fill: this.fill
+        //fill: this.fill
       });
 
       self.player.onfinish = () => {

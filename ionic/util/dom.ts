@@ -194,3 +194,27 @@ export function hasFocusedTextInput() {
   }
   return false;
 }
+
+export function closest(el, selector) {
+    var matchesFn;
+
+    // find vendor prefix
+    ['matches','webkitMatchesSelector','mozMatchesSelector','msMatchesSelector','oMatchesSelector'].some(function(fn) {
+        if (typeof document.body[fn] == 'function') {
+            matchesFn = fn;
+            return true;
+        }
+        return false;
+    })
+
+    // traverse parents
+    while (el!==null) {
+        parent = el.parentElement;
+        if (parent!==null && parent[matchesFn](selector)) {
+            return parent;
+        }
+        el = parent;
+    }
+
+    return null;
+}
