@@ -48,7 +48,7 @@ import {Scroll} from '../scroll/scroll';
     <div class="swiper-wrapper">
       <ng-content></ng-content>
     </div>
-    <div [class.hide]="!pager" class="swiper-pagination"></div>
+    <div [class.hide]="!showPager" class="swiper-pagination"></div>
   </div>`,
   directives: [NgIf, NgClass]
 })
@@ -60,11 +60,17 @@ export class Slides extends Ion {
    */
   constructor(elementRef: ElementRef, config: IonicConfig) {
     super(elementRef, config);
+    this.rapidUpdate = util.debounce(() => {
+      this.update();
+    }, 10);
   }
   onInit() {
     if(!this.options) {
       this.options = {};
     }
+
+    this.showPager = util.isTrueProperty(this.pager);
+
 
     var options = util.defaults({
       pagination: '.swiper-pagination',
@@ -94,11 +100,9 @@ export class Slides extends Ion {
       return this.options.onTransitionEnd && this.options.onTransitionEnd(swiper, e);
     };
     options.onSlideChangeStart = (swiper) => {
-      console.log('Slide change!', swiper.previousIndex);
       return this.options.onSlideChangeStart && this.options.onSlideChangeStart(swiper);
     };
     options.onSlideChangeEnd = (swiper) => {
-      console.log('Slide changED!');
       return this.options.onSlideChangeEnd && this.options.onSlideChangeEnd(swiper);
     };
     options.onLazyImageLoad = (swiper, slide, img) => {
@@ -125,32 +129,24 @@ export class Slides extends Ion {
   }
 
   onTap(swiper, e) {
-    console.log('Slide tap', swiper, e);
   }
   onClick(swiper, e) {
-    console.log('Slide click', swiper, e);
   }
   onDoubleTap(swiper, e) {
-    console.log('Slide double tap', swiper, e);
 
     this.toggleZoom(swiper, e);
   }
   onLazyImageLoad(swiper, slide, img) {
-    console.log('Slide lazy load', swiper, slide, img);
   }
   onLazyImageReady(swiper, slide, img) {
-    console.log('Slide lazy ready', swiper, slide, img);
   }
 
   /*
   nextButton(swiper, e) {
-    console.log('Slide next button', swiper, e);
   }
   prevButton() {
-    console.log('Slide prev button', swiper, e);
   }
   indexButton() {
-    console.log('Slide index button', swiper, e);
   }
   */
 
@@ -159,7 +155,6 @@ export class Slides extends Ion {
     this.maxScale = this.zoomMax || 3;
 
     this.zoomElement = this.getNativeElement().children[0].children[0];
-    console.log('Zooming', this.zoomElement);
 
     this.zoomElement && this.zoomElement.classList.add('ion-scroll-zoom');
 
@@ -425,7 +420,7 @@ export class Slides extends Ion {
 
       // Don't allow pager to show with > 10 slides
       if(this.swiper.slides.length > 10) {
-        this.pager = false;
+        this.showPager = false;
       }
     });
   }
@@ -452,10 +447,13 @@ export class Slide {
    * @param {ElementRef} elementRef  TODO
    */
   constructor(
-    elementRef: ElementRef
+    elementRef: ElementRef,
+    @Host() slides: Slides
   ) {
     this.ele = elementRef.nativeElement;
     this.ele.classList.add('swiper-slide');
+
+    slides.rapidUpdate();
   }
 }
 
