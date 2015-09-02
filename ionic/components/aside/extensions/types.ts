@@ -1,4 +1,5 @@
 import {Aside} from 'ionic/components/aside/aside';
+import {Animtion} from 'ionic/aside/aside';
 import {CSS} from 'ionic/util/dom'
 
 // TODO use setters instead of direct dom manipulation
@@ -110,7 +111,7 @@ export class AsideTypeReveal extends AsideType {
     contentManipulator.setSliding.call(this, sliding);
   }
   setOpen(sliding) {
-    console.log('Reveal setting open', sliding);
+    asideManipulator.setOpen.call(this, sliding);
     contentManipulator.setOpen.call(this, sliding);
   }
   setTransform(t) {

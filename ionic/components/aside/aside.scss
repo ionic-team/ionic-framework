@@ -45,6 +45,10 @@ $aside-shadow: -1px 0px 8px rgba(0, 0, 0, 0.2) !default;
 
   &[type=reveal] {
     left: 0;
+
+    &:not(.open):not(.changing) {
+      display: none;
+    }
   }
 
   &.open, {

@@ -114,7 +114,7 @@ export class Slides extends Ion {
 
     var swiper = new Swiper(this.getNativeElement().children[0], options);
 
-    this.swiper = swiper;
+    this.slider = swiper;
 
     /*
     * TODO: Finish this
@@ -157,8 +157,6 @@ export class Slides extends Ion {
     this.zoomElement = this.getNativeElement().children[0].children[0];
 
     this.zoomElement && this.zoomElement.classList.add('ion-scroll-zoom');
-
-    console.log(this.swiper.slides);
 
     this.zoomGesture = new Gesture(this.zoomElement);
     this.zoomGesture.listen();
@@ -303,10 +301,8 @@ export class Slides extends Ion {
     }
   }
   onTransitionStart(swiper) {
-    console.log('Slide transition start', swiper);
   }
   onTransitionEnd(swiper) {
-    console.log('Slide transition end', swiper);
   }
 
   onTouchStart(e) {
@@ -416,17 +412,36 @@ export class Slides extends Ion {
    */
   update() {
     setTimeout(() => {
-      this.swiper.update();
+      this.slider.update();
 
       // Don't allow pager to show with > 10 slides
-      if(this.swiper.slides.length > 10) {
+      if(this.slider.slides.length > 10) {
         this.showPager = false;
       }
     });
   }
 
+  next() {
+    this.slider.slideNext();
+  }
+  prev() {
+    this.slider.slidePrev();
+  }
+  getIndex() {
+    return this.slider.activeIndex;
+  }
+  getNumSlides() {
+    return this.slider.slides.length;
+  }
+  isAtEnd() {
+    return this.slider.isEnd;
+  }
+  isAtBeginning() {
+    return this.slider.isBeginning;
+  }
+
   getSliderWidget() {
-    return this.swiper;
+    return this.slider;
   }
 }
 
