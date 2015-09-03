@@ -1,5 +1,5 @@
 import {Component, View, bootstrap, ElementRef, NgZone, bind, DynamicComponentLoader, Injector} from 'angular2/angular2';
-import {routerInjectables, HashLocationStrategy, LocationStrategy, Router} from 'angular2/router';
+import {ROUTER_BINDINGS, HashLocationStrategy, LocationStrategy, Router} from 'angular2/router';
 
 import {IonicConfig} from '../../config/config';
 import {Platform} from '../../platform/platform';
@@ -52,6 +52,7 @@ export class IonicApp {
    * @param {string} val  Value to set the document title to.
    */
   title(val) {
+    // TODO: User angular service
     document.title = val;
   }
 
@@ -166,6 +167,8 @@ export class IonicApp {
       }
     });
 
+    bodyEle.setAttribute('mode', config.setting('mode'));
+
     /**
     * Hairline Shim
     * Add the "hairline" CSS class name to the body tag
@@ -174,15 +177,13 @@ export class IonicApp {
     if (window.devicePixelRatio >= 2) {
       var hairlineEle = document.createElement('div');
       hairlineEle.style.border = '.5px solid transparent';
-      document.body.appendChild(hairlineEle);
+      bodyEle.appendChild(hairlineEle);
 
       if (hairlineEle.offsetHeight === 1) {
-        document.body.classList.add('hairlines');
+        bodyEle.classList.add('hairlines');
       }
-      document.body.removeChild(hairlineEle);
+      bodyEle.removeChild(hairlineEle);
     }
-
-    bodyEle.setAttribute('mode', config.setting('mode'));
   }
 
   /**
@@ -216,7 +217,7 @@ function initApp(window, document, config) {
   setTimeout(() => {
     // start listening for resizes XXms after the app starts
     window.addEventListener('resize', Platform.winResize);
-  }, 2000);
+  }, 2500);
 
   return app;
 }
@@ -282,7 +283,7 @@ export function ionicBootstrap(rootComponentType, config) {
         bind(ActionMenu).toValue(actionMenu),
         bind(Modal).toValue(modal),
         bind(Popup).toValue(popup),
-        routerInjectables,
+        ROUTER_BINDINGS,
         bind(LocationStrategy).toClass(HashLocationStrategy)
       ]);
 

@@ -31,6 +31,8 @@ function getBabelOptions(moduleName, moduleType) {
     modules: moduleType || "system",
     moduleIds: true,
     getModuleId: function(name) {
+      if (moduleName === "index") return moduleName;
+
       return moduleName + '/' + name.split('/test').join('');
     }
   }
@@ -177,7 +179,7 @@ gulp.task('bundle.ionic', ['transpile'], function() {
       'dist/src/es5/system/ionic/**/*.js'
     ])
     .pipe(concat('ionic.js'))
-    .pipe(insert.append('System.config({ "paths": { "ionic/*": "ionic/*" } });'))
+    .pipe(insert.prepend('System.config({ "paths": { "ionic/*": "ionic/*", "rx": "rx" } });\n'))
     .pipe(gulp.dest('dist/js/'));
     //TODO minify + sourcemaps
 });
@@ -203,7 +205,7 @@ gulp.task('e2e', function() {
   var buildTest = lazypipe()
              //.pipe(traceur, traceurOptions)
              .pipe(tsc, tscOptions, null, tscReporter)
-             .pipe(babel, getBabelOptions('e2e'))
+             .pipe(babel, getBabelOptions('index'))
 
   var buildE2ETest = lazypipe()
              //.pipe(traceur, traceurOptions)
