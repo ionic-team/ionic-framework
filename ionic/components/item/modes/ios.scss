@@ -23,7 +23,7 @@ $item-ios-note-color:             darken($item-ios-border-color, 10%) !default;
 $item-ios-forward-icon-color:     $item-ios-border-color !default;
 
 
-.list[mode=ios] {
+ion-list[mode=ios] {
 
   .item {
     margin-top: -1px;
@@ -141,7 +141,7 @@ $item-ios-forward-icon-color:     $item-ios-border-color !default;
 }
 
 
-.hairlines .list[mode=ios] .item {
+.hairlines ion-list[mode=ios] .item {
   margin-top: -0.5px;
 
   &:last-child {

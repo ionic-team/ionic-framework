@@ -55,11 +55,11 @@ ion-item-content {
   text-align: center;
 }
 
-.list .item > icon[small]:first-child {
+ion-list .item > icon[small]:first-child {
   min-width: 18px;
 }
 
-.list .item {
+ion-list .item {
   border-radius: 0;
 
   transition: background 300ms ease-out;
@@ -121,15 +121,15 @@ ion-item-content {
     margin-bottom: 0;
   }
 
+  a {
+    text-decoration: none;
+  }
+
 }
 
 .vertical-align-top,
-.item.item-input {
+ion-input.item {
   align-items: flex-start;
-}
-
-.item a {
-  text-decoration: none;
 }
 
 .item.item.item.no-border-bottom:after,

@@ -5,7 +5,7 @@
 $input-label-color:         #888 !default;
 
 
-.input-label {
+ion-label {
   display: block;
   max-width: 200px;
   color: $input-label-color;
@@ -13,7 +13,7 @@ $input-label-color:         #888 !default;
   white-space: nowrap;
 }
 
-[fixed-label] .input-label {
+[fixed-label] ion-label {
   display: block;
   max-width: 200px;
   width: 30%;
@@ -23,11 +23,11 @@ $input-label-color:         #888 !default;
   white-space: nowrap;
 }
 
-.item-input[stacked-label] {
+ion-input[stacked-label] {
   flex-direction: column;
   align-items: flex-start;
 
-  .input-label {
+  ion-label {
     align-self: stretch;
     margin-bottom: 0;
     max-width: 100%;

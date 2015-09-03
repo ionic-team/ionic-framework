@@ -234,7 +234,7 @@ current-weather .current-temp {
   border: none;
   color: #fff;
 }
-#settings-modal .input-label {
+#settings-modal ion-label {
   color: #fff;
 }
 

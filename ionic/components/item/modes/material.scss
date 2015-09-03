@@ -26,7 +26,7 @@ $item-md-note-color:             darken($item-md-border-color, 10%) !default;
 $item-md-forward-icon-color:     $item-md-border-color !default;
 
 
-.list[mode=md] {
+ion-list[mode=md] {
 
   .item {
     margin-top: -1px;

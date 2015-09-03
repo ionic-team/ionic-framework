@@ -4,7 +4,7 @@
 
 
 form {
-  margin: 0 0 2.4rem;
+  margin: 0;
 }
 
 label,
@@ -15,11 +15,20 @@ textarea {
   font-family: inherit;
 }
 
+textarea {
+  margin: 0;
+  padding: 0;
+  height: auto;
+  overflow: auto;
+  color: inherit;
+  font: inherit;
+}
 
-// Form Controls
-// -------------------------------
+.platform-mobile textarea {
+  resize: none;
+}
 
-.item-input {
+ion-input {
 
   // text inputs
   textarea,
@@ -43,19 +52,6 @@ textarea {
     width: 100%;
   }
 
-}
-
-textarea {
-  margin: 0;
-  padding: 0;
-  height: auto;
-  overflow: auto;
-  color: inherit;
-  font: inherit;
-}
-
-.platform-mobile textarea {
-  resize: none;
 }
 
 

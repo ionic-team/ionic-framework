@@ -3,7 +3,7 @@
 // --------------------------------------------------
 
 
-.list {
+ion-list {
   display: block;
   margin: 0;
   padding: 0;
@@ -17,7 +17,7 @@
   }
 }
 
-.list[inset] {
+ion-list[inset] {
   overflow: hidden;
 
   ion-header {
