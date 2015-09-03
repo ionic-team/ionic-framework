@@ -20,7 +20,7 @@ $toolbar-md-button-font-size:        1.4rem !default;
     font-weight: 500;
   }
 
-  .toolbar-primary-item ion-nav-items button:first-child {
+  .toolbar-primary-item button:first-child {
     margin-left: 0;
   }
 
@@ -31,6 +31,17 @@ $toolbar-md-button-font-size:        1.4rem !default;
     margin-top: 0;
     margin-bottom: 0;
     box-shadow: none;
+  }
+
+  [aside-toggle],
+  [aside-toggle].activated {
+    margin: -$toolbar-padding 0 -$toolbar-padding -$toolbar-padding;
+    padding-bottom: $toolbar-padding / 2;
+    height: $toolbar-md-height;
+  }
+
+  [aside-toggle] icon {
+    padding: 0 33px 0 20px;
   }
 
 }

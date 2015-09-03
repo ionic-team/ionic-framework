@@ -2,6 +2,8 @@
 // Toolbar
 // --------------------------------------------------
 
+$toolbar-padding:        4px !default;
+
 $toolbar-order: (
   backButton: 10,
   aside-toggle: 20,
@@ -15,15 +17,15 @@ $toolbar-order: (
   position: relative;
   z-index: $z-index-toolbar;
 
-  width: 100%;
-  padding: 4px;
-
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   order: $flex-order-toolbar-top;
   flex: 0;
+
+  padding: $toolbar-padding;
+  width: 100%;
 
   border: 0;
   border-color: $toolbar-border-color;
