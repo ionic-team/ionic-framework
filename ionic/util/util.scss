@@ -25,40 +25,6 @@
 }
 
 
-// Content Padding
-// --------------------------------------------------
-
-$content-padding:    10px !default;
-
-
-.padding,
-[padding],
-.padding > scroll-content,
-[padding] > scroll-content {
-  padding: $content-padding;
-}
-
-.padding-top,
-.padding-vertical {
-  padding-top: $content-padding;
-}
-
-.padding-right,
-.padding-horizontal {
-  padding-right: $content-padding;
-}
-
-.padding-bottom,
-.padding-vertical {
-  padding-bottom: $content-padding;
-}
-
-.padding-left,
-.padding-horizontal {
-  padding-left: $content-padding;
-}
-
-
 // Focus Outline
 // --------------------------------------------------
 // When a keydown event happens, from a tab key, then the
