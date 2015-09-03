@@ -1,28 +1,15 @@
-var _ = require('lodash');
 var buildConfig = require('./scripts/build/config');
-var fs = require('fs');
 var gulp = require('gulp');
-var karma = require('karma').server;
 var path = require('path');
-var VinylFile = require('vinyl');
 var argv = require('yargs').argv;
-var concat = require('gulp-concat');
 var del = require('del');
-var gulpif = require('gulp-if');
 var rename = require('gulp-rename');
-var sass = require('gulp-sass');
-var autoprefixer = require('gulp-autoprefixer');
 var through2 = require('through2');
 var runSequence = require('run-sequence');
 var watch = require('gulp-watch');
-var exec = require('child_process').exec;
 var babel = require('gulp-babel');
 var tsc = require('gulp-typescript');
-var lazypipe = require('lazypipe');
 var cache = require('gulp-cached');
-var connect = require('gulp-connect');
-var Dgeni = require('dgeni');
-var insert = require('gulp-insert');
 var minimist = require('minimist');
 
 function getBabelOptions(moduleName, moduleType) {
@@ -133,6 +120,7 @@ gulp.task('watch', function(done) {
 });
 
 gulp.task('serve', function() {
+  var connect = require('gulp-connect');
   connect.server({
     root: 'dist',
     port: flags.port,
@@ -175,6 +163,9 @@ gulp.task('transpile.common', function() {
 gulp.task('transpile', ['transpile.system']);
 
 gulp.task('bundle.ionic', ['transpile'], function() {
+  var insert = require('gulp-insert');
+  var concat = require('gulp-concat');
+
   return gulp.src([
       'dist/src/es5/system/ionic/**/*.js'
     ])
@@ -185,6 +176,8 @@ gulp.task('bundle.ionic', ['transpile'], function() {
 });
 
 gulp.task('bundle', ['bundle.ionic'], function() {
+  var concat = require('gulp-concat');
+
   return gulp.src(buildConfig.scripts)
     .pipe(concat('ionic.bundle.js'))
     .pipe(gulp.dest('dist/js'));
@@ -202,6 +195,12 @@ gulp.task('tests', function() {
 })
 
 gulp.task('e2e', function() {
+  var gulpif = require('gulp-if');
+  var lazypipe = require('lazypipe');
+  var _ = require('lodash');
+  var fs = require('fs');
+  var VinylFile = require('vinyl');
+
   var buildTest = lazypipe()
              //.pipe(traceur, traceurOptions)
              .pipe(tsc, tscOptions, null, tscReporter)
@@ -285,17 +284,10 @@ gulp.task('e2e', function() {
   }
 });
 
-gulp.task('sass', function(done) {
+gulp.task('sass', function() {
+  var sass = require('gulp-sass');
+  var autoprefixer = require('gulp-autoprefixer');
   return gulp.src('ionic/ionic.scss')
-    .pipe(sass()
-      .on('error', sass.logError)
-    )
-    .pipe(autoprefixer(buildConfig.autoprefixer))
-    .pipe(gulp.dest('dist/css/'));
-});
-
-gulp.task('sass.dark', function() {
-  return gulp.src('scripts/build/ionic.dark.scss')
     .pipe(sass()
       .on('error', sass.logError)
     )
@@ -311,10 +303,12 @@ gulp.task('fonts', function() {
 require('./scripts/snapshot/snapshot.task')(gulp, argv, buildConfig);
 
 gulp.task('karma', ['tests'], function() {
+  var karma = require('karma').server;
   return karma.start({ configFile: __dirname + '/scripts/karma/karma.conf.js' })
 });
 
 gulp.task('karma-watch', function() {
+  var karma = require('karma').server;
   return karma.start({ configFile: __dirname + '/scripts/karma/karma-watch.conf.js' })
 });
 
@@ -365,6 +359,10 @@ gulp.task('publish', function(done) {
     return
   }
 
+  var exec = require('child_process').exec;
+  var _ = require('lodash');
+  var fs = require('fs');
+
   runSequence(
     'clean',
     ['bundle', 'sass', 'fonts', 'copy.ts', 'copy.scss'],
@@ -375,7 +373,6 @@ gulp.task('publish', function(done) {
       fs.writeFileSync("dist/package.json", packageJSONContents);
 
       // publish to npm
-      var exec = require('child_process').exec;
       exec('cd dist && npm publish', function (err, stdout, stderr) {
         console.log(stdout);
         console.error(stderr);
