@@ -67,6 +67,7 @@ module.exports = function(currentVersion){
   };
 
   renderDocsProcessor.extraData.version = versionData;
+  renderDocsProcessor.extraData.versionInfo = versionInfo;
 
   computePathsProcessor.pathTemplates = [{
     docTypes: ['class', 'var', 'function', 'let'],
@@ -130,19 +131,10 @@ module.exports = function(currentVersion){
   templateFinder.templateFolders.unshift(path.resolve(__dirname, 'templates'));
 
   // Specify how to match docs to templates.
-  // In this case we just use the same static template for all docs
   templateFinder.templatePatterns = [
     '${ doc.template }',
     '${ doc.docType }.template.html',
     'common.template.html'
   ]
-
-  // templateFinder.templatePatterns = [
-  //   '${ doc.template }',
-  //   '${ doc.id }.${ doc.docType }.template.html',
-  //   '${ doc.id }.template.html',
-  //   '${ doc.docType }.template.html',
-  //   'common.template.html'
-  // ];
 })
 }
