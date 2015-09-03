@@ -30,10 +30,24 @@ $toolbar-md-button-font-size:        1.4rem !default;
   [button].activated {
     margin-top: 0;
     margin-bottom: 0;
+    padding: 0 5px;
+    min-height: 32px;
     box-shadow: none;
   }
 
-  [aside-toggle],
+  button.icon-only,
+  [button].icon-only {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  button icon,
+  [button] icon {
+    padding: 0;
+    min-width: 28px;
+  }
+
+  button[aside-toggle],
   [aside-toggle].activated {
     margin: -$toolbar-padding 0 -$toolbar-padding -$toolbar-padding;
     padding-bottom: $toolbar-padding / 2;

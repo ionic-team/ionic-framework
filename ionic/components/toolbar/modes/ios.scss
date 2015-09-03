@@ -50,15 +50,28 @@ $toolbar-ios-title-font-size:               1.7rem !default;
     overflow: inherit;
   }
 
+  .back-button-icon {
+    padding-right: 0.6rem;
+  }
+
   button,
   [button] {
     margin-top: 0;
     margin-bottom: 0;
+    padding: 0 5px;
     min-height: 32px;
   }
 
-  .back-button-icon {
-    padding-right: 0.6rem;
+  button.icon-only,
+  [button].icon-only {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  button icon,
+  [button] icon {
+    padding: 0;
+    min-width: 28px;
   }
 
 }

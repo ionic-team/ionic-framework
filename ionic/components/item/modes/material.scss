@@ -81,22 +81,32 @@ $item-md-forward-icon-color:     $item-md-border-color !default;
   [button][item-right] {
     padding: 0 0.6em;
     min-height: 26px;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
 
+  [item-left].icon-only,
+  [item-right].icon-only,
   [item-left].icon-only icon,
   [item-right].icon-only icon {
-    padding: 0;
+    padding: 0 1px;
+  }
+
+  [item-left][clear],
+  [item-right][clear] {
+    padding: 0 8px;
   }
 
   [item-left].icon-left icon,
   [item-right].icon-left icon {
-    padding-right: 0.2em;
+    margin-left: 0;
+    margin-bottom: 1px;
+    padding-right: 0.3em;
   }
 
   [item-left].icon-right icon,
   [item-right].icon-right icon {
-    padding-left: 0.2em;
+    margin-right: 0;
+    margin-bottom: 1px;
   }
 
   .item-text-wrap ion-item-content {

@@ -14,8 +14,8 @@ $item-ios-padding-left:           16px !default;
 $item-ios-padding-media-top:      10px !default;
 $item-ios-padding-media-bottom:   10px !default;
 
-$item-ios-padding-icon-top:       8px !default;
-$item-ios-padding-icon-bottom:    8px !default;
+$item-ios-padding-icon-top:       10px !default;
+$item-ios-padding-icon-bottom:    10px !default;
 
 $item-ios-avatar-size:            3.6rem !default;
 $item-ios-thumbnail-size:         5.6rem !default;
@@ -92,23 +92,30 @@ $item-ios-forward-icon-color:     $item-ios-border-color !default;
   [button][item-left],
   [button][item-right] {
     padding: 0 0.6em;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     min-height: 25px;
   }
 
+  [item-left].icon-only,
+  [item-right].icon-only,
   [item-left].icon-only icon,
-  [item-right].icon-only icon {
-    padding: 0;
+  [item-right].icon-only icon,
+  [item-left][clear],
+  [item-right][clear] {
+    padding: 0 1px;
   }
 
   [item-left].icon-left icon,
   [item-right].icon-left icon {
-    padding-right: 0.2em;
+    margin-left: 0;
+    margin-bottom: 1px;
+    padding-right: 0.3em;
   }
 
   [item-left].icon-right icon,
   [item-right].icon-right icon {
-    padding-left: 0.2em;
+    margin-right: 0;
+    margin-bottom: 1px;
   }
 
   .item-note {
