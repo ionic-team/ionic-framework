@@ -11,8 +11,11 @@ $item-md-padding-right:          16px !default;
 $item-md-padding-bottom:         13px !default;
 $item-md-padding-left:           16px !default;
 
-$item-md-padding-media-top:      8px !default;
-$item-md-padding-media-bottom:   8px !default;
+$item-md-padding-media-top:      9px !default;
+$item-md-padding-media-bottom:   9px !default;
+
+$item-md-padding-icon-top:       11px !default;
+$item-md-padding-icon-bottom:    10px !default;
 
 $item-md-body-text-font-size:    1.4rem !default;
 $item-md-body-text-line-height:  1.5 !default;
@@ -73,6 +76,12 @@ $item-md-forward-icon-color:     $item-md-border-color !default;
   [item-left],
   [item-right] {
     margin: $item-md-padding-media-top ($item-md-padding-right / 2) $item-md-padding-media-bottom ($item-md-padding-left / 2);
+  }
+
+  icon[item-left],
+  icon[item-right] {
+    margin-top: $item-md-padding-icon-top;
+    margin-bottom: $item-md-padding-icon-bottom;
   }
 
   button[item-left],
