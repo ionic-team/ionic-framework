@@ -43,21 +43,6 @@ textarea {
     width: 100%;
   }
 
-  // tap inputs
-  input[type="radio"],
-  input[type="checkbox"] {
-    margin: 0;
-  }
-
-  input[type="file"],
-  input[type="image"],
-  input[type="submit"],
-  input[type="reset"],
-  input[type="button"],
-  input[type="radio"],
-  input[type="checkbox"] {
-    width: auto;
-  }
 }
 
 textarea {
@@ -91,13 +76,6 @@ select[disabled],
 textarea[disabled],
 select[readonly] {
   cursor: not-allowed;
-}
-// Explicitly reset the colors here
-input[type="radio"][disabled],
-input[type="checkbox"][disabled],
-input[type="radio"][readonly],
-input[type="checkbox"][readonly] {
-  background-color: transparent;
 }
 
 
