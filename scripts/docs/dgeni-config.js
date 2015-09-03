@@ -67,22 +67,15 @@ module.exports = new Package('ionic-v2-docs', [jsdocPackage, nunjucksPackage, ty
 .config(function(templateFinder, templateEngine) {
 
   // Nunjucks and Angular conflict in their template bindings so change the Nunjucks
+  // Also conflict with Jekyll
   templateEngine.config.tags = {
-    variableStart: '{$',
-    variableEnd: '$}',
+    variableStart: '<$',
+    variableEnd: '$>',
     blockStart: '<@',
-    blockEnd: '@>'
+    blockEnd: '@>',
+    commentStart: '<#',
+    commentEnd: '#>'
   };
-
-  //Don't conflict with the jekyll tags
-  // config.set('rendering.nunjucks.config.tags', {
-  //   blockStart: '<@',
-  //   blockEnd: '@>',
-  //   variableStart: '<$',
-  //   variableEnd: '$>',
-  //   commentStart: '<#',
-  //   commentEnd: '#>'
-  // });
 
   templateFinder.templateFolders.unshift(path.resolve(__dirname, 'templates'));
 

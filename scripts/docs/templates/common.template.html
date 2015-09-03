@@ -1,25 +1,25 @@
 <@ macro paramList(paramData) -@>
   <@- if paramData -@><span class="params">(
     <@- for param in paramData -@>
-      <span class="param">{$ param | escape $}<@ if not loop.last @>, <@ endif @></span>
+      <span class="param"><$ param | escape $><@ if not loop.last @>, <@ endif @></span>
     <@- endfor @>)</span>
   <@- endif @>
 <@- endmacro -@>
 <@ macro githubViewLink(doc) -@>
-  <a href="https://github.com/{$ versionInfo.gitRepoInfo.owner $}/{$ versionInfo.gitRepoInfo.repo $}/tree/master/{$ doc.fileInfo.relativePath $}#L{$ doc.location.start.line+1 $}-L{$ doc.location.end.line+1 $}">{$ doc.fileInfo.relativePath $} (line {$ doc.location.start.line+1 $})</a>
+  <a href="https://github.com/<$ versionInfo.gitRepoInfo.owner $>/<$ versionInfo.gitRepoInfo.repo $>/tree/master/<$ doc.fileInfo.relativePath $>#L<$ doc.location.start.line+1 $>-L<$ doc.location.end.line+1 $>"><$ doc.fileInfo.relativePath $> (line <$ doc.location.start.line+1 $>)</a>
 <@- endmacro -@>
 
 <@ block body @>
-<h1 class="class export">{$ doc.name $} <span class="type">{$ doc.docType $}</span></h1>
-<p class="module">exported from {@link {$ doc.moduleDoc.id $} {$doc.moduleDoc.id $} }<br/>
-defined in {$ githubViewLink(doc) $}
+<h1 class="class export"><$ doc.name $> <span class="type"><$ doc.docType $></span></h1>
+<p class="module">exported from {@link <$ doc.moduleDoc.id $> <$doc.moduleDoc.id $> }<br/>
+defined in <$ githubViewLink(doc) $>
 </p>
-<p>{$ doc.description | marked $}</p>
+<p><$ doc.description | marked $></p>
 
 <@- if doc.decorators @>
 <h2>Annotations</h2>
 <@- for decorator in doc.decorators @>
-  <h3 class="annotation">@{$ decorator.name $}{$ paramList(decorator.arguments) $}</h3>
+  <h3 class="annotation">@<$ decorator.name $><$ paramList(decorator.arguments) $></h3>
 <@ endfor @>
 <@ endif -@>
 
@@ -28,20 +28,20 @@ defined in {$ githubViewLink(doc) $}
 
 <@- if doc.constructorDoc @>
   <section class="member constructor">
-    <h1 id="constructor" class="name">{$ doc.constructorDoc.name $}{$ paramList(doc.constructorDoc.paramData) $}</h1>
+    <h1 id="constructor" class="name"><$ doc.constructorDoc.name $><$ paramList(doc.constructorDoc.paramData) $></h1>
     <@ marked @>
-      {$ doc.constructorDoc.description $}
+      <$ doc.constructorDoc.description $>
     <@ endmarked @>
   </section>
 <@ endif -@>
 
 <@- for member in doc.members @><@ if not member.private @>
   <section class="member">
-    <h1 id="{$ member.name $}" class="name">
-      {$ member.name $}<@ if member.optional @>?<@ endif @>{$ paramList(member.params) $}
+    <h1 id="<$ member.name $>" class="name">
+      <$ member.name $><@ if member.optional @>?<@ endif @><$ paramList(member.params) $>
     </h1>
     <@ marked @>
-      {$ member.description $}
+      <$ member.description $>
     <@ endmarked @>
   </section>
 
