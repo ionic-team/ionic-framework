@@ -5,10 +5,14 @@ var typescriptPackage = require('./typescript-package');
 var linksPackage = require('./links-package');
 var gitPackage = require('dgeni-packages/git');
 var path = require('path');
+var semver = require('semver');
+var fs = require('fs');
+var _ = require('lodash');
 
 // Define the dgeni package for generating the docs
-module.exports = new Package('ionic-v2-docs', [jsdocPackage, nunjucksPackage, typescriptPackage, linksPackage, gitPackage])
+module.exports = function(currentVersion){
 
+  return new Package('ionic-v2-docs', [jsdocPackage, nunjucksPackage, typescriptPackage, linksPackage, gitPackage])
 .processor(require('./processors/index-page'))
 .processor(require('./processors/jekyll'))
 
@@ -26,8 +30,56 @@ module.exports = new Package('ionic-v2-docs', [jsdocPackage, nunjucksPackage, ty
   log.level = 'error'; //'silly', 'debug', 'info', 'warn', 'error'
 })
 
-.config(function(renderDocsProcessor, versionInfo) {
-  renderDocsProcessor.extraData.versionInfo = versionInfo;
+.config(function(renderDocsProcessor, computePathsProcessor, versionInfo) {
+  try {
+    versions = fs.readdirSync(path.resolve(__dirname, '../../dist/ionic-site/docs'))
+      .filter(semver.valid)
+      .sort(semver.rcompare);
+  } catch(e) {
+    versions = [];
+  }
+
+  var versionData = {
+    list: versions,
+    current: _.find(versions, { name: currentVersion }),
+    latest: _.find(versions, {name: latestVersion}) || _.first(versions)
+  };
+
+  !_.contains(versions, currentVersion) && versions.unshift(currentVersion);
+  !_.contains(versions, 'nightly') && versions.unshift('nightly');
+
+  //First semver valid version is latest
+  var latestVersion = _.find(versions, semver.valid);
+  versions = versions.map(function(version) {
+    //Latest version is in docs root
+    var folder = version == latestVersion ? '' : version;
+    return {
+      href: path.join('/docs', folder),
+      folder: folder,
+      name: version
+    };
+  });
+
+  var versionData = {
+    list: versions,
+    current: _.find(versions, { name: currentVersion }),
+    latest: _.find(versions, {name: latestVersion}) || _.first(versions)
+  };
+
+  renderDocsProcessor.extraData.version = versionData;
+
+  computePathsProcessor.pathTemplates = [{
+    docTypes: ['class', 'var', 'function', 'let'],
+    getOutputPath: function(doc) {
+      // TODO(tlancina): Use nightly if version isn't specified by gulp task
+      // TODO(tlancina): inject api base path
+      return 'docs/' + (versionData.current.folder || '') + '/api/' + doc.fileInfo.relativePath
+               // strip ionic from path root
+               .replace(/^ionic\//, '')
+               // replace extension with .html
+               .replace(/\.\w*$/, '.html');
+    }
+  }];
 })
 
 //configure file reading
@@ -95,35 +147,4 @@ module.exports = new Package('ionic-v2-docs', [jsdocPackage, nunjucksPackage, ty
   //   'common.template.html'
   // ];
 })
-
-// Configure ids and paths
-.config(function(computeIdsProcessor, computePathsProcessor, versionInfo) {
-  // computeIdsProcessor.idTemplates.push({
-  //   docTypes: ['guide'],
-  //   getId: function(doc) {
-  //     return doc.fileInfo.relativePath
-  //                   // path should be relative to `modules` folder
-  //                   .replace(/.*\/?modules\//, '')
-  //                   // path should not include `/docs/`
-  //                   .replace(/\/docs\//, '/')
-  //                   // path should not have a suffix
-  //                   .replace(/\.\w*$/, '');
-  //   },
-  //   getAliases: function(doc) { return [doc.id]; }
-  // });
-
-  // docTypes: 'module', 'member', 'class', 'var', 'function', 'let'
-
-  computePathsProcessor.pathTemplates = [{
-    docTypes: ['class', 'var', 'function', 'let'],
-    getOutputPath: function(doc) {
-      // TODO(tlancina): Use nightly if version isn't specified by gulp task
-      // TODO(tlancina): inject api base path
-      return 'docs/' + versionInfo.currentVersion.raw + '/api/' + doc.fileInfo.relativePath
-               // strip ionic from path root
-               .replace(/^ionic\//, '')
-               // replace extension with .html
-               .replace(/\.\w*$/, '.html');
-    }
-  }];
-});
+}

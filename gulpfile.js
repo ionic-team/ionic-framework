@@ -313,8 +313,17 @@ gulp.task('karma-watch', function() {
 });
 
 gulp.task('docs', function() {
+  var Dgeni = require('dgeni');
+  var semver = require('semver');
+
+  var docVersion = flags['doc-version'] || 'nightly';
+  if (docVersion != 'nightly' && !semver.valid(docVersion)) {
+    console.log('Usage: gulp docs --doc-version=(nightly|versionName)\nversionName must be a valid semver version.');
+    return process.exit(1);
+  }
   try {
-    var dgeni = new Dgeni([require('./scripts/docs/dgeni-config')]);
+    var ionicPackage = require('./scripts/docs/dgeni-config')(docVersion);
+    var dgeni = new Dgeni([ionicPackage]);
     return dgeni.generate();
   } catch (err) {
     console.log(err.stack);
