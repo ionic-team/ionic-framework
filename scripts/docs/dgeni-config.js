@@ -71,8 +71,6 @@ module.exports = function(currentVersion){
   computePathsProcessor.pathTemplates = [{
     docTypes: ['class', 'var', 'function', 'let'],
     getOutputPath: function(doc) {
-      // TODO(tlancina): Use nightly if version isn't specified by gulp task
-      // TODO(tlancina): inject api base path
       return 'docs/' + (versionData.current.folder || '') + '/api/' + doc.fileInfo.relativePath
                // strip ionic from path root
                .replace(/^ionic\//, '')

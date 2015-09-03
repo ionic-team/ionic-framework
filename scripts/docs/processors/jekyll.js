@@ -1,12 +1,11 @@
-module.exports = function jekyll(){
+module.exports = function jekyll(renderDocsProcessor){
   return {
     name: 'jekyll',
     description: 'Create jekyll includes',
     $runAfter: ['adding-extra-docs'],
     $runBefore: ['extra-docs-added'],
     $process: function(docs) {
-      //TODO(tlancina): supply this via DI
-      var currentVersion = '2.0.0-alpha.2';
+      var currentVersion = renderDocsProcessor.extraData.version.current.name;
 
       docs.push({
         docType: 'api-menu',
