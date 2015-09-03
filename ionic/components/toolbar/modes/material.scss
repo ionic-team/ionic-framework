@@ -2,7 +2,7 @@
 // Material Design Toolbar
 // --------------------------------------------------
 
-$toolbar-md-height:                       5.6rem !default;
+$toolbar-md-height:                  5.6rem !default;
 $toolbar-md-title-font-size:         2rem !default;
 $toolbar-md-button-font-size:        1.4rem !default;
 
@@ -25,8 +25,12 @@ $toolbar-md-button-font-size:        1.4rem !default;
   }
 
   button,
-  [button] {
-    font-size: $toolbar-md-button-font-size;
+  [button],
+  button.activated,
+  [button].activated {
+    margin-top: 0;
+    margin-bottom: 0;
+    box-shadow: none;
   }
 
 }

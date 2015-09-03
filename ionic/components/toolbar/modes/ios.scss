@@ -52,11 +52,9 @@ $toolbar-ios-title-font-size:               1.7rem !default;
 
   button,
   [button] {
-    font-size: $toolbar-ios-button-font-size;
-  }
-
-  [icon] {
-    font-size: 2.5rem;
+    margin-top: 0;
+    margin-bottom: 0;
+    min-height: 32px;
   }
 
   .back-button-icon {

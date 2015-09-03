@@ -30,15 +30,17 @@
 
     </ion-radio-group>
 
-    <p>
-      <code>fruits.dirty: {{fruitsForm.controls.fruits.dirty}}</code><br>
-      <code>fruits.value: {{fruitsForm.controls.fruits.value}}</code><br>
-    </p>
-
   </form>
 
-  <button (click)="setApple()" outline small>Select Apple</button>
-  <button (click)="setBanana()" outline small>Select Banana</button>
-  <button id="e2eCherry" (click)="setCherry()" outline small>Select Cherry</button>
+  <p aria-hidden="true" class="align-center">
+    <button (click)="setApple()" outline small>Select Apple</button>
+    <button (click)="setBanana()" outline small>Select Banana</button>
+    <button id="e2eCherry" (click)="setCherry()" outline small>Select Cherry</button>
+  </p>
+
+  <p>
+    <code>fruits.dirty: {{fruitsForm.controls.fruits.dirty}}</code><br>
+    <code>fruits.value: {{fruitsForm.controls.fruits.value}}</code><br>
+  </p>
 
 </ion-content>

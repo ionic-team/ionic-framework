@@ -63,8 +63,10 @@ export class Icon {
       this.name = this.md;
 
     } else if (!this.name) {
+      // looping through native dom attributes, eww
+      // https://github.com/angular/angular/issues/3961
       for (let i = 0, l = ele.attributes.length; i < l; i++) {
-        if (ele.attributes[i].value === '' && /_|item-|is-active|class/.test(ele.attributes[i].name) !== true) {
+        if (ele.attributes[i].value === '' && /_|item-|is-active|large|small|class/.test(ele.attributes[i].name) !== true) {
           this.name = ele.attributes[i].name;
           break;
         }

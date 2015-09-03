@@ -43,14 +43,14 @@ export class Gesture {
   }
 
   unlisten() {
-    this.hammertime.destroy();
-    this.hammertime = null;
     for (let type in this._callbacks) {
       for (let i = 0; i < this._callbacks[type].length; i++) {
         //this.element.removeEventListener(type, this._callbacks[type][i]);
         this.hammertime.off(type, this._callbacks[type]);
       }
     }
+    this.hammertime.destroy();
+    this.hammertime = null;
     this._callbacks = {}
   }
 
