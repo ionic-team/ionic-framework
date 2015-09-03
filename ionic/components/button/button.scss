@@ -33,13 +33,15 @@ button,
   transition: background-color, opacity 100ms linear;
 
   margin: $button-margin;
+  padding: $button-padding;
+  min-height: $button-height;
   line-height: 1;
 
-  @include appearance(none);
+  border: 1px solid #ccc;
+  border: transparent;
+  border-radius: $button-border-radius;
 
-  vertical-align: top; // the better option for most scenarios
-  vertical-align: -webkit-baseline-middle; // the best for those that support it
-
+  font-size: $button-font-size;
   font-family: inherit;
   font-variant: inherit;
   font-style: inherit;
@@ -48,17 +50,15 @@ button,
   text-overflow: ellipsis;
   overflow: hidden;
 
+  text-align: center;
+  text-transform: none;
+
+  vertical-align: top; // the better option for most scenarios
+  vertical-align: -webkit-baseline-middle; // the best for those that support it
+
   cursor: pointer;
   @include user-select-none();
-
-  border: 1px solid #ccc;
-  padding: $button-padding;
-  min-height: $button-height;
-
-  text-align: center;
-  font-size: $button-font-size;
-  border: transparent;
-  border-radius: $button-border-radius;
+  @include appearance(none);
 
   background: $button-color;
   color: $button-text-color;
