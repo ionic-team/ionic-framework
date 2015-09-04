@@ -23,4 +23,14 @@ ion-card[mode=ios] {
     color: $input-label-ios-color;
   }
 
+  [stacked-label] ion-label {
+    font-size: 1.2rem;
+    margin-bottom: 4px;
+  }
+
+  [stacked-label] .text-input {
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+
 }
