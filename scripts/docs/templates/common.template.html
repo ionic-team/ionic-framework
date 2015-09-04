@@ -1,3 +1,11 @@
+---
+<@ include "lib/yaml.template.html" @>
+title: "<@ if doc.docType == "directive" @><$ doc.name | dashCase $><@ else @><$ doc.name $><@ endif @>"
+header_sub_title: "<$ doc.docType $> in module <$ doc.module $>"
+doc: "<$ doc.name $>"
+docType: "<$ doc.docType $>"
+---
+
 <@ macro paramList(paramData) -@>
   <@- if paramData -@><span class="params">(
     <@- for param in paramData -@>
@@ -10,6 +18,47 @@
 <@- endmacro -@>
 
 <@ block body @>
+<div class="improve-docs">
+  <a href='http://github.com/driftyco/ionic/tree/master/<$ doc.relativePath $>#L<$ doc.startingLine $>'>
+    View Source
+  </a>
+  &nbsp;
+  <a href='http://github.com/driftyco/ionic/edit/master/<$ doc.relativePath $>#L<$ doc.startingLine $>'>
+    Improve this doc
+  </a>
+</div>
+
+<@ block content @>
+
+<@ block header @>
+<h1 class="api-title">
+<@ if doc.docType == "directive" @>
+  <$ doc.name | dashCase $>
+<@ else @>
+  <$ doc.name $>
+<@ endif @>
+<@ if doc.parent @>
+<br />
+<small>
+  Child of <$ doc.parent $>
+</small>
+<@ endif @>
+<@ if doc.delegate @>
+<br/>
+<small>
+  Delegate: <$ doc.delegate $>
+</small>
+<@ endif @>
+</h1>
+
+<@ if doc.codepen @>
+{% include codepen.html id="<$ doc.codepen $>" %}
+<@ endif @>
+<@ endblock @>
+
+<@ block description @>
+<$ doc.description $>
+<@ endblock @>
 <h1 class="class export"><$ doc.name $> <span class="type"><$ doc.docType $></span></h1>
 <p class="module">exported from {@link <$ doc.moduleDoc.id $> <$doc.moduleDoc.id $> }<br/>
 defined in <$ githubViewLink(doc) $>
@@ -48,4 +97,5 @@ defined in <$ githubViewLink(doc) $>
 <@ endif @><@ endfor @>
 <@- endif -@>
 
+<@ endblock @>
 <@ endblock @>
