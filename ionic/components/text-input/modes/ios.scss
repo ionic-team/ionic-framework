@@ -28,9 +28,22 @@ ion-card[mode=ios] {
     margin-bottom: 4px;
   }
 
-  [stacked-label] .text-input {
+  [stacked-label] .text-input,
+  [floating-label] .text-input {
     margin-top: 8px;
     margin-bottom: 8px;
+  }
+
+  [floating-label] ion-label {
+    margin-bottom: 0;
+    transform-origin: left top;
+    transform: translate3d(0, 27px, 0);
+    transition: transform 150ms ease-in-out;
+  }
+
+  [floating-label].has-focus ion-label,
+  [floating-label].has-value ion-label  {
+    transform: translate3d(0, 0, 0) scale(0.8);
   }
 
 }

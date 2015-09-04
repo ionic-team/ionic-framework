@@ -43,13 +43,27 @@ ion-card[mode=md] {
     margin-bottom: 0;
   }
 
-  [stacked-label].has-focus ion-label {
+  [stacked-label].has-focus ion-label,
+  [floating-label].has-focus ion-label {
     color: $text-input-highlight-color;
   }
 
-  [stacked-label] .text-input {
+  [stacked-label] .text-input,
+  [floating-label] .text-input {
     margin-bottom: 8px;
     margin-top: 8px;
+  }
+
+  [floating-label] ion-label {
+    margin-bottom: 0;
+    transform-origin: left top;
+    transform: translate3d(0, 27px, 0);
+    transition: transform 150ms ease-in-out;
+  }
+
+  [floating-label].has-focus ion-label,
+  [floating-label].has-value ion-label  {
+    transform: translate3d(0, 0, 0) scale(0.8);
   }
 }
 

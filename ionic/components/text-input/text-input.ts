@@ -57,6 +57,14 @@ export class TextInputElement {
   get hasFocus() {
     return dom.hasFocus(this.elementRef);
   }
+
+  /**
+   * Whether the input has a value.
+   * @returns {boolean}  true if the input has a value, otherwise false.
+   */
+  get hasValue() {
+    return (this.elementRef.nativeElement.value !== '');
+  }
 }
 
 /**
@@ -75,6 +83,7 @@ export class TextInputElement {
     '(^touchend)': 'pointerEnd($event)',
     '(^mouseup)': 'pointerEnd($event)',
     '[class.has-focus]': 'inputHasFocus',
+    '[class.has-value]': 'inputHasValue',
     '[tabIndex]': 'activeTabIndex',
     'class': 'item'
   }
@@ -402,6 +411,10 @@ export class TextInput extends Ion {
 
   get inputHasFocus() {
     return !!this.input && this.input.hasFocus;
+  }
+
+  get inputHasValue() {
+    return !!this.input && this.input.hasValue;
   }
 
   get activeTabIndex() {

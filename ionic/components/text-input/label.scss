@@ -8,6 +8,7 @@ ion-label {
   max-width: 200px;
   font-size: inherit;
   white-space: nowrap;
+  pointer-events: none;
 }
 
 [fixed-label] ion-label {
@@ -16,9 +17,14 @@ ion-label {
   max-width: 200px;
 }
 
-ion-input[stacked-label] {
+ion-input[stacked-label],
+ion-input[floating-label] {
   flex-direction: column;
   align-items: flex-start;
+}
+
+[stacked-label],
+[floating-label] {
 
   ion-label {
     align-self: stretch;
@@ -30,4 +36,5 @@ ion-input[stacked-label] {
     align-self: stretch;
     width: auto;
   }
+
 }
