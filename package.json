@@ -42,6 +42,7 @@
     "lazypipe": "^0.2.3",
     "lodash": "^2.4.1",
     "minimist": "^1.1.3",
+    "node-html-encoder": "0.0.2",
     "node-libs-browser": "^0.5.2",
     "node-uuid": "^1.4.1",
     "q": "^1.4.1",

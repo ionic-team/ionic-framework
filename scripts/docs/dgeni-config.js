@@ -76,7 +76,7 @@ module.exports = function(currentVersion){
                // strip ionic from path root
                .replace(/^ionic\//, '')
                // replace extension with .html
-               .replace(/\.\w*$/, '.html');
+               .replace(/\.\w*$/, '.md');
     }
   }];
 })
@@ -127,6 +127,12 @@ module.exports = function(currentVersion){
     commentStart: '<#',
     commentEnd: '#>'
   };
+
+  // add custom filters to nunjucks
+  templateEngine.filters.push(
+    require('./filters/capital'),
+    require('./filters/code')
+  );
 
   templateFinder.templateFolders.unshift(path.resolve(__dirname, 'templates'));
 
