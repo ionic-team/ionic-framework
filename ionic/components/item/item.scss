@@ -55,11 +55,11 @@ ion-item-content {
   text-align: center;
 }
 
-ion-list .item > icon[small]:first-child {
+.list .item > icon[small]:first-child {
   min-width: 18px;
 }
 
-ion-list .item {
+.list .item {
   border-radius: 0;
 
   transition: background 300ms ease-out;

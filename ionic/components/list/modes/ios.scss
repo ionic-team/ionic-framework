@@ -20,7 +20,7 @@ $list-ios-header-letter-spacing:      0.1rem !default;
 $list-ios-header-color:               #333 !default;
 
 
-ion-list[mode=ios] {
+.list[mode=ios] {
   margin: 0 $list-ios-margin-right $list-ios-margin-bottom $list-ios-margin-left;
 
   ion-header {
@@ -34,16 +34,16 @@ ion-list[mode=ios] {
 
 }
 
-ion-list[mode=ios] + ion-list {
+.list[mode=ios] + .list {
   margin-top: $list-ios-margin-top + $list-ios-margin-bottom;
 }
 
-ion-list[mode=ios] + ion-list ion-header {
+.list[mode=ios] + .list ion-header {
   margin-top: -$list-ios-margin-top;
   padding-top: 0;
 }
 
-ion-list[mode=ios][inset] {
+.list[mode=ios][inset] {
   margin: $list-inset-ios-margin-top $list-inset-ios-margin-right $list-inset-ios-margin-bottom $list-inset-ios-margin-left;
   border-radius: $list-inset-ios-border-radius;
 
@@ -68,6 +68,6 @@ ion-list[mode=ios][inset] {
   }
 }
 
-ion-list[mode=ios][inset] + ion-list[inset] {
+.list[mode=ios][inset] + .list[inset] {
   margin-top: 0;
 }
