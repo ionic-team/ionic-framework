@@ -5,6 +5,7 @@ module.exports = function indexPage(renderDocsProcessor) {
     $runAfter: ['adding-extra-docs'],
     $runBefore: ['extra-docs-added'],
     $process: function(docs) {
+      //TODO(tlancina): move versionData into its own service
       var versionData = renderDocsProcessor.extraData.version;
       var currentVersion = versionData.current.name;
       var latestVersion = versionData.latest.name;

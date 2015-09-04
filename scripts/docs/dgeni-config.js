@@ -13,6 +13,8 @@ var _ = require('lodash');
 module.exports = function(currentVersion){
 
   return new Package('ionic-v2-docs', [jsdocPackage, nunjucksPackage, typescriptPackage, linksPackage, gitPackage])
+
+.processor(require('./processors/latest-version'))
 .processor(require('./processors/index-page'))
 .processor(require('./processors/jekyll'))
 
@@ -38,12 +40,6 @@ module.exports = function(currentVersion){
   } catch(e) {
     versions = [];
   }
-
-  var versionData = {
-    list: versions,
-    current: _.find(versions, { name: currentVersion }),
-    latest: _.find(versions, {name: latestVersion}) || _.first(versions)
-  };
 
   !_.contains(versions, currentVersion) && versions.unshift(currentVersion);
   !_.contains(versions, 'nightly') && versions.unshift('nightly');
