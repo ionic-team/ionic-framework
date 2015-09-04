@@ -2,7 +2,7 @@
 <ion-toolbar><ion-title>Placeholder Label Text Input</ion-title></ion-toolbar>
 
 
-<ion-content>
+<ion-content class="outer-content">
 
   <ion-list>
 
@@ -30,6 +30,28 @@
 
     <ion-input>
       <textarea placeholder="Textarea Placeholder">Textarea value</textarea>
+    </ion-input>
+
+  </ion-list>
+
+  <ion-list inset>
+
+    <ion-input>
+      <input placeholder="Inset List: Text Input Placeholder" type="text">
+    </ion-input>
+
+    <ion-input>
+      <input placeholder="Inset List: Text Input Placeholder" value="Inset List: Text Input Value" type="text">
+    </ion-input>
+
+    <ion-input>
+      <icon call item-left></icon>
+      <input placeholder="Inset List: Text Input Placeholder" type="text">
+    </ion-input>
+
+    <ion-input>
+      <icon call item-left></icon>
+      <input placeholder="Inset List: Text Input Placeholder" value="Inset List: Text Input Value" type="text">
     </ion-input>
 
   </ion-list>

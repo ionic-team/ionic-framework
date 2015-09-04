@@ -40,7 +40,7 @@ ion-card[mode=md] {
 
 }
 
-.list[mode=md] ion-input.item {
+.list[mode=md][inset] ion-input.item {
   padding-right: 0;
   padding-left: 0;
 }
