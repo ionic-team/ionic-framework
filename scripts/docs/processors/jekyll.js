@@ -13,6 +13,7 @@ module.exports = function jekyll(renderDocsProcessor){
         template: 'api_menu.template.html',
         outputPath: '_includes/api_menu.html'
       });
+     //TODO autogenerate this
       docs.push({
         docType: 'api-menu-version',
         id: 'api-menu-version',
