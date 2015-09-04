@@ -1,7 +1,7 @@
 import {Component} from 'angular2/angular2';
 import {Control, ControlGroup} from 'angular2/forms';
 
-import {App, Http, Storage, LocalStorage, SQLStorage} from 'ionic/ionic';
+import {App, Http, Storage, LocalStorage, SqlStorage} from 'ionic/ionic';
 
 let testUrl = 'https://ionic-api-tester.herokuapp.com/json';
 let testUrl404 = 'https://ionic-api-tester.herokuapp.com/404';
@@ -13,7 +13,7 @@ let testUrl404 = 'https://ionic-api-tester.herokuapp.com/404';
 class IonicApp {
   constructor() {
     this.local = new Storage(LocalStorage);
-    this.sql = new Storage(SQLStorage);
+    this.sql = new Storage(SqlStorage);
   }
   getLocal() {
     this.local.get('name').then(value => {

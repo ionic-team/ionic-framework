@@ -1,10 +1,10 @@
-import {StorageStrategy} from './storage';
+import {StorageEngine} from './storage';
 
 import * as util from 'ionic/util';
 
 const DB_NAME = '__ionicstorage';
 
-export class SQLStorage extends StorageStrategy {
+export class SqlStorage extends StorageEngine {
   static BACKUP_LOCAL =  2
   static BACKUP_LIBRARY = 1
   static BACKUP_DOCUMENTS = 0
@@ -14,7 +14,7 @@ export class SQLStorage extends StorageStrategy {
 
     let dbOptions = util.defaults({
       name: DB_NAME,
-      backupFlag: SQLStorage.BACKUP_NONE,
+      backupFlag: SqlStorage.BACKUP_NONE,
       existingDatabase: false
     }, options);
 
@@ -37,11 +37,11 @@ export class SQLStorage extends StorageStrategy {
 
   _getBackupLocation(dbFlag) {
     switch(dbFlag) {
-      case SQLStorage.BACKUP_LOCAL:
+      case SqlStorage.BACKUP_LOCAL:
         return 2;
-      case SQLStorage.BACKUP_LIBRARY:
+      case SqlStorage.BACKUP_LIBRARY:
         return 1;
-      case SQLStorage.BACKUP_DOCUMENTS:
+      case SqlStorage.BACKUP_DOCUMENTS:
         return 0;
       default:
         throw Error('Invalid backup flag: ' + dbFlag);
