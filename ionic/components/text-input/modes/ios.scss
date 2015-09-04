@@ -2,6 +2,8 @@
 // iOS Text Input
 // --------------------------------------------------
 
+$input-label-ios-color:         #7f7f7f !default;
+
 
 .list[mode=ios],
 ion-card[mode=ios] {
@@ -18,6 +20,7 @@ ion-card[mode=ios] {
 
   ion-label {
     margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom ($item-ios-padding-left / 2);
+    color: $input-label-ios-color;
   }
 
 }

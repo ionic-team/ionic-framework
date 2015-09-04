@@ -3,7 +3,7 @@ import {Directive, View, Host, Optional, ElementRef, Attribute, Query, QueryList
 import {IonicDirective} from '../../config/annotations';
 import {IonicConfig} from '../../config/config';
 import {IonInput} from '../form/input';
-import {Label} from '../form/label';
+import {Label} from './label';
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
 import {Content} from '../content/content';

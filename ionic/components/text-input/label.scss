@@ -2,25 +2,18 @@
 // Label
 // --------------------------------------------------
 
-$input-label-color:         #888 !default;
-
 
 ion-label {
   display: block;
   max-width: 200px;
-  color: $input-label-color;
   font-size: inherit;
   white-space: nowrap;
 }
 
 [fixed-label] ion-label {
-  display: block;
-  max-width: 200px;
   width: 30%;
   min-width: 100px;
-  color: $input-label-color;
-  font-size: inherit;
-  white-space: nowrap;
+  max-width: 200px;
 }
 
 ion-input[stacked-label] {
