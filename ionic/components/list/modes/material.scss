@@ -56,11 +56,11 @@ $list-md-header-color:           #858585 !default;
     margin-bottom: 0;
     border-bottom-right-radius: $list-inset-md-border-radius;
     border-bottom-left-radius: $list-inset-md-border-radius;
-
-    &:after {
-      border-top: none;
-    }
   }
+}
+
+.list[mode=md][inset] .item:not(ion-input):last-child:after {
+  border-top: none;
 }
 
 .list[mode=md][inset] + .list[inset] {

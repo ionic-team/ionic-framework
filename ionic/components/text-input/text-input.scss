@@ -2,11 +2,10 @@
 // Text Input
 // --------------------------------------------------
 
-$ion-input-focus-border-color:      #51a7e8 !default;
-$ion-input-focus-box-shadow:        inset 0px 0px 8px 0px $ion-input-focus-border-color !default;
+$input-focus-border-color:      #51a7e8 !default;
+$input-focus-box-shadow:        inset 0px 0px 8px 0px $input-focus-border-color !default;
 
-$inset-item-input-bg-color:         darken(#fff, 20%) !default;
-$inset-item-input-input-bg-color:   $list-background-color !default;
+$text-input-background-color:   $list-background-color !default;
 
 
 ion-input {
@@ -16,8 +15,8 @@ ion-input {
 .key-input ion-input {
 
   &.has-focus {
-    border-color: $ion-input-focus-border-color;
-    box-shadow: $ion-input-focus-box-shadow;
+    border-color: $input-focus-border-color;
+    box-shadow: $input-focus-box-shadow;
   }
 
   :focus {
@@ -34,6 +33,7 @@ ion-input {
 }
 
 ion-input .text-input {
+  background-color: $text-input-background-color;
   pointer-events: none;
 }
 
@@ -43,17 +43,4 @@ ion-input.has-focus .text-input {
 
 .item.input textarea {
   padding-top: 9px;
-}
-
-ion-input[inset] {
-  background-color: $inset-item-input-bg-color;
-
-  .text-input {
-    background-color: $list-background-color;
-  }
-
-  &:before,
-  &:after {
-    border: 0 !important;
-  }
 }
