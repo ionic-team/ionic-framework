@@ -51,7 +51,9 @@ module.exports = function(currentVersion){
   !_.contains(versions, 'nightly') && versions.unshift('nightly');
 
   //First semver valid version is latest
-  var latestVersion = _.find(versions, semver.valid);
+  var latestVersion = _.find(versions, function(v){
+    return semver.valid(v) && parseInt(v) < 2 // don't let v2 docs be latest for now
+  });
   versions = versions.map(function(version) {
     //Latest version is in docs root
     var folder = version == latestVersion ? '' : version;
