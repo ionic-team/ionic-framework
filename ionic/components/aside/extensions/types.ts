@@ -42,15 +42,15 @@ const backdropManipulator = {
     //.classList[sliding ? 'add' : 'remove']('no-transition');
   },
   setOpen(open) {
-    let amt = open ? 0.32 : 0;
-    this.aside.backdrop.backgroundColor = 'rgba(0,0,0,' + amt + ')';
+    let amt = open ? 0.5 : 0;
+    this.aside.backdrop.opacity = amt;
   },
   setTransform(t) {
     if(t === null) {
       t = this.aside.width();
     }
-    let fade = 0.32 * t / this.aside.width();
-    this.aside.backdrop.backgroundColor = 'rgba(0,0,0,' + fade + ')';
+    let fade = 0.5 * t / this.aside.width();
+    this.aside.backdrop.opacity = fade;
   }
 }
 

@@ -10,7 +10,9 @@ import * as util from 'ionic/util/util'
 import {dom} from 'ionic/util'
 
 /**
- * TODO (?) add docs about how to have a root aside and a nested aside, then hide the root one
+ * Aside is a side-menu navigation that can be dragged out or toggled to show. Aside supports two
+ * display styles currently: overlay, and reveal. Overlay is the tradtional Android drawer style, and Reveal
+ * is the traditional iOS style. By default, Aside will adjust to the correct style for the platform.
  */
 @IonicComponent({
   selector: 'ion-aside',
@@ -218,7 +220,7 @@ export class Aside extends Ion {
   host: {
     '[style.width]': 'width',
     '[style.height]': 'height',
-    '[style.backgroundColor]': 'backgroundColor',
+    '[style.opacity]': 'opacity',
     '(click)': 'clicked($event)'
   }
 })
@@ -239,7 +241,7 @@ export class AsideBackdrop extends Ion {
 
     this.aside = aside;
 
-    this.backgroundColor = 'rgba(0,0,0,0)';
+    this.opacity = 0;
   }
 
   /**
