@@ -2,9 +2,9 @@
 // Material Design Tabs
 // --------------------------------------------------
 
-$tab-bar-md-item-padding:             2px 10px !default;
+$tab-bar-md-item-padding:             12px 10px 4px 10px !default;
 $tab-bar-md-item-font-size:           1.4rem !default;
-$tab-bar-md-item-icon-size:           26px !default;
+$tab-bar-md-item-icon-size:           2.4rem !default;
 $tab-bar-md-item-height:              4.8rem !default;
 
 
@@ -17,6 +17,16 @@ $tab-bar-md-item-height:              4.8rem !default;
 
     box-shadow: none;
     border-radius: 0;
+    border-bottom: 2px solid transparent;
+  }
+
+  button.tab-button[aria-selected="true"] {
+    border-bottom-color: $tab-button-text-active;
+  }
+
+  .tab-button-text {
+    margin-top: 8px;
+    margin-bottom: 8px;
   }
 
   .tab-button-icon {
@@ -24,4 +34,22 @@ $tab-bar-md-item-height:              4.8rem !default;
     min-width: $tab-bar-md-item-icon-size + 5;
   }
 
+}
+
+[mode=md][tab-bar-icons=bottom] button.tab-button {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+[mode=md][tab-bar-icons=right] button.tab-button,
+[mode=md][tab-bar-icons=left] button.tab-button {
+  padding-bottom: 10px;
+
+  icon {
+    min-width: 24px;
+  }
+}
+
+[mode=md] button.tab-button.icon-only,
+[mode=md] button.tab-button.has-title-only {
+  padding: 8px 10px;
 }
