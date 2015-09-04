@@ -36,12 +36,18 @@ module.exports = function(currentVersion){
   try {
     versions = fs.readdirSync(path.resolve(__dirname, '../../dist/ionic-site/docs'))
       .filter(semver.valid)
-      .sort(semver.rcompare);
   } catch(e) {
     versions = [];
   }
 
-  !_.contains(versions, currentVersion) && versions.unshift(currentVersion);
+  // new version, add it to the versions list
+  if (currentVersion != 'nightly' && !_.contains(versions, currentVersion)){
+    versions.unshift(currentVersion);
+  }
+
+  // sort by version so we can find latest
+  versions.sort(semver.rcompare);
+  // add nightly if it isn't in the list
   !_.contains(versions, 'nightly') && versions.unshift('nightly');
 
   //First semver valid version is latest
@@ -73,11 +79,9 @@ module.exports = function(currentVersion){
       // remove filename since we have multiple docTypes per file
       docPath = docPath.substring(0, docPath.lastIndexOf('/') + 1);
       docPath += doc.name + '/index.md';
-
       var path = 'docs/' + (versionData.current.folder || '') +
-                     'api/' +  docPath;
+                     '/api/' +  docPath;
 
-                    // console.log(path);
                     return path;
     }
   }];
