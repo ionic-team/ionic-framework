@@ -38,6 +38,19 @@ ion-card[mode=md] {
     border-top-color: $text-input-highlight-color !important;
   }
 
+  [stacked-label] ion-label {
+    font-size: 1.2rem;
+    margin-bottom: 0;
+  }
+
+  [stacked-label].has-focus ion-label {
+    color: $text-input-highlight-color;
+  }
+
+  [stacked-label] .text-input {
+    margin-bottom: 8px;
+    margin-top: 8px;
+  }
 }
 
 .list[mode=md][inset] ion-input.item {
