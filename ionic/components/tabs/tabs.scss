@@ -57,7 +57,7 @@ ion-tab {
   background: $tab-bar-background-color;
 }
 
-button.tab-button {
+.tab-button {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -78,15 +78,20 @@ button.tab-button {
   border: 0;
   border-radius: 0;
   background: none;
+
+  &:hover,
+  &.hover {
+    color: $tab-button-text-inactive;
+  }
 }
 
-[tab-bar-icons="bottom"] button.tab-button {
+[tab-bar-icons="bottom"] .tab-button {
   .tab-button-icon {
     order: 10;
   }
 }
 
-[tab-bar-icons="left"] button.tab-button {
+[tab-bar-icons="left"] .tab-button {
   flex-direction: row;
 
   .tab-button-icon {
@@ -95,7 +100,7 @@ button.tab-button {
   }
 }
 
-[tab-bar-icons="right"] button.tab-button {
+[tab-bar-icons="right"] .tab-button {
   flex-direction: row;
 
   .tab-button-icon {
@@ -133,6 +138,6 @@ button.tab-button {
   white-space: normal;
 }
 
-button.tab-button[aria-selected="true"] {
+.tab-button[aria-selected="true"] {
   color: $toolbar-active-color;
 }

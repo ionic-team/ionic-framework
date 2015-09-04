@@ -2,31 +2,34 @@
 // Material Design Tabs
 // --------------------------------------------------
 
-$tab-bar-md-item-padding:             12px 10px 4px 10px !default;
+$tab-bar-md-item-padding:             12px 10px 5px 10px !default;
 $tab-bar-md-item-font-size:           1.4rem !default;
+$tab-bar-md-item-font-weight:         500 !default;
 $tab-bar-md-item-icon-size:           2.4rem !default;
 $tab-bar-md-item-height:              4.8rem !default;
 
 
 .tabs[mode=md] {
 
-  button.tab-button {
+  .tab-button {
     padding: $tab-bar-md-item-padding;
     min-height: $tab-bar-md-item-height;
     font-size: $tab-bar-md-item-font-size;
+    font-weight: $tab-bar-md-item-font-weight;
 
     box-shadow: none;
     border-radius: 0;
     border-bottom: 2px solid transparent;
   }
 
-  button.tab-button[aria-selected="true"] {
+  .tab-button[aria-selected="true"] {
     border-bottom-color: $tab-button-text-active;
   }
 
   .tab-button-text {
-    margin-top: 8px;
-    margin-bottom: 8px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
   }
 
   .tab-button-icon {
@@ -36,12 +39,12 @@ $tab-bar-md-item-height:              4.8rem !default;
 
 }
 
-[mode=md][tab-bar-icons=bottom] button.tab-button {
+[mode=md][tab-bar-icons=bottom] .tab-button {
   padding-top: 8px;
   padding-bottom: 8px;
 }
-[mode=md][tab-bar-icons=right] button.tab-button,
-[mode=md][tab-bar-icons=left] button.tab-button {
+[mode=md][tab-bar-icons=right] .tab-button,
+[mode=md][tab-bar-icons=left] .tab-button {
   padding-bottom: 10px;
 
   icon {
@@ -49,7 +52,7 @@ $tab-bar-md-item-height:              4.8rem !default;
   }
 }
 
-[mode=md] button.tab-button.icon-only,
-[mode=md] button.tab-button.has-title-only {
-  padding: 8px 10px;
+[mode=md] .tab-button.icon-only,
+[mode=md] .tab-button.has-title-only {
+  padding: 6px 10px 6px 10px;
 }

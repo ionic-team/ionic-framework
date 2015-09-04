@@ -1,39 +1,5 @@
 
-<ion-tabs>
-  <ion-tab tab-title="Recents" tab-icon="call"></ion-tab>
-  <ion-tab tab-title="Favorites" tab-icon="heart"></ion-tab>
-  <ion-tab tab-title="Settings" tab-icon="settings"></ion-tab>
-</ion-tabs>
-
-
-<ion-tabs tab-bar-icons="bottom">
-  <ion-tab tab-title="Recents" tab-icon="call"></ion-tab>
-  <ion-tab tab-title="Favorites" tab-icon="heart"></ion-tab>
-  <ion-tab tab-title="Settings" tab-icon="settings"></ion-tab>
-</ion-tabs>
-
-
-<ion-tabs tab-bar-icons="right">
-  <ion-tab tab-title="Recents" tab-icon="call"></ion-tab>
-  <ion-tab tab-title="Favorites" tab-icon="heart"></ion-tab>
-  <ion-tab tab-title="Settings" tab-icon="settings"></ion-tab>
-</ion-tabs>
-
-
-<ion-tabs tab-bar-icons="left">
-  <ion-tab tab-title="Recents" tab-icon="call"></ion-tab>
-  <ion-tab tab-title="Favorites" tab-icon="heart"></ion-tab>
-  <ion-tab tab-title="Settings" tab-icon="settings"></ion-tab>
-</ion-tabs>
-
-
-<ion-tabs>
-  <ion-tab tab-icon="call"></ion-tab>
-  <ion-tab tab-icon="heart"></ion-tab>
-  <ion-tab tab-icon="settings"></ion-tab>
-</ion-tabs>
-
-
+<!-- Text -->
 <ion-tabs>
   <ion-tab tab-title="Recents"></ion-tab>
   <ion-tab tab-title="Favorites"></ion-tab>
@@ -41,6 +7,47 @@
 </ion-tabs>
 
 
+<!-- Icons -->
+<ion-tabs>
+  <ion-tab tab-icon="call"></ion-tab>
+  <ion-tab tab-icon="heart"></ion-tab>
+  <ion-tab tab-icon="settings"></ion-tab>
+</ion-tabs>
+
+
+<!-- Icons on top of text -->
+<ion-tabs>
+  <ion-tab tab-title="Location" tab-icon="navigate"></ion-tab>
+  <ion-tab tab-title="Favorites" tab-icon="star"></ion-tab>
+  <ion-tab tab-title="Radio" tab-icon="musical-notes"></ion-tab>
+</ion-tabs>
+
+
+<!-- Icons below text -->
+<ion-tabs tab-bar-icons="bottom">
+  <ion-tab tab-title="Recents" tab-icon="call"></ion-tab>
+  <ion-tab tab-title="Favorites" tab-icon="heart"></ion-tab>
+  <ion-tab tab-title="Settings" tab-icon="settings"></ion-tab>
+</ion-tabs>
+
+
+<!-- Icons right of text -->
+<ion-tabs tab-bar-icons="right">
+  <ion-tab tab-title="Recents" tab-icon="call"></ion-tab>
+  <ion-tab tab-title="Favorites" tab-icon="heart"></ion-tab>
+  <ion-tab tab-title="Settings" tab-icon="settings"></ion-tab>
+</ion-tabs>
+
+
+<!-- Icons left of text -->
+<ion-tabs tab-bar-icons="left">
+  <ion-tab tab-title="Recents" tab-icon="call"></ion-tab>
+  <ion-tab tab-title="Favorites" tab-icon="heart"></ion-tab>
+  <ion-tab tab-title="Settings" tab-icon="settings"></ion-tab>
+</ion-tabs>
+
+
+<!-- No overflow text -->
 <ion-tabs>
   <ion-tab tab-title="Indiana Jones and the Raiders of the Lost Ark"></ion-tab>
   <ion-tab tab-title="Indiana Jones and the Temple of Doom"></ion-tab>
@@ -51,6 +58,8 @@
 <style>
   ion-tabs {
     height: auto;
-    margin-bottom: 24px;
+  }
+  ion-tabs[mode=md] {
+    border-bottom: 1px solid gray;
   }
 </style>

@@ -26,7 +26,7 @@ import {IonicComponent, IonicView} from '../../config/annotations';
    * ```
    *
    */
- 
+
 @IonicComponent({
   selector: 'ion-tabs',
   defaultProperties: {
@@ -38,10 +38,10 @@ import {IonicComponent, IonicView} from '../../config/annotations';
   template: '' +
     '<nav class="tab-bar-container">' +
       '<div class="tab-bar" role="tablist">' +
-        '<button *ng-for="#t of tabs" [tab]="t" class="tab-button" role="tab">' +
+        '<a *ng-for="#t of tabs" [tab]="t" class="tab-button" role="tab">' +
           '<icon [name]="t.tabIcon" [is-active]="t.isSelected" class="tab-button-icon"></icon>' +
           '<span class="tab-button-text">{{t.tabTitle}}</span>' +
-        '</button>' +
+        '</a>' +
       '</div>' +
     '</nav>' +
     '<section class="content-container">' +
@@ -149,7 +149,7 @@ export class Tabs extends ViewController {
  * TODO
  */
 @Directive({
-  selector: 'button.tab-button',
+  selector: '.tab-button',
   properties: ['tab'],
   host: {
     '[attr.id]': 'btnId',
