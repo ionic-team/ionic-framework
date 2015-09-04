@@ -6,7 +6,15 @@ import {Tabs} from './tabs';
 
 
 /**
- * TODO
+ * @name ionTab
+ * @requires ionTabs
+ * @classdesc
+ * Contains a tab's content. The content only exists while the given tab is selected.
+ *
+ * @example
+ * ```html
+ * <ion-tab tab-title="Heart" tab-icon="ion-ios-heart-outline" [root]="root1"></ion-tab>
+ * ```
  */
 @Component({
   selector: 'ion-tab',

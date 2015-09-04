@@ -5,7 +5,22 @@ import {ItemPrimarySwipeButtons, ItemSecondarySwipeButtons} from './item-swipe-b
 import {dom} from 'ionic/util';
 
 /**
- * TODO
+ * @name ionItem
+ * @classdesc
+ * Creates a list-item that can easily be swiped,
+ * deleted, reordered, edited, and more.
+ *
+ * @example
+ * ```html
+ *  <ion-list>
+ *    <ion-item *ng-for="#item of items" (^click)="itemTapped($event, item)">
+ *      {{item.title}}
+ *      <div class="item-note" item-right>
+ *        {{item.note}}
+ *      </div>
+ *    </ion-item>
+ *  </ion-list>
+ *  ```
  */
 @Component({
   selector: 'ion-item,[ion-item]',
@@ -24,22 +39,7 @@ import {dom} from 'ionic/util';
 })
 export class Item {
   /**
-   * @name ionItem
-   * @classdesc
-   * Creates a list-item that can easily be swiped,
-   * deleted, reordered, edited, and more.
-   *
-   * @example
-   * ```html
-   *  <ion-list>
-   *    <ion-item *ng-for="#item of items" (^click)="itemTapped($event, item)">
-   *      {{item.title}}
-   *      <div class="item-note" item-right>
-   *        {{item.note}}
-   *      </div>
-   *    </ion-item>
-   *  </ion-list>
-   * ```
+   * TODO
    * @param {ElementRef} elementRef  TODO
    */
   constructor(elementRef: ElementRef) {

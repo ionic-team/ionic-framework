@@ -5,9 +5,28 @@ import {ViewItem} from '../view/view-item';
 import {Icon} from '../icon/icon';
 import {IonicComponent, IonicView} from '../../config/annotations';
 
-/**
- * TODO
- */
+  /**
+   * @name ionTabs
+   * @classdesc
+   * Powers a multi-tabbed interface with a Tab Bar and a set of "pages" that can be tabbed through.
+   *
+   * Assign any tabs attribute to the element to define its look and feel.
+   *
+   * For iOS, tabs will appear at the bottom of the screen. For Android, tabs will be at the top of the screen, below the nav-bar. This follows each OS's design specification, but can be configured with the ionicConfig.
+   *
+   * See the ionTab component's documentation for more details on individual tabs.
+   *
+   * @example
+   * ```html
+   * <ion-tabs>
+   *   <ion-tab tab-title="Heart" tab-icon="ion-ios-heart-outline" [root]="root1"></ion-tab>
+   *   <ion-tab tab-title="Star" tab-icon="ion-ios-star-outline" [root]="root2"></ion-tab>
+   *   <ion-tab tab-title="Stopwatch" tab-icon="ion-ios-stopwatch-outline" [root]="root3"></ion-tab>
+   * </ion-tabs>
+   * ```
+   *
+   */
+ 
 @IonicComponent({
   selector: 'ion-tabs',
   defaultProperties: {
@@ -31,7 +50,10 @@ import {IonicComponent, IonicView} from '../../config/annotations';
   directives: [forwardRef(() => TabButton)]
 })
 export class Tabs extends ViewController {
-  constructor(
+  /**
+   * TODO
+   */
+ constructor(
     @Optional() hostViewCtrl: ViewController,
     @Optional() viewItem: ViewItem,
     injector: Injector,

@@ -7,7 +7,17 @@ import {ListVirtualScroll} from './virtual';
 import * as util from 'ionic/util';
 
 /**
- * TODO
+ * @name ionList
+ * @classdesc
+ * The List is a widely used interface element in almost any mobile app, and can include
+ * content ranging from basic text all the way to buttons, toggles, icons, and thumbnails.
+ *
+ * Both the list, which contains items, and the list items themselves can be any HTML
+ * element.
+ *
+ * Using the ionList and ionItem components make it easy to support various
+ * interaction modes such as swipe to edit, drag to reorder, and removing items.
+ *
  */
 @IonicDirective({
   selector: 'ion-list',
@@ -19,17 +29,7 @@ import * as util from 'ionic/util';
 })
 export class List extends Ion {
   /**
-   * @name ionList
-   * @classdesc
-   * The List is a widely used interface element in almost any mobile app, and can include
-   * content ranging from basic text all the way to buttons, toggles, icons, and thumbnails.
-   *
-   * Both the list, which contains items, and the list items themselves can be any HTML
-   * element.
-   *
-   * Using the ionList and ionItem components make it easy to support various
-   * interaction modes such as swipe to edit, drag to reorder, and removing items.
-   *
+   * TODO
    * @param {ElementRef} elementRef  TODO
    * @param {IonicConfig} config  TODO
    */
