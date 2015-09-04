@@ -68,11 +68,17 @@ module.exports = function(currentVersion){
   computePathsProcessor.pathTemplates = [{
     docTypes: ['class', 'var', 'function', 'let'],
     getOutputPath: function(doc) {
-      return 'docs/' + (versionData.current.folder || '') + '/api/' + doc.fileInfo.relativePath
-               // strip ionic from path root
-               .replace(/^ionic\//, '')
-               // replace extension with .html
-               .replace(/\.\w*$/, '.md');
+      // strip ionic from path root
+      var docPath = doc.fileInfo.relativePath.replace(/^ionic\//, '');
+      // remove filename since we have multiple docTypes per file
+      docPath = docPath.substring(0, docPath.lastIndexOf('/') + 1);
+      docPath += doc.name + '/index.md';
+
+      var path = 'docs/' + (versionData.current.folder || '') +
+                     'api/' +  docPath;
+
+                    // console.log(path);
+                    return path;
     }
   }];
 })
