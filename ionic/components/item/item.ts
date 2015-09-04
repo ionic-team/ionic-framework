@@ -24,7 +24,22 @@ import {dom} from 'ionic/util';
 })
 export class Item {
   /**
-   * TODO
+   * @name ionItem
+   * @classdesc
+   * Creates a list-item that can easily be swiped,
+   * deleted, reordered, edited, and more.
+   *
+   * @example
+   * ```html
+   *  <ion-list>
+   *    <ion-item *ng-for="#item of items" (^click)="itemTapped($event, item)">
+   *      {{item.title}}
+   *      <div class="item-note" item-right>
+   *        {{item.note}}
+   *      </div>
+   *    </ion-item>
+   *  </ion-list>
+   * ```
    * @param {ElementRef} elementRef  TODO
    */
   constructor(elementRef: ElementRef) {
