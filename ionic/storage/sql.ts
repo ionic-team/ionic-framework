@@ -58,6 +58,37 @@ export class SqlStorage extends StorageEngine {
     });
   }
 
+  /**
+   * Perform an arbitrary SQL operation on the database. Use this method
+   * to have full control over the underlying database through SQL operations
+   * like SELECT, INSERT, and UPDATE.
+   *
+   * @param {string} query the query to run
+   * @return {Promise} that resolves or rejects with an object of the form { tx: Transaction, res: Result (or err)}
+   */
+  query(query) {
+    return new Promise((resolve, reject) => {
+      this._db.transaction((tx) => {
+        ts.executeSql(query, [], (tx, res) => {
+          resolve({
+            tx: tx,
+            res: res
+          });
+        }, (tx, err) => {
+          reject({
+            tx: tx,
+            err: err
+          });
+        })
+      });
+    })
+  }
+
+  /**
+   * Get the value in the database identified by the given key.
+   * @param {string} key the key
+   * @return {Promise} that resolves or rejects with an object of the form { tx: Transaction, res: Result (or err)}
+   */
   get(key) {
     return new Promise((resolve, reject) => {
       try {
@@ -84,6 +115,13 @@ export class SqlStorage extends StorageEngine {
       }
     });
   }
+
+  /**
+  * Set the value in the database for the given key. Existing values will be overwritten.
+  * @param {string} key the key
+  * @param {string} value The value (as a string)
+  * @return {Promise} that resolves or rejects with an object of the form { tx: Transaction, res: Result (or err)}
+  */
   set(key, value) {
     return new Promise((resolve, reject) => {
       try {
@@ -104,6 +142,13 @@ export class SqlStorage extends StorageEngine {
       }
     });
   }
+
+  /**
+  * Remove the value in the database for the given key.
+  * @param {string} key the key
+  * @param {string} value The value (as a string)
+  * @return {Promise} that resolves or rejects with an object of the form { tx: Transaction, res: Result (or err)}
+  */
   remove(key) {
     return new Promise((resolve, reject) => {
       try {
