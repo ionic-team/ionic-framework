@@ -20,7 +20,7 @@ $action-menu-ios-background-active:        #ebebeb !default;
 $action-menu-ios-icon-font-size:           1.4em !default;
 
 
-ion-action-menu[mode=ios] {
+ion-action-menu {
   text-align: center;
 
   .action-menu-container {
@@ -90,7 +90,7 @@ ion-action-menu[mode=ios] {
 
 }
 
-.hairlines .action-menu[mode=ios] {
+&.hairlines .action-menu {
   .action-menu-title,
   .action-menu-option {
     border-bottom-width: 0.55px;

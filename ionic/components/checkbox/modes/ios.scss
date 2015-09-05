@@ -10,7 +10,7 @@ $checkbox-ios-border-color-on:       color(primary) !default;
 $checkbox-ios-checkmark-color-on:    $background-color !default;
 
 
-.checkbox[mode=ios] {
+.checkbox {
 
   .checkbox-icon {
     position: relative;
@@ -47,7 +47,7 @@ $checkbox-ios-checkmark-color-on:    $background-color !default;
 
 @mixin checkbox-theme-ios($color-name, $bg-on) {
 
-  .checkbox[mode=ios][#{$color-name}] {
+  .checkbox[#{$color-name}] {
 
     &[aria-checked=true] .checkbox-icon {
       background-color: $bg-on;

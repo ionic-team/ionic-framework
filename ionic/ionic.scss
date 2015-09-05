@@ -1,41 +1,27 @@
 @charset "UTF-8";
 
 
-// Default Theme
-@import "themes/default";
-
-
 // Core Components
 @import "ionic.core";
 
 
 // iOS Components
-$ios-mode: true !default;
-@if ($ios-mode) {
+.ios {
   @import "ionic.ios";
 }
 
 
 // Material Design Components
-$material-design-mode: true !default;
-@if ($material-design-mode) {
-  @import "ionic.material";
+.md {
+  @import "ionic.md";
 }
 
 
-// Ionicons
-$ionicons: true !default;
-@if ($ionicons) {
-  @import "fonts/ionicons";
-}
-
-
-// Roboto
+// Roboto Font
 $roboto: true !default;
 @if ($roboto) {
   @import "fonts/roboto";
+  .md {
+    font-family: "Roboto", "Helvetica Neue", sans-serif;
+  }
 }
-
-
-// Platforms
-@import  "platform/cordova";

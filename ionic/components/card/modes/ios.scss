@@ -31,7 +31,7 @@ $card-ios-header-padding:              16px !default;
 $card-ios-header-color:                #333 !default;
 
 
-ion-card[mode=ios] {
+ion-card {
   margin: $card-ios-margin-top $card-ios-margin-right $card-ios-margin-bottom $card-ios-margin-left;
   font-size: $card-ios-font-size;
 
@@ -134,6 +134,6 @@ ion-card[mode=ios] {
 
 }
 
-ion-card[mode=ios] + ion-card {
+ion-card + ion-card {
   margin-top: 0;
 }

@@ -159,9 +159,6 @@ function appendConfig(cls, config) {
   let componentId = config.classId || (config.selector && config.selector.replace('ion-', ''));
   config.host['class'] = ((config.host['class'] || '') + ' ' + componentId).trim();
 
-  // the mode will get figured out when the component is constructed
-  config.host['[attr.mode]'] = 'clsMode';
-
   return config;
 }
 

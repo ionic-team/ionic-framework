@@ -5,39 +5,35 @@
 $content-padding-md:    16px !default;
 
 
-[mode=md] {
+.padding,
+[padding],
+.padding > scroll-content,
+[padding] > scroll-content {
+  padding: $content-padding-md;
+}
 
-  .padding,
-  [padding],
-  .padding > scroll-content,
-  [padding] > scroll-content {
-    padding: $content-padding-md;
-  }
+.padding-top {
+  padding-top: $content-padding-md;
+}
 
-  .padding-top {
-    padding-top: $content-padding-md;
-  }
+.padding-right {
+  padding-right: $content-padding-md;
+}
 
-  .padding-right {
-    padding-right: $content-padding-md;
-  }
+.padding-bottom {
+  padding-bottom: $content-padding-md;
+}
 
-  .padding-bottom {
-    padding-bottom: $content-padding-md;
-  }
+.padding-left {
+  padding-left: $content-padding-md;
+}
 
-  .padding-left {
-    padding-left: $content-padding-md;
-  }
+.padding-vertical {
+  padding-top: $content-padding-md;
+  padding-bottom: $content-padding-md;
+}
 
-  .padding-vertical {
-    padding-top: $content-padding-md;
-    padding-bottom: $content-padding-md;
-  }
-
-  .padding-horizontal {
-    padding-right: $content-padding-md;
-    padding-left: $content-padding-md;
-  }
-
+.padding-horizontal {
+  padding-right: $content-padding-md;
+  padding-left: $content-padding-md;
 }

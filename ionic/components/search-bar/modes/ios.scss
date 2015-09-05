@@ -10,7 +10,7 @@ $search-bar-ios-background-svg:       "<svg xmlns='http://www.w3.org/2000/svg' v
 $search-bar-ios-background-size:      13px 13px !default;
 
 
-.search-bar[mode=ios] {
+.search-bar {
   padding: $search-bar-ios-padding;
   background: $search-bar-ios-background-color;
   border-bottom: 1px solid $search-bar-ios-border-color;
@@ -20,7 +20,6 @@ $search-bar-ios-background-size:      13px 13px !default;
     height: 13px;
 
     transform: translateX(calc(50% - 60px));
-    -webkit-transform: translateX(-webkit-calc(50% - 60px));
 
     @include svg-background-image($search-bar-ios-background-svg);
     background-size: $search-bar-ios-background-size;
@@ -56,6 +55,6 @@ $search-bar-ios-background-size:      13px 13px !default;
   }
 }
 
-.hairlines .search-bar[mode=ios] {
+&.hairlines .search-bar {
   border-bottom-width: 0.55px;
 }

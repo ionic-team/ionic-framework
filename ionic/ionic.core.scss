@@ -1,4 +1,8 @@
 
+// Theme
+@import "themes/default";
+
+
 // Globals
 @import
   "util/mixins",
@@ -43,3 +47,14 @@
   "components/switch/switch",
   "components/tabs/tabs",
   "components/view/view";
+
+
+// Ionicons
+$ionicons: true !default;
+@if ($ionicons) {
+  @import "fonts/ionicons";
+}
+
+
+// Engine
+@import  "platform/cordova";

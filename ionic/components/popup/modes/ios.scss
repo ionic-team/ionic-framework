@@ -7,7 +7,7 @@ $popup-ios-bg-color:              #f8f8f8 !default;
 $popup-ios-button-text-color:     color(primary) !default;
 
 
-.popup[mode=ios] {
+.popup {
 
   popup-wrapper {
     border-radius: $popup-ios-border-radius;

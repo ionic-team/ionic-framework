@@ -167,7 +167,7 @@ export class IonicApp {
       }
     });
 
-    bodyEle.setAttribute('mode', config.setting('mode'));
+    bodyEle.classList.add(config.setting('mode'));
 
     /**
     * Hairline Shim

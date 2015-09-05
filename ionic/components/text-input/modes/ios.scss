@@ -5,8 +5,8 @@
 $input-label-ios-color:         #7f7f7f !default;
 
 
-.list[mode=ios],
-ion-card[mode=ios] {
+.list,
+ion-card {
 
   .text-input {
     margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom ($item-ios-padding-left / 2);

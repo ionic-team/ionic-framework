@@ -9,7 +9,7 @@ $tab-bar-md-item-icon-size:           2.4rem !default;
 $tab-bar-md-item-height:              4.8rem !default;
 
 
-.tabs[mode=md] {
+.tabs {
 
   .tab-button {
     padding: $tab-bar-md-item-padding;
@@ -39,12 +39,12 @@ $tab-bar-md-item-height:              4.8rem !default;
 
 }
 
-[mode=md][tab-bar-icons=bottom] .tab-button {
+[tab-bar-icons=bottom] .tab-button {
   padding-top: 8px;
   padding-bottom: 8px;
 }
-[mode=md][tab-bar-icons=right] .tab-button,
-[mode=md][tab-bar-icons=left] .tab-button {
+[tab-bar-icons=right] .tab-button,
+[tab-bar-icons=left] .tab-button {
   padding-bottom: 10px;
 
   icon {
@@ -52,7 +52,7 @@ $tab-bar-md-item-height:              4.8rem !default;
   }
 }
 
-[mode=md] .tab-button.icon-only,
-[mode=md] .tab-button.has-title-only {
+.tab-button.icon-only,
+.tab-button.has-title-only {
   padding: 6px 10px 6px 10px;
 }

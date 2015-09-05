@@ -3,7 +3,7 @@
 // --------------------------------------------------
 
 
-.segment[mode=ios] .ion-segment {
+.segment .ion-segment {
   > button,
   > [button] {
     border-width: 1px;
@@ -26,6 +26,7 @@
     &:first-of-type {
       border-right-width: 0px;
     }
+
     &:last-of-type {
       border-left-width: 0px;
     }

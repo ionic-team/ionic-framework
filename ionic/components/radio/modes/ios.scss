@@ -5,7 +5,7 @@
 $radio-ios-active-color:       color(primary) !default;
 
 
-.radio[mode=ios] {
+.radio {
 
   .radio-icon {
     position: relative;
@@ -38,7 +38,7 @@ $radio-ios-active-color:       color(primary) !default;
 
 @mixin radio-theme-ios($color-name, $color-value) {
 
-  .radio[mode=ios][#{$color-name}] {
+  .radio[#{$color-name}] {
 
     &[aria-checked=true] .radio-icon:after {
       border-color: $color-value;

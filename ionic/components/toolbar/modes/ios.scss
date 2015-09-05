@@ -16,8 +16,7 @@ $toolbar-ios-button-font-size:              1.7rem !default;
 $toolbar-ios-title-font-size:               1.7rem !default;
 
 
-.nav[mode=ios] .toolbar,
-.toolbar[mode=ios] {
+.toolbar {
   border-bottom-width: 1px;
   border-bottom-style: solid;
   min-height: $toolbar-ios-height;
@@ -46,12 +45,17 @@ $toolbar-ios-title-font-size:               1.7rem !default;
   }
 
   .back-button {
+    margin: 0 4px;
+    min-height: 3.2rem;
+    line-height: 1;
     order: map-get($toolbar-order-ios, 'back-button');
     overflow: inherit;
   }
 
   .back-button-icon {
-    padding-right: 0.6rem;
+    display: inherit;
+    min-width: 20px;
+    font-size: 3.2rem;
   }
 
   button,
@@ -76,6 +80,6 @@ $toolbar-ios-title-font-size:               1.7rem !default;
 
 }
 
-.hairlines .toolbar[mode=ios] {
+&.hairlines .toolbar {
   border-bottom-width: 0.55px;
 }

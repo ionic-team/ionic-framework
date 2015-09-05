@@ -8,7 +8,7 @@ $tab-bar-ios-item-icon-size:           32px !default;
 $tab-bar-ios-height:                   49px !default;
 
 
-.tabs[mode=ios] {
+.tabs {
 
   .tab-bar {
     border-top: 1px solid $toolbar-ios-border-color;
@@ -46,8 +46,8 @@ $tab-bar-ios-height:                   49px !default;
 
 }
 
-[mode=ios][tab-bar-icons=right] .tab-button,
-[mode=ios][tab-bar-icons=left] .tab-button {
+[tab-bar-icons=right] .tab-button,
+[tab-bar-icons=left] .tab-button {
 
   .tab-button-text {
     font-size: 1.4rem;
@@ -63,7 +63,7 @@ $tab-bar-ios-height:                   49px !default;
   }
 }
 
-[mode=ios] .tab-button.has-title-only {
+.tab-button.has-title-only {
   min-height: $tab-bar-ios-height - 8;
 
   .tab-button-text {
@@ -72,11 +72,11 @@ $tab-bar-ios-height:                   49px !default;
   }
 }
 
-[mode=ios] .tab-button.icon-only {
+.tab-button.icon-only {
   min-height: $tab-bar-ios-height - 8;
 }
 
-.hairlines .tabs[mode=ios] {
+&.hairlines .tabs {
 
   .tab-bar {
     border-top-width: 0.5px;

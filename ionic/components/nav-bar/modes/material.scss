@@ -5,23 +5,22 @@
 $navbar-md-height:                  5.6rem !default;
 
 
-.nav[mode=md] {
+.nav {
 
   .navbar-container {
     min-height: $navbar-md-height;
   }
 
   .back-button {
-    padding: 0;
     margin: 0 0 0 12px;
     box-shadow: none;
   }
 
   .back-button-icon {
     margin: 0;
-    font-weight: normal;
-    font-size: 2.4rem;
     min-width: 44px;
+    font-size: 2.4rem;
+    font-weight: normal;
     text-align: left;
   }
 

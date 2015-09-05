@@ -6,8 +6,8 @@ $text-input-highlight-color:      map-get($colors, primary) !default;
 $input-label-md-color:            #999 !default;
 
 
-.list[mode=md],
-ion-card[mode=md] {
+.list,
+ion-card {
 
   .text-input {
     margin: $item-md-padding-top ($item-md-padding-right / 2) $item-md-padding-bottom ($item-md-padding-left / 2);
@@ -67,7 +67,7 @@ ion-card[mode=md] {
   }
 }
 
-.list[mode=md][inset] ion-input.item {
+.list[inset] ion-input.item {
   padding-right: 0;
   padding-left: 0;
 }

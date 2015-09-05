@@ -12,7 +12,7 @@ $checkbox-md-border-color-on:       color(primary) !default;
 $checkbox-md-checkmark-color-on:    $background-color !default;
 
 
-.checkbox[mode=md] {
+.checkbox {
 
   .checkbox-icon {
     position: relative;
@@ -49,7 +49,7 @@ $checkbox-md-checkmark-color-on:    $background-color !default;
 
 @mixin checkbox-theme-md($color-name, $bg-on) {
 
-  .checkbox[mode=md][#{$color-name}] {
+  .checkbox[#{$color-name}] {
 
     &[aria-checked=true] .checkbox-icon {
       background-color: $bg-on;

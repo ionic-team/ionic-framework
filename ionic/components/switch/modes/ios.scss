@@ -22,7 +22,7 @@ $switch-ios-handle-bg-color:           $switch-ios-off-bg-color !default;
 $switch-ios-transition-duration:       300ms !default;
 
 
-.switch[mode=ios] {
+.switch {
 
   .item-media {
     margin: 0;
@@ -125,7 +125,7 @@ $switch-ios-transition-duration:       300ms !default;
 
 @mixin switch-theme-ios($color-name, $bg-on) {
 
-  .switch[mode=ios][#{$color-name}] {
+  .switch[#{$color-name}] {
 
     &[aria-checked=true] .switch-icon {
       background-color: $bg-on;
