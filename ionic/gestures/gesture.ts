@@ -43,15 +43,17 @@ export class Gesture {
   }
 
   unlisten() {
-    for (let type in this._callbacks) {
-      for (let i = 0; i < this._callbacks[type].length; i++) {
-        //this.element.removeEventListener(type, this._callbacks[type][i]);
-        this.hammertime.off(type, this._callbacks[type]);
+    if (this.hammertime) {
+      for (let type in this._callbacks) {
+        for (let i = 0; i < this._callbacks[type].length; i++) {
+          //this.element.removeEventListener(type, this._callbacks[type][i]);
+          this.hammertime.off(type, this._callbacks[type]);
+        }
       }
+      this.hammertime.destroy();
+      this.hammertime = null;
+      this._callbacks = {}
     }
-    this.hammertime.destroy();
-    this.hammertime = null;
-    this._callbacks = {}
   }
 
   destroy() {
