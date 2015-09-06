@@ -135,7 +135,9 @@ export class Toolbar extends ToolbarBase {
     this.itemEles = [];
   }
 
-  onIonInit() {
+  onInit() {
+    super.onInit();
+
     // TODO: THIS IS HORRIBLE, FIX
     setTimeout(() => {
       this.alignTitle();

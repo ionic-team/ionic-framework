@@ -40,7 +40,9 @@ export class List extends Ion {
   /**
    * TODO
    */
-  onIonInit() {
+  onInit() {
+    super.onInit();
+
     if (util.isDefined(this.virtual)) {
       console.log('Content', this.content);
       console.log('Virtual?', this.virtual);

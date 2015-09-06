@@ -32,7 +32,8 @@ export class Content extends Ion {
   /**
    * TODO
    */
-  onIonInit() {
+  onInit() {
+    super.onInit();
     this.scrollElement = this.getNativeElement().children[0];
   }
 

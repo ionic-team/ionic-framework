@@ -40,7 +40,8 @@ export class Nav extends ViewController {
   /**
    * TODO
    */
-  onIonInit() {
+  onInit() {
+    super.onInit();
 
     if (this.root) {
       this.push(this.root);

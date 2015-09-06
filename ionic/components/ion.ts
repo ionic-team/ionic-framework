@@ -44,8 +44,6 @@ export class Ion {
         this[prop] = cls.defaultProperties[prop];
       }
     }
-
-    this.onIonInit && this.onIonInit();
   }
 
   getDelegate(delegateName) {
