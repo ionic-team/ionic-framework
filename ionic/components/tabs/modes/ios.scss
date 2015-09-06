@@ -8,42 +8,38 @@ $tab-bar-ios-item-icon-size:           32px !default;
 $tab-bar-ios-height:                   49px !default;
 
 
-.tabs {
+.tab-bar {
+  border-top: 1px solid $toolbar-ios-border-color;
+}
 
-  .tab-bar {
-    border-top: 1px solid $toolbar-ios-border-color;
+.tabs[tab-bar-placement="top"] .tab-bar {
+  border-top: none;
+  border-bottom: 1px solid $toolbar-ios-border-color;
+}
+
+.tab-button {
+  padding: $tab-bar-ios-item-padding;
+  min-height: $tab-bar-ios-height;
+}
+
+.tab-button-text {
+  margin-bottom: 0;
+  min-height: $tab-bar-ios-item-font-size + 1;
+  font-size: $tab-bar-ios-item-font-size;
+}
+
+.has-title-only .tab-button-text {
+  font-size: $tab-bar-ios-item-font-size + 2;
+}
+
+.tab-button-icon {
+  font-size: $tab-bar-ios-item-icon-size;
+  height: $tab-bar-ios-item-icon-size;
+  min-width: $tab-bar-ios-item-icon-size + 5;
+
+  &:before {
+    vertical-align: top;
   }
-
-  &[tab-bar-placement="top"] .tab-bar {
-    border-top: none;
-    border-bottom: 1px solid $toolbar-ios-border-color;
-  }
-
-  .tab-button {
-    padding: $tab-bar-ios-item-padding;
-    min-height: $tab-bar-ios-height;
-  }
-
-  .tab-button-text {
-    margin-bottom: 0;
-    min-height: $tab-bar-ios-item-font-size + 1;
-    font-size: $tab-bar-ios-item-font-size;
-  }
-
-  .has-title-only .tab-button-text {
-    font-size: $tab-bar-ios-item-font-size + 2;
-  }
-
-  .tab-button-icon {
-    font-size: $tab-bar-ios-item-icon-size;
-    height: $tab-bar-ios-item-icon-size;
-    min-width: $tab-bar-ios-item-icon-size + 5;
-
-    &:before {
-      vertical-align: top;
-    }
-  }
-
 }
 
 [tab-bar-icons=right] .tab-button,

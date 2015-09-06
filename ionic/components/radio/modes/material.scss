@@ -12,7 +12,7 @@ $radio-md-transition-duration:    280ms !default;
 $radio-md-transition-easing:      cubic-bezier(.4, 0, .2, 1) !default;
 
 
-.radio {
+ion-radio {
 
   .radio-icon {
     position: relative;
@@ -58,7 +58,7 @@ $radio-md-transition-easing:      cubic-bezier(.4, 0, .2, 1) !default;
 
 @mixin radio-theme-md($color-name, $color-value) {
 
-  .radio[#{$color-name}] {
+  ion-radio[#{$color-name}] {
 
     &[aria-checked=true] .radio-icon {
       border-color: $color-value;

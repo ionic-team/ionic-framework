@@ -18,9 +18,9 @@ $switch-md-handle-box-shadow:         0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2p
 $switch-md-transition-duration:       300ms !default;
 
 
-.switch {
+ion-switch {
 
-  .item-media {
+  .item-media.media-switch {
     margin: 0;
     padding: 6px ($item-md-padding-right / 2) 6px $item-md-padding-left;
   }
@@ -85,7 +85,7 @@ $switch-md-transition-duration:       300ms !default;
 
 @mixin switch-theme-md($color-name, $bg-on) {
 
-  .switch[#{$color-name}] {
+  ion-switch[#{$color-name}] {
 
     &[aria-checked=true] .switch-icon {
       background-color: lighten($bg-on, 25%);

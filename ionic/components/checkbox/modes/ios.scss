@@ -12,15 +12,6 @@ $checkbox-ios-checkmark-color-on:    $background-color !default;
 
 .checkbox {
 
-  .checkbox-icon {
-    position: relative;
-    width: $checkbox-ios-icon-size;
-    height: $checkbox-ios-icon-size;
-    border-radius: 50%;
-    border: 1px solid $checkbox-ios-border-color-off;
-    background-color: $checkbox-ios-bg-color-off;
-  }
-
   &[aria-checked=true] .checkbox-icon {
     background-color: $checkbox-ios-bg-color-on;
     border-color: $checkbox-ios-border-color-on;
@@ -41,19 +32,24 @@ $checkbox-ios-checkmark-color-on:    $background-color !default;
 
 }
 
+.checkbox-icon {
+  position: relative;
+  width: $checkbox-ios-icon-size;
+  height: $checkbox-ios-icon-size;
+  border-radius: 50%;
+  border: 1px solid $checkbox-ios-border-color-off;
+  background-color: $checkbox-ios-bg-color-off;
+}
+
 
 // iOS Checkbox Color Mixin
 // --------------------------------------------------
 
 @mixin checkbox-theme-ios($color-name, $bg-on) {
 
-  .checkbox[#{$color-name}] {
-
-    &[aria-checked=true] .checkbox-icon {
-      background-color: $bg-on;
-      border-color: $bg-on;
-    }
-
+  .checkbox[#{$color-name}][aria-checked=true] .checkbox-icon {
+    background-color: $bg-on;
+    border-color: $bg-on;
   }
 
 }

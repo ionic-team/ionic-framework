@@ -23,16 +23,16 @@ import * as util from 'ionic/util';
         '<div class="action-menu-group action-menu-options">' +
           '<div class="action-menu-title" *ng-if="titleText">{{titleText}}</div>' +
           '<button (^click)="_buttonClicked(index)" *ng-for="#b of buttons; #index = index" class="action-menu-option">' +
-            '<icon class="icon" [name]="b.icon" *ng-if="b.icon"></icon> ' +
+            '<icon [name]="b.icon" *ng-if="b.icon"></icon> ' +
             '{{b.text}}' +
           '</button>' +
           '<button *ng-if="destructiveText" (click)="_destructive()" class="destructive action-menu-destructive">' +
-            '<icon class="icon" [name]="destructiveIcon" *ng-if="destructiveIcon"></icon> ' +
+            '<icon [name]="destructiveIcon" *ng-if="destructiveIcon"></icon> ' +
             '{{destructiveText}}</button>' +
         '</div>' +
         '<div class="action-menu-group action-menu-cancel" *ng-if="cancelText">' +
           '<button (click)="_cancel()">' +
-            '<icon class="icon" [name]="cancelIcon"></icon> ' +
+            '<icon [name]="cancelIcon"></icon> ' +
             '{{cancelText}}</button>' +
         '</div>' +
       '</div>' +

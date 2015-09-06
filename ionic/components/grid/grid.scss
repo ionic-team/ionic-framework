@@ -34,9 +34,11 @@ ion-row {
   display: flex;
   padding: ($grid-padding-width / 2);
   width: 100%;
+
   &[wrap] {
     flex-wrap: wrap;
   }
+
   &[flush] {
     padding: 0;
   }

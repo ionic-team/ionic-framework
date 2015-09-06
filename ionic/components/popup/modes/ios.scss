@@ -7,35 +7,31 @@ $popup-ios-bg-color:              #f8f8f8 !default;
 $popup-ios-button-text-color:     color(primary) !default;
 
 
-.popup {
+popup-wrapper {
+  border-radius: $popup-ios-border-radius;
+  background-color: $popup-ios-bg-color;
+}
 
-  popup-wrapper {
-    border-radius: $popup-ios-border-radius;
-    background-color: $popup-ios-bg-color;
-  }
+.popup-head {
+  padding-top: 24px;
+}
 
-  .popup-head {
-    padding-top: 24px;
-  }
+.popup-body:empty {
+  padding: 0;
+}
 
-  .popup-body:empty {
-    padding: 0;
-  }
+.popup-buttons {
+  padding: 0;
+  min-height: 0;
 
-  .popup-buttons {
-    padding: 0;
-    min-height: 0;
+  button {
+    background-color: transparent;
+    color: $popup-ios-button-text-color;
+    font-size: 14px;
 
-    button {
-      background-color: transparent;
-      color: $popup-ios-button-text-color;
-      font-size: 14px;
-
-      &:last-child {
-        font-weight: bold;
-      }
+    &:last-child {
+      font-weight: bold;
     }
-
   }
 
 }

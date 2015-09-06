@@ -22,73 +22,73 @@ $action-menu-ios-icon-font-size:           1.4em !default;
 
 ion-action-menu {
   text-align: center;
-
-  .action-menu-container {
-    padding: 0 $action-menu-ios-group-margin;
-  }
-
-  button {
-    min-height: $action-menu-ios-height;
-    padding: $action-menu-ios-padding;
-
-    margin: 0;
-    border: 0;
-
-    background: transparent;
-
-    &.activated {
-      background: $action-menu-ios-background-active;
-    }
-  }
-
-  .action-menu-group {
-    margin-bottom: $action-menu-ios-group-margin - 2;
-    border-radius: $action-menu-ios-border-radius;
-  }
-
-  .action-menu-group:last-child {
-    margin-bottom: $action-menu-ios-group-margin;
-  }
-
-  .action-menu-title,
-  .action-menu-option {
-    min-height: $action-menu-ios-height;
-
-    background: $action-menu-ios-background-color;
-    font-weight: 400;
-
-    border-bottom: 1px solid $action-menu-ios-border-color;
-  }
-
-  .action-menu-title {
-    padding: 2rem;
-    font-size: $action-menu-ios-title-font-size;
-    font-weight: 500;
-    color: $action-menu-ios-title-color;
-    border-radius: 0;
-  }
-
-  .action-menu-option {
-    font-size: $action-menu-ios-button-font-size;
-    color: $action-menu-ios-button-text-color;
-    border-radius: 0;
-  }
-
-  .action-menu-title:first-child,
-  .action-menu-button:first-child,
-  .action-menu-group button:first-child {
-    border-top-left-radius: $action-menu-ios-border-radius;
-    border-top-right-radius: $action-menu-ios-border-radius;
-  }
-
-  .action-menu-title:last-child,
-  .action-menu-button:last-child,
-  .action-menu-group button:last-child {
-    border-bottom-left-radius: $action-menu-ios-border-radius;
-    border-bottom-right-radius: $action-menu-ios-border-radius;
-  }
-
 }
+
+.action-menu-container {
+  padding: 0 $action-menu-ios-group-margin;
+}
+
+ion-action-menu button {
+  min-height: $action-menu-ios-height;
+  padding: $action-menu-ios-padding;
+
+  margin: 0;
+  border: 0;
+
+  background: transparent;
+
+  &.activated {
+    background: $action-menu-ios-background-active;
+  }
+}
+
+.action-menu-group {
+  margin-bottom: $action-menu-ios-group-margin - 2;
+  border-radius: $action-menu-ios-border-radius;
+}
+
+.action-menu-group:last-child {
+  margin-bottom: $action-menu-ios-group-margin;
+}
+
+.action-menu-title,
+.action-menu-option {
+  min-height: $action-menu-ios-height;
+
+  background: $action-menu-ios-background-color;
+  font-weight: 400;
+
+  border-bottom: 1px solid $action-menu-ios-border-color;
+}
+
+.action-menu-title {
+  padding: 2rem;
+  font-size: $action-menu-ios-title-font-size;
+  font-weight: 500;
+  color: $action-menu-ios-title-color;
+  border-radius: 0;
+}
+
+.action-menu-option {
+  font-size: $action-menu-ios-button-font-size;
+  color: $action-menu-ios-button-text-color;
+  border-radius: 0;
+}
+
+.action-menu-title:first-child,
+.action-menu-button:first-child,
+.action-menu-group button:first-child {
+  border-top-left-radius: $action-menu-ios-border-radius;
+  border-top-right-radius: $action-menu-ios-border-radius;
+}
+
+.action-menu-title:last-child,
+.action-menu-button:last-child,
+.action-menu-group button:last-child {
+  border-bottom-left-radius: $action-menu-ios-border-radius;
+  border-bottom-right-radius: $action-menu-ios-border-radius;
+}
+
 
 &.hairlines .action-menu {
   .action-menu-title,

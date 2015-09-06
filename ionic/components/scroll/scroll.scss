@@ -1,6 +1,8 @@
+
 ion-scroll {
   position: relative;
   display: block;
+
   &.scroll-x scroll-content {
     overflow-x: auto;
   }
@@ -26,7 +28,6 @@ ion-scroll {
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
     will-change: scroll-position;
-
   }
 
 }

@@ -14,44 +14,44 @@ $search-bar-ios-background-size:      13px 13px !default;
   padding: $search-bar-ios-padding;
   background: $search-bar-ios-background-color;
   border-bottom: 1px solid $search-bar-ios-border-color;
+}
 
+.search-bar-icon {
+  width: 100%;
+  height: 13px;
+
+  transform: translateX(calc(50% - 60px));
+
+  @include svg-background-image($search-bar-ios-background-svg);
+  background-size: $search-bar-ios-background-size;
+  background-repeat: no-repeat;
+  position: absolute;
+  left: 10px;
+  top: 8px;
+}
+
+.search-bar-input {
+  height: $search-bar-ios-input-height;
+  padding: 0 28px;
+
+  font-size: 1.4rem;
+  font-weight: 400;
+
+  border-radius: 5px;
+  color: #000;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-position: 8px center;
+
+  @include calc(padding-left, "50% - 28px");
+}
+
+.search-bar-input-container.left-align {
   .search-bar-icon {
-    width: 100%;
-    height: 13px;
-
-    transform: translateX(calc(50% - 60px));
-
-    @include svg-background-image($search-bar-ios-background-svg);
-    background-size: $search-bar-ios-background-size;
-    background-repeat: no-repeat;
-    position: absolute;
-    left: 10px;
-    top: 8px;
+    transform: translateX(0);
   }
-
   .search-bar-input {
-    height: $search-bar-ios-input-height;
-    padding: 0 28px;
-
-    font-size: 1.4rem;
-    font-weight: 400;
-
-    border-radius: 5px;
-    color: #000;
-    background-color: #fff;
-    background-repeat: no-repeat;
-    background-position: 8px center;
-
-    @include calc(padding-left, "50% - 28px");
-  }
-
-  .search-bar-input-container.left-align {
-    .search-bar-icon {
-      transform: translateX(0);
-    }
-    .search-bar-input {
-      padding-left: 28px;
-    }
+    padding-left: 28px;
   }
 }
 

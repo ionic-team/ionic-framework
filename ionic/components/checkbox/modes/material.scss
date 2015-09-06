@@ -14,15 +14,6 @@ $checkbox-md-checkmark-color-on:    $background-color !default;
 
 .checkbox {
 
-  .checkbox-icon {
-    position: relative;
-    width: $checkbox-md-icon-size;
-    height: $checkbox-md-icon-size;
-    border-radius: $checkbox-md-border-radius;
-    border: $checkbox-md-border-width solid $checkbox-md-border-color-off;
-    background-color: $checkbox-md-bg-color-off;
-  }
-
   &[aria-checked=true] .checkbox-icon {
     background-color: $checkbox-md-bg-color-on;
     border-color: $checkbox-md-border-color-on;
@@ -43,19 +34,24 @@ $checkbox-md-checkmark-color-on:    $background-color !default;
 
 }
 
+.checkbox-icon {
+  position: relative;
+  width: $checkbox-md-icon-size;
+  height: $checkbox-md-icon-size;
+  border-radius: $checkbox-md-border-radius;
+  border: $checkbox-md-border-width solid $checkbox-md-border-color-off;
+  background-color: $checkbox-md-bg-color-off;
+}
+
 
 // Material Design Checkbox Color Mixin
 // --------------------------------------------------
 
 @mixin checkbox-theme-md($color-name, $bg-on) {
 
-  .checkbox[#{$color-name}] {
-
-    &[aria-checked=true] .checkbox-icon {
-      background-color: $bg-on;
-      border-color: $bg-on;
-    }
-
+  .checkbox[#{$color-name}][aria-checked=true] .checkbox-icon {
+    background-color: $bg-on;
+    border-color: $bg-on;
   }
 
 }
@@ -64,8 +60,8 @@ $checkbox-md-checkmark-color-on:    $background-color !default;
 // Generate Material Design Checkbox Auxiliary Colors
 // --------------------------------------------------
 
-@each $color-name, $value in auxiliary-colors() {
+@each $color-name, $color-value in auxiliary-colors() {
 
-  @include checkbox-theme-md($color-name, $value);
+  @include checkbox-theme-md($color-name, $color-value);
 
 }

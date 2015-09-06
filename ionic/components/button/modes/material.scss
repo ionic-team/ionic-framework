@@ -85,40 +85,45 @@ button,
     padding: 0;
   }
 
-  // Generate iOS Checkbox Auxiliary Colors
-  // --------------------------------------------------
+}
 
-  @each $color, $value in auxiliary-colors() {
 
-    &[#{$color}] {
+// Material Design Button Color Mixin
+// --------------------------------------------------
+
+@mixin button-theme-md($color-name, $color-value) {
+
+  button[#{$color-name}],
+  [button][#{$color-name}] {
+
+    &.activated {
+      opacity: 1;
+    }
+
+    &[outline] {
 
       &.activated {
+
+        @if lightness(get-color($color-name, base)) > 90 {
+          $fg-color: get-color($color-name, inverse);
+        } @else {
+          $fg-color: get-color($color-name, base);
+        }
+
         opacity: 1;
       }
-
-      &[outline] {
-        @if lightness(get-color($color, base)) >= 80 {
-          .md-ripple {
-            //background-color: black;
-          }
-        } @else {
-          .md-ripple {
-            //background-color: get-color($color, base);
-          }
-        }
-
-        &.activated {
-
-          @if lightness(get-color($color, base)) > 90 {
-            $fg-color: get-color($color, inverse);
-          } @else {
-            $fg-color: get-color($color, base);
-          }
-
-          opacity: 1;
-        }
-      }
-
     }
+
   }
+
+}
+
+
+// Generate Material Design Button Auxiliary Colors
+// --------------------------------------------------
+
+@each $color-name, $value in auxiliary-colors() {
+
+  @include button-theme-md($color-name, $value);
+
 }

@@ -3,9 +3,10 @@
 // --------------------------------------------------
 
 
-.segment .ion-segment {
-  > button,
-  > [button] {
+.ion-segment {
+
+  button,
+  [button] {
     border-width: 1px;
 
     transition: 100ms all linear;
@@ -30,5 +31,7 @@
     &:last-of-type {
       border-left-width: 0px;
     }
+
   }
+
 }

@@ -2,32 +2,6 @@
 // Forms
 // --------------------------------------------------
 
-
-form {
-  margin: 0;
-}
-
-label,
-input,
-select,
-textarea {
-  line-height: normal;
-  font-family: inherit;
-}
-
-textarea {
-  margin: 0;
-  padding: 0;
-  height: auto;
-  overflow: auto;
-  color: inherit;
-  font: inherit;
-}
-
-.platform-mobile textarea {
-  resize: none;
-}
-
 ion-input {
 
   // text inputs
@@ -53,6 +27,20 @@ ion-input {
   }
 
 }
+
+textarea {
+  margin: 0;
+  padding: 0;
+  height: auto;
+  overflow: auto;
+  font: inherit;
+  color: inherit;
+}
+
+.platform-mobile textarea {
+  resize: none;
+}
+
 
 
 // Placeholder

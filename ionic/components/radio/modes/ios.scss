@@ -5,13 +5,7 @@
 $radio-ios-active-color:       color(primary) !default;
 
 
-.radio {
-
-  .radio-icon {
-    position: relative;
-    width: 16px;
-    height: 21px;
-  }
+ion-radio {
 
   &[aria-checked=true] .radio-icon:after {
     position: absolute;
@@ -32,13 +26,19 @@ $radio-ios-active-color:       color(primary) !default;
 
 }
 
+.radio-icon {
+  position: relative;
+  width: 16px;
+  height: 21px;
+}
+
 
 // iOS Radio Color Mixin
 // --------------------------------------------------
 
 @mixin radio-theme-ios($color-name, $color-value) {
 
-  .radio[#{$color-name}] {
+  ion-radio[#{$color-name}] {
 
     &[aria-checked=true] .radio-icon:after {
       border-color: $color-value;
