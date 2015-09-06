@@ -17,7 +17,8 @@ import {IonicComponent, IonicView} from '../../config/annotations';
 import {pointerCoord} from '../../util/dom';
 
 /**
- * TODO
+ * @name mediaSwitch
+ * @private
  */
 @Directive({
   selector: '.media-switch',
@@ -46,7 +47,41 @@ class MediaSwitch {
 
 
 /**
- * TODO
+ * @name ionSwitch
+ * @classdesc
+ * A switch technically is the same thing as an HTML checkbox input, except it looks different and is easier to use on a touch device. Ionic prefers to wrap the checkbox input with the <label> in order to make the entire toggle easy to tap or drag.
+ *
+ * Toggles can also have colors assigned to them, by adding the `toggle-assertive` attribute to assign the assertive color.
+ *
+ * See the [Angular 2 Docs](https://angular.io/docs/js/latest/api/forms/) for more info on forms and input.
+ *
+ * @example
+ * ```html
+ *  <ion-switch checked="true">
+ *    Pineapple
+ *  </ion-switch>
+ * ````
+ *
+ * @example
+ * Create a list of switch components:
+ * ```html
+ *  <ion-list>
+ *
+ *    <ion-switch checked="true">
+ *      Apple
+ *    </ion-switch>
+ *
+ *     <ion-switch checked="false">
+ *       Banana
+ *     </ion-switch>
+ *
+ *     <ion-switch disabled="true">
+ *       Cherry
+ *     </ion-switch>
+ *
+ *  </ion-list>
+ * ```
+ *
  */
 @IonicComponent({
   selector: 'ion-switch',

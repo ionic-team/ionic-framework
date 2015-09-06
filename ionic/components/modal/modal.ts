@@ -5,7 +5,27 @@ import {Animation} from '../../animations/animation';
 import * as util from 'ionic/util';
 
 /**
- * TODO
+ * @name ionModal
+ * @classdesc
+ * The Modal is a content pane that can go over the user's main view temporarily. Usually used for making a choice or editing an item.
+ *
+ * @example
+ * ```ts
+ * class MyApp {
+ * 
+ *  constructor(modal: Modal, app: IonicApp, ionicConfig: IonicConfig) {
+ *    this.modal = modal;
+ *  }
+ * 
+ *  openModal() {
+ *    this.modal.open(ContactModal, {
+ *      enterAnimation: 'my-fade-in',
+ *      leaveAnimation: 'my-fade-out',
+ *      handle: 'my-modal'
+ *    });
+ *  }
+ * }
+ * ```
  */
 @Injectable()
 export class Modal extends Overlay {

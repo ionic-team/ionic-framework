@@ -7,7 +7,43 @@ import * as util from 'ionic/util';
 
 
 /**
- * TODO
+ * @name ionPopup
+ * @classdesc
+ * The Ionic Popup service allows programmatically creating and showing popup windows that require the user to respond in order to continue.
+ *
+ * The popup system has support for more flexible versions of the built in `alert()`, `prompt()`, and `confirm()` functions that users are used to, in addition to allowing popups with completely custom content and look.
+ *
+ * @example
+ * ```ts
+ * class myApp {
+ * 
+ *   constructor(popup: Popup) {
+ *     this.popup = popup;
+ *   }
+ * 
+ *   doAlert() {
+ *     this.popup.alert('Alert').then(() => {
+ *       console.log('Alert closed');
+ *     });
+ *   }
+ * 
+ *   doPrompt() {
+ *     this.popup.prompt('What is your name?').then((name) => {
+ *       console.log('Name entered:', name);
+ *     }, () => {
+ *       console.error('Prompt closed');
+ *     });
+ *   }
+ * 
+ *   doConfirm() {
+ *     this.popup.confirm('Are you sure?').then((result, ev) => {
+ *       console.log('Confirmed!', result);
+ *     }, () => {
+ *       console.error('Not confirmed!');
+ *     });
+ *   }
+ * }
+ * ```
  */
 @Injectable()
 export class Popup extends Overlay {

@@ -6,7 +6,38 @@ import * as util from 'ionic/util';
 import {raf, ready, CSS} from 'ionic/util/dom';
 
 /**
- * TODO
+ * @name ionRefresher
+ * @classdesc
+ * Allows you to add pull-to-refresh to an ionContent component.
+ *
+ * Place it as the first child of your ionContent or ionScroll element.
+ *
+ * When refreshing is complete, call `refresher.complete()` from your controller.
+ * 
+ *  @example
+ *  ```html
+ *  <ion-refresher (starting)="doStarting()" (refresh)="doRefresh($event, refresher)" (pulling)="doPulling($event, amt)">
+ *  ```
+ *
+ *  @example
+ *  ```ts
+ *  doRefresh(refresher) {
+ *    console.log('Refreshing!', refresher);
+ *  
+ *    setTimeout(() => {
+ *      console.log('Pull to refresh complete!', refresher);
+ *      refresher.complete();
+ *    })
+ *  }
+ *  
+ *  doStarting() {
+ *    console.log('Pull started!');
+ *  }
+ *  
+ *  doPulling(amt) {
+ *    console.log('You have pulled', amt);
+ *  }
+ *  ```
  */
 @Component({
   selector: 'ion-refresher',
@@ -94,7 +125,7 @@ export class Refresher {
 
     this.showIcon = util.isDefined(this.refreshingIcon);
 
-    this._touchMoveListener = this._handleTouchMove.bind(this);
+    this._touchMoveListener = this._handleTouchMov.bind(this);
     this._touchEndListener = this._handleTouchEnd.bind(this);
     this._handleScrollListener = this._handleScroll.bind(this);
     sc.addEventListener('touchmove', this._touchMoveListener);

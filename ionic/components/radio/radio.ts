@@ -6,9 +6,46 @@ import {Ion} from '../ion';
 import {TapClick} from '../button/button';
 import {ListHeader} from '../list/list';
 
+
 /**
- * A radio group component.
- */
+ * @name ionRadioGroup
+ * @classdesc
+ * A radio group is a group of radio components.
+ * 
+ * Selecting a radio button in the group unselects all others in the group.
+ * 
+ * New radios can be registered dynamically. 
+ *
+ * See the [Angular 2 Docs](https://angular.io/docs/js/latest/api/forms/) for more info on forms and input.
+ * 
+ * @example
+ * ```html
+ * <ion-radio-group ng-control="clientside">
+ * 
+ *   <ion-header>
+ *     Clientside
+ *   </ion-header>
+ * 
+ *   <ion-radio value="ember">
+ *     Ember
+ *   </ion-radio>
+ * 
+ *   <ion-radio value="angular1">
+ *     Angular 1
+ *   </ion-radio>
+ * 
+ *   <ion-radio value="angular2" checked="true">
+ *     Angular 2
+ *   </ion-radio>
+ * 
+ *   <ion-radio value="react">
+ *     React
+ *   </ion-radio>
+ * 
+ * </ion-radio-group>
+ * ```
+*/
+
 @IonicDirective({
   selector: 'ion-radio-group',
   host: {
@@ -114,7 +151,19 @@ export class RadioGroup extends Ion {
 }
 
 /**
- * A radio button component.
+ * @name ionRadio
+ * @classdesc
+ * A single radio component. 
+ *
+ * See the [Angular 2 Docs](https://angular.io/docs/js/latest/api/forms/) for more info on forms and input.
+ *
+ * @example
+ * ```html
+ * <ion-radio value="isChecked" checked="true">
+ *   Radio Label
+ * </ion-radio>
+ * ```
+ *
  */
 @IonicComponent({
   selector: 'ion-radio',

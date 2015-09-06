@@ -15,6 +15,44 @@ import {Animation} from '../../animations/animation';
 import * as util from 'ionic/util';
 
 
+/**
+ * @name ActionMenu
+ * @classdesc
+ * The Action Menu is a slide-up pane that lets the user choose from a set of options. Dangerous options are made obvious.
+ *
+ * There are easy ways to cancel out of the action sheet, such as tapping the backdrop or even hitting escape on the keyboard for desktop testing.
+ *
+ * @example
+ * ```ts
+ * openMenu() {
+ *
+ *   this.actionMenu.open({
+ *     buttons: [
+ *       { text: 'Share This' },
+ *       { text: 'Move' }
+ *     ],
+ *     destructiveText: 'Delete',
+ *     titleText: 'Modify your album',
+ *     cancelText: 'Cancel',
+ *     cancel: function() {
+ *       console.log('Canceled');
+ *     },
+ *     destructiveButtonClicked: () => {
+ *       console.log('Destructive clicked');
+ *     },
+ *     buttonClicked: function(index) {
+ *       console.log('Button clicked', index);
+ *       if(index == 1) { return false; }
+ *       return true;
+ *     }
+ *
+ *   }).then(actionMenuRef => {
+ *     this.actionMenuRef = actionMenuRef;
+ *   });
+ *
+ * }
+ * ```
+ */
 @View({
   template:
     '<backdrop (click)="_cancel()" tappable></backdrop>' +
@@ -61,9 +99,6 @@ class ActionMenuDirective {
   }
 }
 
-/**
- * TODO
- */
 @Injectable()
 export class ActionMenu extends Overlay {
   /**
