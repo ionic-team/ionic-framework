@@ -97,7 +97,7 @@ ion-switch {
     box-shadow: $switch-ios-handle-box-shadow;
 
     will-change: transform, width, left;
-    transition: transform $switch-ios-transition-duration, width 120ms ease-in-out 80ms, left 120ms ease-in-out 80ms;
+    transition: transform $switch-ios-transition-duration, width 120ms ease-in-out 80ms, left 110ms ease-in-out 80ms;
   }
 
   &[aria-checked=true] .switch-icon:after {

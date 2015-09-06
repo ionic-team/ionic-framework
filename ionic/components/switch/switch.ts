@@ -22,11 +22,9 @@ import {pointerCoord} from '../../util/dom';
 @Directive({
   selector: '.media-switch',
   host: {
-    '(^touchstart)': 'pointerDown($event)',
-    '(^mousedown)': 'pointerDown($event)',
-    '(^touchend)': 'pointerUp($event)',
-    '(^mouseup)': 'pointerUp($event)',
-    '[class.activated]': 'isActivated'
+    '(^touchstart)': 'swtch.pointerDown($event)',
+    '(^mousedown)': 'swtch.pointerDown($event)',
+    '[class.activated]': 'swtch.isActivated'
   }
 })
 class MediaSwitch {
@@ -38,76 +36,10 @@ class MediaSwitch {
    */
   constructor(
     @Host() @Inject(forwardRef(() => Switch)) swtch: Switch,
-    elementRef: ElementRef,
-    config: IonicConfig
+    elementRef: ElementRef
   ) {
+    swtch.switchEle = elementRef.nativeElement;
     this.swtch = swtch;
-    let self = this;
-    let element = elementRef.nativeElement;
-
-    function pointerMove(ev) {
-      let currentX = pointerCoord(ev).x;
-
-      if (swtch.checked) {
-        if (currentX + 15 < self.startX) {
-          swtch.toggle();
-          self.startX = currentX;
-        }
-      } else if (currentX - 15 > self.startX) {
-        swtch.toggle();
-        self.startX = currentX;
-      }
-    }
-
-    this.addMoveListener = function() {
-      element.addEventListener('touchmove', pointerMove);
-      element.addEventListener('mousemove', pointerMove);
-    };
-
-    this.removeMoveListener = function() {
-      element.removeEventListener('touchmove', pointerMove);
-      element.removeEventListener('mousemove', pointerMove);
-    };
-  }
-
-  pointerDown(ev) {
-    if (ev.type == 'touchstart') {
-      this.isTouch = true;
-    }
-    if (this.isTouch && ev.type == 'mousedown') {
-      return;
-    }
-
-    this.startX = pointerCoord(ev).x;
-
-    this.removeMoveListener();
-    this.addMoveListener();
-
-    this.isActivated = true;
-  }
-
-  pointerUp(ev) {
-    if (this.isTouch && ev.type == 'mouseup') {
-      return;
-    }
-
-    let endX = pointerCoord(ev).x;
-
-    if (this.swtch.checked) {
-      if (this.startX + 4 > endX) {
-        this.swtch.toggle();
-      }
-    } else if (this.startX - 4 < endX) {
-      this.swtch.toggle();
-    }
-
-    this.removeMoveListener();
-    this.isActivated = false;
-  }
-
-  onDestroy() {
-    this.removeMoveListener();
-    this.swtch = this.addMoveListener = this.removeMoveListener = null;
   }
 
 }
@@ -130,7 +62,9 @@ class MediaSwitch {
     '[attr.tab-index]': 'tabIndex',
     '[attr.aria-checked]': 'checked',
     '[attr.aria-disabled]': 'disabled',
-    '[attr.aria-labelledby]': 'labelId'
+    '[attr.aria-labelledby]': 'labelId',
+    '(^touchend)': 'pointerUp($event)',
+    '(^mouseup)': 'pointerUp($event)',
   }
 })
 @IonicView({
@@ -157,13 +91,48 @@ export class Switch extends Ion {
     @Optional() private ngControl: NgControl
   ) {
     super(elementRef, config);
-    this.id = IonInput.nextId();
-    this.tabIndex = 0;
+    let self = this;
 
-    this.onChange = (_) => {};
-    this.onTouched = (_) => {};
+    self.id = IonInput.nextId();
+    self.tabIndex = 0;
+
+    self.onChange = (_) => {};
+    self.onTouched = (_) => {};
 
     if (ngControl) ngControl.valueAccessor = this;
+
+
+    function pointerMove(ev) {
+      let currentX = pointerCoord(ev).x;
+
+      if (self.checked) {
+        if (currentX + 15 < self.startX) {
+          self.toggle();
+          self.startX = currentX;
+        }
+      } else if (currentX - 15 > self.startX) {
+        self.toggle();
+        self.startX = currentX;
+      }
+    }
+
+    function pointerOut(ev) {
+      if (ev.currentTarget === ev.target) {
+        self.pointerUp(ev);
+      }
+    }
+
+    this.addMoveListener = function() {
+      this.switchEle.addEventListener('touchmove', pointerMove);
+      this.switchEle.addEventListener('mousemove', pointerMove);
+      elementRef.nativeElement.addEventListener('mouseout', pointerOut);
+    };
+
+    this.removeMoveListener = function() {
+      this.switchEle.removeEventListener('touchmove', pointerMove);
+      this.switchEle.removeEventListener('mousemove', pointerMove);
+      elementRef.nativeElement.removeEventListener('mouseout', pointerOut);
+    };
   }
 
   onInit() {
@@ -197,9 +166,51 @@ export class Switch extends Ion {
     this.checked = value;
   }
 
+  pointerDown(ev) {
+    if (/touch/.test(ev.type)) {
+      this.isTouch = true;
+    }
+
+    if (this.isTouch && /mouse/.test(ev.type)) {
+      return;
+    }
+
+    this.startX = pointerCoord(ev).x;
+
+    this.removeMoveListener();
+    this.addMoveListener();
+
+    this.isActivated = true;
+  }
+
+  pointerUp(ev) {
+    if (this.isTouch && /mouse/.test(ev.type)) {
+      return;
+    }
+
+    let endX = pointerCoord(ev).x;
+
+    if (this.checked) {
+      if (this.startX + 4 > endX) {
+        this.toggle();
+      }
+    } else if (this.startX - 4 < endX) {
+      this.toggle();
+    }
+
+    this.removeMoveListener();
+    this.isActivated = false;
+    this.isTouch = false;
+  }
+
   // Used by the view to update the model (Control)
   // Up to us to call it in update()
   registerOnChange(fn) { this.onChange = fn; }
 
   registerOnTouched(fn) { this.onTouched = fn; }
+
+  onDestroy() {
+    this.removeMoveListener();
+    this.switchEle = this.addMoveListener = this.removeMoveListener = null;
+  }
 }
