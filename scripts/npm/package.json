@@ -7,10 +7,10 @@
     "url": "https://github.com/driftyco/ionic2.git"
   },
   "dependencies": {
-    "angular2": "2.0.0-alpha.35",
+    "angular2": "2.0.0-alpha.<%= ngVersion %>",
     "reflect-metadata": "0.1.0",
-    "rtts_assert": "2.0.0-alpha.35",
+    "rtts_assert": "2.0.0-alpha.<%= ngVersion %>",
     "traceur-runtime": "0.0.59",
-    "zone.js": "0.5.2"
+    "zone.js": "0.5.4"
   }
 }

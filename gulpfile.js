@@ -41,8 +41,8 @@ var tscReporter = {
 };
 
 var flagConfig = {
-  string: ['port', 'version'],
-  alias: {'p': 'port', 'v': 'version'},
+  string: ['port', 'version', 'ngVersion'],
+  alias: {'p': 'port', 'v': 'version', 'a': 'ngVersion'},
   default: { port: 8000 }
 };
 
@@ -358,12 +358,17 @@ gulp.task('src', function(done){
 })
 
 gulp.task('publish', function(done) {
-  var v = flags.version;
-  if (!v) {
-    console.error("\nERR: You need to provide a version or tag.\ngulp publish -v {version}\n");
+  var version = flags.version;
+  var ngVersion = flags.ngVersion;
+  if (!version || !ngVersion) {
+    console.error("\nERR: You need to provide a version for Ionic as well as " +
+                  "the version of Angular it depends on.\n\n" +
+                  "gulp publish -v {version} -a {ngVersion}\n");
     return
   }
-  if (v.indexOf("alpha") + v.indexOf("-") > -2) {
+  if (version.indexOf("alpha") + version.indexOf("-") > -2 ||
+      ngVersion.indexOf("alpha") + ngVersion.indexOf("-") > -2)
+  {
     console.error("\n ERR: Just provide version number. Instead of 2.0.0-alpha.10, just enter 10\n");
     return
   }
@@ -378,7 +383,7 @@ gulp.task('publish', function(done) {
     'transpile.common',
     function() {
       var packageJSONTemplate = _.template(fs.readFileSync('scripts/npm/package.json'));
-      packageJSONContents = packageJSONTemplate({ 'version': v });
+      packageJSONContents = packageJSONTemplate({ 'version': version, 'ngVersion': ngVersion });
       fs.writeFileSync("dist/package.json", packageJSONContents);
 
       // publish to npm
