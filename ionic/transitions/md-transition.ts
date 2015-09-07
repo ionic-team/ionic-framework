@@ -6,8 +6,8 @@ const DURATION = 300;
 const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
 
 const TRANSLATEY = 'translateY';
-const OFF_BOTTOM = '5%';
-const CENTER = '0%'
+const OFF_BOTTOM = '40px';
+const CENTER = '0px'
 
 
 class MaterialTransition extends Transition {
@@ -24,17 +24,17 @@ class MaterialTransition extends Transition {
       .to(TRANSLATEY, CENTER)
       .before.setStyles({ zIndex: this.entering.index });
 
-    // entering title fades in
-    this.enteringTitle
-      .fadeIn();
+    // entering item moves in bottom to center
+    this.enteringNavbar
+      .to(TRANSLATEY, CENTER)
+      .before.setStyles({ zIndex: this.entering.index + 10 });
 
     // leaving view stays put
     this.leavingView
       .before.setStyles({ zIndex: this.leaving.index });
 
-    // leaving title fades out
-    this.leavingTitle
-      .fadeOut();
+    this.leavingNavbar
+      .before.setStyles({ zIndex: this.leaving.index + 10 });
 
     // set properties depending on direction
     if (opts.direction === 'back') {
@@ -42,23 +42,17 @@ class MaterialTransition extends Transition {
       this.enteringView
         .from(TRANSLATEY, CENTER);
 
-      this.leavingNavbar
-        .before.addClass('transparent-navbar')
-        .after.removeClass('transparent-navbar');
-
-      this.leavingTitle
-        .fadeOut();
+      this.enteringNavbar
+        .from(TRANSLATEY, CENTER);
 
       // leaving view goes center to bottom
       this.leavingView
         .fromTo(TRANSLATEY, CENTER, OFF_BOTTOM)
         .fadeOut();
 
-      if (this.leaving.enableBack()) {
-        let leavingBackButtonText = new Animation(this.leaving.backButtonTextElement());
-        leavingBackButtonText.fadeOut();
-        this.leavingNavbar.add(leavingBackButtonText);
-      }
+      this.leavingNavbar
+        .fromTo(TRANSLATEY, CENTER, OFF_BOTTOM)
+        .fadeOut();
 
     } else {
       // forward direction
@@ -67,14 +61,8 @@ class MaterialTransition extends Transition {
         .fadeIn();
 
       this.enteringNavbar
-        .before.addClass('transparent-navbar')
-        .after.removeClass('transparent-navbar');
-
-      if (this.entering.enableBack()) {
-        let enteringBackButtonText = new Animation(this.entering.backButtonTextElement());
-        enteringBackButtonText.fadeIn();
-        this.enteringNavbar.add(enteringBackButtonText);
-      }
+        .from(TRANSLATEY, OFF_BOTTOM)
+        .fadeIn();
     }
 
   }
