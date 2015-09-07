@@ -31,9 +31,16 @@
           scope.apply(target, interpolation.property, interpolation.interpolation(scaledLocalTime));
         });
       } else {
-        for (var property in propertySpecificKeyframeGroups)
-          if (property != 'offset' && property != 'easing' && property != 'composite')
-            scope.clear(target, property);
+
+        // IONIC HACK!
+        // DO NOT CLEAR OUT THE INLINE STYLE HERE
+        // IONIC ANIMATE SETS INLINE STYLES ITSELF AND THE WEB ANIMATIONS API WILL
+        // OVERWRITE IONIC DUE TO THE ASYNC PROMISES THAT FIRE OFF AFTER ONFINISH
+
+        // for (var property in propertySpecificKeyframeGroups)
+        //   if (property != 'offset' && property != 'easing' && property != 'composite')
+        //     scope.clear(target, property);
+
       }
     };
   };

@@ -457,7 +457,7 @@ class Animate {
       return inlineStyle(ele, this.toEffect);
     }
 
-    this.fill = fill || 'both';
+    this.fill = fill;
 
     this.ele = ele;
     this.promise = new Promise(res => { this.resolve = res; });
@@ -494,7 +494,7 @@ class Animate {
         duration: self.duration || 0,
         easing: self.easing,
         playbackRate: self.rate || 1,
-        //fill: this.fill
+        fill: self.fill
       });
 
       self.player.onfinish = () => {
@@ -502,6 +502,8 @@ class Animate {
         // if the playbackRate is negative then it needs to return
         // to its "from" effects
         inlineStyle(self.ele, self.rate < 0 ? self.fromEffect : self.toEffect);
+
+        self.player = null;
 
         self.resolve();
       };
