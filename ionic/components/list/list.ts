@@ -8,7 +8,7 @@ import * as util from 'ionic/util';
 
 /**
  * @name ionList
- * @classdesc
+ * @description
  * The List is a widely used interface element in almost any mobile app, and can include
  * content ranging from basic text all the way to buttons, toggles, icons, and thumbnails.
  *

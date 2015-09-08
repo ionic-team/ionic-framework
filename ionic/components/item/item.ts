@@ -6,11 +6,11 @@ import {dom} from 'ionic/util';
 
 /**
  * @name ionItem
- * @classdesc
+ * @description
  * Creates a list-item that can easily be swiped,
  * deleted, reordered, edited, and more.
  *
- * @example
+ * @usage
  * ```html
  * <ion-list>
  *   <ion-item *ng-for="#item of items" (^click)="itemTapped($event, item)">

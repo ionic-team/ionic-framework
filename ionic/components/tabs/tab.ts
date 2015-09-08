@@ -8,10 +8,10 @@ import {Tabs} from './tabs';
 /**
  * @name ionTab
  * @requires ionTabs
- * @classdesc
+ * @description
  * Contains a tab's content. The content only exists while the given tab is selected.
  *
- * @example
+ * @usage
  * ```html
  * <ion-tab tab-title="Heart" tab-icon="ion-ios-heart-outline" [root]="root1"></ion-tab>
  * ```

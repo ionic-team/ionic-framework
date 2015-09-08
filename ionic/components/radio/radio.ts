@@ -9,7 +9,7 @@ import {ListHeader} from '../list/list';
 
 /**
  * @name ionRadioGroup
- * @classdesc
+ * @description
  * A radio group is a group of radio components.
  * 
  * Selecting a radio button in the group unselects all others in the group.
@@ -18,7 +18,7 @@ import {ListHeader} from '../list/list';
  *
  * See the [Angular 2 Docs](https://angular.io/docs/js/latest/api/forms/) for more info on forms and input.
  * 
- * @example
+ * @usage
  * ```html
  * <ion-radio-group ng-control="clientside">
  * 
@@ -152,12 +152,12 @@ export class RadioGroup extends Ion {
 
 /**
  * @name ionRadio
- * @classdesc
+ * @description
  * A single radio component. 
  *
  * See the [Angular 2 Docs](https://angular.io/docs/js/latest/api/forms/) for more info on forms and input.
  *
- * @example
+ * @usage
  * ```html
  * <ion-radio value="isChecked" checked="true">
  *   Radio Label

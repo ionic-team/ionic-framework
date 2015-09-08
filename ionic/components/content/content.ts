@@ -8,7 +8,7 @@ import {hasFocusedTextInput} from '../../util/dom';
 
 /**
  * @name ionContent
- * @classdesc
+ * @description
  * TODO
  *
  */
