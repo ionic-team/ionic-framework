@@ -21,9 +21,18 @@ module.exports = function(currentVersion){
 // for debugging docs
 // .processor(function test(){
 //   return {
-//     $runAfter: ['readTypeScriptModules'],
-//     $runAfter: ['parsing-tags'],
+//
+//     $runBefore: ['rendering-docs'],
 //     $process: function(docs){
+//       docs.forEach(function(doc){
+//         if (doc.members && doc.name == "IonicApp"){
+//           doc.members.forEach(function(method){
+//             if (method.name === "load") {
+//               console.log(method);
+//             }
+//           })
+//         }
+//       })
 //     }
 //   }
 // })
@@ -34,7 +43,7 @@ module.exports = function(currentVersion){
 
 .config(function(renderDocsProcessor, computePathsProcessor, versionInfo) {
   try {
-    versions = fs.readdirSync(path.resolve(__dirname, '../../dist/ionic-site/docs'))
+    versions = fs.readdirSync(path.resolve(__dirname, '../../dist/ionic-site/docs/v2/'))
       .filter(semver.valid)
   } catch(e) {
     versions = [];
@@ -51,14 +60,12 @@ module.exports = function(currentVersion){
   !_.contains(versions, 'nightly') && versions.unshift('nightly');
 
   //First semver valid version is latest
-  var latestVersion = _.find(versions, function(v){
-    return semver.valid(v) && parseInt(v) < 2 // don't let v2 docs be latest for now
-  });
+  var latestVersion = _.find(versions, semver.valid);
   versions = versions.map(function(version) {
     //Latest version is in docs root
     var folder = version == latestVersion ? '' : version;
     return {
-      href: path.join('/docs', folder),
+      href: path.join('/docs/v2', folder),
       folder: folder,
       name: version
     };
@@ -81,7 +88,7 @@ module.exports = function(currentVersion){
       // remove filename since we have multiple docTypes per file
       docPath = docPath.substring(0, docPath.lastIndexOf('/') + 1);
       docPath += doc.name + '/index.md';
-      var path = 'docs/' + (versionData.current.folder || '') +
+      var path = 'docs/v2/' + (versionData.current.folder || '') +
                      '/api/' +  docPath;
 
                     return path;

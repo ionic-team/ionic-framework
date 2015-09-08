@@ -12,7 +12,7 @@ module.exports = function latestVersion(renderDocsProcessor) {
     $process: function(docs) {
       var versionData = renderDocsProcessor.extraData.version;
 
-      var docsBase = 'dist/ionic-site/docs';
+      var docsBase = 'dist/ionic-site/docs/v2/';
       var versionDir = path.resolve(docsBase, versionData.latest.name);
       var latestDir = path.resolve(docsBase, 'api');
 
