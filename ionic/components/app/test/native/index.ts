@@ -3,7 +3,7 @@ import {Control, ControlGroup} from 'angular2/forms';
 
 import {App, Http} from 'ionic/ionic';
 
-import {Camera, Geolocation, Vibration, Battery} from 'ionic/ionic';
+import {Camera, Geolocation, Vibration, Battery, Device} from 'ionic/ionic';
 
 let testUrl = 'https://ionic-api-tester.herokuapp.com/json';
 let testUrl404 = 'https://ionic-api-tester.herokuapp.com/404';
@@ -14,6 +14,10 @@ let testUrl404 = 'https://ionic-api-tester.herokuapp.com/404';
 })
 class IonicApp {
   constructor() {
+  }
+  doDevice() {
+    let device = Device.getDevice();
+    console.log('Got device', device);
   }
   doGetLocation() {
     console.log('Getting location');
