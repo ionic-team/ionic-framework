@@ -13,6 +13,7 @@ docType: "<$ doc.docType $>"
     <@- endfor @>)</span>
   <@- endif @>
 <@- endmacro -@>
+
 <@ macro githubViewLink(doc) -@>
   <a href="https://github.com/<$ versionInfo.gitRepoInfo.owner $>/<$ versionInfo.gitRepoInfo.repo $>/tree/master/<$ doc.fileInfo.relativePath $>#L<$ doc.location.start.line+1 $>-L<$ doc.location.end.line+1 $>"><$ doc.fileInfo.relativePath $> (line <$ doc.location.start.line+1 $>)</a>
 <@- endmacro -@>
