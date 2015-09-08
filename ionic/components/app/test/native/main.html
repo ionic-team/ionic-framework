@@ -13,5 +13,7 @@
       <b *ng-if="gettingTrackLocation">Fetching location...</b>
       <b *ng-if="trackLocation">{{trackLocation.coords.latitude}}, {{trackLocation.coords.longitude}}</b>
     </div>
+    <h2>Vibration</h2>
+    <button primary (click)="doVibrate()">Vibrate</button>
   </ion-content>
 </ion-view>

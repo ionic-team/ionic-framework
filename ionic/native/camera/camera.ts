@@ -1,10 +1,18 @@
 import * as util from 'ionic/util';
 
+import {NativePlugin} from '../plugin';
+
+@NativePlugin({
+  name: 'Camera',
+  platforms {
+    cordova: 'cordova-plugin-camera'
+  }
+})
 export class Camera {
   static getPicture(options) {
     return new Promise((resolve, reject) => {
       if (!navigator.camera) {
-        console.warn('Camera: no camera plugin installed. Pictures will not work.')
+        this.pluginWarn();
         resolve(null);
         return;
       }

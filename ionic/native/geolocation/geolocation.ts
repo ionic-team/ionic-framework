@@ -1,7 +1,14 @@
-import * as util from 'ionic/util';
-
 import * as Rx from 'rx';
 
+import * as util from 'ionic/util';
+import {NativePlugin} from '../plugin';
+
+@NativePlugin({
+  name: 'Geolocation',
+  platforms {
+    cordova: 'cordova-plugin-geolocation'
+  }
+})
 export class Geolocation {
   static getCurrentPosition(options) {
     return new Promise((resolve, reject) => {
