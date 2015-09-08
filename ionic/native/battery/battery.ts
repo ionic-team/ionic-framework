@@ -20,9 +20,11 @@ export class Battery {
 
       } else {
 
-        window.addEventListener('batterystatus', (battery) => {
-          resolve(Battery._format(battery));
-        });
+        var fnCb = function fnCb(battery) {
+          resolve(battery);
+          window.removeEventListener('batterystatus', fnCb);
+        }
+        window.addEventListener('batterystatus', fnCb);
       }
     });
   }

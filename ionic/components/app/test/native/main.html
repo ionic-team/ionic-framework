@@ -1,35 +1,12 @@
-<ion-view>
-  <ion-content padding>
-    <h2>Device</h2>
-    <button primary outline (click)="doDevice()">Get Device</button>
-    <div>
-    </div>
-    <h2>Camera</h2>
-    <button primary outline (click)="getPicture()">Get Picture</button>
-    <h2>Geolocation</h2>
-    <button primary outline (click)="doGetLocation()">Get Location</button>
-    <div>
-      <b *ng-if="gettingLocation">Fetching location...</b>
-      <b *ng-if="location">{{location.coords.latitude}}, {{location.coords.longitude}}</b>
-    </div>
-    <button primary outline (click)="doTrackLocation()">Track Location</button>
-    <div>
-      <b *ng-if="gettingTrackLocation">Fetching location...</b>
-      <b *ng-if="trackLocation">{{trackLocation.coords.latitude}}, {{trackLocation.coords.longitude}}</b>
-    </div>
-    <h2>Vibration</h2>
-    <button primary outline (click)="doVibrate()">Vibrate</button>
-    <h2>Battery</h2>
-    <button primary outline (click)="doBatteryStatus()">Get Status</button>
-    <div *ng-if="battery">
-      Battery charging: <b>{{battery.charging}}</b><br>
-      Battery level: <b>{{battery.level * 100}}</b>%<br>
-      Battery charging time: <b>{{battery.chargingTime}}</b>s<br>
-      Battery discharging time: <b>{{battery.dischargingTime}}</b>s<br>
-    </div>
-    <h2>Contacts</h2>
-    <div>
-    </div>
-
+<ion-aside #aside [content]="content" id="mainMenu">
+  <ion-toolbar><ion-title>Plugins</ion-title></ion-toolbar>
+  <ion-content>
+    <ion-list>
+      <ion-item *ng-for="#p of plugins" (^click)="openPage(aside, p)">
+        <span>{{p.title}}</span>
+      </ion-item>
+    </ion-list>
   </ion-content>
-</ion-view>
+</ion-aside>
+
+<ion-nav #content swipe-back-enabled="false" [root]="firstPage"></ion-nav>

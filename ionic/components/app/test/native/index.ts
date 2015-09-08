@@ -5,58 +5,29 @@ import {App, Http} from 'ionic/ionic';
 
 import {Camera, Geolocation, Vibration, Battery, Device} from 'ionic/ionic';
 
-let testUrl = 'https://ionic-api-tester.herokuapp.com/json';
-let testUrl404 = 'https://ionic-api-tester.herokuapp.com/404';
-
+import {CameraPage} from 'pages/camera';
+import {BatteryPage} from 'pages/battery';
+import {ContactsPage} from 'pages/contacts';
+import {DevicePage} from 'pages/device';
+import {DeviceMotionPage} from 'pages/device-motion';
+import {GeolocationPage} from 'pages/geolocation';
+import {VibrationPage} from 'pages/vibration';
 
 @App({
   templateUrl: 'main.html'
 })
 class IonicApp {
   constructor() {
-  }
-  doDevice() {
-    let device = Device.getDevice();
-    console.log('Got device', device);
-  }
-  doGetLocation() {
-    console.log('Getting location');
-    this.gettingLocation = true;
-    Geolocation.getCurrentPosition().then((pos) => {
-      this.gettingLocation = false;
-      console.log('Got location', pos);
-      this.location = pos;
-    }, (err) => {
-      this.gettingLocation = false;
-      console.error('Unable to get location', err);
-    });
-  }
-  doTrackLocation() {
-    this.gettingTrackLocation = true;
-    Geolocation.watchPosition().source.subscribe((pos) => {
-      this.gettingTrackLocation = false;
-      console.log('Got location', pos);
-      this.trackLocation = pos;
-    }, (err) => {
-      this.gettingTrackLocation = false;
-      console.error('Unable to get location', pos);
-    });
-  }
-  getPicture() {
-    Camera.getPicture({
-
-    }).then(data => {
-      console.log('Data', data);
-    }, err => {
-      alert('Unable to take picture')
-    })
-  }
-  doVibrate() {
-    Vibration.vibrate(1000);
-  }
-  doBatteryStatus() {
-    Battery.getStatus().then((battery) => {
-      this.battery = battery;
-    });
+    this.firstPage = CameraPage;
+    console.log('First page', CameraPage);
+    this.plugins = [
+      {title: 'Camera', page: CameraPage},
+      {title: 'Device', page: DevicePage},
+      {title: 'Device Motion', page: DeviceMotionPage},
+      {title: 'Geolocation', page: GeolocationPage},
+      {title: 'Contacts', page: ContactsPage},
+      {title: 'Battery', page: BatteryPage},
+      {title: 'Vibration', page: VibrationPage},
+    ]
   }
 }
