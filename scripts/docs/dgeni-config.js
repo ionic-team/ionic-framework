@@ -104,12 +104,12 @@ module.exports = function(currentVersion){
 
 .config(function(parseTagsProcessor) {
   // We actually don't want to parse param docs in this package as we are getting the data out using TS
-  parseTagsProcessor.tagDefinitions.forEach(function(tagDef) {
-    if (tagDef.name === 'param') {
-      tagDef.docProperty = 'paramData';
-      tagDef.transforms = [];
-    }
-  });
+  // parseTagsProcessor.tagDefinitions.forEach(function(tagDef) {
+  //   if (tagDef.name === 'param') {
+  //     tagDef.docProperty = 'paramData';
+  //     tagDef.transforms = [];
+  //   }
+  // });
 })
 
 // Configure links
