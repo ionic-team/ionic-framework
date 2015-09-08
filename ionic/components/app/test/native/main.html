@@ -1,0 +1,17 @@
+<ion-view>
+  <ion-content padding>
+    <h2>Camera</h2>
+    <button primary (click)="getPicture()">Get Picture</button>
+    <h2>Geolocation</h2>
+    <button primary (click)="doGetLocation()">Get Location</button>
+    <div>
+      <b *ng-if="gettingLocation">Fetching location...</b>
+      <b *ng-if="location">{{location.coords.latitude}}, {{location.coords.longitude}}</b>
+    </div>
+    <button primary (click)="doTrackLocation()">Track Location</button>
+    <div>
+      <b *ng-if="gettingTrackLocation">Fetching location...</b>
+      <b *ng-if="trackLocation">{{trackLocation.coords.latitude}}, {{trackLocation.coords.longitude}}</b>
+    </div>
+  </ion-content>
+</ion-view>
