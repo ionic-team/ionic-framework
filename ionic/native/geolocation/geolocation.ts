@@ -5,7 +5,7 @@ import {NativePlugin} from '../plugin';
 
 @NativePlugin({
   name: 'Geolocation',
-  platforms {
+  platforms: {
     cordova: 'cordova-plugin-geolocation'
   }
 })
