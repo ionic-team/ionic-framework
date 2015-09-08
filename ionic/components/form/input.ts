@@ -11,11 +11,22 @@ let activeInput = null;
 let lastInput = null;
 
 /**
- * TODO
+ * @name ionInput
+ * @description
+ * The ionInput component is used to focus text input elements.
+ * 
+ * The `focusNext()` and  `focusPrevious()` methods make it easy to focus input elements across all devices.
+ *
+ * @usage
+ * ```html
+ * <ion-input>
+ *   <ion-label>Name</ion-label>
+ *   <input value="Name" type="text">
+ * </ion-input>
+ * ```
  */
 export class IonInput extends Ion {
   /**
-   * TODO
    * @param {TODO} input  TODO
    */
   static registerInput(input) {
@@ -31,22 +42,21 @@ export class IonInput extends Ion {
   }
 
   /**
-   * TODO
+   * Focuses the previous input element, if it exists.
    */
   static focusPrevious() {
     this.focusMove(-1);
   }
 
   /**
-   * TODO
+   * Focuses the next input element, if it exists.
    */
   static focusNext() {
     this.focusMove(1);
   }
 
   /**
-   * TODO
-   * @param {TODO} inc  TODO
+   * @param {Number} inc TODO
    */
   static focusMove(inc) {
     let input = activeInput || lastInput;
@@ -61,8 +71,7 @@ export class IonInput extends Ion {
   }
 
   /**
-   * TODO
-   * @returns {TODO} TODO
+   * @returns {Number} The ID of the next input element.
    */
   static nextId() {
     return ++inputItemIds;
