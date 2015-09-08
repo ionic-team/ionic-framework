@@ -301,7 +301,11 @@
       }
     },
 
-    // Check if the platform is the one detected by cordova
+    /**
+     * @ngdoc method
+     * @name ionic.Platform#is
+     * @returns {boolean} Check if the platform is the one detected by cordova.
+     */
     is: function(type) {
       type = type.toLowerCase();
       // check if it has an array of platforms
