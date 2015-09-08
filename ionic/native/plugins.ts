@@ -1,4 +1,6 @@
 export * from './plugin'
+export * from './battery/battery'
 export * from './camera/camera'
+export * from './contacts/contacts'
 export * from './geolocation/geolocation'
 export * from './vibration/vibration'

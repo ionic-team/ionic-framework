@@ -5,17 +5,17 @@ import {NativePlugin} from '../plugin';
 
 @NativePlugin({
   name: 'Vibration',
-  platforms {
+  platforms: {
     cordova: 'cordova-plugin-vibration'
   }
 })
 export class Vibration {
   static vibrate(pattern) {
-    this.pluginWarn();
     if(!navigator.vibrate) {
+      this.pluginWarn();
       console.log('Vibrate (dev): ', pattern);
-      return;
+    } else {
+      navigator.vibrate(pattern);
     }
-    navigator.vibrate(pattern);
   }
 }

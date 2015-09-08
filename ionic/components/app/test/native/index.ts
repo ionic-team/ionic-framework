@@ -1,7 +1,9 @@
 import {Component} from 'angular2/angular2';
 import {Control, ControlGroup} from 'angular2/forms';
 
-import {App, Http, Camera, Geolocation, Vibration} from 'ionic/ionic';
+import {App, Http} from 'ionic/ionic';
+
+import {Camera, Geolocation, Vibration, Battery} from 'ionic/ionic';
 
 let testUrl = 'https://ionic-api-tester.herokuapp.com/json';
 let testUrl404 = 'https://ionic-api-tester.herokuapp.com/404';
@@ -47,5 +49,10 @@ class IonicApp {
   }
   doVibrate() {
     Vibration.vibrate(1000);
+  }
+  doBatteryStatus() {
+    Battery.getStatus().then((battery) => {
+      this.battery = battery;
+    });
   }
 }
