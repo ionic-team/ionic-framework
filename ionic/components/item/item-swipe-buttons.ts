@@ -4,6 +4,11 @@ import {Item} from 'ionic/components/item/item';
 import {SlideGesture} from 'ionic/gestures/slide-gesture';
 
 /**
+ * @name ionPrimarySwipeButtons
+ * @classdesc
+ * Creates a swipeable button inside a list item, that is visible when the item is swiped to the left by the user. Swiped open buttons can be hidden with `setOpen(false)`.
+ *
+ * @example
  * TODO
  */
 @Directive({
@@ -11,9 +16,8 @@ import {SlideGesture} from 'ionic/gestures/slide-gesture';
 })
 export class ItemPrimarySwipeButtons {
   /**
-   * TODO
-   * @param {ElementRef} elementRef  TODO
-   * @param {Item} item  TODO
+   * @param {ElementRef} elementRef  A reference to the component's DOM element.
+   * @param {Item} item  The list item containing the swipeable buttons.
    */
   constructor(
     elementRef: ElementRef,
@@ -27,8 +31,7 @@ export class ItemPrimarySwipeButtons {
   }
 
   /**
-   * TODO
-   * @param {boolean} isOpen  TODO
+   * @param {boolean} isOpen  Whether or not the button should be set to open/visible.
    */
   setOpen(isOpen) {
     if (isOpen !== this.isOpen) {

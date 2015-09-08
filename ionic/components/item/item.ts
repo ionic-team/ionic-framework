@@ -40,7 +40,7 @@ import {dom} from 'ionic/util';
 export class Item {
   /**
    * TODO
-   * @param {ElementRef} elementRef  TODO
+   * @param {ElementRef} elementRef  A reference to the component's DOM element.
    */
   constructor(elementRef: ElementRef) {
     this._isOpen = false;
