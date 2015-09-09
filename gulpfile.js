@@ -131,7 +131,7 @@ gulp.task('serve', function() {
 });
 
 gulp.task('clean', function(done) {
-  del(['dist/'], done);
+  del(['dist/**', '!dist', '!dist/ionic-site', '!dist/ionic-site/**/*'], done);
 });
 
 function transpile(moduleType) {
