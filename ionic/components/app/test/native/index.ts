@@ -1,7 +1,7 @@
 import {Component} from 'angular2/angular2';
 import {Control, ControlGroup} from 'angular2/forms';
 
-import {App, Http} from 'ionic/ionic';
+import {App, IonicApp, Http} from 'ionic/ionic';
 
 import {Camera, Geolocation, Vibration, Battery, Device} from 'ionic/ionic';
 
