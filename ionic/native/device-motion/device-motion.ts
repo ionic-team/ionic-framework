@@ -11,21 +11,33 @@ import {Platform} from '../../platform/platform';
   }
 })
 export class DeviceMotion {
-  getCurrentAcceleration() {
+  static _wrap(result) {
+    // Mimic the DeviceMotionEvent
+    return {
+      acceleration: result,
+      accelerationIncludingGravity: result,
+      rotationRate: 0,
+      interval: 0,
+      native: true
+    }
+  }
+
+  static getCurrentAcceleration() {
     return new Promise((resolve, reject) => {
-      if(navigator.accelerometer) {
-        navigator.accelerometer.getCurrentAcceleration(function (result) {
-          resolve(result);
-        }, function (err) {
-          reject(err);
-        });
-      } else if(window.DeviceMotionEvent || ('listenForDeviceMovement' in window)) {
+      if(window.DeviceMotionEvent || ('listenForDeviceMovement' in window)) {
         var fnCb = function fnCb(eventData) {
+          console.log('Event', eventData);
           resolve(eventData);
           window.removeEventListener('devicemotion', fnCb);
         }
         window.addEventListener('devicemotion', fnCb);
-      } else {
+      } else if(navigator.accelerometer) {
+        navigator.accelerometer.getCurrentAcceleration(function (result) {
+          resolve(DeviceMotion._wrap(result));
+        }, function (err) {
+          reject(err);
+        });
+      else {
         this.pluginWarn();
         reject('The Device does not support device motion events.');
         return;
@@ -33,8 +45,29 @@ export class DeviceMotion {
     });
   }
 
-  watchAcceleration(options) {
-    if(navigator.accelerometer) {
+  static watchAcceleration(options) {
+    if(window.DeviceMotionEvent || ('listenForDeviceMovement' in window)) {
+      let watchID;
+
+      let source = Rx.Observable.create((observer) => {
+
+        var fnCb = function fnCb(eventData) {
+          console.log(eventData);
+          observer.onNext(eventData);
+        };
+
+        window.addEventListener('devicemotion', fnCb);
+
+      });
+
+      return {
+        source: source,
+        watchID: watchID,
+        clear: () => {
+          window.removeEventListener('devicemotion', cbFn);
+        }
+      }
+    } else if(navigator.accelerometer) {
       let watchID;
 
       let source = Rx.Observable.create((observer) => {
@@ -52,26 +85,6 @@ export class DeviceMotion {
         watchID: watchID,
         clear: () => {
           navigator.accelerometer.clearWatch(watchID);
-        }
-      }
-    } else {
-      let watchID;
-
-      let source = Rx.Observable.create((observer) => {
-
-        var fnCb = function fnCb(eventData) {
-          observer.onNext(eventData);
-        };
-
-        window.addEventListener('devicemotion', cbFn);
-
-      });
-
-      return {
-        source: source,
-        watchID: watchID,
-        clear: () => {
-          window.removeEventListener('devicemotion', cbFn);
         }
       }
     }

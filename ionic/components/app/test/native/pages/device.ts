@@ -1,4 +1,4 @@
-import {IonicView} from 'ionic/ionic';
+import {IonicView, Device} from 'ionic/ionic';
 
 
 @IonicView({
