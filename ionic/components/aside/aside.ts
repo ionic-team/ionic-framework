@@ -18,7 +18,8 @@ import {dom} from 'ionic/util'
   selector: 'ion-aside',
   properties: [
     'content',
-    'dragThreshold'
+    'dragThreshold',
+    'id'
   ],
   defaultProperties: {
     'side': 'left',
@@ -88,6 +89,11 @@ export class Aside extends Ion {
   onInit() {
     super.onInit();
     this.contentElement = (this.content instanceof Node) ? this.content : this.content.getNativeElement();
+
+    if(!this.id) {
+      // Auto register
+      this.app.register('menu', this);
+    }
 
     if(this.contentElement) {
       this.contentElement.addEventListener('transitionend', ev => {
