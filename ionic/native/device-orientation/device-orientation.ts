@@ -56,7 +56,7 @@ export class DeviceOrientation {
         source: source,
         watchID: watchID,
         clear: () => {
-          window.removeEventListener('deviceorientation', cbFn);
+          window.removeEventListener('deviceorientation', fnCb);
         }
       }
     } else if(navigator.accelerometer) {

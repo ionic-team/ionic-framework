@@ -64,7 +64,7 @@ export class DeviceMotion {
         source: source,
         watchID: watchID,
         clear: () => {
-          window.removeEventListener('devicemotion', cbFn);
+          window.removeEventListener('devicemotion', fnCb);
         }
       }
     } else if(navigator.accelerometer) {

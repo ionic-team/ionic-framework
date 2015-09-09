@@ -1,4 +1,4 @@
-import {CORE_DIRECTIVES, FORM_DIRECTIVES, Component, Directive, View, forwardRef} from 'angular2/angular2'
+import {CORE_DIRECTIVES, FORM_DIRECTIVES, NgStyle, Component, Directive, View, forwardRef} from 'angular2/angular2'
 
 import * as util from 'ionic/util';
 import {IonicConfig} from './config';
@@ -30,6 +30,8 @@ export const IonicDirectives = [
   // Angular
   CORE_DIRECTIVES,
   FORM_DIRECTIVES,
+
+  NgStyle
 
   // Content
   forwardRef(() => Aside),

@@ -10,6 +10,7 @@ import {BatteryPage} from 'pages/battery';
 import {ContactsPage} from 'pages/contacts';
 import {DevicePage} from 'pages/device';
 import {DeviceMotionPage} from 'pages/device-motion';
+import {DeviceOrientationPage} from 'pages/device-orientation';
 import {GeolocationPage} from 'pages/geolocation';
 import {VibrationPage} from 'pages/vibration';
 
@@ -26,6 +27,7 @@ class MyApp {
       {title: 'Camera', page: CameraPage},
       {title: 'Device', page: DevicePage},
       {title: 'Device Motion', page: DeviceMotionPage},
+      {title: 'Device Orientation', page: DeviceOrientationPage},
       {title: 'Geolocation', page: GeolocationPage},
       {title: 'Contacts', page: ContactsPage},
       {title: 'Battery', page: BatteryPage},
