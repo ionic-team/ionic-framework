@@ -39,6 +39,7 @@ export class IonicApp {
    */
   constructor() {
     this.overlays = [];
+    this._isTransitioning = false;
 
     // Our component registry map
     this.components = {};
@@ -72,6 +73,24 @@ export class IonicApp {
   title(val) {
     // TODO: User angular service
     document.title = val;
+  }
+
+  /**
+   * Sets if the app is currently transitioning or not. For example
+   * this is set to `true` while views transition, a modal slides up, an action-menu
+   * slides up, etc. After the transition completes it is set back to `false`.
+   * @param {bool} isTransitioning
+   */
+  setTransitioning(isTransitioning) {
+    this._isTransitioning = !!isTransitioning;
+  }
+
+  /**
+   * Boolean if the app is actively transitioning or not.
+   * @return {bool}
+   */
+  isTransitioning() {
+    return this._isTransitioning;
   }
 
   /**

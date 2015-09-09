@@ -228,6 +228,7 @@ export class TextInput extends Ion {
       // manually scroll the text input to the top
       // do not allow any clicks while it's scrolling
       ClickBlock(true, SCROLL_INTO_VIEW_DURATION + 100);
+      this.app.setTransitioning(true);
 
       // temporarily move the focus to the focus holder so the browser
       // doesn't freak out while it's trying to get the input in place
@@ -242,6 +243,7 @@ export class TextInput extends Ion {
 
         // all good, allow clicks again
         ClickBlock(false);
+        this.app.setTransitioning(false);
       });
 
     } else {

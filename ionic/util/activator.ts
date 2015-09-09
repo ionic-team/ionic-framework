@@ -15,6 +15,7 @@ export class Activator {
     self.active = {};
     self.activatedClass = 'activated';
     self.deactivateTimeout = 180;
+    this.deactivateAttempt = 0;
     self.pointerTolerance = 4;
     self.isTouch = false;
     self.disableClick = 0;
@@ -109,7 +110,8 @@ export class Activator {
   mouseDown(ev) {
     if (this.isDisabledClick()) {
       console.debug('mouseDown prevent');
-      preventEvent(ev);
+      ev.preventDefault();
+      ev.stopPropagation();
 
     } else if (!self.isTouch) {
       this.pointerStart(ev);
@@ -123,7 +125,8 @@ export class Activator {
   mouseUp(ev) {
     if (this.isDisabledClick()) {
       console.debug('mouseUp prevent');
-      preventEvent(ev);
+      ev.preventDefault();
+      ev.stopPropagation();
     }
 
     if (!self.isTouch) {
@@ -153,7 +156,7 @@ export class Activator {
    * TODO
    */
   pointerEnd(ev) {
-    this.endActive();
+    this.queueDeactivate();
     this.moveListeners(false);
   }
 
@@ -162,7 +165,7 @@ export class Activator {
    */
   pointerCancel() {
     console.debug('pointerCancel')
-    this.clearActive();
+    this.deactivate();
     this.moveListeners(false);
     this.disableClick = Date.now();
   }
@@ -192,7 +195,8 @@ export class Activator {
   click(ev) {
     if (!this.allowClick(ev)) {
       console.debug('click prevent');
-      preventEvent(ev);
+      ev.preventDefault();
+      ev.stopPropagation();
     }
     this.isTouch = false;
   }
@@ -240,50 +244,43 @@ export class Activator {
     });
   }
 
-  endActive() {
+  queueDeactivate() {
     const self = this;
 
     setTimeout(function() {
-      self.clearActive();
+      self.deactivate();
     }, this.deactivateTimeout);
   }
 
-  clearActive() {
+  deactivate() {
     const self = this;
 
-    // clear out any elements that are queued to be set to active
-    self.queue = {};
+    if (this.app.isTransitioning() && this.deactivateAttempt < 10) {
+      // the app is actively transitioning, don't bother deactivating
+      // anything this makes it easier on the GPU so it doesn't
+      // have to redraw any buttons during a transition
+      // retry
+      ++this.deactivateAttempt;
+      this.queueDeactivate();
 
-    // in the next frame, remove the active class from all active elements
-    raf(function() {
-      for (var key in self.active) {
-        if (self.active[key]) {
-          self.active[key].classList.remove(self.activatedClass);
+    } else {
+      // not actively transitioning, good to deactivate any elements
+      // clear out any elements that are queued to be set to active
+      self.queue = {};
+
+      // in the next frame, remove the active class from all active elements
+      raf(function() {
+        for (var key in self.active) {
+          if (self.active[key]) {
+            self.active[key].classList.remove(self.activatedClass);
+          }
+          delete self.active[key];
         }
-        delete self.active[key];
-      }
-    });
-  }
+      });
 
-  clickBlock(enable) {
-    console.log('clickBlock', enable);
-
-    this.doc.removeEventListener('click', preventEvent, true);
-    this.doc.removeEventListener('touchmove', preventEvent, true);
-    this.doc.removeEventListener('touchstart', preventEvent, true);
-    this.doc.removeEventListener('touchend', preventEvent, true);
-
-    if (enable) {
-      this.doc.addEventListener('click', preventEvent, true);
-      this.doc.addEventListener('touchmove', preventEvent, true);
-      this.doc.addEventListener('touchstart', preventEvent, true);
-      this.doc.addEventListener('touchend', preventEvent, true);
+      this.deactivateAttempt = 0;
     }
+
   }
 
-}
-
-function preventEvent(ev) {
-  ev.preventDefault();
-  ev.stopPropagation();
 }

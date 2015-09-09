@@ -279,6 +279,7 @@ export class ViewController extends Ion {
           // block any clicks during the transition and provide a
           // fallback to remove the clickblock if something goes wrong
           ClickBlock(true, duration + 200);
+          this.app.setTransitioning(true);
         }
 
         // start the transition
@@ -396,6 +397,7 @@ export class ViewController extends Ion {
   swipeBackProgress(progress) {
     if (this.sbTransition) {
       ClickBlock(true, 4000);
+      this.app.setTransitioning(true);
       this.sbTransition.progress( Math.min(1, Math.max(0, progress)) );
     }
   }
@@ -481,6 +483,7 @@ export class ViewController extends Ion {
 
     // allow clicks again
     ClickBlock(false);
+    this.app.setTransitioning(false);
   }
 
   /**

@@ -128,6 +128,7 @@ export class OverlayRef {
       animation.before.addClass('show-overlay');
 
       ClickBlock(true, animation.duration() + 200);
+      this.app.setTransitioning(true);
 
       this.app.zoneRunOutside(() => {
 
@@ -135,6 +136,7 @@ export class OverlayRef {
 
           this.app.zoneRun(() => {
             ClickBlock(false);
+            this.app.setTransitioning(false);
             animation.dispose();
             instance.viewDidEnter && instance.viewDidEnter();
             resolve();
@@ -160,6 +162,7 @@ export class OverlayRef {
 
       animation.after.removeClass('show-overlay');
       ClickBlock(true, animation.duration() + 200);
+      this.app.setTransitioning(true);
 
       animation.play().then(() => {
         instance.viewDidLeave && instance.viewDidLeave();
@@ -168,6 +171,7 @@ export class OverlayRef {
         this._dispose();
 
         ClickBlock(false);
+        this.app.setTransitioning(false);
         animation.dispose();
 
         resolve();
