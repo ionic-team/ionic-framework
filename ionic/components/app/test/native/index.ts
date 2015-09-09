@@ -16,10 +16,10 @@ import {VibrationPage} from 'pages/vibration';
 @App({
   templateUrl: 'main.html'
 })
-class IonicApp {
+class MyApp {
   constructor(app: IonicApp) {
     this.app = app;
-    
+
     this.firstPage = CameraPage;
     console.log('First page', CameraPage);
     this.plugins = [
