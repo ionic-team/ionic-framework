@@ -8,8 +8,19 @@ import {hasFocusedTextInput} from '../../util/dom';
 
 /**
  * @name ionContent
- * @classdesc
- * TODO
+ * @description
+ * The ionContent component provides an easy to use content area that can be configured to use Ionic's custom Scroll View, or the built in overflow scrolling of the browser.
+ *
+ * While we recommend using the custom Scroll features in Ionic in most cases, sometimes (for performance reasons) only the browser's native overflow scrolling will suffice, and so we've made it easy to toggle between the Ionic scroll implementation and overflow scrolling.
+ *
+ * You can implement pull-to-refresh with the ionRefresher component.
+ *
+ * @usage
+ * ```html
+ * <ion-content>
+ *   Add your content here!
+ * </ion-content>
+ * ```
  *
  */
 @Component({
@@ -23,9 +34,8 @@ import {hasFocusedTextInput} from '../../util/dom';
 })
 export class Content extends Ion {
   /**
-   * TODO
-   * @param {ElementRef} elementRef  TODO
-   * @param {IonicConfig} config  TODO
+   * @param {ElementRef} elementRef  A reference to the component's DOM element.
+   * @param {IonicConfig} config  The config object to change content's default settings.
    */
   constructor(elementRef: ElementRef, config: IonicConfig) {
     super(elementRef, config);
@@ -34,6 +44,7 @@ export class Content extends Ion {
 
   /**
    * TODO
+   * @private
    */
   onInit() {
     super.onInit();
@@ -78,8 +89,8 @@ export class Content extends Ion {
 
   /**
    * Scroll to the specified position.
-   * @param {TODO} x  TODO
-   * @param {TODO} y  TODO
+   * @param {TODO} x  The x-value to scroll to.
+   * @param {TODO} y  The y-value to scroll to.
    * @param {Number} duration  Duration of the scroll animation.
    * @param {TODO} tolerance  TODO
    * @returns {TODO} TODO

@@ -13,7 +13,24 @@ import {Popup} from '../popup/popup';
 import {FocusHolder} from '../form/focus-holder';
 
 /**
- * TODO
+ * @name IonicApp
+ * @description
+ * The base Ionic class that your app inherits from. By inheriting from this class, you will have access to the Ionic API.
+ *
+ * @usage
+ * ```js
+ *  @App({
+ *    templateUrl: '/app/app.html',
+ *  })
+ *  class MyApp {
+ *
+ *    constructor(app: IonicApp) {
+ *      this.app = app;
+ *    }
+ *  }
+ *  ```
+ * Note: Ionic sets `ion-app` as the selector for the app. Setting a custom selector will override this and cause CSS problems.
+ *
  */
 export class IonicApp {
 

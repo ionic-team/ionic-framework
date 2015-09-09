@@ -13,12 +13,12 @@ import {IonicComponent, IonicView} from '../../config/annotations';
 
 /**
  * @name ionCheckbox
- * @classdesc
+ * @description
  * The checkbox is no different than the HTML checkbox input, except it's styled differently
  *
  * See the [Angular 2 Docs](https://angular.io/docs/js/latest/api/forms/) for more info on forms and input.
  *
- * @example
+ * @usage
  * ```html
  * <ion-checkbox checked="true" value="isChecked" ng-control="htmlCtrl">
  *   HTML5

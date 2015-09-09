@@ -18,7 +18,9 @@ function getBabelOptions(moduleName, moduleType) {
     modules: moduleType || "system",
     moduleIds: true,
     getModuleId: function(name) {
-      if (moduleName === "index") return moduleName;
+      if (moduleName == "e2e"){
+        return name.replace(/\S*\/test\/[^\/]*\//, '');
+      }
 
       return moduleName + '/' + name.split('/test').join('');
     }
@@ -204,7 +206,7 @@ gulp.task('e2e', function() {
   var buildTest = lazypipe()
              //.pipe(traceur, traceurOptions)
              .pipe(tsc, tscOptions, null, tscReporter)
-             .pipe(babel, getBabelOptions('index'))
+             .pipe(babel, getBabelOptions('e2e'))
 
   var buildE2ETest = lazypipe()
              //.pipe(traceur, traceurOptions)

@@ -7,7 +7,7 @@ import {IonicComponent, IonicView} from '../../config/annotations';
 
   /**
    * @name ionTabs
-   * @classdesc
+   * @description
    * Powers a multi-tabbed interface with a Tab Bar and a set of "pages" that can be tabbed through.
    *
    * Assign any tabs attribute to the element to define its look and feel.
@@ -16,7 +16,7 @@ import {IonicComponent, IonicView} from '../../config/annotations';
    *
    * See the ionTab component's documentation for more details on individual tabs.
    *
-   * @example
+   * @usage
    * ```html
    * <ion-tabs>
    *   <ion-tab tab-title="Heart" tab-icon="ion-ios-heart-outline" [root]="root1"></ion-tab>
