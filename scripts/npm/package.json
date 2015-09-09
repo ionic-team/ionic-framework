@@ -6,6 +6,12 @@
     "type": "git",
     "url": "https://github.com/driftyco/ionic2.git"
   },
+  "files": [
+    "css",
+    "fonts",
+    "js",
+    "src"
+  ],
   "dependencies": {
     "angular2": "2.0.0-alpha.<%= ngVersion %>",
     "reflect-metadata": "0.1.0",
