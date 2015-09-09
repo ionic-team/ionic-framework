@@ -17,7 +17,9 @@ import {VibrationPage} from 'pages/vibration';
   templateUrl: 'main.html'
 })
 class IonicApp {
-  constructor() {
+  constructor(app: IonicApp) {
+    this.app = app;
+    
     this.firstPage = CameraPage;
     console.log('First page', CameraPage);
     this.plugins = [
@@ -29,5 +31,12 @@ class IonicApp {
       {title: 'Battery', page: BatteryPage},
       {title: 'Vibration', page: VibrationPage},
     ]
+  }
+
+  openPage(aside, plugin) {
+    aside.close();
+
+    let nav = this.app.getComponent('myNav');
+    nav.setItems([plugin.page]);
   }
 }
