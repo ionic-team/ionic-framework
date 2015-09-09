@@ -1,6 +1,41 @@
 
-<button>
-  <div><div><p>TAP ME</p></div></div>
-</button>
+<ion-row>
+
+  <ion-col>
+    <button (^click)="tapTest('button')" block>
+      <div><div><p>Button</p></div></div>
+    </button>
+  </ion-col>
+
+  <ion-col>
+    <a button (^click)="tapTest('link')" block>
+      Link
+    </a>
+  </ion-col>
+
+</ion-row>
+
+<ion-row>
+
+  <ion-col>
+    <div button (^click)="tapTest('div')" block>
+      Div w/ (click)
+    </div>
+  </ion-col>
+
+  <ion-col>
+    <div button block>
+      Div w/out (click)
+    </div>
+  </ion-col>
+
+</ion-row>
+
 
 <div id="logs"></div>
+
+<style>
+  .activated {
+    background-color: yellow !important;
+  }
+</style>

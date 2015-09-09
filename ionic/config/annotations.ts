@@ -15,7 +15,6 @@ import {
   Segment, SegmentButton, SegmentControlValueAccessor,
   RadioGroup, RadioButton, SearchBar,
   Nav, NavbarTemplate, Navbar, NavPush, NavPop, NavRouter,
-  TapClick, TapDisabled,
   IdRef,
   ShowWhen, HideWhen,
 
@@ -86,10 +85,6 @@ export const IonicDirectives = [
 
   forwardRef(() => ShowWhen),
   forwardRef(() => HideWhen),
-
-  // Gestures
-  forwardRef(() => TapClick),
-  forwardRef(() => TapDisabled),
 
   // Material
   forwardRef(() => MaterialButton)

@@ -23,6 +23,7 @@ import {pointerCoord} from '../../util/dom';
 @Directive({
   selector: '.media-switch',
   host: {
+    'tappable': 'true',
     '(^touchstart)': 'swtch.pointerDown($event)',
     '(^mousedown)': 'swtch.pointerDown($event)',
     '[class.activated]': 'swtch.isActivated'

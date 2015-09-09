@@ -3,7 +3,6 @@ import {ElementRef, Host, Optional, NgControl, Query, QueryList} from 'angular2/
 import {IonicDirective, IonicComponent, IonicView} from '../../config/annotations';
 import {IonicConfig} from '../../config/config';
 import {Ion} from '../ion';
-import {TapClick} from '../button/button';
 import {ListHeader} from '../list/list';
 
 
@@ -11,37 +10,37 @@ import {ListHeader} from '../list/list';
  * @name ionRadioGroup
  * @classdesc
  * A radio group is a group of radio components.
- * 
+ *
  * Selecting a radio button in the group unselects all others in the group.
- * 
- * New radios can be registered dynamically. 
+ *
+ * New radios can be registered dynamically.
  *
  * See the [Angular 2 Docs](https://angular.io/docs/js/latest/api/forms/) for more info on forms and input.
- * 
+ *
  * @example
  * ```html
  * <ion-radio-group ng-control="clientside">
- * 
+ *
  *   <ion-header>
  *     Clientside
  *   </ion-header>
- * 
+ *
  *   <ion-radio value="ember">
  *     Ember
  *   </ion-radio>
- * 
+ *
  *   <ion-radio value="angular1">
  *     Angular 1
  *   </ion-radio>
- * 
+ *
  *   <ion-radio value="angular2" checked="true">
  *     Angular 2
  *   </ion-radio>
- * 
+ *
  *   <ion-radio value="react">
  *     React
  *   </ion-radio>
- * 
+ *
  * </ion-radio-group>
  * ```
 */
@@ -153,7 +152,7 @@ export class RadioGroup extends Ion {
 /**
  * @name ionRadio
  * @classdesc
- * A single radio component. 
+ * A single radio component.
  *
  * See the [Angular 2 Docs](https://angular.io/docs/js/latest/api/forms/) for more info on forms and input.
  *
@@ -176,6 +175,7 @@ export class RadioGroup extends Ion {
   host: {
     'class': 'item',
     'role': 'radio',
+    'tappable': 'true',
     '[attr.id]': 'id',
     '[attr.tab-index]': 'tabIndex',
     '[attr.aria-checked]': 'checked',
@@ -199,16 +199,13 @@ export class RadioButton extends Ion {
    * @param {RadioGroup=} group  The parent radio group, if any.
    * @param {ElementRef} elementRef  TODO
    * @param {IonicConfig} config  TODO
-   * @param {TapClick} tapClick  TODO
    */
   constructor(
     @Host() @Optional() group: RadioGroup,
     elementRef: ElementRef,
-    config: IonicConfig,
-    tapClick: TapClick
+    config: IonicConfig
   ) {
-    super(elementRef, config);
-    this.tapClick = tapClick;
+    super(elementRef, config)
     this.group = group;
     this.tabIndex = 0;
   }
@@ -220,11 +217,9 @@ export class RadioButton extends Ion {
   }
 
   click(ev) {
-    if (this.tapClick.allowClick(ev)) {
-      ev.preventDefault();
-      ev.stopPropagation();
-      this.check();
-    }
+    ev.preventDefault();
+    ev.stopPropagation();
+    this.check();
   }
 
   /**

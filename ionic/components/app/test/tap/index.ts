@@ -4,7 +4,13 @@ import {App} from 'ionic/ionic';
 @App({
   templateUrl: 'main.html'
 })
-class E2EApp {}
+class E2EApp {
+
+  tapTest(eleType) {
+    console.debug('test click', eleType);
+  }
+
+}
 
 
 function onEvent(ev) {
@@ -73,6 +79,8 @@ console.debug = function() {
   if(arguments[0] === 'mouseup') msg = '<span style="color:maroon">' + msg + '</span>';
 
   if(arguments[0] === 'click') msg = '<span style="color:purple">' + msg + '</span>';
+
+  if(arguments[0] === 'test click') msg = '<span style="color:orange">' + msg + '</span>';
 
   msgs.unshift( msg );
 

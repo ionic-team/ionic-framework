@@ -1,61 +1,289 @@
-import {raf} from './dom';
-
-var queueElements = {};   // elements that should get an active state in XX milliseconds
-var activeElements = {};  // elements that are currently active
-var keyId = 0;            // a counter for unique keys for the above ojects
-var ACTIVATED_CLASS = 'activated';
-var DEACTIVATE_TIMEOUT = 180;
+import {raf, pointerCoord, hasPointerMoved} from './dom';
 
 
 export class Activator {
 
-  static start(ele) {
-    queueElements[++keyId] = ele;
-    if (keyId > 9) keyId = 0;
-    raf(Activator.activate);
+  constructor(app: IonicApp, config: IonicConfig, window, document) {
+    const self = this;
+    self.app = app;
+    self.config = config;
+    self.win = window;
+    self.doc = document;
+
+    self.id = 0;
+    self.queue = {};
+    self.active = {};
+    self.activatedClass = 'activated';
+    self.deactivateTimeout = 180;
+    self.pointerTolerance = 4;
+    self.isTouch = false;
+    self.disableClick = 0;
+    self.disableClickLimit = 2500;
+
+    self.tapPolyfill = config.setting('tapPolyfill');
+
+    function bindDom(type, listener, useCapture) {
+      document.addEventListener(type, listener, useCapture);
+    }
+
+    bindDom('click', function(ev) {
+      self.click(ev);
+    }, true);
+
+    bindDom('touchstart', function(ev) {
+      self.isTouch = true;
+      self.pointerStart(ev);
+    });
+
+    bindDom('touchend', function(ev) {
+      self.isTouch = true;
+      self.touchEnd(ev);
+    });
+
+    bindDom('touchcancel', function(ev) {
+      self.isTouch = true;
+      self.touchCancel(ev);
+    });
+
+    bindDom('mousedown', function(ev) {
+      self.mouseDown(ev);
+    }, true);
+
+    bindDom('mouseup', function(ev) {
+      self.mouseUp(ev);
+    }, true);
+
+
+    self.pointerMove = function(ev) {
+      let moveCoord = pointerCoord(ev);
+      console.log('pointerMove', moveCoord, self.start)
+
+      if ( hasPointerMoved(10, self.start, moveCoord) ) {
+        self.pointerCancel();
+      }
+    };
+
+
+    self.moveListeners = function(shouldAdd) {
+      document.removeEventListener('touchmove', self.pointerMove);
+      document.removeEventListener('mousemove', self.pointerMove);
+
+      if (shouldAdd) {
+        bindDom('touchmove', self.pointerMove);
+        bindDom('mousemove', self.pointerMove);
+      }
+    };
+
   }
 
-  static activate() {
-    // activate all elements in the queue
-    for (var key in queueElements) {
-      if (queueElements[key]) {
-        queueElements[key].classList.add(ACTIVATED_CLASS);
-        activeElements[key] = queueElements[key];
+
+  /**
+   * TODO
+   * @param {TODO} ev  TODO
+   */
+  touchEnd(ev) {
+    let self = this;
+
+    if (self.tapPolyfill && self.start) {
+      let endCoord = pointerCoord(ev);
+
+      if (!hasPointerMoved(self.pointerTolerance, self.start, endCoord)) {
+        console.debug('create click');
+
+        self.disableClick = Date.now();
+
+        let clickEvent = self.doc.createEvent('MouseEvents');
+        clickEvent.initMouseEvent('click', true, true, self.win, 1, 0, 0, endCoord.x, endCoord.y, false, false, false, false, 0, null);
+        clickEvent.isIonicTap = true;
+        ev.target.dispatchEvent(clickEvent);
       }
     }
-    queueElements = {};
+
+    self.pointerEnd(ev);
   }
 
-  static end() {
-    setTimeout(Activator.clear, DEACTIVATE_TIMEOUT);
+  /**
+   * TODO
+   * @param {TODO} ev  TODO
+   */
+  mouseDown(ev) {
+    if (this.isDisabledClick()) {
+      console.debug('mouseDown prevent');
+      preventEvent(ev);
+
+    } else if (!self.isTouch) {
+      this.pointerStart(ev);
+    }
   }
 
-  static clear() {
+  /**
+   * TODO
+   * @param {TODO} ev  TODO
+   */
+  mouseUp(ev) {
+    if (this.isDisabledClick()) {
+      console.debug('mouseUp prevent');
+      preventEvent(ev);
+    }
+
+    if (!self.isTouch) {
+      this.pointerEnd(ev);
+    }
+  }
+
+  /**
+   * TODO
+   * @param {TODO} ev  TODO
+   */
+  pointerStart(ev) {
+    let targetEle = this.getActivatableTarget(ev.target);
+
+    if (targetEle) {
+      this.start = pointerCoord(ev);
+
+      this.queueActivate(targetEle);
+      this.moveListeners(true);
+
+    } else {
+      this.start = null;
+    }
+  }
+
+  /**
+   * TODO
+   */
+  pointerEnd(ev) {
+    this.endActive();
+    this.moveListeners(false);
+  }
+
+  /**
+   * TODO
+   */
+  pointerCancel() {
+    console.debug('pointerCancel')
+    this.clearActive();
+    this.moveListeners(false);
+    this.disableClick = Date.now();
+  }
+
+  isDisabledClick() {
+    return this.disableClick + this.disableClickLimit > Date.now();
+  }
+
+  /**
+   * Whether the supplied click event should be allowed or not.
+   * @param {MouseEvent} ev  The click event.
+   * @return {boolean} True if click event should be allowed, otherwise false.
+   */
+  allowClick(ev) {
+    if (!ev.isIonicTap) {
+      if (this.isDisabledClick()) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
+   * TODO
+   * @param {MouseEvent} ev  TODO
+   */
+  click(ev) {
+    if (!this.allowClick(ev)) {
+      console.debug('click prevent');
+      preventEvent(ev);
+    }
+    this.isTouch = false;
+  }
+
+  getActivatableTarget(ele) {
+    var targetEle = ele;
+    for (var x = 0; x < 4; x++) {
+      if (!targetEle) break;
+      if (this.isActivatable(targetEle)) return targetEle;
+      targetEle = targetEle.parentElement;
+    }
+    return null;
+  }
+
+  isActivatable(ele) {
+    if (/^(A|BUTTON)$/.test(ele.tagName)) {
+      return true;
+    }
+
+    let attributes = ele.attributes;
+    for (let i = 0, l = attributes.length; i < l; i++) {
+      if (/click|tappable/.test(attributes[i].name)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  queueActivate(ele) {
+    const self = this;
+
+    self.queue[++self.id] = ele;
+    if (self.id > 19) self.id = 0;
+
+    raf(function(){
+      // activate all elements in the queue
+      for (var key in self.queue) {
+        if (self.queue[key]) {
+          self.queue[key].classList.add(self.activatedClass);
+          self.active[key] = self.queue[key];
+        }
+      }
+      self.queue = {};
+    });
+  }
+
+  endActive() {
+    const self = this;
+
+    setTimeout(function() {
+      self.clearActive();
+    }, this.deactivateTimeout);
+  }
+
+  clearActive() {
+    const self = this;
+
     // clear out any elements that are queued to be set to active
-    queueElements = {};
+    self.queue = {};
 
     // in the next frame, remove the active class from all active elements
-    raf(Activator.deactivate);
-  }
-
-  static deactivate() {
-
-    for (var key in activeElements) {
-      if (activeElements[key]) {
-        activeElements[key].classList.remove(ACTIVATED_CLASS);
+    raf(function() {
+      for (var key in self.active) {
+        if (self.active[key]) {
+          self.active[key].classList.remove(self.activatedClass);
+        }
+        delete self.active[key];
       }
-      delete activeElements[key];
+    });
+  }
+
+  clickBlock(enable) {
+    console.log('clickBlock', enable);
+
+    this.doc.removeEventListener('click', preventEvent, true);
+    this.doc.removeEventListener('touchmove', preventEvent, true);
+    this.doc.removeEventListener('touchstart', preventEvent, true);
+    this.doc.removeEventListener('touchend', preventEvent, true);
+
+    if (enable) {
+      this.doc.addEventListener('click', preventEvent, true);
+      this.doc.addEventListener('touchmove', preventEvent, true);
+      this.doc.addEventListener('touchstart', preventEvent, true);
+      this.doc.addEventListener('touchend', preventEvent, true);
     }
   }
 
-  static moveListeners(pointerMove, shouldAdd) {
-    document.removeEventListener('touchmove', pointerMove);
-    document.removeEventListener('mousemove', pointerMove);
+}
 
-    if (shouldAdd) {
-      document.addEventListener('touchmove', pointerMove);
-      document.addEventListener('mousemove', pointerMove);
-    }
-  }
-
+function preventEvent(ev) {
+  ev.preventDefault();
+  ev.stopPropagation();
 }

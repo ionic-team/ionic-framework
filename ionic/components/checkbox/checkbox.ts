@@ -10,7 +10,6 @@ import {Ion} from '../ion';
 import {IonInput} from '../form/input';
 import {IonicConfig} from '../../config/config';
 import {IonicComponent, IonicView} from '../../config/annotations';
-import {TapClick} from '../button/button';
 
 /**
  * @name ionCheckbox
@@ -37,6 +36,7 @@ import {TapClick} from '../button/button';
   host: {
     'class': 'item',
     'role': 'checkbox',
+    'tappable': 'true',
     '[attr.tab-index]': 'tabIndex',
     '[attr.aria-checked]': 'checked',
     '[attr.aria-disabled]': 'disabled',
@@ -59,16 +59,13 @@ export class Checkbox extends Ion {
    * @param {ElementRef} elementRef  TODO
    * @param {IonicConfig} ionicConfig  TODO
    * @param {NgControl=} ngControl  TODO
-   * @param {TapClick=} tapClick  TODO
    */
   constructor(
     elementRef: ElementRef,
     config: IonicConfig,
-    @Optional() ngControl: NgControl,
-    tapClick: TapClick
+    @Optional() ngControl: NgControl
   ) {
     super(elementRef, config);
-    this.tapClick = tapClick;
     this.tabIndex = 0;
     this.id = IonInput.nextId();
 
@@ -102,11 +99,9 @@ export class Checkbox extends Ion {
    * @param {MouseEvent} ev  The click event.
    */
   click(ev) {
-    if (this.tapClick.allowClick(ev)) {
-      ev.preventDefault();
-      ev.stopPropagation();
-      this.toggle();
-    }
+    ev.preventDefault();
+    ev.stopPropagation();
+    this.toggle();
   }
 
   /**

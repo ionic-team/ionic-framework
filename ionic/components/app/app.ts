@@ -6,6 +6,7 @@ import {Platform} from '../../platform/platform';
 import * as util from '../../util/util';
 
 // injectables
+import {Activator} from '../../util/activator';
 import {ActionMenu} from '../action-menu/action-menu';
 import {Modal} from '../modal/modal';
 import {Popup} from '../popup/popup';
@@ -272,6 +273,7 @@ export function ionicBootstrap(rootComponentType, config) {
       Platform.prepareReady(config);
 
       // TODO: probs need a better way to inject global injectables
+      let activator = new Activator(app, config, window, document);
       let actionMenu = new ActionMenu(app, config);
       let modal = new Modal(app, config);
       let popup = new Popup(app, config);
@@ -280,6 +282,7 @@ export function ionicBootstrap(rootComponentType, config) {
       let appBindings = Injector.resolve([
         bind(IonicApp).toValue(app),
         bind(IonicConfig).toValue(config),
+        bind(Activator).toValue(activator),
         bind(ActionMenu).toValue(actionMenu),
         bind(Modal).toValue(modal),
         bind(Popup).toValue(popup),

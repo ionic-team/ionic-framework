@@ -8,7 +8,6 @@
 
 import {View, Injectable, NgFor, NgIf} from 'angular2/angular2';
 
-import {TapClick} from '../button/button';
 import {Icon} from '../icon/icon';
 import {Overlay} from '../overlay/overlay';
 import {Animation} from '../../animations/animation';
@@ -75,7 +74,7 @@ import * as util from 'ionic/util';
         '</div>' +
       '</div>' +
     '</action-menu-wrapper>',
-  directives: [NgFor, NgIf, TapClick, Icon]
+  directives: [NgFor, NgIf, Icon]
 })
 class ActionMenuDirective {
 
