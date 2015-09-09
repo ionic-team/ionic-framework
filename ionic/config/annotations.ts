@@ -31,7 +31,7 @@ export const IonicDirectives = [
   CORE_DIRECTIVES,
   FORM_DIRECTIVES,
 
-  NgStyle
+  NgStyle,
 
   // Content
   forwardRef(() => Aside),
