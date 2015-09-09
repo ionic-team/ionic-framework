@@ -30,7 +30,7 @@ class MyApp {
       {title: 'Contacts', page: ContactsPage},
       {title: 'Battery', page: BatteryPage},
       {title: 'Vibration', page: VibrationPage},
-    ]
+    ];
   }
 
   openPage(aside, plugin) {

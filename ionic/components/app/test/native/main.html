@@ -1,4 +1,4 @@
-<ion-aside #aside [content]="content">
+<ion-aside #aside [content]="content" id="menu">
   <ion-toolbar><ion-title>Plugins</ion-title></ion-toolbar>
   <ion-content>
     <ion-list>
@@ -9,4 +9,4 @@
   </ion-content>
 </ion-aside>
 
-<ion-nav #content swipe-back-enabled="false" [root]="firstPage"></ion-nav>
+<ion-nav id="myNav" #content swipe-back-enabled="false" [root]="firstPage"></ion-nav>
