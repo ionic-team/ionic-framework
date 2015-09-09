@@ -19,7 +19,10 @@ function getBabelOptions(moduleName, moduleType) {
     moduleIds: true,
     getModuleId: function(name) {
       if (moduleName == "e2e"){
-        return name.replace(/\S*\/test\/[^\/]*\//, '');
+        return name.replace(/^.*\/test\/[^\/]*\//, '');
+      }
+      else if (moduleName == "demos"){
+        return name.replace(/^(.*?)\//, '')
       }
 
       return moduleName + '/' + name.split('/test').join('');
@@ -54,6 +57,7 @@ gulp.task('build', function(done) {
   runSequence(
     'bundle',
     'e2e',
+    'demos',
     'sass',
     'fonts',
     done
@@ -244,19 +248,9 @@ gulp.task('e2e', function() {
 
   function createIndexHTML() {
     return through2.obj(function(file, enc, next) {
-      var self = this;
-
-      var module = path.dirname(file.path)
-                      .replace(__dirname, '')
-                      .replace('/ionic/components/', 'e2e/')
-                      .replace('/test/', '/') +
-                      '/index';
-
-      var indexContents = indexTemplate.replace('{{MODULE}}', module);
-
-      self.push(new VinylFile({
+      this.push(new VinylFile({
         base: file.base,
-        contents: new Buffer(indexContents),
+        contents: new Buffer(indexTemplate),
         path: path.join(path.dirname(file.path), 'index.html'),
       }));
       next(null, file);
@@ -357,6 +351,37 @@ gulp.task('src', function(done){
     'transpile.common',
     done
   );
+})
+
+gulp.task('demos', function(){
+  var gulpif = require('gulp-if');
+  var lazypipe = require('lazypipe');
+  var _ = require('lodash');
+  var fs = require('fs');
+  var VinylFile = require('vinyl');
+
+  var buildTest = lazypipe()
+    .pipe(tsc, tscOptions, null, tscReporter)
+    .pipe(babel, getBabelOptions('demos'))
+
+  var indexTemplate = _.template(fs.readFileSync('scripts/demos/index.template.html'))();
+
+  return gulp.src(['demos/**/*'])
+    .pipe(cache('demos', { optimizeMemory: true }))
+    .pipe(gulpif(/.ts$/, buildTest()))
+    .pipe(gulpif(/index.js$/, createIndexHTML())) //TSC changes .ts to .js
+    .pipe(gulp.dest('dist/demos'))
+
+  function createIndexHTML() {
+    return through2.obj(function(file, enc, next) {
+      this.push(new VinylFile({
+        base: file.base,
+        contents: new Buffer(indexTemplate),
+        path: path.join(path.dirname(file.path), 'index.html'),
+      }));
+      next(null, file);
+    });
+  }
 })
 
 gulp.task('publish', function(done) {
