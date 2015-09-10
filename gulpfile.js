@@ -308,7 +308,7 @@ gulp.task('karma-watch', function() {
   return karma.start({ configFile: __dirname + '/scripts/karma/karma-watch.conf.js' })
 });
 
-gulp.task('docs', function() {
+gulp.task('docs', ['docs.demos'], function() {
   var Dgeni = require('dgeni');
   var semver = require('semver');
 
@@ -325,6 +325,19 @@ gulp.task('docs', function() {
     console.log(err.stack);
   }
 });
+
+gulp.task('docs.demos', ['demos', 'bundle', 'sass', 'fonts'], function(){
+  return gulp.src([
+      'dist/**',
+      '!dist/e2e',
+      '!dist/e2e/**/*',
+      '!dist/ionic-site',
+      '!dist/ionic-site/**/*',
+      '!dist/src',
+      '!dist/src/**/*'
+    ])
+    .pipe(gulp.dest('dist/ionic-site/docs/v2/dist'));
+})
 
 gulp.task('copy.ts', function() {
   return gulp.src([
