@@ -7,14 +7,14 @@ angular.module('ng').config(['$provide', function($provide) {
 
 
   // only provide the patch for iOS9 on UIWebView
-  // var isIOS9 = (navigator.userAgent.indexOf('Version/9.') != -1) && (navigator.appVersion.indexOf('9_0') != -1);
-  // if (false) {
-  //   // do not patch if not iOS9 UIWebView
-  //   return $browser;
-  // }
+  var isIOS9 = (navigator.userAgent.indexOf('Version/9.') != -1) && (navigator.appVersion.indexOf('9_0') != -1);
+  if (!isIOS9) {
+    // do not patch if not iOS9 UIWebView
+    return $browser;
+  }
 
 
-  console.log('iOS9 $browser patch applied');
+  //console.log('iOS9 $browser patch applied');
 
 
   // private methods not public within angular
@@ -82,7 +82,7 @@ angular.module('ng').config(['$provide', function($provide) {
     // force browser to execute all pollFns - this is needed so that cookies and other pollers fire
     // at some deterministic time in respect to the test runner's actions. Leaving things up to the
     // regular poller would result in flaky tests.
-    forEach(pollFns, function(pollFn) { pollFn(); });
+    angular.forEach(pollFns, function(pollFn) { pollFn(); });
 
     if (outstandingRequestCount === 0) {
       callback();
@@ -124,7 +124,7 @@ angular.module('ng').config(['$provide', function($provide) {
    */
   function startPoller(interval, setTimeout) {
     (function check() {
-      forEach(pollFns, function(pollFn) { pollFn(); });
+      angular.forEach(pollFns, function(pollFn) { pollFn(); });
       pollTimeout = setTimeout(check, interval);
     })();
   }
@@ -303,7 +303,7 @@ angular.module('ng').config(['$provide', function($provide) {
 
     lastBrowserUrl = self.url();
     lastHistoryState = cachedState;
-    forEach(urlChangeListeners, function(listener) {
+    angular.forEach(urlChangeListeners, function(listener) {
       listener(self.url(), cachedState);
     });
   }
