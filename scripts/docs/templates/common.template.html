@@ -68,11 +68,11 @@ docType: "<$ doc.docType $>"
 
 <@ block body @>
 <div class="improve-docs">
-  <a href='http://github.com/driftyco/ionic/tree/master/<$ doc.relativePath $>#L<$ doc.startingLine $>'>
+  <a href='http://github.com/driftyco/ionic2/tree/master/<$ doc.fileInfo.relativePath $>#L<$ doc.location.start.line $>'>
     View Source
   </a>
   &nbsp;
-  <a href='http://github.com/driftyco/ionic/edit/master/<$ doc.relativePath $>#L<$ doc.startingLine $>'>
+  <a href='http://github.com/driftyco/ionic2/edit/master/<$ doc.fileInfo.relativePath $>#L<$ doc.location.start.line $>'>
     Improve this doc
   </a>
 </div>
