@@ -318,37 +318,6 @@ gulp.task('karma-watch', function() {
   return karma.start({ configFile: __dirname + '/scripts/karma/karma-watch.conf.js' })
 });
 
-gulp.task('docs', ['docs.demos'], function() {
-  var Dgeni = require('dgeni');
-  var semver = require('semver');
-
-  var docVersion = flags['doc-version'] || 'nightly';
-  if (docVersion != 'nightly' && !semver.valid(docVersion)) {
-    console.log('Usage: gulp docs --doc-version=(nightly|versionName)\nversionName must be a valid semver version.');
-    return process.exit(1);
-  }
-  try {
-    var ionicPackage = require('./scripts/docs/dgeni-config')(docVersion);
-    var dgeni = new Dgeni([ionicPackage]);
-    return dgeni.generate();
-  } catch (err) {
-    console.log(err.stack);
-  }
-});
-
-gulp.task('docs.demos', ['demos', 'bundle', 'sass', 'fonts'], function(){
-  return gulp.src([
-      'dist/**',
-      '!dist/e2e',
-      '!dist/e2e/**/*',
-      '!dist/ionic-site',
-      '!dist/ionic-site/**/*',
-      '!dist/src',
-      '!dist/src/**/*'
-    ])
-    .pipe(gulp.dest('dist/ionic-site/docs/v2/dist'));
-})
-
 gulp.task('copy.ts', function() {
   return gulp.src([
       'ionic/**/*.ts',
@@ -375,6 +344,8 @@ gulp.task('src', function(done){
     done
   );
 })
+
+require('./scripts/docs/gulp-tasks')(gulp, flags)
 
 gulp.task('demos', function(){
   var gulpif = require('gulp-if');
