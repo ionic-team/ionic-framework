@@ -33,6 +33,14 @@ module.exports = function(gulp, flags) {
 
 
   gulp.task('docs.index', function() {
+    var lunr = require('lunr');
+    var gutil = require('gulp-util');
+    var es = require('event-stream');
+    var yaml = require('js-yaml');
+    var htmlparser = require('htmlparser2');
+    var mkdirp = require('mkdirp');
+    var fs = require('fs');
+
     var idx = lunr(function() {
       this.field('path');
       this.field('title', {boost: 10});
@@ -49,22 +57,19 @@ module.exports = function(gulp, flags) {
       refId++;
     }
 
-    var docPath = buildConfig.dist + '/ionic-site';
+    var docPath = 'dist/ionic-site/docs/v2';
     gutil.log('Reading docs from', gutil.colors.cyan(docPath));
 
     return gulp.src([
-      docPath + '/docs/{components,guide,api,overview}/**/*.{md,html,markdown}',
-      docPath + '/docs/index.html',
-      docPath + '/getting-started/index.html',
-      docPath + '/tutorials/**/*.{md,html,markdown}',
-      docPath + '/_posts/**/*.{md,html,markdown}'
+      docPath + '/{guide,api,overview, what-is,utilities,ui,theming,native}/**/*.{md,html,markdown}',
+      docPath + '/index.md',
     ])
       .pipe(es.map(function(file, callback) {
         //docs for gulp file objects: https://github.com/wearefractal/vinyl
         var contents = file.contents.toString(); //was buffer
 
         // Grab relative path from ionic-site root
-        var relpath = file.path.replace(RegExp('^.*?' + docPath + '/'), '');
+        var relpath = file.path.replace(RegExp('^.*?' + docPath.replace('/docs/v2', '') + '/'), '');
 
         // Read out the yaml portion of the Jekyll file
         var yamlStartIndex = contents.indexOf('---');
