@@ -7,9 +7,9 @@
     "url": "https://github.com/driftyco/ionic2.git"
   },
   "dependencies": {
-    "angular2": "2.0.0-alpha.36",
-    "reflect-metadata": "0.1.0",
-    "rtts_assert": "2.0.0-alpha.36",
+    "angular2": "2.0.0-alpha.37",
+    "reflect-metadata": "0.1.1",
+    "rtts_assert": "2.0.0-alpha.37",
     "swiper": "^3.1.2",
     "systemjs": "0.18.10",
     "traceur": "0.0.91",
