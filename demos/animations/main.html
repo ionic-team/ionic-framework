@@ -1,53 +1,33 @@
 <html>
 <head>
-  <title>Animation Tests</title>
+  <title>Animations</title>
   <style>
-    .ball-container {
+    #ionitron {
+      width: 100px;
+      height: 100px;
       position: absolute;
-      top: 200px;
-      left: 20px;
-      border: 1px solid gray;
-      width: 300px;
-      height: 51px;
-    }
-    .ball {
-      position: absolute;
-      width: 50px;
-      height: 50px;
-      background: blue;
+      top: 45%;
+      margin-top: -50px;
+      left: 50%;
+      margin-left: -50px;
     }
   </style>
 </head>
 <body>
 
-  <div class="ball-container">
-    <div class="ball"></div>
+  <img src="http://ionicframework.com/present-ionic/slides/img/me.png" id="ionitron">
+
+  <div style="position:absolute; bottom: 0; display:inline;">
+    <button icon pause primary (click)="pause($event)">
+      Pause
+      <icon pause></icon>
+    </button>
+    <button icon play secondary (click)="play($event)">
+      Play
+      <icon play></icon>
+    </button>
   </div>
-
-  <div style="position: absolute; top: 300px; left: 20px;">
-
-    <div class="red square" style="position:absolute; width:100px; height:100px; background:red; top: 0; left: 0;"></div>
-    <div class="green square" style="position:absolute; width:100px; height:100px; background:green; top: 0; left: 100px;"></div>
-    <div class="blue square" style="position:absolute; width:100px; height:100px; background:blue; top: 0; left: 200px;"></div>
-
-  </div>
-
-  <div style="position: absolute; top: 400px; left: 20px;">
-
-    <div class="yellow square2" style="position:absolute; width:100px; height:100px; background:yellow; top: 0; left: 0;"></div>
-    <div class="purple square2" style="position:absolute; width:100px; height:100px; background:purple; top: 0; left: 100px;"></div>
-    <div class="maroon square2" style="position:absolute; width:100px; height:100px; background:maroon; top: 0; left: 200px;"></div>
-
-  </div>
-
-  <p>
-    <input type="range" (input)="progress($event)" value="0" min="0" step="0.001" max="1" style="width:200px">
-  </p>
-
-  <p>
-    <button (click)="play($event)">Play</button>
-    <button (click)="pause($event)">Pause</button>
-  </p>
+  
 
 </body>
 </html>
