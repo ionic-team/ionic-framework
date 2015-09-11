@@ -81,7 +81,7 @@ gulp.task('watch', function(done) {
         function(file) {
           if (file.event === "unlink") {
             var basePath = file.base.substring(0, file.base.lastIndexOf("ionic/"));
-            var relPath = file.history[0].replace(base, "").replace(".ts", ".js");
+            var relPath = file.history[0].replace(basePath, "").replace(".ts", ".js");
 
             var es6Path = basePath + "dist/src/es6/" + relPath;
             var commonPath = basePath + "dist/src/es5/common/" + relPath;
