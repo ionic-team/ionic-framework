@@ -25,7 +25,7 @@ import * as gestures from  './extensions/gestures';
   },
   host: {
     'role': 'navigation'
-  }
+  },
   events: ['opening']
 })
 @View({
