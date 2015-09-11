@@ -23,6 +23,9 @@ import * as gestures from  './extensions/gestures';
     'side': 'left',
     'type': 'reveal'
   },
+  host: {
+    'role': 'navigation'
+  }
   events: ['opening']
 })
 @View({
