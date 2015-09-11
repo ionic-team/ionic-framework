@@ -2,155 +2,56 @@
 // Aside
 // --------------------------------------------------
 
-$aside-width: 304px !default;
-$aside-small-width: $aside-width - 40px !default;
+$aside-width:                 304px !default;
+$aside-small-width:           $aside-width - 40px !default;
 
-$aside-transition: 0.2s ease transform !default;
-$aside-backdrop-transition: 0.2s ease background-color !default;
-$aside-background: $background-color !default;
-$aside-shadow: -1px 0px 8px rgba(0, 0, 0, 0.2) !default;
+$aside-background:            $background-color !default;
+$aside-shadow:                0px 0px 10px rgba(0, 0, 0, 0.25) !default;
 
 
-.aside {
+ion-aside {
   position: absolute;
   top: 0;
+  right: auto;
   bottom: 0;
+  left: 0;
 
-  left: -$aside-width;
   width: $aside-width;
 
   display: flex;
   flex-direction: column;
 
   background: $aside-background;
-
-  transform: translate3d(0, 0, 0);
-  transition: $aside-transition;
-
-  &.no-transition {
-    ion-aside-backdrop {
-      transition: none;
-    }
-  }
-
-
-  &[type=overlay] {
-    z-index: $z-index-aside-overlay;
-
-    &:not(.open):not(.changing) {
-      display: none;
-    }
-  }
-
-
-  &[type=reveal] {
-    left: 0;
-
-    &:not(.open):not(.changing) {
-      display: none;
-    }
-  }
-
-  &.open, {
-    &[type=reveal],
-    &[type=push] {
-      left: 0;
-    }
-    &[type=overlay] {
-      transform: translate3d($aside-width,0,0);
-      box-shadow: 1px 2px 16px rgba(0, 0, 0, 0.3);
-
-      ion-aside-backdrop {
-        opacity: 0.5;
-      }
-    }
-  }
-
-  &[side=right] {
-    width: $aside-width;
-    left: 100%;
-    top: 0;
-    bottom: 0;
-
-    transform: translate3d(0,0,0);
-    &.open,
-    &[type=reveal] {
-      transform: translate3d(-$aside-width,0,0);
-    }
-  }
-
-  &[side=top] {
-    height: $aside-width;
-    top: -$aside-width;
-    left: 0;
-    right: 0;
-
-    transform: translate3d(0,0,0);
-    &.open,
-    &[type=reveal] {
-      transform: translate3d(0,$aside-width,0);
-    }
-  }
-
-  &[side=bottom] {
-    height: $aside-width;
-    top: 100%;
-    left: 0;
-    right: 0;
-
-    transform: translate3d(0,0,0);
-    &.open,
-    &.type-reveal {
-      transform: translate3d(0,-$aside-width,0);
-    }
-  }
-
 }
 
-ion-aside-backdrop {
-  z-index: $z-index-aside-backdrop;
-  transition: $aside-backdrop-transition;
-  transform: translateX($aside-width);
-  top: 0;
+ion-aside[side=right] {
   right: 0;
-  left: 0;
-  bottom: 0;
-  position: fixed;
-  background-color: rgb(0,0,0);
+  left: auto;
+}
+
+ion-aside backdrop {
+  z-index: -1;
+  display: none;
 }
 
 .aside-content {
-  transition: $aside-transition;
-  transform: translate3d(0,0,0);
+  transform: translate3d(0px, 0px, 0px);
+}
 
-  box-shadow: $aside-shadow;
-  &.aside-open-left {
-    transform: translate3d($aside-width,0,0);
-    pointer-events: none;
-  }
-
-  &.aside-open-right {
-    transform: translate3d(-$aside-width,0,0);
-    pointer-events: none;
-  }
+.aside-content-open ion-pane,
+.aside-content-open ion-content,
+.aside-content-open .toolbar {
+  // the containing element itself should be clickable but
+  // everything inside of it should not clickable when aside is open
+  pointer-events: none;
 }
 
 
 @media (max-width: 340px) {
 
-  .aside {
-    left: -$aside-small-width;
+  ion-aside {
     width: $aside-small-width;
   }
 
-  .aside-content {
-    &.aside-open-left {
-      transform: translate3d($aside-small-width, 0, 0);
-    }
-
-    &.aside-open-right {
-      transform: translate3d(-$aside-small-width, 0, 0);
-    }
-  }
-
 }
+

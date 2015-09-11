@@ -43,7 +43,7 @@ export class Activator {
 
     bindDom('touchcancel', function(ev) {
       self.isTouch = true;
-      self.touchCancel(ev);
+      self.pointerCancel(ev);
     });
 
     bindDom('mousedown', function(ev) {

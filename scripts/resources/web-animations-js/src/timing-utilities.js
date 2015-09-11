@@ -127,9 +127,13 @@
           if ((property == 'direction') && (directions.indexOf(timingInput[property]) == -1)) {
             return;
           }
-          if (property == 'playbackRate' && timingInput[property] !== 1 && shared.isDeprecated('AnimationEffectTiming.playbackRate', '2014-11-28', 'Use Animation.playbackRate instead.')) {
-            return;
-          }
+
+          // IONIC HACK
+          // NATIVE CHROME STILL USES THIS, SO DON'T HAVE THE POLYFILL THROW ERRORS
+          // if (property == 'playbackRate' && timingInput[property] !== 1 && shared.isDeprecated('AnimationEffectTiming.playbackRate', '2014-11-28', 'Use Animation.playbackRate instead.')) {
+          //   return;
+          // }
+
           timing[property] = timingInput[property];
         }
       });

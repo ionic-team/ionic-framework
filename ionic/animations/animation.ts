@@ -1,4 +1,5 @@
 import {CSS} from '../util/dom';
+import {extend} from '../util/util';
 
 const RENDER_DELAY = 36;
 let AnimationRegistry = {};
@@ -123,15 +124,15 @@ export class Animation {
       }
       return this;
     }
-    return this._rate || (this._parent && this._parent.playbackRate());
+    return (typeof this._rate !== 'undefined' ? this._rate : this._parent && this._parent.playbackRate());
   }
 
-  fill(value) {
-    if (arguments.length) {
-      this._fill = value;
-      return this;
-    }
-    return this._fill || (this._parent && this._parent.fill());
+  reverse() {
+    return this.playbackRate(-1);
+  }
+
+  forward() {
+    return this.playbackRate(1);
   }
 
   from(property, value) {
@@ -193,23 +194,22 @@ export class Animation {
 
   play() {
     const self = this;
-    const animations = self._ani;
-    const children = self._chld;
-    let promises = [];
-    let i, l;
 
     // the actual play() method which may or may not start async
     function beginPlay() {
-      let i, l;
       let promises = [];
 
-      for (i = 0, l = children.length; i < l; i++) {
-        promises.push( children[i].play() );
+      for (let i = 0, l = self._chld.length; i < l; i++) {
+        promises.push( self._chld[i].play() );
       }
 
-      for (i = 0, l = animations.length; i < l; i++) {
-        promises.push( animations[i].play() );
-      }
+      self._ani.forEach(animation => {
+        promises.push(
+          new Promise(resolve => {
+            animation.play(resolve);
+          })
+        );
+      });
 
       return Promise.all(promises);
     }
@@ -290,8 +290,7 @@ export class Animation {
                                    this._to,
                                    this.duration(),
                                    this.easing(),
-                                   this.playbackRate(),
-                                   this.fill() );
+                                   this.playbackRate() );
 
           if (animation.shouldAnimate) {
             this._ani.push(animation);
@@ -310,6 +309,7 @@ export class Animation {
     // after the RENDER_DELAY
     // before the animations have started
     let i;
+    this._isFinished = false;
 
     for (i = 0; i < this._chld.length; i++) {
       this._chld[i]._onPlay();
@@ -322,7 +322,7 @@ export class Animation {
 
   _onFinish() {
     // after the animations have finished
-    if (!this._isFinished) {
+    if (!this._isFinished && !this.isProgress) {
       this._isFinished = true;
 
       let i, j, ele;
@@ -367,8 +367,6 @@ export class Animation {
   }
 
   pause() {
-    this._hasFinished = false;
-
     let i;
     for (i = 0; i < this._chld.length; i++) {
       this._chld[i].pause();
@@ -379,17 +377,22 @@ export class Animation {
     }
   }
 
+  progressStart() {
+    this.isProgress = true;
+    for (let i = 0; i < this._chld.length; i++) {
+      this._chld[i].progressStart();
+    }
+
+    this.play();
+    this.pause();
+  }
+
   progress(value) {
+    this.isProgress = true;
     let i;
 
     for (i = 0; i < this._chld.length; i++) {
       this._chld[i].progress(value);
-    }
-
-    if (!this._initProgress) {
-      this._initProgress = true;
-      this.play();
-      this.pause();
     }
 
     for (i = 0; i < this._ani.length; i++) {
@@ -397,16 +400,73 @@ export class Animation {
     }
   }
 
-  onReady(fn) {
+  progressFinish(shouldComplete, rate=1) {
+    let promises = [];
+
+    this.isProgress = false;
+    for (let i = 0; i < this._chld.length; i++) {
+      promises.push( this._chld[i].progressFinish(shouldComplete) );
+    }
+
+    this._ani.forEach(animation => {
+      if (shouldComplete) {
+        animation.playbackRate(rate);
+      } else {
+        animation.playbackRate(rate * -1);
+      }
+
+      promises.push(
+        new Promise(resolve => {
+          animation.play(resolve);
+        })
+      );
+    });
+
+    return Promise.all(promises);
+  }
+
+  onReady(fn, clear) {
+    if (clear) {
+      this._readys = [];
+    }
     this._readys.push(fn);
+    return this;
   }
 
-  onPlay(fn) {
+  onPlay(fn, clear) {
+    if (clear) {
+      this._plays = [];
+    }
     this._plays.push(fn);
+    return this;
   }
 
-  onFinish(fn) {
+  onFinish(fn, clear) {
+    if (clear) {
+      this._finishes = [];
+    }
     this._finishes.push(fn);
+    return this;
+  }
+
+  clone() {
+
+    function copy(dest, src) {
+      // undo what stage() may have already done
+      extend(dest, src);
+
+      dest._isFinished = dest._isStaged = dest.isProgress = false;
+      dest._chld = [];
+      dest._ani = [];
+
+      for (let i = 0; i < src._chld.length; i++) {
+        dest.add( copy(new Animation(), src._chld[i]) );
+      }
+
+      return dest;
+    }
+
+    return copy(new Animation(), this);
   }
 
   dispose() {
@@ -444,7 +504,7 @@ export class Animation {
 
 class Animate {
 
-  constructor(ele, fromEffect, toEffect, duration, easingConfig, playbackRate, fill) {
+  constructor(ele, fromEffect, toEffect, duration, easingConfig, playbackRate) {
     // https://w3c.github.io/web-animations/
     // not using the direct API methods because they're still in flux
     // however, element.animate() seems locked in and uses the latest
@@ -462,24 +522,21 @@ class Animate {
       return inlineStyle(ele, this.toEffect);
     }
 
-    this.fill = fill;
-
     this.ele = ele;
-    this.promise = new Promise(res => { this.resolve = res; });
 
     // stage where the element will start from
-    fromEffect = parseEffect(fromEffect);
-    inlineStyle(ele, fromEffect);
+    this.fromEffect = parseEffect(fromEffect);
+    inlineStyle(ele, this.fromEffect);
 
     this.duration = duration;
-    this.rate = playbackRate;
+    this.rate = (typeof playbackRate !== 'undefined' ? playbackRate : 1);
 
     this.easing = easingConfig && easingConfig.name || 'linear';
 
-    this.effects = [ convertProperties(fromEffect) ];
+    this.effects = [ convertProperties(this.fromEffect) ];
 
     if (this.easing in EASING_FN) {
-      insertEffects(this.effects, fromEffect, this.toEffect, easingConfig);
+      insertEffects(this.effects, this.fromEffect, this.toEffect, easingConfig);
 
     } else if (this.easing in CUBIC_BEZIERS) {
       this.easing = 'cubic-bezier(' + CUBIC_BEZIERS[this.easing] + ')';
@@ -488,68 +545,72 @@ class Animate {
     this.effects.push( convertProperties(this.toEffect) );
   }
 
-  play() {
+  play(callback) {
     const self = this;
 
-    if (self.player) {
-      self.player.play();
+    if (self.ani) {
+      self.ani.play();
 
     } else {
-      self.player = self.ele.animate(self.effects, {
+      // https://developers.google.com/web/updates/2014/05/Web-Animations---element-animate-is-now-in-Chrome-36
+      // https://w3c.github.io/web-animations/
+      // Future versions will use "new window.Animation" rather than "element.animate()"
+
+      self.ani = self.ele.animate(self.effects, {
         duration: self.duration || 0,
         easing: self.easing,
-        playbackRate: self.rate || 1,
-        fill: self.fill
+        playbackRate: self.rate // old way of setting playbackRate, but still necessary
       });
-
-      self.player.onfinish = () => {
-        // lock in where the element will stop at
-        // if the playbackRate is negative then it needs to return
-        // to its "from" effects
-        inlineStyle(self.ele, self.rate < 0 ? self.fromEffect : self.toEffect);
-
-        self.player = null;
-
-        self.resolve();
-      };
+      self.ani.playbackRate = self.rate;
     }
 
-    return self.promise;
+    self.ani.onfinish = () => {
+      // lock in where the element will stop at
+      // if the playbackRate is negative then it needs to return
+      // to its "from" effects
+      inlineStyle(self.ele, self.rate < 0 ? self.fromEffect : self.toEffect);
+
+      self.ani = null;
+
+      callback && callback();
+    };
   }
 
   pause() {
-    this.player && this.player.pause();
+    this.ani && this.ani.pause();
   }
 
   progress(value) {
-    let player = this.player;
+    let animation = this.ani;
 
-    if (player) {
+    if (animation) {
       // passed a number between 0 and 1
       value = Math.max(0, Math.min(1, value));
 
-      if (value >= 1) {
-        player.currentTime = (this.duration * 0.999);
-        return player.play();
+      if (animation.playState !== 'paused') {
+        animation.pause();
       }
 
-      if (player.playState !== 'paused') {
-        player.pause();
+      if (value < 0.999) {
+        animation.currentTime = (this.duration * value);
+
+      } else {
+        // don't let the progress finish the animation
+        animation.currentTime = (this.duration * 0.999);
       }
 
-      player.currentTime = (this.duration * value);
     }
   }
 
   playbackRate(value) {
     this.rate = value;
-    if (this.player) {
-      this.player.playbackRate = value;
+    if (this.ani) {
+      this.ani.playbackRate = value;
     }
   }
 
   dispose() {
-    this.ele = this.player = this.effects = this.toEffect = null;
+    this.ele = this.ani = this.effects = this.toEffect = null;
   }
 
 }
@@ -595,7 +656,7 @@ function parseEffect(inputEffect) {
 
   for (property in inputEffect) {
     val = inputEffect[property];
-    r = val.toString().match(/(\d*\.?\d*)(.*)/);
+    r = val.toString().match(/(^-?\d*\.?\d*)(.*)/);
     num = parseFloat(r[1]);
 
     outputEffect[property] = {

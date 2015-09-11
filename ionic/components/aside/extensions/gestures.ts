@@ -1,47 +1,37 @@
-import {Aside} from 'ionic/components/aside/aside';
-//TODO: figure out way to get rid of all the ../../../../
+import {Aside} from '../aside';
 import {SlideEdgeGesture} from 'ionic/gestures/slide-edge-gesture';
 
-class AsideTargetGesture extends SlideEdgeGesture {
-  constructor(aside: Aside) {
-    let asideElement = aside.getNativeElement();
-    super(asideElement, {
+
+class AsideGenericGestureHandler extends SlideEdgeGesture {
+  constructor(aside: Aside, targetElement, threshold) {
+    super(targetElement, {
       direction: (aside.side === 'left' || aside.side === 'right') ? 'x' : 'y',
       edge: aside.side,
-      threshold: 0
+      threshold: threshold
     });
+
     this.aside = aside;
+    this.listen();
   }
-  canStart(ev) {
-    return this.aside.isOpen;
-  }
+
   // Set CSS, then wait one frame for it to apply before sliding starts
   onSlideBeforeStart(slide, ev) {
-    this.aside.setSliding(true);
-    this.aside.setChanging(true);
-    return new Promise(resolve => {
-      requestAnimationFrame(resolve);
-    });
+    this.aside.setProgressStart();
   }
+
   onSlide(slide, ev) {
-    this.aside.setOpenAmt(slide.distance / slide.max);
-    this.aside.setTransform(slide.distance);
+    this.aside.setProgess(slide.distance / slide.max);
   }
+
   onSlideEnd(slide, ev) {
-    this.aside.setSliding(false);
-    if (Math.abs(ev.velocityX) > 0.2 || Math.abs(slide.delta) > Math.abs(slide.max) * 0.5) {
-
-      this.aside.setOpen(!this.aside.isOpen);
-      this.aside.setDoneTransforming(!this.aside.isOpen);
-
-    } else {
-      this.aside.setDoneTransforming(this.aside.isOpen);
-    }
+    let shouldComplete = (Math.abs(ev.velocityX) > 0.2 || Math.abs(slide.delta) > Math.abs(slide.max) * 0.5);
+    this.aside.setProgressFinish(shouldComplete);
   }
 
   getElementStartPos(slide, ev) {
     return this.aside.isOpen ? slide.max : slide.min;
   }
+
   getSlideBoundaries() {
     return {
       min: 0,
@@ -50,64 +40,26 @@ class AsideTargetGesture extends SlideEdgeGesture {
   }
 }
 
-class AsideGesture extends SlideEdgeGesture {
+
+export class AsideContentGesture extends AsideGenericGestureHandler {
   constructor(aside: Aside) {
-    // TODO figure out the sliding element, dont just use the parent
-    let contentElement = aside.getContentElement();
-    super(contentElement, {
-      direction: (aside.side === 'left' || aside.side === 'right') ? 'x' : 'y',
-      edge: aside.side,
-      threshold: 75
-    });
-    this.aside = aside;
-    this.slideElement = contentElement;
-    this.listen();
-
-    let contentGesture = new AsideTargetGesture(aside);
-    contentGesture.listen();
+    super(aside, aside.getContentElement(), 75);
   }
-
   canStart(ev) {
-    // Only restrict edges if the aside is closed
     return this.aside.isOpen ? true : super.canStart(ev);
   }
+}
 
-  // Set CSS, then wait one frame for it to apply before sliding starts
-  onSlideBeforeStart(slide, ev) {
-    this.aside.setSliding(true);
-    this.aside.setChanging(true);
-    return new Promise(resolve => {
-      requestAnimationFrame(resolve);
-    });
-  }
-  onSlide(slide, ev) {
-    this.aside.setOpenAmt(slide.distance / slide.max);
-    this.aside.setTransform(slide.distance);
-  }
-  onSlideEnd(slide, ev) {
-    this.aside.setSliding(false);
-    if (Math.abs(ev.velocityX) > 0.2 || Math.abs(slide.delta) > Math.abs(slide.max) * 0.5) {
-      this.aside.setOpen(!this.aside.isOpen);
-      this.aside.setDoneTransforming(!this.aside.isOpen);
-    } else {
-      this.aside.setDoneTransforming(false);
-    }
-  }
-
-  getElementStartPos(slide, ev) {
-    return this.aside.isOpen ? slide.max : slide.min;
-  }
-  getSlideBoundaries() {
-    return {
-      min: 0,
-      max: this.aside.width()
-    };
+export class LeftAsideGesture extends AsideContentGesture {
+  constructor(aside: Aside) {
+    super(aside);
   }
 }
 
-export class LeftAsideGesture extends AsideGesture {}
-
 export class RightAsideGesture extends LeftAsideGesture {
+  constructor(aside: Aside) {
+    super(aside);
+  }
   getElementStartPos(slide, ev) {
     return this.aside.isOpen ? slide.min : slide.max;
   }

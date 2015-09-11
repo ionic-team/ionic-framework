@@ -14,6 +14,8 @@ export class PlatformCtrl {
     this._registry = {};
     this._default = null;
     this._onResizes = [];
+    this._dimensions = {};
+    this._dimIds = 0;
 
     this._readyPromise = new Promise(res => { this._readyResolve = res; } );
   }
@@ -173,11 +175,11 @@ export class PlatformCtrl {
   }
 
   winResize() {
-    Platform._w = Platform._h = 0;
-
     clearTimeout(Platform._resizeTimer);
 
     Platform._resizeTimer = setTimeout(() => {
+      Platform.flushDimensions();
+
       for (let i = 0; i < Platform._onResizes.length; i++) {
         try {
           Platform._onResizes[i]();
@@ -191,6 +193,35 @@ export class PlatformCtrl {
   onResize(cb) {
     // TODO: Make more good
     this._onResizes.push(cb);
+  }
+
+  /**
+   * Get the element offsetWidth and offsetHeight. Values are cached to
+   * reduce DOM reads, and reset on a window resize.
+   * @param {TODO} platformConfig  TODO
+   */
+  getDimensions(component) {
+    // cache
+    if (!component._dimId) {
+      component._dimId = ++this._dimIds;
+    }
+
+    let dimensions = this._dimensions[component._dimId];
+    if (!dimensions) {
+      let ele = component.getNativeElement();
+
+      dimensions = this._dimensions[component._dimId] = {
+        w: ele.offsetWidth,
+        h: ele.offsetHeight
+      };
+    }
+
+    return dimensions;
+  }
+
+  flushDimensions() {
+    this._dimensions = {};
+    this._w = this._h = 0;
   }
 
 
@@ -237,8 +268,8 @@ export class PlatformCtrl {
    * @returns {boolean} TODO
    */
   testUserAgent(userAgentExpression) {
-    let rx = new RegExp(userAgentExpression, 'i');
-    return rx.test(this._ua);
+    let rgx = new RegExp(userAgentExpression, 'i');
+    return rgx.test(this._ua);
   }
 
   /**

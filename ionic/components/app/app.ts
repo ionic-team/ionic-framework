@@ -39,7 +39,7 @@ export class IonicApp {
    */
   constructor() {
     this.overlays = [];
-    this._isTransitioning = false;
+    this._transTime = 0;
 
     // Our component registry map
     this.components = {};
@@ -82,7 +82,7 @@ export class IonicApp {
    * @param {bool} isTransitioning
    */
   setTransitioning(isTransitioning) {
-    this._isTransitioning = !!isTransitioning;
+    this._transTime = (isTransitioning ? Date.now() : 0);
   }
 
   /**
@@ -90,7 +90,7 @@ export class IonicApp {
    * @return {bool}
    */
   isTransitioning() {
-    return this._isTransitioning;
+    return (this._transTime + 800 > Date.now());
   }
 
   /**

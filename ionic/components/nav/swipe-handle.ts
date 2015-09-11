@@ -45,7 +45,7 @@ export class SwipeHandle {
         self.onDragHorizontal(ev);
       }
 
-      gesture.on('panend', gestureEv => { self.onDragEnd(gestureEv.gesture); });
+      gesture.on('panend', gesture => { self.onDragEnd(gesture); });
       gesture.on('panleft', dragHorizontal);
       gesture.on('panright', dragHorizontal);
     });
@@ -85,16 +85,14 @@ export class SwipeHandle {
     }
 
     this.zone.run(() => {
-      this.viewCtrl.swipeBackEnd(completeSwipeBack, progress, playbackRate);
+      this.viewCtrl.swipeBackFinish(completeSwipeBack, playbackRate);
     });
 
     this.startX = null;
   }
 
-  onDragHorizontal(gestureEv) {
+  onDragHorizontal(gesture) {
     this.zone.run(() => {
-      let gesture = gestureEv.gesture;
-
       if (this.startX === null) {
         // starting drag
         gesture.srcEvent.preventDefault();

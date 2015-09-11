@@ -1,0 +1,41 @@
+
+// Aside Reveal
+// --------------------------------------------------
+// The content slides over to reveal the aside underneath.
+// The aside menu itself, which is under the content, does not move.
+
+ion-aside[type=reveal] {
+  transform: translate3d(-9999px, 0px, 0px);
+
+  &.show-aside {
+    transform: translate3d(0px, 0px, 0px);
+  }
+}
+
+.aside-content-reveal {
+  box-shadow: $aside-shadow;
+}
+
+
+
+// Aside Overlay
+// --------------------------------------------------
+// The aside menu slides over the content. The content
+// itself, which is under the aside, does not move.
+
+ion-aside[type=overlay] {
+  z-index: $z-index-aside-overlay;
+  box-shadow: $aside-shadow;
+  transform: translate3d(-9999px, 0px, 0px);
+
+  backdrop {
+    display: block;
+    transform: translate3d(-9999px, 0px, 0px);
+    opacity: 0.01;
+    width: 3000px;
+
+    &.show-backdrop {
+      transform: translate3d(0px, 0px, 0px);
+    }
+  }
+}

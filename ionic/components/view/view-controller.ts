@@ -338,6 +338,8 @@ export class ViewController extends Ion {
     enteringItem.shouldCache = false;
     enteringItem.willEnter();
 
+    this.app.setTransitioning(true);
+
     // wait for the new item to complete setup
     enteringItem.stage(() => {
 
@@ -348,8 +350,7 @@ export class ViewController extends Ion {
 
       // init the transition animation
       this.sbTransition = Transition.create(this, opts);
-      this.sbTransition.easing('linear');
-      this.sbTransition.stage();
+      this.sbTransition.easing('linear').progressStart();
 
       let swipeBackPromise = new Promise(res => { this.sbResolve = res; });
 
@@ -408,27 +409,16 @@ export class ViewController extends Ion {
    * @param {TODO} progress  TODO
    * @param {TODO} playbackRate  TODO
    */
-  swipeBackEnd(completeSwipeBack, progress, playbackRate) {
+  swipeBackFinish(completeSwipeBack, playbackRate) {
     // to reverse the animation use a negative playbackRate
     if (this.sbTransition && this.sbActive) {
       this.sbActive = false;
 
-      if (progress <= 0) {
-        this.swipeBackProgress(0.0001);
-      } else if (progress >= 1) {
-        this.swipeBackProgress(0.9999);
-      }
-
-      if (!completeSwipeBack) {
-        playbackRate = playbackRate * -1;
-      }
-
-      this.sbTransition.playbackRate(playbackRate);
-
-      this.sbTransition.play().then(() => {
+      this.sbTransition.progressFinish(completeSwipeBack, playbackRate).then(() => {
         this.sbResolve && this.sbResolve(completeSwipeBack);
         this.sbTransition && this.sbTransition.dispose();
         this.sbResolve = this.sbTransition = null;
+        this.app.setTransitioning(false);
       });
     }
   }

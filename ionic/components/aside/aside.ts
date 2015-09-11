@@ -1,13 +1,11 @@
-import {forwardRef, Component, Host, View, EventEmitter, ElementRef} from 'angular2/angular2';
+import {forwardRef, Directive, Host, View, EventEmitter, ElementRef} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
 import {IonicConfig} from '../../config/config';
 import {IonicComponent} from '../../config/annotations';
-import * as types from './extensions/types'
-import * as gestures from  './extensions/gestures'
-import * as util from 'ionic/util/util'
-import {dom} from 'ionic/util'
+import * as gestures from  './extensions/gestures';
+
 
 /**
  * Aside is a side-menu navigation that can be dragged out or toggled to show. Aside supports two
@@ -25,152 +23,74 @@ import {dom} from 'ionic/util'
     'side': 'left',
     'type': 'reveal'
   },
-  delegates: {
-    gesture: [
-      //[instance => instance.side == 'top', gestures.TopAsideGesture],
-      //[instance => instance.side == 'bottom', gestures.BottomAsideGesture],
-      [instance => instance.side == 'right', gestures.RightAsideGesture],
-      [instance => instance.side == 'left', gestures.LeftAsideGesture],
-    ],
-    type: [
-      [instance => instance.type == 'overlay', types.AsideTypeOverlay],
-      [instance => instance.type == 'reveal', types.AsideTypeReveal],
-      //[instance => instance.type == 'push', types.AsideTypePush],
-    ]
-  },
   events: ['opening']
 })
 @View({
-  template: '<ng-content></ng-content><ion-aside-backdrop></ion-aside-backdrop>',
+  template: '<ng-content></ng-content><backdrop tappable></backdrop>',
   directives: [forwardRef(() => AsideBackdrop)]
 })
 export class Aside extends Ion {
-  /**
-  * TODO
-  * @param {IonicApp} app  TODO
-  * @param {ElementRef} elementRef  Reference to the element.
-  */
+
   constructor(app: IonicApp, elementRef: ElementRef, config: IonicConfig) {
     super(elementRef, config);
 
     this.app = app;
-
     this.opening = new EventEmitter('opening');
-
-    //this.animation = new Animation(element.querySelector('backdrop'));
-    this.contentClickFn = (e) => {
-      if(!this.isOpen || this.isChanging) { return; }
-      this.close();
-    };
-
-
-    this.finishChanging = util.debounce(() => {
-      this.setChanging(false);
-    });
-
-    // TODO: Use Animation Class
-    this.getNativeElement().addEventListener('transitionend', ev => {
-      //this.setChanging(false)
-      clearTimeout(this.setChangeTimeout);
-      this.setChangeTimeout = setInterval(this.finishChanging, 400);
-    })
+    this.isOpen = false;
+    this._disableTime = 0;
   }
 
-  /**
-   * TODO
-   */
-  onDestroy() {
-    app.unregister(this);
-  }
-
-  /**
-   * TODO
-   */
   onInit() {
     super.onInit();
     this.contentElement = (this.content instanceof Node) ? this.content : this.content.getNativeElement();
 
-    if(!this.id) {
+    if (!this.contentElement) {
+      return console.error('Aside: must have a [content] element to listen for drag events on. Example:\n\n<ion-aside [content]="content"></ion-aside>\n\n<ion-content #content></ion-content>');
+    }
+
+    if (!this.id) {
       // Auto register
       this.app.register('menu', this);
     }
 
-    if(this.contentElement) {
-      this.contentElement.addEventListener('transitionend', ev => {
-        //this.setChanging(false)
-        clearTimeout(this.setChangeTimeout);
-        this.setChangeTimeout = setInterval(this.finishChanging, 400);
-      })
-      this.contentElement.addEventListener('click', this.contentClickFn);
-    } else {
-      console.error('Aside: must have a [content] element to listen for drag events on. Supply one like this:\n\n<ion-aside [content]="content"></ion-aside>\n\n<ion-content #content>');
-    }
+    this._initGesture();
+    this._initType(this.type);
 
+    this.contentElement.classList.add('aside-content');
+    this.contentElement.classList.add('aside-content-' + this.type);
 
-    this.gestureDelegate = this.getDelegate('gesture');
-    this.typeDelegate = this.getDelegate('type');
+    let self = this;
+    this.onContentClick = function(ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+      self.close();
+    };
   }
 
-  onDestroy() {
-    this.contentElement.removeEventListener('click', this.contentClickFn);
-  }
+  _initGesture() {
+    switch(this.side) {
+      case 'right':
+        this._gesture = new gestures.RightAsideGesture(this);
+        break;
 
-  /**
-   * TODO
-   * @return {Element} The Aside's content element.
-   */
-  getContentElement() {
-    return this.contentElement;
-  }
-
-  /**
-   * TODO
-   * @param {TODO} v  TODO
-   */
-  setOpenAmt(v) {
-    this.opening.next(v);
-  }
-
-  /**
-   * TODO
-   * @param {boolean} willOpen  TODO
-   */
-  setDoneTransforming(willOpen) {
-    this.typeDelegate.setDoneTransforming(willOpen);
-  }
-
-  /**
-   * TODO
-   * @param {TODO} transform  TODO
-   */
-  setTransform(transform) {
-    this.typeDelegate.setTransform(transform)
-  }
-
-  /**
-   * TODO
-   * @param {boolean} isSliding  TODO
-   */
-  setSliding(isSliding) {
-    if (isSliding !== this.isSliding) {
-      this.typeDelegate.setSliding(isSliding)
+      case 'left':
+        this._gesture = new gestures.LeftAsideGesture(this);
+        break;
     }
   }
 
-  /**
-   * TODO
-   * @param {boolean} isChanging  TODO
-   */
-  setChanging(isChanging) {
+  _initType(type) {
+    type = type && type.trim().toLowerCase() || FALLBACK_ASIDE_TYPE;
 
-    // Stop any last changing end operations
-    clearTimeout(this.setChangeTimeout);
+    let asideTypeCls = asideTypes[type];
 
-    if (isChanging !== this.isChanging) {
-      this.isChanging = isChanging
-      this.getNativeElement().classList[isChanging ? 'add' : 'remove']('changing');
-
+    if (!asideTypeCls) {
+      type = FALLBACK_ASIDE_TYPE;
+      asideTypeCls = asideTypes[type];
     }
+
+    this._type = new asideTypeCls(this);
+    this.type = type;
   }
 
   /**
@@ -178,18 +98,79 @@ export class Aside extends Ion {
    * @param {boolean} isOpen  If the Aside is open or not.
    * @return {Promise} TODO
    */
-  setOpen(isOpen) {
-    if (isOpen !== this.isOpen) {
-      this.isOpen = isOpen;
-      this.setChanging(true);
-
-      // Set full or closed amount
-      this.setOpenAmt(isOpen ? 1 : 0);
-
-      return dom.rafPromise().then(() => {
-        this.typeDelegate.setOpen(isOpen)
-      })
+  setOpen(shouldOpen) {
+    // _isDisabled is used to prevent unwanted opening/closing after swiping open/close
+    // or swiping open the menu while pressing down on the aside-toggle button
+    if (shouldOpen === this.isOpen || this._isDisabled()) {
+      return Promise.resolve();
     }
+
+    this._before();
+
+    return this._type.setOpen(shouldOpen).then(() => {
+      this._after(shouldOpen);
+    });
+  }
+
+  setProgressStart() {
+    // user started swiping the aside open/close
+    if (this._isDisabled()) return;
+
+    this._before();
+
+    this._type.setProgressStart(this.isOpen);
+  }
+
+  setProgess(value) {
+    // user actively dragging the menu
+    this._disable();
+    this._type.setProgess(value);
+  }
+
+  setProgressFinish(shouldComplete) {
+    // user has finished dragging the menu
+    this._disable();
+    this._type.setProgressFinish(shouldComplete).then(isOpen => {
+      this._after(isOpen);
+    });
+  }
+
+  _before() {
+    // this places the aside into the correct location before it animates in
+    // this css class doesn't actually kick off any animations
+    this.getNativeElement().classList.add('show-aside');
+    this.getBackdropElement().classList.add('show-backdrop');
+
+    this._disable();
+    this.app.setTransitioning(true);
+  }
+
+  _after(isOpen) {
+    this._disable();
+    this.isOpen = isOpen;
+
+    this.contentElement.classList[isOpen ? 'add' : 'remove']('aside-content-open');
+
+    this.contentElement.removeEventListener('click', this.onContentClick);
+    if (isOpen) {
+      this.contentElement.addEventListener('click', this.onContentClick);
+
+    } else {
+      this.getNativeElement().classList.remove('show-aside');
+      this.getBackdropElement().classList.remove('show-backdrop');
+    }
+
+    this.app.setTransitioning(false);
+  }
+
+  _disable() {
+    // used to prevent unwanted opening/closing after swiping open/close
+    // or swiping open the menu while pressing down on the aside-toggle
+    this._disableTime = Date.now();
+  }
+
+  _isDisabled() {
+    return this._disableTime + 300 > Date.now();
   }
 
   /**
@@ -216,55 +197,75 @@ export class Aside extends Ion {
     return this.setOpen(!this.isOpen);
   }
 
+  /**
+   * TODO
+   * @return {Element} The Aside element.
+   */
+  getAsideElement() {
+    return this.getNativeElement();
+  }
+
+  /**
+   * TODO
+   * @return {Element} The Aside's associated content element.
+   */
+  getContentElement() {
+    return this.contentElement;
+  }
+
+  /**
+   * TODO
+   * @return {Element} The Aside's associated content element.
+   */
+  getBackdropElement() {
+    return this.backdrop.elementRef.nativeElement;
+  }
+
+  static register(name, cls) {
+    asideTypes[name] = cls;
+  }
+
+  onDestroy() {
+    this.app.unregister(this);
+    this._type && this._type.onDestroy();
+    this.contentElement = null;
+  }
+
 }
+
+let asideTypes = {};
+const FALLBACK_ASIDE_TYPE = 'reveal';
+
 
 /**
  * TODO
  */
-@Component({
-  selector: 'ion-aside-backdrop',
+@Directive({
+  selector: 'backdrop',
   host: {
-    '[style.width]': 'width',
-    '[style.height]': 'height',
-    '[style.opacity]': 'opacity',
     '(click)': 'clicked($event)'
   }
 })
-@View({
-  template: ''
-})
-export class AsideBackdrop extends Ion {
+class AsideBackdrop {
   /**
    * TODO
-   * @param {ElementReg} elementRef  TODO
-   * @param {IonicConfig} config  TODO
    * @param {Aside} aside  TODO
    */
-  constructor(elementRef: ElementRef, config: IonicConfig, @Host() aside: Aside) {
-    super(elementRef, config);
-
-    aside.backdrop = this;
-
+  constructor(@Host() aside: Aside, elementRef: ElementRef) {
     this.aside = aside;
-
-    this.opacity = 0;
-  }
-
-  /**
-   * TODO
-   */
-  onInit() {
-    let ww = window.innerWidth;
-    let wh = window.innerHeight;
-    this.width = ww + 'px';
-    this.height = wh + 'px';
+    this.elementRef = elementRef;
+    aside.backdrop = this;
   }
 
   /**
    * TODO
    * @param {TODO} event  TODO
    */
-  clicked(event) {
+  clicked(ev) {
+    ev.preventDefault();
+    ev.stopPropagation();
     this.aside.close();
   }
 }
+
+

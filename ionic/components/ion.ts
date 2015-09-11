@@ -1,4 +1,5 @@
 import {IonicConfig} from '../config/config';
+import {Platform} from '../platform/platform';
 import * as util from 'ionic/util';
 
 
@@ -76,11 +77,11 @@ export class Ion {
   }
 
   width() {
-    return this.getNativeElement().offsetWidth;
+    return Platform.getDimensions(this).w;
   }
 
   height() {
-    return this.getNativeElement().offsetHeight;
+    return Platform.getDimensions(this).h;
   }
 
 }

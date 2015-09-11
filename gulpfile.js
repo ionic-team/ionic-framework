@@ -46,7 +46,7 @@ var tscReporter = {
 };
 
 var flagConfig = {
-  string: ['port', 'version', 'ngVersion'],
+  string: ['port', 'version', 'ngVersion', 'animations'],
   alias: {'p': 'port', 'v': 'version', 'a': 'ngVersion'},
   default: { port: 8000 }
 };
@@ -172,11 +172,21 @@ gulp.task('bundle.ionic', ['transpile'], function() {
   var insert = require('gulp-insert');
   var concat = require('gulp-concat');
 
+  var prepend = [];
+
+  // force the web animations api polyfill to kick in
+  if (flags.animations == 'polyfill') {
+    prepend.push('window.Element.prototype.animate=undefined;');
+  }
+
+  // prepend correct system paths
+  prepend.push('System.config({ "paths": { "ionic/*": "ionic/*", "rx": "rx" } });');
+
   return gulp.src([
       'dist/src/es5/system/ionic/**/*.js'
     ])
     .pipe(concat('ionic.js'))
-    .pipe(insert.prepend('System.config({ "paths": { "ionic/*": "ionic/*", "rx": "rx" } });\n'))
+    .pipe(insert.prepend(prepend.join('\n')))
     .pipe(gulp.dest('dist/js/'));
     //TODO minify + sourcemaps
 });
