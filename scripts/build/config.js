@@ -1,7 +1,6 @@
 
 module.exports = {
   dist: 'dist',
-  distLib: 'dist/lib',
   src: {
     spec: ['ionic/**/test/*.spec.js'],
     js: ['ionic/**/*.js'],
