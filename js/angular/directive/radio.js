@@ -35,10 +35,10 @@ IonicModule
     template:
       '<label class="item item-radio">' +
         '<input type="radio" name="radio-group">' +
-        '<div class="radio-content">'+
+        '<div class="radio-content">' +
           '<div class="item-content disable-pointer-events" ng-transclude></div>' +
           '<i class="radio-icon disable-pointer-events icon ion-checkmark"></i>' +
-        '</div>'+
+        '</div>' +
       '</label>',
 
     compile: function(element, attr) {
