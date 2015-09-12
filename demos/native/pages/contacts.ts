@@ -5,7 +5,7 @@ import {Contacts} from 'ionic/ionic';
 @IonicView({
   template: `
   <ion-navbar *navbar>
-    <button aside-toggle>
+    <button menu-toggle>
       <icon menu></icon>
     </button>
     <ion-title>Contacts</ion-title>

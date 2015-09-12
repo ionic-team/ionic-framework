@@ -5,7 +5,7 @@ import {App, ActionMenu, IonicApp, IonicView, Register} from 'ionic/ionic';
 @IonicView({
   template: '<ion-navbar *navbar primary>' +
     '<ion-title>Heading</ion-title>' +
-    '<button aside-toggle="menu">' +
+    '<button menu-toggle="menu">' +
       '<icon menu></icon>' +
     '</button>' +
     '<ion-nav-items secondary>' +
@@ -81,14 +81,14 @@ export class FirstPage {
 
 @App({
   template: `<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700,500' rel='stylesheet' type='text/css'>
-    <ion-aside id="menu" side="left" [content]="content">
+    <ion-menu id="menu" side="left" [content]="content">
       <ion-toolbar primary><ion-title>Menu</ion-title></ion-toolbar>
       <ion-list>
         <ion-item>Your Profile</ion-item>
         <ion-item>Playlists</ion-item>
         <ion-item>Artists</ion-item>
       </ion-list>
-    </ion-aside>
+    </ion-menu>
     <ion-nav #content></ion-nav>`,
   routes: [
     {

@@ -1,16 +1,16 @@
-import {Aside} from '../aside';
+import {Menu} from '../menu';
 import {Animation} from 'ionic/animations/animation';
 
 
 /**
- * Aside Type
+ * Menu Type
  * Base class which is extended by the various types. Each
  * type will provide their own animations for open and close
- * and registers itself with Aside.
+ * and registers itself with Menu.
  */
-export class AsideType {
+export class MenuType {
 
-  constructor(aside: Aside) {
+  constructor(menu: Menu) {
     this.open = new Animation();
     this.close = new Animation();
   }
@@ -76,70 +76,70 @@ export class AsideType {
 
 
 /**
- * Aside Reveal Type
- * The content slides over to reveal the aside underneath.
- * The aside menu itself, which is under the content, does not move.
+ * Menu Reveal Type
+ * The content slides over to reveal the menu underneath.
+ * The menu itself, which is under the content, does not move.
  */
-class AsideRevealType extends AsideType {
-  constructor(aside) {
+class MenuRevealType extends MenuType {
+  constructor(menu) {
     super();
 
     let easing = 'ease';
     let duration = 250;
 
-    let openedX = (aside.width() * (aside.side == 'right' ? -1 : 1)) + 'px';
+    let openedX = (menu.width() * (menu.side == 'right' ? -1 : 1)) + 'px';
 
     this.open.easing(easing).duration(duration);
     this.close.easing(easing).duration(duration);
 
-    let contentOpen = new Animation(aside.getContentElement());
+    let contentOpen = new Animation(menu.getContentElement());
     contentOpen.fromTo(TRANSLATE_X, CENTER, openedX);
     this.open.add(contentOpen);
 
-    let contentClose = new Animation(aside.getContentElement());
+    let contentClose = new Animation(menu.getContentElement());
     contentClose.fromTo(TRANSLATE_X, openedX, CENTER);
     this.close.add(contentClose);
   }
 }
-Aside.register('reveal', AsideRevealType);
+Menu.register('reveal', MenuRevealType);
 
 
 /**
- * Aside Overlay Type
- * The aside menu slides over the content. The content
- * itself, which is under the aside, does not move.
+ * Menu Overlay Type
+ * The menu slides over the content. The content
+ * itself, which is under the menu, does not move.
  */
-class AsideOverlayType extends AsideType {
-  constructor(aside) {
+class MenuOverlayType extends MenuType {
+  constructor(menu) {
     super();
 
     let easing = 'ease';
     let duration = 250;
     let backdropOpacity = 0.5;
 
-    let closedX = (aside.width() * (aside.side == 'right' ? 1 : -1)) + 'px';
+    let closedX = (menu.width() * (menu.side == 'right' ? 1 : -1)) + 'px';
 
     this.open.easing(easing).duration(duration);
     this.close.easing(easing).duration(duration);
 
-    let asideOpen = new Animation(aside.getAsideElement());
-    asideOpen.fromTo(TRANSLATE_X, closedX, CENTER);
-    this.open.add(asideOpen);
+    let menuOpen = new Animation(menu.getMenuElement());
+    menuOpen.fromTo(TRANSLATE_X, closedX, CENTER);
+    this.open.add(menuOpen);
 
-    let backdropOpen = new Animation(aside.getBackdropElement());
+    let backdropOpen = new Animation(menu.getBackdropElement());
     backdropOpen.fromTo(OPACITY, 0.01, backdropOpacity);
     this.open.add(backdropOpen);
 
-    let asideClose = new Animation(aside.getAsideElement());
-    asideClose.fromTo(TRANSLATE_X, CENTER, closedX);
-    this.close.add(asideClose);
+    let menuClose = new Animation(menu.getMenuElement());
+    menuClose.fromTo(TRANSLATE_X, CENTER, closedX);
+    this.close.add(menuClose);
 
-    let backdropClose = new Animation(aside.getBackdropElement());
+    let backdropClose = new Animation(menu.getBackdropElement());
     backdropClose.fromTo(OPACITY, backdropOpacity, 0.01);
     this.close.add(backdropClose);
   }
 }
-Aside.register('overlay', AsideOverlayType);
+Menu.register('overlay', MenuOverlayType);
 
 
 const OPACITY = 'opacity';

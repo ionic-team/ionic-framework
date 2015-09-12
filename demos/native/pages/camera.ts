@@ -5,7 +5,7 @@ import {Camera} from 'ionic/ionic';
 @IonicView({
   template: `
   <ion-navbar *navbar>
-    <button aside-toggle>
+    <button menu-toggle>
       <icon menu></icon>
     </button>
     <ion-title>Camera</ion-title>
@@ -18,7 +18,7 @@ import {Camera} from 'ionic/ionic';
 })
 export class CameraPage {
   constructor() {
-    
+
   }
   getPicture() {
     Camera.getPicture({

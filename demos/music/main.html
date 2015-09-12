@@ -1,6 +1,6 @@
 <ion-view>
 
-  <ion-aside id="menu" side="left" [content]="content" (opening)="onMenuOpening($event, amt)">
+  <ion-menu id="menu" side="left" [content]="content" (opening)="onMenuOpening($event, amt)">
     <ion-list inset [parallax]="menuOpenAmount">
       <ion-item>
         Search
@@ -21,7 +21,7 @@
         Settings
       </ion-item>
     </ion-list>
-  </ion-aside>
+  </ion-menu>
 
   <ion-nav #content [root]="rootView"></ion-nav>
 

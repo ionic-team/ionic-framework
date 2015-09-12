@@ -6,30 +6,30 @@ import {IonicApp} from '../app/app';
 * TODO
 */
 @Directive({
-  selector: '[aside-toggle]',
+  selector: '[menu-toggle]',
   properties: [
-    'asideToggle'
+    'menuToggle'
   ],
   host: {
     '(click)': 'toggle($event)'
   }
 })
-export class AsideToggle {
+export class MenuToggle {
 
   constructor(private app: IonicApp) {}
 
   onInit() {
-    let toggleTarget = this.asideToggle;
-
     // Get the component with this toggleTarget tag, or use "menu" if none
-    this.aside = this.app.getComponent(toggleTarget || 'menu');
+    this.menu = this.app.getComponent(this.menuToggle || 'menu');
   }
 
   /**
   * TODO
   * @param {TODO} event  TODO
   */
-  toggle(event) {
-    this.aside && this.aside.toggle();
+  toggle(ev) {
+    this.menu && this.menu.toggle();
+    ev.preventDefault();
+    ev.stopPropagation();
   }
 }

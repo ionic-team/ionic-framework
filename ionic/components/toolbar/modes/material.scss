@@ -46,14 +46,14 @@ $toolbar-md-button-font-size:        1.4rem !default;
     min-width: 28px;
   }
 
-  button[aside-toggle],
-  [aside-toggle].activated {
+  button[menu-toggle],
+  [menu-toggle].activated {
     margin: -$toolbar-padding 0 -$toolbar-padding -$toolbar-padding;
     padding-bottom: $toolbar-padding / 2;
     height: $toolbar-md-height;
   }
 
-  [aside-toggle] icon {
+  [menu-toggle] icon {
     padding: 0 33px 0 20px;
   }
 

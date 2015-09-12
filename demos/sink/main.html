@@ -1,13 +1,13 @@
-<ion-aside #aside [content]="content" id="mainMenu">
+<ion-menu #menu [content]="content" id="mainMenu">
   <ion-toolbar><ion-title>Ionic 2.0</ion-title></ion-toolbar>
   <ion-content>
     <ion-list>
-      <ion-item *ng-for="#c of components" (click)="openPage(aside, c)">
+      <ion-item *ng-for="#c of components" (click)="openPage(menu, c)">
         <span>{{c.title}}</span>
       </ion-item>
     </ion-list>
   </ion-content>
-</ion-aside>
+</ion-menu>
 
 <ion-nav #content swipe-back-enabled="false"></ion-nav>
 

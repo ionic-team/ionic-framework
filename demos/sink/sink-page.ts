@@ -6,7 +6,7 @@ export class SinkPage {
     this.app = app;
   }
   toggleMenu() {
-    let aside = this.app.getComponent('mainMenu');
-    aside.toggle();
+    let menu = this.app.getComponent('mainMenu');
+    menu.toggle();
   }
 }

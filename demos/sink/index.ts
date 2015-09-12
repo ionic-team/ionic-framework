@@ -12,7 +12,7 @@ import {SearchBarPage} from './pages/search-bar'
 import {TableSearchPage} from './pages/table-search'
 import {IconsPage} from './pages/ionicons'
 import {TabsPage} from './pages/tabs'
-import {AsidePage} from './pages/aside'
+import {MenuPage} from './pages/menu'
 import {AnimationPage} from './pages/animation'
 import {SlidePage} from './pages/slides'
 import {ActionMenuPage} from './pages/action-menu'
@@ -57,8 +57,8 @@ import {ModalPage} from './pages/modal'
       path: '/icons',
       component: IconsPage
     }, {
-      path: '/aside',
-      component: AsidePage
+      path: '/menu',
+      component: MenuPage
     }, {
       path: '/animation',
       component: AnimationPage
@@ -89,15 +89,15 @@ class MyApp {
       { title: 'Search Bar', component: SearchBarPage },
       { title: 'Table Search', component: TableSearchPage },
       { title: 'Icons', component: IconsPage },
-      { title: 'Aside', component: AsidePage },
+      { title: 'Menu', component: MenuPage },
       { title: 'Animation', component: AnimationPage },
       { title: 'Slides', component: SlidePage},
       { title: 'Action Menu', component: ActionMenuPage },
     ];
   }
 
-  openPage(aside, component) {
-    aside.close();
+  openPage(menu, component) {
+    menu.close();
 
     let nav = this.app.getComponent('myNav');
     nav.setItems([component.component]);

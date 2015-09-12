@@ -26,7 +26,7 @@ import {ViewItem} from '../view/view-item';
           <span class="back-title" [text-content]="bbText"></span>
         </span>
       </button>
-      <ng-content select="[aside-toggle]"></ng-content>
+      <ng-content select="[menu-toggle]"></ng-content>
       <div class="toolbar-title">
         <div class="toolbar-inner-title">
           <ng-content select="ion-title"></ng-content>

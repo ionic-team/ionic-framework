@@ -8,12 +8,13 @@ import * as gestures from  './extensions/gestures';
 
 
 /**
- * Aside is a side-menu navigation that can be dragged out or toggled to show. Aside supports two
- * display styles currently: overlay, and reveal. Overlay is the tradtional Android drawer style, and Reveal
- * is the traditional iOS style. By default, Aside will adjust to the correct style for the platform.
+ * Menu is a side-menu navigation that can be dragged out or toggled to show.
+ * Menu supports two display styles currently: overlay, and reveal. Overlay
+ * is the tradtional Android drawer style, and Reveal is the traditional iOS
+ * style. By default, Menu will adjust to the correct style for the platform.
  */
 @IonicComponent({
-  selector: 'ion-aside',
+  selector: 'ion-menu',
   properties: [
     'content',
     'dragThreshold',
@@ -30,9 +31,9 @@ import * as gestures from  './extensions/gestures';
 })
 @View({
   template: '<ng-content></ng-content><backdrop tappable></backdrop>',
-  directives: [forwardRef(() => AsideBackdrop)]
+  directives: [forwardRef(() => MenuBackdrop)]
 })
-export class Aside extends Ion {
+export class Menu extends Ion {
 
   constructor(app: IonicApp, elementRef: ElementRef, config: IonicConfig) {
     super(elementRef, config);
@@ -48,7 +49,7 @@ export class Aside extends Ion {
     this.contentElement = (this.content instanceof Node) ? this.content : this.content.getNativeElement();
 
     if (!this.contentElement) {
-      return console.error('Aside: must have a [content] element to listen for drag events on. Example:\n\n<ion-aside [content]="content"></ion-aside>\n\n<ion-content #content></ion-content>');
+      return console.error('Menu: must have a [content] element to listen for drag events on. Example:\n\n<ion-menu [content]="content"></ion-menu>\n\n<ion-content #content></ion-content>');
     }
 
     if (!this.id) {
@@ -59,8 +60,8 @@ export class Aside extends Ion {
     this._initGesture();
     this._initType(this.type);
 
-    this.contentElement.classList.add('aside-content');
-    this.contentElement.classList.add('aside-content-' + this.type);
+    this.contentElement.classList.add('menu-content');
+    this.contentElement.classList.add('menu-content-' + this.type);
 
     let self = this;
     this.onContentClick = function(ev) {
@@ -73,37 +74,37 @@ export class Aside extends Ion {
   _initGesture() {
     switch(this.side) {
       case 'right':
-        this._gesture = new gestures.RightAsideGesture(this);
+        this._gesture = new gestures.RightMenuGesture(this);
         break;
 
       case 'left':
-        this._gesture = new gestures.LeftAsideGesture(this);
+        this._gesture = new gestures.LeftMenuGesture(this);
         break;
     }
   }
 
   _initType(type) {
-    type = type && type.trim().toLowerCase() || FALLBACK_ASIDE_TYPE;
+    type = type && type.trim().toLowerCase() || FALLBACK_MENU_TYPE;
 
-    let asideTypeCls = asideTypes[type];
+    let menuTypeCls = menuTypes[type];
 
-    if (!asideTypeCls) {
-      type = FALLBACK_ASIDE_TYPE;
-      asideTypeCls = asideTypes[type];
+    if (!menuTypeCls) {
+      type = FALLBACK_MENU_TYPE;
+      menuTypeCls = menuTypes[type];
     }
 
-    this._type = new asideTypeCls(this);
+    this._type = new menuTypeCls(this);
     this.type = type;
   }
 
   /**
-   * Sets the state of the Aside to open or not.
-   * @param {boolean} isOpen  If the Aside is open or not.
+   * Sets the state of the Menu to open or not.
+   * @param {boolean} isOpen  If the Menu is open or not.
    * @return {Promise} TODO
    */
   setOpen(shouldOpen) {
     // _isDisabled is used to prevent unwanted opening/closing after swiping open/close
-    // or swiping open the menu while pressing down on the aside-toggle button
+    // or swiping open the menu while pressing down on the menu-toggle button
     if (shouldOpen === this.isOpen || this._isDisabled()) {
       return Promise.resolve();
     }
@@ -116,7 +117,7 @@ export class Aside extends Ion {
   }
 
   setProgressStart() {
-    // user started swiping the aside open/close
+    // user started swiping the menu open/close
     if (this._isDisabled()) return;
 
     this._before();
@@ -139,9 +140,9 @@ export class Aside extends Ion {
   }
 
   _before() {
-    // this places the aside into the correct location before it animates in
+    // this places the menu into the correct location before it animates in
     // this css class doesn't actually kick off any animations
-    this.getNativeElement().classList.add('show-aside');
+    this.getNativeElement().classList.add('show-menu');
     this.getBackdropElement().classList.add('show-backdrop');
 
     this._disable();
@@ -152,14 +153,14 @@ export class Aside extends Ion {
     this._disable();
     this.isOpen = isOpen;
 
-    this.contentElement.classList[isOpen ? 'add' : 'remove']('aside-content-open');
+    this.contentElement.classList[isOpen ? 'add' : 'remove']('menu-content-open');
 
     this.contentElement.removeEventListener('click', this.onContentClick);
     if (isOpen) {
       this.contentElement.addEventListener('click', this.onContentClick);
 
     } else {
-      this.getNativeElement().classList.remove('show-aside');
+      this.getNativeElement().classList.remove('show-menu');
       this.getBackdropElement().classList.remove('show-backdrop');
     }
 
@@ -168,7 +169,7 @@ export class Aside extends Ion {
 
   _disable() {
     // used to prevent unwanted opening/closing after swiping open/close
-    // or swiping open the menu while pressing down on the aside-toggle
+    // or swiping open the menu while pressing down on the menu-toggle
     this._disableTime = Date.now();
   }
 
@@ -202,15 +203,15 @@ export class Aside extends Ion {
 
   /**
    * TODO
-   * @return {Element} The Aside element.
+   * @return {Element} The Menu element.
    */
-  getAsideElement() {
+  getMenuElement() {
     return this.getNativeElement();
   }
 
   /**
    * TODO
-   * @return {Element} The Aside's associated content element.
+   * @return {Element} The Menu's associated content element.
    */
   getContentElement() {
     return this.contentElement;
@@ -218,14 +219,14 @@ export class Aside extends Ion {
 
   /**
    * TODO
-   * @return {Element} The Aside's associated content element.
+   * @return {Element} The Menu's backdrop element.
    */
   getBackdropElement() {
     return this.backdrop.elementRef.nativeElement;
   }
 
   static register(name, cls) {
-    asideTypes[name] = cls;
+    menuTypes[name] = cls;
   }
 
   onDestroy() {
@@ -236,8 +237,8 @@ export class Aside extends Ion {
 
 }
 
-let asideTypes = {};
-const FALLBACK_ASIDE_TYPE = 'reveal';
+let menuTypes = {};
+const FALLBACK_MENU_TYPE = 'reveal';
 
 
 /**
@@ -249,15 +250,15 @@ const FALLBACK_ASIDE_TYPE = 'reveal';
     '(click)': 'clicked($event)'
   }
 })
-class AsideBackdrop {
+class MenuBackdrop {
   /**
    * TODO
-   * @param {Aside} aside  TODO
+   * @param {Menu} menu  TODO
    */
-  constructor(@Host() aside: Aside, elementRef: ElementRef) {
-    this.aside = aside;
+  constructor(@Host() menu: Menu, elementRef: ElementRef) {
+    this.menu = menu;
     this.elementRef = elementRef;
-    aside.backdrop = this;
+    menu.backdrop = this;
   }
 
   /**
@@ -267,7 +268,7 @@ class AsideBackdrop {
   clicked(ev) {
     ev.preventDefault();
     ev.stopPropagation();
-    this.aside.close();
+    this.menu.close();
   }
 }
 

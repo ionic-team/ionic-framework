@@ -1,0 +1,57 @@
+
+// Menu
+// --------------------------------------------------
+
+$menu-width:                 304px !default;
+$menu-small-width:           $menu-width - 40px !default;
+
+$menu-background:            $background-color !default;
+$menu-shadow:                0px 0px 10px rgba(0, 0, 0, 0.25) !default;
+
+
+ion-menu {
+  position: absolute;
+  top: 0;
+  right: auto;
+  bottom: 0;
+  left: 0;
+
+  width: $menu-width;
+
+  display: flex;
+  flex-direction: column;
+
+  background: $menu-background;
+}
+
+ion-menu[side=right] {
+  right: 0;
+  left: auto;
+}
+
+ion-menu backdrop {
+  z-index: -1;
+  display: none;
+}
+
+.menu-content {
+  transform: translate3d(0px, 0px, 0px);
+}
+
+.menu-content-open ion-pane,
+.menu-content-open ion-content,
+.menu-content-open .toolbar {
+  // the containing element itself should be clickable but
+  // everything inside of it should not clickable when menu is open
+  pointer-events: none;
+}
+
+
+@media (max-width: 340px) {
+
+  ion-menu {
+    width: $menu-small-width;
+  }
+
+}
+

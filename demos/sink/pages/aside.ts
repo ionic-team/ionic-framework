@@ -5,13 +5,12 @@ import {SinkPage} from '../sink-page';
 
 @IonicView({
   template: `
-  <ion-navbar *navbar><ion-nav-items primary><button icon (click)="toggleMenu()"><i class="icon ion-navicon"></i></button></ion-nav-items><ion-title>Aside</ion-title></ion-navbar>
+  <ion-navbar *navbar><ion-nav-items primary><button icon (click)="toggleMenu()"><i class="icon ion-navicon"></i></button></ion-nav-items><ion-title>Menu</ion-title></ion-navbar>
 
   <ion-content class="padding">
-    <h2>Aside</h2>
+    <h2>Menu</h2>
     <p>
-      Asides, also known as side menus or "hamburger" menus (mmmmm), are menus that slide
-      or swipe in to show menus or information.
+      Menus slide or swipe in to show more information.
     </p>
     <p>
       Try it! Just swipe from the left edge of the screen to the right to expose
@@ -26,7 +25,7 @@ import {SinkPage} from '../sink-page';
   </ion-content>
   `
 })
-export class AsidePage extends SinkPage {
+export class MenuPage extends SinkPage {
   constructor(app: IonicApp) {
     super(app);
   }

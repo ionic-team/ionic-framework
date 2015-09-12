@@ -4,7 +4,7 @@ import * as util from 'ionic/util';
 import {IonicConfig} from './config';
 import {ionicBootstrap} from '../components/app/app';
 import {
-  Aside, AsideToggle, Button, Content, Scroll, Refresher,
+  Menu, MenuToggle, Button, Content, Scroll, Refresher,
   Slides, Slide, SlideLazy,
   Tabs, Tab,
   Card, List, ListHeader, Item, ItemGroup, ItemGroupTitle,
@@ -34,8 +34,8 @@ export const IonicDirectives = [
   NgStyle,
 
   // Content
-  forwardRef(() => Aside),
-  forwardRef(() => AsideToggle),
+  forwardRef(() => Menu),
+  forwardRef(() => MenuToggle),
 
   forwardRef(() => Button),
   forwardRef(() => Content),

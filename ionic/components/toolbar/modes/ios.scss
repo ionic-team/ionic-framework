@@ -4,7 +4,7 @@
 
 $toolbar-order-ios: (
   back-button: 10,
-  aside-toggle: 20,
+  menu-toggle: 20,
   primary: 30,
   title: 40,
   secondary: 50
@@ -33,8 +33,8 @@ $toolbar-ios-title-font-size:               1.7rem !default;
     order: map-get($toolbar-order-ios, secondary);
   }
 
-  [aside-toggle] {
-    order: map-get($toolbar-order-ios, 'aside-toggle');
+  [menu-toggle] {
+    order: map-get($toolbar-order-ios, 'menu-toggle');
   }
 
   ion-title {

@@ -1,4 +1,4 @@
-<ion-aside [content]="content" id="leftMenu" type="reveal" side="left">
+<ion-menu [content]="content" id="leftMenu" type="overlay" side="left">
 
   <ion-toolbar secondary>
     <ion-title>Left Menu</ion-title>
@@ -8,17 +8,17 @@
 
     <ion-list>
 
-      <button ion-item aside-toggle="leftMenu">
+      <button ion-item menu-toggle="leftMenu">
         Close Left Menu
       </button>
 
     </ion-list>
   </ion-content>
 
-</ion-aside>
+</ion-menu>
 
 
-<!-- <ion-aside [content]="content" id="rightMenu" type="reveal" side="right">
+<!-- <ion-menu [content]="content" id="rightMenu" type="reveal" side="right">
 
   <ion-toolbar secondary>
     <ion-title>Right Menu</ion-title>
@@ -28,14 +28,14 @@
 
     <ion-list>
 
-      <button ion-item aside-toggle="rightMenu">
+      <button ion-item menu-toggle="rightMenu">
         Close Right Menu
       </button>
 
     </ion-list>
   </ion-content>
 
-</ion-aside> -->
+</ion-menu> -->
 
 
 <ion-nav id="nav" [root]="rootView" #content swipe-back-enabled="false"></ion-nav>

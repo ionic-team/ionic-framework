@@ -6,7 +6,7 @@ $toolbar-padding:        4px !default;
 
 $toolbar-order: (
   backButton: 10,
-  aside-toggle: 20,
+  menu-toggle: 20,
   title: 30,
   primary: 40,
   secondary: 50
@@ -78,15 +78,15 @@ ion-title {
   color: $toolbar-text-color;
 }
 
-.toolbar [aside-toggle] {
+.toolbar [menu-toggle] {
   margin: 0;
   padding: 0;
   min-width: 48px;
-  order: map-get($toolbar-order, 'aside-toggle');
+  order: map-get($toolbar-order, 'menu-toggle');
   box-shadow: none;
 }
 
-.toolbar [aside-toggle] icon {
+.toolbar [menu-toggle] icon {
   padding: 0 12px;
 }
 

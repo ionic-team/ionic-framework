@@ -1,12 +1,12 @@
 
 <ion-navbar *navbar>
 
-  <button aside-toggle id="e2eHeaderToggleAside">
+  <button menu-toggle="leftMenu">
     <icon menu></icon>
   </button>
 
   <ion-title>
-    Aside
+    Reveal Menu
   </ion-title>
 
 </ion-navbar>
@@ -14,10 +14,14 @@
 
 <ion-content #content padding>
 
-  <h3>Page 1</h3>
+  <h3>Content</h3>
 
   <p>
-    <button id="e2eContentToggleAside" aside-toggle>Toggle Aside</button>
+    <button menu-toggle="leftMenu">Toggle Left Menu</button>
+  </p>
+
+  <p>
+    <button menu-toggle="rightMenu">Toggle Right Menu</button>
   </p>
 
   <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
