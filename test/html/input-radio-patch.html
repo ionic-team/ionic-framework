@@ -1,0 +1,96 @@
+<html ng-app="ionicApp">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+  <title>Radio Buttons</title>
+
+  <link rel="stylesheet" href="../../dist/css/ionic.css">
+  <script src="../../../../dist/js/ionic.bundle.js"></script>
+  <script>
+angular.module('ionic').directive('ionRadioFix', function() {
+  return {
+    restrict: 'E',
+    replace: true,
+    require: '?ngModel',
+    transclude: true,
+    template:
+      '<label class="item item-radio">' +
+        '<input type="radio" name="radio-group">' +
+        '<div class="radio-content">' +
+          '<div class="item-content disable-pointer-events" ng-transclude></div>' +
+          '<i class="radio-icon disable-pointer-events icon ion-checkmark"></i>' +
+        '</div>' +
+      '</label>',
+
+    compile: function(element, attr) {
+    console.log('Custom radio running');
+      if (attr.icon) {
+        var iconElm = element.find('i');
+        iconElm.removeClass('ion-checkmark').addClass(attr.icon);
+      }
+
+      var input = element.find('input');
+      angular.forEach({
+          'name': attr.name,
+          'value': attr.value,
+          'disabled': attr.disabled,
+          'ng-value': attr.ngValue,
+          'ng-model': attr.ngModel,
+          'ng-disabled': attr.ngDisabled,
+          'ng-change': attr.ngChange,
+          'ng-required': attr.ngRequired,
+          'required': attr.required
+      }, function(value, name) {
+        if (angular.isDefined(value)) {
+            input.attr(name, value);
+          }
+      });
+
+      return function(scope, element, attr) {
+        scope.getValue = function() {
+          return scope.ngValue || attr.value;
+        };
+      };
+    }
+  };
+});
+  </script>
+  <style>
+
+.item-radio input:checked + .radio-content .item-content {
+    /* style the item content when its checked */
+    background: #f7f7f7; 
+    
+  }
+    
+  .item-radio input:checked + .radio-content .radio-icon {
+    /* show the checkmark icon when its checked */
+    visibility: visible;
+    
+  }
+  </style>
+</head>
+
+<body ng-controller="MainCtrl">
+
+<ion-header-bar class="bar-positive">
+  <h1 class="title">Radio Buttons</h1>
+</ion-header-bar>
+
+<ion-content>
+  {{ formData }}
+  <div class="list">
+    <ion-radio-fix ng-model="formData.color" ng-value="'red'" name="color">Red</ion-radio-fix>
+    <ion-radio-fix ng-model="formData.color" ng-value="'blue'" name="color">Blue</ion-radio-fix>
+    <ion-radio-fix ng-model="formData.color" ng-value="'yellow'" name="color">Yellow</ion-radio-fix>
+  </div>
+</ion-content>
+<script>
+angular.module('ionicApp', ['ionic'])
+.controller('MainCtrl', function($scope) {
+  $scope.formData = {};
+});
+</script>
+</body>
+</html>
