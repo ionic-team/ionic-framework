@@ -1,5 +1,5 @@
 /**
- * ================  angular-ios9-uiwebview.patch.js v1.1.0-rc.2 ================
+ * ==================  angular-ios9-uiwebview.patch.js v1.1.0 ==================
  *
  * This patch works around iOS9 UIWebView regression that causes infinite digest
  * errors in Angular.
@@ -9,6 +9,18 @@
  *
  * To apply this patch load/bundle this file with your application and add a
  * dependency on the "ngIOS9Patch" module to your main app module.
+ *
+ * For example:
+ *
+ * ```
+ * angular.module('myApp', ['ngRoute'])`
+ * ```
+ *
+ * becomes
+ *
+ * ```
+ * angular.module('myApp', ['ngRoute', 'ngIOS9UIWebViewPatch'])
+ * ```
  *
  *
  * More info:
@@ -22,7 +34,7 @@
  * License: MIT
  */
 
-IonicModule.config(function($provide) {
+angular.module('ngIOS9UIWebViewPatch', ['ng']).config(function($provide) {
   $provide.decorator('$browser', ['$delegate', '$window', function($delegate, $window) {
 
     if (isIOS9UIWebView($window.navigator.userAgent)) {
@@ -37,7 +49,7 @@ IonicModule.config(function($provide) {
 
     function applyIOS9Shim(browser) {
       var pendingLocationUrl = null;
-      var originalUrlFn = browser.url;
+      var originalUrlFn= browser.url;
 
       browser.url = function() {
         if (arguments.length) {
