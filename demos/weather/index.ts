@@ -14,7 +14,7 @@ import {Flickr} from './flickr';
   template: `<ion-view id="settings-modal">
     <ion-toolbar><ion-title>Settings</ion-title></ion-toolbar>
     <ion-content padding>
-      <form (^submit)="doSubmit($event)" [ng-form-model]="settingsForm">
+      <form (submit)="doSubmit($event)" [ng-form-model]="settingsForm">
         <ion-list>
           <ion-input ion-item>
             <ion-label>Units</ion-label>

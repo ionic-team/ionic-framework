@@ -10,7 +10,7 @@ import {App, ActionMenu, IonicApp, IonicView, Register} from 'ionic/ionic';
     '</button>' +
     '<ion-nav-items secondary>' +
       '<button><ion-icon md="ion-android-search" ios="ion-ios-search-strong"></i></button>' +
-      '<button (^click)="showMoreMenu()"><i class="icon ion-android-more-vertical"></i></button>' +
+      '<button (click)="showMoreMenu()"><i class="icon ion-android-more-vertical"></i></button>' +
     '</ion-nav-items>' +
   '</ion-navbar>' +
   '<ion-content>' +

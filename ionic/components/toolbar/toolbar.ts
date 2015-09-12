@@ -51,7 +51,7 @@ export class ToolbarBase extends Ion  {
     return this._ttTxt;
   }
 
-  onAllChangesDone() {
+  afterViewChecked() {
     if (this._queueAlign) {
       this._queueAlign = false;
       this._alignTitle();

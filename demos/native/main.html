@@ -2,7 +2,7 @@
   <ion-toolbar><ion-title>Plugins</ion-title></ion-toolbar>
   <ion-content>
     <ion-list>
-      <ion-item *ng-for="#p of plugins" (^click)="openPage(aside, p)">
+      <ion-item *ng-for="#p of plugins" (click)="openPage(aside, p)">
         <span>{{p.title}}</span>
       </ion-item>
     </ion-list>

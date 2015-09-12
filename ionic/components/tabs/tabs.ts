@@ -159,7 +159,7 @@ export class Tabs extends ViewController {
     '[class.has-icon]': 'hasIcon',
     '[class.has-title-only]': 'hasTitleOnly',
     '[class.icon-only]': 'hasIconOnly',
-    '(^click)': 'onClick($event)',
+    '(click)': 'onClick($event)',
   }
 })
 class TabButton {

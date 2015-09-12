@@ -7,7 +7,7 @@ import {SinkPage} from '../sink-page';
 
 @IonicView({
   template: `
-  <ion-navbar *navbar><ion-nav-items primary><button icon (^click)="toggleMenu()"><i class="icon ion-navicon"></i></button></ion-nav-items><ion-title>Form</ion-title></ion-navbar>
+  <ion-navbar *navbar><ion-nav-items primary><button icon (click)="toggleMenu()"><i class="icon ion-navicon"></i></button></ion-nav-items><ion-title>Form</ion-title></ion-navbar>
 
   <ion-content class="padding">
     <h2>Forms</h2>
@@ -19,7 +19,7 @@ import {SinkPage} from '../sink-page';
       Ionic comes with a variety of useful from controls, like
       text inputs, text areas, toggle switches, and sliders.
     </p>
-    <form (^submit)="doSubmit($event)" [ng-form-model]="form">
+    <form (submit)="doSubmit($event)" [ng-form-model]="form">
       <ion-input>
         <input ng-control="email" type="email" placeholder="Your email">
       </ion-input>

@@ -179,9 +179,6 @@ gulp.task('bundle.ionic', ['transpile'], function() {
     prepend.push('window.Element.prototype.animate=undefined;');
   }
 
-  // prepend correct system paths
-  prepend.push('System.config({ "paths": { "ionic/*": "ionic/*", "rx": "rx" } });');
-
   return gulp.src([
       'dist/src/es5/system/ionic/**/*.js'
     ])

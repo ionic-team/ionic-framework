@@ -43,14 +43,19 @@ export class NavRouter extends RouterOutlet {
    * TODO
    * @param {ComponentInstruction} instruction  TODO
    */
-  _activate(instruction: ComponentInstruction): Promise<any> {
+  activate(nextInstruction: ComponentInstruction): Promise<any> {
     var previousInstruction = this._currentInstruction;
-    this._currentInstruction = instruction;
-    var componentType = instruction.componentType;
-    this.childRouter = this._parentRouter.childRouter(componentType);
+    this._currentInstruction = nextInstruction;
+    var componentType = nextInstruction.componentType;
+    var childRouter = this._parentRouter.childRouter(componentType);
+
 
     // tell the ViewController which componentType, and it's params, to navigate to
-    this.nav.push(componentType, instruction.params);
+    return this.nav.push(componentType, nextInstruction.params);
+  }
+
+  reuse(nextInstruction: ComponentInstruction) {
+    return Promise.resolve();
   }
 
   /**

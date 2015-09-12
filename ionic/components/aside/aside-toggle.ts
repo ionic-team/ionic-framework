@@ -11,22 +11,20 @@ import {IonicApp} from '../app/app';
     'asideToggle'
   ],
   host: {
-    '(^click)': 'toggle($event)'
+    '(click)': 'toggle($event)'
   }
 })
 export class AsideToggle {
-  /**
-  * TODO
-  * @param {IonicApp} app  TODO
-  */
-  constructor(private app: IonicApp) {
-  }
+
+  constructor(private app: IonicApp) {}
+
   onInit() {
     let toggleTarget = this.asideToggle;
 
     // Get the component with this toggleTarget tag, or use "menu" if none
     this.aside = this.app.getComponent(toggleTarget || 'menu');
   }
+
   /**
   * TODO
   * @param {TODO} event  TODO

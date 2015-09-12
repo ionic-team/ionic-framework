@@ -5,7 +5,7 @@ import {SinkPage} from '../sink-page';
 
 @IonicView({
   template: `
-  <ion-navbar *navbar><ion-nav-items primary><button icon (^click)="toggleMenu()"><i class="icon ion-navicon"></i></button></ion-nav-items><ion-title>Lists</ion-title></ion-navbar>
+  <ion-navbar *navbar><ion-nav-items primary><button icon (click)="toggleMenu()"><i class="icon ion-navicon"></i></button></ion-nav-items><ion-title>Lists</ion-title></ion-navbar>
 
   <ion-content class="padding">
     <h2>Lists</h2>

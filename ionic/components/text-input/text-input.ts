@@ -79,9 +79,9 @@ export class TextInputElement {
   host: {
     '(focus)': 'receivedFocus(true)',
     '(blur)': 'receivedFocus(false)',
-    '(^touchstart)': 'pointerStart($event)',
-    '(^touchend)': 'pointerEnd($event)',
-    '(^mouseup)': 'pointerEnd($event)',
+    '(touchstart)': 'pointerStart($event)',
+    '(touchend)': 'pointerEnd($event)',
+    '(mouseup)': 'pointerEnd($event)',
     '[class.has-focus]': 'inputHasFocus',
     '[class.has-value]': 'inputHasValue',
     '[tabIndex]': 'activeTabIndex',

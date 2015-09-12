@@ -2,7 +2,7 @@
 
 <ion-content>
 
-  <div class="card" *ng-for="#post of posts" (^click)="postClicked($event, post)">
+  <div class="card" *ng-for="#post of posts" (click)="postClicked($event, post)">
     <div class="card-content">
       {{post.text}}
     </div>
