@@ -88,7 +88,7 @@ export class Navbar extends ToolbarBase {
 @Directive({
   selector: '.back-button',
   host: {
-    '(^click)': 'goBack($event)'
+    '(click)': 'goBack($event)'
   }
 })
 class BackButton {

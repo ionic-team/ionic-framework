@@ -41,7 +41,7 @@ import {IonicComponent, IonicView} from '../../config/annotations';
     '[attr.aria-checked]': 'checked',
     '[attr.aria-disabled]': 'disabled',
     '[attr.aria-labelledby]': 'labelId',
-    '(^click)': 'click($event)'
+    '(click)': 'click($event)'
   }
 })
 @IonicView({

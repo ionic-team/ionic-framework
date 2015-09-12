@@ -2,7 +2,7 @@
   <ion-content class="padding">
     <h2>Posts</h2>
     <ion-list>
-      <ion-item *for="#post of posts" (^click)="selectPost(post)">
+      <ion-item *for="#post of posts" (click)="selectPost(post)">
         {{post.title}}
       </ion-item>
     </ion-list>

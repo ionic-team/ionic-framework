@@ -16,7 +16,7 @@ import {ListHeader} from '../list/list';
  * New radios can be registered dynamically.
  *
  * See the [Angular 2 Docs](https://angular.io/docs/js/latest/api/forms/) for more info on forms and input.
- * 
+ *
  * @usage
  * ```html
  * <ion-radio-group ng-control="clientside">
@@ -152,7 +152,7 @@ export class RadioGroup extends Ion {
 /**
  * @name ionRadio
  * @description
- * A single radio component. 
+ * A single radio component.
  *
  * See the [Angular 2 Docs](https://angular.io/docs/js/latest/api/forms/) for more info on forms and input.
  *
@@ -181,7 +181,7 @@ export class RadioGroup extends Ion {
     '[attr.aria-checked]': 'checked',
     '[attr.aria-disabled]': 'disabled',
     '[attr.aria-labelledby]': 'labelId',
-    '(^click)': 'click($event)'
+    '(click)': 'click($event)'
   }
 })
 @IonicView({

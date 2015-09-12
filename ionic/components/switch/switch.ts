@@ -24,8 +24,8 @@ import {pointerCoord} from '../../util/dom';
   selector: '.media-switch',
   host: {
     'tappable': 'true',
-    '(^touchstart)': 'swtch.pointerDown($event)',
-    '(^mousedown)': 'swtch.pointerDown($event)',
+    '(touchstart)': 'swtch.pointerDown($event)',
+    '(mousedown)': 'swtch.pointerDown($event)',
     '[class.activated]': 'swtch.isActivated'
   }
 })
@@ -97,8 +97,8 @@ class MediaSwitch {
     '[attr.aria-checked]': 'checked',
     '[attr.aria-disabled]': 'disabled',
     '[attr.aria-labelledby]': 'labelId',
-    '(^touchend)': 'pointerUp($event)',
-    '(^mouseup)': 'pointerUp($event)',
+    '(touchend)': 'pointerUp($event)',
+    '(mouseup)': 'pointerUp($event)',
   }
 })
 @IonicView({

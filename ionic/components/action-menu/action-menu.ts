@@ -59,7 +59,7 @@ import * as util from 'ionic/util';
       '<div class="action-menu-container">' +
         '<div class="action-menu-group action-menu-options">' +
           '<div class="action-menu-title" *ng-if="titleText">{{titleText}}</div>' +
-          '<button (^click)="_buttonClicked(index)" *ng-for="#b of buttons; #index = index" class="action-menu-option">' +
+          '<button (click)="_buttonClicked(index)" *ng-for="#b of buttons; #index = index" class="action-menu-option">' +
             '<icon [name]="b.icon" *ng-if="b.icon"></icon> ' +
             '{{b.text}}' +
           '</button>' +

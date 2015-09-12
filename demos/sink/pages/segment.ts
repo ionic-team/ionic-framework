@@ -18,7 +18,7 @@ import {IonicView} from 'ionic/ionic';
       the map display between street, hybrid, and satellite.
     </p>
 
-    <form (^submit)="doSubmit($event)">
+    <form (submit)="doSubmit($event)">
 
       <div ng-control-group="form">
         <ion-segment [ng-form-control]="mapStyle">

@@ -2,7 +2,7 @@
 <ion-view>
   <background-cycler class="bg-fade" [image]="activeBgImage"></background-cycler>
 
-  <ion-toolbar id="header" class="no-border"><ion-title><span class="city"><i id="city-nav-icon" class="icon ion-navigate"></i> {{currentLocationString}}</span><br><current-time localtz="current.local_tz_short"></current-time></ion-title><button (^click)="showSettings()" class="toolbar-secondary-item"><i class="icon ion-ios-gear"></i></button></ion-toolbar>
+  <ion-toolbar id="header" class="no-border"><ion-title><span class="city"><i id="city-nav-icon" class="icon ion-navigate"></i> {{currentLocationString}}</span><br><current-time localtz="current.local_tz_short"></current-time></ion-title><button (click)="showSettings()" class="toolbar-secondary-item"><i class="icon ion-ios-gear"></i></button></ion-toolbar>
 
   <ion-content>
     <div id="main-content">

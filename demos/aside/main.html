@@ -8,7 +8,7 @@
 
     <ion-list>
 
-      <button ion-item *ng-for="#p of pages" (^click)="openPage(aside, p)">
+      <button ion-item *ng-for="#p of pages" (click)="openPage(aside, p)">
         {{p.title}}
       </button>
 

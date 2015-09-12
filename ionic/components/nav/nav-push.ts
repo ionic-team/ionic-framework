@@ -11,7 +11,7 @@ import {NavController} from './nav-controller';
     'pushData'
   ],
   host: {
-    '(^click)': 'onClick($event)',
+    '(click)': 'onClick($event)',
     'role': 'link'
   }
 })
@@ -35,7 +35,7 @@ export class NavPush {
 @Directive({
   selector: '[nav-pop]',
   host: {
-    '(^click)': 'onClick($event)',
+    '(click)': 'onClick($event)',
     'role': 'link'
   }
 })

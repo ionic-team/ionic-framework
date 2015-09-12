@@ -96,7 +96,7 @@ export class SettingsModal {}
 
 
 @IonicView({
-  template: '<ion-view id="heart-modal"><button icon (^click)="close()"><i class="icon ion-close"></i></button><h2>20</h2><p>You\'re pretty awesome</p></ion-view>'
+  template: '<ion-view id="heart-modal"><button icon (click)="close()"><i class="icon ion-close"></i></button><h2>20</h2><p>You\'re pretty awesome</p></ion-view>'
 })
 export class HeartModal {}
 

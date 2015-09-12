@@ -13,7 +13,7 @@ import {dom} from 'ionic/util';
  * @usage
  * ```html
  * <ion-list>
- *   <ion-item *ng-for="#item of items" (^click)="itemTapped($event, item)">
+ *   <ion-item *ng-for="#item of items" (click)="itemTapped($event, item)">
  *     {{item.title}}
  *     <div class="item-note" item-right>
  *       {{item.note}}

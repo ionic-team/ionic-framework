@@ -7,7 +7,7 @@
 </ion-toolbar>
 
 <ion-content class="padding">
-  <form (^submit)="doLogin($event)" [control-group]="loginForm">
+  <form (submit)="doLogin($event)" [control-group]="loginForm">
     <ion-input>
       <input control="email" type="email" placeholder="Your email">
     </ion-input>

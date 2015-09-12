@@ -12,7 +12,7 @@ import {SinkPage} from '../sink-page';
 })
 @IonicView({
   template: `
-  <ion-navbar *navbar><ion-nav-items primary><button icon (^click)="toggleMenu()"><i class="icon ion-navicon"></i></button></ion-nav-items><ion-title>Search Bar</ion-title></ion-navbar>
+  <ion-navbar *navbar><ion-nav-items primary><button icon (click)="toggleMenu()"><i class="icon ion-navicon"></i></button></ion-nav-items><ion-title>Search Bar</ion-title></ion-navbar>
 
   <ion-content class="padding">
     <h2>Search Bar</h2>
@@ -24,7 +24,7 @@ import {SinkPage} from '../sink-page';
       or it can also handle and display a list of search results.
     </p>
 
-    <form (^submit)="doSubmit($event)" [ng-form-model]="form">
+    <form (submit)="doSubmit($event)" [ng-form-model]="form">
       <ion-search-bar placeholder="Search" ng-control="searchQuery"></ion-search-bar>
       <div>
         Query: <b>{{form.controls.searchQuery.value}}</b>

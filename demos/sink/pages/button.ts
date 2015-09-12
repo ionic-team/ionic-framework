@@ -5,7 +5,7 @@ import {SinkPage} from '../sink-page';
 
 @IonicView({
   template: `
-  <ion-navbar *navbar><ion-nav-items primary><button icon (^click)="toggleMenu()"><i class="icon ion-navicon"></i></button></ion-nav-items><ion-title>Buttons</ion-title></ion-navbar>
+  <ion-navbar *navbar><ion-nav-items primary><button icon (click)="toggleMenu()"><i class="icon ion-navicon"></i></button></ion-nav-items><ion-title>Buttons</ion-title></ion-navbar>
 
   <ion-content class="padding">
 
@@ -17,7 +17,7 @@ import {SinkPage} from '../sink-page';
       Buttons come in lots of different colors:
     </p>
     <p>
-      <div (^click)="onButtonClick($event)">
+      <div (click)="onButtonClick($event)">
         <button>Primary</button>
         <button secondary>Secondary</button>
         <button danger>Danger</button>
@@ -29,7 +29,7 @@ import {SinkPage} from '../sink-page';
       various shapes:
     </p>
     <p>
-      <div (^click)="onButtonClick($event)">
+      <div (click)="onButtonClick($event)">
         <button small>small</button>
         <button dark>Medium</button>
         <button secondary large>LARGE</button>
@@ -39,7 +39,7 @@ import {SinkPage} from '../sink-page';
       and with different embellishments:
     </p>
     <p>
-      <div (^click)="onButtonClick($event)">
+      <div (click)="onButtonClick($event)">
         <button outline>Outline</button>
         <button dark clear>Clear</button>
         <button danger block>Block</button>

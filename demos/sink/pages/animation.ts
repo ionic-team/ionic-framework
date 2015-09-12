@@ -11,7 +11,7 @@ let scale = 0.6;
 
 @IonicView({
   template: `
-  <ion-navbar *navbar><ion-nav-items primary><button icon (^click)="toggleMenu()"><i class="icon ion-navicon"></i></button></ion-nav-items><ion-title>Animation</ion-title></ion-navbar>
+  <ion-navbar *navbar><ion-nav-items primary><button icon (click)="toggleMenu()"><i class="icon ion-navicon"></i></button></ion-nav-items><ion-title>Animation</ion-title></ion-navbar>
 
   <style>
     .ball-container {

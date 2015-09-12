@@ -18,7 +18,7 @@ function randomTitle() {
   <ion-navbar *navbar><ion-title>Table Search</ion-title></ion-navbar>
 
   <ion-content>
-    <form (^submit)="doSearch($event)" [control-group]="form">
+    <form (submit)="doSearch($event)" [control-group]="form">
 
       <ion-search-bar control="searchQuery"></ion-search-bar>
 

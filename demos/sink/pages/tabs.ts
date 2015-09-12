@@ -63,7 +63,7 @@ class UpdatesTabPage {
 
 @IonicView({
   template: `
-    <ion-navbar *navbar><ion-nav-items primary><button icon (^click)="toggleMenu()"><i class="icon ion-navicon"></i></button></ion-nav-items><ion-title>Tabs</ion-title></ion-navbar>
+    <ion-navbar *navbar><ion-nav-items primary><button icon (click)="toggleMenu()"><i class="icon ion-navicon"></i></button></ion-nav-items><ion-title>Tabs</ion-title></ion-navbar>
 
     <ion-tabs id="tabs">
       <ion-tab tab-title="Featured" tab-icon="star" [root]="featuredTab"></ion-tab>
