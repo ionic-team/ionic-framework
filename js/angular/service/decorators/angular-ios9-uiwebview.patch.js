@@ -49,7 +49,7 @@ angular.module('ngIOS9UIWebViewPatch', ['ng']).config(function($provide) {
 
     function applyIOS9Shim(browser) {
       var pendingLocationUrl = null;
-      var originalUrlFn= browser.url;
+      var originalUrlFn = browser.url;
 
       browser.url = function() {
         if (arguments.length) {
