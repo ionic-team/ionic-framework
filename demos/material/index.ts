@@ -5,9 +5,9 @@ import {App, ActionMenu, IonicApp, IonicView, Register} from 'ionic/ionic';
 @IonicView({
   template: '<ion-navbar *navbar primary>' +
     '<ion-title>Heading</ion-title>' +
-    '<button menu-toggle="menu">' +
+    '<a menu-toggle="menu">' +
       '<icon menu></icon>' +
-    '</button>' +
+    '</a>' +
     '<ion-nav-items secondary>' +
       '<button><ion-icon md="ion-android-search" ios="ion-ios-search-strong"></i></button>' +
       '<button (click)="showMoreMenu()"><i class="icon ion-android-more-vertical"></i></button>' +

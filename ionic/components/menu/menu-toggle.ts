@@ -11,7 +11,8 @@ import {IonicApp} from '../app/app';
     'menuToggle'
   ],
   host: {
-    '(click)': 'toggle($event)'
+    '(click)': 'toggle($event)',
+    'button': ''
   }
 })
 export class MenuToggle {

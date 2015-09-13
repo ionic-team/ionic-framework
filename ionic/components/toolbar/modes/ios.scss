@@ -35,6 +35,7 @@ $toolbar-ios-title-font-size:               1.7rem !default;
 
   [menu-toggle] {
     order: map-get($toolbar-order-ios, 'menu-toggle');
+    margin-left: 10px;
   }
 
   ion-title {

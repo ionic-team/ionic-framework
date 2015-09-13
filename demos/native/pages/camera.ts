@@ -5,9 +5,9 @@ import {Camera} from 'ionic/ionic';
 @IonicView({
   template: `
   <ion-navbar *navbar>
-    <button menu-toggle>
+    <a menu-toggle>
       <icon menu></icon>
-    </button>
+    </a>
     <ion-title>Camera</ion-title>
   </ion-navbar>
   <ion-content class="padding">
