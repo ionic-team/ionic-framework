@@ -96,7 +96,7 @@ export class IonicConfig {
         // or it was from the default platform configs
         // in that order
         if (isFunction(settings[arg0])) {
-          settings[arg0] = settings[arg0]();
+          settings[arg0] = settings[arg0](this._platform);
         }
         return settings[arg0];
 
@@ -139,6 +139,8 @@ export class IonicConfig {
    * @param  {Object} platform   The platform
    */
   setPlatform(platform) {
+    this._platform = platform;
+
     // get the array of active platforms, which also knows the hierarchy,
     // with the last one the most important
     this._platforms = platform.platforms();

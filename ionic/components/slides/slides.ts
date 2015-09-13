@@ -8,7 +8,6 @@ import {DragGesture} from 'ionic/gestures/drag-gesture';
 import {IonicComponent, IonicDirective} from '../../config/annotations';
 import {IonicConfig} from '../../config/config';
 import {dom} from 'ionic/util';
-import {Platform} from 'ionic/platform/platform';
 import {CSS} from '../../util/dom';
 import * as util from 'ionic/util';
 

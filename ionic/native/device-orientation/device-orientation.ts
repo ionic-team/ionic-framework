@@ -2,7 +2,7 @@ import * as Rx from 'rx';
 
 import * as util from 'ionic/util';
 import {NativePlugin} from '../plugin';
-import {Platform} from '../../platform/platform';
+
 
 @NativePlugin({
   name: 'Device Orientation',

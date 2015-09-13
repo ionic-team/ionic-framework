@@ -196,25 +196,58 @@ export function hasFocusedTextInput() {
 }
 
 export function closest(el, selector) {
-    var matchesFn;
+  var matchesFn;
 
-    // find vendor prefix
-    ['matches','webkitMatchesSelector','mozMatchesSelector','msMatchesSelector','oMatchesSelector'].some(function(fn) {
-        if (typeof document.body[fn] == 'function') {
-            matchesFn = fn;
-            return true;
-        }
-        return false;
-    })
-
-    // traverse parents
-    while (el!==null) {
-        parent = el.parentElement;
-        if (parent!==null && parent[matchesFn](selector)) {
-            return parent;
-        }
-        el = parent;
+  // find vendor prefix
+  ['matches','webkitMatchesSelector','mozMatchesSelector','msMatchesSelector','oMatchesSelector'].some(function(fn) {
+    if (typeof document.body[fn] == 'function') {
+      matchesFn = fn;
+      return true;
     }
+    return false;
+  })
 
-    return null;
+  // traverse parents
+  while (el!==null) {
+    parent = el.parentElement;
+    if (parent!==null && parent[matchesFn](selector)) {
+      return parent;
+    }
+    el = parent;
+  }
+
+  return null;
 }
+
+
+/**
+ * Get the element offsetWidth and offsetHeight. Values are cached
+ * to reduce DOM reads. Cache is cleared on a window resize.
+ * @param {TODO} ele  TODO
+ */
+export function getDimensions(ele) {
+  if (!ele.ionicId) {
+    ele.ionicId = ++ionicElementIds;
+    if (ele.ionicId % 200) {
+      // periodically flush dimensions
+      flushDimensionCache();
+    }
+  }
+
+  let dimensions = elementDimensions[ele.ionicId];
+  if (!dimensions) {
+    dimensions = elementDimensions[ele.ionicId] = {
+      width: ele.offsetWidth,
+      height: ele.offsetHeight
+    };
+  }
+
+  return dimensions;
+}
+
+export function flushDimensionCache() {
+  elementDimensions = {};
+}
+
+let elementDimensions = {};
+let ionicElementIds = 0;

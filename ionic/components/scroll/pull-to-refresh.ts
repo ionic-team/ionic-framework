@@ -13,25 +13,25 @@ import {raf, ready, CSS} from 'ionic/util/dom';
  * Place it as the first child of your ionContent or ionScroll element.
  *
  * When refreshing is complete, call `refresher.complete()` from your controller.
- * 
+ *
  *  @usage
  *  ```ts
  *  <ion-refresher (starting)="doStarting()" (refresh)="doRefresh($event, refresher)" (pulling)="doPulling($event, amt)">
- *  
+ *
  *
  *  doRefresh(refresher) {
  *    console.log('Refreshing!', refresher);
- *  
+ *
  *    setTimeout(() => {
  *      console.log('Pull to refresh complete!', refresher);
  *      refresher.complete();
  *    })
  *  }
- *  
+ *
  *  doStarting() {
  *    console.log('Pull started!');
  *  }
- *  
+ *
  *  doPulling(amt) {
  *    console.log('You have pulled', amt);
  *  }
@@ -325,15 +325,6 @@ export class Refresher {
     if (this.startY === null) {
       this.startY = parseInt(e.touches[0].screenY, 10);
     }
-
-    // kitkat fix for touchcancel events http://updates.html5rocks.com/2014/05/A-More-Compatible-Smoother-Touch
-    /*
-    if (ionic.Platform.isAndroid() && ionic.Platform.version() === 4.4 && scrollHost.scrollTop === 0) {
-      isDragging = true;
-      e.preventDefault();
-    }
-    */
-
 
     // how far have we dragged so far?
     this.deltaY = parseInt(e.touches[0].screenY, 10) - this.startY;

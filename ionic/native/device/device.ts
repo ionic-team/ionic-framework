@@ -2,7 +2,7 @@ import * as Rx from 'rx';
 
 import * as util from 'ionic/util';
 import {NativePlugin} from '../plugin';
-import {Platform} from '../../platform/platform';
+
 
 @NativePlugin({
   name: 'Device',
@@ -20,9 +20,7 @@ export class Device {
     return this.ifPlugin(window.device, () => {
       return device;
     }, () => {
-      return {
-        name: Platform.platforms().join(',')
-      }
+      return {}
     });
   }
 
@@ -71,9 +69,7 @@ export class Device {
     this.ifPlugin(window.device, () => {
       return device.name;
     }, () => {
-      return {
-        name: Platform.name()
-      }
+      return 'unknown'
     });
   }
 

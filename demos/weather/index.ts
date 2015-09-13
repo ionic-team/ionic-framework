@@ -211,16 +211,6 @@ class WeatherApp {
     this.currentLocationString = 'Madison, WI';
 
     this.activeBgImageIndex = 0;
-
-    /*
-    $ionicPlatform.ready(function() {
-      // Hide the status bar
-      if(window.StatusBar) {
-        StatusBar.hide();
-      }
-    });
-    */
-
   }
 
   onInit() {

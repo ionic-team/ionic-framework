@@ -1,6 +1,6 @@
 import {IonicConfig} from '../config/config';
-import {Platform} from '../platform/platform';
-import * as util from 'ionic/util';
+import {isArray} from 'ionic/util';
+import * as dom from 'ionic/util/dom';
 
 
 /**
@@ -47,27 +47,6 @@ export class Ion {
     }
   }
 
-  getDelegate(delegateName) {
-    let cls = this.constructor;
-
-    if (cls.delegates) {
-      let cases = cls.delegates[delegateName] || [];
-
-      for (let i = 0; i < cases.length; i++) {
-        let delegateCase = cases[i];
-        if (util.isArray(delegateCase)) {
-          let [ check, DelegateConstructor ] = delegateCase;
-          if (check(this)) {
-            return new DelegateConstructor(this);
-          }
-
-        } else {
-          return new delegateCase(this);
-        }
-      }
-    }
-  }
-
   getElementRef() {
     return this.elementRef;
   }
@@ -76,12 +55,16 @@ export class Ion {
     return this.elementRef.nativeElement;
   }
 
+  getDimensions() {
+    return dom.getDimensions(this.elementRef.nativeElement);
+  }
+
   width() {
-    return Platform.getDimensions(this).w;
+    return this.getDimensions().width;
   }
 
   height() {
-    return Platform.getDimensions(this).h;
+    return this.getDimensions().height;
   }
 
 }

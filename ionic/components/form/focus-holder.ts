@@ -1,8 +1,6 @@
 import {Component, Directive, View, Host, Attribute, ElementRef, forwardRef} from 'angular2/angular2';
 
 import {IonicConfig} from '../../config/config';
-import * as dom  from '../../util/dom';
-import {Platform} from '../../platform/platform';
 import {IonInput} from './input';
 
 /**
@@ -15,7 +13,7 @@ import {IonInput} from './input';
   template: '<input tabindex="999"><input tabindex="1001"><input tabindex="1002">',
   directives: [forwardRef(() => FocusInput)]
 })
-export class FocusHolder { 
+export class FocusHolder {
   /**
    * TODO
    */

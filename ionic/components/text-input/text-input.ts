@@ -9,7 +9,7 @@ import {IonicApp} from '../app/app';
 import {Content} from '../content/content';
 import {ClickBlock} from '../../util/click-block';
 import * as dom  from '../../util/dom';
-import {Platform} from '../../platform/platform';
+import {IonicPlatform} from '../../platform/platform';
 
 
 /**
@@ -104,6 +104,7 @@ export class TextInput extends Ion {
     config: IonicConfig,
     app: IonicApp,
     ngZone: NgZone,
+    platform: IonicPlatform,
     @Optional() @Host() scrollView: Content,
     @Query(TextInputElement) inputQry: QueryList<TextInputElement>,
     @Query(Label) labelQry: QueryList<Label>
@@ -117,8 +118,11 @@ export class TextInput extends Ion {
 
     this.app = app;
     this.zone = ngZone;
+    this.platform = platform;
     this.inputQry = inputQry;
     this.labelQry = labelQry;
+
+    this.keyboardHeight = this.config.setting('keyboardHeight');
   }
 
   /**
@@ -213,9 +217,7 @@ export class TextInput extends Ion {
       // find out if text input should be manually scrolled into view
       let ele = this.elementRef.nativeElement;
 
-      let keyboardHeight = this.config.setting('keyboardHeight');
-
-      let scrollData = TextInput.getScollData(ele.offsetTop, ele.offsetHeight, scrollView.getDimensions(), keyboardHeight);
+      let scrollData = TextInput.getScollData(ele.offsetTop, ele.offsetHeight, scrollView.getDimensions(), this.keyboardHeight, this.platform.height());
       if (scrollData.noScroll) {
         // the text input is in a safe position that doesn't require
         // it to be scrolled into view, just set focus now
@@ -261,14 +263,14 @@ export class TextInput extends Ion {
    * @param {TODO} keyboardHeight  TODO
    * @returns {TODO} TODO
    */
-  static getScollData(inputOffsetTop, inputOffsetHeight, scrollViewDimensions, keyboardHeight) {
+  static getScollData(inputOffsetTop, inputOffsetHeight, scrollViewDimensions, keyboardHeight, plaformHeight) {
     // compute input's Y values relative to the body
     let inputTop = (inputOffsetTop + scrollViewDimensions.contentTop - scrollViewDimensions.scrollTop);
     let inputBottom = (inputTop + inputOffsetHeight);
 
     // compute the safe area which is the viewable content area when the soft keyboard is up
     let safeAreaTop = scrollViewDimensions.contentTop;
-    let safeAreaHeight = Platform.height() - keyboardHeight - safeAreaTop;
+    let safeAreaHeight = plaformHeight - keyboardHeight - safeAreaTop;
     safeAreaHeight /= 2;
     let safeAreaBottom = safeAreaTop + safeAreaHeight;
 

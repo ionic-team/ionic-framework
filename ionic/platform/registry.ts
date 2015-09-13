@@ -1,22 +1,23 @@
-import {Platform} from './platform';
+import {IonicPlatform} from './platform';
+import {windowLoad} from '../util/dom';
 
 
-Platform.register({
+IonicPlatform.register({
   name: 'core',
   settings: {
     mode: 'ios',
     keyboardHeight: 290,
   }
 });
-Platform.setDefault('core');
+IonicPlatform.setDefault('core');
 
 
-Platform.register({
+IonicPlatform.register({
   name: 'mobile'
 });
 
 
-Platform.register({
+IonicPlatform.register({
   name: 'phablet',
   isMatch(p) {
     let smallest = Math.min(p.width(), p.height());
@@ -27,7 +28,7 @@ Platform.register({
 });
 
 
-Platform.register({
+IonicPlatform.register({
   name: 'tablet',
   isMatch(p) {
     let smallest = Math.min(p.width(), p.height());
@@ -38,7 +39,7 @@ Platform.register({
 });
 
 
-Platform.register({
+IonicPlatform.register({
   name: 'android',
   superset: 'mobile',
   subsets: [
@@ -60,7 +61,7 @@ Platform.register({
 
 
 
-Platform.register({
+IonicPlatform.register({
   name: 'ios',
   superset: 'mobile',
   subsets: [
@@ -69,11 +70,11 @@ Platform.register({
   ],
   settings: {
     mode: 'ios',
-    tapPolyfill: function() {
-      return /iphone|ipad|ipod/i.test(Platform.navigatorPlatform());
+    tapPolyfill: function(p) {
+      return /iphone|ipad|ipod/i.test(p.navigatorPlatform());
     },
-    keyboardScrollAssist: function() {
-      return /iphone|ipad|ipod/i.test(Platform.navigatorPlatform());
+    keyboardScrollAssist: function(p) {
+      return /iphone|ipad|ipod/i.test(p.navigatorPlatform());
     },
     keyboardHeight: 290,
   },
@@ -86,7 +87,7 @@ Platform.register({
 });
 
 
-Platform.register({
+IonicPlatform.register({
   name: 'ipad',
   superset: 'tablet',
   settings: {
@@ -98,7 +99,7 @@ Platform.register({
 });
 
 
-Platform.register({
+IonicPlatform.register({
   name: 'iphone',
   subsets: [
     'phablet'
@@ -109,7 +110,7 @@ Platform.register({
 });
 
 
-Platform.register({
+IonicPlatform.register({
   name: 'windowsphone',
   superset: 'mobile',
   subsets: [
@@ -128,17 +129,21 @@ Platform.register({
 });
 
 
-Platform.register({
+IonicPlatform.register({
   name: 'cordova',
   isEngine: true,
   methods: {
     ready: function(resolve) {
-      Platform.windowLoad(() => {
-        document.addEventListener("deviceready", resolve);
+      function isReady() {
+        document.removeEventListener('deviceready', isReady);
+        resolve();
+      }
+      windowLoad(function() {
+        document.addEventListener('deviceready', isReady);
       });
     }
   },
-  isMatch(p) {
+  isMatch() {
     return !!(window.cordova || window.PhoneGap || window.phonegap);
   }
 });

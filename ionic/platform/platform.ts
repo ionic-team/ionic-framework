@@ -5,17 +5,14 @@ import * as dom from '../util/dom';
 /**
  * TODO
  */
-export class PlatformCtrl {
+export class IonicPlatform {
 
-  constructor() {
+  constructor(window) {
+    this._window = window;
     this._settings = {};
     this._platforms = [];
     this._versions = {};
-    this._registry = {};
-    this._default = null;
     this._onResizes = [];
-    this._dimensions = {};
-    this._dimIds = 0;
 
     this._readyPromise = new Promise(res => { this._readyResolve = res; } );
   }
@@ -67,6 +64,7 @@ export class PlatformCtrl {
   }
 
   /**
+   * @private
    * TODO
    * @param {TODO} config  TODO
    * @returns {TODO} TODO
@@ -87,24 +85,6 @@ export class PlatformCtrl {
       // use the default dom ready
       dom.ready(resolve);
     }
-  }
-
-  /**
-   * TODO
-   * @returns {TODO} TODO
-   */
-  domReady() {
-    // convenience method so its easy to access on Platform
-    return dom.ready.apply(this, arguments);
-  }
-
-  /**
-   * TODO
-   * @returns {TODO} TODO
-   */
-  windowLoad() {
-    // convenience method so its easy to access on Platform
-    return dom.windowLoad.apply(this, arguments);
   }
 
 
@@ -152,16 +132,16 @@ export class PlatformCtrl {
 
   width() {
     if (!this._w) {
-      this._w = window.innerWidth;
-      this._h = window.innerHeight;
+      this._w = this._window.innerWidth;
+      this._h = this._window.innerHeight;
     }
     return this._w;
   }
 
   height() {
     if (!this._h) {
-      this._w = window.innerWidth;
-      this._h = window.innerHeight;
+      this._w = this._window.innerWidth;
+      this._h = this._window.innerHeight;
     }
     return this._h;
   }
@@ -175,14 +155,16 @@ export class PlatformCtrl {
   }
 
   winResize() {
-    clearTimeout(Platform._resizeTimer);
+    let self = this;
+    clearTimeout(self._resizeTimer);
 
-    Platform._resizeTimer = setTimeout(() => {
-      Platform.flushDimensions();
+    self._resizeTimer = setTimeout(() => {
+      this._w = this._h = 0;
+      dom.flushDimensionCache();
 
-      for (let i = 0; i < Platform._onResizes.length; i++) {
+      for (let i = 0; i < self._onResizes.length; i++) {
         try {
-          Platform._onResizes[i]();
+          self._onResizes[i]();
         } catch (e) {
           console.error(e);
         }
@@ -195,53 +177,33 @@ export class PlatformCtrl {
     this._onResizes.push(cb);
   }
 
-  /**
-   * Get the element offsetWidth and offsetHeight. Values are cached to
-   * reduce DOM reads, and reset on a window resize.
-   * @param {TODO} platformConfig  TODO
-   */
-  getDimensions(component) {
-    // cache
-    if (!component._dimId) {
-      component._dimId = ++this._dimIds;
-    }
 
-    let dimensions = this._dimensions[component._dimId];
-    if (!dimensions) {
-      let ele = component.getNativeElement();
-
-      dimensions = this._dimensions[component._dimId] = {
-        w: ele.offsetWidth,
-        h: ele.offsetHeight
-      };
-    }
-
-    return dimensions;
-  }
-
-  flushDimensions() {
-    this._dimensions = {};
-    this._w = this._h = 0;
-  }
-
-
-  // Registry
+  // Platform Registry
   // **********************************************
 
   /**
    * TODO
    * @param {TODO} platformConfig  TODO
    */
-  register(platformConfig) {
-    this._registry[platformConfig.name] = platformConfig;
+  static register(platformConfig) {
+    platformRegistry[platformConfig.name] = platformConfig;
   }
 
-  registry() {
-    return this._registry;
+  static registry() {
+    return platformRegistry;
   }
 
-  setDefault(platformName) {
-    this._default = platformName;
+  /**
+   * TODO
+   * @param {TODO} platformName  TODO
+   * @returns {string} TODO
+   */
+  static get(platformName) {
+    return platformRegistry[platformName] || {};
+  }
+
+  static setDefault(platformName) {
+    platformDefault = platformName;
   }
 
   /**
@@ -314,7 +276,7 @@ export class PlatformCtrl {
 
     // figure out the most specific platform and active engine
     let tmpPlatform = null;
-    for (let platformName in this._registry) {
+    for (let platformName in platformRegistry) {
 
       tmpPlatform = this.matchPlatform(platformName);
       if (tmpPlatform) {
@@ -336,7 +298,7 @@ export class PlatformCtrl {
     }
 
     if (!rootPlatformNode) {
-      rootPlatformNode = new PlatformNode(this._default);
+      rootPlatformNode = new PlatformNode(platformDefault);
     }
 
     // build a Platform instance filled with the
@@ -423,15 +385,6 @@ export class PlatformCtrl {
     return this._settings;
   }
 
-  /**
-   * TODO
-   * @param {TODO} platformName  TODO
-   * @returns {string} TODO
-   */
-  get(platformName) {
-    return this._registry[platformName] || {};
-  }
-
 }
 
 function insertSuperset(platformNode) {
@@ -453,7 +406,7 @@ function insertSuperset(platformNode) {
 class PlatformNode {
 
   constructor(platformName) {
-    this.c = Platform.get(platformName);
+    this.c = IonicPlatform.get(platformName);
     this.isEngine = this.c.isEngine;
   }
 
@@ -543,13 +496,13 @@ class PlatformNode {
   }
 
   getSubsetParents(subsetPlatformName) {
-    let registry = Platform.registry();
+    let platformRegistry = IonicPlatform.registry();
 
     let parentPlatformNames = [];
     let platform = null;
 
-    for (let platformName in registry) {
-      platform = registry[platformName];
+    for (let platformName in platformRegistry) {
+      platform = platformRegistry[platformName];
 
       if (platform.subsets && platform.subsets.indexOf(subsetPlatformName) > -1) {
         parentPlatformNames.push(platformName);
@@ -561,4 +514,6 @@ class PlatformNode {
 
 }
 
-export let Platform = new PlatformCtrl();
+
+let platformRegistry = {};
+let platformDefault = null;

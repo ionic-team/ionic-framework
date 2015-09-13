@@ -2,7 +2,7 @@ import {Component, View, bootstrap, ElementRef, NgZone, bind, DynamicComponentLo
 import {ROUTER_BINDINGS, HashLocationStrategy, LocationStrategy, Router} from 'angular2/router';
 
 import {IonicConfig} from '../../config/config';
-import {Platform} from '../../platform/platform';
+import {IonicPlatform, Platform} from '../../platform/platform';
 import * as util from '../../util/util';
 
 // injectables
@@ -181,50 +181,6 @@ export class IonicApp {
   }
 
   /**
-   * TODO
-   *
-   * @param {Element} bodyEle  the body element
-   * @param {TODO} platform  TODO
-   * @param {TODO} config  TODO
-   */
-  applyBodyCss(bodyEle, platform, config) {
-    let versions = platform.versions();
-    platform.platforms().forEach(platformName => {
-      // platform-ios
-      let platformClass = 'platform-' + platformName;
-      bodyEle.classList.add(platformClass);
-
-      let platformVersion = versions[platformName];
-      if (platformVersion) {
-        // platform-ios9
-        platformClass += platformVersion.major;
-        bodyEle.classList.add(platformClass);
-
-        // platform-ios9_3
-        bodyEle.classList.add(platformClass + '_' + platformVersion.minor);
-      }
-    });
-
-    bodyEle.classList.add(config.setting('mode'));
-
-    /**
-    * Hairline Shim
-    * Add the "hairline" CSS class name to the body tag
-    * if the browser supports subpixels.
-    */
-    if (window.devicePixelRatio >= 2) {
-      var hairlineEle = document.createElement('div');
-      hairlineEle.style.border = '.5px solid transparent';
-      bodyEle.appendChild(hairlineEle);
-
-      if (hairlineEle.offsetHeight === 1) {
-        bodyEle.classList.add('hairlines');
-      }
-      bodyEle.removeChild(hairlineEle);
-    }
-  }
-
-  /**
    * If val is defined, specifies whether app text is RTL.  If val is undefined
    * returns whether app text is RTL.
    *
@@ -238,26 +194,6 @@ export class IonicApp {
     return this._rtl;
   }
 
-}
-
-function initApp(window, document, config) {
-  // create the base IonicApp
-  let app = new IonicApp();
-  app.isRTL(document.documentElement.getAttribute('dir') == 'rtl');
-
-  // load all platform data
-  // Platform is a global singleton
-  Platform.url(window.location.href);
-  Platform.userAgent(window.navigator.userAgent);
-  Platform.navigatorPlatform(window.navigator.platform);
-  Platform.load(config);
-
-  setTimeout(() => {
-    // start listening for resizes XXms after the app starts
-    window.addEventListener('resize', Platform.winResize);
-  }, 2500);
-
-  return app;
 }
 
 @Component({
@@ -280,6 +216,38 @@ class RootAnchor {
   }
 }
 
+function initApp(window, document, config, platform) {
+  // create the base IonicApp
+  let app = new IonicApp();
+  app.isRTL(document.dir == 'rtl');
+
+  // load all platform data
+  platform.url(window.location.href);
+  platform.userAgent(window.navigator.userAgent);
+  platform.navigatorPlatform(window.navigator.platform);
+  platform.load(config);
+
+  // copy default platform settings into the user config platform settings
+  // user config platform settings should override default platform settings
+  config.setPlatform(platform);
+
+  // config and platform settings have been figured out
+  // apply the correct CSS to the app
+  applyBodyCss(document.body, config, platform);
+
+  // prepare the ready promise to fire....when ready
+  platform.prepareReady(config);
+
+  setTimeout(function() {
+    // start listening for resizes XXms after the app starts
+    window.addEventListener('resize', function() {
+      platform.winResize();
+    });
+  }, 2500);
+
+  return app;
+}
+
 /**
  * TODO
  *
@@ -295,19 +263,10 @@ export function ionicBootstrap(rootComponentType, config) {
         config = new IonicConfig(config);
       }
 
+      let platform = new IonicPlatform(window);
+
       // create the base IonicApp
-      let app = initApp(window, document, config);
-
-      // copy default platform settings into the user config platform settings
-      // user config platform settings should override default platform settings
-      config.setPlatform(Platform);
-
-      // config and platform settings have been figured out
-      // apply the correct CSS to the app
-      app.applyBodyCss(document.body, Platform, config);
-
-      // prepare the ready promise to fire....when ready
-      Platform.prepareReady(config);
+      let app = initApp(window, document, config, platform);
 
       // TODO: probs need a better way to inject global injectables
       let activator = new Activator(app, config, window, document);
@@ -319,6 +278,7 @@ export function ionicBootstrap(rootComponentType, config) {
       let appBindings = Injector.resolve([
         bind(IonicApp).toValue(app),
         bind(IonicConfig).toValue(config),
+        bind(IonicPlatform).toValue(platform),
         bind(Activator).toValue(activator),
         bind(ActionMenu).toValue(actionMenu),
         bind(Modal).toValue(modal),
@@ -356,4 +316,43 @@ export function ionicBootstrap(rootComponentType, config) {
       console.error(err);
     }
   });
+}
+
+function applyBodyCss(bodyEle, config, platform) {
+  let versions = platform.versions();
+  platform.platforms().forEach(platformName => {
+    // platform-ios
+    let platformClass = 'platform-' + platformName;
+    bodyEle.classList.add(platformClass);
+
+    let platformVersion = versions[platformName];
+    if (platformVersion) {
+      // platform-ios9
+      platformClass += platformVersion.major;
+      bodyEle.classList.add(platformClass);
+
+      // platform-ios9_3
+      bodyEle.classList.add(platformClass + '_' + platformVersion.minor);
+    }
+  });
+
+  // set the mode class name
+  // ios
+  bodyEle.classList.add(config.setting('mode'));
+
+  /**
+  * Hairline Shim
+  * Add the "hairline" CSS class name to the body tag
+  * if the browser supports subpixels.
+  */
+  if (window.devicePixelRatio >= 2) {
+    var hairlineEle = document.createElement('div');
+    hairlineEle.style.border = '.5px solid transparent';
+    bodyEle.appendChild(hairlineEle);
+
+    if (hairlineEle.offsetHeight === 1) {
+      bodyEle.classList.add('hairlines');
+    }
+    bodyEle.removeChild(hairlineEle);
+  }
 }

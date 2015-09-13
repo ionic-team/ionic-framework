@@ -1,4 +1,4 @@
-import {App, IonicView, IonicApp, IonicConfig, Platform} from 'ionic/ionic';
+import {App, IonicView, IonicApp, IonicConfig, IonicPlatform} from 'ionic/ionic';
 import {Modal, ActionMenu, NavController, NavParams, Animation} from 'ionic/ionic';
 
 
@@ -7,27 +7,27 @@ import {Modal, ActionMenu, NavController, NavParams, Animation} from 'ionic/ioni
 })
 class MyAppCmp {
 
-  constructor(modal: Modal, app: IonicApp, ionicConfig: IonicConfig) {
+  constructor(modal: Modal, app: IonicApp, config: IonicConfig, platform: IonicPlatform) {
     this.modal = modal;
 
-    console.log('platforms', Platform.platforms());
-    console.log('mode', ionicConfig.setting('mode'));
+    console.log('platforms', platform.platforms());
+    console.log('mode', config.setting('mode'));
 
-    console.log('core', Platform.is('core'))
-    console.log('cordova', Platform.is('cordova'))
-    console.log('mobile', Platform.is('mobile'))
-    console.log('ipad', Platform.is('ipad'))
-    console.log('iphone', Platform.is('iphone'))
-    console.log('phablet', Platform.is('phablet'))
-    console.log('tablet', Platform.is('tablet'))
-    console.log('ios', Platform.is('ios'))
-    console.log('android', Platform.is('android'))
-    console.log('windows phone', Platform.is('windowsphone'))
+    console.log('core', platform.is('core'))
+    console.log('cordova', platform.is('cordova'))
+    console.log('mobile', platform.is('mobile'))
+    console.log('ipad', platform.is('ipad'))
+    console.log('iphone', platform.is('iphone'))
+    console.log('phablet', platform.is('phablet'))
+    console.log('tablet', platform.is('tablet'))
+    console.log('ios', platform.is('ios'))
+    console.log('android', platform.is('android'))
+    console.log('windows phone', platform.is('windowsphone'))
 
     console.log('isRTL', app.isRTL())
 
-    Platform.ready().then(() => {
-      console.log('Platform.ready')
+    platform.ready().then(() => {
+      console.log('platform.ready')
     });
 
   }
