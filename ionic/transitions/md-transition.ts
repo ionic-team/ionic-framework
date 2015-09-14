@@ -65,6 +65,23 @@ class MaterialTransition extends Transition {
         .fadeIn();
     }
 
+    let itemLength = nav.length();
+    if (nav.tabs && (itemLength === 1 || itemLength === 2)) {
+      let tabBarEle = nav.tabs.elementRef.nativeElement.querySelector('.tab-bar-container');
+      let tabBar = new Animation(tabBarEle);
+
+      if (itemLength === 1) {
+        tabBar.fromTo('height', '0px', '69px');
+        tabBar.fadeIn();
+
+      } else if (itemLength === 2) {
+        tabBar.fromTo('height', '69px', '0px');
+        tabBar.fadeOut();
+      }
+
+      this.add(tabBar);
+    }
+
   }
 
 }

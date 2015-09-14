@@ -650,11 +650,18 @@ export class ViewController extends Ion {
   }
 
   /**
-   * TODO
+   * Number of sibling view items in the view controller. This does
+   * not include items which are about to be destroyed.
    * @returns {TODO} TODO
    */
   length() {
-    return this.items.length;
+    let len = 0;
+    for (let i = 0, l = this.items.length; i < l; i++) {
+      if (!this.items[i].shouldDestroy) {
+        len++;
+      }
+    }
+    return len;
   }
 
   /**
