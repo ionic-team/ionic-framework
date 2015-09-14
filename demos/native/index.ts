@@ -1,7 +1,7 @@
 import {Component} from 'angular2/angular2';
 import {Control, ControlGroup} from 'angular2/forms';
 
-import {App, Http} from 'ionic/ionic';
+import {IonicApp, App, Http} from 'ionic/ionic';
 
 import {Camera, Geolocation, Vibration, Battery, Device} from 'ionic/ionic';
 
@@ -16,8 +16,10 @@ import {VibrationPage} from 'pages/vibration';
 @App({
   templateUrl: 'main.html'
 })
-class IonicApp {
-  constructor() {
+class MyApp {
+  constructor(app: IonicApp) {
+    this.app = app;
+
     this.firstPage = CameraPage;
     console.log('First page', CameraPage);
     this.plugins = [
@@ -30,4 +32,11 @@ class IonicApp {
       {title: 'Vibration', page: VibrationPage},
     ]
   }
+
+  openPage(menu, page) {
+   menu.close();
+
+   let nav = this.app.getComponent('myNav');
+   nav.setItems([page.page]);
+ }
 }

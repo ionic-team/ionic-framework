@@ -7,7 +7,7 @@ import {IonicView} from 'ionic/ionic';
     <a menu-toggle>
       <icon menu></icon>
     </a>
-    <ion-title>Vibration</ion-title>
+    <ion-title>Device</ion-title>
   </ion-navbar>
   <ion-content class="padding">
     <h2>Device</h2>
