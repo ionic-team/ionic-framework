@@ -98,6 +98,10 @@ gulp.task('watch', function(done) {
         }
       );
 
+      watch('demos/**/*', function() {
+        gulp.start('demos');
+      });
+
       watch('ionic/components/*/test/**/*', function(file) {
         if (file.event === "unlink") {
           var paths = file.history[0].split("ionic/components/");
