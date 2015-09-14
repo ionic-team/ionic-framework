@@ -136,9 +136,6 @@ export class IonicApp {
    * @param {TODO} component  The component to register
    */
   register(id, component) {
-    if (this.components[id]) {
-      throw Error('Registered component id "' + id + '" already exists.');
-    }
     this.components[id] = component;
   }
 

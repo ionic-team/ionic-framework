@@ -1,6 +1,5 @@
-import {AppViewManager, ElementRef, Directive, Self, Type} from 'angular2/angular2';
+import {AppViewManager, ElementRef, Directive} from 'angular2/angular2';
 
-import {Ion} from '../ion';
 import {IonicApp} from './app';
 
 /**
@@ -15,10 +14,8 @@ import {IonicApp} from './app';
 export class IdRef {
 
   constructor(private app: IonicApp, private elementRef: ElementRef, private appViewManager: AppViewManager) {
-
     // Grab the component this directive is attached to
     this.component = appViewManager.getComponent(elementRef);
-
   }
 
   onInit() {
