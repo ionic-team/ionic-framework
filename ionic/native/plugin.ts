@@ -19,6 +19,11 @@ export class NativePluginDecorator {
     };
 
     cls.pluginWarn = () => {
+      if(cls._pluginWarned) {
+        // Only warn once
+        return;
+      }
+
       let platformString = [];
       for(var k in this.config.platforms) {
         platformString.push('\t' + k + ': '+ this.config.platforms[k]);
@@ -26,6 +31,9 @@ export class NativePluginDecorator {
       console.warn('Plugin for ' + this.config.name +
       ' not installed. For native functionality, please install the correct plugin for your platform:\n' +
       platformString.join('\n'));
+
+      // Set a flag so we don't warn again
+      cls._pluginWarned = true;
     }
   }
 }
