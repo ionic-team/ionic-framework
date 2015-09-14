@@ -1,4 +1,4 @@
-import {Menu} from '../menu';
+import {Menu} from './menu';
 import {SlideEdgeGesture} from 'ionic/gestures/slide-edge-gesture';
 
 

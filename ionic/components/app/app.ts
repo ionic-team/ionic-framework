@@ -263,7 +263,7 @@ export function ionicBootstrap(rootComponentType, config) {
         config = new IonicConfig(config);
       }
 
-      let platform = new IonicPlatform(window);
+      let platform = new IonicPlatform();
 
       // create the base IonicApp
       let app = initApp(window, document, config, platform);

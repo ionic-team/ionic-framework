@@ -4,7 +4,7 @@ import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
 import {IonicConfig} from '../../config/config';
 import {IonicComponent} from '../../config/annotations';
-import * as gestures from  './extensions/gestures';
+import * as gestures from  './menu-gestures';
 
 
 /**

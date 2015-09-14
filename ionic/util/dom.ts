@@ -228,7 +228,7 @@ export function closest(el, selector) {
 export function getDimensions(ele) {
   if (!ele.ionicId) {
     ele.ionicId = ++ionicElementIds;
-    if (ele.ionicId % 200) {
+    if (ele.ionicId % 100 === 0) {
       // periodically flush dimensions
       flushDimensionCache();
     }
@@ -243,6 +243,16 @@ export function getDimensions(ele) {
   }
 
   return dimensions;
+}
+
+export function windowDimensions() {
+  if (!elementDimensions.win) {
+    elementDimensions.win = {
+      width: window.innerWidth,
+      height: window.innerHeight
+    };
+  }
+  return elementDimensions.win;
 }
 
 export function flushDimensionCache() {

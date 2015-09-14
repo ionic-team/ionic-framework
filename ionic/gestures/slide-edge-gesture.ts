@@ -1,9 +1,11 @@
 import {SlideGesture} from 'ionic/gestures/slide-gesture';
-import * as util from 'ionic/util';
+import {defaults} from '../util/util';
+import {windowDimensions} from '../util/dom';
+
 
 export class SlideEdgeGesture extends SlideGesture {
   constructor(element: Element, opts: Object = {}) {
-    util.defaults(opts, {
+    defaults(opts, {
       edge: 'left',
       threshold: 50
     });
@@ -22,8 +24,8 @@ export class SlideEdgeGesture extends SlideGesture {
     return {
       left: 0,
       top: 0,
-      width: window.innerWidth,
-      height: window.innerHeight
+      width: windowDimensions().width,
+      height: windowDimensions().height
     };
   }
 

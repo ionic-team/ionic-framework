@@ -7,8 +7,7 @@ import * as dom from '../util/dom';
  */
 export class IonicPlatform {
 
-  constructor(window) {
-    this._window = window;
+  constructor() {
     this._settings = {};
     this._platforms = [];
     this._versions = {};
@@ -131,19 +130,11 @@ export class IonicPlatform {
   }
 
   width() {
-    if (!this._w) {
-      this._w = this._window.innerWidth;
-      this._h = this._window.innerHeight;
-    }
-    return this._w;
+    return dom.windowDimensions().width;
   }
 
   height() {
-    if (!this._h) {
-      this._w = this._window.innerWidth;
-      this._h = this._window.innerHeight;
-    }
-    return this._h;
+    return dom.windowDimensions().height;
   }
 
   isPortrait() {
@@ -159,7 +150,6 @@ export class IonicPlatform {
     clearTimeout(self._resizeTimer);
 
     self._resizeTimer = setTimeout(() => {
-      this._w = this._h = 0;
       dom.flushDimensionCache();
 
       for (let i = 0; i < self._onResizes.length; i++) {

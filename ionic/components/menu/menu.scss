@@ -22,6 +22,8 @@ ion-menu {
   flex-direction: column;
 
   background: $menu-background;
+
+  transform: translate3d(-9999px, 0px, 0px);
 }
 
 ion-menu[side=right] {
