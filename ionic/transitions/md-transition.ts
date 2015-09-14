@@ -70,11 +70,11 @@ class MaterialTransition extends Transition {
       let tabBarEle = nav.tabs.elementRef.nativeElement.querySelector('.tab-bar-container');
       let tabBar = new Animation(tabBarEle);
 
-      if (itemLength === 1) {
+      if (itemLength === 1 && opts.direction == 'back') {
         tabBar.fromTo('height', '0px', '69px');
         tabBar.fadeIn();
 
-      } else if (itemLength === 2) {
+      } else if (itemLength === 2 && opts.direction == 'forward') {
         tabBar.fromTo('height', '69px', '0px');
         tabBar.fadeOut();
       }
