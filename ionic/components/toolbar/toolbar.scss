@@ -79,15 +79,18 @@ ion-title {
 }
 
 .toolbar [menu-toggle] {
-  margin: 0;
+  display: flex;
+  align-items: center;
+  margin: 0 6px;
   padding: 0;
-  min-width: 48px;
+  min-width: 36px;
   order: map-get($toolbar-order, 'menu-toggle');
   box-shadow: none;
 }
 
 .toolbar [menu-toggle] icon {
-  padding: 0 12px;
+  padding: 0 6px;
+  font-size: 2.8rem;
 }
 
 .toolbar-item {

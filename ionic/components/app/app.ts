@@ -6,7 +6,7 @@ import {IonicPlatform, Platform} from '../../platform/platform';
 import * as util from '../../util/util';
 
 // injectables
-import {Activator} from '../../util/activator';
+import {Activator} from './activator';
 import {ActionMenu} from '../action-menu/action-menu';
 import {Modal} from '../modal/modal';
 import {Popup} from '../popup/popup';

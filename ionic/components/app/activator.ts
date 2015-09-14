@@ -1,4 +1,4 @@
-import {raf, pointerCoord, hasPointerMoved} from './dom';
+import {raf, pointerCoord, hasPointerMoved} from '../../util/dom';
 
 
 export class Activator {
@@ -15,7 +15,7 @@ export class Activator {
     self.active = {};
     self.activatedClass = 'activated';
     self.deactivateTimeout = 180;
-    this.deactivateAttempt = 0;
+    self.deactivateAttempt = 0;
     self.pointerTolerance = 4;
     self.isTouch = false;
     self.disableClick = 0;
@@ -57,7 +57,6 @@ export class Activator {
 
     self.pointerMove = function(ev) {
       let moveCoord = pointerCoord(ev);
-      console.log('pointerMove', moveCoord, self.start)
 
       if ( hasPointerMoved(10, self.start, moveCoord) ) {
         self.pointerCancel();
@@ -249,19 +248,19 @@ export class Activator {
 
     setTimeout(function() {
       self.deactivate();
-    }, this.deactivateTimeout);
+    }, self.deactivateTimeout);
   }
 
   deactivate() {
     const self = this;
 
-    if (this.app.isTransitioning() && this.deactivateAttempt < 10) {
+    if (self.app.isTransitioning() && self.deactivateAttempt < 10) {
       // the app is actively transitioning, don't bother deactivating
       // anything this makes it easier on the GPU so it doesn't
       // have to redraw any buttons during a transition
       // retry
-      ++this.deactivateAttempt;
-      this.queueDeactivate();
+      ++self.deactivateAttempt;
+      self.queueDeactivate();
 
     } else {
       // not actively transitioning, good to deactivate any elements
@@ -278,7 +277,7 @@ export class Activator {
         }
       });
 
-      this.deactivateAttempt = 0;
+      self.deactivateAttempt = 0;
     }
 
   }

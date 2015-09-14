@@ -46,11 +46,16 @@ $toolbar-md-button-font-size:        1.4rem !default;
     min-width: 28px;
   }
 
-  a[menu-toggle],
+  [menu-toggle],
   [menu-toggle].activated {
-    margin: ($toolbar-padding * -1) 20px ($toolbar-padding * -1) 8px;
-    padding-bottom: $toolbar-padding / 2;
+    margin: ($toolbar-padding * -1) 0 ($toolbar-padding * -1) ($toolbar-padding * -1);
+    padding: 0 10px;
     height: $toolbar-md-height;
+    min-width: 60px;
+
+    icon {
+      font-size: 2.4rem;
+    }
   }
 
 }

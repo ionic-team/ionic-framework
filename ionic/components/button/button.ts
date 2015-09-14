@@ -5,7 +5,7 @@ import {Directive} from 'angular2/angular2';
  * TODO
  */
 @Directive({
-  selector: 'button,[button],[menu-toggle]',
+  selector: 'button,[button]',
   host: {
     '[class.icon-left]': 'iconLeft',
     '[class.icon-right]': 'iconRight',
