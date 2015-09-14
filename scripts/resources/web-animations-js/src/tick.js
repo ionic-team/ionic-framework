@@ -35,6 +35,9 @@
   };
 
   function processRafCallbacks(t) {
+    if (!t) {
+      t = Date.now();
+    }
     var processing = rafCallbacks;
     rafCallbacks = [];
     if (t < timeline.currentTime)
