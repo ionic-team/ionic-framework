@@ -12,14 +12,17 @@ import {NativePlugin} from '../plugin';
 })
 export class DeviceOrientation {
   static _wrap(result) {
-    return result;
+    return util.extend({
+      alpha: result.magneticHeading,
+      magneticHeading: result.webkitCompassHeading || result.alpha
+    }, result);
   }
 
-  static getCurrentAcceleration() {
+  static getCurrentHeading() {
     return new Promise((resolve, reject) => {
       if(window.DeviceOrientationEvent) {
         var fnCb = function fnCb(eventData) {
-          resolve(eventData);
+          resolve(DeviceOrientation._wrap(eventData));
           window.removeEventListener('deviceorientation', fnCb);
         }
         window.addEventListener('deviceorientation', fnCb);
@@ -44,8 +47,7 @@ export class DeviceOrientation {
       let source = Rx.Observable.create((observer) => {
 
         var fnCb = function fnCb(eventData) {
-          console.log(eventData);
-          observer.onNext(eventData);
+          observer.onNext(DeviceOrientation._wrap(eventData));
         };
 
         window.addEventListener('deviceorientation', fnCb);
@@ -65,7 +67,7 @@ export class DeviceOrientation {
       let source = Rx.Observable.create((observer) => {
 
         watchID = navigator.compass.watchHeading(function (result) {
-          observer.onNext(result);
+          observer.onNext(DeviceOrientation._wrap(result));
         }, function (err) {
           observer.onError(err, observer);
         }, options);
