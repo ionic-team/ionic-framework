@@ -13,21 +13,20 @@ import {NativePlugin} from '../plugin';
 export class DeviceMotion {
   static _wrap(result) {
     // Mimic the DeviceMotionEvent
-    return {
-      acceleration: result,
-      accelerationIncludingGravity: result,
+    return util.extend({
+      acceleration: result, // result will be x/y/z accel
+      accelerationIncludingGravity: result, //TODO: I know this isn't correct but not sure how to normalize from native plugin
       rotationRate: 0,
       interval: 0,
       native: true
-    }
+    }, result);
   }
 
   static getCurrentAcceleration() {
     return new Promise((resolve, reject) => {
       if(window.DeviceMotionEvent || ('listenForDeviceMovement' in window)) {
         var fnCb = function fnCb(eventData) {
-          console.log('Event', eventData);
-          resolve(eventData);
+          resolve(DeviceMotion._wrap(eventData));
           window.removeEventListener('devicemotion', fnCb);
         }
         window.addEventListener('devicemotion', fnCb);
@@ -52,8 +51,7 @@ export class DeviceMotion {
       let source = Rx.Observable.create((observer) => {
 
         var fnCb = function fnCb(eventData) {
-          console.log(eventData);
-          observer.onNext(eventData);
+          observer.onNext(DeviceMotion._wrap(eventData));
         };
 
         window.addEventListener('devicemotion', fnCb);
@@ -73,7 +71,7 @@ export class DeviceMotion {
       let source = Rx.Observable.create((observer) => {
 
         watchID = navigator.accelerometer.watchAcceleration(function (result) {
-          observer.onNext(result);
+          observer.onNext(DeviceMotion._wrap(result));
         }, function (err) {
           observer.onError(err, observer);
         }, options);
