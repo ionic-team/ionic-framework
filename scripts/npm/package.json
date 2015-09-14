@@ -17,6 +17,7 @@
     "reflect-metadata": "0.1.0",
     "rtts_assert": "2.0.0-alpha.<%= ngVersion %>",
     "traceur-runtime": "0.0.59",
-    "zone.js": "0.5.4"
+    "zone.js": "0.5.4",
+    "rx": "2.5.1"
   }
 }
