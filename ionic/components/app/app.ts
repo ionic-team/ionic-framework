@@ -132,22 +132,22 @@ export class IonicApp {
 
   /**
    * Register a known component with a key, for easy lookups later.
-   * @param {TODO} key  The key to use to register the component
+   * @param {TODO} id  The id to use to register the component
    * @param {TODO} component  The component to register
    */
-  register(key, component) {
-    if (this.components[key]) {
-      throw Error('Registered component key ' + key + ' already exists.');
+  register(id, component) {
+    if (this.components[id]) {
+      throw Error('Registered component id "' + id + '" already exists.');
     }
-    this.components[key] = component;
+    this.components[id] = component;
   }
 
   /**
    * Unregister a known component with a key.
-   * @param {TODO} key  The key to use to unregister
+   * @param {TODO} id  The id to use to unregister
    */
-  unregister(key) {
-    delete this.components[key];
+  unregister(id) {
+    delete this.components[id];
   }
 
   /**

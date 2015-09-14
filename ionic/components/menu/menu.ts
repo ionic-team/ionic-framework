@@ -54,7 +54,8 @@ export class Menu extends Ion {
 
     if (!this.id) {
       // Auto register
-      this.app.register('menu', this);
+      this.id = 'menu';
+      this.app.register(this.id, this);
     }
 
     this._initGesture();
@@ -230,7 +231,7 @@ export class Menu extends Ion {
   }
 
   onDestroy() {
-    this.app.unregister(this);
+    this.app.unregister(this.id);
     this._type && this._type.onDestroy();
     this.contentElement = null;
   }
