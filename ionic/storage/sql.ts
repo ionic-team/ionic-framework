@@ -4,6 +4,13 @@ import * as util from 'ionic/util';
 
 const DB_NAME = '__ionicstorage';
 
+/**
+ * SqlStorage uses SQLite or WebSQL (development only!) to store data in a
+ * persistent SQL store on the filesystem.
+ *
+ * This is the preferred storage engine, as data will be stored in appropriate
+ * app storage, unlike Local Storage which is treated differently by the OS.
+ */
 export class SqlStorage extends StorageEngine {
   static BACKUP_LOCAL =  2
   static BACKUP_LIBRARY = 1
