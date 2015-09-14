@@ -1,4 +1,4 @@
-import {IonicView} from 'ionic/ionic';
+import {IonicView, Device} from 'ionic/ionic';
 
 
 @IonicView({
@@ -12,7 +12,8 @@ import {IonicView} from 'ionic/ionic';
   <ion-content class="padding">
     <h2>Device</h2>
     <button primary outline (click)="doDevice()">Get Device</button>
-    <div>
+    <div *ng-if="device">
+      Device name: {{device.name}}
     </div>
   </ion-content>
   `
@@ -20,7 +21,7 @@ import {IonicView} from 'ionic/ionic';
 export class DevicePage {
 
   doDevice() {
-    let device = Device.getDevice();
-    console.log('Got device', device);
+    this.device = Device.getDevice();
+    console.log('Got device', this.device);
   }
 }

@@ -20,7 +20,13 @@ export class Device {
     return this.ifPlugin(window.device, () => {
       return device;
     }, () => {
-      return {}
+      return {
+        name: Device.getName(),
+        model: Device.getModel(),
+        platform: Device.getPlatform(),
+        uuid: Device.getUUID(),
+        version: Device.getVersion()
+      }
     });
   }
 
