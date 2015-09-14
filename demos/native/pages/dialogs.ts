@@ -10,7 +10,7 @@ import {IonicView, Dialogs} from 'ionic/ionic';
     <ion-title>Dialogs</ion-title>
   </ion-navbar>
   <ion-content class="padding">
-    <h2>Device</h2>
+    <h2>Dialogs</h2>
     <button primary outline (click)="doAlert()">Do Alert</button>
     <button primary outline (click)="doConfirm()">Do Confirm</button>
     <button primary outline (click)="doPrompt()">Do Prompt</button>
