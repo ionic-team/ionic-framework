@@ -241,7 +241,7 @@ function initApp(window, document, config, platform) {
   setTimeout(function() {
     // start listening for resizes XXms after the app starts
     window.addEventListener('resize', function() {
-      platform.winResize();
+      platform.windowResize();
     });
   }, 2500);
 

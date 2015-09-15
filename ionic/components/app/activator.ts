@@ -84,7 +84,7 @@ export class Activator {
   touchEnd(ev) {
     let self = this;
 
-    if (self.tapPolyfill && self.start) {
+    if (self.tapPolyfill && self.start && !self.app.isTransitioning()) {
       let endCoord = pointerCoord(ev);
 
       if (!hasPointerMoved(self.pointerTolerance, self.start, endCoord)) {
@@ -140,7 +140,7 @@ export class Activator {
   pointerStart(ev) {
     let targetEle = this.getActivatableTarget(ev.target);
 
-    if (targetEle) {
+    if (targetEle && !this.app.isTransitioning()) {
       this.start = pointerCoord(ev);
 
       this.queueActivate(targetEle);
@@ -179,6 +179,9 @@ export class Activator {
    * @return {boolean} True if click event should be allowed, otherwise false.
    */
   allowClick(ev) {
+    if (this.app.isTransitioning()) {
+      return false;
+    }
     if (!ev.isIonicTap) {
       if (this.isDisabledClick()) {
         return false;

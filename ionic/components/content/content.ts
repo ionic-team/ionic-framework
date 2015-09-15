@@ -2,9 +2,10 @@ import {Component, View, ElementRef} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
+import {IonicPlatform} from '../../platform/platform';
 import {IonicComponent} from '../../config/annotations';
 import {ScrollTo} from '../../animations/scroll-to';
-import {hasFocusedTextInput} from '../../util/dom';
+
 
 /**
  * @name ionContent
@@ -37,9 +38,10 @@ export class Content extends Ion {
    * @param {ElementRef} elementRef  A reference to the component's DOM element.
    * @param {IonicConfig} config  The config object to change content's default settings.
    */
-  constructor(elementRef: ElementRef, config: IonicConfig) {
+  constructor(elementRef: ElementRef, config: IonicConfig, platform: IonicPlatform) {
     super(elementRef, config);
     this.scrollPadding = 0;
+    this.platform = platform;
   }
 
   /**
@@ -154,26 +156,17 @@ export class Content extends Ion {
     if (addPadding > this.scrollPadding) {
       this.scrollPadding = addPadding;
       this.scrollElement.style.paddingBottom = addPadding + 'px';
-    }
-  }
 
-  /**
-   * TODO
-   */
-  pollFocus() {
-    if (hasFocusedTextInput()) {
-      this.isPollingFocus = true;
+      if (!this.keyboardPromise) {
 
-      setTimeout(() => {
-        this.pollFocus();
-      }, 500);
+        this.keyboardPromise = this.platform.onKeyboardClose(() => {
+          if (this) {
+            this.scrollPadding = 0;
+            if (this.scrollElement) this.scrollElement.style.paddingBottom = '';
+            this.keyboardPromise = null;
+          }
+        });
 
-    } else {
-      this.isPollingFocus = false;
-
-      if (this.scrollPadding) {
-        this.scrollPadding = 0;
-        this.scrollElement.style.paddingBottom = '';
       }
     }
   }

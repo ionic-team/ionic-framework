@@ -160,7 +160,7 @@ export class TextInput extends Ion {
    * @param {Event} ev  TODO
    */
   pointerStart(ev) {
-    if (this.scrollAssist) {
+    if (this.scrollAssist && !this.app.isTransitioning()) {
       // remember where the touchstart/mousedown started
       this.startCoord = dom.pointerCoord(ev);
     }
@@ -171,7 +171,12 @@ export class TextInput extends Ion {
    * @param {Event} ev TODO
    */
   pointerEnd(ev) {
-    if (this.scrollAssist && ev.type === 'touchend') {
+
+    if (this.app.isTransitioning()) {
+      ev.preventDefault();
+      ev.stopPropagation();
+
+    } else if (this.scrollAssist && ev.type === 'touchend') {
       // get where the touchend/mouseup ended
       let endCoord = dom.pointerCoord(ev);
 
@@ -395,10 +400,6 @@ export class TextInput extends Ion {
 
     if (this.scrollAssist && this.scrollView) {
       setTimeout(() => {
-        if (!this.scrollView.isPollingFocus) {
-          this.scrollView.pollFocus();
-        }
-
         this.deregListeners();
         this.deregScroll = this.scrollView.addScrollEventListener(this.scrollMove);
       }, 100);
@@ -431,9 +432,8 @@ export class TextInput extends Ion {
    * @param {boolean} receivedFocus  TODO
    */
   receivedFocus(receivedFocus) {
-    let self = this;
-    if (receivedFocus && !self.inputHasFocus) {
-      self.initFocus();
+    if (receivedFocus && !this.inputHasFocus) {
+      this.initFocus();
 
     } else {
       this.deregListeners();
