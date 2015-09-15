@@ -8,6 +8,9 @@ import {NativePlugin} from '../plugin';
   name: 'Device',
   platforms: {
     cordova: 'cordova-plugin-device'
+  },
+  pluginCheck: () => {
+    return !!window.device;
   }
 })
 export class Device {
@@ -17,7 +20,7 @@ export class Device {
    * @returns {Object} The device object.
    */
   static getDevice() {
-    return this.ifPlugin(window.device, () => {
+    return this.ifPlugin(() => {
       return device;
     }, () => {
       return {
@@ -36,7 +39,7 @@ export class Device {
    * @returns {String} The Cordova version.
    */
   static getCordova() {
-    this.ifPlugin(window.device, () => {
+    this.ifPlugin(() => {
       return device.cordova;
     });
   }
@@ -47,7 +50,7 @@ export class Device {
    * @returns {String} The name of the device's model or product.
    */
   static getModel() {
-    this.ifPlugin(window.device, () => {
+    this.ifPlugin(() => {
       return device.model;
     }, () => {
       return 'unknown'
@@ -59,7 +62,7 @@ export class Device {
    * @returns {String}
    */
   static getName() {
-    this.ifPlugin(window.device, () => {
+    this.ifPlugin(() => {
       return device.name;
     }, () => {
       return 'unknown'
@@ -72,7 +75,7 @@ export class Device {
    * @returns {String} The device's operating system name.
    */
   static getPlatform() {
-    this.ifPlugin(window.device, () => {
+    this.ifPlugin(() => {
       return device.name;
     }, () => {
       return 'unknown'
@@ -85,7 +88,7 @@ export class Device {
    * @returns {String} The device's Universally Unique Identifier
    */
   static getUUID() {
-    this.ifPlugin(window.device, () => {
+    this.ifPlugin(() => {
       return device.uuid;
     }, () => {
       return 'unknown';
@@ -98,7 +101,7 @@ export class Device {
    * @returns {String}
    */
   static getVersion() {
-    this.ifPlugin(window.device, () => {
+    this.ifPlugin(() => {
       return device.version;
     }, () => {
       return 'unknown';
@@ -110,7 +113,7 @@ export class Device {
    * @returns {String}
    */
   static getManufacturer() {
-    this.ifPlugin(window.device, () => {
+    this.ifPlugin(() => {
       return device.manufacturer;
     }, () => {
       return 'unknown';

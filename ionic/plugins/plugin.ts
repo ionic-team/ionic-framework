@@ -3,18 +3,20 @@ export class NativePluginDecorator {
     this.cls = cls;
     this.config = config;
 
-    cls.ifPlugin = (check, cb, returnType=null) => {
+    cls.ifPlugin = (cb, returnType=null) => {
       // Convert to boolean the plugin param
       var exists = !!check;
-      if(typeof check === 'function') {
-        exists = check();
+      if(typeof this.config.pluginCheck === 'function') {
+        exists = this.config.pluginCheck();
       }
       if(exists) {
         return cb();
       }
 
+      // We don't have the plugin, so print a warning message
       cls.pluginWarn();
 
+      // If the user supplied a default return value, return it here.
       return (typeof returnType === 'function') ? returnType() : returnType;
     };
 

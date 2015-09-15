@@ -24,4 +24,4 @@ export * from './transitions/transition'
 export * from './transitions/ios-transition'
 export * from './transitions/md-transition'
 
-export * from './native/plugins'
+export * from './plugins/plugins'

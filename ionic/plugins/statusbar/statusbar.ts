@@ -10,6 +10,9 @@ import {NativePlugin} from '../plugin';
   name: 'StatusBar',
   platforms: {
     cordova: 'cordova-plugin-statusbar'
+  },
+  pluginCheck: () => {
+    return !!window.StatusBar;
   }
 })
 export class StatusBar {
@@ -22,16 +25,16 @@ export class StatusBar {
    * Show the StatusBar
    */
   static show() {
-    this.ifPlugin(window.StatusBar, () => {
+    this.ifPlugin(() => {
       window.StatusBar.show();
     })
   }
-  
+
   /**
    * Hide the StatusBar
    */
   static hide() {
-    this.ifPlugin(window.StatusBar, () => {
+    this.ifPlugin(() => {
       window.StatusBar.hide();
     })
   }
@@ -49,7 +52,7 @@ export class StatusBar {
    * @param style the style from above
    */
   static setStyle(style) {
-    this.ifPlugin(window.StatusBar, () => {
+    this.ifPlugin(() => {
       switch(style) {
         case StatusBar.DEFAULT:
           window.StatusBar.styleDefault();
@@ -75,7 +78,7 @@ export class StatusBar {
    * @param hex the hex value of the color.
    */
   static setHexColor(hex) {
-    this.ifPlugin(window.StatusBar, () => {
+    this.ifPlugin(() => {
       window.StatusBar.backgroundColorByHexName(hex);
     });
   }
@@ -89,7 +92,7 @@ export class StatusBar {
    * @param name the name of the color (from above)
    */
   static setNamedColor(name) {
-    this.ifPlugin(window.StatusBar, () => {
+    this.ifPlugin(() => {
       window.StatusBar.backgroundColorByName(name);
     });
   }
@@ -101,7 +104,7 @@ export class StatusBar {
    * @param doesOverlay whether the status bar overlays the main app view.
    */
   static setOverlays(doesOverlay) {
-    this.ifPlugin(window.StatusBar, () => {
+    this.ifPlugin(() => {
       window.StatusBar.overlaysWebView(doesOverlay);
     });
   }

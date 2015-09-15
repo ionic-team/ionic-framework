@@ -6,6 +6,9 @@ import {NativePlugin} from '../plugin';
   name: 'Camera',
   platforms: {
     cordova: 'cordova-plugin-camera'
+  },
+  pluginCheck: () => {
+    return !!navigator.camera;
   }
 })
 export class Camera {
