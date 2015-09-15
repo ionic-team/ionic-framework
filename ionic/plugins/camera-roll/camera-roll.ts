@@ -4,7 +4,7 @@ import * as util from 'ionic/util';
 import {NativePlugin} from '../plugin';
 
 /**
- * Manage the appearance of the native status bar.
+ * Save and load photos from the Camera Roll
  */
 @NativePlugin({
   name: 'CameraRoll',
