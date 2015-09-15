@@ -1,4 +1,5 @@
 export * from './plugin'
+export * from './applinks/applinks'
 export * from './barcode/barcode'
 export * from './battery/battery'
 export * from './camera/camera'
