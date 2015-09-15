@@ -162,7 +162,7 @@ export class OverlayRef {
 
       animation.after.removeClass('show-overlay');
       ClickBlock(true, animation.duration() + 200);
-      this.app.setTransitioning(true);
+      this.app.setTransitioning(true, animation.duration() + 200);
 
       animation.play().then(() => {
         instance.viewDidLeave && instance.viewDidLeave();

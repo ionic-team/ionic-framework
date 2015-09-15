@@ -257,7 +257,7 @@ export class Activator {
   deactivate() {
     const self = this;
 
-    if (self.app.isTransitioning() && self.deactivateAttempt < 10) {
+    if (self.app.isTransitioning() && self.deactivateAttempt < 30) {
       // the app is actively transitioning, don't bother deactivating
       // anything this makes it easier on the GPU so it doesn't
       // have to redraw any buttons during a transition

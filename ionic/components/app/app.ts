@@ -40,7 +40,7 @@ export class IonicApp {
    */
   constructor() {
     this.overlays = [];
-    this._transTime = 0;
+    this._transDone = 0;
 
     // Our component registry map
     this.components = {};
@@ -82,8 +82,8 @@ export class IonicApp {
    * slides up, etc. After the transition completes it is set back to `false`.
    * @param {bool} isTransitioning
    */
-  setTransitioning(isTransitioning) {
-    this._transTime = (isTransitioning ? Date.now() : 0);
+  setTransitioning(isTransitioning, msTilDone=800) {
+    this._transDone = (isTransitioning ? Date.now() + msTilDone : 0);
   }
 
   /**
@@ -91,7 +91,7 @@ export class IonicApp {
    * @return {bool}
    */
   isTransitioning() {
-    return (this._transTime + 800 > Date.now());
+    return (this._transDone > Date.now());
   }
 
   /**
