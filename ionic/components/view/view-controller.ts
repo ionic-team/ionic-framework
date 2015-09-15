@@ -474,6 +474,10 @@ export class ViewController extends Ion {
     // allow clicks again
     ClickBlock(false);
     this.app.setTransitioning(false);
+
+    if (this.items.length === 1) {
+      this.elementRef.nativeElement.classList.add('has-views');
+    }
   }
 
   /**
