@@ -1,6 +1,9 @@
-import {Directive} from 'angular2/angular2';
+import {Directive, Optional} from 'angular2/angular2';
 
 import {IonicApp} from '../app/app';
+import {ViewItem} from '../view/view-item';
+import {Navbar} from '../nav-bar/nav-bar';
+
 
 /**
 * TODO
@@ -11,12 +14,17 @@ import {IonicApp} from '../app/app';
     'menuToggle'
   ],
   host: {
-    '(click)': 'toggle($event)'
+    '(click)': 'toggle($event)',
+    '[hidden]': 'isHidden'
   }
 })
 export class MenuToggle {
 
-  constructor(private app: IonicApp) {}
+  constructor(app: IonicApp, @Optional() item: ViewItem, @Optional() navbar: Navbar) {
+    this.app = app;
+    this.item = item;
+    this.withinNavbar = !!navbar;
+  }
 
   /**
   * TODO
@@ -28,4 +36,12 @@ export class MenuToggle {
     ev.preventDefault();
     ev.stopPropagation();
   }
+
+  get isHidden() {
+    if (this.withinNavbar && this.item) {
+      return !this.item.isRoot();
+    }
+    return false;
+  }
+
 }

@@ -7,6 +7,9 @@ import {NavParams, NavController} from 'ionic/ionic';
   template: '' +
     '<ion-navbar *navbar primary>' +
       '<ion-title>{{title}}</ion-title>' +
+      '<ion-nav-items primary>' +
+        '<button><icon star></icon></button>' +
+      '</ion-nav-items>' +
       '<ion-nav-items secondary>' +
         '<button>S1</button>' +
       '</ion-nav-items>' +

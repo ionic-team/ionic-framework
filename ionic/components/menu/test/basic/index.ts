@@ -1,12 +1,23 @@
-import {App, IonicApp, IonicView} from 'ionic/ionic';
+import {App, IonicApp, IonicView, NavController} from 'ionic/ionic';
 
 
 @IonicView({templateUrl: 'page1.html'})
 class Page1 {}
 
 
+@IonicView({templateUrl: 'page3.html'})
+class Page3 {}
+
+
 @IonicView({templateUrl: 'page2.html'})
-class Page2 {}
+class Page2 {
+  constructor(nav: NavController) {
+    this.nav = nav;
+  }
+  page3() {
+    this.nav.push(Page3);
+  }
+}
 
 
 @App({
@@ -21,6 +32,7 @@ class E2EApp {
     this.pages = [
       { title: 'Page 1', component: Page1 },
       { title: 'Page 2', component: Page2 },
+      { title: 'Page 3', component: Page3 },
     ];
   }
 

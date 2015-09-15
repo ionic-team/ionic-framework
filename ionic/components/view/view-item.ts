@@ -226,6 +226,10 @@ export class ViewItem {
     return (this.viewCtrl ? this.viewCtrl.indexOf(this) : -1);
   }
 
+  isRoot() {
+    return this.index === 0;
+  }
+
   /**
    * TODO
    */
