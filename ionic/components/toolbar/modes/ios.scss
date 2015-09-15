@@ -6,7 +6,6 @@ $toolbar-order-ios: (
   back-button: 10,
   menu-toggle: 20,
   primary: 30,
-  title: 40,
   secondary: 50
 );
 
@@ -22,14 +21,23 @@ $toolbar-ios-title-font-size:               1.7rem !default;
   min-height: $toolbar-ios-height;
 
   .toolbar-title {
-    order: map-get($toolbar-order-ios, title);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0px 72px;
+    pointer-events: none;
   }
 
   .toolbar-primary-item {
+    flex: 1;
     order: map-get($toolbar-order-ios, primary);
   }
 
   .toolbar-secondary-item {
+    flex: 1;
+    text-align: right;
     order: map-get($toolbar-order-ios, secondary);
   }
 
@@ -42,7 +50,7 @@ $toolbar-ios-title-font-size:               1.7rem !default;
     font-size: $toolbar-ios-title-font-size;
     font-weight: 500;
     text-align: center;
-    margin-top: -2px;
+    pointer-events: auto;
   }
 
   .back-button {

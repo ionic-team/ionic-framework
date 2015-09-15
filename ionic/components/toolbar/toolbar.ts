@@ -52,17 +52,17 @@ export class ToolbarBase extends Ion  {
   }
 
   afterViewChecked() {
-    if (this._queueAlign) {
-      this._queueAlign = false;
-      this._alignTitle();
-    }
+    // if (this._queueAlign) {
+    //   this._queueAlign = false;
+    //   this._alignTitle();
+    // }
   }
 
   /**
    * TODO
    */
   alignTitle() {
-    this._queueAlign = (this.titleAlign === 'center');
+    //this._queueAlign = (this.titleAlign === 'center');
   }
 
   _alignTitle() {
@@ -139,14 +139,14 @@ export class Toolbar extends ToolbarBase {
     super.onInit();
 
     // TODO: THIS IS HORRIBLE, FIX
-    setTimeout(() => {
-      this.alignTitle();
+    // setTimeout(() => {
+    //   this.alignTitle();
 
-      setTimeout(() => {
-        this.alignTitle()
-      }, 64);
+    //   setTimeout(() => {
+    //     this.alignTitle()
+    //   }, 64);
 
-    }, 32);
+    // }, 32);
   }
 
 }
