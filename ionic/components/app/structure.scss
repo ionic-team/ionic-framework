@@ -41,6 +41,9 @@ $flex-order-tab-bar-bottom:      30 !default;
 
 * {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
 }
 
 html {
@@ -62,7 +65,6 @@ body {
   word-wrap: break-word;
 
   touch-action: manipulation;
-  -webkit-touch-callout: none;
   -webkit-user-drag: none;
   -ms-content-zooming: none;
 
@@ -74,7 +76,6 @@ body {
   -moz-text-size-adjust: none;
   text-size-adjust: none;
 
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   @include user-select-none();
 }
 
