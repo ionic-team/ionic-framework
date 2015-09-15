@@ -42,6 +42,10 @@ export class Animation {
     this._finishes = [];
 
     this.elements(ele);
+
+    if (!document.documentElement.animate) {
+      console.error('Web Animations polyfill missing');
+    }
   }
 
   elements(ele) {
