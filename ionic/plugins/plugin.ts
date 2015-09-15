@@ -17,7 +17,11 @@ export class NativePluginDecorator {
       cls.pluginWarn();
 
       // If the user supplied a default return value, return it here.
-      return (typeof returnType === 'function') ? returnType() : returnType;
+      if(returnType) {
+        return (typeof returnType === 'function') ? returnType() : returnType;
+      }
+      
+      return false;
     };
 
     cls.pluginWarn = () => {
