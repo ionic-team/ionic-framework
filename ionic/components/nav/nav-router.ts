@@ -49,6 +49,11 @@ export class NavRouter extends RouterOutlet {
     var componentType = nextInstruction.componentType;
     var childRouter = this._parentRouter.childRouter(componentType);
 
+    // prevent double navigations to the same view
+    var lastView = this.nav.last();
+    if (lastView && lastView.componentType === componentType && lastView.params.data === nextInstruction.params) {
+      return Promise.resolve();
+    }
 
     // tell the ViewController which componentType, and it's params, to navigate to
     return this.nav.push(componentType, nextInstruction.params);

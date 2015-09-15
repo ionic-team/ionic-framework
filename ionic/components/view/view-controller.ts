@@ -641,6 +641,34 @@ export class ViewController extends Ion {
   }
 
   /**
+   * First view item in this view controller's stack. This would
+   * not return an item which is about to be destroyed.
+   * @returns {TODO} TODO
+   */
+  first() {
+    for (let i = 0, l = this.items.length; i < l; i++) {
+      if (!this.items[i].shouldDestroy) {
+        return this.items[i];
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Last view item in this view controller's stack. This would
+   * not return an item which is about to be destroyed.
+   * @returns {TODO} TODO
+   */
+  last() {
+    for (let i = this.items.length - 1; i >= 0; i--) {
+      if (!this.items[i].shouldDestroy) {
+        return this.items[i];
+      }
+    }
+    return null;
+  }
+
+  /**
    * TODO
    * @param {TODO} item  TODO
    * @returns {TODO} TODO
