@@ -337,10 +337,17 @@ gulp.task('copy.scss', function() {
     .pipe(gulp.dest('dist/src/scss'));
 })
 
+gulp.task('copy.web-animations', function() {
+  return gulp.src([
+      'scripts/resources/web-animations-js/web-animations.min.js'
+    ])
+    .pipe(gulp.dest('dist/js'));
+})
+
 gulp.task('src', function(done){
   runSequence(
     'clean',
-    ['bundle', 'sass', 'fonts', 'copy.ts', 'copy.scss'],
+    ['bundle', 'sass', 'fonts', 'copy.ts', 'copy.scss', 'copy.web-animations'],
     'transpile.common',
     done
   );
@@ -401,7 +408,7 @@ gulp.task('publish', function(done) {
 
   runSequence(
     'clean',
-    ['bundle', 'sass', 'fonts', 'copy.ts', 'copy.scss'],
+    ['bundle', 'sass', 'fonts', 'copy.ts', 'copy.scss', 'copy.web-animations'],
     'transpile.common',
     function() {
       var packageJSONTemplate = _.template(fs.readFileSync('scripts/npm/package.json'));
