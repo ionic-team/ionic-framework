@@ -5,10 +5,10 @@
     <@ else @>
 {% elsif page.versionHref == "<$ ver.href $>" %}
     <@ endif @>
-  {% include v2_api_menu_<$ ver.name $>.html %}
+  {% include v2/api_menu_<$ ver.name $>.html %}
   <@ endif @>
 <@ endfor @>
 <# make the last case always be to show latest version #>
 {% else %}
-  {% include v2_api_menu_<$ version.latest.name $>.html %}
+  {% include v2/api_menu_<$ version.latest.name $>.html %}
 {% endif %}

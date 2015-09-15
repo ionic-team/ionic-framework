@@ -11,20 +11,20 @@ module.exports = function jekyll(renderDocsProcessor){
         docType: 'api-menu',
         id: 'api-menu',
         template: 'api_menu.template.html',
-        outputPath: '_includes/v2_api_menu.html'
+        outputPath: '_includes/v2/api_menu.html'
       });
      //TODO autogenerate this
       docs.push({
         docType: 'api-menu-version',
         id: 'api-menu-version',
         template: 'api_menu_version.template.html',
-        outputPath: '_includes/v2_api_menu_' + currentVersion + '.html'
+        outputPath: '_includes/v2/api_menu_' + currentVersion + '.html'
       });
       docs.push({
         docType: 'api-version-select',
         id: 'api-version-select',
         template: 'api_version_select.template.html',
-        outputPath: '_includes/v2_api_version_select.html'
+        outputPath: '_includes/v2/api_version_select.html'
       });
     }
   }
