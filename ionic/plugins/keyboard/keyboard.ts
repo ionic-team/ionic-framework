@@ -19,7 +19,7 @@ import {NativePlugin} from '../plugin';
 })
 export class Keyboard {
   /**
-   * Set whether hte accessory bar is visible.
+   * Set whether the accessory bar is visible.
    *
    * Note: this only works while running natively (accessory bar cannot be removed
    * in most web browsers), and by default the bar is hidden when running natively.
@@ -42,7 +42,7 @@ export class Keyboard {
   }
 
   /**
-   * Show the keyboard.
+   * Show the keyboard. Does nothing on iOS (has to be triggered from an input)
    */
   static show() {
     this.ifPlugin(() => {
