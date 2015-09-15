@@ -13,6 +13,7 @@ import {DeviceMotionPage} from 'pages/device-motion';
 import {DeviceOrientationPage} from 'pages/device-orientation';
 import {DialogsPage} from 'pages/dialogs';
 import {GeolocationPage} from 'pages/geolocation';
+import {StatusBarPage} from 'pages/statusbar';
 import {VibrationPage} from 'pages/vibration';
 
 @App({
@@ -33,6 +34,7 @@ class MyApp {
       {title: 'Geolocation', page: GeolocationPage},
       {title: 'Contacts', page: ContactsPage},
       {title: 'Battery', page: BatteryPage},
+      {title: 'StatusBar', page: StatusBarPage},
       {title: 'Vibration', page: VibrationPage},
     ]
   }
