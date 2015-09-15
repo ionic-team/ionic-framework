@@ -63,13 +63,6 @@ button,
   background: $button-color;
   color: $button-text-color;
 
-  &:hover,
-  &.hover {
-    opacity: $button-hover-opacity;
-    color: $button-text-color;
-    text-decoration: none;
-  }
-
   &.activated {
     opacity: 1;
     background-color: $button-color-activated;
@@ -117,6 +110,16 @@ button,
     pointer-events: none;
   }
 
+}
+
+.enable-hover button:hover,
+.enable-hover [button]:hover,
+button.hover
+[button].hover {
+  opacity: $button-hover-opacity;
+  color: $button-text-color;
+  text-decoration: none;
+  background: red !important;
 }
 
 a[button] {

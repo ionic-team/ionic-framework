@@ -34,7 +34,7 @@ a {
   color: $link-color;
   background-color: transparent;
 }
-a:hover,
+.enable-hover a:hover,
 a.hover {
   color: $link-hover-color;
 }

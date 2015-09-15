@@ -42,11 +42,6 @@ button,
   &[clear] {
     box-shadow: none;
 
-    &:hover,
-    &.hover {
-      background-color: $button-md-clear-hover-bg-color;
-    }
-
     &.activated {
       background-color: $button-md-clear-active-bg-color;
     }
@@ -85,6 +80,13 @@ button,
     padding: 0;
   }
 
+}
+
+&.enable-hover button[clear]:hover,
+&.enable-hover [button][clear]:hover,
+button[clear].hover,
+[button][clear].hover {
+  background-color: $button-md-clear-hover-bg-color;
 }
 
 

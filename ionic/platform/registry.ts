@@ -50,6 +50,7 @@ IonicPlatform.register({
     mode: 'md',
     keyboardHeight: 290,
     keyboardScrollAssist: true,
+    hoverCSS: false,
   },
   isMatch(p) {
     return p.isPlatform('android', 'android|silk');
@@ -77,6 +78,7 @@ IonicPlatform.register({
       return /iphone|ipad|ipod/i.test(p.navigatorPlatform());
     },
     keyboardHeight: 290,
+    hoverCSS: false,
   },
   isMatch(p) {
     return p.isPlatform('ios', 'iphone|ipad|ipod');

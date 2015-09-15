@@ -78,11 +78,11 @@ ion-tab {
   border: 0;
   border-radius: 0;
   background: none;
+}
 
-  &:hover,
-  &.hover {
-    color: $tab-button-text-inactive;
-  }
+.enable-hover .tab-button:hover,
+.tab-button.hover {
+  color: $tab-button-text-inactive;
 }
 
 [tab-bar-icons="bottom"] .tab-button {

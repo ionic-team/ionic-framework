@@ -340,6 +340,12 @@ function applyBodyCss(bodyEle, config, platform) {
   // ios
   bodyEle.classList.add(config.setting('mode'));
 
+  // touch devices should not use :hover CSS pseudo
+  // enable :hover CSS when the "hoverCSS" setting is not false
+  if (config.setting('hoverCSS') !== false) {
+    bodyEle.classList.add('enable-hover');
+  }
+
   /**
   * Hairline Shim
   * Add the "hairline" CSS class name to the body tag

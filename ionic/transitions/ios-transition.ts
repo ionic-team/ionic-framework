@@ -2,13 +2,12 @@ import {Transition} from './transition';
 import {Animation} from '../animations/animation';
 
 
-const DURATION = 600;
+const DURATION = 550;
 const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
 
 const OPACITY = 'opacity';
 const TRANSLATEX = 'translateX';
 
-const OFF_RIGHT = '100%';
 const OFF_LEFT = '-33%';
 const CENTER = '0%'
 const OFF_OPACITY = 0.8;
@@ -59,11 +58,11 @@ class IOSTransition extends Transition {
         .after.removeClass('transparent-navbar');
 
       this.leavingView
-        .to(TRANSLATEX, OFF_RIGHT)
+        .to(TRANSLATEX, '100%')
         .to(OPACITY, 1);
 
       this.leavingTitle
-        .to(TRANSLATEX, OFF_RIGHT)
+        .to(TRANSLATEX, '100%')
         .to(OPACITY, 0);
 
       if (this.leaving.enableBack() && this.viewWidth() > 200) {
@@ -75,7 +74,7 @@ class IOSTransition extends Transition {
     } else {
       // forward direction
       this.enteringView
-        .from(TRANSLATEX, OFF_RIGHT)
+        .from(TRANSLATEX, '99.5%')
         .from(OPACITY, 1);
 
       this.enteringNavbar
@@ -83,7 +82,7 @@ class IOSTransition extends Transition {
         .after.removeClass('transparent-navbar');
 
       this.enteringTitle
-        .from(TRANSLATEX, OFF_RIGHT);
+        .from(TRANSLATEX, '99.5%');
 
       this.leavingView
         .to(TRANSLATEX, OFF_LEFT)
