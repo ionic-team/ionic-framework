@@ -10,7 +10,8 @@ import {NativePlugin} from '../plugin';
  */
 @NativePlugin({
   name: 'Keyboard',
-  platforms: {
+  platforms: ['ios', 'android'],
+  engines: {
     cordova: 'ionic-plugin-keyboard'
   },
   pluginCheck: () => {

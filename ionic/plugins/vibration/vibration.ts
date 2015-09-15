@@ -5,7 +5,8 @@ import {NativePlugin} from '../plugin';
 
 @NativePlugin({
   name: 'Vibration',
-  platforms: {
+  platforms: ['ios', 'android', 'web'],
+  engines: {
     cordova: 'cordova-plugin-vibration'
   }
 })

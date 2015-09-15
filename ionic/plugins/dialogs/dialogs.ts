@@ -10,7 +10,8 @@ import {NativePlugin} from '../plugin';
  */
 @NativePlugin({
   name: 'Dialogs',
-  platforms: {
+  platforms: ['ios', 'android', 'web'],
+  engines: {
     cordova: 'cordova-plugin-dialogs'
   }
 })

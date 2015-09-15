@@ -4,7 +4,8 @@ import {NativePlugin} from '../plugin';
 
 @NativePlugin({
   name: 'Camera',
-  platforms: {
+  platforms: ['ios', 'android'],
+  engines: {
     cordova: 'cordova-plugin-camera'
   },
   pluginCheck: () => {

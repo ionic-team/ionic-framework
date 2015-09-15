@@ -7,7 +7,8 @@ import {NativePlugin} from '../plugin';
 
 @NativePlugin({
   name: 'Contacts',
-  platforms: {
+  platforms: ['ios', 'android'],
+  engines: {
     cordova: 'cordova-plugin-contacts'
   }
 })

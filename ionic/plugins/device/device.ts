@@ -6,7 +6,8 @@ import {NativePlugin} from '../plugin';
 
 @NativePlugin({
   name: 'Device',
-  platforms: {
+  plugins: ['ios', 'android', 'web'],
+  engines: {
     cordova: 'cordova-plugin-device'
   },
   pluginCheck: () => {

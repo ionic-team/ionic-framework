@@ -8,7 +8,8 @@ import {NativePlugin} from '../plugin';
  */
 @NativePlugin({
   name: 'StatusBar',
-  platforms: {
+  platforms: ['ios', 'android'],
+  engines: {
     cordova: 'cordova-plugin-statusbar'
   },
   pluginCheck: () => {

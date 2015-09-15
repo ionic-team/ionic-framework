@@ -6,7 +6,8 @@ import {NativePlugin} from '../plugin';
 
 @NativePlugin({
   name: 'Device Orientation',
-  platforms: {
+  platforms: ['ios', 'android', 'web'],
+  engines: {
     cordova: 'cordova-plugin-device-orientation'
   }
 })

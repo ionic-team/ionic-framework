@@ -27,8 +27,8 @@ export class NativePluginDecorator {
       }
 
       let platformString = [];
-      for(var k in this.config.platforms) {
-        platformString.push('\t' + k + ': '+ this.config.platforms[k]);
+      for(var k in this.config.engines) {
+        platformString.push('\t' + k + ': '+ this.config.engines[k]);
       }
       console.warn('Plugin for ' + this.config.name +
       ' not installed. For native functionality, please install the correct plugin for your platform:\n' +
