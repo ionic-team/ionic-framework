@@ -34,7 +34,7 @@
  * License: MIT
  */
 
-angular.module('ngIOS9UIWebViewPatch', ['ng']).config(function($provide) {
+angular.module('ngIOS9UIWebViewPatch', ['ng']).config(['$provide', function($provide) {
   $provide.decorator('$browser', ['$delegate', '$window', function($delegate, $window) {
 
     if (isIOS9UIWebView($window.navigator.userAgent)) {
@@ -70,4 +70,4 @@ angular.module('ngIOS9UIWebViewPatch', ['ng']).config(function($provide) {
       return browser;
     }
   }]);
-});
+}]);
