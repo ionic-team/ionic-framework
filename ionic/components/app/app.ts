@@ -136,6 +136,9 @@ export class IonicApp {
    * @param {TODO} component  The component to register
    */
   register(id, component) {
+    if (this.components[id] && this.components[id] !== component) {
+      console.error('Component id "' + id + '" already registered.');
+    }
     this.components[id] = component;
   }
 
@@ -165,8 +168,8 @@ export class IonicApp {
    * @param {TODO} key  TODO
    * @return {TODO} TODO
    */
-  getComponent(key) {
-    return this.components[key];
+  getComponent(id) {
+    return this.components[id];
   }
 
   /**
