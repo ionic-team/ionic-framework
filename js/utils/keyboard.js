@@ -304,16 +304,17 @@ function keyboardNativeShow(e) {
  * adjustments with a more accurate keyboard height.
  */
 function keyboardFocusIn(e) {
-  clearTimeout(keyboardFocusOutTimer);
   //console.log("keyboardFocusIn from: " + e.type + " at: " + Date.now());
 
   if (!e.target ||
       e.target.readOnly ||
       !ionic.tap.isKeyboardElement(e.target) ||
       !(scrollView = ionic.DomUtil.getParentWithClass(e.target, SCROLL_CONTAINER_CSS))) {
-    keyboardActiveElement = null;
+    //keyboardActiveElement = null;
     return;
   }
+  
+  clearTimeout(keyboardFocusOutTimer);
 
   keyboardActiveElement = e.target;
 
