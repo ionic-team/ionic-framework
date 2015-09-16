@@ -275,7 +275,7 @@ export class ViewItem {
    * TODO
    * @returns {TODO} TODO
    */
-  navbarElement() {
+  navbarRef() {
     let navbarView = this.navbarView();
     if (navbarView) {
       return navbarView.getElementRef();
@@ -286,10 +286,10 @@ export class ViewItem {
    * TODO
    * @returns {TODO} TODO
    */
-  titleElement() {
+  titleRef() {
     let navbarView = this.navbarView();
     if (navbarView) {
-      return navbarView.titleElement();
+      return navbarView.getTitleRef();
     }
   }
 
@@ -297,10 +297,10 @@ export class ViewItem {
    * TODO
    * @returns {TODO} TODO
    */
-  backButtonElement() {
+  navbarItemRefs() {
     let navbarView = this.navbarView();
     if (navbarView) {
-      return navbarView.backButtonElement();
+      return navbarView.getItemRefs();
     }
   }
 
@@ -308,10 +308,10 @@ export class ViewItem {
    * TODO
    * @returns {TODO} TODO
    */
-  backButtonTextElement() {
+  backBtnRef() {
     let navbarView = this.navbarView();
     if (navbarView) {
-      return navbarView.backButtonTextElement();
+      return navbarView.getBackButtonRef();
     }
   }
 
@@ -319,10 +319,10 @@ export class ViewItem {
    * TODO
    * @returns {TODO} TODO
    */
-  navbarItemElements() {
+  backBtnTextRef() {
     let navbarView = this.navbarView();
     if (navbarView) {
-      return navbarView.itemElements();
+      return navbarView.getBackButtonTextRef();
     }
   }
 
@@ -333,10 +333,6 @@ export class ViewItem {
   postRender() {
     // the elements are in the DOM and the browser
     // has rendered them in their correct locations
-    let navbarView = this.navbarView();
-    if (navbarView) {
-      navbarView.alignTitle();
-    }
   }
 
 

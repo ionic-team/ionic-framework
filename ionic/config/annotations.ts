@@ -8,7 +8,7 @@ import {
   Slides, Slide, SlideLazy,
   Tabs, Tab,
   Card, List, ListHeader, Item, ItemGroup, ItemGroupTitle,
-  Toolbar,
+  Toolbar, ToolbarTitle, ToolbarItem,
   Icon,
   Checkbox, Switch,
   TextInput, TextInputElement, Label,
@@ -58,7 +58,11 @@ export const IonicDirectives = [
   // Tabs
   forwardRef(() => Tabs),
   forwardRef(() => Tab),
+
+  // Toolbar
   forwardRef(() => Toolbar),
+  forwardRef(() => ToolbarTitle),
+  forwardRef(() => ToolbarItem),
 
   // Media
   forwardRef(() => Icon),

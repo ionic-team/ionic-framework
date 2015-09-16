@@ -56,15 +56,15 @@ export class Ion {
   }
 
   getDimensions() {
-    return dom.getDimensions(this.elementRef.nativeElement);
+    return dom.getDimensions(this);
   }
 
   width() {
-    return this.getDimensions().width;
+    return this.getDimensions().w;
   }
 
   height() {
-    return this.getDimensions().height;
+    return this.getDimensions().h;
   }
 
 }

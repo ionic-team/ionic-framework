@@ -10,19 +10,6 @@ $toolbar-md-button-font-size:        1.4rem !default;
 .toolbar {
   min-height: $toolbar-md-height;
 
-  .toolbar-inner-title {
-    padding: 0px 12px;
-  }
-
-  ion-title {
-    font-size: $toolbar-md-title-font-size;
-    font-weight: 500;
-  }
-
-  .toolbar-primary-item button:first-child {
-    margin-left: 0;
-  }
-
   button,
   [button],
   button.activated,
@@ -48,9 +35,7 @@ $toolbar-md-button-font-size:        1.4rem !default;
 
   [menu-toggle],
   [menu-toggle].activated {
-    margin: ($toolbar-padding * -1) 0 ($toolbar-padding * -1) ($toolbar-padding * -1);
     padding: 0 10px;
-    height: $toolbar-md-height;
     min-width: 60px;
 
     icon {
@@ -58,4 +43,13 @@ $toolbar-md-button-font-size:        1.4rem !default;
     }
   }
 
+}
+
+ion-title {
+  font-size: $toolbar-md-title-font-size;
+  font-weight: 500;
+}
+
+ion-nav-items[primary] button:first-child {
+  margin-left: 0;
 }

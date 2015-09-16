@@ -29,23 +29,23 @@ export class Transition extends Animation {
 
     if (opts.navbar !== false) {
 
-      let enteringNavbar = this.enteringNavbar = new Animation(enteringItem.navbarElement());
+      let enteringNavbar = this.enteringNavbar = new Animation(enteringItem.navbarRef());
       enteringNavbar.before.addClass(SHOW_NAVBAR_CSS);
 
       if (enteringItem.enableBack()) {
         // only animate in the back button if the entering view has it enabled
-        let enteringBackButton = this.enteringBackButton = new Animation(enteringItem.backButtonElement());
+        let enteringBackButton = this.enteringBackButton = new Animation(enteringItem.backBtnRef());
         enteringBackButton
           .before.addClass(SHOW_BACK_BUTTON)
           .fadeIn();
         enteringNavbar.add(enteringBackButton);
       }
 
-      this.enteringTitle = new Animation(enteringItem.titleElement());
+      this.enteringTitle = new Animation(enteringItem.titleRef());
       enteringNavbar.add(this.enteringTitle);
       this.add(enteringNavbar);
 
-      this.enteringNavbarItems = new Animation(enteringItem.navbarItemElements())
+      this.enteringNavbarItems = new Animation(enteringItem.navbarItemRefs());
       this.enteringNavbarItems.fadeIn();
       enteringNavbar.add(this.enteringNavbarItems);
     }
@@ -56,19 +56,19 @@ export class Transition extends Animation {
       this.leavingView = new Animation(leavingItem.viewElementRef());
       this.leavingView.after.removeClass(SHOW_VIEW_CSS);
 
-      let leavingNavbar = this.leavingNavbar = new Animation(leavingItem.navbarElement());
+      let leavingNavbar = this.leavingNavbar = new Animation(leavingItem.navbarRef());
       leavingNavbar.after.removeClass(SHOW_NAVBAR_CSS);
 
-      let leavingBackButton = this.leavingBackButton = new Animation(leavingItem.backButtonElement());
+      let leavingBackButton = this.leavingBackButton = new Animation(leavingItem.backBtnRef());
       leavingBackButton
         .after.removeClass(SHOW_BACK_BUTTON)
         .fadeOut();
       leavingNavbar.add(leavingBackButton);
 
-      this.leavingTitle = new Animation(leavingItem.titleElement());
+      this.leavingTitle = new Animation(leavingItem.titleRef());
       leavingNavbar.add(this.leavingTitle);
 
-      this.leavingNavbarItems = new Animation(leavingItem.navbarItemElements());
+      this.leavingNavbarItems = new Animation(leavingItem.navbarItemRefs());
       this.leavingNavbarItems.fadeOut();
       leavingNavbar.add(this.leavingNavbarItems);
 

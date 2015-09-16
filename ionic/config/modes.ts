@@ -16,7 +16,6 @@ IonicConfig.modeConfig('ios', {
   forwardIcon: 'ion-ios-arrow-forward',
   iconMode: 'ios',
 
-  navTitleAlign: 'center',
   tabBarPlacement: 'bottom',
   viewTransition: 'ios',
 
@@ -37,7 +36,6 @@ IonicConfig.modeConfig('md', {
   forwardIcon: '',
   iconMode: 'md',
 
-  navTitleAlign: 'left',
   tabBarPlacement: 'top',
   viewTransition: 'md',
 

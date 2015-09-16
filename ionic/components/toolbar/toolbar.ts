@@ -1,102 +1,80 @@
-import {Directive, View, Host, ElementRef, forwardRef} from 'angular2/angular2';
+import {Component, Directive, View, Host, ElementRef, forwardRef, Query, QueryList} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
-import {IonicComponent} from '../../config/annotations';
+import {IonicView} from '../../config/annotations';
+import {MenuToggle} from '../menu/menu-toggle';
+
+
+@Component({
+  selector: 'ion-title'
+})
+@View({
+  template:
+    '<div class="toolbar-title">' +
+      '<ng-content></ng-content>' +
+    '</div>'
+})
+export class ToolbarTitle extends Ion {
+  constructor(elementRef: ElementRef) {
+    super(elementRef, null);
+  }
+}
+
+
+@Directive({
+  selector: 'ion-nav-items,[menu-toggle]'
+})
+export class ToolbarItem extends Ion {
+  constructor(elementRef: ElementRef) {
+    super(elementRef, null);
+  }
+}
+
 
 /**
  * TODO
  */
 export class ToolbarBase extends Ion  {
 
-  constructor(elementRef: ElementRef, config: IonicConfig) {
+  constructor(
+    elementRef: ElementRef,
+    config: IonicConfig,
+    titleQry: QueryList<ToolbarTitle>,
+    itemQry: QueryList<ToolbarItem>
+  ) {
     super(elementRef, config);
-    this.titleAlign = config.setting('navTitleAlign');
-    this.itemEles = [];
+    this.titleQry = titleQry;
+    this.itemQry = itemQry;
   }
 
   /**
    * TODO
-   * @param {TODO} eleRef  TODO
    * @returns {TODO} TODO
    */
-  titleElement(eleRef) {
-    if (arguments.length) {
-      this._nbTlEle = eleRef;
-    }
-    return this._nbTlEle;
+  getTitle() {
+    return this.titleQry.first;
   }
 
   /**
    * TODO
-   * @param {TODO} eleRef  TODO
    * @returns {TODO} TODO
    */
-  itemElements(eleRef) {
-    if (arguments.length) {
-      this.itemEles.push(eleRef);
-    }
-    return this.itemEles;
+  getTitleRef() {
+    return this.titleQry.first && this.titleQry.first.elementRef;
   }
 
   /**
-   * TODO
-   * @param {TODO} eleRef  TODO
-   * @returns {TODO} TODO
+   * A toolbar items include the left and right side `ion-nav-items`,
+   * and every `menu-toggle`. It does not include the `ion-title`.
+   * @returns {TODO} Array of this toolbar's item ElementRefs.
    */
-  titleText(eleRef) {
-    if (arguments.length) {
-      this._ttTxt.push(eleRef);
-    }
-    return this._ttTxt;
-  }
-
-  afterViewChecked() {
-    // if (this._queueAlign) {
-    //   this._queueAlign = false;
-    //   this._alignTitle();
-    // }
-  }
-
-  /**
-   * TODO
-   */
-  alignTitle() {
-    //this._queueAlign = (this.titleAlign === 'center');
-  }
-
-  _alignTitle() {
-    // don't bother if we're not trying to center align the title
-    if (this.aligned) return;
-
-    // called after the navbar/title has had a moment to
-    // finish rendering in their correct locations
-    const toolbarEle = this.getNativeElement();
-    const titleEle = toolbarEle.querySelector('ion-title');
-
-    // don't bother if there's no title element
-    if (!titleEle) return;
-
-    // get all the dimensions
-    const titleOffsetLeft = titleEle.offsetLeft;
-    const titleOffsetRight = toolbarEle.offsetWidth - (titleOffsetLeft + titleEle.offsetWidth);
-
-    let marginLeft = 0;
-    let marginRight = 0;
-    if (titleOffsetLeft < titleOffsetRight) {
-      marginLeft = (titleOffsetRight - titleOffsetLeft) + 5;
-
-    } else if (titleOffsetLeft > titleOffsetRight) {
-      marginRight = (titleOffsetLeft - titleOffsetRight) - 5;
-    }
-
-    if (marginLeft || marginRight) {
-      // only do an update if it has to
-      const innerTitleEle = toolbarEle.querySelector('.toolbar-inner-title');
-      innerTitleEle.style.margin = `0 ${marginRight}px 0 ${marginLeft}px`;
-    }
-
-    this.aligned = true;
+  getItemRefs() {
+    let refs = [];
+    this.itemQry.map(function(itm) {
+      refs.push(itm.getElementRef());
+    });
+    return refs;
   }
 
 }
@@ -104,69 +82,30 @@ export class ToolbarBase extends Ion  {
 /**
  * TODO
  */
-@IonicComponent({
-  selector: 'ion-toolbar'
+@Component({
+  selector: 'ion-toolbar',
+  host: {
+    'class': 'toolbar'
+  }
 })
-@View({
-  template: `
-    <div class="toolbar-inner">
-      <ng-content select="[menu-toggle]"></ng-content>
-      <div class="toolbar-title">
-        <div class="toolbar-inner-title">
-          <ng-content select="ion-title"></ng-content>
-        </div>
-      </div>
-      <div class="toolbar-item toolbar-primary-item">
-        <ng-content select="[primary]"></ng-content>
-      </div>
-      <div class="toolbar-item toolbar-secondary-item">
-        <ng-content select="[secondary]"></ng-content>
-      </div>
-    </div>
-  `,
-  directives: [
-    forwardRef(() => ToolbarTitle),
-    forwardRef(() => ToolbarItem)
-  ]
+@IonicView({
+  template:
+    '<div class="toolbar-inner">' +
+      '<ng-content select="[menu-toggle]"></ng-content>' +
+      '<ng-content select="ion-title"></ng-content>' +
+      '<ng-content select="ion-nav-items[primary]"></ng-content>' +
+      '<ng-content select="ion-nav-items[secondary]"></ng-content>' +
+    '</div>'
 })
 export class Toolbar extends ToolbarBase {
-  constructor(elementRef: ElementRef, ionicConfig: IonicConfig) {
-    super(elementRef, ionicConfig);
-    this.itemEles = [];
+
+  constructor(
+    elementRef: ElementRef ,
+    config: IonicConfig,
+    @Query(ToolbarTitle) titleQry: QueryList<ToolbarTitle>,
+    @Query(ToolbarItem) itemQry: QueryList<ToolbarItem>
+  ) {
+    super(elementRef, config, titleQry, itemQry);
   }
 
-  onInit() {
-    super.onInit();
-
-    // TODO: THIS IS HORRIBLE, FIX
-    // setTimeout(() => {
-    //   this.alignTitle();
-
-    //   setTimeout(() => {
-    //     this.alignTitle()
-    //   }, 64);
-
-    // }, 32);
-  }
-
-}
-
-
-@Directive({
-  selector: '.toolbar-title'
-})
-class ToolbarTitle {
-  constructor(@Host() toolbar: Toolbar, elementRef: ElementRef) {
-    toolbar.titleElement(elementRef);
-  }
-}
-
-
-@Directive({
-  selector: '.toolbar-item'
-})
-class ToolbarItem {
-  constructor(@Host() toolbar: Toolbar, elementRef: ElementRef) {
-    toolbar.itemElements(elementRef);
-  }
 }

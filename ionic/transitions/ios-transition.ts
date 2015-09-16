@@ -66,7 +66,7 @@ class IOSTransition extends Transition {
         .to(OPACITY, 0);
 
       if (this.leaving.enableBack() && this.viewWidth() > 200) {
-        let leavingBackButtonText = new Animation(this.leaving.backButtonTextElement());
+        let leavingBackButtonText = new Animation(this.leaving.backBtnTextRef());
         leavingBackButtonText.fromTo(TRANSLATEX, CENTER, (this.viewWidth() / 2) + 'px');
         this.leavingNavbar.add(leavingBackButtonText);
       }
@@ -93,7 +93,7 @@ class IOSTransition extends Transition {
         .to(OPACITY, 0);
 
       if (this.entering.enableBack() && this.viewWidth() > 200) {
-        let enteringBackButtonText = new Animation(this.entering.backButtonTextElement());
+        let enteringBackButtonText = new Animation(this.entering.backBtnTextRef());
         enteringBackButtonText.fromTo(TRANSLATEX, (this.viewWidth() / 2) + 'px', CENTER);
         this.enteringNavbar.add(enteringBackButtonText);
       }

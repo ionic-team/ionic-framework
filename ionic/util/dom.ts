@@ -225,20 +225,21 @@ export function closest(el, selector) {
  * to reduce DOM reads. Cache is cleared on a window resize.
  * @param {TODO} ele  TODO
  */
-export function getDimensions(ele) {
-  if (!ele.ionicId) {
-    ele.ionicId = ++ionicElementIds;
-    if (ele.ionicId % 100 === 0) {
+export function getDimensions(ion) {
+  if (!ion._dimId) {
+    ion._dimId = ++dimensionIds;
+    if (ion._dimId % 100 === 0) {
       // periodically flush dimensions
       flushDimensionCache();
     }
   }
 
-  let dimensions = elementDimensions[ele.ionicId];
+  let dimensions = dimensionCache[ion._dimId];
   if (!dimensions) {
-    dimensions = elementDimensions[ele.ionicId] = {
-      width: ele.offsetWidth,
-      height: ele.offsetHeight
+    let ele = ion.getNativeElement();
+    dimensions = dimensionCache[ion._dimId] = {
+      w: ele.offsetWidth,
+      h: ele.offsetHeight
     };
   }
 
@@ -246,18 +247,18 @@ export function getDimensions(ele) {
 }
 
 export function windowDimensions() {
-  if (!elementDimensions.win) {
-    elementDimensions.win = {
+  if (!dimensionCache.win) {
+    dimensionCache.win = {
       width: window.innerWidth,
       height: window.innerHeight
     };
   }
-  return elementDimensions.win;
+  return dimensionCache.win;
 }
 
 export function flushDimensionCache() {
-  elementDimensions = {};
+  dimensionCache = {};
 }
 
-let elementDimensions = {};
-let ionicElementIds = 0;
+let dimensionCache = {};
+let dimensionIds = 0;

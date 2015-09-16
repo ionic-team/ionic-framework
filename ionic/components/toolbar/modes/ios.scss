@@ -20,51 +20,9 @@ $toolbar-ios-title-font-size:               1.7rem !default;
   border-bottom-style: solid;
   min-height: $toolbar-ios-height;
 
-  .toolbar-title {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    padding: 0px 72px;
-    pointer-events: none;
-  }
-
-  .toolbar-primary-item {
-    flex: 1;
-    order: map-get($toolbar-order-ios, primary);
-  }
-
-  .toolbar-secondary-item {
-    flex: 1;
-    text-align: right;
-    order: map-get($toolbar-order-ios, secondary);
-  }
-
   [menu-toggle] {
     order: map-get($toolbar-order-ios, 'menu-toggle');
     cursor: pointer;
-  }
-
-  ion-title {
-    font-size: $toolbar-ios-title-font-size;
-    font-weight: 500;
-    text-align: center;
-    pointer-events: auto;
-  }
-
-  .back-button {
-    margin: 0 4px;
-    min-height: 3.2rem;
-    line-height: 1;
-    order: map-get($toolbar-order-ios, 'back-button');
-    overflow: inherit;
-  }
-
-  .back-button-icon {
-    display: inherit;
-    min-width: 20px;
-    font-size: 3.2rem;
   }
 
   button,
@@ -87,6 +45,47 @@ $toolbar-ios-title-font-size:               1.7rem !default;
     min-width: 28px;
   }
 
+  .back-button {
+    margin: 0 4px;
+    min-height: 3.2rem;
+    line-height: 1;
+    order: map-get($toolbar-order-ios, 'back-button');
+    overflow: inherit;
+  }
+
+  .back-button-icon {
+    display: inherit;
+    min-width: 20px;
+    font-size: 3.2rem;
+  }
+
+}
+
+ion-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0px 90px;
+  pointer-events: none;
+}
+
+.toolbar-title {
+  font-size: $toolbar-ios-title-font-size;
+  font-weight: 500;
+  text-align: center;
+  pointer-events: auto;
+}
+
+ion-nav-items {
+  flex: 1;
+  order: map-get($toolbar-order-ios, primary);
+}
+
+ion-nav-items[secondary] {
+  text-align: right;
+  order: map-get($toolbar-order-ios, secondary);
 }
 
 &.hairlines .toolbar {

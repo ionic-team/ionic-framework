@@ -3,11 +3,11 @@
 // --------------------------------------------------
 
 
-.navbar.toolbar {
+ion-navbar.toolbar {
   position: absolute;
 }
 
-.navbar {
+ion-navbar {
   transform: translate3d(100%, 0px, 0px);
 
   &.show-navbar {

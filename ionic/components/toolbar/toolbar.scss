@@ -55,23 +55,17 @@ $toolbar-order: (
   width: 100%;
 }
 
-.toolbar-title {
+ion-title {
   flex: 1;
   order: map-get($toolbar-order, title);
-
   display: flex;
   align-items: center;
-
   transform: translateZ(0px);
 }
 
-.toolbar-inner-title {
-  width: 100%;
-  padding: 0 1.5rem;
-}
-
-ion-title {
+.toolbar-title {
   display: block;
+  width: 100%;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -93,20 +87,15 @@ ion-title {
   font-size: 2.8rem;
 }
 
-.toolbar-item {
-  transform: translateZ(0px);
-}
-
 ion-nav-items {
   display: block;
   margin: 0 0.2rem;
-}
-
-.toolbar-primary-item {
+  transform: translateZ(0px);
+  pointer-events: none;
   order: map-get($toolbar-order, primary);
 }
 
-.toolbar-secondary-item {
+ion-nav-items[secondary] {
   order: map-get($toolbar-order, secondary);
 }
 

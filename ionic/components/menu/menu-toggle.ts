@@ -1,5 +1,6 @@
-import {Directive, Optional} from 'angular2/angular2';
+import {Directive, ElementRef, Optional} from 'angular2/angular2';
 
+import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
 import {ViewItem} from '../view/view-item';
 import {Navbar} from '../nav-bar/nav-bar';
@@ -18,9 +19,15 @@ import {Navbar} from '../nav-bar/nav-bar';
     '[hidden]': 'isHidden'
   }
 })
-export class MenuToggle {
+export class MenuToggle extends Ion {
 
-  constructor(app: IonicApp, @Optional() item: ViewItem, @Optional() navbar: Navbar) {
+  constructor(
+    app: IonicApp,
+    elementRef: ElementRef,
+    @Optional() item: ViewItem,
+    @Optional() navbar: Navbar
+  ) {
+    super(elementRef, null);
     this.app = app;
     this.item = item;
     this.withinNavbar = !!navbar;
