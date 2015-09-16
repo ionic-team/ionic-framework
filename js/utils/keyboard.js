@@ -310,10 +310,8 @@ function keyboardFocusIn(e) {
       e.target.readOnly ||
       !ionic.tap.isKeyboardElement(e.target) ||
       !(scrollView = ionic.DomUtil.getParentWithClass(e.target, SCROLL_CONTAINER_CSS))) {
-    //keyboardActiveElement = null;
     return;
   }
-  
   clearTimeout(keyboardFocusOutTimer);
 
   keyboardActiveElement = e.target;
