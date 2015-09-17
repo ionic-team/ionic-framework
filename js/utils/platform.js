@@ -447,4 +447,4 @@
     });
   }
 
-})(this, document, ionic);
+})(window, document, ionic);
