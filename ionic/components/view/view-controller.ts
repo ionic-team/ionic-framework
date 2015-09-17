@@ -10,6 +10,7 @@ import {NavController} from '../nav/nav-controller';
 import {PaneController} from '../nav/pane';
 import {Transition} from '../../transitions/transition';
 import {ClickBlock} from '../../util/click-block';
+import {SlideEdgeGesture} from 'ionic/gestures/slide-edge-gesture';
 import * as util from 'ionic/util';
 
 /**
@@ -449,6 +450,10 @@ export class ViewController extends Ion {
     return false;
   }
 
+  runSwipeBack() {
+    if (!this.canSwipeBack()) return;
+  }
+
   /**
    * TODO
    */
@@ -478,6 +483,8 @@ export class ViewController extends Ion {
     if (this.items.length === 1) {
       this.elementRef.nativeElement.classList.add('has-views');
     }
+
+    this.runSwipeBack();
   }
 
   /**

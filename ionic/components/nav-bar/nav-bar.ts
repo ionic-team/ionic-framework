@@ -1,23 +1,12 @@
-import {Component, Directive, View, Host, Optional, ElementRef, TemplateRef, Query, QueryList, ViewQuery} from 'angular2/angular2';
+import {Component, Directive, View, Optional, ElementRef, TemplateRef, forwardRef, Inject} from 'angular2/angular2';
 
 import {Ion} from '../ion';
-import {ToolbarBase, ToolbarTitle, ToolbarItem} from '../toolbar/toolbar';
+import {ToolbarBase} from '../toolbar/toolbar';
 import {IonicConfig} from '../../config/config';
 import {IonicView} from '../../config/annotations';
 import {IonicApp} from '../app/app';
 import {ViewItem} from '../view/view-item';
 import {ViewController} from '../view/view-controller';
-import {MenuToggle} from '../menu/menu-toggle'
-
-
-@Directive({
-  selector: '.back-button-text'
-})
-class BackButtonText extends Ion {
-  constructor(elementRef: ElementRef) {
-    super(elementRef, null);
-  }
-}
 
 
 @Directive({
@@ -30,11 +19,11 @@ class BackButton extends Ion {
   constructor(
     @Optional() viewCtrl: ViewController,
     elementRef: ElementRef,
-    @Query(BackButtonText) bbtQry: QueryList<BackButtonText>
+    @Optional() @Inject(forwardRef(() => Navbar)) navbar: Navbar
   ) {
     super(elementRef, null);
     this.viewCtrl = viewCtrl;
-    this.bbtQry = bbtQry;
+    navbar && navbar.setBackButtonRef(elementRef);
   }
 
   goBack(ev) {
@@ -42,12 +31,21 @@ class BackButton extends Ion {
     ev.preventDefault();
     this.viewCtrl && this.viewCtrl.pop();
   }
-
-  getTextRef() {
-    return this.bbtQry.first.elementRef;
-  }
 }
 
+
+@Directive({
+  selector: '.back-button-text'
+})
+class BackButtonText extends Ion {
+  constructor(
+    elementRef: ElementRef,
+    @Optional() @Inject(forwardRef(() => Navbar)) navbar: Navbar
+  ) {
+    super(elementRef, null);
+    navbar && navbar.setBackButtonTextRef(elementRef);
+  }
+}
 
 
 @Component({
@@ -77,27 +75,31 @@ export class Navbar extends ToolbarBase {
     app: IonicApp,
     @Optional() item: ViewItem,
     elementRef: ElementRef,
-    config: IonicConfig,
-    @Query(ToolbarTitle) titleQry: QueryList<ToolbarTitle>,
-    @Query(ToolbarItem) itemQry: QueryList<ToolbarItem>,
-    @ViewQuery(BackButton) bbQry: QueryList<BackButton>
+    config: IonicConfig
   ) {
-    super(elementRef, config, titleQry, itemQry);
+    super(elementRef, config);
 
     this.app = app;
     item && item.navbarView(this);
-    this.bbQry = bbQry;
 
     this.bbIcon = config.setting('backButtonIcon');
     this.bbDefault = config.setting('backButtonText');
   }
 
   getBackButtonRef() {
-    return this.bbQry.first.getElementRef();
+    return this.bbRef;
+  }
+
+  setBackButtonRef(backButtonElementRef) {
+    this.bbtRef = backButtonElementRef;
   }
 
   getBackButtonTextRef() {
-    return this.bbQry.first.getTextRef();
+    return this.bbRef;
+  }
+
+  setBackButtonTextRef(backButtonTextElementRef) {
+    this.bbtRef = backButtonTextElementRef;
   }
 
   didEnter() {

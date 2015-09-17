@@ -1,35 +1,10 @@
-import {Component, Directive, View, Host, ElementRef, forwardRef, Query, QueryList} from 'angular2/angular2';
+import {Component, Directive, View, Host, ElementRef, Optional, forwardRef, Inject} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
 import {IonicView} from '../../config/annotations';
 import {MenuToggle} from '../menu/menu-toggle';
-
-
-@Component({
-  selector: 'ion-title'
-})
-@View({
-  template:
-    '<div class="toolbar-title">' +
-      '<ng-content></ng-content>' +
-    '</div>'
-})
-export class ToolbarTitle extends Ion {
-  constructor(elementRef: ElementRef) {
-    super(elementRef, null);
-  }
-}
-
-
-@Directive({
-  selector: 'ion-nav-items,[menu-toggle]'
-})
-export class ToolbarItem extends Ion {
-  constructor(elementRef: ElementRef) {
-    super(elementRef, null);
-  }
-}
+import {Navbar} from '../nav-bar/nav-bar';
 
 
 /**
@@ -39,21 +14,11 @@ export class ToolbarBase extends Ion  {
 
   constructor(
     elementRef: ElementRef,
-    config: IonicConfig,
-    titleQry: QueryList<ToolbarTitle>,
-    itemQry: QueryList<ToolbarItem>
+    config: IonicConfig
   ) {
     super(elementRef, config);
-    this.titleQry = titleQry;
-    this.itemQry = itemQry;
-  }
-
-  /**
-   * TODO
-   * @returns {TODO} TODO
-   */
-  getTitle() {
-    return this.titleQry.first;
+    this.itemRefs = [];
+    this.titleRef = null;
   }
 
   /**
@@ -61,7 +26,11 @@ export class ToolbarBase extends Ion  {
    * @returns {TODO} TODO
    */
   getTitleRef() {
-    return this.titleQry.first && this.titleQry.first.elementRef;
+    return this.titleRef;
+  }
+
+  setTitleRef(titleElementRef) {
+    this.titleRef = titleElementRef;
   }
 
   /**
@@ -70,14 +39,15 @@ export class ToolbarBase extends Ion  {
    * @returns {TODO} Array of this toolbar's item ElementRefs.
    */
   getItemRefs() {
-    let refs = [];
-    this.itemQry.map(function(itm) {
-      refs.push(itm.getElementRef());
-    });
-    return refs;
+    return this.itemRefs;
+  }
+
+  addItemRef(itemElementRef) {
+    this.itemRefs.push(itemElementRef);
   }
 
 }
+
 
 /**
  * TODO
@@ -98,14 +68,49 @@ export class ToolbarBase extends Ion  {
     '</div>'
 })
 export class Toolbar extends ToolbarBase {
-
   constructor(
-    elementRef: ElementRef ,
-    config: IonicConfig,
-    @Query(ToolbarTitle) titleQry: QueryList<ToolbarTitle>,
-    @Query(ToolbarItem) itemQry: QueryList<ToolbarItem>
+    elementRef: ElementRef,
+    config: IonicConfig
   ) {
-    super(elementRef, config, titleQry, itemQry);
+    super(elementRef, config);
   }
 
+}
+
+
+@Component({
+  selector: 'ion-title'
+})
+@View({
+  template:
+    '<div class="toolbar-title">' +
+      '<ng-content></ng-content>' +
+    '</div>'
+})
+export class ToolbarTitle extends Ion {
+  constructor(
+    elementRef: ElementRef,
+    @Optional() toolbar: Toolbar,
+    @Optional() @Inject(forwardRef(() => Navbar)) navbar: Navbar
+  ) {
+    super(elementRef, null);
+    toolbar && toolbar.setTitleRef(elementRef);
+    navbar && navbar.setTitleRef(elementRef);
+  }
+}
+
+
+@Directive({
+  selector: 'ion-nav-items,[menu-toggle]'
+})
+export class ToolbarItem extends Ion {
+  constructor(
+    elementRef: ElementRef,
+    @Optional() toolbar: Toolbar,
+    @Optional() @Inject(forwardRef(() => Navbar)) navbar: Navbar
+  ) {
+    super(elementRef, null);
+    toolbar && toolbar.addItemRef(elementRef);
+    navbar && navbar.addItemRef(elementRef);
+  }
 }
