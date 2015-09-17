@@ -3,6 +3,7 @@ import {ROUTER_BINDINGS, HashLocationStrategy, LocationStrategy, Router} from 'a
 
 import {IonicConfig} from '../../config/config';
 import {IonicPlatform, Platform} from '../../platform/platform';
+import {ClickBlock} from '../../util/click-block';
 import * as util from '../../util/util';
 
 // injectables
@@ -40,7 +41,7 @@ export class IonicApp {
    */
   constructor() {
     this.overlays = [];
-    this._transDone = 0;
+    this._enableTime = 0;
 
     // Our component registry map
     this.components = {};
@@ -77,21 +78,27 @@ export class IonicApp {
   }
 
   /**
-   * Sets if the app is currently transitioning or not. For example
-   * this is set to `true` while views transition, a modal slides up, an action-menu
-   * slides up, etc. After the transition completes it is set back to `false`.
-   * @param {bool} isTransitioning
+   * Sets if the app is currently enabled or not, meaning if it's
+   * available to accept new user commands. For example, this is set to `false`
+   * while views transition, a modal slides up, an action-menu
+   * slides up, etc. After the transition completes it is set back to `true`.
+   * @param {bool} isEnabled
+   * @param {bool} fallback  When `isEnabled` is set to `false`, this argument
+   * is used to set the maximum number of milliseconds that app will wait until
+   * it will automatically enable the app again. It's basically a fallback incase
+   * something goes wrong during a transition and the app wasn't re-enabled correctly.
    */
-  setTransitioning(isTransitioning, msTilDone=800) {
-    this._transDone = (isTransitioning ? Date.now() + msTilDone : 0);
+  setEnabled(isEnabled, fallback=700) {
+    this._enableTime = (isEnabled ?  0 : Date.now() + fallback);
+    ClickBlock(!isEnabled, fallback + 100);
   }
 
   /**
    * Boolean if the app is actively transitioning or not.
    * @return {bool}
    */
-  isTransitioning() {
-    return (this._transDone > Date.now());
+  isEnabled() {
+    return (this._enableTime < Date.now());
   }
 
   /**

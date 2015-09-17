@@ -3,7 +3,6 @@ import {DirectiveBinding} from 'angular2/src/core/compiler/element_injector';
 
 import {IonicApp} from '../app/app';
 import {Animation} from '../../animations/animation';
-import {ClickBlock} from '../../util/click-block';
 import * as util from 'ionic/util';
 
 
@@ -127,16 +126,14 @@ export class OverlayRef {
 
       animation.before.addClass('show-overlay');
 
-      ClickBlock(true, animation.duration() + 200);
-      this.app.setTransitioning(true);
+      this.app.setEnabled(false, animation.duration());
 
       this.app.zoneRunOutside(() => {
 
         animation.play().then(() => {
 
           this.app.zoneRun(() => {
-            ClickBlock(false);
-            this.app.setTransitioning(false);
+            this.app.setEnabled(true);
             animation.dispose();
             instance.viewDidEnter && instance.viewDidEnter();
             resolve();
@@ -161,8 +158,7 @@ export class OverlayRef {
       let animation = Animation.create(this._elementRef.nativeElement, animationName);
 
       animation.after.removeClass('show-overlay');
-      ClickBlock(true, animation.duration() + 200);
-      this.app.setTransitioning(true, animation.duration() + 200);
+      this.app.setEnabled(false, animation.duration());
 
       animation.play().then(() => {
         instance.viewDidLeave && instance.viewDidLeave();
@@ -170,8 +166,7 @@ export class OverlayRef {
 
         this._dispose();
 
-        ClickBlock(false);
-        this.app.setTransitioning(false);
+        this.app.setEnabled(true);
         animation.dispose();
 
         resolve();

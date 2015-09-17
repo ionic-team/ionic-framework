@@ -3,7 +3,6 @@ import {Component, Directive, View, ElementRef, Inject, forwardRef, Injector, bi
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
 import {ViewController} from '../view/view-controller';
-import {SwipeHandle} from './swipe-handle';
 import {IonicComponent} from '../../config/annotations';
 import {PaneAnchor, PaneContentAnchor, NavBarContainer} from './anchors';
 
@@ -116,10 +115,9 @@ export class PaneController {
     <template pane-anchor></template>
     <section class="content-container">
       <template content-anchor></template>
-      <div class="swipe-handle"></div>
     </section>
   `,
-  directives: [PaneAnchor, PaneContentAnchor, SwipeHandle]
+  directives: [PaneAnchor, PaneContentAnchor]
 })
 export class Pane extends Ion {
   constructor(

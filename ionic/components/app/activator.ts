@@ -84,7 +84,7 @@ export class Activator {
   touchEnd(ev) {
     let self = this;
 
-    if (self.tapPolyfill && self.start && !self.app.isTransitioning()) {
+    if (self.tapPolyfill && self.start && self.app.isEnabled()) {
       let endCoord = pointerCoord(ev);
 
       if (!hasPointerMoved(self.pointerTolerance, self.start, endCoord)) {
@@ -140,7 +140,7 @@ export class Activator {
   pointerStart(ev) {
     let targetEle = this.getActivatableTarget(ev.target);
 
-    if (targetEle && !this.app.isTransitioning()) {
+    if (targetEle && this.app.isEnabled()) {
       this.start = pointerCoord(ev);
 
       this.queueActivate(targetEle);
@@ -179,7 +179,7 @@ export class Activator {
    * @return {boolean} True if click event should be allowed, otherwise false.
    */
   allowClick(ev) {
-    if (this.app.isTransitioning()) {
+    if (!this.app.isEnabled()) {
       return false;
     }
     if (!ev.isIonicTap) {
@@ -257,11 +257,10 @@ export class Activator {
   deactivate() {
     const self = this;
 
-    if (self.app.isTransitioning() && self.deactivateAttempt < 30) {
-      // the app is actively transitioning, don't bother deactivating
-      // anything this makes it easier on the GPU so it doesn't
-      // have to redraw any buttons during a transition
-      // retry
+    if (!self.app.isEnabled() && self.deactivateAttempt < 30) {
+      // the app is actively disabled, so don't bother deactivating anything.
+      // this makes it easier on the GPU so it doesn't have to redraw any
+      // buttons during a transition. This will retry in XX milliseconds.
       ++self.deactivateAttempt;
       self.queueDeactivate();
 

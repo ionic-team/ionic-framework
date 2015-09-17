@@ -79,6 +79,11 @@ IonicPlatform.register({
     },
     keyboardHeight: 290,
     hoverCSS: false,
+    swipeBackEnabled: function(p) {
+      return true; // TODO: remove me! Force it to always work for iOS mode for now
+      return /iphone|ipad|ipod/i.test(p.navigatorPlatform());
+    },
+    swipeBackThreshold: 40,
   },
   isMatch(p) {
     return p.isPlatform('ios', 'iphone|ipad|ipod');

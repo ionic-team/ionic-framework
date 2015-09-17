@@ -7,7 +7,6 @@ import {Label} from './label';
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
 import {Content} from '../content/content';
-import {ClickBlock} from '../../util/click-block';
 import * as dom  from '../../util/dom';
 import {IonicPlatform} from '../../platform/platform';
 
@@ -160,7 +159,7 @@ export class TextInput extends Ion {
    * @param {Event} ev  TODO
    */
   pointerStart(ev) {
-    if (this.scrollAssist && !this.app.isTransitioning()) {
+    if (this.scrollAssist && this.app.isEnabled()) {
       // remember where the touchstart/mousedown started
       this.startCoord = dom.pointerCoord(ev);
     }
@@ -171,8 +170,7 @@ export class TextInput extends Ion {
    * @param {Event} ev TODO
    */
   pointerEnd(ev) {
-
-    if (this.app.isTransitioning()) {
+    if (!this.app.isEnabled()) {
       ev.preventDefault();
       ev.stopPropagation();
 
@@ -234,8 +232,7 @@ export class TextInput extends Ion {
 
       // manually scroll the text input to the top
       // do not allow any clicks while it's scrolling
-      ClickBlock(true, SCROLL_INTO_VIEW_DURATION + 100);
-      this.app.setTransitioning(true, SCROLL_INTO_VIEW_DURATION + 100);
+      this.app.setEnabled(false, SCROLL_INTO_VIEW_DURATION);
 
       // temporarily move the focus to the focus holder so the browser
       // doesn't freak out while it's trying to get the input in place
@@ -249,8 +246,7 @@ export class TextInput extends Ion {
         this.setFocus();
 
         // all good, allow clicks again
-        ClickBlock(false);
-        this.app.setTransitioning(false);
+        this.app.setEnabled(true);
       });
 
     } else {

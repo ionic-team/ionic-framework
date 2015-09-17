@@ -9,8 +9,7 @@ import {ViewItem} from './view-item';
 import {NavController} from '../nav/nav-controller';
 import {PaneController} from '../nav/pane';
 import {Transition} from '../../transitions/transition';
-import {ClickBlock} from '../../util/click-block';
-import {SlideEdgeGesture} from 'ionic/gestures/slide-edge-gesture';
+import {SwipeBackGesture} from './swipe-back';
 import * as util from 'ionic/util';
 
 /**
@@ -39,9 +38,9 @@ export class ViewController extends Ion {
     this.items = [];
     this.panes = new PaneController(this);
 
-    this.sbTransition = null;
-    this.sbActive = false;
-    this.sbEnabled = true;
+    this._sbTrans = null;
+    this.sbEnabled = config.setting('swipeBackEnabled') || false;
+    this.sbThreshold = config.setting('swipeBackThreshold') || 40
 
     this.id = ++ctrlIds;
     this._ids = -1;
@@ -62,7 +61,7 @@ export class ViewController extends Ion {
    * @returns {Promise} TODO
    */
   push(componentType, params = {}, opts = {}) {
-    if (!componentType || this.isTransitioning()) {
+    if (!componentType || !this._isEnabled()) {
       return Promise.reject();
     }
 
@@ -110,7 +109,7 @@ export class ViewController extends Ion {
    * @returns {Promise} TODO
    */
   pop(opts = {}) {
-    if (this.isTransitioning() || this.items.length < 2) {
+    if (!this._isEnabled() || !this.canGoBack()) {
       return Promise.reject();
     }
 
@@ -146,7 +145,7 @@ export class ViewController extends Ion {
       });
 
     } else {
-      this.transitionComplete();
+      this._transComplete();
       resolve();
     }
 
@@ -279,8 +278,7 @@ export class ViewController extends Ion {
         if (duration > 64) {
           // block any clicks during the transition and provide a
           // fallback to remove the clickblock if something goes wrong
-          ClickBlock(true, duration + 200);
-          this.app.setTransitioning(true, duration + 200);
+          this._setEnabled(false, duration);
         }
 
         // start the transition
@@ -298,7 +296,7 @@ export class ViewController extends Ion {
 
           // all done!
           this.zone.run(() => {
-            this.transitionComplete();
+            this._transComplete();
             callback();
           });
         });
@@ -313,12 +311,12 @@ export class ViewController extends Ion {
    * TODO
    */
   swipeBackStart() {
-    if (this.isTransitioning() || this.items.length < 2) {
+    if (!this._isEnabled() || !this.canSwipeBack()) {
       return;
     }
 
-    this.sbActive = true;
-    this.sbResolve = null;
+    // disables the app during the transition
+    this._setEnabled(false);
 
     // default the direction to "back"
     let opts = {
@@ -339,55 +337,20 @@ export class ViewController extends Ion {
     enteringItem.shouldCache = false;
     enteringItem.willEnter();
 
-    this.app.setTransitioning(true);
-
     // wait for the new item to complete setup
     enteringItem.stage(() => {
 
-      // set that the new item pushed on the stack is staged to be entering/leaving
-      // staged state is important for the transition to find the correct item
-      enteringItem.state = STAGED_ENTERING_STATE;
-      leavingItem.state = STAGED_LEAVING_STATE;
+      this.zone.runOutsideAngular(() => {
+        // set that the new item pushed on the stack is staged to be entering/leaving
+        // staged state is important for the transition to find the correct item
+        enteringItem.state = STAGED_ENTERING_STATE;
+        leavingItem.state = STAGED_LEAVING_STATE;
 
-      // init the transition animation
-      this.sbTransition = Transition.create(this, opts);
-      this.sbTransition.easing('linear').progressStart();
-
-      let swipeBackPromise = new Promise(res => { this.sbResolve = res; });
-
-      swipeBackPromise.then((completeSwipeBack) => {
-
-        if (completeSwipeBack) {
-          // swipe back has completed, update each item's state
-          enteringItem.state = ACTIVE_STATE;
-          leavingItem.state = CACHED_STATE;
-
-          enteringItem.didEnter();
-          leavingItem.didLeave();
-
-          if (this.router) {
-            // notify router of the state change
-            this.router.stateChange('pop', enteringItem);
-          }
-
-        } else {
-          // cancelled the swipe back, return items to original state
-          leavingItem.state = ACTIVE_STATE;
-          enteringItem.state = CACHED_STATE;
-
-          leavingItem.willEnter();
-          leavingItem.didEnter();
-          enteringItem.didLeave();
-
-          leavingItem.shouldDestroy = false;
-          enteringItem.shouldDestroy = false;
-        }
-
-        // all done!
-        this.transitionComplete();
+        // init the swipe back transition animation
+        this._sbTrans = Transition.create(this, opts);
+        this._sbTrans.easing('linear').progressStart();
 
       });
-
     });
 
   }
@@ -396,31 +359,102 @@ export class ViewController extends Ion {
    * TODO
    * @param {TODO} progress  TODO
    */
-  swipeBackProgress(progress) {
-    if (this.sbTransition) {
-      ClickBlock(true, 4000);
-      this.app.setTransitioning(true, 4000);
-      this.sbTransition.progress( Math.min(1, Math.max(0, progress)) );
+  swipeBackProgress(value) {
+    if (this._sbTrans) {
+      // continue to disable the app while actively dragging
+      this._setEnabled(false, 4000);
+
+      // set the transition animation's progress
+      this._sbTrans.progress(value);
     }
   }
 
   /**
-   * TODO
-   * @param {TODO} completeSwipeBack  TODO
-   * @param {TODO} progress  TODO
-   * @param {TODO} playbackRate  TODO
+   * @private
+   * @param {TODO} completeSwipeBack  Should the swipe back complete or not.
+   * @param {number} rate  How fast it closes
    */
-  swipeBackFinish(completeSwipeBack, playbackRate) {
-    // to reverse the animation use a negative playbackRate
-    if (this.sbTransition && this.sbActive) {
-      this.sbActive = false;
+  swipeBackFinish(completeSwipeBack, rate) {
+    if (!this._sbTrans) return;
 
-      this.sbTransition.progressFinish(completeSwipeBack, playbackRate).then(() => {
-        this.sbResolve && this.sbResolve(completeSwipeBack);
-        this.sbTransition && this.sbTransition.dispose();
-        this.sbResolve = this.sbTransition = null;
-        this.app.setTransitioning(false);
+    // disables the app during the transition
+    this._setEnabled(false);
+
+    this._sbTrans.progressFinish(completeSwipeBack, rate).then(() => {
+
+      this.zone.run(() => {
+        // find the items that were entering and leaving
+        let enteringItem = this.getStagedEnteringItem();
+        let leavingItem = this.getStagedLeavingItem();
+
+        if (enteringItem && leavingItem) {
+          // finish up the animation
+
+          if (completeSwipeBack) {
+            // swipe back has completed navigating back
+            // update each item's state
+            enteringItem.state = ACTIVE_STATE;
+            leavingItem.state = CACHED_STATE;
+
+            enteringItem.didEnter();
+            leavingItem.didLeave();
+
+            if (this.router) {
+              // notify router of the pop state change
+              this.router.stateChange('pop', enteringItem);
+            }
+
+          } else {
+            // cancelled the swipe back, they didn't end up going back
+            // return items to their original state
+            leavingItem.state = ACTIVE_STATE;
+            enteringItem.state = CACHED_STATE;
+
+            leavingItem.willEnter();
+            leavingItem.didEnter();
+            enteringItem.didLeave();
+
+            leavingItem.shouldDestroy = false;
+            enteringItem.shouldDestroy = false;
+          }
+        }
+
+        // empty out and dispose the swipe back transition animation
+        this._sbTrans && this._sbTrans.dispose();
+        this._sbTrans = null;
+
+        // all done!
+        this._transComplete();
+
       });
+    });
+
+  }
+
+  _runSwipeBack() {
+    if (this.canSwipeBack()) {
+      // it is possible to swipe back
+
+      if (this.sbGesture) {
+        // this is already an active gesture, don't create another one
+        return;
+      }
+
+      let opts = {
+        edge: 'left',
+        threshold: this.sbThreshold
+      };
+      this.sbGesture = new SwipeBackGesture(this.getNativeElement(), opts, this);
+      console.debug('SwipeBackGesture listen');
+      this.sbGesture.listen();
+
+
+    } else if (this.sbGesture) {
+      // it is not possible to swipe back and there is an
+      // active sbGesture, so unlisten it
+      console.debug('SwipeBackGesture unlisten');
+      this.sbGesture.unlisten();
+      this.sbGesture = null;
     }
   }
 
@@ -437,27 +471,33 @@ export class ViewController extends Ion {
   }
 
   /**
-   * TODO
-   * @returns {TODO} TODO
+   * If it's possible to use swipe back or not. If it's not possible
+   * to go back, or swipe back is not enable then this will return false.
+   * If it is possible to go back, and swipe back is enabled, then this
+   * will return true.
+   * @returns {boolean}
    */
   canSwipeBack() {
-    if (this.sbEnabled) {
-      let activeItem = this.getActive();
-      if (activeItem) {
-        return activeItem.enableBack();
-      }
+    return (this.sbEnabled && this.canGoBack());
+  }
+
+  /**
+   * Returns `true` if there's a valid previous view that we can pop back to.
+   * Otherwise returns false.
+   * @returns {boolean}
+   */
+  canGoBack() {
+    let activeItem = this.getActive();
+    if (activeItem) {
+      return activeItem.enableBack();
     }
     return false;
   }
 
-  runSwipeBack() {
-    if (!this.canSwipeBack()) return;
-  }
-
   /**
-   * TODO
+   * @private
    */
-  transitionComplete() {
+  _transComplete() {
     let destroys = [];
 
     this.items.forEach(item => {
@@ -476,31 +516,34 @@ export class ViewController extends Ion {
       item.destroy();
     });
 
-    // allow clicks again
-    ClickBlock(false);
-    this.app.setTransitioning(false);
+    // allow clicks again, but still set an enable time
+    // meaning nothing with this view controller can happen for XXms
+    this._setEnabled(true);
 
     if (this.items.length === 1) {
       this.elementRef.nativeElement.classList.add('has-views');
     }
 
-    this.runSwipeBack();
+    this._runSwipeBack();
   }
 
-  /**
-   * TODO
-   * @returns {boolean} TODO
-   */
-  isTransitioning() {
-    let state;
-    for (let i = 0, ii = this.items.length; i < ii; i++) {
-      state = this.items[i].state;
-      if (state === STAGED_ENTERING_STATE ||
-          state === STAGED_LEAVING_STATE) {
-        return true;
-      }
+  _setEnabled(isEnabled, fallback) {
+    // used to prevent unwanted transitions after JUST completing one
+    // prevents the user from crazy clicking everything and possible flickers
+    // gives the app some time to cool off, slow down, and think about life
+    this._enableTime = Date.now() + 100;
+
+    // IonicApp global setEnabled to prevent other things from starting up
+    this.app.setEnabled(isEnabled, fallback);
+  }
+
+  _isEnabled() {
+    // used to prevent unwanted transitions after JUST completing one
+    if (this._enableTime > Date.now()) {
+      return false;
     }
-    return false;
+    // IonicApp global isEnabled, maybe something else has the app disabled
+    return this.app.isEnabled();
   }
 
   /**

@@ -392,6 +392,7 @@ export class Animation {
   }
 
   progress(value) {
+    value = Math.min(1, Math.max(0, value));
     this.isProgress = true;
     let i;
 
@@ -589,7 +590,6 @@ class Animate {
 
     if (animation) {
       // passed a number between 0 and 1
-      value = Math.max(0, Math.min(1, value));
 
       if (animation.playState !== 'paused') {
         animation.pause();

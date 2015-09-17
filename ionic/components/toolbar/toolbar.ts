@@ -34,7 +34,7 @@ export class ToolbarBase extends Ion  {
    * @returns {TODO} TODO
    */
   getTitleRef() {
-    return this.titleCmp && this.titleCmp.elementRef.textContent;
+    return this.titleCmp && this.titleCmp.elementRef;
   }
 
   /**

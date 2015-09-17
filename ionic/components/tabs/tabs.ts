@@ -1,5 +1,6 @@
 import {Component, Directive, View, Injector, NgFor, ElementRef, Optional, Host, forwardRef, NgZone} from 'angular2/angular2';
 
+import {IonicApp} from '../app/app';
 import {ViewController} from '../view/view-controller';
 import {ViewItem} from '../view/view-item';
 import {Icon} from '../icon/icon';
@@ -56,11 +57,13 @@ export class Tabs extends ViewController {
  constructor(
     @Optional() hostViewCtrl: ViewController,
     @Optional() viewItem: ViewItem,
+    app: IonicApp,
     injector: Injector,
     elementRef: ElementRef,
     zone: NgZone
   ) {
     super(hostViewCtrl, injector, elementRef, zone);
+    this.app = app;
 
     // Tabs may also be an actual ViewItem which was navigated to
     // if Tabs is static and not navigated to within a ViewController
@@ -117,7 +120,7 @@ export class Tabs extends ViewController {
       enteringItem = this.getByInstance(tab)
     }
 
-    if (!enteringItem || !enteringItem.instance || this.isTransitioning()) {
+    if (!enteringItem || !enteringItem.instance || !this.app.isEnabled()) {
       return Promise.reject();
     }
 

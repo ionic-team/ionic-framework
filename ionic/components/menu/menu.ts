@@ -129,6 +129,7 @@ export class Menu extends Ion {
   setProgess(value) {
     // user actively dragging the menu
     this._disable();
+    this.app.setEnabled(false);
     this._type.setProgess(value);
   }
 
@@ -147,7 +148,7 @@ export class Menu extends Ion {
     this.getBackdropElement().classList.add('show-backdrop');
 
     this._disable();
-    this.app.setTransitioning(true);
+    this.app.setEnabled(false);
   }
 
   _after(isOpen) {
@@ -165,7 +166,7 @@ export class Menu extends Ion {
       this.getBackdropElement().classList.remove('show-backdrop');
     }
 
-    this.app.setTransitioning(false);
+    this.app.setEnabled(true);
   }
 
   _disable() {
@@ -232,6 +233,7 @@ export class Menu extends Ion {
 
   onDestroy() {
     this.app.unregister(this.id);
+    this._gesture && this._gesture.destroy();
     this._type && this._type.onDestroy();
     this.contentElement = null;
   }
