@@ -35,33 +35,28 @@ module.exports = function(gulp, flags) {
     var fs = require('fs');
     var gutil = require('gulp-util');
     var es = require('event-stream');
-    var concat = require('gulp-concat');
-    var inspect = require('util').inspect;
+    var path = require('path');
 
-    var variables = [];
+    var variables = {};
     var outputFile = 'dist/ionic-site/docs/v2/data/sass.json';
 
-    // todo this is the right one
     return gulp.src('ionic/**/*.scss')
       .pipe(es.map(function(file, callback) {
-        // find $ declarations here, pass them along in the pipeline
         var contents = file.contents.toString();
 
         fs.createReadStream(file.path, {flags: 'r'})
           .pipe(es.split())
           .pipe(es.map(function (line, callback) {
-            //do something with the line
-            var firstChar = line.charAt(0);
-
-            if (firstChar == '$') {
+            if (line.charAt(0) == '$') {
               var variableLine = line.split(":");
-              variables.push({
-                "variable": variableLine[0]
-              });
+
+              variables[variableLine[0]] = {
+                "files": []
+              };
+              variables[variableLine[0]].files.push(path.basename(file.path));
             }
             callback();
           }));
-
         callback();
       }).on('end', function() {
         gutil.log("Writing to file", gutil.colors.cyan(outputFile));
