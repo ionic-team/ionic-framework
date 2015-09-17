@@ -99,6 +99,14 @@ ion-nav-items[secondary] {
   order: map-get($toolbar-order, secondary);
 }
 
+ion-nav-items button,
+ion-nav-items a,
+ion-nav-items input,
+ion-nav-items textarea,
+ion-nav-items div {
+  pointer-events: auto;
+}
+
 
 // Toolbar Color Generation
 // --------------------------------------------------
