@@ -21,16 +21,20 @@ export class ToolbarBase extends Ion  {
     this.titleRef = null;
   }
 
+  setTitleCmp(titleCmp) {
+    this.titleCmp = titleCmp;
+  }
+
+  getTitleText() {
+    return (this.titleCmp && this.titleCmp.getTitleText()) || '';
+  }
+
   /**
    * TODO
    * @returns {TODO} TODO
    */
   getTitleRef() {
-    return this.titleRef;
-  }
-
-  setTitleRef(titleElementRef) {
-    this.titleRef = titleElementRef;
+    return this.titleCmp && this.titleCmp.elementRef.textContent;
   }
 
   /**
@@ -94,8 +98,12 @@ export class ToolbarTitle extends Ion {
     @Optional() @Inject(forwardRef(() => Navbar)) navbar: Navbar
   ) {
     super(elementRef, null);
-    toolbar && toolbar.setTitleRef(elementRef);
-    navbar && navbar.setTitleRef(elementRef);
+    toolbar && toolbar.setTitleCmp(this);
+    navbar && navbar.setTitleCmp(this);
+  }
+
+  getTitleText() {
+    return this.getNativeElement().textContent;
   }
 }
 

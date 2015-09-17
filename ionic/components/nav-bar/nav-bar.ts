@@ -103,8 +103,7 @@ export class Navbar extends ToolbarBase {
   }
 
   didEnter() {
-    // const titleEle = this._ttEle || (this._ttEle = this.getNativeElement().querySelector('ion-title'));
-    // titleEle && this.app.title(titleEle.textContent);
+    this.app.title(this.getTitleText());
   }
 
 }
