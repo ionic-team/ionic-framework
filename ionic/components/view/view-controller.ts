@@ -64,6 +64,9 @@ export class ViewController extends Ion {
     if (!componentType || !this.app.isEnabled()) {
       return Promise.reject();
     }
+    if (typeof componentType !== 'function') {
+      throw 'Loading component must be a component class, not "' + componentType.toString() + '"';
+    }
 
     let resolve;
     let promise = new Promise(res => { resolve = res; });

@@ -44,6 +44,9 @@ export class Nav extends ViewController {
     super.onInit();
 
     if (this.root) {
+      if (typeof this.root !== 'function') {
+        throw 'The [root] property in <ion-nav> must be given a reference to a component class from within the constructor.';
+      }
       this.push(this.root);
     }
 
