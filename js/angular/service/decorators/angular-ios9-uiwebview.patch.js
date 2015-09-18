@@ -37,7 +37,7 @@
 angular.module('ngIOS9UIWebViewPatch', ['ng']).config(['$provide', function($provide) {
   $provide.decorator('$browser', ['$delegate', '$window', function($delegate, $window) {
     'use strict';
-    
+
     if (isIOS9UIWebView($window.navigator.userAgent)) {
       return applyIOS9Shim($delegate);
     }
