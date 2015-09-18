@@ -587,23 +587,18 @@ class Animate {
   }
 
   progress(value) {
-    let animation = this.ani;
-
-    if (animation) {
+    if (this.ani) {
       // passed a number between 0 and 1
 
-      if (animation.playState !== 'paused') {
-        animation.pause();
+      if (this.ani.playState !== 'paused') {
+        this.ani.pause();
       }
 
-      if (value < 0.999) {
-        animation.currentTime = (this.duration * value);
+      // don't let the progress finish the animation
+      // leave it off JUST before it's finished
+      value = Math.min(0.999, Math.max(0.001, value));
 
-      } else {
-        // don't let the progress finish the animation
-        animation.currentTime = (this.duration * 0.999);
-      }
-
+      this.ani.currentTime = (this.duration * value);
     }
   }
 
