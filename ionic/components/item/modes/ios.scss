@@ -137,9 +137,13 @@ $item-ios-forward-icon-color:     $item-ios-border-color !default;
     }
   }
 
-  .thumbnail {
-    max-width: $item-ios-thumbnail-size;
-    max-height: $item-ios-thumbnail-size;
+  ion-thumbnail {
+    min-width: $item-ios-thumbnail-size;
+
+    img {
+      max-width: $item-ios-thumbnail-size;
+      max-height: $item-ios-thumbnail-size;
+    }
   }
 
 }

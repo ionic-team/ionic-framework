@@ -151,9 +151,13 @@ $item-md-forward-icon-color:     $item-md-border-color !default;
     }
   }
 
-  .thumbnail {
-    max-width: $item-md-thumbnail-size;
-    max-height: $item-md-thumbnail-size;
+  ion-thumbnail {
+    min-width: $item-md-thumbnail-size;
+
+    img {
+      max-width: $item-md-thumbnail-size;
+      max-height: $item-md-thumbnail-size;
+    }
   }
 
   h1 {

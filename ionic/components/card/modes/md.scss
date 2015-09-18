@@ -102,9 +102,13 @@ ion-card {
     }
   }
 
-  .thumbnail {
-    max-width: $card-md-thumbnail-size;
-    max-height: $card-md-thumbnail-size;
+  ion-thumbnail {
+    min-width: $card-md-thumbnail-size;
+
+    img {
+      max-width: $card-md-thumbnail-size;
+      max-height: $card-md-thumbnail-size;
+    }
   }
 
   h1 {
