@@ -37,7 +37,7 @@ module.exports = function(gulp, flags) {
     var es = require('event-stream');
     var path = require('path');
 
-    var variables = {};
+    var variables = [];
     var outputFile = 'dist/ionic-site/docs/v2/data/sass.json';
 
     return gulp.src('ionic/**/*.scss')
@@ -50,10 +50,12 @@ module.exports = function(gulp, flags) {
             if (line.charAt(0) == '$') {
               var variableLine = line.split(":");
 
-              variables[variableLine[0]] = {
-                "files": []
-              };
-              variables[variableLine[0]].files.push(path.basename(file.path));
+              // TODO this pushes the file it is defined in, not the file used in
+              // not sure if we should include all of them
+              variables.push({
+                "name": variableLine[0],
+                "file": path.basename(file.path)
+              });
             }
             callback();
           }));
