@@ -387,6 +387,7 @@ export class Animation {
       this._chld[i].progressStart();
     }
 
+    this.duration(1000);
     this.play();
     this.pause();
   }
@@ -405,7 +406,7 @@ export class Animation {
     }
   }
 
-  progressFinish(shouldComplete, rate=1) {
+  progressFinish(shouldComplete, rate=3) {
     let promises = [];
 
     this.isProgress = false;
