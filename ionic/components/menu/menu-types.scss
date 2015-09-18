@@ -22,6 +22,7 @@ ion-menu[type=reveal].show-menu {
 ion-menu[type=overlay] {
   z-index: $z-index-menu-overlay;
   box-shadow: $menu-shadow;
+  left: -8px; // make up for the box-shadow hanging over on the left
 
   backdrop {
     display: block;
