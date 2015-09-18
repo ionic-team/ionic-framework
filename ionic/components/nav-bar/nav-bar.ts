@@ -91,11 +91,11 @@ export class Navbar extends ToolbarBase {
   }
 
   setBackButtonRef(backButtonElementRef) {
-    this.bbtRef = backButtonElementRef;
+    this.bbRef = backButtonElementRef;
   }
 
   getBackButtonTextRef() {
-    return this.bbRef;
+    return this.bbtRef;
   }
 
   setBackButtonTextRef(backButtonTextElementRef) {
