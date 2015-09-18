@@ -45,7 +45,6 @@ export class ViewController extends Ion {
     this.id = ++ctrlIds;
     this._ids = -1;
     this.zIndexes = -1;
-    this._disableTime = 0;
 
     // build a new injector for child ViewItems to use
     this.bindings = Injector.resolve([
@@ -62,7 +61,7 @@ export class ViewController extends Ion {
    * @returns {Promise} TODO
    */
   push(componentType, params = {}, opts = {}) {
-    if (!componentType || !this._isEnabled()) {
+    if (!componentType || !this.app.isEnabled()) {
       return Promise.reject();
     }
 
@@ -110,7 +109,7 @@ export class ViewController extends Ion {
    * @returns {Promise} TODO
    */
   pop(opts = {}) {
-    if (!this._isEnabled() || !this.canGoBack()) {
+    if (!this.app.isEnabled() || !this.canGoBack()) {
       return Promise.reject();
     }
 
@@ -279,7 +278,7 @@ export class ViewController extends Ion {
         if (duration > 64) {
           // block any clicks during the transition and provide a
           // fallback to remove the clickblock if something goes wrong
-          this._setEnabled(false, duration);
+          this.app.setEnabled(false, duration);
         }
 
         // start the transition
@@ -312,12 +311,12 @@ export class ViewController extends Ion {
    * TODO
    */
   swipeBackStart() {
-    if (!this._isEnabled() || !this.canSwipeBack()) {
+    if (!this.app.isEnabled() || !this.canSwipeBack()) {
       return;
     }
 
     // disables the app during the transition
-    this._setEnabled(false);
+    this.app.setEnabled(false);
 
     // default the direction to "back"
     let opts = {
@@ -363,7 +362,7 @@ export class ViewController extends Ion {
   swipeBackProgress(value) {
     if (this._sbTrans) {
       // continue to disable the app while actively dragging
-      this._setEnabled(false, 4000);
+      this.app.setEnabled(false, 4000);
 
       // set the transition animation's progress
       this._sbTrans.progress(value);
@@ -379,7 +378,7 @@ export class ViewController extends Ion {
     if (!this._sbTrans) return;
 
     // disables the app during the transition
-    this._setEnabled(false);
+    this.app.setEnabled(false);
 
     this._sbTrans.progressFinish(completeSwipeBack, rate).then(() => {
 
@@ -519,32 +518,13 @@ export class ViewController extends Ion {
 
     // allow clicks again, but still set an enable time
     // meaning nothing with this view controller can happen for XXms
-    this._setEnabled(true);
+    this.app.setEnabled(true);
 
     if (this.items.length === 1) {
       this.elementRef.nativeElement.classList.add('has-views');
     }
 
     this._runSwipeBack();
-  }
-
-  _setEnabled(isEnabled, fallback) {
-    // used to prevent unwanted transitions after JUST completing one
-    // prevents the user from crazy clicking everything and possible flickers
-    // gives the app some time to cool off, slow down, and think about life
-    this._disableTime = Date.now() + 40;
-
-    // IonicApp global setEnabled to prevent other things from starting up
-    this.app.setEnabled(isEnabled, fallback);
-  }
-
-  _isEnabled() {
-    // used to prevent unwanted transitions after JUST completing one
-    if (this._disableTime > Date.now()) {
-      return false;
-    }
-    // IonicApp global isEnabled, maybe something else has the app disabled
-    return this.app.isEnabled();
   }
 
   /**
