@@ -141,10 +141,14 @@ $item-md-forward-icon-color:     $item-md-border-color !default;
     color: $item-md-forward-icon-color;
   }
 
-  .avatar {
-    max-width: $item-md-avatar-size;
-    max-height: $item-md-avatar-size;
-    border-radius: $item-md-avatar-size / 2;
+  ion-avatar {
+    min-width: $item-md-avatar-size;
+
+    img {
+      max-width: $item-md-avatar-size;
+      max-height: $item-md-avatar-size;
+      border-radius: $item-md-avatar-size / 2;
+    }
   }
 
   .thumbnail {

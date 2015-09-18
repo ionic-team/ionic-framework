@@ -92,10 +92,14 @@ ion-card {
     color: $card-md-title-text-color;
   }
 
-  .avatar {
-    max-width: $card-md-avatar-size;
-    max-height: $card-md-avatar-size;
-    border-radius: $card-md-avatar-size / 2;
+  ion-avatar {
+    min-width: $card-md-avatar-size;
+
+    img {
+      max-width: $card-md-avatar-size;
+      max-height: $card-md-avatar-size;
+      border-radius: $card-md-avatar-size / 2;
+    }
   }
 
   .thumbnail {

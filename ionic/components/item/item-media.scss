@@ -1,0 +1,44 @@
+
+// Item Media
+// --------------------------------------------------
+// Icons, avatars, thumbnails, notes, etc.
+
+
+.item > icon:first-child {
+  min-width: 24px;
+  text-align: center;
+}
+
+.list .item > icon[small]:first-child {
+  min-width: 18px;
+}
+
+.item > icon {
+  line-height: 1;
+  font-size: 2.4rem;
+
+  &[large] {
+    font-size: 3.2rem;
+  }
+
+  &[small] {
+    font-size: 1.8rem;
+  }
+}
+
+.item .item-media {
+  line-height: 1;
+
+  img {
+    display: block;
+  }
+}
+
+ion-avatar,
+ion-thumbnail {
+  line-height: 1;
+
+  img {
+    display: block;
+  }
+}

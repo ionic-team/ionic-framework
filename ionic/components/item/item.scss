@@ -50,15 +50,6 @@ ion-item-content {
   white-space: normal;
 }
 
-.item > icon:first-child {
-  min-width: 24px;
-  text-align: center;
-}
-
-.list .item > icon[small]:first-child {
-  min-width: 18px;
-}
-
 .list .item {
   border-radius: 0;
 
@@ -67,18 +58,6 @@ ion-item-content {
     transition-duration: 0s;
   }
 
-}
-
-.item > icon {
-  font-size: 2.4rem;
-
-  &[large] {
-    font-size: 3.2rem;
-  }
-
-  &[small] {
-    font-size: 1.8rem;
-  }
 }
 
 .item {
@@ -140,12 +119,3 @@ ion-input.item {
 .item.item.item.no-border-bottom + .item {
   margin-top: -13px;
 }
-
-.item .item-media {
-  line-height: 1;
-
-  img {
-    display: block;
-  }
-}
-
