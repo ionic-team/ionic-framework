@@ -41,7 +41,7 @@ export class IonicApp {
    */
   constructor() {
     this.overlays = [];
-    this._enableTime = 0;
+    this._disableTime = 0;
 
     // Our component registry map
     this.components = {};
@@ -89,7 +89,7 @@ export class IonicApp {
    * something goes wrong during a transition and the app wasn't re-enabled correctly.
    */
   setEnabled(isEnabled, fallback=700) {
-    this._enableTime = (isEnabled ?  0 : Date.now() + fallback);
+    this._disableTime = (isEnabled ? 0 : Date.now() + fallback);
     ClickBlock(!isEnabled, fallback + 100);
   }
 
@@ -98,7 +98,7 @@ export class IonicApp {
    * @return {bool}
    */
   isEnabled() {
-    return (this._enableTime < Date.now());
+    return (this._disableTime < Date.now());
   }
 
   /**

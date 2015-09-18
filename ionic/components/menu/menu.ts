@@ -148,7 +148,6 @@ export class Menu extends Ion {
     this.getBackdropElement().classList.add('show-backdrop');
 
     this._disable();
-    this.app.setEnabled(false);
   }
 
   _after(isOpen) {
@@ -165,18 +164,16 @@ export class Menu extends Ion {
       this.getNativeElement().classList.remove('show-menu');
       this.getBackdropElement().classList.remove('show-backdrop');
     }
-
-    this.app.setEnabled(true);
   }
 
   _disable() {
     // used to prevent unwanted opening/closing after swiping open/close
     // or swiping open the menu while pressing down on the menu-toggle
-    this._disableTime = Date.now();
+    this._disableTime = Date.now() + 300;
   }
 
   _isDisabled() {
-    return this._disableTime + 300 > Date.now();
+    return this._disableTime > Date.now();
   }
 
   /**

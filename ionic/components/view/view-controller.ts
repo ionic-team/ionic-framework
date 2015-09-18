@@ -45,6 +45,7 @@ export class ViewController extends Ion {
     this.id = ++ctrlIds;
     this._ids = -1;
     this.zIndexes = -1;
+    this._disableTime = 0;
 
     // build a new injector for child ViewItems to use
     this.bindings = Injector.resolve([
@@ -531,7 +532,7 @@ export class ViewController extends Ion {
     // used to prevent unwanted transitions after JUST completing one
     // prevents the user from crazy clicking everything and possible flickers
     // gives the app some time to cool off, slow down, and think about life
-    this._enableTime = Date.now() + 100;
+    this._disableTime = Date.now() + 40;
 
     // IonicApp global setEnabled to prevent other things from starting up
     this.app.setEnabled(isEnabled, fallback);
@@ -539,7 +540,7 @@ export class ViewController extends Ion {
 
   _isEnabled() {
     // used to prevent unwanted transitions after JUST completing one
-    if (this._enableTime > Date.now()) {
+    if (this._disableTime > Date.now()) {
       return false;
     }
     // IonicApp global isEnabled, maybe something else has the app disabled
