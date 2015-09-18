@@ -15,7 +15,7 @@ import {TabsPage} from './pages/tabs'
 import {MenuPage} from './pages/menu'
 import {AnimationPage} from './pages/animation'
 import {SlidePage} from './pages/slides'
-import {ActionMenuPage} from './pages/action-menu'
+import {ActionSheetPage} from './pages/action-sheet'
 import {ModalPage} from './pages/modal'
 
 
@@ -66,8 +66,8 @@ import {ModalPage} from './pages/modal'
       path: '/slides',
       component: SlidePage
     }, {
-      path: '/action-menu',
-      component: ActionMenuPage
+      path: '/action-sheet',
+      component: ActionSheetPage
     }
   ]
 })
@@ -92,7 +92,7 @@ class MyApp {
       { title: 'Menu', component: MenuPage },
       { title: 'Animation', component: AnimationPage },
       { title: 'Slides', component: SlidePage},
-      { title: 'Action Menu', component: ActionMenuPage },
+      { title: 'Action Sheet', component: ActionSheetPage },
     ];
   }
 

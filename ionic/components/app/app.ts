@@ -8,7 +8,7 @@ import * as util from '../../util/util';
 
 // injectables
 import {Activator} from './activator';
-import {ActionMenu} from '../action-menu/action-menu';
+import {ActionSheet} from '../action-sheet/action-sheet';
 import {Modal} from '../modal/modal';
 import {Popup} from '../popup/popup';
 import {FocusHolder} from '../form/focus-holder';
@@ -80,7 +80,7 @@ export class IonicApp {
   /**
    * Sets if the app is currently enabled or not, meaning if it's
    * available to accept new user commands. For example, this is set to `false`
-   * while views transition, a modal slides up, an action-menu
+   * while views transition, a modal slides up, an action-sheet
    * slides up, etc. After the transition completes it is set back to `true`.
    * @param {bool} isEnabled
    * @param {bool} fallback  When `isEnabled` is set to `false`, this argument
@@ -280,7 +280,7 @@ export function ionicBootstrap(rootComponentType, config) {
 
       // TODO: probs need a better way to inject global injectables
       let activator = new Activator(app, config, window, document);
-      let actionMenu = new ActionMenu(app, config);
+      let actionSheet = new ActionSheet(app, config);
       let modal = new Modal(app, config);
       let popup = new Popup(app, config);
 
@@ -290,7 +290,7 @@ export function ionicBootstrap(rootComponentType, config) {
         bind(IonicConfig).toValue(config),
         bind(IonicPlatform).toValue(platform),
         bind(Activator).toValue(activator),
-        bind(ActionMenu).toValue(actionMenu),
+        bind(ActionSheet).toValue(actionSheet),
         bind(Modal).toValue(modal),
         bind(Popup).toValue(popup),
         ROUTER_BINDINGS,

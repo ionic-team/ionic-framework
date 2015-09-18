@@ -1,6 +1,6 @@
 import {Component, Directive} from 'angular2/angular2';
 
-import {App, ActionMenu, IonicApp, IonicView, Register} from 'ionic/ionic';
+import {App, ActionSheet, IonicApp, IonicView, Register} from 'ionic/ionic';
 
 @IonicView({
   template: '<ion-navbar *navbar primary>' +
@@ -48,12 +48,12 @@ import {App, ActionMenu, IonicApp, IonicView, Register} from 'ionic/ionic';
   '</ion-content>'
 })
 export class FirstPage {
-  constructor(app: IonicApp, actionMenu: ActionMenu) {
+  constructor(app: IonicApp, actionSheet: ActionSheet) {
     this.app = app;
-    this.actionMenu = actionMenu;
+    this.actionSheet = actionSheet;
   }
   showMoreMenu() {
-    this.actionMenu.open({
+    this.actionSheet.open({
       buttons: [
         { icon: 'ion-android-share-alt', text: 'Share' },
         { icon: 'ion-arrow-move', text: 'Move' }
@@ -72,8 +72,8 @@ export class FirstPage {
         if(index == 1) { return false; }
         return true;
       }
-    }).then(actionMenuRef => {
-      this.actionMenuRef = actionMenuRef;
+    }).then(actionSheetRef => {
+      this.actionSheetRef = actionSheetRef;
     });
 
   }

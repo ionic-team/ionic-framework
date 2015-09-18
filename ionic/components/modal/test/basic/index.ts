@@ -1,5 +1,5 @@
 import {App, IonicView, IonicApp, IonicConfig, IonicPlatform} from 'ionic/ionic';
-import {Modal, ActionMenu, NavController, NavParams, Animation} from 'ionic/ionic';
+import {Modal, ActionSheet, NavController, NavParams, Animation} from 'ionic/ionic';
 
 
 @App({
@@ -81,7 +81,7 @@ export class ContactModal {
         <button (click)="push()">Push (Go to 2nd)</button>
       </p>
       <p>
-        <button (click)="openActionMenu()">Open Action Menu</button>
+        <button (click)="openActionSheet()">Open Action Sheet</button>
       </p>
       <p>
         <button (click)="closeByHandeModal()">Close By Handle</button>
@@ -95,11 +95,11 @@ export class ModalFirstPage {
   constructor(
     nav: NavController,
     modal: Modal,
-    actionMenu: ActionMenu
+    actionSheet: ActionSheet
   ) {
     this.nav = nav;
     this.modal = modal;
-    this.actionMenu = actionMenu;
+    this.actionSheet = actionSheet;
   }
 
   push() {
@@ -116,8 +116,8 @@ export class ModalFirstPage {
     modal.close();
   }
 
-  openActionMenu() {
-    this.actionMenu.open({
+  openActionSheet() {
+    this.actionSheet.open({
       buttons: [
         { text: 'Share This' },
         { text: 'Move' }
@@ -136,8 +136,8 @@ export class ModalFirstPage {
         if(index == 1) { return false; }
         return true;
       }
-    }).then(actionMenuRef => {
-      this.actionMenuRef = actionMenuRef;
+    }).then(actionSheetRef => {
+      this.actionSheetRef = actionSheetRef;
     });
   }
 }

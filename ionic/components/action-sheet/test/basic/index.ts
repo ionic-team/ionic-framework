@@ -1,4 +1,4 @@
-import {App, ActionMenu} from 'ionic/ionic';
+import {App, ActionSheet} from 'ionic/ionic';
 
 
 @App({
@@ -6,13 +6,13 @@ import {App, ActionMenu} from 'ionic/ionic';
 })
 class IonicApp {
 
-  constructor(actionMenu: ActionMenu) {
-    this.actionMenu = actionMenu;
+  constructor(actionSheet: ActionSheet) {
+    this.actionSheet = actionSheet;
   }
 
   openMenu() {
 
-    this.actionMenu.open({
+    this.actionSheet.open({
       buttons: [
         { text: 'Share This' },
         { text: 'Move' }
@@ -32,8 +32,8 @@ class IonicApp {
         return true;
       }
 
-    }).then(actionMenuRef => {
-      this.actionMenuRef = actionMenuRef;
+    }).then(actionSheetRef => {
+      this.actionSheetRef = actionSheetRef;
     });
 
   }

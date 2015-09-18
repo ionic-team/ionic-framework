@@ -1,0 +1,100 @@
+
+// Action Sheet
+// --------------------------------------------------
+
+$action-sheet-width:                     100% !default;
+$action-sheet-max-width:                 520px !default;
+$action-sheet-background-color:          rgba(243,243,243,.95) !default;
+$action-sheet-button-text-color:         #007aff !default;
+
+$action-sheet-options-bg-color:          #f1f2f3 !default;
+$action-sheet-options-bg-active-color:   #e4e5e7 !default;
+$action-sheet-options-text-color:        #007aff !default;
+$action-sheet-options-border-color:      #d1d3d6 !default;
+
+
+ion-action-sheet {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: $z-index-overlay;
+}
+
+action-sheet-wrapper {
+  position: absolute;
+  z-index: $z-index-overlay-wrapper;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  display: block;
+  max-width: 500px;
+  margin: auto;
+
+  transform: translate3d(0, 100%, 0);
+}
+
+.action-sheet-container {
+  width: auto;
+  overflow: hidden;
+
+  button {
+    display: block;
+    padding: 1px;
+    width: 100%;
+    margin: 0;
+    border-radius: 0;
+    border-color: $action-sheet-options-border-color;
+    background-color: transparent;
+
+    color: $action-sheet-options-text-color;
+    font-size: 21px;
+
+    &:hover {
+      color: $action-sheet-options-text-color;
+    }
+  }
+
+  button.activated {
+    box-shadow: none;
+    border-color: $action-sheet-options-border-color;
+    color: $action-sheet-options-text-color;
+    background: $action-sheet-options-bg-active-color;
+  }
+}
+
+.action-sheet-has-icons .icon {
+  position: absolute;
+  left: 16px;
+}
+
+.action-sheet-title {
+  padding: 10px;
+  color: #8f8f8f;
+  text-align: center;
+  font-size: 13px;
+}
+
+.action-sheet-group {
+  background-color: #fff;
+  overflow: hidden;
+
+  button {
+    border-width: 1px 0px 0px 0px;
+  }
+
+  button:first-child:last-child {
+    border-width: 0;
+  }
+}
+
+.action-sheet-options {
+  background: $action-sheet-options-bg-color;
+}
+
+.action-sheet-cancel button {
+  font-weight: 500;
+}

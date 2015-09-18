@@ -1,7 +1,7 @@
 
 export * from 'ionic/components/app/app'
 export * from 'ionic/components/app/id'
-export * from 'ionic/components/action-menu/action-menu'
+export * from 'ionic/components/action-sheet/action-sheet'
 export * from 'ionic/components/button/button'
 export * from 'ionic/components/card/card'
 export * from 'ionic/components/checkbox/checkbox'

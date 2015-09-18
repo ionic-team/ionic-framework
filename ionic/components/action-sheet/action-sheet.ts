@@ -1,9 +1,9 @@
 /**
 * @ngdoc service
-* @name ActionMenu
+* @name ActionSheet
 * @module ionic
 * @description
-* The ActionMenu is a modal menu with options to select based on an action.
+* The ActionSheet is a modal menu with options to select based on an action.
 */
 
 import {View, Injectable, NgFor, NgIf} from 'angular2/angular2';
@@ -15,9 +15,9 @@ import * as util from 'ionic/util';
 
 
 /**
- * @name ActionMenu
+ * @name ActionSheet
  * @description
- * The Action Menu is a slide-up pane that lets the user choose from a set of options. Dangerous options are made obvious.
+ * The Action Sheet is a slide-up pane that lets the user choose from a set of options. Dangerous options are made obvious.
  *
  * There are easy ways to cancel out of the action sheet, such as tapping the backdrop or even hitting escape on the keyboard for desktop testing.
  *
@@ -25,7 +25,7 @@ import * as util from 'ionic/util';
  * ```ts
  * openMenu() {
  *
- *   this.actionMenu.open({
+ *   this.actionSheet.open({
  *     buttons: [
  *       { text: 'Share This' },
  *       { text: 'Move' }
@@ -45,8 +45,8 @@ import * as util from 'ionic/util';
  *       return true;
  *     }
  *
- *   }).then(actionMenuRef => {
- *     this.actionMenuRef = actionMenuRef;
+ *   }).then(actionSheetRef => {
+ *     this.actionSheetRef = actionSheetRef;
  *   });
  *
  * }
@@ -55,28 +55,28 @@ import * as util from 'ionic/util';
 @View({
   template:
     '<backdrop (click)="_cancel()" tappable></backdrop>' +
-    '<action-menu-wrapper>' +
-      '<div class="action-menu-container">' +
-        '<div class="action-menu-group action-menu-options">' +
-          '<div class="action-menu-title" *ng-if="titleText">{{titleText}}</div>' +
-          '<button (click)="_buttonClicked(index)" *ng-for="#b of buttons; #index = index" class="action-menu-option">' +
+    '<action-sheet-wrapper>' +
+      '<div class="action-sheet-container">' +
+        '<div class="action-sheet-group action-sheet-options">' +
+          '<div class="action-sheet-title" *ng-if="titleText">{{titleText}}</div>' +
+          '<button (click)="_buttonClicked(index)" *ng-for="#b of buttons; #index = index" class="action-sheet-option">' +
             '<icon [name]="b.icon" *ng-if="b.icon"></icon> ' +
             '{{b.text}}' +
           '</button>' +
-          '<button *ng-if="destructiveText" (click)="_destructive()" class="destructive action-menu-destructive">' +
+          '<button *ng-if="destructiveText" (click)="_destructive()" class="destructive action-sheet-destructive">' +
             '<icon [name]="destructiveIcon" *ng-if="destructiveIcon"></icon> ' +
             '{{destructiveText}}</button>' +
         '</div>' +
-        '<div class="action-menu-group action-menu-cancel" *ng-if="cancelText">' +
+        '<div class="action-sheet-group action-sheet-cancel" *ng-if="cancelText">' +
           '<button (click)="_cancel()">' +
             '<icon [name]="cancelIcon"></icon> ' +
             '{{cancelText}}</button>' +
         '</div>' +
       '</div>' +
-    '</action-menu-wrapper>',
+    '</action-sheet-wrapper>',
   directives: [NgFor, NgIf, Icon]
 })
-class ActionMenuDirective {
+class ActionSheetDirective {
 
   _cancel() {
     this.cancel && this.cancel();
@@ -99,10 +99,10 @@ class ActionMenuDirective {
 }
 
 @Injectable()
-export class ActionMenu extends Overlay {
+export class ActionSheet extends Overlay {
   /**
-   * Create and open a new Action Menu. This is the
-   * public API, and most often you will only use ActionMenu.open()
+   * Create and open a new Action Sheet. This is the
+   * public API, and most often you will only use ActionSheet.open()
    *
    * @param {Object} [opts={}]  TODO
    * @return {Promise} Promise that resolves when the action menu is open.
@@ -110,15 +110,15 @@ export class ActionMenu extends Overlay {
   open(opts={}) {
     let config = this.config;
     let defaults = {
-      enterAnimation: config.setting('actionMenuEnter'),
-      leaveAnimation: config.setting('actionMenuLeave'),
-      cancelIcon: config.setting('actionMenuCancelIcon'),
-      destructiveIcon: config.setting('actionMenuDestructiveIcon')
+      enterAnimation: config.setting('actionSheetEnter'),
+      leaveAnimation: config.setting('actionSheetLeave'),
+      cancelIcon: config.setting('actionSheetCancelIcon'),
+      destructiveIcon: config.setting('actionSheetDestructiveIcon')
     };
 
     let context = util.extend(defaults, opts);
 
-    return this.create(OVERLAY_TYPE, ActionMenuDirective, context, context);
+    return this.create(OVERLAY_TYPE, ActionSheetDirective, context, context);
   }
 
   /**
@@ -131,55 +131,55 @@ export class ActionMenu extends Overlay {
 
 }
 
-const OVERLAY_TYPE = 'action-menu';
+const OVERLAY_TYPE = 'action-sheet';
 
 
 /**
  * Animations for action sheet
  */
-class ActionMenuAnimation extends Animation {
+class ActionSheetAnimation extends Animation {
   constructor(element) {
     super(element);
     this.easing('cubic-bezier(.36, .66, .04, 1)').duration(450);
 
     this.backdrop = new Animation(element.querySelector('backdrop'));
-    this.wrapper = new Animation(element.querySelector('action-menu-wrapper'));
+    this.wrapper = new Animation(element.querySelector('action-sheet-wrapper'));
 
     this.add(this.backdrop, this.wrapper);
   }
 }
 
-class ActionMenuSlideIn extends ActionMenuAnimation {
+class ActionSheetSlideIn extends ActionSheetAnimation {
   constructor(element) {
     super(element);
     this.backdrop.fromTo('opacity', 0.01, 0.4);
     this.wrapper.fromTo('translateY', '100%', '0%');
   }
 }
-Animation.register('action-menu-slide-in', ActionMenuSlideIn);
+Animation.register('action-sheet-slide-in', ActionSheetSlideIn);
 
-class ActionMenuSlideOut extends ActionMenuAnimation {
+class ActionSheetSlideOut extends ActionSheetAnimation {
   constructor(element) {
     super(element);
     this.backdrop.fromTo('opacity', 0.4, 0.01);
     this.wrapper.fromTo('translateY', '0%', '100%');
   }
 }
-Animation.register('action-menu-slide-out', ActionMenuSlideOut);
+Animation.register('action-sheet-slide-out', ActionSheetSlideOut);
 
 
-class ActionMenuMdSlideIn extends ActionMenuSlideIn {
+class ActionSheetMdSlideIn extends ActionSheetSlideIn {
   constructor(element) {
     super(element);
     this.backdrop.fromTo('opacity', 0.01, 0.26);
   }
 }
-Animation.register('action-menu-md-slide-in', ActionMenuMdSlideIn);
+Animation.register('action-sheet-md-slide-in', ActionSheetMdSlideIn);
 
-class ActionMenuMdSlideOut extends ActionMenuSlideOut {
+class ActionSheetMdSlideOut extends ActionSheetSlideOut {
   constructor(element) {
     super(element);
     this.backdrop.fromTo('opacity', 0.26, 0.01);
   }
 }
-Animation.register('action-menu-md-slide-out', ActionMenuMdSlideOut);
+Animation.register('action-sheet-md-slide-out', ActionSheetMdSlideOut);

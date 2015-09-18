@@ -1,0 +1,82 @@
+
+// Material Design Action Sheet
+// --------------------------------------------------
+
+$action-sheet-md-background-color:         #fafafa !default;
+
+$action-sheet-md-height:                   4.8rem !default;
+
+$action-sheet-md-title-color:              #757575 !default;
+$action-sheet-md-title-font-size:          1.6rem !default;
+$action-sheet-md-title-padding:            1.9rem 1.6rem 1.7rem !default;
+
+$action-sheet-md-button-text-color:        #222 !default;
+$action-sheet-md-button-font-size:         1.6rem !default;
+$action-sheet-md-background-active:        #f1f1f1 !default;
+
+$action-sheet-md-icon-font-size:           2.4rem !default;
+$action-sheet-md-icon-margin:              0 28px 0 0 !default;
+
+
+ion-action-sheet {
+  margin: 0;
+}
+
+.action-sheet-container {
+  margin: 0;
+}
+
+.action-sheet-title,
+.action-sheet-option,
+.action-sheet-destructive,
+.action-sheet-cancel button {
+  text-align: left;
+  border-color: transparent;
+  font-size: $action-sheet-md-button-font-size;
+  color: $action-sheet-md-button-text-color;
+  box-shadow: none;
+  text-transform: none;
+}
+
+ion-action-sheet icon {
+  display: inline-block;
+  margin: $action-sheet-md-icon-margin;
+  min-width: 24px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: $action-sheet-md-icon-font-size;
+}
+
+.action-sheet-title {
+  padding: $action-sheet-md-title-padding;
+  font-size: $action-sheet-md-title-font-size;
+  color: $action-sheet-md-title-color;
+}
+
+ion-action-sheet button {
+  font-weight: normal;
+  min-height: $action-sheet-md-height;
+
+  &.activated {
+    background: $action-sheet-md-background-active;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
+.action-sheet-group {
+  margin: 0;
+  border-radius: 0;
+  background-color: $action-sheet-md-background-color;
+
+  &:last-child button {
+    margin-bottom: 8px;
+  }
+}
+
+.action-sheet-cancel {
+  background-color: $action-sheet-md-background-color;
+  width: auto;
+  border: none;
+}
+
