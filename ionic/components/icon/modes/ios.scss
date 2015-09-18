@@ -1,0 +1,12 @@
+
+// iOS Icon
+// --------------------------------------------------
+
+
+$icon-forward-ios-background-svg:    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M2,20l-2-2l8-8L0,2l2-2l10,10L2,20z' fill='fg-color'/></svg>" !default;
+
+
+@mixin ios-icon-forward($fg-color) {
+  $svg: str-replace($icon-forward-ios-background-svg, 'fg-color', $fg-color);
+  @include svg-background-image($svg);
+}

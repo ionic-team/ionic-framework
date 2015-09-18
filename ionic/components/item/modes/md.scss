@@ -136,11 +136,6 @@ $item-md-forward-icon-color:     $item-md-border-color !default;
     margin-left: $item-md-padding-left + ($item-md-padding-left / 2);
   }
 
-  icon[forward] {
-    font-size: 2rem;
-    color: $item-md-forward-icon-color;
-  }
-
   ion-avatar {
     min-width: $item-md-avatar-size;
 

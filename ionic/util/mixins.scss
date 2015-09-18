@@ -105,8 +105,7 @@
 // --------------------------------------------------
 
 @function url-encode($val) {
-  $val: str-replace($val, ' ', '%20');
-  @return $val;
+  @return str-replace($val, ' ', '%20');
 }
 
 

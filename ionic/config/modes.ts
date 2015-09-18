@@ -13,7 +13,6 @@ IonicConfig.modeConfig('ios', {
   backButtonText: 'Back',
   backButtonIcon: 'ion-ios-arrow-back',
 
-  forwardIcon: 'ion-ios-arrow-forward',
   iconMode: 'ios',
 
   tabBarPlacement: 'bottom',
@@ -33,7 +32,6 @@ IonicConfig.modeConfig('md', {
   backButtonText: '',
   backButtonIcon: 'ion-md-arrow-back',
 
-  forwardIcon: '',
   iconMode: 'md',
 
   tabBarPlacement: 'top',

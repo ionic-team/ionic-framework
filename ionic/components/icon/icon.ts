@@ -53,10 +53,7 @@ export class Icon {
   onInit() {
     let ele = this.eleRef.nativeElement;
 
-    if (ele.hasAttribute('forward')) {
-      this.name = this.config.setting('forwardIcon');
-
-    } else if (this.mode == 'ios' && this.ios) {
+    if (this.mode == 'ios' && this.ios) {
       this.name = this.ios;
 
     } else if (this.mode == 'md' && this.md) {
