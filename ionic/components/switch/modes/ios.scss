@@ -24,7 +24,7 @@ $switch-ios-transition-duration:       300ms !default;
 
 ion-switch {
 
-  .item-media.media-switch {
+  [item-right].media-switch {
     margin: 0;
     padding: 6px ($item-ios-padding-right / 2) 6px ($item-ios-padding-left);
   }

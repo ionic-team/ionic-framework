@@ -46,7 +46,7 @@ import {IonicComponent, IonicView} from '../../config/annotations';
 })
 @IonicView({
   template:
-  '<div item-left class="item-media media-checkbox">' +
+  '<div item-left class="media-checkbox">' +
     '<div class="checkbox-icon"></div>' +
   '</div>' +
   '<ion-item-content id="{{labelId}}">' +

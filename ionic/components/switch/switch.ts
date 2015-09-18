@@ -107,7 +107,7 @@ class MediaSwitch {
   '<ion-item-content id="{{labelId}}">' +
     '<ng-content></ng-content>' +
   '</ion-item-content>' +
-  '<div item-right class="item-media media-switch">' +
+  '<div item-right class="media-switch">' +
     '<div class="switch-icon"></div>' +
   '</div>',
   directives: [MediaSwitch]

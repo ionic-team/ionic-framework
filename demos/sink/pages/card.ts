@@ -24,10 +24,8 @@ import {SinkPage} from '../sink-page';
         Card Header
       </ion-card-header>
 
-      <div class="item">
-        <div class="item-media">
-          <img src="http://i.imgur.com/7BEPcGo.jpg">
-        </div>
+      <div>
+        <img src="http://i.imgur.com/7BEPcGo.jpg">
       </div>
 
     </ion-card>

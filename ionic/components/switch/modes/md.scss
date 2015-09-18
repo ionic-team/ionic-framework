@@ -20,7 +20,7 @@ $switch-md-transition-duration:       300ms !default;
 
 ion-switch {
 
-  .item-media.media-switch {
+  [item-right].media-switch {
     margin: 0;
     padding: 6px ($item-md-padding-right / 2) 6px $item-md-padding-left;
   }
