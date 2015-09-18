@@ -36,14 +36,17 @@ $toolbar-order: (
     background-color: transparent;
     color: $toolbar-active-color;
     box-shadow: none;
-
-    &.activated,
-    &:hover,
-    &.hover {
-      color: $toolbar-active-color;
-      background-color: transparent;
-    }
   }
+}
+
+.enable-hover .toolbar button:hover,
+.enable-hover .toolbar [button]:hover,
+.toolbar button.hover,
+.toolbar [button].hover,
+.toolbar button.activated,
+.toolbar [button].activated {
+  color: $toolbar-active-color;
+  background-color: transparent;
 }
 
 .toolbar[position="bottom"] {
