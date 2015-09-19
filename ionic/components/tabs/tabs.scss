@@ -80,8 +80,7 @@ ion-tab {
   background: none;
 }
 
-.enable-hover .tab-button:hover,
-.tab-button.hover {
+.enable-hover .tab-button:hover {
   color: $tab-button-text-inactive;
 }
 

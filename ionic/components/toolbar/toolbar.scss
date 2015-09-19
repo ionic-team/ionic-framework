@@ -41,8 +41,6 @@ $toolbar-order: (
 
 .enable-hover .toolbar button:hover,
 .enable-hover .toolbar [button]:hover,
-.toolbar button.hover,
-.toolbar [button].hover,
 .toolbar button.activated,
 .toolbar [button].activated {
   color: $toolbar-active-color;

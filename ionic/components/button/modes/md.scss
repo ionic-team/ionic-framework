@@ -83,9 +83,7 @@ button,
 }
 
 &.enable-hover button[clear]:hover,
-&.enable-hover [button][clear]:hover,
-button[clear].hover,
-[button][clear].hover {
+&.enable-hover [button][clear]:hover {
   background-color: $button-md-clear-hover-bg-color;
 }
 
