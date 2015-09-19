@@ -1,4 +1,5 @@
 import {raf, pointerCoord, hasPointerMoved} from '../../util/dom';
+import * as ripple from '../material/ripple';
 
 
 export class Activator {
@@ -22,6 +23,8 @@ export class Activator {
     self.disableClickLimit = 2500;
 
     self.tapPolyfill = config.setting('tapPolyfill');
+    self.mdRipple = config.setting('mdRipple');
+
 
     function bindDom(type, listener, useCapture) {
       document.addEventListener(type, listener, useCapture);
@@ -237,13 +240,22 @@ export class Activator {
     raf(function(){
       // activate all elements in the queue
       for (var key in self.queue) {
-        if (self.queue[key]) {
-          self.queue[key].classList.add(self.activatedClass);
-          self.active[key] = self.queue[key];
-        }
+        self.activate(key, self.queue[key]);
       }
       self.queue = {};
     });
+  }
+
+  activate(key, ele) {
+    if (ele) {
+      ele.classList.add(this.activatedClass);
+
+      if (this.mdRipple) {
+        ripple.start(key, ele, this.start.x, this.start.y);
+      }
+
+      this.active[key] = ele;
+    }
   }
 
   queueDeactivate() {
@@ -274,6 +286,9 @@ export class Activator {
         for (var key in self.active) {
           if (self.active[key]) {
             self.active[key].classList.remove(self.activatedClass);
+          }
+          if (self.mdRipple) {
+            ripple.end(key);
           }
           delete self.active[key];
         }

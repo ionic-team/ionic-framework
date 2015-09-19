@@ -1,223 +1,67 @@
-/**
- * Lovingly Adapted from Material Design Lite
- * Copyright Google, 2015, Licensed under the Apache 2 license.
- * https://github.com/google/material-design-lite
- */
-
-import {ElementRef, forwardRef} from 'angular2/angular2';
-
-import {MaterialButton} from './button';
-
-/**
- * TODO
- */
-export class MaterialRippleEffect {
-  /**
-   * TODO
-   * @param {MaterialButton} button  TODO
-   */
-  constructor(button: MaterialButton) {
-    this.elementRef = button.elementRef;
-    this.element = this.elementRef.nativeElement;
-
-    var rippleContainer = document.createElement('span');
-    rippleContainer.classList.add('md-ripple-container');
-    rippleContainer.setAttribute('aria-hidden', 'true');
-    this.rippleElement = document.createElement('span');
-    this.rippleElement.classList.add('md-ripple');
-    rippleContainer.appendChild(this.rippleElement);
-
-    this.recentering = false;//this.element.classList.contains(this.CssClasses_.RIPPLE_CENTER);
-
-    this.INITIAL_SCALE = 'scale(0.0001, 0.0001)';
-    this.INITIAL_SIZE = '1px';
-    this.INITIAL_OPACITY = '0.4';
-    this.FINAL_OPACITY = '0';
-    this.FINAL_SCALE = '';
+import * as dom from '../../util/dom';
 
 
-    //this.boundRippleBlurHandler = this.blurHandler.bind(this);
-    //this.rippleElement_.addEventListener('mouseup', this.boundRippleBlurHandler);
+export function start(key, ele, pointerX, pointerY) {
+  // ensure this key is cleaned up
+  removeRipple(key);
 
-    this.elementRef.nativeElement.appendChild(rippleContainer);
+  // throttle how many ripples can happen quickly
+  if (lastRipple + 150 > Date.now()) return;
+  lastRipple = Date.now();
 
-    this._initRipple();
-  }
+  let r = ele.getBoundingClientRect();
+  let rippleSize = Math.sqrt(r.width * r.width + r.height * r.height) * 2 + 2;
 
-  /**
-   * @private
-   * TODO
-   */
-  _initRipple() {
-    this.frameCount = 0;
-    this.rippleSize = 0;
-    this.x = 0;
-    this.y = 0;
+  let rippleEle = activeElements[key] = document.createElement('md-ripple');
+  rippleEle.style.width = rippleSize + 'px';
+  rippleEle.style.height = rippleSize + 'px';
+  rippleEle.style.marginTop = -(rippleSize / 2) + 'px';
+  rippleEle.style.marginLeft = -(rippleSize / 2) + 'px';
+  rippleEle.style.left = (pointerX - r.left) + 'px';
+  rippleEle.style.top = (pointerY - r.top) + 'px';
 
-    // Touch start produces a compat mouse down event, which would cause a
-    // second ripples. To avoid that, we use this property to ignore the first
-    // mouse down after a touch start.
-    this.ignoringMouseDown = false;
+  let centerX = (r.width / 2);
+  let hitX = (pointerX - r.left);
+  let distanceFromCenter = Math.abs(centerX - hitX);
+  let percent = 1 - (distanceFromCenter / centerX);
+  let duration = 300 + (300 * percent);
+  rippleEle.style.transitionDuration = rippleEle.style.webkitTransitionDuration = (duration + 'ms');
 
-    this.boundDownHandler = this.downHandler.bind(this);
-    this.element.addEventListener('mousedown', this.boundDownHandler);
-    this.element.addEventListener('touchstart', this.boundDownHandler);
+  ele.classList.add('ripple-wave');
+  ele.appendChild(rippleEle);
 
-    this.boundUpHandler = this.upHandler.bind(this);
-    this.element.addEventListener('mouseup', this.boundUpHandler);
-    this.element.addEventListener('mouseleave', this.boundUpHandler);
-    this.element.addEventListener('touchend', this.boundUpHandler);
-    this.element.addEventListener('blur', this.boundUpHandler);
-  }
-
-  /**
-   * Handle mouse / finger down on element.
-   * @param {Event} event The event that fired.
-   * @private
-   */
-  downHandler(event) {
-    'use strict';
-
-    if (!this.rippleElement.style.width && !this.rippleElement.style.height) {
-      var rect = this.element.getBoundingClientRect();
-      this.boundHeight = rect.height;
-      this.boundWidth = rect.width;
-      this.rippleSize = Math.sqrt(rect.width * rect.width + rect.height * rect.height) * 2 + 2;
-      this.rippleElement.style.width = this.rippleSize + 'px';
-      this.rippleElement.style.height = this.rippleSize + 'px';
-    }
-
-    this.rippleElement.classList.add('is-visible');
-
-    if (event.type === 'mousedown' && this.ignoringMouseDown) {
-      this.ignoringMouseDown = false;
-    } else {
-      if (event.type === 'touchstart') {
-        this.ignoringMouseDown = true;
-      }
-      var frameCount = this.getFrameCount();
-      if (frameCount > 0) {
-        return;
-      }
-      this.setFrameCount(1);
-      var bound = event.currentTarget.getBoundingClientRect();
-      var x;
-      var y;
-      // Check if we are handling a keyboard click.
-      if (event.clientX === 0 && event.clientY === 0) {
-        x = Math.round(bound.width / 2);
-        y = Math.round(bound.height / 2);
-      } else {
-        var clientX = event.clientX ? event.clientX : event.touches[0].clientX;
-        var clientY = event.clientY ? event.clientY : event.touches[0].clientY;
-        x = Math.round(clientX - bound.left);
-        y = Math.round(clientY - bound.top);
-      }
-      this.setRippleXY(x, y);
-      this.setRippleStyles(true);
-      window.requestAnimationFrame(this.animFrameHandler.bind(this));
-    }
-  }
-
-  /**
-   * Handle mouse / finger up on element.
-   * @param {Event} event The event that fired.
-   * @private
-   */
-  upHandler(event) {
-    'use strict';
-
-    // Don't fire for the artificial "mouseup" generated by a double-click.
-    if (event && event.detail !== 2) {
-      setTimeout(function() {
-        this.rippleElement.classList.remove('is-visible');
-      }.bind(this), 150);
-    }
-  }
-
-  /**
-   * TODO
-   * @returns {TODO} TODO
-   */
-  getFrameCount() {
-    return this.frameCount;
-  }
-
-  /**
-   * TODO
-   * @param {TODO} fC TODO
-   */
-  setFrameCount(fC) {
-    this.frameCount = fC;
-  }
-
-  /**
-   * TODO
-   * @return {Element} TODO
-   */
-  getRippleElement() {
-    return this.rippleElement;
-  }
-
-  /**
-   * TODO
-   * @param {number} newX  TODO
-   * @param {number} newY  TODO
-   */
-  setRippleXY(newX, newY) {
-    this.x = newX;
-    this.y = newY;
-  }
-
-  /**
-   * TODO
-   * @param {TODO} start  TODO
-   */
-  setRippleStyles(start) {
-    if (this.rippleElement !== null) {
-      var transformString;
-      var scale;
-      var size;
-      var offset = 'translate(' + this.x + 'px, ' + this.y + 'px)';
-
-      if (start) {
-        scale = this.INITIAL_SCALE;
-        size = this.INITIAL_SIZE;
-      } else {
-        scale = this.FINAL_SCALE;
-        size = this.rippleSize + 'px';
-        if (this.recentering) {
-          offset = 'translate(' + this.boundWidth / 2 + 'px, ' + this.boundHeight / 2 + 'px)';
-        }
-      }
-
-      transformString = 'translate(-50%, -50%) ' + offset + scale;
-
-      this.rippleElement.style.webkitTransform = transformString;
-      this.rippleElement.style.msTransform = transformString;
-      this.rippleElement.style.transform = transformString;
-
-      if (start) {
-        this.rippleElement.classList.remove('md-ripple-animating');
-      } else {
-        this.rippleElement.classList.add('md-ripple-animating');
-      }
-    }
-  }
-
-  /**
-   * TODO
-   */
-  animFrameHandler() {
-    if (this.frameCount-- > 0) {
-      window.requestAnimationFrame(this.animFrameHandler.bind(this));
-    } else {
-      this.setRippleStyles(false);
-    }
-  }
-
-  /**
-   * TODO
-   */
-  elementClicked(event) {}
+  // kick off animaiton
+  setTimeout(function() {
+    rippleEle.classList.add('ripple-animate');
+  }, 32);
 }
+
+export function end(key) {
+  let rippleEle = activeElements[key];
+
+  if (rippleEle) {
+    rippleEle.classList.add('ripple-animate-out');
+    rippleEle.classList.remove('ripple-animate');
+
+    removeElements[key] = rippleEle;
+    setTimeout(function() {
+      removeRipple(key);
+    }, 500);
+  }
+
+  delete activeElements[key];
+}
+
+function removeRipple(key) {
+  let rippleEle = removeElements[key];
+
+  if (rippleEle) {
+    rippleEle.parentNode.removeChild(rippleEle);
+  }
+
+  delete removeElements[key];
+}
+
+let lastRipple = 0;
+let activeElements = {};
+let removeElements = {};
