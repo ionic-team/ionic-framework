@@ -105,7 +105,7 @@ export class ActionSheet extends Overlay {
    * public API, and most often you will only use ActionSheet.open()
    *
    * @param {Object} [opts={}]  TODO
-   * @return {Promise} Promise that resolves when the action menu is open.
+   * @return {Promise} Promise that resolves when the action sheet is open.
    */
   open(opts={}) {
     let config = this.config;

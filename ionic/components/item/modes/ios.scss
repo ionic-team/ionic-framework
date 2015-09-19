@@ -150,8 +150,8 @@ $item-ios-forward-icon-color:     $item-ios-border-color !default;
   [forward-icon] {
     @include ios-icon-forward($item-ios-forward-icon-color);
     background-repeat: no-repeat;
-    background-position: right ($item-ios-padding-right - 4) center;
-    background-size: 16px 16px;
+    background-position: right ($item-ios-padding-right - 2) center;
+    background-size: 14px 14px;
     padding-right: 32px;
   }
 }

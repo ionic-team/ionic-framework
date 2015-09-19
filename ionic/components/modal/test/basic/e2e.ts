@@ -1,5 +1,5 @@
 
-it('should open action menu', function() {
+it('should open action sheet', function() {
   element(by.css('#e2eOpenModal')).click();
 });
 
