@@ -14,7 +14,7 @@ import {NavParams, NavController} from 'ionic/ionic';
         '<button>S1</button>' +
       '</ion-nav-items>' +
     '</ion-navbar>' +
-    '<ion-content class="padding">' +
+    '<ion-content padding>' +
       '<p>{{title}}</p>' +
       '<p><button id="from1To2" primary (click)="push()">Push (Go to 2nd)</button></p>' +
       '<p><button [push-data]="pushData" [nav-push]="pushPage">Push w/ nav-push (Go to 2nd)</button></p>' +
@@ -55,7 +55,7 @@ class FirstPage {
 
 @IonicView({
   template: `
-    <ion-content class="padding">
+    <ion-content padding>
       <h1>Second page</h1>
       <p>This page does not have a nav bar!</p>
       <p><button (click)="pop()">Pop (Go back to 1st)</button></p>
@@ -100,7 +100,7 @@ class SecondPage {
 @IonicView({
   template: `
     <ion-navbar *navbar><ion-title>Third Page Header</ion-title></ion-navbar>
-    <ion-content class="padding">
+    <ion-content padding>
       <p>
         <button id="from3To2" (click)="pop()">Pop (Go back to 2nd)</button>
       </p>

@@ -10,7 +10,7 @@ import {Vibration} from 'ionic/ionic';
     </a>
     <ion-title>Vibration</ion-title>
   </ion-navbar>
-  <ion-content class="padding">
+  <ion-content padding>
     <h2>Vibration</h2>
     <button primary outline (click)="doVibrate()">Vibrate</button>
   </ion-content>

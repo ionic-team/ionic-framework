@@ -10,7 +10,7 @@ import {Geolocation} from 'ionic/ionic';
     </a>
     <ion-title>Geolocation</ion-title>
   </ion-navbar>
-  <ion-content class="padding">
+  <ion-content padding>
     <h2>Geolocation</h2>
     <button primary outline (click)="doGetLocation()">Get Location</button>
     <div>

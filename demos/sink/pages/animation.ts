@@ -30,7 +30,7 @@ let scale = 0.6;
     }
   </style>
 
-  <ion-content class="padding">
+  <ion-content padding>
     <h2>Animation</h2>
     <p>
       Ionic comes with a powerful Animation library based on the emerging Web Animation API. Trigger

@@ -9,7 +9,7 @@ import {IonicView, Battery} from 'ionic/ionic';
     </a>
     <ion-title>Battery</ion-title>
   </ion-navbar>
-  <ion-content class="padding">
+  <ion-content padding>
     <h2>Battery</h2>
     <button primary outline (click)="doBatteryStatus()">Get Status</button>
     <div *ng-if="battery">

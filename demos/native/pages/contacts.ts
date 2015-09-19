@@ -10,7 +10,7 @@ import {Contacts} from 'ionic/ionic';
     </a>
     <ion-title>Contacts</ion-title>
   </ion-navbar>
-  <ion-content class="padding">
+  <ion-content padding>
     <h2>Contacts</h2>
     <div>
     </div>

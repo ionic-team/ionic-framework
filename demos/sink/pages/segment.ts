@@ -7,7 +7,7 @@ import {IonicView} from 'ionic/ionic';
   template: `
   <ion-navbar *navbar><ion-title>Segment</ion-title></ion-navbar>
 
-  <ion-content class="padding">
+  <ion-content padding>
     <h2>Segment</h2>
     <p>
       A segment is a radio-style filter bar to let the user toggle between

@@ -7,7 +7,7 @@ import {SinkPage} from '../sink-page';
   template: `
   <ion-navbar *navbar><ion-nav-items primary><button icon (click)="toggleMenu()"><i class="icon ion-navicon"></i></button></ion-nav-items><ion-title>Icons</ion-title></ion-navbar>
 
-  <ion-content class="padding">
+  <ion-content padding>
     <h2>Icons</h2>
     <p>
       Ionic comes with a totally free (in price and license), icon pack (known as "Ionicons") with over 700

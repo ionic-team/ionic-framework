@@ -76,7 +76,7 @@ export class ContactModal {
 @IonicView({
   template: `
     <ion-navbar *navbar><ion-title>First Page Header</ion-title><ion-nav-items primary><button id="e2eCloseMenu" (click)="closeModal()">Close</button></ion-nav-items></ion-navbar>
-    <ion-content class="padding">
+    <ion-content padding>
       <p>
         <button (click)="push()">Push (Go to 2nd)</button>
       </p>
@@ -146,7 +146,7 @@ export class ModalFirstPage {
 @IonicView({
   template: `
     <ion-navbar *navbar><ion-title>Second Page Header</ion-title></ion-navbar>
-    <ion-content class="padding">
+    <ion-content padding>
       <p>
         <button (click)="nav.pop()">Pop (Go back to 1st)</button>
       </p>

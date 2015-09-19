@@ -10,7 +10,7 @@ import {StatusBar} from 'ionic/ionic';
     </a>
     <ion-title>StatusBar</ion-title>
   </ion-navbar>
-  <ion-content class="padding">
+  <ion-content padding>
     <h2>StatusBar</h2>
     <div>
       <button primary outline (click)="hide()">Hide</button>

@@ -10,7 +10,7 @@ import {SinkPage} from '../sink-page';
     '<ion-navbar *navbar>' +
       '<ion-title>Featured</ion-title>' +
     '</ion-navbar>' +
-    '<ion-content class="padding">' +
+    '<ion-content padding>' +
     '</ion-content>'
 })
 class FeaturedTabPage {
@@ -24,7 +24,7 @@ class FeaturedTabPage {
     '<ion-navbar *navbar>' +
       '<ion-title>Top</ion-title>' +
     '</ion-navbar>' +
-    '<ion-content class="padding">' +
+    '<ion-content padding>' +
     '</ion-content>'
 })
 class TopTabPage {
@@ -38,7 +38,7 @@ class TopTabPage {
     '<ion-navbar *navbar>' +
       '<ion-title>Search</ion-title>' +
     '</ion-navbar>' +
-    '<ion-content class="padding">' +
+    '<ion-content padding>' +
     '</ion-content>'
 })
 class SearchTabPage {
@@ -52,7 +52,7 @@ class SearchTabPage {
     '<ion-navbar *navbar>' +
       '<ion-title>Updates</ion-title>' +
     '</ion-navbar>' +
-    '<ion-content class="padding">' +
+    '<ion-content padding>' +
     '</ion-content>'
 })
 class UpdatesTabPage {

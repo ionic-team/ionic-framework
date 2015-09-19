@@ -29,7 +29,7 @@ import {App, ActionSheet, IonicApp, IonicView, Register} from 'ionic/ionic';
       </ion-item>
     </ion-list>
 
-    <div class="padding">
+    <div padding>
       <ion-card>
         <ion-card-header>
           New Post

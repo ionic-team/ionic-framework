@@ -10,7 +10,7 @@ import {Camera} from 'ionic/ionic';
     </a>
     <ion-title>Camera</ion-title>
   </ion-navbar>
-  <ion-content class="padding">
+  <ion-content padding>
     <h2>Camera</h2>
     <button primary outline (click)="getPicture()">Get Picture</button>
   </ion-content>

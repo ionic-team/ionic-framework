@@ -16,7 +16,7 @@ class IonicApp {
     '<ion-navbar *navbar>' +
       '<ion-title>Home</ion-title>' +
     '</ion-navbar>' +
-    '<ion-content class="padding">' +
+    '<ion-content padding>' +
       'home' +
     '</ion-content>'
 })
@@ -33,7 +33,7 @@ class HomeTabPage {
     '<ion-navbar *navbar>' +
       '<ion-title>Peek</ion-title>' +
     '</ion-navbar>' +
-    '<ion-content class="padding">' +
+    '<ion-content padding>' +
       'peek' +
     '</ion-content>'
 })

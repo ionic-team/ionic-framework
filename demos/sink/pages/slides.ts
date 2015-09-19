@@ -7,7 +7,7 @@ import {SinkPage} from '../sink-page';
   template: `
   <ion-navbar *navbar><ion-nav-items primary><button icon (click)="toggleMenu()"><i class="icon ion-navicon"></i></button></ion-nav-items><ion-title>Slides</ion-title></ion-navbar>
 
-  <ion-content class="padding">
+  <ion-content padding>
     <h2>Slides</h2>
     <p>
       Slides have a set of pages that can be swiped between.

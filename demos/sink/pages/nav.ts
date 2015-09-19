@@ -5,7 +5,7 @@ import {IonicView, NavController} from 'ionic/ionic';
   template: `
   <ion-navbar *navbar><ion-title>Navigation</ion-title></ion-navbar>
 
-  <ion-content class="padding">
+  <ion-content padding>
     <h2>Navigation</h2>
     <p>
       Navigation makes your app feel like, well, an app!
@@ -32,7 +32,7 @@ export class NavPage {
 @IonicView({
   template: `
     <ion-navbar *navbar><ion-title>Second Page</ion-title></ion-navbar>
-    <ion-content class="padding">
+    <ion-content padding>
       <button (click)="nav.pop()">Pop</button>
     </ion-content>
   `

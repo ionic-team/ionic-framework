@@ -9,7 +9,7 @@ import {IonicView, DeviceOrientation} from 'ionic/ionic';
     </a>
     <ion-title>Device Orientation</ion-title>
   </ion-navbar>
-  <ion-content class="padding">
+  <ion-content padding>
     <div style="text-align: center">
       <img src="http://ionic-io-assets.s3.amazonaws.com/ionitron-avatar.png" [ng-style]="imageStyle">
     </div>

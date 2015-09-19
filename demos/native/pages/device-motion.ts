@@ -9,7 +9,7 @@ import {IonicView, DeviceMotion} from 'ionic/ionic';
     </a>
     <ion-title>Device Motion</ion-title>
   </ion-navbar>
-  <ion-content class="padding">
+  <ion-content padding>
     <div *ng-if="accel">{{accel.x}} {{accel.y}} {{accel.z}}</div>
   </ion-content>
   `

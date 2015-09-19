@@ -9,7 +9,7 @@ import {IonicView, Device} from 'ionic/ionic';
     </a>
     <ion-title>Device</ion-title>
   </ion-navbar>
-  <ion-content class="padding">
+  <ion-content padding>
     <h2>Device</h2>
     <button primary outline (click)="doDevice()">Get Device</button>
     <div *ng-if="device">

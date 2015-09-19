@@ -9,7 +9,7 @@ import {SinkPage} from '../sink-page';
   template: `
   <ion-navbar *navbar><ion-nav-items primary><button icon (click)="toggleMenu()"><i class="icon ion-navicon"></i></button></ion-nav-items><ion-title>Form</ion-title></ion-navbar>
 
-  <ion-content class="padding">
+  <ion-content padding>
     <h2>Forms</h2>
     <p>
       Forms help you gather important information from the user, like

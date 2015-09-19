@@ -7,7 +7,7 @@ import {SinkPage} from '../sink-page';
   template: `
   <ion-navbar *navbar><ion-nav-items primary><button icon (click)="toggleMenu()"><i class="icon ion-navicon"></i></button></ion-nav-items><ion-title>Menu</ion-title></ion-navbar>
 
-  <ion-content class="padding">
+  <ion-content padding>
     <h2>Menu</h2>
     <p>
       Menus slide or swipe in to show more information.

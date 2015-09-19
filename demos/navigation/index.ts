@@ -8,7 +8,7 @@ import {NavParams, NavController} from 'ionic/ionic';
     '<ion-navbar *navbar primary>' +
       '<ion-title>{{title}}</ion-title>' +
     '</ion-navbar>' +
-    '<ion-content class="padding">' +
+    '<ion-content padding>' +
       '<h1>{{title}}</h1>' +
       '<p><button id="from1To2" secondary (click)="push()">(Push) Go to Second Page</button></p>' +
       '<p><button secondary [push-data]="pushData" [nav-push]="pushPage">(Nav-Push) Go to Second Page</button></p>' +
@@ -47,7 +47,7 @@ class FirstPage {
     <ion-navbar secondary *navbar>
       <ion-title>{{title}}</ion-title>
     </ion-navbar>
-    <ion-content class="padding">
+    <ion-content padding>
       <h1>Second page</h1>
       <p><button (click)="pop()">(Pop) Go back to First Page</button></p>
       <p><button id="from2To1" nav-pop>(NavPop) Go back to First Page</button></p>
@@ -90,7 +90,7 @@ class SecondPage {
     <ion-navbar danger *navbar>
       <ion-title>Third Page Header</ion-title>
     </ion-navbar>
-    <ion-content class="padding">
+    <ion-content padding>
       <p>
         <button secondary id="from3To2" (click)="pop()">(Pop) Go back to Second Page</button>
       </p>

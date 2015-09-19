@@ -1,6 +1,6 @@
 <ion-navbar *navbar><ion-title>Top</ion-title></ion-navbar>
 
-<ion-content class="padding">
+<ion-content padding>
 
   <ion-list inset>
     <ion-item *ng-for="#story of stories" (click)="openStory(story)">{{story.title}}</ion-item>
