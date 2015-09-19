@@ -61,7 +61,7 @@ export class ViewController extends Ion {
    * @returns {Promise} TODO
    */
   push(componentType, params = {}, opts = {}) {
-    if (!componentType || !this.app.isEnabled()) {
+    if (!componentType) {
       return Promise.reject();
     }
     if (typeof componentType !== 'function') {
@@ -112,7 +112,7 @@ export class ViewController extends Ion {
    * @returns {Promise} TODO
    */
   pop(opts = {}) {
-    if (!this.app.isEnabled() || !this.canGoBack()) {
+    if (!this.canGoBack()) {
       return Promise.reject();
     }
 

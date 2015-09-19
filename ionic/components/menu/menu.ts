@@ -129,13 +129,14 @@ export class Menu extends Ion {
   setProgess(value) {
     // user actively dragging the menu
     this._disable();
-    this.app.setEnabled(false);
+    this.app.setEnabled(false, 4000);
     this._type.setProgess(value);
   }
 
   setProgressFinish(shouldComplete) {
     // user has finished dragging the menu
     this._disable();
+    this.app.setEnabled(false);
     this._type.setProgressFinish(shouldComplete).then(isOpen => {
       this._after(isOpen);
     });
@@ -148,10 +149,16 @@ export class Menu extends Ion {
     this.getBackdropElement().classList.add('show-backdrop');
 
     this._disable();
+    this.app.setEnabled(false);
   }
 
   _after(isOpen) {
+    // keep opening/closing the menu disabled for a touch more yet
     this._disable();
+
+    // but the app itself can be used again
+    this.app.setEnabled(true);
+
     this.isOpen = isOpen;
 
     this.contentElement.classList[isOpen ? 'add' : 'remove']('menu-content-open');
