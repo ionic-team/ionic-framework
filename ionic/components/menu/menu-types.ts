@@ -123,7 +123,7 @@ class MenuOverlayType extends MenuType {
     this.close.easing(easing).duration(duration);
 
     let menuOpen = new Animation(menu.getMenuElement());
-    menuOpen.fromTo(TRANSLATE_X, closedX, CENTER);
+    menuOpen.fromTo(TRANSLATE_X, closedX, '8px');
     this.open.add(menuOpen);
 
     let backdropOpen = new Animation(menu.getBackdropElement());
@@ -131,7 +131,7 @@ class MenuOverlayType extends MenuType {
     this.open.add(backdropOpen);
 
     let menuClose = new Animation(menu.getMenuElement());
-    menuClose.fromTo(TRANSLATE_X, CENTER, closedX);
+    menuClose.fromTo(TRANSLATE_X, '8px', closedX);
     this.close.add(menuClose);
 
     let backdropClose = new Animation(menu.getBackdropElement());
