@@ -2,8 +2,8 @@
 // Material Design Ripple Effect
 // --------------------------------------------------
 
-$ripple-bg-color:          white !default;
-$ripple-animation-curve:   cubic-bezier(0, 0, 0.2, 1) !default;
+$ripple-background-color:       #fff !default;
+$ripple-animation-curve:        cubic-bezier(0, 0, 0.2, 1) !default;
 
 
 md-ripple {
@@ -12,7 +12,7 @@ md-ripple {
   display: block;
   border-radius: 50%;
 
-  background: $ripple-bg-color;
+  background: $ripple-background-color;
   opacity: 0.3;
 
   overflow: hidden;

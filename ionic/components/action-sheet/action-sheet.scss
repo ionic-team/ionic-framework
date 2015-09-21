@@ -2,15 +2,15 @@
 // Action Sheet
 // --------------------------------------------------
 
-$action-sheet-width:                     100% !default;
-$action-sheet-max-width:                 520px !default;
-$action-sheet-background-color:          rgba(243,243,243,.95) !default;
-$action-sheet-button-text-color:         #007aff !default;
+$action-sheet-width:                             100% !default;
+$action-sheet-max-width:                         520px !default;
+$action-sheet-background-color:                  rgba(243,243,243,.95) !default;
+$action-sheet-button-text-color:                 #007aff !default;
 
-$action-sheet-options-bg-color:          #f1f2f3 !default;
-$action-sheet-options-bg-active-color:   #e4e5e7 !default;
-$action-sheet-options-text-color:        #007aff !default;
-$action-sheet-options-border-color:      #d1d3d6 !default;
+$action-sheet-options-background-color:          #f1f2f3 !default;
+$action-sheet-options-background-active-color:   #e4e5e7 !default;
+$action-sheet-options-text-color:                #007aff !default;
+$action-sheet-options-border-color:              #d1d3d6 !default;
 
 
 ion-action-sheet {
@@ -62,7 +62,7 @@ action-sheet-wrapper {
     box-shadow: none;
     border-color: $action-sheet-options-border-color;
     color: $action-sheet-options-text-color;
-    background: $action-sheet-options-bg-active-color;
+    background: $action-sheet-options-background-active-color;
   }
 }
 
@@ -92,7 +92,7 @@ action-sheet-wrapper {
 }
 
 .action-sheet-options {
-  background: $action-sheet-options-bg-color;
+  background: $action-sheet-options-background-color;
 }
 
 .action-sheet-cancel button {

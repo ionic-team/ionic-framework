@@ -3,11 +3,11 @@
 // --------------------------------------------------
 
 $checkbox-md-icon-size:             16px !default;
-$checkbox-md-bg-color-off:          $list-background-color !default;
+$checkbox-md-background-color-off:  $list-background-color !default;
 $checkbox-md-border-width:          2px !default;
 $checkbox-md-border-radius:         2px !default;
 $checkbox-md-border-color-off:      darken($item-md-border-color, 40%) !default;
-$checkbox-md-bg-color-on:           color(primary) !default;
+$checkbox-md-background-color-on:   color(primary) !default;
 $checkbox-md-border-color-on:       color(primary) !default;
 $checkbox-md-checkmark-color-on:    $background-color !default;
 
@@ -15,7 +15,7 @@ $checkbox-md-checkmark-color-on:    $background-color !default;
 .checkbox {
 
   &[aria-checked=true] .checkbox-icon {
-    background-color: $checkbox-md-bg-color-on;
+    background-color: $checkbox-md-background-color-on;
     border-color: $checkbox-md-border-color-on;
   }
 
@@ -40,7 +40,7 @@ $checkbox-md-checkmark-color-on:    $background-color !default;
   height: $checkbox-md-icon-size;
   border-radius: $checkbox-md-border-radius;
   border: $checkbox-md-border-width solid $checkbox-md-border-color-off;
-  background-color: $checkbox-md-bg-color-off;
+  background-color: $checkbox-md-background-color-off;
 }
 
 

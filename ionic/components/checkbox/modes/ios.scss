@@ -3,9 +3,9 @@
 // --------------------------------------------------
 
 $checkbox-ios-icon-size:             21px !default;
-$checkbox-ios-bg-color-off:          $list-background-color !default;
+$checkbox-ios-background-color-off:  $list-background-color !default;
 $checkbox-ios-border-color-off:      $list-border-color !default;
-$checkbox-ios-bg-color-on:           color(primary) !default;
+$checkbox-ios-background-color-on:   color(primary) !default;
 $checkbox-ios-border-color-on:       color(primary) !default;
 $checkbox-ios-checkmark-color-on:    $background-color !default;
 
@@ -13,7 +13,7 @@ $checkbox-ios-checkmark-color-on:    $background-color !default;
 .checkbox {
 
   &[aria-checked=true] .checkbox-icon {
-    background-color: $checkbox-ios-bg-color-on;
+    background-color: $checkbox-ios-background-color-on;
     border-color: $checkbox-ios-border-color-on;
   }
 
@@ -38,7 +38,7 @@ $checkbox-ios-checkmark-color-on:    $background-color !default;
   height: $checkbox-ios-icon-size;
   border-radius: 50%;
   border: 1px solid $checkbox-ios-border-color-off;
-  background-color: $checkbox-ios-bg-color-off;
+  background-color: $checkbox-ios-background-color-off;
 }
 
 

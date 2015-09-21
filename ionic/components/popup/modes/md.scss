@@ -3,12 +3,12 @@
 // --------------------------------------------------
 
 $popup-md-border-radius:       13px !default;
-$popup-md-bg-color:            #f8f8f8 !default;
+$popup-md-background-color:    #f8f8f8 !default;
 
 
 popup-wrapper {
   border-radius: $popup-md-border-radius;
-  background-color: $popup-md-bg-color;
+  background-color: $popup-md-background-color;
 }
 
 .popup-head {

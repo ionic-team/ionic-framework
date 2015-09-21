@@ -3,13 +3,13 @@
 // --------------------------------------------------
 
 $popup-ios-border-radius:         13px !default;
-$popup-ios-bg-color:              #f8f8f8 !default;
+$popup-ios-background-color:      #f8f8f8 !default;
 $popup-ios-button-text-color:     color(primary) !default;
 
 
 popup-wrapper {
   border-radius: $popup-ios-border-radius;
-  background-color: $popup-ios-bg-color;
+  background-color: $popup-ios-background-color;
 }
 
 .popup-head {
