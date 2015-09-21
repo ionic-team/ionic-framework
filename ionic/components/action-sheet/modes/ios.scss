@@ -15,7 +15,7 @@ $action-sheet-ios-title-font-size:          1.2rem !default;
 
 $action-sheet-ios-button-text-color:        #007aff !default;
 $action-sheet-ios-button-font-size:         2rem !default;
-$action-sheet-ios-background-active:        #ebebeb !default;
+$action-sheet-ios-background-active-color:  #ebebeb !default;
 
 $action-sheet-ios-icon-font-size:           1.4em !default;
 
@@ -38,7 +38,7 @@ ion-action-sheet button {
   background: transparent;
 
   &.activated {
-    background: $action-sheet-ios-background-active;
+    background: $action-sheet-ios-background-active-color;
   }
 }
 

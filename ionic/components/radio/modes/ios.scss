@@ -2,14 +2,14 @@
 // iOS Radio
 // --------------------------------------------------
 
-$radio-ios-active-color:       color(primary) !default;
+$radio-ios-color-on:       color(primary) !default;
 
 
 ion-radio {
 
   &[aria-checked=true] .radio-icon:after {
     position: absolute;
-    border: 2px solid $radio-ios-active-color;
+    border: 2px solid $radio-ios-color-on;
     top: 3px;
     left: 7px;
     width: 4px;
@@ -21,7 +21,7 @@ ion-radio {
   }
 
   &[aria-checked=true] {
-    color: $radio-ios-active-color;
+    color: $radio-ios-color-on;
   }
 
 }

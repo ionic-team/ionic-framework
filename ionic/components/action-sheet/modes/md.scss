@@ -12,7 +12,7 @@ $action-sheet-md-title-padding:            1.9rem 1.6rem 1.7rem !default;
 
 $action-sheet-md-button-text-color:        #222 !default;
 $action-sheet-md-button-font-size:         1.6rem !default;
-$action-sheet-md-background-active:        #f1f1f1 !default;
+$action-sheet-md-background-active-color:  #f1f1f1 !default;
 
 $action-sheet-md-icon-font-size:           2.4rem !default;
 $action-sheet-md-icon-margin:              0 28px 0 0 !default;
@@ -58,7 +58,7 @@ ion-action-sheet button {
   min-height: $action-sheet-md-height;
 
   &.activated {
-    background: $action-sheet-md-background-active;
+    background: $action-sheet-md-background-active-color;
     border-radius: 0;
     box-shadow: none;
   }

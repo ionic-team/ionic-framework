@@ -7,17 +7,17 @@ $switch-ios-height:                    32px !default;
 $switch-ios-border-width:              2px !default;
 $switch-ios-border-radius:             $switch-ios-height / 2 !default;
 
-$switch-ios-off-background-color:      $list-background-color !default;
-$switch-ios-off-border-color:          grayscale(lighten($list-border-color, 11%)) !default;
+$switch-ios-background-color-off:      $list-background-color !default;
+$switch-ios-border-color-off:          grayscale(lighten($list-border-color, 11%)) !default;
 
-$switch-ios-on-background-color:       color(primary) !default;
+$switch-ios-background-color-on:       color(primary) !default;
 
 $switch-ios-handle-width:              $switch-ios-height - ($switch-ios-border-width * 2) !default;
 $switch-ios-handle-height:             $switch-ios-handle-width !default;
 $switch-ios-handle-radius:             $switch-ios-handle-height / 2 !default;
 $switch-ios-handle-box-shadow:         0 3px 12px rgba(0, 0, 0, 0.16), 0 3px 1px rgba(0, 0, 0, 0.1) !default;
 
-$switch-ios-handle-background-color:   $switch-ios-off-background-color !default;
+$switch-ios-handle-background-color:   $switch-ios-background-color-off !default;
 
 $switch-ios-transition-duration:       300ms !default;
 
@@ -41,14 +41,14 @@ ion-switch {
     border-radius: $switch-ios-border-radius;
     pointer-events: none;
 
-    background-color: $switch-ios-off-border-color;
+    background-color: $switch-ios-border-color-off;
     will-change: background-color;
     transition: background-color $switch-ios-transition-duration;
   }
 
   &[aria-checked=true] .switch-icon {
     // bg track, when checked
-    background-color: $switch-ios-on-background-color;
+    background-color: $switch-ios-background-color-on;
   }
 
 
@@ -65,7 +65,7 @@ ion-switch {
     bottom: $switch-ios-border-width;
 
     border-radius: $switch-ios-border-radius;
-    background-color: $switch-ios-off-background-color;
+    background-color: $switch-ios-background-color-off;
 
     will-change: transform;
     transform: scale3d(1, 1, 1);

@@ -2,7 +2,7 @@
 // Material Design Radio
 // --------------------------------------------------
 
-$radio-md-active-color:           color(primary) !default;
+$radio-md-color-on:               color(primary) !default;
 
 $radio-md-icon-size:              16px !default;
 $radio-md-border-width:           2px !default;
@@ -26,7 +26,7 @@ ion-radio {
   }
 
   &[aria-checked=true] .radio-icon {
-    border-color: $radio-md-active-color;
+    border-color: $radio-md-color-on;
   }
 
   .radio-icon:after {
@@ -35,7 +35,7 @@ ion-radio {
     left: $radio-md-border-width;
     width: $radio-md-icon-size / 2;
     height: $radio-md-icon-size / 2;
-    background: $radio-md-active-color;
+    background: $radio-md-color-on;
     border-radius: 50%;
     content: '';
     transition: transform $radio-md-transition-duration $radio-md-transition-easing;
@@ -47,7 +47,7 @@ ion-radio {
   }
 
   &[aria-checked=true] {
-    color: $radio-md-active-color;
+    color: $radio-md-color-on;
   }
 
 }
