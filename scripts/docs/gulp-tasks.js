@@ -181,14 +181,15 @@ module.exports = function(gulp, flags) {
     var variables = [];
     var outputFile = 'dist/ionic-site/docs/v2/data/sass.json';
 
-    // TODO this pushes the file it is defined in, not any files used in
-    // not sure if we should include both
+    // Add the variable to the array, encode the html and remove !default from the value
     function addVariable(variableName, defaultValue, file) {
       defaultValue = entities.encode(defaultValue);
+      defaultValue = defaultValue.replace("!default;", "");
+
       variables.push({
         "name": variableName,
         "defaultValue": defaultValue.trim(),
-        "file": path.basename(file.path)
+        "file": path.relative('./', file.path)
       });
     }
 
@@ -208,13 +209,13 @@ module.exports = function(gulp, flags) {
               // If there is a semicolon then it isn't a multiline value
               multiline = line.indexOf(';') > -1 ? false : true;
 
-              if (!multiline)
+              if (!multiline && line.indexOf('!default') > -1)
                 addVariable(variableName, defaultValue, file);
             } else if (multiline == true) {
               defaultValue += '\n' + line;
 
-              // If the line has a semicolon then we've found the end of the default value
-              if (line.indexOf(';') > -1) {
+              // If the line has a semicolon then we've found the end of the value
+              if (line.indexOf(';') > -1 && line.indexOf('!default') > -1) {
                 addVariable(variableName, defaultValue, file);
                 multiline = false;
               }
