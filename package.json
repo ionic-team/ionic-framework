@@ -10,11 +10,11 @@
     "angular2": "2.0.0-alpha.37",
     "reflect-metadata": "0.1.1",
     "rtts_assert": "2.0.0-alpha.37",
+    "rx": "2.5.1",
     "swiper": "^3.1.2",
     "systemjs": "0.18.10",
     "traceur": "0.0.91",
-    "zone.js": "0.5.4",
-    "rx": "2.5.1"
+    "zone.js": "0.5.4"
   },
   "devDependencies": {
     "canonical-path": "0.0.2",
@@ -39,6 +39,7 @@
     "gulp-typescript": "^2.7.7",
     "gulp-util": "^3.0.6",
     "gulp-watch": "^4.2.4",
+    "html-entities": "^1.1.3",
     "htmlparser2": "^3.8.3",
     "js-yaml": "^3.4.2",
     "karma": "^0.12.31",

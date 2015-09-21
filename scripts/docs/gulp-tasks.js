@@ -29,42 +29,7 @@ module.exports = function(gulp, flags) {
         '!dist/src/**/*'
       ])
       .pipe(gulp.dest('dist/ionic-site/docs/v2/dist'));
-  })
-
-  gulp.task('docs.sass-variables', function() {
-    var fs = require('fs');
-    var gutil = require('gulp-util');
-    var es = require('event-stream');
-    var path = require('path');
-
-    var variables = [];
-    var outputFile = 'dist/ionic-site/docs/v2/data/sass.json';
-
-    return gulp.src('ionic/**/*.scss')
-      .pipe(es.map(function(file, callback) {
-        var contents = file.contents.toString();
-
-        fs.createReadStream(file.path, {flags: 'r'})
-          .pipe(es.split())
-          .pipe(es.map(function (line, callback) {
-            if (line.charAt(0) == '$') {
-              var variableLine = line.split(":");
-
-              // TODO this pushes the file it is defined in, not the file used in
-              // not sure if we should include all of them
-              variables.push({
-                "name": variableLine[0],
-                "file": path.basename(file.path)
-              });
-            }
-            callback();
-          }));
-        callback();
-      }).on('end', function() {
-        gutil.log("Writing to file", gutil.colors.cyan(outputFile));
-        fs.writeFileSync(outputFile, JSON.stringify(variables));
-      }));
-  })
+  });
 
   gulp.task('docs.index', function() {
     var lunr = require('lunr');
@@ -203,5 +168,64 @@ module.exports = function(gulp, flags) {
           JSON.stringify({'ref': ref, 'index': idx.toJSON()})
         );
       });
+  });
+
+  gulp.task('docs.sass-variables', function() {
+    var fs = require('fs');
+    var gutil = require('gulp-util');
+    var es = require('event-stream');
+    var path = require('path');
+    var Entities = require('html-entities').AllHtmlEntities;
+    entities = new Entities();
+
+    var variables = [];
+    var outputFile = 'dist/ionic-site/docs/v2/data/sass.json';
+
+    // TODO this pushes the file it is defined in, not any files used in
+    // not sure if we should include both
+    function addVariable(variableName, defaultValue, file) {
+      defaultValue = entities.encode(defaultValue);
+      variables.push({
+        "name": variableName,
+        "defaultValue": defaultValue.trim(),
+        "file": path.basename(file.path)
+      });
+    }
+
+    return gulp.src('ionic/**/*.scss')
+      .pipe(es.map(function(file, callback) {
+        var contents = file.contents.toString();
+        var variableLine, variableName, defaultValue, multiline;
+
+        fs.createReadStream(file.path, {flags: 'r'})
+          .pipe(es.split())
+          .pipe(es.map(function (line, callback) {
+            if (line.charAt(0) == '$') {
+              variableLine = line.split(/:(.+)/);
+              variableName = variableLine[0];
+              defaultValue = variableLine[1];
+
+              // If there is a semicolon then it isn't a multiline value
+              multiline = line.indexOf(';') > -1 ? false : true;
+
+              if (!multiline)
+                addVariable(variableName, defaultValue, file);
+            } else if (multiline == true) {
+              defaultValue += '\n' + line;
+
+              // If the line has a semicolon then we've found the end of the default value
+              if (line.indexOf(';') > -1) {
+                addVariable(variableName, defaultValue, file);
+                multiline = false;
+              }
+            }
+            callback();
+          }));
+        callback();
+      }).on('end', function() {
+        gutil.log("Writing to file at", gutil.colors.cyan("/driftyco/ionic2/" + outputFile));
+        gutil.log("Place this file in", gutil.colors.cyan("/driftyco/ionic-site/docs/v2/data"), "in order to update the docs");
+        fs.writeFileSync(outputFile, JSON.stringify(variables));
+      }));
   });
 }
