@@ -7,7 +7,7 @@ import {ClickBlock} from '../../util/click-block';
 import * as util from '../../util/util';
 
 // injectables
-import {Activator} from './activator';
+import {TapClick} from '../tap-click/tap-click';
 import {ActionSheet} from '../action-sheet/action-sheet';
 import {Modal} from '../modal/modal';
 import {Popup} from '../popup/popup';
@@ -279,7 +279,7 @@ export function ionicBootstrap(rootComponentType, config) {
       let app = initApp(window, document, config, platform);
 
       // TODO: probs need a better way to inject global injectables
-      let activator = new Activator(app, config, window, document);
+      let tapClick = new TapClick(app, config, window, document);
       let actionSheet = new ActionSheet(app, config);
       let modal = new Modal(app, config);
       let popup = new Popup(app, config);
@@ -289,7 +289,7 @@ export function ionicBootstrap(rootComponentType, config) {
         bind(IonicApp).toValue(app),
         bind(IonicConfig).toValue(config),
         bind(IonicPlatform).toValue(platform),
-        bind(Activator).toValue(activator),
+        bind(TapClick).toValue(tapClick),
         bind(ActionSheet).toValue(actionSheet),
         bind(Modal).toValue(modal),
         bind(Popup).toValue(popup),

@@ -18,15 +18,15 @@ md-ripple {
   overflow: hidden;
   pointer-events: none;
 
-  transform: scale(0.01) translateZ(0);
-  transition: transform 300ms $ripple-animation-curve, opacity 400ms $ripple-animation-curve;
+  transform: scale(0.001) translateZ(0);
+  transition: transform 280ms $ripple-animation-curve, opacity 400ms ease;
 }
 
-md-ripple.ripple-animate {
+md-ripple.ripple-expand {
   transform: scale(1) translateZ(0);
 }
 
-md-ripple.ripple-animate-out {
+md-ripple.ripple-fade-out {
   transform: scale(1) translateZ(0);
   opacity: 0;
 }

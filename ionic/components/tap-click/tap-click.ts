@@ -1,8 +1,10 @@
-import {raf, pointerCoord, hasPointerMoved} from '../../util/dom';
-import * as ripple from '../material/ripple';
+import {pointerCoord, hasPointerMoved, transitionEnd} from '../../util/dom';
+import * as ripple from './ripple';
+import {Activator} from './activator';
+import {RippleActivator} from './ripple';
 
 
-export class Activator {
+export class TapClick {
 
   constructor(app: IonicApp, config: IonicConfig, window, document) {
     const self = this;
@@ -11,19 +13,18 @@ export class Activator {
     self.win = window;
     self.doc = document;
 
-    self.id = 0;
-    self.queue = {};
-    self.active = {};
-    self.activatedClass = 'activated';
-    self.deactivateTimeout = 180;
-    self.deactivateAttempt = 0;
     self.pointerTolerance = 4;
-    self.isTouch = false;
+    self.lastTouch = 0;
     self.disableClick = 0;
     self.disableClickLimit = 2500;
 
     self.tapPolyfill = config.setting('tapPolyfill');
-    self.mdRipple = config.setting('mdRipple');
+
+    if (config.setting('mdRipple')) {
+      self.activator = new RippleActivator(app, config);
+    } else {
+      self.activator = new Activator(app, config);
+    }
 
 
     function bindDom(type, listener, useCapture) {
@@ -35,17 +36,17 @@ export class Activator {
     }, true);
 
     bindDom('touchstart', function(ev) {
-      self.isTouch = true;
+      self.lastTouch = Date.now();
       self.pointerStart(ev);
     });
 
     bindDom('touchend', function(ev) {
-      self.isTouch = true;
+      self.lastTouch = Date.now();
       self.touchEnd(ev);
     });
 
     bindDom('touchcancel', function(ev) {
-      self.isTouch = true;
+      self.lastTouch = Date.now();
       self.pointerCancel(ev);
     });
 
@@ -62,7 +63,7 @@ export class Activator {
       let moveCoord = pointerCoord(ev);
 
       if ( hasPointerMoved(10, self.start, moveCoord) ) {
-        self.pointerCancel();
+        self.pointerCancel(ev);
       }
     };
 
@@ -115,7 +116,7 @@ export class Activator {
       ev.preventDefault();
       ev.stopPropagation();
 
-    } else if (!self.isTouch) {
+    } else if (self.lastTouch + 999 < Date.now()) {
       this.pointerStart(ev);
     }
   }
@@ -131,7 +132,7 @@ export class Activator {
       ev.stopPropagation();
     }
 
-    if (!self.isTouch) {
+    if (self.lastTouch + 999 < Date.now()) {
       this.pointerEnd(ev);
     }
   }
@@ -143,10 +144,9 @@ export class Activator {
   pointerStart(ev) {
     let targetEle = this.getActivatableTarget(ev.target);
 
-    if (targetEle && this.app.isEnabled()) {
+    if (targetEle) {
       this.start = pointerCoord(ev);
-
-      this.queueActivate(targetEle);
+      this.activator.downAction(targetEle, this.start.x, this.start.y);
       this.moveListeners(true);
 
     } else {
@@ -158,16 +158,16 @@ export class Activator {
    * TODO
    */
   pointerEnd(ev) {
-    this.queueDeactivate();
+    this.activator.upAction(ev);
     this.moveListeners(false);
   }
 
   /**
    * TODO
    */
-  pointerCancel() {
+  pointerCancel(ev) {
     console.debug('pointerCancel')
-    this.deactivate();
+    this.activator.clearState(ev);
     this.moveListeners(false);
     this.disableClick = Date.now();
   }
@@ -203,7 +203,6 @@ export class Activator {
       ev.preventDefault();
       ev.stopPropagation();
     }
-    this.isTouch = false;
   }
 
   getActivatableTarget(ele) {
@@ -229,74 +228,6 @@ export class Activator {
     }
 
     return false;
-  }
-
-  queueActivate(ele) {
-    const self = this;
-
-    self.queue[++self.id] = ele;
-    if (self.id > 19) self.id = 0;
-
-    raf(function(){
-      // activate all elements in the queue
-      for (var key in self.queue) {
-        self.activate(key, self.queue[key]);
-      }
-      self.queue = {};
-    });
-  }
-
-  activate(key, ele) {
-    if (ele) {
-      ele.classList.add(this.activatedClass);
-
-      if (this.mdRipple) {
-        ripple.start(key, ele, this.start.x, this.start.y);
-      }
-
-      this.active[key] = ele;
-    }
-  }
-
-  queueDeactivate() {
-    const self = this;
-
-    setTimeout(function() {
-      self.deactivate();
-    }, self.deactivateTimeout);
-  }
-
-  deactivate() {
-    const self = this;
-
-    if (!self.app.isEnabled() && self.deactivateAttempt < 30) {
-      // the app is actively disabled, so don't bother deactivating anything.
-      // this makes it easier on the GPU so it doesn't have to redraw any
-      // buttons during a transition. This will retry in XX milliseconds.
-      ++self.deactivateAttempt;
-      self.queueDeactivate();
-
-    } else {
-      // not actively transitioning, good to deactivate any elements
-      // clear out any elements that are queued to be set to active
-      self.queue = {};
-
-      // in the next frame, remove the active class from all active elements
-      raf(function() {
-        for (var key in self.active) {
-          if (self.active[key]) {
-            self.active[key].classList.remove(self.activatedClass);
-          }
-          if (self.mdRipple) {
-            ripple.end(key);
-          }
-          delete self.active[key];
-        }
-      });
-
-      self.deactivateAttempt = 0;
-    }
-
   }
 
 }
