@@ -1,5 +1,4 @@
 import {pointerCoord, hasPointerMoved, transitionEnd} from '../../util/dom';
-import * as ripple from './ripple';
 import {Activator} from './activator';
 import {RippleActivator} from './ripple';
 

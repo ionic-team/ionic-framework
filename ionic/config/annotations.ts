@@ -16,9 +16,7 @@ import {
   RadioGroup, RadioButton, SearchBar,
   Nav, NavbarTemplate, Navbar, NavPush, NavPop, NavRouter,
   IdRef,
-  ShowWhen, HideWhen,
-
-  MaterialButton
+  ShowWhen, HideWhen
 } from '../ionic';
 
 /**
@@ -87,13 +85,9 @@ export const IonicDirectives = [
   forwardRef(() => NavPop),
   forwardRef(() => NavRouter),
   forwardRef(() => IdRef),
-  //forwardRef(() => Ref),
 
   forwardRef(() => ShowWhen),
-  forwardRef(() => HideWhen),
-
-  // Material
-  forwardRef(() => MaterialButton)
+  forwardRef(() => HideWhen)
 ];
 
 class IonicViewImpl extends View {
