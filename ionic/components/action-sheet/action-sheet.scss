@@ -61,7 +61,6 @@ action-sheet-wrapper {
   button.activated {
     box-shadow: none;
     border-color: $action-sheet-options-border-color;
-    color: $action-sheet-options-text-color;
     background: $action-sheet-options-background-active-color;
   }
 }

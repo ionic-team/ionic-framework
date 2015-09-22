@@ -26,6 +26,13 @@ ion-action-sheet {
 
 .action-sheet-container {
   padding: 0 $action-sheet-ios-group-margin;
+
+  button.activated {
+    box-shadow: none;
+    border-color: $action-sheet-options-border-color;
+    color: $action-sheet-options-text-color;
+    background: $action-sheet-options-background-active-color;
+  }
 }
 
 ion-action-sheet button {
