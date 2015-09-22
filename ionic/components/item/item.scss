@@ -52,12 +52,6 @@ ion-item-content {
 
 .list .item {
   border-radius: 0;
-
-  transition: background 300ms ease-out;
-  &:active {
-    transition-duration: 0s;
-  }
-
 }
 
 .item {
