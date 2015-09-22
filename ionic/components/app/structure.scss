@@ -3,19 +3,19 @@
 // --------------------------------------------------
 // Grouped by elements which would be siblings
 
-$z-index-menu-overlay:          80 !default;
-$z-index-menu-backdrop:         79 !default;
-$z-index-overlay:                1000 !default;
-$z-index-click-block:            9999 !default;
+$z-index-menu-overlay:           80;
+$z-index-menu-backdrop:          79;
+$z-index-overlay:                1000;
+$z-index-click-block:            9999;
 
-$z-index-content-container:      5 !default;
-$z-index-navbar-container:       10 !default;
+$z-index-content-container:      5;
+$z-index-navbar-container:       10;
 
-$z-index-content:                5 !default;
-$z-index-toolbar:                10 !default;
+$z-index-content:                5;
+$z-index-toolbar:                10;
 
-$z-index-toolbar-border:         20 !default;
-$z-index-list-border:            50 !default;
+$z-index-toolbar-border:         20;
+$z-index-list-border:            50;
 
 $z-index-backdrop:               1;
 $z-index-overlay-wrapper:        10;
@@ -25,13 +25,13 @@ $z-index-overlay-wrapper:        10;
 // Flex Order
 // --------------------------------------------------
 
-$flex-order-view-content:        0 !default;
+$flex-order-view-content:        0;
 
-$flex-order-toolbar-top:         -10 !default;
-$flex-order-toolbar-bottom:      10 !default;
+$flex-order-toolbar-top:         -10;
+$flex-order-toolbar-bottom:      10;
 
-$flex-order-tab-bar-top:         -30 !default;
-$flex-order-tab-bar-bottom:      30 !default;
+$flex-order-tab-bar-top:         -30;
+$flex-order-tab-bar-bottom:      30;
 
 
 
