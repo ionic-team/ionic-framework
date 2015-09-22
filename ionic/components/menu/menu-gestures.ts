@@ -30,7 +30,7 @@ class MenuContentGesture extends SlideEdgeGesture {
 
   onSlideEnd(slide, ev) {
     let shouldComplete = (Math.abs(ev.velocityX) > 0.2 || Math.abs(slide.delta) > Math.abs(slide.max) * 0.5);
-    this.menu.setProgressFinish(shouldComplete);
+    this.menu.setProgressEnd(shouldComplete);
   }
 
   getElementStartPos(slide, ev) {

@@ -23,7 +23,7 @@ export class SwipeBackGesture extends SlideEdgeGesture {
     let shouldComplete = (Math.abs(ev.velocityX) > 0.2 || Math.abs(slide.delta) > Math.abs(slide.max) * 0.5);
 
     // TODO: calculate a better playback rate depending on velocity and distance
-    this.viewCtrl.swipeBackFinish(shouldComplete, 1);
+    this.viewCtrl.swipeBackEnd(shouldComplete, 1);
   }
 
 }

@@ -140,11 +140,11 @@ export class Menu extends Ion {
     this._type.setProgess(value);
   }
 
-  setProgressFinish(shouldComplete) {
+  setProgressEnd(shouldComplete) {
     // user has finished dragging the menu
     this._disable();
     this.app.setEnabled(false);
-    this._type.setProgressFinish(shouldComplete).then(isOpen => {
+    this._type.setProgressEnd(shouldComplete).then(isOpen => {
       this._after(isOpen);
     });
   }

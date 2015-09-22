@@ -377,13 +377,13 @@ export class ViewController extends Ion {
    * @param {TODO} completeSwipeBack  Should the swipe back complete or not.
    * @param {number} rate  How fast it closes
    */
-  swipeBackFinish(completeSwipeBack, rate) {
+  swipeBackEnd(completeSwipeBack, rate) {
     if (!this._sbTrans) return;
 
     // disables the app during the transition
     this.app.setEnabled(false);
 
-    this._sbTrans.progressFinish(completeSwipeBack, rate).then(() => {
+    this._sbTrans.progressEnd(completeSwipeBack, rate).then(() => {
 
       this.zone.run(() => {
         // find the items that were entering and leaving

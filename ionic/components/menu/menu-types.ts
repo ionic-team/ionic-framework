@@ -49,7 +49,7 @@ export class MenuType {
     this.seek.progress(value);
   }
 
-  setProgressFinish(shouldComplete) {
+  setProgressEnd(shouldComplete) {
     let resolve;
     let promise = new Promise(res => { resolve = res });
 
@@ -58,7 +58,7 @@ export class MenuType {
       isOpen = true;
     }
 
-    this.seek.progressFinish(shouldComplete).then(() => {
+    this.seek.progressEnd(shouldComplete).then(() => {
       this.isOpening = false;
       resolve(isOpen);
     });

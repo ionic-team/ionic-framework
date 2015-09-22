@@ -406,12 +406,12 @@ export class Animation {
     }
   }
 
-  progressFinish(shouldComplete, rate=3) {
+  progressEnd(shouldComplete, rate=3) {
     let promises = [];
 
     this.isProgress = false;
     for (let i = 0; i < this._chld.length; i++) {
-      promises.push( this._chld[i].progressFinish(shouldComplete) );
+      promises.push( this._chld[i].progressEnd(shouldComplete) );
     }
 
     this._ani.forEach(animation => {
