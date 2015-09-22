@@ -57,7 +57,7 @@ class UserButton {
   }
 }
 
-var IonicDirectives = [IonicButton];
+var IONIC_DIRECTIVES = [IonicButton];
 
 @Component({
   selector: 'user-modal'
@@ -89,7 +89,7 @@ class UserModal {
     <button (click)="openModal()">Open Modal</button>
     <ng-content></ng-content>
   `,
-  directives: IonicDirectives.concat([UserButton])
+  directives: IONIC_DIRECTIVES.concat([UserButton])
 })
 class UserRootComponent {
   constructor(ionicModal: IonicModal, userService: UserService) {

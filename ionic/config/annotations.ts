@@ -23,7 +23,7 @@ import {
  * The core Ionic directives.  Automatically available in every IonicView
  * template.
  */
-export const IonicDirectives = [
+export const IONIC_DIRECTIVES = [
 // TODO: Why is forwardRef() required when they're already imported above????
   // Angular
   CORE_DIRECTIVES,
@@ -92,7 +92,7 @@ export const IonicDirectives = [
 
 class IonicViewImpl extends View {
   constructor(args = {}) {
-    args.directives = (args.directives || []).concat(IonicDirectives);
+    args.directives = (args.directives || []).concat(IONIC_DIRECTIVES);
     super(args);
   }
 }
