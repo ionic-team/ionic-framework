@@ -9,7 +9,7 @@ import {
 import {Ion} from '../ion';
 import {IonInput} from '../form/input';
 import {IonicConfig} from '../../config/config';
-import {IonicComponent, IonicView} from '../../config/annotations';
+import {IonicComponent, IonicView} from '../../config/decorators';
 
 /**
  * @name ionCheckbox

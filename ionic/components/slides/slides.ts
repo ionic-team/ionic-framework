@@ -5,7 +5,7 @@ import {Ion} from '../ion';
 import {Animation} from 'ionic/animations/animation';
 import {Gesture} from 'ionic/gestures/gesture';
 import {DragGesture} from 'ionic/gestures/drag-gesture';
-import {IonicComponent, IonicDirective} from '../../config/annotations';
+import {IonicComponent, IonicDirective} from '../../config/decorators';
 import {IonicConfig} from '../../config/config';
 import {dom} from 'ionic/util';
 import {CSS} from '../../util/dom';

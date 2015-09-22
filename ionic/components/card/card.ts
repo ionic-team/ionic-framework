@@ -2,7 +2,7 @@ import {ElementRef} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
-import {IonicDirective} from '../../config/annotations';
+import {IonicDirective} from '../../config/decorators';
 import {ListVirtualScroll} from './virtual';
 import * as util from 'ionic/util';
 

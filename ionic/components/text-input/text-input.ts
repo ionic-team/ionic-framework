@@ -1,6 +1,6 @@
 import {Directive, View, Host, Optional, ElementRef, Attribute, Query, QueryList, NgZone} from 'angular2/angular2';
 
-import {IonicDirective} from '../../config/annotations';
+import {IonicDirective} from '../../config/decorators';
 import {IonicConfig} from '../../config/config';
 import {IonInput} from '../form/input';
 import {Label} from './label';

@@ -1,6 +1,6 @@
 import {Directive, View, ElementRef, Host, Optional, forwardRef, Injector, NgZone} from 'angular2/angular2';
 
-import {IonicComponent} from '../../config/annotations';
+import {IonicComponent} from '../../config/decorators';
 import {ViewController} from '../view/view-controller';
 
 /**

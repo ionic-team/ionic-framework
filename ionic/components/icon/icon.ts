@@ -1,7 +1,7 @@
 import {Directive, View, NgClass, ElementRef, Optional, Host, Attribute, Renderer} from 'angular2/angular2';
 
 import {IonicConfig} from '../../config/config';
-import {IonicComponent} from '../../config/annotations';
+import {IonicComponent} from '../../config/decorators';
 import {Ion} from '../ion';
 import {Button} from '../button/button';
 

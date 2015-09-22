@@ -4,7 +4,7 @@ import {ControlGroup, ControlDirective} from 'angular2/forms'
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
-import {IonicDirective, IonicComponent} from '../../config/annotations'
+import {IonicDirective, IonicComponent} from '../../config/decorators'
 import {dom} from 'ionic/util';
 
 /**

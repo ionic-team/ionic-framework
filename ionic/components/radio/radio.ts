@@ -1,6 +1,6 @@
 import {ElementRef, Host, Optional, NgControl, Query, QueryList} from 'angular2/angular2';
 
-import {IonicDirective, IonicComponent, IonicView} from '../../config/annotations';
+import {IonicDirective, IonicComponent, IonicView} from '../../config/decorators';
 import {IonicConfig} from '../../config/config';
 import {Ion} from '../ion';
 import {ListHeader} from '../list/list';

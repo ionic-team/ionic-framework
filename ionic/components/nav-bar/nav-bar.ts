@@ -3,7 +3,7 @@ import {Component, Directive, View, Optional, ElementRef, TemplateRef, forwardRe
 import {Ion} from '../ion';
 import {ToolbarBase} from '../toolbar/toolbar';
 import {IonicConfig} from '../../config/config';
-import {IonicView} from '../../config/annotations';
+import {IonicView} from '../../config/decorators';
 import {IonicApp} from '../app/app';
 import {ViewItem} from '../view/view-item';
 import {ViewController} from '../view/view-controller';

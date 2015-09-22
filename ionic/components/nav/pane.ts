@@ -3,7 +3,7 @@ import {Component, Directive, View, ElementRef, Inject, forwardRef, Injector, bi
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
 import {ViewController} from '../view/view-controller';
-import {IonicComponent} from '../../config/annotations';
+import {IonicComponent} from '../../config/decorators';
 import {PaneAnchor, PaneContentAnchor, NavBarContainer} from './anchors';
 
 /**

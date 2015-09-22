@@ -3,7 +3,7 @@ import {Component, View, ElementRef} from 'angular2/angular2';
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
 import {IonicPlatform} from '../../platform/platform';
-import {IonicComponent} from '../../config/annotations';
+import {IonicComponent} from '../../config/decorators';
 import {ScrollTo} from '../../animations/scroll-to';
 
 

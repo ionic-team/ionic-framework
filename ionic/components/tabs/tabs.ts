@@ -4,7 +4,7 @@ import {IonicApp} from '../app/app';
 import {ViewController} from '../view/view-controller';
 import {ViewItem} from '../view/view-item';
 import {Icon} from '../icon/icon';
-import {IonicComponent, IonicView} from '../../config/annotations';
+import {IonicComponent, IonicView} from '../../config/decorators';
 
   /**
    * @name ionTabs

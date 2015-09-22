@@ -2,7 +2,7 @@ import {Component, Directive, View, Host, ElementRef, Optional, forwardRef, Inje
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
-import {IonicView} from '../../config/annotations';
+import {IonicView} from '../../config/decorators';
 import {MenuToggle} from '../menu/menu-toggle';
 import {Navbar} from '../nav-bar/nav-bar';
 
