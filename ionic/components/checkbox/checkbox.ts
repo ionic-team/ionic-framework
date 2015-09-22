@@ -34,7 +34,7 @@ import {IonicComponent, IonicView} from '../../config/annotations';
     'id'
   ],
   host: {
-    'class': 'item',
+    'class': 'item no-activated',
     'role': 'checkbox',
     'tappable': 'true',
     '[attr.tab-index]': 'tabIndex',

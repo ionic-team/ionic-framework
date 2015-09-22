@@ -12,7 +12,7 @@ $checkbox-md-border-color-on:       color(primary) !default;
 $checkbox-md-checkmark-color-on:    $background-color !default;
 
 
-.checkbox {
+ion-checkbox {
 
   &[aria-checked=true] .checkbox-icon {
     background-color: $checkbox-md-background-color-on;
@@ -49,7 +49,7 @@ $checkbox-md-checkmark-color-on:    $background-color !default;
 
 @mixin checkbox-theme-md($color-name, $bg-on) {
 
-  .checkbox[#{$color-name}][aria-checked=true] .checkbox-icon {
+  ion-checkbox[#{$color-name}][aria-checked=true] .checkbox-icon {
     background-color: $bg-on;
     border-color: $bg-on;
   }

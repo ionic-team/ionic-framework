@@ -3,12 +3,12 @@
 // --------------------------------------------------
 
 
-.checkbox {
+ion-checkbox {
   cursor: pointer;
   @include user-select-none();
 }
 
-.checkbox[aria-disabled=true] {
+ion-checkbox[aria-disabled=true] {
   pointer-events: none;
   opacity: 0.5;
   color: $subdued-text-color;

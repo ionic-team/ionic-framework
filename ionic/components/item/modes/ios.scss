@@ -56,7 +56,7 @@ $item-ios-forward-icon-color:          $item-ios-border-color !default;
       left: 0;
     }
 
-    &.activated {
+    &.activated:not(.no-activated) {
       background-color: $item-ios-activated-background-color;
     }
   }
