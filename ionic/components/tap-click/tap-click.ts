@@ -18,7 +18,7 @@ export class TapClick {
     self.disableClick = 0;
     self.disableClickLimit = 2500;
 
-    self.tapPolyfill = config.setting('tapPolyfill');
+    self.tapPolyfill = (config.setting('tapPolyfill') !== false);
 
     if (config.setting('mdRipple')) {
       self.activator = new RippleActivator(app, config);

@@ -71,9 +71,6 @@ IonicPlatform.register({
   ],
   settings: {
     mode: 'ios',
-    tapPolyfill: function(p) {
-      return /iphone|ipad|ipod/i.test(p.navigatorPlatform());
-    },
     keyboardScrollAssist: function(p) {
       return /iphone|ipad|ipod/i.test(p.navigatorPlatform());
     },
