@@ -47,6 +47,7 @@ export class SlideGesture extends DragGesture {
       this.slide = null;
     });
   }
+
   onDrag(ev) {
     if (!this.slide || !this.slide.started) return;
     this.slide.pos = ev.center[this.direction];
@@ -58,6 +59,7 @@ export class SlideGesture extends DragGesture {
     this.slide.delta = this.slide.pos - this.slide.pointerStartPos;
     this.onSlide(this.slide, ev);
   }
+
   onDragEnd(ev) {
     if (!this.slide || !this.slide.started) return;
     this.onSlideEnd(this.slide, ev);

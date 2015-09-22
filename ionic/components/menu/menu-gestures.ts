@@ -2,16 +2,21 @@ import {Menu} from './menu';
 import {SlideEdgeGesture} from 'ionic/gestures/slide-edge-gesture';
 
 
-class MenuGenericGestureHandler extends SlideEdgeGesture {
-  constructor(menu: Menu, targetElement, threshold) {
-    super(targetElement, {
+class MenuContentGesture extends SlideEdgeGesture {
+  constructor(menu: Menu) {
+
+    super(menu.getContentElement(), {
       direction: (menu.side === 'left' || menu.side === 'right') ? 'x' : 'y',
       edge: menu.side,
-      threshold: threshold
+      threshold: 75
     });
 
     this.menu = menu;
     this.listen();
+  }
+
+  canStart(ev) {
+    return this.menu.isOpen ? true : super.canStart(ev);
   }
 
   // Set CSS, then wait one frame for it to apply before sliding starts
@@ -40,29 +45,25 @@ class MenuGenericGestureHandler extends SlideEdgeGesture {
   }
 }
 
-
-export class MenuContentGesture extends MenuGenericGestureHandler {
-  constructor(menu: Menu) {
-    super(menu, menu.getContentElement(), 75);
-  }
-  canStart(ev) {
-    return this.menu.isOpen ? true : super.canStart(ev);
-  }
-}
-
 export class LeftMenuGesture extends MenuContentGesture {
   constructor(menu: Menu) {
     super(menu);
   }
 }
 
-export class RightMenuGesture extends LeftMenuGesture {
+export class RightMenuGesture extends MenuContentGesture {
   constructor(menu: Menu) {
     super(menu);
   }
+
+  onSlide(slide, ev) {
+    this.menu.setProgess(slide.distance / slide.min);
+  }
+
   getElementStartPos(slide, ev) {
     return this.menu.isOpen ? slide.min : slide.max;
   }
+
   getSlideBoundaries() {
     return {
       min: -this.menu.width(),

@@ -16,7 +16,7 @@ export class SlideEdgeGesture extends SlideGesture {
   }
 
   canStart(ev) {
-    this._containerRect = this.getContainerDimensions();
+    this._d = this.getContainerDimensions();
     return this.edges.every(edge => this._checkEdge(edge, ev.center));
   }
 
@@ -30,11 +30,11 @@ export class SlideEdgeGesture extends SlideGesture {
   }
 
   _checkEdge(edge, pos) {
-    switch(edge) {
-      case 'left': return pos.x <= this._containerRect.left + this.threshold;
-      case 'right': return pos.x >= this._containerRect.width - this.threshold;
-      case 'top': return pos.y <= this._containerRect.top + this.threshold;
-      case 'bottom': return pos.y >= this._containerRect.height - this.threshold;
+    switch (edge) {
+      case 'left': return pos.x <= this._d.left + this.threshold;
+      case 'right': return pos.x >= this._d.width - this.threshold;
+      case 'top': return pos.y <= this._d.top + this.threshold;
+      case 'bottom': return pos.y >= this._d.height - this.threshold;
     }
   }
 
