@@ -52,10 +52,6 @@ action-sheet-wrapper {
 
     color: $action-sheet-options-text-color;
     font-size: 21px;
-
-    &:hover {
-      color: $action-sheet-options-text-color;
-    }
   }
 
   button.activated {

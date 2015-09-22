@@ -35,6 +35,10 @@ ion-action-sheet {
   }
 }
 
+.enable-hover .action-sheet-container button:hover {
+  color: $action-sheet-options-text-color;
+}
+
 ion-action-sheet button {
   min-height: $action-sheet-ios-height;
   padding: $action-sheet-ios-padding;
