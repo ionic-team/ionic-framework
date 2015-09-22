@@ -73,7 +73,7 @@ ion-switch {
   }
 
   &[aria-checked=true] .switch-icon:before,
-  .activated .switch-icon:before {
+  .switch-activated .switch-icon:before {
     // inner bg track's oval, when checked
     transform: scale3d(0, 0, 0);
   }
@@ -105,13 +105,13 @@ ion-switch {
     transform: translate3d($switch-ios-width - $switch-ios-handle-width - ($switch-ios-border-width * 2), 0, 0);
   }
 
-  .activated .switch-icon:after {
+  .switch-activated .switch-icon:after {
     // when pressing down on the switch and NOT checked
     // then make the knob wider
     width: $switch-ios-handle-width + 6;
   }
 
-  &[aria-checked=true] .activated .switch-icon:after {
+  &[aria-checked=true] .switch-activated .switch-icon:after {
     // when pressing down on the switch and IS checked
     // make the knob wider and move it left a bit
     left: $switch-ios-border-width - 6;

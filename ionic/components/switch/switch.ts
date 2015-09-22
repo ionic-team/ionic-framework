@@ -26,7 +26,7 @@ import {pointerCoord} from '../../util/dom';
     'tappable': 'true',
     '(touchstart)': 'swtch.pointerDown($event)',
     '(mousedown)': 'swtch.pointerDown($event)',
-    '[class.activated]': 'swtch.isActivated'
+    '[class.switch-activated]': 'swtch.isActivated'
   }
 })
 class MediaSwitch {
@@ -129,6 +129,7 @@ export class Switch extends Ion {
 
     self.id = IonInput.nextId();
     self.tabIndex = 0;
+    self.lastTouch = 0;
 
     self.onChange = (_) => {};
     self.onTouched = (_) => {};
@@ -202,10 +203,10 @@ export class Switch extends Ion {
 
   pointerDown(ev) {
     if (/touch/.test(ev.type)) {
-      this.isTouch = true;
+      this.lastTouch = Date.now();
     }
 
-    if (this.isTouch && /mouse/.test(ev.type)) {
+    if (this.lastTouch + 999 > Date.now() && /mouse/.test(ev.type)) {
       return;
     }
 
@@ -218,7 +219,7 @@ export class Switch extends Ion {
   }
 
   pointerUp(ev) {
-    if (this.isTouch && /mouse/.test(ev.type)) {
+    if (this.lastTouch + 999 > Date.now() && /mouse/.test(ev.type)) {
       return;
     }
 
@@ -234,7 +235,6 @@ export class Switch extends Ion {
 
     this.removeMoveListener();
     this.isActivated = false;
-    this.isTouch = false;
   }
 
   // Used by the view to update the model (Control)
