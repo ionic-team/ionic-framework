@@ -49,26 +49,26 @@ export class ContactModal {
     console.log('ContactModal constructor')
     this.rootView = ModalFirstPage;
   }
-  viewLoaded() {
-    console.log('ContactModal viewLoaded');
+  onViewLoaded() {
+    console.log('ContactModal onViewLoaded');
   }
-  viewWillEnter() {
-    console.log('ContactModal viewWillEnter');
+  onViewWillEnter() {
+    console.log('ContactModal onViewWillEnter');
   }
   viewDidEnter() {
     console.log('ContactModal viewDidEnter');
   }
-  viewWillLeave() {
-    console.log('ContactModal viewWillLeave');
+  onViewWillLeave() {
+    console.log('ContactModal onViewWillLeave');
   }
-  viewDidLeave() {
-    console.log('ContactModal viewDidLeave');
+  onViewDidLeave() {
+    console.log('ContactModal onViewDidLeave');
   }
-  viewWillUnload() {
-    console.log('ContactModal viewWillUnload');
+  onViewWillUnload() {
+    console.log('ContactModal onViewWillUnload');
   }
-  viewDidUnload() {
-    console.log('ContactModal viewDidUnload');
+  onViewDidUnload() {
+    console.log('ContactModal onViewDidUnload');
   }
 }
 

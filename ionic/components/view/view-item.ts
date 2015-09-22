@@ -344,14 +344,14 @@ export class ViewItem {
    * recommended method to use when a view becomes active.
    */
   loaded() {
-    this.instance && this.instance.viewLoaded && this.instance.viewLoaded();
+    this.instance && this.instance.onViewLoaded && this.instance.onViewLoaded();
   }
 
   /**
    * The view is about to enter and become the active view.
    */
   willEnter() {
-    this.instance && this.instance.viewWillEnter && this.instance.viewWillEnter();
+    this.instance && this.instance.onViewWillEnter && this.instance.onViewWillEnter();
   }
 
   /**
@@ -370,7 +370,7 @@ export class ViewItem {
    * The view has is about to leave and no longer be the active view.
    */
   willLeave() {
-    this.instance && this.instance.viewWillLeave && this.instance.viewWillLeave();
+    this.instance && this.instance.onViewWillLeave && this.instance.onViewWillLeave();
   }
 
   /**
@@ -378,21 +378,21 @@ export class ViewItem {
    * will fire, whether it is cached or unloaded.
    */
   didLeave() {
-    this.instance && this.instance.viewDidLeave && this.instance.viewDidLeave();
+    this.instance && this.instance.onViewDidLeave && this.instance.onViewDidLeave();
   }
 
   /**
    * The view is about to be destroyed and have its elements removed.
    */
   willUnload() {
-    this.instance && this.instance.viewWillUnload && this.instance.viewWillUnload();
+    this.instance && this.instance.onViewWillUnload && this.instance.onViewWillUnload();
   }
 
   /**
    * The view has been destroyed and its elements have been removed.
    */
   didUnload() {
-    this.instance && this.instance.viewDidUnload && this.instance.viewDidUnload();
+    this.instance && this.instance.onViewDidUnload && this.instance.onViewDidUnload();
   }
 
 }

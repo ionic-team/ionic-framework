@@ -84,7 +84,7 @@ export class OverlayRef {
     }
     this._instance = overlayInstance;
 
-    overlayInstance.viewLoaded && overlayInstance.viewLoaded();
+    overlayInstance.onViewLoaded && overlayInstance.onViewLoaded();
 
     this.zIndex = ROOT_Z_INDEX;
     for (let i = 0; i < app.overlays.length; i++) {
@@ -119,7 +119,7 @@ export class OverlayRef {
   _open(opts={}) {
     return new Promise(resolve => {
       let instance = this._instance || {};
-      instance.viewWillEnter && instance.viewWillEnter();
+      instance.onViewWillEnter && instance.onViewWillEnter();
 
       let animationName = (opts && opts.animation) || this._opts.enterAnimation;
       let animation = Animation.create(this._elementRef.nativeElement, animationName);
@@ -151,8 +151,8 @@ export class OverlayRef {
   close(opts={}) {
     return new Promise(resolve => {
       let instance = this._instance || {};
-      instance.viewWillLeave && instance.viewWillLeave();
-      instance.viewWillUnload && instance.viewWillUnload();
+      instance.onViewWillLeave && instance.onViewWillLeave();
+      instance.onViewWillUnload && instance.onViewWillUnload();
 
       let animationName = (opts && opts.animation) || this._opts.leaveAnimation;
       let animation = Animation.create(this._elementRef.nativeElement, animationName);
@@ -161,8 +161,8 @@ export class OverlayRef {
       this.app.setEnabled(false, animation.duration());
 
       animation.play().then(() => {
-        instance.viewDidLeave && instance.viewDidLeave();
-        instance.viewDidUnload && instance.viewDidUnload();
+        instance.onViewDidLeave && instance.onViewDidLeave();
+        instance.onViewDidUnload && instance.onViewDidUnload();
 
         this._dispose();
 
