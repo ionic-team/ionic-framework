@@ -41,6 +41,7 @@ button,
   }
 
   &[clear] {
+    opacity: 1;
     box-shadow: none;
 
     &.activated {

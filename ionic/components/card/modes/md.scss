@@ -79,8 +79,7 @@ ion-card {
   button[item-right],
   [button][item-left],
   [button][item-right], {
-    margin: 0 ($card-md-padding-right / 2) 0 ($card-md-padding-left / 2);
-    padding: 2px 6px;
+    margin: 0 ($card-md-padding-right / 4) 0 ($card-md-padding-left / 4);
     min-height: 26px;
     font-size: 1.3rem;
     border-color: transparent;
