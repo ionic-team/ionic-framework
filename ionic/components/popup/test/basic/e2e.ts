@@ -1,6 +1,6 @@
 
 it('should open alert', function() {
-  element(by.css('#e2eOpenAlert')).click();
+  element(by.css('.e2eOpenAlert')).click();
 });
 
 
@@ -10,7 +10,7 @@ it('should close alert', function() {
 
 
 it('should open prompt', function() {
-  element(by.css('#e2eOpenPrompt')).click();
+  element(by.css('.e2eOpenPrompt')).click();
 });
 
 
@@ -22,7 +22,7 @@ it('should close prompt', function() {
 
 
 it('should open confirm', function() {
-  element(by.css('#e2eOpenConfirm')).click();
+  element(by.css('.e2eOpenConfirm')).click();
 });
 
 
