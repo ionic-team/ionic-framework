@@ -4,9 +4,10 @@
 
 $toolbar-order-ios: (
   back-button: 10,
-  menu-toggle: 20,
+  menu-toggle-primary: 20,
   primary: 30,
-  secondary: 50
+  secondary: 50,
+  menu-toggle-secondary: 60,
 );
 
 $toolbar-ios-height:                        4.4rem !default;
@@ -21,8 +22,12 @@ $toolbar-ios-title-font-size:               1.7rem !default;
   min-height: $toolbar-ios-height;
 
   [menu-toggle] {
-    order: map-get($toolbar-order-ios, 'menu-toggle');
+    order: map-get($toolbar-order-ios, menu-toggle-primary);
     cursor: pointer;
+  }
+
+  [menu-toggle][secondary] {
+    order: map-get($toolbar-order-ios, menu-toggle-secondary);
   }
 
   button,
