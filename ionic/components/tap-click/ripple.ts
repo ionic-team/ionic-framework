@@ -11,7 +11,7 @@ export class RippleActivator extends Activator {
   downAction(targetEle, pointerX, pointerY) {
     super.downAction(targetEle, pointerX, pointerY, (targetEle) => {
 
-      if (!targetEle || !targetEle.parentNode) return;
+      if (!targetEle || !targetEle.parentNode || NO_RIPPLE_TAGNAMES.test(targetEle.tagName)) return;
 
       // clean out any existing ripple elements
       removeAll(targetEle);
@@ -29,7 +29,6 @@ export class RippleActivator extends Activator {
       rippleEle.style.top = (pointerY - r.top) + 'px';
 
       targetEle.appendChild(rippleEle);
-      targetEle.clientWidth; // force render
 
       transitionEnd(rippleEle).then(ev => {
         // the ripple animation has ended
@@ -38,7 +37,9 @@ export class RippleActivator extends Activator {
       });
 
       // kick off animaiton
-      rippleEle.classList.add('ripple-expand');
+      raf(() => {
+        rippleEle.classList.add('ripple-expand');
+      });
     });
   }
 
@@ -50,19 +51,20 @@ export class RippleActivator extends Activator {
     // this stops the background from changing colors, not stop the ripple
     this.queue = {};
 
-    let targetEle = ev.target;
-    raf(() => {
-      if (targetEle && targetEle.parentNode) {
-        targetEle.classList.remove(this.activatedClass);
+    if (ev && ev.target) {
+      raf(() => {
+        let targetEle = ev.target;
+        if (targetEle && targetEle.parentNode) {
+          targetEle.classList.remove(this.activatedClass);
 
-        let rippleElements = getRippleElements(targetEle);
-        for (let i = 0, l = rippleElements.length; i < l; i++) {
-          rippleElements[i].dataset.pointerUp = true;
-          fadeOutRipple(rippleElements[i]);
+          let rippleElements = getRippleElements(targetEle);
+          for (let i = 0, l = rippleElements.length; i < l; i++) {
+            rippleElements[i].dataset.pointerUp = true;
+            fadeOutRipple(rippleElements[i]);
+          }
         }
-      }
-    });
-
+      });
+    }
   }
 
   clearState(ev) {
@@ -102,3 +104,5 @@ function removeAll(targetEle) {
 function getRippleElements(containerEle) {
   return containerEle && containerEle.querySelectorAll('md-ripple');
 }
+
+const NO_RIPPLE_TAGNAMES = /BACKDROP/;
