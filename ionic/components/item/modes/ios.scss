@@ -55,10 +55,6 @@ $item-ios-forward-icon-color:          $item-ios-border-color !default;
     &:last-child:after {
       left: 0;
     }
-
-    &.activated:not(.no-activated) {
-      background-color: $item-ios-activated-background-color;
-    }
   }
 
   ion-header + .item:before {
@@ -141,6 +137,10 @@ $item-ios-forward-icon-color:          $item-ios-border-color !default;
     }
   }
 
+}
+
+.item.activated:not(.no-activated) {
+  background-color: $item-ios-activated-background-color;
 }
 
 .list,
