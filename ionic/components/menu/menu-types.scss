@@ -35,3 +35,7 @@ ion-menu[type=overlay] {
     }
   }
 }
+
+ion-menu[type=overlay][side=right] {
+  left: 8px;
+}

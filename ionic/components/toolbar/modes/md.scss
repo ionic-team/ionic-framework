@@ -43,6 +43,12 @@ $toolbar-md-button-font-size:        1.4rem !default;
     }
   }
 
+  [menu-toggle][secondary],
+  [menu-toggle][secondary].activated {
+    margin: 0 2px;
+    min-width: 28px;
+  }
+
 }
 
 ion-title {

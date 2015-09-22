@@ -10,7 +10,7 @@ import {Animation} from 'ionic/animations/animation';
  */
 export class MenuType {
 
-  constructor(menu: Menu) {
+  constructor() {
     this.open = new Animation();
     this.close = new Animation();
   }
@@ -88,16 +88,17 @@ class MenuRevealType extends MenuType {
     let duration = 250;
 
     let openedX = (menu.width() * (menu.side == 'right' ? -1 : 1)) + 'px';
+    let closedX = '0px'
 
     this.open.easing(easing).duration(duration);
     this.close.easing(easing).duration(duration);
 
     let contentOpen = new Animation(menu.getContentElement());
-    contentOpen.fromTo(TRANSLATE_X, CENTER, openedX);
+    contentOpen.fromTo(TRANSLATE_X, closedX, openedX);
     this.open.add(contentOpen);
 
     let contentClose = new Animation(menu.getContentElement());
-    contentClose.fromTo(TRANSLATE_X, openedX, CENTER);
+    contentClose.fromTo(TRANSLATE_X, openedX, closedX);
     this.close.add(contentClose);
   }
 }
@@ -117,13 +118,23 @@ class MenuOverlayType extends MenuType {
     let duration = 250;
     let backdropOpacity = 0.5;
 
-    let closedX = (menu.width() * (menu.side == 'right' ? 1 : -1)) + 'px';
+    let closedX, openedX;
+    if (menu.side == 'right') {
+      // right side
+      closedX = menu.platform.width() + 'px';
+      openedX = (menu.platform.width() - menu.width() - 8) + 'px';
+
+    } else {
+      // left side
+      closedX = -menu.width() + 'px';
+      openedX = '8px';
+    }
 
     this.open.easing(easing).duration(duration);
     this.close.easing(easing).duration(duration);
 
     let menuOpen = new Animation(menu.getMenuElement());
-    menuOpen.fromTo(TRANSLATE_X, closedX, '8px');
+    menuOpen.fromTo(TRANSLATE_X, closedX, openedX);
     this.open.add(menuOpen);
 
     let backdropOpen = new Animation(menu.getBackdropElement());
@@ -131,7 +142,7 @@ class MenuOverlayType extends MenuType {
     this.open.add(backdropOpen);
 
     let menuClose = new Animation(menu.getMenuElement());
-    menuClose.fromTo(TRANSLATE_X, '8px', closedX);
+    menuClose.fromTo(TRANSLATE_X, openedX, closedX);
     this.close.add(menuClose);
 
     let backdropClose = new Animation(menu.getBackdropElement());
@@ -144,4 +155,3 @@ Menu.register('overlay', MenuOverlayType);
 
 const OPACITY = 'opacity';
 const TRANSLATE_X = 'translateX';
-const CENTER = '0px';

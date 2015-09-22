@@ -1,4 +1,4 @@
-<ion-menu #menu [content]="content">
+<ion-menu [content]="content" id="leftMenu">
 
   <ion-toolbar secondary>
     <ion-title>Left Menu</ion-title>
@@ -8,11 +8,35 @@
 
     <ion-list>
 
-      <button ion-item *ng-for="#p of pages" (click)="openPage(menu, p)">
+      <button ion-item *ng-for="#p of pages" (click)="openPage(p)">
         {{p.title}}
       </button>
 
-      <button ion-item menu-toggle no-forward-icon class="e2eCloseMenu">
+      <button ion-item menu-toggle="leftMenu" no-forward-icon class="e2eCloseMenu">
+        Close Menu
+      </button>
+
+    </ion-list>
+  </ion-content>
+
+</ion-menu>
+
+
+<ion-menu side="right" [content]="content" id="rightMenu">
+
+  <ion-toolbar secondary>
+    <ion-title>Right Menu</ion-title>
+  </ion-toolbar>
+
+  <ion-content>
+
+    <ion-list>
+
+      <button ion-item *ng-for="#p of pages" (click)="openPage(p)">
+        {{p.title}}
+      </button>
+
+      <button ion-item menu-toggle="rightMenu" no-forward-icon class="e2eCloseMenu">
         Close Menu
       </button>
 

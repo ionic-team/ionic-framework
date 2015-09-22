@@ -4,6 +4,7 @@ import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
 import {IonicConfig} from '../../config/config';
 import {IonicComponent} from '../../config/annotations';
+import {IonicPlatform} from '../../platform/platform';
 import * as gestures from  './menu-gestures';
 
 
@@ -35,10 +36,16 @@ import * as gestures from  './menu-gestures';
 })
 export class Menu extends Ion {
 
-  constructor(app: IonicApp, elementRef: ElementRef, config: IonicConfig) {
+  constructor(
+    app: IonicApp,
+    elementRef: ElementRef,
+    config: IonicConfig,
+    platform: IonicPlatform
+  ) {
     super(elementRef, config);
-
     this.app = app;
+    this.platform = platform;
+
     this.opening = new EventEmitter('opening');
     this.isOpen = false;
     this._disableTime = 0;
@@ -46,9 +53,9 @@ export class Menu extends Ion {
 
   onInit() {
     super.onInit();
-    this.contentElement = (this.content instanceof Node) ? this.content : this.content.getNativeElement();
+    this._cntEle = (this.content instanceof Node) ? this.content : this.content.getNativeElement();
 
-    if (!this.contentElement) {
+    if (!this._cntEle) {
       return console.error('Menu: must have a [content] element to listen for drag events on. Example:\n\n<ion-menu [content]="content"></ion-menu>\n\n<ion-content #content></ion-content>');
     }
 
@@ -61,8 +68,8 @@ export class Menu extends Ion {
     this._initGesture();
     this._initType(this.type);
 
-    this.contentElement.classList.add('menu-content');
-    this.contentElement.classList.add('menu-content-' + this.type);
+    this._cntEle.classList.add('menu-content');
+    this._cntEle.classList.add('menu-content-' + this.type);
 
     let self = this;
     this.onContentClick = function(ev) {
@@ -161,11 +168,11 @@ export class Menu extends Ion {
 
     this.isOpen = isOpen;
 
-    this.contentElement.classList[isOpen ? 'add' : 'remove']('menu-content-open');
+    this._cntEle.classList[isOpen ? 'add' : 'remove']('menu-content-open');
 
-    this.contentElement.removeEventListener('click', this.onContentClick);
+    this._cntEle.removeEventListener('click', this.onContentClick);
     if (isOpen) {
-      this.contentElement.addEventListener('click', this.onContentClick);
+      this._cntEle.addEventListener('click', this.onContentClick);
 
     } else {
       this.getNativeElement().classList.remove('show-menu');
@@ -220,7 +227,7 @@ export class Menu extends Ion {
    * @return {Element} The Menu's associated content element.
    */
   getContentElement() {
-    return this.contentElement;
+    return this._cntEle;
   }
 
   /**
@@ -239,7 +246,7 @@ export class Menu extends Ion {
     this.app.unregister(this.id);
     this._gesture && this._gesture.destroy();
     this._type && this._type.onDestroy();
-    this.contentElement = null;
+    this._cntEle = null;
   }
 
 }
