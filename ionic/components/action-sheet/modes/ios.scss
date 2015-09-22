@@ -61,6 +61,10 @@ ion-action-sheet button {
   border-bottom: 1px solid $action-sheet-ios-border-color;
 }
 
+.action-sheet-cancel button {
+  font-weight: bold;
+}
+
 .action-sheet-title {
   padding: 2rem;
   font-size: $action-sheet-ios-title-font-size;
