@@ -2,47 +2,43 @@
 // Clear Button
 // --------------------------------------------------
 
-button,
-[button] {
+button[clear],
+[button][clear] {
+  border-color: transparent;
+  background: transparent;
+  color: darken-or-lighten($button-color);
 
-  &[clear] {
-    border-color: transparent;
-    background: transparent;
-    color: darken-or-lighten($button-color);
-
-    &.activated {
-      opacity: 0.4;
-    }
+  &.activated {
+    opacity: 0.4;
   }
 
 }
 
-
-// Clear Button Color Mixin
-// --------------------------------------------------
-
-@mixin button-clear($fg-color) {
-
-  &[clear] {
-    border-color: transparent;
-    background: transparent;
-    color: $fg-color;
-  }
-
+.enable-hover button[clear]:hover,
+.enable-hover [button][clear]:hover {
+  opacity: 0.6;
+  color: darken-or-lighten($button-color);
 }
+
 
 
 // Generate Clear Button Colors
 // --------------------------------------------------
 
-@each $color, $value in auxiliary-colors() {
+@each $color-name, $color-value in auxiliary-colors() {
 
-  button[#{$color}],
-  [button][#{$color}] {
+  $fg-color: darken-or-lighten($color-value);
 
-    $fg-color: darken-or-lighten($value);
-    @include button-clear($fg-color);
+  button[clear][#{$color-name}],
+  [button][clear][#{$color-name}] {
+    border-color: transparent;
+    background: transparent;
+    color: $fg-color;
+  }
 
+  .enable-hover button[clear][#{$color-name}]:hover,
+  .enable-hover [button][clear][#{$color-name}]:hover {
+    color: darken-or-lighten($fg-color);
   }
 
 }
