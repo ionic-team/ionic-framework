@@ -4,7 +4,7 @@ import {ROUTER_BINDINGS, HashLocationStrategy, LocationStrategy, Router} from 'a
 import {IonicConfig} from '../../config/config';
 import {IonicPlatform, Platform} from '../../platform/platform';
 import {ClickBlock} from '../../util/click-block';
-import * as util from '../../util/util';
+import * as dom from '../../util/dom';
 
 // injectables
 import {TapClick} from '../tap-click/tap-click';
@@ -243,7 +243,7 @@ function initApp(window, document, config, platform) {
 
   // config and platform settings have been figured out
   // apply the correct CSS to the app
-  applyBodyCss(document.body, config, platform);
+  applyBodyCss(document, config, platform);
 
   // prepare the ready promise to fire....when ready
   platform.prepareReady(config);
@@ -328,7 +328,14 @@ export function ionicBootstrap(rootComponentType, config) {
   });
 }
 
-function applyBodyCss(bodyEle, config, platform) {
+function applyBodyCss(document, config, platform) {
+  let bodyEle = document.body;
+  if (!bodyEle) {
+    return dom.ready(function() {
+      applyBodyCss(document, config, platform);
+    });
+  }
+
   let versions = platform.versions();
   platform.platforms().forEach(platformName => {
     // platform-ios
