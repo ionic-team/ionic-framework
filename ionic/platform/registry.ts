@@ -122,7 +122,7 @@ IonicPlatform.register({
     'tablet'
   ],
   settings: {
-    mode: 'wp',
+    mode: 'md',
   },
   isMatch(p) {
     return p.isPlatform('windowsphone', 'windows phone');
