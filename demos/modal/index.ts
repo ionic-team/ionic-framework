@@ -55,8 +55,8 @@ export class ContactModal {
   onViewWillEnter() {
     console.log('ContactModal onViewWillEnter');
   }
-  viewDidEnter() {
-    console.log('ContactModal viewDidEnter');
+  onViewDidEnter() {
+    console.log('ContactModal onViewDidEnter');
   }
   onViewWillLeave() {
     console.log('ContactModal onViewWillLeave');

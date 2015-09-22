@@ -135,7 +135,7 @@ export class OverlayRef {
           this.app.zoneRun(() => {
             this.app.setEnabled(true);
             animation.dispose();
-            instance.viewDidEnter && instance.viewDidEnter();
+            instance.onViewDidEnter && instance.onViewDidEnter();
             resolve();
           });
 

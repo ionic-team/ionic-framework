@@ -363,7 +363,7 @@ export class ViewItem {
     if (navbarView) {
       navbarView.didEnter();
     }
-    this.instance && this.instance.viewDidEnter && this.instance.viewDidEnter();
+    this.instance && this.instance.onViewDidEnter && this.instance.onViewDidEnter();
   }
 
   /**
