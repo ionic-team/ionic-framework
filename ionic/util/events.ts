@@ -1,13 +1,12 @@
 import {Injectable} from 'angular2/angular2';
 
 /**
- * Event is a pub/sub style event system for sending and responding to application-level
+ * Events is a pub/sub style event system for sending and responding to application-level
  * events across your app.
  */
 @Injectable()
 export class Events {
   constructor() {
-    console.log('Events constructed');
     this.channels = [];
   }
 
@@ -33,12 +32,16 @@ export class Events {
    *
    * @param topic the topic to unsubscribe from
    * @param handler the event handler
+   *
+   * @return true if a handler was removed
    */
   unsubscribe(topic, handler) {
-    var t = this.channels[topic];
+    let t = this.channels[topic];
     if(!t) {
-      return null;
+      return false;
     }
+
+    let i = t.indexOf(handler);
 
     t.splice(t.indexOf(handler), 1);
 

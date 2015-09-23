@@ -27,13 +27,17 @@ class MyApp {
 
     events.subscribe('user:created', (user) => {
       console.log('User created', user);
+      return {
+        what: 'what'
+      }
     })
 
     setInterval(() => {
-      events.publish('user:created', {
+      var results = events.publish('user:created', {
         name: 'Max Lynch',
         id: 1
       })
+      console.log('Got results', results);
     }, 2000);
 
     setTimeout(() => {
