@@ -115,7 +115,7 @@ export class TapClick {
       ev.preventDefault();
       ev.stopPropagation();
 
-    } else if (self.lastTouch + 999 < Date.now()) {
+    } else if (this.lastTouch + 999 < Date.now()) {
       this.pointerStart(ev);
     }
   }
@@ -131,7 +131,7 @@ export class TapClick {
       ev.stopPropagation();
     }
 
-    if (self.lastTouch + 999 < Date.now()) {
+    if (this.lastTouch + 999 < Date.now()) {
       this.pointerEnd(ev);
     }
   }
