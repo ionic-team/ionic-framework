@@ -420,6 +420,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     self.setScrollStop = function() {
       ionic.scroll.isScrolling = false;
       ionic.scroll.lastTop = self.__scrollTop;
+      self.triggerScrollEndEvent();
     };
 
     self.triggerScrollEvent = ionic.throttle(function() {
