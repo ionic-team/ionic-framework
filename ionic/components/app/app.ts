@@ -16,8 +16,7 @@ import {FocusHolder} from '../form/focus-holder';
 /**
  * @name IonicApp
  * @description
- * TODO(adamdbradley): IonicApp is injected, not inherited from now
- * The base Ionic class that your app inherits from. By inheriting from this class, you will have access to the Ionic API.
+ * Service exposing the Ionic app level api.
  *
  * @usage
  * ```js
