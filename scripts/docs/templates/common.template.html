@@ -1,5 +1,8 @@
 ---
-<@ include "lib/yaml.template.html" @>
+layout: "v2/docs_base"
+version: "<$ version.current.name $>"
+versionHref: "<$ version.current.href $>"
+path: "<$ doc.path $>"
 id: api
 title: "<@ if doc.docType == "directive" @><$ doc.name | dashCase $><@ else @><$ doc.name $><@ endif @>"
 header_sub_title: "<$ doc.docType | capital $> in module <$ doc.module $>"
