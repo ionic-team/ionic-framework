@@ -100,6 +100,6 @@ class MyApp {
     menu.close();
 
     let nav = this.app.getComponent('myNav');
-    nav.setItems([component.component]);
+    nav.setViews([component.component]);
   }
 }

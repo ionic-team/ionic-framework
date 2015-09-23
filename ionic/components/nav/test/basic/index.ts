@@ -18,7 +18,7 @@ import {NavParams, NavController} from 'ionic/ionic';
       '<p>{{title}}</p>' +
       '<p><button id="from1To2" primary (click)="push()">Push (Go to 2nd)</button></p>' +
       '<p><button [push-data]="pushData" [nav-push]="pushPage">Push w/ nav-push (Go to 2nd)</button></p>' +
-      '<p><button (click)="setItems()">setItems() (Go to 3rd, no history)</button></p>' +
+      '<p><button (click)="setViews()">setViews() (Go to 3rd, no history)</button></p>' +
       '<icon class="ion-ios-arrow-back"></icon>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
@@ -39,12 +39,12 @@ class FirstPage {
     }
   }
 
-  setItems() {
+  setViews() {
     let items = [
       ThirdPage
     ];
 
-    this.nav.setItems(items);
+    this.nav.setViews(items);
   }
 
   push() {
@@ -61,7 +61,7 @@ class FirstPage {
       <p><button (click)="pop()">Pop (Go back to 1st)</button></p>
       <p><button id="from2To1" nav-pop>Pop with NavPop (Go back to 1st)</button></p>
       <p><button id="from2To3" (click)="push()">Push (Go to 3rd)</button></p>
-      <p><button (click)="setItems()">setItems() (Go to 3rd, FirstPage 1st in history)</button></p>
+      <p><button (click)="setViews()">setViews() (Go to 3rd, FirstPage 1st in history)</button></p>
       <div class="green"><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f></div>
     </ion-content>
   `
@@ -77,13 +77,13 @@ class SecondPage {
     console.log('Second page params:', params);
   }
 
-  setItems() {
+  setViews() {
     let items = [
       FirstPage,
       ThirdPage
     ];
 
-    this.nav.setItems(items);
+    this.nav.setViews(items);
   }
 
   pop() {

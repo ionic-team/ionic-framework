@@ -5,8 +5,8 @@ import {ToolbarBase} from '../toolbar/toolbar';
 import {IonicConfig} from '../../config/config';
 import {IonicView} from '../../config/decorators';
 import {IonicApp} from '../app/app';
-import {ViewItem} from '../view/view-item';
-import {ViewController} from '../view/view-controller';
+import {ViewController} from '../nav/view-controller';
+import {NavController} from '../nav/nav-controller';
 
 
 @Directive({
@@ -17,19 +17,19 @@ import {ViewController} from '../view/view-controller';
 })
 class BackButton extends Ion {
   constructor(
-    @Optional() viewCtrl: ViewController,
+    @Optional() navCtrl: NavController,
     elementRef: ElementRef,
     @Optional() @Inject(forwardRef(() => Navbar)) navbar: Navbar
   ) {
     super(elementRef, null);
-    this.viewCtrl = viewCtrl;
+    this.navCtrl = navCtrl;
     navbar && navbar.setBackButtonRef(elementRef);
   }
 
   goBack(ev) {
     ev.stopPropagation();
     ev.preventDefault();
-    this.viewCtrl && this.viewCtrl.pop();
+    this.navCtrl && this.navCtrl.pop();
   }
 }
 
@@ -73,14 +73,14 @@ class BackButtonText extends Ion {
 export class Navbar extends ToolbarBase {
   constructor(
     app: IonicApp,
-    @Optional() item: ViewItem,
+    @Optional() viewCtrl: ViewController,
     elementRef: ElementRef,
     config: IonicConfig
   ) {
     super(elementRef, config);
 
     this.app = app;
-    item && item.navbarView(this);
+    viewCtrl && viewCtrl.navbarView(this);
 
     this.bbIcon = config.setting('backButtonIcon');
     this.bbDefault = config.setting('backButtonText');
@@ -119,9 +119,9 @@ export class Navbar extends ToolbarBase {
 })
 export class NavbarTemplate {
   constructor(
-    @Optional() item: ViewItem,
+    @Optional() viewCtrl: ViewController,
     @Optional() templateRef: TemplateRef
   ) {
-    item && item.addTemplateRef('navbar', templateRef);
+    viewCtrl && viewCtrl.addTemplateRef('navbar', templateRef);
   }
 }

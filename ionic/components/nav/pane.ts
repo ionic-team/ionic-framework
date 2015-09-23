@@ -2,7 +2,7 @@ import {Component, Directive, View, ElementRef, Inject, forwardRef, Injector, bi
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
-import {ViewController} from '../view/view-controller';
+import {NavController} from './nav-controller';
 import {IonicComponent} from '../../config/decorators';
 import {PaneAnchor, PaneContentAnchor, NavBarContainer} from './anchors';
 
@@ -12,14 +12,14 @@ import {PaneAnchor, PaneContentAnchor, NavBarContainer} from './anchors';
 export class PaneController {
   /**
    * TODO
-   * @param {ViewController} viewCtrl  TODO
+   * @param {NavController} navCtrl  TODO
    */
-  constructor(viewCtrl: ViewController) {
+  constructor(navCtrl: NavController) {
     this.panes = [];
-    this.viewCtrl = viewCtrl;
+    this.navCtrl = navCtrl;
 
     this.bindings = Injector.resolve([
-      bind(ViewController).toValue(viewCtrl)
+      bind(NavController).toValue(navCtrl)
     ]);
   }
 
@@ -34,7 +34,7 @@ export class PaneController {
     // Tabs and view's without a navbar would get a different Panes
 
     let key = itemStructure.key;
-    let viewCtrl = this.viewCtrl;
+    let navCtrl = this.navCtrl;
     let pane = this.panes[this.panes.length - 1];
 
     if (pane && pane.key === key) {
@@ -43,7 +43,7 @@ export class PaneController {
 
     } else {
       // create a new nav pane
-      viewCtrl.loader.loadNextToLocation(Pane, viewCtrl.anchorElementRef(), this.bindings).then((componentRef) => {
+      navCtrl.loader.loadNextToLocation(Pane, navCtrl.anchorElementRef(), this.bindings).then((componentRef) => {
 
         // get the pane reference
         pane = this.newPane;
@@ -76,7 +76,7 @@ export class PaneController {
           // as each section is compiled and added to the Pane
           // the section will add a reference to itself in the Pane's sections object
           promises.push(
-            viewCtrl.loader.loadNextToLocation(SectionClass, sectionAnchorElementRef)
+            navCtrl.loader.loadNextToLocation(SectionClass, sectionAnchorElementRef)
           );
         });
 
@@ -121,14 +121,14 @@ export class PaneController {
 })
 export class Pane extends Ion {
   constructor(
-    @Inject(forwardRef(() => ViewController)) viewCtrl: ViewController,
+    @Inject(forwardRef(() => NavController)) navCtrl: NavController,
     elementRef: ElementRef,
     ionicConfig: IonicConfig
   ) {
     super(elementRef, ionicConfig);
-    viewCtrl.panes.add(this);
+    navCtrl.panes.add(this);
     this.totalItems = 0;
-    this.zIndex = ++viewCtrl.zIndexes;
+    this.zIndex = ++navCtrl.zIndexes;
   }
 
 }

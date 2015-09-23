@@ -29,12 +29,12 @@ export class NavRouter extends RouterOutlet {
               nav: Nav) {
     super(_elementRef, _loader, _parentRouter, nameAttr);
 
-    // Nav is Ionic's ViewController, which we injected into this class
+    // Nav is Ionic's NavController, which we injected into this class
     this.nav = nav;
 
-    // register this router with Ionic's ViewController
-    // Ionic's ViewController will call this NavRouter's "stateChange"
-    // method when the ViewController has...changed its state
+    // register this router with Ionic's NavController
+    // Ionic's NavController will call this NavRouter's "stateChange"
+    // method when the NavController has...changed its state
     nav.registerRouter(this);
   }
 
@@ -55,7 +55,7 @@ export class NavRouter extends RouterOutlet {
       return Promise.resolve();
     }
 
-    // tell the ViewController which componentType, and it's params, to navigate to
+    // tell the NavController which componentType, and it's params, to navigate to
     return this.nav.push(componentType, nextInstruction.params);
   }
 
@@ -66,23 +66,23 @@ export class NavRouter extends RouterOutlet {
   /**
    * TODO
    * @param {TODO} type  TODO
-   * @param {TODO} viewItem  TODO
+   * @param {TODO} viewCtrl  TODO
    */
-  stateChange(type, viewItem) {
-    // stateChange is called by Ionic's ViewController
+  stateChange(type, viewCtrl) {
+    // stateChange is called by Ionic's NavController
     // type could be "push" or "pop"
-    // viewItem is Ionic's ViewItem class, which has the properties "componentType" and "params"
+    // viewCtrl is Ionic's ViewController class, which has the properties "componentType" and "params"
 
     // only do an update if there's an actual view change
-    if (!viewItem || this._activeViewId === viewItem.id) return;
-    this._activeViewId = viewItem.id;
+    if (!viewCtrl || this._activeViewId === viewCtrl.id) return;
+    this._activeViewId = viewCtrl.id;
 
     // get the best PathRecognizer for this view's componentType
-    let pathRecognizer = this.getPathRecognizerByComponent(viewItem.componentType);
+    let pathRecognizer = this.getPathRecognizerByComponent(viewCtrl.componentType);
     if (pathRecognizer) {
 
       // generate a componentInstruction from the view's PathRecognizer and params
-      let componentInstruction = pathRecognizer.generate(viewItem.params.data);
+      let componentInstruction = pathRecognizer.generate(viewCtrl.params.data);
 
       // create an Instruction from the componentInstruction
       let instruction = new Instruction(componentInstruction, null);

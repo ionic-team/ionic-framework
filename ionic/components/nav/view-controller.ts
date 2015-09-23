@@ -1,15 +1,15 @@
 import {Component, EventEmitter, ElementRef, bind, Injector, ComponentRef} from 'angular2/angular2';
 import {DirectiveBinding} from 'angular2/src/core/compiler/element_injector';
 
-import {NavParams} from '../nav/nav-controller';
+import {NavParams} from './nav-controller';
 
 /**
  * TODO
  */
-export class ViewItem {
+export class ViewController {
 
-  constructor(viewCtrl, componentType, params = {}) {
-    this.viewCtrl = viewCtrl;
+  constructor(navCtrl, componentType, params = {}) {
+    this.navCtrl = navCtrl;
     this.componentType = componentType;
     this.params = new NavParams(params);
     this.instance = null;
@@ -47,9 +47,9 @@ export class ViewItem {
    * @returns {TODO} TODO
    */
   stage(callback) {
-    let viewCtrl = this.viewCtrl;
+    let navCtrl = this.navCtrl;
 
-    if (this.instance || !viewCtrl) {
+    if (this.instance || !navCtrl) {
       // already compiled this view
       return callback();
     }
@@ -67,19 +67,19 @@ export class ViewItem {
     ionViewComponentType.token = 'ionView' + this.componentType.name;
 
     // compile the Component
-    viewCtrl.compiler.compileInHost(ionViewComponentType).then(hostProtoViewRef => {
+    navCtrl.compiler.compileInHost(ionViewComponentType).then(hostProtoViewRef => {
 
       // figure out the sturcture of this Component
       // does it have a navbar? Is it tabs? Should it not have a navbar or any toolbars?
       let itemStructure = this.sturcture = this.inspectStructure(hostProtoViewRef);
 
-      // get the appropriate Pane which this ViewItem will fit into
-      viewCtrl.panes.get(itemStructure, pane => {
+      // get the appropriate Pane which this ViewController will fit into
+      navCtrl.panes.get(itemStructure, pane => {
         this.pane = pane;
 
-        let bindings = viewCtrl.bindings.concat(Injector.resolve([
+        let bindings = navCtrl.bindings.concat(Injector.resolve([
           bind(NavParams).toValue(this.params),
-          bind(ViewItem).toValue(this)
+          bind(ViewController).toValue(this)
         ]));
 
         // add the content of the view to the content area
@@ -89,8 +89,8 @@ export class ViewItem {
         // the same guts as DynamicComponentLoader.loadNextToLocation
         var hostViewRef =
             contentContainer.createHostView(hostProtoViewRef, -1, bindings);
-        var newLocation = viewCtrl.viewMngr.getHostElement(hostViewRef);
-        var newComponent = viewCtrl.viewMngr.getComponent(newLocation);
+        var newLocation = navCtrl.viewMngr.getHostElement(hostViewRef);
+        var newComponent = navCtrl.viewMngr.getComponent(newLocation);
         pane.totalItems++;
 
         var dispose = () => {
@@ -108,12 +108,12 @@ export class ViewItem {
         this.disposals.push(dispose);
         var viewComponetRef = new ComponentRef(newLocation, newComponent, dispose);
 
-        // get the component's instance, and set it to the this ViewItem
+        // get the component's instance, and set it to the this ViewController
         this.setInstance(viewComponetRef.instance);
         this.viewElementRef(viewComponetRef.location);
 
         // // get the item container's nav bar
-        let navbarViewContainer = viewCtrl.navbarViewContainer();
+        let navbarViewContainer = navCtrl.navbarViewContainer();
 
         // // get the item's navbar protoview
         let navbarTemplateRef = this.templateRefs.navbar;
@@ -186,7 +186,7 @@ export class ViewItem {
       });
     });
 
-    if (this.viewCtrl.childNavbar()) {
+    if (this.navCtrl.childNavbar()) {
       navbar = false;
     }
 
@@ -204,8 +204,8 @@ export class ViewItem {
    */
   enableBack() {
     // update if it's possible to go back from this nav item
-    if (this.viewCtrl) {
-      let previousItem = this.viewCtrl.getPrevious(this);
+    if (this.navCtrl) {
+      let previousItem = this.navCtrl.getPrevious(this);
       // the previous view may exist, but if it's about to be destroyed
       // it shouldn't be able to go back to
       return !!(previousItem && !previousItem.shouldDestroy);
@@ -219,11 +219,10 @@ export class ViewItem {
    */
   setInstance(instance) {
     this.instance = instance;
-    this.instance._viewItem = this;
   }
 
   get index() {
-    return (this.viewCtrl ? this.viewCtrl.indexOf(this) : -1);
+    return (this.navCtrl ? this.navCtrl.indexOf(this) : -1);
   }
 
   isRoot() {

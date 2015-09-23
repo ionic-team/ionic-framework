@@ -12,7 +12,7 @@ import {NavParams, NavController} from 'ionic/ionic';
       '<h1>{{title}}</h1>' +
       '<p><button id="from1To2" secondary (click)="push()">(Push) Go to Second Page</button></p>' +
       '<p><button secondary [push-data]="pushData" [nav-push]="pushPage">(Nav-Push) Go to Second Page</button></p>' +
-      '<p><button danger (click)="setItems()">(setItems) Go to Third Page</button></p>' +
+      '<p><button danger (click)="setViews()">(setViews) Go to Third Page</button></p>' +
     '</ion-content>'
 })
 class FirstPage {
@@ -29,11 +29,11 @@ class FirstPage {
     }
   }
 
-  setItems() {
+  setViews() {
     let items = [
       ThirdPage
     ];
-    this.nav.setItems(items);
+    this.nav.setViews(items);
   }
 
   push() {
@@ -52,7 +52,7 @@ class FirstPage {
       <p><button (click)="pop()">(Pop) Go back to First Page</button></p>
       <p><button id="from2To1" nav-pop>(NavPop) Go back to First Page</button></p>
       <p><button danger id="from2To3" (click)="push()">(Push) Go to Third Page</button></p>
-      <p><button danger (click)="setItems()">(setItems) Go to Third Page</button></p>
+      <p><button danger (click)="setViews()">(setViews) Go to Third Page</button></p>
     </ion-content>
   `
 })
@@ -66,12 +66,12 @@ class SecondPage {
     console.log('Second page params:', params);
   }
 
-  setItems() {
+  setViews() {
     let items = [
       FirstPage,
       ThirdPage
     ];
-    this.nav.setItems(items);
+    this.nav.setViews(items);
   }
 
   pop() {

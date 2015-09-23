@@ -1,8 +1,7 @@
 import {Component, Directive, View, ElementRef, NgIf, ViewQuery, QueryList} from 'angular2/angular2';
 
-import {ItemPrimaryOptions, ItemSecondaryOptions} from './item-options';
-import {ItemPrimarySwipeButtons, ItemSecondarySwipeButtons} from './item-swipe-buttons';
 import {dom} from 'ionic/util';
+
 
 /**
  * @name ionItem

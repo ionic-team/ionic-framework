@@ -1,7 +1,7 @@
 import {Directive, View, ElementRef, Host, Optional, forwardRef, Injector, NgZone} from 'angular2/angular2';
 
 import {IonicComponent} from '../../config/decorators';
-import {ViewController} from '../view/view-controller';
+import {NavController} from './nav-controller';
 
 /**
  * TODO
@@ -19,22 +19,22 @@ import {ViewController} from '../view/view-controller';
   template: '<template pane-anchor></template>',
   directives: [forwardRef(() => NavPaneAnchor)]
 })
-export class Nav extends ViewController {
+export class Nav extends NavController {
 
   /**
    * TODO
-   * @param {ViewController} hostViewCtrl  TODO
+   * @param {NavController} hostnavCtrl  TODO
    * @param {Injector} injector  TODO
    * @param {ElementRef} elementRef  TODO
    * @param {NgZone} zone  TODO
    */
   constructor(
-    @Optional() hostViewCtrl: ViewController,
+    @Optional() hostnavCtrl: NavController,
     injector: Injector,
     elementRef: ElementRef,
     zone: NgZone
   ) {
-    super(hostViewCtrl, injector, elementRef, zone);
+    super(hostnavCtrl, injector, elementRef, zone);
   }
 
   /**

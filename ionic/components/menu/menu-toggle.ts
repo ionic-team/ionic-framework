@@ -2,7 +2,7 @@ import {Directive, ElementRef, Optional} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
-import {ViewItem} from '../view/view-item';
+import {ViewController} from '../nav/view-controller';
 import {Navbar} from '../nav-bar/nav-bar';
 
 
@@ -24,12 +24,12 @@ export class MenuToggle extends Ion {
   constructor(
     app: IonicApp,
     elementRef: ElementRef,
-    @Optional() item: ViewItem,
+    @Optional() viewCtrl: ViewController,
     @Optional() navbar: Navbar
   ) {
     super(elementRef, null);
     this.app = app;
-    this.item = item;
+    this.viewCtrl = viewCtrl;
     this.withinNavbar = !!navbar;
   }
 
@@ -45,8 +45,8 @@ export class MenuToggle extends Ion {
   }
 
   get isHidden() {
-    if (this.withinNavbar && this.item) {
-      return !this.item.isRoot();
+    if (this.withinNavbar && this.viewCtrl) {
+      return !this.viewCtrl.isRoot();
     }
     return false;
   }

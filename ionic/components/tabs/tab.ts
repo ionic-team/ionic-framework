@@ -1,7 +1,7 @@
 import {Directive, Component, View, Host, ElementRef, forwardRef, Injector, NgZone} from 'angular2/angular2';
 
-import {ViewController} from '../view/view-controller';
-import {ViewItem} from '../view/view-item';
+import {NavController} from '../nav/nav-controller';
+import {ViewController} from '../nav/view-controller';
 import {Tabs} from './tabs';
 
 
@@ -35,7 +35,7 @@ import {Tabs} from './tabs';
   template: '<template pane-anchor></template><ng-content></ng-content>',
   directives: [forwardRef(() => TabPaneAnchor)]
 })
-export class Tab extends ViewController {
+export class Tab extends NavController {
 
   /**
    * TODO
@@ -51,32 +51,32 @@ export class Tab extends ViewController {
     zone: NgZone
   ) {
     // A Tab is both a container of many views, and is a view itself.
-    // A Tab is one ViewItem within it's Host Tabs (which extends ViewController)
-    // A Tab is a ViewController for its child ViewItems
+    // A Tab is one ViewController within it's Host Tabs (which extends NavController)
+    // A Tab is a NavController for its child ViewControllers
     super(tabs, injector, elementRef, zone);
     this.tabs = tabs;
 
     this.childNavbar(true);
 
-    let item = this.item = new ViewItem(tabs.Host);
-    item.setInstance(this);
-    item.viewElementRef(elementRef);
+    let viewCtrl = this.viewCtrl = new ViewController(tabs.Host);
+    viewCtrl.setInstance(this);
+    viewCtrl.viewElementRef(elementRef);
     tabs.addTab(this);
 
-    this.navbarView = item.navbarView = () => {
-      let activeItem = this.getActive();
-      return activeItem && activeItem.navbarView();
+    this.navbarView = viewCtrl.navbarView = () => {
+      let activeView = this.getActive();
+      return activeView && activeView.navbarView();
     };
 
-    item.enableBack = () => {
-      // override ViewItem's enableBack(), should use the
+    viewCtrl.enableBack = () => {
+      // override ViewController's enableBack(), should use the
       // active child nav item's enableBack() instead
-      let activeItem = this.getActive();
-      return (activeItem && activeItem.enableBack());
+      let activeView = this.getActive();
+      return (activeView && activeView.enableBack());
     };
 
-    this.panelId = 'tab-panel-' + item.id;
-    this.labeledBy = 'tab-button-' + item.id;
+    this.panelId = 'tab-panel-' + viewCtrl.id;
+    this.labeledBy = 'tab-button-' + viewCtrl.id;
   }
 
   onInit() {
@@ -118,11 +118,11 @@ export class Tab extends ViewController {
   }
 
   get isSelected() {
-    return this.tabs.isActive(this.item);
+    return this.tabs.isActive(this.viewCtrl);
   }
 
   get isNotSelected() {
-    return !this.tabs.isActive(this.item);
+    return !this.tabs.isActive(this.viewCtrl);
   }
 
 }

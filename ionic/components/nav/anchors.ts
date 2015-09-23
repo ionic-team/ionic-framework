@@ -2,7 +2,7 @@ import {Component, View, Directive, Host, ElementRef, forwardRef, Inject} from '
 import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
 
 import {Pane} from './pane';
-import {ViewController} from '../view/view-controller';
+import {NavController} from './nav-controller';
 
 
 @Directive({selector: 'template[pane-anchor]'})
@@ -32,10 +32,10 @@ export class PaneContentAnchor {
 })
 class NavBarAnchor {
   constructor(
-    @Inject(forwardRef(() => ViewController)) viewCtrl: ViewController,
+    @Inject(forwardRef(() => NavController)) navCtrl: NavController,
     viewContainerRef: ViewContainerRef
   ) {
-    viewCtrl.navbarViewContainer(viewContainerRef);
+    navCtrl.navbarViewContainer(viewContainerRef);
   }
 }
 
