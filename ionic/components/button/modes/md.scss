@@ -5,8 +5,9 @@
 $button-md-font-size:                      1.4rem !default;
 $button-md-min-height:                     3.6rem !default;
 $button-md-padding:                        0 1.1em !default;
-$button-md-box-shadow:                     0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12) !default;
-$button-md-box-shadow-active:              0 4px 5px 0 rgba(0, 0, 0, 0.14),0 1px 10px 0 rgba(0, 0, 0, 0.12),0 2px 4px -1px rgba(0, 0, 0, 0.2); //0 1px 3px 0 rgba(0, 0, 0, 0.3); //0 2px 5px 0 rgba(0, 0, 0, 0.26) !default;
+$button-md-box-shadow:                     0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12) !default;
+$button-md-box-shadow-active:              0 3px 5px rgba(0, 0, 0, 0.14), 0 3px 5px rgba(0, 0, 0, 0.21) !default;
+
 $button-md-border-radius:                  2px !default;
 $button-md-animation-curve:                cubic-bezier(0.4, 0, 0.2, 1) !default;
 $button-md-transition-duration:            300ms !default;

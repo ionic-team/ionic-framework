@@ -1,108 +1,117 @@
 import {Activator} from './activator';
-import {raf, transitionEnd} from '../../util/dom';
+import {raf, removeElement} from '../../util/dom';
+import {Animation} from '../../animations/animation';
 
 
 export class RippleActivator extends Activator {
 
   constructor(app, config) {
     super(app, config);
+    this.ripples = {};
   }
 
   downAction(targetEle, pointerX, pointerY) {
-    super.downAction(targetEle, pointerX, pointerY, (targetEle) => {
+    super.downAction(targetEle, pointerX, pointerY);
 
-      if (!targetEle || !targetEle.parentNode || NO_RIPPLE_TAGNAMES.test(targetEle.tagName)) return;
+    if (!isRippleElement(targetEle)) return;
 
-      // clean out any existing ripple elements
-      removeAll(targetEle);
+    // create a new ripple element
+    let r = targetEle.getBoundingClientRect();
+    let x = Math.max(Math.abs(r.width - pointerX), pointerX) * 2;
+    let y = Math.max(Math.abs(r.height - pointerY), pointerY) * 2;
+    let size = (Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2))) - 10;
 
-      // create a new ripple element
-      let r = targetEle.getBoundingClientRect();
-      let rippleSize = Math.sqrt(r.width * r.width + r.height * r.height) * 2 + 2;
+    let rippleEle = document.createElement('md-ripple');
+    let eleStyle = rippleEle.style;
+    eleStyle.width = size + 'px';
+    eleStyle.height = size + 'px';
+    eleStyle.marginTop = -(size / 2) + 'px';
+    eleStyle.marginLeft = -(size / 2) + 'px';
+    eleStyle.left = (pointerX - r.left) + 'px';
+    eleStyle.top = (pointerY - r.top) + 'px';
 
-      let rippleEle = document.createElement('md-ripple');
-      rippleEle.style.width = rippleSize + 'px';
-      rippleEle.style.height = rippleSize + 'px';
-      rippleEle.style.marginTop = -(rippleSize / 2) + 'px';
-      rippleEle.style.marginLeft = -(rippleSize / 2) + 'px';
-      rippleEle.style.left = (pointerX - r.left) + 'px';
-      rippleEle.style.top = (pointerY - r.top) + 'px';
+    targetEle.appendChild(rippleEle);
 
-      targetEle.appendChild(rippleEle);
+    let ripple = this.ripples[Date.now()] = { ele: rippleEle };
 
-      transitionEnd(rippleEle).then(ev => {
-        // the ripple animation has ended
-        ev.target.dataset.expanded = true;
-        fadeOutRipple(ev.target);
-      });
+    // expand the circle from the users starting point
+    // start slow, and when they let up, then speed up the animation
+    ripple.expand = new Animation(rippleEle, {renderDelay: 0});
+    ripple.expand
+      .fromTo('scale', '0.001', '1')
+      .duration(300)
+      .playbackRate(0.35)
+      .onFinish(()=> {
+        // finished expanding
+        ripple.expand && ripple.expand.dispose();
+        ripple.expand = null;
+        ripple.expanded = true;
+        this.next();
+      })
+      .play();
 
-      // kick off animaiton
-      raf(() => {
-        rippleEle.classList.add('ripple-expand');
-      });
-    });
+      this.next();
   }
 
-  upAction(ev) {
-    // the user was pressing down, then just let up
-    super.upAction(ev);
+  upAction() {
+    this.deactivate();
 
-    // immediately remove the activated css class and clear the queue
-    // this stops the background from changing colors, not stop the ripple
-    this.queue = {};
+    let ripple;
+    for (let rippleId in this.ripples) {
+      ripple = this.ripples[rippleId];
 
-    if (ev && ev.target) {
-      raf(() => {
-        let targetEle = ev.target;
-        if (targetEle && targetEle.parentNode) {
-          targetEle.classList.remove(this.activatedClass);
+      if (!ripple.fade) {
+        // ripple has not been let up yet
+        // spped up the rate if the animation is still going
+        setTimeout(() => {
+          ripple.expand && ripple.expand.playbackRate(1);
+          ripple.fade = new Animation(ripple.ele);
+          ripple.fade
+            .fadeOut()
+            .duration(750)
+            .onFinish(() => {
+              ripple.fade && ripple.fade.dispose();
+              ripple.fade = null;
+              ripple.faded = true;
+              this.next();
+            })
+            .play();
 
-          let rippleElements = getRippleElements(targetEle);
-          for (let i = 0, l = rippleElements.length; i < l; i++) {
-            rippleElements[i].dataset.pointerUp = true;
-            fadeOutRipple(rippleElements[i]);
-          }
-        }
-      });
-    }
-  }
-
-  clearState(ev) {
-    super.clearState(ev);
-    if (ev && ev.target) {
-      removeAll(ev.target);
-    }
-  }
-
-}
-
-function fadeOutRipple(rippleEle) {
-  if (rippleEle && rippleEle.dataset.pointerUp && rippleEle.dataset.expanded && !rippleEle.dataset.removing) {
-
-    transitionEnd(rippleEle).then(ev => {
-      // the ripple has faded out completely
-      let rippleEle = ev.target;
-      if (rippleEle.parentNode) {
-        rippleEle.parentNode.removeChild(rippleEle);
+          }, 16);
       }
-    });
+    }
 
-    // start fading out the ripple
-    rippleEle.classList.add('ripple-fade-out');
-    rippleEle.dataset.removing = true;
+    this.next();
   }
+
+  next(forceComplete) {
+    let ripple, rippleEle;
+    for (let rippleId in this.ripples) {
+      ripple = this.ripples[rippleId];
+
+      if ((ripple.expanded && ripple.faded && ripple.ele) ||
+        forceComplete ||
+        parseInt(rippleId) + 5000 < Date.now()) {
+        // finished expanding and the user has lifted the pointer
+        ripple.expand && ripple.expand.dispose();
+        ripple.fade && ripple.fade.dispose();
+        removeElement(ripple.ele);
+        ripple.ele = ripple.expand = ripple.fade = null;
+        delete this.ripples[rippleId];
+      }
+    }
+  }
+
+  clearState() {
+    this.deactivate();
+    this.next(true);
+  }
+
 }
 
-function removeAll(targetEle) {
-  let rippleElements = getRippleElements(targetEle);
-  for (let i = 0; i < rippleElements.length; i++) {
-    rippleElements[i].dataset.pointerUp = rippleElements[i].dataset.expanded = true;
-    fadeOutRipple(rippleElements[i]);
-  }
-}
 
-function getRippleElements(containerEle) {
-  return containerEle && containerEle.querySelectorAll('md-ripple');
+function isRippleElement(targetEle) {
+  return (targetEle && targetEle.parentNode && !(NO_RIPPLE_TAGNAMES.test(targetEle.tagName)));
 }
 
 const NO_RIPPLE_TAGNAMES = /BACKDROP/;

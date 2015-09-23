@@ -195,7 +195,7 @@ export function hasFocusedTextInput() {
   return false;
 }
 
-export function closest(el, selector) {
+export function closest(ele, selector) {
   var matchesFn;
 
   // find vendor prefix
@@ -208,15 +208,19 @@ export function closest(el, selector) {
   })
 
   // traverse parents
-  while (el!==null) {
-    parent = el.parentElement;
+  while (ele !== null) {
+    parent = ele.parentElement;
     if (parent!==null && parent[matchesFn](selector)) {
       return parent;
     }
-    el = parent;
+    ele = parent;
   }
 
   return null;
+}
+
+export function removeElement(ele) {
+  ele && ele.parentNode && ele.parentNode.removeChild(ele);
 }
 
 

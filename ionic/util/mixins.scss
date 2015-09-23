@@ -27,7 +27,7 @@
 
   @if ($lightness-percent < 35) {
     // dark foreground color, so light it up
-    @return lighten($color-value, $amount);
+    @return lighten($color-value, $amount * 2);
   }
 
   // default to darken

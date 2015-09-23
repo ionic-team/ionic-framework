@@ -1,8 +1,6 @@
 import {CSS} from '../util/dom';
 import {extend} from '../util/util';
 
-const RENDER_DELAY = 36;
-let AnimationRegistry = {};
 
 /**
   Animation Steps/Process
@@ -26,10 +24,13 @@ let AnimationRegistry = {};
 
 export class Animation {
 
-  constructor(ele) {
+  constructor(ele, opts={}) {
     this._el = [];
     this._chld = [];
     this._ani = [];
+    this._opts = extend({
+      renderDelay: 36
+    }, opts);
 
     this._bfAdd = [];
     this._bfSty = {};
@@ -238,10 +239,10 @@ export class Animation {
         });
       }
 
-      if (this._duration > RENDER_DELAY) {
+      if (self._duration > this._opts.renderDelay) {
         // begin each animation when everything is rendered in their starting point
         // give the browser some time to render everything in place before starting
-        setTimeout(kickoff, RENDER_DELAY);
+        setTimeout(kickoff, this._opts.renderDelay);
 
       } else {
         // no need to render everything in there place before animating in
@@ -294,7 +295,8 @@ export class Animation {
                                    this._to,
                                    this.duration(),
                                    this.easing(),
-                                   this.playbackRate() );
+                                   this.playbackRate(),
+                                   this._opts.renderDelay );
 
           if (animation.shouldAnimate) {
             this._ani.push(animation);
@@ -510,7 +512,7 @@ export class Animation {
 
 class Animate {
 
-  constructor(ele, fromEffect, toEffect, duration, easingConfig, playbackRate) {
+  constructor(ele, fromEffect, toEffect, duration, easingConfig, playbackRate, renderDelay) {
     // https://w3c.github.io/web-animations/
     // not using the direct API methods because they're still in flux
     // however, element.animate() seems locked in and uses the latest
@@ -522,7 +524,7 @@ class Animate {
 
     this.toEffect = parseEffect(toEffect);
 
-    this.shouldAnimate = (duration > RENDER_DELAY);
+    this.shouldAnimate = (duration > renderDelay);
 
     if (!this.shouldAnimate) {
       return inlineStyle(ele, this.toEffect);
@@ -864,3 +866,5 @@ const EASING_FN = {
   }
 
 };
+
+let AnimationRegistry = {};

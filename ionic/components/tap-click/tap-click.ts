@@ -157,7 +157,7 @@ export class TapClick {
    * TODO
    */
   pointerEnd(ev) {
-    this.activator.upAction(ev);
+    this.activator.upAction();
     this.moveListeners(false);
   }
 
@@ -166,7 +166,7 @@ export class TapClick {
    */
   pointerCancel(ev) {
     console.debug('pointerCancel')
-    this.activator.clearState(ev);
+    this.activator.clearState();
     this.moveListeners(false);
     this.disableClick = Date.now();
   }
