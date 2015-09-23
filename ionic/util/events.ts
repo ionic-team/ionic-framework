@@ -27,7 +27,7 @@ export class Events {
   }
 
   /**
-   * Unsubscribe the given handler from the given topic. Your handler will
+   * Unsubscribe from the given topic. Your handler will
    * no longer receive events published to this topic.
    *
    * @param topic the topic to unsubscribe from
@@ -38,12 +38,25 @@ export class Events {
   unsubscribe(topic, handler) {
     let t = this.channels[topic];
     if(!t) {
+      // Wasn't found, wasn't removed
       return false;
     }
 
+    if(!handler) {
+      // Remove all handlers for this topic
+      delete this.channels[topic];
+      return true;
+    }
+
+    // We need to find and remove a specific handler
     let i = t.indexOf(handler);
 
-    t.splice(t.indexOf(handler), 1);
+    if(i < 0) {
+      // Wasn't found, wasn't removed
+      return false;
+    }
+
+    t.splice(i, 1);
 
     // If the channel is empty now, remove it from the channel map
     if(!t.length) {

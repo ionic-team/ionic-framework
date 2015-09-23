@@ -25,12 +25,21 @@ class MyApp {
 
     console.log('Events', events);
 
-    events.subscribe('user:created', (user) => {
+    let handler = (user) => {
       console.log('User created', user);
       return {
         what: 'what'
       }
-    })
+    }
+    let handler2 = (user) => {
+      console.log('2User created', user);
+      return {
+        things: 'yes'
+      }
+    }
+
+    events.subscribe('user:created', handler);
+    events.subscribe('user:created', handler2);
 
     setInterval(() => {
       var results = events.publish('user:created', {
