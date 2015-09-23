@@ -439,6 +439,41 @@ ionic.views.Scroll = ionic.views.View.inherit({
       });
     };
 
+    self.triggerTouchStartEvent = function() {
+
+      // Store current scroll position to calculate delta later on
+      self.__scrollTopAtTouchStart = self.__scrollTop;
+      self.__scrollLeftAtTouchStart = self.__scrollLeft;
+
+      // Trigger it!
+      ionic.trigger('scrollview.touchstart', {
+        scrollTop: self.__scrollTop,
+        scrollLeft: self.__scrollLeft,
+        target: self.__container
+      }, false);
+
+    }
+
+    self.triggerTouchMoveEvent = ionic.throttle(function() {
+      ionic.trigger('scrollview.touchmove', {
+        scrollTop: self.__scrollTop,
+        deltaY: self.__scrollTopAtTouchStart - self.__scrollTop,
+        scrollLeft: self.__scrollLeft,
+        deltaX: self.__scrollLeftAtTouchStart - self.__scrollLeft,
+        target: self.__container
+      }, false);
+    }, self.options.scrollEventInterval);
+
+    self.triggerTouchEndEvent = function() {
+      ionic.trigger('scrollview.touchend', {
+        scrollTop: self.__scrollTop,
+        deltaY: self.__scrollTopAtTouchStart - self.__scrollTop,
+        scrollLeft: self.__scrollLeft,
+        deltaX: self.__scrollLeftAtTouchStart - self.__scrollLeft,
+        target: self.__container
+      }, false);
+    };
+
     self.__scrollLeft = self.options.startX;
     self.__scrollTop = self.options.startY;
 
@@ -1771,6 +1806,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
     // Clearing data structure
     self.__positions = [];
 
+    // Trigger touchstart
+    self.triggerTouchStartEvent();
+
   },
 
 
@@ -1972,6 +2010,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
     self.__lastTouchMove = timeStamp;
     self.__lastScale = scale;
 
+    // Trigger touchmove
+    self.triggerTouchMoveEvent();
+
   },
 
 
@@ -2099,6 +2140,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
     // Fully cleanup list
     self.__positions.length = 0;
+
+    // Trigger touchend
+    self.triggerTouchEndEvent();
 
   },
 
