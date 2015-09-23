@@ -3,7 +3,7 @@ import {Control, ControlGroup} from 'angular2/forms';
 
 import {IonicApp, App, Http} from 'ionic/ionic';
 
-import {Camera, Geolocation, Vibration, Battery, Device} from 'ionic/ionic';
+import {Camera, Geolocation, Vibration, Battery, Device, Events} from 'ionic/ionic';
 
 import {CameraPage} from 'pages/camera';
 import {BatteryPage} from 'pages/battery';
@@ -20,8 +20,26 @@ import {VibrationPage} from 'pages/vibration';
   templateUrl: 'main.html'
 })
 class MyApp {
-  constructor(app: IonicApp) {
+  constructor(app: IonicApp, events: Events) {
     this.app = app;
+
+    console.log('Events', events);
+
+    events.subscribe('user:created', (user) => {
+      console.log('User created', user);
+    })
+
+    setInterval(() => {
+      events.publish('user:created', {
+        name: 'Max Lynch',
+        id: 1
+      })
+    }, 2000);
+
+    setTimeout(() => {
+      events.unsubscribe('user:created');
+      console.log(events.channels);
+    }, 6000);
 
     this.firstPage = CameraPage;
 

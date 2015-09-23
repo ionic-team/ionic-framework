@@ -12,6 +12,7 @@ import {ActionSheet} from '../action-sheet/action-sheet';
 import {Modal} from '../modal/modal';
 import {Popup} from '../popup/popup';
 import {FocusHolder} from '../form/focus-holder';
+import {Events} from '../../util/events';
 
 /**
  * @name IonicApp
@@ -282,6 +283,7 @@ export function ionicBootstrap(rootComponentType, config) {
       let actionSheet = new ActionSheet(app, config);
       let modal = new Modal(app, config);
       let popup = new Popup(app, config);
+      let events = new Events();
 
       // add injectables that will be available to all child components
       let appBindings = Injector.resolve([
@@ -292,6 +294,7 @@ export function ionicBootstrap(rootComponentType, config) {
         bind(ActionSheet).toValue(actionSheet),
         bind(Modal).toValue(modal),
         bind(Popup).toValue(popup),
+        bind(Events).toValue(events),
         ROUTER_BINDINGS,
         bind(LocationStrategy).toClass(HashLocationStrategy)
       ]);
