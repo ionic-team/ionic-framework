@@ -452,7 +452,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
         target: self.__container
       }, false);
 
-    }
+    };
 
     self.triggerTouchMoveEvent = ionic.throttle(function() {
       ionic.trigger('scrollview.touchmove', {
