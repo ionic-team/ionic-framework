@@ -16,7 +16,7 @@ import {FocusHolder} from '../form/focus-holder';
 /**
  * @name IonicApp
  * @description
- * Service exposing the Ionic app level api.
+ * Service exposing the Ionic app level API.
  *
  * @usage
  * ```js
