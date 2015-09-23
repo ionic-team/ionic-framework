@@ -7,8 +7,7 @@ import {NavController} from './nav-controller';
 @Directive({
   selector: '[nav-push]',
   properties: [
-    'navPush',
-    'pushData'
+    'navInstructions: navPush'
   ],
   host: {
     '(click)': 'onClick($event)',
@@ -24,8 +23,23 @@ export class NavPush {
     this.nav = nav;
   }
 
+  set navInstructions(instructions) {
+    if (instructions instanceof Array) {
+      if (instructions.length > 2) {
+        throw 'Too many [nav-push] arguments, expects [View, { params }]'
+      }
+      this.destination = instructions[0];
+      this.navParams = instructions[1];
+    } else {
+      this.destination = instructions;
+    }
+
+    //let annotations = Reflect.getMetadata('annotations', view);
+    // TODO check to make sure destination is a Component/IonicView?
+  }
+
   onClick(event) {
-    this.nav.push(this.navPush, this.pushData);
+    this.nav.push(this.destination, this.navParams);
   }
 }
 
