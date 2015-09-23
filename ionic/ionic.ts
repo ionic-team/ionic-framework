@@ -24,4 +24,4 @@ export * from './transitions/transition'
 export * from './transitions/ios-transition'
 export * from './transitions/md-transition'
 
-export * from './plugins/plugins'
+export * from './platform/plugins'
