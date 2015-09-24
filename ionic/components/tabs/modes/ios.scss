@@ -12,7 +12,7 @@ $tab-bar-ios-height:                   49px !default;
   border-top: 1px solid $toolbar-ios-border-color;
 }
 
-.tabs[tab-bar-placement="top"] .tab-bar {
+.tabs[tab-bar-placement=top] .tab-bar {
   border-top: none;
   border-bottom: 1px solid $toolbar-ios-border-color;
 }

@@ -20,7 +20,7 @@ $tab-bar-md-item-height:              4.8rem !default;
   border-bottom: 2px solid transparent;
 }
 
-.tab-button[aria-selected="true"] {
+.tab-button[aria-selected=true] {
   border-bottom-color: $tab-button-text-active;
 }
 

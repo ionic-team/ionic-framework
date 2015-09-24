@@ -3,31 +3,34 @@ import {Component, Directive, View, Injector, NgFor, ElementRef, Optional, Host,
 import {IonicApp} from '../app/app';
 import {NavController} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
-import {Icon} from '../icon/icon';
 import {IonicComponent, IonicView} from '../../config/decorators';
+import {IonicConfig} from '../../config/config';
 
-  /**
-   * @name ionTabs
-   * @description
-   * Powers a multi-tabbed interface with a Tab Bar and a set of "pages" that can be tabbed through.
-   *
-   * Assign any tabs attribute to the element to define its look and feel.
-   *
-   * For iOS, tabs will appear at the bottom of the screen. For Android, tabs will be at the top of the screen, below the nav-bar. This follows each OS's design specification, but can be configured with the ionicConfig.
-   *
-   * See the ionTab component's documentation for more details on individual tabs.
-   *
-   * @usage
-   * ```html
-   * <ion-tabs>
-   *   <ion-tab tab-title="Heart" tab-icon="ion-ios-heart-outline" [root]="root1"></ion-tab>
-   *   <ion-tab tab-title="Star" tab-icon="ion-ios-star-outline" [root]="root2"></ion-tab>
-   *   <ion-tab tab-title="Stopwatch" tab-icon="ion-ios-stopwatch-outline" [root]="root3"></ion-tab>
-   * </ion-tabs>
-   * ```
-   *
-   */
 
+/**
+ * @name ionTabs
+ * @description
+ * Powers a multi-tabbed interface with a Tab Bar and a set of "pages"
+ * that can be tabbed through.
+ *
+ * Assign any tabs attribute to the element to define its look and feel.
+ *
+ * For iOS, tabs will appear at the bottom of the screen. For Android, tabs
+ * will be at the top of the screen, below the nav-bar. This follows each platform's
+ * design specification, but can be configured with IonicConfig.
+ *
+ * See the ionTab component's documentation for more details on individual tabs.
+ *
+ * @usage
+ * ```html
+ * <ion-tabs>
+ *   <ion-tab tab-title="Heart" tab-icon="ion-ios-heart-outline" [root]="root1"></ion-tab>
+ *   <ion-tab tab-title="Star" tab-icon="ion-ios-star-outline" [root]="root2"></ion-tab>
+ *   <ion-tab tab-title="Stopwatch" tab-icon="ion-ios-stopwatch-outline" [root]="root3"></ion-tab>
+ * </ion-tabs>
+ * ```
+ *
+ */
 @IonicComponent({
   selector: 'ion-tabs',
   defaultProperties: {
@@ -166,8 +169,12 @@ export class Tabs extends NavController {
   }
 })
 class TabButton {
-  constructor(@Host() tabs: Tabs) {
+  constructor(@Host() tabs: Tabs, config: IonicConfig, elementRef: ElementRef) {
     this.tabs = tabs;
+
+    if (config.setting('hoverCSS') === false) {
+      elementRef.nativeElement.classList.add('disable-hover');
+    }
   }
 
   onInit() {

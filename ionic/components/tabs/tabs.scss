@@ -46,7 +46,7 @@ ion-tab {
   order: $flex-order-tab-bar-bottom;
 }
 
-[tab-bar-placement="top"] .tab-bar-container {
+[tab-bar-placement=top] .tab-bar-container {
   order: $flex-order-tab-bar-top;
 }
 
@@ -79,18 +79,18 @@ ion-tab {
   border-radius: 0;
   background: none;
 
-  :hover:not(.disable-hover) {
+  &:hover:not(.disable-hover) {
     color: $tab-button-text-inactive;
   }
 }
 
-[tab-bar-icons="bottom"] .tab-button {
+[tab-bar-icons=bottom] .tab-button {
   .tab-button-icon {
     order: 10;
   }
 }
 
-[tab-bar-icons="left"] .tab-button {
+[tab-bar-icons=left] .tab-button {
   flex-direction: row;
 
   .tab-button-icon {
@@ -99,7 +99,7 @@ ion-tab {
   }
 }
 
-[tab-bar-icons="right"] .tab-button {
+[tab-bar-icons=right] .tab-button {
   flex-direction: row;
 
   .tab-button-icon {
@@ -137,6 +137,6 @@ ion-tab {
   white-space: normal;
 }
 
-.tab-button[aria-selected="true"] {
+.tab-button[aria-selected=true] {
   color: $toolbar-active-color;
 }
