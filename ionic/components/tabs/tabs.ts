@@ -84,7 +84,7 @@ export class Tabs extends NavController {
       // a Tabs ViewController should not have a back button
       // enableBack back button will later be determined
       // by the active ViewController that has a navbar
-      ViewController.enableBack = () => {
+      viewCtrl.enableBack = () => {
         return false;
       };
     }
