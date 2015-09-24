@@ -1,9 +1,6 @@
-import {Directive, View, NgClass, ElementRef, Optional, Host, Attribute, Renderer} from 'angular2/angular2';
+import {Directive, ElementRef, Attribute, Renderer} from 'angular2/angular2';
 
 import {IonicConfig} from '../../config/config';
-import {IonicComponent} from '../../config/decorators';
-import {Ion} from '../ion';
-import {Button} from '../button/button';
 
 
 /**
@@ -19,7 +16,6 @@ import {Button} from '../button/button';
   ],
   host: {
     '[attr.aria-label]': 'label',
-    '[attr.aria-hidden]': 'ariaHidden',
     'role': 'img'
   }
 })
@@ -27,24 +23,18 @@ export class Icon {
   /**
    * TODO
    * @param {ElementRef} elementRef  TODO
-   * @param {Button} hostButton  TODO
    * @param {IonicConfig} config  TODO
    * @param {Renderer} renderer  TODO
    */
   constructor(
     private elementRef: ElementRef,
-    @Optional() @Host() hostButton: Button,
     config: IonicConfig,
     private renderer: Renderer
   ) {
     this.eleRef = elementRef;
-    this.hostButton = hostButton;
     this.config = config;
 
     this.mode = config.setting('iconMode');
-
-    this.iconLeft = this.iconRight = this.iconOnly = false;
-    this.ariaHidden = true;
   }
 
   /**
@@ -78,29 +68,6 @@ export class Icon {
       this.name = 'ion-' + this.mode + '-' + this.name;
     }
 
-    if (this.hostButton) {
-      // check if there is a sibling element (that's not aria hidden)
-      let hasPreviousSiblingElement = !!ele.previousElementSibling;
-      let hasNextSiblingElement = ele.nextElementSibling && ele.nextElementSibling.getAttribute('aria-hidden') !== 'true';
-
-      if (!hasPreviousSiblingElement && !hasNextSiblingElement) {
-        // this icon is within a button, and doesn't have a sibling element
-        // check for text nodes to the right and left of this icon element
-        this.iconLeft = (ele.nextSibling && ele.nextSibling.textContent || '').trim() !== '';
-        this.iconRight = (ele.previousSibling && ele.previousSibling.textContent || '').trim() !== '';
-        this.iconOnly = !this.iconLeft && !this.iconRight;
-      }
-
-      // tell the button there's a child icon
-      // the button will set the correct css classes on itself
-      this.hostButton.registerIcon(this);
-    }
-
-
-    // hide the icon when it's within a button
-    // and the button isn't an icon only button
-    this.ariaHidden = (this.hostButton && !this.iconOnly);
-
     this.update();
   }
 
@@ -112,7 +79,6 @@ export class Icon {
     this._isActive = val;
     this.update();
   }
-
 
   update() {
     if (this.name && this.mode == 'ios') {
@@ -135,11 +101,7 @@ export class Icon {
       this._name = this.name;
       this.renderer.setElementClass(this.elementRef, this.name, true);
 
-      if (!this.ariaHidden) {
-        // the icon is either not within a button
-        // or the icon is within a button, and its an icon only button
-        this.label = this.name.replace('ion-', '').replace('ios-', '').replace('md-', '').replace('-', ' ');
-      }
+      this.label = this.name.replace('ion-', '').replace('ios-', '').replace('md-', '').replace('-', ' ');
     }
   }
 
