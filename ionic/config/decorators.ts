@@ -180,7 +180,7 @@ export function App(args={}) {
     // redefine with added annotations
     Reflect.defineMetadata('annotations', annotations, cls);
 
-    ionicBootstrap(cls, args.config);
+    ionicBootstrap(cls, args.views, args.config);
 
     return cls;
   }

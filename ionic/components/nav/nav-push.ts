@@ -1,5 +1,6 @@
 import {Directive} from 'angular2/angular2';
 import {NavController} from './nav-controller';
+import {NavRegistry} from './nav-registry';
 
 /**
  * TODO
@@ -20,19 +21,30 @@ export class NavPush {
    * TODO
    * @param {NavController} nav  TODO
    */
-  constructor(nav: NavController) {
+  constructor(nav: NavController, registry: NavRegistry) {
     this.nav = nav;
+    this.registry = registry;
   }
 
   onClick(event) {
+    let destination, params;
+
     if (this.instruction instanceof Array) {
       if (this.instruction.length > 2) {
         throw 'Too many [nav-push] arguments, expects [View, { params }]'
       }
-      this.nav.push(this.instruction[0], this.instruction[1]);
+      destination = this.instruction[0];
+      params = this.instruction[1] || this.params;
     } else {
-      this.nav.push(this.instruction, this.params);
+      destination = this.instruction;
+      params = this.params;
     }
+
+    if (typeof destination === "string") {
+      destination = this.registry.get(destination);
+    }
+
+    this.nav.push(destination, params);
   }
 }
 

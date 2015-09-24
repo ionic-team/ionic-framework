@@ -13,6 +13,7 @@ import {Modal} from '../modal/modal';
 import {Popup} from '../popup/popup';
 import {FocusHolder} from '../form/focus-holder';
 import {Events} from '../../util/events';
+import {NavRegistry} from '../nav/nav-registry';
 
 /**
  * @name IonicApp
@@ -278,7 +279,7 @@ function initApp(window, document, config, platform) {
  * @param {TODO} config  TODO
  * @return {Promise} TODO
  */
-export function ionicBootstrap(rootComponentType, config) {
+export function ionicBootstrap(rootComponentType, views, config) {
   return new Promise(resolve => {
     try {
       // get the user config, or create one if wasn't passed in
@@ -297,6 +298,7 @@ export function ionicBootstrap(rootComponentType, config) {
       let modal = new Modal(app, config);
       let popup = new Popup(app, config);
       let events = new Events();
+      let navRegistry = new NavRegistry(views);
 
       // add injectables that will be available to all child components
       let appBindings = Injector.resolve([
@@ -309,7 +311,8 @@ export function ionicBootstrap(rootComponentType, config) {
         bind(Popup).toValue(popup),
         bind(Events).toValue(events),
         ROUTER_BINDINGS,
-        bind(LocationStrategy).toClass(HashLocationStrategy)
+        bind(LocationStrategy).toClass(HashLocationStrategy),
+        bind(NavRegistry).toValue(navRegistry)
       ]);
 
       bootstrap(rootComponentType, appBindings).then(appRef => {
