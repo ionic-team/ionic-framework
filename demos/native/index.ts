@@ -74,6 +74,6 @@ class MyApp {
    menu.close();
 
    let nav = this.app.getComponent('myNav');
-   nav.setViews([page.page]);
+   nav.setRoot(page.page);
  }
 }
