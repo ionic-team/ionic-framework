@@ -159,6 +159,27 @@ export class NavController extends Ion {
    * @param {TODO} [opts={}]  TODO
    * @returns {Promise} TODO
    */
+
+  insert(componentType, index) {
+    if (!componentType || index < 0) {
+      return Promise.reject();
+    }
+
+    // push it onto the end
+    if (index >= this.views.length) {
+      return this.push(componentType);
+    }
+
+    // create new ViewController, but don't render yet
+    let viewCtrl = new ViewController(this, componentType);
+    viewCtrl.state = CACHED_STATE;
+    viewCtrl.shouldDestroy = false;
+    viewCtrl.shouldCache = false;
+
+    this._incrementId(viewCtrl);
+    this.views.splice(index, 0, viewCtrl);
+  }
+
   setViews(components, opts = {}) {
     if (!components || !components.length) {
       return Promise.resolve();
@@ -668,8 +689,12 @@ export class NavController extends Ion {
    * @returns {TODO} TODO
    */
   add(view) {
-    view.id = this.id + '-' + (++this._ids);
+    this._incrementId(view);
     this.views.push(view);
+  }
+
+  _incrementId(view) {
+    view.id = this.id + '-' + (++this._ids);
   }
 
   /**

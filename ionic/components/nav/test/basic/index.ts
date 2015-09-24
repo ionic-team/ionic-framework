@@ -100,6 +100,7 @@ class SecondPage {
     <ion-content padding>
       <p>
         <button id="from3To2" (click)="pop()">Pop (Go back to 2nd)</button>
+        <button id="insert" (click)="insert()">Insert first page into history before this</button>
       </p>
       <div class="yellow"><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f></div>
     </ion-content>
@@ -114,6 +115,10 @@ class ThirdPage {
 
   pop() {
     this.nav.pop()
+  }
+
+  insert() {
+    this.nav.insert(FirstPage, 2);
   }
 
 }
