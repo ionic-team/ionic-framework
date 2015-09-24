@@ -17,7 +17,8 @@ import {NavParams, NavController} from 'ionic/ionic';
     '<ion-content padding>' +
       '<p>{{title}}</p>' +
       '<p><button id="from1To2" primary (click)="push()">Push (Go to 2nd)</button></p>' +
-      '<p><button [nav-push]="[pushPage, {id: 42}]">Push w/ nav-push (Go to 2nd)</button></p>' +
+      '<p><button [nav-push]="[pushPage, {id: 42}]">Push w/ nav-push array (Go to 2nd)</button></p>' +
+      '<p><button [nav-push]="pushPage" [nav-params]="{id:40}">Push w/ nav-push and nav-params (Go to 2nd)</button></p>' +
       '<p><button (click)="setViews()">setViews() (Go to 3rd, no history)</button></p>' +
       '<icon class="ion-ios-arrow-back"></icon>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
