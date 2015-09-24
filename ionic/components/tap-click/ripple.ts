@@ -1,5 +1,5 @@
 import {Activator} from './activator';
-import {raf, removeElement} from '../../util/dom';
+import {removeElement} from '../../util/dom';
 import {Animation} from '../../animations/animation';
 
 
@@ -93,11 +93,9 @@ export class RippleActivator extends Activator {
         forceComplete ||
         parseInt(rippleId) + 5000 < Date.now()) {
         // finished expanding and the user has lifted the pointer
-        ripple.expand && ripple.expand.dispose();
-        ripple.fade && ripple.fade.dispose();
-        removeElement(ripple.ele);
-        ripple.ele = ripple.expand = ripple.fade = null;
-        delete this.ripples[rippleId];
+        setTimeout(() => {
+          this.remove(rippleId);
+        }, 0);
       }
     }
   }
@@ -105,6 +103,17 @@ export class RippleActivator extends Activator {
   clearState() {
     this.deactivate();
     this.next(true);
+  }
+
+  remove(rippleId) {
+    let ripple = this.ripples[rippleId];
+    if (ripple) {
+      ripple.expand && ripple.expand.dispose();
+      ripple.fade && ripple.fade.dispose();
+      removeElement(ripple.ele);
+      ripple.ele = ripple.expand = ripple.fade = null;
+      delete this.ripples[rippleId];
+    }
   }
 
 }
