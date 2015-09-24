@@ -67,7 +67,8 @@ class BackButtonText extends Ion {
       '<ng-content select="ion-title"></ng-content>' +
       '<ng-content select="ion-nav-items[primary]"></ng-content>' +
       '<ng-content select="ion-nav-items[secondary]"></ng-content>' +
-    '</div>',
+    '</div>' +
+    '<div class="toolbar-background"></div>',
   directives: [BackButton, BackButtonText]
 })
 export class Navbar extends ToolbarBase {

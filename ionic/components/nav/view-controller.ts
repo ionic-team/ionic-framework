@@ -329,6 +329,17 @@ export class ViewController {
    * TODO
    * @returns {TODO} TODO
    */
+  navbarBackgroundRef() {
+    let navbarView = this.navbarView();
+    if (navbarView) {
+      return navbarView.getNativeElement().querySelector('.toolbar-background');
+    }
+  }
+
+  /**
+   * TODO
+   * @returns {TODO} TODO
+   */
   postRender() {
     // the elements are in the DOM and the browser
     // has rendered them in their correct locations

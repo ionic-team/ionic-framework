@@ -69,7 +69,8 @@ export class ToolbarBase extends Ion  {
       '<ng-content select="ion-title"></ng-content>' +
       '<ng-content select="ion-nav-items[primary]"></ng-content>' +
       '<ng-content select="ion-nav-items[secondary]"></ng-content>' +
-    '</div>'
+    '</div>' +
+    '<div class="toolbar-background"></div>'
 })
 export class Toolbar extends ToolbarBase {
   constructor(

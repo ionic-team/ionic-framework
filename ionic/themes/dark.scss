@@ -21,7 +21,6 @@ $list-background-color:      $background-color !default;
 $list-border-color:               #666 !default;
 
 $link-color:                 map-get($colors, primary) !default;
-$link-hover-color:           lighten($link-color, 15%) !default;
 
 $toolbar-background-color:   #111 !default;
 $toolbar-border-color:       #000 !default;

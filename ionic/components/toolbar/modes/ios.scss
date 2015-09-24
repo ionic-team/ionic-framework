@@ -17,8 +17,6 @@ $toolbar-ios-title-font-size:               1.7rem !default;
 
 
 .toolbar {
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
   min-height: $toolbar-ios-height;
 
   [menu-toggle] {
@@ -66,6 +64,11 @@ $toolbar-ios-title-font-size:               1.7rem !default;
 
 }
 
+.toolbar .toolbar-background {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+
 ion-title {
   position: absolute;
   top: 0;
@@ -93,6 +96,6 @@ ion-nav-items[secondary] {
   order: map-get($toolbar-order-ios, secondary);
 }
 
-&.hairlines .toolbar {
+&.hairlines .toolbar .toolbar-background {
   border-bottom-width: 0.55px;
 }

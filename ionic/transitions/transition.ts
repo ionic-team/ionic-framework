@@ -46,8 +46,10 @@ export class Transition extends Animation {
       this.add(enteringNavbar);
 
       this.enteringNavbarItems = new Animation(enteringView.navbarItemRefs());
-      this.enteringNavbarItems.fadeIn();
-      enteringNavbar.add(this.enteringNavbarItems);
+      enteringNavbar.add(this.enteringNavbarItems.fadeIn());
+
+      this.enteringNavbarBackground = new Animation(enteringView.navbarBackgroundRef());
+      enteringNavbar.add(this.enteringNavbarBackground);
     }
 
 
@@ -69,8 +71,10 @@ export class Transition extends Animation {
       leavingNavbar.add(this.leavingTitle);
 
       this.leavingNavbarItems = new Animation(leavingView.navbarItemRefs());
-      this.leavingNavbarItems.fadeOut();
-      leavingNavbar.add(this.leavingNavbarItems);
+      leavingNavbar.add(this.leavingNavbarItems.fadeOut());
+
+      this.leavingNavbarBackground = new Animation(leavingView.navbarBackgroundRef());
+      leavingNavbar.add(this.leavingNavbarBackground);
 
       this.add(this.leavingView, leavingNavbar);
     }

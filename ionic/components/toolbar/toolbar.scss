@@ -28,16 +28,27 @@ $toolbar-order: (
   padding: $toolbar-padding;
   width: 100%;
 
-  border: 0;
-  border-color: $toolbar-border-color;
-  background-color: $toolbar-background-color;
-
   button,
   [button] {
     background-color: transparent;
     color: $toolbar-active-color;
     box-shadow: none;
   }
+}
+
+.toolbar .toolbar-background {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: $z-index-toolbar-background;
+
+  border: 0;
+  border-color: $toolbar-border-color;
+  background-color: $toolbar-background-color;
+
+  pointer-events: none;
 }
 
 .enable-hover .toolbar button:hover,
@@ -120,8 +131,11 @@ ion-nav-items div {
 @each $color-name, $color-value in $colors {
 
   .toolbar[#{$color-name}] {
-    background-color: $color-value;
-    border-color: darken($color-value, 10%);
+
+    .toolbar-background {
+      background-color: $color-value;
+      border-color: darken($color-value, 10%);
+    }
 
     .toolbar-title,
     button,

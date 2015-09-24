@@ -28,8 +28,8 @@ ion-menu[type=overlay] {
     display: block;
     transform: translate3d(-9999px, 0px, 0px);
     opacity: 0.01;
-    left: -1000px;
-    width: 4000px;
+    left: -3000px;
+    width: 6000px;
 
     &.show-backdrop {
       transform: translate3d(0px, 0px, 0px);

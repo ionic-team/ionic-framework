@@ -111,7 +111,6 @@ export class IonicApp {
    * @return {bool}
    */
   isTransitioning() {
-    console.debug('isTransitioning', (this._trnsTime > Date.now()), this._trnsTime, Date.now())
     return (this._trnsTime > Date.now());
   }
 

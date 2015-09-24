@@ -32,6 +32,9 @@ class IOSTransition extends Transition {
       .fadeIn()
       .to(TRANSLATEX, CENTER);
 
+    this.enteringNavbarBackground
+      .to(TRANSLATEX, CENTER);
+
     // leaving view moves off screen
     this.leavingView
       .from(TRANSLATEX, CENTER)
@@ -41,6 +44,9 @@ class IOSTransition extends Transition {
     this.leavingTitle
       .from(TRANSLATEX, CENTER)
       .from(OPACITY, 1);
+
+    this.leavingNavbarBackground
+      .from(TRANSLATEX, CENTER);
 
     // set properties depending on direction
     if (opts.direction === 'back') {
@@ -53,9 +59,8 @@ class IOSTransition extends Transition {
       this.enteringTitle
         .from(TRANSLATEX, OFF_LEFT);
 
-      this.leavingNavbar
-        .before.addClass('transparent-navbar')
-        .after.removeClass('transparent-navbar');
+      this.enteringNavbarBackground
+        .from(TRANSLATEX, OFF_LEFT);
 
       this.leavingView
         .to(TRANSLATEX, '100%')
@@ -64,6 +69,9 @@ class IOSTransition extends Transition {
       this.leavingTitle
         .to(TRANSLATEX, '100%')
         .to(OPACITY, 0);
+
+      this.leavingNavbarBackground
+        .to(TRANSLATEX, '100%');
 
       if (this.leaving.enableBack() && this.viewWidth() > 200) {
         let leavingBackButtonText = new Animation(this.leaving.backBtnTextRef());
@@ -77,11 +85,10 @@ class IOSTransition extends Transition {
         .from(TRANSLATEX, '99.5%')
         .from(OPACITY, 1);
 
-      this.enteringNavbar
-        .before.addClass('transparent-navbar')
-        .after.removeClass('transparent-navbar');
-
       this.enteringTitle
+        .from(TRANSLATEX, '99.5%');
+
+      this.enteringNavbarBackground
         .from(TRANSLATEX, '99.5%');
 
       this.leavingView
@@ -91,6 +98,9 @@ class IOSTransition extends Transition {
       this.leavingTitle
         .to(TRANSLATEX, OFF_LEFT)
         .to(OPACITY, 0);
+
+      this.leavingNavbarBackground
+        .to(TRANSLATEX, OFF_LEFT);
 
       if (this.entering.enableBack() && this.viewWidth() > 200) {
         let enteringBackButtonText = new Animation(this.entering.backBtnTextRef());
