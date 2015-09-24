@@ -153,13 +153,13 @@ export class NavController extends Ion {
     return promise;
   }
 
+
   /**
-   * Set the view stack to reflect the given component classes.
-   * @param {TODO} components  TODO
-   * @param {TODO} [opts={}]  TODO
+   * Inserts a view into the nav stack at the specified index.
+   * @param {TODO} componentType  TODO
+   * @param {TODO} index TODO
    * @returns {Promise} TODO
    */
-
   insert(componentType, index) {
     if (!componentType || index < 0) {
       return Promise.reject();
@@ -180,6 +180,12 @@ export class NavController extends Ion {
     this.views.splice(index, 0, viewCtrl);
   }
 
+  /**
+   * Set the view stack to reflect the given component classes.
+   * @param {TODO} components  TODO
+   * @param {TODO} [opts={}]  TODO
+   * @returns {Promise} TODO
+   */
   setViews(components, opts = {}) {
     if (!components || !components.length) {
       return Promise.resolve();
