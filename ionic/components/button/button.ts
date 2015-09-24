@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Renderer} from 'angular2/angular2';
+import {Directive, ElementRef} from 'angular2/angular2';
 
 import {IonicConfig} from '../../config/config';
 
@@ -13,17 +13,21 @@ export class Button {
 
   constructor(
     config: IonicConfig,
-    elementRef: ElementRef,
-    renderer: Renderer
+    elementRef: ElementRef
   ) {
-    this.iconLeft = this.iconRight = this.iconOnly = false;
+    let element = elementRef.nativeElement;
 
     if (config.setting('hoverCSS') === false) {
-      renderer.setElementClass(elementRef, 'disable-hover', true);
+      element.classList.add('disable-hover');
+    }
+
+    if (element.hasAttribute('ion-item')) {
+      // no need to put on these icon classes for an ion-item
+      return;
     }
 
     // figure out if and where the icon lives in the button
-    let childNodes = elementRef.nativeElement.childNodes;
+    let childNodes = element.childNodes;
     let childNode;
     let nodes = [];
     for (let i = 0, l = childNodes.length; i < l; i++) {
@@ -49,13 +53,13 @@ export class Button {
 
     if (nodes.length > 1) {
       if (nodes[0] === ICON && nodes[1] === TEXT) {
-        renderer.setElementClass(elementRef, 'icon-left', true);
+        element.classList.add('icon-left');
 
       } else if (nodes[0] === TEXT && nodes[1] === ICON) {
-        renderer.setElementClass(elementRef, 'icon-right', true);
+        element.classList.add('icon-right');
       }
     } else if (nodes.length === 1 && nodes[0] === ICON) {
-      renderer.setElementClass(elementRef, 'icon-only', true);
+      element.classList.add('icon-only');
     }
 
   }

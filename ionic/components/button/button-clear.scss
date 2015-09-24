@@ -12,12 +12,10 @@ button[clear],
     opacity: 0.4;
   }
 
-}
-
-.enable-hover button[clear]:hover,
-.enable-hover [button][clear]:hover {
-  opacity: 0.6;
-  color: darken-or-lighten($button-color);
+  &:hover:not(.disable-hover) {
+    opacity: 0.6;
+    color: darken-or-lighten($button-color);
+  }
 }
 
 
@@ -34,11 +32,10 @@ button[clear],
     border-color: transparent;
     background: transparent;
     color: $fg-color;
-  }
 
-  .enable-hover button[clear][#{$color-name}]:hover,
-  .enable-hover [button][clear][#{$color-name}]:hover {
-    color: darken-or-lighten($fg-color);
+    &:hover:not(.disable-hover) {
+      color: darken-or-lighten($fg-color);
+    }
   }
 
 }

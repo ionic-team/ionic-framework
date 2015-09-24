@@ -51,8 +51,8 @@ $toolbar-order: (
   pointer-events: none;
 }
 
-.enable-hover .toolbar button:hover,
-.enable-hover .toolbar [button]:hover,
+.toolbar button:hover:not(.disable-hover),
+.toolbar [button]:hover:not(.disable-hover),
 .toolbar button.activated,
 .toolbar [button].activated {
   color: $toolbar-active-color;
@@ -140,6 +140,8 @@ ion-nav-items div {
     .toolbar-title,
     button,
     [button],
+    button:hover:not(.disable-hover),
+    [button]:hover:not(.disable-hover),
     a {
       color: inverse($color-value);
     }

@@ -14,7 +14,7 @@ $button-round-border-radius:      64px !default;
 $button-color:                    color(primary) !default;
 $button-color-activated:          darken-or-lighten($button-color) !default;
 $button-text-color:               inverse($button-color) !default;
-$button-hover-opacity:            0.88 !default;
+$button-hover-opacity:            0.8 !default;
 
 
 // Default Button
@@ -63,6 +63,11 @@ button,
   background: $button-color;
   color: $button-text-color;
 
+  &:hover:not(.disable-hover) {
+    opacity: $button-hover-opacity;
+    text-decoration: none;
+  }
+
   &.activated {
     opacity: 1;
     background-color: $button-color-activated;
@@ -110,13 +115,6 @@ button,
     pointer-events: none;
   }
 
-}
-
-.enable-hover button:hover,
-.enable-hover [button]:hover {
-  opacity: $button-hover-opacity;
-  color: $button-text-color;
-  text-decoration: none;
 }
 
 a[button] {

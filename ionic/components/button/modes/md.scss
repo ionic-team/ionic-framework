@@ -33,6 +33,10 @@ button,
               background-color $button-md-transition-duration $button-md-animation-curve,
               color $button-md-transition-duration $button-md-animation-curve;
 
+  :hover:not(.disable-hover) {
+    background-color: $button-md-clear-hover-background-color;
+  }
+
   &.activated {
     box-shadow: $button-md-box-shadow-active;
   }
@@ -83,11 +87,6 @@ button,
     padding: 0;
   }
 
-}
-
-&.enable-hover button[clear]:hover,
-&.enable-hover [button][clear]:hover {
-  background-color: $button-md-clear-hover-background-color;
 }
 
 

@@ -35,7 +35,7 @@ ion-action-sheet {
   }
 }
 
-.enable-hover .action-sheet-container button:hover {
+.action-sheet-container button:hover:not(.disable-hover) {
   color: $action-sheet-options-text-color;
 }
 
