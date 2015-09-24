@@ -14,8 +14,8 @@ export class Transition extends Animation {
     super();
 
     // get the entering and leaving items
-    let enteringView = this.entering = nav.getStagedenteringView();
-    let leavingView = this.leaving = nav.getStagedleavingView();
+    let enteringView = this.entering = nav.getStagedEnteringView();
+    let leavingView = this.leaving = nav.getStagedLeavingView();
 
     // create animation for the entering item's "ion-view" element
     this.enteringView = new Animation(enteringView.viewElementRef());

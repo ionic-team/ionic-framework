@@ -127,6 +127,7 @@ export class OverlayRef {
       animation.before.addClass('show-overlay');
 
       this.app.setEnabled(false, animation.duration());
+      this.app.setTransitioning(true, animation.duration());
 
       this.app.zoneRunOutside(() => {
 
@@ -134,6 +135,7 @@ export class OverlayRef {
 
           this.app.zoneRun(() => {
             this.app.setEnabled(true);
+            this.app.setTransitioning(false);
             animation.dispose();
             instance.onViewDidEnter && instance.onViewDidEnter();
             resolve();
@@ -159,6 +161,7 @@ export class OverlayRef {
 
       animation.after.removeClass('show-overlay');
       this.app.setEnabled(false, animation.duration());
+      this.app.setTransitioning(true, animation.duration());
 
       animation.play().then(() => {
         instance.onViewDidLeave && instance.onViewDidLeave();
@@ -167,6 +170,7 @@ export class OverlayRef {
         this._dispose();
 
         this.app.setEnabled(true);
+        this.app.setTransitioning(false);
         animation.dispose();
 
         resolve();

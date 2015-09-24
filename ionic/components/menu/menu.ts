@@ -136,12 +136,14 @@ export class Menu extends Ion {
   setProgess(value) {
     // user actively dragging the menu
     this._disable();
+    this.app.setTransitioning(true);
     this._type.setProgess(value);
   }
 
   setProgressEnd(shouldComplete) {
     // user has finished dragging the menu
     this._disable();
+    this.app.setTransitioning(true);
     this._type.setProgressEnd(shouldComplete).then(isOpen => {
       this._after(isOpen);
     });
@@ -154,11 +156,13 @@ export class Menu extends Ion {
     this.getBackdropElement().classList.add('show-backdrop');
 
     this._disable();
+    this.app.setTransitioning(true);
   }
 
   _after(isOpen) {
     // keep opening/closing the menu disabled for a touch more yet
     this._disable();
+    this.app.setTransitioning(false);
 
     this.isOpen = isOpen;
 

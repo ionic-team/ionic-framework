@@ -35,7 +35,7 @@ export class Activator {
   clearState() {
     // all states should return to normal
 
-    if (!this.app.isEnabled() && this.clearAttempt < 30) {
+    if ((!this.app.isEnabled() || this.app.isTransitioning()) && this.clearAttempt < 30) {
       // the app is actively disabled, so don't bother deactivating anything.
       // this makes it easier on the GPU so it doesn't have to redraw any
       // buttons during a transition. This will retry in XX milliseconds.

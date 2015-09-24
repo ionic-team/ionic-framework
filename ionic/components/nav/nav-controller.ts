@@ -280,6 +280,7 @@ export class NavController extends Ion {
           // block any clicks during the transition and provide a
           // fallback to remove the clickblock if something goes wrong
           this.app.setEnabled(false, duration);
+          this.app.setTransitioning(true, duration);
         }
 
         // start the transition
@@ -318,6 +319,7 @@ export class NavController extends Ion {
 
     // disables the app during the transition
     this.app.setEnabled(false);
+    this.app.setTransitioning(true);
 
     // default the direction to "back"
     let opts = {
@@ -364,6 +366,7 @@ export class NavController extends Ion {
     if (this._sbTrans) {
       // continue to disable the app while actively dragging
       this.app.setEnabled(false, 4000);
+      this.app.setTransitioning(true, 4000);
 
       // set the transition animation's progress
       this._sbTrans.progress(value);
@@ -380,13 +383,14 @@ export class NavController extends Ion {
 
     // disables the app during the transition
     this.app.setEnabled(false);
+    this.app.setTransitioning(true);
 
     this._sbTrans.progressEnd(completeSwipeBack, rate).then(() => {
 
       this.zone.run(() => {
         // find the views that were entering and leaving
-        let enteringView = this.getStagedenteringView();
-        let leavingView = this.getStagedleavingView();
+        let enteringView = this.getStagedEnteringView();
+        let leavingView = this.getStagedLeavingView();
 
         if (enteringView && leavingView) {
           // finish up the animation
@@ -520,6 +524,7 @@ export class NavController extends Ion {
     // allow clicks again, but still set an enable time
     // meaning nothing with this view controller can happen for XXms
     this.app.setEnabled(true);
+    this.app.setTransitioning(false);
 
     if (this.views.length === 1) {
       this.elementRef.nativeElement.classList.add('has-views');
@@ -585,7 +590,7 @@ export class NavController extends Ion {
    * TODO
    * @returns {TODO} TODO
    */
-  getStagedenteringView() {
+  getStagedEnteringView() {
     for (let i = 0, ii = this.views.length; i < ii; i++) {
       if (this.views[i].state === STAGED_ENTERING_STATE) {
         return this.views[i];
@@ -598,7 +603,7 @@ export class NavController extends Ion {
    * TODO
    * @returns {TODO} TODO
    */
-  getStagedleavingView() {
+  getStagedLeavingView() {
     for (let i = 0, ii = this.views.length; i < ii; i++) {
       if (this.views[i].state === STAGED_LEAVING_STATE) {
         return this.views[i];

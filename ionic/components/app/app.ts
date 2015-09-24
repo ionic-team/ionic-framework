@@ -41,7 +41,8 @@ export class IonicApp {
    */
   constructor() {
     this.overlays = [];
-    this._disableTime = 0;
+    this._disTime = 0;
+    this._trnsTime = 0;
 
     // Our component registry map
     this.components = {};
@@ -63,9 +64,9 @@ export class IonicApp {
    */
   focusHolder(val) {
     if (arguments.length) {
-      this._focusHolder = val;
+      this._fcsHldr = val;
     }
-    return this._focusHolder;
+    return this._fcsHldr;
   }
 
   /**
@@ -89,16 +90,29 @@ export class IonicApp {
    * something goes wrong during a transition and the app wasn't re-enabled correctly.
    */
   setEnabled(isEnabled, fallback=700) {
-    this._disableTime = (isEnabled ? 0 : Date.now() + fallback);
+    this._disTime = (isEnabled ? 0 : Date.now() + fallback);
     ClickBlock(!isEnabled, fallback + 100);
+  }
+
+  /**
+   * Boolean if the app is actively enabled or not.
+   * @return {bool}
+   */
+  isEnabled() {
+    return (this._disTime < Date.now());
+  }
+
+  setTransitioning(isTransitioning, fallback=700) {
+    this._trnsTime = (isTransitioning ? Date.now() + fallback : 0);
   }
 
   /**
    * Boolean if the app is actively transitioning or not.
    * @return {bool}
    */
-  isEnabled() {
-    return (this._disableTime < Date.now());
+  isTransitioning() {
+    console.debug('isTransitioning', (this._trnsTime > Date.now()), this._trnsTime, Date.now())
+    return (this._trnsTime > Date.now());
   }
 
   /**
