@@ -28,20 +28,22 @@ export class Button {
     let nodes = [];
     for (let i = 0, l = childNodes.length; i < l; i++) {
       childNode = childNodes[i];
+
       if (childNode.nodeType === 3) {
         // text node
         if (childNode.textContent.trim() !== '') {
           nodes.push(TEXT);
         }
 
-      } else if (childNode.nodeName === 'ICON') {
-        // element node
-        nodes.push(ICON);
+      } else if (childNode.nodeType === 1) {
+        if (childNode.nodeName === 'ICON') {
+          // icon element node
+          nodes.push(ICON);
 
-      } else {
-        // element other than an <icon>
-        nodes.push(TEXT);
-
+        } else {
+          // element other than an <icon>
+          nodes.push(TEXT);
+        }
       }
     }
 
