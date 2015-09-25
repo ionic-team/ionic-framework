@@ -38,8 +38,8 @@ export class NavController extends Ion {
     this.panes = new PaneController(this);
 
     this._sbTrans = null;
-    this.sbEnabled = config.setting('swipeBackEnabled') || false;
-    this.sbThreshold = config.setting('swipeBackThreshold') || 40
+    this._sbEnabled = config.setting('swipeBackEnabled') || false;
+    this._sbThreshold = config.setting('swipeBackThreshold') || 40;
 
     this.id = ++ctrlIds;
     this._ids = -1;
@@ -474,7 +474,7 @@ export class NavController extends Ion {
 
       let opts = {
         edge: 'left',
-        threshold: this.sbThreshold
+        threshold: this._sbThreshold
       };
       this.sbGesture = new SwipeBackGesture(this.getNativeElement(), opts, this);
       console.debug('SwipeBackGesture listen');
@@ -497,9 +497,9 @@ export class NavController extends Ion {
    */
   isSwipeBackEnabled(val) {
     if (arguments.length) {
-       this.sbEnabled = !!val;
+       this._sbEnabled = !!val;
     }
-    return this.sbEnabled;
+    return this._sbEnabled;
   }
 
   /**
@@ -510,7 +510,7 @@ export class NavController extends Ion {
    * @returns {boolean}
    */
   canSwipeBack() {
-    return (this.sbEnabled && this.canGoBack());
+    return (this._sbEnabled && this.canGoBack());
   }
 
   /**
