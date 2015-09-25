@@ -18,3 +18,7 @@ md-ripple {
 
   transform: scale(0.001) translateZ(0);
 }
+
+.item > md-ripple {
+  z-index: 0;
+}

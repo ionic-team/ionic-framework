@@ -5,6 +5,7 @@ export class Activator {
 
   constructor(app, config) {
     this.app = app;
+    this.queue = [];
     this.active = [];
     this.clearStateTimeout = 180;
     this.clearAttempt = 0;
@@ -20,9 +21,20 @@ export class Activator {
     this.x = pointerX;
     this.y = pointerY;
 
-    // remember this is the active element
-    targetEle.classList.add(this.activatedClass);
-    this.active.push(targetEle);
+    // queue to have this element activated
+    this.queue.push(targetEle);
+
+    raf(() => {
+      let targetEle;
+      for (let i = 0; i < this.queue.length; i++) {
+        targetEle = this.queue[i];
+        if (targetEle && targetEle.parentNode) {
+          this.active.push(targetEle);
+          targetEle.classList.add(this.activatedClass);
+        }
+      }
+      this.queue = [];
+    });
   }
 
   upAction() {
@@ -54,6 +66,7 @@ export class Activator {
     for (let i = 0; i < this.active.length; i++) {
       this.active[i].classList.remove(this.activatedClass);
     }
+    this.queue = [];
     this.active = [];
   }
 

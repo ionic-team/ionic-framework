@@ -189,3 +189,9 @@ $item-md-forward-icon-color:          $item-md-border-color !default;
   }
 
 }
+
+.item,
+a.item,
+button.item {
+  transition: background-color $button-md-transition-duration $button-md-animation-curve,
+}
