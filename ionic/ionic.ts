@@ -24,3 +24,5 @@ export * from './transitions/ios-transition'
 export * from './transitions/md-transition'
 
 export * from './platform/plugins'
+
+export * from './translation/translate'

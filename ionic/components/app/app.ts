@@ -14,6 +14,7 @@ import {Popup} from '../popup/popup';
 import {FocusHolder} from '../form/focus-holder';
 import {Events} from '../../util/events';
 import {NavRegistry} from '../nav/nav-registry';
+import {Translate} from '../../translation/translate';
 
 /**
  * @name IonicApp
@@ -298,6 +299,8 @@ export function ionicBootstrap(rootComponentType, views, config) {
       let modal = new Modal(app, config);
       let popup = new Popup(app, config);
       let events = new Events();
+      let translate = new Translate();
+      console.log('Translate', translate);
       let navRegistry = new NavRegistry(views);
 
       // add injectables that will be available to all child components
@@ -312,6 +315,7 @@ export function ionicBootstrap(rootComponentType, views, config) {
         bind(Events).toValue(events),
         ROUTER_BINDINGS,
         bind(LocationStrategy).toClass(HashLocationStrategy),
+        bind(Translate).toValue(translate),
         bind(NavRegistry).toValue(navRegistry)
       ]);
 
