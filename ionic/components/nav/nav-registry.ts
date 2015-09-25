@@ -3,7 +3,7 @@
  * Map of possible views that can be navigated to using an Ionic NavController
  */
 export class NavRegistry {
-  constructor(views) {
+  constructor(views=[]) {
     this._views = new Map(views.map(view => [view.name, view]));
   }
 
