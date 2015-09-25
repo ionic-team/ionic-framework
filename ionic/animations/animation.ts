@@ -620,7 +620,7 @@ class Animate {
   }
 
   getCurrentTime() {
-    return this.ani.currentTime;
+    return this.ani && this.ani.currentTime;
   }
 
   playbackRate(value) {

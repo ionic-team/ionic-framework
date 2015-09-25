@@ -11,8 +11,8 @@ export class RippleActivator extends Activator {
 
   static OPACITY_OUT_DURATION = 750;
 
-  static EXPAND_OUT_PLAYBACK_RATE = 2;
-  static DOWN_PLAYBACK_RATE = 0.45;
+  static EXPAND_OUT_PLAYBACK_RATE = 3.5;
+  static DOWN_PLAYBACK_RATE = 0.65;
   static OPACITY_OUT_PLAYBACK_RATE = 1;
 
   constructor(app, config) {
