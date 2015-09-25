@@ -408,6 +408,21 @@ export class Animation {
     }
   }
 
+  /**
+   * Get the current time of the first animation
+   * in the list. To get a specific time of an animation, call
+   * subAnimationInstance.getCurrentTime()
+   */
+  getCurrentTime() {
+    if(this._chld.length > 0) {
+      return this._chld[0].getCurrentTime();
+    }
+    if(this._ani.length > 0) {
+      return this._ani[0].getCurrentTime();
+    }
+    return 0;
+  }
+
   progressEnd(shouldComplete, rate=3) {
     let promises = [];
 
@@ -602,6 +617,10 @@ class Animate {
 
       this.ani.currentTime = (this.duration * value);
     }
+  }
+
+  getCurrentTime() {
+    return this.ani.currentTime;
   }
 
   playbackRate(value) {
