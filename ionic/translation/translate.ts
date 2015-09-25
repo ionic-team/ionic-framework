@@ -18,22 +18,18 @@ export class Translate {
     return this._transMap[lang];
   }
 
-  translate(lang, key) {
-    // If called with just one param, first is the key
-    if(typeof key === 'undefined') {
-      key = lang;
-      lang = this._language;
-    }
-
-    // If the language isn't specified, return the string passed.
-    if(!lang) {
+  translate(key, lang) {
+    // If the language isn't specified and we have no overridden one, return the string passed.
+    if(!lang && !this._language) {
       return key;
     }
 
-    let map = this.getTranslations(lang);
+    let setLanguage = lang || this._language;
+
+    let map = this.getTranslations(setLanguage);
 
     if(!map) {
-      console.warn('I18N: No translation for key', key, 'using language', this._language);
+      console.warn('I18N: No translation for key', key, 'using language', setLanguage);
       return '';
     }
     return this._getTranslation(map, key);

@@ -3,10 +3,11 @@ import {Control, ControlGroup} from 'angular2/forms';
 
 import {IonicApp, App, Http} from 'ionic/ionic';
 
-import {Translate} from 'ionic/ionic';
+import {Translate, TranslatePipe} from 'ionic/ionic';
 
 @App({
-  templateUrl: 'main.html'
+  templateUrl: 'main.html',
+  pipes: [TranslatePipe]
 })
 class MyApp {
   constructor(app: IonicApp, trans: Translate) {
@@ -18,8 +19,8 @@ class MyApp {
     });
 
     console.log(this.trans.translate('Location'));
-    console.log(this.trans.translate('de', 'Location'));
-    this.trans.setLanguage('de');
+    console.log(this.trans.translate('Location', 'de'));
+    //this.trans.setLanguage('de');
     console.log(this.trans.translate('Location'));
 
   }
