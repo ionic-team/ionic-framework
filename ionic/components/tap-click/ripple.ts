@@ -1,5 +1,5 @@
 import {Activator} from './activator';
-import {removeElement} from '../../util/dom';
+import {removeElement, raf} from '../../util/dom';
 import {Animation} from '../../animations/animation';
 
 
@@ -93,9 +93,9 @@ export class RippleActivator extends Activator {
         forceComplete ||
         parseInt(rippleId) + 5000 < Date.now()) {
         // finished expanding and the user has lifted the pointer
-        setTimeout(() => {
+        raf(() => {
           this.remove(rippleId);
-        }, 0);
+        });
       }
     }
   }
