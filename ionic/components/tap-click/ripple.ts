@@ -4,16 +4,6 @@ import {Animation} from '../../animations/animation';
 
 
 export class RippleActivator extends Activator {
-  static TOUCH_DOWN_ACCEL = 512;
-  static TOUCH_UP_ACCEL = 1024;
-  static OPACITY_DECAY_VEL = 1.6;
-  static OUTER_OPACITY_VEL = 1.2;
-
-  static OPACITY_OUT_DURATION = 750;
-
-  static EXPAND_OUT_PLAYBACK_RATE = 3.5;
-  static DOWN_PLAYBACK_RATE = 0.65;
-  static OPACITY_OUT_PLAYBACK_RATE = 1;
 
   constructor(app, config) {
     super(app, config);
@@ -27,18 +17,10 @@ export class RippleActivator extends Activator {
     super.downAction(ev, activatableEle, pointerX, pointerY);
 
     // create a new ripple element
-    let r = targetEle.getBoundingClientRect();
-    let w = r.width;
-    let h = r.height;
+    let r = activatableEle.getBoundingClientRect();
 
-    let halfW = w/2;
-    let halfH = h/2;
-    let outerRadius = Math.sqrt(halfW * halfW + halfH * halfH);
-
-    let radiusDuration = (1000 * Math.sqrt(outerRadius / RippleActivator.TOUCH_DOWN_ACCEL) + 0.5);
-    let outerDuration = 1000 * (1/RippleActivator.OUTER_OPACITY_VEL);
-
-    //console.log('Rippling', radiusDuration);
+    let outerRadius = Math.sqrt(r.width + r.height);
+    let radiusDuration = (1000 * Math.sqrt(outerRadius / TOUCH_DOWN_ACCEL) + 0.5);
 
     let x = Math.max(Math.abs(r.width - pointerX), pointerX) * 2;
     let y = Math.max(Math.abs(r.height - pointerY), pointerY) * 2;
@@ -46,18 +28,18 @@ export class RippleActivator extends Activator {
 
     let rippleEle = document.createElement('md-ripple');
     let eleStyle = rippleEle.style;
-    eleStyle.width = size + 'px';
-    eleStyle.height = size + 'px';
-    eleStyle.marginTop = -(size / 2) + 'px';
-    eleStyle.marginLeft = -(size / 2) + 'px';
+    eleStyle.width = eleStyle.height = size + 'px';
+    eleStyle.marginTop = eleStyle.marginLeft = -(size / 2) + 'px';
     eleStyle.left = (pointerX - r.left) + 'px';
     eleStyle.top = (pointerY - r.top) + 'px';
 
     activatableEle.appendChild(rippleEle);
 
-    let ripple = this.ripples[Date.now()] = { ele: rippleEle };
-    ripple.outerRadius = outerRadius;
-    ripple.radiusDuration = radiusDuration;
+    let ripple = this.ripples[Date.now()] = {
+      ele: rippleEle,
+      outerRadius: outerRadius,
+      radiusDuration: radiusDuration
+    };
 
     // expand the circle from the users starting point
     // start slow, and when they let up, then speed up the animation
@@ -65,7 +47,7 @@ export class RippleActivator extends Activator {
     ripple.expand
       .fromTo('scale', '0.001', '1')
       .duration(radiusDuration)
-      .playbackRate(RippleActivator.DOWN_PLAYBACK_RATE)
+      .playbackRate(DOWN_PLAYBACK_RATE)
       .onFinish(()=> {
         // finished expanding
         ripple.expand && ripple.expand.dispose();
@@ -89,21 +71,20 @@ export class RippleActivator extends Activator {
 
         // How much more time do we need to finish the radius animation?
         // Math: (radius/second) * ((total_radius_time) - current_time)
-        let remainingTime = (ripple.outerRadius / ripple.radiusDuration) *
-          ((ripple.radiusDuration / RippleActivator.DOWN_PLAYBACK_RATE)- (currentTime));
-        ripple.expand.remainingTime = remainingTime;
+        ripple.expand.remainingTime = (ripple.outerRadius / ripple.radiusDuration) *
+          ((ripple.radiusDuration / DOWN_PLAYBACK_RATE) - (currentTime));
       }
 
       if (!ripple.fade) {
         // ripple has not been let up yet
-        // spped up the rate if the animation is still going
+        // speed up the rate if the animation is still going
         setTimeout(() => {
-          ripple.expand && ripple.expand.playbackRate(RippleActivator.EXPAND_OUT_PLAYBACK_RATE);
+          ripple.expand && ripple.expand.playbackRate(EXPAND_OUT_PLAYBACK_RATE);
           ripple.fade = new Animation(ripple.ele);
           ripple.fade
             .fadeOut()
-            .duration(ripple.epxand && ripple.expand.remaingTime || RippleActivator.OPACITY_OUT_DURATION)
-            .playbackRate(RippleActivator.OPACITY_OUT_PLAYBACK_RATE)
+            .duration(ripple.epxand && ripple.expand.remaingTime || OPACITY_OUT_DURATION)
+            .playbackRate(1)
             .onFinish(() => {
               ripple.fade && ripple.fade.dispose();
               ripple.fade = null;
@@ -152,3 +133,8 @@ export class RippleActivator extends Activator {
   }
 
 }
+
+const TOUCH_DOWN_ACCEL = 512;
+const OPACITY_OUT_DURATION = 750;
+const EXPAND_OUT_PLAYBACK_RATE = 3.5;
+const DOWN_PLAYBACK_RATE = 0.65;

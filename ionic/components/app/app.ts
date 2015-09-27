@@ -300,7 +300,6 @@ export function ionicBootstrap(rootComponentType, views, config) {
       let popup = new Popup(app, config);
       let events = new Events();
       let translate = new Translate();
-      console.log('Translate', translate);
       let navRegistry = new NavRegistry(views);
 
       // add injectables that will be available to all child components
