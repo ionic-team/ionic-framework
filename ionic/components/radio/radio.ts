@@ -189,9 +189,9 @@ export class RadioGroup extends Ion {
   '<ion-item-content id="{{labelId}}">' +
     '<ng-content></ng-content>' +
   '</ion-item-content>' +
-  '<div item-right class="media-radio">' +
-    '<div class="radio-icon"></div>' +
-  '</div>'
+  '<media-radio>' +
+    '<radio-icon></radio-icon>' +
+  '</media-radio>'
 })
 export class RadioButton extends Ion {
   /**

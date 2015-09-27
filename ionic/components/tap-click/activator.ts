@@ -14,23 +14,25 @@ export class Activator {
     this.y = 0;
   }
 
-  downAction(targetEle, pointerX, pointerY, callback) {
+  downAction(ev, activatableEle, pointerX, pointerY, callback) {
     // the user just pressed down
+
+    if (this.disableActivated(ev)) return;
 
     // remember where they pressed
     this.x = pointerX;
     this.y = pointerY;
 
     // queue to have this element activated
-    this.queue.push(targetEle);
+    this.queue.push(activatableEle);
 
     raf(() => {
-      let targetEle;
+      let activatableEle;
       for (let i = 0; i < this.queue.length; i++) {
-        targetEle = this.queue[i];
-        if (targetEle && targetEle.parentNode) {
-          this.active.push(targetEle);
-          targetEle.classList.add(this.activatedClass);
+        activatableEle = this.queue[i];
+        if (activatableEle && activatableEle.parentNode) {
+          this.active.push(activatableEle);
+          activatableEle.classList.add(this.activatedClass);
         }
       }
       this.queue = [];
@@ -68,6 +70,16 @@ export class Activator {
     }
     this.queue = [];
     this.active = [];
+  }
+
+  disableActivated(ev) {
+    let targetEle = ev.target;
+    for (let x = 0; x < 4; x++) {
+      if (!targetEle) break;
+      if (targetEle.hasAttribute('disable-activated')) return true;
+      targetEle = targetEle.parentElement;
+    }
+    return false;
   }
 
 }

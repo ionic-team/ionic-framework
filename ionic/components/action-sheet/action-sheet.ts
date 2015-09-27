@@ -54,7 +54,7 @@ import * as util from 'ionic/util';
  */
 @View({
   template:
-    '<backdrop (click)="_cancel()" tappable></backdrop>' +
+    '<backdrop (click)="_cancel()" tappable disable-activated></backdrop>' +
     '<action-sheet-wrapper>' +
       '<div class="action-sheet-container">' +
         '<div class="action-sheet-group action-sheet-options">' +

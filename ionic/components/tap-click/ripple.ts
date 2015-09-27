@@ -10,13 +10,14 @@ export class RippleActivator extends Activator {
     this.ripples = {};
   }
 
-  downAction(targetEle, pointerX, pointerY) {
-    super.downAction(targetEle, pointerX, pointerY);
+  downAction(ev, activatableEle, pointerX, pointerY) {
 
-    if (!isRippleElement(targetEle)) return;
+    if (this.disableActivated(ev)) return;
+
+    super.downAction(ev, activatableEle, pointerX, pointerY);
 
     // create a new ripple element
-    let r = targetEle.getBoundingClientRect();
+    let r = activatableEle.getBoundingClientRect();
     let x = Math.max(Math.abs(r.width - pointerX), pointerX) * 2;
     let y = Math.max(Math.abs(r.height - pointerY), pointerY) * 2;
     let size = (Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2))) - 10;
@@ -30,7 +31,7 @@ export class RippleActivator extends Activator {
     eleStyle.left = (pointerX - r.left) + 'px';
     eleStyle.top = (pointerY - r.top) + 'px';
 
-    targetEle.appendChild(rippleEle);
+    activatableEle.appendChild(rippleEle);
 
     let ripple = this.ripples[Date.now()] = { ele: rippleEle };
 
@@ -117,10 +118,3 @@ export class RippleActivator extends Activator {
   }
 
 }
-
-
-function isRippleElement(targetEle) {
-  return (targetEle && targetEle.parentNode && !(NO_RIPPLE_TAGNAMES.test(targetEle.tagName)));
-}
-
-const NO_RIPPLE_TAGNAMES = /BACKDROP/;

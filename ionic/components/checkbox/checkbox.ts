@@ -34,7 +34,7 @@ import {IonicComponent, IonicView} from '../../config/decorators';
     'id'
   ],
   host: {
-    'class': 'item no-activated',
+    'class': 'item',
     'role': 'checkbox',
     'tappable': 'true',
     '[attr.tab-index]': 'tabIndex',
@@ -46,9 +46,9 @@ import {IonicComponent, IonicView} from '../../config/decorators';
 })
 @IonicView({
   template:
-  '<div item-left class="media-checkbox">' +
-    '<div class="checkbox-icon"></div>' +
-  '</div>' +
+  '<media-checkbox disable-activated>' +
+    '<checkbox-icon></checkbox-icon>' +
+  '</media-checkbox>' +
   '<ion-item-content id="{{labelId}}">' +
     '<ng-content></ng-content>' +
   '</ion-item-content>'

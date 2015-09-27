@@ -141,11 +141,11 @@ export class TapClick {
    * @param {TODO} ev  TODO
    */
   pointerStart(ev) {
-    let targetEle = this.getActivatableTarget(ev.target);
+    let activatableEle = this.getActivatableTarget(ev.target);
 
-    if (targetEle) {
+    if (activatableEle) {
       this.start = pointerCoord(ev);
-      this.activator.downAction(targetEle, this.start.x, this.start.y);
+      this.activator.downAction(ev, activatableEle, this.start.x, this.start.y);
       this.moveListeners(true);
 
     } else {
@@ -205,8 +205,8 @@ export class TapClick {
   }
 
   getActivatableTarget(ele) {
-    var targetEle = ele;
-    for (var x = 0; x < 4; x++) {
+    let targetEle = ele;
+    for (let x = 0; x < 4; x++) {
       if (!targetEle) break;
       if (this.isActivatable(targetEle)) return targetEle;
       targetEle = targetEle.parentElement;

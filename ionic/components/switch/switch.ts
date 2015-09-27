@@ -21,11 +21,8 @@ import {pointerCoord} from '../../util/dom';
  * @private
  */
 @Directive({
-  selector: '.media-switch',
+  selector: 'media-switch',
   host: {
-    'tappable': 'true',
-    '(touchstart)': 'swtch.pointerDown($event)',
-    '(mousedown)': 'swtch.pointerDown($event)',
     '[class.switch-activated]': 'swtch.isActivated'
   }
 })
@@ -93,12 +90,15 @@ class MediaSwitch {
   host: {
     'class': 'item',
     'role': 'checkbox',
+    'tappable': 'true',
     '[attr.tab-index]': 'tabIndex',
     '[attr.aria-checked]': 'checked',
     '[attr.aria-disabled]': 'disabled',
     '[attr.aria-labelledby]': 'labelId',
+    '(touchstart)': 'pointerDown($event)',
+    '(mousedown)': 'pointerDown($event)',
     '(touchend)': 'pointerUp($event)',
-    '(mouseup)': 'pointerUp($event)',
+    '(mouseup)': 'pointerUp($event)'
   }
 })
 @IonicView({
@@ -107,9 +107,9 @@ class MediaSwitch {
   '<ion-item-content id="{{labelId}}">' +
     '<ng-content></ng-content>' +
   '</ion-item-content>' +
-  '<div item-right class="media-switch">' +
-    '<div class="switch-icon"></div>' +
-  '</div>',
+  '<media-switch disable-activated>' +
+    '<switch-icon></switch-icon>' +
+  '</media-switch>',
   directives: [MediaSwitch]
 })
 export class Switch extends Ion {
@@ -130,6 +130,7 @@ export class Switch extends Ion {
     self.id = IonInput.nextId();
     self.tabIndex = 0;
     self.lastTouch = 0;
+    self.mode = config.setting('mode');
 
     self.onChange = (_) => {};
     self.onTouched = (_) => {};
@@ -142,11 +143,11 @@ export class Switch extends Ion {
 
       if (self.checked) {
         if (currentX + 15 < self.startX) {
-          self.toggle();
+          self.toggle(ev);
           self.startX = currentX;
         }
       } else if (currentX - 15 > self.startX) {
-        self.toggle();
+        self.toggle(ev);
         self.startX = currentX;
       }
     }
@@ -187,14 +188,10 @@ export class Switch extends Ion {
   /**
    * Toggle the checked state of this switch.
    */
-  toggle() {
-    this.check(!this.checked);
-  }
-
-  click(ev) {
+  toggle(ev) {
     ev.preventDefault();
     ev.stopPropagation();
-    this.toggle();
+    this.check(!this.checked);
   }
 
   writeValue(value) {
@@ -206,9 +203,7 @@ export class Switch extends Ion {
       this.lastTouch = Date.now();
     }
 
-    if (this.lastTouch + 999 > Date.now() && /mouse/.test(ev.type)) {
-      return;
-    }
+    if (this.isDisabled(ev)) return;
 
     this.startX = pointerCoord(ev).x;
 
@@ -219,18 +214,16 @@ export class Switch extends Ion {
   }
 
   pointerUp(ev) {
-    if (this.lastTouch + 999 > Date.now() && /mouse/.test(ev.type)) {
-      return;
-    }
+    if (this.isDisabled(ev)) return;
 
     let endX = pointerCoord(ev).x;
 
     if (this.checked) {
       if (this.startX + 4 > endX) {
-        this.toggle();
+        this.toggle(ev);
       }
     } else if (this.startX - 4 < endX) {
-      this.toggle();
+      this.toggle(ev);
     }
 
     this.removeMoveListener();
@@ -246,5 +239,9 @@ export class Switch extends Ion {
   onDestroy() {
     this.removeMoveListener();
     this.switchEle = this.addMoveListener = this.removeMoveListener = null;
+  }
+
+  isDisabled(ev) {
+    return (this.lastTouch + 999 > Date.now() && /mouse/.test(ev.type)) || (this.mode == 'ios' && ev.target.tagName == 'ION-SWITCH');
   }
 }

@@ -4,10 +4,11 @@
 
 
 ion-switch {
+  display: block;
   @include user-select-none();
 }
 
-ion-switch .media-switch {
+ion-switch media-switch {
   margin: 0;
   cursor: pointer;
 }

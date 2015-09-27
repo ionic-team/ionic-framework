@@ -16,17 +16,17 @@ import * as util from 'ionic/util';
  * @usage
  * ```ts
  * class myApp {
- * 
+ *
  *   constructor(popup: Popup) {
  *     this.popup = popup;
  *   }
- * 
+ *
  *   doAlert() {
  *     this.popup.alert('Alert').then(() => {
  *       console.log('Alert closed');
  *     });
  *   }
- * 
+ *
  *   doPrompt() {
  *     this.popup.prompt('What is your name?').then((name) => {
  *       console.log('Name entered:', name);
@@ -34,7 +34,7 @@ import * as util from 'ionic/util';
  *       console.error('Prompt closed');
  *     });
  *   }
- * 
+ *
  *   doConfirm() {
  *     this.popup.confirm('Are you sure?').then((result, ev) => {
  *       console.log('Confirmed!', result);
@@ -198,7 +198,7 @@ const OVERLAY_TYPE = 'popup';
 })
 @View({
   template:
-  '<backdrop (click)="_cancel($event)" tappable></backdrop>' +
+  '<backdrop (click)="_cancel($event)" tappable disable-activated></backdrop>' +
   '<popup-wrapper>' +
     '<div class="popup-head">' +
       '<h3 class="popup-title" [inner-html]="title"></h3>' +
