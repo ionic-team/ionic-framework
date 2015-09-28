@@ -4,6 +4,15 @@ import * as util from 'ionic/util';
 import {NativePlugin} from '../plugin';
 
 
+/**
+ * Access information about the underlying device and platform.
+ *
+ * @usage
+ * ```js
+ * let info = Device.getDevice();
+ * // Device sits below
+ * ```
+ */
 @NativePlugin({
   name: 'Device',
   plugins: ['ios', 'android', 'web'],
