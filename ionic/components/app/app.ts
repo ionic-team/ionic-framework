@@ -51,6 +51,23 @@ export class IonicApp {
   }
 
   /**
+   * Bind some global events and publish on the 'app' channel
+   */
+  bindEvents(events) {
+    window.addEventListener('online', (event) => {
+      events.publish('app:online', event);
+    }, false);
+
+    window.addEventListener('offline', (event) => {
+      events.publish('app:offline', event);
+    }, false);
+
+    window.addEventListener('orientationchange', (event) => {
+      events.publish('app:rotated', event);
+    });
+  }
+
+  /**
    * TODO
    * @param {Object} appRef  TODO
    */
@@ -301,6 +318,8 @@ export function ionicBootstrap(rootComponentType, views, config) {
       let events = new Events();
       let translate = new Translate();
       let navRegistry = new NavRegistry(views);
+
+      app.bindEvents(events);
 
       // add injectables that will be available to all child components
       let appBindings = Injector.resolve([
