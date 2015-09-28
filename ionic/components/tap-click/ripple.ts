@@ -136,6 +136,6 @@ export class RippleActivator extends Activator {
 }
 
 const TOUCH_DOWN_ACCEL = 512;
-const EXPAND_DOWN_PLAYBACK_RATE = 0.45;
-const EXPAND_OUT_PLAYBACK_RATE = 2.5;
+const EXPAND_DOWN_PLAYBACK_RATE = 0.35;
+const EXPAND_OUT_PLAYBACK_RATE = 3;
 const OPACITY_OUT_DURATION = 750;
