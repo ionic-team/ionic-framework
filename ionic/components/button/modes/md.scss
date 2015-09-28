@@ -12,8 +12,8 @@ $button-md-border-radius:                  2px !default;
 $button-md-animation-curve:                cubic-bezier(0.4, 0, 0.2, 1) !default;
 $button-md-transition-duration:            300ms !default;
 
-$button-md-clear-hover-background-color:   rgba(158, 158, 158, 0.1);
-$button-md-clear-active-background-color:  rgba(158, 158, 158, 0.2);
+$button-md-clear-hover-background-color:   rgba(158, 158, 158, 0.1) !default;
+$button-md-clear-active-background-color:  rgba(158, 158, 158, 0.2) !default;
 
 
 button,
