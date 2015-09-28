@@ -624,7 +624,7 @@ class Animate {
   }
 
   getCurrentTime() {
-    return this.ani && this.ani.currentTime;
+    return (this.ani && this.ani.currentTime) || 0;
   }
 
   playbackRate(value) {

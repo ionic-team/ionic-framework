@@ -41,6 +41,8 @@ export class RippleActivator extends Activator {
       radiusDuration: radiusDuration
     };
 
+    //console.log('outerRadius', outerRadius, 'radiusDuration', radiusDuration, 'size', size)
+
     // expand the circle from the users starting point
     // start slow, and when they let up, then speed up the animation
     ripple.expand = new Animation(rippleEle, {renderDelay: 0});
@@ -83,7 +85,7 @@ export class RippleActivator extends Activator {
           ripple.fade = new Animation(ripple.ele);
           ripple.fade
             .fadeOut()
-            .duration(ripple.epxand && ripple.expand.remaingTime || OPACITY_OUT_DURATION)
+            .duration(ripple.epxand && ripple.expand.remainingTime || OPACITY_OUT_DURATION)
             .playbackRate(1)
             .onFinish(() => {
               ripple.fade && ripple.fade.dispose();
@@ -106,8 +108,7 @@ export class RippleActivator extends Activator {
       ripple = this.ripples[rippleId];
 
       if ((ripple.expanded && ripple.faded && ripple.ele) ||
-        forceComplete ||
-        parseInt(rippleId) + 5000 < Date.now()) {
+           forceComplete || parseInt(rippleId) + 5000 < Date.now()) {
         // finished expanding and the user has lifted the pointer
         raf(() => {
           this.remove(rippleId);
@@ -136,5 +137,5 @@ export class RippleActivator extends Activator {
 
 const TOUCH_DOWN_ACCEL = 512;
 const OPACITY_OUT_DURATION = 750;
-const EXPAND_OUT_PLAYBACK_RATE = 3.5;
-const DOWN_PLAYBACK_RATE = 0.65;
+const EXPAND_OUT_PLAYBACK_RATE = 2.5;
+const DOWN_PLAYBACK_RATE = 0.45;
