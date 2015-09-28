@@ -2,10 +2,6 @@
 // Color Functions
 // --------------------------------------------------
 
-@function get-color($color, $tone: base) {
-  @return red;
-}
-
 @function inverse($color-value) {
   @if (lightness($color-value) > 70) {
     @return #000;

@@ -11,18 +11,14 @@
 
     transition: 100ms all linear;
 
-    color: get-color(primary, base);
-
     min-height: 3.3rem;
     line-height: 3.3rem;
 
     &.active {
-      background-color: get-color(primary, base);
       color: white;
     }
 
     border-style: solid;
-    border-color: get-color(primary, base);
 
     &:first-of-type {
       border-right-width: 0px;

@@ -60,6 +60,10 @@ button,
     &.activated {
       opacity: 1;
     }
+
+    md-ripple {
+      background: rgba( red($button-color), green($button-color), blue($button-color), 0.1);
+    }
   }
 
   &[round] {
@@ -104,15 +108,16 @@ button,
 
     &[outline] {
 
+      md-ripple {
+        background: rgba( red($color-value), green($color-value), blue($color-value), 0.2);
+      }
+
       &.activated {
-
-        @if lightness(get-color($color-name, base)) > 90 {
-          $fg-color: get-color($color-name, inverse);
-        } @else {
-          $fg-color: get-color($color-name, base);
-        }
-
         opacity: 1;
+
+        md-ripple {
+          background: rgba(0, 0, 0, 0.1);
+        }
       }
     }
 

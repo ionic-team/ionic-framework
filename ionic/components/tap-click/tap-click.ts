@@ -16,7 +16,7 @@ export class TapClick {
     self.lastTouch = 0;
     self.lastActivated = 0;
     self.disableClick = 0;
-    self.disableClickLimit = 2500;
+    self.disableClickLimit = 1500;
 
     self.tapPolyfill = (config.setting('tapPolyfill') !== false);
 

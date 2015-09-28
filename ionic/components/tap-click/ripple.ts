@@ -62,22 +62,14 @@ export class RippleActivator extends Activator {
       this.next();
   }
 
-  upAction() {
+  upAction(forceFadeOut) {
     this.deactivate();
 
     let ripple;
     for (let rippleId in this.ripples) {
       ripple = this.ripples[rippleId];
-      if(ripple.expand) {
-        let currentTime = ripple.expand.getCurrentTime();
 
-        // How much more time do we need to finish the radius animation?
-        // Math: (radius/second) * ((total_radius_time) - current_time)
-        ripple.expand.remainingTime = (ripple.radius / ripple.duration) *
-          ((ripple.duration / EXPAND_DOWN_PLAYBACK_RATE) - (currentTime));
-      }
-
-      if (!ripple.fade) {
+      if (!ripple.fade || forceFadeOut) {
         // ripple has not been let up yet
         // speed up the rate if the animation is still going
         setTimeout(() => {
@@ -85,7 +77,7 @@ export class RippleActivator extends Activator {
           ripple.fade = new Animation(ripple.ele);
           ripple.fade
             .fadeOut()
-            .duration(ripple.epxand && ripple.expand.remainingTime || OPACITY_OUT_DURATION)
+            .duration(OPACITY_OUT_DURATION)
             .playbackRate(1)
             .onFinish(() => {
               ripple.fade && ripple.fade.dispose();
