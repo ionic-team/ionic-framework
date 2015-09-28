@@ -2,7 +2,6 @@ import {Transition} from './transition';
 import {Animation} from '../animations/animation';
 
 
-const DURATION = 300;
 const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
 
 const TRANSLATEY = 'translateY';
@@ -16,7 +15,7 @@ class MaterialTransition extends Transition {
     super(nav, opts);
 
     // global duration and easing for all child animations
-    this.duration(DURATION);
+
     this.easing(EASING);
 
     // entering item moves in bottom to center
@@ -38,6 +37,8 @@ class MaterialTransition extends Transition {
 
     // set properties depending on direction
     if (opts.direction === 'back') {
+      this.duration(500);
+
       // back direction
       this.enteringView
         .from(TRANSLATEY, CENTER);
@@ -56,6 +57,8 @@ class MaterialTransition extends Transition {
 
     } else {
       // forward direction
+      this.duration(280);
+
       this.enteringView
         .from(TRANSLATEY, OFF_BOTTOM)
         .fadeIn();
