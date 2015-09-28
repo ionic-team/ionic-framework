@@ -7,8 +7,9 @@ import {NativePlugin} from '../plugin';
  * Open installed apps on the device. Note: Android and iOS have different ways of
  * opening and specifying launch params, so they have separate launch functions.
  *
- * Example:
+ * @usage
  *
+ * ```js
  * if(platform.is('ios') {
  *   AppLinks.check('twitter://').then((installed) => {
  *     AppLinks.openIOS('twitter://user?screen_name=ionicframework')
@@ -20,6 +21,7 @@ import {NativePlugin} from '../plugin';
  *     AppLinks.openAndroid([["action", "VIEW"], ['twitter://user?screen_name=ionicframework']])
  *   })
  * }
+ * ```
  */
 @NativePlugin({
   name: 'AppLinks',

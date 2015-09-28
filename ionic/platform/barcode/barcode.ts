@@ -3,6 +3,26 @@ import * as Rx from 'rx';
 import * as util from 'ionic/util';
 import {NativePlugin} from '../plugin';
 
+/**
+ * Scan barcodes and QR codes.
+ *
+ * @usage
+ *
+ * ## Scanning a code
+ *
+ * ```js
+ * Barcode.scan().then((data) => {
+ *   console.log("Result: " + result.text + "\n" + "Format: " + result.format + "\n" + "Cancelled: " + result.cancelled);
+ * }, (err) => {
+ * })
+ * ```
+ *
+ * ## Encoding data
+ *
+ * ```js
+ * Barcode.encode(Barcode.TEXT_TYPE).then((data) => {}, (fail) => {});
+ * ```
+ */
 @NativePlugin({
   name: 'Barcode',
   platforms: ['ios', 'android'],
