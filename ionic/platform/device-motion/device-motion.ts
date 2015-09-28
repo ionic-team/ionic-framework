@@ -4,6 +4,21 @@ import * as util from 'ionic/util';
 import {NativePlugin} from '../plugin';
 
 
+/**
+ * Respond to device movement in the x/y/z axes.
+ *
+ * @usage
+ * ```js
+ * let watch = DeviceMotion.watchAcceleration();
+ * watch.source.subscribe((data) => {
+ *  // data.acceleration.x
+ *  // data.acceleration.y
+ *  // data.acceleration.z
+ * })
+ *
+ * watch.clear() // to stop watching
+ ```
+ */
 @NativePlugin({
   name: 'Device Motion',
   platforms: ['ios', 'android', 'web'],
@@ -23,6 +38,12 @@ export class DeviceMotion {
     }, result);
   }
 
+  /**
+   * Get the current acceleration from the device. Generally, watchAcceleration
+   * is more commonly used.
+   *
+   * @return {Promise} that resolves with current motion data.
+   */
   static getCurrentAcceleration() {
     return new Promise((resolve, reject) => {
       if(window.DeviceMotionEvent || ('listenForDeviceMovement' in window)) {
@@ -45,6 +66,9 @@ export class DeviceMotion {
     });
   }
 
+  /**
+   * Watch for device motion.
+   */
   static watchAcceleration(options) {
     if(window.DeviceMotionEvent || ('listenForDeviceMovement' in window)) {
       let watchID;
