@@ -25,12 +25,22 @@ import {extend} from '../util/util';
 export class Animation {
 
   constructor(ele, opts={}) {
-    this._el = [];
-    this._chld = [];
-    this._ani = [];
+    this.reset();
     this._opts = extend({
       renderDelay: 36
     }, opts);
+
+    this.elements(ele);
+
+    if (!document.documentElement.animate) {
+      console.error('Web Animations polyfill missing');
+    }
+  }
+
+  reset() {
+    this._el = [];
+    this._chld = [];
+    this._ani = [];
 
     this._bfAdd = [];
     this._bfSty = {};
@@ -41,12 +51,6 @@ export class Animation {
     this._readys = [];
     this._plays = [];
     this._finishes = [];
-
-    this.elements(ele);
-
-    if (!document.documentElement.animate) {
-      console.error('Web Animations polyfill missing');
-    }
   }
 
   elements(ele) {
@@ -502,7 +506,7 @@ export class Animation {
       this._ani[i].dispose();
     }
 
-    this._el = this._parent = this._chld = this._ani = this._readys = this._plays = this._finishes = null;
+    this.reset();
   }
 
   /*
