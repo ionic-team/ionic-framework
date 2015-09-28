@@ -31,7 +31,7 @@ import * as gestures from  './menu-gestures';
   events: ['opening']
 })
 @View({
-  template: '<ng-content></ng-content><backdrop tappable></backdrop>',
+  template: '<ng-content></ng-content><backdrop tappable disable-activated></backdrop>',
   directives: [forwardRef(() => MenuBackdrop)]
 })
 export class Menu extends Ion {
@@ -278,6 +278,7 @@ class MenuBackdrop {
    * @param {TODO} event  TODO
    */
   clicked(ev) {
+    console.debug('backdrop clicked')
     ev.preventDefault();
     ev.stopPropagation();
     this.menu.close();
