@@ -5,6 +5,13 @@ import {NativePlugin} from '../plugin';
 
 /**
  * Manage the appearance of the native status bar.
+ *
+ * @usage
+ * ```js
+ * StatusBar.hide(); // Hide the bar
+ *
+ * StatusBar.setStyle(StatusBar.LIGHT_CONTENT) // Good for dark backgrounds
+ * ```
  */
 @NativePlugin({
   name: 'StatusBar',
