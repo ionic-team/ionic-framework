@@ -7,6 +7,14 @@ import {NativePlugin} from '../plugin';
  * Manage the native keyboard. Note: this plugin performs mainly in the native
  * app context. Most operations are non-functional in a normal web browser as
  * keyboard control is limited.
+ *
+ * @usage
+ * ```js
+ * // Hide the accessory bar
+ * Keyboard.setAccessoryBarVisible(false)
+ *
+ * Keyboard.close()
+ * ```
  */
 @NativePlugin({
   name: 'Keyboard',
