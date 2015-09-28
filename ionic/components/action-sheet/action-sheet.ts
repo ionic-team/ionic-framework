@@ -140,7 +140,7 @@ const OVERLAY_TYPE = 'action-sheet';
 class ActionSheetAnimation extends Animation {
   constructor(element) {
     super(element);
-    this.easing('cubic-bezier(.36, .66, .04, 1)').duration(450);
+    this.easing('cubic-bezier(.36, .66, .04, 1)');
 
     this.backdrop = new Animation(element.querySelector('backdrop'));
     this.wrapper = new Animation(element.querySelector('action-sheet-wrapper'));
@@ -152,6 +152,7 @@ class ActionSheetAnimation extends Animation {
 class ActionSheetSlideIn extends ActionSheetAnimation {
   constructor(element) {
     super(element);
+    this.duration(400);
     this.backdrop.fromTo('opacity', 0.01, 0.4);
     this.wrapper.fromTo('translateY', '100%', '0%');
   }
@@ -161,6 +162,7 @@ Animation.register('action-sheet-slide-in', ActionSheetSlideIn);
 class ActionSheetSlideOut extends ActionSheetAnimation {
   constructor(element) {
     super(element);
+    this.duration(300);
     this.backdrop.fromTo('opacity', 0.4, 0.01);
     this.wrapper.fromTo('translateY', '0%', '100%');
   }
@@ -171,6 +173,7 @@ Animation.register('action-sheet-slide-out', ActionSheetSlideOut);
 class ActionSheetMdSlideIn extends ActionSheetSlideIn {
   constructor(element) {
     super(element);
+    this.duration(450);
     this.backdrop.fromTo('opacity', 0.01, 0.26);
   }
 }
@@ -179,6 +182,7 @@ Animation.register('action-sheet-md-slide-in', ActionSheetMdSlideIn);
 class ActionSheetMdSlideOut extends ActionSheetSlideOut {
   constructor(element) {
     super(element);
+    this.duration(450);
     this.backdrop.fromTo('opacity', 0.26, 0.01);
   }
 }
