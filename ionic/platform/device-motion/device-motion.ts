@@ -17,7 +17,7 @@ import {NativePlugin} from '../plugin';
  * })
  *
  * watch.clear() // to stop watching
- ```
+ * ```
  */
 @NativePlugin({
   name: 'Device Motion',

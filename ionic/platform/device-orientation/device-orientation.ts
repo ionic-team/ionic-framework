@@ -4,6 +4,19 @@ import * as util from 'ionic/util';
 import {NativePlugin} from '../plugin';
 
 
+/**
+ * Respond to device orientation changes (compass).
+ *
+ * @usage
+ * ```js
+ * let watch = DeviceOrientation.watchHeading();
+ * watch.source.subscribe((data) => {
+ *  // data.alpha is the compass heading
+ * })
+ *
+ * watch.clear() // to stop watching
+ * ```
+ */
 @NativePlugin({
   name: 'Device Orientation',
   platforms: ['ios', 'android', 'web'],
