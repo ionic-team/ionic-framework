@@ -189,8 +189,6 @@ export class Switch extends Ion {
    * Toggle the checked state of this switch.
    */
   toggle(ev) {
-    ev.preventDefault();
-    ev.stopPropagation();
     this.check(!this.checked);
   }
 
