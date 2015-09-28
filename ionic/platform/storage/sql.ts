@@ -10,6 +10,29 @@ const DB_NAME = '__ionicstorage';
  *
  * This is the preferred storage engine, as data will be stored in appropriate
  * app storage, unlike Local Storage which is treated differently by the OS.
+ *
+ * For convenience, the engine supports key/value storage for simple get/set and blob
+ * storage. The full SQL engine is exposed underneath through the `query` method.
+ *
+ * @usage
+ ```js
+ * let storage = new Storage(SqlStorage, options);
+ * storage.set('name', 'Max');
+ * storage.get('name').then((name) => {
+ * });
+ *
+ * // Sql storage also exposes the full engine underneath
+ * storage.query('insert into projects(name, data) values('Cool Project', 'blah')');'
+ * storage.query('select * from projects').then((resp) => {})
+ * ```
+ *
+ * The `SqlStorage` service supports these options:
+ * {
+ *   name: the name of the database (__ionicstorage by default)
+ *   backupFlag: // where to store the file, default is BACKUP_LOCAL which DOES NOT store to iCloud. Other options: BACKUP_LIBRARY, BACKUP_DOCUMENTS
+ *   existingDatabase: whether to load this as an existing database (default is false)
+ * }
+ *
  */
 export class SqlStorage extends StorageEngine {
   static BACKUP_LOCAL =  2
@@ -21,7 +44,7 @@ export class SqlStorage extends StorageEngine {
 
     let dbOptions = util.defaults({
       name: DB_NAME,
-      backupFlag: SqlStorage.BACKUP_NONE,
+      backupFlag: SqlStorage.BACKUP_LOCAL,
       existingDatabase: false
     }, options);
 
