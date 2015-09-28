@@ -14,6 +14,7 @@ export class TapClick {
 
     self.pointerTolerance = 4;
     self.lastTouch = 0;
+    self.lastActivated = 0;
     self.disableClick = 0;
     self.disableClickLimit = 2500;
 
@@ -145,7 +146,13 @@ export class TapClick {
 
     if (activatableEle) {
       this.start = pointerCoord(ev);
-      this.activator.downAction(ev, activatableEle, this.start.x, this.start.y);
+
+      let now = Date.now();
+      if (this.lastActivated + 100 < now) {
+        this.activator.downAction(ev, activatableEle, this.start.x, this.start.y);
+        this.lastActivated = now;
+      }
+
       this.moveListeners(true);
 
     } else {
