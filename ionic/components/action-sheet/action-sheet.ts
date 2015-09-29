@@ -59,16 +59,16 @@ import * as util from 'ionic/util';
       '<div class="action-sheet-container">' +
         '<div class="action-sheet-group action-sheet-options">' +
           '<div class="action-sheet-title" *ng-if="titleText">{{titleText}}</div>' +
-          '<button (click)="_buttonClicked(index)" *ng-for="#b of buttons; #index = index" class="action-sheet-option">' +
+          '<button (click)="_buttonClicked(i)" *ng-for="#b of buttons; #i=index" class="action-sheet-option disable-hover">' +
             '<icon [name]="b.icon" *ng-if="b.icon"></icon> ' +
             '{{b.text}}' +
           '</button>' +
-          '<button *ng-if="destructiveText" (click)="_destructive()" class="destructive action-sheet-destructive">' +
+          '<button *ng-if="destructiveText" (click)="_destructive()" class="action-sheet-destructive disable-hover">' +
             '<icon [name]="destructiveIcon" *ng-if="destructiveIcon"></icon> ' +
             '{{destructiveText}}</button>' +
         '</div>' +
         '<div class="action-sheet-group action-sheet-cancel" *ng-if="cancelText">' +
-          '<button (click)="_cancel()">' +
+          '<button (click)="_cancel()" class=" disable-hover">' +
             '<icon [name]="cancelIcon"></icon> ' +
             '{{cancelText}}</button>' +
         '</div>' +
