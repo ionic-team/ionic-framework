@@ -33,8 +33,6 @@ $item-ios-divider-padding:            5px 15px !default;
     padding: $item-ios-padding-top $item-ios-padding-right $item-ios-padding-bottom $item-ios-padding-left;
     background-color: $item-ios-divider-bg;
     color: $item-ios-divider-color;
-    //padding-top: ceil($item-padding / 2);
-    //padding-bottom: ceil($item-padding / 2);
   }
   .item-group {
     // Make sure the first and last items don't have borders
