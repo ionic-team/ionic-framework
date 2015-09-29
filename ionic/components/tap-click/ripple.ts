@@ -23,7 +23,7 @@ export class RippleActivator extends Activator {
 
     let x = Math.max(Math.abs(clientRect.width - clientPointerX), clientPointerX) * 2;
     let y = Math.max(Math.abs(clientRect.height - clientPointerY), clientPointerY) * 2;
-    let diameter = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+    let diameter = Math.max(Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)), 64);
 
     let radius = Math.sqrt(clientRect.width + clientRect.height);
     let duration = (1000 * Math.sqrt(radius / TOUCH_DOWN_ACCEL) + 0.5);

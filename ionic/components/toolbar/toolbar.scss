@@ -27,6 +27,7 @@ $toolbar-order: (
 
   padding: $toolbar-padding;
   width: 100%;
+  overflow: hidden;
 
   button,
   [button] {
