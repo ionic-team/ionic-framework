@@ -25,8 +25,26 @@ $item-md-thumbnail-size:              8rem !default;
 $item-md-note-color:                  darken($item-md-border-color, 10%) !default;
 $item-md-forward-icon-color:          $item-md-border-color !default;
 
+$item-md-divider-bg:                 #fff !default;
+$item-md-divider-color:              #222 !default;
+$item-md-divider-padding:            5px 15px !default;
 
 .list {
+
+  .item-group-title {
+    padding: $item-md-padding-top $item-md-padding-right $item-md-padding-bottom $item-md-padding-left;
+    background-color: $item-md-divider-bg;
+    color: $item-md-divider-color;
+  }
+  .item-group {
+    // Make sure the first and last items don't have borders
+    > .item:first-of-type:before {
+      border-top: none !important;
+    }
+    > .item:last-of-type:after {
+      border-top: none !important;
+    }
+  }
 
   .item {
     margin-top: -1px;

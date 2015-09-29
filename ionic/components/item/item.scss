@@ -21,6 +21,24 @@
   color: $list-text-color;
 }
 
+.item-group {
+  display: block;
+}
+
+.item-group-title {
+  display: block;
+  min-height: 30px;
+  font-weight: 500;
+  width: 100%;
+  z-index: 100;
+  z-index: 1000;
+  &.sticky {
+    position: -webkit-sticky;
+    position: sticky;
+  	top: 0px;
+  }
+}
+
 a.item,
 button.item.item {
   margin: 0;

@@ -22,8 +22,29 @@ $item-ios-thumbnail-size:              5.6rem !default;
 $item-ios-note-color:                  darken($item-ios-border-color, 10%) !default;
 $item-ios-forward-icon-color:          $item-ios-border-color !default;
 
+$item-ios-divider-bg:                 #f5f5f5 !default;
+$item-ios-divider-color:              #222 !default;
+$item-ios-divider-padding:            5px 15px !default;
 
 .list {
+
+
+  .item-group-title {
+    padding: $item-ios-padding-top $item-ios-padding-right $item-ios-padding-bottom $item-ios-padding-left;
+    background-color: $item-ios-divider-bg;
+    color: $item-ios-divider-color;
+    //padding-top: ceil($item-padding / 2);
+    //padding-bottom: ceil($item-padding / 2);
+  }
+  .item-group {
+    // Make sure the first and last items don't have borders
+    > .item:first-of-type:before {
+      border-top: none !important;
+    }
+    > .item:last-of-type:after {
+      border-top: none !important;
+    }
+  }
 
   .item {
     margin-top: -1px;
