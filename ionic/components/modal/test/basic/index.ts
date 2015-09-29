@@ -33,6 +33,10 @@ class MyAppCmp {
   }
 
   openModal() {
+    this.modal.open(ContactModal);
+  }
+
+  openModalCustomAnimation() {
     this.modal.open(ContactModal, {
       enterAnimation: 'my-fade-in',
       leaveAnimation: 'my-fade-out',

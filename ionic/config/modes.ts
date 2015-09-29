@@ -15,6 +15,9 @@ IonicConfig.modeConfig('ios', {
 
   iconMode: 'ios',
 
+  modalEnter: 'modal-slide-in',
+  modalLeave: 'modal-slide-out',
+
   tabBarPlacement: 'bottom',
   viewTransition: 'ios',
 
@@ -33,6 +36,9 @@ IonicConfig.modeConfig('md', {
   backButtonIcon: 'ion-md-arrow-back',
 
   iconMode: 'md',
+
+  modalEnter: 'modal-md-slide-in',
+  modalLeave: 'modal-md-slide-out',
 
   tabBarPlacement: 'top',
   viewTransition: 'md',
