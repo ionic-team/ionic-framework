@@ -81,7 +81,6 @@ IonicModule
      * @returns {object} Returns an object containing the properties top, left, width and height.
      */
     offset: function(element) {
-      offset: function(element) {
       var boundingClientRect = element[0].getBoundingClientRect();
       var modalXOffset = 0;
       var modalYOffset = 0;
@@ -98,6 +97,5 @@ IonicModule
         left: boundingClientRect.left - modalXOffset + ($window.pageXOffset || $document[0].documentElement.scrollLeft)
       };
     }
-
   };
 }]);
