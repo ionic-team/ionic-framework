@@ -1,4 +1,4 @@
-import {Directive} from 'angular2/angular2';
+import {Directive, Optional} from 'angular2/angular2';
 import {NavController} from './nav-controller';
 import {NavRegistry} from './nav-registry';
 
@@ -21,9 +21,12 @@ export class NavPush {
    * TODO
    * @param {NavController} nav  TODO
    */
-  constructor(nav: NavController, registry: NavRegistry) {
+  constructor(@Optional() nav: NavController, registry: NavRegistry) {
     this.nav = nav;
     this.registry = registry;
+    if (!nav) {
+      console.error('nav-push must be within a NavController');
+    }
   }
 
   onClick() {
@@ -64,8 +67,11 @@ export class NavPop {
    * TODO
    * @param {NavController} nav  TODO
    */
-  constructor(nav: NavController) {
+  constructor(@Optional() nav: NavController) {
     this.nav = nav;
+    if (!nav) {
+      console.error('nav-pop must be within a NavController');
+    }
   }
   onClick() {
     this.nav && this.nav.pop();

@@ -2,7 +2,8 @@
 // FABulous Buttons (Floating Action Button from material)
 // --------------------------------------------------
 
-$button-fab-size:                 56px;
+$button-fab-size:           56px !default;
+$button-fab-box-shadow:     0 4px 6px 0 rgba(0, 0, 0, 0.14), 0 4px 5px rgba(0, 0, 0, 0.1) !default;
 
 
 button,
@@ -15,6 +16,7 @@ button,
     line-height: $button-fab-size;
     min-width: 0;
     vertical-align: middle;
+    box-shadow: $button-fab-box-shadow !important;
 
     border-radius: 50%;
     background-clip: padding-box;
@@ -30,15 +32,19 @@ button,
       left: 50%;
       margin-left: -$button-fab-size / 2;
     }
+
     &[fab-top] {
       top: 16px;
     }
+
     &[fab-right] {
       right: 16px;
     }
+
     &[fab-bottom] {
       bottom: 16px;
     }
+
     &[fab-left] {
       left: 16px;
     }
@@ -48,6 +54,7 @@ button,
       font-size: 3.6rem;
       min-width: 64px;
     }
+
   }
 
 }
