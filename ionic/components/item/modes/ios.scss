@@ -139,8 +139,17 @@ $item-ios-forward-icon-color:          $item-ios-border-color !default;
 
 }
 
-.item.activated {
+.item.activated,
+a.item.activated,
+button.item.activated {
   background-color: $item-ios-activated-background-color;
+  transition-duration: 0ms;
+}
+
+.item,
+a.item,
+button.item {
+  transition-duration: 200ms;
 }
 
 .list,
