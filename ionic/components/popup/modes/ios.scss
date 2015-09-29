@@ -2,18 +2,41 @@
 // iOS Popups
 // --------------------------------------------------
 
+$popup-ios-max-width:             280px !default;
+$popup-ios-background:            rgba(0,0,0,0) !default;
 $popup-ios-border-radius:         13px !default;
 $popup-ios-background-color:      #f8f8f8 !default;
+
+$popup-ios-head-text-align:       center !default;
+$popup-ios-title-font-size:       15px !default;
+$popup-ios-body-text-color:       inherit !default;
+
 $popup-ios-button-text-color:     color(primary) !default;
+$popup-ios-button-min-height:     45px !default;
 
 
-popup-wrapper {
-  border-radius: $popup-ios-border-radius;
-  background-color: $popup-ios-background-color;
+ion-popup {
+  background: $popup-ios-background;
+
+  popup-wrapper {
+    border-radius: $popup-ios-border-radius;
+    background-color: $popup-ios-background-color;
+    max-width: $popup-ios-max-width;
+  }
 }
 
 .popup-head {
+  text-align: $popup-ios-head-text-align;
   padding-top: 24px;
+}
+
+.popup-title {
+  font-size: $popup-ios-title-font-size;
+}
+
+.popup-body {
+  padding: 10px;
+  color: $popup-ios-body-text-color;
 }
 
 .popup-body:empty {
@@ -27,7 +50,7 @@ popup-wrapper {
   button {
     background-color: transparent;
     color: $popup-ios-button-text-color;
-    font-size: 14px;
+    min-height: $popup-ios-button-min-height;
 
     &:last-child {
       font-weight: bold;

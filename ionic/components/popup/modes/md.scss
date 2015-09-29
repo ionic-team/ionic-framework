@@ -2,17 +2,44 @@
 // Material Design Popups
 // --------------------------------------------------
 
-$popup-md-border-radius:       13px !default;
-$popup-md-background-color:    #f8f8f8 !default;
+$popup-md-max-width:           280px !default;
+$popup-md-background:          rgba(0,0,0,0.5) !default;
+$popup-md-border-radius:       2px !default;
+$popup-md-background-color:    #fafafa !default;
+$popup-md-box-shadow:          0px 16px 20px rgba(0, 0, 0, 0.4) !default;
+
+$popup-md-head-text-align:     left !default;
+$popup-md-title-font-size:     20px !default;
+$popup-md-body-text-color:     rgba(0,0,0,.5) !default;
+
+$popup-md-button-text-color:   color(primary) !default;
+$popup-md-button-min-height:   36px !default;
 
 
-popup-wrapper {
-  border-radius: $popup-md-border-radius;
-  background-color: $popup-md-background-color;
+ion-popup {
+  background: $popup-md-background;
+
+  popup-wrapper {
+    max-width: $popup-md-max-width;
+    border-radius: $popup-md-border-radius;
+    background-color: $popup-md-background-color;
+
+    box-shadow: $popup-md-box-shadow;
+  }
 }
 
 .popup-head {
-  padding-top: 24px;
+  text-align: $popup-md-head-text-align;
+  padding: 24px 24px 10px 24px;
+}
+
+.popup-title {
+  font-size: $popup-md-title-font-size;
+}
+
+.popup-body {
+  padding: 10px 24px 24px 24px;
+  color: $popup-md-body-text-color;
 }
 
 .popup-body:empty {
@@ -20,16 +47,25 @@ popup-wrapper {
 }
 
 .popup-buttons {
-  padding: 0;
-  min-height: 0;
+  padding: 8px 8px 8px 24px;
+  justify-content: flex-end;
 
-  .button {
-    min-height: 42px;
-    font-size: 14px;
+  button {
+    -webkit-box-flex: initial;
+    -webkit-flex: intiial;
+    -ms-flex: initial;
+    flex: initial;
+
+    background-color: transparent;
+    color: $popup-md-button-text-color;
+    min-height: $popup-md-button-min-height;
+
+    box-shadow: none;
+    -webkit-transition: none;
+    transition: none;
 
     &:last-child {
-      font-weight: bold;
+      margin-right: 0;
     }
   }
-
 }

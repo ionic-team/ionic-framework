@@ -2,14 +2,15 @@
 // Popups
 // --------------------------------------------------
 
-$popup-width:                     250px !default;
+$popup-min-width:                 250px !default;
+$popup-max-width:                 100% !default;
+$popup-max-height:                90% !default;
 
-$popup-border-radius:             0px !default;
-$popup-background-color:          rgba(255,255,255,0.9) !default;
+$popup-sub-title-font-size:       11px !default;
 
-$popup-button-border-radius:      2px !default;
 $popup-button-line-height:        20px !default;
-$popup-button-min-height:         45px !default;
+$popup-button-font-size:          14px !default;
+$popup-button-margin-right:       8px !default;
 
 
 ion-popup {
@@ -19,7 +20,6 @@ ion-popup {
   left: 0;
   bottom: 0;
   right: 0;
-  background: rgba(0,0,0,0);
 
   display: flex;
   justify-content: center;
@@ -27,12 +27,9 @@ ion-popup {
 
   popup-wrapper {
     z-index: $z-index-overlay-wrapper;
-    width: $popup-width;
-    max-width: 100%;
-    max-height: 90%;
-
-    border-radius: $popup-border-radius;
-    background-color: $popup-background-color;
+    min-width: $popup-min-width;
+    max-width: $popup-max-width;
+    max-height: $popup-max-height;
 
     display: flex;
     flex-direction: column;
@@ -46,44 +43,38 @@ ion-popup {
 
 .popup-head {
   padding: 15px 10px;
-  text-align: center;
 }
 
-h3.popup-title {
+.popup-title {
   margin: 0;
   padding: 0;
-  font-size: 15px;
 }
 
 .popup-sub-title {
   margin: 5px 0 0 0;
   padding: 0;
   font-weight: normal;
-  font-size: 11px;
+  font-size: $popup-sub-title-font-size;
 }
 
 .popup-body {
-  padding: 10px;
   overflow: auto;
 }
 
 .popup-buttons {
   display: flex;
   flex-direction: row;
-  padding: 10px;
-  min-height: $popup-button-min-height + 20;
 
   button {
     flex: 1;
     display: block;
-    min-height: $popup-button-min-height;
-    border-radius: $popup-button-border-radius;
+    margin: 0;
     line-height: $popup-button-line-height;
-
-    margin-right: 5px;
+    font-size: $popup-button-font-size;
+    margin-right: $popup-button-margin-right;
 
     &:last-child {
-      margin-right: 0px;
+      margin-right: 0;
     }
   }
 }
