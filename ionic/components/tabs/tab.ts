@@ -27,7 +27,6 @@ import {Tabs} from './tabs';
     '[attr.id]': 'panelId',
     '[attr.aria-labelledby]': 'labeledBy',
     '[attr.aria-hidden]': 'isNotSelected',
-    '[class.tab-selected]': 'isSelected',
     'role': 'tabpanel'
   }
 })

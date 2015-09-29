@@ -60,11 +60,11 @@ export class Ion {
   }
 
   width() {
-    return this.getDimensions().w;
+    return dom.getDimensions(this).width;
   }
 
   height() {
-    return this.getDimensions().h;
+    return dom.getDimensions(this).height;
   }
 
 }

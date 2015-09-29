@@ -8,11 +8,11 @@ $tab-bar-ios-item-icon-size:           32px !default;
 $tab-bar-ios-height:                   49px !default;
 
 
-.tab-bar {
+tab-bar {
   border-top: 1px solid $toolbar-ios-border-color;
 }
 
-.tabs[tab-bar-placement=top] .tab-bar {
+ion-tabs[tab-bar-placement=top] tab-bar {
   border-top: none;
   border-bottom: 1px solid $toolbar-ios-border-color;
 }
@@ -72,13 +72,13 @@ $tab-bar-ios-height:                   49px !default;
   min-height: $tab-bar-ios-height - 8;
 }
 
-&.hairlines .tabs {
+&.hairlines ion-tabs {
 
-  .tab-bar {
+  tab-bar {
     border-top-width: 0.5px;
   }
 
-  &[tab-bar-placement="top"] .tab-bar {
+  &[tab-bar-placement="top"] tab-bar {
     border-bottom-width: 0.55px;
   }
 

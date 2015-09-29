@@ -1,10 +1,12 @@
 import {Component, Directive, View, Injector, NgFor, ElementRef, Optional, Host, forwardRef, NgZone} from 'angular2/angular2';
 
+import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
 import {NavController} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
 import {IonicComponent, IonicView} from '../../config/decorators';
 import {IonicConfig} from '../../config/config';
+import * as dom from 'ionic/util/dom';
 
 
 /**
@@ -24,9 +26,9 @@ import {IonicConfig} from '../../config/config';
  * @usage
  * ```html
  * <ion-tabs>
- *   <ion-tab tab-title="Heart" tab-icon="ion-ios-heart-outline" [root]="root1"></ion-tab>
- *   <ion-tab tab-title="Star" tab-icon="ion-ios-star-outline" [root]="root2"></ion-tab>
- *   <ion-tab tab-title="Stopwatch" tab-icon="ion-ios-stopwatch-outline" [root]="root3"></ion-tab>
+ *   <ion-tab tab-title="Heart" tab-icon="heart-" [root]="root1"></ion-tab>
+ *   <ion-tab tab-title="Star" tab-icon="star" [root]="root2"></ion-tab>
+ *   <ion-tab tab-title="Stopwatch" tab-icon="stopwatch" [root]="root3"></ion-tab>
  * </ion-tabs>
  * ```
  *
@@ -41,17 +43,18 @@ import {IonicConfig} from '../../config/config';
 @IonicView({
   template: '' +
     '<nav class="tab-bar-container">' +
-      '<div class="tab-bar" role="tablist">' +
+      '<tab-bar role="tablist">' +
         '<a *ng-for="#t of tabs" [tab]="t" class="tab-button" role="tab">' +
           '<icon [name]="t.tabIcon" [is-active]="t.isSelected" class="tab-button-icon"></icon>' +
           '<span class="tab-button-text">{{t.tabTitle}}</span>' +
         '</a>' +
-      '</div>' +
+        '<tab-highlight></tab-highlight>' +
+      '</tab-bar>' +
     '</nav>' +
     '<section class="content-container">' +
       '<ng-content></ng-content>' +
     '</section>',
-  directives: [forwardRef(() => TabButton)]
+  directives: [forwardRef(() => TabButton), forwardRef(() => TabHighlight)]
 })
 export class Tabs extends NavController {
   /**
@@ -138,6 +141,7 @@ export class Tabs extends NavController {
         leavingView.shouldCache = true;
 
         this.transition(enteringView, leavingView, opts, () => {
+          this.highlight && this.highlight.select(tab);
           resolve();
         });
       });
@@ -168,8 +172,9 @@ export class Tabs extends NavController {
     '(click)': 'onClick($event)',
   }
 })
-class TabButton {
+class TabButton extends Ion {
   constructor(@Host() tabs: Tabs, config: IonicConfig, elementRef: ElementRef) {
+    super(elementRef, config);
     this.tabs = tabs;
 
     if (config.setting('hoverCSS') === false) {
@@ -178,6 +183,7 @@ class TabButton {
   }
 
   onInit() {
+    this.tab.btn = this;
     let id = this.tab.viewCtrl.id;
     this.btnId = 'tab-button-' + id;
     this.panelId = 'tab-panel-' + id;
@@ -193,4 +199,33 @@ class TabButton {
     ev.preventDefault();
     this.tabs.select(this.tab);
   }
+}
+
+
+@Directive({
+  selector: 'tab-highlight'
+})
+class TabHighlight {
+  constructor(@Host() tabs: Tabs, config: IonicConfig, elementRef: ElementRef) {
+    if (config.setting('mode') === 'md') {
+      tabs.highlight = this;
+      this.elementRef = elementRef;
+    }
+  }
+
+  select(tab) {
+    setTimeout(() => {
+      let d = tab.btn.getDimensions();
+      let ele = this.elementRef.nativeElement;
+      ele.style.transform = 'translate3d(' + d.left + 'px,0,0) scaleX(' + d.width + ')';
+
+      if (!this.init) {
+        this.init = true;
+        setTimeout(() => {
+          ele.classList.add('animate');
+        }, 64)
+      }
+    }, 32);
+  }
+
 }

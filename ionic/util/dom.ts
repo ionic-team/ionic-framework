@@ -242,8 +242,10 @@ export function getDimensions(ion) {
   if (!dimensions) {
     let ele = ion.getNativeElement();
     dimensions = dimensionCache[ion._dimId] = {
-      w: ele.offsetWidth,
-      h: ele.offsetHeight
+      width: ele.offsetWidth,
+      height: ele.offsetHeight,
+      left: ele.offsetLeft,
+      top: ele.offsetTop
     };
   }
 

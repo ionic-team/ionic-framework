@@ -20,10 +20,6 @@ $tab-bar-md-item-height:              4.8rem !default;
   border-bottom: 2px solid transparent;
 }
 
-.tab-button[aria-selected=true] {
-  border-bottom-color: $tab-button-text-active;
-}
-
 .tab-button-text {
   margin-top: 5px;
   margin-bottom: 5px;
@@ -52,4 +48,19 @@ $tab-bar-md-item-height:              4.8rem !default;
 .tab-button.icon-only,
 .tab-button.has-title-only {
   padding: 6px 10px 6px 10px;
+}
+
+tab-highlight {
+  position: absolute;
+  display: block;
+  height: 2px;
+  width: 1px;
+  bottom: 0;
+  left: 0;
+  background: $tab-button-active-color;
+  transform-origin: 0 0;
+
+  &.animate {
+    transition-duration: 300ms;
+  }
 }
