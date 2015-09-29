@@ -13,10 +13,10 @@ import {IonicApp} from '../app/app';
     'menuClose'
   ],
   host: {
-    '(click)': 'close($event)'
+    '(click)': 'close()'
   }
 })
-export class MenuToggle extends Ion {
+export class MenuClose extends Ion {
 
   constructor(
     app: IonicApp,
@@ -26,11 +26,9 @@ export class MenuToggle extends Ion {
     this.app = app;
   }
 
-  close(ev) {
+  close() {
     let menu = this.app.getComponent(this.menuClose || 'menu');
     menu && menu.close();
-    ev.preventDefault();
-    ev.stopPropagation();
   }
 
 }

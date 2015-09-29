@@ -12,7 +12,7 @@ import {NavRegistry} from './nav-registry';
     'params: navParams'
   ],
   host: {
-    '(click)': 'onClick($event)',
+    '(click)': 'onClick()',
     'role': 'link'
   }
 })
@@ -26,7 +26,7 @@ export class NavPush {
     this.registry = registry;
   }
 
-  onClick(event) {
+  onClick() {
     let destination, params;
 
     if (this.instruction instanceof Array) {
@@ -44,9 +44,10 @@ export class NavPush {
       destination = this.registry.get(destination);
     }
 
-    this.nav.push(destination, params);
+    this.nav && this.nav.push(destination, params);
   }
 }
+
 
 /**
  * TODO
@@ -54,7 +55,7 @@ export class NavPush {
 @Directive({
   selector: '[nav-pop]',
   host: {
-    '(click)': 'onClick($event)',
+    '(click)': 'onClick()',
     'role': 'link'
   }
 })
@@ -66,7 +67,7 @@ export class NavPop {
   constructor(nav: NavController) {
     this.nav = nav;
   }
-  onClick(event) {
-    this.nav.pop();
+  onClick() {
+    this.nav && this.nav.pop();
   }
 }

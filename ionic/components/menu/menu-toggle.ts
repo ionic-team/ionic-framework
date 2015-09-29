@@ -15,7 +15,7 @@ import {Navbar} from '../nav-bar/nav-bar';
     'menuToggle'
   ],
   host: {
-    '(click)': 'toggle($event)',
+    '(click)': 'toggle()',
     '[hidden]': 'isHidden'
   }
 })
@@ -37,11 +37,9 @@ export class MenuToggle extends Ion {
   * TODO
   * @param {TODO} event  TODO
   */
-  toggle(ev) {
+  toggle() {
     let menu = this.app.getComponent(this.menuToggle || 'menu');
     menu && menu.toggle();
-    ev.preventDefault();
-    ev.stopPropagation();
   }
 
   get isHidden() {

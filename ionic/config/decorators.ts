@@ -4,7 +4,8 @@ import * as util from 'ionic/util';
 import {IonicConfig} from './config';
 import {ionicBootstrap} from '../components/app/app';
 import {
-  Menu, MenuToggle, Button, Content, Scroll, Refresher,
+  Menu, MenuToggle, MenuClose,
+  Button, Content, Scroll, Refresher,
   Slides, Slide, SlideLazy,
   Tabs, Tab,
   Card, List, ListHeader, Item, ItemGroup, ItemGroupTitle,
@@ -14,7 +15,8 @@ import {
   TextInput, TextInputElement, Label,
   Segment, SegmentButton, SegmentControlValueAccessor,
   RadioGroup, RadioButton, SearchBar,
-  Nav, NavbarTemplate, Navbar, NavPush, NavPop, NavRouter,
+  Nav, NavbarTemplate, Navbar,
+  NavPush, NavPop, NavRouter,
   IdRef,
   ShowWhen, HideWhen
 } from '../ionic';
@@ -34,6 +36,7 @@ export const IONIC_DIRECTIVES = [
   // Content
   forwardRef(() => Menu),
   forwardRef(() => MenuToggle),
+  forwardRef(() => MenuClose),
 
   forwardRef(() => Button),
   forwardRef(() => Content),
@@ -81,6 +84,7 @@ export const IONIC_DIRECTIVES = [
   forwardRef(() => Nav),
   forwardRef(() => NavbarTemplate),
   forwardRef(() => Navbar),
+
   forwardRef(() => NavPush),
   forwardRef(() => NavPop),
   forwardRef(() => NavRouter),
