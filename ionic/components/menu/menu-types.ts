@@ -116,7 +116,7 @@ class MenuOverlayType extends MenuType {
 
     let easing = 'ease';
     let duration = 250;
-    let backdropOpacity = 0.5;
+    let backdropOpacity = 0.35;
 
     let closedX, openedX;
     if (menu.side == 'right') {
