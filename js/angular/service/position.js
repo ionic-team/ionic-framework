@@ -81,12 +81,21 @@ IonicModule
      * @returns {object} Returns an object containing the properties top, left, width and height.
      */
     offset: function(element) {
+      offset: function(element) {
       var boundingClientRect = element[0].getBoundingClientRect();
+      var modalXOffset = 0;
+      var modalYOffset = 0;
+      if ($window.innerWidth >= 680) {
+        if (ionic.DomUtil.getParentWithClass(element[0], "modal")) {
+          modalXOffset = $window.innerWidth * 20 / 100; //20% left of modal with media width >= 680
+          modalYOffset = $window.innerHeight * 20 / 100; //20% top of modal with media width >= 680
+        }
+      }
       return {
         width: boundingClientRect.width || element.prop('offsetWidth'),
         height: boundingClientRect.height || element.prop('offsetHeight'),
-        top: boundingClientRect.top + ($window.pageYOffset || $document[0].documentElement.scrollTop),
-        left: boundingClientRect.left + ($window.pageXOffset || $document[0].documentElement.scrollLeft)
+        top: boundingClientRect.top - modalYOffset + ($window.pageYOffset || $document[0].documentElement.scrollTop),
+        left: boundingClientRect.left - modalXOffset + ($window.pageXOffset || $document[0].documentElement.scrollLeft)
       };
     }
 
