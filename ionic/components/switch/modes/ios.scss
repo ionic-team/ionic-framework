@@ -24,6 +24,10 @@ $switch-ios-transition-duration:       300ms !default;
 
 ion-switch {
 
+  &.item.activated {
+    background: $list-background-color;
+  }
+
   media-switch {
     padding: 6px ($item-ios-padding-right / 2) 6px ($item-ios-padding-left);
   }
