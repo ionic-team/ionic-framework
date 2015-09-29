@@ -8,8 +8,8 @@
  * during low disk space situations.
  */
 export class Storage {
-  constructor(strategyCls: StorageEngine) {
-    this._strategy = new strategyCls();
+  constructor(strategyCls: StorageEngine, options) {
+    this._strategy = new strategyCls(options);
   }
   get(key) {
     return this._strategy.get(key);
