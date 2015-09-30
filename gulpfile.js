@@ -58,6 +58,7 @@ gulp.task('build', function(done) {
     'bundle',
     'e2e',
     'demos',
+    'copy.docs-demo',
     'sass',
     'fonts',
     done

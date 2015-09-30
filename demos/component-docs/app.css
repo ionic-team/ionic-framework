@@ -1,0 +1,7 @@
+body {
+  cursor: url('http://ionicframework.com/img/finger.png'), auto;
+}
+
+section.hidden {
+  display: none !important;
+}
