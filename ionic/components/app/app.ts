@@ -86,7 +86,6 @@ export class IonicApp {
    * @param {Object} appRef  TODO
    */
   load(appRef) {
-    console.log('App ref', appRef);
     this.ref(appRef);
     this._zone = appRef.injector.get(NgZone);
   }
