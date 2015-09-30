@@ -11,7 +11,7 @@ let TransitionRegistry = {};
 export class Transition extends Animation {
 
   constructor(nav, opts) {
-    super();
+    super(null, opts);
 
     // get the entering and leaving items
     let enteringView = this.entering = nav.getStagedEnteringView();

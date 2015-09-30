@@ -243,7 +243,7 @@ export class Animation {
         });
       }
 
-      if (self._duration > this._opts.renderDelay) {
+      if (self._duration > 32) {
         // begin each animation when everything is rendered in their starting point
         // give the browser some time to render everything in place before starting
         setTimeout(kickoff, this._opts.renderDelay);

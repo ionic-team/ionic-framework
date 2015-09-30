@@ -9,6 +9,7 @@ const CENTER = '0px'
 class MaterialTransition extends Transition {
 
   constructor(nav, opts) {
+    opts.renderDelay = 160;
     super(nav, opts);
 
     // entering item moves in bottom to center
