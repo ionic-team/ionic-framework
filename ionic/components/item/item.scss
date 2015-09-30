@@ -63,6 +63,11 @@ ion-item-content {
   overflow: hidden;
   text-overflow: ellipsis;
   pointer-events: none;
+
+  a,
+  button {
+    pointer-events: auto;
+  }
 }
 
 .item-text-wrap ion-item-content {
