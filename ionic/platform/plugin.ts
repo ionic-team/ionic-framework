@@ -5,9 +5,12 @@ export class NativePluginDecorator {
 
     cls.ifPlugin = (cb, returnType=null) => {
       // Convert to boolean the plugin param
-      var exists = !!check;
+      var exists;
       if(typeof this.config.pluginCheck === 'function') {
         exists = this.config.pluginCheck();
+      } else {
+        console.error('Plugin "' + this.config.name + '" is missing a pluginCheck() function for plugin verification. Please add one."');
+        return false;
       }
       if(exists) {
         return cb();
@@ -20,7 +23,7 @@ export class NativePluginDecorator {
       if(returnType) {
         return (typeof returnType === 'function') ? returnType() : returnType;
       }
-      
+
       return false;
     };
 
