@@ -4,6 +4,7 @@ import {ROUTER_BINDINGS, HashLocationStrategy, LocationStrategy, Router} from 'a
 import {IonicConfig} from '../../config/config';
 import {IonicPlatform, Platform} from '../../platform/platform';
 import {ClickBlock} from '../../util/click-block';
+import {ScrollTo} from '../../animations/scroll-to';
 import * as dom from '../../util/dom';
 
 // injectables
@@ -53,7 +54,7 @@ export class IonicApp {
   /**
    * Bind some global events and publish on the 'app' channel
    */
-  bindEvents(events) {
+  bindEvents(platform, events) {
     window.addEventListener('online', (event) => {
       events.publish('app:online', event);
     }, false);
@@ -66,10 +67,18 @@ export class IonicApp {
       events.publish('app:rotated', event);
     });
 
+    // When that status taps, we respond
     window.addEventListener('statusTap', (event) => {
-      //alert('Status tap!');
-      //console.log(event);
-    })
+      // TODO: Make this more better
+      var el = document.elementFromPoint(platform.width() / 2, platform.height() / 2);
+      if(!el) { return; }
+
+      var content = dom.closest(el, 'scroll-content');
+      if(content) {
+        var scrollTo = new ScrollTo(content);
+        scrollTo.start(0, 0, 300, 0);
+      }
+    });
   }
 
   /**
@@ -77,6 +86,7 @@ export class IonicApp {
    * @param {Object} appRef  TODO
    */
   load(appRef) {
+    console.log('App ref', appRef);
     this.ref(appRef);
     this._zone = appRef.injector.get(NgZone);
   }
@@ -324,7 +334,7 @@ export function ionicBootstrap(rootComponentType, views, config) {
       let translate = new Translate();
       let navRegistry = new NavRegistry(views);
 
-      app.bindEvents(events);
+      app.bindEvents(platform, events);
 
       // add injectables that will be available to all child components
       let appBindings = Injector.resolve([
