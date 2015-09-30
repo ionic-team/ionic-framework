@@ -1,4 +1,5 @@
 import {App, ActionSheet} from 'ionic/ionic';
+import {NgZone} from 'angular2/angular2';
 
 function toTitleCase(str) {
   return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
@@ -9,13 +10,21 @@ function toTitleCase(str) {
 })
 class DemoApp {
 
-  constructor(actionSheet: ActionSheet) {
+  component: any;
+  actionSheet: any;
+
+  constructor(actionSheet: ActionSheet, zone: NgZone) {
     this.actionSheet = actionSheet;
     this.component = {
-      title: 'Action Sheet',
-    }
+        title: 'Action Sheets',
+    };
     window.onmessage = (e) => {
-        this.component.title = toTitleCase(e.data.replace('-', ' '));
+      zone.run(() => {
+        if (e.data) {
+          var data = JSON.parse(e.data);
+          this.component.title = toTitleCase(data.hash.replace('-', ' '));
+        }
+      });
     };
   }
 
