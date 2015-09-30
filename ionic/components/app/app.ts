@@ -67,8 +67,8 @@ export class IonicApp {
     });
 
     window.addEventListener('statusTap', (event) => {
-      alert('Status tap!');
-      console.log(event);
+      //alert('Status tap!');
+      //console.log(event);
     })
   }
 
