@@ -65,6 +65,7 @@ $toolbar-order: (
 }
 
 .toolbar-inner {
+  position: relative;
   display: flex;
   width: 100%;
 }
