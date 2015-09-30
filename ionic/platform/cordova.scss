@@ -8,7 +8,9 @@
   // iOS Cordova
   // ------------
   &.platform-ios .navbar-container,
-  &.platform-ios ion-navbar {
+  &.platform-ios ion-navbar,
+  &.platform-ios ion-menu > ion-toolbar {
+    min-height: 64px;
     height: 64px;
   }
 
