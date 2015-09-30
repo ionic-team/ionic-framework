@@ -22,28 +22,5 @@
 </ion-menu>
 
 
-<ion-menu side="right" [content]="content" id="rightMenu">
-
-  <ion-toolbar secondary>
-    <ion-title>Right Menu</ion-title>
-  </ion-toolbar>
-
-  <ion-content>
-
-    <ion-list>
-
-      <button ion-item *ng-for="#p of pages" (click)="openPage(p)">
-        {{p.title}}
-      </button>
-
-      <button ion-item menu-toggle="rightMenu" no-forward-icon class="e2eCloseMenu">
-        Close Menu
-      </button>
-
-    </ion-list>
-  </ion-content>
-
-</ion-menu>
-
 
 <ion-nav id="nav" [root]="rootView" #content swipe-back-enabled="false"></ion-nav>
