@@ -15,6 +15,8 @@ $button-md-transition-duration:            300ms !default;
 $button-md-clear-hover-background-color:   rgba(158, 158, 158, 0.1) !default;
 $button-md-clear-active-background-color:  rgba(158, 158, 158, 0.2) !default;
 
+$button-md-fab-box-shadow:     0 4px 6px 0 rgba(0, 0, 0, 0.14), 0 4px 5px rgba(0, 0, 0, 0.1) !default;
+
 
 button,
 [button] {
@@ -85,6 +87,7 @@ button,
 
   &[fab] {
     border-radius: 50%;
+    box-shadow: $button-md-fab-box-shadow !important;
   }
 
   &.icon-only {

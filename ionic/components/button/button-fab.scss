@@ -3,7 +3,6 @@
 // --------------------------------------------------
 
 $button-fab-size:           56px !default;
-$button-fab-box-shadow:     0 4px 6px 0 rgba(0, 0, 0, 0.14), 0 4px 5px rgba(0, 0, 0, 0.1) !default;
 
 
 button,
@@ -16,7 +15,6 @@ button,
     line-height: $button-fab-size;
     min-width: 0;
     vertical-align: middle;
-    box-shadow: $button-fab-box-shadow !important;
 
     border-radius: 50%;
     background-clip: padding-box;
