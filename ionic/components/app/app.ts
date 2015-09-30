@@ -65,6 +65,11 @@ export class IonicApp {
     window.addEventListener('orientationchange', (event) => {
       events.publish('app:rotated', event);
     });
+
+    window.addEventListener('statusTap', (event) => {
+      alert('Status tap!');
+      console.log(event);
+    })
   }
 
   /**
@@ -176,7 +181,7 @@ export class IonicApp {
    */
   register(id, component) {
     if (this.components[id] && this.components[id] !== component) {
-      console.error('Component id "' + id + '" already registered.');
+      //console.error('Component id "' + id + '" already registered.');
     }
     this.components[id] = component;
   }
