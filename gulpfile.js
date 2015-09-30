@@ -386,6 +386,12 @@ gulp.task('demos', function(){
   }
 })
 
+gulp.task('copy.docs-demo', function () {
+  return gulp
+    .src('dist/demos/component-docs/*')
+    .pipe(gulp.dest('dist/ionic-site/docs/v2/components/demo/'))
+})
+
 gulp.task('publish', function(done) {
   var version = flags.version;
   var ngVersion = flags.ngVersion;
