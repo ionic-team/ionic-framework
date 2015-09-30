@@ -166,6 +166,15 @@ export class Tabs extends NavController {
       // Pop to the root view
       tab.popToRoot();
     }
+    /*
+     TODO: Uncomment to enable root scroll to top
+     else {
+      let content = tab.views[0] && tab.views[0].getContent();
+      if(content) {
+        content.scrollToTop();
+      }
+    }
+    */
   }
 
   get tabs() {

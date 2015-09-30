@@ -23,6 +23,14 @@ export class ViewController {
     this.templateRefs = {};
   }
 
+  setContent(content) {
+    this._content = content;
+  }
+
+  getContent() {
+    return this._content;
+  }
+
   /**
    * TODO
    * @param {TODO} name  TODO

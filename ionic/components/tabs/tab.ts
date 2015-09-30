@@ -1,8 +1,10 @@
-import {Directive, Component, View, Host, ElementRef, forwardRef, Injector, NgZone} from 'angular2/angular2';
+import {Directive, Component, View, Host, ElementRef, forwardRef,
+  Injector, NgZone, Query, ViewQuery, QueryList} from 'angular2/angular2';
 
 import {NavController} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
 import {Tabs} from './tabs';
+import {Content} from '../content/content';
 
 
 /**
@@ -47,7 +49,7 @@ export class Tab extends NavController {
     @Host() tabs: Tabs,
     elementRef: ElementRef,
     injector: Injector,
-    zone: NgZone
+    zone: NgZone,
   ) {
     // A Tab is both a container of many views, and is a view itself.
     // A Tab is one ViewController within it's Host Tabs (which extends NavController)
@@ -141,6 +143,7 @@ class TabPaneAnchor {
   * @param {ElementRef} elementRef  TODO
   */
   constructor(@Host() tab: Tab, elementRef: ElementRef) {
+
     tab.anchorElementRef(elementRef);
   }
 }
