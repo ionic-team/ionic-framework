@@ -2,18 +2,20 @@
 // Material Design Popups
 // --------------------------------------------------
 
-$popup-md-max-width:           280px !default;
-$popup-md-background:          rgba(0,0,0,0.5) !default;
-$popup-md-border-radius:       2px !default;
-$popup-md-background-color:    #fafafa !default;
-$popup-md-box-shadow:          0px 16px 20px rgba(0, 0, 0, 0.4) !default;
+$popup-md-max-width:                      280px !default;
+$popup-md-background:                     rgba(0,0,0,0.5) !default;
+$popup-md-border-radius:                  2px !default;
+$popup-md-background-color:               #fafafa !default;
+$popup-md-box-shadow:                     0px 16px 20px rgba(0, 0, 0, 0.4) !default;
 
-$popup-md-head-text-align:     left !default;
-$popup-md-title-font-size:     20px !default;
-$popup-md-body-text-color:     rgba(0,0,0,.5) !default;
+$popup-md-head-text-align:                left !default;
+$popup-md-title-font-size:                20px !default;
+$popup-md-body-text-color:                rgba(0,0,0,.5) !default;
 
-$popup-md-button-text-color:   color(primary) !default;
-$popup-md-button-min-height:   36px !default;
+$popup-md-button-text-color:              color(primary) !default;
+$popup-md-button-min-height:              36px !default;
+$popup-md-prompt-input-highlight-color:   map-get($colors, primary) !default;
+$popup-md-prompt-input-placeholder-color: #b9b9b9;
 
 
 ion-popup {
@@ -42,8 +44,28 @@ ion-popup {
   color: $popup-md-body-text-color;
 }
 
-.popup-body:empty {
-  padding: 0;
+.prompt-input {
+  border-bottom: 1px solid #dedede;
+
+  &::-webkit-input-placeholder {
+     color: $popup-md-prompt-input-placeholder-color;
+  }
+
+  &:-moz-placeholder { /* Firefox 18- */
+     color: $popup-md-prompt-input-placeholder-color;
+  }
+
+  &::-moz-placeholder {  /* Firefox 19+ */
+     color: $popup-md-prompt-input-placeholder-color;
+  }
+
+  &:-ms-input-placeholder {
+     color: $popup-md-prompt-input-placeholder-color;
+  }
+
+  &:focus {
+    border-bottom: 2px solid $popup-md-prompt-input-highlight-color;
+  }
 }
 
 .popup-buttons {
@@ -63,9 +85,5 @@ ion-popup {
     box-shadow: none;
     -webkit-transition: none;
     transition: none;
-
-    &:last-child {
-      margin-right: 0;
-    }
   }
 }

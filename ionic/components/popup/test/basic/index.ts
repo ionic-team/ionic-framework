@@ -17,14 +17,23 @@ class E2EApp {
 
   doAlert() {
     this.alertOpen = true;
-    this.popup.alert('Alert').then(() => {
+    this.popup.alert({
+      title: "New Friend!",
+      template: "Your friend, Obi wan Kenobi, just accepted your friend request!"
+    }).then(() => {
       this.alertOpen = false;
     });
   }
 
   doPrompt() {
     this.promptOpen = true;
-    this.popup.prompt('What is your name?').then((name) => {
+    this.popup.prompt({
+      title: "New Album",
+      template: "Enter a name for this new album you're so keen on adding",
+      inputPlaceholder: "Title",
+      okText: "Save",
+      okType: "secondary"
+    }).then((name) => {
       this.promptResult = name;
       this.promptOpen = false;
     }, () => {
@@ -35,7 +44,13 @@ class E2EApp {
 
   doConfirm() {
     this.confirmOpen = true;
-    this.popup.confirm('Are you sure?').then((result, ev) => {
+    this.popup.confirm({
+      title: "Use this lightsaber?",
+      subTitle: "You can't exchange lightsabers",
+      template: "Do you agree to use this lightsaber to do good across the intergalactic galaxy?",
+      cancelText: "Disagree",
+      okText: "Agree"
+    }).then((result, ev) => {
       console.log('CONFIRMED', result);
       this.confirmResult = result;
       this.confirmOpen = false;

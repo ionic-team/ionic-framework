@@ -6,7 +6,7 @@ $popup-min-width:                 250px !default;
 $popup-max-width:                 100% !default;
 $popup-max-height:                90% !default;
 
-$popup-sub-title-font-size:       11px !default;
+$popup-sub-title-font-size:       15px !default;
 
 $popup-button-line-height:        20px !default;
 $popup-button-font-size:          14px !default;
@@ -59,6 +59,18 @@ ion-popup {
 
 .popup-body {
   overflow: auto;
+
+  // TODO is this needed?
+  &:empty {
+    padding: 0;
+  }
+}
+
+.prompt-input {
+  border: 0;
+  background: inherit;
+  padding: 10px 0;
+  margin: 5px 0;
 }
 
 .popup-buttons {
@@ -72,9 +84,5 @@ ion-popup {
     line-height: $popup-button-line-height;
     font-size: $popup-button-font-size;
     margin-right: $popup-button-margin-right;
-
-    &:last-child {
-      margin-right: 0;
-    }
   }
 }

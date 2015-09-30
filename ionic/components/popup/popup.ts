@@ -3,6 +3,8 @@ import {FORM_DIRECTIVES, NgControl, NgControlGroup,
 
 import {Overlay} from '../overlay/overlay';
 import {Animation} from '../../animations/animation';
+import {Ion} from '../ion';
+import {IonInput} from '../form/input';
 import * as util from 'ionic/util';
 
 
@@ -81,7 +83,7 @@ export class Popup extends Overlay {
       };
     }
     let button = {
-      text: 'OK',
+      text: context.okText || 'OK',
       onTap: (event, popupRef) => {
         // Allow it to close
         //resolve();
@@ -112,13 +114,13 @@ export class Popup extends Overlay {
       }
     }
     let okButton = {
-      text: 'OK',
+      text: context.okText || 'OK',
       onTap: (event, popupRef) => {
         // Allow it to close
       }
     }
     let cancelButton = {
-      text: 'Cancel',
+      text: context.cancelText || 'Cancel',
       isCancel: true,
       onTap: (event, popupRef) => {
         // Allow it to close
@@ -146,16 +148,17 @@ export class Popup extends Overlay {
         title: context
       };
     }
-
     let okButton = {
-      text: 'Ok',
+      text: context.okText || 'OK',
+      type: context.okType,
       onTap: (event, popupRef) => {
         // Allow it to close
       }
     }
 
     let cancelButton = {
-      text: 'Cancel',
+      text: context.cancelText || 'Cancel',
+      type: context.cancelType,
       isCancel: true,
       onTap: (event, popupRef) => {
         // Allow it to close
@@ -201,14 +204,15 @@ const OVERLAY_TYPE = 'popup';
   '<backdrop (click)="_cancel($event)" tappable disable-activated></backdrop>' +
   '<popup-wrapper>' +
     '<div class="popup-head">' +
-      '<h3 class="popup-title" [inner-html]="title"></h3>' +
-      '<h5 class="popup-sub-title" [inner-html]="subTitle" *ng-if="subTitle"></h5>' +
+      '<h2 class="popup-title" [inner-html]="title" *ng-if="title"></h2>' +
+      '<h3 class="popup-sub-title" [inner-html]="subTitle" *ng-if="subTitle"></h3>' +
     '</div>' +
     '<div class="popup-body">' +
-      '<input type="text" *ng-if="showPrompt" placeholder="{{promptPlaceholder}}">' +
+      '<div [inner-html]="template" *ng-if="template"></div>' +
+      '<input type="{{inputType || \'text\'}}" placeholder="{{inputPlaceholder}}" *ng-if="showPrompt" class="prompt-input">' +
     '</div>' +
     '<div class="popup-buttons" *ng-if="buttons.length">' +
-      '<button *ng-for="#button of buttons" (click)="buttonTapped(button, $event)" [ng-class]="button.type || \'button-default\'" [inner-html]="button.text"></button>' +
+      '<button *ng-for="#button of buttons" (click)="buttonTapped(button, $event)" [inner-html]="button.text"></button>' +
     '</div>' +
   '</popup-wrapper>',
   directives: [FORM_DIRECTIVES, NgClass, NgIf, NgFor]
