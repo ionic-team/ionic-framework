@@ -1,4 +1,5 @@
 import {Component, Directive, View, Injector, NgFor, ElementRef, Optional, Host, forwardRef, NgZone} from 'angular2/angular2';
+import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
 
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
@@ -42,6 +43,9 @@ import * as dom from 'ionic/util/dom';
 })
 @IonicView({
   template: '' +
+    '<section class="navbar-container">' +
+      '<template navbar-anchor></template>' +
+    '</section>' +
     '<nav class="tab-bar-container">' +
       '<tab-bar role="tablist">' +
         '<a *ng-for="#t of tabs" [tab]="t" class="tab-button" role="tab">' +
@@ -54,7 +58,11 @@ import * as dom from 'ionic/util/dom';
     '<section class="content-container">' +
       '<ng-content></ng-content>' +
     '</section>',
-  directives: [forwardRef(() => TabButton), forwardRef(() => TabHighlight)]
+  directives: [
+    forwardRef(() => TabButton),
+    forwardRef(() => TabHighlight),
+    forwardRef(() => TabNavBarAnchor)
+  ]
 })
 export class Tabs extends NavController {
   /**
@@ -70,6 +78,8 @@ export class Tabs extends NavController {
   ) {
     super(hostNavCtrl, injector, elementRef, zone);
     this.app = app;
+
+    this._ready = new Promise(res => { this._isReady = res; });
 
     // Tabs may also be an actual ViewController which was navigated to
     // if Tabs is static and not navigated to within a NavController
@@ -93,24 +103,19 @@ export class Tabs extends NavController {
       viewCtrl.enableBack = () => {
         return false;
       };
+
+      viewCtrl.onReady = () => {
+        return this._ready;
+      };
     }
 
   }
 
-  /**
-   * TODO
-   * @param {Tab} tab  TODO
-   */
   addTab(tab) {
-    // tab.viewCtrl refers to the ViewController of the individual Tab being added to Tabs (NavController)
-    // this.viewCtrl refers to the ViewController instsance on Tabs
     this.add(tab.viewCtrl);
 
-    if (this.length() === 1) {
-      // this was the first tab added, queue this one to be loaded and selected
-      let promise = tab.queueInitial();
-      this.viewCtrl && this.viewCtrl.addPromise(promise);
-    }
+    // return true/false if it's the initial tab
+    return (this.length() === 1);
   }
 
   /**
@@ -142,6 +147,7 @@ export class Tabs extends NavController {
 
         this.transition(enteringView, leavingView, opts, () => {
           this.highlight && this.highlight.select(tab);
+          this._isReady();
           resolve();
         });
       });
@@ -228,4 +234,15 @@ class TabHighlight {
     }, 32);
   }
 
+}
+
+
+@Directive({selector: 'template[navbar-anchor]'})
+class TabNavBarAnchor {
+  constructor(
+    @Host() tabs: Tabs,
+    viewContainerRef: ViewContainerRef
+  ) {
+    tabs.navbarContainerRef = viewContainerRef;
+  }
 }

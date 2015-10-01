@@ -42,6 +42,10 @@ ion-tab {
   }
 }
 
+ion-tabs > .navbar-container {
+  order: $flex-order-tab-bar-navbar;
+}
+
 .tab-bar-container {
   position: relative;
   order: $flex-order-tab-bar-bottom;

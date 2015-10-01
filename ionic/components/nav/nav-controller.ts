@@ -1,12 +1,12 @@
-import {Compiler, ElementRef, Injector, bind, NgZone} from 'angular2/angular2';
+import {Component, ComponentRef, Compiler, ElementRef, Injector, bind, NgZone} from 'angular2/angular2';
 import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_component_loader';
+import {DirectiveBinding} from 'angular2/src/core/compiler/element_injector';
 import {AppViewManager} from 'angular2/src/core/compiler/view_manager';
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
 import {IonicApp} from '../app/app';
 import {ViewController} from './view-controller';
-import {PaneController} from './pane';
 import {Transition} from '../../transitions/transition';
 import {SwipeBackGesture} from './swipe-back';
 import * as util from 'ionic/util';
@@ -35,7 +35,6 @@ export class NavController extends Ion {
     this.zone = zone;
 
     this.views = [];
-    this.panes = new PaneController(this);
 
     this._sbTrans = null;
     this._sbEnabled = config.setting('swipeBackEnabled') || false;
@@ -43,7 +42,6 @@ export class NavController extends Ion {
 
     this.id = ++ctrlIds;
     this._ids = -1;
-    this.zIndexes = -1;
 
     // build a new injector for child ViewControllers to use
     this.bindings = Injector.resolve([
@@ -334,6 +332,51 @@ export class NavController extends Ion {
 
     });
 
+  }
+
+  compileView(componentType) {
+    // create a new ion-view annotation
+    let annotation = new Component({
+      selector: 'ion-view',
+      host: {
+        '[class.pane-view]': '_paneView'
+      }
+    });
+
+    let ionViewComponentType = DirectiveBinding.createFromType(componentType, annotation);
+
+    // create a unique token that works as a cache key
+    ionViewComponentType.token = 'ionView' + componentType.name;
+
+    // compile the Component
+    return this.compiler.compileInHost(ionViewComponentType);
+  }
+
+  createViewComponetRef(hostProtoViewRef, contentContainerRef, viewCtrlBindings) {
+    let bindings = this.bindings.concat(Injector.resolve(viewCtrlBindings));
+
+    // the same guts as DynamicComponentLoader.loadNextToLocation
+    var hostViewRef =
+        contentContainerRef.createHostView(hostProtoViewRef, -1, bindings);
+    var newLocation = this.viewMngr.getHostElement(hostViewRef);
+    var newComponent = this.viewMngr.getComponent(newLocation);
+
+    var dispose = () => {
+      var index = contentContainerRef.indexOf(hostViewRef);
+      if (index !== -1) {
+        contentContainerRef.remove(index);
+      }
+    };
+
+    return new ComponentRef(newLocation, newComponent, dispose);
+  }
+
+  getBindings(viewCtrl) {
+    // create bindings to this ViewController and its NavParams
+    return this.bindings.concat(Injector.resolve([
+      bind(ViewController).toValue(viewCtrl),
+      bind(NavParams).toValue(viewCtrl.params),
+    ]));
   }
 
   /**
@@ -665,28 +708,6 @@ export class NavController extends Ion {
       this._anchorER = arguments[0];
     }
     return this._anchorER;
-  }
-
-  /**
-   * TODO
-   * @returns {TODO} TODO
-   */
-  anchorViewContainerRef() {
-    if (arguments.length) {
-      this._anchorVC = arguments[0];
-    }
-    return this._anchorVC;
-  }
-
-  /**
-   * TODO
-   * @returns {TODO} TODO
-   */
-  childNavbar() {
-    if (arguments.length) {
-      this._childNavbar = arguments[0];
-    }
-    return this._childNavbar;
   }
 
   /**

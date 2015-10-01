@@ -32,7 +32,7 @@ class IOSTransition extends Transition {
       .fadeIn()
       .to(TRANSLATEX, CENTER);
 
-    this.enteringNavbarBackground
+    this.enteringNavbarBg
       .to(TRANSLATEX, CENTER);
 
     // leaving view moves off screen
@@ -45,7 +45,7 @@ class IOSTransition extends Transition {
       .from(TRANSLATEX, CENTER)
       .from(OPACITY, 1);
 
-    this.leavingNavbarBackground
+    this.leavingNavbarBg
       .from(TRANSLATEX, CENTER);
 
     // set properties depending on direction
@@ -59,7 +59,7 @@ class IOSTransition extends Transition {
       this.enteringTitle
         .from(TRANSLATEX, OFF_LEFT);
 
-      this.enteringNavbarBackground
+      this.enteringNavbarBg
         .from(TRANSLATEX, OFF_LEFT);
 
       this.leavingView
@@ -70,7 +70,7 @@ class IOSTransition extends Transition {
         .to(TRANSLATEX, '100%')
         .to(OPACITY, 0);
 
-      this.leavingNavbarBackground
+      this.leavingNavbarBg
         .to(TRANSLATEX, '100%');
 
       if (this.leaving.enableBack() && this.viewWidth() > 200) {
@@ -88,7 +88,7 @@ class IOSTransition extends Transition {
       this.enteringTitle
         .from(TRANSLATEX, '99.5%');
 
-      this.enteringNavbarBackground
+      this.enteringNavbarBg
         .from(TRANSLATEX, '99.5%');
 
       this.leavingView
@@ -99,7 +99,7 @@ class IOSTransition extends Transition {
         .to(TRANSLATEX, OFF_LEFT)
         .to(OPACITY, 0);
 
-      this.leavingNavbarBackground
+      this.leavingNavbarBg
         .to(TRANSLATEX, OFF_LEFT);
 
       if (this.entering.enableBack() && this.viewWidth() > 200) {

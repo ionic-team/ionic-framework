@@ -31,8 +31,9 @@ $flex-order-view-content:        0;
 $flex-order-toolbar-top:         -10;
 $flex-order-toolbar-bottom:      10;
 
-$flex-order-tab-bar-top:         -30;
-$flex-order-tab-bar-bottom:      30;
+$flex-order-tab-bar-navbar:      -30;
+$flex-order-tab-bar-top:         -20;
+$flex-order-tab-bar-bottom:      20;
 
 
 
@@ -96,7 +97,8 @@ ion-nav {
   height: 100%;
 }
 
-ion-pane {
+ion-pane,
+ion-view.pane-view {
   position: absolute;
   top: 0;
   right: 0;
@@ -110,12 +112,26 @@ ion-pane {
   flex-direction: column;
 }
 
-.nav-item {
+ion-view {
   display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+
+  background-color: $background-color;
+
+  transform: translateZ(0px);
 
   &.show-view {
     display: flex;
   }
+}
+
+.no-navbar > .navbar-container {
+  display: none;
 }
 
 .navbar-container {
@@ -129,20 +145,6 @@ ion-pane {
   z-index: $z-index-content-container;
   flex: 1;
   order: $flex-order-view-content;
-}
-
-ion-view {
-  display: flex;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  flex-direction: column;
-
-  background-color: $background-color;
-
-  transform: translateZ(0px);
 }
 
 [hidden],

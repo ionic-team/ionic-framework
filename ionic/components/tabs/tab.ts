@@ -1,4 +1,5 @@
 import {Directive, Component, View, Host, ElementRef, forwardRef, Injector, NgZone} from 'angular2/angular2';
+import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
 
 import {NavController} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
@@ -31,8 +32,8 @@ import {Tabs} from './tabs';
   }
 })
 @View({
-  template: '<template pane-anchor></template><ng-content></ng-content>',
-  directives: [forwardRef(() => TabPaneAnchor)]
+  template: '<template content-anchor></template><ng-content></ng-content>',
+  directives: [forwardRef(() => TabContentAnchor)]
 })
 export class Tab extends NavController {
 
@@ -55,12 +56,10 @@ export class Tab extends NavController {
     super(tabs, injector, elementRef, zone);
     this.tabs = tabs;
 
-    this.childNavbar(true);
-
     let viewCtrl = this.viewCtrl = new ViewController(tabs.Host);
     viewCtrl.setInstance(this);
     viewCtrl.viewElementRef(elementRef);
-    tabs.addTab(this);
+    this._initTab = tabs.addTab(this);
 
     this.navbarView = viewCtrl.navbarView = () => {
       let activeView = this.getActive();
@@ -79,18 +78,19 @@ export class Tab extends NavController {
   }
 
   onInit() {
-    if (this._initialResolve) {
-      this.tabs.select(this).then(() => {
-        this._initialResolve();
-        this._initialResolve = null;
-      });
+    console.log('Tab onInit');
+
+    if (this._initTab) {
+      this.tabs.select(this);
+
+    } else {
+      // TODO: OPTIONAL PRELOAD OTHER TABS!
+      // setTimeout(() => {
+      //   this.load();
+      // }, 300);
     }
   }
 
-  /**
-   * TODO
-   * @param {Function} callback  TODO
-   */
   load(callback) {
     if (!this._loaded && this.root) {
       let opts = {
@@ -107,15 +107,6 @@ export class Tab extends NavController {
     }
   }
 
-  /**
-   * TODO
-   * @returns {TODO} TODO
-   */
-  queueInitial() {
-    // this Tab will be used as the initial one for the first load of Tabs
-    return new Promise(res => { this._initialResolve = res; });
-  }
-
   get isSelected() {
     return this.tabs.isActive(this.viewCtrl);
   }
@@ -124,23 +115,53 @@ export class Tab extends NavController {
     return !this.tabs.isActive(this.viewCtrl);
   }
 
+  loadContainer(hostProtoViewRef, componentType, viewCtrl, done) {
+
+    let viewComponetRef = this.createViewComponetRef(hostProtoViewRef, this.contentContainerRef, this.getBindings(viewCtrl));
+    viewCtrl.disposals.push(() => {
+      viewComponetRef.dispose();
+    });
+
+    // a new ComponentRef has been created
+    // set the ComponentRef's instance to this ViewController
+    viewCtrl.setInstance(viewComponetRef.instance);
+
+    // remember the ElementRef to the content that was just created
+    viewCtrl.viewElementRef(viewComponetRef.location);
+
+    // get the NavController's container for navbars, which is
+    // the place this NavController will add each ViewController's navbar
+    let navbarContainerRef = this.tabs.navbarContainerRef;
+
+    // get this ViewController's navbar TemplateRef, which may not
+    // exist if the ViewController's template didn't have an <ion-navbar *navbar>
+    let navbarTemplateRef = viewCtrl.getNavbarTemplateRef();
+
+    // create the navbar view if the pane has a navbar container, and the
+    // ViewController's instance has a navbar TemplateRef to go to inside of it
+    if (navbarContainerRef && navbarTemplateRef) {
+      let navbarView = navbarContainerRef.createEmbeddedView(navbarTemplateRef, -1);
+
+      viewCtrl.disposals.push(() => {
+        let index = navbarContainerRef.indexOf(navbarView);
+        if (index > -1) {
+          navbarContainerRef.remove(index);
+        }
+      });
+    }
+
+    done();
+  }
+
 }
 
 
-/**
- * TODO
- */
-@Directive({
-  selector: 'template[pane-anchor]'
-})
-class TabPaneAnchor {
-
-  /**
-  * TODO
-  * @param {Tab} tab  TODO
-  * @param {ElementRef} elementRef  TODO
-  */
-  constructor(@Host() tab: Tab, elementRef: ElementRef) {
-    tab.anchorElementRef(elementRef);
+@Directive({selector: 'template[content-anchor]'})
+class TabContentAnchor {
+  constructor(
+    @Host() tab: Tab,
+    viewContainerRef: ViewContainerRef
+  ) {
+    tab.contentContainerRef = viewContainerRef;
   }
 }

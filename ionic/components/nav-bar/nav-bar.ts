@@ -123,6 +123,6 @@ export class NavbarTemplate {
     @Optional() viewCtrl: ViewController,
     @Optional() templateRef: TemplateRef
   ) {
-    viewCtrl && viewCtrl.addTemplateRef('navbar', templateRef);
+    viewCtrl && viewCtrl.setNavbarTemplateRef(templateRef);
   }
 }
