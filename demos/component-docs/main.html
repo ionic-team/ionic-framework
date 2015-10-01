@@ -244,8 +244,26 @@
     <section id="navigation" [ng-class]="{hidden: component.title !== 'Navigation' }">
    TODO
   </section>
-    <section id="slides" [ng-class]="{hidden: component.title !== 'Slides' }">
-   TODO
+  
+  <section id="slides" [ng-class]="{hidden: component.title !== 'Slides' }">
+   
+   <ion-slides id="slider" style="background-color: black" pager="true" zoom="false" index="1" loop="true">
+      <ion-slide>
+        <div class="demo-slide demo-slide-1">
+          Slide 1
+        </div>
+      </ion-slide>
+      <ion-slide>
+        <div class="demo-slide demo-slide-2">
+          Slide 2
+        </div>
+      </ion-slide>
+      <ion-slide>
+        <div class="demo-slide demo-slide-3">
+          Slide 3
+        </div>
+      </ion-slide>
+   </ion-slides>
   </section>
 
     <section id="tabs" [ng-class]="{hidden: component.title !== 'Tabs' }">
