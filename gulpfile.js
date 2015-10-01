@@ -58,6 +58,7 @@ gulp.task('build', function(done) {
     'bundle',
     'e2e',
     'demos',
+    'copy.docs-demo',
     'sass',
     'fonts',
     done
@@ -366,7 +367,8 @@ gulp.task('demos', function(){
     .pipe(tsc, tscOptions, null, tscReporter)
     .pipe(babel, getBabelOptions('demos'))
 
-  var indexTemplate = _.template(fs.readFileSync('scripts/demos/index.template.html'))();
+  var baseIndexTemplate = _.template(fs.readFileSync('scripts/demos/index.template.html'))();
+  var docsIndexTemplate = _.template(fs.readFileSync('scripts/demos/docs.index.template.html'))();
 
   return gulp.src(['demos/**/*'])
     .pipe(cache('demos', { optimizeMemory: true }))
@@ -376,14 +378,26 @@ gulp.task('demos', function(){
 
   function createIndexHTML() {
     return through2.obj(function(file, enc, next) {
+      var indexTemplate = baseIndexTemplate;
+      if (file.path.indexOf('component-docs') > -1) {
+        indexTemplate = docsIndexTemplate;
+      }
       this.push(new VinylFile({
         base: file.base,
         contents: new Buffer(indexTemplate),
         path: path.join(path.dirname(file.path), 'index.html'),
       }));
       next(null, file);
+
+
     });
   }
+})
+
+gulp.task('copy.docs-demo', function () {
+  return gulp
+    .src('dist/demos/component-docs/*')
+    .pipe(gulp.dest('dist/ionic-site/docs/v2/components/demo/'))
 })
 
 gulp.task('publish', function(done) {

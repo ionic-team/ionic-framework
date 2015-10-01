@@ -1,9 +1,10 @@
 ---
-layout: "v2/docs_base"
+layout: "v2_fluid/docs_base"
 version: "<$ version.current.name $>"
 versionHref: "<$ version.current.href $>"
 path: "<$ doc.path $>"
-id: api
+category: api
+id: "{{<$ doc.name $> | slugify}}"
 title: "<@ if doc.docType == "directive" @><$ doc.name | dashCase $><@ else @><$ doc.name $><@ endif @>"
 header_sub_title: "<$ doc.docType | capital $> in module <$ doc.module $>"
 doc: "<$ doc.name $>"

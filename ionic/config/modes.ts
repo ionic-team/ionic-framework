@@ -21,6 +21,8 @@ IonicConfig.modeConfig('ios', {
   tabBarPlacement: 'bottom',
   viewTransition: 'ios',
 
+  popupPopIn: 'popup-pop-in',
+  popupPopOut: 'popup-pop-out',
 });
 
 
@@ -42,6 +44,9 @@ IonicConfig.modeConfig('md', {
 
   tabBarPlacement: 'top',
   viewTransition: 'md',
+
+  popupPopIn: 'popup-md-pop-in',
+  popupPopOut: 'popup-md-pop-out',  
 
   type: 'overlay',
   mdRipple: true,
