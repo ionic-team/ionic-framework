@@ -8,13 +8,16 @@ $popup-ios-border-radius:         13px !default;
 $popup-ios-background-color:      rgba(255,255,255,0.85) !default;
 
 $popup-ios-head-text-align:       center !default;
-$popup-ios-title-font-size:       15px !default;
+$popup-ios-title-font-size:       17px !default;
 $popup-ios-sub-title-font-size:   14px !default;
 $popup-ios-sub-title-text-color:  #666 !default;
 $popup-ios-body-text-color:       inherit !default;
+$popup-ios-body-text-align:       center !default;
+$popup-ios-body-font-size:        13px !default;
 
 $popup-ios-button-text-color:     color(primary) !default;
-$popup-ios-button-min-height:     45px !default;
+$popup-ios-button-min-height:     44px !default;
+$popup-ios-button-font-size:      17px !default;
 
 
 ion-popup {
@@ -28,12 +31,12 @@ ion-popup {
 }
 
 .popup-head {
-  padding: 10px;
+  padding: 12px 16px 20px;
   text-align: $popup-ios-head-text-align;
 }
 
 .popup-title {
-  margin-top: 10px;
+  margin-top: 12px;
   font-size: $popup-ios-title-font-size;
 }
 
@@ -43,27 +46,60 @@ ion-popup {
 }
 
 .popup-body {
-  padding: 10px 20px;
+  padding: 0px 16px 24px;
   color: $popup-ios-body-text-color;
+  text-align: $popup-ios-body-text-align;
+  font-size: $popup-ios-body-font-size;
 }
 
 .prompt-input {
-  margin-top: 5px;
+  background-color: #fff;
+  padding: 5px;
+  margin-top: 24px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
 }
 
 .popup-buttons {
-  padding-bottom: 10px;
-  min-height: 0;
-
   button {
     @extend button[clear];
 
+    margin: 0;
     flex: 1;
+    border-radius: 0;
+    font-size: $popup-ios-button-font-size;
     min-height: $popup-ios-button-min-height;
+    border-right: 1px solid #c8c7cc;
+
+    &:before {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      border-top: 1px solid #c8c7cc;
+      content: '';
+      pointer-events: none;
+    }
 
     &:last-child {
       font-weight: bold;
+      border-right: 0;
     }
   }
+}
 
+&.hairlines {
+  .prompt-input {
+    border-width: 0.55px;
+  }
+
+  .popup-buttons {
+    button {
+      border-right-width: 0.55px;
+
+      &:before {
+        border-top-width: 0.55px;
+      }
+    }
+  }
 }
