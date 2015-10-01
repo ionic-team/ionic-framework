@@ -2,13 +2,15 @@
 // iOS Popups
 // --------------------------------------------------
 
-$popup-ios-max-width:             280px !default;
+$popup-ios-max-width:             84% !default;
 $popup-ios-background:            rgba(0,0,0,0) !default;
 $popup-ios-border-radius:         13px !default;
-$popup-ios-background-color:      #f8f8f8 !default;
+$popup-ios-background-color:      rgba(255,255,255,0.85) !default;
 
 $popup-ios-head-text-align:       center !default;
 $popup-ios-title-font-size:       15px !default;
+$popup-ios-sub-title-font-size:   14px !default;
+$popup-ios-sub-title-text-color:  #666 !default;
 $popup-ios-body-text-color:       inherit !default;
 
 $popup-ios-button-text-color:     color(primary) !default;
@@ -26,26 +28,37 @@ ion-popup {
 }
 
 .popup-head {
+  padding: 10px;
   text-align: $popup-ios-head-text-align;
-  padding-top: 24px;
 }
 
 .popup-title {
+  margin-top: 10px;
   font-size: $popup-ios-title-font-size;
 }
 
+.popup-sub-title {
+  font-size: $popup-ios-sub-title-font-size;
+  color: $popup-ios-sub-title-text-color;
+}
+
 .popup-body {
-  padding: 10px;
+  padding: 10px 20px;
   color: $popup-ios-body-text-color;
 }
 
+.prompt-input {
+  margin-top: 5px;
+}
+
 .popup-buttons {
-  padding: 0;
+  padding-bottom: 10px;
   min-height: 0;
 
   button {
-    background-color: transparent;
-    color: $popup-ios-button-text-color;
+    @extend button[clear];
+
+    flex: 1;
     min-height: $popup-ios-button-min-height;
 
     &:last-child {
