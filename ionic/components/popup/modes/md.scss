@@ -3,7 +3,6 @@
 // --------------------------------------------------
 
 $popup-md-max-width:                      280px !default;
-$popup-md-background:                     rgba(0,0,0,0.5) !default;
 $popup-md-border-radius:                  2px !default;
 $popup-md-background-color:               #fafafa !default;
 $popup-md-box-shadow:                     0px 16px 20px rgba(0, 0, 0, 0.4) !default;
@@ -24,8 +23,6 @@ $popup-md-prompt-input-margin-bottom:     5px !default;
 
 
 ion-popup {
-  background: $popup-md-background;
-
   popup-wrapper {
     max-width: $popup-md-max-width;
     border-radius: $popup-md-border-radius;

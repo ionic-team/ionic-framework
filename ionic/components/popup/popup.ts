@@ -4,7 +4,6 @@ import {FORM_DIRECTIVES, NgControl, NgControlGroup,
 import {Overlay} from '../overlay/overlay';
 import {Animation} from '../../animations/animation';
 import {Ion} from '../ion';
-import {IonInput} from '../form/input';
 import * as util from 'ionic/util';
 
 
@@ -58,9 +57,10 @@ export class Popup extends Overlay {
      */
     popup(context, opts={}) {
     return new Promise((resolve, reject)=> {
+      let config = this.config;
       let defaults = {
-        enterAnimation: 'popup-pop-in',
-        leaveAnimation: 'popup-pop-out',
+        enterAnimation: config.setting('popupPopIn'),
+        leaveAnimation: config.setting('popupPopOut'),
       };
 
       context.promiseResolve = resolve;
@@ -204,7 +204,7 @@ const OVERLAY_TYPE = 'popup';
   '<backdrop (click)="_cancel($event)" tappable disable-activated></backdrop>' +
   '<popup-wrapper>' +
     '<div class="popup-head">' +
-      '<h2 class="popup-title" [inner-html]="title"></h2>' +
+      '<h2 class="popup-title" [inner-html]="title" *ng-if="title"></h2>' +
       '<h3 class="popup-sub-title" [inner-html]="subTitle" *ng-if="subTitle"></h3>' +
     '</div>' +
     '<div class="popup-body">' +
@@ -281,7 +281,6 @@ class PopupAnimation extends Animation {
 class PopupPopIn extends PopupAnimation {
   constructor(element) {
     super(element);
-
     this.wrapper.fromTo('opacity', '0', '1')
     this.wrapper.fromTo('scale', '1.1', '1');
 
@@ -289,7 +288,6 @@ class PopupPopIn extends PopupAnimation {
   }
 }
 Animation.register('popup-pop-in', PopupPopIn);
-
 
 class PopupPopOut extends PopupAnimation {
   constructor(element) {
@@ -301,3 +299,19 @@ class PopupPopOut extends PopupAnimation {
   }
 }
 Animation.register('popup-pop-out', PopupPopOut);
+
+class PopupMdPopIn extends PopupPopIn {
+  constructor(element) {
+    super(element);
+    this.backdrop.fromTo('opacity', '0', '0.5')
+  }
+}
+Animation.register('popup-md-pop-in', PopupMdPopIn);
+
+class PopupMdPopOut extends PopupPopOut {
+  constructor(element) {
+    super(element);
+    this.backdrop.fromTo('opacity', '0.5', '0')
+  }
+}
+Animation.register('popup-md-pop-out', PopupMdPopOut);
