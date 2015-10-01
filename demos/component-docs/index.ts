@@ -1,4 +1,4 @@
-import {App, ActionSheet} from 'ionic/ionic';
+import {App, ActionSheet, Animation} from 'ionic/ionic';
 import {NgZone} from 'angular2/angular2';
 
 function toTitleCase(str) {
@@ -26,6 +26,7 @@ class DemoApp {
         }
       });
     };
+    this.setupAnimations();
   }
 
   openMenu() {
@@ -52,6 +53,27 @@ class DemoApp {
     }).then(actionSheetRef => {
       this.actionSheetRef = actionSheetRef;
     });
+  }
+
+  setupAnimations() {
+    this.animation = new Animation();
+    this.animation
+      .duration(2000)
+
+    var ionitronSpin = new Animation(document.querySelector('#ionitron'));
+    ionitronSpin
+      .from('transform', 'rotate(0deg)')
+      .to('transform', 'rotate(360deg)')
+
+    this.animation.add(ionitronSpin);
+  }
+
+  play() {
+    this.animation.play();
+  }
+
+  pause() {
+    this.animation.pause();
   }
 
 

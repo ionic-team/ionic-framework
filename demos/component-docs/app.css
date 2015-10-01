@@ -5,3 +5,24 @@ body {
 section.hidden {
   display: none !important;
 }
+
+#ionitron {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  top: 25%;
+  margin-top: -50px;
+  left: 50%;
+  margin-left: -50px;
+}
+
+.animation-buttons {
+  position: absolute;
+  bottom: 25%; 
+  left: 60px; 
+  display: inline;
+}
+
+.components-demo h4 {
+    text-align: center;
+}

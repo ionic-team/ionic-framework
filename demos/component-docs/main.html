@@ -9,24 +9,231 @@
     </button>
   </section>
 
+
   <section id="animation" [ng-class]="{hidden: component.title !== 'Animations' }">
-   TODO
+   <img src="http://ionicframework.com/present-ionic/slides/img/me.png" id="ionitron">
+
+   <div class="animation-buttons">
+     <button icon pause primary (click)="pause($event)">
+       Pause
+       <icon pause></icon>
+     </button>
+     <button icon play secondary (click)="play($event)">
+       Play
+       <icon play></icon>
+     </button>
+   </div>
   </section>
+
 
   <section id="buttons" [ng-class]="{hidden: component.title !== 'Buttons' }">
-   TODO
+    <h4>Colors</h4>
+
+    <p>
+      <button block>Default</button>
+    </p>
+
+    <p>
+      <button secondary block>Secondary</button>
+    </p>
+
+    <p>
+      <button danger block>Danger</button>
+    </p>
+
+    <p>
+      <button light block>Light</button>
+    </p>
+
+    <p>
+      <button dark block>Dark</button>
+    </p>
+
+    <h4>Shapes</h4>
+
+    <p>
+      <button full>Full Button</button>
+    </p>
+
+    <p>
+      <button block>Block Button</button>
+    </p>
+
+    <p>
+      <button round>Round Button</button>
+    </p>
+
+      <p>
+      <button fab style="position: relative;">FAB</button>
+    </p>
+
+    <h4>Outlines</h4>
+
+    <p>
+      <button secondary full outline>Outline + Full</button>
+    </p>
+
+    <p>
+      <button secondary block outline>Outline + Block</button>
+    </p>
+
+    <p>
+      <button secondary round outline>Outline + Round</button>
+    </p>
+
+      <p>
+      <button secondary fab outline style="position: relative;">FAB</button>
+    </p>
+
+    <h4>Icons</h4>
+
+    <p>
+      <button dark>
+        <icon star></icon>
+        Left Icon
+      </button>
+    </p>
+
+    <p>
+      <button dark>
+        Right Icon
+        <icon star></icon>
+      </button>
+    </p>
+
+    <p>
+      <button dark>
+        <icon star></icon>
+      </button>
+    </p>
+
+
+    <h4>Sizes</h4>
+
+    <p>
+      <button light large>Large</button>
+    </p>
+
+    <p>
+      <button light>Default</button>
+    </p>
+
+    <p>
+      <button light small>Small</button>
+    </p>
   </section>
 
-   <section id="cards" [ng-class]="{hidden: component.title !== 'Cards' }">
-   TODO
+
+  <section id="cards" [ng-class]="{hidden: component.title !== 'Cards' }">
+
+    <ion-card>
+
+      <ion-card-header primary>
+        Menu
+      </ion-card-header>
+
+      <ion-card-content>
+        <a ion-item href="#">
+          <icon home item-left></icon>
+          Home
+        </a>
+
+        <a ion-item href="#">
+          <icon people item-left></icon>
+          Friends
+        </a>
+
+        <button ion-item>
+          <icon musical-notes item-left></icon>
+          Music
+        </button>
+
+        <button ion-item>
+          <icon mail item-left></icon>
+          Mail
+        </button>
+      </ion-card-content>
+
+    </ion-card> 
+
+
+    <ion-card>
+
+      <ion-item>
+        <icon football item-left></icon>
+        Schedule
+        <button outline item-right>Open</button>
+      </ion-item>
+
+    </ion-card>
+
+    <ion-card>
+
+      <ion-item>
+        <icon trophy item-left></icon>
+        Trophies
+        <button outline item-right>View</button>
+      </ion-item>
+
+    </ion-card>
+
+
   </section>
    
     <section id="icons" [ng-class]="{hidden: component.title !== 'Icons' }">
    TODO
   </section>
 
-     <section id="lists" [ng-class]="{hidden: component.title !== 'Lists' }">
-   TODO
+  <section id="lists" [ng-class]="{hidden: component.title !== 'Lists' }">
+    <ion-list>
+
+      <ion-header>
+        Classes
+      </ion-header>
+
+      <ion-item>
+        <icon color-wand item-left></icon>
+        Dark Arts
+      </ion-item>
+
+      <ion-item>
+        <icon planet item-left></icon>
+        Astronomy
+      </ion-item>
+
+      <ion-item>
+        <icon flask item-left></icon>
+        Potions
+      </ion-item>
+
+      <ion-item>
+        <icon star item-left></icon>
+        Charms
+      </ion-item>
+
+    </ion-list>
+
+
+    <ion-list>
+
+      <ion-header>
+        Menu
+      </ion-header>
+
+      <ion-switch checked="true">
+        <icon shirt item-left></icon>
+        Invisibility Cloak
+      </ion-switch>
+
+      <ion-item>
+        <icon call item-left></icon>
+        Call Ron
+        <div class="item-note" item-right>Maybe later</div>
+      </ion-item>
+
+    </ion-list>
+
+
   </section>
     <section id="menus" [ng-class]="{hidden:component.title !== 'Menus' }">
    TODO
