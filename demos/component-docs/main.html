@@ -1,7 +1,7 @@
 
 <ion-toolbar><ion-title>{{ component.title }}</ion-title></ion-toolbar>
 
-<ion-content class="has-header padding components-demo">
+<ion-content class="has-header components-demo">
 
   <section id="action-sheet" [ng-class]="{hidden: component.title !== 'Action Sheets' }">
     <button class="button" (click)="openMenu()">
@@ -266,8 +266,12 @@
    </ion-slides>
   </section>
 
-    <section id="tabs" [ng-class]="{hidden: component.title !== 'Tabs' }">
-   TODO
+  <section id="tabs" [ng-class]="{hidden: component.title !== 'Tabs' }">
+    <ion-tabs tab-bar-placement="bottom">
+      <ion-tab tab-title="Food" tab-icon="pizza"></ion-tab>
+      <ion-tab tab-title="Drinks" tab-icon="beer"></ion-tab>
+      <ion-tab tab-title="Hours" tab-icon="clock"></ion-tab>
+    </ion-tabs>
   </section>
 
 </ion-content>

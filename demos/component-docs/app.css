@@ -24,7 +24,12 @@ section.hidden {
 }
 
 .components-demo h4 {
-    text-align: center;
+  text-align: center;
+}
+
+.components-demo section {
+  width: 100%;
+  height: 100%;
 }
 
 ion-scroll {

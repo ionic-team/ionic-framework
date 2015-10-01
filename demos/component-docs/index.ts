@@ -16,7 +16,7 @@ class DemoApp {
   constructor(actionSheet: ActionSheet, zone: NgZone) {
     this.actionSheet = actionSheet;
     this.component = {
-        title: 'Action Sheets',
+        title: 'Tabs',
     };
     window.onmessage = (e) => {
       zone.run(() => {
