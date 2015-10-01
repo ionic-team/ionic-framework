@@ -27,9 +27,18 @@ section.hidden {
   text-align: center;
 }
 
+.section-padding {
+  padding: 16px;
+}
+
 .components-demo section {
   width: 100%;
   height: 100%;
+}
+
+.components-icons {
+  font-size: 2em;
+  text-align: center;
 }
 
 ion-scroll {
