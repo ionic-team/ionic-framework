@@ -1,4 +1,4 @@
-<select onchange="window.location.href=this.options[this.selectedIndex].value">
+<select name="version" id="version-toggle">
 <@ for ver in version.list @>
   <option
    value="<$ ver.href $>/{% if page.path != ''%}{{page.path}}{% else %}api/{% endif %}"
@@ -7,5 +7,3 @@
   </option>
 <@ endfor @>
 </select>
-
-
