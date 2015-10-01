@@ -1,4 +1,4 @@
 <@ for doc in docs @><@ if doc.URL @>
-<li class="{% if page.id == '{{<$ doc.name $> | slugify: 'pretty'}}' %}active{% endif %}">
-  <a href="<$ doc.URL $>"><$ doc.name $></a>
+<li class="{% if page.id == '{{<$ doc.name $> | slugify}}' %}active{% endif %}">
+  <a href="/<$ doc.URL $>"><$ doc.name $></a>
 </li><@ endif @><@ endfor @>
