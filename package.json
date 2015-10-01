@@ -61,7 +61,7 @@
     "source-map-support": "^0.2.10",
     "through2": "^0.6.3",
     "traceur-runtime": "0.0.59",
-    "typescript": "^1.5.3",
+    "typescript": "1.5.3",
     "vinyl": "^0.4.6",
     "yargs": "^3.6.0"
   }
