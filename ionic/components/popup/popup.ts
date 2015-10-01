@@ -204,7 +204,7 @@ const OVERLAY_TYPE = 'popup';
   '<backdrop (click)="_cancel($event)" tappable disable-activated></backdrop>' +
   '<popup-wrapper>' +
     '<div class="popup-head">' +
-      '<h2 class="popup-title" [inner-html]="title" *ng-if="title"></h2>' +
+      '<h2 class="popup-title" [inner-html]="title"></h2>' +
       '<h3 class="popup-sub-title" [inner-html]="subTitle" *ng-if="subTitle"></h3>' +
     '</div>' +
     '<div class="popup-body">' +

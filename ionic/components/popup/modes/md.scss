@@ -12,8 +12,8 @@ $popup-md-head-text-align:                left !default;
 $popup-md-title-font-size:                20px !default;
 $popup-md-body-text-color:                rgba(0,0,0,.5) !default;
 
-$popup-md-button-text-color:              color(primary) !default;
 $popup-md-button-min-height:              36px !default;
+$popup-md-prompt-input-text-color:        #000000;
 $popup-md-prompt-input-highlight-color:   map-get($colors, primary) !default;
 $popup-md-prompt-input-placeholder-color: #b9b9b9;
 
@@ -46,25 +46,24 @@ ion-popup {
 
 .prompt-input {
   border-bottom: 1px solid #dedede;
+  color: $popup-md-prompt-input-text-color;
 
   &::-webkit-input-placeholder {
      color: $popup-md-prompt-input-placeholder-color;
   }
-
   &:-moz-placeholder { /* Firefox 18- */
      color: $popup-md-prompt-input-placeholder-color;
   }
-
   &::-moz-placeholder {  /* Firefox 19+ */
      color: $popup-md-prompt-input-placeholder-color;
   }
-
   &:-ms-input-placeholder {
      color: $popup-md-prompt-input-placeholder-color;
   }
 
   &:focus {
     border-bottom: 2px solid $popup-md-prompt-input-highlight-color;
+    margin-bottom: 4px;
   }
 }
 
@@ -73,17 +72,12 @@ ion-popup {
   justify-content: flex-end;
 
   button {
+    @extend button[clear];
     -webkit-box-flex: initial;
     -webkit-flex: intiial;
     -ms-flex: initial;
     flex: initial;
 
-    background-color: transparent;
-    color: $popup-md-button-text-color;
     min-height: $popup-md-button-min-height;
-
-    box-shadow: none;
-    -webkit-transition: none;
-    transition: none;
   }
 }
