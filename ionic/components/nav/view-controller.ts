@@ -19,6 +19,14 @@ export class ViewController {
     this.navbarTemplateRef = null;
   }
 
+  setContent(content) {
+    this._content = content;
+  }
+
+  getContent() {
+    return this._content;
+  }
+
   /**
    * @private
    */
