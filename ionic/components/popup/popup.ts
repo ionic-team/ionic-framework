@@ -8,7 +8,7 @@ import * as util from 'ionic/util';
 
 
 /**
- * @name ionPopup
+ * @name Popup
  * @description
  * The Ionic Popup service allows programmatically creating and showing popup windows that require the user to respond in order to continue.
  *
@@ -77,6 +77,7 @@ export class Popup extends Overlay {
    * @returns {TODO} TODO
    */
   alert(context={}, opts={}) {
+    console.log(context, opts);
     if (typeof context === 'string') {
       context = {
         title: context
@@ -84,6 +85,7 @@ export class Popup extends Overlay {
     }
     let button = {
       text: context.okText || 'OK',
+      type: context.okType || 'primary',
       onTap: (event, popupRef) => {
         // Allow it to close
         //resolve();
@@ -115,12 +117,14 @@ export class Popup extends Overlay {
     }
     let okButton = {
       text: context.okText || 'OK',
+      type: context.okType || 'primary',
       onTap: (event, popupRef) => {
         // Allow it to close
       }
     }
     let cancelButton = {
       text: context.cancelText || 'Cancel',
+      type: context.cancelType || 'primary',
       isCancel: true,
       onTap: (event, popupRef) => {
         // Allow it to close
@@ -150,7 +154,7 @@ export class Popup extends Overlay {
     }
     let okButton = {
       text: context.okText || 'OK',
-      type: context.okType,
+      type: context.okType || 'primary',
       onTap: (event, popupRef) => {
         // Allow it to close
       }
@@ -158,7 +162,7 @@ export class Popup extends Overlay {
 
     let cancelButton = {
       text: context.cancelText || 'Cancel',
-      type: context.cancelType,
+      type: context.cancelType || 'primary',
       isCancel: true,
       onTap: (event, popupRef) => {
         // Allow it to close
@@ -202,7 +206,7 @@ const OVERLAY_TYPE = 'popup';
 @View({
   template:
   '<backdrop (click)="_cancel($event)" tappable disable-activated></backdrop>' +
-  '<popup-wrapper>' +
+  '<popup-wrapper [ng-class]="cssClass">' +
     '<div class="popup-head">' +
       '<h2 class="popup-title" [inner-html]="title" *ng-if="title"></h2>' +
       '<h3 class="popup-sub-title" [inner-html]="subTitle" *ng-if="subTitle"></h3>' +

@@ -19,7 +19,8 @@ class E2EApp {
     this.alertOpen = true;
     this.popup.alert({
       title: "New Friend!",
-      template: "Your friend, Obi wan Kenobi, just accepted your friend request!"
+      template: "Your friend, Obi wan Kenobi, just accepted your friend request!",
+      cssClass: 'my-alert'
     }).then(() => {
       this.alertOpen = false;
     });
