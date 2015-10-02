@@ -125,7 +125,7 @@ defined in <$ githubViewLink(doc) $>
 <@ endfor @>
 <@ endif -@>
 
-<@- if doc.members @>
+<@- if doc.members and doc.members.length @>
 ## Members
 <@- for method in doc.members @>
 

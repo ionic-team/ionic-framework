@@ -17,6 +17,7 @@ module.exports = function(currentVersion){
 .processor(require('./processors/latest-version'))
 .processor(require('./processors/index-page'))
 .processor(require('./processors/jekyll'))
+.processor(require('./processors/remove-private-members'))
 
 // for debugging docs
 // .processor(function test(){
