@@ -12,7 +12,16 @@ import {SwipeBackGesture} from './swipe-back';
 import * as util from 'ionic/util';
 
 /**
- * TODO
+ * NavController is the base class for navigation controller components like
+ * [`Nav`](../Nav/) and [`Tab`](../../Tabs/Tab/). At a basic level, it is an array of
+ * [views](#creating_views) representing a particular history (of a Tab for example).
+ * This array can be manipulated to navigate throughout an app by pushing,
+ * popping, inserting and removing views.
+ *
+ * <h3 id="creating_views">How do I create views?</h3>
+ * Any class that is annotated with [@IonicView](../../../config/IonicView/) will
+ * create a view, that is, a component that can be navigated to.
+ *
  */
 export class NavController extends Ion {
 
@@ -383,6 +392,10 @@ export class NavController extends Ion {
 
   }
 
+  /**
+   * @private
+   * TODO
+   */
   compileView(componentType) {
     // create a new ion-view annotation
     let annotation = new Component({
@@ -401,6 +414,10 @@ export class NavController extends Ion {
     return this.compiler.compileInHost(ionViewComponentType);
   }
 
+  /**
+   * @private
+   * TODO
+   */
   createViewComponetRef(hostProtoViewRef, contentContainerRef, viewCtrlBindings) {
     let bindings = this.bindings.concat(Injector.resolve(viewCtrlBindings));
 
@@ -420,6 +437,10 @@ export class NavController extends Ion {
     return new ComponentRef(newLocation, newComponent, dispose);
   }
 
+  /**
+   * @private
+   * TODO
+   */
   getBindings(viewCtrl) {
     // create bindings to this ViewController and its NavParams
     return this.bindings.concat(Injector.resolve([
@@ -429,6 +450,7 @@ export class NavController extends Ion {
   }
 
   /**
+   * @private
    * TODO
    */
   swipeBackStart() {
@@ -478,6 +500,7 @@ export class NavController extends Ion {
   }
 
   /**
+   * @private
    * TODO
    * @param {TODO} progress  TODO
    */
@@ -555,6 +578,10 @@ export class NavController extends Ion {
 
   }
 
+  /**
+   * @private
+   * TODO
+   */
   _runSwipeBack() {
     if (this.canSwipeBack()) {
       // it is possible to swipe back

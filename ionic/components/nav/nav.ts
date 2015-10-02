@@ -5,7 +5,89 @@ import {IonicComponent} from '../../config/decorators';
 import {NavController} from './nav-controller';
 
 /**
- * TODO
+ * Nav is a basic navigation controller component.  It handles animating between
+ * incoming and outgoing views, and as a subclass of [NavController](../NavController/)
+ * it also exposes the underlying navigation stack.
+ *
+ * For more information on using navigation controllers like Nav or [Tabs](../../Tabs/Tabs/),
+ * please take a look at the [NavController API reference](../NavController/).
+ *
+ * Here is a diagram of how Nav animates smoothly between [views](../NavController/#creating_views):
+ *
+ * <div class="highlight less-margin">
+ *   <pre>
+ *                           +-------+
+ *                           |  App  |
+ *                           +---+---+
+ *                           &lt;ion-app&gt;
+ *                               |
+ *                  +------------+-------------+
+ *                  |   Ionic Nav Controller   |
+ *                  +------------+-------------+
+ *                           &lt;ion-nav&gt;
+ *                               |
+ *                               |
+ *             Pane 3  +--------------------+
+ *           Pane 2  +--------------------+ |          Has header, animates into pane 1
+ *         Pane 1  +--------------------+ | |              +--------------------+
+ *                 | | Header (Pane 1)  |&lt;-----------------|       Login        |
+ *                 +--------------------+ | |              +--------------------+
+ *                 | | |                | | |              | Username:          |
+ *                 | | |                | | |              | Password:          |
+ *                 | | |  Pane 3 is     | | |              |                    |
+ *                 | | |  only content  | | |              |                    |
+ *                 | | |                |&lt;-----------------|                    |
+ *                 | | |                | | |              |                    |
+ *                 | | |                | | |              |                    |
+ *                 | +------------------|-+ |              |                    |
+ *                 | | Footer (Pane 2)--|-|-+              |                    |
+ *                 | +------------------|-+                |                    |
+ *                 +--------------------+                  +--------------------+
+ *                       &lt;ion-pane&gt;                              &lt;ion-view&gt;
+ *
+ *                   Pane 1                    Pane 2                    Pane 3
+ *           +--------------------+    +--------------------+    +--------------------+
+ *           | Header             |    | Content            |    | Content            |
+ *           +--------------------+    |                    |    |                    |
+ *           | Content            |    |                    |    |                    |
+ *           |                    |    |                    |    |                    |
+ *           |                    |    |                    |    |                    |
+ *           |                    |    |                    |    |                    |
+ *           |                    |    |                    |    |                    |
+ *           |                    |    |                    |    |                    |
+ *           |                    |    |                    |    |                    |
+ *           |                    |    |                    |    |                    |
+ *           |                    |    +--------------------+    |                    |
+ *           |                    |    | Footer             |    |                    |
+ *           +--------------------+    +--------------------+    +--------------------+
+ *
+ *   </pre>
+ * </div>
+ *
+ * ### Panes
+ *
+ * NOTE: You don't have to do anything with panes, it is all taken care of for you.
+ * This is just an explanation of how Nav works to accompany the diagram above.
+ *
+ * When you push a new view onto the navigation stack using [NavController.push()](../NavController/#push)
+ * or the [NavPush directive](../NavPush/), Nav animates the new view into the
+ * appropriate pane.
+ *
+ * Panes are the containers Nav creates to animate views into. They do not have
+ * any content of their own, as they are just a structural reference for where
+ * views should animate into.
+ *
+ * The easiest scenario is animating between views with the same structure. If
+ * you have a view with a header and content, and navigate to another view that
+ * also has a header and content, Nav can smoothly animate the incoming view into
+ * the pane the exiting view is leaving. This allows for things like seamless header
+ * animations between views that both have headers.
+ *
+ * But suppose you have a view with a header and content and want to navigate to
+ * a view with no header. The view controller creates a new pane with no header
+ * that is directly behind the current pane. It then animates the exiting view
+ * out of the current pane and the new view into the new content-only pane.
+ *
  */
 @IonicComponent({
   selector: 'ion-nav',
@@ -40,7 +122,7 @@ export class Nav extends NavController {
   }
 
   /**
-   * TODO
+   * @private
    */
   onInit() {
     super.onInit();
@@ -57,6 +139,15 @@ export class Nav extends NavController {
     this.isSwipeBackEnabled( isSwipeBackEnabled );
   }
 
+  /**
+   * @private
+   * TODO
+   * @param  {TODO}   hostProtoViewRef TODO
+   * @param  {TODO}   componentType    TODO
+   * @param  {TODO}   viewCtrl         TODO
+   * @param  {Function} done             TODO
+   * @return {TODO}                    TODO
+   */
   loadContainer(hostProtoViewRef, componentType, viewCtrl, done) {
     // this gets or creates the Pane which similar nav items live in
     // Nav items with just a navbar/content would all use the same Pane
@@ -129,6 +220,14 @@ export class Nav extends NavController {
     }
   }
 
+  /**
+   * @private
+   * TODO
+   * @param  {TODO}   structure TODO
+   * @param  {TODO}   viewCtrl  TODO
+   * @param  {Function} done      TODO
+   * @return {TODO}             TODO
+   */
   getPane(structure, viewCtrl, done) {
     let pane = this.panes[this.panes.length - 1];
 
@@ -164,11 +263,22 @@ export class Nav extends NavController {
 
     }
   }
-
+  /**
+   * @private
+   * TODO
+   * @param  {TODO} pane TODO
+   * @return {TODO}      TODO
+   */
   addPane(pane) {
     this.newPane = pane;
   }
 
+  /**
+   * @private
+   * TODO
+   * @param  {TODO} componentProtoViewRef TODO
+   * @return {TODO}                       TODO
+   */
   inspectStructure(componentProtoViewRef) {
     let navbar = false;
     let tabs = false;
@@ -199,10 +309,20 @@ export class Nav extends NavController {
 
 }
 
+/**
+ * @private
+ * TODO
+ * @param  {TODO} elementBinder TODO
+ * @param  {TODO} id            TODO
+ * @return {TODO}               TODO
+ */
 function isComponent(elementBinder, id) {
   return (elementBinder && elementBinder.componentDirective && elementBinder.componentDirective.metadata.id == id);
 }
 
+/**
+ * @private
+ */
 @Directive({selector: 'template[pane-anchor]'})
 class NavPaneAnchor {
   constructor(@Host() nav: Nav, elementRef: ElementRef) {
@@ -210,7 +330,9 @@ class NavPaneAnchor {
   }
 }
 
-
+/**
+ * @private
+ */
 @Directive({selector: 'template[navbar-anchor]'})
 class NavBarAnchor {
   constructor(
@@ -221,7 +343,9 @@ class NavBarAnchor {
   }
 }
 
-
+/**
+ * @private
+ */
 @Directive({selector: 'template[content-anchor]'})
 class ContentAnchor {
   constructor(
@@ -232,7 +356,9 @@ class ContentAnchor {
   }
 }
 
-
+/**
+ * @private
+ */
 @Component({
   selector: 'ion-pane',
   host: {
