@@ -119,7 +119,7 @@ export class IonicPlatform {
     if (arguments.length) {
       this._ua = val;
     }
-    return this._ua;
+    return this._ua || '';
   }
 
   navigatorPlatform(val) {
@@ -191,7 +191,6 @@ export class IonicPlatform {
   }
 
   onResize(cb) {
-    // TODO: Make more good
     this._onResizes.push(cb);
   }
 
@@ -229,17 +228,9 @@ export class IonicPlatform {
    * @param {TODO} queryValue  TODO
    * @returns {boolean} TODO
    */
-  testQuery(queryValue) {
-    let val = this.query('ionicplatform');
-    if (val) {
-      let valueSplit = val.toLowerCase().split(';');
-      for (let i = 0; i < valueSplit.length; i++) {
-        if (valueSplit[i] == queryValue) {
-          return true;
-        }
-      }
-    }
-    return false;
+  testQuery(queryValue, queryTestValue) {
+    let valueSplit = queryValue.toLowerCase().split(';');
+    return valueSplit.indexOf(queryTestValue) > -1;
   }
 
   /**
@@ -249,7 +240,7 @@ export class IonicPlatform {
    */
   testUserAgent(userAgentExpression) {
     let rgx = new RegExp(userAgentExpression, 'i');
-    return rgx.test(this._ua);
+    return rgx.test(this._ua || '');
   }
 
   /**
@@ -258,11 +249,13 @@ export class IonicPlatform {
    * @returns {Object} TODO
    */
   matchUserAgentVersion(userAgentExpression) {
-    let val = this._ua.match(userAgentExpression);
-    if (val) {
-      return {
-        major: val[1],
-        minor: val[2]
+    if (this._ua && userAgentExpression) {
+      let val = this._ua.match(userAgentExpression);
+      if (val) {
+        return {
+          major: val[1],
+          minor: val[2]
+        };
       }
     }
   }
@@ -273,12 +266,17 @@ export class IonicPlatform {
    * @param {TODO} userAgentExpression  TODO
    * @returns {boolean} TODO
    */
-  isPlatform(queryValue, userAgentExpression) {
+  isPlatform(queryTestValue, userAgentExpression) {
     if (!userAgentExpression) {
-      userAgentExpression = queryValue;
+      userAgentExpression = queryTestValue;
     }
-    return this.testQuery(queryValue) ||
-           this.testUserAgent(userAgentExpression);
+
+    let queryValue = this.query('ionicplatform');
+    if (queryValue) {
+      return this.testQuery(queryValue, queryTestValue);
+    }
+
+    return this.testUserAgent(userAgentExpression);
   }
 
   /**
@@ -389,7 +387,7 @@ export class IonicPlatform {
       rootNode.depth = 0;
       let childPlatform = rootNode.child();
       while (childPlatform) {
-        rootNode.depth++
+        rootNode.depth++;
         childPlatform = childPlatform.child();
       }
     }
@@ -459,16 +457,14 @@ class PlatformNode {
   }
 
   isMatch(p) {
-    if (typeof this.c.isMatched !== 'boolean') {
-      if (p.platformOverride && !this.isEngine) {
-        this.c.isMatched = (p.platformOverride === this.c.name);
-      } else if (!this.c.isMatch) {
-        this.c.isMatched = false;
-      } else {
-        this.c.isMatched = this.c.isMatch(p);
-      }
+    if (p.platformOverride && !this.isEngine) {
+      return (p.platformOverride === this.c.name);
+
+    } else if (!this.c.isMatch) {
+      return false;
     }
-    return this.c.isMatched;
+
+    return this.c.isMatch(p);
   }
 
   version(p) {
