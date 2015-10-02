@@ -51,10 +51,10 @@ export class Popup extends Overlay {
 
     /**
      * TODO
-     * @param {TODO} context  TODO
+     * @param {TODO} opts  TODO
      * @returns {TODO} TODO
      */
-    popup(context) {
+    popup(opts) {
     return new Promise((resolve, reject)=> {
       let config = this.config;
       let defaults = {
@@ -62,109 +62,109 @@ export class Popup extends Overlay {
         leaveAnimation: config.setting('popupPopOut'),
       };
 
-      context.promiseResolve = resolve;
-      context.promiseReject = reject;
+      opts.promiseResolve = resolve;
+      opts.promiseReject = reject;
 
-      return this.create(OVERLAY_TYPE, StandardPopup, defaults, context);
+      return this.create(OVERLAY_TYPE, StandardPopup, defaults, opts);
     });
   }
 
   /**
    * TODO
-   * @param {TODO} context  TODO
+   * @param {TODO} opts  TODO
    * @returns {TODO} TODO
    */
-  alert(context={}) {
-    if (typeof context === 'string') {
-      context = {
-        title: context
+  alert(opts={}) {
+    if (typeof opts === 'string') {
+      opts = {
+        title: opts
       };
     }
     let button = {
-      text: context.okText || 'OK',
-      type: context.okType || 'primary',
+      text: opts.okText || 'OK',
+      type: opts.okType || 'primary',
       onTap: (event, popupRef) => {
         // Allow it to close
         //resolve();
       }
     };
-    context = util.extend({
+    opts = util.extend({
       cancel: () => {
         //reject();
       },
       buttons: [
         button
       ]
-    }, context);
+    }, opts);
 
-    return this.popup(context);
+    return this.popup(opts);
   }
 
   /**
    * TODO
-   * @param {TODO} context  TODO
+   * @param {TODO} opts  TODO
    * @returns {TODO} TODO
    */
-  confirm(context={}) {
-    if (typeof context === 'string') {
-      context = {
-        title: context
+  confirm(opts={}) {
+    if (typeof opts === 'string') {
+      opts = {
+        title: opts
       }
     }
     let okButton = {
-      text: context.okText || 'OK',
-      type: context.okType || 'primary',
+      text: opts.okText || 'OK',
+      type: opts.okType || 'primary',
       onTap: (event, popupRef) => {
         // Allow it to close
       }
     }
     let cancelButton = {
-      text: context.cancelText || 'Cancel',
-      type: context.cancelType || 'primary',
+      text: opts.cancelText || 'Cancel',
+      type: opts.cancelType || 'primary',
       isCancel: true,
       onTap: (event, popupRef) => {
         // Allow it to close
       }
     }
-    context = util.extend({
+    opts = util.extend({
       cancel: () => {
       },
       buttons: [
         cancelButton, okButton
       ]
-    }, context);
-    return this.popup(context);
+    }, opts);
+    return this.popup(opts);
   }
 
   /**
    * TODO
-   * @param {TODO} [context={}]  TODO
+   * @param {TODO} [opts={}]  TODO
    * @returns {TODO} TODO
    */
-  prompt(context={}) {
-    if (typeof context === 'string') {
-      context = {
-        title: context
+  prompt(opts={}) {
+    if (typeof opts === 'string') {
+      opts = {
+        title: opts
       };
     }
     let okButton = {
-      text: context.okText || 'OK',
-      type: context.okType || 'primary',
+      text: opts.okText || 'OK',
+      type: opts.okType || 'primary',
       onTap: (event, popupRef) => {
         // Allow it to close
       }
     }
 
     let cancelButton = {
-      text: context.cancelText || 'Cancel',
-      type: context.cancelType || 'primary',
+      text: opts.cancelText || 'Cancel',
+      type: opts.cancelType || 'primary',
       isCancel: true,
       onTap: (event, popupRef) => {
         // Allow it to close
       }
     }
 
-    context = util.extend({
+    opts = util.extend({
       showPrompt: true,
       promptPlaceholder: '',
       cancel: () => {
@@ -172,14 +172,14 @@ export class Popup extends Overlay {
       buttons: [
         cancelButton, okButton
       ]
-    }, context);
+    }, opts);
 
-    return this.popup(context);
+    return this.popup(opts);
   }
 
   /**
    * TODO
-   * @param {TODO} context  TODO
+   * @param {TODO} opts  TODO
    * @returns {TODO} TODO
    */
   get(handle) {
