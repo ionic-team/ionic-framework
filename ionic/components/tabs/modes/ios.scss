@@ -59,6 +59,11 @@ ion-tabs[tab-bar-placement=top] tab-bar {
   }
 }
 
+[tab-bar-icons=hide] .tab-button-text {
+  font-size: 1.4rem;
+  line-height: 1.1;
+}
+
 .tab-button.has-title-only {
   min-height: $tab-bar-ios-height - 8;
 

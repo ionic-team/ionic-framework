@@ -93,31 +93,6 @@ tab-bar {
   }
 }
 
-[tab-bar-icons=bottom] .tab-button {
-  .tab-button-icon {
-    order: 10;
-  }
-}
-
-[tab-bar-icons=left] .tab-button {
-  flex-direction: row;
-
-  .tab-button-icon {
-    text-align: right;
-    padding-right: 8px;
-  }
-}
-
-[tab-bar-icons=right] .tab-button {
-  flex-direction: row;
-
-  .tab-button-icon {
-    order: 10;
-    text-align: left;
-    padding-left: 8px;
-  }
-}
-
 .tab-button-text {
   margin-top: 3px;
   margin-bottom: 2px;
@@ -153,3 +128,33 @@ tab-bar {
 tab-highlight {
   display: none;
 }
+
+[tab-bar-icons=bottom] .tab-button {
+  .tab-button-icon {
+    order: 10;
+  }
+}
+
+[tab-bar-icons=left] .tab-button {
+  flex-direction: row;
+
+  .tab-button-icon {
+    text-align: right;
+    padding-right: 8px;
+  }
+}
+
+[tab-bar-icons=right] .tab-button {
+  flex-direction: row;
+
+  .tab-button-icon {
+    order: 10;
+    text-align: left;
+    padding-left: 8px;
+  }
+}
+
+[tab-bar-icons=hide] .tab-button-icon {
+  display: none;
+}
+
