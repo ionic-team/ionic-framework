@@ -43,7 +43,6 @@ IonicConfig.modeConfig('md', {
   modalLeave: 'modal-md-slide-out',
 
   tabBarPlacement: 'top',
-  tabBarIcons: 'hide',
   viewTransition: 'md',
 
   popupPopIn: 'popup-md-pop-in',
