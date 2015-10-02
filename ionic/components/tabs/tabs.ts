@@ -202,7 +202,7 @@ class TabButton extends Ion {
     super(elementRef, config);
     this.tabs = tabs;
 
-    if (config.setting('hoverCSS') === false) {
+    if (config.get('hoverCSS') === false) {
       elementRef.nativeElement.classList.add('disable-hover');
     }
   }
@@ -232,7 +232,7 @@ class TabButton extends Ion {
 })
 class TabHighlight {
   constructor(@Host() tabs: Tabs, config: IonicConfig, elementRef: ElementRef) {
-    if (config.setting('mode') === 'md') {
+    if (config.get('mode') === 'md') {
       tabs.highlight = this;
       this.elementRef = elementRef;
     }

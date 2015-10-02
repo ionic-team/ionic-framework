@@ -9,7 +9,7 @@ export class Activator {
     this.active = [];
     this.clearStateTimeout = 180;
     this.clearAttempt = 0;
-    this.activatedClass = config.setting('activatedClass') || 'activated';
+    this.activatedClass = config.get('activatedClass') || 'activated';
     this.x = 0;
     this.y = 0;
   }

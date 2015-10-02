@@ -46,8 +46,8 @@ export class NavController extends Ion {
     this.views = [];
 
     this._sbTrans = null;
-    this._sbEnabled = config.setting('swipeBackEnabled') || false;
-    this._sbThreshold = config.setting('swipeBackThreshold') || 40;
+    this._sbEnabled = config.get('swipeBackEnabled') || false;
+    this._sbThreshold = config.get('swipeBackThreshold') || 40;
 
     this.id = ++ctrlIds;
     this._ids = -1;
@@ -333,7 +333,7 @@ export class NavController extends Ion {
     }
 
     if (!opts.animation) {
-      opts.animation = this.config.setting('viewTransition');
+      opts.animation = this.config.get('viewTransition');
     }
 
     // wait for the new view to complete setup

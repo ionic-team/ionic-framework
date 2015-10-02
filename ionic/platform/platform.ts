@@ -7,9 +7,8 @@ import * as dom from '../util/dom';
  */
 export class IonicPlatform {
 
-  constructor() {
-    this._settings = {};
-    this._platforms = [];
+  constructor(platforms=[]) {
+    this._platforms = platforms;
     this._versions = {};
     this._onResizes = [];
 
@@ -283,12 +282,12 @@ export class IonicPlatform {
    * TODO
    * @param {TODO} config  TODO
    */
-  load(config) {
+  load(platformOverride) {
     let rootPlatformNode = null;
     let engineNode = null;
     let self = this;
 
-    this.platformOverride = config.setting('platform');
+    this.platformOverride = platformOverride;
 
     // figure out the most specific platform and active engine
     let tmpPlatform = null;
@@ -359,9 +358,6 @@ export class IonicPlatform {
         // the last one in the array the most important
         this._platforms.push(platformNode.name());
 
-        // copy default platform settings into this platform settings obj
-        this._settings[platformNode.name()] = util.extend({}, platformNode.settings());
-
         // get the platforms version if a version parser was provided
         this._versions[platformNode.name()] = platformNode.version(this);
 
@@ -392,13 +388,6 @@ export class IonicPlatform {
       }
     }
     return rootNode;
-  }
-
-  settings(val) {
-    if (arguments.length) {
-      this._settings = val;
-    }
-    return this._settings;
   }
 
 }

@@ -111,7 +111,7 @@ export class TextInput extends Ion {
     super(elementRef, config);
 
     this.scrollView = scrollView;
-    this.scrollAssist = config.setting('keyboardScrollAssist');
+    this.scrollAssist = config.get('keyboardScrollAssist');
     this.id = IonInput.nextId();
     IonInput.registerInput(this);
 
@@ -121,7 +121,7 @@ export class TextInput extends Ion {
     this.inputQry = inputQry;
     this.labelQry = labelQry;
 
-    this.keyboardHeight = this.config.setting('keyboardHeight');
+    this.keyboardHeight = this.config.get('keyboardHeight');
   }
 
   /**

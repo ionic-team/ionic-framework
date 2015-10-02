@@ -34,7 +34,7 @@ export class Icon {
     this.eleRef = elementRef;
     this.config = config;
 
-    this.mode = config.setting('iconMode');
+    this.mode = config.get('iconMode');
   }
 
   /**
