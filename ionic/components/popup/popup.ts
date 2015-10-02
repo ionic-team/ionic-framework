@@ -52,10 +52,9 @@ export class Popup extends Overlay {
     /**
      * TODO
      * @param {TODO} context  TODO
-     * @param {TODO} [opts={}]  TODO
      * @returns {TODO} TODO
      */
-    popup(context, opts={}) {
+    popup(context) {
     return new Promise((resolve, reject)=> {
       let config = this.config;
       let defaults = {
@@ -66,18 +65,16 @@ export class Popup extends Overlay {
       context.promiseResolve = resolve;
       context.promiseReject = reject;
 
-      return this.create(OVERLAY_TYPE, StandardPopup, util.extend(defaults, opts), context);
+      return this.create(OVERLAY_TYPE, StandardPopup, defaults, context);
     });
   }
 
   /**
    * TODO
    * @param {TODO} context  TODO
-   * @param {TODO} [opts={}]  TODO
    * @returns {TODO} TODO
    */
-  alert(context={}, opts={}) {
-    console.log(context, opts);
+  alert(context={}) {
     if (typeof context === 'string') {
       context = {
         title: context
@@ -100,16 +97,15 @@ export class Popup extends Overlay {
       ]
     }, context);
 
-    return this.popup(context, opts);
+    return this.popup(context);
   }
 
   /**
    * TODO
    * @param {TODO} context  TODO
-   * @param {TODO} [opts={}]  TODO
    * @returns {TODO} TODO
    */
-  confirm(context={}, opts={}) {
+  confirm(context={}) {
     if (typeof context === 'string') {
       context = {
         title: context
@@ -137,16 +133,15 @@ export class Popup extends Overlay {
         cancelButton, okButton
       ]
     }, context);
-    return this.popup(context, opts);
+    return this.popup(context);
   }
 
   /**
    * TODO
    * @param {TODO} [context={}]  TODO
-   * @param {TODO} [opts={}]  TODO
    * @returns {TODO} TODO
    */
-  prompt(context={}, opts={}) {
+  prompt(context={}) {
     if (typeof context === 'string') {
       context = {
         title: context
@@ -179,13 +174,12 @@ export class Popup extends Overlay {
       ]
     }, context);
 
-    return this.popup(context, opts);
+    return this.popup(context);
   }
 
   /**
    * TODO
    * @param {TODO} context  TODO
-   * @param {TODO} [opts={}]  TODO
    * @returns {TODO} TODO
    */
   get(handle) {
