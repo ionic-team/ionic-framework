@@ -151,6 +151,60 @@ export class NavController extends Ion {
     return promise;
   }
 
+  /**
+   * Pop to a specific view in the history stack
+   *
+   * @param view {Component} to pop to
+   * @param opts {object} pop options
+   */
+  popTo(view, opts = {}) {
+
+    // Get the target index of the view to pop to
+    let viewIndex = this.views.indexOf(view);
+    let targetIndex = viewIndex + 1;
+    let resolve;
+    let promise = new Promise(res => { resolve = res; });
+    // Don't pop to the view if it wasn't found, or the target is beyond the view list
+    if(viewIndex < 0 || targetIndex > this.views.length - 1) {
+      resolve();
+      return;
+    }
+
+
+    opts.direction = opts.direction || 'back';
+
+    // get the views to auto remove without having to do a transiton for each
+    // the last view (the currently active one) will do a normal transition out
+    if (this.views.length > 1) {
+      let autoRemoveItems = this.views.slice(targetIndex, this.views.length);
+      for (let i = 0; i < autoRemoveItems.length; i++) {
+        autoRemoveItems[i].shouldDestroy = true;
+        autoRemoveItems[i].shouldCache = false;
+        autoRemoveItems[i].willUnload();
+      }
+    }
+
+    let leavingView = this.views[this.views.length - 1];
+    let enteringView = view;
+
+    if(this.router) {
+      this.router.stateChange('pop', enteringView);
+    }
+
+    this.transition(enteringView, leavingView, opts, () => {
+      resolve();
+    });
+
+    return promise;
+  }
+
+  /**
+   * Pop to the root view.
+   * @param opts extra animation options
+   */
+  popToRoot(opts = {}) {
+    this.popTo(this.views[0]);
+  }
 
   /**
    * Inserts a view into the nav stack at the specified index.

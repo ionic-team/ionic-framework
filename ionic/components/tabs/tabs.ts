@@ -131,6 +131,12 @@ export class Tabs extends NavController {
       enteringView = this.getByInstance(tab)
     }
 
+    // If we select the same tab as the active one, do some magic.
+    if(enteringView === this.getActive()) {
+      this._touchActive(tab);
+      return;
+    }
+
     if (!enteringView || !enteringView.instance || !this.app.isEnabled()) {
       return Promise.reject();
     }
@@ -153,6 +159,19 @@ export class Tabs extends NavController {
       });
 
     });
+  }
+
+  /**
+   * "Touch" the active tab, either going back to the root view of the tab
+   * or scrolling the tab to the top
+   */
+  _touchActive(tab) {
+    let stateLen = tab.length();
+
+    if(stateLen > 1) {
+      // Pop to the root view
+      tab.popToRoot();
+    }
   }
 
   get tabs() {
