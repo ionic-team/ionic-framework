@@ -16,7 +16,7 @@ class MainPage {
     this.actionSheet = actionSheet;
 
     this.navDetailsPage = NavigationDetailsPage;
-    this.component = { title: 'Tabs' };
+    this.component = { title: 'Action Sheets' };
 
     this.setupAnimations();
 
@@ -44,7 +44,7 @@ class MainPage {
         { text: 'Move' }
       ],
       destructiveText: 'Delete',
-      titleText: 'Modify your album',
+      titleText: 'You Opened Action Sheet',
       cancelText: 'Cancel',
       cancel: function() {
         console.log('Canceled');

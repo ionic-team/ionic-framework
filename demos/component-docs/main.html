@@ -7,9 +7,9 @@
 
 <ion-content class="has-header components-demo">
 
-  <section id="action-sheet" [ng-class]="{hidden: component.title !== 'Action Sheets' }">
+  <section id="action-sheet" [ng-class]="{hidden: component.title !== 'Action Sheets' }" class="section-padding">
     <button class="button" (click)="openMenu()">
-      Show Actionsheet
+      Show Action Sheet
     </button>
   </section>
 
@@ -175,7 +175,7 @@
 
     <ion-row>
       <ion-col><icon sunny></icon></ion-col>
-      <ion-col><icon umbrella</icon></ion-col>
+      <ion-col><icon umbrella></icon></ion-col>
       <ion-col><icon rainy></icon></ion-col>
     </ion-row>
 
@@ -208,6 +208,11 @@
         Charms
       </ion-item>
 
+      <ion-item>
+        <icon leaf item-left></icon>
+        Herbology
+      </ion-item>
+
     </ion-list>
 
 
@@ -219,12 +224,18 @@
 
       <ion-switch checked="true">
         <icon shirt item-left></icon>
-        Invisibility Cloak
+        Cloak of Invisibility
       </ion-switch>
 
       <ion-item>
         <icon call item-left></icon>
         Call Ron
+        <div class="item-note" item-right>Sure</div>
+      </ion-item>
+
+      <ion-item>
+        <icon book item-left></icon>
+        Study Potions
         <div class="item-note" item-right>Maybe later</div>
       </ion-item>
 
