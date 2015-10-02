@@ -1,13 +1,13 @@
 <ion-content padding>
   <form (submit)="doSubmit($event)" [ng-form-model]="myForm">
-      <ion-segment ng-control="mapStyle">
-        <ion-segment-button value="standard" button>
+      <ion-segment ng-control="mapStyle" danger>
+        <ion-segment-button value="standard">
           Standard
         </ion-segment-button>
-        <ion-segment-button value="hybrid" button>
+        <ion-segment-button value="hybrid">
           Hybrid
         </ion-segment-button>
-        <ion-segment-button value="sat" button>
+        <ion-segment-button value="sat">
           Satellite
         </ion-segment-button>
       </ion-segment>

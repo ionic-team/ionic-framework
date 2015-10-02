@@ -17,7 +17,7 @@ import {dom} from 'ionic/util';
     'value'
   ],
   host: {
-    '(click)': 'buttonClicked($event)',
+    //'(click)': 'buttonClicked($event)',
     '(change)': 'onChange($event)',
     //'[value]': 'value',
     /*
@@ -191,7 +191,7 @@ export class SegmentControlValueAccessor {
   ],
   host: {
     '(click)': 'buttonClicked($event)',
-    '[class.active]': 'isActive'
+    '[class.activated]': 'isActive',
   }
 })
 export class SegmentButton {
@@ -202,10 +202,16 @@ export class SegmentButton {
    */
   constructor(
     @Host() segment: Segment,
-    elementRef: ElementRef
+    elementRef: ElementRef,
+    renderer: Renderer
   ) {
-    this.ele = elementRef.ele
     this.segment = segment;
+    this.renderer = renderer;
+    this.isButton = true;
+
+    // This is a button, and it's outlined
+    this.renderer.setElementAttribute(elementRef, 'button', '');
+    this.renderer.setElementAttribute(elementRef, 'outline', '');
   }
 
   onInit() {

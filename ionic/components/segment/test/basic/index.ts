@@ -5,12 +5,11 @@ import {App} from 'ionic/ionic';
 
 @App({
   templateUrl: 'main.html',
-  appInjector: [FormBuilder],
+  bindings: [FormBuilder],
   directives: [FORM_DIRECTIVES]
 })
-class IonicApp {
+class MyApp {
   constructor(fb: FormBuilder) {
-
     this.myForm = fb.group({
       mapStyle: ['hybrid', Validators.required]
     });
@@ -18,7 +17,7 @@ class IonicApp {
   }
 
   doSubmit(event) {
-    console.log('Submitting form', this.form.value);
+    console.log('Submitting form', this.myForm.value);
     event.preventDefault();
   }
 }
