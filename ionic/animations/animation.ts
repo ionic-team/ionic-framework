@@ -107,7 +107,7 @@ export class Animation {
       this._duration = value;
       return this;
     }
-    return this._duration || (this._parent && this._parent.duration());
+    return this._duration || (this._parent && this._parent.duration()) || 0;
   }
 
   easing(name, opts) {
@@ -243,7 +243,7 @@ export class Animation {
         });
       }
 
-      if (self._duration > 32) {
+      if (self._duration > 64) {
         // begin each animation when everything is rendered in their starting point
         // give the browser some time to render everything in place before starting
         setTimeout(kickoff, this._opts.renderDelay);
@@ -299,8 +299,7 @@ export class Animation {
                                    this._to,
                                    this.duration(),
                                    this.easing(),
-                                   this.playbackRate(),
-                                   this._opts.renderDelay );
+                                   this.playbackRate() );
 
           if (animation.shouldAnimate) {
             this._ani.push(animation);
@@ -531,7 +530,7 @@ export class Animation {
 
 class Animate {
 
-  constructor(ele, fromEffect, toEffect, duration, easingConfig, playbackRate, renderDelay) {
+  constructor(ele, fromEffect, toEffect, duration, easingConfig, playbackRate) {
     // https://w3c.github.io/web-animations/
     // not using the direct API methods because they're still in flux
     // however, element.animate() seems locked in and uses the latest
@@ -543,7 +542,7 @@ class Animate {
 
     this.toEffect = parseEffect(toEffect);
 
-    this.shouldAnimate = (duration > renderDelay);
+    this.shouldAnimate = (duration > 64);
 
     if (!this.shouldAnimate) {
       return inlineStyle(ele, this.toEffect);

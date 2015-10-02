@@ -13,7 +13,7 @@ class MaterialTransition extends Transition {
     super(nav, opts);
 
     // entering item moves in bottom to center
-    this.enteringView
+    this.enteringContent
       .to(TRANSLATEY, CENTER)
       .before.setStyles({ zIndex: this.entering.index });
 
@@ -23,10 +23,10 @@ class MaterialTransition extends Transition {
       .before.setStyles({ zIndex: this.entering.index + 10 });
 
     // leaving view stays put
-    this.leavingView
+    this.leavingContent && this.leavingContent
       .before.setStyles({ zIndex: this.leaving.index });
 
-    this.leavingNavbar
+    this.leavingNavbar && this.leavingNavbar
       .before.setStyles({ zIndex: this.leaving.index + 10 });
 
     // set properties depending on direction
@@ -34,18 +34,18 @@ class MaterialTransition extends Transition {
       this.duration(200).easing('cubic-bezier(0.47,0,0.745,0.715)');
 
       // back direction
-      this.enteringView
+      this.enteringContent
         .from(TRANSLATEY, CENTER);
 
       this.enteringNavbar
         .from(TRANSLATEY, CENTER);
 
       // leaving view goes center to bottom
-      this.leavingView
+      this.leavingContent && this.leavingContent
         .fromTo(TRANSLATEY, CENTER, OFF_BOTTOM)
         .fadeOut();
 
-      this.leavingNavbar
+      this.leavingNavbar && this.leavingNavbar
         .fromTo(TRANSLATEY, CENTER, OFF_BOTTOM)
         .fadeOut();
 
@@ -53,7 +53,7 @@ class MaterialTransition extends Transition {
       // forward direction
       this.duration(280).easing('cubic-bezier(0.36,0.66,0.04,1)');
 
-      this.enteringView
+      this.enteringContent
         .from(TRANSLATEY, OFF_BOTTOM)
         .fadeIn();
 
@@ -62,16 +62,16 @@ class MaterialTransition extends Transition {
         .fadeIn();
     }
 
-    let itemLength = nav.length();
-    if (nav.tabs && (itemLength === 1 || itemLength === 2)) {
+    let viewLength = nav.length();
+    if (nav.tabs && (viewLength === 1 || viewLength === 2)) {
       let tabBarEle = nav.tabs.elementRef.nativeElement.querySelector('.tab-bar-container');
       let tabBar = new Animation(tabBarEle);
 
-      if (itemLength === 1 && opts.direction == 'back') {
+      if (viewLength === 1 && opts.direction == 'back') {
         tabBar.fromTo('height', '0px', '69px');
         tabBar.fadeIn();
 
-      } else if (itemLength === 2 && opts.direction == 'forward') {
+      } else if (viewLength === 2 && opts.direction == 'forward') {
         tabBar.fromTo('height', '69px', '0px');
         tabBar.fadeOut();
       }

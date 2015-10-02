@@ -210,15 +210,6 @@ export class ViewController {
     }
   }
 
-  /**
-   * TODO
-   * @returns {TODO} TODO
-   */
-  postRender() {
-    // the elements are in the DOM and the browser
-    // has rendered them in their correct locations
-  }
-
 
   /**
    * The view has loaded. This event only happens once per view being

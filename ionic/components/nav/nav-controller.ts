@@ -69,7 +69,7 @@ export class NavController extends Ion {
 
     // do not animate if this is the first in the stack
     if (!this.views.length) {
-      opts.animation = 'none';
+      opts.animate = false;
     }
 
     // default the direction to "forward"
@@ -269,14 +269,9 @@ export class NavController extends Ion {
       return callback();
     }
 
-    if (opts.animate === false) {
-      opts.animation = 'none';
-
-    } else if (!opts.animation) {
+    if (!opts.animation) {
       opts.animation = this.config.setting('viewTransition');
     }
-
-    opts.animate = (opts.animation !== 'none');
 
     // wait for the new view to complete setup
     enteringView.stage(() => {
@@ -295,7 +290,7 @@ export class NavController extends Ion {
 
         // init the transition animation
         let transAnimation = Transition.create(this, opts);
-        if (!opts.animate) {
+        if (opts.animate === false) {
           // force it to not animate the elements, just apply the "to" styles
           transAnimation.duration(0);
         }

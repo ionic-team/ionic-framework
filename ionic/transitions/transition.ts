@@ -14,69 +14,65 @@ export class Transition extends Animation {
     super(null, opts);
 
     // get the entering and leaving items
-    let enteringView = this.entering = nav.getStagedEnteringView();
-    let leavingView = this.leaving = nav.getStagedLeavingView();
+    let entering = this.entering = nav.getStagedEnteringView();
+    let leaving = this.leaving = nav.getStagedLeavingView();
 
-    // create animation for the entering item's "ion-view" element
-    this.enteringView = new Animation(enteringView.viewElementRef());
-    this.enteringView.before.addClass(SHOW_VIEW_CSS);
 
-    this.enteringView.onPlay(() => {
-      enteringView.postRender();
-    });
-
-    this.add(this.enteringView);
+    // create animation for the entering view's content area
+    this.enteringContent = new Animation(entering.viewElementRef());
+    this.enteringContent.before.addClass(SHOW_VIEW_CSS);
+    this.add(this.enteringContent);
 
     if (opts.navbar !== false) {
 
-      let enteringNavbar = this.enteringNavbar = new Animation(enteringView.navbarRef());
+      let enteringNavbar = this.enteringNavbar = new Animation(entering.navbarRef());
       enteringNavbar.before.addClass(SHOW_NAVBAR_CSS);
 
-      if (enteringView.enableBack()) {
+      if (entering.enableBack()) {
         // only animate in the back button if the entering view has it enabled
-        let enteringBackButton = this.enteringBackButton = new Animation(enteringView.backBtnRef());
+        let enteringBackButton = this.enteringBackButton = new Animation(entering.backBtnRef());
         enteringBackButton
           .before.addClass(SHOW_BACK_BUTTON)
           .fadeIn();
         enteringNavbar.add(enteringBackButton);
       }
 
-      this.enteringTitle = new Animation(enteringView.titleRef());
+      this.enteringTitle = new Animation(entering.titleRef());
       enteringNavbar.add(this.enteringTitle);
       this.add(enteringNavbar);
 
-      this.enteringNavbarItems = new Animation(enteringView.navbarItemRefs());
+      this.enteringNavbarItems = new Animation(entering.navbarItemRefs());
       enteringNavbar.add(this.enteringNavbarItems.fadeIn());
 
-      this.enteringNavbarBg = new Animation(enteringView.navbarBgRef());
+      this.enteringNavbarBg = new Animation(entering.navbarBgRef());
       enteringNavbar.add(this.enteringNavbarBg);
     }
 
 
-    if (leavingView) {
+    if (leaving) {
       // setup the leaving item if one exists (initial viewing wouldn't have a leaving item)
-      this.leavingView = new Animation(leavingView.viewElementRef());
-      this.leavingView.after.removeClass(SHOW_VIEW_CSS);
+      this.leavingContent = new Animation(leaving.viewElementRef());
+      this.leavingContent.after.removeClass(SHOW_VIEW_CSS);
 
-      let leavingNavbar = this.leavingNavbar = new Animation(leavingView.navbarRef());
+      let leavingNavbar = this.leavingNavbar = new Animation(leaving.navbarRef());
       leavingNavbar.after.removeClass(SHOW_NAVBAR_CSS);
 
-      let leavingBackButton = this.leavingBackButton = new Animation(leavingView.backBtnRef());
+      let leavingBackButton = this.leavingBackButton = new Animation(leaving.backBtnRef());
       leavingBackButton
         .after.removeClass(SHOW_BACK_BUTTON)
         .fadeOut();
       leavingNavbar.add(leavingBackButton);
 
-      this.leavingTitle = new Animation(leavingView.titleRef());
+      this.leavingTitle = new Animation(leaving.titleRef());
       leavingNavbar.add(this.leavingTitle);
 
-      this.leavingNavbarItems = new Animation(leavingView.navbarItemRefs());
+      this.leavingNavbarItems = new Animation(leaving.navbarItemRefs());
       leavingNavbar.add(this.leavingNavbarItems.fadeOut());
 
-      this.leavingNavbarBg = new Animation(leavingView.navbarBgRef());
+      this.leavingNavbarBg = new Animation(leaving.navbarBgRef());
       leavingNavbar.add(this.leavingNavbarBg);
 
-      this.add(this.leavingView, leavingNavbar);
+      this.add(this.leavingContent, leavingNavbar);
     }
 
   }
