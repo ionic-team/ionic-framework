@@ -268,3 +268,70 @@ export function flushDimensionCache() {
 
 let dimensionCache = {};
 let dimensionIds = 0;
+
+function getStyle(el, cssprop) {
+  if (el.currentStyle) { //IE
+    return el.currentStyle[cssprop];
+  } else if (window.getComputedStyle) {
+    return window.getComputedStyle(el)[cssprop];
+  }
+  // finally try and get inline style
+  return el.style[cssprop];
+}
+
+function isStaticPositioned(element) {
+  return (getStyle(element, 'position') || 'static') === 'static';
+}
+
+/**
+ * returns the closest, non-statically positioned parentOffset of a given element
+ * @param element
+ */
+export function parentOffsetEl(element) {
+  var offsetParent = element.offsetParent || document;
+  while (offsetParent && offsetParent !== document && isStaticPositioned(offsetParent)) {
+    offsetParent = offsetParent.offsetParent;
+  }
+  return offsetParent || document;
+};
+
+/**
+ * Get the current coordinates of the element, relative to the offset parent.
+ * Read-only equivalent of [jQuery's position function](http://api.jquery.com/position/).
+ * @param {element} element The element to get the position of.
+ * @returns {object} Returns an object containing the properties top, left, width and height.
+ */
+export function position(element) {
+  var elBCR = offset(element);
+  var offsetParentBCR = { top: 0, left: 0 };
+  var offsetParentEl = parentOffsetEl(element);
+  if (offsetParentEl != document) {
+    offsetParentBCR = offset(offsetParentEl);
+    offsetParentBCR.top += offsetParentEl.clientTop - offsetParentEl.scrollTop;
+    offsetParentBCR.left += offsetParentEl.clientLeft - offsetParentEl.scrollLeft;
+  }
+
+  var boundingClientRect = element.getBoundingClientRect();
+  return {
+    width: boundingClientRect.width || element.prop('offsetWidth'),
+    height: boundingClientRect.height || element.prop('offsetHeight'),
+    top: elBCR.top - offsetParentBCR.top,
+    left: elBCR.left - offsetParentBCR.left
+  };
+}
+
+/**
+* Get the current coordinates of the element, relative to the document.
+* Read-only equivalent of [jQuery's offset function](http://api.jquery.com/offset/).
+* @param {element} element The element to get the offset of.
+* @returns {object} Returns an object containing the properties top, left, width and height.
+*/
+export function offset(element) {
+ var boundingClientRect = element.getBoundingClientRect();
+ return {
+   width: boundingClientRect.width || element.prop('offsetWidth'),
+   height: boundingClientRect.height || element.prop('offsetHeight'),
+   top: boundingClientRect.top + (window.pageYOffset || document.documentElement.scrollTop),
+   left: boundingClientRect.left + (window.pageXOffset || document.documentElement.scrollLeft)
+ };
+}
