@@ -1,4 +1,4 @@
-import {View, Renderer, ElementRef, EventEmitter, Host, forwardRef} from 'angular2/angular2';
+import {View, Renderer, ElementRef, EventEmitter, Host, forwardRef, Optional} from 'angular2/angular2';
 import {Control, NgControl,NgFormControl} from 'angular2/forms';
 import {ControlGroup, ControlDirective} from 'angular2/forms'
 
@@ -43,7 +43,7 @@ export class Segment extends Ion {
    * @param {Renderer} renderer  TODO
    */
   constructor(
-    ngControl: NgControl,
+    @Optional() ngControl: NgControl,
     elementRef: ElementRef,
     ionicConfig: IonicConfig,
     renderer: Renderer
@@ -101,6 +101,7 @@ export class Segment extends Ion {
 
     //this.onChange();
 
+    if(!this.ngControl) { return; }
 
     setTimeout(() => {
       this.value = segmentButton.value;
@@ -150,13 +151,19 @@ export class SegmentControlValueAccessor {
    * @param {Segment} segment  TODO
    */
   constructor(
-    ngControl: NgControl,
+    @Optional() ngControl: NgControl,
     renderer: Renderer,
     elementRef: ElementRef,
     segment: Segment
   ) {
     this.onChange = (_) => {};
     this.onTouched = (_) => {};
+
+    if(!ngControl) {
+      // They don't want to do anything that works, so we won't do anything that breaks
+      return;
+    }
+
     this.ngControl = ngControl;
     this.renderer = renderer;
     this.elementRef = elementRef;
