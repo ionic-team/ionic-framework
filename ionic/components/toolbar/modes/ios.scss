@@ -28,6 +28,12 @@ $toolbar-ios-title-font-size:               1.7rem !default;
     order: map-get($toolbar-order-ios, menu-toggle-secondary);
   }
 
+  ion-segment-button[button] {
+    line-height: 2.4rem;
+    min-height: 2.4rem;
+    font-size: 1.2rem;
+  }
+
   button,
   [button] {
     margin-top: 0;

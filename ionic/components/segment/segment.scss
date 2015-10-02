@@ -2,6 +2,11 @@
 // Segment
 // --------------------------------------------------
 
+$segment-button-bg-color:                 transparent !default;
+$segment-button-bg-color-activated:       color(primary) !default;
+$segment-button-text-color:               inverse($segment-button-bg-color-activated) !default;
+$segment-button-hover-opacity:            0.8 !default;
+
 
 ion-segment {
   display: block;
@@ -34,6 +39,22 @@ ion-segment {
 
     background: none;
 
+    background-color: $segment-button-bg-color;
+    color: $segment-button-text-color;
+
+    &[outline] {
+      border: 1px solid $segment-button-bg-color-activated;
+      background: $segment-button-bg-color;
+      color: $segment-button-bg-color-activated;
+
+      &.activated {
+        opacity: 1;
+        color: $segment-button-text-color;
+        background-color: $segment-button-bg-color-activated;
+      }
+    }
+
+
     &:first-of-type {
       border-radius: $button-border-radius 0px 0px $button-border-radius;
     }
@@ -56,30 +77,22 @@ ion-segment {
 
     ion-segment-button[button] {
       $bg-color: $value;
-      $bg-color-activated: darken-or-lighten($bg-color);
       $text-color: inverse($bg-color);
 
-      background-color: $bg-color;
+      background-color: transparent;
       color: $text-color;
-
-      &.activated {
-        background-color: $bg-color-activated;
-      }
 
       &[outline] {
         border: 1px solid $bg-color;
-        background: $background-color;
+        background: $segment-button-bg-color;
         color: $bg-color;
 
         &.activated {
           opacity: 1;
-          color: $text-color;
-          background-color: $bg-color;
+          color: $text-color !important;
+          background-color: $bg-color !important;
         }
       }
-
     }
-
   }
-
 }

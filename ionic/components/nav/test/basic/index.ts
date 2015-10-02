@@ -5,8 +5,8 @@ import {NavParams, NavController} from 'ionic/ionic';
 
 @IonicView({
   template: '' +
-    '<ion-navbar *navbar primary>' +
-      '<ion-title>{{title}}</ion-title>' +
+    '<ion-navbar *navbar>' +
+      '<ion-title><ion-segment><ion-segment-button>Friends</ion-segment-button><ion-segment-button>Enemies</ion-segment-button></ion-segment></ion-title>' +
       '<ion-nav-items primary>' +
         '<button><icon star></icon></button>' +
       '</ion-nav-items>' +
