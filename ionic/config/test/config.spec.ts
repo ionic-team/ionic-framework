@@ -9,19 +9,19 @@ export function run() {
       occupation: 'Weather Man'
     });
 
-    expect(config.setting('name')).toEqual('Doc Brown');
-    expect(config.setting('name')).toEqual('Doc Brown');
-    expect(config.setting('occupation')).toEqual('Weather Man');
-    expect(config.setting('occupation')).toEqual('Weather Man');
+    expect(config.get('name')).toEqual('Doc Brown');
+    expect(config.get('name')).toEqual('Doc Brown');
+    expect(config.get('occupation')).toEqual('Weather Man');
+    expect(config.get('occupation')).toEqual('Weather Man');
   });
 
   it('should get null setting', () => {
     let config = new IonicConfig();
 
-    expect(config.setting('name')).toEqual(null);
-    expect(config.setting('name')).toEqual(null);
-    expect(config.setting('occupation')).toEqual(null);
-    expect(config.setting('occupation')).toEqual(null);
+    expect(config.get('name')).toEqual(null);
+    expect(config.get('name')).toEqual(null);
+    expect(config.get('occupation')).toEqual(null);
+    expect(config.get('occupation')).toEqual(null);
   });
 
   it('should set/get single setting', () => {
@@ -29,10 +29,10 @@ export function run() {
     config.setting('name', 'Doc Brown');
     config.setting('occupation', 'Weather Man');
 
-    expect(config.setting('name')).toEqual('Doc Brown');
-    expect(config.setting('name')).toEqual('Doc Brown');
-    expect(config.setting('occupation')).toEqual('Weather Man');
-    expect(config.setting('occupation')).toEqual('Weather Man');
+    expect(config.get('name')).toEqual('Doc Brown');
+    expect(config.get('name')).toEqual('Doc Brown');
+    expect(config.get('occupation')).toEqual('Weather Man');
+    expect(config.get('occupation')).toEqual('Weather Man');
   });
 
   it('should init w/ given config settings', () => {
@@ -40,8 +40,8 @@ export function run() {
       name: 'Doc Brown',
       occupation: 'Weather Man'
     });
-    expect(config.setting('name')).toEqual('Doc Brown');
-    expect(config.setting('occupation')).toEqual('Weather Man');
+    expect(config.get('name')).toEqual('Doc Brown');
+    expect(config.get('occupation')).toEqual('Weather Man');
   });
 
   it('should get settings object', () => {

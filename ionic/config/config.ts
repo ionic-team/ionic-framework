@@ -20,6 +20,59 @@ export class IonicConfig {
       extend(this._settings, settings);
     }
   }
+
+  get(key) {
+    let settings = this._settings;
+
+    if (!isDefined(this._settings[key])) {
+      // if the value was already set this will all be skipped
+      // if there was no user config then it'll check each of
+      // the user config's platforms, which already contains
+      // settings from default platform configs
+      this._settings[key] = null;
+
+      // check the platform settings object for this value
+      // loop though each of the active platforms
+      let activePlatformKeys = this._platforms;
+      let platformSettings = this._settings.platforms;
+      let platformObj = null;
+      if (platformSettings) {
+        let platformValue = undefined;
+        for (let i = 0; i < activePlatformKeys.length; i++) {
+          platformObj = platformSettings[ activePlatformKeys[i] ];
+
+          if (platformObj) {
+            if (isDefined(platformObj[key])) {
+              // check assigned platform settings
+              platformValue = platformObj[key];
+
+            } else if (platformObj.mode) {
+              // check the platform default mode settings
+              platformObj = IonicConfig.modeConfig(platformObj.mode);
+              if (platformObj) {
+                platformValue = platformObj[key];
+              }
+            }
+          }
+
+        }
+        if (isDefined(platformValue)) {
+          this._settings[key] = platformValue;
+        }
+      }
+    }
+
+    // return key's value
+    // either it came directly from the user config
+    // or it was from the users platform configs
+    // or it was from the default platform configs
+    // in that order
+    if (isFunction(this._settings[key])) {
+      this._settings[key] = settings[key](this._platform);
+    }
+    return this._settings[key];
+  }
+
   /**
   * TODO
   */
