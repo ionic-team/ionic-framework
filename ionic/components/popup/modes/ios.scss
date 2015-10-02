@@ -2,7 +2,7 @@
 // iOS Popups
 // --------------------------------------------------
 
-$popup-ios-max-width:             84% !default;
+$popup-ios-max-width:             270px !default;
 $popup-ios-background:            rgba(0,0,0,0) !default;
 $popup-ios-border-radius:         13px !default;
 $popup-ios-background-color:      #f8f8f8 !default;
@@ -27,6 +27,7 @@ ion-popup {
     border-radius: $popup-ios-border-radius;
     background-color: $popup-ios-background-color;
     max-width: $popup-ios-max-width;
+    overflow: hidden;
   }
 }
 
@@ -37,6 +38,7 @@ ion-popup {
 
 .popup-title {
   margin-top: 12px;
+  font-weight: bold;
   font-size: $popup-ios-title-font-size;
 }
 
@@ -54,10 +56,11 @@ ion-popup {
 
 .prompt-input {
   background-color: #fff;
-  padding: 5px;
+  padding: 6px;
   margin-top: 24px;
   border-radius: 4px;
   border: 1px solid #ccc;
+  -webkit-appearance: none;
 }
 
 .popup-buttons {
@@ -70,6 +73,15 @@ ion-popup {
     font-size: $popup-ios-button-font-size;
     min-height: $popup-ios-button-min-height;
     border-right: 1px solid #c8c7cc;
+
+    &.activated {
+      opacity: 1;
+      background-color: #DEDEDE;
+    }
+
+    &:hover:not(.disable-hover) {
+      opacity: 1;
+    }
 
     &:before {
       position: absolute;
