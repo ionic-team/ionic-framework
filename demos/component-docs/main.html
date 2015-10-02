@@ -1,5 +1,9 @@
 
-<ion-toolbar><ion-title>{{ component.title }}</ion-title></ion-toolbar>
+
+<ion-navbar *navbar class="show-navbar">
+  <ion-title>{{ component.title }}</ion-title>
+</ion-navbar>
+
 
 <ion-content class="has-header components-demo">
 
@@ -234,8 +238,38 @@
     <section id="modals" [ng-class]="{hidden: component.title !== 'Modals' }">
    TODO
   </section>
-    <section id="navigation" [ng-class]="{hidden: component.title !== 'Navigation' }">
-   TODO
+
+  <section id="navigation" [ng-class]="{hidden: component.title !== 'Navigation' }">
+    <ion-card>
+      <ion-card-header primary>
+        Tap for more info...
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <a ion-item href="#" (click)="openNavDetailsPage('Angular')">
+          <icon ion-social-angular item-left></icon>
+          Angular
+        </a>
+
+        <a ion-item href="#" (click)="openNavDetailsPage('CSS3')">
+          <icon ion-social-css3 item-left></icon>
+          CSS3
+        </a>
+
+        <button ion-item (click)="openNavDetailsPage('HTML5')">
+          <icon ion-social-html5 item-left></icon>
+          HTML5
+        </button>
+
+        <button ion-item (click)="openNavDetailsPage('Sass')">
+          <icon ion-social-sass item-left></icon>
+          Sass
+        </button>
+      </ion-card-content>
+
+    </ion-card> 
+
   </section>
   
   <section id="slides" [ng-class]="{hidden: component.title !== 'Slides' }">

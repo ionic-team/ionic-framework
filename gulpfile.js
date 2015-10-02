@@ -57,8 +57,7 @@ gulp.task('build', function(done) {
   runSequence(
     'bundle',
     'e2e',
-    'demos',
-    'copy.docs-demo',
+    'demos:all',
     'sass',
     'fonts',
     done
@@ -100,7 +99,7 @@ gulp.task('watch', function(done) {
       );
 
       watch('demos/**/*', function() {
-        gulp.start('demos');
+        gulp.start('demos:all');
       });
 
       watch('ionic/components/*/test/**/*', function(file) {
@@ -394,11 +393,11 @@ gulp.task('demos', function(){
   }
 })
 
-gulp.task('copy.docs-demo', function () {
-  return gulp
+gulp.task('demos:all', ['demos'], function() {
+   return gulp
     .src('dist/demos/component-docs/*')
-    .pipe(gulp.dest('dist/ionic-site/docs/v2/components/demo/'))
-})
+    .pipe(gulp.dest('dist/ionic-site/docs/v2/components/demo/')) 
+});
 
 gulp.task('publish', function(done) {
   var version = flags.version;

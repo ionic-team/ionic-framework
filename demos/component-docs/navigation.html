@@ -1,0 +1,20 @@
+
+<ion-navbar *navbar>
+  <ion-title>{{ selection.title }}</ion-title>
+</ion-navbar>
+
+<ion-content>
+
+<ion-card>
+
+  <ion-card-header primary>
+    <icon [name]="selection.icon" item-left></icon>
+    {{ selection.title }}
+  </ion-card-header>
+
+  <ion-card-content>
+    {{ selection.content }}
+  </ion-card-content>
+
+</ion-card> 
+</ion-content>

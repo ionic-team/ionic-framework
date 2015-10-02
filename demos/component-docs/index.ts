@@ -1,34 +1,42 @@
-import {App, ActionSheet, Animation} from 'ionic/ionic';
+import {App, IonicApp, ActionSheet, Animation, NavController, NavParams} from 'ionic/ionic';
+import {IonicView, IonicConfig, Events} from 'ionic/ionic';
 import {NgZone} from 'angular2/angular2';
+import {NavigationDetailsPage} from 'navigation';
+import * as helpers from 'helpers';
 
-function toTitleCase(str) {
-  return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-}
 
-@App({
+@IonicView({
   templateUrl: 'main.html'
 })
-class DemoApp {
+class MainPage {
 
-  component: any;
-  actionSheet: any;
-
-  constructor(actionSheet: ActionSheet, zone: NgZone) {
+  constructor(app: IonicApp, nav: NavController, actionSheet: ActionSheet, zone: NgZone, params: NavParams, events: Events) {
+    this.params = params;
+    this.nav = nav;
     this.actionSheet = actionSheet;
-    this.component = {
-        title: 'Tabs',
-    };
-    window.onmessage = (e) => {
+
+    this.navDetailsPage = NavigationDetailsPage;
+    this.component = { title: 'Tabs' };
+
+    this.setupAnimations();
+
+    window.addEventListener('message', (e) => {
       zone.run(() => {
         if (e.data) {
           var data = JSON.parse(e.data);
-          this.component.title = toTitleCase(data.hash.replace('-', ' '));
+          this.component.title = helpers.toTitleCase(data.hash.replace('-', ' '));
         }
       });
-    };
-    this.setupAnimations();
+    });
+
+    events.subscribe('page:locationChange', (data) => {
+      this.component.title = data[0].componentName;
+    });
   }
 
+  // **************************
+  // Action Sheets
+  // **************************
   openMenu() {
     this.actionSheet.open({
       buttons: [
@@ -55,6 +63,16 @@ class DemoApp {
     });
   }
 
+  // **************************
+  // Navigation
+  // **************************
+  openNavDetailsPage(item) {
+    this.nav.push(NavigationDetailsPage, {name: item});
+  }
+
+  // **************************
+  // Animations
+  // **************************
   setupAnimations() {
     this.animation = new Animation();
     this.animation
@@ -67,14 +85,22 @@ class DemoApp {
 
     this.animation.add(ionitronSpin);
   }
-
   play() {
     this.animation.play();
   }
-
   pause() {
     this.animation.pause();
   }
 
+}
+
+@App({
+  template: '<ion-nav [root]="rootPage"></ion-nav>'  
+})
+class DemoApp {
+
+  constructor() {
+    this.rootPage = MainPage;
+  }
 
 }
