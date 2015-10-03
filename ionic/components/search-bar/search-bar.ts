@@ -1,5 +1,5 @@
-import {ElementRef, Pipe} from 'angular2/angular2';
-//import {ControlGroup, ControlDirective} from 'angular2/forms'
+import {ElementRef, Pipe, NgControl, Renderer} from 'angular2/angular2';
+//import {ControlGroup} from 'angular2/forms'
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
@@ -10,6 +10,7 @@ import {IonicComponent, IonicView} from '../../config/decorators';
  */
 @IonicComponent({
   selector: 'ion-search-bar',
+  appInjector: [NgControl],
   properties: [
     'list',
     'query'
@@ -36,12 +37,21 @@ export class SearchBar extends Ion {
    */
   constructor(
     elementRef: ElementRef,
-    config: IonicConfig//,
-    //cd:ControlDirective
+    config: IonicConfig,
+    ngControl: NgControl,
+    renderer: Renderer
   ) {
     super(elementRef, config);
-    // this.controlDirective = cd;
-    // cd.valueAccessor = this; //ControlDirective should inject CheckboxControlDirective
+    this.renderer = renderer;
+    this.elementRef = elementRef;
+    if(!ngControl) {
+      // They don't want to do anything that works, so we won't do anything that breaks
+      return;
+    }
+
+    this.ngControl = ngControl;
+
+    ngControl.valueAccessor = this;
 
     this.query = '';
   }
@@ -52,13 +62,28 @@ export class SearchBar extends Ion {
    */
   writeValue(value) {
     this.value = value;
+    console.log('writeValue', value);
+    this.renderer.setElementProperty(this.elementRef, 'value', this.value);
+
+  }
+
+  registerOnChange(val) {
+    console.log('registerONChange', val);
+  }
+
+  registerOnTouched(val) {
+    console.log('register on touched', val);
   }
 
   inputChanged(event) {
     this.value = event.target.value;
     console.log('Search changed', this.value);
+    this.ngControl.valueAccessor.writeValue(this.value);
+    this.ngControl.control.updateValue(this.value);
+    // this.ngControl.valueAccessor.updateValue(this.value);
+    // this.ngControl.updateValue(this.value);
     // TODO: Better way to do this?
-    this.controlDirective._control().updateValue(event.target.value);
+    //this.controlDirective._control().updateValue(event.target.value);
   }
 
   inputFocused() {
