@@ -26,7 +26,6 @@ import {
  * template.
  */
 export const IONIC_DIRECTIVES = [
-// TODO: Why is forwardRef() required when they're already imported above????
   // Angular
   CORE_DIRECTIVES,
   FORM_DIRECTIVES,
@@ -94,6 +93,9 @@ export const IONIC_DIRECTIVES = [
   forwardRef(() => HideWhen)
 ];
 
+/**
+ * @private
+ */
 class IonicViewImpl extends View {
   constructor(args = {}) {
     args.directives = (args.directives || []).concat(IONIC_DIRECTIVES);
@@ -102,7 +104,13 @@ class IonicViewImpl extends View {
 }
 
 /**
- * TODO
+ * the IonicView decorator indicates that the decorated class is an Ionic
+ * navigation view, meaning it can be navigated to using a [NavController](../../Nav/NavController/)
+ *
+ * Ionic views are automatically wrapped in `<ion-view>`, so although you may
+ * see these tags if you inspect your markup, you don't need to include them in
+ * your templates.
+ *
  */
 export function IonicView(args) {
   return function(cls) {

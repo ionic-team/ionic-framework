@@ -12,6 +12,17 @@ import {NavController} from './nav-controller';
  * For more information on using navigation controllers like Nav or [Tabs](../../Tabs/Tabs/),
  * please take a look at the [NavController API reference](../NavController/).
  *
+ * <h2 id="back_navigation">Back navigation</h2>
+ * One feature of Nav is that if your [view](../NavController/#creating_views) has
+ * a [NavBar](../NavBar/), a back button will be added automatically when there
+ * view before it in the navigation stack.
+ *
+ * Additionally, specifying the `swipe-back-enabled` property will allow you to
+ * swipe to go back:
+ * ```ts
+ * <ion-nav swipe-back-enabled="false" [root]="rootPage"></ion-nav>
+ * ```
+ *
  * Here is a diagram of how Nav animates smoothly between [views](../NavController/#creating_views):
  *
  * <div class="highlight less-margin">
@@ -66,8 +77,8 @@ import {NavController} from './nav-controller';
  *
  * ### Panes
  *
- * NOTE: You don't have to do anything with panes, it is all taken care of for you.
- * This is just an explanation of how Nav works to accompany the diagram above.
+ * NOTE: You don't have to do anything with panes, Ionic takes care of animated
+ * transitions for you. This is an explanation of how Nav works to accompany the diagram above.
  *
  * When you push a new view onto the navigation stack using [NavController.push()](../NavController/#push)
  * or the [NavPush directive](../NavPush/), Nav animates the new view into the
