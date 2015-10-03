@@ -1,5 +1,4 @@
-import {Directive, Component, View, Host, ElementRef, forwardRef, Injector, NgZone} from 'angular2/angular2';
-import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
+import {Directive, Component, View, Host, ElementRef, forwardRef, Injector, NgZone, ViewContainerRef} from 'angular2/angular2';
 
 import {NavController} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';

@@ -1,13 +1,11 @@
-import {Component, Directive, View} from 'angular2/angular2';
-import {NgIf, NgFor, NgClass, ElementRef} from 'angular2/angular2';
-import {FormBuilder, Control, ControlGroup, Validators, FORM_DIRECTIVES} from 'angular2/forms';
+import {Component, Directive, View, NgIf, NgFor, NgClass, ElementRef} from 'angular2/angular2';
+import {FormBuilder, Control, ControlGroup, Validators, FORM_DIRECTIVES} from 'angular2/angular2';
 
 import {App, IonicView, Animation, Content, Scroll, Modal, NavController, NavParams} from 'ionic/ionic';
 
 import {Geo} from './geo';
 import {Weather} from './weather';
 import {Flickr} from './flickr';
-
 
 
 @IonicView({

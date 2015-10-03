@@ -1,9 +1,8 @@
-import {Component} from 'angular2/angular2';
-import {Control, ControlGroup} from 'angular2/forms';
+import {Component, Control, ControlGroup} from 'angular2/angular2';
 
 import {IonicApp, App, Http} from 'ionic/ionic';
-
 import {Translate, TranslatePipe} from 'ionic/ionic';
+
 
 @App({
   templateUrl: 'main.html',

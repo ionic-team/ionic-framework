@@ -1,5 +1,4 @@
-import {Component, Directive, View, Injector, NgFor, ElementRef, Optional, Host, forwardRef, NgZone} from 'angular2/angular2';
-import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
+import {Component, Directive, View, Injector, NgFor, ElementRef, Optional, Host, forwardRef, NgZone, ViewContainerRef} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';

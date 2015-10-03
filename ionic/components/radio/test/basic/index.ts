@@ -9,7 +9,7 @@ import {
   NgControlName,
   NgFormModel,
   FormBuilder
-} from 'angular2/forms';
+} from 'angular2/angular2';
 
 
 @App({

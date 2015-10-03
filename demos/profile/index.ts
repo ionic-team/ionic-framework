@@ -1,6 +1,5 @@
-import {ElementRef} from 'angular2/angular2'
-import {Component, Directive} from 'angular2/angular2';
-import {FormBuilder, Control, ControlGroup, Validators} from 'angular2/forms';
+import {ElementRef, Component, Directive} from 'angular2/angular2';
+import {FormBuilder, Control, ControlGroup, Validators} from 'angular2/angular2';
 
 import {App, Modal, Animation, Content} from 'ionic/ionic';
 import {NavController, NavParams, IonicView} from 'ionic/ionic';

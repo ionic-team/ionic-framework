@@ -1,7 +1,4 @@
-import {Component, ComponentRef, Compiler, ElementRef, Injector, bind, NgZone} from 'angular2/angular2';
-import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_component_loader';
-import {DirectiveBinding} from 'angular2/src/core/compiler/element_injector';
-import {AppViewManager} from 'angular2/src/core/compiler/view_manager';
+import {Component, ComponentRef, Compiler, ElementRef, Injector, bind, NgZone, DynamicComponentLoader, DirectiveBinding, AppViewManager} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';

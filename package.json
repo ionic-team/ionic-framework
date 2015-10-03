@@ -7,14 +7,10 @@
     "url": "https://github.com/driftyco/ionic2.git"
   },
   "dependencies": {
-    "angular2": "2.0.0-alpha.37",
+    "angular2": "2.0.0-alpha.38",
+    "@reactivex/rxjs": "0.0.0-prealpha.3",
     "reflect-metadata": "0.1.1",
-    "rtts_assert": "2.0.0-alpha.37",
-    "rx": "2.5.1",
-    "swiper": "^3.1.2",
-    "systemjs": "0.18.10",
-    "traceur": "0.0.91",
-    "zone.js": "0.5.4"
+    "zone.js": "0.5.7"
   },
   "devDependencies": {
     "canonical-path": "0.0.2",
@@ -59,6 +55,7 @@
     "semver": "^5.0.1",
     "serve-static": "^1.9.2",
     "source-map-support": "^0.2.10",
+    "systemjs": "0.18.10",
     "through2": "^0.6.3",
     "traceur-runtime": "0.0.59",
     "typescript": "1.5.3",

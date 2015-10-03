@@ -1,5 +1,4 @@
-import {Component} from 'angular2/angular2';
-import {DirectiveBinding} from 'angular2/src/core/compiler/element_injector';
+import {Component, DirectiveBinding} from 'angular2/angular2';
 
 import {IonicApp} from '../app/app';
 import {Animation} from '../../animations/animation';

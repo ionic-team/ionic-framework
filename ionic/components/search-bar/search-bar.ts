@@ -1,5 +1,4 @@
 import {ElementRef, Pipe} from 'angular2/angular2';
-//import {ControlGroup, ControlDirective} from 'angular2/forms'
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';

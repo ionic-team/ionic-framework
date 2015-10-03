@@ -1,6 +1,5 @@
 import {View, Renderer, ElementRef, EventEmitter, Host, forwardRef, Optional} from 'angular2/angular2';
-import {Control, NgControl,NgFormControl} from 'angular2/forms';
-import {ControlGroup, ControlDirective} from 'angular2/forms'
+import {Control, NgControl, NgFormControl, ControlGroup, ControlDirective} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';

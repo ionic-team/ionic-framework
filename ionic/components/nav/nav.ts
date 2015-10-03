@@ -1,5 +1,4 @@
-import {Component, Directive, View, ElementRef, Host, Optional, forwardRef, Inject, Injector, NgZone, Renderer} from 'angular2/angular2';
-import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
+import {Component, Directive, View, ElementRef, Host, Optional, forwardRef, Inject, Injector, NgZone, Renderer, ViewContainerRef} from 'angular2/angular2';
 
 import {IonicComponent} from '../../config/decorators';
 import {NavController} from './nav-controller';
