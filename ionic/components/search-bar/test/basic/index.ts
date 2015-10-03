@@ -6,7 +6,7 @@ import {SearchPipe} from 'ionic/components/search-bar/search-bar';
 
 
 function randomTitle() {
-  var items = ['Pizza', 'Pumpkin', 'Apple', 'Bologna'];
+  var items = ['Soylent', 'Pizza', 'Pumpkin', 'Apple', 'Bologna', 'Turkey', 'Kabob', 'Salad', 'Fruit bowl', 'Fish Tacos', 'Chimichongas', 'Meatloaf'];
   return items[Math.floor(Math.random() * items.length)];
 }
 
