@@ -5,17 +5,17 @@ import {IonicComponent} from '../../config/decorators';
 import {NavController} from './nav-controller';
 
 /**
- * Nav is a basic navigation controller component.  It handles animating between
- * incoming and outgoing views, and as a subclass of [NavController](../NavController/)
- * it also exposes the underlying navigation stack.
+ * Nav is a basic navigation controller component.  As a subclass of [NavController](../NavController/)
+ * you use it to navigate to views in your app. Nav automatically animates
+ * transitions between views for you.
  *
  * For more information on using navigation controllers like Nav or [Tabs](../../Tabs/Tabs/),
- * please take a look at the [NavController API reference](../NavController/).
+ * take a look at the [NavController API reference](../NavController/).
  *
  * <h2 id="back_navigation">Back navigation</h2>
- * One feature of Nav is that if your [view](../NavController/#creating_views) has
- * a [NavBar](../NavBar/), a back button will be added automatically when there
- * view before it in the navigation stack.
+ * If a [view](../NavController/#creating_views) you navigate to has a [NavBar](../NavBar/),
+ * Nav will automatically add a back button to it if there is a view
+ * before the one you are navigating to in the navigation stack.
  *
  * Additionally, specifying the `swipe-back-enabled` property will allow you to
  * swipe to go back:
