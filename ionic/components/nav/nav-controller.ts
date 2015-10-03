@@ -13,14 +13,16 @@ import * as util from 'ionic/util';
 
 /**
  * NavController is the base class for navigation controller components like
- * [`Nav`](../Nav/) and [`Tab`](../../Tabs/Tab/). At a basic level, it is an array of
- * [views](#creating_views) representing a particular history (of a Tab for example).
- * This array can be manipulated to navigate throughout an app by pushing and
- * popping views or inserting and removing them at arbitrary indices.
+ * [`Nav`](../Nav/) and [`Tab`](../../Tabs/Tab/). You use navigation controllers
+ * to navigate to [views](#creating_views) in your app. At a basic level, a
+ * navigation controller is an array of views representing a particular history
+ * (of a Tab for example). This array can be manipulated to navigate throughout
+ * an app by pushing and popping views or inserting and removing them at
+ * arbitrary locations in history.
  *
- * The current view is the last one in the array, or the top of the stack, if we think of it
- * that way.  Pushing a new [view](#creating_views) onto the top of
- * the navigation stack causes the new view to be animated in, while popping the current
+ * The current view is the last one in the array, or the top of the stack if we think of it
+ * that way.  [Pushing](#push) a new view onto the top of
+ * the navigation stack causes the new view to be animated in, while [popping](#pop) the current
  * view will navigate to the previous view in the stack.
  *
  * For examples on the basic usage of NavController, check out the [Navigation section](../../../../components/#navigation)
@@ -33,7 +35,7 @@ import * as util from 'ionic/util';
  *
  * <h3 id="injecting_nav_controller">Injecting NavController</h3>
  * Injecting NavController will always get you an instance of the nearest NavController,
- * regardless of whether it's a Tab or a Nav.
+ * regardless of whether it is a Tab or a Nav.
  *
  * Behind the scenes, when Ionic instantiates a new NavController, it creates an
  * injector with NavController bound to that instance (usually either a Nav or Tab)
@@ -49,7 +51,7 @@ import * as util from 'ionic/util';
  * ```
  *
  * That way you don't need to worry about getting a hold of the proper NavController
- *  for [views](#creating_views) that may be used in either a Tab or a Nav:
+ *  for views that may be used in either a Tab or a Nav:
  *
  * ```ts
  *  class MyPage {
@@ -76,12 +78,12 @@ import * as util from 'ionic/util';
  * Views are created when they are added to the navigation stack.  For methods
  * like [push()](#push), the NavController takes any component class that is
  * decorated with [@IonicView](../../../config/IonicView/) as its first
- * argument.  The NavController then [compiles]() that component, loads it in
- * a similar fashion to Angular's [DynamicComponentLoader](https://angular.io/docs/js/latest/api/core/DynamicComponentLoader-interface.html),
+ * argument.  The NavController then [compiles]() that component, adds it to the
+ * DOM in a similar fashion to Angular's [DynamicComponentLoader](https://angular.io/docs/js/latest/api/core/DynamicComponentLoader-interface.html),
  * and animates it into view.
  *
- * By default, views are cached and left in the DOM if they are navigated away from, but are
- * still in the navigation stack (on a `push()` for example).  They are
+ * By default, views are cached and left in the DOM if they are navigated away from but
+ * still in the navigation stack (the exiting view on a `push()` for example).  They are
  * destroyed when removed from the navigation stack (on [pop()](#pop) or [setRoot()](#setRoot)).
  *
  *
