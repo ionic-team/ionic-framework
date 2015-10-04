@@ -19,9 +19,9 @@ import {Tabs} from './tabs';
  * import {GettingStartedPage} from 'getting-started';
  * @App({
  *   template: `<ion-tabs>
- *   							<ion-tab [root]="tabOneRoot"></ion-tab>
- *   							<ion-tab [root]="tabTwoRoot"></ion-tab>
- *   						<ion-tabs>`
+ *                <ion-tab [root]="tabOneRoot"></ion-tab>
+ *                <ion-tab [root]="tabTwoRoot"></ion-tab>
+ *              <ion-tabs>`
  * })
  * class MyApp {
  *   constructor(){
