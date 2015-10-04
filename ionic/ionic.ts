@@ -1,4 +1,5 @@
 
+export * from './config/bootstrap'
 export * from './config/config'
 export * from './config/modes'
 export * from './config/decorators'

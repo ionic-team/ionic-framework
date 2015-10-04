@@ -1,4 +1,4 @@
-import {Component, DirectiveBinding} from 'angular2/angular2';
+import {Component, View, DirectiveBinding} from 'angular2/angular2';
 
 import {IonicApp} from '../app/app';
 import {Animation} from '../../animations/animation';
@@ -7,10 +7,8 @@ import * as util from 'ionic/util';
 
 export class Overlay {
 
-  constructor(app: IonicApp, config: IonicConfig) {
+  constructor(app: IonicApp) {
     this.app = app;
-    this.config = config;
-    this.mode = config.get('mode');
   }
 
   create(overlayType, componentType: Type, opts={}, context=null) {
@@ -21,7 +19,6 @@ export class Overlay {
         selector: 'ion-' + overlayType,
         host: {
           '[style.z-index]': 'zIndex',
-          'mode': this.mode,
           'class': overlayType
         }
       });
@@ -30,14 +27,14 @@ export class Overlay {
       // create a unique token that works as a cache key
       overlayComponentType.token = overlayType + componentType.name;
 
-      app.appendComponent(overlayComponentType).then(ref => {
+      app.appendOverlay(overlayComponentType).then(ref => {
         let overlayRef = new OverlayRef(app, overlayType, opts, ref, context);
         overlayRef._open(opts).then(() => {
           resolve(overlayRef);
         });
 
       }).catch(err => {
-        console.error('Overlay appendComponent:', err);
+        console.error('Overlay appendOverlay:', err);
         reject(err);
       });
 
@@ -180,5 +177,27 @@ export class OverlayRef {
   }
 
 }
+
+
+@Component({
+  selector: 'ion-overlays'
+})
+@View({
+  template: ''
+})
+export class OverlaysContainer {
+  constructor(app: IonicApp, elementRef: ElementRef, loader: DynamicComponentLoader) {
+    this.elementRef = elementRef;
+    this.loader = loader;
+    app.overlayAnchor = this;
+  }
+
+  append(componentType) {
+    return this.loader.loadNextToLocation(componentType, this.elementRef).catch(err => {
+      console.error(err);
+    });
+  }
+}
+
 
 const ROOT_Z_INDEX = 1000;
