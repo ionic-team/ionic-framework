@@ -17,6 +17,9 @@
  *   this directive is unnecessary since it is the default behavior.
  * - On iOS, if there is an input in your footer, you will need to set
  *   `cordova.plugins.Keyboard.disableScroll(true)`.
+ * - To test this in the browser use these:
+ *   - `window.dispatchEvent(new CustomEvent("native.keyboardshow", { "detail": { "keyboardHeight": 200 } }));`
+ *   - `window.dispatchEvent(new CustomEvent("native.keyboardhide"));`
  *
  * @usage
  *
@@ -37,31 +40,66 @@ IonicModule
     ionic.on('native.showkeyboard', onShow, window);
     ionic.on('native.hidekeyboard', onHide, window);
 
-
-    var scrollCtrl;
+    var keyboardHeight = 0,
+        scrollCtrl, scrollView, ionView;
 
     function onShow(e) {
+      // App running on Android (not fullscreen)? Don't bother as this is default behavior
       if (ionic.Platform.isAndroid() && !ionic.Platform.isFullScreen) {
         return;
       }
 
-      //for testing
-      var keyboardHeight = e.keyboardHeight || e.detail.keyboardHeight;
-      element.css('bottom', keyboardHeight + "px");
-      scrollCtrl = element.controller('$ionicScroll');
-      if (scrollCtrl) {
-        scrollCtrl.scrollView.__container.style.bottom = keyboardHeight + keyboardAttachGetClientHeight(element[0]) + "px";
+      // Get keyboardHeight from the event (or from the detail when testing)
+      keyboardHeight = e.keyboardHeight || e.detail.keyboardHeight;
+
+      // Scroll Controller present? Shift the whole ionView up
+      if (scrollCtrl = element.controller('$ionicScroll')) {
+
+        // get the ionView
+        scrollView = scrollCtrl.getScrollView();
+        ionView = angular.element(scrollView.el).parent();
+
+        // Adjust height and bottom position
+        ionView.css('height', 'auto').css('bottom', keyboardHeight + 'px');
+
+        // Adjust scroll position so that the content doesn't jump
+        scrollView.scrollBy(0, keyboardHeight);
+
+      }
+
+      // No Scroll Controller present
+      else {
+
+        // Shift the element (and only the element) up
+        element.css('bottom', keyboardHeight + 'px');
+
       }
     }
 
     function onHide() {
+      // App running on Android (not fullscreen)? Don't bother as this is default behavior
       if (ionic.Platform.isAndroid() && !ionic.Platform.isFullScreen) {
         return;
       }
 
-      element.css('bottom', '');
+      // Scrollcontroller present? Shift the whole ionView back down
+      // @note: Make sure to scroll in reverse first, and then adjust the height. Otherwise it won't work!
       if (scrollCtrl) {
-        scrollCtrl.scrollView.__container.style.bottom = '';
+
+        // Restore scroll position
+        scrollView.scrollBy(0, (-1 * keyboardHeight));
+
+        // Adjust height and bottom position to the defaults
+        ionView.css('height', '100%').css('bottom', '0');
+
+      }
+
+      // No Scroll Controller present
+      else {
+
+        // Shift the element (and only the element) back down
+        element.css('bottom', 'auto');
+
       }
     }
 
@@ -75,7 +113,3 @@ IonicModule
     });
   };
 });
-
-function keyboardAttachGetClientHeight(element) {
-  return element.clientHeight;
-}
