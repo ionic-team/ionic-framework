@@ -15,10 +15,10 @@ import * as dom from 'ionic/util/dom';
  * individual [Tab]() components. On iOS, the TabBar is placed on the bottom of
  * the screen, while on Android it is at the top.
  *
- * For basic Tabs usage, see the [Tabs section]() of the component docs.
- * See the [Tab API reference]() for more details on individual Tab components.
+ * For basic Tabs usage, see the [Tabs section](../../../../components/#tabs) of the component docs.
+ * See the [Tab API reference](../Tab/) for more details on individual Tab components.
  *
- * You can override the platform specific TabBar placement, by using the
+ * You can override the platform specific TabBar placement by using the
  * `tab-bar-placement` property:
  *
  * ```ts
@@ -34,6 +34,26 @@ import * as dom from 'ionic/util/dom';
  *   <ion-tab [root]="tabRoot"></ion-tab>
  * </ion-tabs>
  * ```
+ *
+ * You can select tabs programatically by injecting Tabs into any child
+ * component, and using the [select()](#select) method:
+ * ```ts
+ * @IonicView({
+ *   template: `<button (click)="goToTabTwo()">Go to Tab2</button>`
+ * })
+ * class TabOne {
+ *   constructor(tabs: Tabs){
+ *     this.tabs = tabs;
+ *   }
+ *
+ *   goToTabTwo() {
+ *     this.tabs.select(this.tabs.tabs[1]);
+ *   }
+ * }
+ * ```
+ * The [tabs](#tabs) property is an array of all child [Tab](../Tab/) components
+ * of this Tabs component.
+ *
  */
 @IonicComponent({
   selector: 'ion-tabs',
@@ -112,6 +132,10 @@ export class Tabs extends NavController {
 
   }
 
+  /**
+   * @private
+   * TODO
+   */
   addTab(tab) {
     this.add(tab.viewCtrl);
 
@@ -163,6 +187,7 @@ export class Tabs extends NavController {
   }
 
   /**
+   * @private
    * "Touch" the active tab, either going back to the root view of the tab
    * or scrolling the tab to the top
    */
@@ -175,6 +200,10 @@ export class Tabs extends NavController {
     }
   }
 
+  /**
+   * TODO
+   * @return TODO
+   */
   get tabs() {
     return this.instances();
   }
