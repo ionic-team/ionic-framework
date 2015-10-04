@@ -52,8 +52,11 @@ IonicModule
       // Get keyboardHeight from the event (or from the detail when testing)
       keyboardHeight = e.keyboardHeight || e.detail.keyboardHeight;
 
+      // Get Scroll Controller
+      scrollCtrl = element.controller('$ionicScroll');
+
       // Scroll Controller present? Shift the whole ionView up
-      if (scrollCtrl = element.controller('$ionicScroll')) {
+      if (scrollCtrl) {
 
         // get the ionView
         scrollView = scrollCtrl.getScrollView();
