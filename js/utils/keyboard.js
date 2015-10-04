@@ -452,7 +452,7 @@ function keyboardOnKeyDown(e) {
  * elements outside the scroll view while the keyboard is open.
  */
 function keyboardPreventDefault(e) {
-  if (e.target.tagName !== 'TEXTAREA') {
+  if (ionic.keyboard.isOpen && e.target.tagName !== 'TEXTAREA') {
     e.preventDefault();
   }
 }
