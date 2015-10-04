@@ -192,6 +192,16 @@ gulp.task('bundle.ionic', ['transpile'], function() {
     //TODO minify + sourcemaps
 });
 
+gulp.task('temp.hack', function(){
+  var insert = require('gulp-insert');
+
+  var fileName = 'angular2.dev.js';
+  var filePath = 'node_modules/angular2/bundles/';
+  return gulp.src(filePath + fileName)
+    .pipe(insert.prepend("System.config({ 'paths': { '@reactivex/*': '@reactivex/*.js' }});\n"))
+    .pipe(gulp.dest(filePath));
+});
+
 gulp.task('bundle', ['bundle.ionic'], function() {
   var concat = require('gulp-concat');
 
@@ -396,7 +406,7 @@ gulp.task('demos', function(){
 gulp.task('demos:all', ['demos'], function() {
    return gulp
     .src('dist/demos/component-docs/*')
-    .pipe(gulp.dest('dist/ionic-site/docs/v2/components/demo/')) 
+    .pipe(gulp.dest('dist/ionic-site/docs/v2/components/demo/'))
 });
 
 gulp.task('publish', function(done) {
