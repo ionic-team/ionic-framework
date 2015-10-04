@@ -11,7 +11,7 @@ import * as dom from 'ionic/util/dom';
 
 
 /**
- * The Tabs component is a container that contains a [TabBar]() and any number of
+ * The Tabs component is a container with a [TabBar]() and any number of
  * individual [Tab]() components. On iOS, the TabBar is placed on the bottom of
  * the screen, while on Android it is at the top.
  *
