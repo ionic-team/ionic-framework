@@ -104,7 +104,7 @@ export class Navbar extends ToolbarBase {
   }
 
   didEnter() {
-    this.app.title(this.getTitleText());
+    this.app.setTitle(this.getTitleText());
   }
 
 }

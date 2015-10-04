@@ -19,9 +19,9 @@ export function ionicBindings(configSettings) {
   let app = new IonicApp();
   let platform = new IonicPlatform();
   let config = new IonicConfig(configSettings);
+  let events = new Events();
   let tapClick = new TapClick(app, config, window, document);
 
-  // load all platform data
   platform.url(window.location.href);
   platform.userAgent(window.navigator.userAgent);
   platform.navigatorPlatform(window.navigator.platform);
@@ -112,20 +112,20 @@ function setupDom(window, document, config, platform) {
  * Bind some global events and publish on the 'app' channel
  */
 function bindEvents(window, document, platform, events) {
-  window.addEventListener('online', (event) => {
-    events.publish('app:online', event);
+  window.addEventListener('online', (ev) => {
+    events.publish('app:online', ev);
   }, false);
 
-  window.addEventListener('offline', (event) => {
-    events.publish('app:offline', event);
+  window.addEventListener('offline', (ev) => {
+    events.publish('app:offline', ev);
   }, false);
 
-  window.addEventListener('orientationchange', (event) => {
-    events.publish('app:rotated', event);
+  window.addEventListener('orientationchange', (ev) => {
+    events.publish('app:rotated', ev);
   });
 
   // When that status taps, we respond
-  window.addEventListener('statusTap', (event) => {
+  window.addEventListener('statusTap', (ev) => {
     // TODO: Make this more better
     var el = document.elementFromPoint(platform.width() / 2, platform.height() / 2);
     if(!el) { return; }

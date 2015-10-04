@@ -1,4 +1,4 @@
-import {Component, View, ElementRef, NgZone, DynamicComponentLoader} from 'angular2/angular2';
+import {Title} from 'angular2/angular2';
 
 import {ClickBlock} from '../../util/click-block';
 import {ScrollTo} from '../../animations/scroll-to';
@@ -31,7 +31,7 @@ export class IonicApp {
    * TODO
    */
   constructor() {
-    this.overlays = [];
+    this._title = new Title();
     this._disTime = 0;
     this._trnsTime = 0;
 
@@ -43,9 +43,12 @@ export class IonicApp {
    * Sets the document title.
    * @param {string} val  Value to set the document title to.
    */
-  title(val) {
-    // TODO: User angular service
-    document.title = val;
+  setTitle(val) {
+    this._title.setTitle(val);
+  }
+
+  getTitle() {
+    return this._title.getTitle(val);
   }
 
   /**
