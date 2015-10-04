@@ -11,28 +11,29 @@ import * as dom from 'ionic/util/dom';
 
 
 /**
- * @name ionTabs
- * @description
- * Powers a multi-tabbed interface with a Tab Bar and a set of "pages"
- * that can be tabbed through.
+ * The Tabs component is a container that contains a [TabBar]() and any number of
+ * individual [Tab]() components. On iOS, the TabBar is placed on the bottom of
+ * the screen, while on Android it is at the top.
  *
- * Assign any tabs attribute to the element to define its look and feel.
+ * For basic Tabs usage, see the [Tabs section]() of the component docs.
+ * See the [Tab API reference]() for more details on individual Tab components.
  *
- * For iOS, tabs will appear at the bottom of the screen. For Android, tabs
- * will be at the top of the screen, below the nav-bar. This follows each platform's
- * design specification, but can be configured with IonicConfig.
+ * You can override the platform specific TabBar placement, by using the
+ * `tab-bar-placement` property:
  *
- * See the ionTab component's documentation for more details on individual tabs.
- *
- * @usage
- * ```html
- * <ion-tabs>
- *   <ion-tab tab-title="Heart" tab-icon="heart-" [root]="root1"></ion-tab>
- *   <ion-tab tab-title="Star" tab-icon="star" [root]="root2"></ion-tab>
- *   <ion-tab tab-title="Stopwatch" tab-icon="stopwatch" [root]="root3"></ion-tab>
+ * ```ts
+ * <ion-tabs tab-bar-placement="top">
+ *   <ion-tab [root]="tabRoot"></ion-tab>
  * </ion-tabs>
  * ```
  *
+ * To change the location of the icons in the TabBar, use the `tab-bar-icons`
+ * property:
+ * ```ts
+ * <ion-tabs tab-bar-icons="bottom">
+ *   <ion-tab [root]="tabRoot"></ion-tab>
+ * </ion-tabs>
+ * ```
  */
 @IonicComponent({
   selector: 'ion-tabs',
@@ -181,6 +182,7 @@ export class Tabs extends NavController {
 }
 
 /**
+ * @private
  * TODO
  */
 @Directive({
@@ -226,7 +228,10 @@ class TabButton extends Ion {
   }
 }
 
-
+/**
+ * @private
+ * TODO
+ */
 @Directive({
   selector: 'tab-highlight'
 })
@@ -256,6 +261,10 @@ class TabHighlight {
 }
 
 
+/**
+ * @private
+ * TODO
+ */
 @Directive({selector: 'template[navbar-anchor]'})
 class TabNavBarAnchor {
   constructor(
