@@ -2,13 +2,15 @@
 // iOS Search Bar
 // --------------------------------------------------
 
-$search-bar-ios-background-color:     #c9c9ce !default;
-$search-bar-ios-border-color:         $item-ios-border-color !default;
-$search-bar-ios-padding:              0 8px !default;
-$search-bar-ios-input-height:         28px !default;
-$search-bar-ios-background-svg:       "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 13'><path fill='#939398' d='M5,1c2.2,0,4,1.8,4,4S7.2,9,5,9S1,7.2,1,5S2.8,1,5,1 M5,0C2.2,0,0,2.2,0,5s2.2,5,5,5s5-2.2,5-5S7.8,0,5,0 L5,0z'/><line stroke='#939398' stroke-miterlimit='10' x1='12.6' y1='12.6' x2='8.2' y2='8.2'/></svg>" !default;
-$search-bar-ios-background-size:      13px 13px !default;
-
+$search-bar-ios-background-color:         rgba(0, 0, 0, 0.2) !default;
+$search-bar-ios-border-color:             rgba(0, 0, 0, 0.05) !default;
+$search-bar-ios-padding:                  0 8px !default;
+$search-bar-ios-input-height:             28px !default;
+$search-bar-ios-input-text-color:         #9D9D9D !default;
+$search-bar-ios-input-background-color:   #FFFFFF !default;
+$search-bar-ios-input-icon-color:         #767676 !default;
+$search-bar-ios-input-background-svg:     "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 13'><path fill='" + $search-bar-ios-input-icon-color + "' d='M5,1c2.2,0,4,1.8,4,4S7.2,9,5,9S1,7.2,1,5S2.8,1,5,1 M5,0C2.2,0,0,2.2,0,5s2.2,5,5,5s5-2.2,5-5S7.8,0,5,0 L5,0z'/><line stroke='#939398' stroke-miterlimit='10' x1='12.6' y1='12.6' x2='8.2' y2='8.2'/></svg>" !default;
+$search-bar-ios-background-size:          13px 13px !default;
 
 .search-bar {
   padding: $search-bar-ios-padding;
@@ -22,7 +24,7 @@ $search-bar-ios-background-size:      13px 13px !default;
 
   transform: translateX(calc(50% - 60px));
 
-  @include svg-background-image($search-bar-ios-background-svg);
+  @include svg-background-image($search-bar-ios-input-background-svg);
   background-size: $search-bar-ios-background-size;
   background-repeat: no-repeat;
   position: absolute;
@@ -38,20 +40,26 @@ $search-bar-ios-background-size:      13px 13px !default;
   font-weight: 400;
 
   border-radius: 5px;
-  color: #000;
-  background-color: #fff;
+  color: $search-bar-ios-input-text-color;
+  background-color: $search-bar-ios-input-background-color;
   background-repeat: no-repeat;
   background-position: 8px center;
 
   @include calc(padding-left, "50% - 28px");
 }
 
+
+
 .search-bar-input-container.left-align {
   .search-bar-icon {
     transform: translateX(0);
+    -webkit-transition: all 0.3s cubic-bezier(.25, .45, .05, 1);
+    -moz-transition: all 0.3s cubic-bezier(.25, .45, .05, 1);
   }
   .search-bar-input {
     padding-left: 28px;
+    -webkit-transition: all 0.3s cubic-bezier(.25, .45, .05, 1);
+    -moz-transition: all 0.3s cubic-bezier(.25, .45, .05, 1);
   }
 }
 

@@ -26,6 +26,7 @@ import {IonicComponent, IonicView} from '../../config/decorators';
     <div class="search-bar-icon"></div>
     <input (focus)="inputFocused()" (blur)="inputBlurred()"
     (input)="inputChanged($event)" class="search-bar-input" type="search" [attr.placeholder]="placeholder">
+    <div class="search-bar-close-icon"></div>
   </div>
   <button class="search-bar-cancel">{{cancelText}}</button>`
 })
