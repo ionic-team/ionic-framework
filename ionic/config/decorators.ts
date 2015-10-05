@@ -15,12 +15,58 @@ class IonicViewImpl extends View {
 }
 
 /**
- * the IonicView decorator indicates that the decorated class is an Ionic
+ * The IonicView decorator indicates that the decorated class is an Ionic
  * navigation view, meaning it can be navigated to using a [NavController](../../Nav/NavController/#creating_views)
  *
- * Ionic views are automatically wrapped in `<ion-view>`, so although you may
- * see these tags if you inspect your markup, you don't need to include them in
- * your templates.
+ * Ionic views have all [IONIC_DIRECTIVES](../IONIC_DIRECTIVES/), which include
+ * all Ionic components, as well as Angular's [CORE_DIRECTIVES](https://angular.io/docs/js/latest/api/core/CORE_DIRECTIVES-const.html)
+ * and [FORM_DIRECTIVES](https://angular.io/docs/js/latest/api/core/FORM_DIRECTIVES-const.html),
+ * already provided to them, so you only need to supply custom directives to
+ * your Ionic views:
+ *
+ * ```ts
+ * @IonicView({
+ *   template: '<ion-checkbox my-custom-dir>' +
+ *             '</ion-checkbox>'
+ *   directives: [MyCustomDirective]
+ * })
+ * class MyPage {}
+ * ```
+ * Here [Checkbox](../../../components/checkbox/Checkbox/) will load because
+ * it is in IONIC_DIRECTIVES, so there is no need to add it to the `directives`
+ * array.
+ *
+ * For custom components that use Ionic components, you will need to include
+ * IONIC_DIRECTIVES in the `directives` array:
+ *
+ * ```ts
+ * import {IONIC_DIRECTIVES} from 'ionic/ionic';
+ * @Component({
+ *   template: `<div class="customStyle">
+ *   						  <ion-checkbox></ion-checkbox>
+ *   						</div>`
+ * })
+ * @View({
+ *   directives: [IONIC_DIRECTIVES]
+ * })
+ * class MyCustomCheckbox {}
+ *```
+ * Alternatively, you could:
+ * ```ts
+ * import {Checkbox} from 'ionic/ionic'
+ * ```
+ * along with any other components and add them individually:
+ * ```
+ * @View({
+ *   directives: [Checkbox]
+ * })
+ * ```
+ * However, using IONIC_DIRECTIVES will always Just Work :tm: with no
+ * performance overhead, so there is really no reason to not always use it.
+ *
+ * Ionic views are also automatically wrapped in `<ion-view>`, so although you
+ * may see these tags if you inspect your markup, you don't need to include them
+ * in your templates.
  *
  */
 export function IonicView(args) {
