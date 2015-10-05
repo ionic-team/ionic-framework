@@ -80,6 +80,7 @@ export class IonicConfig {
   get(key) {
 
     if (!isDefined(this._c[key])) {
+
       // if the value was already set this will all be skipped
       // if there was no user config then it'll check each of
       // the user config's platforms, which already contains
@@ -87,14 +88,16 @@ export class IonicConfig {
       this._c[key] = null;
 
       let userPlatformValue = undefined;
-      let platformValue = undefined;
       let userDefaultValue = this._s[key];
-      let modeValue = undefined;
+      let userPlatformModeValue = undefined;
+      let userDefaultModeValue = undefined;
+      let platformValue = undefined;
+      let platformModeValue = undefined;
+      let configObj = null;
 
       if (this._platform) {
         // check the platform settings object for this value
         // loop though each of the active platforms
-        let platformObj = null;
 
         // array of active platforms, which also knows the hierarchy,
         // with the last one the most important
@@ -105,34 +108,54 @@ export class IonicConfig {
 
           // get user defined platform values
           if (this._s.platforms) {
-            platformObj = this._s.platforms[ activePlatformKeys[i] ];
-            if (platformObj && isDefined(platformObj[key])) {
-              userPlatformValue = platformObj[key];
+            configObj = this._s.platforms[ activePlatformKeys[i] ];
+            if (configObj) {
+              if (isDefined(configObj[key])) {
+                userPlatformValue = configObj[key];
+              }
+              configObj = IonicConfig.getModeConfig(configObj.mode);
+              if (configObj && isDefined(configObj[key])) {
+                userPlatformModeValue = configObj[key];
+              }
             }
           }
 
           // get default platform's setting
-          platformObj = IonicPlatform.get(activePlatformKeys[i]);
-          if (platformObj && platformObj.settings) {
+          configObj = IonicPlatform.get(activePlatformKeys[i]);
+          if (configObj && configObj.settings) {
 
-            if (isDefined(platformObj.settings[key])) {
+            if (isDefined(configObj.settings[key])) {
               // found a setting for this platform
-              platformValue = platformObj.settings[key];
+              platformValue = configObj.settings[key];
             }
 
-            platformObj = IonicConfig.modeConfig(platformObj.settings.mode);
-            if (platformObj && isDefined(platformObj[key])) {
+            configObj = IonicConfig.getModeConfig(configObj.settings.mode);
+            if (configObj && isDefined(configObj[key])) {
               // found setting for this platform's mode
-              modeValue = platformObj[key];
+              platformModeValue = configObj[key];
             }
 
           }
 
         }
+
+        if (this._s.mode) {
+          configObj = IonicConfig.getModeConfig(this._s.mode);
+          if (configObj && isDefined(configObj[key])) {
+            userDefaultModeValue = configObj[key];
+          }
+        }
+
       }
 
       // cache the value
-      this._c[key] = isDefined(userPlatformValue) ? userPlatformValue : isDefined(platformValue) ? platformValue : isDefined(userDefaultValue) ? userDefaultValue : isDefined(modeValue) ? modeValue : null;
+      this._c[key] = isDefined(userPlatformValue) ? userPlatformValue :
+                     isDefined(userDefaultValue) ? userDefaultValue :
+                     isDefined(userPlatformModeValue) ? userPlatformModeValue :
+                     isDefined(userDefaultModeValue) ? userDefaultModeValue :
+                     isDefined(platformValue) ? platformValue :
+                     isDefined(platformModeValue) ? platformModeValue :
+                     null;
     }
 
     // return key's value
@@ -155,18 +178,12 @@ export class IonicConfig {
     this._platform = platform;
   }
 
-  static modeConfig(mode, config) {
-    const args = arguments;
+  static setModeConfig(mode, config) {
+    modeConfigs[mode] = config;
+  }
 
-    if (args.length === 2) {
-      // modeConfig('ios', {...})
-      modeConfigs[mode] = extend(modeConfigs[mode] || {}, config);
-
-    } else {
-      // modeConfig('ios')
-      return modeConfigs[mode];
-    }
-
+  static getModeConfig(mode) {
+    return modeConfigs[mode] || null;
   }
 
 }

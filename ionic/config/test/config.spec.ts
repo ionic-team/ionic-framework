@@ -2,6 +2,70 @@ import {IonicConfig, IonicPlatform} from 'ionic/ionic';
 
 export function run() {
 
+  it('should override mode settings', () => {
+    let config = new IonicConfig({
+      mode: 'md'
+    });
+    let platform = new IonicPlatform(['ios']);
+    config.setPlatform(platform);
+
+    expect(config.get('mode')).toEqual('md');
+    expect(config.get('tabBarPlacement')).toEqual('top');
+  });
+
+  it('should override mode settings from platforms setting', () => {
+    let config = new IonicConfig({
+      platforms: {
+        ios: {
+          mode: 'md'
+        }
+      }
+    });
+    let platform = new IonicPlatform(['ios']);
+    config.setPlatform(platform);
+
+    expect(config.get('mode')).toEqual('md');
+    expect(config.get('tabBarPlacement')).toEqual('top');
+  });
+
+  it('should override mode platform', () => {
+    let config = new IonicConfig({
+      mode: 'modeA',
+      platforms: {
+        mobile: {
+          mode: 'modeB'
+        },
+        ios: {
+          mode: 'modeC'
+        }
+      }
+    });
+    let platform = new IonicPlatform(['mobile']);
+    config.setPlatform(platform);
+
+    expect(config.get('mode')).toEqual('modeB');
+  });
+
+  it('should override mode', () => {
+    let config = new IonicConfig({
+      mode: 'modeA'
+    });
+    let platform = new IonicPlatform(['core']);
+    config.setPlatform(platform);
+
+    expect(config.get('mode')).toEqual('modeA');
+  });
+
+  it('should get user settings after user platform settings', () => {
+    let config = new IonicConfig({
+      hoverCSS: true
+    });
+    let platform = new IonicPlatform(['ios']);
+    config.setPlatform(platform);
+
+    expect(config.get('hoverCSS')).toEqual(true);
+  });
+
   it('should get ios mode for core platform', () => {
     let config = new IonicConfig();
     let platform = new IonicPlatform(['core']);
