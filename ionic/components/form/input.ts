@@ -11,10 +11,8 @@ let activeInput = null;
 let lastInput = null;
 
 /**
- * @name ionInput
- * @description
- * The ionInput component is used to focus text input elements.
- * 
+ * The Input component is used to focus text input elements.
+ *
  * The `focusNext()` and  `focusPrevious()` methods make it easy to focus input elements across all devices.
  *
  * @usage

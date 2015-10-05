@@ -10,13 +10,11 @@ import {ScrollTo} from '../../animations/scroll-to';
 
 
 /**
- * @name ionContent
- * @description
- * The ionContent component provides an easy to use content area that can be configured to use Ionic's custom Scroll View, or the built in overflow scrolling of the browser.
+ * The Content component provides an easy to use content area that can be configured to use Ionic's custom Scroll View, or the built in overflow scrolling of the browser.
  *
  * While we recommend using the custom Scroll features in Ionic in most cases, sometimes (for performance reasons) only the browser's native overflow scrolling will suffice, and so we've made it easy to toggle between the Ionic scroll implementation and overflow scrolling.
  *
- * You can implement pull-to-refresh with the ionRefresher component.
+ * You can implement pull-to-refresh with the [Refresher](../../scroll/Refresher) component.
  *
  * @usage
  * ```html

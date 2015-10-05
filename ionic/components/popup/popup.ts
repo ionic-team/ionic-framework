@@ -9,8 +9,6 @@ import * as util from 'ionic/util';
 
 
 /**
- * @name Popup
- * @description
  * The Ionic Popup service allows the creation of popup windows that require the user to respond in order to continue.
  *
  * The popup service has support for more flexible versions of the built in `alert()`, `prompt()`, and `confirm()` functions that users are used to, in addition to allowing popups with completely custom content and look.

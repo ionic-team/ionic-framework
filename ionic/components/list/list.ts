@@ -7,15 +7,13 @@ import {ListVirtualScroll} from './virtual';
 import * as util from 'ionic/util';
 
 /**
- * @name ionList
- * @description
  * The List is a widely used interface element in almost any mobile app, and can include
  * content ranging from basic text all the way to buttons, toggles, icons, and thumbnails.
  *
  * Both the list, which contains items, and the list items themselves can be any HTML
  * element.
  *
- * Using the ionList and ionItem components make it easy to support various
+ * Using the List and Item components make it easy to support various
  * interaction modes such as swipe to edit, drag to reorder, and removing items.
  *
  */

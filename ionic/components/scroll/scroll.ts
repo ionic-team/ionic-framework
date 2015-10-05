@@ -10,8 +10,8 @@ import {Animation} from '../../animations/animation';
 import * as util from 'ionic/util';
 
 /**
- * ion-scroll is a non-flexboxed scroll area that can
- * scroll horizontally or vertically.
+ * Scroll is a non-flexboxed scroll area that can scroll horizontally or
+ * vertically.
  */
 @IonicComponent({
   selector: 'ion-scroll',

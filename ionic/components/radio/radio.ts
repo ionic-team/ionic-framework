@@ -7,8 +7,6 @@ import {ListHeader} from '../list/list';
 
 
 /**
- * @name ionRadioGroup
- * @description
  * A radio group is a group of radio components.
  *
  * Selecting a radio button in the group unselects all others in the group.

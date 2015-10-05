@@ -6,11 +6,9 @@ import * as util from 'ionic/util';
 import {raf, ready, CSS} from 'ionic/util/dom';
 
 /**
- * @name ionRefresher
- * @description
- * Allows you to add pull-to-refresh to an ionContent component.
+ * Allows you to add pull-to-refresh to an Content component.
  *
- * Place it as the first child of your ionContent or ionScroll element.
+ * Place it as the first child of your Content or Scroll element.
  *
  * When refreshing is complete, call `refresher.complete()` from your controller.
  *

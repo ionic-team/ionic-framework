@@ -4,8 +4,6 @@ import {dom} from 'ionic/util';
 
 
 /**
- * @name ionItem
- * @description
  * Creates a list-item that can easily be swiped,
  * deleted, reordered, edited, and more.
  *
