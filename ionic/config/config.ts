@@ -38,8 +38,9 @@ export class IonicConfig {
         this._s.platforms[args[0]] = args[1];
         this._c = {}; // clear cache
         break;
-
     }
+
+    return this;
   }
 
  /**
@@ -85,7 +86,6 @@ export class IonicConfig {
       // if there was no user config then it'll check each of
       // the user config's platforms, which already contains
       // settings from default platform configs
-      this._c[key] = null;
 
       let userPlatformValue = undefined;
       let userDefaultValue = this._s[key];
@@ -104,11 +104,11 @@ export class IonicConfig {
         let activePlatformKeys = this._platform.platforms();
 
         // loop through all of the active platforms we're on
-        for (let i = 0; i < activePlatformKeys.length; i++) {
+        for (let i = 0, l = activePlatformKeys.length; i < l; i++) {
 
           // get user defined platform values
           if (this._s.platforms) {
-            configObj = this._s.platforms[ activePlatformKeys[i] ];
+            configObj = this._s.platforms[activePlatformKeys[i]];
             if (configObj) {
               if (isDefined(configObj[key])) {
                 userPlatformValue = configObj[key];
@@ -139,13 +139,11 @@ export class IonicConfig {
 
         }
 
-        if (this._s.mode) {
-          configObj = IonicConfig.getModeConfig(this._s.mode);
-          if (configObj && isDefined(configObj[key])) {
-            userDefaultModeValue = configObj[key];
-          }
-        }
+      }
 
+      configObj = IonicConfig.getModeConfig(this._s.mode);
+      if (configObj && isDefined(configObj[key])) {
+        userDefaultModeValue = configObj[key];
       }
 
       // cache the value
