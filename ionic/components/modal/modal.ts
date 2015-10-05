@@ -1,8 +1,7 @@
 import {Injectable} from 'angular2/angular2';
 
-import {IonicApp} from '../app/app';
-import {IonicConfig} from '../../config/config';
 import {OverlayController} from '../overlay/overlay-controller';
+import {IonicConfig} from '../../config/config';
 import {Animation} from '../../animations/animation';
 import * as util from 'ionic/util';
 
@@ -32,21 +31,24 @@ import * as util from 'ionic/util';
 @Injectable()
 export class Modal {
 
-  constructor(app: IonicApp, config: IonicConfig) {
-    // super(app, {
-    //   enterAnimation: config.get('modalEnter') || 'modal-slide-in',
-    //   leaveAnimation: config.get('modalLeave') || 'modal-slide-out',
-    // })
+  constructor(ctrl: OverlayController, config: IonicConfig) {
+    this.ctrl = ctrl;
+    this._defaults = {
+      enterAnimation: config.get('modalEnter') || 'modal-slide-in',
+      leaveAnimation: config.get('modalLeave') || 'modal-slide-out',
+    };
   }
 
   /**
    * TODO
-   * @param {Type} ComponentType  TODO
+   * @param {Type} componentType  TODO
    * @param {Object} [opts={}]  TODO
    * @returns {TODO} TODO
    */
-  open(ComponentType: Type, opts={}) {
-    return this.create(OVERLAY_TYPE, ComponentType, opts);
+  open(componentType: Type, opts={}) {
+
+
+    return this.ctrl.open(OVERLAY_TYPE, componentType, util.extend(this._defaults, opts));
   }
 
   /**
@@ -56,9 +58,9 @@ export class Modal {
    */
   get(handle) {
     if (handle) {
-      return this.getByHandle(handle, OVERLAY_TYPE);
+      return this.ctrl.getByHandle(handle, OVERLAY_TYPE);
     }
-    return this.getByType(OVERLAY_TYPE);
+    return this.ctrl.getByType(OVERLAY_TYPE);
   }
 
 }

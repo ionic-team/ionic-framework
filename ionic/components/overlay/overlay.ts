@@ -16,7 +16,7 @@ export class OverlayAnchor {
     loader: DynamicComponentLoader
   ) {
     if (overlayCtrl.anchor) {
-      throw ('An app should only have one <ion-overlays></ion-overlays>');
+      throw ('An app should only have one <ion-overlay></ion-overlay>');
     }
 
     this.elementRef = elementRef;

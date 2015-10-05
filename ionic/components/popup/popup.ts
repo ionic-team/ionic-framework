@@ -255,9 +255,9 @@ export class Popup {
    */
   get(handle) {
     if (handle) {
-      return this.getByHandle(handle, OVERLAY_TYPE);
+      return this.ctrl.getByHandle(handle, OVERLAY_TYPE);
     }
-    return this.getByType(OVERLAY_TYPE);
+    return this.ctrl.getByType(OVERLAY_TYPE);
   }
 
 }
