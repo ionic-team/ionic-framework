@@ -9,10 +9,39 @@ import * as gestures from  './menu-gestures';
 
 
 /**
+ * _For basic Menu usage, see the [Menu section](../../../../components/#menus)
+ * of the Component docs._
+ *
  * Menu is a side-menu navigation that can be dragged out or toggled to show.
- * Menu supports two display styles currently: overlay, and reveal. Overlay
- * is the tradtional Android drawer style, and Reveal is the traditional iOS
- * style. By default, Menu will adjust to the correct style for the platform.
+ *
+ * In order to use Menu, you must specify a [reference](https://angular.io/docs/ts/latest/guide/user-input.html#local-variables)
+ * to the content element that Menu should listen on for drag events, using the
+ * `content` property:
+ * ```html
+ * <ion-menu [content]="contentRef">
+ *   <ion-content>
+ *     <ion-list>
+ *     ...
+ *     </ion-list>
+ *   </ion-content>
+ * </ion-menu>
+ *
+ * <ion-nav #content-ref [root]="rootPage"></ion-nav>
+ * ```
+ *
+ * By default, Menus are on the left, but this can be overriden with the `side`
+ * property:
+ * ```html
+ * <ion-menu [content]="contentRef" side="right"></ion-menu>
+ * ```
+ *
+ * Menu supports two display styles: overlay, and reveal. Overlay
+ * is the traditional Android drawer style, and Reveal is the traditional iOS
+ * style. By default, Menu will adjust to the correct style for the platform,
+ * but this can be overriden using the `type` property:
+ * ```html
+ * <ion-menu [content]="contentRef" type="overlay"></ion-menu>
+ * ```
  */
 @IonicComponent({
   selector: 'ion-menu',
@@ -51,6 +80,9 @@ export class Menu extends Ion {
     this._disableTime = 0;
   }
 
+  /**
+   * @private
+   */
   onInit() {
     super.onInit();
     this._cntEle = (this.content instanceof Node) ? this.content : this.content.getNativeElement();
@@ -284,5 +316,3 @@ class MenuBackdrop {
     this.menu.close();
   }
 }
-
-
