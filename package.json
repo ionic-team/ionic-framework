@@ -6,6 +6,10 @@
     "type": "git",
     "url": "https://github.com/driftyco/ionic2.git"
   },
+  "scripts": {
+    "test": "gulp tests",
+    "link": "npm install && gulp src && npm link"
+  },
   "dependencies": {
     "angular2": "2.0.0-alpha.38",
     "@reactivex/rxjs": "0.0.0-prealpha.3",
