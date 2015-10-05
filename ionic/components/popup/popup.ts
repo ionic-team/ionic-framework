@@ -266,6 +266,7 @@ const OVERLAY_TYPE = 'popup';
 @Component({
   selector: 'ion-popup-default'
 })
+// TODO add button type to button: [type]="button.type"
 @View({
   template:
   '<backdrop (click)="_cancel($event)" tappable disable-activated></backdrop>' +
@@ -279,7 +280,7 @@ const OVERLAY_TYPE = 'popup';
       '<input type="{{inputType || \'text\'}}" placeholder="{{inputPlaceholder}}" *ng-if="showPrompt" class="prompt-input">' +
     '</div>' +
     '<div class="popup-buttons" *ng-if="buttons.length">' +
-      '<button *ng-for="#button of buttons" (click)="buttonTapped(button, $event)" [inner-html]="button.text" [type]="button.type"></button>' +
+      '<button *ng-for="#button of buttons" (click)="buttonTapped(button, $event)" [inner-html]="button.text"></button>' +
     '</div>' +
   '</popup-wrapper>',
   directives: [FORM_DIRECTIVES, NgClass, NgIf, NgFor, Button]
