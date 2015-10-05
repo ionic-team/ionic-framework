@@ -46,6 +46,7 @@ export function ionicBindings(rootCmp, configSettings) {
     Modal,
     Popup,
     Translate,
+    NavRegistry,
     routerBindings(rootCmp),
     bind(LocationStrategy).toClass(HashLocationStrategy),
   ];

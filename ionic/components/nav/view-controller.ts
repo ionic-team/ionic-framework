@@ -41,7 +41,7 @@ export class ViewController {
 
       // get the pane the NavController wants to use
       // the pane is where all this content will be placed into
-      navCtrl.loadContainer(hostProtoViewRef, this.componentType, this, () => {
+      navCtrl.loadContainer(this.componentType, hostProtoViewRef, this, () => {
 
         // this ViewController instance has finished loading
         try {

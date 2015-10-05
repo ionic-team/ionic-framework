@@ -122,14 +122,14 @@ export class NavController extends Ion {
 
     this.parent = parentnavCtrl;
 
-    this.compiler = injector.get(Compiler);
-    this.loader = injector.get(DynamicComponentLoader);
-    this.viewMngr = injector.get(AppViewManager);
+    this._compiler = injector.get(Compiler);
+    this._loader = injector.get(DynamicComponentLoader);
+    this._viewManager = injector.get(AppViewManager);
     this.app = injector.get(IonicApp);
     this.config = config;
     this.zone = zone;
 
-    this.views = [];
+    this._views = [];
 
     this._sbTrans = null;
     this._sbEnabled = config.get('swipeBackEnabled') || false;
@@ -163,7 +163,7 @@ export class NavController extends Ion {
     let promise = new Promise(res => { resolve = res; });
 
     // do not animate if this is the first in the stack
-    if (!this.views.length) {
+    if (!this._views.length) {
       opts.animate = false;
     }
 
@@ -255,12 +255,12 @@ export class NavController extends Ion {
   popTo(view, opts = {}) {
 
     // Get the target index of the view to pop to
-    let viewIndex = this.views.indexOf(view);
+    let viewIndex = this._views.indexOf(view);
     let targetIndex = viewIndex + 1;
     let resolve;
     let promise = new Promise(res => { resolve = res; });
     // Don't pop to the view if it wasn't found, or the target is beyond the view list
-    if(viewIndex < 0 || targetIndex > this.views.length - 1) {
+    if(viewIndex < 0 || targetIndex > this._views.length - 1) {
       resolve();
       return;
     }
@@ -270,8 +270,8 @@ export class NavController extends Ion {
 
     // get the views to auto remove without having to do a transiton for each
     // the last view (the currently active one) will do a normal transition out
-    if (this.views.length > 1) {
-      let autoRemoveItems = this.views.slice(targetIndex, this.views.length);
+    if (this._views.length > 1) {
+      let autoRemoveItems = this._views.slice(targetIndex, this._views.length);
       for (let i = 0; i < autoRemoveItems.length; i++) {
         autoRemoveItems[i].shouldDestroy = true;
         autoRemoveItems[i].shouldCache = false;
@@ -279,7 +279,7 @@ export class NavController extends Ion {
       }
     }
 
-    let leavingView = this.views[this.views.length - 1];
+    let leavingView = this._views[this._views.length - 1];
     let enteringView = view;
 
     if(this.router) {
@@ -298,7 +298,7 @@ export class NavController extends Ion {
    * @param opts extra animation options
    */
   popToRoot(opts = {}) {
-    this.popTo(this.views[0]);
+    this.popTo(this._views[0]);
   }
 
   /**
@@ -313,7 +313,7 @@ export class NavController extends Ion {
     }
 
     // push it onto the end
-    if (index >= this.views.length) {
+    if (index >= this._views.length) {
       return this.push(componentType);
     }
 
@@ -324,7 +324,7 @@ export class NavController extends Ion {
     viewCtrl.shouldCache = false;
 
     this._incrementId(viewCtrl);
-    this.views.splice(index, 0, viewCtrl);
+    this._views.splice(index, 0, viewCtrl);
   }
 
   /**
@@ -346,8 +346,8 @@ export class NavController extends Ion {
 
     // get the views to auto remove without having to do a transiton for each
     // the last view (the currently active one) will do a normal transition out
-    if (this.views.length > 1) {
-      let autoRemoveItems = this.views.slice(0, this.views.length - 1);
+    if (this._views.length > 1) {
+      let autoRemoveItems = this._views.slice(0, this._views.length - 1);
       for (let i = 0; i < autoRemoveItems.length; i++) {
         autoRemoveItems[i].shouldDestroy = true;
         autoRemoveItems[i].shouldCache = false;
@@ -492,30 +492,29 @@ export class NavController extends Ion {
     });
 
     // compile the Component
-    return this.compiler.compileInHost(viewComponentType);
+    return this._compiler.compileInHost(viewComponentType);
   }
 
   /**
    * @private
    * TODO
    */
-  createViewComponetRef(hostProtoViewRef, contentContainerRef, viewCtrlBindings) {
+  createViewComponetRef(type, hostProtoViewRef, viewContainer, viewCtrlBindings) {
     let bindings = this.bindings.concat(viewCtrlBindings);
 
     // the same guts as DynamicComponentLoader.loadNextToLocation
     var hostViewRef =
-        contentContainerRef.createHostView(hostProtoViewRef, -1, bindings);
-    var newLocation = this.viewMngr.getHostElement(hostViewRef);
-    var newComponent = this.viewMngr.getComponent(newLocation);
+        viewContainer.createHostView(hostProtoViewRef, viewContainer.length, bindings);
+    var newLocation = this._viewManager.getHostElement(hostViewRef);
+    var component = this._viewManager.getComponent(newLocation);
 
     var dispose = () => {
-      var index = contentContainerRef.indexOf(hostViewRef);
+      var index = viewContainer.indexOf(hostViewRef);
       if (index !== -1) {
-        contentContainerRef.remove(index);
+        viewContainer.remove(index);
       }
     };
-
-    return new ComponentRef(newLocation, newComponent, dispose);
+    return new ComponentRef(newLocation, component, type, null, dispose);
   }
 
   /**
@@ -732,7 +731,7 @@ export class NavController extends Ion {
   _transComplete() {
     let destroys = [];
 
-    this.views.forEach(view => {
+    this._views.forEach(view => {
       if (view) {
         if (view.shouldDestroy) {
           destroys.push(view);
@@ -753,7 +752,7 @@ export class NavController extends Ion {
     this.app.setEnabled(true);
     this.app.setTransitioning(false);
 
-    if (this.views.length === 1) {
+    if (this._views.length === 1) {
       this.elementRef.nativeElement.classList.add('has-views');
     }
 
@@ -765,9 +764,9 @@ export class NavController extends Ion {
    * @returns {TODO} TODO
    */
   getActive() {
-    for (let i = 0, ii = this.views.length; i < ii; i++) {
-      if (this.views[i].state === ACTIVE_STATE) {
-        return this.views[i];
+    for (let i = 0, ii = this._views.length; i < ii; i++) {
+      if (this._views[i].state === ACTIVE_STATE) {
+        return this._views[i];
       }
     }
     return null;
@@ -780,9 +779,9 @@ export class NavController extends Ion {
    */
   getByInstance(instance) {
     if (instance) {
-      for (let i = 0, ii = this.views.length; i < ii; i++) {
-        if (this.views[i].instance === instance) {
-          return this.views[i];
+      for (let i = 0, ii = this._views.length; i < ii; i++) {
+        if (this._views[i].instance === instance) {
+          return this._views[i];
         }
       }
     }
@@ -795,8 +794,8 @@ export class NavController extends Ion {
    * @returns {TODO} TODO
    */
   getByIndex(index) {
-    if (index < this.views.length && index > -1) {
-      return this.views[index];
+    if (index < this._views.length && index > -1) {
+      return this._views[index];
     }
     return null;
   }
@@ -808,7 +807,7 @@ export class NavController extends Ion {
    */
   getPrevious(view) {
     if (view) {
-      return this.views[ this.views.indexOf(view) - 1 ];
+      return this._views[ this._views.indexOf(view) - 1 ];
     }
     return null;
   }
@@ -818,9 +817,9 @@ export class NavController extends Ion {
    * @returns {TODO} TODO
    */
   getStagedEnteringView() {
-    for (let i = 0, ii = this.views.length; i < ii; i++) {
-      if (this.views[i].state === STAGED_ENTERING_STATE) {
-        return this.views[i];
+    for (let i = 0, ii = this._views.length; i < ii; i++) {
+      if (this._views[i].state === STAGED_ENTERING_STATE) {
+        return this._views[i];
       }
     }
     return null;
@@ -831,9 +830,9 @@ export class NavController extends Ion {
    * @returns {TODO} TODO
    */
   getStagedLeavingView() {
-    for (let i = 0, ii = this.views.length; i < ii; i++) {
-      if (this.views[i].state === STAGED_LEAVING_STATE) {
-        return this.views[i];
+    for (let i = 0, ii = this._views.length; i < ii; i++) {
+      if (this._views[i].state === STAGED_LEAVING_STATE) {
+        return this._views[i];
       }
     }
     return null;
@@ -874,7 +873,7 @@ export class NavController extends Ion {
    */
   add(view) {
     this._incrementId(view);
-    this.views.push(view);
+    this._views.push(view);
   }
 
   _incrementId(view) {
@@ -887,7 +886,7 @@ export class NavController extends Ion {
    * @returns {TODO} TODO
    */
   remove(viewOrIndex) {
-    util.array.remove(this.views, viewOrIndex);
+    util.array.remove(this._views, viewOrIndex);
   }
 
   /**
@@ -896,9 +895,9 @@ export class NavController extends Ion {
    * @returns {TODO} TODO
    */
   first() {
-    for (let i = 0, l = this.views.length; i < l; i++) {
-      if (!this.views[i].shouldDestroy) {
-        return this.views[i];
+    for (let i = 0, l = this._views.length; i < l; i++) {
+      if (!this._views[i].shouldDestroy) {
+        return this._views[i];
       }
     }
     return null;
@@ -910,9 +909,9 @@ export class NavController extends Ion {
    * @returns {TODO} TODO
    */
   last() {
-    for (let i = this.views.length - 1; i >= 0; i--) {
-      if (!this.views[i].shouldDestroy) {
-        return this.views[i];
+    for (let i = this._views.length - 1; i >= 0; i--) {
+      if (!this._views[i].shouldDestroy) {
+        return this._views[i];
       }
     }
     return null;
@@ -924,7 +923,7 @@ export class NavController extends Ion {
    * @returns {TODO} TODO
    */
   indexOf(view) {
-    return this.views.indexOf(view);
+    return this._views.indexOf(view);
   }
 
   /**
@@ -934,8 +933,8 @@ export class NavController extends Ion {
    */
   length() {
     let len = 0;
-    for (let i = 0, l = this.views.length; i < l; i++) {
-      if (!this.views[i].shouldDestroy) {
+    for (let i = 0, l = this._views.length; i < l; i++) {
+      if (!this._views[i].shouldDestroy) {
         len++;
       }
     }
@@ -948,7 +947,7 @@ export class NavController extends Ion {
    */
   instances() {
     let instances = [];
-    for (let view of this.views) {
+    for (let view of this._views) {
       if (view.instance) {
         instances.push(view.instance);
       }

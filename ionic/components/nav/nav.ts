@@ -167,13 +167,13 @@ export class Nav extends NavController {
   /**
    * @private
    * TODO
-   * @param  {TODO}   hostProtoViewRef TODO
    * @param  {TODO}   componentType    TODO
+   * @param  {TODO}   hostProtoViewRef TODO
    * @param  {TODO}   viewCtrl         TODO
    * @param  {Function} done             TODO
    * @return {TODO}                    TODO
    */
-  loadContainer(hostProtoViewRef, componentType, viewCtrl, done) {
+  loadContainer(componentType, hostProtoViewRef, viewCtrl, done) {
     // this gets or creates the Pane which similar nav items live in
     // Nav items with just a navbar/content would all use the same Pane
     // Tabs and view's without a navbar would get a different Panes
@@ -183,7 +183,7 @@ export class Nav extends NavController {
       // the component being loaded is an <ion-tabs>
       // Tabs is essentially a pane, cuz it has its own navbar and content containers
       let contentContainerRef = this.viewMngr.getViewContainer(this.anchorElementRef());
-      let viewComponetRef = this.createViewComponetRef(hostProtoViewRef, contentContainerRef, this.getBindings(viewCtrl));
+      let viewComponetRef = this.createViewComponetRef(componentType, hostProtoViewRef, contentContainerRef, this.getBindings(viewCtrl));
       viewComponetRef.instance._paneView = true;
 
       viewCtrl.disposals.push(() => {
@@ -198,7 +198,7 @@ export class Nav extends NavController {
       // normal ion-view going into pane
       this.getPane(structure, viewCtrl, (pane) => {
         // add the content of the view into the pane's content area
-        let viewComponetRef = this.createViewComponetRef(hostProtoViewRef, pane.contentContainerRef, this.getBindings(viewCtrl));
+        let viewComponetRef = this.createViewComponetRef(componentType, hostProtoViewRef, pane.contentContainerRef, this.getBindings(viewCtrl));
         viewCtrl.disposals.push(() => {
           viewComponetRef.dispose();
 

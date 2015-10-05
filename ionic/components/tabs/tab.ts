@@ -137,9 +137,9 @@ export class Tab extends NavController {
     return !this.tabs.isActive(this.viewCtrl);
   }
 
-  loadContainer(hostProtoViewRef, componentType, viewCtrl, done) {
+  loadContainer(componentType, hostProtoViewRef, viewCtrl, done) {
 
-    let viewComponetRef = this.createViewComponetRef(hostProtoViewRef, this.contentContainerRef, this.getBindings(viewCtrl));
+    let viewComponetRef = this.createViewComponetRef(componentType, hostProtoViewRef, this.contentContainerRef, this.getBindings(viewCtrl));
     viewCtrl.disposals.push(() => {
       viewComponetRef.dispose();
     });
