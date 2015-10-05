@@ -16,7 +16,7 @@ import {IonicComponent, IonicView} from '../../config/decorators';
  * @description
  * The checkbox is no different than the HTML checkbox input, except it's styled differently
  *
- * See the [Angular 2 Docs](https://angular.io/docs/js/latest/api/forms/) for more info on forms and input.
+ * See the [Angular 2 Docs](https://angular.io/docs/js/latest/api/core/Form-interface.html) for more info on forms and input.
  *
  * @usage
  * ```html
