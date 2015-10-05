@@ -57,11 +57,13 @@ ion-segment {
 
     &:first-of-type {
       border-radius: $button-border-radius 0px 0px $button-border-radius;
+      margin-right: 0;
     }
 
     &:last-of-type {
       border-right-width: 1px;
       border-radius: 0px $button-border-radius $button-border-radius 0px;
+      margin-left: 0;
     }
 
   }
