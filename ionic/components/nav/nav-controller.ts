@@ -171,7 +171,7 @@ export class NavController extends Ion {
 
     // the active view is going to be the leaving one (if one exists)
     let leavingView = this.getActive() || new ViewController();
-    leavingView.shouldCache = (util.isBoolean(opts.cacheleavingView) ? opts.cacheleavingView : true);
+    leavingView.shouldCache = (util.isBoolean(opts.cacheLeavingView) ? opts.cacheLeavingView : true);
     leavingView.shouldDestroy = !leavingView.shouldCache;
     if (leavingView.shouldDestroy) {
       leavingView.willUnload();
@@ -215,7 +215,7 @@ export class NavController extends Ion {
     // get the active view and set that it is staged to be leaving
     // was probably the one popped from the stack
     let leavingView = this.getActive() || new ViewController();
-    leavingView.shouldCache = (util.isBoolean(opts.cacheleavingView) ? opts.cacheleavingView : false);
+    leavingView.shouldCache = (util.isBoolean(opts.cacheLeavingView) ? opts.cacheLeavingView : false);
     leavingView.shouldDestroy = !leavingView.shouldCache;
     if (leavingView.shouldDestroy) {
       leavingView.willUnload();
@@ -341,7 +341,7 @@ export class NavController extends Ion {
     opts.animate = opts.animate || false;
 
     // ensure leaving views are not cached, and should be destroyed
-    opts.cacheleavingView = false;
+    opts.cacheLeavingView = false;
 
     // get the views to auto remove without having to do a transiton for each
     // the last view (the currently active one) will do a normal transition out

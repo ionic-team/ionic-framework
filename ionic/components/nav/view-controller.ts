@@ -14,8 +14,6 @@ export class ViewController {
     this.state = 0;
     this.disposals = [];
 
-    this._nbItms = [];
-
     this.navbarTemplateRef = null;
   }
 

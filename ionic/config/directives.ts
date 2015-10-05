@@ -1,6 +1,7 @@
 import {CORE_DIRECTIVES, FORM_DIRECTIVES, forwardRef} from 'angular2/angular2'
 
 import {
+  OverlayAnchor,
   Menu, MenuToggle, MenuClose,
   Button, Content, Scroll, Refresher,
   Slides, Slide, SlideLazy,
@@ -29,6 +30,7 @@ export const IONIC_DIRECTIVES = [
   FORM_DIRECTIVES,
 
   // Content
+  forwardRef(() => OverlayAnchor),
   forwardRef(() => Menu),
   forwardRef(() => MenuToggle),
   forwardRef(() => MenuClose),

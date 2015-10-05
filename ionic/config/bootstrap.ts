@@ -4,6 +4,7 @@ import {ROUTER_BINDINGS, HashLocationStrategy, LocationStrategy} from 'angular2/
 import {IonicApp} from '../components/app/app';
 import {IonicConfig} from './config';
 import {IonicPlatform} from '../platform/platform';
+import {OverlayController} from '../components/overlay/overlay-controller';
 import {ActionSheet} from '../components/action-sheet/action-sheet';
 import {Modal} from '../components/modal/modal';
 import {Popup} from '../components/popup/popup';
@@ -40,6 +41,7 @@ export function ionicBindings(configSettings) {
     bind(IonicPlatform).toValue(platform),
     bind(TapClick).toValue(tapClick),
     bind(Events).toValue(events),
+    OverlayController,
     ActionSheet,
     Modal,
     Popup,

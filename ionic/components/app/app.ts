@@ -129,18 +129,4 @@ export class IonicApp {
     return this.components[id];
   }
 
-  /**
-   * Create and append the given component into the root
-   * element of the app.
-   *
-   * @param {TODO} componentType the component to create and insert
-   * @return {Promise} Promise that resolves with the ContainerRef created
-   */
-  appendOverlay(componentType: Type) {
-    if (!this.overlayAnchor) {
-      throw ('<ion-overlays></ion-overlays> must be added to your root component\'s template');
-    }
-    return this.overlayAnchor.append(componentType);
-  }
-
 }

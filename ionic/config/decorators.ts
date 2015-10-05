@@ -49,11 +49,15 @@ export function IonicDirective(config) {
  */
 export function IonicComponent(config) {
   return function(cls) {
-    var annotations = Reflect.getMetadata('annotations', cls) || [];
-    annotations.push(new Component(appendConfig(cls, config)));
-    Reflect.defineMetadata('annotations', annotations, cls);
-    return cls;
+    return makeComponent(cls, appendConfig(cls, config));
   }
+}
+
+export function makeComponent(cls, config) {
+  var annotations = Reflect.getMetadata('annotations', cls) || [];
+  annotations.push(new Component(config));
+  Reflect.defineMetadata('annotations', annotations, cls);
+  return cls;
 }
 
 function appendConfig(cls, config) {

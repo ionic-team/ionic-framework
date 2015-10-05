@@ -1,9 +1,9 @@
 import {FORM_DIRECTIVES, NgControl, NgControlGroup,
-  Component, View, Injectable, NgClass, NgIf, NgFor} from 'angular2/angular2';
+  Component, View, ElementRef, Injectable, NgClass, NgIf, NgFor} from 'angular2/angular2';
 
-import {Overlay} from '../overlay/overlay';
+import {OverlayController} from '../overlay/overlay-controller';
+import {IonicConfig} from '../../config/config';
 import {Animation} from '../../animations/animation';
-import {Ion} from '../ion';
 import * as util from 'ionic/util';
 
 
@@ -63,25 +63,27 @@ import * as util from 'ionic/util';
  * ```
  */
 @Injectable()
-export class Popup extends Overlay {
+export class Popup {
+
+  constructor(ctrl: OverlayController, config: IonicConfig) {
+    this.ctrl = ctrl;
+    this._defaults = {
+      enterAnimation: config.get('popupPopIn'),
+      leaveAnimation: config.get('popupPopOut'),
+    };
+  }
 
   /**
    * TODO
    * @param {TODO} opts  TODO
    * @returns {object} A promise
    */
-  popup(opts) {
+  open(opts) {
     return new Promise((resolve, reject)=> {
-      let config = this.config;
-      let defaults = {
-        enterAnimation: config.get('popupPopIn'),
-        leaveAnimation: config.get('popupPopOut'),
-      };
-
       opts.promiseResolve = resolve;
       opts.promiseReject = reject;
 
-      return this.create(OVERLAY_TYPE, StandardPopup, defaults, opts);
+      return this.ctrl.open(OVERLAY_TYPE, PopupCmp, util.extend(this._defaults, opts));
     });
   }
 
@@ -128,7 +130,7 @@ export class Popup extends Overlay {
       ]
     }, opts);
 
-    return this.popup(opts);
+    return this.open(opts);
   }
 
   /**
@@ -182,7 +184,7 @@ export class Popup extends Overlay {
         cancelButton, okButton
       ]
     }, opts);
-    return this.popup(opts);
+    return this.open(opts);
   }
 
   /**
@@ -243,7 +245,7 @@ export class Popup extends Overlay {
       ]
     }, opts);
 
-    return this.popup(opts);
+    return this.open(opts);
   }
 
   /**
@@ -264,7 +266,7 @@ const OVERLAY_TYPE = 'popup';
 
 
 @Component({
-  selector: 'ion-popup-default'
+  selector: 'ion-popup'
 })
 @View({
   template:
@@ -285,19 +287,22 @@ const OVERLAY_TYPE = 'popup';
   directives: [FORM_DIRECTIVES, NgClass, NgIf, NgFor]
 })
 
-class StandardPopup {
-  constructor(popup: Popup) {
-    this.popup = popup;
+class PopupCmp {
+
+  constructor(elementRef: ElementRef) {
+    this.elementRef = elementRef;
   }
+
   onInit() {
     setTimeout(() => {
-      this.element = this.overlayRef.getElementRef().nativeElement;
-      this.promptInput = this.element.querySelector('input');
+      // TODO: make more better, no DOM BS
+      this.promptInput = this.elementRef.nativeElement.querySelector('input');
       if (this.promptInput) {
         this.promptInput.value = '';
       }
     });
   }
+
   buttonTapped(button, event) {
     let promptValue = this.promptInput && this.promptInput.value;
 
@@ -314,19 +319,21 @@ class StandardPopup {
         // Resolve with the prompt value
         this.promiseResolve(promptValue);
       }
-      return this.overlayRef.close();
+      return this.close();
     }
 
   }
+
   _cancel(event) {
     this.cancel && this.cancel(event);
 
     if (!event.defaultPrevented) {
       this.promiseReject();
-      return this.overlayRef.close();
+      return this.close();
     }
   }
 }
+
 
 class PopupAnimation extends Animation {
   constructor(element) {
@@ -342,13 +349,14 @@ class PopupAnimation extends Animation {
   }
 }
 
+
 /**
- * Animations for modals
+ * Animations for popups
  */
 class PopupPopIn extends PopupAnimation {
   constructor(element) {
     super(element);
-    this.wrapper.fromTo('opacity', '0', '1')
+    this.wrapper.fromTo('opacity', '0.01', '1')
     this.wrapper.fromTo('scale', '1.1', '1');
 
     this.backdrop.fromTo('opacity', '0', '0.3')
@@ -370,7 +378,7 @@ Animation.register('popup-pop-out', PopupPopOut);
 class PopupMdPopIn extends PopupPopIn {
   constructor(element) {
     super(element);
-    this.backdrop.fromTo('opacity', '0', '0.5')
+    this.backdrop.fromTo('opacity', '0.01', '0.5')
   }
 }
 Animation.register('popup-md-pop-in', PopupMdPopIn);

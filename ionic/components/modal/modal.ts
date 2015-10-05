@@ -1,6 +1,8 @@
 import {Injectable} from 'angular2/angular2';
 
-import {Overlay} from '../overlay/overlay';
+import {IonicApp} from '../app/app';
+import {IonicConfig} from '../../config/config';
+import {OverlayController} from '../overlay/overlay-controller';
 import {Animation} from '../../animations/animation';
 import * as util from 'ionic/util';
 
@@ -28,7 +30,14 @@ import * as util from 'ionic/util';
  * ```
  */
 @Injectable()
-export class Modal extends Overlay {
+export class Modal {
+
+  constructor(app: IonicApp, config: IonicConfig) {
+    // super(app, {
+    //   enterAnimation: config.get('modalEnter') || 'modal-slide-in',
+    //   leaveAnimation: config.get('modalLeave') || 'modal-slide-out',
+    // })
+  }
 
   /**
    * TODO
@@ -37,12 +46,7 @@ export class Modal extends Overlay {
    * @returns {TODO} TODO
    */
   open(ComponentType: Type, opts={}) {
-    let defaults = {
-      enterAnimation: this.config.get('modalEnter') || 'modal-slide-in',
-      leaveAnimation: this.config.get('modalLeave') || 'modal-slide-out',
-    };
-
-    return this.create(OVERLAY_TYPE, ComponentType, util.extend(defaults, opts));
+    return this.create(OVERLAY_TYPE, ComponentType, opts);
   }
 
   /**
