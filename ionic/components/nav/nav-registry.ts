@@ -1,5 +1,6 @@
 
 /**
+ * @private
  * Map of possible views that can be navigated to using an Ionic NavController
  */
 export class NavRegistry {

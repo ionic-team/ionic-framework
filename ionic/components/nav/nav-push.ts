@@ -3,7 +3,36 @@ import {NavController} from './nav-controller';
 import {NavRegistry} from './nav-registry';
 
 /**
- * TODO
+ * Directive for declaratively linking to a new view instead of using
+ * [NavController.push()](../NavController/#push). Similar to ui-router's `ui-sref`.
+ *
+ * Basic usage:
+ * ```html
+ * <button [nav-push]="pushPage"></button>
+ * ```
+ * To specify parameters you can use array syntax or the `nav-params` property:
+ * ```html
+ * <button [nav-push]="pushPage" [nav-params]="params"></button>
+ * ```
+ * Where `pushPage` and `params` are specified in your component:
+ * ```ts
+ * import {LoginPage} from 'login';
+ * @IonicView({
+ *   template: `<button [nav-push]="pushPage" [nav-params]="params"></button>`
+ * })
+ * class MyPage {
+ *   constructor(){
+ *     this.pushPage = LoginPage;
+ *     this.params = { id: 42 };
+ *   }
+ * }
+ * ```
+ *
+ * ### Alternate syntax
+ * You can also use syntax similar to Angular2's router, passing an array to NavPush:
+ * ```html
+ * <button [nav-push]="[pushPage, params]"></button>
+ * ```
  */
 @Directive({
   selector: '[nav-push]',
