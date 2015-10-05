@@ -5,11 +5,26 @@ import {NavController} from './nav-controller';
 
 /**
  * Nav is a basic navigation controller component.  As a subclass of [NavController](../NavController/)
- * you use it to navigate to views in your app. Nav automatically animates
- * transitions between views for you.
+ * you use it to navigate to views in your app and manipulate the navigation stack.
+ * Nav automatically animates transitions between views for you.
  *
  * For more information on using navigation controllers like Nav or [Tabs](../../Tabs/Tabs/),
  * take a look at the [NavController API reference](../NavController/).
+ *
+ * You must set a root view to be loaded initially for any Nav you create, using
+ * the 'root' property:
+ *
+ * ```ts
+ * import {GettingStartedPage} from 'getting-started';
+ * @App({
+ *   template: `<ion-nav [root]="rootPage"></ion-nav>`
+ * })
+ * class MyApp {
+ *   constructor(){
+ *     this.rootPage = GettingStartedPage;
+ *   }
+ * }
+ * ```
  *
  * <h2 id="back_navigation">Back navigation</h2>
  * If a [view](../NavController/#creating_views) you navigate to has a [NavBar](../NavBar/),
