@@ -4,7 +4,11 @@ import {IonicComponent} from '../../config/decorators';
 import {NavController} from './nav-controller';
 
 /**
- * Nav is a basic navigation controller component.  As a subclass of [NavController](../NavController/)
+ * _For a quick walkthrough of navigation in Ionic, check out the
+ * [Navigation section](../../../../components/#navigation) of the Component
+ * docs._
+ *
+ * Nav is a basic navigation controller component.  As a subclass of NavController
  * you use it to navigate to views in your app and manipulate the navigation stack.
  * Nav automatically animates transitions between views for you.
  *

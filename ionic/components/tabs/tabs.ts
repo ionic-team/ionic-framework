@@ -10,14 +10,19 @@ import * as dom from 'ionic/util/dom';
 
 
 /**
- * The Tabs component is a container with a [TabBar]() and any number of
- * individual [Tab]() components. On iOS, the TabBar is placed on the bottom of
+ * _For basic Tabs usage, see the [Tabs section](../../../../components/#tabs)
+ * of the Component docs._
+ *
+ * The Tabs component is a container with a TabBar and any number of
+ * individual Tab components. On iOS, the TabBar is placed on the bottom of
  * the screen, while on Android it is at the top.
  *
- * For basic Tabs usage, see the [Tabs section](../../../../components/#tabs) of the component docs.
  * See the [Tab API reference](../Tab/) for more details on individual Tab components.
  *
- * You can override the platform specific TabBar placement by using the
+ * The TabBar is automatically created for you using the
+ * [properties you set on each Tab](../Tab/#tab_properties).
+ *
+ * To override the platform specific TabBar placement, use the
  * `tab-bar-placement` property:
  *
  * ```ts
@@ -51,7 +56,7 @@ import * as dom from 'ionic/util/dom';
  * }
  * ```
  * The [tabs](#tabs) property is an array of all child [Tab](../Tab/) components
- * of this Tabs component.
+ * of that Tabs component.
  *
  */
 @IonicComponent({

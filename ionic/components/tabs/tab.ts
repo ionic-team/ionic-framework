@@ -6,11 +6,18 @@ import {Tabs} from './tabs';
 
 
 /**
- * Tab components are basic navigation controllers used with [Tabs]().  Much like
- * [Nav](), they are a subclass of [NavController]() and are used to navigate to
- * views and manipulate the navigation stack of a particular tab.
+ * _For basic Tabs usage, see the [Tabs section](../../../../components/#tabs)
+ * of the Component docs._
  *
- * For basic Tabs usage, see the [Tabs section]() of the component docs.
+ * Tab components are basic navigation controllers used with Tabs.  Much like
+ * Nav, they are a subclass of NavController and can be used to navigate
+ * to views and manipulate the navigation stack of a particular tab.
+ *
+ * For more information on using navigation controllers like Tab or [Nav](../../nav/Nav/),
+ * take a look at the [NavController API reference](../NavController/).
+ *
+ * See the [Tabs API reference](../Tabs/) for more details on configuring Tabs
+ * and the TabBar.
  *
  * Like Nav, you must set a root view to be loaded initially for each Tab with
  * the 'root' property:
@@ -29,8 +36,11 @@ import {Tabs} from './tabs';
  *   }
  * }
  * ```
+ * <h3 id="tab_properties">Tab Properties</h3>
+ * The Tabs component automatically creates the TabBar from the properties you
+ * set on each Tab.
  *
- * To change the title and icon for each tab, use the `tab-title` and `tab-icon`
+ * To change the title and icon, use the `tab-title` and `tab-icon`
  * properties:
  * ```html
  * <ion-tabs>

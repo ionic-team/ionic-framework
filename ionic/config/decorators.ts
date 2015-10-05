@@ -16,7 +16,7 @@ class IonicViewImpl extends View {
 
 /**
  * the IonicView decorator indicates that the decorated class is an Ionic
- * navigation view, meaning it can be navigated to using a [NavController](../../Nav/NavController/)
+ * navigation view, meaning it can be navigated to using a [NavController](../../Nav/NavController/#creating_views)
  *
  * Ionic views are automatically wrapped in `<ion-view>`, so although you may
  * see these tags if you inspect your markup, you don't need to include them in
