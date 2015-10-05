@@ -4,6 +4,7 @@ import {FORM_DIRECTIVES, NgControl, NgControlGroup,
 import {Overlay} from '../overlay/overlay';
 import {Animation} from '../../animations/animation';
 import {Ion} from '../ion';
+import {Button} from '../button/button';
 import * as util from 'ionic/util';
 
 
@@ -99,7 +100,7 @@ export class Popup extends Overlay {
    *   template: '', // String (optional). The html template to place in the popup body.
    *   templateUrl: '', // String (optional). The URL of an html template to place in the popup body.
    *   okText: '', // String (default: 'OK'). The text of the OK button.
-   *   okType: '', // String (default: 'primary'). The type of the OK button.
+   *   okType: '', // String (default: ''). The type of the OK button.
    * }
    * ```
    *
@@ -113,7 +114,7 @@ export class Popup extends Overlay {
     }
     let button = {
       text: opts.okText || 'OK',
-      type: opts.okType || 'primary',
+      type: opts.okType || '',
       onTap: (event, popupRef) => {
         // Allow it to close
         //resolve();
@@ -146,9 +147,9 @@ export class Popup extends Overlay {
    *   template: '', // String (optional). The html template to place in the popup body.
    *   templateUrl: '', // String (optional). The URL of an html template to place in the popup body.
    *   cancelText: '', // String (default: 'Cancel'). The text of the Cancel button.
-   *   cancelType: '', // String (default: 'primary'). The type of the Cancel button.
+   *   cancelType: '', // String (default: ''). The type of the Cancel button.
    *   okText: '', // String (default: 'OK'). The text of the OK button.
-   *   okType: '', // String (default: 'primary'). The type of the OK button.
+   *   okType: '', // String (default: ''). The type of the OK button.
    * }
    * ```
    *
@@ -162,14 +163,14 @@ export class Popup extends Overlay {
     }
     let okButton = {
       text: opts.okText || 'OK',
-      type: opts.okType || 'primary',
+      type: opts.okType || '',
       onTap: (event, popupRef) => {
         // Allow it to close
       }
     }
     let cancelButton = {
       text: opts.cancelText || 'Cancel',
-      type: opts.cancelType || 'primary',
+      type: opts.cancelType || '',
       isCancel: true,
       onTap: (event, popupRef) => {
         // Allow it to close
@@ -202,9 +203,9 @@ export class Popup extends Overlay {
    *   inputType: // String (default: 'text'). The type of input to use.
    *   inputPlaceholder: // String (default: ''). A placeholder to use for the input.
    *   cancelText: '', // String (default: 'Cancel'). The text of the Cancel button.
-   *   cancelType: '', // String (default: 'primary'). The type of the Cancel button.
+   *   cancelType: '', // String (default: ''). The type of the Cancel button.
    *   okText: '', // String (default: 'OK'). The text of the OK button.
-   *   okType: '', // String (default: 'primary'). The type of the OK button.
+   *   okType: '', // String (default: ''). The type of the OK button.
    * }
    * ```
    *
@@ -218,7 +219,7 @@ export class Popup extends Overlay {
     }
     let okButton = {
       text: opts.okText || 'OK',
-      type: opts.okType || 'primary',
+      type: opts.okType || '',
       onTap: (event, popupRef) => {
         // Allow it to close
       }
@@ -226,7 +227,7 @@ export class Popup extends Overlay {
 
     let cancelButton = {
       text: opts.cancelText || 'Cancel',
-      type: opts.cancelType || 'primary',
+      type: opts.cancelType || '',
       isCancel: true,
       onTap: (event, popupRef) => {
         // Allow it to close
@@ -262,7 +263,6 @@ export class Popup extends Overlay {
 
 const OVERLAY_TYPE = 'popup';
 
-
 @Component({
   selector: 'ion-popup-default'
 })
@@ -279,10 +279,10 @@ const OVERLAY_TYPE = 'popup';
       '<input type="{{inputType || \'text\'}}" placeholder="{{inputPlaceholder}}" *ng-if="showPrompt" class="prompt-input">' +
     '</div>' +
     '<div class="popup-buttons" *ng-if="buttons.length">' +
-      '<button *ng-for="#button of buttons" (click)="buttonTapped(button, $event)" [inner-html]="button.text"></button>' +
+      '<button *ng-for="#button of buttons" (click)="buttonTapped(button, $event)" [inner-html]="button.text" [type]="button.type"></button>' +
     '</div>' +
   '</popup-wrapper>',
-  directives: [FORM_DIRECTIVES, NgClass, NgIf, NgFor]
+  directives: [FORM_DIRECTIVES, NgClass, NgIf, NgFor, Button]
 })
 
 class StandardPopup {

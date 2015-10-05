@@ -32,8 +32,7 @@ class E2EApp {
       title: "New Album",
       template: "Enter a name for this new album you're so keen on adding",
       inputPlaceholder: "Title",
-      okText: "Save",
-      okType: "secondary"
+      okText: "Save"
     }).then((name) => {
       this.promptResult = name;
       this.promptOpen = false;
