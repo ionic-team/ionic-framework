@@ -4,6 +4,7 @@ import {FORM_DIRECTIVES, NgControl, NgControlGroup,
 import {OverlayController} from '../overlay/overlay-controller';
 import {IonicConfig} from '../../config/config';
 import {Animation} from '../../animations/animation';
+import {Button} from '../button/button';
 import * as util from 'ionic/util';
 
 
@@ -101,7 +102,7 @@ export class Popup {
    *   template: '', // String (optional). The html template to place in the popup body.
    *   templateUrl: '', // String (optional). The URL of an html template to place in the popup body.
    *   okText: '', // String (default: 'OK'). The text of the OK button.
-   *   okType: '', // String (default: 'primary'). The type of the OK button.
+   *   okType: '', // String (default: ''). The type of the OK button.
    * }
    * ```
    *
@@ -115,7 +116,7 @@ export class Popup {
     }
     let button = {
       text: opts.okText || 'OK',
-      type: opts.okType || 'primary',
+      type: opts.okType || '',
       onTap: (event, popupRef) => {
         // Allow it to close
         //resolve();
@@ -148,9 +149,9 @@ export class Popup {
    *   template: '', // String (optional). The html template to place in the popup body.
    *   templateUrl: '', // String (optional). The URL of an html template to place in the popup body.
    *   cancelText: '', // String (default: 'Cancel'). The text of the Cancel button.
-   *   cancelType: '', // String (default: 'primary'). The type of the Cancel button.
+   *   cancelType: '', // String (default: ''). The type of the Cancel button.
    *   okText: '', // String (default: 'OK'). The text of the OK button.
-   *   okType: '', // String (default: 'primary'). The type of the OK button.
+   *   okType: '', // String (default: ''). The type of the OK button.
    * }
    * ```
    *
@@ -164,14 +165,14 @@ export class Popup {
     }
     let okButton = {
       text: opts.okText || 'OK',
-      type: opts.okType || 'primary',
+      type: opts.okType || '',
       onTap: (event, popupRef) => {
         // Allow it to close
       }
     }
     let cancelButton = {
       text: opts.cancelText || 'Cancel',
-      type: opts.cancelType || 'primary',
+      type: opts.cancelType || '',
       isCancel: true,
       onTap: (event, popupRef) => {
         // Allow it to close
@@ -204,9 +205,9 @@ export class Popup {
    *   inputType: // String (default: 'text'). The type of input to use.
    *   inputPlaceholder: // String (default: ''). A placeholder to use for the input.
    *   cancelText: '', // String (default: 'Cancel'). The text of the Cancel button.
-   *   cancelType: '', // String (default: 'primary'). The type of the Cancel button.
+   *   cancelType: '', // String (default: ''). The type of the Cancel button.
    *   okText: '', // String (default: 'OK'). The text of the OK button.
-   *   okType: '', // String (default: 'primary'). The type of the OK button.
+   *   okType: '', // String (default: ''). The type of the OK button.
    * }
    * ```
    *
@@ -220,7 +221,7 @@ export class Popup {
     }
     let okButton = {
       text: opts.okText || 'OK',
-      type: opts.okType || 'primary',
+      type: opts.okType || '',
       onTap: (event, popupRef) => {
         // Allow it to close
       }
@@ -228,7 +229,7 @@ export class Popup {
 
     let cancelButton = {
       text: opts.cancelText || 'Cancel',
-      type: opts.cancelType || 'primary',
+      type: opts.cancelType || '',
       isCancel: true,
       onTap: (event, popupRef) => {
         // Allow it to close
@@ -264,10 +265,10 @@ export class Popup {
 
 const OVERLAY_TYPE = 'popup';
 
-
 @Component({
   selector: 'ion-popup'
 })
+// TODO add button type to button: [type]="button.type"
 @View({
   template:
   '<backdrop (click)="_cancel($event)" tappable disable-activated></backdrop>' +
@@ -284,7 +285,7 @@ const OVERLAY_TYPE = 'popup';
       '<button *ng-for="#button of buttons" (click)="buttonTapped(button, $event)" [inner-html]="button.text"></button>' +
     '</div>' +
   '</popup-wrapper>',
-  directives: [FORM_DIRECTIVES, NgClass, NgIf, NgFor]
+  directives: [FORM_DIRECTIVES, NgClass, NgIf, NgFor, Button]
 })
 
 class PopupCmp {
