@@ -110,10 +110,10 @@ export class ActionSheet extends Overlay {
   open(opts={}) {
     let config = this.config;
     let defaults = {
-      enterAnimation: config.setting('actionSheetEnter'),
-      leaveAnimation: config.setting('actionSheetLeave'),
-      cancelIcon: config.setting('actionSheetCancelIcon'),
-      destructiveIcon: config.setting('actionSheetDestructiveIcon')
+      enterAnimation: config.get('actionSheetEnter'),
+      leaveAnimation: config.get('actionSheetLeave'),
+      cancelIcon: config.get('actionSheetCancelIcon'),
+      destructiveIcon: config.get('actionSheetDestructiveIcon')
     };
 
     let context = util.extend(defaults, opts);

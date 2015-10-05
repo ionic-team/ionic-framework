@@ -13,14 +13,102 @@ import * as util from 'ionic/util';
 
 /**
  * NavController is the base class for navigation controller components like
- * [`Nav`](../Nav/) and [`Tab`](../../Tabs/Tab/). At a basic level, it is an array of
- * [views](#creating_views) representing a particular history (of a Tab for example).
- * This array can be manipulated to navigate throughout an app by pushing,
- * popping, inserting and removing views.
+ * [`Nav`](../Nav/) and [`Tab`](../../Tabs/Tab/). You use navigation controllers
+ * to navigate to [views](#creating_views) in your app. At a basic level, a
+ * navigation controller is an array of views representing a particular history
+ * (of a Tab for example). This array can be manipulated to navigate throughout
+ * an app by pushing and popping views or inserting and removing them at
+ * arbitrary locations in history.
  *
- * <h3 id="creating_views">How do I create views?</h3>
- * Any class that is annotated with [@IonicView](../../../config/IonicView/) will
- * create a view, that is, a component that can be navigated to.
+ * The current view is the last one in the array, or the top of the stack if we think of it
+ * that way.  [Pushing](#push) a new view onto the top of
+ * the navigation stack causes the new view to be animated in, while [popping](#pop) the current
+ * view will navigate to the previous view in the stack.
+ *
+ * For examples on the basic usage of NavController, check out the [Navigation section](../../../../components/#navigation)
+ * of the Component docs.  The following is a more in depth explanation of some
+ * of the features of NavController.
+ *
+ * Unless you are using a directive like [NavPush](../NavPush/), or need a
+ * specific NavController, most times you will inject and use a reference to the
+ * nearest NavController to manipulate the navigation stack.
+ *
+ * <h3 id="injecting_nav_controller">Injecting NavController</h3>
+ * Injecting NavController will always get you an instance of the nearest NavController,
+ * regardless of whether it is a Tab or a Nav.
+ *
+ * Behind the scenes, when Ionic instantiates a new NavController, it creates an
+ * injector with NavController bound to that instance (usually either a Nav or Tab)
+ *  and adds the injector to its own bindings.  For more information on binding
+ *  and dependency injection, see [Binding and DI]().
+ *
+ * ```ts
+ * // class NavController
+ * //"this" is either Nav or Tab, both extend NavController
+ * this.bindings = Injector.resolve([
+ *   bind(NavController).toValue(this)
+ * ]);
+ * ```
+ *
+ * That way you don't need to worry about getting a hold of the proper NavController
+ *  for views that may be used in either a Tab or a Nav:
+ *
+ * ```ts
+ *  class MyPage {
+ *    constructor(@Optional() tab: Tab, @Optional() nav: Nav) {
+ *    	// Unhhhhh so much typinggggg
+ *      // What if we are in a nav that is in a tab, or vice versa, so these both resolve?
+ *    }
+ *  }
+ * ```
+ *
+ * Instead, you can inject NavController and know that it is the correct
+ * navigation controller for most situations (for more advanced situations, see
+ * [Menu](../../Menu/Menu/) and [Tab](../../Tab/Tab/)).
+ *
+ * ```ts
+ *  class MyComponent {
+ *    constructor(nav: NavController) {
+ *      this.nav = nav;
+ *    }
+ *  }
+ * ```
+ *
+ * <h2 id="creating_views">View creation</h2>
+ * Views are created when they are added to the navigation stack.  For methods
+ * like [push()](#push), the NavController takes any component class that is
+ * decorated with [@IonicView](../../../config/IonicView/) as its first
+ * argument.  The NavController then [compiles]() that component, adds it to the
+ * DOM in a similar fashion to Angular's [DynamicComponentLoader](https://angular.io/docs/js/latest/api/core/DynamicComponentLoader-interface.html),
+ * and animates it into view.
+ *
+ * By default, views are cached and left in the DOM if they are navigated away from but
+ * still in the navigation stack (the exiting view on a `push()` for example).  They are
+ * destroyed when removed from the navigation stack (on [pop()](#pop) or [setRoot()](#setRoot)).
+ *
+ *
+ * <h2 id="Lifecycle">Lifecycle events</h2>
+ * Lifecycle events are fired during various stages of navigation.  They can be
+ * defined in any `@IonicView` decorated component class.
+ *
+ * ```ts
+ * @IonicView({
+ *   template: 'Hello World'
+ * })
+ * class HelloWorld {
+ *   onViewLoaded() {
+ *     console.log("I'm alive!");
+ *   }
+ * }
+ * ```
+ *
+ * - `onViewLoaded` - Runs when the view has loaded. This event only happens once per view being created and added to the DOM. If a view leaves but is cached, then this event will not fire again on a subsequent viewing. The `onViewLoaded` event is good place to put your setup code for the view.
+ * - `onViewWillEnter` - Runs when the view is about to enter and become the active view.
+ * - `onViewDidEnter` - Runs when the view has fully entered and is now the active view. This event will fire, whether it was the first load or a cached view.
+ * - `onViewWillLeave` - Runs when the view is about to leave and no longer be the active view.
+ * - `onViewDidLeave` - Runs when the view has finished leaving and is no longer the active view.
+ * - `onViewWillUnload` - Runs when the view is about to be destroyed and have its elements removed.
+ * - `onViewDidUnload` - Runs after the view has been destroyed and its elements have been removed.
  *
  */
 export class NavController extends Ion {
@@ -46,8 +134,8 @@ export class NavController extends Ion {
     this.views = [];
 
     this._sbTrans = null;
-    this._sbEnabled = config.setting('swipeBackEnabled') || false;
-    this._sbThreshold = config.setting('swipeBackThreshold') || 40;
+    this._sbEnabled = config.get('swipeBackEnabled') || false;
+    this._sbThreshold = config.get('swipeBackThreshold') || 40;
 
     this.id = ++ctrlIds;
     this._ids = -1;
@@ -333,7 +421,7 @@ export class NavController extends Ion {
     }
 
     if (!opts.animation) {
-      opts.animation = this.config.setting('viewTransition');
+      opts.animation = this.config.get('viewTransition');
     }
 
     // wait for the new view to complete setup

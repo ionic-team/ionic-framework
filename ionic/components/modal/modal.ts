@@ -38,8 +38,8 @@ export class Modal extends Overlay {
    */
   open(ComponentType: Type, opts={}) {
     let defaults = {
-      enterAnimation: this.config.setting('modalEnter') || 'modal-slide-in',
-      leaveAnimation: this.config.setting('modalLeave') || 'modal-slide-out',
+      enterAnimation: this.config.get('modalEnter') || 'modal-slide-in',
+      leaveAnimation: this.config.get('modalLeave') || 'modal-slide-out',
     };
 
     return this.create(OVERLAY_TYPE, ComponentType, util.extend(defaults, opts));

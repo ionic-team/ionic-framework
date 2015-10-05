@@ -5,12 +5,38 @@ import {IonicComponent} from '../../config/decorators';
 import {NavController} from './nav-controller';
 
 /**
- * Nav is a basic navigation controller component.  It handles animating between
- * incoming and outgoing views, and as a subclass of [NavController](../NavController/)
- * it also exposes the underlying navigation stack.
+ * Nav is a basic navigation controller component.  As a subclass of [NavController](../NavController/)
+ * you use it to navigate to views in your app and manipulate the navigation stack.
+ * Nav automatically animates transitions between views for you.
  *
  * For more information on using navigation controllers like Nav or [Tabs](../../Tabs/Tabs/),
- * please take a look at the [NavController API reference](../NavController/).
+ * take a look at the [NavController API reference](../NavController/).
+ *
+ * You must set a root view to be loaded initially for any Nav you create, using
+ * the 'root' property:
+ *
+ * ```ts
+ * import {GettingStartedPage} from 'getting-started';
+ * @App({
+ *   template: `<ion-nav [root]="rootPage"></ion-nav>`
+ * })
+ * class MyApp {
+ *   constructor(){
+ *     this.rootPage = GettingStartedPage;
+ *   }
+ * }
+ * ```
+ *
+ * <h2 id="back_navigation">Back navigation</h2>
+ * If a [view](../NavController/#creating_views) you navigate to has a [NavBar](../NavBar/),
+ * Nav will automatically add a back button to it if there is a view
+ * before the one you are navigating to in the navigation stack.
+ *
+ * Additionally, specifying the `swipe-back-enabled` property will allow you to
+ * swipe to go back:
+ * ```ts
+ * <ion-nav swipe-back-enabled="false" [root]="rootPage"></ion-nav>
+ * ```
  *
  * Here is a diagram of how Nav animates smoothly between [views](../NavController/#creating_views):
  *
@@ -66,8 +92,8 @@ import {NavController} from './nav-controller';
  *
  * ### Panes
  *
- * NOTE: You don't have to do anything with panes, it is all taken care of for you.
- * This is just an explanation of how Nav works to accompany the diagram above.
+ * NOTE: You don't have to do anything with panes, Ionic takes care of animated
+ * transitions for you. This is an explanation of how Nav works to accompany the diagram above.
  *
  * When you push a new view onto the navigation stack using [NavController.push()](../NavController/#push)
  * or the [NavPush directive](../NavPush/), Nav animates the new view into the

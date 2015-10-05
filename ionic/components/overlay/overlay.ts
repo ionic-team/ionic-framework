@@ -11,7 +11,7 @@ export class Overlay {
   constructor(app: IonicApp, config: IonicConfig) {
     this.app = app;
     this.config = config;
-    this.mode = config.setting('mode');
+    this.mode = config.get('mode');
   }
 
   create(overlayType, componentType: Type, opts={}, context=null) {

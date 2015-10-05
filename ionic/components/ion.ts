@@ -35,7 +35,7 @@ export class Ion {
         }
 
         // get the property values from a global user/platform config
-        let configVal = this.config.setting(prop);
+        let configVal = this.config.get(prop);
         if (configVal) {
           this[prop] = configVal;
           continue;
