@@ -64,19 +64,19 @@
  *  </tr>
  *  <tr>
  *   <td><code>$ionicView.beforeEnter</code></td>
- *   <td>The view is about to enter and become the active view.</td>
+ *   <td>The view is about to enter and become the active view. This event will fire, whether it is cached or destroyed.</td>
  *  </tr>
  *  <tr>
  *   <td><code>$ionicView.beforeLeave</code></td>
- *   <td>The view is about to leave and no longer be the active view.</td>
+ *   <td>The view is about to leave and no longer be the active view. This event will fire, whether it is cached or destroyed.</td>
  *  </tr>
  *  <tr>
  *   <td><code>$ionicView.afterEnter</code></td>
- *   <td>The view has fully entered and is now the active view.</td>
+ *   <td>The view has fully entered and is now the active view. This event will fire, whether it is cached or destroyed.</td>
  *  </tr>
  *  <tr>
  *   <td><code>$ionicView.afterLeave</code></td>
- *   <td>The view has finished leaving and is no longer the active view.</td>
+ *   <td>The view has finished leaving and is no longer the active view. This event will fire, whether it is cached or destroyed.</td>
  *  </tr>
  *  <tr>
  *   <td><code>$ionicView.unloaded</code></td>
