@@ -24,8 +24,6 @@ class MyAppCmp {
     console.log('android', platform.is('android'))
     console.log('windows phone', platform.is('windowsphone'))
 
-    console.log('isRTL', app.isRTL())
-
     platform.ready().then(() => {
       console.log('platform.ready')
     });
@@ -33,14 +31,15 @@ class MyAppCmp {
   }
 
   openModal() {
-    this.modal.open(ContactModal);
+    this.modal.open(ContactModal, {
+      handle: 'my-awesome-modal'
+    });
   }
 
   openModalCustomAnimation() {
     this.modal.open(ContactModal, {
       enterAnimation: 'my-fade-in',
-      leaveAnimation: 'my-fade-out',
-      handle: 'my-awesome-modal'
+      leaveAnimation: 'my-fade-out'
     });
   }
 }

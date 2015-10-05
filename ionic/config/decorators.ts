@@ -107,7 +107,7 @@ export function App(args={}) {
     // redefine with added annotations
     Reflect.defineMetadata('annotations', annotations, cls);
 
-    bootstrap(cls, ionicBindings(args.config));
+    bootstrap(cls, ionicBindings(cls, args.config));
 
     return cls;
   }

@@ -3,6 +3,7 @@ import {Injectable} from 'angular2/angular2';
 import {OverlayController} from '../overlay/overlay-controller';
 import {IonicConfig} from '../../config/config';
 import {Animation} from '../../animations/animation';
+import {makeComponent} from '../../config/decorators';
 import * as util from 'ionic/util';
 
 /**
@@ -46,9 +47,11 @@ export class Modal {
    * @returns {TODO} TODO
    */
   open(componentType: Type, opts={}) {
+    let modalComponent = makeComponent(componentType, {
+      selector: 'ion-modal'
+    });
 
-
-    return this.ctrl.open(OVERLAY_TYPE, componentType, util.extend(this._defaults, opts));
+    return this.ctrl.open(OVERLAY_TYPE, modalComponent, util.extend(this._defaults, opts));
   }
 
   /**

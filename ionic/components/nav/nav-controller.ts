@@ -1,6 +1,7 @@
-import {Component, ComponentRef, Compiler, ElementRef, Injector, bind, NgZone, DynamicComponentLoader, DirectiveBinding, AppViewManager} from 'angular2/angular2';
+import {ComponentRef, Compiler, ElementRef, Injector, bind, NgZone, DynamicComponentLoader, AppViewManager} from 'angular2/angular2';
 
 import {Ion} from '../ion';
+import {makeComponent} from '../../config/decorators';
 import {IonicConfig} from '../../config/config';
 import {IonicApp} from '../app/app';
 import {ViewController} from './view-controller';
@@ -483,20 +484,15 @@ export class NavController extends Ion {
    */
   compileView(componentType) {
     // create a new ion-view annotation
-    let annotation = new Component({
+    let viewComponentType = makeComponent(componentType, {
       selector: 'ion-view',
       host: {
         '[class.pane-view]': '_paneView'
       }
     });
 
-    let ionViewComponentType = DirectiveBinding.createFromType(componentType, annotation);
-
-    // create a unique token that works as a cache key
-    ionViewComponentType.token = 'ionView' + componentType.name;
-
     // compile the Component
-    return this.compiler.compileInHost(ionViewComponentType);
+    return this.compiler.compileInHost(viewComponentType);
   }
 
   /**
@@ -504,7 +500,7 @@ export class NavController extends Ion {
    * TODO
    */
   createViewComponetRef(hostProtoViewRef, contentContainerRef, viewCtrlBindings) {
-    let bindings = this.bindings.concat(Injector.resolve(viewCtrlBindings));
+    let bindings = this.bindings.concat(viewCtrlBindings);
 
     // the same guts as DynamicComponentLoader.loadNextToLocation
     var hostViewRef =

@@ -24,8 +24,6 @@ class MyAppCmp {
     console.log('android', platform.is('android'))
     console.log('windows phone', platform.is('windowsphone'))
 
-    console.log('isRTL', app.isRTL())
-
     platform.ready().then(() => {
       console.log('platform.ready')
     });

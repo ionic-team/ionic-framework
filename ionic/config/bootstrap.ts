@@ -1,5 +1,5 @@
 import {bootstrap, bind} from 'angular2/angular2';
-import {ROUTER_BINDINGS, HashLocationStrategy, LocationStrategy} from 'angular2/router';
+import {routerBindings, HashLocationStrategy, LocationStrategy} from 'angular2/router';
 
 import {IonicApp} from '../components/app/app';
 import {IonicConfig} from './config';
@@ -16,7 +16,7 @@ import {TapClick} from '../components/tap-click/tap-click';
 import * as dom from '../util/dom';
 
 
-export function ionicBindings(configSettings) {
+export function ionicBindings(rootCmp, configSettings) {
   let app = new IonicApp();
   let platform = new IonicPlatform();
   let config = new IonicConfig(configSettings);
@@ -46,7 +46,7 @@ export function ionicBindings(configSettings) {
     Modal,
     Popup,
     Translate,
-    ROUTER_BINDINGS,
+    routerBindings(rootCmp),
     bind(LocationStrategy).toClass(HashLocationStrategy),
   ];
 }

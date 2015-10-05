@@ -309,22 +309,22 @@ export class Nav extends NavController {
     let tabs = false;
     //let key = '_';
 
-    componentProtoViewRef._protoView.elementBinders.forEach(rootElementBinder => {
-      if (!rootElementBinder.componentDirective || !rootElementBinder.nestedProtoView) return;
+    // componentProtoViewRef._protoView.elementBinders.forEach(rootElementBinder => {
+    //   if (!rootElementBinder.componentDirective || !rootElementBinder.nestedProtoView) return;
 
-      rootElementBinder.nestedProtoView.elementBinders.forEach(nestedElementBinder => {
-        if ( isComponent(nestedElementBinder, 'Tabs') ) {
-          tabs = true;
-        }
-        if (!nestedElementBinder.componentDirective && nestedElementBinder.nestedProtoView) {
-          nestedElementBinder.nestedProtoView.elementBinders.forEach(templatedElementBinder => {
-            if ( isComponent(templatedElementBinder, 'Navbar') ) {
-              navbar = true;
-            }
-          });
-        }
-      });
-    });
+    //   rootElementBinder.nestedProtoView.elementBinders.forEach(nestedElementBinder => {
+    //     if ( isComponent(nestedElementBinder, 'Tabs') ) {
+    //       tabs = true;
+    //     }
+    //     if (!nestedElementBinder.componentDirective && nestedElementBinder.nestedProtoView) {
+    //       nestedElementBinder.nestedProtoView.elementBinders.forEach(templatedElementBinder => {
+    //         if ( isComponent(templatedElementBinder, 'Navbar') ) {
+    //           navbar = true;
+    //         }
+    //       });
+    //     }
+    //   });
+    // });
 
     return {
       navbar,

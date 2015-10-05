@@ -16,17 +16,20 @@ export class OverlayController {
   }
 
   open(overlayType, componentType: Type, opts={}) {
-    let resolve;
-    let promise = new Promise(res => { resolve = res; });
-
     if (!this.anchor) {
       console.error('<ion-overlay></ion-overlay> required in root component template to use: ' + overlayType);
       return Promise.reject();
     }
 
+    let resolve, reject;
+    let promise = new Promise((res, rej) => { resolve = res; reject = rej; });
+
     try {
       this.anchor.append(componentType).then(ref => {
-        let instance = ref.instance;
+        let instance = ref && ref.instance;
+        if (!instance) {
+          return reject();
+        }
 
         ref._z = ROOT_Z_INDEX;
         for (let i = 0; i < this.refs.length; i++) {
@@ -39,13 +42,12 @@ export class OverlayController {
         util.extend(instance, opts);
 
         ref._type = overlayType;
-        ref._opts = opts;
-        ref._handle = opts.handle || (overlayType + instance.zIndex);
+        ref._handle = opts.handle || (overlayType + ref._z);
 
         this.add(ref);
 
-        instance.close = (opts={}) => {
-          this.close(ref, opts);
+        instance.close = (closeOpts={}) => {
+          this.close(ref, util.extend(opts, closeOpts));
         };
 
         instance.onViewLoaded && instance.onViewLoaded();
@@ -92,7 +94,6 @@ export class OverlayController {
     instance.onViewWillLeave && instance.onViewWillLeave();
     instance.onViewWillUnload && instance.onViewWillUnload();
 
-    opts = util.extend(ref._opts, opts);
     let animation = Animation.create(ref.location.nativeElement, opts.leaveAnimation);
     animation.after.removeClass('show-overlay');
 
@@ -133,18 +134,18 @@ export class OverlayController {
   }
 
   getByType(overlayType) {
-    for (let i = this.overlays.length - 1; i >= 0; i--) {
-      if (overlayType === this.overlays[i]._type) {
-        return this.overlays[i];
+    for (let i = this.refs.length - 1; i >= 0; i--) {
+      if (overlayType === this.refs[i]._type) {
+        return this.refs[i].instance;
       }
     }
     return null;
   }
 
   getByHandle(handle, overlayType) {
-    for (let i = this.overlays.length - 1; i >= 0; i--) {
-      if (handle === this.overlays[i]._handle && overlayType === this.overlays[i]._type) {
-        return this.overlays[i];
+    for (let i = this.refs.length - 1; i >= 0; i--) {
+      if (handle === this.refs[i]._handle && overlayType === this.refs[i]._type) {
+        return this.refs[i].instance;
       }
     }
     return null;
