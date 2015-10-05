@@ -5,10 +5,8 @@
     <form [ng-form-model]="form">
 
       <ion-search-bar ng-control="searchQuery"></ion-search-bar>
-
       <ion-list inset #list>
-
-        <ion-item *ng-for="#item of getItems()"><!--items | search:form.controls.searchControl.value">-->
+        <ion-item *ng-for="#item of getItems()">
           {{item.title}}
         </ion-item>
       </ion-list>

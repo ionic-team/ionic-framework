@@ -22,9 +22,6 @@ class IonicApp {
       searchQuery: ['', Validators.required]
     });
 
-
-    this.query = 'HELLO';
-
     this.items = []
     for(let i = 0; i < 100; i++) {
       this.items.push({
@@ -35,8 +32,6 @@ class IonicApp {
 
   getItems() {
     var q = this.form.controls.searchQuery.value;
-    console.log('getItem', q);
-    // debugger;
     if(q.trim() == '') {
       return this.items;
     }
