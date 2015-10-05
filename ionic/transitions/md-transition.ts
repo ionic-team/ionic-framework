@@ -15,19 +15,19 @@ class MaterialTransition extends Transition {
     // entering item moves in bottom to center
     this.enteringContent
       .to(TRANSLATEY, CENTER)
-      .before.setStyles({ zIndex: this.entering.index });
+      .before.setStyles({ zIndex: this.enteringZ });
 
     // entering item moves in bottom to center
     this.enteringNavbar
       .to(TRANSLATEY, CENTER)
-      .before.setStyles({ zIndex: this.entering.index + 10 });
+      .before.setStyles({ zIndex: this.enteringZ + 10 });
 
     // leaving view stays put
-    this.leavingContent && this.leavingContent
-      .before.setStyles({ zIndex: this.leaving.index });
+    this.leavingContent
+      .before.setStyles({ zIndex: this.leavingZ });
 
-    this.leavingNavbar && this.leavingNavbar
-      .before.setStyles({ zIndex: this.leaving.index + 10 });
+    this.leavingNavbar
+      .before.setStyles({ zIndex: this.leavingZ + 10 });
 
     // set properties depending on direction
     if (opts.direction === 'back') {
@@ -41,11 +41,11 @@ class MaterialTransition extends Transition {
         .from(TRANSLATEY, CENTER);
 
       // leaving view goes center to bottom
-      this.leavingContent && this.leavingContent
+      this.leavingContent
         .fromTo(TRANSLATEY, CENTER, OFF_BOTTOM)
         .fadeOut();
 
-      this.leavingNavbar && this.leavingNavbar
+      this.leavingNavbar
         .fromTo(TRANSLATEY, CENTER, OFF_BOTTOM)
         .fadeOut();
 

@@ -281,7 +281,7 @@ function initApp(window, document, config, platform) {
   platform.url(window.location.href);
   platform.userAgent(window.navigator.userAgent);
   platform.navigatorPlatform(window.navigator.platform);
-  platform.load(config);
+  platform.load();
 
   // copy default platform settings into the user config platform settings
   // user config platform settings should override default platform settings
@@ -361,7 +361,7 @@ export function ionicBootstrap(rootComponentType, views, config) {
         let loader = injector.get(DynamicComponentLoader);
         loader.loadNextToLocation(RootAnchor, lastElementRef).then(() => {
           // append the focus holder if its needed
-          if (config.setting('keyboardScrollAssist')) {
+          if (config.get('keyboardScrollAssist')) {
             app.appendComponent(FocusHolder).then(ref => {
               app.focusHolder(ref.instance);
             });
@@ -409,11 +409,11 @@ function applyBodyCss(document, config, platform) {
 
   // set the mode class name
   // ios
-  bodyEle.classList.add(config.setting('mode'));
+  bodyEle.classList.add(config.get('mode'));
 
   // touch devices should not use :hover CSS pseudo
   // enable :hover CSS when the "hoverCSS" setting is not false
-  if (config.setting('hoverCSS') !== false) {
+  if (config.get('hoverCSS') !== false) {
     bodyEle.classList.add('enable-hover');
   }
 

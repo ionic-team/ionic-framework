@@ -17,60 +17,62 @@ export class Transition extends Animation {
     let entering = this.entering = nav.getStagedEnteringView();
     let leaving = this.leaving = nav.getStagedLeavingView();
 
+    this.enteringZ = entering.index;
+    this.leavingZ = (leaving && leaving.index) || 0;
 
     // create animation for the entering view's content area
     this.enteringContent = new Animation(entering.viewElementRef());
     this.enteringContent.before.addClass(SHOW_VIEW_CSS);
     this.add(this.enteringContent);
 
+    let enteringNavbar = this.enteringNavbar = new Animation(entering.navbarRef());
+    this.enteringBackButton = new Animation(entering.backBtnRef());
+    this.enteringTitle = new Animation(entering.titleRef());
+    this.enteringNavbarItems = new Animation(entering.navbarItemRefs());
+    this.enteringNavbarBg = new Animation(entering.navbarBgRef());
+
     if (opts.navbar !== false) {
 
-      let enteringNavbar = this.enteringNavbar = new Animation(entering.navbarRef());
       enteringNavbar.before.addClass(SHOW_NAVBAR_CSS);
 
       if (entering.enableBack()) {
         // only animate in the back button if the entering view has it enabled
-        let enteringBackButton = this.enteringBackButton = new Animation(entering.backBtnRef());
-        enteringBackButton
+        this.enteringBackButton
           .before.addClass(SHOW_BACK_BUTTON)
           .fadeIn();
-        enteringNavbar.add(enteringBackButton);
+        enteringNavbar.add(this.enteringBackButton);
       }
 
-      this.enteringTitle = new Animation(entering.titleRef());
-      enteringNavbar.add(this.enteringTitle);
+      enteringNavbar
+        .add(this.enteringTitle)
+        .add(this.enteringNavbarItems.fadeIn())
+        .add(this.enteringNavbarBg);
+
       this.add(enteringNavbar);
-
-      this.enteringNavbarItems = new Animation(entering.navbarItemRefs());
-      enteringNavbar.add(this.enteringNavbarItems.fadeIn());
-
-      this.enteringNavbarBg = new Animation(entering.navbarBgRef());
-      enteringNavbar.add(this.enteringNavbarBg);
     }
 
+    this.leavingContent = new Animation(leaving && leaving.viewElementRef());
+    let leavingNavbar = this.leavingNavbar = new Animation(leaving && leaving.navbarRef());
+    this.leavingBackButton = new Animation(leaving && leaving.backBtnRef());
+    this.leavingTitle = new Animation(leaving && leaving.titleRef());
+    this.leavingNavbarItems = new Animation(leaving && leaving.navbarItemRefs());
+    this.leavingNavbarBg = new Animation(leaving && leaving.navbarBgRef());
 
     if (leaving) {
       // setup the leaving item if one exists (initial viewing wouldn't have a leaving item)
-      this.leavingContent = new Animation(leaving.viewElementRef());
       this.leavingContent.after.removeClass(SHOW_VIEW_CSS);
 
-      let leavingNavbar = this.leavingNavbar = new Animation(leaving.navbarRef());
       leavingNavbar.after.removeClass(SHOW_NAVBAR_CSS);
 
-      let leavingBackButton = this.leavingBackButton = new Animation(leaving.backBtnRef());
-      leavingBackButton
+      this.leavingBackButton
         .after.removeClass(SHOW_BACK_BUTTON)
         .fadeOut();
-      leavingNavbar.add(leavingBackButton);
 
-      this.leavingTitle = new Animation(leaving.titleRef());
-      leavingNavbar.add(this.leavingTitle);
-
-      this.leavingNavbarItems = new Animation(leaving.navbarItemRefs());
-      leavingNavbar.add(this.leavingNavbarItems.fadeOut());
-
-      this.leavingNavbarBg = new Animation(leaving.navbarBgRef());
-      leavingNavbar.add(this.leavingNavbarBg);
+      leavingNavbar
+        .add(this.leavingBackButton)
+        .add(this.leavingTitle)
+        .add(this.leavingNavbarItems.fadeOut())
+        .add(this.leavingNavbarBg);
 
       this.add(this.leavingContent, leavingNavbar);
     }

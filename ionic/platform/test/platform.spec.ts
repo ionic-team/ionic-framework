@@ -1,13 +1,21 @@
-import {IonicConfig, IonicPlatform} from 'ionic/ionic';
+import {IonicPlatform} from 'ionic/ionic';
 
 export function run() {
 
+  it('should set core as the fallback', () => {
+    let platform = new IonicPlatform();
+    platform.userAgent('idk');
+    platform.load();
+
+    expect(platform.is('android')).toEqual(false);
+    expect(platform.is('ios')).toEqual(false);
+    expect(platform.is('core')).toEqual(true);
+  });
+
   it('should set android via platformOverride, despite ios user agent', () => {
     let platform = new IonicPlatform();
-    let config = new IonicConfig();
-    config.setting('platform', 'android');
     platform.userAgent(IPAD_UA);
-    platform.load(config);
+    platform.load('android');
 
     expect(platform.is('android')).toEqual(true);
     expect(platform.is('ios')).toEqual(false);
@@ -15,10 +23,8 @@ export function run() {
 
   it('should set ios via platformOverride, despite android querystring', () => {
     let platform = new IonicPlatform();
-    let config = new IonicConfig();
-    config.setting('platform', 'ios');
     platform.url('/?ionicplatform=android');
-    platform.load(config);
+    platform.load('ios');
 
     expect(platform.is('android')).toEqual(false);
     expect(platform.is('ios')).toEqual(true);
@@ -26,9 +32,7 @@ export function run() {
 
   it('should set ios via platformOverride', () => {
     let platform = new IonicPlatform();
-    let config = new IonicConfig();
-    config.setting('platform', 'ios');
-    platform.load(config);
+    platform.load('ios');
 
     expect(platform.is('android')).toEqual(false);
     expect(platform.is('ios')).toEqual(true);
@@ -36,9 +40,7 @@ export function run() {
 
   it('should set android via platformOverride', () => {
     let platform = new IonicPlatform();
-    let config = new IonicConfig();
-    config.setting('platform', 'android');
-    platform.load(config);
+    platform.load('android');
 
     expect(platform.is('android')).toEqual(true);
     expect(platform.is('ios')).toEqual(false);
@@ -46,9 +48,8 @@ export function run() {
 
   it('should set ios via querystring', () => {
     let platform = new IonicPlatform();
-    let config = new IonicConfig();
     platform.url('/?ionicplatform=ios');
-    platform.load(config);
+    platform.load();
 
     expect(platform.is('mobile')).toEqual(true);
     expect(platform.is('android')).toEqual(false);
@@ -58,10 +59,9 @@ export function run() {
 
   it('should set ios via querystring, even with android user agent', () => {
     let platform = new IonicPlatform();
-    let config = new IonicConfig();
     platform.url('/?ionicplatform=ios');
     platform.userAgent(ANDROID_UA);
-    platform.load(config);
+    platform.load();
 
     expect(platform.is('android')).toEqual(false);
     expect(platform.is('ios')).toEqual(true);
@@ -69,9 +69,8 @@ export function run() {
 
   it('should set android via querystring', () => {
     let platform = new IonicPlatform();
-    let config = new IonicConfig();
     platform.url('/?ionicplatform=android');
-    platform.load(config);
+    platform.load();
 
     expect(platform.is('android')).toEqual(true);
     expect(platform.is('ios')).toEqual(false);
@@ -79,10 +78,9 @@ export function run() {
 
   it('should set android via querystring, even with ios user agent', () => {
     let platform = new IonicPlatform();
-    let config = new IonicConfig();
     platform.url('/?ionicplatform=android');
     platform.userAgent(IPHONE_UA);
-    platform.load(config);
+    platform.load();
 
     expect(platform.is('android')).toEqual(true);
     expect(platform.is('ios')).toEqual(false);
@@ -90,9 +88,8 @@ export function run() {
 
   it('should set android via user agent', () => {
     let platform = new IonicPlatform();
-    let config = new IonicConfig();
     platform.userAgent(ANDROID_UA);
-    platform.load(config);
+    platform.load();
 
     expect(platform.is('mobile')).toEqual(true);
     expect(platform.is('android')).toEqual(true);
@@ -101,9 +98,8 @@ export function run() {
 
   it('should set iphone via user agent', () => {
     let platform = new IonicPlatform();
-    let config = new IonicConfig();
     platform.userAgent(IPHONE_UA);
-    platform.load(config);
+    platform.load();
 
     expect(platform.is('mobile')).toEqual(true);
     expect(platform.is('android')).toEqual(false);
@@ -114,9 +110,8 @@ export function run() {
 
   it('should set ipad via user agent', () => {
     let platform = new IonicPlatform();
-    let config = new IonicConfig();
     platform.userAgent(IPAD_UA);
-    platform.load(config);
+    platform.load();
 
     expect(platform.is('mobile')).toEqual(true);
     expect(platform.is('android')).toEqual(false);

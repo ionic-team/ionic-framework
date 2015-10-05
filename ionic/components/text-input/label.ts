@@ -26,7 +26,7 @@ export class Label {
    * @param {IonicConfig} config
    */
   constructor(config: IonicConfig) {
-    this.scrollAssist = config.setting('keyboardScrollAssist');
+    this.scrollAssist = config.get('keyboardScrollAssist');
   }
 
   /**

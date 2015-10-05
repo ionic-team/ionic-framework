@@ -11,7 +11,7 @@ class MyAppCmp {
     this.modal = modal;
 
     console.log('platforms', platform.platforms());
-    console.log('mode', config.setting('mode'));
+    console.log('mode', config.get('mode'));
 
     console.log('core', platform.is('core'))
     console.log('cordova', platform.is('cordova'))

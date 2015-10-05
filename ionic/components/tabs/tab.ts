@@ -7,14 +7,37 @@ import {Tabs} from './tabs';
 
 
 /**
- * @name ionTab
- * @requires ionTabs
- * @description
- * Contains a tab's content. The content only exists while the given tab is selected.
+ * Tab components are basic navigation controllers used with [Tabs]().  Much like
+ * [Nav](), they are a subclass of [NavController]() and are used to navigate to
+ * views and manipulate the navigation stack of a particular tab.
  *
- * @usage
+ * For basic Tabs usage, see the [Tabs section]() of the component docs.
+ *
+ * Like Nav, you must set a root view to be loaded initially for each Tab with
+ * the 'root' property:
+ * ```
+ * import {GettingStartedPage} from 'getting-started';
+ * @App({
+ *   template: `<ion-tabs>
+ *                <ion-tab [root]="tabOneRoot"></ion-tab>
+ *                <ion-tab [root]="tabTwoRoot"></ion-tab>
+ *              <ion-tabs>`
+ * })
+ * class MyApp {
+ *   constructor(){
+ *     this.tabOneRoot = GettingStartedPage;
+ *     this.tabTwoRoot = GettingStartedPage;
+ *   }
+ * }
+ * ```
+ *
+ * To change the title and icon for each tab, use the `tab-title` and `tab-icon`
+ * properties:
  * ```html
- * <ion-tab tab-title="Heart" tab-icon="ion-ios-heart-outline" [root]="root1"></ion-tab>
+ * <ion-tabs>
+ * 	 <ion-tab tab-title="Home" tab-icon="home" [root]="tabOneRoot"></ion-tab>
+ * 	 <ion-tab tab-title="Login" tab-icon="star" [root]="tabTwoRoot"></ion-tab>
+ * <ion-tabs>
  * ```
  */
 @Component({

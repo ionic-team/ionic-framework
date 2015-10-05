@@ -26,7 +26,7 @@ class IOSTransition extends Transition {
     this.enteringContent
       .to(TRANSLATEX, CENTER)
       .to(OPACITY, 1)
-      .before.setStyles({ zIndex: this.entering.index });
+      .before.setStyles({ zIndex: this.enteringZ });
 
     this.enteringTitle
       .fadeIn()
@@ -36,16 +36,16 @@ class IOSTransition extends Transition {
       .to(TRANSLATEX, CENTER);
 
     // leaving view moves off screen
-    this.leavingContent && this.leavingContent
+    this.leavingContent
       .from(TRANSLATEX, CENTER)
       .from(OPACITY, 1)
-      .before.setStyles({ zIndex: this.leaving.index });
+      .before.setStyles({ zIndex: this.leavingZ });
 
-    this.leavingTitle && this.leavingTitle
+    this.leavingTitle
       .from(TRANSLATEX, CENTER)
       .from(OPACITY, 1);
 
-    this.leavingNavbarBg && this.leavingNavbarBg
+    this.leavingNavbarBg
       .from(TRANSLATEX, CENTER);
 
     // set properties depending on direction
@@ -62,15 +62,15 @@ class IOSTransition extends Transition {
       this.enteringNavbarBg
         .from(TRANSLATEX, OFF_LEFT);
 
-      this.leavingContent && this.leavingContent
+      this.leavingContent
         .to(TRANSLATEX, '100%')
         .to(OPACITY, 1);
 
-      this.leavingTitle && this.leavingTitle
+      this.leavingTitle
         .to(TRANSLATEX, '100%')
         .to(OPACITY, 0);
 
-      this.leavingNavbarBg && this.leavingNavbarBg
+      this.leavingNavbarBg
         .to(TRANSLATEX, '100%');
 
       if (this.leaving && this.leaving.enableBack() && this.viewWidth() > 200) {
@@ -91,15 +91,15 @@ class IOSTransition extends Transition {
       this.enteringNavbarBg
         .from(TRANSLATEX, '99.5%');
 
-      this.leavingContent && this.leavingContent
+      this.leavingContent
         .to(TRANSLATEX, OFF_LEFT)
         .to(OPACITY, OFF_OPACITY);
 
-      this.leavingTitle && this.leavingTitle
+      this.leavingTitle
         .to(TRANSLATEX, OFF_LEFT)
         .to(OPACITY, 0);
 
-      this.leavingNavbarBg && this.leavingNavbarBg
+      this.leavingNavbarBg
         .to(TRANSLATEX, OFF_LEFT);
 
       if (this.entering.enableBack() && this.viewWidth() > 200) {

@@ -11,27 +11,48 @@ import * as dom from 'ionic/util/dom';
 
 
 /**
- * @name ionTabs
- * @description
- * Powers a multi-tabbed interface with a Tab Bar and a set of "pages"
- * that can be tabbed through.
+ * The Tabs component is a container with a [TabBar]() and any number of
+ * individual [Tab]() components. On iOS, the TabBar is placed on the bottom of
+ * the screen, while on Android it is at the top.
  *
- * Assign any tabs attribute to the element to define its look and feel.
+ * For basic Tabs usage, see the [Tabs section](../../../../components/#tabs) of the component docs.
+ * See the [Tab API reference](../Tab/) for more details on individual Tab components.
  *
- * For iOS, tabs will appear at the bottom of the screen. For Android, tabs
- * will be at the top of the screen, below the nav-bar. This follows each platform's
- * design specification, but can be configured with IonicConfig.
+ * You can override the platform specific TabBar placement by using the
+ * `tab-bar-placement` property:
  *
- * See the ionTab component's documentation for more details on individual tabs.
- *
- * @usage
- * ```html
- * <ion-tabs>
- *   <ion-tab tab-title="Heart" tab-icon="heart-" [root]="root1"></ion-tab>
- *   <ion-tab tab-title="Star" tab-icon="star" [root]="root2"></ion-tab>
- *   <ion-tab tab-title="Stopwatch" tab-icon="stopwatch" [root]="root3"></ion-tab>
+ * ```ts
+ * <ion-tabs tab-bar-placement="top">
+ *   <ion-tab [root]="tabRoot"></ion-tab>
  * </ion-tabs>
  * ```
+ *
+ * To change the location of the icons in the TabBar, use the `tab-bar-icons`
+ * property:
+ * ```ts
+ * <ion-tabs tab-bar-icons="bottom">
+ *   <ion-tab [root]="tabRoot"></ion-tab>
+ * </ion-tabs>
+ * ```
+ *
+ * You can select tabs programatically by injecting Tabs into any child
+ * component, and using the [select()](#select) method:
+ * ```ts
+ * @IonicView({
+ *   template: `<button (click)="goToTabTwo()">Go to Tab2</button>`
+ * })
+ * class TabOne {
+ *   constructor(tabs: Tabs){
+ *     this.tabs = tabs;
+ *   }
+ *
+ *   goToTabTwo() {
+ *     this.tabs.select(this.tabs.tabs[1]);
+ *   }
+ * }
+ * ```
+ * The [tabs](#tabs) property is an array of all child [Tab](../Tab/) components
+ * of this Tabs component.
  *
  */
 @IonicComponent({
@@ -111,6 +132,10 @@ export class Tabs extends NavController {
 
   }
 
+  /**
+   * @private
+   * TODO
+   */
   addTab(tab) {
     this.add(tab.viewCtrl);
 
@@ -162,6 +187,7 @@ export class Tabs extends NavController {
   }
 
   /**
+   * @private
    * "Touch" the active tab, either going back to the root view of the tab
    * or scrolling the tab to the top
    */
@@ -174,6 +200,10 @@ export class Tabs extends NavController {
     }
   }
 
+  /**
+   * TODO
+   * @return TODO
+   */
   get tabs() {
     return this.instances();
   }
@@ -181,6 +211,7 @@ export class Tabs extends NavController {
 }
 
 /**
+ * @private
  * TODO
  */
 @Directive({
@@ -202,7 +233,7 @@ class TabButton extends Ion {
     super(elementRef, config);
     this.tabs = tabs;
 
-    if (config.setting('hoverCSS') === false) {
+    if (config.get('hoverCSS') === false) {
       elementRef.nativeElement.classList.add('disable-hover');
     }
   }
@@ -226,13 +257,16 @@ class TabButton extends Ion {
   }
 }
 
-
+/**
+ * @private
+ * TODO
+ */
 @Directive({
   selector: 'tab-highlight'
 })
 class TabHighlight {
   constructor(@Host() tabs: Tabs, config: IonicConfig, elementRef: ElementRef) {
-    if (config.setting('mode') === 'md') {
+    if (config.get('mode') === 'md') {
       tabs.highlight = this;
       this.elementRef = elementRef;
     }
@@ -256,6 +290,10 @@ class TabHighlight {
 }
 
 
+/**
+ * @private
+ * TODO
+ */
 @Directive({selector: 'template[navbar-anchor]'})
 class TabNavBarAnchor {
   constructor(

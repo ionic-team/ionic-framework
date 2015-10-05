@@ -130,7 +130,7 @@ export class Switch extends Ion {
     self.id = IonInput.nextId();
     self.tabIndex = 0;
     self.lastTouch = 0;
-    self.mode = config.setting('mode');
+    self.mode = config.get('mode');
 
     self.onChange = (_) => {};
     self.onTouched = (_) => {};

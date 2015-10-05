@@ -2,9 +2,206 @@ import {IonicConfig, IonicPlatform} from 'ionic/ionic';
 
 export function run() {
 
+  it('should get ios mode for core platform', () => {
+    let config = new IonicConfig();
+    let platform = new IonicPlatform(['core']);
+    config.setPlatform(platform);
+
+    expect(config.get('mode')).toEqual('ios');
+  });
+
+  it('should get ios mode for ipad platform', () => {
+    let config = new IonicConfig();
+    let platform = new IonicPlatform(['mobile', 'ios', 'ipad', 'tablet']);
+    config.setPlatform(platform);
+
+    expect(config.get('mode')).toEqual('ios');
+  });
+
+  it('should get md mode for windowsphone platform', () => {
+    let config = new IonicConfig();
+    let platform = new IonicPlatform(['mobile', 'windowsphone']);
+    config.setPlatform(platform);
+
+    expect(config.get('mode')).toEqual('md');
+  });
+
+  it('should get md mode for android platform', () => {
+    let config = new IonicConfig();
+    let platform = new IonicPlatform(['mobile', 'android']);
+    config.setPlatform(platform);
+
+    expect(config.get('mode')).toEqual('md');
+  });
+
+  it('should override ios mode config with user platform setting', () => {
+    let config = new IonicConfig({
+      tabBarPlacement: 'hide',
+      platforms: {
+        ios: {
+          tabBarPlacement: 'top'
+        }
+      }
+    });
+    let platform = new IonicPlatform(['ios']);
+    config.setPlatform(platform);
+
+    expect(config.get('tabBarPlacement')).toEqual('top');
+  });
+
+  it('should override ios mode config with user setting', () => {
+    let config = new IonicConfig({
+      tabBarPlacement: 'top'
+    });
+    let platform = new IonicPlatform(['ios']);
+    config.setPlatform(platform);
+
+    expect(config.get('tabBarPlacement')).toEqual('top');
+  });
+
+  it('should get setting from md mode', () => {
+    let config = new IonicConfig();
+    let platform = new IonicPlatform(['android']);
+    config.setPlatform(platform);
+
+    expect(config.get('tabBarPlacement')).toEqual('top');
+  });
+
+  it('should get setting from ios mode', () => {
+    let config = new IonicConfig();
+    let platform = new IonicPlatform(['ios']);
+    config.setPlatform(platform);
+
+    expect(config.get('tabBarPlacement')).toEqual('bottom');
+  });
+
+  it('should set/get platform setting from set()', () => {
+    let config = new IonicConfig();
+    let platform = new IonicPlatform(['ios']);
+    config.setPlatform(platform);
+
+    config.set('tabBarPlacement', 'bottom');
+    config.set('ios', 'tabBarPlacement', 'top');
+
+    expect(config.get('tabBarPlacement')).toEqual('top');
+  });
+
+  it('should set/get setting from set()', () => {
+    let config = new IonicConfig();
+    let platform = new IonicPlatform(['ios']);
+    config.setPlatform(platform);
+
+    config.set('tabBarPlacement', 'top');
+
+    expect(config.get('tabBarPlacement')).toEqual('top');
+  });
+
+  it('should set ios platform settings from settings()', () => {
+    let config = new IonicConfig();
+    let platform = new IonicPlatform(['ios']);
+    config.setPlatform(platform);
+
+    config.settings('ios', {
+      key: 'iosValue'
+    });
+
+    expect(config.get('key')).toEqual('iosValue');
+  });
+
+  it('should set/get mobile setting even w/ higher priority ios', () => {
+    let config = new IonicConfig();
+    let platform = new IonicPlatform(['mobile', 'ios']);
+    config.setPlatform(platform);
+
+    config.settings({
+      key: 'defaultValue',
+      platforms: {
+        mobile: {
+          key: 'mobileValue'
+        }
+      }
+    });
+
+    expect(config.get('key')).toEqual('mobileValue');
+  });
+
+  it('should set/get mobile setting even w/ higher priority ios', () => {
+    let config = new IonicConfig();
+    let platform = new IonicPlatform(['mobile', 'ios']);
+    config.setPlatform(platform);
+
+    config.settings({
+      key: 'defaultValue',
+      platforms: {
+        mobile: {
+          key: 'mobileValue'
+        }
+      }
+    });
+
+    expect(config.get('key')).toEqual('mobileValue');
+  });
+
+  it('should set/get android setting w/ higher priority than mobile', () => {
+    let config = new IonicConfig();
+    let platform = new IonicPlatform(['mobile', 'android']);
+    config.setPlatform(platform);
+
+    config.settings({
+      key: 'defaultValue',
+      platforms: {
+        mobile: {
+          key: 'mobileValue'
+        },
+        android: {
+          key: 'androidValue'
+        }
+      }
+    });
+
+    expect(config.get('key')).toEqual('androidValue');
+  });
+
+  it('should set/get ios setting w/ platforms set', () => {
+    let config = new IonicConfig();
+    let platform = new IonicPlatform(['ios']);
+    config.setPlatform(platform);
+
+    config.settings({
+      key: 'defaultValue',
+      platforms: {
+        ios: {
+          key: 'iosValue'
+        },
+        android: {
+          key: 'androidValue'
+        }
+      }
+    });
+
+    expect(config.get('key')).toEqual('iosValue');
+  });
+
+  it('should set/get default setting w/ platforms set, but no platform match', () => {
+    let config = new IonicConfig();
+    config.settings({
+      key: 'defaultValue',
+      platforms: {
+        ios: {
+          key: 'iosValue'
+        },
+        android: {
+          key: 'androidValue'
+        }
+      }
+    });
+
+    expect(config.get('key')).toEqual('defaultValue');
+  });
+
   it('should set setting object', () => {
     let config = new IonicConfig();
-    config.setting({
+    config.settings({
       name: 'Doc Brown',
       occupation: 'Weather Man'
     });
@@ -26,8 +223,8 @@ export function run() {
 
   it('should set/get single setting', () => {
     let config = new IonicConfig();
-    config.setting('name', 'Doc Brown');
-    config.setting('occupation', 'Weather Man');
+    config.set('name', 'Doc Brown');
+    config.set('occupation', 'Weather Man');
 
     expect(config.get('name')).toEqual('Doc Brown');
     expect(config.get('name')).toEqual('Doc Brown');
@@ -50,7 +247,7 @@ export function run() {
       occupation: 'Weather Man'
     });
 
-    expect(config.setting()).toEqual({
+    expect(config.settings()).toEqual({
       name: 'Doc Brown',
       occupation: 'Weather Man'
     });

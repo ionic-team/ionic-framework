@@ -74,8 +74,8 @@ export class Popup extends Overlay {
     return new Promise((resolve, reject)=> {
       let config = this.config;
       let defaults = {
-        enterAnimation: config.setting('popupPopIn'),
-        leaveAnimation: config.setting('popupPopOut'),
+        enterAnimation: config.get('popupPopIn'),
+        leaveAnimation: config.get('popupPopOut'),
       };
 
       opts.promiseResolve = resolve;

@@ -17,7 +17,7 @@ export class Button {
   ) {
     let element = elementRef.nativeElement;
 
-    if (config.setting('hoverCSS') === false) {
+    if (config.get('hoverCSS') === false) {
       element.classList.add('disable-hover');
     }
 
