@@ -1,0 +1,13 @@
+<!-- <ion-toolbar>
+  <form [ng-form-model]="toolbarForm">
+    <ion-search-bar ng-control="toolbarSearchQuery"></ion-search-bar>
+  </form>
+</ion-toolbar> -->
+<ion-content>
+  <form [ng-form-model]="form">
+    <label> Default Search </label>
+    <ion-search-bar ng-control="searchQuery"></ion-search-bar>
+    <label> Placeholder Search </label>
+    <ion-search-bar ng-control="searchQuery" placeholder="Filter"></ion-search-bar>
+  </form>
+</ion-content>
