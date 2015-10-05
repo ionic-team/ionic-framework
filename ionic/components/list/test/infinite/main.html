@@ -1,15 +1,10 @@
+<ion-content padding #content>
 
-<ion-view nav-title="List">
+  <ion-list inset virtual [items]="items" [content]="content">
+    <ion-item *cell #item>
+      {{item.title}}
+    </ion-item>
+  </ion-list>
+  <f style="height: 15000px; width: 100%; background-color: green"></f>
 
-  <ion-content padding #content>
-
-    <ion-list inset virtual [items]="items" [content]="content">
-      <ion-item *cell #item>
-        {{item.title}}
-      </ion-item>
-    </ion-list>
-    <f style="height: 15000px; width: 100%; background-color: green"></f>
-
-  </ion-content>
-
-</ion-view>
+</ion-content>

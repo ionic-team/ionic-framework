@@ -68,6 +68,7 @@ export const IONIC_DIRECTIVES = [
   forwardRef(() => Icon),
 
   // Forms
+  forwardRef(() => SearchBar),
   forwardRef(() => Segment),
   forwardRef(() => SegmentButton),
   forwardRef(() => SegmentControlValueAccessor),
