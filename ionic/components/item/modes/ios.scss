@@ -78,7 +78,7 @@ $item-ios-divider-padding:            5px 15px !default;
     }
   }
 
-  ion-header + .item:before {
+  ion-header + .item:first-of-type:before {
     left: 0;
   }
 
