@@ -2,15 +2,12 @@
 // Search Bar
 // --------------------------------------------------
 
-$search-bar-min-height:         44px !default;
-
 
 .search-bar {
   position: relative;
   display: flex;
   align-items: center;
   width: 100%;
-  min-height: $search-bar-min-height;
 }
 
 .search-bar-icon {
