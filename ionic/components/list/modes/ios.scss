@@ -24,14 +24,30 @@ $list-ios-header-color:               #333 !default;
   margin: 0 $list-ios-margin-right $list-ios-margin-bottom $list-ios-margin-left;
 
   ion-header {
+    position: relative;
     padding: $list-ios-header-padding;
     font-size: $list-ios-header-font-size;
     font-weight: $list-ios-header-font-weight;
     letter-spacing: $list-ios-header-letter-spacing;
     text-transform: uppercase;
     color: $list-ios-header-color;
+
+    &:after {
+      position: absolute;
+      z-index: 1;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      border-top: 1px solid $item-ios-border-color;
+      content: '';
+      pointer-events: none;
+    }
   }
 
+}
+
+&.hairlines .list ion-header:after {
+  border-top-width: 0.55px;
 }
 
 .list + .list {
