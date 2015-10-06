@@ -6,24 +6,8 @@ import * as dom from '../../util/dom';
 
 
 /**
- * @name IonicApp
- * @description
- * Service exposing the Ionic app level API.
- *
- * @usage
- * ```js
- *  @App({
- *    templateUrl: '/app/app.html',
- *  })
- *  class MyApp {
- *
- *    constructor(app: IonicApp) {
- *      this.app = app;
- *    }
- *  }
- *  ```
- * Note: Ionic sets `ion-app` as the selector for the app. Setting a custom selector will override this and cause CSS problems.
- *
+ * Component registry service.  For more information on registering
+ * components see the [IdRef API reference](../id/IdRef/).
  */
 export class IonicApp {
 
