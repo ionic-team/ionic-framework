@@ -28,6 +28,9 @@ import {IonicComponent, IonicView} from '../../config/decorators';
     'placeholder': 'Search',
     'cancelAction': function() {
       console.log('Default Cancel');
+      this.isFocused = false;
+      this.shouldLeftAlign = this.value.trim() != '';
+      // TODO input blur      
     }
   }
 })
