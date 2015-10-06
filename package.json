@@ -11,10 +11,10 @@
     "link": "npm install && gulp src && npm link"
   },
   "dependencies": {
-    "angular2": "2.0.0-alpha.38",
+    "angular2": "2.0.0-alpha.39",
     "@reactivex/rxjs": "0.0.0-prealpha.3",
     "reflect-metadata": "0.1.1",
-    "zone.js": "0.5.7"
+    "zone.js": "0.5.8"
   },
   "devDependencies": {
     "canonical-path": "0.0.2",
