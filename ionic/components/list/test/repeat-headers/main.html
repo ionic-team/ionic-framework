@@ -1,0 +1,16 @@
+<ion-toolbar><ion-title>List Headers Borders</ion-title></ion-toolbar>
+
+<ion-content>
+  
+  <ion-list class="outer-content" *ng-for="#person of people">
+    <ion-header>
+      {{person.name}}
+    </ion-header>
+    <ion-item *ng-for="#component of person.components">
+      <span>{{component}}</span>
+      <div item-right>
+        <icon pin></icon>
+      </div>
+    </ion-item>
+  </ion-list>
+</ion-content>
