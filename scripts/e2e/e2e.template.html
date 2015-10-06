@@ -17,9 +17,19 @@
     stylesheet.setAttribute('rel', 'stylesheet');
     stylesheet.setAttribute('href', '../../../css/' + theme);
     document.getElementsByTagName('head')[0].appendChild(stylesheet);
+
+    if (location.href.indexOf('snapshot=true') > -1) {
+      document.documentElement.classList.add('snapshot');
+    } else {
+      document.documentElement.classList.remove('snapshot');
+    }
   </script>
 
   <style>
+    .snapshot body {
+      max-height: 700px;
+    }
+
     /* hack to create tall scrollable areas for testing using <f></f> */
     f {
       display: block;
