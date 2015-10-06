@@ -66,7 +66,7 @@ import * as dom from 'ionic/util/dom';
     'tabBarIcons': 'top'
   }
 })
-@IonicView({
+@View({
   template: '' +
     '<section class="navbar-container">' +
       '<template navbar-anchor></template>' +

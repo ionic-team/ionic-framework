@@ -1,9 +1,9 @@
-import {ElementRef, Pipe, NgControl, Renderer} from 'angular2/angular2';
+import {ElementRef, Pipe, NgControl, Renderer, View} from 'angular2/angular2';
 //import {ControlGroup} from 'angular2/forms'
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
-import {IonicComponent, IonicView} from '../../config/decorators';
+import {IonicComponent} from '../../config/decorators';
 
 /**
  * TODO
@@ -20,7 +20,7 @@ import {IonicComponent, IonicView} from '../../config/decorators';
     'placeholder': 'Search'
   }
 })
-@IonicView({
+@View({
   template: `
   <div class="search-bar-input-container" [class.left-align]="shouldLeftAlign">
     <div class="search-bar-search-icon"></div>

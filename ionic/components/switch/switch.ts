@@ -13,7 +13,7 @@ import {
 import {Ion} from '../ion';
 import {IonInput} from '../form/input';
 import {IonicConfig} from '../../config/config';
-import {IonicComponent, IonicView} from '../../config/decorators';
+import {IonicComponent} from '../../config/decorators';
 import {pointerCoord} from '../../util/dom';
 
 /**
@@ -99,7 +99,7 @@ class MediaSwitch {
     '(mouseup)': 'pointerUp($event)'
   }
 })
-@IonicView({
+@View({
   template:
   '<ng-content select="[item-left]"></ng-content>' +
   '<ion-item-content id="{{labelId}}">' +

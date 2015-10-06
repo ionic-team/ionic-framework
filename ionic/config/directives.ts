@@ -1,24 +1,35 @@
 import {CORE_DIRECTIVES, FORM_DIRECTIVES, forwardRef} from 'angular2/angular2'
 
-import {
-  OverlayAnchor,
-  Menu, MenuToggle, MenuClose,
-  Button, Content, Scroll, Refresher,
-  Slides, Slide, SlideLazy,
-  Tabs, Tab,
-  Card, List, ListHeader, Item, ItemGroup, ItemGroupTitle,
-  Toolbar, ToolbarTitle, ToolbarItem,
-  Icon,
-  Checkbox, Switch,
-  TextInput, TextInputElement, Label,
-  Segment, SegmentButton, SegmentControlValueAccessor,
-  RadioGroup, RadioButton, SearchBar,
-  Nav, NavbarTemplate, Navbar,
-  NavPush, NavPop, NavRouter,
-  IdRef,
-  ShowWhen, HideWhen
-} from '../ionic';
-
+import {OverlayAnchor} from '../components/overlay/overlay';
+import {Menu} from '../components/menu/menu';
+import {MenuToggle} from '../components/menu/menu-toggle';
+import {MenuClose} from '../components/menu/menu-close';
+import {Button} from '../components/button/button';
+import {Content} from '../components/content/content';
+import {Scroll} from '../components/scroll/scroll';
+import {Refresher} from '../components/scroll/pull-to-refresh';
+import {Slides, Slide, SlideLazy} from '../components/slides/slides';
+import {Tabs} from '../components/tabs/tabs';
+import {Tab} from '../components/tabs/tab';
+import {Card} from '../components/card/card';
+import {List, ListHeader} from '../components/list/list';
+import {Item} from '../components/item/item';
+import {ItemGroup, ItemGroupTitle} from '../components/item/item-group';
+import {Toolbar, ToolbarTitle, ToolbarItem} from '../components/toolbar/toolbar';
+import {Icon} from '../components/icon/icon';
+import {Checkbox} from '../components/checkbox/checkbox';
+import {Switch} from '../components/switch/switch';
+import {TextInput, TextInputElement} from '../components/text-input/text-input';
+import {Label} from '../components/text-input/label';
+import {Segment, SegmentButton, SegmentControlValueAccessor} from '../components/segment/segment';
+import {RadioGroup, RadioButton} from '../components/radio/radio';
+import {SearchBar} from '../components/search-bar/search-bar';
+import {Nav} from '../components/nav/nav';
+import {NavPush, NavPop} from '../components/nav/nav-push';
+import {NavRouter} from '../components/nav/nav-router';
+import {NavbarTemplate, Navbar} from '../components/nav-bar/nav-bar';
+import {IdRef} from '../components/app/id';
+import {ShowWhen, HideWhen} from '../components/show-hide-when/show-hide-when';
 
 /**
  * The core Ionic directives.  Automatically available in every
@@ -30,63 +41,63 @@ export const IONIC_DIRECTIVES = [
   FORM_DIRECTIVES,
 
   // Content
-  forwardRef(() => OverlayAnchor),
-  forwardRef(() => Menu),
-  forwardRef(() => MenuToggle),
-  forwardRef(() => MenuClose),
+  OverlayAnchor,
+  Menu,
+  MenuToggle,
+  MenuClose,
 
-  forwardRef(() => Button),
-  forwardRef(() => Content),
-  forwardRef(() => Scroll),
-  forwardRef(() => Refresher),
+  Button,
+  Content,
+  Scroll,
+  Refresher,
 
   // Lists
-  forwardRef(() => Card),
-  forwardRef(() => List),
-  forwardRef(() => ListHeader),
-  forwardRef(() => Item),
-  forwardRef(() => ItemGroup),
-  forwardRef(() => ItemGroupTitle),
+  Card,
+  List,
+  ListHeader,
+  Item,
+  ItemGroup,
+  ItemGroupTitle,
 
   // Slides
-  forwardRef(() => Slides),
-  forwardRef(() => Slide),
-  forwardRef(() => SlideLazy),
+  Slides,
+  Slide,
+  SlideLazy,
 
   // Tabs
-  forwardRef(() => Tabs),
-  forwardRef(() => Tab),
+  Tabs,
+  Tab,
 
   // Toolbar
-  forwardRef(() => Toolbar),
-  forwardRef(() => ToolbarTitle),
-  forwardRef(() => ToolbarItem),
+  Toolbar,
+  ToolbarTitle,
+  ToolbarItem,
 
   // Media
-  forwardRef(() => Icon),
+  Icon,
 
   // Forms
-  forwardRef(() => Segment),
-  forwardRef(() => SegmentButton),
-  forwardRef(() => SegmentControlValueAccessor),
-  forwardRef(() => Checkbox),
-  forwardRef(() => RadioGroup),
-  forwardRef(() => RadioButton),
-  forwardRef(() => Switch),
-  forwardRef(() => TextInput),
-  forwardRef(() => TextInputElement),
-  forwardRef(() => Label),
+  Segment,
+  SegmentButton,
+  SegmentControlValueAccessor,
+  Checkbox,
+  RadioGroup,
+  RadioButton,
+  Switch,
+  TextInput,
+  TextInputElement,
+  Label,
 
   // Nav
-  forwardRef(() => Nav),
-  forwardRef(() => NavbarTemplate),
-  forwardRef(() => Navbar),
+  Nav,
+  NavbarTemplate,
+  Navbar,
 
-  forwardRef(() => NavPush),
-  forwardRef(() => NavPop),
-  forwardRef(() => NavRouter),
-  forwardRef(() => IdRef),
+  NavPush,
+  NavPop,
+  NavRouter,
+  IdRef,
 
-  forwardRef(() => ShowWhen),
-  forwardRef(() => HideWhen)
+  ShowWhen,
+  HideWhen
 ];

@@ -1,6 +1,6 @@
-import {ElementRef, Host, Optional, NgControl, Query, QueryList} from 'angular2/angular2';
+import {ElementRef, Host, Optional, NgControl, Query, QueryList, View} from 'angular2/angular2';
 
-import {IonicDirective, IonicComponent, IonicView} from '../../config/decorators';
+import {IonicDirective, IonicComponent} from '../../config/decorators';
 import {IonicConfig} from '../../config/config';
 import {Ion} from '../ion';
 import {ListHeader} from '../list/list';
@@ -182,7 +182,7 @@ export class RadioGroup extends Ion {
     '(click)': 'click($event)'
   }
 })
-@IonicView({
+@View({
   template:
   '<ion-item-content id="{{labelId}}">' +
     '<ng-content></ng-content>' +

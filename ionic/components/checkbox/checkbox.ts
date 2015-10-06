@@ -9,7 +9,7 @@ import {
 import {Ion} from '../ion';
 import {IonInput} from '../form/input';
 import {IonicConfig} from '../../config/config';
-import {IonicComponent, IonicView} from '../../config/decorators';
+import {IonicComponent} from '../../config/decorators';
 
 /**
  * The checkbox is no different than the HTML checkbox input, except it's styled differently
@@ -42,7 +42,7 @@ import {IonicComponent, IonicView} from '../../config/decorators';
     '(click)': 'click($event)'
   }
 })
-@IonicView({
+@View({
   template:
   '<media-checkbox disable-activated>' +
     '<checkbox-icon></checkbox-icon>' +
