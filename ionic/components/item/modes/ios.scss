@@ -20,7 +20,7 @@ $item-ios-padding-icon-bottom:         10px !default;
 $item-ios-avatar-size:                 3.6rem !default;
 $item-ios-thumbnail-size:              5.6rem !default;
 $item-ios-note-color:                  darken($item-ios-border-color, 10%) !default;
-$item-ios-forward-icon-color:          $item-ios-border-color !default;
+$item-ios-detail-push-color:          $item-ios-border-color !default;
 
 $item-ios-divider-bg:                 #f5f5f5 !default;
 $item-ios-divider-color:              #222 !default;
@@ -174,10 +174,10 @@ button.item {
 
 .list,
 .card {
-  button[ion-item]:not([no-forward-icon]),
-  a[ion-item]:not([no-forward-icon]),
-  [forward-icon] {
-    @include ios-icon-forward($item-ios-forward-icon-color);
+  button[ion-item]:not([detail-none]),
+  a[ion-item]:not([detail-push]),
+  [detail-push] {
+    @include ios-detail-push-icon($item-ios-detail-push-color);
     background-repeat: no-repeat;
     background-position: right ($item-ios-padding-right - 2) center;
     background-size: 14px 14px;
