@@ -46,6 +46,10 @@ $list-ios-header-color:               #333 !default;
 
 }
 
+&.hairlines .list ion-header:after {
+  border-top-width: 0.55px;
+}
+
 .list + .list {
   margin-top: $list-ios-margin-top + $list-ios-margin-bottom;
 }
