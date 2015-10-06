@@ -1,16 +1,16 @@
+import {FORM_DIRECTIVES, FormBuilder, Validators, Control, ControlGroup} from 'angular2/forms';
 import {App, IonicApp, ActionSheet, NavController, NavParams} from 'ionic/ionic';
 import {Modal, IonicView, IonicConfig, Events, Animation} from 'ionic/ionic';
 import {NavigationDetailsPage} from 'navigation';
+
 import {TabsPage} from 'tabs';
 import {DemoModal} from 'modal';
-
 import * as helpers from 'helpers';
 
 
-
-
 @IonicView({
-  templateUrl: 'main.html'
+  templateUrl: 'main.html',
+  bindings: [FormBuilder]
 })
 export class MainPage {
 
@@ -29,6 +29,10 @@ export class MainPage {
     this.actionSheet = actionSheet;
     this.navDetailsPage = NavigationDetailsPage;
     this.demoModal = DemoModal;
+    this.form = new ControlGroup({
+      firstName: new Control("", Validators.required),
+      lastName: new Control("", Validators.required)
+    });
 
     if (params.data.location) { this.component.title = params.data.location; }
     else if (window.location.hash) { this.component.title = window.location.hash; }
@@ -98,6 +102,14 @@ export class MainPage {
     });
   }
 
+  // **************************
+  // Form
+  // **************************
+  processForm(event) {
+    // TODO: display input in a popup
+    console.log(event);
+  }
+
 }
 
 class FadeIn extends Animation {
@@ -126,7 +138,7 @@ Animation.register('my-fade-out', FadeOut);
 
 
 @App({
-  template: '<ion-nav [root]="rootPage"></ion-nav>'  
+  template: '<ion-nav [root]="rootPage"></ion-nav>'
 })
 class DemoApp {
 

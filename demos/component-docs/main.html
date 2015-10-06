@@ -412,6 +412,19 @@
   </section>
 
   <section id="forms" [ng-class]="{hidden: component.title !== 'Forms' }">
+    <form (submit)="processForm($event)" [ng-form-model]="form">
+        <ion-list>
+        <ion-input>
+          <input ng-control="firstName" type="text" placeholder="First Name">
+        </ion-input>
+        <ion-input>
+          <input ng-control="lastName" type="text" placeholder="Last Name">
+        </ion-input>
+      </ion-list>
+      <div class="padding">
+        <button block type="submit">Create Account</button>
+      </div>
+    </form>
   </section>
 
 </ion-content>
