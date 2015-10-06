@@ -7,7 +7,7 @@
 <ion-content class="has-header components-demo">
 
   <section id="action-sheet" [ng-class]="{hidden: component.title !== 'Action Sheets' }" class="section-padding">
-    <button class="button" (click)="openMenu()">
+    <button block (click)="openMenu()">
       Show Actionsheet
     </button>
   </section>
@@ -101,7 +101,7 @@
 
   </section>
 
-  <section id="outline-buttons" [ng-class]="{hidden: component.title !== 'Outline Buttons' }">
+  <section id="outline-buttons" [ng-class]="{hidden: component.title !== 'Outline Buttons' }" class="section-padding">
 
     <p>
       <button outline>Default</button>
@@ -121,6 +121,54 @@
 
     <p>
       <button dark outline>Dark</button>
+    </p>
+
+  </section>
+
+  <section id="outline-buttons" [ng-class]="{hidden: component.title !== 'Outline Buttons' }" class="section-padding">
+
+    <p>
+      <button outline>Default</button>
+    </p>
+
+    <p>
+      <button secondary outline>Secondary</button>
+    </p>
+
+    <p>
+      <button danger outline>Danger</button>
+    </p>
+
+    <p>
+      <button light outline>Light</button>
+    </p>
+
+    <p>
+      <button dark outline>Dark</button>
+    </p>
+
+  </section>
+
+  <section id="button-sizes" [ng-class]="{hidden: component.title !== 'Button Sizes' }" class="section-padding">
+
+    <p>
+      <button small>Default</button>
+    </p>
+
+    <p>
+      <button secondary small>Secondary</button>
+    </p>
+
+    <p>
+      <button danger small>Danger</button>
+    </p>
+
+    <p>
+      <button light large>Light</button>
+    </p>
+
+    <p>
+      <button dark large>Dark</button>
     </p>
 
   </section>
