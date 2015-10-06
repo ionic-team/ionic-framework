@@ -5,9 +5,13 @@
 </ion-toolbar> -->
 <ion-content>
   <form [ng-form-model]="form">
-    <label> Default Search </label>
+    <label> Search - Default </label>
     <ion-search-bar ng-control="searchQuery" class="e2eFloatingSearchBar"></ion-search-bar>
-    <label> Placeholder Search </label>
+    <label> Search - Custom Placeholder </label>
     <ion-search-bar ng-control="searchQuery" placeholder="Filter"></ion-search-bar>
+    <label> Search - Cancel Button </label>
+    <ion-search-bar ng-control="searchQuery" show-cancel="true"></ion-search-bar>
+    <label> Search - Custom Cancel Button </label>
+    <ion-search-bar ng-control="searchQuery" show-cancel="true" cancel-text="Done"></ion-search-bar>
   </form>
 </ion-content>

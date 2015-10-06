@@ -23,6 +23,7 @@ import {IonicComponent, IonicView} from '../../config/decorators';
     'query'
   ],
   defaultProperties: {
+    'showCancel': false,
     'cancelText': 'Cancel',
     'placeholder': 'Search'
   }
@@ -35,7 +36,7 @@ import {IonicComponent, IonicView} from '../../config/decorators';
     (input)="inputChanged($event)" class="search-bar-input" type="search" [attr.placeholder]="placeholder">
     <div class="search-bar-close-icon"></div>
   </div>
-  <button class="search-bar-cancel">{{cancelText}}</button>`
+  <button *ng-if="showCancel" class="search-bar-cancel" [class.left-align]="shouldLeftAlign">{{cancelText}}</button>`
 })
 export class SearchBar extends Ion {
   /**

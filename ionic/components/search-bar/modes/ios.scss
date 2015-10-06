@@ -33,15 +33,15 @@ $search-bar-ios-input-close-icon-size:    17px !default;
   width: $search-bar-ios-input-search-icon-size + 1;
   height: $search-bar-ios-input-search-icon-size + 1;
 
-  @include calc(margin-left, "50% - 60px");
-  transition: $search-bar-ios-input-transition;
-
   @include svg-background-image($search-bar-ios-input-search-icon-svg);
   background-size: $search-bar-ios-input-search-icon-size;
   background-repeat: no-repeat;
   position: absolute;
   left: 10px;
   top: 8px;
+
+  @include calc(margin-left, "50% - 60px");
+  transition: $search-bar-ios-input-transition;
 }
 
 .search-bar-input {
@@ -57,13 +57,12 @@ $search-bar-ios-input-close-icon-size:    17px !default;
   background-repeat: no-repeat;
   background-position: 8px center;
 
-  transition: $search-bar-ios-input-transition;
-
   &::placeholder {
     color: $search-bar-ios-input-placeholder-color;
   }
 
   @include calc(padding-left, "50% - 28px");
+  transition: $search-bar-ios-input-transition;
 }
 
 .search-bar-close-icon {
@@ -87,6 +86,14 @@ $search-bar-ios-input-close-icon-size:    17px !default;
     padding-left: 28px;
     transition: $search-bar-ios-input-transition;
   }
+}
+
+.search-bar-cancel.left-align {
+  @extend button[clear];
+  display: block;
+  padding-left: 8px;
+  padding-right: 0;
+  min-height: 0;
 }
 
 &.hairlines .search-bar {
