@@ -354,8 +354,12 @@
     <section id="menus" [ng-class]="{hidden:component.title !== 'Menus' }">
    TODO
   </section>
-    <section id="modals" [ng-class]="{hidden: component.title !== 'Modals' }">
-   TODO
+
+  <section id="modals" [ng-class]="{hidden: component.title !== 'Modals' }" class="section-padding">
+   <button block (click)="openModal()">
+    Show Modal
+  </button>
+
   </section>
 
   <section id="navigation" [ng-class]="{hidden: component.title !== 'Navigation' }">

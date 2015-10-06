@@ -1,20 +1,13 @@
 import {App, IonicApp, ActionSheet, NavController, NavParams} from 'ionic/ionic';
-import {Modal, IonicView, IonicConfig, Events} from 'ionic/ionic';
+import {Modal, IonicView, IonicConfig, Events, Animation} from 'ionic/ionic';
 import {NgZone} from 'angular2/angular2';
 import {NavigationDetailsPage} from 'navigation';
 import {TabsPage} from 'tabs';
+import {DemoModal} from 'modal';
 
 import * as helpers from 'helpers';
 
 
-@IonicView({
-  template: '<div>My Modal</div>'
-})
-class DemoModal extends Modal {
-  constructor() {
-    super();
-  }
-}
 
 
 @IonicView({
@@ -37,6 +30,7 @@ export class MainPage {
     this.modal = modal;
     this.actionSheet = actionSheet;
     this.navDetailsPage = NavigationDetailsPage;
+    this.demoModal = DemoModal;
 
     if (params.data.location) { this.component.title = params.data.location; }
     else if (window.location.hash) { this.component.title = window.location.hash; }
@@ -99,14 +93,39 @@ export class MainPage {
   // Modal
   // **************************
   openModal() {
-    this.modal.open(DemoModal, {
+    this.modal.open(this.demoModal, {
+      handle: 'my-awesome-modal',
       enterAnimation: 'my-fade-in',
-      leaveAnimation: 'my-fade-out',
-      handle: 'my-awesome-modal'
+      leaveAnimation: 'my-fade-out'
     });
   }
 
 }
+
+class FadeIn extends Animation {
+  constructor(element) {
+    super(element);
+    this
+      .easing('ease')
+      .duration(450)
+      .fadeIn();
+  }
+}
+
+Animation.register('my-fade-in', FadeIn);
+
+class FadeOut extends Animation {
+  constructor(element) {
+    super(element);
+    this
+      .easing('ease')
+      .duration(250)
+      .fadeOut();
+  }
+}
+
+Animation.register('my-fade-out', FadeOut);
+
 
 @App({
   template: '<ion-nav [root]="rootPage"></ion-nav>'  
