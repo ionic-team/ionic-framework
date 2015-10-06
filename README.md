@@ -45,6 +45,15 @@ Ionic 2 is based on the new [2.x version of AngularJS](https://angular.io/), and
 3. Go to [http://localhost:8000/e2e/](http://localhost:8000/e2e/)
 4. Stay cool
 
+### Running Snapshot
+
+1. Install [Protractor](https://angular.github.io/protractor/#/): `npm install -g protractor`
+2. Export `IONIC_SNAPSHOT_KEY` (get from someone)
+3. Run `gulp snapshot`
+
+### Running Tests
+
+1. `gulp karma`
 
 ### Distribution
 
