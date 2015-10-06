@@ -12,7 +12,8 @@ $search-bar-ios-input-search-icon-svg:    "<svg xmlns='http://www.w3.org/2000/sv
 $search-bar-ios-input-search-icon-size:   13px !default;
 
 $search-bar-ios-input-height:             28px !default;
-$search-bar-ios-input-text-color:         #9D9D9D !default;
+$search-bar-ios-input-placeholder-color:  #9D9D9D !default;
+$search-bar-ios-input-text-color:         #000 !default;
 $search-bar-ios-input-background-color:   #FFFFFF !default;
 $search-bar-ios-input-transition:         all 0.3s cubic-bezier(.25, .45, .05, 1) !default;
 
@@ -29,10 +30,10 @@ $search-bar-ios-input-close-icon-size:    17px !default;
 }
 
 .search-bar-search-icon {
-  width: $search-bar-ios-input-search-icon-size + 1;
+  width: 100%;
   height: $search-bar-ios-input-search-icon-size + 1;
 
-  transform: translateX(calc(50% + 90px));
+  transform: translateX(calc(50% - 60px));
   transition: $search-bar-ios-input-transition;
 
   @include svg-background-image($search-bar-ios-input-search-icon-svg);
@@ -57,6 +58,10 @@ $search-bar-ios-input-close-icon-size:    17px !default;
   background-position: 8px center;
 
   transition: $search-bar-ios-input-transition;
+
+  &::placeholder {
+    color: $search-bar-ios-input-placeholder-color;
+  }
 
   @include calc(padding-left, "50% - 28px");
 }
