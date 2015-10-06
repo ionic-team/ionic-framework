@@ -1,6 +1,5 @@
 import {App, IonicApp, ActionSheet, NavController, NavParams} from 'ionic/ionic';
 import {Modal, IonicView, IonicConfig, Events, Animation} from 'ionic/ionic';
-import {NgZone} from 'angular2/angular2';
 import {NavigationDetailsPage} from 'navigation';
 import {TabsPage} from 'tabs';
 import {DemoModal} from 'modal';
@@ -20,7 +19,6 @@ export class MainPage {
   constructor(app: IonicApp,
               nav: NavController,
               actionSheet: ActionSheet,
-              zone: NgZone,
               params: NavParams,
               modal: Modal,
               events: Events)
