@@ -18,4 +18,7 @@ class IonicApp {
       toolbarSearchQuery: ['', Validators.required]
     })
   }
+  myCancelAction = function() {
+    console.log('myCancelAction');
+  }
 }

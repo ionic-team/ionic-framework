@@ -25,7 +25,10 @@ import {IonicComponent, IonicView} from '../../config/decorators';
   defaultProperties: {
     'showCancel': false,
     'cancelText': 'Cancel',
-    'placeholder': 'Search'
+    'placeholder': 'Search',
+    'cancelAction': function() {
+      console.log('Default Cancel');
+    }
   }
 })
 @IonicView({
@@ -33,11 +36,12 @@ import {IonicComponent, IonicView} from '../../config/decorators';
   <div class="search-bar-input-container" [class.left-align]="shouldLeftAlign">
     <div class="search-bar-search-icon"></div>
     <input (focus)="inputFocused()" (blur)="inputBlurred()"
-    (input)="inputChanged($event)" class="search-bar-input" type="search" [attr.placeholder]="placeholder">
-    <div class="search-bar-close-icon"></div>
+    (input)="inputChanged($event)" class="search-bar-input" type="search" [attr.placeholder]="placeholder" [(ng-model)]="value">
+    <div class="search-bar-close-icon" (click)="clearInput()"></div>
   </div>
-  <button *ng-if="showCancel" class="search-bar-cancel" [class.left-align]="shouldLeftAlign">{{cancelText}}</button>`
+  <button *ng-if="showCancel" (click)="cancelAction()" class="search-bar-cancel" [class.left-align]="shouldLeftAlign">{{cancelText}}</button>`
 })
+
 export class SearchBar extends Ion {
   /**
    * TODO
@@ -71,28 +75,20 @@ export class SearchBar extends Ion {
    */
   writeValue(value) {
     this.value = value;
-    console.log('writeValue', value);
     this.renderer.setElementProperty(this.elementRef, 'value', this.value);
 
   }
 
   registerOnChange(val) {
-    console.log('registerONChange', val);
   }
 
   registerOnTouched(val) {
-    console.log('register on touched', val);
   }
 
   inputChanged(event) {
     this.value = event.target.value;
-    console.log('Search changed', this.value);
     this.ngControl.valueAccessor.writeValue(this.value);
     this.ngControl.control.updateValue(this.value);
-    // this.ngControl.valueAccessor.updateValue(this.value);
-    // this.ngControl.updateValue(this.value);
-    // TODO: Better way to do this?
-    //this.controlDirective._control().updateValue(event.target.value);
   }
 
   inputFocused() {
@@ -102,6 +98,11 @@ export class SearchBar extends Ion {
   inputBlurred() {
     this.isFocused = false;
     this.shouldLeftAlign = this.value.trim() != '';
+  }
+
+  clearInput() {
+    this.value = '';
+    this.ngControl.control.updateValue('');
   }
 }
 
@@ -117,13 +118,11 @@ export class SearchPipe extends Pipe {
   }
 
   transform(value, ...args) {
-    console.log('Transforming', value, args);
     return value;
     //return `${value} state:${this.state ++}`;
   }
 
   create(cdRef) {
-    console.log('REF', cdRef);
     return new SearchPipe(cdRef);
   }
 }
