@@ -12,7 +12,7 @@ import {dom} from 'ionic/util';
 @IonicComponent({
   selector: 'ion-segment',
   appInjector: [ NgControl ],
-  properties: [
+  inputs: [
     'value'
   ],
   host: {
@@ -125,7 +125,7 @@ export class Segment extends Ion {
  */
 @IonicDirective({
   selector: 'ion-segment',
-  //properties: ['value'],
+  //inputs: ['value'],
   host: {
     '(change)': 'onChange($event.target.value)',
     '(input)': 'onChange($event.target.value)',
@@ -192,7 +192,7 @@ export class SegmentControlValueAccessor {
  */
 @IonicDirective({
   selector: 'ion-segment-button',
-  properties: [
+  inputs: [
     'value'
   ],
   host: {

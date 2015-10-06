@@ -164,7 +164,7 @@ export class RadioGroup extends Ion {
  */
 @IonicComponent({
   selector: 'ion-radio',
-  properties: [
+  inputs: [
     'value',
     'checked',
     'disabled',

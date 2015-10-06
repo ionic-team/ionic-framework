@@ -41,7 +41,7 @@ import {Tabs} from './tabs';
  * set on each Tab.
  *
  * To change the title and icon, use the `tab-title` and `tab-icon`
- * properties:
+ * inputs:
  * ```html
  * <ion-tabs>
  * 	 <ion-tab tab-title="Home" tab-icon="home" [root]="tabOneRoot"></ion-tab>
@@ -51,7 +51,7 @@ import {Tabs} from './tabs';
  */
 @Component({
   selector: 'ion-tab',
-  properties: [
+  inputs: [
     'root',
     'tabTitle',
     'tabIcon'

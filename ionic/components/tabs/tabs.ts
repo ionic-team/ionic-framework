@@ -1,11 +1,12 @@
-import {Component, Directive, View, Injector, NgFor, ElementRef, Optional, Host, forwardRef, NgZone, ViewContainerRef} from 'angular2/angular2';
+import {Component, Directive, View, Injector, ElementRef, NgZone, Optional, Host, NgFor, forwardRef, ViewContainerRef} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
 import {NavController} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
-import {IonicComponent, IonicView} from '../../config/decorators';
+import {IonicComponent} from '../../config/decorators';
 import {IonicConfig} from '../../config/config';
+import {Icon} from '../icon/icon';
 import * as dom from 'ionic/util/dom';
 
 
@@ -61,7 +62,7 @@ import * as dom from 'ionic/util/dom';
  */
 @IonicComponent({
   selector: 'ion-tabs',
-  defaultProperties: {
+  defaultInputs: {
     'tabBarPlacement': 'bottom',
     'tabBarIcons': 'top'
   }
@@ -84,6 +85,8 @@ import * as dom from 'ionic/util/dom';
       '<ng-content></ng-content>' +
     '</section>',
   directives: [
+    Icon,
+    NgFor,
     forwardRef(() => TabButton),
     forwardRef(() => TabHighlight),
     forwardRef(() => TabNavBarAnchor)
@@ -220,7 +223,7 @@ export class Tabs extends NavController {
  */
 @Directive({
   selector: '.tab-button',
-  properties: ['tab'],
+  inputs: ['tab'],
   host: {
     '[attr.id]': 'btnId',
     '[attr.aria-controls]': 'panelId',

@@ -37,8 +37,7 @@ import {raf, ready, CSS} from 'ionic/util/dom';
  */
 @Component({
   selector: 'ion-refresher',
-  events: ['refresh', 'starting', 'pulling'],
-  properties: [
+  inputs: [
     'pullingIcon',
     'pullingText',
     'refreshingIcon',
@@ -46,6 +45,7 @@ import {raf, ready, CSS} from 'ionic/util/dom';
     'spinner',
     'disablePullingRotation'
   ],
+  outputs: ['refresh', 'starting', 'pulling'],
   host: {
     '[class.active]': 'isActive',
     '[class.refreshing]': 'isRefreshing',

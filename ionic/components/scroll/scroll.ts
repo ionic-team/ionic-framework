@@ -15,7 +15,7 @@ import * as util from 'ionic/util';
  */
 @IonicComponent({
   selector: 'ion-scroll',
-  properties: [
+  inputs: [
     'scrollX', 'scrollY', 'zoom', 'maxZoom'
   ],
   host: {

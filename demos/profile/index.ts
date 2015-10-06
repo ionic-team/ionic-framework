@@ -8,7 +8,7 @@ import {dom} from 'ionic/util';
 
 @Directive({
   selector: '[parallax]',
-  properties: [
+  inputs: [
     'parallax',
     'counter'
   ]

@@ -8,7 +8,7 @@ import {IonicConfig} from '../../config/config';
  */
 @Directive({
   selector: 'icon',
-  properties: [
+  inputs: [
     'name',
     'ios',
     'md',

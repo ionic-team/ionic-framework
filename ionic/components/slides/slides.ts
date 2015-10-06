@@ -31,7 +31,7 @@ import {Scroll} from '../scroll/scroll';
  */
 @IonicComponent({
   selector: 'ion-slides',
-  properties: [
+  inputs: [
     'loop',
     'index',
     'bounce',
@@ -449,7 +449,7 @@ export class Slides extends Ion {
  */
 @IonicComponent({
   selector: 'ion-slide',
-  properties: ['zoom']
+  inputs: ['zoom']
 })
 @View({
   template: `<div class="slide-zoom"><ng-content></ng-content></div>`

@@ -11,7 +11,7 @@ import {Navbar} from '../nav-bar/nav-bar';
 */
 @Directive({
   selector: '[menu-toggle]',
-  properties: [
+  inputs: [
     'menuToggle'
   ],
   host: {

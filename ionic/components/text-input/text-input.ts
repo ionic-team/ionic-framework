@@ -72,7 +72,7 @@ export class TextInputElement {
 @IonicDirective({
   selector: 'ion-input',
   classId: 'item-input',
-  properties: [
+  inputs: [
     'tabIndex'
   ],
   host: {

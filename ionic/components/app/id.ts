@@ -30,7 +30,7 @@ import {IonicApp} from './app';
  */
 @Directive({
   selector: '[id]',
-  properties: ['id']
+  inputs: ['id']
 })
 export class IdRef {
 

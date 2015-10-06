@@ -17,11 +17,11 @@ import {IonicComponent} from '../../config/decorators';
  */
 @IonicComponent({
   selector: 'ion-search-bar',
-  properties: [
+  inputs: [
     'list',
     'query'
   ],
-  defaultProperties: {
+  defaultInputs: {
     'cancelText': 'Cancel',
     'placeholder': 'Search'
   }

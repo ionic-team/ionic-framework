@@ -45,19 +45,19 @@ import * as gestures from  './menu-gestures';
  */
 @IonicComponent({
   selector: 'ion-menu',
-  properties: [
+  inputs: [
     'content',
     'dragThreshold',
     'id'
   ],
-  defaultProperties: {
+  defaultInputs: {
     'side': 'left',
     'type': 'reveal'
   },
   host: {
     'role': 'navigation'
   },
-  events: ['opening']
+  outputs: ['opening']
 })
 @View({
   template: '<ng-content></ng-content><backdrop tappable disable-activated></backdrop>',

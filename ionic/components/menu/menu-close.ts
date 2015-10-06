@@ -9,7 +9,7 @@ import {IonicApp} from '../app/app';
 */
 @Directive({
   selector: '[menu-close]',
-  properties: [
+  inputs: [
     'menuClose'
   ],
   host: {

@@ -25,7 +25,7 @@ import {IonicComponent} from '../../config/decorators';
  */
 @IonicComponent({
   selector: 'ion-checkbox',
-  properties: [
+  inputs: [
     'value',
     'checked',
     'disabled',

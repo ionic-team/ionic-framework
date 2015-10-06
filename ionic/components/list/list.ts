@@ -19,7 +19,7 @@ import * as util from 'ionic/util';
  */
 @IonicDirective({
   selector: 'ion-list',
-  properties: [
+  inputs: [
     'items',
     'virtual',
     'content'
@@ -74,7 +74,7 @@ export class List extends Ion {
  */
 @Directive({
   selector: 'ion-header',
-  properties: [
+  inputs: [
     'id'
   ],
   host: {

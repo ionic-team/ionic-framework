@@ -8,7 +8,7 @@ import {pointerCoord, hasPointerMoved} from '../../util/dom';
  */
 @Directive({
   selector: 'ion-label',
-  properties: [
+  inputs: [
     'id'
   ],
   host: {

@@ -79,7 +79,7 @@ class MediaSwitch {
  */
 @IonicComponent({
   selector: 'ion-switch',
-  properties: [
+  inputs: [
     'value',
     'checked',
     'disabled',

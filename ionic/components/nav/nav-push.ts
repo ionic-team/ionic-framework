@@ -36,7 +36,7 @@ import {NavRegistry} from './nav-registry';
  */
 @Directive({
   selector: '[nav-push]',
-  properties: [
+  inputs: [
     'instruction: navPush',
     'params: navParams'
   ],

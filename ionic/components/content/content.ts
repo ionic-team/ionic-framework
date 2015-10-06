@@ -26,7 +26,7 @@ import {ScrollTo} from '../../animations/scroll-to';
  */
 @Component({
   selector: 'ion-content',
-  properties: [
+  inputs: [
     'parallax'
   ]
 })

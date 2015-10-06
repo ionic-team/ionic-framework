@@ -16,7 +16,7 @@ class AppPage {
 
 @Directive({
   selector: '[parallax]',
-  properties: [
+  inputs: [
     'parallax'
   ]
 })

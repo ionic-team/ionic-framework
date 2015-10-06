@@ -56,7 +56,7 @@ let WEATHER_ICONS = {
 
 @Component({
   selector: 'weather-icon',
-  properties: [
+  inputs: [
     'icon'
   ]
 })
@@ -80,7 +80,7 @@ export class WeatherIcon {
 
 @Component({
   selector: 'current-time',
-  properties: [
+  inputs: [
     'localtz'
   ]
 })
@@ -100,7 +100,7 @@ export class CurrentTime {
 
 @Component({
   selector: 'current-weather',
-  properties: [
+  inputs: [
     'current'
   ]
 })
@@ -175,7 +175,7 @@ export class CurrentWeather {
 
 @Component({
   selector: 'background-cycler',
-  properties: [
+  inputs: [
     'image'
   ]
 })

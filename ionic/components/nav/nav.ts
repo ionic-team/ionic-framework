@@ -120,10 +120,10 @@ import {NavController} from './nav-controller';
  */
 @IonicComponent({
   selector: 'ion-nav',
-  properties: [
+  inputs: [
     'root'
   ],
-  defaultProperties: {
+  defaultInputs: {
     'swipeBackEnabled': true
   }
 })
