@@ -32,8 +32,8 @@ import {IdRef} from '../components/app/id';
 import {ShowWhen, HideWhen} from '../components/show-hide-when/show-hide-when';
 
 /**
- * The core Ionic directives.  Automatically available in every
- * IonicView template.
+ * The core Ionic directives as well as Angular's CORE_DIRECTIVES and
+ * FORM_DIRECTIVES.  Automatically available in every IonicView template.
  */
 export const IONIC_DIRECTIVES = [
   // Angular
