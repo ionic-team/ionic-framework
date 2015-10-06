@@ -77,6 +77,7 @@ export const IONIC_DIRECTIVES = [
   Icon,
 
   // Forms
+  SearchBar,
   Segment,
   SegmentButton,
   SegmentControlValueAccessor,

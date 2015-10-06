@@ -10,7 +10,6 @@ import {IonicComponent} from '../../config/decorators';
  */
 @IonicComponent({
   selector: 'ion-search-bar',
-  appInjector: [NgControl],
   properties: [
     'list',
     'query'
