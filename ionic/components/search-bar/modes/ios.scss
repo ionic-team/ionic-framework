@@ -30,10 +30,10 @@ $search-bar-ios-input-close-icon-size:    17px !default;
 }
 
 .search-bar-search-icon {
-  width: 100%;
+  width: $search-bar-ios-input-search-icon-size + 1;
   height: $search-bar-ios-input-search-icon-size + 1;
 
-  transform: translateX(calc(50% - 60px));
+  @include calc(margin-left, "50% - 60px");
   transition: $search-bar-ios-input-transition;
 
   @include svg-background-image($search-bar-ios-input-search-icon-svg);
@@ -80,7 +80,7 @@ $search-bar-ios-input-close-icon-size:    17px !default;
 
 .search-bar-input-container.left-align {
   .search-bar-search-icon {
-    transform: translateX(0);
+    margin-left: 0;
     transition: $search-bar-ios-input-transition;
   }
   .search-bar-input {
