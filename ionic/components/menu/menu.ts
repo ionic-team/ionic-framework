@@ -53,10 +53,11 @@ export class Menu extends Ion {
 
   onInit() {
     super.onInit();
-    this._cntEle = (this.content instanceof Node) ? this.content : this.content.getNativeElement();
+    let content = this.content;
+    this._cntEle = (content instanceof Node) ? content : content && content.getNativeElement && content.getNativeElement();
 
     if (!this._cntEle) {
-      return console.error('Menu: must have a [content] element to listen for drag events on. Example:\n\n<ion-menu [content]="content"></ion-menu>\n\n<ion-content #content></ion-content>');
+      return console.error('Menu: must have a [content] element to listen for drag events on. Example:\n\n<ion-menu [content]="content"></ion-menu>\n\n<ion-nav #content></ion-nav>');
     }
 
     if (!this.id) {
