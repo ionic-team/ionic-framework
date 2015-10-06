@@ -212,7 +212,7 @@ button.item {
 .list,
 .card {
   button[ion-item]:not([detail-none]),
-  a[ion-item]:not([detail-push]),
+  a[ion-item]:not([detail-none]),
   [detail-push] {
     @include ios-detail-push-icon($item-ios-detail-push-color);
     background-repeat: no-repeat;
