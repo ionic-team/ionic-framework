@@ -8,7 +8,7 @@ import {
   Button, Content, Scroll, Refresher,
   Slides, Slide, SlideLazy,
   Tabs, Tab,
-  Card, List, ListHeader, Item, ItemGroup, ItemGroupTitle, ItemSliding
+  Card, List, ListHeader, Item, ItemGroup, ItemGroupTitle, ItemSliding,
   Toolbar, ToolbarTitle, ToolbarItem,
   Icon,
   Checkbox, Switch,
