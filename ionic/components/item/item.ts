@@ -12,9 +12,9 @@ import {dom} from 'ionic/util';
  * <ion-list>
  *   <ion-item *ng-for="#item of items" (click)="itemTapped($event, item)">
  *     {{item.title}}
- *     <div class="item-note" item-right>
+ *     <ion-note item-right>
  *       {{item.note}}
- *     </div>
+ *     </ion-note>
  *   </ion-item>
  * </ion-list>
  *  ```

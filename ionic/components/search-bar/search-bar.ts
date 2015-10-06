@@ -6,7 +6,14 @@ import {IonicConfig} from '../../config/config';
 import {IonicComponent} from '../../config/decorators';
 
 /**
- * TODO
+ * @name Search Bar
+ * @description
+ * The Search Bar service adds an input field which can be used to search or filter items.
+ *
+ * @usage
+ * ```html
+ * <ion-search-bar ng-control="searchQuery"></ion-search-bar>
+ * ```
  */
 @IonicComponent({
   selector: 'ion-search-bar',
