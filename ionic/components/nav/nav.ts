@@ -267,7 +267,7 @@ export class Nav extends NavController {
 
     } else {
       // create a new nav pane
-      this.loader.loadNextToLocation(Pane, this.anchorElementRef(), this.getBindings(viewCtrl)).then(componentRef => {
+      this._loader.loadNextToLocation(Pane, this.anchorElementRef(), this.getBindings(viewCtrl)).then(componentRef => {
 
         // get the pane reference
         pane = this.newPane;
@@ -311,24 +311,24 @@ export class Nav extends NavController {
   inspectStructure(componentProtoViewRef) {
     let navbar = false;
     let tabs = false;
-    //let key = '_';
+    let key = '_';
 
-    // componentProtoViewRef._protoView.elementBinders.forEach(rootElementBinder => {
-    //   if (!rootElementBinder.componentDirective || !rootElementBinder.nestedProtoView) return;
+    componentProtoViewRef._protoView.elementBinders.forEach(rootElementBinder => {
+      if (!rootElementBinder.componentDirective || !rootElementBinder.nestedProtoView) return;
 
-    //   rootElementBinder.nestedProtoView.elementBinders.forEach(nestedElementBinder => {
-    //     if ( isComponent(nestedElementBinder, 'Tabs') ) {
-    //       tabs = true;
-    //     }
-    //     if (!nestedElementBinder.componentDirective && nestedElementBinder.nestedProtoView) {
-    //       nestedElementBinder.nestedProtoView.elementBinders.forEach(templatedElementBinder => {
-    //         if ( isComponent(templatedElementBinder, 'Navbar') ) {
-    //           navbar = true;
-    //         }
-    //       });
-    //     }
-    //   });
-    // });
+      rootElementBinder.nestedProtoView.elementBinders.forEach(nestedElementBinder => {
+        if ( isComponent(nestedElementBinder, 'Tabs') ) {
+          tabs = true;
+        }
+        if (!nestedElementBinder.componentDirective && nestedElementBinder.nestedProtoView) {
+          nestedElementBinder.nestedProtoView.elementBinders.forEach(templatedElementBinder => {
+            if ( isComponent(templatedElementBinder, 'Navbar') ) {
+              navbar = true;
+            }
+          });
+        }
+      });
+    });
 
     return {
       navbar,
