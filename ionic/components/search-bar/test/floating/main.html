@@ -13,5 +13,7 @@
     <ion-search-bar ng-control="searchQuery" show-cancel="true"></ion-search-bar>
     <label> Search - Custom Cancel Button </label>
     <ion-search-bar ng-control="searchQuery" show-cancel="true" cancel-text="Done"></ion-search-bar>
+    <label> Search - Custom Cancel Action</label>
+    <ion-search-bar ng-control="searchQuery" show-cancel="true" cancel-text="Done" [cancel-action]="myCancelAction"></ion-search-bar>
   </form>
 </ion-content>
