@@ -74,22 +74,22 @@ export class NavRouter extends RouterOutlet {
     // viewCtrl is Ionic's ViewController class, which has the properties "componentType" and "params"
 
     // only do an update if there's an actual view change
-    if (!viewCtrl || this._activeViewId === viewCtrl.id) return;
-    this._activeViewId = viewCtrl.id;
+    // if (!viewCtrl || this._activeViewId === viewCtrl.id) return;
+    // this._activeViewId = viewCtrl.id;
 
-    // get the best PathRecognizer for this view's componentType
-    let pathRecognizer = this.getPathRecognizerByComponent(viewCtrl.componentType);
-    if (pathRecognizer) {
+    // // get the best PathRecognizer for this view's componentType
+    // let pathRecognizer = this.getPathRecognizerByComponent(viewCtrl.componentType);
+    // if (pathRecognizer) {
 
-      // generate a componentInstruction from the view's PathRecognizer and params
-      let componentInstruction = pathRecognizer.generate(viewCtrl.params.data);
+    //   // generate a componentInstruction from the view's PathRecognizer and params
+    //   let componentInstruction = pathRecognizer.generate(viewCtrl.params.data);
 
-      // create an Instruction from the componentInstruction
-      let instruction = new Instruction(componentInstruction, null);
+    //   // create an Instruction from the componentInstruction
+    //   let instruction = new Instruction(componentInstruction, null);
 
-      // update the browser's URL
-      this._parentRouter.navigateInstruction(instruction);
-    }
+    //   // update the browser's URL
+    //   this._parentRouter.navigateInstruction(instruction);
+    // }
   }
 
   /**

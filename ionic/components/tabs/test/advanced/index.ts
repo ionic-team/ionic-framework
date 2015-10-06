@@ -186,7 +186,7 @@ class Tab3Page1 {}
 
 @App()
 @RouteConfig([
-  { path: '/', component: SignIn, as: 'signin' },
-  { path: '/tabs', component: TabsPage, as: 'tabs' },
+  { path: '/', component: SignIn, as: 'Signin' },
+  { path: '/tabs', component: TabsPage, as: 'Tabs' },
 ])
 class E2EApp {}

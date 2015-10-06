@@ -181,12 +181,12 @@ export class Nav extends NavController {
     // this gets or creates the Pane which similar nav items live in
     // Nav items with just a navbar/content would all use the same Pane
     // Tabs and view's without a navbar would get a different Panes
-    let structure = this.inspectStructure(hostProtoViewRef);
+    let structure = this.getStructure(hostProtoViewRef);
 
     if (structure.tabs) {
       // the component being loaded is an <ion-tabs>
       // Tabs is essentially a pane, cuz it has its own navbar and content containers
-      let contentContainerRef = this.viewMngr.getViewContainer(this.anchorElementRef());
+      let contentContainerRef = this._viewManager.getViewContainer(this.anchorElementRef());
       let viewComponetRef = this.createViewComponetRef(componentType, hostProtoViewRef, contentContainerRef, this.getBindings(viewCtrl));
       viewComponetRef.instance._paneView = true;
 
@@ -308,32 +308,40 @@ export class Nav extends NavController {
    * @param  {TODO} componentProtoViewRef TODO
    * @return {TODO}                       TODO
    */
-  inspectStructure(componentProtoViewRef) {
-    let navbar = false;
-    let tabs = false;
-    let key = '_';
+  getStructure(componentProtoViewRef) {
+    let templateCmds = componentProtoViewRef._protoView.templateCmds;
+    let compiledTemplateData, directives;
+    let i, ii, j, jj, k, kk;
 
-    componentProtoViewRef._protoView.elementBinders.forEach(rootElementBinder => {
-      if (!rootElementBinder.componentDirective || !rootElementBinder.nestedProtoView) return;
+    for (i = 0, ii = templateCmds.length; i < ii; i++) {
+      if (templateCmds[i].template) {
+        compiledTemplateData = templateCmds[i].template.getData(templateCmds[i].templateId);
+        if (compiledTemplateData) {
+          for (j = 0, jj = compiledTemplateData.commands.length; j < jj; j++) {
+            directives = compiledTemplateData.commands[j].directives;
 
-      rootElementBinder.nestedProtoView.elementBinders.forEach(nestedElementBinder => {
-        if ( isComponent(nestedElementBinder, 'Tabs') ) {
-          tabs = true;
-        }
-        if (!nestedElementBinder.componentDirective && nestedElementBinder.nestedProtoView) {
-          nestedElementBinder.nestedProtoView.elementBinders.forEach(templatedElementBinder => {
-            if ( isComponent(templatedElementBinder, 'Navbar') ) {
-              navbar = true;
+            if (directives && (kk = directives.length)) {
+
+              for (k = 0; k < kk; k++) {
+
+                if (directives[k].name == 'NavbarTemplate') {
+                  return { navbar: true };
+                }
+
+                if (directives[k].name == 'Tabs') {
+                  return { tabs: true };
+                }
+
+              }
+
             }
-          });
-        }
-      });
-    });
 
-    return {
-      navbar,
-      tabs
-    };
+          }
+        }
+      }
+    }
+
+    return {};
   }
 
 }
