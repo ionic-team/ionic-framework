@@ -1,5 +1,4 @@
 
-
 <ion-navbar *navbar class="show-navbar">
   <ion-title>{{ component.title }}</ion-title>
 </ion-navbar>
@@ -9,7 +8,7 @@
 
   <section id="action-sheet" [ng-class]="{hidden: component.title !== 'Action Sheets' }" class="section-padding">
     <button class="button" (click)="openMenu()">
-      Show Action Sheet
+      Show Actionsheet
     </button>
   </section>
 
@@ -33,6 +32,30 @@
   <section id="buttons" [ng-class]="{hidden: component.title !== 'Buttons' }" class="section-padding">
 
     <p>
+      <button>Default</button>
+    </p>
+
+    <p>
+      <button secondary>Secondary</button>
+    </p>
+
+    <p>
+      <button danger>Danger</button>
+    </p>
+
+    <p>
+      <button light>Light</button>
+    </p>
+
+    <p>
+      <button dark>Dark</button>
+    </p>
+
+  </section>
+
+  <section id="block-buttons" [ng-class]="{hidden: component.title !== 'Block Buttons' }" class="section-padding">
+
+    <p>
       <button block>Default</button>
     </p>
 
@@ -50,6 +73,54 @@
 
     <p>
       <button dark block>Dark</button>
+    </p>
+
+  </section>
+
+  <section id="full-buttons" [ng-class]="{hidden: component.title !== 'Full Buttons' }">
+
+    <p>
+      <button full>Default</button>
+    </p>
+
+    <p>
+      <button secondary full>Secondary</button>
+    </p>
+
+    <p>
+      <button danger full>Danger</button>
+    </p>
+
+    <p>
+      <button light full>Light</button>
+    </p>
+
+    <p>
+      <button dark full>Dark</button>
+    </p>
+
+  </section>
+
+  <section id="outline-buttons" [ng-class]="{hidden: component.title !== 'Outline Buttons' }">
+
+    <p>
+      <button outline>Default</button>
+    </p>
+
+    <p>
+      <button secondary outline>Secondary</button>
+    </p>
+
+    <p>
+      <button danger outline>Danger</button>
+    </p>
+
+    <p>
+      <button light outline>Light</button>
+    </p>
+
+    <p>
+      <button dark outline>Dark</button>
     </p>
 
   </section>
@@ -175,7 +246,7 @@
 
     <ion-row>
       <ion-col><icon sunny></icon></ion-col>
-      <ion-col><icon umbrella></icon></ion-col>
+      <ion-col><icon umbrella</icon></ion-col>
       <ion-col><icon rainy></icon></ion-col>
     </ion-row>
 
@@ -208,11 +279,6 @@
         Charms
       </ion-item>
 
-      <ion-item>
-        <icon leaf item-left></icon>
-        Herbology
-      </ion-item>
-
     </ion-list>
 
 
@@ -224,18 +290,12 @@
 
       <ion-switch checked="true">
         <icon shirt item-left></icon>
-        Cloak of Invisibility
+        Invisibility Cloak
       </ion-switch>
 
       <ion-item>
         <icon call item-left></icon>
         Call Ron
-        <div class="item-note" item-right>Sure</div>
-      </ion-item>
-
-      <ion-item>
-        <icon book item-left></icon>
-        Study Potions
         <div class="item-note" item-right>Maybe later</div>
       </ion-item>
 
@@ -251,35 +311,30 @@
   </section>
 
   <section id="navigation" [ng-class]="{hidden: component.title !== 'Navigation' }">
-    <ion-card>
-      <ion-card-header primary>
-        Tap for more info...
-      </ion-card-header>
+    <ion-list>
 
-      <ion-card-content>
+      <a ion-item (click)="openNavDetailsPage('Angular')">
+        <icon ion-social-angular item-left></icon>
+        Angular
+      </a>
 
-        <a ion-item href="#" (click)="openNavDetailsPage('Angular')">
-          <icon ion-social-angular item-left></icon>
-          Angular
-        </a>
+      <a ion-item href="#" (click)="openNavDetailsPage('CSS3')">
+        <icon ion-social-css3 item-left></icon>
+        CSS3
+      </a>
 
-        <a ion-item href="#" (click)="openNavDetailsPage('CSS3')">
-          <icon ion-social-css3 item-left></icon>
-          CSS3
-        </a>
+      <button ion-item (click)="openNavDetailsPage('HTML5')">
+        <icon ion-social-html5 item-left></icon>
+        HTML5
+      </button>
 
-        <button ion-item (click)="openNavDetailsPage('HTML5')">
-          <icon ion-social-html5 item-left></icon>
-          HTML5
-        </button>
+      <button ion-item (click)="openNavDetailsPage('Sass')">
+        <icon ion-social-sass item-left></icon>
+        Sass
+      </button>
 
-        <button ion-item (click)="openNavDetailsPage('Sass')">
-          <icon ion-social-sass item-left></icon>
-          Sass
-        </button>
-      </ion-card-content>
+    </ion-list>
 
-    </ion-card> 
 
   </section>
   
@@ -304,12 +359,8 @@
    </ion-slides>
   </section>
 
-  <section id="tabs" [ng-class]="{hidden: component.title !== 'Tabs' }">
-    <ion-tabs tab-bar-placement="bottom">
-      <ion-tab tab-title="Food" tab-icon="pizza"></ion-tab>
-      <ion-tab tab-title="Drinks" tab-icon="beer"></ion-tab>
-      <ion-tab tab-title="Hours" tab-icon="clock"></ion-tab>
-    </ion-tabs>
+  <section id="forms" [ng-class]="{hidden: component.title !== 'Forms' }">
   </section>
 
 </ion-content>
+
