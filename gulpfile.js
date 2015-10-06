@@ -344,6 +344,17 @@ gulp.task('copy.web-animations', function() {
     .pipe(gulp.dest('dist/js'));
 })
 
+gulp.task('src.link', function(done) {
+  watch(['/ionic/**/*.ts', 'ionic/**/*.scss'], function(file) {
+    gulp.start('src');
+  });
+
+
+  watch('demos/**/*', function() {
+    gulp.start('demos:all');
+  });
+})
+
 gulp.task('src', function(done){
   runSequence(
     'clean',
