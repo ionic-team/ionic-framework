@@ -178,6 +178,22 @@ $item-ios-sliding-transition:         transform 250ms ease-in-out !default;
     margin-top: 1px;
     margin-bottom: 1px;
   }
+  ion-item-options {
+    button, [button] {
+      height: calc(100% - 2px);
+      margin: 1px 0 1px 0;
+
+      border: none;
+      border-radius: 0;
+      display: inline-flex;
+      align-items: center;
+      box-sizing: border-box;
+
+      &:before{
+        margin: 0 auto;
+      }
+    }
+  }
 }
 
 .item.activated,
