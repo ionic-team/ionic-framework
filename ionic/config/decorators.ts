@@ -8,7 +8,7 @@ import {
   Button, Content, Scroll, Refresher,
   Slides, Slide, SlideLazy,
   Tabs, Tab,
-  Card, List, ListHeader, Item, ItemGroup, ItemGroupTitle,
+  Card, List, ListHeader, Item, ItemGroup, ItemGroupTitle, ItemSliding
   Toolbar, ToolbarTitle, ToolbarItem,
   Icon,
   Checkbox, Switch,
@@ -49,6 +49,7 @@ export const IONIC_DIRECTIVES = [
   forwardRef(() => Item),
   forwardRef(() => ItemGroup),
   forwardRef(() => ItemGroupTitle),
+  forwardRef(() => ItemSliding),
 
   // Slides
   forwardRef(() => Slides),

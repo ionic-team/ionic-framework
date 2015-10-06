@@ -26,6 +26,8 @@ $item-ios-divider-bg:                 #f5f5f5 !default;
 $item-ios-divider-color:              #222 !default;
 $item-ios-divider-padding:            5px 15px !default;
 
+$item-ios-sliding-content-bg:            $background-color !default;
+$item-ios-sliding-transition:         transform 250ms ease-in-out !default;
 
 .item-group-title {
   padding: $item-ios-padding-top $item-ios-padding-right $item-ios-padding-bottom $item-ios-padding-left;
@@ -157,6 +159,25 @@ $item-ios-divider-padding:            5px 15px !default;
     }
   }
 
+
+  ion-item-sliding.item {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  ion-item-sliding-content {
+    background-color: $item-ios-sliding-content-bg;
+    padding-right: ($item-ios-padding-right / 2);
+    padding-left: ($item-ios-padding-left / 2);
+    display: flex;
+    min-height: 42px;
+    justify-content: center;
+
+    transition: $item-ios-sliding-transition;
+
+    // To allow the hairlines through
+    margin-top: 1px;
+    margin-bottom: 1px;
+  }
 }
 
 .item.activated,

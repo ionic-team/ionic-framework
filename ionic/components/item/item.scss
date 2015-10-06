@@ -137,3 +137,36 @@ ion-input.item {
 .item.item.item.no-border-bottom + .item {
   margin-top: -13px;
 }
+
+/**
+ * The hidden right-side buttons that can be exposed under a list item
+ * with dragging.
+ */
+ion-item-sliding-content {
+  display: block;
+  z-index: $z-index-item-options + 1;
+  flex: 1;
+}
+ion-item-options {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: $z-index-item-options;
+  height: 100%;
+
+  button, [button] {
+    height: calc(100% - 2px);
+    margin: 1px 0 1px 0;
+    
+    border: none;
+    border-radius: 0;
+    display: inline-flex;
+    align-items: center;
+    box-sizing: border-box;
+
+    &:before{
+      margin: 0 auto;
+    }
+  }
+}
