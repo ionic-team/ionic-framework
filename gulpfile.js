@@ -447,7 +447,8 @@ gulp.task('publish', function(done) {
     function() {
       var packageJSONTemplate = _.template(fs.readFileSync('scripts/npm/package.json'));
       packageJSONContents = packageJSONTemplate({ 'version': version, 'ngVersion': ngVersion });
-      fs.writeFileSync("dist/package.json", packageJSONContents);
+      fs.writeFileSync('dist/package.json', packageJSONContents);
+      fs.writeFileSync('dist/README.md', fs.readFileSync('scripts/npm/README.md'));
 
       // publish to npm
       exec('cd dist && npm publish', function (err, stdout, stderr) {
