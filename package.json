@@ -7,7 +7,7 @@
     "url": "https://github.com/driftyco/ionic2.git"
   },
   "scripts": {
-    "test": "gulp tests",
+    "test": "gulp karma",
     "link": "npm install && gulp src && npm link"
   },
   "dependencies": {
