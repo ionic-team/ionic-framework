@@ -2,8 +2,8 @@ import {ComponentRef, Compiler, ElementRef, Injector, bind, NgZone, DynamicCompo
 
 import {Ion} from '../ion';
 import {makeComponent} from '../../config/decorators';
-import {IonicConfig} from '../../config/config';
 import {IonicApp} from '../app/app';
+import {IonicConfig} from '../../config/config';
 import {ViewController} from './view-controller';
 import {Transition} from '../../transitions/transition';
 import {SwipeBackGesture} from './swipe-back';
@@ -116,20 +116,23 @@ export class NavController extends Ion {
 
   constructor(
     parentnavCtrl: NavController,
-    injector: Injector,
+    app: IonicApp,
+    config: IonicConfig,
     elementRef: ElementRef,
+    compiler: Compiler,
+    loader: DynamicComponentLoader,
+    viewManager: AppViewManager,
     zone: NgZone
   ) {
-    let config = injector.get(IonicConfig);
     super(elementRef, config);
 
     this.parent = parentnavCtrl;
-
-    this._compiler = injector.get(Compiler);
-    this._loader = injector.get(DynamicComponentLoader);
-    this._viewManager = injector.get(AppViewManager);
-    this.app = injector.get(IonicApp);
+    this.app = app;
     this.config = config;
+
+    this._compiler = compiler;
+    this._loader = loader;
+    this._viewManager = viewManager;
     this.zone = zone;
 
     this._views = [];

@@ -1,11 +1,11 @@
-import {Component, Directive, View, Injector, ElementRef, NgZone, Optional, Host, NgFor, forwardRef, ViewContainerRef} from 'angular2/angular2';
+import {Component, Directive, View, Injector, ElementRef, Compiler, DynamicComponentLoader, AppViewManager, NgZone, Optional, Host, NgFor, forwardRef, ViewContainerRef} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
+import {IonicConfig} from '../../config/config';
 import {NavController} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
 import {ConfigComponent} from '../../config/decorators';
-import {IonicConfig} from '../../config/config';
 import {Icon} from '../icon/icon';
 import * as dom from 'ionic/util/dom';
 
@@ -100,12 +100,14 @@ export class Tabs extends NavController {
     @Optional() hostNavCtrl: NavController,
     @Optional() viewCtrl: ViewController,
     app: IonicApp,
-    injector: Injector,
+    config: IonicConfig,
     elementRef: ElementRef,
+    compiler: Compiler,
+    loader: DynamicComponentLoader,
+    viewManager: AppViewManager,
     zone: NgZone
   ) {
-    super(hostNavCtrl, injector, elementRef, zone);
-    this.app = app;
+    super(hostNavCtrl, app, config, elementRef, compiler, loader, viewManager, zone);
 
     this._ready = new Promise(res => { this._isReady = res; });
 

@@ -1,5 +1,7 @@
-import {Directive, Component, View, Host, ElementRef, forwardRef, Injector, NgZone, ViewContainerRef} from 'angular2/angular2';
+import {Directive, Component, View, Host, ElementRef, Compiler, DynamicComponentLoader, AppViewManager, forwardRef, Injector, NgZone, ViewContainerRef} from 'angular2/angular2';
 
+import {IonicApp} from '../app/app';
+import {IonicConfig} from '../../config/config';
 import {NavController} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
 import {Tabs} from './tabs';
@@ -78,14 +80,18 @@ export class Tab extends NavController {
    */
   constructor(
     @Host() tabs: Tabs,
+    app: IonicApp,
+    config: IonicConfig,
     elementRef: ElementRef,
-    injector: Injector,
+    compiler: Compiler,
+    loader: DynamicComponentLoader,
+    viewManager: AppViewManager,
     zone: NgZone
   ) {
     // A Tab is both a container of many pages, and is a page itself.
     // A Tab is one page within it's Host Tabs (which also extends NavController)
     // A Tab is a NavController for its child pages
-    super(tabs, injector, elementRef, zone);
+    super(tabs, app, config, elementRef, compiler, loader, viewManager, zone);
     this.tabs = tabs;
 
     let viewCtrl = this.viewCtrl = new ViewController(tabs.Host);

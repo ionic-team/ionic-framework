@@ -1,5 +1,7 @@
-import {Component, Directive, View, ElementRef, Host, Optional, forwardRef, Inject, Injector, NgZone, Renderer, ViewContainerRef} from 'angular2/angular2';
+import {Component, Directive, View, ElementRef, Host, Optional, forwardRef, Inject, NgZone, Compiler, AppViewManager, DynamicComponentLoader, Renderer, ViewContainerRef} from 'angular2/angular2';
 
+import {IonicApp} from '../app/app';
+import {IonicConfig} from '../../config/config';
 import {ConfigComponent} from '../../config/decorators';
 import {NavController} from './nav-controller';
 
@@ -144,11 +146,15 @@ export class Nav extends NavController {
    */
   constructor(
     @Optional() hostNavCtrl: NavController,
-    injector: Injector,
+    app: IonicApp,
+    config: IonicConfig,
     elementRef: ElementRef,
+    compiler: Compiler,
+    loader: DynamicComponentLoader,
+    viewManager: AppViewManager,
     zone: NgZone
   ) {
-    super(hostNavCtrl, injector, elementRef, zone);
+    super(hostNavCtrl, app, config, elementRef, compiler, loader, viewManager, zone);
     this.panes = [];
   }
 
