@@ -121,6 +121,7 @@ export class Popup {
       }
     };
     opts = util.extend({
+      showPrompt: false,
       cancel: () => {
         //reject();
       },
@@ -177,6 +178,7 @@ export class Popup {
       }
     }
     opts = util.extend({
+      showPrompt: false,
       cancel: () => {
       },
       buttons: [
