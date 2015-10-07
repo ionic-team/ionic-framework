@@ -79,7 +79,11 @@ export class List extends Ion {
   closeOpenItem() {
     if(this.openItem) {
       this.openItem.close(true);
+      this.openItem = null;
     }
+  }
+  getOpenItem() {
+    return this.openItem;
   }
 }
 
