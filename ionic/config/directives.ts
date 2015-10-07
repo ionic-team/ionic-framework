@@ -12,7 +12,6 @@ import {Refresher} from '../components/scroll/pull-to-refresh';
 import {Slides, Slide, SlideLazy} from '../components/slides/slides';
 import {Tabs} from '../components/tabs/tabs';
 import {Tab} from '../components/tabs/tab';
-import {Card} from '../components/card/card';
 import {List, ListHeader} from '../components/list/list';
 import {Item} from '../components/item/item';
 import {ItemGroup, ItemGroupTitle} from '../components/item/item-group';
@@ -55,7 +54,6 @@ export const IONIC_DIRECTIVES = [
   Refresher,
 
   // Lists
-  Card,
   List,
   ListHeader,
   Item,

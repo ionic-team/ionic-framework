@@ -1,4 +1,4 @@
-import {Component, View} from 'angular2/angular2';
+import {Component, View, ElementRef, Renderer} from 'angular2/angular2';
 
 
 /**
@@ -18,17 +18,18 @@ import {Component, View} from 'angular2/angular2';
  *  ```
  */
 @Component({
-  selector: 'ion-item,[ion-item]',
-  host: {
-    'class': 'item'
-  }
+  selector: 'ion-item,[ion-item]'
 })
 @View({
   template:
     '<ng-content select="[item-left]"></ng-content>' +
+    '<ng-content select="[item-right]"></ng-content>' +
     '<ion-item-content>' +
       '<ng-content></ng-content>'+
-    '</ion-item-content>' +
-    '<ng-content select="[item-right]"></ng-content>'
+    '</ion-item-content>'
 })
-export class Item {}
+export class Item {
+  constructor(elementRef: ElementRef, renderer: Renderer) {
+    renderer.setElementClass(elementRef, 'item', true);
+  }
+}

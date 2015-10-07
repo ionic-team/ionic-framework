@@ -155,3 +155,9 @@ ion-item-options {
   z-index: $z-index-item-options;
   height: 100%;
 }
+
+
+// TEMP hack for https://github.com/angular/angular/issues/4582
+[item-right] {
+  order: 1;
+}
