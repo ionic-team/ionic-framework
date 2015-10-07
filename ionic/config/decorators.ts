@@ -81,7 +81,7 @@ export function IonicView(args) {
 /**
  * TODO
  */
-export function IonicComponent(config) {
+export function ConfigComponent(config) {
   return function(cls) {
     return makeComponent(cls, appendConfig(cls, config));
   }

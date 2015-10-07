@@ -4,7 +4,7 @@ import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
 import {NavController} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
-import {IonicComponent} from '../../config/decorators';
+import {ConfigComponent} from '../../config/decorators';
 import {IonicConfig} from '../../config/config';
 import {Icon} from '../icon/icon';
 import * as dom from 'ionic/util/dom';
@@ -60,7 +60,7 @@ import * as dom from 'ionic/util/dom';
  * of that Tabs component.
  *
  */
-@IonicComponent({
+@ConfigComponent({
   selector: 'ion-tabs',
   defaultInputs: {
     'tabBarPlacement': 'bottom',

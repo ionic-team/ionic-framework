@@ -2,7 +2,7 @@ import {ElementRef, Pipe, NgControl, Renderer, View} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
-import {IonicComponent} from '../../config/decorators';
+import {ConfigComponent} from '../../config/decorators';
 
 /**
  * @name Search Bar
@@ -14,7 +14,7 @@ import {IonicComponent} from '../../config/decorators';
  * <ion-search-bar ng-control="searchQuery"></ion-search-bar>
  * ```
  */
-@IonicComponent({
+@ConfigComponent({
   selector: 'ion-search-bar',
   inputs: [
     'list',

@@ -3,7 +3,7 @@ import {forwardRef, Directive, Host, View, EventEmitter, ElementRef} from 'angul
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
 import {IonicConfig} from '../../config/config';
-import {IonicComponent} from '../../config/decorators';
+import {ConfigComponent} from '../../config/decorators';
 import {IonicPlatform} from '../../platform/platform';
 import * as gestures from  './menu-gestures';
 
@@ -43,7 +43,7 @@ import * as gestures from  './menu-gestures';
  * <ion-menu [content]="contentRef" type="overlay"></ion-menu>
  * ```
  */
-@IonicComponent({
+@ConfigComponent({
   selector: 'ion-menu',
   inputs: [
     'content',

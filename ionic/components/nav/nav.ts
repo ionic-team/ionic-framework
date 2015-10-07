@@ -1,6 +1,6 @@
 import {Component, Directive, View, ElementRef, Host, Optional, forwardRef, Inject, Injector, NgZone, Renderer, ViewContainerRef} from 'angular2/angular2';
 
-import {IonicComponent} from '../../config/decorators';
+import {ConfigComponent} from '../../config/decorators';
 import {NavController} from './nav-controller';
 
 /**
@@ -118,7 +118,7 @@ import {NavController} from './nav-controller';
  * out of the current pane and the new view into the new content-only pane.
  *
  */
-@IonicComponent({
+@ConfigComponent({
   selector: 'ion-nav',
   inputs: [
     'root'
