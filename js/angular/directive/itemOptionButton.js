@@ -10,7 +10,7 @@ var ITEM_TPL_OPTION_BUTTONS =
 * @description
 * Creates an option button inside a list item, that is visible when the item is swiped
 * to the left by the user.  Swiped open option buttons can be hidden with
-* {@link ionic.service:$ionicListDelegate#closeOptionButtons $ionicListDelegate#closeOptionButtons}.
+* {@link ionic.service:$ionicListDelegate#closeOptionButtons $ionicListDelegate.closeOptionButtons}.
 *
 * Can be assigned any button class.
 *
