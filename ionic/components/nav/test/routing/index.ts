@@ -10,7 +10,7 @@ class View1Cmp {
     this.viewCtrl = viewCtrl;
     console.log(`View1Cmp, path: ${this.path}`);
   }
-  onViewDidEnter() {
+  onPageDidEnter() {
     this.windowHash = window.location.hash;
   }
 }
@@ -23,7 +23,7 @@ class View2Cmp {
     this.viewCtrl = viewCtrl;
     console.log(`View2Cmp, path: ${this.path}`);
   }
-  onViewDidEnter() {
+  onPageDidEnter() {
     this.windowHash = window.location.hash;
   }
 }
@@ -37,7 +37,7 @@ class View3Cmp {
     this.viewCtrl = viewCtrl;
     console.log(`View3Cmp, path: ${this.path}, param id: ${this.id}`);
   }
-  onViewDidEnter() {
+  onPageDidEnter() {
     this.windowHash = window.location.hash;
   }
 }

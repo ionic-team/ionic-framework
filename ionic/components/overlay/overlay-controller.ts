@@ -50,8 +50,8 @@ export class OverlayController {
           this.close(ref, util.extend(opts, closeOpts));
         };
 
-        instance.onViewLoaded && instance.onViewLoaded();
-        instance.onViewWillEnter && instance.onViewWillEnter();
+        instance.onPageLoaded && instance.onPageLoaded();
+        instance.onPageWillEnter && instance.onPageWillEnter();
 
         let animation = Animation.create(ref.location.nativeElement, opts.enterAnimation);
         animation.before.addClass('show-overlay');
@@ -67,7 +67,7 @@ export class OverlayController {
             this.zone.run(() => {
               this.app.setEnabled(true);
               this.app.setTransitioning(false);
-              instance.onViewDidEnter && instance.onViewDidEnter();
+              instance.onPageDidEnter && instance.onPageDidEnter();
               resolve();
             });
 
@@ -91,8 +91,8 @@ export class OverlayController {
     let promise = new Promise(res => { resolve = res; });
 
     let instance = ref.instance;
-    instance.onViewWillLeave && instance.onViewWillLeave();
-    instance.onViewWillUnload && instance.onViewWillUnload();
+    instance.onPageWillLeave && instance.onPageWillLeave();
+    instance.onPageWillUnload && instance.onPageWillUnload();
 
     let animation = Animation.create(ref.location.nativeElement, opts.leaveAnimation);
     animation.after.removeClass('show-overlay');
@@ -106,8 +106,8 @@ export class OverlayController {
         animation.dispose();
 
         this.zone.run(() => {
-          instance.onViewDidLeave && instance.onViewDidLeave();
-          instance.onViewDidUnload && instance.onViewDidUnload();
+          instance.onPageDidLeave && instance.onPageDidLeave();
+          instance.onPageDidUnload && instance.onPageDidUnload();
 
           this.app.setEnabled(true);
           this.app.setTransitioning(false);
