@@ -81,18 +81,6 @@ export function IonicView(args) {
 /**
  * TODO
  */
-export function IonicDirective(config) {
-  return function(cls) {
-    var annotations = Reflect.getMetadata('annotations', cls) || [];
-    annotations.push(new Directive(appendConfig(cls, config)));
-    Reflect.defineMetadata('annotations', annotations, cls);
-    return cls;
-  }
-}
-
-/**
- * TODO
- */
 export function IonicComponent(config) {
   return function(cls) {
     return makeComponent(cls, appendConfig(cls, config));
@@ -109,22 +97,22 @@ export function makeComponent(cls, config) {
 function appendConfig(cls, config) {
   config.host = config.host || {};
 
-  cls.defaultProperties = config.defaultProperties || {};
+  cls.defaultInputs = config.defaultInputs || {};
 
-  config.properties = config.properties || [];
+  config.inputs = config.inputs || [];
 
-  for (let prop in cls.defaultProperties) {
-    // add the property to the component "properties"
-    config.properties.push(prop);
+  for (let prop in cls.defaultInputs) {
+    // add the property to the component "inputs"
+    config.inputs.push(prop);
 
     // set the component "hostProperties", so the instance's
-    // property value will be used to set the element's attribute
+    // input value will be used to set the element's attribute
     config.host['[attr.' + util.pascalCaseToDashCase(prop) + ']'] = prop;
   }
 
   cls.delegates = config.delegates;
 
-  let componentId = config.classId || (config.selector && config.selector.replace('ion-', ''));
+  let componentId = (config.selector && config.selector.replace('ion-', ''));
   config.host['class'] = ((config.host['class'] || '') + ' ' + componentId).trim();
 
   return config;

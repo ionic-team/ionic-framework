@@ -1,5 +1,4 @@
 import {ElementRef, Pipe, NgControl, Renderer, View} from 'angular2/angular2';
-//import {ControlGroup} from 'angular2/forms'
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
@@ -22,7 +21,6 @@ import {IonicComponent} from '../../config/decorators';
     'query'
   ],
   defaultInputs: {
-
     'showCancel': false,
     'cancelText': 'Cancel',
     'placeholder': 'Search',
@@ -30,7 +28,7 @@ import {IonicComponent} from '../../config/decorators';
       console.log('Default Cancel');
       this.isFocused = false;
       this.shouldLeftAlign = this.value.trim() != '';
-      // TODO input blur      
+      // TODO input blur
     }
   }
 })

@@ -1,11 +1,11 @@
 import {
+  Component,
   View,
   Directive,
   ElementRef,
   Host,
   Optional,
   NgControl,
-  Renderer,
   Inject,
   forwardRef
 } from 'angular2/angular2';
@@ -13,7 +13,6 @@ import {
 import {Ion} from '../ion';
 import {IonInput} from '../form/input';
 import {IonicConfig} from '../../config/config';
-import {IonicComponent} from '../../config/decorators';
 import {pointerCoord} from '../../util/dom';
 
 /**
@@ -77,7 +76,7 @@ class MediaSwitch {
  * ```
  *
  */
-@IonicComponent({
+@Component({
   selector: 'ion-switch',
   inputs: [
     'value',

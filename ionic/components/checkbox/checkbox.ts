@@ -1,15 +1,8 @@
-import {
-  View,
-  Directive,
-  ElementRef,
-  Optional,
-  NgControl
-} from 'angular2/angular2';
+import {Component, View, Directive, ElementRef, Optional, NgControl} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonInput} from '../form/input';
 import {IonicConfig} from '../../config/config';
-import {IonicComponent} from '../../config/decorators';
 
 /**
  * The checkbox is no different than the HTML checkbox input, except it's styled differently
@@ -23,7 +16,7 @@ import {IonicComponent} from '../../config/decorators';
  * </ion-checkbox>
  * ```
  */
-@IonicComponent({
+@Component({
   selector: 'ion-checkbox',
   inputs: [
     'value',

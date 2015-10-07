@@ -430,7 +430,7 @@ class Pane {
   showNavbar(hasNavbar) {
     this.navbar = hasNavbar;
     if (!hasNavbar) {
-      this.renderer.setElementClass(this.elementRef, 'no-navbar', true);
+      this.renderer.setElementAttribute(this.elementRef, 'no-navbar', '');
     }
   }
 

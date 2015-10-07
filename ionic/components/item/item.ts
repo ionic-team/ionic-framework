@@ -1,6 +1,4 @@
-import {Component, Directive, View, ElementRef, NgIf, ViewQuery, QueryList} from 'angular2/angular2';
-
-import * as util from 'ionic/util';
+import {Component, View} from 'angular2/angular2';
 
 
 /**
@@ -31,25 +29,6 @@ import * as util from 'ionic/util';
     '<ion-item-content>' +
       '<ng-content></ng-content>'+
     '</ion-item-content>' +
-    '<ng-content select="ion-item-options"></ng-content>' +
-    '<ng-content select="[item-right]"></ng-content>',
-  directives: [NgIf]
+    '<ng-content select="[item-right]"></ng-content>'
 })
-export class Item {
-  /**
-   * TODO
-   * @param {ElementRef} elementRef  A reference to the component's DOM element.
-   */
-  constructor(elementRef: ElementRef) {
-    this._isOpen = false;
-    this._isSlideActive = false;
-    this._isTransitioning = false;
-    this._transform = '';
-
-    this.ele = elementRef.nativeElement;
-    this.swipeButtons = {};
-    this.optionButtons = {};
-
-  }
-
-}
+export class Item {}

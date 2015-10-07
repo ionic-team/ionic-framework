@@ -1,6 +1,5 @@
-import {ElementRef, Host, Optional, NgControl, Query, QueryList, View} from 'angular2/angular2';
+import {Component, Directive, ElementRef, Host, Optional, NgControl, Query, QueryList, View} from 'angular2/angular2';
 
-import {IonicDirective, IonicComponent} from '../../config/decorators';
 import {IonicConfig} from '../../config/config';
 import {Ion} from '../ion';
 import {ListHeader} from '../list/list';
@@ -43,7 +42,7 @@ import {ListHeader} from '../list/list';
  * ```
 */
 
-@IonicDirective({
+@Directive({
   selector: 'ion-radio-group',
   host: {
     'class': 'list',
@@ -162,7 +161,7 @@ export class RadioGroup extends Ion {
  * ```
  *
  */
-@IonicComponent({
+@Component({
   selector: 'ion-radio',
   inputs: [
     'value',

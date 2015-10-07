@@ -1,17 +1,15 @@
-import {View, Renderer, ElementRef, EventEmitter, Host, forwardRef, Optional} from 'angular2/angular2';
+import {Component, Directive, View, Renderer, ElementRef, EventEmitter, Host, forwardRef, Optional} from 'angular2/angular2';
 import {Control, NgControl, NgFormControl, ControlGroup, ControlDirective} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
-import {IonicDirective, IonicComponent} from '../../config/decorators'
 import {dom} from 'ionic/util';
 
 /**
  * TODO
  */
-@IonicComponent({
+@Component({
   selector: 'ion-segment',
-  appInjector: [ NgControl ],
   inputs: [
     'value'
   ],
@@ -123,7 +121,7 @@ export class Segment extends Ion {
 /**
  * TODO
  */
-@IonicDirective({
+@Directive({
   selector: 'ion-segment',
   //inputs: ['value'],
   host: {
@@ -190,7 +188,7 @@ export class SegmentControlValueAccessor {
 /**
  * TODO
  */
-@IonicDirective({
+@Directive({
   selector: 'ion-segment-button',
   inputs: [
     'value'

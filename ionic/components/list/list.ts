@@ -2,7 +2,6 @@ import {Directive, ElementRef} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
-import {IonicDirective} from '../../config/decorators';
 import {ListVirtualScroll} from './virtual';
 import * as util from 'ionic/util';
 
@@ -17,13 +16,16 @@ import * as util from 'ionic/util';
  * interaction modes such as swipe to edit, drag to reorder, and removing items.
  *
  */
-@IonicDirective({
+@Directive({
   selector: 'ion-list',
   inputs: [
     'items',
     'virtual',
     'content'
-  ]
+  ],
+  host: {
+    'class': 'list'
+  }
 })
 export class List extends Ion {
   /**
