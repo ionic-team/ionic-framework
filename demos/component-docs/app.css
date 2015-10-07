@@ -68,3 +68,7 @@ ion-scroll {
 .demo-slide-3 {
   background-color: #f53d3d;
 }
+
+scroll-content {
+  overflow-y: hidden;
+}
