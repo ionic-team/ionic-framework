@@ -1,4 +1,4 @@
-import {ElementRef, Pipe, NgControl, Renderer, View} from 'angular2/angular2';
+import {ElementRef, Pipe, NgControl, Renderer, View, FORM_DIRECTIVES, NgIf, NgClass} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
@@ -43,7 +43,8 @@ import {ConfigComponent} from '../../config/decorators';
     (input)="inputChanged($event)" class="search-bar-input" type="search" [attr.placeholder]="placeholder" [(ng-model)]="value">
     <div class="search-bar-close-icon" (click)="clearInput()"></div>
   </div>
-  <button *ng-if="showCancel" (click)="cancelAction()" class="search-bar-cancel" [class.left-align]="shouldLeftAlign">{{cancelText}}</button>`
+  <button *ng-if="showCancel" (click)="cancelAction()" class="search-bar-cancel" [class.left-align]="shouldLeftAlign">{{cancelText}}</button>`,
+  directives: [FORM_DIRECTIVES, NgIf, NgClass]
 })
 
 export class SearchBar extends Ion {
