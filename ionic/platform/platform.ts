@@ -1,3 +1,12 @@
+/**
++* @ngdoc service
++* @name platform
++* @module ionic
++* @description
++* IonicPlatform returns the availble information about your current platform
++*/
+
+
 import * as util from '../util/util';
 import * as dom from '../util/dom';
 
@@ -20,17 +29,44 @@ export class IonicPlatform {
   // **********************************************
 
   /**
-   * TODO
-   * @param {TODO} platformName  TODO
-   * @returns {TODO} TODO
+   * @param {string} platformName
+   * @returns {bool}
+   *
+   * ```
+   * import {IonicPlatform} 'ionic/ionic';
+   * export MyClass {
+   *    constructor(platform: IonicPlatform){
+   *      this.platform = platform;
+   *      if(this.platform.is('ios'){
+   *        // what ever you need to do for
+   *        // if the platfomr is ios
+   *      }
+   *    }
+   * }
+   * ```
    */
   is(platformName) {
     return (this._platforms.indexOf(platformName) > -1);
   }
 
   /**
-   * TODO
-   * @returns {TODO} TODO
+   * @returns {array} the array of platforms
+   * @description
+   * Depending on what device you are on, `platforms` can return multiple values.
+   * Each possible value is a hierarchy of platforms. For example, on an iPhone,
+   * it would return mobile, ios, and iphone.
+   *
+   * ```
+   * import {IonicPlatform} 'ionic/ionic';
+   * export MyClass {
+   *    constructor(platform: IonicPlatform){
+   *      this.platform = platform;
+   *      console.log(this.platform.platforms());
+   *      // This will return an array of all the availble platforms
+   *      // From if your on mobile, to mobile os, and device name
+   *    }
+   * }
+   * ```
    */
   platforms() {
     // get the array of active platforms, which also knows the hierarchy,
@@ -40,8 +76,24 @@ export class IonicPlatform {
 
   /**
    * TODO
-   * @param {TODO} platformName  TODO
-   * @returns {TODO} TODO
+   * @param {string} platformName
+   * @returns {object}
+   * @description
+   * Returns an object containing the os version
+   *
+   * ```
+   * import {IonicPlatform} 'ionic/ionic';
+   * export MyClass {
+   *    constructor(platform: IonicPlatform){
+   *      this.platform = platform;
+   *      console.log(this.platform.versions('android'));
+   *      // Returns an object with the os version as a string,
+   *      // The Major version as a string
+   *      // The Minor version as a string
+   *    }
+   * }
+   * ```
+   *
    */
   versions(platformName) {
     if (arguments.length) {
@@ -55,7 +107,22 @@ export class IonicPlatform {
 
   /**
    * TODO
-   * @returns {TODO} TODO
+   * @returns {promise}
+   * @description
+   * Returns a promise when the platform is ready and native functionality can be called
+   *
+   * ```
+   * import {IonicPlatform} 'ionic/ionic';
+   * export MyClass {
+   *    constructor(platform: IonicPlatform){
+   *      this.platform = platform;
+   *      this.platform.ready().then(() => {
+   *        console.log('Platform ready');
+   *        // The platform is now ready, execute any native code you want
+   *       });
+   *    }
+   * }
+   * ```
    */
   ready() {
     return this._readyPromise;
