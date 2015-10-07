@@ -18,7 +18,8 @@ import {
   Nav, NavbarTemplate, Navbar,
   NavPush, NavPop, NavRouter,
   IdRef,
-  ShowWhen, HideWhen
+  ShowWhen, HideWhen,
+  Blur
 } from '../ionic';
 
 /**
@@ -93,6 +94,9 @@ export const IONIC_DIRECTIVES = [
 
   forwardRef(() => ShowWhen),
   forwardRef(() => HideWhen)
+
+  // Random effects
+  forwardRef(() => Blur)
 ];
 
 /**

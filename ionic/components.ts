@@ -2,6 +2,7 @@
 export * from 'ionic/components/app/app'
 export * from 'ionic/components/app/id'
 export * from 'ionic/components/action-sheet/action-sheet'
+export * from 'ionic/components/blur/blur'
 export * from 'ionic/components/button/button'
 export * from 'ionic/components/card/card'
 export * from 'ionic/components/checkbox/checkbox'
