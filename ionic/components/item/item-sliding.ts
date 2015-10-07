@@ -88,8 +88,12 @@ export class ItemSliding {
     this.openAmount = 0;
 
     // Enable it once, it'll get disabled on the next drag
-    this.enableAnimation();
-    el.style[CSS.transform] = 'translateX(' + -amt + 'px)';
+    raf(() => {
+      this.enableAnimation();
+      if(this.itemSlidingContent) {
+        this.itemSlidingContent.style[CSS.transform] = 'translateX(0)';
+      }
+    });
   }
   open(amt) {
     let el = this.itemSlidingContent;
@@ -101,7 +105,7 @@ export class ItemSliding {
       el.style[CSS.transform] = 'translateX(' + -amt + 'px)';
     }
   }
-  get isOpen() {
+  isOpen() {
     return this.openAmount > 0;
   }
   getOpenAmt() {
@@ -130,6 +134,12 @@ class ItemSlideGesture extends DragGesture {
     this.el = el;
     this.item = item;
     this.listen();
+
+    this.el.addEventListener('touchstart', (e) => {
+      if(this.item.isOpen()) {
+        this.item.close();
+      }
+    })
   }
 
   onDragStart(ev) {

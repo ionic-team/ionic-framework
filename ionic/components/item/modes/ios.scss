@@ -213,12 +213,23 @@ button.item {
 .card {
   button[ion-item]:not([detail-none]),
   a[ion-item]:not([detail-none]),
-  [detail-push] {
+  [detail-push]:not(ion-item-sliding) {
     @include ios-detail-push-icon($item-ios-detail-push-color);
     background-repeat: no-repeat;
     background-position: right ($item-ios-padding-right - 2) center;
     background-size: 14px 14px;
     padding-right: 32px;
+  }
+
+  ion-item-sliding[detail-push] {
+
+    ion-item-sliding-content {
+      @include ios-detail-push-icon($item-ios-detail-push-color);
+      background-repeat: no-repeat;
+      background-position: right ($item-ios-padding-right - 2) center;
+      background-size: 14px 14px;
+      padding-right: 32px;
+    }
   }
 }
 
