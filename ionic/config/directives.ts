@@ -15,6 +15,7 @@ import {Card} from '../components/card/card';
 import {List, ListHeader} from '../components/list/list';
 import {Item} from '../components/item/item';
 import {ItemGroup, ItemGroupTitle} from '../components/item/item-group';
+import {ItemSliding} from '../components/item/item-sliding';
 import {Toolbar, ToolbarTitle, ToolbarItem} from '../components/toolbar/toolbar';
 import {Icon} from '../components/icon/icon';
 import {Checkbox} from '../components/checkbox/checkbox';
@@ -58,6 +59,7 @@ export const IONIC_DIRECTIVES = [
   Item,
   ItemGroup,
   ItemGroupTitle,
+  ItemSliding,
 
   // Slides
   Slides,

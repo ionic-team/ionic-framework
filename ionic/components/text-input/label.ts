@@ -1,6 +1,7 @@
-import {Directive} from 'angular2/angular2';
+import {Directive, Optional} from 'angular2/angular2';
 
 import {IonicConfig} from '../../config/config';
+import {TextInput} from './text-input';
 import {pointerCoord, hasPointerMoved} from '../../util/dom';
 
 /**
@@ -25,8 +26,9 @@ export class Label {
    * TODO
    * @param {IonicConfig} config
    */
-  constructor(config: IonicConfig) {
+  constructor(config: IonicConfig, @Optional() textInput: TextInput) {
     this.scrollAssist = config.get('keyboardScrollAssist');
+    textInput && textInput.registerLabel(this);
   }
 
   /**
