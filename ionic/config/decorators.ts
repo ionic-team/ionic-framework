@@ -93,7 +93,7 @@ export const IONIC_DIRECTIVES = [
   forwardRef(() => IdRef),
 
   forwardRef(() => ShowWhen),
-  forwardRef(() => HideWhen)
+  forwardRef(() => HideWhen),
 
   // Random effects
   forwardRef(() => Blur)
