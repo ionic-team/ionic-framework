@@ -1,3 +1,11 @@
+/**
+* @ngdoc service
+* @name Config
+* @module ionic
+* @description
+* IonicConfig allows you to set the modes of your components
+*/
+
 import {IonicPlatform} from '../platform/platform';
 import {isObject, isDefined, isFunction, extend} from '../util/util';
 
@@ -18,6 +26,29 @@ export class IonicConfig {
  /**
   * For setting and getting multiple config values
   */
+
+  /**
+ * @name settings()
+ * @description
+ * IonicConfig lets you change multiple or a single value in an apps mode configuration. Things such as tab placement, icon changes, and view animations can be set here.
+ *
+ *
+ * @usage
+ * ```ts
+ * import {IonicConfig} from 'ionic/ionic';
+ * @App({
+ *   template: `<ion-nav [root]="root"></ion-nav>`
+ *   config: {
+ *     backButtonText: 'Go Back',
+ *     iconMode: 'ios',
+ *     modalEnter: 'modal-slide-in',
+ *     modalLeave: 'modal-slide-out',
+ *     tabBarPlacement: 'bottom',
+ *     viewTransition: 'ios',
+ *   }
+ * })
+ * ```
+ */
   settings() {
     const args = arguments;
 
