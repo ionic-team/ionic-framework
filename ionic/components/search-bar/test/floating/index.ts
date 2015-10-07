@@ -19,5 +19,6 @@ class IonicApp {
   }
   myCancelAction = function() {
     console.log('myCancelAction');
+    alert("My custom action!");
   }
 }

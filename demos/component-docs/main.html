@@ -123,31 +123,42 @@
       <button dark outline>Dark</button>
     </p>
 
+  </section>  
+
+  <section id="round-buttons" [ng-class]="{hidden: component.title !== 'Round Buttons' }" class="section-padding">
+
+    <p>
+      <button round>Default</button>
+    </p>
+
+    <p>
+      <button secondary round>Secondary</button>
+    </p>
+
+    <p>
+      <button danger round>Danger</button>
+    </p>
+
+    <p>
+      <button light round>Light</button>
+    </p>
+
+    <p>
+      <button dark round>Dark</button>
+    </p>
+
   </section>
 
-  <section id="outline-buttons" [ng-class]="{hidden: component.title !== 'Outline Buttons' }" class="section-padding">
+  <section id="floating-action-buttons" [ng-class]="{hidden: component.title !== 'Floating Action Buttons' }" class="section-padding">
 
     <p>
-      <button outline>Default</button>
-    </p>
-
-    <p>
-      <button secondary outline>Secondary</button>
-    </p>
-
-    <p>
-      <button danger outline>Danger</button>
-    </p>
-
-    <p>
-      <button light outline>Light</button>
-    </p>
-
-    <p>
-      <button dark outline>Dark</button>
+      <button fab fab-top fab-right>
+        <icon add></icon>
+      </button>
     </p>
 
   </section>
+  
 
   <section id="button-sizes" [ng-class]="{hidden: component.title !== 'Button Sizes' }" class="section-padding">
 
@@ -172,6 +183,44 @@
     </p>
 
   </section>
+
+  <section id="icon-buttons" [ng-class]="{hidden: component.title !== 'Icon Buttons' }" class="section-padding">
+
+    <p>
+      <button>
+        <icon home></icon>
+        Home
+      </button>
+    </p>
+
+    <p>
+      <button secondary>
+        <icon people></icon>
+        Friends
+      </button>
+    </p>
+
+    <p>
+      <button danger>
+        <icon close></icon>
+      </button>
+    </p>
+
+    <p>
+      <button light>
+        <icon arrow-back></icon>
+        Back
+      </button>
+    </p>
+
+    <p>
+      <button dark>
+        <icon hammer></icon>
+      </button>
+    </p>
+
+  </section>
+  
 
 
   <section id="cards" [ng-class]="{hidden: component.title !== 'Cards' }">
@@ -388,6 +437,12 @@
     </ion-list>
 
 
+  </section>
+
+  <section id="popup" [ng-class]="{hidden: component.title !== 'Popups' }" class="section-padding">
+    <button block (click)="showPopup()">
+      Show Popup
+    </button>
   </section>
 
   <section id="slides" [ng-class]="{hidden: component.title !== 'Slides' }">

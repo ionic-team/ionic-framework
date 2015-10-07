@@ -1,6 +1,6 @@
 import {FORM_DIRECTIVES, FormBuilder, Validators, Control, ControlGroup} from 'angular2/forms';
 import {App, IonicApp, ActionSheet, NavController, NavParams} from 'ionic/ionic';
-import {Modal, IonicView, IonicConfig, Events, Animation} from 'ionic/ionic';
+import {Popup, Modal, IonicView, IonicConfig, Events, Animation} from 'ionic/ionic';
 import {NavigationDetailsPage} from 'navigation';
 
 import {TabsPage} from 'tabs';
@@ -20,12 +20,14 @@ export class MainPage {
               nav: NavController,
               actionSheet: ActionSheet,
               params: NavParams,
+              popup: Popup,
               modal: Modal,
               events: Events)
   {
     this.params = params;
     this.nav = nav;
     this.modal = modal;
+    this.popup = popup;
     this.actionSheet = actionSheet;
     this.navDetailsPage = NavigationDetailsPage;
     this.demoModal = DemoModal;
@@ -41,7 +43,8 @@ export class MainPage {
       zone.run(() => {
         if (e.data) {
           var data = JSON.parse(e.data);
-          this.component.title = helpers.toTitleCase(data.hash.replace('-', ' '));
+          this.component.title = helpers.toTitleCase(data.hash.replace(/-/g, ' '));
+          console.log(this.component.title);
           if (this.component.title === 'Tabs') {
             this.nav.setRoot(TabsPage);
           }
@@ -101,6 +104,15 @@ export class MainPage {
       leaveAnimation: 'my-fade-out'
     });
   }
+
+  // **************************
+  // Popup
+  // **************************
+  showPopup() {
+    this.popup.alert("Popup Title").then(() => {
+    });
+  }
+
 
   // **************************
   // Form

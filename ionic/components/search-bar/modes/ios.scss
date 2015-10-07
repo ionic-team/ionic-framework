@@ -15,8 +15,8 @@ $search-bar-ios-input-height:             28px !default;
 $search-bar-ios-input-placeholder-color:  #9D9D9D !default;
 $search-bar-ios-input-text-color:         #000 !default;
 $search-bar-ios-input-background-color:   #FFFFFF !default;
-$search-bar-ios-input-transition:         all 0.3s cubic-bezier(.25, .45, .05, 1) !default;
-
+$search-bar-ios-input-transition:         all 0.3s linear !default;
+//cubic-bezier(.25, .45, .05, 1)
 $search-bar-ios-input-close-icon-color:   #8F8E94 !default;
 $search-bar-ios-input-close-icon-svg:     "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path fill='" + $search-bar-ios-input-close-icon-color + "' d='M403.1,108.9c-81.2-81.2-212.9-81.2-294.2,0s-81.2,212.9,0,294.2c81.2,81.2,212.9,81.2,294.2,0S484.3,190.1,403.1,108.9z M352,340.2L340.2,352l-84.4-84.2l-84,83.8L160,339.8l84-83.8l-84-83.8l11.8-11.8l84,83.8l84.4-84.2l11.8,11.8L267.6,256L352,340.2z'/></svg>" !default;
 $search-bar-ios-input-close-icon-size:    17px !default;
@@ -80,20 +80,28 @@ $search-bar-ios-input-close-icon-size:    17px !default;
 .search-bar-input-container.left-align {
   .search-bar-search-icon {
     margin-left: 0;
-    transition: $search-bar-ios-input-transition;
   }
   .search-bar-input {
     padding-left: 28px;
-    transition: $search-bar-ios-input-transition;
   }
 }
 
-.search-bar-cancel.left-align {
+.search-bar-cancel {
   @extend button[clear];
-  display: block;
+  // transition: all 2s cubic-bezier(.25, .45, .05, 1);
+  transition: $search-bar-ios-input-transition;
+  transition-duration: 3s !important;
+  margin-right: calc(-100%);
+  // transform: translate3d(100px,0,0);
+  // max-width: 0;
+  min-height: 0;
+}
+
+.search-bar-cancel.left-align {
+  max-width: initial;
+  margin-right: 0;
   padding-left: 8px;
   padding-right: 0;
-  min-height: 0;
 }
 
 &.hairlines .search-bar {

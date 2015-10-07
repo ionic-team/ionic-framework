@@ -25,10 +25,13 @@ import {ConfigComponent} from '../../config/decorators';
     'cancelText': 'Cancel',
     'placeholder': 'Search',
     'cancelAction': function() {
+      // TODO user will override this if they pass a function
+      // need to allow user to call these
       console.log('Default Cancel');
       this.isFocused = false;
       this.shouldLeftAlign = this.value.trim() != '';
-      // TODO input blur
+      this.element = this.elementRef.nativeElement.querySelector('input');
+      this.element.blur();
     }
   }
 })
