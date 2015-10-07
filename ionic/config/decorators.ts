@@ -7,7 +7,7 @@ import {IONIC_DIRECTIVES} from './directives';
 /**
  * @private
  */
-class IonicViewImpl extends View {
+class PageImpl extends View {
   constructor(args = {}) {
     args.directives = (args.directives || []).concat(IONIC_DIRECTIVES);
     super(args);
@@ -15,7 +15,7 @@ class IonicViewImpl extends View {
 }
 
 /**
- * The IonicView decorator indicates that the decorated class is an Ionic
+ * The Page decorator indicates that the decorated class is an Ionic
  * navigation view, meaning it can be navigated to using a [NavController](../../Nav/NavController/#creating_views)
  *
  * Ionic views have all [IONIC_DIRECTIVES](../IONIC_DIRECTIVES/), which include
@@ -25,7 +25,7 @@ class IonicViewImpl extends View {
  * your Ionic views:
  *
  * ```ts
- * @IonicView({
+ * @Page({
  *   template: '<ion-checkbox my-custom-dir>' +
  *             '</ion-checkbox>'
  *   directives: [MyCustomDirective]
@@ -69,10 +69,10 @@ class IonicViewImpl extends View {
  * in your templates.
  *
  */
-export function IonicView(args) {
+export function Page(args) {
   return function(cls) {
     var annotations = Reflect.getMetadata('annotations', cls) || [];
-    annotations.push(new IonicViewImpl(args));
+    annotations.push(new PageImpl(args));
     Reflect.defineMetadata('annotations', annotations, cls);
     return cls;
   }
@@ -136,7 +136,7 @@ export function App(args={}) {
       args.template = '<ion-nav></ion-nav>';
     }
 
-    annotations.push(new IonicViewImpl(args));
+    annotations.push(new PageImpl(args));
 
     // redefine with added annotations
     Reflect.defineMetadata('annotations', annotations, cls);

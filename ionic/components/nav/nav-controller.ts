@@ -74,7 +74,7 @@ import * as util from 'ionic/util';
  * <h2 id="creating_views">View creation</h2>
  * Views are created when they are added to the navigation stack.  For methods
  * like [push()](#push), the NavController takes any component class that is
- * decorated with [@IonicView](../../../config/IonicView/) as its first
+ * decorated with [@Page](../../../config/Page/) as its first
  * argument.  The NavController then [compiles]() that component, adds it to the
  * DOM in a similar fashion to Angular's [DynamicComponentLoader](https://angular.io/docs/js/latest/api/core/DynamicComponentLoader-interface.html),
  * and animates it into view.
@@ -87,10 +87,10 @@ import * as util from 'ionic/util';
  *
  * <h2 id="Lifecycle">Lifecycle events</h2>
  * Lifecycle events are fired during various stages of navigation.  They can be
- * defined in any `@IonicView` decorated component class.
+ * defined in any `@Page` decorated component class.
  *
  * ```ts
- * @IonicView({
+ * @Page({
  *   template: 'Hello World'
  * })
  * class HelloWorld {

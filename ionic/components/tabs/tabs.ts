@@ -43,7 +43,7 @@ import * as dom from 'ionic/util/dom';
  * You can select tabs programatically by injecting Tabs into any child
  * component, and using the [select()](#select) method:
  * ```ts
- * @IonicView({
+ * @Page({
  *   template: `<button (click)="goToTabTwo()">Go to Tab2</button>`
  * })
  * class TabOne {

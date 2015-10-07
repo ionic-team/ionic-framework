@@ -1,4 +1,4 @@
-import {App, IonicView, IonicApp, IonicConfig, IonicPlatform} from 'ionic/ionic';
+import {App, Page, IonicApp, IonicConfig, IonicPlatform} from 'ionic/ionic';
 import {Modal, ActionSheet, NavController, NavParams, Animation} from 'ionic/ionic';
 
 
@@ -44,7 +44,7 @@ class MyAppCmp {
   }
 }
 
-@IonicView({
+@Page({
   template: '<ion-nav [root]="rootView"></ion-nav>'
 })
 export class ContactModal {
@@ -76,7 +76,7 @@ export class ContactModal {
 }
 
 
-@IonicView({
+@Page({
   template: `
     <ion-navbar *navbar><ion-title>First Page Header</ion-title><ion-nav-items primary><button class="e2eCloseMenu" (click)="closeModal()">Close</button></ion-nav-items></ion-navbar>
     <ion-content padding>
@@ -146,7 +146,7 @@ export class ModalFirstPage {
 }
 
 
-@IonicView({
+@Page({
   template: `
     <ion-navbar *navbar><ion-title>Second Page Header</ion-title></ion-navbar>
     <ion-content padding>

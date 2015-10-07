@@ -17,7 +17,7 @@ import {NavRegistry} from './nav-registry';
  * Where `pushPage` and `params` are specified in your component:
  * ```ts
  * import {LoginPage} from 'login';
- * @IonicView({
+ * @Page({
  *   template: `<button [nav-push]="pushPage" [nav-params]="params"></button>`
  * })
  * class MyPage {

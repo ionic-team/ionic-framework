@@ -1,9 +1,9 @@
-  import {App, IonicView, NavController} from 'ionic/ionic';
+  import {App, Page, NavController} from 'ionic/ionic';
 
 //
 // Tab 1
 //
-@IonicView({
+@Page({
   template: `
     <ion-navbar *navbar>
       <ion-title>Heart</ion-title>
@@ -22,7 +22,7 @@ class Tab1 {
 //
 // Tab 2
 //
-@IonicView({
+@Page({
   template: `
     <ion-navbar *navbar>
       <ion-title>Star</ion-title>
@@ -41,7 +41,7 @@ class Tab2 {
 //
 // Tab 3
 //
-@IonicView({
+@Page({
   template: `
     <ion-navbar *navbar>
       <ion-title>Stopwatch</ion-title>

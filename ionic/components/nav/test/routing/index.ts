@@ -1,9 +1,9 @@
 import {RouteConfig, Location} from 'angular2/router';
 
-import {App, IonicView, NavParams, ViewController} from 'ionic/ionic';
+import {App, Page, NavParams, ViewController} from 'ionic/ionic';
 
 
-@IonicView({templateUrl: 'view1.html'})
+@Page({templateUrl: 'view1.html'})
 class View1Cmp {
   constructor(location: Location, viewCtrl: ViewController) {
     this.path = location.path();
@@ -16,7 +16,7 @@ class View1Cmp {
 }
 
 
-@IonicView({templateUrl: 'view2.html'})
+@Page({templateUrl: 'view2.html'})
 class View2Cmp {
   constructor(location: Location, viewCtrl: ViewController) {
     this.path = location.path();
@@ -29,7 +29,7 @@ class View2Cmp {
 }
 
 
-@IonicView({templateUrl: 'view3.html'})
+@Page({templateUrl: 'view3.html'})
 class View3Cmp {
   constructor(params: NavParams, location: Location, viewCtrl: ViewController) {
     this.id = params.get('id');
