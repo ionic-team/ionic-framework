@@ -1,8 +1,9 @@
-import {Component, Directive, View, ElementRef, NgIf, ViewQuery, QueryList} from 'angular2/angular2';
+import {Component, Directive, View, ElementRef, NgIf, Host, Optional} from 'angular2/angular2';
 
 import {Gesture} from 'ionic/gestures/gesture';
 import {DragGesture} from 'ionic/gestures/drag-gesture';
 import {Hammer} from 'ionic/gestures/hammer';
+import {List} from 'ionic/components/list/list';
 
 import * as util from 'ionic/util';
 
@@ -53,11 +54,13 @@ export class ItemSliding {
    * TODO
    * @param {ElementRef} elementRef  A reference to the component's DOM element.
    */
-  constructor(elementRef: ElementRef) {
+  constructor(elementRef: ElementRef, @Optional() @Host() list: List) {
     this._isOpen = false;
     this._isSlideActive = false;
     this._isTransitioning = false;
     this._transform = '';
+
+    this.list = list;
 
     this.ele = elementRef.nativeElement;
     this.swipeButtons = {};
@@ -84,7 +87,7 @@ export class ItemSliding {
     this.gesture = new ItemSlideGesture(this, itemSlidingContent);
   }
 
-  close() {
+  close(andStopDrag) {
     this.openAmount = 0;
 
     // Enable it once, it'll get disabled on the next drag
@@ -98,6 +101,10 @@ export class ItemSliding {
   open(amt) {
     let el = this.itemSlidingContent;
     this.openAmount = amt || 0;
+
+    if(this.list) {
+      this.list.setOpenItem(this);
+    }
 
     if(amt === '') {
       el.style[CSS.transform] = '';
@@ -121,6 +128,20 @@ export class ItemSliding {
     // Clear the explicit transition, allow for CSS one to take over
     this.itemSlidingContent.style[CSS.transition] = '';
   }
+  /**
+   * User did a touchstart
+   */
+  didTouch() {
+    if(this.isOpen()) {
+      this.close();
+      this.didClose = true;
+    } else {
+      if(this.list) {
+        this.list.closeOpenItem();
+      }
+    }
+
+  }
 }
 
 class ItemSlideGesture extends DragGesture {
@@ -133,16 +154,23 @@ class ItemSlideGesture extends DragGesture {
 
     this.el = el;
     this.item = item;
+    this.canDrag = true;
     this.listen();
 
     this.el.addEventListener('touchstart', (e) => {
-      if(this.item.isOpen()) {
-        this.item.close();
-      }
+      this.item.didTouch();
     })
+
+    this.el.addEventListener('touchend', (e) => {
+      this.item.didClose = false;
+    });
+    this.el.addEventListener('touchcancel', (e) => {
+      this.item.didClose = false;
+    });
   }
 
   onDragStart(ev) {
+    if(this.item.didClose) { return; }
 
     this.slide = {};
 
