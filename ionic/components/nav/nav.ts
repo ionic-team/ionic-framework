@@ -9,13 +9,14 @@ import {NavController} from './nav-controller';
  * docs._
  *
  * Nav is a basic navigation controller component.  As a subclass of NavController
- * you use it to navigate to views in your app and manipulate the navigation stack.
- * Nav automatically animates transitions between views for you.
+ * you use it to navigate to pages in your app and manipulate the navigation stack.
+ * Nav automatically animates transitions between pages for you.
  *
- * For more information on using navigation controllers like Nav or [Tabs](../../Tabs/Tabs/),
+ * For more information on using navigation controllers like Nav or [Tab](../../Tabs/Tab/),
  * take a look at the [NavController API reference](../NavController/).
  *
- * You must set a root view to be loaded initially for any Nav you create, using
+ * You must set a root page (where page is any [@Page](../../config/Page/)
+ * component) to be loaded initially by any Nav you create, using
  * the 'root' property:
  *
  * ```ts
@@ -31,8 +32,8 @@ import {NavController} from './nav-controller';
  * ```
  *
  * <h2 id="back_navigation">Back navigation</h2>
- * If a [view](../NavController/#creating_views) you navigate to has a [NavBar](../NavBar/),
- * Nav will automatically add a back button to it if there is a view
+ * If a [page](../NavController/#creating_pages) you navigate to has a [NavBar](../NavBar/),
+ * Nav will automatically add a back button to it if there is a page
  * before the one you are navigating to in the navigation stack.
  *
  * Additionally, specifying the `swipe-back-enabled` property will allow you to
@@ -41,7 +42,7 @@ import {NavController} from './nav-controller';
  * <ion-nav swipe-back-enabled="false" [root]="rootPage"></ion-nav>
  * ```
  *
- * Here is a diagram of how Nav animates smoothly between [views](../NavController/#creating_views):
+ * Here is a diagram of how Nav animates smoothly between pages:
  *
  * <div class="highlight less-margin">
  *   <pre>
@@ -56,7 +57,7 @@ import {NavController} from './nav-controller';
  *                           &lt;ion-nav&gt;
  *                               |
  *                               |
- *             Pane 3  +--------------------+
+ *             Pane 3  +--------------------+                     LoginPage
  *           Pane 2  +--------------------+ |          Has header, animates into pane 1
  *         Pane 1  +--------------------+ | |              +--------------------+
  *                 | | Header (Pane 1)  |&lt;-----------------|       Login        |
@@ -95,27 +96,28 @@ import {NavController} from './nav-controller';
  *
  * ### Panes
  *
- * NOTE: You don't have to do anything with panes, Ionic takes care of animated
- * transitions for you. This is an explanation of how Nav works to accompany the diagram above.
+ * NOTE: You don't have to do anything with panes because Ionic takes care of
+ * animated transitions for you. This is an explanation of how Nav works to
+ * accompany the diagram above.
  *
- * When you push a new view onto the navigation stack using [NavController.push()](../NavController/#push)
- * or the [NavPush directive](../NavPush/), Nav animates the new view into the
+ * When you push a new page onto the navigation stack using [NavController.push()](../NavController/#push)
+ * or the [NavPush directive](../NavPush/), Nav animates the new page into the
  * appropriate pane.
  *
  * Panes are the containers Nav creates to animate views into. They do not have
  * any content of their own, as they are just a structural reference for where
- * views should animate into.
+ * the various parts of a page (header, footer, content) should animate into.
  *
- * The easiest scenario is animating between views with the same structure. If
- * you have a view with a header and content, and navigate to another view that
- * also has a header and content, Nav can smoothly animate the incoming view into
- * the pane the exiting view is leaving. This allows for things like seamless header
- * animations between views that both have headers.
+ * The easiest scenario is animating between pages with the same structure. If
+ * you have a page with a header and content, and navigate to another page that
+ * also has a header and content, Nav can smoothly animate the incoming page
+ * into the pane the exiting page is leaving. This allows for things like
+ * seamless header animations between pages that both have headers.
  *
- * But suppose you have a view with a header and content and want to navigate to
- * a view with no header. The view controller creates a new pane with no header
- * that is directly behind the current pane. It then animates the exiting view
- * out of the current pane and the new view into the new content-only pane.
+ * But suppose you have a page with a header and content and want to navigate to
+ * a page with no header. Nav creates a new pane with no header that is directly
+ * behind the current pane. It then animates the exiting page out of the current
+ * pane and the new page into the new content-only pane.
  *
  */
 @ConfigComponent({

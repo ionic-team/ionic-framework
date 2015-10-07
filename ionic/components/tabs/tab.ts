@@ -11,7 +11,7 @@ import {Tabs} from './tabs';
  *
  * Tab components are basic navigation controllers used with Tabs.  Much like
  * Nav, they are a subclass of NavController and can be used to navigate
- * to views and manipulate the navigation stack of a particular tab.
+ * to pages in and manipulate the navigation stack of a particular tab.
  *
  * For more information on using navigation controllers like Tab or [Nav](../../nav/Nav/),
  * take a look at the [NavController API reference](../NavController/).
@@ -19,7 +19,7 @@ import {Tabs} from './tabs';
  * See the [Tabs API reference](../Tabs/) for more details on configuring Tabs
  * and the TabBar.
  *
- * Like Nav, you must set a root view to be loaded initially for each Tab with
+ * Like Nav, you must set a root page to be loaded initially for each Tab with
  * the 'root' property:
  * ```
  * import {GettingStartedPage} from 'getting-started';
@@ -82,9 +82,9 @@ export class Tab extends NavController {
     injector: Injector,
     zone: NgZone
   ) {
-    // A Tab is both a container of many views, and is a view itself.
-    // A Tab is one ViewController within it's Host Tabs (which extends NavController)
-    // A Tab is a NavController for its child ViewControllers
+    // A Tab is both a container of many pages, and is a page itself.
+    // A Tab is one page within it's Host Tabs (which also extends NavController)
+    // A Tab is a NavController for its child pages
     super(tabs, injector, elementRef, zone);
     this.tabs = tabs;
 

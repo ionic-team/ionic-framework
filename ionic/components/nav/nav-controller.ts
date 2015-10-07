@@ -15,16 +15,16 @@ import * as util from 'ionic/util';
  *
  * NavController is the base class for navigation controller components like
  * [`Nav`](../Nav/) and [`Tab`](../../Tabs/Tab/). You use navigation controllers
- * to navigate to [views](#creating_views) in your app. At a basic level, a
- * navigation controller is an array of views representing a particular history
+ * to navigate to [pages](#creating_pages) in your app. At a basic level, a
+ * navigation controller is an array of pages representing a particular history
  * (of a Tab for example). This array can be manipulated to navigate throughout
- * an app by pushing and popping views or inserting and removing them at
+ * an app by pushing and popping pages or inserting and removing them at
  * arbitrary locations in history.
  *
- * The current view is the last one in the array, or the top of the stack if we
- * think of it that way.  [Pushing](#push) a new view onto the top of the
- * navigation stack causes the new view to be animated in, while [popping](#pop)
- * the current view will navigate to the previous view in the stack.
+ * The current page is the last one in the array, or the top of the stack if we
+ * think of it that way.  [Pushing](#push) a new page onto the top of the
+ * navigation stack causes the new page to be animated in, while [popping](#pop)
+ * the current page will navigate to the previous page in the stack.
  *
  * Unless you are using a directive like [NavPush](../NavPush/), or need a
  * specific NavController, most times you will inject and use a reference to the
@@ -71,16 +71,19 @@ import * as util from 'ionic/util';
  *  }
  * ```
  *
- * <h2 id="creating_views">View creation</h2>
- * Views are created when they are added to the navigation stack.  For methods
+ * <h2 id="creating_pages">Page creation</h2>
+ * _For more information on the `@Page` decorator see the [@Page API
+ * reference](../../../config/Page/)._
+ *
+ * Pages are created when they are added to the navigation stack.  For methods
  * like [push()](#push), the NavController takes any component class that is
- * decorated with [@Page](../../../config/Page/) as its first
- * argument.  The NavController then [compiles]() that component, adds it to the
- * DOM in a similar fashion to Angular's [DynamicComponentLoader](https://angular.io/docs/js/latest/api/core/DynamicComponentLoader-interface.html),
+ * decorated with @Page as its first argument.  The NavController then
+ * [compiles]() that component, adds it to the DOM in a similar fashion to
+ * Angular's [DynamicComponentLoader](https://angular.io/docs/js/latest/api/core/DynamicComponentLoader-interface.html),
  * and animates it into view.
  *
- * By default, views are cached and left in the DOM if they are navigated away
- * from but still in the navigation stack (the exiting view on a `push()` for
+ * By default, pages are cached and left in the DOM if they are navigated away
+ * from but still in the navigation stack (the exiting page on a `push()` for
  * example).  They are destroyed when removed from the navigation stack (on
  * [pop()](#pop) or [setRoot()](#setRoot)).
  *
@@ -100,13 +103,13 @@ import * as util from 'ionic/util';
  * }
  * ```
  *
- * - `onViewLoaded` - Runs when the view has loaded. This event only happens once per view being created and added to the DOM. If a view leaves but is cached, then this event will not fire again on a subsequent viewing. The `onViewLoaded` event is good place to put your setup code for the view.
- * - `onViewWillEnter` - Runs when the view is about to enter and become the active view.
- * - `onViewDidEnter` - Runs when the view has fully entered and is now the active view. This event will fire, whether it was the first load or a cached view.
- * - `onViewWillLeave` - Runs when the view is about to leave and no longer be the active view.
- * - `onViewDidLeave` - Runs when the view has finished leaving and is no longer the active view.
- * - `onViewWillUnload` - Runs when the view is about to be destroyed and have its elements removed.
- * - `onViewDidUnload` - Runs after the view has been destroyed and its elements have been removed.
+ * - `onViewLoaded` - Runs when the page has loaded. This event only happens once per page being created and added to the DOM. If a page leaves but is cached, then this event will not fire again on a subsequent viewing. The `onViewLoaded` event is good place to put your setup code for the page.
+ * - `onViewWillEnter` - Runs when the page is about to enter and become the active page.
+ * - `onViewDidEnter` - Runs when the page has fully entered and is now the active page. This event will fire, whether it was the first load or a cached page.
+ * - `onViewWillLeave` - Runs when the page is about to leave and no longer be the active page.
+ * - `onViewDidLeave` - Runs when the page has finished leaving and is no longer the active page.
+ * - `onViewWillUnload` - Runs when the page is about to be destroyed and have its elements removed.
+ * - `onViewDidUnload` - Runs after the page has been destroyed and its elements have been removed.
  *
  */
 export class NavController extends Ion {

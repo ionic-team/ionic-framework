@@ -15,14 +15,17 @@ class PageImpl extends View {
 }
 
 /**
- * The Page decorator indicates that the decorated class is an Ionic
- * navigation view, meaning it can be navigated to using a [NavController](../../Nav/NavController/#creating_views)
+ * _For more information on how pages are created, see the [NavController API
+ * reference](../../Nav/NavController/#creating_pages)._
  *
- * Ionic views have all [IONIC_DIRECTIVES](../IONIC_DIRECTIVES/), which include
- * all Ionic components, as well as Angular's [CORE_DIRECTIVES](https://angular.io/docs/js/latest/api/core/CORE_DIRECTIVES-const.html)
+ * The Page decorator indicates that the decorated class is an Ionic
+ * navigation component, meaning it can be navigated to using a NavController.
+ *
+ * Pages have all [IONIC_DIRECTIVES](../IONIC_DIRECTIVES/), which include
+ * all Ionic components and directives, as well as Angular's [CORE_DIRECTIVES](https://angular.io/docs/js/latest/api/core/CORE_DIRECTIVES-const.html)
  * and [FORM_DIRECTIVES](https://angular.io/docs/js/latest/api/core/FORM_DIRECTIVES-const.html),
- * already provided to them, so you only need to supply custom directives to
- * your Ionic views:
+ * already provided to them, so you only need to supply custom components and
+ * directives to your pages:
  *
  * ```ts
  * @Page({
@@ -53,21 +56,20 @@ class PageImpl extends View {
  *```
  * Alternatively, you could:
  * ```ts
- * import {Checkbox} from 'ionic/ionic'
+ * import {Checkbox, Icon} from 'ionic/ionic'
  * ```
  * along with any other components and add them individually:
  * ```
  * @View({
- *   directives: [Checkbox]
+ *   directives: [Checkbox, Icon]
  * })
  * ```
- * However, using IONIC_DIRECTIVES will always Just Work :tm: with no
+ * However, using IONIC_DIRECTIVES will always *Just Work* with no
  * performance overhead, so there is really no reason to not always use it.
  *
- * Ionic views are also automatically wrapped in `<ion-view>`, so although you
- * may see these tags if you inspect your markup, you don't need to include them
- * in your templates.
- *
+ * Pages have their content automatically wrapped in `<ion-view>`, so although
+ * you may see these tags if you inspect your markup, you don't need to include
+ * them in your templates.
  */
 export function Page(args) {
   return function(cls) {

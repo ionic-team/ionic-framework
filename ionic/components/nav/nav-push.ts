@@ -3,7 +3,7 @@ import {NavController} from './nav-controller';
 import {NavRegistry} from './nav-registry';
 
 /**
- * Directive for declaratively linking to a new view instead of using
+ * Directive for declaratively linking to a new page instead of using
  * [NavController.push()](../NavController/#push). Similar to ui-router's `ui-sref`.
  *
  * Basic usage:
@@ -14,7 +14,9 @@ import {NavRegistry} from './nav-registry';
  * ```html
  * <button [nav-push]="pushPage" [nav-params]="params"></button>
  * ```
- * Where `pushPage` and `params` are specified in your component:
+ * Where `pushPage` and `params` are specified in your component, and `pushPage`
+ * contains a reference to a [@Page component](../../../config/Page/):
+ *
  * ```ts
  * import {LoginPage} from 'login';
  * @Page({
@@ -29,7 +31,8 @@ import {NavRegistry} from './nav-registry';
  * ```
  *
  * ### Alternate syntax
- * You can also use syntax similar to Angular2's router, passing an array to NavPush:
+ * You can also use syntax similar to Angular2's router, passing an array to
+ * NavPush:
  * ```html
  * <button [nav-push]="[pushPage, params]"></button>
  * ```
