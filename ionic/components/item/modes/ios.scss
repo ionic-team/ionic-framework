@@ -26,6 +26,8 @@ $item-ios-divider-bg:                 #f5f5f5 !default;
 $item-ios-divider-color:              #222 !default;
 $item-ios-divider-padding:            5px 15px !default;
 
+$item-ios-sliding-content-bg:            $background-color !default;
+$item-ios-sliding-transition:         transform 250ms ease-in-out !default;
 
 .item-group-title {
   padding: $item-ios-padding-top $item-ios-padding-right $item-ios-padding-bottom $item-ios-padding-left;
@@ -157,6 +159,41 @@ $item-ios-divider-padding:            5px 15px !default;
     }
   }
 
+
+  ion-item-sliding.item {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  ion-item-sliding-content {
+    background-color: $item-ios-sliding-content-bg;
+    padding-right: ($item-ios-padding-right / 2);
+    padding-left: ($item-ios-padding-left / 2);
+    display: flex;
+    min-height: 42px;
+    justify-content: center;
+
+    transition: $item-ios-sliding-transition;
+
+    // To allow the hairlines through
+    margin-top: 1px;
+    margin-bottom: 1px;
+  }
+  ion-item-options {
+    button, [button] {
+      height: calc(100% - 2px);
+      margin: 1px 0 2px 0;
+
+      border: none;
+      border-radius: 0;
+      display: inline-flex;
+      align-items: center;
+      box-sizing: border-box;
+
+      &:before{
+        margin: 0 auto;
+      }
+    }
+  }
 }
 
 .item.activated,
@@ -175,13 +212,24 @@ button.item {
 .list,
 .card {
   button[ion-item]:not([detail-none]),
-  a[ion-item]:not([detail-push]),
-  [detail-push] {
+  a[ion-item]:not([detail-none]),
+  [detail-push]:not(ion-item-sliding) {
     @include ios-detail-push-icon($item-ios-detail-push-color);
     background-repeat: no-repeat;
     background-position: right ($item-ios-padding-right - 2) center;
     background-size: 14px 14px;
     padding-right: 32px;
+  }
+
+  ion-item-sliding[detail-push] {
+
+    ion-item-sliding-content {
+      @include ios-detail-push-icon($item-ios-detail-push-color);
+      background-repeat: no-repeat;
+      background-position: right ($item-ios-padding-right - 2) center;
+      background-size: 14px 14px;
+      padding-right: 32px;
+    }
   }
 }
 

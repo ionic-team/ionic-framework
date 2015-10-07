@@ -67,6 +67,18 @@ export class List extends Ion {
   setItemTemplate(item) {
     this.itemTemplate = item;
   }
+
+  /**
+   * Keeps track of any open item (a sliding item, for example), to close it later
+   */
+  setOpenItem(item) {
+    this.openItem = item;
+  }
+  closeOpenItem() {
+    if(this.openItem) {
+      this.openItem.close(true);
+    }
+  }
 }
 
 /**

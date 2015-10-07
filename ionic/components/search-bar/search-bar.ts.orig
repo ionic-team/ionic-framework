@@ -21,9 +21,12 @@ import {IonicComponent} from '../../config/decorators';
     'list',
     'query'
   ],
+<<<<<<< HEAD
   defaultInputs: {
-
+=======
+  defaultProperties: {
     'showCancel': false,
+>>>>>>> master
     'cancelText': 'Cancel',
     'placeholder': 'Search',
     'cancelAction': function() {
