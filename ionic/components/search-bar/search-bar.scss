@@ -31,9 +31,3 @@ input[type="search"].search-bar-input {
   line-height: 3rem;
   @include appearance(none);
 }
-
-.search-bar-cancel {
-  visibility: hidden;
-  margin-right: -200px;
-  min-height: 0;
-}
