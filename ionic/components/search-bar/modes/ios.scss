@@ -80,20 +80,22 @@ $search-bar-ios-input-close-icon-size:    17px !default;
 .search-bar-input-container.left-align {
   .search-bar-search-icon {
     margin-left: 0;
-    transition: $search-bar-ios-input-transition;
   }
   .search-bar-input {
     padding-left: 28px;
-    transition: $search-bar-ios-input-transition;
   }
 }
 
-.search-bar-cancel.left-align {
+.search-bar-cancel {
   @extend button[clear];
-  display: block;
   padding-left: 8px;
   padding-right: 0;
-  min-height: 0;
+  transition: $search-bar-ios-input-transition;
+}
+
+.search-bar-cancel.left-align {
+  margin-right: 0;
+  visibility: visible;
 }
 
 &.hairlines .search-bar {

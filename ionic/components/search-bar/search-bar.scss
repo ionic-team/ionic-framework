@@ -33,5 +33,7 @@ input[type="search"].search-bar-input {
 }
 
 .search-bar-cancel {
-  display: none;
+  visibility: hidden;
+  margin-right: -200px;
+  min-height: 0;
 }
