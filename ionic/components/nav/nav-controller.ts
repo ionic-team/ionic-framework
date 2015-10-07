@@ -133,7 +133,7 @@ export class NavController extends Ion {
     this._compiler = compiler;
     this._loader = loader;
     this._viewManager = viewManager;
-    this.zone = zone;
+    this._zone = zone;
 
     this._views = [];
 
@@ -431,7 +431,7 @@ export class NavController extends Ion {
     // wait for the new view to complete setup
     enteringView.stage(() => {
 
-      this.zone.runOutsideAngular(() => {
+      this._zone.runOutsideAngular(() => {
 
         enteringView.shouldDestroy = false;
         enteringView.shouldCache = false;
@@ -472,7 +472,7 @@ export class NavController extends Ion {
           leavingView.didLeave();
 
           // all done!
-          this.zone.run(() => {
+          this._zone.run(() => {
             this._transComplete();
             callback();
           });
@@ -570,7 +570,7 @@ export class NavController extends Ion {
     // wait for the new view to complete setup
     enteringView.stage(() => {
 
-      this.zone.runOutsideAngular(() => {
+      this._zone.runOutsideAngular(() => {
         // set that the new view pushed on the stack is staged to be entering/leaving
         // staged state is important for the transition to find the correct view
         enteringView.state = STAGED_ENTERING_STATE;
@@ -615,7 +615,7 @@ export class NavController extends Ion {
 
     this._sbTrans.progressEnd(completeSwipeBack, rate).then(() => {
 
-      this.zone.run(() => {
+      this._zone.run(() => {
         // find the views that were entering and leaving
         let enteringView = this.getStagedEnteringView();
         let leavingView = this.getStagedLeavingView();
