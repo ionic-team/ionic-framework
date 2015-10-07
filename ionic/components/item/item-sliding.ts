@@ -136,6 +136,10 @@ export class ItemSliding {
       this.close();
       this.didClose = true;
     } else {
+      let openItem = this.list.getOpenItem();
+      if(openItem && openItem !== this) {
+        this.didClose = true;
+      }
       if(this.list) {
         this.list.closeOpenItem();
       }
