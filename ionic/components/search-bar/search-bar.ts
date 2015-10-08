@@ -74,6 +74,16 @@ export class SearchBar extends Ion {
     this.query = '';
   }
 
+  // Add the margin for iOS
+  afterViewInit() {
+    this.cancelButton = this.elementRef.nativeElement.querySelector('.search-bar-cancel');
+
+    if (this.cancelButton) {
+      this.cancelWidth = this.cancelButton.offsetWidth;
+      this.cancelButton.style.marginRight = "-" + this.cancelWidth + "px";
+    }
+  }
+
   /**
    * Much like ngModel, this is called from our valueAccessor for the attached
    * ControlDirective to update the value internally.
@@ -99,10 +109,18 @@ export class SearchBar extends Ion {
   inputFocused() {
     this.isFocused = true;
     this.shouldLeftAlign = true;
+
+    if (this.cancelButton) {
+      this.cancelButton.style.marginRight = "0px";
+    }
   }
   inputBlurred() {
     this.isFocused = false;
     this.shouldLeftAlign = this.value.trim() != '';
+
+    if (this.cancelButton) {
+      this.cancelButton.style.marginRight = "-" + this.cancelWidth + "px";
+    }
   }
 
   clearInput() {
