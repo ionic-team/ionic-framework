@@ -45,7 +45,7 @@ import {CSS, raf} from 'ionic/util/dom';
           '<ng-content></ng-content>'+
         '</ion-item-content>' +
         '<ng-content select="[item-right]"></ng-content>' +
-      '</ion-item-sliding-content>'
+      '</ion-item-sliding-content>',
   directives: [NgIf]
 })
 export class ItemSliding {
