@@ -1,8 +1,8 @@
 import {NavController, NavParams} from 'ionic/ionic';
-import {IonicView, Events} from 'ionic/ionic';
+import {Page, Events} from 'ionic/ionic';
 import * as helpers from 'helpers';
 
-@IonicView({
+@Page({
   templateUrl: 'navigation/navigation-details.html'
 })
 class NavigationDetailsPage {
@@ -26,7 +26,7 @@ class NavigationDetailsPage {
   }
 }
 
-@IonicView({
+@Page({
     templateUrl: 'navigation/navigation.html',
 })
 export class NavigationPage {

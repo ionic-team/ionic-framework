@@ -1,8 +1,8 @@
-import {FORM_DIRECTIVES, FormBuilder, Validators, Control, ControlGroup} from 'angular2/forms';
-import {IonicView} from 'ionic/ionic';
+import {FORM_DIRECTIVES, FormBuilder, Validators, Control, ControlGroup} from 'angular2/angular2';
+import {Page} from 'ionic/ionic';
 
 
-@IonicView({
+@Page({
   templateUrl: 'forms/forms.html',
   bindings: [FormBuilder]
 })

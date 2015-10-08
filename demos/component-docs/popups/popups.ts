@@ -1,6 +1,6 @@
-import {IonicPlatform, IonicView, Popup} from 'ionic/ionic';
+import {IonicPlatform, Page, Popup} from 'ionic/ionic';
 
-@IonicView({
+@Page({
     templateUrl: 'popups/popups.html',
 })
 export class PopupsPage {

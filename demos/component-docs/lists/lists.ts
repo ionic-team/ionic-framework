@@ -1,6 +1,6 @@
-import {IonicPlatform, IonicView} from 'ionic/ionic';
+import {IonicPlatform, Page} from 'ionic/ionic';
 
-@IonicView({
+@Page({
     templateUrl: 'lists/lists.html',
 })
 export class ListsPage {
