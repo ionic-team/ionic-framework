@@ -1,8 +1,8 @@
-import {App, IonicApp, IonicView, NavController, NavParams} from 'ionic/ionic';
-import {IonicView, Events} from 'ionic/ionic';
+import {App, IonicApp, Page, NavController, NavParams} from 'ionic/ionic';
+import {Page, Events} from 'ionic/ionic';
 import * as helpers from 'helpers';
 
-@IonicView({
+@Page({
   templateUrl: 'menus/menu-home.html'
 })
 class PageOne{
@@ -12,19 +12,19 @@ class PageOne{
   }
 }
 
-@IonicView({
+@Page({
   templateUrl: 'menus/menu-friends.html'
 })
 class PageTwo{
 }
 
-@IonicView({
+@Page({
   templateUrl: 'menus/menu-events.html'
 })
 class PageThree{
 }
 
-@IonicView({
+@Page({
   templateUrl: 'menus/menus.html'
 })
 export class MenusPage {

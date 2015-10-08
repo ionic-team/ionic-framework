@@ -1,6 +1,6 @@
-import {IonicPlatform, IonicView} from 'ionic/ionic';
+import {IonicPlatform, Page} from 'ionic/ionic';
 
-@IonicView({
+@Page({
   templateUrl: 'buttons/buttons.html',
 })
 export class ButtonsPage {
@@ -9,7 +9,7 @@ export class ButtonsPage {
     }
 }
 
-@IonicView({
+@Page({
   templateUrl: 'buttons/block.html',
 })
 export class BlockButtonsPage {
@@ -18,7 +18,7 @@ export class BlockButtonsPage {
     }
 }
 
-@IonicView({
+@Page({
   templateUrl: 'buttons/full.html',
 })
 export class FullButtonsPage {
@@ -27,7 +27,7 @@ export class FullButtonsPage {
     }
 }
 
-@IonicView({
+@Page({
   templateUrl: 'buttons/outline.html',
 })
 export class OutlineButtonsPage {
@@ -36,7 +36,7 @@ export class OutlineButtonsPage {
     }
 }
 
-@IonicView({
+@Page({
   templateUrl: 'buttons/round.html',
 })
 export class RoundButtonsPage {
@@ -45,7 +45,7 @@ export class RoundButtonsPage {
     }
 }
 
-@IonicView({
+@Page({
   templateUrl: 'buttons/fab.html',
 })
 export class FabPage {
@@ -54,7 +54,7 @@ export class FabPage {
     }
 }
 
-@IonicView({
+@Page({
   templateUrl: 'buttons/sizes.html',
 })
 export class ButtonSizesPage {
@@ -63,7 +63,7 @@ export class ButtonSizesPage {
     }
 }
 
-@IonicView({
+@Page({
   templateUrl: 'buttons/icons.html',
 })
 export class IconButtonsPage {

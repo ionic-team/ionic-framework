@@ -1,8 +1,8 @@
-import {App, IonicApp, Animation, Modal, NavController, IonicView, Events} from 'ionic/ionic';
+import {App, IonicApp, Animation, Modal, NavController, Page, Events} from 'ionic/ionic';
 import * as helpers from 'helpers';
 
 
-@IonicView({
+@Page({
   templateUrl: 'modals/modals.html'
 })
 class ModalsFirstPage {
@@ -26,7 +26,7 @@ class ModalsFirstPage {
 
 }
 
-@IonicView({
+@Page({
   templateUrl: 'modals/modals-content.html'
 })
 class ModalsContentPage {
@@ -46,7 +46,7 @@ class ModalsContentPage {
   }
 }
 
-@IonicView({
+@Page({
   template: '<ion-nav [root]="rootView"></ion-nav>'
 })
 export class ModalsPage {

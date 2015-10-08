@@ -1,8 +1,8 @@
 import {NavController, NavParams} from 'ionic/ionic';
-import {IonicView, ViewController} from 'ionic/ionic';
+import {Page, ViewController} from 'ionic/ionic';
 import * as helpers from 'helpers';
 
-@IonicView({
+@Page({
   template: 'Hello 1',
 })
 class TabOneCtrl {
@@ -12,7 +12,7 @@ class TabOneCtrl {
   }
 }
 
-@IonicView({
+@Page({
   templateUrl: 'tabs.html'
 })
 export class TabsPage {

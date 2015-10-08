@@ -1,6 +1,6 @@
-import {IonicPlatform, IonicView, ActionSheet} from 'ionic/ionic';
+import {IonicPlatform, Page, ActionSheet} from 'ionic/ionic';
 
-@IonicView({
+@Page({
   templateUrl: 'actionSheet/actionSheet.html',
 })
 export class ActionSheetPage {
