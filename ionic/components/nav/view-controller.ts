@@ -36,7 +36,7 @@ export class ViewController {
       return done();
     }
 
-    // compile the componenet and create a ProtoViewRef
+    // compile the component and create a ProtoViewRef
     navCtrl.compileView(this.componentType).then(hostProtoViewRef => {
 
       // get the pane the NavController wants to use
