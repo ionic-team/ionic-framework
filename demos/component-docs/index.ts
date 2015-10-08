@@ -9,24 +9,28 @@ import * as helpers from 'helpers';
 })
 class DemoApp {
 
-  constructor(app: IonicApp) {
+  rootPage: any;
+
+  constructor(app: IonicApp, platform: IonicPlatform) {
     this.app = app;
-    this.rootPage = ActionSheetPage;
+    this.platform = platform;
 
-    // if (params.data.location) { this.nextPage = helpers.getPageFor(params.data.location); }
-    // else if (window.location.hash) { this.nextPage = helpers.getPageFor(window.location.hash); }
-    // else { this.nextPage = helpers.getPageFor('action-sheet'); }
-
-    window.addEventListener('message', (e) => {
-      zone.run(() => {
-        if (e.data) {
-          var data = JSON.parse(e.data);
-          this.nextPage = helpers.getPageFor(data.hash);
-          this.title = helpers.toTitleCase(data.hash.replace(/-/g, ' '));
-          let nav = this.app.getComponent('nav');
-          nav.setRoot(this.nextPage);
-        }
+    this.platform.ready().then( () => {
+      window.addEventListener('message', (e) => {
+        zone.run(() => {
+          if (e.data) {
+            var data = JSON.parse(e.data);
+            if (data.hash) {
+              this.nextPage = helpers.getPageFor(data.hash.replace('#', ''));
+            } else {
+              this.nextPage = ActionSheetPage;
+            }
+            let nav = this.app.getComponent('nav');
+            nav.setRoot(this.nextPage);
+          }
+        });
       });
+      window.parent.postMessage(this.platform.is('ios')? "ios":"android", "*");
     });
 
   }
