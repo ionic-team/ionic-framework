@@ -8,6 +8,7 @@ module.exports = function(config) {
     frameworks: ['jasmine'],
 
     files: buildConfig.scripts.concat([
+      'node_modules/angular2/bundles/test_lib.dev.js',
       'dist/tests/**/*.spec.js',
       'scripts/karma/test-main.js'
     ]),
