@@ -1,5 +1,5 @@
 import {FORM_DIRECTIVES, FormBuilder, Validators, Control, ControlGroup} from 'angular2/forms';
-import {App, IonicApp, ActionSheet, NavController, NavParams} from 'ionic/ionic';
+import {App, IonicApp, IonicPlatform, ActionSheet, NavController, NavParams} from 'ionic/ionic';
 import {Popup, Modal, IonicView, IonicConfig, Events, Animation} from 'ionic/ionic';
 import {NavigationDetailsPage} from 'navigation';
 
@@ -17,15 +17,16 @@ export class MainPage {
   component: any = { title: 'Action Sheets' };
 
   constructor(app: IonicApp,
-              nav: NavController,
-              actionSheet: ActionSheet,
-              params: NavParams,
-              popup: Popup,
-              modal: Modal,
-              events: Events)
-  {
+    nav: NavController,
+    actionSheet: ActionSheet,
+    params: NavParams,
+    popup: Popup,
+    platform: IonicPlatform,
+    modal: Modal,
+    events: Events) {
     this.params = params;
     this.nav = nav;
+    this.platform = platform;
     this.modal = modal;
     this.popup = popup;
     this.actionSheet = actionSheet;
@@ -44,7 +45,6 @@ export class MainPage {
         if (e.data) {
           var data = JSON.parse(e.data);
           this.component.title = helpers.toTitleCase(data.hash.replace(/-/g, ' '));
-          console.log(this.component.title);
           if (this.component.title === 'Tabs') {
             this.nav.setRoot(TabsPage);
           }
@@ -61,7 +61,32 @@ export class MainPage {
   // Action Sheets
   // **************************
   openMenu() {
-    this.actionSheet.open({
+    if (this.platform.is('android')) {
+      var androidSheet = {
+
+        buttons: [
+          { text: 'Share', icon: 'share' },
+          { text: 'Play', icon: 'arrow-dropright-circle'},
+          { text: 'Favorite', icon: 'ion-md-heart-outline'}
+        ],
+        destructiveText: 'Delete',
+        titleText: 'Purchased',
+        cancelText: 'Cancel',
+        cancel: function() {
+          console.log('Canceled');
+        },
+        destructiveButtonClicked: () => {
+          console.log('Destructive clicked');
+        },
+        buttonClicked: function(index) {
+          console.log('Button clicked', index);
+          if (index == 1) { return false; }
+          return true;
+        }
+      };
+    }
+
+    this.actionSheet.open(androidSheet || {
       buttons: [
         { text: 'Share This' },
         { text: 'Move' }
@@ -77,7 +102,7 @@ export class MainPage {
       },
       buttonClicked: function(index) {
         console.log('Button clicked', index);
-        if(index == 1) { return false; }
+        if (index == 1) { return false; }
         return true;
       }
 
@@ -90,7 +115,7 @@ export class MainPage {
   // Navigation
   // **************************
   openNavDetailsPage(item) {
-    this.nav.push(NavigationDetailsPage, {name: item});
+    this.nav.push(NavigationDetailsPage, { name: item });
   }
 
 
