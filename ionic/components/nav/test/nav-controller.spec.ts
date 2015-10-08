@@ -165,15 +165,31 @@ export function run() {
 
     });
 
+    describe("insert", () => {
+      it('insert page at the specified index', () => {
+        nav._views = [{}, {}, {}];
+        expect(nav._views[2].componentType).toBeUndefined();
+        nav.insert(FirstPage, 2);
+        expect(nav._views[2].componentType).toBe(FirstPage);
+      });
 
+      it('push page if index >= _views.length', () => {
+        nav._views = [{}, {}, {}];
+        spyOn(nav, 'push').and.callThrough();
+        nav.insert(FirstPage, 2);
+        expect(nav.push).not.toHaveBeenCalled();
 
+        nav.transition = mockTransitionFn;
+        nav.insert(FirstPage, 4);
+        expect(nav._views[4].componentType).toBe(FirstPage);
+        expect(nav.push).toHaveBeenCalled();
 
+        nav.insert(FirstPage, 10);
+        expect(nav._views[5].componentType).toBe(FirstPage);
+        expect(nav.push.calls.count()).toBe(2);
+      });
 
-
-
-
-
-
+    });
 
   });
 }
