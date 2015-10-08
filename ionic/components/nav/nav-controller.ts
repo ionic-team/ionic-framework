@@ -505,7 +505,7 @@ export class NavController extends Ion {
    * @private
    * TODO
    */
-  createViewComponetRef(type, hostProtoViewRef, viewContainer, viewCtrlBindings) {
+  createViewComponentRef(type, hostProtoViewRef, viewContainer, viewCtrlBindings) {
     let bindings = this.bindings.concat(viewCtrlBindings);
 
     // the same guts as DynamicComponentLoader.loadNextToLocation
