@@ -121,8 +121,8 @@ a[button] {
   text-decoration: none;
 }
 
-.padding > button[block]:first-child,
-.padding > [button][block]:first-child {
+[padding] > button[block]:first-child,
+[padding] > [button][block]:first-child {
   margin-top: 0;
 }
 
