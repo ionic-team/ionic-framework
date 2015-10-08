@@ -7,7 +7,7 @@
 */
 
 import {IonicPlatform} from '../platform/platform';
-import {isObject, isDefined, isFunction, extend} from '../util/util';
+import {isObject, isDefined, isFunction, isArray, extend} from '../util/util';
 
 /**
 * TODO
@@ -16,10 +16,10 @@ export class IonicConfig {
 
  /**
   * TODO
-  * @param  {Object} settings   The settings for your app
+  * @param  {Object} config   The config for your app
   */
-  constructor(settings={}) {
-    this._s = settings;
+  constructor(config) {
+    this._s = config && isObject(config) && !isArray(config) ? config : {};
     this._c = {}; // cached values
   }
 

@@ -16,10 +16,14 @@ import {TapClick} from '../components/tap-click/tap-click';
 import * as dom from '../util/dom';
 
 
-export function ionicBindings(rootCmp, configSettings) {
+export function ionicBindings(rootCmp, config) {
   let app = new IonicApp();
   let platform = new IonicPlatform();
-  let config = new IonicConfig(configSettings);
+
+  if (!(config instanceof IonicConfig)) {
+    config = new IonicConfig(config);
+  }
+
   let events = new Events();
   let tapClick = new TapClick(app, config, window, document);
 

@@ -1,6 +1,38 @@
-import {IonicConfig, IonicPlatform} from 'ionic/ionic';
+import {IonicConfig, IonicPlatform, ionicBindings} from 'ionic/ionic';
 
 export function run() {
+
+  it('should create a new IonicConfig instace when no confg passed in ionicBindings', () => {
+    let rootCmp = function(){};
+    let bindings = ionicBindings(rootCmp);
+
+    let config = bindings.find(binding => binding.toValue instanceof IonicConfig).toValue;
+
+    expect(config.get('mode')).toEqual('ios');
+  });
+
+  it('should used passed in IonicConfig instance in ionicBindings', () => {
+    let rootCmp = function(){};
+    let userConfig =  new IonicConfig({
+      mode: 'configInstance'
+    })
+    let bindings = ionicBindings(rootCmp, userConfig);
+
+    let config = bindings.find(binding => binding.toValue instanceof IonicConfig).toValue;
+
+    expect(config.get('mode')).toEqual('configInstance');
+  });
+
+  it('should create new IonicConfig instance from config object in ionicBindings', () => {
+    let rootCmp = function(){};
+    let bindings = ionicBindings(rootCmp, {
+      mode: 'configObj'
+    });
+
+    let config = bindings.find(binding => binding.toValue instanceof IonicConfig).toValue;
+
+    expect(config.get('mode')).toEqual('configObj');
+  });
 
   it('should override mode settings', () => {
     let config = new IonicConfig({
@@ -315,6 +347,38 @@ export function run() {
       name: 'Doc Brown',
       occupation: 'Weather Man'
     });
+  });
+
+  it('should create default config w/ bad settings value', () => {
+    let config = new IonicConfig(null);
+    expect(config.settings()).toEqual({});
+
+    config = new IonicConfig(undefined);
+    expect(config.settings()).toEqual({});
+
+    config = new IonicConfig();
+    expect(config.settings()).toEqual({});
+
+    config = new IonicConfig([1,2,3]);
+    expect(config.settings()).toEqual({});
+
+    config = new IonicConfig('im bad, you know it');
+    expect(config.settings()).toEqual({});
+
+    config = new IonicConfig(8675309);
+    expect(config.settings()).toEqual({});
+
+    config = new IonicConfig(true);
+    expect(config.settings()).toEqual({});
+
+    config = new IonicConfig(false);
+    expect(config.settings()).toEqual({});
+
+    config = new IonicConfig(1);
+    expect(config.settings()).toEqual({});
+
+    config = new IonicConfig(function(){});
+    expect(config.settings()).toEqual({});
   });
 
 }
