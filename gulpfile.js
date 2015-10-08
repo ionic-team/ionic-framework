@@ -416,8 +416,8 @@ gulp.task('demos', function(){
 
 gulp.task('demos:all', ['demos'], function() {
    return gulp
-    .src('dist/demos/component-docs/*')
-    .pipe(gulp.dest('dist/ionic-site/docs/v2/components/demo/'))
+    .src('dist/demos/component-docs/**/*')
+    .pipe(gulp.dest('dist/ionic-site/docs/v2/components/demo/')) 
 });
 
 gulp.task('publish', function(done) {

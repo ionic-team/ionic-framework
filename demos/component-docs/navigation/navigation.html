@@ -1,0 +1,30 @@
+
+<ion-navbar *navbar>
+  <ion-title>Navigation</ion-title>
+</ion-navbar>
+
+<ion-content>
+  <ion-list>
+
+    <a ion-item (click)="openNavDetailsPage('Angular')">
+      <icon ion-social-angular item-left></icon>
+      Angular
+    </a>
+
+    <a ion-item href="#" (click)="openNavDetailsPage('CSS3')">
+      <icon ion-social-css3 item-left></icon>
+      CSS3
+    </a>
+
+    <button ion-item (click)="openNavDetailsPage('HTML5')">
+      <icon ion-social-html5 item-left></icon>
+      HTML5
+    </button>
+
+    <button ion-item (click)="openNavDetailsPage('Sass')">
+      <icon ion-social-sass item-left></icon>
+      Sass
+    </button>
+
+  </ion-list>
+</ion-content>
