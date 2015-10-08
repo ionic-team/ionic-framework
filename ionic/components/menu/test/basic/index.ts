@@ -1,15 +1,15 @@
-import {App, IonicApp, IonicView, NavController} from 'ionic/ionic';
+import {App, IonicApp, Page, NavController} from 'ionic/ionic';
 
 
-@IonicView({templateUrl: 'page1.html'})
+@Page({templateUrl: 'page1.html'})
 class Page1 {}
 
 
-@IonicView({templateUrl: 'page3.html'})
+@Page({templateUrl: 'page3.html'})
 class Page3 {}
 
 
-@IonicView({templateUrl: 'page2.html'})
+@Page({templateUrl: 'page2.html'})
 class Page2 {
   constructor(nav: NavController) {
     this.nav = nav;

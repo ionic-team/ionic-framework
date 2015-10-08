@@ -1,19 +1,27 @@
-import {Directive, Component, View, Host, ElementRef, forwardRef, Injector, NgZone} from 'angular2/angular2';
-import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
+import {Directive, Component, View, Host, ElementRef, Compiler, DynamicComponentLoader, AppViewManager, forwardRef, Injector, NgZone, ViewContainerRef} from 'angular2/angular2';
 
+import {IonicApp} from '../app/app';
+import {IonicConfig} from '../../config/config';
 import {NavController} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
 import {Tabs} from './tabs';
 
 
 /**
- * Tab components are basic navigation controllers used with [Tabs]().  Much like
- * [Nav](), they are a subclass of [NavController]() and are used to navigate to
- * views and manipulate the navigation stack of a particular tab.
+ * _For basic Tabs usage, see the [Tabs section](../../../../components/#tabs)
+ * of the Component docs._
  *
- * For basic Tabs usage, see the [Tabs section]() of the component docs.
+ * Tab components are basic navigation controllers used with Tabs.  Much like
+ * Nav, they are a subclass of NavController and can be used to navigate
+ * to pages in and manipulate the navigation stack of a particular tab.
  *
- * Like Nav, you must set a root view to be loaded initially for each Tab with
+ * For more information on using navigation controllers like Tab or [Nav](../../nav/Nav/),
+ * take a look at the [NavController API reference](../NavController/).
+ *
+ * See the [Tabs API reference](../Tabs/) for more details on configuring Tabs
+ * and the TabBar.
+ *
+ * Like Nav, you must set a root page to be loaded initially for each Tab with
  * the 'root' property:
  * ```
  * import {GettingStartedPage} from 'getting-started';
@@ -30,9 +38,12 @@ import {Tabs} from './tabs';
  *   }
  * }
  * ```
+ * <h3 id="tab_properties">Tab Properties</h3>
+ * The Tabs component automatically creates the TabBar from the properties you
+ * set on each Tab.
  *
- * To change the title and icon for each tab, use the `tab-title` and `tab-icon`
- * properties:
+ * To change the title and icon, use the `tab-title` and `tab-icon`
+ * inputs:
  * ```html
  * <ion-tabs>
  * 	 <ion-tab tab-title="Home" tab-icon="home" [root]="tabOneRoot"></ion-tab>
@@ -42,7 +53,7 @@ import {Tabs} from './tabs';
  */
 @Component({
   selector: 'ion-tab',
-  properties: [
+  inputs: [
     'root',
     'tabTitle',
     'tabIcon'
@@ -69,14 +80,18 @@ export class Tab extends NavController {
    */
   constructor(
     @Host() tabs: Tabs,
+    app: IonicApp,
+    config: IonicConfig,
     elementRef: ElementRef,
-    injector: Injector,
+    compiler: Compiler,
+    loader: DynamicComponentLoader,
+    viewManager: AppViewManager,
     zone: NgZone
   ) {
-    // A Tab is both a container of many views, and is a view itself.
-    // A Tab is one ViewController within it's Host Tabs (which extends NavController)
-    // A Tab is a NavController for its child ViewControllers
-    super(tabs, injector, elementRef, zone);
+    // A Tab is both a container of many pages, and is a page itself.
+    // A Tab is one page within it's Host Tabs (which also extends NavController)
+    // A Tab is a NavController for its child pages
+    super(tabs, app, config, elementRef, compiler, loader, viewManager, zone);
     this.tabs = tabs;
 
     let viewCtrl = this.viewCtrl = new ViewController(tabs.Host);
@@ -138,9 +153,9 @@ export class Tab extends NavController {
     return !this.tabs.isActive(this.viewCtrl);
   }
 
-  loadContainer(hostProtoViewRef, componentType, viewCtrl, done) {
+  loadContainer(componentType, hostProtoViewRef, viewCtrl, done) {
 
-    let viewComponetRef = this.createViewComponetRef(hostProtoViewRef, this.contentContainerRef, this.getBindings(viewCtrl));
+    let viewComponetRef = this.createViewComponetRef(componentType, hostProtoViewRef, this.contentContainerRef, this.getBindings(viewCtrl));
     viewCtrl.disposals.push(() => {
       viewComponetRef.dispose();
     });

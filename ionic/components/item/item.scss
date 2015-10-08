@@ -70,7 +70,7 @@ ion-item-content {
   }
 }
 
-.item-text-wrap ion-item-content {
+[text-wrap] ion-item-content {
   white-space: normal;
 }
 
@@ -154,4 +154,10 @@ ion-item-options {
   right: 0;
   z-index: $z-index-item-options;
   height: 100%;
+}
+
+
+// TEMP hack for https://github.com/angular/angular/issues/4582
+[item-right] {
+  order: 1;
 }

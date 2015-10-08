@@ -1,4 +1,4 @@
-import {App, IonicView, IonicApp, IonicConfig, IonicPlatform} from 'ionic/ionic';
+import {App, Page, IonicApp, IonicConfig, IonicPlatform} from 'ionic/ionic';
 import {Modal, ActionSheet, NavController, NavParams, Animation} from 'ionic/ionic';
 
 
@@ -24,8 +24,6 @@ class MyAppCmp {
     console.log('android', platform.is('android'))
     console.log('windows phone', platform.is('windowsphone'))
 
-    console.log('isRTL', app.isRTL())
-
     platform.ready().then(() => {
       console.log('platform.ready')
     });
@@ -33,19 +31,20 @@ class MyAppCmp {
   }
 
   openModal() {
-    this.modal.open(ContactModal);
+    this.modal.open(ContactModal, {
+      handle: 'my-awesome-modal'
+    });
   }
 
   openModalCustomAnimation() {
     this.modal.open(ContactModal, {
       enterAnimation: 'my-fade-in',
-      leaveAnimation: 'my-fade-out',
-      handle: 'my-awesome-modal'
+      leaveAnimation: 'my-fade-out'
     });
   }
 }
 
-@IonicView({
+@Page({
   template: '<ion-nav [root]="rootView"></ion-nav>'
 })
 export class ContactModal {
@@ -53,31 +52,31 @@ export class ContactModal {
     console.log('ContactModal constructor')
     this.rootView = ModalFirstPage;
   }
-  onViewLoaded() {
-    console.log('ContactModal onViewLoaded');
+  onPageLoaded() {
+    console.log('ContactModal onPageLoaded');
   }
-  onViewWillEnter() {
-    console.log('ContactModal onViewWillEnter');
+  onPageWillEnter() {
+    console.log('ContactModal onPageWillEnter');
   }
-  onViewDidEnter() {
-    console.log('ContactModal onViewDidEnter');
+  onPageDidEnter() {
+    console.log('ContactModal onPageDidEnter');
   }
-  onViewWillLeave() {
-    console.log('ContactModal onViewWillLeave');
+  onPageWillLeave() {
+    console.log('ContactModal onPageWillLeave');
   }
-  onViewDidLeave() {
-    console.log('ContactModal onViewDidLeave');
+  onPageDidLeave() {
+    console.log('ContactModal onPageDidLeave');
   }
-  onViewWillUnload() {
-    console.log('ContactModal onViewWillUnload');
+  onPageWillUnload() {
+    console.log('ContactModal onPageWillUnload');
   }
-  onViewDidUnload() {
-    console.log('ContactModal onViewDidUnload');
+  onPageDidUnload() {
+    console.log('ContactModal onPageDidUnload');
   }
 }
 
 
-@IonicView({
+@Page({
   template: `
     <ion-navbar *navbar><ion-title>First Page Header</ion-title><ion-nav-items primary><button class="e2eCloseMenu" (click)="closeModal()">Close</button></ion-nav-items></ion-navbar>
     <ion-content padding>
@@ -147,7 +146,7 @@ export class ModalFirstPage {
 }
 
 
-@IonicView({
+@Page({
   template: `
     <ion-navbar *navbar><ion-title>Second Page Header</ion-title></ion-navbar>
     <ion-content padding>

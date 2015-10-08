@@ -1,6 +1,5 @@
 import {Directive, View, Host, Optional, ElementRef, Attribute, Query, QueryList, NgZone} from 'angular2/angular2';
 
-import {IonicDirective} from '../../config/decorators';
 import {IonicConfig} from '../../config/config';
 import {IonInput} from '../form/input';
 import {Label} from './label';
@@ -15,64 +14,8 @@ import {IonicPlatform} from '../../platform/platform';
  * TODO
  */
 @Directive({
-  selector: 'textarea,input[type=text],input[type=password],input[type=number],input[type=search],input[type=email],input[type=url],input[type=tel]',
-  property: [
-    'tabIndex'
-  ],
-  host: {
-    '[tabIndex]': 'tabIndex',
-    '[attr.aria-labelledby]': 'labelledBy',
-    'class': 'text-input input'
-  }
-})
-export class TextInputElement {
-  /**
-   * TODO
-   * @param {string} type  The value of the underlying element's type attribute.
-   * @param {ElementRef} elementRef  TODO
-   * @param {IonicConfig} config  TODO
-   */
-  constructor(
-    @Attribute('type') type: string,
-    elementRef: ElementRef,
-    config: IonicConfig
-  ) {
-    this.type = type;
-    this.elementRef = elementRef;
-    this.tabIndex = this.tabIndex || '';
-  }
-
-  /**
-   * Focus the input.
-   */
-  setFocus() {
-    this.elementRef.nativeElement.focus();
-  }
-
-  /**
-   * Whether the input has focus or not.
-   * @returns {boolean}  true if the input has focus, otherwise false.
-   */
-  get hasFocus() {
-    return dom.hasFocus(this.elementRef);
-  }
-
-  /**
-   * Whether the input has a value.
-   * @returns {boolean}  true if the input has a value, otherwise false.
-   */
-  get hasValue() {
-    return (this.elementRef.nativeElement.value !== '');
-  }
-}
-
-/**
- * TODO
- */
-@IonicDirective({
   selector: 'ion-input',
-  classId: 'item-input',
-  properties: [
+  inputs: [
     'tabIndex'
   ],
   host: {
@@ -104,9 +47,7 @@ export class TextInput extends Ion {
     app: IonicApp,
     ngZone: NgZone,
     platform: IonicPlatform,
-    @Optional() @Host() scrollView: Content,
-    @Query(TextInputElement) inputQry: QueryList<TextInputElement>,
-    @Query(Label) labelQry: QueryList<Label>
+    @Optional() @Host() scrollView: Content
   ) {
     super(elementRef, config);
 
@@ -118,10 +59,18 @@ export class TextInput extends Ion {
     this.app = app;
     this.zone = ngZone;
     this.platform = platform;
-    this.inputQry = inputQry;
-    this.labelQry = labelQry;
 
     this.keyboardHeight = this.config.get('keyboardHeight');
+  }
+
+  registerInputElement(textInputElement) {
+    this.input = textInputElement;
+    this.type = textInputElement.type;
+    textInputElement.tabIndex = -1;
+  }
+
+  registerLabel(label) {
+    this.label = label;
   }
 
   /**
@@ -130,21 +79,11 @@ export class TextInput extends Ion {
   onInit() {
     super.onInit();
 
-    let label = this.labelQry.first;
-    this.input = this.inputQry.first;
-
-    if (this.input) {
-      this.type = this.input.type;
-      this.input.tabIndex = -1;
-
-      if (label) {
-        label.id = (label.id || 'label-' + this.id);
-        this.input.labelledBy = label.id;
-      }
+    if (this.input && this.label) {
+      this.input.labelledBy = this.label.id = (this.label.id || 'label-' + this.id);
     }
 
     let self = this;
-
     self.scrollMove = (ev) => {
       self.deregListeners();
 
@@ -439,5 +378,63 @@ export class TextInput extends Ion {
   }
 
 }
+
+/**
+
+ * TODO
+ */
+@Directive({
+  selector: 'textarea,input[type=text],input[type=password],input[type=number],input[type=search],input[type=email],input[type=url],input[type=tel]',
+  inputs: [
+    'tabIndex'
+  ],
+  host: {
+    '[tabIndex]': 'tabIndex',
+    '[attr.aria-labelledby]': 'labelledBy',
+    'class': 'text-input input'
+  }
+})
+export class TextInputElement {
+  /**
+   * TODO
+   * @param {string} type  The value of the underlying element's type attribute.
+   * @param {ElementRef} elementRef  TODO
+   * @param {IonicConfig} config  TODO
+   */
+  constructor(
+    @Attribute('type') type: string,
+    elementRef: ElementRef,
+    @Optional() textInput: TextInput
+  ) {
+    this.type = type;
+    this.elementRef = elementRef;
+    this.tabIndex = this.tabIndex || '';
+    textInput && textInput.registerInputElement(this);
+  }
+
+  /**
+   * Focus the input.
+   */
+  setFocus() {
+    this.elementRef.nativeElement.focus();
+  }
+
+  /**
+   * Whether the input has focus or not.
+   * @returns {boolean}  true if the input has focus, otherwise false.
+   */
+  get hasFocus() {
+    return dom.hasFocus(this.elementRef);
+  }
+
+  /**
+   * Whether the input has a value.
+   * @returns {boolean}  true if the input has a value, otherwise false.
+   */
+  get hasValue() {
+    return (this.elementRef.nativeElement.value !== '');
+  }
+}
+
 
 const SCROLL_INTO_VIEW_DURATION = 400;

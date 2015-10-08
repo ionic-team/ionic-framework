@@ -1,9 +1,10 @@
 import {Component, Directive, View, Optional, ElementRef, TemplateRef, forwardRef, Inject} from 'angular2/angular2';
 
 import {Ion} from '../ion';
+import {Icon} from '../icon/icon';
 import {ToolbarBase} from '../toolbar/toolbar';
 import {IonicConfig} from '../../config/config';
-import {IonicView} from '../../config/decorators';
+import {Page} from '../../config/decorators';
 import {IonicApp} from '../app/app';
 import {ViewController} from '../nav/view-controller';
 import {NavController} from '../nav/nav-controller';
@@ -54,7 +55,7 @@ class BackButtonText extends Ion {
     'class': 'toolbar'
   }
 })
-@IonicView({
+@View({
   template:
     '<div class="toolbar-inner">' +
       '<button class="back-button">' +
@@ -69,7 +70,7 @@ class BackButtonText extends Ion {
       '<ng-content select="ion-nav-items[secondary]"></ng-content>' +
     '</div>' +
     '<div class="toolbar-background"></div>',
-  directives: [BackButton, BackButtonText]
+  directives: [BackButton, BackButtonText, Icon]
 })
 export class Navbar extends ToolbarBase {
   constructor(
@@ -104,7 +105,7 @@ export class Navbar extends ToolbarBase {
   }
 
   didEnter() {
-    this.app.title(this.getTitleText());
+    this.app.setTitle(this.getTitleText());
   }
 
 }

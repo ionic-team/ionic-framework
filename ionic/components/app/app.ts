@@ -1,41 +1,13 @@
-import {Component, View, bootstrap, ElementRef, NgZone, bind, DynamicComponentLoader, Injector} from 'angular2/angular2';
-import {ROUTER_BINDINGS, HashLocationStrategy, LocationStrategy, Router} from 'angular2/router';
+import {Title} from 'angular2/angular2';
 
-import {IonicConfig} from '../../config/config';
-import {IonicPlatform, Platform} from '../../platform/platform';
 import {ClickBlock} from '../../util/click-block';
 import {ScrollTo} from '../../animations/scroll-to';
 import * as dom from '../../util/dom';
 
-// injectables
-import {TapClick} from '../tap-click/tap-click';
-import {ActionSheet} from '../action-sheet/action-sheet';
-import {Modal} from '../modal/modal';
-import {Popup} from '../popup/popup';
-import {FocusHolder} from '../form/focus-holder';
-import {Events} from '../../util/events';
-import {NavRegistry} from '../nav/nav-registry';
-import {Translate} from '../../translation/translate';
 
 /**
- * @name IonicApp
- * @description
- * Service exposing the Ionic app level API.
- *
- * @usage
- * ```js
- *  @App({
- *    templateUrl: '/app/app.html',
- *  })
- *  class MyApp {
- *
- *    constructor(app: IonicApp) {
- *      this.app = app;
- *    }
- *  }
- *  ```
- * Note: Ionic sets `ion-app` as the selector for the app. Setting a custom selector will override this and cause CSS problems.
- *
+ * Component registry service.  For more information on registering
+ * components see the [IdRef API reference](../id/IdRef/).
  */
 export class IonicApp {
 
@@ -43,7 +15,7 @@ export class IonicApp {
    * TODO
    */
   constructor() {
-    this.overlays = [];
+    this._title = new Title();
     this._disTime = 0;
     this._trnsTime = 0;
 
@@ -52,63 +24,15 @@ export class IonicApp {
   }
 
   /**
-   * Bind some global events and publish on the 'app' channel
-   */
-  bindEvents(platform, events) {
-    window.addEventListener('online', (event) => {
-      events.publish('app:online', event);
-    }, false);
-
-    window.addEventListener('offline', (event) => {
-      events.publish('app:offline', event);
-    }, false);
-
-    window.addEventListener('orientationchange', (event) => {
-      events.publish('app:rotated', event);
-    });
-
-    // When that status taps, we respond
-    window.addEventListener('statusTap', (event) => {
-      // TODO: Make this more better
-      var el = document.elementFromPoint(platform.width() / 2, platform.height() / 2);
-      if(!el) { return; }
-
-      var content = dom.closest(el, 'scroll-content');
-      if(content) {
-        var scrollTo = new ScrollTo(content);
-        scrollTo.start(0, 0, 300, 0);
-      }
-    });
-  }
-
-  /**
-   * TODO
-   * @param {Object} appRef  TODO
-   */
-  load(appRef) {
-    this.ref(appRef);
-    this._zone = appRef.injector.get(NgZone);
-  }
-
-  /**
-   * TODO
-   * @param {TODO=} val  TODO
-   * @return {TODO} TODO
-   */
-  focusHolder(val) {
-    if (arguments.length) {
-      this._fcsHldr = val;
-    }
-    return this._fcsHldr;
-  }
-
-  /**
    * Sets the document title.
    * @param {string} val  Value to set the document title to.
    */
-  title(val) {
-    // TODO: User angular service
-    document.title = val;
+  setTitle(val) {
+    this._title.setTitle(val);
+  }
+
+  getTitle() {
+    return this._title.getTitle(val);
   }
 
   /**
@@ -145,42 +69,6 @@ export class IonicApp {
    */
   isTransitioning() {
     return (this._trnsTime > Date.now());
-  }
-
-  /**
-   * TODO
-   * @param {TODO=} val  TODO
-   * @return TODO
-   */
-  ref(val) {
-    if (arguments.length) {
-      this._ref = val;
-    }
-    return this._ref;
-  }
-
-  /**
-   * TODO
-   * @return TODO
-   */
-  get injector() {
-    return this._ref.injector;
-  }
-
-  /**
-   * TODO
-   * @param {Function} fn  TODO
-   */
-  zoneRun(fn) {
-    this._zone.run(fn);
-  }
-
-  /**
-   * TODO
-   * @param {Function} fn  TODO
-   */
-  zoneRunOutside(fn) {
-    this._zone.runOutsideAngular(fn);
   }
 
   /**
@@ -225,211 +113,4 @@ export class IonicApp {
     return this.components[id];
   }
 
-  /**
-   * Create and append the given component into the root
-   * element of the app.
-   *
-   * @param {TODO} componentType the component to create and insert
-   * @return {Promise} Promise that resolves with the ContainerRef created
-   */
-  appendComponent(componentType: Type) {
-    return this.rootAnchor.append(componentType);
-  }
-
-  /**
-   * If val is defined, specifies whether app text is RTL.  If val is undefined
-   * returns whether app text is RTL.
-   *
-   * @param {boolean=} val  Boolean specifying whether text is RTL or not.
-   * @returns {boolean} true if app text is RTL, false if otherwise.
-   */
-  isRTL(val) {
-    if (arguments.length) {
-      this._rtl = val;
-    }
-    return this._rtl;
-  }
-
-}
-
-@Component({
-  selector: 'root-anchor'
-})
-@View({
-  template: ''
-})
-class RootAnchor {
-  constructor(app: IonicApp, elementRef: ElementRef, loader: DynamicComponentLoader) {
-    this.elementRef = elementRef;
-    this.loader = loader;
-    app.rootAnchor = this;
-  }
-
-  append(componentType) {
-    return this.loader.loadNextToLocation(componentType, this.elementRef).catch(err => {
-      console.error(err)
-    });
-  }
-}
-
-function initApp(window, document, config, platform) {
-  // create the base IonicApp
-  let app = new IonicApp();
-  app.isRTL(document.dir == 'rtl');
-
-  // load all platform data
-  platform.url(window.location.href);
-  platform.userAgent(window.navigator.userAgent);
-  platform.navigatorPlatform(window.navigator.platform);
-  platform.load();
-
-  // copy default platform settings into the user config platform settings
-  // user config platform settings should override default platform settings
-  config.setPlatform(platform);
-
-  // config and platform settings have been figured out
-  // apply the correct CSS to the app
-  applyBodyCss(document, config, platform);
-
-  // prepare the ready promise to fire....when ready
-  platform.prepareReady(config);
-
-  setTimeout(function() {
-    // start listening for resizes XXms after the app starts
-    window.addEventListener('resize', function() {
-      platform.windowResize();
-    });
-  }, 2500);
-
-  return app;
-}
-
-/**
- * TODO
- *
- * @param {TODO} rootComponentType  TODO
- * @param {TODO} config  TODO
- * @return {Promise} TODO
- */
-export function ionicBootstrap(rootComponentType, views, config) {
-  return new Promise(resolve => {
-    try {
-      // get the user config, or create one if wasn't passed in
-      if (typeof config !== IonicConfig) {
-        config = new IonicConfig(config);
-      }
-
-      let platform = new IonicPlatform();
-
-      // create the base IonicApp
-      let app = initApp(window, document, config, platform);
-
-      // TODO: probs need a better way to inject global injectables
-      let tapClick = new TapClick(app, config, window, document);
-      let actionSheet = new ActionSheet(app, config);
-      let modal = new Modal(app, config);
-      let popup = new Popup(app, config);
-      let events = new Events();
-      let translate = new Translate();
-      let navRegistry = new NavRegistry(views);
-
-      app.bindEvents(platform, events);
-
-      // add injectables that will be available to all child components
-      let appBindings = Injector.resolve([
-        bind(IonicApp).toValue(app),
-        bind(IonicConfig).toValue(config),
-        bind(IonicPlatform).toValue(platform),
-        bind(TapClick).toValue(tapClick),
-        bind(ActionSheet).toValue(actionSheet),
-        bind(Modal).toValue(modal),
-        bind(Popup).toValue(popup),
-        bind(Events).toValue(events),
-        ROUTER_BINDINGS,
-        bind(LocationStrategy).toClass(HashLocationStrategy),
-        bind(Translate).toValue(translate),
-        bind(NavRegistry).toValue(navRegistry)
-      ]);
-
-      bootstrap(rootComponentType, appBindings).then(appRef => {
-        app.load(appRef);
-
-        // Adding a anchor to add overlays off of...huh??
-        let elementRefs = appRef._hostComponent.hostView._view.elementRefs;
-        let lastElementRef = elementRefs[1];
-        let injector = lastElementRef.parentView._view.rootElementInjectors[0]._injector;
-        let loader = injector.get(DynamicComponentLoader);
-        loader.loadNextToLocation(RootAnchor, lastElementRef).then(() => {
-          // append the focus holder if its needed
-          if (config.get('keyboardScrollAssist')) {
-            app.appendComponent(FocusHolder).then(ref => {
-              app.focusHolder(ref.instance);
-            });
-          }
-        }).catch(err => {
-          console.error(err)
-        });
-
-        resolve(app);
-
-      }).catch(err => {
-        console.error('ionicBootstrap', err);
-      });
-
-    } catch (err) {
-      console.error(err);
-    }
-  });
-}
-
-function applyBodyCss(document, config, platform) {
-  let bodyEle = document.body;
-  if (!bodyEle) {
-    return dom.ready(function() {
-      applyBodyCss(document, config, platform);
-    });
-  }
-
-  let versions = platform.versions();
-  platform.platforms().forEach(platformName => {
-    // platform-ios
-    let platformClass = 'platform-' + platformName;
-    bodyEle.classList.add(platformClass);
-
-    let platformVersion = versions[platformName];
-    if (platformVersion) {
-      // platform-ios9
-      platformClass += platformVersion.major;
-      bodyEle.classList.add(platformClass);
-
-      // platform-ios9_3
-      bodyEle.classList.add(platformClass + '_' + platformVersion.minor);
-    }
-  });
-
-  // set the mode class name
-  // ios
-  bodyEle.classList.add(config.get('mode'));
-
-  // touch devices should not use :hover CSS pseudo
-  // enable :hover CSS when the "hoverCSS" setting is not false
-  if (config.get('hoverCSS') !== false) {
-    bodyEle.classList.add('enable-hover');
-  }
-
-  /**
-  * Hairline Shim
-  * Add the "hairline" CSS class name to the body tag
-  * if the browser supports subpixels.
-  */
-  if (window.devicePixelRatio >= 2) {
-    var hairlineEle = document.createElement('div');
-    hairlineEle.style.border = '.5px solid transparent';
-    bodyEle.appendChild(hairlineEle);
-
-    if (hairlineEle.offsetHeight === 1) {
-      bodyEle.classList.add('hairlines');
-    }
-    bodyEle.removeChild(hairlineEle);
-  }
 }

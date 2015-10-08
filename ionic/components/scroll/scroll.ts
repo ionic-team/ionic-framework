@@ -1,8 +1,7 @@
-import {View, ElementRef, onInit} from 'angular2/angular2';
+import {Component, View, ElementRef, onInit} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
-import {IonicComponent} from '../../config/decorators';
 import {Gesture} from '../../gestures/gesture';
 import {CSS} from '../../util/dom';
 import {Animation} from '../../animations/animation';
@@ -10,12 +9,12 @@ import {Animation} from '../../animations/animation';
 import * as util from 'ionic/util';
 
 /**
- * ion-scroll is a non-flexboxed scroll area that can
- * scroll horizontally or vertically.
+ * Scroll is a non-flexboxed scroll area that can scroll horizontally or
+ * vertically.
  */
-@IonicComponent({
+@Component({
   selector: 'ion-scroll',
-  properties: [
+  inputs: [
     'scrollX', 'scrollY', 'zoom', 'maxZoom'
   ],
   host: {

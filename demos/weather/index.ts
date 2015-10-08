@@ -1,13 +1,11 @@
-import {Component, Directive, View} from 'angular2/angular2';
-import {NgIf, NgFor, NgClass, ElementRef} from 'angular2/angular2';
-import {FormBuilder, Control, ControlGroup, Validators, FORM_DIRECTIVES} from 'angular2/forms';
+import {Component, Directive, View, NgIf, NgFor, NgClass, ElementRef} from 'angular2/angular2';
+import {FormBuilder, Control, ControlGroup, Validators, FORM_DIRECTIVES} from 'angular2/angular2';
 
 import {App, IonicView, Animation, Content, Scroll, Modal, NavController, NavParams} from 'ionic/ionic';
 
 import {Geo} from './geo';
 import {Weather} from './weather';
 import {Flickr} from './flickr';
-
 
 
 @IonicView({
@@ -58,7 +56,7 @@ let WEATHER_ICONS = {
 
 @Component({
   selector: 'weather-icon',
-  properties: [
+  inputs: [
     'icon'
   ]
 })
@@ -82,7 +80,7 @@ export class WeatherIcon {
 
 @Component({
   selector: 'current-time',
-  properties: [
+  inputs: [
     'localtz'
   ]
 })
@@ -102,7 +100,7 @@ export class CurrentTime {
 
 @Component({
   selector: 'current-weather',
-  properties: [
+  inputs: [
     'current'
   ]
 })
@@ -177,7 +175,7 @@ export class CurrentWeather {
 
 @Component({
   selector: 'background-cycler',
-  properties: [
+  inputs: [
     'image'
   ]
 })

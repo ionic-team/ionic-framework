@@ -1,16 +1,18 @@
+import {Injectable} from 'angular2/angular2';
+
+import {IonicApp} from '../app/app';
+import {IonicConfig} from '../../config/config';
 import {pointerCoord, hasPointerMoved, transitionEnd} from '../../util/dom';
 import {Activator} from './activator';
 import {RippleActivator} from './ripple';
 
 
+@Injectable()
 export class TapClick {
 
-  constructor(app: IonicApp, config: IonicConfig, window, document) {
+  constructor(app: IonicApp, config: IonicConfig) {
     const self = this;
     self.app = app;
-    self.config = config;
-    self.win = window;
-    self.doc = document;
 
     self.pointerTolerance = 4;
     self.lastTouch = 0;
@@ -18,14 +20,13 @@ export class TapClick {
     self.disableClick = 0;
     self.disableClickLimit = 1000;
 
-    self.tapPolyfill = (config.get('tapPolyfill') !== false);
-
     if (config.get('mdRipple')) {
       self.activator = new RippleActivator(app, config);
     } else {
       self.activator = new Activator(app, config);
     }
 
+    self.enable( config.get('tapPolyfill') !== false );
 
     function bindDom(type, listener, useCapture) {
       document.addEventListener(type, listener, useCapture);
@@ -80,6 +81,10 @@ export class TapClick {
 
   }
 
+  enable(shouldEnable) {
+    this._enabled = shouldEnable;
+  }
+
 
   /**
    * TODO
@@ -88,7 +93,7 @@ export class TapClick {
   touchEnd(ev) {
     let self = this;
 
-    if (self.tapPolyfill && self.start && self.app.isEnabled()) {
+    if (self._enabled && self.start && self.app.isEnabled()) {
       let endCoord = pointerCoord(ev);
 
       if (!hasPointerMoved(self.pointerTolerance, self.start, endCoord)) {
@@ -96,8 +101,8 @@ export class TapClick {
 
         self.disableClick = Date.now();
 
-        let clickEvent = self.doc.createEvent('MouseEvents');
-        clickEvent.initMouseEvent('click', true, true, self.win, 1, 0, 0, endCoord.x, endCoord.y, false, false, false, false, 0, null);
+        let clickEvent = document.createEvent('MouseEvents');
+        clickEvent.initMouseEvent('click', true, true, window, 1, 0, 0, endCoord.x, endCoord.y, false, false, false, false, 0, null);
         clickEvent.isIonicTap = true;
         ev.target.dispatchEvent(clickEvent);
       }

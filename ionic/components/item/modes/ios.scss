@@ -210,7 +210,7 @@ button.item {
 }
 
 .list,
-.card {
+ion-card {
   button[ion-item]:not([detail-none]),
   a[ion-item]:not([detail-none]),
   [detail-push]:not(ion-item-sliding) {

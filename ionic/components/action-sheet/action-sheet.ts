@@ -6,10 +6,11 @@
 * The ActionSheet is a modal menu with options to select based on an action.
 */
 
-import {View, Injectable, NgFor, NgIf} from 'angular2/angular2';
+import {Component, View, Injectable, NgFor, NgIf} from 'angular2/angular2';
 
+import {OverlayController} from '../overlay/overlay-controller';
+import {IonicConfig} from '../../config/config';
 import {Icon} from '../icon/icon';
-import {Overlay} from '../overlay/overlay';
 import {Animation} from '../../animations/animation';
 import * as util from 'ionic/util';
 
@@ -52,6 +53,9 @@ import * as util from 'ionic/util';
  * }
  * ```
  */
+@Component({
+  selector: 'ion-action-sheet'
+})
 @View({
   template:
     '<backdrop (click)="_cancel()" tappable disable-activated></backdrop>' +
@@ -76,30 +80,42 @@ import * as util from 'ionic/util';
     '</action-sheet-wrapper>',
   directives: [NgFor, NgIf, Icon]
 })
-class ActionSheetDirective {
+class ActionSheetCmp {
 
   _cancel() {
     this.cancel && this.cancel();
-    return this.overlayRef.close();
+    return this.close();
   }
 
   _destructive() {
     let shouldClose = this.destructiveButtonClicked();
     if (shouldClose === true) {
-      return this.overlayRef.close();
+      return this.close();
     }
   }
 
   _buttonClicked(index) {
     let shouldClose = this.buttonClicked(index);
     if (shouldClose === true) {
-      return this.overlayRef.close();
+      return this.close();
     }
   }
 }
 
+
 @Injectable()
-export class ActionSheet extends Overlay {
+export class ActionSheet {
+
+  constructor(ctrl: OverlayController, config: IonicConfig) {
+    this.ctrl = ctrl;
+    this._defaults = {
+      enterAnimation: config.get('actionSheetEnter'),
+      leaveAnimation: config.get('actionSheetLeave'),
+      cancelIcon: config.get('actionSheetCancelIcon'),
+      destructiveIcon: config.get('actionSheetDestructiveIcon')
+    };
+  }
+
   /**
    * Create and open a new Action Sheet. This is the
    * public API, and most often you will only use ActionSheet.open()
@@ -108,25 +124,18 @@ export class ActionSheet extends Overlay {
    * @return {Promise} Promise that resolves when the action sheet is open.
    */
   open(opts={}) {
-    let config = this.config;
-    let defaults = {
-      enterAnimation: config.get('actionSheetEnter'),
-      leaveAnimation: config.get('actionSheetLeave'),
-      cancelIcon: config.get('actionSheetCancelIcon'),
-      destructiveIcon: config.get('actionSheetDestructiveIcon')
-    };
-
-    let context = util.extend(defaults, opts);
-
-    return this.create(OVERLAY_TYPE, ActionSheetDirective, context, context);
+    return this.ctrl.open(OVERLAY_TYPE, ActionSheetCmp, util.extend(this._defaults, opts));
   }
 
   /**
    * TODO
    * @returns {TODO} TODO
    */
-  get() {
-    return this.getByType(OVERLAY_TYPE);
+  get(handle) {
+    if (handle) {
+      return this.ctrl.getByHandle(handle, OVERLAY_TYPE);
+    }
+    return this.ctrl.getByType(OVERLAY_TYPE);
   }
 
 }

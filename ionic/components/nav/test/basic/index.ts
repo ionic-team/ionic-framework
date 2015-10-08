@@ -1,9 +1,9 @@
 import {App, NavController} from 'ionic/ionic';
-import {IonicView, IonicConfig, IonicApp} from 'ionic/ionic';
+import {Page, IonicConfig, IonicApp} from 'ionic/ionic';
 import {NavParams, NavController} from 'ionic/ionic';
 
 
-@IonicView({
+@Page({
   template: '' +
     '<ion-navbar *navbar>' +
       '<ion-title><ion-segment><ion-segment-button>Friends</ion-segment-button><ion-segment-button>Enemies</ion-segment-button></ion-segment></ion-title>' +
@@ -53,7 +53,7 @@ class FirstPage {
 }
 
 
-@IonicView({
+@Page({
   template: `
     <ion-content padding>
       <h1>Second page</h1>
@@ -97,7 +97,7 @@ class SecondPage {
 }
 
 
-@IonicView({
+@Page({
   template: `
     <ion-navbar *navbar><ion-title>Third Page Header</ion-title></ion-navbar>
     <ion-content padding>

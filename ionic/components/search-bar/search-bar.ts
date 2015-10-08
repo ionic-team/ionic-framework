@@ -1,9 +1,8 @@
-import {ElementRef, Pipe, NgControl, Renderer} from 'angular2/angular2';
-//import {ControlGroup} from 'angular2/forms'
+import {ElementRef, Pipe, NgControl, Renderer, View, FORM_DIRECTIVES, NgIf, NgClass} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
-import {IonicComponent, IonicView} from '../../config/decorators';
+import {ConfigComponent} from '../../config/decorators';
 
 /**
  * @name Search Bar
@@ -15,14 +14,13 @@ import {IonicComponent, IonicView} from '../../config/decorators';
  * <ion-search-bar ng-control="searchQuery"></ion-search-bar>
  * ```
  */
-@IonicComponent({
+@ConfigComponent({
   selector: 'ion-search-bar',
-  appInjector: [NgControl],
-  properties: [
+  inputs: [
     'list',
     'query'
   ],
-  defaultProperties: {
+  defaultInputs: {
     'showCancel': false,
     'cancelText': 'Cancel',
     'placeholder': 'Search',
@@ -37,7 +35,7 @@ import {IonicComponent, IonicView} from '../../config/decorators';
     }
   }
 })
-@IonicView({
+@View({
   template: `
   <div class="search-bar-input-container" [class.left-align]="shouldLeftAlign">
     <div class="search-bar-search-icon"></div>
@@ -45,7 +43,8 @@ import {IonicComponent, IonicView} from '../../config/decorators';
     (input)="inputChanged($event)" class="search-bar-input" type="search" [attr.placeholder]="placeholder" [(ng-model)]="value">
     <div class="search-bar-close-icon" (click)="clearInput()"></div>
   </div>
-  <button *ng-if="showCancel" (click)="cancelAction()" class="search-bar-cancel" [class.left-align]="shouldLeftAlign">{{cancelText}}</button>`
+  <button *ng-if="showCancel" (click)="cancelAction()" class="search-bar-cancel" [class.left-align]="shouldLeftAlign">{{cancelText}}</button>`,
+  directives: [FORM_DIRECTIVES, NgIf, NgClass]
 })
 
 export class SearchBar extends Ion {

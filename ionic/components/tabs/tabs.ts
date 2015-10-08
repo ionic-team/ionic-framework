@@ -1,24 +1,29 @@
-import {Component, Directive, View, Injector, NgFor, ElementRef, Optional, Host, forwardRef, NgZone} from 'angular2/angular2';
-import {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
+import {Component, Directive, View, Injector, ElementRef, Compiler, DynamicComponentLoader, AppViewManager, NgZone, Optional, Host, NgFor, forwardRef, ViewContainerRef} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
+import {IonicConfig} from '../../config/config';
 import {NavController} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
-import {IonicComponent, IonicView} from '../../config/decorators';
-import {IonicConfig} from '../../config/config';
+import {ConfigComponent} from '../../config/decorators';
+import {Icon} from '../icon/icon';
 import * as dom from 'ionic/util/dom';
 
 
 /**
- * The Tabs component is a container with a [TabBar]() and any number of
- * individual [Tab]() components. On iOS, the TabBar is placed on the bottom of
+ * _For basic Tabs usage, see the [Tabs section](../../../../components/#tabs)
+ * of the Component docs._
+ *
+ * The Tabs component is a container with a TabBar and any number of
+ * individual Tab components. On iOS, the TabBar is placed on the bottom of
  * the screen, while on Android it is at the top.
  *
- * For basic Tabs usage, see the [Tabs section](../../../../components/#tabs) of the component docs.
  * See the [Tab API reference](../Tab/) for more details on individual Tab components.
  *
- * You can override the platform specific TabBar placement by using the
+ * The TabBar is automatically created for you using the
+ * [properties you set on each Tab](../Tab/#tab_properties).
+ *
+ * To override the platform specific TabBar placement, use the
  * `tab-bar-placement` property:
  *
  * ```ts
@@ -38,7 +43,7 @@ import * as dom from 'ionic/util/dom';
  * You can select tabs programatically by injecting Tabs into any child
  * component, and using the [select()](#select) method:
  * ```ts
- * @IonicView({
+ * @Page({
  *   template: `<button (click)="goToTabTwo()">Go to Tab2</button>`
  * })
  * class TabOne {
@@ -52,17 +57,17 @@ import * as dom from 'ionic/util/dom';
  * }
  * ```
  * The [tabs](#tabs) property is an array of all child [Tab](../Tab/) components
- * of this Tabs component.
+ * of that Tabs component.
  *
  */
-@IonicComponent({
+@ConfigComponent({
   selector: 'ion-tabs',
-  defaultProperties: {
+  defaultInputs: {
     'tabBarPlacement': 'bottom',
     'tabBarIcons': 'top'
   }
 })
-@IonicView({
+@View({
   template: '' +
     '<section class="navbar-container">' +
       '<template navbar-anchor></template>' +
@@ -80,6 +85,8 @@ import * as dom from 'ionic/util/dom';
       '<ng-content></ng-content>' +
     '</section>',
   directives: [
+    Icon,
+    NgFor,
     forwardRef(() => TabButton),
     forwardRef(() => TabHighlight),
     forwardRef(() => TabNavBarAnchor)
@@ -93,12 +100,14 @@ export class Tabs extends NavController {
     @Optional() hostNavCtrl: NavController,
     @Optional() viewCtrl: ViewController,
     app: IonicApp,
-    injector: Injector,
+    config: IonicConfig,
     elementRef: ElementRef,
+    compiler: Compiler,
+    loader: DynamicComponentLoader,
+    viewManager: AppViewManager,
     zone: NgZone
   ) {
-    super(hostNavCtrl, injector, elementRef, zone);
-    this.app = app;
+    super(hostNavCtrl, app, config, elementRef, compiler, loader, viewManager, zone);
 
     this._ready = new Promise(res => { this._isReady = res; });
 
@@ -216,7 +225,7 @@ export class Tabs extends NavController {
  */
 @Directive({
   selector: '.tab-button',
-  properties: ['tab'],
+  inputs: ['tab'],
   host: {
     '[attr.id]': 'btnId',
     '[attr.aria-controls]': 'panelId',

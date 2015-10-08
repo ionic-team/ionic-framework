@@ -131,7 +131,7 @@ ion-view {
   }
 }
 
-.no-navbar > .navbar-container {
+[no-navbar] > .navbar-container {
   display: none;
 }
 

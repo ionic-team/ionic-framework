@@ -1,13 +1,14 @@
 import {Injectable} from 'angular2/angular2';
 
-import {Overlay} from '../overlay/overlay';
+import {OverlayController} from '../overlay/overlay-controller';
+import {IonicConfig} from '../../config/config';
 import {Animation} from '../../animations/animation';
+import {makeComponent} from '../../config/decorators';
 import * as util from 'ionic/util';
 
 /**
- * @name ionModal
- * @description
- * The Modal is a content pane that can go over the user's main view temporarily. Usually used for making a choice or editing an item.
+ * The Modal is a content pane that can go over the user's main view temporarily.
+ * Usually used for making a choice or editing an item.
  *
  * @usage
  * ```ts
@@ -28,21 +29,28 @@ import * as util from 'ionic/util';
  * ```
  */
 @Injectable()
-export class Modal extends Overlay {
+export class Modal {
+
+  constructor(ctrl: OverlayController, config: IonicConfig) {
+    this.ctrl = ctrl;
+    this._defaults = {
+      enterAnimation: config.get('modalEnter') || 'modal-slide-in',
+      leaveAnimation: config.get('modalLeave') || 'modal-slide-out',
+    };
+  }
 
   /**
    * TODO
-   * @param {Type} ComponentType  TODO
+   * @param {Type} componentType  TODO
    * @param {Object} [opts={}]  TODO
    * @returns {TODO} TODO
    */
-  open(ComponentType: Type, opts={}) {
-    let defaults = {
-      enterAnimation: this.config.get('modalEnter') || 'modal-slide-in',
-      leaveAnimation: this.config.get('modalLeave') || 'modal-slide-out',
-    };
+  open(componentType: Type, opts={}) {
+    let modalComponent = makeComponent(componentType, {
+      selector: 'ion-modal'
+    });
 
-    return this.create(OVERLAY_TYPE, ComponentType, util.extend(defaults, opts));
+    return this.ctrl.open(OVERLAY_TYPE, modalComponent, util.extend(this._defaults, opts));
   }
 
   /**
@@ -52,9 +60,9 @@ export class Modal extends Overlay {
    */
   get(handle) {
     if (handle) {
-      return this.getByHandle(handle, OVERLAY_TYPE);
+      return this.ctrl.getByHandle(handle, OVERLAY_TYPE);
     }
-    return this.getByType(OVERLAY_TYPE);
+    return this.ctrl.getByType(OVERLAY_TYPE);
   }
 
 }

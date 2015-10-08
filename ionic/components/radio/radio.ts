@@ -1,14 +1,11 @@
-import {ElementRef, Host, Optional, NgControl, Query, QueryList} from 'angular2/angular2';
+import {Component, Directive, ElementRef, Host, Optional, NgControl, Query, QueryList, View} from 'angular2/angular2';
 
-import {IonicDirective, IonicComponent, IonicView} from '../../config/decorators';
 import {IonicConfig} from '../../config/config';
 import {Ion} from '../ion';
 import {ListHeader} from '../list/list';
 
 
 /**
- * @name ionRadioGroup
- * @description
  * A radio group is a group of radio components.
  *
  * Selecting a radio button in the group unselects all others in the group.
@@ -45,7 +42,7 @@ import {ListHeader} from '../list/list';
  * ```
 */
 
-@IonicDirective({
+@Directive({
   selector: 'ion-radio-group',
   host: {
     'class': 'list',
@@ -164,9 +161,9 @@ export class RadioGroup extends Ion {
  * ```
  *
  */
-@IonicComponent({
+@Component({
   selector: 'ion-radio',
-  properties: [
+  inputs: [
     'value',
     'checked',
     'disabled',
@@ -184,7 +181,7 @@ export class RadioGroup extends Ion {
     '(click)': 'click($event)'
   }
 })
-@IonicView({
+@View({
   template:
   '<ion-item-content id="{{labelId}}">' +
     '<ng-content></ng-content>' +

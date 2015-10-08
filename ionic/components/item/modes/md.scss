@@ -135,7 +135,7 @@ $item-md-sliding-transition:         transform 250ms ease-in-out !default;
     margin-bottom: 1px;
   }
 
-  .item-text-wrap ion-item-content {
+  [text-wrap] ion-item-content {
     font-size: $item-md-body-text-font-size;
     line-height: $item-md-body-text-line-height;
   }
@@ -148,8 +148,8 @@ $item-md-sliding-transition:         transform 250ms ease-in-out !default;
     margin: 4px;
   }
 
-  icon + ion-item-content,
-  icon + .text-input {
+  icon[item-left] + ion-item-content,
+  icon[item-left] + .text-input {
     margin-left: $item-md-padding-left + ($item-md-padding-left / 2);
   }
 

@@ -1,9 +1,9 @@
 import {RouteConfig, Location} from 'angular2/router';
 
-import {App, IonicView, NavController} from 'ionic/ionic';
+import {App, Page, NavController} from 'ionic/ionic';
 
 
-@IonicView({
+@Page({
   template: '' +
     '<ion-navbar *navbar>' +
       '<ion-title>Sign In</ion-title>' +
@@ -25,7 +25,7 @@ class SignIn {
 }
 
 
-@IonicView({
+@Page({
   templateUrl: './tabs.html'
 })
 class TabsPage {
@@ -40,7 +40,7 @@ class TabsPage {
 //
 // tab 1
 //
-@IonicView({
+@Page({
   template: '' +
     '<ion-navbar *navbar>' +
       '<ion-title>Tabs 1 Page 1</ion-title>' +
@@ -62,7 +62,7 @@ class Tab1Page1 {
 }
 
 
-@IonicView({
+@Page({
   template: '' +
     '<ion-navbar *navbar>' +
       '<ion-title>Tabs 1 Page 2</ion-title>' +
@@ -85,7 +85,7 @@ class Tab1Page2 {
 }
 
 
-@IonicView({
+@Page({
   template: '' +
     '<ion-navbar *navbar>' +
       '<ion-title>Tabs 1 Page 3</ion-title>' +
@@ -107,7 +107,7 @@ class Tab1Page3 {
 //
 // tab 2
 //
-@IonicView({
+@Page({
   template: '' +
     '<ion-navbar *navbar>' +
       '<ion-title>Tabs 2 Page 1</ion-title>' +
@@ -129,7 +129,7 @@ class Tab2Page1 {
 }
 
 
-@IonicView({
+@Page({
   template: '' +
     '<ion-navbar *navbar>' +
       '<ion-title>Tabs 2 Page 2</ion-title>' +
@@ -152,7 +152,7 @@ class Tab2Page2 {
 }
 
 
-@IonicView({
+@Page({
   template: '' +
     '<ion-navbar *navbar>' +
       '<ion-title>Tabs 2 Page 3</ion-title>' +
@@ -174,7 +174,7 @@ class Tab2Page3 {
 //
 // tab 3
 //
-@IonicView({
+@Page({
   template: '' +
     '<ion-navbar *navbar>' +
       '<ion-title>Tabs 3</ion-title>' +
@@ -186,7 +186,7 @@ class Tab3Page1 {}
 
 @App()
 @RouteConfig([
-  { path: '/', component: SignIn, as: 'signin' },
-  { path: '/tabs', component: TabsPage, as: 'tabs' },
+  { path: '/', component: SignIn, as: 'Signin' },
+  { path: '/tabs', component: TabsPage, as: 'Tabs' },
 ])
 class E2EApp {}

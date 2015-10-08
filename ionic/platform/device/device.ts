@@ -1,6 +1,3 @@
-import * as Rx from 'rx';
-
-import * as util from 'ionic/util';
 import {NativePlugin} from '../plugin';
 
 

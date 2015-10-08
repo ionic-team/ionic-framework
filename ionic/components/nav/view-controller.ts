@@ -14,8 +14,6 @@ export class ViewController {
     this.state = 0;
     this.disposals = [];
 
-    this._nbItms = [];
-
     this.navbarTemplateRef = null;
   }
 
@@ -43,7 +41,7 @@ export class ViewController {
 
       // get the pane the NavController wants to use
       // the pane is where all this content will be placed into
-      navCtrl.loadContainer(hostProtoViewRef, this.componentType, this, () => {
+      navCtrl.loadContainer(this.componentType, hostProtoViewRef, this, () => {
 
         // this ViewController instance has finished loading
         try {
@@ -219,14 +217,14 @@ export class ViewController {
    * recommended method to use when a view becomes active.
    */
   loaded() {
-    this.instance && this.instance.onViewLoaded && this.instance.onViewLoaded();
+    this.instance && this.instance.onPageLoaded && this.instance.onPageLoaded();
   }
 
   /**
    * The view is about to enter and become the active view.
    */
   willEnter() {
-    this.instance && this.instance.onViewWillEnter && this.instance.onViewWillEnter();
+    this.instance && this.instance.onPageWillEnter && this.instance.onPageWillEnter();
   }
 
   /**
@@ -238,14 +236,14 @@ export class ViewController {
     if (navbarView) {
       navbarView.didEnter();
     }
-    this.instance && this.instance.onViewDidEnter && this.instance.onViewDidEnter();
+    this.instance && this.instance.onPageDidEnter && this.instance.onPageDidEnter();
   }
 
   /**
    * The view has is about to leave and no longer be the active view.
    */
   willLeave() {
-    this.instance && this.instance.onViewWillLeave && this.instance.onViewWillLeave();
+    this.instance && this.instance.onPageWillLeave && this.instance.onPageWillLeave();
   }
 
   /**
@@ -253,21 +251,21 @@ export class ViewController {
    * will fire, whether it is cached or unloaded.
    */
   didLeave() {
-    this.instance && this.instance.onViewDidLeave && this.instance.onViewDidLeave();
+    this.instance && this.instance.onPageDidLeave && this.instance.onPageDidLeave();
   }
 
   /**
    * The view is about to be destroyed and have its elements removed.
    */
   willUnload() {
-    this.instance && this.instance.onViewWillUnload && this.instance.onViewWillUnload();
+    this.instance && this.instance.onPageWillUnload && this.instance.onPageWillUnload();
   }
 
   /**
    * The view has been destroyed and its elements have been removed.
    */
   didUnload() {
-    this.instance && this.instance.onViewDidUnload && this.instance.onViewDidUnload();
+    this.instance && this.instance.onPageDidUnload && this.instance.onPageDidUnload();
   }
 
 }

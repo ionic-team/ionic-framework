@@ -1,22 +1,13 @@
-import {
-  View,
-  Directive,
-  ElementRef,
-  Optional,
-  NgControl
-} from 'angular2/angular2';
+import {Component, View, Directive, ElementRef, Optional, NgControl} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonInput} from '../form/input';
 import {IonicConfig} from '../../config/config';
-import {IonicComponent, IonicView} from '../../config/decorators';
 
 /**
- * @name ionCheckbox
- * @description
  * The checkbox is no different than the HTML checkbox input, except it's styled differently
  *
- * See the [Angular 2 Docs](https://angular.io/docs/js/latest/api/forms/) for more info on forms and input.
+ * See the [Angular 2 Docs](https://angular.io/docs/js/latest/api/core/Form-interface.html) for more info on forms and input.
  *
  * @usage
  * ```html
@@ -25,9 +16,9 @@ import {IonicComponent, IonicView} from '../../config/decorators';
  * </ion-checkbox>
  * ```
  */
-@IonicComponent({
+@Component({
   selector: 'ion-checkbox',
-  properties: [
+  inputs: [
     'value',
     'checked',
     'disabled',
@@ -44,7 +35,7 @@ import {IonicComponent, IonicView} from '../../config/decorators';
     '(click)': 'click($event)'
   }
 })
-@IonicView({
+@View({
   template:
   '<media-checkbox disable-activated>' +
     '<checkbox-icon></checkbox-icon>' +

@@ -17,8 +17,8 @@ export class Ion {
   onInit() {
     let cls = this.constructor;
 
-    if (cls.defaultProperties && this.config) {
-      for (let prop in cls.defaultProperties) {
+    if (cls.defaultInputs && this.config) {
+      for (let prop in cls.defaultInputs) {
         // Priority:
         // ---------
         // 1) Value set from within constructor
@@ -42,7 +42,7 @@ export class Ion {
         }
 
         // wasn't set yet, so go with property's default value
-        this[prop] = cls.defaultProperties[prop];
+        this[prop] = cls.defaultInputs[prop];
       }
     }
   }

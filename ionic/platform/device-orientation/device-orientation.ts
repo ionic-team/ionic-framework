@@ -1,4 +1,6 @@
-import * as Rx from 'rx';
+// TODO: temporary until https://github.com/angular/angular/issues/4390 decided
+// var Rx = require('@reactivex/rxjs/dist/cjs/Rx');
+// var {Observable} = Rx;
 
 import * as util from 'ionic/util';
 import {NativePlugin} from '../plugin';

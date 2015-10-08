@@ -1,11 +1,9 @@
-import {Component, View, QueryList, ElementRef, EventEmitter, onInit,
-  Host, forwardRef, NgFor, NgIf, NgClass} from 'angular2/angular2';
+import {Directive, Component, View, ElementRef, Host, NgIf, NgClass} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {Animation} from 'ionic/animations/animation';
 import {Gesture} from 'ionic/gestures/gesture';
 import {DragGesture} from 'ionic/gestures/drag-gesture';
-import {IonicComponent, IonicDirective} from '../../config/decorators';
 import {IonicConfig} from '../../config/config';
 import {dom} from 'ionic/util';
 import {CSS} from '../../util/dom';
@@ -13,6 +11,7 @@ import * as util from 'ionic/util';
 
 import {Swiper} from './swiper-widget';
 import {Scroll} from '../scroll/scroll';
+
 
 /**
  * Slides is a slide box implementation based on Swiper.js
@@ -29,9 +28,9 @@ import {Scroll} from '../scroll/scroll';
  * Licensed under MIT
  *
  */
-@IonicComponent({
+@Component({
   selector: 'ion-slides',
-  properties: [
+  inputs: [
     'loop',
     'index',
     'bounce',
@@ -447,9 +446,9 @@ export class Slides extends Ion {
 /**
  * TODO
  */
-@IonicComponent({
+@Component({
   selector: 'ion-slide',
-  properties: ['zoom']
+  inputs: ['zoom']
 })
 @View({
   template: `<div class="slide-zoom"><ng-content></ng-content></div>`
@@ -471,7 +470,7 @@ export class Slide {
   }
 }
 
-@IonicDirective({
+@Directive({
   selector: 'slide-lazy',
 })
 export class SlideLazy {

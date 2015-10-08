@@ -1,108 +1,13 @@
-import {CORE_DIRECTIVES, FORM_DIRECTIVES, NgStyle, Component, Directive, View, forwardRef} from 'angular2/angular2'
+import {Component, Directive, View, bootstrap} from 'angular2/angular2'
 
 import * as util from 'ionic/util';
-import {IonicConfig} from './config';
-import {ionicBootstrap} from '../components/app/app';
-import {
-  Menu, MenuToggle, MenuClose,
-  Button, Content, Scroll, Refresher,
-  Slides, Slide, SlideLazy,
-  Tabs, Tab,
-  Card, List, ListHeader, Item, ItemGroup, ItemGroupTitle, ItemSliding,
-  Toolbar, ToolbarTitle, ToolbarItem,
-  Icon,
-  Checkbox, Switch,
-  TextInput, TextInputElement, Label,
-  Segment, SegmentButton, SegmentControlValueAccessor,
-  RadioGroup, RadioButton, SearchBar,
-  Nav, NavbarTemplate, Navbar,
-  NavPush, NavPop, NavRouter,
-  IdRef,
-  ShowWhen, HideWhen,
-  Blur
-} from '../ionic';
-
-/**
- * The core Ionic directives.  Automatically available in every IonicView
- * template.
- */
-export const IONIC_DIRECTIVES = [
-  // Angular
-  CORE_DIRECTIVES,
-  FORM_DIRECTIVES,
-
-  NgStyle,
-
-  // Content
-  forwardRef(() => Menu),
-  forwardRef(() => MenuToggle),
-  forwardRef(() => MenuClose),
-
-  forwardRef(() => Button),
-  forwardRef(() => Content),
-  forwardRef(() => Scroll),
-  forwardRef(() => Refresher),
-
-  // Lists
-  forwardRef(() => Card),
-  forwardRef(() => List),
-  forwardRef(() => ListHeader),
-  forwardRef(() => Item),
-  forwardRef(() => ItemGroup),
-  forwardRef(() => ItemGroupTitle),
-  forwardRef(() => ItemSliding),
-
-  // Slides
-  forwardRef(() => Slides),
-  forwardRef(() => Slide),
-  forwardRef(() => SlideLazy),
-
-  // Tabs
-  forwardRef(() => Tabs),
-  forwardRef(() => Tab),
-
-  // Toolbar
-  forwardRef(() => Toolbar),
-  forwardRef(() => ToolbarTitle),
-  forwardRef(() => ToolbarItem),
-
-  // Media
-  forwardRef(() => Icon),
-
-  // Forms
-  forwardRef(() => SearchBar),
-  forwardRef(() => Segment),
-  forwardRef(() => SegmentButton),
-  forwardRef(() => SegmentControlValueAccessor),
-  forwardRef(() => Checkbox),
-  forwardRef(() => RadioGroup),
-  forwardRef(() => RadioButton),
-  forwardRef(() => Switch),
-  forwardRef(() => TextInput),
-  forwardRef(() => TextInputElement),
-  forwardRef(() => Label),
-
-  // Nav
-  forwardRef(() => Nav),
-  forwardRef(() => NavbarTemplate),
-  forwardRef(() => Navbar),
-
-  forwardRef(() => NavPush),
-  forwardRef(() => NavPop),
-  forwardRef(() => NavRouter),
-  forwardRef(() => IdRef),
-
-  forwardRef(() => ShowWhen),
-  forwardRef(() => HideWhen),
-
-  // Random effects
-  forwardRef(() => Blur)
-];
+import {ionicBindings} from './bootstrap';
+import {IONIC_DIRECTIVES} from './directives';
 
 /**
  * @private
  */
-class IonicViewImpl extends View {
+class PageImpl extends View {
   constructor(args = {}) {
     args.directives = (args.directives || []).concat(IONIC_DIRECTIVES);
     super(args);
@@ -110,18 +15,66 @@ class IonicViewImpl extends View {
 }
 
 /**
- * the IonicView decorator indicates that the decorated class is an Ionic
- * navigation view, meaning it can be navigated to using a [NavController](../../Nav/NavController/)
+ * _For more information on how pages are created, see the [NavController API
+ * reference](../../Nav/NavController/#creating_pages)._
  *
- * Ionic views are automatically wrapped in `<ion-view>`, so although you may
- * see these tags if you inspect your markup, you don't need to include them in
- * your templates.
+ * The Page decorator indicates that the decorated class is an Ionic
+ * navigation component, meaning it can be navigated to using a NavController.
  *
+ * Pages have all [IONIC_DIRECTIVES](../IONIC_DIRECTIVES/), which include
+ * all Ionic components and directives, as well as Angular's [CORE_DIRECTIVES](https://angular.io/docs/js/latest/api/core/CORE_DIRECTIVES-const.html)
+ * and [FORM_DIRECTIVES](https://angular.io/docs/js/latest/api/core/FORM_DIRECTIVES-const.html),
+ * already provided to them, so you only need to supply custom components and
+ * directives to your pages:
+ *
+ * ```ts
+ * @Page({
+ *   template: '<ion-checkbox my-custom-dir>' +
+ *             '</ion-checkbox>'
+ *   directives: [MyCustomDirective]
+ * })
+ * class MyPage {}
+ * ```
+ * Here [Checkbox](../../../components/checkbox/Checkbox/) will load because
+ * it is in IONIC_DIRECTIVES, so there is no need to add it to the `directives`
+ * array.
+ *
+ * For custom components that use Ionic components, you will need to include
+ * IONIC_DIRECTIVES in the `directives` array:
+ *
+ * ```ts
+ * import {IONIC_DIRECTIVES} from 'ionic/ionic';
+ * @Component({
+ *   template: `<div class="customStyle">
+ *   						  <ion-checkbox></ion-checkbox>
+ *   						</div>`
+ * })
+ * @View({
+ *   directives: [IONIC_DIRECTIVES]
+ * })
+ * class MyCustomCheckbox {}
+ *```
+ * Alternatively, you could:
+ * ```ts
+ * import {Checkbox, Icon} from 'ionic/ionic'
+ * ```
+ * along with any other components and add them individually:
+ * ```
+ * @View({
+ *   directives: [Checkbox, Icon]
+ * })
+ * ```
+ * However, using IONIC_DIRECTIVES will always *Just Work* with no
+ * performance overhead, so there is really no reason to not always use it.
+ *
+ * Pages have their content automatically wrapped in `<ion-view>`, so although
+ * you may see these tags if you inspect your markup, you don't need to include
+ * them in your templates.
  */
-export function IonicView(args) {
+export function Page(args) {
   return function(cls) {
     var annotations = Reflect.getMetadata('annotations', cls) || [];
-    annotations.push(new IonicViewImpl(args));
+    annotations.push(new PageImpl(args));
     Reflect.defineMetadata('annotations', annotations, cls);
     return cls;
   }
@@ -130,46 +83,38 @@ export function IonicView(args) {
 /**
  * TODO
  */
-export function IonicDirective(config) {
+export function ConfigComponent(config) {
   return function(cls) {
-    var annotations = Reflect.getMetadata('annotations', cls) || [];
-    annotations.push(new Directive(appendConfig(cls, config)));
-    Reflect.defineMetadata('annotations', annotations, cls);
-    return cls;
+    return makeComponent(cls, appendConfig(cls, config));
   }
 }
 
-/**
- * TODO
- */
-export function IonicComponent(config) {
-  return function(cls) {
-    var annotations = Reflect.getMetadata('annotations', cls) || [];
-    annotations.push(new Component(appendConfig(cls, config)));
-    Reflect.defineMetadata('annotations', annotations, cls);
-    return cls;
-  }
+export function makeComponent(cls, config) {
+  var annotations = Reflect.getMetadata('annotations', cls) || [];
+  annotations.push(new Component(config));
+  Reflect.defineMetadata('annotations', annotations, cls);
+  return cls;
 }
 
 function appendConfig(cls, config) {
   config.host = config.host || {};
 
-  cls.defaultProperties = config.defaultProperties || {};
+  cls.defaultInputs = config.defaultInputs || {};
 
-  config.properties = config.properties || [];
+  config.inputs = config.inputs || [];
 
-  for (let prop in cls.defaultProperties) {
-    // add the property to the component "properties"
-    config.properties.push(prop);
+  for (let prop in cls.defaultInputs) {
+    // add the property to the component "inputs"
+    config.inputs.push(prop);
 
     // set the component "hostProperties", so the instance's
-    // property value will be used to set the element's attribute
+    // input value will be used to set the element's attribute
     config.host['[attr.' + util.pascalCaseToDashCase(prop) + ']'] = prop;
   }
 
   cls.delegates = config.delegates;
 
-  let componentId = config.classId || (config.selector && config.selector.replace('ion-', ''));
+  let componentId = (config.selector && config.selector.replace('ion-', ''));
   config.host['class'] = ((config.host['class'] || '') + ' ' + componentId).trim();
 
   return config;
@@ -193,12 +138,12 @@ export function App(args={}) {
       args.template = '<ion-nav></ion-nav>';
     }
 
-    annotations.push(new IonicViewImpl(args));
+    annotations.push(new PageImpl(args));
 
     // redefine with added annotations
     Reflect.defineMetadata('annotations', annotations, cls);
 
-    ionicBootstrap(cls, args.views, args.config);
+    bootstrap(cls, ionicBindings(cls, args.config));
 
     return cls;
   }

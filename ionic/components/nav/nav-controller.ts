@@ -1,46 +1,43 @@
-import {Component, ComponentRef, Compiler, ElementRef, Injector, bind, NgZone} from 'angular2/angular2';
-import {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_component_loader';
-import {DirectiveBinding} from 'angular2/src/core/compiler/element_injector';
-import {AppViewManager} from 'angular2/src/core/compiler/view_manager';
+import {ComponentRef, Compiler, ElementRef, Injector, bind, NgZone, DynamicComponentLoader, AppViewManager} from 'angular2/angular2';
 
 import {Ion} from '../ion';
-import {IonicConfig} from '../../config/config';
+import {makeComponent} from '../../config/decorators';
 import {IonicApp} from '../app/app';
+import {IonicConfig} from '../../config/config';
 import {ViewController} from './view-controller';
 import {Transition} from '../../transitions/transition';
 import {SwipeBackGesture} from './swipe-back';
 import * as util from 'ionic/util';
 
 /**
+ * _For examples on the basic usage of NavController, check out the [Navigation section](../../../../components/#navigation)
+ * of the Component docs._
+ *
  * NavController is the base class for navigation controller components like
  * [`Nav`](../Nav/) and [`Tab`](../../Tabs/Tab/). You use navigation controllers
- * to navigate to [views](#creating_views) in your app. At a basic level, a
- * navigation controller is an array of views representing a particular history
+ * to navigate to [pages](#creating_pages) in your app. At a basic level, a
+ * navigation controller is an array of pages representing a particular history
  * (of a Tab for example). This array can be manipulated to navigate throughout
- * an app by pushing and popping views or inserting and removing them at
+ * an app by pushing and popping pages or inserting and removing them at
  * arbitrary locations in history.
  *
- * The current view is the last one in the array, or the top of the stack if we think of it
- * that way.  [Pushing](#push) a new view onto the top of
- * the navigation stack causes the new view to be animated in, while [popping](#pop) the current
- * view will navigate to the previous view in the stack.
- *
- * For examples on the basic usage of NavController, check out the [Navigation section](../../../../components/#navigation)
- * of the Component docs.  The following is a more in depth explanation of some
- * of the features of NavController.
+ * The current page is the last one in the array, or the top of the stack if we
+ * think of it that way.  [Pushing](#push) a new page onto the top of the
+ * navigation stack causes the new page to be animated in, while [popping](#pop)
+ * the current page will navigate to the previous page in the stack.
  *
  * Unless you are using a directive like [NavPush](../NavPush/), or need a
  * specific NavController, most times you will inject and use a reference to the
  * nearest NavController to manipulate the navigation stack.
  *
  * <h3 id="injecting_nav_controller">Injecting NavController</h3>
- * Injecting NavController will always get you an instance of the nearest NavController,
- * regardless of whether it is a Tab or a Nav.
+ * Injecting NavController will always get you an instance of the nearest
+ * NavController, regardless of whether it is a Tab or a Nav.
  *
  * Behind the scenes, when Ionic instantiates a new NavController, it creates an
- * injector with NavController bound to that instance (usually either a Nav or Tab)
- *  and adds the injector to its own bindings.  For more information on binding
- *  and dependency injection, see [Binding and DI]().
+ * injector with NavController bound to that instance (usually either a Nav or
+ * Tab) and adds the injector to its own bindings.  For more information on
+ * binding and dependency injection, see [Binding and DI]().
  *
  * ```ts
  * // class NavController
@@ -50,8 +47,8 @@ import * as util from 'ionic/util';
  * ]);
  * ```
  *
- * That way you don't need to worry about getting a hold of the proper NavController
- *  for views that may be used in either a Tab or a Nav:
+ * That way you don't need to worry about getting a hold of the proper
+ * NavController for views that may be used in either a Tab or a Nav:
  *
  * ```ts
  *  class MyPage {
@@ -74,64 +71,71 @@ import * as util from 'ionic/util';
  *  }
  * ```
  *
- * <h2 id="creating_views">View creation</h2>
- * Views are created when they are added to the navigation stack.  For methods
+ * <h2 id="creating_pages">Page creation</h2>
+ * _For more information on the `@Page` decorator see the [@Page API
+ * reference](../../../config/Page/)._
+ *
+ * Pages are created when they are added to the navigation stack.  For methods
  * like [push()](#push), the NavController takes any component class that is
- * decorated with [@IonicView](../../../config/IonicView/) as its first
- * argument.  The NavController then [compiles]() that component, adds it to the
- * DOM in a similar fashion to Angular's [DynamicComponentLoader](https://angular.io/docs/js/latest/api/core/DynamicComponentLoader-interface.html),
+ * decorated with @Page as its first argument.  The NavController then
+ * [compiles]() that component, adds it to the DOM in a similar fashion to
+ * Angular's [DynamicComponentLoader](https://angular.io/docs/js/latest/api/core/DynamicComponentLoader-interface.html),
  * and animates it into view.
  *
- * By default, views are cached and left in the DOM if they are navigated away from but
- * still in the navigation stack (the exiting view on a `push()` for example).  They are
- * destroyed when removed from the navigation stack (on [pop()](#pop) or [setRoot()](#setRoot)).
+ * By default, pages are cached and left in the DOM if they are navigated away
+ * from but still in the navigation stack (the exiting page on a `push()` for
+ * example).  They are destroyed when removed from the navigation stack (on
+ * [pop()](#pop) or [setRoot()](#setRoot)).
  *
  *
  * <h2 id="Lifecycle">Lifecycle events</h2>
  * Lifecycle events are fired during various stages of navigation.  They can be
- * defined in any `@IonicView` decorated component class.
+ * defined in any `@Page` decorated component class.
  *
  * ```ts
- * @IonicView({
+ * @Page({
  *   template: 'Hello World'
  * })
  * class HelloWorld {
- *   onViewLoaded() {
+ *   onPageLoaded() {
  *     console.log("I'm alive!");
  *   }
  * }
  * ```
  *
- * - `onViewLoaded` - Runs when the view has loaded. This event only happens once per view being created and added to the DOM. If a view leaves but is cached, then this event will not fire again on a subsequent viewing. The `onViewLoaded` event is good place to put your setup code for the view.
- * - `onViewWillEnter` - Runs when the view is about to enter and become the active view.
- * - `onViewDidEnter` - Runs when the view has fully entered and is now the active view. This event will fire, whether it was the first load or a cached view.
- * - `onViewWillLeave` - Runs when the view is about to leave and no longer be the active view.
- * - `onViewDidLeave` - Runs when the view has finished leaving and is no longer the active view.
- * - `onViewWillUnload` - Runs when the view is about to be destroyed and have its elements removed.
- * - `onViewDidUnload` - Runs after the view has been destroyed and its elements have been removed.
+ * - `onPageLoaded` - Runs when the page has loaded. This event only happens once per page being created and added to the DOM. If a page leaves but is cached, then this event will not fire again on a subsequent viewing. The `onPageLoaded` event is good place to put your setup code for the page.
+ * - `onPageWillEnter` - Runs when the page is about to enter and become the active page.
+ * - `onPageDidEnter` - Runs when the page has fully entered and is now the active page. This event will fire, whether it was the first load or a cached page.
+ * - `onPageWillLeave` - Runs when the page is about to leave and no longer be the active page.
+ * - `onPageDidLeave` - Runs when the page has finished leaving and is no longer the active page.
+ * - `onPageWillUnload` - Runs when the page is about to be destroyed and have its elements removed.
+ * - `onPageDidUnload` - Runs after the page has been destroyed and its elements have been removed.
  *
  */
 export class NavController extends Ion {
 
   constructor(
     parentnavCtrl: NavController,
-    injector: Injector,
+    app: IonicApp,
+    config: IonicConfig,
     elementRef: ElementRef,
+    compiler: Compiler,
+    loader: DynamicComponentLoader,
+    viewManager: AppViewManager,
     zone: NgZone
   ) {
-    let config = injector.get(IonicConfig);
     super(elementRef, config);
 
     this.parent = parentnavCtrl;
-
-    this.compiler = injector.get(Compiler);
-    this.loader = injector.get(DynamicComponentLoader);
-    this.viewMngr = injector.get(AppViewManager);
-    this.app = injector.get(IonicApp);
+    this.app = app;
     this.config = config;
-    this.zone = zone;
 
-    this.views = [];
+    this._compiler = compiler;
+    this._loader = loader;
+    this._viewManager = viewManager;
+    this._zone = zone;
+
+    this._views = [];
 
     this._sbTrans = null;
     this._sbEnabled = config.get('swipeBackEnabled') || false;
@@ -165,7 +169,7 @@ export class NavController extends Ion {
     let promise = new Promise(res => { resolve = res; });
 
     // do not animate if this is the first in the stack
-    if (!this.views.length) {
+    if (!this._views.length) {
       opts.animate = false;
     }
 
@@ -174,7 +178,7 @@ export class NavController extends Ion {
 
     // the active view is going to be the leaving one (if one exists)
     let leavingView = this.getActive() || new ViewController();
-    leavingView.shouldCache = (util.isBoolean(opts.cacheleavingView) ? opts.cacheleavingView : true);
+    leavingView.shouldCache = (util.isBoolean(opts.cacheLeavingView) ? opts.cacheLeavingView : true);
     leavingView.shouldDestroy = !leavingView.shouldCache;
     if (leavingView.shouldDestroy) {
       leavingView.willUnload();
@@ -218,7 +222,7 @@ export class NavController extends Ion {
     // get the active view and set that it is staged to be leaving
     // was probably the one popped from the stack
     let leavingView = this.getActive() || new ViewController();
-    leavingView.shouldCache = (util.isBoolean(opts.cacheleavingView) ? opts.cacheleavingView : false);
+    leavingView.shouldCache = (util.isBoolean(opts.cacheLeavingView) ? opts.cacheLeavingView : false);
     leavingView.shouldDestroy = !leavingView.shouldCache;
     if (leavingView.shouldDestroy) {
       leavingView.willUnload();
@@ -257,12 +261,12 @@ export class NavController extends Ion {
   popTo(view, opts = {}) {
 
     // Get the target index of the view to pop to
-    let viewIndex = this.views.indexOf(view);
+    let viewIndex = this._views.indexOf(view);
     let targetIndex = viewIndex + 1;
     let resolve;
     let promise = new Promise(res => { resolve = res; });
     // Don't pop to the view if it wasn't found, or the target is beyond the view list
-    if(viewIndex < 0 || targetIndex > this.views.length - 1) {
+    if(viewIndex < 0 || targetIndex > this._views.length - 1) {
       resolve();
       return;
     }
@@ -272,8 +276,8 @@ export class NavController extends Ion {
 
     // get the views to auto remove without having to do a transiton for each
     // the last view (the currently active one) will do a normal transition out
-    if (this.views.length > 1) {
-      let autoRemoveItems = this.views.slice(targetIndex, this.views.length);
+    if (this._views.length > 1) {
+      let autoRemoveItems = this._views.slice(targetIndex, this._views.length);
       for (let i = 0; i < autoRemoveItems.length; i++) {
         autoRemoveItems[i].shouldDestroy = true;
         autoRemoveItems[i].shouldCache = false;
@@ -281,7 +285,7 @@ export class NavController extends Ion {
       }
     }
 
-    let leavingView = this.views[this.views.length - 1];
+    let leavingView = this._views[this._views.length - 1];
     let enteringView = view;
 
     if(this.router) {
@@ -300,7 +304,7 @@ export class NavController extends Ion {
    * @param opts extra animation options
    */
   popToRoot(opts = {}) {
-    this.popTo(this.views[0]);
+    this.popTo(this._views[0]);
   }
 
   /**
@@ -315,7 +319,7 @@ export class NavController extends Ion {
     }
 
     // push it onto the end
-    if (index >= this.views.length) {
+    if (index >= this._views.length) {
       return this.push(componentType);
     }
 
@@ -326,7 +330,7 @@ export class NavController extends Ion {
     viewCtrl.shouldCache = false;
 
     this._incrementId(viewCtrl);
-    this.views.splice(index, 0, viewCtrl);
+    this._views.splice(index, 0, viewCtrl);
   }
 
   /**
@@ -344,12 +348,12 @@ export class NavController extends Ion {
     opts.animate = opts.animate || false;
 
     // ensure leaving views are not cached, and should be destroyed
-    opts.cacheleavingView = false;
+    opts.cacheLeavingView = false;
 
     // get the views to auto remove without having to do a transiton for each
     // the last view (the currently active one) will do a normal transition out
-    if (this.views.length > 1) {
-      let autoRemoveItems = this.views.slice(0, this.views.length - 1);
+    if (this._views.length > 1) {
+      let autoRemoveItems = this._views.slice(0, this._views.length - 1);
       for (let i = 0; i < autoRemoveItems.length; i++) {
         autoRemoveItems[i].shouldDestroy = true;
         autoRemoveItems[i].shouldCache = false;
@@ -427,7 +431,7 @@ export class NavController extends Ion {
     // wait for the new view to complete setup
     enteringView.stage(() => {
 
-      this.zone.runOutsideAngular(() => {
+      this._zone.runOutsideAngular(() => {
 
         enteringView.shouldDestroy = false;
         enteringView.shouldCache = false;
@@ -468,7 +472,7 @@ export class NavController extends Ion {
           leavingView.didLeave();
 
           // all done!
-          this.zone.run(() => {
+          this._zone.run(() => {
             this._transComplete();
             callback();
           });
@@ -486,43 +490,37 @@ export class NavController extends Ion {
    */
   compileView(componentType) {
     // create a new ion-view annotation
-    let annotation = new Component({
+    let viewComponentType = makeComponent(componentType, {
       selector: 'ion-view',
       host: {
         '[class.pane-view]': '_paneView'
       }
     });
 
-    let ionViewComponentType = DirectiveBinding.createFromType(componentType, annotation);
-
-    // create a unique token that works as a cache key
-    ionViewComponentType.token = 'ionView' + componentType.name;
-
     // compile the Component
-    return this.compiler.compileInHost(ionViewComponentType);
+    return this._compiler.compileInHost(viewComponentType);
   }
 
   /**
    * @private
    * TODO
    */
-  createViewComponetRef(hostProtoViewRef, contentContainerRef, viewCtrlBindings) {
-    let bindings = this.bindings.concat(Injector.resolve(viewCtrlBindings));
+  createViewComponetRef(type, hostProtoViewRef, viewContainer, viewCtrlBindings) {
+    let bindings = this.bindings.concat(viewCtrlBindings);
 
     // the same guts as DynamicComponentLoader.loadNextToLocation
     var hostViewRef =
-        contentContainerRef.createHostView(hostProtoViewRef, -1, bindings);
-    var newLocation = this.viewMngr.getHostElement(hostViewRef);
-    var newComponent = this.viewMngr.getComponent(newLocation);
+        viewContainer.createHostView(hostProtoViewRef, viewContainer.length, bindings);
+    var newLocation = this._viewManager.getHostElement(hostViewRef);
+    var component = this._viewManager.getComponent(newLocation);
 
     var dispose = () => {
-      var index = contentContainerRef.indexOf(hostViewRef);
+      var index = viewContainer.indexOf(hostViewRef);
       if (index !== -1) {
-        contentContainerRef.remove(index);
+        viewContainer.remove(index);
       }
     };
-
-    return new ComponentRef(newLocation, newComponent, dispose);
+    return new ComponentRef(newLocation, component, type, null, dispose);
   }
 
   /**
@@ -572,7 +570,7 @@ export class NavController extends Ion {
     // wait for the new view to complete setup
     enteringView.stage(() => {
 
-      this.zone.runOutsideAngular(() => {
+      this._zone.runOutsideAngular(() => {
         // set that the new view pushed on the stack is staged to be entering/leaving
         // staged state is important for the transition to find the correct view
         enteringView.state = STAGED_ENTERING_STATE;
@@ -617,7 +615,7 @@ export class NavController extends Ion {
 
     this._sbTrans.progressEnd(completeSwipeBack, rate).then(() => {
 
-      this.zone.run(() => {
+      this._zone.run(() => {
         // find the views that were entering and leaving
         let enteringView = this.getStagedEnteringView();
         let leavingView = this.getStagedLeavingView();
@@ -739,7 +737,7 @@ export class NavController extends Ion {
   _transComplete() {
     let destroys = [];
 
-    this.views.forEach(view => {
+    this._views.forEach(view => {
       if (view) {
         if (view.shouldDestroy) {
           destroys.push(view);
@@ -760,7 +758,7 @@ export class NavController extends Ion {
     this.app.setEnabled(true);
     this.app.setTransitioning(false);
 
-    if (this.views.length === 1) {
+    if (this._views.length === 1) {
       this.elementRef.nativeElement.classList.add('has-views');
     }
 
@@ -772,9 +770,9 @@ export class NavController extends Ion {
    * @returns {TODO} TODO
    */
   getActive() {
-    for (let i = 0, ii = this.views.length; i < ii; i++) {
-      if (this.views[i].state === ACTIVE_STATE) {
-        return this.views[i];
+    for (let i = 0, ii = this._views.length; i < ii; i++) {
+      if (this._views[i].state === ACTIVE_STATE) {
+        return this._views[i];
       }
     }
     return null;
@@ -787,9 +785,9 @@ export class NavController extends Ion {
    */
   getByInstance(instance) {
     if (instance) {
-      for (let i = 0, ii = this.views.length; i < ii; i++) {
-        if (this.views[i].instance === instance) {
-          return this.views[i];
+      for (let i = 0, ii = this._views.length; i < ii; i++) {
+        if (this._views[i].instance === instance) {
+          return this._views[i];
         }
       }
     }
@@ -802,8 +800,8 @@ export class NavController extends Ion {
    * @returns {TODO} TODO
    */
   getByIndex(index) {
-    if (index < this.views.length && index > -1) {
-      return this.views[index];
+    if (index < this._views.length && index > -1) {
+      return this._views[index];
     }
     return null;
   }
@@ -815,7 +813,7 @@ export class NavController extends Ion {
    */
   getPrevious(view) {
     if (view) {
-      return this.views[ this.views.indexOf(view) - 1 ];
+      return this._views[ this._views.indexOf(view) - 1 ];
     }
     return null;
   }
@@ -825,9 +823,9 @@ export class NavController extends Ion {
    * @returns {TODO} TODO
    */
   getStagedEnteringView() {
-    for (let i = 0, ii = this.views.length; i < ii; i++) {
-      if (this.views[i].state === STAGED_ENTERING_STATE) {
-        return this.views[i];
+    for (let i = 0, ii = this._views.length; i < ii; i++) {
+      if (this._views[i].state === STAGED_ENTERING_STATE) {
+        return this._views[i];
       }
     }
     return null;
@@ -838,9 +836,9 @@ export class NavController extends Ion {
    * @returns {TODO} TODO
    */
   getStagedLeavingView() {
-    for (let i = 0, ii = this.views.length; i < ii; i++) {
-      if (this.views[i].state === STAGED_LEAVING_STATE) {
-        return this.views[i];
+    for (let i = 0, ii = this._views.length; i < ii; i++) {
+      if (this._views[i].state === STAGED_LEAVING_STATE) {
+        return this._views[i];
       }
     }
     return null;
@@ -881,7 +879,7 @@ export class NavController extends Ion {
    */
   add(view) {
     this._incrementId(view);
-    this.views.push(view);
+    this._views.push(view);
   }
 
   _incrementId(view) {
@@ -894,7 +892,7 @@ export class NavController extends Ion {
    * @returns {TODO} TODO
    */
   remove(viewOrIndex) {
-    util.array.remove(this.views, viewOrIndex);
+    util.array.remove(this._views, viewOrIndex);
   }
 
   /**
@@ -903,9 +901,9 @@ export class NavController extends Ion {
    * @returns {TODO} TODO
    */
   first() {
-    for (let i = 0, l = this.views.length; i < l; i++) {
-      if (!this.views[i].shouldDestroy) {
-        return this.views[i];
+    for (let i = 0, l = this._views.length; i < l; i++) {
+      if (!this._views[i].shouldDestroy) {
+        return this._views[i];
       }
     }
     return null;
@@ -917,9 +915,9 @@ export class NavController extends Ion {
    * @returns {TODO} TODO
    */
   last() {
-    for (let i = this.views.length - 1; i >= 0; i--) {
-      if (!this.views[i].shouldDestroy) {
-        return this.views[i];
+    for (let i = this._views.length - 1; i >= 0; i--) {
+      if (!this._views[i].shouldDestroy) {
+        return this._views[i];
       }
     }
     return null;
@@ -931,7 +929,7 @@ export class NavController extends Ion {
    * @returns {TODO} TODO
    */
   indexOf(view) {
-    return this.views.indexOf(view);
+    return this._views.indexOf(view);
   }
 
   /**
@@ -941,8 +939,8 @@ export class NavController extends Ion {
    */
   length() {
     let len = 0;
-    for (let i = 0, l = this.views.length; i < l; i++) {
-      if (!this.views[i].shouldDestroy) {
+    for (let i = 0, l = this._views.length; i < l; i++) {
+      if (!this._views[i].shouldDestroy) {
         len++;
       }
     }
@@ -955,7 +953,7 @@ export class NavController extends Ion {
    */
   instances() {
     let instances = [];
-    for (let view of this.views) {
+    for (let view of this._views) {
       if (view.instance) {
         instances.push(view.instance);
       }

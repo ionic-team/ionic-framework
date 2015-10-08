@@ -1,16 +1,14 @@
 import {FORM_DIRECTIVES, NgControl, NgControlGroup,
-  Component, View, Injectable, NgClass, NgIf, NgFor} from 'angular2/angular2';
+  Component, View, ElementRef, Injectable, NgClass, NgIf, NgFor} from 'angular2/angular2';
 
-import {Overlay} from '../overlay/overlay';
+import {OverlayController} from '../overlay/overlay-controller';
+import {IonicConfig} from '../../config/config';
 import {Animation} from '../../animations/animation';
-import {Ion} from '../ion';
 import {Button} from '../button/button';
 import * as util from 'ionic/util';
 
 
 /**
- * @name Popup
- * @description
  * The Ionic Popup service allows the creation of popup windows that require the user to respond in order to continue.
  *
  * The popup service has support for more flexible versions of the built in `alert()`, `prompt()`, and `confirm()` functions that users are used to, in addition to allowing popups with completely custom content and look.
@@ -64,25 +62,27 @@ import * as util from 'ionic/util';
  * ```
  */
 @Injectable()
-export class Popup extends Overlay {
+export class Popup {
+
+  constructor(ctrl: OverlayController, config: IonicConfig) {
+    this.ctrl = ctrl;
+    this._defaults = {
+      enterAnimation: config.get('popupPopIn'),
+      leaveAnimation: config.get('popupPopOut'),
+    };
+  }
 
   /**
    * TODO
    * @param {TODO} opts  TODO
    * @returns {object} A promise
    */
-  popup(opts) {
+  open(opts) {
     return new Promise((resolve, reject)=> {
-      let config = this.config;
-      let defaults = {
-        enterAnimation: config.get('popupPopIn'),
-        leaveAnimation: config.get('popupPopOut'),
-      };
-
       opts.promiseResolve = resolve;
       opts.promiseReject = reject;
 
-      return this.create(OVERLAY_TYPE, StandardPopup, defaults, opts);
+      return this.ctrl.open(OVERLAY_TYPE, PopupCmp, util.extend(this._defaults, opts));
     });
   }
 
@@ -121,6 +121,7 @@ export class Popup extends Overlay {
       }
     };
     opts = util.extend({
+      showPrompt: false,
       cancel: () => {
         //reject();
       },
@@ -129,7 +130,7 @@ export class Popup extends Overlay {
       ]
     }, opts);
 
-    return this.popup(opts);
+    return this.open(opts);
   }
 
   /**
@@ -177,13 +178,14 @@ export class Popup extends Overlay {
       }
     }
     opts = util.extend({
+      showPrompt: false,
       cancel: () => {
       },
       buttons: [
         cancelButton, okButton
       ]
     }, opts);
-    return this.popup(opts);
+    return this.open(opts);
   }
 
   /**
@@ -244,7 +246,7 @@ export class Popup extends Overlay {
       ]
     }, opts);
 
-    return this.popup(opts);
+    return this.open(opts);
   }
 
   /**
@@ -254,9 +256,9 @@ export class Popup extends Overlay {
    */
   get(handle) {
     if (handle) {
-      return this.getByHandle(handle, OVERLAY_TYPE);
+      return this.ctrl.getByHandle(handle, OVERLAY_TYPE);
     }
-    return this.getByType(OVERLAY_TYPE);
+    return this.ctrl.getByType(OVERLAY_TYPE);
   }
 
 }
@@ -264,7 +266,7 @@ export class Popup extends Overlay {
 const OVERLAY_TYPE = 'popup';
 
 @Component({
-  selector: 'ion-popup-default'
+  selector: 'ion-popup'
 })
 // TODO add button type to button: [type]="button.type"
 @View({
@@ -286,19 +288,22 @@ const OVERLAY_TYPE = 'popup';
   directives: [FORM_DIRECTIVES, NgClass, NgIf, NgFor, Button]
 })
 
-class StandardPopup {
-  constructor(popup: Popup) {
-    this.popup = popup;
+class PopupCmp {
+
+  constructor(elementRef: ElementRef) {
+    this.elementRef = elementRef;
   }
+
   onInit() {
     setTimeout(() => {
-      this.element = this.overlayRef.getElementRef().nativeElement;
-      this.promptInput = this.element.querySelector('input');
+      // TODO: make more better, no DOM BS
+      this.promptInput = this.elementRef.nativeElement.querySelector('input');
       if (this.promptInput) {
         this.promptInput.value = '';
       }
     });
   }
+
   buttonTapped(button, event) {
     let promptValue = this.promptInput && this.promptInput.value;
 
@@ -315,19 +320,21 @@ class StandardPopup {
         // Resolve with the prompt value
         this.promiseResolve(promptValue);
       }
-      return this.overlayRef.close();
+      return this.close();
     }
 
   }
+
   _cancel(event) {
     this.cancel && this.cancel(event);
 
     if (!event.defaultPrevented) {
       this.promiseReject();
-      return this.overlayRef.close();
+      return this.close();
     }
   }
 }
+
 
 class PopupAnimation extends Animation {
   constructor(element) {
@@ -343,13 +350,14 @@ class PopupAnimation extends Animation {
   }
 }
 
+
 /**
- * Animations for modals
+ * Animations for popups
  */
 class PopupPopIn extends PopupAnimation {
   constructor(element) {
     super(element);
-    this.wrapper.fromTo('opacity', '0', '1')
+    this.wrapper.fromTo('opacity', '0.01', '1')
     this.wrapper.fromTo('scale', '1.1', '1');
 
     this.backdrop.fromTo('opacity', '0', '0.3')
@@ -371,7 +379,7 @@ Animation.register('popup-pop-out', PopupPopOut);
 class PopupMdPopIn extends PopupPopIn {
   constructor(element) {
     super(element);
-    this.backdrop.fromTo('opacity', '0', '0.5')
+    this.backdrop.fromTo('opacity', '0.01', '0.5')
   }
 }
 Animation.register('popup-md-pop-in', PopupMdPopIn);

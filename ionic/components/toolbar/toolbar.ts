@@ -2,7 +2,6 @@ import {Component, Directive, View, Host, ElementRef, Optional, forwardRef, Inje
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
-import {IonicView} from '../../config/decorators';
 import {MenuToggle} from '../menu/menu-toggle';
 import {Navbar} from '../nav-bar/nav-bar';
 
@@ -62,7 +61,7 @@ export class ToolbarBase extends Ion  {
     'class': 'toolbar'
   }
 })
-@IonicView({
+@View({
   template:
     '<div class="toolbar-inner">' +
       '<ng-content select="[menu-toggle]"></ng-content>' +
