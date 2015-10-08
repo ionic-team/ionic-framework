@@ -10,8 +10,7 @@ import {
   forwardRef
 } from 'angular2/angular2';
 
-import {Ion} from '../ion';
-import {IonInput} from '../form/input';
+import {IonicForm} from '../form/form';
 import {IonicConfig} from '../../config/config';
 import {pointerCoord} from '../../util/dom';
 
@@ -109,7 +108,7 @@ class MediaSwitch {
   '</media-switch>',
   directives: [MediaSwitch]
 })
-export class Switch extends Ion {
+export class Switch {
   /**
    * TODO
    * @param {ElementRef} elementRef  TODO
@@ -117,24 +116,24 @@ export class Switch extends Ion {
    * @param {NgControl=} ngControl  TODO
    */
   constructor(
+    form: IonicForm,
     elementRef: ElementRef,
     config: IonicConfig,
     @Optional() private ngControl: NgControl
   ) {
-    super(elementRef, config);
-    let self = this;
+    this.form = form;
+    form.register(this);
 
-    self.id = IonInput.nextId();
-    self.tabIndex = 0;
-    self.lastTouch = 0;
-    self.mode = config.get('mode');
+    this.lastTouch = 0;
+    this.mode = config.get('mode');
 
-    self.onChange = (_) => {};
-    self.onTouched = (_) => {};
+    this.onChange = (_) => {};
+    this.onTouched = (_) => {};
 
     if (ngControl) ngControl.valueAccessor = this;
 
 
+    let self = this;
     function pointerMove(ev) {
       let currentX = pointerCoord(ev).x;
 
@@ -156,21 +155,20 @@ export class Switch extends Ion {
     }
 
     this.addMoveListener = function() {
-      this.switchEle.addEventListener('touchmove', pointerMove);
-      this.switchEle.addEventListener('mousemove', pointerMove);
+      self.switchEle.addEventListener('touchmove', pointerMove);
+      self.switchEle.addEventListener('mousemove', pointerMove);
       elementRef.nativeElement.addEventListener('mouseout', pointerOut);
     };
 
     this.removeMoveListener = function() {
-      this.switchEle.removeEventListener('touchmove', pointerMove);
-      this.switchEle.removeEventListener('mousemove', pointerMove);
+      self.switchEle.removeEventListener('touchmove', pointerMove);
+      self.switchEle.removeEventListener('mousemove', pointerMove);
       elementRef.nativeElement.removeEventListener('mouseout', pointerOut);
     };
   }
 
   onInit() {
-    super.onInit();
-    this.labelId = 'label-' + this.id;
+    this.labelId = 'label-' + this.inputId;
   }
 
   /**
@@ -234,6 +232,7 @@ export class Switch extends Ion {
   onDestroy() {
     this.removeMoveListener();
     this.switchEle = this.addMoveListener = this.removeMoveListener = null;
+    this.form.deregister(this);
   }
 
   isDisabled(ev) {

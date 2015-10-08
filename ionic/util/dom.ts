@@ -176,8 +176,12 @@ export function hasPointerMoved(threshold, startCoord, endCoord) {
          (Math.abs(startCoord.x - endCoord.x) > threshold || Math.abs(startCoord.y - endCoord.y) > threshold);
 }
 
+export function isActive(ele) {
+  return !!(ele && (document.activeElement === ele));
+}
+
 export function hasFocus(ele) {
-  return !!(ele && (document.activeElement === ele.nativeElement || document.activeElement === ele));
+  return isActive(ele) && (ele.parentElement.querySelector(':focus') === ele);
 }
 
 export function isTextInput(ele) {

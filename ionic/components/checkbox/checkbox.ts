@@ -1,8 +1,7 @@
-import {Component, View, Directive, ElementRef, Optional, NgControl} from 'angular2/angular2';
+import {Component, View, Directive, Optional, NgControl} from 'angular2/angular2';
 
 import {Ion} from '../ion';
-import {IonInput} from '../form/input';
-import {IonicConfig} from '../../config/config';
+import {IonicForm} from '../form/form';
 
 /**
  * The checkbox is no different than the HTML checkbox input, except it's styled differently
@@ -44,21 +43,14 @@ import {IonicConfig} from '../../config/config';
     '<ng-content></ng-content>' +
   '</ion-item-content>'
 })
-export class Checkbox extends Ion {
-  /**
-   * TODO
-   * @param {ElementRef} elementRef  TODO
-   * @param {IonicConfig} ionicConfig  TODO
-   * @param {NgControl=} ngControl  TODO
-   */
+export class Checkbox {
+
   constructor(
-    elementRef: ElementRef,
-    config: IonicConfig,
+    form: IonicForm,
     @Optional() ngControl: NgControl
   ) {
-    super(elementRef, config);
-    this.tabIndex = 0;
-    this.id = IonInput.nextId();
+    this.form = form;
+    form.register(this);
 
     this.onChange = (_) => {};
     this.onTouched = (_) => {};
@@ -72,8 +64,7 @@ export class Checkbox extends Ion {
    * TODO
    */
   onInit() {
-    super.onInit();
-    this.labelId = 'label-' + this.id;
+    this.labelId = 'label-' + this.inputId;
   }
 
   /**
@@ -121,4 +112,8 @@ export class Checkbox extends Ion {
    * @param {Function} fn  onTouched event handler.
    */
   registerOnTouched(fn) { this.onTouched = fn; }
+
+  onDestroy() {
+    this.form.deregister(this);
+  }
 }

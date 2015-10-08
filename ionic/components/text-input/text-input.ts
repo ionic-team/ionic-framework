@@ -1,9 +1,8 @@
 import {Directive, View, Host, Optional, ElementRef, Attribute, Query, QueryList, NgZone} from 'angular2/angular2';
 
 import {IonicConfig} from '../../config/config';
-import {IonInput} from '../form/input';
+import {IonicForm} from '../form/form';
 import {Label} from './label';
-import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
 import {Content} from '../content/content';
 import * as dom  from '../../util/dom';
@@ -15,22 +14,18 @@ import {IonicPlatform} from '../../platform/platform';
  */
 @Directive({
   selector: 'ion-input',
-  inputs: [
-    'tabIndex'
-  ],
   host: {
     '(focus)': 'receivedFocus(true)',
     '(blur)': 'receivedFocus(false)',
     '(touchstart)': 'pointerStart($event)',
     '(touchend)': 'pointerEnd($event)',
     '(mouseup)': 'pointerEnd($event)',
-    '[class.has-focus]': 'inputHasFocus',
-    '[class.has-value]': 'inputHasValue',
-    '[tabIndex]': 'activeTabIndex',
+    '[class.has-focus]': 'hasFocus',
+    '[class.has-value]': 'hasValue',
     'class': 'item'
   }
 })
-export class TextInput extends Ion {
+export class TextInput {
   /**
    * TODO
    * @param {ElementRef} elementRef  TODO
@@ -42,31 +37,30 @@ export class TextInput extends Ion {
    * @param {QueryList<Label>} labelQry  TODO
    */
   constructor(
+    form: IonicForm,
     elementRef: ElementRef,
     config: IonicConfig,
     app: IonicApp,
-    ngZone: NgZone,
+    zone: NgZone,
     platform: IonicPlatform,
     @Optional() @Host() scrollView: Content
   ) {
-    super(elementRef, config);
+    this.form = form;
+    form.register(this);
+
+    this.app = app;
+    this.elementRef = elementRef;
+    this.zone = zone;
+    this.platform = platform;
 
     this.scrollView = scrollView;
     this.scrollAssist = config.get('keyboardScrollAssist');
-    this.id = IonInput.nextId();
-    IonInput.registerInput(this);
-
-    this.app = app;
-    this.zone = ngZone;
-    this.platform = platform;
-
-    this.keyboardHeight = this.config.get('keyboardHeight');
+    this.keyboardHeight = config.get('keyboardHeight');
   }
 
-  registerInputElement(textInputElement) {
+  registerInput(textInputElement) {
     this.input = textInputElement;
     this.type = textInputElement.type;
-    textInputElement.tabIndex = -1;
   }
 
   registerLabel(label) {
@@ -77,17 +71,15 @@ export class TextInput extends Ion {
    * TODO
    */
   onInit() {
-    super.onInit();
-
     if (this.input && this.label) {
-      this.input.labelledBy = this.label.id = (this.label.id || 'label-' + this.id);
+      this.input.labelledBy = this.label.id = (this.label.id || 'label-' + this.inputId);
     }
 
     let self = this;
     self.scrollMove = (ev) => {
       self.deregListeners();
 
-      if (self.inputHasFocus) {
+      if (self.hasFocus) {
         self.tempFocusMove();
       }
     };
@@ -119,7 +111,7 @@ export class TextInput extends Ion {
 
       // focus this input if the pointer hasn't moved XX pixels
       // and the input doesn't already have focus
-      if (!dom.hasPointerMoved(8, this.startCoord, endCoord) && !this.inputHasFocus) {
+      if (!dom.hasPointerMoved(8, this.startCoord, endCoord) && !this.hasFocus) {
         ev.preventDefault();
         ev.stopPropagation();
 
@@ -149,7 +141,6 @@ export class TextInput extends Ion {
    * TODO
    * @returns {TODO} TODO
    */
-   //TODO inconsistent return value, sometimes undefined
   initFocus() {
     let scrollView = this.scrollView;
 
@@ -327,12 +318,12 @@ export class TextInput extends Ion {
   setFocus() {
     this.zone.run(() => {
       // set focus on the input element
-      this.input && this.input.setFocus();
+      this.input && this.input.initFocus();
 
       // ensure the body hasn't scrolled down
       document.body.scrollTop = 0;
 
-      IonInput.setAsLastInput(this);
+      this.form.resetInputs();
     });
 
     if (this.scrollAssist && this.scrollView) {
@@ -343,25 +334,26 @@ export class TextInput extends Ion {
     }
   }
 
-  /**
-   * TODO
-   */
   tempFocusMove() {
-    let focusHolder = this.app.focusHolder();
-    focusHolder.setFocusHolder(this.type);
+    this.form.setFocusHolder(this.type);
   }
 
-  get inputHasFocus() {
+  get hasFocus() {
     return !!this.input && this.input.hasFocus;
   }
 
-  get inputHasValue() {
+  get hasValue() {
     return !!this.input && this.input.hasValue;
   }
 
-  get activeTabIndex() {
-    this.input.tabIndex = (this.inputHasFocus ? 1000 : -1);
-    return -1;
+  get tabIndex() {
+    return this.input && this.input.tabIndex;
+  }
+
+  set tabIndex(val) {
+    if (this.input) {
+      this.input.tabIndex = val;
+    }
   }
 
   /**
@@ -369,12 +361,17 @@ export class TextInput extends Ion {
    * @param {boolean} receivedFocus  TODO
    */
   receivedFocus(receivedFocus) {
-    if (receivedFocus && !this.inputHasFocus) {
+    if (receivedFocus && !this.hasFocus) {
       this.initFocus();
 
     } else {
       this.deregListeners();
     }
+  }
+
+  onDestroy() {
+    this.deregListeners();
+    this.form.deregister(this);
   }
 
 }
@@ -391,31 +388,33 @@ export class TextInput extends Ion {
   host: {
     '[tabIndex]': 'tabIndex',
     '[attr.aria-labelledby]': 'labelledBy',
-    'class': 'text-input input'
+    'class': 'text-input'
   }
 })
 export class TextInputElement {
-  /**
-   * TODO
-   * @param {string} type  The value of the underlying element's type attribute.
-   * @param {ElementRef} elementRef  TODO
-   * @param {IonicConfig} config  TODO
-   */
+
   constructor(
+    form: IonicForm,
     @Attribute('type') type: string,
     elementRef: ElementRef,
-    @Optional() textInput: TextInput
+    @Optional() textInputWrapper: TextInput
   ) {
+    this.form = form;
     this.type = type;
     this.elementRef = elementRef;
-    this.tabIndex = this.tabIndex || '';
-    textInput && textInput.registerInputElement(this);
+    this.tabIndex = 0;
+
+    if (textInputWrapper) {
+      // it's within ionic's ion-input, let ion-input handle what's up
+      textInputWrapper.registerInput(this);
+
+    } else {
+      // not within ion-input
+      form.register(this);
+    }
   }
 
-  /**
-   * Focus the input.
-   */
-  setFocus() {
+  initFocus() {
     this.elementRef.nativeElement.focus();
   }
 
@@ -424,7 +423,7 @@ export class TextInputElement {
    * @returns {boolean}  true if the input has focus, otherwise false.
    */
   get hasFocus() {
-    return dom.hasFocus(this.elementRef);
+    return dom.hasFocus(this.elementRef.nativeElement);
   }
 
   /**
@@ -433,6 +432,10 @@ export class TextInputElement {
    */
   get hasValue() {
     return (this.elementRef.nativeElement.value !== '');
+  }
+
+  onDestroy() {
+    this.form.deregister(this);
   }
 }
 

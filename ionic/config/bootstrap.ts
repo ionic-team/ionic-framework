@@ -5,6 +5,7 @@ import {IonicApp} from '../components/app/app';
 import {IonicConfig} from './config';
 import {IonicPlatform} from '../platform/platform';
 import {OverlayController} from '../components/overlay/overlay-controller';
+import {IonicForm} from '../components/form/form';
 import {ActionSheet} from '../components/action-sheet/action-sheet';
 import {Modal} from '../components/modal/modal';
 import {Popup} from '../components/popup/popup';
@@ -45,6 +46,7 @@ export function ionicBindings(rootCmp, config) {
     bind(IonicPlatform).toValue(platform),
     bind(TapClick).toValue(tapClick),
     bind(Events).toValue(events),
+    IonicForm,
     OverlayController,
     ActionSheet,
     Modal,
@@ -90,10 +92,6 @@ function setupDom(window, document, config, platform) {
   // enable :hover CSS when the "hoverCSS" setting is not false
   if (config.get('hoverCSS') !== false) {
     bodyEle.classList.add('enable-hover');
-  }
-
-  if (config.get('keyboardScrollAssist')) {
-    // create focus holder
   }
 
   /**
