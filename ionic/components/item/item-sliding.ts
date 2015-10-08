@@ -39,14 +39,13 @@ import {CSS, raf} from 'ionic/util/dom';
 })
 @View({
   template:
-    '<ng-content select="[item-left]"></ng-content>' +
+      '<ng-content select="ion-item-options"></ng-content>' +
       '<ion-item-sliding-content>' +
         '<ion-item-content>' +
           '<ng-content></ng-content>'+
         '</ion-item-content>' +
         '<ng-content select="[item-right]"></ng-content>' +
-      '</ion-item-sliding-content>' +
-      '<ng-content select="ion-item-options"></ng-content>',
+      '</ion-item-sliding-content>'
   directives: [NgIf]
 })
 export class ItemSliding {
@@ -76,16 +75,18 @@ export class ItemSliding {
     var itemSlidingContent = this.ele.querySelector('ion-item-sliding-content');
     var itemOptionsContent = this.ele.querySelector('ion-item-options');
 
+    console.log('List width', this.list.width());
+
     this.itemSlidingContent = itemSlidingContent;
     this.itemOptions = itemOptionsContent;
 
-    this.itemWidth = itemSlidingContent.offsetWidth;
-    this.itemOptionsWidth = itemOptionsContent && itemOptionsContent.offsetWidth || 0;
+    this.itemWidth = this.list.width();
 
     this.openAmount = 0;
 
     this.gesture = new ItemSlideGesture(this, itemSlidingContent);
   }
+
 
   close(andStopDrag) {
     this.openAmount = 0;
@@ -163,6 +164,9 @@ class ItemSlideGesture extends DragGesture {
 
     this.el.addEventListener('touchstart', (e) => {
       this.item.didTouch();
+      raf(() => {
+        this.item.itemOptionsWidth = this.item.itemOptions && this.item.itemOptions.offsetWidth || 0;
+      })
     })
 
     this.el.addEventListener('touchend', (e) => {
@@ -175,6 +179,8 @@ class ItemSlideGesture extends DragGesture {
 
   onDragStart(ev) {
     if(this.item.didClose) { return; }
+
+    if(!this.item.itemOptionsWidth) { return; }
 
     this.slide = {};
 
