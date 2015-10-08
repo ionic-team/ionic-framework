@@ -38,7 +38,7 @@ export class ItemGroupTitle {
    * TODO
    * @param {ElementRef} elementRef  TODO
    */
-  constructor(elementRef: ElementRef, config: IonicConfig, @Host() content: Content) {
+  constructor(elementRef: ElementRef, config: IonicConfig, @Optional() @Host() content: Content) {
     this.isSticky = true;
     this.content = content;
     this.ele = elementRef.nativeElement;
@@ -46,6 +46,7 @@ export class ItemGroupTitle {
   }
 
   onInit() {
+    if(!this.content) { return; }
 
     this.scrollContent = this.content.elementRef.nativeElement.children[0];
 
