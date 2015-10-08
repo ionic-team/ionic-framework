@@ -25,14 +25,14 @@ export function ionicBindings(rootCmp, config) {
     config = new IonicConfig(config);
   }
 
-  let events = new Events();
-  let tapClick = new TapClick(app, config, window, document);
-
   platform.url(window.location.href);
   platform.userAgent(window.navigator.userAgent);
   platform.navigatorPlatform(window.navigator.platform);
   platform.load();
   config.setPlatform(platform);
+
+  let events = new Events();
+  let tapClick = new TapClick(app, config, window, document);
 
   setupDom(window, document, config, platform);
   bindEvents(window, document, platform, events);
