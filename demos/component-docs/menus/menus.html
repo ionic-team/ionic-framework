@@ -1,12 +1,24 @@
+<ion-menu #menu [content]="content">
 
-<ion-navbar *navbar class="show-navbar">
-  <ion-title>Menus</ion-title>
-</ion-navbar>
+  <ion-toolbar primary>
+    <ion-title>Menu</ion-title>
+  </ion-toolbar>
 
-<ion-content class="has-header padding">
-  TODO
-</ion-content>
+  <ion-content>
 
+    <ion-list>
 
+      <button ion-item *ng-for="#p of pages" (click)="openPage(menu, p)">
+        {{p.title}}
+      </button>
 
+      <button ion-item menu-toggle>
+        Close Menu
+      </button>
 
+    </ion-list>
+  </ion-content>
+
+</ion-menu>
+
+<ion-nav id="menuNav" #content [root]="rootView"></ion-nav> 
