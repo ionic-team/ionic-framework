@@ -1,11 +1,11 @@
 import {NavController, NavParams} from 'ionic/ionic';
-import {IonicView, Events} from 'ionic/ionic';
+import {Page, Events} from 'ionic/ionic';
 import * as helpers from 'helpers';
 
-@IonicView({
-  templateUrl: 'navigation.html'
+@Page({
+  templateUrl: 'navigation/navigation-details.html'
 })
-export class NavigationDetailsPage {
+class NavigationDetailsPage {
   constructor(nav: NavController, params: NavParams, events: Events) {
     this.nav = nav;
     this.selection = { title: params.data.name };
@@ -23,16 +23,20 @@ export class NavigationDetailsPage {
     };
     this.selection['content'] = navData[this.selection.title];
     this.selection['icon'] = navIcons[this.selection.title];
-    window.onmessage = (e) => {
-      zone.run(() => {
-        if (e.data) {
-          var data = JSON.parse(e.data);
-          var componentTitle = helpers.toTitleCase(data.hash.replace('-', ' '));
-          events.publish('page:locationChange', { componentName: componentTitle });
-          this.nav.pop();
-        }
-      });
-    };
-
   }
+}
+
+@Page({
+    templateUrl: 'navigation/navigation.html',
+})
+export class NavigationPage {
+  
+  constructor(nav: NavController) {
+      this.nav = nav;
+  }
+
+  openNavDetailsPage(item) {
+    this.nav.push(NavigationDetailsPage, { name: item });
+  }
+
 }

@@ -14,7 +14,6 @@ export * from './platform/plugins'
 export * from './platform/storage'
 
 export * from './util/click-block'
-export * from './util/focus'
 export * from './util/events'
 
 export * from './animations/animation'

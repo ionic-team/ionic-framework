@@ -155,17 +155,17 @@ export class Tab extends NavController {
 
   loadContainer(componentType, hostProtoViewRef, viewCtrl, done) {
 
-    let viewComponetRef = this.createViewComponetRef(componentType, hostProtoViewRef, this.contentContainerRef, this.getBindings(viewCtrl));
+    let viewComponentRef = this.createViewComponentRef(componentType, hostProtoViewRef, this.contentContainerRef, this.getBindings(viewCtrl));
     viewCtrl.disposals.push(() => {
-      viewComponetRef.dispose();
+      viewComponentRef.dispose();
     });
 
     // a new ComponentRef has been created
     // set the ComponentRef's instance to this ViewController
-    viewCtrl.setInstance(viewComponetRef.instance);
+    viewCtrl.setInstance(viewComponentRef.instance);
 
     // remember the ElementRef to the content that was just created
-    viewCtrl.viewElementRef(viewComponetRef.location);
+    viewCtrl.viewElementRef(viewComponentRef.location);
 
     // get the NavController's container for navbars, which is
     // the place this NavController will add each ViewController's navbar

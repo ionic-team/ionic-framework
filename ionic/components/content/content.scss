@@ -33,35 +33,33 @@ scroll-content {
 $content-padding:    16px !default;
 
 
-.padding,
 [padding],
-.padding > scroll-content,
 [padding] > scroll-content {
   padding: $content-padding;
 }
 
-.padding-top {
+[padding-top] {
   padding-top: $content-padding;
 }
 
-.padding-right {
+[padding-right] {
   padding-right: $content-padding;
 }
 
-.padding-bottom {
+[padding-bottom] {
   padding-bottom: $content-padding;
 }
 
-.padding-left {
+[padding-left] {
   padding-left: $content-padding;
 }
 
-.padding-vertical {
+[padding-vertical] {
   padding-top: $content-padding;
   padding-bottom: $content-padding;
 }
 
-.padding-horizontal {
+[padding-horizontal] {
   padding-right: $content-padding;
   padding-left: $content-padding;
 }
