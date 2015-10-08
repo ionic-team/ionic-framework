@@ -191,5 +191,21 @@ export function run() {
 
     });
 
+    describe("setRoot", () => {
+      it('remove previous views and set root', () => {
+        let vc1 = new ViewController(),
+            vc2 = new ViewController(),
+            vc3 = new ViewController();
+        nav._views = [vc1, vc2, vc3];
+        expect(nav._views.length).toBe(3);
+
+        nav.transition = mockTransitionFn;
+        nav.setRoot(FirstPage);
+        //_views[0] will be transitioned out of
+        expect(nav._views.length).toBe(2);
+        expect(nav._views[1].componentType).toBe(FirstPage);
+      });
+    });
+
   });
 }
