@@ -10,7 +10,7 @@ IonicModule
   return {
     /**
      * @ngdoc method
-     * @name $ionicBody#add
+     * @name $ionicBody#addClass
      * @description Add a class to the document's body element.
      * @param {string} class Each argument will be added to the body element.
      * @returns {$ionicBody} The $ionicBody service so methods can be chained.
