@@ -38,7 +38,7 @@ export class ItemGroupTitle {
    * TODO
    * @param {ElementRef} elementRef  TODO
    */
-  constructor(elementRef: ElementRef, config: IonicConfig, @Optional() @Host() content: Content) {
+  constructor(elementRef: ElementRef, config: IonicConfig, content: Content) {
     this.isSticky = true;
     this.content = content;
     this.ele = elementRef.nativeElement;
