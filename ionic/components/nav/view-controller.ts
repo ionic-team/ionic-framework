@@ -31,13 +31,15 @@ export class ViewController {
   stage(done) {
     let navCtrl = this.navCtrl;
 
-    if (this.instance || !navCtrl) {
+    if (this.instance || !navCtrl || this.shouldDestroy) {
       // already compiled this view
       return done();
     }
 
     // compile the component and create a ProtoViewRef
     navCtrl.compileView(this.componentType).then(hostProtoViewRef => {
+
+      if (this.shouldDestroy) return done();
 
       // get the pane the NavController wants to use
       // the pane is where all this content will be placed into
@@ -96,13 +98,6 @@ export class ViewController {
     }
 
     this.didUnload();
-
-    // just to help prevent any possible memory leaks
-    for (let name in this) {
-      if (this.hasOwnProperty(name)) {
-        this[name] = null;
-      }
-    }
   }
 
   /**
@@ -217,14 +212,18 @@ export class ViewController {
    * recommended method to use when a view becomes active.
    */
   loaded() {
-    this.instance && this.instance.onPageLoaded && this.instance.onPageLoaded();
+    if (!this.shouldDestroy) {
+      this.instance && this.instance.onPageLoaded && this.instance.onPageLoaded();
+    }
   }
 
   /**
    * The view is about to enter and become the active view.
    */
   willEnter() {
-    this.instance && this.instance.onPageWillEnter && this.instance.onPageWillEnter();
+    if (!this.shouldDestroy) {
+      this.instance && this.instance.onPageWillEnter && this.instance.onPageWillEnter();
+    }
   }
 
   /**

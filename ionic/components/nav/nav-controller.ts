@@ -186,6 +186,8 @@ export class NavController extends Ion {
 
     // create a new ViewController
     let enteringView = new ViewController(this, componentType, params);
+    enteringView.shouldDestroy = false;
+    enteringView.shouldCache = false;
 
     // add the view to the stack
     this._add(enteringView);
@@ -452,6 +454,11 @@ export class NavController extends Ion {
 
     // wait for the new view to complete setup
     enteringView.stage(() => {
+
+      if (enteringView.shouldDestroy) {
+        // already marked as a view that will be destroyed, don't continue
+        return callback();
+      }
 
       this._zone.runOutsideAngular(() => {
 
