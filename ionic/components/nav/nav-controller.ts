@@ -527,41 +527,13 @@ export class NavController extends Ion {
    * @private
    * TODO
    */
-  createViewComponentRef(type, hostProtoViewRef, viewContainer, viewCtrlBindings) {
-    let bindings = this.bindings.concat(viewCtrlBindings);
-
-    // the same guts as DynamicComponentLoader.loadNextToLocation
-    var hostViewRef =
-        viewContainer.createHostView(hostProtoViewRef, viewContainer.length, bindings);
-    var newLocation = this._viewManager.getHostElement(hostViewRef);
-    var component = this._viewManager.getComponent(newLocation);
-
-    var dispose = () => {
-      var index = viewContainer.indexOf(hostViewRef);
-      if (index !== -1) {
-        viewContainer.remove(index);
-      }
-    };
-
-    // TODO: make-shift ComponentRef_, this is pretty much going to
-    // break in future versions of ng2, keep an eye on it
-    return {
-      location: newLocation,
-      instance: component,
-      dispose: dispose
-    };
-  }
-
-  /**
-   * @private
-   * TODO
-   */
-  getBindings(viewCtrl) {
-    // create bindings to this ViewController and its NavParams
-    return this.bindings.concat(Injector.resolve([
+  loadNextToAnchor(type, location, viewCtrl) {
+    let bindings = this.bindings.concat(Injector.resolve([
       bind(ViewController).toValue(viewCtrl),
       bind(NavParams).toValue(viewCtrl.params),
     ]));
+
+    return this._loader.loadNextToLocation(type, location, bindings);
   }
 
   /**

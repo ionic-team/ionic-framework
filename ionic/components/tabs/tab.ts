@@ -153,40 +153,44 @@ export class Tab extends NavController {
 
   loadContainer(componentType, hostProtoViewRef, viewCtrl, done) {
 
-    let viewComponentRef = this.createViewComponentRef(componentType, hostProtoViewRef, this.contentContainerRef, this.getBindings(viewCtrl));
-    viewCtrl.disposals.push(() => {
-      viewComponentRef.dispose();
-    });
-
-    // a new ComponentRef has been created
-    // set the ComponentRef's instance to this ViewController
-    viewCtrl.setInstance(viewComponentRef.instance);
-
-    // remember the ElementRef to the content that was just created
-    viewCtrl.viewElementRef(viewComponentRef.location);
-
-    // get the NavController's container for navbars, which is
-    // the place this NavController will add each ViewController's navbar
-    let navbarContainerRef = this.tabs.navbarContainerRef;
-
-    // get this ViewController's navbar TemplateRef, which may not
-    // exist if the ViewController's template didn't have an <ion-navbar *navbar>
-    let navbarTemplateRef = viewCtrl.getNavbarTemplateRef();
-
-    // create the navbar view if the pane has a navbar container, and the
-    // ViewController's instance has a navbar TemplateRef to go to inside of it
-    if (navbarContainerRef && navbarTemplateRef) {
-      let navbarView = navbarContainerRef.createEmbeddedView(navbarTemplateRef, -1);
+    this.loadNextToAnchor(componentType, this.contentAnchorRef, viewCtrl).then(componentRef => {
 
       viewCtrl.disposals.push(() => {
-        let index = navbarContainerRef.indexOf(navbarView);
-        if (index > -1) {
-          navbarContainerRef.remove(index);
-        }
+        componentRef.dispose();
       });
-    }
 
-    done();
+      // a new ComponentRef has been created
+      // set the ComponentRef's instance to this ViewController
+      viewCtrl.setInstance(componentRef.instance);
+
+      // remember the ElementRef to the content that was just created
+      viewCtrl.viewElementRef(componentRef.location);
+
+      // get the NavController's container for navbars, which is
+      // the place this NavController will add each ViewController's navbar
+      let navbarContainerRef = this.tabs.navbarContainerRef;
+
+      // get this ViewController's navbar TemplateRef, which may not
+      // exist if the ViewController's template didn't have an <ion-navbar *navbar>
+      let navbarTemplateRef = viewCtrl.getNavbarTemplateRef();
+
+      // create the navbar view if the pane has a navbar container, and the
+      // ViewController's instance has a navbar TemplateRef to go to inside of it
+      if (navbarContainerRef && navbarTemplateRef) {
+        let navbarView = navbarContainerRef.createEmbeddedView(navbarTemplateRef, -1);
+
+        viewCtrl.disposals.push(() => {
+          let index = navbarContainerRef.indexOf(navbarView);
+          if (index > -1) {
+            navbarContainerRef.remove(index);
+          }
+        });
+      }
+
+      done();
+
+    });
+
   }
 
 }
@@ -194,10 +198,7 @@ export class Tab extends NavController {
 
 @Directive({selector: 'template[content-anchor]'})
 class TabContentAnchor {
-  constructor(
-    @Host() tab: Tab,
-    viewContainerRef: ViewContainerRef
-  ) {
-    tab.contentContainerRef = viewContainerRef;
+  constructor(@Host() tab: Tab, elementRef: ElementRef) {
+    tab.contentAnchorRef = elementRef;
   }
 }
