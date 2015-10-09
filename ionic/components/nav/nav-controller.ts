@@ -336,6 +336,26 @@ export class NavController extends Ion {
   }
 
   /**
+   * Removes a view from the nav stack at the specified index.
+   * @param {TODO} index TODO
+   * @returns {Promise} TODO
+   */
+  remove(index) {
+    if (index < 0 || index >= this._views.length) {
+      return Promise.reject("Index out of range");
+    }
+
+    let viewToRemove = this._views[index];
+    if (this.isActive(viewToRemove)){
+      return this.pop();
+    } else {
+      this._remove(index);
+      viewToRemove.destroy();
+      return Promise.resolve();
+    }
+  }
+
+  /**
    * Set the view stack to reflect the given component classes.
    * @param {TODO} components  TODO
    * @param {TODO} [opts={}]  TODO
