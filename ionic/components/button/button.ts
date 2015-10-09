@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Renderer} from 'angular2/angular2';
+import {Directive, ElementRef, Renderer, Attribute} from 'angular2/angular2';
 
 import {IonicConfig} from '../../config/config';
 
@@ -14,7 +14,8 @@ export class Button {
   constructor(
     config: IonicConfig,
     elementRef: ElementRef,
-    renderer: Renderer
+    renderer: Renderer,
+    @Attribute('type') type: string
   ) {
     let element = elementRef.nativeElement;
 
@@ -22,10 +23,8 @@ export class Button {
       element.classList.add('disable-hover');
     }
 
-    // TODO this isn't working in the popup
-    if (element.hasAttribute('type')) {
-      let type = element.getAttribute("type");
-      renderer.setElementAttribute(elementRef, type, "");
+    if (type) {
+      renderer.setElementAttribute(elementRef, type, '');
     }
 
     if (element.hasAttribute('ion-item')) {

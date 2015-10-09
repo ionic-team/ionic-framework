@@ -114,9 +114,6 @@ function appendConfig(cls, config) {
 
   cls.delegates = config.delegates;
 
-  let componentId = (config.selector && config.selector.replace('ion-', ''));
-  config.host['class'] = ((config.host['class'] || '') + ' ' + componentId).trim();
-
   return config;
 }
 

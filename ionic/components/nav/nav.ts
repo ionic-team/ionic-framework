@@ -405,13 +405,10 @@ class ContentAnchor {
  * @private
  */
 @Component({
-  selector: 'ion-pane',
-  host: {
-    'class': 'nav'
-  }
+  selector: 'ion-pane'
 })
 @View({
-  template: '' +
+  template:
     '<section class="navbar-container">' +
       '<template navbar-anchor></template>' +
     '</section>' +

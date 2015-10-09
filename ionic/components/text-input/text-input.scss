@@ -24,13 +24,13 @@ ion-input.item {
   }
 }
 
-ion-input .text-input {
+ion-input [text-input] {
   flex: 1;
   background-color: $text-input-background-color;
   pointer-events: none;
 }
 
-ion-input.has-focus .text-input {
+ion-input.has-focus [text-input] {
   pointer-events: auto;
 }
 

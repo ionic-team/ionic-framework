@@ -1,4 +1,4 @@
-import {Component, View, Directive, Optional, NgControl} from 'angular2/angular2';
+import {Component, View, Directive, Optional, NgControl, ElementRef, Renderer} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicForm} from '../form/form';
@@ -24,7 +24,6 @@ import {IonicForm} from '../form/form';
     'id'
   ],
   host: {
-    'class': 'item',
     'role': 'checkbox',
     'tappable': 'true',
     '[attr.tab-index]': 'tabIndex',
@@ -47,8 +46,11 @@ export class Checkbox {
 
   constructor(
     form: IonicForm,
-    @Optional() ngControl: NgControl
+    @Optional() ngControl: NgControl,
+    elementRef: ElementRef,
+    renderer: Renderer
   ) {
+    renderer.setElementClass(elementRef, 'item', true);
     this.form = form;
     form.register(this);
 

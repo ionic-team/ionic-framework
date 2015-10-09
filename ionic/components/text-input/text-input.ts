@@ -1,4 +1,4 @@
-import {Directive, View, Host, Optional, ElementRef, Attribute, Query, QueryList, NgZone} from 'angular2/angular2';
+import {Directive, View, Host, Optional, ElementRef, Renderer, Attribute, Query, QueryList, NgZone} from 'angular2/angular2';
 
 import {IonicConfig} from '../../config/config';
 import {IonicForm} from '../form/form';
@@ -21,8 +21,7 @@ import {IonicPlatform} from '../../platform/platform';
     '(touchend)': 'pointerEnd($event)',
     '(mouseup)': 'pointerEnd($event)',
     '[class.has-focus]': 'hasFocus',
-    '[class.has-value]': 'hasValue',
-    'class': 'item'
+    '[class.has-value]': 'hasValue'
   }
 })
 export class TextInput {
@@ -40,11 +39,14 @@ export class TextInput {
     form: IonicForm,
     elementRef: ElementRef,
     config: IonicConfig,
+    renderer: Renderer,
     app: IonicApp,
     zone: NgZone,
     platform: IonicPlatform,
     @Optional() @Host() scrollView: Content
   ) {
+    renderer.setElementClass(elementRef, 'item', true);
+
     this.form = form;
     form.register(this);
 
@@ -72,7 +74,8 @@ export class TextInput {
    */
   onInit() {
     if (this.input && this.label) {
-      this.input.labelledBy = this.label.id = (this.label.id || 'label-' + this.inputId);
+      this.label.id = (this.label.id || 'label-' + this.inputId)
+      this.input.labelledBy(this.label.id);
     }
 
     let self = this;
@@ -384,9 +387,7 @@ export class TextInput {
     'tabIndex'
   ],
   host: {
-    '[tabIndex]': 'tabIndex',
-    '[attr.aria-labelledby]': 'labelledBy',
-    'class': 'text-input'
+    '[tabIndex]': 'tabIndex'
   }
 })
 export class TextInputElement {
@@ -395,12 +396,16 @@ export class TextInputElement {
     form: IonicForm,
     @Attribute('type') type: string,
     elementRef: ElementRef,
+    renderer: Renderer,
     @Optional() textInputWrapper: TextInput
   ) {
     this.form = form;
     this.type = type;
     this.elementRef = elementRef;
     this.tabIndex = 0;
+
+    this.renderer = renderer;
+    renderer.setElementAttribute(this.elementRef, 'text-input', '');
 
     if (textInputWrapper) {
       // it's within ionic's ion-input, let ion-input handle what's up
@@ -410,6 +415,10 @@ export class TextInputElement {
       // not within ion-input
       form.register(this);
     }
+  }
+
+  labelledBy(val) {
+    this.renderer.setElementAttribute(this.elementRef, 'aria-labelledby', val);
   }
 
   initFocus() {

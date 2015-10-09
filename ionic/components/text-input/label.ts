@@ -14,7 +14,6 @@ import {pointerCoord, hasPointerMoved} from '../../util/dom';
   ],
   host: {
     '[attr.id]': 'id',
-    'class': 'input-label',
     '(touchstart)': 'pointerStart($event)',
     '(touchend)': 'pointerEnd($event)',
     '(mousedown)': 'pointerStart($event)',
