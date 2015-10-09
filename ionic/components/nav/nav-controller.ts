@@ -253,16 +253,15 @@ export class NavController extends Ion {
   }
 
   /**
-   * @private
-   * Pop to a specific view in the history stack
+   * Pop to a specific page in the history stack
    *
-   * @param view {ViewController} to pop to
+   * @param componentType the page to pop to
    * @param opts {object} pop options
    */
-  _popTo(view, opts = {}) {
+  popTo(componentType, opts = {}) {
 
     // Get the target index of the view to pop to
-    let viewIndex = this._views.indexOf(view);
+    let viewIndex = this.getIndexByComponentType(componentType);
     let targetIndex = viewIndex + 1;
     let resolve;
     let promise = new Promise(res => { resolve = res; });
@@ -271,7 +270,6 @@ export class NavController extends Ion {
       resolve();
       return;
     }
-
 
     opts.direction = opts.direction || 'back';
 
@@ -287,7 +285,7 @@ export class NavController extends Ion {
     }
 
     let leavingView = this._views[this._views.length - 1];
-    let enteringView = view;
+    let enteringView = this.getByIndex(viewIndex);
 
     if(this.router) {
       this.router.stateChange('pop', enteringView);
@@ -305,7 +303,7 @@ export class NavController extends Ion {
    * @param opts extra animation options
    */
   popToRoot(opts = {}) {
-    this.popTo(this._views[0]);
+    this.popTo(this._views[0].componentType);
   }
 
   /**
@@ -810,6 +808,22 @@ export class NavController extends Ion {
       for (let i = 0, ii = this._views.length; i < ii; i++) {
         if (this._views[i].instance === instance) {
           return this._views[i];
+        }
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Get the index of the view with the specified componentType
+   * @param  componentType
+   * @return index
+   */
+  getIndexByComponentType(componentType) {
+    if (componentType) {
+      for (let i = 0, ii = this._views.length; i < ii; i++) {
+        if (this._views[i].componentType === componentType) {
+          return i;
         }
       }
     }
