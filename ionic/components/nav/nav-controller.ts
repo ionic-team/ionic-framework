@@ -332,6 +332,7 @@ export class NavController extends Ion {
 
     this._incrementId(viewCtrl);
     this._views.splice(index, 0, viewCtrl);
+    return Promise.resolve();
   }
 
   /**
