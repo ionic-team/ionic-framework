@@ -5,7 +5,8 @@ import {IonicApp} from '../components/app/app';
 import {IonicConfig} from './config';
 import {IonicPlatform} from '../platform/platform';
 import {OverlayController} from '../components/overlay/overlay-controller';
-import {IonicForm} from '../components/form/form';
+import {IonicForm} from '../util/form';
+import {IonicKeyboard} from '../util/keyboard';
 import {ActionSheet} from '../components/action-sheet/action-sheet';
 import {Modal} from '../components/modal/modal';
 import {Popup} from '../components/popup/popup';
@@ -47,6 +48,7 @@ export function ionicBindings(rootCmp, config) {
     bind(TapClick).toValue(tapClick),
     bind(Events).toValue(events),
     IonicForm,
+    IonicKeyboard,
     OverlayController,
     ActionSheet,
     Modal,

@@ -53,6 +53,23 @@
 }
 
 
+// Focus Controls
+// -------------------------------
+
+focus-ctrl {
+  position: fixed;
+
+  input,
+  button {
+    position: fixed;
+    top: 1px;
+    width: 9px;
+    left: -9999px;
+    z-index: 9999;
+  }
+}
+
+
 // Backdrop
 // --------------------------------------------------
 

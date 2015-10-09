@@ -2,7 +2,7 @@ import {Component, ElementRef, Optional} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
-import {IonicPlatform} from '../../platform/platform';
+import {IonicKeyboard} from '../../util/keyboard';
 import {ViewController} from '../nav/view-controller';
 import {Tab} from '../tabs/tab';
 import {ScrollTo} from '../../animations/scroll-to';
@@ -33,10 +33,10 @@ export class Content extends Ion {
    * @param {ElementRef} elementRef  A reference to the component's DOM element.
    * @param {IonicConfig} config  The config object to change content's default settings.
    */
-  constructor(elementRef: ElementRef, config: IonicConfig, platform: IonicPlatform, @Optional() viewCtrl: ViewController) {
+  constructor(elementRef: ElementRef, config: IonicConfig, keyboard: IonicKeyboard, @Optional() viewCtrl: ViewController) {
     super(elementRef, config);
     this.scrollPadding = 0;
-    this.platform = platform;
+    this.keyboard = keyboard;
 
     if(viewCtrl) {
       viewCtrl.setContent(this);
@@ -168,7 +168,7 @@ export class Content extends Ion {
 
       if (!this.keyboardPromise) {
 
-        this.keyboardPromise = this.platform.onKeyboardClose(() => {
+        this.keyboardPromise = this.keyboard.onClose(() => {
           if (this) {
             this.scrollPadding = 0;
             if (this.scrollElement) this.scrollElement.style.paddingBottom = '';

@@ -1,7 +1,7 @@
 import {Component, Directive, Optional, NgControl, ElementRef, Renderer} from 'angular2/angular2';
 
 import {Ion} from '../ion';
-import {IonicForm} from '../form/form';
+import {IonicForm} from '../../util/form';
 
 /**
  * The checkbox is no different than the HTML checkbox input, except it's styled differently

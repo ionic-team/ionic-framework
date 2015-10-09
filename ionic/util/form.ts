@@ -1,7 +1,8 @@
 import {Injectable, NgZone} from 'angular2/angular2';
 
-import {IonicConfig} from '../../config/config';
-import {raf} from '../../util/dom';
+import {IonicConfig} from '../config/config';
+import {raf} from './dom';
+
 
 /**
  * The Input component is used to focus text input elements.

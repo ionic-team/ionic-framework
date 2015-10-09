@@ -1,7 +1,7 @@
 import {Directive, Host, Optional, ElementRef, Renderer, Attribute, Query, QueryList, NgZone} from 'angular2/angular2';
 
 import {IonicConfig} from '../../config/config';
-import {IonicForm} from '../form/form';
+import {IonicForm} from '../../util/form';
 import {Label} from './label';
 import {IonicApp} from '../app/app';
 import {Content} from '../content/content';
