@@ -56,6 +56,19 @@ module.exports = function createCompilerHost(log) {
       },
       getNewLine: function() {
         return ts.sys.newLine;
+      },
+      fileExists: function(fileName) {
+        var resolvedPath = path.resolve(baseDir, fileName);
+        try {
+          fs.statSync(resolvedPath);
+          return true;
+        } catch (e) {
+          return false;
+        }
+      },
+      readFile: function(fileName) {
+        var resolvedPath = path.resolve(baseDir, fileName);
+        return fs.readFileSync(resolvedPath, { encoding: options.charset });
       }
     };
   };
