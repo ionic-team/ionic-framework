@@ -1,4 +1,4 @@
-import {ComponentRef, Compiler, ElementRef, Injector, bind, NgZone, DynamicComponentLoader, AppViewManager} from 'angular2/angular2';
+import {Compiler, ElementRef, Injector, bind, NgZone, DynamicComponentLoader, AppViewManager} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {makeComponent} from '../../config/decorators';
@@ -305,7 +305,7 @@ export class NavController extends Ion {
    * @param opts extra animation options
    */
   popToRoot(opts = {}) {
-    this.popTo(this._views[0]);
+    this._popTo(this.first());
   }
 
   /**
@@ -542,7 +542,14 @@ export class NavController extends Ion {
         viewContainer.remove(index);
       }
     };
-    return new ComponentRef(newLocation, component, type, null, dispose);
+
+    // TODO: make-shift ComponentRef_, this is pretty much going to
+    // break in future versions of ng2, keep an eye on it
+    return {
+      location: newLocation,
+      instance: component,
+      dispose: dispose
+    };
   }
 
   /**
