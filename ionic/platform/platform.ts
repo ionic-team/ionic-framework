@@ -211,34 +211,6 @@ export class IonicPlatform {
     return !this.isPortrait();
   }
 
-  isKeyboardOpen() {
-    return dom.hasFocusedTextInput();
-  }
-
-  onKeyboardClose(callback) {
-    const self = this;
-
-    let promise = null;
-
-    if (!callback) {
-      // a callback wasn't provided, so let's return a promise instead
-      promise = new Promise(resolve => { callback = resolve; });
-    }
-
-    function checkKeyboard() {
-      if (!self.isKeyboardOpen()) {
-        callback();
-
-      } else {
-        setTimeout(checkKeyboard, 500);
-      }
-    }
-
-    setTimeout(checkKeyboard, 100);
-
-    return promise;
-  }
-
   windowResize() {
     let self = this;
     clearTimeout(self._resizeTimer);

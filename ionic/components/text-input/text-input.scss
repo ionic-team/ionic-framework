@@ -8,6 +8,31 @@ $input-focus-box-shadow:        inset 0px 0px 8px 0px $input-focus-border-color 
 $text-input-background-color:   $list-background-color !default;
 
 
+ion-input {
+
+  // text inputs
+  textarea,
+  input[type="text"],
+  input[type="password"],
+  input[type="datetime"],
+  input[type="datetime-local"],
+  input[type="date"],
+  input[type="month"],
+  input[type="time"],
+  input[type="week"],
+  input[type="number"],
+  input[type="email"],
+  input[type="url"],
+  input[type="search"],
+  input[type="tel"],
+  input[type="color"] {
+    display: block;
+    background: transparent;
+    border: 0;
+    width: 100%;
+  }
+}
+
 ion-input.item {
   align-items: flex-start;
 }
@@ -37,3 +62,22 @@ ion-input.has-focus [text-input] {
 ion-input textarea {
   padding-top: 9px;
 }
+
+textarea {
+  margin: 0;
+  padding: 0;
+  height: auto;
+  overflow: auto;
+  font: inherit;
+  color: inherit;
+}
+
+.platform-mobile textarea {
+  resize: none;
+}
+
+input,
+textarea {
+  @include placeholder();
+}
+

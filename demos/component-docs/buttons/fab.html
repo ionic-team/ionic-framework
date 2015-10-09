@@ -1,11 +1,20 @@
 <ion-navbar *navbar>
-  <ion-title>Floating Action Buttons</ion-title>
+  <ion-title>FAB</ion-title>
 </ion-navbar>
 
 <ion-content class="has-header components-demo">
   <p>
-    <button fab fab-top fab-right>
+    <button fab primary fab-top fab-left>
       <icon add></icon>
+    </button>
+    <button fab secondary fab-top fab-center>
+      <icon is-active="false" compass></icon>
+    </button>
+    <button fab danger fab-top fab-right>
+      <icon is-active="false" mic></icon>
+    </button>
+    <button fab dark fab-bottom fab-center>
+      <icon is-active="false" heart></icon>
     </button>
   </p>
 </ion-content>

@@ -47,9 +47,11 @@ var tscReporter = {
 
 var flagConfig = {
   string: ['port', 'version', 'ngVersion', 'animations'],
+  boolean: ['dry-run'],
   alias: {'p': 'port', 'v': 'version', 'a': 'ngVersion'},
   default: { port: 8000 }
 };
+
 
 var flags = minimist(process.argv.slice(2), flagConfig);
 
@@ -423,6 +425,8 @@ gulp.task('demos:all', ['demos'], function() {
 gulp.task('publish', function(done) {
   var version = flags.version;
   var ngVersion = flags.ngVersion;
+  var dryRun = flags['dry-run'];
+
   if (!version || !ngVersion) {
     console.error("\nERR: You need to provide a version for Ionic as well as " +
                   "the version of Angular it depends on.\n\n" +
@@ -451,11 +455,13 @@ gulp.task('publish', function(done) {
       fs.writeFileSync('dist/README.md', fs.readFileSync('scripts/npm/README.md'));
 
       // publish to npm
-      exec('cd dist && npm publish', function (err, stdout, stderr) {
-        console.log(stdout);
-        console.error(stderr);
-        done();
-      });
+      if (!dryRun) {
+        exec('cd dist && npm publish', function (err, stdout, stderr) {
+          console.log(stdout);
+          console.error(stderr);
+          done();
+        });
+      }
     }
   )
 })

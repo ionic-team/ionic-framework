@@ -78,6 +78,17 @@ ion-search-bar {
   top: 6px;
 }
 
+.search-bar-cancel {
+  @extend button[clear];
+  transition: $search-bar-ios-cancel-transition;
+  min-height: 0;
+
+  padding-left: 8px;
+  padding-right: 0;
+  margin-left: 0;
+  margin-right: -100%;
+}
+
 .search-bar-input-container.left-align {
   .search-bar-search-icon {
     margin-left: 0;

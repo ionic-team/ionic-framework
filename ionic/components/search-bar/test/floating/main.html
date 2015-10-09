@@ -1,21 +1,21 @@
-<!-- <ion-toolbar>
-  <form [ng-form-model]="toolbarForm">
-    <ion-search-bar ng-control="toolbarSearchQuery"></ion-search-bar>
-  </form>
-</ion-toolbar> -->
 <ion-content>
   <form [ng-form-model]="form">
-    <label> Search - Default </label>
-    <ion-search-bar ng-control="searchQuery" class="e2eFloatingSearchBar"></ion-search-bar>
-    <label> Search - Custom Placeholder </label>
-    <ion-search-bar ng-control="searchQuery" placeholder="Filter"></ion-search-bar>
-    <label> Search - Cancel Button </label>
-    <ion-search-bar ng-control="searchQuery" show-cancel="true"></ion-search-bar>
-    <label> Search - Custom Cancel Button </label>
-    <ion-search-bar ng-control="searchQuery" show-cancel="true" cancel-text="Done"></ion-search-bar>
-    <label> Search - Custom Cancel Button Long Text</label>
-    <ion-search-bar ng-control="searchQuery" show-cancel="true" cancel-text="I Am So Done"></ion-search-bar>
-    <label> Search - Custom Cancel Action</label>
-    <ion-search-bar ng-control="searchQuery" show-cancel="true" cancel-text="Done" [cancel-action]="myCancelAction"></ion-search-bar>
+    <h5 padding-left padding-top> Search - Default </h5>
+    <ion-search-bar ng-control="defaultSearch" class="e2eDefaultFloatingSearchBar"></ion-search-bar>
+
+    <h5 padding-left> Search - Custom Placeholder </h5>
+    <ion-search-bar ng-control="customPlaceholder" placeholder="Filter" class="e2eCustomPlaceholderFloatingSearchBar"></ion-search-bar>
+
+    <h5 padding-left> Search - Default Cancel Button </h5>
+    <ion-search-bar ng-control="defaultCancel" show-cancel="true" class="e2eDefaultCancelButtonFloatingSearchBar"></ion-search-bar>
+
+    <h5 padding-left> Search - Custom Cancel Button </h5>
+    <ion-search-bar ng-control="customCancel" show-cancel="true" cancel-text="Done" class="e2eCustomCancelButtonFloatingSearchBar"></ion-search-bar>
+
+    <h5 padding-left> Search - Custom Cancel Button Long</h5>
+    <ion-search-bar ng-control="customCancelLong" show-cancel="true" cancel-text="I Am So Done" class="e2eCustomCancelButtonLongTextFloatingSearchBar"></ion-search-bar>
+
+    <h5 padding-left> Search - Custom Cancel Action</h5>
+    <ion-search-bar ng-control="customCancelAction" show-cancel="true" cancel-text="Done" [cancel-action]="myCancelAction" class="e2eCustomCancelActionFloatingSearchBar"></ion-search-bar>
   </form>
 </ion-content>

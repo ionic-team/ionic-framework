@@ -5,6 +5,7 @@ import {IonicApp} from '../app/app';
 import {IonicConfig} from '../../config/config';
 import {ConfigComponent} from '../../config/decorators';
 import {IonicPlatform} from '../../platform/platform';
+import {IonicKeyboard} from '../../util/keyboard';
 import * as gestures from  './menu-gestures';
 
 
@@ -67,11 +68,13 @@ export class Menu extends Ion {
     app: IonicApp,
     elementRef: ElementRef,
     config: IonicConfig,
-    platform: IonicPlatform
+    platform: IonicPlatform,
+    keyboard: IonicKeyboard
   ) {
     super(elementRef, config);
     this.app = app;
     this.platform = platform;
+    this.keyboard = keyboard;
 
     this.opening = new EventEmitter('opening');
     this.isOpen = false;
@@ -188,6 +191,7 @@ export class Menu extends Ion {
 
     this._disable();
     this.app.setTransitioning(true);
+    this.keyboard.close();
   }
 
   _after(isOpen) {

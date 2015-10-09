@@ -1,6 +1,6 @@
 import {Component, Directive, ElementRef, Renderer, Host, Optional, NgControl, Inject, forwardRef} from 'angular2/angular2';
 
-import {IonicForm} from '../form/form';
+import {IonicForm} from '../../util/form';
 import {IonicConfig} from '../../config/config';
 import {pointerCoord} from '../../util/dom';
 
