@@ -20,16 +20,16 @@ export class Button {
     let element = elementRef.nativeElement;
 
     if (config.get('hoverCSS') === false) {
-      element.classList.add('disable-hover');
-    }
-
-    if (type) {
-      renderer.setElementAttribute(elementRef, type, '');
+      renderer.setElementClass(elementRef, 'disable-hover', true);
     }
 
     if (element.hasAttribute('ion-item')) {
       // no need to put on these icon classes for an ion-item
       return;
+    }
+
+    if (type) {
+      renderer.setElementAttribute(elementRef, type, '');
     }
 
     // figure out if and where the icon lives in the button
