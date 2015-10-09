@@ -4,10 +4,39 @@
 </ion-navbar>
 
 <ion-content padding class="has-header components-demo">
+
+  <p>
+    <button light>
+      <icon arrow-back></icon>
+      Back
+    </button>
+
+    <button light>
+      <icon arrow-down></icon>
+    </button>
+
+    <button light>
+      <icon arrow-up></icon>
+    </button>
+
+    <button light>
+      Next
+      <icon arrow-forward></icon>
+    </button>
+  </p>
+
   <p>
     <button>
       <icon home></icon>
       Home
+    </button>
+    <button outline >
+      <icon briefcase is-active="false"></icon>
+      Work
+    </button>
+    <button clear>
+      <icon beer is-active="false"></icon>
+      Pub
     </button>
   </p>
 
@@ -16,24 +45,30 @@
       <icon people></icon>
       Friends
     </button>
+    <button secondary outline>
+      <icon paw is-active="false"></icon>
+      Best Friend
+    </button>
   </p>
 
   <p>
     <button danger>
       <icon close></icon>
     </button>
-  </p>
-
-  <p>
-    <button light>
-      <icon arrow-back></icon>
-      Back
+    <button danger outline>
+      <icon remove-circle is-active="false"></icon>
+    </button>
+    <button danger clear>
+      <icon trash is-active="false"></icon>
     </button>
   </p>
 
   <p>
-    <button dark>
-      <icon hammer></icon>
+    <button dark round>
+      <icon hammer id="demo-hammer"></icon>
+    </button>
+    <button dark clear>
+      <icon construct is-active="false"></icon>
     </button>
   </p>
 
