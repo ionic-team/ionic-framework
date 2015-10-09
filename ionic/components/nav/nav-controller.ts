@@ -188,7 +188,7 @@ export class NavController extends Ion {
     let enteringView = new ViewController(this, componentType, params);
 
     // add the view to the stack
-    this.add(enteringView);
+    this._add(enteringView);
 
     if (this.router) {
       // notify router of the state change
@@ -253,12 +253,13 @@ export class NavController extends Ion {
   }
 
   /**
+   * @private
    * Pop to a specific view in the history stack
    *
-   * @param view {Component} to pop to
+   * @param view {ViewController} to pop to
    * @param opts {object} pop options
    */
-  popTo(view, opts = {}) {
+  _popTo(view, opts = {}) {
 
     // Get the target index of the view to pop to
     let viewIndex = this._views.indexOf(view);
@@ -383,7 +384,7 @@ export class NavController extends Ion {
           viewCtrl.shouldCache = false;
 
           // add the item to the stack
-          this.add(viewCtrl);
+          this._add(viewCtrl);
         }
       }
     }
@@ -749,7 +750,7 @@ export class NavController extends Ion {
     });
 
     destroys.forEach(view => {
-      this.remove(view);
+      this._remove(view);
       view.destroy();
     });
 
@@ -873,11 +874,12 @@ export class NavController extends Ion {
   }
 
   /**
+   * @private
    * TODO
    * @param {TODO} view  TODO
    * @returns {TODO} TODO
    */
-  add(view) {
+  _add(view) {
     this._incrementId(view);
     this._views.push(view);
   }
@@ -887,11 +889,12 @@ export class NavController extends Ion {
   }
 
   /**
+   * @private
    * TODO
    * @param {TODO} viewOrIndex  TODO
    * @returns {TODO} TODO
    */
-  remove(viewOrIndex) {
+  _remove(viewOrIndex) {
     util.array.remove(this._views, viewOrIndex);
   }
 
