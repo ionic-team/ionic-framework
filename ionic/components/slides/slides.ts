@@ -1,4 +1,4 @@
-import {Directive, Component, View, ElementRef, Host, NgIf, NgClass} from 'angular2/angular2';
+import {Directive, Component, ElementRef, Host, NgClass} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {Animation} from 'ionic/animations/animation';
@@ -39,16 +39,15 @@ import {Scroll} from '../scroll/scroll';
     'zoom',
     'zoomDuration',
     'zoomMax'
-  ]
-})
-@View({
-  template: `<div class="swiper-container">
-    <div class="swiper-wrapper">
-      <ng-content></ng-content>
-    </div>
-    <div [class.hide]="!showPager" class="swiper-pagination"></div>
-  </div>`,
-  directives: [NgIf, NgClass]
+  ],
+  template:
+    '<div class="swiper-container">' +
+      '<div class="swiper-wrapper">' +
+        '<ng-content></ng-content>' +
+      '</div>' +
+      '<div [class.hide]="!showPager" class="swiper-pagination"></div>' +
+    '</div>',
+  directives: [NgClass]
 })
 export class Slides extends Ion {
 
@@ -448,10 +447,8 @@ export class Slides extends Ion {
  */
 @Component({
   selector: 'ion-slide',
-  inputs: ['zoom']
-})
-@View({
-  template: `<div class="slide-zoom"><ng-content></ng-content></div>`
+  inputs: ['zoom'],
+  template: '<div class="slide-zoom"><ng-content></ng-content></div>'
 })
 export class Slide {
   /**

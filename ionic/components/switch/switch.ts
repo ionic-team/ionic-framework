@@ -1,15 +1,4 @@
-import {
-  Component,
-  View,
-  Directive,
-  ElementRef,
-  Renderer,
-  Host,
-  Optional,
-  NgControl,
-  Inject,
-  forwardRef
-} from 'angular2/angular2';
+import {Component, Directive, ElementRef, Renderer, Host, Optional, NgControl, Inject, forwardRef} from 'angular2/angular2';
 
 import {IonicForm} from '../form/form';
 import {IonicConfig} from '../../config/config';
@@ -95,17 +84,15 @@ class MediaSwitch {
     '(mousedown)': 'pointerDown($event)',
     '(touchend)': 'pointerUp($event)',
     '(mouseup)': 'pointerUp($event)'
-  }
-})
-@View({
+  },
   template:
-  '<ng-content select="[item-left]"></ng-content>' +
-  '<ion-item-content id="{{labelId}}">' +
-    '<ng-content></ng-content>' +
-  '</ion-item-content>' +
-  '<media-switch disable-activated>' +
-    '<switch-icon></switch-icon>' +
-  '</media-switch>',
+    '<ng-content select="[item-left]"></ng-content>' +
+    '<ion-item-content id="{{labelId}}">' +
+      '<ng-content></ng-content>' +
+    '</ion-item-content>' +
+    '<media-switch disable-activated>' +
+      '<switch-icon></switch-icon>' +
+    '</media-switch>',
   directives: [MediaSwitch]
 })
 export class Switch {

@@ -1,12 +1,10 @@
-import {Component, View, ElementRef, DynamicComponentLoader} from 'angular2/angular2';
+import {Component, ElementRef, DynamicComponentLoader} from 'angular2/angular2';
 
 import {OverlayController} from './overlay-controller';
 
 
 @Component({
-  selector: 'ion-overlay'
-})
-@View({
+  selector: 'ion-overlay',
   template: ''
 })
 export class OverlayAnchor {

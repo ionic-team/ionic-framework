@@ -1,4 +1,4 @@
-import {Component, View, ElementRef, Renderer} from 'angular2/angular2';
+import {Component, ElementRef, Renderer} from 'angular2/angular2';
 
 
 /**
@@ -18,9 +18,7 @@ import {Component, View, ElementRef, Renderer} from 'angular2/angular2';
  *  ```
  */
 @Component({
-  selector: 'ion-item,[ion-item]'
-})
-@View({
+  selector: 'ion-item,[ion-item]',
   template:
     '<ng-content select="[item-left]"></ng-content>' +
     '<ng-content select="[item-right]"></ng-content>' +

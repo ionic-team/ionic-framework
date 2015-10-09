@@ -1,4 +1,4 @@
-import {Component, Directive, View, Host, ElementRef, Renderer, Optional, forwardRef, Inject} from 'angular2/angular2';
+import {Component, Directive, Host, ElementRef, Renderer, Optional, forwardRef, Inject} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
@@ -56,9 +56,7 @@ export class ToolbarBase extends Ion  {
  * TODO
  */
 @Component({
-  selector: 'ion-toolbar'
-})
-@View({
+  selector: 'ion-toolbar',
   template:
     '<div class="toolbar-inner">' +
       '<ng-content select="[menu-toggle]"></ng-content>' +
@@ -82,9 +80,7 @@ export class Toolbar extends ToolbarBase {
 
 
 @Component({
-  selector: 'ion-title'
-})
-@View({
+  selector: 'ion-title',
   template:
     '<div class="toolbar-title">' +
       '<ng-content></ng-content>' +

@@ -1,4 +1,4 @@
-import {Component, Directive, View, ElementRef, NgIf, Host, Optional, Renderer} from 'angular2/angular2';
+import {Component, Directive, ElementRef, NgIf, Host, Optional, Renderer} from 'angular2/angular2';
 
 import {Gesture} from 'ionic/gestures/gesture';
 import {DragGesture} from 'ionic/gestures/drag-gesture';
@@ -32,17 +32,15 @@ import {CSS, raf} from 'ionic/util/dom';
   selector: 'ion-item-sliding,[ion-item-sliding]',
   inputs: [
     'sliding'
-  ]
-})
-@View({
+  ],
   template:
-      '<ng-content select="ion-item-options"></ng-content>' +
-      '<ion-item-sliding-content>' +
-        '<ion-item-content>' +
-          '<ng-content></ng-content>'+
-        '</ion-item-content>' +
-        '<ng-content select="[item-right]"></ng-content>' +
-      '</ion-item-sliding-content>',
+    '<ng-content select="ion-item-options"></ng-content>' +
+    '<ion-item-sliding-content>' +
+      '<ion-item-content>' +
+        '<ng-content></ng-content>'+
+      '</ion-item-content>' +
+      '<ng-content select="[item-right]"></ng-content>' +
+    '</ion-item-sliding-content>',
   directives: [NgIf]
 })
 export class ItemSliding {

@@ -29,8 +29,9 @@ class PageImpl extends View {
  *
  * ```ts
  * @Page({
- *   template: '<ion-checkbox my-custom-dir>' +
- *             '</ion-checkbox>'
+ *   template: `
+ *     <ion-checkbox my-custom-dir>
+ *     </ion-checkbox>`
  *   directives: [MyCustomDirective]
  * })
  * class MyPage {}
@@ -45,11 +46,10 @@ class PageImpl extends View {
  * ```ts
  * import {IONIC_DIRECTIVES} from 'ionic/ionic';
  * @Component({
- *   template: `<div class="customStyle">
+ *   selector: 'my-component'
+ *   template: `<div class="my-style">
  *   						  <ion-checkbox></ion-checkbox>
- *   						</div>`
- * })
- * @View({
+ *   						</div>`,
  *   directives: [IONIC_DIRECTIVES]
  * })
  * class MyCustomCheckbox {}
@@ -60,7 +60,8 @@ class PageImpl extends View {
  * ```
  * along with any other components and add them individually:
  * ```
- * @View({
+ * @Component({
+ *   ...
  *   directives: [Checkbox, Icon]
  * })
  * ```

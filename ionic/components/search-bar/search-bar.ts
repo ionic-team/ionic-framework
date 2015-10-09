@@ -1,4 +1,4 @@
-import {ElementRef, Pipe, NgControl, Renderer, View, FORM_DIRECTIVES, NgIf, NgClass} from 'angular2/angular2';
+import {ElementRef, Pipe, NgControl, Renderer, FORM_DIRECTIVES, NgIf, NgClass} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
@@ -33,17 +33,15 @@ import {ConfigComponent} from '../../config/decorators';
       this.element = this.elementRef.nativeElement.querySelector('input');
       this.element.blur();
     }
-  }
-})
-@View({
-  template: `
-  <div class="search-bar-input-container" [class.left-align]="shouldLeftAlign">
-    <div class="search-bar-search-icon"></div>
-    <input (focus)="inputFocused()" (blur)="inputBlurred()"
-    (input)="inputChanged($event)" class="search-bar-input" type="search" [attr.placeholder]="placeholder" [(ng-model)]="value">
-    <div class="search-bar-close-icon" (click)="clearInput()"></div>
-  </div>
-  <button *ng-if="showCancel" (click)="cancelAction()" class="search-bar-cancel" [class.left-align]="shouldLeftAlign">{{cancelText}}</button>`,
+  },
+  template:
+    '<div class="search-bar-input-container" [class.left-align]="shouldLeftAlign">' +
+      '<div class="search-bar-search-icon"></div>' +
+      '<input (focus)="inputFocused()" (blur)="inputBlurred()" ' +
+      '(input)="inputChanged($event)" class="search-bar-input" type="search" [attr.placeholder]="placeholder" [(ng-model)]="value">' +
+      '<div class="search-bar-close-icon" (click)="clearInput()"></div>' +
+    '</div>' +
+    '<button *ng-if="showCancel" (click)="cancelAction()" class="search-bar-cancel" [class.left-align]="shouldLeftAlign">{{cancelText}}</button>',
   directives: [FORM_DIRECTIVES, NgIf, NgClass]
 })
 

@@ -1,4 +1,4 @@
-import {Component, Directive, View, Injector, ElementRef, Compiler, DynamicComponentLoader, AppViewManager, NgZone, Optional, Host, NgFor, forwardRef, ViewContainerRef} from 'angular2/angular2';
+import {Component, Directive, Injector, ElementRef, Compiler, DynamicComponentLoader, AppViewManager, NgZone, Optional, Host, NgFor, forwardRef, ViewContainerRef} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
@@ -65,9 +65,7 @@ import * as dom from 'ionic/util/dom';
   defaultInputs: {
     'tabBarPlacement': 'bottom',
     'tabBarIcons': 'top'
-  }
-})
-@View({
+  },
   template:
     '<section class="navbar-container">' +
       '<template navbar-anchor></template>' +

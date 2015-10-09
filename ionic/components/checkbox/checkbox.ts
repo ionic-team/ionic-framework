@@ -1,4 +1,4 @@
-import {Component, View, Directive, Optional, NgControl, ElementRef, Renderer} from 'angular2/angular2';
+import {Component, Directive, Optional, NgControl, ElementRef, Renderer} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicForm} from '../form/form';
@@ -31,16 +31,14 @@ import {IonicForm} from '../form/form';
     '[attr.aria-disabled]': 'disabled',
     '[attr.aria-labelledby]': 'labelId',
     '(click)': 'click($event)'
-  }
-})
-@View({
+  },
   template:
-  '<media-checkbox disable-activated>' +
-    '<checkbox-icon></checkbox-icon>' +
-  '</media-checkbox>' +
-  '<ion-item-content id="{{labelId}}">' +
-    '<ng-content></ng-content>' +
-  '</ion-item-content>'
+    '<media-checkbox disable-activated>' +
+      '<checkbox-icon></checkbox-icon>' +
+    '</media-checkbox>' +
+    '<ion-item-content id="{{labelId}}">' +
+      '<ng-content></ng-content>' +
+    '</ion-item-content>'
 })
 export class Checkbox {
 

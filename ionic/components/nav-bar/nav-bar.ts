@@ -1,4 +1,4 @@
-import {Component, Directive, View, Optional, ElementRef, Renderer, TemplateRef, forwardRef, Inject} from 'angular2/angular2';
+import {Component, Directive, Optional, ElementRef, Renderer, TemplateRef, forwardRef, Inject} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {Icon} from '../icon/icon';
@@ -50,9 +50,7 @@ class BackButtonText extends Ion {
 
 
 @Component({
-  selector: 'ion-navbar'
-})
-@View({
+  selector: 'ion-navbar',
   template:
     '<div class="toolbar-inner">' +
       '<button class="back-button">' +
