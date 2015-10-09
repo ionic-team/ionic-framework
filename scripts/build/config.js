@@ -12,7 +12,6 @@ module.exports = {
   },
 
   scripts: [
-    'node_modules/traceur/bin/traceur-runtime.js',
     'node_modules/systemjs/node_modules/es6-module-loader/dist/es6-module-loader.js',
     'node_modules/systemjs/dist/system.js',
     'node_modules/angular2/bundles/angular2.dev.js',

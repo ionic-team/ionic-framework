@@ -10,7 +10,6 @@ Bundles:
  - `js/`
      - `ionic.js` the Ionic module, in System register format
      - `ionic.bundle.js` the Ionic bundle, contains:
-          * traceur-runtime.js
           * es6-module-loader.js
           * system.js
           * angular2.dev.js
