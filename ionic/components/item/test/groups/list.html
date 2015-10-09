@@ -1,0 +1,19 @@
+<ion-content class="outer-content">
+<ion-list>
+  <ion-item-group class="outer-content" *ng-for="#timeSlot of data">
+    <ion-item-group-title>
+      {{timeSlot.time}}
+    </ion-item-group-title>
+    <ion-item *ng-for="#session of timeSlot.talks">
+      <h3>{{session.name}}</h3>
+      <p>
+        <span>{{session.location}}</span>
+      </p>
+      <ion-item-options>
+        <button primary (click)="openSession(session, $this)">Speaker Info</button>
+        <button secondary (click)="addFavorite(timeSlot, session, $event)">Add to <br>Favorites</button>
+      </ion-item-options>
+    </ion-item>
+  </ion-item-group>
+</ion-list>
+</ion-content>
