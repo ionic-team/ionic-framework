@@ -11,11 +11,13 @@ import {SearchPipe} from 'ionic/components/search-bar/search-bar';
 class IonicApp {
   constructor(fb: FormBuilder) {
     this.form = fb.group({
-      searchQuery: ['', Validators.required]
+      defaultSearch: ['', Validators.required],
+      customPlaceholder: ['', Validators.required],
+      defaultCancel: ['', Validators.required],
+      customCancel: ['', Validators.required],
+      customCancelLong: ['', Validators.required],
+      customCancelAction: ['', Validators.required],
     });
-    this.toolbarForm = fb.group({
-      toolbarSearchQuery: ['', Validators.required]
-    })
   }
   myCancelAction = function() {
     console.log('myCancelAction');
