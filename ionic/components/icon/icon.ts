@@ -3,9 +3,6 @@ import {Directive, ElementRef, Attribute, Renderer} from 'angular2/angular2';
 import {IonicConfig} from '../../config/config';
 
 
-/**
- * TODO
- */
 @Directive({
   selector: 'icon',
   inputs: [
@@ -15,17 +12,11 @@ import {IonicConfig} from '../../config/config';
     'isActive'
   ],
   host: {
-    '[attr.aria-label]': 'label',
     'role': 'img'
   }
 })
 export class Icon {
-  /**
-   * TODO
-   * @param {ElementRef} elementRef  TODO
-   * @param {IonicConfig} config  TODO
-   * @param {Renderer} renderer  TODO
-   */
+
   constructor(
     private elementRef: ElementRef,
     config: IonicConfig,
@@ -37,9 +28,6 @@ export class Icon {
     this.mode = config.get('iconMode');
   }
 
-  /**
-   * TODO
-   */
   onInit() {
     let ele = this.eleRef.nativeElement;
 
@@ -101,7 +89,8 @@ export class Icon {
       this._name = this.name;
       this.renderer.setElementClass(this.elementRef, this.name, true);
 
-      this.label = this.name.replace('ion-', '').replace('ios-', '').replace('md-', '').replace('-', ' ');
+      this.renderer.setElementAttribute(this.elementRef, 'aria-label',
+          this.name.replace('ion-', '').replace('ios-', '').replace('md-', '').replace('-', ' '));
     }
   }
 

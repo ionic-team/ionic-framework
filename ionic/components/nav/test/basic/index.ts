@@ -104,6 +104,7 @@ class SecondPage {
       <p>
         <button id="from3To2" (click)="pop()">Pop (Go back to 2nd)</button>
         <button id="insert" (click)="insert()">Insert first page into history before this</button>
+        <button id="remove" (click)="removeSecond()">Remove second page in history</button>
       </p>
       <div class="yellow"><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f></div>
     </ion-content>
@@ -122,6 +123,10 @@ class ThirdPage {
 
   insert() {
     this.nav.insert(FirstPage, 2);
+  }
+
+  removeSecond() {
+    this.nav.remove(1);
   }
 
 }

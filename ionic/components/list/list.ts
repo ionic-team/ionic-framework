@@ -1,4 +1,4 @@
-import {Directive, ElementRef} from 'angular2/angular2';
+import {Directive, ElementRef, Renderer} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
@@ -22,10 +22,7 @@ import * as util from 'ionic/util';
     'items',
     'virtual',
     'content'
-  ],
-  host: {
-    'class': 'list'
-  }
+  ]
 })
 export class List extends Ion {
   /**
@@ -33,8 +30,9 @@ export class List extends Ion {
    * @param {ElementRef} elementRef  TODO
    * @param {IonicConfig} config  TODO
    */
-  constructor(elementRef: ElementRef, config: IonicConfig) {
+  constructor(elementRef: ElementRef, config: IonicConfig, renderer: Renderer) {
     super(elementRef, config);
+    renderer.setElementClass(elementRef, 'list', true);
     this.ele = elementRef.nativeElement;
   }
   /**

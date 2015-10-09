@@ -1,4 +1,4 @@
-import {ComponentRef, Compiler, ElementRef, Injector, bind, NgZone, DynamicComponentLoader, AppViewManager} from 'angular2/angular2';
+import {Compiler, ElementRef, Injector, bind, NgZone, DynamicComponentLoader, AppViewManager} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {makeComponent} from '../../config/decorators';
@@ -188,7 +188,7 @@ export class NavController extends Ion {
     let enteringView = new ViewController(this, componentType, params);
 
     // add the view to the stack
-    this.add(enteringView);
+    this._add(enteringView);
 
     if (this.router) {
       // notify router of the state change
@@ -253,12 +253,13 @@ export class NavController extends Ion {
   }
 
   /**
+   * @private
    * Pop to a specific view in the history stack
    *
-   * @param view {Component} to pop to
+   * @param view {ViewController} to pop to
    * @param opts {object} pop options
    */
-  popTo(view, opts = {}) {
+  _popTo(view, opts = {}) {
 
     // Get the target index of the view to pop to
     let viewIndex = this._views.indexOf(view);
@@ -304,7 +305,7 @@ export class NavController extends Ion {
    * @param opts extra animation options
    */
   popToRoot(opts = {}) {
-    this.popTo(this._views[0]);
+    this._popTo(this.first());
   }
 
   /**
@@ -331,6 +332,27 @@ export class NavController extends Ion {
 
     this._incrementId(viewCtrl);
     this._views.splice(index, 0, viewCtrl);
+    return Promise.resolve();
+  }
+
+  /**
+   * Removes a view from the nav stack at the specified index.
+   * @param {TODO} index TODO
+   * @returns {Promise} TODO
+   */
+  remove(index) {
+    if (index < 0 || index >= this._views.length) {
+      return Promise.reject("Index out of range");
+    }
+
+    let viewToRemove = this._views[index];
+    if (this.isActive(viewToRemove)){
+      return this.pop();
+    } else {
+      this._remove(index);
+      viewToRemove.destroy();
+      return Promise.resolve();
+    }
   }
 
   /**
@@ -383,7 +405,7 @@ export class NavController extends Ion {
           viewCtrl.shouldCache = false;
 
           // add the item to the stack
-          this.add(viewCtrl);
+          this._add(viewCtrl);
         }
       }
     }
@@ -520,7 +542,14 @@ export class NavController extends Ion {
         viewContainer.remove(index);
       }
     };
-    return new ComponentRef(newLocation, component, type, null, dispose);
+
+    // TODO: make-shift ComponentRef_, this is pretty much going to
+    // break in future versions of ng2, keep an eye on it
+    return {
+      location: newLocation,
+      instance: component,
+      dispose: dispose
+    };
   }
 
   /**
@@ -749,7 +778,7 @@ export class NavController extends Ion {
     });
 
     destroys.forEach(view => {
-      this.remove(view);
+      this._remove(view);
       view.destroy();
     });
 
@@ -873,11 +902,12 @@ export class NavController extends Ion {
   }
 
   /**
+   * @private
    * TODO
    * @param {TODO} view  TODO
    * @returns {TODO} TODO
    */
-  add(view) {
+  _add(view) {
     this._incrementId(view);
     this._views.push(view);
   }
@@ -887,11 +917,12 @@ export class NavController extends Ion {
   }
 
   /**
+   * @private
    * TODO
    * @param {TODO} viewOrIndex  TODO
    * @returns {TODO} TODO
    */
-  remove(viewOrIndex) {
+  _remove(viewOrIndex) {
     util.array.remove(this._views, viewOrIndex);
   }
 

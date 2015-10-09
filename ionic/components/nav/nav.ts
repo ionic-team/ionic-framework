@@ -405,13 +405,10 @@ class ContentAnchor {
  * @private
  */
 @Component({
-  selector: 'ion-pane',
-  host: {
-    'class': 'nav'
-  }
+  selector: 'ion-pane'
 })
 @View({
-  template: '' +
+  template:
     '<section class="navbar-container">' +
       '<template navbar-anchor></template>' +
     '</section>' +
@@ -437,9 +434,7 @@ class Pane {
 
   showNavbar(hasNavbar) {
     this.navbar = hasNavbar;
-    if (!hasNavbar) {
-      this.renderer.setElementAttribute(this.elementRef, 'no-navbar', '');
-    }
+    this.renderer.setElementAttribute(this.elementRef, 'no-navbar', hasNavbar ? null : '' );
   }
 
 }

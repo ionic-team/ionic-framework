@@ -3,6 +3,7 @@ import {
   View,
   Directive,
   ElementRef,
+  Renderer,
   Host,
   Optional,
   NgControl,
@@ -84,7 +85,6 @@ class MediaSwitch {
     'id'
   ],
   host: {
-    'class': 'item',
     'role': 'checkbox',
     'tappable': 'true',
     '[attr.tab-index]': 'tabIndex',
@@ -119,10 +119,13 @@ export class Switch {
     form: IonicForm,
     elementRef: ElementRef,
     config: IonicConfig,
+    renderer: Renderer,
     @Optional() private ngControl: NgControl
   ) {
     this.form = form;
     form.register(this);
+
+    renderer.setElementClass(elementRef, 'item', true);
 
     this.lastTouch = 0;
     this.mode = config.get('mode');

@@ -46,7 +46,7 @@ export function run() {
       });
 
       destroys.forEach(view => {
-        nav.remove(view);
+        nav._remove(view);
         view.destroy();
       });
       cb();
@@ -75,7 +75,7 @@ export function run() {
         let activeView = new ViewController();
         activeView.state = 1; // ACTIVE_STATE
 
-        nav.add(activeView);
+        nav._add(activeView);
         var active = nav.getActive();
 
         expect(active).toBe(activeView);
@@ -83,7 +83,7 @@ export function run() {
         let secondActiveView = new ViewController();
         secondActiveView.state = 1; // ACTIVE_STATE
 
-        nav.add(secondActiveView);
+        nav._add(secondActiveView);
         active = nav.getActive();
 
         expect(active).toBe(activeView);
@@ -122,11 +122,11 @@ export function run() {
         expect(FirstPage).toBeDefined();
         expect(nav._views.length).toBe(0);
 
-        spyOn(nav, 'add').and.callThrough();
+        spyOn(nav, '_add').and.callThrough();
 
         nav.transition = mockTransitionFn;
         nav.push(FirstPage, {}, {}).then(() => {
-          expect(nav.add).toHaveBeenCalled();
+          expect(nav._add).toHaveBeenCalled();
           expect(nav._views.length).toBe(1);
           done();
         });
@@ -204,6 +204,40 @@ export function run() {
         //_views[0] will be transitioned out of
         expect(nav._views.length).toBe(2);
         expect(nav._views[1].componentType).toBe(FirstPage);
+      });
+    });
+
+    describe("remove", () => {
+      it('should remove the view at the specified index', () => {
+        let vc1 = new ViewController(),
+            vc2 = new ViewController(null, FirstPage),
+            vc3 = new ViewController(null, SecondPage);
+        nav._views = [vc1, vc2, vc3];
+        expect(nav._views.length).toBe(3);
+        expect(nav._views[1].componentType).toBe(FirstPage);
+
+        nav.remove(1);
+
+        expect(nav._views.length).toBe(2);
+        expect(nav._views[1].componentType).toBe(SecondPage);
+      });
+
+      it('should pop if index is of active view', () => {
+        let vc1 = new ViewController(),
+            vc2 = new ViewController(null, FirstPage),
+            vc3 = new ViewController(null, SecondPage);
+
+        vc3.state = 1; //ACTIVE_STATE
+        nav._views = [vc1, vc2, vc3];
+
+        spyOn(nav, 'pop').and.callThrough();
+
+        nav.remove(1);
+        expect(nav.pop).not.toHaveBeenCalled();
+
+        nav.remove(1);
+        expect(nav.pop).toHaveBeenCalled();
+
       });
     });
 

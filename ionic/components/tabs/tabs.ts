@@ -68,7 +68,7 @@ import * as dom from 'ionic/util/dom';
   }
 })
 @View({
-  template: '' +
+  template:
     '<section class="navbar-container">' +
       '<template navbar-anchor></template>' +
     '</section>' +
@@ -146,7 +146,7 @@ export class Tabs extends NavController {
    * TODO
    */
   addTab(tab) {
-    this.add(tab.viewCtrl);
+    this._add(tab.viewCtrl);
 
     // return true/false if it's the initial tab
     return (this.length() === 1);

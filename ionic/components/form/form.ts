@@ -28,9 +28,7 @@ export class IonicForm {
     this._focused = null;
 
     zone.runOutsideAngular(() => {
-      if (this._config.get('keyboardScrollAssist')) {
-        this.initHolders(document);
-      }
+      this.initHolders(document, this._config.get('keyboardScrollAssist'));
 
       if (this._config.get('keyboardInputListener') !== false) {
         this.initKeyInput(document);
@@ -78,55 +76,72 @@ export class IonicForm {
     document.addEventListener('keydown', keyDown);
   }
 
-  initHolders(document) {
+  initHolders(document, scrollAssist) {
     // raw DOM fun
-    this._holder = document.createElement('focus-holder');
+    this._ctrl = document.createElement('focus-ctrl');
+    this._ctrl.setAttribute('aria-hidden', true);
 
-    this._prev = document.createElement('input');
-    this._prev.tabIndex = NO_FOCUS_TAB_INDEX;
-    this._holder.appendChild(this._prev);
+    if (scrollAssist) {
+      this._prev = document.createElement('input');
+      this._prev.tabIndex = NO_FOCUS_TAB_INDEX;
+      this._ctrl.appendChild(this._prev);
 
-    this._next = document.createElement('input');
-    this._next.tabIndex = NO_FOCUS_TAB_INDEX;
-    this._holder.appendChild(this._next);
+      this._next = document.createElement('input');
+      this._next.tabIndex = NO_FOCUS_TAB_INDEX;
+      this._ctrl.appendChild(this._next);
 
-    this._temp = document.createElement('input');
-    this._temp.tabIndex = NO_FOCUS_TAB_INDEX;
-    this._holder.appendChild(this._temp);
+      this._temp = document.createElement('input');
+      this._temp.tabIndex = NO_FOCUS_TAB_INDEX;
+      this._ctrl.appendChild(this._temp);
+    }
 
-    document.body.appendChild(this._holder);
+    this._blur = document.createElement('button');
+    this._blur.tabIndex = NO_FOCUS_TAB_INDEX;
+    this._ctrl.appendChild(this._blur);
+
+    document.body.appendChild(this._ctrl);
 
     function preventDefault(ev) {
       ev.preventDefault();
       ev.stopPropagation();
     }
 
-    this._prev.addEventListener('keydown', preventDefault);
-    this._next.addEventListener('keydown', preventDefault);
-    this._temp.addEventListener('keydown', preventDefault);
+    if (scrollAssist) {
+      this._prev.addEventListener('keydown', preventDefault);
+      this._next.addEventListener('keydown', preventDefault);
+      this._temp.addEventListener('keydown', preventDefault);
 
-    this._prev.addEventListener('focus', () => {
-      this.focusPrevious();
-    });
+      this._prev.addEventListener('focus', () => {
+        this.focusPrevious();
+      });
 
-    this._next.addEventListener('focus', () => {
-      this.focusNext();
-    });
+      this._next.addEventListener('focus', () => {
+        this.focusNext();
+      });
 
-    let self = this;
-    let resetTimer;
-    function queueReset() {
-      clearTimeout(resetTimer);
+      let self = this;
+      let resetTimer;
+      function queueReset() {
+        clearTimeout(resetTimer);
 
-      resetTimer = setTimeout(function() {
-        self._zone.run(() => {
-          self.resetInputs();
-        });
-      }, 100);
+        resetTimer = setTimeout(function() {
+          self._zone.run(() => {
+            self.resetInputs();
+          });
+        }, 100);
+      }
+
+      document.addEventListener('focusin', queueReset);
+      document.addEventListener('focusout', queueReset);
     }
 
-    document.addEventListener('focusin', queueReset);
-    document.addEventListener('focusout', queueReset);
+  }
+
+  focusOut() {
+    console.debug('focusOut')
+    this._blur.tabIndex = NORMAL_FOCUS_TAB_INDEX;
+    this._blur.focus();
+    this._blur.tabIndex = NO_FOCUS_TAB_INDEX;
   }
 
   setFocusHolder(type) {
@@ -216,8 +231,7 @@ export class IonicForm {
       if (index > -1 && (index + inc) < this._inputs.length) {
         let siblingInput = this._inputs[index + inc];
         if (siblingInput) {
-          siblingInput.initFocus();
-          return;
+          return siblingInput.initFocus();
         }
       }
       this._focused.initFocus();
@@ -232,4 +246,3 @@ const PREV_TAB_INDEX = 999;
 const ACTIVE_FOCUS_TAB_INDEX = 1000;
 const NEXT_TAB_INDEX = 1001;
 const TEMP_TAB_INDEX = 2000;
-
