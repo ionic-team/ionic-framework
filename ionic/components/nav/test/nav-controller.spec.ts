@@ -46,7 +46,7 @@ export function run() {
       });
 
       destroys.forEach(view => {
-        nav.remove(view);
+        nav._remove(view);
         view.destroy();
       });
       cb();
@@ -75,7 +75,7 @@ export function run() {
         let activeView = new ViewController();
         activeView.state = 1; // ACTIVE_STATE
 
-        nav.add(activeView);
+        nav._add(activeView);
         var active = nav.getActive();
 
         expect(active).toBe(activeView);
@@ -83,7 +83,7 @@ export function run() {
         let secondActiveView = new ViewController();
         secondActiveView.state = 1; // ACTIVE_STATE
 
-        nav.add(secondActiveView);
+        nav._add(secondActiveView);
         active = nav.getActive();
 
         expect(active).toBe(activeView);
@@ -122,11 +122,11 @@ export function run() {
         expect(FirstPage).toBeDefined();
         expect(nav._views.length).toBe(0);
 
-        spyOn(nav, 'add').and.callThrough();
+        spyOn(nav, '_add').and.callThrough();
 
         nav.transition = mockTransitionFn;
         nav.push(FirstPage, {}, {}).then(() => {
-          expect(nav.add).toHaveBeenCalled();
+          expect(nav._add).toHaveBeenCalled();
           expect(nav._views.length).toBe(1);
           done();
         });
