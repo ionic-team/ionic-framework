@@ -1,7 +1,4 @@
-<ion-content class="outer-content">
-  <div *ng-if="data.length > 0">
-    <component-list [data]="data"></component-list>
-  </div>
-  <div *ng-if="data.length == 0"><h4>No Items</h4></div>
-
+<ion-content class="outer-content content-selected">
+  <h4>Component List</h4>
+  <component-list [data]="data"></component-list>
 </ion-content>

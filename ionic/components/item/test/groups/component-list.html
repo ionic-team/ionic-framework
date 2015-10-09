@@ -1,0 +1,17 @@
+<ion-list>
+  <ion-item-group class="outer-content">
+    <ion-item-group-title>
+      {{data.day}} - Sessions
+    </ion-item-group-title>
+    <ion-item-sliding *ng-for="#session of data.sessions">
+      <h3>{{session.name}}</h3>
+      <p>
+        <span>{{session.location}}</span>
+      </p>
+      <ion-item-options>
+        <button primary>Speaker Info</button>
+        <button secondary>Add to <br>Favorites</button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-item-group>
+</ion-list>
