@@ -66,27 +66,33 @@ select[readonly] {
 // Focus Utils
 // -------------------------------
 
-focus-holder input {
+focus-ctrl {
   position: fixed;
-  top: 1px;
-  width: 9px;
-  left: -9999px;
-  z-index: 9999;
+
+  input,
+  button {
+    position: fixed;
+    top: 1px;
+    width: 9px;
+    left: -9999px;
+    z-index: 9999;
+  }
 }
 
-/*focus-holder input[tabindex="999"] {
+
+/*focus-ctrl input[tabindex="999"] {
   left: 0px;
 }
 
-focus-holder input[tabindex="1001"] {
+focus-ctrl input[tabindex="1001"] {
   left: 20px;
 }
 
-focus-holder input[tabindex="1002"] {
+focus-ctrl input[tabindex="1002"] {
   left: auto;
   right: 10px;
 }
 
-focus-holder input:focus {
+focus-ctrl input:focus {
   background: red;
 }*/

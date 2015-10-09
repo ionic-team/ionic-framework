@@ -322,8 +322,6 @@ export class TextInput {
 
       // ensure the body hasn't scrolled down
       document.body.scrollTop = 0;
-
-      this.form.resetInputs();
     });
 
     if (this.scrollAssist && this.scrollView) {
