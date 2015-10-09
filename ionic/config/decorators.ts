@@ -125,17 +125,19 @@ export function App(args={}) {
     // get current annotations
     let annotations = Reflect.getMetadata('annotations', cls) || [];
 
-    // create @Component
+    // default to select <ion-app>
     args.selector = args.selector || 'ion-app';
-    annotations.push(new Component(args));
 
-    // create @View
-    // if no template was provided, default so it has a root ion-nav
+    // auto add Ionic directives
+    args.directives = args.directives ? args.directives.concat(IONIC_DIRECTIVES) : IONIC_DIRECTIVES;
+
+    // if no template was provided, default so it has a root <ion-nav>
     if (!args.templateUrl && !args.template) {
       args.template = '<ion-nav></ion-nav>';
     }
 
-    annotations.push(new PageImpl(args));
+    // create @Component
+    annotations.push(new Component(args));
 
     // redefine with added annotations
     Reflect.defineMetadata('annotations', annotations, cls);
