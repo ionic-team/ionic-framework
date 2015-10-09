@@ -49,7 +49,7 @@ function run {
     ;;
   2)
     # We have to install jekyll for the site task for now.
-    gem install jekyll
+    gem install jekyll --pre
     # Install gulp globally for site deploy script.
     npm install -g gulp
 
