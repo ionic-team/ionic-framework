@@ -14,10 +14,8 @@
   ],
   "dependencies": {
     "angular2": "2.0.0-alpha.<%= ngVersion %>",
-    "reflect-metadata": "0.1.0",
-    "rtts_assert": "2.0.0-alpha.37",
-    "traceur-runtime": "0.0.59",
-    "zone.js": "0.5.4",
-    "rx": "2.5.1"
+    "reflect-metadata": "0.1.1",
+    "@reactivex/rxjs": "0.0.0-prealpha.3",
+    "zone.js": "0.5.8"
   }
 }
