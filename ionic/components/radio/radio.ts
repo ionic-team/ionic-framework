@@ -1,4 +1,4 @@
-import {Component, Directive, ElementRef, Renderer, Host, Optional, NgControl, Query, QueryList, View} from 'angular2/angular2';
+import {Component, Directive, ElementRef, Renderer, Host, Optional, NgControl, Query, QueryList} from 'angular2/angular2';
 
 import {IonicConfig} from '../../config/config';
 import {Ion} from '../ion';
@@ -180,16 +180,14 @@ export class RadioGroup extends Ion {
     '[attr.aria-disabled]': 'disabled',
     '[attr.aria-labelledby]': 'labelId',
     '(click)': 'click($event)'
-  }
-})
-@View({
+  },
   template:
-  '<ion-item-content id="{{labelId}}">' +
-    '<ng-content></ng-content>' +
-  '</ion-item-content>' +
-  '<media-radio>' +
-    '<radio-icon></radio-icon>' +
-  '</media-radio>'
+    '<ion-item-content id="{{labelId}}">' +
+      '<ng-content></ng-content>' +
+    '</ion-item-content>' +
+    '<media-radio>' +
+      '<radio-icon></radio-icon>' +
+    '</media-radio>'
 })
 export class RadioButton extends Ion {
   /**

@@ -1,4 +1,4 @@
-import {Directive, View, Host, Optional, ElementRef, Renderer, Attribute, Query, QueryList, NgZone} from 'angular2/angular2';
+import {Directive, Host, Optional, ElementRef, Renderer, Attribute, Query, QueryList, NgZone} from 'angular2/angular2';
 
 import {IonicConfig} from '../../config/config';
 import {IonicForm} from '../form/form';

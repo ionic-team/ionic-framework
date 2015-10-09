@@ -1,4 +1,4 @@
-import {Component, Directive, View, ElementRef, Host, Optional, forwardRef, Inject, NgZone, Compiler, AppViewManager, DynamicComponentLoader, Renderer, ViewContainerRef} from 'angular2/angular2';
+import {Component, Directive, ElementRef, Host, Optional, forwardRef, Inject, NgZone, Compiler, AppViewManager, DynamicComponentLoader, Renderer, ViewContainerRef} from 'angular2/angular2';
 
 import {IonicApp} from '../app/app';
 import {IonicConfig} from '../../config/config';
@@ -129,9 +129,7 @@ import {NavController} from './nav-controller';
   ],
   defaultInputs: {
     'swipeBackEnabled': true
-  }
-})
-@View({
+  },
   template: '<template pane-anchor></template>',
   directives: [forwardRef(() => NavPaneAnchor)]
 })
@@ -405,9 +403,7 @@ class ContentAnchor {
  * @private
  */
 @Component({
-  selector: 'ion-pane'
-})
-@View({
+  selector: 'ion-pane',
   template:
     '<section class="navbar-container">' +
       '<template navbar-anchor></template>' +

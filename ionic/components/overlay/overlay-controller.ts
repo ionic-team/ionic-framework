@@ -1,4 +1,4 @@
-import {Component, View, NgZone, Injectable, Renderer} from 'angular2/angular2';
+import {Component, NgZone, Injectable, Renderer} from 'angular2/angular2';
 
 import {IonicApp} from '../app/app';
 import {Animation} from '../../animations/animation';

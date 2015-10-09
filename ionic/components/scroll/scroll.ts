@@ -1,4 +1,4 @@
-import {Component, View, ElementRef, onInit} from 'angular2/angular2';
+import {Component, ElementRef, onInit} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
@@ -21,9 +21,12 @@ import * as util from 'ionic/util';
     '[class.scroll-x]': 'scrollX',
     '[class.scroll-y]': 'scrollY'
   },
-})
-@View({
-  template: '<scroll-content><div class="scroll-zoom-wrapper"><ng-content></ng-content></div></scroll-content>'
+  template:
+    '<scroll-content>' +
+      '<div class="scroll-zoom-wrapper">' +
+        '<ng-content></ng-content>' +
+      '</div>' +
+    '</scroll-content>'
 })
 export class Scroll extends Ion {
   /**

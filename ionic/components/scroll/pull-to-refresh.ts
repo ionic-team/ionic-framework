@@ -1,9 +1,9 @@
-import {Component, View, NgIf, NgClass, ElementRef, EventEmitter, Host} from 'angular2/angular2'
+import {Component, NgIf, NgClass, ElementRef, EventEmitter, Host} from 'angular2/angular2'
 
 import {Content} from '../content/content';
-
 import * as util from 'ionic/util';
 import {raf, ready, CSS} from 'ionic/util/dom';
+
 
 /**
  * Allows you to add pull-to-refresh to an Content component.
@@ -50,20 +50,18 @@ import {raf, ready, CSS} from 'ionic/util/dom';
     '[class.active]': 'isActive',
     '[class.refreshing]': 'isRefreshing',
     '[class.refreshingTail]': 'isRefreshingTail'
-  }
-})
-@View({
-  template: `<div class="refresher-content" [class.refresher-with-text]="pullingText || refreshingText">
-      <div class="icon-pulling">
-        <i class="icon" [ng-class]="pullingIcon"></i>
-      </div>
-      <div class="text-pulling" [inner-html]="pullingText" *ng-if="pullingText"></div>
-      <div class="icon-refreshing">
-        <!--<ion-spinner ng-if="showSpinner" icon="{{spinner}}"></ion-spinner>-->
-        <i class="icon" [ng-class]="refreshingIcon"></i>
-      </div>
-      <div class="text-refreshing" [inner-html]="refreshingText" *ng-if="refreshingText"></div>
-    </div>`,
+  },
+  template:
+    '<div class="refresher-content" [class.refresher-with-text]="pullingText || refreshingText">' +
+      '<div class="icon-pulling">' +
+        '<i class="icon" [ng-class]="pullingIcon"></i>' +
+      '</div>' +
+      '<div class="text-pulling" [inner-html]="pullingText" *ng-if="pullingText"></div>' +
+      '<div class="icon-refreshing">' +
+        '<i class="icon" [ng-class]="refreshingIcon"></i>' +
+      '</div>' +
+      '<div class="text-refreshing" [inner-html]="refreshingText" *ng-if="refreshingText"></div>' +
+    '</div>',
   directives: [NgIf, NgClass]
 })
 export class Refresher {
