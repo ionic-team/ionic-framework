@@ -93,6 +93,40 @@ scroll-content {
   color: #757575;
 }
 
-#demo-hammer {
-  padding: 0 0.4em;
+#card-wireframe {
+  width: 100%;
+  margin-bottom: 2.7em;
+}
+#subtle-footer {
+  background-color: #fff;
+  border-image-source: url(footer-wireframe.png);
+  border-image-repeat: repeat;
+  border-image-width: 100%;
+  border-bottom: 0;
+  border-left: 0;
+  border-right: 0;
+  position: absolute;
+  bottom:0;
+}
+#demo-fab-bottom {
+  padding-top: 3px;
+  z-index: 100;
+}
+#subtle-footer .toolbar-background {
+  background-color: #fff;
+  border-bottom: 0;
+}
+#demo-card-left {
+  font-size: 14px;
+  margin-top: -90px;
+  margin-left: 10px;
+  float: left;
+}
+#demo-card-right {
+  font-size: 14px;
+  margin-top: -90px;
+  float: right;
+  margin-right: 10px;
+
+
 }

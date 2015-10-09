@@ -2,12 +2,14 @@ import {ActionSheetPage} from 'actionSheet/actionSheet';
 
 import {ButtonsPage,
         BlockButtonsPage,
+        ClearButtonsPage,
         FullButtonsPage,
         OutlineButtonsPage,
         RoundButtonsPage,
         FabPage,
         ButtonSizesPage,
-        IconButtonsPage} from 'buttons/buttons';
+        IconButtonsPage,
+        ButtonsInComponentsPage} from 'buttons/buttons';
 
 import {CardsPage} from 'cards/cards';
 import {FormsPage} from 'forms/forms';
@@ -30,10 +32,12 @@ export function getPageFor(hash) {
         'action-sheets': ActionSheetPage,
         'buttons': ButtonsPage,
         'block-buttons': BlockButtonsPage,
+        'clear-buttons': ClearButtonsPage,
         'full-buttons': FullButtonsPage,
         'outline-buttons': OutlineButtonsPage,
         'round-buttons': RoundButtonsPage,
         'floating-action-buttons': FabPage,
+        'buttons-in-components': ButtonsInComponentsPage,
         'button-sizes': ButtonSizesPage,
         'icon-buttons': IconButtonsPage,
         'cards': CardsPage,

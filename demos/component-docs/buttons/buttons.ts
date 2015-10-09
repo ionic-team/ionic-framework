@@ -19,6 +19,15 @@ export class BlockButtonsPage {
 }
 
 @Page({
+  templateUrl: 'buttons/clear.html',
+})
+export class ClearButtonsPage {
+    constructor() {
+
+    }
+}
+
+@Page({
   templateUrl: 'buttons/full.html',
 })
 export class FullButtonsPage {
@@ -67,6 +76,15 @@ export class ButtonSizesPage {
   templateUrl: 'buttons/icons.html',
 })
 export class IconButtonsPage {
+    constructor() {
+
+    }
+}
+
+@Page({
+  templateUrl: 'buttons/components.html',
+})
+export class ButtonsInComponentsPage {
     constructor() {
 
     }

@@ -1,0 +1,50 @@
+<ion-navbar *navbar>
+
+  <ion-title>Buttons</ion-title>
+
+  <ion-nav-items primary>
+    <button>
+      <icon contact></icon>
+    </button>
+  </ion-nav-items>
+  <ion-nav-items secondary>
+  <button>
+    <icon search></icon>
+  </button>
+  </ion-nav-items>
+
+</ion-navbar>
+
+<ion-content padding class="has-header components-demo">
+  
+  <div id="mock-card">
+    <img src="card-wireframe.png" id="card-wireframe">
+    <button clear id="demo-card-left">Like</button>
+    <button clear id="demo-card-right">Comment</button>
+  </div>
+
+  <ion-list>
+
+    <ion-item>
+      Inner Button
+      <button item-right outline>Outline</button>
+    </ion-item>
+
+    <ion-item>
+      Left Icon Button
+      <button item-right outline>
+        <icon star></icon>
+        Left Icon
+      </button>
+    </ion-item>
+
+    <ion-item>
+      Right Icon Button
+      <button item-right outline>
+        Right Icon
+        <icon star></icon>
+      </button>
+    </ion-item>
+
+  </ion-list>
+</ion-content>
