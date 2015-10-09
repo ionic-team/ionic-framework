@@ -83,3 +83,13 @@ scroll-content {
   color: #31D55F;
 }
 
+.md .action-sheet-destructive {
+  border-top: 1px solid rgba(204, 204, 204, 0.32);
+  margin-top: 8px;
+  padding-top: 4px;
+}
+
+.md .action-sheet-cancel icon, .md .action-sheet-destructive icon {
+  color: #757575;
+}
+

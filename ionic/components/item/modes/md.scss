@@ -149,7 +149,7 @@ $item-md-sliding-transition:         transform 250ms ease-in-out !default;
   }
 
   icon[item-left] + ion-item-content,
-  icon[item-left] + .text-input {
+  icon[item-left] + [text-input] {
     margin-left: $item-md-padding-left + ($item-md-padding-left / 2);
   }
 

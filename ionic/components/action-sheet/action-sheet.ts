@@ -6,7 +6,7 @@
 * The ActionSheet is a modal menu with options to select based on an action.
 */
 
-import {Component, View, Injectable, NgFor, NgIf} from 'angular2/angular2';
+import {Component, Injectable, NgFor, NgIf} from 'angular2/angular2';
 
 import {OverlayController} from '../overlay/overlay-controller';
 import {IonicConfig} from '../../config/config';
@@ -54,9 +54,7 @@ import * as util from 'ionic/util';
  * ```
  */
 @Component({
-  selector: 'ion-action-sheet'
-})
-@View({
+  selector: 'ion-action-sheet',
   template:
     '<backdrop (click)="_cancel()" tappable disable-activated></backdrop>' +
     '<action-sheet-wrapper>' +

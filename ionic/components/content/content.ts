@@ -1,4 +1,4 @@
-import {Component, View, ElementRef, Optional, Host} from 'angular2/angular2';
+import {Component, ElementRef, Optional} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
@@ -25,11 +25,7 @@ import {ScrollTo} from '../../animations/scroll-to';
  */
 @Component({
   selector: 'ion-content',
-  inputs: [
-    'parallax'
-  ]
-})
-@View({
+  inputs: ['parallax'],
   template: '<scroll-content><ng-content></ng-content></scroll-content>'
 })
 export class Content extends Ion {

@@ -1,4 +1,4 @@
-import {Component, Directive, View, Optional, ElementRef, TemplateRef, forwardRef, Inject} from 'angular2/angular2';
+import {Component, Directive, Optional, ElementRef, Renderer, TemplateRef, forwardRef, Inject} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {Icon} from '../icon/icon';
@@ -51,11 +51,6 @@ class BackButtonText extends Ion {
 
 @Component({
   selector: 'ion-navbar',
-  host: {
-    'class': 'toolbar'
-  }
-})
-@View({
   template:
     '<div class="toolbar-inner">' +
       '<button class="back-button">' +
@@ -77,9 +72,11 @@ export class Navbar extends ToolbarBase {
     app: IonicApp,
     @Optional() viewCtrl: ViewController,
     elementRef: ElementRef,
-    config: IonicConfig
+    config: IonicConfig,
+    renderer: Renderer
   ) {
     super(elementRef, config);
+    renderer.setElementClass(elementRef, 'toolbar', true);
 
     this.app = app;
     viewCtrl && viewCtrl.navbarView(this);

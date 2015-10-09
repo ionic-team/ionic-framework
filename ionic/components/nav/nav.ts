@@ -1,4 +1,4 @@
-import {Component, Directive, View, ElementRef, Host, Optional, forwardRef, Inject, NgZone, Compiler, AppViewManager, DynamicComponentLoader, Renderer, ViewContainerRef} from 'angular2/angular2';
+import {Component, Directive, ElementRef, Host, Optional, forwardRef, Inject, NgZone, Compiler, AppViewManager, DynamicComponentLoader, Renderer, ViewContainerRef} from 'angular2/angular2';
 
 import {IonicApp} from '../app/app';
 import {IonicConfig} from '../../config/config';
@@ -129,9 +129,7 @@ import {NavController} from './nav-controller';
   ],
   defaultInputs: {
     'swipeBackEnabled': true
-  }
-})
-@View({
+  },
   template: '<template pane-anchor></template>',
   directives: [forwardRef(() => NavPaneAnchor)]
 })
@@ -195,11 +193,11 @@ export class Nav extends NavController {
       // the component being loaded is an <ion-tabs>
       // Tabs is essentially a pane, cuz it has its own navbar and content containers
       let contentContainerRef = this._viewManager.getViewContainer(this.anchorElementRef());
-      let viewComponetRef = this.createViewComponetRef(componentType, hostProtoViewRef, contentContainerRef, this.getBindings(viewCtrl));
-      viewComponetRef.instance._paneView = true;
+      let viewComponentRef = this.createViewComponentRef(componentType, hostProtoViewRef, contentContainerRef, this.getBindings(viewCtrl));
+      viewComponentRef.instance._paneView = true;
 
       viewCtrl.disposals.push(() => {
-        viewComponetRef.dispose();
+        viewComponentRef.dispose();
       });
 
       viewCtrl.onReady().then(() => {
@@ -210,9 +208,9 @@ export class Nav extends NavController {
       // normal ion-view going into pane
       this.getPane(structure, viewCtrl, (pane) => {
         // add the content of the view into the pane's content area
-        let viewComponetRef = this.createViewComponetRef(componentType, hostProtoViewRef, pane.contentContainerRef, this.getBindings(viewCtrl));
+        let viewComponentRef = this.createViewComponentRef(componentType, hostProtoViewRef, pane.contentContainerRef, this.getBindings(viewCtrl));
         viewCtrl.disposals.push(() => {
-          viewComponetRef.dispose();
+          viewComponentRef.dispose();
 
           // remove the pane if there are no view items left
           pane.totalViews--;
@@ -226,10 +224,10 @@ export class Nav extends NavController {
 
         // a new ComponentRef has been created
         // set the ComponentRef's instance to this ViewController
-        viewCtrl.setInstance(viewComponetRef.instance);
+        viewCtrl.setInstance(viewComponentRef.instance);
 
         // remember the ElementRef to the content that was just created
-        viewCtrl.viewElementRef(viewComponetRef.location);
+        viewCtrl.viewElementRef(viewComponentRef.location);
 
         // get the NavController's container for navbars, which is
         // the place this NavController will add each ViewController's navbar
@@ -406,12 +404,7 @@ class ContentAnchor {
  */
 @Component({
   selector: 'ion-pane',
-  host: {
-    'class': 'nav'
-  }
-})
-@View({
-  template: '' +
+  template:
     '<section class="navbar-container">' +
       '<template navbar-anchor></template>' +
     '</section>' +
@@ -437,9 +430,7 @@ class Pane {
 
   showNavbar(hasNavbar) {
     this.navbar = hasNavbar;
-    if (!hasNavbar) {
-      this.renderer.setElementAttribute(this.elementRef, 'no-navbar', '');
-    }
+    this.renderer.setElementAttribute(this.elementRef, 'no-navbar', hasNavbar ? null : '' );
   }
 
 }

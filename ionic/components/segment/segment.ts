@@ -1,4 +1,4 @@
-import {Component, Directive, View, Renderer, ElementRef, EventEmitter, Host, forwardRef, Optional} from 'angular2/angular2';
+import {Component, Directive, Renderer, ElementRef, EventEmitter, Host, forwardRef, Optional} from 'angular2/angular2';
 import {Control, NgControl, NgFormControl, ControlGroup, ControlDirective} from 'angular2/angular2';
 
 import {Ion} from '../ion';
@@ -25,9 +25,7 @@ import {dom} from 'ionic/util';
     '[class.ng-valid]': 'cd.control?.valid == true',
     '[class.ng-invalid]': 'cd.control?.valid == false'
     */
-  }
-})
-@View({
+  },
   template: '<div class="ion-segment"><ng-content></ng-content></div>',
   directives: [forwardRef(() => SegmentButton)]
 })

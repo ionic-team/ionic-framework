@@ -1,4 +1,4 @@
-import {forwardRef, Directive, Host, View, EventEmitter, ElementRef} from 'angular2/angular2';
+import {forwardRef, Directive, Host, EventEmitter, ElementRef} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
@@ -54,12 +54,10 @@ import * as gestures from  './menu-gestures';
     'side': 'left',
     'type': 'reveal'
   },
+  outputs: ['opening'],
   host: {
     'role': 'navigation'
   },
-  outputs: ['opening']
-})
-@View({
   template: '<ng-content></ng-content><backdrop tappable disable-activated></backdrop>',
   directives: [forwardRef(() => MenuBackdrop)]
 })

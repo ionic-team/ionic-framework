@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Renderer} from 'angular2/angular2';
+import {Directive, ElementRef, Renderer, Attribute} from 'angular2/angular2';
 
 import {IonicConfig} from '../../config/config';
 
@@ -14,23 +14,22 @@ export class Button {
   constructor(
     config: IonicConfig,
     elementRef: ElementRef,
-    renderer: Renderer
+    renderer: Renderer,
+    @Attribute('type') type: string
   ) {
     let element = elementRef.nativeElement;
 
     if (config.get('hoverCSS') === false) {
-      element.classList.add('disable-hover');
-    }
-
-    // TODO this isn't working in the popup
-    if (element.hasAttribute('type')) {
-      let type = element.getAttribute("type");
-      renderer.setElementAttribute(elementRef, type, "");
+      renderer.setElementClass(elementRef, 'disable-hover', true);
     }
 
     if (element.hasAttribute('ion-item')) {
       // no need to put on these icon classes for an ion-item
       return;
+    }
+
+    if (type) {
+      renderer.setElementAttribute(elementRef, type, '');
     }
 
     // figure out if and where the icon lives in the button

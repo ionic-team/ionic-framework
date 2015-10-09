@@ -38,7 +38,7 @@ export class ItemGroupTitle {
    * TODO
    * @param {ElementRef} elementRef  TODO
    */
-  constructor(elementRef: ElementRef, config: IonicConfig, @Host() content: Content) {
+  constructor(elementRef: ElementRef, config: IonicConfig, @Optional() @Host() content: Content) {
     this.isSticky = true;
     this.content = content;
     this.ele = elementRef.nativeElement;
@@ -46,6 +46,7 @@ export class ItemGroupTitle {
   }
 
   onInit() {
+    if(!this.content) { return; }
 
     this.scrollContent = this.content.elementRef.nativeElement.children[0];
 
@@ -85,7 +86,7 @@ export class ItemGroupTitle {
    if (element.style[CSS.transform] == transformString) {
    }
    else {
-       element.style[CSS.transform] = transformString;
+     element.style[CSS.transform] = transformString;
    }
   }
 
@@ -94,12 +95,12 @@ export class ItemGroupTitle {
     // if immediate execution is requested, then just execute immediately
     // if not, execute in the animation frame.
     if (executeImmediately) {
-        this.applyTransform(element, translateDyPixelsUp);
+      this.applyTransform(element, translateDyPixelsUp);
     }
     else {
-        // see http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
-        // see http://ionicframework.com/docs/api/utility/ionic.DomUtil/
-        requestAnimationFrame( a => this.applyTransform(element, translateDyPixelsUp) );
+      // see http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
+      // see http://ionicframework.com/docs/api/utility/ionic.DomUtil/
+      requestAnimationFrame( a => this.applyTransform(element, translateDyPixelsUp) );
     }
   }
 
@@ -122,10 +123,10 @@ export class ItemGroupTitle {
     // if you want to experiment, always use the throttled one and just click on the page
     // you will see all affix elements stacked on top
     if (scrollTop == 0) {
-        this.calculateScrollLimits(scrollTop);
+      this.calculateScrollLimits(scrollTop);
     }
     else {
-        this.throttledCalculateScrollLimits(scrollTop);
+      this.throttledCalculateScrollLimits(scrollTop);
     }
 
     // when we scrolled to the container, create the clone of element and place it on top
@@ -136,9 +137,9 @@ export class ItemGroupTitle {
       var cloneCreatedJustNow = false;
 
       if (!this.affixClone) {
-          this.affixClone = this.createAffixClone();
-          cloneCreatedJustNow = true;
-          this.isSticking = true;
+        this.affixClone = this.createAffixClone();
+        cloneCreatedJustNow = true;
+        this.isSticking = true;
       }
 
       // if we're reaching towards the end of the container, apply some nice translation to move up/down the clone

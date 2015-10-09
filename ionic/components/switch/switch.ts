@@ -1,17 +1,6 @@
-import {
-  Component,
-  View,
-  Directive,
-  ElementRef,
-  Host,
-  Optional,
-  NgControl,
-  Inject,
-  forwardRef
-} from 'angular2/angular2';
+import {Component, Directive, ElementRef, Renderer, Host, Optional, NgControl, Inject, forwardRef} from 'angular2/angular2';
 
-import {Ion} from '../ion';
-import {IonInput} from '../form/input';
+import {IonicForm} from '../form/form';
 import {IonicConfig} from '../../config/config';
 import {pointerCoord} from '../../util/dom';
 
@@ -85,7 +74,6 @@ class MediaSwitch {
     'id'
   ],
   host: {
-    'class': 'item',
     'role': 'checkbox',
     'tappable': 'true',
     '[attr.tab-index]': 'tabIndex',
@@ -96,20 +84,18 @@ class MediaSwitch {
     '(mousedown)': 'pointerDown($event)',
     '(touchend)': 'pointerUp($event)',
     '(mouseup)': 'pointerUp($event)'
-  }
-})
-@View({
+  },
   template:
-  '<ng-content select="[item-left]"></ng-content>' +
-  '<ion-item-content id="{{labelId}}">' +
-    '<ng-content></ng-content>' +
-  '</ion-item-content>' +
-  '<media-switch disable-activated>' +
-    '<switch-icon></switch-icon>' +
-  '</media-switch>',
+    '<ng-content select="[item-left]"></ng-content>' +
+    '<ion-item-content id="{{labelId}}">' +
+      '<ng-content></ng-content>' +
+    '</ion-item-content>' +
+    '<media-switch disable-activated>' +
+      '<switch-icon></switch-icon>' +
+    '</media-switch>',
   directives: [MediaSwitch]
 })
-export class Switch extends Ion {
+export class Switch {
   /**
    * TODO
    * @param {ElementRef} elementRef  TODO
@@ -117,24 +103,27 @@ export class Switch extends Ion {
    * @param {NgControl=} ngControl  TODO
    */
   constructor(
+    form: IonicForm,
     elementRef: ElementRef,
     config: IonicConfig,
+    renderer: Renderer,
     @Optional() private ngControl: NgControl
   ) {
-    super(elementRef, config);
-    let self = this;
+    this.form = form;
+    form.register(this);
 
-    self.id = IonInput.nextId();
-    self.tabIndex = 0;
-    self.lastTouch = 0;
-    self.mode = config.get('mode');
+    renderer.setElementClass(elementRef, 'item', true);
 
-    self.onChange = (_) => {};
-    self.onTouched = (_) => {};
+    this.lastTouch = 0;
+    this.mode = config.get('mode');
+
+    this.onChange = (_) => {};
+    this.onTouched = (_) => {};
 
     if (ngControl) ngControl.valueAccessor = this;
 
 
+    let self = this;
     function pointerMove(ev) {
       let currentX = pointerCoord(ev).x;
 
@@ -156,21 +145,20 @@ export class Switch extends Ion {
     }
 
     this.addMoveListener = function() {
-      this.switchEle.addEventListener('touchmove', pointerMove);
-      this.switchEle.addEventListener('mousemove', pointerMove);
+      self.switchEle.addEventListener('touchmove', pointerMove);
+      self.switchEle.addEventListener('mousemove', pointerMove);
       elementRef.nativeElement.addEventListener('mouseout', pointerOut);
     };
 
     this.removeMoveListener = function() {
-      this.switchEle.removeEventListener('touchmove', pointerMove);
-      this.switchEle.removeEventListener('mousemove', pointerMove);
+      self.switchEle.removeEventListener('touchmove', pointerMove);
+      self.switchEle.removeEventListener('mousemove', pointerMove);
       elementRef.nativeElement.removeEventListener('mouseout', pointerOut);
     };
   }
 
   onInit() {
-    super.onInit();
-    this.labelId = 'label-' + this.id;
+    this.labelId = 'label-' + this.inputId;
   }
 
   /**
@@ -234,6 +222,7 @@ export class Switch extends Ion {
   onDestroy() {
     this.removeMoveListener();
     this.switchEle = this.addMoveListener = this.removeMoveListener = null;
+    this.form.deregister(this);
   }
 
   isDisabled(ev) {

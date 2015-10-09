@@ -1,4 +1,4 @@
-import {Component, Directive, View, Injector, ElementRef, Compiler, DynamicComponentLoader, AppViewManager, NgZone, Optional, Host, NgFor, forwardRef, ViewContainerRef} from 'angular2/angular2';
+import {Component, Directive, Injector, ElementRef, Compiler, DynamicComponentLoader, AppViewManager, NgZone, Optional, Host, NgFor, forwardRef, ViewContainerRef} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
@@ -65,10 +65,8 @@ import * as dom from 'ionic/util/dom';
   defaultInputs: {
     'tabBarPlacement': 'bottom',
     'tabBarIcons': 'top'
-  }
-})
-@View({
-  template: '' +
+  },
+  template:
     '<section class="navbar-container">' +
       '<template navbar-anchor></template>' +
     '</section>' +
@@ -146,7 +144,7 @@ export class Tabs extends NavController {
    * TODO
    */
   addTab(tab) {
-    this.add(tab.viewCtrl);
+    this._add(tab.viewCtrl);
 
     // return true/false if it's the initial tab
     return (this.length() === 1);

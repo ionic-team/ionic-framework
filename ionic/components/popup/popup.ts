@@ -1,5 +1,5 @@
 import {FORM_DIRECTIVES, NgControl, NgControlGroup,
-  Component, View, ElementRef, Injectable, NgClass, NgIf, NgFor} from 'angular2/angular2';
+  Component, ElementRef, Injectable, NgClass, NgIf, NgFor} from 'angular2/angular2';
 
 import {OverlayController} from '../overlay/overlay-controller';
 import {IonicConfig} from '../../config/config';
@@ -265,25 +265,23 @@ export class Popup {
 
 const OVERLAY_TYPE = 'popup';
 
-@Component({
-  selector: 'ion-popup'
-})
 // TODO add button type to button: [type]="button.type"
-@View({
+@Component({
+  selector: 'ion-popup',
   template:
-  '<backdrop (click)="_cancel($event)" tappable disable-activated></backdrop>' +
-  '<popup-wrapper [ng-class]="cssClass">' +
-    '<div class="popup-head">' +
-      '<h2 class="popup-title" [inner-html]="title" *ng-if="title"></h2>' +
-      '<h3 class="popup-sub-title" [inner-html]="subTitle" *ng-if="subTitle"></h3>' +
-    '</div>' +
-    '<div class="popup-body">' +
-      '<div [inner-html]="template" *ng-if="template"></div>' +
-      '<input type="{{inputType || \'text\'}}" placeholder="{{inputPlaceholder}}" *ng-if="showPrompt" class="prompt-input">' +
-    '</div>' +
-    '<div class="popup-buttons" *ng-if="buttons.length">' +
-      '<button *ng-for="#button of buttons" (click)="buttonTapped(button, $event)" [inner-html]="button.text"></button>' +
-    '</div>' +
+    '<backdrop (click)="_cancel($event)" tappable disable-activated></backdrop>' +
+    '<popup-wrapper [ng-class]="cssClass">' +
+      '<div class="popup-head">' +
+        '<h2 class="popup-title" [inner-html]="title" *ng-if="title"></h2>' +
+        '<h3 class="popup-sub-title" [inner-html]="subTitle" *ng-if="subTitle"></h3>' +
+      '</div>' +
+      '<div class="popup-body">' +
+        '<div [inner-html]="template" *ng-if="template"></div>' +
+        '<input type="{{inputType || \'text\'}}" placeholder="{{inputPlaceholder}}" *ng-if="showPrompt" class="prompt-input">' +
+      '</div>' +
+      '<div class="popup-buttons" *ng-if="buttons.length">' +
+        '<button *ng-for="#button of buttons" (click)="buttonTapped(button, $event)" [inner-html]="button.text"></button>' +
+      '</div>' +
   '</popup-wrapper>',
   directives: [FORM_DIRECTIVES, NgClass, NgIf, NgFor, Button]
 })

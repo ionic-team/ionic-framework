@@ -29,8 +29,9 @@ class PageImpl extends View {
  *
  * ```ts
  * @Page({
- *   template: '<ion-checkbox my-custom-dir>' +
- *             '</ion-checkbox>'
+ *   template: `
+ *     <ion-checkbox my-custom-dir>
+ *     </ion-checkbox>`
  *   directives: [MyCustomDirective]
  * })
  * class MyPage {}
@@ -45,11 +46,10 @@ class PageImpl extends View {
  * ```ts
  * import {IONIC_DIRECTIVES} from 'ionic/ionic';
  * @Component({
- *   template: `<div class="customStyle">
+ *   selector: 'my-component'
+ *   template: `<div class="my-style">
  *   						  <ion-checkbox></ion-checkbox>
- *   						</div>`
- * })
- * @View({
+ *   						</div>`,
  *   directives: [IONIC_DIRECTIVES]
  * })
  * class MyCustomCheckbox {}
@@ -60,7 +60,8 @@ class PageImpl extends View {
  * ```
  * along with any other components and add them individually:
  * ```
- * @View({
+ * @Component({
+ *   ...
  *   directives: [Checkbox, Icon]
  * })
  * ```
@@ -114,9 +115,6 @@ function appendConfig(cls, config) {
 
   cls.delegates = config.delegates;
 
-  let componentId = (config.selector && config.selector.replace('ion-', ''));
-  config.host['class'] = ((config.host['class'] || '') + ' ' + componentId).trim();
-
   return config;
 }
 
@@ -128,17 +126,19 @@ export function App(args={}) {
     // get current annotations
     let annotations = Reflect.getMetadata('annotations', cls) || [];
 
-    // create @Component
+    // default to select <ion-app>
     args.selector = args.selector || 'ion-app';
-    annotations.push(new Component(args));
 
-    // create @View
-    // if no template was provided, default so it has a root ion-nav
+    // auto add Ionic directives
+    args.directives = args.directives ? args.directives.concat(IONIC_DIRECTIVES) : IONIC_DIRECTIVES;
+
+    // if no template was provided, default so it has a root <ion-nav>
     if (!args.templateUrl && !args.template) {
       args.template = '<ion-nav></ion-nav>';
     }
 
-    annotations.push(new PageImpl(args));
+    // create @Component
+    annotations.push(new Component(args));
 
     // redefine with added annotations
     Reflect.defineMetadata('annotations', annotations, cls);

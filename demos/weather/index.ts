@@ -1,4 +1,4 @@
-import {Component, Directive, View, NgIf, NgFor, NgClass, ElementRef} from 'angular2/angular2';
+import {Component, Directive, NgIf, NgFor, NgClass, ElementRef} from 'angular2/angular2';
 import {FormBuilder, Control, ControlGroup, Validators, FORM_DIRECTIVES} from 'angular2/angular2';
 
 import {App, IonicView, Animation, Content, Scroll, Modal, NavController, NavParams} from 'ionic/ionic';
@@ -58,9 +58,7 @@ let WEATHER_ICONS = {
   selector: 'weather-icon',
   inputs: [
     'icon'
-  ]
-})
-@View({
+  ],
   template: '<i class="icon" [ng-class]="weatherIcon"></i>',
   directives: [NgClass]
 })
@@ -82,9 +80,7 @@ export class WeatherIcon {
   selector: 'current-time',
   inputs: [
     'localtz'
-  ]
-})
-@View({
+  ],
   template: '<span class="current-time">{{currentTime}}</span>',
 })
 export class CurrentTime {
@@ -102,9 +98,7 @@ export class CurrentTime {
   selector: 'current-weather',
   inputs: [
     'current'
-  ]
-})
-@View({
+  ],
   templateUrl: 'current-weather.html',
   directives: [NgIf]
 })
@@ -177,9 +171,7 @@ export class CurrentWeather {
   selector: 'background-cycler',
   inputs: [
     'image'
-  ]
-})
-@View({
+  ],
   template: '<div class="bg-image"></div>'
 })
 export class BackgroundCycler {

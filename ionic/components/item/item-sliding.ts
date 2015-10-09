@@ -1,4 +1,4 @@
-import {Component, Directive, View, ElementRef, NgIf, Host, Optional} from 'angular2/angular2';
+import {Component, Directive, ElementRef, NgIf, Host, Optional, Renderer} from 'angular2/angular2';
 
 import {Gesture} from 'ionic/gestures/gesture';
 import {DragGesture} from 'ionic/gestures/drag-gesture';
@@ -30,22 +30,17 @@ import {CSS, raf} from 'ionic/util/dom';
  */
 @Component({
   selector: 'ion-item-sliding,[ion-item-sliding]',
-  host: {
-    'class': 'item'
-  },
-  properties: [
+  inputs: [
     'sliding'
-  ]
-})
-@View({
+  ],
   template:
-      '<ng-content select="ion-item-options"></ng-content>' +
-      '<ion-item-sliding-content>' +
-        '<ion-item-content>' +
-          '<ng-content></ng-content>'+
-        '</ion-item-content>' +
-        '<ng-content select="[item-right]"></ng-content>' +
-      '</ion-item-sliding-content>',
+    '<ng-content select="ion-item-options"></ng-content>' +
+    '<ion-item-sliding-content>' +
+      '<ion-item-content>' +
+        '<ng-content></ng-content>'+
+      '</ion-item-content>' +
+      '<ng-content select="[item-right]"></ng-content>' +
+    '</ion-item-sliding-content>',
   directives: [NgIf]
 })
 export class ItemSliding {
@@ -53,7 +48,9 @@ export class ItemSliding {
    * TODO
    * @param {ElementRef} elementRef  A reference to the component's DOM element.
    */
-  constructor(elementRef: ElementRef, @Optional() @Host() list: List) {
+  constructor(elementRef: ElementRef, renderer: Renderer, @Optional() @Host() list: List) {
+    renderer.setElementClass(elementRef, 'item', true);
+
     this._isOpen = false;
     this._isSlideActive = false;
     this._isTransitioning = false;

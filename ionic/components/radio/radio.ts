@@ -1,4 +1,4 @@
-import {Component, Directive, ElementRef, Host, Optional, NgControl, Query, QueryList, View} from 'angular2/angular2';
+import {Component, Directive, ElementRef, Renderer, Host, Optional, NgControl, Query, QueryList} from 'angular2/angular2';
 
 import {IonicConfig} from '../../config/config';
 import {Ion} from '../ion';
@@ -45,7 +45,6 @@ import {ListHeader} from '../list/list';
 @Directive({
   selector: 'ion-radio-group',
   host: {
-    'class': 'list',
     'role': 'radiogroup',
     '[attr.aria-activedescendant]': 'activeId',
     '[attr.aria-describedby]': 'describedById'
@@ -64,10 +63,13 @@ export class RadioGroup extends Ion {
   constructor(
     elementRef: ElementRef,
     config: IonicConfig,
+    renderer: Renderer,
     @Optional() ngControl: NgControl,
     @Query(ListHeader) private headerQuery: QueryList<ListHeader>
   ) {
     super(elementRef, config);
+    renderer.setElementClass(elementRef, 'list', true);
+
     this.id = ++radioGroupIds;
     this.radioIds = -1;
     this.onChange = (_) => {};
@@ -170,7 +172,6 @@ export class RadioGroup extends Ion {
     'id'
   ],
   host: {
-    'class': 'item',
     'role': 'radio',
     'tappable': 'true',
     '[attr.id]': 'id',
@@ -179,16 +180,14 @@ export class RadioGroup extends Ion {
     '[attr.aria-disabled]': 'disabled',
     '[attr.aria-labelledby]': 'labelId',
     '(click)': 'click($event)'
-  }
-})
-@View({
+  },
   template:
-  '<ion-item-content id="{{labelId}}">' +
-    '<ng-content></ng-content>' +
-  '</ion-item-content>' +
-  '<media-radio>' +
-    '<radio-icon></radio-icon>' +
-  '</media-radio>'
+    '<ion-item-content id="{{labelId}}">' +
+      '<ng-content></ng-content>' +
+    '</ion-item-content>' +
+    '<media-radio>' +
+      '<radio-icon></radio-icon>' +
+    '</media-radio>'
 })
 export class RadioButton extends Ion {
   /**
@@ -200,9 +199,12 @@ export class RadioButton extends Ion {
   constructor(
     @Host() @Optional() group: RadioGroup,
     elementRef: ElementRef,
-    config: IonicConfig
+    config: IonicConfig,
+    renderer: Renderer
   ) {
-    super(elementRef, config)
+    super(elementRef, config);
+    renderer.setElementClass(elementRef, 'item', true);
+
     this.group = group;
     this.tabIndex = 0;
   }

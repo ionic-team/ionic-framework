@@ -20,7 +20,7 @@ export class ActionSheetPage {
           { text: 'Favorite', icon: 'ion-md-heart-outline'}
         ],
         destructiveText: 'Delete',
-        titleText: 'Purchased',
+        titleText: 'Albums',
         cancelText: 'Cancel',
         cancel: function() {
           console.log('Canceled');
@@ -38,11 +38,12 @@ export class ActionSheetPage {
 
     this.actionSheet.open(androidSheet || {
       buttons: [
-        { text: 'Share This' },
-        { text: 'Move' }
+        { text: 'Share'},
+        { text: 'Play'},
+        { text: 'Favorite'}
       ],
       destructiveText: 'Delete',
-      titleText: 'You Opened Action Sheet',
+      titleText: 'Albums',
       cancelText: 'Cancel',
       cancel: function() {
         console.log('Canceled');

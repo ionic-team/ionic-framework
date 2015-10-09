@@ -23,7 +23,7 @@ $search-bar-ios-input-close-icon-svg:     "<svg xmlns='http://www.w3.org/2000/sv
 $search-bar-ios-input-close-icon-size:    17px !default;
 
 
-.search-bar {
+ion-search-bar {
   padding: $search-bar-ios-padding;
   background: $search-bar-ios-background-color;
   border-bottom: 1px solid $search-bar-ios-border-color;
@@ -98,6 +98,14 @@ $search-bar-ios-input-close-icon-size:    17px !default;
   }
 }
 
-&.hairlines .search-bar {
+.search-bar-cancel {
+  @extend button[clear];
+  transition: $search-bar-ios-cancel-transition;
+  padding-left: 8px;
+  min-height: 0;
+  padding-right: 0;
+}
+
+&.hairlines ion-search-bar {
   border-bottom-width: 0.55px;
 }

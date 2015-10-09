@@ -1,19 +1,19 @@
-import {
-  ddescribe,
-  describe,
-  xdescribe,
-  it,
-  iit,
-  xit,
-  expect,
-  beforeEach,
-  afterEach,
-  AsyncTestCompleter,
-  inject,
-  beforeEachBindings
-} from 'angular2/test';
+// import {
+//   ddescribe,
+//   describe,
+//   xdescribe,
+//   it,
+//   iit,
+//   xit,
+//   expect,
+//   beforeEach,
+//   afterEach,
+//   AsyncTestCompleter,
+//   inject,
+//   beforeEachBindings
+// } from 'angular2/test';
 
-import {Compiler} from 'angular2/angular2';
+// import {Compiler} from 'angular2/angular2';
 
 import {
   NavController,
@@ -23,18 +23,43 @@ import {
 } from 'ionic/ionic';
 
 
-@Page({
-  template: ''
-})
-class SomePage {}
-
 export function run() {
   describe("NavController", () => {
     let nav;
 
-    beforeEach(inject([Compiler], compiler => {
-      nav = new NavController(null, null, new IonicConfig(), null, compiler, null, null, null);
-    }));
+    class FirstPage {}
+    class SecondPage {}
+    class ThirdPage {}
+
+    function mockTransitionFn(enteringView, leavingView, opts, cb) {
+      let destroys = [];
+
+      nav._views.forEach(view => {
+        if (view) {
+          if (view.shouldDestroy) {
+            destroys.push(view);
+
+          } else if (view.state === 2 && view.shouldCache) {
+            view.shouldCache = false;
+          }
+        }
+      });
+
+      destroys.forEach(view => {
+        nav._remove(view);
+        view.destroy();
+      });
+      cb();
+    }
+
+    function mockCanGoBackFn() {
+       return true;
+    }
+
+    // beforeEach(inject([Compiler], compiler => {
+    beforeEach(() => {
+      nav = new NavController(null, null, new IonicConfig(), null, null, null, null, null);
+    });
 
     it('should exist', () => {
       expect(nav).not.toBeUndefined();
@@ -50,7 +75,7 @@ export function run() {
         let activeView = new ViewController();
         activeView.state = 1; // ACTIVE_STATE
 
-        nav.add(activeView);
+        nav._add(activeView);
         var active = nav.getActive();
 
         expect(active).toBe(activeView);
@@ -58,7 +83,7 @@ export function run() {
         let secondActiveView = new ViewController();
         secondActiveView.state = 1; // ACTIVE_STATE
 
-        nav.add(secondActiveView);
+        nav._add(secondActiveView);
         active = nav.getActive();
 
         expect(active).toBe(activeView);
@@ -93,13 +118,128 @@ export function run() {
         expect(push).toThrow();
       });
 
-      it('be successful', () => {
-        expect(SomePage).toBeDefined();
+      it('to add the pushed page to the nav stack', (done) => {
+        expect(FirstPage).toBeDefined();
+        expect(nav._views.length).toBe(0);
 
-        nav.push(SomePage, {}, {});
+        spyOn(nav, '_add').and.callThrough();
+
+        nav.transition = mockTransitionFn;
+        nav.push(FirstPage, {}, {}).then(() => {
+          expect(nav._add).toHaveBeenCalled();
+          expect(nav._views.length).toBe(1);
+          done();
+        });
+      });
+    });
+
+    describe("setViews", () => {
+      it('should return a resolved Promise if components is falsy', done => {
+        let s = jasmine.createSpy('success');
+        let f = jasmine.createSpy('fail');
+
+        let promise = nav.setViews();
+
+        promise.then(s, f).then(() => {
+          expect(s).toHaveBeenCalled();
+          expect(f).not.toHaveBeenCalled();
+          done();
+        });
       });
 
-    })
-  });
+      it('replace views with the supplied views', () => {
+        let vc1 = new ViewController(),
+            vc2 = new ViewController(),
+            vc3 = new ViewController();
+        nav._views = [vc1, vc2, vc3];
+        let arr = [FirstPage, SecondPage, ThirdPage];
 
+        nav.transition = mockTransitionFn;
+        nav.setViews(arr);
+
+        //_views[0] will be transitioned out of
+        expect(nav._views[1].componentType).toBe(FirstPage);
+        expect(nav._views[2].componentType).toBe(SecondPage);
+        expect(nav._views[3].componentType).toBe(ThirdPage);
+      });
+
+    });
+
+    describe("insert", () => {
+      it('insert page at the specified index', () => {
+        nav._views = [{}, {}, {}];
+        expect(nav._views[2].componentType).toBeUndefined();
+        nav.insert(FirstPage, 2);
+        expect(nav._views[2].componentType).toBe(FirstPage);
+      });
+
+      it('push page if index >= _views.length', () => {
+        nav._views = [{}, {}, {}];
+        spyOn(nav, 'push').and.callThrough();
+        nav.insert(FirstPage, 2);
+        expect(nav.push).not.toHaveBeenCalled();
+
+        nav.transition = mockTransitionFn;
+        nav.insert(FirstPage, 4);
+        expect(nav._views[4].componentType).toBe(FirstPage);
+        expect(nav.push).toHaveBeenCalled();
+
+        nav.insert(FirstPage, 10);
+        expect(nav._views[5].componentType).toBe(FirstPage);
+        expect(nav.push.calls.count()).toBe(2);
+      });
+
+    });
+
+    describe("setRoot", () => {
+      it('remove previous views and set root', () => {
+        let vc1 = new ViewController(),
+            vc2 = new ViewController(),
+            vc3 = new ViewController();
+        nav._views = [vc1, vc2, vc3];
+        expect(nav._views.length).toBe(3);
+
+        nav.transition = mockTransitionFn;
+        nav.setRoot(FirstPage);
+        //_views[0] will be transitioned out of
+        expect(nav._views.length).toBe(2);
+        expect(nav._views[1].componentType).toBe(FirstPage);
+      });
+    });
+
+    describe("remove", () => {
+      it('should remove the view at the specified index', () => {
+        let vc1 = new ViewController(),
+            vc2 = new ViewController(null, FirstPage),
+            vc3 = new ViewController(null, SecondPage);
+        nav._views = [vc1, vc2, vc3];
+        expect(nav._views.length).toBe(3);
+        expect(nav._views[1].componentType).toBe(FirstPage);
+
+        nav.remove(1);
+
+        expect(nav._views.length).toBe(2);
+        expect(nav._views[1].componentType).toBe(SecondPage);
+      });
+
+      it('should pop if index is of active view', () => {
+        let vc1 = new ViewController(),
+            vc2 = new ViewController(null, FirstPage),
+            vc3 = new ViewController(null, SecondPage);
+
+        vc3.state = 1; //ACTIVE_STATE
+        nav._views = [vc1, vc2, vc3];
+
+        spyOn(nav, 'pop').and.callThrough();
+
+        nav.remove(1);
+        expect(nav.pop).not.toHaveBeenCalled();
+
+        nav.remove(1);
+        expect(nav.pop).toHaveBeenCalled();
+
+      });
+    });
+
+  });
 }

@@ -5,7 +5,7 @@ import * as helpers from 'helpers';
 
 
 @App({
-  template: '<ion-nav id="nav" [root]="rootPage"></ion-nav>'
+  template: '<ion-nav id="nav" [root]="rootPage"></ion-nav><ion-overlay></ion-overlay>'
 })
 class DemoApp {
 

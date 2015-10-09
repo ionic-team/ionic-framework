@@ -11,7 +11,7 @@
     "link": "npm install && gulp src && npm link"
   },
   "dependencies": {
-    "angular2": "2.0.0-alpha.39",
+    "angular2": "2.0.0-alpha.40",
     "@reactivex/rxjs": "0.0.0-prealpha.3",
     "reflect-metadata": "0.1.1",
     "zone.js": "0.5.8"

@@ -8,12 +8,12 @@ $input-label-ios-color:         #7f7f7f !default;
 .list,
 ion-card {
 
-  .text-input {
+  [text-input] {
     margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom ($item-ios-padding-left / 2);
     padding: 0;
   }
 
-  ion-input[inset] .text-input {
+  ion-input[inset] [text-input] {
     margin: ($item-ios-padding-top / 2) $item-ios-padding-right ($item-ios-padding-bottom / 2) $item-ios-padding-left;
     padding: ($item-ios-padding-top / 2) ($item-ios-padding-right / 2) ($item-ios-padding-bottom / 2) ($item-ios-padding-left / 2);
   }
@@ -28,8 +28,8 @@ ion-card {
     margin-bottom: 4px;
   }
 
-  [stacked-label] .text-input,
-  [floating-label] .text-input {
+  [stacked-label] [text-input],
+  [floating-label] [text-input] {
     margin-top: 8px;
     margin-bottom: 8px;
   }
