@@ -207,5 +207,39 @@ export function run() {
       });
     });
 
+    describe("remove", () => {
+      it('should remove the view at the specified index', () => {
+        let vc1 = new ViewController(),
+            vc2 = new ViewController(null, FirstPage),
+            vc3 = new ViewController(null, SecondPage);
+        nav._views = [vc1, vc2, vc3];
+        expect(nav._views.length).toBe(3);
+        expect(nav._views[1].componentType).toBe(FirstPage);
+
+        nav.remove(1);
+
+        expect(nav._views.length).toBe(2);
+        expect(nav._views[1].componentType).toBe(SecondPage);
+      });
+
+      it('should pop if index is of active view', () => {
+        let vc1 = new ViewController(),
+            vc2 = new ViewController(null, FirstPage),
+            vc3 = new ViewController(null, SecondPage);
+
+        vc3.state = 1; //ACTIVE_STATE
+        nav._views = [vc1, vc2, vc3];
+
+        spyOn(nav, 'pop').and.callThrough();
+
+        nav.remove(1);
+        expect(nav.pop).not.toHaveBeenCalled();
+
+        nav.remove(1);
+        expect(nav.pop).toHaveBeenCalled();
+
+      });
+    });
+
   });
 }
