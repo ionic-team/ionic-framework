@@ -337,36 +337,38 @@
       var circleEle = ele.querySelector('circle');
 
       function run() {
-        var v = easeInOutCubic(Date.now() - startTime, 650);
-        var scaleX = 1;
-        var translateX = 0;
-        var dasharray = (188 - (58 * v));
-        var dashoffset = (182 - (182 * v));
+        if (ele.parentNode) {
+          var v = easeInOutCubic(Date.now() - startTime, 650);
+          var scaleX = 1;
+          var translateX = 0;
+          var dasharray = (188 - (58 * v));
+          var dashoffset = (182 - (182 * v));
 
-        if (rIndex % 2) {
-          scaleX = -1;
-          translateX = -64;
-          dasharray = (128 - (-58 * v));
-          dashoffset = (182 * v);
+          if (rIndex % 2) {
+            scaleX = -1;
+            translateX = -64;
+            dasharray = (128 - (-58 * v));
+            dashoffset = (182 * v);
+          }
+
+          var rotateLine = [0, -101, -90, -11, -180, 79, -270, -191][rIndex];
+
+          setSvgAttribute(circleEle, 'da', Math.max(Math.min(dasharray, 188), 128));
+          setSvgAttribute(circleEle, 'os', Math.max(Math.min(dashoffset, 182), 0));
+          setSvgAttribute(circleEle, 't', 'scale(' + scaleX + ',1) translate(' + translateX + ',0) rotate(' + rotateLine + ',32,32)');
+
+          rotateCircle += 4.1;
+          if (rotateCircle > 359) rotateCircle = 0;
+          setSvgAttribute(svgEle, 't', 'rotate(' + rotateCircle + ',32,32)');
+
+          if (v >= 1) {
+            rIndex++;
+            if (rIndex > 7) rIndex = 0;
+            startTime = Date.now();
+          }
+
+          ionic.requestAnimationFrame(run);
         }
-
-        var rotateLine = [0, -101, -90, -11, -180, 79, -270, -191][rIndex];
-
-        setSvgAttribute(circleEle, 'da', Math.max(Math.min(dasharray, 188), 128));
-        setSvgAttribute(circleEle, 'os', Math.max(Math.min(dashoffset, 182), 0));
-        setSvgAttribute(circleEle, 't', 'scale(' + scaleX + ',1) translate(' + translateX + ',0) rotate(' + rotateLine + ',32,32)');
-
-        rotateCircle += 4.1;
-        if (rotateCircle > 359) rotateCircle = 0;
-        setSvgAttribute(svgEle, 't', 'rotate(' + rotateCircle + ',32,32)');
-
-        if (v >= 1) {
-          rIndex++;
-          if (rIndex > 7) rIndex = 0;
-          startTime = Date.now();
-        }
-
-        ionic.requestAnimationFrame(run);
       }
 
       return function() {
