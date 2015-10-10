@@ -59,7 +59,7 @@ gulp.task('build', function(done) {
   runSequence(
     'bundle',
     'e2e',
-    'demos:all',
+    // 'demos:all',
     'sass',
     'fonts',
     done
@@ -100,9 +100,9 @@ gulp.task('watch', function(done) {
         }
       );
 
-      watch('demos/**/*', function() {
-        gulp.start('demos:all');
-      });
+      // watch('demos/**/*', function() {
+      //   gulp.start('demos:all');
+      // });
 
       watch('ionic/components/*/test/**/*', function(file) {
         if (file.event === "unlink") {
@@ -362,9 +362,9 @@ gulp.task('src.link', function(done) {
   });
 
 
-  watch('demos/**/*', function() {
-    gulp.start('demos:all');
-  });
+  // watch('demos/**/*', function() {
+  //   gulp.start('demos:all');
+  // });
 })
 
 gulp.task('src', function(done){
