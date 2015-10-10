@@ -9,7 +9,7 @@ module.exports = function jekyll(renderDocsProcessor) {
 
       // pretty up and sort the docs object for menu generation
       docs = docs.filter(function(doc) {
-        return !!doc.name && !!doc.outputPath;
+        return (!!doc.name && !!doc.outputPath) || doc.docType === 'index-page';
       });
       docs.sort(function(a, b) {
         textA = a.name ? a.name.toUpperCase() : '';
