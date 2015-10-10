@@ -1,6 +1,6 @@
 import {NavController, NavParams} from 'ionic/ionic';
 import {Page, ViewController} from 'ionic/ionic';
-import * as helpers from 'helpers';
+import * as helpers from './helpers';
 
 @Page({
   template: 'Hello 1',

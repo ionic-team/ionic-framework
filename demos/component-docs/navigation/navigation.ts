@@ -1,6 +1,6 @@
 import {NavController, NavParams} from 'ionic/ionic';
 import {Page, Events} from 'ionic/ionic';
-import * as helpers from 'helpers';
+import * as helpers from './helpers';
 
 @Page({
   templateUrl: 'navigation/navigation-details.html'
@@ -30,7 +30,7 @@ class NavigationDetailsPage {
     templateUrl: 'navigation/navigation.html',
 })
 export class NavigationPage {
-  
+
   constructor(nav: NavController) {
       this.nav = nav;
   }

@@ -1,5 +1,5 @@
 import {App, IonicApp, Animation, Modal, NavController, Page, Events} from 'ionic/ionic';
-import * as helpers from 'helpers';
+import * as helpers from './helpers';
 
 
 @Page({

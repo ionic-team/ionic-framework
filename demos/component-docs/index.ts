@@ -1,7 +1,7 @@
 import {App, IonicApp, IonicPlatform, ActionSheet} from 'ionic/ionic';
 import {Page, IonicConfig, Events} from 'ionic/ionic';
-import {ActionSheetPage} from 'actionSheet/actionSheet';
-import * as helpers from 'helpers';
+import {ActionSheetPage} from './actionSheet/actionSheet';
+import * as helpers from './helpers';
 
 
 @App({
