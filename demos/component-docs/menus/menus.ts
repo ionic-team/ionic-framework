@@ -1,6 +1,6 @@
 import {App, IonicApp, Page, NavController, NavParams} from 'ionic/ionic';
 import {Page, Events} from 'ionic/ionic';
-import * as helpers from 'helpers';
+import * as helpers from './helpers';
 
 @Page({
   templateUrl: 'menus/menu-home.html'
@@ -54,5 +54,3 @@ export class MenusPage {
     this.nav.setRoot(page.component);
   }
 }
-
-

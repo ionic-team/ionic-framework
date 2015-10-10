@@ -1,4 +1,4 @@
-import {ActionSheetPage} from 'actionSheet/actionSheet';
+import {ActionSheetPage} from './actionSheet/actionSheet';
 
 import {ButtonsPage,
         BlockButtonsPage,
@@ -9,18 +9,18 @@ import {ButtonsPage,
         FabPage,
         ButtonSizesPage,
         IconButtonsPage,
-        ButtonsInComponentsPage} from 'buttons/buttons';
+        ButtonsInComponentsPage} from './buttons/buttons';
 
-import {CardsPage} from 'cards/cards';
-import {FormsPage} from 'forms/forms';
-import {IconsPage} from 'icons/icons';
-import {ListsPage} from 'lists/lists';
-import {MenusPage} from 'menus/menus';
-import {ModalsPage} from 'modals/modals';
-import {NavigationPage} from 'navigation/navigation';
-import {PopupsPage} from 'popups/popups';
-import {SlidesPage} from 'slides/slides';
-import {TabsPage} from 'tabs/tabs';
+import {CardsPage} from './cards/cards';
+import {FormsPage} from './forms/forms';
+import {IconsPage} from './icons/icons';
+import {ListsPage} from './lists/lists';
+import {MenusPage} from './menus/menus';
+import {ModalsPage} from './modals/modals';
+import {NavigationPage} from './navigation/navigation';
+import {PopupsPage} from './popups/popups';
+import {SlidesPage} from './slides/slides';
+import {TabsPage} from './tabs/tabs';
 
 
 export function toTitleCase(str) {
@@ -52,5 +52,3 @@ export function getPageFor(hash) {
         'tabs': TabsPage
     }[hash]
 }
-
-

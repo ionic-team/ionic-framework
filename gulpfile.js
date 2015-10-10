@@ -59,7 +59,7 @@ gulp.task('build', function(done) {
   runSequence(
     'bundle',
     'e2e',
-    'demos:all',
+    // 'demos:all',
     'sass',
     'fonts',
     done
@@ -100,9 +100,9 @@ gulp.task('watch', function(done) {
         }
       );
 
-      watch('demos/**/*', function() {
-        gulp.start('demos:all');
-      });
+      // watch('demos/**/*', function() {
+      //   gulp.start('demos:all');
+      // });
 
       watch('ionic/components/*/test/**/*', function(file) {
         if (file.event === "unlink") {
@@ -362,9 +362,9 @@ gulp.task('src.link', function(done) {
   });
 
 
-  watch('demos/**/*', function() {
-    gulp.start('demos:all');
-  });
+  // watch('demos/**/*', function() {
+  //   gulp.start('demos:all');
+  // });
 })
 
 gulp.task('src', function(done){
@@ -378,7 +378,7 @@ gulp.task('src', function(done){
 
 require('./scripts/docs/gulp-tasks')(gulp, flags)
 
-gulp.task('demos', function(){
+gulp.task('build.demos', function(){
   var gulpif = require('gulp-if');
   var lazypipe = require('lazypipe');
   var _ = require('lodash');
@@ -387,7 +387,8 @@ gulp.task('demos', function(){
 
   var buildTest = lazypipe()
     .pipe(tsc, tscOptions, null, tscReporter)
-    .pipe(babel, getBabelOptions('demos'))
+    .pipe(babel, getBabelOptions('demos', 'common'))
+    // .pipe(babel, getBabelOptions('demos'))
 
   var baseIndexTemplate = _.template(fs.readFileSync('scripts/demos/index.template.html'))();
   var docsIndexTemplate = _.template(fs.readFileSync('scripts/demos/docs.index.template.html'))();
@@ -410,16 +411,54 @@ gulp.task('demos', function(){
         path: path.join(path.dirname(file.path), 'index.html'),
       }));
       next(null, file);
-
-
     });
   }
-})
+});
+
+gulp.task('bundle.demos', ['build.demos'], function(done){
+  var glob = require('glob');
+  var webpack = require('webpack');
+  var path = require('path');
+  var _ = require('lodash');
+
+  var numWebpacks = 0;
+  glob('dist/demos/**/index.js', function(err, files){
+    files.forEach(function(file){
+      var config = require('./scripts/demos/webpack.config.js');
+
+      // add our bundle entry, removing previous if necessary
+      // since config is cached
+      if (config.entry.length > 5) {
+        config.entry.pop();
+      }
+      config.entry.push('./' + file);
+      config.output = {
+        filename: path.dirname(file) + '/bundle.js'
+      }
+
+      // pretty sure this is a race, but it works
+      numWebpacks++;
+      webpack(config, function(err, stats){
+        // var statsOptions = {
+        //   'colors': true,
+        //   'modules': true,
+        //   'chunks': false,
+        //   'exclude': ['node_modules'],
+        //   'errorDetails': true
+        // }
+        // console.log(stats.toString(statsOptions));
+        if (--numWebpacks === 0) done();
+      })
+    })
+  });
+});
+
+gulp.task('demos', ['bundle.demos']);
 
 gulp.task('demos:all', ['demos'], function() {
    return gulp
     .src('dist/demos/component-docs/**/*')
-    .pipe(gulp.dest('dist/ionic-site/docs/v2/components/demo/')) 
+    .pipe(gulp.dest('dist/ionic-site/docs/v2/components/demo/'))
 });
 
 gulp.task('publish', function(done) {
