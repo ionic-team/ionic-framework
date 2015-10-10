@@ -8,8 +8,8 @@ $z-index-menu-backdrop:          79;
 $z-index-overlay:                1000;
 $z-index-click-block:            9999;
 
-$z-index-content-container:      5;
-$z-index-navbar-container:       10;
+$z-index-content-section:        5;
+$z-index-navbar-section:         10;
 
 $z-index-content:                5;
 $z-index-toolbar:                10;
@@ -131,19 +131,19 @@ ion-view {
   }
 }
 
-[no-navbar] > .navbar-container {
+[no-navbar] > ion-navbar-section {
   display: none;
 }
 
-.navbar-container {
+ion-navbar-section {
   position: relative;
   min-height: 4.4rem;
-  z-index: $z-index-navbar-container;
+  z-index: $z-index-navbar-section;
 }
 
-.content-container {
+ion-content-section {
   position: relative;
-  z-index: $z-index-content-container;
+  z-index: $z-index-content-section;
   flex: 1;
   order: $flex-order-view-content;
 }

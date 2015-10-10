@@ -378,7 +378,7 @@ export class TextInputElement {
   }
 
   labelledBy(val) {
-    val && this.renderer.setElementAttribute(this.elementRef, 'aria-labelledby', val);
+    this.renderer.setElementAttribute(this.elementRef, 'aria-labelledby', val);
   }
 
   setFocus() {

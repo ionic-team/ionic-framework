@@ -64,7 +64,7 @@ class MaterialTransition extends Transition {
 
     let viewLength = nav.length();
     if (nav.tabs && (viewLength === 1 || viewLength === 2)) {
-      let tabBarEle = nav.tabs.elementRef.nativeElement.querySelector('.tab-bar-container');
+      let tabBarEle = nav.tabs.elementRef.nativeElement.querySelector('ion-tab-bar-section');
       let tabBar = new Animation(tabBarEle);
 
       if (viewLength === 1 && opts.direction == 'back') {

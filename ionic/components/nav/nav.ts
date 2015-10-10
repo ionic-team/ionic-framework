@@ -399,12 +399,12 @@ class ContentAnchor {
 @Component({
   selector: 'ion-pane',
   template:
-    '<section class="navbar-container">' +
+    '<ion-navbar-section>' +
       '<template navbar-anchor></template>' +
-    '</section>' +
-    '<section class="content-container">' +
+    '</ion-navbar-section>' +
+    '<ion-content-section>' +
       '<template content-anchor></template>' +
-    '</section>',
+    '</ion-content-section>',
   directives: [NavBarAnchor, ContentAnchor]
 })
 class Pane {

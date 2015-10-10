@@ -67,10 +67,10 @@ import * as dom from 'ionic/util/dom';
     'tabBarIcons': 'top'
   },
   template:
-    '<section class="navbar-container">' +
+    '<ion-navbar-section>' +
       '<template navbar-anchor></template>' +
-    '</section>' +
-    '<nav class="tab-bar-container">' +
+    '</ion-navbar-section>' +
+    '<ion-tab-bar-section>' +
       '<tab-bar role="tablist">' +
         '<a *ng-for="#t of tabs" [tab]="t" class="tab-button" role="tab">' +
           '<icon [name]="t.tabIcon" [is-active]="t.isSelected" class="tab-button-icon"></icon>' +
@@ -78,10 +78,10 @@ import * as dom from 'ionic/util/dom';
         '</a>' +
         '<tab-highlight></tab-highlight>' +
       '</tab-bar>' +
-    '</nav>' +
-    '<section class="content-container">' +
+    '</ion-tab-bar-section>' +
+    '<ion-content-section>' +
       '<ng-content></ng-content>' +
-    '</section>',
+    '</ion-content-section>',
   directives: [
     Icon,
     NgFor,

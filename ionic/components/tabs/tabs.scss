@@ -42,16 +42,16 @@ ion-tab {
   }
 }
 
-ion-tabs > .navbar-container {
+ion-tabs > ion-navbar-section {
   order: $flex-order-tab-bar-navbar;
 }
 
-.tab-bar-container {
+ion-tab-bar-section {
   position: relative;
   order: $flex-order-tab-bar-bottom;
 }
 
-[tab-bar-placement=top] .tab-bar-container {
+[tab-bar-placement=top] ion-tab-bar-section {
   order: $flex-order-tab-bar-top;
 }
 

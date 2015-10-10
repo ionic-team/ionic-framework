@@ -11,7 +11,7 @@ exports.config = {
   specs: 'dist/e2e/**/*e2e.js',
   //specs: 'dist/e2e/tabs/**/*e2e.js',
 
-  sleepBetweenSpecs: 900,
+  sleepBetweenSpecs: 600,
 
   platformDefauls: {
     browser: 'chrome',

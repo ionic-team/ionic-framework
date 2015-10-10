@@ -46,6 +46,8 @@ ion-input.has-focus [text-input] {
 
 ion-input input[scroll-assist] {
   display: inline-block;
+  padding: 0;
+  margin: 0;
   width: 1px;
   height: 1px;
   pointer-events: none;
