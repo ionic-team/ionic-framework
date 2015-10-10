@@ -27,17 +27,17 @@
 
 // Focus Outline
 // --------------------------------------------------
-// When a keydown event happens, from a tab key, then the
-// 'key-input' class is added to the body element so focusable
-// elements have an outline. On a mousedown or touchstart
-// event then the 'key-input' class is removed.
+
+$focus-outline-border-color:   #51a7e8 !default;
+$focus-outline-box-shadow:     0px 0px 8px 0px $focus-outline-border-color !default;
+
 
 :focus,
 :active {
   outline: none;
 }
 
-.key-input {
+.focus-outline {
 
   :focus {
     outline-offset: -1px;
@@ -46,8 +46,20 @@
 
   button:focus,
   [button]:focus {
-    outline-offset: -2px;
-    outline: 2px solid red;
+    border-color: $focus-outline-border-color;
+    box-shadow: $focus-outline-box-shadow;
+    outline: thin solid $focus-outline-border-color;
+  }
+
+  ion-input.has-focus,
+  button[ion-item]:focus,
+  a[ion-item]:focus {
+    border-color: $focus-outline-border-color;
+    box-shadow: inset $focus-outline-box-shadow !important;
+  }
+
+  ion-input :focus {
+    outline: none;
   }
 
 }

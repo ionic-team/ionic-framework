@@ -2,9 +2,6 @@
 // Text Input
 // --------------------------------------------------
 
-$input-focus-border-color:      #51a7e8 !default;
-$input-focus-box-shadow:        inset 0px 0px 8px 0px $input-focus-border-color !default;
-
 $text-input-background-color:   $list-background-color !default;
 
 
@@ -37,18 +34,6 @@ ion-input.item {
   align-items: flex-start;
 }
 
-.key-input ion-input {
-
-  &.has-focus {
-    border-color: $input-focus-border-color;
-    box-shadow: $input-focus-box-shadow;
-  }
-
-  :focus {
-    outline: none;
-  }
-}
-
 ion-input [text-input] {
   flex: 1;
   background-color: $text-input-background-color;
@@ -57,6 +42,13 @@ ion-input [text-input] {
 
 ion-input.has-focus [text-input] {
   pointer-events: auto;
+}
+
+ion-input input[scroll-assist] {
+  display: inline-block;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
 }
 
 ion-input textarea {
@@ -80,4 +72,3 @@ input,
 textarea {
   @include placeholder();
 }
-

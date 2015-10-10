@@ -1,4 +1,4 @@
-import {Directive, Host, Optional, ElementRef, Renderer, Attribute, Query, QueryList, NgZone} from 'angular2/angular2';
+import {Component, Directive, NgIf, forwardRef, Host, Optional, ElementRef, Renderer, Attribute, Query, QueryList, NgZone} from 'angular2/angular2';
 
 import {IonicConfig} from '../../config/config';
 import {IonicForm} from '../../util/form';
@@ -12,29 +12,20 @@ import {IonicPlatform} from '../../platform/platform';
 /**
  * TODO
  */
-@Directive({
+@Component({
   selector: 'ion-input',
   host: {
-    '(focus)': 'receivedFocus(true)',
-    '(blur)': 'receivedFocus(false)',
     '(touchstart)': 'pointerStart($event)',
     '(touchend)': 'pointerEnd($event)',
-    '(mouseup)': 'pointerEnd($event)',
-    '[class.has-focus]': 'hasFocus',
-    '[class.has-value]': 'hasValue'
-  }
+    '(mouseup)': 'pointerEnd($event)'
+  },
+  template:
+    '<ng-content></ng-content>' +
+    '<input [type]="type" aria-hidden="true" scroll-assist *ng-if="scrollAssist">',
+  directives: [NgIf, forwardRef(() => InputScrollAssist)]
 })
 export class TextInput {
-  /**
-   * TODO
-   * @param {ElementRef} elementRef  TODO
-   * @param {IonicConfig} config  TODO
-   * @param {IonicApp} app  TODO
-   * @param {NgZone} ngZone  TODO
-   * @param {Content=} scrollView  The parent scroll view.
-   * @param {QueryList<TextInputElement>} inputQry  TODO
-   * @param {QueryList<Label>} labelQry  TODO
-   */
+
   constructor(
     form: IonicForm,
     elementRef: ElementRef,
@@ -46,9 +37,13 @@ export class TextInput {
     @Optional() @Host() scrollView: Content
   ) {
     renderer.setElementClass(elementRef, 'item', true);
+    this.renderer = renderer;
 
     this.form = form;
     form.register(this);
+
+    this.type = 'text';
+    this.lastTouch = 0;
 
     this.app = app;
     this.elementRef = elementRef;
@@ -56,30 +51,30 @@ export class TextInput {
     this.platform = platform;
 
     this.scrollView = scrollView;
-    this.scrollAssist = config.get('keyboardScrollAssist');
+    this.scrollAssist = config.get('scrollAssist');
     this.keyboardHeight = config.get('keyboardHeight');
   }
 
   registerInput(textInputElement) {
     this.input = textInputElement;
-    this.type = textInputElement.type;
+    this.type = textInputElement.type || 'text';
   }
 
   registerLabel(label) {
     this.label = label;
   }
 
-  /**
-   * TODO
-   */
   onInit() {
     if (this.input && this.label) {
-      this.label.id = (this.label.id || 'label-' + this.inputId)
+      // if there is an input and an label
+      // then give the label an ID
+      // and tell the input the ID of who it's labelled by
       this.input.labelledBy(this.label.id);
     }
 
     let self = this;
     self.scrollMove = (ev) => {
+      console.debug('content scrollMove');
       self.deregListeners();
 
       if (self.hasFocus) {
@@ -88,10 +83,6 @@ export class TextInput {
     };
   }
 
-  /**
-   * TODO
-   * @param {Event} ev  TODO
-   */
   pointerStart(ev) {
     if (this.scrollAssist && this.app.isEnabled()) {
       // remember where the touchstart/mousedown started
@@ -99,10 +90,6 @@ export class TextInput {
     }
   }
 
-  /**
-   * TODO
-   * @param {Event} ev TODO
-   */
   pointerEnd(ev) {
     if (!this.app.isEnabled()) {
       ev.preventDefault();
@@ -122,29 +109,21 @@ export class TextInput {
           this.initFocus();
 
           // temporarily prevent mouseup's from focusing
-          this.preventMouse = true;
-          clearTimeout(this.mouseTimer);
-          this.mouseTimer = setTimeout(() => {
-            this.preventMouse = false;
-          }, 500);
+          this.lastTouch = Date.now();
         });
       }
 
-    } else if (!this.preventMouse) {
+    } else if (this.lastTouch + 500 < Date.now()) {
       ev.preventDefault();
       ev.stopPropagation();
 
-      this.zone.runOutsideAngular(() => {
-        this.setFocus();
-      });
+      this.setFocus();
     }
   }
 
-  /**
-   * TODO
-   * @returns {TODO} TODO
-   */
   initFocus() {
+    // begin the process of setting focus to the inner input element
+
     let scrollView = this.scrollView;
 
     if (scrollView && this.scrollAssist) {
@@ -161,7 +140,7 @@ export class TextInput {
       }
 
       // add padding to the bottom of the scroll view (if needed)
-      scrollView.addKeyboardPadding(scrollData.scrollPadding);
+      scrollView.addScrollPadding(scrollData.scrollPadding);
 
       // manually scroll the text input to the top
       // do not allow any clicks while it's scrolling
@@ -308,31 +287,40 @@ export class TextInput {
     return scrollData;
   }
 
-  /**
-   * TODO
-   */
-  deregListeners() {
-    this.deregScroll && this.deregScroll();
+  focusChange(hasFocus) {
+    this.renderer.setElementClass(this.elementRef, 'has-focus', hasFocus);
   }
 
-  /**
-   * TODO
-   */
-  setFocus() {
-    this.zone.run(() => {
-      // set focus on the input element
-      this.input && this.input.initFocus();
+  hasValue(inputValue) {
+    this.renderer.setElementClass(this.elementRef, 'has-value', inputValue && inputValue !== '');
+  }
 
-      // ensure the body hasn't scrolled down
-      document.body.scrollTop = 0;
-    });
+  setFocus() {
+    if (this.input) {
+
+      this.zone.run(() => {
+
+        this.form.setAsFocused(this);
+
+        // set focus on the actual input element
+        this.input.setFocus();
+
+        // ensure the body hasn't scrolled down
+        document.body.scrollTop = 0;
+      });
+
+    }
 
     if (this.scrollAssist && this.scrollView) {
-      setTimeout(() => {
+      this.zone.runOutsideAngular(() => {
         this.deregListeners();
         this.deregScroll = this.scrollView.addScrollEventListener(this.scrollMove);
-      }, 100);
+      });
     }
+  }
+
+  deregListeners() {
+    this.deregScroll && this.deregScroll();
   }
 
   tempFocusMove() {
@@ -343,33 +331,6 @@ export class TextInput {
     return !!this.input && this.input.hasFocus;
   }
 
-  get hasValue() {
-    return !!this.input && this.input.hasValue;
-  }
-
-  get tabIndex() {
-    return this.input && this.input.tabIndex;
-  }
-
-  set tabIndex(val) {
-    if (this.input) {
-      this.input.tabIndex = val;
-    }
-  }
-
-  /**
-   * TODO
-   * @param {boolean} receivedFocus  TODO
-   */
-  receivedFocus(receivedFocus) {
-    if (receivedFocus && !this.hasFocus) {
-      this.initFocus();
-
-    } else {
-      this.deregListeners();
-    }
-  }
-
   onDestroy() {
     this.deregListeners();
     this.form.deregister(this);
@@ -377,73 +338,80 @@ export class TextInput {
 
 }
 
-/**
 
- * TODO
- */
 @Directive({
   selector: 'textarea,input[type=text],input[type=password],input[type=number],input[type=search],input[type=email],input[type=url],input[type=tel]',
-  inputs: [
-    'tabIndex'
-  ],
+  inputs: ['value'],
   host: {
-    '[tabIndex]': 'tabIndex'
+    '(focus)': 'wrapper.focusChange(true)',
+    '(blur)': 'wrapper.focusChange(false)',
+    '(keyup)': 'onKeyup($event)'
   }
 })
 export class TextInputElement {
 
   constructor(
-    form: IonicForm,
     @Attribute('type') type: string,
     elementRef: ElementRef,
     renderer: Renderer,
-    @Optional() textInputWrapper: TextInput
+    @Optional() wrapper: TextInput
   ) {
-    this.form = form;
     this.type = type;
     this.elementRef = elementRef;
-    this.tabIndex = 0;
+    this.wrapper = wrapper;
 
     this.renderer = renderer;
     renderer.setElementAttribute(this.elementRef, 'text-input', '');
 
-    if (textInputWrapper) {
+    if (wrapper) {
       // it's within ionic's ion-input, let ion-input handle what's up
-      textInputWrapper.registerInput(this);
-
-    } else {
-      // not within ion-input
-      form.register(this);
+      wrapper.registerInput(this);
     }
   }
 
+  onKeyup(ev) {
+    this.wrapper.hasValue(ev.target.value);
+  }
+
+  onInit() {
+    this.wrapper.hasValue(this.value);
+  }
+
   labelledBy(val) {
-    this.renderer.setElementAttribute(this.elementRef, 'aria-labelledby', val);
+    val && this.renderer.setElementAttribute(this.elementRef, 'aria-labelledby', val);
   }
 
-  initFocus() {
-    this.elementRef.nativeElement.focus();
+  setFocus() {
+    this.getNativeElement().focus();
   }
 
-  /**
-   * Whether the input has focus or not.
-   * @returns {boolean}  true if the input has focus, otherwise false.
-   */
   get hasFocus() {
-    return dom.hasFocus(this.elementRef.nativeElement);
+    return dom.hasFocus(this.getNativeElement());
   }
 
-  /**
-   * Whether the input has a value.
-   * @returns {boolean}  true if the input has a value, otherwise false.
-   */
-  get hasValue() {
-    return (this.elementRef.nativeElement.value !== '');
+  getNativeElement() {
+    return this.elementRef.nativeElement;
   }
 
-  onDestroy() {
-    this.form.deregister(this);
+}
+
+@Directive({
+  selector: '[scroll-assist]',
+  host: {
+    '(focus)': 'receivedFocus($event)'
   }
+})
+class InputScrollAssist {
+
+  constructor(form: IonicForm, textInput: TextInput) {
+    this.form = form;
+    this.textInput = textInput;
+  }
+
+  receivedFocus(ev) {
+    this.form.focusNext(this.textInput);
+  }
+
 }
 
 

@@ -49,7 +49,7 @@ IonicPlatform.register({
   settings: {
     mode: 'md',
     keyboardHeight: 290,
-    keyboardScrollAssist: true,
+    scrollAssist: true,
     hoverCSS: false,
   },
   isMatch(p) {
@@ -71,7 +71,7 @@ IonicPlatform.register({
   ],
   settings: {
     mode: 'ios',
-    keyboardScrollAssist: function(p) {
+    scrollAssist: function(p) {
       return /iphone|ipad|ipod/i.test(p.navigatorPlatform());
     },
     keyboardHeight: 290,

@@ -4,7 +4,7 @@ import {Ion} from '../ion';
 import {IonicConfig} from '../../config/config';
 import {IonicKeyboard} from '../../util/keyboard';
 import {ViewController} from '../nav/view-controller';
-import {Tab} from '../tabs/tab';
+import {Animation} from '../../animations/animation';
 import {ScrollTo} from '../../animations/scroll-to';
 
 
@@ -25,8 +25,10 @@ import {ScrollTo} from '../../animations/scroll-to';
  */
 @Component({
   selector: 'ion-content',
-  inputs: ['parallax'],
-  template: '<scroll-content><ng-content></ng-content></scroll-content>'
+  template:
+    '<scroll-content>' +
+      '<ng-content></ng-content>' +
+    '</scroll-content>'
 })
 export class Content extends Ion {
   /**
@@ -38,7 +40,7 @@ export class Content extends Ion {
     this.scrollPadding = 0;
     this.keyboard = keyboard;
 
-    if(viewCtrl) {
+    if (viewCtrl) {
       viewCtrl.setContent(this);
     }
   }
@@ -58,7 +60,7 @@ export class Content extends Ion {
    * @returns {Function} A function that removes the scroll handler.
    */
   addScrollEventListener(handler) {
-    if(!this.scrollElement) { return; }
+    if (!this.scrollElement) { return; }
 
     // ensure we're not creating duplicates
     this.scrollElement.removeEventListener('scroll', handler);
@@ -76,7 +78,7 @@ export class Content extends Ion {
    * @returns {Function} A function that removes the touchmove handler.
    */
   addTouchMoveListener(handler) {
-    if(!this.scrollElement) { return; }
+    if (!this.scrollElement) { return; }
 
     // ensure we're not creating duplicates
     this.scrollElement.removeEventListener('touchmove', handler);
@@ -161,17 +163,29 @@ export class Content extends Ion {
    * Adds padding to the bottom of the scroll element when the keyboard is open
    * so content below the keyboard can be scrolled into view.
    */
-  addKeyboardPadding(addPadding) {
-    if (addPadding > this.scrollPadding) {
-      this.scrollPadding = addPadding;
-      this.scrollElement.style.paddingBottom = addPadding + 'px';
+  addScrollPadding(newScrollPadding) {
+    if (newScrollPadding > this.scrollPadding) {
+      console.debug('addScrollPadding', newScrollPadding);
+
+      this.scrollPadding = newScrollPadding;
+      this.scrollElement.style.paddingBottom = newScrollPadding + 'px';
 
       if (!this.keyboardPromise) {
+        console.debug('add scroll keyboard close callback', newScrollPadding);
 
         this.keyboardPromise = this.keyboard.onClose(() => {
+          console.debug('scroll keyboard closed', newScrollPadding);
+
           if (this) {
+            if (this.scrollPadding && this.scrollElement) {
+              let close = new Animation(this.scrollElement);
+              close
+                .duration(150)
+                .fromTo('paddingBottom', this.scrollPadding + 'px', '0px')
+                .play();
+            }
+
             this.scrollPadding = 0;
-            if (this.scrollElement) this.scrollElement.style.paddingBottom = '';
             this.keyboardPromise = null;
           }
         });

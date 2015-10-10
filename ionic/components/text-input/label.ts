@@ -25,9 +25,13 @@ export class Label {
    * TODO
    * @param {IonicConfig} config
    */
-  constructor(config: IonicConfig, @Optional() textInput: TextInput) {
-    this.scrollAssist = config.get('keyboardScrollAssist');
-    textInput && textInput.registerLabel(this);
+  constructor(config: IonicConfig, @Optional() container: TextInput) {
+    this.scrollAssist = config.get('scrollAssist');
+    if (!this.id) {
+      this.id = 'lbl-' + (++labelIds);
+    }
+    this.container = container;
+    container && container.registerLabel(this);
   }
 
   /**
@@ -55,7 +59,7 @@ export class Label {
       if (!hasPointerMoved(20, this.startCoord, endCoord)) {
         ev.preventDefault();
         ev.stopPropagation();
-        this.container.focus();
+        this.container.initFocus();
       }
 
       this.startCoord = null;
@@ -63,3 +67,5 @@ export class Label {
   }
 
 }
+
+let labelIds = -1;
