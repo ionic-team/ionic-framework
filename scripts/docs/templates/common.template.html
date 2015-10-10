@@ -118,10 +118,10 @@ docType: "<$ doc.docType $>"
 defined in <$ githubViewLink(doc) $>
 </p>
 
-<@- if doc.decorators @>
-<h2>Annotations</h2>
-<@- for decorator in doc.decorators @>
-  <h3 class="annotation">@<$ decorator.name $><$ paramList(decorator.arguments) $></h3>
+<@- if doc.directiveInfo @>
+<h2><$ doc.directiveInfo.type $></h2>
+<@- for prop in doc.directiveInfo.properties @>
+  <span><$ prop.name $>: <@ for v in prop.values @><$ v $><@ if not loop.last @>, <@ endif @><@ endfor @></span>
 <@ endfor @>
 <@ endif -@>
 

@@ -4,7 +4,8 @@ var _ = require('lodash');
 var ts = require('typescript');
 
 module.exports = function readTypeScriptModules(tsParser, modules, getFileInfo,
-                                                getExportDocType, getContent, log) {
+                                                getExportDocType, getContent,
+                                                getDirectiveInfo, log) {
 
   return {
     $runAfter: ['files-read'],
@@ -180,7 +181,8 @@ module.exports = function readTypeScriptModules(tsParser, modules, getFileInfo,
       moduleDoc: moduleDoc,
       content: getContent(exportSymbol),
       fileInfo: getFileInfo(exportSymbol, basePath),
-      location: getLocation(exportSymbol)
+      location: getLocation(exportSymbol),
+      directiveInfo: getDirectiveInfo(exportSymbol)
     };
 
     if(exportSymbol.flags & ts.SymbolFlags.Function) {
