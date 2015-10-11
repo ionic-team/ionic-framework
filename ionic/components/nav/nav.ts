@@ -130,6 +130,9 @@ import {NavController} from './nav-controller';
   defaultInputs: {
     'swipeBackEnabled': true
   },
+  host: {
+    '[class.has-views]': '_views.length > 0'
+  },
   template: '<template pane-anchor></template>',
   directives: [forwardRef(() => NavPaneAnchor)]
 })

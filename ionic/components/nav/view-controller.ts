@@ -94,8 +94,6 @@ export class ViewController {
     for (let i = 0; i < this.disposals.length; i++) {
       this.disposals[i]();
     }
-
-    this.didUnload();
   }
 
   /**
@@ -138,6 +136,14 @@ export class ViewController {
    */
   getNavbar() {
     return this._nbVw;
+  }
+
+  /**
+   * TODO
+   * @returns {TODO} TODO
+   */
+  hasNavbar() {
+    return !!this.getNavbar();
   }
 
   /**
@@ -254,6 +260,22 @@ export class ViewController {
    */
   didUnload() {
     this.instance && this.instance.onPageDidUnload && this.instance.onPageDidUnload();
+  }
+
+  domCache(isActiveView, isPreviousView) {
+    let renderInDom = (isActiveView || isPreviousView);
+
+    let contentRef = this.contentRef();
+    if (contentRef) {
+      // the active view, and the previous view should have the 'show-view' css class
+      // all others, like a cached page 2 back, should now have 'show-view' so it's not rendered
+      contentRef.nativeElement.classList[renderInDom ? 'add' : 'remove' ]('show-view');
+    }
+
+    let navbarRef = this.getNavbar();
+    if (navbarRef) {
+      navbarRef.elementRef.nativeElement.classList[renderInDom ? 'add' : 'remove' ]('show-navbar');
+    }
   }
 
 }

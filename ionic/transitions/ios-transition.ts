@@ -3,156 +3,158 @@ import {Animation} from '../animations/animation';
 
 const DURATION = 550;
 const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
-
 const OPACITY = 'opacity';
 const TRANSLATEX = 'translateX';
-
+const OFF_RIGHT = '99.5%';
 const OFF_LEFT = '-33%';
 const CENTER = '0%'
 const OFF_OPACITY = 0.8;
+const SHOW_NAVBAR_CSS = 'show-navbar';
+const SHOW_VIEW_CSS = 'show-view';
+const SHOW_BACK_BTN_CSS = 'show-back-button';
 
 
-class IOSTransition extends Transition {
+class IOSTransition extends Animation {
 
   constructor(navCtrl, opts) {
-    super(navCtrl, opts, IOSEnteringTransition, IOSLeavingTransition);
+    super(null, opts);
 
     this.duration(DURATION);
     this.easing(EASING);
-  }
 
-}
+    // what direction is the transition going
+    let backDirection = (opts.direction === 'back');
 
-class IOSEnteringTransition extends ViewTransition {
+    // get entering/leaving views
+    let enteringView = navCtrl.getStagedEnteringView();
+    let leavingView = navCtrl.getStagedLeavingView();
 
-  constructor(navCtrl, viewCtrl, opts) {
-    super(navCtrl, viewCtrl, opts);
+    // do they have navbars?
+    let enteringHasNavbar = enteringView.hasNavbar();
+    let leavingHasNavbar = leavingView && leavingView.hasNavbar();
 
-    this.content
-      .to(TRANSLATEX, CENTER)
-      .to(OPACITY, 1)
-      .before.setStyles({ zIndex: viewCtrl.index });
 
-    this.navbar.before.addClass('show-navbar');
+    // entering content
+    let enteringContent = new Animation(enteringView.contentRef());
+    enteringContent
+      .before.addClass(SHOW_VIEW_CSS)
+      .before.setStyles({ zIndex: enteringView.index });
+    this.add(enteringContent);
 
-    this.title
-      .fadeIn()
-      .to(TRANSLATEX, CENTER);
-
-    this.navbarBg
-      .to(TRANSLATEX, CENTER);
-
-    this.navbarItems
-      .fadeIn();
-
-    if (viewCtrl.enableBack()) {
-      this.backButton
-        .before.addClass('show-back-button')
-        .fadeIn();
-    }
-
-    // set properties depending on direction
-    if (opts.direction === 'back') {
+    if (backDirection) {
       // back direction
-      this.content
-        .from(TRANSLATEX, OFF_LEFT)
-        .from(OPACITY, OFF_OPACITY)
-        .to(OPACITY, 1);
-
-      this.title
-        .from(TRANSLATEX, OFF_LEFT);
-
-      this.navbarBg
-        .from(TRANSLATEX, OFF_LEFT);
+      enteringContent
+        .fromTo(TRANSLATEX, OFF_LEFT, CENTER)
+        .fromTo(OPACITY, OFF_OPACITY, 1);
 
     } else {
       // forward direction
-      this.content
-        .from(TRANSLATEX, '99.5%')
-        .from(OPACITY, 1);
+      enteringContent
+        .fromTo(TRANSLATEX, OFF_RIGHT, CENTER)
+        .fromTo(OPACITY, 1, 1);
+    }
 
-      this.title
-        .from(TRANSLATEX, '99.5%');
 
-      this.navbarBg
-        .from(TRANSLATEX, '99.5%')
-        .fadeIn();
+    // entering navbar
+    if (enteringHasNavbar) {
+      let enteringNavBar = new Animation(enteringView.navbarRef());
+      enteringNavBar.before.addClass(SHOW_NAVBAR_CSS);
+      this.add(enteringNavBar);
 
-      if (viewCtrl.enableBack()) {
-        let backBtnText = new Animation(viewCtrl.backBtnTextRef());
-        backBtnText.fromTo(TRANSLATEX, (300) + 'px', CENTER);
-        this.navbar.add(backBtnText);
+      let enteringTitle = new Animation(enteringView.titleRef());
+      let enteringNavbarItems = new Animation(enteringView.navbarItemRefs());
+      let enteringNavbarBg = new Animation(enteringView.navbarBgRef());
+      let enteringBackButton = new Animation(enteringView.backBtnRef());
+      enteringNavBar
+        .add(enteringTitle)
+        .add(enteringNavbarItems)
+        .add(enteringNavbarBg)
+        .add(enteringBackButton);
+
+      enteringTitle.fadeIn();
+      enteringNavbarItems.fadeIn();
+
+      // set properties depending on direction
+      if (backDirection) {
+        // back direction
+        enteringTitle.fromTo(TRANSLATEX, OFF_LEFT, CENTER);
+        enteringNavbarBg.fromTo(TRANSLATEX, OFF_LEFT, CENTER);
+
+      } else {
+        // forward direction
+        enteringTitle.fromTo(TRANSLATEX, OFF_RIGHT, CENTER);
+        enteringNavbarBg.fromTo(TRANSLATEX, OFF_RIGHT, CENTER);
+
+        if (enteringView.enableBack()) {
+          enteringBackButton.before.addClass(SHOW_BACK_BTN_CSS);
+          enteringBackButton.fadeIn();
+
+          let enteringBackBtnText = new Animation(enteringView.backBtnTextRef());
+          enteringBackBtnText.fromTo(TRANSLATEX, '150px', '0px');
+          enteringNavBar.add(enteringBackBtnText);
+        }
       }
     }
 
-  }
 
-}
+    // setup leaving view
+    if (leavingView) {
+      // leaving content
+      let leavingContent = new Animation(leavingView.contentRef());
+      this.add(leavingContent);
+      leavingContent
+        .before.addClass(SHOW_VIEW_CSS)
+        .before.setStyles({ zIndex: leavingView.index })
 
-class IOSLeavingTransition extends ViewTransition {
+      if (backDirection) {
+        leavingContent
+          .fromTo(TRANSLATEX, CENTER, '100%')
+          .fromTo(OPACITY, 1, 1);
 
-  constructor(navCtrl, viewCtrl, opts) {
-    super(navCtrl, viewCtrl, opts);
+      } else {
+        leavingContent
+          .fromTo(TRANSLATEX, CENTER, OFF_LEFT)
+          .fromTo(OPACITY, 1, OFF_OPACITY);
+      }
 
-    // leaving viewCtrl moves off screen
-    this.content
-      .from(TRANSLATEX, CENTER)
-      .from(OPACITY, 1)
-      .before.setStyles({ zIndex: viewCtrl.index })
-      .after.removeClass('show-view');
+      if (leavingHasNavbar) {
+        let leavingNavBar = new Animation(leavingView.navbarRef());
+        let leavingBackButton = new Animation(leavingView.backBtnRef());
+        let leavingTitle = new Animation(leavingView.titleRef());
+        let leavingNavbarItems = new Animation(leavingView.navbarItemRefs());
+        let leavingNavbarBg = new Animation(leavingView.navbarBgRef());
 
-    this.title
-      .from(TRANSLATEX, CENTER)
-      .from(OPACITY, 1);
+        leavingNavBar
+          .add(leavingBackButton)
+          .add(leavingTitle)
+          .add(leavingNavbarItems)
+          .add(leavingNavbarBg);
+        this.add(leavingNavBar);
 
-    this.navbarBg
-      .from(TRANSLATEX, CENTER);
+        leavingBackButton
+          .after.removeClass(SHOW_BACK_BTN_CSS)
+          .fadeOut();
 
-    this.navbarItems
-      .fadeOut();
+        leavingTitle.fadeOut();
+        leavingNavbarItems.fadeOut();
 
-    this.backButton
-      .after.removeClass('show-back-button')
-      .fadeOut();
+        // set properties depending on direction
+        if (backDirection) {
+          // back direction
+          leavingTitle.fromTo(TRANSLATEX, CENTER, '100%');
+          leavingNavbarBg.fromTo(TRANSLATEX, CENTER, '100%');
 
-    this.navbar.after.removeClass('show-navbar');
+          let leavingBackBtnText = new Animation(leavingView.backBtnTextRef());
+          leavingBackBtnText.fromTo(TRANSLATEX, CENTER, (300) + 'px');
+          leavingNavBar.add(leavingBackBtnText);
 
-    // set properties depending on direction
-    if (opts.direction === 'back') {
+        } else {
+          // forward direction
+          leavingTitle.fromTo(TRANSLATEX, CENTER, OFF_LEFT);
+        }
+      }
 
-      // back direction
-      this.content
-        .to(TRANSLATEX, '100%')
-        .to(OPACITY, 1);
-
-      this.title
-        .to(TRANSLATEX, '100%')
-        .to(OPACITY, 0);
-
-      this.navbarBg
-        .to(TRANSLATEX, '100%')
-        .fadeOut();
-
-      // if (this.leaving && this.leaving.enableBack() && this.viewWidth() > 200) {
-      //   let leavingBackButtonText = new Animation(this.leaving.backBtnTextRef());
-      //   leavingBackButtonText.fromTo(TRANSLATEX, CENTER, (this.viewWidth() / 2) + 'px');
-      //   this.leavingNavbar.add(leavingBackButtonText);
-      // }
-
-    } else {
-      // forward direction
-      this.content
-        .to(TRANSLATEX, OFF_LEFT)
-        .to(OPACITY, OFF_OPACITY);
-
-      this.title
-        .to(TRANSLATEX, OFF_LEFT)
-        .to(OPACITY, 0);
-
-      this.navbarBg
-        .to(TRANSLATEX, OFF_LEFT);
     }
-
   }
 
 }

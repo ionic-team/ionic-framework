@@ -8,6 +8,7 @@ import {ViewController} from './view-controller';
 import {Transition} from '../../transitions/transition';
 import {SwipeBackGesture} from './swipe-back';
 import * as util from 'ionic/util';
+import {raf} from '../../util/dom';
 
 /**
  * _For examples on the basic usage of NavController, check out the [Navigation section](../../../../components/#navigation)
@@ -350,11 +351,11 @@ export class NavController extends Ion {
     let viewToRemove = this._views[index];
     if (this.isActive(viewToRemove)){
       return this.pop();
-    } else {
-      this._remove(index);
-      viewToRemove.destroy();
-      return Promise.resolve();
     }
+
+    viewToRemove.shouldDestroy = true;
+    this._cleanup();
+    return Promise.resolve();
   }
 
   /**
@@ -677,7 +678,7 @@ export class NavController extends Ion {
    * @private
    * TODO
    */
-  _runSwipeBack() {
+  _sbComplete() {
     if (this.canSwipeBack()) {
       // it is possible to swipe back
 
@@ -744,12 +745,10 @@ export class NavController extends Ion {
    * @private
    */
   _transComplete() {
-    let destroys = [];
-
     this._views.forEach(view => {
       if (view) {
         if (view.shouldDestroy) {
-          destroys.push(view);
+          view.didUnload();
 
         } else if (view.state === CACHED_STATE && view.shouldCache) {
           view.shouldCache = false;
@@ -757,100 +756,44 @@ export class NavController extends Ion {
       }
     });
 
-    destroys.forEach(view => {
-      this._remove(view);
-      view.destroy();
-    });
-
     // allow clicks again, but still set an enable time
     // meaning nothing with this view controller can happen for XXms
     this.app.setEnabled(true);
     this.app.setTransitioning(false);
 
-    if (this._views.length === 1) {
-      this.elementRef.nativeElement.classList.add('has-views');
-    }
+    this._sbComplete();
 
-    this._runSwipeBack();
+    raf(() => {
+      this._cleanup();
+    });
   }
 
-  /**
-   * TODO
-   * @returns {TODO} TODO
-   */
-  getActive() {
-    for (let i = 0, ii = this._views.length; i < ii; i++) {
-      if (this._views[i].state === ACTIVE_STATE) {
-        return this._views[i];
-      }
-    }
-    return null;
-  }
+  _cleanup() {
+    // the active view, and the previous view, should be rendered in dom and ready to go
+    // all others, like a cached page 2 back, should be display: none and not rendered
+    let destroys = [];
+    let activeView = this.getActive();
+    let previousView = this.getPrevious(activeView);
 
-  /**
-   * TODO
-   * @param {TODO} instance  TODO
-   * @returns {TODO} TODO
-   */
-  getByInstance(instance) {
-    if (instance) {
-      for (let i = 0, ii = this._views.length; i < ii; i++) {
-        if (this._views[i].instance === instance) {
-          return this._views[i];
+    this._views.forEach(view => {
+      if (view) {
+        if (view.shouldDestroy) {
+          destroys.push(view);
+
+        } else {
+          let isActiveView = (view === activeView);
+          let isPreviousView = (view === previousView);
+          view.domCache(isActiveView, isPreviousView);
         }
       }
-    }
-    return null;
-  }
+    });
 
-  /**
-   * TODO
-   * @param {TODO} index  TODO
-   * @returns {TODO} TODO
-   */
-  getByIndex(index) {
-    if (index < this._views.length && index > -1) {
-      return this._views[index];
-    }
-    return null;
-  }
-
-  /**
-   * TODO
-   * @param {TODO} view  TODO
-   * @returns {TODO} TODO
-   */
-  getPrevious(view) {
-    if (view) {
-      return this._views[ this._views.indexOf(view) - 1 ];
-    }
-    return null;
-  }
-
-  /**
-   * TODO
-   * @returns {TODO} TODO
-   */
-  getStagedEnteringView() {
-    for (let i = 0, ii = this._views.length; i < ii; i++) {
-      if (this._views[i].state === STAGED_ENTERING_STATE) {
-        return this._views[i];
-      }
-    }
-    return null;
-  }
-
-  /**
-   * TODO
-   * @returns {TODO} TODO
-   */
-  getStagedLeavingView() {
-    for (let i = 0, ii = this._views.length; i < ii; i++) {
-      if (this._views[i].state === STAGED_LEAVING_STATE) {
-        return this._views[i];
-      }
-    }
-    return null;
+    // all views being destroyed should be removed from the list of views
+    // and completely removed from the dom
+    destroys.forEach(view => {
+      this._remove(view);
+      view.destroy();
+    });
   }
 
   /**
@@ -904,6 +847,91 @@ export class NavController extends Ion {
    */
   _remove(viewOrIndex) {
     util.array.remove(this._views, viewOrIndex);
+  }
+
+  /**
+   * TODO
+   * @returns {TODO} TODO
+   */
+  getActive() {
+    for (let i = this._views.length - 1; i >= 0; i--) {
+      if (this._views[i].state === ACTIVE_STATE && !this._views[i].shouldDestroy) {
+        return this._views[i];
+      }
+    }
+    return null;
+  }
+
+  /**
+   * TODO
+   * @param {TODO} instance  TODO
+   * @returns {TODO} TODO
+   */
+  getByInstance(instance) {
+    if (instance) {
+      for (let i = 0, ii = this._views.length; i < ii; i++) {
+        if (this._views[i].instance === instance) {
+          return this._views[i];
+        }
+      }
+    }
+    return null;
+  }
+
+  /**
+   * TODO
+   * @param {TODO} index  TODO
+   * @returns {TODO} TODO
+   */
+  getByIndex(index) {
+    if (index < this._views.length && index > -1) {
+      return this._views[index];
+    }
+    return null;
+  }
+
+  /**
+   * TODO
+   * @param {TODO} view  TODO
+   * @returns {TODO} TODO
+   */
+  getPrevious(view) {
+    if (view) {
+      let viewIndex = this._views.indexOf(view);
+
+      for (let i = viewIndex - 1; i >= 0; i--) {
+        if (!this._views[i].shouldDestroy) {
+          return this._views[i];
+        }
+      }
+    }
+    return null;
+  }
+
+  /**
+   * TODO
+   * @returns {TODO} TODO
+   */
+  getStagedEnteringView() {
+    for (let i = 0, ii = this._views.length; i < ii; i++) {
+      if (this._views[i].state === STAGED_ENTERING_STATE) {
+        return this._views[i];
+      }
+    }
+    return null;
+  }
+
+  /**
+   * TODO
+   * @returns {TODO} TODO
+   */
+  getStagedLeavingView() {
+    for (let i = 0, ii = this._views.length; i < ii; i++) {
+      if (this._views[i].state === STAGED_LEAVING_STATE) {
+        return this._views[i];
+      }
+    }
+    return null;
   }
 
   /**

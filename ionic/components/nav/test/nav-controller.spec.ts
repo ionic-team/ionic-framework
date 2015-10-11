@@ -71,22 +71,31 @@ export function run() {
         expect(active).toBe(null);
       });
 
-      it('should return the first active page', () => {
+      it('should return the last active page', () => {
         let activeView = new ViewController();
         activeView.state = 1; // ACTIVE_STATE
-
         nav._add(activeView);
-        var active = nav.getActive();
 
-        expect(active).toBe(activeView);
+        expect(nav.getActive()).toBe(activeView);
 
         let secondActiveView = new ViewController();
         secondActiveView.state = 1; // ACTIVE_STATE
-
         nav._add(secondActiveView);
-        active = nav.getActive();
 
-        expect(active).toBe(activeView);
+        expect(nav.getActive()).toBe(secondActiveView);
+      });
+
+      it('should return the last active page thats not shouldDestroy', () => {
+        let view1 = new ViewController();
+        view1.state = 1; // ACTIVE_STATE
+        nav._add(view1);
+        expect(nav.getActive()).toBe(view1);
+
+        let view2 = new ViewController();
+        view2.state = 1; // ACTIVE_STATE
+        view2.shouldDestroy = true;
+        nav._add(view2);
+        expect(nav.getActive()).toBe(view1);
       });
     });
 

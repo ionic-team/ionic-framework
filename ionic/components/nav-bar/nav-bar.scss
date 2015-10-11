@@ -13,7 +13,7 @@ ion-navbar.toolbar {
 }
 
 .back-button {
-  order: map-get($toolbar-order, backButton);;
+  order: map-get($toolbar-order, backButton);
   transform: translateZ(0px);
 
   display: none;
