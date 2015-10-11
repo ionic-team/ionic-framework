@@ -1,4 +1,4 @@
-import {Transition, ViewTransition} from './transition';
+import {Transition} from './transition';
 import {Animation} from '../animations/animation';
 
 const DURATION = 550;

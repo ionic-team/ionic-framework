@@ -1,113 +1,105 @@
-import {Transition, ViewTransition} from './transition';
+import {Transition} from './transition';
 import {Animation} from '../animations/animation';
 
-const TRANSLATE_Y = 'translateY';
+const TRANSLATEY = 'translateY';
 const OFF_BOTTOM = '40px';
 const CENTER = '0px'
+const SHOW_NAVBAR_CSS = 'show-navbar';
+const SHOW_VIEW_CSS = 'show-view';
+const SHOW_BACK_BTN_CSS = 'show-back-button';
+const TABBAR_HEIGHT = '69px';
 
 
-class MDTransition extends Transition {
+class MDTransition extends Animation {
 
   constructor(navCtrl, opts) {
     opts.renderDelay = 160;
-    super(navCtrl, opts, MDEnteringTransition, MDLeavingTransition);
-  }
+    super(null, opts);
 
-}
+    // what direction is the transition going
+    let backDirection = (opts.direction === 'back');
 
-class MDEnteringTransition extends ViewTransition {
+    // get entering/leaving views
+    let enteringView = navCtrl.getStagedEnteringView();
+    let leavingView = navCtrl.getStagedLeavingView();
 
-  constructor(navCtrl, viewCtrl, opts) {
-    super(navCtrl, viewCtrl, opts);
+    // do they have navbars?
+    let enteringHasNavbar = enteringView.hasNavbar();
+    let leavingHasNavbar = leavingView && leavingView.hasNavbar();
 
-    // entering item moves in bottom to center
-    this.content
-      .to(TRANSLATE_Y, CENTER)
-      .before.setStyles({ zIndex: viewCtrl.index });
 
-    // entering item moves in bottom to center
-    this.navbar
-      .to(TRANSLATE_Y, CENTER)
-      .fadeIn()
-      .before.addClass('show-navbar')
-      .before.setStyles({ zIndex: viewCtrl.index + 10 });
+    // entering content item moves in bottom to center
+    let enteringContent = new Animation(enteringView.contentRef());
+    enteringContent
+      .before.addClass(SHOW_VIEW_CSS)
+      .before.setStyles({ zIndex: enteringView.index });
+    this.add(enteringContent);
 
-    if (viewCtrl.enableBack()) {
-      this.backButton.before.addClass('show-back-button');
-    }
-
-    // set properties depending on direction
-    if (opts.direction === 'back') {
+    if (backDirection) {
       this.duration(200).easing('cubic-bezier(0.47,0,0.745,0.715)');
-
-      // back direction
-      this.content
-        .from(TRANSLATE_Y, CENTER);
-
-      this.navbar
-        .from(TRANSLATE_Y, CENTER);
+      enteringContent.fromTo(TRANSLATEY, CENTER, CENTER);
 
     } else {
-      // forward direction
       this.duration(280).easing('cubic-bezier(0.36,0.66,0.04,1)');
-
-      this.content
-        .from(TRANSLATE_Y, OFF_BOTTOM)
-        .fadeIn();
-
-      this.navbar
-        .from(TRANSLATE_Y, OFF_BOTTOM)
+      enteringContent
+        .fromTo(TRANSLATEY, OFF_BOTTOM, CENTER)
         .fadeIn();
     }
 
-    let viewLength = navCtrl.length();
-    if ((viewLength === 1 || viewLength === 2) && navCtrl.tabs) {
-      let tabBarEle = navCtrl.tabs.elementRef.nativeElement.querySelector('ion-tab-bar-section');
-      let tabBar = new Animation(tabBarEle);
 
-      if (viewLength === 1 && opts.direction == 'back') {
-        tabBar.fromTo('height', '0px', '69px');
-        tabBar.fadeIn();
+    // entering navbar
+    if (enteringHasNavbar) {
+      let enteringNavBar = new Animation(enteringView.navbarRef());
+      enteringNavBar
+        .before.addClass(SHOW_NAVBAR_CSS)
+        .before.setStyles({ zIndex: enteringView.index + 10 });
+      this.add(enteringNavBar);
 
-      } else if (viewLength === 2 && opts.direction == 'forward') {
-        tabBar.fromTo('height', '69px', '0px');
-        tabBar.fadeOut();
+      if (backDirection) {
+        enteringNavBar.fromTo(TRANSLATEY, CENTER, CENTER);
+
+      } else {
+        enteringNavBar
+          .fromTo(TRANSLATEY, OFF_BOTTOM, CENTER)
+          .fadeIn();
       }
 
-      this.add(tabBar);
+      if (enteringView.enableBack()) {
+        let enteringBackButton = new Animation(enteringView.backBtnRef());
+        enteringBackButton.before.addClass(SHOW_BACK_BTN_CSS);
+        enteringNavBar.add(enteringBackButton);
+      }
     }
 
-  }
+    // setup leaving view
+    if (leavingView) {
+      // leaving content
+      let leavingContent = new Animation(leavingView.contentRef());
+      this.add(leavingContent);
+      leavingContent
+        .before.addClass(SHOW_VIEW_CSS)
+        .before.setStyles({ zIndex: leavingView.index });
 
-}
 
-class MDLeavingTransition extends ViewTransition {
+      if (backDirection) {
+        this.duration(200).easing('cubic-bezier(0.47,0,0.745,0.715)');
+        leavingContent
+          .fromTo(TRANSLATEY, CENTER, OFF_BOTTOM)
+          .fadeOut();
+      }
 
-  constructor(navCtrl, viewCtrl, opts) {
-    super(navCtrl, viewCtrl, opts);
 
-    // leaving viewCtrl stays put
-    this.content
-      .before.setStyles({ zIndex: viewCtrl.index })
-      .after.removeClass('show-view');
+      if (leavingHasNavbar) {
+        if (backDirection) {
+          let leavingNavBar = new Animation(leavingView.navbarRef());
+          this.add(leavingNavBar);
 
-    this.navbar
-      .before.setStyles({ zIndex: viewCtrl.index + 10 })
-      .after.removeClass('show-navbar')
-      .fadeOut();
+          leavingNavBar
+            .before.setStyles({ zIndex: leavingView.index + 10 })
+            .fadeOut();
+        }
 
-    // set properties depending on direction
-    if (opts.direction === 'back') {
-      this.duration(200).easing('cubic-bezier(0.47,0,0.745,0.715)');
-
-      // leaving viewCtrl goes center to bottom
-      this.content
-        .fromTo(TRANSLATE_Y, CENTER, OFF_BOTTOM)
-        .fadeOut();
-
-      this.navbar
-        .fromTo(TRANSLATE_Y, CENTER, OFF_BOTTOM)
-        .fadeOut();
+      }
     }
 
     let viewLength = navCtrl.length();
@@ -115,13 +107,15 @@ class MDLeavingTransition extends ViewTransition {
       let tabBarEle = navCtrl.tabs.elementRef.nativeElement.querySelector('ion-tab-bar-section');
       let tabBar = new Animation(tabBarEle);
 
-      if (viewLength === 1 && opts.direction == 'back') {
-        tabBar.fromTo('height', '0px', '69px');
-        tabBar.fadeIn();
+      if (viewLength === 1 && backDirection) {
+        tabBar
+          .fromTo('height', '0px', TABBAR_HEIGHT)
+          .fadeIn();
 
-      } else if (viewLength === 2 && opts.direction == 'forward') {
-        tabBar.fromTo('height', '69px', '0px');
-        tabBar.fadeOut();
+      } else if (viewLength === 2 && !backDirection) {
+        tabBar
+          .fromTo('height', TABBAR_HEIGHT, '0px')
+          .fadeOut();
       }
 
       this.add(tabBar);
