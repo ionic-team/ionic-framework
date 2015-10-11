@@ -118,10 +118,17 @@ export class Tabs extends NavController {
       // special overrides for the Tabs ViewController
       // the Tabs ViewController does not have it's own navbar
       // so find the navbar it should use within it's active Tab
-      viewCtrl.navbarView = () => {
+      viewCtrl.getNavbar = () => {
         let activeTab = this.getActive();
         if (activeTab && activeTab.instance) {
-          return activeTab.instance.navbarView();
+          return activeTab.instance.getNavbar();
+        }
+      };
+
+      viewCtrl.contentRef = () => {
+        let activeTab = this.getActive();
+        if (activeTab && activeTab.instance) {
+          return activeTab.instance.viewCtrl.contentRef();
         }
       };
 

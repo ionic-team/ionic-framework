@@ -79,7 +79,7 @@ export class Navbar extends ToolbarBase {
     renderer.setElementClass(elementRef, 'toolbar', true);
 
     this.app = app;
-    viewCtrl && viewCtrl.navbarView(this);
+    viewCtrl && viewCtrl.setNavbar(this);
 
     this.bbIcon = config.get('backButtonIcon');
     this.bbDefault = config.get('backButtonText');

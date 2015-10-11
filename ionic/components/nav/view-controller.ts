@@ -13,8 +13,6 @@ export class ViewController {
     this.instance = null;
     this.state = 0;
     this.disposals = [];
-
-    this.navbarTemplateRef = null;
   }
 
   setContent(content) {
@@ -104,37 +102,42 @@ export class ViewController {
    * @private
    */
   setNavbarTemplateRef(templateRef) {
-    this.navbarTemplateRef = templateRef;
+    this._nbTmpRef = templateRef;
   }
 
   /**
    * @private
    */
   getNavbarTemplateRef() {
-    return this.navbarTemplateRef;
-  }
-
-  /**
-   * TODO
-   * @param {TODO} val  TODO
-   * @returns {TODO} TODO
-   */
-  viewElementRef(val) {
-    if (arguments.length) {
-      this._vwEle = val;
-    }
-    return this._vwEle;
+    return this._nbTmpRef;
   }
 
   /**
    * TODO
    * @returns {TODO} TODO
    */
-  navbarView() {
-    if (arguments.length) {
-      this._nbView = arguments[0];
-    }
-    return this._nbView;
+  setContentRef(contentElementRef) {
+    this._cntRef = contentElementRef;
+  }
+
+  /**
+   * TODO
+   * @returns {TODO} TODO
+   */
+  contentRef() {
+    return this._cntRef;
+  }
+
+  setNavbar(navbarView) {
+    this._nbVw = navbarView;
+  }
+
+  /**
+   * TODO
+   * @returns {TODO} TODO
+   */
+  getNavbar() {
+    return this._nbVw;
   }
 
   /**
@@ -142,10 +145,8 @@ export class ViewController {
    * @returns {TODO} TODO
    */
   navbarRef() {
-    let navbarView = this.navbarView();
-    if (navbarView) {
-      return navbarView.getElementRef();
-    }
+    let navbar = this.getNavbar();
+    return navbar && navbar.getElementRef();
   }
 
   /**
@@ -153,10 +154,8 @@ export class ViewController {
    * @returns {TODO} TODO
    */
   titleRef() {
-    let navbarView = this.navbarView();
-    if (navbarView) {
-      return navbarView.getTitleRef();
-    }
+    let navbar = this.getNavbar();
+    return navbar && navbar.getTitleRef();
   }
 
   /**
@@ -164,10 +163,8 @@ export class ViewController {
    * @returns {TODO} TODO
    */
   navbarItemRefs() {
-    let navbarView = this.navbarView();
-    if (navbarView) {
-      return navbarView.getItemRefs();
-    }
+    let navbar = this.getNavbar();
+    return navbar && navbar.getItemRefs();
   }
 
   /**
@@ -175,10 +172,8 @@ export class ViewController {
    * @returns {TODO} TODO
    */
   backBtnRef() {
-    let navbarView = this.navbarView();
-    if (navbarView) {
-      return navbarView.getBackButtonRef();
-    }
+    let navbar = this.getNavbar();
+    return navbar && navbar.getBackButtonRef();
   }
 
   /**
@@ -186,10 +181,8 @@ export class ViewController {
    * @returns {TODO} TODO
    */
   backBtnTextRef() {
-    let navbarView = this.navbarView();
-    if (navbarView) {
-      return navbarView.getBackButtonTextRef();
-    }
+    let navbar = this.getNavbar();
+    return navbar && navbar.getBackButtonTextRef();
   }
 
   /**
@@ -197,10 +190,8 @@ export class ViewController {
    * @returns {TODO} TODO
    */
   navbarBgRef() {
-    let navbarView = this.navbarView();
-    if (navbarView) {
-      return navbarView.getNativeElement().querySelector('.toolbar-background');
-    }
+    let navbar = this.getNavbar();
+    return navbar && navbar.getNativeElement().querySelector('.toolbar-background');
   }
 
 
@@ -231,10 +222,8 @@ export class ViewController {
    * will fire, whether it was the first load or loaded from the cache.
    */
   didEnter() {
-    let navbarView = this.navbarView();
-    if (navbarView) {
-      navbarView.didEnter();
-    }
+    let navbar = this.getNavbar();
+    navbar && navbar.didEnter();
     this.instance && this.instance.onPageDidEnter && this.instance.onPageDidEnter();
   }
 

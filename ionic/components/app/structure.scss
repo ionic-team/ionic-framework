@@ -113,6 +113,10 @@ ion-view.pane-view {
   flex-direction: column;
 }
 
+ion-view.pane-view {
+  background: transparent;
+}
+
 ion-view {
   display: none;
   position: absolute;

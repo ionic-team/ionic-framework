@@ -230,7 +230,7 @@ export class Nav extends NavController {
           viewCtrl.setInstance(componentRef.instance);
 
           // remember the ElementRef to the content that was just created
-          viewCtrl.viewElementRef(componentRef.location);
+          viewCtrl.setContentRef(componentRef.location);
 
           // get the NavController's container for navbars, which is
           // the place this NavController will add each ViewController's navbar

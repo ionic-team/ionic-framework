@@ -92,14 +92,14 @@ export class Tab extends NavController {
     super(tabs, app, config, elementRef, compiler, loader, viewManager, zone);
     this.tabs = tabs;
 
-    let viewCtrl = this.viewCtrl = new ViewController(tabs.Host);
+    let viewCtrl = this.viewCtrl = new ViewController(tabs);
     viewCtrl.setInstance(this);
-    viewCtrl.viewElementRef(elementRef);
+    viewCtrl.setContentRef(elementRef);
     this._initTab = tabs.addTab(this);
 
-    this.navbarView = viewCtrl.navbarView = () => {
+    this.getNavbar = viewCtrl.getNavbar = () => {
       let activeView = this.getActive();
-      return activeView && activeView.navbarView();
+      return activeView && activeView.getNavbar();
     };
 
     viewCtrl.enableBack = () => {
@@ -164,7 +164,7 @@ export class Tab extends NavController {
       viewCtrl.setInstance(componentRef.instance);
 
       // remember the ElementRef to the content that was just created
-      viewCtrl.viewElementRef(componentRef.location);
+      viewCtrl.setContentRef(componentRef.location);
 
       // get the NavController's container for navbars, which is
       // the place this NavController will add each ViewController's navbar

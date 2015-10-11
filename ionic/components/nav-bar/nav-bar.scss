@@ -5,13 +5,10 @@
 
 ion-navbar.toolbar {
   position: absolute;
-}
-
-ion-navbar {
-  transform: translate3d(100%, 0px, 0px);
+  display: none;
 
   &.show-navbar {
-    transform: translate3d(0px, 0px, 0px);
+    display: flex;
   }
 }
 

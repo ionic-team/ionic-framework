@@ -110,6 +110,13 @@ export class Animation {
     return this._duration || (this._parent && this._parent.duration()) || 0;
   }
 
+  clearDuration() {
+    this._duration = null;
+    for (let i = 0, l = this._chld.length; i < l; i++) {
+      this._chld[i].clearDuration();
+    }
+  }
+
   easing(name, opts) {
     if (arguments.length) {
       this._easing = {
@@ -184,6 +191,7 @@ export class Animation {
       },
       setStyles: (styles) => {
         this._bfSty = styles;
+        return this;
       }
     }
   }

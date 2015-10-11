@@ -64,7 +64,7 @@ class Tab1Page1 {
 
 @Page({
   template: '' +
-    '<ion-navbar *navbar>' +
+    '<ion-navbar *navbar primary>' +
       '<ion-title>Tabs 1 Page 2</ion-title>' +
     '</ion-navbar>' +
     '<ion-content padding>' +

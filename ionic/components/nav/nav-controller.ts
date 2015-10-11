@@ -476,6 +476,7 @@ export class NavController extends Ion {
         let transAnimation = Transition.create(this, opts);
         if (opts.animate === false) {
           // force it to not animate the elements, just apply the "to" styles
+          transAnimation.clearDuration();
           transAnimation.duration(0);
         }
 

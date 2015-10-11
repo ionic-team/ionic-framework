@@ -1,6 +1,5 @@
-import {Transition} from './transition';
+import {Transition, ViewTransition} from './transition';
 import {Animation} from '../animations/animation';
-
 
 const DURATION = 550;
 const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
@@ -15,98 +14,143 @@ const OFF_OPACITY = 0.8;
 
 class IOSTransition extends Transition {
 
-  constructor(nav, opts) {
-    super(nav, opts);
+  constructor(navCtrl, opts) {
+    super(navCtrl, opts, IOSEnteringTransition, IOSLeavingTransition);
 
-    // global duration and easing for all child animations
     this.duration(DURATION);
     this.easing(EASING);
+  }
 
-    // entering item moves to center
-    this.enteringContent
+}
+
+class IOSEnteringTransition extends ViewTransition {
+
+  constructor(navCtrl, viewCtrl, opts) {
+    super(navCtrl, viewCtrl, opts);
+
+    this.content
       .to(TRANSLATEX, CENTER)
       .to(OPACITY, 1)
-      .before.setStyles({ zIndex: this.enteringZ });
+      .before.setStyles({ zIndex: viewCtrl.index });
 
-    this.enteringTitle
+    this.navbar.before.addClass('show-navbar');
+
+    this.title
       .fadeIn()
       .to(TRANSLATEX, CENTER);
 
-    this.enteringNavbarBg
+    this.navbarBg
       .to(TRANSLATEX, CENTER);
 
-    // leaving view moves off screen
-    this.leavingContent
-      .from(TRANSLATEX, CENTER)
-      .from(OPACITY, 1)
-      .before.setStyles({ zIndex: this.leavingZ });
+    this.navbarItems
+      .fadeIn();
 
-    this.leavingTitle
-      .from(TRANSLATEX, CENTER)
-      .from(OPACITY, 1);
-
-    this.leavingNavbarBg
-      .from(TRANSLATEX, CENTER);
+    if (viewCtrl.enableBack()) {
+      this.backButton
+        .before.addClass('show-back-button')
+        .fadeIn();
+    }
 
     // set properties depending on direction
     if (opts.direction === 'back') {
       // back direction
-      this.enteringContent
+      this.content
         .from(TRANSLATEX, OFF_LEFT)
         .from(OPACITY, OFF_OPACITY)
         .to(OPACITY, 1);
 
-      this.enteringTitle
+      this.title
         .from(TRANSLATEX, OFF_LEFT);
 
-      this.enteringNavbarBg
+      this.navbarBg
         .from(TRANSLATEX, OFF_LEFT);
-
-      this.leavingContent
-        .to(TRANSLATEX, '100%')
-        .to(OPACITY, 1);
-
-      this.leavingTitle
-        .to(TRANSLATEX, '100%')
-        .to(OPACITY, 0);
-
-      this.leavingNavbarBg
-        .to(TRANSLATEX, '100%');
-
-      if (this.leaving && this.leaving.enableBack() && this.viewWidth() > 200) {
-        let leavingBackButtonText = new Animation(this.leaving.backBtnTextRef());
-        leavingBackButtonText.fromTo(TRANSLATEX, CENTER, (this.viewWidth() / 2) + 'px');
-        this.leavingNavbar.add(leavingBackButtonText);
-      }
 
     } else {
       // forward direction
-      this.enteringContent
+      this.content
         .from(TRANSLATEX, '99.5%')
         .from(OPACITY, 1);
 
-      this.enteringTitle
+      this.title
         .from(TRANSLATEX, '99.5%');
 
-      this.enteringNavbarBg
-        .from(TRANSLATEX, '99.5%');
+      this.navbarBg
+        .from(TRANSLATEX, '99.5%')
+        .fadeIn();
 
-      this.leavingContent
+      if (viewCtrl.enableBack()) {
+        let backBtnText = new Animation(viewCtrl.backBtnTextRef());
+        backBtnText.fromTo(TRANSLATEX, (300) + 'px', CENTER);
+        this.navbar.add(backBtnText);
+      }
+    }
+
+  }
+
+}
+
+class IOSLeavingTransition extends ViewTransition {
+
+  constructor(navCtrl, viewCtrl, opts) {
+    super(navCtrl, viewCtrl, opts);
+
+    // leaving viewCtrl moves off screen
+    this.content
+      .from(TRANSLATEX, CENTER)
+      .from(OPACITY, 1)
+      .before.setStyles({ zIndex: viewCtrl.index })
+      .after.removeClass('show-view');
+
+    this.title
+      .from(TRANSLATEX, CENTER)
+      .from(OPACITY, 1);
+
+    this.navbarBg
+      .from(TRANSLATEX, CENTER);
+
+    this.navbarItems
+      .fadeOut();
+
+    this.backButton
+      .after.removeClass('show-back-button')
+      .fadeOut();
+
+    this.navbar.after.removeClass('show-navbar');
+
+    // set properties depending on direction
+    if (opts.direction === 'back') {
+
+      // back direction
+      this.content
+        .to(TRANSLATEX, '100%')
+        .to(OPACITY, 1);
+
+      this.title
+        .to(TRANSLATEX, '100%')
+        .to(OPACITY, 0);
+
+      this.navbarBg
+        .to(TRANSLATEX, '100%')
+        .fadeOut();
+
+      // if (this.leaving && this.leaving.enableBack() && this.viewWidth() > 200) {
+      //   let leavingBackButtonText = new Animation(this.leaving.backBtnTextRef());
+      //   leavingBackButtonText.fromTo(TRANSLATEX, CENTER, (this.viewWidth() / 2) + 'px');
+      //   this.leavingNavbar.add(leavingBackButtonText);
+      // }
+
+    } else {
+      // forward direction
+      this.content
         .to(TRANSLATEX, OFF_LEFT)
         .to(OPACITY, OFF_OPACITY);
 
-      this.leavingTitle
+      this.title
         .to(TRANSLATEX, OFF_LEFT)
         .to(OPACITY, 0);
 
-      this.leavingNavbarBg
+      this.navbarBg
         .to(TRANSLATEX, OFF_LEFT);
-
-      if (this.entering.enableBack() && this.viewWidth() > 200) {
-        let enteringBackButtonText = new Animation(this.entering.backBtnTextRef());
-        enteringBackButtonText.fromTo(TRANSLATEX, (this.viewWidth() / 2) + 'px', CENTER);
-        this.enteringNavbar.add(enteringBackButtonText);
-      }
     }
 
   }
