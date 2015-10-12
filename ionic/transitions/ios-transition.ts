@@ -104,7 +104,7 @@ class IOSTransition extends Animation {
       this.add(leavingContent);
       leavingContent
         .before.addClass(SHOW_VIEW_CSS)
-        .before.setStyles({ zIndex: leavingView.index })
+        .before.setStyles({ zIndex: leavingView.index });
 
       if (backDirection) {
         leavingContent

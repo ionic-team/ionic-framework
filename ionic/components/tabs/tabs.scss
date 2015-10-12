@@ -37,13 +37,17 @@ ion-tab {
   flex-direction: column;
 
   display: none;
-  &.show-view {
+  &.show-tab {
     display: flex;
   }
 }
 
 ion-tabs > ion-navbar-section {
   order: $flex-order-tab-bar-navbar;
+}
+
+ion-tabs ion-navbar.toolbar.deselected-tab {
+  display: none;
 }
 
 ion-tab-bar-section {

@@ -1,13 +1,11 @@
-import {Component, Directive, Injector, ElementRef, Compiler, DynamicComponentLoader, AppViewManager, NgZone, Optional, Host, NgFor, forwardRef, ViewContainerRef} from 'angular2/angular2';
+import {Directive, ElementRef, Optional, Host, NgFor, forwardRef, ViewContainerRef} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
 import {IonicConfig} from '../../config/config';
-import {NavController} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
 import {ConfigComponent} from '../../config/decorators';
 import {Icon} from '../icon/icon';
-import * as dom from 'ionic/util/dom';
 
 
 /**
@@ -72,7 +70,7 @@ import * as dom from 'ionic/util/dom';
     '</ion-navbar-section>' +
     '<ion-tab-bar-section>' +
       '<tab-bar role="tablist">' +
-        '<a *ng-for="#t of tabs" [tab]="t" class="tab-button" role="tab">' +
+        '<a *ng-for="#t of _tabs" [tab]="t" class="tab-button" role="tab">' +
           '<icon [name]="t.tabIcon" [is-active]="t.isSelected" class="tab-button-icon"></icon>' +
           '<span class="tab-button-text">{{t.tabTitle}}</span>' +
         '</a>' +
@@ -90,71 +88,50 @@ import * as dom from 'ionic/util/dom';
     forwardRef(() => TabNavBarAnchor)
   ]
 })
-export class Tabs extends NavController {
+export class Tabs extends Ion {
+
   /**
-   * TODO
+   * Hi, I'm "Tabs". I'm really just another Page, with a few special features.
+   * "Tabs" can be a sibling to other pages that can be navigated to, which those
+   * sibling pages may or may not have their own tab bars (doesn't matter). The fact
+   * that "Tabs" can happen to have children "Tab" classes, and each "Tab" can have
+   * children pages with their own "ViewController" instance, as nothing to do with the
+   * point that "Tabs" is itself is just a page with its own instance of ViewController.
    */
  constructor(
-    @Optional() hostNavCtrl: NavController,
-    @Optional() viewCtrl: ViewController,
     app: IonicApp,
     config: IonicConfig,
     elementRef: ElementRef,
-    compiler: Compiler,
-    loader: DynamicComponentLoader,
-    viewManager: AppViewManager,
-    zone: NgZone
+    @Optional() viewCtrl: ViewController
   ) {
-    super(hostNavCtrl, app, config, elementRef, compiler, loader, viewManager, zone);
+    super(elementRef, config);
+    this.app = app;
 
-    this._ready = new Promise(res => { this._isReady = res; });
+    // collection of children "Tab" instances, which extends NavController
+    this._tabs = [];
 
     // Tabs may also be an actual ViewController which was navigated to
     // if Tabs is static and not navigated to within a NavController
     // then skip this and don't treat it as it's own ViewController
     if (viewCtrl) {
-      this.viewCtrl = viewCtrl;
-
-      // special overrides for the Tabs ViewController
-      // the Tabs ViewController does not have it's own navbar
-      // so find the navbar it should use within it's active Tab
-      viewCtrl.getNavbar = () => {
-        let activeTab = this.getActive();
-        if (activeTab && activeTab.instance) {
-          return activeTab.instance.getNavbar();
-        }
-      };
-
-      viewCtrl.contentRef = () => {
-        let activeTab = this.getActive();
-        if (activeTab && activeTab.instance) {
-          return activeTab.instance.viewCtrl.contentRef();
-        }
-      };
-
-      // a Tabs ViewController should not have a back button
-      // enableBack back button will later be determined
-      // by the active ViewController that has a navbar
-      viewCtrl.enableBack = () => {
-        return false;
-      };
+      this._ready = new Promise(res => { this._isReady = res; });
 
       viewCtrl.onReady = () => {
         return this._ready;
       };
     }
-
   }
 
   /**
    * @private
-   * TODO
    */
-  addTab(tab) {
-    this._add(tab.viewCtrl);
+  add(tab) {
+    tab.id = ++_tabIds;
+    tab.btnId = 'tab-' + tab.id;
+    tab.panelId = 'tabpanel-' + tab.id;
+    this._tabs.push(tab);
 
-    // return true/false if it's the initial tab
-    return (this.length() === 1);
+    return (this._tabs.length === 1);
   }
 
   /**
@@ -162,42 +139,66 @@ export class Tabs extends NavController {
    * @param {Tab} tab  TODO
    * @returns {TODO} TODO
    */
-  select(tab) {
-    let enteringView = null;
-    if (typeof tab === 'number') {
-      enteringView = this.getByIndex(tab);
+  select(tabOrIndex) {
+    let selectedTab = null;
+
+    if (typeof tabOrIndex === 'number') {
+      selectedTab = this.getByIndex(tabOrIndex);
+
     } else {
-      enteringView = this.getByInstance(tab)
+      selectedTab = tabOrIndex;
     }
 
-    // If we select the same tab as the active one, do some magic.
-    if(enteringView === this.getActive()) {
-      this._touchActive(tab);
-      return;
-    }
-
-    if (!enteringView || !enteringView.instance || !this.app.isEnabled()) {
+    if (!selectedTab || !this.app.isEnabled()) {
       return Promise.reject();
     }
 
-    return new Promise(resolve => {
-      enteringView.instance.load(() => {
-        let opts = {
-          animate: false
-        };
+    let deselectedTab = this.getSelected();
 
-        let leavingView = this.getActive() || new ViewController();
-        leavingView.shouldDestroy = false;
-        leavingView.shouldCache = true;
+    if (selectedTab === deselectedTab) {
+      // no change
+      return this._touchActive(selectedTab);
+    }
 
-        this.transition(enteringView, leavingView, opts, () => {
-          this.highlight && this.highlight.select(tab);
-          this._isReady();
-          resolve();
-        });
-      });
+    console.debug('select tab', selectedTab.id);
 
+    selectedTab.load(() => {
+      this._isReady && this._isReady();
     });
+
+    this._tabs.forEach(tab => {
+      tab.isSelected = (tab === selectedTab);
+
+      tab._views.forEach(viewCtrl => {
+        let navbarRef = viewCtrl.navbarRef();
+        if (navbarRef) {
+          navbarRef.nativeElement.classList[tab.isSelected ? 'remove': 'add']('deselected-tab');
+        }
+      });
+    });
+
+    this.highlight && this.highlight.select(selectedTab);
+  }
+
+  /**
+   * TODO
+   * @param {TODO} index  TODO
+   * @returns {TODO} TODO
+   */
+  getByIndex(index) {
+    if (index < this._tabs.length && index > -1) {
+      return this._tabs[index];
+    }
+    return null;
+  }
+
+  getSelected() {
+    for (let i = 0; i < this._tabs.length; i++) {
+      if (this._tabs[i].isSelected) {
+        return this._tabs[i];
+      }
+    }
+    return null;
   }
 
   /**
@@ -210,19 +211,16 @@ export class Tabs extends NavController {
 
     if(stateLen > 1) {
       // Pop to the root view
-      tab.popToRoot();
+      return tab.popToRoot();
     }
-  }
 
-  /**
-   * TODO
-   * @return TODO
-   */
-  get tabs() {
-    return this.instances();
+    return Promise.resolve();
   }
 
 }
+
+let _tabIds = -1;
+
 
 /**
  * @private
@@ -232,8 +230,8 @@ export class Tabs extends NavController {
   selector: '.tab-button',
   inputs: ['tab'],
   host: {
-    '[attr.id]': 'btnId',
-    '[attr.aria-controls]': 'panelId',
+    '[attr.id]': 'tab.btnId',
+    '[attr.aria-controls]': 'tab.panelId',
     '[attr.aria-selected]': 'tab.isSelected',
     '[class.has-title]': 'hasTitle',
     '[class.has-icon]': 'hasIcon',
@@ -254,10 +252,6 @@ class TabButton extends Ion {
 
   onInit() {
     this.tab.btn = this;
-    let id = this.tab.viewCtrl.id;
-    this.btnId = 'tab-button-' + id;
-    this.panelId = 'tab-panel-' + id;
-
     this.hasTitle = !!this.tab.tabTitle;
     this.hasIcon = !!this.tab.tabIcon;
     this.hasTitleOnly = (this.hasTitle && !this.hasIcon);

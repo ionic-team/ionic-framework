@@ -1,4 +1,4 @@
-import {Directive, Component, Host, ElementRef, Compiler, DynamicComponentLoader, AppViewManager, forwardRef, Injector, NgZone, ViewContainerRef} from 'angular2/angular2';
+import {Component, Directive, Host, ElementRef, Compiler, DynamicComponentLoader, AppViewManager, forwardRef, NgZone} from 'angular2/angular2';
 
 import {IonicApp} from '../app/app';
 import {IonicConfig} from '../../config/config';
@@ -60,8 +60,8 @@ import {Tabs} from './tabs';
   ],
   host: {
     '[attr.id]': 'panelId',
-    '[attr.aria-labelledby]': 'labeledBy',
-    '[attr.aria-hidden]': 'isNotSelected',
+    '[attr.aria-labelledby]': 'btnId',
+    '[class.show-tab]': 'isSelected',
     'role': 'tabpanel'
   },
   template: '<template content-anchor></template><ng-content></ng-content>',
@@ -69,13 +69,6 @@ import {Tabs} from './tabs';
 })
 export class Tab extends NavController {
 
-  /**
-   * TODO
-   * @param {Tabs} tabs  TODO
-   * @param {ElementRef} elementRef  TODO
-   * @param {Injector} injector  TODO
-   * @param {NgZone} zone  TODO
-   */
   constructor(
     @Host() tabs: Tabs,
     app: IonicApp,
@@ -86,44 +79,18 @@ export class Tab extends NavController {
     viewManager: AppViewManager,
     zone: NgZone
   ) {
-    // A Tab is both a container of many pages, and is a page itself.
-    // A Tab is one page within it's Host Tabs (which also extends NavController)
     // A Tab is a NavController for its child pages
     super(tabs, app, config, elementRef, compiler, loader, viewManager, zone);
     this.tabs = tabs;
 
-    let viewCtrl = this.viewCtrl = new ViewController(tabs);
-    viewCtrl.setInstance(this);
-    viewCtrl.setContentRef(elementRef);
-    this._initTab = tabs.addTab(this);
-
-    this.getNavbar = viewCtrl.getNavbar = () => {
-      let activeView = this.getActive();
-      return activeView && activeView.getNavbar();
-    };
-
-    viewCtrl.enableBack = () => {
-      // override ViewController's enableBack(), should use the
-      // active child nav item's enableBack() instead
-      let activeView = this.getActive();
-      return (activeView && activeView.enableBack());
-    };
-
-    this.panelId = 'tab-panel-' + viewCtrl.id;
-    this.labeledBy = 'tab-button-' + viewCtrl.id;
+    this._isInitial = tabs.add(this);
   }
 
   onInit() {
-    console.log('Tab onInit');
+    console.debug('Tab onInit');
 
-    if (this._initTab) {
+    if (this._isInitial) {
       this.tabs.select(this);
-
-    } else {
-      // TODO: OPTIONAL PRELOAD OTHER TABS!
-      // setTimeout(() => {
-      //   this.load();
-      // }, 300);
     }
   }
 
@@ -133,22 +100,12 @@ export class Tab extends NavController {
         animate: false,
         navbar: false
       };
-      this.push(this.root, null, opts).then(() => {
-        callback && callback();
-      });
+      this.push(this.root, null, opts).then(callback);
       this._loaded = true;
 
     } else {
-      callback && callback();
+      callback();
     }
-  }
-
-  get isSelected() {
-    return this.tabs.isActive(this.viewCtrl);
-  }
-
-  get isNotSelected() {
-    return !this.tabs.isActive(this.viewCtrl);
   }
 
   loadContainer(componentType, hostProtoViewRef, viewCtrl, done) {

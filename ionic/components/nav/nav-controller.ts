@@ -864,22 +864,6 @@ export class NavController extends Ion {
 
   /**
    * TODO
-   * @param {TODO} instance  TODO
-   * @returns {TODO} TODO
-   */
-  getByInstance(instance) {
-    if (instance) {
-      for (let i = 0, ii = this._views.length; i < ii; i++) {
-        if (this._views[i].instance === instance) {
-          return this._views[i];
-        }
-      }
-    }
-    return null;
-  }
-
-  /**
-   * TODO
    * @param {TODO} index  TODO
    * @returns {TODO} TODO
    */
