@@ -18,30 +18,26 @@ import {ConfigComponent} from '../../config/decorators';
   selector: 'ion-search-bar',
   inputs: [
     'list',
-    'query'
+    'query',
+    'model' : 'ngModel'
   ],
   defaultInputs: {
     'showCancel': false,
     'cancelText': 'Cancel',
     'placeholder': 'Search',
-    'cancelAction': function() {
-      // TODO user will override this if they pass a function
-      // need to allow user to call these
+    'cancelAction': function(event, model) {
+      // The cancel button now works on its own to blur the input
       console.log('Default Cancel');
-      this.isFocused = false;
-      this.shouldLeftAlign = this.value.trim() != '';
-      this.element = this.elementRef.nativeElement.querySelector('input');
-      this.element.blur();
     }
   },
   template:
     '<div class="search-bar-input-container" [class.left-align]="shouldLeftAlign">' +
       '<div class="search-bar-search-icon"></div>' +
       '<input (focus)="inputFocused()" (blur)="inputBlurred()" ' +
-      '(input)="inputChanged($event)" class="search-bar-input" type="search" [attr.placeholder]="placeholder" [(ng-model)]="value">' +
-      '<div class="search-bar-close-icon" (click)="clearInput()"></div>' +
+      '(input)="inputChanged($event)" class="search-bar-input" type="search" [attr.placeholder]="placeholder" [(ng-model)]="model">' +
+      '<button clear *ng-if="model" class="search-bar-close-icon" (click)="clearInput($event)"></button>' +
     '</div>' +
-    '<button *ng-if="showCancel" (click)="cancelAction()" class="search-bar-cancel" [class.left-align]="shouldLeftAlign">{{cancelText}}</button>',
+    '<button *ng-if="showCancel" (click)="cancelAction($event, model)" class="search-bar-cancel" [class.left-align]="shouldLeftAlign">{{cancelText}}</button>',
   directives: [FORM_DIRECTIVES, NgIf, NgClass]
 })
 
@@ -80,6 +76,9 @@ export class SearchBar extends Ion {
       this.cancelWidth = this.cancelButton.offsetWidth;
       this.cancelButton.style.marginRight = "-" + this.cancelWidth + "px";
     }
+
+    // If the user passes in a value to the model we should left align
+    this.shouldLeftAlign = this.model && this.model.trim() != '';
   }
 
   /**
@@ -87,21 +86,19 @@ export class SearchBar extends Ion {
    * ControlDirective to update the value internally.
    */
   writeValue(value) {
-    this.value = value;
-    this.renderer.setElementProperty(this.elementRef, 'value', this.value);
-
+    this.model = value;
   }
 
-  registerOnChange(val) {
+  registerOnChange(fn) {
+    this.onChange = fn;
   }
 
-  registerOnTouched(val) {
+  registerOnTouched(fn) {
+    this.onTouched = fn;
   }
 
   inputChanged(event) {
-    this.value = event.target.value;
-    this.ngControl.valueAccessor.writeValue(this.value);
-    this.ngControl.control.updateValue(this.value);
+    this.onChange(event.target.value);
   }
 
   inputFocused() {
@@ -112,18 +109,19 @@ export class SearchBar extends Ion {
       this.cancelButton.style.marginRight = "0px";
     }
   }
+
   inputBlurred() {
     this.isFocused = false;
-    this.shouldLeftAlign = this.value.trim() != '';
+    this.shouldLeftAlign = this.model && this.model.trim() != '';
 
     if (this.cancelButton) {
       this.cancelButton.style.marginRight = "-" + this.cancelWidth + "px";
     }
   }
 
-  clearInput() {
-    this.value = '';
-    this.ngControl.control.updateValue('');
+  clearInput(event) {
+    this.model = '';
+    this.onChange(this.model);
   }
 }
 

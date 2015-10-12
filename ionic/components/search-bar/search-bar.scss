@@ -31,3 +31,9 @@ input[type="search"].search-bar-input {
   line-height: 3rem;
   @include appearance(none);
 }
+
+.search-bar-close-icon {
+  min-height: 0;
+  padding: 0;
+  margin: 0;
+}

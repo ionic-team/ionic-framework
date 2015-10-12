@@ -20,7 +20,7 @@ $search-bar-ios-cancel-transition:        all 400ms cubic-bezier(.25, .45, .05, 
 
 $search-bar-ios-input-close-icon-color:   #8F8E94 !default;
 $search-bar-ios-input-close-icon-svg:     "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path fill='" + $search-bar-ios-input-close-icon-color + "' d='M403.1,108.9c-81.2-81.2-212.9-81.2-294.2,0s-81.2,212.9,0,294.2c81.2,81.2,212.9,81.2,294.2,0S484.3,190.1,403.1,108.9z M352,340.2L340.2,352l-84.4-84.2l-84,83.8L160,339.8l84-83.8l-84-83.8l11.8-11.8l84,83.8l84.4-84.2l11.8,11.8L267.6,256L352,340.2z'/></svg>" !default;
-$search-bar-ios-input-close-icon-size:    17px !default;
+$search-bar-ios-input-close-icon-size:    18px !default;
 
 
 ion-search-bar {
@@ -67,15 +67,16 @@ ion-search-bar {
 }
 
 .search-bar-close-icon {
-  width: $search-bar-ios-input-close-icon-size;
-  height: $search-bar-ios-input-close-icon-size;
+  width: 30px;
+  height: 100%;
 
   @include svg-background-image($search-bar-ios-input-close-icon-svg);
   background-size: $search-bar-ios-input-close-icon-size;
   background-repeat: no-repeat;
+  background-position: center;
   position: absolute;
-  right: 10px;
-  top: 6px;
+  right: 0;
+  top: 0;
 }
 
 .search-bar-cancel {

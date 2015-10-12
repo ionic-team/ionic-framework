@@ -1,26 +1,26 @@
-import {NgControl, FORM_DIRECTIVES, FormBuilder, Validators, Control, ControlGroup} from 'angular2/angular2';
+import {FORM_DIRECTIVES, FormBuilder, Validators, Control, ControlGroup} from 'angular2/angular2';
 
 import {App} from 'ionic/ionic';
 import {SearchPipe} from 'ionic/components/search-bar/search-bar';
 
 @App({
   templateUrl: 'main.html',
-  bindings: [NgControl, FormBuilder],
   directives: [FORM_DIRECTIVES]
 })
 class IonicApp {
-  constructor(fb: FormBuilder) {
-    this.form = fb.group({
-      defaultSearch: ['', Validators.required],
-      customPlaceholder: ['', Validators.required],
-      defaultCancel: ['', Validators.required],
-      customCancel: ['', Validators.required],
-      customCancelLong: ['', Validators.required],
-      customCancelAction: ['', Validators.required],
-    });
+  defaultSearch: string;
+  customPlaceholder: string;
+  defaultCancel: string;
+  customCancel: string;
+  customCancelLong: string;
+  customCancelAction: string;
+  clickedCustomAction: boolean = false;
+
+  constructor() {
+
   }
-  myCancelAction = function() {
-    console.log('myCancelAction');
-    alert("My custom action!");
+
+  myCancelAction(event, model) {
+    console.log("TODO get app property");
   }
 }

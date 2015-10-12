@@ -60,14 +60,17 @@ ion-search-bar {
 
 .search-bar-close-icon {
   width: $search-bar-md-input-close-icon-size;
-  height: $search-bar-md-input-close-icon-size;
+  height: 100%;
+  padding: 0;
 
   @include svg-background-image($search-bar-md-input-close-icon-svg);
   background-size: $search-bar-md-input-close-icon-size;
   background-repeat: no-repeat;
+  background-position: center;
   position: absolute;
   right: 13px;
-  top: 13px;
+  top: 0;
+
 }
 
 .search-bar-cancel {
