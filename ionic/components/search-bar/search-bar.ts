@@ -16,10 +16,6 @@ import {ConfigComponent} from '../../config/decorators';
  */
 @ConfigComponent({
   selector: 'ion-search-bar',
-  inputs: [
-    'list',
-    'model: ngModel'
-  ],
   defaultInputs: {
     'showCancel': false,
     'cancelText': 'Cancel',
@@ -32,15 +28,16 @@ import {ConfigComponent} from '../../config/decorators';
   template:
     '<div class="search-bar-input-container" [class.left-align]="shouldLeftAlign">' +
       '<div class="search-bar-search-icon"></div>' +
-      '<input (focus)="inputFocused()" (blur)="inputBlurred()" ' +
-      '(input)="inputChanged($event)" class="search-bar-input" type="search" [attr.placeholder]="placeholder" [(ng-model)]="model">' +
-      '<button clear *ng-if="model" class="search-bar-close-icon" (click)="clearInput($event)"></button>' +
+      '<input [(value)]="query" (focus)="inputFocused()" (blur)="inputBlurred()" ' +
+      '(input)="inputChanged($event)" class="search-bar-input" type="search" [attr.placeholder]="placeholder">' +
+      '<button clear *ng-if="query" class="search-bar-close-icon" (click)="clearInput($event)"></button>' +
     '</div>' +
     '<button *ng-if="showCancel" (click)="cancelAction($event, model)" class="search-bar-cancel" [class.left-align]="shouldLeftAlign">{{cancelText}}</button>',
   directives: [FORM_DIRECTIVES, NgIf, NgClass]
 })
 
 export class SearchBar extends Ion {
+  query: string;
   /**
    * TODO
    * @param {ElementRef} elementRef  TODO
@@ -61,10 +58,7 @@ export class SearchBar extends Ion {
     }
 
     this.ngControl = ngControl;
-
-    ngControl.valueAccessor = this;
-
-    this.query = '';
+    this.ngControl.valueAccessor = this;
   }
 
   // Add the margin for iOS
@@ -77,7 +71,8 @@ export class SearchBar extends Ion {
     }
 
     // If the user passes in a value to the model we should left align
-    this.shouldLeftAlign = this.model && this.model.trim() != '';
+    this.shouldLeftAlign = this.ngControl && this.ngControl.value.trim() != '';
+    this.query = this.ngControl.value;
   }
 
   /**
@@ -85,7 +80,7 @@ export class SearchBar extends Ion {
    * ControlDirective to update the value internally.
    */
   writeValue(value) {
-    this.model = value;
+    this.query = value;
   }
 
   registerOnChange(fn) {
@@ -97,6 +92,7 @@ export class SearchBar extends Ion {
   }
 
   inputChanged(event) {
+    this.writeValue(event.target.value);
     this.onChange(event.target.value);
   }
 
@@ -111,7 +107,7 @@ export class SearchBar extends Ion {
 
   inputBlurred() {
     this.isFocused = false;
-    this.shouldLeftAlign = this.model && this.model.trim() != '';
+    this.shouldLeftAlign = this.ngControl && this.ngControl.value.trim() != '';
 
     if (this.cancelButton) {
       this.cancelButton.style.marginRight = "-" + this.cancelWidth + "px";
@@ -119,8 +115,8 @@ export class SearchBar extends Ion {
   }
 
   clearInput(event) {
-    this.model = '';
-    this.onChange(this.model);
+    this.writeValue('');
+    this.onChange('');
   }
 }
 
