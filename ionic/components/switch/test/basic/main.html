@@ -28,6 +28,10 @@
         Secondary color
       </ion-switch>
 
+      <ion-switch value="apple" checked="true" [(ng-model)]="myModel">
+        I'm an NgModel
+      </ion-switch>
+
     </ion-list>
 
   </form>
@@ -47,6 +51,7 @@
     <code>cherry.value: {{fruitsForm.controls.cherryCtrl.value}}</code><br>
     <code>grape.dirty: {{fruitsForm.controls.grapeCtrl.dirty}}</code><br>
     <code>grape.value: {{fruitsForm.controls.grapeCtrl.value}}</code><br>
+    <code>ngModel.value: {{myModel}}</code><br>
   </p>
 
   <pre aria-hidden="true" padding>{{formResults}}</pre>

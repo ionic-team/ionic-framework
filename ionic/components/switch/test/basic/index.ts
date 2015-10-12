@@ -25,6 +25,8 @@ class IonicApp {
 
     this.grapeDisabled = true;
     this.grapeChecked = true;
+
+    this.myModel = true;
   }
 
   toggleGrapeChecked() {
