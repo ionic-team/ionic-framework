@@ -18,8 +18,7 @@ import {ConfigComponent} from '../../config/decorators';
   selector: 'ion-search-bar',
   inputs: [
     'list',
-    'query',
-    'model' : 'ngModel'
+    'model: ngModel'
   ],
   defaultInputs: {
     'showCancel': false,
