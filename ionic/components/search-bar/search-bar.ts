@@ -71,8 +71,8 @@ export class SearchBar extends Ion {
     }
 
     // If the user passes in a value to the model we should left align
-    this.shouldLeftAlign = this.ngControl && this.ngControl.value.trim() != '';
-    this.query = this.ngControl.value;
+    this.shouldLeftAlign = this.ngControl.value && this.ngControl.value.trim() != '';
+    this.query = this.ngControl.value || '';
   }
 
   /**
@@ -107,7 +107,7 @@ export class SearchBar extends Ion {
 
   inputBlurred() {
     this.isFocused = false;
-    this.shouldLeftAlign = this.ngControl && this.ngControl.value.trim() != '';
+    this.shouldLeftAlign = this.ngControl.value && this.ngControl.value.trim() != '';
 
     if (this.cancelButton) {
       this.cancelButton.style.marginRight = "-" + this.cancelWidth + "px";
