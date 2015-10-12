@@ -23,3 +23,60 @@ export class FormsPage {
     
 }
 
+@Page({
+  templateUrl: 'forms/fixed-inline.html',
+})
+export class FixedInlinePage {
+    constructor() {
+
+    }
+}
+
+@Page({
+  templateUrl: 'forms/floating.html',
+})
+export class FloatingPage {
+    constructor() {
+
+    }
+}
+
+
+@Page({
+  templateUrl: 'forms/inline.html',
+})
+export class InlinePage {
+    constructor() {
+
+    }
+}
+
+
+@Page({
+  templateUrl: 'forms/inset.html',
+})
+export class InsetPage {
+    constructor() {
+
+    }
+}
+
+
+@Page({
+  templateUrl: 'forms/placeholder.html',
+})
+export class PlaceholderPage {
+    constructor() {
+
+    }
+}
+
+
+@Page({
+  templateUrl: 'forms/stacked.html',
+})
+export class StackedPage {
+    constructor() {
+
+    }
+}
