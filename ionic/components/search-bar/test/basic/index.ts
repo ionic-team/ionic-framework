@@ -17,9 +17,7 @@ function randomTitle() {
 class IonicApp {
   constructor() {
     var fb = new FormBuilder();
-    this.form = fb.group({
-      searchQuery: ['', Validators.required]
-    });
+    this.searchQuery = '';
 
     this.items = []
     for(let i = 0; i < 100; i++) {
@@ -29,8 +27,13 @@ class IonicApp {
     }
   }
 
+  doThis() {
+    console.log('Doing this');
+  }
+
   getItems() {
-    var q = this.form.controls.searchQuery.value;
+    var q = this.searchQuery;
+    console.log('Its changing');
     if(q.trim() == '') {
       return this.items;
     }
