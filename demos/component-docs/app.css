@@ -116,17 +116,9 @@ scroll-content {
   background-color: #fff;
   border-bottom: 0;
 }
-#demo-card-left {
-  font-size: 14px;
-  margin-top: -90px;
-  margin-left: 10px;
-  float: left;
+.demo-card {
+  height: 0;
 }
-#demo-card-right {
-  font-size: 14px;
-  margin-top: -90px;
-  float: right;
-  margin-right: 10px;
-
-
+.demo-card button {
+  font-size: 1.3rem;
 }
