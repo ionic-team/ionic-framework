@@ -26,7 +26,7 @@ class DemoApp {
               this.nextPage = ActionSheetPage;
             }
             let nav = this.app.getComponent('nav');
-            helpers.debounce(nav.setRoot(this.nextPage), 100, true);
+            helpers.debounce(nav.setRoot(this.nextPage), 500, true);
           }
         });
       });
