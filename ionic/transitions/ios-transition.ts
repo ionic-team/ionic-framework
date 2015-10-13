@@ -79,6 +79,10 @@ class IOSTransition extends Animation {
         // back direction
         enteringTitle.fromTo(TRANSLATEX, OFF_LEFT, CENTER);
         enteringNavbarBg.fromTo(TRANSLATEX, OFF_LEFT, CENTER);
+        if (enteringView.enableBack()) {
+          enteringBackButton.before.addClass(SHOW_BACK_BTN_CSS);
+          enteringBackButton.fadeIn();
+        }
 
       } else {
         // forward direction
