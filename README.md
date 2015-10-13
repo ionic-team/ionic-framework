@@ -1,5 +1,6 @@
 [![Circle CI](https://circleci.com/gh/driftyco/ionic.svg?style=svg)](https://circleci.com/gh/driftyco/ionic)
 
+[![NPM](https://nodei.co/npm/ionic.png?stars&downloads)](https://nodei.co/npm/ionic/) [![NPM](https://nodei.co/npm-dl/ionic.png)](https://nodei.co/npm/ionic/)
 
 [![Issues Ready](https://badge.waffle.io/driftyco/ionic.png?label=ready&title=Ready)](https://waffle.io/driftyco/ionic)
 
