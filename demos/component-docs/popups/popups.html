@@ -4,7 +4,9 @@
 </ion-navbar>
 
 <ion-content padding class="has-header">
-  <button block (click)="showPopup()">
-    Show Popup
-  </button>
+  <button (click)="doAlert()">Alert</button>
+  <button (click)="doPrompt()">Prompt</button>
+  <button (click)="doConfirm()">Confirm</button>
 </ion-content>
+
+<ion-overlay></ion-overlay>
