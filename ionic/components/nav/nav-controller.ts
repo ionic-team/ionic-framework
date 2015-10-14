@@ -1,4 +1,4 @@
-import {Compiler, ElementRef, Injector, bind, NgZone, DynamicComponentLoader, AppViewManager} from 'angular2/angular2';
+import {Compiler, ElementRef, Injector, provide, NgZone, DynamicComponentLoader, AppViewManager} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {makeComponent} from '../../config/decorators';
@@ -37,27 +37,14 @@ import {raf} from '../../util/dom';
  *
  * Behind the scenes, when Ionic instantiates a new NavController, it creates an
  * injector with NavController bound to that instance (usually either a Nav or
- * Tab) and adds the injector to its own bindings.  For more information on
- * binding and dependency injection, see [Binding and DI]().
+ * Tab) and adds the injector to its own providers.  For more information on
+ * providers and dependency injection, see [Providers and DI]().
  *
  * ```ts
  * // class NavController
- * //"this" is either Nav or Tab, both extend NavController
- * this.bindings = Injector.resolve([
- *   bind(NavController).toValue(this)
+ * this.providers = Injector.resolve([
+ *   provide(NavController, {useValue: this})
  * ]);
- * ```
- *
- * That way you don't need to worry about getting a hold of the proper
- * NavController for views that may be used in either a Tab or a Nav:
- *
- * ```ts
- *  class MyPage {
- *    constructor(@Optional() tab: Tab, @Optional() nav: Nav) {
- *    	// Unhhhhh so much typinggggg
- *      // What if we are in a nav that is in a tab, or vice versa, so these both resolve?
- *    }
- *  }
  * ```
  *
  * Instead, you can inject NavController and know that it is the correct
@@ -146,8 +133,8 @@ export class NavController extends Ion {
     this._ids = -1;
 
     // build a new injector for child ViewControllers to use
-    this.bindings = Injector.resolve([
-      bind(NavController).toValue(this)
+    this.providers = Injector.resolve([
+      provide(NavController, {useValue: this})
     ]);
   }
 
@@ -537,12 +524,12 @@ export class NavController extends Ion {
    * TODO
    */
   loadNextToAnchor(type, location, viewCtrl) {
-    let bindings = this.bindings.concat(Injector.resolve([
-      bind(ViewController).toValue(viewCtrl),
-      bind(NavParams).toValue(viewCtrl.params),
+    let providers = this.providers.concat(Injector.resolve([
+      provide(ViewController, {useValue: viewCtrl}),
+      provide(NavParams, {useValue: viewCtrl.params})
     ]));
 
-    return this._loader.loadNextToLocation(type, location, bindings);
+    return this._loader.loadNextToLocation(type, location, providers);
   }
 
   /**

@@ -1,5 +1,5 @@
-import {bootstrap, bind} from 'angular2/angular2';
-import {routerBindings, HashLocationStrategy, LocationStrategy} from 'angular2/router';
+import {bootstrap, provide} from 'angular2/angular2';
+import {ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy} from 'angular2/router';
 
 import {IonicApp} from '../components/app/app';
 import {IonicConfig} from './config';
@@ -18,7 +18,7 @@ import {TapClick} from '../components/tap-click/tap-click';
 import * as dom from '../util/dom';
 
 
-export function ionicBindings(rootCmp, config) {
+export function ionicProviders(config) {
   let app = new IonicApp();
   let platform = new IonicPlatform();
 
@@ -42,11 +42,11 @@ export function ionicBindings(rootCmp, config) {
   platform.prepareReady(config);
 
   return [
-    bind(IonicApp).toValue(app),
-    bind(IonicConfig).toValue(config),
-    bind(IonicPlatform).toValue(platform),
-    bind(TapClick).toValue(tapClick),
-    bind(Events).toValue(events),
+    provide(IonicApp, {useValue: app}),
+    provide(IonicConfig, {useValue: config}),
+    provide(IonicPlatform, {useValue: platform}),
+    provide(TapClick, {useValue: tapClick}),
+    provide(Events, {useValue: events}),
     IonicForm,
     IonicKeyboard,
     OverlayController,
@@ -55,8 +55,8 @@ export function ionicBindings(rootCmp, config) {
     Popup,
     Translate,
     NavRegistry,
-    routerBindings(rootCmp),
-    bind(LocationStrategy).toClass(HashLocationStrategy),
+    ROUTER_PROVIDERS,
+    provide(LocationStrategy, {useClass: HashLocationStrategy}),
   ];
 }
 

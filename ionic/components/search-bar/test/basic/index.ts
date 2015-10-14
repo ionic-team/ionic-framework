@@ -11,7 +11,7 @@ function randomTitle() {
 
 @App({
   templateUrl: 'main.html',
-  bindings: [NgControl],
+  providers: [NgControl],
   directives: [FORM_DIRECTIVES]
 })
 class IonicApp {

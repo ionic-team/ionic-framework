@@ -4,7 +4,7 @@ import {Page} from 'ionic/ionic';
 
 @Page({
   templateUrl: 'forms/forms.html',
-  bindings: [FormBuilder]
+  providers: [FormBuilder]
 })
 export class FormsPage {
 
@@ -20,7 +20,7 @@ export class FormsPage {
     console.log(event);
   }
 
-    
+
 }
 
 @Page({

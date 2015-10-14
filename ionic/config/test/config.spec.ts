@@ -1,35 +1,32 @@
-import {IonicConfig, IonicPlatform, ionicBindings} from 'ionic/ionic';
+import {IonicConfig, IonicPlatform, ionicProviders} from 'ionic/ionic';
 
 export function run() {
 
-  it('should create a new IonicConfig instace when no confg passed in ionicBindings', () => {
-    let rootCmp = function(){};
-    let bindings = ionicBindings(rootCmp);
+  it('should create a new IonicConfig instace when no confg passed in ionicProviders', () => {
+    let providers = ionicProviders();
 
-    let config = bindings.find(binding => binding.toValue instanceof IonicConfig).toValue;
+    let config = providers.find(provider => provider.useValue instanceof IonicConfig).useValue;
 
     expect(config.get('mode')).toEqual('ios');
   });
 
-  it('should used passed in IonicConfig instance in ionicBindings', () => {
-    let rootCmp = function(){};
+  it('should used passed in IonicConfig instance in ionicProviders', () => {
     let userConfig =  new IonicConfig({
       mode: 'configInstance'
     })
-    let bindings = ionicBindings(rootCmp, userConfig);
+    let providers = ionicProviders(userConfig);
 
-    let config = bindings.find(binding => binding.toValue instanceof IonicConfig).toValue;
+    let config = providers.find(provider => provider.useValue instanceof IonicConfig).useValue;
 
     expect(config.get('mode')).toEqual('configInstance');
   });
 
-  it('should create new IonicConfig instance from config object in ionicBindings', () => {
-    let rootCmp = function(){};
-    let bindings = ionicBindings(rootCmp, {
+  it('should create new IonicConfig instance from config object in ionicProviders', () => {
+    let providers = ionicProviders({
       mode: 'configObj'
     });
 
-    let config = bindings.find(binding => binding.toValue instanceof IonicConfig).toValue;
+    let config = providers.find(provider => provider.useValue instanceof IonicConfig).useValue;
 
     expect(config.get('mode')).toEqual('configObj');
   });

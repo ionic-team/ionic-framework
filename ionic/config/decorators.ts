@@ -1,7 +1,7 @@
 import {Component, Directive, View, bootstrap} from 'angular2/angular2'
 
 import * as util from 'ionic/util';
-import {ionicBindings} from './bootstrap';
+import {ionicProviders} from './bootstrap';
 import {IONIC_DIRECTIVES} from './directives';
 
 /**
@@ -143,7 +143,7 @@ export function App(args={}) {
     // redefine with added annotations
     Reflect.defineMetadata('annotations', annotations, cls);
 
-    bootstrap(cls, ionicBindings(cls, args.config));
+    bootstrap(cls, ionicProviders(args.config));
 
     return cls;
   }

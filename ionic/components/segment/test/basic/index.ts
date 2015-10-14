@@ -5,7 +5,7 @@ import {App} from 'ionic/ionic';
 
 @App({
   templateUrl: 'main.html',
-  bindings: [FormBuilder],
+  providers: [FormBuilder],
   directives: [FORM_DIRECTIVES]
 })
 class MyApp {
