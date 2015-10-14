@@ -710,8 +710,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
        *  All commented calculations relative to the top of the viewport (ie E
        *  is the viewport height, not 0)
        */
-      // if the element is positioned under the keyboard and it is not 
-	  // already being scrolled into view, then scroll it into view
+      // if the element is positioned under the keyboard and it is not
+      // already being scrolled into view, then scroll it into view
       if (e.detail.isElementUnderKeyboard && !scrollingChild) {
         scrollingChild = true;
         ionic.requestAnimationFrame(function(){
