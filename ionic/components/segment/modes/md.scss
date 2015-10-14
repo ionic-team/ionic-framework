@@ -5,6 +5,9 @@
 $segment-button-md-text-color-activated:       color(primary) !default;
 $segment-button-md-border-color-activated:     color(primary) !default;
 
+$segment-button-md-min-height:                 5.0rem;
+$segment-button-md-line-height:                5.0rem;
+
 
 .ion-segment {
 
@@ -13,8 +16,8 @@ $segment-button-md-border-color-activated:     color(primary) !default;
     border-width: 0;
     transition: 100ms all linear;
 
-    min-height: 3.3rem;
-    line-height: 3.3rem;
+    min-height: $segment-button-md-min-height;
+    line-height: $segment-button-md-line-height;
 
     &.activated {
       color: $segment-button-md-text-color-activated;
