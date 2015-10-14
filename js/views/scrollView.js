@@ -639,6 +639,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
     // save height when scroll view is shrunk so we don't need to reflow
     var scrollViewOffsetHeight;
+	var scrollingChild = false;
 
     /**
      * Shrink the scroll view when the keyboard is up if necessary and if the
@@ -709,37 +710,42 @@ ionic.views.Scroll = ionic.views.View.inherit({
        *  All commented calculations relative to the top of the viewport (ie E
        *  is the viewport height, not 0)
        */
-      // if the element is positioned under the keyboard scroll it into view
-      if (e.detail.isElementUnderKeyboard) {
-
+      // if the element is positioned under the keyboard and it is not 
+	  // already being scrolled into view, then scroll it into view
+      if (e.detail.isElementUnderKeyboard && !scrollingChild) {
+        scrollingChild = true;
         ionic.requestAnimationFrame(function(){
-          container.scrollTop = 0;
-          // update D if we shrunk
-          if (self.isShrunkForKeyboard && !alreadyShrunk) {
-            scrollBottomOffsetToTop = container.getBoundingClientRect().bottom;
-          }
+          setTimeout(function(){
+            container.scrollTop = 0;
+            // update D if we shrunk
+            if (self.isShrunkForKeyboard && !alreadyShrunk) {
+              scrollBottomOffsetToTop = container.getBoundingClientRect().bottom;
+            }
 
-          // middle of the scrollview, this is where we want to scroll to
-          // (D - A) / 2
-          var scrollMidpointOffset = scrollViewOffsetHeight * 0.5;
-          //console.log("container.offsetHeight: " + scrollViewOffsetHeight);
+            // middle of the scrollview, this is where we want to scroll to
+            // (D - A) / 2
+            var scrollMidpointOffset = scrollViewOffsetHeight * 0.5;
+            //console.log("container.offsetHeight: " + scrollViewOffsetHeight);
 
-          // middle of the input we want to scroll into view
-          // C
-          var inputMidpoint = ((e.detail.elementBottom + e.detail.elementTop) / 2);
+            // middle of the input we want to scroll into view
+            // C
+            var inputMidpoint = ((e.detail.elementBottom + e.detail.elementTop) / 2);
 
-          // distance from middle of input to the bottom of the scroll view
-          // C - D                                C               D
-          var inputMidpointOffsetToScrollBottom = inputMidpoint - scrollBottomOffsetToTop;
+            // distance from middle of input to the bottom of the scroll view
+            // C - D                                C               D
+            var inputMidpointOffsetToScrollBottom = inputMidpoint - scrollBottomOffsetToTop;
 
-          //C - D + (D - A)/2          C - D                     (D - A)/ 2
-          var scrollTop = inputMidpointOffsetToScrollBottom + scrollMidpointOffset;
+            //C - D + (D - A)/2          C - D                     (D - A)/ 2
+            var scrollTop = inputMidpointOffsetToScrollBottom + scrollMidpointOffset;
 
-          if ( scrollTop > 0) {
-            if (ionic.Platform.isIOS()) ionic.tap.cloneFocusedInput(container, self);
-            self.scrollBy(0, scrollTop, true);
-            self.onScroll();
-          }
+            if ( scrollTop > 0) {
+              if (ionic.Platform.isIOS()) ionic.tap.cloneFocusedInput(container, self);
+              self.scrollBy(0, scrollTop, true);
+              self.onScroll();
+            }
+
+            scrollingChild = false;
+          }, 32);
         });
       }
 
