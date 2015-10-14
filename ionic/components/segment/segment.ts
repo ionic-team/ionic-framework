@@ -226,3 +226,37 @@ export class SegmentButton {
   }
 
 }
+
+// TODO Android animation similar to tabs
+
+// /**
+//  * @private
+//  * TODO
+//  */
+// @Directive({
+//   selector: 'tab-highlight'
+// })
+// class TabHighlight {
+//   constructor(@Host() tabs: Tabs, config: IonicConfig, elementRef: ElementRef) {
+//     if (config.get('mode') === 'md') {
+//       tabs.highlight = this;
+//       this.elementRef = elementRef;
+//     }
+//   }
+//
+//   select(tab) {
+//     setTimeout(() => {
+//       let d = tab.btn.getDimensions();
+//       let ele = this.elementRef.nativeElement;
+//       ele.style.transform = 'translate3d(' + d.left + 'px,0,0) scaleX(' + d.width + ')';
+//
+//       if (!this.init) {
+//         this.init = true;
+//         setTimeout(() => {
+//           ele.classList.add('animate');
+//         }, 64)
+//       }
+//     }, 32);
+//   }
+//
+// }

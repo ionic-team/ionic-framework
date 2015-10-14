@@ -1,3 +1,16 @@
+<ion-toolbar>
+  <ion-title>
+    <ion-segment>
+      <ion-segment-button>
+        Friends
+      </ion-segment-button>
+      <ion-segment-button>
+        Enemies
+      </ion-segment-button>
+    </ion-segment>
+  </ion-title>
+</ion-toolbar>
+
 <ion-content padding>
   <form (submit)="doSubmit($event)" [ng-form-model]="myForm">
       <ion-segment ng-control="mapStyle" danger>
@@ -11,15 +24,7 @@
           Satellite
         </ion-segment-button>
       </ion-segment>
-      <ion-segment>
-        <ion-segment-button>
-          Friends
-        </ion-segment-button>
-        <ion-segment-button>
-          Enemies
-        </ion-segment-button>
-      </ion-segment>
-    <button type="submit" button primary>Submit</button>
+      <button type="submit" button primary>Submit</button>
   </form>
 
   Map mode: <b>{{myForm.controls.mapStyle.value}}</b>

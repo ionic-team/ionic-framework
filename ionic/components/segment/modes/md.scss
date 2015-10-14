@@ -1,0 +1,55 @@
+
+// iOS Segment
+// --------------------------------------------------
+
+$segment-button-md-text-color-activated:       color(primary) !default;
+$segment-button-md-border-color-activated:     color(primary) !default;
+
+
+.ion-segment {
+
+  button,
+  [button] {
+    border-width: 0;
+    transition: 100ms all linear;
+
+    min-height: 3.3rem;
+    line-height: 3.3rem;
+
+    &.activated {
+      color: $segment-button-md-text-color-activated;
+      background-color: transparent;
+      border-color: $segment-button-md-border-color-activated;
+    }
+
+    border-radius: 0;
+    border-bottom: 2px solid transparent;
+  }
+}
+
+// Generate Default Button Colors
+// --------------------------------------------------
+
+@each $color, $value in $colors {
+
+  ion-segment[#{$color}] {
+
+    ion-segment-button[button] {
+      $bg-color: $value;
+      $text-color: inverse($bg-color);
+
+      background-color: transparent;
+      color: $text-color;
+
+      &[outline] {
+        color: $bg-color;
+
+        &.activated {
+          opacity: 1;
+          color: $bg-color !important;
+          border-color: $bg-color !important;
+        }
+      }
+    }
+  }
+}

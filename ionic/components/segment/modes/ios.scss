@@ -2,32 +2,79 @@
 // iOS Segment
 // --------------------------------------------------
 
+$segment-button-ios-bg-color:                 transparent !default;
+$segment-button-ios-bg-color-activated:       color(primary) !default;
+$segment-button-ios-text-color:               inverse($segment-button-ios-bg-color-activated) !default;
+$segment-button-ios-hover-opacity:            0.8 !default;
+
 
 .ion-segment {
 
   button,
   [button] {
     border-width: 1px;
+    border-style: solid;
 
     transition: 100ms all linear;
 
     min-height: 3.3rem;
     line-height: 3.3rem;
 
-    &.active {
-      color: white;
-    }
+    background-color: $segment-button-ios-bg-color;
+    color: $segment-button-ios-text-color;
 
-    border-style: solid;
+    &[outline] {
+      border: 1px solid $segment-button-ios-bg-color-activated;
+      background: $segment-button-ios-bg-color;
+      color: $segment-button-ios-bg-color-activated;
+
+      &.activated {
+        opacity: 1;
+        color: $segment-button-ios-text-color;
+        background-color: $segment-button-ios-bg-color-activated;
+      }
+    }
 
     &:first-of-type {
       border-right-width: 0px;
+      border-radius: $button-border-radius 0px 0px $button-border-radius;
+      margin-right: 0;
     }
 
     &:last-of-type {
       border-left-width: 0px;
+      border-radius: 0px $button-border-radius $button-border-radius 0px;
+      margin-left: 0;
     }
-
   }
 
+}
+
+// Generate Default Button Colors
+// --------------------------------------------------
+
+@each $color, $value in $colors {
+
+  ion-segment[#{$color}] {
+
+    ion-segment-button[button] {
+      $bg-color: $value;
+      $text-color: inverse($bg-color);
+
+      background-color: transparent;
+      color: $text-color;
+
+      &[outline] {
+        border-color: $bg-color;
+        background: $segment-button-ios-bg-color;
+        color: $bg-color;
+
+        &.activated {
+          opacity: 1;
+          color: $text-color !important;
+          background-color: $bg-color !important;
+        }
+      }
+    }
+  }
 }
