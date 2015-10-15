@@ -77,7 +77,12 @@ export class Segment extends Ion {
    * @param {string} value  Value of the button to select.
    */
   selectFromValue(value) {
-    for(let button of this.buttons) {
+    if (this.buttons.length == 0) {
+      return;
+    }
+    //for(let button of this.buttons) {
+    for(var i = 0, j = this.buttons.length; i < j; i++) {
+      var button = this.buttons[i];
       if(button.value === value) {
         button.isActive = true;
       }
@@ -89,7 +94,9 @@ export class Segment extends Ion {
    * @param {SegmentButton} segmentButton  The button to select.
    */
   selected(segmentButton) {
-    for(let button of this.buttons) {
+    //for(let button of this.buttons) {
+    for(var i = 0, j = this.buttons.length; i < j; i++) {
+      let button = this.buttons[i];
       button.isActive = false;
     }
     segmentButton.isActive = true;
