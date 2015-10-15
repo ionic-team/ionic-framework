@@ -4,8 +4,6 @@ export * from './config/config'
 export * from './config/modes'
 export * from './config/decorators'
 
-export * from './net/http'
-
 export * from './components'
 
 export * from './platform/platform'

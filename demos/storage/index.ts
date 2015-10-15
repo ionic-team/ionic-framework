@@ -1,6 +1,6 @@
 import {Component, Control, ControlGroup} from 'angular2/angular2';
 
-import {App, Http, Storage, LocalStorage, SqlStorage} from 'ionic/ionic';
+import {App, Storage, LocalStorage, SqlStorage} from 'ionic/ionic';
 
 let testUrl = 'https://ionic-api-tester.herokuapp.com/json';
 let testUrl404 = 'https://ionic-api-tester.herokuapp.com/404';

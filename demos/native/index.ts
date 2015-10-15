@@ -1,6 +1,6 @@
 import {Component, Control, ControlGroup} from 'angular2/angular2';
 
-import {IonicApp, App, Http} from 'ionic/ionic';
+import {IonicApp, App} from 'ionic/ionic';
 
 import {Camera, Geolocation, Vibration, Battery, Device, Events} from 'ionic/ionic';
 

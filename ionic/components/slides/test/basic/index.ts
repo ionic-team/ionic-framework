@@ -1,4 +1,4 @@
-import {App, IonicApp, Http} from 'ionic/ionic';
+import {App, IonicApp} from 'ionic/ionic';
 
 
 @App({
@@ -17,6 +17,7 @@ class MyApp {
 
     let baseUrl = 'https://api.flickr.com/services/rest/';
 
+    // TODO: update to use angular2's HTTP Service
     Http.get(baseUrl + '?method=flickr.groups.pools.getPhotos&group_id=1463451@N25&safe_search=1&api_key=' + FLICKR_API_KEY + '&jsoncallback=JSON_CALLBACK&format=json&tags=' + tags, {
       method: 'jsonp'
     }).then((val) => {
