@@ -107,13 +107,15 @@ export class IonicKeyboard {
     function enableKeyInput() {
       cssClass();
 
-      document.removeEventListener('mousedown', pointerDown);
-      document.removeEventListener('touchstart', pointerDown);
+      this.zone.runOutsideAngular(() => {
+        document.removeEventListener('mousedown', pointerDown);
+        document.removeEventListener('touchstart', pointerDown);
 
-      if (isKeyInputEnabled) {
-        document.addEventListener('mousedown', pointerDown);
-        document.addEventListener('touchstart', pointerDown);
-      }
+        if (isKeyInputEnabled) {
+          document.addEventListener('mousedown', pointerDown);
+          document.addEventListener('touchstart', pointerDown);
+        }
+      });
     }
 
     document.addEventListener('keydown', keyDown);

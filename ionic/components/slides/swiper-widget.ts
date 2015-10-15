@@ -19,7 +19,7 @@
   ===========================*/
 export function Swiper(container, params) {
 
-  
+
       if (!(this instanceof Swiper)) return new Swiper(container, params);
 
       var defaults = {
@@ -987,6 +987,7 @@ export function Swiper(container, params) {
 
       // Attach/detach events
       s.initEvents = function (detach) {
+          console.debug('swiper initEvents', detach ? 'detach' : 'attach');
           var actionDom = detach ? 'off' : 'on';
           var action = detach ? 'removeEventListener' : 'addEventListener';
           var touchEventsTarget = s.params.touchEventsTarget === 'container' ? s.container[0] : s.wrapper[0];

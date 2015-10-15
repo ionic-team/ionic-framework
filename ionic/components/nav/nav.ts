@@ -130,9 +130,6 @@ import {NavController} from './nav-controller';
   defaultInputs: {
     'swipeBackEnabled': true
   },
-  host: {
-    '[class.has-views]': '_views.length > 0'
-  },
   template: '<template pane-anchor></template>',
   directives: [forwardRef(() => NavPaneAnchor)]
 })
@@ -253,6 +250,14 @@ export class Nav extends NavController {
               if (index > -1) {
                 navbarContainerRef.remove(index);
               }
+            });
+          }
+
+          if (this._views.length === 1) {
+            this._zone.runOutsideAngular(() => {
+              // setTimeout(function() {
+              //   componentRef && componentRef.location && componentRef.location.nativeElement.classList.add('has-views');
+              // }, 100);
             });
           }
 
