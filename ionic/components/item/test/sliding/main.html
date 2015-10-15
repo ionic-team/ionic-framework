@@ -43,4 +43,12 @@
       <button primary>Archive</button>
     </ion-item-options>
   </ion-item-sliding>
+
+  <ion-item-sliding text-wrap detail-push *ng-for="#item of getItems()">
+    <h3>{{item}}</h3>
+    <ion-item-options>
+      <button primary>Archive</button>
+    </ion-item-options>
+  </ion-item-sliding>
+
 </ion-list>

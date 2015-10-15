@@ -10,4 +10,10 @@ class E2EApp {
       this.shouldShow = true;
     }, 5000);
   }
+
+  getItems() {
+    console.log('getItems');
+    return [1,2,3,4];
+  }
+
 }

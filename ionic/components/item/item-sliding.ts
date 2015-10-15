@@ -1,4 +1,4 @@
-import {Component, Directive, ElementRef, NgIf, Host, Optional, Renderer} from 'angular2/angular2';
+import {Component, Directive, ElementRef, NgIf, Host, Optional, Renderer, NgZone} from 'angular2/angular2';
 
 import {Gesture} from 'ionic/gestures/gesture';
 import {DragGesture} from 'ionic/gestures/drag-gesture';
@@ -48,7 +48,8 @@ export class ItemSliding {
    * TODO
    * @param {ElementRef} elementRef  A reference to the component's DOM element.
    */
-  constructor(elementRef: ElementRef, renderer: Renderer, @Optional() @Host() list: List) {
+  constructor(elementRef: ElementRef, renderer: Renderer, @Optional() @Host() list: List, zone: NgZone) {
+    this._zone = zone;
     renderer.setElementClass(elementRef, 'item', true);
 
     this._isOpen = false;
@@ -58,32 +59,25 @@ export class ItemSliding {
 
     this.list = list;
 
-    this.ele = elementRef.nativeElement;
+    this.elementRef = elementRef;
     this.swipeButtons = {};
     this.optionButtons = {};
-
   }
 
   onInit() {
-    this._initSliding();
-  }
-
-  _initSliding() {
-    var itemSlidingContent = this.ele.querySelector('ion-item-sliding-content');
-    var itemOptionsContent = this.ele.querySelector('ion-item-options');
-
-    console.log('List width', this.list.width());
-
-    this.itemSlidingContent = itemSlidingContent;
-    this.itemOptions = itemOptionsContent;
-
-    this.itemWidth = this.list.width();
-
+    let ele = this.elementRef.nativeElement;
+    this.itemSlidingContent = ele.querySelector('ion-item-sliding-content');
+    this.itemOptions = ele.querySelector('ion-item-options');
     this.openAmount = 0;
-
-    this.gesture = new ItemSlideGesture(this, itemSlidingContent);
+    this._zone.runOutsideAngular(() => {
+      this.gesture = new ItemSlideGesture(this, this.itemSlidingContent, this._zone);
+    });
   }
 
+  onDestroy() {
+    this.gesture && this.gesture.unlisten();
+    this.itemSlidingContent = this.itemOptionsContent = null;
+  }
 
   close(andStopDrag) {
     this.openAmount = 0;
@@ -91,93 +85,97 @@ export class ItemSliding {
     // Enable it once, it'll get disabled on the next drag
     raf(() => {
       this.enableAnimation();
-      if(this.itemSlidingContent) {
+      if (this.itemSlidingContent) {
         this.itemSlidingContent.style[CSS.transform] = 'translateX(0)';
       }
     });
   }
+
   open(amt) {
     let el = this.itemSlidingContent;
     this.openAmount = amt || 0;
 
-    if(this.list) {
+    if (this.list) {
       this.list.setOpenItem(this);
     }
 
-    if(amt === '') {
+    if (amt === '') {
       el.style[CSS.transform] = '';
     } else {
       el.style[CSS.transform] = 'translateX(' + -amt + 'px)';
     }
   }
+
   isOpen() {
     return this.openAmount > 0;
   }
+
   getOpenAmt() {
     return this.openAmount;
   }
-  getItemWidth() {
-    return this.itemWidth;
-  }
+
   disableAnimation() {
     this.itemSlidingContent.style[CSS.transition] = 'none';
   }
+
   enableAnimation() {
     // Clear the explicit transition, allow for CSS one to take over
     this.itemSlidingContent.style[CSS.transition] = '';
   }
+
   /**
    * User did a touchstart
    */
   didTouch() {
-    if(this.isOpen()) {
+    if (this.isOpen()) {
       this.close();
       this.didClose = true;
+
     } else {
       let openItem = this.list.getOpenItem();
-      if(openItem && openItem !== this) {
+      if (openItem && openItem !== this) {
         this.didClose = true;
       }
-      if(this.list) {
+      if (this.list) {
         this.list.closeOpenItem();
       }
     }
-
   }
 }
 
 class ItemSlideGesture extends DragGesture {
-  constructor(item: ItemSliding, el: Element) {
-
+  constructor(item: ItemSliding, el: Element, zone) {
     super(el, {
       direction: 'x',
       threshold: el.offsetWidth
     });
 
-    this.el = el;
     this.item = item;
     this.canDrag = true;
     this.listen();
 
-    this.el.addEventListener('touchstart', (e) => {
-      this.item.didTouch();
-      raf(() => {
-        this.item.itemOptionsWidth = this.item.itemOptions && this.item.itemOptions.offsetWidth || 0;
-      })
-    })
+    zone.runOutsideAngular(() => {
+      el.addEventListener('touchstart', (e) => {
+        this.item.didTouch();
+        raf(() => {
+          this.item.itemOptionsWidth = this.item.itemOptions && this.item.itemOptions.offsetWidth || 0;
+        })
+      });
 
-    this.el.addEventListener('touchend', (e) => {
-      this.item.didClose = false;
-    });
-    this.el.addEventListener('touchcancel', (e) => {
-      this.item.didClose = false;
+      el.addEventListener('touchend', (e) => {
+        this.item.didClose = false;
+      });
+
+      el.addEventListener('touchcancel', (e) => {
+        this.item.didClose = false;
+      });
     });
   }
 
   onDragStart(ev) {
-    if(this.item.didClose) { return; }
+    if (this.item.didClose) { return; }
 
-    if(!this.item.itemOptionsWidth) { return; }
+    if (!this.item.itemOptionsWidth) { return; }
 
     this.slide = {};
 
@@ -198,7 +196,7 @@ class ItemSlideGesture extends DragGesture {
 
     let buttonsWidth = this.item.itemOptionsWidth;
 
-    if(newX > this.item.itemOptionsWidth) {
+    if (newX > this.item.itemOptionsWidth) {
       // Calculate the new X position, capped at the top of the buttons
       newX = -Math.min(-buttonsWidth, -buttonsWidth + (((this.slide.delta + buttonsWidth) * 0.4)));
     }
@@ -238,6 +236,7 @@ class ItemSlideGesture extends DragGesture {
         this.hideButtonsTimeout = setTimeout(() => {
           buttons && buttons.classList.add('invisible');
         }, 250);
+
       } else {
         this.item.open(restingPoint);
       }
