@@ -8,12 +8,12 @@ class E2EApp {
   constructor() {
     setTimeout(() => {
       this.shouldShow = true;
-    }, 5000);
+    }, 10);
   }
 
   getItems() {
     console.log('getItems');
-    return [1,2,3,4];
+    return [0,1];
   }
 
 }

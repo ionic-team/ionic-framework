@@ -36,10 +36,11 @@ import {CSS, raf} from 'ionic/util/dom';
   template:
     '<ng-content select="ion-item-options"></ng-content>' +
     '<ion-item-sliding-content>' +
+      '<ng-content select="[item-left]"></ng-content>' +
+      '<ng-content select="[item-right]"></ng-content>' +
       '<ion-item-content>' +
         '<ng-content></ng-content>'+
       '</ion-item-content>' +
-      '<ng-content select="[item-right]"></ng-content>' +
     '</ion-item-sliding-content>',
   directives: [NgIf]
 })
