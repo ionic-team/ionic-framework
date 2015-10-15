@@ -143,7 +143,6 @@ export class ItemSliding {
     }
   }
 }
-
 class ItemSlideGesture extends DragGesture {
   constructor(item: ItemSliding, el: Element, zone) {
     super(el, {
@@ -156,20 +155,23 @@ class ItemSlideGesture extends DragGesture {
     this.listen();
 
     zone.runOutsideAngular(() => {
-      el.addEventListener('touchstart', (e) => {
+      let touchStart = (e) => {
         this.item.didTouch();
         raf(() => {
           this.item.itemOptionsWidth = this.item.itemOptions && this.item.itemOptions.offsetWidth || 0;
         })
-      });
+      };
+      el.addEventListener('touchstart', touchStart);
+      el.addEventListener('mousedown', touchStart);
 
-      el.addEventListener('touchend', (e) => {
+      let touchEnd = (e) => {
         this.item.didClose = false;
-      });
-
-      el.addEventListener('touchcancel', (e) => {
-        this.item.didClose = false;
-      });
+      };
+      el.addEventListener('touchend', touchEnd);
+      el.addEventListener('mouseup', touchEnd);
+      el.addEventListener('mouseout', touchEnd);
+      el.addEventListener('mouseleave', touchEnd);
+      el.addEventListener('touchcancel', touchEnd);
     });
   }
 
