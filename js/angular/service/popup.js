@@ -346,7 +346,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
     };
 
     self.remove = function() {
-      if (self.removed || !$ionicModal.stack.isHighest(self)) return;
+      if (self.removed) return;
 
       self.hide(function() {
         self.element.remove();
@@ -369,8 +369,8 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
     var showDelay = 0;
 
     if (popupStack.length > 0) {
-      popupStack[popupStack.length - 1].hide();
       showDelay = config.stackPushDelay;
+      $timeout(popupStack[popupStack.length - 1].hide, showDelay, false);
     } else {
       //Add popup-open & backdrop if this is first popup
       $ionicBody.addClass('popup-open');
