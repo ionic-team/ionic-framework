@@ -9,6 +9,7 @@ $outer-content-md-background-color:         #efeff4 !default;
   background: $outer-content-md-background-color;
 }
 
-ion-nav.has-views {
+ion-nav.has-views,
+ion-tab.has-views {
   background: #000;
 }

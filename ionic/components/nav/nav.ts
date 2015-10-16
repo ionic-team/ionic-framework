@@ -150,9 +150,10 @@ export class Nav extends NavController {
     compiler: Compiler,
     loader: DynamicComponentLoader,
     viewManager: AppViewManager,
-    zone: NgZone
+    zone: NgZone,
+    renderer: Renderer
   ) {
-    super(hostNavCtrl, app, config, elementRef, compiler, loader, viewManager, zone);
+    super(hostNavCtrl, app, config, elementRef, compiler, loader, viewManager, zone, renderer);
     this.panes = [];
   }
 
@@ -253,13 +254,7 @@ export class Nav extends NavController {
             });
           }
 
-          if (this._views.length === 1) {
-            this._zone.runOutsideAngular(() => {
-              // setTimeout(function() {
-              //   componentRef && componentRef.location && componentRef.location.nativeElement.classList.add('has-views');
-              // }, 100);
-            });
-          }
+          this.addHasViews();
 
           done();
         });

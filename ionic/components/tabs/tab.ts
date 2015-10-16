@@ -1,4 +1,4 @@
-import {Component, Directive, Host, ElementRef, Compiler, DynamicComponentLoader, AppViewManager, forwardRef, NgZone} from 'angular2/angular2';
+import {Component, Directive, Host, ElementRef, Compiler, DynamicComponentLoader, AppViewManager, forwardRef, NgZone, Renderer} from 'angular2/angular2';
 
 import {IonicApp} from '../app/app';
 import {IonicConfig} from '../../config/config';
@@ -77,10 +77,11 @@ export class Tab extends NavController {
     compiler: Compiler,
     loader: DynamicComponentLoader,
     viewManager: AppViewManager,
-    zone: NgZone
+    zone: NgZone,
+    renderer: Renderer
   ) {
     // A Tab is a NavController for its child pages
-    super(tabs, app, config, elementRef, compiler, loader, viewManager, zone);
+    super(tabs, app, config, elementRef, compiler, loader, viewManager, zone, renderer);
     this.tabs = tabs;
 
     this._isInitial = tabs.add(this);
@@ -144,8 +145,9 @@ export class Tab extends NavController {
         });
       }
 
-      done();
+      this.addHasViews();
 
+      done();
     });
 
   }

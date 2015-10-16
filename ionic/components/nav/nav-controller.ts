@@ -1,4 +1,4 @@
-import {Compiler, ElementRef, Injector, provide, NgZone, DynamicComponentLoader, AppViewManager} from 'angular2/angular2';
+import {Compiler, ElementRef, Injector, provide, NgZone, DynamicComponentLoader, AppViewManager, Renderer} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {makeComponent} from '../../config/decorators';
@@ -110,7 +110,8 @@ export class NavController extends Ion {
     compiler: Compiler,
     loader: DynamicComponentLoader,
     viewManager: AppViewManager,
-    zone: NgZone
+    zone: NgZone,
+    renderer: Renderer
   ) {
     super(elementRef, config);
 
@@ -122,6 +123,7 @@ export class NavController extends Ion {
     this._loader = loader;
     this._viewManager = viewManager;
     this._zone = zone;
+    this.renderer = renderer;
 
     this._views = [];
 
@@ -179,6 +181,10 @@ export class NavController extends Ion {
 
     // add the view to the stack
     this._add(enteringView);
+
+    raf(() => {
+      this._cleanup(enteringView);
+    });
 
     if (this.router) {
       // notify router of the state change
@@ -755,11 +761,11 @@ export class NavController extends Ion {
     });
   }
 
-  _cleanup() {
+  _cleanup(activeView) {
     // the active view, and the previous view, should be rendered in dom and ready to go
     // all others, like a cached page 2 back, should be display: none and not rendered
     let destroys = [];
-    let activeView = this.getActive();
+    activeView = activeView || this.getActive();
     let previousView = this.getPrevious(activeView);
 
     this._views.forEach(view => {
@@ -781,6 +787,16 @@ export class NavController extends Ion {
       this._remove(view);
       view.destroy();
     });
+  }
+
+  addHasViews() {
+    if (this._views.length === 1) {
+      this._zone.runOutsideAngular(() => {
+        setTimeout(() => {
+          this.renderer.setElementClass(this.elementRef, 'has-views', true);
+        }, 200);
+      });
+    }
   }
 
   /**
