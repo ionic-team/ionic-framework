@@ -251,16 +251,11 @@ ionic.tap = {
   },
 
   isElementTapDisabled: function(ele) {
+    var withDataTapDisabled;
     if (ele && ele.nodeType === 1) {
-      var element = ele;
-      while (element) {
-        if ((element.dataset ? element.dataset.tapDisabled : element.getAttribute('data-tap-disabled')) == 'true') {
-          return true;
-        }
-        element = element.parentElement;
-      }
+      withDataTapDisabled = ionic.DomUtil.getParentOrSelfWithAttribute(ele, 'tapDisabled', 'true');
     }
-    return false;
+    return !!withDataTapDisabled;
   },
 
   setTolerance: function(releaseTolerance, releaseButtonTolerance) {

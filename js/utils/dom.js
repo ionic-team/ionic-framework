@@ -245,7 +245,27 @@
       }
       return null;
     },
-
+    /**
+     * @ngdoc method
+     * @name ionic.DomUtil#getParentOrSelfWithAttribute
+     * @param {DOMElement} element
+     * @param {string} attrName (camelCased)
+     * @param {string} value
+     * @returns {DOMElement} The closest parent or self matching the
+     * attrName with specified value, or null.
+     */
+    getParentOrSelfWithAttribute: function(e, attrName, value, depth) {
+      // Convert camelCase to dash: attrName --> attr-name (http://bit.ly/1RkhjEA)
+      var attrToDash = attrName.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+      depth = depth || 10;
+      while (e && e.nodeType !== 9 && depth--) {
+        if (e.dataset ? e.dataset[attrName] : e.getAttribute('data-' + attrToDash) == value) {
+          return e;
+        }
+        e = e.parentNode;
+      }
+      return null;
+    },
     /**
      * @ngdoc method
      * @name ionic.DomUtil#rectContains
