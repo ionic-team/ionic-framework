@@ -1,7 +1,7 @@
 import {Component, Directive, ElementRef, Host, Optional, forwardRef, Inject, NgZone, Compiler, AppViewManager, DynamicComponentLoader, Renderer, ViewContainerRef} from 'angular2/angular2';
 
 import {IonicApp} from '../app/app';
-import {IonicConfig} from '../../config/config';
+import {Config} from '../../config/config';
 import {ConfigComponent} from '../../config/decorators';
 import {NavController} from './nav-controller';
 
@@ -145,14 +145,15 @@ export class Nav extends NavController {
   constructor(
     @Optional() hostNavCtrl: NavController,
     app: IonicApp,
-    config: IonicConfig,
+    config: Config,
     elementRef: ElementRef,
     compiler: Compiler,
     loader: DynamicComponentLoader,
     viewManager: AppViewManager,
-    zone: NgZone
+    zone: NgZone,
+    renderer: Renderer
   ) {
-    super(hostNavCtrl, app, config, elementRef, compiler, loader, viewManager, zone);
+    super(hostNavCtrl, app, config, elementRef, compiler, loader, viewManager, zone, renderer);
     this.panes = [];
   }
 
@@ -253,13 +254,7 @@ export class Nav extends NavController {
             });
           }
 
-          if (this._views.length === 1) {
-            this._zone.runOutsideAngular(() => {
-              // setTimeout(function() {
-              //   componentRef && componentRef.location && componentRef.location.nativeElement.classList.add('has-views');
-              // }, 100);
-            });
-          }
+          this.addHasViews();
 
           done();
         });

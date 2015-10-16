@@ -9,7 +9,7 @@
 import {Component, Injectable, NgFor, NgIf} from 'angular2/angular2';
 
 import {OverlayController} from '../overlay/overlay-controller';
-import {IonicConfig} from '../../config/config';
+import {Config} from '../../config/config';
 import {Icon} from '../icon/icon';
 import {Animation} from '../../animations/animation';
 import * as util from 'ionic/util';
@@ -104,7 +104,7 @@ class ActionSheetCmp {
 @Injectable()
 export class ActionSheet {
 
-  constructor(ctrl: OverlayController, config: IonicConfig) {
+  constructor(ctrl: OverlayController, config: Config) {
     this.ctrl = ctrl;
     this._defaults = {
       enterAnimation: config.get('actionSheetEnter'),

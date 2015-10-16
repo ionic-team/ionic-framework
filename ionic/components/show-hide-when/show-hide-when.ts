@@ -1,6 +1,6 @@
 import {Directive, Attribute, NgZone} from 'angular2/angular2'
 
-import {IonicPlatform} from '../../platform/platform';
+import {Platform} from '../../platform/platform';
 
 
 class DisplayWhen {
@@ -68,7 +68,7 @@ export class ShowWhen extends DisplayWhen {
    */
   constructor(
     @Attribute('show-when') showWhen: string,
-    platform: IonicPlatform,
+    platform: Platform,
     ngZone: NgZone
   ) {
     super(showWhen, platform, ngZone);
@@ -97,7 +97,7 @@ export class HideWhen extends DisplayWhen {
    */
   constructor(
     @Attribute('hide-when') hideWhen: string,
-    platform: IonicPlatform,
+    platform: Platform,
     ngZone: NgZone
   ) {
     super(hideWhen, platform, ngZone);

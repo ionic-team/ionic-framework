@@ -1,7 +1,7 @@
 import {Component, ElementRef, onInit} from 'angular2/angular2';
 
 import {Ion} from '../ion';
-import {IonicConfig} from '../../config/config';
+import {Config} from '../../config/config';
 import {Gesture} from '../../gestures/gesture';
 import {CSS} from '../../util/dom';
 import {Animation} from '../../animations/animation';
@@ -32,10 +32,10 @@ export class Scroll extends Ion {
   /**
    * TODO
    * @param {ElementRef} elementRef  TODO
-   * @param {IonicConfig} config  TODO
+   * @param {Config} config  TODO
    */
-  constructor(elementRef: ElementRef, ionicConfig: IonicConfig) {
-    super(elementRef, ionicConfig);
+  constructor(elementRef: ElementRef, Config: Config) {
+    super(elementRef, Config);
 
     this.maxScale = 3;
     this.zoomDuration = 250;

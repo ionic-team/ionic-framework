@@ -17,7 +17,7 @@
 
 import {
   NavController,
-  IonicConfig,
+  Config,
   Page,
   ViewController
 } from 'ionic/ionic';
@@ -58,7 +58,7 @@ export function run() {
 
     // beforeEach(inject([Compiler], compiler => {
     beforeEach(() => {
-      nav = new NavController(null, null, new IonicConfig(), null, null, null, null, null);
+      nav = new NavController(null, null, new Config(), null, null, null, null, null);
     });
 
     it('should exist', () => {

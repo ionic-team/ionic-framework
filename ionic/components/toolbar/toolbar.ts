@@ -1,7 +1,7 @@
 import {Component, Directive, Host, ElementRef, Renderer, Optional, forwardRef, Inject} from 'angular2/angular2';
 
 import {Ion} from '../ion';
-import {IonicConfig} from '../../config/config';
+import {Config} from '../../config/config';
 import {MenuToggle} from '../menu/menu-toggle';
 import {Navbar} from '../nav-bar/nav-bar';
 
@@ -13,7 +13,7 @@ export class ToolbarBase extends Ion  {
 
   constructor(
     elementRef: ElementRef,
-    config: IonicConfig
+    config: Config
   ) {
     super(elementRef, config);
     this.itemRefs = [];
@@ -69,7 +69,7 @@ export class ToolbarBase extends Ion  {
 export class Toolbar extends ToolbarBase {
   constructor(
     elementRef: ElementRef,
-    config: IonicConfig,
+    config: Config,
     renderer: Renderer
   ) {
     super(elementRef, config);

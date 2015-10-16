@@ -2,10 +2,10 @@ import {forwardRef, Directive, Host, EventEmitter, ElementRef} from 'angular2/an
 
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
-import {IonicConfig} from '../../config/config';
+import {Config} from '../../config/config';
 import {ConfigComponent} from '../../config/decorators';
-import {IonicPlatform} from '../../platform/platform';
-import {IonicKeyboard} from '../../util/keyboard';
+import {Platform} from '../../platform/platform';
+import {Keyboard} from '../../util/keyboard';
 import * as gestures from  './menu-gestures';
 
 
@@ -67,9 +67,9 @@ export class Menu extends Ion {
   constructor(
     app: IonicApp,
     elementRef: ElementRef,
-    config: IonicConfig,
-    platform: IonicPlatform,
-    keyboard: IonicKeyboard
+    config: Config,
+    platform: Platform,
+    keyboard: Keyboard
   ) {
     super(elementRef, config);
     this.app = app;

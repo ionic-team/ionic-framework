@@ -34,6 +34,12 @@ module.exports = function(gulp, argv, buildConfig) {
   });
 
   function snapshot(done, quickMode) {
+
+    if (!snapshotConfig.accessKey || !snapshotConfig.accessKey.length) {
+      console.error('Missing IONIC_SNAPSHOT_KEY environment variable');
+      return done();
+    }
+
     var testId = uuid.v4().split('-')[0];
 
     var protractorConfigFile = path.resolve(projectRoot, 'scripts/snapshot/protractor.config.js');

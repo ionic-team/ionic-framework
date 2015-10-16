@@ -1,6 +1,6 @@
 import {Directive, Optional} from 'angular2/angular2';
 
-import {IonicConfig} from '../../config/config';
+import {Config} from '../../config/config';
 import {TextInput} from './text-input';
 import {pointerCoord, hasPointerMoved} from '../../util/dom';
 
@@ -23,9 +23,9 @@ import {pointerCoord, hasPointerMoved} from '../../util/dom';
 export class Label {
   /**
    * TODO
-   * @param {IonicConfig} config
+   * @param {Config} config
    */
-  constructor(config: IonicConfig, @Optional() container: TextInput) {
+  constructor(config: Config, @Optional() container: TextInput) {
     this.scrollAssist = config.get('scrollAssist');
     if (!this.id) {
       this.id = 'lbl-' + (++labelIds);

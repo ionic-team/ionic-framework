@@ -1,9 +1,9 @@
 
-import {IonicConfig} from './config';
+import {Config} from './config';
 
 
 // iOS Mode Settings
-IonicConfig.setModeConfig('ios', {
+Config.setModeConfig('ios', {
 
   actionSheetEnter: 'action-sheet-slide-in',
   actionSheetLeave: 'action-sheet-slide-out',
@@ -27,7 +27,7 @@ IonicConfig.setModeConfig('ios', {
 
 
 // Material Design Mode Settings
-IonicConfig.setModeConfig('md', {
+Config.setModeConfig('md', {
 
   actionSheetEnter: 'action-sheet-md-slide-in',
   actionSheetLeave: 'action-sheet-md-slide-out',

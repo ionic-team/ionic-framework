@@ -2,11 +2,11 @@ import {bootstrap, provide} from 'angular2/angular2';
 import {ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy} from 'angular2/router';
 
 import {IonicApp} from '../components/app/app';
-import {IonicConfig} from './config';
-import {IonicPlatform} from '../platform/platform';
+import {Config} from './config';
+import {Platform} from '../platform/platform';
 import {OverlayController} from '../components/overlay/overlay-controller';
-import {IonicForm} from '../util/form';
-import {IonicKeyboard} from '../util/keyboard';
+import {Form} from '../util/form';
+import {Keyboard} from '../util/keyboard';
 import {ActionSheet} from '../components/action-sheet/action-sheet';
 import {Modal} from '../components/modal/modal';
 import {Popup} from '../components/popup/popup';
@@ -14,16 +14,17 @@ import {Events} from '../util/events';
 import {NavRegistry} from '../components/nav/nav-registry';
 import {Translate} from '../translation/translate';
 import {ClickBlock} from '../util/click-block';
+import {FeatureDetect} from '../util/feature-detect';
 import {TapClick} from '../components/tap-click/tap-click';
 import * as dom from '../util/dom';
 
 
 export function ionicProviders(config) {
   let app = new IonicApp();
-  let platform = new IonicPlatform();
+  let platform = new Platform();
 
-  if (!(config instanceof IonicConfig)) {
-    config = new IonicConfig(config);
+  if (!(config instanceof Config)) {
+    config = new Config(config);
   }
 
   platform.url(window.location.href);
@@ -34,8 +35,9 @@ export function ionicProviders(config) {
 
   let events = new Events();
   let tapClick = new TapClick(app, config, window, document);
+  let featureDetect = new FeatureDetect();
 
-  setupDom(window, document, config, platform);
+  setupDom(window, document, config, platform, featureDetect);
   bindEvents(window, document, platform, events);
 
   // prepare the ready promise to fire....when ready
@@ -43,12 +45,13 @@ export function ionicProviders(config) {
 
   return [
     provide(IonicApp, {useValue: app}),
-    provide(IonicConfig, {useValue: config}),
-    provide(IonicPlatform, {useValue: platform}),
+    provide(Config, {useValue: config}),
+    provide(Platform, {useValue: platform}),
     provide(TapClick, {useValue: tapClick}),
+    provide(FeatureDetect, {useValue: featureDetect}),
     provide(Events, {useValue: events}),
-    IonicForm,
-    IonicKeyboard,
+    Form,
+    Keyboard,
     OverlayController,
     ActionSheet,
     Modal,
@@ -61,7 +64,7 @@ export function ionicProviders(config) {
 }
 
 
-function setupDom(window, document, config, platform) {
+function setupDom(window, document, config, platform, featureDetect) {
   let bodyEle = document.body;
   if (!bodyEle) {
     return dom.ready(function() {
@@ -96,22 +99,8 @@ function setupDom(window, document, config, platform) {
     bodyEle.classList.add('enable-hover');
   }
 
-  /**
-  * Hairline Shim
-  * Add the "hairline" CSS class name to the body tag
-  * if the browser supports subpixels.
-  */
-  if (window.devicePixelRatio >= 2) {
-    var hairlineEle = document.createElement('div');
-    hairlineEle.style.border = '.5px solid transparent';
-    bodyEle.appendChild(hairlineEle);
-
-    if (hairlineEle.offsetHeight === 1) {
-      bodyEle.classList.add('hairlines');
-    }
-    bodyEle.removeChild(hairlineEle);
-  }
-
+  // run feature detection tests
+  featureDetect.run(window, document);
 }
 
 

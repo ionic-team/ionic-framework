@@ -2,7 +2,7 @@ import {FORM_DIRECTIVES, NgControl, NgControlGroup,
   Component, ElementRef, Injectable, NgClass, NgIf, NgFor} from 'angular2/angular2';
 
 import {OverlayController} from '../overlay/overlay-controller';
-import {IonicConfig} from '../../config/config';
+import {Config} from '../../config/config';
 import {Animation} from '../../animations/animation';
 import {Button} from '../button/button';
 import * as util from 'ionic/util';
@@ -64,7 +64,7 @@ import * as util from 'ionic/util';
 @Injectable()
 export class Popup {
 
-  constructor(ctrl: OverlayController, config: IonicConfig) {
+  constructor(ctrl: OverlayController, config: Config) {
     this.ctrl = ctrl;
     this._defaults = {
       enterAnimation: config.get('popupPopIn'),

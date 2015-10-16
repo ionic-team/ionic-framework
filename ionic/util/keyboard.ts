@@ -1,14 +1,14 @@
 import {Injectable, NgZone} from 'angular2/angular2';
 
-import {IonicConfig} from '../config/config';
-import {IonicForm} from './form';
+import {Config} from '../config/config';
+import {Form} from './form';
 import * as dom from './dom';
 
 
 @Injectable()
-export class IonicKeyboard {
+export class Keyboard {
 
-  constructor(config: IonicConfig, form: IonicForm, zone: NgZone) {
+  constructor(config: Config, form: Form, zone: NgZone) {
     this.form = form;
     this.zone = zone;
 

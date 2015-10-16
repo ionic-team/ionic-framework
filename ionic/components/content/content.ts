@@ -1,8 +1,8 @@
 import {Component, ElementRef, Optional} from 'angular2/angular2';
 
 import {Ion} from '../ion';
-import {IonicConfig} from '../../config/config';
-import {IonicKeyboard} from '../../util/keyboard';
+import {Config} from '../../config/config';
+import {Keyboard} from '../../util/keyboard';
 import {ViewController} from '../nav/view-controller';
 import {Animation} from '../../animations/animation';
 import {ScrollTo} from '../../animations/scroll-to';
@@ -33,9 +33,9 @@ import {ScrollTo} from '../../animations/scroll-to';
 export class Content extends Ion {
   /**
    * @param {ElementRef} elementRef  A reference to the component's DOM element.
-   * @param {IonicConfig} config  The config object to change content's default settings.
+   * @param {Config} config  The config object to change content's default settings.
    */
-  constructor(elementRef: ElementRef, config: IonicConfig, keyboard: IonicKeyboard, @Optional() viewCtrl: ViewController) {
+  constructor(elementRef: ElementRef, config: Config, keyboard: Keyboard, @Optional() viewCtrl: ViewController) {
     super(elementRef, config);
     this.scrollPadding = 0;
     this.keyboard = keyboard;

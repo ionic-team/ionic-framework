@@ -2,7 +2,7 @@ import {Directive, ElementRef, Optional, Host, NgFor, forwardRef, ViewContainerR
 
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
-import {IonicConfig} from '../../config/config';
+import {Config} from '../../config/config';
 import {ViewController} from '../nav/view-controller';
 import {ConfigComponent} from '../../config/decorators';
 import {Icon} from '../icon/icon';
@@ -62,7 +62,8 @@ import {Icon} from '../icon/icon';
   selector: 'ion-tabs',
   defaultInputs: {
     'tabBarPlacement': 'bottom',
-    'tabBarIcons': 'top'
+    'tabBarIcons': 'top',
+    'preloadTabs': true
   },
   template:
     '<ion-navbar-section>' +
@@ -100,12 +101,13 @@ export class Tabs extends Ion {
    */
  constructor(
     app: IonicApp,
-    config: IonicConfig,
+    config: Config,
     elementRef: ElementRef,
     @Optional() viewCtrl: ViewController
   ) {
     super(elementRef, config);
     this.app = app;
+    this.preload = config.get('preloadTabs');
 
     // collection of children "Tab" instances, which extends NavController
     this._tabs = [];
@@ -201,6 +203,10 @@ export class Tabs extends Ion {
     return null;
   }
 
+  getIndex(tab) {
+    return this._tabs.indexOf(tab);
+  }
+
   /**
    * @private
    * "Touch" the active tab, either going back to the root view of the tab
@@ -241,7 +247,7 @@ let _tabIds = -1;
   }
 })
 class TabButton extends Ion {
-  constructor(@Host() tabs: Tabs, config: IonicConfig, elementRef: ElementRef) {
+  constructor(@Host() tabs: Tabs, config: Config, elementRef: ElementRef) {
     super(elementRef, config);
     this.tabs = tabs;
 
@@ -273,7 +279,7 @@ class TabButton extends Ion {
   selector: 'tab-highlight'
 })
 class TabHighlight {
-  constructor(@Host() tabs: Tabs, config: IonicConfig, elementRef: ElementRef) {
+  constructor(@Host() tabs: Tabs, config: Config, elementRef: ElementRef) {
     if (config.get('mode') === 'md') {
       tabs.highlight = this;
       this.elementRef = elementRef;

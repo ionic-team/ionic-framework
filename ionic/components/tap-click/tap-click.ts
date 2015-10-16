@@ -1,7 +1,7 @@
 import {Injectable} from 'angular2/angular2';
 
 import {IonicApp} from '../app/app';
-import {IonicConfig} from '../../config/config';
+import {Config} from '../../config/config';
 import {pointerCoord, hasPointerMoved, transitionEnd} from '../../util/dom';
 import {Activator} from './activator';
 import {RippleActivator} from './ripple';
@@ -10,7 +10,7 @@ import {RippleActivator} from './ripple';
 @Injectable()
 export class TapClick {
 
-  constructor(app: IonicApp, config: IonicConfig) {
+  constructor(app: IonicApp, config: Config) {
     const self = this;
     self.app = app;
 

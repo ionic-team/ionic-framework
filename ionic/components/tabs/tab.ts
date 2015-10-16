@@ -1,7 +1,7 @@
-import {Component, Directive, Host, ElementRef, Compiler, DynamicComponentLoader, AppViewManager, forwardRef, NgZone} from 'angular2/angular2';
+import {Component, Directive, Host, ElementRef, Compiler, DynamicComponentLoader, AppViewManager, forwardRef, NgZone, Renderer} from 'angular2/angular2';
 
 import {IonicApp} from '../app/app';
-import {IonicConfig} from '../../config/config';
+import {Config} from '../../config/config';
 import {NavController} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
 import {Tabs} from './tabs';
@@ -72,25 +72,33 @@ export class Tab extends NavController {
   constructor(
     @Host() tabs: Tabs,
     app: IonicApp,
-    config: IonicConfig,
+    config: Config,
     elementRef: ElementRef,
     compiler: Compiler,
     loader: DynamicComponentLoader,
     viewManager: AppViewManager,
-    zone: NgZone
+    zone: NgZone,
+    renderer: Renderer
   ) {
     // A Tab is a NavController for its child pages
-    super(tabs, app, config, elementRef, compiler, loader, viewManager, zone);
+    super(tabs, app, config, elementRef, compiler, loader, viewManager, zone, renderer);
     this.tabs = tabs;
 
     this._isInitial = tabs.add(this);
   }
 
   onInit() {
-    console.debug('Tab onInit');
+    console.debug('Tab onInit', this.getIndex());
 
     if (this._isInitial) {
       this.tabs.select(this);
+
+    } else if (this.tabs.preloadTabs) {
+      setTimeout(() => {
+        this.load(() => {
+          console.debug('preloaded tab', this.getIndex());
+        });
+      }, 500 * this.getIndex());
     }
   }
 
@@ -144,10 +152,15 @@ export class Tab extends NavController {
         });
       }
 
-      done();
+      this.addHasViews();
 
+      done();
     });
 
+  }
+
+  getIndex() {
+    return this.tabs.getIndex(this);
   }
 
 }

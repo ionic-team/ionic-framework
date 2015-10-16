@@ -16,13 +16,20 @@
 </ion-navbar>
 
 <ion-content padding class="has-header components-demo">
-  
-  <div id="mock-card">
-    <img src="card-wireframe.png" id="card-wireframe">
-    <button clear id="demo-card-left">Like</button>
-    <button clear id="demo-card-right">Comment</button>
-  </div>
 
+
+  <ion-card class="buttons-in-components">
+    <ion-card-content class="buttons-in-components">
+      <img src="img/img-icon.png" />
+    </ion-card-content>
+
+    <ion-item actions>
+      <button clear item-left>Like</button>
+      <button clear item-right>Comment</button>
+    </ion-item>
+
+  </ion-card>
+  
   <ion-list>
 
     <ion-item>

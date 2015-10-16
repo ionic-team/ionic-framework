@@ -2,7 +2,7 @@ import {Component, Directive, Renderer, ElementRef, EventEmitter, Host, forwardR
 import {Control, NgControl, NgFormControl, ControlGroup, ControlDirective} from 'angular2/angular2';
 
 import {Ion} from '../ion';
-import {IonicConfig} from '../../config/config';
+import {Config} from '../../config/config';
 import {dom} from 'ionic/util';
 
 /**
@@ -34,16 +34,16 @@ export class Segment extends Ion {
    * TODO
    * @param {NgControl} ngControl  TODO
    * @param {ElementRef} elementRef  TODO
-   * @param {IonicConfig} config  TODO
+   * @param {Config} config  TODO
    * @param {Renderer} renderer  TODO
    */
   constructor(
     @Optional() ngControl: NgControl,
     elementRef: ElementRef,
-    ionicConfig: IonicConfig,
+    config: Config,
     renderer: Renderer
   ) {
-    super(elementRef, ionicConfig);
+    super(elementRef, config);
 
     this.ele = elementRef.nativeElement
     this.elementRef = elementRef;
@@ -244,7 +244,7 @@ export class SegmentButton {
 //   selector: 'tab-highlight'
 // })
 // class TabHighlight {
-//   constructor(@Host() tabs: Tabs, config: IonicConfig, elementRef: ElementRef) {
+//   constructor(@Host() tabs: Tabs, config: Config, elementRef: ElementRef) {
 //     if (config.get('mode') === 'md') {
 //       tabs.highlight = this;
 //       this.elementRef = elementRef;

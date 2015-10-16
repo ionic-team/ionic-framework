@@ -1,7 +1,7 @@
 import {Component, Directive, Optional, NgControl, ElementRef, Renderer} from 'angular2/angular2';
 
 import {Ion} from '../ion';
-import {IonicForm} from '../../util/form';
+import {Form} from '../../util/form';
 
 /**
  * The checkbox is no different than the HTML checkbox input, except it's styled differently
@@ -43,7 +43,7 @@ import {IonicForm} from '../../util/form';
 export class Checkbox {
 
   constructor(
-    form: IonicForm,
+    form: Form,
     @Optional() ngControl: NgControl,
     elementRef: ElementRef,
     renderer: Renderer

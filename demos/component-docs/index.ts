@@ -1,5 +1,5 @@
-import {App, IonicApp, IonicPlatform, ActionSheet} from 'ionic/ionic';
-import {Page, IonicConfig, Events} from 'ionic/ionic';
+import {App, IonicApp, Platform, ActionSheet} from 'ionic/ionic';
+import {Page, Config, Events} from 'ionic/ionic';
 import {ActionSheetPage} from './actionSheet/actionSheet';
 import * as helpers from './helpers';
 
@@ -11,7 +11,7 @@ class DemoApp {
 
   rootPage: any;
 
-  constructor(app: IonicApp, platform: IonicPlatform) {
+  constructor(app: IonicApp, platform: Platform) {
     this.app = app;
     this.platform = platform;
 

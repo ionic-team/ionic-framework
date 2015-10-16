@@ -1,12 +1,12 @@
 import {Component, Directive, NgIf, forwardRef, Host, Optional, ElementRef, Renderer, Attribute, Query, QueryList, NgZone} from 'angular2/angular2';
 
-import {IonicConfig} from '../../config/config';
-import {IonicForm} from '../../util/form';
+import {Config} from '../../config/config';
+import {Form} from '../../util/form';
 import {Label} from './label';
 import {IonicApp} from '../app/app';
 import {Content} from '../content/content';
 import * as dom  from '../../util/dom';
-import {IonicPlatform} from '../../platform/platform';
+import {Platform} from '../../platform/platform';
 
 
 /**
@@ -27,13 +27,13 @@ import {IonicPlatform} from '../../platform/platform';
 export class TextInput {
 
   constructor(
-    form: IonicForm,
+    form: Form,
     elementRef: ElementRef,
-    config: IonicConfig,
+    config: Config,
     renderer: Renderer,
     app: IonicApp,
     zone: NgZone,
-    platform: IonicPlatform,
+    platform: Platform,
     @Optional() @Host() scrollView: Content
   ) {
     renderer.setElementClass(elementRef, 'item', true);
@@ -403,7 +403,7 @@ export class TextInputElement {
 })
 class InputScrollAssist {
 
-  constructor(form: IonicForm, textInput: TextInput) {
+  constructor(form: Form, textInput: TextInput) {
     this.form = form;
     this.textInput = textInput;
   }
