@@ -24,7 +24,7 @@ import {NativePlugin} from '../plugin';
   name: 'AppLinks',
   platforms: ['ios', 'android'],
   engines: {
-    cordova: 'cordova-plugin-statusbar'
+    cordova: 'com.lampa.startapp'
   },
   pluginCheck: () => {
     return !!navigator.startApp;
