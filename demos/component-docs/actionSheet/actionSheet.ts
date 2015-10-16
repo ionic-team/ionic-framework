@@ -7,6 +7,7 @@ export class ActionSheetPage {
 
   constructor(actionSheet: ActionSheet, platform: IonicPlatform) {
     this.actionSheet = actionSheet;
+    console.log('actionSheet', actionSheet);
     this.platform = platform;
   }
 
@@ -58,6 +59,7 @@ export class ActionSheetPage {
       }
 
     }).then(actionSheetRef => {
+      console.log(actionSheetRef);
       this.actionSheetRef = actionSheetRef;
     });
   }
