@@ -273,18 +273,8 @@ export function flushDimensionCache() {
 let dimensionCache = {};
 let dimensionIds = 0;
 
-function getStyle(el, cssprop) {
-  if (el.currentStyle) { //IE
-    return el.currentStyle[cssprop];
-  } else if (window.getComputedStyle) {
-    return window.getComputedStyle(el)[cssprop];
-  }
-  // finally try and get inline style
-  return el.style[cssprop];
-}
-
 function isStaticPositioned(element) {
-  return (getStyle(element, 'position') || 'static') === 'static';
+  return (element.style.position || 'static') === 'static';
 }
 
 /**
@@ -317,8 +307,8 @@ export function position(element) {
 
   var boundingClientRect = element.getBoundingClientRect();
   return {
-    width: boundingClientRect.width || element.prop('offsetWidth'),
-    height: boundingClientRect.height || element.prop('offsetHeight'),
+    width: boundingClientRect.width || element.offsetWidth,
+    height: boundingClientRect.height || element.offsetHeight,
     top: elBCR.top - offsetParentBCR.top,
     left: elBCR.left - offsetParentBCR.left
   };
@@ -333,8 +323,8 @@ export function position(element) {
 export function offset(element) {
  var boundingClientRect = element.getBoundingClientRect();
  return {
-   width: boundingClientRect.width || element.prop('offsetWidth'),
-   height: boundingClientRect.height || element.prop('offsetHeight'),
+   width: boundingClientRect.width || element.offsetWidth,
+   height: boundingClientRect.height || element.offsetHeight,
    top: boundingClientRect.top + (window.pageYOffset || document.documentElement.scrollTop),
    left: boundingClientRect.left + (window.pageXOffset || document.documentElement.scrollLeft)
  };
