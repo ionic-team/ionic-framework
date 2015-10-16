@@ -1,7 +1,7 @@
 import {Component, Directive, ElementRef, Host, Optional, forwardRef, Inject, NgZone, Compiler, AppViewManager, DynamicComponentLoader, Renderer, ViewContainerRef} from 'angular2/angular2';
 
 import {IonicApp} from '../app/app';
-import {IonicConfig} from '../../config/config';
+import {Config} from '../../config/config';
 import {ConfigComponent} from '../../config/decorators';
 import {NavController} from './nav-controller';
 
@@ -145,7 +145,7 @@ export class Nav extends NavController {
   constructor(
     @Optional() hostNavCtrl: NavController,
     app: IonicApp,
-    config: IonicConfig,
+    config: Config,
     elementRef: ElementRef,
     compiler: Compiler,
     loader: DynamicComponentLoader,

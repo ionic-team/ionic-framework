@@ -1,7 +1,7 @@
 import {Component, Directive, Host, ElementRef, Compiler, DynamicComponentLoader, AppViewManager, forwardRef, NgZone, Renderer} from 'angular2/angular2';
 
 import {IonicApp} from '../app/app';
-import {IonicConfig} from '../../config/config';
+import {Config} from '../../config/config';
 import {NavController} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
 import {Tabs} from './tabs';
@@ -72,7 +72,7 @@ export class Tab extends NavController {
   constructor(
     @Host() tabs: Tabs,
     app: IonicApp,
-    config: IonicConfig,
+    config: Config,
     elementRef: ElementRef,
     compiler: Compiler,
     loader: DynamicComponentLoader,

@@ -1,6 +1,6 @@
 import {Directive, ElementRef, Renderer, Attribute} from 'angular2/angular2';
 
-import {IonicConfig} from '../../config/config';
+import {Config} from '../../config/config';
 
 
 /**
@@ -12,7 +12,7 @@ import {IonicConfig} from '../../config/config';
 export class Button {
 
   constructor(
-    config: IonicConfig,
+    config: Config,
     elementRef: ElementRef,
     renderer: Renderer,
     @Attribute('type') type: string

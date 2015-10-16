@@ -1,4 +1,4 @@
-import {IonicConfig} from '../config/config';
+import {Config} from '../config/config';
 import {isArray} from 'ionic/util';
 import * as dom from 'ionic/util/dom';
 
@@ -9,7 +9,7 @@ import * as dom from 'ionic/util/dom';
  * sending/receiving app-level events.
  */
 export class Ion {
-  constructor(elementRef: ElementRef, config: IonicConfig) {
+  constructor(elementRef: ElementRef, config: Config) {
     this.elementRef = elementRef;
     this.config = config;
   }

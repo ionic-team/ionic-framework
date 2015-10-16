@@ -1,4 +1,4 @@
-import {App, Page, IonicApp, IonicConfig, IonicPlatform} from 'ionic/ionic';
+import {App, Page, IonicApp, Config, IonicPlatform} from 'ionic/ionic';
 import {Modal, ActionSheet, NavController, NavParams, Animation} from 'ionic/ionic';
 
 
@@ -7,7 +7,7 @@ import {Modal, ActionSheet, NavController, NavParams, Animation} from 'ionic/ion
 })
 class MyAppCmp {
 
-  constructor(modal: Modal, app: IonicApp, config: IonicConfig, platform: IonicPlatform) {
+  constructor(modal: Modal, app: IonicApp, config: Config, platform: IonicPlatform) {
     this.modal = modal;
 
     console.log('platforms', platform.platforms());

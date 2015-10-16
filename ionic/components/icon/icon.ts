@@ -1,6 +1,6 @@
 import {Directive, ElementRef, Attribute, Renderer} from 'angular2/angular2';
 
-import {IonicConfig} from '../../config/config';
+import {Config} from '../../config/config';
 
 
 @Directive({
@@ -19,7 +19,7 @@ export class Icon {
 
   constructor(
     private elementRef: ElementRef,
-    config: IonicConfig,
+    config: Config,
     private renderer: Renderer
   ) {
     this.eleRef = elementRef;

@@ -3,7 +3,7 @@ import {Content} from '../content/content';
 import {throttle} from '../../util/util';
 import {position, offset, CSS, raf} from '../../util/dom';
 import {FeatureDetect} from '../../util/feature-detect';
-import {IonicConfig} from '../../config/config';
+import {Config} from '../../config/config';
 
 /**
  * TODO
@@ -39,7 +39,7 @@ export class ItemGroupTitle {
    * TODO
    * @param {ElementRef} elementRef  TODO
    */
-  constructor(elementRef: ElementRef, config: IonicConfig, content: Content, featureDetect: FeatureDetect) {
+  constructor(elementRef: ElementRef, config: Config, content: Content, featureDetect: FeatureDetect) {
     this.isSticky = true;
     this.content = content;
     this.ele = elementRef.nativeElement;

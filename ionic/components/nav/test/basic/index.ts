@@ -1,5 +1,5 @@
 import {App, NavController} from 'ionic/ionic';
-import {Page, IonicConfig, IonicApp} from 'ionic/ionic';
+import {Page, Config, IonicApp} from 'ionic/ionic';
 import {NavParams, NavController} from 'ionic/ionic';
 
 
@@ -31,7 +31,7 @@ class FirstPage {
   constructor(
     nav: NavController,
     app: IonicApp,
-    config: IonicConfig
+    config: Config
   ) {
     this.nav = nav;
     this.title = 'First Page';

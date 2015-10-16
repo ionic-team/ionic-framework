@@ -3,7 +3,7 @@
 * @name Config
 * @module ionic
 * @description
-* IonicConfig allows you to set the modes of your components
+* Config allows you to set the modes of your components
 */
 
 import {IonicPlatform} from '../platform/platform';
@@ -12,7 +12,7 @@ import {isObject, isDefined, isFunction, isArray, extend} from '../util/util';
 /**
 * TODO
 */
-export class IonicConfig {
+export class Config {
 
  /**
   * TODO
@@ -30,12 +30,12 @@ export class IonicConfig {
   /**
  * @name settings()
  * @description
- * IonicConfig lets you change multiple or a single value in an apps mode configuration. Things such as tab placement, icon changes, and view animations can be set here.
+ * Config lets you change multiple or a single value in an apps mode configuration. Things such as tab placement, icon changes, and view animations can be set here.
  *
  *
  * @usage
  * ```ts
- * import {IonicConfig} from 'ionic/ionic';
+ * import {Config} from 'ionic/ionic';
  * @App({
  *   template: `<ion-nav [root]="root"></ion-nav>`
  *   config: {
@@ -144,7 +144,7 @@ export class IonicConfig {
               if (isDefined(configObj[key])) {
                 userPlatformValue = configObj[key];
               }
-              configObj = IonicConfig.getModeConfig(configObj.mode);
+              configObj = Config.getModeConfig(configObj.mode);
               if (configObj && isDefined(configObj[key])) {
                 userPlatformModeValue = configObj[key];
               }
@@ -160,7 +160,7 @@ export class IonicConfig {
               platformValue = configObj.settings[key];
             }
 
-            configObj = IonicConfig.getModeConfig(configObj.settings.mode);
+            configObj = Config.getModeConfig(configObj.settings.mode);
             if (configObj && isDefined(configObj[key])) {
               // found setting for this platform's mode
               platformModeValue = configObj[key];
@@ -172,7 +172,7 @@ export class IonicConfig {
 
       }
 
-      configObj = IonicConfig.getModeConfig(this._s.mode);
+      configObj = Config.getModeConfig(this._s.mode);
       if (configObj && isDefined(configObj[key])) {
         userDefaultModeValue = configObj[key];
       }

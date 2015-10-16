@@ -3,7 +3,7 @@ import {Component, Directive, Optional, ElementRef, Renderer, TemplateRef, forwa
 import {Ion} from '../ion';
 import {Icon} from '../icon/icon';
 import {ToolbarBase} from '../toolbar/toolbar';
-import {IonicConfig} from '../../config/config';
+import {Config} from '../../config/config';
 import {Page} from '../../config/decorators';
 import {IonicApp} from '../app/app';
 import {ViewController} from '../nav/view-controller';
@@ -72,7 +72,7 @@ export class Navbar extends ToolbarBase {
     app: IonicApp,
     @Optional() viewCtrl: ViewController,
     elementRef: ElementRef,
-    config: IonicConfig,
+    config: Config,
     renderer: Renderer
   ) {
     super(elementRef, config);

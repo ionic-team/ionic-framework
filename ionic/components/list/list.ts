@@ -1,7 +1,7 @@
 import {Directive, ElementRef, Renderer} from 'angular2/angular2';
 
 import {Ion} from '../ion';
-import {IonicConfig} from '../../config/config';
+import {Config} from '../../config/config';
 import {ListVirtualScroll} from './virtual';
 import * as util from 'ionic/util';
 
@@ -28,9 +28,9 @@ export class List extends Ion {
   /**
    * TODO
    * @param {ElementRef} elementRef  TODO
-   * @param {IonicConfig} config  TODO
+   * @param {Config} config  TODO
    */
-  constructor(elementRef: ElementRef, config: IonicConfig, renderer: Renderer) {
+  constructor(elementRef: ElementRef, config: Config, renderer: Renderer) {
     super(elementRef, config);
     renderer.setElementClass(elementRef, 'list', true);
     this.ele = elementRef.nativeElement;

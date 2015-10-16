@@ -1,38 +1,38 @@
-import {IonicConfig, IonicPlatform, ionicProviders} from 'ionic/ionic';
+import {Config, IonicPlatform, ionicProviders} from 'ionic/ionic';
 
 export function run() {
 
-  it('should create a new IonicConfig instace when no confg passed in ionicProviders', () => {
+  it('should create a new Config instace when no confg passed in ionicProviders', () => {
     let providers = ionicProviders();
 
-    let config = providers.find(provider => provider.useValue instanceof IonicConfig).useValue;
+    let config = providers.find(provider => provider.useValue instanceof Config).useValue;
 
     expect(config.get('mode')).toEqual('ios');
   });
 
-  it('should used passed in IonicConfig instance in ionicProviders', () => {
-    let userConfig =  new IonicConfig({
+  it('should used passed in Config instance in ionicProviders', () => {
+    let userConfig =  new Config({
       mode: 'configInstance'
     })
     let providers = ionicProviders(userConfig);
 
-    let config = providers.find(provider => provider.useValue instanceof IonicConfig).useValue;
+    let config = providers.find(provider => provider.useValue instanceof Config).useValue;
 
     expect(config.get('mode')).toEqual('configInstance');
   });
 
-  it('should create new IonicConfig instance from config object in ionicProviders', () => {
+  it('should create new Config instance from config object in ionicProviders', () => {
     let providers = ionicProviders({
       mode: 'configObj'
     });
 
-    let config = providers.find(provider => provider.useValue instanceof IonicConfig).useValue;
+    let config = providers.find(provider => provider.useValue instanceof Config).useValue;
 
     expect(config.get('mode')).toEqual('configObj');
   });
 
   it('should override mode settings', () => {
-    let config = new IonicConfig({
+    let config = new Config({
       mode: 'md'
     });
     let platform = new IonicPlatform(['ios']);
@@ -43,7 +43,7 @@ export function run() {
   });
 
   it('should override mode settings from platforms setting', () => {
-    let config = new IonicConfig({
+    let config = new Config({
       platforms: {
         ios: {
           mode: 'md'
@@ -58,7 +58,7 @@ export function run() {
   });
 
   it('should override mode platform', () => {
-    let config = new IonicConfig({
+    let config = new Config({
       mode: 'modeA',
       platforms: {
         mobile: {
@@ -76,7 +76,7 @@ export function run() {
   });
 
   it('should override mode', () => {
-    let config = new IonicConfig({
+    let config = new Config({
       mode: 'modeA'
     });
     let platform = new IonicPlatform(['core']);
@@ -86,7 +86,7 @@ export function run() {
   });
 
   it('should get user settings after user platform settings', () => {
-    let config = new IonicConfig({
+    let config = new Config({
       hoverCSS: true
     });
     let platform = new IonicPlatform(['ios']);
@@ -96,7 +96,7 @@ export function run() {
   });
 
   it('should get ios mode for core platform', () => {
-    let config = new IonicConfig();
+    let config = new Config();
     let platform = new IonicPlatform(['core']);
     config.setPlatform(platform);
 
@@ -104,7 +104,7 @@ export function run() {
   });
 
   it('should get ios mode for ipad platform', () => {
-    let config = new IonicConfig();
+    let config = new Config();
     let platform = new IonicPlatform(['mobile', 'ios', 'ipad', 'tablet']);
     config.setPlatform(platform);
 
@@ -112,7 +112,7 @@ export function run() {
   });
 
   it('should get md mode for windowsphone platform', () => {
-    let config = new IonicConfig();
+    let config = new Config();
     let platform = new IonicPlatform(['mobile', 'windowsphone']);
     config.setPlatform(platform);
 
@@ -120,7 +120,7 @@ export function run() {
   });
 
   it('should get md mode for android platform', () => {
-    let config = new IonicConfig();
+    let config = new Config();
     let platform = new IonicPlatform(['mobile', 'android']);
     config.setPlatform(platform);
 
@@ -128,7 +128,7 @@ export function run() {
   });
 
   it('should override ios mode config with user platform setting', () => {
-    let config = new IonicConfig({
+    let config = new Config({
       tabBarPlacement: 'hide',
       platforms: {
         ios: {
@@ -143,7 +143,7 @@ export function run() {
   });
 
   it('should override ios mode config with user setting', () => {
-    let config = new IonicConfig({
+    let config = new Config({
       tabBarPlacement: 'top'
     });
     let platform = new IonicPlatform(['ios']);
@@ -153,7 +153,7 @@ export function run() {
   });
 
   it('should get setting from md mode', () => {
-    let config = new IonicConfig();
+    let config = new Config();
     let platform = new IonicPlatform(['android']);
     config.setPlatform(platform);
 
@@ -161,7 +161,7 @@ export function run() {
   });
 
   it('should get setting from ios mode', () => {
-    let config = new IonicConfig();
+    let config = new Config();
     let platform = new IonicPlatform(['ios']);
     config.setPlatform(platform);
 
@@ -169,7 +169,7 @@ export function run() {
   });
 
   it('should set/get platform setting from set()', () => {
-    let config = new IonicConfig();
+    let config = new Config();
     let platform = new IonicPlatform(['ios']);
     config.setPlatform(platform);
 
@@ -180,7 +180,7 @@ export function run() {
   });
 
   it('should set/get setting from set()', () => {
-    let config = new IonicConfig();
+    let config = new Config();
     let platform = new IonicPlatform(['ios']);
     config.setPlatform(platform);
 
@@ -190,7 +190,7 @@ export function run() {
   });
 
   it('should set ios platform settings from settings()', () => {
-    let config = new IonicConfig();
+    let config = new Config();
     let platform = new IonicPlatform(['ios']);
     config.setPlatform(platform);
 
@@ -202,7 +202,7 @@ export function run() {
   });
 
   it('should set/get mobile setting even w/ higher priority ios', () => {
-    let config = new IonicConfig();
+    let config = new Config();
     let platform = new IonicPlatform(['mobile', 'ios']);
     config.setPlatform(platform);
 
@@ -219,7 +219,7 @@ export function run() {
   });
 
   it('should set/get mobile setting even w/ higher priority ios', () => {
-    let config = new IonicConfig();
+    let config = new Config();
     let platform = new IonicPlatform(['mobile', 'ios']);
     config.setPlatform(platform);
 
@@ -236,7 +236,7 @@ export function run() {
   });
 
   it('should set/get android setting w/ higher priority than mobile', () => {
-    let config = new IonicConfig();
+    let config = new Config();
     let platform = new IonicPlatform(['mobile', 'android']);
     config.setPlatform(platform);
 
@@ -256,7 +256,7 @@ export function run() {
   });
 
   it('should set/get ios setting w/ platforms set', () => {
-    let config = new IonicConfig();
+    let config = new Config();
     let platform = new IonicPlatform(['ios']);
     config.setPlatform(platform);
 
@@ -276,7 +276,7 @@ export function run() {
   });
 
   it('should set/get default setting w/ platforms set, but no platform match', () => {
-    let config = new IonicConfig();
+    let config = new Config();
     config.settings({
       key: 'defaultValue',
       platforms: {
@@ -293,7 +293,7 @@ export function run() {
   });
 
   it('should set setting object', () => {
-    let config = new IonicConfig();
+    let config = new Config();
     config.settings({
       name: 'Doc Brown',
       occupation: 'Weather Man'
@@ -306,7 +306,7 @@ export function run() {
   });
 
   it('should get null setting', () => {
-    let config = new IonicConfig();
+    let config = new Config();
 
     expect(config.get('name')).toEqual(null);
     expect(config.get('name')).toEqual(null);
@@ -315,7 +315,7 @@ export function run() {
   });
 
   it('should set/get single setting', () => {
-    let config = new IonicConfig();
+    let config = new Config();
     config.set('name', 'Doc Brown');
     config.set('occupation', 'Weather Man');
 
@@ -326,7 +326,7 @@ export function run() {
   });
 
   it('should init w/ given config settings', () => {
-    let config = new IonicConfig({
+    let config = new Config({
       name: 'Doc Brown',
       occupation: 'Weather Man'
     });
@@ -335,7 +335,7 @@ export function run() {
   });
 
   it('should get settings object', () => {
-    let config = new IonicConfig({
+    let config = new Config({
       name: 'Doc Brown',
       occupation: 'Weather Man'
     });
@@ -347,34 +347,34 @@ export function run() {
   });
 
   it('should create default config w/ bad settings value', () => {
-    let config = new IonicConfig(null);
+    let config = new Config(null);
     expect(config.settings()).toEqual({});
 
-    config = new IonicConfig(undefined);
+    config = new Config(undefined);
     expect(config.settings()).toEqual({});
 
-    config = new IonicConfig();
+    config = new Config();
     expect(config.settings()).toEqual({});
 
-    config = new IonicConfig([1,2,3]);
+    config = new Config([1,2,3]);
     expect(config.settings()).toEqual({});
 
-    config = new IonicConfig('im bad, you know it');
+    config = new Config('im bad, you know it');
     expect(config.settings()).toEqual({});
 
-    config = new IonicConfig(8675309);
+    config = new Config(8675309);
     expect(config.settings()).toEqual({});
 
-    config = new IonicConfig(true);
+    config = new Config(true);
     expect(config.settings()).toEqual({});
 
-    config = new IonicConfig(false);
+    config = new Config(false);
     expect(config.settings()).toEqual({});
 
-    config = new IonicConfig(1);
+    config = new Config(1);
     expect(config.settings()).toEqual({});
 
-    config = new IonicConfig(function(){});
+    config = new Config(function(){});
     expect(config.settings()).toEqual({});
   });
 

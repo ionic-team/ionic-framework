@@ -1,6 +1,6 @@
 import {Injectable, NgZone} from 'angular2/angular2';
 
-import {IonicConfig} from '../config/config';
+import {Config} from '../config/config';
 
 
 /**
@@ -17,7 +17,7 @@ import {IonicConfig} from '../config/config';
  @Injectable()
 export class IonicForm {
 
-  constructor(config: IonicConfig, zone: NgZone) {
+  constructor(config: Config, zone: NgZone) {
     this._config = config;
     this._zone = zone;
 

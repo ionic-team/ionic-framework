@@ -3,7 +3,7 @@ import {Compiler, ElementRef, Injector, provide, NgZone, DynamicComponentLoader,
 import {Ion} from '../ion';
 import {makeComponent} from '../../config/decorators';
 import {IonicApp} from '../app/app';
-import {IonicConfig} from '../../config/config';
+import {Config} from '../../config/config';
 import {ViewController} from './view-controller';
 import {Transition} from '../../transitions/transition';
 import {SwipeBackGesture} from './swipe-back';
@@ -105,7 +105,7 @@ export class NavController extends Ion {
   constructor(
     parentnavCtrl: NavController,
     app: IonicApp,
-    config: IonicConfig,
+    config: Config,
     elementRef: ElementRef,
     compiler: Compiler,
     loader: DynamicComponentLoader,
@@ -776,7 +776,7 @@ export class NavController extends Ion {
         } else {
           let isActiveView = (view === activeView);
           let isPreviousView = (view === previousView);
-          view.domCache(isActiveView, isPreviousView);
+          view.domCache && view.domCache(isActiveView, isPreviousView);
         }
       }
     });

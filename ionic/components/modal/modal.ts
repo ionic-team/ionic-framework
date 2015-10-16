@@ -1,7 +1,7 @@
 import {Injectable} from 'angular2/angular2';
 
 import {OverlayController} from '../overlay/overlay-controller';
-import {IonicConfig} from '../../config/config';
+import {Config} from '../../config/config';
 import {Animation} from '../../animations/animation';
 import {makeComponent} from '../../config/decorators';
 import * as util from 'ionic/util';
@@ -14,7 +14,7 @@ import * as util from 'ionic/util';
  * ```ts
  * class MyApp {
  *
- *  constructor(modal: Modal, app: IonicApp, ionicConfig: IonicConfig) {
+ *  constructor(modal: Modal, app: IonicApp, Config: Config) {
  *    this.modal = modal;
  *  }
  *
@@ -31,7 +31,7 @@ import * as util from 'ionic/util';
 @Injectable()
 export class Modal {
 
-  constructor(ctrl: OverlayController, config: IonicConfig) {
+  constructor(ctrl: OverlayController, config: Config) {
     this.ctrl = ctrl;
     this._defaults = {
       enterAnimation: config.get('modalEnter') || 'modal-slide-in',

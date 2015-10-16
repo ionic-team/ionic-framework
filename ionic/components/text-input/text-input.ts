@@ -1,6 +1,6 @@
 import {Component, Directive, NgIf, forwardRef, Host, Optional, ElementRef, Renderer, Attribute, Query, QueryList, NgZone} from 'angular2/angular2';
 
-import {IonicConfig} from '../../config/config';
+import {Config} from '../../config/config';
 import {IonicForm} from '../../util/form';
 import {Label} from './label';
 import {IonicApp} from '../app/app';
@@ -29,7 +29,7 @@ export class TextInput {
   constructor(
     form: IonicForm,
     elementRef: ElementRef,
-    config: IonicConfig,
+    config: Config,
     renderer: Renderer,
     app: IonicApp,
     zone: NgZone,

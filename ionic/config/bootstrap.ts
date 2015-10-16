@@ -2,7 +2,7 @@ import {bootstrap, provide} from 'angular2/angular2';
 import {ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy} from 'angular2/router';
 
 import {IonicApp} from '../components/app/app';
-import {IonicConfig} from './config';
+import {Config} from './config';
 import {IonicPlatform} from '../platform/platform';
 import {OverlayController} from '../components/overlay/overlay-controller';
 import {IonicForm} from '../util/form';
@@ -23,8 +23,8 @@ export function ionicProviders(config) {
   let app = new IonicApp();
   let platform = new IonicPlatform();
 
-  if (!(config instanceof IonicConfig)) {
-    config = new IonicConfig(config);
+  if (!(config instanceof Config)) {
+    config = new Config(config);
   }
 
   platform.url(window.location.href);
@@ -45,7 +45,7 @@ export function ionicProviders(config) {
 
   return [
     provide(IonicApp, {useValue: app}),
-    provide(IonicConfig, {useValue: config}),
+    provide(Config, {useValue: config}),
     provide(IonicPlatform, {useValue: platform}),
     provide(TapClick, {useValue: tapClick}),
     provide(FeatureDetect, {useValue: featureDetect}),

@@ -1,7 +1,7 @@
 import {Component, Directive, ElementRef, Renderer, Host, Optional, NgControl, Inject, forwardRef} from 'angular2/angular2';
 
 import {IonicForm} from '../../util/form';
-import {IonicConfig} from '../../config/config';
+import {Config} from '../../config/config';
 import {pointerCoord} from '../../util/dom';
 
 /**
@@ -19,7 +19,7 @@ class MediaSwitch {
    * TODO
    * @param {Switch} swtch  TODO
    * @param {} elementRef  TODO
-   * @param {IonicConfig} config  TODO
+   * @param {Config} config  TODO
    */
   constructor(
     @Host() @Inject(forwardRef(() => Switch)) swtch: Switch,
@@ -99,13 +99,13 @@ export class Switch {
   /**
    * TODO
    * @param {ElementRef} elementRef  TODO
-   * @param {IonicConfig} config  TODO
+   * @param {Config} config  TODO
    * @param {NgControl=} ngControl  TODO
    */
   constructor(
     form: IonicForm,
     elementRef: ElementRef,
-    config: IonicConfig,
+    config: Config,
     renderer: Renderer,
     @Optional() private ngControl: NgControl
   ) {

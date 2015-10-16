@@ -1,6 +1,6 @@
 import {Component, Directive, ElementRef, Renderer, Host, Optional, NgControl, Query, QueryList} from 'angular2/angular2';
 
-import {IonicConfig} from '../../config/config';
+import {Config} from '../../config/config';
 import {Ion} from '../ion';
 import {ListHeader} from '../list/list';
 
@@ -56,13 +56,13 @@ export class RadioGroup extends Ion {
   /**
    * TODO
    * @param {ElementRef} elementRef  TODO
-   * @param {IonicConfig} config  TODO
+   * @param {Config} config  TODO
    * @param {NgControl=} ngControl  TODO
    * @param {QueryList<ListHeader>} headerQuery  TODO
    */
   constructor(
     elementRef: ElementRef,
-    config: IonicConfig,
+    config: Config,
     renderer: Renderer,
     @Optional() ngControl: NgControl,
     @Query(ListHeader) private headerQuery: QueryList<ListHeader>
@@ -194,12 +194,12 @@ export class RadioButton extends Ion {
    * Radio button constructor.
    * @param {RadioGroup=} group  The parent radio group, if any.
    * @param {ElementRef} elementRef  TODO
-   * @param {IonicConfig} config  TODO
+   * @param {Config} config  TODO
    */
   constructor(
     @Host() @Optional() group: RadioGroup,
     elementRef: ElementRef,
-    config: IonicConfig,
+    config: Config,
     renderer: Renderer
   ) {
     super(elementRef, config);

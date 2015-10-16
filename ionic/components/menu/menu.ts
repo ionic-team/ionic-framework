@@ -2,7 +2,7 @@ import {forwardRef, Directive, Host, EventEmitter, ElementRef} from 'angular2/an
 
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
-import {IonicConfig} from '../../config/config';
+import {Config} from '../../config/config';
 import {ConfigComponent} from '../../config/decorators';
 import {IonicPlatform} from '../../platform/platform';
 import {IonicKeyboard} from '../../util/keyboard';
@@ -67,7 +67,7 @@ export class Menu extends Ion {
   constructor(
     app: IonicApp,
     elementRef: ElementRef,
-    config: IonicConfig,
+    config: Config,
     platform: IonicPlatform,
     keyboard: IonicKeyboard
   ) {
