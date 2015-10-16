@@ -6,7 +6,7 @@ import * as dom from './dom';
 
 
 @Injectable()
-export class IonicKeyboard {
+export class Keyboard {
 
   constructor(config: Config, form: IonicForm, zone: NgZone) {
     this.form = form;

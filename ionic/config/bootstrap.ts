@@ -6,7 +6,7 @@ import {Config} from './config';
 import {Platform} from '../platform/platform';
 import {OverlayController} from '../components/overlay/overlay-controller';
 import {IonicForm} from '../util/form';
-import {IonicKeyboard} from '../util/keyboard';
+import {Keyboard} from '../util/keyboard';
 import {ActionSheet} from '../components/action-sheet/action-sheet';
 import {Modal} from '../components/modal/modal';
 import {Popup} from '../components/popup/popup';
@@ -51,7 +51,7 @@ export function ionicProviders(config) {
     provide(FeatureDetect, {useValue: featureDetect}),
     provide(Events, {useValue: events}),
     IonicForm,
-    IonicKeyboard,
+    Keyboard,
     OverlayController,
     ActionSheet,
     Modal,
