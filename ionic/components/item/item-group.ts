@@ -1,7 +1,8 @@
 import {Directive, ElementRef, Host, Optional} from 'angular2/angular2';
 import {Content} from '../content/content';
 import {throttle} from '../../util/util';
-import {position, offset, CSS} from '../../util/dom';
+import {position, offset, CSS, raf} from '../../util/dom';
+import {FeatureDetect} from '../../util/feature-detect';
 import {IonicConfig} from '../../config/config';
 
 /**
@@ -38,15 +39,16 @@ export class ItemGroupTitle {
    * TODO
    * @param {ElementRef} elementRef  TODO
    */
-  constructor(elementRef: ElementRef, config: IonicConfig, content: Content) {
+  constructor(elementRef: ElementRef, config: IonicConfig, content: Content, featureDetect: FeatureDetect) {
     this.isSticky = true;
     this.content = content;
     this.ele = elementRef.nativeElement;
     this.parent = this.ele.parentNode;
+    this.isCssValid = featureDetect.has('positionsticky')
   }
 
   onInit() {
-    if(!this.content) { return; }
+    if (!this.content || this.isCssValid) { return; }
 
     this.scrollContent = this.content.elementRef.nativeElement.children[0];
 
@@ -54,7 +56,6 @@ export class ItemGroupTitle {
     this.scrollMax = 0;
     this.scrollTransition = 0;
     this.isSticking = false;
-
 
     this.scrollContent.addEventListener('scroll', event => this.scrollEvent(event));
 
@@ -98,9 +99,7 @@ export class ItemGroupTitle {
       this.applyTransform(element, translateDyPixelsUp);
     }
     else {
-      // see http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
-      // see http://ionicframework.com/docs/api/utility/ionic.DomUtil/
-      requestAnimationFrame( a => this.applyTransform(element, translateDyPixelsUp) );
+      raf( a => this.applyTransform(element, translateDyPixelsUp) );
     }
   }
 
