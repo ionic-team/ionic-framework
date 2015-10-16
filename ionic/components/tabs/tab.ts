@@ -94,19 +94,18 @@ export class Tab extends NavController {
       this.tabs.select(this);
 
     } else if (this.tabs.preloadTabs) {
-      setTimeout(() => {
-        this.load(() => {
-          console.debug('preloaded tab', this.getIndex());
-        });
-      }, 500 * this.getIndex());
+      // setTimeout(() => {
+      //   this.load(() => {
+      //     console.debug('preloaded tab', this.getIndex());
+      //   });
+      // }, 500 * this.getIndex());
     }
   }
 
   load(callback) {
     if (!this._loaded && this.root) {
       let opts = {
-        animate: false,
-        navbar: false
+        animate: false
       };
       this.push(this.root, null, opts).then(callback);
       this._loaded = true;
