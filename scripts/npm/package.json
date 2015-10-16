@@ -14,8 +14,9 @@
   ],
   "dependencies": {
     "angular2": "2.0.0-alpha.<%= ngVersion %>",
+    "es6-shim": "^0.33.6",
+    "@reactivex/rxjs": "5.0.0-alpha.4",
     "reflect-metadata": "0.1.1",
-    "@reactivex/rxjs": "0.0.0-prealpha.3",
     "zone.js": "0.5.8"
   }
 }
