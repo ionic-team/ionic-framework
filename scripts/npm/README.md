@@ -1,8 +1,7 @@
-Ionic Framework
-=========
-https://github.com/driftyco/ionic2
+# Ionic Framework
 
-Bundles:
+### Bundles:
+
  - `css/`
      - the Ionic CSS stylesheet
  - `fonts/`
@@ -18,7 +17,8 @@ Bundles:
           * web-animations.min.js
      - `web-animations.min.js` web animations API polyfill
 
-Source files:
+###Source files:
+
  - `src/es5` - Ionic ES5 source files in both CommonJS and System module formats
  - `src/es6` - Ionic ES6 source files
  - `src/ts` - Ionic TypeScript source files (typings still missing)
