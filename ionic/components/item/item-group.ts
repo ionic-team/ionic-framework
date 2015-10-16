@@ -44,7 +44,7 @@ export class ItemGroupTitle {
     this.content = content;
     this.ele = elementRef.nativeElement;
     this.parent = this.ele.parentNode;
-    this.isCssValid = featureDetect.has('positionsticky')
+    this.isCssValid = true;//featureDetect.has('positionsticky')
   }
 
   onInit() {
