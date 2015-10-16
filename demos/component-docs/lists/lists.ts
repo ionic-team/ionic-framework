@@ -1,4 +1,4 @@
-import {IonicPlatform, Page} from 'ionic/ionic';
+import {Page} from 'ionic/ionic';
 
 @Page({
     templateUrl: 'lists/lists.html',

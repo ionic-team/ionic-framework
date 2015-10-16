@@ -4,7 +4,7 @@ import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
 import {ConfigComponent} from '../../config/decorators';
-import {IonicPlatform} from '../../platform/platform';
+import {Platform} from '../../platform/platform';
 import {IonicKeyboard} from '../../util/keyboard';
 import * as gestures from  './menu-gestures';
 
@@ -68,7 +68,7 @@ export class Menu extends Ion {
     app: IonicApp,
     elementRef: ElementRef,
     config: Config,
-    platform: IonicPlatform,
+    platform: Platform,
     keyboard: IonicKeyboard
   ) {
     super(elementRef, config);

@@ -1,4 +1,4 @@
-import {Config, IonicPlatform, ionicProviders} from 'ionic/ionic';
+import {Config, Platform, ionicProviders} from 'ionic/ionic';
 
 export function run() {
 
@@ -35,7 +35,7 @@ export function run() {
     let config = new Config({
       mode: 'md'
     });
-    let platform = new IonicPlatform(['ios']);
+    let platform = new Platform(['ios']);
     config.setPlatform(platform);
 
     expect(config.get('mode')).toEqual('md');
@@ -50,7 +50,7 @@ export function run() {
         }
       }
     });
-    let platform = new IonicPlatform(['ios']);
+    let platform = new Platform(['ios']);
     config.setPlatform(platform);
 
     expect(config.get('mode')).toEqual('md');
@@ -69,7 +69,7 @@ export function run() {
         }
       }
     });
-    let platform = new IonicPlatform(['mobile']);
+    let platform = new Platform(['mobile']);
     config.setPlatform(platform);
 
     expect(config.get('mode')).toEqual('modeB');
@@ -79,7 +79,7 @@ export function run() {
     let config = new Config({
       mode: 'modeA'
     });
-    let platform = new IonicPlatform(['core']);
+    let platform = new Platform(['core']);
     config.setPlatform(platform);
 
     expect(config.get('mode')).toEqual('modeA');
@@ -89,7 +89,7 @@ export function run() {
     let config = new Config({
       hoverCSS: true
     });
-    let platform = new IonicPlatform(['ios']);
+    let platform = new Platform(['ios']);
     config.setPlatform(platform);
 
     expect(config.get('hoverCSS')).toEqual(true);
@@ -97,7 +97,7 @@ export function run() {
 
   it('should get ios mode for core platform', () => {
     let config = new Config();
-    let platform = new IonicPlatform(['core']);
+    let platform = new Platform(['core']);
     config.setPlatform(platform);
 
     expect(config.get('mode')).toEqual('ios');
@@ -105,7 +105,7 @@ export function run() {
 
   it('should get ios mode for ipad platform', () => {
     let config = new Config();
-    let platform = new IonicPlatform(['mobile', 'ios', 'ipad', 'tablet']);
+    let platform = new Platform(['mobile', 'ios', 'ipad', 'tablet']);
     config.setPlatform(platform);
 
     expect(config.get('mode')).toEqual('ios');
@@ -113,7 +113,7 @@ export function run() {
 
   it('should get md mode for windowsphone platform', () => {
     let config = new Config();
-    let platform = new IonicPlatform(['mobile', 'windowsphone']);
+    let platform = new Platform(['mobile', 'windowsphone']);
     config.setPlatform(platform);
 
     expect(config.get('mode')).toEqual('md');
@@ -121,7 +121,7 @@ export function run() {
 
   it('should get md mode for android platform', () => {
     let config = new Config();
-    let platform = new IonicPlatform(['mobile', 'android']);
+    let platform = new Platform(['mobile', 'android']);
     config.setPlatform(platform);
 
     expect(config.get('mode')).toEqual('md');
@@ -136,7 +136,7 @@ export function run() {
         }
       }
     });
-    let platform = new IonicPlatform(['ios']);
+    let platform = new Platform(['ios']);
     config.setPlatform(platform);
 
     expect(config.get('tabBarPlacement')).toEqual('top');
@@ -146,7 +146,7 @@ export function run() {
     let config = new Config({
       tabBarPlacement: 'top'
     });
-    let platform = new IonicPlatform(['ios']);
+    let platform = new Platform(['ios']);
     config.setPlatform(platform);
 
     expect(config.get('tabBarPlacement')).toEqual('top');
@@ -154,7 +154,7 @@ export function run() {
 
   it('should get setting from md mode', () => {
     let config = new Config();
-    let platform = new IonicPlatform(['android']);
+    let platform = new Platform(['android']);
     config.setPlatform(platform);
 
     expect(config.get('tabBarPlacement')).toEqual('top');
@@ -162,7 +162,7 @@ export function run() {
 
   it('should get setting from ios mode', () => {
     let config = new Config();
-    let platform = new IonicPlatform(['ios']);
+    let platform = new Platform(['ios']);
     config.setPlatform(platform);
 
     expect(config.get('tabBarPlacement')).toEqual('bottom');
@@ -170,7 +170,7 @@ export function run() {
 
   it('should set/get platform setting from set()', () => {
     let config = new Config();
-    let platform = new IonicPlatform(['ios']);
+    let platform = new Platform(['ios']);
     config.setPlatform(platform);
 
     config.set('tabBarPlacement', 'bottom');
@@ -181,7 +181,7 @@ export function run() {
 
   it('should set/get setting from set()', () => {
     let config = new Config();
-    let platform = new IonicPlatform(['ios']);
+    let platform = new Platform(['ios']);
     config.setPlatform(platform);
 
     config.set('tabBarPlacement', 'top');
@@ -191,7 +191,7 @@ export function run() {
 
   it('should set ios platform settings from settings()', () => {
     let config = new Config();
-    let platform = new IonicPlatform(['ios']);
+    let platform = new Platform(['ios']);
     config.setPlatform(platform);
 
     config.settings('ios', {
@@ -203,7 +203,7 @@ export function run() {
 
   it('should set/get mobile setting even w/ higher priority ios', () => {
     let config = new Config();
-    let platform = new IonicPlatform(['mobile', 'ios']);
+    let platform = new Platform(['mobile', 'ios']);
     config.setPlatform(platform);
 
     config.settings({
@@ -220,7 +220,7 @@ export function run() {
 
   it('should set/get mobile setting even w/ higher priority ios', () => {
     let config = new Config();
-    let platform = new IonicPlatform(['mobile', 'ios']);
+    let platform = new Platform(['mobile', 'ios']);
     config.setPlatform(platform);
 
     config.settings({
@@ -237,7 +237,7 @@ export function run() {
 
   it('should set/get android setting w/ higher priority than mobile', () => {
     let config = new Config();
-    let platform = new IonicPlatform(['mobile', 'android']);
+    let platform = new Platform(['mobile', 'android']);
     config.setPlatform(platform);
 
     config.settings({
@@ -257,7 +257,7 @@ export function run() {
 
   it('should set/get ios setting w/ platforms set', () => {
     let config = new Config();
-    let platform = new IonicPlatform(['ios']);
+    let platform = new Platform(['ios']);
     config.setPlatform(platform);
 
     config.settings({

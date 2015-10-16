@@ -6,7 +6,7 @@ import {Label} from './label';
 import {IonicApp} from '../app/app';
 import {Content} from '../content/content';
 import * as dom  from '../../util/dom';
-import {IonicPlatform} from '../../platform/platform';
+import {Platform} from '../../platform/platform';
 
 
 /**
@@ -33,7 +33,7 @@ export class TextInput {
     renderer: Renderer,
     app: IonicApp,
     zone: NgZone,
-    platform: IonicPlatform,
+    platform: Platform,
     @Optional() @Host() scrollView: Content
   ) {
     renderer.setElementClass(elementRef, 'item', true);

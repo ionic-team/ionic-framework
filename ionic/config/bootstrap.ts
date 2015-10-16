@@ -3,7 +3,7 @@ import {ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy} from 'angular2
 
 import {IonicApp} from '../components/app/app';
 import {Config} from './config';
-import {IonicPlatform} from '../platform/platform';
+import {Platform} from '../platform/platform';
 import {OverlayController} from '../components/overlay/overlay-controller';
 import {IonicForm} from '../util/form';
 import {IonicKeyboard} from '../util/keyboard';
@@ -21,7 +21,7 @@ import * as dom from '../util/dom';
 
 export function ionicProviders(config) {
   let app = new IonicApp();
-  let platform = new IonicPlatform();
+  let platform = new Platform();
 
   if (!(config instanceof Config)) {
     config = new Config(config);
@@ -46,7 +46,7 @@ export function ionicProviders(config) {
   return [
     provide(IonicApp, {useValue: app}),
     provide(Config, {useValue: config}),
-    provide(IonicPlatform, {useValue: platform}),
+    provide(Platform, {useValue: platform}),
     provide(TapClick, {useValue: tapClick}),
     provide(FeatureDetect, {useValue: featureDetect}),
     provide(Events, {useValue: events}),

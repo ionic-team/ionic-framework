@@ -1,9 +1,9 @@
-import {IonicPlatform} from 'ionic/ionic';
+import {Platform} from 'ionic/ionic';
 
 export function run() {
 
   it('should set core as the fallback', () => {
-    let platform = new IonicPlatform();
+    let platform = new Platform();
     platform.userAgent('idk');
     platform.load();
 
@@ -13,7 +13,7 @@ export function run() {
   });
 
   it('should set android via platformOverride, despite ios user agent', () => {
-    let platform = new IonicPlatform();
+    let platform = new Platform();
     platform.userAgent(IPAD_UA);
     platform.load('android');
 
@@ -22,7 +22,7 @@ export function run() {
   });
 
   it('should set ios via platformOverride, despite android querystring', () => {
-    let platform = new IonicPlatform();
+    let platform = new Platform();
     platform.url('/?ionicplatform=android');
     platform.load('ios');
 
@@ -31,7 +31,7 @@ export function run() {
   });
 
   it('should set ios via platformOverride', () => {
-    let platform = new IonicPlatform();
+    let platform = new Platform();
     platform.load('ios');
 
     expect(platform.is('android')).toEqual(false);
@@ -39,7 +39,7 @@ export function run() {
   });
 
   it('should set android via platformOverride', () => {
-    let platform = new IonicPlatform();
+    let platform = new Platform();
     platform.load('android');
 
     expect(platform.is('android')).toEqual(true);
@@ -47,7 +47,7 @@ export function run() {
   });
 
   it('should set ios via querystring', () => {
-    let platform = new IonicPlatform();
+    let platform = new Platform();
     platform.url('/?ionicplatform=ios');
     platform.load();
 
@@ -58,7 +58,7 @@ export function run() {
   });
 
   it('should set ios via querystring, even with android user agent', () => {
-    let platform = new IonicPlatform();
+    let platform = new Platform();
     platform.url('/?ionicplatform=ios');
     platform.userAgent(ANDROID_UA);
     platform.load();
@@ -68,7 +68,7 @@ export function run() {
   });
 
   it('should set android via querystring', () => {
-    let platform = new IonicPlatform();
+    let platform = new Platform();
     platform.url('/?ionicplatform=android');
     platform.load();
 
@@ -77,7 +77,7 @@ export function run() {
   });
 
   it('should set android via querystring, even with ios user agent', () => {
-    let platform = new IonicPlatform();
+    let platform = new Platform();
     platform.url('/?ionicplatform=android');
     platform.userAgent(IPHONE_UA);
     platform.load();
@@ -87,7 +87,7 @@ export function run() {
   });
 
   it('should set android via user agent', () => {
-    let platform = new IonicPlatform();
+    let platform = new Platform();
     platform.userAgent(ANDROID_UA);
     platform.load();
 
@@ -97,7 +97,7 @@ export function run() {
   });
 
   it('should set iphone via user agent', () => {
-    let platform = new IonicPlatform();
+    let platform = new Platform();
     platform.userAgent(IPHONE_UA);
     platform.load();
 
@@ -109,7 +109,7 @@ export function run() {
   });
 
   it('should set ipad via user agent', () => {
-    let platform = new IonicPlatform();
+    let platform = new Platform();
     platform.userAgent(IPAD_UA);
     platform.load();
 

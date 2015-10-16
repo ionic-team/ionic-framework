@@ -6,7 +6,7 @@
 * Config allows you to set the modes of your components
 */
 
-import {IonicPlatform} from '../platform/platform';
+import {Platform} from '../platform/platform';
 import {isObject, isDefined, isFunction, isArray, extend} from '../util/util';
 
 /**
@@ -152,7 +152,7 @@ export class Config {
           }
 
           // get default platform's setting
-          configObj = IonicPlatform.get(activePlatformKeys[i]);
+          configObj = Platform.get(activePlatformKeys[i]);
           if (configObj && configObj.settings) {
 
             if (isDefined(configObj.settings[key])) {

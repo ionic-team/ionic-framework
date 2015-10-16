@@ -1,4 +1,4 @@
-import {IonicPlatform, Page, Popup} from 'ionic/ionic';
+import {Page, Popup} from 'ionic/ionic';
 
 @Page({
     templateUrl: 'popups/popups.html',

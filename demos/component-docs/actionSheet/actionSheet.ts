@@ -1,11 +1,11 @@
-import {IonicPlatform, Page, ActionSheet} from 'ionic/ionic';
+import {Platform, Page, ActionSheet} from 'ionic/ionic';
 
 @Page({
   templateUrl: 'actionSheet/actionSheet.html',
 })
 export class ActionSheetPage {
 
-  constructor(actionSheet: ActionSheet, platform: IonicPlatform) {
+  constructor(actionSheet: ActionSheet, platform: Platform) {
     this.actionSheet = actionSheet;
     console.log('actionSheet', actionSheet);
     this.platform = platform;

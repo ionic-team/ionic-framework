@@ -1,23 +1,23 @@
-import {IonicPlatform} from './platform';
+import {Platform} from './platform';
 import {windowLoad} from '../util/dom';
 
 
-IonicPlatform.register({
+Platform.register({
   name: 'core',
   settings: {
     mode: 'ios',
     keyboardHeight: 290,
   }
 });
-IonicPlatform.setDefault('core');
+Platform.setDefault('core');
 
 
-IonicPlatform.register({
+Platform.register({
   name: 'mobile'
 });
 
 
-IonicPlatform.register({
+Platform.register({
   name: 'phablet',
   isMatch(p) {
     let smallest = Math.min(p.width(), p.height());
@@ -28,7 +28,7 @@ IonicPlatform.register({
 });
 
 
-IonicPlatform.register({
+Platform.register({
   name: 'tablet',
   isMatch(p) {
     let smallest = Math.min(p.width(), p.height());
@@ -39,7 +39,7 @@ IonicPlatform.register({
 });
 
 
-IonicPlatform.register({
+Platform.register({
   name: 'android',
   superset: 'mobile',
   subsets: [
@@ -62,7 +62,7 @@ IonicPlatform.register({
 
 
 
-IonicPlatform.register({
+Platform.register({
   name: 'ios',
   superset: 'mobile',
   subsets: [
@@ -91,7 +91,7 @@ IonicPlatform.register({
 });
 
 
-IonicPlatform.register({
+Platform.register({
   name: 'ipad',
   superset: 'tablet',
   settings: {
@@ -103,7 +103,7 @@ IonicPlatform.register({
 });
 
 
-IonicPlatform.register({
+Platform.register({
   name: 'iphone',
   subsets: [
     'phablet'
@@ -114,7 +114,7 @@ IonicPlatform.register({
 });
 
 
-IonicPlatform.register({
+Platform.register({
   name: 'windowsphone',
   superset: 'mobile',
   subsets: [
@@ -133,7 +133,7 @@ IonicPlatform.register({
 });
 
 
-IonicPlatform.register({
+Platform.register({
   name: 'cordova',
   isEngine: true,
   methods: {

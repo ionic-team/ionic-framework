@@ -3,7 +3,7 @@
 +* @name platform
 +* @module ionic
 +* @description
-+* IonicPlatform returns the availble information about your current platform
++* Platform returns the availble information about your current platform
 +*/
 
 
@@ -14,7 +14,7 @@ import * as dom from '../util/dom';
 /**
  * TODO
  */
-export class IonicPlatform {
+export class Platform {
 
   constructor(platforms=[]) {
     this._platforms = platforms;
@@ -33,9 +33,9 @@ export class IonicPlatform {
    * @returns {bool}
    *
    * ```
-   * import {IonicPlatform} 'ionic/ionic';
+   * import {Platform} 'ionic/ionic';
    * export MyClass {
-   *    constructor(platform: IonicPlatform){
+   *    constructor(platform: Platform){
    *      this.platform = platform;
    *      if(this.platform.is('ios'){
    *        // what ever you need to do for
@@ -57,9 +57,9 @@ export class IonicPlatform {
    * it would return mobile, ios, and iphone.
    *
    * ```
-   * import {IonicPlatform} 'ionic/ionic';
+   * import {Platform} 'ionic/ionic';
    * export MyClass {
-   *    constructor(platform: IonicPlatform){
+   *    constructor(platform: Platform){
    *      this.platform = platform;
    *      console.log(this.platform.platforms());
    *      // This will return an array of all the availble platforms
@@ -82,9 +82,9 @@ export class IonicPlatform {
    * Returns an object containing the os version
    *
    * ```
-   * import {IonicPlatform} 'ionic/ionic';
+   * import {Platform} 'ionic/ionic';
    * export MyClass {
-   *    constructor(platform: IonicPlatform){
+   *    constructor(platform: Platform){
    *      this.platform = platform;
    *      console.log(this.platform.versions('android'));
    *      // Returns an object with the os version as a string,
@@ -112,9 +112,9 @@ export class IonicPlatform {
    * Returns a promise when the platform is ready and native functionality can be called
    *
    * ```
-   * import {IonicPlatform} 'ionic/ionic';
+   * import {Platform} 'ionic/ionic';
    * export MyClass {
-   *    constructor(platform: IonicPlatform){
+   *    constructor(platform: Platform){
    *      this.platform = platform;
    *      this.platform.ready().then(() => {
    *        console.log('Platform ready');
@@ -450,7 +450,7 @@ function insertSuperset(platformNode) {
 class PlatformNode {
 
   constructor(platformName) {
-    this.c = IonicPlatform.get(platformName);
+    this.c = Platform.get(platformName);
     this.isEngine = this.c.isEngine;
   }
 
@@ -538,7 +538,7 @@ class PlatformNode {
   }
 
   getSubsetParents(subsetPlatformName) {
-    let platformRegistry = IonicPlatform.registry();
+    let platformRegistry = Platform.registry();
 
     let parentPlatformNames = [];
     let platform = null;
