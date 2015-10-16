@@ -1,7 +1,7 @@
 import {Component, Directive, NgIf, forwardRef, Host, Optional, ElementRef, Renderer, Attribute, Query, QueryList, NgZone} from 'angular2/angular2';
 
 import {Config} from '../../config/config';
-import {IonicForm} from '../../util/form';
+import {Form} from '../../util/form';
 import {Label} from './label';
 import {IonicApp} from '../app/app';
 import {Content} from '../content/content';
@@ -27,7 +27,7 @@ import {Platform} from '../../platform/platform';
 export class TextInput {
 
   constructor(
-    form: IonicForm,
+    form: Form,
     elementRef: ElementRef,
     config: Config,
     renderer: Renderer,
@@ -403,7 +403,7 @@ export class TextInputElement {
 })
 class InputScrollAssist {
 
-  constructor(form: IonicForm, textInput: TextInput) {
+  constructor(form: Form, textInput: TextInput) {
     this.form = form;
     this.textInput = textInput;
   }

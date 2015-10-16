@@ -5,7 +5,7 @@ import {IonicApp} from '../components/app/app';
 import {Config} from './config';
 import {Platform} from '../platform/platform';
 import {OverlayController} from '../components/overlay/overlay-controller';
-import {IonicForm} from '../util/form';
+import {Form} from '../util/form';
 import {Keyboard} from '../util/keyboard';
 import {ActionSheet} from '../components/action-sheet/action-sheet';
 import {Modal} from '../components/modal/modal';
@@ -50,7 +50,7 @@ export function ionicProviders(config) {
     provide(TapClick, {useValue: tapClick}),
     provide(FeatureDetect, {useValue: featureDetect}),
     provide(Events, {useValue: events}),
-    IonicForm,
+    Form,
     Keyboard,
     OverlayController,
     ActionSheet,

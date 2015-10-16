@@ -15,7 +15,7 @@ import {Config} from '../config/config';
  * ```
  */
  @Injectable()
-export class IonicForm {
+export class Form {
 
   constructor(config: Config, zone: NgZone) {
     this._config = config;

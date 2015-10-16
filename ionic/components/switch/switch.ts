@@ -1,6 +1,6 @@
 import {Component, Directive, ElementRef, Renderer, Host, Optional, NgControl, Inject, forwardRef} from 'angular2/angular2';
 
-import {IonicForm} from '../../util/form';
+import {Form} from '../../util/form';
 import {Config} from '../../config/config';
 import {pointerCoord} from '../../util/dom';
 
@@ -103,7 +103,7 @@ export class Switch {
    * @param {NgControl=} ngControl  TODO
    */
   constructor(
-    form: IonicForm,
+    form: Form,
     elementRef: ElementRef,
     config: Config,
     renderer: Renderer,
