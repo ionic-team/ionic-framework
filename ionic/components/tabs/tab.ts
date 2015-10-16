@@ -88,10 +88,17 @@ export class Tab extends NavController {
   }
 
   onInit() {
-    console.debug('Tab onInit');
+    console.debug('Tab onInit', this.getIndex());
 
     if (this._isInitial) {
       this.tabs.select(this);
+
+    } else if (this.tabs.preloadTabs) {
+      setTimeout(() => {
+        this.load(() => {
+          console.debug('preloaded tab', this.getIndex());
+        });
+      }, 500 * this.getIndex());
     }
   }
 
@@ -150,6 +157,10 @@ export class Tab extends NavController {
       done();
     });
 
+  }
+
+  getIndex() {
+    return this.tabs.getIndex(this);
   }
 
 }

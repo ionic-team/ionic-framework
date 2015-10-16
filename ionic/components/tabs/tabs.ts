@@ -62,7 +62,8 @@ import {Icon} from '../icon/icon';
   selector: 'ion-tabs',
   defaultInputs: {
     'tabBarPlacement': 'bottom',
-    'tabBarIcons': 'top'
+    'tabBarIcons': 'top',
+    'preloadTabs': true
   },
   template:
     '<ion-navbar-section>' +
@@ -106,6 +107,7 @@ export class Tabs extends Ion {
   ) {
     super(elementRef, config);
     this.app = app;
+    this.preload = config.get('preloadTabs');
 
     // collection of children "Tab" instances, which extends NavController
     this._tabs = [];
@@ -199,6 +201,10 @@ export class Tabs extends Ion {
       }
     }
     return null;
+  }
+
+  getIndex(tab) {
+    return this._tabs.indexOf(tab);
   }
 
   /**
