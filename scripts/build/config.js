@@ -16,6 +16,7 @@ module.exports = {
     'node_modules/systemjs/dist/system.js',
     'node_modules/angular2/bundles/angular2.dev.js',
     'node_modules/angular2/bundles/router.dev.js',
+    'node_modules/angular2/bundles/http.dev.js',
     'dist/js/ionic.js',
     'scripts/resources/web-animations-js/web-animations.min.js'
   ],

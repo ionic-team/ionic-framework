@@ -166,20 +166,20 @@ export class Tabs extends Ion {
 
     selectedTab.load(() => {
       this._isReady && this._isReady();
-    });
 
-    this._tabs.forEach(tab => {
-      tab.isSelected = (tab === selectedTab);
+      this._tabs.forEach(tab => {
+        tab.isSelected = (tab === selectedTab);
 
-      tab._views.forEach(viewCtrl => {
-        let navbarRef = viewCtrl.navbarRef();
-        if (navbarRef) {
-          navbarRef.nativeElement.classList[tab.isSelected ? 'remove': 'add']('deselected-tab');
-        }
+        tab._views.forEach(viewCtrl => {
+          let navbarRef = viewCtrl.navbarRef();
+          if (navbarRef) {
+            navbarRef.nativeElement.classList[tab.isSelected ? 'remove': 'add']('deselected-tab');
+          }
+        });
       });
-    });
 
-    this.highlight && this.highlight.select(selectedTab);
+      this.highlight && this.highlight.select(selectedTab);
+    });
   }
 
   /**
