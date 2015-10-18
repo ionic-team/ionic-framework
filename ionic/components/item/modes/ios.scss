@@ -143,6 +143,7 @@ $item-ios-sliding-transition:         transform 250ms ease-in-out !default;
 
   ion-avatar {
     min-width: $item-ios-avatar-size;
+    min-height: $item-ios-avatar-size;
 
     img {
       max-width: $item-ios-avatar-size;
@@ -153,6 +154,7 @@ $item-ios-sliding-transition:         transform 250ms ease-in-out !default;
 
   ion-thumbnail {
     min-width: $item-ios-thumbnail-size;
+    min-height: $item-ios-thumbnail-size;
 
     img {
       max-width: $item-ios-thumbnail-size;
@@ -165,6 +167,7 @@ $item-ios-sliding-transition:         transform 250ms ease-in-out !default;
     padding-left: 0;
     padding-right: 0;
   }
+  
   ion-item-sliding-content {
     background-color: $item-ios-sliding-content-bg;
     padding-right: ($item-ios-padding-right / 2);

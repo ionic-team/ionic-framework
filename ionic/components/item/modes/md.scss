@@ -155,6 +155,7 @@ $item-md-sliding-transition:         transform 250ms ease-in-out !default;
 
   ion-avatar {
     min-width: $item-md-avatar-size;
+    min-height: $item-md-avatar-size;
 
     img {
       max-width: $item-md-avatar-size;
@@ -165,6 +166,7 @@ $item-md-sliding-transition:         transform 250ms ease-in-out !default;
 
   ion-thumbnail {
     min-width: $item-md-thumbnail-size;
+    min-height: $item-md-thumbnail-size;
 
     img {
       max-width: $item-md-thumbnail-size;
