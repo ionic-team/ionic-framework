@@ -79,6 +79,7 @@ body {
   text-size-adjust: none;
 
   @include user-select-none();
+  background-color: $background-color;
 }
 
 ion-app {
