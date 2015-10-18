@@ -30,6 +30,50 @@ function getBabelOptions(moduleName, moduleType) {
   }
 }
 
+function buildDemoBundle(opts, done) {
+  var glob = require('glob');
+  var webpack = require('webpack');
+  var path = require('path');
+  var _ = require('lodash');
+
+  var numWebpacks = 0;
+  var fp = 'dist/demos/'+opts.demo+'/index.js';
+  if (opts.demo == '*') {
+    fp = "dist/demos/**/index.js";
+  }
+
+  return glob(fp, function(err, files){
+    files.forEach(function(file){
+      var config = require('./scripts/demos/webpack.config.js');
+
+      // add our bundle entry, removing previous if necessary
+      // since config is cached
+      if (config.entry.length > 5) {
+        config.entry.pop();
+      }
+      config.entry.push('./' + file);
+      config.output = {
+        filename: path.dirname(file) + '/bundle.js'
+      }
+
+      // pretty sure this is a race, but it works
+      numWebpacks++;
+      webpack(config, function(err, stats){
+        // var statsOptions = {
+        //   'colors': true,
+        //   'modules': true,
+        //   'chunks': false,
+        //   'exclude': ['node_modules'],
+        //   'errorDetails': true
+        // }
+        // console.log(stats.toString(statsOptions));
+        if (--numWebpacks === 0) done();
+      })
+    })
+
+  });
+}
+
 var tscOptions = {
   target: 'ES6',
   allowNonTsExtensions: true,
@@ -59,7 +103,6 @@ gulp.task('build', function(done) {
   runSequence(
     'bundle',
     'e2e',
-    // 'demos:all',
     'sass',
     'fonts',
     done
@@ -100,10 +143,6 @@ gulp.task('watch', function(done) {
         }
       );
 
-      // watch('demos/**/*', function() {
-      //   gulp.start('demos:all');
-      // });
-
       watch('ionic/components/*/test/**/*', function(file) {
         if (file.event === "unlink") {
           var paths = file.history[0].split("ionic/components/");
@@ -129,6 +168,12 @@ gulp.task('watch', function(done) {
       done();
     }
   );
+});
+
+gulp.task('watch:demos', function() {
+  watch('demos/**/*', function() {
+    gulp.start('demos:docs');
+  });
 });
 
 gulp.task('serve', function() {
@@ -360,11 +405,6 @@ gulp.task('src.link', function(done) {
   watch(['/ionic/**/*.ts', 'ionic/**/*.scss'], function(file) {
     gulp.start('src');
   });
-
-
-  // watch('demos/**/*', function() {
-  //   gulp.start('demos:all');
-  // });
 })
 
 gulp.task('src', function(done){
@@ -415,51 +455,28 @@ gulp.task('build.demos', function(){
   }
 });
 
-gulp.task('bundle.demos', ['build.demos'], function(done){
-  var glob = require('glob');
-  var webpack = require('webpack');
-  var path = require('path');
-  var _ = require('lodash');
-
-  var numWebpacks = 0;
-  glob('dist/demos/**/index.js', function(err, files){
-    files.forEach(function(file){
-      var config = require('./scripts/demos/webpack.config.js');
-
-      // add our bundle entry, removing previous if necessary
-      // since config is cached
-      if (config.entry.length > 5) {
-        config.entry.pop();
-      }
-      config.entry.push('./' + file);
-      config.output = {
-        filename: path.dirname(file) + '/bundle.js'
-      }
-
-      // pretty sure this is a race, but it works
-      numWebpacks++;
-      webpack(config, function(err, stats){
-        // var statsOptions = {
-        //   'colors': true,
-        //   'modules': true,
-        //   'chunks': false,
-        //   'exclude': ['node_modules'],
-        //   'errorDetails': true
-        // }
-        // console.log(stats.toString(statsOptions));
-        if (--numWebpacks === 0) done();
-      })
-    })
-  });
+gulp.task('bundle.demos:all', ['build.demos'], function(done) {
+  return buildDemoBundle({demo: '*'}, done);
 });
 
-gulp.task('demos', ['bundle.demos']);
+gulp.task('bundle.demos:docs', ['build.demos'], function(done) {
+  buildDemoBundle({demo: 'component-docs'}, done);
+});
 
-gulp.task('demos:all', ['demos'], function() {
-   return gulp
+gulp.task('demos:all', ['bundle.demos:all'], function() {
+  return gulp
     .src('dist/demos/component-docs/**/*')
     .pipe(gulp.dest('dist/ionic-site/docs/v2/components/demo/'))
 });
+
+gulp.task('demos:docs', ['bundle.demos:docs'], function() {
+  return gulp
+    .src('dist/demos/component-docs/**/*')
+    .pipe(gulp.dest('dist/ionic-site/docs/v2/components/demo/'))
+});
+
+gulp.task('demos', ['demos:all']);
+
 
 gulp.task('publish', function(done) {
   var version = flags.version;
