@@ -75,7 +75,7 @@ export function getPageFor(hash) {
         'card-header': CardsHeaderPage,
         'card-list': CardsListPage,
         'card-image': CardsImagePage,
-        'card-background-image': CardsBackgroundPage,
+        'card-background': CardsBackgroundPage,
         'card-advanced-map': CardsAdvancedMapPage,
         'card-advanced-social': CardsAdvancedSocialPage,
         'card-advanced-image': CardsAdvancedImagePage,

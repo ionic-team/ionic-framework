@@ -143,3 +143,28 @@ ion-card.cards-list-demo a > icon {
   color: #444444;
 }
 
+.adv-background {
+  position: relative;
+  text-align: center !important;
+}
+
+ion-card p.adv-background-title {
+  position: absolute;
+  top: 29%;
+  font-size: 2.0em;
+  width: 100%;
+  font-weight: bold;
+  color: #fff !important;
+
+
+}
+
+ion-card p.adv-background-subtitle {
+  font-size: 1.0em;
+  position: absolute;
+  top: 48%;
+  width: 100%;
+  color: #fff !important;
+
+}
+
