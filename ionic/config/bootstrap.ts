@@ -1,5 +1,6 @@
 import {bootstrap, provide} from 'angular2/angular2';
 import {ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy} from 'angular2/router';
+import {HTTP_PROVIDERS} from 'angular2/http';
 
 import {IonicApp} from '../components/app/app';
 import {Config} from './config';
@@ -60,6 +61,7 @@ export function ionicProviders(config) {
     NavRegistry,
     ROUTER_PROVIDERS,
     provide(LocationStrategy, {useClass: HashLocationStrategy}),
+    HTTP_PROVIDERS,
   ];
 }
 
