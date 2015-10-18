@@ -15,7 +15,10 @@ import {ButtonsPage,
         IconButtonsPage,
         ButtonsInComponentsPage} from './buttons/buttons';
 
-import {CardsPage} from './cards/cards';
+import {CardsBasicPage,
+        CardsImagePage,
+        CardsHeaderPage,
+        CardsListPage} from './cards/cards';
 
 import {FormsPage,
         FixedInlinePage,
@@ -63,7 +66,11 @@ export function getPageFor(hash) {
         'buttons-in-components': ButtonsInComponentsPage,
         'button-sizes': ButtonSizesPage,
         'icon-buttons': IconButtonsPage,
-        'cards': CardsPage,
+
+        'cards': CardsBasicPage,
+        'card-header': CardsHeaderPage,
+        'card-list': CardsListPage,
+        'card-image': CardsImagePage,
 
         'forms': FormsPage,
         'fixed-inline-labels': FixedInlinePage,
