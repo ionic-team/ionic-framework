@@ -168,3 +168,15 @@ ion-card p.adv-background-subtitle {
 
 }
 
+ion-card .icon-avatar {
+  margin: 10px 8px;
+  min-width: 2.4rem !important;
+  color: #444444;
+  font-size: 1.8em;
+  text-align: center;
+}
+
+ion-card.adv-map p {
+  font-size: 0.7em !important;
+}
+
