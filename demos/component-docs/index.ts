@@ -5,7 +5,8 @@ import * as helpers from './helpers';
 
 
 @App({
-  template: '<ion-nav id="nav" [root]="rootPage"></ion-nav><ion-overlay></ion-overlay>'
+  template: '<ion-nav id="nav" [root]="rootPage"></ion-nav><ion-overlay></ion-overlay>',
+  directives: [helpers.AndroidAttribute],
 })
 class DemoApp {
 
