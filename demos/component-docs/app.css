@@ -180,3 +180,10 @@ ion-card.adv-map p {
   font-size: 0.7em !important;
 }
 
+.ios ion-content.cards-bg {
+  background-color: #f4f4f7;
+}
+.md ion-content.cards-bg {
+  background-color: #e6e6e6 !important;
+}
+
