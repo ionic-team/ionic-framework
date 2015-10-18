@@ -45,9 +45,9 @@ class View3Cmp {
 
 @App()
 @RouteConfig([
-  { path: '/', component: View1Cmp, as: 'first' },
-  { path: '/second', component: View2Cmp, as: 'second' },
-  { path: '/third/:id', component: View3Cmp, as: 'third' }
+  { path: '/', component: View1Cmp, as: 'First' },
+  { path: '/2', component: View2Cmp, as: 'Second' },
+  { path: '/3/:id', component: View3Cmp, as: 'Third' }
 ])
 class InboxApp {
   constructor(location: Location) {

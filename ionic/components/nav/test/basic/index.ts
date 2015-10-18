@@ -4,28 +4,28 @@ import {NavParams, NavController} from 'ionic/ionic';
 
 
 @Page({
-  template: '' +
-    '<ion-navbar *navbar>' +
-      '<ion-title><ion-segment><ion-segment-button>Friends</ion-segment-button><ion-segment-button>Enemies</ion-segment-button></ion-segment></ion-title>' +
-      '<ion-nav-items primary>' +
-        '<button><icon star></icon></button>' +
-      '</ion-nav-items>' +
-      '<ion-nav-items secondary>' +
-        '<button>S1</button>' +
-      '</ion-nav-items>' +
-    '</ion-navbar>' +
-    '<ion-content padding>' +
-      '<p>{{title}}</p>' +
-      '<p><button id="from1To2" primary (click)="push()">Push (Go to 2nd)</button></p>' +
-      '<p><button [nav-push]="[pushPage, {id: 42}]">Push w/ [nav-push] array (Go to 2nd)</button></p>' +
-      '<p><button [nav-push]="pushPage" [nav-params]="{id:40}">Push w/ [nav-push] and [nav-params] (Go to 2nd)</button></p>' +
-      '<p><button [nav-push]="[\'FirstPage\', {id: 22}]">Push w/ [nav-push] array and string view name (Go to 2nd)</button></p>' +
-      '<p><button nav-push="FirstPage" [nav-params]="{id: 23}">Push w/ nav-push and [nav-params] (Go to 2nd)</button></p>' +
-      '<p><button (click)="setViews()">setViews() (Go to 3rd, no history)</button></p>' +
-      '<icon class="ion-ios-arrow-back"></icon>' +
-      '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
-      '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
-    '</ion-content>'
+  template: `
+    <ion-navbar *navbar>
+      <ion-title><ion-segment><ion-segment-button>Friends</ion-segment-button><ion-segment-button>Enemies</ion-segment-button></ion-segment></ion-title>
+      <ion-nav-items primary>
+        <button><icon star></icon></button>
+      </ion-nav-items>
+      <ion-nav-items secondary>
+        <button>S1</button>
+      </ion-nav-items>
+    </ion-navbar>
+    <ion-content padding>
+      <p>{{title}}</p>
+      <p><button id="from1To2" primary (click)="push()">Push (Go to 2nd)</button></p>
+      <p><button [nav-push]="[pushPage, {id: 42}]">Push w/ [nav-push] array (Go to 2nd)</button></p>
+      <p><button [nav-push]="pushPage" [nav-params]="{id:40}">Push w/ [nav-push] and [nav-params] (Go to 2nd)</button></p>
+      <p><button [nav-push]="[\'FirstPage\', {id: 22}]">Push w/ [nav-push] array and string view name (Go to 2nd)</button></p>
+      <p><button nav-push="FirstPage" [nav-params]="{id: 23}">Push w/ nav-push and [nav-params] (Go to 2nd)</button></p>
+      <p><button (click)="setViews()">setViews() (Go to 3rd, no history)</button></p>
+      <icon class="ion-ios-arrow-back"></icon>
+      <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
+      <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
+    </ion-content>`
 })
 class FirstPage {
   constructor(
@@ -101,11 +101,10 @@ class SecondPage {
   template: `
     <ion-navbar *navbar><ion-title>Third Page Header</ion-title></ion-navbar>
     <ion-content padding>
-      <p>
-        <button id="from3To2" (click)="pop()">Pop (Go back to 2nd)</button>
-        <button id="insert" (click)="insert()">Insert first page into history before this</button>
-        <button id="remove" (click)="removeSecond()">Remove second page in history</button>
-      </p>
+      <p><button (click)="push()">Push (Go to 4th)</button></p>
+      <p><button id="from3To2" (click)="pop()">Pop (Go back to 2nd)</button></p>
+      <p><button id="insert" (click)="insert()">Insert first page into history before this</button></p>
+      <p><button id="remove" (click)="removeSecond()">Remove second page in history</button></p>
       <div class="yellow"><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f></div>
     </ion-content>
   `
@@ -115,6 +114,10 @@ class ThirdPage {
     nav: NavController
   ) {
     this.nav = nav
+  }
+
+  push() {
+    this.nav.push(FourthPage);
   }
 
   pop() {
@@ -132,9 +135,29 @@ class ThirdPage {
 }
 
 
+@Page({
+  template: `
+    <ion-navbar *navbar><ion-title>Fourth Page Header</ion-title></ion-navbar>
+    <ion-content padding>
+      <p>
+        <button (click)="nav.pop()">Pop (Go back to 3rd)</button>
+      </p>
+    </ion-content>
+  `
+})
+class FourthPage {
+  constructor(
+    nav: NavController
+  ) {
+    this.nav = nav
+  }
+}
+
 
 @App({
-  template: '<ion-nav [root]="root"></ion-nav>',
+  template: `
+    <ion-nav [root]="root"></ion-nav>
+  `,
   views: [FirstPage, SecondPage, ThirdPage]
 })
 class E2EApp {

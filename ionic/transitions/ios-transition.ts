@@ -78,7 +78,7 @@ class IOSTransition extends Animation {
       if (backDirection) {
         // back direction
         enteringTitle.fromTo(TRANSLATEX, OFF_LEFT, CENTER);
-        enteringNavbarBg.fromTo(TRANSLATEX, OFF_LEFT, CENTER);
+
         if (enteringView.enableBack()) {
           enteringBackButton.before.addClass(SHOW_BACK_BTN_CSS);
           enteringBackButton.fadeIn();
@@ -87,7 +87,6 @@ class IOSTransition extends Animation {
       } else {
         // forward direction
         enteringTitle.fromTo(TRANSLATEX, OFF_RIGHT, CENTER);
-        enteringNavbarBg.fromTo(TRANSLATEX, OFF_RIGHT, CENTER);
 
         if (enteringView.enableBack()) {
           enteringBackButton.before.addClass(SHOW_BACK_BTN_CSS);
@@ -97,6 +96,17 @@ class IOSTransition extends Animation {
           enteringBackBtnText.fromTo(TRANSLATEX, '150px', '0px');
           enteringNavBar.add(enteringBackBtnText);
         }
+
+        if (leavingHasNavbar) {
+          // if there is a leaving navbar, then just fade this one in
+          enteringNavbarBg
+            .fromTo(TRANSLATEX, CENTER, CENTER)
+            .fadeIn();
+
+        } else {
+          enteringNavbarBg.fromTo(TRANSLATEX, OFF_RIGHT, CENTER);
+        }
+
       }
     }
 
@@ -146,7 +156,15 @@ class IOSTransition extends Animation {
         if (backDirection) {
           // back direction
           leavingTitle.fromTo(TRANSLATEX, CENTER, '100%');
-          leavingNavbarBg.fromTo(TRANSLATEX, CENTER, '100%');
+          if (enteringHasNavbar) {
+            // this is an entering navbar, just fade this out
+            leavingNavbarBg
+              .fromTo(TRANSLATEX, CENTER, CENTER)
+              .fadeOut();
+
+          } else {
+            leavingNavbarBg.fromTo(TRANSLATEX, CENTER, '100%');
+          }
 
           let leavingBackBtnText = new Animation(leavingView.backBtnTextRef());
           leavingBackBtnText.fromTo(TRANSLATEX, CENTER, (300) + 'px');
