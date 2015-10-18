@@ -18,7 +18,11 @@ import {ButtonsPage,
 import {CardsBasicPage,
         CardsImagePage,
         CardsHeaderPage,
-        CardsListPage} from './cards/cards';
+        CardsListPage,
+        CardsBackgroundPage,
+        CardsAdvancedMapPage,
+        CardsAdvancedSocialPage,
+        CardsAdvancedImagePage} from './cards/cards';
 
 import {FormsPage,
         FixedInlinePage,
@@ -71,6 +75,10 @@ export function getPageFor(hash) {
         'card-header': CardsHeaderPage,
         'card-list': CardsListPage,
         'card-image': CardsImagePage,
+        'card-background-image': CardsBackgroundPage,
+        'card-advanced-map': CardsAdvancedMapPage,
+        'card-advanced-social': CardsAdvancedSocialPage,
+        'card-advanced-image': CardsAdvancedImagePage,
 
         'forms': FormsPage,
         'fixed-inline-labels': FixedInlinePage,

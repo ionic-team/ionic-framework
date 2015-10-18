@@ -36,3 +36,39 @@ export class CardsImagePage {
 
     }
 }
+
+@Page({
+  templateUrl: 'cards/cards-background.html',
+})
+export class CardsBackgroundPage {
+    constructor() {
+
+    }
+}
+
+@Page({
+  templateUrl: 'cards/cards-advanced-social.html',
+})
+export class CardsAdvancedSocialPage {
+    constructor() {
+
+    }
+}
+
+@Page({
+  templateUrl: 'cards/cards-advanced-map.html',
+})
+export class CardsAdvancedMapPage {
+    constructor() {
+
+    }
+}
+
+@Page({
+  templateUrl: 'cards/cards-advanced-image.html',
+})
+export class CardsAdvancedImagePage {
+    constructor() {
+
+    }
+}
