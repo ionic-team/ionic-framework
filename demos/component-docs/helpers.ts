@@ -37,8 +37,8 @@ import {IconsPage} from './icons/icons';
 import {BasicListsPage,
         AvatarListsPage,
         IconListsPage,
-        NoDividersPage,
-        InsetListsPage,
+        BasicDividersPage,
+        BasicInsetListsPage,
         ListHeadersPage} from './lists/lists';
 
 import {MenusPage} from './menus/menus';
@@ -100,8 +100,8 @@ export function getPageFor(hash) {
         'lists': BasicListsPage,
         'avatar-list': AvatarListsPage,
         'icon-list': IconListsPage,
-        'no-dividers': NoDividersPage,
-        'inset-list': InsetListsPage,
+        'dividers': BasicDividersPage,
+        'inset-list': BasicInsetListsPage,
         'list-headers': ListHeadersPage,
 
         'menus': MenusPage,

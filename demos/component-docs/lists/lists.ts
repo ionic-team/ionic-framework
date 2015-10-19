@@ -10,18 +10,18 @@ export class BasicListsPage {
 }
 
 @Page({
-    templateUrl: 'lists/inset-lists.html',
+    templateUrl: 'lists/dividers.html',
 })
-export class InsetListsPage {
+export class BasicDividersPage {
     constructor() {
 
     }
 }
 
 @Page({
-    templateUrl: 'lists/no-dividers.html',
+    templateUrl: 'lists/inset-lists.html',
 })
-export class NoDividersPage {
+export class BasicInsetListsPage {
     constructor() {
 
     }
