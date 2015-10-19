@@ -17,11 +17,7 @@ class ModalsFirstPage {
   }
 
   openModal() {
-    this.modal.open(ModalsContentPage, {
-      handle: 'my-awesome-modal',
-      enterAnimation: 'my-fade-in',
-      leaveAnimation: 'my-fade-out'
-    });
+    this.modal.open(ModalsContentPage);
   }
 
 }
@@ -54,27 +50,3 @@ export class ModalsPage {
     this.rootView = ModalsFirstPage;
   }
 }
-
-class FadeIn extends Animation {
-  constructor(element) {
-    super(element);
-    this
-      .easing('ease')
-      .duration(450)
-      .fadeIn();
-  }
-}
-
-Animation.register('my-fade-in', FadeIn);
-
-class FadeOut extends Animation {
-  constructor(element) {
-    super(element);
-    this
-      .easing('ease')
-      .duration(250)
-      .fadeOut();
-  }
-}
-
-Animation.register('my-fade-out', FadeOut);
