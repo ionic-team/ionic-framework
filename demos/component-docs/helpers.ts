@@ -33,7 +33,14 @@ import {FormsPage,
         StackedPage} from './forms/forms';
         
 import {IconsPage} from './icons/icons';
-import {ListsPage} from './lists/lists';
+
+import {BasicListsPage,
+        AvatarListsPage,
+        IconListsPage,
+        NoDividersPage,
+        InsetListsPage,
+        ListHeadersPage} from './lists/lists';
+
 import {MenusPage} from './menus/menus';
 import {ModalsPage} from './modals/modals';
 import {NavigationPage} from './navigation/navigation';
@@ -89,7 +96,14 @@ export function getPageFor(hash) {
         'stacked-labels': StackedPage,
 
         'icons': IconsPage,
-        'lists': ListsPage,
+
+        'lists': BasicListsPage,
+        'avatar-list': AvatarListsPage,
+        'icon-list': IconListsPage,
+        'no-dividers': NoDividersPage,
+        'inset-list': InsetListsPage,
+        'list-headers': ListHeadersPage,
+
         'menus': MenusPage,
         'modals': ModalsPage,
         'navigation': NavigationPage,
