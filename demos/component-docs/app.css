@@ -187,3 +187,10 @@ ion-card.adv-map p {
   background-color: #e6e6e6 !important;
 }
 
+.demo-list-icons icon {
+  color: #444444;
+}
+.demo-list-icons icon#secondary {
+  color: #32DB64;
+}
+

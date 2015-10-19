@@ -3,7 +3,7 @@
   <ion-title>Lists</ion-title>
 </ion-navbar>
 
-<ion-content class="has-header">
+<ion-content class="has-header demo-list-icons">
   <ion-list>
 
     <ion-header>
@@ -11,24 +11,33 @@
     </ion-header>
 
     <ion-item>
-      <icon color-wand item-left></icon>
-      Dark Arts
-    </ion-item>
-
-    <ion-item>
       <icon planet item-left></icon>
       Astronomy
+      <ion-note item-right>
+      To the moon
+      </ion-note>
+    </ion-item>
+
+    <ion-switch checked="false">
+      <icon body item-left></icon>
+      Muggle Studies
+    </ion-switch>
+
+    <ion-item>
+      <icon leaf item-left></icon>
+      Herbology
+      <icon rose item-right id="secondary"></icon>
     </ion-item>
 
     <ion-item>
       <icon flask item-left></icon>
       Potions
+      <ion-note item-right>
+      Poisonous
+      </ion-note>
     </ion-item>
 
-    <ion-item>
-      <icon star item-left></icon>
-      Charms
-    </ion-item>
+
 
   </ion-list>
 
@@ -36,21 +45,57 @@
   <ion-list>
 
     <ion-header>
-      Menu
+      Activities
     </ion-header>
 
+    <ion-item>
+      Incantation
+      <icon color-wand item-left></icon>
+      <ion-note item-right>Crucio!</ion-note>
+    </ion-item>
+
     <ion-switch checked="true">
-      <icon shirt item-left></icon>
-      Invisibility Cloak
+      <icon brush item-left></icon>
+      Quidditch Practice
     </ion-switch>
 
     <ion-item>
-      <icon call item-left></icon>
-      Call Ron
-      <ion-note item-right>Maybe later</ion-note>
+      <icon wine item-left></icon>
+      Mead Drinking
+      <ion-note item-right>Yes please</ion-note>
     </ion-item>
 
+
   </ion-list>
+
+  <ion-list>
+
+    <ion-header>
+      Friends
+    </ion-header>
+
+    <ion-item>
+      <icon flash item-left></icon>
+      Harry
+      <ion-note item-right>The boy who lived</ion-note>
+    </ion-item>
+
+    <ion-item>
+      <icon book item-left></icon>
+      Hermoine
+      <ion-note item-right>Muggle-born</ion-note>
+    </ion-item>
+
+    <ion-item>
+      <icon beer item-left></icon>
+      Ron
+      <ion-note item-right>Brilliant!</ion-note>
+    </ion-item>
+
+
+  </ion-list>
+
+
 </ion-content>
 
 
