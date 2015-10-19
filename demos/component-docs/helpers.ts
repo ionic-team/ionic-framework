@@ -100,7 +100,7 @@ export function getPageFor(hash) {
         'lists': BasicListsPage,
         'avatar-list': AvatarListsPage,
         'icon-list': IconListsPage,
-        'dividers': BasicDividersPage,
+        'list-dividers': BasicDividersPage,
         'inset-list': BasicInsetListsPage,
         'list-headers': ListHeadersPage,
 
