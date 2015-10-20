@@ -21,6 +21,9 @@ ion-modal {
   width: 100%;
   background-color: $modal-background-color;
 
+  display: flex;
+  flex-direction: column;
+
   transform: translate3d(0px, 100%, 0px);
   &.show-overlay {
     transform: translate3d(0px, 0px, 0px);
