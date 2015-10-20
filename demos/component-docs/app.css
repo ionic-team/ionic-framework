@@ -195,7 +195,7 @@ ion-card.adv-map p {
 }
 
 body.md {
-  margin-top: 24px;
+  border-top: 24px solid black;
 }
 body.md .android-attr, body.md .android-attr div.toolbar-background {
   background-color: #4e8ef7;
