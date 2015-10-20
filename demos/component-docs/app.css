@@ -194,11 +194,21 @@ ion-card.adv-map p {
   color: #32DB64;
 }
 
+body.md {
+  margin-top: 24px;
+}
 body.md .android-attr, body.md .android-attr div.toolbar-background {
-  background-color: #387EF5;
+  background-color: #4e8ef7;
 }
 body.md .android-attr .toolbar-title {
   color: #fff;
+}
+body.md img#md-only {
+  display: block !important;
+  position: absolute;
+  top: -24px;
+  width: 100%;
+  height: auto;
 }
 
 
