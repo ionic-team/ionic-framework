@@ -10,10 +10,11 @@ Ionic 2 is based on the new [2.x version of AngularJS](https://angular.io/), and
 
 To try Ionic 2 today, visit the [http://ionicframework.com/docs/v2/getting-started/](Getting Started) page. We would love any feedback you have or to know when you encounter issues, by filing an issue report on this repo.
 
+### Ionic 2 Examples
 
-### Ionic 2 Starter Project
+There are a few real Ionic 2 apps in the wild. The most complete is the [Ionic Conference App](https://github.com/driftyco/ionic-conference-app), a perfect starting point for building your own conference app.
 
-Here is an example of a complete Ionic 2 starter app:
+We are also building out a number of starter projects, including the Ionic 2 starter:
 
 [https://github.com/driftyco/ionic2-starter](https://github.com/driftyco/ionic2-starter)
 
