@@ -167,7 +167,7 @@ $item-ios-sliding-transition:         transform 250ms ease-in-out !default;
     padding-left: 0;
     padding-right: 0;
   }
-  
+
   ion-item-sliding-content {
     background-color: $item-ios-sliding-content-bg;
     padding-right: ($item-ios-padding-right / 2);
@@ -184,6 +184,7 @@ $item-ios-sliding-transition:         transform 250ms ease-in-out !default;
   }
   ion-item-options {
     button, [button] {
+      min-height: calc(100% - 2px);
       height: calc(100% - 2px);
       margin: 1px 0 2px 0;
 
@@ -237,12 +238,25 @@ ion-card {
   }
 }
 
+&.hairlines .list ion-item-options {
+    button, [button] {
+      min-height: calc(100% - 1px);
+      height: calc(100% - 1px);
+      margin-top: 0.55px;
+      margin-bottom: 0.55px;
+    }
+}
+
+&.hairlines .list ion-item-sliding-content {
+  margin-top: 0.55px;
+  margin-bottom: 0.55px;
+}
 
 &.hairlines .list .item {
-  margin-top: -0.5px;
+  margin-top: -0.55px;
 
   &:last-child {
-    margin-bottom: -0.5px;
+    margin-bottom: -0.55px;
   }
 
   &:before,
