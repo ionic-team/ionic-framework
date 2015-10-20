@@ -1,10 +1,10 @@
-# Ionic 2: Developer Preview
+# Ionic 2: Alpha
 
 Ionic 2 is the next generation of [Ionic](http://ionicframework.com/), the open-source mobile app development SDK that makes it easy to build top quality mobile apps with web technologies.
 
 Ionic 2 is based on the new [2.x version of AngularJS](https://angular.io/), and comes with many significant performance, usability, and feature improvements.
 
-[Ionic 2 Starter](https://github.com/driftyco/ionic2-starter)
+See [Adam Bradley](http://twitter.com/adamdbradley)'s [Building apps with Ionic 2](http://adamdbradley.github.io/building-with-ionic2) slides for a quick overview of Ionic 2.
 
 ### Try Ionic 2
 
