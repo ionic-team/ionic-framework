@@ -6,34 +6,14 @@ Ionic 2 is based on the new [2.x version of AngularJS](https://angular.io/), and
 
 [Ionic 2 Starter](https://github.com/driftyco/ionic2-starter)
 
+### Try Ionic 2
 
-### Current Angular 2 known issues:
-
-- Angular 2 is still in alpha and is not production ready
-- Angular team has first focused on developing what the core of Angular 2 "is"
-- Angular 2 filesize has not been optimized for minification yet
-- Angular 2 bootstrap time has not been optimized yet
-- As Angular 2 reaches beta there will be significant performance improvements
-
-
-### ES6/Typescript
-
-- Ionic's source is written using [Typescript](http://www.typescriptlang.org/)
-- Ionic apps can be written in ES6
-- Typescript is an optional feature to be used at the developers discretion
-- Ionic 2 starters come with the necessary build tools to transpile ES6/Typescript
-
-
-### CSS Attribute Selectors:
-
-- Simple
-- Smaller markup
-- Easier to read and understand
-- [Not an issue](https://twitter.com/paul_irish/status/311610425617838081) for today's mobile browsers
-- No performance impacts have been found
+To try Ionic 2 today, visit the [http://ionicframework.com/docs/v2/getting-started/](Getting Started) page. We would love any feedback you have or to know when you encounter issues, by filing an issue report on this repo.
 
 
 ### Ionic 2 Starter Project
+
+Here is an example of a complete Ionic 2 starter app:
 
 [https://github.com/driftyco/ionic2-starter](https://github.com/driftyco/ionic2-starter)
 
