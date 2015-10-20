@@ -1,14 +1,11 @@
-import {App, IonicApp, Page, NavController, NavParams} from 'ionic/ionic';
-import {Page, Events} from 'ionic/ionic';
+import {App, IonicApp, Page} from 'ionic/ionic';
 import * as helpers from './helpers';
 
 @Page({
   templateUrl: 'menus/menu-home.html'
 })
 class PageOne{
-  constructor(nav: NavController, events: Events) {
-      this.nav = nav;
-      this.events = events;
+  constructor() {
   }
 }
 
@@ -29,10 +26,9 @@ class PageThree{
 })
 export class MenusPage {
 
-  constructor(app: IonicApp, events: Events, nav: NavController) {
-    this.nav = nav;
+  constructor(app: IonicApp) {
     this.app = app;
-    this.rootView = PageOne;
+    this.rootPage = PageOne;
     this.pages = [
       { title: 'Home', component: PageOne },
       { title: 'Friends', component: PageTwo },
@@ -41,16 +37,13 @@ export class MenusPage {
 
   }
 
-  onViewWillUnload() {
-  }
-
   openPage(menu, page) {
     // close the menu when clicking a link from the menu
-    menu.close();
+    this.app.getComponent('leftMenu').close();
 
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    // let nav = this.app.getComponent('nav');
-    this.nav.setRoot(page.component);
+    let nav = this.app.getComponent('menuNav');
+    nav.setRoot(page.component);
   }
 }

@@ -5,16 +5,17 @@ import * as helpers from './helpers';
 
 
 @App({
-  template: '<ion-nav id="nav" [root]="rootPage"></ion-nav><ion-overlay></ion-overlay>',
-  directives: [helpers.AndroidAttribute],
+  template: '<ion-nav id="nav" [root]="rootPage" #content></ion-nav><ion-overlay></ion-overlay>',
 })
 class DemoApp {
 
   rootPage: any;
+  androidAttribute: any;
 
   constructor(app: IonicApp, platform: Platform) {
     this.app = app;
     this.platform = platform;
+    this.androidAttribute = helpers.AndroidAttribute;
 
     this.platform.ready().then( () => {
       window.addEventListener('message', (e) => {

@@ -54,6 +54,7 @@ import {TabsPage} from './tabs/tabs';
 export class AndroidAttribute {
 
     constructor (platform: Platform, elementRef: ElementRef, renderer: Renderer) {
+        console.log('init');
         this.isAndroid = platform.is('android');
         renderer.setElementAttribute(elementRef, 'primary', this.isAndroid ? true : null);
     }

@@ -194,3 +194,12 @@ ion-card.adv-map p {
   color: #32DB64;
 }
 
+body.md .android-attr, body.md .android-attr div.toolbar-background {
+  background-color: #387EF5;
+}
+body.md .android-attr .toolbar-title {
+  color: #fff;
+}
+
+
+
