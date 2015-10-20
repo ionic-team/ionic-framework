@@ -72,7 +72,6 @@ ion-scroll {
 scroll-content {
   overflow-y: scroll;
   margin-right: -15px;
-  padding-right: 15px;
 }
 
 .md .ion-md-share {
