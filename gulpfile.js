@@ -231,6 +231,7 @@ gulp.task('bundle.ionic', ['transpile'], function() {
   }
 
   return gulp.src([
+      'node_modules/es6-shim/es6-shim.min.js',
       'dist/src/es5/system/ionic/**/*.js'
     ])
     .pipe(concat('ionic.js'))

@@ -1,5 +1,6 @@
 module.exports = {
   entry: [
+    "es6-shim",
     "zone.js",
     "reflect-metadata",
     "angular2/angular2",
