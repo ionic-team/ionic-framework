@@ -1,4 +1,4 @@
-body {
+body, body:hover, body a, body button {
   cursor: url('http://ionicframework.com/img/finger.png'), auto;
   overflow: hidden;
 }
