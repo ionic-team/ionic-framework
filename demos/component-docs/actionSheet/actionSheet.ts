@@ -65,4 +65,11 @@ export class ActionSheetPage {
     });
   }
 
+  onPageWillLeave() {
+    let actionSheet = this.actionSheet.get();
+    if (actionSheet) {
+      actionSheet.close();
+    }
+  }
+
 }

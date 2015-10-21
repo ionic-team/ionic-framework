@@ -15,9 +15,9 @@ export class PopupsPage {
 
   doAlert() {
     this.popup.alert({
-      title: "New Friend!",
-      template: "Your friend, Obi wan Kenobi, just accepted your friend request!",
-      cssClass: 'my-alert'
+        title: "New Friend!",
+        template: "Your friend, Obi wan Kenobi, just accepted your friend request!",
+        cssClass: 'my-alert'
     });
   }
 
@@ -39,4 +39,13 @@ export class PopupsPage {
       okText: "Agree"
     });
   }
+
+  onPageWillLeave() {
+    let popup = this.popup.get();
+    // only try to close if there is an active popup
+    if (popup) {
+      popup.close();
+    }
+  }
+
 }

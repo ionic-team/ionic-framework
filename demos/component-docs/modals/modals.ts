@@ -50,7 +50,14 @@ class ModalsContentPage {
   template: '<ion-nav [root]="rootView"></ion-nav>'
 })
 export class ModalsPage {
-  constructor() {
+  constructor(modal: Modal) {
     this.rootView = ModalsFirstPage;
+    this.modal = modal;
+  }
+  onPageWillLeave() {
+    let modal = this.modal.get();
+    if (modal) {
+      modal.close();
+    }
   }
 }
