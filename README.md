@@ -8,7 +8,7 @@ See [Adam Bradley](http://twitter.com/adamdbradley)'s [Building apps with Ionic 
 
 ### Try Ionic 2
 
-To try Ionic 2 today, visit the [Ionic 2 Docs](http://ionicframework.com/docs/v2/) page. We would love any feedback you have or to know when you encounter issues, by filing an issue report on this repo.
+To try Ionic 2 today, visit the [Ionic 2 Docs](http://ionicframework.com/docs/v2/). We would love any feedback you have or to know when you encounter issues, by filing an issue report on this repo.
 
 ### Ionic 2 Examples
 
