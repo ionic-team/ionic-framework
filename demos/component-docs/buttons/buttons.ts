@@ -1,7 +1,10 @@
 import {Page} from 'ionic/ionic';
+import {forwardRef} from 'angular2/angular2';
+import {AndroidAttribute} from '../helpers';
 
 @Page({
   templateUrl: 'buttons/buttons.html',
+  directives: [forwardRef(() => AndroidAttribute)]
 })
 export class ButtonsPage {
     constructor() {
@@ -11,6 +14,7 @@ export class ButtonsPage {
 
 @Page({
   templateUrl: 'buttons/block.html',
+  directives: [forwardRef(() => AndroidAttribute)]
 })
 export class BlockButtonsPage {
     constructor() {
@@ -20,6 +24,7 @@ export class BlockButtonsPage {
 
 @Page({
   templateUrl: 'buttons/clear.html',
+  directives: [forwardRef(() => AndroidAttribute)]
 })
 export class ClearButtonsPage {
     constructor() {
@@ -29,6 +34,7 @@ export class ClearButtonsPage {
 
 @Page({
   templateUrl: 'buttons/full.html',
+  directives: [forwardRef(() => AndroidAttribute)]
 })
 export class FullButtonsPage {
     constructor() {
@@ -38,6 +44,7 @@ export class FullButtonsPage {
 
 @Page({
   templateUrl: 'buttons/outline.html',
+  directives: [forwardRef(() => AndroidAttribute)]
 })
 export class OutlineButtonsPage {
     constructor() {
@@ -47,6 +54,7 @@ export class OutlineButtonsPage {
 
 @Page({
   templateUrl: 'buttons/round.html',
+  directives: [forwardRef(() => AndroidAttribute)]
 })
 export class RoundButtonsPage {
     constructor() {
@@ -56,6 +64,7 @@ export class RoundButtonsPage {
 
 @Page({
   templateUrl: 'buttons/fab.html',
+  directives: [forwardRef(() => AndroidAttribute)]
 })
 export class FabPage {
     constructor() {
@@ -65,6 +74,7 @@ export class FabPage {
 
 @Page({
   templateUrl: 'buttons/sizes.html',
+  directives: [forwardRef(() => AndroidAttribute)]
 })
 export class ButtonSizesPage {
     constructor() {
@@ -74,6 +84,7 @@ export class ButtonSizesPage {
 
 @Page({
   templateUrl: 'buttons/icons.html',
+  directives: [forwardRef(() => AndroidAttribute)]
 })
 export class IconButtonsPage {
     constructor() {
@@ -83,6 +94,7 @@ export class IconButtonsPage {
 
 @Page({
   templateUrl: 'buttons/components.html',
+  directives: [forwardRef(() => AndroidAttribute)]
 })
 export class ButtonsInComponentsPage {
     constructor() {

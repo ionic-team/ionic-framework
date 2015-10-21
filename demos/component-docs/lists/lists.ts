@@ -1,7 +1,11 @@
 import {Page} from 'ionic/ionic';
+import {forwardRef} from 'angular2/angular2';
+import {AndroidAttribute} from '../helpers';
+
 
 @Page({
     templateUrl: 'lists/basic-lists.html',
+    directives: [forwardRef(() => AndroidAttribute)]
 })
 export class BasicListsPage {
     constructor() {
@@ -11,6 +15,7 @@ export class BasicListsPage {
 
 @Page({
     templateUrl: 'lists/dividers.html',
+    directives: [forwardRef(() => AndroidAttribute)]
 })
 export class BasicDividersPage {
     constructor() {
@@ -20,6 +25,7 @@ export class BasicDividersPage {
 
 @Page({
     templateUrl: 'lists/inset-lists.html',
+    directives: [forwardRef(() => AndroidAttribute)]
 })
 export class BasicInsetListsPage {
     constructor() {
@@ -29,6 +35,7 @@ export class BasicInsetListsPage {
 
 @Page({
     templateUrl: 'lists/list-headers.html',
+    directives: [forwardRef(() => AndroidAttribute)]
 })
 export class ListHeadersPage {
     constructor() {
@@ -38,6 +45,7 @@ export class ListHeadersPage {
 
 @Page({
     templateUrl: 'lists/icon-lists.html',
+    directives: [forwardRef(() => AndroidAttribute)]
 })
 export class IconListsPage {
     constructor() {
@@ -47,6 +55,7 @@ export class IconListsPage {
 
 @Page({
     templateUrl: 'lists/avatar-lists.html',
+    directives: [forwardRef(() => AndroidAttribute)]
 })
 export class AvatarListsPage {
     constructor() {

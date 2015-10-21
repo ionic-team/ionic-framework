@@ -1,7 +1,9 @@
 import {Platform, Page, ActionSheet} from 'ionic/ionic';
+import {AndroidAttribute} from '../helpers';
 
 @Page({
   templateUrl: 'actionSheet/actionSheet.html',
+  directives: [AndroidAttribute]
 })
 export class ActionSheetPage {
 

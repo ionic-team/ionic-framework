@@ -1,9 +1,11 @@
 import {App, IonicApp, Animation, Modal, NavController, Page, Events} from 'ionic/ionic';
-import * as helpers from './helpers';
+import {forwardRef} from 'angular2/angular2';
+import * as helpers from '../helpers';
 
 
 @Page({
-  templateUrl: 'modals/modals.html'
+  templateUrl: 'modals/modals.html',
+  directives: [forwardRef(() => helpers.AndroidAttribute)]
 })
 class ModalsFirstPage {
 
@@ -23,7 +25,9 @@ class ModalsFirstPage {
 }
 
 @Page({
-  templateUrl: 'modals/modals-content.html'
+  templateUrl: 'modals/modals-content.html',
+  directives: [forwardRef(() => helpers.AndroidAttribute)]
+
 })
 class ModalsContentPage {
 

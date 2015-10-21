@@ -1,8 +1,11 @@
 import {App, IonicApp, Page} from 'ionic/ionic';
-import * as helpers from './helpers';
+import {forwardRef} from 'angular2/angular2';
+import * as helpers from '../helpers';
+
 
 @Page({
-  templateUrl: 'menus/menu-home.html'
+  templateUrl: 'menus/menu-home.html',
+  directives: [forwardRef(() => helpers.AndroidAttribute)]
 })
 class PageOne{
   constructor() {
@@ -10,19 +13,22 @@ class PageOne{
 }
 
 @Page({
-  templateUrl: 'menus/menu-friends.html'
+  templateUrl: 'menus/menu-friends.html',
+  directives: [forwardRef(() => helpers.AndroidAttribute)]
 })
 class PageTwo{
 }
 
 @Page({
-  templateUrl: 'menus/menu-events.html'
+  templateUrl: 'menus/menu-events.html',
+  directives: [forwardRef(() => helpers.AndroidAttribute)]
 })
 class PageThree{
 }
 
 @Page({
-  templateUrl: 'menus/menus.html'
+  templateUrl: 'menus/menus.html',
+  directives: [forwardRef(() => helpers.AndroidAttribute)]
 })
 export class MenusPage {
 

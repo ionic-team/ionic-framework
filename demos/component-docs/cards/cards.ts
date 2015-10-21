@@ -1,7 +1,10 @@
 import {Page} from 'ionic/ionic';
+import {forwardRef} from 'angular2/angular2';
+import {AndroidAttribute} from '../helpers';
 
 @Page({
   templateUrl: 'cards/cards-basic.html',
+  directives: [forwardRef(() => AndroidAttribute)]
 })
 export class CardsBasicPage {
     constructor() {
@@ -11,6 +14,7 @@ export class CardsBasicPage {
 
 @Page({
   templateUrl: 'cards/cards-header.html',
+  directives: [forwardRef(() => AndroidAttribute)]
 })
 export class CardsHeaderPage {
     constructor() {
@@ -21,6 +25,7 @@ export class CardsHeaderPage {
 
 @Page({
   templateUrl: 'cards/cards-list.html',
+  directives: [forwardRef(() => AndroidAttribute)]
 })
 export class CardsListPage {
     constructor() {
@@ -30,6 +35,7 @@ export class CardsListPage {
 
 @Page({
   templateUrl: 'cards/cards-image.html',
+  directives: [forwardRef(() => AndroidAttribute)]
 })
 export class CardsImagePage {
     constructor() {
@@ -39,6 +45,7 @@ export class CardsImagePage {
 
 @Page({
   templateUrl: 'cards/cards-background.html',
+  directives: [forwardRef(() => AndroidAttribute)]
 })
 export class CardsBackgroundPage {
     constructor() {
@@ -48,6 +55,7 @@ export class CardsBackgroundPage {
 
 @Page({
   templateUrl: 'cards/cards-advanced-social.html',
+  directives: [forwardRef(() => AndroidAttribute)]
 })
 export class CardsAdvancedSocialPage {
     constructor() {
@@ -57,6 +65,7 @@ export class CardsAdvancedSocialPage {
 
 @Page({
   templateUrl: 'cards/cards-advanced-map.html',
+  directives: [forwardRef(() => AndroidAttribute)]
 })
 export class CardsAdvancedMapPage {
     constructor() {
@@ -66,6 +75,7 @@ export class CardsAdvancedMapPage {
 
 @Page({
   templateUrl: 'cards/cards-advanced-image.html',
+  directives: [forwardRef(() => AndroidAttribute)]
 })
 export class CardsAdvancedImagePage {
     constructor() {

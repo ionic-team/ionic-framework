@@ -1,10 +1,13 @@
-import {FORM_DIRECTIVES, FormBuilder, Validators, Control, ControlGroup} from 'angular2/angular2';
+import {FORM_DIRECTIVES, FormBuilder, forwardRef, Validators, Control, ControlGroup} from 'angular2/angular2';
 import {Page} from 'ionic/ionic';
+import {AndroidAttribute} from '../helpers';
+
 
 
 @Page({
   templateUrl: 'forms/forms.html',
-  providers: [FormBuilder]
+  providers: [FormBuilder],
+  directives: [forwardRef(() => AndroidAttribute)]
 })
 export class FormsPage {
 
@@ -25,6 +28,7 @@ export class FormsPage {
 
 @Page({
   templateUrl: 'forms/fixed-inline.html',
+  directives: [forwardRef(() => AndroidAttribute)]
 })
 export class FixedInlinePage {
     constructor() {
@@ -34,6 +38,7 @@ export class FixedInlinePage {
 
 @Page({
   templateUrl: 'forms/floating.html',
+  directives: [forwardRef(() => AndroidAttribute)]
 })
 export class FloatingPage {
     constructor() {
@@ -44,6 +49,7 @@ export class FloatingPage {
 
 @Page({
   templateUrl: 'forms/inline.html',
+  directives: [forwardRef(() => AndroidAttribute)]
 })
 export class InlinePage {
     constructor() {
@@ -54,6 +60,7 @@ export class InlinePage {
 
 @Page({
   templateUrl: 'forms/inset.html',
+  directives: [forwardRef(() => AndroidAttribute)]
 })
 export class InsetPage {
     constructor() {
@@ -64,6 +71,7 @@ export class InsetPage {
 
 @Page({
   templateUrl: 'forms/placeholder.html',
+  directives: [forwardRef(() => AndroidAttribute)]
 })
 export class PlaceholderPage {
     constructor() {
@@ -74,6 +82,7 @@ export class PlaceholderPage {
 
 @Page({
   templateUrl: 'forms/stacked.html',
+  directives: [forwardRef(() => AndroidAttribute)]
 })
 export class StackedPage {
     constructor() {

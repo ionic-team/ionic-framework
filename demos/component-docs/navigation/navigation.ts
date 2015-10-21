@@ -1,9 +1,11 @@
 import {NavController, NavParams} from 'ionic/ionic';
 import {Page, Events} from 'ionic/ionic';
-import * as helpers from './helpers';
+import {forwardRef} from 'angular2/angular2';
+import * as helpers from '../helpers';
 
 @Page({
-  templateUrl: 'navigation/navigation-details.html'
+  templateUrl: 'navigation/navigation-details.html',
+  directives: [forwardRef(() => helpers.AndroidAttribute)]
 })
 class NavigationDetailsPage {
   constructor(nav: NavController, params: NavParams, events: Events) {
@@ -28,6 +30,7 @@ class NavigationDetailsPage {
 
 @Page({
     templateUrl: 'navigation/navigation.html',
+    directives: [forwardRef(() => helpers.AndroidAttribute)]
 })
 export class NavigationPage {
 
