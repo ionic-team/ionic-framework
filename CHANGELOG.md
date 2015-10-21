@@ -104,11 +104,11 @@
 
 
 * **backdrop:**
-  * dont allow counter to go below 0 ([fdca73a5](https://github.com/driftyco/ionic/commit/fdca73a5))
+  * don't allow counter to go below 0 ([fdca73a5](https://github.com/driftyco/ionic/commit/fdca73a5))
 * **clearCache:** 
   * ensure async transition completed ([c4364377](https://github.com/driftyco/ionic/commit/c4364377), closes [#2939](https://github.com/driftyco/ionic/issues/2939))
 * **collectionRepeat:**
-  * when array is empty, dont use heightGetter/widthGetter ([bd4723c9](https://github.com/driftyco/ionic/commit/bd4723c9), closes [#3440](https://github.com/driftyco/ionic/issues/3440))
+  * when array is empty, don't use heightGetter/widthGetter ([bd4723c9](https://github.com/driftyco/ionic/commit/bd4723c9), closes [#3440](https://github.com/driftyco/ionic/issues/3440))
 * **content:**
   * make on-scroll-complete pass (scrollLeft, scrollTop) locals ([10552634](https://github.com/driftyco/ionic/commit/10552634), closes [#2464](https://github.com/driftyco/ionic/issues/2464))
 * **exposeAsideWhen:**
@@ -181,7 +181,7 @@
 * **activator:** adds activated class to buttons in nav-bar and header-bars ([36df5086](https://github.com/driftyco/ionic/commit/36df50863853dcf4faee77cbf40c93c4556c11c1), closes [#3348](https://github.com/driftyco/ionic/issues/3348))
 * **keyboard:** enable keyboard accessory bar more quickly after focus ([7bf1207a](https://github.com/driftyco/ionic/commit/7bf1207a54bb482d1fdb2cf13620ef2837ffab18), closes [#3113](https://github.com/driftyco/ionic/issues/3113))
 * **popover:** fix popover position on Internet Explorer ([893fcbec](https://github.com/driftyco/ionic/commit/893fcbec5f97eb487d602ab2c19459924c0098b0), closes [#2861](https://github.com/driftyco/ionic/issues/2861))
-* **popup:** prevent scrollbars from showing on desktop unecessarily. ([b8df44d4](https://github.com/driftyco/ionic/commit/b8df44d4c44e47516032b96cac79147eb48afe4c), closes [#3204](https://github.com/driftyco/ionic/issues/3204))
+* **popup:** prevent scrollbars from showing on desktop unnecessarily. ([b8df44d4](https://github.com/driftyco/ionic/commit/b8df44d4c44e47516032b96cac79147eb48afe4c), closes [#3204](https://github.com/driftyco/ionic/issues/3204))
 * **scrolling:** Prevent gestures from breaking native scrolling ([e917cae3](https://github.com/driftyco/ionic/commit/e917cae3346ba3e78e5a4126704bdc102e33ae95))
 
 
@@ -229,7 +229,7 @@
   * properly resize, but only when scrollView size actually changes ([b7a09689](https://github.com/driftyco/ionic/commit/b7a096893393a35eaf981979a7eae29320d13bf9), closes [#2935](https://github.com/driftyco/ionic/issues/2935), [#3054](https://github.com/driftyco/ionic/issues/3054))
   * don't rerender on window resize when view is cached ([4f0598dd](https://github.com/driftyco/ionic/commit/4f0598dd47d2f21b37480e12d6a4d91f325a0393), closes [#2677](https://github.com/driftyco/ionic/issues/2677))
   * properly display sibling elements after a collection-repeat ([7913ee0f](https://github.com/driftyco/ionic/commit/7913ee0f2856117a927da2d6ba14982f173c6b4c))
-  * Properly calcuate list height and show ion-infinite-scroll. ([83899681](https://github.com/driftyco/ionic/commit/838996815c3cfa0379a5235bd4c5174dec084f08), closes [#2376](https://github.com/driftyco/ionic/issues/2376))
+  * Properly calculate list height and show ion-infinite-scroll. ([83899681](https://github.com/driftyco/ionic/commit/838996815c3cfa0379a5235bd4c5174dec084f08), closes [#2376](https://github.com/driftyco/ionic/issues/2376))
 * **css:** add height to item-image and fix nav-bar ([c1ef4718](https://github.com/driftyco/ionic/commit/c1ef471883d8c93d4f8dd444664572742563c56a))
 * **exposeAsideWhen:** trigger a resize event when the aside is exposed ([27298e92](https://github.com/driftyco/ionic/commit/27298e9209a718450c48048592dc5cf8ffb139f8), closes [#3054](https://github.com/driftyco/ionic/issues/3054))
 * **gestures:** improve drag/swipe response ([a5881eae](https://github.com/driftyco/ionic/commit/a5881eaeba7d12d016fe3712c77261e75e863cf3), closes [#1729](https://github.com/driftyco/ionic/issues/1729), [#2674](https://github.com/driftyco/ionic/issues/2674))
@@ -264,10 +264,10 @@
 * **tabs:**
   * fire leaving life cycle events ([9cc61ecd](https://github.com/driftyco/ionic/commit/9cc61ecdced8d33a138cdd5f6cdbd8f90e33484a), closes [#2869](https://github.com/driftyco/ionic/issues/2869))
   * reload tab after previous clearHistory() ([3628ebac](https://github.com/driftyco/ionic/commit/3628ebac16e5d2924c158c18d748403f4ff12b8b), closes [#2664](https://github.com/driftyco/ionic/issues/2664))
-  * corectly size ion-content when used with inline tabs. ([65ab5f35](https://github.com/driftyco/ionic/commit/65ab5f35a719e7b65325c5dd481d82b49f1e436b), closes [#2781](https://github.com/driftyco/ionic/issues/2781))
+  * correctly size ion-content when used with inline tabs. ([65ab5f35](https://github.com/driftyco/ionic/commit/65ab5f35a719e7b65325c5dd481d82b49f1e436b), closes [#2781](https://github.com/driftyco/ionic/issues/2781))
   * correct border visibility with android style tabs ([bf40b222](https://github.com/driftyco/ionic/commit/bf40b222be85c8dba6e9531044505976fabc8d78))
 * **video:** prevent styles from bleeding into html video tag ([7e762b9c](https://github.com/driftyco/ionic/commit/7e762b9cbfc4cdd7c2c2997ff44d36abbb66ab8a))
-* **viewSwitcher:** do not finish transition from bubbled transitionend events ([6fa75b7f](https://github.com/driftyco/ionic/commit/6fa75b7fff12cb4610be9bd117d160f62ce5326d), closes [#3006](https://github.com/driftyco/ionic/issues/3006), [#3063](https://github.com/driftyco/ionic/issues/3063))
+* **viewSwitcher:** do not finish transition from bubbled transitioned events ([6fa75b7f](https://github.com/driftyco/ionic/commit/6fa75b7fff12cb4610be9bd117d160f62ce5326d), closes [#3006](https://github.com/driftyco/ionic/issues/3006), [#3063](https://github.com/driftyco/ionic/issues/3063))
 
 
 #### Features
@@ -288,7 +288,7 @@
 * **refresher:**
   * allow spinner to be none. ([4afc7677](https://github.com/driftyco/ionic/commit/4afc767721df0986d61e1862134677feb50056c5), closes [#2926](https://github.com/driftyco/ionic/issues/2926))
   * add elastic drag to native scrolling refresher ([658451cb](https://github.com/driftyco/ionic/commit/658451cbc644bc2e2571164615bfa07ca0e88378))
-  * Allow refrsher to work with native scrolling ([7134114b](https://github.com/driftyco/ionic/commit/7134114bd5975f9d63d0b73cc53c9a0c60d8cf0f))
+  * Allow refresher to work with native scrolling ([7134114b](https://github.com/driftyco/ionic/commit/7134114bd5975f9d63d0b73cc53c9a0c60d8cf0f))
 * **scroll:** freeze scroll on ion-option-button swipe ([9a88c417](https://github.com/driftyco/ionic/commit/9a88c4179df87046bc993cd66089ab99411be539), closes [#2950](https://github.com/driftyco/ionic/issues/2950))
 * **scrolling:** Allow native scrolling to be configurable, add infinite scroll support for nativ ([54c27ff8](https://github.com/driftyco/ionic/commit/54c27ff85bae2b76d34ff8bae6ea738b71c1fd96))
 * **spinners:** add ionic color convention ([2b88b4fe](https://github.com/driftyco/ionic/commit/2b88b4feac51ef4b6852c6ae134fd8116f915cdb), closes [#3077](https://github.com/driftyco/ionic/issues/3077))
@@ -440,7 +440,7 @@
 * **refresher:** finish animating before changing icon, hide when not in use ([c336e8ed](https://github.com/driftyco/ionic/commit/c336e8ede8a1f83ef2a4a567121cce0d82aa78e8))
 * **reorder:**
   * reorder drag threshold are equal for going up and down. ([6f5b6c24](https://github.com/driftyco/ionic/commit/6f5b6c24c607d4fe609756616ff6ea4a6e1a4ef1), closes [#1394](https://github.com/driftyco/ionic/issues/1394))
-  * item click handlers dont fire when tapping on reorder icon ([cc18a64b](https://github.com/driftyco/ionic/commit/cc18a64bf4ad2fc474d6d83288b8fcdcc368e02d))
+  * item click handlers don't fire when tapping on reorder icon ([cc18a64b](https://github.com/driftyco/ionic/commit/cc18a64bf4ad2fc474d6d83288b8fcdcc368e02d))
 * **scroll:**
   * calculate padding-bottom ([ba3600df](https://github.com/driftyco/ionic/commit/ba3600dfb4d2652b6ded87e085c4186c5bf22f31), closes [#2174](https://github.com/driftyco/ionic/issues/2174))
   * remove isContentEditable from ignoreScrollStart ([caf12721](https://github.com/driftyco/ionic/commit/caf12721869a9efc7ca660e4f4b7943ad3eb4b44), closes [#2091](https://github.com/driftyco/ionic/issues/2091))
@@ -1207,7 +1207,7 @@ To this:
   * add setContent method ([366bd686](git://github.com/driftyco/ionic.git/commit/366bd6866ffa513c1d99b36b841d5ad3fbe23622), closes [#732](git://github.com/driftyco/ionic.git/issues/732))
   * add setContent method ([e5cba05e](git://github.com/driftyco/ionic.git/commit/e5cba05e90a0c1f7ce6b032020ef212b19b7bc84))
 * **navclear:** Ability to disable the next view transition and back button ([f744d9eb](git://github.com/driftyco/ionic.git/commit/f744d9ebcfaad9be237fd2b1753568bf832bfe0a))
-* **popup:** Support for programatically closing popup. ([dc2b24ed](git://github.com/driftyco/ionic.git/commit/dc2b24ed6aa14f7db6c70791c16c5afc5e909c66), closes [#854](git://github.com/driftyco/ionic.git/issues/854))
+* **popup:** Support for programmatically closing popup. ([dc2b24ed](git://github.com/driftyco/ionic.git/commit/dc2b24ed6aa14f7db6c70791c16c5afc5e909c66), closes [#854](git://github.com/driftyco/ionic.git/issues/854))
 * **progress:** Set progress element's default width to 100%, closes #872 ([b9cde47d](git://github.com/driftyco/ionic.git/commit/b9cde47dd039bc58f84e0af76fccbfcc9d7be74e))
 * **ready:** Add 'platform-ready' css class to the body when the platform is ready ([681a6a2e](git://github.com/driftyco/ionic.git/commit/681a6a2ed743fab2352551156ff18dbb42549d4d))
 * **sideMenu:** Added directive for simple toggling ([5a89df43](git://github.com/driftyco/ionic.git/commit/5a89df43363b1ea88bff25c73f019462c964fa7d))
@@ -1611,7 +1611,7 @@ To this HTML:
 * **backButton:**
   * able to hide back button if any back button attr set in navBar, closes #564 ([74a05a03](https://github.com/driftyco/ionic/commit/74a05a03388f1a9a77141f078623b018bf2829eb))
   * Do not show back button if no attributes set, closes #549 ([2d39418d](https://github.com/driftyco/ionic/commit/2d39418d0b322e6e2ab2b054035e4c3abeabfaff))
-* **browser:** on first hash-set, dont set scrollTop ([1c4d4a8b](https://github.com/driftyco/ionic/commit/1c4d4a8b90e24a277187c7505538dbf461b95d11))
+* **browser:** on first hash-set, don't set scrollTop ([1c4d4a8b](https://github.com/driftyco/ionic/commit/1c4d4a8b90e24a277187c7505538dbf461b95d11))
 * **buttonIcon:**
   * fix vertical-align in safari, closes #554 ([6acba8da](https://github.com/driftyco/ionic/commit/6acba8da3e02dc29c115748196bee93faa9a43b3))
   * float left icon-left, closes #515 ([38420c81](https://github.com/driftyco/ionic/commit/38420c81278f915562a0d0c941c83daf949ed2e0))
@@ -1660,7 +1660,7 @@ To this HTML:
  - Add major and minor platform version numbers in body css
  - Removed dist folder from git
  - Created release folder to hold the latest release
- - Automate bulding the nightly folder in the CDN
+ - Automate building the nightly folder in the CDN
  - Clicking tab item takes user to root/home of the tab
  - Add tab badges with `badge` attribute
  - Remember the previous scroll of a page when going back to it
@@ -1736,7 +1736,7 @@ To this HTML:
 
 ### 0.9.14 "Alpha Fox" (2013-12-04)
  - Massive scroll performance improvements
- - Android fixes and perf improvements
+ - Android fixes and performance improvements
  - Header and nav bar button fixes
  - Animation performance improvements
 
