@@ -5,7 +5,10 @@ import * as helpers from './helpers';
 
 
 @App({
-  template: '<img src="img/android-statusbar-blue.png" style="display:none" id="md-only"><ion-nav id="nav" [root]="rootPage" #content></ion-nav><ion-overlay></ion-overlay>',
+  template: '<img src="img/android-statusbar-blue.png" style="display:none" id="md-only">' +
+            '<img src="img/ios-statusbar.png" style="display:none" id="ios-only">' +
+            '<ion-nav id="nav" [root]="rootPage" #content></ion-nav>' +
+            '<ion-overlay></ion-overlay>',
 })
 class DemoApp {
 
