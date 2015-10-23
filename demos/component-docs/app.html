@@ -1,3 +1,7 @@
+<img src="img/android-statusbar-blue.png" style="display:none" id="md-only">
+<img src="img/ios-statusbar.png" style="display:none" id="ios-only">
+
+
 <ion-menu [content]="content" id="leftMenu">
 
   <ion-toolbar primary>
@@ -8,7 +12,7 @@
 
     <ion-list>
 
-      <button ion-item *ng-for="#p of pages" (click)="openPage(menu, p)">
+      <button ion-item *ng-for="#p of pages" (click)="openPage(p)">
         {{p.title}}
       </button>
 
@@ -21,4 +25,6 @@
 
 </ion-menu>
 
-<ion-nav id="menuNav" [root]="rootPage" #content swipe-back-enabled="false"></ion-nav>
+<ion-nav id="nav" [root]="rootPage" #content></ion-nav>
+
+<ion-overlay></ion-overlay>

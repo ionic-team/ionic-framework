@@ -1,14 +1,12 @@
 import {App, IonicApp, Platform, ActionSheet} from 'ionic/ionic';
 import {Page, Config, Events} from 'ionic/ionic';
+import {PageOne, PageTwo, PageThree} from './menus/menus';
 import {ActionSheetPage} from './actionSheet/actionSheet';
 import * as helpers from './helpers';
 
 
 @App({
-  template: '<img src="img/android-statusbar-blue.png" style="display:none" id="md-only">' +
-            '<img src="img/ios-statusbar.png" style="display:none" id="ios-only">' +
-            '<ion-nav id="nav" [root]="rootPage" #content></ion-nav>' +
-            '<ion-overlay></ion-overlay>',
+  templateUrl: 'app.html',
 })
 class DemoApp {
 
@@ -19,6 +17,12 @@ class DemoApp {
     this.app = app;
     this.platform = platform;
     this.androidAttribute = helpers.AndroidAttribute;
+
+    this.pages = [
+      { title: 'Home', component: PageOne },
+      { title: 'Friends', component: PageTwo },
+      { title: 'Events', component: PageThree }
+    ];
 
     this.platform.ready().then( () => {
       window.addEventListener('message', (e) => {
@@ -38,6 +42,16 @@ class DemoApp {
       window.parent.postMessage(this.platform.is('ios')? "ios":"android", "*");
     });
 
+  }
+
+  openPage(page) {
+    // close the menu when clicking a link from the menu
+    this.app.getComponent('leftMenu').close();
+
+    // Reset the content nav to have just this page
+    // we wouldn't want the back button to show in this scenario
+    let nav = this.app.getComponent('nav');
+    nav.setRoot(page.component);
   }
 
 }
