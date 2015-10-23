@@ -1,9 +1,11 @@
 import {Platform, Page, ActionSheet} from 'ionic/ionic';
+import {forwardRef} from 'angular2/angular2';
 import {AndroidAttribute} from '../helpers';
 
 @Page({
   templateUrl: 'actionSheet/actionSheet.html',
-  directives: [AndroidAttribute]
+  directives: [forwardRef(() => AndroidAttribute)]
+
 })
 export class ActionSheetPage {
 
