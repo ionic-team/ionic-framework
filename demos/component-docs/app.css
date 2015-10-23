@@ -200,7 +200,7 @@ body.md {
 }
 
 body.ios{
-  border-top: 10px solid #F8F8F8;
+  border-top: 20px solid #F8F8F8;
 }
 
 body.ios backdrop {
@@ -224,7 +224,7 @@ body.md img#md-only {
 body.ios img#ios-only {
   display: block !important;
   position: absolute;
-  top: -6px;
+  top: -16px;
   width: 100%;
   height: auto;
   z-index: 9999;
