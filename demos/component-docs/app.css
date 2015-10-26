@@ -5,6 +5,9 @@ body, body:hover, body a, body button, body media-switch {
 body.has-scrollbar scroll-content {
   margin-right: -15px;
 }
+body.has-scrollbar ion-menu scroll-content {
+  margin-right: 0;
+}
 
 section.hidden {
   display: none !important;
