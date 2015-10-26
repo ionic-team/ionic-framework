@@ -219,7 +219,9 @@ body.md img#md-only {
 body.ios img#ios-only {
   display: block !important;
   position: absolute;
-  top: 5px;
+  background-color: #F8F8F8;
+  padding: 5px 0;
+  top: 0px;
   width: 100%;
   height: auto;
   z-index: 9999;
