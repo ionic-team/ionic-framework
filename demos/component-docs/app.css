@@ -194,7 +194,6 @@ ion-card.adv-map p {
 .demo-list-icons icon#secondary {
   color: #32DB64;
 }
-
 body.md {
   border-top: 24px solid black;
 }
@@ -224,7 +223,7 @@ body.md img#md-only {
 body.ios img#ios-only {
   display: block !important;
   position: absolute;
-  top: -16px;
+  top: -1rqww6px;
   width: 100%;
   height: auto;
   z-index: 9999;
