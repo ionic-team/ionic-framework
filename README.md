@@ -64,7 +64,7 @@ For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/`
 * Have a question that's not a feature request or bug report? [Discuss on the Ionic Forum](http://forum.ionicframework.com/)
 * Read our [Blog](http://ionicframework.com/blog/)
 * Have a feature request or find a bug? [Submit an issue](http://ionicframework.com/submit-issue/)
-
+* Join our Community Slack Group! [Ionic Worldwide](http://ionicworldwide.herokuapp.com/)
 
 ## Authors
 
