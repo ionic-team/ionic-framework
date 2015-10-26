@@ -1,6 +1,9 @@
 body, body:hover, body a, body button, body media-switch {
   cursor: url('http://ionicframework.com/img/finger.png'), auto;
-  overflow: hidden;
+}
+
+body.has-scrollbar scroll-content {
+  margin-right: -15px;
 }
 
 section.hidden {
@@ -71,7 +74,6 @@ ion-scroll {
 
 scroll-content {
   overflow-y: scroll;
-  margin-right: -15px;
 }
 
 .md .ion-md-share {
@@ -199,7 +201,7 @@ body.md {
 }
 
 body.ios{
-  border-top: 20px solid #F8F8F8;
+  border-top: 10px solid #F8F8F8;
 }
 
 body.ios backdrop {
@@ -223,7 +225,7 @@ body.md img#md-only {
 body.ios img#ios-only {
   display: block !important;
   position: absolute;
-  top: -1rqww6px;
+  top: -6px;
   width: 100%;
   height: auto;
   z-index: 9999;

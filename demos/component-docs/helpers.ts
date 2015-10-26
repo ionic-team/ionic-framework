@@ -65,33 +65,35 @@ export function toTitleCase(str) {
 }
 
 export function hasScrollbar() {
-    console.log(window);
-  // The Modern solution
-  if (typeof window.innerWidth === 'number')
-    return window.innerWidth > document.documentElement.clientWidth
+
+  if (typeof window.top.innerWidth === 'number') {
+      return window.top.innerWidth > window.top.document.documentElement.clientWidth;  
+  }
 
   // rootElem for quirksmode
-  var rootElem = document.documentElement || document.body
+  var rootElem = window.top.document.documentElement || window.top.document.body;
 
   // Check overflow style property on body for fauxscrollbars
-  var overflowStyle
+  var overflowStyle;
 
-  if (typeof rootElem.currentStyle !== 'undefined')
-    overflowStyle = rootElem.currentStyle.overflow
+  if (typeof rootElem.currentStyle !== 'undefined') {
+      overflowStyle = rootElem.currentStyle.overflow;
+  }
 
-  overflowStyle = overflowStyle || window.getComputedStyle(rootElem, '').overflow
+  overflowStyle = overflowStyle || window.top.getComputedStyle(rootElem, '').overflow;
 
-    // Also need to check the Y axis overflow
-  var overflowYStyle
+  // Also need to check the Y axis overflow
+  var overflowYStyle;
 
-  if (typeof rootElem.currentStyle !== 'undefined')
-    overflowYStyle = rootElem.currentStyle.overflowY
+  if (typeof rootElem.currentStyle !== 'undefined') {
+      overflowYStyle = rootElem.currentStyle.overflowY;
+  }
 
-  overflowYStyle = overflowYStyle || window.getComputedStyle(rootElem, '').overflowY
+  overflowYStyle = overflowYStyle || window.top.getComputedStyle(rootElem, '').overflowY;
 
-  var contentOverflows = rootElem.scrollHeight > rootElem.clientHeight
-  var overflowShown    = /^(visible|auto)$/.test(overflowStyle) || /^(visible|auto)$/.test(overflowYStyle)
-  var alwaysShowScroll = overflowStyle === 'scroll' || overflowYStyle === 'scroll'
+  var contentOverflows = rootElem.scrollHeight > rootElem.clientHeight;
+  var overflowShown = /^(visible|auto)$/.test(overflowStyle) || /^(visible|auto)$/.test(overflowYStyle);
+  var alwaysShowScroll = overflowStyle === 'scroll' || overflowYStyle === 'scroll';
 
   return (contentOverflows && overflowShown) || (alwaysShowScroll)
 }
