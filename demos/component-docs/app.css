@@ -149,12 +149,12 @@ ion-card.cards-list-demo a > icon {
   color: #444444;
 }
 
-.adv-background {
+.advanced-background {
   position: relative;
   text-align: center !important;
 }
 
-ion-card p.adv-background-title {
+ion-card p.advanced-background-title {
   position: absolute;
   top: 29%;
   font-size: 2.0em;
@@ -165,7 +165,7 @@ ion-card p.adv-background-title {
 
 }
 
-ion-card p.adv-background-subtitle {
+ion-card p.advanced-background-subtitle {
   font-size: 1.0em;
   position: absolute;
   top: 48%;
