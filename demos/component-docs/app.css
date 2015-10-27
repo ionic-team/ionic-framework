@@ -238,5 +238,11 @@ body.ios img#ios-only {
   content: '•';
   padding-right: 5px;
 }
+p.time-ago {
+  color: #bbbbbb;
+  margin-left: 4px !important;
+  margin-right: 0px !important;
+
+}
 
 
