@@ -2,26 +2,31 @@
 // iOS Segment
 // --------------------------------------------------
 
+$segment-button-ios-border-width:             1px !default;
+$segment-button-ios-min-height:               3.0rem !default;
+$segment-button-ios-line-height:              3.0rem !default;
 $segment-button-ios-bg-color:                 transparent !default;
-$segment-button-ios-bg-color-activated:       color(primary) !default;
 $segment-button-ios-text-color:               inverse($segment-button-ios-bg-color-activated) !default;
-$segment-button-ios-hover-opacity:            0.8 !default;
+$segment-button-ios-font-size:                1.3rem !default;
+
+$segment-button-ios-bg-color-activated:       color(primary) !default;
+$segment-button-ios-activated-transition:     100ms all linear !default;
+$segment-button-ios-hover-opacity:            0.16 !default;
 
 
 .ion-segment {
 
   button,
   [button] {
-    border-width: 1px;
+    border-width: $segment-button-ios-border-width;
     border-style: solid;
 
-    transition: 100ms all linear;
-
-    min-height: 3.3rem;
-    line-height: 3.3rem;
+    min-height: $segment-button-ios-min-height;
+    line-height: $segment-button-ios-line-height;
 
     background-color: $segment-button-ios-bg-color;
     color: $segment-button-ios-text-color;
+    font-size: $segment-button-ios-font-size;
 
     &[outline] {
       border: 1px solid $segment-button-ios-bg-color-activated;
@@ -32,6 +37,11 @@ $segment-button-ios-hover-opacity:            0.8 !default;
         opacity: 1;
         color: $segment-button-ios-text-color;
         background-color: $segment-button-ios-bg-color-activated;
+        transition: $segment-button-ios-activated-transition;
+      }
+
+      &:hover:not(.activated) {
+        background-color: rgba($segment-button-ios-bg-color-activated, $segment-button-ios-hover-opacity);
       }
     }
 
@@ -71,8 +81,12 @@ $segment-button-ios-hover-opacity:            0.8 !default;
 
         &.activated {
           opacity: 1;
-          color: $text-color !important;
-          background-color: $bg-color !important;
+          color: $text-color;
+          background-color: $bg-color;
+        }
+
+        &:hover:not(.activated) {
+          background-color: rgba($bg-color, $segment-button-ios-hover-opacity);
         }
       }
     }

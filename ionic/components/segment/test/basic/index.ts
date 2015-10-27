@@ -13,7 +13,8 @@ class MyApp {
     this.myForm = fb.group({
       mapStyle: ['hybrid', Validators.required]
     });
-    console.log(this.myForm);
+
+    this.modelStyle = 'B';
   }
 
   doSubmit(event) {

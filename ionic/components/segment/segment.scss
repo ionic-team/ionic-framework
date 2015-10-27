@@ -2,6 +2,8 @@
 // Segment
 // --------------------------------------------------
 
+$segment-button-padding:    0 16px !default;
+
 
 ion-segment {
   display: block;
@@ -22,7 +24,7 @@ ion-segment {
     display: block;
     overflow: hidden;
 
-    padding: 0 16px;
+    padding: $segment-button-padding;
     width: 0;
 
     border-width: 1px 0px 1px 1px;

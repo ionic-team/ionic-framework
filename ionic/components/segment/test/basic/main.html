@@ -40,4 +40,22 @@
       <h2>Satellite!!</h2>
     </div>
   </div>
+
+  <hr>
+
+  <h3>NgModel</h3>
+
+  <ion-segment [(ng-model)]="modelStyle" dark>
+    <ion-segment-button value="A">
+      Model A
+    </ion-segment-button>
+    <ion-segment-button value="B">
+      Model B
+    </ion-segment-button>
+    <ion-segment-button value="C">
+      Model C
+    </ion-segment-button>
+  </ion-segment>
+
+  Model Style: <b>Model {{ modelStyle }}</b>
 </ion-content>

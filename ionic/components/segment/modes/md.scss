@@ -2,11 +2,13 @@
 // iOS Segment
 // --------------------------------------------------
 
+$segment-button-md-font-size:                  1.2rem !default;
+$segment-button-md-min-height:                 4.0rem !default;
+$segment-button-md-line-height:                4.0rem !default;
+
 $segment-button-md-text-color-activated:       color(primary) !default;
 $segment-button-md-border-color-activated:     color(primary) !default;
-
-$segment-button-md-min-height:                 5.0rem;
-$segment-button-md-line-height:                5.0rem;
+$segment-button-md-border-bottom:              2px solid rgba(#000000, 0.10) !default;
 
 
 .ion-segment {
@@ -15,6 +17,7 @@ $segment-button-md-line-height:                5.0rem;
   [button] {
     border-width: 0;
     transition: 100ms all linear;
+    font-size: $segment-button-md-font-size;
 
     min-height: $segment-button-md-min-height;
     line-height: $segment-button-md-line-height;
@@ -26,7 +29,7 @@ $segment-button-md-line-height:                5.0rem;
     }
 
     border-radius: 0;
-    border-bottom: 2px solid transparent;
+    border-bottom: $segment-button-md-border-bottom;
   }
 }
 
@@ -49,8 +52,8 @@ $segment-button-md-line-height:                5.0rem;
 
         &.activated {
           opacity: 1;
-          color: $bg-color !important;
-          border-color: $bg-color !important;
+          color: $bg-color;
+          border-color: $bg-color;
         }
       }
     }
