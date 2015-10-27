@@ -2320,7 +2320,12 @@ window.ionic.version = '1.1.0';
       }
     },
 
-    // Check if the platform is the one detected by cordova
+    /**
+     * @ngdoc method
+     * @name ionic.Platform#is
+     * @param {string} Platform name.
+     * @returns {boolean} Whether the platform name provided is detected.
+     */
     is: function(type) {
       type = type.toLowerCase();
       // check if it has an array of platforms
@@ -2447,7 +2452,7 @@ window.ionic.version = '1.1.0';
     });
   }
 
-})(this, document, ionic);
+})(window, document, ionic);
 
 (function(document, ionic) {
   'use strict';
@@ -4612,7 +4617,7 @@ var zyngaCore = { effect: {} };
       return id;
     }
   };
-})(this);
+})(window);
 
 /*
  * Scroller
