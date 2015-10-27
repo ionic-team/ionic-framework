@@ -82,3 +82,13 @@ export class CardsAdvancedImagePage {
 
     }
 }
+
+@Page({
+  templateUrl: 'cards/cards-advanced-weather.html',
+  directives: [forwardRef(() => AndroidAttribute)]
+})
+export class CardsAdvancedWeatherPage {
+    constructor() {
+
+    }
+}

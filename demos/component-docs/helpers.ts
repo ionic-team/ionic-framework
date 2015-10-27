@@ -22,7 +22,8 @@ import {CardsBasicPage,
         CardsBackgroundPage,
         CardsAdvancedMapPage,
         CardsAdvancedSocialPage,
-        CardsAdvancedImagePage} from './cards/cards';
+        CardsAdvancedImagePage,
+        CardsAdvancedWeatherPage} from './cards/cards';
 
 import {FormsPage,
         FixedInlinePage,
@@ -120,6 +121,8 @@ export function getPageFor(hash) {
         'card-advanced-map': CardsAdvancedMapPage,
         'card-advanced-social': CardsAdvancedSocialPage,
         'card-advanced-image': CardsAdvancedImagePage,
+        'card-advanced-weather': CardsAdvancedWeatherPage,
+
 
         'forms': FormsPage,
         'fixed-inline-labels': FixedInlinePage,
