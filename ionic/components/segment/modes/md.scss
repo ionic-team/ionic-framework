@@ -18,6 +18,7 @@ $segment-button-md-border-bottom:              2px solid rgba(#000000, 0.10) !de
     border-width: 0;
     transition: 100ms all linear;
     font-size: $segment-button-md-font-size;
+    opacity: 0.7;
 
     min-height: $segment-button-md-min-height;
     line-height: $segment-button-md-line-height;
