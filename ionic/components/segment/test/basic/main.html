@@ -1,7 +1,7 @@
 <ion-toolbar>
   <ion-title>
     <ion-segment>
-      <ion-segment-button>
+      <ion-segment-button class="e2eSegmentFriends">
         Friends
       </ion-segment-button>
       <ion-segment-button>
@@ -12,9 +12,11 @@
 </ion-toolbar>
 
 <ion-content padding>
+  <h4>Map mode: NgControl</h4>
+
   <form (submit)="doSubmit($event)" [ng-form-model]="myForm">
       <ion-segment ng-control="mapStyle" danger>
-        <ion-segment-button value="standard">
+        <ion-segment-button value="standard" class="e2eSegmentStandard">
           Standard
         </ion-segment-button>
         <ion-segment-button value="hybrid">
@@ -24,26 +26,25 @@
           Satellite
         </ion-segment-button>
       </ion-segment>
-      <button type="submit" button primary>Submit</button>
   </form>
 
-  Map mode: <b>{{myForm.controls.mapStyle.value}}</b>
+  <p>
+    Map mode: <b>{{myForm.controls.mapStyle.value}}</b> -
 
-  <div [ng-switch]="myForm.controls.mapStyle.value">
-    <div *ng-switch-when="'standard'">
-      <h2>Standard</h2>
-    </div>
-    <div *ng-switch-when="'hybrid'">
-      <h2>Hybrid</h2>
-    </div>
-    <div *ng-switch-when="'sat'">
-      <h2>Satellite!!</h2>
-    </div>
-  </div>
+    <span [ng-switch]="myForm.controls.mapStyle.value">
+      <span *ng-switch-when="'standard'">
+        <b>Standard</b>
+      </span>
+      <span *ng-switch-when="'hybrid'">
+        <b>Hybrid</b>
+      </span>
+      <span *ng-switch-when="'sat'">
+        <b>Satellite</b>
+      </span>
+    </span>
+  </p>
 
-  <hr>
-
-  <h3>NgModel</h3>
+  <h4>Model style: NgModel</h4>
 
   <ion-segment [(ng-model)]="modelStyle" dark>
     <ion-segment-button value="A">
@@ -52,10 +53,13 @@
     <ion-segment-button value="B">
       Model B
     </ion-segment-button>
-    <ion-segment-button value="C">
+    <ion-segment-button value="C" class="e2eSegmentModelC">
       Model C
+    </ion-segment-button>
+    <ion-segment-button value="D">
+      Model D
     </ion-segment-button>
   </ion-segment>
 
-  Model Style: <b>Model {{ modelStyle }}</b>
+  <p>Model Style: <b>Model {{ modelStyle }}</b></p>
 </ion-content>
