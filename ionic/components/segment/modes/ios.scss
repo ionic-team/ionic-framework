@@ -6,10 +6,10 @@ $segment-button-ios-border-width:             1px !default;
 $segment-button-ios-min-height:               3.0rem !default;
 $segment-button-ios-line-height:              3.0rem !default;
 $segment-button-ios-bg-color:                 transparent !default;
-$segment-button-ios-text-color:               inverse($segment-button-ios-bg-color-activated) !default;
 $segment-button-ios-font-size:                1.3rem !default;
 
 $segment-button-ios-bg-color-activated:       color(primary) !default;
+$segment-button-ios-text-color:               inverse($segment-button-ios-bg-color-activated) !default;
 $segment-button-ios-activated-transition:     100ms all linear !default;
 $segment-button-ios-hover-opacity:            0.16 !default;
 
