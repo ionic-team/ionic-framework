@@ -74,16 +74,6 @@ export class CardsAdvancedMapPage {
 }
 
 @Page({
-  templateUrl: 'cards/cards-advanced-image.html',
-  directives: [forwardRef(() => AndroidAttribute)]
-})
-export class CardsAdvancedImagePage {
-    constructor() {
-
-    }
-}
-
-@Page({
   templateUrl: 'cards/cards-advanced-weather.html',
   directives: [forwardRef(() => AndroidAttribute)]
 })

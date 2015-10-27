@@ -22,7 +22,6 @@ import {CardsBasicPage,
         CardsBackgroundPage,
         CardsAdvancedMapPage,
         CardsAdvancedSocialPage,
-        CardsAdvancedImagePage,
         CardsAdvancedWeatherPage} from './cards/cards';
 
 import {FormsPage,
@@ -118,9 +117,9 @@ export function getPageFor(hash) {
         'card-list': CardsListPage,
         'card-image': CardsImagePage,
         'card-background': CardsBackgroundPage,
+        'advanced-cards': CardsAdvancedSocialPage,
         'card-advanced-map': CardsAdvancedMapPage,
         'card-advanced-social': CardsAdvancedSocialPage,
-        'card-advanced-image': CardsAdvancedImagePage,
         'card-advanced-weather': CardsAdvancedWeatherPage,
 
 
