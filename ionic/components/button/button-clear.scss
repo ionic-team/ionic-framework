@@ -10,6 +10,7 @@ button[clear],
 
   &.activated {
     opacity: 0.4;
+    background: transparent;
   }
 
   &:hover:not(.disable-hover) {
