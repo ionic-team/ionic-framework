@@ -10,3 +10,7 @@ it('standard should be selected', function() {
 it('model c should be selected', function() {
   element(by.css('.e2eSegmentModelC')).click();
 });
+
+it('top grossing should be selected', function() {
+  element(by.css('.e2eSegmentTopGrossing')).click();
+});

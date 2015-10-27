@@ -15,6 +15,7 @@ class MyApp {
     });
 
     this.modelStyle = 'B';
+    this.appType = 'free';
   }
 
   doSubmit(event) {

@@ -46,9 +46,12 @@ $segment-button-ios-hover-opacity:            0.16 !default;
     }
 
     &:first-of-type {
-      border-right-width: 0px;
       border-radius: $button-border-radius 0px 0px $button-border-radius;
       margin-right: 0;
+    }
+
+    &:not(:first-of-type) {
+      border-left-width: 0px;
     }
 
     &:last-of-type {

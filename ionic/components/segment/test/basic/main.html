@@ -44,6 +44,8 @@
     </span>
   </p>
 
+  <hr>
+
   <h4>Model style: NgModel</h4>
 
   <ion-segment [(ng-model)]="modelStyle" dark>
@@ -63,3 +65,19 @@
 
   <p>Model Style: <b>Model {{ modelStyle }}</b></p>
 </ion-content>
+
+<ion-toolbar position="bottom">
+  <ion-title>
+    <ion-segment [(ng-model)]="appType" primary>
+      <ion-segment-button value="paid">
+        Paid
+      </ion-segment-button>
+      <ion-segment-button value="free">
+        Free
+      </ion-segment-button>
+      <ion-segment-button value="top" class="e2eSegmentTopGrossing">
+        Top Grossing
+      </ion-segment-button>
+    </ion-segment>
+  </ion-title>
+</ion-toolbar>
