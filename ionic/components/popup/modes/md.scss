@@ -69,5 +69,9 @@ ion-popup {
     @extend button[clear];
 
     min-height: $popup-md-button-min-height;
+
+    &.activated {
+      opacity: 1;
+    }
   }
 }
