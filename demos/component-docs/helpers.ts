@@ -123,7 +123,7 @@ export function getPageFor(hash) {
         'card-advanced-weather': CardsAdvancedWeatherPage,
 
 
-        'forms': FormsPage,
+        'inputs': FormsPage,
         'fixed-inline-labels': FixedInlinePage,
         'floating-labels': FloatingPage,
         'inline-labels': InlinePage,
