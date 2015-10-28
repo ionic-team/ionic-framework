@@ -226,8 +226,12 @@ ion-card .advanced-weather-tabs tab-bar a span.tab-button-text {
 body.md ion-card .advanced-weather-tabs tab-bar a span.tab-button-text {
   text-transform: uppercase;
 }
-body.md tab-highlight {
+body.md .cards-bg tab-highlight {
   background-color: #fff !important;
+  top: 0;
+}
+.cards-bg md-ripple {
+  background: #EBEDEF !important;
 }
 
 ion-content ion-card ion-item.advanced-trans p {
