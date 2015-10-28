@@ -70,6 +70,16 @@ ion-card {
     padding-top: 0;
   }
 
+  [actions] {
+    button,
+    [button] {
+      margin: 0 ($card-md-padding-right / 4) 0 ($card-md-padding-left / 4);
+      min-height: 26px;
+      font-size: 1.3rem;
+      border-color: transparent;
+    }
+  }
+
   [item-left],
   [item-right] {
     margin: $card-md-padding-media-top ($card-md-padding-right / 2) $card-md-padding-media-bottom ($card-md-padding-left / 2);
