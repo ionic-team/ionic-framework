@@ -214,6 +214,8 @@ body.md ion-card .advanced-weather-tabs tab-bar {
 }
 ion-card .advanced-weather-tabs tab-bar a {
   height: 100%;
+  border-top: 2px solid transparent;
+  border-bottom: none !important;
 }
 ion-card .advanced-weather-tabs tab-bar a icon.tab-button-icon {
   color: #fff;
