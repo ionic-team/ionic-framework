@@ -233,7 +233,7 @@ body.md .cards-bg tab-highlight {
   top: 0;
 }
 .cards-bg md-ripple {
-  background: #EBEDEF !important;
+  background: rgba(255,255,255, 0.15);
 }
 
 ion-content ion-card ion-item.advanced-trans p {
