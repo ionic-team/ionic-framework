@@ -34,6 +34,12 @@ import {FormsPage,
         
 import {IconsPage} from './icons/icons';
 
+import {CheckboxPage,
+        RadioPage,
+        RangePage,
+        SelectPage,
+        SwitchPage} from './inputs/inputs';
+
 import {BasicListsPage,
         AvatarListsPage,
         IconListsPage,
@@ -122,6 +128,11 @@ export function getPageFor(hash) {
         'card-advanced-social': CardsAdvancedSocialPage,
         'card-advanced-weather': CardsAdvancedWeatherPage,
 
+        'checkbox': CheckboxPage,
+        'radio': RadioPage,
+        'range': RangePage,
+        'select': SelectPage,
+        'switch': SwitchPage,
 
         'inputs': FormsPage,
         'fixed-inline-labels': FixedInlinePage,
