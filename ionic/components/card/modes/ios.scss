@@ -44,7 +44,6 @@ ion-card {
     padding-right: ($card-ios-padding-right / 2);
     padding-left: ($card-ios-padding-left / 2);
     font-size: $item-ios-font-size;
-    border-radius: inherit;
   }
 
   ion-item-content {
@@ -70,6 +69,8 @@ ion-card {
   }
 
   [actions] {
+    border-radius: inherit;
+
     ion-item-content {
       padding: 0;
     }
