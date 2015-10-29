@@ -7,7 +7,7 @@ button,
 
   &[outline] {
     border: 1px solid $button-color;
-    background: $background-color;
+    background: transparent;
     color: $button-color;
 
     &.activated {
@@ -27,7 +27,7 @@ button,
 
   &[outline] {
     border-color: $fg-color;
-    background: $background-color;
+    background: transparent;
     color: $fg-color;
 
     &.activated {
