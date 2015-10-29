@@ -1,0 +1,7 @@
+
+button {
+  &[block] {
+    // This fixes an issue with flexbox and button on iOS Safari. See #225
+    display: block;
+  }
+}
