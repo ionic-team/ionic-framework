@@ -28,7 +28,7 @@ import {dom} from 'ionic/util';
   selector: 'ion-segment',
   inputs: [
     'value'
-  ]
+  ],
   template: '<div class="ion-segment"><ng-content></ng-content></div>',
   directives: [forwardRef(() => SegmentButton)]
 })
