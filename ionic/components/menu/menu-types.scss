@@ -12,6 +12,9 @@ ion-menu[type=reveal].show-menu {
   box-shadow: $menu-shadow;
 }
 
+.menu-content-push {
+  box-shadow: $menu-shadow;
+}
 
 
 // Menu Overlay
@@ -39,4 +42,8 @@ ion-menu[type=overlay] {
 
 ion-menu[type=overlay][side=right] {
   left: 8px;
+}
+
+ion-menu[type=push][side=right] {
+  left: 0px;
 }
