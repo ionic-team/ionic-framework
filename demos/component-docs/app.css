@@ -309,7 +309,6 @@ body.ios img#ios-only {
   margin-left: -3px !important;
 }
 .item-subtle:before {
-  content: '•';
   padding-right: 5px;
 }
 p.time-ago {
@@ -317,6 +316,19 @@ p.time-ago {
   margin-left: 4px !important;
   margin-right: 0px !important;
 
+}
+
+
+button[fab].fab-map {
+  top: 190px;
+  z-index: 50;
+}
+body.ios button[fab].fab-map {
+  width: 50px;
+  height: 50px;
+}
+body.md button[fab].fab-map {
+  top: 220px;
 }
 
 

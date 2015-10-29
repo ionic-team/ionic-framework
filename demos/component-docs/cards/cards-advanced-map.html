@@ -6,14 +6,17 @@
 <ion-content class="has-header components-demo cards-bg">
 
 <ion-card class="adv-map">
-  <div>
-    <img src="img/advance-card-map.png">
+  <div style="position: relative">
+    <img src="img/advance-card-map-madison.png">
+    <button fab fab-right fab-top class="fab-map">
+      <icon pin></icon>
+    </button>
   </div>
   <ion-item>
     <ion-avatar item-left class="icon-avatar">
       <icon football></icon>
     </ion-avatar>
-    <h2>Museum of Modern Football</h2>
+    <h2>Museum of Football</h2>
     <p>11 N. Way St, Madison, WI 53703</p>
   </ion-item>
   <ion-item>
@@ -25,8 +28,7 @@
   </ion-item>
   <ion-item actions>
     <span item-left class="item-bold">18 min</span>
-    <span item-left class="item-subtle">2.6m</span>
-    <span item-left class="item-subtle">2:16PM</span>
+    <span item-left class="item-subtle">(2.6 mi)</span>
     <button primary clear item-right>
       <icon navigate></icon>
       Start
@@ -36,8 +38,11 @@
 </ion-card>
 
 <ion-card class="adv-map">
-  <div>
+  <div style="position: relative">
     <img src="img/advance-card-map-mario.png">
+    <button danger fab fab-right fab-top class="fab-map">
+      <icon pin></icon>
+    </button>
   </div>
   <ion-item>
     <ion-avatar item-left class="icon-avatar">
@@ -54,10 +59,41 @@
     <p>Roy Koopa</p>
   </ion-item>
   <ion-item actions>
-    <span item-left class="item-bold">3hr</span>
-    <span item-left class="item-subtle">4.8m</span>
-    <span item-left class="item-subtle">6:20PM</span>
-    <button primary clear item-right>
+    <span item-left class="item-bold">3 hr</span>
+    <span item-left class="item-subtle">(4.8 mi)</span>
+    <button danger clear item-right>
+      <icon navigate></icon>
+      Start
+    </button>
+  </ion-item>
+
+</ion-card>
+
+<ion-card class="adv-map">
+  <div style="position: relative">
+    <img src="img/advance-card-map-paris.png">
+    <button secondary fab fab-right fab-top class="fab-map">
+      <icon pin></icon>
+    </button>
+  </div>
+  <ion-item>
+    <ion-avatar item-left class="icon-avatar">
+      <icon information-circle></icon>
+    </ion-avatar>
+    <h2>Museum of Information</h2>
+    <p>44 Rue de Info, 75010 Paris, France</p>
+  </ion-item>
+  <ion-item>
+    <ion-avatar item-left class="icon-avatar">
+      <icon leaf></icon>
+    </ion-avatar>
+    <h2>General Pharmacy</h2>
+    <p>1 Avenue Faux, 75010 Paris, France</p>
+  </ion-item>
+  <ion-item actions>
+    <span item-left secondary class="item-bold">26 min</span>
+    <span item-left class="item-subtle">(8.1 mi)</span>
+    <button secondary clear item-right>
       <icon navigate></icon>
       Start
     </button>
