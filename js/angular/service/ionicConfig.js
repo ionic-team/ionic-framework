@@ -486,6 +486,7 @@ IonicModule
 
     function setStyles(ele, x) {
       var css = {};
+      css.opacity = 1;
       css[ionic.CSS.TRANSITION_DURATION] = d.shouldAnimate ? '' : 0;
       css[ionic.CSS.TRANSFORM] = 'translate3d(' + x + '%,0,0)';
       ionic.DomUtil.cachedStyles(ele, css);
