@@ -1,6 +1,7 @@
 import {Component, NgZone, Injectable, Renderer} from 'angular2/angular2';
 
 import {IonicApp} from '../app/app';
+import {Config} from '../../config/config';
 import {Animation} from '../../animations/animation';
 import * as util from 'ionic/util';
 
@@ -8,8 +9,9 @@ import * as util from 'ionic/util';
 @Injectable()
 export class OverlayController {
 
-  constructor(app: IonicApp, zone: NgZone, renderer: Renderer) {
+  constructor(app: IonicApp, config: Config, zone: NgZone, renderer: Renderer) {
     this.app = app;
+    this.config = config;
     this.zone = zone;
     this.renderer = renderer;
     this.refs = [];
@@ -54,6 +56,9 @@ export class OverlayController {
         instance.onPageWillEnter && instance.onPageWillEnter();
 
         let animation = Animation.create(ref.location.nativeElement, opts.enterAnimation);
+        if (this.config.get('animate') === false) {
+          animation.duration(0);
+        }
         animation.before.addClass('show-overlay');
 
         this.app.setEnabled(false, animation.duration());
@@ -95,6 +100,9 @@ export class OverlayController {
     instance.onPageWillUnload && instance.onPageWillUnload();
 
     let animation = Animation.create(ref.location.nativeElement, opts.leaveAnimation);
+    if (this.config.get('animate') === false) {
+      animation.duration(0);
+    }
     animation.after.removeClass('show-overlay');
 
     this.app.setEnabled(false, animation.duration());

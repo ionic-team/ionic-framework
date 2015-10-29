@@ -10,22 +10,3 @@ $modal-inset-mode-right:          20% !default;
 $modal-inset-mode-bottom:         20% !default;
 $modal-inset-mode-left:           20% !default;
 $modal-inset-mode-min-height:     240px !default;
-
-
-ion-modal {
-  position: absolute;
-  top: 0;
-  z-index: $z-index-overlay;
-  overflow: hidden;
-  min-height: 100%;
-  width: 100%;
-  background-color: $modal-background-color;
-
-  display: flex;
-  flex-direction: column;
-
-  transform: translate3d(0px, 100%, 0px);
-  &.show-overlay {
-    transform: translate3d(0px, 0px, 0px);
-  }
-}

@@ -46,10 +46,6 @@ ion-tabs > ion-navbar-section {
   order: $flex-order-tab-bar-navbar;
 }
 
-ion-tabs ion-navbar.toolbar.deselected-tab {
-  display: none;
-}
-
 ion-tab-bar-section {
   position: relative;
   order: $flex-order-tab-bar-bottom;
@@ -161,4 +157,3 @@ tab-highlight {
 [tab-bar-icons=hide] .tab-button-icon {
   display: none;
 }
-

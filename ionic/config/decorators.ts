@@ -1,18 +1,9 @@
-import {Component, Directive, View, bootstrap} from 'angular2/angular2'
+import {Component, bootstrap} from 'angular2/angular2'
 
 import * as util from 'ionic/util';
 import {ionicProviders} from './bootstrap';
 import {IONIC_DIRECTIVES} from './directives';
 
-/**
- * @private
- */
-class PageImpl extends View {
-  constructor(args = {}) {
-    args.directives = (args.directives || []).concat(IONIC_DIRECTIVES);
-    super(args);
-  }
-}
 
 /**
  * _For more information on how pages are created, see the [NavController API
@@ -72,30 +63,30 @@ class PageImpl extends View {
  * you may see these tags if you inspect your markup, you don't need to include
  * them in your templates.
  */
-export function Page(args) {
+export function Page(config={}) {
   return function(cls) {
+    config.selector = 'ion-page';
+    config.directives = config.directives ? config.directives.concat(IONIC_DIRECTIVES) : IONIC_DIRECTIVES;
+    config.host = config.host || {};
+    config.host['[hidden]'] = '_hidden';
+    config.host['[class.tab-subpage]'] = '_tabSubPage';
     var annotations = Reflect.getMetadata('annotations', cls) || [];
-    annotations.push(new PageImpl(args));
+    annotations.push(new Component(config));
     Reflect.defineMetadata('annotations', annotations, cls);
     return cls;
   }
 }
 
-/**
- * TODO
- */
+
 export function ConfigComponent(config) {
   return function(cls) {
-    return makeComponent(cls, appendConfig(cls, config));
+    var annotations = Reflect.getMetadata('annotations', cls) || [];
+    annotations.push(new Component(config));
+    Reflect.defineMetadata('annotations', annotations, cls);
+    return cls;
   }
 }
 
-export function makeComponent(cls, config) {
-  var annotations = Reflect.getMetadata('annotations', cls) || [];
-  annotations.push(new Component(config));
-  Reflect.defineMetadata('annotations', annotations, cls);
-  return cls;
-}
 
 function appendConfig(cls, config) {
   config.host = config.host || {};

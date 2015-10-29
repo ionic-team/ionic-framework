@@ -4,17 +4,11 @@
 
 
 ion-navbar.toolbar {
-  position: absolute;
-  display: none;
-
-  &.show-navbar {
-    display: flex;
-  }
+  display: flex;
 }
 
 .back-button {
-  order: map-get($toolbar-order, backButton);
-  transform: translateZ(0px);
+  order: map-get($toolbar-order, backButton);  
 
   display: none;
   &.show-back-button {

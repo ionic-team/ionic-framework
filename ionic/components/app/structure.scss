@@ -82,79 +82,123 @@ body {
   background-color: $background-color;
 }
 
-ion-app {
+ion-app,
+ion-nav,
+ion-tabs {
   display: flex;
   flex-direction: column;
-
-  overflow: hidden;
-  height: 100%;
-  max-width: 100%;
-  max-height: 100%;
-  margin: 0;
-  padding: 0;
-
-}
-
-ion-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 100%;
 }
 
-ion-pane,
-ion-view.pane-view {
+ion-navbar-section {
+  display: block;
+  width: 100%;
+  min-height: 50px;
+}
+
+ion-content-section {
+  display: block;
+  flex: 1;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+ion-page {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: translateZ(0);
+}
+
+ion-content {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  background-color: $background-color;
+}
+
+scroll-content {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-
-  display: flex;
-  flex-direction: column;
+  display: block;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  will-change: scroll-position;
 }
 
-ion-view.pane-view {
-  background: transparent;
-}
-
-ion-view {
-  display: none;
+ion-tab-bar {
+  display: block;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
+  min-height: 50px;
+}
+
+ion-tab-section {
+  display: block;
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 100%;
-  flex-direction: column;
-
-  background-color: $background-color;
-
-  transform: translateZ(0px);
-
-  &.show-view {
-    display: flex;
-  }
+  overflow: hidden;
 }
 
-[no-navbar] > ion-navbar-section {
-  display: none;
+ion-page.tab-subpage {
+  position: fixed;
+  z-index: 10;
 }
 
-ion-navbar-section {
-  position: relative;
-  min-height: 4.4rem;
-  z-index: $z-index-navbar-section;
+ion-navbar {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 50px;
+  z-index: 10;
 }
 
-ion-content-section {
-  position: relative;
-  z-index: $z-index-content-section;
-  flex: 1;
-  order: $flex-order-view-content;
+ion-navbar-section ion-navbar.toolbar {
+  position: absolute;
 }
 
-[hidden],
-template,
-root-anchor {
-  display: none !important;
+ion-toolbar {
+  display: block;
+  width: 100%;
+  height: 50px;
+}
+
+ion-toolbar[position=bottom] {
+  bottom: 0;
+  z-index: 10;
+}
+
+ion-scrollbar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 10;
+  width: 10px;
+}
+
+.hide-navtive-scrollbar ion-content {
+  padding-right: 20px;
+  width: calc(100% + 20px);
 }

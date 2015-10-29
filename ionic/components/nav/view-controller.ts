@@ -12,15 +12,7 @@ export class ViewController {
     this.params = new NavParams(params);
     this.instance = null;
     this.state = 0;
-    this.disposals = [];
-  }
-
-  setContent(content) {
-    this._content = content;
-  }
-
-  getContent() {
-    return this._content;
+    this._destroys = [];
   }
 
   /**
@@ -34,25 +26,18 @@ export class ViewController {
       return done();
     }
 
-    // compile the component and create a ProtoViewRef
-    navCtrl.compileView(this.componentType).then(hostProtoViewRef => {
+    // get the pane the NavController wants to use
+    // the pane is where all this content will be placed into
+    navCtrl.loadPage(this, null, () => {
 
-      if (this.shouldDestroy) return done();
+      // this ViewController instance has finished loading
+      try {
+        this.loaded();
+      } catch (e) {
+        console.error(e);
+      }
 
-      // get the pane the NavController wants to use
-      // the pane is where all this content will be placed into
-      navCtrl.loadContainer(this.componentType, hostProtoViewRef, this, () => {
-
-        // this ViewController instance has finished loading
-        try {
-          this.loaded();
-        } catch (e) {
-          console.error(e);
-        }
-
-        done();
-      });
-
+      done();
     });
   }
 
@@ -87,55 +72,66 @@ export class ViewController {
     return this.index === 0;
   }
 
+  addDestroy(destroyFn) {
+    this._destroys.push(destroyFn);
+  }
+
   /**
    * TODO
    */
   destroy() {
-    for (let i = 0; i < this.disposals.length; i++) {
-      this.disposals[i]();
+    for (let i = 0; i < this._destroys.length; i++) {
+      this._destroys[i]();
     }
+    this._destroys = [];
   }
 
-  /**
-   * @private
-   */
   setNavbarTemplateRef(templateRef) {
     this._nbTmpRef = templateRef;
   }
 
-  /**
-   * @private
-   */
   getNavbarTemplateRef() {
     return this._nbTmpRef;
   }
 
-  /**
-   * TODO
-   * @returns {TODO} TODO
-   */
-  setContentRef(contentElementRef) {
-    this._cntRef = contentElementRef;
+  getNavbarViewRef() {
+    return this._nbVwRef;
   }
 
-  /**
-   * TODO
-   * @returns {TODO} TODO
-   */
+  setNavbarViewRef(viewContainerRef) {
+    this._nbVwRef = viewContainerRef;
+  }
+
+  setPageRef(elementRef) {
+    this._pgRef = elementRef;
+  }
+
+  pageRef() {
+    return this._pgRef;
+  }
+
+  setContentRef(elementRef) {
+    this._cntRef = elementRef;
+  }
+
   contentRef() {
     return this._cntRef;
   }
 
-  setNavbar(navbarView) {
-    this._nbVw = navbarView;
+  setContent(directive) {
+    this._cntDir = directive;
   }
 
-  /**
-   * TODO
-   * @returns {TODO} TODO
-   */
+  getContent() {
+    return this._cntDir;
+  }
+
+  setNavbar(directive) {
+    this._nbDir = directive;
+  }
+
   getNavbar() {
-    return this._nbVw;
+    return this._nbDir;
   }
 
   /**
@@ -263,18 +259,8 @@ export class ViewController {
   }
 
   domCache(isActiveView, isPreviousView) {
-    let renderInDom = (isActiveView || isPreviousView);
-
-    let contentRef = this.contentRef();
-    if (contentRef) {
-      // the active view, and the previous view should have the 'show-view' css class
-      // all others, like a cached page 2 back, should now have 'show-view' so it's not rendered
-      contentRef.nativeElement.classList[renderInDom ? 'add' : 'remove' ]('show-view');
-    }
-
-    let navbarRef = this.getNavbar();
-    if (navbarRef) {
-      navbarRef.elementRef.nativeElement.classList[renderInDom ? 'add' : 'remove' ]('show-navbar');
+    if (this.instance) {
+      this.instance._hidden = (!isActiveView && !isPreviousView);
     }
   }
 

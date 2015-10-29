@@ -84,6 +84,7 @@ ion-title {
   height: 100%;
   padding: 0px 90px 1px 90px;
   pointer-events: none;
+  transform: translateZ(0px);
 }
 
 .toolbar-title {
@@ -96,6 +97,7 @@ ion-title {
 ion-nav-items {
   flex: 1;
   order: map-get($toolbar-order-ios, primary);
+  transform: translateZ(0px);
 }
 
 ion-nav-items[secondary] {

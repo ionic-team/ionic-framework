@@ -138,6 +138,11 @@ export class Menu extends Ion {
 
     this._type = new menuTypeCls(this);
     this.type = type;
+
+    if (this.config.get('animate') === false) {
+      this._type.open.duration(33);
+      this._type.close.duration(33);
+    }
   }
 
   /**

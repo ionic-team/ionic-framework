@@ -75,7 +75,6 @@ ion-title {
   order: map-get($toolbar-order, title);
   display: flex;
   align-items: center;
-  transform: translateZ(0px);
 }
 
 .toolbar-title {
@@ -109,7 +108,6 @@ ion-title {
 ion-nav-items {
   display: block;
   margin: 0 0.2rem;
-  transform: translateZ(0px);
   pointer-events: none;
   order: map-get($toolbar-order, primary);
 }

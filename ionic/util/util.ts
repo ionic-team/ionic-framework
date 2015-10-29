@@ -167,12 +167,10 @@ export function getQuerystring(url, key) {
     const startIndex = url.indexOf('?');
     if (startIndex !== -1) {
       const queries = url.slice(startIndex + 1).split('&');
-      if (queries.length) {
-        queries.forEach((param) => {
-          var split = param.split('=');
-          queryParams[split[0]] = split[1].split('#')[0];
-        });
-      }
+      queries.forEach((param) => {
+        var split = param.split('=');
+        queryParams[split[0].toLowerCase()] = split[1].split('#')[0];
+      });
     }
     if (key) {
       return queryParams[key] || '';

@@ -251,7 +251,7 @@ export class Animation {
         });
       }
 
-      if (self._duration > 64) {
+      if (self._duration > 32) {
         // begin each animation when everything is rendered in their starting point
         // give the browser some time to render everything in place before starting
         setTimeout(kickoff, this._opts.renderDelay);
@@ -550,7 +550,7 @@ class Animate {
 
     this.toEffect = parseEffect(toEffect);
 
-    this.shouldAnimate = (duration > 64);
+    this.shouldAnimate = (duration > 32);
 
     if (!this.shouldAnimate) {
       return inlineStyle(ele, this.toEffect);

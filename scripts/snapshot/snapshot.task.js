@@ -8,7 +8,6 @@ module.exports = function(gulp, argv, buildConfig) {
   var serveStatic = require('serve-static');
   var cp = require('child_process');
   var path = require('canonical-path');
-  var uuid = require('node-uuid');
 
   var projectRoot = path.resolve(__dirname, '../..');
   var protractorHttpServer;
@@ -29,7 +28,7 @@ module.exports = function(gulp, argv, buildConfig) {
   });
 
   gulp.task('e2e-publish', function(done) {
-    var testId = uuid.v4().split('-')[0];
+    var testId = generateTestId();
     e2ePublish(testId, true);
   });
 
@@ -40,7 +39,7 @@ module.exports = function(gulp, argv, buildConfig) {
       return done();
     }
 
-    var testId = uuid.v4().split('-')[0];
+    var testId = generateTestId();
 
     var protractorConfigFile = path.resolve(projectRoot, 'scripts/snapshot/protractor.config.js');
 
@@ -89,6 +88,16 @@ module.exports = function(gulp, argv, buildConfig) {
     snapshotConfig.testId = testId;
     snapshotConfig.verbose = verbose;
     require('../e2e/e2e-publish')(snapshotConfig);
+  }
+
+  function generateTestId() {
+    var chars = 'abcdefghijklmnopqrstuvwxyz';
+    var id = chars.charAt(Math.floor(Math.random() * chars.length));
+    chars += '0123456789';
+    while (id.length < 3) {
+      id += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return id;
   }
 
 };

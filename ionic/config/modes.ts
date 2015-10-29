@@ -48,6 +48,7 @@ Config.setModeConfig('md', {
   popupPopIn: 'popup-md-pop-in',
   popupPopOut: 'popup-md-pop-out',
 
+  tabSubPages: true,
   type: 'overlay',
   mdRipple: true,
 });

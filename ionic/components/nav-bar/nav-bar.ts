@@ -1,4 +1,4 @@
-import {Component, Directive, Optional, ElementRef, Renderer, TemplateRef, forwardRef, Inject} from 'angular2/angular2';
+import {Component, Directive, Optional, ElementRef, Renderer, TemplateRef, forwardRef, Inject, ViewContainerRef} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {Icon} from '../icon/icon';
@@ -65,6 +65,9 @@ class BackButtonText extends Ion {
       '<ng-content select="ion-nav-items[secondary]"></ng-content>' +
     '</div>' +
     '<div class="toolbar-background"></div>',
+  host: {
+    '[hidden]': '_hidden'
+  },
   directives: [BackButton, BackButtonText, Icon]
 })
 export class Navbar extends ToolbarBase {
@@ -105,6 +108,10 @@ export class Navbar extends ToolbarBase {
     this.app.setTitle(this.getTitleText());
   }
 
+  setHidden(isHidden) {
+    this._hidden = isHidden
+  }
+
 }
 
 
@@ -118,9 +125,13 @@ export class Navbar extends ToolbarBase {
 })
 export class NavbarTemplate {
   constructor(
-    @Optional() viewCtrl: ViewController,
-    @Optional() templateRef: TemplateRef
+    viewContainerRef: ViewContainerRef,
+    templateRef: TemplateRef,
+    @Optional() viewCtrl: ViewController
   ) {
-    viewCtrl && viewCtrl.setNavbarTemplateRef(templateRef);
+    if (viewCtrl) {
+      viewCtrl.setNavbarTemplateRef(templateRef);
+      viewCtrl.setNavbarViewRef(viewContainerRef);
+    }
   }
 }

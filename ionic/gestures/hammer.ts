@@ -165,7 +165,7 @@ function ifUndefined(val1, val2) {
  */
 function addEventListeners(target, types, handler) {
     each(splitStr(types), function(type) {
-        console.debug('hammer addEventListener', type, target.tagName);
+        //console.debug('hammer addEventListener', type, target.tagName);
         target.addEventListener(type, handler, false);
     });
 }
@@ -178,7 +178,7 @@ function addEventListeners(target, types, handler) {
  */
 function removeEventListeners(target, types, handler) {
     each(splitStr(types), function(type) {
-        console.debug('hammer removeEventListener', type, target.tagName);
+        //console.debug('hammer removeEventListener', type, target.tagName);
         target.removeEventListener(type, handler, false);
     });
 }
@@ -394,7 +394,7 @@ Input.prototype = {
      * bind the events
      */
     init: function() {
-        console.debug('hammer Input init')
+        //console.debug('hammer Input init')
         this.evEl && addEventListeners(this.element, this.evEl, this.domHandler);
         this.evTarget && addEventListeners(this.target, this.evTarget, this.domHandler);
         this.evWin && addEventListeners(getWindowForElement(this.element), this.evWin, this.domHandler);

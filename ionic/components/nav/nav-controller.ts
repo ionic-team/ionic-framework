@@ -1,7 +1,6 @@
 import {Compiler, ElementRef, Injector, provide, NgZone, DynamicComponentLoader, AppViewManager, Renderer} from 'angular2/angular2';
 
 import {Ion} from '../ion';
-import {makeComponent} from '../../config/decorators';
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
 import {ViewController} from './view-controller';
@@ -445,6 +444,9 @@ export class NavController extends Ion {
     if (!opts.animation) {
       opts.animation = this.config.get('viewTransition');
     }
+    if (this.config.get('animate') === false) {
+      opts.animate = false;
+    }
 
     // wait for the new view to complete setup
     enteringView.stage(() => {
@@ -508,34 +510,51 @@ export class NavController extends Ion {
 
   }
 
-  /**
-   * @private
-   * TODO
-   */
-  compileView(componentType) {
-    // create a new ion-view annotation
-    let viewComponentType = makeComponent(componentType, {
-      selector: 'ion-view',
-      host: {
-        '[class.pane-view]': '_paneView'
-      }
-    });
-
-    // compile the Component
-    return this._compiler.compileInHost(viewComponentType);
-  }
-
-  /**
-   * @private
-   * TODO
-   */
-  loadNextToAnchor(type, location, viewCtrl) {
+  loadPage(viewCtrl, navbarContainerRef, done) {
     let providers = this.providers.concat(Injector.resolve([
       provide(ViewController, {useValue: viewCtrl}),
       provide(NavParams, {useValue: viewCtrl.params})
     ]));
 
-    return this._loader.loadNextToLocation(type, location, providers);
+    this._loader.loadIntoLocation(viewCtrl.componentType, this.elementRef, 'contents', providers).then(componentRef => {
+
+      viewCtrl.addDestroy(() => {
+        componentRef.dispose();
+      });
+
+      // a new ComponentRef has been created
+      // set the ComponentRef's instance to this ViewController
+      viewCtrl.setInstance(componentRef.instance);
+
+      // remember the ElementRef to the ion-page elementRef that was just created
+      viewCtrl.setPageRef(componentRef.location);
+
+      if (!navbarContainerRef) {
+        navbarContainerRef = viewCtrl.getNavbarViewRef();
+      }
+
+      let navbarTemplateRef = viewCtrl.getNavbarTemplateRef();
+      if (navbarContainerRef && navbarTemplateRef) {
+        let navbarView = navbarContainerRef.createEmbeddedView(navbarTemplateRef);
+
+        viewCtrl.addDestroy(() => {
+          let index = navbarContainerRef.indexOf(navbarView);
+          if (index > -1) {
+            navbarContainerRef.remove(index);
+          }
+        });
+      }
+
+      if (this._views.length === 1) {
+        this._zone.runOutsideAngular(() => {
+          setTimeout(() => {
+            this.renderer.setElementClass(this.elementRef, 'has-views', true);
+          }, 200);
+        });
+      }
+
+      done(viewCtrl);
+    });
   }
 
   /**
@@ -543,6 +562,7 @@ export class NavController extends Ion {
    * TODO
    */
   swipeBackStart() {
+    return;
     if (!this.app.isEnabled() || !this.canSwipeBack()) {
       return;
     }
@@ -594,6 +614,7 @@ export class NavController extends Ion {
    * @param {TODO} progress  TODO
    */
   swipeBackProgress(value) {
+    return;
     if (this._sbTrans) {
       // continue to disable the app while actively dragging
       this.app.setEnabled(false, 4000);
@@ -610,6 +631,7 @@ export class NavController extends Ion {
    * @param {number} rate  How fast it closes
    */
   swipeBackEnd(completeSwipeBack, rate) {
+    return;
     if (!this._sbTrans) return;
 
     // disables the app during the transition
@@ -672,6 +694,7 @@ export class NavController extends Ion {
    * TODO
    */
   _sbComplete() {
+    return;
     if (this.canSwipeBack()) {
       // it is possible to swipe back
 
@@ -787,16 +810,6 @@ export class NavController extends Ion {
       this._remove(view);
       view.destroy();
     });
-  }
-
-  addHasViews() {
-    if (this._views.length === 1) {
-      this._zone.runOutsideAngular(() => {
-        setTimeout(() => {
-          this.renderer.setElementClass(this.elementRef, 'has-views', true);
-        }, 200);
-      });
-    }
   }
 
   /**

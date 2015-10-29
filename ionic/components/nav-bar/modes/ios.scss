@@ -8,3 +8,7 @@ $navbar-ios-height:                        4.4rem !default;
 ion-navbar-section {
   min-height: $navbar-ios-height;
 }
+
+.back-button {
+  transform: translateZ(0px);
+}

@@ -2,22 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- https://www.chromium.org/developers/design-documents/chromium-graphics/how-to-get-gpu-rasterization -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link href="../../../css/ionic.css" rel="stylesheet">
 
   <script>
-    // dynamically load the stylesheet depending on theme querystring
-    // defaults to use the light-theme
-    var theme = 'ionic.css';
-    if (location.href.indexOf('ionictheme=dark') > -1) {
-      theme = 'ionic.dark.css';
-    }
-
-    var stylesheet = document.createElement('link');
-    stylesheet.setAttribute('rel', 'stylesheet');
-    stylesheet.setAttribute('href', '../../../css/' + theme);
-    document.getElementsByTagName('head')[0].appendChild(stylesheet);
-
     if (location.href.indexOf('snapshot=true') > -1) {
       document.documentElement.classList.add('snapshot');
     } else {
@@ -27,7 +15,12 @@
 
   <style>
     .snapshot body {
-      max-height: 700px;
+      /* crop an exact size */
+      max-height: 700px !important;
+    }
+    .snapshot scroll-content {
+      /* disable scrollbars */
+      overflow: hidden !important;
     }
 
     /* hack to create tall scrollable areas for testing using <f></f> */

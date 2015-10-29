@@ -1,4 +1,4 @@
-import {Component, Directive, Host, ElementRef, Compiler, DynamicComponentLoader, AppViewManager, forwardRef, NgZone, Renderer} from 'angular2/angular2';
+import {Component, Directive, Host, ElementRef, Compiler, DynamicComponentLoader, AppViewManager, NgZone, Renderer} from 'angular2/angular2';
 
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
@@ -64,8 +64,7 @@ import {Tabs} from './tabs';
     '[class.show-tab]': 'isSelected',
     'role': 'tabpanel'
   },
-  template: '<template content-anchor></template><ng-content></ng-content>',
-  directives: [forwardRef(() => TabContentAnchor)]
+  template: '<template #contents></template>'
 })
 export class Tab extends NavController {
 
@@ -83,91 +82,71 @@ export class Tab extends NavController {
     // A Tab is a NavController for its child pages
     super(tabs, app, config, elementRef, compiler, loader, viewManager, zone, renderer);
     this.tabs = tabs;
-
     this._isInitial = tabs.add(this);
   }
 
   onInit() {
-    console.debug('Tab onInit', this.getIndex());
+    console.debug('Tab onInit', this.index);
 
     if (this._isInitial) {
       this.tabs.select(this);
 
     } else if (this.tabs.preloadTabs) {
-      // setTimeout(() => {
-      //   this.load(() => {
-      //     console.debug('preloaded tab', this.getIndex());
-      //   });
-      // }, 500 * this.getIndex());
+      setTimeout(() => {
+        this.load(() => {
+          console.debug('preloaded tab', this.index);
+          this.hideNavbars(true);
+        });
+      }, 500 * this.index);
     }
   }
 
-  load(callback) {
+  load(done) {
     if (!this._loaded && this.root) {
       let opts = {
         animate: false
       };
-      this.push(this.root, null, opts).then(callback);
+      this.push(this.root, null, opts).then(done);
       this._loaded = true;
 
     } else {
-      callback();
+      done();
     }
   }
 
-  loadContainer(componentType, hostProtoViewRef, viewCtrl, done) {
+  loadPage(viewCtrl, navbarContainerRef, done) {
+    // by default a page's navbar goes into the shared tab's navbar section
+    navbarContainerRef = this.tabs.navbarContainerRef;
 
-    this.loadNextToAnchor(componentType, this.contentAnchorRef, viewCtrl).then(componentRef => {
+    let isTabSubPage = (this.tabs.subPages && viewCtrl.index > 0);
+    if (isTabSubPage) {
+      // a subpage, that's not the first index
+      // should not use the shared tabs navbar section, but use it's own
+      navbarContainerRef = null;
+    }
 
-      viewCtrl.disposals.push(() => {
-        componentRef.dispose();
-      });
-
-      // a new ComponentRef has been created
-      // set the ComponentRef's instance to this ViewController
-      viewCtrl.setInstance(componentRef.instance);
-
-      // remember the ElementRef to the content that was just created
-      viewCtrl.setContentRef(componentRef.location);
-
-      // get the NavController's container for navbars, which is
-      // the place this NavController will add each ViewController's navbar
-      let navbarContainerRef = this.tabs.navbarContainerRef;
-
-      // get this ViewController's navbar TemplateRef, which may not
-      // exist if the ViewController's template didn't have an <ion-navbar *navbar>
-      let navbarTemplateRef = viewCtrl.getNavbarTemplateRef();
-
-      // create the navbar view if the pane has a navbar container, and the
-      // ViewController's instance has a navbar TemplateRef to go to inside of it
-      if (navbarContainerRef && navbarTemplateRef) {
-        let navbarView = navbarContainerRef.createEmbeddedView(navbarTemplateRef, -1);
-
-        viewCtrl.disposals.push(() => {
-          let index = navbarContainerRef.indexOf(navbarView);
-          if (index > -1) {
-            navbarContainerRef.remove(index);
-          }
-        });
+    super.loadPage(viewCtrl, navbarContainerRef, () => {
+      if (viewCtrl.instance) {
+        viewCtrl.instance._tabSubPage = isTabSubPage;
       }
-
-      this.addHasViews();
-
       done();
     });
-
   }
 
-  getIndex() {
+  setSelected(isSelected) {
+    this.isSelected = isSelected;
+    this.hideNavbars(!isSelected);
+  }
+
+  hideNavbars(shouldHideNavbars) {
+    this._views.forEach(viewCtrl => {
+      let navbar = viewCtrl.getNavbar();
+      navbar && navbar.setHidden(shouldHideNavbars);
+    });
+  }
+
+  get index() {
     return this.tabs.getIndex(this);
   }
 
-}
-
-
-@Directive({selector: 'template[content-anchor]'})
-class TabContentAnchor {
-  constructor(@Host() tab: Tab, elementRef: ElementRef) {
-    tab.contentAnchorRef = elementRef;
-  }
 }

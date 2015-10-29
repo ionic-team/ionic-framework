@@ -42,6 +42,7 @@ export class Content extends Ion {
 
     if (viewCtrl) {
       viewCtrl.setContent(this);
+      viewCtrl.setContentRef(elementRef);
     }
   }
 

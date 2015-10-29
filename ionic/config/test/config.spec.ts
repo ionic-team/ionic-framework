@@ -57,6 +57,42 @@ export function run() {
     expect(config.get('tabBarPlacement')).toEqual('top');
   });
 
+  it('should get boolean value from querystring', () => {
+    let config = new Config();
+    let platform = new Platform();
+    platform.url('http://biff.com/?ionicanimate=true')
+    config.setPlatform(platform);
+    expect(config.get('animate')).toEqual(true);
+
+    config = new Config();
+    platform = new Platform();
+    platform.url('http://biff.com/?ionicanimate=false')
+    config.setPlatform(platform);
+    expect(config.get('animate')).toEqual(false);
+  });
+
+  it('should get value from case insensitive querystring key', () => {
+    let config = new Config({
+      mode: 'a'
+    });
+    let platform = new Platform();
+    platform.url('http://biff.com/?ionicConfigKey=b')
+    config.setPlatform(platform);
+
+    expect(config.get('configKey')).toEqual('b');
+  });
+
+  it('should get value from querystring', () => {
+    let config = new Config({
+      mode: 'modeA'
+    });
+    let platform = new Platform();
+    platform.url('http://biff.com/?ionicmode=modeB')
+    config.setPlatform(platform);
+
+    expect(config.get('mode')).toEqual('modeB');
+  });
+
   it('should override mode platform', () => {
     let config = new Config({
       mode: 'modeA',

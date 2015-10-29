@@ -20,8 +20,49 @@
   background: none !important;
 }
 
-.hide.hide.hide {
-  display: none;
+.hide,
+[hidden],
+template,
+root-anchor {
+  display: none !important;
+}
+
+
+// Content Padding
+// --------------------------------------------------
+
+$content-padding:    16px !default;
+
+
+[padding],
+[padding] > scroll-content {
+  padding: $content-padding;
+}
+
+[padding-top] {
+  padding-top: $content-padding;
+}
+
+[padding-right] {
+  padding-right: $content-padding;
+}
+
+[padding-bottom] {
+  padding-bottom: $content-padding;
+}
+
+[padding-left] {
+  padding-left: $content-padding;
+}
+
+[padding-vertical] {
+  padding-top: $content-padding;
+  padding-bottom: $content-padding;
+}
+
+[padding-horizontal] {
+  padding-right: $content-padding;
+  padding-left: $content-padding;
 }
 
 

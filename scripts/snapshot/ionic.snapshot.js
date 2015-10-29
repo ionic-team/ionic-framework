@@ -116,7 +116,7 @@ var IonicSnapshot = function(options) {
             self.testData.description = spec.getFullName();
             self.testData.highest_mismatch = self.highestMismatch;
             self.testData.png_base64 = pngBase64;
-            self.testData.url = currentUrl.replace('dist/', '/');
+            self.testData.url = currentUrl.replace('dist/', '/').replace('&ionicanimate=false', '');
             pngBase64 = null;
 
             var requestDeferred = q.defer();

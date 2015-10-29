@@ -9,8 +9,6 @@ const OFF_RIGHT = '99.5%';
 const OFF_LEFT = '-33%';
 const CENTER = '0%'
 const OFF_OPACITY = 0.8;
-const SHOW_NAVBAR_CSS = 'show-navbar';
-const SHOW_VIEW_CSS = 'show-view';
 const SHOW_BACK_BTN_CSS = 'show-back-button';
 
 
@@ -36,29 +34,24 @@ class IOSTransition extends Animation {
 
     // entering content
     let enteringContent = new Animation(enteringView.contentRef());
-    enteringContent
-      .before.addClass(SHOW_VIEW_CSS)
-      .before.setStyles({ zIndex: enteringView.index });
     this.add(enteringContent);
 
     if (backDirection) {
-      // back direction
+      // entering content, back direction
       enteringContent
         .fromTo(TRANSLATEX, OFF_LEFT, CENTER)
         .fromTo(OPACITY, OFF_OPACITY, 1);
 
     } else {
-      // forward direction
+      // entering content, forward direction
       enteringContent
         .fromTo(TRANSLATEX, OFF_RIGHT, CENTER)
         .fromTo(OPACITY, 1, 1);
     }
 
-
-    // entering navbar
     if (enteringHasNavbar) {
+      // entering page has a navbar
       let enteringNavBar = new Animation(enteringView.navbarRef());
-      enteringNavBar.before.addClass(SHOW_NAVBAR_CSS);
       this.add(enteringNavBar);
 
       let enteringTitle = new Animation(enteringView.titleRef());
@@ -76,62 +69,68 @@ class IOSTransition extends Animation {
 
       // set properties depending on direction
       if (backDirection) {
-        // back direction
+        // entering navbar, back direction
         enteringTitle.fromTo(TRANSLATEX, OFF_LEFT, CENTER);
 
         if (enteringView.enableBack()) {
-          enteringBackButton.before.addClass(SHOW_BACK_BTN_CSS);
+          // back direction, entering page has a back button
           enteringBackButton.fadeIn();
         }
 
       } else {
-        // forward direction
+        // entering navbar, forward direction
         enteringTitle.fromTo(TRANSLATEX, OFF_RIGHT, CENTER);
 
-        if (enteringView.enableBack()) {
-          enteringBackButton.before.addClass(SHOW_BACK_BTN_CSS);
-          enteringBackButton.fadeIn();
-
-          let enteringBackBtnText = new Animation(enteringView.backBtnTextRef());
-          enteringBackBtnText.fromTo(TRANSLATEX, '150px', '0px');
-          enteringNavBar.add(enteringBackBtnText);
-        }
-
         if (leavingHasNavbar) {
-          // if there is a leaving navbar, then just fade this one in
+          // entering navbar, forward direction, and there's a leaving navbar
+          // should just fade in, no sliding
           enteringNavbarBg
             .fromTo(TRANSLATEX, CENTER, CENTER)
             .fadeIn();
 
         } else {
-          enteringNavbarBg.fromTo(TRANSLATEX, OFF_RIGHT, CENTER);
+          // entering navbar, forward direction, and there's no leaving navbar
+          // should just slide in, no fading in
+          enteringNavbarBg
+            .fromTo(TRANSLATEX, OFF_RIGHT, CENTER)
+            .fromTo(OPACITY, 1, 1);
         }
 
+
+        if (enteringView.enableBack()) {
+          // forward direction, entering page has a back button
+          enteringBackButton
+            .before.addClass(SHOW_BACK_BTN_CSS)
+            .fadeIn();
+
+          let enteringBackBtnText = new Animation(enteringView.backBtnTextRef());
+          enteringBackBtnText.fromTo(TRANSLATEX, '100px', '0px');
+          enteringNavBar.add(enteringBackBtnText);
+        }
       }
     }
-
 
     // setup leaving view
     if (leavingView) {
       // leaving content
       let leavingContent = new Animation(leavingView.contentRef());
       this.add(leavingContent);
-      leavingContent
-        .before.addClass(SHOW_VIEW_CSS)
-        .before.setStyles({ zIndex: leavingView.index });
 
       if (backDirection) {
+        // leaving content, back direction
         leavingContent
           .fromTo(TRANSLATEX, CENTER, '100%')
           .fromTo(OPACITY, 1, 1);
 
       } else {
+        // leaving content, forward direction
         leavingContent
           .fromTo(TRANSLATEX, CENTER, OFF_LEFT)
           .fromTo(OPACITY, 1, OFF_OPACITY);
       }
 
       if (leavingHasNavbar) {
+        // leaving page has a navbar
         let leavingNavBar = new Animation(leavingView.navbarRef());
         let leavingBackButton = new Animation(leavingView.backBtnRef());
         let leavingTitle = new Animation(leavingView.titleRef());
@@ -145,25 +144,28 @@ class IOSTransition extends Animation {
           .add(leavingNavbarBg);
         this.add(leavingNavBar);
 
-        leavingBackButton
-          .after.removeClass(SHOW_BACK_BTN_CSS)
-          .fadeOut();
-
+        // fade out leaving navbar items
+        leavingBackButton.fadeOut();
         leavingTitle.fadeOut();
         leavingNavbarItems.fadeOut();
 
-        // set properties depending on direction
         if (backDirection) {
-          // back direction
+          // leaving navbar, back direction
           leavingTitle.fromTo(TRANSLATEX, CENTER, '100%');
+
           if (enteringHasNavbar) {
-            // this is an entering navbar, just fade this out
+            // leaving navbar, back direction, and there's an entering navbar
+            // should just fade out, no sliding
             leavingNavbarBg
               .fromTo(TRANSLATEX, CENTER, CENTER)
               .fadeOut();
 
           } else {
-            leavingNavbarBg.fromTo(TRANSLATEX, CENTER, '100%');
+            // leaving navbar, back direction, and there's no entering navbar
+            // should just slide out, no fading out
+            leavingNavbarBg
+              .fromTo(TRANSLATEX, CENTER,  '100%')
+              .fromTo(OPACITY, 1, 1);
           }
 
           let leavingBackBtnText = new Animation(leavingView.backBtnTextRef());
@@ -171,7 +173,7 @@ class IOSTransition extends Animation {
           leavingNavBar.add(leavingBackBtnText);
 
         } else {
-          // forward direction
+          // leaving navbar, forward direction
           leavingTitle.fromTo(TRANSLATEX, CENTER, OFF_LEFT);
         }
       }
