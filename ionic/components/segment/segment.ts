@@ -6,26 +6,29 @@ import {Config} from '../../config/config';
 import {dom} from 'ionic/util';
 
 /**
- * TODO
+ * @name Segment
+ * @description
+ * A Segment is a group of buttons, sometimes known as Segmented Controls, that allow the user to interact with a compact group of a number of controls.
+ *
+ * Segments provide functionality similar to tabs, selecting one will unselect all others. You should use a tab bar instead of a segmented control when you want to let the user move back and forth between distinct pages in your app.
+ *
+ * @usage
+ * ```html
+ * <ion-segment [(ng-model)]="relationship" danger>
+ *   <ion-segment-button value="friends">
+ *     Friends
+ *   </ion-segment-button>
+ *   <ion-segment-button value="enemies">
+ *     Enemies
+ *   </ion-segment-button>
+ * </ion-segment>
+ * ```
  */
 @Component({
   selector: 'ion-segment',
   inputs: [
     'value'
-  ],
-  host: {
-    //'(click)': 'buttonClicked($event)',
-    '(change)': 'onChange($event)',
-    //'[value]': 'value',
-    /*
-    '[class.ng-untouched]': 'cd.control?.untouched == true',
-    '[class.ng-touched]': 'cd.control?.touched == true',
-    '[class.ng-pristine]': 'cd.control?.pristine == true',
-    '[class.ng-dirty]': 'cd.control?.dirty == true',
-    '[class.ng-valid]': 'cd.control?.valid == true',
-    '[class.ng-invalid]': 'cd.control?.valid == false'
-    */
-  },
+  ]
   template: '<div class="ion-segment"><ng-content></ng-content></div>',
   directives: [forwardRef(() => SegmentButton)]
 })
@@ -105,7 +108,6 @@ export class Segment extends Ion {
 
     setTimeout(() => {
       this.writeValue(segmentButton.value);
-      this.selectFromValue(segmentButton.value);
 
       this.ngControl.control.updateValue(segmentButton.value);
 
@@ -166,7 +168,6 @@ export class SegmentControlValueAccessor {
     this.value = !value ? '' : value;
 
     this.segment.value = this.value;
-    this.segment.selectFromValue(value);
   }
 
   registerOnChange(fn) { this.onChange = fn; }
@@ -183,7 +184,7 @@ export class SegmentControlValueAccessor {
     'value'
   ],
   host: {
-    '(click)': 'buttonClicked($event)',
+    '(click)': 'click($event)',
     '[class.activated]': 'isActive',
   }
 })
@@ -199,21 +200,16 @@ export class SegmentButton {
     renderer: Renderer
   ) {
     this.segment = segment;
-    this.renderer = renderer;
-    this.isButton = true;
 
-    // This is a button, and it's outlined
-    this.renderer.setElementAttribute(elementRef, 'button', '');
-    this.renderer.setElementAttribute(elementRef, 'outline', '');
+    renderer.setElementAttribute(elementRef, 'button', '');
+    renderer.setElementAttribute(elementRef, 'outline', '');
   }
 
   onInit() {
     this.segment.register(this);
   }
 
-  buttonClicked(event) {
+  click(event) {
     this.segment.selected(this, event);
-    event.preventDefault();
   }
-
 }
