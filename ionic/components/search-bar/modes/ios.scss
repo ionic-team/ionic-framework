@@ -82,7 +82,7 @@ ion-search-bar {
 .search-bar-cancel {
   @extend button[clear];
   transition: $search-bar-ios-cancel-transition;
-  min-height: 0;
+  min-height: 30px;
 
   padding-left: 8px;
   padding-right: 0;
@@ -97,14 +97,6 @@ ion-search-bar {
   .search-bar-input {
     padding-left: 28px;
   }
-}
-
-.search-bar-cancel {
-  @extend button[clear];
-  transition: $search-bar-ios-cancel-transition;
-  padding-left: 8px;
-  min-height: 0;
-  padding-right: 0;
 }
 
 &.hairlines ion-search-bar {
