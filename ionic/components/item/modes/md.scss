@@ -38,6 +38,10 @@ $item-md-sliding-transition:         transform 250ms ease-in-out !default;
   color: $item-md-divider-color;
 }
 
+ion-note {
+  color: $item-md-note-color;
+}
+
 .list {
   .item-group {
     // Make sure the first and last items don't have borders
@@ -138,10 +142,6 @@ $item-md-sliding-transition:         transform 250ms ease-in-out !default;
   [text-wrap] ion-item-content {
     font-size: $item-md-body-text-font-size;
     line-height: $item-md-body-text-line-height;
-  }
-
-  ion-note {
-    color: $item-md-note-color;
   }
 
   .item[actions] ion-item-content {

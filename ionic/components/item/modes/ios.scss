@@ -36,6 +36,10 @@ $item-ios-sliding-transition:         transform 250ms ease-in-out !default;
   color: $item-ios-divider-color;
 }
 
+ion-note {
+  color: $item-ios-note-color;
+}
+
 .list {
 
   .item-group {
@@ -135,10 +139,6 @@ $item-ios-sliding-transition:         transform 250ms ease-in-out !default;
   [item-right].icon-right icon {
     margin-right: 0;
     margin-bottom: 1px;
-  }
-
-  ion-note {
-    color: $item-ios-note-color;
   }
 
   ion-avatar {
