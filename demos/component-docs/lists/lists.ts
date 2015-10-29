@@ -62,3 +62,23 @@ export class AvatarListsPage {
 
     }
 }
+
+@Page({
+    templateUrl: 'lists/three-lists.html',
+    directives: [forwardRef(() => AndroidAttribute)]
+})
+export class ThreeLineListsPage {
+    constructor() {
+
+    }
+}
+
+@Page({
+    templateUrl: 'lists/thumbnail-lists.html',
+    directives: [forwardRef(() => AndroidAttribute)]
+})
+export class ThumbnailListsPage {
+    constructor() {
+
+    }
+}
