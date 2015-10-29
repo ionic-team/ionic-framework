@@ -14,6 +14,7 @@ class MyApp {
       mapStyle: ['hybrid', Validators.required]
     });
 
+    this.relationship = 'enemies';
     this.modelStyle = 'B';
     this.appType = 'free';
   }

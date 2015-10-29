@@ -1,16 +1,15 @@
 <ion-toolbar>
   <ion-title>
-    <ion-segment>
-      <ion-segment-button class="e2eSegmentFriends">
+    <ion-segment [(ng-model)]="relationship">
+      <ion-segment-button value="friends" class="e2eSegmentFriends">
         Friends
       </ion-segment-button>
-      <ion-segment-button>
+      <ion-segment-button value="enemies">
         Enemies
       </ion-segment-button>
     </ion-segment>
   </ion-title>
 </ion-toolbar>
-
 
 <ion-toolbar>
   <ion-nav-items secondary>
@@ -31,6 +30,8 @@
 </ion-toolbar>
 
 <ion-content padding>
+  <p>Are we friends or enemies? <b>{{ relationship }}</b></p>
+
   <h4>Map mode: NgControl</h4>
 
   <form (submit)="doSubmit($event)" [ng-form-model]="myForm">
