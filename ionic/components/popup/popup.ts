@@ -82,7 +82,9 @@ export class Popup {
       opts.promiseResolve = resolve;
       opts.promiseReject = reject;
 
-      return this.ctrl.open(OVERLAY_TYPE, PopupCmp, util.extend(opts, this._defaults));
+      let defaults = util.merge({}, this._defaults);
+
+      return this.ctrl.open(OVERLAY_TYPE, PopupCmp, util.extend(defaults, opts));
     });
   }
 
