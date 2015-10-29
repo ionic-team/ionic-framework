@@ -82,7 +82,7 @@ export class Popup {
       opts.promiseResolve = resolve;
       opts.promiseReject = reject;
 
-      return this.ctrl.open(OVERLAY_TYPE, PopupCmp, util.extend(this._defaults, opts));
+      return this.ctrl.open(OVERLAY_TYPE, PopupCmp, util.extend(opts, this._defaults));
     });
   }
 
@@ -129,7 +129,6 @@ export class Popup {
         button
       ]
     }, opts);
-
     return this.open(opts);
   }
 
@@ -245,7 +244,6 @@ export class Popup {
         cancelButton, okButton
       ]
     }, opts);
-
     return this.open(opts);
   }
 
