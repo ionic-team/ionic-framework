@@ -123,6 +123,7 @@ export class Menu extends Ion {
         this._gesture = new gestures.LeftMenuGesture(this);
         break;
     }
+    this._targetGesture = new gestures.TargetGesture(this);
   }
 
   _initType(type) {
@@ -278,6 +279,7 @@ export class Menu extends Ion {
   onDestroy() {
     this.app.unregister(this.id);
     this._gesture && this._gesture.destroy();
+    this._targetGesture && this._targetGesture.destroy();
     this._type && this._type.onDestroy();
     this._cntEle = null;
   }
