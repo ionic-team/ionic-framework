@@ -95,6 +95,11 @@ ion-card {
     border-color: transparent;
   }
 
+  ion-note[item-left],
+  ion-note[item-right], {
+    font-size: 1.3rem;
+  }
+
   .card-title {
     padding: $card-md-title-padding;
     font-size: $card-md-title-font-size;

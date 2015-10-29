@@ -99,6 +99,11 @@ ion-card {
     font-size: 1.3rem;
   }
 
+  ion-note[item-left],
+  ion-note[item-right], {
+    font-size: 1.3rem;
+  }
+
   .card-title {
     padding: $card-ios-title-padding;
     font-size: $card-ios-title-font-size;
