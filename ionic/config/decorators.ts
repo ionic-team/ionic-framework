@@ -81,7 +81,7 @@ export function Page(config={}) {
 export function ConfigComponent(config) {
   return function(cls) {
     var annotations = Reflect.getMetadata('annotations', cls) || [];
-    annotations.push(new Component(config));
+    annotations.push(new Component(appendConfig(cls, config)));
     Reflect.defineMetadata('annotations', annotations, cls);
     return cls;
   }

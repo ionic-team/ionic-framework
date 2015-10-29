@@ -8,10 +8,8 @@ $z-index-menu-backdrop:          79;
 $z-index-overlay:                1000;
 $z-index-click-block:            9999;
 
-$z-index-content-section:        5;
 $z-index-navbar-section:         10;
 
-$z-index-content:                5;
 $z-index-toolbar:                10;
 $z-index-toolbar-background:     -1;
 
@@ -21,13 +19,11 @@ $z-index-list-border:            50;
 $z-index-backdrop:               1;
 $z-index-overlay-wrapper:        10;
 
-
 $z-index-item-options:           1;
+
 
 // Flex Order
 // --------------------------------------------------
-
-$flex-order-view-content:        0;
 
 $flex-order-toolbar-top:         -10;
 $flex-order-toolbar-bottom:      10;
@@ -172,7 +168,7 @@ ion-navbar {
   left: 0;
   width: 100%;
   min-height: 50px;
-  z-index: 10;
+  z-index: $z-index-navbar-section;
 }
 
 ion-navbar-section ion-navbar.toolbar {
@@ -187,18 +183,5 @@ ion-toolbar {
 
 ion-toolbar[position=bottom] {
   bottom: 0;
-  z-index: 10;
-}
-
-ion-scrollbar {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 10;
-  width: 10px;
-}
-
-.hide-navtive-scrollbar ion-content {
-  padding-right: 20px;
-  width: calc(100% + 20px);
+  z-index: $z-index-toolbar;
 }
