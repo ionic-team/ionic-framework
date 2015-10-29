@@ -57,6 +57,10 @@ export class Segment extends Ion {
     this.buttons = [];
   }
 
+  writeValue(value) {
+    this.value = value;
+  }
+
   /**
    * Called by child SegmentButtons to bind themselves to
    * the Segment.
@@ -97,13 +101,10 @@ export class Segment extends Ion {
     });
     segmentButton.isActive = true;
 
-    //this.onChange();
-
     if(!this.ngControl) { return; }
 
     setTimeout(() => {
-      this.value = segmentButton.value;
-      this.ngControl.valueAccessor.writeValue(segmentButton.value);
+      this.writeValue(segmentButton.value);
       this.selectFromValue(segmentButton.value);
 
       this.ngControl.control.updateValue(segmentButton.value);
@@ -111,11 +112,6 @@ export class Segment extends Ion {
       // Trigger on change
       this.change.next();
     })
-
-
-    //this.ngControl.control().updateValue(this.value);
-    // TODO: Better way to do this?
-    //this.controlDirective._control().updateValue(this.value);
   }
 }
 
@@ -124,7 +120,6 @@ export class Segment extends Ion {
  */
 @Directive({
   selector: 'ion-segment',
-  //inputs: ['value'],
   host: {
     '(change)': 'onChange($event.target.value)',
     '(input)': 'onChange($event.target.value)',
@@ -157,25 +152,18 @@ export class SegmentControlValueAccessor {
     this.onChange = (_) => {};
     this.onTouched = (_) => {};
 
-    if(!ngControl) {
-      // They don't want to do anything that works, so we won't do anything that breaks
-      return;
-    }
+    if(!ngControl) { return; }
 
     this.ngControl = ngControl;
     this.renderer = renderer;
     this.elementRef = elementRef;
     this.segment = segment;
 
-    ngControl.valueAccessor = this;
+    this.ngControl.valueAccessor = this;
   }
 
   writeValue(value) {
-    // both this.value and setProperty are required at the moment
-    // remove when a proper imperative API is provided
     this.value = !value ? '' : value;
-
-    this.renderer.setElementProperty(this.elementRef, 'value', this.value);
 
     this.segment.value = this.value;
     this.segment.selectFromValue(value);
@@ -229,37 +217,3 @@ export class SegmentButton {
   }
 
 }
-
-// TODO Android animation similar to tabs
-
-// /**
-//  * @private
-//  * TODO
-//  */
-// @Directive({
-//   selector: 'tab-highlight'
-// })
-// class TabHighlight {
-//   constructor(@Host() tabs: Tabs, config: Config, elementRef: ElementRef) {
-//     if (config.get('mode') === 'md') {
-//       tabs.highlight = this;
-//       this.elementRef = elementRef;
-//     }
-//   }
-//
-//   select(tab) {
-//     setTimeout(() => {
-//       let d = tab.btn.getDimensions();
-//       let ele = this.elementRef.nativeElement;
-//       ele.style.transform = 'translate3d(' + d.left + 'px,0,0) scaleX(' + d.width + ')';
-//
-//       if (!this.init) {
-//         this.init = true;
-//         setTimeout(() => {
-//           ele.classList.add('animate');
-//         }, 64)
-//       }
-//     }, 32);
-//   }
-//
-// }
