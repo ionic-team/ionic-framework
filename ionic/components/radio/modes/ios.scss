@@ -24,6 +24,10 @@ ion-radio {
     color: $radio-ios-color-on;
   }
 
+  &.item.activated {
+    background-color: $list-background-color;
+  }
+
 }
 
 media-radio {

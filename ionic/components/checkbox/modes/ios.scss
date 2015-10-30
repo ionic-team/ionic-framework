@@ -30,6 +30,10 @@ ion-checkbox {
     transform: rotate(45deg);
   }
 
+  &.item.activated {
+    background-color: $list-background-color;
+  }
+
 }
 
 media-checkbox {
