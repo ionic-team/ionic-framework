@@ -40,6 +40,14 @@ ion-card {
   border-radius: $card-ios-border-radius;
   overflow: hidden;
 
+  .list {
+    margin-bottom: 0;
+
+    ion-item-content {
+      padding: 0;
+    }
+  }
+
   .item {
     padding-right: ($card-ios-padding-right / 2);
     padding-left: ($card-ios-padding-left / 2);

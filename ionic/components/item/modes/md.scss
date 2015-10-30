@@ -254,3 +254,14 @@ button.item {
     box-shadow: none;
   }
 }
+
+.item[no-lines] {
+  &:before,
+  &:after {
+    border-width: 0;
+  }
+
+  + .item:before {
+    border-width: 0;
+  }
+}

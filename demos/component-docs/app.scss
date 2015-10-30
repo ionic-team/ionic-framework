@@ -1,3 +1,17 @@
+$colors: (
+  primary:    #387ef5,
+  secondary:  #32db64,
+  danger:     #f53d3d,
+  light:      #f4f4f4,
+  dark:       #222,
+  energized:  #ffc527,
+  royal:      #7e60ff,
+);
+
+$font-path: '../../dist/fonts';
+@import "../../ionic/ionic";
+
+
 body, body:hover, body a, body button, body media-switch {
   cursor: url('http://ionicframework.com/img/finger.png'), auto;
 }
@@ -330,5 +344,3 @@ body.ios button[fab].fab-map {
 body.md button[fab].fab-map {
   top: 220px;
 }
-
-

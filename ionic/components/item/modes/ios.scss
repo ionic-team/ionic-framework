@@ -238,29 +238,44 @@ ion-card {
   }
 }
 
-&.hairlines .list ion-item-options {
+&.hairlines .list {
+
+  ion-item-options {
     button, [button] {
       min-height: calc(100% - 1px);
       height: calc(100% - 1px);
       margin-top: 0.55px;
       margin-bottom: 0.55px;
     }
-}
-
-&.hairlines .list ion-item-sliding-content {
-  margin-top: 0.55px;
-  margin-bottom: 0.55px;
-}
-
-&.hairlines .list .item {
-  margin-top: -0.55px;
-
-  &:last-child {
-    margin-bottom: -0.55px;
   }
 
+  ion-item-sliding-content {
+    margin-top: 0.55px;
+    margin-bottom: 0.55px;
+  }
+
+  .item {
+    margin-top: -0.55px;
+
+    &:last-child {
+      margin-bottom: -0.55px;
+    }
+
+    &:before,
+    &:after {
+      border-top-width: 0.55px;
+    }
+  }
+
+}
+
+.item[no-lines] {
   &:before,
   &:after {
-    border-top-width: 0.55px;
+    border-width: 0;
+  }
+
+  + .item:before {
+    border-width: 0;
   }
 }

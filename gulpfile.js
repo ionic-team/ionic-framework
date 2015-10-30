@@ -459,12 +459,14 @@ gulp.task('build.demos', function(){
 gulp.task('sass.demos:docs', function() {
   var sass = require('gulp-sass');
   var autoprefixer = require('gulp-autoprefixer');
+  var concat = require('gulp-concat');
   return gulp.src([
-      'demos/component-docs/app.scss'
+      'demos/component-docs/app.scss',
     ])
     .pipe(sass()
       .on('error', sass.logError)
     )
+    .pipe(concat('app.css'))
     .pipe(autoprefixer(buildConfig.autoprefixer))
     .pipe(gulp.dest('dist/demos/component-docs/'));
 });
