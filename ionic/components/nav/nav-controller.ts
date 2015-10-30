@@ -181,9 +181,11 @@ export class NavController extends Ion {
     // add the view to the stack
     this._add(enteringView);
 
-    raf(() => {
-      this._cleanup(enteringView);
-    });
+    if (opts.preCleanup !== false) {
+      raf(() => {
+        this._cleanup(enteringView);
+      });  
+    }
 
     if (this.router) {
       // notify router of the state change
@@ -363,6 +365,7 @@ export class NavController extends Ion {
 
     // if animate has not been set then default to false
     opts.animate = opts.animate || false;
+    opts.preCleanup = false;
 
     // ensure leaving views are not cached, and should be destroyed
     opts.cacheLeavingView = false;
