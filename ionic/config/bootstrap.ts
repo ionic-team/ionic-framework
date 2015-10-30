@@ -16,7 +16,7 @@ import {NavRegistry} from '../components/nav/nav-registry';
 import {Translate} from '../translation/translate';
 import {ClickBlock} from '../util/click-block';
 import {FeatureDetect} from '../util/feature-detect';
-import {TapClick} from '../components/tap-click/tap-click';
+import {initTapClick} from '../components/tap-click/tap-click';
 import * as dom from '../util/dom';
 
 
@@ -35,7 +35,7 @@ export function ionicProviders(config) {
   config.setPlatform(platform);
 
   let events = new Events();
-  let tapClick = new TapClick(app, config, window, document);
+  initTapClick(window, document, app, config);
   let featureDetect = new FeatureDetect();
 
   setupDom(window, document, config, platform, featureDetect);
@@ -48,7 +48,6 @@ export function ionicProviders(config) {
     provide(IonicApp, {useValue: app}),
     provide(Config, {useValue: config}),
     provide(Platform, {useValue: platform}),
-    provide(TapClick, {useValue: tapClick}),
     provide(FeatureDetect, {useValue: featureDetect}),
     provide(Events, {useValue: events}),
     Form,

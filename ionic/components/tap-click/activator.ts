@@ -7,7 +7,7 @@ export class Activator {
     this.app = app;
     this.queue = [];
     this.active = [];
-    this.clearStateTimeout = 180;
+    this.clearStateTimeout = 80;
     this.clearAttempt = 0;
     this.activatedClass = config.get('activatedClass') || 'activated';
     this.x = 0;

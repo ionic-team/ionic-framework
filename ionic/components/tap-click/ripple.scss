@@ -7,7 +7,7 @@ $ripple-background-color:       rgba(0, 0, 0, 0.1) !default;
 
 md-ripple {
   position: absolute;
-  z-index: -1;
+  z-index: 0;
   display: block;
   border-radius: 50%;
 
@@ -17,8 +17,4 @@ md-ripple {
   pointer-events: none;
 
   transform: scale(0.001) translateZ(0);
-}
-
-.item > md-ripple {
-  z-index: 0;
 }

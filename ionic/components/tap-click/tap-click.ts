@@ -1,244 +1,202 @@
-import {Injectable} from 'angular2/angular2';
-
-import {IonicApp} from '../app/app';
-import {Config} from '../../config/config';
 import {pointerCoord, hasPointerMoved, transitionEnd} from '../../util/dom';
 import {Activator} from './activator';
 import {RippleActivator} from './ripple';
 
 
-@Injectable()
-export class TapClick {
-
-  constructor(app: IonicApp, config: Config) {
-    const self = this;
-    self.app = app;
-
-    self.pointerTolerance = 4;
-    self.lastTouch = 0;
-    self.lastActivated = 0;
-    self.disableClick = 0;
-    self.disableClickLimit = 1000;
-
-    if (config.get('mdRipple')) {
-      self.activator = new RippleActivator(app, config);
-    } else {
-      self.activator = new Activator(app, config);
-    }
-
-    self.enable( config.get('tapPolyfill') !== false );
-
-    function bindDom(type, listener, useCapture) {
-      document.addEventListener(type, listener, useCapture);
-    }
-
-    bindDom('click', function(ev) {
-      self.click(ev);
-    }, true);
-
-    bindDom('touchstart', function(ev) {
-      self.lastTouch = Date.now();
-      self.pointerStart(ev);
-    });
-
-    bindDom('touchend', function(ev) {
-      self.lastTouch = Date.now();
-      self.touchEnd(ev);
-    });
-
-    bindDom('touchcancel', function(ev) {
-      self.lastTouch = Date.now();
-      self.pointerCancel(ev);
-    });
-
-    bindDom('mousedown', function(ev) {
-      self.mouseDown(ev);
-    }, true);
-
-    bindDom('mouseup', function(ev) {
-      self.mouseUp(ev);
-    }, true);
+let startCoord = null;
+let pointerTolerance = 4;
+let lastTouch = 0;
+let lastActivated = 0;
+let disableNativeClickTime = 0;
+let disableNativeClickLimit = 1000;
+let activator = null;
+let isEnabled = false;
+let app = null;
+let config = null;
+let win = null;
+let doc = null;
 
 
-    self.pointerMove = function(ev) {
-      let moveCoord = pointerCoord(ev);
+export function initTapClick(windowInstance, documentInstance, appInstance, configInstance) {
+  win = windowInstance;
+  doc = documentInstance;
+  app = appInstance;
+  config = configInstance;
 
-      if ( hasPointerMoved(10, self.start, moveCoord) ) {
-        self.pointerCancel(ev);
-      }
-    };
+  activator = (config.get('mdRipple') ? new RippleActivator(app, config) : new Activator(app, config));
+  isEnabled = (config.get('tapPolyfill') !== false);
 
+  addListener('click', click, true);
 
-    self.moveListeners = function(shouldAdd) {
-      document.removeEventListener('touchmove', self.pointerMove);
-      document.removeEventListener('mousemove', self.pointerMove);
+  addListener('touchstart', touchStart);
+  addListener('touchend', touchEnd);
+  addListener('touchcancel', touchCancel);
 
-      if (shouldAdd) {
-        bindDom('touchmove', self.pointerMove);
-        bindDom('mousemove', self.pointerMove);
-      }
-    };
-
-  }
-
-  enable(shouldEnable) {
-    this._enabled = shouldEnable;
-  }
+  addListener('mousedown', mouseDown, true);
+  addListener('mouseup', mouseUp, true);
+}
 
 
-  /**
-   * TODO
-   * @param {TODO} ev  TODO
-   */
-  touchEnd(ev) {
-    let self = this;
+function touchStart(ev) {
+  touchAction();
+  pointerStart(ev);
+}
 
-    if (self._enabled && self.start && self.app.isEnabled()) {
-      let endCoord = pointerCoord(ev);
+function touchEnd(ev) {
+  touchAction();
 
-      if (!hasPointerMoved(self.pointerTolerance, self.start, endCoord)) {
-        console.debug('create click');
+  if (isEnabled && startCoord && app.isEnabled()) {
+    let endCoord = pointerCoord(ev);
 
-        self.disableClick = Date.now();
+    if (!hasPointerMoved(pointerTolerance, startCoord, endCoord)) {
+      console.debug('create click from touch');
 
-        let clickEvent = document.createEvent('MouseEvents');
-        clickEvent.initMouseEvent('click', true, true, window, 1, 0, 0, endCoord.x, endCoord.y, false, false, false, false, 0, null);
-        clickEvent.isIonicTap = true;
-        ev.target.dispatchEvent(clickEvent);
-      }
-    }
+      setDisableNativeClick();;
 
-    self.pointerEnd(ev);
-  }
-
-  /**
-   * TODO
-   * @param {TODO} ev  TODO
-   */
-  mouseDown(ev) {
-    if (this.isDisabledClick()) {
-      console.debug('mouseDown prevent');
-      ev.preventDefault();
-      ev.stopPropagation();
-
-    } else if (this.lastTouch + 999 < Date.now()) {
-      this.pointerStart(ev);
+      let clickEvent = doc.createEvent('MouseEvents');
+      clickEvent.initMouseEvent('click', true, true, win, 1, 0, 0, endCoord.x, endCoord.y, false, false, false, false, 0, null);
+      clickEvent.isIonicTap = true;
+      ev.target.dispatchEvent(clickEvent);
     }
   }
 
-  /**
-   * TODO
-   * @param {TODO} ev  TODO
-   */
-  mouseUp(ev) {
-    if (this.isDisabledClick()) {
-      console.debug('mouseUp prevent');
-      ev.preventDefault();
-      ev.stopPropagation();
-    }
+  pointerEnd(ev);
+}
 
-    if (this.lastTouch + 999 < Date.now()) {
-      this.pointerEnd(ev);
-    }
+function touchCancel(ev) {
+  touchAction();
+  pointerCancel(ev);
+}
+
+function mouseDown(ev) {
+  if (isDisabledNativeClick()) {
+    console.debug('mouseDown prevent');
+    ev.preventDefault();
+    ev.stopPropagation();
+
+  } else if (lastTouch + disableNativeClickLimit < Date.now()) {
+    pointerStart(ev);
+  }
+}
+
+function mouseUp(ev) {
+  if (isDisabledNativeClick()) {
+    console.debug('mouseUp prevent');
+    ev.preventDefault();
+    ev.stopPropagation();
   }
 
-  /**
-   * TODO
-   * @param {TODO} ev  TODO
-   */
-  pointerStart(ev) {
-    let activatableEle = this.getActivatableTarget(ev.target);
+  if (lastTouch + disableNativeClickLimit < Date.now()) {
+    pointerEnd(ev);
+  }
+}
 
-    if (activatableEle) {
-      this.start = pointerCoord(ev);
+function pointerStart(ev) {
+  let activatableEle = getActivatableTarget(ev.target);
 
-      let now = Date.now();
-      if (this.lastActivated + 100 < now) {
-        this.activator.downAction(ev, activatableEle, this.start.x, this.start.y);
-        this.lastActivated = now;
-      }
+  if (activatableEle) {
+    startCoord = pointerCoord(ev);
 
-      this.moveListeners(true);
-
-    } else {
-      this.start = null;
+    let now = Date.now();
+    if (lastActivated + 100 < now) {
+      activator.downAction(ev, activatableEle, startCoord.x, startCoord.y);
+      lastActivated = now;
     }
+
+    moveListeners(true);
+
+  } else {
+    startCoord = null;
+  }
+}
+
+function pointerEnd(ev) {
+  activator.upAction();
+  moveListeners(false);
+}
+
+function pointerMove(ev) {
+  let moveCoord = pointerCoord(ev);
+
+  if ( hasPointerMoved(10, startCoord, moveCoord) ) {
+    pointerCancel(ev);
+  }
+}
+
+function pointerCancel(ev) {
+  console.debug('pointerCancel from', ev.type);
+  activator.clearState();
+  moveListeners(false);
+  setDisableNativeClick();
+}
+
+function moveListeners(shouldAdd) {
+  removeListener('touchmove', pointerMove);
+  removeListener('mousemove', pointerMove);
+  if (shouldAdd) {
+    addListener('touchmove', pointerMove);
+    addListener('mousemove', pointerMove);
+  }
+}
+
+function setDisableNativeClick() {
+  disableNativeClickTime = Date.now() + disableNativeClickLimit;
+}
+
+function isDisabledNativeClick() {
+  return disableNativeClickTime > Date.now();
+}
+
+function click(ev) {
+  let preventReason = null;
+
+  if (!app.isEnabled()) {
+    preventReason = 'appDisabled';
+
+  } else if (!ev.isIonicTap && isDisabledNativeClick()) {
+    preventReason = 'nativeClick';
   }
 
-  /**
-   * TODO
-   */
-  pointerEnd(ev) {
-    this.activator.upAction();
-    this.moveListeners(false);
+  if (preventReason !== null) {
+    console.debug('click prevent', preventReason);
+    ev.preventDefault();
+    ev.stopPropagation();
   }
+}
 
-  /**
-   * TODO
-   */
-  pointerCancel(ev) {
-    console.debug('pointerCancel')
-    this.activator.clearState();
-    this.moveListeners(false);
-    this.disableClick = Date.now();
+function getActivatableTarget(ele) {
+  let targetEle = ele;
+  for (let x = 0; x < 4; x++) {
+    if (!targetEle) break;
+    if (isActivatable(targetEle)) return targetEle;
+    targetEle = targetEle.parentElement;
   }
+  return null;
+}
 
-  isDisabledClick() {
-    return this.disableClick + this.disableClickLimit > Date.now();
-  }
-
-  /**
-   * Whether the supplied click event should be allowed or not.
-   * @param {MouseEvent} ev  The click event.
-   * @return {boolean} True if click event should be allowed, otherwise false.
-   */
-  allowClick(ev) {
-    if (!this.app.isEnabled()) {
-      return false;
-    }
-    if (!ev.isIonicTap) {
-      if (this.isDisabledClick()) {
-        return false;
-      }
-    }
+function isActivatable(ele) {
+  if (/^(A|BUTTON)$/.test(ele.tagName)) {
     return true;
   }
 
-  /**
-   * TODO
-   * @param {MouseEvent} ev  TODO
-   */
-  click(ev) {
-    if (!this.allowClick(ev)) {
-      console.debug('click prevent');
-      ev.preventDefault();
-      ev.stopPropagation();
-    }
-  }
-
-  getActivatableTarget(ele) {
-    let targetEle = ele;
-    for (let x = 0; x < 4; x++) {
-      if (!targetEle) break;
-      if (this.isActivatable(targetEle)) return targetEle;
-      targetEle = targetEle.parentElement;
-    }
-    return null;
-  }
-
-  isActivatable(ele) {
-    if (/^(A|BUTTON)$/.test(ele.tagName)) {
+  let attributes = ele.attributes;
+  for (let i = 0, l = attributes.length; i < l; i++) {
+    if (/click|tappable/.test(attributes[i].name)) {
       return true;
     }
-
-    let attributes = ele.attributes;
-    for (let i = 0, l = attributes.length; i < l; i++) {
-      if (/click|tappable/.test(attributes[i].name)) {
-        return true;
-      }
-    }
-
-    return false;
   }
 
+  return false;
+}
+
+function touchAction() {
+  lastTouch = Date.now();
+}
+
+function addListener(type, listener, useCapture) {
+  doc.addEventListener(type, listener, useCapture);
+}
+
+function removeListener(type, listener) {
+  doc.removeEventListener(type, listener);
 }
