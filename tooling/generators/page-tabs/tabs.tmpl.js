@@ -1,11 +1,11 @@
 import {NavController, Page} from 'ionic/ionic';
 
 <% _.forEach(tabs, function(tab) { %>
-import {<%= tab.javascriptClassName %>} from '../<%= tab.filename %>/<%= tab.filename %>';
+import {<%= tab.javascriptClassName %>} from '../<%= tab.fileAndClassName %>/<%= tab.fileAndClassName %>';
 <% }); %>
 
 @Page({
-  templateUrl: 'app/<%= filename %>/<%= filename %>.html'
+  templateUrl: 'app/<%= fileAndClassName %>/<%= fileAndClassName %>.html'
 })
 export class <%= javascriptClassName %> {
   constructor(nav: NavController) {

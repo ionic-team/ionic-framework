@@ -17,6 +17,7 @@ var fs = require('fs'),
       appDirectory: App directory of where to save file
 */
 Generator.run = function run(options) {
+
   options.rootDirectory = options.rootDirectory || path.join('www', 'app');
   var savePath = path.join(options.appDirectory, options.rootDirectory, options.fileAndClassName);
 
@@ -28,7 +29,7 @@ Generator.run = function run(options) {
     var renderedTemplate = Generate.renderTemplateFromFile(options);
     var saveFilePath = path.join(savePath, [options.fileAndClassName, template.type].join(''));
     // console.log('renderedTemplate', renderedTemplate, 'saving to', saveFilePath);
-    console.log('\n√ Create'.blue, path.relative(options.appDirectory, saveFilePath));
+    console.log('√ Create'.blue, path.relative(options.appDirectory, saveFilePath));
     fs.writeFileSync(saveFilePath, renderedTemplate);
   });
 };
