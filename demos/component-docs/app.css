@@ -232,7 +232,7 @@ body.md .cards-bg tab-highlight {
   background-color: #fff !important;
   top: 0;
 }
-.cards-bg md-ripple {
+.cards-weather md-ripple {
   background: rgba(255,255,255, 0.15);
 }
 
