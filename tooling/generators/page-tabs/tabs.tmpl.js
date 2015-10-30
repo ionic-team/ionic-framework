@@ -8,7 +8,7 @@ import {NavController, Page} from 'ionic/ionic';
 export class <%= javascriptClassName %> {
   constructor(nav: NavController) {
     // set the root pages for each tab
-    <% _.forEach(tabs, function(tab) { %>this.<%= tab.javascriptClassName %> = <%= tab.javascriptClassName %>;
+    <% _.forEach(tabs, function(tab) { %>this.<%= tab.fileAndClassName %> = <%= tab.javascriptClassName %>;
     <% }); %>
   }
 
