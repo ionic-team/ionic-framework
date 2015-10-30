@@ -43,6 +43,14 @@ ion-card {
   border-radius: $card-md-border-radius;
   overflow: hidden;
 
+  .list {
+    margin-bottom: 0;
+
+    ion-item-content {
+      padding: 0;
+    }
+  }
+
   .item {
     padding-right: ($card-md-padding-right / 2);
     padding-left: ($card-md-padding-left / 2);
