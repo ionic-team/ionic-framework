@@ -196,6 +196,12 @@ export class ViewController {
     return navbar && navbar.getNativeElement().querySelector('.toolbar-background');
   }
 
+  hideBackButton(shouldHide) {
+    let navbar = this.getNavbar();
+    if (navbar) {
+      navbar.hideBackButton = !!shouldHide;
+    }
+  }
 
   /**
    * The view has loaded. This event only happens once per view being

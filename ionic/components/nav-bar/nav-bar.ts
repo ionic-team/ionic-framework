@@ -53,7 +53,7 @@ class BackButtonText extends Ion {
   selector: 'ion-navbar',
   template:
     '<div class="toolbar-inner">' +
-      '<button class="back-button">' +
+      '<button class="back-button" [hidden]="hideBackButton">' +
         '<icon class="back-button-icon" [name]="bbIcon"></icon>' +
         '<span class="back-button-text">' +
           '<span class="back-default">{{bbDefault}}</span>' +
@@ -68,6 +68,9 @@ class BackButtonText extends Ion {
   host: {
     '[hidden]': '_hidden'
   },
+  inputs: [
+    'hideBackButton'
+  ],
   directives: [BackButton, BackButtonText, Icon]
 })
 export class Navbar extends ToolbarBase {
@@ -86,6 +89,13 @@ export class Navbar extends ToolbarBase {
 
     this.bbIcon = config.get('backButtonIcon');
     this.bbDefault = config.get('backButtonText');
+  }
+
+  onInit() {
+    let hideBackButton = this.hideBackButton;
+    if (typeof hideBackButton === 'string') {
+      this.hideBackButton = (hideBackButton === '' || hideBackButton === 'true');
+    }
   }
 
   getBackButtonRef() {

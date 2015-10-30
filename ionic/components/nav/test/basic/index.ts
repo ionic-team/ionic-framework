@@ -1,6 +1,6 @@
 import {App, NavController} from 'ionic/ionic';
 import {Page, Config, IonicApp} from 'ionic/ionic';
-import {NavParams, NavController} from 'ionic/ionic';
+import {NavParams, NavController, ViewController} from 'ionic/ionic';
 
 
 @Page({
@@ -152,22 +152,27 @@ class PrimaryHeaderPage {
 
 @Page({
   template: `
-    <ion-navbar *navbar>
+    <ion-navbar *navbar hide-back-button>
       <ion-title>Another Page Header</ion-title>
     </ion-navbar>
     <ion-content padding>
+      <p>Back button hidden w/ <code>ion-navbar hide-back-button</code></p>
       <p><button (click)="nav.pop()">Pop</button></p>
       <p><button (click)="pushFullPage()">Push to FullPage</button></p>
       <p><button (click)="pushPrimaryHeaderPage()">Push to PrimaryHeaderPage</button></p>
       <p><button (click)="pushFirstPage()">Push to FirstPage</button></p>
+      <p><button (click)="toggleBackButton()">Toggle hide-back-button</button></p>
     </ion-content>
   `
 })
 class AnotherPage {
   constructor(
-    nav: NavController
+    nav: NavController,
+    viewCtrl: ViewController
   ) {
-    this.nav = nav
+    this.nav = nav;
+    this.viewCtrl = viewCtrl;
+    this.bbHideToggleVal = true;
   }
 
   pushFullPage() {
@@ -180,6 +185,11 @@ class AnotherPage {
 
   pushFirstPage() {
     this.nav.push(FirstPage);
+  }
+
+  toggleBackButton() {
+    this.bbHideToggleVal = !this.bbHideToggleVal
+    this.viewCtrl.hideBackButton(this.bbHideToggleVal);
   }
 }
 
