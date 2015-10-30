@@ -40,6 +40,7 @@ export class OverlayController {
           }
         }
         this.renderer.setElementStyle(ref.location, 'zIndex', ref._z);
+        this.renderer.setElementAttribute(ref.location, 'role', 'dialog');
 
         util.extend(instance, opts);
 
@@ -59,7 +60,7 @@ export class OverlayController {
         if (this.config.get('animate') === false) {
           animation.duration(0);
         }
-        animation.before.addClass('show-overlay');
+        animation.before.addClass(overlayType);
 
         this.app.setEnabled(false, animation.duration());
         this.app.setTransitioning(true, animation.duration());
@@ -103,7 +104,6 @@ export class OverlayController {
     if (this.config.get('animate') === false) {
       animation.duration(0);
     }
-    animation.after.removeClass('show-overlay');
 
     this.app.setEnabled(false, animation.duration());
     this.app.setTransitioning(true, animation.duration());

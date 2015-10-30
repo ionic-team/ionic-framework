@@ -5,7 +5,7 @@ import {OverlayController} from './overlay-controller';
 
 @Component({
   selector: 'ion-overlay',
-  template: ''
+  template: '<template #contents></template>'
 })
 export class OverlayAnchor {
   constructor(
@@ -23,7 +23,7 @@ export class OverlayAnchor {
   }
 
   append(componentType) {
-    return this.loader.loadNextToLocation(componentType, this.elementRef).catch(err => {
+    return this.loader.loadIntoLocation(componentType, this.elementRef, 'contents').catch(err => {
       console.error(err);
     });
   }

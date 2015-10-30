@@ -27,10 +27,13 @@ class MyAppCmp {
     platform.ready().then(() => {
       console.log('platform.ready')
     });
-
   }
 
   openModal() {
+    this.modal.open(PlainPage);
+  }
+
+  openModalChildNav() {
     this.modal.open(ContactModal, {
       handle: 'my-awesome-modal'
     });
@@ -44,10 +47,27 @@ class MyAppCmp {
   }
 }
 
+
+@Page({
+  template: `
+    <p>Plain Page in a modal</p>
+    <p>Not inside of ion-content</p>
+    <p><button (click)="closeModal()">Close Modal</button></p>
+  `
+})
+class PlainPage {
+  constructor(private modal: Modal) {}
+
+  closeModal() {
+    this.modal.get().close();
+  }
+}
+
+
 @Page({
   template: '<ion-nav [root]="rootView"></ion-nav>'
 })
-export class ContactModal {
+class ContactModal {
   constructor() {
     console.log('ContactModal constructor')
     this.rootView = ModalFirstPage;
@@ -94,7 +114,7 @@ export class ContactModal {
     </ion-content>
   `
 })
-export class ModalFirstPage {
+class ModalFirstPage {
   constructor(
     nav: NavController,
     modal: Modal,
@@ -158,7 +178,7 @@ export class ModalFirstPage {
     </ion-content>
   `
 })
-export class ModalSecondPage {
+class ModalSecondPage {
   constructor(
     nav: NavController,
     params: NavParams
@@ -181,7 +201,6 @@ class FadeIn extends Animation {
       .fadeIn();
   }
 }
-
 Animation.register('my-fade-in', FadeIn);
 
 class FadeOut extends Animation {
@@ -193,5 +212,4 @@ class FadeOut extends Animation {
       .fadeOut();
   }
 }
-
 Animation.register('my-fade-out', FadeOut);

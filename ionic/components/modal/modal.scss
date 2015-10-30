@@ -2,11 +2,13 @@
 // Modals
 // --------------------------------------------------
 
-$modal-background-color:          #fff !default;
+$modal-background-color:          $background-color !default;
 
-$modal-inset-mode-break-point:    680px !default;  // @media min-width
-$modal-inset-mode-top:            20% !default;
-$modal-inset-mode-right:          20% !default;
-$modal-inset-mode-bottom:         20% !default;
-$modal-inset-mode-left:           20% !default;
-$modal-inset-mode-min-height:     240px !default;
+
+ion-page.modal {
+  background-color: $modal-background-color;
+  z-index: $z-index-overlay;
+
+  // hidden by default to prevent flickers, the animation will show it
+  transform: translate3d(0px, 100%, 0px);
+}
