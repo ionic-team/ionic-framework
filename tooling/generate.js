@@ -1,6 +1,5 @@
 var _ = require('lodash'),
     fs = require('fs'),
-    // logging = require('../logging'),
     path = require('path'),
     shell = require('shelljs'),
     Generate = module.exports;
@@ -15,13 +14,22 @@ Generate.__defineGetter__('generators', function() {
   return Generate._generators;
 });
 
+Generate.log = function log() {
+  console.log('DEBUG'.red, arguments);
+};
+
 // options: appDirectory, generatorName, name
 Generate.generate = function generate(options) {
-  // console.log('Generate options', options);
+  // Generate.log('Generate options', options);
   if (!options) {
     throw new Error('No options passed to generator');
   }
-  // var generatorPath = path.join(__dirname, 'generators');
+  
+  //add optional logger for CLI or other tools
+  if (options.log) {
+    Generate.log = options.log;
+  }
+
   if (!options.generatorName) {
     options.generatorName = 'page';
   }
@@ -39,7 +47,6 @@ Generate.generate = function generate(options) {
 };
 
 Generate.loadGeneratorTemplates = function loadGeneratorTemplates(generatorPath) {
-  // var generatorPath = path.join(__dirname, 'generators', generatorName);
   var templates = [];
   fs.readdirSync(generatorPath)
   .forEach(function(template) {
@@ -62,15 +69,19 @@ Generate.loadGenerator = function loadGenerator(file) {
   try {
     generateModule = require(generatorPath);
   } catch (ex) {
-    console.log('Error loading generator module', ex);
+    Generate.log('Error loading generator module', ex);
+    Generate.log(ex.stack);
   }
-  return generateModule;//page
+  return generateModule;
 };
   
 Generate.loadGenerators = function loadGenerators() {
   var generators = {};
   fs.readdirSync(path.join(__dirname, 'generators'))
   .forEach(function (file) {
+    if (file.indexOf('.') !== -1) {
+      return;
+    }
     var generatorName = file.replace('.js', '');
     generators[generatorName] = Generate.loadGenerator(generatorName);
   });
@@ -90,30 +101,6 @@ Generate.renderTemplateFromFile = function renderTemplateFromFile(options) {
   var templateCompiler = _.template(templateContents);
   var result = templateCompiler(options);
   return result;
-};
-
-/* 
-  Will take options to render the basic page javascript template
-    the name of the component/page being rendered, ex: 'IonicTest'
-*/
-Generate.generateJsTemplate = function generateJsTemplate(name) {
-  var jsTemplatePath = path.join(__dirname, 'page.tmpl.js');
-  var options = { javascriptClassName: Generate.javascriptClassName(name), filename: Generate.fileAndClassName(name), templatePath: jsTemplatePath};
-  return Generate.renderTemplateFromFile(options);
-};
-
-/* 
-  Will take options to render the basic page html template
-    the name of the component/page being rendered, ex: 'IonicTest'
-*/
-Generate.generateHtmlTemplate = function generateHtmlTemplate(name) {
-  var htmlTemplatePath = path.join(__dirname, 'page.tmpl.html');
-  return Generate.renderTemplateFromFile({ name: Generate.fileAndClassName(name), capitalizedName: Generate.capitalizeName(name) ,templatePath: htmlTemplatePath});
-};
-
-Generate.generateScssTemplate = function generateScssTemplate(name) {
-  var scssTemplatePath = path.join(__dirname, 'page.tmpl.scss');
-  return Generate.renderTemplateFromFile({ name: Generate.fileAndClassName(name), templatePath: scssTemplatePath});
 };
 
 // Tabs - name = name of the page with the tabs,
@@ -138,33 +125,6 @@ Generate.tabPages = function tabPages(appDirectory, name, tabs) {
     var tabHtml = Generate.generateHtmlTemplate(appDirectory, tab);
 
   })
-};
-
-Generate.generateTabHtmlTemplate = function generateTabHtmlTemplate(appDirectory, name) {
-  throw new Error('not implemented');
-};
-
-Generate.generateTabsHtmlTemplate = function generateTabsHtmlTemplate(appDirectory, name, tabs) {
-  // throw new Error('not implemented');
-  var fileAndClassName = Generate.fileAndClassName(name);
-  var javascriptClassName = Generate.javascriptClassName(name);
-  // Generate.createScaffoldDirectories(appDirectory, fileAndClassName);
-
-  var tabsData = [];
-  tabs.forEach(function(tab) {
-    var tabObj = { name: tab, javascriptClassName: Generate.javascriptClassName(tab)};
-    tabsData.push(tabObj);
-  });
-
-  var tabsHtmlTemplatePath = path.join(__dirname, 'tabs.tmpl.html');
-  return Generate.renderTemplateFromFile({tabs: tabsData, templatePath: tabsHtmlTemplatePath });
-
-  // <ion-tabs>
-  // <% _.forEach(tabs, function(tab) { %>
-  //   <ion-tab tab-title="<%= tab.name %>" tab-icon="globe" [root]="<%= tab.javascriptClassName %>">
-  //   </ion-tab>
-  // <% }); %>
-  // </ion-tabs>
 };
 
 Generate.generateTabJsTemplate = function generateTabJsTemplate(appDirectory, name) {
@@ -201,17 +161,8 @@ Generate.generateTabsJsTemplate = function generateTabsJsTemplate(appDirectory, 
   return Generate.renderTemplateFromFile({tabs: tabsData, templatePath: tabsHtmlTemplatePath, filename: fileAndClassName, javascriptClassName: javascriptClassName });
 };
 
-Generate.generateTabScssTemplate = function generateTabScssTemplate(appDirectory, name) {
-  throw new Error('not implemented');
-};
-
-Generate.generateTabsScssTemplate = function generateTabsScssTemplate(appDirectory, name) {
-  throw new Error('not implemented');
-};
-// end of tabs
-
 Generate.createScaffoldDirectories = function createScaffoldDirectories(options) {
-  // console.log('Create', options.appDirectory, options.fileAndClassName);
+  // Generate.log('Create', options.appDirectory, options.fileAndClassName);
   var componentPath = path.join(options.appDirectory, 'www', 'app', options.fileAndClassName);
   shell.mkdir('-p', componentPath);
 };

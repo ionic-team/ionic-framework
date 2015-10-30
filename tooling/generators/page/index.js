@@ -31,31 +31,4 @@ Generator.run = function run(options) {
     console.log('\n√ Create'.blue, path.relative(options.appDirectory, saveFilePath));
     fs.writeFileSync(saveFilePath, renderedTemplate);
   });
-
-  return Q();
 };
-
-// var fileAndClassName = Generate.fileAndClassName(name);
-// var javascriptClassName = Generate.javascriptClassName(name);
-// Generate.createScaffoldDirectories(appDirectory, fileAndClassName);
-
-// var jsTemplate = Generate.generateJsTemplate(name);
-// var htmlTemplate = Generate.generateHtmlTemplate(name);
-// var scssTemplate = Generate.generateScssTemplate(name);
-
-// var pagePath = path.join(appDirectory, 'www', 'app', fileAndClassName),
-//     jsPath = path.join(pagePath, [fileAndClassName, '.js'].join('')),
-//     htmlPath = path.join(pagePath, [fileAndClassName, '.html'].join('')),
-//     scssPath = path.join(pagePath, [fileAndClassName, '.scss'].join(''));
-
-// logging.logger.info('√ Create'.blue, path.relative(appDirectory, jsPath));
-// fs.writeFileSync(jsPath, jsTemplate, 'utf8');
-// logging.logger.info('√ Create'.blue, path.relative(appDirectory, htmlPath));
-// fs.writeFileSync(htmlPath, htmlTemplate, 'utf8');
-// logging.logger.info('√ Create'.blue, path.relative(appDirectory, scssPath));
-// fs.writeFileSync(scssPath, scssTemplate, 'utf8');
-
-// //TODO: Modify the main sass file (via config) to somehow update it
-// //to include this sass file. 
-// //In the meantime, put a console message to alert them
-// logging.logger.info('* Tip: if youd like to use the generated sass file, use \'@import "' + path.relative(appDirectory, scssPath) + '"\' in your main sass file');
