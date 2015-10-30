@@ -67,8 +67,11 @@ $list-md-header-color:           #858585 !default;
   margin-top: 0;
 }
 
-.list[no-borders] {
-  ion-header:after,
+.list[no-lines] {
+  ion-header + .item:before {
+    border-width: 1px;
+  }
+
   .item:before,
   .item:after {
     border-width: 0;

@@ -129,15 +129,6 @@ ion-input.item {
   align-items: flex-start;
 }
 
-.item.item.item.no-border-bottom:after,
-.item.item.item.no-border-bottom + .item:before {
-  border: none;
-}
-
-.item.item.item.no-border-bottom + .item {
-  margin-top: -13px;
-}
-
 /**
  * The hidden right-side buttons that can be exposed under a list item
  * with dragging.

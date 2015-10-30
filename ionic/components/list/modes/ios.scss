@@ -88,8 +88,8 @@ $list-ios-header-color:               #333 !default;
   margin-top: 0;
 }
 
-&.hairlines .list[no-borders],
-.list[no-borders] {
+&.hairlines .list[no-lines],
+.list[no-lines] {
   ion-header:after,
   .item:before,
   .item:after {
