@@ -6,7 +6,10 @@ import {Keyboard} from '../../util/keyboard';
 import {ViewController} from '../nav/view-controller';
 import {Animation} from '../../animations/animation';
 import {ScrollTo} from '../../animations/scroll-to';
+import {FeatureDetect} from '../../util/feature-detect';
+import {StickyPoly} from './sticky-poly';
 
+console.log(StickyPoly);
 
 /**
  * The Content component provides an easy to use content area that can be configured to use Ionic's custom Scroll View, or the built in overflow scrolling of the browser.
@@ -35,7 +38,7 @@ export class Content extends Ion {
    * @param {ElementRef} elementRef  A reference to the component's DOM element.
    * @param {Config} config  The config object to change content's default settings.
    */
-  constructor(elementRef: ElementRef, config: Config, keyboard: Keyboard, @Optional() viewCtrl: ViewController) {
+  constructor(elementRef: ElementRef, config: Config, keyboard: Keyboard, @Optional() viewCtrl: ViewController, private featureDetect: FeatureDetect) {
     super(elementRef, config);
     this.scrollPadding = 0;
     this.keyboard = keyboard;
@@ -46,6 +49,10 @@ export class Content extends Ion {
     }
   }
 
+  getStickyPolyfill() {
+    return this._sticky;
+  }
+
   /**
    * TODO
    * @private
@@ -53,6 +60,14 @@ export class Content extends Ion {
   onInit() {
     super.onInit();
     this.scrollElement = this.getNativeElement().children[0];
+
+    setTimeout(() => {
+      if(!this.featureDetect.has('sticky')) {
+        console.log('Enabling sticky polyfill');
+        this._sticky = StickyPoly(this.scrollElement);
+        //this._sticky.init();
+      }
+    })
   }
 
   /**

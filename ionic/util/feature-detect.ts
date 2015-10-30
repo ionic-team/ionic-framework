@@ -21,7 +21,7 @@ export class FeatureDetect {
 let featureDetects = {};
 
 
-FeatureDetect.add('positionsticky', function(window, document) {
+FeatureDetect.add('sticky', function(window, document) {
   // css position sticky
   let ele = document.createElement('div');
   ele.style.cssText = 'position:-webkit-sticky;position:sticky';

@@ -185,3 +185,9 @@ ion-toolbar[position=bottom] {
   bottom: 0;
   z-index: $z-index-toolbar;
 }
+
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
