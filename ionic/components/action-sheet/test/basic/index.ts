@@ -10,7 +10,7 @@ class IonicApp {
     this.actionSheet = actionSheet;
   }
 
-  openMenu() {
+  openActionSheet() {
 
     this.actionSheet.open({
       buttons: [
