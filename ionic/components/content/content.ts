@@ -61,13 +61,13 @@ export class Content extends Ion {
     super.onInit();
     this.scrollElement = this.getNativeElement().children[0];
 
-    this._zone.runOutsideAngular(() => {
-      setTimeout(() => {
-        if(!this.featureDetect.has('sticky')) {
+    if(!this.featureDetect.has('sticky')) {
+      this._zone.runOutsideAngular(() => {
+        setTimeout(() => {
           this._sticky = StickyPoly(this.scrollElement);
-        }
+        });
       });
-    });
+    }
   }
 
   /**
