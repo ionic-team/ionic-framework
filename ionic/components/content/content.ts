@@ -9,8 +9,6 @@ import {ScrollTo} from '../../animations/scroll-to';
 import {FeatureDetect} from '../../util/feature-detect';
 import {StickyPoly} from './sticky-poly';
 
-console.log(StickyPoly);
-
 /**
  * The Content component provides an easy to use content area that can be configured to use Ionic's custom Scroll View, or the built in overflow scrolling of the browser.
  *
@@ -63,9 +61,7 @@ export class Content extends Ion {
 
     setTimeout(() => {
       if(!this.featureDetect.has('sticky')) {
-        console.log('Enabling sticky polyfill');
         this._sticky = StickyPoly(this.scrollElement);
-        //this._sticky.init();
       }
     })
   }

@@ -44,7 +44,9 @@ export class ItemGroupTitle {
   }
   onInit() {
     setTimeout(() => {
-      this.content.getStickyPolyfill().add(this.elementRef.nativeElement);
+      if(this.content.getStickyPolyfill()) {
+        this.content.getStickyPolyfill().add(this.elementRef.nativeElement);
+      }
     })
   }
 }
