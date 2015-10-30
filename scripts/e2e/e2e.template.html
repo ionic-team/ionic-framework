@@ -22,9 +22,16 @@
       /* disable scrollbars */
       overflow: hidden !important;
     }
-    .snapshot * {
+    .snapshot *,
+    .snapshot *:before,
+    .snapshot *:after {
+      /* do not allow css animations during snapshot */
       -webkit-transition-duration: 0ms !important;
       transition-duration: 0ms !important;
+    }
+    .snapshot ion-loading-icon,
+    .snapshot md-ripple {
+      display: none !important;
     }
 
     /* hack to create tall scrollable areas for testing using <f></f> */
