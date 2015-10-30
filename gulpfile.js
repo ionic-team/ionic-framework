@@ -456,6 +456,20 @@ gulp.task('build.demos', function(){
   }
 });
 
+gulp.task('sass.demos:docs', function() {
+  var sass = require('gulp-sass');
+  var autoprefixer = require('gulp-autoprefixer');
+  return gulp.src([
+      'demos/component-docs/app.scss'
+    ])
+    .pipe(sass()
+      .on('error', sass.logError)
+    )
+    .pipe(autoprefixer(buildConfig.autoprefixer))
+    .pipe(gulp.dest('dist/demos/component-docs/'));
+});
+
+
 gulp.task('bundle.demos:all', ['build.demos'], function(done) {
   return buildDemoBundle({demo: '*'}, done);
 });
@@ -470,9 +484,12 @@ gulp.task('demos:all', ['bundle.demos:all'], function() {
     .pipe(gulp.dest('dist/ionic-site/docs/v2/components/demo/'))
 });
 
-gulp.task('demos:docs', ['bundle.demos:docs'], function() {
+gulp.task('demos:docs', ['sass.demos:docs', 'bundle.demos:docs'], function() {
   return gulp
-    .src('dist/demos/component-docs/**/*')
+    .src([
+      'dist/demos/component-docs/**/*',
+      '!dist/demos/component-docs/**/*.scss',
+      ])
     .pipe(gulp.dest('dist/ionic-site/docs/v2/components/demo/'))
 });
 
