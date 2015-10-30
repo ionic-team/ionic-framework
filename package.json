@@ -6,13 +6,16 @@
     "type": "git",
     "url": "https://github.com/driftyco/ionic2.git"
   },
+  "main": "index.js",
   "scripts": {
     "test": "gulp karma",
+    "test:generators": "jasmine-node ./tooling/spec",
     "link": "npm install && gulp src && npm link"
   },
   "dependencies": {
     "angular2": "2.0.0-alpha.44",
     "es6-shim": "^0.33.6",
+    "lodash": "^3.10.1",
     "@reactivex/rxjs": "5.0.0-alpha.4",
     "reflect-metadata": "0.1.1",
     "zone.js": "0.5.8"
@@ -47,7 +50,6 @@
     "karma-chrome-launcher": "^0.1.7",
     "karma-jasmine": "^0.3.5",
     "lazypipe": "^0.2.3",
-    "lodash": "^2.4.1",
     "lunr": "^0.5.12",
     "minimist": "^1.1.3",
     "mkdirp": "^0.5.1",
