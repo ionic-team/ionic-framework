@@ -16,7 +16,7 @@ $button-md-clear-hover-background-color:   rgba(158, 158, 158, 0.1) !default;
 $button-md-clear-active-background-color:  rgba(158, 158, 158, 0.2) !default;
 
 $button-md-fab-box-shadow:                 0 4px 6px 0 rgba(0, 0, 0, 0.14), 0 4px 5px rgba(0, 0, 0, 0.1) !default;
-
+$button-md-fab-box-shadow-active:          0 5px 15px 0 rgba(0, 0, 0, 0.4), 0 4px 7px 0 rgba(0, 0, 0, 0.1) !default;
 
 button,
 [button] {
@@ -39,33 +39,8 @@ button,
     background-color: $button-md-clear-hover-background-color;
   }
 
-  &.activated {
-    box-shadow: $button-md-box-shadow-active;
-  }
-
   &[full] {
     border-radius: 0;
-  }
-
-  &[clear] {
-    opacity: 1;
-    box-shadow: none;
-
-    &.activated {
-      background-color: $button-md-clear-active-background-color;
-    }
-  }
-
-  &[outline] {
-    box-shadow: none;
-
-    &.activated {
-      opacity: 1;
-    }
-
-    md-ripple {
-      background: rgba( red($button-color), green($button-color), blue($button-color), 0.1);
-    }
   }
 
   &[round] {
@@ -85,13 +60,42 @@ button,
     font-size: $button-small-font-size;
   }
 
+  &.activated {
+    box-shadow: $button-md-box-shadow-active;
+  }
+
   &[fab] {
     border-radius: 50%;
-    box-shadow: $button-md-fab-box-shadow !important;
+    box-shadow: $button-md-fab-box-shadow;
+
+    &.activated {
+      box-shadow: $button-md-fab-box-shadow-active;
+    }
   }
 
   &.icon-only {
     padding: 0;
+  }
+
+  &[outline] {
+    box-shadow: none;
+
+    &.activated {
+      opacity: 1;
+    }
+
+    md-ripple {
+      background: rgba( red($button-color), green($button-color), blue($button-color), 0.1);
+    }
+  }
+
+  &[clear] {
+    opacity: 1;
+    box-shadow: none;
+
+    &.activated {
+      background-color: $button-md-clear-active-background-color;
+    }
   }
 
 }
