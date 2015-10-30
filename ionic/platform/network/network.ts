@@ -38,6 +38,8 @@ export class Network {
     this.ifPlugin(() => {
       var networkState = navigator.connection.type;
       return networkState !== window.Connection.UNKNOWN && networkState !== window.Connection.NONE;
+    }, () => {
+      return navigator.onLine
     });
   }
 }
