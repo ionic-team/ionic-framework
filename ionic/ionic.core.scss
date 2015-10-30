@@ -49,6 +49,7 @@
 
 
 // Ionicons
+$font-path: "../fonts" !default;
 $ionicons: true !default;
 @if ($ionicons) {
   @import "fonts/ionicons";
