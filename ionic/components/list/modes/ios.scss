@@ -87,3 +87,12 @@ $list-ios-header-color:               #333 !default;
 .list[inset] + .list[inset] {
   margin-top: 0;
 }
+
+&.hairlines .list[no-borders],
+.list[no-borders] {
+  ion-header:after,
+  .item:before,
+  .item:after {
+    border-width: 0;
+  }
+}

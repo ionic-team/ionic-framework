@@ -66,3 +66,11 @@ $list-md-header-color:           #858585 !default;
 .list[inset] + .list[inset] {
   margin-top: 0;
 }
+
+.list[no-borders] {
+  ion-header:after,
+  .item:before,
+  .item:after {
+    border-width: 0;
+  }
+}
