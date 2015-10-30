@@ -1,6 +1,3 @@
-<ion-tabs>
-<% _.forEach(tabs, function(tab) { %>
-  <ion-tab tab-title="<%= tab.name %>" tab-icon="globe" [root]="<%= tab.javascriptClassName %>">
-  </ion-tab>
-<% }); %>
+<ion-tabs><% _.forEach(tabs, function(tab) { %>
+  <ion-tab tab-title="<%= tab.name %>" tab-icon="globe" [root]="<%= tab.javascriptClassName %>"></ion-tab><% }); %>
 </ion-tabs>
