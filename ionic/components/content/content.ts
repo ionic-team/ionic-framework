@@ -1,4 +1,4 @@
-import {Component, ElementRef, Optional} from 'angular2/angular2';
+import {Component, ElementRef, Optional, NgZone} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {Config} from '../../config/config';
@@ -36,7 +36,9 @@ export class Content extends Ion {
    * @param {ElementRef} elementRef  A reference to the component's DOM element.
    * @param {Config} config  The config object to change content's default settings.
    */
-  constructor(elementRef: ElementRef, config: Config, keyboard: Keyboard, @Optional() viewCtrl: ViewController, private featureDetect: FeatureDetect) {
+  constructor(elementRef: ElementRef, config: Config, keyboard: Keyboard,
+    @Optional() viewCtrl: ViewController, private featureDetect: FeatureDetect,
+    private _zone: NgZone) {
     super(elementRef, config);
     this.scrollPadding = 0;
     this.keyboard = keyboard;
@@ -60,9 +62,11 @@ export class Content extends Ion {
     this.scrollElement = this.getNativeElement().children[0];
 
     setTimeout(() => {
-      if(!this.featureDetect.has('sticky')) {
-        this._sticky = StickyPoly(this.scrollElement);
-      }
+      this._zone.runOutsideAngular(() => {
+        if(!this.featureDetect.has('sticky')) {
+          this._sticky = StickyPoly(this.scrollElement);
+        }
+      });
     })
   }
 
