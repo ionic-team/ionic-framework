@@ -250,5 +250,27 @@ export function run() {
       });
     });
 
+    describe("_setZIndex", () => {
+      it('should set zIndex 0 on first entering view', () => {
+        let enteringInstance = {};
+        nav._setZIndex(enteringInstance, null, 'forward');
+        expect(enteringInstance._zIndex).toEqual(0);
+      });
+
+      it('should set zIndex 1 on second entering view', () => {
+        let leavingInstance = { _zIndex: 0 };
+        let enteringInstance = {};
+        nav._setZIndex(enteringInstance, leavingInstance, 'forward');
+        expect(enteringInstance._zIndex).toEqual(1);
+      });
+
+      it('should set zIndex 0 on entering view going back', () => {
+        let leavingInstance = { _zIndex: 1 };
+        let enteringInstance = {};
+        nav._setZIndex(enteringInstance, leavingInstance, 'back');
+        expect(enteringInstance._zIndex).toEqual(0);
+      });
+    });
+
   });
 }

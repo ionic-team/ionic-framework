@@ -459,6 +459,8 @@ export class NavController extends Ion {
         return callback();
       }
 
+      this._setZIndex(enteringView.instance, leavingView.instance, opts.direction);
+
       this._zone.runOutsideAngular(() => {
 
         enteringView.shouldDestroy = false;
@@ -558,6 +560,20 @@ export class NavController extends Ion {
 
       done(viewCtrl);
     });
+  }
+
+  _setZIndex(enteringInstance, leavingInstance, direction) {
+    if (!leavingInstance) {
+      enteringInstance._zIndex = 0;
+
+    } else if (direction === 'back') {
+      // moving back
+      enteringInstance._zIndex = leavingInstance._zIndex - 1;
+
+    } else {
+      // moving forward
+      enteringInstance._zIndex = leavingInstance._zIndex + 1;
+    }
   }
 
   /**

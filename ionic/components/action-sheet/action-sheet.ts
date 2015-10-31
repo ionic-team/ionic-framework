@@ -76,6 +76,9 @@ import * as util from 'ionic/util';
         '</div>' +
       '</div>' +
     '</action-sheet-wrapper>',
+  host: {
+    '[style.zIndex]': '_zIndex'
+  },
   directives: [NgFor, NgIf, Icon]
 })
 class ActionSheetCmp {

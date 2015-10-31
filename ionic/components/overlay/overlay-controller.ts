@@ -33,13 +33,12 @@ export class OverlayController {
           return reject();
         }
 
-        ref._z = ROOT_Z_INDEX;
+        instance._zIndex = ROOT_Z_INDEX;
         for (let i = 0; i < this.refs.length; i++) {
-          if (this.refs[i]._z >= ref._z) {
-            ref._z = this.refs[i]._z + 1;
+          if (this.refs[i].instance._zIndex >= ref.instance._zIndex) {
+            ref.instance._zIndex = this.refs[i].instance._zIndex + 1;
           }
         }
-        this.renderer.setElementStyle(ref.location, 'zIndex', ref._z);
         this.renderer.setElementAttribute(ref.location, 'role', 'dialog');
 
         util.extend(instance, opts);
