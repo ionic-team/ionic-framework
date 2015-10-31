@@ -4,6 +4,7 @@ import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
 import {ConfigComponent} from '../../config/decorators';
 import {NavController} from './nav-controller';
+import {ViewController} from './view-controller';
 
 /**
  * _For a quick walkthrough of navigation in Ionic, check out the
@@ -59,25 +60,23 @@ import {NavController} from './nav-controller';
  *                           &lt;ion-nav&gt;
  *                               |
  *                               |
- *             Pane 3  +--------------------+                     LoginPage
- *           Pane 2  +--------------------+ |          Has header, animates into pane 1
- *         Pane 1  +--------------------+ | |              +--------------------+
- *                 | | Header (Pane 1)  |&lt;-----------------|       Login        |
+ *             Page 3  +--------------------+                     LoginPage
+ *           Page 2  +--------------------+ |
+ *         Page 1  +--------------------+ | |              +--------------------+
+ *                 | | Header           |&lt;-----------------|       Login        |
  *                 +--------------------+ | |              +--------------------+
  *                 | | |                | | |              | Username:          |
  *                 | | |                | | |              | Password:          |
- *                 | | |  Pane 3 is     | | |              |                    |
+ *                 | | |  Page 3 is     | | |              |                    |
  *                 | | |  only content  | | |              |                    |
  *                 | | |                |&lt;-----------------|                    |
  *                 | | |                | | |              |                    |
  *                 | | |                | | |              |                    |
  *                 | +------------------|-+ |              |                    |
- *                 | | Footer (Pane 2)--|-|-+              |                    |
+ *                 | | Footer           |-|-+              |                    |
  *                 | +------------------|-+                |                    |
  *                 +--------------------+                  +--------------------+
- *                       &lt;ion-pane&gt;                              &lt;ion-view&gt;
  *
- *                   Pane 1                    Pane 2                    Pane 3
  *           +--------------------+    +--------------------+    +--------------------+
  *           | Header             |    | Content            |    | Content            |
  *           +--------------------+    |                    |    |                    |
@@ -96,31 +95,6 @@ import {NavController} from './nav-controller';
  *   </pre>
  * </div>
  *
- * ### Panes
- *
- * NOTE: You don't have to do anything with panes because Ionic takes care of
- * animated transitions for you. This is an explanation of how Nav works to
- * accompany the diagram above.
- *
- * When you push a new page onto the navigation stack using [NavController.push()](../NavController/#push)
- * or the [NavPush directive](../NavPush/), Nav animates the new page into the
- * appropriate pane.
- *
- * Panes are the containers Nav creates to animate views into. They do not have
- * any content of their own, as they are just a structural reference for where
- * the various parts of a page (header, footer, content) should animate into.
- *
- * The easiest scenario is animating between pages with the same structure. If
- * you have a page with a header and content, and navigate to another page that
- * also has a header and content, Nav can smoothly animate the incoming page
- * into the pane the exiting page is leaving. This allows for things like
- * seamless header animations between pages that both have headers.
- *
- * But suppose you have a page with a header and content and want to navigate to
- * a page with no header. Nav creates a new pane with no header that is directly
- * behind the current pane. It then animates the exiting page out of the current
- * pane and the new page into the new content-only pane.
- *
  */
 @ConfigComponent({
   selector: 'ion-nav',
@@ -136,6 +110,7 @@ export class Nav extends NavController {
 
   constructor(
     @Optional() hostNavCtrl: NavController,
+    @Optional() viewCtrl: ViewController,
     app: IonicApp,
     config: Config,
     elementRef: ElementRef,
@@ -146,11 +121,15 @@ export class Nav extends NavController {
     renderer: Renderer
   ) {
     super(hostNavCtrl, app, config, elementRef, compiler, loader, viewManager, zone, renderer);
+
+    if (viewCtrl) {
+      // an ion-nav can also act as an ion-page within a parent ion-nav
+      // this would happen when an ion-nav nests a child ion-nav.
+      viewCtrl.setContent(this);
+      viewCtrl.setContentRef(elementRef);
+    }
   }
 
-  /**
-   * @private
-   */
   onInit() {
     super.onInit();
 

@@ -39,11 +39,13 @@ class MDTransition extends Animation {
         .fadeIn();
     }
 
-    // entering navbar
+    let enteringBackButton = new Animation(enteringView.backBtnRef());
+    this.add(enteringBackButton);
     if (enteringHasNavbar && enteringView.enableBack()) {
-      let enteringBackButton = new Animation(enteringView.backBtnRef());
       enteringBackButton.before.addClass(SHOW_BACK_BTN_CSS);
-      this.add(enteringBackButton);
+      
+    } else {
+      enteringBackButton.before.removeClass(SHOW_BACK_BTN_CSS);
     }
 
     // setup leaving view
