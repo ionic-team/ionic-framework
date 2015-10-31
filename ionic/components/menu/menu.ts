@@ -79,6 +79,7 @@ export class Menu extends Ion {
     this.opening = new EventEmitter('opening');
     this.isOpen = false;
     this._disableTime = 0;
+    this.isEnabled = true;
   }
 
   /**
@@ -107,9 +108,11 @@ export class Menu extends Ion {
 
     let self = this;
     this.onContentClick = function(ev) {
-      ev.preventDefault();
-      ev.stopPropagation();
-      self.close();
+      if (self.isEnabled) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        self.close();
+      }
     };
   }
 
@@ -251,6 +254,23 @@ export class Menu extends Ion {
    */
   toggle() {
     return this.setOpen(!this.isOpen);
+  }
+
+  enabled(isEnabled) {
+    if (!this.isEnabled && isEnabled && !this._gesture) {
+      // was previously disabled, and is being enabled again
+      // re-add the gestures
+      this._initGesture();
+
+    } else if (this.isEnabled && !isEnabled) {
+      // is currently enabled, and is being disabled
+      // remove the gestures
+      this._gesture && this._gesture.destroy();
+      this._targetGesture && this._targetGesture.destroy();
+      this._gesture = this._targetGesture = null;
+    }
+
+    this.isEnabled = isEnabled;
   }
 
   /**
