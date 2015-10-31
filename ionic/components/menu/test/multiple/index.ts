@@ -11,13 +11,13 @@ class Page1 {
   }
   menu1Active() {
     this.activeMenu = 'menu1';
-    this.app.getComponent('menu1').enabled(true);
-    this.app.getComponent('menu2').enabled(false);
+    this.app.getComponent('menu1').enable(true);
+    this.app.getComponent('menu2').enable(false);
   }
   menu2Active() {
     this.activeMenu = 'menu2';
-    this.app.getComponent('menu1').enabled(false);
-    this.app.getComponent('menu2').enabled(true);
+    this.app.getComponent('menu1').enable(false);
+    this.app.getComponent('menu2').enable(true);
   }
 }
 

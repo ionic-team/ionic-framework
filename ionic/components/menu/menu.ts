@@ -78,7 +78,7 @@ export class Menu extends Ion {
 
     this.opening = new EventEmitter('opening');
     this.isOpen = false;
-    this._disableTime = 0;
+    this._preventTime = 0;
     this.isEnabled = true;
   }
 
@@ -154,9 +154,9 @@ export class Menu extends Ion {
    * @return {Promise} TODO
    */
   setOpen(shouldOpen) {
-    // _isDisabled is used to prevent unwanted opening/closing after swiping open/close
+    // _isPrevented is used to prevent unwanted opening/closing after swiping open/close
     // or swiping open the menu while pressing down on the menu-toggle button
-    if (shouldOpen === this.isOpen || this._isDisabled()) {
+    if (shouldOpen === this.isOpen || this._isPrevented()) {
       return Promise.resolve();
     }
 
@@ -169,7 +169,7 @@ export class Menu extends Ion {
 
   setProgressStart() {
     // user started swiping the menu open/close
-    if (this._isDisabled()) return;
+    if (this._isPrevented() || !this.isEnabled) return;
 
     this._before();
 
@@ -178,58 +178,66 @@ export class Menu extends Ion {
 
   setProgess(value) {
     // user actively dragging the menu
-    this._disable();
-    this.app.setTransitioning(true);
-    this._type.setProgess(value);
+    if (this.isEnabled) {
+      this._prevent();
+      this.app.setTransitioning(true);
+      this._type.setProgess(value);
+    }
   }
 
   setProgressEnd(shouldComplete) {
     // user has finished dragging the menu
-    this._disable();
-    this.app.setTransitioning(true);
-    this._type.setProgressEnd(shouldComplete).then(isOpen => {
-      this._after(isOpen);
-    });
+    if (this.isEnabled) {
+      this._prevent();
+      this.app.setTransitioning(true);
+      this._type.setProgressEnd(shouldComplete).then(isOpen => {
+        this._after(isOpen);
+      });
+    }
   }
 
   _before() {
     // this places the menu into the correct location before it animates in
     // this css class doesn't actually kick off any animations
-    this.getNativeElement().classList.add('show-menu');
-    this.getBackdropElement().classList.add('show-backdrop');
+    if (this.isEnabled) {
+      this.getNativeElement().classList.add('show-menu');
+      this.getBackdropElement().classList.add('show-backdrop');
 
-    this._disable();
-    this.app.setTransitioning(true);
-    this.keyboard.close();
+      this._prevent();
+      this.app.setTransitioning(true);
+      this.keyboard.close();
+    }
   }
 
   _after(isOpen) {
     // keep opening/closing the menu disabled for a touch more yet
-    this._disable();
-    this.app.setTransitioning(false);
+    if (this.isEnabled) {
+      this._prevent();
+      this.app.setTransitioning(false);
 
-    this.isOpen = isOpen;
+      this.isOpen = isOpen;
 
-    this._cntEle.classList[isOpen ? 'add' : 'remove']('menu-content-open');
+      this._cntEle.classList[isOpen ? 'add' : 'remove']('menu-content-open');
 
-    this._cntEle.removeEventListener('click', this.onContentClick);
-    if (isOpen) {
-      this._cntEle.addEventListener('click', this.onContentClick);
+      this._cntEle.removeEventListener('click', this.onContentClick);
+      if (isOpen) {
+        this._cntEle.addEventListener('click', this.onContentClick);
 
-    } else {
-      this.getNativeElement().classList.remove('show-menu');
-      this.getBackdropElement().classList.remove('show-backdrop');
+      } else {
+        this.getNativeElement().classList.remove('show-menu');
+        this.getBackdropElement().classList.remove('show-backdrop');
+      }
     }
   }
 
-  _disable() {
+  _prevent() {
     // used to prevent unwanted opening/closing after swiping open/close
     // or swiping open the menu while pressing down on the menu-toggle
-    this._disableTime = Date.now() + 20;
+    this._preventTime = Date.now() + 20;
   }
 
-  _isDisabled() {
-    return this._disableTime > Date.now();
+  _isPrevented() {
+    return this._preventTime > Date.now();
   }
 
   /**
@@ -256,21 +264,8 @@ export class Menu extends Ion {
     return this.setOpen(!this.isOpen);
   }
 
-  enabled(isEnabled) {
-    if (!this.isEnabled && isEnabled && !this._gesture) {
-      // was previously disabled, and is being enabled again
-      // re-add the gestures
-      this._initGesture();
-
-    } else if (this.isEnabled && !isEnabled) {
-      // is currently enabled, and is being disabled
-      // remove the gestures
-      this._gesture && this._gesture.destroy();
-      this._targetGesture && this._targetGesture.destroy();
-      this._gesture = this._targetGesture = null;
-    }
-
-    this.isEnabled = isEnabled;
+  enable(shouldEnable) {
+    this.isEnabled = shouldEnable;
   }
 
   /**
