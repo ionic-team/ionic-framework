@@ -1,0 +1,18 @@
+<ion-view nav-title="Signup" style="padding: 20px">
+  <form (submit)="doSignup($event)" [control-group]="signupForm">
+    <ion-input>
+      <input control="name" type="text" placeholder="Your name">
+    </ion-input>
+    <ion-input>
+      <input control="email" type="email" placeholder="Your email">
+    </ion-input>
+    <ion-input>
+      <input control="password" type="password" placeholder="Your password">
+    </ion-input>
+    <button dark block type="submit">Create account</button>
+    <div>
+      <button block (click)="doLogin()">Log in</button>
+    </div>
+  </form>
+</ion-view>
+
