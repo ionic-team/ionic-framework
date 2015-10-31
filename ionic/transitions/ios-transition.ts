@@ -106,6 +106,9 @@ class IOSTransition extends Animation {
           let enteringBackBtnText = new Animation(enteringView.backBtnTextRef());
           enteringBackBtnText.fromTo(TRANSLATEX, '100px', '0px');
           enteringNavBar.add(enteringBackBtnText);
+
+        } else {
+          enteringBackButton.before.removeClass(SHOW_BACK_BTN_CSS);
         }
       }
     }

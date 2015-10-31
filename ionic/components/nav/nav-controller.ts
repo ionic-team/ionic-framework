@@ -184,7 +184,7 @@ export class NavController extends Ion {
     if (opts.preCleanup !== false) {
       raf(() => {
         this._cleanup(enteringView);
-      });  
+      });
     }
 
     if (this.router) {
@@ -286,7 +286,7 @@ export class NavController extends Ion {
     let leavingView = this._views[this._views.length - 1];
     let enteringView = view;
 
-    if(this.router) {
+    if (this.router) {
       this.router.stateChange('pop', enteringView);
     }
 

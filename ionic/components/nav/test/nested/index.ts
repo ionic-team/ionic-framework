@@ -24,7 +24,7 @@ export class Login {
 }
 
 
- @Page({
+@Page({
   template: `
     <ion-menu [content]="content">
      <ion-toolbar secondary>
@@ -67,7 +67,7 @@ export class Account {
   }
 
   logOut() {
-    this.app.getComponent('root-nav').setRoot(Login);
+    this.app.getComponent('root-nav').setRoot(Login, null, { animate: true });
   }
 }
 
@@ -75,27 +75,63 @@ export class Account {
 @Page({
   template: `
     <ion-navbar *navbar primary>
+      <a menu-toggle>
+        <icon menu></icon>
+      </a>
       <ion-title>Account Dashboard</ion-title>
     </ion-navbar>
     <ion-content padding>
-      Dashboard
+      <p><button (click)="goToProfile()">Profile</button></p>
+      <p><button (click)="logOut()">Logout</button></p>
     </ion-content>
   `
 })
-export class Dashboard {}
+export class Dashboard {
+  constructor(app: IonicApp, nav: NavController) {
+    this.app = app;
+    this.nav = nav;
+  }
+  goToProfile() {
+    this.nav.push(Profile);
+  }
+  logOut() {
+    this.app.getComponent('root-nav').setRoot(Login, null, {
+      animate: true,
+      direction: 'back'
+    });
+  }
+}
 
 
 @Page({
   template: `
     <ion-navbar *navbar danger>
+      <a menu-toggle>
+        <icon menu></icon>
+      </a>
       <ion-title>Account Profile</ion-title>
     </ion-navbar>
     <ion-content padding>
-      Profile
+      <p><button (click)="goToDashboard()">Dashboard</button></p>
+      <p><button (click)="logOut()">Logout</button></p>
     </ion-content>
   `
 })
-export class Profile {}
+export class Profile {
+  constructor(app: IonicApp, nav: NavController) {
+    this.app = app;
+    this.nav = nav;
+  }
+  goToDashboard() {
+    this.nav.push(Dashboard);
+  }
+  logOut() {
+    this.app.getComponent('root-nav').setRoot(Login, null, {
+      animate: true,
+      direction: 'back'
+    });
+  }
+}
 
 
 @App({
