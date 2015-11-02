@@ -1,10 +1,10 @@
 import {Injectable, Pipe} from 'angular2/angular2';
 
 @Pipe({
-  name: '<%= fileAndClassName %>'
+  name: '<%= fileName %>'
 })
 @Injectable()
-class <%= javascriptClassName %> {
+class <%= jsClassName %> {
   transform(v, args) { 
     return v.toLowerCase(); 
   }

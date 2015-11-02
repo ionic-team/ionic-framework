@@ -1,5 +1,6 @@
 var _ = require('lodash'),
     fs = require('fs'),
+    inquirer = require('inquirer'),
     path = require('path'),
     shell = require('shelljs'),
     Generate = module.exports;
@@ -20,6 +21,7 @@ Generate.log = function log() {
 
 // options: appDirectory, generatorName, name
 Generate.generate = function generate(options) {
+  Generate.inquirer = inquirer;
   // Generate.log('Generate options', options);
   if (!options) {
     throw new Error('No options passed to generator');
@@ -28,10 +30,6 @@ Generate.generate = function generate(options) {
   //add optional logger for CLI or other tools
   if (options.log) {
     Generate.log = options.log;
-  }
-
-  if (options.inquirer) {
-    Generate.inquirer = options.inquirer;
   }
 
   if (options.q) {
@@ -44,16 +42,47 @@ Generate.generate = function generate(options) {
 
   var generateOptions = { 
     appDirectory: options.appDirectory,
-    inquirer: options.inquirer,
-    fileAndClassName: Generate.fileAndClassName(options.name),
-    javascriptClassName: Generate.javascriptClassName(options.name),
-    name: options.name
+    cssClassName: Generate.cssClassName(options.name),
+    fileName: Generate.fileName(options.name),
+    jsClassName: Generate.jsClassName(options.name),
+    name: options.name,
+    template: options.generatorName
   };
 
-  Generate.createScaffoldDirectories({appDirectory: options.appDirectory, fileAndClassName: generateOptions.fileAndClassName});
+  Generate.createScaffoldDirectories({appDirectory: options.appDirectory, fileName: generateOptions.fileName});
 
-  return Generate.generators[options.generatorName].run(generateOptions);
+  try {
+    //Try to run the generator if it supplies a run method.
+    var generator = Generate.generators[options.generatorName];
+    if (generator && generator.run) {
+      return Generate.generators[options.generatorName].run(generateOptions);
+    } else {
+      return Generate.defaultTemplates(generateOptions);
+    }
+  } catch (ex) {
+    console.log('Error with generation:', ex);
+    console.log(ex.stack);
+  }
 };
+
+Generate.defaultTemplates = function defaultTemplates(options) {
+  var template = options.template ? options.template : 'page';
+
+  options.rootDirectory = options.rootDirectory || path.join('www', 'app');
+  var savePath = path.join(options.appDirectory, options.rootDirectory, options.fileName);
+
+  var templates = Generate.loadGeneratorTemplates(path.join(__dirname, 'generators', options.template));
+
+  templates.forEach(function(template) {
+    var templatePath = template.file;
+    options.templatePath = templatePath;
+    var renderedTemplate = Generate.renderTemplateFromFile(options);
+    var saveFilePath = path.join(savePath, [options.fileName, template.type].join(''));
+    // console.log('renderedTemplate', renderedTemplate, 'saving to', saveFilePath);
+    console.log('√ Create'.blue, path.relative(options.appDirectory, saveFilePath));
+    fs.writeFileSync(saveFilePath, renderedTemplate);
+  });
+}
 
 Generate.loadGeneratorTemplates = function loadGeneratorTemplates(generatorPath) {
   var templates = [];
@@ -66,7 +95,7 @@ Generate.loadGeneratorTemplates = function loadGeneratorTemplates(generatorPath)
       return;
     }
 
-    templates.push({file: template, type: path.extname(template)});
+    templates.push({file: path.join(generatorPath, template), type: path.extname(template)});
   });
 
   return templates;
@@ -101,7 +130,7 @@ Generate.loadGenerators = function loadGenerators() {
   Will take options to render an html, js, or scss template.
   options:
     they differ based on what is needed in template
-    For JavaScript file: filename, javascriptClassName
+    For JavaScript file: filename, jsClassName
     For HTML file: name, nameUppercased
     templatePath: the path of the template to render (html/js/scss), ex: '/path/to/page.tmpl.html'
 */
@@ -118,15 +147,15 @@ Generate.tabPages = function tabPages(appDirectory, name, tabs) {
   Generate.createScaffoldDirectories(appDirectory, name);
 
   // Generate page with tabs:
-  var tabsFileAndClassName = Generate.fileAndClassName(name);
+  var tabsfileName = Generate.fileName(name);
 
   var tabsHtml = Generate.generateTabsHtmlTemplate(appDirectory, name, tabs);
   var tabsJs = Generate.generateTabsJsTemplate(appDirectory, name, tabs);
   // var tabsScss = Generate.generateTabsScssTemplate(appDirectory, name, tabs);
-  var pagePath = path.join(appDirectory, 'www', 'app', tabsFileAndClassName),
-      jsPath = path.join(pagePath, [tabsFileAndClassName, '.js'].join('')),
-      htmlPath = path.join(pagePath, [tabsFileAndClassName, '.html'].join(''));
-      // scssPath = path.join(pagePath, [tabsFileAndClassName, '.scss'].join(''));
+  var pagePath = path.join(appDirectory, 'www', 'app', tabsfileName),
+      jsPath = path.join(pagePath, [tabsfileName, '.js'].join('')),
+      htmlPath = path.join(pagePath, [tabsfileName, '.html'].join(''));
+      // scssPath = path.join(pagePath, [tabsfileName, '.scss'].join(''));
 
   tabs.forEach(function(tab) {
     Generate.createScaffoldDirectories(appDirectory, tab);
@@ -143,47 +172,51 @@ Generate.generateTabJsTemplate = function generateTabJsTemplate(appDirectory, na
 Generate.generateTabsJsTemplate = function generateTabsJsTemplate(appDirectory, name, tabs) {
   // import {NavController, Page} from 'ionic/ionic';
   // <% _.forEach(tabs, function(tab) { %>
-  // import {<%= tab.javascriptClassName %>} from '../<%= tab.filename %>/<%= tab.filename %>';
+  // import {<%= tab.jsClassName %>} from '../<%= tab.filename %>/<%= tab.filename %>';
   // <% }); %>
   // @Page({
   //   templateUrl: 'app/<%= filename %>/<%= filename %>.html',
   //   providers: [DataService]
   // })
-  // class <%= javascriptClassName %> {
+  // class <%= jsClassName %> {
   //   constructor(nav: NavController) {
   //     // set the root pages for each tab
   //     <% _.forEach(tabs, function(tab) { %>
-  //     this.{<%= tab.javascriptClassName %>} = <%= tab.javascriptClassName %>;
+  //     this.{<%= tab.jsClassName %>} = <%= tab.jsClassName %>;
   //     <% }); %>
   //   }
   // }
-  var fileAndClassName = Generate.fileAndClassName(name);
-  var javascriptClassName = Generate.javascriptClassName(name);
+  var fileName = Generate.fileName(name);
+  var jsClassName = Generate.jsClassName(name);
 
   var tabsData = [];
   tabs.forEach(function(tab) {
-    var tabObj = { name: tab, filename: Generate.fileAndClassName(tab), javascriptClassName: Generate.javascriptClassName(tab)};
+    var tabObj = { name: tab, filename: Generate.fileName(tab), jsClassName: Generate.jsClassName(tab)};
     tabsData.push(tabObj);
   });
 
   var tabsHtmlTemplatePath = path.join(__dirname, 'tabs.tmpl.js');
-  return Generate.renderTemplateFromFile({tabs: tabsData, templatePath: tabsHtmlTemplatePath, filename: fileAndClassName, javascriptClassName: javascriptClassName });
+  return Generate.renderTemplateFromFile({tabs: tabsData, templatePath: tabsHtmlTemplatePath, filename: fileName, jsClassName: jsClassName });
 };
 
 Generate.createScaffoldDirectories = function createScaffoldDirectories(options) {
-  // Generate.log('Create', options.appDirectory, options.fileAndClassName);
-  var componentPath = path.join(options.appDirectory, 'www', 'app', options.fileAndClassName);
+  // Generate.log('Create', options.appDirectory, options.fileName);
+  var componentPath = path.join(options.appDirectory, 'www', 'app', options.fileName);
   shell.mkdir('-p', componentPath);
 };
 
-Generate.fileAndClassName = function fileAndClassName(name) {
+Generate.fileName = function fileName(name) {
   return name.replace(/([a-z])([A-Z])/g, '$1-$2').replace('_', '-').toLowerCase();
 };
+
+Generate.cssClassName = function cssClassName(name) {
+  return Generate.fileName(name);
+}
 
 Generate.capitalizeName = function capitalizeName(name) {
   return name.charAt(0).toUpperCase() + name.slice(1);
 };
 
-Generate.javascriptClassName = function javascriptClassName(name) {
+Generate.jsClassName = function jsClassName(name) {
   return _.capitalize(_.camelCase(name));
 };

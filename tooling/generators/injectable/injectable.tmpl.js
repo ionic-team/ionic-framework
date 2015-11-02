@@ -2,7 +2,7 @@ import {Injectable} from 'angular2/angular2';
 import {Http} from 'angular2/http';
 
 @Injectable()
-export class <%= javascriptClassName %> {
+export class <%= jsClassName %> {
   constructor(http: Http) {
     this.http = http;
     this.data = null;

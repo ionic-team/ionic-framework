@@ -20,7 +20,6 @@ describe('#Generate', function() {
   ddescribe('#generators', function() {
     it('should have a list of generators', function() {
       expect(Generate.generators).toBeDefined();
-      console.log('we got', Generate.generators)
       expect(Object.keys(Generate.generators).length).toBeGreaterThan(0);
       expect(Generate.generators.page).toBeDefined();
       expect(Generate.generators['page-tabs']).toBeDefined();
@@ -38,7 +37,7 @@ describe('#Generate', function() {
 
     it('should call the appropriate generator', function() {
       spyOn(Generate, 'createScaffoldDirectories');
-      var generatorOptions = { name: 'About', generatorName: 'page' };
+      var generatorOptions = { appDirectory: '/fake/ionic/path', name: 'About', generatorName: 'page' };
       var generatorSpy = {run: createSpy()};
       var realGenerator = Generate.generators['page'];
       Generate.generators['page'] = generatorSpy;
@@ -46,9 +45,12 @@ describe('#Generate', function() {
       Generate.generate(generatorOptions);
 
       var genOpts = {
-        fileAndClassName: 'about',
-        javascriptClassName: 'About',
+        appDirectory: '/fake/ionic/path',
+        cssClassName: 'about',
+        fileName: 'about',
+        jsClassName: 'About',
         name: 'About', 
+        template: 'page'
       }
 
       expect(generatorSpy.run).toHaveBeenCalledWith(genOpts);
@@ -60,9 +62,12 @@ describe('#Generate', function() {
       it('should generate all the templates for a page', function() {
         var generatorOptions = { appDirectory: '/ionic/app/dir', name: 'About', generatorName: 'page' };
         var genOpts = {
-          fileAndClassName: 'about',
-          javascriptClassName: 'About',
+          appDirectory: '/ionic/app/dir',
+          fileName: 'about',
+          cssClassName: 'about',
+          jsClassName: 'About',
           name: 'About', 
+          template: 'page'
         };
 
         spyOn(fs, 'writeFileSync');
@@ -241,7 +246,7 @@ describe('#Generate', function() {
     it('should generate a tabs page javascript template', function() {
       // import {NavController, Page} from 'ionic/ionic';
       // <% _.forEach(tabs, function(tab) { %>
-      // import {<%= tab.javascriptClassName %>} from '../<%= tab.filename %>/<%= tab.filename %>';
+      // import {<%= tab.jsClassName %>} from '../<%= tab.filename %>/<%= tab.filename %>';
       // <% }); %>
       // @Page({
       //   templateUrl: 'app/<%= filename %>/<%= filename %>.html',
@@ -251,7 +256,7 @@ describe('#Generate', function() {
       //   constructor(nav: NavController) {
       //     // set the root pages for each tab
       //     <% _.forEach(tabs, function(tab) { %>
-      //     this.{<%= tab.javascriptClassName %>} = <%= tab.javascriptClassName %>;
+      //     this.{<%= tab.jsClassName %>} = <%= tab.jsClassName %>;
       //     <% }); %>
       //   }
       // }
@@ -276,29 +281,29 @@ describe('#Generate', function() {
     });
 
     it('should generate the correct file and css class name', function() {
-      expect(Generate.fileAndClassName('session')).toBe('session');
-      expect(Generate.fileAndClassName('Session')).toBe('session');
-      expect(Generate.fileAndClassName('SESSION')).toBe('session');
-      expect(Generate.fileAndClassName('sessionDetail')).toBe('session-detail');
-      expect(Generate.fileAndClassName('SessionDetail')).toBe('session-detail');
-      expect(Generate.fileAndClassName('SesSionDetail')).toBe('ses-sion-detail');
-      expect(Generate.fileAndClassName('seSsionDeTail')).toBe('se-ssion-de-tail');
-      expect(Generate.fileAndClassName('session-detail')).toBe('session-detail');
-      expect(Generate.fileAndClassName('Session-Detail')).toBe('session-detail');
-      expect(Generate.fileAndClassName('Session_Detail')).toBe('session-detail');
+      expect(Generate.fileName('session')).toBe('session');
+      expect(Generate.fileName('Session')).toBe('session');
+      expect(Generate.fileName('SESSION')).toBe('session');
+      expect(Generate.fileName('sessionDetail')).toBe('session-detail');
+      expect(Generate.fileName('SessionDetail')).toBe('session-detail');
+      expect(Generate.fileName('SesSionDetail')).toBe('ses-sion-detail');
+      expect(Generate.fileName('seSsionDeTail')).toBe('se-ssion-de-tail');
+      expect(Generate.fileName('session-detail')).toBe('session-detail');
+      expect(Generate.fileName('Session-Detail')).toBe('session-detail');
+      expect(Generate.fileName('Session_Detail')).toBe('session-detail');
     });
 
     it('should generate the correct javascript class name', function() {
-      expect(Generate.javascriptClassName('session')).toBe('Session');
-      expect(Generate.javascriptClassName('Session')).toBe('Session');
-      expect(Generate.javascriptClassName('SESSION')).toBe('Session');
-      expect(Generate.javascriptClassName('sessionDetail')).toBe('SessionDetail');
-      expect(Generate.javascriptClassName('SessionDetail')).toBe('SessionDetail');
-      expect(Generate.javascriptClassName('SesSionDetail')).toBe('SesSionDetail');
-      expect(Generate.javascriptClassName('seSsionDeTail')).toBe('SeSsionDeTail');
-      expect(Generate.javascriptClassName('session-detail')).toBe('SessionDetail');
-      expect(Generate.javascriptClassName('Session-Detail')).toBe('SessionDetail');
-      expect(Generate.javascriptClassName('Session_Detail')).toBe('SessionDetail');
+      expect(Generate.jsClassName('session')).toBe('Session');
+      expect(Generate.jsClassName('Session')).toBe('Session');
+      expect(Generate.jsClassName('SESSION')).toBe('Session');
+      expect(Generate.jsClassName('sessionDetail')).toBe('SessionDetail');
+      expect(Generate.jsClassName('SessionDetail')).toBe('SessionDetail');
+      expect(Generate.jsClassName('SesSionDetail')).toBe('SesSionDetail');
+      expect(Generate.jsClassName('seSsionDeTail')).toBe('SeSsionDeTail');
+      expect(Generate.jsClassName('session-detail')).toBe('SessionDetail');
+      expect(Generate.jsClassName('Session-Detail')).toBe('SessionDetail');
+      expect(Generate.jsClassName('Session_Detail')).toBe('SessionDetail');
     });
   });
 });

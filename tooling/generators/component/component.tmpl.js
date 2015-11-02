@@ -3,10 +3,10 @@ import {Component, NgIf} from 'angular2/angular2';
 @Component({
   directives: [NgIf],
   properties: ['value'], //Change to be whatever properties you want, ex: <<%= fileAndClassName %> value="5">
-  selector: '<%= fileAndClassName %>',
-  templateUrl: 'app/<%= fileAndClassName %>/<%= fileAndClassName %>.html'
+  selector: '<%= fileName %>',
+  templateUrl: 'app/<%= fileName %>/<%= fileName %>.html'
 })
-export class <%= javascriptClassName %> {
+export class <%= jsClassName %> {
   constructor() {
     this.nav = nav;
     this.popup = popup;

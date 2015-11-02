@@ -3,9 +3,9 @@ import {Log} from 'ionic/util'
 import {Page, NavController} from 'ionic/ionic'
 
 @Page({
-  templateUrl: 'app/<%= fileAndClassName %>/<%= fileAndClassName %>.html'
+  templateUrl: 'app/<%= fileName %>/<%= fileName %>.html'
 })
-class <%= javascriptClassName %> {
+class <%= jsClassName %> {
   constructor(nav: NavController ) {
 
     this.nav = nav
