@@ -36,6 +36,10 @@ Generate.generate = function generate(options) {
     options.generatorName = 'page';
   }
 
+  if (!Generate.generators[options.generatorName]) {
+    throw new Error('There is no generator available with that name: ' +   options.generatorName + '.');
+  }
+
   var generateOptions = {
     appDirectory: options.appDirectory,
     cssClassName: Generate.cssClassName(options.name),
@@ -117,7 +121,8 @@ Generate.loadGenerators = function loadGenerators() {
       return;
     }
     var generatorName = file.replace('.js', '');
-    generators[generatorName] = Generate.loadGenerator(generatorName);
+    var generator = Generate.loadGenerator(generatorName);
+    generators[generatorName] = generator;
   });
   return generators;
 };

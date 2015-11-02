@@ -34,6 +34,13 @@ describe('#Generate', function() {
       expect(Generate.generate).toThrow('No options passed to generator');
     });
 
+    it('should throw an error trying to use a generator that does not exist', function() {
+      var generatorOptions = { appDirectory: '/fake/ionic/path', name: 'About', generatorName: 'tabz' };
+      expect(function() {
+        Generate.generate(generatorOptions);
+      }).toThrow('There is no generator available with that name: tabz.');
+    });
+
     it('should call the appropriate generator', function() {
       spyOn(Generate, 'createScaffoldDirectories');
       var generatorOptions = { appDirectory: '/fake/ionic/path', name: 'About', generatorName: 'page' };

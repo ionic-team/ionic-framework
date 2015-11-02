@@ -1,3 +1,5 @@
+var Generate = require('./generate');
 module.exports = {
-  generate: require('./generate').generate
+  Generate: Generate,
+  generate: Generate.generate
 };
