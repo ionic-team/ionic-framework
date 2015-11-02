@@ -30,10 +30,6 @@ Generate.generate = function generate(options) {
     Generate.log = options.log;
   }
 
-  if (options.inquirer) {
-    Generate.inquirer = options.inquirer;
-  }
-
   if (options.q) {
     Generate.q = options.q;
   }
@@ -44,7 +40,6 @@ Generate.generate = function generate(options) {
 
   var generateOptions = { 
     appDirectory: options.appDirectory,
-    inquirer: options.inquirer,
     fileAndClassName: Generate.fileAndClassName(options.name),
     javascriptClassName: Generate.javascriptClassName(options.name),
     name: options.name

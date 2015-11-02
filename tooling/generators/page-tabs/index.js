@@ -1,7 +1,8 @@
 var fs = require('fs'),
+    path = require('path'),
+    inquirer = require('inquirer'),
     Generator = module.exports,
-    Generate = require('../../generate'),
-    path = require('path');
+    Generate = require('../../generate');
 
 Generator.validate = function(input) {
   // console.log(typeof parseInt(input));
@@ -17,7 +18,7 @@ Generator.numberNames = ['first', 'second', 'third', 'fourth', 'fifth'];
 Generator.promptForTabCount = function promptForTabCount() {
   var q = Generate.q.defer();
 
-  Generate.inquirer.prompt({choices: ['1', '2', '3', '4', '5'], message: 'How many tabs will you have?', name: 'count', type: 'list', validate: Generator.validate}, function(result) {
+  inquirer.prompt({choices: ['1', '2', '3', '4', '5'], message: 'How many tabs will you have?', name: 'count', type: 'list', validate: Generator.validate}, function(result) {
     q.resolve(result.count);
   });
 
@@ -27,7 +28,7 @@ Generator.promptForTabCount = function promptForTabCount() {
 Generator.promptForTabName = function promptForTabName(tabIndex, options) {
   var q = Generate.q.defer();
 
-  Generate.inquirer.prompt({message: 'Enter the ' + Generator.numberNames[tabIndex] + ' tab name:', name: 'name', type: 'input'}, function(nameResult) {
+  inquirer.prompt({message: 'Enter the ' + Generator.numberNames[tabIndex] + ' tab name:', name: 'name', type: 'input'}, function(nameResult) {
     Generator.tabs.push({ appDirectory: options.appDirectory, fileAndClassName: Generate.fileAndClassName(nameResult.name), javascriptClassName: Generate.javascriptClassName(nameResult.name), name: nameResult.name });
     q.resolve();
   });
@@ -63,9 +64,9 @@ Generator.run = function run(options) {
       // console.log('Using tabs:', Generator.tabs);
     // });
   })
-  .then(function() { 
+  .then(function() {
     var templates = Generate.loadGeneratorTemplates(__dirname);
-      
+
     //Generate the tabs container page templates
     templates.forEach(function(template) {
       var templatePath = path.join(__dirname, template.file);
