@@ -15,12 +15,12 @@
   "dependencies": {
     "@reactivex/rxjs": "5.0.0-alpha.4",
     "angular2": "2.0.0-alpha.44",
-    "es6-shim": "^0.33.6",
-    "inquirer": "^0.11.0",
-    "lodash": "^3.10.1",
-    "q": "^1.4.1",
+    "es6-shim": "0.33.6",
+    "inquirer": "0.11.0",
+    "lodash": "3.10.1",
+    "q": "1.4.1",
     "reflect-metadata": "0.1.1",
-    "shelljs": "^0.5.3",
+    "shelljs": "0.5.3",
     "zone.js": "0.5.8"
   },
   "devDependencies": {
