@@ -133,7 +133,7 @@ export function run() {
 
         spyOn(nav, '_add').and.callThrough();
 
-        nav.transition = mockTransitionFn;
+        nav._transition = mockTransitionFn;
         nav.push(FirstPage, {}, {}).then(() => {
           expect(nav._add).toHaveBeenCalled();
           expect(nav._views.length).toBe(1);
@@ -163,7 +163,7 @@ export function run() {
         nav._views = [vc1, vc2, vc3];
         let arr = [FirstPage, SecondPage, ThirdPage];
 
-        nav.transition = mockTransitionFn;
+        nav._transition = mockTransitionFn;
         nav.setViews(arr);
 
         //_views[0] will be transitioned out of
@@ -188,7 +188,7 @@ export function run() {
         nav.insert(FirstPage, 2);
         expect(nav.push).not.toHaveBeenCalled();
 
-        nav.transition = mockTransitionFn;
+        nav._transition = mockTransitionFn;
         nav.insert(FirstPage, 4);
         expect(nav._views[4].componentType).toBe(FirstPage);
         expect(nav.push).toHaveBeenCalled();
@@ -208,7 +208,7 @@ export function run() {
         nav._views = [vc1, vc2, vc3];
         expect(nav._views.length).toBe(3);
 
-        nav.transition = mockTransitionFn;
+        nav._transition = mockTransitionFn;
         nav.setRoot(FirstPage);
         //_views[0] will be transitioned out of
         expect(nav._views.length).toBe(2);

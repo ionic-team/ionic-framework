@@ -193,9 +193,7 @@ export class NavController extends Ion {
     }
 
     // start the transition
-    this.transition(enteringView, leavingView, opts, () => {
-      resolve();
-    });
+    this._transition(enteringView, leavingView, opts, resolve);
 
     return promise;
   }
@@ -236,7 +234,7 @@ export class NavController extends Ion {
       }
 
       // start the transition
-      this.transition(enteringView, leavingView, opts, resolve);
+      this._transition(enteringView, leavingView, opts, resolve);
 
     } else {
       this._transComplete();
@@ -285,7 +283,7 @@ export class NavController extends Ion {
       this.router.stateChange('pop', viewCtrl);
     }
 
-    this.transition(viewCtrl, leavingView, opts, resolve);
+    this._transition(viewCtrl, leavingView, opts, resolve);
 
     return promise;
   }
@@ -432,7 +430,7 @@ export class NavController extends Ion {
    * @param {Function} done  TODO
    * @returns {any} TODO
    */
-  transition(enteringView, leavingView, opts, done) {
+  _transition(enteringView, leavingView, opts, done) {
     if (!enteringView || enteringView === leavingView) {
       return done();
     }
@@ -445,7 +443,7 @@ export class NavController extends Ion {
     }
 
     // wait for the new view to complete setup
-    this.stage(enteringView, () => {
+    this._stage(enteringView, () => {
 
       if (enteringView.shouldDestroy) {
         // already marked as a view that will be destroyed, don't continue
@@ -511,7 +509,7 @@ export class NavController extends Ion {
   /**
    * @private
    */
-  stage(viewCtrl, done) {
+  _stage(viewCtrl, done) {
     if (viewCtrl.instance || viewCtrl.shouldDestroy) {
       // already compiled this view
       return done();
@@ -627,7 +625,7 @@ export class NavController extends Ion {
     enteringView.willEnter();
 
     // wait for the new view to complete setup
-    enteringView.stage(() => {
+    enteringView._stage(() => {
 
       this._zone.runOutsideAngular(() => {
         // set that the new view pushed on the stack is staged to be entering/leaving
