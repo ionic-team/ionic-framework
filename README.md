@@ -18,6 +18,62 @@ We are also building out a number of starter projects, including the Ionic 2 sta
 
 [https://github.com/driftyco/ionic2-starter](https://github.com/driftyco/ionic2-starter)
 
-### Distribution
+## Distribution
 
  - [npm: ionic-framework](https://www.npmjs.com/package/ionic-framework)
+
+## Ionic Framework Package
+ The ionic-framework package comes with both frontend dependencies, located in 'dist', and a Node API, located in 'tooling'.
+
+### Bundles:
+
+ - `css/`
+     - the Ionic CSS stylesheet
+ - `fonts/`
+     - Ionicons and Roboto fonts
+ - `js/`
+     - `ionic.js` the Ionic module, in System register format
+     - `ionic.bundle.js` the Ionic bundle, contains:
+          - es6-module-loader.js
+          - system.js
+          - angular2.dev.js
+          - router.dev.js (angular2 router)
+          - ionic.js
+          - web-animations.min.js
+     - `web-animations.min.js` web animations API polyfill
+
+### Source files:
+
+ - `src/es5` - Ionic ES5 source files in both CommonJS and System module formats
+ - `src/es6` - Ionic ES6 source files
+ - `src/ts` - Ionic TypeScript source files (typings still missing)
+ - `scss` - Ionic Sass source files
+
+---------
+
+### Tooling
+
+ At the moment, ionic-framework exports one function, `generate`, that can be used to scaffold new pages in an Ionic app. It is used by the [Ionic CLI's](https://github.com/driftyco/ionic-cli) `generate` command.
+
+#### Methods
+
+`generate(config)`
+
+Creates the js, html, and scss file for a new page, based on the supplied [Generator](#generators).
+
+- **config** (Object) Config object, with the following options:
+  - `appDirectory` - root directory of the Ionic project
+  - `generator` - which [generator](#generators) to use, default is `page`.
+  - `name` - 
+
+Example:
+ ```
+ var ionic = require('ionic-framework');
+ ionic.generate({ appDirectory: process.cwd(), generator: 'tabs', name: 'MyTabsPage' })
+ ```
+
+#### Generators
+- `page`, a blank page
+- `tabs`, a page with tab navigation
+- `sidemenu`
+ 

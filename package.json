@@ -1,12 +1,12 @@
 {
-  "name": "ionic2",
-  "version": "2.0.0-alpha.2",
+  "name": "ionic-framework",
+  "version": "2.0.0-alpha.31",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/driftyco/ionic2.git"
   },
-  "main": "index.js",
+  "main": "tooling/index.js",
   "scripts": {
     "test": "gulp karma",
     "test:generators": "jasmine-node ./tooling/spec",
