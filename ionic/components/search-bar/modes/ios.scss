@@ -30,21 +30,6 @@ ion-search-bar {
   min-height: $search-bar-ios-min-height;
 }
 
-.search-bar-search-icon {
-  width: $search-bar-ios-input-search-icon-size + 1;
-  height: $search-bar-ios-input-search-icon-size + 1;
-
-  @include svg-background-image($search-bar-ios-input-search-icon-svg);
-  background-size: $search-bar-ios-input-search-icon-size;
-  background-repeat: no-repeat;
-  position: absolute;
-  left: 10px;
-  top: 8px;
-
-  @include calc(margin-left, "50% - 60px");
-  transition: $search-bar-ios-input-transition;
-}
-
 .search-bar-input {
   height: $search-bar-ios-input-height;
   padding: 0 28px;
@@ -55,8 +40,11 @@ ion-search-bar {
   border-radius: 5px;
   color: $search-bar-ios-input-text-color;
   background-color: $search-bar-ios-input-background-color;
+
+  @include svg-background-image($search-bar-ios-input-search-icon-svg);
+  background-size: $search-bar-ios-input-search-icon-size;
   background-repeat: no-repeat;
-  background-position: 8px center;
+  background-position: calc(50% - 40px);
 
   &::placeholder {
     color: $search-bar-ios-input-placeholder-color;
@@ -96,9 +84,37 @@ ion-search-bar {
   }
   .search-bar-input {
     padding-left: 28px;
+    background-position: 8px;
   }
 }
 
 &.hairlines ion-search-bar {
   border-bottom-width: 0.55px;
+}
+
+ion-toolbar {
+
+  ion-search-bar {
+    background: transparent;
+    border-bottom-width: 0;
+
+    .search-bar-input {
+      background-color: #E5E5E5;
+    }
+  }
+
+}
+
+// Generate Default Search Bar Colors
+// --------------------------------------------------
+
+@each $color, $value in $colors {
+
+  ion-search-bar[#{$color}] {
+    //background-color: $value;
+
+    .search-bar-cancel {
+      color: $value;
+    }
+  }
 }
