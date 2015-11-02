@@ -1,14 +1,12 @@
 <ion-toolbar>
-  <ion-title>
-    <ion-segment [(ng-model)]="relationship">
-      <ion-segment-button value="friends" class="e2eSegmentFriends">
-        Friends
-      </ion-segment-button>
-      <ion-segment-button value="enemies">
-        Enemies
-      </ion-segment-button>
-    </ion-segment>
-  </ion-title>
+  <ion-segment [(ng-model)]="relationship">
+    <ion-segment-button value="friends" class="e2eSegmentFriends">
+      Friends
+    </ion-segment-button>
+    <ion-segment-button value="enemies">
+      Enemies
+    </ion-segment-button>
+  </ion-segment>
 </ion-toolbar>
 
 <ion-toolbar>
@@ -17,16 +15,14 @@
       <icon search></icon>
     </button>
   </ion-nav-items>
-  <ion-title>
-    <ion-segment secondary>
-      <ion-segment-button>
-        Something
-      </ion-segment-button>
-      <ion-segment-button>
-        Else
-      </ion-segment-button>
-    </ion-segment>
-  </ion-title>
+  <ion-segment secondary>
+    <ion-segment-button>
+      Something
+    </ion-segment-button>
+    <ion-segment-button>
+      Else
+    </ion-segment-button>
+  </ion-segment>
 </ion-toolbar>
 
 <ion-content padding>
@@ -87,17 +83,15 @@
 </ion-content>
 
 <ion-toolbar position="bottom">
-  <ion-title>
-    <ion-segment [(ng-model)]="appType" primary>
-      <ion-segment-button value="paid">
-        Paid
-      </ion-segment-button>
-      <ion-segment-button value="free">
-        Free
-      </ion-segment-button>
-      <ion-segment-button value="top" class="e2eSegmentTopGrossing">
-        Top Grossing
-      </ion-segment-button>
-    </ion-segment>
-  </ion-title>
+  <ion-segment [(ng-model)]="appType" primary>
+    <ion-segment-button value="paid">
+      Paid
+    </ion-segment-button>
+    <ion-segment-button value="free">
+      Free
+    </ion-segment-button>
+    <ion-segment-button value="top" class="e2eSegmentTopGrossing">
+      Top Grossing
+    </ion-segment-button>
+  </ion-segment>
 </ion-toolbar>
