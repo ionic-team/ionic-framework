@@ -1,6 +1,7 @@
 var fs = require('fs'),
     path = require('path'),
     inquirer = require('inquirer'),
+    Q = require('q'),
     Generator = module.exports,
     Generate = require('../../generate');
 
@@ -16,7 +17,7 @@ Generator.validate = function(input) {
 Generator.numberNames = ['first', 'second', 'third', 'fourth', 'fifth'];
 
 Generator.promptForTabCount = function promptForTabCount() {
-  var q = Generate.q.defer();
+  var q = Q.defer();
 
   inquirer.prompt({choices: ['1', '2', '3', '4', '5'], message: 'How many tabs will you have?', name: 'count', type: 'list', validate: Generator.validate}, function(result) {
     q.resolve(result.count);
@@ -26,7 +27,7 @@ Generator.promptForTabCount = function promptForTabCount() {
 };
 
 Generator.promptForTabName = function promptForTabName(tabIndex, options) {
-  var q = Generate.q.defer();
+  var q = Q.defer();
 
   inquirer.prompt({message: 'Enter the ' + Generator.numberNames[tabIndex] + ' tab name:', name: 'name', type: 'input'}, function(nameResult) {
     Generator.tabs.push({ appDirectory: options.appDirectory, fileAndClassName: Generate.fileAndClassName(nameResult.name), javascriptClassName: Generate.javascriptClassName(nameResult.name), name: nameResult.name });
@@ -39,7 +40,6 @@ Generator.promptForTabName = function promptForTabName(tabIndex, options) {
 Generator.run = function run(options) {
   // console.log('got options!', options);
 
-  // Generator.q = Generate.q;
   //Need to query user for tabs:
   options.rootDirectory = options.rootDirectory || path.join('www', 'app');
   var savePath = path.join(options.appDirectory, options.rootDirectory, options.fileAndClassName);
@@ -49,7 +49,7 @@ Generator.run = function run(options) {
   return Generator.promptForTabCount()
   .then(function(count) {
     console.log('count', count);
-    var promise = Generate.q();
+    var promise = Q();
     for(var i = 0, j = parseInt(count); i < j; i++) {
       (function(index) {
         promise = promise.then(function() {
