@@ -16,6 +16,13 @@
 4. Run `gulp watch` in this directory
 5. A browser should launch at `http://localhost:3000` at which point you can navigate to `http://localhost:3000/docs/v2/components/`
 
+
+### Building API Docs
+1. `gulp docs` to build the nightly version 
+2. `gulp docs --doc-version=2.0.0` to build a specific API version
+
+
+
 ### Running Snapshot
 
 1. Install [Protractor](https://angular.github.io/protractor/#/): `npm install -g protractor`
