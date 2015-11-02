@@ -246,13 +246,17 @@ ion-note {
 
 .item,
 a.item,
-button.item {
+button.item,
+.item ion-item-sliding-content {
   transition: background-color $button-md-transition-duration $button-md-animation-curve;
+}
 
-  &.activated {
-    background-color: $item-md-activated-background-color;
-    box-shadow: none;
-  }
+.item.activated,
+a.item.activated,
+button.item.activated,
+.item.activated ion-item-sliding-content {
+  background-color: $item-md-activated-background-color;
+  box-shadow: none;
 }
 
 .item[no-lines] {

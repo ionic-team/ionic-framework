@@ -46,7 +46,7 @@ export class ItemSlidingOptionButton {
  *  ```
  */
 @Component({
-  selector: 'ion-item-sliding,[ion-item-sliding]',
+  selector: 'ion-item-sliding',
   inputs: [
     'sliding'
   ],
@@ -68,6 +68,7 @@ export class ItemSliding {
   constructor(elementRef: ElementRef, renderer: Renderer, @Optional() @Host() list: List, zone: NgZone) {
     this._zone = zone;
     renderer.setElementClass(elementRef, 'item', true);
+    renderer.setElementAttribute(elementRef, 'tappable', '');
 
     this._isOpen = false;
     this._isSlideActive = false;

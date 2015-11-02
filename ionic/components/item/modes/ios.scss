@@ -203,7 +203,8 @@ ion-note {
 
 .item.activated,
 a.item.activated,
-button.item.activated {
+button.item.activated,
+.item.activated ion-item-sliding-content {
   background-color: $item-ios-activated-background-color;
   transition-duration: 0ms;
 }

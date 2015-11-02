@@ -579,7 +579,7 @@ export class NavController extends Ion {
 
   _setZIndex(enteringInstance, leavingInstance, direction) {
     if (!leavingInstance) {
-      enteringInstance._zIndex = 0;
+      enteringInstance._zIndex = 10;
 
     } else if (direction === 'back') {
       // moving back

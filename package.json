@@ -12,6 +12,13 @@
     "test:generators": "jasmine-node ./tooling/spec",
     "link": "npm install && gulp src && npm link"
   },
+  "files": [
+    "dist/css",
+    "dist/fonts",
+    "dist/js",
+    "dist/src",
+    "tooling"
+  ],
   "dependencies": {
     "@reactivex/rxjs": "5.0.0-alpha.4",
     "angular2": "2.0.0-alpha.44",

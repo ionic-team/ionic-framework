@@ -46,7 +46,7 @@ import {BasicListsPage,
         BasicDividersPage,
         BasicInsetListsPage,
         ListHeadersPage,
-        ThreeLineListsPage,
+        MultilineListsPage,
         ThumbnailListsPage} from './lists/lists';
 
 import {MenusPage} from './menus/menus';
@@ -152,7 +152,7 @@ export function getPageFor(hash) {
         'list-dividers': BasicDividersPage,
         'inset-list': BasicInsetListsPage,
         'list-headers': ListHeadersPage,
-        'three-line-list': ThreeLineListsPage,
+        'multiline-list': MultilineListsPage,
         'thumbnail-list': ThumbnailListsPage,
 
         'menus': MenusPage,

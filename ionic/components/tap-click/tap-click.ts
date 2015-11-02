@@ -174,14 +174,14 @@ function getActivatableTarget(ele) {
   return null;
 }
 
-function isActivatable(ele) {
-  if (/^(A|BUTTON)$/.test(ele.tagName)) {
+export function isActivatable(ele) {
+  if (ACTIVATABLE_ELEMENTS.test(ele.tagName)) {
     return true;
   }
 
   let attributes = ele.attributes;
   for (let i = 0, l = attributes.length; i < l; i++) {
-    if (/click|tappable/.test(attributes[i].name)) {
+    if (ACTIVATABLE_ATTRIBUTES.test(attributes[i].name)) {
       return true;
     }
   }
@@ -200,3 +200,6 @@ function addListener(type, listener, useCapture) {
 function removeListener(type, listener) {
   doc.removeEventListener(type, listener);
 }
+
+const ACTIVATABLE_ELEMENTS = /^(A|BUTTON)$/;
+const ACTIVATABLE_ATTRIBUTES = /tappable/;

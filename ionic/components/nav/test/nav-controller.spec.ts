@@ -1,20 +1,3 @@
-// import {
-//   ddescribe,
-//   describe,
-//   xdescribe,
-//   it,
-//   iit,
-//   xit,
-//   expect,
-//   beforeEach,
-//   afterEach,
-//   AsyncTestCompleter,
-//   inject,
-//   beforeEachBindings
-// } from 'angular2/test';
-
-// import {Compiler} from 'angular2/angular2';
-
 import {
   NavController,
   Config,
