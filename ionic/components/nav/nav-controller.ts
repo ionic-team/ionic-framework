@@ -269,7 +269,6 @@ export class NavController extends Ion {
       return;
     }
 
-
     opts.direction = opts.direction || 'back';
 
     // get the views to auto remove without having to do a transiton for each
@@ -452,7 +451,7 @@ export class NavController extends Ion {
     }
 
     // wait for the new view to complete setup
-    enteringView.stage(() => {
+    this.stage(enteringView, () => {
 
       if (enteringView.shouldDestroy) {
         // already marked as a view that will be destroyed, don't continue
@@ -513,6 +512,30 @@ export class NavController extends Ion {
 
     });
 
+  }
+
+  /**
+   * @private
+   */
+  stage(viewCtrl, done) {
+    if (viewCtrl.instance || viewCtrl.shouldDestroy) {
+      // already compiled this view
+      return done();
+    }
+
+    // get the pane the NavController wants to use
+    // the pane is where all this content will be placed into
+    this.loadPage(viewCtrl, null, () => {
+
+      // this ViewController instance has finished loading
+      try {
+        viewCtrl.loaded();
+      } catch (e) {
+        console.error(e);
+      }
+
+      done();
+    });
   }
 
   loadPage(viewCtrl, navbarContainerRef, done) {
