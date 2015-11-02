@@ -13,10 +13,17 @@ var fs = require('fs'),
 describe('#Generate', function() {
   it('should have generate exported', function() {
     expect(Generate).toBeDefined();
-    expect(Generate.page).toBeDefined();
+    expect(Generate.generate).toBeDefined();
+    expect(Generate.generate).toBeDefined();
+    expect(Generate.defaultTemplates).toBeDefined();
+    expect(Generate.loadGeneratorTemplates).toBeDefined();
+    expect(Generate.loadGeneratorTemplates).toBeDefined();
+    expect(Generate.loadGenerator).toBeDefined();
+    expect(Generate.loadGenerators).toBeDefined();
+
   });
 
-  ddescribe('#generators', function() {
+  describe('#generators', function() {
     it('should have a list of generators', function() {
       expect(Generate.generators).toBeDefined();
       expect(Object.keys(Generate.generators).length).toBeGreaterThan(0);
@@ -87,8 +94,7 @@ describe('#Generate', function() {
     });
   });
 
-  xdescribe('#page', function() {
-
+  describe('#page', function() {
     it('should generate a page at a directory', function() {
       //ionic g page about
       //what should happen:
@@ -98,70 +104,37 @@ describe('#Generate', function() {
       var appDir = '/ionic/app';
       spyOn(Generate, 'createScaffoldDirectories');
       spyOn(fs, 'writeFileSync');
-      spyOn(Generate, 'generateHtmlTemplate');
-      spyOn(Generate, 'generateScssTemplate');
-      spyOn(Generate, 'generateJsTemplate');
 
-      Generate.page(appDir, 'about');
+      var options = {
+        appDirectory: appDir,
+        generatorName: 'page',
+        name: 'MyPage',
+      }
 
-      expect(Generate.createScaffoldDirectories).toHaveBeenCalledWith(appDir, 'about');
-      expect(Generate.generateJsTemplate).toHaveBeenCalledWith('about');
-      expect(Generate.generateHtmlTemplate).toHaveBeenCalledWith('about');
-      expect(Generate.generateScssTemplate).toHaveBeenCalledWith('about');
+      Generate.generate(options);
+      // console.log(fs.writeFileSync.calls);
+      expect(fs.writeFileSync.calls.length).toBe(3);
+      var htmlSaveCall = fs.writeFileSync.calls[0];
+      expect(fs.writeFileSync.calls[0].args[0]).toBe('/ionic/app/www/app/my-page/my-page.html');
+      expect(fs.writeFileSync.calls[0].args[1]).toContain('<ion-title>MyPage</ion-title>');
+      expect(fs.writeFileSync.calls[0].args[1]).toContain('<ion-content padding class="my-page">');
 
-      expect(fs.writeFileSync).toHaveBeenCalled();
+      expect(fs.writeFileSync.calls[1].args[0]).toBe('/ionic/app/www/app/my-page/my-page.js');
+      expect(fs.writeFileSync.calls[1].args[1]).toContain('templateUrl: \'app/my-page/my-page.html\'');
+      expect(fs.writeFileSync.calls[1].args[1]).toContain('export class MyPage {');
 
-    });
-
-    it('should generate a page code template', function() {
-      var scaffold = 'about';
-      var compiledTemplate = Generate.generateJsTemplate(scaffold);
-      expect(compiledTemplate).toContain('templateUrl: \'app/about/about.html\'');
-      expect(compiledTemplate).toContain('export class About');
-    });
-
-    it('should generate a properly cased page template', function() {
-      var scaffold = 'scheduleDetail';
-      var compiledTemplate = Generate.generateJsTemplate(scaffold);
-      expect(compiledTemplate).toContain('templateUrl: \'app/schedule-detail/schedule-detail.html\'');
-      expect(compiledTemplate).not.toContain('export class scheduleDetail');
-      expect(compiledTemplate).toContain('export class ScheduleDetail');
-    });
-
-    it('should generate a page html template', function() {
-      var scaffold = 'sessions';
-      var compiledTemplate = Generate.generateHtmlTemplate(scaffold);
-      expect(compiledTemplate).toContain('<ion-content padding class="sessions">');
-      expect(compiledTemplate).toContain('<ion-title>Sessions</ion-title>');
-
-    });
-
-    it('should generate a page sass template', function() {
-      var scaffold = 'sessions';
-      var compiledTemplate = Generate.generateScssTemplate(scaffold);
-      expect(compiledTemplate).toContain('.sessions {');
-    });
-
-    it('should render html template from file', function() {
-      spyOn(fs, 'readFileSync').andReturn('faketemplate');
-      var templateSpy = createSpy();
-
-      spyOn(_, 'template').andReturn(templateSpy);
-      var options = { name: 'test', capitalizedName: 'Test', templatePath: '/path/to/template.tmpl.html'};
-      var generatedContents = Generate.renderTemplateFromFile(options);
-      expect(fs.readFileSync).toHaveBeenCalledWith(options.templatePath, 'utf8');
-      expect(_.template).toHaveBeenCalledWith('faketemplate');
-      expect(templateSpy).toHaveBeenCalledWith(options);
+      expect(fs.writeFileSync.calls[2].args[0]).toBe('/ionic/app/www/app/my-page/my-page.scss');
+      expect(fs.writeFileSync.calls[2].args[1]).toContain('.my-page {');
     });
   }); //#page
 
-  xdescribe('#directories', function() {
+  describe('#directories', function() {
     it('should create directories for scaffolding', function() {
       // pwd = /ionic/app
       // ionic g page about
       // create folders in /ionic/app/www/app/about
       spyOn(shell, 'mkdir');
-      Generate.createScaffoldDirectories('/ionic/app', 'about');
+      Generate.createScaffoldDirectories({appDirectory: '/ionic/app', fileName: 'about'});
       expect(shell.mkdir).toHaveBeenCalledWith('-p', '/ionic/app/www/app/about');
     });
   }); //#directories
@@ -275,17 +248,10 @@ describe('#Generate', function() {
       expect(tabsJs).toContain('export class TabsPage {');
       expect(tabsJs).toContain('this.About = About;');
       expect(tabsJs).toContain('this.Map = Map;');
-
-
-
     });
   });//#tabs
 
-  xdescribe('#naming', function() {
-    it('should capitalize names', function() {
-      expect(Generate.capitalizeName('session')).toBe('Session');
-    });
-
+  describe('#naming', function() {
     it('should generate the correct file and css class name', function() {
       expect(Generate.fileName('session')).toBe('session');
       expect(Generate.fileName('Session')).toBe('session');

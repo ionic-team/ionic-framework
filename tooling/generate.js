@@ -32,12 +32,12 @@ Generate.generate = function generate(options) {
     Generate.log = options.log;
   }
 
-  if (!options.generatorName) {
-    options.generatorName = 'page';
+  if (options.generatorName && !Generate.generators[options.generatorName]) {
+    throw new Error('There is no generator available with that name: ' +   options.generatorName + '.');
   }
 
-  if (!Generate.generators[options.generatorName]) {
-    throw new Error('There is no generator available with that name: ' +   options.generatorName + '.');
+  if (!options.generatorName) {
+    options.generatorName = 'page';
   }
 
   var generateOptions = {
