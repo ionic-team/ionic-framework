@@ -20,7 +20,8 @@ class IonicApp {
 
   }
 
-  myCancelAction(event, model) {
-    console.log("TODO get app property");
+  myCancelAction(event, query) {
+    console.log("Clicked cancel action with", query);
+    this.clickedCustomAction = true;
   }
 }

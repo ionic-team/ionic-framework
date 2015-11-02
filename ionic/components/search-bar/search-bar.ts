@@ -20,19 +20,18 @@ import {ConfigComponent} from '../../config/decorators';
     'showCancel': false,
     'cancelText': 'Cancel',
     'placeholder': 'Search',
-    'cancelAction': function(event, model) {
+    'cancelAction': function(event, query) {
       // The cancel button now works on its own to blur the input
       console.log('Default Cancel');
     }
   },
   template:
     '<div class="search-bar-input-container" [class.left-align]="shouldLeftAlign">' +
-      '<div class="search-bar-search-icon"></div>' +
       '<input [(value)]="query" (focus)="inputFocused()" (blur)="inputBlurred()" ' +
       '(input)="inputChanged($event)" class="search-bar-input" type="search" [attr.placeholder]="placeholder">' +
       '<button clear *ng-if="query" class="search-bar-close-icon" (click)="clearInput($event)"></button>' +
     '</div>' +
-    '<button *ng-if="showCancel" (click)="cancelAction($event, model)" class="search-bar-cancel" [class.left-align]="shouldLeftAlign">{{cancelText}}</button>',
+    '<button *ng-if="showCancel" (click)="cancelAction($event, query)" class="search-bar-cancel" [class.left-align]="shouldLeftAlign">{{cancelText}}</button>',
   directives: [FORM_DIRECTIVES, NgIf, NgClass]
 })
 

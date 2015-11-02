@@ -26,18 +26,6 @@ ion-search-bar {
   background: $search-bar-md-background-color;
 }
 
-.search-bar-search-icon {
-  width: $search-bar-md-input-search-icon-size + 1;
-  height: $search-bar-md-input-search-icon-size + 1;
-
-  @include svg-background-image($search-bar-md-input-search-icon-svg);
-  background-size: $search-bar-md-input-search-icon-size;
-  background-repeat: no-repeat;
-  position: absolute;
-  left: 13px;
-  top: 13px;
-}
-
 .search-bar-input {
   padding: 8px 55px;
 
@@ -50,8 +38,11 @@ ion-search-bar {
   border-radius: $search-bar-md-input-border-radius;
   color: $search-bar-md-input-text-color;
   background-color: $search-bar-md-input-background-color;
+
+  @include svg-background-image($search-bar-md-input-search-icon-svg);
+  background-size: $search-bar-md-input-search-icon-size;
   background-repeat: no-repeat;
-  background-position: 8px center;
+  background-position: 16px center;
 
   &::placeholder {
     color: $search-bar-md-input-placeholder-color;

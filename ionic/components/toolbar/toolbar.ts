@@ -3,7 +3,7 @@ import {Component, Directive, Host, ElementRef, Renderer, Optional, forwardRef, 
 import {Ion} from '../ion';
 import {Config} from '../../config/config';
 import {MenuToggle} from '../menu/menu-toggle';
-import {Navbar} from '../nav-bar/nav-bar';
+import {Navbar} from '../navbar/navbar';
 
 
 /**
@@ -60,7 +60,7 @@ export class ToolbarBase extends Ion  {
   template:
     '<div class="toolbar-inner">' +
       '<ng-content select="[menu-toggle]"></ng-content>' +
-      '<ng-content select="ion-title"></ng-content>' +
+      '<ng-content select="ion-title,ion-search-bar,ion-segment"></ng-content>' +
       '<ng-content select="ion-nav-items[primary]"></ng-content>' +
       '<ng-content select="ion-nav-items[secondary]"></ng-content>' +
     '</div>' +
