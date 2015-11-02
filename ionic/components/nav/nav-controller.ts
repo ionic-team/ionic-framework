@@ -236,10 +236,7 @@ export class NavController extends Ion {
       }
 
       // start the transition
-      this.transition(enteringView, leavingView, opts, () => {
-        // transition completed, destroy the leaving view
-        resolve();
-      });
+      this.transition(enteringView, leavingView, opts, resolve);
 
     } else {
       this._transComplete();
@@ -261,14 +258,14 @@ export class NavController extends Ion {
     // Get the target index of the view to pop to
     let viewIndex = this._views.indexOf(view);
     let targetIndex = viewIndex + 1;
-    let resolve;
-    let promise = new Promise(res => { resolve = res; });
+
     // Don't pop to the view if it wasn't found, or the target is beyond the view list
-    if(viewIndex < 0 || targetIndex > this._views.length - 1) {
-      resolve();
-      return;
+    if (viewIndex < 0 || targetIndex > this._views.length - 1) {
+      return Promise.resolve();
     }
 
+    let resolve;
+    let promise = new Promise(res => { resolve = res; });
     opts.direction = opts.direction || 'back';
 
     // get the views to auto remove without having to do a transiton for each
@@ -289,9 +286,7 @@ export class NavController extends Ion {
       this.router.stateChange('pop', enteringView);
     }
 
-    this.transition(enteringView, leavingView, opts, () => {
-      resolve();
-    });
+    this.transition(enteringView, leavingView, opts, resolve);
 
     return promise;
   }
@@ -301,7 +296,7 @@ export class NavController extends Ion {
    * @param opts extra animation options
    */
   popToRoot(opts = {}) {
-    this._popTo(this.first());
+    return this._popTo(this.first(), opts);
   }
 
   /**
