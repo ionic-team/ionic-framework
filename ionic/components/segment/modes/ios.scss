@@ -15,6 +15,12 @@ $segment-button-ios-hover-opacity:            0.16 !default;
 
 $segment-button-ios-toolbar-button-max-width: 100px !default;
 
+
+ion-segment {
+  display: flex;
+  align-items: center;
+}
+
 .ion-segment {
 
   button,
