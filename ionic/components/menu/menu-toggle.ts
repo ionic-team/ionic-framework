@@ -3,7 +3,7 @@ import {Directive, ElementRef, Optional} from 'angular2/angular2';
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
 import {ViewController} from '../nav/view-controller';
-import {Navbar} from '../nav-bar/nav-bar';
+import {Navbar} from '../navbar/navbar';
 
 
 /**

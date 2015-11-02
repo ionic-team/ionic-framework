@@ -3,7 +3,7 @@ import {Component, Directive, Host, ElementRef, Renderer, Optional, forwardRef, 
 import {Ion} from '../ion';
 import {Config} from '../../config/config';
 import {MenuToggle} from '../menu/menu-toggle';
-import {Navbar} from '../nav-bar/nav-bar';
+import {Navbar} from '../navbar/navbar';
 
 
 /**
