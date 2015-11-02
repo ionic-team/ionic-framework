@@ -304,14 +304,14 @@ export class NavController extends Ion {
    * @param {TODO} index TODO
    * @returns {Promise} TODO
    */
-  insert(componentType, index) {
+  insert(componentType, index, params = {}, opts = {}) {
     if (!componentType || index < 0) {
       return Promise.reject();
     }
 
     // push it onto the end
     if (index >= this._views.length) {
-      return this.push(componentType);
+      return this.push(componentType, params, opts);
     }
 
     // create new ViewController, but don't render yet
@@ -330,14 +330,14 @@ export class NavController extends Ion {
    * @param {TODO} index TODO
    * @returns {Promise} TODO
    */
-  remove(index) {
+  remove(index, opts = {}) {
     if (index < 0 || index >= this._views.length) {
       return Promise.reject("Index out of range");
     }
 
     let viewToRemove = this._views[index];
     if (this.isActive(viewToRemove)){
-      return this.pop();
+      return this.pop(opts);
     }
 
     viewToRemove.shouldDestroy = true;
@@ -429,12 +429,12 @@ export class NavController extends Ion {
    * @param {TODO} enteringView  TODO
    * @param {TODO} leavingView  TODO
    * @param {TODO} opts  TODO
-   * @param {Function} callback  TODO
+   * @param {Function} done  TODO
    * @returns {any} TODO
    */
-  transition(enteringView, leavingView, opts, callback) {
+  transition(enteringView, leavingView, opts, done) {
     if (!enteringView || enteringView === leavingView) {
-      return callback();
+      return done();
     }
 
     if (!opts.animation) {
@@ -449,7 +449,7 @@ export class NavController extends Ion {
 
       if (enteringView.shouldDestroy) {
         // already marked as a view that will be destroyed, don't continue
-        return callback();
+        return done();
       }
 
       this._setZIndex(enteringView.instance, leavingView.instance, opts.direction);
@@ -498,7 +498,7 @@ export class NavController extends Ion {
           // all done!
           this._zone.run(() => {
             this._transComplete();
-            callback();
+            done();
           });
         });
 
