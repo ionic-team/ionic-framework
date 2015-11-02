@@ -11,7 +11,7 @@ Generate.__defineGetter__('generators', function() {
   if (!Generate._generators) {
     Generate._generators = Generate.loadGenerators();
   }
-  
+
   return Generate._generators;
 });
 
@@ -26,21 +26,17 @@ Generate.generate = function generate(options) {
   if (!options) {
     throw new Error('No options passed to generator');
   }
-  
+
   //add optional logger for CLI or other tools
   if (options.log) {
     Generate.log = options.log;
-  }
-
-  if (options.q) {
-    Generate.q = options.q;
   }
 
   if (!options.generatorName) {
     options.generatorName = 'page';
   }
 
-  var generateOptions = { 
+  var generateOptions = {
     appDirectory: options.appDirectory,
     cssClassName: Generate.cssClassName(options.name),
     fileName: Generate.fileName(options.name),
@@ -112,7 +108,7 @@ Generate.loadGenerator = function loadGenerator(file) {
   }
   return generateModule;
 };
-  
+
 Generate.loadGenerators = function loadGenerators() {
   var generators = {};
   fs.readdirSync(path.join(__dirname, 'generators'))
@@ -126,7 +122,7 @@ Generate.loadGenerators = function loadGenerators() {
   return generators;
 };
 
-/* 
+/*
   Will take options to render an html, js, or scss template.
   options:
     they differ based on what is needed in template

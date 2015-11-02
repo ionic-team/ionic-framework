@@ -44,6 +44,9 @@ class Tab2 {
 @Page({
   template: `
     <ion-navbar *navbar>
+      <a menu-toggle>
+        <icon menu></icon>
+      </a>
       <ion-title>Stopwatch</ion-title>
     </ion-navbar>
     <ion-content padding>
@@ -59,12 +62,25 @@ class Tab3 {
 
 @App({
   template: `
-    <ion-tabs>
+    <ion-menu [content]="content">
+      <ion-toolbar secondary>
+        <ion-title>Menu</ion-title>
+      </ion-toolbar>
+      <ion-content>
+        <ion-list>
+          <button ion-item menu-close detail-none>
+            Close Menu
+          </button>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+
+    <ion-tabs #content>
       <ion-tab tab-title="Heart" tab-icon="heart" [root]="root1"></ion-tab>
       <ion-tab tab-title="Star" tab-icon="star" [root]="root2"></ion-tab>
       <ion-tab tab-title="Stopwatch" tab-icon="stopwatch" [root]="root3"></ion-tab>
     </ion-tabs>
-    `
+  `
 })
 export class TabsPage {
   constructor() {

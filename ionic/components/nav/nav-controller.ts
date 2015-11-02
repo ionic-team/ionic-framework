@@ -193,9 +193,7 @@ export class NavController extends Ion {
     }
 
     // start the transition
-    this.transition(enteringView, leavingView, opts, () => {
-      resolve();
-    });
+    this._transition(enteringView, leavingView, opts, resolve);
 
     return promise;
   }
@@ -236,10 +234,7 @@ export class NavController extends Ion {
       }
 
       // start the transition
-      this.transition(enteringView, leavingView, opts, () => {
-        // transition completed, destroy the leaving view
-        resolve();
-      });
+      this._transition(enteringView, leavingView, opts, resolve);
 
     } else {
       this._transComplete();
@@ -256,20 +251,19 @@ export class NavController extends Ion {
    * @param view {ViewController} to pop to
    * @param opts {object} pop options
    */
-  _popTo(view, opts = {}) {
+  popTo(viewCtrl, opts = {}) {
 
     // Get the target index of the view to pop to
-    let viewIndex = this._views.indexOf(view);
+    let viewIndex = this._views.indexOf(viewCtrl);
     let targetIndex = viewIndex + 1;
-    let resolve;
-    let promise = new Promise(res => { resolve = res; });
+
     // Don't pop to the view if it wasn't found, or the target is beyond the view list
-    if(viewIndex < 0 || targetIndex > this._views.length - 1) {
-      resolve();
-      return;
+    if (viewIndex < 0 || targetIndex > this._views.length - 1) {
+      return Promise.resolve();
     }
 
-
+    let resolve;
+    let promise = new Promise(res => { resolve = res; });
     opts.direction = opts.direction || 'back';
 
     // get the views to auto remove without having to do a transiton for each
@@ -283,16 +277,13 @@ export class NavController extends Ion {
       }
     }
 
-    let leavingView = this._views[this._views.length - 1];
-    let enteringView = view;
+    let leavingView = this.getPrevious(viewCtrl);
 
     if (this.router) {
-      this.router.stateChange('pop', enteringView);
+      this.router.stateChange('pop', viewCtrl);
     }
 
-    this.transition(enteringView, leavingView, opts, () => {
-      resolve();
-    });
+    this._transition(viewCtrl, leavingView, opts, resolve);
 
     return promise;
   }
@@ -302,7 +293,7 @@ export class NavController extends Ion {
    * @param opts extra animation options
    */
   popToRoot(opts = {}) {
-    this._popTo(this.first());
+    return this._popTo(this.first(), opts);
   }
 
   /**
@@ -311,14 +302,14 @@ export class NavController extends Ion {
    * @param {TODO} index TODO
    * @returns {Promise} TODO
    */
-  insert(componentType, index) {
+  insert(componentType, index, params = {}, opts = {}) {
     if (!componentType || index < 0) {
       return Promise.reject();
     }
 
     // push it onto the end
     if (index >= this._views.length) {
-      return this.push(componentType);
+      return this.push(componentType, params, opts);
     }
 
     // create new ViewController, but don't render yet
@@ -337,14 +328,14 @@ export class NavController extends Ion {
    * @param {TODO} index TODO
    * @returns {Promise} TODO
    */
-  remove(index) {
+  remove(index, opts = {}) {
     if (index < 0 || index >= this._views.length) {
       return Promise.reject("Index out of range");
     }
 
     let viewToRemove = this._views[index];
     if (this.isActive(viewToRemove)){
-      return this.pop();
+      return this.pop(opts);
     }
 
     viewToRemove.shouldDestroy = true;
@@ -436,12 +427,12 @@ export class NavController extends Ion {
    * @param {TODO} enteringView  TODO
    * @param {TODO} leavingView  TODO
    * @param {TODO} opts  TODO
-   * @param {Function} callback  TODO
+   * @param {Function} done  TODO
    * @returns {any} TODO
    */
-  transition(enteringView, leavingView, opts, callback) {
+  _transition(enteringView, leavingView, opts, done) {
     if (!enteringView || enteringView === leavingView) {
-      return callback();
+      return done();
     }
 
     if (!opts.animation) {
@@ -452,12 +443,14 @@ export class NavController extends Ion {
     }
 
     // wait for the new view to complete setup
-    enteringView.stage(() => {
+    this._stage(enteringView, () => {
 
       if (enteringView.shouldDestroy) {
         // already marked as a view that will be destroyed, don't continue
-        return callback();
+        return done();
       }
+
+      this._setZIndex(enteringView.instance, leavingView.instance, opts.direction);
 
       this._zone.runOutsideAngular(() => {
 
@@ -503,7 +496,7 @@ export class NavController extends Ion {
           // all done!
           this._zone.run(() => {
             this._transComplete();
-            callback();
+            done();
           });
         });
 
@@ -511,6 +504,30 @@ export class NavController extends Ion {
 
     });
 
+  }
+
+  /**
+   * @private
+   */
+  _stage(viewCtrl, done) {
+    if (viewCtrl.instance || viewCtrl.shouldDestroy) {
+      // already compiled this view
+      return done();
+    }
+
+    // get the pane the NavController wants to use
+    // the pane is where all this content will be placed into
+    this.loadPage(viewCtrl, null, () => {
+
+      // this ViewController instance has finished loading
+      try {
+        viewCtrl.loaded();
+      } catch (e) {
+        console.error(e);
+      }
+
+      done();
+    });
   }
 
   loadPage(viewCtrl, navbarContainerRef, done) {
@@ -560,6 +577,20 @@ export class NavController extends Ion {
     });
   }
 
+  _setZIndex(enteringInstance, leavingInstance, direction) {
+    if (!leavingInstance) {
+      enteringInstance._zIndex = 0;
+
+    } else if (direction === 'back') {
+      // moving back
+      enteringInstance._zIndex = leavingInstance._zIndex - 1;
+
+    } else {
+      // moving forward
+      enteringInstance._zIndex = leavingInstance._zIndex + 1;
+    }
+  }
+
   /**
    * @private
    * TODO
@@ -594,7 +625,7 @@ export class NavController extends Ion {
     enteringView.willEnter();
 
     // wait for the new view to complete setup
-    enteringView.stage(() => {
+    enteringView._stage(() => {
 
       this._zone.runOutsideAngular(() => {
         // set that the new view pushed on the stack is staged to be entering/leaving

@@ -14,18 +14,24 @@ import {NavParams, NavController, ViewController} from 'ionic/ionic';
         <button>S1</button>
       </ion-nav-items>
     </ion-navbar>
-    <ion-content padding>
-      <p>{{title}}</p>
-      <p><button class="e2eFrom1To2" (click)="pushFullPage()">Push to FullPage</button></p>
-      <p><button (click)="pushPrimaryHeaderPage()">Push to PrimaryHeaderPage</button></p>
-      <p><button (click)="pushAnother()">Push to AnotherPage</button></p>
-      <p><button [nav-push]="[pushPage, {id: 42}]">Push FullPage w/ [nav-push] array</button></p>
-      <p><button [nav-push]="pushPage" [nav-params]="{id:40}">Push w/ [nav-push] and [nav-params]</button></p>
-      <p><button [nav-push]="[\'FirstPage\', {id: 22}]">Push w/ [nav-push] array and string view name</button></p>
-      <p><button nav-push="FirstPage" [nav-params]="{id: 23}">Push w/ nav-push and [nav-params]</button></p>
-      <p><button (click)="setViews()">setViews() (Go to PrimaryHeaderPage)</button></p>
-      <p><button (click)="nav.pop()">Pop</button></p>
-      <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
+    <ion-content>
+      <ion-list>
+        <ion-header>
+          {{title}}
+        </ion-header>
+
+        <button ion-item class="e2eFrom1To2" (click)="pushFullPage()">Push to FullPage</button>
+        <button ion-item (click)="pushPrimaryHeaderPage()">Push to PrimaryHeaderPage</button>
+        <button ion-item (click)="pushAnother()">Push to AnotherPage</button>
+        <button ion-item [nav-push]="[pushPage, {id: 42}]">Push FullPage w/ [nav-push] array</button>
+        <button ion-item [nav-push]="pushPage" [nav-params]="{id:40}">Push w/ [nav-push] and [nav-params]</button>
+        <button ion-item [nav-push]="[\'FirstPage\', {id: 22}]">Push w/ [nav-push] array and string view name</button>
+        <button ion-item nav-push="FirstPage" [nav-params]="{id: 23}">Push w/ nav-push and [nav-params]</button>
+        <button ion-item (click)="setViews()">setViews() (Go to PrimaryHeaderPage)</button>
+        <button ion-item (click)="nav.pop()">Pop</button>
+
+        <button *ng-for="#i of pages" ion-item (click)="pushPrimaryHeaderPage()">Page {{i}}</button>
+      </ion-list>
     </ion-content>`
 })
 class FirstPage {
@@ -38,6 +44,11 @@ class FirstPage {
     this.title = 'First Page';
 
     this.pushPage = FullPage;
+
+    this.pages = [];
+    for (var i = 1; i <= 50; i++) {
+      this.pages.push(i);
+    }
   }
 
   setViews() {

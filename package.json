@@ -1,12 +1,12 @@
 {
-  "name": "ionic2",
-  "version": "2.0.0-alpha.2",
+  "name": "ionic-framework",
+  "version": "2.0.0-alpha.31",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/driftyco/ionic2.git"
   },
-  "main": "index.js",
+  "main": "tooling/index.js",
   "scripts": {
     "test": "gulp karma",
     "test:generators": "jasmine-node ./tooling/spec",
@@ -15,10 +15,13 @@
   "dependencies": {
     "@reactivex/rxjs": "5.0.0-alpha.4",
     "angular2": "2.0.0-alpha.44",
-    "es6-shim": "^0.33.6",
-    "lodash": "^3.10.1",
+    "colors": "^1.1.2",
+    "es6-shim": "0.33.6",
+    "inquirer": "0.11.0",
+    "lodash": "3.10.1",
+    "q": "1.4.1",
     "reflect-metadata": "0.1.1",
-    "shelljs": "^0.5.3",
+    "shelljs": "0.5.3",
     "zone.js": "0.5.8"
   },
   "devDependencies": {
@@ -56,7 +59,6 @@
     "minimist": "^1.1.3",
     "node-html-encoder": "0.0.2",
     "node-libs-browser": "^0.5.2",
-    "q": "^1.4.1",
     "request": "2.53.0",
     "run-sequence": "^1.1.0",
     "semver": "^5.0.1",

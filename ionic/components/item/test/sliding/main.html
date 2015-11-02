@@ -2,13 +2,14 @@
 
 <ion-list>
 
-  <ion-item-sliding text-wrap detail-push>
+  <ion-item-sliding text-wrap detail-push (click)="didClick($event)">
     <h3>Max Lynch</h3>
     <p>
       Hey do you want to go to the game tonight?
     </p>
     <ion-item-options>
-      <button primary>Archive</button>
+      <button primary (click)="archive($event)">Archive</button>
+      <button danger (click)="del($event)">Delete</button>
     </ion-item-options>
   </ion-item-sliding>
 

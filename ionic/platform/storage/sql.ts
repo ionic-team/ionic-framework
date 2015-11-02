@@ -50,7 +50,7 @@ export class SqlStorage extends StorageEngine {
 
 
     if(window.sqlitePlugin) {
-      let location = this._getBackupLocation(dbOptions);
+      let location = this._getBackupLocation(dbOptions.backupFlag);
 
       this._db = window.sqlitePlugin.openDatabase(util.extend({
         name: dbOptions.name,

@@ -283,6 +283,9 @@ const OVERLAY_TYPE = 'popup';
         '<button *ng-for="#button of buttons" (click)="buttonTapped(button, $event)" [inner-html]="button.text"></button>' +
       '</div>' +
   '</popup-wrapper>',
+  host: {
+    '[style.zIndex]': '_zIndex'
+  },
   directives: [FORM_DIRECTIVES, NgClass, NgIf, NgFor, Button]
 })
 

@@ -16,4 +16,14 @@ class E2EApp {
     return [0,1];
   }
 
+  didClick(e) {
+    console.log('CLICK', e.defaultPrevented, e)
+  }
+
+  archive(e) {
+    console.log('Accept', e);
+  }
+  del(e) {
+    console.log('Delete', e);
+  }
 }

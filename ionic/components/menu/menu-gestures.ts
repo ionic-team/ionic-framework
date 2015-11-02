@@ -17,7 +17,7 @@ class MenuContentGesture extends SlideEdgeGesture {
   }
 
   canStart(ev) {
-    return this.menu.isOpen ? true : super.canStart(ev);
+    return this.menu.isOpen && this.menu.isEnabled ? true : super.canStart(ev);
   }
 
   // Set CSS, then wait one frame for it to apply before sliding starts

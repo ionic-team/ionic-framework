@@ -1,4 +1,8 @@
-var fs = require('fs'),
+var colors = require('colors'),
+    fs = require('fs'),
+    path = require('path'),
+    inquirer = require('inquirer'),
+    Q = require('q'),
     Generator = module.exports,
     Generate = require('../../generate'),
     path = require('path'),
@@ -18,7 +22,7 @@ Generator.numberNames = ['first', 'second', 'third', 'fourth', 'fifth'];
 Generator.promptForTabCount = function promptForTabCount() {
   var q = Q.defer();
 
-  Generate.inquirer.prompt({choices: ['1', '2', '3', '4', '5'], message: 'How many tabs will you have?', name: 'count', type: 'list', validate: Generator.validate}, function(result) {
+  inquirer.prompt({choices: ['1', '2', '3', '4', '5'], message: 'How many tabs will you have?', name: 'count', type: 'list', validate: Generator.validate}, function(result) {
     q.resolve(result.count);
   });
 
@@ -28,7 +32,7 @@ Generator.promptForTabCount = function promptForTabCount() {
 Generator.promptForTabName = function promptForTabName(tabIndex, options) {
   var q = Q.defer();
 
-  Generate.inquirer.prompt({message: 'Enter the ' + Generator.numberNames[tabIndex] + ' tab name:', name: 'name', type: 'input'}, function(nameResult) {
+  inquirer.prompt({message: 'Enter the ' + Generator.numberNames[tabIndex] + ' tab name:', name: 'name', type: 'input'}, function(nameResult) {
     Generator.tabs.push({ appDirectory: options.appDirectory, cssClassName: Generate.cssClassName(nameResult.name), fileName: Generate.fileName(nameResult.name), jsClassName: Generate.jsClassName(nameResult.name), name: nameResult.name });
     q.resolve();
   });
@@ -39,7 +43,6 @@ Generator.promptForTabName = function promptForTabName(tabIndex, options) {
 Generator.run = function run(options) {
   console.log('got options!', options);
 
-  // Generator.q = Q;
   //Need to query user for tabs:
   options.rootDirectory = options.rootDirectory || path.join('www', 'app');
   var savePath = path.join(options.appDirectory, options.rootDirectory, options.fileName);
@@ -59,17 +62,12 @@ Generator.run = function run(options) {
     }
 
     return promise;
-    // .fin(function(result) {
-      // console.log('All done', result);
-      // console.log('Using tabs:', Generator.tabs);
-    // });
   })
-  .then(function() { 
+  .then(function() {
     var templates = Generate.loadGeneratorTemplates(__dirname);
-      
+
     //Generate the tabs container page templates
     templates.forEach(function(template) {
-      // var templatePath = path.join(__dirname, template.file);
       options.templatePath = template.file;
       options.tabs = Generator.tabs;
       console.log('generating stuffs', options);
@@ -82,13 +80,10 @@ Generator.run = function run(options) {
 
     //Now render the individual tab pages
     Generator.tabs.forEach(function(tab) {
-      // Generate.createScaffoldDirectories({appDirectory: tab.appDirectory, fileName: tab.fileName});
       console.log('Tab:', tab);
       tab.generatorName = 'page';
       tab.appDirectory = tab.appDirectory;
       Generate.generate(tab);
-      // var pageGenerator = require('../page');
-      // pageGenerator.run(tab);
     });
   })
   .catch(function(ex) {
@@ -99,10 +94,4 @@ Generator.run = function run(options) {
   .fin(function() {
     console.log('√ Done'.green);
   });
-
-  // var tabsData = [];
-  // tabs.forEach(function(tab) {
-  //   var tabObj = { name: tab, javascriptClassName: Generate.javascriptClassName(tab)};
-  //   tabsData.push(tabObj);
-  // });
 };

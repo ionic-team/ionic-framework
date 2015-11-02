@@ -1,4 +1,4 @@
-import {Component, ElementRef, Renderer} from 'angular2/angular2';
+import {Component} from 'angular2/angular2';
 
 
 /**
@@ -24,10 +24,13 @@ import {Component, ElementRef, Renderer} from 'angular2/angular2';
     '<ng-content select="[item-right]"></ng-content>' +
     '<ion-item-content>' +
       '<ng-content></ng-content>'+
-    '</ion-item-content>'
+    '</ion-item-content>',
+  host: {
+    '[class.item]': 'isItem'
+  }
 })
 export class Item {
-  constructor(elementRef: ElementRef, renderer: Renderer) {
-    renderer.setElementClass(elementRef, 'item', true);
+  constructor() {
+    this.isItem = true;
   }
 }

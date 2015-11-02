@@ -16,7 +16,8 @@ import {Navbar} from '../nav-bar/nav-bar';
   ],
   host: {
     '(click)': 'toggle()',
-    '[hidden]': 'isHidden'
+    '[hidden]': 'isHidden',
+    'menu-toggle': '' //ensures the attr is there for css when using [menu-toggle]
   }
 })
 export class MenuToggle extends Ion {
