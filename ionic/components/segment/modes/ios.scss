@@ -13,6 +13,7 @@ $segment-button-ios-text-color:               inverse($segment-button-ios-bg-col
 $segment-button-ios-activated-transition:     100ms all linear !default;
 $segment-button-ios-hover-opacity:            0.16 !default;
 
+$segment-button-ios-toolbar-button-max-width: 100px !default;
 
 .ion-segment {
 
@@ -61,6 +62,17 @@ $segment-button-ios-hover-opacity:            0.16 !default;
     }
   }
 
+}
+
+ion-toolbar {
+  .ion-segment {
+    justify-content: center;
+
+    button,
+    [button] {
+      max-width: $segment-button-ios-toolbar-button-max-width;
+    }
+  }
 }
 
 // Generate Default Button Colors
