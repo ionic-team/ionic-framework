@@ -64,10 +64,10 @@ export class AvatarListsPage {
 }
 
 @Page({
-    templateUrl: 'lists/three-lists.html',
+    templateUrl: 'lists/multiline-lists.html',
     directives: [forwardRef(() => AndroidAttribute)]
 })
-export class ThreeLineListsPage {
+export class MultilineListsPage {
     constructor() {
 
     }
