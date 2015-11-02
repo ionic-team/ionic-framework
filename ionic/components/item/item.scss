@@ -30,8 +30,8 @@
   min-height: 30px;
   font-weight: 500;
   width: 100%;
-  z-index: 100;
   z-index: 1000;
+  
   &.sticky {
     position: -webkit-sticky;
     position: sticky;
