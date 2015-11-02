@@ -165,6 +165,11 @@ class ItemSlideGesture extends DragGesture {
       el.addEventListener('mousedown', touchStart);
 
       let touchEnd = (e) => {
+        // If we have a touch end and the item is closing,
+        // prevent default to stop a click from triggering
+        if(this.item.didClose) {
+          e.preventDefault();
+        }
         this.item.didClose = false;
       };
       el.addEventListener('touchend', touchEnd);

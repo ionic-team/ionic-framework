@@ -16,4 +16,7 @@ class E2EApp {
     return [0,1];
   }
 
+  didClick(e) {
+    console.log('CLICK', e)
+  }
 }
