@@ -253,10 +253,10 @@ export class NavController extends Ion {
    * @param view {ViewController} to pop to
    * @param opts {object} pop options
    */
-  _popTo(view, opts = {}) {
+  popTo(viewCtrl, opts = {}) {
 
     // Get the target index of the view to pop to
-    let viewIndex = this._views.indexOf(view);
+    let viewIndex = this._views.indexOf(viewCtrl);
     let targetIndex = viewIndex + 1;
 
     // Don't pop to the view if it wasn't found, or the target is beyond the view list
@@ -279,14 +279,13 @@ export class NavController extends Ion {
       }
     }
 
-    let leavingView = this._views[this._views.length - 1];
-    let enteringView = view;
+    let leavingView = this.getPrevious(viewCtrl);
 
     if (this.router) {
-      this.router.stateChange('pop', enteringView);
+      this.router.stateChange('pop', viewCtrl);
     }
 
-    this.transition(enteringView, leavingView, opts, resolve);
+    this.transition(viewCtrl, leavingView, opts, resolve);
 
     return promise;
   }
