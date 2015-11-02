@@ -10,6 +10,23 @@ import * as util from 'ionic/util';
 import {CSS, raf} from 'ionic/util/dom';
 
 
+
+@Directive({
+  selector: 'ion-item-options > button,ion-item-options > [button]',
+  host: {
+    '(click)': 'clicked($event)'
+  }
+})
+export class ItemSlidingOptionButton {
+  constructor(elementRef: ElementRef) {
+  }
+  clicked(event) {
+    // Don't allow the click to propagate
+    event.preventDefault();
+    event.stopPropagation();
+  }
+}
+
 /**
  * @name ionItem
  * @description
@@ -41,8 +58,7 @@ import {CSS, raf} from 'ionic/util/dom';
       '<ion-item-content>' +
         '<ng-content></ng-content>'+
       '</ion-item-content>' +
-    '</ion-item-sliding-content>',
-  directives: [NgIf]
+    '</ion-item-sliding-content>'
 })
 export class ItemSliding {
   /**
