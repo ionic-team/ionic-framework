@@ -1,5 +1,4 @@
-var colors = require('colors'),
-    fs = require('fs'),
+var fs = require('fs'),
     path = require('path'),
     Generate = require('../generate'),
     _ = require('lodash'),
@@ -48,7 +47,7 @@ describe('#Generate', function() {
       var genOpts = {
         fileAndClassName: 'about',
         javascriptClassName: 'About',
-        name: 'About', 
+        name: 'About',
       }
 
       expect(generatorSpy.run).toHaveBeenCalledWith(genOpts);
@@ -62,7 +61,7 @@ describe('#Generate', function() {
         var genOpts = {
           fileAndClassName: 'about',
           javascriptClassName: 'About',
-          name: 'About', 
+          name: 'About',
         };
 
         spyOn(fs, 'writeFileSync');
@@ -71,12 +70,12 @@ describe('#Generate', function() {
         Generate.generate(generatorOptions);
 
         expect(fs.writeFileSync.calls.length).toBe(3);
-        
+
       });
     });
   });
 
-  xdescribe('#page', function() { 
+  xdescribe('#page', function() {
 
     it('should generate a page at a directory', function() {
       //ionic g page about
@@ -144,7 +143,7 @@ describe('#Generate', function() {
     });
   }); //#page
 
-  xdescribe('#directories', function() { 
+  xdescribe('#directories', function() {
     it('should create directories for scaffolding', function() {
       // pwd = /ionic/app
       // ionic g page about
