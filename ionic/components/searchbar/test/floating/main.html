@@ -1,0 +1,20 @@
+<ion-content>
+  <h5 padding-left padding-top> Search - Default </h5>
+  <ion-searchbar [(ng-model)]="defaultSearch" class="e2eDefaultFloatingSearchBar"></ion-searchbar>
+
+  <h5 padding-left> Search - Custom Placeholder </h5>
+  <ion-searchbar [(ng-model)]="customPlaceholder" placeholder="Filter Schedules" class="e2eCustomPlaceholderFloatingSearchBar"></ion-searchbar>
+
+  <h5 padding-left> Search - Default Cancel Button </h5>
+  <ion-searchbar [(ng-model)]="defaultCancel" show-cancel="true" class="e2eDefaultCancelButtonFloatingSearchBar"></ion-searchbar>
+
+  <h5 padding-left> Search - Custom Cancel Button Danger </h5>
+  <ion-searchbar [(ng-model)]="customCancel" show-cancel="true" cancel-text="Really Long Cancel" class="e2eCustomCancelButtonFloatingSearchBar" danger></ion-searchbar>
+
+  <h5 padding-left> Search - Custom Cancel Action</h5>
+  <ion-searchbar [(ng-model)]="customCancelAction" show-cancel="true" cancel-text="Done" [cancel-action]="myCancelAction" class="e2eCustomCancelActionFloatingSearchBar"></ion-searchbar>
+
+  <div *ng-if="clickedCustomAction">
+    Clicked custom action with input = {{customCancelAction}}
+  </div>
+</ion-content>

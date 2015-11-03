@@ -60,7 +60,7 @@ export class ToolbarBase extends Ion  {
   template:
     '<div class="toolbar-inner">' +
       '<ng-content select="[menu-toggle]"></ng-content>' +
-      '<ng-content select="ion-title,ion-search-bar,ion-segment"></ng-content>' +
+      '<ng-content select="ion-title,ion-searchbar,ion-segment"></ng-content>' +
       '<ng-content select="ion-nav-items[primary]"></ng-content>' +
       '<ng-content select="ion-nav-items[secondary]"></ng-content>' +
     '</div>' +

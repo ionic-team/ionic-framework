@@ -24,7 +24,7 @@ import {SinkPage} from '../sink-page';
     </p>
 
     <form (submit)="doSubmit($event)" [ng-form-model]="form">
-      <ion-search-bar placeholder="Search" ng-control="searchQuery"></ion-search-bar>
+      <ion-searchbar placeholder="Search" ng-control="searchQuery"></ion-searchbar>
       <div>
         Query: <b>{{form.controls.searchQuery.value}}</b>
       </div>

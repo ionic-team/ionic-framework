@@ -19,7 +19,7 @@ function randomTitle() {
   <ion-content>
     <form (submit)="doSearch($event)" [control-group]="form">
 
-      <ion-search-bar control="searchQuery"></ion-search-bar>
+      <ion-searchbar control="searchQuery"></ion-searchbar>
 
       <ion-list #list>
 
