@@ -20,14 +20,22 @@ $searchbar-md-input-close-icon-color:   #5B5B5B !default;
 $searchbar-md-input-close-icon-svg:     "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><polygon fill='" + $searchbar-md-input-close-icon-color + "' points='405,136.798 375.202,107 256,226.202 136.798,107 107,136.798 226.202,256 107,375.202 136.798,405 256,285.798 375.202,405 405,375.202 285.798,256'/></svg>" !default;
 $searchbar-md-input-close-icon-size:    22px !default;
 
+$searchbar-md-input-cancel-icon-color:   #5B5B5B !default;
+$searchbar-md-input-cancel-icon-svg:    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path fill='" + $searchbar-md-input-cancel-icon-color + "' d='M427,234.625H167.296l119.702-119.702L256,85L85,256l171,171l29.922-29.924L167.296,277.375H427V234.625z'/></svg>" !default;
+$searchbar-md-input-cancel-icon-size:    22px !default;
+
 
 ion-searchbar {
   padding: $searchbar-md-padding;
   background: $searchbar-md-background-color;
 }
 
+.toolbar ion-searchbar {
+  padding: 3px;
+}
+
 .searchbar-input {
-  padding: 8px 55px;
+  padding: 6px 55px;
 
   height: $searchbar-md-input-height;
   box-shadow: $searchbar-md-input-box-shadow;
@@ -61,7 +69,13 @@ ion-searchbar {
   position: absolute;
   right: 13px;
   top: 0;
+}
 
+.left-align .searchbar-input {
+  @include svg-background-image($searchbar-md-input-cancel-icon-svg);
+  background-size: $searchbar-md-input-cancel-icon-size;
+  background-repeat: no-repeat;
+  background-position: 16px center;
 }
 
 .searchbar-cancel {
