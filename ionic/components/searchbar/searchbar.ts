@@ -3,6 +3,7 @@ import {ElementRef, Pipe, NgControl, Renderer, FORM_DIRECTIVES, NgIf, NgClass} f
 import {Ion} from '../ion';
 import {Config} from '../../config/config';
 import {ConfigComponent} from '../../config/decorators';
+import {Icon} from '../icon/icon';
 
 /**
  * @name Search Bar
@@ -21,21 +22,25 @@ import {ConfigComponent} from '../../config/decorators';
     'cancelText': 'Cancel',
     'placeholder': 'Search',
     'cancelAction': function(event, query) {
-      // The cancel button now works on its own to blur the input
       console.log('Default Cancel');
+      this.element = this.elementRef.nativeElement.querySelector('input');
+      this.element.blur();
     }
   },
   host: {
    '[class.left-align]': 'shouldLeftAlign',
+   '[class.focused]': 'isFocused',
   }
   template:
     '<div class="searchbar-input-container">' +
+      '<button (click)="cancelAction($event, query)" clear dark class="searchbar-cancel-icon"><icon arrow-back></icon></button>' +
+      '<div class="searchbar-search-icon"></div>' +
       '<input [(value)]="query" (focus)="inputFocused()" (blur)="inputBlurred()" ' +
       '(input)="inputChanged($event)" class="searchbar-input" type="search" [attr.placeholder]="placeholder">' +
       '<button clear *ng-if="query" class="searchbar-close-icon" (click)="clearInput($event)"></button>' +
     '</div>' +
     '<button *ng-if="showCancel" (click)="cancelAction($event, query)" class="searchbar-cancel">{{cancelText}}</button>',
-  directives: [FORM_DIRECTIVES, NgIf, NgClass]
+  directives: [FORM_DIRECTIVES, NgIf, NgClass, Icon]
 })
 
 export class SearchBar extends Ion {

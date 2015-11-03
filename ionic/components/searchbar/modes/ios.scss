@@ -30,6 +30,21 @@ ion-searchbar {
   min-height: $searchbar-ios-min-height;
 }
 
+.searchbar-search-icon {
+  width: $searchbar-ios-input-search-icon-size + 1;
+  height: $searchbar-ios-input-search-icon-size + 1;
+
+  @include svg-background-image($searchbar-ios-input-search-icon-svg);
+  background-size: $searchbar-ios-input-search-icon-size;
+  background-repeat: no-repeat;
+  position: absolute;
+  left: 10px;
+  top: 9px;
+
+  @include calc(margin-left, "50% - 60px");
+  transition: $searchbar-ios-input-transition;
+}
+
 .searchbar-input {
   height: $searchbar-ios-input-height;
   padding: 0 28px;
@@ -40,15 +55,9 @@ ion-searchbar {
   border-radius: 5px;
   color: $searchbar-ios-input-text-color;
   background-color: $searchbar-ios-input-background-color;
+  background-position: 8px center;
 
-  @include svg-background-image($searchbar-ios-input-search-icon-svg);
-  background-size: $searchbar-ios-input-search-icon-size;
-  background-repeat: no-repeat;
-  background-position: calc(50% - 40px);
-
-  &::placeholder {
-    color: $searchbar-ios-input-placeholder-color;
-  }
+  @include placeholder($searchbar-ios-input-placeholder-color);
 
   @include calc(padding-left, "50% - 28px");
   transition: $searchbar-ios-input-transition;
@@ -112,6 +121,10 @@ ion-searchbar.left-align {
     right: 0px;
   }
 
+}
+
+.searchbar-cancel-icon {
+  display: none;
 }
 
 // Generate Default Search Bar Colors
