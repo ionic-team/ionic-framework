@@ -26,13 +26,17 @@ ion-searchbar {
 }
 
 .searchbar-search-icon,
-.searchbar-cancel-icon {
+button.searchbar-cancel-icon {
   width: $searchbar-md-input-search-icon-size + 1;
   height: $searchbar-md-input-search-icon-size + 1;
 
   background-size: $searchbar-md-input-search-icon-size;
   background-repeat: no-repeat;
   position: absolute;
+
+  &.activated {
+    background-color: transparent;
+  }
 }
 
 .searchbar-search-icon {
@@ -41,7 +45,7 @@ ion-searchbar {
   @include svg-background-image($searchbar-md-input-search-icon-svg);
 }
 
-.searchbar-cancel-icon {
+button.searchbar-cancel-icon {
   display: none;
   height: 100%;
   margin: 0;
@@ -66,7 +70,7 @@ ion-searchbar {
   @include placeholder($searchbar-md-input-placeholder-color);
 }
 
-.searchbar-close-icon {
+button.searchbar-close-icon {
   width: $searchbar-md-input-close-icon-size;
   height: 100%;
   padding: 0;
@@ -78,6 +82,10 @@ ion-searchbar {
   position: absolute;
   right: 13px;
   top: 0;
+
+  &.activated {
+    background-color: transparent;
+  }
 }
 
 .searchbar-cancel {
@@ -90,7 +98,7 @@ ion-searchbar {
     display: none;
   }
 
-  .searchbar-cancel-icon {
+  button.searchbar-cancel-icon {
     display: inline-flex;
   }
 
@@ -102,7 +110,7 @@ ion-searchbar {
     padding: 3px;
   }
 
-  .searchbar-cancel-icon {
+  button.searchbar-cancel-icon {
     left: 14px;
   }
 
