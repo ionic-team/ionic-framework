@@ -13,7 +13,7 @@ module.exports = function(options) {
       list.forEach(function(file) {
         var url = urlPath + '/' + file
 
-        if (url.indexOf('/test/') > -1) return;
+        if (url.indexOf('/test/') > -1 || url.indexOf('/ionic-site/') > -1 || url.indexOf('/docs/') > -1) return;
 
         fs.stat(dir + '/' + file, function(err, stat) {
           if (stat && stat.isDirectory()) {
