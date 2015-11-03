@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Host, Optional} from 'angular2/angular2';
+import {Directive, ElementRef, Host, Optional, NgZone} from 'angular2/angular2';
 import {Content} from '../content/content';
 import {throttle} from '../../util/util';
 import {position, offset, CSS, raf} from '../../util/dom';
@@ -38,15 +38,22 @@ export class ItemGroupTitle {
    * TODO
    * @param {ElementRef} elementRef  TODO
    */
-  constructor(private elementRef: ElementRef, config: Config, private content: Content) {
+  constructor(
+    private elementRef: ElementRef,
+    private zone: NgZone,
+    config: Config,
+    private content: Content
+  ) {
     // make sure the sticky class gets set on the title
     this.isSticky = true;
   }
   onInit() {
-    setTimeout(() => {
-      if(this.content.getStickyPolyfill()) {
-        this.content.getStickyPolyfill().add(this.elementRef.nativeElement);
-      }
-    })
+    this.zone.runOutsideAngular(() => {
+      setTimeout(() => {
+        if(this.content.getStickyPolyfill()) {
+          this.content.getStickyPolyfill().add(this.elementRef.nativeElement);
+        }
+      });
+    });
   }
 }
