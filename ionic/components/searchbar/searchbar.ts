@@ -25,13 +25,16 @@ import {ConfigComponent} from '../../config/decorators';
       console.log('Default Cancel');
     }
   },
+  host: {
+   '[class.left-align]': 'shouldLeftAlign',
+  }
   template:
-    '<div class="searchbar-input-container" [class.left-align]="shouldLeftAlign">' +
+    '<div class="searchbar-input-container">' +
       '<input [(value)]="query" (focus)="inputFocused()" (blur)="inputBlurred()" ' +
       '(input)="inputChanged($event)" class="searchbar-input" type="search" [attr.placeholder]="placeholder">' +
       '<button clear *ng-if="query" class="searchbar-close-icon" (click)="clearInput($event)"></button>' +
     '</div>' +
-    '<button *ng-if="showCancel" (click)="cancelAction($event, query)" class="searchbar-cancel" [class.left-align]="shouldLeftAlign">{{cancelText}}</button>',
+    '<button *ng-if="showCancel" (click)="cancelAction($event, query)" class="searchbar-cancel">{{cancelText}}</button>',
   directives: [FORM_DIRECTIVES, NgIf, NgClass]
 })
 

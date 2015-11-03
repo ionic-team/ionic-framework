@@ -78,7 +78,7 @@ ion-searchbar {
   margin-right: -100%;
 }
 
-.searchbar-input-container.left-align {
+ion-searchbar.left-align {
   .searchbar-search-icon {
     margin-left: 0;
   }
@@ -108,7 +108,7 @@ ion-searchbar {
     }
   }
 
-  .searchbar-cancel.left-align {
+  .left-align .searchbar-cancel {
     right: 0px;
   }
 
