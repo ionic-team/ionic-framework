@@ -16,6 +16,10 @@ body, body:hover, body a, body button, body media-switch {
   cursor: url('http://ionicframework.com/img/finger.png'), auto;
 }
 
+body ion-app {
+  overflow: visible;
+}
+
 body.has-scrollbar scroll-content {
   margin-right: -15px;
 }
