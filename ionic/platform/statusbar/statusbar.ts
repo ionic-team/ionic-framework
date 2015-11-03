@@ -84,7 +84,7 @@ export class StatusBar {
    */
   static setHexColor(hex) {
     this.ifPlugin(() => {
-      window.StatusBar.backgroundColorByHexName(hex);
+      window.StatusBar.backgroundColorByHexString(hex);
     });
   }
 
