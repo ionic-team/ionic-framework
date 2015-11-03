@@ -53,12 +53,7 @@ We are also building out a number of starter projects, including the Ionic 2 sta
 
 ### Tooling
 
- At the moment, ionic-framework exports one function, `generate`, that can be used to scaffold new pages in an Ionic app. It is used by the [Ionic CLI's](https://github.com/driftyco/ionic-cli) `generate` command (also use `g` as an alias).
-
-#### Usage:
-
-* `ionic generate page MyPage` - Generate a basic page HTML, JS, and SCSS files.
-* `ionic g tabs MyTabPage` - Generate a page with tabs and the tab pages with those.
+ At the moment, ionic-framework exports one function, `generate`, that can be used to scaffold new pages in an Ionic app. It is used by the [Ionic CLI's](https://github.com/driftyco/ionic-cli) `generate` command.
 
 #### Methods
 
@@ -80,5 +75,4 @@ Example:
 #### Generators
 - `page`, a blank page
 - `tabs`, a page with tab navigation
-- `directive`, an Angular2 directive
  
