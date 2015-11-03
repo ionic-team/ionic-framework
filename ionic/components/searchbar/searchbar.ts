@@ -30,7 +30,7 @@ import {Icon} from '../icon/icon';
   host: {
    '[class.left-align]': 'shouldLeftAlign',
    '[class.focused]': 'isFocused',
-  }
+  },
   template:
     '<div class="searchbar-input-container">' +
       '<button (click)="cancelAction($event, query)" clear dark class="searchbar-cancel-icon"><icon arrow-back></icon></button>' +
