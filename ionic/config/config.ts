@@ -43,7 +43,7 @@ export class Config {
  *     iconMode: 'ios',
  *     modalEnter: 'modal-slide-in',
  *     modalLeave: 'modal-slide-out',
- *     tabBarPlacement: 'bottom',
+ *     tabbarPlacement: 'bottom',
  *     viewTransition: 'ios',
  *   }
  * })

@@ -39,7 +39,7 @@ export function run() {
     config.setPlatform(platform);
 
     expect(config.get('mode')).toEqual('md');
-    expect(config.get('tabBarPlacement')).toEqual('top');
+    expect(config.get('tabbarPlacement')).toEqual('top');
   });
 
   it('should override mode settings from platforms setting', () => {
@@ -54,7 +54,7 @@ export function run() {
     config.setPlatform(platform);
 
     expect(config.get('mode')).toEqual('md');
-    expect(config.get('tabBarPlacement')).toEqual('top');
+    expect(config.get('tabbarPlacement')).toEqual('top');
   });
 
   it('should get boolean value from querystring', () => {
@@ -165,27 +165,27 @@ export function run() {
 
   it('should override ios mode config with user platform setting', () => {
     let config = new Config({
-      tabBarPlacement: 'hide',
+      tabbarPlacement: 'hide',
       platforms: {
         ios: {
-          tabBarPlacement: 'top'
+          tabbarPlacement: 'top'
         }
       }
     });
     let platform = new Platform(['ios']);
     config.setPlatform(platform);
 
-    expect(config.get('tabBarPlacement')).toEqual('top');
+    expect(config.get('tabbarPlacement')).toEqual('top');
   });
 
   it('should override ios mode config with user setting', () => {
     let config = new Config({
-      tabBarPlacement: 'top'
+      tabbarPlacement: 'top'
     });
     let platform = new Platform(['ios']);
     config.setPlatform(platform);
 
-    expect(config.get('tabBarPlacement')).toEqual('top');
+    expect(config.get('tabbarPlacement')).toEqual('top');
   });
 
   it('should get setting from md mode', () => {
@@ -193,7 +193,7 @@ export function run() {
     let platform = new Platform(['android']);
     config.setPlatform(platform);
 
-    expect(config.get('tabBarPlacement')).toEqual('top');
+    expect(config.get('tabbarPlacement')).toEqual('top');
   });
 
   it('should get setting from ios mode', () => {
@@ -201,7 +201,7 @@ export function run() {
     let platform = new Platform(['ios']);
     config.setPlatform(platform);
 
-    expect(config.get('tabBarPlacement')).toEqual('bottom');
+    expect(config.get('tabbarPlacement')).toEqual('bottom');
   });
 
   it('should set/get platform setting from set()', () => {
@@ -209,10 +209,10 @@ export function run() {
     let platform = new Platform(['ios']);
     config.setPlatform(platform);
 
-    config.set('tabBarPlacement', 'bottom');
-    config.set('ios', 'tabBarPlacement', 'top');
+    config.set('tabbarPlacement', 'bottom');
+    config.set('ios', 'tabbarPlacement', 'top');
 
-    expect(config.get('tabBarPlacement')).toEqual('top');
+    expect(config.get('tabbarPlacement')).toEqual('top');
   });
 
   it('should set/get setting from set()', () => {
@@ -220,9 +220,9 @@ export function run() {
     let platform = new Platform(['ios']);
     config.setPlatform(platform);
 
-    config.set('tabBarPlacement', 'top');
+    config.set('tabbarPlacement', 'top');
 
-    expect(config.get('tabBarPlacement')).toEqual('top');
+    expect(config.get('tabbarPlacement')).toEqual('top');
   });
 
   it('should set ios platform settings from settings()', () => {

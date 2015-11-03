@@ -18,7 +18,7 @@ Config.setModeConfig('ios', {
   modalEnter: 'modal-slide-in',
   modalLeave: 'modal-slide-out',
 
-  tabBarPlacement: 'bottom',
+  tabbarPlacement: 'bottom',
   viewTransition: 'ios',
 
   popupPopIn: 'popup-pop-in',
@@ -42,7 +42,7 @@ Config.setModeConfig('md', {
   modalEnter: 'modal-md-slide-in',
   modalLeave: 'modal-md-slide-out',
 
-  tabBarPlacement: 'top',
+  tabbarPlacement: 'top',
   viewTransition: 'md',
 
   popupPopIn: 'popup-md-pop-in',

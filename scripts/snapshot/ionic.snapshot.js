@@ -54,8 +54,9 @@ var IonicSnapshot = function(options) {
         };
       });
     });
-    process.on('exit', function() {
-      if (!self.shouldUpload) return;
+
+    process.on('exit', function(code) {
+      if (!self.shouldUpload || code === 1) return;
 
       if (self.highestMismatch > 1) {
         log(colors.red('Highest Mismatch: ' + self.highestMismatch + '%'));
@@ -127,34 +128,45 @@ var IonicSnapshot = function(options) {
               { form: self.testData },
               function (error, response, body) {
                 try {
-                  var rspData = JSON.parse(body);
-                  self.highestMismatch = Math.max(self.highestMismatch, rspData.Mismatch);
+                  if (error) {
+                    log(specIdString, colors.red('error posting screenshot:'), error);
+                    process.exit(1);
 
-                  var mismatch = Math.round(rspData.Mismatch * 100) / 100;
+                  } else if (response.statusCode >= 400) {
+                    log(specIdString, colors.red('error posting screenshot:'), response.statusCode, body);
+                    process.exit(1);
 
-                  if (rspData.Mismatch > 1) {
-                    log(specIdString, colors.red('Mismatch: ' + mismatch + '%'), colors.gray(spec.getFullName()));
-                  } else if (rspData.Mismatch > 0) {
-                    log(specIdString, colors.yellow('Mismatch: ' + mismatch + '%'), colors.gray(spec.getFullName()));
                   } else {
-                    log(specIdString, colors.green('Mismatch: ' + mismatch + '%'), colors.gray(spec.getFullName()));
-                  }
+                    var rspData = JSON.parse(body);
+                    self.highestMismatch = Math.max(self.highestMismatch, rspData.Mismatch);
 
-                  var resultKey = (((rspData.Mismatch * 1000) + 1000000) + '').split('.')[0] + '-' + spec.id;
-                  self.results[resultKey] = {
-                    index: spec.id,
-                    name: spec.getFullName(),
-                    mismatch: mismatch,
-                    compareUrl: rspData.CompareUrl,
-                    screenshotUrl: rspData.ScreenshotUrl,
-                  };
+                    var mismatch = Math.round(rspData.Mismatch * 100) / 100;
 
-                  if (rspData.IsMismatch) {
-                    self.mismatches.push(resultKey);
+                    if (rspData.Mismatch > 1) {
+                      log(specIdString, colors.red('Mismatch: ' + mismatch + '%'), colors.gray(spec.getFullName()));
+                    } else if (rspData.Mismatch > 0) {
+                      log(specIdString, colors.yellow('Mismatch: ' + mismatch + '%'), colors.gray(spec.getFullName()));
+                    } else {
+                      log(specIdString, colors.green('Mismatch: ' + mismatch + '%'), colors.gray(spec.getFullName()));
+                    }
+
+                    var resultKey = (((rspData.Mismatch * 1000) + 1000000) + '').split('.')[0] + '-' + spec.id;
+                    self.results[resultKey] = {
+                      index: spec.id,
+                      name: spec.getFullName(),
+                      mismatch: mismatch,
+                      compareUrl: rspData.CompareUrl,
+                      screenshotUrl: rspData.ScreenshotUrl,
+                    };
+
+                    if (rspData.IsMismatch) {
+                      self.mismatches.push(resultKey);
+                    }
                   }
 
                 } catch(e) {
-                  log(specIdString, colors.red('reportSpecResults', 'error posting screenshot:'), e);
+                  log(specIdString, colors.red('error parsing screenshot response:'), e);
+                  process.exit(1);
                 }
                 requestDeferred.resolve();
               }

@@ -2,18 +2,18 @@
 // Material Design Tabs
 // --------------------------------------------------
 
-$tab-bar-md-item-padding:             12px 10px 5px 10px !default;
-$tab-bar-md-item-font-size:           1.4rem !default;
-$tab-bar-md-item-font-weight:         500 !default;
-$tab-bar-md-item-icon-size:           2.4rem !default;
-$tab-bar-md-item-height:              4.8rem !default;
+$tabbar-md-item-padding:             12px 10px 5px 10px !default;
+$tabbar-md-item-font-size:           1.4rem !default;
+$tabbar-md-item-font-weight:         500 !default;
+$tabbar-md-item-icon-size:           2.4rem !default;
+$tabbar-md-item-height:              4.8rem !default;
 
 
 .tab-button {
-  padding: $tab-bar-md-item-padding;
-  min-height: $tab-bar-md-item-height;
-  font-size: $tab-bar-md-item-font-size;
-  font-weight: $tab-bar-md-item-font-weight;
+  padding: $tabbar-md-item-padding;
+  min-height: $tabbar-md-item-height;
+  font-size: $tabbar-md-item-font-size;
+  font-weight: $tabbar-md-item-font-weight;
 
   box-shadow: none;
   border-radius: 0;
@@ -27,17 +27,17 @@ $tab-bar-md-item-height:              4.8rem !default;
 }
 
 .tab-button-icon {
-  font-size: $tab-bar-md-item-icon-size;
-  min-width: $tab-bar-md-item-icon-size + 5;
+  font-size: $tabbar-md-item-icon-size;
+  min-width: $tabbar-md-item-icon-size + 5;
 }
 
-[tab-bar-icons=bottom] .tab-button {
+[tabbar-icons=bottom] .tab-button {
   padding-top: 8px;
   padding-bottom: 8px;
 }
 
-[tab-bar-icons=right] .tab-button,
-[tab-bar-icons=left] .tab-button {
+[tabbar-icons=right] .tab-button,
+[tabbar-icons=left] .tab-button {
   padding-bottom: 10px;
 
   icon {
@@ -65,6 +65,6 @@ tab-highlight {
   }
 }
 
-[tab-bar-placement=bottom] tab-highlight {
+[tabbar-placement=bottom] tab-highlight {
   top: 0;
 }

@@ -2,48 +2,48 @@
 // iOS Tabs
 // --------------------------------------------------
 
-$tab-bar-ios-item-padding:             0px 10px !default;
-$tab-bar-ios-item-font-size:           10px !default;
-$tab-bar-ios-item-icon-size:           32px !default;
-$tab-bar-ios-height:                   49px !default;
+$tabbar-ios-item-padding:             0px 10px !default;
+$tabbar-ios-item-font-size:           10px !default;
+$tabbar-ios-item-icon-size:           32px !default;
+$tabbar-ios-height:                   49px !default;
 
 
-tab-bar {
+tabbar {
   border-top: 1px solid $toolbar-ios-border-color;
 }
 
-ion-tabs[tab-bar-placement=top] tab-bar {
+ion-tabs[tabbar-placement=top] tabbar {
   border-top: none;
   border-bottom: 1px solid $toolbar-ios-border-color;
 }
 
 .tab-button {
-  padding: $tab-bar-ios-item-padding;
-  min-height: $tab-bar-ios-height;
+  padding: $tabbar-ios-item-padding;
+  min-height: $tabbar-ios-height;
 }
 
 .tab-button-text {
   margin-bottom: 0;
-  min-height: $tab-bar-ios-item-font-size + 1;
-  font-size: $tab-bar-ios-item-font-size;
+  min-height: $tabbar-ios-item-font-size + 1;
+  font-size: $tabbar-ios-item-font-size;
 }
 
 .has-title-only .tab-button-text {
-  font-size: $tab-bar-ios-item-font-size + 2;
+  font-size: $tabbar-ios-item-font-size + 2;
 }
 
 .tab-button-icon {
-  font-size: $tab-bar-ios-item-icon-size;
-  height: $tab-bar-ios-item-icon-size;
-  min-width: $tab-bar-ios-item-icon-size + 5;
+  font-size: $tabbar-ios-item-icon-size;
+  height: $tabbar-ios-item-icon-size;
+  min-width: $tabbar-ios-item-icon-size + 5;
 
   &:before {
     vertical-align: top;
   }
 }
 
-[tab-bar-icons=right] .tab-button,
-[tab-bar-icons=left] .tab-button {
+[tabbar-icons=right] .tab-button,
+[tabbar-icons=left] .tab-button {
 
   .tab-button-text {
     font-size: 1.4rem;
@@ -59,13 +59,13 @@ ion-tabs[tab-bar-placement=top] tab-bar {
   }
 }
 
-[tab-bar-icons=hide] .tab-button-text {
+[tabbar-icons=hide] .tab-button-text {
   font-size: 1.4rem;
   line-height: 1.1;
 }
 
 .tab-button.has-title-only {
-  min-height: $tab-bar-ios-height - 8;
+  min-height: $tabbar-ios-height - 8;
 
   .tab-button-text {
     font-size: 1.4rem;
@@ -74,16 +74,16 @@ ion-tabs[tab-bar-placement=top] tab-bar {
 }
 
 .tab-button.icon-only {
-  min-height: $tab-bar-ios-height - 8;
+  min-height: $tabbar-ios-height - 8;
 }
 
 &.hairlines ion-tabs {
 
-  tab-bar {
+  tabbar {
     border-top-width: 0.55px;
   }
 
-  &[tab-bar-placement="top"] tab-bar {
+  &[tabbar-placement="top"] tabbar {
     border-bottom-width: 0.55px;
   }
 

@@ -28,9 +28,9 @@ $z-index-item-options:           1;
 $flex-order-toolbar-top:         -10;
 $flex-order-toolbar-bottom:      10;
 
-$flex-order-tab-bar-navbar:      -30;
-$flex-order-tab-bar-top:         -20;
-$flex-order-tab-bar-bottom:      20;
+$flex-order-tabbar-navbar:      -30;
+$flex-order-tabbar-top:         -20;
+$flex-order-tabbar-bottom:      20;
 
 
 
@@ -138,7 +138,7 @@ scroll-content {
   will-change: scroll-position;
 }
 
-ion-tab-bar {
+ion-tabbar {
   display: block;
   position: absolute;
   top: 0;

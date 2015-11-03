@@ -22,18 +22,18 @@ import {Icon} from '../icon/icon';
  * [properties you set on each Tab](../Tab/#tab_properties).
  *
  * To override the platform specific TabBar placement, use the
- * `tab-bar-placement` property:
+ * `tabbar-placement` property:
  *
  * ```ts
- * <ion-tabs tab-bar-placement="top">
+ * <ion-tabs tabbar-placement="top">
  *   <ion-tab [root]="tabRoot"></ion-tab>
  * </ion-tabs>
  * ```
  *
- * To change the location of the icons in the TabBar, use the `tab-bar-icons`
+ * To change the location of the icons in the TabBar, use the `tabbar-icons`
  * property:
  * ```ts
- * <ion-tabs tab-bar-icons="bottom">
+ * <ion-tabs tabbar-icons="bottom">
  *   <ion-tab [root]="tabRoot"></ion-tab>
  * </ion-tabs>
  * ```
@@ -61,23 +61,23 @@ import {Icon} from '../icon/icon';
 @ConfigComponent({
   selector: 'ion-tabs',
   defaultInputs: {
-    'tabBarPlacement': 'bottom',
-    'tabBarIcons': 'top',
+    'tabbarPlacement': 'bottom',
+    'tabbarIcons': 'top',
     'preloadTabs': true
   },
   template:
     '<ion-navbar-section>' +
       '<template navbar-anchor></template>' +
     '</ion-navbar-section>' +
-    '<ion-tab-bar-section>' +
-      '<tab-bar role="tablist">' +
+    '<ion-tabbar-section>' +
+      '<tabbar role="tablist">' +
         '<a *ng-for="#t of tabs" [tab]="t" class="tab-button" role="tab">' +
           '<icon [name]="t.tabIcon" [is-active]="t.isSelected" class="tab-button-icon"></icon>' +
           '<span class="tab-button-text">{{t.tabTitle}}</span>' +
         '</a>' +
         '<tab-highlight></tab-highlight>' +
-      '</tab-bar>' +
-    '</ion-tab-bar-section>' +
+      '</tabbar>' +
+    '</ion-tabbar-section>' +
     '<ion-content-section>' +
       '<ng-content></ng-content>' +
     '</ion-content-section>',
