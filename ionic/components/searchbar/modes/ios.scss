@@ -92,7 +92,7 @@ ion-searchbar {
   border-bottom-width: 0.55px;
 }
 
-ion-toolbar {
+.toolbar {
 
   ion-searchbar {
     background: transparent;
@@ -101,6 +101,15 @@ ion-toolbar {
     .searchbar-input {
       background-color: #E5E5E5;
     }
+
+    .searchbar-cancel {
+      padding-left: 8px;
+      right: -10px;
+    }
+  }
+
+  .searchbar-cancel.left-align {
+    right: 0px;
   }
 
 }
