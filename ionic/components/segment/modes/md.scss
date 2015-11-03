@@ -11,7 +11,7 @@ $segment-button-md-border-color-activated:     color(primary) !default;
 $segment-button-md-border-bottom:              2px solid rgba(#000000, 0.10) !default;
 
 
-.ion-segment {
+ion-segment {
 
   button,
   [button] {
@@ -32,13 +32,16 @@ $segment-button-md-border-bottom:              2px solid rgba(#000000, 0.10) !de
     border-radius: 0;
     border-bottom: $segment-button-md-border-bottom;
   }
+
 }
 
-ion-toolbar {
-  .ion-segment {
+.toolbar {
+
+  ion-segment {
     width: 95%;
     margin: 0 auto;
   }
+
 }
 
 // Generate Default Button Colors
@@ -65,5 +68,6 @@ ion-toolbar {
         }
       }
     }
+
   }
 }

@@ -29,7 +29,7 @@ import {dom} from 'ionic/util';
   inputs: [
     'value'
   ],
-  template: '<div class="ion-segment"><ng-content></ng-content></div>',
+  template: '<ng-content></ng-content>',
   directives: [forwardRef(() => SegmentButton)]
 })
 export class Segment extends Ion {

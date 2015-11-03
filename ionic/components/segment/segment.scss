@@ -6,12 +6,10 @@ $segment-button-padding:    0 16px !default;
 
 
 ion-segment {
-  display: block;
-  width: 100%;
-}
 
-.ion-segment {
   display: flex;
+  align-items: center;
+  justify-content: center;
   flex: 1;
   width: 100%;
 

@@ -17,11 +17,6 @@ $segment-button-ios-toolbar-button-max-width: 100px !default;
 
 
 ion-segment {
-  display: flex;
-  align-items: center;
-}
-
-.ion-segment {
 
   button,
   [button] {
@@ -70,15 +65,22 @@ ion-segment {
 
 }
 
-ion-toolbar {
-  .ion-segment {
-    justify-content: center;
+.toolbar {
+
+  // TODO this is to get the segment centered with nav-items, but like ion-title it will need to be fixed
+  ion-segment {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
 
     button,
     [button] {
       max-width: $segment-button-ios-toolbar-button-max-width;
     }
   }
+
 }
 
 // Generate Default Button Colors
@@ -111,5 +113,6 @@ ion-toolbar {
         }
       }
     }
+
   }
 }
