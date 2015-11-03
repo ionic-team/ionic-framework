@@ -4,7 +4,7 @@
   <ion-content>
     <!-- <form [ng-form-model]="form">  -->
 
-      <ion-search-bar [(ng-model)]="searchQuery"></ion-search-bar>
+      <ion-searchbar [(ng-model)]="searchQuery"></ion-searchbar>
       <ion-list inset #list>
         <ion-item-sliding *ng-for="#item of getItems()" (click)="doThis">
           {{item.title}}

@@ -11,11 +11,11 @@ import {ConfigComponent} from '../../config/decorators';
  *
  * @usage
  * ```html
- * <ion-search-bar ng-control="searchQuery"></ion-search-bar>
+ * <ion-searchbar ng-control="searchQuery"></ion-searchbar>
  * ```
  */
 @ConfigComponent({
-  selector: 'ion-search-bar',
+  selector: 'ion-searchbar',
   defaultInputs: {
     'showCancel': false,
     'cancelText': 'Cancel',
@@ -26,12 +26,12 @@ import {ConfigComponent} from '../../config/decorators';
     }
   },
   template:
-    '<div class="search-bar-input-container" [class.left-align]="shouldLeftAlign">' +
+    '<div class="searchbar-input-container" [class.left-align]="shouldLeftAlign">' +
       '<input [(value)]="query" (focus)="inputFocused()" (blur)="inputBlurred()" ' +
-      '(input)="inputChanged($event)" class="search-bar-input" type="search" [attr.placeholder]="placeholder">' +
-      '<button clear *ng-if="query" class="search-bar-close-icon" (click)="clearInput($event)"></button>' +
+      '(input)="inputChanged($event)" class="searchbar-input" type="search" [attr.placeholder]="placeholder">' +
+      '<button clear *ng-if="query" class="searchbar-close-icon" (click)="clearInput($event)"></button>' +
     '</div>' +
-    '<button *ng-if="showCancel" (click)="cancelAction($event, query)" class="search-bar-cancel" [class.left-align]="shouldLeftAlign">{{cancelText}}</button>',
+    '<button *ng-if="showCancel" (click)="cancelAction($event, query)" class="searchbar-cancel" [class.left-align]="shouldLeftAlign">{{cancelText}}</button>',
   directives: [FORM_DIRECTIVES, NgIf, NgClass]
 })
 
@@ -62,7 +62,7 @@ export class SearchBar extends Ion {
 
   // Add the margin for iOS
   afterViewInit() {
-    this.cancelButton = this.elementRef.nativeElement.querySelector('.search-bar-cancel');
+    this.cancelButton = this.elementRef.nativeElement.querySelector('.searchbar-cancel');
 
     if (this.cancelButton) {
       this.cancelWidth = this.cancelButton.offsetWidth;

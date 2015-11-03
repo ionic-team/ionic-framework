@@ -1,7 +1,7 @@
 import {FORM_DIRECTIVES, FormBuilder, Validators, Control, ControlGroup} from 'angular2/angular2';
 
 import {App} from 'ionic/ionic';
-import {SearchPipe} from 'ionic/components/search-bar/search-bar';
+import {SearchPipe} from 'ionic/components/searchbar/searchbar';
 
 @App({
   templateUrl: 'main.html',

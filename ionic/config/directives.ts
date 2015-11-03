@@ -24,7 +24,7 @@ import {TextInput, TextInputElement} from '../components/text-input/text-input';
 import {Label} from '../components/text-input/label';
 import {Segment, SegmentButton, SegmentControlValueAccessor} from '../components/segment/segment';
 import {RadioGroup, RadioButton} from '../components/radio/radio';
-import {SearchBar} from '../components/search-bar/search-bar';
+import {SearchBar} from '../components/searchbar/searchbar';
 import {Nav} from '../components/nav/nav';
 import {NavPush, NavPop} from '../components/nav/nav-push';
 import {NavRouter} from '../components/nav/nav-router';
