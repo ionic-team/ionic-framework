@@ -11,6 +11,10 @@ var fs = require('fs'),
 // }
 
 describe('#Generate', function() {
+  beforeEach(function() {
+    spyOn(console, 'log');
+  });
+  
   it('should have generate exported', function() {
     expect(Generate).toBeDefined();
     expect(Generate.generate).toBeDefined();
@@ -28,7 +32,7 @@ describe('#Generate', function() {
       expect(Generate.generators).toBeDefined();
       expect(Object.keys(Generate.generators).length).toBeGreaterThan(0);
       expect(Generate.generators.page).toBeDefined();
-      expect(Generate.generators['page-tabs']).toBeDefined();
+      expect(Generate.generators['tabs']).toBeDefined();
     });
 
     it('should be able to load generators', function() {
@@ -42,7 +46,7 @@ describe('#Generate', function() {
     });
 
     it('should throw an error trying to use a generator that does not exist', function() {
-      var generatorOptions = { appDirectory: '/fake/ionic/path', name: 'About', generatorName: 'tabz' };
+      var generatorOptions = { appDirectory: '/fake/ionic/path', name: 'About', generator: 'tabz' };
       expect(function() {
         Generate.generate(generatorOptions);
       }).toThrow('There is no generator available with that name: tabz.');
@@ -50,7 +54,7 @@ describe('#Generate', function() {
 
     it('should call the appropriate generator', function() {
       spyOn(Generate, 'createScaffoldDirectories');
-      var generatorOptions = { appDirectory: '/fake/ionic/path', name: 'About', generatorName: 'page' };
+      var generatorOptions = { appDirectory: '/fake/ionic/path', name: 'About', generator: 'page' };
       var generatorSpy = {run: createSpy()};
       var realGenerator = Generate.generators['page'];
       Generate.generators['page'] = generatorSpy;
@@ -73,7 +77,7 @@ describe('#Generate', function() {
 
     describe('#generate:page', function() {
       it('should generate all the templates for a page', function() {
-        var generatorOptions = { appDirectory: '/ionic/app/dir', name: 'About', generatorName: 'page' };
+        var generatorOptions = { appDirectory: '/ionic/app/dir', name: 'About', generator: 'page' };
         var genOpts = {
           appDirectory: '/ionic/app/dir',
           fileName: 'about',
@@ -107,7 +111,7 @@ describe('#Generate', function() {
 
       var options = {
         appDirectory: appDir,
-        generatorName: 'page',
+        generator: 'page',
         name: 'MyPage',
       }
 

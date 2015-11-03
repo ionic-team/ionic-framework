@@ -41,8 +41,6 @@ Generator.promptForTabName = function promptForTabName(tabIndex, options) {
 }
 
 Generator.run = function run(options) {
-  console.log('got options!', options);
-
   //Need to query user for tabs:
   options.rootDirectory = options.rootDirectory || path.join('www', 'app');
   var savePath = path.join(options.appDirectory, options.rootDirectory, options.fileName);
@@ -51,7 +49,6 @@ Generator.run = function run(options) {
 
   return Generator.promptForTabCount()
   .then(function(count) {
-    console.log('count', count);
     var promise = Q();
     for(var i = 0, j = parseInt(count); i < j; i++) {
       (function(index) {
@@ -70,7 +67,6 @@ Generator.run = function run(options) {
     templates.forEach(function(template) {
       options.templatePath = template.file;
       options.tabs = Generator.tabs;
-      console.log('generating stuffs', options);
       var renderedTemplate = Generate.renderTemplateFromFile(options);
       var saveFilePath = path.join(savePath, [options.fileName, template.type].join(''));
       // console.log('renderedTemplate', renderedTemplate, 'saving to', saveFilePath);
@@ -80,7 +76,6 @@ Generator.run = function run(options) {
 
     //Now render the individual tab pages
     Generator.tabs.forEach(function(tab) {
-      console.log('Tab:', tab);
       tab.generatorName = 'page';
       tab.appDirectory = tab.appDirectory;
       Generate.generate(tab);

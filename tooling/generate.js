@@ -19,7 +19,7 @@ Generate.log = function log() {
   console.log('DEBUG'.red, arguments);
 };
 
-// options: appDirectory, generatorName, name
+// options: appDirectory, generator, name
 Generate.generate = function generate(options) {
   Generate.inquirer = inquirer;
   // Generate.log('Generate options', options);
@@ -32,12 +32,12 @@ Generate.generate = function generate(options) {
     Generate.log = options.log;
   }
 
-  if (options.generatorName && !Generate.generators[options.generatorName]) {
-    throw new Error('There is no generator available with that name: ' +   options.generatorName + '.');
+  if (options.generator && !Generate.generators[options.generator]) {
+    throw new Error('There is no generator available with that name: ' +   options.generator + '.');
   }
 
-  if (!options.generatorName) {
-    options.generatorName = 'page';
+  if (!options.generator) {
+    options.generator = 'page';
   }
 
   var generateOptions = {
@@ -46,16 +46,16 @@ Generate.generate = function generate(options) {
     fileName: Generate.fileName(options.name),
     jsClassName: Generate.jsClassName(options.name),
     name: options.name,
-    template: options.generatorName
+    template: options.generator
   };
 
   Generate.createScaffoldDirectories({appDirectory: options.appDirectory, fileName: generateOptions.fileName});
 
   try {
     //Try to run the generator if it supplies a run method.
-    var generator = Generate.generators[options.generatorName];
+    var generator = Generate.generators[options.generator];
     if (generator && generator.run) {
-      return Generate.generators[options.generatorName].run(generateOptions);
+      return Generate.generators[options.generator].run(generateOptions);
     } else {
       return Generate.defaultTemplates(generateOptions);
     }
