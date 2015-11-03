@@ -47,18 +47,16 @@ module.exports = function(gulp, argv, buildConfig) {
     snapshotValues.params.upload = !quickMode;
 
     var protractorArgs = [
-      '--browser <%= browser %>',
-      '--platform <%= platform %>',
-      '--params.platform_id=<%= params.platform_id %>',
-      '--params.platform_index=<%= params.platform_index %>',
-      '--params.platform_count=<%= params.platform_count %>',
-      '--params.width=<%= params.width %>',
-      '--params.height=<%= params.height %>',
-      '--params.test_id=<%= params.test_id %>',
-      '--params.upload=<%= params.upload %>',
-    ].map(function(argument) {
-      return _.template(argument, snapshotValues);
-    });
+      '--browser ' + snapshotValues.browser,
+      '--platform ' + snapshotValues.platform,
+      '--params.platform_id=' +  snapshotValues.params.platform_id,
+      '--params.platform_index=' +  snapshotValues.params.platform_index,
+      '--params.platform_count=' +  snapshotValues.params.platform_count,
+      '--params.width=' +  snapshotValues.params.width,
+      '--params.height=' +  snapshotValues.params.height,
+      '--params.test_id=' +  snapshotValues.params.test_id,
+      '--params.upload=' +  snapshotValues.params.upload
+    ];
 
     e2ePublish(testId, false);
 
@@ -70,16 +68,14 @@ module.exports = function(gulp, argv, buildConfig) {
       stdio: [process.stdin, process.stdout, 'pipe']
     });
 
-    var finish = _.once(function(err) {
-      err && done(err) || done();
+    child.stderr.on('data', function(data) {
       protractorHttpServer.close();
+      done('Protractor tests failed. Error:', data.toString());
     });
 
-    child.stderr.on('data', function(data) {
-      finish('Protractor tests failed. Error:', data.toString());
-    });
     child.on('exit', function() {
-      finish();
+      protractorHttpServer.close();
+      done();
     });
   }
 
@@ -94,7 +90,7 @@ module.exports = function(gulp, argv, buildConfig) {
     var chars = 'abcdefghijklmnopqrstuvwxyz';
     var id = chars.charAt(Math.floor(Math.random() * chars.length));
     chars += '0123456789';
-    while (id.length < 3) {
+    while (id.length < 4) {
       id += chars.charAt(Math.floor(Math.random() * chars.length));
     }
     return id;

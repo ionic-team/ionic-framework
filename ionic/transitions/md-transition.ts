@@ -26,6 +26,7 @@ class MDTransition extends Animation {
 
     // entering content item moves in bottom to center
     let enteringPage = new Animation(enteringView.pageRef());
+    enteringPage.before.addClass('show-page');
     this.add(enteringPage);
 
     if (backDirection) {
@@ -46,7 +47,7 @@ class MDTransition extends Animation {
         enteringBackButton.before.addClass(SHOW_BACK_BTN_CSS);
       } else {
         enteringBackButton.before.removeClass(SHOW_BACK_BTN_CSS);
-      }  
+      }
     }
 
     // setup leaving view

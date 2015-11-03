@@ -106,7 +106,7 @@ ion-content-section {
 }
 
 ion-page {
-  display: flex;
+  display: none;
   flex-direction: column;
   position: absolute;
   top: 0;
@@ -114,6 +114,10 @@ ion-page {
   width: 100%;
   height: 100%;
   transform: translateZ(0);
+
+  &.show-page {
+    display: flex;
+  }
 }
 
 ion-content {

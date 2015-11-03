@@ -60,6 +60,9 @@ export class OverlayController {
           animation.duration(0);
         }
         animation.before.addClass(overlayType);
+        if (overlayType == 'modal') {
+          animation.before.addClass('show-page');
+        }
 
         this.app.setEnabled(false, animation.duration());
         this.app.setTransitioning(true, animation.duration());

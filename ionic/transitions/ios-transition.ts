@@ -31,6 +31,9 @@ class IOSTransition extends Animation {
     let enteringHasNavbar = enteringView.hasNavbar();
     let leavingHasNavbar = leavingView && leavingView.hasNavbar();
 
+    let enteringPage = new Animation(enteringView.pageRef());
+    enteringPage.before.addClass('show-page');
+    this.add(enteringPage);
 
     // entering content
     let enteringContent = new Animation(enteringView.contentRef());
