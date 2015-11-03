@@ -22,9 +22,9 @@ import {Icon} from '../icon/icon';
     'cancelText': 'Cancel',
     'placeholder': 'Search',
     'cancelAction': function(event, query) {
-      console.log('Default Cancel');
       this.element = this.elementRef.nativeElement.querySelector('input');
       this.element.blur();
+      this.clearInput();
     }
   },
   host: {

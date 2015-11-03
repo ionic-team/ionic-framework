@@ -38,7 +38,7 @@ ion-searchbar {
   background-size: $searchbar-ios-input-search-icon-size;
   background-repeat: no-repeat;
   position: absolute;
-  left: 10px;
+  left: 9px;
   top: 9px;
 
   @include calc(margin-left, "50% - 60px");
@@ -92,8 +92,7 @@ ion-searchbar.left-align {
     margin-left: 0;
   }
   .searchbar-input {
-    padding-left: 28px;
-    background-position: 8px;
+    padding-left: 30px;
   }
 }
 
@@ -117,7 +116,7 @@ ion-searchbar.left-align {
     }
   }
 
-  .left-align .searchbar-cancel {
+  .focused .searchbar-cancel {
     right: 0px;
   }
 
@@ -133,10 +132,10 @@ ion-searchbar.left-align {
 @each $color, $value in $colors {
 
   ion-searchbar[#{$color}] {
-    //background-color: $value;
 
     .searchbar-cancel {
       color: $value;
     }
+    
   }
 }

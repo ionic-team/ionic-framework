@@ -25,10 +25,6 @@ ion-searchbar {
   background: $searchbar-md-background-color;
 }
 
-.toolbar ion-searchbar {
-  padding: 3px;
-}
-
 .searchbar-search-icon,
 .searchbar-cancel-icon {
   width: $searchbar-md-input-search-icon-size + 1;
@@ -51,18 +47,6 @@ ion-searchbar {
   margin: 0;
   top: 0;
   left: 10px;
-}
-
-.focused {
-
-  .searchbar-search-icon {
-    display: none;
-  }
-
-  .searchbar-cancel-icon {
-    display: inline-flex;
-  }
-
 }
 
 .searchbar-input {
@@ -98,4 +82,29 @@ ion-searchbar {
 
 .searchbar-cancel {
   display: none;
+}
+
+.focused {
+
+  .searchbar-search-icon {
+    display: none;
+  }
+
+  .searchbar-cancel-icon {
+    display: inline-flex;
+  }
+
+}
+
+.toolbar {
+
+  ion-searchbar {
+    padding: 3px;
+  }
+
+  .searchbar-cancel-icon {
+    left: 14px;
+  }
+
+
 }
