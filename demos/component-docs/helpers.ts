@@ -54,7 +54,11 @@ import {ModalsPage} from './modals/modals';
 import {NavigationPage} from './navigation/navigation';
 import {PopupsPage} from './popups/popups';
 import {SlidesPage} from './slides/slides';
+
 import {TabsPage} from './tabs/tabs';
+import {TabsIconPage} from './tabs/tabs-icon';
+import {TabsIconTextPage} from './tabs/tabs-icon-text';
+
 
 @Directive({
   selector: '.android-attr',
@@ -160,7 +164,10 @@ export function getPageFor(hash) {
         'navigation': NavigationPage,
         'popups': PopupsPage,
         'slides': SlidesPage,
-        'tabs': TabsPage
+
+        'tabs': TabsPage,
+        'tabs-icon': TabsIconPage,
+        'tabs-icon-text': TabsIconTextPage,
     }[hash]
 }
 
