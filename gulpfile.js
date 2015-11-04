@@ -59,14 +59,14 @@ function buildDemoBundle(opts, done) {
       // pretty sure this is a race, but it works
       numWebpacks++;
       webpack(config, function(err, stats){
-        // var statsOptions = {
-        //   'colors': true,
-        //   'modules': true,
-        //   'chunks': false,
-        //   'exclude': ['node_modules'],
-        //   'errorDetails': true
-        // }
-        // console.log(stats.toString(statsOptions));
+      //   var statsOptions = {
+      //    'colors': true,
+      //     'modules': true,
+      //     'chunks': false,
+      //     'exclude': ['node_modules'],
+      //     'errorDetails': true
+      //  }
+      // console.log(stats.toString(statsOptions));
         if (--numWebpacks === 0) done();
       })
     })

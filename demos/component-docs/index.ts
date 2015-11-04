@@ -14,6 +14,7 @@ class DemoApp {
   androidAttribute: any;
 
   constructor(app: IonicApp, platform: Platform) {
+    debugger;
     this.app = app;
     this.platform = platform;
     this.androidAttribute = helpers.AndroidAttribute;
@@ -35,7 +36,7 @@ class DemoApp {
               this.nextPage = ActionSheetPage;
             }
             let nav = this.app.getComponent('nav');
-            helpers.debounce(nav.setRoot(this.nextPage), 500, true);
+            nav.setRoot(this.nextPage);
           }
         });
       });

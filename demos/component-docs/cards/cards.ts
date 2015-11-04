@@ -2,11 +2,13 @@ import {Page} from 'ionic/ionic';
 import {forwardRef} from 'angular2/angular2';
 import {AndroidAttribute} from '../helpers';
 
+export * from './cards-background/pages';
+
 @Page({
   templateUrl: 'cards/cards-basic.html',
   directives: [forwardRef(() => AndroidAttribute)]
 })
-export class CardsBasicPage {
+export class BasicPage {
     constructor() {
 
     }
@@ -16,7 +18,7 @@ export class CardsBasicPage {
   templateUrl: 'cards/cards-header.html',
   directives: [forwardRef(() => AndroidAttribute)]
 })
-export class CardsHeaderPage {
+export class HeaderPage {
     constructor() {
 
     }
@@ -27,7 +29,7 @@ export class CardsHeaderPage {
   templateUrl: 'cards/cards-list.html',
   directives: [forwardRef(() => AndroidAttribute)]
 })
-export class CardsListPage {
+export class ListPage {
     constructor() {
 
     }
@@ -37,17 +39,7 @@ export class CardsListPage {
   templateUrl: 'cards/cards-image.html',
   directives: [forwardRef(() => AndroidAttribute)]
 })
-export class CardsImagePage {
-    constructor() {
-
-    }
-}
-
-@Page({
-  templateUrl: 'cards/cards-background.html',
-  directives: [forwardRef(() => AndroidAttribute)]
-})
-export class CardsBackgroundPage {
+export class ImagePage {
     constructor() {
 
     }
@@ -57,7 +49,7 @@ export class CardsBackgroundPage {
   templateUrl: 'cards/cards-advanced-social.html',
   directives: [forwardRef(() => AndroidAttribute)]
 })
-export class CardsAdvancedSocialPage {
+export class AdvancedSocialPage {
     constructor() {
 
     }
@@ -67,7 +59,7 @@ export class CardsAdvancedSocialPage {
   templateUrl: 'cards/cards-advanced-map.html',
   directives: [forwardRef(() => AndroidAttribute)]
 })
-export class CardsAdvancedMapPage {
+export class AdvancedMapPage {
     constructor() {
 
     }
@@ -77,7 +69,7 @@ export class CardsAdvancedMapPage {
   templateUrl: 'cards/cards-advanced-weather.html',
   directives: [forwardRef(() => AndroidAttribute)]
 })
-export class CardsAdvancedWeatherPage {
+export class AdvancedWeatherPage {
     constructor() {
 
     }

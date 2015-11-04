@@ -15,14 +15,7 @@ import {ButtonsPage,
         IconButtonsPage,
         ButtonsInComponentsPage} from './buttons/buttons';
 
-import {CardsBasicPage,
-        CardsImagePage,
-        CardsHeaderPage,
-        CardsListPage,
-        CardsBackgroundPage,
-        CardsAdvancedMapPage,
-        CardsAdvancedSocialPage,
-        CardsAdvancedWeatherPage} from './cards/cards';
+import * as cards from './cards/cards';
 
 import {FormsPage,
         FixedInlinePage,
@@ -124,15 +117,15 @@ export function getPageFor(hash) {
         'button-sizes': ButtonSizesPage,
         'icon-buttons': IconButtonsPage,
 
-        'cards': CardsBasicPage,
-        'card-header': CardsHeaderPage,
-        'card-list': CardsListPage,
-        'card-image': CardsImagePage,
-        'card-background': CardsBackgroundPage,
-        'advanced-cards': CardsAdvancedSocialPage,
-        'card-advanced-map': CardsAdvancedMapPage,
-        'card-advanced-social': CardsAdvancedSocialPage,
-        'card-advanced-weather': CardsAdvancedWeatherPage,
+        'cards': cards.BasicPage,
+        'card-header': cards.HeaderPage,
+        'card-list': cards.ListPage,
+        'card-image': cards.ImagePage,
+        'card-background': cards.BackgroundPage,
+        'advanced-cards': cards.AdvancedSocialPage,
+        'card-advanced-map': cards.AdvancedMapPage,
+        'card-advanced-social': cards.AdvancedSocialPage,
+        'card-advanced-weather': cards.AdvancedWeatherPage,
 
         'checkbox': CheckboxPage,
         'radio': RadioPage,

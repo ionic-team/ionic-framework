@@ -27,6 +27,10 @@ body.has-scrollbar ion-menu scroll-content {
   margin-right: 0;
 }
 
+ion-page {
+  display: block;
+}
+
 section.hidden {
   display: none !important;
 }
