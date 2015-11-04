@@ -35,9 +35,7 @@ export class Content extends Ion {
    * @param {ElementRef} elementRef  A reference to the component's DOM element.
    * @param {Config} config  The config object to change content's default settings.
    */
-  constructor(elementRef: ElementRef, config: Config, keyboard: Keyboard,
-    @Optional() viewCtrl: ViewController) {
-    private _zone: NgZone) {
+  constructor(elementRef: ElementRef, config: Config, keyboard: Keyboard, @Optional() viewCtrl: ViewController, private _zone: NgZone) {
     super(elementRef, config);
     this.scrollPadding = 0;
     this.keyboard = keyboard;
