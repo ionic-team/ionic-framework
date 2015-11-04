@@ -47,13 +47,4 @@ export class ItemGroupTitle {
     // make sure the sticky class gets set on the title
     this.isSticky = true;
   }
-  onInit() {
-    this.zone.runOutsideAngular(() => {
-      setTimeout(() => {
-        if(this.content.getStickyPolyfill()) {
-          this.content.getStickyPolyfill().add(this.elementRef.nativeElement);
-        }
-      });
-    });
-  }
 }
