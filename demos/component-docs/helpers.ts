@@ -2,8 +2,7 @@ import {Directive, ElementRef, Renderer} from 'angular2/angular2';
 import {Platform, Navbar} from 'ionic/ionic';
 
 
-import {ActionSheetPage} from './actionSheet/actionSheet';
-
+import * as actionSheets from './action-sheets/action-sheets';
 import * as buttons from './buttons/buttons';
 import * as cards from './cards/cards';
 
@@ -95,7 +94,7 @@ export function hasScrollbar() {
 
 export function getPageFor(hash) {
     return {
-        'action-sheets': ActionSheetPage,
+        'action-sheets': actionSheets.BasicPage,
 
         'buttons': buttons.BasicPage,
         'block-buttons': buttons.BlockPage,
