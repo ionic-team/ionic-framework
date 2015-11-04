@@ -4,17 +4,7 @@ import {Platform, Navbar} from 'ionic/ionic';
 
 import {ActionSheetPage} from './actionSheet/actionSheet';
 
-import {ButtonsPage,
-        BlockButtonsPage,
-        ClearButtonsPage,
-        FullButtonsPage,
-        OutlineButtonsPage,
-        RoundButtonsPage,
-        FabPage,
-        ButtonSizesPage,
-        IconButtonsPage,
-        ButtonsInComponentsPage} from './buttons/buttons';
-
+import * as buttons from './buttons/buttons';
 import * as cards from './cards/cards';
 
 import {FormsPage,
@@ -106,16 +96,17 @@ export function hasScrollbar() {
 export function getPageFor(hash) {
     return {
         'action-sheets': ActionSheetPage,
-        'buttons': ButtonsPage,
-        'block-buttons': BlockButtonsPage,
-        'clear-buttons': ClearButtonsPage,
-        'full-buttons': FullButtonsPage,
-        'outline-buttons': OutlineButtonsPage,
-        'round-buttons': RoundButtonsPage,
-        'floating-action-buttons': FabPage,
-        'buttons-in-components': ButtonsInComponentsPage,
-        'button-sizes': ButtonSizesPage,
-        'icon-buttons': IconButtonsPage,
+
+        'buttons': buttons.BasicPage,
+        'block-buttons': buttons.BlockPage,
+        'clear-buttons': buttons.ClearPage,
+        'full-buttons': buttons.FullPage,
+        'outline-buttons': buttons.OutlinePage,
+        'round-buttons': buttons.RoundPage,
+        'floating-action-buttons': buttons.FabPage,
+        'buttons-in-components': buttons.ComponentsPage,
+        'button-sizes': buttons.SizesPage,
+        'icon-buttons': buttons.IconsPage,
 
         'cards': cards.BasicPage,
         'card-header': cards.HeaderPage,
