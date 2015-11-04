@@ -1,9 +1,7 @@
-import {Component, Directive, Renderer, ElementRef, EventEmitter, Host, forwardRef, Optional} from 'angular2/angular2';
-import {Control, NgControl, NgFormControl, ControlGroup, ControlDirective} from 'angular2/angular2';
+import {Directive, Renderer, ElementRef, Host, Optional, NgControl} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {Config} from '../../config/config';
-import {dom} from 'ionic/util';
 
 /**
  * @name Segment
@@ -22,47 +20,55 @@ import {dom} from 'ionic/util';
  *     Enemies
  *   </ion-segment-button>
  * </ion-segment>
+ *
+ *
+ * <form [ng-form-model]="myForm">
+ *   <ion-segment ng-control="mapStyle" danger>
+ *     <ion-segment-button value="standard">
+ *       Standard
+ *     </ion-segment-button>
+ *     <ion-segment-button value="hybrid">
+ *       Hybrid
+ *     </ion-segment-button>
+ *     <ion-segment-button value="sat">
+ *       Satellite
+ *     </ion-segment-button>
+ *   </ion-segment>
+ * </form>
  * ```
  */
-@Component({
-  selector: 'ion-segment',
-  inputs: [
-    'value'
-  ],
-  template: '<ng-content></ng-content>',
-  directives: [forwardRef(() => SegmentButton)]
+@Directive({
+  selector: 'ion-segment'
 })
 export class Segment extends Ion {
+  buttons: Array<SegmentButton> = [];
+
   /**
    * TODO
    * @param {NgControl} ngControl  TODO
    * @param {ElementRef} elementRef  TODO
    * @param {Config} config  TODO
-   * @param {Renderer} renderer  TODO
    */
   constructor(
     @Optional() ngControl: NgControl,
     elementRef: ElementRef,
-    config: Config,
-    renderer: Renderer
+    config: Config
   ) {
     super(elementRef, config);
 
-    this.ele = elementRef.nativeElement
-    this.elementRef = elementRef;
-    this.renderer = renderer;
+    this.onChange = (_) => {};
+    this.onTouched = (_) => {};
 
-    this.change = new EventEmitter('change');
-    this.input = new EventEmitter('input');
-
-    this.ngControl = ngControl;
-
-    this.buttons = [];
+    if (ngControl) ngControl.valueAccessor = this;
   }
 
   writeValue(value) {
-    this.value = value;
+    this.value = !value ? '' : value;
   }
+
+  registerOnChange(fn) { this.onChange = fn; }
+
+  registerOnTouched(fn) { this.onTouched = fn; }
 
   /**
    * Called by child SegmentButtons to bind themselves to
@@ -74,7 +80,7 @@ export class Segment extends Ion {
 
     // If this button is registered and matches our value,
     // make sure to select it
-    if(this.value == segmentButton.value) {
+    if (this.value == segmentButton.value) {
       this.selected(segmentButton);
     }
   }
@@ -88,7 +94,7 @@ export class Segment extends Ion {
       return;
     }
     this.buttons.forEach(function(button) {
-      if(button.value === value) {
+      if (button.value === value) {
         button.isActive = true;
       }
     });
@@ -104,75 +110,9 @@ export class Segment extends Ion {
     });
     segmentButton.isActive = true;
 
-    if(!this.ngControl) { return; }
-
-    setTimeout(() => {
-      this.writeValue(segmentButton.value);
-
-      this.ngControl.control.updateValue(segmentButton.value);
-
-      // Trigger on change
-      this.change.next();
-    })
+    this.value = segmentButton.value;
+    this.onChange(segmentButton.value);
   }
-}
-
-/**
- * TODO
- */
-@Directive({
-  selector: 'ion-segment',
-  host: {
-    '(change)': 'onChange($event.target.value)',
-    '(input)': 'onChange($event.target.value)',
-    '(blur)': 'onTouched()',
-    //'[value]': 'value',
-    /*
-    '[class.ng-untouched]': 'cd.control?.untouched == true',
-    '[class.ng-touched]': 'cd.control?.touched == true',
-    '[class.ng-pristine]': 'cd.control?.pristine == true',
-    '[class.ng-dirty]': 'cd.control?.dirty == true',
-    '[class.ng-valid]': 'cd.control?.valid == true',
-    '[class.ng-invalid]': 'cd.control?.valid == false'
-    */
-  }
-})
-export class SegmentControlValueAccessor {
-  /**
-   * TODO
-   * @param {NgControl} ngControl  TODO
-   * @param {Renderer} renderer  TODO
-   * @param {ElementRef} elementRef  TODO
-   * @param {Segment} segment  TODO
-   */
-  constructor(
-    @Optional() ngControl: NgControl,
-    renderer: Renderer,
-    elementRef: ElementRef,
-    segment: Segment
-  ) {
-    this.onChange = (_) => {};
-    this.onTouched = (_) => {};
-
-    if(!ngControl) { return; }
-
-    this.ngControl = ngControl;
-    this.renderer = renderer;
-    this.elementRef = elementRef;
-    this.segment = segment;
-
-    this.ngControl.valueAccessor = this;
-  }
-
-  writeValue(value) {
-    this.value = !value ? '' : value;
-
-    this.segment.value = this.value;
-  }
-
-  registerOnChange(fn) { this.onChange = fn; }
-
-  registerOnTouched(fn) { this.onTouched = fn; }
 }
 
 /**

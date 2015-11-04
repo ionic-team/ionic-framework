@@ -31,17 +31,17 @@
   <h4>Map mode: NgControl</h4>
 
   <form (submit)="doSubmit($event)" [ng-form-model]="myForm">
-      <ion-segment ng-control="mapStyle" danger>
-        <ion-segment-button value="standard" class="e2eSegmentStandard">
-          Standard
-        </ion-segment-button>
-        <ion-segment-button value="hybrid">
-          Hybrid
-        </ion-segment-button>
-        <ion-segment-button value="sat">
-          Satellite
-        </ion-segment-button>
-      </ion-segment>
+    <ion-segment ng-control="mapStyle" danger>
+      <ion-segment-button value="standard" class="e2eSegmentStandard">
+        Standard
+      </ion-segment-button>
+      <ion-segment-button value="hybrid">
+        Hybrid
+      </ion-segment-button>
+      <ion-segment-button value="sat">
+        Satellite
+      </ion-segment-button>
+    </ion-segment>
   </form>
 
   <p>
