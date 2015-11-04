@@ -86,26 +86,24 @@ export class Tab extends NavController {
   }
 
   onInit() {
-    console.debug('Tab onInit', this.index);
-
     if (this._isInitial) {
       this.tabs.select(this);
 
     } else if (this.tabs.preloadTabs) {
       setTimeout(() => {
-        this.load(() => {
-          console.debug('preloaded tab', this.index);
+        let opts = {
+          animate: false,
+          preload: true
+        };
+        this.load(opts, () => {
           this.hideNavbars(true);
         });
-      }, 500 * this.index);
+      }, 1000 * this.index);
     }
   }
 
-  load(done) {
+  load(opts, done) {
     if (!this._loaded && this.root) {
-      let opts = {
-        animate: false
-      };
       this.push(this.root, null, opts).then(done);
       this._loaded = true;
 

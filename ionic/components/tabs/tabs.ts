@@ -152,7 +152,7 @@ export class Tabs extends Ion {
       return Promise.reject();
     }
 
-    console.debug('select tab', selectedTab.id);
+    console.time('select tab ' + selectedTab.id);
 
     let deselectedTab = this.getSelected();
 
@@ -161,14 +161,32 @@ export class Tabs extends Ion {
       return this.touchActive(selectedTab);
     }
 
-    selectedTab.load(() => {
-      this.isReady && this.isReady();
+    let opts = {
+      animate: false
+    };
 
+    let deselectedPage;
+    if (deselectedTab) {
+      deselectedPage = deselectedTab.getActive();
+      deselectedPage && deselectedPage.willLeave();
+    }
+
+    let selectedPage = selectedTab.getActive();
+    selectedPage && selectedPage.willEnter();
+
+    selectedTab.load(opts, () => {
       this.tabs.forEach(tab => {
         tab.setSelected(tab === selectedTab);
       });
 
       this.highlight && this.highlight.select(selectedTab);
+
+      selectedPage && selectedPage.didEnter();
+      deselectedPage && deselectedPage.didLeave();
+
+      this.isReady && this.isReady();
+
+      console.timeEnd('select tab ' + selectedTab.id);
     });
   }
 
@@ -270,18 +288,16 @@ class TabHighlight {
   }
 
   select(tab) {
-    setTimeout(() => {
-      let d = tab.btn.getDimensions();
-      let ele = this.elementRef.nativeElement;
-      ele.style.transform = 'translate3d(' + d.left + 'px,0,0) scaleX(' + d.width + ')';
+    let d = tab.btn.getDimensions();
+    let ele = this.elementRef.nativeElement;
+    ele.style.transform = 'translate3d(' + d.left + 'px,0,0) scaleX(' + d.width + ')';
 
-      if (!this.init) {
-        this.init = true;
-        setTimeout(() => {
-          ele.classList.add('animate');
-        }, 64)
-      }
-    }, 32);
+    if (!this.init) {
+      this.init = true;
+      setTimeout(() => {
+        ele.classList.add('animate');
+      }, 64)
+    }
   }
 
 }
