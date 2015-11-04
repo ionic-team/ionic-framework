@@ -59,6 +59,7 @@ tab-highlight {
   left: 0;
   background: $tab-button-active-color;
   transform-origin: 0 0;
+  transform: translateZ(0);
 
   &.animate {
     transition-duration: 300ms;
