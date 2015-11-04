@@ -172,11 +172,11 @@ export class Animation {
   }
 
   fadeIn() {
-    return this.fromTo('opacity', 0.01, 1);
+    return this.fromTo('opacity', 0.001, 1);
   }
 
   fadeOut() {
-    return this.fromTo('opacity', 1, 0);
+    return this.fromTo('opacity', 0.999, 0);
   }
 
   get before() {
@@ -238,31 +238,15 @@ export class Animation {
       // stage all animations and child animations at their starting point
       self.stage();
 
-      let resolve;
-      let promise = new Promise(res => { resolve = res; });
+      // synchronously call all onPlay()'s before play()
+      self._onPlay();
 
-      function kickoff() {
-        // synchronously call all onPlay()'s before play()
-        self._onPlay();
-
+      return new Promise(resolve => {
         beginPlay().then(() => {
           self._onFinish();
           resolve();
         });
-      }
-
-      if (self._duration > 32) {
-        // begin each animation when everything is rendered in their starting point
-        // give the browser some time to render everything in place before starting
-        setTimeout(kickoff, this._opts.renderDelay);
-
-      } else {
-        // no need to render everything in there place before animating in
-        // just kick it off immediately to render them in their "to" locations
-        kickoff();
-      }
-
-      return promise;
+      });
     }
 
     // this is a child animation, it is told exactly when to
@@ -579,7 +563,7 @@ class Animate {
     this.effects.push( convertProperties(this.toEffect) );
   }
 
-  play(callback) {
+  play(done) {
     const self = this;
 
     if (self.ani) {
@@ -606,7 +590,7 @@ class Animate {
 
       self.ani = null;
 
-      callback && callback();
+      done && done();
     };
   }
 
