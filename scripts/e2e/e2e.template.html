@@ -7,6 +7,14 @@
   <link href="../../../css/ionic.css" rel="stylesheet">
 
   <script>
+    if (!console.time) {
+      console.time = console.log;
+    }
+    if (!console.timeEnd) {
+      console.timeEnd = console.log;
+    }
+    console.time('script init');
+
     if (location.href.indexOf('snapshot=true') > -1) {
       document.documentElement.classList.add('snapshot');
     } else {
@@ -76,7 +84,9 @@
         "rx": "rx"
       }
     })
-    System.import("index").then(function(m) {}, console.error.bind(console));;
+    System.import("index").then(function(m) {}, console.error.bind(console));
+
+    console.timeEnd('script init');
   </script>
 
 </body>

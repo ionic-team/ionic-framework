@@ -118,8 +118,7 @@ export function App(args={}) {
     // get current annotations
     let annotations = Reflect.getMetadata('annotations', cls) || [];
 
-    // default to select <ion-app>
-    args.selector = args.selector || 'ion-app';
+    args.selector = 'ion-app';
 
     // auto add Ionic directives
     args.directives = args.directives ? args.directives.concat(IONIC_DIRECTIVES) : IONIC_DIRECTIVES;
@@ -135,7 +134,10 @@ export function App(args={}) {
     // redefine with added annotations
     Reflect.defineMetadata('annotations', annotations, cls);
 
-    bootstrap(cls, ionicProviders(args.config));
+    console.time('bootstrap');
+    bootstrap(cls, ionicProviders(args.config)).then(() => {
+      console.timeEnd('bootstrap');
+    });
 
     return cls;
   }

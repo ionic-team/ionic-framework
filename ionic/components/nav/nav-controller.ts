@@ -456,8 +456,11 @@ export class NavController extends Ion {
 
         enteringView.shouldDestroy = false;
         enteringView.shouldCache = false;
-        enteringView.willEnter();
-        leavingView.willLeave();
+
+        if (!opts.preload) {
+          enteringView.willEnter();
+          leavingView.willLeave();
+        }
 
         // set that the new view pushed on the stack is staged to be entering/leaving
         // staged state is important for the transition to find the correct view
@@ -490,8 +493,10 @@ export class NavController extends Ion {
           // dispose any views that shouldn't stay around
           transAnimation.dispose();
 
-          enteringView.didEnter();
-          leavingView.didLeave();
+          if (!opts.preload) {
+            enteringView.didEnter();
+            leavingView.didLeave();
+          }
 
           // all done!
           this._zone.run(() => {
@@ -536,7 +541,9 @@ export class NavController extends Ion {
       provide(NavParams, {useValue: viewCtrl.params})
     ]));
 
+    console.time('loadPage ' + viewCtrl.componentType.name + ': loadIntoLocation');
     this._loader.loadIntoLocation(viewCtrl.componentType, this.elementRef, 'contents', providers).then(componentRef => {
+      console.timeEnd('loadPage ' + viewCtrl.componentType.name + ': loadIntoLocation');
 
       viewCtrl.addDestroy(() => {
         componentRef.dispose();
@@ -555,7 +562,10 @@ export class NavController extends Ion {
 
       let navbarTemplateRef = viewCtrl.getNavbarTemplateRef();
       if (navbarContainerRef && navbarTemplateRef) {
+
+        console.time('loadPage ' + viewCtrl.componentType.name + ': createEmbeddedView');
         let navbarView = navbarContainerRef.createEmbeddedView(navbarTemplateRef);
+        console.timeEnd('loadPage ' + viewCtrl.componentType.name + ': createEmbeddedView');
 
         viewCtrl.addDestroy(() => {
           let index = navbarContainerRef.indexOf(navbarView);
