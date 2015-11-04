@@ -14,7 +14,6 @@ class DemoApp {
   androidAttribute: any;
 
   constructor(app: IonicApp, platform: Platform) {
-    debugger;
     this.app = app;
     this.platform = platform;
     this.androidAttribute = helpers.AndroidAttribute;
