@@ -4,7 +4,7 @@ import {AndroidAttribute} from '../../helpers';
 
 @Page({
   templateUrl: 'inputs/select/template.html',
-  directives: [forwardRef(() => helpers.AndroidAttribute)]
+  directives: [forwardRef(() => AndroidAttribute)]
 })
 export class SelectPage{
   constructor() {

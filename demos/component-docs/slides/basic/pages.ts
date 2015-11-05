@@ -3,10 +3,11 @@ import {forwardRef} from 'angular2/angular2';
 import {AndroidAttribute} from '../../helpers';
 
 @Page({
-  templateUrl: 'inputs/checkbox/template.html',
-  directives: [forwardRef(() => AndroidAttribute)]
+    templateUrl: 'slides/basic/slides.html',
+    directives: [forwardRef(() => AndroidAttribute)]
 })
-export class CheckboxPage{
+export class BasicPage {
   constructor() {
+
   }
 }
