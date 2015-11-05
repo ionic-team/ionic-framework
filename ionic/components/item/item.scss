@@ -5,7 +5,6 @@
 
 
 .item {
-  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -31,7 +30,7 @@
   font-weight: 500;
   width: 100%;
   z-index: 1000;
-  
+
   &.sticky {
     position: -webkit-sticky;
     position: sticky;
@@ -54,6 +53,12 @@ button.item.item {
   border-radius: 0;
   box-shadow: none;
   will-change: initial;
+}
+
+.item-inner {
+  height: 100%;
+  width: 100%;
+  display: flex;
 }
 
 ion-item-content {

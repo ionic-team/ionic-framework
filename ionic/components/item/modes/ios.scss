@@ -40,68 +40,69 @@ ion-note {
   color: $item-ios-note-color;
 }
 
-.list {
+.item-group {
+  ion-item-group-title {
+    border-bottom: 1px solid $item-ios-border-color;
+  }
 
-  .item-group {
-    // Make sure the first and last items don't have borders
-    > .item:first-of-type:before {
-      border-top: none !important;
-    }
-    > .item:last-of-type:after {
-      border-top: none !important;
+  .item:first-child {
+    .item-inner {
+      border-top-width: 0;
     }
   }
+}
+
+.list {
 
   .item {
     margin-top: -1px;
-    padding-right: ($item-ios-padding-right / 2);
-    padding-left: ($item-ios-padding-left / 2);
+    padding-left: $item-ios-padding-left;
     font-size: $item-ios-font-size;
 
-    &:before {
-      position: absolute;
-      top: 0;
-      right: 0;
-      left: $item-ios-padding-left;
+    &:first-child {
       border-top: 1px solid $item-ios-border-color;
-      content: '';
-      pointer-events: none;
+
+      .item-inner {
+        border-top-width: 0;
+      }
     }
 
-    &:after {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      left: $item-ios-padding-left;
+    &:last-child {
+      border-bottom: 1px solid $item-ios-border-color;
+    }
+
+    .item-inner {
+      padding-right: ($item-ios-padding-right / 2);
       border-top: 1px solid $item-ios-border-color;
-      content: '';
-      pointer-events: none;
     }
 
-    &:first-child:before,
-    &:last-child:after {
-      left: 0;
+    ion-item-content {
+      margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom 0;
     }
   }
 
-  ion-header + .item:first-of-type:before {
-    left: 0;
-  }
+  // If the item has the no-lines attribute we want to remove the border from it
+  // and the border from the next item if there is one
+  .item[no-lines] {
+    border-width: 0;
 
-  &[inset] .item {
-    &:before,
-    &:after {
-      left: 0;
+    .item-inner {
+      border-width: 0;
+    }
+
+    + .item {
+      .item-inner {
+        border-width: 0;
+      }
     }
   }
 
-  ion-item-content {
-    margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom ($item-ios-padding-left / 2);
+  [item-left] {
+    margin: $item-ios-padding-media-top $item-ios-padding-right $item-ios-padding-media-bottom 0;
   }
 
-  [item-left],
   [item-right] {
-    margin: $item-ios-padding-media-top ($item-ios-padding-right / 2) $item-ios-padding-media-bottom ($item-ios-padding-left / 2);
+    margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom ($item-ios-padding-left / 2);
   }
 
   icon[item-left],
@@ -224,7 +225,7 @@ ion-card {
     background-repeat: no-repeat;
     background-position: right ($item-ios-padding-right - 2) center;
     background-size: 14px 14px;
-    padding-right: 32px;
+    margin-right: 32px;
   }
 
   ion-item-sliding[detail-push] {
@@ -234,11 +235,12 @@ ion-card {
       background-repeat: no-repeat;
       background-position: right ($item-ios-padding-right - 2) center;
       background-size: 14px 14px;
-      padding-right: 32px;
+      margin-right: 32px;
     }
   }
 }
 
+// Hairlines for iOS need to be set at 0.55px to show on iPhone 6 and 6 Plus
 &.hairlines .list {
 
   ion-item-options {
@@ -255,28 +257,26 @@ ion-card {
     margin-bottom: 0.55px;
   }
 
+  ion-header + .item {
+    border-top-width: 0.55px;
+
+    .item-inner {
+      border-width: 0;
+    }
+  }
+
   .item {
     margin-top: -0.55px;
+    border-width: 0.55px;
 
-    &:last-child {
-      margin-bottom: -0.55px;
+    .item-inner {
+      border-width: 0.55px;
     }
 
-    &:before,
-    &:after {
-      border-top-width: 0.55px;
+    &:first-child {
+      .item-inner {
+        border-top-width: 0px;
+      }
     }
-  }
-
-}
-
-.item[no-lines] {
-  &:before,
-  &:after {
-    border-width: 0;
-  }
-
-  + .item:before {
-    border-width: 0;
   }
 }

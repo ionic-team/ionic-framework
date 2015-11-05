@@ -21,10 +21,12 @@ import {Component} from 'angular2/angular2';
   selector: 'ion-item,[ion-item]',
   template:
     '<ng-content select="[item-left]"></ng-content>' +
-    '<ng-content select="[item-right]"></ng-content>' +
-    '<ion-item-content>' +
-      '<ng-content></ng-content>'+
-    '</ion-item-content>',
+    '<div class="item-inner">' +
+      '<ng-content select="[item-right]"></ng-content>' +
+      '<ion-item-content>' +
+        '<ng-content></ng-content>'+
+      '</ion-item-content>' +
+    '</div>',
   host: {
     '[class.item]': 'isItem'
   }
