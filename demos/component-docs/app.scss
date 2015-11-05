@@ -7,9 +7,14 @@ $colors: (
   energized:  #ffc527,
   royal:      #7e60ff,
 );
-
 $font-path: '../../dist/fonts';
+
 @import "../../ionic/ionic";
+@import "cards/background/styles";
+@import "cards/advanced-weather/styles";
+@import "cards/advanced-map/styles";
+@import "icons/basic/styles";
+@import "slides/basic/styles";
 
 
 body, body:hover, body a, body button, body media-switch {
@@ -20,6 +25,15 @@ body ion-app {
   overflow: visible;
 }
 
+ion-page {
+  display: flex;
+}
+
+ion-scroll {
+  width: 100%;
+  height: 100%;
+}
+
 body.has-scrollbar scroll-content {
   margin-right: -15px;
 }
@@ -27,30 +41,14 @@ body.has-scrollbar ion-menu scroll-content {
   margin-right: 0;
 }
 
-ion-page {
-  display: flex;
+scroll-content {
+  overflow-y: scroll;
 }
 
 section.hidden {
   display: none !important;
 }
 
-#ionitron {
-  width: 100px;
-  height: 100px;
-  position: absolute;
-  top: 25%;
-  margin-top: -50px;
-  left: 50%;
-  margin-left: -50px;
-}
-
-.animation-buttons {
-  position: absolute;
-  bottom: 25%; 
-  left: 60px; 
-  display: inline;
-}
 
 .components-demo h4 {
   text-align: center;
@@ -63,42 +61,6 @@ section.hidden {
 .components-demo section {
   width: 100%;
   height: 100%;
-}
-
-.components-icons {
-  font-size: 2em;
-  text-align: center;
-}
-
-ion-scroll {
-  width: 100%;
-  height: 100%;
-}
-
-.demo-slide {
-  display: block;
-  height: 100%;
-  padding: 500px 0;
-  width: 100%;
-  font-weight: bold;
-  font-size: 2.5em;
-  color: #fff;
-}
-
-.demo-slide-1 {
-  background-color: #32db64;
-}
-
-.demo-slide-2 {
-  background-color: #387ef5;
-}
-
-.demo-slide-3 {
-  background-color: #f53d3d;
-}
-
-scroll-content {
-  overflow-y: scroll;
 }
 
 .md .ion-md-share {
@@ -171,111 +133,11 @@ ion-card.cards-list-demo a > icon {
   color: #444444;
 }
 
-.advanced-background {
-  position: relative;
-  text-align: center !important;
-}
-
-ion-card p.advanced-background-title {
-  position: absolute;
-  top: 25%;
-  font-size: 2.0em;
-  width: 100%;
-  font-weight: bold;
-  color: #fff !important;
-}
-
-ion-card p.advanced-background-title-large {
-  top: 29%;
-  font-weight: normal;
-  font-size: 4.4em;
-  color: #fff !important;
-}
-ion-card p.advanced-background-title-large span {
-  vertical-align: top;
-  padding-top: 5px;
-  font-size: 72px;
-  height: 74px;
-  line-height: 1;
-  display: inline-block;
-}
-body.ios ion-card p.advanced-background-title-large span {
-  font-weight: 300;
-}
-
-ion-card ion-item.advanced-trans.item {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  padding: 12px 20px !important;
-  background: transparent;
-}
-ion-card ion-item.advanced-trans.item p {
-  font-size: 12px;
-  letter-spacing: 1.7px;
-  font-weight: 500;
-  opacity: 0.7;
-}
-
 ion-card .advanced-weather-tabs {
   position: absolute;
   bottom: 0;
   width: 100%;
   background: transparent;
-}
-
-ion-card .advanced-weather-tabs tabbar {
-  background: transparent;
-  border-top: none;
-}
-body.ios ion-card .advanced-weather-tabs tabbar {
-  height: 88px;
-}
-body.md ion-card .advanced-weather-tabs tabbar {
-  height: 100px;
-}
-ion-card .advanced-weather-tabs tabbar a {
-  height: 100%;
-  border-top: 2px solid transparent !important;
-  border-bottom: 0px !important;
-}
-ion-card .advanced-weather-tabs tabbar a icon.tab-button-icon {
-  color: #fff;
-  font-size: 2.8em;
-}
-ion-card .advanced-weather-tabs tabbar a span.tab-button-text {
-  color: #fff;
-  font-size: 13px;
-}
-body.md ion-card .advanced-weather-tabs tabbar a span.tab-button-text {
-  text-transform: uppercase;
-}
-body.md .cards-bg tab-highlight {
-  background-color: #fff !important;
-  top: 0;
-}
-.cards-weather md-ripple {
-  background: rgba(255,255,255, 0.15);
-}
-
-ion-content ion-card ion-item.advanced-trans p {
-  color: #fff;
-}
-
-ion-card p.advanced-background-subtitle {
-  font-size: 1.0em;
-  position: absolute;
-  top: 48%;
-  width: 100%;
-  color: #fff !important;
-}
-
-ion-card .icon-avatar {
-  margin: 10px 8px;
-  min-width: 2.4rem !important;
-  color: #444444;
-  font-size: 1.8em;
-  text-align: center;
 }
 
 ion-card.adv-map p {
@@ -334,22 +196,4 @@ body.ios img#ios-only {
 .item-subtle:before {
   padding-right: 5px;
 }
-p.time-ago {
-  color: #bbbbbb !important;
-  margin-left: 4px !important;
-  margin-right: 0px !important;
 
-}
-
-
-button[fab].fab-map {
-  top: 190px;
-  z-index: 50;
-}
-body.ios button[fab].fab-map {
-  width: 50px;
-  height: 50px;
-}
-body.md button[fab].fab-map {
-  top: 220px;
-}

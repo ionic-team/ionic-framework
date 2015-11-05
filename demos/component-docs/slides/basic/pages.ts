@@ -3,7 +3,7 @@ import {forwardRef} from 'angular2/angular2';
 import {AndroidAttribute} from '../../helpers';
 
 @Page({
-    templateUrl: 'slides/basic/slides.html',
+    templateUrl: 'slides/basic/template.html',
     directives: [forwardRef(() => AndroidAttribute)]
 })
 export class BasicPage {
