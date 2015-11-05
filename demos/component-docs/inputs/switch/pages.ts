@@ -4,7 +4,7 @@ import {AndroidAttribute} from '../../helpers';
 
 @Page({
   templateUrl: 'inputs/switch/template.html',
-  directives: [forwardRef(() => helpers.AndroidAttribute)]
+  directives: [forwardRef(() => AndroidAttribute)]
 })
 export class SwitchPage{
   constructor() {
