@@ -1,0 +1,25 @@
+p.time-ago {
+  color: #bbbbbb !important;
+  margin-left: 4px !important;
+  margin-right: 0px !important;
+
+}
+button[fab].fab-map {
+  top: 190px;
+  z-index: 50;
+}
+body.ios button[fab].fab-map {
+  width: 50px;
+  height: 50px;
+}
+body.md button[fab].fab-map {
+  top: 220px;
+}
+
+ion-card .icon-avatar {
+  margin: 10px 8px;
+  min-width: 2.4rem !important;
+  color: #444444;
+  font-size: 1.8em;
+  text-align: center;
+}

@@ -1,0 +1,127 @@
+body.ios ion-card .advanced-weather-tabs tabbar {
+  height: 88px;
+}
+body.md ion-card .advanced-weather-tabs tabbar {
+  height: 100px;
+}
+body.md ion-card .advanced-weather-tabs tabbar a span.tab-button-text {
+  text-transform: uppercase;
+}
+body.md .cards-bg tab-highlight {
+  background-color: #fff !important;
+  top: 0;
+}
+body.ios ion-card p.advanced-background-title-large span {
+  font-weight: 300;
+}
+
+
+.preview-weather-cards {
+
+  ion-content ion-card ion-item.advanced-trans p {
+    color: #fff;
+  }
+
+  ion-card p.advanced-background-subtitle {
+    font-size: 1.0em;
+    position: absolute;
+    top: 48%;
+    width: 100%;
+    color: #fff !important;
+  }
+
+  .advanced-background {
+    position: relative;
+    text-align: center !important;
+  }
+
+  ion-card ion-item.advanced-trans.item {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    padding: 12px 20px !important;
+    background: transparent;
+  }
+  ion-card ion-item.advanced-trans.item p {
+    font-size: 12px;
+    letter-spacing: 1.7px;
+    font-weight: 500;
+    opacity: 0.7;
+  }
+
+  ion-card p.advanced-background-title {
+    position: absolute;
+    top: 25%;
+    font-size: 2.0em;
+    width: 100%;
+    font-weight: bold;
+    color: #fff !important;
+  }
+
+  ion-card p.advanced-background-title-large {
+    top: 29%;
+    font-weight: normal;
+    font-size: 4.4em;
+    color: #fff !important;
+  }
+  ion-card p.advanced-background-title-large span {
+    vertical-align: top;
+    padding-top: 5px;
+    font-size: 72px;
+    height: 74px;
+    line-height: 1;
+    display: inline-block;
+  }
+  
+
+
+
+  
+
+  ion-card .advanced-weather-tabs tabbar {
+    background: transparent;
+    border-top: none;
+  }
+
+  ion-card .advanced-weather-tabs tabbar a {
+    height: 100%;
+    border-top: 2px solid transparent !important;
+    border-bottom: 0px !important;
+  }
+  ion-card .advanced-weather-tabs tabbar a icon.tab-button-icon {
+    color: #fff;
+    font-size: 2.8em;
+  }
+  ion-card .advanced-weather-tabs tabbar a span.tab-button-text {
+    color: #fff;
+    font-size: 13px;
+  }
+
+  md-ripple {
+    background: rgba(255,255,255, 0.15);
+  }
+
+  ion-card .advanced-weather-tabs {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: transparent;
+  }
+  ion-card ion-item.advanced-trans.item {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    padding: 12px 20px !important;
+    background: transparent;
+  }
+  ion-card ion-item.advanced-trans.item p {
+    font-size: 12px;
+    letter-spacing: 1.7px;
+    font-weight: 500;
+    opacity: 0.7;
+  }
+  ion-content ion-card ion-item.advanced-trans p {
+    color: #fff;
+  }
+
+}
