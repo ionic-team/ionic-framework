@@ -245,12 +245,19 @@ export function getDimensions(ion) {
   let dimensions = dimensionCache[ion._dimId];
   if (!dimensions) {
     let ele = ion.getNativeElement();
-    dimensions = dimensionCache[ion._dimId] = {
-      width: ele.offsetWidth,
-      height: ele.offsetHeight,
-      left: ele.offsetLeft,
-      top: ele.offsetTop
-    };
+    // make sure we got good values before caching
+    if (ele.offsetWidth && ele.offsetHeight) {
+      dimensions = dimensionCache[ion._dimId] = {
+        width: ele.offsetWidth,
+        height: ele.offsetHeight,
+        left: ele.offsetLeft,
+        top: ele.offsetTop
+      };
+      
+    } else {
+      // do not cache bad values
+      return { width: 0, height: 0, left: 0, top: 0 };
+    }
   }
 
   return dimensions;
@@ -258,10 +265,16 @@ export function getDimensions(ion) {
 
 export function windowDimensions() {
   if (!dimensionCache.win) {
-    dimensionCache.win = {
-      width: window.innerWidth,
-      height: window.innerHeight
-    };
+    // make sure we got good values before caching
+    if (window.innerWidth && window.innerHeight) {
+      dimensionCache.win = {
+        width: window.innerWidth,
+        height: window.innerHeight
+      };
+    } else {
+      // do not cache bad values
+      return { width: 0, height: 0 };
+    }
   }
   return dimensionCache.win;
 }
