@@ -163,26 +163,6 @@ ion-note {
     }
   }
 
-
-  ion-item-sliding.item {
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  ion-item-sliding-content {
-    background-color: $item-ios-sliding-content-bg;
-    padding-right: ($item-ios-padding-right / 2);
-    padding-left: ($item-ios-padding-left / 2);
-    display: flex;
-    min-height: 42px;
-    justify-content: center;
-
-    transition: $item-ios-sliding-transition;
-
-    // To allow the hairlines through
-    margin-top: 1px;
-    margin-bottom: 1px;
-  }
   ion-item-options {
     button, [button] {
       min-height: calc(100% - 2px);
@@ -204,8 +184,7 @@ ion-note {
 
 .item.activated,
 a.item.activated,
-button.item.activated,
-.item.activated ion-item-sliding-content {
+button.item.activated {
   background-color: $item-ios-activated-background-color;
   transition-duration: 0ms;
 }
@@ -219,24 +198,12 @@ button.item {
 .list,
 ion-card {
   button[ion-item]:not([detail-none]),
-  a[ion-item]:not([detail-none]),
-  [detail-push]:not(ion-item-sliding) {
+  a[ion-item]:not([detail-none]) {
     @include ios-detail-push-icon($item-ios-detail-push-color);
     background-repeat: no-repeat;
     background-position: right ($item-ios-padding-right - 2) center;
     background-size: 14px 14px;
     margin-right: 32px;
-  }
-
-  ion-item-sliding[detail-push] {
-
-    ion-item-sliding-content {
-      @include ios-detail-push-icon($item-ios-detail-push-color);
-      background-repeat: no-repeat;
-      background-position: right ($item-ios-padding-right - 2) center;
-      background-size: 14px 14px;
-      margin-right: 32px;
-    }
   }
 }
 
@@ -250,11 +217,6 @@ ion-card {
       margin-top: 0.55px;
       margin-bottom: 0.55px;
     }
-  }
-
-  ion-item-sliding-content {
-    margin-top: 0.55px;
-    margin-bottom: 0.55px;
   }
 
   ion-header + .item {

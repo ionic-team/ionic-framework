@@ -207,24 +207,6 @@ ion-note {
     box-shadow: none;
   }
 
-  ion-item-sliding.item {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  ion-item-sliding-content {
-    background-color: $item-md-sliding-content-bg;
-    padding-right: ($item-md-padding-right / 2);
-    padding-left: ($item-md-padding-left / 2);
-    display: flex;
-    min-height: 42px;
-    justify-content: center;
-
-    transition: $item-md-sliding-transition;
-
-    // To allow the hairlines through
-    margin-top: 1px;
-    margin-bottom: 1px;
-  }
   ion-item-options {
     button, [button] {
       height: calc(100% - 2px);
@@ -246,15 +228,13 @@ ion-note {
 
 .item,
 a.item,
-button.item,
-.item ion-item-sliding-content {
-  transition: background-color $button-md-transition-duration $button-md-animation-curve;
+button.item {
+  transition: background-color $button-md-transition-duration $button-md-animation-curve, transform 300ms;
 }
 
 .item.activated,
 a.item.activated,
-button.item.activated,
-.item.activated ion-item-sliding-content {
+button.item.activated {
   background-color: $item-md-activated-background-color;
   box-shadow: none;
 }

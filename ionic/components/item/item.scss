@@ -134,24 +134,6 @@ ion-input.item {
   align-items: flex-start;
 }
 
-/**
- * The hidden right-side buttons that can be exposed under a list item
- * with dragging.
- */
-ion-item-sliding-content {
-  display: block;
-  z-index: $z-index-item-options + 1;
-  flex: 1;
-}
-ion-item-options {
-  display: flex;
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: $z-index-item-options;
-  height: 100%;
-}
-
 
 // TEMP hack for https://github.com/angular/angular/issues/4582
 [item-right] {

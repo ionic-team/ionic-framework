@@ -1,29 +1,35 @@
-import {App} from 'ionic/ionic';
+import {App, IonicApp} from 'ionic/ionic';
 
 
 @App({
   templateUrl: 'main.html'
 })
 class E2EApp {
-  constructor() {
+  constructor(private app: IonicApp) {
     setTimeout(() => {
       this.shouldShow = true;
     }, 10);
   }
 
+  closeOpened() {
+    this.app.getComponent('myList').closeSlidingItems();
+  }
+
   getItems() {
-    console.log('getItems');
     return [0,1];
   }
 
-  didClick(e) {
-    console.log('CLICK', e.defaultPrevented, e)
+  didClick(ev, item) {
+    console.log('CLICK', ev.defaultPrevented, ev)
   }
 
-  archive(e) {
-    console.log('Accept', e);
+  archive(ev, item) {
+    console.log('Archive', ev, item);
+    item.close();
   }
-  del(e) {
-    console.log('Delete', e);
+
+  del(ev, item) {
+    console.log('Delete', ev, item);
+    item.close();
   }
 }
