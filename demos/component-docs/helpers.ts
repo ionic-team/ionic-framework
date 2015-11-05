@@ -1,56 +1,19 @@
 import {Directive, ElementRef, Renderer} from 'angular2/angular2';
 import {Platform, Navbar} from 'ionic/ionic';
 
-
-import {ActionSheetPage} from './actionSheet/actionSheet';
-
-import {ButtonsPage,
-        BlockButtonsPage,
-        ClearButtonsPage,
-        FullButtonsPage,
-        OutlineButtonsPage,
-        RoundButtonsPage,
-        FabPage,
-        ButtonSizesPage,
-        IconButtonsPage,
-        ButtonsInComponentsPage} from './buttons/buttons';
-
+import * as actionSheets from './action-sheets/action-sheets';
+import * as buttons from './buttons/buttons';
 import * as cards from './cards/cards';
-
-import {FormsPage,
-        FixedInlinePage,
-        FloatingPage,
-        InlinePage,
-        InsetPage,
-        PlaceholderPage,
-        StackedPage} from './forms/forms';
-        
-import {IconsPage} from './icons/icons';
-
-import {CheckboxPage,
-        RadioPage,
-        RangePage,
-        SelectPage,
-        SwitchPage} from './inputs/inputs';
-
-import {BasicListsPage,
-        AvatarListsPage,
-        IconListsPage,
-        BasicDividersPage,
-        BasicInsetListsPage,
-        ListHeadersPage,
-        MultilineListsPage,
-        ThumbnailListsPage} from './lists/lists';
-
-import {MenusPage} from './menus/menus';
-import {ModalsPage} from './modals/modals';
-import {NavigationPage} from './navigation/navigation';
-import {PopupsPage} from './popups/popups';
-import {SlidesPage} from './slides/slides';
-
-import {TabsPage} from './tabs/tabs';
-import {TabsIconPage} from './tabs/tabs-icon';
-import {TabsIconTextPage} from './tabs/tabs-icon-text';
+import * as labels from './labels/labels';
+import * as icons from './icons/icons';
+import * as inputs from './inputs/inputs';
+import * as lists from './lists/lists';
+import * as menus from './menus/menus';
+import * as modals from './modals/modals';
+import * as navigation from './navigation/navigation';
+import * as popups from './popups/popups';
+import * as slides from './slides/slides';
+import * as tabs from './tabs/tabs';
 
 
 @Directive({
@@ -105,17 +68,18 @@ export function hasScrollbar() {
 
 export function getPageFor(hash) {
     return {
-        'action-sheets': ActionSheetPage,
-        'buttons': ButtonsPage,
-        'block-buttons': BlockButtonsPage,
-        'clear-buttons': ClearButtonsPage,
-        'full-buttons': FullButtonsPage,
-        'outline-buttons': OutlineButtonsPage,
-        'round-buttons': RoundButtonsPage,
-        'floating-action-buttons': FabPage,
-        'buttons-in-components': ButtonsInComponentsPage,
-        'button-sizes': ButtonSizesPage,
-        'icon-buttons': IconButtonsPage,
+        'action-sheets': actionSheets.BasicPage,
+
+        'buttons': buttons.BasicPage,
+        'block-buttons': buttons.BlockPage,
+        'clear-buttons': buttons.ClearPage,
+        'full-buttons': buttons.FullPage,
+        'outline-buttons': buttons.OutlinePage,
+        'round-buttons': buttons.RoundPage,
+        'floating-action-buttons': buttons.FabPage,
+        'buttons-in-components': buttons.ComponentsPage,
+        'button-sizes': buttons.SizesPage,
+        'icon-buttons': buttons.IconsPage,
 
         'cards': cards.BasicPage,
         'card-header': cards.HeaderPage,
@@ -127,40 +91,40 @@ export function getPageFor(hash) {
         'card-advanced-social': cards.AdvancedSocialPage,
         'card-advanced-weather': cards.AdvancedWeatherPage,
 
-        'checkbox': CheckboxPage,
-        'radio': RadioPage,
-        'range': RangePage,
-        'select': SelectPage,
-        'switch': SwitchPage,
+        'checkbox': inputs.CheckboxPage,
+        'radio': inputs.RadioPage,
+        'range': inputs.RangePage,
+        'select': inputs.SelectPage,
+        'switch': inputs.SwitchPage,
 
-        'inputs': FormsPage,
-        'fixed-inline-labels': FixedInlinePage,
-        'floating-labels': FloatingPage,
-        'inline-labels': InlinePage,
-        'inset-labels': InsetPage,
-        'placeholder-labels': PlaceholderPage,
-        'stacked-labels': StackedPage,
+        'inputs': labels.BasicPage,
+        'fixed-inline-labels': labels.FixedInlinePage,
+        'floating-labels': labels.FloatingPage,
+        'inline-labels': labels.InlinePage,
+        'inset-labels': labels.InsetPage,
+        'placeholder-labels': labels.PlaceholderPage,
+        'stacked-labels': labels.StackedPage,
 
-        'icons': IconsPage,
+        'icons': icons.BasicPage,
 
-        'lists': BasicListsPage,
-        'avatar-list': AvatarListsPage,
-        'icon-list': IconListsPage,
-        'list-dividers': BasicDividersPage,
-        'inset-list': BasicInsetListsPage,
-        'list-headers': ListHeadersPage,
-        'multiline-list': MultilineListsPage,
-        'thumbnail-list': ThumbnailListsPage,
+        'lists': lists.BasicPage,
+        'avatar-list': lists.AvatarPage,
+        'icon-list': lists.IconPage,
+        'list-dividers': lists.LinesPage,
+        'inset-list': lists.InsetPage,
+        'list-headers': lists.HeadersPage,
+        'multiline-list': lists.MultilinePage,
+        'thumbnail-list': lists.ThumbnailPage,
 
-        'menus': MenusPage,
-        'modals': ModalsPage,
-        'navigation': NavigationPage,
-        'popups': PopupsPage,
-        'slides': SlidesPage,
+        'menus': menus.BasicPage,
+        'modals': modals.BasicPage,
+        'navigation': navigation.BasicPage,
+        'popups': popups.BasicPage,
+        'slides': slides.BasicPage,
 
-        'tabs': TabsPage,
-        'tabs-icon': TabsIconPage,
-        'tabs-icon-text': TabsIconTextPage,
+        'tabs': tabs.BasicPage,
+        'tabs-icon': tabs.IconPage,
+        'tabs-icon-text': tabs.IconTextPage,
     }[hash]
 }
 
