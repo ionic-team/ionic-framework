@@ -33,12 +33,14 @@ import {Form} from '../../util/form';
     '(click)': 'click($event)'
   },
   template:
-    '<media-checkbox disable-activated>' +
-      '<checkbox-icon></checkbox-icon>' +
-    '</media-checkbox>' +
-    '<ion-item-content id="{{labelId}}">' +
-      '<ng-content></ng-content>' +
-    '</ion-item-content>'
+    '<div class="item-inner">' +
+      '<media-checkbox disable-activated>' +
+        '<checkbox-icon></checkbox-icon>' +
+      '</media-checkbox>' +
+      '<ion-item-content id="{{labelId}}">' +
+        '<ng-content></ng-content>' +
+      '</ion-item-content>' +
+    '</div>'
 })
 export class Checkbox {
 
