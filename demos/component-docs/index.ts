@@ -1,7 +1,7 @@
 import {App, IonicApp, Platform, ActionSheet} from 'ionic/ionic';
 import {Page, Config, Events} from 'ionic/ionic';
 import {PageOne, PageTwo, PageThree} from './menus/menus';
-import {ActionSheetPage} from './actionSheet/actionSheet';
+import * as actionSheets from './action-sheets/action-sheets';
 import * as helpers from './helpers';
 
 
@@ -32,7 +32,7 @@ class DemoApp {
             if (data.hash) {
               this.nextPage = helpers.getPageFor(data.hash.replace('#', ''));
             } else {
-              this.nextPage = ActionSheetPage;
+              this.nextPage = actionSheets.BasicPage;
             }
             let nav = this.app.getComponent('nav');
             nav.setRoot(this.nextPage);

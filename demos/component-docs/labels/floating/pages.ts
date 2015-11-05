@@ -3,10 +3,10 @@ import {forwardRef} from 'angular2/angular2';
 import {AndroidAttribute} from '../../helpers';
 
 @Page({
-  templateUrl: 'cards/cards-background/main.html',
+  templateUrl: 'labels/floating/template.html',
   directives: [forwardRef(() => AndroidAttribute)]
 })
-export class BackgroundPage {
+export class FloatingPage {
     constructor() {
 
     }

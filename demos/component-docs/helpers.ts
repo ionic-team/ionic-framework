@@ -5,22 +5,9 @@ import {Platform, Navbar} from 'ionic/ionic';
 import * as actionSheets from './action-sheets/action-sheets';
 import * as buttons from './buttons/buttons';
 import * as cards from './cards/cards';
-
-import {FormsPage,
-        FixedInlinePage,
-        FloatingPage,
-        InlinePage,
-        InsetPage,
-        PlaceholderPage,
-        StackedPage} from './forms/forms';
-        
-import {IconsPage} from './icons/icons';
-
-import {CheckboxPage,
-        RadioPage,
-        RangePage,
-        SelectPage,
-        SwitchPage} from './inputs/inputs';
+import * as labels from './labels/labels';
+import * as icons from './icons/icons';
+import * as inputs from './inputs/inputs';
 
 import {BasicListsPage,
         AvatarListsPage,
@@ -117,21 +104,21 @@ export function getPageFor(hash) {
         'card-advanced-social': cards.AdvancedSocialPage,
         'card-advanced-weather': cards.AdvancedWeatherPage,
 
-        'checkbox': CheckboxPage,
-        'radio': RadioPage,
-        'range': RangePage,
-        'select': SelectPage,
-        'switch': SwitchPage,
+        'checkbox': inputs.CheckboxPage,
+        'radio': inputs.RadioPage,
+        'range': inputs.RangePage,
+        'select': inputs.SelectPage,
+        'switch': inputs.SwitchPage,
 
-        'inputs': FormsPage,
-        'fixed-inline-labels': FixedInlinePage,
-        'floating-labels': FloatingPage,
-        'inline-labels': InlinePage,
-        'inset-labels': InsetPage,
-        'placeholder-labels': PlaceholderPage,
-        'stacked-labels': StackedPage,
+        'inputs': labels.BasicPage,
+        'fixed-inline-labels': labels.FixedInlinePage,
+        'floating-labels': labels.FloatingPage,
+        'inline-labels': labels.InlinePage,
+        'inset-labels': labels.InsetPage,
+        'placeholder-labels': labels.PlaceholderPage,
+        'stacked-labels': labels.StackedPage,
 
-        'icons': IconsPage,
+        'icons': icons.BasicPage,
 
         'lists': BasicListsPage,
         'avatar-list': AvatarListsPage,
