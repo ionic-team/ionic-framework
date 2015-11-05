@@ -206,6 +206,7 @@ class AnotherPage {
 
 
 @App({
+  pages: [FirstPage, FullPage, PrimaryHeaderPage, AnotherPage],
   template: `<ion-nav [root]="root"></ion-nav>`
 })
 class E2EApp {

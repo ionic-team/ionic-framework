@@ -135,7 +135,7 @@ export function App(args={}) {
     Reflect.defineMetadata('annotations', annotations, cls);
 
     console.time('bootstrap');
-    bootstrap(cls, ionicProviders(args.config)).then(() => {
+    bootstrap(cls, ionicProviders(args)).then(() => {
       console.timeEnd('bootstrap');
     });
 
