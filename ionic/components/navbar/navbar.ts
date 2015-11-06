@@ -69,7 +69,8 @@ class BackButtonText extends Ion {
     '[hidden]': '_hidden'
   },
   inputs: [
-    'hideBackButton'
+    'hideBackButton',
+    'navbarStyle'
   ],
   directives: [BackButton, BackButtonText, Icon]
 })
@@ -82,9 +83,16 @@ export class Navbar extends ToolbarBase {
     renderer: Renderer
   ) {
     super(elementRef, config);
+    this.app = app;
+    this.renderer = renderer;
+
     renderer.setElementClass(elementRef, 'toolbar', true);
 
-    this.app = app;
+    let navbarStyle = config.get('navbarStyle');
+    if (navbarStyle) {
+      renderer.setElementAttribute(elementRef, navbarStyle, '');
+    }
+
     viewCtrl && viewCtrl.setNavbar(this);
 
     this.bbIcon = config.get('backButtonIcon');
@@ -92,9 +100,14 @@ export class Navbar extends ToolbarBase {
   }
 
   onInit() {
+    super.onInit();
     let hideBackButton = this.hideBackButton;
     if (typeof hideBackButton === 'string') {
       this.hideBackButton = (hideBackButton === '' || hideBackButton === 'true');
+    }
+    
+    if (this.navbarStyle) {
+      this.renderer.setElementAttribute(this.elementRef, this.navbarStyle, '');
     }
   }
 

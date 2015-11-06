@@ -1,4 +1,4 @@
-import {AppViewManager, ElementRef, Directive} from 'angular2/angular2';
+import {AppViewManager, ElementRef, Directive, Renderer} from 'angular2/angular2';
 
 import {IonicApp} from './app';
 
@@ -45,5 +45,17 @@ export class IdRef {
 
   onDestroy() {
     this.app.unregister(this.id);
+  }
+}
+
+
+@Directive({
+  selector: '[attr]',
+  inputs: ['attr']
+})
+export class Attr {
+  constructor(private renderer: Renderer, private elementRef: ElementRef) {}
+  onInit() {
+    this.renderer.setElementAttribute(this.elementRef, this.attr, '');
   }
 }

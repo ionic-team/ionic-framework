@@ -1,23 +1,13 @@
-import {Directive, ElementRef, Optional, Host, NgFor, NgIf, forwardRef, ViewContainerRef, Renderer} from 'angular2/angular2';
+import {Directive, ElementRef, Optional, Host, NgFor, NgIf, forwardRef, ViewContainerRef} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
+import {Attr} from '../app/id';
 import {Config} from '../../config/config';
 import {ViewController} from '../nav/view-controller';
 import {ConfigComponent} from '../../config/decorators';
 import {Icon} from '../icon/icon';
 
-
-@Directive({
-  selector: '[attr]',
-  inputs: ['attr']
-})
-class Attr {
-  constructor(private renderer: Renderer, private elementRef: ElementRef) {}
-  onInit() {
-    this.renderer.setElementAttribute(this.elementRef, this.attr, '');
-  }
-}
 
 /**
  * _For basic Tabs usage, see the [Tabs section](../../../../components/#tabs)
