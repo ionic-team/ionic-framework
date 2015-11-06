@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Optional, Host, NgFor, NgIf, forwardRef, ViewContainerRef} from 'angular2/angular2';
+import {Directive, ElementRef, Optional, Host, NgFor, NgIf, forwardRef, ViewContainerRef, Renderer} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
@@ -7,6 +7,17 @@ import {ViewController} from '../nav/view-controller';
 import {ConfigComponent} from '../../config/decorators';
 import {Icon} from '../icon/icon';
 
+
+@Directive({
+  selector: '[attr]',
+  inputs: ['attr']
+})
+class Attr {
+  constructor(private renderer: Renderer, private elementRef: ElementRef) {}
+  onInit() {
+    this.renderer.setElementAttribute(this.elementRef, this.attr, '');
+  }
+}
 
 /**
  * _For basic Tabs usage, see the [Tabs section](../../../../components/#tabs)
@@ -63,6 +74,7 @@ import {Icon} from '../icon/icon';
   defaultInputs: {
     'tabbarPlacement': 'bottom',
     'tabbarIcons': 'top',
+    'tabbarStyle': 'default',
     'preloadTabs': true
   },
   template:
@@ -70,7 +82,7 @@ import {Icon} from '../icon/icon';
       '<template navbar-anchor></template>' +
     '</ion-navbar-section>' +
     '<ion-tabbar-section>' +
-      '<tabbar role="tablist">' +
+      '<tabbar role="tablist" [attr]="tabbarStyle">' +
         '<a *ng-for="#t of tabs" [tab]="t" class="tab-button" role="tab">' +
           '<icon [name]="t.tabIcon" [is-active]="t.isSelected" class="tab-button-icon"></icon>' +
           '<span class="tab-button-text">{{t.tabTitle}}</span>' +
@@ -85,6 +97,7 @@ import {Icon} from '../icon/icon';
     Icon,
     NgFor,
     NgIf,
+    Attr,
     forwardRef(() => TabButton),
     forwardRef(() => TabHighlight),
     forwardRef(() => TabNavBarAnchor)

@@ -88,3 +88,11 @@ ion-tabs[tabbar-placement=top] tabbar {
   }
 
 }
+
+@each $color-name, $color-value in $colors {
+
+  tabbar[#{$color-name}] {
+    border-color: darken($color-value, 10%);
+  }
+
+}
