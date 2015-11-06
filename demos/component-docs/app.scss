@@ -20,7 +20,7 @@ $font-path: '../../dist/fonts';
 
 
 body, body:hover, body a, body button, body media-switch {
-  cursor: url('http://ionicframework.com/img/finger.png'), auto;
+  cursor: url('http://ionicframework.com/img/finger.png') 8 8, auto;
 }
 
 body ion-app {
