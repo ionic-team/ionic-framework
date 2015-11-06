@@ -44,50 +44,21 @@ ion-note {
 
 .list {
   .item-group {
-    // Make sure the first and last items don't have borders
-    > .item:first-of-type:before {
-      border-top: none !important;
-    }
-    > .item:last-of-type:after {
-      border-top: none !important;
-    }
+
   }
 
   .item {
     margin-top: -1px;
+    border-top: 1px solid $item-md-border-color;
     padding-right: ($item-md-padding-right / 2);
-    padding-left: ($item-md-padding-left / 2);
+    margin-left: $item-md-padding-left;
     font-size: $item-md-font-size;
     text-transform: none;
-
-    &:before {
-      position: absolute;
-      top: 0;
-      right: 0;
-      left: $item-md-padding-left;
-      border-top: 1px solid $item-md-border-color;
-      content: '';
-      pointer-events: none;
-    }
-
-    &:after {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      left: $item-md-padding-left;
-      border-top: 1px solid $item-md-border-color;
-      content: '';
-      pointer-events: none;
-    }
-
-    &:first-child:before,
-    &:last-child:after {
-      left: 0;
-    }
   }
 
-  ion-header + .item:before {
-    left: 0;
+  ion-header + .item {
+    margin-left: 0;
+    padding-left: $item-md-padding-left;
   }
 
   ion-item-content {
@@ -240,12 +211,5 @@ button.item.activated {
 }
 
 .item[no-lines] {
-  &:before,
-  &:after {
-    border-width: 0;
-  }
-
-  + .item:before {
-    border-width: 0;
-  }
+  border-width: 0;
 }
