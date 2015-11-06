@@ -3,7 +3,7 @@ import {forwardRef} from 'angular2/angular2';
 import {AndroidAttribute} from '../../helpers';
 
 @Page({
-  templateUrl: 'buttons/sizes.html',
+  templateUrl: 'buttons/sizes/sizes.html',
   directives: [forwardRef(() => AndroidAttribute)]
 })
 export class SizesPage {
