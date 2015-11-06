@@ -23,3 +23,15 @@ ion-card .icon-avatar {
   font-size: 1.8em;
   text-align: center;
 }
+
+.item-bold {
+  font-weight: bold;
+  color: #32DB64;
+}
+.item-subtle {
+  color: #656565;
+  margin-left: -3px !important;
+}
+.item-subtle:before {
+  padding-right: 5px;
+}

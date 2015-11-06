@@ -20,9 +20,12 @@ import {initTapClick} from '../components/tap-click/tap-click';
 import * as dom from '../util/dom';
 
 
-export function ionicProviders(config) {
+export function ionicProviders(args) {
   let app = new IonicApp();
   let platform = new Platform();
+  let navRegistry = new NavRegistry(args.pages);
+
+  var config = args.config;
 
   if (!(config instanceof Config)) {
     config = new Config(config);
@@ -50,6 +53,7 @@ export function ionicProviders(config) {
     provide(Platform, {useValue: platform}),
     provide(FeatureDetect, {useValue: featureDetect}),
     provide(Events, {useValue: events}),
+    provide(NavRegistry, {useValue: navRegistry}),
     Form,
     Keyboard,
     OverlayController,
@@ -57,7 +61,6 @@ export function ionicProviders(config) {
     Modal,
     Popup,
     Translate,
-    NavRegistry,
     ROUTER_PROVIDERS,
     provide(LocationStrategy, {useClass: HashLocationStrategy}),
     HTTP_PROVIDERS,

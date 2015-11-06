@@ -28,9 +28,14 @@ class DemoApp {
       window.addEventListener('message', (e) => {
         zone.run(() => {
           if (e.data) {
+
             var data = JSON.parse(e.data);
             if (data.hash) {
               this.nextPage = helpers.getPageFor(data.hash.replace('#', ''));
+              this.app.getComponent('leftMenu').enable(false);
+              if (data.hash === 'menus') {
+                this.app.getComponent('leftMenu').enable(true);                
+              }
             } else {
               this.nextPage = actionSheets.BasicPage;
             }
