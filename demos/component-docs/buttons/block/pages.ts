@@ -3,7 +3,7 @@ import {forwardRef} from 'angular2/angular2';
 import {AndroidAttribute} from '../../helpers';
 
 @Page({
-  templateUrl: 'buttons/block.html',
+  templateUrl: 'buttons/block/block.html',
   directives: [forwardRef(() => AndroidAttribute)]
 })
 export class BlockPage {

@@ -87,10 +87,11 @@ tabbar {
   border: 0;
   border-radius: 0;
   background: none;
+}
 
-  &:hover:not(.disable-hover) {
-    color: $tab-button-active-color;
-  }
+.tab-button:hover:not(.disable-hover),
+.tab-button[aria-selected=true] {
+  color: $tab-button-active-color;
 }
 
 .tab-button-text {
@@ -119,10 +120,6 @@ tabbar {
 
 .has-title-only .tab-button-text {
   white-space: normal;
-}
-
-.tab-button[aria-selected=true] {
-  color: $tab-button-active-color;
 }
 
 tab-highlight {
@@ -156,4 +153,25 @@ tab-highlight {
 
 [tabbar-icons=hide] .tab-button-icon {
   display: none;
+}
+
+
+// Tabbar Color Generation
+// --------------------------------------------------
+
+@each $color-name, $color-value in $colors {
+
+  tabbar[#{$color-name}] {
+    background-color: $color-value;
+
+    .tab-button {
+      color: inverse($color-value);
+    }
+
+    .tab-button:hover:not(.disable-hover),
+    .tab-button[aria-selected=true] {
+      color: inverse($color-value);
+    }
+  }
+
 }

@@ -54,9 +54,7 @@ class Tab1 {
   `
 })
 class Tab2 {
-  constructor(nav: NavController) {
-    this.nav = nav;
-
+  constructor() {
     this.sessions = [];
     for(var i = 1; i <= 250; i++) {
       this.sessions.push({
@@ -83,11 +81,8 @@ class Tab2 {
     </ion-content>
     `
 })
-class Tab3 {
-  constructor(nav: NavController) {
-    this.nav = nav;
-  }
-}
+class Tab3 {}
+
 
 @App({
   template: `
@@ -104,7 +99,7 @@ class Tab3 {
       </ion-content>
     </ion-menu>
 
-    <ion-tabs #content>
+    <ion-tabs #content tabbar-style="secondary">
       <ion-tab tab-title="Plain List" tab-icon="star" [root]="root1"></ion-tab>
       <ion-tab tab-title="Schedule" tab-icon="globe" [root]="root2"></ion-tab>
       <ion-tab tab-title="Stopwatch" tab-icon="stopwatch" [root]="root3"></ion-tab>

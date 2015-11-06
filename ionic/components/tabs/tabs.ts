@@ -2,6 +2,7 @@ import {Directive, ElementRef, Optional, Host, NgFor, NgIf, forwardRef, ViewCont
 
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
+import {Attr} from '../app/id';
 import {Config} from '../../config/config';
 import {ViewController} from '../nav/view-controller';
 import {ConfigComponent} from '../../config/decorators';
@@ -63,6 +64,7 @@ import {Icon} from '../icon/icon';
   defaultInputs: {
     'tabbarPlacement': 'bottom',
     'tabbarIcons': 'top',
+    'tabbarStyle': 'default',
     'preloadTabs': true
   },
   template:
@@ -70,7 +72,7 @@ import {Icon} from '../icon/icon';
       '<template navbar-anchor></template>' +
     '</ion-navbar-section>' +
     '<ion-tabbar-section>' +
-      '<tabbar role="tablist">' +
+      '<tabbar role="tablist" [attr]="tabbarStyle">' +
         '<a *ng-for="#t of tabs" [tab]="t" class="tab-button" role="tab">' +
           '<icon [name]="t.tabIcon" [is-active]="t.isSelected" class="tab-button-icon"></icon>' +
           '<span class="tab-button-text">{{t.tabTitle}}</span>' +
@@ -85,6 +87,7 @@ import {Icon} from '../icon/icon';
     Icon,
     NgFor,
     NgIf,
+    Attr,
     forwardRef(() => TabButton),
     forwardRef(() => TabHighlight),
     forwardRef(() => TabNavBarAnchor)
@@ -217,15 +220,36 @@ export class Tabs extends Ion {
 
   /**
    * @private
-   * "Touch" the active tab, either going back to the root view of the tab
-   * or scrolling the tab to the top
+   * "Touch" the active tab, going back to the root view of the tab
+   * or optionally letting the tab handle the event
    */
   touchActive(tab) {
+    let active = tab.getActive();
+
+    if(!active) {
+      return Promise.resolve();
+    }
+
+    let instance = active.instance;
+
+    // If they have a custom tab selected handler, call it
+    if(instance.tabSelected) {
+      return instance.tabSelected();
+    }
+
+    // If we're a few pages deep, pop to root
     if (tab.length() > 1) {
       // Pop to the root view
       return tab.popToRoot();
     }
 
+    // Otherwise, if the page we're on is not our real root, reset it to our
+    // default root type
+    if(tab.root != active.componentType) {
+      return tab.setRoot(tab.root);
+    }
+
+    // And failing all of that, we do something safe and secure
     return Promise.resolve();
   }
 
