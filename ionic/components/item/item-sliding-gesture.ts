@@ -2,7 +2,6 @@ import {Hammer} from 'ionic/gestures/hammer';
 import {DragGesture} from 'ionic/gestures/drag-gesture';
 import {List} from '../list/list';
 
-import * as util from 'ionic/util';
 import {CSS, raf, closest} from 'ionic/util/dom';
 
 
@@ -10,6 +9,7 @@ export class ItemSlidingGesture extends DragGesture {
   constructor(list: List, listEle) {
     super(listEle, {
       direction: 'x',
+      threshold: 40,
       threshold: list.width()
     });
 
@@ -29,6 +29,10 @@ export class ItemSlidingGesture extends DragGesture {
         }
       }
     });
+
+    this.mouseOut = (ev) => {
+      this.onDragEnd(ev);
+    };
   }
 
   onDragStart(ev) {
@@ -38,7 +42,7 @@ export class ItemSlidingGesture extends DragGesture {
     this.closeOpened(ev, itemContainerEle);
 
     let openAmout = this.getOpenAmount(itemContainerEle);
-    let itemData = this.getData(itemContainerEle);
+    let itemData = this.get(itemContainerEle);
 
     if (openAmout) {
       return ev.preventDefault();
@@ -46,15 +50,19 @@ export class ItemSlidingGesture extends DragGesture {
 
     itemContainerEle.classList.add('active-slide');
 
-    this.setData(itemContainerEle, 'offsetX', openAmout);
-    this.setData(itemContainerEle, 'startX', ev.center[this.direction]);
+    this.set(itemContainerEle, 'offsetX', openAmout);
+    this.set(itemContainerEle, 'startX', ev.center[this.direction]);
+
+    if (ev.srcEvent.type.indexOf('mouse') > -1) {
+      ev.target.addEventListener('mouseout', this.mouseOut);
+    }
   }
 
   onDrag(ev) {
     let itemContainerEle = getItemConatiner(ev.target);
     if (!itemContainerEle || !isActive(itemContainerEle)) return;
 
-    let itemData = this.getData(itemContainerEle);
+    let itemData = this.get(itemContainerEle);
 
     if (!itemData.optsWidth) {
       itemData.optsWidth = getOptionsWidth(itemContainerEle);
@@ -80,7 +88,7 @@ export class ItemSlidingGesture extends DragGesture {
 
     // If we are currently dragging, we want to snap back into place
     // The final resting point X will be the width of the exposed buttons
-    let itemData = this.getData(itemContainerEle);
+    let itemData = this.get(itemContainerEle);
 
     var restingPoint = itemData.optsWidth;
 
@@ -100,7 +108,7 @@ export class ItemSlidingGesture extends DragGesture {
       }
     }
 
-    this.setData(itemContainerEle, 'opened', restingPoint > 0);
+    ev.target.removeEventListener('mouseout', this.mouseOut);
 
     raf(() => {
       this.open(itemContainerEle, restingPoint, true);
@@ -125,9 +133,9 @@ export class ItemSlidingGesture extends DragGesture {
     let slidingEle = itemContainerEle.querySelector('ion-item');
     if (!slidingEle) return;
 
-    this.setData(itemContainerEle, 'openAmount', openAmount);
+    this.set(itemContainerEle, 'openAmount', openAmount);
 
-    clearTimeout(this.getData(itemContainerEle).timerId);
+    clearTimeout(this.get(itemContainerEle).timerId);
 
     if (openAmount > 0) {
       this.openItems++;
@@ -139,7 +147,7 @@ export class ItemSlidingGesture extends DragGesture {
           this.openItems--;
         }
       }, 400);
-      this.setData(itemContainerEle, 'timerId', timerId);
+      this.set(itemContainerEle, 'timerId', timerId);
     }
 
     slidingEle.style[CSS.transform] = (openAmount === 0 ? '' : 'translate3d(' + -openAmount + 'px,0,0)');
@@ -147,14 +155,14 @@ export class ItemSlidingGesture extends DragGesture {
   }
 
   getOpenAmount(itemContainerEle) {
-    return this.getData(itemContainerEle).openAmount || 0;
+    return this.get(itemContainerEle).openAmount || 0;
   }
 
-  getData(itemContainerEle) {
+  get(itemContainerEle) {
     return this.data[itemContainerEle && itemContainerEle.$ionSlide] || {};
   }
 
-  setData(itemContainerEle, key, value) {
+  set(itemContainerEle, key, value) {
     if (!this.data[itemContainerEle.$ionSlide]) {
       this.data[itemContainerEle.$ionSlide] = {};
     }
