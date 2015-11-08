@@ -9,8 +9,7 @@ export class ItemSlidingGesture extends DragGesture {
   constructor(list: List, listEle) {
     super(listEle, {
       direction: 'x',
-      threshold: 40,
-      threshold: list.width()
+      threshold: 40
     });
 
     this.data = {};
