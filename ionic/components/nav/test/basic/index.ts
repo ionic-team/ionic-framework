@@ -1,6 +1,15 @@
+import {Component} from 'angular2/angular2';
 import {App, NavController} from 'ionic/ionic';
 import {Page, Config, IonicApp} from 'ionic/ionic';
-import {NavParams, NavController, ViewController} from 'ionic/ionic';
+import {NavParams, NavController, ViewController, IONIC_DIRECTIVES} from 'ionic/ionic';
+
+
+@Component({
+  selector: 'my-cmp',
+  template: `<p>My Custom Component Test <icon star></icon></p>`,
+  directives: [IONIC_DIRECTIVES]
+})
+class MyCmpTest{}
 
 
 @Page({
@@ -32,7 +41,9 @@ import {NavParams, NavController, ViewController} from 'ionic/ionic';
 
         <button *ng-for="#i of pages" ion-item (click)="pushPrimaryHeaderPage()">Page {{i}}</button>
       </ion-list>
-    </ion-content>`
+      <my-cmp></my-cmp>
+    </ion-content>`,
+  directives: [MyCmpTest]
 })
 class FirstPage {
   constructor(
