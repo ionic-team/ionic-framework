@@ -1,0 +1,47 @@
+<ion-toolbar class="android-attr">
+  <ion-title>
+    Description
+  </ion-title>
+  <ion-nav-items primary>
+    <button (click)="close()" *ng-if=" currentPlatform === 'ios' ">
+      Cancel
+    </button>
+    <button (click)="close()" *ng-if=" currentPlatform === 'android' ">
+      <icon close></icon>
+    </button>
+  </ion-nav-items>
+</ion-toolbar>
+
+
+  <ion-content class="has-header">
+
+    <ion-list>
+
+        <ion-item>
+          <ion-avatar item-left>
+            <img src="{{character.image}}">
+          </ion-avatar>
+          <h2>{{character.name}}</h2>
+          <p>{{character.quote}}</p>
+        </ion-item>
+
+        <div *ng-for="#item of character['items']">
+          <ion-item>
+            {{item.title}}
+            <ion-note item-right>
+              {{item.note}}
+            </ion-note>
+          </ion-item>        
+        </div>
+
+
+    </ion-list>
+
+  </ion-content>
+
+
+
+
+
+
+
