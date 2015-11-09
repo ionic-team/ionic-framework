@@ -14,9 +14,7 @@ import * as helpers from '../../helpers';
   directives: [forwardRef(() => helpers.AndroidAttribute)],
 })
 class TabIconCtrl {
-  constructor(nav: NavController, view: ViewController) {
-    this.nav = nav;
-    this.view = view;
+  constructor() {
   }
 }
 
@@ -30,8 +28,7 @@ class TabIconCtrl {
   '</ion-tabs>',
 })
 export class IconPage {
-  constructor(nav: NavController, params: NavParams) {
-    this.nav = nav;
+  constructor() {
     this.tabOne = TabIconCtrl;
     this.tabTwo = TabIconCtrl;
     this.tabThree = TabIconCtrl;
