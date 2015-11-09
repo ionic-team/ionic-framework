@@ -3,10 +3,10 @@ import {forwardRef} from 'angular2/angular2';
 import {AndroidAttribute} from '../../helpers';
 
 @Page({
-    templateUrl: 'lists/lines/template.html',
+    templateUrl: 'lists/no-lines/template.html',
     directives: [forwardRef(() => AndroidAttribute)]
 })
-export class LinesPage {
+export class NoLinesPage {
     constructor() {
 
     }

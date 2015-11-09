@@ -108,9 +108,10 @@ export function getPageFor(hash) {
         'icons': icons.BasicPage,
 
         'lists': lists.BasicPage,
+        'list-lines': lists.BasicPage,
+        'list-no-lines': lists.NoLinesPage,
         'avatar-list': lists.AvatarPage,
         'icon-list': lists.IconPage,
-        'list-dividers': lists.LinesPage,
         'inset-list': lists.InsetPage,
         'list-headers': lists.HeadersPage,
         'multiline-list': lists.MultilinePage,
