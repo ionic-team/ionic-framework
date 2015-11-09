@@ -65,14 +65,15 @@ export class RippleActivator extends Activator {
   upAction(forceFadeOut) {
     this.deactivate();
 
-    let ripple;
-    for (let rippleId in this.ripples) {
+    let rippleId, ripple;
+    for (rippleId in this.ripples) {
       ripple = this.ripples[rippleId];
 
       if (!ripple.fade || forceFadeOut) {
         // ripple has not been let up yet
-        // speed up the rate if the animation is still going
-        setTimeout(() => {
+        clearTimeout(ripple.fadeStart);
+        ripple.fadeStart = setTimeout(() => {
+          // speed up the rate if the animation is still going
           ripple.expand && ripple.expand.playbackRate(EXPAND_OUT_PLAYBACK_RATE);
           ripple.fade = new Animation(ripple.ele);
           ripple.fade
@@ -87,7 +88,7 @@ export class RippleActivator extends Activator {
             })
             .play();
 
-          }, 16);
+          });
       }
     }
 
@@ -95,15 +96,15 @@ export class RippleActivator extends Activator {
   }
 
   next(forceComplete) {
-    let ripple, rippleEle;
-    for (let rippleId in this.ripples) {
+    let rippleId, ripple;
+    for (rippleId in this.ripples) {
       ripple = this.ripples[rippleId];
 
-      if ((ripple.expanded && ripple.faded && ripple.ele) ||
-           forceComplete || parseInt(rippleId) + 5000 < Date.now()) {
+      if ((ripple.expanded && ripple.faded && ripple.ele) || forceComplete) {
         // finished expanding and the user has lifted the pointer
+        ripple.remove = true;
         raf(() => {
-          this.remove(rippleId);
+          this.remove();
         });
       }
     }
@@ -114,14 +115,17 @@ export class RippleActivator extends Activator {
     this.next(true);
   }
 
-  remove(rippleId) {
-    let ripple = this.ripples[rippleId];
-    if (ripple) {
-      ripple.expand && ripple.expand.dispose();
-      ripple.fade && ripple.fade.dispose();
-      removeElement(ripple.ele);
-      ripple.ele = ripple.expand = ripple.fade = null;
-      delete this.ripples[rippleId];
+  remove() {
+    let rippleId, ripple;
+    for (rippleId in this.ripples) {
+      ripple = this.ripples[rippleId];
+      if (ripple.remove || parseInt(rippleId, 10) + 4000 < Date.now()) {
+        ripple.expand && ripple.expand.dispose();
+        ripple.fade && ripple.fade.dispose();
+        removeElement(ripple.ele);
+        ripple.ele = ripple.expand = ripple.fade = null;
+        delete this.ripples[rippleId];
+      }
     }
   }
 

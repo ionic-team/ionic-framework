@@ -10,7 +10,7 @@ let lastActivated = 0;
 let disableNativeClickTime = 0;
 let disableNativeClickLimit = 1000;
 let activator = null;
-let isEnabled = false;
+let isTapPolyfill = false;
 let app = null;
 let config = null;
 let win = null;
@@ -24,13 +24,15 @@ export function initTapClick(windowInstance, documentInstance, appInstance, conf
   config = configInstance;
 
   activator = (config.get('mdRipple') ? new RippleActivator(app, config) : new Activator(app, config));
-  isEnabled = (config.get('tapPolyfill') !== false);
+  isTapPolyfill = (config.get('tapPolyfill') === true);
 
   addListener('click', click, true);
 
-  addListener('touchstart', touchStart);
-  addListener('touchend', touchEnd);
-  addListener('touchcancel', touchCancel);
+  if (isTapPolyfill) {
+    addListener('touchstart', touchStart);
+    addListener('touchend', touchEnd);
+    addListener('touchcancel', touchCancel);
+  }
 
   addListener('mousedown', mouseDown, true);
   addListener('mouseup', mouseUp, true);
@@ -45,7 +47,7 @@ function touchStart(ev) {
 function touchEnd(ev) {
   touchAction();
 
-  if (isEnabled && startCoord && app.isEnabled()) {
+  if (startCoord && app.isEnabled()) {
     let endCoord = pointerCoord(ev);
 
     if (!hasPointerMoved(pointerTolerance, startCoord, endCoord)) {
@@ -111,8 +113,8 @@ function pointerStart(ev) {
 }
 
 function pointerEnd(ev) {
-  activator.upAction();
   moveListeners(false);
+  activator.upAction();
 }
 
 function pointerMove(ev) {
@@ -131,16 +133,22 @@ function pointerCancel(ev) {
 }
 
 function moveListeners(shouldAdd) {
-  removeListener('touchmove', pointerMove);
+  if (isTapPolyfill) {
+    removeListener('touchmove', pointerMove);
+  }
   removeListener('mousemove', pointerMove);
   if (shouldAdd) {
-    addListener('touchmove', pointerMove);
+    if (isTapPolyfill) {
+      addListener('touchmove', pointerMove);
+    }
     addListener('mousemove', pointerMove);
   }
 }
 
 function setDisableNativeClick() {
-  disableNativeClickTime = Date.now() + disableNativeClickLimit;
+  if (isTapPolyfill) {
+    disableNativeClickTime = Date.now() + disableNativeClickLimit;
+  }
 }
 
 function isDisabledNativeClick() {
@@ -161,6 +169,8 @@ function click(ev) {
     console.debug('click prevent', preventReason);
     ev.preventDefault();
     ev.stopPropagation();
+  } else {
+    activator.upAction();
   }
 }
 
