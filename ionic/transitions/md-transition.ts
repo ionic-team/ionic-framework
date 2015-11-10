@@ -10,7 +10,6 @@ const SHOW_BACK_BTN_CSS = 'show-back-button';
 class MDTransition extends Animation {
 
   constructor(navCtrl, opts) {
-    //opts.renderDelay = 80;
     super(null, opts);
 
     // what direction is the transition going

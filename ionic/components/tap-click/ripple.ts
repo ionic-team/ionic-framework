@@ -1,23 +1,38 @@
 import {Activator} from './activator';
-import {removeElement, raf} from '../../util/dom';
 import {Animation} from '../../animations/animation';
+import {raf} from '../../util/dom';
 
 
 export class RippleActivator extends Activator {
 
-  constructor(app, config) {
-    super(app, config);
-    this.ripples = {};
+  constructor(app, config, fastdom) {
+    super(app, config, fastdom);
+
+    this.expands = {};
+    this.fades = {};
+    this.expandSpeed = null;
   }
 
   downAction(ev, activatableEle, pointerX, pointerY) {
+    if (super.downAction(ev, activatableEle, pointerX, pointerY) ) {
+      // create a new ripple element
+      this.expandSpeed = EXPAND_DOWN_PLAYBACK_RATE;
 
-    if (this.disableActivated(ev)) return;
+      this.fastdom.defer(2, () => {
 
-    super.downAction(ev, activatableEle, pointerX, pointerY);
+        this.fastdom.read(() => {
+          let clientRect = activatableEle.getBoundingClientRect();
 
-    // create a new ripple element
-    let clientRect = activatableEle.getBoundingClientRect();
+          this.fastdom.write(() => {
+            this.createRipple(activatableEle, pointerX, pointerY, clientRect);
+          });
+        });
+
+      });
+    }
+  }
+
+  createRipple(activatableEle, pointerX, pointerY, clientRect) {
     let clientPointerX = (pointerX - clientRect.left);
     let clientPointerY = (pointerY - clientRect.top);
 
@@ -29,6 +44,7 @@ export class RippleActivator extends Activator {
     let duration = (1000 * Math.sqrt(radius / TOUCH_DOWN_ACCEL) + 0.5);
 
     let rippleEle = document.createElement('md-ripple');
+    let rippleId = Date.now();
     let eleStyle = rippleEle.style;
     eleStyle.width = eleStyle.height = diameter + 'px';
     eleStyle.marginTop = eleStyle.marginLeft = -(diameter / 2) + 'px';
@@ -37,96 +53,74 @@ export class RippleActivator extends Activator {
 
     activatableEle.appendChild(rippleEle);
 
-    let ripple = this.ripples[Date.now()] = {
-      ele: rippleEle,
-      radius: radius,
-      duration: duration
-    };
+    // create the animation for the fade out, but don't start it yet
+    this.fades[rippleId] = new Animation(rippleEle, {renderDelay: 0});
+    this.fades[rippleId]
+      .fadeOut()
+      .duration(FADE_OUT_DURATION)
+      .playbackRate(1)
+      .onFinish(() => {
+        this.fastdom.write(() => {
+          this.fades[rippleId].dispose(true);
+          delete this.fades[rippleId];
+        });
+      });
 
     // expand the circle from the users starting point
     // start slow, and when they let up, then speed up the animation
-    ripple.expand = new Animation(rippleEle, {renderDelay: 0});
-    ripple.expand
+    this.expands[rippleId] = new Animation(rippleEle, {renderDelay: 0});
+    this.expands[rippleId]
       .fromTo('scale', '0.001', '1')
       .duration(duration)
-      .playbackRate(EXPAND_DOWN_PLAYBACK_RATE)
+      .playbackRate(this.expandSpeed)
       .onFinish(()=> {
-        // finished expanding
-        ripple.expand && ripple.expand.dispose();
-        ripple.expand = null;
-        ripple.expanded = true;
+        this.expands[rippleId].dispose();
+        delete this.expands[rippleId];
+
         this.next();
       })
       .play();
-
-      this.next();
   }
 
-  upAction(forceFadeOut) {
+  upAction() {
     this.deactivate();
 
-    let rippleId, ripple;
-    for (rippleId in this.ripples) {
-      ripple = this.ripples[rippleId];
+    this.expandSpeed = 1;
 
-      if (!ripple.fade || forceFadeOut) {
-        // ripple has not been let up yet
-        clearTimeout(ripple.fadeStart);
-        ripple.fadeStart = setTimeout(() => {
-          // speed up the rate if the animation is still going
-          ripple.expand && ripple.expand.playbackRate(EXPAND_OUT_PLAYBACK_RATE);
-          ripple.fade = new Animation(ripple.ele);
-          ripple.fade
-            .fadeOut()
-            .duration(OPACITY_OUT_DURATION)
-            .playbackRate(1)
-            .onFinish(() => {
-              ripple.fade && ripple.fade.dispose();
-              ripple.fade = null;
-              ripple.faded = true;
-              this.next();
-            })
-            .play();
+    this.fastdom.defer(4, () => {
+      this.next();
+    });
+  }
 
-          });
+  next() {
+    const now = Date.now();
+
+    let rippleId;
+    for (rippleId in this.expands) {
+      if (parseInt(rippleId, 10) + 4000 < now) {
+        this.expands[rippleId].dispose(true);
+        delete this.expands[rippleId];
+
+      } else if (this.expands[rippleId].playbackRate() === EXPAND_DOWN_PLAYBACK_RATE) {
+        this.expands[rippleId].playbackRate(EXPAND_OUT_PLAYBACK_RATE);
       }
     }
 
-    this.next();
-  }
+    for (rippleId in this.fades) {
+      if (parseInt(rippleId, 10) + 4000 < now) {
+        this.fades[rippleId].dispose(true);
+        delete this.fades[rippleId];
 
-  next(forceComplete) {
-    let rippleId, ripple;
-    for (rippleId in this.ripples) {
-      ripple = this.ripples[rippleId];
-
-      if ((ripple.expanded && ripple.faded && ripple.ele) || forceComplete) {
-        // finished expanding and the user has lifted the pointer
-        ripple.remove = true;
-        raf(() => {
-          this.remove();
-        });
+      } else if (!this.fades[rippleId].isPlaying) {
+        this.fades[rippleId].isPlaying = true;
+        this.fades[rippleId].play();
       }
     }
   }
 
   clearState() {
     this.deactivate();
-    this.next(true);
-  }
-
-  remove() {
-    let rippleId, ripple;
-    for (rippleId in this.ripples) {
-      ripple = this.ripples[rippleId];
-      if (ripple.remove || parseInt(rippleId, 10) + 4000 < Date.now()) {
-        ripple.expand && ripple.expand.dispose();
-        ripple.fade && ripple.fade.dispose();
-        removeElement(ripple.ele);
-        ripple.ele = ripple.expand = ripple.fade = null;
-        delete this.ripples[rippleId];
-      }
-    }
+    this.next();
   }
 
 }
@@ -134,4 +128,4 @@ export class RippleActivator extends Activator {
 const TOUCH_DOWN_ACCEL = 512;
 const EXPAND_DOWN_PLAYBACK_RATE = 0.35;
 const EXPAND_OUT_PLAYBACK_RATE = 3;
-const OPACITY_OUT_DURATION = 750;
+const FADE_OUT_DURATION = 700;

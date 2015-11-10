@@ -2,7 +2,6 @@ import {Title} from 'angular2/angular2';
 
 import {ClickBlock} from '../../util/click-block';
 import {ScrollTo} from '../../animations/scroll-to';
-import * as dom from '../../util/dom';
 
 
 /**
@@ -11,11 +10,10 @@ import * as dom from '../../util/dom';
  */
 export class IonicApp {
 
-  /**
-   * TODO
-   */
-  constructor() {
-    this._title = new Title();
+  constructor(fastdom) {
+    this._fastdom = fastdom;
+    this._titleSrv = new Title();
+    this._title = '';
     this._disTime = 0;
     this._trnsTime = 0;
 
@@ -28,11 +26,12 @@ export class IonicApp {
    * @param {string} val  Value to set the document title to.
    */
   setTitle(val) {
-    this._title.setTitle(val);
-  }
-
-  getTitle() {
-    return this._title.getTitle(val);
+    if (val !== this._title) {
+      this._title = val;
+      this._fastdom.defer(4, () => {
+        this._titleSrv.setTitle(this._title);
+      });
+    }
   }
 
   /**

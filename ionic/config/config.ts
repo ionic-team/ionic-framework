@@ -22,7 +22,7 @@ import {isObject, isDefined, isFunction, isArray, extend} from '../util/util';
  *     modalEnter: 'modal-slide-in',
  *     modalLeave: 'modal-slide-out',
  *     tabbarPlacement: 'bottom',
- *     viewTransition: 'ios',
+ *     pageTransition: 'ios',
  *   }
  * })
  * ```

@@ -1,5 +1,6 @@
 import {CSS} from '../util/dom';
 import {extend} from '../util/util';
+import {FastDom} from '../util/fastdom';
 
 
 /**
@@ -24,8 +25,10 @@ import {extend} from '../util/util';
 
 export class Animation {
 
-  constructor(ele, opts={}) {
+  constructor(ele, opts={}, fastdom=null) {
     this.reset();
+    this._fastdom = fastdom;
+
     this._opts = extend({
       renderDelay: 16
     }, opts);
@@ -251,10 +254,14 @@ export class Animation {
         });
       }
 
-      if (self._duration > 16) {
+      if (self._duration > 16 && this._opts.renderDelay > 0) {
         // begin each animation when everything is rendered in their starting point
         // give the browser some time to render everything in place before starting
-        setTimeout(kickoff, this._opts.renderDelay);
+        if (this._fastdom) {
+          this._fastdom.write(kickoff);
+        } else {
+          setTimeout(kickoff, this._opts.renderDelay);
+        }
 
       } else {
         // no need to render everything in there place before animating in
@@ -503,14 +510,19 @@ export class Animation {
     return copy(new Animation(), this);
   }
 
-  dispose() {
+  dispose(removeElement) {
     let i;
 
     for (i = 0; i < this._chld.length; i++) {
-      this._chld[i].dispose();
+      this._chld[i].dispose(removeElement);
     }
     for (i = 0; i < this._ani.length; i++) {
-      this._ani[i].dispose();
+      this._ani[i].dispose(removeElement);
+    }
+    if (removeElement) {
+      for (i = 0; i < this._el.length; i++) {
+        this._el[i].parentNode && this._el[i].parentNode.removeChild(this._el[i]);
+      }
     }
 
     this.reset();
@@ -607,7 +619,7 @@ class Animate {
 
         self.ani = self.ani.onfinish = null;
 
-        done && done();  
+        done && done();
       }
     };
   }

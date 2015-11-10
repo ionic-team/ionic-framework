@@ -436,7 +436,7 @@ export class NavController extends Ion {
     }
 
     if (!opts.animation) {
-      opts.animation = this.config.get('viewTransition');
+      opts.animation = this.config.get('pageTransition');
     }
     if (this.config.get('animate') === false) {
       opts.animate = false;
@@ -468,6 +468,7 @@ export class NavController extends Ion {
         leavingView.state = STAGED_LEAVING_STATE;
 
         // init the transition animation
+        opts.renderDelay = this.config.get('pageTransitionDelay');
         let transAnimation = Transition.create(this, opts);
         if (opts.animate === false) {
           // force it to not animate the elements, just apply the "to" styles
