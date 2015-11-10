@@ -34,10 +34,24 @@ $list-md-header-color:           #858585 !default;
     margin-left: $item-md-padding-left;
     font-size: $item-md-font-size;
     text-transform: none;
+
+    &:last-child {
+      border-bottom: 1px solid $item-md-border-color;
+    }
+  }
+
+  .item[no-lines],
+  .item[no-lines] + .item {
+    border-width: 0;
+    .item-inner {
+      border-width: 0;
+    }
   }
 
   ion-header + .item,
-  ion-item-group-title + .item {
+  ion-header + script + .item,
+  ion-item-group-title + .item,
+  ion-item-group-title + script + .item {
     margin-left: 0;
     padding-left: $item-md-padding-left;
   }
@@ -54,6 +68,7 @@ $list-md-header-color:           #858585 !default;
   icon[item-left],
   icon[item-right] {
     margin-top: $item-md-padding-icon-top;
+    margin-left: 0;
     margin-bottom: $item-md-padding-icon-bottom;
   }
 
@@ -100,7 +115,7 @@ $list-md-header-color:           #858585 !default;
     margin: 4px;
   }
 
-  icon[item-left] + ion-item-content,
+  icon[item-left] + .item-inner,
   icon[item-left] + [text-input] {
     margin-left: $item-md-padding-left + ($item-md-padding-left / 2);
   }
@@ -207,12 +222,14 @@ $list-md-header-color:           #858585 !default;
   border-radius: $list-inset-md-border-radius;
 
   .item:first-child {
+    border-top-width: 0;
     margin-top: 0;
     border-top-right-radius: $list-inset-md-border-radius;
     border-top-left-radius: $list-inset-md-border-radius;
   }
 
   .item:last-child {
+    border-bottom-width: 0;
     margin-bottom: 0;
     border-bottom-right-radius: $list-inset-md-border-radius;
     border-bottom-left-radius: $list-inset-md-border-radius;
@@ -238,7 +255,9 @@ $list-md-header-color:           #858585 !default;
   }
 
   ion-header + .item,
-  ion-item-group-title + .item {
+  ion-header + script + .item,
+  ion-item-group-title + .item,
+  ion-item-group-title + script + .item {
     border-width: 1px !important;
   }
 }

@@ -18,6 +18,20 @@
 
   background-color: $list-background-color;
   color: $list-text-color;
+
+  box-sizing: border-box;
+}
+
+.item-inner {
+  width: 100%;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  align-items: center;
+  overflow: hidden;
+  align-self: stretch;
+  box-sizing: border-box;
 }
 
 .item-group {
@@ -53,18 +67,6 @@ button.item.item {
   border-radius: 0;
   box-shadow: none;
   will-change: initial;
-}
-
-.item-inner {
-  // height: 100%;
-  width: 100%;
-  display: flex;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  align-items: center;
-  overflow: hidden;
-  align-self: stretch;
 }
 
 ion-item-content {

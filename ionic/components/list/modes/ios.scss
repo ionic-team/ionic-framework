@@ -38,7 +38,9 @@ $list-ios-header-color:               #333 !default;
   }
 
   ion-header + .item,
-  ion-item-group-title + .item {
+  ion-header + script + .item,
+  ion-item-group-title + .item,
+  ion-item-group-title + script + .item {
     border-top: 1px solid $item-ios-border-color;
 
     .item-inner {
@@ -48,7 +50,7 @@ $list-ios-header-color:               #333 !default;
 
   .item {
     border-radius: 0;
-    margin-top: -1px;
+    // margin-top: -1px;
     padding-left: $item-ios-padding-left;
     font-size: $item-ios-font-size;
 
@@ -71,7 +73,7 @@ $list-ios-header-color:               #333 !default;
     }
 
     ion-item-content {
-      //margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom 0;
+      margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom 0;
     }
   }
 
@@ -203,15 +205,17 @@ ion-card {
     button, [button] {
       min-height: calc(100% - 1px);
       height: calc(100% - 1px);
-      margin-top: 0.55px;
+      //margin-top: 0.55px;
       margin-bottom: 0.55px;
     }
   }
 
   ion-header + .item,
-  ion-item-group-title + .item {
+  ion-header + script + .item,
+  ion-item-group-title + .item,
+  ion-item-group-title + script + .item {
     border-top-width: 0.55px;
-    margin-top: -0.55px;
+    //margin-top: -0.55px;
 
     .item-inner {
       border-width: 0;
@@ -219,7 +223,7 @@ ion-card {
   }
 
   .item {
-    margin-top: -0.55px;
+    //margin-top: -0.55px;
 
     .item-inner {
       border-width: 0.55px;
@@ -235,7 +239,7 @@ ion-card {
 
     &:last-child {
       border-bottom-width: 0.55px;
-      margin-bottom: -0.55px;
+      //margin-bottom: -0.55px;
     }
   }
 }
