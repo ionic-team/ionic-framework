@@ -28,30 +28,29 @@ $list-md-header-color:           #858585 !default;
   }
 
   .item {
-    margin-top: -1px;
-    border-top: 1px solid $item-md-border-color;
+    // margin-top: -1px;
+    border-bottom: 1px solid $item-md-border-color;
     padding-right: ($item-md-padding-right / 2);
     margin-left: $item-md-padding-left;
     font-size: $item-md-font-size;
     text-transform: none;
 
-    &:last-child {
-      border-bottom: 1px solid $item-md-border-color;
+    &:first-child {
+      border-top: 1px solid $item-md-border-color;
     }
   }
 
-  .item[no-lines],
-  .item[no-lines] + .item {
-    border-width: 0;
-    .item-inner {
-      border-width: 0;
-    }
-  }
+  // .item[no-lines],
+  // .item[no-lines] + .item {
+  //   border-width: 0;
+  //   .item-inner {
+  //     border-width: 0;
+  //   }
+  // }
 
-  ion-header + .item,
-  ion-header + script + .item,
-  ion-item-group-title + .item,
-  ion-item-group-title + script + .item {
+  ion-header,
+  ion-item-group-title {
+    border-bottom: 1px solid $item-md-border-color;
     margin-left: 0;
     padding-left: $item-md-padding-left;
   }
@@ -236,7 +235,7 @@ $list-md-header-color:           #858585 !default;
   }
 
   .item:not(ion-input):last-child:after {
-    border-top: none;
+    border-bottom: none;
   }
 
   + .list[inset] {
@@ -249,15 +248,15 @@ $list-md-header-color:           #858585 !default;
 /* NO LINES LIST */
 /*****************/
 
-.list[no-lines] {
-  .item {
-    border-width: 0;
-  }
-
-  ion-header + .item,
-  ion-header + script + .item,
-  ion-item-group-title + .item,
-  ion-item-group-title + script + .item {
-    border-width: 1px !important;
-  }
-}
+// .list[no-lines] {
+//   .item {
+//     border-width: 0;
+//   }
+//
+//   ion-header + .item,
+//   ion-header + script + .item,
+//   ion-item-group-title + .item,
+//   ion-item-group-title + script + .item {
+//     border-width: 1px !important;
+//   }
+// }

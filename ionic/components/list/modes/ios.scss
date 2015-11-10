@@ -37,39 +37,37 @@ $list-ios-header-color:               #333 !default;
     color: $list-ios-header-color;
   }
 
-  ion-header + .item,
-  ion-header + script + .item,
-  ion-item-group-title + .item,
-  ion-item-group-title + script + .item {
-    border-top: 1px solid $item-ios-border-color;
-
-    .item-inner {
-      border-top-width: 0;
-    }
+  // Apply the border to the first item in the list
+  // whether there is a header or not
+  ion-header,
+  ion-item-group-title , {
+    border-bottom: 1px solid $item-ios-border-color;
   }
 
   .item {
     border-radius: 0;
-    // margin-top: -1px;
+    // TODO this makes the border not show on sticky
+    margin-top: -1px;
     padding-left: $item-ios-padding-left;
     font-size: $item-ios-font-size;
+  }
 
+  .item {
     &:first-child {
       border-top: 1px solid $item-ios-border-color;
-
-      .item-inner {
-        border-top-width: 0;
-      }
     }
 
     &:last-child {
       border-bottom: 1px solid $item-ios-border-color;
-      margin-bottom: -1px;
+
+      .item-inner {
+        border-bottom: none;
+      }
     }
 
     .item-inner {
       padding-right: ($item-ios-padding-right / 2);
-      border-top: 1px solid $item-ios-border-color;
+      border-bottom: 1px solid $item-ios-border-color;
     }
 
     ion-item-content {
@@ -77,21 +75,14 @@ $list-ios-header-color:               #333 !default;
     }
   }
 
-  // If the item has the no-lines attribute we want to remove the border from it
-  // and the border from the next item if there is one
-  .item[no-lines] {
-    border-width: 0;
-
-    .item-inner {
-      border-width: 0;
-    }
-
-    + .item {
-      .item-inner {
-        border-width: 0;
-      }
-    }
-  }
+  // If the item has the no-lines attribute remove the border from:
+  // the item itself (for first or last-child items)
+  // the item-inner class (if it is not first or last)
+  // the next item's item-inner after the one with no-lines if there is one
+  // .item[no-lines],
+  // .item[no-lines] .item-inner, {
+  //   border-width: 0;
+  // }
 
   [item-left] {
     margin: ($item-ios-padding-top / 2) $item-ios-padding-right ($item-ios-padding-bottom / 2) 0;
@@ -205,25 +196,18 @@ ion-card {
     button, [button] {
       min-height: calc(100% - 1px);
       height: calc(100% - 1px);
-      //margin-top: 0.55px;
+      margin-top: 0.55px;
       margin-bottom: 0.55px;
     }
   }
 
-  ion-header + .item,
-  ion-header + script + .item,
-  ion-item-group-title + .item,
-  ion-item-group-title + script + .item {
-    border-top-width: 0.55px;
-    //margin-top: -0.55px;
-
-    .item-inner {
-      border-width: 0;
-    }
+  ion-header,
+  ion-item-group-title {
+    border-bottom-width: 0.55px;
   }
 
   .item {
-    //margin-top: -0.55px;
+    margin-top: -0.55px;
 
     .item-inner {
       border-width: 0.55px;
@@ -231,15 +215,11 @@ ion-card {
 
     &:first-child {
       border-top-width: 0.55px;
-
-      .item-inner {
-        border-top-width: 0;
-      }
     }
 
     &:last-child {
       border-bottom-width: 0.55px;
-      //margin-bottom: -0.55px;
+      margin-bottom: -0.55px;
     }
   }
 }
@@ -255,17 +235,21 @@ ion-card {
 
   .item {
     margin-top: 0;
-    border-top: 1px solid $item-ios-border-color;
+    border-bottom: 1px solid $item-ios-border-color;
 
     .item-inner {
-      border-top: none;
+      border-bottom: none;
     }
   }
 
-  .item:first-child, ion-header {
+  .item:first-child,
+  ion-header {
     margin-top: 0;
     border-top-right-radius: $list-inset-ios-border-radius;
     border-top-left-radius: $list-inset-ios-border-radius;
+  }
+
+  .item:first-child {
     border-top: none;
   }
 
@@ -291,11 +275,13 @@ ion-card {
 /*****************/
 /* NO LINES LIST */
 /*****************/
-
-.list[no-lines],
-&.hairlines .list[no-lines] {
-  .item,
-  .item .item-inner {
-    border-width: 0;
-  }
-}
+//
+// .list[no-lines],
+// &.hairlines .list[no-lines] {
+//   ion-header,
+//   ion-item-group-title,
+//   .item,
+//   .item .item-inner {
+//     border-width: 0;
+//   }
+// }
