@@ -144,15 +144,12 @@ function moveListeners(shouldAdd) {
   }
 }
 
-<<<<<<< HEAD
-=======
 function setDisableNativeClick() {
   if (isTapPolyfill) {
     disableNativeClickTime = Date.now() + disableNativeClickLimit;
   }
 }
 
->>>>>>> master
 function isDisabledNativeClick() {
   return disableNativeClickUntil > Date.now();
 }
