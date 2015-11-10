@@ -10,8 +10,56 @@ import {Platform} from '../platform/platform';
 import {isObject, isDefined, isFunction, isArray, extend} from '../util/util';
 
 /**
-* TODO
-*/
+ * Config lets you change multiple or a single value in an apps mode configuration. Things such as tab placement, icon changes, and view animations can be set here.
+ *
+ * ```ts
+ * import {Config} from 'ionic/ionic';
+ * @App({
+ *   template: `<ion-nav [root]="root"></ion-nav>`
+ *   config: {
+ *     backButtonText: 'Go Back',
+ *     iconMode: 'ios',
+ *     modalEnter: 'modal-slide-in',
+ *     modalLeave: 'modal-slide-out',
+ *     tabbarPlacement: 'bottom',
+ *     viewTransition: 'ios',
+ *   }
+ * })
+ * ```
+ *
+ * Config can be overwritting at multiple levels, allowing deeper configuration. Taking the example from earlier, we can override any setting we want based on a platform.
+ * ```ts
+ * import {Config} from 'ionic/ionic';
+ * @App({
+ *   template: `<ion-nav [root]="root"></ion-nav>`
+ *   config: {
+ *     'tabbarPlacement': 'bottom',
+ *     platform: {
+ *      ios: {
+ *        'tabbarPlacement': 'top',
+ *      }
+ *     }
+ *   }
+ * })
+ * ```
+ *
+ * We could also configure these values at a component level. Take `tabbarPlacement`, we can configure this as a property on our `ion-tabs`.
+ *
+ * ```html
+ * <ion-tabs tabbar-placement="top">
+ *    <ion-tab tab-title="Dash" tab-icon="pulse" [root]="DashRoot"></ion-tab>
+ *  </ion-tabs>
+ * ```
+ *
+ * The property will override anything else set in the apps.
+ *
+ * The last way we could configure is through URL query strings. This is useful for testing while in the browser.
+ * Simply add `?ionic<PROPERTYNAME>=<value>` to the url.
+ *
+ * ```
+ * http://localhost:8100/?IonictabbarPlacement=bottom
+ * ```
+**/
 export class Config {
 
  /**
@@ -27,27 +75,10 @@ export class Config {
   * For setting and getting multiple config values
   */
 
-  /**
+/**
+ * @private
  * @name settings()
  * @description
- * Config lets you change multiple or a single value in an apps mode configuration. Things such as tab placement, icon changes, and view animations can be set here.
- *
- *
- * @usage
- * ```ts
- * import {Config} from 'ionic/ionic';
- * @App({
- *   template: `<ion-nav [root]="root"></ion-nav>`
- *   config: {
- *     backButtonText: 'Go Back',
- *     iconMode: 'ios',
- *     modalEnter: 'modal-slide-in',
- *     modalLeave: 'modal-slide-out',
- *     tabbarPlacement: 'bottom',
- *     viewTransition: 'ios',
- *   }
- * })
- * ```
  */
   settings() {
     const args = arguments;
@@ -74,9 +105,14 @@ export class Config {
     return this;
   }
 
- /**
-  * For setting a single config values
-  */
+/**
+* For setting a single config values
+*/
+/**
+ * @private
+ * @name set()
+ * @description
+ */
   set() {
     const args = arguments;
     const arg0 = args[0];
@@ -109,6 +145,11 @@ export class Config {
  /**
   * For getting a single config values
   */
+/**
+ * @private
+ * @name get()
+ * @description
+ */
   get(key) {
 
     if (!isDefined(this._c[key])) {

@@ -1,5 +1,5 @@
 import {NavController, NavParams} from 'ionic/ionic';
-import {Page, Events} from 'ionic/ionic';
+import {Page} from 'ionic/ionic';
 import {forwardRef} from 'angular2/angular2';
 import * as helpers from '../../helpers';
 
@@ -8,7 +8,7 @@ import * as helpers from '../../helpers';
   directives: [forwardRef(() => helpers.AndroidAttribute)]
 })
 class NavigationDetailsPage {
-  constructor(nav: NavController, params: NavParams, events: Events) {
+  constructor(nav: NavController, params: NavParams) {
     this.nav = nav;
     this.selection = { title: params.data.name };
     var navData = {

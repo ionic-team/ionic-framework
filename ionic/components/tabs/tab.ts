@@ -91,13 +91,15 @@ export class Tab extends NavController {
 
     } else if (this.tabs.preloadTabs) {
       setTimeout(() => {
-        let opts = {
-          animate: false,
-          preload: true
-        };
-        this.load(opts, () => {
-          this.hideNavbars(true);
-        });
+        if (!this._loaded) {
+          let opts = {
+            animate: false,
+            preload: true
+          };
+          this.load(opts, () => {
+            this.hideNavbars(true);
+          });
+        }
       }, 1000 * this.index);
     }
   }

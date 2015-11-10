@@ -27,7 +27,7 @@ export class Animation {
   constructor(ele, opts={}) {
     this.reset();
     this._opts = extend({
-      renderDelay: 36
+      renderDelay: 16
     }, opts);
 
     this.elements(ele);
@@ -238,15 +238,31 @@ export class Animation {
       // stage all animations and child animations at their starting point
       self.stage();
 
-      // synchronously call all onPlay()'s before play()
-      self._onPlay();
+      let resolve;
+      let promise = new Promise(res => { resolve = res; });
 
-      return new Promise(resolve => {
+      function kickoff() {
+        // synchronously call all onPlay()'s before play()
+        self._onPlay();
+
         beginPlay().then(() => {
           self._onFinish();
           resolve();
         });
-      });
+      }
+
+      if (self._duration > 16) {
+        // begin each animation when everything is rendered in their starting point
+        // give the browser some time to render everything in place before starting
+        setTimeout(kickoff, this._opts.renderDelay);
+
+      } else {
+        // no need to render everything in there place before animating in
+        // just kick it off immediately to render them in their "to" locations
+        kickoff();
+      }
+
+      return promise;
     }
 
     // this is a child animation, it is told exactly when to
@@ -586,11 +602,13 @@ class Animate {
       // lock in where the element will stop at
       // if the playbackRate is negative then it needs to return
       // to its "from" effects
-      inlineStyle(self.ele, self.rate < 0 ? self.fromEffect : self.toEffect);
+      if (self.ani) {
+        inlineStyle(self.ele, self.rate < 0 ? self.fromEffect : self.toEffect);
 
-      self.ani = null;
+        self.ani = self.ani.onfinish = null;
 
-      done && done();
+        done && done();  
+      }
     };
   }
 
