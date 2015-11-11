@@ -24,8 +24,8 @@ Config.setModeConfig('ios', {
   pageTransition: 'ios',
   pageTransitionDelay: 16,
 
-  popupPopIn: 'popup-pop-in',
-  popupPopOut: 'popup-pop-out',
+  popupEnter: 'popup-pop-in',
+  popupLeave: 'popup-pop-out',
 
   tabbarPlacement: 'bottom',
 });
@@ -53,8 +53,8 @@ Config.setModeConfig('md', {
   pageTransition: 'md',
   pageTransitionDelay: 80,
 
-  popupPopIn: 'popup-md-pop-in',
-  popupPopOut: 'popup-md-pop-out',
+  popupEnter: 'popup-md-pop-in',
+  popupLeave: 'popup-md-pop-out',
 
   tabbarHighlight: true,
   tabbarPlacement: 'top',
