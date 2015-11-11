@@ -94,6 +94,7 @@ export function getPageFor(hash) {
         'checkbox': inputs.CheckboxPage,
         'radio': inputs.RadioPage,
         'range': inputs.RangePage,
+        'segment': inputs.SegmentPage,
         'select': inputs.SelectPage,
         'switch': inputs.SwitchPage,
 
