@@ -12,27 +12,29 @@ let disableNativeClickAmount = 3000;
 let activator = null;
 let isTapPolyfill = false;
 let app = null;
-let config = null;
 let win = null;
 let doc = null;
 
 
-export function initTapClick(windowInstance, documentInstance, appInstance, configInstance) {
+export function initTapClick(windowInstance, documentInstance, appInstance, config, fastdom) {
   win = windowInstance;
   doc = documentInstance;
   app = appInstance;
-  config = configInstance;
 
-  activator = (config.get('mdRipple') ? new RippleActivator(app, config) : new Activator(app, config));
+  if (config.get('activator') == 'ripple') {
+    activator = new RippleActivator(app, config, fastdom);
+
+  } else if (config.get('activator') == 'highlight') {
+    activator = new Activator(app, config, fastdom));
+  }
+
   isTapPolyfill = (config.get('tapPolyfill') === true);
 
   addListener('click', click, true);
 
-  if (isTapPolyfill) {
-    addListener('touchstart', touchStart);
-    addListener('touchend', touchEnd);
-    addListener('touchcancel', touchCancel);
-  }
+  addListener('touchstart', touchStart);
+  addListener('touchend', touchEnd);
+  addListener('touchcancel', touchCancel);
 
   addListener('mousedown', mouseDown, true);
   addListener('mouseup', mouseUp, true);
@@ -47,7 +49,7 @@ function touchStart(ev) {
 function touchEnd(ev) {
   touchAction();
 
-  if (startCoord && app.isEnabled()) {
+  if (isTapPolyfill && startCoord && app.isEnabled()) {
     let endCoord = pointerCoord(ev);
 
     if (!hasPointerMoved(pointerTolerance, startCoord, endCoord)) {
@@ -100,8 +102,8 @@ function pointerStart(ev) {
     startCoord = pointerCoord(ev);
 
     let now = Date.now();
-    if (lastActivated + 100 < now) {
-      activator.downAction(ev, activatableEle, startCoord.x, startCoord.y);
+    if (lastActivated + 150 < now) {
+      activator && activator.downAction(ev, activatableEle, startCoord.x, startCoord.y);
       lastActivated = now;
     }
 
@@ -114,7 +116,7 @@ function pointerStart(ev) {
 
 function pointerEnd(ev) {
   moveListeners(false);
-  activator.upAction();
+  activator && activator.upAction();
 }
 
 function pointerMove(ev) {
@@ -127,20 +129,22 @@ function pointerMove(ev) {
 
 function pointerCancel(ev) {
   console.debug('pointerCancel from', ev.type);
-  activator.clearState();
+  activator && activator.clearState();
   moveListeners(false);
 }
 
 function moveListeners(shouldAdd) {
-  if (isTapPolyfill) {
-    removeListener('touchmove', pointerMove);
-  }
-  removeListener('mousemove', pointerMove);
   if (shouldAdd) {
     if (isTapPolyfill) {
       addListener('touchmove', pointerMove);
     }
     addListener('mousemove', pointerMove);
+
+  } else {
+    if (isTapPolyfill) {
+      removeListener('touchmove', pointerMove);
+    }
+    removeListener('mousemove', pointerMove);
   }
 }
 
@@ -168,8 +172,6 @@ function click(ev) {
     console.debug('click prevent', preventReason);
     ev.preventDefault();
     ev.stopPropagation();
-  } else {
-    activator.upAction();
   }
 }
 

@@ -4,6 +4,7 @@ import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
 import {Attr} from '../app/id';
 import {Config} from '../../config/config';
+import {Platform} from '../../platform/platform';
 import {ViewController} from '../nav/view-controller';
 import {ConfigComponent} from '../../config/decorators';
 import {Icon} from '../icon/icon';
@@ -107,7 +108,8 @@ export class Tabs extends Ion {
     app: IonicApp,
     config: Config,
     elementRef: ElementRef,
-    @Optional() viewCtrl: ViewController
+    @Optional() viewCtrl: ViewController,
+    private platform: Platform
   ) {
     super(elementRef, config);
     this.app = app;
@@ -129,6 +131,15 @@ export class Tabs extends Ion {
       viewCtrl.onReady = () => {
         return this.readyPromise;
       };
+    }
+  }
+
+  onInit() {
+    super.onInit();
+    if (this.highlight) {
+      this.platform.onResize(() => {
+        this.highlight.select(this.getSelected());
+      });
     }
   }
 
@@ -305,7 +316,7 @@ class TabButton extends Ion {
 })
 class TabHighlight {
   constructor(@Host() tabs: Tabs, config: Config, elementRef: ElementRef) {
-    if (config.get('mode') === 'md') {
+    if (config.get('tabbarHighlight')) {
       tabs.highlight = this;
       this.elementRef = elementRef;
     }
@@ -320,7 +331,7 @@ class TabHighlight {
       this.init = true;
       setTimeout(() => {
         ele.classList.add('animate');
-      }, 64)
+      }, 64);
     }
   }
 

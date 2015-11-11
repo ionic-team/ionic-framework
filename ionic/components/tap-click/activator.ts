@@ -3,11 +3,12 @@ import {raf} from '../../util/dom';
 
 export class Activator {
 
-  constructor(app, config) {
+  constructor(app, config, fastdom) {
     this.app = app;
+    this.fastdom = fastdom;
     this.queue = [];
     this.active = [];
-    this.clearStateTimeout = 80;
+    this.clearStateDefers = 5;
     this.clearAttempt = 0;
     this.activatedClass = config.get('activatedClass') || 'activated';
     this.x = 0;
@@ -17,7 +18,7 @@ export class Activator {
   downAction(ev, activatableEle, pointerX, pointerY, callback) {
     // the user just pressed down
 
-    if (this.disableActivated(ev)) return;
+    if (this.disableActivated(ev)) return false;
 
     // remember where they pressed
     this.x = pointerX;
@@ -26,7 +27,7 @@ export class Activator {
     // queue to have this element activated
     this.queue.push(activatableEle);
 
-    raf(() => {
+    this.fastdom.write(() => {
       let activatableEle;
       for (let i = 0; i < this.queue.length; i++) {
         activatableEle = this.queue[i];
@@ -37,13 +38,15 @@ export class Activator {
       }
       this.queue = [];
     });
+
+    return true;
   }
 
   upAction() {
     // the user was pressing down, then just let up
-    setTimeout(() => {
+    this.fastdom.defer(this.clearStateDefers, () => {
       this.clearState();
-    }, this.clearStateTimeout);
+    });
   }
 
   clearState() {
@@ -65,11 +68,14 @@ export class Activator {
 
   deactivate() {
     // remove the active class from all active elements
-    for (let i = 0; i < this.active.length; i++) {
-      this.active[i].classList.remove(this.activatedClass);
-    }
     this.queue = [];
-    this.active = [];
+
+    this.fastdom.write(() => {
+      for (let i = 0; i < this.active.length; i++) {
+        this.active[i].classList.remove(this.activatedClass);
+      }
+      this.active = [];
+    });
   }
 
   disableActivated(ev) {

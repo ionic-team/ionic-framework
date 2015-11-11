@@ -6,6 +6,7 @@ import {IonicApp} from '../components/app/app';
 import {Config} from './config';
 import {Platform} from '../platform/platform';
 import {OverlayController} from '../components/overlay/overlay-controller';
+import {FastDom} from '../util/fastdom';
 import {Form} from '../util/form';
 import {Keyboard} from '../util/keyboard';
 import {ActionSheet} from '../components/action-sheet/action-sheet';
@@ -21,7 +22,9 @@ import * as dom from '../util/dom';
 
 
 export function ionicProviders(args) {
-  let app = new IonicApp();
+  let fastdom = new FastDom();
+
+  let app = new IonicApp(fastdom);
   let platform = new Platform();
   let navRegistry = new NavRegistry(args.pages);
 
@@ -38,7 +41,7 @@ export function ionicProviders(args) {
   config.setPlatform(platform);
 
   let events = new Events();
-  initTapClick(window, document, app, config);
+  initTapClick(window, document, app, config, fastdom);
   let featureDetect = new FeatureDetect();
 
   setupDom(window, document, config, platform, featureDetect);
@@ -48,6 +51,7 @@ export function ionicProviders(args) {
   platform.prepareReady(config);
 
   return [
+    provide(FastDom, {useValue: fastdom}),
     provide(IonicApp, {useValue: app}),
     provide(Config, {useValue: config}),
     provide(Platform, {useValue: platform}),
