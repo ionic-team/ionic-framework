@@ -38,13 +38,25 @@ class BackButton extends Ion {
 @Directive({
   selector: '.back-button-text'
 })
-class BackButtonText extends Ion {
+class BackButtonText {
   constructor(
     elementRef: ElementRef,
-    @Optional() @Inject(forwardRef(() => Navbar)) navbar: Navbar
+    @Inject(forwardRef(() => Navbar)) navbar: Navbar
   ) {
-    super(elementRef, null);
-    navbar && navbar.setBackButtonTextRef(elementRef);
+    navbar.setBackButtonTextRef(elementRef);
+  }
+}
+
+
+@Directive({
+  selector: 'toolbar-background'
+})
+class ToolbarBackground {
+  constructor(
+    elementRef: ElementRef,
+    @Inject(forwardRef(() => Navbar)) navbar: Navbar
+  ) {
+    navbar.setBackgroundRef(elementRef);
   }
 }
 
@@ -52,19 +64,19 @@ class BackButtonText extends Ion {
 @Component({
   selector: 'ion-navbar',
   template:
-    '<div class="toolbar-inner">' +
-      '<button class="back-button" [hidden]="hideBackButton">' +
-        '<icon class="back-button-icon" [name]="bbIcon"></icon>' +
-        '<span class="back-button-text">' +
-          '<span class="back-default">{{bbDefault}}</span>' +
-        '</span>' +
-      '</button>' +
-      '<ng-content select="[menu-toggle]"></ng-content>' +
-      '<ng-content select="ion-title"></ng-content>' +
-      '<ng-content select="ion-nav-items[primary]"></ng-content>' +
-      '<ng-content select="ion-nav-items[secondary]"></ng-content>' +
-    '</div>' +
-    '<div class="toolbar-background"></div>',
+    '<toolbar-background></toolbar-background>' +
+    '<button class="back-button" [hidden]="hideBackButton">' +
+      '<icon class="back-button-icon" [name]="bbIcon"></icon>' +
+      '<span class="back-button-text">' +
+        '<span class="back-default">{{bbDefault}}</span>' +
+      '</span>' +
+    '</button>' +
+    '<ng-content select="[menu-toggle]"></ng-content>' +
+    '<ng-content select="ion-nav-items[primary]"></ng-content>' +
+    '<ng-content select="ion-nav-items[secondary]"></ng-content>' +
+    '<toolbar-content>' +
+      '<ng-content></ng-content>' +
+    '</toolbar-content>',
   host: {
     '[hidden]': '_hidden'
   },
@@ -72,7 +84,7 @@ class BackButtonText extends Ion {
     'hideBackButton',
     'navbarStyle'
   ],
-  directives: [BackButton, BackButtonText, Icon]
+  directives: [BackButton, BackButtonText, Icon, ToolbarBackground]
 })
 export class Navbar extends ToolbarBase {
   constructor(
@@ -105,7 +117,7 @@ export class Navbar extends ToolbarBase {
     if (typeof hideBackButton === 'string') {
       this.hideBackButton = (hideBackButton === '' || hideBackButton === 'true');
     }
-    
+
     if (this.navbarStyle) {
       this.renderer.setElementAttribute(this.elementRef, this.navbarStyle, '');
     }
@@ -125,6 +137,14 @@ export class Navbar extends ToolbarBase {
 
   setBackButtonTextRef(backButtonTextElementRef) {
     this.bbtRef = backButtonTextElementRef;
+  }
+
+  setBackgroundRef(backgrouneElementRef) {
+    this.bgRef = backgrouneElementRef;
+  }
+
+  getBackgroundRef() {
+    return this.bgRef;
   }
 
   didEnter() {

@@ -25,7 +25,7 @@ export function initTapClick(windowInstance, documentInstance, appInstance, conf
     activator = new RippleActivator(app, config, fastdom);
 
   } else if (config.get('activator') == 'highlight') {
-    activator = new Activator(app, config, fastdom));
+    activator = new Activator(app, config, fastdom);
   }
 
   isTapPolyfill = (config.get('tapPolyfill') === true);

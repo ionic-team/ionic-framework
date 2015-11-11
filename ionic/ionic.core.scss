@@ -54,7 +54,3 @@ $ionicons: true !default;
 @if ($ionicons) {
   @import "fonts/ionicons";
 }
-
-
-// Engine
-@import  "platform/cordova";

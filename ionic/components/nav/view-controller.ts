@@ -30,10 +30,6 @@ export class ViewController {
     return false;
   }
 
-  /**
-   * TODO
-   * @param {TODO} instance  TODO
-   */
   setInstance(instance) {
     this.instance = instance;
   }
@@ -50,9 +46,6 @@ export class ViewController {
     this._destroys.push(destroyFn);
   }
 
-  /**
-   * TODO
-   */
   destroy() {
     for (let i = 0; i < this._destroys.length; i++) {
       this._destroys[i]();
@@ -108,66 +101,38 @@ export class ViewController {
     return this._nbDir;
   }
 
-  /**
-   * TODO
-   * @returns {TODO} TODO
-   */
   hasNavbar() {
     return !!this.getNavbar();
   }
 
-  /**
-   * TODO
-   * @returns {TODO} TODO
-   */
   navbarRef() {
     let navbar = this.getNavbar();
     return navbar && navbar.getElementRef();
   }
 
-  /**
-   * TODO
-   * @returns {TODO} TODO
-   */
   titleRef() {
     let navbar = this.getNavbar();
     return navbar && navbar.getTitleRef();
   }
 
-  /**
-   * TODO
-   * @returns {TODO} TODO
-   */
   navbarItemRefs() {
     let navbar = this.getNavbar();
     return navbar && navbar.getItemRefs();
   }
 
-  /**
-   * TODO
-   * @returns {TODO} TODO
-   */
   backBtnRef() {
     let navbar = this.getNavbar();
     return navbar && navbar.getBackButtonRef();
   }
 
-  /**
-   * TODO
-   * @returns {TODO} TODO
-   */
   backBtnTextRef() {
     let navbar = this.getNavbar();
     return navbar && navbar.getBackButtonTextRef();
   }
 
-  /**
-   * TODO
-   * @returns {TODO} TODO
-   */
   navbarBgRef() {
     let navbar = this.getNavbar();
-    return navbar && navbar.getNativeElement().querySelector('.toolbar-background');
+    return navbar && navbar.getBackgroundRef();
   }
 
   hideBackButton(shouldHide) {

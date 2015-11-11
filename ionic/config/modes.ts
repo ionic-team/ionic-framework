@@ -51,7 +51,7 @@ Config.setModeConfig('md', {
   modalLeave: 'modal-md-slide-out',
 
   pageTransition: 'md',
-  pageTransitionDelay: 80,
+  pageTransitionDelay: 120,
 
   popupEnter: 'popup-md-pop-in',
   popupLeave: 'popup-md-pop-out',

@@ -71,7 +71,7 @@ $toolbar-ios-title-font-size:               1.7rem !default;
 
 }
 
-.toolbar .toolbar-background {
+.toolbar toolbar-background {
   border-bottom-width: 1px;
   border-bottom-style: solid;
 }
@@ -105,6 +105,6 @@ ion-nav-items[secondary] {
   order: map-get($toolbar-order-ios, secondary);
 }
 
-&.hairlines .toolbar .toolbar-background {
+&.hairlines .toolbar toolbar-background {
   border-bottom-width: 0.55px;
 }
