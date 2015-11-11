@@ -23,7 +23,6 @@
 }
 
 .item-inner {
-  width: 100%;
   display: flex;
   margin: 0;
   padding: 0;
@@ -32,6 +31,7 @@
   overflow: hidden;
   align-self: stretch;
   box-sizing: border-box;
+  flex: 1;
 }
 
 .item-group {

@@ -47,7 +47,7 @@ $list-ios-header-color:               #333 !default;
   .item {
     border-radius: 0;
     // TODO this makes the border not show on sticky
-    margin-top: -1px;
+    // margin-top: -1px;
     padding-left: $item-ios-padding-left;
     font-size: $item-ios-font-size;
   }
@@ -96,6 +96,16 @@ $list-ios-header-color:               #333 !default;
   icon[item-right] {
     margin-top: $item-ios-padding-icon-top;
     margin-bottom: $item-ios-padding-icon-bottom;
+  }
+
+  ion-avatar[item-left],
+  ion-thumbnail[item-left] {
+    margin: $item-ios-padding-top $item-ios-padding-right $item-ios-padding-bottom 0;
+  }
+
+  ion-avatar[item-right],
+  ion-thumbnail[item-right] {
+    margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom ($item-ios-padding-left / 2);
   }
 
   button[item-left],
