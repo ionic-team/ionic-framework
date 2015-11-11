@@ -1,9 +1,8 @@
-import {forwardRef, Directive, Host, EventEmitter, ElementRef} from 'angular2/angular2';
+import {Component, forwardRef, Directive, Host, EventEmitter, ElementRef} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
-import {ConfigComponent} from '../../config/decorators';
 import {Platform} from '../../platform/platform';
 import {Keyboard} from '../../util/keyboard';
 import * as gestures from  './menu-gestures';
@@ -44,20 +43,24 @@ import * as gestures from  './menu-gestures';
  * <ion-menu [content]="contentRef" type="overlay"></ion-menu>
  * ```
  */
-@ConfigComponent({
+@Component({
   selector: 'ion-menu',
   inputs: [
     'content',
     'dragThreshold',
-    'id'
+    'id',
+    'side',
+    'type'
   ],
   defaultInputs: {
     'side': 'left',
-    'type': 'reveal'
+    'menuType': 'reveal'
   },
   outputs: ['opening'],
   host: {
-    'role': 'navigation'
+    'role': 'navigation',
+    '[attr.side]': 'side',
+    '[attr.type]': 'type'
   },
   template: '<ng-content></ng-content><backdrop tappable disable-activated></backdrop>',
   directives: [forwardRef(() => MenuBackdrop)]
@@ -92,6 +95,10 @@ export class Menu extends Ion {
 
     if (!this._cntEle) {
       return console.error('Menu: must have a [content] element to listen for drag events on. Example:\n\n<ion-menu [content]="content"></ion-menu>\n\n<ion-nav #content></ion-nav>');
+    }
+
+    if (this.side !== 'left' && this.side !== 'right') {
+      this.side = 'left';
     }
 
     if (!this.id) {
@@ -130,16 +137,12 @@ export class Menu extends Ion {
   }
 
   _initType(type) {
-    type = type && type.trim().toLowerCase() || FALLBACK_MENU_TYPE;
-
-    let menuTypeCls = menuTypes[type];
-
-    if (!menuTypeCls) {
-      type = FALLBACK_MENU_TYPE;
-      menuTypeCls = menuTypes[type];
+    type = type && type.trim().toLowerCase();
+    if (!type) {
+      type = this.config.get('menuType');
     }
 
-    this._type = new menuTypeCls(this);
+    this._type = new menuTypes[type](this);
     this.type = type;
 
     if (this.config.get('animate') === false) {
@@ -307,7 +310,6 @@ export class Menu extends Ion {
 }
 
 let menuTypes = {};
-const FALLBACK_MENU_TYPE = 'reveal';
 
 
 /**

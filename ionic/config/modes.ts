@@ -16,6 +16,8 @@ Config.setModeConfig('ios', {
 
   iconMode: 'ios',
 
+  menuType: 'reveal',
+
   modalEnter: 'modal-slide-in',
   modalLeave: 'modal-slide-out',
 
@@ -43,7 +45,7 @@ Config.setModeConfig('md', {
 
   iconMode: 'md',
 
-  type: 'overlay',
+  menuType: 'overlay',
 
   modalEnter: 'modal-md-slide-in',
   modalLeave: 'modal-md-slide-out',
