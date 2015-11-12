@@ -40,13 +40,13 @@ $list-md-header-color:           #858585 !default;
     }
   }
 
-  // .item[no-lines],
-  // .item[no-lines] + .item {
-  //   border-width: 0;
-  //   .item-inner {
-  //     border-width: 0;
-  //   }
-  // }
+  // If the item has the no-lines attribute remove the bottom border from:
+  // the item itself (for last-child items)
+  // the item-inner class (if it is not last)
+  .item[no-lines],
+  .item[no-lines] .item-inner {
+    border-width: 0;
+  }
 
   ion-header,
   ion-item-group-title {
@@ -248,15 +248,11 @@ $list-md-header-color:           #858585 !default;
 /* NO LINES LIST */
 /*****************/
 
-// .list[no-lines] {
-//   .item {
-//     border-width: 0;
-//   }
-//
-//   ion-header + .item,
-//   ion-header + script + .item,
-//   ion-item-group-title + .item,
-//   ion-item-group-title + script + .item {
-//     border-width: 1px !important;
-//   }
-// }
+.list[no-lines] {
+  ion-header,
+  ion-item-group-title,
+  .item,
+  .item .item-inner {
+    border-width: 0;
+  }
+}

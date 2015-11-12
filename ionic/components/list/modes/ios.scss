@@ -82,14 +82,13 @@ $list-ios-header-color:               #333 !default;
     border-bottom: 1px solid $item-ios-border-color;
   }
 
-  // If the item has the no-lines attribute remove the border from:
-  // the item itself (for first or last-child items)
-  // the item-inner class (if it is not first or last)
-  // the next item's item-inner after the one with no-lines if there is one
-  // .item[no-lines],
-  // .item[no-lines] .item-inner, {
-  //   border-width: 0;
-  // }
+  // If the item has the no-lines attribute remove the bottom border from:
+  // the item itself (for last-child items)
+  // the item-inner class (if it is not last)
+  .item[no-lines],
+  .item[no-lines] .item-inner, {
+    border-width: 0;
+  }
 
   [item-left] {
     margin: ($item-ios-padding-top / 2) $item-ios-padding-right ($item-ios-padding-bottom / 2) 0;
