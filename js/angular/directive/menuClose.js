@@ -32,6 +32,7 @@
  *  disableAnimate: true,
  *  expire: 300
  * });
+ * ```
  */
 IonicModule
 .directive('menuClose', ['$ionicHistory', '$timeout', function($ionicHistory, $timeout) {
