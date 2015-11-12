@@ -1,0 +1,14 @@
+<ion-navbar *navbar hide-back-button class="android-attr">
+  <ion-title>
+    Search
+  </ion-title>
+</ion-navbar>
+
+<ion-content>
+  <ion-searchbar [(ng-model)]="searchQuery"></ion-searchbar>
+  <ion-list #list>
+    <ion-item *ng-for="#item of getItems()">
+      {{item}}
+    </ion-item>
+  </ion-list>
+</ion-content> 

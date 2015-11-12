@@ -49,13 +49,13 @@ export class BasicPage {
       destructiveText: 'Delete',
       titleText: 'Albums',
       cancelText: 'Cancel',
-      cancel: function() {
+      cancel: () => {
         console.log('Canceled');
       },
       destructiveButtonClicked: () => {
         console.log('Destructive clicked');
       },
-      buttonClicked: function(index) {
+      buttonClicked: (index) => {
         console.log('Button clicked', index);
         if (index == 1) { return false; }
         return true;

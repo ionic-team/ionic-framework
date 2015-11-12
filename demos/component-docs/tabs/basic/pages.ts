@@ -13,7 +13,7 @@ import * as helpers from '../../helpers';
     '</ion-content>',
   directives: [forwardRef(() => helpers.AndroidAttribute)],
 })
-class TabTextCtrl {
+class TabTextPage {
   constructor() {
   }
 }
@@ -28,8 +28,8 @@ class TabTextCtrl {
 })
 export class BasicPage {
   constructor() {
-    this.tabOne = TabTextCtrl;
-    this.tabTwo = TabTextCtrl;
-    this.tabThree = TabTextCtrl;
+    this.tabOne = TabTextPage;
+    this.tabTwo = TabTextPage;
+    this.tabThree = TabTextPage;
   }
 }
