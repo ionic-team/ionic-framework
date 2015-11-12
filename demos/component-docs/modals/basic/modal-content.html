@@ -25,14 +25,12 @@
           <p>{{character.quote}}</p>
         </ion-item>
 
-        <div *ng-for="#item of character['items']">
-          <ion-item>
-            {{item.title}}
-            <ion-note item-right>
-              {{item.note}}
-            </ion-note>
-          </ion-item>        
-        </div>
+        <ion-item *ng-for="#item of character['items']">
+          {{item.title}}
+          <ion-note item-right>
+            {{item.note}}
+          </ion-note>
+        </ion-item>
 
 
     </ion-list>
