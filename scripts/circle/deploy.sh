@@ -64,14 +64,18 @@ function run {
   3)
     # Update demos
     # ./scripts/demo/publish.sh --version-name="$VERSION_NAME"
+    # Update cdn
+    ./scripts/cdn/publish.sh --version-name="$VERSION_NAME" --old-version="$OLD_VERSION"
+    # Update bower
+    ./scripts/bower/publish.sh
     ;;
   4)
     # Update cdn
-    ./scripts/cdn/publish.sh --version-name="$VERSION_NAME" --old-version="$OLD_VERSION"
+    # ./scripts/cdn/publish.sh --version-name="$VERSION_NAME" --old-version="$OLD_VERSION"
     ;;
   5)
     # Update bower
-    ./scripts/bower/publish.sh
+    # ./scripts/bower/publish.sh
     ;;
   esac
 }
