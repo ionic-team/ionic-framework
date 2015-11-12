@@ -51,17 +51,16 @@ $list-ios-header-color:               #333 !default;
     font-size: $item-ios-font-size;
   }
 
-  > .item {
-    &:first-child {
-      border-top: 1px solid $item-ios-border-color;
-    }
+  > .item:first-child {
+    border-top: 1px solid $item-ios-border-color;
+  }
 
-    &:last-child {
-      border-bottom: 1px solid $item-ios-border-color;
+  > .item:last-child,
+  > ion-item-sliding:last-child .item {
+    border-bottom: 1px solid $item-ios-border-color;
 
-      .item-inner {
-        border-bottom: none;
-      }
+    .item-inner {
+      border-bottom: none;
     }
   }
 
@@ -231,15 +230,14 @@ ion-card {
     }
   }
 
-  > .item {
-    &:first-child {
-      border-top-width: 0.55px;
-    }
+  > .item:first-child {
+    border-top-width: 0.55px;
+  }
 
-    &:last-child {
-      border-bottom-width: 0.55px;
-      margin-bottom: -0.55px;
-    }
+  > .item:last-child,
+  > ion-item-sliding:last-child .item {
+    border-bottom-width: 0.55px;
+    margin-bottom: -0.55px;
   }
 }
 
@@ -272,7 +270,8 @@ ion-card {
     border-top: none;
   }
 
-  > .item:last-child {
+  > .item:last-child,
+  > ion-item-sliding:last-child .item {
     margin-bottom: 0;
     border-bottom-right-radius: $list-inset-ios-border-radius;
     border-bottom-left-radius: $list-inset-ios-border-radius;
