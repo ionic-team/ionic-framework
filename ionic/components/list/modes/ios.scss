@@ -47,7 +47,6 @@ $list-ios-header-color:               #333 !default;
   .item {
     border-radius: 0;
     // TODO this makes the border not show on sticky
-    // margin-top: -1px;
     padding-left: $item-ios-padding-left;
     font-size: $item-ios-font-size;
   }
