@@ -190,8 +190,9 @@ $list-ios-header-color:               #333 !default;
 
 .list,
 ion-card {
-  button[ion-item]:not([detail-none]) .item-inner,
-  a[ion-item]:not([detail-none]) .item-inner {
+  button.item:not([detail-none]) .item-inner,
+  a.item:not([detail-none]) .item-inner,
+  .item[detail-push] .item-inner {
     @include ios-detail-push-icon($item-ios-detail-push-color);
     background-repeat: no-repeat;
     background-position: right ($item-ios-padding-right - 2) center;
