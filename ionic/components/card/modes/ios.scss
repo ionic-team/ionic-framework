@@ -43,6 +43,10 @@ ion-card {
   .list {
     margin-bottom: 0;
 
+    .item {
+      padding-right: 0;
+    }
+
     ion-item-content {
       padding: 0;
     }
@@ -50,6 +54,7 @@ ion-card {
 
   .item {
     padding-left: ($card-ios-padding-left / 2);
+    padding-right: ($card-ios-padding-right / 2);
     font-size: $item-ios-font-size;
   }
 
