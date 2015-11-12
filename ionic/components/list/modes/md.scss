@@ -23,20 +23,32 @@ $list-md-header-color:           #858585 !default;
 /****************/
 
 .list {
-  .item-group {
-
+  ion-header,
+  ion-item-group-title , {
+    border-bottom: 1px solid $item-md-border-color;
   }
 
   .item {
-    // margin-top: -1px;
-    border-bottom: 1px solid $item-md-border-color;
     padding-right: ($item-md-padding-right / 2);
-    margin-left: $item-md-padding-left;
+    padding-left: ($item-md-padding-left);
     font-size: $item-md-font-size;
     text-transform: none;
 
-    &:first-child {
-      border-top: 1px solid $item-md-border-color;
+    .item-inner {
+      border-bottom: 1px solid $item-md-border-color;
+    }
+  }
+
+  > .item:first-child {
+    border-top: 1px solid $item-md-border-color;
+  }
+
+  > .item:last-child,
+  > ion-item-sliding:last-child .item {
+    border-bottom: 1px solid $item-md-border-color;
+
+    .item-inner {
+      border-bottom: none;
     }
   }
 

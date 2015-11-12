@@ -37,8 +37,6 @@ $list-ios-header-color:               #333 !default;
     color: $list-ios-header-color;
   }
 
-  // Apply the border to the first item in the list
-  // whether there is a header or not
   ion-header,
   ion-item-group-title , {
     border-bottom: 1px solid $item-ios-border-color;
