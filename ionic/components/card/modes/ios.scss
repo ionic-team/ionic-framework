@@ -13,7 +13,7 @@ $card-ios-padding-bottom:              14px !default;
 $card-ios-padding-left:                16px !default;
 
 $card-ios-padding-media-top:           10px !default;
-$card-ios-padding-media-bottom:        10px !default;
+$card-ios-padding-media-bottom:        9px !default;
 
 $card-ios-background-color:            $list-background-color !default;
 $card-ios-box-shadow:                  0 1px 2px rgba(0,0,0,.3) !default;
@@ -49,7 +49,6 @@ ion-card {
   }
 
   .item {
-    padding-right: ($card-ios-padding-right / 2);
     padding-left: ($card-ios-padding-left / 2);
     font-size: $item-ios-font-size;
   }

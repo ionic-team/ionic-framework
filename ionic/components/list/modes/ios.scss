@@ -25,7 +25,7 @@ $list-ios-header-color:               #333 !default;
 /****************/
 
 .list {
-  margin: 0 $list-ios-margin-right $list-ios-margin-bottom $list-ios-margin-left;
+  margin: -1px $list-ios-margin-right $list-ios-margin-bottom $list-ios-margin-left;
 
   ion-header {
     position: relative;
@@ -78,6 +78,10 @@ $list-ios-header-color:               #333 !default;
     }
   }
 
+  ion-input.item {
+    border-bottom: 1px solid $item-ios-border-color;
+  }
+
   // If the item has the no-lines attribute remove the border from:
   // the item itself (for first or last-child items)
   // the item-inner class (if it is not first or last)
@@ -95,6 +99,7 @@ $list-ios-header-color:               #333 !default;
     margin: ($item-ios-padding-top / 2) ($item-ios-padding-right / 2) ($item-ios-padding-bottom / 2) ($item-ios-padding-left / 2);
   }
 
+  // TODO clean up Sass variables
   icon[item-left],
   icon[item-right] {
     margin-top: $item-ios-padding-icon-top;
@@ -103,12 +108,12 @@ $list-ios-header-color:               #333 !default;
 
   ion-avatar[item-left],
   ion-thumbnail[item-left] {
-    margin: $item-ios-padding-top $item-ios-padding-right $item-ios-padding-bottom 0;
+    margin: ($item-ios-padding-right / 2) $item-ios-padding-right ($item-ios-padding-right / 2) 0;
   }
 
   ion-avatar[item-right],
   ion-thumbnail[item-right] {
-    margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom ($item-ios-padding-left / 2);
+    margin: ($item-ios-padding-right / 2);
   }
 
   button[item-left],

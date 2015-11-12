@@ -31,7 +31,11 @@ ion-input {
 }
 
 ion-input.item {
-  align-items: flex-start;
+  align-items: center;
+
+  ion-label {
+    align-self: flex-start;
+  }
 }
 
 ion-input [text-input] {
