@@ -27,12 +27,13 @@
   margin: 0;
   padding: 0;
   border: 0;
-  align-items: center;
   overflow: hidden;
-  align-self: stretch;
   box-sizing: border-box;
+
   flex: 1;
   flex-direction: inherit;
+  align-items: inherit;
+  align-self: stretch;
 }
 
 .item-group {

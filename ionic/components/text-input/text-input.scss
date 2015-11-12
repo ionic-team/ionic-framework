@@ -30,14 +30,6 @@ ion-input {
   }
 }
 
-ion-input.item {
-  align-items: center;
-
-  ion-label {
-    align-self: flex-start;
-  }
-}
-
 ion-input [text-input] {
   flex: 1;
   background-color: $text-input-background-color;
