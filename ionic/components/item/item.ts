@@ -5,6 +5,11 @@ import {Component} from 'angular2/angular2';
  * Creates a list-item that can easily be swiped,
  * deleted, reordered, edited, and more.
  *
+ * There are three common ways to use an item: 
+ * - Use `<ion-item>` for something that is only non-clickable text.
+ * - Use `<button ion-item>` for something that can be clicked/tapped. Typically this element will also have a `(click)` handler.
+ * - Use `<a ion-item>` for when the item needs to contain a `href`.
+ *
  * @usage
  * ```html
  * <ion-list>
@@ -16,6 +21,7 @@ import {Component} from 'angular2/angular2';
  *   </ion-item>
  * </ion-list>
  *  ```
+ * 
  */
 @Component({
   selector: 'ion-item,[ion-item]',
