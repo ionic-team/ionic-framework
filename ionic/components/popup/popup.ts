@@ -67,8 +67,8 @@ export class Popup {
   constructor(ctrl: OverlayController, config: Config) {
     this.ctrl = ctrl;
     this._defaults = {
-      enterAnimation: config.get('popupPopIn'),
-      leaveAnimation: config.get('popupPopOut'),
+      enterAnimation: config.get('popupEnter'),
+      leaveAnimation: config.get('popupLeave'),
     };
   }
 

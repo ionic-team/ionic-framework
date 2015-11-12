@@ -7,7 +7,7 @@ $toolbar-padding:        4px !default;
 $toolbar-order: (
   backButton: 10,
   menu-toggle-primary: 20,
-  title: 30,
+  content: 30,
   primary: 40,
   secondary: 50,
   menu-toggle-secondary: 60,
@@ -37,7 +37,7 @@ $toolbar-order: (
   }
 }
 
-.toolbar .toolbar-background {
+.toolbar toolbar-background {
   position: absolute;
   left: 0;
   top: 0;
@@ -52,6 +52,12 @@ $toolbar-order: (
   pointer-events: none;
 }
 
+toolbar-content {
+  display: block;
+  flex: 1;
+  order: map-get($toolbar-order, content);
+}
+
 .toolbar button:hover:not(.disable-hover),
 .toolbar [button]:hover:not(.disable-hover),
 .toolbar button.activated,
@@ -64,15 +70,8 @@ $toolbar-order: (
   order: $flex-order-toolbar-bottom;
 }
 
-.toolbar-inner {
-  position: relative;
-  display: flex;
-  width: 100%;
-}
-
 ion-title {
   flex: 1;
-  order: map-get($toolbar-order, title);
   display: flex;
   align-items: center;
 }
@@ -132,7 +131,7 @@ ion-nav-items div {
 
   .toolbar[#{$color-name}] {
 
-    .toolbar-background {
+    toolbar-background {
       background-color: $color-value;
       border-color: darken($color-value, 10%);
     }

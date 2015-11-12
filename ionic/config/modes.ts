@@ -16,14 +16,16 @@ Config.setModeConfig('ios', {
 
   iconMode: 'ios',
 
+  menuType: 'reveal',
+
   modalEnter: 'modal-slide-in',
   modalLeave: 'modal-slide-out',
 
   pageTransition: 'ios',
   pageTransitionDelay: 16,
 
-  popupPopIn: 'popup-pop-in',
-  popupPopOut: 'popup-pop-out',
+  popupEnter: 'popup-pop-in',
+  popupLeave: 'popup-pop-out',
 
   tabbarPlacement: 'bottom',
 });
@@ -43,16 +45,16 @@ Config.setModeConfig('md', {
 
   iconMode: 'md',
 
-  type: 'overlay',
+  menuType: 'overlay',
 
   modalEnter: 'modal-md-slide-in',
   modalLeave: 'modal-md-slide-out',
 
   pageTransition: 'md',
-  pageTransitionDelay: 80,
+  pageTransitionDelay: 120,
 
-  popupPopIn: 'popup-md-pop-in',
-  popupPopOut: 'popup-md-pop-out',
+  popupEnter: 'popup-md-pop-in',
+  popupLeave: 'popup-md-pop-out',
 
   tabbarHighlight: true,
   tabbarPlacement: 'top',

@@ -58,13 +58,13 @@ export class ToolbarBase extends Ion  {
 @Component({
   selector: 'ion-toolbar',
   template:
-    '<div class="toolbar-inner">' +
-      '<ng-content select="[menu-toggle]"></ng-content>' +
-      '<ng-content select="ion-title,ion-searchbar,ion-segment"></ng-content>' +
-      '<ng-content select="ion-nav-items[primary]"></ng-content>' +
-      '<ng-content select="ion-nav-items[secondary]"></ng-content>' +
-    '</div>' +
-    '<div class="toolbar-background"></div>'
+    '<toolbar-background></toolbar-background>' +
+    '<ng-content select="[menu-toggle]"></ng-content>' +
+    '<ng-content select="ion-nav-items[primary]"></ng-content>' +
+    '<ng-content select="ion-nav-items[secondary]"></ng-content>' +
+    '<toolbar-content>' +
+      '<ng-content></ng-content>' +
+    '</toolbar-content>'
 })
 export class Toolbar extends ToolbarBase {
   constructor(
