@@ -52,7 +52,7 @@ $list-ios-header-color:               #333 !default;
     font-size: $item-ios-font-size;
   }
 
-  .item {
+  > .item {
     &:first-child {
       border-top: 1px solid $item-ios-border-color;
     }
@@ -64,6 +64,9 @@ $list-ios-header-color:               #333 !default;
         border-bottom: none;
       }
     }
+  }
+
+  .item {
 
     .item-inner {
       padding-right: ($item-ios-padding-right / 2);
@@ -161,10 +164,12 @@ $list-ios-header-color:               #333 !default;
   }
 
   ion-item-options {
+    border-bottom: 1px solid $item-ios-border-color;
+
     button, [button] {
-      min-height: calc(100% - 2px);
-      height: calc(100% - 2px);
-      margin: 1px 0 2px 0;
+      min-height: 100%;
+      height: 100%;
+      margin: 0;
 
       border: none;
       border-radius: 0;
@@ -181,13 +186,13 @@ $list-ios-header-color:               #333 !default;
 
 .list,
 ion-card {
-  button[ion-item]:not([detail-none]),
-  a[ion-item]:not([detail-none]) {
+  button[ion-item]:not([detail-none]) .item-inner,
+  a[ion-item]:not([detail-none]) .item-inner {
     @include ios-detail-push-icon($item-ios-detail-push-color);
     background-repeat: no-repeat;
     background-position: right ($item-ios-padding-right - 2) center;
     background-size: 14px 14px;
-    margin-right: 32px;
+    padding-right: 32px;
   }
 }
 
@@ -203,12 +208,14 @@ ion-card {
 &.hairlines .list {
 
   ion-item-options {
-    button, [button] {
-      min-height: calc(100% - 1px);
-      height: calc(100% - 1px);
-      margin-top: 0.55px;
-      margin-bottom: 0.55px;
-    }
+    border-width: 0.55px;
+    //
+    // button, [button] {
+    //   min-height: calc(100% - 1px);
+    //   height: calc(100% - 1px);
+    //   margin-top: 0.55px;
+    //   margin-bottom: 0.55px;
+    // }
   }
 
   ion-header,
@@ -222,7 +229,9 @@ ion-card {
     .item-inner {
       border-width: 0.55px;
     }
+  }
 
+  > .item {
     &:first-child {
       border-top-width: 0.55px;
     }
@@ -252,18 +261,18 @@ ion-card {
     }
   }
 
-  .item:first-child,
+  > .item:first-child,
   ion-header {
     margin-top: 0;
     border-top-right-radius: $list-inset-ios-border-radius;
     border-top-left-radius: $list-inset-ios-border-radius;
   }
 
-  .item:first-child {
+  > .item:first-child {
     border-top: none;
   }
 
-  .item:last-child {
+  > .item:last-child {
     margin-bottom: 0;
     border-bottom-right-radius: $list-inset-ios-border-radius;
     border-bottom-left-radius: $list-inset-ios-border-radius;
@@ -285,13 +294,13 @@ ion-card {
 /*****************/
 /* NO LINES LIST */
 /*****************/
-//
-// .list[no-lines],
-// &.hairlines .list[no-lines] {
-//   ion-header,
-//   ion-item-group-title,
-//   .item,
-//   .item .item-inner {
-//     border-width: 0;
-//   }
-// }
+
+.list[no-lines],
+&.hairlines .list[no-lines] {
+  ion-header,
+  ion-item-group-title,
+  .item,
+  .item .item-inner {
+    border-width: 0;
+  }
+}
