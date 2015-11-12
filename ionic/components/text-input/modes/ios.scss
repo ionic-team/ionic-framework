@@ -23,6 +23,10 @@ ion-card {
     color: $input-label-ios-color;
   }
 
+  ion-label + [text-input] {
+    margin-left: $item-ios-padding-left;
+  }
+
   [stacked-label] ion-label {
     font-size: 1.2rem;
     margin-bottom: 4px;
@@ -30,6 +34,7 @@ ion-card {
 
   [stacked-label] [text-input],
   [floating-label] [text-input] {
+    margin-left: 0;
     margin-top: 8px;
     margin-bottom: 8px;
   }
