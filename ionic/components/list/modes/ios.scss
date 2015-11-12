@@ -77,10 +77,6 @@ $list-ios-header-color:               #333 !default;
     }
   }
 
-  ion-input.item {
-    border-bottom: 1px solid $item-ios-border-color;
-  }
-
   // If the item has the no-lines attribute remove the bottom border from:
   // the item itself (for last-child items)
   // the item-inner class (if it is not last)

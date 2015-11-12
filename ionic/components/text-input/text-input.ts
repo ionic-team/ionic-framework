@@ -20,8 +20,10 @@ import {Platform} from '../../platform/platform';
     '(mouseup)': 'pointerEnd($event)'
   },
   template:
-    '<ng-content></ng-content>' +
-    '<input [type]="type" aria-hidden="true" scroll-assist *ng-if="scrollAssist">',
+    '<div class="item-inner">' +
+      '<ng-content></ng-content>' +
+      '<input [type]="type" aria-hidden="true" scroll-assist *ng-if="scrollAssist">' +
+    '</div>',
   directives: [NgIf, forwardRef(() => InputScrollAssist)]
 })
 export class TextInput {

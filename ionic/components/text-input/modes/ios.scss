@@ -7,12 +7,9 @@ $input-label-ios-color:         #7f7f7f !default;
 
 .list,
 ion-card {
-  ion-input {
-    padding-right: ($item-ios-padding-right / 2);
-  }
 
   [text-input] {
-    margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom ($item-ios-padding-left / 2);
+    margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom 0;
     padding: 0;
   }
 
@@ -22,7 +19,7 @@ ion-card {
   }
 
   ion-label {
-    margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom ($item-ios-padding-left / 2);
+    margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom 0;
     color: $input-label-ios-color;
   }
 
