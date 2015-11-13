@@ -33,6 +33,10 @@ class MyAppCmp {
     this.modal.open(PlainPage);
   }
 
+  openToolbarModal() {
+    this.modal.open(ToolbarModal);
+  }
+
   openModalChildNav() {
     this.modal.open(ContactModal, {
       handle: 'my-awesome-modal'
@@ -56,6 +60,32 @@ class MyAppCmp {
   `
 })
 class PlainPage {
+  constructor(private modal: Modal) {}
+
+  closeModal() {
+    this.modal.get().close();
+  }
+}
+
+@Page({
+  template: `
+    <ion-toolbar>
+      <ion-title>Modals</ion-title>
+    </ion-toolbar>
+    <ion-toolbar primary>
+      <ion-title>Another toolbar</ion-title>
+    </ion-toolbar>
+
+
+    <ion-content padding>
+        <button block danger (click)="closeModal()" class="e2eCloseToolbarModal">
+          <icon close></icon>
+          Close Modal
+        </button>
+    </ion-content>
+  `
+})
+class ToolbarModal {
   constructor(private modal: Modal) {}
 
   closeModal() {

@@ -100,3 +100,22 @@ sup {
 sub {
   bottom: -0.25em;
 }
+
+@each $color, $value in $colors {
+  h1, h2, h3, h4, h5, h6,
+  p,
+  span,
+  a,
+  small,
+  b,
+  i,
+  u,
+  strong,
+  em,
+  sub,
+  sup {
+     &[#{$color}] {
+        color: $value !important;
+     }
+  }
+}
