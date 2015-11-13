@@ -27,7 +27,7 @@ import {List} from '../list/list';
 @Component({
   selector: 'ion-item-sliding',
   template:
-    '<ng-content select="ion-item"></ng-content>' +
+    '<ng-content select="ion-item,[ion-item]"></ng-content>' +
     '<ng-content select="ion-item-options"></ng-content>'
 })
 export class ItemSliding {
