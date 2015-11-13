@@ -1,77 +1,99 @@
 <ion-toolbar><ion-title>Sliding Items</ion-title></ion-toolbar>
 
-<ion-list>
+<ion-content>
+  
+  <ion-list id="myList">
 
-  <ion-item-sliding text-wrap detail-push (click)="didClick($event)">
-    <h3>Max Lynch</h3>
-    <p>
-      Hey do you want to go to the game tonight?
-    </p>
-    <ion-item-options>
-      <button primary (click)="archive($event)">Archive</button>
-      <button danger (click)="del($event)">Delete</button>
-    </ion-item-options>
-  </ion-item-sliding>
+    <ion-item-sliding #item>
+      <ion-item text-wrap detail-push (click)="didClick($event, item)">
+        <h3>Max Lynch</h3>
+        <p>
+          Hey do you want to go to the game tonight?
+        </p>
+      </ion-item>
+      <ion-item-options>
+        <button primary (click)="archive($event, item)">Archive</button>
+        <button danger (click)="del($event, item)">Delete</button>
+      </ion-item-options>
+    </ion-item-sliding>
 
-  <ion-item-sliding text-wrap detail-push class="activated">
-    <h3>Adam Bradley</h3>
-    <p>
-      I think I figured out how to get more Mountain Dew
-    </p>
-    <ion-item-options>
-      <button primary>Archive</button>
-      <button danger><icon trash></icon></button>
-    </ion-item-options>
-  </ion-item-sliding>
+    <ion-item-sliding #item>
+      <ion-item text-wrap detail-push class="activated">
+        <h3>Adam Bradley</h3>
+        <p>
+          I think I figured out how to get more Mountain Dew
+        </p>
+      </ion-item>
+      <ion-item-options>
+        <button primary (click)="archive($event, item)">Archive</button>
+        <button danger (click)="del($event, item)"><icon trash></icon></button>
+      </ion-item-options>
+    </ion-item-sliding>
 
-  <ion-item-sliding text-wrap detail-push *ng-if="shouldShow">
-    <h3>Ben Sperry</h3>
-    <p>
-      I like paper
-    </p>
-    <ion-item-options>
-      <button primary>Archive</button>
-      <button danger>Delete</button>
-    </ion-item-options>
-  </ion-item-sliding>
+    <ion-item-sliding text-wrap detail-push *ng-if="shouldShow" #item>
+      <ion-item>
+        <h3>Ben Sperry</h3>
+        <p>
+          I like paper
+        </p>
+      </ion-item>
+      <ion-item-options>
+        <button primary (click)="archive($event, item)">Archive</button>
+        <button danger (click)="del($event, item)">Delete</button>
+      </ion-item-options>
+    </ion-item-sliding>
 
-  <ion-item-sliding>
-    <icon mail item-left></icon>
-    One Line w/ Icon, div only text
-    <ion-item-options>
-      <button primary>Archive</button>
-    </ion-item-options>
-  </ion-item-sliding>
+    <ion-item-sliding #item>
+      <ion-item>
+        <icon mail item-left></icon>
+        One Line w/ Icon, div only text
+      </ion-item>
+      <ion-item-options>
+        <button primary (click)="archive($event, item)">Archive</button>
+      </ion-item-options>
+    </ion-item-sliding>
 
-  <ion-item-sliding>
-    <ion-avatar item-left>
-      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
-    </ion-avatar>
-    One Line w/ Avatar, div only text
-    <ion-item-options>
-      <button primary>Archive</button>
-    </ion-item-options>
-  </ion-item-sliding>
+    <ion-item-sliding #item>
+      <ion-item>
+        <ion-avatar item-left>
+          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+        </ion-avatar>
+        One Line w/ Avatar, div only text
+      </ion-item>
+      <ion-item-options>
+        <button primary (click)="archive($event, item)">Archive</button>
+      </ion-item-options>
+    </ion-item-sliding>
 
-  <ion-item-sliding>
-    <ion-thumbnail item-left>
-      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
-    </ion-thumbnail>
-    <h2>Two Lines w/ Thumbnail, H2 Header</h2>
-    <p>Paragraph text.</p>
-    <ion-item-options>
-      <button primary>Archive</button>
-    </ion-item-options>
-  </ion-item-sliding>
+    <ion-item-sliding #item>
+      <ion-item>
+        <ion-thumbnail item-left>
+          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+        </ion-thumbnail>
+        <h2>Two Lines w/ Thumbnail, H2 Header</h2>
+        <p>Paragraph text.</p>
+      </ion-item>
+      <ion-item-options>
+        <button primary (click)="archive($event, item)">Archive</button>
+      </ion-item-options>
+    </ion-item-sliding>
 
-  <ion-item-sliding text-wrap detail-push *ng-for="#item of getItems()">
-    <h3>ng-for {{item}}</h3>
-    <ion-item-options>
-      <button primary>Archive</button>
-    </ion-item-options>
-  </ion-item-sliding>
+    <ion-item-sliding *ng-for="#item of getItems()">
+      <ion-item text-wrap detail-push>
+        <h3>ng-for {{item}}</h3>
+      </ion-item>
+      <ion-item-options>
+        <button primary (click)="archive($event, item)">Archive</button>
+      </ion-item-options>
+    </ion-item-sliding>
 
-</ion-list>
+  </ion-list>
+
+  <p>
+    <button (click)="closeOpened()">Close opened items</button>
+  </p>
+
+</ion-content>
 
 <style>
   img {

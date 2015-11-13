@@ -9,7 +9,7 @@ $input-label-ios-color:         #7f7f7f !default;
 ion-card {
 
   [text-input] {
-    margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom ($item-ios-padding-left / 2);
+    margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom 0;
     padding: 0;
   }
 
@@ -19,8 +19,12 @@ ion-card {
   }
 
   ion-label {
-    margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom ($item-ios-padding-left / 2);
+    margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom 0;
     color: $input-label-ios-color;
+  }
+
+  ion-label + [text-input] {
+    margin-left: $item-ios-padding-left;
   }
 
   [stacked-label] ion-label {
@@ -30,6 +34,7 @@ ion-card {
 
   [stacked-label] [text-input],
   [floating-label] [text-input] {
+    margin-left: 0;
     margin-top: 8px;
     margin-bottom: 8px;
   }

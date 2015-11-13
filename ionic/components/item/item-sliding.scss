@@ -1,0 +1,36 @@
+
+/**
+ * The hidden right-side buttons that can be exposed under a list item
+ * with dragging.
+ */
+
+ion-item-sliding {
+  display: block;
+  position: relative;
+  overflow: hidden;
+
+  .item {
+    position: static;
+  }
+}
+
+ion-item-options {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: $z-index-item-options;
+  height: 100%;
+}
+
+ion-item-sliding.active-slide {
+
+  .item {
+    position: relative;
+    z-index: $z-index-item-options + 1;
+  }
+
+  ion-item-options {
+    display: flex;
+  }
+}

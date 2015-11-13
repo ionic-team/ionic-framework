@@ -7,8 +7,8 @@ let startCoord = null;
 let pointerTolerance = 4;
 let lastTouch = 0;
 let lastActivated = 0;
-let disableNativeClickTime = 0;
-let disableNativeClickLimit = 1000;
+let disableNativeClickUntil = 0;
+let disableNativeClickAmount = 3000;
 let activator = null;
 let isTapPolyfill = false;
 let app = null;
@@ -55,7 +55,7 @@ function touchEnd(ev) {
     if (!hasPointerMoved(pointerTolerance, startCoord, endCoord)) {
       console.debug('create click from touch');
 
-      setDisableNativeClick();;
+      disableNativeClickUntil = Date.now() + disableNativeClickAmount;
 
       let clickEvent = doc.createEvent('MouseEvents');
       clickEvent.initMouseEvent('click', true, true, win, 1, 0, 0, endCoord.x, endCoord.y, false, false, false, false, 0, null);
@@ -78,7 +78,7 @@ function mouseDown(ev) {
     ev.preventDefault();
     ev.stopPropagation();
 
-  } else if (lastTouch + disableNativeClickLimit < Date.now()) {
+  } else if (lastTouch + disableNativeClickAmount < Date.now()) {
     pointerStart(ev);
   }
 }
@@ -90,7 +90,7 @@ function mouseUp(ev) {
     ev.stopPropagation();
   }
 
-  if (lastTouch + disableNativeClickLimit < Date.now()) {
+  if (lastTouch + disableNativeClickAmount < Date.now()) {
     pointerEnd(ev);
   }
 }
@@ -131,7 +131,6 @@ function pointerCancel(ev) {
   console.debug('pointerCancel from', ev.type);
   activator && activator.clearState();
   moveListeners(false);
-  setDisableNativeClick();
 }
 
 function moveListeners(shouldAdd) {
@@ -156,7 +155,7 @@ function setDisableNativeClick() {
 }
 
 function isDisabledNativeClick() {
-  return disableNativeClickTime > Date.now();
+  return disableNativeClickUntil > Date.now();
 }
 
 function click(ev) {

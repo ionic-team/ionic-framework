@@ -13,7 +13,7 @@ ion-switch media-switch {
   cursor: pointer;
 }
 
-ion-switch[aria-disabled=true] {
+ion-switch[aria-disabled=true] .item-inner > * {
   pointer-events: none;
   opacity: 0.5;
   color: $subdued-text-color;

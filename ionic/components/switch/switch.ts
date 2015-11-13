@@ -87,12 +87,14 @@ class MediaSwitch {
   },
   template:
     '<ng-content select="[item-left]"></ng-content>' +
-    '<ion-item-content id="{{labelId}}">' +
-      '<ng-content></ng-content>' +
-    '</ion-item-content>' +
-    '<media-switch disable-activated>' +
-      '<switch-icon></switch-icon>' +
-    '</media-switch>',
+    '<div class="item-inner">' +
+      '<ion-item-content id="{{labelId}}">' +
+        '<ng-content></ng-content>' +
+      '</ion-item-content>' +
+      '<media-switch disable-activated>' +
+        '<switch-icon></switch-icon>' +
+      '</media-switch>' +
+    `</div>`,
   directives: [MediaSwitch]
 })
 export class Switch {

@@ -79,6 +79,8 @@ export class Activator {
   }
 
   disableActivated(ev) {
+    if (ev.defaultPrevented) return true;
+
     let targetEle = ev.target;
     for (let x = 0; x < 4; x++) {
       if (!targetEle) break;

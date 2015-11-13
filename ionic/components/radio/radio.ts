@@ -182,12 +182,14 @@ export class RadioGroup extends Ion {
     '(click)': 'click($event)'
   },
   template:
-    '<ion-item-content id="{{labelId}}">' +
-      '<ng-content></ng-content>' +
-    '</ion-item-content>' +
-    '<media-radio>' +
-      '<radio-icon></radio-icon>' +
-    '</media-radio>'
+    '<div class="item-inner">' +
+      '<ion-item-content id="{{labelId}}">' +
+        '<ng-content></ng-content>' +
+      '</ion-item-content>' +
+      '<media-radio>' +
+        '<radio-icon></radio-icon>' +
+      '</media-radio>' +
+    '</div>'
 })
 export class RadioButton extends Ion {
   /**

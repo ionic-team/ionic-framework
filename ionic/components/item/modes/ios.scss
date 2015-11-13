@@ -6,16 +6,16 @@ $item-ios-border-color:               $list-border-color !default;
 $item-ios-activated-background-color: #d9d9d9 !default;
 $item-ios-font-size:                  1.6rem !default;
 
-$item-ios-padding-top:                13px !default;
+$item-ios-padding-top:                12px !default;
 $item-ios-padding-right:              16px !default;
-$item-ios-padding-bottom:             14px !default;
+$item-ios-padding-bottom:             13px !default;
 $item-ios-padding-left:               16px !default;
 
 $item-ios-padding-media-top:          10px !default;
 $item-ios-padding-media-bottom:       10px !default;
 
 $item-ios-padding-icon-top:           10px !default;
-$item-ios-padding-icon-bottom:        10px !default;
+$item-ios-padding-icon-bottom:        9px !default;
 
 $item-ios-avatar-size:                3.6rem !default;
 $item-ios-thumbnail-size:             5.6rem !default;
@@ -40,171 +40,21 @@ ion-note {
   color: $item-ios-note-color;
 }
 
-.list {
-
-  .item-group {
-    // Make sure the first and last items don't have borders
-    > .item:first-of-type:before {
-      border-top: none !important;
-    }
-    > .item:last-of-type:after {
-      border-top: none !important;
-    }
+.item-group {
+  ion-item-group-title {
+    border-bottom: 1px solid $item-ios-border-color;
   }
 
-  .item {
-    margin-top: -1px;
-    padding-right: ($item-ios-padding-right / 2);
-    padding-left: ($item-ios-padding-left / 2);
-    font-size: $item-ios-font-size;
-
-    &:before {
-      position: absolute;
-      top: 0;
-      right: 0;
-      left: $item-ios-padding-left;
-      border-top: 1px solid $item-ios-border-color;
-      content: '';
-      pointer-events: none;
-    }
-
-    &:after {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      left: $item-ios-padding-left;
-      border-top: 1px solid $item-ios-border-color;
-      content: '';
-      pointer-events: none;
-    }
-
-    &:first-child:before,
-    &:last-child:after {
-      left: 0;
-    }
-  }
-
-  ion-header + .item:first-of-type:before {
-    left: 0;
-  }
-
-  &[inset] .item {
-    &:before,
-    &:after {
-      left: 0;
-    }
-  }
-
-  ion-item-content {
-    margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom ($item-ios-padding-left / 2);
-  }
-
-  [item-left],
-  [item-right] {
-    margin: $item-ios-padding-media-top ($item-ios-padding-right / 2) $item-ios-padding-media-bottom ($item-ios-padding-left / 2);
-  }
-
-  icon[item-left],
-  icon[item-right] {
-    margin-top: $item-ios-padding-icon-top;
-    margin-bottom: $item-ios-padding-icon-bottom;
-  }
-
-  button[item-left],
-  button[item-right],
-  [button][item-left],
-  [button][item-right] {
-    padding: 0 0.5em;
-    font-size: 1.3rem;
-    min-height: 25px;
-  }
-
-  [item-left].icon-only,
-  [item-right].icon-only,
-  [item-left].icon-only icon,
-  [item-right].icon-only icon,
-  [item-left][clear],
-  [item-right][clear] {
-    padding: 0 1px;
-  }
-
-  [item-left].icon-left icon,
-  [item-right].icon-left icon {
-    margin-left: 0;
-    margin-bottom: 1px;
-    padding-right: 0.3em;
-  }
-
-  [item-left].icon-right icon,
-  [item-right].icon-right icon {
-    margin-right: 0;
-    margin-bottom: 1px;
-  }
-
-  ion-avatar {
-    min-width: $item-ios-avatar-size;
-    min-height: $item-ios-avatar-size;
-
-    img {
-      max-width: $item-ios-avatar-size;
-      max-height: $item-ios-avatar-size;
-      border-radius: $item-ios-avatar-size / 2;
-    }
-  }
-
-  ion-thumbnail {
-    min-width: $item-ios-thumbnail-size;
-    min-height: $item-ios-thumbnail-size;
-
-    img {
-      max-width: $item-ios-thumbnail-size;
-      max-height: $item-ios-thumbnail-size;
-    }
-  }
-
-
-  ion-item-sliding.item {
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  ion-item-sliding-content {
-    background-color: $item-ios-sliding-content-bg;
-    padding-right: ($item-ios-padding-right / 2);
-    padding-left: ($item-ios-padding-left / 2);
-    display: flex;
-    min-height: 42px;
-    justify-content: center;
-
-    transition: $item-ios-sliding-transition;
-
-    // To allow the hairlines through
-    margin-top: 1px;
-    margin-bottom: 1px;
-  }
-  ion-item-options {
-    button, [button] {
-      min-height: calc(100% - 2px);
-      height: calc(100% - 2px);
-      margin: 1px 0 2px 0;
-
-      border: none;
-      border-radius: 0;
-      display: inline-flex;
-      align-items: center;
-      box-sizing: border-box;
-
-      &:before{
-        margin: 0 auto;
-      }
+  .item:first-child {
+    .item-inner {
+      border-top-width: 0;
     }
   }
 }
 
 .item.activated,
 a.item.activated,
-button.item.activated,
-.item.activated ion-item-sliding-content {
+button.item.activated {
   background-color: $item-ios-activated-background-color;
   transition-duration: 0ms;
 }
@@ -213,70 +63,4 @@ button.item.activated,
 a.item,
 button.item {
   transition-duration: 200ms;
-}
-
-.list,
-ion-card {
-  button[ion-item]:not([detail-none]),
-  a[ion-item]:not([detail-none]),
-  [detail-push]:not(ion-item-sliding) {
-    @include ios-detail-push-icon($item-ios-detail-push-color);
-    background-repeat: no-repeat;
-    background-position: right ($item-ios-padding-right - 2) center;
-    background-size: 14px 14px;
-    padding-right: 32px;
-  }
-
-  ion-item-sliding[detail-push] {
-
-    ion-item-sliding-content {
-      @include ios-detail-push-icon($item-ios-detail-push-color);
-      background-repeat: no-repeat;
-      background-position: right ($item-ios-padding-right - 2) center;
-      background-size: 14px 14px;
-      padding-right: 32px;
-    }
-  }
-}
-
-&.hairlines .list {
-
-  ion-item-options {
-    button, [button] {
-      min-height: calc(100% - 1px);
-      height: calc(100% - 1px);
-      margin-top: 0.55px;
-      margin-bottom: 0.55px;
-    }
-  }
-
-  ion-item-sliding-content {
-    margin-top: 0.55px;
-    margin-bottom: 0.55px;
-  }
-
-  .item {
-    margin-top: -0.55px;
-
-    &:last-child {
-      margin-bottom: -0.55px;
-    }
-
-    &:before,
-    &:after {
-      border-top-width: 0.55px;
-    }
-  }
-
-}
-
-.item[no-lines] {
-  &:before,
-  &:after {
-    border-width: 0;
-  }
-
-  + .item:before {
-    border-width: 0;
-  }
 }

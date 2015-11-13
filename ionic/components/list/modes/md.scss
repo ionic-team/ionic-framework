@@ -18,6 +18,192 @@ $list-md-header-font-size:       1.4rem !default;
 $list-md-header-color:           #858585 !default;
 
 
+/****************/
+/* DEFAULT LIST */
+/****************/
+
+.list {
+  ion-header,
+  ion-item-group-title , {
+    border-bottom: 1px solid $item-md-border-color;
+  }
+
+  .item {
+    padding-right: ($item-md-padding-right / 2);
+    padding-left: ($item-md-padding-left);
+    font-size: $item-md-font-size;
+    text-transform: none;
+
+    .item-inner {
+      border-bottom: 1px solid $item-md-border-color;
+    }
+  }
+
+  > .item:first-child {
+    border-top: 1px solid $item-md-border-color;
+  }
+
+  > .item:last-child,
+  > ion-item-sliding:last-child .item {
+    border-bottom: 1px solid $item-md-border-color;
+
+    .item-inner {
+      border-bottom: none;
+    }
+  }
+
+  // If the item has the no-lines attribute remove the bottom border from:
+  // the item itself (for last-child items)
+  // the item-inner class (if it is not last)
+  .item[no-lines],
+  .item[no-lines] .item-inner {
+    border-width: 0;
+  }
+
+  ion-header,
+  ion-item-group-title {
+    border-bottom: 1px solid $item-md-border-color;
+    margin-left: 0;
+    padding-left: $item-md-padding-left;
+  }
+
+  ion-item-content {
+    margin: $item-md-padding-top ($item-md-padding-right / 2) $item-md-padding-bottom 0;
+  }
+
+  [item-left],
+  [item-right] {
+    margin: $item-md-padding-media-top ($item-md-padding-right / 2) $item-md-padding-media-bottom ($item-md-padding-left / 2);
+  }
+
+  icon[item-left],
+  icon[item-right] {
+    margin-top: $item-md-padding-icon-top;
+    margin-left: 0;
+    margin-bottom: $item-md-padding-icon-bottom;
+  }
+
+  button[item-left],
+  button[item-right],
+  [button][item-left],
+  [button][item-right] {
+    padding: 0 0.6em;
+    min-height: 26px;
+    font-size: 1.2rem;
+  }
+
+  [item-left].icon-only,
+  [item-right].icon-only,
+  [item-left].icon-only icon,
+  [item-right].icon-only icon {
+    padding: 0 1px;
+  }
+
+  [item-left][clear],
+  [item-right][clear] {
+    padding: 0 8px;
+  }
+
+  [item-left].icon-left icon,
+  [item-right].icon-left icon {
+    margin-left: 0;
+    margin-bottom: 1px;
+    padding-right: 0.3em;
+  }
+
+  [item-left].icon-right icon,
+  [item-right].icon-right icon {
+    margin-right: 0;
+    margin-bottom: 1px;
+  }
+
+  [text-wrap] ion-item-content {
+    font-size: $item-md-body-text-font-size;
+    line-height: $item-md-body-text-line-height;
+  }
+
+  .item[actions] ion-item-content {
+    margin: 4px;
+  }
+
+  icon[item-left] + .item-inner,
+  icon[item-left] + [text-input] {
+    margin-left: $item-md-padding-left + ($item-md-padding-left / 2);
+  }
+
+  ion-avatar {
+    min-width: $item-md-avatar-size;
+    min-height: $item-md-avatar-size;
+
+    img {
+      max-width: $item-md-avatar-size;
+      max-height: $item-md-avatar-size;
+      border-radius: $item-md-avatar-size / 2;
+    }
+  }
+
+  ion-thumbnail {
+    min-width: $item-md-thumbnail-size;
+    min-height: $item-md-thumbnail-size;
+
+    img {
+      max-width: $item-md-thumbnail-size;
+      max-height: $item-md-thumbnail-size;
+    }
+  }
+
+  h1 {
+    margin: 0 0 2px;
+    font-size: 2.4rem;
+    font-weight: normal;
+  }
+
+  h2 {
+    margin: 2px 0 2px;
+    font-size: 1.6rem;
+    font-weight: normal;
+  }
+
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: normal;
+    margin: 2px 0 2px;
+    font-size: 1.4rem;
+    font-weight: normal;
+  }
+
+  p {
+    line-height: normal;
+    color: #666;
+    font-size: 1.4rem;
+    margin: 0 0 2px;
+  }
+
+  button.item.activated {
+    box-shadow: none;
+  }
+
+  ion-item-options {
+    button, [button] {
+      height: calc(100% - 2px);
+      margin: 1px 0 1px 0;
+      box-shadow: none;
+
+      border: none;
+      border-radius: 0;
+      display: inline-flex;
+      align-items: center;
+      box-sizing: border-box;
+
+      &:before{
+        margin: 0 auto;
+      }
+    }
+  }
+}
+
 .list {
   margin: 0 $list-md-margin-right $list-md-margin-bottom $list-md-margin-left;
 
@@ -27,53 +213,58 @@ $list-md-header-color:           #858585 !default;
     color: $list-md-header-color;
   }
 
+  + .list {
+    margin-top: $list-md-margin-top + $list-md-margin-bottom;
+
+    ion-header {
+      margin-top: -$list-md-margin-top;
+      padding-top: 0;
+    }
+  }
 }
 
-.list + .list {
-  margin-top: $list-md-margin-top + $list-md-margin-bottom;
-}
 
-.list + .list ion-header {
-  margin-top: -$list-md-margin-top;
-  padding-top: 0;
-}
+/**************/
+/* INSET LIST */
+/**************/
 
 .list[inset] {
   margin: $list-inset-md-margin-top $list-inset-md-margin-right $list-inset-md-margin-bottom $list-inset-md-margin-left;
   border-radius: $list-inset-md-border-radius;
 
   .item:first-child {
+    border-top-width: 0;
     margin-top: 0;
     border-top-right-radius: $list-inset-md-border-radius;
     border-top-left-radius: $list-inset-md-border-radius;
-
-    &:before {
-      border-top: none;
-    }
   }
 
   .item:last-child {
+    border-bottom-width: 0;
     margin-bottom: 0;
     border-bottom-right-radius: $list-inset-md-border-radius;
     border-bottom-left-radius: $list-inset-md-border-radius;
   }
-}
 
-.list[inset] .item:not(ion-input):last-child:after {
-  border-top: none;
-}
-
-.list[inset] + .list[inset] {
-  margin-top: 0;
-}
-
-.list[no-lines] {
-  ion-header + .item:before {
-    border-width: 1px;
+  .item:not(ion-input):last-child:after {
+    border-bottom: none;
   }
 
-  .item:before,
-  .item:after {
+  + .list[inset] {
+    margin-top: 0;
+  }
+}
+
+
+/*****************/
+/* NO LINES LIST */
+/*****************/
+
+.list[no-lines] {
+  ion-header,
+  ion-item-group-title,
+  .item,
+  .item .item-inner {
     border-width: 0;
   }
 }

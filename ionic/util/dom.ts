@@ -199,25 +199,25 @@ export function hasFocusedTextInput() {
   return false;
 }
 
-export function closest(ele, selector) {
-  var matchesFn;
+let matchesFn;
+['matches','webkitMatchesSelector','mozMatchesSelector','msMatchesSelector'].some(fn => {
+  if (typeof document.documentElement[fn] == 'function') {
+    matchesFn = fn;
+  }
+});
 
-  // find vendor prefix
-  ['matches','webkitMatchesSelector','mozMatchesSelector','msMatchesSelector','oMatchesSelector'].some(function(fn) {
-    if (typeof document.body[fn] == 'function') {
-      matchesFn = fn;
-      return true;
-    }
-    return false;
-  })
+export function closest(ele, selector, checkSelf) {
+  if (ele && matchesFn) {
 
-  // traverse parents
-  while (ele !== null) {
-    parent = ele.parentElement;
-    if (parent!==null && parent[matchesFn](selector)) {
-      return parent;
+    // traverse parents
+    ele = (checkSelf ? ele : ele.parentElement);
+
+    while (ele !== null) {
+      if (ele[matchesFn](selector)) {
+        return ele;
+      }
+      ele = ele.parentElement;
     }
-    ele = parent;
   }
 
   return null;
@@ -233,10 +233,10 @@ export function removeElement(ele) {
  * to reduce DOM reads. Cache is cleared on a window resize.
  * @param {TODO} ele  TODO
  */
-export function getDimensions(ion) {
+export function getDimensions(ion, ele) {
   if (!ion._dimId) {
     ion._dimId = ++dimensionIds;
-    if (ion._dimId % 100 === 0) {
+    if (ion._dimId % 1000 === 0) {
       // periodically flush dimensions
       flushDimensionCache();
     }
@@ -253,7 +253,7 @@ export function getDimensions(ion) {
         left: ele.offsetLeft,
         top: ele.offsetTop
       };
-      
+
     } else {
       // do not cache bad values
       return { width: 0, height: 0, left: 0, top: 0 };

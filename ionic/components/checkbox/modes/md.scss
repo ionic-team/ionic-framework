@@ -36,7 +36,8 @@ ion-checkbox {
 
 media-checkbox {
   display: block;
-  margin: $item-md-padding-media-top ($item-md-padding-right / 2) $item-md-padding-media-bottom ($item-md-padding-left / 2);
+  // TODO convert these to sass variables
+  margin: $item-md-padding-media-top 36px $item-md-padding-media-bottom 4px;
 }
 
 checkbox-icon {

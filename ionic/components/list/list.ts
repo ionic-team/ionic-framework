@@ -1,8 +1,9 @@
-import {Directive, ElementRef, Renderer} from 'angular2/angular2';
+import {Directive, ElementRef, Renderer, NgZone} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {Config} from '../../config/config';
 import {ListVirtualScroll} from './virtual';
+import {ItemSlidingGesture} from '../item/item-sliding-gesture';
 import * as util from 'ionic/util';
 
 /**
@@ -30,7 +31,7 @@ export class List extends Ion {
    * @param {ElementRef} elementRef  TODO
    * @param {Config} config  TODO
    */
-  constructor(elementRef: ElementRef, config: Config, renderer: Renderer) {
+  constructor(elementRef: ElementRef, config: Config, renderer: Renderer, private zone: NgZone) {
     super(elementRef, config);
     renderer.setElementClass(elementRef, 'list', true);
     this.ele = elementRef.nativeElement;
@@ -48,6 +49,12 @@ export class List extends Ion {
       this._initVirtualScrolling();
     }
   }
+
+  onDestroy() {
+    this.ele = null;
+    this.slidingGesture && this.slidingGesture.unlisten();
+  }
+
   /**
    * @private
    * TODO
@@ -68,20 +75,32 @@ export class List extends Ion {
     this.itemTemplate = item;
   }
 
-  /**
-   * Keeps track of any open item (a sliding item, for example), to close it later
-   */
-  setOpenItem(item) {
-    this.openItem = item;
-  }
-  closeOpenItem() {
-    if(this.openItem) {
-      this.openItem.close(true);
-      this.openItem = null;
+  enableSlidingItems(shouldEnable) {
+    this._enableSliding = shouldEnable;
+
+    if (this._init) {
+      if (shouldEnable) {
+        this.zone.runOutsideAngular(() => {
+          setTimeout(() => {
+            this.slidingGesture = new ItemSlidingGesture(this, this.ele);
+          });
+        });
+
+      } else {
+        this.slidingGesture && this.slidingGesture.unlisten();
+      }
     }
   }
-  getOpenItem() {
-    return this.openItem;
+
+  closeSlidingItems() {
+    this.slidingGesture && this.slidingGesture.closeOpened();
+  }
+
+  afterViewInit() {
+    this._init = true;
+    if (this._enableSliding) {
+      this.enableSlidingItems(true);
+    }
   }
 }
 
@@ -97,6 +116,4 @@ export class List extends Ion {
     '[attr.id]': 'id'
   }
 })
-export class ListHeader {
-
-}
+export class ListHeader {}
