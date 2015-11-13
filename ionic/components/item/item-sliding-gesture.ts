@@ -129,7 +129,7 @@ export class ItemSlidingGesture extends DragGesture {
   }
 
   open(itemContainerEle, openAmount, animate) {
-    let slidingEle = itemContainerEle.querySelector('ion-item');
+    let slidingEle = itemContainerEle.querySelector('ion-item,[ion-item]');
     if (!slidingEle) return;
 
     this.set(itemContainerEle, 'openAmount', openAmount);
