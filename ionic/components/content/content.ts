@@ -73,6 +73,18 @@ export class Content extends Ion {
     }
   }
 
+  onScrollEnd(callback) {
+    let timerId;
+
+    function debounce() {
+      timerId = setTimeout(() => {
+
+      }, 250);
+    }
+
+    this.addScrollEventListener(debounce);
+  }
+
   /**
    * Adds the specified touchmove handler to the content's scroll element.
    * @param {Function} handler  The touchmove handler.

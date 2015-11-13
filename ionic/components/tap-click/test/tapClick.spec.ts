@@ -18,7 +18,7 @@ export function run() {
 
       it('should be activatable on <ion-item-sliding> element', () => {
         let ele = document.createElement('ion-item-sliding');
-        expect( tapClick.isActivatable(ele) ).toBe(true);
+        expect( tapClick.isActivatable(ele) ).toBe(false);
       });
 
       it('should be not activatable on <ion-item> element', () => {

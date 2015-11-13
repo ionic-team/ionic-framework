@@ -199,6 +199,41 @@ export function run() {
       });
     });
 
+    describe("first", () => {
+      it('should get the first item', () => {
+        let vc1 = new ViewController(),
+            vc2 = new ViewController(null, FirstPage),
+            vc3 = new ViewController(null, SecondPage);
+        nav._views = [vc1, vc2, vc3];
+
+        expect(nav.first()).toBe(vc1);
+      });
+      it('should get the first item that isnt being destroyed', () => {
+        let vc1 = new ViewController(),
+            vc2 = new ViewController(),
+            vc3 = new ViewController();
+        vc1.shouldDestroy = true;
+        nav._views = [vc1, vc2, vc3];
+
+        expect(nav.first()).toBe(vc2);
+      });
+    });
+
+    describe("popTo", () => {
+      it('should popTo 1st view', () => {
+        let vc1 = new ViewController(null, FirstPage),
+            vc2 = new ViewController(null, SecondPage),
+            vc3 = new ViewController(null, ThirdPage);
+        nav._views = [vc1, vc2, vc3];
+
+        nav._transition = mockTransitionFn;
+        nav.popTo(vc1);
+
+        expect(nav._views.length).toBe(1);
+        expect(nav._views[0].componentType).toBe(FirstPage);
+      });
+    });
+
     describe("remove", () => {
       it('should remove the view at the specified index', () => {
         let vc1 = new ViewController(),
@@ -234,10 +269,10 @@ export function run() {
     });
 
     describe("_setZIndex", () => {
-      it('should set zIndex 0 on first entering view', () => {
+      it('should set zIndex 10 on first entering view', () => {
         let enteringInstance = {};
         nav._setZIndex(enteringInstance, null, 'forward');
-        expect(enteringInstance._zIndex).toEqual(0);
+        expect(enteringInstance._zIndex).toEqual(10);
       });
 
       it('should set zIndex 1 on second entering view', () => {

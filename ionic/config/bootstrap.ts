@@ -21,7 +21,7 @@ import {initTapClick} from '../components/tap-click/tap-click';
 import * as dom from '../util/dom';
 
 
-export function ionicProviders(args) {
+export function ionicProviders(args={}) {
   let fastdom = new FastDom();
 
   let app = new IonicApp(fastdom);
