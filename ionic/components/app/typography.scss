@@ -107,6 +107,11 @@ sub {
   span,
   a,
   small,
+  b,
+  i,
+  u,
+  strong,
+  em,
   sub,
   sup {
      &[#{$color}] {
