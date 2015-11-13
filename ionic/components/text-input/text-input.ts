@@ -1,4 +1,4 @@
-import {Component, Directive, NgIf, forwardRef, Host, Optional, ElementRef, Renderer, Attribute, Query, QueryList, NgZone} from 'angular2/angular2';
+import {Component, Directive, NgIf, forwardRef, Host, Optional, ElementRef, Renderer, Attribute} from 'angular2/angular2';
 
 import {Config} from '../../config/config';
 import {Form} from '../../util/form';
@@ -34,7 +34,6 @@ export class TextInput {
     config: Config,
     renderer: Renderer,
     app: IonicApp,
-    zone: NgZone,
     platform: Platform,
     @Optional() @Host() scrollView: Content
   ) {
@@ -49,7 +48,6 @@ export class TextInput {
 
     this.app = app;
     this.elementRef = elementRef;
-    this.zone = zone;
     this.platform = platform;
 
     this.scrollView = scrollView;
@@ -80,7 +78,7 @@ export class TextInput {
       self.deregListeners();
 
       if (self.hasFocus) {
-        self.tempFocusMove();
+
       }
     };
   }
@@ -107,15 +105,13 @@ export class TextInput {
         ev.preventDefault();
         ev.stopPropagation();
 
-        this.zone.runOutsideAngular(() => {
-          this.initFocus();
+        this.initFocus();
 
-          // temporarily prevent mouseup's from focusing
-          this.lastTouch = Date.now();
-        });
+        // temporarily prevent mouseup's from focusing
+        this.lastTouch = Date.now();
       }
 
-    } else if (this.lastTouch + 500 < Date.now()) {
+    } else if (this.lastTouch + 999 < Date.now()) {
       ev.preventDefault();
       ev.stopPropagation();
 
@@ -146,19 +142,20 @@ export class TextInput {
 
       // manually scroll the text input to the top
       // do not allow any clicks while it's scrolling
-      this.app.setEnabled(false, SCROLL_INTO_VIEW_DURATION);
-      this.app.setTransitioning(true, SCROLL_INTO_VIEW_DURATION);
+      let scrollDuration = getScrollAssistDuration(scrollData.scrollAmount);
+      this.app.setEnabled(false, scrollDuration);
+      this.app.setTransitioning(true, scrollDuration);
 
       // temporarily move the focus to the focus holder so the browser
       // doesn't freak out while it's trying to get the input in place
       // at this point the native text input still does not have focus
-      this.tempFocusMove();
+      this.input.relocate(true, scrollData.inputSafeY);
 
       // scroll the input into place
-      scrollView.scrollTo(0, scrollData.scrollTo, SCROLL_INTO_VIEW_DURATION, 6).then(() => {
+      scrollView.scrollTo(0, scrollData.scrollTo, scrollDuration).then(() => {
         // the scroll view is in the correct position now
         // give the native text input focus
-        this.setFocus();
+        this.input.relocate(false);
 
         // all good, allow clicks again
         this.app.setEnabled(true);
@@ -220,6 +217,7 @@ export class TextInput {
       scrollAmount: 0,
       scrollTo: 0,
       scrollPadding: 0,
+      inputSafeY: 0
     };
 
     if (inputTopBelowSafeArea || inputBottomBelowSafeArea) {
@@ -238,11 +236,14 @@ export class TextInput {
         scrollData.scrollAmount = (safeAreaTop - inputTop);
       }
 
+      scrollData.inputSafeY = -(inputTop - safeAreaTop) + 4;
 
     } else if (inputTopAboveSafeArea) {
       // Input top above safe area
       // auto scroll the input down so at least the top of it shows
       scrollData.scrollAmount = (safeAreaTop - inputTop);
+
+      scrollData.inputSafeY = (safeAreaTop - inputTop) + 4;
 
     }
 
@@ -267,11 +268,12 @@ export class TextInput {
     // if (!window.safeAreaEle) {
     //   window.safeAreaEle = document.createElement('div');
     //   window.safeAreaEle.style.position = 'absolute';
-    //   window.safeAreaEle.style.background = 'rgba(0, 128, 0, 0.3)';
+    //   window.safeAreaEle.style.background = 'rgba(0, 128, 0, 0.7)';
     //   window.safeAreaEle.style.padding = '10px';
-    //   window.safeAreaEle.style.textShadow = '2px 2px white';
+    //   window.safeAreaEle.style.textShadow = '1px 1px white';
     //   window.safeAreaEle.style.left = '0px';
     //   window.safeAreaEle.style.right = '0px';
+    //   window.safeAreaEle.style.fontWeight = 'bold';
     //   window.safeAreaEle.style.pointerEvents = 'none';
     //   document.body.appendChild(window.safeAreaEle);
     // }
@@ -281,6 +283,7 @@ export class TextInput {
     //   <div>scrollTo: ${scrollData.scrollTo}</div>
     //   <div>scrollAmount: ${scrollData.scrollAmount}</div>
     //   <div>scrollPadding: ${scrollData.scrollPadding}</div>
+    //   <div>inputSafeY: ${scrollData.inputSafeY}</div>
     //   <div>scrollHeight: ${scrollViewDimensions.scrollHeight}</div>
     //   <div>scrollTop: ${scrollViewDimensions.scrollTop}</div>
     //   <div>contentHeight: ${scrollViewDimensions.contentHeight}</div>
@@ -299,34 +302,23 @@ export class TextInput {
 
   setFocus() {
     if (this.input) {
+      this.form.setAsFocused(this);
 
-      this.zone.run(() => {
+      // set focus on the actual input element
+      this.input.setFocus();
 
-        this.form.setAsFocused(this);
-
-        // set focus on the actual input element
-        this.input.setFocus();
-
-        // ensure the body hasn't scrolled down
-        document.body.scrollTop = 0;
-      });
-
+      // ensure the body hasn't scrolled down
+      document.body.scrollTop = 0;
     }
 
     if (this.scrollAssist && this.scrollView) {
-      this.zone.runOutsideAngular(() => {
-        this.deregListeners();
-        this.deregScroll = this.scrollView.addScrollEventListener(this.scrollMove);
-      });
+      this.deregListeners();
+      this.deregScroll = this.scrollView.addScrollEventListener(this.scrollMove);
     }
   }
 
   deregListeners() {
     this.deregScroll && this.deregScroll();
-  }
-
-  tempFocusMove() {
-    this.form.setFocusHolder(this.type);
   }
 
   get hasFocus() {
@@ -387,6 +379,37 @@ export class TextInputElement {
     this.getNativeElement().focus();
   }
 
+  relocate(shouldRelocate, inputRelativeY) {
+    this.clone(shouldRelocate, inputRelativeY);
+
+    if (shouldRelocate) {
+      this.wrapper.setFocus();
+    }
+  }
+
+  clone(shouldClone, inputRelativeY) {
+    let focusedInputEle = this.getNativeElement();
+
+    if (shouldRelocate) {
+      let clonedInputEle = focusedInputEle.cloneNode(true);
+      clonedInputEle.classList.add('cloned-input');
+      clonedInputEle.setAttribute('aria-hidden', true);
+      clonedInputEle.tabIndex = -1;
+
+      focusedInputEle.classList.add('hide-focused-input');
+      focusedInputEle.style[dom.CSS.transform] = `translate3d(-9999px,${inputRelativeY}px,0)`;
+      focusedInputEle.parentNode.insertBefore(clonedInputEle, focusedInputEle);
+
+    } else {
+      focusedInputEle.classList.remove('hide-focused-input');
+      focusedInputEle.style[dom.CSS.transform] = '';
+      let clonedInputEle = focusedInputEle.parentNode.querySelector('.cloned-input');
+      if (clonedInputEle) {
+        clonedInputEle.parentNode.removeChild(clonedInputEle);
+      }
+    }
+  }
+
   get hasFocus() {
     return dom.hasFocus(this.getNativeElement());
   }
@@ -417,4 +440,11 @@ class InputScrollAssist {
 }
 
 
-const SCROLL_INTO_VIEW_DURATION = 400;
+const SCROLL_ASSIST_SPEED = 0.5;
+
+function getScrollAssistDuration(distanceToScroll) {
+  //return 3000;
+  distanceToScroll = Math.abs(distanceToScroll);
+  let duration = distanceToScroll / SCROLL_ASSIST_SPEED;
+  return Math.min(380, Math.max(80, duration));
+}

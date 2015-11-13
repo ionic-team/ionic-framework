@@ -74,7 +74,7 @@ export class Keyboard {
      * focusOutline: false    - Do not add the focus-outline
      */
 
-
+    let self = this;
     let isKeyInputEnabled = false;
 
     function cssClass() {
@@ -107,7 +107,7 @@ export class Keyboard {
     function enableKeyInput() {
       cssClass();
 
-      this.zone.runOutsideAngular(() => {
+      self.zone.runOutsideAngular(() => {
         document.removeEventListener('mousedown', pointerDown);
         document.removeEventListener('touchstart', pointerDown);
 
