@@ -9,14 +9,20 @@ $cordova-ios-toolbar-padding:    2rem   !default;
 
   ion-navbar-section,
   ion-navbar,
-  ion-menu > ion-toolbar {
+  ion-menu > ion-toolbar:first-child,
+  ion-menu > ion-toolbar:first-child ion-title,
+  ion-page.modal > ion-toolbar:first-child,
+  ion-page.modal > ion-toolbar:first-child ion-title, {
     min-height: $toolbar-ios-height + $cordova-ios-toolbar-padding;
     height: $toolbar-ios-height + $cordova-ios-toolbar-padding;
   }
 
   ion-navbar,
   ion-navbar ion-title,
-  ion-menu > ion-toolbar {
+  ion-menu > ion-toolbar:first-child,
+  ion-menu > ion-toolbar:first-child ion-title,
+  ion-page.modal > ion-toolbar:first-child,
+  ion-page.modal > ion-toolbar:first-child ion-title, {
     padding-top: $cordova-ios-toolbar-padding;
   }
 
