@@ -1,13 +1,21 @@
 {
-    "version": "1.5.0-beta",
+    "version": "1.5.0",
     "compilerOptions": {
-        "target": "es6",
-        "module": "system",
-        "declaration": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "target": "es5",
+        "module": "commonjs",
+        "declaration": false,
+        "noImplicitAny": false,
+        "removeComments": true,
+        "noLib": false,
+        "outDir": "dist/js/cjs"
     },
-    "filesGlob": [
-        "./**/*.ts",
-        "!node_modules/**/*.ts",
-        "!node_modules/**/*.tsx"
+    "fileGlobs": [
+        "./ionic/**/*.ts",
+        "!./node_modules/**",
+        "!./scripts/**",
+        "!./dist/**",
+        "!./tmp/**"
     ]
 }
