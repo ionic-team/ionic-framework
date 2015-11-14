@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Renderer, NgZone} from 'angular2/angular2';
+import {Directive, ElementRef, NgZone} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {Config} from '../../config/config';
@@ -23,22 +23,18 @@ import * as util from 'ionic/util';
     'items',
     'virtual',
     'content'
-  ]
+  ],
+  host: {
+    'class': 'list'
+  }
 })
 export class List extends Ion {
-  /**
-   * TODO
-   * @param {ElementRef} elementRef  TODO
-   * @param {Config} config  TODO
-   */
-  constructor(elementRef: ElementRef, config: Config, renderer: Renderer, private zone: NgZone) {
+
+  constructor(elementRef: ElementRef, config: Config, private zone: NgZone) {
     super(elementRef, config);
-    renderer.setElementClass(elementRef, 'list', true);
     this.ele = elementRef.nativeElement;
   }
-  /**
-   * TODO
-   */
+
   onInit() {
     super.onInit();
 

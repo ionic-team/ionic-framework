@@ -17,7 +17,8 @@ import {Platform} from '../../platform/platform';
   host: {
     '(touchstart)': 'pointerStart($event)',
     '(touchend)': 'pointerEnd($event)',
-    '(mouseup)': 'pointerEnd($event)'
+    '(mouseup)': 'pointerEnd($event)',
+    'class': 'item'
   },
   template:
     '<div class="item-inner">' +
@@ -37,7 +38,6 @@ export class TextInput {
     platform: Platform,
     @Optional() @Host() scrollView: Content
   ) {
-    renderer.setElementClass(elementRef, 'item', true);
     this.renderer = renderer;
 
     this.form = form;

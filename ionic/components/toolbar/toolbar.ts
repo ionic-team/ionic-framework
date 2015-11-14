@@ -1,4 +1,4 @@
-import {Component, Directive, Host, ElementRef, Renderer, Optional, forwardRef, Inject} from 'angular2/angular2';
+import {Component, Directive, Host, ElementRef, Optional, forwardRef, Inject} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {Config} from '../../config/config';
@@ -64,16 +64,17 @@ export class ToolbarBase extends Ion  {
     '<ng-content select="ion-nav-items[secondary]"></ng-content>' +
     '<toolbar-content>' +
       '<ng-content></ng-content>' +
-    '</toolbar-content>'
+    '</toolbar-content>',
+  host: {
+    'class': 'toolbar'
+  }
 })
 export class Toolbar extends ToolbarBase {
   constructor(
     elementRef: ElementRef,
-    config: Config,
-    renderer: Renderer
+    config: Config
   ) {
     super(elementRef, config);
-    renderer.setElementClass(elementRef, 'toolbar', true);
   }
 
 }

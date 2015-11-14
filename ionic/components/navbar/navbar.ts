@@ -78,7 +78,8 @@ class ToolbarBackground {
       '<ng-content></ng-content>' +
     '</toolbar-content>',
   host: {
-    '[hidden]': '_hidden'
+    '[hidden]': '_hidden',
+    'class': 'toolbar'
   },
   inputs: [
     'hideBackButton',
@@ -97,8 +98,6 @@ export class Navbar extends ToolbarBase {
     super(elementRef, config);
     this.app = app;
     this.renderer = renderer;
-
-    renderer.setElementClass(elementRef, 'toolbar', true);
 
     let navbarStyle = config.get('navbarStyle');
     if (navbarStyle) {

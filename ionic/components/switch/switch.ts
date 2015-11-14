@@ -1,4 +1,4 @@
-import {Component, Directive, ElementRef, Renderer, Host, Optional, NgControl, Inject, forwardRef} from 'angular2/angular2';
+import {Component, Directive, ElementRef, Host, Optional, NgControl, Inject, forwardRef} from 'angular2/angular2';
 
 import {Form} from '../../util/form';
 import {Config} from '../../config/config';
@@ -83,7 +83,8 @@ class MediaSwitch {
     '(touchstart)': 'pointerDown($event)',
     '(mousedown)': 'pointerDown($event)',
     '(touchend)': 'pointerUp($event)',
-    '(mouseup)': 'pointerUp($event)'
+    '(mouseup)': 'pointerUp($event)',
+    'class': 'item'
   },
   template:
     '<ng-content select="[item-left]"></ng-content>' +
@@ -108,13 +109,10 @@ export class Switch {
     form: Form,
     elementRef: ElementRef,
     config: Config,
-    renderer: Renderer,
     @Optional() private ngControl: NgControl
   ) {
     this.form = form;
     form.register(this);
-
-    renderer.setElementClass(elementRef, 'item', true);
 
     this.lastTouch = 0;
     this.mode = config.get('mode');
