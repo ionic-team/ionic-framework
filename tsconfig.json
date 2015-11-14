@@ -3,13 +3,9 @@
     "compilerOptions": {
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "target": "es5",
-        "module": "commonjs",
-        "declaration": false,
-        "noImplicitAny": false,
-        "removeComments": true,
-        "noLib": false,
-        "outDir": "dist/js/cjs"
+        "target": "es6",
+        "module": "system",
+        "declaration": true
     },
     "fileGlobs": [
         "./ionic/**/*.ts",

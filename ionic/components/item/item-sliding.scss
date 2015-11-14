@@ -21,6 +21,7 @@ ion-item-options {
   right: 0;
   z-index: $z-index-item-options;
   height: 100%;
+  opacity: 0;
 }
 
 ion-item-sliding.active-slide {
@@ -28,9 +29,14 @@ ion-item-sliding.active-slide {
   .item {
     position: relative;
     z-index: $z-index-item-options + 1;
+    transition: all 200ms;
   }
 
   ion-item-options {
     display: flex;
+  }
+
+  &.active-options ion-item-options{
+    opacity: 1;
   }
 }

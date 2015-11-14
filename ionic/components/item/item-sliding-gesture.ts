@@ -68,6 +68,9 @@ export class ItemSlidingGesture extends DragGesture {
       if (!itemData.optsWidth) return;
     }
 
+    itemContainerEle.classList.add('active-slide');
+    itemContainerEle.classList.add('active-options');
+
     let x = ev.center[this.direction];
     let delta = x - itemData.startX;
 
@@ -143,14 +146,15 @@ export class ItemSlidingGesture extends DragGesture {
       let timerId = setTimeout(() => {
         if (slidingEle.style[CSS.transform] === '') {
           itemContainerEle.classList.remove('active-slide');
+          itemContainerEle.classList.remove('active-options');
           this.openItems--;
         }
       }, 400);
       this.set(itemContainerEle, 'timerId', timerId);
     }
 
-    slidingEle.style[CSS.transform] = (openAmount === 0 ? '' : 'translate3d(' + -openAmount + 'px,0,0)');
     slidingEle.style[CSS.transition] = (animate ? '' : 'none');
+    slidingEle.style[CSS.transform] = (openAmount === 0 ? '' : 'translate3d(' + -openAmount + 'px,0,0)');
   }
 
   getOpenAmount(itemContainerEle) {
