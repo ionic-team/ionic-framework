@@ -16,7 +16,11 @@ class E2EApp {
   }
 
   getItems() {
-    return [0,1];
+    let items = [];
+    for (let x = 0; x < 20; x++) {
+      items.push(x);
+    }
+    return items;
   }
 
   didClick(ev, item) {
@@ -31,5 +35,9 @@ class E2EApp {
   del(ev, item) {
     console.log('Delete', ev, item);
     item.close();
+  }
+
+  reload() {
+    window.location.reload();
   }
 }

@@ -73,15 +73,16 @@ export class Content extends Ion {
   }
 
   onScrollEnd(callback) {
-    let timerId;
+    let timerId, deregister;
 
     function debounce() {
       timerId = setTimeout(() => {
-
+        deregister();
+        callback();
       }, 250);
     }
 
-    this.addScrollEventListener(debounce);
+    deregister = this.addScrollEventListener(debounce);
   }
 
   /**
