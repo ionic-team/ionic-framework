@@ -29,6 +29,8 @@ export class DragGesture extends Gesture {
       this.onDragEnd(ev);
       this.dragging = false;
     });
+
+    this.hammertime.get('pan').set(this._options);
   }
 
   onDrag() {}

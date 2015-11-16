@@ -9,7 +9,7 @@ export class ItemSlidingGesture extends DragGesture {
   constructor(list: List, listEle) {
     super(listEle, {
       direction: 'x',
-      threshold: 40
+      threshold: DRAG_THRESHOLD
     });
 
     this.data = {};
@@ -24,7 +24,7 @@ export class ItemSlidingGesture extends DragGesture {
       if (!isFromOptionButtons(ev.target)) {
         let didClose = this.closeOpened();
         if (didClose) {
-          ev.preventDefault();
+          preventDefault(ev);
         }
       }
     });
@@ -46,7 +46,7 @@ export class ItemSlidingGesture extends DragGesture {
 
     if (this.preventDrag) {
       this.closeOpened(ev);
-      return ev.preventDefault();
+      return preventDefault(ev);
     }
 
     itemContainerEle.classList.add('active-slide');
@@ -60,6 +60,11 @@ export class ItemSlidingGesture extends DragGesture {
   }
 
   onDrag(ev) {
+    if (Math.abs(ev.deltaY) > 30) {
+      this.preventDrag = true;
+      return this.closeOpened(ev);
+    }
+
     let itemContainerEle = getItemConatiner(ev.target);
     if (!itemContainerEle || !isActive(itemContainerEle) || this.preventDrag) return;
 
@@ -142,7 +147,7 @@ export class ItemSlidingGesture extends DragGesture {
 
     clearTimeout(this.get(itemContainerEle).timerId);
 
-    if (openAmount > 0) {
+    if (openAmount) {
       this.openItems++;
 
     } else {
@@ -157,7 +162,11 @@ export class ItemSlidingGesture extends DragGesture {
     }
 
     slidingEle.style[CSS.transition] = (isFinal ? '' : 'none');
-    slidingEle.style[CSS.transform] = (openAmount === 0 ? '' : 'translate3d(' + -openAmount + 'px,0,0)');
+    slidingEle.style[CSS.transform] = (openAmount ? 'translate3d(' + -openAmount + 'px,0,0)' : '');
+
+    if (isFinal) {
+      this.enableScroll(!openAmount);
+    }
   }
 
   getOpenAmount(itemContainerEle) {
@@ -175,10 +184,21 @@ export class ItemSlidingGesture extends DragGesture {
     this.data[itemContainerEle.$ionSlide][key] = value;
   }
 
+  enableScroll(shouldEnable) {
+    let scrollContentEle = closest(this.listEle, 'scroll-content');
+    if (scrollContentEle) {
+      scrollContentEle[shouldEnable ? 'removeEventListener' : 'addEventListener']('touchstart', preventDefault);
+    }
+  }
+
   unlisten() {
     super.unlisten();
     this.listEle = null;
   }
+}
+
+function preventDefault(ev) {
+  ev.preventDefault();
 }
 
 function getItemConatiner(ele) {
@@ -199,3 +219,6 @@ function getOptionsWidth(itemContainerEle) {
 function isActive(itemContainerEle) {
   return itemContainerEle.classList.contains('active-slide');
 }
+
+
+const DRAG_THRESHOLD = 20;
