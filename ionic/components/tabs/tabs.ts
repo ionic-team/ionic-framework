@@ -26,7 +26,7 @@ import {Icon} from '../icon/icon';
  * To override the platform specific TabBar placement, use the
  * `tabbar-placement` property:
  *
- * ```ts
+ * ```html
  * <ion-tabs tabbar-placement="top">
  *   <ion-tab [root]="tabRoot"></ion-tab>
  * </ion-tabs>
@@ -34,7 +34,7 @@ import {Icon} from '../icon/icon';
  *
  * To change the location of the icons in the TabBar, use the `tabbar-icons`
  * property:
- * ```ts
+ * ```html
  * <ion-tabs tabbar-icons="bottom">
  *   <ion-tab [root]="tabRoot"></ion-tab>
  * </ion-tabs>
