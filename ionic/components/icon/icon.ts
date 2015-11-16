@@ -60,9 +60,6 @@ export class Icon {
     this.update();
   }
 
-  /**
-   * @private
-   */
   get isActive() {
     return (this._isActive === undefined || this._isActive === true || this._isActive === 'true');
   }

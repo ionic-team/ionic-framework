@@ -41,7 +41,7 @@ import {ViewController} from './view-controller';
  *
  * Additionally, specifying the `swipe-back-enabled` property will allow you to
  * swipe to go back:
- * ```ts
+ * ```html
  * <ion-nav swipe-back-enabled="false" [root]="rootPage"></ion-nav>
  * ```
  *
