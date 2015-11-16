@@ -134,6 +134,9 @@ export class Tabs extends Ion {
     }
   }
 
+  /**
+   * @private
+   */
   onInit() {
     super.onInit();
     if (this.highlight) {

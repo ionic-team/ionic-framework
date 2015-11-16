@@ -1,6 +1,6 @@
 {
   "name": "ionic-framework",
-  "version": "2.0.0-alpha.31",
+  "version": "2.0.0-alpha.32",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
   ],
   "dependencies": {
     "@reactivex/rxjs": "5.0.0-alpha.7",
-    "angular2": "2.0.0-alpha.45",
+    "angular2": "2.0.0-alpha.46",
     "colors": "^1.1.2",
     "es6-shim": "0.33.6",
     "inquirer": "0.11.0",

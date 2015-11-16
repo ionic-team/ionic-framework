@@ -293,7 +293,7 @@ export class NavController extends Ion {
    * @param opts extra animation options
    */
   popToRoot(opts = {}) {
-    return this._popTo(this.first(), opts);
+    return this.popTo(this.first(), opts);
   }
 
   /**

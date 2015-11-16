@@ -47,7 +47,6 @@ export class Content extends Ion {
   }
 
   /**
-   * TODO
    * @private
    */
   onInit() {
@@ -71,6 +70,18 @@ export class Content extends Ion {
     return () => {
       this.scrollElement.removeEventListener('scroll', handler);
     }
+  }
+
+  onScrollEnd(callback) {
+    let timerId;
+
+    function debounce() {
+      timerId = setTimeout(() => {
+
+      }, 250);
+    }
+
+    this.addScrollEventListener(debounce);
   }
 
   /**
@@ -120,6 +131,7 @@ export class Content extends Ion {
   }
 
   /**
+   * @private
    * Returns the content and scroll elements' dimensions.
    * @returns {Object} dimensions  The content and scroll elements' dimensions
    * {Number} dimensions.contentHeight  content offsetHeight
@@ -134,7 +146,6 @@ export class Content extends Ion {
    * {Number} dimensions.scrollWidth  scroll scrollWidth
    * {Number} dimensions.scrollLeft  scroll scrollLeft
    * {Number} dimensions.scrollRight  scroll scrollLeft + scrollWidth
-   * TODO: figure out how to get this to work
    */
   getDimensions() {
     let scrollElement = this.scrollElement;

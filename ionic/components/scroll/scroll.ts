@@ -29,11 +29,7 @@ import * as util from 'ionic/util';
     '</scroll-content>'
 })
 export class Scroll extends Ion {
-  /**
-   * TODO
-   * @param {ElementRef} elementRef  TODO
-   * @param {Config} config  TODO
-   */
+
   constructor(elementRef: ElementRef, Config: Config) {
     super(elementRef, Config);
 
@@ -41,6 +37,9 @@ export class Scroll extends Ion {
     this.zoomDuration = 250;
   }
 
+  /**
+   * @private
+   */
   onInit() {
     this.scrollElement = this.getNativeElement().children[0];
   }
@@ -60,4 +59,5 @@ export class Scroll extends Ion {
       this.scrollElement.removeEventListener('scroll', handler);
     }
   }
+
 }

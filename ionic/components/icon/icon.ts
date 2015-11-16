@@ -22,14 +22,15 @@ export class Icon {
     config: Config,
     private renderer: Renderer
   ) {
-    this.eleRef = elementRef;
     this.config = config;
-
     this.mode = config.get('iconMode');
   }
 
+  /**
+   * @private
+   */
   onInit() {
-    let ele = this.eleRef.nativeElement;
+    let ele = this.elementRef.nativeElement;
 
     if (this.mode == 'ios' && this.ios) {
       this.name = this.ios;
@@ -59,15 +60,24 @@ export class Icon {
     this.update();
   }
 
+  /**
+   * @private
+   */
   get isActive() {
     return (this._isActive === undefined || this._isActive === true || this._isActive === 'true');
   }
 
+  /**
+   * @private
+   */
   set isActive(val) {
     this._isActive = val;
     this.update();
   }
 
+  /**
+   * @private
+   */
   update() {
     if (this.name && this.mode == 'ios') {
 

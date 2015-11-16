@@ -20,6 +20,9 @@
     } else {
       document.documentElement.classList.remove('snapshot');
     }
+    if (location.href.indexOf('cordova=true') > -1) {
+      window.cordova = {};
+    }
   </script>
 
   <style>

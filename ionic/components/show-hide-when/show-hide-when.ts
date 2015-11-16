@@ -61,11 +61,7 @@ class DisplayWhen {
   }
 })
 export class ShowWhen extends DisplayWhen {
-  /**
-   * TODO
-   * @param {string} showWhen  The value of the element's 'show-when' attribute
-   * @param {NgZone} ngZone  TODO
-   */
+
   constructor(
     @Attribute('show-when') showWhen: string,
     platform: Platform,
@@ -74,6 +70,9 @@ export class ShowWhen extends DisplayWhen {
     super(showWhen, platform, ngZone);
   }
 
+  /**
+   * @private
+   */
   get hidden() {
     return !this.isMatch;
   }
@@ -90,11 +89,7 @@ export class ShowWhen extends DisplayWhen {
   }
 })
 export class HideWhen extends DisplayWhen {
-  /**
-   * TODO
-   * @param {string} showWhen  The value of the element's 'hide-when' attribute
-   * @param {NgZone} ngZone  TODO
-   */
+
   constructor(
     @Attribute('hide-when') hideWhen: string,
     platform: Platform,
@@ -103,6 +98,9 @@ export class HideWhen extends DisplayWhen {
     super(hideWhen, platform, ngZone);
   }
 
+  /**
+   * @private
+   */
   get hidden() {
     return this.isMatch;
   }

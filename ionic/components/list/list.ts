@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Renderer, NgZone} from 'angular2/angular2';
+import {Directive, ElementRef, NgZone} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {Config} from '../../config/config';
@@ -23,21 +23,20 @@ import * as util from 'ionic/util';
     'items',
     'virtual',
     'content'
-  ]
+  ],
+  host: {
+    'class': 'list'
+  }
 })
 export class List extends Ion {
-  /**
-   * TODO
-   * @param {ElementRef} elementRef  TODO
-   * @param {Config} config  TODO
-   */
-  constructor(elementRef: ElementRef, config: Config, renderer: Renderer, private zone: NgZone) {
+
+  constructor(elementRef: ElementRef, config: Config, private zone: NgZone) {
     super(elementRef, config);
-    renderer.setElementClass(elementRef, 'list', true);
     this.ele = elementRef.nativeElement;
   }
+
   /**
-   * TODO
+   * @private
    */
   onInit() {
     super.onInit();
@@ -50,6 +49,9 @@ export class List extends Ion {
     }
   }
 
+  /**
+   * @private
+   */
   onDestroy() {
     this.ele = null;
     this.slidingGesture && this.slidingGesture.unlisten();
@@ -57,7 +59,6 @@ export class List extends Ion {
 
   /**
    * @private
-   * TODO
    */
   _initVirtualScrolling() {
     if(!this.content) {
@@ -68,8 +69,7 @@ export class List extends Ion {
   }
 
   /**
-   * TODO
-   * @param {TODO} item  TODO
+   * @private
    */
   setItemTemplate(item) {
     this.itemTemplate = item;
@@ -96,6 +96,9 @@ export class List extends Ion {
     this.slidingGesture && this.slidingGesture.closeOpened();
   }
 
+  /**
+   * @private
+   */
   afterViewInit() {
     this._init = true;
     if (this._enableSliding) {
@@ -104,9 +107,7 @@ export class List extends Ion {
   }
 }
 
-/**
- * TODO
- */
+
 @Directive({
   selector: 'ion-header',
   inputs: [

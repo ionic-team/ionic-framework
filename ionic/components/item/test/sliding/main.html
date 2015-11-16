@@ -1,16 +1,16 @@
 <ion-toolbar><ion-title>Sliding Items</ion-title></ion-toolbar>
 
 <ion-content>
-  
+
   <ion-list id="myList">
 
     <ion-item-sliding #item>
-      <ion-item text-wrap detail-push (click)="didClick($event, item)">
+      <button ion-item text-wrap (click)="didClick($event, item)">
         <h3>Max Lynch</h3>
         <p>
           Hey do you want to go to the game tonight?
         </p>
-      </ion-item>
+      </button>
       <ion-item-options>
         <button primary (click)="archive($event, item)">Archive</button>
         <button danger (click)="del($event, item)">Delete</button>

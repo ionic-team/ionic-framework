@@ -3,8 +3,8 @@ import {Directive, Renderer, ElementRef, Host, Optional, NgControl} from 'angula
 import {Ion} from '../ion';
 import {Config} from '../../config/config';
 
+
 /**
- * @name Segment
  * @description
  * A Segment is a group of buttons, sometimes known as Segmented Controls, that allow the user to interact with a compact group of a number of controls.
  *
@@ -41,14 +41,11 @@ import {Config} from '../../config/config';
   selector: 'ion-segment'
 })
 export class Segment extends Ion {
+  /**
+   * @private
+   */
   buttons: Array<SegmentButton> = [];
 
-  /**
-   * TODO
-   * @param {NgControl} ngControl  TODO
-   * @param {ElementRef} elementRef  TODO
-   * @param {Config} config  TODO
-   */
   constructor(
     @Optional() ngControl: NgControl,
     elementRef: ElementRef,
@@ -62,15 +59,25 @@ export class Segment extends Ion {
     if (ngControl) ngControl.valueAccessor = this;
   }
 
+  /**
+   * @private
+   */
   writeValue(value) {
     this.value = !value ? '' : value;
   }
 
+  /**
+   * @private
+   */
   registerOnChange(fn) { this.onChange = fn; }
 
+  /**
+   * @private
+   */
   registerOnTouched(fn) { this.onTouched = fn; }
 
   /**
+   * @private
    * Called by child SegmentButtons to bind themselves to
    * the Segment.
    * @param {SegmentButton} segmentButton  The child SegmentButton to register.
@@ -86,6 +93,7 @@ export class Segment extends Ion {
   }
 
   /**
+   * @private
    * Select the button with the given value.
    * @param {string} value  Value of the button to select.
    */
@@ -101,6 +109,7 @@ export class Segment extends Ion {
   }
 
   /**
+   * @private
    * Indicate a button should be selected.
    * @param {SegmentButton} segmentButton  The button to select.
    */
@@ -115,9 +124,7 @@ export class Segment extends Ion {
   }
 }
 
-/**
- * TODO
- */
+
 @Directive({
   selector: 'ion-segment-button',
   inputs: [
@@ -129,11 +136,7 @@ export class Segment extends Ion {
   }
 })
 export class SegmentButton {
-  /**
-   * TODO
-   * @param {Segment} segment  TODO
-   * @param {ElementRef} elementRef  TODO
-   */
+
   constructor(
     @Host() segment: Segment,
     elementRef: ElementRef,
@@ -145,10 +148,16 @@ export class SegmentButton {
     renderer.setElementAttribute(elementRef, 'outline', '');
   }
 
+  /**
+   * @private
+   */
   onInit() {
     this.segment.register(this);
   }
 
+  /**
+   * @private
+   */
   click(event) {
     this.segment.selected(this, event);
   }

@@ -1,6 +1,4 @@
-import {Injectable, NgZone} from 'angular2/angular2';
-
-import {Config} from '../config/config';
+import {Injectable} from 'angular2/angular2';
 
 
 /**
@@ -17,16 +15,11 @@ import {Config} from '../config/config';
  @Injectable()
 export class Form {
 
-  constructor(config: Config, zone: NgZone) {
-    this._config = config;
-    this._zone = zone;
-
+  constructor() {
     this._inputs = [];
     this._focused = null;
 
-    zone.runOutsideAngular(() => {
-      this.focusCtrl(document);
-    });
+    this.focusCtrl(document);
   }
 
   register(input) {
@@ -44,44 +37,20 @@ export class Form {
   }
 
   focusCtrl(document) {
-    let scrollAssist = this._config.get('scrollAssist');
-
     // raw DOM fun
     let focusCtrl = document.createElement('focus-ctrl');
     focusCtrl.setAttribute('aria-hidden', true);
-
-    if (scrollAssist) {
-      this._tmp = document.createElement('input');
-      this._tmp.tabIndex = -1;
-      focusCtrl.appendChild(this._tmp);
-    }
 
     this._blur = document.createElement('button');
     this._blur.tabIndex = -1;
     focusCtrl.appendChild(this._blur);
 
     document.body.appendChild(focusCtrl);
-
-    if (scrollAssist) {
-      this._tmp.addEventListener('keydown', (ev) => {
-        ev.preventDefault();
-        ev.stopPropagation();
-      });
-    }
-
   }
 
   focusOut() {
     console.debug('focusOut');
     this._blur.focus();
-  }
-
-  setFocusHolder(type) {
-    if (this._tmp && this._config.get('scrollAssist')) {
-      this._tmp.type = type;
-      console.debug('setFocusHolder', this._tmp.type);
-      this._tmp.focus();
-    }
   }
 
   setAsFocused(input) {

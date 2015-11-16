@@ -4,9 +4,7 @@ import {Config} from '../../config/config';
 import {TextInput} from './text-input';
 import {pointerCoord, hasPointerMoved} from '../../util/dom';
 
-/**
- * TODO
- */
+
 @Directive({
   selector: 'ion-label',
   inputs: [
@@ -21,10 +19,7 @@ import {pointerCoord, hasPointerMoved} from '../../util/dom';
   }
 })
 export class Label {
-  /**
-   * TODO
-   * @param {Config} config
-   */
+
   constructor(config: Config, @Optional() container: TextInput) {
     this.scrollAssist = config.get('scrollAssist');
     if (!this.id) {
@@ -35,8 +30,7 @@ export class Label {
   }
 
   /**
-   * TODO
-   * @param {TODO} ev  TODO
+   * @private
    */
   pointerStart(ev) {
     if (this.scrollAssist) {
@@ -46,8 +40,7 @@ export class Label {
   }
 
   /**
-   * TODO
-   * @param {TODO} ev  TODO
+   * @private
    */
   pointerEnd(ev) {
     if (this.container) {

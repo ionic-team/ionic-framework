@@ -4,7 +4,6 @@ import {List} from '../list/list';
 
 
 /**
- * @name ionItem
  * @description
  * Creates a list-item that can easily be swiped,
  * deleted, reordered, edited, and more.
@@ -27,7 +26,7 @@ import {List} from '../list/list';
 @Component({
   selector: 'ion-item-sliding',
   template:
-    '<ng-content select="ion-item"></ng-content>' +
+    '<ng-content select="ion-item,[ion-item]"></ng-content>' +
     '<ng-content select="ion-item-options"></ng-content>'
 })
 export class ItemSliding {

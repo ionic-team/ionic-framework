@@ -1,4 +1,4 @@
-import {Component, Directive, Optional, NgControl, ElementRef, Renderer} from 'angular2/angular2';
+import {Component, Directive, Optional, NgControl, ElementRef} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {Form} from '../../util/form';
@@ -30,7 +30,8 @@ import {Form} from '../../util/form';
     '[attr.aria-checked]': 'checked',
     '[attr.aria-disabled]': 'disabled',
     '[attr.aria-labelledby]': 'labelId',
-    '(click)': 'click($event)'
+    '(click)': 'click($event)',
+    'class': 'item'
   },
   template:
     '<div class="item-inner">' +
@@ -47,10 +48,8 @@ export class Checkbox {
   constructor(
     form: Form,
     @Optional() ngControl: NgControl,
-    elementRef: ElementRef,
-    renderer: Renderer
+    elementRef: ElementRef
   ) {
-    renderer.setElementClass(elementRef, 'item', true);
     this.form = form;
     form.register(this);
 
@@ -62,9 +61,6 @@ export class Checkbox {
     if (ngControl) ngControl.valueAccessor = this;
   }
 
-  /**
-   * TODO
-   */
   onInit() {
     this.labelId = 'label-' + this.inputId;
   }
@@ -79,6 +75,7 @@ export class Checkbox {
   }
 
   /**
+   * @private
    * Click event handler to toggle the checkbox checked state.
    * @param {MouseEvent} ev  The click event.
    */
@@ -115,6 +112,9 @@ export class Checkbox {
    */
   registerOnTouched(fn) { this.onTouched = fn; }
 
+  /**
+   * @private
+   */
   onDestroy() {
     this.form.deregister(this);
   }

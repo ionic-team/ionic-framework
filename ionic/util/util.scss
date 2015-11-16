@@ -114,7 +114,19 @@ focus-ctrl {
     width: 9px;
     left: -9999px;
     z-index: 9999;
+    pointer-events: none;
   }
+}
+
+.hide-focused-input {
+  flex: 0 0 8px !important;
+  margin: 0 !important;
+  transform: translate3d(-9999px,0,0);
+  pointer-events: none;
+}
+
+.cloned-input {
+  pointer-events: none;
 }
 
 
