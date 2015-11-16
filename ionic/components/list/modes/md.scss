@@ -73,7 +73,7 @@ $list-md-header-color:           #858585 !default;
 
   [item-left],
   [item-right] {
-    margin: $item-md-padding-media-top ($item-md-padding-right / 2) $item-md-padding-media-bottom ($item-md-padding-left / 2);
+    margin: $item-md-padding-media-top ($item-md-padding-right / 2) $item-md-padding-media-bottom 0;
   }
 
   icon[item-left],
@@ -261,8 +261,6 @@ $list-md-header-color:           #858585 !default;
 /*****************/
 
 .list[no-lines] {
-  ion-header,
-  ion-item-group-title,
   .item,
   .item .item-inner {
     border-width: 0;
