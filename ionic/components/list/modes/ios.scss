@@ -37,10 +37,6 @@ $list-ios-border-color:               $list-border-color !default;
     letter-spacing: $list-ios-header-letter-spacing;
     text-transform: uppercase;
     color: $list-ios-header-color;
-  }
-
-  ion-header,
-  ion-item-group-title {
     border-bottom: 1px solid $list-ios-border-color;
   }
 
@@ -105,8 +101,7 @@ $list-ios-border-color:               $list-border-color !default;
     border-width: 0.55px;
   }
 
-  ion-header,
-  ion-item-group-title {
+  ion-header {
     border-bottom-width: 0.55px;
   }
 
@@ -136,7 +131,6 @@ $list-ios-border-color:               $list-border-color !default;
   border-radius: $list-inset-ios-border-radius;
 
   .item {
-    margin-top: 0;
     border-bottom: 1px solid $list-ios-border-color;
 
     .item-inner {
@@ -146,7 +140,6 @@ $list-ios-border-color:               $list-border-color !default;
 
   > .item:first-child,
   ion-header {
-    margin-top: 0;
     border-top-right-radius: $list-inset-ios-border-radius;
     border-top-left-radius: $list-inset-ios-border-radius;
   }
@@ -157,7 +150,6 @@ $list-ios-border-color:               $list-border-color !default;
 
   > .item:last-child,
   > ion-item-sliding:last-child .item {
-    margin-bottom: 0;
     border-bottom-right-radius: $list-inset-ios-border-radius;
     border-bottom-left-radius: $list-inset-ios-border-radius;
     border-bottom: none;

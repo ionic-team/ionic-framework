@@ -29,18 +29,12 @@ $item-ios-divider-padding:            5px 15px !default;
 $item-ios-sliding-content-bg:         $background-color !default;
 $item-ios-sliding-transition:         transform 250ms ease-in-out !default;
 
-.item-group-title {
-  padding: $item-ios-padding-top $item-ios-padding-right $item-ios-padding-bottom $item-ios-padding-left;
-  background-color: $item-ios-divider-bg;
-  color: $item-ios-divider-color;
-}
-
-ion-note {
-  color: $item-ios-note-color;
-}
 
 .item-group {
   ion-item-group-title {
+    padding: $item-ios-padding-top $item-ios-padding-right $item-ios-padding-bottom $item-ios-padding-left;
+    background-color: $item-ios-divider-bg;
+    color: $item-ios-divider-color;
     border-bottom: 1px solid $item-ios-border-color;
   }
 
@@ -49,6 +43,10 @@ ion-note {
       border-top-width: 0;
     }
   }
+}
+
+ion-note {
+  color: $item-ios-note-color;
 }
 
 .item {
@@ -79,7 +77,6 @@ ion-item-content {
   margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom 0;
 }
 
-// TODO clean up Sass variables
 [item-left] {
   margin: ($item-ios-padding-top / 2) $item-ios-padding-right ($item-ios-padding-bottom / 2) 0;
 }
@@ -167,6 +164,9 @@ a.item:not([detail-none]) .item-inner,
   padding-right: 32px;
 }
 
-&.hairlines .item-inner {
-  border-bottom-width: 0.55px;
+&.hairlines {
+  .item-inner,
+  .item-group ion-item-group-title {
+    border-bottom-width: 0.55px;
+  }
 }
