@@ -33,7 +33,8 @@ import {Component} from 'angular2/angular2';
   template:
     '<ng-content select="[item-left]"></ng-content>' +
     '<div class="item-inner">' +
-      '<ion-item-content>' +
+      '<ng-content select="ion-item-content"></ng-content>' +
+      '<ion-item-content cnt>' +
         '<ng-content></ng-content>'+
       '</ion-item-content>' +
       '<ng-content select="[item-right]"></ng-content>' +

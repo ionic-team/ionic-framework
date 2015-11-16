@@ -140,8 +140,6 @@ ion-input.item {
   align-items: flex-start;
 }
 
-
-// TEMP hack for https://github.com/angular/angular/issues/4582
-[item-right] {
-  order: 1;
+ion-item-content + ion-item-content[cnt] {
+  display: none;
 }
