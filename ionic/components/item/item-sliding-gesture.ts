@@ -42,8 +42,10 @@ export class ItemSlidingGesture extends DragGesture {
 
     let openAmout = this.getOpenAmount(itemContainerEle);
     let itemData = this.get(itemContainerEle);
+    this.preventDrag = (openAmout > 0);
 
-    if (openAmout) {
+    if (this.preventDrag) {
+      this.closeOpened(ev);
       return ev.preventDefault();
     }
 
@@ -59,7 +61,7 @@ export class ItemSlidingGesture extends DragGesture {
 
   onDrag(ev) {
     let itemContainerEle = getItemConatiner(ev.target);
-    if (!itemContainerEle || !isActive(itemContainerEle)) return;
+    if (!itemContainerEle || !isActive(itemContainerEle) || this.preventDrag) return;
 
     let itemData = this.get(itemContainerEle);
 
@@ -85,6 +87,7 @@ export class ItemSlidingGesture extends DragGesture {
   }
 
   onDragEnd(ev) {
+    this.preventDrag = false;
     let itemContainerEle = getItemConatiner(ev.target);
     if (!itemContainerEle || !isActive(itemContainerEle)) return;
 
@@ -131,7 +134,7 @@ export class ItemSlidingGesture extends DragGesture {
     return didClose;
   }
 
-  open(itemContainerEle, openAmount, animate) {
+  open(itemContainerEle, openAmount, isFinal) {
     let slidingEle = itemContainerEle.querySelector('ion-item,[ion-item]');
     if (!slidingEle) return;
 
@@ -153,7 +156,7 @@ export class ItemSlidingGesture extends DragGesture {
       this.set(itemContainerEle, 'timerId', timerId);
     }
 
-    slidingEle.style[CSS.transition] = (animate ? '' : 'none');
+    slidingEle.style[CSS.transition] = (isFinal ? '' : 'none');
     slidingEle.style[CSS.transform] = (openAmount === 0 ? '' : 'translate3d(' + -openAmount + 'px,0,0)');
   }
 
