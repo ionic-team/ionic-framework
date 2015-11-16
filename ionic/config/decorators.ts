@@ -78,7 +78,9 @@ export function Page(config={}) {
   }
 }
 
-
+/**
+ * @private
+ */
 export function ConfigComponent(config) {
   return function(cls) {
     var annotations = Reflect.getMetadata('annotations', cls) || [];
@@ -88,7 +90,9 @@ export function ConfigComponent(config) {
   }
 }
 
-
+/**
+ * @private
+ */
 function appendConfig(cls, config) {
   config.host = config.host || {};
 

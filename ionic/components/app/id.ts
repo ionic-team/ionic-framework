@@ -39,10 +39,16 @@ export class IdRef {
     this.component = appViewManager.getComponent(elementRef);
   }
 
+  /**
+   * @private
+   */
   onInit() {
     this.app.register(this.id, this.component);
   }
 
+  /**
+   * @private
+   */
   onDestroy() {
     this.app.unregister(this.id);
   }
@@ -55,6 +61,10 @@ export class IdRef {
 })
 export class Attr {
   constructor(private renderer: Renderer, private elementRef: ElementRef) {}
+
+  /**
+   * @private
+   */
   onInit() {
     this.renderer.setElementAttribute(this.elementRef, this.attr, '');
   }

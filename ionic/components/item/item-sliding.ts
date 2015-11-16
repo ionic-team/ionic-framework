@@ -4,7 +4,6 @@ import {List} from '../list/list';
 
 
 /**
- * @name ionItem
  * @description
  * Creates a list-item that can easily be swiped,
  * deleted, reordered, edited, and more.

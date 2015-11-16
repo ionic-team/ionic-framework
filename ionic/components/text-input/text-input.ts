@@ -55,15 +55,24 @@ export class TextInput {
     this.keyboardHeight = config.get('keyboardHeight');
   }
 
+  /**
+   * @private
+   */
   registerInput(textInputElement) {
     this.input = textInputElement;
     this.type = textInputElement.type || 'text';
   }
 
+  /**
+   * @private
+   */
   registerLabel(label) {
     this.label = label;
   }
 
+  /**
+   * @private
+   */
   onInit() {
     if (this.input && this.label) {
       // if there is an input and an label
@@ -83,6 +92,9 @@ export class TextInput {
     };
   }
 
+  /**
+   * @private
+   */
   pointerStart(ev) {
     if (this.scrollAssist && this.app.isEnabled()) {
       // remember where the touchstart/mousedown started
@@ -90,6 +102,9 @@ export class TextInput {
     }
   }
 
+  /**
+   * @private
+   */
   pointerEnd(ev) {
     if (!this.app.isEnabled()) {
       ev.preventDefault();
@@ -119,6 +134,9 @@ export class TextInput {
     }
   }
 
+  /**
+   * @private
+   */
   initFocus() {
     // begin the process of setting focus to the inner input element
 
@@ -170,7 +188,7 @@ export class TextInput {
   }
 
   /**
-   * TODO
+   * @private
    * @param {TODO} inputOffsetTop  TODO
    * @param {TODO} inputOffsetHeight  TODO
    * @param {TODO} scrollViewDimensions  TODO
@@ -292,14 +310,23 @@ export class TextInput {
     return scrollData;
   }
 
+  /**
+   * @private
+   */
   focusChange(hasFocus) {
     this.renderer.setElementClass(this.elementRef, 'has-focus', hasFocus);
   }
 
+  /**
+   * @private
+   */
   hasValue(inputValue) {
     this.renderer.setElementClass(this.elementRef, 'has-value', inputValue && inputValue !== '');
   }
 
+  /**
+   * @private
+   */
   setFocus() {
     if (this.input) {
       this.form.setAsFocused(this);
@@ -317,14 +344,23 @@ export class TextInput {
     }
   }
 
+  /**
+   * @private
+   */
   deregListeners() {
     this.deregScroll && this.deregScroll();
   }
 
+  /**
+   * @private
+   */
   get hasFocus() {
     return !!this.input && this.input.hasFocus;
   }
 
+  /**
+   * @private
+   */
   onDestroy() {
     this.deregListeners();
     this.form.deregister(this);
@@ -333,6 +369,9 @@ export class TextInput {
 }
 
 
+/**
+ * @private
+ */
 @Directive({
   selector: 'textarea,input[type=text],input[type=password],input[type=number],input[type=search],input[type=email],input[type=url],input[type=tel]',
   inputs: ['value'],

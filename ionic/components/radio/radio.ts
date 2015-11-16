@@ -41,7 +41,6 @@ import {ListHeader} from '../list/list';
  * </ion-radio-group>
  * ```
 */
-
 @Directive({
   selector: 'ion-radio-group',
   host: {
@@ -54,13 +53,6 @@ import {ListHeader} from '../list/list';
 export class RadioGroup extends Ion {
   radios: Array<RadioButton> = [];
 
-  /**
-   * TODO
-   * @param {ElementRef} elementRef  TODO
-   * @param {Config} config  TODO
-   * @param {NgControl=} ngControl  TODO
-   * @param {QueryList<ListHeader>} headerQuery  TODO
-   */
   constructor(
     elementRef: ElementRef,
     config: Config,
@@ -77,6 +69,9 @@ export class RadioGroup extends Ion {
     if (ngControl) ngControl.valueAccessor = this;
   }
 
+  /**
+   * @private
+   */
   onInit() {
     let header = this.headerQuery.first;
     if (header) {
@@ -88,6 +83,7 @@ export class RadioGroup extends Ion {
   }
 
   /**
+   * @private
    * Register the specified radio button with the radio group.
    * @param {RadioButton} radio  The radio button to register.
    */
@@ -102,6 +98,7 @@ export class RadioGroup extends Ion {
   }
 
   /**
+   * @private
    * Update which radio button in the group is checked, unchecking all others.
    * @param {RadioButton} checkedRadio  The radio button to check.
    */
@@ -147,8 +144,8 @@ export class RadioGroup extends Ion {
   registerOnTouched(fn) { this.onTouched = fn; }
 }
 
+
 /**
- * @name ionRadio
  * @description
  * A single radio component.
  *
@@ -192,12 +189,7 @@ export class RadioGroup extends Ion {
     '</div>'
 })
 export class RadioButton extends Ion {
-  /**
-   * Radio button constructor.
-   * @param {RadioGroup=} group  The parent radio group, if any.
-   * @param {ElementRef} elementRef  TODO
-   * @param {Config} config  TODO
-   */
+
   constructor(
     @Host() @Optional() group: RadioGroup,
     elementRef: ElementRef,
@@ -209,12 +201,18 @@ export class RadioButton extends Ion {
     this.tabIndex = 0;
   }
 
+  /**
+   * @private
+   */
   onInit() {
     super.onInit();
     this.group.registerRadio(this);
     this.labelId = 'label-' + this.id;
   }
 
+  /**
+   * @private
+   */
   click(ev) {
     ev.preventDefault();
     ev.stopPropagation();

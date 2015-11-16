@@ -88,6 +88,7 @@ class ToolbarBackground {
   directives: [BackButton, BackButtonText, Icon, ToolbarBackground]
 })
 export class Navbar extends ToolbarBase {
+
   constructor(
     app: IonicApp,
     @Optional() viewCtrl: ViewController,
@@ -110,6 +111,9 @@ export class Navbar extends ToolbarBase {
     this.bbDefault = config.get('backButtonText');
   }
 
+  /**
+   * @private
+   */
   onInit() {
     super.onInit();
     let hideBackButton = this.hideBackButton;
@@ -122,34 +126,58 @@ export class Navbar extends ToolbarBase {
     }
   }
 
+  /**
+   * @private
+   */
   getBackButtonRef() {
     return this.bbRef;
   }
 
+  /**
+   * @private
+   */
   setBackButtonRef(backButtonElementRef) {
     this.bbRef = backButtonElementRef;
   }
 
+  /**
+   * @private
+   */
   getBackButtonTextRef() {
     return this.bbtRef;
   }
 
+  /**
+   * @private
+   */
   setBackButtonTextRef(backButtonTextElementRef) {
     this.bbtRef = backButtonTextElementRef;
   }
 
+  /**
+   * @private
+   */
   setBackgroundRef(backgrouneElementRef) {
     this.bgRef = backgrouneElementRef;
   }
 
+  /**
+   * @private
+   */
   getBackgroundRef() {
     return this.bgRef;
   }
 
+  /**
+   * @private
+   */
   didEnter() {
     this.app.setTitle(this.getTitleText());
   }
 
+  /**
+   * @private
+   */
   setHidden(isHidden) {
     this._hidden = isHidden
   }
@@ -157,10 +185,11 @@ export class Navbar extends ToolbarBase {
 }
 
 
-/*
-  Used to find and register headers in a view, and this directive's
-  content will be moved up to the common navbar location, and created
-  using the same context as the view's content area.
+/**
+ * @private
+ * Used to find and register headers in a view, and this directive's
+ * content will be moved up to the common navbar location, and created
+ * using the same context as the view's content area.
 */
 @Directive({
   selector: 'template[navbar]'

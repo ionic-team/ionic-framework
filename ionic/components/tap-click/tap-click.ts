@@ -16,6 +16,9 @@ let win = null;
 let doc = null;
 
 
+/**
+ * @private
+ */
 export function initTapClick(windowInstance, documentInstance, appInstance, config, fastdom) {
   win = windowInstance;
   doc = documentInstance;
@@ -185,6 +188,9 @@ function getActivatableTarget(ele) {
   return null;
 }
 
+/**
+ * @private
+ */
 export function isActivatable(ele) {
   if (ACTIVATABLE_ELEMENTS.test(ele.tagName)) {
     return true;

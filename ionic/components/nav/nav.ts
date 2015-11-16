@@ -130,6 +130,9 @@ export class Nav extends NavController {
     }
   }
 
+  /**
+   * @private
+   */
   onInit() {
     super.onInit();
 

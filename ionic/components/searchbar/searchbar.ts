@@ -6,7 +6,6 @@ import {ConfigComponent} from '../../config/decorators';
 import {Icon} from '../icon/icon';
 
 /**
- * @name Search Bar
  * @description
  * The Search Bar service adds an input field which can be used to search or filter items.
  *
@@ -42,14 +41,12 @@ import {Icon} from '../icon/icon';
     '<button *ng-if="showCancel" (click)="cancelAction($event, query)" class="searchbar-cancel">{{cancelText}}</button>',
   directives: [FORM_DIRECTIVES, NgIf, NgClass, Icon]
 })
-
 export class SearchBar extends Ion {
-  query: string;
   /**
-   * TODO
-   * @param {ElementRef} elementRef  TODO
-   * @param {Config} config  TODO
+   * @private
    */
+  query: string;
+
   constructor(
     elementRef: ElementRef,
     config: Config,
@@ -68,7 +65,9 @@ export class SearchBar extends Ion {
     this.ngControl.valueAccessor = this;
   }
 
-  // Add the margin for iOS
+  /**
+   * @private
+   */
   afterViewInit() {
     this.cancelButton = this.elementRef.nativeElement.querySelector('.searchbar-cancel');
 
@@ -83,6 +82,7 @@ export class SearchBar extends Ion {
   }
 
   /**
+   * @private
    * Much like ngModel, this is called from our valueAccessor for the attached
    * ControlDirective to update the value internally.
    */
@@ -90,19 +90,31 @@ export class SearchBar extends Ion {
     this.query = value;
   }
 
+  /**
+   * @private
+   */
   registerOnChange(fn) {
     this.onChange = fn;
   }
 
+  /**
+   * @private
+   */
   registerOnTouched(fn) {
     this.onTouched = fn;
   }
 
+  /**
+   * @private
+   */
   inputChanged(event) {
     this.writeValue(event.target.value);
     this.onChange(event.target.value);
   }
 
+  /**
+   * @private
+   */
   inputFocused() {
     this.isFocused = true;
     this.shouldLeftAlign = true;
@@ -112,6 +124,9 @@ export class SearchBar extends Ion {
     }
   }
 
+  /**
+   * @private
+   */
   inputBlurred() {
     this.isFocused = false;
     this.shouldLeftAlign = this.ngControl.value && this.ngControl.value.trim() != '';
@@ -126,25 +141,3 @@ export class SearchBar extends Ion {
     this.onChange('');
   }
 }
-
-/*
-export class SearchPipe extends Pipe {
-  constructor() {
-    super();
-    this.state = 0;
-  }
-
-  supports(newValue) {
-    return true;
-  }
-
-  transform(value, ...args) {
-    return value;
-    //return `${value} state:${this.state ++}`;
-  }
-
-  create(cdRef) {
-    return new SearchPipe(cdRef);
-  }
-}
-*/

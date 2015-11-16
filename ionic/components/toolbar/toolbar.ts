@@ -20,23 +20,29 @@ export class ToolbarBase extends Ion  {
     this.titleRef = null;
   }
 
+  /**
+   * @private
+   */
   setTitleCmp(titleCmp) {
     this.titleCmp = titleCmp;
   }
 
+  /**
+   * @private
+   */
   getTitleText() {
     return (this.titleCmp && this.titleCmp.getTitleText()) || '';
   }
 
   /**
-   * TODO
-   * @returns {TODO} TODO
+   * @private
    */
   getTitleRef() {
     return this.titleCmp && this.titleCmp.elementRef;
   }
 
   /**
+   * @private
    * A toolbar items include the left and right side `ion-nav-items`,
    * and every `menu-toggle`. It does not include the `ion-title`.
    * @returns {TODO} Array of this toolbar's item ElementRefs.
@@ -45,6 +51,9 @@ export class ToolbarBase extends Ion  {
     return this.itemRefs;
   }
 
+  /**
+   * @private
+   */
   addItemRef(itemElementRef) {
     this.itemRefs.push(itemElementRef);
   }
@@ -104,6 +113,9 @@ export class ToolbarTitle extends Ion {
 }
 
 
+/**
+ * @private
+ */
 @Directive({
   selector: 'ion-nav-items,[menu-toggle]'
 })

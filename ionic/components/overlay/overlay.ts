@@ -3,6 +3,9 @@ import {Component, ElementRef, DynamicComponentLoader} from 'angular2/angular2';
 import {OverlayController} from './overlay-controller';
 
 
+/**
+ * @private
+ */
 @Component({
   selector: 'ion-overlay',
   template: '<template #contents></template>'

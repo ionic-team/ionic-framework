@@ -57,15 +57,11 @@ import {isObject, isDefined, isFunction, isArray, extend} from '../util/util';
  * Simply add `?ionic<PROPERTYNAME>=<value>` to the url.
  *
  * ```
- * http://localhost:8100/?IonictabbarPlacement=bottom
+ * http://localhost:8100/?ionicTabbarPlacement=bottom
  * ```
 **/
 export class Config {
 
- /**
-  * TODO
-  * @param  {Object} config   The config for your app
-  */
   constructor(config) {
     this._s = config && isObject(config) && !isArray(config) ? config : {};
     this._c = {}; // cached values
@@ -246,8 +242,7 @@ export class Config {
   }
 
   /**
-   * TODO
-   * @param  {Object} platform   The platform
+   * @private
    */
   setPlatform(platform) {
     this._platform = platform;

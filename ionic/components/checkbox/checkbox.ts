@@ -61,9 +61,6 @@ export class Checkbox {
     if (ngControl) ngControl.valueAccessor = this;
   }
 
-  /**
-   * TODO
-   */
   onInit() {
     this.labelId = 'label-' + this.inputId;
   }
@@ -78,6 +75,7 @@ export class Checkbox {
   }
 
   /**
+   * @private
    * Click event handler to toggle the checkbox checked state.
    * @param {MouseEvent} ev  The click event.
    */
@@ -114,6 +112,9 @@ export class Checkbox {
    */
   registerOnTouched(fn) { this.onTouched = fn; }
 
+  /**
+   * @private
+   */
   onDestroy() {
     this.form.deregister(this);
   }

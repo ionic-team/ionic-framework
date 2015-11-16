@@ -35,6 +35,9 @@ export class List extends Ion {
     this.ele = elementRef.nativeElement;
   }
 
+  /**
+   * @private
+   */
   onInit() {
     super.onInit();
 
@@ -46,6 +49,9 @@ export class List extends Ion {
     }
   }
 
+  /**
+   * @private
+   */
   onDestroy() {
     this.ele = null;
     this.slidingGesture && this.slidingGesture.unlisten();
@@ -53,7 +59,6 @@ export class List extends Ion {
 
   /**
    * @private
-   * TODO
    */
   _initVirtualScrolling() {
     if(!this.content) {
@@ -64,8 +69,7 @@ export class List extends Ion {
   }
 
   /**
-   * TODO
-   * @param {TODO} item  TODO
+   * @private
    */
   setItemTemplate(item) {
     this.itemTemplate = item;
@@ -92,6 +96,9 @@ export class List extends Ion {
     this.slidingGesture && this.slidingGesture.closeOpened();
   }
 
+  /**
+   * @private
+   */
   afterViewInit() {
     this._init = true;
     if (this._enableSliding) {
@@ -100,9 +107,7 @@ export class List extends Ion {
   }
 }
 
-/**
- * TODO
- */
+
 @Directive({
   selector: 'ion-header',
   inputs: [
