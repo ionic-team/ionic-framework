@@ -207,13 +207,6 @@ ion-card {
 
   ion-item-options {
     border-width: 0.55px;
-    //
-    // button, [button] {
-    //   min-height: calc(100% - 1px);
-    //   height: calc(100% - 1px);
-    //   margin-top: 0.55px;
-    //   margin-bottom: 0.55px;
-    // }
   }
 
   ion-header,
@@ -222,8 +215,6 @@ ion-card {
   }
 
   .item {
-    margin-top: -0.55px;
-
     .item-inner {
       border-width: 0.55px;
     }
@@ -236,7 +227,6 @@ ion-card {
   > .item:last-child,
   > ion-item-sliding:last-child .item {
     border-bottom-width: 0.55px;
-    margin-bottom: -0.55px;
   }
 }
 
