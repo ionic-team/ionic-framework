@@ -87,7 +87,7 @@ export class TextInput {
       self.deregListeners();
 
       if (self.hasFocus) {
-
+        //self.input.hideFocus();
       }
     };
   }
@@ -315,6 +315,9 @@ export class TextInput {
    */
   focusChange(hasFocus) {
     this.renderer.setElementClass(this.elementRef, 'has-focus', hasFocus);
+    if (!hasFocus) {
+      this.deregListeners();
+    }
   }
 
   /**
@@ -419,34 +422,46 @@ export class TextInputElement {
   }
 
   relocate(shouldRelocate, inputRelativeY) {
-    this.clone(shouldRelocate, inputRelativeY);
+    if (this._relocated !== shouldRelocate) {
 
-    if (shouldRelocate) {
-      this.wrapper.setFocus();
+      let focusedInputEle = this.getNativeElement();
+      if (shouldRelocate) {
+        let clonedInputEle = focusedInputEle.cloneNode(true);
+        clonedInputEle.classList.add('cloned-input');
+        clonedInputEle.setAttribute('aria-hidden', true);
+        clonedInputEle.tabIndex = -1;
+        focusedInputEle.parentNode.insertBefore(clonedInputEle, focusedInputEle);
+
+        focusedInputEle.classList.add('hide-focused-input');
+        focusedInputEle.style[dom.CSS.transform] = `translate3d(-9999px,${inputRelativeY}px,0)`;
+        this.wrapper.setFocus();
+
+      } else {
+        focusedInputEle.classList.remove('hide-focused-input');
+        focusedInputEle.style[dom.CSS.transform] = '';
+        let clonedInputEle = focusedInputEle.parentNode.querySelector('.cloned-input');
+        if (clonedInputEle) {
+          clonedInputEle.parentNode.removeChild(clonedInputEle);
+        }
+      }
+
+      this._relocated = shouldRelocate;
     }
   }
 
-  clone(shouldClone, inputRelativeY) {
+  hideFocus() {
+    console.debug('hideFocus');
     let focusedInputEle = this.getNativeElement();
 
-    if (shouldRelocate) {
-      let clonedInputEle = focusedInputEle.cloneNode(true);
-      clonedInputEle.classList.add('cloned-input');
-      clonedInputEle.setAttribute('aria-hidden', true);
-      clonedInputEle.tabIndex = -1;
-
-      focusedInputEle.classList.add('hide-focused-input');
-      focusedInputEle.style[dom.CSS.transform] = `translate3d(-9999px,${inputRelativeY}px,0)`;
-      focusedInputEle.parentNode.insertBefore(clonedInputEle, focusedInputEle);
-
-    } else {
-      focusedInputEle.classList.remove('hide-focused-input');
-      focusedInputEle.style[dom.CSS.transform] = '';
-      let clonedInputEle = focusedInputEle.parentNode.querySelector('.cloned-input');
-      if (clonedInputEle) {
-        clonedInputEle.parentNode.removeChild(clonedInputEle);
-      }
+    let hiddenInputEle = focusedInputEle.parentNode.querySelector('.cloned-hidden');
+    if (!hiddenInputEle) {
+      hiddenInputEle = focusedInputEle.cloneNode(true);
+      hiddenInputEle.classList.add('cloned-hidden');
+      hiddenInputEle.setAttribute('aria-hidden', true);
+      hiddenInputEle.tabIndex = -1;
+      focusedInputEle.parentNode.appendChild(hiddenInputEle);
     }
+    hiddenInputEle.focus();
   }
 
   get hasFocus() {
