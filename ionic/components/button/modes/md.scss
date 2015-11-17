@@ -35,7 +35,7 @@ button,
               background-color $button-md-transition-duration $button-md-animation-curve,
               color $button-md-transition-duration $button-md-animation-curve;
 
-  :hover:not(.disable-hover) {
+  &:hover:not(.disable-hover) {
     background-color: $button-md-clear-hover-background-color;
   }
 
