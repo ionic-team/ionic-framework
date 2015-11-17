@@ -14,7 +14,7 @@ function randomTitle() {
   providers: [NgControl],
   directives: [FORM_DIRECTIVES]
 })
-class IonicApp {
+class E2EApp {
   constructor() {
     var fb = new FormBuilder();
     this.searchQuery = '';

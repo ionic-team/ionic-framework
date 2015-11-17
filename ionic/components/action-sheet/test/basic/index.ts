@@ -4,7 +4,7 @@ import {App, ActionSheet} from 'ionic/ionic';
 @App({
   templateUrl: 'main.html'
 })
-class IonicApp {
+class E2EApp {
 
   constructor(actionSheet: ActionSheet) {
     this.actionSheet = actionSheet;

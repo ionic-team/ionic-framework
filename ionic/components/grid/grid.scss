@@ -18,13 +18,16 @@ $grid-responsive-lg-break:        1023px !default; // smaller than landscape tab
     #{$selector} {
       flex-direction: column;
 
-      .col, .col-10, .col-20, .col-25, .col-33, .col-34, .col-50, .col-66, .col-67, .col-75, .col-80, .col-90 {
-        flex: 1;
-        margin-bottom: ($grid-padding-width * 3) / 2;
-        margin-left: 0;
-        max-width: 100%;
-        width: 100%;
+      ion-col {
+        &[width-10], &[width-20], &[width-25], &[width-33], &[width-34], &[width-50], &[width-66], &[width-67], &[width-75], &[width-80], &[width-90] {
+          flex: 1;
+          margin-bottom: ($grid-padding-width * 3) / 2;
+          margin-left: 0;
+          max-width: 100%;
+          width: 100%;
+        }
       }
+
     }
   }
 }
@@ -40,10 +43,6 @@ ion-row {
   }
 
   &[flush] {
-    padding: 0;
-  }
-
-  > .col {
     padding: 0;
   }
 
@@ -82,44 +81,48 @@ ion-col {
   &[bottom] {
     align-self: flex-end;
   }
+
   &[center] {
     align-self: center;
+  }
+  &[stretch] {
+    align-self: stretch;
+  }
+  &[baseline] {
+    align-self: baseline;
   }
 }
 
 
-/* Vertically Align Columns */
-/* .row-* vertically aligns every .col in the .row */
-
-/* .col-* vertically aligns an individual .col */
-
 /* Column Offsets */
-.col-offset-10 {
-  margin-left: 10%;
-}
-.col-offset-20 {
-  margin-left: 20%;
-}
-.col-offset-25 {
-  margin-left: 25%;
-}
-.col-offset-33, .col-offset-34 {
-  margin-left: 33.3333%;
-}
-.col-offset-50 {
-  margin-left: 50%;
-}
-.col-offset-66, .col-offset-67 {
-  margin-left: 66.6666%;
-}
-.col-offset-75 {
-  margin-left: 75%;
-}
-.col-offset-80 {
-  margin-left: 80%;
-}
-.col-offset-90 {
-  margin-left: 90%;
+ion-col {
+  &[offset-10] {
+    margin-left: 10%;
+  }
+  &[offset-20] {
+    margin-left: 20%;
+  }
+  &[offset-25] {
+    margin-left: 25%;
+  }
+  &[offset-33], &[offset-34] {
+    margin-left: 33.3333%;
+  }
+  &[offset-50] {
+    margin-left: 50%;
+  }
+  &[offset-66], &[offset-67] {
+    margin-left: 66.6666%;
+  }
+  &[offset-75] {
+    margin-left: 75%;
+  }
+  &[offset-80] {
+    margin-left: 80%;
+  }
+  &[offset-90] {
+    margin-left: 90%;
+  }
 }
 
 
@@ -127,50 +130,52 @@ ion-col {
 /* By default each grid column will evenly distribute */
 /* across the grid. However, you can specify individual */
 /* columns to take up a certain size of the available area */
-.col-10 {
-  flex: 0, 0, 10%;
-  max-width: 10%;
-}
-.col-20 {
-  flex: 0, 0, 20%;
-  max-width: 20%;
-}
-.col-25 {
-  flex: 0, 0, 25%;
-  max-width: 25%;
-}
-.col-33, .col-34 {
-  flex: 0, 0, 33.3333%;
-  max-width: 33.3333%;
-}
-.col-50 {
-  flex: 0, 0, 50%;
-  max-width: 50%;
-}
-.col-66, .col-67 {
-  flex: 0, 0, 66.6666%;
-  max-width: 66.6666%;
-}
-.col-75 {
-  flex: 0, 0, 75%;
-  max-width: 75%;
-}
-.col-80 {
-  flex: 0, 0, 80%;
-  max-width: 80%;
-}
-.col-90 {
-  flex: 0, 0, 90%;
-  max-width: 90%;
+ion-col {
+  &[width-10] {
+    flex: 0 0 10%;
+    max-width: 10%;
+  }
+  &[width-20] {
+    flex: 0 0 20%;
+    max-width: 20%;
+  }
+  &[width-25] {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+  &[width-33], &[width-34] {
+    flex: 0 0 33.3333%;
+    max-width: 33.3333%;
+  }
+  &[width-50] {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+  &[width-66], &[width-67] {
+    flex: 0 0 66.6666%;
+    max-width: 66.6666%;
+  }
+  &[width-75] {
+    flex: 0 0 75%;
+    max-width: 75%;
+  }
+  &[width-80] {
+    flex: 0 0 80%;
+    max-width: 80%;
+  }
+  &[width-90] {
+    flex: 0 0 90%;
+    max-width: 90%;
+  }
 }
 
 
 /* Responsive Grid Classes */
 /* Adding a class of responsive-X to a row */
-/* will trigger the flex-direction to */
+/* will trigger the width-direction to */
 /* change to column and add some margin */
 /* to any columns in the row for clearity */
 
-@include responsive-grid-break('.responsive-sm', $grid-responsive-sm-break);
-@include responsive-grid-break('.responsive-md', $grid-responsive-md-break);
-@include responsive-grid-break('.responsive-lg', $grid-responsive-lg-break);
+@include responsive-grid-break('[responsive-sm]', $grid-responsive-sm-break);
+@include responsive-grid-break('[responsive-md]', $grid-responsive-md-break);
+@include responsive-grid-break('[responsive-lg]', $grid-responsive-lg-break);

@@ -2,6 +2,7 @@ import {Component, ElementRef, Optional, NgZone} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {Config} from '../../config/config';
+import {raf}  from '../../util/dom';
 import {Keyboard} from '../../util/keyboard';
 import {ViewController} from '../nav/view-controller';
 import {Animation} from '../../animations/animation';
@@ -71,19 +72,34 @@ export class Content extends Ion {
     }
   }
 
-  onScrollEnd(callback, debounceWait=400) {
-    let timerId, deregister;
+  onScrollEnd(callback) {
+    let lastScrollTop = null;
+    let framesUnchanged = 0;
+    let scrollElement = this.scrollElement;
 
-    function debounce() {
-      console.debug('onScroll')
-      clearTimeout(timerId);
-      timerId = setTimeout(() => {
-        deregister();
-        callback();
-      }, debounceWait);
+    function next() {
+      let currentScrollTop = scrollElement.scrollTop;
+      if (lastScrollTop !== null) {
+
+        if (Math.round(lastScrollTop) === Math.round(currentScrollTop)) {
+          framesUnchanged++;
+        } else {
+          framesUnchanged = 0;
+        }
+
+        if (framesUnchanged > 9) {
+          return callback();
+        }
+      }
+
+      lastScrollTop = currentScrollTop;
+
+      raf(() => {
+        raf(next);
+      });
     }
 
-    deregister = this.addScrollEventListener(debounce);
+    setTimeout(next, 100);
   }
 
   /**

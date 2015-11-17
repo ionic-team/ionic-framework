@@ -43,6 +43,7 @@ ion-note {
 }
 
 .item {
+  position: relative;
   padding-right: 0;
   padding-left: ($item-md-padding-left);
   font-size: $item-md-font-size;

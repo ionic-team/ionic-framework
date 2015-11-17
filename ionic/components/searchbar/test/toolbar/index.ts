@@ -6,7 +6,7 @@ import {SearchPipe} from 'ionic/components/searchbar/searchbar';
 @App({
   templateUrl: 'main.html'
 })
-class IonicApp {
+class E2EApp {
   toolbarSearch: string;
 
   constructor() {

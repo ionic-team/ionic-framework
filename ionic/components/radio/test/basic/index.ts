@@ -15,7 +15,7 @@ import {
 @App({
   templateUrl: 'main.html'
 })
-class IonicApp {
+class E2EApp {
   constructor() {
     this.fruits = new Control("");
 

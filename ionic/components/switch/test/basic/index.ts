@@ -14,7 +14,7 @@ import {
 @App({
   templateUrl: 'main.html'
 })
-class IonicApp {
+class E2EApp {
   constructor() {
     this.fruitsForm = new ControlGroup({
       "appleCtrl": new Control(),

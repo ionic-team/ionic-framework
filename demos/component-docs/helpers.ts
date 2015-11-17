@@ -4,6 +4,7 @@ import {Platform, Navbar} from 'ionic/ionic';
 import * as actionSheets from './action-sheets/action-sheets';
 import * as buttons from './buttons/buttons';
 import * as cards from './cards/cards';
+import * as grid from './grid/grid';
 import * as labels from './labels/labels';
 import * as icons from './icons/icons';
 import * as inputs from './inputs/inputs';
@@ -108,6 +109,7 @@ export function getPageFor(hash) {
         'stacked-labels': labels.StackedPage,
 
         'icons': icons.BasicPage,
+        'grid': grid.BasicPage,
 
         'lists': lists.BasicPage,
         'list-lines': lists.BasicPage,

@@ -66,7 +66,7 @@ import {Icon} from '../icon/icon';
     'tabbarPlacement': 'bottom',
     'tabbarIcons': 'top',
     'tabbarStyle': 'default',
-    'preloadTabs': true
+    'preloadTabs': false
   },
   template:
     '<ion-navbar-section>' +
@@ -113,7 +113,6 @@ export class Tabs extends Ion {
   ) {
     super(elementRef, config);
     this.app = app;
-    this.preload = config.get('preloadTabs');
     this.subPages = config.get('tabSubPages');
 
     // collection of children "Tab" instances, which extends NavController
@@ -139,6 +138,8 @@ export class Tabs extends Ion {
    */
   onInit() {
     super.onInit();
+    this.preloadTabs = (this.preloadTabs !== "false" && this.preloadTabs !== false);
+
     if (this.highlight) {
       this.platform.onResize(() => {
         this.highlight.select(this.getSelected());
