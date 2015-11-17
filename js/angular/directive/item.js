@@ -7,7 +7,7 @@
 * Creates a list-item that can easily be swiped,
 * deleted, reordered, edited, and more.
 *
-* See {@link ionic.directive:ionList} for a complete example and explanation.
+* See {@link ionic.directive:ionList} for a complete example & explanation.
 *
 * Can be assigned any item class name. See the
 * [list CSS documentation](/docs/components/#list).
