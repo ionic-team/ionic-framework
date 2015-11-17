@@ -4,76 +4,80 @@
 
 <ion-content>
 
-  <ion-list>
+  <form (ng-submit)="submit($event)">
 
-    <ion-input>
-      <ion-label>To:</ion-label>
-      <input value="Text 1" type="text">
-    </ion-input>
+    <ion-list>
 
-    <ion-input>
-      <ion-label>CC:</ion-label>
-      <input value="Text 2" type="text">
-    </ion-input>
+      <ion-input>
+        <ion-label>To:</ion-label>
+        <input value="Text 1" type="text">
+      </ion-input>
 
-    <ion-input>
-      <ion-label>From:</ion-label>
-      <input value="Text 3" type="text">
-      <button clear item-right>
-        <icon power></icon>
-      </button>
-    </ion-input>
+      <ion-input>
+        <ion-label>CC:</ion-label>
+        <input value="Text 2" type="text">
+      </ion-input>
 
-    <ion-input>
-      <ion-label>Comments:</ion-label>
-      <textarea>Comment value</textarea>
-    </ion-input>
+      <ion-input>
+        <ion-label>From:</ion-label>
+        <input value="Text 3" type="text">
+        <button clear item-right>
+          <icon power></icon>
+        </button>
+      </ion-input>
 
-    <ion-input>
-      <icon globe item-left></icon>
-      <ion-label>Website:</ion-label>
-      <input value="http://ionic.io/" type="url">
-    </ion-input>
+      <ion-input>
+        <ion-label>Comments:</ion-label>
+        <textarea>Comment value</textarea>
+      </ion-input>
 
-    <ion-input>
-      <icon mail item-left></icon>
-      <ion-label>Email:</ion-label>
-      <input value="email6@email.com" type="email">
-    </ion-input>
+      <ion-input>
+        <icon globe item-left></icon>
+        <ion-label>Website:</ion-label>
+        <input value="http://ionic.io/" type="url">
+      </ion-input>
 
-    <ion-input>
-      <icon create item-left></icon>
-      <ion-label>Feedback:</ion-label>
-      <textarea placeholder="Placeholder Text"></textarea>
-    </ion-input>
+      <ion-input>
+        <icon mail item-left></icon>
+        <ion-label>Email:</ion-label>
+        <input value="email6@email.com" type="email">
+      </ion-input>
 
-    <ion-input>
-      <ion-label>More Info:</ion-label>
-      <input placeholder="Placeholder Text" type="text">
-      <icon flag item-right></icon>
-    </ion-input>
+      <ion-input>
+        <icon create item-left></icon>
+        <ion-label>Feedback:</ion-label>
+        <textarea placeholder="Placeholder Text"></textarea>
+      </ion-input>
 
-    <ion-input>
-      <ion-label>Score:</ion-label>
-      <input value="10" type="number">
-      <button outline item-right>Update</button>
-    </ion-input>
+      <ion-input>
+        <ion-label>More Info:</ion-label>
+        <input placeholder="Placeholder Text" type="text">
+        <icon flag item-right></icon>
+      </ion-input>
 
-    <ion-input>
-      <ion-label>First Name:</ion-label>
-      <input value="Lightning" type="text">
-    </ion-input>
+      <ion-input>
+        <ion-label>Score:</ion-label>
+        <input value="10" type="number">
+        <button outline item-right>Update</button>
+      </ion-input>
 
-    <ion-input>
-      <ion-label>Last Name:</ion-label>
-      <input value="McQueen" type="text">
-    </ion-input>
+      <ion-input>
+        <ion-label>First Name:</ion-label>
+        <input value="Lightning" type="text">
+      </ion-input>
 
-    <ion-input>
-      <ion-label>Message:</ion-label>
-      <textarea>KA-CHOW!</textarea>
-    </ion-input>
+      <ion-input>
+        <ion-label>Last Name:</ion-label>
+        <input value="McQueen" type="text">
+      </ion-input>
 
-  </ion-list>
+      <ion-input>
+        <ion-label>Message:</ion-label>
+        <textarea>KA-CHOW!</textarea>
+      </ion-input>
+
+    </ion-list>
+
+  </form>
 
 </ion-content>

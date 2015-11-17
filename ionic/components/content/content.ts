@@ -6,7 +6,6 @@ import {Keyboard} from '../../util/keyboard';
 import {ViewController} from '../nav/view-controller';
 import {Animation} from '../../animations/animation';
 import {ScrollTo} from '../../animations/scroll-to';
-import {FeatureDetect} from '../../util/feature-detect';
 
 /**
  * The Content component provides an easy to use content area that can be configured to use Ionic's custom Scroll View, or the built in overflow scrolling of the browser.
@@ -72,14 +71,16 @@ export class Content extends Ion {
     }
   }
 
-  onScrollEnd(callback) {
+  onScrollEnd(callback, debounceWait=400) {
     let timerId, deregister;
 
     function debounce() {
+      console.debug('onScroll')
+      clearTimeout(timerId);
       timerId = setTimeout(() => {
         deregister();
         callback();
-      }, 250);
+      }, debounceWait);
     }
 
     deregister = this.addScrollEventListener(debounce);
