@@ -43,7 +43,7 @@ ion-note {
 }
 
 .item {
-  padding-right: ($item-md-padding-right / 2);
+  padding-right: 0;
   padding-left: ($item-md-padding-left);
   font-size: $item-md-font-size;
   text-transform: none;
@@ -80,6 +80,7 @@ ion-note {
 
 .item-inner {
   border-bottom: 1px solid $item-md-border-color;
+  padding-right: ($item-md-padding-right / 2);
 }
 
 ion-item-content {
