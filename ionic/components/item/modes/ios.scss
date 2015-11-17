@@ -30,7 +30,7 @@ $item-ios-sliding-content-bg:         $background-color !default;
 $item-ios-sliding-transition:         transform 250ms ease-in-out !default;
 
 
-.item-group {
+ion-item-group {
   ion-item-group-title {
     padding: $item-ios-padding-top $item-ios-padding-right $item-ios-padding-bottom $item-ios-padding-left;
     background-color: $item-ios-divider-bg;
@@ -166,7 +166,7 @@ a.item:not([detail-none]) .item-inner,
 
 &.hairlines {
   .item-inner,
-  .item-group ion-item-group-title {
+  ion-item-group ion-item-group-title {
     border-bottom-width: 0.55px;
   }
 }

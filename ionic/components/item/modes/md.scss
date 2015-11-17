@@ -32,7 +32,7 @@ $item-md-sliding-content-bg:         $background-color !default;
 $item-md-sliding-transition:         transform 250ms ease-in-out !default;
 
 
-.item-group-title {
+ion-item-group-title {
   padding: $item-md-padding-top $item-md-padding-right $item-md-padding-bottom $item-md-padding-left;
   background-color: $item-md-divider-bg;
   color: $item-md-divider-color;
@@ -152,6 +152,16 @@ button[item-right],
 icon[item-left] + .item-inner,
 icon[item-left] + [text-input] {
   margin-left: $item-md-padding-left + ($item-md-padding-left / 2);
+}
+
+ion-avatar[item-left],
+ion-thumbnail[item-left] {
+  margin: ($item-md-padding-right / 2) $item-md-padding-right ($item-md-padding-right / 2) 0;
+}
+
+ion-avatar[item-right],
+ion-thumbnail[item-right] {
+  margin: ($item-md-padding-right / 2);
 }
 
 ion-avatar {
