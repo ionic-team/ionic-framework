@@ -236,6 +236,9 @@ ionic.tap = {
   },
 
   requiresNativeClick: function(ele) {
+    if (ionic.Platform.isWindowsPhone && (ele.tagName == 'A' || ele.tagName == 'BUTTON' || ele.hasAttribute('ng-click') || (ele.tagName == 'INPUT' && (ele.type == 'button' || ele.type == 'submit')))) {
+      return true; //Windows Phone edge case, prevent ng-click (and similar) events from firing twice on this platform
+    }
     if (!ele || ele.disabled || (/^(file|range)$/i).test(ele.type) || (/^(object|video)$/i).test(ele.tagName) || ionic.tap.isLabelContainingFileInput(ele)) {
       return true;
     }
