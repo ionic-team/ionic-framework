@@ -32,7 +32,7 @@ $item-md-sliding-content-bg:         $background-color !default;
 $item-md-sliding-transition:         transform 250ms ease-in-out !default;
 
 
-.item-group-title {
+ion-item-group-title {
   padding: $item-md-padding-top $item-md-padding-right $item-md-padding-bottom $item-md-padding-left;
   background-color: $item-md-divider-bg;
   color: $item-md-divider-color;
