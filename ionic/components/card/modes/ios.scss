@@ -50,16 +50,19 @@ ion-card {
     ion-item-content {
       padding: 0;
     }
+
+    > .item:last-child,
+    > ion-item-sliding:last-child .item {
+      border-bottom: none;
+    }
   }
 
   .item {
-    padding-left: ($card-ios-padding-left / 2);
-    padding-right: ($card-ios-padding-right / 2);
-    font-size: $item-ios-font-size;
+    padding-left: $card-ios-padding-left / 2;
   }
 
-  ion-item-content {
-    padding: $card-ios-padding-top ($card-ios-padding-right / 2) $card-ios-padding-bottom ($card-ios-padding-left / 2);
+  .item-inner {
+    border: none;
   }
 
   ion-card-content {
@@ -89,26 +92,11 @@ ion-card {
 
     button,
     [button] {
-      margin: $item-ios-padding-icon-top ($item-ios-padding-right / 2) $item-ios-padding-icon-bottom ($item-ios-padding-left / 2);
+      margin: 0 ($item-ios-padding-right / 2);
       padding: 2px 6px;
       min-height: 26px;
       font-size: 1.3rem;
     }
-  }
-
-  [item-left],
-  [item-right] {
-    margin: $card-ios-padding-media-top ($card-ios-padding-right / 2) $card-ios-padding-media-bottom ($card-ios-padding-left / 2);
-  }
-
-  button[item-left],
-  button[item-right],
-  [button][item-left],
-  [button][item-right], {
-    margin: $item-ios-padding-icon-top ($item-ios-padding-right / 2) $item-ios-padding-icon-bottom ($item-ios-padding-left / 2);
-    padding: 2px 6px;
-    min-height: 26px;
-    font-size: 1.3rem;
   }
 
   ion-note[item-left],
@@ -120,25 +108,6 @@ ion-card {
     padding: $card-ios-title-padding;
     font-size: $card-ios-title-font-size;
     color: $card-ios-title-text-color;
-  }
-
-  ion-avatar {
-    min-width: $item-ios-avatar-size;
-
-    img {
-      max-width: $item-ios-avatar-size;
-      max-height: $item-ios-avatar-size;
-      border-radius: $item-ios-avatar-size / 2;
-    }
-  }
-
-  ion-thumbnail  {
-    min-width: $item-ios-thumbnail-size;
-
-    img {
-      max-width: $item-ios-thumbnail-size;
-      max-height: $item-ios-thumbnail-size;
-    }
   }
 
   h1 {

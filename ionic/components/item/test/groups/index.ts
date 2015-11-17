@@ -1,21 +1,20 @@
-import {ElementRef, Host} from 'angular2/angular2';
-import {Component, View, NgIf, NgFor} from 'angular2/angular2';
-import {App, Content, Icon, Item, ItemGroup, ItemGroupTitle, ItemSliding, List, ListHeader, NavController} from 'ionic/ionic';
+import {Component, NgIf, NgFor} from 'angular2/angular2';
+import {App, Icon, Item, ItemGroup, ItemGroupTitle, ItemSliding, List, ListHeader, NavController} from 'ionic/ionic';
 
 @Component({
   properties: ['data'],
   selector: 'component-list',
-  directives: [ComponentList, Item, ItemGroup, ItemGroupTitle, ItemSliding, List, NgIf, NgFor],
+  directives: [Item, ItemGroup, ItemGroupTitle, ItemSliding, List, NgIf, NgFor],
   templateUrl: 'component-list.html'
 })
-class ComponentList {
-  constructor(elementRef: ElementRef, @Host() content:Content) {
-    console.log('Component List init', content);
+export class ComponentList {
+  constructor() {
+
   }
 }
 
 @App({
-  directives: [Content, ComponentList, Item, ItemGroup, ItemGroupTitle, ItemSliding, List, NgIf, NgFor],
+  directives: [ComponentList],
   templateUrl: 'main.html'
 })
 class E2EApp {

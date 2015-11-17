@@ -19,6 +19,8 @@ $list-ios-header-font-weight:         500 !default;
 $list-ios-header-letter-spacing:      0.1rem !default;
 $list-ios-header-color:               #333 !default;
 
+$list-ios-border-color:               $list-border-color !default;
+
 
 /****************/
 /* DEFAULT LIST */
@@ -35,43 +37,24 @@ $list-ios-header-color:               #333 !default;
     letter-spacing: $list-ios-header-letter-spacing;
     text-transform: uppercase;
     color: $list-ios-header-color;
-  }
-
-  ion-header,
-  ion-item-group-title , {
-    border-bottom: 1px solid $item-ios-border-color;
-  }
-
-  .item {
-    border-radius: 0;
-    // TODO this makes the border not show on sticky
-    padding-left: $item-ios-padding-left;
-    font-size: $item-ios-font-size;
+    border-bottom: 1px solid $list-ios-border-color;
   }
 
   > .item:first-child {
-    border-top: 1px solid $item-ios-border-color;
+    border-top: 1px solid $list-ios-border-color;
   }
 
   > .item:last-child,
   > ion-item-sliding:last-child .item {
-    border-bottom: 1px solid $item-ios-border-color;
+    border-bottom: 1px solid $list-ios-border-color;
 
     .item-inner {
       border-bottom: none;
     }
   }
 
-  .item {
-
-    .item-inner {
-      padding-right: ($item-ios-padding-right / 2);
-      border-bottom: 1px solid $item-ios-border-color;
-    }
-
-    ion-item-content {
-      margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom 0;
-    }
+  .item-inner {
+    border-bottom: 1px solid $list-ios-border-color;
   }
 
   // If the item has the no-lines attribute remove the bottom border from:
@@ -82,86 +65,8 @@ $list-ios-header-color:               #333 !default;
     border-width: 0;
   }
 
-  [item-left] {
-    margin: ($item-ios-padding-top / 2) $item-ios-padding-right ($item-ios-padding-bottom / 2) 0;
-  }
-
-  [item-right] {
-    margin: ($item-ios-padding-top / 2) ($item-ios-padding-right / 2) ($item-ios-padding-bottom / 2) ($item-ios-padding-left / 2);
-  }
-
-  // TODO clean up Sass variables
-  icon[item-left],
-  icon[item-right] {
-    margin-top: $item-ios-padding-icon-top;
-    margin-bottom: $item-ios-padding-icon-bottom;
-  }
-
-  ion-avatar[item-left],
-  ion-thumbnail[item-left] {
-    margin: ($item-ios-padding-right / 2) $item-ios-padding-right ($item-ios-padding-right / 2) 0;
-  }
-
-  ion-avatar[item-right],
-  ion-thumbnail[item-right] {
-    margin: ($item-ios-padding-right / 2);
-  }
-
-  button[item-left],
-  button[item-right],
-  [button][item-left],
-  [button][item-right] {
-    padding: 0 0.5em;
-    font-size: 1.3rem;
-    min-height: 25px;
-    margin-top: 9px;
-  }
-
-  [item-left].icon-only,
-  [item-right].icon-only,
-  [item-left].icon-only icon,
-  [item-right].icon-only icon,
-  [item-left][clear],
-  [item-right][clear] {
-    padding: 0 1px;
-  }
-
-  [item-left].icon-left icon,
-  [item-right].icon-left icon {
-    margin-left: 0;
-    margin-bottom: 1px;
-    padding-right: 0.3em;
-  }
-
-  [item-left].icon-right icon,
-  [item-right].icon-right icon {
-    margin-right: 0;
-    margin-bottom: 1px;
-  }
-
-  ion-avatar {
-    min-width: $item-ios-avatar-size;
-    min-height: $item-ios-avatar-size;
-
-    img {
-      max-width: $item-ios-avatar-size;
-      max-height: $item-ios-avatar-size;
-      border-radius: $item-ios-avatar-size / 2;
-    }
-  }
-
-  ion-thumbnail {
-    min-width: $item-ios-thumbnail-size;
-    min-height: $item-ios-thumbnail-size;
-
-    img {
-      max-width: $item-ios-thumbnail-size;
-      max-height: $item-ios-thumbnail-size;
-    }
-  }
-
   ion-item-options {
-    border-bottom: 1px solid $item-ios-border-color;
+    border-bottom: 1px solid $list-ios-border-color;
 
     button, [button] {
       min-height: 100%;
@@ -181,19 +86,6 @@ $list-ios-header-color:               #333 !default;
   }
 }
 
-.list,
-ion-card {
-  button.item:not([detail-none]) .item-inner,
-  a.item:not([detail-none]) .item-inner,
-  .item[detail-push] .item-inner {
-    @include ios-detail-push-icon($item-ios-detail-push-color);
-    background-repeat: no-repeat;
-    background-position: right ($item-ios-padding-right - 2) center;
-    background-size: 14px 14px;
-    padding-right: 32px;
-  }
-}
-
 .list + .list {
   margin-top: $list-ios-margin-top + $list-ios-margin-bottom;
 
@@ -209,8 +101,7 @@ ion-card {
     border-width: 0.55px;
   }
 
-  ion-header,
-  ion-item-group-title {
+  ion-header {
     border-bottom-width: 0.55px;
   }
 
@@ -240,8 +131,7 @@ ion-card {
   border-radius: $list-inset-ios-border-radius;
 
   .item {
-    margin-top: 0;
-    border-bottom: 1px solid $item-ios-border-color;
+    border-bottom: 1px solid $list-ios-border-color;
 
     .item-inner {
       border-bottom: none;
@@ -250,7 +140,6 @@ ion-card {
 
   > .item:first-child,
   ion-header {
-    margin-top: 0;
     border-top-right-radius: $list-inset-ios-border-radius;
     border-top-left-radius: $list-inset-ios-border-radius;
   }
@@ -261,7 +150,6 @@ ion-card {
 
   > .item:last-child,
   > ion-item-sliding:last-child .item {
-    margin-bottom: 0;
     border-bottom-right-radius: $list-inset-ios-border-radius;
     border-bottom-left-radius: $list-inset-ios-border-radius;
     border-bottom: none;

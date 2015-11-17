@@ -43,6 +43,11 @@ ion-card {
     margin-bottom: 0;
   }
 
+  [stacked-label] ion-label,
+  [floating-label] ion-label {
+    margin-left: 0;
+  }
+
   [stacked-label].has-focus ion-label,
   [floating-label].has-focus ion-label {
     color: $text-input-highlight-color;
@@ -52,6 +57,7 @@ ion-card {
   [floating-label] [text-input] {
     margin-bottom: 8px;
     margin-top: 8px;
+    margin-left: 0;
   }
 
   [floating-label] ion-label {
