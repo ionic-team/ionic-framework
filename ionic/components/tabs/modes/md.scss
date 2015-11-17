@@ -69,3 +69,16 @@ tab-highlight {
 [tabbar-placement=bottom] tab-highlight {
   top: 0;
 }
+
+
+@each $color-name, $color-value in $colors {
+
+  tabbar[#{$color-name}] {
+
+    tab-highlight {
+      background: inverse($color-value);
+    }
+
+  }
+
+}
