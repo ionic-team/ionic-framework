@@ -154,6 +154,16 @@ icon[item-left] + [text-input] {
   margin-left: $item-md-padding-left + ($item-md-padding-left / 2);
 }
 
+ion-avatar[item-left],
+ion-thumbnail[item-left] {
+  margin: ($item-md-padding-right / 2) $item-md-padding-right ($item-md-padding-right / 2) 0;
+}
+
+ion-avatar[item-right],
+ion-thumbnail[item-right] {
+  margin: ($item-md-padding-right / 2);
+}
+
 ion-avatar {
   min-width: $item-md-avatar-size;
   min-height: $item-md-avatar-size;
