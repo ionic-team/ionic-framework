@@ -83,11 +83,19 @@ export class TextInput {
 
     let self = this;
     self.scrollMove = (ev) => {
-      console.debug('content scrollMove');
-      self.deregListeners();
+      if (!self.app.isTransitioning()) {
+        self.deregMove();
 
-      if (self.hasFocus) {
-        //self.input.hideFocus();
+        if (self.hasFocus) {
+          self.input.hideFocus(true);
+          this.scrollView.onScrollEnd(() => {
+            self.input.hideFocus(false);
+
+            if (self.hasFocus) {
+              self.regMove();
+            }
+          });
+        }
       }
     };
   }
@@ -131,6 +139,7 @@ export class TextInput {
       ev.stopPropagation();
 
       this.setFocus();
+      this.regMove();
     }
   }
 
@@ -149,10 +158,12 @@ export class TextInput {
       let ele = this.elementRef.nativeElement;
 
       let scrollData = TextInput.getScollData(ele.offsetTop, ele.offsetHeight, scrollView.getDimensions(), this.keyboardHeight, this.platform.height());
-      if (scrollData.noScroll) {
+      if (scrollData.scrollAmount > -3 && scrollData.scrollAmount < 3) {
         // the text input is in a safe position that doesn't require
         // it to be scrolled into view, just set focus now
-        return this.setFocus();
+        this.setFocus();
+        this.regMove();
+        return;
       }
 
       // add padding to the bottom of the scroll view (if needed)
@@ -178,11 +189,13 @@ export class TextInput {
         // all good, allow clicks again
         this.app.setEnabled(true);
         this.app.setTransitioning(false);
+        this.regMove();
       });
 
     } else {
       // not inside of a scroll view, just focus it
       this.setFocus();
+      this.regMove();
     }
 
   }
@@ -224,13 +237,6 @@ export class TextInput {
     7) Input top below safe area, no room to scroll, input larger than safe area
     */
 
-    if (inputTopWithinSafeArea && inputBottomWithinSafeArea) {
-      // Input top within safe area, bottom within safe area
-      // no need to scroll to a position, it's good as-is
-      return { noScroll: true };
-    }
-
-    // looks like we'll have to do some auto-scrolling
     let scrollData = {
       scrollAmount: 0,
       scrollTo: 0,
@@ -238,6 +244,13 @@ export class TextInput {
       inputSafeY: 0
     };
 
+    if (inputTopWithinSafeArea && inputBottomWithinSafeArea) {
+      // Input top within safe area, bottom within safe area
+      // no need to scroll to a position, it's good as-is
+      return scrollData;
+    }
+
+    // looks like we'll have to do some auto-scrolling
     if (inputTopBelowSafeArea || inputBottomBelowSafeArea) {
       // Input top and bottom below safe area
       // auto scroll the input up so at least the top of it shows
@@ -245,13 +258,13 @@ export class TextInput {
       if (safeAreaHeight > inputOffsetHeight) {
         // safe area height is taller than the input height, so we
         // can bring it up the input just enough to show the input bottom
-        scrollData.scrollAmount = (safeAreaBottom - inputBottom);
+        scrollData.scrollAmount = Math.round(safeAreaBottom - inputBottom);
 
       } else {
         // safe area height is smaller than the input height, so we can
         // only scroll it up so the input top is at the top of the safe area
         // however the input bottom will be below the safe area
-        scrollData.scrollAmount = (safeAreaTop - inputTop);
+        scrollData.scrollAmount = Math.round(safeAreaTop - inputTop);
       }
 
       scrollData.inputSafeY = -(inputTop - safeAreaTop) + 4;
@@ -259,10 +272,9 @@ export class TextInput {
     } else if (inputTopAboveSafeArea) {
       // Input top above safe area
       // auto scroll the input down so at least the top of it shows
-      scrollData.scrollAmount = (safeAreaTop - inputTop);
+      scrollData.scrollAmount = Math.round(safeAreaTop - inputTop);
 
       scrollData.inputSafeY = (safeAreaTop - inputTop) + 4;
-
     }
 
     // figure out where it should scroll to for the best position to the input
@@ -287,7 +299,7 @@ export class TextInput {
     //   window.safeAreaEle = document.createElement('div');
     //   window.safeAreaEle.style.position = 'absolute';
     //   window.safeAreaEle.style.background = 'rgba(0, 128, 0, 0.7)';
-    //   window.safeAreaEle.style.padding = '10px';
+    //   window.safeAreaEle.style.padding = '2px 5px';
     //   window.safeAreaEle.style.textShadow = '1px 1px white';
     //   window.safeAreaEle.style.left = '0px';
     //   window.safeAreaEle.style.right = '0px';
@@ -316,7 +328,8 @@ export class TextInput {
   focusChange(hasFocus) {
     this.renderer.setElementClass(this.elementRef, 'has-focus', hasFocus);
     if (!hasFocus) {
-      this.deregListeners();
+      this.deregMove();
+      this.input.hideFocus(false);
     }
   }
 
@@ -340,17 +353,24 @@ export class TextInput {
       // ensure the body hasn't scrolled down
       document.body.scrollTop = 0;
     }
+  }
 
+  /**
+   * @private
+   */
+  regMove() {
     if (this.scrollAssist && this.scrollView) {
-      this.deregListeners();
-      this.deregScroll = this.scrollView.addScrollEventListener(this.scrollMove);
+      setTimeout(() => {
+        this.deregMove();
+        this.deregScroll = this.scrollView.addScrollEventListener(this.scrollMove);
+      }, 80);
     }
   }
 
   /**
    * @private
    */
-  deregListeners() {
+  deregMove() {
     this.deregScroll && this.deregScroll();
   }
 
@@ -365,7 +385,7 @@ export class TextInput {
    * @private
    */
   onDestroy() {
-    this.deregListeners();
+    this.deregMove();
     this.form.deregister(this);
   }
 
@@ -428,12 +448,14 @@ export class TextInputElement {
       if (shouldRelocate) {
         let clonedInputEle = focusedInputEle.cloneNode(true);
         clonedInputEle.classList.add('cloned-input');
+        clonedInputEle.classList.remove('hide-focused-input');
         clonedInputEle.setAttribute('aria-hidden', true);
         clonedInputEle.tabIndex = -1;
-        focusedInputEle.parentNode.insertBefore(clonedInputEle, focusedInputEle);
 
         focusedInputEle.classList.add('hide-focused-input');
         focusedInputEle.style[dom.CSS.transform] = `translate3d(-9999px,${inputRelativeY}px,0)`;
+        focusedInputEle.parentNode.insertBefore(clonedInputEle, focusedInputEle);
+
         this.wrapper.setFocus();
 
       } else {
@@ -449,19 +471,27 @@ export class TextInputElement {
     }
   }
 
-  hideFocus() {
-    console.debug('hideFocus');
+  hideFocus(shouldHideFocus) {
     let focusedInputEle = this.getNativeElement();
 
-    let hiddenInputEle = focusedInputEle.parentNode.querySelector('.cloned-hidden');
-    if (!hiddenInputEle) {
-      hiddenInputEle = focusedInputEle.cloneNode(true);
-      hiddenInputEle.classList.add('cloned-hidden');
-      hiddenInputEle.setAttribute('aria-hidden', true);
-      hiddenInputEle.tabIndex = -1;
-      focusedInputEle.parentNode.appendChild(hiddenInputEle);
+    if (shouldHideFocus) {
+      let clonedInputEle = focusedInputEle.cloneNode(true);
+      clonedInputEle.classList.add('cloned-hidden');
+      clonedInputEle.setAttribute('aria-hidden', true);
+      clonedInputEle.tabIndex = -1;
+
+      focusedInputEle.classList.add('hide-focused-input');
+      focusedInputEle.style[dom.CSS.transform] = 'translate3d(-9999px,0,0)';
+      focusedInputEle.parentNode.insertBefore(clonedInputEle, focusedInputEle);
+
+    } else {
+      focusedInputEle.classList.remove('hide-focused-input');
+      focusedInputEle.style[dom.CSS.transform] = '';
+      let clonedInputEle = focusedInputEle.parentNode.querySelector('.cloned-hidden');
+      if (clonedInputEle) {
+        clonedInputEle.parentNode.removeChild(clonedInputEle);
+      }
     }
-    hiddenInputEle.focus();
   }
 
   get hasFocus() {

@@ -48,7 +48,7 @@ Platform.register({
   ],
   settings: {
     hoverCSS: false,
-    keyboardHeight: 290,
+    keyboardHeight: 300,
     mode: 'md',
     scrollAssist: true,
   },
@@ -71,7 +71,7 @@ Platform.register({
   ],
   settings: {
     hoverCSS: false,
-    keyboardHeight: 290,
+    keyboardHeight: 300,
     mode: 'ios',
     scrollAssist: isIOSDevice,
     swipeBackEnabled: isIOSDevice,
