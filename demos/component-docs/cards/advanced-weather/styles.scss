@@ -72,11 +72,6 @@ body.ios ion-card p.advanced-background-title-large span {
     line-height: 1;
     display: inline-block;
   }
-  
-
-
-
-  
 
   ion-card .advanced-weather-tabs tabbar {
     background: transparent;
@@ -124,4 +119,11 @@ body.ios ion-card p.advanced-background-title-large span {
     color: #fff;
   }
 
+}
+
+ion-card .advanced-weather-tabs {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: transparent;
 }
