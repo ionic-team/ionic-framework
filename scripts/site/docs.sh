@@ -34,8 +34,11 @@ function run {
   if [[ "$CHANGES" == "" ]]; then
     echo "-- No changes detected in docs for $VERSION_NAME; docs not updated."
   else
+    git status
     git add -A
+    git status
     git commit -am "docs: update for $VERSION"
+    echo "pushing"
     source deploy.sh
 
     echo "-- Updated docs for $VERSION_NAME succesfully!"
