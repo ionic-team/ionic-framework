@@ -66,7 +66,7 @@ import {Icon} from '../icon/icon';
     'tabbarPlacement': 'bottom',
     'tabbarIcons': 'top',
     'tabbarStyle': 'default',
-    'preloadTabs': true
+    'preloadTabs': false
   },
   template:
     '<ion-navbar-section>' +
