@@ -26,7 +26,7 @@ function run {
   node_modules/.bin/gulp docs-index --dist=$SITE_DIR
 
   cd $SITE_DIR
-  npm install
+  #npm install
 
   CHANGES=$(git status --porcelain)
 
@@ -34,12 +34,9 @@ function run {
   if [[ "$CHANGES" == "" ]]; then
     echo "-- No changes detected in docs for $VERSION_NAME; docs not updated."
   else
-    git status
     git add -A
-    git status
     git commit -am "docs: update for $VERSION"
-    echo "pushing"
-    source deploy.sh
+    git push origin master
 
     echo "-- Updated docs for $VERSION_NAME succesfully!"
   fi
