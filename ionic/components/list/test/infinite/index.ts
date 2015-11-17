@@ -9,7 +9,7 @@ import {App, List} from 'ionic/ionic';
   templateUrl: 'main.html',
   directives: [forwardRef(() => ItemCellTemplate)]
 })
-class IonicApp {
+class E2EApp {
   constructor() {
 
     this.items = []
