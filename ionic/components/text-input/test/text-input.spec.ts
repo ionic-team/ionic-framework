@@ -129,7 +129,7 @@ export function run() {
     let platformHeight = 800;
 
     let scrollData = TextInput.getScollData(inputOffsetTop, inputOffsetHeight, scrollViewDimensions, keyboardHeight, platformHeight);
-    expect(scrollData.noScroll).toBe(true);
+    expect(scrollData.scrollAmount).toBe(0);
   });
 
 }
