@@ -11,16 +11,9 @@ checkout:
     - "[[ ! -s \"$(git rev-parse --git-dir)/shallow\" ]] || git fetch --unshallow"
 dependencies:
   post:
-    - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test && sudo apt-get update
-    - sudo apt-get install -y gcc-4.9 g++-4.9
-    - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.6 10
-    - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.6 10
-    - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 20
-    - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 20
     - bower install
 test:
   override:
-    - gcc --version
     - ./scripts/circle/test.sh --index=$CIRCLE_NODE_INDEX --total=$CIRCLE_NODE_TOTAL
 deployment:
   tasks:
