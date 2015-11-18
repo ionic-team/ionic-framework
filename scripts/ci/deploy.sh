@@ -14,7 +14,7 @@ function run {
   git config --global user.name 'Ionitron'
   git config --global user.email hi@ionicframework.com
 
-  git show $SHA1~1:package.json > .package.tmp.json
+  git show $CIRCLE_SHA1~1:package.json > .package.tmp.json
   OLD_VERSION=$(readJsonProp ".package.tmp.json" "version")
   VERSION=$(readJsonProp "package.json" "version")
 
