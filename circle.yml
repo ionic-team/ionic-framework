@@ -1,15 +1,8 @@
-machine:
-  node:
-    version: 4.1.0
-  ruby:
-    version: 2.2.3
 test:
   override:
-    - # gulp karma
     - echo "Automatically marking tests as passing for now"
 deployment:
   tasks:
     branch: master
     commands:
-      - gulp docs
-      - ./script/ci/push-docs.sh
+      - ./script/ci/deploy.sh
