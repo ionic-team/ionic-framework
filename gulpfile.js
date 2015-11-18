@@ -241,13 +241,30 @@ gulp.task('bundle.ionic', ['transpile'], function() {
 });
 
 gulp.task('temp.hack', function(){
-  var insert = require('gulp-insert');
+  var fs = require('fs');
+  var file = 'node_modules/angular2/bundles/angular2.dev.js';
 
-  var fileName = 'angular2.dev.js';
-  var filePath = 'node_modules/angular2/bundles/';
-  return gulp.src(filePath + fileName)
-    .pipe(insert.prepend("System.config({ 'paths': { '@reactivex/*': '@reactivex/*.js' }});\n"))
-    .pipe(gulp.dest(filePath));
+  var myHackedFileThatYouLove = fs.readFileSync(file, 'utf8');
+
+  myHackedFileThatYouLove = "System.config({ 'paths': { '@reactivex/*': '@reactivex/*.js' }});\n" + myHackedFileThatYouLove;
+
+  // don't judge me
+  var find = 'function moveNodesAfterSibling(sibling, nodes) {';
+  var replaceWith =
+  'function moveNodesAfterSibling(sibling, nodes) {\n' +
+  '    // https://github.com/angular/angular/issues/5077\n' +
+  '    var cs = sibling;\n' +
+  '    if (nodes.length > 0 && lang_1.isPresent(dom_adapter_1.DOM.parentElement(sibling))) {\n' +
+  '      for (var i = 0; i < nodes.length; i++) {\n' +
+  '        dom_adapter_1.DOM.insertAfter(cs, nodes[i]);\n' +
+  '        cs = nodes[i];\n' +
+  '      }\n' +
+  '    }\n' +
+  '  }\n' +
+  '  function moveNodesAfterSibling_IF_YOU_WANT_DAT_FLICKER(sibling, nodes) {';
+  myHackedFileThatYouLove = myHackedFileThatYouLove.replace(find, replaceWith);
+
+  fs.writeFileSync(file, myHackedFileThatYouLove, 'utf8');
 });
 
 gulp.task('bundle', ['bundle.ionic'], function() {
@@ -496,4 +513,3 @@ gulp.task('demos:docs', ['sass.demos:docs', 'bundle.demos:docs'], function() {
 });
 
 gulp.task('demos', ['demos:all']);
-
