@@ -7,7 +7,7 @@ import {IONIC_DIRECTIVES} from './directives';
 
 /**
  * _For more information on how pages are created, see the [NavController API
- * reference](../../Nav/NavController/#creating_pages)._
+ * reference](../../components/nav/NavController/#creating_pages)._
  *
  * The Page decorator indicates that the decorated class is an Ionic
  * navigation component, meaning it can be navigated to using a NavController.
