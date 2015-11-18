@@ -33,7 +33,7 @@ function run {
 
 
   # We have to install jekyll for the site task.
-  gem install jekyll --pre && gem install jekyll-paginate
+  # gem install jekyll --pre && gem install jekyll-paginate
   # Install gulp globally for site deploy script.
   npm install -g gulp
 
