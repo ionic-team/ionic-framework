@@ -5,4 +5,4 @@ deployment:
   tasks:
     branch: master
     commands:
-      - ./script/ci/deploy.sh
+      - ./scripts/ci/deploy.sh
