@@ -100,7 +100,7 @@ export class SqlStorage extends StorageEngine {
   query(query, ...params) {
     return new Promise((resolve, reject) => {
       this._db.transaction((tx) => {
-        ts.executeSql(query, params, (tx, res) => {
+        tx.executeSql(query, params, (tx, res) => {
           resolve({
             tx: tx,
             res: res
