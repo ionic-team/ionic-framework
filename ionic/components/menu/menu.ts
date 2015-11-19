@@ -147,14 +147,19 @@ export class Menu extends Ion {
     if (!type) {
       type = this.config.get('menuType');
     }
-
-    this._type = new menuTypes[type](this);
     this.type = type;
+  }
 
-    if (this.config.get('animate') === false) {
-      this._type.open.duration(33);
-      this._type.close.duration(33);
+  _getType() {
+    if (!this._type) {
+      this._type = new menuTypes[this.type](this);
+
+      if (this.config.get('animate') === false) {
+        this._type.open.duration(33);
+        this._type.close.duration(33);
+      }
     }
+    return this._type;
   }
 
   /**
@@ -171,7 +176,7 @@ export class Menu extends Ion {
 
     this._before();
 
-    return this._type.setOpen(shouldOpen).then(() => {
+    return this._getType().setOpen(shouldOpen).then(() => {
       this._after(shouldOpen);
     });
   }
@@ -185,7 +190,7 @@ export class Menu extends Ion {
 
     this._before();
 
-    this._type.setProgressStart(this.isOpen);
+    this._getType().setProgressStart(this.isOpen);
   }
 
   /**
@@ -196,7 +201,7 @@ export class Menu extends Ion {
     if (this.isEnabled) {
       this._prevent();
       this.app.setTransitioning(true);
-      this._type.setProgess(value);
+      this._getType().setProgess(value);
     }
   }
 
@@ -208,7 +213,7 @@ export class Menu extends Ion {
     if (this.isEnabled) {
       this._prevent();
       this.app.setTransitioning(true);
-      this._type.setProgressEnd(shouldComplete).then(isOpen => {
+      this._getType().setProgressEnd(shouldComplete).then(isOpen => {
         this._after(isOpen);
       });
     }

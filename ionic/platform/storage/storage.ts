@@ -28,8 +28,8 @@ export class Storage {
   remove(key) {
     return this._strategy.remove(key);
   }
-  query(query) {
-    return this._strategy.query(key);
+  query(query, params) {
+    return this._strategy.query(query, params);
   }
 }
 
@@ -43,7 +43,7 @@ export class StorageEngine {
   remove(key) {
     throw Error("remove() not implemented for this storage engine");
   }
-  query(query) {
+  query(query, params) {
     throw Error("query() not implemented for this storage engine");
   }
 }

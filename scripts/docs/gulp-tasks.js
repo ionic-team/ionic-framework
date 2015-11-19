@@ -1,4 +1,4 @@
-
+var config = require('../config.json');
 module.exports = function(gulp, flags) {
   gulp.task('docs', ['docs.demos'], function() {
     var Dgeni = require('dgeni');
@@ -28,7 +28,7 @@ module.exports = function(gulp, flags) {
         '!dist/src',
         '!dist/src/**/*'
       ])
-      .pipe(gulp.dest('dist/ionic-site/docs/v2/dist'));
+      .pipe(gulp.dest(config.docsDest + '/dist'));
   });
 
   gulp.task('docs.index', function() {
@@ -56,7 +56,7 @@ module.exports = function(gulp, flags) {
       refId++;
     }
 
-    var docPath = 'dist/ionic-site/docs/v2';
+    var docPath = config.docsDest;
     gutil.log('Reading docs from', gutil.colors.cyan(docPath));
 
     return gulp.src([
@@ -68,7 +68,7 @@ module.exports = function(gulp, flags) {
         var contents = file.contents.toString(); //was buffer
 
         // Grab relative path from ionic-site root
-        var relpath = file.path.replace(RegExp('^.*?' + docPath.replace('/docs/v2', '') + '/'), '');
+        var relpath = file.path.replace(RegExp('^.*?' + docPath.replace('/' + config.v2DocsDir, '') + '/'), '');
 
         // Read out the yaml portion of the Jekyll file
         var yamlStartIndex = contents.indexOf('---');
@@ -179,7 +179,7 @@ module.exports = function(gulp, flags) {
     entities = new Entities();
 
     var variables = [];
-    var outputFile = 'dist/ionic-site/docs/v2/data/sass.json';
+    var outputFile = config.docsDest + '/data/sass.json';
 
     // Add the variable to the array, encode the html and remove !default from the value
     function addVariable(variableName, defaultValue, file) {
@@ -225,7 +225,7 @@ module.exports = function(gulp, flags) {
         callback();
       }).on('end', function() {
         gutil.log("Writing to file at", gutil.colors.cyan("/driftyco/ionic2/" + outputFile));
-        gutil.log("Place this file in", gutil.colors.cyan("/driftyco/ionic-site/docs/v2/theming/overriding-ionic-variables/"), "in order to update the docs");
+        gutil.log("Place this file in", gutil.colors.cyan("/driftyco/ionic-site/" + config.v2DocsDir + "/theming/overriding-ionic-variables/"), "in order to update the docs");
         fs.writeFileSync(outputFile, JSON.stringify(variables));
       }));
   });

@@ -450,7 +450,7 @@ export class NavController extends Ion {
         return done();
       }
 
-      this._setZIndex(enteringView.instance, leavingView.instance, opts.direction);
+      this._setZIndex(enteringView.instance, leavingView && leavingView.instance, opts.direction);
 
       this._zone.runOutsideAngular(() => {
 

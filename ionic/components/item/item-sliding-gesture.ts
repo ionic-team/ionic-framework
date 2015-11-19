@@ -20,14 +20,14 @@ export class ItemSlidingGesture extends DragGesture {
     this.canDrag = true;
     this.listen();
 
-    this.on('tap', ev => {
+    this.tap = (ev) => {
       if (!isFromOptionButtons(ev.target)) {
         let didClose = this.closeOpened();
         if (didClose) {
           preventDefault(ev);
         }
       }
-    });
+    };
 
     this.mouseOut = (ev) => {
       this.onDragEnd(ev);
@@ -38,14 +38,14 @@ export class ItemSlidingGesture extends DragGesture {
     let itemContainerEle = getItemConatiner(ev.target);
     if (!itemContainerEle) return;
 
-    this.closeOpened(ev, itemContainerEle);
+    this.closeOpened(itemContainerEle);
 
     let openAmout = this.getOpenAmount(itemContainerEle);
     let itemData = this.get(itemContainerEle);
     this.preventDrag = (openAmout > 0);
 
     if (this.preventDrag) {
-      this.closeOpened(ev);
+      this.closeOpened();
       return preventDefault(ev);
     }
 
@@ -57,16 +57,18 @@ export class ItemSlidingGesture extends DragGesture {
     if (ev.srcEvent.type.indexOf('mouse') > -1) {
       ev.target.addEventListener('mouseout', this.mouseOut);
     }
+
+    this.dragEnded = false;
   }
 
   onDrag(ev) {
-    if (Math.abs(ev.deltaY) > 30) {
+    if (this.dragEnded || this.preventDrag || Math.abs(ev.deltaY) > 30) {
       this.preventDrag = true;
-      return this.closeOpened(ev);
+      return;
     }
 
     let itemContainerEle = getItemConatiner(ev.target);
-    if (!itemContainerEle || !isActive(itemContainerEle) || this.preventDrag) return;
+    if (!itemContainerEle || !isActive(itemContainerEle)) return;
 
     let itemData = this.get(itemContainerEle);
 
@@ -74,9 +76,6 @@ export class ItemSlidingGesture extends DragGesture {
       itemData.optsWidth = getOptionsWidth(itemContainerEle);
       if (!itemData.optsWidth) return;
     }
-
-    itemContainerEle.classList.add('active-slide');
-    itemContainerEle.classList.add('active-options');
 
     let x = ev.center[this.direction];
     let delta = x - itemData.startX;
@@ -88,11 +87,18 @@ export class ItemSlidingGesture extends DragGesture {
       newX = -Math.min(-itemData.optsWidth, -itemData.optsWidth + (((delta + itemData.optsWidth) * 0.4)));
     }
 
-    this.open(itemContainerEle, newX, false);
+    raf(() => {
+      if (!this.dragEnded && !this.preventDrag) {
+        isItemActive(itemContainerEle, true);
+        this.open(itemContainerEle, newX, false);
+      }
+    });
   }
 
   onDragEnd(ev) {
     this.preventDrag = false;
+    this.dragEnded = true;
+
     let itemContainerEle = getItemConatiner(ev.target);
     if (!itemContainerEle || !isActive(itemContainerEle)) return;
 
@@ -108,12 +114,7 @@ export class ItemSlidingGesture extends DragGesture {
     if (this.getOpenAmount(itemContainerEle) < (restingPoint / 2)) {
 
       // If we are going left but too slow, or going right, go back to resting
-      if (ev.direction & Hammer.DIRECTION_RIGHT) {
-        // Left
-        restingPoint = 0;
-
-      } else if (Math.abs(ev.velocityX) < 0.3) {
-        // Right
+      if (ev.direction & Hammer.DIRECTION_RIGHT || Math.abs(ev.velocityX) < 0.3) {
         restingPoint = 0;
       }
     }
@@ -125,7 +126,7 @@ export class ItemSlidingGesture extends DragGesture {
     });
   }
 
-  closeOpened(ev, doNotCloseEle) {
+  closeOpened(doNotCloseEle) {
     let didClose = false;
     if (this.openItems) {
       let openItemElements = this.listEle.querySelectorAll('.active-slide');
@@ -153,8 +154,7 @@ export class ItemSlidingGesture extends DragGesture {
     } else {
       let timerId = setTimeout(() => {
         if (slidingEle.style[CSS.transform] === '') {
-          itemContainerEle.classList.remove('active-slide');
-          itemContainerEle.classList.remove('active-options');
+          isItemActive(itemContainerEle, false);
           this.openItems--;
         }
       }, 400);
@@ -165,6 +165,12 @@ export class ItemSlidingGesture extends DragGesture {
     slidingEle.style[CSS.transform] = (openAmount ? 'translate3d(' + -openAmount + 'px,0,0)' : '');
 
     if (isFinal) {
+      if (openAmount) {
+        isItemActive(itemContainerEle, true);
+        this.on('tap', this.tap);
+      } else {
+        this.off('tap', this.tap);
+      }
       this.enableScroll(!openAmount);
     }
   }
@@ -195,6 +201,11 @@ export class ItemSlidingGesture extends DragGesture {
     super.unlisten();
     this.listEle = null;
   }
+}
+
+function isItemActive(ele, isActive) {
+  ele.classList[isActive ? 'add' : 'remove']('active-slide');
+  ele.classList[isActive ? 'add' : 'remove']('active-options');
 }
 
 function preventDefault(ev) {

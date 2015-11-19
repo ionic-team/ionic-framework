@@ -1,5 +1,5 @@
 import {Menu} from './menu';
-import {SlideEdgeGesture} from 'ionic/gestures/slide-edge-gesture';
+import {SlideEdgeGesture} from '../../gestures/slide-edge-gesture';
 
 import * as util from 'ionic/util';
 

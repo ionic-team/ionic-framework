@@ -7,7 +7,9 @@ import * as helpers from '../../helpers';
   directives: [forwardRef(() => helpers.AndroidAttribute)]
 })
 export class BasicPage{
-  constructor() {
+  constructor(app: IonicApp) {
+    this.app = app;
+    this.app.getComponent('leftMenu').enable(true);
   }
 }
 

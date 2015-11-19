@@ -8,6 +8,7 @@ var path = require('path');
 var semver = require('semver');
 var fs = require('fs');
 var _ = require('lodash');
+var config = require('../config.json');
 
 // Define the dgeni package for generating the docs
 module.exports = function(currentVersion){
@@ -44,7 +45,7 @@ module.exports = function(currentVersion){
 
 .config(function(renderDocsProcessor, computePathsProcessor, versionInfo) {
   try {
-    versions = fs.readdirSync(path.resolve(__dirname, '../../dist/ionic-site/docs/v2/'))
+    versions = fs.readdirSync(path.resolve(__dirname, '../../' + config.docsDest + '/'))
       .filter(semver.valid)
   } catch(e) {
     versions = [];
@@ -66,7 +67,7 @@ module.exports = function(currentVersion){
     //Latest version is in docs root
     var folder = version == latestVersion ? '' : version;
     return {
-      href: path.join('/docs/v2', folder),
+      href: path.join('/' + config.v2DocsDir, folder),
       folder: folder,
       name: version
     };
@@ -89,7 +90,7 @@ module.exports = function(currentVersion){
       // remove filename since we have multiple docTypes per file
       docPath = docPath.substring(0, docPath.lastIndexOf('/') + 1);
       docPath += doc.name + '/index.md';
-      var path = 'docs/v2/' + (versionData.current.folder || '') +
+      var path = config.v2DocsDir + '/' + (versionData.current.folder || '') +
                      '/api/' +  docPath;
 
                     return path;
@@ -127,7 +128,7 @@ module.exports = function(currentVersion){
 
 // Configure file writing
 .config(function(writeFilesProcessor) {
-  writeFilesProcessor.outputFolder  = 'dist/ionic-site'
+  writeFilesProcessor.outputFolder  = config.sitePath;
 })
 
 // Configure rendering

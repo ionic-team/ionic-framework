@@ -25,16 +25,16 @@ class DemoApp {
     ];
 
     this.platform.ready().then( () => {
+
       window.addEventListener('message', (e) => {
+
         zone.run(() => {
           if (e.data) {
-
             var data = JSON.parse(e.data);
             if (data.hash) {
               this.nextPage = helpers.getPageFor(data.hash.replace('#', ''));
-              this.app.getComponent('leftMenu').enable(false);
-              if (data.hash === 'menus') {
-                this.app.getComponent('leftMenu').enable(true);                
+              if (data.hash !== 'menus') {
+                this.app.getComponent('leftMenu').enable(false);
               }
             } else {
               this.nextPage = actionSheets.BasicPage;
@@ -57,6 +57,7 @@ class DemoApp {
 
   openPage(page) {
     // close the menu when clicking a link from the menu
+    // debugger;
     this.app.getComponent('leftMenu').close();
 
     // Reset the content nav to have just this page

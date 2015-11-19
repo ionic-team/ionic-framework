@@ -76,7 +76,7 @@ export class OverlayController {
               this.app.setEnabled(true);
               this.app.setTransitioning(false);
               instance.onPageDidEnter && instance.onPageDidEnter();
-              resolve();
+              resolve(instance);
             });
 
           });
