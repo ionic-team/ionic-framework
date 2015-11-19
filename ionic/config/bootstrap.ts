@@ -24,7 +24,6 @@ import * as dom from '../util/dom';
 export function ionicProviders(args={}) {
   let fastdom = new FastDom();
 
-  let app = new IonicApp(fastdom);
   let platform = new Platform();
   let navRegistry = new NavRegistry(args.pages);
 
@@ -39,6 +38,8 @@ export function ionicProviders(args={}) {
   platform.navigatorPlatform(window.navigator.platform);
   platform.load();
   config.setPlatform(platform);
+
+  let app = new IonicApp(config, fastdom);
 
   let events = new Events();
   initTapClick(window, document, app, config, fastdom);

@@ -10,7 +10,8 @@ import {ScrollTo} from '../../animations/scroll-to';
  */
 export class IonicApp {
 
-  constructor(fastdom) {
+  constructor(config, fastdom) {
+    this._config = config;
     this._fastdom = fastdom;
     this._titleSrv = new Title();
     this._title = '';
@@ -47,7 +48,9 @@ export class IonicApp {
    */
   setEnabled(isEnabled, fallback=700) {
     this._disTime = (isEnabled ? 0 : Date.now() + fallback);
-    ClickBlock(!isEnabled, fallback + 100);
+    if (this._config.get('clickBlock')) {
+      ClickBlock(!isEnabled, fallback + 100);
+    }
   }
 
   /**

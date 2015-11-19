@@ -70,6 +70,7 @@ Platform.register({
     'iphone'
   ],
   settings: {
+    clickBlock: true,
     hoverCSS: false,
     keyboardHeight: 300,
     mode: 'ios',
