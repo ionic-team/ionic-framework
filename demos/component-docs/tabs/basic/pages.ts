@@ -1,12 +1,12 @@
 import {NavController, NavParams} from 'ionic/ionic';
-import {Page, ViewController} from 'ionic/ionic';
+import {Page, ViewController, Platform} from 'ionic/ionic';
 import {forwardRef} from 'angular2/angular2';
 import * as helpers from '../../helpers';
 
 
 @Page({
   template: '' +
-    '<ion-navbar *navbar hide-back-button class="android-attr">' +
+    '<ion-navbar *navbar hide-back-button [attr.primary]="isAndroid ? \'\' : null">' +
     '<ion-title>Tabs</ion-title>' +
     '</ion-navbar>' +
     '<ion-content>' +
@@ -14,7 +14,9 @@ import * as helpers from '../../helpers';
   directives: [forwardRef(() => helpers.AndroidAttribute)],
 })
 class TabTextPage {
-  constructor() {
+  constructor(platform: Platform) {
+    this.platform = platform;
+    this.isAndroid = platform.is('android');
   }
 }
 

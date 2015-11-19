@@ -18,7 +18,10 @@ import * as tabs from './tabs/tabs';
 
 
 @Directive({
-  selector: '.android-attr',
+  selector: '[android-attr]',
+  defaultInputs: {
+    'androidAttr': 'primary'
+  },
 })
 export class AndroidAttribute {
 

@@ -1,30 +1,32 @@
 import {NavController, NavParams} from 'ionic/ionic';
-import {Page, ViewController} from 'ionic/ionic';
+import {Page, ViewController, Platform} from 'ionic/ionic';
 import {forwardRef} from 'angular2/angular2';
 import * as helpers from '../../helpers';
 
 
 @Page({
   template: '' +
-  '<ion-navbar *navbar hide-back-button class="android-attr">' +
-  '<ion-title>Tabs</ion-title>' +
+  '<ion-navbar *navbar hide-back-button [attr.royal]="isAndroid ? \'\' : null">' +
+    '<ion-title>Tabs</ion-title>' +
   '</ion-navbar>' +
   '<ion-content>' +
   '</ion-content>',
   directives: [forwardRef(() => helpers.AndroidAttribute)],
 })
 class TabIconTextPage {
-  constructor() {
+  constructor(platform: Platform) {
+    this.platform = platform;
+    this.isAndroid = platform.is('android');
   }
 }
 
 @Page({
   template:
   '<ion-tabs class="tabs-icon-text">' +
-  '<ion-tab tab-icon="water" tab-title="Water" [root]="tabOne"></ion-tab>' +
-  '<ion-tab tab-icon="leaf" tab-title="Life" [root]="tabTwo"></ion-tab>' +
-  '<ion-tab tab-icon="flame" tab-title="Fire" [root]="tabThree"></ion-tab>' +
-  '<ion-tab tab-icon="magnet" tab-title="Force" [root]="tabFour"></ion-tab>' +
+    '<ion-tab tab-icon="water" tab-title="Water" [root]="tabOne"></ion-tab>' +
+    '<ion-tab tab-icon="leaf" tab-title="Life" [root]="tabTwo"></ion-tab>' +
+    '<ion-tab tab-icon="flame" tab-title="Fire" [root]="tabThree"></ion-tab>' +
+    '<ion-tab tab-icon="magnet" tab-title="Force" [root]="tabFour"></ion-tab>' +
   '</ion-tabs>',
 })
 export class IconTextPage {
