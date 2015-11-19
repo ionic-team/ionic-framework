@@ -110,6 +110,16 @@ export class Platform {
     return this._versions;
   }
 
+
+  version() {
+    for (let platformName in this._versions) {
+      if (this._versions[platformName]) {
+        return this._versions[platformName];
+      }
+    }
+    return {};
+  }
+
   /**
    * @returns {promise}
    * @description

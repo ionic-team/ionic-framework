@@ -47,6 +47,9 @@ Platform.register({
     'tablet'
   ],
   settings: {
+    activator: function(p) {
+      return (p.version().major >= 5) ? 'ripple' : 'none';
+    },
     hoverCSS: false,
     keyboardHeight: 300,
     mode: 'md',
