@@ -116,16 +116,14 @@ class MenuPushType extends MenuType {
     let easing = 'ease';
     let duration = 250;
 
-    let contentClosedX, contentOpenedX, menuClosedX, menuOpenedX;
+    let contentOpenedX, menuClosedX, menuOpenedX;
 
     if (menu.side == 'right') {
       contentOpenedX = -menu.width() + 'px';
-      contentClosedX =  '0px';
       menuOpenedX = (menu.platform.width() - menu.width()) + 'px';
       menuClosedX = menu.platform.width() + 'px';
     } else {
       contentOpenedX = menu.width() + 'px';
-      contentClosedX =  '0px';
       menuOpenedX = '0px';
       menuClosedX = -menu.width() + 'px';
     }
@@ -139,7 +137,7 @@ class MenuPushType extends MenuType {
     this.open.add(menuOpen);
 
     let contentOpen = new Animation(menu.getContentElement());
-    contentOpen.fromTo(TRANSLATE_X, contentClosedX, contentOpenedX);
+    contentOpen.fromTo(TRANSLATE_X, '0px', contentOpenedX);
     this.open.add(contentOpen);
 
     let menuClose = new Animation(menu.getMenuElement());
@@ -147,7 +145,7 @@ class MenuPushType extends MenuType {
     this.close.add(menuClose);
 
     let contentClose = new Animation(menu.getContentElement());
-    contentClose.fromTo(TRANSLATE_X, contentOpenedX, contentClosedX);
+    contentClose.fromTo(TRANSLATE_X, contentOpenedX, '0px');
     this.close.add(contentClose);
   }
 }
