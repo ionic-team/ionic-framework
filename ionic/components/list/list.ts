@@ -33,6 +33,7 @@ export class List extends Ion {
   constructor(elementRef: ElementRef, config: Config, private zone: NgZone) {
     super(elementRef, config);
     this.ele = elementRef.nativeElement;
+    this._enableSliding = false;
   }
 
   /**
@@ -76,18 +77,22 @@ export class List extends Ion {
   }
 
   enableSlidingItems(shouldEnable) {
-    this._enableSliding = shouldEnable;
-
     if (this._init) {
-      if (shouldEnable) {
-        this.zone.runOutsideAngular(() => {
-          setTimeout(() => {
-            this.slidingGesture = new ItemSlidingGesture(this, this.ele);
-          });
-        });
 
-      } else {
-        this.slidingGesture && this.slidingGesture.unlisten();
+      if (this._enableSliding !== shouldEnable) {
+        this._enableSliding = shouldEnable;
+
+        if (shouldEnable) {
+          console.debug('enableSlidingItems');
+          this.zone.runOutsideAngular(() => {
+            setTimeout(() => {
+              this.slidingGesture = new ItemSlidingGesture(this, this.ele);
+            });
+          });
+
+        } else {
+          this.slidingGesture && this.slidingGesture.unlisten();
+        }
       }
     }
   }
