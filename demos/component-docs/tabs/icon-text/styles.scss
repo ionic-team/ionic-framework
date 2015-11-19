@@ -1,0 +1,22 @@
+body.md {
+  
+  .tabs-icon-text tabbar {
+    background-color: #7e60ff;
+
+    a {
+      color: #fff !important;
+    }
+  }
+  .tabs-icon-text tab-highlight {
+    color: #fff;
+    background-color: #fff;
+  }
+}
+
+body.ios {
+  .tabs-icon-text tabbar {
+    a {
+      color: #7e60ff;
+    }
+  }
+}

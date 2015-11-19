@@ -20,7 +20,7 @@ class TabIconTextPage {
 
 @Page({
   template:
-  '<ion-tabs>' +
+  '<ion-tabs class="tabs-icon-text">' +
   '<ion-tab tab-icon="water" tab-title="Water" [root]="tabOne"></ion-tab>' +
   '<ion-tab tab-icon="leaf" tab-title="Life" [root]="tabTwo"></ion-tab>' +
   '<ion-tab tab-icon="flame" tab-title="Fire" [root]="tabThree"></ion-tab>' +
