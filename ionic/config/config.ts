@@ -33,10 +33,10 @@ import {isObject, isDefined, isFunction, isArray, extend} from '../util/util';
  * @App({
  *   template: `<ion-nav [root]="root"></ion-nav>`
  *   config: {
- *     'tabbarPlacement': 'bottom',
+ *     tabbarPlacement: 'bottom',
  *     platform: {
  *      ios: {
- *        'tabbarPlacement': 'top',
+ *        tabbarPlacement: 'top',
  *      }
  *     }
  *   }
@@ -47,7 +47,7 @@ import {isObject, isDefined, isFunction, isArray, extend} from '../util/util';
  *
  * ```html
  * <ion-tabs tabbar-placement="top">
- *    <ion-tab tab-title="Dash" tab-icon="pulse" [root]="DashRoot"></ion-tab>
+ *    <ion-tab tab-title="Dash" tab-icon="pulse" [root]="tabRoot"></ion-tab>
  *  </ion-tabs>
  * ```
  *
