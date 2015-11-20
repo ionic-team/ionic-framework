@@ -42,12 +42,11 @@ export class SqlStorage extends StorageEngine {
   constructor(options) {
     super();
 
-    let dbOptions = util.defaults({
+    let dbOptions = util.defaults(options, {
       name: DB_NAME,
       backupFlag: SqlStorage.BACKUP_LOCAL,
       existingDatabase: false
-    }, options);
-
+    });
 
     if(window.sqlitePlugin) {
       let location = this._getBackupLocation(dbOptions.backupFlag);
