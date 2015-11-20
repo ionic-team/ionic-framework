@@ -49,7 +49,8 @@ $list-md-border-color:          $item-md-border-color !default;
   > ion-item-sliding:last-child .item {
     border-bottom: 1px solid $list-md-border-color;
 
-    .item-inner {
+    .item-inner,
+    ion-item-content {
       border-bottom: none;
     }
   }

@@ -13,6 +13,16 @@ $checkbox-md-checkmark-color-on:    $background-color !default;
 
 
 ion-checkbox {
+  &.item .item-inner {
+    border: none;
+    padding-right: 0;
+  }
+
+  ion-item-content {
+    border-bottom: 1px solid $item-md-border-color;
+    margin: 0;
+    padding: $item-md-padding-top ($item-md-padding-right / 2) $item-md-padding-bottom 0;
+  }
 
   &[aria-checked=true] checkbox-icon {
     background-color: $checkbox-md-background-color-on;
