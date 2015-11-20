@@ -18,10 +18,7 @@ import * as tabs from './tabs/tabs';
 
 
 @Directive({
-  selector: '[android-attr]',
-  defaultInputs: {
-    'androidAttr': 'primary'
-  },
+  selector: '.android-attr',
 })
 export class AndroidAttribute {
 
@@ -72,6 +69,7 @@ export function hasScrollbar() {
 
 export function getPageFor(hash) {
     return {
+        'overview': actionSheets.BasicPage,
         'action-sheets': actionSheets.BasicPage,
 
         'buttons': buttons.BasicPage,

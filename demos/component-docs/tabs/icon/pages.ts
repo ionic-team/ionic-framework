@@ -7,7 +7,7 @@ import * as helpers from '../../helpers';
 @Page({
   template: '' +
   '<ion-navbar *navbar hide-back-button [attr.danger]="isAndroid ? \'\' : null">' +
-  '<ion-title>Tabs</ion-title>' +
+    '<ion-title>Tabs</ion-title>' +
   '</ion-navbar>' +
   '<ion-content>' +
   '</ion-content>',
@@ -18,15 +18,23 @@ class TabIconPage {
     this.platform = platform;
     this.isAndroid = platform.is('android');
   }
+  onInit() {
+    document.getElementById('md-tabs-icon').style.display = "block";
+    document.getElementById('md-only').style.display = "none";
+  }
+  onDestroy() {
+    document.getElementById('md-tabs-icon').style.display = "none";
+    document.getElementById('md-only').style.display = "block";
+  }
 }
 
 @Page({
   template:
   '<ion-tabs class="tabs-icon">' +
-  '<ion-tab tab-icon="contact" [root]="tabOne"></ion-tab>' +
-  '<ion-tab tab-icon="compass" [root]="tabTwo"></ion-tab>' +
-  '<ion-tab tab-icon="analytics" [root]="tabThree"></ion-tab>' +
-  '<ion-tab tab-icon="settings" [root]="tabFour"></ion-tab>' +
+    '<ion-tab tab-icon="contact" [root]="tabOne"></ion-tab>' +
+    '<ion-tab tab-icon="compass" [root]="tabTwo"></ion-tab>' +
+    '<ion-tab tab-icon="analytics" [root]="tabThree"></ion-tab>' +
+    '<ion-tab tab-icon="settings" [root]="tabFour"></ion-tab>' +
   '</ion-tabs>',
 })
 export class IconPage {

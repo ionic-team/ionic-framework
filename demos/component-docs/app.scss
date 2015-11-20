@@ -127,6 +127,14 @@ body.md img#md-only {
   height: auto;
 }
 
+body.md img#md-tabs-icon, body.md img#md-tabs-icon-text {
+  display: none;
+  position: absolute;
+  top: -24px;
+  width: 100%;
+  height: auto;
+}
+
 body.ios img#ios-only {
   display: block !important;
   position: absolute;

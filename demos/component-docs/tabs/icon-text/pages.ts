@@ -18,6 +18,14 @@ class TabIconTextPage {
     this.platform = platform;
     this.isAndroid = platform.is('android');
   }
+  onInit() {
+    document.getElementById('md-tabs-icon-text').style.display = "block";
+    document.getElementById('md-only').style.display = "none";
+  }
+  onDestroy() {
+    document.getElementById('md-tabs-icon-text').style.display = "none";
+    document.getElementById('md-only').style.display = "block";
+  }
 }
 
 @Page({
