@@ -6,19 +6,26 @@
 
 </ion-navbar>
 
+<ion-toolbar [attr.primary]="isAndroid ? '' : null">
+  <ion-segment [(ng-model)]="pet">
+    <ion-segment-button value="puppies">
+      Puppies
+    </ion-segment-button>
+    <ion-segment-button value="kittens">
+      Kittens
+    </ion-segment-button>
+    <ion-segment-button value="ducklings">
+      Ducklings
+    </ion-segment-button>
+  </ion-segment> 
+</ion-toolbar>
+
 
 <ion-content>
 
-  <div padding>
-    <ion-segment [(ng-model)]="pet">
-      <ion-segment-button value="kittens">
-        Kittens
-      </ion-segment-button>
-      <ion-segment-button value="puppies">
-        Puppies
-      </ion-segment-button>
-    </ion-segment> 
-  </div> 
+<!--   <div padding>
+
+  </div>  -->
 
   <div [ng-switch]="pet">
     <ion-list *ng-switch-when="'puppies'">
@@ -72,6 +79,33 @@
           <img src="img/thumbnail-kitten-2.jpg">
         </ion-thumbnail>
         <h2>Nala</h2>
+      </ion-item>
+    </ion-list>
+
+    <ion-list *ng-switch-when="'ducklings'">
+      <ion-item>
+        <ion-thumbnail item-left>
+          <img src="img/thumbnail-duckling-1.jpg">
+        </ion-thumbnail>
+        <h2>Daffy</h2>
+      </ion-item>
+      <ion-item>
+        <ion-thumbnail item-left>
+          <img src="img/thumbnail-duckling-2.jpg">
+        </ion-thumbnail>
+        <h2>Huey</h2>
+      </ion-item>
+      <ion-item>
+        <ion-thumbnail item-left>
+          <img src="img/thumbnail-duckling-3.jpg">
+        </ion-thumbnail>
+        <h2>Dewey</h2>
+      </ion-item>
+      <ion-item>
+        <ion-thumbnail item-left>
+          <img src="img/thumbnail-duckling-4.jpg">
+        </ion-thumbnail>
+        <h2>Louie</h2>
       </ion-item>
     </ion-list>
   </div>

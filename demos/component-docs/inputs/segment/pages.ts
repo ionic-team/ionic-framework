@@ -1,4 +1,4 @@
-import {Page} from 'ionic/ionic';
+import {Page, Platform} from 'ionic/ionic';
 import {forwardRef} from 'angular2/angular2';
 import {AndroidAttribute} from '../../helpers';
 
@@ -7,8 +7,10 @@ import {AndroidAttribute} from '../../helpers';
   directives: [forwardRef(() => AndroidAttribute)]
 })
 export class SegmentPage{
-  constructor() {
+  constructor(platform: Platform) {
+    this.platform = platform;
     this.pet = "puppies";
+    this.isAndroid = platform.is('android');
   }
 
 }
