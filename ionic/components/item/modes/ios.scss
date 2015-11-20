@@ -35,13 +35,17 @@ ion-item-group {
     padding: $item-ios-padding-top $item-ios-padding-right $item-ios-padding-bottom $item-ios-padding-left;
     background-color: $item-ios-divider-bg;
     color: $item-ios-divider-color;
-    border-bottom: 1px solid $item-ios-border-color;
   }
 
   .item:first-child {
     .item-inner {
       border-top-width: 0;
     }
+  }
+
+  .item:last-child .item-inner,
+  ion-item-sliding:last-child .item .item-inner {
+    border: none;
   }
 }
 
@@ -165,8 +169,7 @@ a.item:not([detail-none]) .item-inner,
 }
 
 &.hairlines {
-  .item-inner,
-  ion-item-group ion-item-group-title {
+  .item-inner {
     border-bottom-width: 0.55px;
   }
 }
