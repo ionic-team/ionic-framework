@@ -2,8 +2,7 @@ import {Component} from 'angular2/angular2';
 
 
 /**
- * Creates a list-item that can easily be swiped,
- * deleted, reordered, edited, and more.
+ * Creates a list-item that can easily be swiped, deleted, reordered, edited, and more.
  *
  * There are three common ways to use an item:
  * - Use `<ion-item>` for something that is only non-clickable text.
@@ -14,19 +13,30 @@ import {Component} from 'angular2/angular2';
  * To hide this icon, add the `detail-none` attribute to the item (eg: `<button ion-item detail-none>`). To add the icon when it is not displayed by default,
  * add the `detail-push` attribute (eg: `<ion-item detail-push>`).
  *
+ * To break an item up into multiple columns, add multiple `<ion-item-content>` components inside of the item. By default,
+ * this component will automatically be added inside of an `<ion-item>`, giving it a single column.
+ *
  *
  * @usage
  * ```html
- * <ion-list>
- *   <ion-item *ng-for="#item of items" (click)="itemTapped($event, item)">
- *     {{item.title}}
- *     <ion-note item-right>
- *       {{item.note}}
- *     </ion-note>
- *   </ion-item>
- * </ion-list>
- *  ```
  *
+ * <ion-list>
+ *
+ *   // default item
+ *   <ion-item>
+ *     {{item.title}}
+ *   </ion-item>
+ *
+ *   // multiple item-content containers
+ *   <ion-item>
+ *     <ion-item-content>First Column</ion-item-content>
+ *     <ion-item-content>Second Column</ion-item-content>
+ *     <ion-item-content>Third Column</ion-item-content>
+ *   </ion-item>
+ *
+ * </ion-list>
+ *
+ *  ```
  */
 @Component({
   selector: 'ion-item,[ion-item]',
