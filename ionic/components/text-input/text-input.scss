@@ -70,3 +70,11 @@ input,
 textarea {
   @include placeholder();
 }
+
+@each $color-name, $color-value in $colors {
+  ion-label {
+    &[#{$color-name}] {
+      color: $color-value !important;
+    }
+  }
+}
