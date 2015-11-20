@@ -83,35 +83,61 @@ ion-segment {
 
 }
 
-// Generate Default Button Colors
+// Generate Default Segment Colors
 // --------------------------------------------------
 
-@each $color, $value in $colors {
+@mixin segment-button($button-color, $activated-text-color) {
+  background-color: transparent;
 
-  ion-segment[#{$color}] {
+  &[outline] {
+    border-color: $button-color;
+    background: $segment-button-ios-bg-color;
+    color: $button-color;
 
-    ion-segment-button[button] {
-      $bg-color: $value;
-      $text-color: inverse($bg-color);
+    &.activated {
+      opacity: 1;
+      color: $activated-text-color;
+      background-color: $button-color;
+    }
 
-      background-color: transparent;
-      color: $text-color;
+    &:hover:not(.activated) {
+      background-color: rgba($button-color, $segment-button-ios-hover-opacity);
+    }
+  }
+}
 
-      &[outline] {
-        border-color: $bg-color;
-        background: $segment-button-ios-bg-color;
-        color: $bg-color;
+// Loop through all of the colors to change the segment colors
+// based on the toolbar color or if it isn't in a toolbar then based on
+// the segment color value
+@each $color-name, $color-value in $colors {
+  $inverse-color-value: inverse($color-value);
 
-        &.activated {
-          opacity: 1;
-          color: $text-color;
-          background-color: $bg-color;
-        }
+  .toolbar[#{$color-name}] {
 
-        &:hover:not(.activated) {
-          background-color: rgba($bg-color, $segment-button-ios-hover-opacity);
+    ion-segment {
+      ion-segment-button[button] {
+        @include segment-button($inverse-color-value, $color-value);
+      }
+    }
+
+    // Loop through all of the colors again to change the segment colors
+    // for each toolbar based on the segment color
+    // this will take priority over the default toolbar colors
+    @each $color-name, $color-value in $colors {
+      $inverse-color-value: inverse($color-value);
+
+      ion-segment[#{$color-name}] {
+        ion-segment-button[button] {
+          @include segment-button($color-value, $inverse-color-value);
         }
       }
+    }
+
+  }
+
+  ion-segment[#{$color-name}] {
+    ion-segment-button[button] {
+      @include segment-button($color-value, $inverse-color-value);
     }
 
   }
