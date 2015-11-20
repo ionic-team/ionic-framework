@@ -20,6 +20,14 @@
   color: $list-text-color;
 
   box-sizing: border-box;
+
+  &[no-lines] {
+    border: none;
+
+    .item-inner {
+      border: none;
+    }
+  }
 }
 
 .item-inner {
