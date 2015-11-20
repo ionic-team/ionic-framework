@@ -39,33 +39,62 @@ ion-segment {
 
   ion-segment {
     margin: 0 auto;
+
+    ion-segment-button[button][outline].activated {
+      background-color: transparent;
+    }
   }
 
 }
 
-// Generate Default Button Colors
+// Generate Default Segment Colors
 // --------------------------------------------------
 
-@each $color, $value in $colors {
+@mixin segment-button($button-color) {
+  background-color: transparent;
 
-  ion-segment[#{$color}] {
+  &[outline] {
+    color: $button-color;
 
-    ion-segment-button[button] {
-      $bg-color: $value;
-      $text-color: inverse($bg-color);
-
+    &.activated {
       background-color: transparent;
-      color: $text-color;
+      color: $button-color;
+      border-color: $button-color;
+      opacity: 1;
+    }
+  }
+}
 
-      &[outline] {
-        color: $bg-color;
+// Loop through all of the colors to change the segment colors
+// based on the toolbar color or if it isn't in a toolbar then based on
+// the segment color value
+@each $color-name, $color-value in $colors {
+  $inverse-color-value: inverse($color-value);
 
-        &.activated {
-          opacity: 1;
-          color: $bg-color;
-          border-color: $bg-color;
+  .toolbar[#{$color-name}] {
+
+    ion-segment {
+      ion-segment-button[button] {
+        @include segment-button($inverse-color-value);
+      }
+    }
+
+    // Loop through all of the colors again to change the segment colors
+    // for each toolbar based on the segment color
+    // this will take priority over the default toolbar colors
+    @each $color-name, $color-value in $colors {
+      ion-segment[#{$color-name}] {
+        ion-segment-button[button] {
+          @include segment-button($color-value);
         }
       }
+    }
+
+  }
+
+  ion-segment[#{$color-name}] {
+    ion-segment-button[button] {
+      @include segment-button($color-value);
     }
 
   }

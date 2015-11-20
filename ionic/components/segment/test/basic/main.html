@@ -82,16 +82,44 @@
   <p>Model Style: <b>Model {{ modelStyle }}</b></p>
 </ion-content>
 
-<ion-toolbar position="bottom">
-  <ion-segment [(ng-model)]="appType" primary>
+<ion-toolbar position="bottom" primary>
+  <ion-segment [(ng-model)]="appType">
     <ion-segment-button value="paid">
-      Paid
+      Primary
     </ion-segment-button>
     <ion-segment-button value="free">
-      Free
+      Toolbar
     </ion-segment-button>
     <ion-segment-button value="top" class="e2eSegmentTopGrossing">
-      Top Grossing
+      Default Segment
+    </ion-segment-button>
+  </ion-segment>
+</ion-toolbar>
+
+<ion-toolbar position="bottom" light>
+  <ion-segment [(ng-model)]="appType" primary>
+    <ion-segment-button value="paid">
+      Light
+    </ion-segment-button>
+    <ion-segment-button value="free">
+      Toolbar
+    </ion-segment-button>
+    <ion-segment-button value="top" class="e2eSegmentTopGrossing">
+      Primary Segment
+    </ion-segment-button>
+  </ion-segment>
+</ion-toolbar>
+
+<ion-toolbar position="bottom" light>
+  <ion-segment [(ng-model)]="appType">
+    <ion-segment-button value="paid">
+      Light
+    </ion-segment-button>
+    <ion-segment-button value="free">
+      Toolbar
+    </ion-segment-button>
+    <ion-segment-button value="top" class="e2eSegmentTopGrossing">
+      Default Segment
     </ion-segment-button>
   </ion-segment>
 </ion-toolbar>

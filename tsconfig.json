@@ -13,5 +13,6 @@
         "!./scripts/**",
         "!./dist/**",
         "!./tmp/**"
-    ]
+    ],
+    "compileOnSave" : false
 }
