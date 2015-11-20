@@ -485,7 +485,7 @@ export class NavController extends Ion {
         }
 
         // start the transition
-        transAnimation.play().then(() => {
+        transAnimation.play(() => {
 
           // transition has completed, update each view's state
           enteringView.state = ACTIVE_STATE;

@@ -212,26 +212,26 @@ export class Animation {
     }
   }
 
-  play() {
+  play(done) {
     const self = this;
 
     // the actual play() method which may or may not start async
-    function beginPlay() {
-      let promises = [];
+    function beginPlay(beginPlayDone) {
+      let tasks = [];
 
-      for (let i = 0, l = self._chld.length; i < l; i++) {
-        promises.push( self._chld[i].play() );
-      }
-
-      self._ani.forEach(animation => {
-        promises.push(
-          new Promise(resolve => {
-            animation.play(resolve);
-          })
-        );
+      self._chld.forEach(childAnimation => {
+        tasks.push(taskDone => {
+          childAnimation.play(taskDone);
+        });
       });
 
-      return Promise.all(promises);
+      self._ani.forEach(animation => {
+        tasks.push(taskDone => {
+          animation.play(taskDone);
+        });
+      });
+
+      parallel(tasks, beginPlayDone);
     }
 
     if (!self._parent) {
@@ -241,16 +241,18 @@ export class Animation {
       // stage all animations and child animations at their starting point
       self.stage();
 
-      let resolve;
-      let promise = new Promise(res => { resolve = res; });
+      let promise;
+      if (!done) {
+        promise = new Promise(res => { done = res; });
+      }
 
       function kickoff() {
         // synchronously call all onPlay()'s before play()
         self._onPlay();
 
-        beginPlay().then(() => {
+        beginPlay(() => {
           self._onFinish();
-          resolve();
+          done();
         });
       }
 
@@ -259,6 +261,7 @@ export class Animation {
         // give the browser some time to render everything in place before starting
         if (this._fastdom) {
           this._fastdom.write(kickoff);
+
         } else {
           setTimeout(kickoff, this._opts.renderDelay);
         }
@@ -274,7 +277,7 @@ export class Animation {
 
     // this is a child animation, it is told exactly when to
     // start by the top level animation
-    return beginPlay();
+    beginPlay(done);
   }
 
   stage() {
@@ -912,3 +915,24 @@ const EASING_FN = {
 };
 
 let AnimationRegistry = {};
+
+
+function parallel(tasks, done) {
+  var l = tasks.length;
+  if (!l) {
+    return done();
+  }
+
+  var completed = 0;
+
+  function taskCompleted() {
+    completed++;
+    if (completed === l) {
+      done();
+    }
+  }
+
+  for (var i = 0; i < l; i++) {
+    tasks[i](taskCompleted);
+  }
+}
