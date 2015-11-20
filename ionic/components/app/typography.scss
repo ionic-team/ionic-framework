@@ -101,7 +101,7 @@ sub {
   bottom: -0.25em;
 }
 
-@each $color, $value in $colors {
+@each $color-name, $color-value in $colors {
   h1, h2, h3, h4, h5, h6,
   p,
   span,
@@ -114,8 +114,8 @@ sub {
   em,
   sub,
   sup {
-     &[#{$color}] {
-        color: $value !important;
-     }
+    &[#{$color-name}] {
+      color: $color-value !important;
+    }
   }
 }

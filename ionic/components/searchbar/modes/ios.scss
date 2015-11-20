@@ -129,12 +129,13 @@ ion-searchbar.left-align {
 // Generate Default Search Bar Colors
 // --------------------------------------------------
 
-@each $color, $value in $colors {
+@each $color-name, $color-value in $colors {
 
-  ion-searchbar[#{$color}] {
+  ion-searchbar[#{$color-name}] {
 
     .searchbar-cancel {
-      color: $value;
+      color: $color-value;
     }
   }
+  
 }

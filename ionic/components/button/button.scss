@@ -142,12 +142,12 @@ a[button] {
 // Generate Default Button Colors
 // --------------------------------------------------
 
-@each $color, $value in $colors {
+@each $color-name, $color-value in $colors {
 
-  button[#{$color}],
-  [button][#{$color}] {
+  button[#{$color-name}],
+  [button][#{$color-name}] {
 
-    $bg-color: $value;
+    $bg-color: $color-value;
     $bg-color-activated: darken-or-lighten($bg-color);
     $text-color: inverse($bg-color);
     @include button-default($bg-color, $bg-color-activated, $text-color);

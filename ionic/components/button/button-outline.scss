@@ -42,12 +42,12 @@ button,
 // Outline Clear Button Colors
 // --------------------------------------------------
 
-@each $color, $value in auxiliary-colors() {
+@each $color-name, $color-value in auxiliary-colors() {
 
-  button[#{$color}],
-  [button][#{$color}] {
+  button[#{$color-name}],
+  [button][#{$color-name}] {
 
-    $fg-color: darken-or-lighten($value, 5%);
+    $fg-color: darken-or-lighten($color-value, 5%);
     @include button-outline($fg-color);
 
   }
