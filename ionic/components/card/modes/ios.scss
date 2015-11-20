@@ -38,7 +38,6 @@ ion-card {
   background: $card-ios-background-color;
   box-shadow: $card-ios-box-shadow;
   border-radius: $card-ios-border-radius;
-  overflow: hidden;
 
   .list {
     margin-bottom: 0;
@@ -80,7 +79,6 @@ ion-card {
   }
 
   [actions] {
-    border-radius: inherit;
     padding-right: ($card-ios-padding-right / 2);
 
     ion-item-content {
