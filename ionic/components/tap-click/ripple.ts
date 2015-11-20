@@ -1,12 +1,12 @@
 import {Activator} from './activator';
 import {Animation} from '../../animations/animation';
-import {raf} from '../../util/dom';
+import {raf, rafFrames} from '../../util/dom';
 
 
 export class RippleActivator extends Activator {
 
-  constructor(app, config, fastdom) {
-    super(app, config, fastdom);
+  constructor(app, config) {
+    super(app, config);
 
     this.expands = {};
     this.fades = {};
@@ -18,16 +18,12 @@ export class RippleActivator extends Activator {
       // create a new ripple element
       this.expandSpeed = EXPAND_DOWN_PLAYBACK_RATE;
 
-      this.fastdom.defer(2, () => {
+      rafFrames(2, () => {
+        let clientRect = activatableEle.getBoundingClientRect();
 
-        this.fastdom.read(() => {
-          let clientRect = activatableEle.getBoundingClientRect();
-
-          this.fastdom.write(() => {
-            this.createRipple(activatableEle, pointerX, pointerY, clientRect);
-          });
+        raf(() => {
+          this.createRipple(activatableEle, pointerX, pointerY, clientRect);
         });
-
       });
     }
   }
@@ -60,7 +56,7 @@ export class RippleActivator extends Activator {
       .duration(FADE_OUT_DURATION)
       .playbackRate(1)
       .onFinish(() => {
-        this.fastdom.write(() => {
+        raf(() => {
           this.fades[rippleId].dispose(true);
           delete this.fades[rippleId];
         });
@@ -87,7 +83,7 @@ export class RippleActivator extends Activator {
 
     this.expandSpeed = 1;
 
-    this.fastdom.defer(4, () => {
+    rafFrames(4, () => {
       this.next();
     });
   }

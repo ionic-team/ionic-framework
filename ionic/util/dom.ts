@@ -7,15 +7,15 @@ const nativeCancelRaf = window.cancelAnimationFrame ||
   window.webkitCancelRequestAnimationFrame;
 
 export const raf = nativeRaf || function(callback) {
-    let timeCurrent = (new Date()).getTime(),
-        timeDelta;
+  let timeCurrent = (new Date()).getTime(),
+      timeDelta;
 
-    /* Dynamically set delay on a per-tick basis to match 60fps. */
-    /* Technique by Erik Moller. MIT license: https://gist.github.com/paulirish/1579671 */
-    timeDelta = Math.max(0, 16 - (timeCurrent - timeLast));
-    timeLast = timeCurrent + timeDelta;
+  /* Dynamically set delay on a per-tick basis to match 60fps. */
+  /* Technique by Erik Moller. MIT license: https://gist.github.com/paulirish/1579671 */
+  timeDelta = Math.max(0, 16 - (timeCurrent - timeLast));
+  timeLast = timeCurrent + timeDelta;
 
-    return setTimeout(function() { callback(timeCurrent + timeDelta); }, timeDelta);
+  return setTimeout(function() { callback(timeCurrent + timeDelta); }, timeDelta);
 }
 
 export const rafCancel = nativeRaf ? nativeCancelRaf : function(id) {
@@ -24,6 +24,19 @@ export const rafCancel = nativeRaf ? nativeCancelRaf : function(id) {
 
 export function rafPromise() {
   return new Promise(resolve => raf(resolve));
+}
+
+export function rafFrames(framesToWait, callback) {
+  framesToWait = Math.ceil(framesToWait);
+
+  if (framesToWait < 2) {
+    raf(callback);
+    
+  } else {
+    setTimeout(() => {
+      raf(callback);
+    }, (framesToWait - 1) * 17);
+  }
 }
 
 export let CSS = {};

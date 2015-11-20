@@ -1,6 +1,5 @@
-import {CSS} from '../util/dom';
+import {CSS, rafFrames} from '../util/dom';
 import {extend} from '../util/util';
-import {FastDom} from '../util/fastdom';
 
 
 /**
@@ -25,9 +24,8 @@ import {FastDom} from '../util/fastdom';
 
 export class Animation {
 
-  constructor(ele, opts={}, fastdom=null) {
+  constructor(ele, opts={}) {
     this.reset();
-    this._fastdom = fastdom;
 
     this._opts = extend({
       renderDelay: 16
@@ -259,12 +257,7 @@ export class Animation {
       if (self._duration > 16 && this._opts.renderDelay > 0) {
         // begin each animation when everything is rendered in their starting point
         // give the browser some time to render everything in place before starting
-        if (this._fastdom) {
-          this._fastdom.write(kickoff);
-
-        } else {
-          setTimeout(kickoff, this._opts.renderDelay);
-        }
+        rafFrames(this._opts.renderDelay / 16, kickoff);
 
       } else {
         // no need to render everything in there place before animating in

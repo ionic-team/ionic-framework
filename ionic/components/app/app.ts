@@ -1,5 +1,6 @@
 import {Title} from 'angular2/angular2';
 
+import {rafFrames} from '../../util/dom';
 import {ClickBlock} from '../../util/click-block';
 import {ScrollTo} from '../../animations/scroll-to';
 
@@ -10,9 +11,8 @@ import {ScrollTo} from '../../animations/scroll-to';
  */
 export class IonicApp {
 
-  constructor(config, fastdom) {
+  constructor(config) {
     this._config = config;
-    this._fastdom = fastdom;
     this._titleSrv = new Title();
     this._title = '';
     this._disTime = 0;
@@ -29,7 +29,7 @@ export class IonicApp {
   setTitle(val) {
     if (val !== this._title) {
       this._title = val;
-      this._fastdom.defer(4, () => {
+      rafFrames(4, () => {
         this._titleSrv.setTitle(this._title);
       });
     }
