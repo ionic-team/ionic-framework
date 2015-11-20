@@ -139,19 +139,12 @@ $list-ios-border-color:               $list-border-color !default;
   }
 
   > .item:first-child,
-  ion-header {
-    border-top-right-radius: $list-inset-ios-border-radius;
-    border-top-left-radius: $list-inset-ios-border-radius;
-  }
-
-  > .item:first-child {
+  > ion-item-sliding:first-child .item {
     border-top: none;
   }
 
   > .item:last-child,
   > ion-item-sliding:last-child .item {
-    border-bottom-right-radius: $list-inset-ios-border-radius;
-    border-bottom-left-radius: $list-inset-ios-border-radius;
     border-bottom: none;
   }
 }
