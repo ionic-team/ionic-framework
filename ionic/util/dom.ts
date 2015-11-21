@@ -6,7 +6,12 @@ const nativeCancelRaf = window.cancelAnimationFrame ||
   window.webkitCancelAnimationFrame ||
   window.webkitCancelRequestAnimationFrame;
 
-export const raf = nativeRaf || function(callback) {
+export function raf(callback) {
+  //console.log('raf', callback.toString().replace(/\s/g, '').replace('function', '').substring(0, 50));
+  _raf(callback);
+}
+
+const _raf = nativeRaf || function(callback) {
   let timeCurrent = (new Date()).getTime(),
       timeDelta;
 
@@ -31,7 +36,7 @@ export function rafFrames(framesToWait, callback) {
 
   if (framesToWait < 2) {
     raf(callback);
-    
+
   } else {
     setTimeout(() => {
       raf(callback);

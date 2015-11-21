@@ -27,11 +27,13 @@ export class IonicApp {
    * @param {string} val  Value to set the document title to.
    */
   setTitle(val) {
-    if (val !== this._title) {
-      this._title = val;
-      rafFrames(4, () => {
-        this._titleSrv.setTitle(this._title);
-      });
+    let self = this;
+    if (val !== self._title) {
+      self._title = val;
+      function setAppTitle() {
+        self._titleSrv.setTitle(self._title);
+      }
+      rafFrames(4, setAppTitle);
     }
   }
 

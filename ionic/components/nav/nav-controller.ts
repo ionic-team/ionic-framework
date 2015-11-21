@@ -182,9 +182,7 @@ export class NavController extends Ion {
     this._add(enteringView);
 
     if (opts.preCleanup !== false) {
-      raf(() => {
-        this._cleanup(enteringView);
-      });
+      this._cleanup(enteringView);
     }
 
     if (this.router) {
@@ -824,9 +822,7 @@ export class NavController extends Ion {
 
     this._sbComplete();
 
-    raf(() => {
-      this._cleanup();
-    });
+    this._cleanup();
   }
 
   _cleanup(activeView) {

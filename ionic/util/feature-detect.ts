@@ -21,12 +21,12 @@ export class FeatureDetect {
 let featureDetects = {};
 
 
-FeatureDetect.add('sticky', function(window, document) {
-  // css position sticky
-  let ele = document.createElement('div');
-  ele.style.cssText = 'position:-webkit-sticky;position:sticky';
-  return ele.style.position.indexOf('sticky') > -1;
-});
+// FeatureDetect.add('sticky', function(window, document) {
+//   // css position sticky
+//   let ele = document.createElement('div');
+//   ele.style.cssText = 'position:-webkit-sticky;position:sticky';
+//   return ele.style.position.indexOf('sticky') > -1;
+// });
 
 
 FeatureDetect.add('hairlines', function(window, document, body) {

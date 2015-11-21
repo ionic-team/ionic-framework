@@ -17,35 +17,40 @@ export class Activator {
   downAction(ev, activatableEle, pointerX, pointerY, callback) {
     // the user just pressed down
 
-    if (this.disableActivated(ev)) return false;
+    let self = this;
+    if (self.disableActivated(ev)) return false;
 
     // remember where they pressed
-    this.x = pointerX;
-    this.y = pointerY;
+    self.x = pointerX;
+    self.y = pointerY;
 
     // queue to have this element activated
-    this.queue.push(activatableEle);
+    self.queue.push(activatableEle);
 
-    rafFrames(2, () => {
+    function activateCss() {
       let activatableEle;
-      for (let i = 0; i < this.queue.length; i++) {
-        activatableEle = this.queue[i];
+      for (let i = 0; i < self.queue.length; i++) {
+        activatableEle = self.queue[i];
         if (activatableEle && activatableEle.parentNode) {
-          this.active.push(activatableEle);
-          activatableEle.classList.add(this.activatedClass);
+          self.active.push(activatableEle);
+          activatableEle.classList.add(self.activatedClass);
         }
       }
-      this.queue = [];
-    });
+      self.queue = [];
+    }
+
+    rafFrames(2, activateCss);
 
     return true;
   }
 
   upAction() {
     // the user was pressing down, then just let up
-    rafFrames(this.clearStateDefers, () => {
-      this.clearState();
-    });
+    let self = this;
+    function activateUp() {
+      self.clearState();
+    }
+    rafFrames(self.clearStateDefers, activateUp);
   }
 
   clearState() {
@@ -67,14 +72,17 @@ export class Activator {
 
   deactivate() {
     // remove the active class from all active elements
-    this.queue = [];
+    let self = this;
+    self.queue = [];
 
-    rafFrames(2, () => {
-      for (let i = 0; i < this.active.length; i++) {
-        this.active[i].classList.remove(this.activatedClass);
+    function deactivate() {
+      for (let i = 0; i < self.active.length; i++) {
+        self.active[i].classList.remove(self.activatedClass);
       }
-      this.active = [];
-    });
+      self.active = [];
+    }
+
+    rafFrames(2, deactivate);
   }
 
   disableActivated(ev) {
