@@ -14,10 +14,15 @@ $tabbar-md-item-height:              4.8rem !default;
   min-height: $tabbar-md-item-height;
   font-size: $tabbar-md-item-font-size;
   font-weight: $tabbar-md-item-font-weight;
+  opacity: 0.7;
 
   box-shadow: none;
   border-radius: 0;
   border-bottom: 2px solid transparent;
+
+  &[aria-selected=true] {
+    opacity: 1.0;
+  }
 }
 
 .tab-button-text {
