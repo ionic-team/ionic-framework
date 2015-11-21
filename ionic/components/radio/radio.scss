@@ -9,7 +9,7 @@ ion-radio {
   @include user-select-none();
 }
 
-ion-radio[aria-disabled=true] .item-inner > * {
+ion-radio[aria-disabled=true] {
   opacity: 0.5;
   color: $subdued-text-color;
   pointer-events: none;
