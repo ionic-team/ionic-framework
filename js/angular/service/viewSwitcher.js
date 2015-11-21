@@ -191,7 +191,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
           if (renderStart && renderEnd) {
             // CSS "auto" transitioned, not manually transitioned
             // wait a frame so the styles apply before auto transitioning
-            $timeout(onReflow, 16);
+            ionic.requestAnimationFrame(onReflow);
 
           } else if (!renderEnd) {
             // just the start of a manual transition
