@@ -1,33 +1,35 @@
-import {Component, ElementRef, DynamicComponentLoader} from 'angular2/angular2';
+import {Component, ElementRef, Compiler, DynamicComponentLoader, AppViewManager, NgZone, Renderer} from 'angular2/angular2';
 
+import {IonicApp} from '../app/app';
+import {Config} from '../../config/config';
 import {OverlayController} from './overlay-controller';
+import {NavController} from '../nav/nav-controller';
 
 
-/**
- * @private
- */
 @Component({
   selector: 'ion-overlay',
   template: '<template #contents></template>'
 })
-export class OverlayAnchor {
+export class OverlayNav extends NavController {
+
   constructor(
     overlayCtrl: OverlayController,
+    app: IonicApp,
+    config: Config,
     elementRef: ElementRef,
-    loader: DynamicComponentLoader
+    compiler: Compiler,
+    loader: DynamicComponentLoader,
+    viewManager: AppViewManager,
+    zone: NgZone,
+    renderer: Renderer
   ) {
+    super(null, app, config, elementRef, compiler, loader, viewManager, zone, renderer);
+
     if (overlayCtrl.anchor) {
       throw ('An app should only have one <ion-overlay></ion-overlay>');
     }
 
-    this.elementRef = elementRef;
-    this.loader = loader;
-    overlayCtrl.anchor = this;
+    overlayCtrl.nav = this;
   }
 
-  append(componentType) {
-    return this.loader.loadIntoLocation(componentType, this.elementRef, 'contents').catch(err => {
-      console.error(err);
-    });
-  }
 }

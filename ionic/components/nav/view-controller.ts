@@ -10,9 +10,10 @@ export class ViewController {
     this.navCtrl = navCtrl;
     this.componentType = componentType;
     this.params = new NavParams(params);
-    this.instance = null;
+    this.instance = {};
     this.state = 0;
     this._destroys = [];
+    this._loaded = false;
   }
 
   /**
@@ -142,6 +143,10 @@ export class ViewController {
     }
   }
 
+  isLoaded() {
+    return this._loaded;
+  }
+
   /**
    * The view has loaded. This event only happens once per view being
    * created. If a view leaves but is cached, then this will not
@@ -150,8 +155,9 @@ export class ViewController {
    * recommended method to use when a view becomes active.
    */
   loaded() {
+    this._loaded = true;
     if (!this.shouldDestroy) {
-      this.instance && this.instance.onPageLoaded && this.instance.onPageLoaded();
+      this.instance.onPageLoaded && this.instance.onPageLoaded();
     }
   }
 
@@ -160,7 +166,7 @@ export class ViewController {
    */
   willEnter() {
     if (!this.shouldDestroy) {
-      this.instance && this.instance.onPageWillEnter && this.instance.onPageWillEnter();
+      this.instance.onPageWillEnter && this.instance.onPageWillEnter();
     }
   }
 
@@ -171,14 +177,14 @@ export class ViewController {
   didEnter() {
     let navbar = this.getNavbar();
     navbar && navbar.didEnter();
-    this.instance && this.instance.onPageDidEnter && this.instance.onPageDidEnter();
+    this.instance.onPageDidEnter && this.instance.onPageDidEnter();
   }
 
   /**
    * The view has is about to leave and no longer be the active view.
    */
   willLeave() {
-    this.instance && this.instance.onPageWillLeave && this.instance.onPageWillLeave();
+    this.instance.onPageWillLeave && this.instance.onPageWillLeave();
   }
 
   /**
@@ -186,27 +192,25 @@ export class ViewController {
    * will fire, whether it is cached or unloaded.
    */
   didLeave() {
-    this.instance && this.instance.onPageDidLeave && this.instance.onPageDidLeave();
+    this.instance.onPageDidLeave && this.instance.onPageDidLeave();
   }
 
   /**
    * The view is about to be destroyed and have its elements removed.
    */
   willUnload() {
-    this.instance && this.instance.onPageWillUnload && this.instance.onPageWillUnload();
+    this.instance.onPageWillUnload && this.instance.onPageWillUnload();
   }
 
   /**
    * The view has been destroyed and its elements have been removed.
    */
   didUnload() {
-    this.instance && this.instance.onPageDidUnload && this.instance.onPageDidUnload();
+    this.instance.onPageDidUnload && this.instance.onPageDidUnload();
   }
 
   domCache(isActiveView, isPreviousView) {
-    if (this.instance) {
-      this.instance._hidden = (!isActiveView && !isPreviousView);
-    }
+    this.instance._hidden = (!isActiveView && !isPreviousView);
   }
 
 }

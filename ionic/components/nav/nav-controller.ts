@@ -4,7 +4,7 @@ import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
 import {ViewController} from './view-controller';
-import {Transition} from '../../transitions/transition';
+import {Animation} from '../../animations/animation';
 import {SwipeBackGesture} from './swipe-back';
 import * as util from 'ionic/util';
 import {raf} from '../../util/dom';
@@ -158,7 +158,7 @@ export class NavController extends Ion {
     let promise = new Promise(res => { resolve = res; });
 
     // do not animate if this is the first in the stack
-    if (!this._views.length) {
+    if (!this._views.length && !opts.animateFirst) {
       opts.animate = false;
     }
 
@@ -177,6 +177,8 @@ export class NavController extends Ion {
     let enteringView = new ViewController(this, componentType, params);
     enteringView.shouldDestroy = false;
     enteringView.shouldCache = false;
+    enteringView.pageType = opts.pageType;
+    enteringView.handle = opts.handle || null;
 
     // add the view to the stack
     this._add(enteringView);
@@ -202,7 +204,7 @@ export class NavController extends Ion {
    * @returns {Promise} TODO
    */
   pop(opts = {}) {
-    if (!this.canGoBack()) {
+    if (!opts.animateFirst && !this.canGoBack()) {
       return Promise.reject();
     }
 
@@ -225,19 +227,13 @@ export class NavController extends Ion {
     // Note: we might not have an entering view if this is the
     // only view on the history stack.
     let enteringView = this.getPrevious(leavingView);
-    if (enteringView) {
-      if (this.router) {
-        // notify router of the state change
-        this.router.stateChange('pop', enteringView);
-      }
-
-      // start the transition
-      this._transition(enteringView, leavingView, opts, resolve);
-
-    } else {
-      this._transComplete();
-      resolve();
+    if (this.router) {
+      // notify router of the state change
+      this.router.stateChange('pop', enteringView);
     }
+
+    // start the transition
+    this._transition(enteringView, leavingView, opts, resolve);
 
     return promise;
   }
@@ -429,8 +425,8 @@ export class NavController extends Ion {
    * @returns {any} TODO
    */
   _transition(enteringView, leavingView, opts, done) {
-    if (!enteringView || enteringView === leavingView) {
-      return done();
+    if (enteringView === leavingView) {
+      return done(enteringView);
     }
 
     if (!opts.animation) {
@@ -440,15 +436,21 @@ export class NavController extends Ion {
       opts.animate = false;
     }
 
+    if (!enteringView) {
+      // if not entering view then create a bogus one
+      enteringView = new ViewController()
+      enteringView.loaded();
+    }
+
     // wait for the new view to complete setup
     this._stage(enteringView, () => {
 
       if (enteringView.shouldDestroy) {
         // already marked as a view that will be destroyed, don't continue
-        return done();
+        return done(enteringView);
       }
 
-      this._setZIndex(enteringView.instance, leavingView && leavingView.instance, opts.direction);
+      this._setZIndex(enteringView.instance, leavingView.instance, opts.direction);
 
       this._zone.runOutsideAngular(() => {
 
@@ -466,8 +468,11 @@ export class NavController extends Ion {
         leavingView.state = STAGED_LEAVING_STATE;
 
         // init the transition animation
-        opts.renderDelay = this.config.get('pageTransitionDelay');
-        let transAnimation = Transition.create(this, opts);
+        opts.renderDelay = opts.transitionDelay || this.config.get('pageTransitionDelay');
+
+        let transAnimation = Animation.createTransition(this._getStagedEntering(),
+                                                        this._getStagedLeaving(),
+                                                        opts);
         if (opts.animate === false) {
           // force it to not animate the elements, just apply the "to" styles
           transAnimation.clearDuration();
@@ -482,9 +487,12 @@ export class NavController extends Ion {
           this.app.setTransitioning(true, duration);
         }
 
+        if (opts.pageType) {
+          transAnimation.before.addClass(opts.pageType);
+        }
+
         // start the transition
         transAnimation.play(() => {
-
           // transition has completed, update each view's state
           enteringView.state = ACTIVE_STATE;
           leavingView.state = CACHED_STATE;
@@ -500,7 +508,7 @@ export class NavController extends Ion {
           // all done!
           this._zone.run(() => {
             this._transComplete();
-            done();
+            done(enteringView);
           });
         });
 
@@ -514,7 +522,7 @@ export class NavController extends Ion {
    * @private
    */
   _stage(viewCtrl, done) {
-    if (viewCtrl.instance || viewCtrl.shouldDestroy) {
+    if (viewCtrl.isLoaded() || viewCtrl.shouldDestroy) {
       // already compiled this view
       return done();
     }
@@ -685,8 +693,8 @@ export class NavController extends Ion {
 
       this._zone.run(() => {
         // find the views that were entering and leaving
-        let enteringView = this.getStagedEnteringView();
-        let leavingView = this.getStagedLeavingView();
+        let enteringView = this._getStagedEntering();
+        let leavingView = this._getStagedLeaving();
 
         if (enteringView && leavingView) {
           // finish up the animation
@@ -883,27 +891,48 @@ export class NavController extends Ion {
 
   /**
    * @private
-   * TODO
-   * @param {TODO} view  TODO
-   * @returns {TODO} TODO
    */
-  _add(view) {
-    this._incrementId(view);
-    this._views.push(view);
-  }
-
-  _incrementId(view) {
-    view.id = this.id + '-' + (++this._ids);
+  _add(viewCtrl) {
+    this._incrementId(viewCtrl);
+    this._views.push(viewCtrl);
   }
 
   /**
    * @private
-   * TODO
-   * @param {TODO} viewOrIndex  TODO
-   * @returns {TODO} TODO
+   */
+  _incrementId(viewCtrl) {
+    viewCtrl.id = this.id + '-' + (++this._ids);
+  }
+
+  /**
+   * @private
    */
   _remove(viewOrIndex) {
     util.array.remove(this._views, viewOrIndex);
+  }
+
+  /**
+   * @private
+   */
+  _getStagedEntering() {
+    for (let i = 0, ii = this._views.length; i < ii; i++) {
+      if (this._views[i].state === STAGED_ENTERING_STATE) {
+        return this._views[i];
+      }
+    }
+    return null;
+  }
+
+  /**
+   * @private
+   */
+  _getStagedLeaving() {
+    for (let i = 0, ii = this._views.length; i < ii; i++) {
+      if (this._views[i].state === STAGED_LEAVING_STATE) {
+        return this._views[i];
+      }
+    }
+    return null;
   }
 
   /**
@@ -933,43 +962,45 @@ export class NavController extends Ion {
 
   /**
    * TODO
+   * @param {TODO} handle  TODO
+   * @returns {TODO} TODO
+   */
+  getByHandle(handle) {
+    for (let i = 0, ii = this._views.length; i < ii; i++) {
+      if (this._views[i].handle === handle) {
+        return this._views[i];
+      }
+    }
+    return null;
+  }
+
+  /**
+   * TODO
+   * @param {TODO} pageType  TODO
+   * @returns {TODO} TODO
+   */
+  getByType(pageType) {
+    for (let i = 0, ii = this._views.length; i < ii; i++) {
+      if (this._views[i].pageType === pageType) {
+        return this._views[i];
+      }
+    }
+    return null;
+  }
+
+  /**
+   * TODO
    * @param {TODO} view  TODO
    * @returns {TODO} TODO
    */
-  getPrevious(view) {
-    if (view) {
-      let viewIndex = this._views.indexOf(view);
+  getPrevious(viewCtrl) {
+    if (viewCtrl) {
+      let viewIndex = this._views.indexOf(viewCtrl);
 
       for (let i = viewIndex - 1; i >= 0; i--) {
         if (!this._views[i].shouldDestroy) {
           return this._views[i];
         }
-      }
-    }
-    return null;
-  }
-
-  /**
-   * TODO
-   * @returns {TODO} TODO
-   */
-  getStagedEnteringView() {
-    for (let i = 0, ii = this._views.length; i < ii; i++) {
-      if (this._views[i].state === STAGED_ENTERING_STATE) {
-        return this._views[i];
-      }
-    }
-    return null;
-  }
-
-  /**
-   * TODO
-   * @returns {TODO} TODO
-   */
-  getStagedLeavingView() {
-    for (let i = 0, ii = this._views.length; i < ii; i++) {
-      if (this._views[i].state === STAGED_LEAVING_STATE) {
-        return this._views[i];
       }
     }
     return null;
@@ -1008,8 +1039,8 @@ export class NavController extends Ion {
    * @param {TODO} view  TODO
    * @returns {TODO} TODO
    */
-  indexOf(view) {
-    return this._views.indexOf(view);
+  indexOf(viewCtrl) {
+    return this._views.indexOf(viewCtrl);
   }
 
   /**
@@ -1029,34 +1060,11 @@ export class NavController extends Ion {
 
   /**
    * TODO
-   * @returns {TODO} TODO
-   */
-  instances() {
-    let instances = [];
-    for (let view of this._views) {
-      if (view.instance) {
-        instances.push(view.instance);
-      }
-    }
-    return instances;
-  }
-
-  /**
-   * TODO
    * @param {TODO} view  TODO
    * @returns {TODO} TODO
    */
-  isActive(view) {
-    return (view && view.state === ACTIVE_STATE);
-  }
-
-  /**
-   * TODO
-   * @param {TODO} view  TODO
-   * @returns {TODO} TODO
-   */
-  isStagedEntering(view) {
-    return (view && view.state === STAGED_ENTERING_STATE);
+  isActive(viewCtrl) {
+    return (viewCtrl && viewCtrl.state === ACTIVE_STATE);
   }
 
   /**

@@ -1,6 +1,5 @@
 import {FormBuilder, Validators} from 'angular2/angular2';
-import {Log} from 'ionic/util'
-import {Page, NavController} from 'ionic/ionic'
+import {Page, NavController} from 'ionic/ionic';
 
 
 @Page({
@@ -8,11 +7,9 @@ import {Page, NavController} from 'ionic/ionic'
 })
 export class <%= jsClassName %> {
   constructor(nav: NavController) {
-    this.nav = nav
+    this.nav = nav;
 
-    Log.log('SIGNUP PAGE')
-
-    var fb = new FormBuilder()
+    var fb = new FormBuilder();
 
     this.signupForm = fb.group({
       name: ['', Validators.required],
@@ -21,14 +18,14 @@ export class <%= jsClassName %> {
     });
   }
 
-  doLogin(event) {
+  doLogin() {
     this.nav.pop()
   }
-  doSignup(event) {
-    Log.log('Doing signup')
-    event.preventDefault();
+
+  doSignup() {
     console.log(this.signupForm.value);
 
-    this.nav.push(AppPage)
+    this.nav.push(AppPage);
   }
+
 }

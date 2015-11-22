@@ -254,10 +254,10 @@ export class Animation {
         });
       }
 
-      if (self._duration > 16 && this._opts.renderDelay > 0) {
+      if (self._duration > 16 && self._opts.renderDelay > 0) {
         // begin each animation when everything is rendered in their starting point
         // give the browser some time to render everything in place before starting
-        rafFrames(this._opts.renderDelay / 16, kickoff);
+        rafFrames(self._opts.renderDelay / 16, kickoff);
 
       } else {
         // no need to render everything in there place before animating in
@@ -536,6 +536,17 @@ export class Animation {
       AnimationClass = Animation;
     }
     return new AnimationClass(element);
+  }
+
+  static createTransition(enteringView, leavingView, opts = {}) {
+    const name = opts.animation || 'ios-transition';
+
+    let TransitionClass = AnimationRegistry[name];
+    if (!TransitionClass) {
+      TransitionClass = Animation;
+    }
+
+    return new TransitionClass(enteringView, leavingView, opts);
   }
 
   static register(name, AnimationClass) {
@@ -912,8 +923,9 @@ let AnimationRegistry = {};
 
 function parallel(tasks, done) {
   var l = tasks.length;
-  if (!l) {
-    return done();
+  if (!l ) {
+    done && done();
+    return;
   }
 
   var completed = 0;
@@ -921,7 +933,7 @@ function parallel(tasks, done) {
   function taskCompleted() {
     completed++;
     if (completed === l) {
-      done();
+      done && done();
     }
   }
 

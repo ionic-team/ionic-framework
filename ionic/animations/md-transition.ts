@@ -1,5 +1,4 @@
-import {Transition} from './transition';
-import {Animation} from '../animations/animation';
+import {Animation} from './animation';
 
 const TRANSLATEY = 'translateY';
 const OFF_BOTTOM = '40px';
@@ -9,15 +8,11 @@ const SHOW_BACK_BTN_CSS = 'show-back-button';
 
 class MDTransition extends Animation {
 
-  constructor(navCtrl, opts) {
+  constructor(enteringView, leavingView, opts) {
     super(null, opts);
 
     // what direction is the transition going
     let backDirection = (opts.direction === 'back');
-
-    // get entering/leaving views
-    let enteringView = navCtrl.getStagedEnteringView();
-    let leavingView = navCtrl.getStagedLeavingView();
 
     // do they have navbars?
     let enteringHasNavbar = enteringView.hasNavbar();
@@ -61,4 +56,4 @@ class MDTransition extends Animation {
 
 }
 
-Transition.register('md', MDTransition);
+Animation.register('md-transition', MDTransition);

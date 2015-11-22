@@ -21,7 +21,7 @@ Config.setModeConfig('ios', {
   modalEnter: 'modal-slide-in',
   modalLeave: 'modal-slide-out',
 
-  pageTransition: 'ios',
+  pageTransition: 'ios-transition',
   pageTransitionDelay: 16,
 
   popupEnter: 'popup-pop-in',
@@ -50,7 +50,7 @@ Config.setModeConfig('md', {
   modalEnter: 'modal-md-slide-in',
   modalLeave: 'modal-md-slide-out',
 
-  pageTransition: 'md',
+  pageTransition: 'md-transition',
   pageTransitionDelay: 120,
 
   popupEnter: 'popup-md-pop-in',

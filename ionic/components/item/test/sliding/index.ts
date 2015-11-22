@@ -23,17 +23,17 @@ class E2EApp {
     return items;
   }
 
-  didClick(ev, item) {
-    console.log('CLICK', ev.defaultPrevented, ev)
+  didClick(item) {
+    console.log('CLICK')
   }
 
-  archive(ev, item) {
-    console.log('Archive', ev, item);
+  archive(item) {
+    console.log('Archive', item);
     item.close();
   }
 
-  del(ev, item) {
-    console.log('Delete', ev, item);
+  del(item) {
+    console.log('Delete', item);
     item.close();
   }
 

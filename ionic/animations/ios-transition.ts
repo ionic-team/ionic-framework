@@ -1,5 +1,4 @@
-import {Transition} from './transition';
-import {Animation} from '../animations/animation';
+import {Animation} from './animation';
 
 const DURATION = 550;
 const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
@@ -14,7 +13,7 @@ const SHOW_BACK_BTN_CSS = 'show-back-button';
 
 class IOSTransition extends Animation {
 
-  constructor(navCtrl, opts) {
+  constructor(enteringView, leavingView, opts) {
     super(null, opts);
 
     this.duration(DURATION);
@@ -22,10 +21,6 @@ class IOSTransition extends Animation {
 
     // what direction is the transition going
     let backDirection = (opts.direction === 'back');
-
-    // get entering/leaving views
-    let enteringView = navCtrl.getStagedEnteringView();
-    let leavingView = navCtrl.getStagedLeavingView();
 
     // do they have navbars?
     let enteringHasNavbar = enteringView.hasNavbar();
@@ -189,4 +184,4 @@ class IOSTransition extends Animation {
 
 }
 
-Transition.register('ios', IOSTransition);
+Animation.register('ios-transition', IOSTransition);

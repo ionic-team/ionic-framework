@@ -1,13 +1,13 @@
-import {App, Page, IonicApp, Config, Platform} from 'ionic/ionic';
+import {App, Page, Config, Platform} from 'ionic/ionic';
 import {Modal, ActionSheet, NavController, NavParams, Animation} from 'ionic/ionic';
 
 
 @App({
   templateUrl: 'main.html'
 })
-class MyAppCmp {
+class E2EApp {
 
-  constructor(modal: Modal, app: IonicApp, config: Config, platform: Platform) {
+  constructor(modal: Modal, config: Config, platform: Platform) {
     this.modal = modal;
 
     console.log('platforms', platform.platforms());
@@ -25,7 +25,7 @@ class MyAppCmp {
     console.log('windows phone', platform.is('windowsphone'))
 
     platform.ready().then(() => {
-      console.log('platform.ready')
+      console.log('platform.ready');
     });
   }
 
@@ -38,13 +38,14 @@ class MyAppCmp {
   }
 
   openModalChildNav() {
-    this.modal.open(ContactModal, {
+    this.modal.open(ContactUs, null, {
       handle: 'my-awesome-modal'
     });
   }
 
   openModalCustomAnimation() {
-    this.modal.open(ContactModal, {
+    this.modal.open(ContactUs, null, {
+      handle: 'my-awesome-modal',
       enterAnimation: 'my-fade-in',
       leaveAnimation: 'my-fade-out'
     });
@@ -67,21 +68,22 @@ class PlainPage {
   }
 }
 
+
 @Page({
   template: `
     <ion-toolbar>
       <ion-title>Modals</ion-title>
     </ion-toolbar>
+
     <ion-toolbar primary>
       <ion-title>Another toolbar</ion-title>
     </ion-toolbar>
 
-
     <ion-content padding>
-        <button block danger (click)="closeModal()" class="e2eCloseToolbarModal">
-          <icon close></icon>
-          Close Modal
-        </button>
+      <button block danger (click)="closeModal()" class="e2eCloseToolbarModal">
+        <icon close></icon>
+        Close Modal
+      </button>
     </ion-content>
   `
 })
@@ -97,38 +99,43 @@ class ToolbarModal {
 @Page({
   template: '<ion-nav [root]="rootView"></ion-nav>'
 })
-class ContactModal {
+class ContactUs {
   constructor() {
-    console.log('ContactModal constructor')
+    console.log('ContactUs constructor');
     this.rootView = ModalFirstPage;
   }
   onPageLoaded() {
-    console.log('ContactModal onPageLoaded');
+    console.log('ContactUs onPageLoaded');
   }
   onPageWillEnter() {
-    console.log('ContactModal onPageWillEnter');
+    console.log('ContactUs onPageWillEnter');
   }
   onPageDidEnter() {
-    console.log('ContactModal onPageDidEnter');
+    console.log('ContactUs onPageDidEnter');
   }
   onPageWillLeave() {
-    console.log('ContactModal onPageWillLeave');
+    console.log('ContactUs onPageWillLeave');
   }
   onPageDidLeave() {
-    console.log('ContactModal onPageDidLeave');
+    console.log('ContactUs onPageDidLeave');
   }
   onPageWillUnload() {
-    console.log('ContactModal onPageWillUnload');
+    console.log('ContactUs onPageWillUnload');
   }
   onPageDidUnload() {
-    console.log('ContactModal onPageDidUnload');
+    console.log('ContactUs onPageDidUnload');
   }
 }
 
 
 @Page({
   template: `
-    <ion-navbar *navbar><ion-title>First Page Header</ion-title><ion-nav-items primary><button class="e2eCloseMenu" (click)="closeModal()">Close</button></ion-nav-items></ion-navbar>
+    <ion-navbar *navbar>
+      <ion-title>First Page Header</ion-title>
+      <ion-nav-items primary>
+        <button class="e2eCloseMenu" (click)="closeModal()">Close</button>
+      </ion-nav-items>
+    </ion-navbar>
     <ion-content padding>
       <p>
         <button (click)="push()">Push (Go to 2nd)</button>
@@ -156,17 +163,19 @@ class ModalFirstPage {
   }
 
   push() {
-    this.nav.push(ModalSecondPage, { id: 8675309, myData: [1,2,3,4] }, { animation: 'ios' });
+    let page = ModalSecondPage;
+    let params = { id: 8675309, myData: [1,2,3,4] };
+    let opts = { animation: 'ios' };
+
+    this.nav.push(page, params, opts);
   }
 
   closeModal() {
-    let modal = this.modal.get();
-    modal.close();
+    this.modal.get().close();
   }
 
   closeByHandeModal() {
-    let modal = this.modal.get('my-awesome-modal');
-    modal.close();
+    this.modal.get('my-awesome-modal').close();
   }
 
   openActionSheet() {
@@ -198,7 +207,9 @@ class ModalFirstPage {
 
 @Page({
   template: `
-    <ion-navbar *navbar><ion-title>Second Page Header</ion-title></ion-navbar>
+    <ion-navbar *navbar>
+      <ion-title>Second Page Header</ion-title>
+    </ion-navbar>
     <ion-content padding>
       <p>
         <button (click)="nav.pop()">Pop (Go back to 1st)</button>
@@ -214,32 +225,32 @@ class ModalSecondPage {
     params: NavParams
   ) {
     this.nav = nav;
-    this.params = params;
-
     console.log('Second page params:', params);
   }
-
 }
 
 
 class FadeIn extends Animation {
-  constructor(element) {
-    super(element);
+  constructor(enteringView, leavingView) {
+    super(enteringView.pageRef());
     this
       .easing('ease')
-      .duration(450)
-      .fadeIn();
+      .duration(1000)
+      .fromTo('translateY', '0%', '0%')
+      .fadeIn()
+      .before.addClass('show-page');
   }
 }
 Animation.register('my-fade-in', FadeIn);
 
 class FadeOut extends Animation {
-  constructor(element) {
-    super(element);
+  constructor(enteringView, leavingView) {
+    super(leavingView.pageRef());
     this
       .easing('ease')
-      .duration(250)
-      .fadeOut();
+      .duration(500)
+      .fadeOut()
+      .before.addClass('show-page');
   }
 }
 Animation.register('my-fade-out', FadeOut);

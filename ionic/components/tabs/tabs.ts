@@ -115,7 +115,6 @@ export class Tabs extends Ion {
     this.app = app;
     this.subPages = config.get('tabSubPages');
 
-    // collection of children "Tab" instances, which extends NavController
     this.tabs = [];
 
     // Tabs may also be an actual ViewController which was navigated to

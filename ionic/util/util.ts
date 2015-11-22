@@ -118,24 +118,6 @@ export function nextUid() {
   return ++uid;
 }
 
-/**
- * A simple logger class.
- */
-export class Log {
-  static log(...args) {
-    console.log.apply(console, args);
-  }
-  static info(...args) {
-    console.info.apply(console, args);
-  }
-  static warn(...args) {
-    console.warn.apply(console, args);
-  }
-  static error(...args) {
-    console.error.apply(console, args);
-  }
-}
-
 export const array = {
   find(arr, cb) {
     for (let i = 0, ii = arr.length; i < ii; i++) {

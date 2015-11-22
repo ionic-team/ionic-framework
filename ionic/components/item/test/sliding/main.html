@@ -10,15 +10,15 @@
   <ion-list id="myList">
 
     <ion-item-sliding #item>
-      <button ion-item text-wrap (click)="didClick($event, item)">
+      <button ion-item text-wrap (click)="didClick(item)">
         <h3>Max Lynch</h3>
         <p>
           Hey do you want to go to the game tonight?
         </p>
       </button>
       <ion-item-options>
-        <button primary (click)="archive($event, item)">Archive</button>
-        <button danger (click)="del($event, item)">Delete</button>
+        <button primary (click)="archive(item)">Archive</button>
+        <button danger (click)="del(item)">Delete</button>
       </ion-item-options>
     </ion-item-sliding>
 
@@ -30,8 +30,8 @@
         </p>
       </ion-item>
       <ion-item-options>
-        <button primary (click)="archive($event, item)">Archive</button>
-        <button danger (click)="del($event, item)"><icon trash></icon></button>
+        <button primary (click)="archive(item)">Archive</button>
+        <button danger (click)="del(item)"><icon trash></icon></button>
       </ion-item-options>
     </ion-item-sliding>
 
@@ -43,8 +43,8 @@
         </p>
       </ion-item>
       <ion-item-options>
-        <button primary (click)="archive($event, item)">Archive</button>
-        <button danger (click)="del($event, item)">Delete</button>
+        <button primary (click)="archive(item)">Archive</button>
+        <button danger (click)="del(item)">Delete</button>
       </ion-item-options>
     </ion-item-sliding>
 
@@ -54,7 +54,7 @@
         One Line w/ Icon, div only text
       </ion-item>
       <ion-item-options>
-        <button primary (click)="archive($event, item)">Archive</button>
+        <button primary (click)="archive(item)">Archive</button>
       </ion-item-options>
     </ion-item-sliding>
 
@@ -66,7 +66,7 @@
         One Line w/ Avatar, div only text
       </ion-item>
       <ion-item-options>
-        <button primary (click)="archive($event, item)">Archive</button>
+        <button primary (click)="archive(item)">Archive</button>
       </ion-item-options>
     </ion-item-sliding>
 
@@ -79,7 +79,7 @@
         <p>Paragraph text.</p>
       </ion-item>
       <ion-item-options>
-        <button primary (click)="archive($event, item)">Archive</button>
+        <button primary (click)="archive(item)">Archive</button>
       </ion-item-options>
     </ion-item-sliding>
 
@@ -88,7 +88,7 @@
         <h3>ng-for {{data}}</h3>
       </ion-item>
       <ion-item-options>
-        <button primary (click)="archive($event, item)">Archive</button>
+        <button primary (click)="archive(item)">Archive</button>
       </ion-item-options>
     </ion-item-sliding>
 

@@ -18,7 +18,7 @@ export class RippleActivator extends Activator {
       // create a new ripple element
       this.expandSpeed = EXPAND_DOWN_PLAYBACK_RATE;
 
-      rafFrames(2, () => {
+      raf(() => {
         let clientRect = activatableEle.getBoundingClientRect();
 
         raf(() => {

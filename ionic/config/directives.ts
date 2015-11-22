@@ -1,6 +1,6 @@
 import {CORE_DIRECTIVES, FORM_DIRECTIVES, forwardRef} from 'angular2/angular2'
 
-import {OverlayAnchor} from '../components/overlay/overlay';
+import {OverlayNav} from '../components/overlay/overlay';
 import {Menu} from '../components/menu/menu';
 import {MenuToggle} from '../components/menu/menu-toggle';
 import {MenuClose} from '../components/menu/menu-close';
@@ -42,7 +42,7 @@ export const IONIC_DIRECTIVES = [
   FORM_DIRECTIVES,
 
   // Content
-  OverlayAnchor,
+  OverlayNav,
   Menu,
   MenuToggle,
   MenuClose,
