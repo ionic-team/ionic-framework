@@ -16,13 +16,24 @@ export class OverlayController {
     opts.animation = opts.enterAnimation;
     opts.animateFirst = true;
 
-    this.nav.push(componentType, params, opts).then(enteringView => {
-      if (enteringView && enteringView.instance) {
-        enteringView.instance.close = (closeOpts={}) => {
+    this.nav.push(componentType, params, opts).then(viewCtrl => {
+      if (viewCtrl && viewCtrl.instance) {
+
+        let self = this;
+        function escape(ev) {
+          if (ev.keyCode == 27 && self.nav.last() === viewCtrl) {
+            viewCtrl.instance.close();
+          }
+        }
+
+        viewCtrl.instance.close = (closeOpts={}) => {
           extend(opts, closeOpts);
           opts.animation = opts.leaveAnimation;
           this.nav.pop(opts);
+          document.removeEventListener('keyup', escape, true);
         };
+
+        document.addEventListener('keyup', escape, true);
       }
       resolve();
     })
