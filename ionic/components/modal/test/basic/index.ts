@@ -30,7 +30,7 @@ class E2EApp {
   }
 
   openModal() {
-    this.modal.open(PlainPage);
+    this.modal.open(ModalPassParams, { userId: 3141209 });
   }
 
   openToolbarModal() {
@@ -55,13 +55,15 @@ class E2EApp {
 
 @Page({
   template: `
-    <p>Plain Page in a modal</p>
-    <p>Not inside of ion-content</p>
+    <h3>Pass Params</h3>
+    <p>User Id: {{userId}}</p>
     <p><button (click)="closeModal()">Close Modal</button></p>
   `
 })
-class PlainPage {
-  constructor(private modal: Modal) {}
+class ModalPassParams {
+  constructor(private modal: Modal, params: NavParams) {
+    this.userId = params.get('userId');
+  }
 
   closeModal() {
     this.modal.get().close();
