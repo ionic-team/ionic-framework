@@ -11,6 +11,11 @@ import {extend} from 'ionic/util';
  * similar to how NavController#push works, where you pass it a Page component,
  * along with optional Page params, and options for presenting the modal.
  *
+ *
+ * The `modal.open()` function can receive an object as the second argument that will be passed to the modal. For example, `modal.open(MyModal, {data: 7})` will open and pass a data object to `MyModal`.
+ * Inside of `MyModal`, this data can be accessed through the modal's `_defaults` property (eg: `this.modal._defaults`).
+ *
+ *
  * @usage
  * ```ts
  * class MyApp {
