@@ -69,13 +69,6 @@ export class SearchBar extends Ion {
    * @private
    */
   afterViewInit() {
-    this.cancelButton = this.elementRef.nativeElement.querySelector('.searchbar-cancel');
-
-    if (this.cancelButton) {
-      this.cancelWidth = this.cancelButton.offsetWidth;
-      this.cancelButton.style.marginRight = "-" + this.cancelWidth + "px";
-    }
-
     // If the user passes in a value to the model we should left align
     this.shouldLeftAlign = this.ngControl.value && this.ngControl.value.trim() != '';
     this.query = this.ngControl.value || '';
@@ -118,10 +111,6 @@ export class SearchBar extends Ion {
   inputFocused() {
     this.isFocused = true;
     this.shouldLeftAlign = true;
-
-    if (this.cancelButton) {
-      this.cancelButton.style.marginRight = "0px";
-    }
   }
 
   /**
@@ -130,10 +119,6 @@ export class SearchBar extends Ion {
   inputBlurred() {
     this.isFocused = false;
     this.shouldLeftAlign = this.ngControl.value && this.ngControl.value.trim() != '';
-
-    if (this.cancelButton) {
-      this.cancelButton.style.marginRight = "-" + this.cancelWidth + "px";
-    }
   }
 
   clearInput(event) {
