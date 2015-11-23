@@ -1,11 +1,6 @@
 
-// Theme
-@import "themes/default";
-
-
-// Globals
+// Core App
 @import
-  "util/mixins",
   "components/app/normalize",
   "components/app/structure",
   "components/app/typography",
@@ -50,6 +45,7 @@
 
 
 // Ionicons
+// soon to be replaced with SVGs
 $font-path: "../fonts" !default;
 $ionicons: true !default;
 @if ($ionicons) {

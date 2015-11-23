@@ -1,0 +1,62 @@
+
+// Color Functions
+// --------------------------------------------------
+
+@function inverse($color-value) {
+  @if (lightness($color-value) > 70) {
+    @return #000;
+  }
+  @else {
+    @return #fff;
+  }
+}
+
+@function darken-or-lighten($color-value, $amount:8%) {
+  // lightness is a percent value, 0% darkest, 100% lightest
+  $lightness-percent: lightness($color-value);
+
+
+  @if ($lightness-percent > 80) {
+    // really light foreground color, so really darken it up
+    @return darken($color-value, ($amount * 2));
+  }
+
+  @if ($lightness-percent < 35) {
+    // dark foreground color, so light it up
+    @return lighten($color-value, $amount * 2);
+  }
+
+  // default to darken
+  @return darken($color-value, $amount);
+}
+
+@function color($color-name) {
+  @return map-get($colors, $color-name);
+}
+
+@function auxiliary-colors() {
+  // get a map of all the colors, except "primary"
+  @return map-remove($colors, primary);
+}
+
+
+// String Replace Function
+// --------------------------------------------------
+
+@function str-replace($string, $search, $replace: '') {
+  $index: str-index($string, $search);
+
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+
+  @return $string;
+}
+
+
+// URL Encode Function
+// --------------------------------------------------
+
+@function url-encode($val) {
+  @return str-replace($val, ' ', '%20');
+}

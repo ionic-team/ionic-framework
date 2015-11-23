@@ -1,3 +1,4 @@
+@import "../../ionic.globals";
 
 // List
 // --------------------------------------------------
@@ -20,7 +21,7 @@
 .list[inset] {
   overflow: hidden;
   transform: translateZ(0);
-  
+
   ion-header {
     background-color: $list-background-color;
   }

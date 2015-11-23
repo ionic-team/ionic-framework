@@ -1,12 +1,13 @@
-/**
- * Grid
- * --------------------------------------------------
- * Using flexbox for the grid, inspired by Philip Walton:
- * http://philipwalton.github.io/solved-by-flexbox/demos/grids/
- * By default each .col within a .row will evenly take up
- * available width, and the height of each .col with take
- * up the height of the tallest .col in the same .row.
- */
+@import "../../ionic.globals";
+
+// Grid
+// --------------------------------------------------
+// Using flexbox for the grid, inspired by Philip Walton:
+// http://philipwalton.github.io/solved-by-flexbox/demos/grids/
+// By default each .col within a .row will evenly take up
+// available width, and the height of each .col with take
+// up the height of the tallest .col in the same .row.
+
 
 $grid-padding-width:              10px !default;
 $grid-responsive-sm-break:        567px !default;  // smaller than landscape phone

@@ -1,3 +1,4 @@
+@import "../../ionic.globals";
 
 // Navbar
 // --------------------------------------------------
@@ -8,7 +9,7 @@ ion-navbar.toolbar {
 }
 
 .back-button {
-  order: map-get($toolbar-order, backButton);  
+  order: map-get($toolbar-order, backButton);
 
   display: none;
   &.show-back-button {

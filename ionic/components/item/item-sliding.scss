@@ -1,9 +1,7 @@
+@import "../../ionic.globals";
 
-/**
- * The hidden right-side buttons that can be exposed under a list item
- * with dragging.
- */
 
+// The hidden right-side buttons that can be exposed under a list item with dragging.
 ion-item-sliding {
   display: block;
   position: relative;
