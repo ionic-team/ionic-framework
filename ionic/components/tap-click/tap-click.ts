@@ -77,8 +77,9 @@ function touchCancel(ev) {
 
 function mouseDown(ev) {
   if (isDisabledNativeClick()) {
-    console.debug('mouseDown prevent');
-    ev.preventDefault();
+    console.debug('mouseDown prevent', ev.target.tagName);
+    // does not prevent default on purpose
+    // so native blur events from inputs can happen
     ev.stopPropagation();
 
   } else if (lastTouch + disableNativeClickAmount < Date.now()) {
@@ -88,7 +89,7 @@ function mouseDown(ev) {
 
 function mouseUp(ev) {
   if (isDisabledNativeClick()) {
-    console.debug('mouseUp prevent');
+    console.debug('mouseUp prevent', ev.target.tagName);
     ev.preventDefault();
     ev.stopPropagation();
   }

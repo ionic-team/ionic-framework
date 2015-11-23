@@ -524,11 +524,11 @@ class InputScrollAssist {
 }
 
 
-const SCROLL_ASSIST_SPEED = 0.5;
+const SCROLL_ASSIST_SPEED = 0.4;
 
 function getScrollAssistDuration(distanceToScroll) {
   //return 3000;
   distanceToScroll = Math.abs(distanceToScroll);
   let duration = distanceToScroll / SCROLL_ASSIST_SPEED;
-  return Math.min(380, Math.max(80, duration));
+  return Math.min(400, Math.max(100, duration));
 }

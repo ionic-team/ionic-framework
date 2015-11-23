@@ -3,6 +3,7 @@ import {Compiler, ElementRef, Injector, provide, NgZone, DynamicComponentLoader,
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
+import {Keyboard} from '../../util/keyboard';
 import {ViewController} from './view-controller';
 import {Animation} from '../../animations/animation';
 import {SwipeBackGesture} from './swipe-back';
@@ -105,6 +106,7 @@ export class NavController extends Ion {
     parentnavCtrl: NavController,
     app: IonicApp,
     config: Config,
+    keyboard: Keyboard,
     elementRef: ElementRef,
     compiler: Compiler,
     loader: DynamicComponentLoader,
@@ -117,6 +119,7 @@ export class NavController extends Ion {
     this.parent = parentnavCtrl;
     this.app = app;
     this.config = config;
+    this.keyboard = keyboard;
 
     this._compiler = compiler;
     this._loader = loader;
@@ -437,14 +440,16 @@ export class NavController extends Ion {
    * @returns {any} TODO
    */
   _transition(enteringView, leavingView, opts, done) {
+    let self = this;
+
     if (enteringView === leavingView) {
       return done(enteringView);
     }
 
     if (!opts.animation) {
-      opts.animation = this.config.get('pageTransition');
+      opts.animation = self.config.get('pageTransition');
     }
-    if (this.config.get('animate') === false) {
+    if (self.config.get('animate') === false) {
       opts.animate = false;
     }
 
@@ -454,17 +459,15 @@ export class NavController extends Ion {
       enteringView.loaded();
     }
 
-    // wait for the new view to complete setup
-    this._stage(enteringView, () => {
-
+    function beginTransition() {
       if (enteringView.shouldDestroy) {
         // already marked as a view that will be destroyed, don't continue
         return done(enteringView);
       }
 
-      this._setZIndex(enteringView.instance, leavingView.instance, opts.direction);
+      self._setZIndex(enteringView.instance, leavingView.instance, opts.direction);
 
-      this._zone.runOutsideAngular(() => {
+      self._zone.runOutsideAngular(() => {
 
         enteringView.shouldDestroy = false;
         enteringView.shouldCache = false;
@@ -480,10 +483,10 @@ export class NavController extends Ion {
         leavingView.state = STAGED_LEAVING_STATE;
 
         // init the transition animation
-        opts.renderDelay = opts.transitionDelay || this.config.get('pageTransitionDelay');
+        opts.renderDelay = opts.transitionDelay || self.config.get('pageTransitionDelay');
 
-        let transAnimation = Animation.createTransition(this._getStagedEntering(),
-                                                        this._getStagedLeaving(),
+        let transAnimation = Animation.createTransition(self._getStagedEntering(),
+                                                        self._getStagedLeaving(),
                                                         opts);
         if (opts.animate === false) {
           // force it to not animate the elements, just apply the "to" styles
@@ -495,8 +498,8 @@ export class NavController extends Ion {
         if (duration > 64) {
           // block any clicks during the transition and provide a
           // fallback to remove the clickblock if something goes wrong
-          this.app.setEnabled(false, duration);
-          this.app.setTransitioning(true, duration);
+          self.app.setEnabled(false, duration);
+          self.app.setTransitioning(true, duration);
         }
 
         if (opts.pageType) {
@@ -518,16 +521,25 @@ export class NavController extends Ion {
           }
 
           // all done!
-          this._zone.run(() => {
-            this._transComplete();
+          self._zone.run(() => {
+            self._transComplete();
             done(enteringView);
           });
         });
 
       });
 
-    });
+    }
 
+    // wait for the new view to complete setup
+    if (self.keyboard.isOpen()) {
+      self._stage(enteringView, () => {
+        self.keyboard.onClose(beginTransition, 64);
+      });
+
+    } else {
+      self._stage(enteringView, beginTransition);
+    }
   }
 
   /**

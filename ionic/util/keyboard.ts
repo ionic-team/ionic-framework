@@ -2,7 +2,7 @@ import {Injectable, NgZone} from 'angular2/angular2';
 
 import {Config} from '../config/config';
 import {Form} from './form';
-import * as dom from './dom';
+import {hasFocusedTextInput, raf} from './dom';
 
 
 @Injectable()
@@ -18,10 +18,10 @@ export class Keyboard {
   }
 
   isOpen() {
-    return dom.hasFocusedTextInput();
+    return hasFocusedTextInput();
   }
 
-  onClose(callback) {
+  onClose(callback, pollingInternval=KEYBOARD_CLOSE_POLLING) {
     const self = this;
 
     let promise = null;
@@ -41,20 +41,19 @@ export class Keyboard {
           });
 
         } else {
-          setTimeout(checkKeyboard, KEYBOARD_CLOSE_POLLING);
+          setTimeout(checkKeyboard, pollingInternval);
         }
       }
 
-      setTimeout(checkKeyboard, KEYBOARD_CLOSE_POLLING);
-
+      setTimeout(checkKeyboard, pollingInternval);
     });
-
+    
     return promise;
   }
 
   close() {
-    dom.raf(() => {
-      if (dom.hasFocusedTextInput()) {
+    raf(() => {
+      if (hasFocusedTextInput()) {
         // only focus out when a text input has focus
         this.form.focusOut();
       }
@@ -78,7 +77,7 @@ export class Keyboard {
     let isKeyInputEnabled = false;
 
     function cssClass() {
-      dom.raf(() => {
+      raf(() => {
         document.body.classList[isKeyInputEnabled ? 'add' : 'remove']('focus-outline');
       });
     }

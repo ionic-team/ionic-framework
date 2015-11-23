@@ -1,26 +1,39 @@
 import {RouteConfig, Location} from 'angular2/router';
 
-import {App, Page, NavController} from 'ionic/ionic';
+import {App, Page, NavController, Keyboard} from 'ionic/ionic';
 
 
 @Page({
-  template: '' +
-    '<ion-navbar *navbar>' +
-      '<ion-title>Sign In</ion-title>' +
-    '</ion-navbar>' +
-    '<ion-content padding>' +
-      '<p><button id="signIn" (click)="push()">Go to tabs</button></p>' +
-      '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
-      '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
-    '</ion-content>'
+  template: `
+    <ion-navbar *navbar>
+      <ion-title>Sign In</ion-title>
+    </ion-navbar>
+    <ion-content padding>
+      <ion-card>
+        <ion-input>
+          <ion-label>Username:</ion-label>
+          <input type="text">
+        </ion-input>
+        <ion-input>
+          <ion-label>Password:</ion-label>
+          <input type="password">
+        </ion-input>
+        <ion-item>
+          <button block id="signIn" (click)="push()">Sign In</button>
+        </ion-item>
+      </ion-card>
+    </ion-content>
+  `
 })
 class SignIn {
-  constructor(nav: NavController) {
+  constructor(nav: NavController, keyboard: Keyboard) {
     this.nav = nav;
+    this.keyboard = keyboard;
   }
 
   push() {
     this.nav.push(TabsPage);
+    //this.keyboard.close();
   }
 }
 

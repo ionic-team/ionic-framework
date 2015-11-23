@@ -2,6 +2,7 @@ import {Component, ElementRef, Compiler, DynamicComponentLoader, AppViewManager,
 
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
+import {Keyboard} from '../../util/keyboard';
 import {OverlayController} from './overlay-controller';
 import {NavController} from '../nav/nav-controller';
 
@@ -16,6 +17,7 @@ export class OverlayNav extends NavController {
     overlayCtrl: OverlayController,
     app: IonicApp,
     config: Config,
+    keyboard: Keyboard,
     elementRef: ElementRef,
     compiler: Compiler,
     loader: DynamicComponentLoader,
@@ -23,7 +25,7 @@ export class OverlayNav extends NavController {
     zone: NgZone,
     renderer: Renderer
   ) {
-    super(null, app, config, elementRef, compiler, loader, viewManager, zone, renderer);
+    super(null, app, config, keyboard, elementRef, compiler, loader, viewManager, zone, renderer);
 
     if (overlayCtrl.anchor) {
       throw ('An app should only have one <ion-overlay></ion-overlay>');

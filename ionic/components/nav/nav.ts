@@ -2,6 +2,7 @@ import {Component, Directive, ElementRef, Host, Optional, forwardRef, Inject, Ng
 
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
+import {Keyboard} from '../../util/keyboard';
 import {ConfigComponent} from '../../config/decorators';
 import {NavController} from './nav-controller';
 import {ViewController} from './view-controller';
@@ -113,6 +114,7 @@ export class Nav extends NavController {
     @Optional() viewCtrl: ViewController,
     app: IonicApp,
     config: Config,
+    keyboard: Keyboard,
     elementRef: ElementRef,
     compiler: Compiler,
     loader: DynamicComponentLoader,
@@ -120,7 +122,7 @@ export class Nav extends NavController {
     zone: NgZone,
     renderer: Renderer
   ) {
-    super(hostNavCtrl, app, config, elementRef, compiler, loader, viewManager, zone, renderer);
+    super(hostNavCtrl, app, config, keyboard, elementRef, compiler, loader, viewManager, zone, renderer);
 
     if (viewCtrl) {
       // an ion-nav can also act as an ion-page within a parent ion-nav

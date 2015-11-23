@@ -2,6 +2,7 @@ import {Component, Directive, Host, ElementRef, Compiler, DynamicComponentLoader
 
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
+import {Keyboard} from '../../util/keyboard';
 import {NavController} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
 import {Tabs} from './tabs';
@@ -72,6 +73,7 @@ export class Tab extends NavController {
     @Host() parentTabs: Tabs,
     app: IonicApp,
     config: Config,
+    keyboard: Keyboard,
     elementRef: ElementRef,
     compiler: Compiler,
     loader: DynamicComponentLoader,
@@ -80,7 +82,7 @@ export class Tab extends NavController {
     renderer: Renderer
   ) {
     // A Tab is a NavController for its child pages
-    super(parentTabs, app, config, elementRef, compiler, loader, viewManager, zone, renderer);
+    super(parentTabs, app, config, keyboard, elementRef, compiler, loader, viewManager, zone, renderer);
     this._isInitial = parentTabs.add(this);
 
     this._panelId = 'tabpanel-' + this.id;
