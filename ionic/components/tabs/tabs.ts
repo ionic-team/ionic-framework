@@ -1,10 +1,10 @@
 import {Directive, ElementRef, Optional, Host, NgFor, NgIf, forwardRef, ViewContainerRef} from 'angular2/angular2';
 
 import {Ion} from '../ion';
-import {IonicApp} from '../app/app';
 import {Attr} from '../app/id';
 import {Config} from '../../config/config';
 import {Platform} from '../../platform/platform';
+import {NavController} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
 import {ConfigComponent} from '../../config/decorators';
 import {Icon} from '../icon/icon';
@@ -74,7 +74,7 @@ import {Icon} from '../icon/icon';
     '</ion-navbar-section>' +
     '<ion-tabbar-section>' +
       '<tabbar role="tablist" [attr]="tabbarStyle">' +
-        '<a *ng-for="#t of tabs" [tab]="t" class="tab-button" role="tab">' +
+        '<a *ng-for="#t of _tabs" [tab]="t" class="tab-button" role="tab">' +
           '<icon [name]="t.tabIcon" [is-active]="t.isSelected" class="tab-button-icon"></icon>' +
           '<span class="tab-button-text">{{t.tabTitle}}</span>' +
         '</a>' +
@@ -105,17 +105,18 @@ export class Tabs extends Ion {
    * point that "Tabs" is itself is just a page with its own instance of ViewController.
    */
  constructor(
-    app: IonicApp,
     config: Config,
     elementRef: ElementRef,
     @Optional() viewCtrl: ViewController,
+    @Optional() navCtrl: NavController,
     private platform: Platform
   ) {
     super(elementRef, config);
-    this.app = app;
+    this.parent = navCtrl;
     this.subPages = config.get('tabSubPages');
 
-    this.tabs = [];
+    this._tabs = [];
+    this._id = ++tabIds;
 
     // Tabs may also be an actual ViewController which was navigated to
     // if Tabs is static and not navigated to within a NavController
@@ -125,9 +126,9 @@ export class Tabs extends Ion {
       viewCtrl.setContentRef(elementRef);
 
       // TODO: improve how this works, probably not use promises here
-      this.readyPromise = new Promise(res => { this.isReady = res; });
+      this._readyPromise = new Promise(res => { this._isReady = res; });
       viewCtrl.onReady = () => {
-        return this.readyPromise;
+        return this._readyPromise;
       };
     }
   }
@@ -139,9 +140,9 @@ export class Tabs extends Ion {
     super.onInit();
     this.preloadTabs = (this.preloadTabs !== "false" && this.preloadTabs !== false);
 
-    if (this.highlight) {
+    if (this._highlight) {
       this.platform.onResize(() => {
-        this.highlight.select(this.getSelected());
+        this._highlight.select(this.getSelected());
       });
     }
   }
@@ -150,12 +151,10 @@ export class Tabs extends Ion {
    * @private
    */
   add(tab) {
-    tab.id = ++_tabIds;
-    tab.btnId = 'tab-' + tab.id;
-    tab.panelId = 'tabpanel-' + tab.id;
-    this.tabs.push(tab);
+    tab.id = this._id + '-' + (++_tabIds);
+    this._tabs.push(tab);
 
-    return (this.tabs.length === 1);
+    return (this._tabs.length === 1);
   }
 
   /**
@@ -175,7 +174,7 @@ export class Tabs extends Ion {
 
     if (selectedTab === deselectedTab) {
       // no change
-      return this.touchActive(selectedTab);
+      return this._touchActive(selectedTab);
     }
 
     let opts = {
@@ -192,16 +191,16 @@ export class Tabs extends Ion {
     selectedPage && selectedPage.willEnter();
 
     selectedTab.load(opts, () => {
-      this.tabs.forEach(tab => {
+      this._tabs.forEach(tab => {
         tab.setSelected(tab === selectedTab);
       });
 
-      this.highlight && this.highlight.select(selectedTab);
+      this._highlight && this._highlight.select(selectedTab);
 
       selectedPage && selectedPage.didEnter();
       deselectedPage && deselectedPage.didLeave();
 
-      this.isReady && this.isReady();
+      this._isReady && this._isReady();
 
       console.timeEnd('select tab ' + selectedTab.id);
     });
@@ -213,23 +212,23 @@ export class Tabs extends Ion {
    * @returns {TODO} TODO
    */
   getByIndex(index) {
-    if (index < this.tabs.length && index > -1) {
-      return this.tabs[index];
+    if (index < this._tabs.length && index > -1) {
+      return this._tabs[index];
     }
     return null;
   }
 
   getSelected() {
-    for (let i = 0; i < this.tabs.length; i++) {
-      if (this.tabs[i].isSelected) {
-        return this.tabs[i];
+    for (let i = 0; i < this._tabs.length; i++) {
+      if (this._tabs[i].isSelected) {
+        return this._tabs[i];
       }
     }
     return null;
   }
 
   getIndex(tab) {
-    return this.tabs.indexOf(tab);
+    return this._tabs.indexOf(tab);
   }
 
   /**
@@ -237,17 +236,17 @@ export class Tabs extends Ion {
    * "Touch" the active tab, going back to the root view of the tab
    * or optionally letting the tab handle the event
    */
-  touchActive(tab) {
+  _touchActive(tab) {
     let active = tab.getActive();
 
-    if(!active) {
+    if (!active) {
       return Promise.resolve();
     }
 
     let instance = active.instance;
 
     // If they have a custom tab selected handler, call it
-    if(instance.tabSelected) {
+    if (instance.tabSelected) {
       return instance.tabSelected();
     }
 
@@ -259,7 +258,7 @@ export class Tabs extends Ion {
 
     // Otherwise, if the page we're on is not our real root, reset it to our
     // default root type
-    if(tab.root != active.componentType) {
+    if (tab.root != active.componentType) {
       return tab.setRoot(tab.root);
     }
 
@@ -279,8 +278,8 @@ let _tabIds = -1;
   selector: '.tab-button',
   inputs: ['tab'],
   host: {
-    '[attr.id]': 'tab.btnId',
-    '[attr.aria-controls]': 'tab.panelId',
+    '[attr.id]': 'tab._btnId',
+    '[attr.aria-controls]': 'tab._panelId',
     '[attr.aria-selected]': 'tab.isSelected',
     '[class.has-title]': 'hasTitle',
     '[class.has-icon]': 'hasIcon',
@@ -310,6 +309,8 @@ class TabButton extends Ion {
   }
 }
 
+let tabIds = -1;
+
 
 /**
  * @private
@@ -320,7 +321,7 @@ class TabButton extends Ion {
 class TabHighlight {
   constructor(@Host() tabs: Tabs, config: Config, elementRef: ElementRef) {
     if (config.get('tabbarHighlight')) {
-      tabs.highlight = this;
+      tabs._highlight = this;
       this.elementRef = elementRef;
     }
   }

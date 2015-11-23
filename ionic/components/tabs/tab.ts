@@ -59,9 +59,9 @@ import {Tabs} from './tabs';
     'tabIcon'
   ],
   host: {
-    '[attr.id]': 'panelId',
-    '[attr.aria-labelledby]': 'btnId',
     '[class.show-tab]': 'isSelected',
+    '[attr.id]': '_panelId',
+    '[attr.aria-labelledby]': '_btnId',
     'role': 'tabpanel'
   },
   template: '<template #contents></template>'
@@ -69,7 +69,7 @@ import {Tabs} from './tabs';
 export class Tab extends NavController {
 
   constructor(
-    @Host() tabs: Tabs,
+    @Host() parentTabs: Tabs,
     app: IonicApp,
     config: Config,
     elementRef: ElementRef,
@@ -80,9 +80,11 @@ export class Tab extends NavController {
     renderer: Renderer
   ) {
     // A Tab is a NavController for its child pages
-    super(tabs, app, config, elementRef, compiler, loader, viewManager, zone, renderer);
-    this.tabs = tabs;
-    this._isInitial = tabs.add(this);
+    super(parentTabs, app, config, elementRef, compiler, loader, viewManager, zone, renderer);
+    this._isInitial = parentTabs.add(this);
+
+    this._panelId = 'tabpanel-' + this.id;
+    this._btnId = 'tab-' + this.id;
   }
 
   /**
@@ -90,10 +92,10 @@ export class Tab extends NavController {
    */
   onInit() {
     if (this._isInitial) {
-      this.tabs.select(this);
+      this.parent.select(this);
 
-    } else if (this.tabs.preloadTabs) {
-      setTimeout(() => {
+    } else if (this.parent.preloadTabs) {
+      this._loadTimer = setTimeout(() => {
         if (!this._loaded) {
           let opts = {
             animate: false,
@@ -125,9 +127,9 @@ export class Tab extends NavController {
    */
   loadPage(viewCtrl, navbarContainerRef, done) {
     // by default a page's navbar goes into the shared tab's navbar section
-    navbarContainerRef = this.tabs.navbarContainerRef;
+    navbarContainerRef = this.parent.navbarContainerRef;
 
-    let isTabSubPage = (this.tabs.subPages && viewCtrl.index > 0);
+    let isTabSubPage = (this.parent.subPages && viewCtrl.index > 0);
     if (isTabSubPage) {
       // a subpage, that's not the first index
       // should not use the shared tabs navbar section, but use it's own
@@ -158,7 +160,11 @@ export class Tab extends NavController {
   }
 
   get index() {
-    return this.tabs.getIndex(this);
+    return this.parent.getIndex(this);
+  }
+
+  onDestroy() {
+    clearTimeout(this._loadTimer);
   }
 
 }

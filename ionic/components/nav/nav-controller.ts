@@ -148,11 +148,20 @@ export class NavController extends Ion {
    */
   push(componentType, params = {}, opts = {}) {
     if (!componentType) {
+      console.debug('invalid componentType to push');
       return Promise.reject();
     }
     if (typeof componentType !== 'function') {
       throw 'Loading component must be a component class, not "' + componentType.toString() + '"';
     }
+
+    let now = Date.now();
+    let last = this.last();
+    if (last && last.componentType === componentType && now + 500 > this._lastPush) {
+      console.debug('same componentType pushed as active');
+      return Promise.reject();
+    }
+    this._lastPush = now;
 
     let resolve;
     let promise = new Promise(res => { resolve = res; });

@@ -47,6 +47,7 @@ class TabsPage {
     '</ion-navbar>' +
     '<ion-content padding>' +
       '<p><button id="goToTab1Page2" (click)="push()">Go to Tab 1, Page 2</button></p>' +
+      '<p><button (click)="logout()">Logout</button></p>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
     '</ion-content>'
@@ -58,6 +59,12 @@ class Tab1Page1 {
 
   push() {
     this.nav.push(Tab1Page2)
+  }
+
+  logout() {
+    let tabs = this.nav.parent;
+    let rootNav = tabs.parent;
+    rootNav.pop();
   }
 }
 
