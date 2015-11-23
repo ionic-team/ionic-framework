@@ -500,7 +500,7 @@ gulp.task('bundle.demos:docs', ['build.demos'], function(done) {
 gulp.task('demos:all', ['bundle.demos:all'], function() {
   return gulp
     .src('dist/demos/component-docs/**/*')
-    .pipe(gulp.dest('dist/ionic-site/docs/v2/components/demo/'))
+    .pipe(gulp.dest('../ionic-site/docs/v2/components/demo/'))
 });
 
 gulp.task('demos:docs', ['sass.demos:docs', 'bundle.demos:docs'], function() {
@@ -509,7 +509,7 @@ gulp.task('demos:docs', ['sass.demos:docs', 'bundle.demos:docs'], function() {
       'dist/demos/component-docs/**/*',
       '!dist/demos/component-docs/**/*.scss',
       ])
-    .pipe(gulp.dest('dist/ionic-site/docs/v2/components/demo/'))
+    .pipe(gulp.dest('../ionic-site/docs/v2/components/demo/'))
 });
 
 gulp.task('demos', ['demos:all']);
