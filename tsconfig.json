@@ -14,5 +14,6 @@
         "!./dist/**",
         "!./tmp/**"
     ],
-    "compileOnSave" : false
+    "compileOnSave" : false,
+    "buildOnSave": false
 }
