@@ -146,7 +146,7 @@ export class NavController extends Ion {
    * @param {TODO} [opts={}]  TODO
    * @returns {Promise} TODO
    */
-  push(componentType, params = {}, opts = {}) {
+  push(componentType, params = {}, opts = {}, callback) {
     if (!componentType) {
       console.debug('invalid componentType to push');
       return Promise.reject();
@@ -164,7 +164,10 @@ export class NavController extends Ion {
     this._lastPush = now;
 
     let resolve;
-    let promise = new Promise(res => { resolve = res; });
+    let promise = null;
+    if (!callback) {
+      promise = new Promise(res => { callback = res; });
+    }
 
     // do not animate if this is the first in the stack
     if (!this._views.length && !opts.animateFirst) {
@@ -202,7 +205,7 @@ export class NavController extends Ion {
     }
 
     // start the transition
-    this._transition(enteringView, leavingView, opts, resolve);
+    this._transition(enteringView, leavingView, opts, callback);
 
     return promise;
   }
@@ -579,9 +582,9 @@ export class NavController extends Ion {
       let navbarTemplateRef = viewCtrl.getNavbarTemplateRef();
       if (navbarContainerRef && navbarTemplateRef) {
 
-        console.time('loadPage ' + viewCtrl.componentType.name + ': createEmbeddedView');
+        console.time('loadPage ' + viewCtrl.componentType.name + ': create navbar');
         let navbarView = navbarContainerRef.createEmbeddedView(navbarTemplateRef);
-        console.timeEnd('loadPage ' + viewCtrl.componentType.name + ': createEmbeddedView');
+        console.timeEnd('loadPage ' + viewCtrl.componentType.name + ': create navbar');
 
         viewCtrl.addDestroy(() => {
           let index = navbarContainerRef.indexOf(navbarView);

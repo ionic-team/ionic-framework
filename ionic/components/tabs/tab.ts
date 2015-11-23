@@ -114,7 +114,7 @@ export class Tab extends NavController {
    */
   load(opts, done) {
     if (!this._loaded && this.root) {
-      this.push(this.root, null, opts).then(done);
+      this.push(this.root, null, opts, done);
       this._loaded = true;
 
     } else {
