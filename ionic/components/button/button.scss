@@ -13,7 +13,7 @@ $button-round-padding:            0 2.6rem !default;
 $button-round-border-radius:      64px !default;
 
 $button-color:                    color(primary) !default;
-$button-color-activated:          darken-or-lighten($button-color) !default;
+$button-color-activated:          color-shade($button-color) !default;
 $button-text-color:               inverse($button-color) !default;
 $button-hover-opacity:            0.8 !default;
 
@@ -149,7 +149,7 @@ a[button] {
   [button][#{$color-name}] {
 
     $bg-color: $color-value;
-    $bg-color-activated: darken-or-lighten($bg-color);
+    $bg-color-activated: color-shade($bg-color);
     $text-color: inverse($bg-color);
     @include button-default($bg-color, $bg-color-activated, $text-color);
 

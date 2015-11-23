@@ -3,36 +3,35 @@
 // --------------------------------------------------
 
 @function inverse($color-value) {
-  @if (lightness($color-value) > 70) {
-    @return #000;
+  $lightness: lightness($color-value);
+  $red: red($color-value);
+  $green: green($color-value);
+
+  @if ($lightness > 65 or $green > 220 or ($red > 240 and $green > 180)) {
+    @return black;
   }
-  @else {
-    @return #fff;
-  }
+
+  @return white;
 }
 
-@function darken-or-lighten($color-value, $amount:8%) {
-  // lightness is a percent value, 0% darkest, 100% lightest
-  $lightness-percent: lightness($color-value);
 
+@function color-shade($color-value, $amount:8%) {
+  $lightness: lightness($color-value);
 
-  @if ($lightness-percent > 80) {
-    // really light foreground color, so really darken it up
-    @return darken($color-value, ($amount * 2));
+  $shade: white;
+
+  @if ($lightness > 50) {
+    $shade: black;
   }
 
-  @if ($lightness-percent < 35) {
-    // dark foreground color, so light it up
-    @return lighten($color-value, $amount * 2);
-  }
-
-  // default to darken
-  @return darken($color-value, $amount);
+  @return mix($shade, $color-value, $amount);
 }
+
 
 @function color($color-name) {
   @return map-get($colors, $color-name);
 }
+
 
 @function auxiliary-colors() {
   // get a map of all the colors, except "primary"

@@ -7,7 +7,7 @@ button[clear],
 [button][clear] {
   border-color: transparent;
   background: transparent;
-  color: darken-or-lighten($button-color);
+  color: color-shade($button-color);
 
   &.activated {
     opacity: 0.4;
@@ -16,7 +16,7 @@ button[clear],
 
   &:hover:not(.disable-hover) {
     opacity: 0.6;
-    color: darken-or-lighten($button-color);
+    color: color-shade($button-color);
   }
 }
 
@@ -27,7 +27,7 @@ button[clear],
 
 @each $color-name, $color-value in auxiliary-colors() {
 
-  $fg-color: darken-or-lighten($color-value);
+  $fg-color: color-shade($color-value);
 
   button[clear][#{$color-name}],
   [button][clear][#{$color-name}] {
@@ -36,7 +36,7 @@ button[clear],
     color: $fg-color;
 
     &:hover:not(.disable-hover) {
-      color: darken-or-lighten($fg-color);
+      color: color-shade($fg-color);
     }
   }
 
