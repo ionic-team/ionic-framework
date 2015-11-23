@@ -2,6 +2,9 @@ import {Animation} from '../../animations/animation';
 import {extend} from 'ionic/util';
 
 
+/**
+ * @private
+ */
 export class OverlayController {
 
   open(componentType, params = {}, opts = {}) {
@@ -34,8 +37,11 @@ export class OverlayController {
         };
 
         document.addEventListener('keyup', escape, true);
+        resolve(viewCtrl.instance);
+
+      } else {
+        reject();
       }
-      resolve();
     })
 
     return promise;
@@ -52,6 +58,3 @@ export class OverlayController {
   }
 
 }
-
-
-const ROOT_Z_INDEX = 1000;
