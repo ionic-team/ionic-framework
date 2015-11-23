@@ -24,7 +24,7 @@ class DemoApp {
       { title: 'Events', component: PageThree }
     ];
 
-    this.platform.ready().then( () => {
+    this.platform.ready().then(() => {
 
       window.addEventListener('message', (e) => {
 
@@ -40,11 +40,11 @@ class DemoApp {
               this.nextPage = actionSheets.BasicPage;
             }
             let nav = this.app.getComponent('nav');
-            nav.setRoot(this.nextPage);
+            helpers.debounce(nav.setRoot(this.nextPage), 60, false);
           }
         });
       });
-      window.parent.postMessage(this.platform.is('ios')? "ios":"android", "*");
+      window.parent.postMessage(this.platform.is('ios') ? "ios" : "android", "*");
       if (helpers.hasScrollbar() === true) {
         setTimeout(function() {
           var body = document.getElementsByTagName('body')[0];
