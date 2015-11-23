@@ -37,6 +37,7 @@ class MyCmpTest{}
         <button ion-item [nav-push]="[\'FirstPage\', {id: 22}]">Push w/ [nav-push] array and string view name</button>
         <button ion-item nav-push="FirstPage" [nav-params]="{id: 23}">Push w/ nav-push and [nav-params]</button>
         <button ion-item (click)="setViews()">setViews() (Go to PrimaryHeaderPage)</button>
+        <button ion-item (click)="setRoot()">setRoot(PrimaryHeaderPage) (Go to PrimaryHeaderPage)</button>
         <button ion-item (click)="nav.pop()">Pop</button>
 
         <button *ng-for="#i of pages" ion-item (click)="pushPrimaryHeaderPage()">Page {{i}}</button>
@@ -68,6 +69,10 @@ class FirstPage {
     ];
 
     this.nav.setViews(items);
+  }
+
+  setRoot(PrimaryHeaderPage) {
+
   }
 
   pushPrimaryHeaderPage() {
@@ -140,6 +145,7 @@ class FullPage {
       <p><button class="e2eFrom3To2" (click)="nav.pop()">Pop</button></p>
       <p><button (click)="pushAnother()">Push to AnotherPage</button></p>
       <p><button (click)="pushFullPage()">Push to FullPage</button></p>
+      <p><button (click)="setRoot()">setRoot(AnotherPage)</button></p>
       <p><button id="insert" (click)="insert()">Insert first page into history before this</button></p>
       <p><button id="remove" (click)="removeSecond()">Remove second page in history</button></p>
       <div class="yellow"><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f></div>
@@ -169,6 +175,10 @@ class PrimaryHeaderPage {
     this.nav.remove(1);
   }
 
+  setRoot() {
+    this.nav.setRoot(AnotherPage);
+  }
+
 }
 
 
@@ -183,6 +193,7 @@ class PrimaryHeaderPage {
       <p><button (click)="pushFullPage()">Push to FullPage</button></p>
       <p><button (click)="pushPrimaryHeaderPage()">Push to PrimaryHeaderPage</button></p>
       <p><button (click)="pushFirstPage()">Push to FirstPage</button></p>
+      <p><button (click)="setRoot()">setRoot(FirstPage)</button></p>
       <p><button (click)="toggleBackButton()">Toggle hide-back-button</button></p>
     </ion-content>
   `
@@ -207,6 +218,10 @@ class AnotherPage {
 
   pushFirstPage() {
     this.nav.push(FirstPage);
+  }
+
+  setRoot() {
+    this.nav.setRoot(FirstPage);
   }
 
   toggleBackButton() {
