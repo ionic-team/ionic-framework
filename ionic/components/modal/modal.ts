@@ -49,9 +49,9 @@ export class Modal {
    * for the modal to work correctly. (This is something that will
    * be hopefully be removed in the near future.)
    * @param pageComponent  The Page component to load in the modal.
-   * @param [params={}]  Optional data which can be passed to the page
+   * @param {Object} [params={}]  Optional data which can be passed to the page
    * component, which can be read from the constructor's `NavParams`.
-   * @param [opts={}]  Additional options for this one modal instance of.
+   * @param {Object} [opts={}]  Additional options for this one modal instance of.
    * Options include `enterAnimation` and `leaveAnimation`, which
    * allows customization of which animation to use.
    * @returns {Promise} Returns a promise which resolves when the modal has
