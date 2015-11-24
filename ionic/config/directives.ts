@@ -14,7 +14,6 @@ import {Tabs} from '../components/tabs/tabs';
 import {Tab} from '../components/tabs/tab';
 import {List, ListHeader} from '../components/list/list';
 import {Item} from '../components/item/item';
-import {ItemGroup, ItemGroupTitle} from '../components/item/item-group';
 import {ItemSliding} from '../components/item/item-sliding';
 import {Toolbar, ToolbarTitle, ToolbarItem} from '../components/toolbar/toolbar';
 import {Icon} from '../components/icon/icon';
@@ -57,8 +56,6 @@ export const IONIC_DIRECTIVES = [
   List,
   ListHeader,
   Item,
-  ItemGroup,
-  ItemGroupTitle,
   ItemSliding,
 
   // Slides
