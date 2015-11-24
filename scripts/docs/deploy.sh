@@ -22,7 +22,6 @@ function run {
   VERSION=$(readJsonProp "package.json" "version")
 
   gulp docs --doc-version="$VERSION_NAME"
-  gulp src
   cd $SITE_DIR
 
   CHANGES=$(git status --porcelain)

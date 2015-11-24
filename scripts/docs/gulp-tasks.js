@@ -18,7 +18,7 @@ module.exports = function(gulp, flags) {
     }
   });
 
-  gulp.task('docs.demos', ['demos', 'bundle', 'sass', 'fonts'], function(){
+  gulp.task('docs.demos', ['demos', 'sass', 'fonts'], function(){
     return gulp.src([
         'dist/**',
         '!dist/e2e',
