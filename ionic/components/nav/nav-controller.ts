@@ -217,7 +217,7 @@ export class NavController extends Ion {
   /**
    * TODO
    * @name NavController#pop
-   * @param [opts={}] Any additional option for the transition
+   * @param {Object} [opts={}] Any additional option for the transition
    * @returns {Promise} Returns a promise when the transition is completed
    */
   pop(opts = {}) {
