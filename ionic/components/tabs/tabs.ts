@@ -117,6 +117,7 @@ export class Tabs extends Ion {
 
     this._tabs = [];
     this._id = ++tabIds;
+    this._ids = -1;
 
     // Tabs may also be an actual ViewController which was navigated to
     // if Tabs is static and not navigated to within a NavController
@@ -151,7 +152,7 @@ export class Tabs extends Ion {
    * @private
    */
   add(tab) {
-    tab.id = this._id + '-' + (++_tabIds);
+    tab.id = this._id + '-' + (++this._ids);
     this._tabs.push(tab);
 
     return (this._tabs.length === 1);
@@ -268,7 +269,7 @@ export class Tabs extends Ion {
 
 }
 
-let _tabIds = -1;
+let tabIds = -1;
 
 
 /**
@@ -308,8 +309,6 @@ class TabButton extends Ion {
     this.tabs.select(this.tab);
   }
 }
-
-let tabIds = -1;
 
 
 /**

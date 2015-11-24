@@ -200,7 +200,6 @@ export class Menu extends Ion {
     // user actively dragging the menu
     if (this.isEnabled) {
       this._prevent();
-      this.app.setTransitioning(true);
       this._getType().setProgess(value);
       this.opening.next(value);
     }
@@ -213,7 +212,6 @@ export class Menu extends Ion {
     // user has finished dragging the menu
     if (this.isEnabled) {
       this._prevent();
-      this.app.setTransitioning(true);
       this._getType().setProgressEnd(shouldComplete).then(isOpen => {
         this._after(isOpen);
       });
@@ -231,7 +229,6 @@ export class Menu extends Ion {
       this.getBackdropElement().classList.add('show-backdrop');
 
       this._prevent();
-      this.app.setTransitioning(true);
       this.keyboard.close();
     }
   }
@@ -243,7 +240,6 @@ export class Menu extends Ion {
     // keep opening/closing the menu disabled for a touch more yet
     if (this.isEnabled) {
       this._prevent();
-      this.app.setTransitioning(false);
 
       this.isOpen = isOpen;
 

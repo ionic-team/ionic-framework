@@ -16,7 +16,6 @@ export class IonicApp {
     this._titleSrv = new Title();
     this._title = '';
     this._disTime = 0;
-    this._trnsTime = 0;
 
     // Our component registry map
     this.components = {};
@@ -61,18 +60,6 @@ export class IonicApp {
    */
   isEnabled() {
     return (this._disTime < Date.now());
-  }
-
-  setTransitioning(isTransitioning, fallback=700) {
-    this._trnsTime = (isTransitioning ? Date.now() + fallback : 0);
-  }
-
-  /**
-   * Boolean if the app is actively transitioning or not.
-   * @return {bool}
-   */
-  isTransitioning() {
-    return (this._trnsTime > Date.now());
   }
 
   /**

@@ -128,6 +128,7 @@ export class NavController extends Ion {
     this.renderer = renderer;
 
     this._views = [];
+    this._trnsTime = 0;
 
     this._sbTrans = null;
     this._sbEnabled = config.get('swipeBackEnabled') || false;
@@ -143,6 +144,18 @@ export class NavController extends Ion {
   }
 
   /**
+   * Boolean if the nav controller is actively transitioning or not.
+   * @return {bool}
+   */
+  isTransitioning() {
+    return (this._trnsTime > Date.now());
+  }
+
+  setTransitioning(isTransitioning, fallback=700) {
+    this._trnsTime = (isTransitioning ? Date.now() + fallback : 0);
+  }
+
+  /**
    * TODO
    * @name NavController#push
    * @param {Component} The name of the component you want to push on the navigation stack
@@ -155,19 +168,18 @@ export class NavController extends Ion {
       console.debug('invalid componentType to push');
       return Promise.reject();
     }
+
     if (typeof componentType !== 'function') {
       throw 'Loading component must be a component class, not "' + componentType.toString() + '"';
     }
 
-    let now = Date.now();
-    let last = this.last();
-    if (last && last.componentType === componentType && now + 500 > this._lastPush) {
-      console.debug('same componentType pushed as active');
+    if (this.isTransitioning()) {
+      console.debug('nav controller actively transitioning');
       return Promise.reject();
     }
-    this._lastPush = now;
 
-    let resolve;
+    this.setTransitioning(true, 500);
+
     let promise = null;
     if (!callback) {
       promise = new Promise(res => { callback = res; });
@@ -224,6 +236,13 @@ export class NavController extends Ion {
     if (!opts.animateFirst && !this.canGoBack()) {
       return Promise.reject();
     }
+
+    if (this.isTransitioning()) {
+      console.debug('nav controller actively transitioning');
+      return Promise.reject();
+    }
+
+    this.setTransitioning(true, 500);
 
     let resolve;
     let promise = new Promise(res => { resolve = res; });
@@ -498,12 +517,11 @@ export class NavController extends Ion {
         }
 
         let duration = transAnimation.duration();
-        if (duration > 64) {
-          // block any clicks during the transition and provide a
-          // fallback to remove the clickblock if something goes wrong
-          self.app.setEnabled(false, duration);
-          self.app.setTransitioning(true, duration);
-        }
+        let enableApp = (duration < 64);
+        // block any clicks during the transition and provide a
+        // fallback to remove the clickblock if something goes wrong
+        self.app.setEnabled(enableApp, duration);
+        self.setTransitioning(!enableApp, duration);
 
         if (opts.pageType) {
           transAnimation.before.addClass(opts.pageType);
@@ -647,7 +665,7 @@ export class NavController extends Ion {
 
     // disables the app during the transition
     this.app.setEnabled(false);
-    this.app.setTransitioning(true);
+    this.setTransitioning(true);
 
     // default the direction to "back"
     let opts = {
@@ -696,7 +714,7 @@ export class NavController extends Ion {
     if (this._sbTrans) {
       // continue to disable the app while actively dragging
       this.app.setEnabled(false, 4000);
-      this.app.setTransitioning(true, 4000);
+      this.setTransitioning(true, 4000);
 
       // set the transition animation's progress
       this._sbTrans.progress(value);
@@ -714,7 +732,7 @@ export class NavController extends Ion {
 
     // disables the app during the transition
     this.app.setEnabled(false);
-    this.app.setTransitioning(true);
+    this.setTransitioning(true);
 
     this._sbTrans.progressEnd(completeSwipeBack, rate).then(() => {
 
@@ -853,7 +871,7 @@ export class NavController extends Ion {
     // allow clicks again, but still set an enable time
     // meaning nothing with this view controller can happen for XXms
     this.app.setEnabled(true);
-    this.app.setTransitioning(false);
+    this.setTransitioning(false);
 
     this._sbComplete();
 

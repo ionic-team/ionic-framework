@@ -1,5 +1,6 @@
 import {Component, Directive, NgIf, forwardRef, Host, Optional, ElementRef, Renderer, Attribute} from 'angular2/angular2';
 
+import {NavController} from '../nav/nav-controller';
 import {Config} from '../../config/config';
 import {Form} from '../../util/form';
 import {Label} from './label';
@@ -36,7 +37,8 @@ export class TextInput {
     renderer: Renderer,
     app: IonicApp,
     platform: Platform,
-    @Optional() @Host() scrollView: Content
+    @Optional() @Host() scrollView: Content,
+    @Optional() navCtrl: NavController
   ) {
     this.renderer = renderer;
 
@@ -49,6 +51,7 @@ export class TextInput {
     this.app = app;
     this.elementRef = elementRef;
     this.platform = platform;
+    this.navCtrl = navCtrl;
 
     this.scrollView = scrollView;
     this.scrollAssist = config.get('scrollAssist');
@@ -83,7 +86,7 @@ export class TextInput {
 
     let self = this;
     self.scrollMove = (ev) => {
-      if (!self.app.isTransitioning()) {
+      if (!(this.navCtrl && this.navCtrl.isTransitioning())) {
         self.deregMove();
 
         if (self.hasFocus) {
@@ -173,7 +176,7 @@ export class TextInput {
       // do not allow any clicks while it's scrolling
       let scrollDuration = getScrollAssistDuration(scrollData.scrollAmount);
       this.app.setEnabled(false, scrollDuration);
-      this.app.setTransitioning(true, scrollDuration);
+      this.navCtrl && this.navCtrl.setTransitioning(true, scrollDuration);
 
       // temporarily move the focus to the focus holder so the browser
       // doesn't freak out while it's trying to get the input in place
@@ -188,7 +191,7 @@ export class TextInput {
 
         // all good, allow clicks again
         this.app.setEnabled(true);
-        this.app.setTransitioning(false);
+        this.navCtrl && this.navCtrl.setTransitioning(false);
         this.regMove();
       });
 
