@@ -12,7 +12,7 @@
  *
  * @usage
  *
- * ````html
+ * ```html
  * <ion-content ng-controller="MyCtrl">
  *   <button class="button" ng-click="showDeleteButtons()"></button>
  *   <ion-list>
