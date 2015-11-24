@@ -160,7 +160,7 @@ export class TextInput {
       // find out if text input should be manually scrolled into view
       let ele = this.elementRef.nativeElement;
 
-      let scrollData = TextInput.getScollData(ele.offsetTop, ele.offsetHeight, scrollView.getDimensions(), this.keyboardHeight, this.platform.height());
+      let scrollData = TextInput.getScrollData(ele.offsetTop, ele.offsetHeight, scrollView.getDimensions(), this.keyboardHeight, this.platform.height());
       if (scrollData.scrollAmount > -3 && scrollData.scrollAmount < 3) {
         // the text input is in a safe position that doesn't require
         // it to be scrolled into view, just set focus now
@@ -211,7 +211,7 @@ export class TextInput {
    * @param {TODO} keyboardHeight  TODO
    * @returns {TODO} TODO
    */
-  static getScollData(inputOffsetTop, inputOffsetHeight, scrollViewDimensions, keyboardHeight, plaformHeight) {
+  static getScrollData(inputOffsetTop, inputOffsetHeight, scrollViewDimensions, keyboardHeight, plaformHeight) {
     // compute input's Y values relative to the body
     let inputTop = (inputOffsetTop + scrollViewDimensions.contentTop - scrollViewDimensions.scrollTop);
     let inputBottom = (inputTop + inputOffsetHeight);

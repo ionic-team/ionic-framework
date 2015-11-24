@@ -14,7 +14,7 @@ export function run() {
     let keyboardHeight = 400;
     let platformHeight = 800;
 
-    let scrollData = TextInput.getScollData(inputOffsetTop, inputOffsetHeight, scrollViewDimensions, keyboardHeight, platformHeight);
+    let scrollData = TextInput.getScrollData(inputOffsetTop, inputOffsetHeight, scrollViewDimensions, keyboardHeight, platformHeight);
 
     expect(scrollData.scrollAmount).toBe(-205);
     expect(scrollData.scrollTo).toBe(235);
@@ -33,7 +33,7 @@ export function run() {
     let keyboardHeight = 400;
     let platformHeight = 800;
 
-    let scrollData = TextInput.getScollData(inputOffsetTop, inputOffsetHeight, scrollViewDimensions, keyboardHeight, platformHeight);
+    let scrollData = TextInput.getScrollData(inputOffsetTop, inputOffsetHeight, scrollViewDimensions, keyboardHeight, platformHeight);
 
     expect(scrollData.scrollAmount).toBe(-205);
     expect(scrollData.scrollTo).toBe(235);
@@ -53,7 +53,7 @@ export function run() {
     let keyboardHeight = 400;
     let platformHeight = 800;
 
-    let scrollData = TextInput.getScollData(inputOffsetTop, inputOffsetHeight, scrollViewDimensions, keyboardHeight, platformHeight);
+    let scrollData = TextInput.getScrollData(inputOffsetTop, inputOffsetHeight, scrollViewDimensions, keyboardHeight, platformHeight);
 
     expect(scrollData.scrollAmount).toBe(150);
     expect(scrollData.scrollTo).toBe(100);
@@ -73,7 +73,7 @@ export function run() {
     let keyboardHeight = 400;
     let platformHeight = 800;
 
-    let scrollData = TextInput.getScollData(inputOffsetTop, inputOffsetHeight, scrollViewDimensions, keyboardHeight, platformHeight);
+    let scrollData = TextInput.getScrollData(inputOffsetTop, inputOffsetHeight, scrollViewDimensions, keyboardHeight, platformHeight);
 
     expect(scrollData.scrollAmount).toBe(-80);
     expect(scrollData.scrollTo).toBe(100);
@@ -91,7 +91,7 @@ export function run() {
     let keyboardHeight = 400;
     let platformHeight = 800;
 
-    let scrollData = TextInput.getScollData(inputOffsetTop, inputOffsetHeight, scrollViewDimensions, keyboardHeight, platformHeight);
+    let scrollData = TextInput.getScrollData(inputOffsetTop, inputOffsetHeight, scrollViewDimensions, keyboardHeight, platformHeight);
 
     expect(scrollData.scrollAmount).toBe(-20);
     expect(scrollData.scrollTo).toBe(20);
@@ -109,7 +109,7 @@ export function run() {
     let keyboardHeight = 400;
     let platformHeight = 800;
 
-    let scrollData = TextInput.getScollData(inputOffsetTop, inputOffsetHeight, scrollViewDimensions, keyboardHeight, platformHeight);
+    let scrollData = TextInput.getScrollData(inputOffsetTop, inputOffsetHeight, scrollViewDimensions, keyboardHeight, platformHeight);
 
     expect(scrollData.scrollAmount).toBe(-180);
     expect(scrollData.scrollTo).toBe(180);
@@ -128,7 +128,7 @@ export function run() {
     let keyboardHeight = 400;
     let platformHeight = 800;
 
-    let scrollData = TextInput.getScollData(inputOffsetTop, inputOffsetHeight, scrollViewDimensions, keyboardHeight, platformHeight);
+    let scrollData = TextInput.getScrollData(inputOffsetTop, inputOffsetHeight, scrollViewDimensions, keyboardHeight, platformHeight);
     expect(scrollData.scrollAmount).toBe(0);
   });
 
