@@ -28,7 +28,7 @@ $list-md-border-color:          $item-md-border-color !default;
 .list {
   margin: 0 $list-md-margin-right $list-md-margin-bottom $list-md-margin-left;
 
-  ion-header,
+  ion-list-header,
   ion-item-divider {
     border-bottom: 1px solid $list-md-border-color;
     margin-left: 0;
@@ -85,7 +85,7 @@ $list-md-border-color:          $item-md-border-color !default;
   + .list {
     margin-top: $list-md-margin-top + $list-md-margin-bottom;
 
-    ion-header {
+    ion-list-header {
       margin-top: -$list-md-margin-top;
       padding-top: 0;
     }

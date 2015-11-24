@@ -10,7 +10,7 @@
   padding: 0;
   list-style-type: none;
 
-  ion-header {
+  ion-list-header {
     display: block;
     overflow: hidden;
     white-space: nowrap;
@@ -22,7 +22,7 @@
   overflow: hidden;
   transform: translateZ(0);
 
-  ion-header {
+  ion-list-header {
     background-color: $list-background-color;
   }
 }

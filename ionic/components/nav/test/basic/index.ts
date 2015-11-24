@@ -25,9 +25,9 @@ class MyCmpTest{}
     </ion-navbar>
     <ion-content>
       <ion-list>
-        <ion-header>
+        <ion-list-header>
           {{title}}
-        </ion-header>
+        </ion-list-header>
 
         <button ion-item class="e2eFrom1To2" (click)="pushFullPage()">Push to FullPage</button>
         <button ion-item (click)="pushPrimaryHeaderPage()">Push to PrimaryHeaderPage</button>

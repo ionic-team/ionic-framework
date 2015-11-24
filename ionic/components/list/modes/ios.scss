@@ -30,7 +30,7 @@ $list-ios-border-color:               $list-border-color !default;
 .list {
   margin: -1px $list-ios-margin-right $list-ios-margin-bottom $list-ios-margin-left;
 
-  ion-header {
+  ion-list-header {
     position: relative;
     padding: $list-ios-header-padding;
     font-size: $list-ios-header-font-size;
@@ -90,7 +90,7 @@ $list-ios-border-color:               $list-border-color !default;
 .list + .list {
   margin-top: $list-ios-margin-top + $list-ios-margin-bottom;
 
-  ion-header {
+  ion-list-header {
     margin-top: -$list-ios-margin-top;
     padding-top: 0;
   }
@@ -102,7 +102,7 @@ $list-ios-border-color:               $list-border-color !default;
     border-width: 0.55px;
   }
 
-  ion-header {
+  ion-list-header {
     border-bottom-width: 0.55px;
   }
 
@@ -167,7 +167,7 @@ $list-ios-border-color:               $list-border-color !default;
 
 .list[no-lines],
 &.hairlines .list[no-lines] {
-  ion-header,
+  ion-list-header,
   .item,
   .item .item-inner {
     border-width: 0;

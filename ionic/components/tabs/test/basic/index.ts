@@ -10,9 +10,9 @@
     </ion-navbar>
     <ion-content>
       <ion-list>
-        <ion-header>
+        <ion-list-header>
           Tab 1
-        </ion-header>
+        </ion-list-header>
         <ion-item *ng-for="#i of items">Item {{i}} {{i}} {{i}} {{i}}</ion-item>
       </ion-list>
     </ion-content>

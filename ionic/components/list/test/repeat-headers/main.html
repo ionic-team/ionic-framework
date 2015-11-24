@@ -3,9 +3,9 @@
 <ion-content class="outer-content">
   
   <ion-list class="outer-content" *ng-for="#person of people">
-    <ion-header>
+    <ion-list-header>
       {{person.name}}
-    </ion-header>
+    </ion-list-header>
     <ion-item *ng-for="#component of person.components">
       {{component}}
       <div item-right>

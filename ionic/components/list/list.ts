@@ -114,7 +114,7 @@ export class List extends Ion {
 
 
 @Directive({
-  selector: 'ion-header',
+  selector: 'ion-list-header',
   inputs: [
     'id'
   ],

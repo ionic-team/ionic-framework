@@ -18,9 +18,9 @@ import {ListHeader} from '../list/list';
  * ```html
  * <ion-radio-group ng-control="clientside">
  *
- *   <ion-header>
+ *   <ion-list-header>
  *     Clientside
- *   </ion-header>
+ *   </ion-list-header>
  *
  *   <ion-radio value="ember">
  *     Ember
