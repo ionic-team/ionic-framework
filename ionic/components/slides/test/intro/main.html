@@ -42,7 +42,7 @@
   </ion-nav-items>
   <ion-title>Grid Icons</ion-title>
 </ion-navbar>
-<ion-slides pager>
+<ion-slides pager (slide-changed)="onSlideChanged($event)">
   <ion-slide>
     <h3>Thank you for choosing the Awesome App!</h3>
     <div id="logo">
