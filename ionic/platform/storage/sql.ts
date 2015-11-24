@@ -22,7 +22,7 @@ const DB_NAME = '__ionicstorage';
  * });
  *
  * // Sql storage also exposes the full engine underneath
- * storage.query('insert into projects(name, data) values('Cool Project', 'blah')');'
+ * storage.query('insert into projects(name, data) values('Cool Project', 'blah');'
  * storage.query('select * from projects').then((resp) => {})
  * ```
  *
