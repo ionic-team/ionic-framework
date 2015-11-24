@@ -38,7 +38,7 @@ function buildDemoBundle(opts, done) {
 
   var numWebpacks = 0;
   var fp = 'dist/demos/'+opts.demo+'/index.js';
-  if (opts.demo == '*') {
+  if (opts.demo == 'api') {
     fp = "dist/demos/**/index.js";
   }
 
@@ -170,11 +170,6 @@ gulp.task('watch', function(done) {
   );
 });
 
-gulp.task('watch:demos', function() {
-  watch('demos/**/*', function() {
-    gulp.start('demos:docs');
-  });
-});
 
 gulp.task('serve', function() {
   var connect = require('gulp-connect');
@@ -436,6 +431,11 @@ gulp.task('src', function(done){
 
 require('./scripts/docs/gulp-tasks')(gulp, flags)
 
+////////////////////////////////////////////////////
+// Demos
+// todo: move these to scripts/docs/gulp-tasks
+////////////////////////////////////////////////////
+
 gulp.task('build.demos', function(){
   var gulpif = require('gulp-if');
   var lazypipe = require('lazypipe');
@@ -473,7 +473,7 @@ gulp.task('build.demos', function(){
   }
 });
 
-gulp.task('sass.demos:docs', function() {
+gulp.task('sass.demos:components', function() {
   var sass = require('gulp-sass');
   var autoprefixer = require('gulp-autoprefixer');
   var concat = require('gulp-concat');
@@ -488,28 +488,25 @@ gulp.task('sass.demos:docs', function() {
     .pipe(gulp.dest('dist/demos/component-docs/'));
 });
 
-
-gulp.task('bundle.demos:all', ['build.demos'], function(done) {
-  return buildDemoBundle({demo: '*'}, done);
+gulp.task('bundle.demos:api', ['build.demos'], function(done) {
+  return buildDemoBundle({demo: 'api'}, done);
 });
 
-gulp.task('bundle.demos:docs', ['build.demos'], function(done) {
+gulp.task('bundle.demos:components', ['sass.demos:components', 'build.demos'], function(done) {
   buildDemoBundle({demo: 'component-docs'}, done);
 });
 
-gulp.task('demos:all', ['bundle.demos:all'], function() {
-  return gulp
-    .src('dist/demos/component-docs/**/*')
-    .pipe(gulp.dest('../ionic-site/docs/v2/components/demo/'))
-});
-
-gulp.task('demos:docs', ['sass.demos:docs', 'bundle.demos:docs'], function() {
+gulp.task('demos', ['bundle.demos:api', 'bundle.demos:components'], function() {
   return gulp
     .src([
-      'dist/demos/component-docs/**/*',
-      '!dist/demos/component-docs/**/*.scss',
+      'dist/demos/**/*',
+      '!dist/demos/**/*.scss',
       ])
-    .pipe(gulp.dest('../ionic-site/docs/v2/components/demo/'))
+    .pipe(gulp.dest('../ionic-site/docs/v2/demos/'))
 });
 
-gulp.task('demos', ['demos:all']);
+gulp.task('watch:demos', function() {
+  watch('demos/**/*', function() {
+    gulp.start('demos');
+  });
+});

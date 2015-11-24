@@ -18,7 +18,7 @@ module.exports = function(gulp, flags) {
     }
   });
 
-  gulp.task('docs.demos', ['demos', 'sass', 'fonts', 'copy.web-animations'], function(){
+  gulp.task('docs.demos', ['demos', 'src', 'temp.hack'], function(){
     return gulp.src([
         'dist/**',
         '!dist/e2e',
