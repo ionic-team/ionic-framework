@@ -32,12 +32,6 @@ $item-ios-sliding-transition:         transform 250ms ease-in-out !default;
 
 
 ion-item-group {
-  ion-item-group-title {
-    padding: $item-ios-padding-top $item-ios-padding-right $item-ios-padding-bottom $item-ios-padding-left;
-    background-color: $item-ios-divider-bg;
-    color: $item-ios-divider-color;
-  }
-
   .item:first-child {
     .item-inner {
       border-top-width: 0;
@@ -48,6 +42,12 @@ ion-item-group {
   ion-item-sliding:last-child .item .item-inner {
     border: none;
   }
+}
+
+ion-item-divider {
+  padding: $item-ios-padding-top $item-ios-padding-right $item-ios-padding-bottom $item-ios-padding-left;
+  background-color: $item-ios-divider-bg;
+  color: $item-ios-divider-color;
 }
 
 ion-note {

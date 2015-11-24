@@ -10,9 +10,9 @@
   <ion-list>
     <ion-item-group *ng-for="#timeSlot of data">
 
-      <ion-item-group-title>
+      <ion-item-divider sticky>
         {{timeSlot.time}}
-      </ion-item-group-title>
+      </ion-item-divider>
 
       <ion-item-sliding *ng-for="#session of timeSlot.talks" [attr.category]="session.category" #sliding-item>
         <button ion-item (click)="openSession(session)">

@@ -49,14 +49,14 @@ ion-item-group {
   display: block;
 }
 
-ion-item-group-title {
+ion-item-divider {
   display: block;
   min-height: 30px;
   font-weight: 500;
   width: 100%;
   z-index: 1000;
 
-  &.sticky {
+  &[sticky] {
     position: -webkit-sticky;
     position: sticky;
   	top: 0px;
