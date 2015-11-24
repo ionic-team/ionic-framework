@@ -202,6 +202,7 @@ export class Menu extends Ion {
       this._prevent();
       this.app.setTransitioning(true);
       this._getType().setProgess(value);
+      this.opening.next(value);
     }
   }
 

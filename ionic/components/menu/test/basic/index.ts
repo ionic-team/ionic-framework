@@ -58,4 +58,8 @@ class E2EApp {
       this.app.getComponent('leftMenu').close();
     });
   }
+
+  onMenuOpening(ev) {
+    console.log('onMenuOpening', ev);
+  }
 }

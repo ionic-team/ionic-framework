@@ -1,4 +1,4 @@
-<ion-menu [content]="content" id="leftMenu" side="left">
+<ion-menu [content]="content" id="leftMenu" side="left" (opening)="onMenuOpening($event)">
 
   <ion-toolbar secondary>
     <ion-title>Left Menu</ion-title>
