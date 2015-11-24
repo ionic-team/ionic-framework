@@ -144,10 +144,11 @@ export class NavController extends Ion {
 
   /**
    * TODO
-   * @param {TODO} componentType  TODO
-   * @param {TODO} [params={}]  TODO
-   * @param {TODO} [opts={}]  TODO
-   * @returns {Promise} TODO
+   * @name NavController#push
+   * @param {Component} The name of the component you want to push on the navigation stack
+   * @param {Component} [params={}] The name of the component you want to push on the navigation stack, plus additional data you want to pass as parameters
+   * @param {Component} [opts={}]  The name of the component you want to push on the navigation stack, plus additional options for the transition
+   * @returns {Promise} Returns a promise when the transition is completed
    */
   push(componentType, params = {}, opts = {}, callback) {
     if (!componentType) {
@@ -215,8 +216,9 @@ export class NavController extends Ion {
 
   /**
    * TODO
-   * @param {TODO} [opts={}]  TODO
-   * @returns {Promise} TODO
+   * @name NavController#pop
+   * @param [opts={}] Any additional option for the transition
+   * @returns {Promise} Returns a promise when the transition is completed
    */
   pop(opts = {}) {
     if (!opts.animateFirst && !this.canGoBack()) {
@@ -307,9 +309,9 @@ export class NavController extends Ion {
 
   /**
    * Inserts a view into the nav stack at the specified index.
-   * @param {TODO} componentType  TODO
-   * @param {TODO} index TODO
-   * @returns {Promise} TODO
+   * @param {Component} The name of the component you want to insert into the nav stack
+   * @param {Index} The index where you want to insert the view
+   * @returns {Promise} Returns a promise when the view has been inserted into the navigation stack
    */
   insert(componentType, index, params = {}, opts = {}) {
     if (!componentType || index < 0) {
@@ -334,8 +336,8 @@ export class NavController extends Ion {
 
   /**
    * Removes a view from the nav stack at the specified index.
-   * @param {TODO} index TODO
-   * @returns {Promise} TODO
+   * @param {Index} Remove the view from the nav stack at that index
+   * @returns {Promise} Returns a promise when the view has been removed
    */
   remove(index, opts = {}) {
     if (index < 0 || index >= this._views.length) {
@@ -419,10 +421,10 @@ export class NavController extends Ion {
 
   /**
    * TODO
-   * @param {TODO} componentType  TODO
-   * @param {TODO} [params={}]  TODO
-   * @param {TODO} [opts={}]  TODO
-   * @returns {Promise} TODO
+   * @param {Component} The component you want to make root
+   * @param {Component} [params={}] The component you want to make root plus any nav params you want to pass
+   * @param {Component} [opts={}]  The component you want to make root plus any transition params you want to pass
+   * @returns {Promise} Returns a promise when done
    */
   setRoot(componentType, params = {}, opts = {}) {
     return this.setViews([{
@@ -432,7 +434,8 @@ export class NavController extends Ion {
   }
 
   /**
-   * TODO
+   *
+   * @private
    * @param {TODO} enteringView  TODO
    * @param {TODO} leavingView  TODO
    * @param {TODO} opts  TODO
@@ -798,8 +801,8 @@ export class NavController extends Ion {
 
   /**
    * TODO
-   * @param {TODO} val  TODO
-   * @returns {TODO} TODO
+   * @param {boolean=} isSwipeBackEnabled Set whether or not swipe-to-go-back is enabled
+   * @returns {boolean} Whether swipe-to-go-back is enabled
    */
   isSwipeBackEnabled(val) {
     if (arguments.length) {
@@ -813,7 +816,7 @@ export class NavController extends Ion {
    * to go back, or swipe back is not enable then this will return false.
    * If it is possible to go back, and swipe back is enabled, then this
    * will return true.
-   * @returns {boolean}
+   * @returns {boolean} Whether you can swipe to go back
    */
   canSwipeBack() {
     return (this._sbEnabled && this.canGoBack());
@@ -822,7 +825,7 @@ export class NavController extends Ion {
   /**
    * Returns `true` if there's a valid previous view that we can pop back to.
    * Otherwise returns false.
-   * @returns {boolean}
+   * @returns {boolean} Whether there is a view to go back to
    */
   canGoBack() {
     let activeView = this.getActive();
@@ -887,6 +890,7 @@ export class NavController extends Ion {
 
   /**
    * TODO
+   * Question for ADAM
    * @param {TODO} nbContainer  TODO
    * @returns {TODO} TODO
    */
@@ -961,7 +965,7 @@ export class NavController extends Ion {
 
   /**
    * TODO
-   * @returns {TODO} TODO
+   * @returns {Component} TODO
    */
   getActive() {
     for (let i = this._views.length - 1; i >= 0; i--) {
@@ -974,8 +978,8 @@ export class NavController extends Ion {
 
   /**
    * TODO
-   * @param {TODO} index  TODO
-   * @returns {TODO} TODO
+   * @param {Index} The index of the view you want to get
+   * @returns {Component} Returns the component that matches the index given
    */
   getByIndex(index) {
     if (index < this._views.length && index > -1) {
@@ -986,8 +990,8 @@ export class NavController extends Ion {
 
   /**
    * TODO
-   * @param {TODO} handle  TODO
-   * @returns {TODO} TODO
+   * @param {Handle} The handle of the view you want to get
+   * @returns {Component} Returns the component that matches the handle given
    */
   getByHandle(handle) {
     for (let i = 0, ii = this._views.length; i < ii; i++) {
@@ -1000,6 +1004,7 @@ export class NavController extends Ion {
 
   /**
    * TODO
+   * QUESTIONS FOR ADAM
    * @param {TODO} pageType  TODO
    * @returns {TODO} TODO
    */
@@ -1033,7 +1038,7 @@ export class NavController extends Ion {
   /**
    * First view in this nav controller's stack. This would
    * not return an view which is about to be destroyed.
-   * @returns {TODO} TODO
+   * @returns {Component} Returns the first component view in the current stack
    */
   first() {
     for (let i = 0, l = this._views.length; i < l; i++) {
@@ -1047,7 +1052,7 @@ export class NavController extends Ion {
   /**
    * Last view in this nav controller's stack. This would
    * not return an view which is about to be destroyed.
-   * @returns {TODO} TODO
+   * @returns {Component} Returns the last component view in the current stack
    */
   last() {
     for (let i = this._views.length - 1; i >= 0; i--) {
@@ -1070,7 +1075,7 @@ export class NavController extends Ion {
   /**
    * Number of sibling views in the nav controller. This does
    * not include views which are about to be destroyed.
-   * @returns {TODO} TODO
+   * @returns {Number} The number of views in stack, including the current view
    */
   length() {
     let len = 0;
@@ -1084,6 +1089,7 @@ export class NavController extends Ion {
 
   /**
    * TODO
+   * IS RETURNING UNDEFIND
    * @param {TODO} view  TODO
    * @returns {TODO} TODO
    */
@@ -1114,7 +1120,7 @@ let ctrlIds = -1;
  */
 export class NavParams {
   /**
-   * TODO
+   * @private
    * @param {TODO} data  TODO
    */
   constructor(data) {
@@ -1123,7 +1129,7 @@ export class NavParams {
 
   /**
    * TODO
-   * @param {TODO} param  TODO
+   * @param {string} Which param you want to look up
    */
   get(param) {
     return this.data[param];
