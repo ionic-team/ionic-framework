@@ -7,8 +7,8 @@ import {Keyboard} from '../../util/keyboard';
 import {ViewController} from './view-controller';
 import {Animation} from '../../animations/animation';
 import {SwipeBackGesture} from './swipe-back';
-import * as util from 'ionic/util';
-import {raf} from '../../util/dom';
+import {isBoolean, array} from '../../util/util';
+import {rafFrames} from '../../util/dom';
 
 /**
  * _For examples on the basic usage of NavController, check out the [Navigation section](../../../../components/#navigation)
@@ -195,7 +195,7 @@ export class NavController extends Ion {
 
     // the active view is going to be the leaving one (if one exists)
     let leavingView = this.getActive() || new ViewController();
-    leavingView.shouldCache = (util.isBoolean(opts.cacheLeavingView) ? opts.cacheLeavingView : true);
+    leavingView.shouldCache = (isBoolean(opts.cacheLeavingView) ? opts.cacheLeavingView : true);
     leavingView.shouldDestroy = !leavingView.shouldCache;
     if (leavingView.shouldDestroy) {
       leavingView.willUnload();
@@ -253,7 +253,7 @@ export class NavController extends Ion {
     // get the active view and set that it is staged to be leaving
     // was probably the one popped from the stack
     let leavingView = this.getActive() || new ViewController();
-    leavingView.shouldCache = (util.isBoolean(opts.cacheLeavingView) ? opts.cacheLeavingView : false);
+    leavingView.shouldCache = (isBoolean(opts.cacheLeavingView) ? opts.cacheLeavingView : false);
     leavingView.shouldDestroy = !leavingView.shouldCache;
     if (leavingView.shouldDestroy) {
       leavingView.willUnload();
@@ -572,18 +572,26 @@ export class NavController extends Ion {
       return done();
     }
 
-    // get the pane the NavController wants to use
-    // the pane is where all this content will be placed into
-    this.loadPage(viewCtrl, null, () => {
-
+    function loaded() {
       // this ViewController instance has finished loading
       try {
         viewCtrl.loaded();
       } catch (e) {
         console.error(e);
       }
-
       done();
+    }
+
+    // get the pane the NavController wants to use
+    // the pane is where all this content will be placed into
+    this.loadPage(viewCtrl, null, () => {
+
+      if (viewCtrl.onReady) {
+        viewCtrl.onReady(loaded);
+      } else {
+        loaded();
+      }
+
     });
   }
 
@@ -629,9 +637,9 @@ export class NavController extends Ion {
 
       if (this._views.length === 1) {
         this._zone.runOutsideAngular(() => {
-          setTimeout(() => {
+          rafFrames(38, () => {
             this.renderer.setElementClass(this.elementRef, 'has-views', true);
-          }, 200);
+          });
         });
       }
 
@@ -954,7 +962,7 @@ export class NavController extends Ion {
    * @private
    */
   _remove(viewOrIndex) {
-    util.array.remove(this._views, viewOrIndex);
+    array.remove(this._views, viewOrIndex);
   }
 
   /**

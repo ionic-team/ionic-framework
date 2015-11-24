@@ -118,6 +118,7 @@ export class Tabs extends Ion {
     this._tabs = [];
     this._id = ++tabIds;
     this._ids = -1;
+    this._onReady = null;
 
     // Tabs may also be an actual ViewController which was navigated to
     // if Tabs is static and not navigated to within a NavController
@@ -126,10 +127,8 @@ export class Tabs extends Ion {
       viewCtrl.setContent(this);
       viewCtrl.setContentRef(elementRef);
 
-      // TODO: improve how this works, probably not use promises here
-      this._readyPromise = new Promise(res => { this._isReady = res; });
-      viewCtrl.onReady = () => {
-        return this._readyPromise;
+      viewCtrl.onReady = (done) => {
+        this._onReady = done;
       };
     }
   }
@@ -201,7 +200,10 @@ export class Tabs extends Ion {
       selectedPage && selectedPage.didEnter();
       deselectedPage && deselectedPage.didLeave();
 
-      this._isReady && this._isReady();
+      if (this._onReady) {
+        this._onReady();
+        this._onReady = null;
+      }
 
       console.timeEnd('select tab ' + selectedTab.id);
     });
