@@ -31,6 +31,7 @@ import {Scroll} from '../scroll/scroll';
 @Component({
   selector: 'ion-slides',
   inputs: [
+    'autoplay',
     'loop',
     'index',
     'bounce',
@@ -75,6 +76,7 @@ export class Slides extends Ion {
 
 
     var options = util.defaults({
+      loop: this.loop,
       pagination: '.swiper-pagination',
       paginationClickable: true,
       lazyLoading: true,
