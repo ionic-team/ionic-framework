@@ -81,16 +81,6 @@ ion-card {
     padding-top: 0;
   }
 
-  [actions] {
-    button,
-    [button] {
-      margin: 0 ($card-md-padding-right / 4) 0 ($card-md-padding-left / 4);
-      min-height: 26px;
-      font-size: 1.3rem;
-      border-color: transparent;
-    }
-  }
-
   ion-note[item-left],
   ion-note[item-right], {
     font-size: 1.3rem;

@@ -79,22 +79,6 @@ ion-card {
     padding-top: 0;
   }
 
-  [actions] {
-    padding-right: ($card-ios-padding-right / 2);
-
-    ion-item-content {
-      padding: 0;
-    }
-
-    button,
-    [button] {
-      margin: 0 ($item-ios-padding-right / 2);
-      padding: 2px 6px;
-      min-height: 26px;
-      font-size: 1.3rem;
-    }
-  }
-
   ion-note[item-left],
   ion-note[item-right], {
     font-size: 1.3rem;

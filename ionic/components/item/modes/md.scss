@@ -146,10 +146,6 @@ button[item-right],
   line-height: $item-md-body-text-line-height;
 }
 
-.item[actions] ion-item-content {
-  margin: 4px;
-}
-
 icon[item-left] + .item-inner,
 icon[item-left] + [text-input] {
   margin-left: $item-md-padding-left + ($item-md-padding-left / 2);
