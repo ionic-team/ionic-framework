@@ -24,6 +24,7 @@ import {Icon} from '../icon/icon';
       this.element = this.elementRef.nativeElement.querySelector('input');
       this.element.blur();
       this.clearInput();
+      this.shouldLeftAlign = false;
     }
   },
   host: {
