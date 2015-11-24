@@ -1,4 +1,4 @@
-import {App, IonicApp, Animation, Modal, Platform, NavController, Page, Events} from 'ionic/ionic';
+import {App, IonicApp, Animation, Modal, Platform, NavController, NavParams, Page, Events} from 'ionic/ionic';
 import {forwardRef, NgFor} from 'angular2/angular2';
 import * as helpers from '../../helpers';
 
@@ -34,8 +34,10 @@ class ModalsContentPage {
     constructor(
         modal: Modal,
         platform: Platform,
+        params: NavParams
     ) {
         this.modal = modal;
+        this.params = params;
         if (platform.is('android')) {
             this.currentPlatform = 'android';
         } else {
@@ -74,8 +76,8 @@ class ModalsContentPage {
                 ]
             }
         ];
-        this.character = characters[this.modal._defaults.charNum];
-    
+        this.character = characters[this.params.get('charNum')];
+
   }
 
   closeModal() {
