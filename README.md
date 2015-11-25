@@ -19,7 +19,7 @@ We built Ionic because we wanted a framework that focused on building hybrid nat
 It's important to realize that Ionic is not a replacement for frameworks used for building mobile web apps. There are a lot
 of great solutions that work well for websites, like [jQuery Mobile](http://jquerymobile.com/).
 
-Ionic is also not a good solution if you need to support older generation devices. Our compatibility *starts* at iOS 6 and Android 4.1. We will never support versions earlier than those. This is a framework for the future. Learn more: [Where does the Ionic Framework fit in?](http://ionicframework.com/blog/where-does-the-ionic-framework-fit-in/)
+Ionic is also not a good solution if you need to support older generation devices. Our compatibility *starts* at iOS 6 and Android 4.1. We will never support versions earlier than those. This is a framework for the future. Learn more: [Where does the Ionic Framework fit in?](http://blog.ionic.io/where-does-the-ionic-framework-fit-in/)
 
 ## Quick Start
 
@@ -62,13 +62,13 @@ For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/`
 * Follow [@ionicframework on Twitter](https://twitter.com/ionicframework)
 * Subscribe to the [Ionic Newsletter](http://ionicframework.com/subscribe/)
 * Have a question that's not a feature request or bug report? [Discuss on the Ionic Forum](http://forum.ionicframework.com/)
-* Read our [Blog](http://ionicframework.com/blog/)
+* Read our [Blog](http://blog.ionic.io/)
 * Have a feature request or find a bug? [Submit an issue](http://ionicframework.com/submit-issue/)
 * Join our Community Slack Group! [Ionic Worldwide](http://ionicworldwide.herokuapp.com/)
 
 ## Authors
 
-Originally created by [Adam Bradley](http://twitter.com/adamdbradley), [Ben Sperry](http://twitter.com/benjsperry), and [Max Lynch](http://twitter.com/maxlynch), Ionic has seen hundreds of great [contributors](https://github.com/driftyco/ionic/graphs/contributors) from around the world, including Ionic Team Members [Perry Govier](http://twitter.com/perrygovier), [Mike Hartington](http://twitter.com/mhartington), and [Tim Lancina](http://twitter.com/dopernicus).
+Originally created by [Adam Bradley](https://twitter.com/adamdbradley), [Ben Sperry](https://twitter.com/benjsperry), and [Max Lynch](https://twitter.com/maxlynch), Ionic has seen hundreds of great [contributors](https://github.com/driftyco/ionic/graphs/contributors) from around the world, including Ionic Team Members [Perry Govier](https://twitter.com/perrygovier), [Mike Hartington](https://twitter.com/mhartington), and [Tim Lancina](https://twitter.com/dopernicus).
 
 ## Development
 
@@ -104,7 +104,7 @@ Originally created by [Adam Bradley](http://twitter.com/adamdbradley), [Ben Sper
 
 ### Commit Conventions
 
-* Uses these [commit conventions](http://github.com/ajoslin/conventional-changelog)
+* Uses these [commit conventions](https://github.com/ajoslin/conventional-changelog)
 
 ### Pushing New Release of Ionic
 
