@@ -36,12 +36,16 @@ export function run() {
     }
 
     function mockCanGoBackFn() {
-       return true;
+      return true;
     }
 
     // beforeEach(inject([Compiler], compiler => {
     beforeEach(() => {
       nav = new NavController(null, null, new Config(), null, null, null, null, null);
+      nav._renderer = {
+        setElementAttribute: function(){},
+        setElementStyle: function(){}
+      };
     });
 
     it('should exist', () => {
@@ -125,12 +129,12 @@ export function run() {
       });
     });
 
-    describe("setViews", () => {
+    describe("setPages", () => {
       it('should return a resolved Promise if components is falsy', done => {
         let s = jasmine.createSpy('success');
         let f = jasmine.createSpy('fail');
 
-        let promise = nav.setViews();
+        let promise = nav.setPages();
 
         promise.then(s, f).then(() => {
           expect(s).toHaveBeenCalled();
@@ -147,7 +151,7 @@ export function run() {
         let arr = [FirstPage, SecondPage, ThirdPage];
 
         nav._transition = mockTransitionFn;
-        nav.setViews(arr);
+        nav.setPages(arr);
 
         //_views[0] will be transitioned out of
         expect(nav._views[1].componentType).toBe(FirstPage);
@@ -161,22 +165,24 @@ export function run() {
       it('insert page at the specified index', () => {
         nav._views = [{}, {}, {}];
         expect(nav._views[2].componentType).toBeUndefined();
-        nav.insert(FirstPage, 2);
+        nav.insert(2, FirstPage);
         expect(nav._views[2].componentType).toBe(FirstPage);
       });
 
       it('push page if index >= _views.length', () => {
         nav._views = [{}, {}, {}];
         spyOn(nav, 'push').and.callThrough();
-        nav.insert(FirstPage, 2);
+        nav.insert(2, FirstPage);
         expect(nav.push).not.toHaveBeenCalled();
 
         nav._transition = mockTransitionFn;
-        nav.insert(FirstPage, 4);
+        nav.insert(4, FirstPage);
         expect(nav._views[4].componentType).toBe(FirstPage);
         expect(nav.push).toHaveBeenCalled();
 
-        nav.insert(FirstPage, 10);
+        nav.setTransitioning(false);
+
+        nav.insert(10, FirstPage);
         expect(nav._views[5].componentType).toBe(FirstPage);
         expect(nav.push.calls.count()).toBe(2);
       });
@@ -270,23 +276,30 @@ export function run() {
 
     describe("_setZIndex", () => {
       it('should set zIndex 10 on first entering view', () => {
-        let enteringInstance = {};
-        nav._setZIndex(enteringInstance, null, 'forward');
-        expect(enteringInstance._zIndex).toEqual(10);
+        let enteringView = new ViewController();
+        enteringView.setPageRef({});
+        nav._setZIndex(enteringView, null, 'forward');
+        expect(enteringView.zIndex).toEqual(10);
       });
 
       it('should set zIndex 1 on second entering view', () => {
-        let leavingInstance = { _zIndex: 0 };
-        let enteringInstance = {};
-        nav._setZIndex(enteringInstance, leavingInstance, 'forward');
-        expect(enteringInstance._zIndex).toEqual(1);
+        let leavingView = new ViewController();
+        leavingView.zIndex = 0;
+        leavingView._loaded = true;
+        let enteringView = new ViewController();
+        enteringView.setPageRef({});
+        nav._setZIndex(enteringView, leavingView, 'forward');
+        expect(enteringView.zIndex).toEqual(1);
       });
 
       it('should set zIndex 0 on entering view going back', () => {
-        let leavingInstance = { _zIndex: 1 };
-        let enteringInstance = {};
-        nav._setZIndex(enteringInstance, leavingInstance, 'back');
-        expect(enteringInstance._zIndex).toEqual(0);
+        let leavingView = new ViewController();
+        leavingView.zIndex = 1;
+        leavingView._loaded = true;
+        let enteringView = new ViewController();
+        enteringView.setPageRef({});
+        nav._setZIndex(enteringView, leavingView, 'back');
+        expect(enteringView.zIndex).toEqual(0);
       });
     });
 

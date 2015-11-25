@@ -209,8 +209,4 @@ export class ViewController {
     this.instance.onPageDidUnload && this.instance.onPageDidUnload();
   }
 
-  domCache(isActiveView, isPreviousView) {
-    this.instance._hidden = (!isActiveView && !isPreviousView);
-  }
-
 }

@@ -70,7 +70,6 @@ export function Page(config={}) {
     config.host = config.host || {};
     config.host['[hidden]'] = '_hidden';
     config.host['[class.tab-subpage]'] = '_tabSubPage';
-    config.host['[style.zIndex]'] = '_zIndex';
     var annotations = Reflect.getMetadata('annotations', cls) || [];
     annotations.push(new Component(config));
     Reflect.defineMetadata('annotations', annotations, cls);

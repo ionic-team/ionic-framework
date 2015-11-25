@@ -125,7 +125,7 @@ export class NavController extends Ion {
     this._loader = loader;
     this._viewManager = viewManager;
     this._zone = zone;
-    this.renderer = renderer;
+    this._renderer = renderer;
 
     this._views = [];
     this._trnsTime = 0;
@@ -165,8 +165,7 @@ export class NavController extends Ion {
    */
   push(componentType, params = {}, opts = {}, callback) {
     if (!componentType) {
-      console.debug('invalid componentType to push');
-      return Promise.reject();
+      return Promise.reject('invalid componentType to push');
     }
 
     if (typeof componentType !== 'function') {
@@ -210,10 +209,6 @@ export class NavController extends Ion {
 
     // add the view to the stack
     this._add(enteringView);
-
-    if (opts.preCleanup !== false) {
-      this._cleanup(enteringView);
-    }
 
     if (this.router) {
       // notify router of the state change
@@ -292,22 +287,30 @@ export class NavController extends Ion {
       return Promise.resolve();
     }
 
-    let resolve;
+    // ensure the entering view is shown
+    this._renderView(viewCtrl, true);
+
+    let resolve = null;
     let promise = new Promise(res => { resolve = res; });
     opts.direction = opts.direction || 'back';
+
+    let leavingView = this.getActive() || new ViewController();
 
     // get the views to auto remove without having to do a transiton for each
     // the last view (the currently active one) will do a normal transition out
     if (this._views.length > 1) {
       let autoRemoveItems = this._views.slice(targetIndex, this._views.length);
+      let popView;
       for (let i = 0; i < autoRemoveItems.length; i++) {
-        autoRemoveItems[i].shouldDestroy = true;
-        autoRemoveItems[i].shouldCache = false;
-        autoRemoveItems[i].willUnload();
+        popView = autoRemoveItems[i];
+        popView.shouldDestroy = true;
+        popView.shouldCache = false;
+        popView.willUnload();
+
+        // only the leaving view should be shown, all others hide
+        this._renderView(popView, (popView === leavingView));
       }
     }
-
-    let leavingView = this.getPrevious(viewCtrl);
 
     if (this.router) {
       this.router.stateChange('pop', viewCtrl);
@@ -328,11 +331,11 @@ export class NavController extends Ion {
 
   /**
    * Inserts a view into the nav stack at the specified index.
-   * @param {Component} The name of the component you want to insert into the nav stack
    * @param {Index} The index where you want to insert the view
+   * @param {Component} The name of the component you want to insert into the nav stack
    * @returns {Promise} Returns a promise when the view has been inserted into the navigation stack
    */
-  insert(componentType, index, params = {}, opts = {}) {
+  insert(index, componentType, params = {}, opts = {}) {
     if (!componentType || index < 0) {
       return Promise.reject();
     }
@@ -374,19 +377,28 @@ export class NavController extends Ion {
   }
 
   /**
+   * @private
+   */
+  setViews(components, opts = {}) {
+    console.warn('setViews() deprecated, use setPages() instead');
+    this.setPages(components, opts);
+  }
+
+  /**
    * Set the view stack to reflect the given component classes.
    * @param {TODO} components  TODO
    * @param {TODO} [opts={}]  TODO
    * @returns {Promise} TODO
    */
-  setViews(components, opts = {}) {
+  setPages(components, opts = {}) {
     if (!components || !components.length) {
       return Promise.resolve();
     }
 
+    let leavingView = this.getActive() || new ViewController();
+
     // if animate has not been set then default to false
     opts.animate = opts.animate || false;
-    opts.preCleanup = false;
 
     // ensure leaving views are not cached, and should be destroyed
     opts.cacheLeavingView = false;
@@ -395,10 +407,17 @@ export class NavController extends Ion {
     // the last view (the currently active one) will do a normal transition out
     if (this._views.length > 1) {
       let autoRemoveItems = this._views.slice(0, this._views.length - 1);
+      let popView;
       for (let i = 0; i < autoRemoveItems.length; i++) {
-        autoRemoveItems[i].shouldDestroy = true;
-        autoRemoveItems[i].shouldCache = false;
-        autoRemoveItems[i].willUnload();
+        popView = autoRemoveItems[i];
+        popView.shouldDestroy = true;
+        popView.shouldCache = false;
+        popView.willUnload();
+
+        if (opts.animate) {
+          // only the leaving view should be shown, all others hide
+          this._renderView(popView, (popView === leavingView));
+        }
       }
     }
 
@@ -406,15 +425,14 @@ export class NavController extends Ion {
     let componentType = null;
     let viewCtrl = null;
 
-    // create the ViewControllers that go before the new active ViewController in the stack
-    // but the previous views won't should render yet
+    // create the ViewControllers that go before the new active ViewController
+    // in the stack, but the previous views shouldn't render yet
     if (components.length > 1) {
       let newBeforeItems = components.slice(0, components.length - 1);
       for (let j = 0; j < newBeforeItems.length; j++) {
         componentObj = newBeforeItems[j];
 
         if (componentObj) {
-
           // could be an object with a componentType property, or it is a componentType
           componentType = componentObj.componentType || componentObj;
 
@@ -446,7 +464,7 @@ export class NavController extends Ion {
    * @returns {Promise} Returns a promise when done
    */
   setRoot(componentType, params = {}, opts = {}) {
-    return this.setViews([{
+    return this.setPages([{
              componentType,
              params
            }], opts);
@@ -462,6 +480,7 @@ export class NavController extends Ion {
    * @returns {any} TODO
    */
   _transition(enteringView, leavingView, opts, done) {
+    console.debug('_transition', enteringView, leavingView, opts);
     let self = this;
 
     if (enteringView === leavingView) {
@@ -487,9 +506,8 @@ export class NavController extends Ion {
         return done(enteringView);
       }
 
-      self._setZIndex(enteringView.instance, leavingView.instance, opts.direction);
-
       self._zone.runOutsideAngular(() => {
+        self._setZIndex(enteringView, leavingView, opts.direction);
 
         enteringView.shouldDestroy = false;
         enteringView.shouldCache = false;
@@ -638,7 +656,7 @@ export class NavController extends Ion {
       if (this._views.length === 1) {
         this._zone.runOutsideAngular(() => {
           rafFrames(38, () => {
-            this.renderer.setElementClass(this.elementRef, 'has-views', true);
+            this._renderer.setElementClass(this.elementRef, 'has-views', true);
           });
         });
       }
@@ -647,17 +665,42 @@ export class NavController extends Ion {
     });
   }
 
-  _setZIndex(enteringInstance, leavingInstance, direction) {
-    if (!leavingInstance) {
-      enteringInstance._zIndex = 10;
+  _setZIndex(enteringView, leavingView, direction) {
+    let enteringPageRef = enteringView && enteringView.pageRef();
+    if (enteringPageRef) {
+      if (!leavingView || !leavingView.isLoaded()) {
+        enteringView.zIndex = 10;
 
-    } else if (direction === 'back') {
-      // moving back
-      enteringInstance._zIndex = leavingInstance._zIndex - 1;
+      } else if (direction === 'back') {
+        // moving back
+        enteringView.zIndex = leavingView.zIndex - 1;
 
-    } else {
-      // moving forward
-      enteringInstance._zIndex = leavingInstance._zIndex + 1;
+      } else {
+        // moving forward
+        enteringView.zIndex = leavingView.zIndex + 1;
+      }
+
+      if (enteringView.zIndex !== enteringView._zIndex) {
+        this._renderer.setElementStyle(enteringPageRef, 'z-index', enteringView.zIndex);
+        enteringView._zIndex = enteringView.zIndex;
+      }
+    }
+  }
+
+  _renderView(viewCtrl, shouldShow) {
+    // using hidden element attribute to display:none and not render views
+    // renderAttr of '' means the hidden attribute will be added
+    // renderAttr of null means the hidden attribute will be removed
+    // doing checks to make sure we only make an update to the element when needed
+    if (shouldShow && viewCtrl._hdnAttr === '' ||
+       !shouldShow && viewCtrl._hdnAttr !== '') {
+      viewCtrl._hdnAttr = (shouldShow ? null : '');
+      this._renderer.setElementAttribute(viewCtrl.pageRef(), 'hidden', viewCtrl._hdnAttr);
+
+      let navbarRef = viewCtrl.navbarRef();
+      if (navbarRef) {
+        this._renderer.setElementAttribute(navbarRef, 'hidden', viewCtrl._hdnAttr);
+      }
     }
   }
 
@@ -899,9 +942,8 @@ export class NavController extends Ion {
           destroys.push(view);
 
         } else {
-          let isActiveView = (view === activeView);
-          let isPreviousView = (view === previousView);
-          view.domCache && view.domCache(isActiveView, isPreviousView);
+          let shouldShow = (view === activeView) || (view === previousView);
+          this._renderView(view, shouldShow);
         }
       }
     });

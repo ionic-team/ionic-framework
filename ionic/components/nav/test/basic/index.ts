@@ -36,7 +36,7 @@ class MyCmpTest{}
         <button ion-item [nav-push]="pushPage" [nav-params]="{id:40}">Push w/ [nav-push] and [nav-params]</button>
         <button ion-item [nav-push]="[\'FirstPage\', {id: 22}]">Push w/ [nav-push] array and string view name</button>
         <button ion-item nav-push="FirstPage" [nav-params]="{id: 23}">Push w/ nav-push and [nav-params]</button>
-        <button ion-item (click)="setViews()">setViews() (Go to PrimaryHeaderPage)</button>
+        <button ion-item (click)="setPages()">setPages() (Go to PrimaryHeaderPage)</button>
         <button ion-item (click)="setRoot()">setRoot(PrimaryHeaderPage) (Go to PrimaryHeaderPage)</button>
         <button ion-item (click)="nav.pop()">Pop</button>
 
@@ -63,12 +63,12 @@ class FirstPage {
     }
   }
 
-  setViews() {
+  setPages() {
     let items = [
       PrimaryHeaderPage
     ];
 
-    this.nav.setViews(items);
+    this.nav.setPages(items);
   }
 
   setRoot(PrimaryHeaderPage) {
@@ -99,7 +99,7 @@ class FirstPage {
       <p><button (click)="pushAnother()">Push to AnotherPage</button></p>
       <p><button (click)="pushFirstPage()">Push to FirstPage</button></p>
       <p><button class="e2eFrom2To1" nav-pop>Pop with NavPop (Go back to 1st)</button></p>
-      <p><button (click)="setViews()">setViews() (Go to PrimaryHeaderPage, FirstPage 1st in history)</button></p>
+      <p><button (click)="setPages()">setPages() (Go to PrimaryHeaderPage, FirstPage 1st in history)</button></p>
     </ion-content>
   `
 })
@@ -112,13 +112,13 @@ class FullPage {
     this.params = params;
   }
 
-  setViews() {
+  setPages() {
     let items = [
       FirstPage,
       PrimaryHeaderPage
     ];
 
-    this.nav.setViews(items);
+    this.nav.setPages(items);
   }
 
   pushPrimaryHeaderPage() {
@@ -168,7 +168,7 @@ class PrimaryHeaderPage {
   }
 
   insert() {
-    this.nav.insert(FirstPage, 2);
+    this.nav.insert(2, FirstPage);
   }
 
   removeSecond() {

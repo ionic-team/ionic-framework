@@ -287,7 +287,6 @@ const OVERLAY_TYPE = 'popup';
       '</div>' +
     '</popup-wrapper>',
   host: {
-    '[style.zIndex]': '_zIndex',
     'role': 'dialog'
   },
   directives: [FORM_DIRECTIVES, NgClass, NgIf, NgFor, Button]

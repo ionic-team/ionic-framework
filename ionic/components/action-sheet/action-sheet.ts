@@ -77,7 +77,6 @@ import {extend} from '../../util/util';
       '</div>' +
     '</action-sheet-wrapper>',
   host: {
-    '[style.zIndex]': '_zIndex',
     'role': 'dialog'
   },
   directives: [NgFor, NgIf, Icon]

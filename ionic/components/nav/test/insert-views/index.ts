@@ -39,7 +39,7 @@ class SecondPage {
     this.nav = nav;
   }
   insertPage(){
-    this.nav.insert(InsertPage, 1)
+    this.nav.insert(1, InsertPage)
   }
 }
 
