@@ -91,13 +91,13 @@ export class RadioGroup extends Ion {
     radio.id = radio.id || ('radio-' + this.id + '-' + (++this.radioIds));
     this.radios.push(radio);
 
-    console.log("Radio", radio.id, radio.value, radio.checked);
     if (this.value == radio.value) {
       radio.check(this.value);
     }
 
     if (radio.checked) {
       this.value = radio.value;
+      this.onChange(this.value);
       this.activeId = radio.id;
     }
   }

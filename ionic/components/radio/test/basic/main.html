@@ -39,8 +39,8 @@
   </div>
 
   <div padding>
-    <code>fruits.dirty: {{fruitsForm.controls.fruits.dirty}}</code><br>
-    <code>fruits.value: {{fruitsForm.controls.fruits.value}}</code><br>
+    <code><b>fruits.dirty:</b> {{fruitsForm.controls.fruits.dirty}}</code><br>
+    <code><b>fruits.value:</b> {{fruitsForm.controls.fruits.value}}</code><br>
   </div>
 
   <form (submit)="doSubmit($event)" [ng-form-model]="currencyForm">
@@ -53,7 +53,7 @@
   </form>
 
   <div padding>
-    <code>currenciesControl.value: {{currencyForm.controls.currenciesControl.value}}</code>
+    <code><b>currenciesControl.value:</b> {{currencyForm.controls.currenciesControl.value}}</code>
   </div>
 
   <ion-radio-group [(ng-model)]="relationship">
@@ -62,7 +62,7 @@
   </ion-radio-group>
 
   <div padding>
-    <code>relationship: {{relationship}}</code>
+    <code><b>relationship:</b> {{relationship}}</code>
   </div>
 
 </ion-content>
