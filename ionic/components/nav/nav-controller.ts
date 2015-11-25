@@ -944,7 +944,7 @@ export class NavController extends Ion {
         if (view.shouldDestroy) {
           destroys.push(view);
 
-        } else {
+        } else if (view.isLoaded()) {
           let shouldShow = (view === activeView) || (view === previousView);
           this._renderView(view, shouldShow);
         }
