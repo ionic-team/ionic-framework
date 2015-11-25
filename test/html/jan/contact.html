@@ -1,0 +1,20 @@
+<ion-view view-title="Contact">
+    <ion-content class="has-footer">
+        <form id="contact-form" name="contactForm" ng-submit="send(contactForm)" novalidate>
+            <div class="list">
+                <label class="item item-input item-floating-label" ng-class="{ 'has-error' : contactForm.name.$invalid }">
+                    <span class="input-label">Name</span>
+                    <input type="text" name="name" placeholder="Name" ng-model="contactData.name" required>
+                </label>
+                <label class="item item-input item-floating-label" ng-class="{ 'has-error' : contactForm.email.$invalid }">
+                    <span class="input-label">E-Mail</span>
+                    <input type="text" name="email" placeholder="E-Mail" ng-model="contactData.email" required>
+                </label>
+            </div>
+            <div class="padding-left padding-right">
+                <button class="button button-block button-positive">
+                    Submit
+                </button>
+            </div>
+        </form>
+</ion-view>

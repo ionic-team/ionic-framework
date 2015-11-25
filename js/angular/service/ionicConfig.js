@@ -140,6 +140,15 @@
 
 /**
  * @ngdoc method
+ * @name $ionicConfigProvider#spinner.icon
+ * @description Default spinner icon to use.
+ * @param {string} value Can be: `android`, `ios`, `ios-small`, `bubbles`, `circles`, `crescent`,
+ * `dots`, `lines`, `ripple`, or `spiral`.
+ * @returns {string}
+ */
+
+/**
+ * @ngdoc method
  * @name $ionicConfigProvider#tabs.style
  * @description Tab style. Android defaults to `striped` and iOS defaults to `standard`.
  * @param {string} value Available values include `striped` and `standard`.
@@ -253,6 +262,9 @@ IonicModule
     scrolling: {
       jsScrolling: PLATFORM
     },
+    spinner: {
+      icon: PLATFORM
+    },
     tabs: {
       style: PLATFORM,
       position: PLATFORM
@@ -300,6 +312,10 @@ IonicModule
       jsScrolling: true
     },
 
+    spinner: {
+      icon: 'ios'
+    },
+
     tabs: {
       style: 'standard',
       position: 'bottom'
@@ -345,6 +361,10 @@ IonicModule
       toggle: 'small'
     },
 
+    spinner: {
+      icon: 'android'
+    },
+
     tabs: {
       style: 'striped',
       position: 'top'
@@ -358,6 +378,9 @@ IonicModule
     //scrolling: {
     //  jsScrolling: false
     //}
+    spinner: {
+      icon: 'android'
+    }
   });
 
 
@@ -628,6 +651,6 @@ IonicModule
 // http://blogs.msdn.com/b/msdn_answers/archive/2015/02/10/
 // running-cordova-apps-on-windows-and-windows-phone-8-1-using-ionic-angularjs-and-other-frameworks.aspx
 .config(['$compileProvider', function($compileProvider) {
-  $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|tel|ftp|mailto|file|ghttps?|ms-appx|x-wmapp0):/);
-  $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|tel|ftp|file|blob|ms-appx|x-wmapp0):|data:image\//);
+  $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|sms|tel|geo|ftp|mailto|file|ghttps?|ms-appx|x-wmapp0):/);
+  $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|content|blob|ms-appx|x-wmapp0):|data:image\//);
 }]);

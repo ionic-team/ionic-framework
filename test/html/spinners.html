@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="ionic">
+<html ng-app="ionic.example">
   <head>
     <meta charset="utf-8">
     <title>Spinners</title>
@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../../../../dist/css/ionic.css">
     <script src="../../../../dist/js/ionic.bundle.js"></script>
   </head>
-  <body>
+  <body ng-controller="SpinnerCtrl">>
 
     <header class="bar bar-header bar-royal">
       <h1 class="title">Spinners</h1>
@@ -124,6 +124,11 @@
       </tbody></table>
 
     </ion-content>
-
+    <script>
+      angular.module('ionic.example', ['ionic'])
+      .controller('SpinnerCtrl', function($scope, $ionicConfig) {
+        //$ionicConfig.spinner.icon('lines');
+      });
+    </script>
   </body>
 </html>

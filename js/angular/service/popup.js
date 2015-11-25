@@ -113,8 +113,9 @@ IonicModule
   '$ionicBody',
   '$compile',
   '$ionicPlatform',
+  '$ionicModal',
   'IONIC_BACK_PRIORITY',
-function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicBody, $compile, $ionicPlatform, IONIC_BACK_PRIORITY) {
+function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicBody, $compile, $ionicPlatform, $ionicModal, IONIC_BACK_PRIORITY) {
   //TODO allow this to be configured
   var config = {
     stackPushDelay: 75
@@ -321,6 +322,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
     self.show = function() {
       if (self.isShown || self.removed) return;
 
+      $ionicModal.stack.add(self);
       self.isShown = true;
       ionic.requestAnimationFrame(function() {
         //if hidden while waiting for raf, don't show
@@ -336,6 +338,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
       callback = callback || noop;
       if (!self.isShown) return callback();
 
+      $ionicModal.stack.remove(self);
       self.isShown = false;
       self.element.removeClass('active');
       self.element.addClass('popup-hidden');
@@ -366,8 +369,8 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
     var showDelay = 0;
 
     if (popupStack.length > 0) {
-      popupStack[popupStack.length - 1].hide();
       showDelay = config.stackPushDelay;
+      $timeout(popupStack[popupStack.length - 1].hide, showDelay, false);
     } else {
       //Add popup-open & backdrop if this is first popup
       $ionicBody.addClass('popup-open');
@@ -400,6 +403,8 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
           popupStack.splice(index, 1);
         }
 
+        popup.remove();
+
         if (popupStack.length > 0) {
           popupStack[popupStack.length - 1].show();
         } else {
@@ -415,7 +420,6 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
           ($ionicPopup._backButtonActionDone || noop)();
         }
 
-        popup.remove();
 
         return result;
       });

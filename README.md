@@ -1,5 +1,6 @@
 [![Circle CI](https://circleci.com/gh/driftyco/ionic.svg?style=svg)](https://circleci.com/gh/driftyco/ionic)
 
+[![NPM](https://nodei.co/npm/ionic.png?stars&downloads)](https://nodei.co/npm/ionic/)
 
 [![Issues Ready](https://badge.waffle.io/driftyco/ionic.png?label=ready&title=Ready)](https://waffle.io/driftyco/ionic)
 
@@ -41,6 +42,7 @@ $ ionic start myproject
   * The `release` folder of this repository
   * Ionic CDN: [Latest Release](http://code.ionicframework.com/)
   * Using bower: `bower install ionic`
+  * For [Meteor](https://www.meteor.com/) applications: `meteor add driftyco:ionic`
 - Download the **bleeding edge just-from-master release** from:
   * Ionic CDN: [Nightly Build](http://code.ionicframework.com/#nightly)
   * Using bower: `bower install driftyco/ionic-bower#master`
@@ -62,7 +64,7 @@ For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/`
 * Have a question that's not a feature request or bug report? [Discuss on the Ionic Forum](http://forum.ionicframework.com/)
 * Read our [Blog](http://ionicframework.com/blog/)
 * Have a feature request or find a bug? [Submit an issue](http://ionicframework.com/submit-issue/)
-
+* Join our Community Slack Group! [Ionic Worldwide](http://ionicworldwide.herokuapp.com/)
 
 ## Authors
 
@@ -82,11 +84,11 @@ Originally created by [Adam Bradley](http://twitter.com/adamdbradley), [Ben Sper
 
 ### Documentation
 
-* Documentation is generated into `dist/ionic-site`.  To test documentation properly, follow these steps:
-  1. Clone ionic-site into `./dist/ionic-site`
-    - `git clone git@github.com:driftyco/ionic-site dist/ionic-site`
+* Documentation is generated into `./../ionic-site`.  To test documentation properly, follow these steps:
+  1. Clone ionic-site into `./../ionic-site`
+    - `git clone git@github.com:driftyco/ionic-site ./../ionic-site`
   2. Start jekyll, telling it to rebuild whenever the site changes
-    - `cd dist/ionic-site && jekyll serve -w`
+    - `cd ./../ionic-site && jekyll serve -w`
   3. Go back to project root and build the docs
     - `gulp docs [--doc-version=(versionName|nightly)]`
   4. Open localhost:4000 and see your changes! Re-run `gulp docs` again whenever you change something, and jekyll will update the site

@@ -26,7 +26,7 @@ function run {
   node_modules/.bin/gulp docs-index --dist=$SITE_DIR
 
   cd $SITE_DIR
-  npm install
+  #npm install
 
   CHANGES=$(git status --porcelain)
 
@@ -36,7 +36,7 @@ function run {
   else
     git add -A
     git commit -am "docs: update for $VERSION"
-    source deploy.sh
+    git push origin master
 
     echo "-- Updated docs for $VERSION_NAME succesfully!"
   fi

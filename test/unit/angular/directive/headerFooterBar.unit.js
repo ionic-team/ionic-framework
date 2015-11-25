@@ -50,7 +50,7 @@ describe('bar directives', function() {
         spyOn(ionic.DomUtil, 'rectContains');
         var child = angular.element('<div contenteditable>');
         el.append(child);
-        ionic.trigger('tap', { target: child[0] }, true, true);
+        ionic.trigger('tap', [{ target: child[0] }], true, true);
         expect(ionic.DomUtil.rectContains).not.toHaveBeenCalled();
       });
       it('should ignore tap if it\'s in a .button', function() {

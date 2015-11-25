@@ -201,7 +201,7 @@ button.item.item-complex {
   z-index: $z-index-item;
   padding: $item-padding (ceil( ($item-padding * 3) + ($item-padding / 3) ) - 5) $item-padding $item-padding;
   border: none;
-  background-color: white;
+  background-color: $item-default-bg;
 }
 
 a.item-content {

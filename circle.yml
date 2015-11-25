@@ -1,6 +1,6 @@
 machine:
   node:
-    version: v0.10.26
+    version: 4.1.0
   ruby:
     version: 2.1.2
 checkout:
@@ -14,9 +14,9 @@ dependencies:
     - bower install
 test:
   override:
-    - ./scripts/circle/test.sh --index=$CIRCLE_NODE_INDEX --total=$CIRCLE_NODE_TOTAL: {parallel: true}
+    - ./scripts/circle/test.sh --index=$CIRCLE_NODE_INDEX --total=$CIRCLE_NODE_TOTAL
 deployment:
   tasks:
     branch: master
     commands:
-      - ./scripts/circle/deploy.sh --sha1=$CIRCLE_SHA1 --index=$CIRCLE_NODE_INDEX --build-number=$CIRCLE_BUILD_NUM: {parallel: true}
+      - ./scripts/circle/deploy.sh --sha1=$CIRCLE_SHA1 --index=$CIRCLE_NODE_INDEX --build-number=$CIRCLE_BUILD_NUM
