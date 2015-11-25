@@ -50,6 +50,10 @@ ion-card {
       padding: 0;
     }
 
+    .item-inner {
+      border-bottom: 1px solid $list-md-border-color;
+    }
+
     > .item:last-child,
     > ion-item-sliding:last-child .item {
       border-bottom: none;
