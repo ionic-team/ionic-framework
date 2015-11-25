@@ -124,6 +124,12 @@ ion-nav-items div {
   pointer-events: auto;
 }
 
+// TODO this is a temp hack to fix segment overlapping ion-nav-item
+ion-nav-items,
+[menu-toggle] {
+  z-index: 99;
+}
+
 
 // Toolbar Color Generation
 // --------------------------------------------------

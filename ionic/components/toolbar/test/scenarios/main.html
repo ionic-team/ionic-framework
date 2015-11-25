@@ -180,7 +180,7 @@
 
 <ion-toolbar>
 <ion-nav-items secondary>
-  <button>
+  <button #button1 (click)="buttonClick(button1)">
     <icon star></icon>
   </button>
 </ion-nav-items>
@@ -190,6 +190,35 @@
   </a>
 </ion-toolbar>
 
+<ion-toolbar>
+  <ion-nav-items secondary>
+    <button #button2 (click)="buttonClick(button2)">
+      <icon search></icon>
+    </button>
+  </ion-nav-items>
+  <ion-segment secondary>
+    <ion-segment-button>
+      Something
+    </ion-segment-button>
+    <ion-segment-button>
+      Else
+    </ion-segment-button>
+  </ion-segment>
+</ion-toolbar>
+
+<ion-toolbar>
+  <ion-segment>
+    <ion-segment-button>
+      Light
+    </ion-segment-button>
+    <ion-segment-button>
+      Toolbar
+    </ion-segment-button>
+    <ion-segment-button>
+      Default Segment
+    </ion-segment-button>
+  </ion-segment>
+</ion-toolbar>
 
 
 <style>
