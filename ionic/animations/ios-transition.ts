@@ -72,7 +72,9 @@ class IOSTransition extends Animation {
 
         if (enteringView.enableBack()) {
           // back direction, entering page has a back button
-          enteringBackButton.fadeIn();
+          enteringBackButton
+            .before.addClass(SHOW_BACK_BTN_CSS)
+            .fadeIn();
         }
 
       } else {

@@ -239,7 +239,7 @@ export class NavController extends Ion {
 
     this.setTransitioning(true, 500);
 
-    let resolve;
+    let resolve = null;
     let promise = new Promise(res => { resolve = res; });
 
     // default the direction to "back"
@@ -353,6 +353,9 @@ export class NavController extends Ion {
 
     this._incrementId(viewCtrl);
     this._views.splice(index, 0, viewCtrl);
+
+    this._cleanup();
+
     return Promise.resolve();
   }
 
