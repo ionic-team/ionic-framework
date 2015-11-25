@@ -22,6 +22,18 @@ class E2EApp {
     this.fruitsForm = new ControlGroup({
       "fruits": this.fruits
     });
+
+    this.currenciesControl = new Control("");
+
+    this.currencyForm = new ControlGroup({
+      "currenciesControl": this.currenciesControl
+    });
+
+    this.currencies = ['USD', 'EUR'];
+    this.selectedCurrency = 'EUR';
+
+    this.relationship = 'friends';
+
   }
 
   setApple() {

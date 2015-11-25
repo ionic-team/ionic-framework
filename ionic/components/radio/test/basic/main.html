@@ -32,15 +32,37 @@
 
   </form>
 
-  <p aria-hidden="true" class="align-center">
+  <div aria-hidden="true" class="align-center">
     <button (click)="setApple()" outline small>Select Apple</button>
     <button (click)="setBanana()" outline small>Select Banana</button>
     <button class="e2eCherry" (click)="setCherry()" outline small>Select Cherry</button>
-  </p>
+  </div>
 
-  <p>
+  <div padding>
     <code>fruits.dirty: {{fruitsForm.controls.fruits.dirty}}</code><br>
     <code>fruits.value: {{fruitsForm.controls.fruits.value}}</code><br>
-  </p>
+  </div>
+
+  <form (submit)="doSubmit($event)" [ng-form-model]="currencyForm">
+    <ion-radio-group ng-control="currenciesControl">
+      <ion-list-header>
+        Currencies
+      </ion-list-header>
+      <ion-radio *ng-for="#currency of currencies" [checked]="currency==selectedCurrency" [value]="currency">{{currency}}</ion-radio>
+    </ion-radio-group>
+  </form>
+
+  <div padding>
+    <code>currenciesControl.value: {{currencyForm.controls.currenciesControl.value}}</code>
+  </div>
+
+  <ion-radio-group [(ng-model)]="relationship">
+    <ion-radio value="friends">Friends</ion-radio>
+    <ion-radio value="enemies">Enemies</ion-radio>
+  </ion-radio-group>
+
+  <div padding>
+    <code>relationship: {{relationship}}</code>
+  </div>
 
 </ion-content>

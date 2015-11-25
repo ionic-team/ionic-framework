@@ -60,13 +60,13 @@ export class RadioGroup extends Ion {
     @Query(ListHeader) private headerQuery: QueryList<ListHeader>
   ) {
     super(elementRef, config);
-
+    this.ngControl = ngControl;
     this.id = ++radioGroupIds;
     this.radioIds = -1;
     this.onChange = (_) => {};
     this.onTouched = (_) => {};
 
-    if (ngControl) ngControl.valueAccessor = this;
+    if (ngControl) this.ngControl.valueAccessor = this;
   }
 
   /**
@@ -90,6 +90,11 @@ export class RadioGroup extends Ion {
   registerRadio(radio) {
     radio.id = radio.id || ('radio-' + this.id + '-' + (++this.radioIds));
     this.radios.push(radio);
+
+    console.log("Radio", radio.id, radio.value, radio.checked);
+    if (this.value == radio.value) {
+      radio.check(this.value);
+    }
 
     if (radio.checked) {
       this.value = radio.value;
@@ -213,9 +218,9 @@ export class RadioButton extends Ion {
   /**
    * @private
    */
-  click(ev) {
-    ev.preventDefault();
-    ev.stopPropagation();
+  click(event) {
+    event.preventDefault();
+    event.stopPropagation();
     this.check();
   }
 
