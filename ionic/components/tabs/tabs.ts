@@ -8,6 +8,7 @@ import {NavController} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
 import {ConfigComponent} from '../../config/decorators';
 import {Icon} from '../icon/icon';
+import {rafFrames} from '../../util/dom';
 
 
 /**
@@ -328,16 +329,18 @@ class TabHighlight {
   }
 
   select(tab) {
-    let d = tab.btn.getDimensions();
-    let ele = this.elementRef.nativeElement;
-    ele.style.transform = 'translate3d(' + d.left + 'px,0,0) scaleX(' + d.width + ')';
+    rafFrames(3, () => {
+      let d = tab.btn.getDimensions();
+      let ele = this.elementRef.nativeElement;
+      ele.style.transform = 'translate3d(' + d.left + 'px,0,0) scaleX(' + d.width + ')';
 
-    if (!this.init) {
-      this.init = true;
-      setTimeout(() => {
-        ele.classList.add('animate');
-      }, 64);
-    }
+      if (!this.init) {
+        this.init = true;
+        rafFrames(6, () => {
+          ele.classList.add('animate');
+        });
+      }
+    });
   }
 
 }
