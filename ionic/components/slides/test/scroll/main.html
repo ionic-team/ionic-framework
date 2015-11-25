@@ -1,0 +1,34 @@
+<ion-toolbar>
+  <ion-title>Fixed Height Slides</ion-title>
+</ion-toolbar>
+
+<ion-content>
+
+  <div style="height: 300px">
+    <ion-slides pager="true">
+      <ion-slide class="yellow">Slide 1</ion-slide>
+      <ion-slide class="blue">Slide 2</ion-slide>
+      <ion-slide class="red">Slide 3</ion-slide>
+    </ion-slides>
+  </div>
+  <ion-list>
+    <button ion-item *ng-for="#item of [0,1,2,3,4,5,6,7,8]">
+      {{ item }}
+    </button>
+  </ion-list>
+
+</ion-content>
+
+<style>
+  .yellow {
+    background-color: yellow;
+  }
+
+  .blue {
+    background-color: blue;
+  }
+
+  .red {
+    background-color: red;
+  }
+</style>
