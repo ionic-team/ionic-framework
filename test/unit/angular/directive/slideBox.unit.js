@@ -34,7 +34,9 @@ describe('Ionic Angular Slide Box', function() {
     spyOn($ionicSlideBoxDelegate, '_registerInstance').andCallFake(function() {
       return deregisterSpy;
     });
-    var el = $compile('<ion-slide-box delegate-handle="superHandle">')($rootScope.$new());
+    var $scope = $rootScope.$new();
+    $scope.slideBoxHandle = 'superHandle';
+    var el = $compile('<ion-slide-box delegate-handle="{{slideBoxHandle}}">')($scope);
     $rootScope.$apply();
 
     expect($ionicSlideBoxDelegate._registerInstance)
