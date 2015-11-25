@@ -1,34 +1,32 @@
 import {App, IonicApp} from 'ionic/ionic';
-
+import {Http} from 'angular2/http';
 
 @App({
-  templateUrl: 'main.html'
+  templateUrl: 'main.html',
 })
 class MyApp {
-  constructor(private app: IonicApp) {
+  constructor(private app: IonicApp, http: Http) {
+    this.http = http;
     this.extraOptions = {
       loop: true
     };
-
     this.images = [];
 
     let tags = "amsterdam";
     let FLICKR_API_KEY = '504fd7414f6275eb5b657ddbfba80a2c';
-
     let baseUrl = 'https://api.flickr.com/services/rest/';
 
-    // TODO: update to use angular2's HTTP Service
-    Http.get(baseUrl + '?method=flickr.groups.pools.getPhotos&group_id=1463451@N25&safe_search=1&api_key=' + FLICKR_API_KEY + '&jsoncallback=JSON_CALLBACK&format=json&tags=' + tags, {
-      method: 'jsonp'
-    }).then((val) => {
-      this.images = val.photos.photo.slice(0, 20);
-      setTimeout(() => {
-        this.slider.update();
-      });
-    }, (err) => {
-      alert('Unable to load images');
-      console.error(err);
-    })
+    this.http.get(baseUrl + '?method=flickr.groups.pools.getPhotos&group_id=1463451@N25&safe_search=1&api_key=' + FLICKR_API_KEY + '&format=json&nojsoncallback=1&tags=' + tags).subscribe(
+      data => {
+        let val = data.json();
+        this.images = val.photos.photo.slice(0, 20);
+        setTimeout(() => {
+          this.slider.update();
+        });
+      },
+      err => console.log(err),
+      () => console.log('complete')
+    );
   }
 
   onInit() {
