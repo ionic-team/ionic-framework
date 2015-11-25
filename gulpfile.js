@@ -181,7 +181,7 @@ gulp.task('serve', function() {
 });
 
 gulp.task('clean', function(done) {
-  del(['dist/**', '!dist', '!dist/ionic-site', '!dist/ionic-site/**/*'], done);
+  del(['dist/**', '!dist'], done);
 });
 
 function transpile(moduleType) {
@@ -485,7 +485,7 @@ gulp.task('sass.demos:components', function() {
     )
     .pipe(concat('app.css'))
     .pipe(autoprefixer(buildConfig.autoprefixer))
-    .pipe(gulp.dest('dist/demos/component-docs/'));
+    .pipe(gulp.dest('../ionic-site/docs/v2/demos/component-docs/'));
 });
 
 gulp.task('bundle.demos:api', ['build.demos'], function(done) {
