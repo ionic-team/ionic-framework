@@ -48,7 +48,7 @@ Platform.register({
   ],
   settings: {
     activator: function(p) {
-      return (p.version().major >= 5) ? 'ripple' : 'none';
+      return (p.version().major < 5 && p.navigatorPlatform().indexOf('linux') > -1) ? 'none' : 'ripple';
     },
     hoverCSS: false,
     keyboardHeight: 300,

@@ -204,7 +204,7 @@ export class Platform {
 
   navigatorPlatform(val) {
     if (arguments.length) {
-      this._bPlt = val;
+      this._bPlt = (val || '').toLowerCase();
     }
     return this._bPlt || '';
   }
