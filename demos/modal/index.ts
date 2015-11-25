@@ -1,4 +1,4 @@
-import {App, IonicView, IonicApp, Config, Platform} from 'ionic/ionic';
+import {App, Page, IonicApp, Config, Platform} from 'ionic/ionic';
 import {Modal, ActionSheet, NavController, NavParams, Animation} from 'ionic/ionic';
 
 
@@ -39,7 +39,7 @@ class MyAppCmp {
   }
 }
 
-@IonicView({
+@Page({
   template: '<ion-nav [root]="rootView"></ion-nav>'
 })
 export class ContactModal {
@@ -71,7 +71,7 @@ export class ContactModal {
 }
 
 
-@IonicView({
+@Page({
   template: `
     <ion-navbar *navbar><ion-title>First Page Header</ion-title><ion-nav-items primary><button (click)="closeModal()">Close</button></ion-nav-items></ion-navbar>
     <ion-content padding>
@@ -82,7 +82,7 @@ export class ContactModal {
         <button (click)="openActionSheet()">Open Action Sheet</button>
       </p>
       <p>
-        <button (click)="closeByHandeModal()">Close By Handle</button>
+        <button (click)="closeByHandleModal()">Close By Handle</button>
       </p>
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
@@ -109,7 +109,8 @@ export class ModalFirstPage {
     modal.close();
   }
 
-  closeByHandeModal() {
+  closeByHandleModal() {
+    debugger;
     let modal = this.modal.get('my-awesome-modal');
     modal.close();
   }
@@ -141,7 +142,7 @@ export class ModalFirstPage {
 }
 
 
-@IonicView({
+@Page({
   template: `
     <ion-navbar *navbar><ion-title>Second Page Header</ion-title></ion-navbar>
     <ion-content padding>
