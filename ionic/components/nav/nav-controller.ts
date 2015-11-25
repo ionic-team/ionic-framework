@@ -346,7 +346,7 @@ export class NavController extends Ion {
     }
 
     // create new ViewController, but don't render yet
-    let viewCtrl = new ViewController(this, componentType);
+    let viewCtrl = new ViewController(this, componentType, params);
     viewCtrl.state = CACHED_STATE;
     viewCtrl.shouldDestroy = false;
     viewCtrl.shouldCache = false;
