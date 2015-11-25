@@ -23,10 +23,7 @@ import * as util from 'ionic/util';
     'items',
     'virtual',
     'content'
-  ],
-  host: {
-    'class': 'list'
-  }
+  ]
 })
 export class List extends Ion {
 

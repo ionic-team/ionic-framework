@@ -16,7 +16,7 @@ import {ListHeader} from '../list/list';
  *
  * @usage
  * ```html
- * <ion-radio-group ng-control="clientside">
+ * <ion-list radio-group ng-control="clientside">
  *
  *   <ion-list-header>
  *     Clientside
@@ -38,16 +38,15 @@ import {ListHeader} from '../list/list';
  *     React
  *   </ion-radio>
  *
- * </ion-radio-group>
+ * </ion-list>
  * ```
 */
 @Directive({
-  selector: 'ion-radio-group',
+  selector: '[radio-group]',
   host: {
     'role': 'radiogroup',
     '[attr.aria-activedescendant]': 'activeId',
     '[attr.aria-describedby]': 'describedById',
-    'class': 'list'
   }
 })
 export class RadioGroup extends Ion {

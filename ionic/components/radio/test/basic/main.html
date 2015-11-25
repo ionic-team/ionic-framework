@@ -6,7 +6,7 @@
 
   <form (submit)="doSubmit($event)" [ng-form-model]="fruitsForm">
 
-    <ion-radio-group ng-control="fruits">
+    <ion-list radio-group ng-control="fruits">
 
       <ion-list-header>
         Fruits
@@ -28,7 +28,7 @@
         Disabled
       </ion-radio>
 
-    </ion-radio-group>
+    </ion-list>
 
   </form>
 
@@ -44,22 +44,22 @@
   </div>
 
   <form (submit)="doSubmit($event)" [ng-form-model]="currencyForm">
-    <ion-radio-group ng-control="currenciesControl">
+    <ion-list radio-group ng-control="currenciesControl">
       <ion-list-header>
         Currencies
       </ion-list-header>
       <ion-radio *ng-for="#currency of currencies" [checked]="currency==selectedCurrency" [value]="currency">{{currency}}</ion-radio>
-    </ion-radio-group>
+    </ion-list>
   </form>
 
   <div padding>
     <code><b>currenciesControl.value:</b> {{currencyForm.controls.currenciesControl.value}}</code>
   </div>
 
-  <ion-radio-group [(ng-model)]="relationship">
+  <ion-list radio-group [(ng-model)]="relationship">
     <ion-radio value="friends">Friends</ion-radio>
     <ion-radio value="enemies">Enemies</ion-radio>
-  </ion-radio-group>
+  </ion-list>
 
   <div padding>
     <code><b>relationship:</b> {{relationship}}</code>

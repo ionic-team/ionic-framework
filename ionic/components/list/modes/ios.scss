@@ -27,7 +27,7 @@ $list-ios-border-color:               $list-border-color !default;
 /* DEFAULT LIST */
 /****************/
 
-.list {
+ion-list {
   margin: -1px $list-ios-margin-right $list-ios-margin-bottom $list-ios-margin-left;
 
   ion-list-header {
@@ -87,7 +87,7 @@ $list-ios-border-color:               $list-border-color !default;
   }
 }
 
-.list + .list {
+ion-list + ion-list {
   margin-top: $list-ios-margin-top + $list-ios-margin-bottom;
 
   ion-list-header {
@@ -96,7 +96,7 @@ $list-ios-border-color:               $list-border-color !default;
   }
 }
 
-&.hairlines .list {
+&.hairlines ion-list {
 
   ion-item-options {
     border-width: 0.55px;
@@ -127,7 +127,7 @@ $list-ios-border-color:               $list-border-color !default;
 /* INSET LIST */
 /**************/
 
-.list[inset] {
+ion-list[inset] {
   margin: $list-inset-ios-margin-top $list-inset-ios-margin-right $list-inset-ios-margin-bottom $list-inset-ios-margin-left;
   border-radius: $list-inset-ios-border-radius;
 
@@ -150,11 +150,11 @@ $list-ios-border-color:               $list-border-color !default;
   }
 }
 
-.list[inset] + .list[inset] {
+ion-list[inset] + ion-list[inset] {
   margin-top: 0;
 }
 
-&.hairlines .list[inset] {
+&.hairlines ion-list[inset] {
   .item {
     border-width: 0.55px;
   }
@@ -165,8 +165,8 @@ $list-ios-border-color:               $list-border-color !default;
 /* NO LINES LIST */
 /*****************/
 
-.list[no-lines],
-&.hairlines .list[no-lines] {
+ion-list[no-lines],
+&.hairlines ion-list[no-lines] {
   ion-list-header,
   .item,
   .item .item-inner {

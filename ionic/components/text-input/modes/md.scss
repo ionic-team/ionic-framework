@@ -7,7 +7,7 @@ $text-input-highlight-color:      map-get($colors, primary) !default;
 $input-label-md-color:            #999 !default;
 
 
-.list,
+ion-list,
 ion-card {
 
   [text-input] {
@@ -74,7 +74,7 @@ ion-card {
   }
 }
 
-.list[inset] ion-input.item {
+ion-list[inset] ion-input.item {
   padding-right: 0;
   padding-left: 0;
 }
