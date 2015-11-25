@@ -11,8 +11,9 @@ import {isBoolean, array} from '../../util/util';
 import {rafFrames} from '../../util/dom';
 
 /**
- * _For examples on the basic usage of NavController, check out the [Navigation section](../../../../components/#navigation)
- * of the Component docs._
+ * _For examples on the basic usage of NavController, check out the
+ * [Navigation section](../../../../components/#navigation) of the Component
+ * docs._
  *
  * NavController is the base class for navigation controller components like
  * [`Nav`](../Nav/) and [`Tab`](../../Tabs/Tab/). You use navigation controllers
@@ -40,13 +41,6 @@ import {rafFrames} from '../../util/dom';
  * Tab) and adds the injector to its own providers.  For more information on
  * providers and dependency injection, see [Providers and DI]().
  *
- * ```ts
- * // class NavController
- * this.providers = Injector.resolve([
- *   provide(NavController, {useValue: this})
- * ]);
- * ```
- *
  * Instead, you can inject NavController and know that it is the correct
  * navigation controller for most situations (for more advanced situations, see
  * [Menu](../../Menu/Menu/) and [Tab](../../Tab/Tab/)).
@@ -65,10 +59,8 @@ import {rafFrames} from '../../util/dom';
  *
  * Pages are created when they are added to the navigation stack.  For methods
  * like [push()](#push), the NavController takes any component class that is
- * decorated with @Page as its first argument.  The NavController then
- * [compiles]() that component, adds it to the DOM in a similar fashion to
- * Angular's [DynamicComponentLoader](https://angular.io/docs/js/latest/api/core/DynamicComponentLoader-interface.html),
- * and animates it into view.
+ * decorated with `@Page` as its first argument.  The NavController then
+ * compiles that component, adds it to the app and animates it into view.
  *
  * By default, pages are cached and left in the DOM if they are navigated away
  * from but still in the navigation stack (the exiting page on a `push()` for
@@ -87,6 +79,9 @@ import {rafFrames} from '../../util/dom';
  * class HelloWorld {
  *   onPageLoaded() {
  *     console.log("I'm alive!");
+ *   }
+ *   onPageWillLeave() {
+ *     console.log("Looks like I'm about to leave :(");
  *   }
  * }
  * ```
