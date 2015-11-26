@@ -126,6 +126,11 @@ focus-ctrl {
   pointer-events: none;
 }
 
+[floating-label] .hide-focused-input,
+[stacked-label] .hide-focused-input {
+  margin-top: -8px !important;
+}
+
 .cloned-input {
   pointer-events: none;
 }

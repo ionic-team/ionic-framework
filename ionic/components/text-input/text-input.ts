@@ -449,11 +449,7 @@ export class TextInputElement {
 
       let focusedInputEle = this.getNativeElement();
       if (shouldRelocate) {
-        let clonedInputEle = focusedInputEle.cloneNode(true);
-        clonedInputEle.classList.add('cloned-input');
-        clonedInputEle.classList.remove('hide-focused-input');
-        clonedInputEle.setAttribute('aria-hidden', true);
-        clonedInputEle.tabIndex = -1;
+        let clonedInputEle = cloneInput(focusedInputEle, 'cloned-input');
 
         focusedInputEle.classList.add('hide-focused-input');
         focusedInputEle.style[dom.CSS.transform] = `translate3d(-9999px,${inputRelativeY}px,0)`;
@@ -478,10 +474,7 @@ export class TextInputElement {
     let focusedInputEle = this.getNativeElement();
 
     if (shouldHideFocus) {
-      let clonedInputEle = focusedInputEle.cloneNode(true);
-      clonedInputEle.classList.add('cloned-hidden');
-      clonedInputEle.setAttribute('aria-hidden', true);
-      clonedInputEle.tabIndex = -1;
+      let clonedInputEle = cloneInput(focusedInputEle, 'cloned-hidden');
 
       focusedInputEle.classList.add('hide-focused-input');
       focusedInputEle.style[dom.CSS.transform] = 'translate3d(-9999px,0,0)';
@@ -524,6 +517,16 @@ class InputScrollAssist {
     this.form.focusNext(this.textInput);
   }
 
+}
+
+function cloneInput(srcInput, addCssClass) {
+  let clonedInputEle = srcInput.cloneNode(true);
+  clonedInputEle.classList.add(addCssClass);
+  clonedInputEle.classList.remove('hide-focused-input');
+  clonedInputEle.setAttribute('aria-hidden', true);
+  clonedInputEle.removeAttribute('aria-labelledby');
+  clonedInputEle.tabIndex = -1;
+  return clonedInputEle;
 }
 
 

@@ -200,27 +200,27 @@ export class Content extends Ion {
       this.scrollPadding = newScrollPadding;
       this.scrollElement.style.paddingBottom = newScrollPadding + 'px';
 
-      if (!this.keyboardPromise) {
-        console.debug('add scroll keyboard close callback', newScrollPadding);
-
-        this.keyboardPromise = this.keyboard.onClose(() => {
-          console.debug('scroll keyboard closed', newScrollPadding);
-
-          if (this) {
-            if (this.scrollPadding && this.scrollElement) {
-              let close = new Animation(this.scrollElement);
-              close
-                .duration(150)
-                .fromTo('paddingBottom', this.scrollPadding + 'px', '0px')
-                .play();
-            }
-
-            this.scrollPadding = 0;
-            this.keyboardPromise = null;
-          }
-        });
-
-      }
+      // if (!this.keyboardPromise) {
+      //   console.debug('add scroll keyboard close callback', newScrollPadding);
+      //
+      //   this.keyboardPromise = this.keyboard.onClose(() => {
+      //     console.debug('scroll keyboard closed', newScrollPadding);
+      //
+      //     if (this) {
+      //       if (this.scrollPadding && this.scrollElement) {
+      //         let close = new Animation(this.scrollElement);
+      //         close
+      //           .duration(250)
+      //           .fromTo('paddingBottom', this.scrollPadding + 'px', '0px')
+      //           .play();
+      //       }
+      //
+      //       this.scrollPadding = 0;
+      //       this.keyboardPromise = null;
+      //     }
+      //   });
+      //
+      // }
     }
   }
 
