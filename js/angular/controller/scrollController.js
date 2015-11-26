@@ -108,38 +108,40 @@ function($scope,
 
   self.scrollTop = function(shouldAnimate) {
     self.resize().then(function() {
-      scrollView.scrollTo(0, 0, !!shouldAnimate);
+      scrollView && scrollView.scrollTo(0, 0, !!shouldAnimate);
     });
   };
 
   self.scrollBottom = function(shouldAnimate) {
     self.resize().then(function() {
-      var max = scrollView.getScrollMax();
-      scrollView.scrollTo(max.left, max.top, !!shouldAnimate);
+      if (scrollView) {
+        var max = scrollView.getScrollMax();
+        scrollView.scrollTo(max.left, max.top, !!shouldAnimate);
+      }
     });
   };
 
   self.scrollTo = function(left, top, shouldAnimate) {
     self.resize().then(function() {
-      scrollView.scrollTo(left, top, !!shouldAnimate);
+      scrollView && scrollView.scrollTo(left, top, !!shouldAnimate);
     });
   };
 
   self.zoomTo = function(zoom, shouldAnimate, originLeft, originTop) {
     self.resize().then(function() {
-      scrollView.zoomTo(zoom, !!shouldAnimate, originLeft, originTop);
+      scrollView && scrollView.zoomTo(zoom, !!shouldAnimate, originLeft, originTop);
     });
   };
 
   self.zoomBy = function(zoom, shouldAnimate, originLeft, originTop) {
     self.resize().then(function() {
-      scrollView.zoomBy(zoom, !!shouldAnimate, originLeft, originTop);
+      scrollView && scrollView.zoomBy(zoom, !!shouldAnimate, originLeft, originTop);
     });
   };
 
   self.scrollBy = function(left, top, shouldAnimate) {
     self.resize().then(function() {
-      scrollView.scrollBy(left, top, !!shouldAnimate);
+      scrollView && scrollView.scrollBy(left, top, !!shouldAnimate);
     });
   };
 

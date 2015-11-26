@@ -181,26 +181,26 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
 
     // Check if we can move to that side, depending if the left/right panel is enabled
     if (!(self.left && self.left.isEnabled) && amount > 0) {
-      self.content.setTranslateX(0);
+      self.content && self.content.setTranslateX(0);
       return;
     }
 
     if (!(self.right && self.right.isEnabled) && amount < 0) {
-      self.content.setTranslateX(0);
+      self.content && self.content.setTranslateX(0);
       return;
     }
 
     if (leftShowing && amount > maxLeft) {
-      self.content.setTranslateX(maxLeft);
+      self.content && self.content.setTranslateX(maxLeft);
       return;
     }
 
     if (rightShowing && amount < -maxRight) {
-      self.content.setTranslateX(-maxRight);
+      self.content && self.content.setTranslateX(-maxRight);
       return;
     }
 
-    self.content.setTranslateX(amount);
+    self.content && self.content.setTranslateX(amount);
 
     if (amount >= 0) {
       leftShowing = true;
@@ -304,12 +304,12 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
     if (self.left && self.left.isEnabled) {
       // set the left marget width if it should be exposed
       // otherwise set false so there's no left margin
-      self.content.setMarginLeft(isAsideExposed ? self.left.width : 0);
+      self.content && self.content.setMarginLeft(isAsideExposed ? self.left.width : 0);
     } else if (self.right && self.right.isEnabled) {
-      self.content.setMarginRight(isAsideExposed ? self.right.width : 0);
+      self.content && self.content.setMarginRight(isAsideExposed ? self.right.width : 0);
     }
 
-    self.$scope.$emit('$ionicExposeAside', isAsideExposed);
+    self.$scope && self.$scope.$emit('$ionicExposeAside', isAsideExposed);
   };
 
   self.activeAsideResizing = function(isResizing) {
@@ -405,7 +405,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
       menuEnabled &&
       !e.target.tagName.match(/input|textarea|select|object|embed/i) &&
       !e.target.isContentEditable &&
-      !(e.target.dataset ? e.target.dataset.preventScroll : e.target.getAttribute('data-prevent-scroll') == 'true');
+      !(e.target.dataset ? e.target.dataset.preventScroll : e.target.getAttribute && e.target.getAttribute('data-prevent-scroll') == 'true');
   };
 
   $scope.sideMenuContentTranslateX = 0;
