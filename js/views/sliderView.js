@@ -3,6 +3,7 @@
  *
  * Brad Birdsall
  * Copyright 2013, MIT License
+ *
 */
 
 (function(ionic) {
@@ -11,25 +12,25 @@
 ionic.views.Slider = ionic.views.View.inherit({
   initialize: function (options) {
     var slider = this;
-	
-	var touchStartEvent, touchMoveEvent, touchEndEvent;
-	if (window.navigator.pointerEnabled) {		
-		touchStartEvent = 'pointerdown';
-		touchMoveEvent = 'pointermove';
-		touchEndEvent = 'pointerup';
-    } else if (window.navigator.msPointerEnabled) {
-		touchStartEvent = 'MSPointerDown';
-		touchMoveEvent = 'MSPointerMove';
-		touchEndEvent = 'MSPointerUp';
-	} else {
-		touchStartEvent = 'touchstart';
-		touchMoveEvent = 'touchmove';
-		touchEndEvent = 'touchend';
-	}
-	
-	var mouseStartEvent = 'mousedown';
-	var mouseMoveEvent = 'mousemove';
-	var mouseEndEvent = 'mouseup';
+
+  	var touchStartEvent, touchMoveEvent, touchEndEvent;
+  	if (window.navigator.pointerEnabled) {		
+  		touchStartEvent = 'pointerdown';
+  		touchMoveEvent = 'pointermove';
+  		touchEndEvent = 'pointerup';
+  	} else if (window.navigator.msPointerEnabled) {
+  		touchStartEvent = 'MSPointerDown';
+  		touchMoveEvent = 'MSPointerMove';
+  		touchEndEvent = 'MSPointerUp';
+  	} else {
+  		touchStartEvent = 'touchstart';
+  		touchMoveEvent = 'touchmove';
+  		touchEndEvent = 'touchend';
+  	}
+  	
+  	var mouseStartEvent = 'mousedown';
+  	var mouseMoveEvent = 'mousemove';
+  	var mouseEndEvent = 'mouseup';
 	
     // utilities
     var noop = function() {}; // simple no operation function
@@ -277,11 +278,11 @@ ionic.views.Slider = ionic.views.View.inherit({
 
         switch (event.type) {
           case touchStartEvent: this.start(event); break;
-		  case mouseStartEvent: this.start(event); break;
+		      case mouseStartEvent: this.start(event); break;
           case touchMoveEvent: this.touchmove(event); break;
-		  case mouseMoveEvent: this.touchmove(event); break;
+		      case mouseMoveEvent: this.touchmove(event); break;
           case touchEndEvent: offloadFn(this.end(event)); break;
-		  case mouseEndEvent: offloadFn(this.end(event)); break;
+		      case mouseEndEvent: offloadFn(this.end(event)); break;
           case 'webkitTransitionEnd':
           case 'msTransitionEnd':
           case 'oTransitionEnd':
@@ -316,14 +317,14 @@ ionic.views.Slider = ionic.views.View.inherit({
         delta = {};
 
         // attach touchmove and touchend listeners
-		element.addEventListener(touchMoveEvent, this, false);
-		element.addEventListener(mouseMoveEvent, this, false);
-		
-		element.addEventListener(touchEndEvent, this, false);
-		element.addEventListener(mouseEndEvent, this, false);
-		
-		document.addEventListener(touchEndEvent, this, false);
-		document.addEventListener(mouseEndEvent, this, false);
+        element.addEventListener(touchMoveEvent, this, false);
+        element.addEventListener(mouseMoveEvent, this, false);
+
+        element.addEventListener(touchEndEvent, this, false);
+        element.addEventListener(mouseEndEvent, this, false);
+
+        document.addEventListener(touchEndEvent, this, false);
+        document.addEventListener(mouseEndEvent, this, false);
       },
       touchmove: function(event) {
 
@@ -465,15 +466,15 @@ ionic.views.Slider = ionic.views.View.inherit({
         }
 
         // kill touchmove and touchend event listeners until touchstart called again
-		element.removeEventListener(touchMoveEvent, events, false);
-		element.removeEventListener(mouseMoveEvent, events, false);
-		
-		element.removeEventListener(touchEndEvent, events, false);
-		element.removeEventListener(mouseEndEvent, events, false);
-		
-		document.removeEventListener(touchEndEvent, events, false);
-		document.removeEventListener(mouseEndEvent, events, false);
-		
+        element.removeEventListener(touchMoveEvent, events, false);
+        element.removeEventListener(mouseMoveEvent, events, false);
+
+        element.removeEventListener(touchEndEvent, events, false);
+        element.removeEventListener(mouseEndEvent, events, false);
+
+        document.removeEventListener(touchEndEvent, events, false);
+        document.removeEventListener(mouseEndEvent, events, false);
+
         options.onDragEnd && options.onDragEnd();
       },
       transitionEnd: function(event) {
@@ -603,8 +604,8 @@ ionic.views.Slider = ionic.views.View.inherit({
       if (browser.addEventListener) {
 
         // set touchstart event on element
-		element.addEventListener(touchStartEvent, events, false);
-		element.addEventListener(mouseStartEvent, events, false);
+        element.addEventListener(touchStartEvent, events, false);
+        element.addEventListener(mouseStartEvent, events, false);
 
         if (browser.transitions) {
           element.addEventListener('webkitTransitionEnd', events, false);
