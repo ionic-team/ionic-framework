@@ -27,11 +27,11 @@ ionic.views.Slider = ionic.views.View.inherit({
       touchMoveEvent = 'touchmove';
       touchEndEvent = 'touchend';
     }
-  	
+
     var mouseStartEvent = 'mousedown';
     var mouseMoveEvent = 'mousemove';
     var mouseEndEvent = 'mouseup';
-	
+
     // utilities
     var noop = function() {}; // simple no operation function
     var offloadFn = function(fn) { setTimeout(fn || noop, 0); }; // offload a functions execution
