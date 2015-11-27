@@ -26,7 +26,7 @@ ionic.views.Slider = ionic.views.View.inherit({
       touchStartEvent = 'touchstart';
       touchMoveEvent = 'touchmove';
       touchEndEvent = 'touchend';
-  	}
+    }
   	
     var mouseStartEvent = 'mousedown';
     var mouseMoveEvent = 'mousemove';
