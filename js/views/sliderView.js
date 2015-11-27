@@ -14,7 +14,7 @@ ionic.views.Slider = ionic.views.View.inherit({
     var slider = this;
 
     var touchStartEvent, touchMoveEvent, touchEndEvent;
-    if (window.navigator.pointerEnabled) {		
+    if (window.navigator.pointerEnabled) {
       touchStartEvent = 'pointerdown';
       touchMoveEvent = 'pointermove';
       touchEndEvent = 'pointerup';
