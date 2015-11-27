@@ -20,6 +20,11 @@
   background-size: 99% $range-track-height;
   background-repeat: no-repeat;
   -webkit-appearance: none;
+  
+  &::-moz-focus-outer {
+    /* hide the focus outline in Firefox */
+    border: 0;  
+  }
 
   &::-webkit-slider-thumb {
     position: relative;
