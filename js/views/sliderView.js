@@ -13,24 +13,24 @@ ionic.views.Slider = ionic.views.View.inherit({
   initialize: function (options) {
     var slider = this;
 
-  	var touchStartEvent, touchMoveEvent, touchEndEvent;
-  	if (window.navigator.pointerEnabled) {		
-  		touchStartEvent = 'pointerdown';
-  		touchMoveEvent = 'pointermove';
-  		touchEndEvent = 'pointerup';
-  	} else if (window.navigator.msPointerEnabled) {
-  		touchStartEvent = 'MSPointerDown';
-  		touchMoveEvent = 'MSPointerMove';
-  		touchEndEvent = 'MSPointerUp';
-  	} else {
-  		touchStartEvent = 'touchstart';
-  		touchMoveEvent = 'touchmove';
-  		touchEndEvent = 'touchend';
+    var touchStartEvent, touchMoveEvent, touchEndEvent;
+    if (window.navigator.pointerEnabled) {		
+      touchStartEvent = 'pointerdown';
+      touchMoveEvent = 'pointermove';
+      touchEndEvent = 'pointerup';
+    } else if (window.navigator.msPointerEnabled) {
+      touchStartEvent = 'MSPointerDown';
+      touchMoveEvent = 'MSPointerMove';
+      touchEndEvent = 'MSPointerUp';
+    } else {
+      touchStartEvent = 'touchstart';
+      touchMoveEvent = 'touchmove';
+      touchEndEvent = 'touchend';
   	}
   	
-  	var mouseStartEvent = 'mousedown';
-  	var mouseMoveEvent = 'mousemove';
-  	var mouseEndEvent = 'mouseup';
+    var mouseStartEvent = 'mousedown';
+    var mouseMoveEvent = 'mousemove';
+    var mouseEndEvent = 'mouseup';
 	
     // utilities
     var noop = function() {}; // simple no operation function
