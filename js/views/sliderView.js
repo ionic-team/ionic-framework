@@ -278,11 +278,11 @@ ionic.views.Slider = ionic.views.View.inherit({
 
         switch (event.type) {
           case touchStartEvent: this.start(event); break;
-		      case mouseStartEvent: this.start(event); break;
+          case mouseStartEvent: this.start(event); break;
           case touchMoveEvent: this.touchmove(event); break;
-		      case mouseMoveEvent: this.touchmove(event); break;
+          case mouseMoveEvent: this.touchmove(event); break;
           case touchEndEvent: offloadFn(this.end(event)); break;
-		      case mouseEndEvent: offloadFn(this.end(event)); break;
+          case mouseEndEvent: offloadFn(this.end(event)); break;
           case 'webkitTransitionEnd':
           case 'msTransitionEnd':
           case 'oTransitionEnd':
