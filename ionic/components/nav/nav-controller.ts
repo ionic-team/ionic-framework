@@ -699,24 +699,18 @@ export class NavController extends Ion {
       return done();
     }
 
-    function loaded() {
-      // this ViewController instance has finished loading
-      try {
-        viewCtrl.loaded();
-      } catch (e) {
-        console.error(e);
-      }
-      done();
-    }
-
     // get the pane the NavController wants to use
     // the pane is where all this content will be placed into
     this.loadPage(viewCtrl, null, () => {
 
       if (viewCtrl.onReady) {
-        viewCtrl.onReady(loaded);
+        viewCtrl.onReady(() => {
+          viewCtrl.loaded();
+          done();
+        });
       } else {
-        loaded();
+        viewCtrl.loaded();
+        done();
       }
 
     });

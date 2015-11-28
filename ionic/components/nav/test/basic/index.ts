@@ -63,6 +63,12 @@ class FirstPage {
     }
   }
 
+  onPageLoaded() {
+    console.log('onPageLoaded');
+    var meNoWorky = true;
+    meNoWorky(helloIsItMeYoureLookingFor);
+  }
+
   setPages() {
     let items = [
       PrimaryHeaderPage

@@ -157,7 +157,7 @@ export class ViewController {
   loaded() {
     this._loaded = true;
     if (!this.shouldDestroy) {
-      this.instance.onPageLoaded && this.instance.onPageLoaded();
+      ctrlFn(this, 'onPageLoaded');
     }
   }
 
@@ -166,7 +166,7 @@ export class ViewController {
    */
   willEnter() {
     if (!this.shouldDestroy) {
-      this.instance.onPageWillEnter && this.instance.onPageWillEnter();
+      ctrlFn(this, 'onPageWillEnter');
     }
   }
 
@@ -177,14 +177,14 @@ export class ViewController {
   didEnter() {
     let navbar = this.getNavbar();
     navbar && navbar.didEnter();
-    this.instance.onPageDidEnter && this.instance.onPageDidEnter();
+    ctrlFn(this, 'onPageDidEnter');
   }
 
   /**
    * The view has is about to leave and no longer be the active view.
    */
   willLeave() {
-    this.instance.onPageWillLeave && this.instance.onPageWillLeave();
+    ctrlFn(this, 'onPageWillLeave');
   }
 
   /**
@@ -192,21 +192,31 @@ export class ViewController {
    * will fire, whether it is cached or unloaded.
    */
   didLeave() {
-    this.instance.onPageDidLeave && this.instance.onPageDidLeave();
+    ctrlFn(this, 'onPageDidLeave');
   }
 
   /**
    * The view is about to be destroyed and have its elements removed.
    */
   willUnload() {
-    this.instance.onPageWillUnload && this.instance.onPageWillUnload();
+    ctrlFn(this, 'onPageWillUnload');
   }
 
   /**
    * The view has been destroyed and its elements have been removed.
    */
   didUnload() {
-    this.instance.onPageDidUnload && this.instance.onPageDidUnload();
+    ctrlFn(this, 'onPageDidUnload');
   }
 
+}
+
+function ctrlFn(viewCtrl, fnName) {
+  if (viewCtrl.instance && viewCtrl.instance[fnName]) {
+    try {
+      viewCtrl.instance[fnName]();
+    } catch(e) {
+      console.error(fnName + ': ' + e.message);
+    }
+  }
 }
