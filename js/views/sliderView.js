@@ -296,6 +296,11 @@ ionic.views.Slider = ionic.views.View.inherit({
       },
       start: function(event) {
 
+        // prevent to start if there is no valid event
+        if (!event.touches) {
+          return;
+        }
+
         var touches = event.touches[0];
 
         // measure start values
@@ -328,9 +333,11 @@ ionic.views.Slider = ionic.views.View.inherit({
       },
       touchmove: function(event) {
 
+        // ensure there is a valid event
         // ensure swiping with one touch and not pinching
         // ensure sliding is enabled
-        if (event.touches.length > 1 ||
+        if (!event.touches ||
+            event.touches.length > 1 ||
             event.scale && event.scale !== 1 ||
             slider.slideIsDisabled) {
           return;
