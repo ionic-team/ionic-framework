@@ -32,8 +32,9 @@ class SignIn {
   }
 
   push() {
-    this.nav.push(TabsPage);
-    //this.keyboard.close();
+    setTimeout(() => {
+      this.nav.setRoot(TabsPage, null, { animate: true });
+    }, 1000);
   }
 }
 
