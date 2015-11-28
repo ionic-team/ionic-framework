@@ -233,10 +233,18 @@ class AnotherPage {
 
 @App({
   pages: [FirstPage, FullPage, PrimaryHeaderPage, AnotherPage],
-  template: `<ion-nav [root]="root"></ion-nav>`
+  template: `<ion-nav [root]="root"></ion-nav>`,
+  host: {
+    '[class.is-change-detecting]': 'isChangeDetecting'
+  }
 })
 class E2EApp {
   constructor() {
     this.root = FirstPage;
+  }
+
+  get isChangeDetecting() {
+    console.log('isChangeDetecting');
+    return true;
   }
 }

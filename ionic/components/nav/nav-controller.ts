@@ -1,4 +1,4 @@
-import {Compiler, ElementRef, Injector, provide, NgZone, DynamicComponentLoader, AppViewManager, Renderer} from 'angular2/angular2';
+import {ChangeDetectorRef, Compiler, ElementRef, Injector, provide, NgZone, DynamicComponentLoader, AppViewManager, Renderer} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
@@ -107,7 +107,8 @@ export class NavController extends Ion {
     loader: DynamicComponentLoader,
     viewManager: AppViewManager,
     zone: NgZone,
-    renderer: Renderer
+    renderer: Renderer,
+    cd: ChangeDetectorRef
   ) {
     super(elementRef, config);
 
@@ -121,6 +122,7 @@ export class NavController extends Ion {
     this._viewManager = viewManager;
     this._zone = zone;
     this._renderer = renderer;
+    this._cd = cd;
 
     this._views = [];
     this._trnsTime = 0;
@@ -579,7 +581,6 @@ export class NavController extends Ion {
    * @returns {any} TODO
    */
   _transition(enteringView, leavingView, opts, done) {
-    console.debug('_transition', enteringView, leavingView, opts);
     let self = this;
 
     if (enteringView === leavingView) {
@@ -594,7 +595,7 @@ export class NavController extends Ion {
     }
 
     if (!enteringView) {
-      // if not entering view then create a bogus one
+      // if no entering view then create a bogus one
       enteringView = new ViewController()
       enteringView.loaded();
     }
@@ -640,6 +641,13 @@ export class NavController extends Ion {
         self.app.setEnabled(enableApp, duration);
         self.setTransitioning(!enableApp, duration);
 
+        if (!enableApp) {
+          // do a quick check for changes
+          // then detach the change detection during a transition
+          self._cd.detectChanges();
+          self._cd.detach();
+        }
+
         if (opts.pageType) {
           transAnimation.before.addClass(opts.pageType);
         }
@@ -658,10 +666,20 @@ export class NavController extends Ion {
             leavingView.didLeave();
           }
 
-          // all done!
+          // reattach the change detection
+          self._cd.reattach();
+
           self._zone.run(() => {
-            self._transComplete();
-            done(enteringView);
+            if (self.keyboard.isOpen()) {
+              self.keyboard.onClose(() => {
+                self._transComplete();
+                done(enteringView);
+              }, 32);
+
+            } else {
+              self._transComplete();
+              done(enteringView);
+            }
           });
         });
 
@@ -669,15 +687,7 @@ export class NavController extends Ion {
 
     }
 
-    // wait for the new view to complete setup
-    if (self.keyboard.isOpen()) {
-      self._stage(enteringView, () => {
-        self.keyboard.onClose(beginTransition, 64);
-      });
-
-    } else {
-      self._stage(enteringView, beginTransition);
-    }
+    self._stage(enteringView, beginTransition);
   }
 
   /**
