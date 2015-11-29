@@ -104,11 +104,13 @@ export class Tab extends NavController {
         if (!this._loaded) {
           let opts = {
             animate: false,
-            preload: true
+            preload: true,
+            postLoad: (viewCtrl) => {
+              let navbar = viewCtrl.getNavbar();
+              navbar && navbar.setHidden(true);
+            }
           };
-          this.load(opts, () => {
-            this.hideNavbars(true);
-          });
+          this.load(opts);
         }
       }, 1000 * this.index);
     }
@@ -130,7 +132,7 @@ export class Tab extends NavController {
   /**
    * @private
    */
-  loadPage(viewCtrl, navbarContainerRef, done) {
+  loadPage(viewCtrl, navbarContainerRef, opts, done) {
     // by default a page's navbar goes into the shared tab's navbar section
     navbarContainerRef = this.parent.navbarContainerRef;
 
@@ -141,7 +143,7 @@ export class Tab extends NavController {
       navbarContainerRef = null;
     }
 
-    super.loadPage(viewCtrl, navbarContainerRef, () => {
+    super.loadPage(viewCtrl, navbarContainerRef, opts, () => {
       if (viewCtrl.instance) {
         viewCtrl.instance._tabSubPage = isTabSubPage;
       }

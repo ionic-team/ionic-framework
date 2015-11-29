@@ -581,16 +581,14 @@ export class NavController extends Ion {
    * @returns {any} TODO
    */
   _transition(enteringView, leavingView, opts, done) {
-    let self = this;
-
     if (enteringView === leavingView) {
       return done(enteringView);
     }
 
     if (!opts.animation) {
-      opts.animation = self.config.get('pageTransition');
+      opts.animation = this.config.get('pageTransition');
     }
-    if (self.config.get('animate') === false) {
+    if (this.config.get('animate') === false) {
       opts.animate = false;
     }
 
@@ -600,100 +598,101 @@ export class NavController extends Ion {
       enteringView.loaded();
     }
 
-    function beginTransition() {
+    this._stage(enteringView, opts, () => {
       if (enteringView.shouldDestroy) {
         // already marked as a view that will be destroyed, don't continue
         return done(enteringView);
       }
 
-      self._zone.runOutsideAngular(() => {
-        self._setZIndex(enteringView, leavingView, opts.direction);
+      this._zone.runOutsideAngular(() => {
+        this._setZIndex(enteringView, leavingView, opts.direction);
 
         enteringView.shouldDestroy = false;
         enteringView.shouldCache = false;
 
-        if (!opts.preload) {
-          enteringView.willEnter();
-          leavingView.willLeave();
-        }
-
-        // set that the new view pushed on the stack is staged to be entering/leaving
-        // staged state is important for the transition to find the correct view
-        enteringView.state = STAGED_ENTERING_STATE;
-        leavingView.state = STAGED_LEAVING_STATE;
-
-        // init the transition animation
-        opts.renderDelay = opts.transitionDelay || self.config.get('pageTransitionDelay');
-
-        let transAnimation = Animation.createTransition(self._getStagedEntering(),
-                                                        self._getStagedLeaving(),
-                                                        opts);
-        if (opts.animate === false) {
-          // force it to not animate the elements, just apply the "to" styles
-          transAnimation.clearDuration();
-          transAnimation.duration(0);
-        }
-
-        let duration = transAnimation.duration();
-        let enableApp = (duration < 64);
-        // block any clicks during the transition and provide a
-        // fallback to remove the clickblock if something goes wrong
-        self.app.setEnabled(enableApp, duration);
-        self.setTransitioning(!enableApp, duration);
-
-        if (!enableApp) {
-          // do a quick check for changes
-          // then detach the change detection during a transition
-          self._cd.detectChanges();
-          self._cd.detach();
-        }
-
-        if (opts.pageType) {
-          transAnimation.before.addClass(opts.pageType);
-        }
-
-        // start the transition
-        transAnimation.play(() => {
-          // transition has completed, update each view's state
-          enteringView.state = ACTIVE_STATE;
-          leavingView.state = CACHED_STATE;
-
-          // dispose any views that shouldn't stay around
-          transAnimation.dispose();
+        this._postRender(enteringView, opts, () => {
 
           if (!opts.preload) {
-            enteringView.didEnter();
-            leavingView.didLeave();
+            enteringView.willEnter();
+            leavingView.willLeave();
           }
 
-          // reattach the change detection
-          self._cd.reattach();
+          // set that the new view pushed on the stack is staged to be entering/leaving
+          // staged state is important for the transition to find the correct view
+          enteringView.state = STAGED_ENTERING_STATE;
+          leavingView.state = STAGED_LEAVING_STATE;
 
-          self._zone.run(() => {
-            if (self.keyboard.isOpen()) {
-              self.keyboard.onClose(() => {
-                self._transComplete();
-                done(enteringView);
-              }, 32);
+          // init the transition animation
+          opts.renderDelay = opts.transitionDelay || this.config.get('pageTransitionDelay');
 
-            } else {
-              self._transComplete();
-              done(enteringView);
+          let transAnimation = Animation.createTransition(this._getStagedEntering(),
+                                                          this._getStagedLeaving(),
+                                                          opts);
+          if (opts.animate === false) {
+            // force it to not animate the elements, just apply the "to" styles
+            transAnimation.clearDuration();
+            transAnimation.duration(0);
+          }
+
+          let duration = transAnimation.duration();
+          let enableApp = (duration < 64);
+          // block any clicks during the transition and provide a
+          // fallback to remove the clickblock if something goes wrong
+          this.app.setEnabled(enableApp, duration);
+          this.setTransitioning(!enableApp, duration);
+
+          if (!enableApp) {
+            // do a quick check for changes
+            // then detach the change detection during a transition
+            this._cd.detectChanges();
+            this._cd.detach();
+          }
+
+          if (opts.pageType) {
+            transAnimation.before.addClass(opts.pageType);
+          }
+
+          // start the transition
+          transAnimation.play(() => {
+            // transition has completed, update each view's state
+            enteringView.state = ACTIVE_STATE;
+            leavingView.state = CACHED_STATE;
+
+            // dispose any views that shouldn't stay around
+            transAnimation.dispose();
+
+            if (!opts.preload) {
+              enteringView.didEnter();
+              leavingView.didLeave();
             }
+
+            // reattach the change detection
+            this._cd.reattach();
+
+            this._zone.run(() => {
+              if (this.keyboard.isOpen()) {
+                this.keyboard.onClose(() => {
+                  this._transComplete();
+                  done(enteringView);
+                }, 32);
+
+              } else {
+                this._transComplete();
+                done(enteringView);
+              }
+            });
           });
         });
 
       });
 
-    }
-
-    self._stage(enteringView, beginTransition);
+    });
   }
 
   /**
    * @private
    */
-  _stage(viewCtrl, done) {
+  _stage(viewCtrl, opts, done) {
     if (viewCtrl.isLoaded() || viewCtrl.shouldDestroy) {
       // already compiled this view
       return done();
@@ -701,22 +700,21 @@ export class NavController extends Ion {
 
     // get the pane the NavController wants to use
     // the pane is where all this content will be placed into
-    this.loadPage(viewCtrl, null, () => {
-
+    this.loadPage(viewCtrl, null, opts, () => {
       if (viewCtrl.onReady) {
         viewCtrl.onReady(() => {
           viewCtrl.loaded();
           done();
         });
+
       } else {
         viewCtrl.loaded();
         done();
       }
-
     });
   }
 
-  loadPage(viewCtrl, navbarContainerRef, done) {
+  loadPage(viewCtrl, navbarContainerRef, opts, done) {
     let providers = this.providers.concat(Injector.resolve([
       provide(ViewController, {useValue: viewCtrl}),
       provide(NavParams, {useValue: viewCtrl.params})
@@ -756,6 +754,8 @@ export class NavController extends Ion {
         });
       }
 
+      opts.postLoad && opts.postLoad(viewCtrl);
+
       if (this._views.length === 1) {
         this._zone.runOutsideAngular(() => {
           rafFrames(38, () => {
@@ -766,6 +766,17 @@ export class NavController extends Ion {
 
       done(viewCtrl);
     });
+  }
+
+  _postRender(enteringView, opts, done) {
+    enteringView.postRender();
+
+    if (opts.animate === false) {
+      done();
+
+    } else {
+      rafFrames(2, done);
+    }
   }
 
   _setZIndex(enteringView, leavingView, direction) {
@@ -841,7 +852,7 @@ export class NavController extends Ion {
     enteringView.willEnter();
 
     // wait for the new view to complete setup
-    enteringView._stage(() => {
+    enteringView._stage(enteringView, {}, () => {
 
       this._zone.runOutsideAngular(() => {
         // set that the new view pushed on the stack is staged to be entering/leaving

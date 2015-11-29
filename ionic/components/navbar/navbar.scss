@@ -6,6 +6,11 @@
 
 ion-navbar.toolbar {
   display: flex;
+  transform: translate3d(-9999px, -9999px, 0);
+}
+
+ion-navbar.toolbar.show-navbar {
+  transform: none;
 }
 
 .back-button {
