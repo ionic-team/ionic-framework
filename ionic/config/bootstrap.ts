@@ -17,7 +17,8 @@ import {Translate} from '../translation/translate';
 import {ClickBlock} from '../util/click-block';
 import {FeatureDetect} from '../util/feature-detect';
 import {initTapClick} from '../components/tap-click/tap-click';
-import * as dom from '../util/dom';
+import {ClickBlock} from '../util/click-block';
+import {ready, closest} from '../util/dom';
 
 
 export function ionicProviders(args={}) {
@@ -36,13 +37,15 @@ export function ionicProviders(args={}) {
   platform.load();
   config.setPlatform(platform);
 
-  let app = new IonicApp(config);
+  let clickBlock = new ClickBlock(config.get('clickBlock'));
+
+  let app = new IonicApp(config, clickBlock);
 
   let events = new Events();
   initTapClick(window, document, app, config);
   let featureDetect = new FeatureDetect();
 
-  setupDom(window, document, config, platform, featureDetect);
+  setupDom(window, document, config, platform, clickBlock, featureDetect);
   bindEvents(window, document, platform, events);
 
   // prepare the ready promise to fire....when ready
@@ -69,10 +72,10 @@ export function ionicProviders(args={}) {
 }
 
 
-function setupDom(window, document, config, platform, featureDetect) {
+function setupDom(window, document, config, platform, clickBlock, featureDetect) {
   let bodyEle = document.body;
   if (!bodyEle) {
-    return dom.ready(function() {
+    return ready(function() {
       applyBodyCss(document, config, platform);
     });
   }
@@ -104,6 +107,10 @@ function setupDom(window, document, config, platform, featureDetect) {
     bodyEle.classList.add('enable-hover');
   }
 
+  if (config.get('clickBlock')) {
+    clickBlock.enable();
+  }
+
   // run feature detection tests
   featureDetect.run(window, document);
 }
@@ -131,7 +138,7 @@ function bindEvents(window, document, platform, events) {
     var el = document.elementFromPoint(platform.width() / 2, platform.height() / 2);
     if(!el) { return; }
 
-    var content = dom.closest(el, 'scroll-content');
+    var content = closest(el, 'scroll-content');
     if(content) {
       var scrollTo = new ScrollTo(content);
       scrollTo.start(0, 0, 300, 0);

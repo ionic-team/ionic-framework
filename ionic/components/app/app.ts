@@ -1,7 +1,6 @@
 import {Title} from 'angular2/angular2';
 
 import {rafFrames} from '../../util/dom';
-import {ClickBlock} from '../../util/click-block';
 import {ScrollTo} from '../../animations/scroll-to';
 
 
@@ -11,11 +10,12 @@ import {ScrollTo} from '../../animations/scroll-to';
  */
 export class IonicApp {
 
-  constructor(config) {
+  constructor(config, clickBlock) {
     this._config = config;
     this._titleSrv = new Title();
     this._title = '';
     this._disTime = 0;
+    this._clickBlock = clickBlock;
 
     // Our component registry map
     this.components = {};
@@ -49,9 +49,7 @@ export class IonicApp {
    */
   setEnabled(isEnabled, fallback=700) {
     this._disTime = (isEnabled ? 0 : Date.now() + fallback);
-    if (this._config.get('clickBlock')) {
-      ClickBlock(!isEnabled, fallback + 100);
-    }
+    this._clickBlock.show(!isEnabled, fallback + 100);
   }
 
   /**

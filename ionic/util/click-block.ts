@@ -3,9 +3,31 @@ const DEFAULT_EXPIRE = 330;
 let cbEle, fallbackTimerId;
 let isShowing = false;
 
-function disableInput(ev) {
-  ev.preventDefault();
-  ev.stopPropagation();
+
+export class ClickBlock {
+
+  enable() {
+    cbEle = document.createElement('div');
+    cbEle.className = 'click-block';
+    document.body.appendChild(cbEle);
+    cbEle.addEventListener('touchmove', function(ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+    });
+    this._enabled = true;
+  }
+
+  show(shouldShow, expire) {
+    if (this._enabled) {
+      if (shouldShow) {
+        show(expire);
+
+      } else {
+        hide();
+      }
+    }
+  }
+
 }
 
 function show(expire) {
@@ -13,16 +35,8 @@ function show(expire) {
   fallbackTimerId = setTimeout(hide, expire || DEFAULT_EXPIRE);
 
   if (!isShowing) {
-    isShowing = true;
-    if (cbEle) {
-      cbEle.classList.add(CSS_CLICK_BLOCK);
-
-    } else {
-      cbEle = document.createElement('div');
-      cbEle.className = 'click-block ' + CSS_CLICK_BLOCK;
-      document.body.appendChild(cbEle);
-    }
-    cbEle.addEventListener('touchmove', disableInput);
+    cbEle.classList.add(CSS_CLICK_BLOCK);
+      isShowing = true;
   }
 }
 
@@ -31,10 +45,5 @@ function hide() {
   if (isShowing) {
     cbEle.classList.remove(CSS_CLICK_BLOCK);
     isShowing = false;
-    cbEle.removeEventListener('touchmove', disableInput);
   }
 }
-
-export let ClickBlock = function(shouldShow, expire) {
-  (shouldShow ? show : hide)(expire);
-};
