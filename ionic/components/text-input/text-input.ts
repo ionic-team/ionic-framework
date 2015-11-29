@@ -402,8 +402,8 @@ export class TextInput {
   selector: 'textarea,input[type=text],input[type=password],input[type=number],input[type=search],input[type=email],input[type=url],input[type=tel]',
   inputs: ['value'],
   host: {
-    '(focus)': 'wrapper.focusChange(true)',
-    '(blur)': 'wrapper.focusChange(false)',
+    '(focus)': 'focusChange(true)',
+    '(blur)': 'focusChange(false)',
     '(keyup)': 'onKeyup($event)'
   }
 })
@@ -428,12 +428,16 @@ export class TextInputElement {
     }
   }
 
-  onKeyup(ev) {
-    this.wrapper.hasValue(ev.target.value);
+  onInit() {
+    this.wrapper && this.wrapper.hasValue(this.value);
   }
 
-  onInit() {
-    this.wrapper.hasValue(this.value);
+  focusChange(changed) {
+    this.wrapper && this.wrapper.focusChange(changed);
+  }
+
+  onKeyup(ev) {
+    this.wrapper && this.wrapper.hasValue(ev.target.value);
   }
 
   labelledBy(val) {
