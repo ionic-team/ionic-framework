@@ -60,7 +60,7 @@ $toolbar-ios-title-font-size:               1.7rem !default;
     min-height: 3.2rem;
     line-height: 1;
     order: map-get($toolbar-order-ios, 'back-button');
-    overflow: inherit;
+    overflow: visible;
   }
 
   .back-button-icon {
