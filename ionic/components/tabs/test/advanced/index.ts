@@ -33,7 +33,7 @@ class SignIn {
 
   push() {
     setTimeout(() => {
-      this.nav.setRoot(TabsPage, null, { animate: true });
+      this.nav.push(TabsPage);
     }, 1000);
   }
 }

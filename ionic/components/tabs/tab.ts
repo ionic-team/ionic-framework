@@ -102,15 +102,14 @@ export class Tab extends NavController {
     } else if (this.parent.preloadTabs) {
       this._loadTimer = setTimeout(() => {
         if (!this._loaded) {
-          let opts = {
+          this.load({
             animate: false,
             preload: true,
             postLoad: (viewCtrl) => {
               let navbar = viewCtrl.getNavbar();
               navbar && navbar.setHidden(true);
             }
-          };
-          this.load(opts);
+          }, function(){});
         }
       }, 1000 * this.index);
     }

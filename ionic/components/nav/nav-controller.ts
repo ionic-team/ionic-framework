@@ -229,8 +229,7 @@ export class NavController extends Ion {
     }
 
     if (this.isTransitioning()) {
-      console.debug('nav controller actively transitioning');
-      return Promise.reject();
+      return Promise.reject('nav controller actively transitioning');
     }
 
     this.setTransitioning(true, 500);
@@ -301,12 +300,11 @@ export class NavController extends Ion {
    */
   pop(opts = {}) {
     if (!opts.animateFirst && !this.canGoBack()) {
-      return Promise.reject();
+      return Promise.reject('pop cannot go back');
     }
 
     if (this.isTransitioning()) {
-      console.debug('nav controller actively transitioning');
-      return Promise.reject();
+      return Promise.reject('nav controller actively transitioning';
     }
 
     this.setTransitioning(true, 500);
@@ -422,7 +420,7 @@ export class NavController extends Ion {
    */
   insert(index, componentType, params = {}, opts = {}) {
     if (!componentType || index < 0) {
-      return Promise.reject();
+      return Promise.reject('invalid insert');
     }
 
     // push it onto the end
@@ -464,7 +462,7 @@ export class NavController extends Ion {
    */
   remove(index, opts = {}) {
     if (index < 0 || index >= this._views.length) {
-      return Promise.reject("Index out of range");
+      return Promise.reject("index out of range");
     }
 
     let viewToRemove = this._views[index];

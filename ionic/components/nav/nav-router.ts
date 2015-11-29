@@ -51,7 +51,7 @@ export class NavRouter extends RouterOutlet {
 
     // prevent double navigations to the same view
     var lastView = this.nav.last();
-    if (lastView && lastView.componentType === componentType && lastView.params.data === nextInstruction.params) {
+    if (this.nav.isTransitioning() || lastView && lastView.componentType === componentType && lastView.params.data === nextInstruction.params) {
       return Promise.resolve();
     }
 
