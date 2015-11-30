@@ -1,6 +1,8 @@
 import {Component, bootstrap} from 'angular2/angular2'
+import {wtfLeave, wtfCreateScope} from 'angular2/angular2';
 
-import * as util from 'ionic/util';
+import {TapClick} from '../components/tap-click/tap-click';
+import {pascalCaseToDashCase} from '../util/util';
 import {ionicProviders} from './bootstrap';
 import {IONIC_DIRECTIVES} from './directives';
 
@@ -105,7 +107,7 @@ function appendConfig(cls, config) {
 
     // set the component "hostProperties", so the instance's
     // input value will be used to set the element's attribute
-    config.host['[attr.' + util.pascalCaseToDashCase(prop) + ']'] = prop;
+    config.host['[attr.' + pascalCaseToDashCase(prop) + ']'] = prop;
   }
 
   cls.delegates = config.delegates;
@@ -137,9 +139,10 @@ export function App(args={}) {
     // redefine with added annotations
     Reflect.defineMetadata('annotations', annotations, cls);
 
-    console.time('bootstrap');
-    bootstrap(cls, ionicProviders(args)).then(() => {
-      console.timeEnd('bootstrap');
+    let wtfScope = wtfCreateScope('IonicBootstrap')();
+    bootstrap(cls, ionicProviders(args)).then(appRef => {
+      let tc = appRef.injector.get(TapClick);
+      wtfLeave(wtfScope);
     });
 
     return cls;

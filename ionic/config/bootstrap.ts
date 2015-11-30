@@ -16,7 +16,7 @@ import {NavRegistry} from '../components/nav/nav-registry';
 import {Translate} from '../translation/translate';
 import {ClickBlock} from '../util/click-block';
 import {FeatureDetect} from '../util/feature-detect';
-import {initTapClick} from '../components/tap-click/tap-click';
+import {TapClick} from '../components/tap-click/tap-click';
 import {ClickBlock} from '../util/click-block';
 import {ready, closest} from '../util/dom';
 
@@ -42,7 +42,6 @@ export function ionicProviders(args={}) {
   let app = new IonicApp(config, clickBlock);
 
   let events = new Events();
-  initTapClick(window, document, app, config);
   let featureDetect = new FeatureDetect();
 
   setupDom(window, document, config, platform, clickBlock, featureDetect);
@@ -58,6 +57,7 @@ export function ionicProviders(args={}) {
     provide(FeatureDetect, {useValue: featureDetect}),
     provide(Events, {useValue: events}),
     provide(NavRegistry, {useValue: navRegistry}),
+    TapClick,
     Form,
     Keyboard,
     OverlayController,

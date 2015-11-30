@@ -1,183 +1,167 @@
-import {pointerCoord, hasPointerMoved, transitionEnd} from '../../util/dom';
+import {Injectable, NgZone} from 'angular2/angular2';
+
+import {IonicApp} from '../app/app';
+import {Config} from '../../config/config';
+import {pointerCoord, hasPointerMoved} from '../../util/dom';
 import {Activator} from './activator';
 import {RippleActivator} from './ripple';
-
-
-let startCoord = null;
-let pointerTolerance = 4;
-let lastTouch = 0;
-let lastActivated = 0;
-let disableNativeClickUntil = 0;
-let disableNativeClickAmount = 3000;
-let activator = null;
-let isTapPolyfill = false;
-let app = null;
-let win = null;
-let doc = null;
 
 
 /**
  * @private
  */
-export function initTapClick(windowInstance, documentInstance, appInstance, config) {
-  win = windowInstance;
-  doc = documentInstance;
-  app = appInstance;
+@Injectable()
+export class TapClick {
+  constructor(app: IonicApp, config: Config, zone: NgZone) {
+    this.app = app;
+    this.zone = zone;
 
-  if (config.get('activator') == 'ripple') {
-    activator = new RippleActivator(app, config);
+    this.lastTouch = 0;
+    this.disableClick = 0;
+    this.lastActivated = 0;
 
-  } else if (config.get('activator') == 'highlight') {
-    activator = new Activator(app, config);
+    if (config.get('activator') == 'ripple') {
+      this.activator = new RippleActivator(app, config);
+
+    } else if (config.get('activator') == 'highlight') {
+      this.activator = new Activator(app, config);
+    }
+
+    this.usePolyfill = (config.get('tapPolyfill') === true);
+
+    zone.runOutsideAngular(() => {
+      addListener('click', this.click.bind(this), true);
+
+      addListener('touchstart', this.touchStart.bind(this));
+      addListener('touchend', this.touchEnd.bind(this));
+      addListener('touchcancel', this.pointerCancel.bind(this));
+
+      addListener('mousedown', this.mouseDown.bind(this), true);
+      addListener('mouseup', this.mouseUp.bind(this), true);
+    });
   }
 
-  isTapPolyfill = (config.get('tapPolyfill') === true);
+  touchStart(ev) {
+    this.lastTouch = Date.now();
+    this.pointerStart(ev);
+  }
 
-  addListener('click', click, true);
+  touchEnd(ev) {
+    this.lastTouch = Date.now();
 
-  addListener('touchstart', touchStart);
-  addListener('touchend', touchEnd);
-  addListener('touchcancel', touchCancel);
+    if (this.usePolyfill && this.startCoord && this.app.isEnabled()) {
+      let endCoord = pointerCoord(ev);
 
-  addListener('mousedown', mouseDown, true);
-  addListener('mouseup', mouseUp, true);
-}
+      if (!hasPointerMoved(POINTER_TOLERANCE, this.startCoord, endCoord)) {
+        console.debug('create click from touch');
 
+        // prevent native mouse click events for XX amount of time
+        this.disableClick = this.lastTouch + DISABLE_NATIVE_CLICK_AMOUNT;
 
-function touchStart(ev) {
-  touchAction();
-  pointerStart(ev);
-}
+        // manually dispatch the mouse click event
+        let clickEvent = document.createEvent('MouseEvents');
+        clickEvent.initMouseEvent('click', true, true, window, 1, 0, 0, endCoord.x, endCoord.y, false, false, false, false, 0, null);
+        clickEvent.isIonicTap = true;
+        ev.target.dispatchEvent(clickEvent);
+      }
+    }
 
-function touchEnd(ev) {
-  touchAction();
+    this.pointerEnd(ev);
+  }
 
-  if (isTapPolyfill && startCoord && app.isEnabled()) {
-    let endCoord = pointerCoord(ev);
+  mouseDown(ev) {
+    if (this.isDisabledNativeClick()) {
+      console.debug('mouseDown prevent', ev.target.tagName);
+      // does not prevent default on purpose
+      // so native blur events from inputs can happen
+      ev.stopPropagation();
 
-    if (!hasPointerMoved(pointerTolerance, startCoord, endCoord)) {
-      console.debug('create click from touch');
-
-      disableNativeClickUntil = Date.now() + disableNativeClickAmount;
-
-      let clickEvent = doc.createEvent('MouseEvents');
-      clickEvent.initMouseEvent('click', true, true, win, 1, 0, 0, endCoord.x, endCoord.y, false, false, false, false, 0, null);
-      clickEvent.isIonicTap = true;
-      ev.target.dispatchEvent(clickEvent);
+    } else if (this.lastTouch + DISABLE_NATIVE_CLICK_AMOUNT < Date.now()) {
+      this.pointerStart(ev);
     }
   }
 
-  pointerEnd(ev);
-}
-
-function touchCancel(ev) {
-  touchAction();
-  pointerCancel(ev);
-}
-
-function mouseDown(ev) {
-  if (isDisabledNativeClick()) {
-    console.debug('mouseDown prevent', ev.target.tagName);
-    // does not prevent default on purpose
-    // so native blur events from inputs can happen
-    ev.stopPropagation();
-
-  } else if (lastTouch + disableNativeClickAmount < Date.now()) {
-    pointerStart(ev);
-  }
-}
-
-function mouseUp(ev) {
-  if (isDisabledNativeClick()) {
-    console.debug('mouseUp prevent', ev.target.tagName);
-    ev.preventDefault();
-    ev.stopPropagation();
-  }
-
-  if (lastTouch + disableNativeClickAmount < Date.now()) {
-    pointerEnd(ev);
-  }
-}
-
-function pointerStart(ev) {
-  let activatableEle = getActivatableTarget(ev.target);
-
-  if (activatableEle) {
-    startCoord = pointerCoord(ev);
-
-    let now = Date.now();
-    if (lastActivated + 150 < now) {
-      activator && activator.downAction(ev, activatableEle, startCoord.x, startCoord.y);
-      lastActivated = now;
+  mouseUp(ev) {
+    if (this.isDisabledNativeClick()) {
+      console.debug('mouseUp prevent', ev.target.tagName);
+      ev.preventDefault();
+      ev.stopPropagation();
     }
 
-    moveListeners(true);
-
-  } else {
-    startCoord = null;
-  }
-}
-
-function pointerEnd(ev) {
-  moveListeners(false);
-  activator && activator.upAction();
-}
-
-function pointerMove(ev) {
-  let moveCoord = pointerCoord(ev);
-
-  if ( hasPointerMoved(10, startCoord, moveCoord) ) {
-    pointerCancel(ev);
-  }
-}
-
-function pointerCancel(ev) {
-  console.debug('pointerCancel from', ev.type);
-  activator && activator.clearState();
-  moveListeners(false);
-}
-
-function moveListeners(shouldAdd) {
-  if (shouldAdd) {
-    if (isTapPolyfill) {
-      addListener('touchmove', pointerMove);
+    if (this.lastTouch + DISABLE_NATIVE_CLICK_AMOUNT < Date.now()) {
+      this.pointerEnd(ev);
     }
-    addListener('mousemove', pointerMove);
+  }
 
-  } else {
-    if (isTapPolyfill) {
-      removeListener('touchmove', pointerMove);
+  pointerStart(ev) {
+    let activatableEle = getActivatableTarget(ev.target);
+
+    if (activatableEle) {
+      this.startCoord = pointerCoord(ev);
+
+      let now = Date.now();
+      if (this.lastActivated + 150 < now) {
+        this.activator && this.activator.downAction(ev, activatableEle, this.startCoord.x, this.startCoord.y);
+        this.lastActivated = now;
+      }
+
+      this.moveListeners(true);
+
+    } else {
+      this.startCoord = null;
     }
-    removeListener('mousemove', pointerMove);
-  }
-}
-
-function setDisableNativeClick() {
-  if (isTapPolyfill) {
-    disableNativeClickTime = Date.now() + disableNativeClickLimit;
-  }
-}
-
-function isDisabledNativeClick() {
-  return disableNativeClickUntil > Date.now();
-}
-
-function click(ev) {
-  let preventReason = null;
-
-  if (!app.isEnabled()) {
-    preventReason = 'appDisabled';
-
-  } else if (!ev.isIonicTap && isDisabledNativeClick()) {
-    preventReason = 'nativeClick';
   }
 
-  if (preventReason !== null) {
-    console.debug('click prevent', preventReason);
-    ev.preventDefault();
-    ev.stopPropagation();
+  pointerEnd(ev) {
+    this.moveListeners(false);
+    this.activator && this.activator.upAction();
   }
+
+  pointerMove(ev) {
+    if ( hasPointerMoved(POINTER_MOVE_UNTIL_CANCEL, this.startCoord, pointerCoord(ev)) ) {
+      this.pointerCancel(ev);
+    }
+  }
+
+  pointerCancel(ev) {
+    console.debug('pointerCancel from', ev.type);
+    this.activator && this.activator.clearState();
+    this.moveListeners(false);
+  }
+
+  moveListeners(shouldAdd) {
+    this.zone.runOutsideAngular(() => {
+      if (shouldAdd) {
+        addListener(this.usePolyfill ? 'touchmove' : 'mousemove', this.pointerMove.bind(this));
+      } else {
+        removeListener(this.usePolyfill ? 'touchmove' : 'mousemove', this.pointerMove.bind(this));
+      }
+    });
+  }
+
+  click(ev) {
+    let preventReason = null;
+
+    if (!this.app.isEnabled()) {
+      preventReason = 'appDisabled';
+
+    } else if (!ev.isIonicTap && this.isDisabledNativeClick()) {
+      preventReason = 'nativeClick';
+    }
+
+    if (preventReason !== null) {
+      console.debug('click prevent', preventReason);
+      ev.preventDefault();
+      ev.stopPropagation();
+    }
+  }
+
+  isDisabledNativeClick() {
+    return this.disableClick > Date.now();
+  }
+
 }
+
 
 function getActivatableTarget(ele) {
   let targetEle = ele;
@@ -207,17 +191,16 @@ export function isActivatable(ele) {
   return false;
 }
 
-function touchAction() {
-  lastTouch = Date.now();
-}
-
 function addListener(type, listener, useCapture) {
-  doc.addEventListener(type, listener, useCapture);
+  document.addEventListener(type, listener, useCapture);
 }
 
 function removeListener(type, listener) {
-  doc.removeEventListener(type, listener);
+  document.removeEventListener(type, listener);
 }
 
 const ACTIVATABLE_ELEMENTS = /^(A|BUTTON)$/;
 const ACTIVATABLE_ATTRIBUTES = /tappable/;
+const POINTER_TOLERANCE = 4;
+const POINTER_MOVE_UNTIL_CANCEL = 10;
+const DISABLE_NATIVE_CLICK_AMOUNT = 2500;
