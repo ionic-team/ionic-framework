@@ -126,13 +126,13 @@ defined in <$ githubViewLink(doc) $>
 <@ endif -@>
 
 <@- if doc.members and doc.members.length @>
-## Members
+<h2>Members</h2>
 <@- for method in doc.members @>
 
 <div id="<$ method.name $>"></div>
-<h2>
+<h3>
   <$ functionSyntax(method) $>
-</h2>
+</h3>
 
 <$ method.description $>
 
@@ -141,8 +141,9 @@ defined in <$ githubViewLink(doc) $>
 <@ endif @>
 
 <@ if method.this @>
-#### Method's `this`
+<h4> Method's `this`
 <$ method.this $>
+</h4>
 <@ endif @>
 
 <@ if method.returns @>
