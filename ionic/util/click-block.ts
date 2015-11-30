@@ -7,8 +7,7 @@ let isShowing = false;
 export class ClickBlock {
 
   enable() {
-    cbEle = document.createElement('div');
-    cbEle.className = 'click-block';
+    cbEle = document.createElement('click-block');
     document.body.appendChild(cbEle);
     cbEle.addEventListener('touchmove', function(ev) {
       ev.preventDefault();

@@ -161,7 +161,8 @@ backdrop {
 // Fill the screen to block clicks (a better pointer-events: none)
 // to avoid full-page reflows and paints which can cause flickers
 
-.click-block {
+click-block {
+  display: block;
   position: absolute;
   top: 0;
   right: 0;
@@ -169,10 +170,11 @@ backdrop {
   left: 0;
   opacity: 0;
   z-index: $z-index-click-block;
-  transform: translate3d(-9999px, 0px, 0px);;
+  transform: translate3d(0px, -100%, 0px);
+  transform: translate3d(0px, calc(-100% + 1px), 0px);
 
-  //background: red;
-  //opacity: .3;
+  // background: red;
+  // opacity: .3;
 }
 
 .click-block-active {
