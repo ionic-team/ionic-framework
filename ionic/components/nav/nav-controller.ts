@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Compiler, ElementRef, Injector, provide, NgZone, DynamicComponentLoader, AppViewManager, Renderer} from 'angular2/angular2';
+import {Compiler, ElementRef, Injector, provide, NgZone, DynamicComponentLoader, AppViewManager, Renderer} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
@@ -107,8 +107,7 @@ export class NavController extends Ion {
     loader: DynamicComponentLoader,
     viewManager: AppViewManager,
     zone: NgZone,
-    renderer: Renderer,
-    cd: ChangeDetectorRef
+    renderer: Renderer
   ) {
     super(elementRef, config);
 
@@ -122,7 +121,6 @@ export class NavController extends Ion {
     this._viewManager = viewManager;
     this._zone = zone;
     this._renderer = renderer;
-    this._cd = cd;
 
     this._views = [];
     this._trnsTime = 0;
@@ -639,13 +637,6 @@ export class NavController extends Ion {
           this.app.setEnabled(enableApp, duration);
           this.setTransitioning(!enableApp, duration);
 
-          if (!enableApp) {
-            // do a quick check for changes
-            // then detach the change detection during a transition
-            this._cd.detectChanges();
-            this._cd.detach();
-          }
-
           if (opts.pageType) {
             transAnimation.before.addClass(opts.pageType);
           }
@@ -663,9 +654,6 @@ export class NavController extends Ion {
               enteringView.didEnter();
               leavingView.didLeave();
             }
-
-            // reattach the change detection
-            this._cd.reattach();
 
             this._zone.run(() => {
               if (this.keyboard.isOpen()) {

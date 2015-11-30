@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ElementRef, Compiler, DynamicComponentLoader, AppViewManager, NgZone, Renderer} from 'angular2/angular2';
+import {Component, ElementRef, Compiler, DynamicComponentLoader, AppViewManager, NgZone, Renderer} from 'angular2/angular2';
 
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
@@ -23,11 +23,10 @@ export class OverlayNav extends NavController {
     loader: DynamicComponentLoader,
     viewManager: AppViewManager,
     zone: NgZone,
-    renderer: Renderer,
-    cd: ChangeDetectorRef
+    renderer: Renderer
   ) {
     super(null, app, config, keyboard, elementRef, compiler,
-          loader, viewManager, zone, renderer, cd);
+          loader, viewManager, zone, renderer);
 
     if (overlayCtrl.anchor) {
       throw ('An app should only have one <ion-overlay></ion-overlay>');

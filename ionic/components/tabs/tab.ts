@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Directive, Host, ElementRef, Compiler, DynamicComponentLoader, AppViewManager, NgZone, Renderer} from 'angular2/angular2';
+import {Component, Directive, Host, ElementRef, Compiler, DynamicComponentLoader, AppViewManager, NgZone, Renderer} from 'angular2/angular2';
 
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
@@ -79,12 +79,11 @@ export class Tab extends NavController {
     loader: DynamicComponentLoader,
     viewManager: AppViewManager,
     zone: NgZone,
-    renderer: Renderer,
-    cd: ChangeDetectorRef
+    renderer: Renderer
   ) {
     // A Tab is a NavController for its child pages
     super(parentTabs, app, config, keyboard, elementRef, compiler,
-          loader, viewManager, zone, renderer, cd);
+          loader, viewManager, zone, renderer);
 
     this._isInitial = parentTabs.add(this);
 
