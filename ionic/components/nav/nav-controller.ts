@@ -1,4 +1,5 @@
 import {Compiler, ElementRef, Injector, provide, NgZone, DynamicComponentLoader, AppViewManager, Renderer} from 'angular2/angular2';
+import {wtfLeave, wtfCreateScope} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
@@ -581,6 +582,8 @@ export class NavController extends Ion {
       return done(enteringView);
     }
 
+    let wtfScope = wtfCreateScope('NavController#_transition()')();
+
     if (!opts.animation) {
       opts.animation = this.config.get('pageTransition');
     }
@@ -658,12 +661,12 @@ export class NavController extends Ion {
             this._zone.run(() => {
               if (this.keyboard.isOpen()) {
                 this.keyboard.onClose(() => {
-                  this._transComplete();
+                  this._transComplete(wtfScope);
                   done(enteringView);
                 }, 32);
 
               } else {
-                this._transComplete();
+                this._transComplete(wtfScope);
                 done(enteringView);
               }
             });
@@ -679,8 +682,11 @@ export class NavController extends Ion {
    * @private
    */
   _stage(viewCtrl, opts, done) {
+    let wtfScope = wtfCreateScope('NavController#_stage()')();
+
     if (viewCtrl.isLoaded() || viewCtrl.shouldDestroy) {
       // already compiled this view
+      wtfLeave(wtfScope);
       return done();
     }
 
@@ -690,25 +696,30 @@ export class NavController extends Ion {
       if (viewCtrl.onReady) {
         viewCtrl.onReady(() => {
           viewCtrl.loaded();
+          wtfLeave(wtfScope);
           done();
         });
 
       } else {
         viewCtrl.loaded();
+        wtfLeave(wtfScope);
         done();
       }
     });
   }
 
+  /**
+   * @private
+   */
   loadPage(viewCtrl, navbarContainerRef, opts, done) {
+    let wtfScope = wtfCreateScope('NavController#loadPage()')();
+
     let providers = this.providers.concat(Injector.resolve([
       provide(ViewController, {useValue: viewCtrl}),
       provide(NavParams, {useValue: viewCtrl.params})
     ]));
 
-    console.time('loadPage ' + viewCtrl.componentType.name + ': loadIntoLocation');
     this._loader.loadIntoLocation(viewCtrl.componentType, this.elementRef, 'contents', providers).then(componentRef => {
-      console.timeEnd('loadPage ' + viewCtrl.componentType.name + ': loadIntoLocation');
 
       viewCtrl.addDestroy(() => {
         componentRef.dispose();
@@ -727,10 +738,7 @@ export class NavController extends Ion {
 
       let navbarTemplateRef = viewCtrl.getNavbarTemplateRef();
       if (navbarContainerRef && navbarTemplateRef) {
-
-        console.time('loadPage ' + viewCtrl.componentType.name + ': create navbar');
         let navbarView = navbarContainerRef.createEmbeddedView(navbarTemplateRef);
-        console.timeEnd('loadPage ' + viewCtrl.componentType.name + ': create navbar');
 
         viewCtrl.addDestroy(() => {
           let index = navbarContainerRef.indexOf(navbarView);
@@ -749,6 +757,8 @@ export class NavController extends Ion {
           });
         });
       }
+
+      wtfLeave(wtfScope);
 
       done(viewCtrl);
     });
@@ -806,7 +816,6 @@ export class NavController extends Ion {
 
   /**
    * @private
-   * TODO
    */
   swipeBackStart() {
     return;
@@ -857,8 +866,6 @@ export class NavController extends Ion {
 
   /**
    * @private
-   * TODO
-   * @param {TODO} progress  TODO
    */
   swipeBackProgress(value) {
     return;
@@ -874,8 +881,6 @@ export class NavController extends Ion {
 
   /**
    * @private
-   * @param {TODO} completeSwipeBack  Should the swipe back complete or not.
-   * @param {number} rate  How fast it closes
    */
   swipeBackEnd(completeSwipeBack, rate) {
     return;
@@ -938,7 +943,6 @@ export class NavController extends Ion {
 
   /**
    * @private
-   * TODO
    */
   _sbComplete() {
     return;
@@ -1007,7 +1011,7 @@ export class NavController extends Ion {
   /**
    * @private
    */
-  _transComplete() {
+  _transComplete(wtfScope) {
     this._views.forEach(view => {
       if (view) {
         if (view.shouldDestroy) {
@@ -1027,6 +1031,8 @@ export class NavController extends Ion {
     this._sbComplete();
 
     this._cleanup();
+
+    wtfScope && wtfLeave(wtfScope);
   }
 
   /**
@@ -1061,8 +1067,6 @@ export class NavController extends Ion {
 
   /**
    * @private
-   * @param {TODO} nbContainer  TODO
-   * @returns {TODO} TODO
    */
   navbarViewContainer(nbContainer) {
     if (nbContainer) {
