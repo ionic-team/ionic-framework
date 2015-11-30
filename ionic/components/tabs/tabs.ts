@@ -1,4 +1,5 @@
 import {Directive, ElementRef, Optional, Host, NgFor, NgIf, forwardRef, ViewContainerRef} from 'angular2/angular2';
+import {wtfLeave, wtfCreateScope} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {Attr} from '../app/id';
@@ -169,14 +170,14 @@ export class Tabs extends Ion {
       return Promise.reject();
     }
 
-    console.time('select tab ' + selectedTab.id);
-
     let deselectedTab = this.getSelected();
 
     if (selectedTab === deselectedTab) {
       // no change
       return this._touchActive(selectedTab);
     }
+
+    let wtfScope = wtfCreateScope('Tabs#select()')();
 
     let opts = {
       animate: false
@@ -205,8 +206,8 @@ export class Tabs extends Ion {
         this._onReady();
         this._onReady = null;
       }
-
-      console.timeEnd('select tab ' + selectedTab.id);
+      
+      wtfLeave(wtfScope);
     });
   }
 
