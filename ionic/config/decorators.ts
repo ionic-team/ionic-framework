@@ -115,9 +115,17 @@ function appendConfig(cls, config) {
 }
 
 /**
- * TODO
- */
+* @ngdoc service
+* @name App
+* @module ionic
+* @param {object} [config] - the app's [../Config](Config) object
+* @param {string} [template] - the template to use for the app root
+* @param {string} [templateUrl] - a relative URL pointing to the template to use for the app root
+* @description
+* App is an Ionic decorator that bootstraps an application. It can be passed a number of arguments, that act as global config variables for the app.
+*/
 export function App(args={}) {
+
   return function(cls) {
     // get current annotations
     let annotations = Reflect.getMetadata('annotations', cls) || [];
