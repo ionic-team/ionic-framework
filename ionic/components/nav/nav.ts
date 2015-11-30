@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Directive, ElementRef, Host, Optional, forwardRef, Inject, NgZone, Compiler, AppViewManager, DynamicComponentLoader, Renderer, ViewContainerRef} from 'angular2/angular2';
+import {Component, Directive, ElementRef, Host, Optional, forwardRef, Inject, NgZone, Compiler, AppViewManager, DynamicComponentLoader, Renderer, ViewContainerRef} from 'angular2/angular2';
 
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
@@ -120,11 +120,10 @@ export class Nav extends NavController {
     loader: DynamicComponentLoader,
     viewManager: AppViewManager,
     zone: NgZone,
-    renderer: Renderer,
-    cd: ChangeDetectorRef
+    renderer: Renderer
   ) {
     super(hostNavCtrl, app, config, keyboard, elementRef, compiler,
-          loader, viewManager, zone, renderer, cd);
+          loader, viewManager, zone, renderer);
 
     if (viewCtrl) {
       // an ion-nav can also act as an ion-page within a parent ion-nav
