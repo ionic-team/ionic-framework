@@ -1,6 +1,6 @@
 var config = require('../config.json');
 module.exports = function(gulp, flags) {
-  gulp.task('docs', ['docs.demos'], function() {
+  gulp.task('docs', [], function() {
     var Dgeni = require('dgeni');
     var semver = require('semver');
 
