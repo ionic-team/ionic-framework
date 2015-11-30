@@ -29,9 +29,10 @@ export class OverlayController {
           }
         }
 
-        viewCtrl.instance.close = (closeOpts={}) => {
+        viewCtrl.instance.close = (data, closeOpts={}) => {
           extend(opts, closeOpts);
           opts.animation = opts.leaveAnimation;
+          viewCtrl.instance.onClose && viewCtrl.instance.onClose(data);
           this.nav.pop(opts);
           document.removeEventListener('keyup', escape, true);
         };

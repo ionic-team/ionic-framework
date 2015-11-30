@@ -34,7 +34,14 @@ class E2EApp {
   }
 
   openToolbarModal() {
-    this.modal.open(ToolbarModal);
+    this.modal.open(ToolbarModal).then(modalRef => {
+      // modal has finished opening
+      // modalRef is a reference to the modal instance
+      modalRef.onClose = (modalData) => {
+        // somehow modalRef.close(modalData) was called w/ modalData
+        console.log('modalRef.onClose', modalData)
+      }
+    });
   }
 
   openModalChildNav() {
@@ -57,16 +64,12 @@ class E2EApp {
   template: `
     <h3>Pass Params</h3>
     <p>User Id: {{userId}}</p>
-    <p><button (click)="closeModal()">Close Modal</button></p>
+    <p><button (click)="close()">Close Modal</button></p>
   `
 })
 class ModalPassParams {
   constructor(private modal: Modal, params: NavParams) {
     this.userId = params.get('userId');
-  }
-
-  closeModal() {
-    this.modal.get().close();
   }
 }
 
@@ -93,8 +96,12 @@ class ToolbarModal {
   constructor(private modal: Modal) {}
 
   closeModal() {
-    this.modal.get().close();
+    this.close({
+      adel: 'hello',
+      lionel: 'hello'
+    });
   }
+
 }
 
 
