@@ -304,7 +304,7 @@ export class NavController extends Ion {
     }
 
     if (this.isTransitioning()) {
-      return Promise.reject('nav controller actively transitioning';
+      return Promise.reject('nav controller actively transitioning');
     }
 
     this.setTransitioning(true, 500);
