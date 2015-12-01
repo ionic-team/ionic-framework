@@ -1,0 +1,22 @@
+<ion-navbar *navbar>
+  <ion-title>
+    Segment under Navbar
+  </ion-title>
+</ion-navbar>
+
+<ion-toolbar>
+  <ion-segment [(ng-model)]="relationship">
+    <ion-segment-button value="friends" class="e2eSegmentFriends">
+      Friends
+    </ion-segment-button>
+    <ion-segment-button value="enemies">
+      Enemies
+    </ion-segment-button>
+  </ion-segment>
+</ion-toolbar>
+
+<ion-content padding>
+  <p>Are we friends or enemies? <b>{{ relationship }}</b></p>
+
+
+</ion-content>
