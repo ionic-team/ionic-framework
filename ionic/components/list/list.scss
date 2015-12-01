@@ -3,19 +3,18 @@
 // List
 // --------------------------------------------------
 
+ion-list-header {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 
 ion-list {
   display: block;
   margin: 0;
   padding: 0;
   list-style-type: none;
-
-  ion-list-header {
-    display: block;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
 }
 
 ion-list[inset] {

@@ -25,17 +25,17 @@ $list-md-border-color:          $item-md-border-color !default;
 /* DEFAULT LIST */
 /****************/
 
+ion-list-header,
+ion-item-divider {
+  border-bottom: 1px solid $list-md-border-color;
+  margin-left: 0;
+  padding: $list-md-header-padding;
+  font-size: $list-md-header-font-size;
+  color: $list-md-header-color;
+}
+
 ion-list {
   margin: 0 $list-md-margin-right $list-md-margin-bottom $list-md-margin-left;
-
-  ion-list-header,
-  ion-item-divider {
-    border-bottom: 1px solid $list-md-border-color;
-    margin-left: 0;
-    padding: $list-md-header-padding;
-    font-size: $list-md-header-font-size;
-    color: $list-md-header-color;
-  }
 
   .item-inner {
     border-bottom: 1px solid $list-md-border-color;
