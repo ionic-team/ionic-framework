@@ -1,6 +1,6 @@
 import {RouteConfig, Location} from 'angular2/router';
 
-import {App, Page, NavController, Keyboard} from 'ionic/ionic';
+import {App, Page, NavController} from 'ionic/ionic';
 
 
 @Page({
@@ -26,15 +26,12 @@ import {App, Page, NavController, Keyboard} from 'ionic/ionic';
   `
 })
 class SignIn {
-  constructor(nav: NavController, keyboard: Keyboard) {
+  constructor(nav: NavController) {
     this.nav = nav;
-    this.keyboard = keyboard;
   }
 
   push() {
-    setTimeout(() => {
-      this.nav.push(TabsPage);
-    }, 1000);
+    this.nav.push(TabsPage);
   }
 }
 
@@ -78,7 +75,7 @@ class Tab1Page1 {
   logout() {
     let tabs = this.nav.parent;
     let rootNav = tabs.parent;
-    rootNav.pop();
+    rootNav.setRoot(SignIn, null, { animate: true, direction: 'back' });
   }
 }
 
