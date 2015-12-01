@@ -1,4 +1,4 @@
-import {Compiler, ElementRef, Injector, provide, NgZone, DynamicComponentLoader, AppViewManager, Renderer} from 'angular2/angular2';
+import {Compiler, ElementRef, Injector, provide, NgZone, AppViewManager, Renderer} from 'angular2/angular2';
 import {wtfLeave, wtfCreateScope} from 'angular2/angular2';
 
 import {Ion} from '../ion';
@@ -107,7 +107,6 @@ export class NavController extends Ion {
     keyboard: Keyboard,
     elementRef: ElementRef,
     compiler: Compiler,
-    loader: DynamicComponentLoader,
     viewManager: AppViewManager,
     zone: NgZone,
     renderer: Renderer
@@ -120,7 +119,6 @@ export class NavController extends Ion {
     this.keyboard = keyboard;
 
     this._compiler = compiler;
-    this._loader = loader;
     this._viewManager = viewManager;
     this._zone = zone;
     this._renderer = renderer;
@@ -793,23 +791,34 @@ export class NavController extends Ion {
   loadPage(viewCtrl, navbarContainerRef, opts, done) {
     let wtfScope = wtfCreateScope('NavController#loadPage()')();
 
-    let providers = this.providers.concat(Injector.resolve([
-      provide(ViewController, {useValue: viewCtrl}),
-      provide(NavParams, {useValue: viewCtrl.params})
-    ]));
+    // guts of DynamicComponentLoader#loadIntoLocation
+    this._compiler.compileInHost(viewCtrl.componentType).then(hostProtoViewRef => {
+      let providers = this.providers.concat(Injector.resolve([
+        provide(ViewController, {useValue: viewCtrl}),
+        provide(NavParams, {useValue: viewCtrl.params})
+      ]));
 
-    this._loader.loadIntoLocation(viewCtrl.componentType, this.elementRef, 'contents', providers).then(componentRef => {
+      let location = this._viewManager.getNamedElementInComponentView(this.elementRef, 'contents');
+
+      let viewContainer = this._viewManager.getViewContainer(location);
+      let hostViewRef =
+          viewContainer.createHostView(hostProtoViewRef, viewContainer.length, providers);
+      let newLocation = this._viewManager.getHostElement(hostViewRef);
+      let component = this._viewManager.getComponent(newLocation);
 
       viewCtrl.addDestroy(() => {
-        componentRef.dispose();
+        let index = viewContainer.indexOf(hostViewRef);
+        if (index !== -1) {
+          viewContainer.remove(index);
+        }
       });
 
       // a new ComponentRef has been created
       // set the ComponentRef's instance to this ViewController
-      viewCtrl.setInstance(componentRef.instance);
+      viewCtrl.setInstance(component);
 
       // remember the ElementRef to the ion-page elementRef that was just created
-      viewCtrl.setPageRef(componentRef.location);
+      viewCtrl.setPageRef(newLocation);
 
       if (!navbarContainerRef) {
         navbarContainerRef = viewCtrl.getNavbarViewRef();
