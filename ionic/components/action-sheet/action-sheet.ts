@@ -14,45 +14,6 @@ import {Animation} from '../../animations/animation';
 import {NavParams} from '../nav/nav-controller';
 import {extend} from '../../util/util';
 
-
-/**
- * @name ActionSheet
- * @description
- * The Action Sheet is a slide-up pane that lets the user choose from a set of options. Dangerous options are made obvious.
- *
- * There are easy ways to cancel out of the action sheet, such as tapping the backdrop or even hitting escape on the keyboard for desktop testing.
- *
- * @usage
- * ```ts
- * openMenu() {
- *
- *   this.actionSheet.open({
- *     buttons: [
- *       { text: 'Share This' },
- *       { text: 'Move' }
- *     ],
- *     destructiveText: 'Delete',
- *     titleText: 'Modify your album',
- *     cancelText: 'Cancel',
- *     cancel: function() {
- *       console.log('Canceled');
- *     },
- *     destructiveButtonClicked: () => {
- *       console.log('Destructive clicked');
- *     },
- *     buttonClicked: function(index) {
- *       console.log('Button clicked', index);
- *       if(index == 1) { return false; }
- *       return true;
- *     }
- *
- *   }).then(actionSheetRef => {
- *     this.actionSheetRef = actionSheetRef;
- *   });
- *
- * }
- * ```
- */
 @Component({
   selector: 'ion-action-sheet',
   template:
@@ -109,7 +70,43 @@ class ActionSheetCmp {
   }
 }
 
-
+/**
+ * @name ActionSheet
+ * @description
+ * The Action Sheet is a slide-up pane that lets the user choose from a set of options. Dangerous options are made obvious.
+ * There are easy ways to cancel out of the action sheet, such as tapping the backdrop or even hitting escape on the keyboard for desktop testing.
+ *
+ * @usage
+ * ```ts
+ * openMenu() {
+ *
+ *   this.actionSheet.open({
+ *     buttons: [
+ *       { text: 'Share This' },
+ *       { text: 'Move' }
+ *     ],
+ *     destructiveText: 'Delete',
+ *     titleText: 'Modify your album',
+ *     cancelText: 'Cancel',
+ *     cancel: function() {
+ *       console.log('Canceled');
+ *     },
+ *     destructiveButtonClicked: () => {
+ *       console.log('Destructive clicked');
+ *     },
+ *     buttonClicked: function(index) {
+ *       console.log('Button clicked', index);
+ *       if(index == 1) { return false; }
+ *       return true;
+ *     }
+ *
+ *   }).then(actionSheetRef => {
+ *     this.actionSheetRef = actionSheetRef;
+ *   });
+ *
+ * }
+ * ```
+ */
 @Injectable()
 export class ActionSheet {
 
@@ -122,7 +119,10 @@ export class ActionSheet {
    * Create and open a new Action Sheet. This is the
    * public API, and most often you will only use ActionSheet.open()
    *
-   * @param {Object} [opts={}]  TODO
+   * @param {Object} [opts={}]  An object containing optional settings.
+   * @param {String} [opts.pageType='action-sheet'] The page type that determines how the page renders and animates.
+   * @param {String} [opts.enterAnimation='action-sheet-slide-in'] The class used to animate an actionSheet that is entering. 
+   * @param {String} [opts.leaveAnimation='action-sheet-slide-out'] The class used to animate an actionSheet that is leaving.
    * @return {Promise} Promise that resolves when the action sheet is open.
    */
   open(opts={}) {
@@ -138,8 +138,10 @@ export class ActionSheet {
   }
 
   /**
-   * TODO
-   * @returns {TODO} TODO
+   * Retrieves an actionSheet instance.
+   *
+   * @param {String} [handle]  The handle used to open the instance to be retrieved.
+   * @returns {ActionSheet} An actionSheet instance.
    */
   get(handle) {
     if (handle) {
