@@ -1,4 +1,4 @@
-import {CORE_DIRECTIVES, FORM_DIRECTIVES, forwardRef} from 'angular2/angular2'
+import {CORE_DIRECTIVES, FORM_DIRECTIVES, forwardRef, Type} from 'angular2/angular2'
 
 import {OverlayNav} from '../components/overlay/overlay';
 import {Menu} from '../components/menu/menu';

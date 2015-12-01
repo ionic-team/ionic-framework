@@ -1,4 +1,4 @@
-import {SlideGesture} from 'ionic/gestures/slide-gesture';
+import {SlideGesture} from './slide-gesture';
 import {defaults} from '../util/util';
 import {windowDimensions} from '../util/dom';
 

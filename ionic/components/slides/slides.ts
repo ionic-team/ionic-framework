@@ -1,13 +1,13 @@
 import {Directive, Component, ElementRef, Host, NgClass, EventEmitter} from 'angular2/angular2';
 
 import {Ion} from '../ion';
-import {Animation} from 'ionic/animations/animation';
-import {Gesture} from 'ionic/gestures/gesture';
-import {DragGesture} from 'ionic/gestures/drag-gesture';
+import {Animation} from '../../animations/animation';
+import {Gesture} from '../../gestures/gesture';
+import {DragGesture} from '../../gestures/drag-gesture';
 import {Config} from '../../config/config';
-import {dom} from 'ionic/util';
+import {dom} from '../../util';
 import {CSS} from '../../util/dom';
-import * as util from 'ionic/util';
+import * as util from '../../util';
 
 import {Swiper} from './swiper-widget';
 import {Scroll} from '../scroll/scroll';

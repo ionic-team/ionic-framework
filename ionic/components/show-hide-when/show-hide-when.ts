@@ -3,7 +3,7 @@ import {Directive, Attribute, NgZone} from 'angular2/angular2'
 import {Platform} from '../../platform/platform';
 
 
-class DisplayWhen {
+export class DisplayWhen {
 
   constructor(conditions, platform, ngZone) {
     this.isMatch = false;

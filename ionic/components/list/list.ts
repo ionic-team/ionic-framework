@@ -4,7 +4,7 @@ import {Ion} from '../ion';
 import {Config} from '../../config/config';
 import {ListVirtualScroll} from './virtual';
 import {ItemSlidingGesture} from '../item/item-sliding-gesture';
-import * as util from 'ionic/util';
+import * as util from '../../util';
 
 /**
  * The List is a widely used interface element in almost any mobile app, and can include

@@ -6,7 +6,7 @@ import {Gesture} from '../../gestures/gesture';
 import {CSS} from '../../util/dom';
 import {Animation} from '../../animations/animation';
 
-import * as util from 'ionic/util';
+import * as util from '../../util';
 
 /**
  * @name Scroll

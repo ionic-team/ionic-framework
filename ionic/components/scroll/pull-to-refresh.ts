@@ -1,8 +1,8 @@
 import {Component, NgIf, NgClass, ElementRef, EventEmitter, Host} from 'angular2/angular2'
 
 import {Content} from '../content/content';
-import * as util from 'ionic/util';
-import {raf, ready, CSS} from 'ionic/util/dom';
+import * as util from '../../util';
+import {raf, ready, CSS} from '../../util/dom';
 
 
 /**

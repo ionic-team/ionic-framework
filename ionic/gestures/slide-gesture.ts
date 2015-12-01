@@ -1,5 +1,5 @@
-import {DragGesture} from 'ionic/gestures/drag-gesture';
-import * as util from 'ionic/util';
+import {DragGesture} from './drag-gesture';
+import * as util from '../util';
 
 export class SlideGesture extends DragGesture {
   constructor(element, opts = {}) {

@@ -1,6 +1,6 @@
 import {StorageEngine} from './storage';
 
-import * as util from 'ionic/util';
+import * as util from '../util';
 
 const DB_NAME = '__ionicstorage';
 

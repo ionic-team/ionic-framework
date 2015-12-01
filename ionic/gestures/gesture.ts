@@ -1,5 +1,5 @@
-import * as util from 'ionic/util';
-import {Hammer} from 'ionic/gestures/hammer';
+import * as util from '../util';
+import {Hammer} from './hammer';
 
 /**
  * A gesture recognizer class.

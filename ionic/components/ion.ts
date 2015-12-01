@@ -1,6 +1,7 @@
+import {ElementRef} from 'angular2/angular2';
 import {Config} from '../config/config';
-import {isArray} from 'ionic/util';
-import * as dom from 'ionic/util/dom';
+import {isArray} from '../util';
+import * as dom from '../util/dom';
 
 
 /**

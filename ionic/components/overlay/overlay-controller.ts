@@ -1,5 +1,5 @@
 import {Animation} from '../../animations/animation';
-import {extend} from 'ionic/util';
+import {extend} from '../../util';
 
 
 /**
