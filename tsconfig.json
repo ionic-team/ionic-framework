@@ -1,23 +1,18 @@
 {
-    "version": "1.5.0",
     "compilerOptions": {
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "target": "es6",
-        "module": "system",
-        "declaration": true
+        "target": "es5",
+        "module": "commonjs",
+        "declaration": true,
+        "outDir": "dist"
     },
-    "fileGlobs": [
-        "./ionic/**/*.ts",
-        "!./node_modules/**",
-        "!./scripts/**",
-        "!./dist/**",
-        "!./tmp/**"
+    "files": [
+      "ionic/ionic.ts"
     ],
     "compileOnSave" : false,
     "buildOnSave": false,
     "exclude": [
-      "node_modules",
-      "ionic"
+      "node_modules"
     ]
 }
