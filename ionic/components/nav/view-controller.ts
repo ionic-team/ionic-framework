@@ -2,7 +2,7 @@ import {NavParams} from './nav-controller';
 
 
 /**
- * TODO
+ * You can access various features and information about the current view
  */
 export class ViewController {
 
@@ -17,6 +17,8 @@ export class ViewController {
   }
 
   /**
+   * Check to see if you can go back in the navigation stack
+   * @param {boolean} Check whether or not you can go back from this page
    * @returns {boolean} Returns if it's possible to go back from this Page.
    */
   enableBack() {
@@ -38,6 +40,18 @@ export class ViewController {
   }
 
   /**
+   * You can find out the index of the current view is in the current navigation stack
+   *
+   * ```typescript
+   *  export class Page1 {
+   *    constructor(view: ViewController){
+   *      this.view = view;
+   *      // Just log out the index
+   *      console.log(this.view.index);
+   *    }
+   *  }
+   * ```
+   *
    * @returns {Number} Returns the index of this page within its NavController.
    */
   get index() {
@@ -104,6 +118,7 @@ export class ViewController {
   }
 
   /**
+   * @private
    * @returns {ElementRef} Returns the Page's ElementRef
    */
   pageRef() {
@@ -118,6 +133,7 @@ export class ViewController {
   }
 
   /**
+   * @private
    * @returns {ElementRef} Returns the Page's Content ElementRef
    */
   contentRef() {
@@ -132,6 +148,7 @@ export class ViewController {
   }
 
   /**
+   * @private
    * @returns {Component} Returns the Page's Content component reference.
    */
   getContent() {
@@ -153,6 +170,19 @@ export class ViewController {
   }
 
   /**
+   * You can find out of the current view has a Navbar or not. Be sure to wrap this in an `onInit` method in order to make sure the view has rendered fully.
+   *
+   * ```typescript
+   * export class Page1 {
+   *  constructor(view: ViewController) {
+   *    this.view = view
+   *  }
+   *  onInit(){
+   *    console.log('Do we have a Navbar?', this.view.hasNavbar());
+   *  }
+   *}
+   * ```
+   *
    * @returns {boolean} Returns a boolean if this Page has a navbar or not.
    */
   hasNavbar() {
@@ -218,6 +248,7 @@ export class ViewController {
   }
 
   /**
+   * Set if the back button for the current view is visible or not. Be sure to wrap this in `onInit` to make sure the has been compleltly rendered.
    * @param {boolean} Set if this Page's back button should show or not.
    */
   showBackButton(shouldShow) {
