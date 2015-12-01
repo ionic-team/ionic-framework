@@ -4,7 +4,28 @@ import {Config} from '../../config/config';
 
 
 /**
- * TODO
+  * @name Button
+  * @module ionic
+  * @property [primary] - sets button color to default primary
+  * @property [secondary] - sets button color to default secondary
+  * @property [danger] - sets button color to default danger
+  * @property [light] - sets button color to default light
+  * @property [dark] - sets button color to default dark
+  * @property [outline] - for an unfilled outline button
+  * @property [clear] - for a transparent button that only shows text and icons
+  * @property [round] - for a button with rounded corners
+  * @property [block] - for a block button that fills it's parent container
+  * @property [full] - for a full width button
+  * @property [small] - sets button size to small
+  * @property [large] - sets button size to large
+  * @property [fab] - for a floating action button
+  * @property [fab-left] - position a fab button to the left
+  * @property [fab-right] - position a fab button to the right
+  * @property [fab-center] - position a fab button towards the center
+  * @property [fab-top] - position a fab button towards the top
+  * @property [fab-bottom] - position a fab button towards the bottom
+  * @description
+  * Buttons are simple components in Ionic, can consist of text, an icon, or both, and can be enhanced with a wide range of attributes.
  */
 @Directive({
   selector: 'button,[button]'

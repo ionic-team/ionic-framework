@@ -11,6 +11,7 @@ doc: "<$ doc.name $>"
 docType: "<$ doc.docType $>"
 ---
 
+
 <@ macro paramList(paramData) -@>
   <@- if paramData -@><span class="params">(
     <@- for param in paramData -@>
@@ -52,6 +53,7 @@ docType: "<$ doc.docType $>"
   </tbody>
 </table>
 <@ endmacro @>
+
 
 <@- macro functionSyntax(fn) @>
 <@- set sep = joiner(', ') -@>
@@ -152,6 +154,30 @@ defined in <$ githubViewLink(doc) $>
 
 <@ endfor -@>
 <@- endif -@>
+
+<@ if doc.properties @> 
+  <h2>Attributes:</h2>
+  <table class="table" style="margin:0;">
+    <thead>
+      <tr>
+        <th>Attribute</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <@ for prop in doc.properties @>
+      <tr>
+        <td>
+          <$ prop.name $>
+        </td>
+        <td>
+          <$ prop.description $>
+        </td>
+      </tr>
+      <@ endfor @>
+    </tbody>
+  </table>
+<@ endif @>
 
 <@ endblock @>
 <@ endblock @>
