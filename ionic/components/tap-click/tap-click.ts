@@ -39,6 +39,13 @@ export class TapClick {
       addListener('mousedown', this.mouseDown.bind(this), true);
       addListener('mouseup', this.mouseUp.bind(this), true);
     });
+
+    this.pointerMove = function(ev) {
+      console.log('pointerMove');
+      if ( hasPointerMoved(POINTER_MOVE_UNTIL_CANCEL, this.startCoord, pointerCoord(ev)) ) {
+        this.pointerCancel(ev);
+      }
+    };
   }
 
   touchStart(ev) {
@@ -117,12 +124,6 @@ export class TapClick {
     this.activator && this.activator.upAction();
   }
 
-  pointerMove(ev) {
-    if ( hasPointerMoved(POINTER_MOVE_UNTIL_CANCEL, this.startCoord, pointerCoord(ev)) ) {
-      this.pointerCancel(ev);
-    }
-  }
-
   pointerCancel(ev) {
     console.debug('pointerCancel from', ev.type);
     this.activator && this.activator.clearState();
@@ -130,11 +131,13 @@ export class TapClick {
   }
 
   moveListeners(shouldAdd) {
+    removeListener(this.usePolyfill ? 'touchmove' : 'mousemove', this.pointerMove);
+    
     this.zone.runOutsideAngular(() => {
       if (shouldAdd) {
-        addListener(this.usePolyfill ? 'touchmove' : 'mousemove', this.pointerMove.bind(this));
+        addListener(this.usePolyfill ? 'touchmove' : 'mousemove', this.pointerMove);
       } else {
-        removeListener(this.usePolyfill ? 'touchmove' : 'mousemove', this.pointerMove.bind(this));
+
       }
     });
   }
