@@ -4,9 +4,12 @@ import {Ion} from '../ion';
 import {Form} from '../../util/form';
 
 /**
- * The checkbox is no different than the HTML checkbox input, except it's styled differently
+ * The checkbox is no different than the HTML checkbox input, except it's styled differently.
  *
  * See the [Angular 2 Docs](https://angular.io/docs/js/latest/api/core/Form-interface.html) for more info on forms and input.
+ *
+ * @property [checked] - whether or not the checkbox is checked (defaults to false)
+ * @property [value] - the value of the checkbox component
  *
  * @usage
  * ```html
@@ -66,8 +69,7 @@ export class Checkbox {
   }
 
   /**
-   * Toggle the checked state of the checkbox. Calls onChange to pass the
-   * updated checked state to the model (Control).
+   * Toggle the checked state of the checkbox. Calls onChange to pass the updated checked state to the model (Control).
    */
   toggle() {
     this.checked = !this.checked;
