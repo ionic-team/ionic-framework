@@ -6,50 +6,45 @@
 $input-label-ios-color:         #7f7f7f !default;
 
 
-ion-list,
-ion-card {
+[text-input] {
+  margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom 0;
+  padding: 0;
+}
 
-  [text-input] {
-    margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom 0;
-    padding: 0;
-  }
+ion-input[inset] [text-input] {
+  margin: ($item-ios-padding-top / 2) $item-ios-padding-right ($item-ios-padding-bottom / 2) $item-ios-padding-left;
+  padding: ($item-ios-padding-top / 2) ($item-ios-padding-right / 2) ($item-ios-padding-bottom / 2) ($item-ios-padding-left / 2);
+}
 
-  ion-input[inset] [text-input] {
-    margin: ($item-ios-padding-top / 2) $item-ios-padding-right ($item-ios-padding-bottom / 2) $item-ios-padding-left;
-    padding: ($item-ios-padding-top / 2) ($item-ios-padding-right / 2) ($item-ios-padding-bottom / 2) ($item-ios-padding-left / 2);
-  }
+ion-label {
+  margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom 0;
+  color: $input-label-ios-color;
+}
 
-  ion-label {
-    margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom 0;
-    color: $input-label-ios-color;
-  }
+ion-label + [text-input] {
+  margin-left: $item-ios-padding-left;
+}
 
-  ion-label + [text-input] {
-    margin-left: $item-ios-padding-left;
-  }
+[stacked-label] ion-label {
+  font-size: 1.2rem;
+  margin-bottom: 4px;
+}
 
-  [stacked-label] ion-label {
-    font-size: 1.2rem;
-    margin-bottom: 4px;
-  }
+[stacked-label] [text-input],
+[floating-label] [text-input] {
+  margin-left: 0;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
 
-  [stacked-label] [text-input],
-  [floating-label] [text-input] {
-    margin-left: 0;
-    margin-top: 8px;
-    margin-bottom: 8px;
-  }
+[floating-label] ion-label {
+  margin-bottom: 0;
+  transform-origin: left top;
+  transform: translate3d(0, 27px, 0);
+  transition: transform 150ms ease-in-out;
+}
 
-  [floating-label] ion-label {
-    margin-bottom: 0;
-    transform-origin: left top;
-    transform: translate3d(0, 27px, 0);
-    transition: transform 150ms ease-in-out;
-  }
-
-  [floating-label].has-focus ion-label,
-  [floating-label].has-value ion-label  {
-    transform: translate3d(0, 0, 0) scale(0.8);
-  }
-
+[floating-label].has-focus ion-label,
+[floating-label].has-value ion-label  {
+  transform: translate3d(0, 0, 0) scale(0.8);
 }

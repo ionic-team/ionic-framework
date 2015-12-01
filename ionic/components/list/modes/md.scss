@@ -113,6 +113,11 @@ ion-list[inset] {
     border-bottom-left-radius: $list-inset-md-border-radius;
   }
 
+  ion-input.item {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
   + ion-list[inset] {
     margin-top: 0;
   }
