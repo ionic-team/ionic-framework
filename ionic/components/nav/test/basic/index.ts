@@ -69,6 +69,13 @@ class FirstPage {
     meNoWorky(helloIsItMeYoureLookingFor);
   }
 
+  onPageDidEnter() {
+    setTimeout(() => {
+      // Page2 will be transparent on first nav
+      this.nav.push(PrimaryHeaderPage);
+    }, 2000);
+  }
+
   setPages() {
     let items = [
       PrimaryHeaderPage
@@ -211,7 +218,7 @@ class AnotherPage {
   ) {
     this.nav = nav;
     this.viewCtrl = viewCtrl;
-    this.bbHideToggleVal = true;
+    this.bbHideToggleVal = false;
   }
 
   pushFullPage() {
@@ -232,7 +239,7 @@ class AnotherPage {
 
   toggleBackButton() {
     this.bbHideToggleVal = !this.bbHideToggleVal
-    this.viewCtrl.hideBackButton(this.bbHideToggleVal);
+    this.viewCtrl.showBackButton(this.bbHideToggleVal);
   }
 }
 
