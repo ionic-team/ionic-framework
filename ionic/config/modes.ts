@@ -1,7 +1,6 @@
 
 import {Config} from './config';
 
-export {}
 
 // iOS Mode Settings
 Config.setModeConfig('ios', {
