@@ -221,7 +221,6 @@ export class NavController extends Ion {
    *      },{
    *       // here we can configure things like the animations direction or
    *       // or if the view should animate at all.
-   *       animate: true,
    *       direction: back
    *      });
    *    }
@@ -298,12 +297,8 @@ export class NavController extends Ion {
    *    constructor(nav:NavController){
    *      this.nav = nav;
    *    }
-   *
    *    goBack(){
-   *      this.nav.pop({
-   *       animate: true,
-   *       direction: back
-   *      });
+   *      this.nav.pop();
    *    }
    * }
    * ```
@@ -510,8 +505,8 @@ export class NavController extends Ion {
    *    constructor(nav: NavController) {
    *      this.nav = nav;
    *    }
-   *    setView() {
-   *      this.nav.setViews([List,Detail, Info]);
+   *    setPages() {
+   *      this.nav.setPages([List,Detail, Info]);
    *    }
    *  }
    *```
@@ -531,8 +526,8 @@ export class NavController extends Ion {
    *    constructor(nav: NavController) {
    *      this.nav = nav;
    *    }
-   *    setView() {
-   *      this.nav.setViews([List,Detail, Info],{
+   *    setPages() {
+   *      this.nav.setPages([List,Detail, Info],{
    *        animate: true
    *      });
    *    }
@@ -552,8 +547,8 @@ export class NavController extends Ion {
    *    constructor(nav: NavController) {
    *      this.nav = nav;
    *    }
-   *    setView() {
-   *      this.nav.setViews([{
+   *    setPages() {
+   *      this.nav.setPages([{
    *        componentType: List,
    *        params: {id: 43}
    *      }, {
@@ -562,16 +557,14 @@ export class NavController extends Ion {
    *      },{
    *        componentType: Info,
    *        params: {id: 5}
-   *      } ],{
-   *        animate: true
-   *      });
+   *      }]);
    *    }
    *  }
    *```
    *
    * @param {Array} component an arry of components to load in the stack
    * @param {Object} [opts={}] Any options you want to use pass
-   * @returns {Promise} Returns a promise when the views are set
+   * @returns {Promise} Returns a promise when the pages are set
    */
   setPages(components, opts = {}) {
     if (!components || !components.length) {
@@ -1091,9 +1084,9 @@ export class NavController extends Ion {
   }
 
   /**
-   * Returns `true` if there's a valid previous view that we can pop back to.
+   * Returns `true` if there's a valid previous page that we can pop back to.
    * Otherwise returns false.
-   * @returns {boolean} Whether there is a view to go back to
+   * @returns {boolean} Whether there is a page to go back to
    */
   canGoBack() {
     let activeView = this.getActive();
@@ -1121,7 +1114,7 @@ export class NavController extends Ion {
     });
 
     // allow clicks again, but still set an enable time
-    // meaning nothing with this view controller can happen for XXms
+    // meaning nothing with this page controller can happen for XXms
     this.app.setEnabled(true);
     this.setTransitioning(false);
 
@@ -1136,7 +1129,7 @@ export class NavController extends Ion {
    * @private
    */
   _cleanup(activeView) {
-    // the active view, and the previous view, should be rendered in dom and ready to go
+    // the active page, and the previous page, should be rendered in dom and ready to go
     // all others, like a cached page 2 back, should be display: none and not rendered
     let destroys = [];
     activeView = activeView || this.getActive();
@@ -1154,7 +1147,7 @@ export class NavController extends Ion {
       }
     });
 
-    // all views being destroyed should be removed from the list of views
+    // all pages being destroyed should be removed from the list of pages
     // and completely removed from the dom
     destroys.forEach(view => {
       this._remove(view);
@@ -1248,7 +1241,7 @@ export class NavController extends Ion {
   }
 
   /**
-   * @param {Index} The index of the view you want to get
+   * @param {Index} The index of the page you want to get
    * @returns {Component} Returns the component that matches the index given
    */
   getByIndex(index) {
@@ -1260,7 +1253,7 @@ export class NavController extends Ion {
 
   /**
    * @private
-   * @param {Handle} The handle of the view you want to get
+   * @param {Handle} The handle of the page you want to get
    * @returns {Component} Returns the component that matches the handle given
    */
   getByHandle(handle) {
@@ -1305,9 +1298,8 @@ export class NavController extends Ion {
   }
 
   /**
-   * First view in this nav controller's stack. This would
-   * not return an view which is about to be destroyed.
-   * @returns {Component} Returns the first component view in the current stack
+   * First page in this nav controller's stack. This would not return a page which is about to be destroyed.
+   * @returns {Component} Returns the first component page in the current stack
    */
   first() {
     for (let i = 0, l = this._views.length; i < l; i++) {
@@ -1319,9 +1311,8 @@ export class NavController extends Ion {
   }
 
   /**
-   * Last view in this nav controller's stack. This would
-   * not return an view which is about to be destroyed.
-   * @returns {Component} Returns the last component view in the current stack
+   * Last page in this nav controller's stack. This would not return a page which is about to be destroyed.
+   * @returns {Component} Returns the last component page in the current stack
    */
   last() {
     for (let i = this._views.length - 1; i >= 0; i--) {
