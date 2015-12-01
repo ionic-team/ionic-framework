@@ -5,8 +5,8 @@ import {raf, rafFrames} from '../../util/dom';
 
 export class RippleActivator extends Activator {
 
-  constructor(app, config) {
-    super(app, config);
+  constructor(app, config, zone) {
+    super(app, config, zone);
 
     this.expands = {};
     this.fades = {};

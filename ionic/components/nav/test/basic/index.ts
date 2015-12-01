@@ -63,16 +63,10 @@ class FirstPage {
     }
   }
 
-  onPageLoaded() {
-    console.log('onPageLoaded');
-    var meNoWorky = true;
-    meNoWorky(helloIsItMeYoureLookingFor);
-  }
-
   onPageDidEnter() {
-    // setTimeout(() => {
-    //   this.nav.push(PrimaryHeaderPage);
-    // }, 2000);
+    setTimeout(() => {
+      this.nav.push(PrimaryHeaderPage);
+    }, 1000);
   }
 
   setPages() {
@@ -83,8 +77,8 @@ class FirstPage {
     this.nav.setPages(items);
   }
 
-  setRoot(PrimaryHeaderPage) {
-
+  setRoot() {
+    this.nav.setRoot(PrimaryHeaderPage);
   }
 
   pushPrimaryHeaderPage() {

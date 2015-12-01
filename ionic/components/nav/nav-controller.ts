@@ -1,4 +1,4 @@
-import {Compiler, ElementRef, Injector, provide, NgZone, AppViewManager, Renderer} from 'angular2/angular2';
+import {ChangeDetectorRef, Compiler, ElementRef, Injector, provide, NgZone, AppViewManager, Renderer} from 'angular2/angular2';
 import {wtfLeave, wtfCreateScope, WtfScopeFn} from 'angular2/angular2';
 
 import {Ion} from '../ion';
@@ -115,7 +115,8 @@ export class NavController extends Ion {
     compiler: Compiler,
     viewManager: AppViewManager,
     zone: NgZone,
-    renderer: Renderer
+    renderer: Renderer,
+    cd: ChangeDetectorRef
   ) {
     super(elementRef, config);
 
@@ -128,6 +129,7 @@ export class NavController extends Ion {
     this._viewManager = viewManager;
     this._zone = zone;
     this._renderer = renderer;
+    this._cd =  cd;
 
     this._views = [];
     this._trnsTime = 0;
@@ -685,6 +687,8 @@ export class NavController extends Ion {
         // already marked as a view that will be destroyed, don't continue
         return done(enteringView);
       }
+
+      this._cd.detectChanges();
 
       this._zone.runOutsideAngular(() => {
         this._setZIndex(enteringView, leavingView, opts.direction);
