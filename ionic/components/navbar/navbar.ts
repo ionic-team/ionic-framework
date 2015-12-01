@@ -68,7 +68,7 @@ class ToolbarBackground {
     '<button class="back-button" [hidden]="hideBackButton">' +
       '<icon class="back-button-icon" [name]="bbIcon"></icon>' +
       '<span class="back-button-text">' +
-        '<span class="back-default">{{bbDefault}}</span>' +
+        '<span class="back-default">{{bbText}}</span>' +
       '</span>' +
     '</button>' +
     '<ng-content select="[menu-toggle]"></ng-content>' +
@@ -108,7 +108,7 @@ export class Navbar extends ToolbarBase {
     viewCtrl && viewCtrl.setNavbar(this);
 
     this.bbIcon = config.get('backButtonIcon');
-    this.bbDefault = config.get('backButtonText');
+    this.bbText = config.get('backButtonText');
   }
 
   /**

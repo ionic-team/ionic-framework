@@ -208,6 +208,16 @@ export class ViewController {
   }
 
   /**
+   * @param {string} Set the back button text.
+   */
+  setBackButtonText(val) {
+    let navbar = this.getNavbar();
+    if (navbar) {
+      navbar.bbText = val;
+    }
+  }
+
+  /**
    * @param {boolean} Set if this Page's back button should show or not.
    */
   showBackButton(shouldShow) {

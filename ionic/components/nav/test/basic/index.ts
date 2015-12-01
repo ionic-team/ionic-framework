@@ -70,10 +70,9 @@ class FirstPage {
   }
 
   onPageDidEnter() {
-    setTimeout(() => {
-      // Page2 will be transparent on first nav
-      this.nav.push(PrimaryHeaderPage);
-    }, 2000);
+    // setTimeout(() => {
+    //   this.nav.push(PrimaryHeaderPage);
+    // }, 2000);
   }
 
   setPages() {
@@ -208,6 +207,7 @@ class PrimaryHeaderPage {
       <p><button (click)="pushFirstPage()">Push to FirstPage</button></p>
       <p><button (click)="setRoot()">setRoot(FirstPage)</button></p>
       <p><button (click)="toggleBackButton()">Toggle hide-back-button</button></p>
+      <p><button (click)="setBackButtonText()">Set Back Button Text</button></p>
     </ion-content>
   `
 })
@@ -219,6 +219,7 @@ class AnotherPage {
     this.nav = nav;
     this.viewCtrl = viewCtrl;
     this.bbHideToggleVal = false;
+    this._bbCount = 0;
   }
 
   pushFullPage() {
@@ -240,6 +241,17 @@ class AnotherPage {
   toggleBackButton() {
     this.bbHideToggleVal = !this.bbHideToggleVal
     this.viewCtrl.showBackButton(this.bbHideToggleVal);
+  }
+
+  setBackButtonText() {
+    let backButtonText = 'Messages';
+
+    if (this._bbCount > 0) {
+      backButtonText += ` (${this._bbCount})`;
+    }
+
+    this.viewCtrl.setBackButtonText(backButtonText);
+    ++this._bbCount;
   }
 }
 
