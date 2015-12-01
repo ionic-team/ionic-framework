@@ -18,11 +18,13 @@ export class RippleActivator extends Activator {
       // create a new ripple element
       this.expandSpeed = EXPAND_DOWN_PLAYBACK_RATE;
 
-      raf(() => {
-        let clientRect = activatableEle.getBoundingClientRect();
-
+      this.zone.runOutsideAngular(() => {
         raf(() => {
-          this.createRipple(activatableEle, pointerX, pointerY, clientRect);
+          let clientRect = activatableEle.getBoundingClientRect();
+
+          raf(() => {
+            this.createRipple(activatableEle, pointerX, pointerY, clientRect);
+          });
         });
       });
     }
@@ -83,8 +85,10 @@ export class RippleActivator extends Activator {
 
     this.expandSpeed = 1;
 
-    rafFrames(4, () => {
-      this.next();
+    this.zone.runOutsideAngular(() => {
+      rafFrames(4, () => {
+        this.next();
+      });
     });
   }
 

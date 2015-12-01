@@ -39,8 +39,6 @@ export function ionicProviders(args={}) {
 
   let clickBlock = new ClickBlock(config.get('clickBlock'));
 
-  let app = new IonicApp(config, clickBlock);
-
   let events = new Events();
   let featureDetect = new FeatureDetect();
 
@@ -51,7 +49,8 @@ export function ionicProviders(args={}) {
   platform.prepareReady(config);
 
   return [
-    provide(IonicApp, {useValue: app}),
+    IonicApp,
+    provide(ClickBlock, {useValue: clickBlock}),
     provide(Config, {useValue: config}),
     provide(Platform, {useValue: platform}),
     provide(FeatureDetect, {useValue: featureDetect}),

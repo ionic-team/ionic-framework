@@ -21,10 +21,10 @@ export class TapClick {
     this.lastActivated = 0;
 
     if (config.get('activator') == 'ripple') {
-      this.activator = new RippleActivator(app, config);
+      this.activator = new RippleActivator(app, config, zone);
 
     } else if (config.get('activator') == 'highlight') {
-      this.activator = new Activator(app, config);
+      this.activator = new Activator(app, config, zone);
     }
 
     this.usePolyfill = (config.get('tapPolyfill') === true);

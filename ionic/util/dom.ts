@@ -1,3 +1,4 @@
+
 const nativeRaf = window.requestAnimationFrame ||
    window.webkitRequestAnimationFrame ||
    window.mozRequestAnimationFrame;
@@ -8,6 +9,7 @@ const nativeCancelRaf = window.cancelAnimationFrame ||
 
 export function raf(callback) {
   //console.log('raf', callback.toString().replace(/\s/g, '').replace('function', '').substring(0, 50));
+  //console.log('raf, isRootZone()', zone.isRootZone(), '$id', zone.$id);
   _raf(callback);
 }
 
@@ -25,10 +27,6 @@ const _raf = nativeRaf || function(callback) {
 
 export const rafCancel = nativeRaf ? nativeCancelRaf : function(id) {
   return window.cancelTimeout(id);
-}
-
-export function rafPromise() {
-  return new Promise(resolve => raf(resolve));
 }
 
 export function rafFrames(framesToWait, callback) {

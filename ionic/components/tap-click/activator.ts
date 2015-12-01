@@ -3,8 +3,9 @@ import {raf, rafFrames} from '../../util/dom';
 
 export class Activator {
 
-  constructor(app, config) {
+  constructor(app, config, zone) {
     this.app = app;
+    this.zone = zone;
     this.queue = [];
     this.active = [];
     this.clearStateDefers = 5;
@@ -39,7 +40,9 @@ export class Activator {
       self.queue = [];
     }
 
-    rafFrames(2, activateCss);
+    this.zone.runOutsideAngular(() => {
+      rafFrames(2, activateCss);
+    });
 
     return true;
   }
@@ -50,7 +53,9 @@ export class Activator {
     function activateUp() {
       self.clearState();
     }
-    rafFrames(self.clearStateDefers, activateUp);
+    this.zone.runOutsideAngular(() => {
+      rafFrames(self.clearStateDefers, activateUp);
+    });
   }
 
   clearState() {

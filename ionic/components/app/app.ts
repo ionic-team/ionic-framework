@@ -1,5 +1,7 @@
-import {Title} from 'angular2/angular2';
+import {Injectable, NgZone, Title} from 'angular2/angular2';
 
+import {Config} from '../../config/config';
+import {ClickBlock} from '../../util/click-block';
 import {rafFrames} from '../../util/dom';
 import {ScrollTo} from '../../animations/scroll-to';
 
@@ -8,10 +10,12 @@ import {ScrollTo} from '../../animations/scroll-to';
  * Component registry service.  For more information on registering
  * components see the [IdRef API reference](../id/IdRef/).
  */
+@Injectable()
 export class IonicApp {
 
-  constructor(config, clickBlock) {
+  constructor(config: Config, clickBlock: ClickBlock, zone: NgZone) {
     this._config = config;
+    this._zone = zone;
     this._titleSrv = new Title();
     this._title = '';
     this._disTime = 0;
@@ -29,10 +33,12 @@ export class IonicApp {
     let self = this;
     if (val !== self._title) {
       self._title = val;
-      function setAppTitle() {
-        self._titleSrv.setTitle(self._title);
-      }
-      rafFrames(4, setAppTitle);
+      this._zone.runOutsideAngular(() => {
+        function setAppTitle() {
+          self._titleSrv.setTitle(self._title);
+        }
+        rafFrames(4, setAppTitle);
+      });
     }
   }
 
