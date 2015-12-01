@@ -1,5 +1,5 @@
 import {Compiler, ElementRef, Injector, provide, NgZone, AppViewManager, Renderer} from 'angular2/angular2';
-import {wtfLeave, wtfCreateScope} from 'angular2/angular2';
+import {wtfLeave, wtfCreateScope, WtfScopeFn} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
@@ -99,6 +99,12 @@ import {rafFrames} from '../../util/dom';
  *
  */
 export class NavController extends Ion {
+
+  /** @internal */
+  static _tranitionScope: WtfScopeFn = wtfCreateScope('ionic.NavController#_transition()');
+  static _loadPageScope: WtfScopeFn = wtfCreateScope('ionic.NavController#loadPage()');
+  static _transCompleteScope: WtfScopeFn = wtfCreateScope('ionic.NavController#_transComplete()');
+
 
   constructor(
     parentnavCtrl: NavController,
@@ -659,8 +665,6 @@ export class NavController extends Ion {
       return done(enteringView);
     }
 
-    let wtfScope = wtfCreateScope('ionic.NavController#_transition()')();
-
     if (!opts.animation) {
       opts.animation = this.config.get('pageTransition');
     }
@@ -673,6 +677,8 @@ export class NavController extends Ion {
       enteringView = new ViewController()
       enteringView.loaded();
     }
+
+    console.time('_transition ' + (enteringView.componentType && enteringView.componentType.name));
 
     this._stage(enteringView, opts, () => {
       if (enteringView.shouldDestroy) {
@@ -738,12 +744,14 @@ export class NavController extends Ion {
             this._zone.run(() => {
               if (this.keyboard.isOpen()) {
                 this.keyboard.onClose(() => {
-                  this._transComplete(wtfScope);
+                  this._transComplete();
+                  console.timeEnd('_transition ' + (enteringView.componentType && enteringView.componentType.name));
                   done(enteringView);
                 }, 32);
 
               } else {
-                this._transComplete(wtfScope);
+                this._transComplete();
+                console.timeEnd('_transition ' + (enteringView.componentType && enteringView.componentType.name));
                 done(enteringView);
               }
             });
@@ -759,11 +767,8 @@ export class NavController extends Ion {
    * @private
    */
   _stage(viewCtrl, opts, done) {
-    let wtfScope = wtfCreateScope('ionic.NavController#_stage()')();
-
     if (viewCtrl.isLoaded() || viewCtrl.shouldDestroy) {
       // already compiled this view
-      wtfLeave(wtfScope);
       return done();
     }
 
@@ -773,13 +778,11 @@ export class NavController extends Ion {
       if (viewCtrl.onReady) {
         viewCtrl.onReady(() => {
           viewCtrl.loaded();
-          wtfLeave(wtfScope);
           done();
         });
 
       } else {
         viewCtrl.loaded();
-        wtfLeave(wtfScope);
         done();
       }
     });
@@ -789,10 +792,10 @@ export class NavController extends Ion {
    * @private
    */
   loadPage(viewCtrl, navbarContainerRef, opts, done) {
-    let wtfScope = wtfCreateScope('ionic.NavController#loadPage()')();
-
     // guts of DynamicComponentLoader#loadIntoLocation
     this._compiler.compileInHost(viewCtrl.componentType).then(hostProtoViewRef => {
+      let wtfScope = NavController._loadPageScope();
+
       let providers = this.providers.concat(Injector.resolve([
         provide(ViewController, {useValue: viewCtrl}),
         provide(NavParams, {useValue: viewCtrl.params})
@@ -1099,7 +1102,9 @@ export class NavController extends Ion {
   /**
    * @private
    */
-  _transComplete(wtfScope) {
+  _transComplete() {
+    let wtfScope = NavController._transCompleteScope();
+
     this._views.forEach(view => {
       if (view) {
         if (view.shouldDestroy) {
