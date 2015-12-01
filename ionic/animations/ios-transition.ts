@@ -61,7 +61,6 @@ class IOSTransition extends Animation {
         .add(enteringNavbarItems)
         .add(enteringNavbarBg)
         .add(enteringBackButton);
-      enteringNavBar.before.addClass('show-navbar');
 
       enteringTitle.fadeIn();
       enteringNavbarItems.fadeIn();
