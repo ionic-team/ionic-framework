@@ -42,7 +42,7 @@ import {Icon} from '../icon/icon';
     '<button *ng-if="showCancel" (click)="cancelAction($event, query)" class="searchbar-cancel">{{cancelText}}</button>',
   directives: [FORM_DIRECTIVES, NgIf, NgClass, Icon]
 })
-export class SearchBar extends Ion {
+export class Searchbar extends Ion {
   /**
    * @private
    */
