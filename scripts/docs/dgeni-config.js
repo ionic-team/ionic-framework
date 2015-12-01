@@ -148,7 +148,8 @@ module.exports = function(currentVersion){
   // add custom filters to nunjucks
   templateEngine.filters.push(
     require('./filters/capital'),
-    require('./filters/code')
+    require('./filters/code'),
+    require('./filters/dump')
   );
 
   templateFinder.templateFolders.unshift(path.resolve(__dirname, 'templates'));
