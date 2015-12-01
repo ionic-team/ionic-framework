@@ -63,12 +63,6 @@ class FirstPage {
     }
   }
 
-  onPageDidEnter() {
-    setTimeout(() => {
-      this.nav.push(PrimaryHeaderPage);
-    }, 1000);
-  }
-
   setPages() {
     let items = [
       PrimaryHeaderPage
