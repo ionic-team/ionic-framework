@@ -659,7 +659,7 @@ export class NavController extends Ion {
       return done(enteringView);
     }
 
-    let wtfScope = wtfCreateScope('NavController#_transition()')();
+    let wtfScope = wtfCreateScope('ionic.NavController#_transition()')();
 
     if (!opts.animation) {
       opts.animation = this.config.get('pageTransition');
@@ -759,7 +759,7 @@ export class NavController extends Ion {
    * @private
    */
   _stage(viewCtrl, opts, done) {
-    let wtfScope = wtfCreateScope('NavController#_stage()')();
+    let wtfScope = wtfCreateScope('ionic.NavController#_stage()')();
 
     if (viewCtrl.isLoaded() || viewCtrl.shouldDestroy) {
       // already compiled this view
@@ -789,7 +789,7 @@ export class NavController extends Ion {
    * @private
    */
   loadPage(viewCtrl, navbarContainerRef, opts, done) {
-    let wtfScope = wtfCreateScope('NavController#loadPage()')();
+    let wtfScope = wtfCreateScope('ionic.NavController#loadPage()')();
 
     // guts of DynamicComponentLoader#loadIntoLocation
     this._compiler.compileInHost(viewCtrl.componentType).then(hostProtoViewRef => {
@@ -1120,7 +1120,7 @@ export class NavController extends Ion {
 
     this._cleanup();
 
-    wtfScope && wtfLeave(wtfScope);
+    wtfLeave(wtfScope);
   }
 
   /**

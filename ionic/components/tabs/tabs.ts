@@ -177,7 +177,7 @@ export class Tabs extends Ion {
       return this._touchActive(selectedTab);
     }
 
-    let wtfScope = wtfCreateScope('Tabs#select()')();
+    let wtfScope = wtfCreateScope('ionic.Tabs#select()')();
 
     let opts = {
       animate: false
@@ -206,7 +206,7 @@ export class Tabs extends Ion {
         this._onReady();
         this._onReady = null;
       }
-      
+
       wtfLeave(wtfScope);
     });
   }

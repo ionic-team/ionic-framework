@@ -139,7 +139,7 @@ export function App(args={}) {
     // redefine with added annotations
     Reflect.defineMetadata('annotations', annotations, cls);
 
-    let wtfScope = wtfCreateScope('IonicBootstrap')();
+    let wtfScope = wtfCreateScope('ionic.bootstrap')();
     bootstrap(cls, ionicProviders(args)).then(appRef => {
       let tc = appRef.injector.get(TapClick);
       wtfLeave(wtfScope);
