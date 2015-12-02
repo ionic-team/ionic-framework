@@ -37,7 +37,7 @@ class E2EApp {
       this.promptResult = name;
       this.promptOpen = false;
     }, () => {
-      console.error('Prompt closed');
+      console.log('Prompt closed');
       this.promptOpen = false;
     });
   }
@@ -56,7 +56,7 @@ class E2EApp {
       this.confirmOpen = false;
     }, () => {
       this.confirmOpen = false;
-      console.error('NOT CONFIRMED');
+      console.log('NOT CONFIRMED');
     });
   }
 }
