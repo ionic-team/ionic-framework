@@ -1,18 +1,18 @@
 {
-    "compilerOptions": {
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "target": "es5",
-        "module": "commonjs",
-        "declaration": true,
-        "outDir": "dist"
-    },
-    "files": [
-      "ionic/ionic.ts"
-    ],
-    "compileOnSave" : false,
-    "buildOnSave": false,
-    "exclude": [
-      "node_modules"
-    ]
+  "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es5",
+    "module": "commonjs",
+    "declaration": true,
+    "outDir": "dist"
+  },
+  "files": [
+    "ionic/ionic.ts"
+  ],
+  "compileOnSave" : false,
+  "buildOnSave": false,
+  "exclude": [
+    "node_modules"
+  ]
 }

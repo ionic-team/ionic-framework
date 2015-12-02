@@ -74,18 +74,11 @@ function buildDemoBundle(opts, done) {
   });
 }
 
-var tscOptions = {
-  target: 'ES6',
-  allowNonTsExtensions: true,
-  isolatedModules: true,
-  emitDecoratorMetadata: true,
-  experimentalDecorators: true,
-  noEmitOnError: false,  // ignore errors
-  rootDir: '.'
-}
+var tscOptions = require('./tsconfig.json').compilerOptions;
 var tscReporter = {
   error: function (error) {
-    console.error(error.message);
+    // suppress type errors until we convert everything to TS
+    // console.error(error.message);
   }
 };
 
@@ -185,25 +178,32 @@ gulp.task('clean', function(done) {
 });
 
 function transpile(moduleType) {
-  var stream = gulp.src([
+  var merge = require('merge2');
+
+  var tsResult = gulp.src([
       'ionic/**/*.ts',
       '!ionic/components/*/test/**/*',
       '!ionic/util/test/*'
     ])
    .pipe(cache('transpile', { optimizeMemory: true }))
-   .pipe(tsc(tscOptions, null, tscReporter))
-   .on('error', function(error) {
-     stream.emit('end');
-   })
-   .pipe(gulp.dest('dist/src/es6/ionic'))
-   .pipe(babel(getBabelOptions('ionic', moduleType)))
-   .on('error', function (err) {
-     console.log("ERROR: " + err.message);
-     this.emit('end');
-   })
-   .pipe(gulp.dest('dist/src/es5/' + moduleType + '/ionic'))
+   .pipe(tsc(tscOptions, undefined, tscReporter))
+  //  .on('error', function(error) {
+  //    tsResult.emit('end');
+  //  })
+  //  .pipe(gulp.dest('dist/src/es6/ionic'))
+  //  .pipe(babel(getBabelOptions('ionic', moduleType)))
+  //  .on('error', function (err) {
+  //    console.log("ERROR: " + err.message);
+  //    this.emit('end');
+  //  })
+  //  .pipe(gulp.dest('dist'))
 
-  return stream;
+  // merge definition and source streams
+  return merge([
+    tsResult.dts,
+    tsResult.js
+  ])
+  .pipe(gulp.dest('dist'));
 }
 
 gulp.task('transpile.system', function() { return transpile("system"); });
@@ -212,9 +212,9 @@ gulp.task('transpile.common', function() {
   cache.caches && delete cache.caches.transpile;
   return transpile("common");
 });
-gulp.task('transpile', ['transpile.system']);
+gulp.task('transpile', ['transpile.common']);
 
-gulp.task('bundle.ionic', ['transpile'], function() {
+gulp.task('bundle.ionic', ['transpile.system'], function() {
   var insert = require('gulp-insert');
   var concat = require('gulp-concat');
 
@@ -272,7 +272,7 @@ gulp.task('bundle', ['bundle.ionic'], function() {
 
 gulp.task('tests', function() {
   return gulp.src('ionic/**/test/**/*.spec.ts')
-    .pipe(tsc(tscOptions, null, tscReporter))
+    .pipe(tsc(tscOptions, undefined, tscReporter))
     .pipe(babel(getBabelOptions('dist/tests')))
     .pipe(rename(function(file) {
       var regex = new RegExp(path.sep + 'test(' + path.sep + '|$)');
@@ -290,12 +290,12 @@ gulp.task('e2e', function() {
 
   var buildTest = lazypipe()
              //.pipe(traceur, traceurOptions)
-             .pipe(tsc, tscOptions, null, tscReporter)
+             .pipe(tsc, tscOptions, undefined, tscReporter)
              .pipe(babel, getBabelOptions('e2e'))
 
   var buildE2ETest = lazypipe()
              //.pipe(traceur, traceurOptions)
-             .pipe(tsc, tscOptions, null, tscReporter)
+             .pipe(tsc, tscOptions, undefined, tscReporter)
              .pipe(babel)
 
   var indexTemplate = _.template(
@@ -459,7 +459,7 @@ gulp.task('build.demos', function(){
   var VinylFile = require('vinyl');
 
   var buildTest = lazypipe()
-    .pipe(tsc, tscOptions, null, tscReporter)
+    .pipe(tsc, tscOptions, undefined, tscReporter)
     .pipe(babel, getBabelOptions('demos', 'common'))
     // .pipe(babel, getBabelOptions('demos'))
 
