@@ -910,10 +910,15 @@ export class NavController extends Ion {
       let viewContainer = this._viewManager.getViewContainer(location);
       let hostViewRef =
           viewContainer.createHostView(hostProtoViewRef, viewContainer.length, providers);
-      let newLocation = this._viewManager.getHostElement(hostViewRef);
-      let component = this._viewManager.getComponent(newLocation);
+      let pageElementRef = this._viewManager.getHostElement(hostViewRef);
+      let component = this._viewManager.getComponent(pageElementRef);
 
       viewCtrl.addDestroy(() => {
+        // ensure the element is cleaned up for when the view pool reuses this element
+        this._renderer.setElementAttribute(pageElementRef, 'class', null);
+        this._renderer.setElementAttribute(pageElementRef, 'style', null);
+
+        // remove the page from its container
         let index = viewContainer.indexOf(hostViewRef);
         if (index !== -1) {
           viewContainer.remove(index);
@@ -925,7 +930,7 @@ export class NavController extends Ion {
       viewCtrl.setInstance(component);
 
       // remember the ElementRef to the ion-page elementRef that was just created
-      viewCtrl.setPageRef(newLocation);
+      viewCtrl.setPageRef(pageElementRef);
 
       if (!navbarContainerRef) {
         navbarContainerRef = viewCtrl.getNavbarViewRef();
