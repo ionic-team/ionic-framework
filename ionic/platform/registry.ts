@@ -48,7 +48,24 @@ Platform.register({
   ],
   settings: {
     activator: function(p) {
-      return (p.version().major < 5 && p.navigatorPlatform().indexOf('linux') > -1) ? 'none' : 'ripple';
+      // md mode defaults to use ripple activator
+      // however, under-powered devices shouldn't use ripple
+      // if this a linux device, and is using Android Chrome v36 (Android 5.0)
+      // or above then use ripple, otherwise do not use a ripple effect
+      if (p.testNavigatorPlatform('linux')) {
+        let chromeVersion = p.matchUserAgentVersion(/Chrome\/(\d+).(\d+)?/);
+        if (chromeVersion) {
+          // linux android device using modern android chrome browser gets ripple
+          return (parseInt(chromeVersion.major, 10) < 36 ? 'none' : 'ripple');
+        }
+        // linux android device not using chrome browser checks just android's version
+        if (p.version().major < 5) {
+          return 'none';
+        }
+      }
+
+      // fallback to always use ripple
+      return 'ripple';
     },
     hoverCSS: false,
     keyboardHeight: 300,
@@ -158,5 +175,5 @@ function isIOSDevice(p) {
   // checks navigator.platform to see if it's an actual iOS device
   // this does not use the user-agent string because it is often spoofed
   // an actual iPad will return true, a chrome dev tools iPad will return false
-  return /iphone|ipad|ipod/i.test(p.navigatorPlatform());
+  return p.testNavigatorPlatform(/iphone|ipad|ipod/);
 }

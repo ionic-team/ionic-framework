@@ -163,14 +163,28 @@ export function run() {
 
     describe("insert", () => {
       it('insert page at the specified index', () => {
-        nav._views = [{}, {}, {}];
+        let view1 = new ViewController();
+        view1._loaded = true;
+        let view2 = new ViewController();
+        view2._loaded = true;
+        let view3 = new ViewController();
+        view3._loaded = true;
+
+        nav._views = [view1, view2, view3];
         expect(nav._views[2].componentType).toBeUndefined();
         nav.insert(2, FirstPage);
         expect(nav._views[2].componentType).toBe(FirstPage);
       });
 
       it('push page if index >= _views.length', () => {
-        nav._views = [{}, {}, {}];
+        let view1 = new ViewController();
+        view1._loaded = true;
+        let view2 = new ViewController();
+        view2._loaded = true;
+        let view3 = new ViewController();
+        view3._loaded = true;
+
+        nav._views = [view1, view2, view3];
         spyOn(nav, 'push').and.callThrough();
         nav.insert(2, FirstPage);
         expect(nav.push).not.toHaveBeenCalled();
