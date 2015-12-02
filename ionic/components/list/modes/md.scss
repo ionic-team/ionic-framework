@@ -56,6 +56,10 @@ ion-list {
     }
   }
 
+  > ion-input.has-focus:last-child:after {
+    left: 0;
+  }
+
   ion-item-options {
     button, [button] {
       height: calc(100% - 2px);
@@ -116,6 +120,10 @@ ion-list[inset] {
   ion-input.item {
     padding-right: 0;
     padding-left: 0;
+
+    &:after {
+      left: 0;
+    }
   }
 
   + ion-list[inset] {

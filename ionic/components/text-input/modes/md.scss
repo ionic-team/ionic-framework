@@ -28,12 +28,12 @@ ion-label {
 }
 
 ion-input.has-focus:after {
-  border-top: 2px solid $text-input-highlight-color !important;
-  z-index: 1;
-}
-
-ion-input.has-focus + ion-input:before {
-  border-top-color: $text-input-highlight-color !important;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: $item-md-padding-left;
+  border-bottom: 2px solid $text-input-highlight-color;
+  content: '';
 }
 
 [stacked-label] ion-label {
