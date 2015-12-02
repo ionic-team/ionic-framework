@@ -282,15 +282,6 @@ export class ViewController {
 
   /**
    * @private
-   */
-  postRender() {
-    // let navbar = this.getNavbar();
-    // navbar && navbar.postRender();
-    // ctrlFn(this, 'onPagePostRender');
-  }
-
-  /**
-   * @private
    * The view is about to enter and become the active view.
    */
   willEnter() {

@@ -39,6 +39,7 @@ class MyCmpTest{}
         <button ion-item (click)="setPages()">setPages() (Go to PrimaryHeaderPage)</button>
         <button ion-item (click)="setRoot()">setRoot(PrimaryHeaderPage) (Go to PrimaryHeaderPage)</button>
         <button ion-item (click)="nav.pop()">Pop</button>
+        <button ion-item (click)="reload()">Reload</button>
 
         <button *ng-for="#i of pages" ion-item (click)="pushPrimaryHeaderPage()">Page {{i}}</button>
       </ion-list>
@@ -85,6 +86,10 @@ class FirstPage {
 
   pushAnother() {
     this.nav.push(AnotherPage);
+  }
+
+  reload() {
+    window.location.reload();
   }
 }
 
@@ -154,9 +159,15 @@ class FullPage {
 })
 class PrimaryHeaderPage {
   constructor(
-    nav: NavController
+    nav: NavController,
+    viewCtrl: ViewController
   ) {
-    this.nav = nav
+    this.nav = nav;
+    this.viewCtrl = viewCtrl;
+  }
+
+  onPageWillEnter() {
+    this.viewCtrl.setBackButtonText('Previous');
   }
 
   pushAnother() {

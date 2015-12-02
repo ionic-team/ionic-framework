@@ -53,9 +53,13 @@ export class IonicApp {
    * it will automatically enable the app again. It's basically a fallback incase
    * something goes wrong during a transition and the app wasn't re-enabled correctly.
    */
-  setEnabled(isEnabled, fallback=700) {
-    this._disTime = (isEnabled ? 0 : Date.now() + fallback);
-    this._clickBlock.show(!isEnabled, fallback + 100);
+  setEnabled(isEnabled, duration=700) {
+    this._disTime = (isEnabled ? 0 : Date.now() + duration);
+
+    if (duration > 32 || isEnabled) {
+      // only do a click block if the duration is longer than XXms
+      this._clickBlock.show(!isEnabled, duration + 64);
+    }
   }
 
   /**

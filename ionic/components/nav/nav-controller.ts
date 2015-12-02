@@ -9,7 +9,7 @@ import {ViewController} from './view-controller';
 import {Animation} from '../../animations/animation';
 import {SwipeBackGesture} from './swipe-back';
 import {isBoolean, array} from '../../util/util';
-import {rafFrames} from '../../util/dom';
+import {raf, rafFrames} from '../../util/dom';
 
 /**
  * _For examples on the basic usage of NavController, check out the
@@ -101,7 +101,6 @@ import {rafFrames} from '../../util/dom';
 export class NavController extends Ion {
 
   /** @internal */
-  static _tranitionScope: WtfScopeFn = wtfCreateScope('ionic.NavController#_transition()');
   static _loadPageScope: WtfScopeFn = wtfCreateScope('ionic.NavController#loadPage()');
   static _transCompleteScope: WtfScopeFn = wtfCreateScope('ionic.NavController#_transComplete()');
 
@@ -133,6 +132,7 @@ export class NavController extends Ion {
 
     this._views = [];
     this._trnsTime = 0;
+    this._trnsDelay = config.get('pageTransitionDelay');
 
     this._sbTrans = null;
     this._sbEnabled = config.get('swipeBackEnabled') || false;
@@ -365,7 +365,7 @@ export class NavController extends Ion {
     }
 
     // ensure the entering view is shown
-    this._renderView(viewCtrl, true);
+    this._cachePage(viewCtrl, true);
 
     let resolve = null;
     let promise = new Promise(res => { resolve = res; });
@@ -385,7 +385,7 @@ export class NavController extends Ion {
         popView.willUnload();
 
         // only the leaving view should be shown, all others hide
-        this._renderView(popView, (popView === leavingView));
+        this._cachePage(popView, (popView === leavingView));
       }
     }
 
@@ -592,7 +592,7 @@ export class NavController extends Ion {
 
         if (opts.animate) {
           // only the leaving view should be shown, all others hide
-          this._renderView(popView, (popView === leavingView));
+          this._cachePage(popView, (popView === leavingView));
         }
       }
     }
@@ -647,16 +647,11 @@ export class NavController extends Ion {
   }
 
   /**
-   *
    * @private
-   * @param {TODO} enteringView  TODO
-   * @param {TODO} leavingView  TODO
-   * @param {TODO} opts  TODO
-   * @param {Function} done  TODO
-   * @returns {any} TODO
    */
   _transition(enteringView, leavingView, opts, done) {
     if (enteringView === leavingView) {
+      // if the entering view and leaving view are the same thing don't continue
       return done(enteringView);
     }
 
@@ -669,119 +664,242 @@ export class NavController extends Ion {
 
     if (!enteringView) {
       // if no entering view then create a bogus one
+      // already consider this bogus one loaded
       enteringView = new ViewController()
       enteringView.loaded();
     }
 
     console.time('_transition ' + (enteringView.componentType && enteringView.componentType.name));
 
-    this._stage(enteringView, opts, () => {
-      if (enteringView.shouldDestroy) {
-        // already marked as a view that will be destroyed, don't continue
-        return done(enteringView);
-      }
+    /* Async steps to complete a transition
+      1. _render: compile the view and render it in the DOM. Load page if it hasn't loaded already. When done call postRender
+      2. _postRender: Run willEnter/willLeave, then wait a frame (change detection happens), then call beginTransition
+      3. _beforeTrans: Create the transition's animation, play the animation, wait for it to end
+      4. _afterTrans: Run didEnter/didLeave, call _transComplete()
+      5. _transComplete: Cleanup, remove cache views, then call the final callback
+    */
 
-      this._cd.detectChanges();
+    // begin the multiple async process of transitioning to the entering view
+    this._render(enteringView, leavingView, opts, done);
+  }
 
-      this._zone.runOutsideAngular(() => {
-        this._setZIndex(enteringView, leavingView, opts.direction);
+  /**
+   * @private
+   */
+  _render(enteringView, leavingView, opts, done) {
+    // compile/load the view into the DOM
 
-        enteringView.shouldDestroy = false;
-        enteringView.shouldCache = false;
+    if (enteringView.shouldDestroy) {
+      // about to be destroyed, shouldn't continue
+      done(enteringView);
 
-        this._postRender(enteringView, opts, () => {
+    } else if (enteringView.isLoaded()) {
+      // already compiled this view, do not load again and continue
+      this._postRender(enteringView, leavingView, opts, done);
 
-          if (!opts.preload) {
-            enteringView.willEnter();
-            leavingView.willLeave();
-          }
-
-          // set that the new view pushed on the stack is staged to be entering/leaving
-          // staged state is important for the transition to find the correct view
-          enteringView.state = STAGED_ENTERING_STATE;
-          leavingView.state = STAGED_LEAVING_STATE;
-
-          // init the transition animation
-          opts.renderDelay = opts.transitionDelay || this.config.get('pageTransitionDelay');
-
-          let transAnimation = Animation.createTransition(this._getStagedEntering(),
-                                                          this._getStagedLeaving(),
-                                                          opts);
-          if (opts.animate === false) {
-            // force it to not animate the elements, just apply the "to" styles
-            transAnimation.clearDuration();
-            transAnimation.duration(0);
-          }
-
-          let duration = transAnimation.duration();
-          let enableApp = (duration < 64);
-          // block any clicks during the transition and provide a
-          // fallback to remove the clickblock if something goes wrong
-          this.app.setEnabled(enableApp, duration);
-          this.setTransitioning(!enableApp, duration);
-
-          if (opts.pageType) {
-            transAnimation.before.addClass(opts.pageType);
-          }
-
-          // start the transition
-          transAnimation.play(() => {
-            // transition has completed, update each view's state
-            enteringView.state = ACTIVE_STATE;
-            leavingView.state = CACHED_STATE;
-
-            // dispose any views that shouldn't stay around
-            transAnimation.dispose();
-
-            if (!opts.preload) {
-              enteringView.didEnter();
-              leavingView.didLeave();
-            }
-
-            this._zone.run(() => {
-              if (this.keyboard.isOpen()) {
-                this.keyboard.onClose(() => {
-                  this._transComplete();
-                  console.timeEnd('_transition ' + (enteringView.componentType && enteringView.componentType.name));
-                  done(enteringView);
-                }, 32);
-
-              } else {
-                this._transComplete();
-                console.timeEnd('_transition ' + (enteringView.componentType && enteringView.componentType.name));
-                done(enteringView);
-              }
-            });
+    } else {
+      // view has not been compiled/loaded yet
+      // continue once the view has finished compiling
+      // DOM WRITE
+      this.loadPage(enteringView, null, opts, () => {
+        if (enteringView.onReady) {
+          // this entering view needs to wait for it to be ready
+          // this is used by Tabs to wait for the first page of
+          // the first selected tab to be loaded
+          enteringView.onReady(() => {
+            enteringView.loaded();
+            this._postRender(enteringView, leavingView, opts, done);
           });
-        });
 
+        } else {
+          enteringView.loaded();
+          this._postRender(enteringView, leavingView, opts, done);
+        }
+      });
+    }
+  }
+
+  /**
+   * @private
+   */
+  _postRender(enteringView, leavingView, opts, done) {
+    // called after _render has completed and the view is compiled/loaded
+
+    if (enteringView.shouldDestroy) {
+      // view already marked as a view that will be destroyed, don't continue
+      done(enteringView);
+
+    } else if (!opts.preload) {
+      // the enteringView will become the active view, and is not being preloaded
+
+      // call each view's lifecycle events
+      // POSSIBLE DOM READ THEN DOM WRITE
+      enteringView.willEnter();
+      leavingView.willLeave();
+
+      // set the correct zIndex for the entering and leaving views
+      // DOM WRITE
+      this._setZIndex(enteringView, leavingView, opts.direction);
+
+      // lifecycle events may have updated some data
+      // wait one frame and allow the raf to do a change detection
+      // before kicking off the transition and showing the new view
+      raf(() => {
+        this._beforeTrans(enteringView, leavingView, opts, done);
       });
 
+    } else {
+      // this view is being preloaded, don't call lifecycle events
+      // transition does not need to animate
+      opts.animate = false;
+      this._beforeTrans(enteringView, leavingView, opts, done);
+    }
+  }
+
+  /**
+   * @private
+   */
+  _beforeTrans(enteringView, leavingView, opts, done) {
+    // called after one raf from postRender()
+    // create the transitions animation, play the animation
+    // when the transition ends call wait for it to end
+
+    // everything during the transition should runOutsideAngular
+    this._zone.runOutsideAngular(() => {
+
+      // ensure the entering view is not destroyed or cached
+      enteringView.shouldDestroy = false;
+      enteringView.shouldCache = false;
+
+      // set that the new view pushed on the stack is staged to be entering/leaving
+      // staged state is important for the transition to find the correct view
+      enteringView.state = STAGED_ENTERING_STATE;
+      leavingView.state = STAGED_LEAVING_STATE;
+
+      // init the transition animation
+      opts.renderDelay = opts.transitionDelay || self._trnsDelay;
+
+      let transAnimation = Animation.createTransition(enteringView,
+                                                      leavingView,
+                                                      opts);
+      if (opts.animate === false) {
+        // force it to not animate the elements, just apply the "to" styles
+        transAnimation.clearDuration();
+        transAnimation.duration(0);
+      }
+
+      let duration = transAnimation.duration();
+      let enableApp = (duration < 64);
+      // block any clicks during the transition and provide a
+      // fallback to remove the clickblock if something goes wrong
+      this.app.setEnabled(enableApp, duration);
+      this.setTransitioning(!enableApp, duration);
+
+      if (opts.pageType) {
+        transAnimation.before.addClass(opts.pageType);
+      }
+
+      // start the transition
+      transAnimation.play(() => {
+        // transition animation has ended
+
+        // dispose the animation and it's element references
+        transAnimation.dispose();
+
+        this._afterTrans(enteringView, leavingView, opts, done);
+      });
     });
   }
 
   /**
    * @private
    */
-  _stage(viewCtrl, opts, done) {
-    if (viewCtrl.isLoaded() || viewCtrl.shouldDestroy) {
-      // already compiled this view
-      return done();
-    }
+  _afterTrans(enteringView, leavingView, opts, done) {
+    // transition has completed, update each view's state
+    // place back into the zone, run didEnter/didLeave
+    // call the final callback when done
+    enteringView.state = ACTIVE_STATE;
+    leavingView.state = CACHED_STATE;
 
-    // get the pane the NavController wants to use
-    // the pane is where all this content will be placed into
-    this.loadPage(viewCtrl, null, opts, () => {
-      if (viewCtrl.onReady) {
-        viewCtrl.onReady(() => {
-          viewCtrl.loaded();
-          done();
-        });
+    // run inside of the zone again
+    this._zone.run(() => {
+
+      if (!opts.preload) {
+        enteringView.didEnter();
+        leavingView.didLeave();
+      }
+
+      if (this.keyboard.isOpen()) {
+        // the keyboard is still open!
+        // no problem, let's just close for them
+        this.keyboard.onClose(() => {
+          // keyboard has finished closing, transition complete
+          this._transComplete();
+          console.timeEnd('_transition ' + (enteringView.componentType && enteringView.componentType.name));
+          done(enteringView);
+        }, 32);
 
       } else {
-        viewCtrl.loaded();
-        done();
+        // all good, transition complete
+        this._transComplete();
+        console.timeEnd('_transition ' + (enteringView.componentType && enteringView.componentType.name));
+        done(enteringView);
       }
+    });
+  }
+
+  /**
+   * @private
+   */
+  _transComplete() {
+    this._views.forEach(view => {
+      if (view) {
+        if (view.shouldDestroy) {
+          view.didUnload();
+
+        } else if (view.state === CACHED_STATE && view.shouldCache) {
+          view.shouldCache = false;
+        }
+      }
+    });
+
+    // allow clicks again, but still set an enable time
+    // meaning nothing with this view controller can happen for XXms
+    this.app.setEnabled(true);
+    this.setTransitioning(false);
+
+    this._sbComplete();
+
+    this._cleanup();
+  }
+
+  /**
+   * @private
+   */
+  _cleanup(activeView) {
+    // the active view, and the previous view, should be rendered in dom and ready to go
+    // all others, like a cached page 2 back, should be display: none and not rendered
+    let destroys = [];
+    activeView = activeView || this.getActive();
+    let previousView = this.getPrevious(activeView);
+
+    this._views.forEach(view => {
+      if (view) {
+        if (view.shouldDestroy) {
+          destroys.push(view);
+
+        } else if (view.isLoaded()) {
+          let shouldShow = (view === activeView) || (view === previousView);
+          this._cachePage(view, shouldShow);
+        }
+      }
+    });
+
+    // all views being destroyed should be removed from the list of views
+    // and completely removed from the dom
+    destroys.forEach(view => {
+      this._remove(view);
+      view.destroy();
     });
   }
 
@@ -852,17 +970,6 @@ export class NavController extends Ion {
     });
   }
 
-  _postRender(enteringView, opts, done) {
-    enteringView.postRender();
-
-    if (opts.animate === false) {
-      done();
-
-    } else {
-      rafFrames(2, done);
-    }
-  }
-
   _setZIndex(enteringView, leavingView, direction) {
     let enteringPageRef = enteringView && enteringView.pageRef();
     if (enteringPageRef) {
@@ -885,7 +992,7 @@ export class NavController extends Ion {
     }
   }
 
-  _renderView(viewCtrl, shouldShow) {
+  _cachePage(viewCtrl, shouldShow) {
     // using hidden element attribute to display:none and not render views
     // renderAttr of '' means the hidden attribute will be added
     // renderAttr of null means the hidden attribute will be removed
@@ -935,7 +1042,7 @@ export class NavController extends Ion {
     enteringView.willEnter();
 
     // wait for the new view to complete setup
-    enteringView._stage(enteringView, {}, () => {
+    this._render(enteringView, {}, () => {
 
       this._zone.runOutsideAngular(() => {
         // set that the new view pushed on the stack is staged to be entering/leaving
@@ -1023,7 +1130,6 @@ export class NavController extends Ion {
 
         // all done!
         this._transComplete();
-
       });
     });
 
@@ -1142,7 +1248,7 @@ export class NavController extends Ion {
 
         } else if (view.isLoaded()) {
           let shouldShow = (view === activeView) || (view === previousView);
-          this._renderView(view, shouldShow);
+          this._cachePage(view, shouldShow);
         }
       }
     });

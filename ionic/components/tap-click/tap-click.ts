@@ -13,37 +13,40 @@ import {RippleActivator} from './ripple';
 @Injectable()
 export class TapClick {
   constructor(app: IonicApp, config: Config, zone: NgZone) {
-    this.app = app;
-    this.zone = zone;
+    let self = this;
+    self.app = app;
+    self.zone = zone;
 
-    this.lastTouch = 0;
-    this.disableClick = 0;
-    this.lastActivated = 0;
+    self.lastTouch = 0;
+    self.disableClick = 0;
+    self.lastActivated = 0;
 
     if (config.get('activator') == 'ripple') {
-      this.activator = new RippleActivator(app, config, zone);
+      self.activator = new RippleActivator(app, config, zone);
 
     } else if (config.get('activator') == 'highlight') {
-      this.activator = new Activator(app, config, zone);
+      self.activator = new Activator(app, config, zone);
     }
 
-    this.usePolyfill = (config.get('tapPolyfill') === true);
+    self.usePolyfill = (config.get('tapPolyfill') === true);
 
     zone.runOutsideAngular(() => {
-      addListener('click', this.click.bind(this), true);
+      addListener('click', self.click.bind(self), true);
 
-      addListener('touchstart', this.touchStart.bind(this));
-      addListener('touchend', this.touchEnd.bind(this));
-      addListener('touchcancel', this.pointerCancel.bind(this));
+      if (self.usePolyfill) {
+        addListener('touchstart', self.touchStart.bind(self));
+        addListener('touchend', self.touchEnd.bind(self));
+        addListener('touchcancel', self.pointerCancel.bind(self));
+      }
 
-      addListener('mousedown', this.mouseDown.bind(this), true);
-      addListener('mouseup', this.mouseUp.bind(this), true);
+      addListener('mousedown', self.mouseDown.bind(self), true);
+      addListener('mouseup', self.mouseUp.bind(self), true);
     });
 
-    this.pointerMove = function(ev) {
-      console.log('pointerMove');
-      if ( hasPointerMoved(POINTER_MOVE_UNTIL_CANCEL, this.startCoord, pointerCoord(ev)) ) {
-        this.pointerCancel(ev);
+
+    self.pointerMove = function(ev) {
+      if ( hasPointerMoved(POINTER_MOVE_UNTIL_CANCEL, self.startCoord, pointerCoord(ev)) ) {
+        self.pointerCancel(ev);
       }
     };
   }
@@ -60,7 +63,7 @@ export class TapClick {
       let endCoord = pointerCoord(ev);
 
       if (!hasPointerMoved(POINTER_TOLERANCE, this.startCoord, endCoord)) {
-        console.debug('create click from touch');
+        console.debug('create click from touch ' + Date.now());
 
         // prevent native mouse click events for XX amount of time
         this.disableClick = this.lastTouch + DISABLE_NATIVE_CLICK_AMOUNT;
@@ -78,7 +81,7 @@ export class TapClick {
 
   mouseDown(ev) {
     if (this.isDisabledNativeClick()) {
-      console.debug('mouseDown prevent', ev.target.tagName);
+      console.debug('mouseDown prevent ' + ev.target.tagName + ' ' + Date.now());
       // does not prevent default on purpose
       // so native blur events from inputs can happen
       ev.stopPropagation();
@@ -90,7 +93,7 @@ export class TapClick {
 
   mouseUp(ev) {
     if (this.isDisabledNativeClick()) {
-      console.debug('mouseUp prevent', ev.target.tagName);
+      console.debug('mouseUp prevent ' + ev.target.tagName + ' ' + Date.now());
       ev.preventDefault();
       ev.stopPropagation();
     }
@@ -125,21 +128,21 @@ export class TapClick {
   }
 
   pointerCancel(ev) {
-    console.debug('pointerCancel from', ev.type);
+    console.debug('pointerCancel from ' + ev.type + ' ' + Date.now());
     this.activator && this.activator.clearState();
     this.moveListeners(false);
   }
 
   moveListeners(shouldAdd) {
     removeListener(this.usePolyfill ? 'touchmove' : 'mousemove', this.pointerMove);
-    
-    this.zone.runOutsideAngular(() => {
+
+    //this.zone.runOutsideAngular(() => {
       if (shouldAdd) {
         addListener(this.usePolyfill ? 'touchmove' : 'mousemove', this.pointerMove);
       } else {
 
       }
-    });
+    //});
   }
 
   click(ev) {
@@ -153,7 +156,7 @@ export class TapClick {
     }
 
     if (preventReason !== null) {
-      console.debug('click prevent', preventReason);
+      console.debug('click prevent ' + preventReason + ' ' + Date.now());
       ev.preventDefault();
       ev.stopPropagation();
     }
