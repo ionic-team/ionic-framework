@@ -35,16 +35,15 @@ export class ScrollTo {
     y = y || 0;
     tolerance = tolerance || 0;
 
-    let ele = self._el;
-    let fromY = ele.scrollTop;
-    let fromX = ele.scrollLeft;
+    let fromY = self._el.scrollTop;
+    let fromX = self._el.scrollLeft;
 
     let xDistance = Math.abs(x - fromX);
     let yDistance = Math.abs(y - fromY);
 
     if (yDistance <= tolerance && xDistance <= tolerance) {
       // prevent scrolling if already close to there
-      this._el = ele = null;
+      self._el = null;
       return Promise.resolve();
     }
 
@@ -62,6 +61,10 @@ export class ScrollTo {
 
       // scroll loop
       function step() {
+        if (!self._el) {
+          return resolve();
+        }
+        
         let time = Math.min(1, ((Date.now() - start) / duration));
 
         // where .5 would be 50% of time on a linear scale easedT gives a
@@ -69,10 +72,10 @@ export class ScrollTo {
         let easedT = easeOutCubic(time);
 
         if (fromY != y) {
-          ele.scrollTop = parseInt((easedT * (y - fromY)) + fromY, 10);
+          self._el.scrollTop = parseInt((easedT * (y - fromY)) + fromY, 10);
         }
         if (fromX != x) {
-          ele.scrollLeft = parseInt((easedT * (x - fromX)) + fromX, 10);
+          self._el.scrollLeft = parseInt((easedT * (x - fromX)) + fromX, 10);
         }
 
         if (time < 1 && self.isPlaying) {
@@ -80,12 +83,12 @@ export class ScrollTo {
 
         } else if (!self.isPlaying) {
           // stopped
-          this._el = ele = null;
+          self._el = null;
           reject();
 
         } else {
           // done
-          this._el = ele = null;
+          self._el = null;
           resolve();
         }
       }

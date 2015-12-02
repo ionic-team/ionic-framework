@@ -90,31 +90,32 @@ export class Menu extends Ion {
    */
   onInit() {
     super.onInit();
-    let content = this.content;
-    this._cntEle = (content instanceof Node) ? content : content && content.getNativeElement && content.getNativeElement();
+    let self = this;
 
-    if (!this._cntEle) {
+    let content = self.content;
+    self._cntEle = (content instanceof Node) ? content : content && content.getNativeElement && content.getNativeElement();
+
+    if (!self._cntEle) {
       return console.error('Menu: must have a [content] element to listen for drag events on. Example:\n\n<ion-menu [content]="content"></ion-menu>\n\n<ion-nav #content></ion-nav>');
     }
 
-    if (this.side !== 'left' && this.side !== 'right') {
-      this.side = 'left';
+    if (self.side !== 'left' && self.side !== 'right') {
+      self.side = 'left';
     }
 
-    if (!this.id) {
+    if (!self.id) {
       // Auto register
-      this.id = 'menu';
-      this.app.register(this.id, this);
+      self.id = 'menu';
+      self.app.register(self.id, self);
     }
 
-    this._initGesture();
-    this._initType(this.type);
+    self._initGesture();
+    self._initType(self.type);
 
-    this._cntEle.classList.add('menu-content');
-    this._cntEle.classList.add('menu-content-' + this.type);
+    self._cntEle.classList.add('menu-content');
+    self._cntEle.classList.add('menu-content-' + self.type);
 
-    let self = this;
-    this.onContentClick = function(ev) {
+    self.onContentClick = function(ev) {
       if (self.isEnabled) {
         ev.preventDefault();
         ev.stopPropagation();
@@ -150,6 +151,9 @@ export class Menu extends Ion {
     this.type = type;
   }
 
+  /**
+   * @private
+   */
   _getType() {
     if (!this._type) {
       this._type = new menuTypes[this.type](this);
@@ -238,7 +242,9 @@ export class Menu extends Ion {
    */
   _after(isOpen) {
     // keep opening/closing the menu disabled for a touch more yet
-    if (this.isEnabled) {
+    // only add listeners/css if it's enabled and isOpen
+    // and only remove listeners/css if it's not open
+    if ((this.isEnabled && isOpen) || !isOpen) {
       this._prevent();
 
       this.isOpen = isOpen;
@@ -246,6 +252,7 @@ export class Menu extends Ion {
       this._cntEle.classList[isOpen ? 'add' : 'remove']('menu-content-open');
 
       this._cntEle.removeEventListener('click', this.onContentClick);
+
       if (isOpen) {
         this._cntEle.addEventListener('click', this.onContentClick);
 
@@ -297,10 +304,17 @@ export class Menu extends Ion {
   }
 
   /**
-   * @private
+   * Used to enable or disable a menu. For example, there could be multiple
+   * left menus, but only one of them should be able to be dragged open.
+   * @param {boolean} shouldEnable  True if it should be enabled, false if not.
+   * @return {Menu}  Returns the instance of the menu, which is useful for chaining.
    */
   enable(shouldEnable) {
     this.isEnabled = shouldEnable;
+    if (!shouldEnable) {
+      this.close();
+    }
+    return this;
   }
 
   /**
@@ -324,6 +338,9 @@ export class Menu extends Ion {
     return this.backdrop.elementRef.nativeElement;
   }
 
+  /**
+   * @private
+   */
   static register(name, cls) {
     menuTypes[name] = cls;
   }
