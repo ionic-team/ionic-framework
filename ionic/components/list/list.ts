@@ -110,6 +110,9 @@ export class List extends Ion {
 }
 
 
+/**
+ * @private
+ */
 @Directive({
   selector: 'ion-list-header',
   inputs: [

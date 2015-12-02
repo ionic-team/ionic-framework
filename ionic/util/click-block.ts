@@ -3,7 +3,9 @@ const DEFAULT_EXPIRE = 330;
 let cbEle, fallbackTimerId;
 let isShowing = false;
 
-
+/**
+ * @private
+ */
 export class ClickBlock {
 
   enable() {

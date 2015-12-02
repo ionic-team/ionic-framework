@@ -7,6 +7,9 @@ import {OverlayController} from './overlay-controller';
 import {NavController} from '../nav/nav-controller';
 
 
+/**
+ * @private
+ */
 @Component({
   selector: 'ion-overlay',
   template: '<template #contents></template>'

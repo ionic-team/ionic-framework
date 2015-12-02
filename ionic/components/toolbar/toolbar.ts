@@ -7,7 +7,7 @@ import {Navbar} from '../navbar/navbar';
 
 
 /**
- * TODO
+ * @private
  */
 export class ToolbarBase extends Ion  {
 
