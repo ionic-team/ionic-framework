@@ -898,7 +898,7 @@ export class NavController extends Ion {
 
     // guts of DynamicComponentLoader#loadIntoLocation
     this._compiler.compileInHost(viewCtrl.componentType).then(hostProtoViewRef => {
-      let wtfScope = wtfCreateScope('ionic.NavController#loadPage after compile ' + viewCtrl.name)();
+      let wtfScope = wtfCreateScope('ionic.NavController#loadPage_After_Compile')();
 
       let providers = this.providers.concat(Injector.resolve([
         provide(ViewController, {useValue: viewCtrl}),
