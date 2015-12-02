@@ -101,8 +101,6 @@ export class Popup {
    *   title: '', // String. The title of the popup.
    *   cssClass: '', // String (optional). The custom CSS class name.
    *   subTitle: '', // String (optional). The sub-title of the popup.
-   *   template: '', // String (optional). The html template to place in the popup body.
-   *   templateUrl: '', // String (optional). The URL of an html template to place in the popup body.
    *   okText: '', // String (default: 'OK'). The text of the OK button.
    *   okType: '', // String (default: ''). The type of the OK button.
    * }
@@ -148,8 +146,6 @@ export class Popup {
    *   title: '', // String. The title of the popup.
    *   cssClass: '', // String (optional). The custom CSS class name.
    *   subTitle: '', // String (optional). The sub-title of the popup.
-   *   template: '', // String (optional). The html template to place in the popup body.
-   *   templateUrl: '', // String (optional). The URL of an html template to place in the popup body.
    *   cancelText: '', // String (default: 'Cancel'). The text of the Cancel button.
    *   cancelType: '', // String (default: ''). The type of the Cancel button.
    *   okText: '', // String (default: 'OK'). The text of the OK button.
@@ -203,8 +199,6 @@ export class Popup {
    *   title: '', // String. The title of the popup.
    *   cssClass: '', // String (optional). The custom CSS class name.
    *   subTitle: '', // String (optional). The sub-title of the popup.
-   *   template: '', // String (optional). The html template to place in the popup body.
-   *   templateUrl: '', // String (optional). The URL of an html template to place in the popup body.
    *   inputType: // String (default: 'text'). The type of input to use.
    *   inputPlaceholder: // String (default: ''). A placeholder to use for the input.
    *   cancelText: '', // String (default: 'Cancel'). The text of the Cancel button.
