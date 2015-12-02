@@ -12,6 +12,13 @@ import {rafFrames} from '../../util/dom';
 
 
 /**
+ * @name Tabs
+ * @property
+ * @property [tabbar-placement] - set position of the tabbar, top or bottom
+ * @property [tabbar-icons] - set the position of the tabbar's icons: top, bottom, left, right, hide
+ * @property [tabbar-style] - sets tabbar's style (primary, secondary, etc)
+ * @property [preload-tabs] - sets whether to preload all the tabs, true or false
+ * @description
  * _For basic Tabs usage, see the [Tabs section](../../../../components/#tabs)
  * of the Component docs._
  *
@@ -159,9 +166,7 @@ export class Tabs extends Ion {
   }
 
   /**
-   * TODO
-   * @param {Tab} tab  TODO
-   * @returns {TODO} TODO
+   * @param {Number} index Index of the tab you want to select
    */
   select(tabOrIndex) {
     let selectedTab = (typeof tabOrIndex === 'number' ? this.getByIndex(tabOrIndex) : tabOrIndex);
@@ -212,9 +217,8 @@ export class Tabs extends Ion {
   }
 
   /**
-   * TODO
-   * @param {TODO} index  TODO
-   * @returns {TODO} TODO
+   * @param {Number} index Index of the tab you want to get
+   * @returns {Any} Tab Returs the tab who's index matches the one passed
    */
   getByIndex(index) {
     if (index < this._tabs.length && index > -1) {
@@ -223,6 +227,9 @@ export class Tabs extends Ion {
     return null;
   }
 
+  /**
+   * @return {Any} Tab Returns the currently selected tab
+   */
   getSelected() {
     for (let i = 0; i < this._tabs.length; i++) {
       if (this._tabs[i].isSelected) {
@@ -232,6 +239,9 @@ export class Tabs extends Ion {
     return null;
   }
 
+  /**
+   * @private
+   */
   getIndex(tab) {
     return this._tabs.indexOf(tab);
   }

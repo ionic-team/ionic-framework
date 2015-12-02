@@ -3,6 +3,7 @@ import {Injectable, Pipe, PipeTransform} from 'angular2/angular2';
 import {Translate} from './translate';
 
 /**
+ * @private
  * The Translate pipe makes it easy to translate strings.
  *
  * @usage

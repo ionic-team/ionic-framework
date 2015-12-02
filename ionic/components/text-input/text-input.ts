@@ -11,8 +11,37 @@ import {Platform} from '../../platform/platform';
 
 
 /**
- * TODO
+ * @name Input
+ * @module ionic
+ * @description
+ * `ionInput` is a generic wrapper for both inputs and textareas. You can give `ion-input` to tell it how to handle a chile `ion-label` component
+ * @property [fixed-labels] - a persistant label that sits next the the input
+ * @property [floating-labels] - a label that will float about the input if the input is empty of looses focus
+ * @property [stacked-labels] - A stacked label will always appear on top of the input
+ * @usage
+ * ```html
+ *  <ion-input>
+ *    <ion-label>Username</ion-label>
+ *    <input type="text" value="">
+ *  </ion-input>
+ *
+ *  <ion-input>
+ *    <input type="text" placeholder="Username">
+ *  </ion-input>
+ *
+ *  <ion-input fixed-label>
+ *    <ion-label>Username</ion-label>
+ *    <input type="text" value="">
+ *  </ion-input>
+ *
+ *  <ion-input floating-label>
+ *    <ion-label>Username</ion-label>
+ *    <input type="text" value="">
+ *  </ion-input>
+ * ```
+ *
  */
+
 @Component({
   selector: 'ion-input',
   host: {
@@ -504,6 +533,9 @@ export class TextInputElement {
 
 }
 
+/**
+ * @private
+ */
 @Directive({
   selector: '[scroll-assist]',
   host: {
