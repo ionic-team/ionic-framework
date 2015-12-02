@@ -19,6 +19,8 @@ module.exports = function(currentVersion){
 .processor(require('./processors/index-page'))
 .processor(require('./processors/jekyll'))
 .processor(require('./processors/remove-private-members'))
+.processor(require('./processors/hide-private-api'))
+
 
 // for debugging docs
 // .processor(function test(){
