@@ -865,7 +865,7 @@ export class NavController extends Ion {
    * @private
    */
   _transComplete() {
-    let wtfScope = wtfCreateScope('ionic.NavController#_transComplete');
+    let wtfScope = wtfCreateScope('ionic.NavController#_transComplete')();
 
     this._views.forEach(view => {
       if (view) {
@@ -898,7 +898,7 @@ export class NavController extends Ion {
 
     // guts of DynamicComponentLoader#loadIntoLocation
     this._compiler.compileInHost(viewCtrl.componentType).then(hostProtoViewRef => {
-      let wtfScope = wtfCreateScope('ionic.NavController#loadPage after compile ' + viewCtrl.name);
+      let wtfScope = wtfCreateScope('ionic.NavController#loadPage after compile ' + viewCtrl.name)();
 
       let providers = this.providers.concat(Injector.resolve([
         provide(ViewController, {useValue: viewCtrl}),
@@ -960,6 +960,9 @@ export class NavController extends Ion {
     });
   }
 
+  /**
+   * @private
+   */
   _setZIndex(enteringView, leavingView, direction) {
     let enteringPageRef = enteringView && enteringView.pageRef();
     if (enteringPageRef) {
@@ -982,6 +985,9 @@ export class NavController extends Ion {
     }
   }
 
+  /**
+   * @private
+   */
   _cachePage(viewCtrl, shouldShow) {
     // using hidden element attribute to display:none and not render views
     // renderAttr of '' means the hidden attribute will be added
@@ -998,6 +1004,36 @@ export class NavController extends Ion {
         this._renderer.setElementAttribute(navbarRef, 'hidden', viewCtrl._hdnAttr);
       }
     }
+  }
+
+  /**
+   * @private
+   */
+  _cleanup(activeView, previousView, skipDestroy) {
+    // the active page, and the previous page, should be rendered in dom and ready to go
+    // all others, like a cached page 2 back, should be display: none and not rendered
+    let destroys = [];
+    activeView = activeView || this.getActive();
+    previousView = previousView || this.getPrevious(activeView);
+
+    this._views.forEach(view => {
+      if (view) {
+        if (view.shouldDestroy && !skipDestroy) {
+          destroys.push(view);
+
+        } else if (view.isLoaded()) {
+          let shouldShow = (view === activeView) || (view === previousView);
+          this._cachePage(view, shouldShow);
+        }
+      }
+    });
+
+    // all pages being destroyed should be removed from the list of pages
+    // and completely removed from the dom
+    destroys.forEach(view => {
+      this._remove(view);
+      view.destroy();
+    });
   }
 
   /**
@@ -1191,65 +1227,6 @@ export class NavController extends Ion {
       return activeView.enableBack();
     }
     return false;
-  }
-
-  /**
-   * @private
-   */
-  _transComplete() {
-    let wtfScope = wtfCreateScope('ionic.NavController#_transComplete')();
-
-    this._views.forEach(view => {
-      if (view) {
-        if (view.shouldDestroy) {
-          view.didUnload();
-
-        } else if (view.state === CACHED_STATE && view.shouldCache) {
-          view.shouldCache = false;
-        }
-      }
-    });
-
-    // allow clicks again, but still set an enable time
-    // meaning nothing with this page controller can happen for XXms
-    this.app.setEnabled(true);
-    this.setTransitioning(false);
-
-    this._sbComplete();
-
-    this._cleanup();
-
-    wtfLeave(wtfScope);
-  }
-
-  /**
-   * @private
-   */
-  _cleanup(activeView, previousView, skipDestroy) {
-    // the active page, and the previous page, should be rendered in dom and ready to go
-    // all others, like a cached page 2 back, should be display: none and not rendered
-    let destroys = [];
-    activeView = activeView || this.getActive();
-    previousView = previousView || this.getPrevious(activeView);
-
-    this._views.forEach(view => {
-      if (view) {
-        if (view.shouldDestroy && !skipDestroy) {
-          destroys.push(view);
-
-        } else if (view.isLoaded()) {
-          let shouldShow = (view === activeView) || (view === previousView);
-          this._cachePage(view, shouldShow);
-        }
-      }
-    });
-
-    // all pages being destroyed should be removed from the list of pages
-    // and completely removed from the dom
-    destroys.forEach(view => {
-      this._remove(view);
-      view.destroy();
-    });
   }
 
   /**
