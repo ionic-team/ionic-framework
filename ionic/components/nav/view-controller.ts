@@ -40,6 +40,13 @@ export class ViewController {
   }
 
   /**
+   * @private
+   */
+  get name() {
+    return this.componentType ? this.componentType.name : '';
+  }
+
+  /**
    * You can find out the index of the current view is in the current navigation stack
    *
    * ```typescript

@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Compiler, ElementRef, Injector, provide, NgZone, AppViewManager, Renderer} from 'angular2/angular2';
-import {wtfLeave, wtfCreateScope, WtfScopeFn} from 'angular2/angular2';
+import {wtfLeave, wtfCreateScope, WtfScopeFn, wtfStartTimeRange, wtfEndTimeRange} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
@@ -99,11 +99,6 @@ import {raf, rafFrames} from '../../util/dom';
  *
  */
 export class NavController extends Ion {
-
-  /** @internal */
-  static _loadPageScope: WtfScopeFn = wtfCreateScope('ionic.NavController#loadPage()');
-  static _transCompleteScope: WtfScopeFn = wtfCreateScope('ionic.NavController#_transComplete()');
-
 
   constructor(
     parentnavCtrl: NavController,
@@ -354,7 +349,6 @@ export class NavController extends Ion {
    * @param {Object} [opts={}] Any options you want to use pass to transtion
    */
   popTo(viewCtrl, opts = {}) {
-
     // Get the target index of the view to pop to
     let viewIndex = this._views.indexOf(viewCtrl);
     let targetIndex = viewIndex + 1;
@@ -669,7 +663,7 @@ export class NavController extends Ion {
       enteringView.loaded();
     }
 
-    console.time('_transition ' + (enteringView.componentType && enteringView.componentType.name));
+    var wtfScope = wtfStartTimeRange('ionic.NavController#_transition ' + enteringView.name);
 
     /* Async steps to complete a transition
       1. _render: compile the view and render it in the DOM. Load page if it hasn't loaded already. When done call postRender
@@ -680,7 +674,10 @@ export class NavController extends Ion {
     */
 
     // begin the multiple async process of transitioning to the entering view
-    this._render(enteringView, leavingView, opts, done);
+    this._render(enteringView, leavingView, opts, () => {
+      wtfEndTimeRange(wtfScope);
+      done(enteringView);
+    });
   }
 
   /**
@@ -691,7 +688,7 @@ export class NavController extends Ion {
 
     if (enteringView.shouldDestroy) {
       // about to be destroyed, shouldn't continue
-      done(enteringView);
+      done();
 
     } else if (enteringView.isLoaded()) {
       // already compiled this view, do not load again and continue
@@ -723,11 +720,14 @@ export class NavController extends Ion {
    * @private
    */
   _postRender(enteringView, leavingView, opts, done) {
+    var wtfScope = wtfStartTimeRange('ionic.NavController#_postRender ' + enteringView.name);
+
     // called after _render has completed and the view is compiled/loaded
 
     if (enteringView.shouldDestroy) {
       // view already marked as a view that will be destroyed, don't continue
-      done(enteringView);
+      wtfEndTimeRange(wtfScope);
+      done();
 
     } else if (!opts.preload) {
       // the enteringView will become the active view, and is not being preloaded
@@ -741,10 +741,16 @@ export class NavController extends Ion {
       // DOM WRITE
       this._setZIndex(enteringView, leavingView, opts.direction);
 
+      // make sure the entering and leaving views are showing
+      // and all others are hidden, but don't remove the leaving view yet
+      // DOM WRITE
+      this._cleanup(enteringView, leavingView, true);
+
       // lifecycle events may have updated some data
       // wait one frame and allow the raf to do a change detection
       // before kicking off the transition and showing the new view
       raf(() => {
+        wtfEndTimeRange(wtfScope);
         this._beforeTrans(enteringView, leavingView, opts, done);
       });
 
@@ -752,6 +758,7 @@ export class NavController extends Ion {
       // this view is being preloaded, don't call lifecycle events
       // transition does not need to animate
       opts.animate = false;
+      wtfEndTimeRange(wtfScope);
       this._beforeTrans(enteringView, leavingView, opts, done);
     }
   }
@@ -760,6 +767,8 @@ export class NavController extends Ion {
    * @private
    */
   _beforeTrans(enteringView, leavingView, opts, done) {
+    var wtfScope = wtfStartTimeRange('ionic.NavController#_beforeTrans ' + enteringView.name);
+
     // called after one raf from postRender()
     // create the transitions animation, play the animation
     // when the transition ends call wait for it to end
@@ -799,6 +808,8 @@ export class NavController extends Ion {
         transAnimation.before.addClass(opts.pageType);
       }
 
+      wtfEndTimeRange(wtfScope);
+
       // start the transition
       transAnimation.play(() => {
         // transition animation has ended
@@ -815,6 +826,8 @@ export class NavController extends Ion {
    * @private
    */
   _afterTrans(enteringView, leavingView, opts, done) {
+    var wtfScope = wtfStartTimeRange('ionic.NavController#_afterTrans ' + enteringView.name);
+
     // transition has completed, update each view's state
     // place back into the zone, run didEnter/didLeave
     // call the final callback when done
@@ -835,15 +848,15 @@ export class NavController extends Ion {
         this.keyboard.onClose(() => {
           // keyboard has finished closing, transition complete
           this._transComplete();
-          console.timeEnd('_transition ' + (enteringView.componentType && enteringView.componentType.name));
-          done(enteringView);
+          wtfEndTimeRange(wtfScope);
+          done();
         }, 32);
 
       } else {
         // all good, transition complete
         this._transComplete();
-        console.timeEnd('_transition ' + (enteringView.componentType && enteringView.componentType.name));
-        done(enteringView);
+        wtfEndTimeRange(wtfScope);
+        done();
       }
     });
   }
@@ -852,6 +865,8 @@ export class NavController extends Ion {
    * @private
    */
   _transComplete() {
+    let wtfScope = wtfCreateScope('ionic.NavController#_transComplete');
+
     this._views.forEach(view => {
       if (view) {
         if (view.shouldDestroy) {
@@ -871,45 +886,19 @@ export class NavController extends Ion {
     this._sbComplete();
 
     this._cleanup();
-  }
 
-  /**
-   * @private
-   */
-  _cleanup(activeView) {
-    // the active view, and the previous view, should be rendered in dom and ready to go
-    // all others, like a cached page 2 back, should be display: none and not rendered
-    let destroys = [];
-    activeView = activeView || this.getActive();
-    let previousView = this.getPrevious(activeView);
-
-    this._views.forEach(view => {
-      if (view) {
-        if (view.shouldDestroy) {
-          destroys.push(view);
-
-        } else if (view.isLoaded()) {
-          let shouldShow = (view === activeView) || (view === previousView);
-          this._cachePage(view, shouldShow);
-        }
-      }
-    });
-
-    // all views being destroyed should be removed from the list of views
-    // and completely removed from the dom
-    destroys.forEach(view => {
-      this._remove(view);
-      view.destroy();
-    });
+    wtfLeave(wtfScope);
   }
 
   /**
    * @private
    */
   loadPage(viewCtrl, navbarContainerRef, opts, done) {
+    let wtfTimeRangeScope = wtfStartTimeRange('ionic.NavController#loadPage ' + viewCtrl.name);
+
     // guts of DynamicComponentLoader#loadIntoLocation
     this._compiler.compileInHost(viewCtrl.componentType).then(hostProtoViewRef => {
-      let wtfScope = NavController._loadPageScope();
+      let wtfScope = wtfCreateScope('ionic.NavController#loadPage after compile ' + viewCtrl.name);
 
       let providers = this.providers.concat(Injector.resolve([
         provide(ViewController, {useValue: viewCtrl}),
@@ -964,6 +953,7 @@ export class NavController extends Ion {
         });
       }
 
+      wtfEndTimeRange(wtfTimeRangeScope);
       wtfLeave(wtfScope);
 
       done(viewCtrl);
@@ -1000,6 +990,7 @@ export class NavController extends Ion {
     if (shouldShow && viewCtrl._hdnAttr === '' ||
        !shouldShow && viewCtrl._hdnAttr !== '') {
       viewCtrl._hdnAttr = (shouldShow ? null : '');
+
       this._renderer.setElementAttribute(viewCtrl.pageRef(), 'hidden', viewCtrl._hdnAttr);
 
       let navbarRef = viewCtrl.navbarRef();
@@ -1206,7 +1197,7 @@ export class NavController extends Ion {
    * @private
    */
   _transComplete() {
-    let wtfScope = NavController._transCompleteScope();
+    let wtfScope = wtfCreateScope('ionic.NavController#_transComplete')();
 
     this._views.forEach(view => {
       if (view) {
@@ -1234,16 +1225,16 @@ export class NavController extends Ion {
   /**
    * @private
    */
-  _cleanup(activeView) {
+  _cleanup(activeView, previousView, skipDestroy) {
     // the active page, and the previous page, should be rendered in dom and ready to go
     // all others, like a cached page 2 back, should be display: none and not rendered
     let destroys = [];
     activeView = activeView || this.getActive();
-    let previousView = this.getPrevious(activeView);
+    previousView = previousView || this.getPrevious(activeView);
 
     this._views.forEach(view => {
       if (view) {
-        if (view.shouldDestroy) {
+        if (view.shouldDestroy && !skipDestroy) {
           destroys.push(view);
 
         } else if (view.isLoaded()) {
