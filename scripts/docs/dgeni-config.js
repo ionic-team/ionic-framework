@@ -114,14 +114,20 @@ module.exports = function(currentVersion){
 })
 
 .config(function(parseTagsProcessor) {
-  // We actually don't want to parse param docs in this package as we are getting the data out using TS
-  // parseTagsProcessor.tagDefinitions.forEach(function(tagDef) {
-  //   if (tagDef.name === 'param') {
-  //     tagDef.docProperty = 'paramData';
-  //     tagDef.transforms = [];
-  //   }
-  // });
+  parseTagsProcessor.tagDefinitions.concat(require('./tag-defs/tag-defs'));
 })
+
+// .config(function(parseTagsProcessor) {
+//   // We actually don't want to parse param docs in this package as we are getting the data out using TS
+//   parseTagsProcessor.tagDefinitions.forEach(function(tagDef) {
+//     console.log(tagDef);
+//     if (tagDef.name === 'param') {
+//       tagDef.docProperty = 'paramData';
+//       tagDef.transforms = [];
+//     }
+//   });
+// })
+
 
 // Configure links
 .config(function(getLinkInfo) {
@@ -163,4 +169,6 @@ module.exports = function(currentVersion){
     'common.template.html'
   ]
 })
+
 }
+
