@@ -3,11 +3,10 @@
 // Material Design Text Input
 // --------------------------------------------------
 
-$text-input-highlight-color:            color(primary) !default;
-$text-input-label-md-color:             #999 !default;
-
-$text-input-hightlight-color-valid:     color(secondary) !default;
-$text-input-hightlight-color-invalid:   color(danger) !default;
+$text-input-md-label-color:                 #999 !default;
+$text-input-md-highlight-color:             color(primary) !default;
+$text-input-md-hightlight-color-valid:      color(secondary) !default;
+$text-input-md-hightlight-color-invalid:    color(danger) !default;
 
 
 [text-input] {
@@ -22,7 +21,7 @@ ion-input[inset] [text-input] {
 
 ion-label {
   margin: $item-md-padding-top ($item-md-padding-right / 2) $item-md-padding-bottom ($item-md-padding-left / 2);
-  color: $text-input-label-md-color;
+  color: $text-input-md-label-color;
 }
 
 ion-input:after {
@@ -35,15 +34,15 @@ ion-input:after {
 }
 
 ion-input.has-focus:after {
-  border-bottom: 2px solid $text-input-highlight-color;
+  border-bottom: 2px solid $text-input-md-highlight-color;
 }
 
 ion-input.ng-valid.has-value:after {
-  border-bottom: 2px solid $text-input-hightlight-color-valid;
+  border-bottom: 2px solid $text-input-md-hightlight-color-valid;
 }
 
 ion-input.ng-invalid.ng-touched:after {
-  border-bottom: 2px solid $text-input-hightlight-color-invalid;
+  border-bottom: 2px solid $text-input-md-hightlight-color-invalid;
 }
 
 [stacked-label] ion-label {
@@ -58,7 +57,7 @@ ion-input.ng-invalid.ng-touched:after {
 
 [stacked-label].has-focus ion-label,
 [floating-label].has-focus ion-label {
-  color: $text-input-highlight-color;
+  color: $text-input-md-highlight-color;
 }
 
 [stacked-label] [text-input],

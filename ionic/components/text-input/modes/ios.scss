@@ -3,7 +3,7 @@
 // iOS Text Input
 // --------------------------------------------------
 
-$input-label-ios-color:         #7f7f7f !default;
+$text-input-ios-label-color:         #7f7f7f !default;
 
 
 [text-input] {
@@ -18,7 +18,7 @@ ion-input[inset] [text-input] {
 
 ion-label {
   margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom 0;
-  color: $input-label-ios-color;
+  color: $text-input-ios-label-color;
 }
 
 ion-label + [text-input] {
