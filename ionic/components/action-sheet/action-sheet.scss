@@ -24,7 +24,7 @@ ion-action-sheet {
   z-index: $z-index-overlay;
 }
 
-action-sheet-wrapper {
+.action-sheet-wrapper {
   position: absolute;
   z-index: $z-index-overlay-wrapper;
   bottom: 0;

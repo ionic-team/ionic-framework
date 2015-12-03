@@ -141,7 +141,7 @@ focus-ctrl {
 
 $backdrop-color:      #000 !default;
 
-backdrop {
+.backdrop {
   position: absolute;
   z-index: $z-index-backdrop;
   top: 0;

@@ -26,17 +26,6 @@ ion-action-sheet {
   text-align: center;
 }
 
-.action-sheet-container {
-  padding: 0 $action-sheet-ios-group-margin;
-
-  button.activated {
-    box-shadow: none;
-    border-color: $action-sheet-options-border-color;
-    color: $action-sheet-options-text-color;
-    background: $action-sheet-options-background-active-color;
-  }
-}
-
 ion-action-sheet button {
   min-height: $action-sheet-ios-height;
   padding: $action-sheet-ios-padding;
@@ -48,6 +37,17 @@ ion-action-sheet button {
 
   &.activated {
     background: $action-sheet-ios-background-active-color;
+  }
+}
+
+.action-sheet-container {
+  padding: 0 $action-sheet-ios-group-margin;
+
+  button.activated {
+    box-shadow: none;
+    border-color: $action-sheet-options-border-color;
+    color: $action-sheet-options-text-color;
+    background: $action-sheet-options-background-active-color;
   }
 }
 
