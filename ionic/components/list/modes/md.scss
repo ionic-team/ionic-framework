@@ -56,7 +56,7 @@ ion-list {
     }
   }
 
-  > ion-input.has-focus:last-child:after {
+  > ion-input:last-child:after {
     left: 0;
   }
 
