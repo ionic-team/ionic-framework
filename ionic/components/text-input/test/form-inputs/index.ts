@@ -8,15 +8,20 @@ import {FormBuilder, Validators} from 'angular2/angular2';
 class E2EApp {
   constructor(fb: FormBuilder) {
     this.loginForm = fb.group({
-      username: ["", Validators.required],
       email: ["", Validators.required],
+      username: [""],
       password: ["", Validators.required],
       comments: ["", Validators.required]
     });
+
+    this.login = {};
+
+    this.submitted = false;
   }
 
   submit(ev) {
     console.log("Submitted", this.loginForm.value);
+    this.submitted = true;
   }
 
 }
