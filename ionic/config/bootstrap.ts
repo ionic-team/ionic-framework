@@ -103,7 +103,7 @@ function setupDom(window, document, config, platform, clickBlock, featureDetect)
 
   let linkEle = document.createElement('link');
   linkEle.setAttribute('href', '../../../css/ionic.' + mode + '.css');
-  linkEle.setAttribute('ref', 'stylesheet');
+  linkEle.setAttribute('rel', 'stylesheet');
   document.head.appendChild(linkEle);
 
   // touch devices should not use :hover CSS pseudo
