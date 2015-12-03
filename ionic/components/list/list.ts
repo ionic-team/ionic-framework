@@ -15,6 +15,8 @@ import * as util from 'ionic/util';
  *
  * Using the List and Item components make it easy to support various
  * interaction modes such as swipe to edit, drag to reorder, and removing items.
+ * @demo /docs/v2/demos/list/
+ *
  *
  */
 @Directive({

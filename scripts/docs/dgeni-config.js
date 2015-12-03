@@ -114,7 +114,7 @@ module.exports = function(currentVersion){
 })
 
 .config(function(parseTagsProcessor) {
-  parseTagsProcessor.tagDefinitions.concat(require('./tag-defs/tag-defs'));
+  parseTagsProcessor.tagDefinitions = parseTagsProcessor.tagDefinitions.concat(require('./tag-defs/tag-defs'));
 })
 
 // .config(function(parseTagsProcessor) {
