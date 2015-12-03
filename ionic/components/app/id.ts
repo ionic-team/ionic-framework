@@ -55,6 +55,16 @@ export class IdRef {
 }
 
 
+/**
+ * @name Attr
+ * @description
+ * Attr allows you to dynamically add or remove an attribute based on the value of an expression or variable.
+ * @usage
+ * ```html
+ * // toggle the no-lines attributes based on whether isAndroid is true or false
+ * <ion-list [attr.no-lines]="isAndroid ? '' : null">
+ * ```
+ */
 @Directive({
   selector: '[attr]',
   inputs: ['attr']
