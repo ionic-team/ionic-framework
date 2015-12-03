@@ -67,7 +67,9 @@ module.exports = function(currentVersion){
   var latestVersion = _.find(versions, semver.valid);
   versions = versions.map(function(version) {
     //Latest version is in docs root
-    var folder = version == latestVersion ? '' : version;
+    //var folder = version == latestVersion ? '' : version;
+    // Instead set nightly as docs root
+    var folder = version == 'nightly' ? '' : version;
     return {
       href: path.join('/' + config.v2DocsDir, folder),
       folder: folder,
