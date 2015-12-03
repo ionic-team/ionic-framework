@@ -24,4 +24,12 @@ class E2EApp {
     console.log("Clicked cancel action with", query);
     this.clickedCustomAction = true;
   }
+
+  triggerInput() {
+    // The defaultSearch doesn't get updated before this function is called
+    // so we have to wrap it in a timeout
+    setTimeout(() => {
+      console.log(this.defaultSearch);
+    });
+  }
 }
