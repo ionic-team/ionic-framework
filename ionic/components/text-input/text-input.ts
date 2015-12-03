@@ -48,7 +48,13 @@ import {Platform} from '../../platform/platform';
     '(touchstart)': 'pointerStart($event)',
     '(touchend)': 'pointerEnd($event)',
     '(mouseup)': 'pointerEnd($event)',
-    'class': 'item'
+    'class': 'item',
+    '[class.ng-untouched]': 'addNgClass("ng-untouched")',
+    '[class.ng-touched]': 'addNgClass("ng-touched")',
+    '[class.ng-pristine]': 'addNgClass("ng-pristine")',
+    '[class.ng-dirty]': 'addNgClass("ng-dirty")',
+    '[class.ng-valid]': 'addNgClass("ng-valid")',
+    '[class.ng-invalid]': 'addNgClass("ng-invalid")'
   },
   template:
     '<div class="item-inner">' +
@@ -86,6 +92,14 @@ export class TextInput {
     this.scrollAssist = config.get('scrollAssist');
     this.keyboardHeight = config.get('keyboardHeight');
   }
+
+  /**
+   * @private
+   * This function is used to add the Angular css classes associated with inputs in forms
+   */
+   addNgClass(className) {
+     return this.input.elementRef.nativeElement.classList.contains(className);
+   }
 
   /**
    * @private
