@@ -141,11 +141,6 @@ docType: "<$ doc.docType $>"
 <@ endblock @>
 <@ endif @>
 
-<h1 class="class export"><$ doc.name $> <span class="type"><$ doc.docType $></span></h1>
-<p class="module">exported from {@link <$ doc.moduleDoc.id $> <$doc.moduleDoc.id $> }<br/>
-defined in <$ githubViewLink(doc) $>
-</p>
-
 <@- if doc.directiveInfo @>
 <h2><$ doc.directiveInfo.type $></h2>
 <@- for prop in doc.directiveInfo.properties @>
