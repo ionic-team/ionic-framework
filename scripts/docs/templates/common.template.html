@@ -187,6 +187,17 @@ defined in <$ githubViewLink(doc) $>
     <thead>
       <tr>
         <th>Attribute</th>
+
+        <@ set hasTypes = false @>
+        <@ for prop in doc.properties @>
+          <@ if prop.type @>
+            <@ set hasTypes = true @>
+          <@ endif @>
+        <@ endfor @>
+        <@ if hasTypes @>
+        <th>Type</th>
+        <@ endif @>
+
         <th>Description</th>
       </tr>
     </thead>
@@ -194,8 +205,17 @@ defined in <$ githubViewLink(doc) $>
       <@ for prop in doc.properties @>
       <tr>
         <td>
+          <@ if doc.name != 'Icon' @>
+          <@ endif @>
           <$ prop.name $>
         </td>
+
+        <@ if hasTypes @>
+        <td>
+          <$ prop.type.name $>
+        </td>
+        <@ endif @>
+
         <td>
           <$ prop.description $>
         </td>
