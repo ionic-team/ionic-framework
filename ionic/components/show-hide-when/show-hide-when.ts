@@ -52,7 +52,13 @@ class DisplayWhen {
 }
 
 /**
- * TODO
+ *
+ * The `show-when` attribute takes a value or expression, and only shows the element it has been added to when
+ * the value or expression is true. Complements the [hide-when attribute](../HideWhen).
+ * @usage
+ * ```html
+ * <div show-when="false">I am hidden!</div>
+ * ```
  */
 @Directive({
   selector: '[show-when]',
@@ -80,7 +86,13 @@ export class ShowWhen extends DisplayWhen {
 }
 
 /**
- * TODO
+ *
+ * The `hide-when` attribute takes a value or expression, and hides the element it has been added to when
+ * the value or expression is true. Complements the [show-when attribute](../ShowWhen).
+ * @usage
+ * ```html
+ * <div hide-when="true">I am hidden!</div>
+ * ```
  */
 @Directive({
   selector: '[hide-when]',
