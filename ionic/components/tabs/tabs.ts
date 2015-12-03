@@ -13,7 +13,6 @@ import {rafFrames} from '../../util/dom';
 
 /**
  * @name Tabs
- * @property
  * @property [tabbar-placement] - set position of the tabbar, top or bottom
  * @property [tabbar-icons] - set the position of the tabbar's icons: top, bottom, left, right, hide
  * @property [tabbar-style] - sets tabbar's style (primary, secondary, etc)
