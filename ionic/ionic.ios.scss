@@ -1,24 +1,11 @@
 /*! Ionic: iOS */
+@charset "UTF-8";
+
+
+// Core Components
+@import "ionic.core";
 
 
 // iOS Components
 @import
-  "components/app/modes/ios",
-  "components/button/modes/ios",
-  "components/icon/modes/ios",
-  "components/item/modes/ios",
-  "components/toolbar/modes/ios",
-  "components/action-sheet/modes/ios",
-  "components/card/modes/ios",
-  "components/content/modes/ios",
-  "components/list/modes/ios",
-  "components/text-input/modes/ios",
-  "components/navbar/modes/ios",
-  "components/popup/modes/ios",
-  "components/checkbox/modes/ios",
-  "components/radio/modes/ios",
-  "components/searchbar/modes/ios",
-  "components/segment/modes/ios",
-  "components/switch/modes/ios",
-  "components/tabs/modes/ios",
-  "platform/cordova-ios";
+  "components/action-sheet/modes/ios";

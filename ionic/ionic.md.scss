@@ -1,23 +1,11 @@
 /*! Ionic: Material Design */
+@charset "UTF-8";
+
+
+// Core Components
+@import "ionic.core";
 
 
 // Material Design Components
 @import
-  "components/app/modes/md",
-  "components/toolbar/modes/md",
-  "components/action-sheet/modes/md",
-  "components/button/modes/md",
-  "components/content/modes/md",
-  "components/item/modes/md",
-  "components/list/modes/md",
-  "components/card/modes/md",
-  "components/checkbox/modes/md",
-  "components/text-input/modes/md",
-  "components/navbar/modes/md",
-  "components/popup/modes/md",
-  "components/radio/modes/md",
-  "components/searchbar/modes/md",
-  "components/segment/modes/md",
-  "components/switch/modes/md",
-  "components/tabs/modes/md",
-  "components/tap-click/ripple";
+  "components/action-sheet/modes/md";

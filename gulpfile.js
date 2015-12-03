@@ -340,23 +340,23 @@ gulp.task('e2e', function() {
 
   function createPlatformTests(file) {
     return through2.obj(function(file, enc, next) {
-      var self = this
-      var relativePath = path.dirname(file.path.replace(/^.*?ionic(\/|\\)components(\/|\\)/, ''))
-      var contents = file.contents.toString()
+      var self = this;
+      var relativePath = path.dirname(file.path.replace(/^.*?ionic(\/|\\)components(\/|\\)/, ''));
+      var contents = file.contents.toString();
       platforms.forEach(function(platform) {
         var platformContents = testTemplate({
           contents: contents,
           buildConfig: buildConfig,
           relativePath: relativePath,
           platform: platform
-        })
+        });
         self.push(new VinylFile({
           base: file.base,
           contents: new Buffer(platformContents),
           path: file.path.replace(/e2e.js$/, platform + '.e2e.js')
-        }))
+        }));
       })
-      next()
+      next();
     })
   }
 });
@@ -364,6 +364,21 @@ gulp.task('e2e', function() {
 gulp.task('sass', function() {
   var sass = require('gulp-sass');
   var autoprefixer = require('gulp-autoprefixer');
+
+  gulp.src('ionic/ionic.ios.scss')
+    .pipe(sass()
+      .on('error', sass.logError)
+    )
+    .pipe(autoprefixer(buildConfig.autoprefixer))
+    .pipe(gulp.dest('dist/css/'));
+
+  gulp.src('ionic/ionic.md.scss')
+    .pipe(sass()
+      .on('error', sass.logError)
+    )
+    .pipe(autoprefixer(buildConfig.autoprefixer))
+    .pipe(gulp.dest('dist/css/'));
+
   return gulp.src('ionic/ionic.scss')
     .pipe(sass()
       .on('error', sass.logError)
