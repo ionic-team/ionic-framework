@@ -1014,7 +1014,7 @@
     index: 10,
     defaults: {
       hold_timeout: 500,
-      hold_threshold: 1
+      hold_threshold: 9
     },
     timer: null,
     handler: function holdGesture(ev, inst) {
