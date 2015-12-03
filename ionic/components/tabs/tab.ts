@@ -33,9 +33,9 @@ import {Tabs} from './tabs';
  * and the TabBar.
 
  *
- * @property [root] - set the root page for this tab
- * @property [tab-title] - set the title of this tab
- * @property [tab-icon] - set the icon for this tab
+ * @property {any} [root] - set the root page for this tab
+ * @property {any} [tab-title] - set the title of this tab
+ * @property {any} [tab-icon] - set the icon for this tab
 
  */
 @Component({

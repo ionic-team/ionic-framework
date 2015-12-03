@@ -13,10 +13,16 @@ import {rafFrames} from '../../util/dom';
 
 /**
  * @name Tabs
- * @property [tabbar-placement] - set position of the tabbar, top or bottom
- * @property [tabbar-icons] - set the position of the tabbar's icons: top, bottom, left, right, hide
- * @property [tabbar-style] - sets tabbar's style (primary, secondary, etc)
- * @property [preload-tabs] - sets whether to preload all the tabs, true or false
+ * @property {any} [tabbar-placement] - set position of the tabbar, top or bottom
+ * @property {any} [tabbar-icons] - set the position of the tabbar's icons: top, bottom, left, right, hide
+ * @property {any} [tabbar-style] - sets tabbar's style (primary, secondary, etc)
+ * @property {any} [preload-tabs] - sets whether to preload all the tabs, true or false
+ * @usage
+* ```html
+ * <ion-tabs>
+ *   <ion-tab [root]="tabRoot"></ion-tab>
+ * </ion-tabs>
+ * ```
  * @description
  * _For basic Tabs usage, see the [Tabs section](../../../../components/#tabs)
  * of the Component docs._
@@ -26,45 +32,6 @@ import {rafFrames} from '../../util/dom';
  * the screen, while on Android it is at the top.
  *
  * See the [Tab API reference](../Tab/) for more details on individual Tab components.
- *
- * The TabBar is automatically created for you using the
- * [properties you set on each Tab](../Tab/#tab_properties).
- *
- * To override the platform specific TabBar placement, use the
- * `tabbar-placement` property:
- *
- * ```html
- * <ion-tabs tabbar-placement="top">
- *   <ion-tab [root]="tabRoot"></ion-tab>
- * </ion-tabs>
- * ```
- *
- * To change the location of the icons in the TabBar, use the `tabbar-icons`
- * property:
- * ```html
- * <ion-tabs tabbar-icons="bottom">
- *   <ion-tab [root]="tabRoot"></ion-tab>
- * </ion-tabs>
- * ```
- *
- * You can select tabs programatically by injecting Tabs into any child
- * component, and using the [select()](#select) method:
- * ```ts
- * @Page({
- *   template: `<button (click)="goToTabTwo()">Go to Tab2</button>`
- * })
- * class TabOne {
- *   constructor(tabs: Tabs){
- *     this.tabs = tabs;
- *   }
- *
- *   goToTabTwo() {
- *     this.tabs.select(this.tabs.tabs[1]);
- *   }
- * }
- * ```
- * The [tabs](#tabs) property is an array of all child [Tab](../Tab/) components
- * of that Tabs component.
  *
  */
 @ConfigComponent({
