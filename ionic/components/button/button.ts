@@ -28,7 +28,10 @@ import {Config} from '../../config/config';
   * Buttons are simple components in Ionic, can consist of text, an icon, or both, and can be enhanced with a wide range of attributes.
  */
 @Directive({
-  selector: 'button,[button]'
+  selector: 'button,[button]',
+  host: {
+    'class': 'button'
+  }
 })
 export class Button {
 

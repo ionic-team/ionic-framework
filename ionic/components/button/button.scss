@@ -21,8 +21,15 @@ $button-hover-opacity:            0.8 !default;
   flex-flow: row nowrap;
   align-items: center;
   justify-content: center;
+  transition: background-color, opacity 100ms linear;
+  margin: $button-margin;
+  padding: $button-padding;
+  min-height: $button-height;
   line-height: 1;
 
+  border: 1px solid #ccc;
+  border: transparent;
+  border-radius: $button-border-radius;
 
   font-size: $button-font-size;
   font-family: inherit;
@@ -42,6 +49,17 @@ $button-hover-opacity:            0.8 !default;
   cursor: pointer;
   @include user-select-none();
   @include appearance(none);
+
+  background: $button-color;
+   color: $button-text-color;
+   &:hover:not(.disable-hover) {
+     opacity: $button-hover-opacity;
+     text-decoration: none;
+   }
+   &.activated {
+     opacity: 1;
+     background-color: $button-color-activated;
+   }
 
   // Button Types
   // --------------------------------------------------

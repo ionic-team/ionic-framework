@@ -9,9 +9,7 @@
 // iOS Button (largely the core button styles)
 // --------------------------------------------------
 
-button {
-  &[block] {
-    // This fixes an issue with flexbox and button on iOS Safari. See #225
-    display: block;
-  }
+.button-block {
+  // This fixes an issue with flexbox and button on iOS Safari. See #225
+  display: block;
 }

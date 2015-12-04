@@ -26,8 +26,7 @@ $button-md-fab-box-shadow:                 0 4px 6px 0 rgba(0, 0, 0, 0.14), 0 4p
 $button-md-fab-box-shadow-active:          0 5px 15px 0 rgba(0, 0, 0, 0.4), 0 4px 7px 0 rgba(0, 0, 0, 0.1) !default;
 
 
-button,
-[button] {
+.button {
   border-radius: $button-md-border-radius;
 
   min-height: $button-md-min-height;
@@ -46,96 +45,89 @@ button,
   &:hover:not(.disable-hover) {
     background-color: $button-md-clear-hover-background-color;
   }
-
-  &[full] {
-    border-radius: 0;
-  }
-
-  &[round] {
-    border-radius: $button-round-border-radius;
-    padding: $button-round-padding;
-  }
-
-  &[large] {
-    padding: 0 $button-large-padding;
-    min-height: $button-large-height;
-    font-size: $button-large-font-size;
-  }
-
-  &[small] {
-    padding: 0 $button-small-padding;
-    min-height: $button-small-height;
-    font-size: $button-small-font-size;
-  }
-
-  &.activated {
-    box-shadow: $button-md-box-shadow-active;
-  }
-
-  &[fab] {
-    border-radius: 50%;
-    box-shadow: $button-md-fab-box-shadow;
-
-    &.activated {
-      box-shadow: $button-md-fab-box-shadow-active;
-    }
-  }
-
-  &.icon-only {
-    padding: 0;
-  }
-
-  &[outline] {
-    box-shadow: none;
-
-    &.activated {
-      opacity: 1;
-    }
-
-    md-ripple {
-      background: rgba( red($button-color), green($button-color), blue($button-color), 0.1);
-    }
-  }
-
-  &[clear] {
-    opacity: 1;
-    box-shadow: none;
-
-    &.activated {
-      background-color: $button-md-clear-active-background-color;
-    }
-  }
-
 }
 
+.button-full {
+  border-radius: 0;
+}
+
+.button-round {
+  border-radius: $button-round-border-radius;
+  padding: $button-round-padding;
+}
+
+.button-large {
+  padding: 0 $button-large-padding;
+  min-height: $button-large-height;
+  font-size: $button-large-font-size;
+}
+
+.button-small {
+  padding: 0 $button-small-padding;
+  min-height: $button-small-height;
+  font-size: $button-small-font-size;
+}
+
+&.activated {
+  box-shadow: $button-md-box-shadow-active;
+}
+
+.button-fab {
+  border-radius: 50%;
+  box-shadow: $button-md-fab-box-shadow;
+
+  &.activated {
+    box-shadow: $button-md-fab-box-shadow-active;
+  }
+}
+
+.button-icon-only {
+  padding: 0;
+}
+
+.button-outline {
+  box-shadow: none;
+
+  &.activated {
+    opacity: 1;
+  }
+
+  md-ripple {
+    background: rgba( red($button-color), green($button-color), blue($button-color), 0.1);
+  }
+}
+
+.button-clear {
+  opacity: 1;
+  box-shadow: none;
+
+  &.activated {
+    background-color: $button-md-clear-active-background-color;
+  }
+}
 
 // Material Design Button Color Mixin
 // --------------------------------------------------
 
 @mixin button-theme-md($color-name, $color-value) {
 
-  button[#{$color-name}],
-  [button][#{$color-name}] {
+  .button-#{$color-name}.activated {
+    opacity: 1;
+  }
+
+  .button-outline {
+
+    md-ripple {
+      background: rgba( red($color-value), green($color-value), blue($color-value), 0.2);
+    }
 
     &.activated {
       opacity: 1;
-    }
-
-    &[outline] {
 
       md-ripple {
-        background: rgba( red($color-value), green($color-value), blue($color-value), 0.2);
-      }
-
-      &.activated {
-        opacity: 1;
-
-        md-ripple {
-          background: rgba(0, 0, 0, 0.1);
-        }
+        background: rgba(0, 0, 0, 0.1);
       }
     }
-
   }
 
 }
