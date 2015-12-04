@@ -6,9 +6,6 @@
 $menu-width:                 304px !default;
 $menu-small-width:           $menu-width - 40px !default;
 
-$menu-background:            $background-color !default;
-$menu-shadow:                0px 0px 10px rgba(0, 0, 0, 0.25) !default;
-
 
 ion-menu {
   position: absolute;
@@ -21,8 +18,6 @@ ion-menu {
 
   display: flex;
   flex-direction: column;
-
-  background: $menu-background;
 
   transform: translate3d(-9999px, 0px, 0px);
 }
@@ -68,14 +63,6 @@ ion-menu[type=reveal].show-menu {
   transform: translate3d(0px, 0px, 0px);
 }
 
-.menu-content-reveal {
-  box-shadow: $menu-shadow;
-}
-
-.menu-content-push {
-  box-shadow: $menu-shadow;
-}
-
 
 // Menu Overlay
 // --------------------------------------------------
@@ -84,7 +71,6 @@ ion-menu[type=reveal].show-menu {
 
 ion-menu[type=overlay] {
   z-index: $z-index-menu-overlay;
-  box-shadow: $menu-shadow;
   left: -8px; // make up for the box-shadow hanging over on the left
 
   backdrop {

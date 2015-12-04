@@ -3,11 +3,7 @@
 // Modals
 // --------------------------------------------------
 
-$modal-background-color:          $background-color !default;
-
-
 ion-page.modal {
-  background-color: $modal-background-color;
   z-index: $z-index-overlay;
 
   // hidden by default to prevent flickers, the animation will show it

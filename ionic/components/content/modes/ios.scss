@@ -6,6 +6,15 @@
 $outer-content-md-background-color:         #efeff4 !default;
 
 
+body,
+ion-content {
+  background-color: $background-ios-color;
+}
+
+a {
+  color: $link-ios-color;
+}
+
 .outer-content {
   background: $outer-content-md-background-color;
 }
@@ -13,4 +22,23 @@ $outer-content-md-background-color:         #efeff4 !default;
 ion-nav.has-views,
 ion-tab.has-views {
   background: #000;
+}
+
+@each $color-name, $color-value in $colors {
+  h1, h2, h3, h4, h5, h6,
+  p,
+  span,
+  a:not([button]),
+  small,
+  b,
+  i,
+  u,
+  strong,
+  em,
+  sub,
+  sup {
+    &[#{$color-name}] {
+      color: $color-value !important;
+    }
+  }
 }
