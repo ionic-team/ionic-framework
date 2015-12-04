@@ -22,7 +22,7 @@ const DB_NAME = '__ionicstorage';
  * });
  *
  * // Sql storage also exposes the full engine underneath
- * storage.query('insert into projects(name, data) values('Cool Project', 'blah');'
+ * storage.query('insert into projects(name, data) values('Cool Project', 'blah')');
  * storage.query('select * from projects').then((resp) => {})
  * ```
  *
@@ -39,7 +39,7 @@ export class SqlStorage extends StorageEngine {
   static BACKUP_LIBRARY = 1
   static BACKUP_DOCUMENTS = 0
 
-  constructor(options) {
+  constructor(options={}) {
     super();
 
     let dbOptions = util.defaults(options, {
@@ -98,19 +98,25 @@ export class SqlStorage extends StorageEngine {
    */
   query(query, ...params) {
     return new Promise((resolve, reject) => {
-      this._db.transaction((tx) => {
-        tx.executeSql(query, params, (tx, res) => {
-          resolve({
-            tx: tx,
-            res: res
-          });
-        }, (tx, err) => {
-          reject({
-            tx: tx,
-            err: err
-          });
-        })
-      });
+      try {
+        this._db.transaction((tx) => {
+          tx.executeSql(query, params, (tx, res) => {
+            resolve({
+              tx: tx,
+              res: res
+            });
+          }, (tx, err) => {
+            reject({
+              tx: tx,
+              err: err
+            });
+          })
+        }, err => {
+          reject(err);
+        });
+      } catch(e) {
+        reject(e);
+      }
     })
   }
 
