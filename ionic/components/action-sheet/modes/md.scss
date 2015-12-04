@@ -21,40 +21,18 @@ $action-sheet-md-icon-margin:              0 28px 0 0 !default;
 
 ion-action-sheet {
   margin: 0;
+
+  icon {
+    display: inline-block;
+    margin: $action-sheet-md-icon-margin;
+    min-width: 24px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: $action-sheet-md-icon-font-size;
+  }
 }
 
-.action-sheet-container {
-  margin: 0;
-}
-
-.action-sheet-title,
-.action-sheet-option,
-.action-sheet-destructive,
-.action-sheet-cancel button {
-  text-align: left;
-  border-color: transparent;
-  font-size: $action-sheet-md-button-font-size;
-  color: $action-sheet-md-button-text-color;
-  box-shadow: none;
-  text-transform: none;
-}
-
-ion-action-sheet icon {
-  display: inline-block;
-  margin: $action-sheet-md-icon-margin;
-  min-width: 24px;
-  text-align: center;
-  vertical-align: middle;
-  font-size: $action-sheet-md-icon-font-size;
-}
-
-.action-sheet-title {
-  padding: $action-sheet-md-title-padding;
-  font-size: $action-sheet-md-title-font-size;
-  color: $action-sheet-md-title-color;
-}
-
-ion-action-sheet button {
+.action-sheet-button {
   font-weight: normal;
   min-height: $action-sheet-md-height;
 
@@ -65,14 +43,36 @@ ion-action-sheet button {
   }
 }
 
+.action-sheet-container {
+  margin: 0;
+}
+
 .action-sheet-group {
   margin: 0;
   border-radius: 0;
   background-color: $action-sheet-md-background-color;
 
-  &:last-child button {
+  &:last-child .action-sheet-button {
     margin-bottom: 8px;
   }
+}
+
+.action-sheet-title {
+  padding: $action-sheet-md-title-padding;
+  font-size: $action-sheet-md-title-font-size;
+  color: $action-sheet-md-title-color;
+}
+
+.action-sheet-title,
+.action-sheet-option,
+.action-sheet-destructive,
+.action-sheet-cancel .action-sheet-button {
+  text-align: left;
+  border-color: transparent;
+  font-size: $action-sheet-md-button-font-size;
+  color: $action-sheet-md-button-text-color;
+  box-shadow: none;
+  text-transform: none;
 }
 
 .action-sheet-cancel {

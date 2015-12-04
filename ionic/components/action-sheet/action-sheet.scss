@@ -41,25 +41,20 @@ ion-action-sheet {
 .action-sheet-container {
   width: auto;
   overflow: hidden;
+}
 
-  button {
-    display: block;
-    padding: 1px;
-    width: 100%;
-    margin: 0;
-    border-radius: 0;
-    border-color: $action-sheet-options-border-color;
-    background-color: transparent;
+.action-sheet-button {
+  display: block;
+  width: 100%;
+  margin: 0;
+  border-radius: 0;
+  border-color: $action-sheet-options-border-color;
+}
 
-    color: $action-sheet-options-text-color;
-    font-size: 21px;
-  }
-
-  button.activated {
-    box-shadow: none;
-    border-color: $action-sheet-options-border-color;
-    background: $action-sheet-options-background-active-color;
-  }
+.action-sheet-button.activated {
+  box-shadow: none;
+  border-color: $action-sheet-options-border-color;
+  background: $action-sheet-options-background-active-color;
 }
 
 .action-sheet-title {
@@ -73,11 +68,7 @@ ion-action-sheet {
   background-color: #fff;
   overflow: hidden;
 
-  button {
-    border-width: 1px 0px 0px 0px;
-  }
-
-  button:first-child:last-child {
+  .action-sheet-button:first-child:last-child {
     border-width: 0;
   }
 }
