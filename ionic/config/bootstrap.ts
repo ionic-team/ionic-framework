@@ -98,13 +98,7 @@ function setupDom(window, document, config, platform, clickBlock, featureDetect)
 
   // set the mode class name
   // ios/md
-  let mode = config.get('mode');
-  bodyEle.classList.add(mode);
-
-  let linkEle = document.createElement('link');
-  linkEle.setAttribute('href', '../../../css/ionic.' + mode + '.css');
-  linkEle.setAttribute('rel', 'stylesheet');
-  document.head.appendChild(linkEle);
+  bodyEle.classList.add(config.get('mode'));
 
   // touch devices should not use :hover CSS pseudo
   // enable :hover CSS when the "hoverCSS" setting is not false
