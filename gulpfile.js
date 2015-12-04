@@ -44,6 +44,7 @@ function buildDemoBundle(opts, done) {
   }
 
   return glob(fp, function(err, files){
+    var numTasks = files.length;
     files.forEach(function(file){
       var config = require('./scripts/demos/webpack.config.js');
 
@@ -57,8 +58,6 @@ function buildDemoBundle(opts, done) {
         filename: path.dirname(file) + '/bundle.js'
       }
 
-      // pretty sure this is a race, but it works
-      numWebpacks++;
       webpack(config, function(err, stats){
       //   var statsOptions = {
       //    'colors': true,
@@ -68,7 +67,7 @@ function buildDemoBundle(opts, done) {
       //     'errorDetails': true
       //  }
       // console.log(stats.toString(statsOptions));
-        if (--numWebpacks === 0) done();
+        if (--numTasks === 0) done();
       })
     })
 
