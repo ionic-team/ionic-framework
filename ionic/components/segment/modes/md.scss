@@ -44,6 +44,7 @@ ion-segment {
     ion-segment-button[button][outline].activated,
     ion-segment-button[button][outline].segment-activated {
       background-color: transparent;
+      opacity: 1;
     }
   }
 

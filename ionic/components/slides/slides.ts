@@ -64,6 +64,7 @@ import {Scroll} from '../scroll/scroll';
  * @property {Any} [bounce] - whether the slides should bounce
  * @property [pager] - add this property to enable the slide pager
  * @property {Any} [slideChanged] - expression to evaluate when a slide has been changed
+ * @see {@link /docs/v2/components#slides Slides Component Docs}
  */
 @Component({
   selector: 'ion-slides',

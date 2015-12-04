@@ -6,6 +6,8 @@ import {IonicApp} from '../app/app';
 
 /**
 * TODO
+* @see {@link /docs/v2/components#menus Menu Component Docs}
+* @see {@link ../../menu/Menu Menu API Docs}
 */
 @Directive({
   selector: '[menu-close]',

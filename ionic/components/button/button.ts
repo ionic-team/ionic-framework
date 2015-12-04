@@ -26,6 +26,8 @@ import {Config} from '../../config/config';
   * @property [fab-bottom] - position a fab button towards the bottom
   * @description
   * Buttons are simple components in Ionic, can consist of text, an icon, or both, and can be enhanced with a wide range of attributes.
+  * @see {@link /docs/v2/components#buttons Button Component Docs}
+
  */
 @Directive({
   selector: 'button,[button]'

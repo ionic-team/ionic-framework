@@ -13,6 +13,7 @@ import {Config} from '../../config/config';
  * If there is not an outlined version for the particular icon, it will use the default (full) version.
  * @property {string} [ios] - Explicitly set the icon to use on iOS.
  * @property {string} [md] - Explicitly set the icon to use on Android.
+ * @see {@link /docs/v2/components#icons Icon Component Docs}
  *
  */
 @Directive({
