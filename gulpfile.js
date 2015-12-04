@@ -30,6 +30,7 @@ function getBabelOptions(moduleName, moduleType) {
   }
 }
 
+
 function buildDemoBundle(opts, done) {
   var glob = require('glob');
   var webpack = require('webpack');
@@ -77,6 +78,7 @@ function buildDemoBundle(opts, done) {
 var tscOptions = require('./tsconfig.json').compilerOptions;
 var tscReporter = {
   error: function (error) {
+    // TODO
     // suppress type errors until we convert everything to TS
     // console.error(error.message);
   }
@@ -177,7 +179,7 @@ gulp.task('clean', function(done) {
   del(['dist/**', '!dist'], done);
 });
 
-function transpile(moduleType) {
+gulp.task('transpile', function(){
   var merge = require('merge2');
 
   var tsResult = gulp.src([
@@ -185,18 +187,8 @@ function transpile(moduleType) {
       '!ionic/components/*/test/**/*',
       '!ionic/util/test/*'
     ])
-   .pipe(cache('transpile', { optimizeMemory: true }))
-   .pipe(tsc(tscOptions, undefined, tscReporter))
-  //  .on('error', function(error) {
-  //    tsResult.emit('end');
-  //  })
-  //  .pipe(gulp.dest('dist/src/es6/ionic'))
-  //  .pipe(babel(getBabelOptions('ionic', moduleType)))
-  //  .on('error', function (err) {
-  //    console.log("ERROR: " + err.message);
-  //    this.emit('end');
-  //  })
-  //  .pipe(gulp.dest('dist'))
+    .pipe(cache('transpile', { optimizeMemory: true }))
+    .pipe(tsc(tscOptions, undefined, tscReporter));
 
   // merge definition and source streams
   return merge([
@@ -204,36 +196,43 @@ function transpile(moduleType) {
     tsResult.js
   ])
   .pipe(gulp.dest('dist'));
-}
-
-gulp.task('transpile.system', function() { return transpile("system"); });
-gulp.task('transpile.common', function() {
-  // necessary for publish task, remove if we ever do incremental builds with cjs
-  cache.caches && delete cache.caches.transpile;
-  return transpile("common");
 });
-gulp.task('transpile', ['transpile.common']);
 
-gulp.task('bundle.ionic', ['transpile.system'], function() {
-  var insert = require('gulp-insert');
-  var concat = require('gulp-concat');
+gulp.task('bundle', ['transpile', 'copy.web-animations'], function(done){
+  //TODO
+  //   if (flags.animations == 'polyfill') {
+  //     prepend.push('window.Element.prototype.animate=undefined;');
+  //   }
 
-  var prepend = [];
+  var numTasks = 2;
+  var ionicConfig = require('./scripts/npm/ionic.webpack.config.js');
+  var bundleConfig = require('./scripts/npm/bundle.webpack.config.js');
 
-  // force the web animations api polyfill to kick in
-  if (flags.animations == 'polyfill') {
-    prepend.push('window.Element.prototype.animate=undefined;');
+  bundle(ionicConfig, finished);
+  bundle(bundleConfig, finished);
+
+  function finished(){
+    numTasks--;
+    if (numTasks == 0) done();
   }
+})
 
-  return gulp.src([
-      'node_modules/es6-shim/es6-shim.min.js',
-      'dist/src/es5/system/ionic/**/*.js'
-    ])
-    .pipe(concat('ionic.js'))
-    .pipe(insert.prepend(prepend.join('\n')))
-    .pipe(gulp.dest('dist/js/'));
-    //TODO minify + sourcemaps
-});
+function bundle(config, cb){
+  var webpack = require('webpack');
+  var path = require('path');
+
+  webpack(config, function(err, stats){
+    var statsOptions = {
+      'colors': true,
+      'modules': false,
+      'chunks': false,
+      'exclude': ['node_module'],
+      'errorDetails': true
+    }
+    console.log(stats.toString(statsOptions));
+    cb();
+  })
+}
 
 gulp.task('temp.hack', function(){
   var fs = require('fs');
@@ -261,14 +260,6 @@ gulp.task('temp.hack', function(){
 
   fs.writeFileSync(file, myHackedFileThatYouLove, 'utf8');
 });
-
-gulp.task('bundle', ['bundle.ionic'], function() {
-  var concat = require('gulp-concat');
-
-  return gulp.src(buildConfig.scripts)
-    .pipe(concat('ionic.bundle.js'))
-    .pipe(gulp.dest('dist/js'));
-})
 
 gulp.task('tests', function() {
   return gulp.src('ionic/**/test/**/*.spec.ts')
