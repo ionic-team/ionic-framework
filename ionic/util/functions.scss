@@ -28,17 +28,6 @@
 }
 
 
-@function color($color-name) {
-  @return map-get($colors, $color-name);
-}
-
-
-@function auxiliary-colors() {
-  // get a map of all the colors, except "primary"
-  @return map-remove($colors, primary);
-}
-
-
 // String Replace Function
 // --------------------------------------------------
 

@@ -2,4 +2,16 @@
 
 
 // Core Components
-@import "ionic.core";
+@import "components.core";
+
+
+// iOS Components
+.ios {
+  @import "components.ios";
+}
+
+
+// Material Design Components
+.md {
+  @import "components.md";
+}
