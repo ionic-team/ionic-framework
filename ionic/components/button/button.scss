@@ -14,9 +14,7 @@ $button-color-activated:          color-shade($button-color) !default;
 $button-text-color:               inverse($button-color) !default;
 $button-hover-opacity:            0.8 !default;
 
-
-button,
-[button] {
+.button {
   position: relative;
   display: inline-flex;
   flex-shrink: 0;
@@ -44,8 +42,95 @@ button,
   cursor: pointer;
   @include user-select-none();
   @include appearance(none);
+
+  // Button Types
+  // --------------------------------------------------
+
+  .button-block {
+    display: flex;
+    clear: both;
+    margin-right: 0;
+    margin-left: 0;
+    width: 100%;
+
+    &:after {
+      clear: both;
+    }
+  }
+
+  .button-full {
+    width: 100%;
+    margin-right: 0;
+    margin-left: 0;
+    border-radius: 0;
+    border-right-width: 0;
+    border-left-width: 0;
+  }
+
+  .button-round {
+    border-radius: $button-round-border-radius;
+    padding: $button-round-padding;
+  }
+
+  .button-disabled {
+    opacity: 0.4;
+    cursor: default !important;
+    pointer-events: none;
+  }
 }
 
 a[button] {
   text-decoration: none;
+}
+
+
+// TODO
+// button should have classes:
+// button, button-primary, button-secondary, etc.
+// button holds all styling with default primary color(will this affect outline/clear?) and
+// the other classes change the color
+//
+// button-clear should have classes:
+// button-clear, button-clear-primary, button-clear-secondary, etc.
+// button-clear holds all clear styling with default primary color and
+// the other classes change the color
+//
+// button-outline should have classes:
+// button-outline, button-outline-primary, button-outline-secondary, etc.
+// button-outline holds all outline styling with default primary color and
+// the other classes change the color
+//
+// button-block should stand alone
+// button-full should stand alone
+// button-round should stand alone
+// button-disabled should stand alone(?)
+// button-sizes should stand alone (button-small, button-large, etc)
+// button-fab errrrr
+
+
+// Default Button Color Mixin
+// --------------------------------------------------
+
+@mixin button-default($bg-color, $bg-color-activated, $text-color) {
+  background-color: $bg-color;
+  color: $text-color;
+
+  &.activated {
+    background-color: $bg-color-activated;
+  }
+}
+
+
+// Generate Default Button Colors
+// --------------------------------------------------
+
+@each $color-name, $color-value in $colors {
+
+  .button-#{$color-name} {
+    $bg-color: $color-value;
+    $bg-color-activated: color-shade($bg-color);
+    $text-color: inverse($bg-color);
+    @include button-default($bg-color, $bg-color-activated, $text-color);
+  }
+
 }

@@ -3,8 +3,7 @@
 // Clear Button
 // --------------------------------------------------
 
-button[clear],
-[button][clear] {
+.button-clear {
   border-color: transparent;
   background: transparent;
   color: color-shade($button-color);
@@ -29,8 +28,7 @@ button[clear],
 
   $fg-color: color-shade($color-value);
 
-  button[clear][#{$color-name}],
-  [button][clear][#{$color-name}] {
+  .button-clear-#{$color-name} {
     border-color: transparent;
     background: transparent;
     color: $fg-color;
