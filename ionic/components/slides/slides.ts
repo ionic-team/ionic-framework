@@ -33,35 +33,36 @@ import {Scroll} from '../scroll/scroll';
  * ```ts
  * @Page({
  *  template: `
- *         <ion-slides pager (slide-changed)="onSlideChanged($event)" loop="true" autoplay="true">
- *          <ion-slide>
- *            <h3>Thank you for choosing the Awesome App!</h3>
- *            <p>
- *              The number one app for everything awesome.
- *            </p>
- *          </ion-slide>
- *          <ion-slide>
- *            <h3>Using Awesome</h3>
- *             <div id="list">
- *               <h5>Just three steps:</h5>
- *               <ol>
- *                 <li>Be awesome</li>
- *                 <li>Stay awesome</li>
- *                 <li>There is no step 3</li>
- *               </ol>
- *             </div>
- *          </ion-slide>
- *          <ion-slide>
- *            <h3>Any questions?</h3>
- *          </ion-slide>
- *        </ion-slides>
- *        `
+ *     <ion-slides pager (slide-changed)="onSlideChanged($event)" loop="true" autoplay="true">
+ *      <ion-slide>
+ *        <h3>Thank you for choosing the Awesome App!</h3>
+ *        <p>
+ *          The number one app for everything awesome.
+ *        </p>
+ *      </ion-slide>
+ *      <ion-slide>
+ *        <h3>Using Awesome</h3>
+ *         <div id="list">
+ *           <h5>Just three steps:</h5>
+ *           <ol>
+ *             <li>Be awesome</li>
+ *             <li>Stay awesome</li>
+ *             <li>There is no step 3</li>
+ *           </ol>
+ *         </div>
+ *      </ion-slide>
+ *      <ion-slide>
+ *        <h3>Any questions?</h3>
+ *      </ion-slide>
+ *    </ion-slides>
+ *    `
  *})
  *
  *```
- * @property {Any} [autoplay] - whether or not the slides should automatically change
- * @property {Any} [loop] - whether the slides should loop from the last slide back to the first
- * @property {Any} [bounce] - whether the slides should bounce
+ * @property {Boolean} [autoplay] - whether or not the slides should automatically change
+ * @property {Boolean} [loop] - whether the slides should loop from the last slide back to the first
+ * @property {Boolean} [bounce] - whether the slides should bounce
+ * @property {Number} [index] - The slide index to start on
  * @property [pager] - add this property to enable the slide pager
  * @property {Any} [slideChanged] - expression to evaluate when a slide has been changed
  * @see {@link /docs/v2/components#slides Slides Component Docs}
@@ -499,7 +500,6 @@ export class Slides extends Ion {
    * Update the underlying slider implementation. Call this if you've added or removed
    * child slides.
    */
-   */
   update() {
     setTimeout(() => {
       this.slider.update();
@@ -587,7 +587,7 @@ export class Slide {
 }
 
  /**
-  * @priavte
+  * @private
   */
 @Directive({
   selector: 'slide-lazy',
