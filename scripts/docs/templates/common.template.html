@@ -235,6 +235,18 @@ Delegate: <$ doc.delegate $>
 
 
 
+
+<@- if doc.see @>
+
+  <h2>Related</h2>
+
+<@ for s in doc.see @>
+<$ s | safe $>
+<@- endfor -@>
+
+<@- endif -@>
+
+
 <!-- end content block -->
 <@ endblock @>
 

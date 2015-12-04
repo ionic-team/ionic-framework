@@ -15,6 +15,9 @@ import {pointerCoord, hasPointerMoved} from '../../util/dom';
  * </ion-input>
  * ```
  *
+ * @see {@link ../../../../components#inputs Input Component Docs}
+ * @see {@link ../Input Input API Docs}
+ *
  */
 
 @Directive({
