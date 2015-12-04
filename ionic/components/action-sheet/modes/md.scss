@@ -20,7 +20,6 @@ $action-sheet-md-icon-margin:              0 28px 0 0 !default;
 
 
 ion-action-sheet {
-  margin: 0;
 
   icon {
     display: inline-block;
@@ -32,19 +31,25 @@ ion-action-sheet {
   }
 }
 
+.action-sheet-title {
+  padding: $action-sheet-md-title-padding;
+  font-size: $action-sheet-md-title-font-size;
+  color: $action-sheet-md-title-color;
+  text-align: left;
+}
+
 .action-sheet-button {
+  background-color: transparent;
   font-weight: normal;
   min-height: $action-sheet-md-height;
+  color: $action-sheet-md-button-text-color;
+  text-align: left;
 
   &.activated {
     background: $action-sheet-md-background-active-color;
     border-radius: 0;
     box-shadow: none;
   }
-}
-
-.action-sheet-container {
-  margin: 0;
 }
 
 .action-sheet-group {
@@ -55,24 +60,6 @@ ion-action-sheet {
   &:last-child .action-sheet-button {
     margin-bottom: 8px;
   }
-}
-
-.action-sheet-title {
-  padding: $action-sheet-md-title-padding;
-  font-size: $action-sheet-md-title-font-size;
-  color: $action-sheet-md-title-color;
-}
-
-.action-sheet-title,
-.action-sheet-option,
-.action-sheet-destructive,
-.action-sheet-cancel .action-sheet-button {
-  text-align: left;
-  border-color: transparent;
-  font-size: $action-sheet-md-button-font-size;
-  color: $action-sheet-md-button-text-color;
-  box-shadow: none;
-  text-transform: none;
 }
 
 .action-sheet-cancel {

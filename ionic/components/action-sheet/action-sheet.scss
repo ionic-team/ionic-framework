@@ -49,28 +49,17 @@ ion-action-sheet {
   margin: 0;
   border-radius: 0;
   border-color: $action-sheet-options-border-color;
-}
 
-.action-sheet-button.activated {
-  box-shadow: none;
-  border-color: $action-sheet-options-border-color;
-  background: $action-sheet-options-background-active-color;
-}
-
-.action-sheet-title {
-  padding: 10px;
-  color: #8f8f8f;
-  text-align: center;
-  font-size: 13px;
+  &.activated {
+    box-shadow: none;
+    border-color: $action-sheet-options-border-color;
+    background: $action-sheet-options-background-active-color;
+  }
 }
 
 .action-sheet-group {
   background-color: #fff;
   overflow: hidden;
-
-  .action-sheet-button:first-child:last-child {
-    border-width: 0;
-  }
 }
 
 .action-sheet-options {
