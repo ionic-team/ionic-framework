@@ -499,7 +499,6 @@ export class Slides extends Ion {
    * Update the underlying slider implementation. Call this if you've added or removed
    * child slides.
    */
-   */
   update() {
     setTimeout(() => {
       this.slider.update();
@@ -587,7 +586,7 @@ export class Slide {
 }
 
  /**
-  * @priavte
+  * @private
   */
 @Directive({
   selector: 'slide-lazy',
