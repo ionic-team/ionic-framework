@@ -50,7 +50,7 @@ function buildDemoBundle(opts, done) {
 
       // add our bundle entry, removing previous if necessary
       // since config is cached
-      if (config.entry.length > 5) {
+      if (config.entry.length > 4) {
         config.entry.pop();
       }
       config.entry.push('./' + file);
