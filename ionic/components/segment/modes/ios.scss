@@ -36,14 +36,14 @@ ion-segment {
       background: $segment-button-ios-bg-color;
       color: $segment-button-ios-bg-color-activated;
 
-      &.activated {
+      &.segment-activated {
         opacity: 1;
         color: $segment-button-ios-text-color;
         background-color: $segment-button-ios-bg-color-activated;
         transition: $segment-button-ios-activated-transition;
       }
 
-      &:hover:not(.activated) {
+      &:hover:not(.segment-activated) {
         background-color: rgba($segment-button-ios-bg-color-activated, $segment-button-ios-hover-opacity);
       }
     }
@@ -95,13 +95,13 @@ ion-segment {
     background: $segment-button-ios-bg-color;
     color: $button-color;
 
-    &.activated {
+    &.segment-activated {
       opacity: 1;
       color: $activated-text-color;
       background-color: $button-color;
     }
 
-    &:hover:not(.activated) {
+    &:hover:not(.segment-activated) {
       background-color: rgba($button-color, $segment-button-ios-hover-opacity);
     }
   }

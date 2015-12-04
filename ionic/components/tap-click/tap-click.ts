@@ -62,6 +62,7 @@ export class TapClick {
     if (this.usePolyfill && this.startCoord && this.app.isEnabled()) {
       let endCoord = pointerCoord(ev);
 
+
       if (!hasPointerMoved(POINTER_TOLERANCE, this.startCoord, endCoord)) {
         console.debug('create click from touch ' + Date.now());
 
@@ -206,7 +207,7 @@ function removeListener(type, listener) {
 }
 
 const ACTIVATABLE_ELEMENTS = /^(A|BUTTON)$/;
-const ACTIVATABLE_ATTRIBUTES = /tappable/;
+const ACTIVATABLE_ATTRIBUTES = /tappable|button/i;
 const POINTER_TOLERANCE = 4;
 const POINTER_MOVE_UNTIL_CANCEL = 10;
 const DISABLE_NATIVE_CLICK_AMOUNT = 2500;
