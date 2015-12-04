@@ -3,6 +3,20 @@ import {Injectable} from 'angular2/angular2';
 /**
  * Events is a pub/sub style event system for sending and responding to application-level
  * events across your app.
+ * @usage
+ * ```ts
+ * // first page (publish an event when a user is created)
+ * function createUser(user) {
+ *   console.log('User created!')
+ *   events.publish('user:created', user);
+ * }
+ *
+ * // second page (listen for the user created event)
+ * events.subscribe('user:created', (user) => {
+ *   console.log('Welcome', user); 
+ * });
+ *
+ * ```
  */
 @Injectable()
 export class Events {
