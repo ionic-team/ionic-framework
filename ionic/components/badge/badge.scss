@@ -8,7 +8,7 @@ $badge-font-weight:               bold !default;
 $badge-border-radius:             10px !default;
 
 
-item-badge {
+ion-badge {
   display: inline-block;
 
   padding: 3px 8px;
@@ -28,4 +28,16 @@ item-badge {
   &:empty {
     display: none;
   }
+}
+
+// Generate Default Badge Colors
+// --------------------------------------------------
+
+@each $color-name, $color-value in $colors {
+
+  .badge-#{$color-name} {
+    background-color: $color-value;
+    color: inverse($color-value);
+  }
+
 }
