@@ -1,4 +1,10 @@
 @import "../../../ionic.globals";
+@import "../button";
+@import "../button-clear";
+@import "../button-fab";
+@import "../button-icon";
+@import "../button-outline";
+@import "../button-size";
 
 // Material Design Button
 // --------------------------------------------------
@@ -18,6 +24,7 @@ $button-md-clear-active-background-color:  rgba(158, 158, 158, 0.2) !default;
 
 $button-md-fab-box-shadow:                 0 4px 6px 0 rgba(0, 0, 0, 0.14), 0 4px 5px rgba(0, 0, 0, 0.1) !default;
 $button-md-fab-box-shadow-active:          0 5px 15px 0 rgba(0, 0, 0, 0.4), 0 4px 7px 0 rgba(0, 0, 0, 0.1) !default;
+
 
 button,
 [button] {

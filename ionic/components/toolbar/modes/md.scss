@@ -62,3 +62,27 @@ ion-title {
 ion-nav-items[primary] button:first-child {
   margin-left: 0;
 }
+
+
+// Material Design Navbar
+// --------------------------------------------------
+
+$navbar-md-height:                  5.6rem !default;
+
+
+ion-navbar-section {
+  min-height: $navbar-md-height;
+}
+
+.toolbar .back-button {
+  margin: 0 0 0 12px;
+  box-shadow: none;
+}
+
+.toolbar .back-button-icon {
+  margin: 0;
+  min-width: 44px;
+  font-size: 2.4rem;
+  font-weight: normal;
+  text-align: left;
+}
