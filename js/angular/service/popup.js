@@ -475,7 +475,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
     return showPopup(extend({
       template: text + '<input ng-model="data.response" '
         + 'type="' + (opts.inputType || 'text') + '" '
-        + (opts.maxLength ? 'maxlength="'+parseInt(opts.maxLength)+'" ' : '')
+        + (opts.maxLength ? 'maxlength="' + parseInt(opts.maxLength) + '" ' : '')
         + 'placeholder="' + (opts.inputPlaceholder || '') + '"'
         + '>',
       scope: scope,
