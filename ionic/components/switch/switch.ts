@@ -33,9 +33,10 @@ class MediaSwitch {
 
 
 /**
- * A switch technically is the same thing as an HTML checkbox input, except it looks different and is easier to use on a touch device. Ionic prefers to wrap the checkbox input with the <label> in order to make the entire toggle easy to tap or drag.
- *
- * Toggles can also have colors assigned to them, by adding the `toggle-assertive` attribute to assign the assertive color.
+ * @name Switch
+ * @description
+ * A switch technically is the same thing as an HTML checkbox input, except it looks different and is easier to use on a touch device. Ionic prefers to wrap the checkbox input with the `<label>` in order to make the entire toggle easy to tap or drag.
+ * Switches can also have colors assigned to them, by adding any color attribute to them.
  *
  * See the [Angular 2 Docs](https://angular.io/docs/js/latest/api/forms/) for more info on forms and input.
  *
@@ -64,6 +65,7 @@ class MediaSwitch {
  *  </ion-list>
  * ```
  *
+ * @see {@link /docs/v2/components#switch Switch Component Docs}
  */
 @Component({
   selector: 'ion-switch',

@@ -14,6 +14,8 @@ import {Scroll} from '../scroll/scroll';
 
 
 /**
+ * @name Slides
+ * @description
  * Slides is a slide box implementation based on Swiper.js
  *
  * Swiper.js:
@@ -27,6 +29,42 @@ import {Scroll} from '../scroll/scroll';
  *
  * Licensed under MIT
  *
+ * @usage
+ * ```ts
+ * @Page({
+ *  template: `
+ *         <ion-slides pager (slide-changed)="onSlideChanged($event)" loop="true" autoplay="true">
+ *          <ion-slide>
+ *            <h3>Thank you for choosing the Awesome App!</h3>
+ *            <p>
+ *              The number one app for everything awesome.
+ *            </p>
+ *          </ion-slide>
+ *          <ion-slide>
+ *            <h3>Using Awesome</h3>
+ *             <div id="list">
+ *               <h5>Just three steps:</h5>
+ *               <ol>
+ *                 <li>Be awesome</li>
+ *                 <li>Stay awesome</li>
+ *                 <li>There is no step 3</li>
+ *               </ol>
+ *             </div>
+ *          </ion-slide>
+ *          <ion-slide>
+ *            <h3>Any questions?</h3>
+ *          </ion-slide>
+ *        </ion-slides>
+ *        `
+ *})
+ *
+ *```
+ * @property {Any} [autoplay] - whether or not the slides should automatically change
+ * @property {Any} [loop] - whether the slides should loop from the last slide back to the first
+ * @property {Any} [bounce] - whether the slides should bounce
+ * @property [pager] - add this property to enable the slide pager
+ * @property {Any} [slideChanged] - expression to evaluate when a slide has been changed
+ * @see {@link /docs/v2/components#slides Slides Component Docs}
  */
 @Component({
   selector: 'ion-slides',
@@ -56,7 +94,7 @@ import {Scroll} from '../scroll/scroll';
 export class Slides extends Ion {
 
   /**
-   * TODO
+   * @private
    * @param {ElementRef} elementRef  TODO
    */
   constructor(elementRef: ElementRef, config: Config) {
@@ -67,6 +105,10 @@ export class Slides extends Ion {
 
     this.slideChanged = new EventEmitter('slideChanged');
   }
+
+  /**
+   * @private
+   */
   onInit() {
     if(!this.options) {
       this.options = {};
@@ -133,16 +175,31 @@ export class Slides extends Ion {
 
   }
 
+  /**
+   * @private
+   */
   onTap(swiper, e) {
   }
+  /**
+   * @private
+   */
   onClick(swiper, e) {
   }
+  /**
+   * @private
+   */
   onDoubleTap(swiper, e) {
 
     this.toggleZoom(swiper, e);
   }
+  /**
+   * @private
+   */
   onLazyImageLoad(swiper, slide, img) {
   }
+  /**
+   * @private
+   */
   onLazyImageReady(swiper, slide, img) {
   }
 
@@ -155,6 +212,9 @@ export class Slides extends Ion {
   }
   */
 
+  /**
+   * @private
+   */
   initZoom() {
     this.zoomDuration = this.zoomDuration || 230;
     this.maxScale = this.zoomMax || 3;
@@ -218,6 +278,9 @@ export class Slides extends Ion {
     });
   }
 
+  /**
+   * @private
+   */
   resetZoom() {
 
     if(this.zoomElement) {
@@ -231,6 +294,9 @@ export class Slides extends Ion {
     this.zoomLastPosY = 0;
   }
 
+  /**
+   * @private
+   */
   toggleZoom(swiper, e) {
     console.log('Try toggle zoom');
     if(!this.enableZoom) { return; }
@@ -305,11 +371,21 @@ export class Slides extends Ion {
       this.scale = this.maxScale;
     }
   }
+
+  /**
+   * @private
+   */
   onTransitionStart(swiper) {
   }
+  /**
+   * @private
+   */
   onTransitionEnd(swiper) {
   }
 
+  /**
+   * @private
+   */
   onTouchStart(e) {
     console.log('Touch start', e);
 
@@ -335,6 +411,9 @@ export class Slides extends Ion {
 
   }
 
+  /**
+   * @private
+   */
   onTouchMove(e) {
     this.touch.deltaX = e.touches[0].clientX - this.touch.startX;
     this.touch.deltaY = e.touches[0].clientY - this.touch.startY;
@@ -384,6 +463,10 @@ export class Slides extends Ion {
     }
 
   }
+
+  /**
+   * @private
+   */
   onTouchEnd(e) {
     console.log('PANEND', e);
 
@@ -412,6 +495,7 @@ export class Slides extends Ion {
   }
 
   /**
+   * @private
    * Update the underlying slider implementation. Call this if you've added or removed
    * child slides.
    */
@@ -426,33 +510,59 @@ export class Slides extends Ion {
     });
   }
 
+  /**
+   * @private
+   */
   next() {
     this.slider.slideNext();
   }
+
+  /**
+   * @private
+   */
   prev() {
     this.slider.slidePrev();
   }
+
+  /**
+   * @private
+   */
   getIndex() {
     return this.slider.activeIndex;
   }
+
+  /**
+   * @private
+   */
   getNumSlides() {
     return this.slider.slides.length;
   }
+
+  /**
+   * @private
+   */
   isAtEnd() {
     return this.slider.isEnd;
   }
+
+  /**
+   * @private
+   */
   isAtBeginning() {
     return this.slider.isBeginning;
   }
 
+  /**
+   * @private
+   */
   getSliderWidget() {
     return this.slider;
   }
 }
 
-/**
- * TODO
- */
+ /**
+  * @private
+  */
 @Component({
   selector: 'ion-slide',
   inputs: ['zoom'],
@@ -475,6 +585,9 @@ export class Slide {
   }
 }
 
+ /**
+  * @private
+  */
 @Directive({
   selector: 'slide-lazy',
 })

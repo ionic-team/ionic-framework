@@ -36,6 +36,8 @@ import {Config} from '../../config/config';
  *   </ion-segment>
  * </form>
  * ```
+ *
+ * @see {@link /docs/v2/components#segment Segment Component Docs}
  */
 @Directive({
   selector: 'ion-segment'

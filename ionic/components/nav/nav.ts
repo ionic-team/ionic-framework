@@ -96,6 +96,7 @@ import {ViewController} from './view-controller';
  *   </pre>
  * </div>
  *
+ * @see {@link /docs/v2/components#navigation Navigation Component Docs}
  */
 @ConfigComponent({
   selector: 'ion-nav',

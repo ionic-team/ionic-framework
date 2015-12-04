@@ -108,6 +108,8 @@ class ActionSheetCmp {
  *
  * }
  * ```
+ *
+ * @see {@link /docs/v2/components#action-sheets ActionSheet Component Docs}
  */
 @Injectable()
 export class ActionSheet {

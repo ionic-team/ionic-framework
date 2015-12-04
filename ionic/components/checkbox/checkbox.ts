@@ -17,6 +17,7 @@ import {Form} from '../../util/form';
  *   HTML5
  * </ion-checkbox>
  * ```
+ * @see {@link /docs/v2/components#checkbox Checkbox Component Docs}
  */
 @Component({
   selector: 'ion-checkbox',

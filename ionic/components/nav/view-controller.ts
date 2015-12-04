@@ -2,7 +2,19 @@ import {NavParams} from './nav-controller';
 
 
 /**
- * You can access various features and information about the current view
+ * @name ViewController
+ * @description
+ * Access various features and information about the current view
+ * @usage
+ *  ```ts
+ *  import {Page, ViewController} from 'ionic/ionic';
+ *  @Page....
+ *  export class MyPage{
+ *   constructor(viewCtrl: ViewController){
+ *     this.viewCtrl = viewCtrl;
+ *   }
+ *  }
+ *  ```
  */
 export class ViewController {
 

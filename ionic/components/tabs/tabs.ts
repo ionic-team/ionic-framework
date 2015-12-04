@@ -31,8 +31,8 @@ import {rafFrames} from '../../util/dom';
  * individual Tab components. On iOS, the TabBar is placed on the bottom of
  * the screen, while on Android it is at the top.
  *
- * See the [Tab API reference](../Tab/) for more details on individual Tab components.
- *
+ * @see {@link /docs/v2/components#tabs Tabs Component Docs}
+ * @see {@link ../Tab Tab API Docs}
  */
 @ConfigComponent({
   selector: 'ion-tabs',

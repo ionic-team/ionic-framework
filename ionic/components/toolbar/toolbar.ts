@@ -109,6 +109,9 @@ export class Toolbar extends ToolbarBase {
  * </ion-navbar>
  *
  *<!-- or if you wanted to crate a subheader title-->
+ * <ion-navbar *navbar>
+ *    <ion-title>Tab 1</ion-title>
+ * </ion-navbar>
  * <ion-toolbar>
  *   <ion-title>SubHeader</ion-title>
  * </ion-toolbar>

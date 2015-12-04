@@ -9,6 +9,8 @@ title: "<@ if doc.docType == "directive" @><$ doc.name | dashCase $><@ else @><$
 header_sub_title: "<$ doc.docType | capital $> in module <$ doc.module $>"
 doc: "<$ doc.name $>"
 docType: "<$ doc.docType $>"
+<@ if doc.demo and false @>show_preview_device: true
+preview_device_url= "<$ doc.demo $>"<@ endif @>
 ---
 
 
@@ -83,24 +85,6 @@ docType: "<$ doc.docType $>"
   <a href='http://github.com/driftyco/ionic2/edit/master/<$ doc.fileInfo.relativePath $>#L<$ doc.location.start.line $>'>
     Improve this doc
   </a>
-
-  <!-- TODO(drewrygh, perrygovier): render this block in the correct location, markup identical to component docs -->
-  <@- if doc.demo and false -@>
-  <aside id="platform-preview" class="platform-preview">
-    <div class="platform-toggle">
-      <a ng-class="{active: iosActive}"
-         ng-click="setPlatform('ios')">iOS</a>
-      <a ng-class="{active: androidActive}"
-         ng-click="setPlatform('android')">Android</a>
-    </div>
-    <div id="demo-device-ios" ng-class="previewPlatform">
-      <iframe id="demo-ios" src="<$ doc.demo $>" frameborder="0"></iframe>
-    </div>
-    <div id="demo-device-android" ng-class="previewPlatform">
-      <iframe id="demo-ios" src="<$ doc.demo $>" frameborder="0"></iframe>
-    </div>
-  </aside>
-  <@ endif @>
 
 </div>
 
@@ -238,8 +222,7 @@ Delegate: <$ doc.delegate $>
 
 <@- if doc.see @>
 
-  <h2>Related</h2>
-
+<h2>Related</h2>
 <@ for s in doc.see @>
 <$ s | safe $>
 <@- endfor -@>
@@ -252,4 +235,3 @@ Delegate: <$ doc.delegate $>
 
 <!-- end body block -->
 <@ endblock @>
-
