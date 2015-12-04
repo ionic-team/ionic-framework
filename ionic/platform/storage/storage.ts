@@ -7,6 +7,9 @@
  * for temporary data as it may be "cleaned up" by the operation system
  * during low disk space situations.
  */
+/**
+ * @private
+*/
 export class Storage {
   constructor(strategyCls: StorageEngine, options) {
     this._strategy = new strategyCls(options);
@@ -33,6 +36,9 @@ export class Storage {
   }
 }
 
+/**
+ * @private
+*/
 export class StorageEngine {
   get(key, value) {
     throw Error("get() not implemented for this storage engine");
