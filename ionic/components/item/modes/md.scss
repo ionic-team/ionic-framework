@@ -186,7 +186,7 @@ ion-thumbnail {
 .item,
 a.item,
 button.item {
-  transition: background-color $button-md-transition-duration $button-md-animation-curve, transform 300ms;
+  transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1), transform 300ms;
 }
 
 .item.activated,
