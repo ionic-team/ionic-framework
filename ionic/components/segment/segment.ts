@@ -132,7 +132,7 @@ export class Segment extends Ion {
   ],
   host: {
     '(click)': 'click($event)',
-    '[class.activated]': 'isActive',
+    '[class.segment-activated]': 'isActive',
   }
 })
 export class SegmentButton {

@@ -74,6 +74,7 @@ docType: "<$ doc.docType $>"
 <@- endmacro -@>
 
 <@ block body @>
+
 <div class="improve-docs">
   <a href='http://github.com/driftyco/ionic2/tree/master/<$ doc.fileInfo.relativePath $>#L<$ doc.location.start.line $>'>
     View Source
@@ -107,59 +108,108 @@ docType: "<$ doc.docType $>"
 
 <@ block header @>
 <h1 class="api-title">
+
 <@ if doc.docType == "directive" @>
-  <$ doc.name | dashCase $>
+<$ doc.name | dashCase $>
+
 <@ else @>
-  <$ doc.name $>
+<$ doc.name $>
 <@ endif @>
+
 <@ if doc.parent @>
 <br />
 <small>
-  Child of <$ doc.parent $>
+Child of <$ doc.parent $>
 </small>
 <@ endif @>
+
 <@ if doc.delegate @>
 <br/>
 <small>
-  Delegate: <$ doc.delegate $>
+Delegate: <$ doc.delegate $>
 </small>
 <@ endif @>
+
 </h1>
 
 <@ if doc.codepen @>
 {% include codepen.html id="<$ doc.codepen $>" %}
 <@ endif @>
+
 <@ endblock @>
 
+
+<h2>Description</h2>
 <@ block description @>
 <$ doc.description | marked $>
 <@ endblock @>
 
+
+<@- if doc.directiveInfo @>
+<h2><$ doc.directiveInfo.type $></h2>
+<h3><$ doc.directiveInfo.properties[0].name $>: <code><$ doc.directiveInfo.properties[0].values $></code></h3>
+<@ endif -@>
+
+
+<h2>Usage</h2>
 <@ if doc.usage @>
 <@ block usage @>
 <$ doc.usage | marked $>
 <@ endblock @>
 <@ endif @>
 
-<h1 class="class export"><$ doc.name $> <span class="type"><$ doc.docType $></span></h1>
-<p class="module">exported from {@link <$ doc.moduleDoc.id $> <$doc.moduleDoc.id $> }<br/>
-defined in <$ githubViewLink(doc) $>
-</p>
 
-<@- if doc.directiveInfo @>
-<h2><$ doc.directiveInfo.type $></h2>
-<@- for prop in doc.directiveInfo.properties @>
-  <span><$ prop.name $>: <@ for v in prop.values @><$ v $><@ if not loop.last @>, <@ endif @><@ endfor @></span>
+<@ if doc.properties @>
+<h2>Attributes:</h2>
+<table class="table" style="margin:0;">
+<thead>
+<tr>
+<th>Attribute</th>
+
+<@ set hasTypes = false @>
+<@ for prop in doc.properties @>
+<@ if prop.type @>
+<@ set hasTypes = true @>
+<@ endif @>
 <@ endfor @>
-<@ endif -@>
+<@ if hasTypes @>
+<th>Type</th>
+<@ endif @>
+
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<@ for prop in doc.properties @>
+<tr>
+<td>
+<$ prop.name $>
+</td>
+
+<@ if hasTypes @>
+<td>
+<$ prop.type.name $>
+</td>
+<@ endif @>
+
+<td>
+<$ prop.description $>
+</td>
+</tr>
+<@ endfor @>
+</tbody>
+</table>
+<@ endif @>
 
 <@- if doc.members and doc.members.length @>
-<h2>Members</h2>
+
+<h2>Methods</h2>
 <@- for method in doc.members @>
 
 <div id="<$ method.name $>"></div>
+
 <h3>
-  <$ functionSyntax(method) $>
+<$ functionSyntax(method) $>
 </h3>
 
 <$ method.description $>
@@ -179,31 +229,27 @@ defined in <$ githubViewLink(doc) $>
 <@ endif @>
 
 <@ endfor -@>
+
 <@- endif -@>
 
-<@ if doc.properties @>
-  <h2>Attributes:</h2>
-  <table class="table" style="margin:0;">
-    <thead>
-      <tr>
-        <th>Attribute</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <@ for prop in doc.properties @>
-      <tr>
-        <td>
-          <$ prop.name $>
-        </td>
-        <td>
-          <$ prop.description $>
-        </td>
-      </tr>
-      <@ endfor @>
-    </tbody>
-  </table>
-<@ endif @>
 
+
+
+
+<@- if doc.see @>
+
+  <h2>Related</h2>
+
+<@ for s in doc.see @>
+<$ s | safe $>
+<@- endfor -@>
+
+<@- endif -@>
+
+
+<!-- end content block -->
 <@ endblock @>
+
+<!-- end body block -->
 <@ endblock @>
+

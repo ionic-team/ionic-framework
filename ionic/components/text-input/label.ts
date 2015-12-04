@@ -3,7 +3,22 @@ import {Directive, Optional} from 'angular2/angular2';
 import {Config} from '../../config/config';
 import {TextInput} from './text-input';
 import {pointerCoord, hasPointerMoved} from '../../util/dom';
-
+/**
+ * @name Label
+ * @description
+ * Labels describe the data that the user should enter in to an input element.
+ * @usage
+ * ```html
+ * <ion-input>
+ *   <ion-label>Username</ion-label>
+ *   <input type="text" value="">
+ * </ion-input>
+ * ```
+ *
+ * @see {@link ../../../../components#inputs Input Component Docs}
+ * @see {@link ../Input Input API Docs}
+ *
+ */
 
 @Directive({
   selector: 'ion-label',

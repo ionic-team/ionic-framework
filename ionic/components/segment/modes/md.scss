@@ -24,7 +24,7 @@ ion-segment {
     min-height: $segment-button-md-min-height;
     line-height: $segment-button-md-line-height;
 
-    &.activated {
+    &.activated, &.segment-activated {
       color: $segment-button-md-text-color-activated;
       background-color: transparent;
       border-color: $segment-button-md-border-color-activated;
@@ -41,7 +41,8 @@ ion-segment {
   ion-segment {
     margin: 0 auto;
 
-    ion-segment-button[button][outline].activated {
+    ion-segment-button[button][outline].activated,
+    ion-segment-button[button][outline].segment-activated {
       background-color: transparent;
     }
   }
@@ -57,7 +58,7 @@ ion-segment {
   &[outline] {
     color: $button-color;
 
-    &.activated {
+    &.activated, &.segment-activated {
       background-color: transparent;
       color: $button-color;
       border-color: $button-color;
