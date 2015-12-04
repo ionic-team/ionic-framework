@@ -19,18 +19,6 @@ $action-sheet-md-icon-font-size:           2.4rem !default;
 $action-sheet-md-icon-margin:              0 28px 0 0 !default;
 
 
-ion-action-sheet {
-
-  icon {
-    display: inline-block;
-    margin: $action-sheet-md-icon-margin;
-    min-width: 24px;
-    text-align: center;
-    vertical-align: middle;
-    font-size: $action-sheet-md-icon-font-size;
-  }
-}
-
 .action-sheet-title {
   padding: $action-sheet-md-title-padding;
   font-size: $action-sheet-md-title-font-size;
@@ -50,6 +38,15 @@ ion-action-sheet {
     border-radius: 0;
     box-shadow: none;
   }
+}
+
+.action-sheet-icon {
+  display: inline-block;
+  margin: $action-sheet-md-icon-margin;
+  min-width: 24px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: $action-sheet-md-icon-font-size;
 }
 
 .action-sheet-group {
