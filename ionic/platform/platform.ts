@@ -301,8 +301,7 @@ export class Platform {
    * @returns {boolean} TODO
    */
   testNavigatorPlatform(navigatorPlatformExpression) {
-    let rgx = new RegExp(navigatorPlatformExpression, 'i');
-    return rgx.test(this._bPlt || '');
+    return navigatorPlatformExpression.test(this._bPlt || '');
   }
 
   /**
