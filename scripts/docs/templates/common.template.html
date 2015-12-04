@@ -9,8 +9,8 @@ title: "<@ if doc.docType == "directive" @><$ doc.name | dashCase $><@ else @><$
 header_sub_title: "<$ doc.docType | capital $> in module <$ doc.module $>"
 doc: "<$ doc.name $>"
 docType: "<$ doc.docType $>"
-<@- if doc.demo and false -@>show_preview_device: true
-preview_device_url= "<$ doc.demo $>"<@- endif -@>
+<@ if doc.demo and false @>show_preview_device: true
+preview_device_url= "<$ doc.demo $>"<@ endif @>
 ---
 
 
