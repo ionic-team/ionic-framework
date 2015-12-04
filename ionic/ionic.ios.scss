@@ -2,29 +2,28 @@
 @charset "UTF-8";
 
 
+// iOS Theme
+@import "themes/default.ios";
+
+
 // Core Components
 @import "ionic.core";
 
 
-// iOS Required Components
-@import
-  "components/icon/modes/ios",
-  "components/item/modes/ios",
-  "components/list/modes/ios",
-  "components/toolbar/modes/ios";
-
-
-// iOS Optional Components
+// iOS Components
 @import
   "components/action-sheet/modes/ios",
   "components/button/modes/ios",
   "components/card/modes/ios",
   "components/checkbox/modes/ios",
   "components/content/modes/ios",
+  "components/item/modes/ios",
+  "components/list/modes/ios",
   "components/popup/modes/ios",
   "components/radio/modes/ios",
   "components/searchbar/modes/ios",
   "components/segment/modes/ios",
   "components/switch/modes/ios",
   "components/tabs/modes/ios",
-  "components/text-input/modes/ios";
+  "components/text-input/modes/ios",
+  "components/toolbar/modes/ios";

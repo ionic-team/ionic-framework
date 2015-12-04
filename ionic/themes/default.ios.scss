@@ -1,0 +1,65 @@
+@import "themes/default";
+
+// iOS Default Theme
+// ----------------------------------
+
+$colors: (
+
+  primary:    #387ef5,
+  secondary:  #32db64,
+  danger:     #f53d3d,
+  light:      #f4f4f4,
+  dark:       #222,
+
+) !default;
+
+
+$text-ios-color:                 $text-color !default;
+$background-ios-color:           $background-color !default;
+$subdued-text-ios-color:         $subdued-text-color !default;
+
+$list-ios-text-color:            $text-ios-color !default;
+$list-ios-background-color:      $background-color !default;
+$list-ios-border-color:          $list-border-color !default;
+
+$link-ios-color:                 map-get($colors, primary) !default;
+
+
+// iOS Toolbar
+// --------------------------------------------------
+
+$toolbar-ios-background-color:   $toolbar-background-color !default;
+$toolbar-ios-border-color:       $toolbar-border-color !default;
+$toolbar-ios-text-color:         $text-ios-color !default;
+$toolbar-ios-active-color:       $link-ios-color !default;
+$toolbar-ios-inactive-color:     $toolbar-inactive-color !default;
+
+
+// iOS Item
+// --------------------------------------------------
+
+$item-ios-border-color:               $list-border-color !default;
+$item-ios-activated-background-color: #d9d9d9 !default;
+$item-ios-font-size:                  1.6rem !default;
+
+$item-ios-padding-top:                12px !default;
+$item-ios-padding-right:              16px !default;
+$item-ios-padding-bottom:             13px !default;
+$item-ios-padding-left:               16px !default;
+
+$item-ios-padding-media-top:          10px !default;
+$item-ios-padding-media-bottom:       10px !default;
+
+$item-ios-padding-icon-top:           10px !default;
+$item-ios-padding-icon-bottom:        9px !default;
+
+
+// iOS Icon
+// --------------------------------------------------
+
+$icon-detail-push-background-svg:    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M2,20l-2-2l8-8L0,2l2-2l10,10L2,20z' fill='fg-color'/></svg>" !default;
+
+@mixin ios-detail-push-icon($fg-color) {
+  $svg: str-replace($icon-detail-push-background-svg, 'fg-color', $fg-color);
+  @include svg-background-image($svg);
+}

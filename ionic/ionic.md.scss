@@ -2,13 +2,16 @@
 @charset "UTF-8";
 
 
+// Material Design Theme
+@import "themes/default.md";
+
+
 // Core Components
 @import "ionic.core";
 
 
 // Material Design Components
 @import
-  "components/icon/modes/md",
   "components/item/modes/md",
   "components/list/modes/md",
   "components/toolbar/modes/md";

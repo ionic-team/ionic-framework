@@ -1,0 +1,54 @@
+@import "themes/default";
+
+// Material Design Default Theme
+// ----------------------------------
+
+$colors: (
+
+  primary:    #387ef5,
+  secondary:  #32db64,
+  danger:     #f53d3d,
+  light:      #f4f4f4,
+  dark:       #222,
+
+) !default;
+
+
+$text-md-color:                 $text-color !default;
+$background-md-color:           $background-color !default;
+$subdued-text-md-color:         $subdued-text-color !default;
+
+$list-md-text-color:            $text-md-color !default;
+$list-md-background-color:      $background-color !default;
+$list-md-border-color:          $list-border-color !default;
+
+$link-md-color:                 map-get($colors, primary) !default;
+
+
+// iOS Toolbar
+// --------------------------------------------------
+
+$toolbar-md-background-color:   $toolbar-background-color !default;
+$toolbar-md-border-color:       $toolbar-border-color !default;
+$toolbar-md-text-color:         $text-md-color !default;
+$toolbar-md-active-color:       $link-md-color !default;
+$toolbar-md-inactive-color:     $toolbar-inactive-color !default;
+
+
+// Material Design Item
+// --------------------------------------------------
+
+$item-md-border-color:               $list-border-color !default;
+$item-md-activated-background-color: #d9d9d9 !default;
+$item-md-font-size:                  1.6rem !default;
+
+$item-md-padding-top:                12px !default;
+$item-md-padding-right:              16px !default;
+$item-md-padding-bottom:             13px !default;
+$item-md-padding-left:               16px !default;
+
+$item-md-padding-media-top:          10px !default;
+$item-md-padding-media-bottom:       10px !default;
+
+$item-md-padding-icon-top:           10px !default;
+$item-md-padding-icon-bottom:        9px !default;
