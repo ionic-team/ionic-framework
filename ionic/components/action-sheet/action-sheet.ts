@@ -122,7 +122,17 @@ export class ActionSheet {
    * public API, and most often you will only use ActionSheet.open()
    *
    * @param {Object} [opts={}]  An object containing optional settings.
-   * @param {String} [opts.pageType='action-sheet'] The page type that determines how the page renders and animates.
+   *  - `[Object]` `buttons` Which buttons to show.  Each button is an object with a `text` field.
+   *  - `{string}` `titleText` The title to show on the action sheet.
+   *  - `{string=}` `cancelText` the text for a 'cancel' button on the action sheet.
+   *  - `{string=}` `destructiveText` The text for a 'danger' on the action sheet.
+   *  - `{function=}` `cancel` Called if the cancel button is pressed, the backdrop is tapped or
+   *     the hardware back button is pressed.
+   *  - `{function=}` `buttonClicked` Called when one of the non-destructive buttons is clicked,
+   *     with the index of the button that was clicked and the button object. Return true to close
+   *     the action sheet, or false to keep it opened.
+   *  - `{function=}` `destructiveButtonClicked` Called when the destructive button is clicked.
+   *     Return true to close the action sheet, or false to keep it opened.
    * @param {String} [opts.enterAnimation='action-sheet-slide-in'] The class used to animate an actionSheet that is entering.
    * @param {String} [opts.leaveAnimation='action-sheet-slide-out'] The class used to animate an actionSheet that is leaving.
    * @return {Promise} Promise that resolves when the action sheet is open.
