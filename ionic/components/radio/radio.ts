@@ -40,6 +40,7 @@ import {ListHeader} from '../list/list';
  *
  * </ion-list>
  * ```
+ * @see {@link /docs/v2/components#radio Radio Component Docs}
 */
 @Directive({
   selector: '[radio-group]',
@@ -161,7 +162,8 @@ export class RadioGroup extends Ion {
  *   Radio Label
  * </ion-radio>
  * ```
- *
+ * 
+ * @see {@link /docs/v2/components#radio Radio Component Docs}
  */
 @Component({
   selector: 'ion-radio',

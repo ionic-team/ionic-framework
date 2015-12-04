@@ -20,6 +20,7 @@ import {Icon} from '../icon/icon';
  * @property [show-cancel] - shows the cancel button based on boolean value passed in
  * @property [cancel-text] - sets the cancel button text to the value passed in
  * @property [cancel-action] - the function that gets called by clicking the cancel button
+ * @see {@link /docs/v2/components#search Search Component Docs}
  */
 @ConfigComponent({
   selector: 'ion-searchbar',

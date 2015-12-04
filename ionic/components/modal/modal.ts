@@ -33,6 +33,7 @@ import {extend} from 'ionic/util';
  *
  * }
  * ```
+ * @see {@link /docs/v2/components#modals Modal Component Docs}
  */
 @Injectable()
 export class Modal {

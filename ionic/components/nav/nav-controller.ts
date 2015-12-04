@@ -97,6 +97,7 @@ import {raf, rafFrames} from '../../util/dom';
  * - `onPageWillUnload` - Runs when the page is about to be destroyed and have its elements removed.
  * - `onPageDidUnload` - Runs after the page has been destroyed and its elements have been removed.
  *
+ * @see {@link /docs/v2/components#navigation Navigation Component Docs}
  */
 export class NavController extends Ion {
 

@@ -37,6 +37,8 @@ import {Component} from 'angular2/angular2';
  * </ion-list>
  *
  *  ```
+ * @see {@link /docs/v2/components#lists List Component Docs}
+ * @see {@link ../../list/List List API Docs}
  */
 @Component({
   selector: 'ion-item,[ion-item]',

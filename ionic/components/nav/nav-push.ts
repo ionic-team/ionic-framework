@@ -36,6 +36,7 @@ import {NavRegistry} from './nav-registry';
  * ```html
  * <button [nav-push]="[pushPage, params]"></button>
  * ```
+ * @see {@link /docs/v2/components#navigation Navigation Component Docs}
  */
 @Directive({
   selector: '[nav-push]',

@@ -27,6 +27,7 @@ import {Scroll} from '../scroll/scroll';
  *
  * Licensed under MIT
  *
+ * @see {@link /docs/v2/components#slides Slides Component Docs}
  */
 @Component({
   selector: 'ion-slides',
