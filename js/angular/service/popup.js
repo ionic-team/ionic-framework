@@ -466,10 +466,10 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
   function showPrompt(opts) {
     var scope = $rootScope.$new(true);
     scope.data = {};
-    scope.data.fieldtype   = opts.inputType ? opts.inputType : 'text';
-    scope.data.response    = opts.defaultText ? opts.defaultText : '';
+    scope.data.fieldtype = opts.inputType ? opts.inputType : 'text';
+    scope.data.response = opts.defaultText ? opts.defaultText : '';
     scope.data.placeholder = opts.inputPlaceholder ? opts.inputPlaceholder : '';
-    scope.data.maxlength   = opts.maxLength ? parseInt(opts.maxLength) : '';
+    scope.data.maxlength = opts.maxLength ? parseInt(opts.maxLength) : '';
     var text = '';
     if (opts.template && /<[a-z][\s\S]*>/i.test(opts.template) === false) {
       text = '<span>' + opts.template + '</span>';
