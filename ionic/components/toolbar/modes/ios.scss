@@ -109,3 +109,18 @@ ion-nav-items[secondary] {
 &.hairlines .toolbar toolbar-background {
   border-bottom-width: 0.55px;
 }
+
+
+// iOS Navbar
+// --------------------------------------------------
+
+$navbar-ios-height:                        4.4rem !default;
+
+
+ion-navbar-section {
+  min-height: $navbar-ios-height;
+}
+
+.back-button {
+  transform: translateZ(0px);
+}

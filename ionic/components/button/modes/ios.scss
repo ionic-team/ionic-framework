@@ -1,4 +1,13 @@
 @import "../../../ionic.globals";
+@import "../button";
+@import "../button-clear";
+@import "../button-fab";
+@import "../button-icon";
+@import "../button-outline";
+@import "../button-size";
+
+// iOS Button (largely the core button styles)
+// --------------------------------------------------
 
 button {
   &[block] {

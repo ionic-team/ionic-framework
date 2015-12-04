@@ -1,4 +1,5 @@
 @import "../../../ionic.globals";
+@import "../segment";
 
 // iOS Segment
 // --------------------------------------------------
@@ -8,6 +9,7 @@ $segment-button-ios-min-height:               3.0rem !default;
 $segment-button-ios-line-height:              3.0rem !default;
 $segment-button-ios-bg-color:                 transparent !default;
 $segment-button-ios-font-size:                1.3rem !default;
+$segment-button-ios-border-radius:            4px !default;
 
 $segment-button-ios-bg-color-activated:       color(primary) !default;
 $segment-button-ios-text-color:               inverse($segment-button-ios-bg-color-activated) !default;
@@ -49,17 +51,17 @@ ion-segment {
     }
 
     &:first-of-type {
-      border-radius: $button-border-radius 0px 0px $button-border-radius;
+      border-radius: $segment-button-ios-border-radius 0 0 $segment-button-ios-border-radius;
       margin-right: 0;
     }
 
     &:not(:first-of-type) {
-      border-left-width: 0px;
+      border-left-width: 0;
     }
 
     &:last-of-type {
-      border-left-width: 0px;
-      border-radius: 0px $button-border-radius $button-border-radius 0px;
+      border-left-width: 0;
+      border-radius: 0 $segment-button-ios-border-radius $segment-button-ios-border-radius 0;
       margin-left: 0;
     }
   }
