@@ -14,6 +14,16 @@ $button-color-activated:          color-shade($button-color) !default;
 $button-text-color:               inverse($button-color) !default;
 $button-hover-opacity:            0.8 !default;
 
+.button-disabled {
+  opacity: 0.4;
+  cursor: default !important;
+  pointer-events: none;
+}
+
+a.button {
+  text-decoration: none;
+}
+
 .button {
   position: relative;
   display: inline-flex;
@@ -25,7 +35,7 @@ $button-hover-opacity:            0.8 !default;
   margin: $button-margin;
   padding: $button-padding;
   min-height: $button-height;
-  line-height: 1;
+  line-height: $button-height;
 
   border: 1px solid #ccc;
   border: transparent;
@@ -60,47 +70,36 @@ $button-hover-opacity:            0.8 !default;
      opacity: 1;
      background-color: $button-color-activated;
    }
+ }
 
-  // Button Types
-  // --------------------------------------------------
+// Button Types
+// --------------------------------------------------
 
-  .button-block {
-    display: flex;
+.button-block {
+  display: flex;
+  clear: both;
+  margin-right: 0;
+  margin-left: 0;
+  width: 100%;
+
+  &:after {
     clear: both;
-    margin-right: 0;
-    margin-left: 0;
-    width: 100%;
-
-    &:after {
-      clear: both;
-    }
-  }
-
-  .button-full {
-    width: 100%;
-    margin-right: 0;
-    margin-left: 0;
-    border-radius: 0;
-    border-right-width: 0;
-    border-left-width: 0;
-  }
-
-  .button-round {
-    border-radius: $button-round-border-radius;
-    padding: $button-round-padding;
-  }
-
-  .button-disabled {
-    opacity: 0.4;
-    cursor: default !important;
-    pointer-events: none;
   }
 }
 
-a[button] {
-  text-decoration: none;
+.button-full {
+  width: 100%;
+  margin-right: 0;
+  margin-left: 0;
+  border-radius: 0;
+  border-right-width: 0;
+  border-left-width: 0;
 }
 
+.button-round {
+  border-radius: $button-round-border-radius;
+  padding: $button-round-padding;
+}
 
 // TODO
 // button should have classes:

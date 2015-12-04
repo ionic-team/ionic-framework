@@ -24,6 +24,7 @@
 // Generate Clear Button Colors
 // --------------------------------------------------
 
+// TODO primary activated is wrong
 @each $color-name, $color-value in auxiliary-colors() {
 
   $fg-color: color-shade($color-value);
@@ -32,6 +33,11 @@
     border-color: transparent;
     background: transparent;
     color: $fg-color;
+
+    &.activated {
+      opacity: 0.4;
+      background: transparent;
+    }
 
     &:hover:not(.disable-hover) {
       color: color-shade($fg-color);

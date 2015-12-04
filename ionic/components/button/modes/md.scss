@@ -100,8 +100,10 @@ $button-md-fab-box-shadow-active:          0 5px 15px 0 rgba(0, 0, 0, 0.4), 0 4p
 .button-clear {
   opacity: 1;
   box-shadow: none;
+  background: transparent;
 
   &.activated {
+    opacity: 0.4;
     background-color: $button-md-clear-active-background-color;
   }
 }
