@@ -251,9 +251,10 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
      *   cssClass: '', // String, The custom CSS class name
      *   subTitle: '', // String (optional). The sub-title of the popup.
      *   template: '', // String (optional). The html template to place in the popup body.
-     *   templateUrl: '', // String (optional). The URL of an html template to place in the popup   body.
+     *   templateUrl: '', // String (optional). The URL of an html template to place in the popup body.
      *   inputType: // String (default: 'text'). The type of input to use
      *   defaultText: // String (default: ''). The initial value placed into the input.
+     *   maxLength: // Integer (default: null). Specify a maxlength attribute for the input.
      *   inputPlaceholder: // String (default: ''). A placeholder to use for the input.
      *   cancelText: // String (default: 'Cancel'. The text of the Cancel button.
      *   cancelType: // String (default: 'button-default'). The type of the Cancel button.
@@ -472,8 +473,11 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
       delete opts.template;
     }
     return showPopup(extend({
-      template: text + '<input ng-model="data.response" type="' + (opts.inputType || 'text') +
-        '" placeholder="' + (opts.inputPlaceholder || '') + '">',
+      template: text + '<input ng-model="data.response" '
+        + 'type="' + (opts.inputType || 'text') + '" '
+        + (opts.maxLength ? 'maxlength="'+parseInt(opts.maxLength)+'" ' : '')
+        + 'placeholder="' + (opts.inputPlaceholder || '') + '"'
+        + '>',
       scope: scope,
       buttons: [{
         text: opts.cancelText || 'Cancel',
