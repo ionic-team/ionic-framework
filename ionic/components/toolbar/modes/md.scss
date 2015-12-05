@@ -21,6 +21,7 @@ $toolbar-md-button-font-size:        1.4rem !default;
     min-height: 32px;
     box-shadow: none;
     overflow: visible;
+    color: $toolbar-md-active-color;
   }
 
   button.icon-only,
@@ -53,10 +54,27 @@ $toolbar-md-button-font-size:        1.4rem !default;
 
 }
 
+.toolbar button:hover:not(.disable-hover),
+.toolbar [button]:hover:not(.disable-hover),
+.toolbar button.activated,
+.toolbar [button].activated {
+  color: $toolbar-md-active-color;
+  background-color: transparent;
+}
+
+.toolbar toolbar-background {
+  border-color: $toolbar-md-border-color;
+  background-color: $toolbar-md-background-color;
+}
+
 ion-title {
   padding: 0 12px;
   font-size: $toolbar-md-title-font-size;
   font-weight: 500;
+}
+
+.toolbar-title {
+  color: $toolbar-md-text-color;
 }
 
 ion-nav-items[primary] button:first-child {

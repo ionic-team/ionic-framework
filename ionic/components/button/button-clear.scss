@@ -6,15 +6,10 @@
 .button-clear {
   border-color: transparent;
   background: transparent;
-  color: color-shade($button-color);
 
   &.activated {
     opacity: 0.4;
     background: transparent;
   }
 
-  &:hover:not(.disable-hover) {
-    opacity: 0.6;
-    color: color-shade($button-color);
-  }
 }

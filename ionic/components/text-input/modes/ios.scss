@@ -5,12 +5,14 @@
 // iOS Text Input
 // --------------------------------------------------
 
+$text-input-ios-background-color:    $list-ios-background-color !default;
 $text-input-ios-label-color:         #7f7f7f !default;
 
 
 [text-input] {
   margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom 0;
   padding: 0;
+  background-color: $text-input-ios-background-color;
 }
 
 ion-input[inset] [text-input] {
@@ -49,4 +51,11 @@ ion-label + [text-input] {
 [floating-label].has-focus ion-label,
 [floating-label].has-value ion-label  {
   transform: translate3d(0, 0, 0) scale(0.8);
+}
+
+
+@each $color-name, $color-value in $colors-ios {
+  ion-label[#{$color-name}] {
+    color: $color-value !important;
+  }
 }

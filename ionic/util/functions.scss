@@ -28,6 +28,14 @@
 }
 
 
+// Copy Colors Map
+// --------------------------------------------------
+
+@function copy-colors($colors-map) {
+  @return map-merge($colors-map, ());
+}
+
+
 // String Replace Function
 // --------------------------------------------------
 

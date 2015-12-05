@@ -18,7 +18,7 @@ $popup-md-button-min-height:              36px !default;
 
 $popup-md-prompt-input-border-color:      #dedede !default;
 $popup-md-prompt-input-text-color:        #000000 !default;
-$popup-md-prompt-input-highlight-color:   map-get($colors, primary) !default;
+$popup-md-prompt-input-highlight-color:   map-get($colors-md, primary) !default;
 $popup-md-prompt-input-placeholder-color: #b9b9b9 !default;
 $popup-md-prompt-input-margin-top:        5px !default;
 $popup-md-prompt-input-margin-bottom:     5px !default;

@@ -3,7 +3,6 @@
 @import "../button-clear";
 @import "../button-fab";
 @import "../button-icon";
-@import "../button-outline";
 @import "../button-size";
 
 // Material Design Button
@@ -24,6 +23,11 @@ $button-md-clear-active-background-color:  rgba(158, 158, 158, 0.2) !default;
 
 $button-md-fab-box-shadow:                 0 4px 6px 0 rgba(0, 0, 0, 0.14), 0 4px 5px rgba(0, 0, 0, 0.1) !default;
 $button-md-fab-box-shadow-active:          0 5px 15px 0 rgba(0, 0, 0, 0.4), 0 4px 7px 0 rgba(0, 0, 0, 0.1) !default;
+
+$button-md-color:                          map-get($colors-md, primary) !default;
+$button-md-color-activated:                color-shade($button-md-color) !default;
+$button-md-text-color:                     inverse($button-md-color) !default;
+$button-md-hover-opacity:                  0.8 !default;
 
 
 .button {
@@ -93,7 +97,7 @@ $button-md-fab-box-shadow-active:          0 5px 15px 0 rgba(0, 0, 0, 0.4), 0 4p
   }
 
   md-ripple {
-    background: rgba( red($button-color), green($button-color), blue($button-color), 0.1);
+    background: rgba( red($button-md-color), green($button-md-color), blue($button-md-color), 0.1);
   }
 }
 
@@ -105,6 +109,22 @@ $button-md-fab-box-shadow-active:          0 5px 15px 0 rgba(0, 0, 0, 0.4), 0 4p
   &.activated {
     opacity: 0.4;
     background-color: $button-md-clear-active-background-color;
+  }
+}
+
+
+// Outline Button
+// --------------------------------------------------
+
+.button-outline {
+  border: 1px solid $button-md-color;
+  background: transparent;
+  color: $button-md-color;
+
+  &.activated {
+    opacity: 1;
+    color: $background-md-color;
+    background-color: $button-md-color;
   }
 }
 
@@ -138,7 +158,7 @@ $button-md-fab-box-shadow-active:          0 5px 15px 0 rgba(0, 0, 0, 0.4), 0 4p
 // Generate Material Design Button Auxiliary Colors
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors {
+@each $color-name, $color-value in $colors-md {
 
   @include button-theme-md($color-name, $color-value);
 

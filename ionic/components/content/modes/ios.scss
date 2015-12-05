@@ -3,7 +3,7 @@
 // iOS Content
 // --------------------------------------------------
 
-$outer-content-md-background-color:         #efeff4 !default;
+$outer-content-ios-background-color:         #efeff4 !default;
 
 
 body,
@@ -16,7 +16,7 @@ a {
 }
 
 .outer-content {
-  background: $outer-content-md-background-color;
+  background: $outer-content-ios-background-color;
 }
 
 ion-nav.has-views,
@@ -24,7 +24,7 @@ ion-tab.has-views {
   background: #000;
 }
 
-@each $color-name, $color-value in $colors {
+@each $color-name, $color-value in $colors-ios {
   h1, h2, h3, h4, h5, h6,
   p,
   span,

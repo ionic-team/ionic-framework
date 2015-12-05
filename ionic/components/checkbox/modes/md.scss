@@ -5,13 +5,13 @@
 // --------------------------------------------------
 
 $checkbox-md-icon-size:             16px !default;
-$checkbox-md-background-color-off:  $list-background-color !default;
+$checkbox-md-background-color-off:  $list-md-background-color !default;
 $checkbox-md-border-width:          2px !default;
 $checkbox-md-border-radius:         2px !default;
 $checkbox-md-border-color-off:      darken($item-md-border-color, 40%) !default;
-$checkbox-md-background-color-on:   color(primary) !default;
-$checkbox-md-border-color-on:       color(primary) !default;
-$checkbox-md-checkmark-color-on:    $background-color !default;
+$checkbox-md-background-color-on:   map-get($colors-md, primary) !default;
+$checkbox-md-border-color-on:       map-get($colors-md, primary) !default;
+$checkbox-md-checkmark-color-on:    $background-md-color !default;
 
 
 ion-checkbox {
@@ -76,10 +76,10 @@ checkbox-icon {
 }
 
 
-// Generate Material Design Checkbox Auxiliary Colors
+// Generate Material Design Checkbox Colors
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors {
+@each $color-name, $color-value in $colors-md {
 
   @include checkbox-theme-md($color-name, $color-value);
 

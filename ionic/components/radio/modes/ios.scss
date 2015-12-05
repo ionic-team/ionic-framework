@@ -4,7 +4,7 @@
 // iOS Radio
 // --------------------------------------------------
 
-$radio-ios-color-on:       color(primary) !default;
+$radio-ios-color-on:       map-get($colors-ios, primary) !default;
 
 
 ion-radio {
@@ -27,7 +27,7 @@ ion-radio {
   }
 
   &.item.activated {
-    background-color: $list-background-color;
+    background-color: $list-ios-background-color;
   }
 
 }
@@ -68,7 +68,7 @@ radio-icon {
 // Generate iOS Radio Auxiliary Colors
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors {
+@each $color-name, $color-value in $colors-ios {
 
   @include radio-theme-ios($color-name, $color-value);
 

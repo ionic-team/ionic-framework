@@ -130,6 +130,10 @@ ion-list[inset] {
   + ion-list[inset] {
     margin-top: 0;
   }
+
+  ion-list-header {
+    background-color: $list-md-background-color;
+  }
 }
 
 

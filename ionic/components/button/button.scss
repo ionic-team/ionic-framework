@@ -1,5 +1,8 @@
 @import "../../globals.core";
 
+// Buttons
+// --------------------------------------------------
+
 $button-font-size:                1.6rem !default;
 $button-margin:                   0.4rem 0.2rem !default;
 $button-padding:                  0 1em !default;
@@ -9,10 +12,6 @@ $button-border-radius:            4px !default;
 $button-round-padding:            0 2.6rem !default;
 $button-round-border-radius:      64px !default;
 
-$button-color:                    map-get($colors, primary) !default;
-$button-color-activated:          color-shade($button-color) !default;
-$button-text-color:               inverse($button-color) !default;
-$button-hover-opacity:            0.8 !default;
 
 .button-disabled {
   opacity: 0.4;
@@ -59,17 +58,6 @@ a.button {
   cursor: pointer;
   @include user-select-none();
   @include appearance(none);
-
-  background: $button-color;
-   color: $button-text-color;
-   &:hover:not(.disable-hover) {
-     opacity: $button-hover-opacity;
-     text-decoration: none;
-   }
-   &.activated {
-     opacity: 1;
-     background-color: $button-color-activated;
-   }
  }
 
 // Button Types
@@ -123,31 +111,3 @@ a.button {
 // button-disabled should stand alone(?)
 // button-sizes should stand alone (button-small, button-large, etc)
 // button-fab errrrr
-
-
-// Default Button Color Mixin
-// --------------------------------------------------
-
-@mixin button-default($bg-color, $bg-color-activated, $text-color) {
-  background-color: $bg-color;
-  color: $text-color;
-
-  &.activated {
-    background-color: $bg-color-activated;
-  }
-}
-
-
-// Generate Default Button Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors {
-
-  .button-#{$color-name} {
-    $bg-color: $color-value;
-    $bg-color-activated: color-shade($bg-color);
-    $text-color: inverse($bg-color);
-    @include button-default($bg-color, $bg-color-activated, $text-color);
-  }
-
-}

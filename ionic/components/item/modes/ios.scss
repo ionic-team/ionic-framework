@@ -13,8 +13,14 @@ $item-ios-divider-bg:                 #f7f7f7 !default;
 $item-ios-divider-color:              #222 !default;
 $item-ios-divider-padding:            5px 15px !default;
 
-$item-ios-sliding-content-bg:         $background-color !default;
+$item-ios-sliding-content-bg:         $background-ios-color !default;
 $item-ios-sliding-transition:         transform 250ms ease-in-out !default;
+
+
+.item {
+  background-color: $list-ios-background-color;
+  color: $list-ios-text-color;
+}
 
 
 ion-item-group {

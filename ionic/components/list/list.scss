@@ -20,8 +20,4 @@ ion-list {
 ion-list[inset] {
   overflow: hidden;
   transform: translateZ(0);
-
-  ion-list-header {
-    background-color: $list-background-color;
-  }
 }

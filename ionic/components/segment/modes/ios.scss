@@ -11,7 +11,7 @@ $segment-button-ios-bg-color:                 transparent !default;
 $segment-button-ios-font-size:                1.3rem !default;
 $segment-button-ios-border-radius:            4px !default;
 
-$segment-button-ios-bg-color-activated:       map-get($colors, primary) !default;
+$segment-button-ios-bg-color-activated:       map-get($colors-ios, primary) !default;
 $segment-button-ios-text-color:               inverse($segment-button-ios-bg-color-activated) !default;
 $segment-button-ios-activated-transition:     100ms all linear !default;
 $segment-button-ios-hover-opacity:            0.16 !default;
@@ -112,7 +112,7 @@ ion-segment {
 // Loop through all of the colors to change the segment colors
 // based on the toolbar color or if it isn't in a toolbar then based on
 // the segment color value
-@each $color-name, $color-value in $colors {
+@each $color-name, $color-value in $colors-ios {
   $inverse-color-value: inverse($color-value);
 
   .toolbar[#{$color-name}] {
@@ -126,7 +126,7 @@ ion-segment {
     // Loop through all of the colors again to change the segment colors
     // for each toolbar based on the segment color
     // this will take priority over the default toolbar colors
-    @each $color-name, $color-value in $colors {
+    @each $color-name, $color-value in $colors-ios {
       $inverse-color-value: inverse($color-value);
 
       ion-segment[#{$color-name}] {

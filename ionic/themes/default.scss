@@ -14,14 +14,13 @@ $colors: (
 
 
 $text-color:                 #000 !default;
+$link-color:                 map-get($colors, primary) !default;
 $background-color:           #fff !default;
 $subdued-text-color:         #666 !default;
 
 $list-text-color:            $text-color !default;
 $list-background-color:      $background-color !default;
 $list-border-color:          #c8c7cc !default;
-
-$link-color:                 map-get($colors, primary) !default;
 
 $toolbar-background-color:   #f8f8f8 !default;
 $toolbar-border-color:       #b2b2b2 !default;

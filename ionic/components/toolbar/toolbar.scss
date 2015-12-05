@@ -33,7 +33,6 @@ $toolbar-order: (
   button,
   [button] {
     background-color: transparent;
-    color: $toolbar-active-color;
     box-shadow: none;
   }
 }
@@ -47,8 +46,6 @@ $toolbar-order: (
   z-index: $z-index-toolbar-background;
 
   border: 0;
-  border-color: $toolbar-border-color;
-  background-color: $toolbar-background-color;
 
   pointer-events: none;
 }
@@ -57,14 +54,6 @@ toolbar-content {
   display: block;
   flex: 1;
   order: map-get($toolbar-order, content);
-}
-
-.toolbar button:hover:not(.disable-hover),
-.toolbar [button]:hover:not(.disable-hover),
-.toolbar button.activated,
-.toolbar [button].activated {
-  color: $toolbar-active-color;
-  background-color: transparent;
 }
 
 .toolbar[position=bottom] {
@@ -83,7 +72,6 @@ ion-title {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  color: $toolbar-text-color;
 }
 
 .toolbar [menu-toggle] {

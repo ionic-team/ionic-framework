@@ -4,7 +4,7 @@
 // Material Design Switch
 // --------------------------------------------------
 
-$switch-md-active-color:                 map-get($colors, primary) !default;
+$switch-md-active-color:                 map-get($colors-md, primary) !default;
 
 $switch-md-track-width:                  36px !default;
 $switch-md-track-height:                 14px !default;
@@ -13,7 +13,7 @@ $switch-md-track-background-color-on:    lighten($switch-md-active-color, 25%) !
 
 $switch-md-handle-width:                 20px !default;
 $switch-md-handle-height:                20px !default;
-$switch-md-handle-background-color-off:  $background-color !default;
+$switch-md-handle-background-color-off:  $background-md-color !default;
 $switch-md-handle-background-color-on:   $switch-md-active-color !default;
 $switch-md-handle-box-shadow:            0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12) !default;
 
@@ -105,7 +105,7 @@ ion-switch {
 // Generate Material Design Switch Auxiliary Colors
 // --------------------------------------------------
 
-@each $color-name, $value in $colors {
+@each $color-name, $value in $colors-md {
 
   @include switch-theme-md($color-name, $value);
 

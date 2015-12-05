@@ -3,15 +3,6 @@
 // Tabs
 // --------------------------------------------------
 
-$tabbar-background-color:        $toolbar-background-color !default;
-
-$tab-button-text-color:           $toolbar-text-color !default;
-$tab-button-active-color:         $toolbar-active-color !default;
-$tab-button-inactive-color:       $toolbar-inactive-color !default;
-$tab-button-padding:              10px !default;
-$tab-button-min-width:            80px !default;
-$tab-button-max-width:            240px !default;
-
 
 ion-tabs {
   display: flex;
@@ -61,7 +52,6 @@ tabbar {
   display: flex;
   justify-content: center;
   overflow: hidden;
-  background: $tabbar-background-color;
 }
 
 .tab-button {
@@ -76,23 +66,14 @@ tabbar {
   align-items: center;
 
   margin: 0;
-  padding: $tab-button-padding;
-  min-width: $tab-button-min-width;
-  max-width: $tab-button-max-width;
 
   text-align: center;
   cursor: pointer;
   @include user-select-none();
 
-  color: $tab-button-inactive-color;
   border: 0;
   border-radius: 0;
   background: none;
-}
-
-.tab-button:hover:not(.disable-hover),
-.tab-button[aria-selected=true] {
-  color: $tab-button-active-color;
 }
 
 .tab-button-text {
@@ -154,25 +135,4 @@ tab-highlight {
 
 [tabbar-icons=hide] .tab-button-icon {
   display: none;
-}
-
-
-// Tabbar Color Generation
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors {
-
-  tabbar[#{$color-name}] {
-    background-color: $color-value;
-
-    .tab-button {
-      color: inverse($color-value);
-    }
-
-    .tab-button:hover:not(.disable-hover),
-    .tab-button[aria-selected=true] {
-      color: inverse($color-value);
-    }
-  }
-
 }

@@ -4,7 +4,7 @@
 // Material Design Item
 // --------------------------------------------------
 
-$item-md-border-color:                grayscale(lighten($list-border-color, 8%)) !default;
+$item-md-border-color:                grayscale(lighten($list-md-border-color, 8%)) !default;
 $item-md-activated-background-color:  #f1f1f1 !default;
 $item-md-font-size:                   1.6rem !default;
 
@@ -30,7 +30,7 @@ $item-md-divider-bg:                 #fff !default;
 $item-md-divider-color:              #222 !default;
 $item-md-divider-padding:            5px 15px !default;
 
-$item-md-sliding-content-bg:         $background-color !default;
+$item-md-sliding-content-bg:         $background-md-color !default;
 $item-md-sliding-transition:         transform 250ms ease-in-out !default;
 
 
@@ -52,6 +52,9 @@ ion-note {
   text-transform: none;
   font-weight: normal;
   box-shadow: none;
+
+  background-color: $list-md-background-color;
+  color: $list-md-text-color;
 
   h1 {
     margin: 0 0 2px;

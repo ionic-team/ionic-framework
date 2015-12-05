@@ -8,8 +8,8 @@ $segment-button-md-font-size:                  1.2rem !default;
 $segment-button-md-min-height:                 4.0rem !default;
 $segment-button-md-line-height:                4.0rem !default;
 
-$segment-button-md-text-color-activated:       color(primary) !default;
-$segment-button-md-border-color-activated:     color(primary) !default;
+$segment-button-md-text-color-activated:       map-get($colors-md, primary) !default;
+$segment-button-md-border-color-activated:     map-get($colors-md, primary) !default;
 $segment-button-md-border-bottom:              2px solid rgba(#000000, 0.10) !default;
 
 
@@ -72,7 +72,7 @@ ion-segment {
 // Loop through all of the colors to change the segment colors
 // based on the toolbar color or if it isn't in a toolbar then based on
 // the segment color value
-@each $color-name, $color-value in $colors {
+@each $color-name, $color-value in $colors-md {
   $inverse-color-value: inverse($color-value);
 
   .toolbar[#{$color-name}] {
@@ -86,7 +86,7 @@ ion-segment {
     // Loop through all of the colors again to change the segment colors
     // for each toolbar based on the segment color
     // this will take priority over the default toolbar colors
-    @each $color-name, $color-value in $colors {
+    @each $color-name, $color-value in $colors-md {
       ion-segment[#{$color-name}] {
         ion-segment-button[button] {
           @include segment-button($color-value);

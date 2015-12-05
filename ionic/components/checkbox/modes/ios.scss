@@ -5,11 +5,11 @@
 // --------------------------------------------------
 
 $checkbox-ios-icon-size:             21px !default;
-$checkbox-ios-background-color-off:  $list-background-color !default;
-$checkbox-ios-border-color-off:      $list-border-color !default;
-$checkbox-ios-background-color-on:   map-get($colors, primary) !default;
-$checkbox-ios-border-color-on:       map-get($colors, primary) !default;
-$checkbox-ios-checkmark-color-on:    $background-color !default;
+$checkbox-ios-background-color-off:  $list-ios-background-color !default;
+$checkbox-ios-border-color-off:      $list-ios-border-color !default;
+$checkbox-ios-background-color-on:   map-get($colors-ios, primary) !default;
+$checkbox-ios-border-color-on:       map-get($colors-ios, primary) !default;
+$checkbox-ios-checkmark-color-on:    $background-ios-color !default;
 
 
 ion-checkbox {
@@ -33,7 +33,7 @@ ion-checkbox {
   }
 
   &.item.activated {
-    background-color: $list-background-color;
+    background-color: $list-ios-background-color;
   }
 
 }
@@ -70,7 +70,7 @@ checkbox-icon {
 // Generate iOS Checkbox Auxiliary Colors
 // --------------------------------------------------
 
-@each $color-name, $value in $colors {
+@each $color-name, $value in $colors-ios {
 
   @include checkbox-theme-ios($color-name, $value);
 

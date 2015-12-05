@@ -3,11 +3,32 @@
 @import "../button-clear";
 @import "../button-fab";
 @import "../button-icon";
-@import "../button-outline";
 @import "../button-size";
 
-// iOS Button (largely the core button styles)
+// iOS Button
 // --------------------------------------------------
+
+$button-ios-color:                    map-get($colors-ios, primary) !default;
+$button-ios-color-activated:          color-shade($button-ios-color) !default;
+$button-ios-text-color:               inverse($button-ios-color) !default;
+$button-ios-hover-opacity:            0.8 !default;
+
+
+.button {
+  background: $button-ios-color;
+  color: $button-ios-text-color;
+
+  &:hover:not(.disable-hover) {
+     opacity: $button-ios-hover-opacity;
+     text-decoration: none;
+   }
+
+   &.activated {
+     opacity: 1;
+     background-color: $button-ios-color-activated;
+   }
+}
+
 
 .button-block {
   // This fixes an issue with flexbox and button on iOS Safari. See #225
@@ -15,11 +36,69 @@
 }
 
 
+// Clear Button
+// --------------------------------------------------
+
+.button-clear {
+  color: color-shade($button-ios-color);
+
+  &:hover:not(.disable-hover) {
+    opacity: 0.6;
+    color: color-shade($button-ios-color);
+  }
+}
+
+
+// Outline Button
+// --------------------------------------------------
+
+.button-outline {
+  border: 1px solid $button-ios-color;
+  background: transparent;
+  color: $button-ios-color;
+
+  &.activated {
+    opacity: 1;
+    color: $background-ios-color;
+    background-color: $button-ios-color;
+  }
+}
+
+
+
+// Default Button Color Mixin
+// --------------------------------------------------
+
+@mixin button-default($bg-color, $bg-color-activated, $fg-color) {
+  background-color: $bg-color;
+  color: $fg-color;
+
+  &.activated {
+    background-color: $bg-color-activated;
+  }
+}
+
+
+// Generate Default Button Colors
+// --------------------------------------------------
+
+@each $color-name, $color-value in $colors-ios {
+
+  .button-#{$color-name} {
+    $bg-color: $color-value;
+    $bg-color-activated: color-shade($bg-color);
+    $fg-color: inverse($bg-color);
+    @include button-default($bg-color, $bg-color-activated, $fg-color);
+  }
+
+}
+
+
 // Generate Clear Button Colors
 // --------------------------------------------------
 
 // TODO primary activated is wrong
-@each $color-name, $color-value in $colors {
+@each $color-name, $color-value in $colors-ios {
 
   $fg-color: color-shade($color-value);
 
@@ -52,7 +131,7 @@
   color: $fg-color;
 
   &.activated {
-    color: $background-color;
+    color: $background-ios-color;
     background-color: $fg-color;
   }
 
@@ -62,7 +141,7 @@
 // Outline Clear Button Colors
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors {
+@each $color-name, $color-value in $colors-ios {
 
   .button-outline-#{$color-name} {
 

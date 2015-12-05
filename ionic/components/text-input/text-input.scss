@@ -3,8 +3,6 @@
 // Text Input
 // --------------------------------------------------
 
-$text-input-background-color:   $list-background-color !default;
-
 
 ion-input {
 
@@ -33,7 +31,6 @@ ion-input {
 
 ion-input [text-input] {
   flex: 1;
-  background-color: $text-input-background-color;
   pointer-events: none;
 }
 
@@ -70,12 +67,4 @@ textarea {
 input,
 textarea {
   @include placeholder();
-}
-
-@each $color-name, $color-value in $colors {
-  ion-label {
-    &[#{$color-name}] {
-      color: $color-value !important;
-    }
-  }
 }

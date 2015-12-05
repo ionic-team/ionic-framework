@@ -4,7 +4,7 @@
 // Material Design Radio
 // --------------------------------------------------
 
-$radio-md-color-on:               color(primary) !default;
+$radio-md-color-on:               map-get($colors-md, primary) !default;
 
 $radio-md-icon-size:              16px !default;
 $radio-md-border-width:           2px !default;
@@ -85,10 +85,10 @@ media-radio {
 }
 
 
-// Generate Material Design Radio Auxiliary Colors
+// Generate Material Design Radio Colors
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors {
+@each $color-name, $color-value in $colors-md {
 
   @include radio-theme-md($color-name, $color-value);
 
