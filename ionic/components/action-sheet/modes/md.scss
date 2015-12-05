@@ -29,6 +29,7 @@ $action-sheet-md-icon-margin:              0 28px 0 0 !default;
 
 .action-sheet-button {
   background-color: transparent;
+  font-size: $action-sheet-md-button-font-size;
   font-weight: normal;
   min-height: $action-sheet-md-height;
   color: $action-sheet-md-button-text-color;

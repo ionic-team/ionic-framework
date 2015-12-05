@@ -1,10 +1,16 @@
 /*! Ionic: Material Design */
 @charset "UTF-8";
 
-
 // Core Components
 @import "components.core";
 
-
 // Material Design Components
 @import "components.md";
+
+// Material Design Body
+body {
+  @include md-body();
+}
+
+// Roboto Font
+@import "fonts/roboto";

@@ -19,6 +19,9 @@ $link-md-color:                       map-get($colors-md, primary) !default;
 $background-md-color:                 $background-color !default;
 $subdued-text-md-color:               $subdued-text-color !default;
 
+$font-family-md-base:                 "Roboto", "Helvetica Neue", sans-serif !default;
+$font-size-md-base:                   $font-size-base !default;
+
 
 // Material Design Toolbar
 // --------------------------------------------------
@@ -57,4 +60,14 @@ $item-md-padding-icon-bottom:         10px !default;
 
 @function ripple-background-color($button-color) {
   @return rgba( red($button-color), green($button-color), blue($button-color), 0.1);
+}
+
+
+// Material Design Body
+// --------------------------------------------------
+
+@mixin md-body() {
+  font-family: $font-family-md-base;
+  font-size: $font-size-md-base;
+  background-color: $background-md-color;
 }

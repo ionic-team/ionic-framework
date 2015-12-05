@@ -19,6 +19,9 @@ $link-ios-color:                       map-get($colors-ios, primary) !default;
 $background-ios-color:                 $background-color !default;
 $subdued-text-ios-color:               $subdued-text-color !default;
 
+$font-family-ios-base:                 $font-family-base !default;
+$font-size-ios-base:                   $font-size-base !default;
+
 
 // iOS Toolbar
 // --------------------------------------------------
@@ -60,4 +63,14 @@ $icon-detail-push-background-svg:    "<svg xmlns='http://www.w3.org/2000/svg' vi
 @mixin ios-detail-push-icon($fg-color) {
   $svg: str-replace($icon-detail-push-background-svg, 'fg-color', $fg-color);
   @include svg-background-image($svg);
+}
+
+
+// iOS Body
+// --------------------------------------------------
+
+@mixin ios-body() {
+  font-family: $font-family-ios-base;
+  font-size: $font-size-ios-base;
+  background-color: $background-ios-color;
 }

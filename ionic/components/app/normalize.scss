@@ -117,6 +117,10 @@ input[type="submit"] {
 
 button {
   border: 0;
+  line-height: 1;
+  font-family: inherit;
+  font-variant: inherit;
+  font-style: inherit;
   text-transform: none;
   -webkit-appearance: button;
   cursor: pointer;

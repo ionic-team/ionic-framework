@@ -6,6 +6,10 @@
 $content-padding-md:    16px !default;
 
 
+ion-content {
+  background-color: $background-md-color;
+}
+
 [padding],
 [padding] > scroll-content {
   padding: $content-padding-md;
