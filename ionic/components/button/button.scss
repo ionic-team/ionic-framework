@@ -3,12 +3,6 @@
 // Buttons
 // --------------------------------------------------
 
-$button-font-size:                1.6rem !default;
-$button-margin:                   0.4rem 0.2rem !default;
-$button-padding:                  0 1em !default;
-$button-height:                   2.8em !default;
-$button-border-radius:            4px !default;
-
 $button-round-padding:            0 2.6rem !default;
 $button-round-border-radius:      64px !default;
 
@@ -21,16 +15,6 @@ $button-round-border-radius:      64px !default;
   align-items: center;
   justify-content: center;
   transition: background-color, opacity 100ms linear;
-  margin: $button-margin;
-  padding: $button-padding;
-  min-height: $button-height;
-  line-height: $button-height;
-
-  border: 1px solid #ccc;
-  border: transparent;
-  border-radius: $button-border-radius;
-
-  font-size: $button-font-size;
 
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -93,21 +77,6 @@ a.button {
 .button-round {
   padding: $button-round-padding;
   border-radius: $button-round-border-radius;
-}
-
-
-// Clear Button
-// --------------------------------------------------
-
-.button-clear {
-  border-color: transparent;
-  background: transparent;
-
-  &.activated {
-    opacity: 0.4;
-    background: transparent;
-  }
-
 }
 
 
