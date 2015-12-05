@@ -10,7 +10,7 @@ module.exports = function indexPage(renderDocsProcessor) {
       var currentVersion = versionData.current.name;
       var latestVersion = versionData.latest.name;
 
-      var versionPath = currentVersion == latestVersion ? '' : currentVersion;
+      var versionPath = currentVersion == 'nightly' ? '' : currentVersion;
 
       docs.push({
         docType: 'index-page',
