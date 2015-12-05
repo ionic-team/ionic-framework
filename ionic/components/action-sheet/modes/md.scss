@@ -10,10 +10,11 @@ $action-sheet-md-height:                   4.8rem !default;
 
 $action-sheet-md-title-color:              #757575 !default;
 $action-sheet-md-title-font-size:          1.6rem !default;
-$action-sheet-md-title-padding:            1.9rem 1.6rem 1.7rem !default;
+$action-sheet-md-title-padding:            19px 16px 17px !default;
 
 $action-sheet-md-button-text-color:        #222 !default;
 $action-sheet-md-button-font-size:         1.6rem !default;
+$action-sheet-md-button-padding:           0 16px !default;
 $action-sheet-md-background-active-color:  #f1f1f1 !default;
 
 $action-sheet-md-icon-font-size:           2.4rem !default;
@@ -28,11 +29,12 @@ $action-sheet-md-icon-margin:              0 28px 0 0 !default;
 }
 
 .action-sheet-button {
-  background-color: transparent;
+  padding: $action-sheet-md-button-padding;
+  min-height: $action-sheet-md-height;
   font-size: $action-sheet-md-button-font-size;
   font-weight: normal;
-  min-height: $action-sheet-md-height;
   color: $action-sheet-md-button-text-color;
+  background-color: transparent;
   text-align: left;
 
   &.activated {
