@@ -50,3 +50,11 @@ $item-md-padding-media-top:           9px !default;
 $item-md-padding-media-bottom:        9px !default;
 $item-md-padding-icon-top:            11px !default;
 $item-md-padding-icon-bottom:         10px !default;
+
+
+// Ripple Color
+// --------------------------------------------------
+
+@function ripple-background-color($button-color) {
+  @return rgba( red($button-color), green($button-color), blue($button-color), 0.1);
+}

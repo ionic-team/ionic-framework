@@ -13,16 +13,6 @@ $button-round-padding:            0 2.6rem !default;
 $button-round-border-radius:      64px !default;
 
 
-.button-disabled {
-  opacity: 0.4;
-  cursor: default !important;
-  pointer-events: none;
-}
-
-a.button {
-  text-decoration: none;
-}
-
 .button {
   position: relative;
   display: inline-flex;
@@ -58,9 +48,20 @@ a.button {
   cursor: pointer;
   @include user-select-none();
   @include appearance(none);
- }
+}
 
-// Button Types
+a.button {
+  text-decoration: none;
+}
+
+.button-disabled {
+  opacity: 0.4;
+  cursor: default !important;
+  pointer-events: none;
+}
+
+
+// Block Button
 // --------------------------------------------------
 
 .button-block {
@@ -75,19 +76,44 @@ a.button {
   }
 }
 
+
+// Full Button
+// --------------------------------------------------
+
 .button-full {
-  width: 100%;
   margin-right: 0;
   margin-left: 0;
+  width: 100%;
   border-radius: 0;
   border-right-width: 0;
   border-left-width: 0;
 }
 
+
+// Round Button
+// --------------------------------------------------
+
 .button-round {
-  border-radius: $button-round-border-radius;
   padding: $button-round-padding;
+  border-radius: $button-round-border-radius;
 }
+
+
+// Clear Button
+// --------------------------------------------------
+
+.button-clear {
+  border-color: transparent;
+  background: transparent;
+
+  &.activated {
+    opacity: 0.4;
+    background: transparent;
+  }
+
+}
+
+
 
 // TODO
 // button should have classes:

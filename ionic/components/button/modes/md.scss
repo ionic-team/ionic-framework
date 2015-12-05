@@ -1,6 +1,5 @@
 @import "../../../globals.md";
 @import "../button";
-@import "../button-clear";
 @import "../button-fab";
 @import "../button-icon";
 @import "../button-size";
@@ -97,7 +96,7 @@ $button-md-hover-opacity:                  0.8 !default;
   }
 
   md-ripple {
-    background: rgba( red($button-md-color), green($button-md-color), blue($button-md-color), 0.1);
+    background-color: ripple-background-color($button-md-color);
   }
 }
 

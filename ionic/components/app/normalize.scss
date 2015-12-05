@@ -115,6 +115,13 @@ input[type="submit"] {
   cursor: pointer; // 3
 }
 
+button {
+  border: 0;
+  text-transform: none;
+  -webkit-appearance: button;
+  cursor: pointer;
+}
+
 // Re-set default cursor for disabled elements.
 button[disabled],
 html input[disabled] {
