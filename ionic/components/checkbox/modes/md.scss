@@ -79,7 +79,7 @@ checkbox-icon {
 // Generate Material Design Checkbox Auxiliary Colors
 // --------------------------------------------------
 
-@each $color-name, $color-value in auxiliary-colors() {
+@each $color-name, $color-value in $colors {
 
   @include checkbox-theme-md($color-name, $color-value);
 

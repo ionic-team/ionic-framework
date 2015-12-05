@@ -88,7 +88,7 @@ media-radio {
 // Generate Material Design Radio Auxiliary Colors
 // --------------------------------------------------
 
-@each $color-name, $color-value in auxiliary-colors() {
+@each $color-name, $color-value in $colors {
 
   @include radio-theme-md($color-name, $color-value);
 

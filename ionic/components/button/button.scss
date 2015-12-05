@@ -9,7 +9,7 @@ $button-border-radius:            4px !default;
 $button-round-padding:            0 2.6rem !default;
 $button-round-border-radius:      64px !default;
 
-$button-color:                    color(primary) !default;
+$button-color:                    map-get($colors, primary) !default;
 $button-color-activated:          color-shade($button-color) !default;
 $button-text-color:               inverse($button-color) !default;
 $button-hover-opacity:            0.8 !default;

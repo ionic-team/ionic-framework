@@ -138,7 +138,7 @@ $button-md-fab-box-shadow-active:          0 5px 15px 0 rgba(0, 0, 0, 0.4), 0 4p
 // Generate Material Design Button Auxiliary Colors
 // --------------------------------------------------
 
-@each $color-name, $color-value in auxiliary-colors() {
+@each $color-name, $color-value in $colors {
 
   @include button-theme-md($color-name, $color-value);
 

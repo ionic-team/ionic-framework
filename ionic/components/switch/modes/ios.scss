@@ -145,7 +145,7 @@ ion-switch {
 // Generate iOS Switch Auxiliary Colors
 // --------------------------------------------------
 
-@each $color-name, $value in auxiliary-colors() {
+@each $color-name, $value in $colors {
 
   @include switch-theme-ios($color-name, $value);
 

@@ -4,7 +4,7 @@
 // Material Design Switch
 // --------------------------------------------------
 
-$switch-md-active-color:                 color(primary) !default;
+$switch-md-active-color:                 map-get($colors, primary) !default;
 
 $switch-md-track-width:                  36px !default;
 $switch-md-track-height:                 14px !default;
@@ -105,7 +105,7 @@ ion-switch {
 // Generate Material Design Switch Auxiliary Colors
 // --------------------------------------------------
 
-@each $color-name, $value in auxiliary-colors() {
+@each $color-name, $value in $colors {
 
   @include switch-theme-md($color-name, $value);
 

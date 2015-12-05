@@ -13,3 +13,62 @@
   // This fixes an issue with flexbox and button on iOS Safari. See #225
   display: block;
 }
+
+
+// Generate Clear Button Colors
+// --------------------------------------------------
+
+// TODO primary activated is wrong
+@each $color-name, $color-value in $colors {
+
+  $fg-color: color-shade($color-value);
+
+  .button-clear-#{$color-name} {
+    border-color: transparent;
+    background: transparent;
+    color: $fg-color;
+
+    &.activated {
+      opacity: 0.4;
+      background: transparent;
+    }
+
+    &:hover:not(.disable-hover) {
+      color: color-shade($fg-color);
+    }
+  }
+
+}
+
+
+
+// Outline Button Color Mixin
+// --------------------------------------------------
+
+@mixin button-outline($fg-color) {
+
+  border-color: $fg-color;
+  background: transparent;
+  color: $fg-color;
+
+  &.activated {
+    color: $background-color;
+    background-color: $fg-color;
+  }
+
+}
+
+
+// Outline Clear Button Colors
+// --------------------------------------------------
+
+@each $color-name, $color-value in $colors {
+
+  .button-outline-#{$color-name} {
+
+    $fg-color: color-shade($color-value, 5%);
+    @include button-outline($fg-color);
+
+  }
+
+}

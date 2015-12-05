@@ -28,16 +28,3 @@ $toolbar-border-color:       #b2b2b2 !default;
 $toolbar-text-color:         $text-color !default;
 $toolbar-active-color:       $link-color !default;
 $toolbar-inactive-color:     #8c8c8c !default;
-
-
-
-
-@function color($color-name) {
-  @return map-get($colors, $color-name);
-}
-
-
-@function auxiliary-colors() {
-  // get a map of all the colors, except "primary"
-  @return map-remove($colors, primary);
-}

@@ -14,35 +14,3 @@
     background-color: $button-color;
   }
 }
-
-
-// Outline Button Color Mixin
-// --------------------------------------------------
-
-@mixin button-outline($fg-color) {
-
-  border-color: $fg-color;
-  background: transparent;
-  color: $fg-color;
-
-  &.activated {
-    color: $background-color;
-    background-color: $fg-color;
-  }
-
-}
-
-
-// Outline Clear Button Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in auxiliary-colors() {
-
-  .button-outline-#{$color-name} {
-
-    $fg-color: color-shade($color-value, 5%);
-    @include button-outline($fg-color);
-
-  }
-
-}

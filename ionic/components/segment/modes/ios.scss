@@ -11,7 +11,7 @@ $segment-button-ios-bg-color:                 transparent !default;
 $segment-button-ios-font-size:                1.3rem !default;
 $segment-button-ios-border-radius:            4px !default;
 
-$segment-button-ios-bg-color-activated:       color(primary) !default;
+$segment-button-ios-bg-color-activated:       map-get($colors, primary) !default;
 $segment-button-ios-text-color:               inverse($segment-button-ios-bg-color-activated) !default;
 $segment-button-ios-activated-transition:     100ms all linear !default;
 $segment-button-ios-hover-opacity:            0.16 !default;

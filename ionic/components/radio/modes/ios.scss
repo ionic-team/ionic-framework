@@ -68,7 +68,7 @@ radio-icon {
 // Generate iOS Radio Auxiliary Colors
 // --------------------------------------------------
 
-@each $color-name, $color-value in auxiliary-colors() {
+@each $color-name, $color-value in $colors {
 
   @include radio-theme-ios($color-name, $color-value);
 
