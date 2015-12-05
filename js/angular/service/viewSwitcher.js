@@ -257,9 +257,6 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
             $timeout.cancel(enteringEle.data(DATA_FALLBACK_TIMER));
             leavingEle && $timeout.cancel(leavingEle.data(DATA_FALLBACK_TIMER));
 
-            // emit that the views have finished transitioning
-            // each parent nav-view will update which views are active and cached
-            switcher.emit('after', enteringData, leavingData);
 
             // resolve that this one transition (there could be many w/ nested views)
             deferred && deferred.resolve(navViewCtrl);
@@ -277,6 +274,9 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
             });
 
             // remove any references that could cause memory issues
+            // emit that the views have finished transitioning
+            // each parent nav-view will update which views are active and cached
+            switcher.emit('after', enteringData, leavingData);
             nextTransition = nextDirection = enteringView = leavingView = enteringEle = leavingEle = null;
           }
 

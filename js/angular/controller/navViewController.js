@@ -161,6 +161,7 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
 
 
   self.transitionEnd = function() {
+    console.log('TRANSITION END CHILD VIEW');
     var viewElements = $element.children();
     var x, l, viewElement;
 

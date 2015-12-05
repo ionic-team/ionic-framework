@@ -26,6 +26,7 @@
           <button class="button button-icon ion-android-search"></button>
         </ion-nav-buttons>
         <ion-content padding="true">
+          <h2>Random {{random}}</h2>
           <ion-list>
             <div class="item item-divider">
               Things
@@ -46,6 +47,7 @@
     <script id="page2.html" type="text/ng-template">
       <ion-view title="Page 2">
         <ion-content padding="true">
+          <h2>Random: {{random}}</h2>
           <a ng-click="goBack()" class="button button-positive">Back</a>
           <a href="#/page3" class="button button-positive">Page 3</a>
         </ion-content>
@@ -62,7 +64,9 @@
     <script>
       angular.module('nav', ['ionic'])
 
-      .config(function($stateProvider, $urlRouterProvider) {
+      .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+
+        //$ionicConfigProvider.views.maxCache(0);
 
         $stateProvider
           .state('page1', {
@@ -84,7 +88,8 @@
          $urlRouterProvider.otherwise("/page1");
        })
 
-       .controller('Page1Ctrl', function($scope) {
+       .controller('Page1Ctrl', function($scope, $ionicHistory) {
+         $scope.random = Math.random() * 100;
          $scope.items = [];
          for(var i = 0; i < 4; i++) {
           $scope.items.push({});
@@ -96,7 +101,13 @@
          }
        })
 
-       .controller('Page2Ctrl', function($scope, $ionicNavBarDelegate) {
+       .controller('Page2Ctrl', function($timeout, $scope, $ionicNavBarDelegate, $ionicHistory) {
+         $scope.$on('$ionicView.enter', function() {
+           //$timeout(function() {
+             $ionicHistory.clearCache();
+           //})
+         });
+
         $scope.goBack = function() {
           $ionicNavBarDelegate.back();
         };
@@ -107,7 +118,7 @@
           $ionicNavBarDelegate.back();
         };
        })
-      
+
     </script>
   </body>
 </html>
