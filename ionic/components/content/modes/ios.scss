@@ -10,10 +10,6 @@ ion-content {
   background-color: $background-ios-color;
 }
 
-a {
-  color: $link-ios-color;
-}
-
 .outer-content {
   background: $outer-content-ios-background-color;
 }
@@ -21,23 +17,4 @@ a {
 ion-nav.has-views,
 ion-tab.has-views {
   background: #000;
-}
-
-@each $color-name, $color-value in $colors-ios {
-  h1, h2, h3, h4, h5, h6,
-  p,
-  span,
-  a:not([button]),
-  small,
-  b,
-  i,
-  u,
-  strong,
-  em,
-  sub,
-  sup {
-    &[#{$color-name}] {
-      color: $color-value !important;
-    }
-  }
 }
