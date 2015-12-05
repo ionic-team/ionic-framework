@@ -8,7 +8,7 @@ $checkbox-md-icon-size:             16px !default;
 $checkbox-md-background-color-off:  $list-md-background-color !default;
 $checkbox-md-border-width:          2px !default;
 $checkbox-md-border-radius:         2px !default;
-$checkbox-md-border-color-off:      darken($item-md-border-color, 40%) !default;
+$checkbox-md-border-color-off:      darken($list-md-border-color, 40%) !default;
 $checkbox-md-background-color-on:   map-get($colors-md, primary) !default;
 $checkbox-md-border-color-on:       map-get($colors-md, primary) !default;
 $checkbox-md-checkmark-color-on:    $background-md-color !default;
@@ -21,7 +21,7 @@ ion-checkbox {
   }
 
   ion-item-content {
-    border-bottom: 1px solid $item-md-border-color;
+    border-bottom: 1px solid $list-md-border-color;
     margin: 0;
     padding: $item-md-padding-top ($item-md-padding-right / 2) $item-md-padding-bottom 0;
   }

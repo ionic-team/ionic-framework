@@ -8,7 +8,7 @@ $switch-md-active-color:                 map-get($colors-md, primary) !default;
 
 $switch-md-track-width:                  36px !default;
 $switch-md-track-height:                 14px !default;
-$switch-md-track-background-color-off:   $item-md-border-color !default;
+$switch-md-track-background-color-off:   $list-md-border-color !default;
 $switch-md-track-background-color-on:    lighten($switch-md-active-color, 25%) !default;
 
 $switch-md-handle-width:                 20px !default;

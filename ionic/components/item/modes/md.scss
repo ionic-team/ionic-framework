@@ -4,27 +4,13 @@
 // Material Design Item
 // --------------------------------------------------
 
-$item-md-border-color:                grayscale(lighten($list-md-border-color, 8%)) !default;
-$item-md-activated-background-color:  #f1f1f1 !default;
-$item-md-font-size:                   1.6rem !default;
-
-$item-md-padding-top:                 13px !default;
-$item-md-padding-right:               16px !default;
-$item-md-padding-bottom:              13px !default;
-$item-md-padding-left:                16px !default;
-
-$item-md-padding-media-top:           9px !default;
-$item-md-padding-media-bottom:        9px !default;
-
-$item-md-padding-icon-top:            11px !default;
-$item-md-padding-icon-bottom:         10px !default;
-
 $item-md-body-text-font-size:         1.4rem !default;
 $item-md-body-text-line-height:       1.5 !default;
 
+$item-md-font-size:                   1.6rem !default;
 $item-md-avatar-size:                 4rem !default;
 $item-md-thumbnail-size:              8rem !default;
-$item-md-note-color:                  darken($item-md-border-color, 10%) !default;
+$item-md-note-color:                  darken($list-md-border-color, 10%) !default;
 
 $item-md-divider-bg:                 #fff !default;
 $item-md-divider-color:              #222 !default;
@@ -87,7 +73,7 @@ ion-note {
 }
 
 .item-inner {
-  border-bottom: 1px solid $item-md-border-color;
+  border-bottom: 1px solid $list-md-border-color;
   padding-right: ($item-md-padding-right / 2);
 }
 
@@ -195,7 +181,7 @@ button.item {
 .item.activated,
 a.item.activated,
 button.item.activated {
-  background-color: $item-md-activated-background-color;
+  background-color: $list-md-activated-background-color;
   box-shadow: none;
 }
 

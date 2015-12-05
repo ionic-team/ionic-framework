@@ -8,7 +8,7 @@ $radio-md-color-on:               map-get($colors-md, primary) !default;
 
 $radio-md-icon-size:              16px !default;
 $radio-md-border-width:           2px !default;
-$radio-md-color-off:              darken($item-md-border-color, 40%) !default;
+$radio-md-color-off:              darken($list-md-border-color, 40%) !default;
 
 $radio-md-transition-duration:    280ms !default;
 $radio-md-transition-easing:      cubic-bezier(.4, 0, .2, 1) !default;

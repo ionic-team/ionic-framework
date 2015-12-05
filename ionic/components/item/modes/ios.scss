@@ -4,10 +4,11 @@
 // iOS Item
 // --------------------------------------------------
 
+$item-ios-font-size:                  1.6rem !default;
 $item-ios-avatar-size:                3.6rem !default;
 $item-ios-thumbnail-size:             5.6rem !default;
-$item-ios-note-color:                 darken($item-ios-border-color, 10%) !default;
-$item-ios-detail-push-color:          $item-ios-border-color !default;
+$item-ios-note-color:                 darken($list-ios-border-color, 10%) !default;
+$item-ios-detail-push-color:          $list-ios-border-color !default;
 
 $item-ios-divider-bg:                 #f7f7f7 !default;
 $item-ios-divider-color:              #222 !default;
@@ -55,7 +56,7 @@ ion-note {
 .item.activated,
 a.item.activated,
 button.item.activated {
-  background-color: $item-ios-activated-background-color;
+  background-color: $list-ios-activated-background-color;
   transition-duration: 0ms;
 }
 
@@ -67,7 +68,7 @@ button.item {
 
 .item-inner {
   padding-right: ($item-ios-padding-right / 2);
-  border-bottom: 1px solid $item-ios-border-color;
+  border-bottom: 1px solid $list-ios-border-color;
 }
 
 ion-item-content {
