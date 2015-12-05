@@ -73,11 +73,20 @@ export function ionicProviders(args={}) {
 
 function setupDom(window, document, config, platform, clickBlock, featureDetect) {
   let bodyEle = document.body;
-  if (!bodyEle) {
-    return ready(function() {
-      applyBodyCss(document, config, platform);
-    });
+  let mode = config.get('mode');
+
+  // if dynamic mode links have been added the fire up the correct one
+  let modeLinkAttr = mode + '-href';
+  let linkEle = document.head.querySelector('link[' + modeLinkAttr + ']');
+  if (linkEle) {
+    let href = linkEle.getAttribute(modeLinkAttr);
+    linkEle.removeAttribute(modeLinkAttr);
+    linkEle.href = href;
   }
+
+  // set the mode class name
+  // ios/md
+  bodyEle.classList.add(mode);
 
   let versions = platform.versions();
   platform.platforms().forEach(platformName => {
@@ -95,10 +104,6 @@ function setupDom(window, document, config, platform, clickBlock, featureDetect)
       bodyEle.classList.add(platformClass + '_' + platformVersion.minor);
     }
   });
-
-  // set the mode class name
-  // ios/md
-  bodyEle.classList.add(config.get('mode'));
 
   // touch devices should not use :hover CSS pseudo
   // enable :hover CSS when the "hoverCSS" setting is not false
