@@ -1,14 +1,17 @@
 @import "../../../globals.md";
+@import "../toolbar";
 
 // Material Design Toolbar
 // --------------------------------------------------
 
+$toolbar-md-padding:                 4px !default;
 $toolbar-md-height:                  5.6rem !default;
 $toolbar-md-title-font-size:         2rem !default;
 $toolbar-md-button-font-size:        1.4rem !default;
 
 
 .toolbar {
+  padding: $toolbar-md-padding;
   min-height: $toolbar-md-height;
 
   button,
@@ -62,7 +65,7 @@ $toolbar-md-button-font-size:        1.4rem !default;
   background-color: transparent;
 }
 
-.toolbar toolbar-background {
+.toolbar-background {
   border-color: $toolbar-md-border-color;
   background-color: $toolbar-md-background-color;
 }
@@ -92,12 +95,12 @@ ion-navbar-section {
   min-height: $navbar-md-height;
 }
 
-.toolbar .back-button {
+.back-button {
   margin: 0 0 0 12px;
   box-shadow: none;
 }
 
-.toolbar .back-button-icon {
+.back-button-icon {
   margin: 0;
   min-width: 44px;
   font-size: 2.4rem;

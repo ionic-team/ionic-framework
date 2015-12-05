@@ -49,7 +49,7 @@ class BackButtonText {
 
 
 @Directive({
-  selector: 'toolbar-background'
+  selector: '.toolbar-background'
 })
 class ToolbarBackground {
   constructor(
@@ -64,7 +64,7 @@ class ToolbarBackground {
 @Component({
   selector: 'ion-navbar',
   template:
-    '<toolbar-background></toolbar-background>' +
+    '<div class="toolbar-background"></div>' +
     '<button class="back-button" [hidden]="hideBackButton">' +
       '<icon class="back-button-icon" [name]="bbIcon"></icon>' +
       '<span class="back-button-text">' +
@@ -74,9 +74,9 @@ class ToolbarBackground {
     '<ng-content select="[menu-toggle]"></ng-content>' +
     '<ng-content select="ion-nav-items[primary]"></ng-content>' +
     '<ng-content select="ion-nav-items[secondary]"></ng-content>' +
-    '<toolbar-content>' +
+    '<div class="toolbar-content">' +
       '<ng-content></ng-content>' +
-    '</toolbar-content>',
+    '</div>',
   host: {
     '[hidden]': '_hidden',
     'class': 'toolbar'

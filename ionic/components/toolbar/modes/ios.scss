@@ -1,4 +1,5 @@
 @import "../../../globals.ios";
+@import "../toolbar";
 
 // iOS Toolbar
 // --------------------------------------------------
@@ -11,12 +12,14 @@ $toolbar-order-ios: (
   menu-toggle-secondary: 60,
 );
 
+$toolbar-ios-padding:                       4px !default;
 $toolbar-ios-height:                        4.4rem !default;
 $toolbar-ios-button-font-size:              1.7rem !default;
 $toolbar-ios-title-font-size:               1.7rem !default;
 
 
 .toolbar {
+  padding: $toolbar-ios-padding;
   min-height: $toolbar-ios-height;
 
   [menu-toggle] {
@@ -80,7 +83,7 @@ $toolbar-ios-title-font-size:               1.7rem !default;
   background-color: transparent;
 }
 
-.toolbar toolbar-background {
+.toolbar-background {
   border-bottom-width: 1px;
   border-bottom-style: solid;
   border-color: $toolbar-ios-border-color;
@@ -117,7 +120,7 @@ ion-nav-items[secondary] {
   order: map-get($toolbar-order-ios, secondary);
 }
 
-&.hairlines .toolbar toolbar-background {
+&.hairlines .toolbar-background {
   border-bottom-width: 0.55px;
 }
 

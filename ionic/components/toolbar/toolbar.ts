@@ -77,13 +77,13 @@ export class ToolbarBase extends Ion  {
 @Component({
   selector: 'ion-toolbar',
   template:
-    '<toolbar-background></toolbar-background>' +
+    '<div class="toolbar-background"></div>' +
     '<ng-content select="[menu-toggle]"></ng-content>' +
     '<ng-content select="ion-nav-items[primary]"></ng-content>' +
     '<ng-content select="ion-nav-items[secondary]"></ng-content>' +
-    '<toolbar-content>' +
+    '<div class="toolbar-content">' +
       '<ng-content></ng-content>' +
-    '</toolbar-content>',
+    '</div>',
   host: {
     'class': 'toolbar'
   }
