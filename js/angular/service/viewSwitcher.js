@@ -273,10 +273,11 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
               instance.triggerTransitionEnd();
             });
 
-            // remove any references that could cause memory issues
             // emit that the views have finished transitioning
             // each parent nav-view will update which views are active and cached
             switcher.emit('after', enteringData, leavingData);
+
+            // remove any references that could cause memory issues
             nextTransition = nextDirection = enteringView = leavingView = enteringEle = leavingEle = null;
           }
 
