@@ -26,6 +26,9 @@
       }
     }
 
+    // Fallback in case the keys don't exist at all
+    ionic.CSS.TRANSITION = ionic.CSS.TRANSITION || 'transition';
+
     // The only prefix we care about is webkit for transitions.
     var isWebkit = ionic.CSS.TRANSITION.indexOf('webkit') > -1;
 
