@@ -69,7 +69,7 @@ IonicModule
          *   Dismiss modal = 200
          *   Close action sheet = 300
          *   Dismiss popup = 400
-         *   Dismiss loading overlay = 500
+         *   Prevent action with loading overlay = 500
          *
          * Your back button action will override each of the above actions
          * whose priority is less than the priority you provide. For example,
