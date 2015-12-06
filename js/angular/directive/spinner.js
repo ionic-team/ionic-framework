@@ -189,8 +189,7 @@ IonicModule
       var spinnerName = ctrl.init();
       $element.addClass('spinner spinner-' + spinnerName);
 
-      $element.on('$destroy', function onDestroy()
-      {
+      $element.on('$destroy', function onDestroy() {
         ctrl.stop();
       });
     }

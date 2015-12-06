@@ -115,7 +115,7 @@ function($scope, $element, $ionicHistory) {
     return false;
   };
 
-  self.showBar = function (show) {
+  self.showBar = function(show) {
     if (arguments.length) {
       if (show) {
         $element.removeClass('tabs-item-hide');

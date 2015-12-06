@@ -57,7 +57,7 @@ IonicModule
    * @param {boolean} show Whether to show the bar.
    * @returns {boolean} Whether the bar is shown.
    */
-  'showBar',
+  'showBar'
   /**
    * @ngdoc method
    * @name $ionicTabsDelegate#$getByHandle
@@ -69,4 +69,3 @@ IonicModule
    * Example: `$ionicTabsDelegate.$getByHandle('my-handle').select(0);`
    */
 ]));
-
