@@ -236,6 +236,10 @@ ion-infinite-scroll {
   }
 }
 
+.bar-subfooter.has-tabs {
+  bottom: $tabs-height + $bar-footer-height;
+}
+
 .has-footer.has-tabs {
   bottom: $tabs-height + $bar-footer-height;
 }
