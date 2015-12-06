@@ -1,8 +1,5 @@
 @import "../../../globals.ios";
 @import "../button";
-@import "../button-fab";
-@import "../button-icon";
-@import "../button-size";
 
 // iOS Button
 // --------------------------------------------------
@@ -156,3 +153,11 @@ $button-ios-border-radius:            4px !default;
   @include ios-button-outline($color-name, $color-value);
   @include ios-button-clear($color-name, $color-value);
 }
+
+
+// Core Button Overrides
+// --------------------------------------------------
+
+@import "../button-fab";
+@import "../button-icon";
+@import "../button-size";

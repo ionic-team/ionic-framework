@@ -1,5 +1,5 @@
 @import "../../../globals.ios";
-@import "../checkbox";
+
 
 // iOS Checkbox Structure
 // --------------------------------------------------
@@ -13,13 +13,15 @@ $checkbox-ios-checkmark-color-on:    $background-ios-color !default;
 
 
 ion-checkbox {
+  cursor: pointer;
+  @include user-select-none();
 
-  &[aria-checked=true] checkbox-icon {
+  &[aria-checked=true] .checkbox-icon {
     background-color: $checkbox-ios-background-color-on;
     border-color: $checkbox-ios-border-color-on;
   }
 
-  &[aria-checked=true] checkbox-icon:after {
+  &[aria-checked=true] .checkbox-icon:after {
     position: absolute;
     border: 1px solid $checkbox-ios-checkmark-color-on;
     top: 3px;
@@ -38,12 +40,17 @@ ion-checkbox {
 
 }
 
-media-checkbox {
-  display: block;
+ion-checkbox[aria-disabled=true] {
+  opacity: 0.5;
+  color: $subdued-text-ios-color;
+  pointer-events: none;
+}
+
+.media-checkbox {
   margin: $item-ios-padding-media-top $item-ios-padding-right $item-ios-padding-media-bottom 2px;
 }
 
-checkbox-icon {
+.checkbox-icon {
   position: relative;
   display: block;
   width: $checkbox-ios-icon-size;
@@ -59,7 +66,7 @@ checkbox-icon {
 
 @mixin checkbox-theme-ios($color-name, $bg-on) {
 
-  ion-checkbox[#{$color-name}][aria-checked=true] checkbox-icon {
+  ion-checkbox[#{$color-name}][aria-checked=true] .checkbox-icon {
     background-color: $bg-on;
     border-color: $bg-on;
   }
@@ -67,11 +74,9 @@ checkbox-icon {
 }
 
 
-// Generate iOS Checkbox Auxiliary Colors
+// Generate iOS Checkbox Colors
 // --------------------------------------------------
 
-@each $color-name, $value in $colors-ios {
-
-  @include checkbox-theme-ios($color-name, $value);
-
+@each $color-name, $color-value in $colors-ios {
+  @include checkbox-theme-ios($color-name, $color-value);
 }

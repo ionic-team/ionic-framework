@@ -1,8 +1,5 @@
 @import "../../../globals.md";
 @import "../button";
-@import "../button-fab";
-@import "../button-icon";
-@import "../button-size";
 
 // Material Design Button
 // --------------------------------------------------
@@ -250,3 +247,11 @@ $button-md-hover-opacity:                  0.8 !default;
   @include md-button-outline($color-name, $color-value);
   @include md-button-clear($color-name, $color-value);
 }
+
+
+// Core Button Overrides
+// --------------------------------------------------
+
+@import "../button-fab";
+@import "../button-icon";
+@import "../button-size";

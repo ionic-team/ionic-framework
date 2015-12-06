@@ -1,5 +1,4 @@
 @import "../../../globals.md";
-@import "../checkbox";
 
 // Material Design Checkbox
 // --------------------------------------------------
@@ -15,6 +14,9 @@ $checkbox-md-checkmark-color-on:    $background-md-color !default;
 
 
 ion-checkbox {
+  cursor: pointer;
+  @include user-select-none();
+
   &.item .item-inner {
     border: none;
     padding-right: 0;
@@ -26,12 +28,12 @@ ion-checkbox {
     padding: $item-md-padding-top ($item-md-padding-right / 2) $item-md-padding-bottom 0;
   }
 
-  &[aria-checked=true] checkbox-icon {
+  &[aria-checked=true] .checkbox-icon {
     background-color: $checkbox-md-background-color-on;
     border-color: $checkbox-md-border-color-on;
   }
 
-  &[aria-checked=true] checkbox-icon:after {
+  &[aria-checked=true] .checkbox-icon:after {
     position: absolute;
     border: 2px solid $checkbox-md-checkmark-color-on;
     top: 0;
@@ -46,15 +48,19 @@ ion-checkbox {
 
 }
 
-media-checkbox {
-  display: block;
+ion-checkbox[aria-disabled=true] {
+  opacity: 0.5;
+  color: $subdued-text-md-color;
+  pointer-events: none;
+}
+
+.media-checkbox {
   // TODO convert these to sass variables
   margin: $item-md-padding-media-top 36px $item-md-padding-media-bottom 4px;
 }
 
-checkbox-icon {
+.checkbox-icon {
   position: relative;
-  display: block;
   width: $checkbox-md-icon-size;
   height: $checkbox-md-icon-size;
   border-radius: $checkbox-md-border-radius;
@@ -68,7 +74,7 @@ checkbox-icon {
 
 @mixin checkbox-theme-md($color-name, $bg-on) {
 
-  ion-checkbox[#{$color-name}][aria-checked=true] checkbox-icon {
+  ion-checkbox[#{$color-name}][aria-checked=true] .checkbox-icon {
     background-color: $bg-on;
     border-color: $bg-on;
   }
@@ -80,7 +86,5 @@ checkbox-icon {
 // --------------------------------------------------
 
 @each $color-name, $color-value in $colors-md {
-
   @include checkbox-theme-md($color-name, $color-value);
-
 }
