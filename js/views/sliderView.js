@@ -124,6 +124,11 @@ ionic.views.Slider = ionic.views.View.inherit({
       // do nothing if already on requested slide
       if (index == to) return;
 
+      if (!slides) {
+        index = to;
+        return;
+      }
+
       if (browser.transitions) {
 
         var direction = Math.abs(index - to) / (index - to); // 1: backward, -1: forward
