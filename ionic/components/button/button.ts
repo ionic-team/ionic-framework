@@ -40,6 +40,7 @@ export class Button {
     renderer: Renderer,
     @Attribute('type') type: string
   ) {
+
     let element = elementRef.nativeElement;
 
     if (config.get('hoverCSS') === false) {
@@ -51,7 +52,9 @@ export class Button {
       return;
     }
 
-    renderer.setElementAttribute(elementRef, 'class', 'button');
+    renderer.setElementClass(elementRef, 'button', true);
+
+    this.attrToClass(renderer, elementRef);
 
     if (type) {
       renderer.setElementAttribute(elementRef, type, '');
@@ -95,7 +98,47 @@ export class Button {
 
   }
 
+  attrToClass(renderer, elementRef) {
+    // looping through native dom attributes, eww
+    // https://github.com/angular/angular/issues/1818
+
+    let element = elementRef.nativeElement;
+    let attrs = element.attributes;
+    let btnAttrs = [];
+
+    BUTTON_SIZE_ATTRS.forEach(buttonAttr => {
+      if (element.hasAttribute(buttonAttr)) {
+        renderer.setElementClass(elementRef, 'button-' + buttonAttr, true);
+      }
+    });
+
+    BUTTON_TYPE_ATTRS.forEach(buttonAttr => {
+      if (element.hasAttribute(buttonAttr)) {
+        renderer.setElementClass(elementRef, 'button-' + buttonAttr, true);
+        btnAttrs.push(buttonAttr);
+      }
+    });
+
+    let attrName;
+    for (let i = 0, l = attrs.length; i < l; i++) {
+      attrName = attrs[i].name;
+      if (attrs[i].value === '' && COMMON_HTML_ATTR.test(attrName) !== true && BUTTON_TYPE_ATTRS.indexOf(attrName) < 0 && BUTTON_SIZE_ATTRS.indexOf(attrName) < 0) {
+        if (btnAttrs.length) {
+          btnAttrs.forEach(buttonAttr => {
+            renderer.setElementClass(elementRef, 'button-' + buttonAttr + '-' + attrName, true);
+          });
+        } else {
+          renderer.setElementClass(elementRef, 'button-' + attrName, true);
+        }
+      }
+    }
+  }
+
 }
+
+const COMMON_HTML_ATTR = /id|class|type|href|ng-/;
+const BUTTON_TYPE_ATTRS = ['block', 'full', 'round', 'clear', 'outline'];
+const BUTTON_SIZE_ATTRS = ['large', 'small'];
 
 const TEXT = 1;
 const ICON = 2;
