@@ -83,7 +83,7 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
      * @name $ionicLoading#show
      * @description Shows a loading indicator. If the indicator is already shown,
      * it will set the options given and keep the indicator shown. Note: While this
-     * function still returns an $ionicLoading instance for backwards compatiblity, 
+     * function still returns an $ionicLoading instance for backwards compatiblity,
      * its use has been deprecated.
      * @param {object} opts The options for the loading indicator. Available properties:
      *  - `{string=}` `template` The html content of the indicator.
