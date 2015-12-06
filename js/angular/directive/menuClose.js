@@ -40,6 +40,7 @@ IonicModule
     restrict: 'AC',
     link: function($scope, $element) {
       $element.bind('click', function() {
+        var currentState = $ionicHistory.currentStateName();
         var sideMenuCtrl = $element.inheritedData('$ionSideMenusController');
         if (sideMenuCtrl) {
           $ionicHistory.nextViewOptions({
@@ -57,6 +58,15 @@ IonicModule
             });
           }, 300);
           sideMenuCtrl.close();
+          $timeout(function(){
+            if (currentState === $ionicHistory.currentStateName()) {
+              $ionicHistory.nextViewOptions({
+                historyRoot: false,
+                disableAnimate: false,
+                expire: 300
+              });
+            }
+          }, 10);
         }
       });
     }
