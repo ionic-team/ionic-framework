@@ -185,6 +185,8 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
           }
           $timeout.cancel(self.durationTimeout);
           self.isShown = false;
+          var loading = self.element.children();
+          loading.html("");
         };
 
         return self;
