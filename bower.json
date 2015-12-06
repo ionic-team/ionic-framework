@@ -12,8 +12,7 @@
   "main": [
     "release/css/ionic.css",
     "release/fonts/*",
-    "release/js/ionic.js",
-    "release/js/ionic-angular.js"
+    "release/js/ionic.bundle.js"
   ],
   "keywords": [
     "mobile",
