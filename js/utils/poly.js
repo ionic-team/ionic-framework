@@ -2,7 +2,10 @@
   'use strict';
 
   // Ionic CSS polyfills
-  ionic.CSS = {};
+  ionic.CSS = {
+    'TRANSFORM': [],
+    'TRANSITION': []
+  };
 
   (function() {
 
