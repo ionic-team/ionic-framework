@@ -356,7 +356,7 @@ function tapMouseDown(e) {
     console.log('mousedown', 'stop event');
     e.stopPropagation();
 
-    if ((!ionic.tap.isTextInput(e.target) || tapLastTouchTarget !== e.target) && !(/^(select|option)$/i).test(e.target.tagName)) {
+    if ((!ionic.tap.isTextInput(e.target) || tapLastTouchTarget !== e.target) && !isSelectOrOption(e.target.tagName)) {
       // If you preventDefault on a text input then you cannot move its text caret/cursor.
       // Allow through only the text input default. However, without preventDefault on an
       // input the 300ms delay can change focus on inputs after the keyboard shows up.
@@ -382,7 +382,7 @@ function tapMouseUp(e) {
     return false;
   }
 
-  if (tapIgnoreEvent(e) || (/^(select|option)$/i).test(e.target.tagName)) return false;
+  if (tapIgnoreEvent(e) || isSelectOrOption(e.target.tagName)) return false;
 
   if (!tapHasPointerMoved(e)) {
     tapClick(e);
@@ -437,7 +437,7 @@ function tapTouchEnd(e) {
   if (!tapHasPointerMoved(e)) {
     tapClick(e);
 
-    if ((/^(select|option)$/i).test(e.target.tagName)) {
+    if (isSelectOrOption(e.target.tagName)) {
       e.preventDefault();
     }
   }
@@ -598,6 +598,10 @@ function tapTargetElement(ele) {
     }
   }
   return ele;
+}
+
+function isSelectOrOption(tagName){
+  return (/^(select|option)$/i).test(tagName);
 }
 
 ionic.DomUtil.ready(function() {
