@@ -7,7 +7,7 @@ import {IonicApp} from './app';
  * no matter where in the UI heirarchy you are. For example, this makes toggling
  * a global side menu feasible from any place in the application.
  *
- * See the [Menu section](http://localhost:4000/docs/v2/components/#menus) of
+ * See the [Menu section](http://ionicframework.com/docs/v2/components/#menus) of
  * the Component docs for an example of how Menus rely on ID's.
  *
  * To give any component an ID, simply set its `id` property:
