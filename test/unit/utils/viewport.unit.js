@@ -43,6 +43,7 @@ describe('Ionic Viewport', function() {
     window._setTimeout = window.setTimeout;
     window.setTimeout = function(){};
     _activeElement = null; // the element which has focus
+    window.forge = undefined;
     window.cordova = undefined;
     window.device = undefined;
     window.navigator = {};

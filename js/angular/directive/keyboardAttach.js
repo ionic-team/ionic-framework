@@ -16,7 +16,7 @@
  *   `<preference name="Fullscreen" value="false" />` or no preference in your `config.xml` file,
  *   this directive is unnecessary since it is the default behavior.
  * - On iOS, if there is an input in your footer, you will need to set
- *   `cordova.plugins.Keyboard.disableScroll(true)`.
+ *   `ionic.keyboard.getPlugin().disableScroll(true)`.
  *
  * @usage
  *
