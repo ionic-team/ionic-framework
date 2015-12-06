@@ -127,6 +127,10 @@ input:checked + .checkbox-icon:before {
   height: 7px;
 }
 
+.platform-android .item-checkbox-right .checkbox-square .checkbox-icon::after {
+  top: 31%;
+}
+
 .grade-c .checkbox input:after,
 .grade-c .checkbox-icon:after {
   @include rotate(0);
