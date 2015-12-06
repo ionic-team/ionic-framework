@@ -298,7 +298,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
       subTitle: options.subTitle,
       cssClass: options.cssClass,
       $buttonTapped: function(button, event) {
-        var result = (button.onTap || noop)(event);
+        var result = (button.onTap || noop).apply(self, [event]);
         event = event.originalEvent || event; //jquery events
 
         if (!event.defaultPrevented) {
