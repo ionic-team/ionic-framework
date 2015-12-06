@@ -97,6 +97,7 @@ function tapScrollToTopDirective() {
           while (depth-- && current) {
             if (current.classList.contains('button') ||
                 current.tagName.match(/input|textarea|select/i) ||
+                ((current.getAttribute('no-tap-scroll') != null) && (current.getAttribute('no-tap-scroll') !== "false")) ||
                 current.isContentEditable) {
               return;
             }
