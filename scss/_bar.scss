@@ -159,7 +159,7 @@
     color: inherit;
   }
 
-  .button {
+  .button, button {
     z-index: $z-index-bar-button;
     padding: 0 $button-bar-button-padding;
     min-width: initial;
@@ -401,4 +401,3 @@
 .nav-bar-tabs-top .bar {
   background-image: none;
 }
-
