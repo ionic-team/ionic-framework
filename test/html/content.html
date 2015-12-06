@@ -118,7 +118,7 @@
       })
 
       .controller('TestCtrl', function($scope, $timeout) {
-        console.log('CONSTRUCT');
+        console.log('CONSTRUCT', ionic.Platform.isIOS());
         $timeout(function() {
         });
       })
