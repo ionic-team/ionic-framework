@@ -18,6 +18,16 @@
       self.__maxScrollTop = Math.max((self.__contentHeight) - self.__clientHeight, 0);
       self.__maxScrollLeft = Math.max((self.__contentWidth) - self.__clientWidth, 0);
 
+      if(options.startY >= 0 || options.startX >= 0) {
+        ionic.requestAnimationFrame(function() {
+          self.el.scrollTop = options.startY || 0;
+          self.el.scrollLeft = options.startX || 0;
+
+          self.__scrollTop = self.el.scrollTop;
+          self.__scrollLeft = self.el.scrollLeft;
+        })
+      }
+
       self.options = {
 
         freeze: false,
@@ -459,4 +469,3 @@
   });
 
 })(ionic);
-
