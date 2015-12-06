@@ -15,9 +15,9 @@
 
         <ion-side-menu-content edge-drag-threshold="true" drag-content="!$root.disableDrag">
           <header class="bar bar-header bar-positive">
-            <button class="button button-icon ion-navicon" ng-click="toggleLeft()" ng-hide="$exposeAside.active"></button>
+            <button class="button button-icon ion-navicon" menu-toggle="left" ng-hide="$exposeAside.active"></button>
             <h1 class="title">Slide me</h1>
-            <button class="button button-icon ion-navicon" ng-click="toggleRight()"></button>
+            <button class="button button-icon ion-navicon" menu-toggle="right"></button>
           </header>
           <ion-content class="has-header">
             <ion-toggle ng-model="$root.disableDrag">Disable Drag Content?</ion-toggle>
@@ -66,9 +66,6 @@
       angular.module('sideMenuTest', ['ionic'])
 
       .controller('MenuCtrl', function($scope, $ionicSideMenuDelegate) {
-
-        $scope.toggleLeft = $ionicSideMenuDelegate.toggleLeft;
-        $scope.toggleRight = $ionicSideMenuDelegate.toggleRight;
 
         $scope.list = [];
         for(var i = 0; i < 20; i++) {
