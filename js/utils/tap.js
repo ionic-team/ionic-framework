@@ -472,6 +472,10 @@ function tapEnableTouchEvents() {
 function tapIgnoreEvent(e) {
   if (e.isTapHandled) return true;
   e.isTapHandled = true;
+  
+  if(ionic.tap.isElementTapDisabled(e.target)){
+      return true;
+  }
 
   if(ionic.tap.isElementTapDisabled(e.target)) {
     return true;
