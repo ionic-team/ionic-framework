@@ -393,7 +393,21 @@
   var platformName = null, // just the name, like iOS or Android
   platformVersion = null, // a float of the major and minor, like 7.1
   readyCallbacks = [],
-  windowLoadListenderAttached;
+  windowLoadListenderAttached,
+  platformReadyTimer = 2000; // How long to wait for platform ready before emitting a warning
+
+  verifyPlatformReady();
+
+  // Warn the user if deviceready did not fire in a reasonable amount of time, and how to fix it.
+  function verifyPlatformReady() {
+    setTimeout(function() {
+      if(!self.isReady) {
+        console.warn('Possible issue: deviceready did not fire in a reasonable amount of time. ' +
+        'This can be caused by plugins in an inconsistent state. One possible solution: uninstall/remove all ' +
+        'plugins and reinstall them. Additionally, one or more plugins might be faulty or out of date.');
+      }
+    }, platformReadyTimer);
+  }
 
   // setup listeners to know when the device is ready to go
   function onWindowLoad() {
