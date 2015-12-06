@@ -26,21 +26,30 @@
 
   background-size: 0;
   line-height: $tabs-height;
+}
 
-  @media (min--moz-device-pixel-ratio: 1.5),
-         (-webkit-min-device-pixel-ratio: 1.5),
-         (min-device-pixel-ratio: 1.5),
-         (min-resolution: 144dpi),
-         (min-resolution: 1.5dppx) {
+@media (min--moz-device-pixel-ratio: 1.5),
+       (-webkit-min-device-pixel-ratio: 1.5),
+       (min-device-pixel-ratio: 1.5),
+       (min-resolution: 144dpi),
+       (min-resolution: 1.5dppx) {
+  .card .tabs.item {
+    border-top-width: $item-border-width !important;
+    background-size: 0;
+  }
+  .card .tabs.item:first-child {
+    border-top-width: initial !important;
+  }
+  .tabs {
     padding-top: 2px;
-    border-top: none !important;
+    border-top-width: 0 !important;
     border-bottom: none;
     background-position: top;
     background-size: 100% 1px;
     background-repeat: no-repeat;
   }
-
 }
+
 /* Allow parent element of tabs to define color, or just the tab itself */
 .tabs-light > .tabs,
 .tabs.tabs-light {
