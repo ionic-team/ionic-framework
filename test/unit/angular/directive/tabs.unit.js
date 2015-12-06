@@ -2,12 +2,13 @@ describe('tabs', function() {
 
   describe('$ionicTabs controller', function() {
     beforeEach(module('ionic'));
-    var ctrl, scope;
+    var ctrl, scope, $element;
     beforeEach(inject(function($rootScope, $controller) {
       scope = $rootScope.$new();
+      $element = angular.element('<div>');
       ctrl = $controller('$ionicTabs', {
         $scope: scope,
-        $element: angular.element('<div>')
+        $element: $element
       });
     }));
 
@@ -183,6 +184,17 @@ describe('tabs', function() {
         url: tab3.href,
         uiSref: tab3.uiSref
       });
+    });
+
+    it('.showBar with true/false should remove/add a tabs-item-hide class', function() {
+      var visible = ctrl.showBar();
+      expect(visible).toBe(true);
+      visible = ctrl.showBar(false);
+      expect(visible).toBe(false);
+      expect($element.hasClass('tabs-item-hide')).toBe(true);
+      visible = ctrl.showBar(true);
+      expect(visible).toBe(true);
+      expect($element.hasClass('tabs-item-hide')).toBe(false);
     });
   });
 
