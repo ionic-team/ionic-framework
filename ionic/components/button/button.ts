@@ -30,10 +30,7 @@ import {Config} from '../../config/config';
 
  */
 @Directive({
-  selector: 'button,[button]',
-  host: {
-    'class': 'button'
-  }
+  selector: 'button,[button]'
 })
 export class Button {
 
@@ -50,9 +47,11 @@ export class Button {
     }
 
     if (element.hasAttribute('ion-item')) {
-      // no need to put on these icon classes for an ion-item
+      // no need to put on these classes for an ion-item
       return;
     }
+
+    renderer.setElementAttribute(elementRef, 'class', 'button');
 
     if (type) {
       renderer.setElementAttribute(elementRef, type, '');
@@ -85,13 +84,13 @@ export class Button {
 
     if (nodes.length > 1) {
       if (nodes[0] === ICON && nodes[1] === TEXT) {
-        element.classList.add('icon-left');
+        renderer.setElementClass(elementRef, 'icon-left', true);
 
       } else if (nodes[0] === TEXT && nodes[1] === ICON) {
-        element.classList.add('icon-right');
+        renderer.setElementClass(elementRef, 'icon-right', true);
       }
     } else if (nodes.length === 1 && nodes[0] === ICON) {
-      element.classList.add('icon-only');
+      renderer.setElementClass(elementRef, 'icon-only', true);
     }
 
   }
