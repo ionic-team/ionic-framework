@@ -145,7 +145,7 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
         element.remove();
         // scope.cancel.$scope is defined near the bottom
         scope.cancel.$scope = sheetEl = null;
-        (done || noop)();
+        (done || noop)(opts.buttons);
       });
     };
 
