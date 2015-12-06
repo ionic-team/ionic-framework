@@ -379,16 +379,17 @@ ionic.views.Slider = ionic.views.View.inherit({
             translate(index, delta.x + slidePos[index], 0);
             translate(circle(index + 1), delta.x + slidePos[circle(index + 1)], 0);
 
-          } else{
-              if(options.bouncing){
-               delta.x =
-                 delta.x /
-                   ( (!index && delta.x > 0 ||         // if first slide and sliding left
-                     index == slides.length - 1 &&     // or if last slide and sliding right
-                     delta.x < 0                       // and if sliding at all
-                   ) ?
-                   ( Math.abs(delta.x) / width + 1 )      // determine resistance level
-                   : 1 );                                 // no resistance if false
+          } else {
+            // If the slider bounces, do the bounce!
+            if(options.bouncing) {
+              delta.x =
+               delta.x /
+                 ( (!index && delta.x > 0 ||         // if first slide and sliding left
+                   index == slides.length - 1 &&     // or if last slide and sliding right
+                   delta.x < 0                       // and if sliding at all
+                 ) ?
+                 ( Math.abs(delta.x) / width + 1 )      // determine resistance level
+                 : 1 );                                 // no resistance if false
              } else {
                if(width * index - delta.x < 0) {               //We are trying scroll past left boundary
                  delta.x = Math.min(delta.x, width * index);  //Set delta.x so we don't go past left screen

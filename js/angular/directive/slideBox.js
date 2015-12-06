@@ -56,13 +56,13 @@ function($timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory, $ionicScroll
       disableScroll: '@',
       onSlideChanged: '&',
       activeSlide: '=?',
-      hasBouncing: '@'
+      bounce: '@'
     },
     controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
       var _this = this;
 
       var continuous = $scope.$eval($scope.doesContinue) === true;
-      var bouncing = ($scope.$eval($scope.hasBouncing) !== false); //Default to true
+      var bouncing = ($scope.$eval($scope.bounce) !== false); //Default to true
       var shouldAutoPlay = isDefined($attrs.autoPlay) ? !!$scope.autoPlay : false;
       var slideInterval = shouldAutoPlay ? $scope.$eval($scope.slideInterval) || 4000 : 0;
 
@@ -142,7 +142,6 @@ function($timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory, $ionicScroll
       };
 
       this.onPagerClick = function(index) {
-        console.log('pagerClick', index);
         $scope.pagerClick({index: index});
       };
 
