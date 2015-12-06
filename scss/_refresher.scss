@@ -38,7 +38,7 @@
   }
   .icon-pulling {
     @include animation-name(refresh-spin-back);
-    @include animation-duration(200ms);
+    @include transition-duration(200ms);
     @include animation-timing-function(linear);
     @include animation-fill-mode(none);
     -webkit-transform: translate3d(0,0,0) rotate(0deg);
