@@ -296,7 +296,7 @@ IonicModule
       var q = $scope.$onRefresh();
 
       if (q && q.then) {
-        q.finally(function() {
+        q['finally'](function() {
           $scope.$broadcast('scroll.refreshComplete');
         });
       }

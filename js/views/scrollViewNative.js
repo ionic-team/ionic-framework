@@ -25,7 +25,7 @@
 
           self.__scrollTop = self.el.scrollTop;
           self.__scrollLeft = self.el.scrollLeft;
-        })
+        });
       }
 
       self.options = {
