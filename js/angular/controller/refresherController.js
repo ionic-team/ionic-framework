@@ -28,6 +28,8 @@ IonicModule
 
     $scope.showIcon = isDefined($attrs.refreshingIcon);
 
+    $scope.isRefreshing = false;
+
     $ionicBind($scope, $attrs, {
       pullingIcon: '@',
       pullingText: '@',
@@ -287,6 +289,7 @@ IonicModule
         // deactivateCallback
         $element.removeClass('active refreshing refreshing-tail');
         if (activated) activated = false;
+        $scope.isRefreshing = false;
       }, 150);
     }
 
@@ -294,6 +297,7 @@ IonicModule
       // startCallback
       $element[0].classList.add('refreshing');
       $scope.$onRefresh();
+      $scope.isRefreshing = true;
     }
 
     function show() {

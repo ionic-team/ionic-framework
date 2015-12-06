@@ -77,7 +77,7 @@ IonicModule
         '</div>' +
         '<div class="text-pulling" ng-bind-html="pullingText"></div>' +
         '<div class="icon-refreshing">' +
-          '<ion-spinner ng-if="showSpinner" icon="{{spinner}}"></ion-spinner>' +
+          '<ion-spinner ng-if="showSpinner && isRefreshing" icon="{{spinner}}"></ion-spinner>' +
           '<i ng-if="showIcon" class="icon {{refreshingIcon}}"></i>' +
         '</div>' +
         '<div class="text-refreshing" ng-bind-html="refreshingText"></div>' +

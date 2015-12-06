@@ -26,6 +26,20 @@ describe('ionRefresher directive', function() {
     return el;
   }
 
+  function startRefreshing(el) {
+    var refresher = el.refresherCtrl.getRefresherDomMethods();
+    refresher.start();
+    el.scope().$apply();
+  }
+  function stopRefreshing(el) {
+    inject(function($timeout) {
+      var refresher = el.refresherCtrl.getRefresherDomMethods();
+      refresher.deactivate();
+      $timeout.flush();
+      el.scope().$apply();
+    });
+  }
+
   it('should error without ionScroll or ionContent', inject(function($compile, $rootScope) {
     expect(function() {
       $compile('<ion-refresher>')($rootScope);
@@ -79,19 +93,32 @@ describe('ionRefresher directive', function() {
     expect(el[0].querySelector('.icon-pulling .super-icon')).toBeTruthy();
   });
 
-  it('should have default spinner', function() {
+  it('should have default spinner', inject(function($rootScope) {
     var el = setup();
+    startRefreshing(el);
     expect(el[0].querySelector('ion-spinner')).toBeTruthy();
-  });
+  }));
   it('should allow a custom spinner', function() {
     var el = setup('spinner="android"');
+    startRefreshing(el);
     expect(el[0].querySelector('.spinner-android')).toBeTruthy();
   });
   it('should allow spinner to be none', function() {
     var el = setup('spinner="none"');
+    startRefreshing(el);
     expect(el[0].querySelector('ion-spinner')).not.toBeTruthy();
     expect(el[0].querySelector('.icon.icon-refreshing')).not.toBeTruthy();
   });
+  it('should have no spinner prior to refreshing', inject(function($rootScope) {
+    var el = setup();
+    expect(el[0].querySelector('ion-spinner')).not.toBeTruthy();
+  }));
+  it('should have no spinner after refreshing', inject(function($rootScope) {
+    var el = setup();
+    startRefreshing(el);
+    stopRefreshing(el);
+    expect(el[0].querySelector('ion-spinner')).not.toBeTruthy();
+  }));
   it('should allow custom refreshingIcon', function() {
     var el = setup('refreshing-icon="monkey-icon"');
     expect(el[0].querySelector('.icon.icon-refreshing.ion-arrow-down-c')).toBeFalsy();
