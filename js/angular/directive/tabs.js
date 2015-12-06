@@ -25,7 +25,7 @@
  *
  * @usage
  * ```html
- * <ion-tabs class="tabs-positive tabs-icon-only">
+ * <ion-tabs class="tabs-positive tabs-icon-top">
  *
  *   <ion-tab title="Home" icon-on="ion-ios-filing" icon-off="ion-ios-filing-outline">
  *     <!-- Tab 1 content -->
