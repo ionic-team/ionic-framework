@@ -4,8 +4,8 @@
 // Material Design Button
 // --------------------------------------------------
 
-$button-md-margin:                        0.4rem 0.2rem !default;
-$button-md-padding:                       0 1.1em !default;
+$button-md-margin:                         0.4rem 0.2rem !default;
+$button-md-padding:                        0 1.1em !default;
 $button-md-font-size:                      1.4rem !default;
 $button-md-height:                         3.6rem !default;
 $button-md-box-shadow:                     0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12) !default;
@@ -32,6 +32,7 @@ $button-md-large-padding:                  1.0em !default;
 $button-md-small-font-size:                1.3rem !default;
 $button-md-small-height:                   2.1em !default;
 $button-md-small-padding:                  0.9em !default;
+$button-md-small-icon-font-size:           1.4em !default;
 
 
 // Material Design Default Button
@@ -40,11 +41,7 @@ $button-md-small-padding:                  0.9em !default;
 .button {
   margin: $button-md-margin;
   padding: $button-md-padding;
-
   min-height: $button-md-height;
-  font-size: $button-md-font-size;
-
-  border: 0;
   border-radius: $button-md-border-radius;
 
   font-weight: 500;
@@ -66,6 +63,7 @@ $button-md-small-padding:                  0.9em !default;
 
   &.activated {
     box-shadow: $button-md-box-shadow-active;
+    background-color: $button-md-color-activated;
   }
 }
 
@@ -84,6 +82,7 @@ $button-md-small-padding:                  0.9em !default;
 
     &.activated {
       opacity: 1;
+      background-color: $bg-color-activated;
     }
   }
 
@@ -105,12 +104,20 @@ $button-md-small-padding:                  0.9em !default;
   font-size: $button-md-small-font-size;
 }
 
+.button-small.button-icon-only icon {
+  font-size: $button-md-small-icon-font-size;
+}
+
 
 // Material Design Full Button
 // --------------------------------------------------
 
 .button-full {
   border-radius: 0;
+  margin-right: 0;
+  margin-left: 0;
+  border-right-width: 0;
+  border-left-width: 0;
 }
 
 
@@ -118,7 +125,9 @@ $button-md-small-padding:                  0.9em !default;
 // --------------------------------------------------
 
 .button-outline {
-  border: 1px solid $button-md-color;
+  border-width: 1px;
+  border-style: solid;
+  border-color: $button-md-color;
   background-color: transparent;
   color: $button-md-color;
   box-shadow: none;
@@ -127,6 +136,7 @@ $button-md-small-padding:                  0.9em !default;
     opacity: 1;
     color: $background-md-color;
     background-color: $button-md-color;
+    box-shadow: none;
   }
 
   md-ripple {
@@ -166,8 +176,12 @@ $button-md-small-padding:                  0.9em !default;
   color: color-shade($button-md-color);
 
   &.activated {
-    opacity: 0.4;
     background-color: $button-md-clear-active-background-color;
+    box-shadow: none;
+  }
+
+  &:hover:not(.disable-hover) {
+    color: color-shade($button-md-color);
   }
 }
 
@@ -183,9 +197,10 @@ $button-md-small-padding:                  0.9em !default;
     background-color: transparent;
     color: $fg-color;
 
+
     &.activated {
-      opacity: 0.4;
-      background-color: transparent;
+      background-color: $button-md-clear-active-background-color;
+      box-shadow: none;
     }
 
     &:hover:not(.disable-hover) {
