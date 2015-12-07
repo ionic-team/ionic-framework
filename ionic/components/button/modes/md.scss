@@ -26,6 +26,13 @@ $button-md-color-activated:                color-shade($button-md-color) !defaul
 $button-md-text-color:                     inverse($button-md-color) !default;
 $button-md-hover-opacity:                  0.8 !default;
 
+$button-md-large-font-size:                2rem !default;
+$button-md-large-height:                   2.8em !default;
+$button-md-large-padding:                  1.0em !default;
+$button-md-small-font-size:                1.3rem !default;
+$button-md-small-height:                   2.1em !default;
+$button-md-small-padding:                  0.9em !default;
+
 
 // Material Design Default Button
 // --------------------------------------------------
@@ -87,15 +94,15 @@ $button-md-hover-opacity:                  0.8 !default;
 // --------------------------------------------------
 
 .button-large {
-  padding: 0 $button-large-padding;
-  min-height: $button-large-height;
-  font-size: $button-large-font-size;
+  padding: 0 $button-md-large-padding;
+  min-height: $button-md-large-height;
+  font-size: $button-md-large-font-size;
 }
 
 .button-small {
-  padding: 0 $button-small-padding;
-  min-height: $button-small-height;
-  font-size: $button-small-font-size;
+  padding: 0 $button-md-small-padding;
+  min-height: $button-md-small-height;
+  font-size: $button-md-small-font-size;
 }
 
 
@@ -254,4 +261,3 @@ $button-md-hover-opacity:                  0.8 !default;
 
 @import "../button-fab";
 @import "../button-icon";
-@import "../button-size";

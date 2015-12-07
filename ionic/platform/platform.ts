@@ -301,7 +301,10 @@ export class Platform {
    * @returns {boolean} TODO
    */
   testNavigatorPlatform(navigatorPlatformExpression) {
-    return navigatorPlatformExpression.test(this._bPlt || '');
+    if (navigatorPlatformExpression && this._bPlt) {
+      let rgx = new RegExp(navigatorPlatformExpression, 'i');
+      return rgx.test(this._bPlt);
+    }
   }
 
   /**

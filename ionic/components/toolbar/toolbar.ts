@@ -1,9 +1,10 @@
-import {Component, Directive, Host, ElementRef, Optional, forwardRef, Inject} from 'angular2/angular2';
+import {Component, Directive, Host, ElementRef, Optional, forwardRef, Inject, ContentChildren, ContentChild, QueryList} from 'angular2/angular2';
 
 import {Ion} from '../ion';
 import {Config} from '../../config/config';
 import {MenuToggle} from '../menu/menu-toggle';
 import {Navbar} from '../navbar/navbar';
+import {Button} from '../button/button';
 
 
 /**
@@ -63,8 +64,8 @@ export class ToolbarBase extends Ion  {
 /**
  * @name Toolbar
  * @description
- * The toolbar is generic bar that sits above content.
- * Unlike an `ionNavbar`, `ionToolbar` can be used for a subheader as well.
+ * The toolbar is generic bar that sits above or below content.
+ * Unlike an `Navbar`, `Toolbar` can be used for a subheader as well.
  * @usage
  * ```html
  * <ion-toolbar>
@@ -89,6 +90,7 @@ export class ToolbarBase extends Ion  {
   }
 })
 export class Toolbar extends ToolbarBase {
+
   constructor(
     elementRef: ElementRef,
     config: Config
@@ -101,14 +103,14 @@ export class Toolbar extends ToolbarBase {
 /**
  * @name ToolbarTitle
  * @description
- * `ion-title` is a component that sets the title of the `ionToolbar` or `ionNavbar`
+ * `ion-title` is a component that sets the title of the `Toolbar` or `Navbar`
  * @usage
  * ```html
  * <ion-navbar *navbar>
  *    <ion-title>Tab 1</ion-title>
  * </ion-navbar>
  *
- *<!-- or if you wanted to crate a subheader title-->
+ *<!-- or if you wanted to create a subheader title-->
  * <ion-navbar *navbar>
  *    <ion-title>Tab 1</ion-title>
  * </ion-navbar>
@@ -158,5 +160,10 @@ export class ToolbarItem extends Ion {
     super(elementRef, null);
     toolbar && toolbar.addItemRef(elementRef);
     navbar && navbar.addItemRef(elementRef);
+  }
+
+  @ContentChildren(Button)
+  set _buttons(buttons) {
+    Button.setRoles(buttons, 'bar-button');
   }
 }

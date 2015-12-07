@@ -52,7 +52,7 @@ Platform.register({
       // however, under-powered devices shouldn't use ripple
       // if this a linux device, and is using Android Chrome v36 (Android 5.0)
       // or above then use ripple, otherwise do not use a ripple effect
-      if (p.testNavigatorPlatform('/linux/i')) {
+      if (p.testNavigatorPlatform(/linux/i)) {
         let chromeVersion = p.matchUserAgentVersion(/Chrome\/(\d+).(\d+)?/);
         if (chromeVersion) {
           // linux android device using modern android chrome browser gets ripple
