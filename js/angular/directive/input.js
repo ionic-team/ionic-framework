@@ -28,15 +28,7 @@ IonicModule
       this.$element = $element;
 
       this.input = $element[0].querySelector('input,textarea');
-    }],
-    scope: true,
-    compile: function($element, $attrs) {
-
-      var element = $element[0];
-
-      return function link($scope, $element, $attrs) {
-      }
-    }
+    }]
   };
 }]);
 
@@ -47,9 +39,8 @@ IonicModule
 .directive('inputLabel', [function() {
   return {
     restrict: 'C',
-    scope: true,
     require: '?^ionInput',
-    compile: function($element, $attrs) {
+    compile: function($element) {
 
       return function link($scope, $element, $attrs, ionInputCtrl) {
         var element = $element[0];
@@ -73,7 +64,6 @@ IonicModule
 .directive('ionLabel', [function() {
   return {
     restrict: 'E',
-    scope: true,
     require: '?^ionInput',
     compile: function($element, $attrs) {
 
