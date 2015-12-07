@@ -39,7 +39,7 @@ import {Form} from '../../util/form';
   },
   template:
     '<div class="item-inner">' +
-      '<div class="media-checkbox" disable-activated>' +
+      '<div class="checkbox-media" disable-activated>' +
         '<div class="checkbox-icon"></div>' +
       '</div>' +
       '<ion-item-content id="{{labelId}}">' +
