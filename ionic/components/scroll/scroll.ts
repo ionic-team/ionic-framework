@@ -9,8 +9,24 @@ import {Animation} from '../../animations/animation';
 import * as util from 'ionic/util';
 
 /**
- * Scroll is a non-flexboxed scroll area that can scroll horizontally or
- * vertically.
+ * @name Scroll
+ * @description
+ * Scroll is a non-flexboxed scroll area that can scroll horizontally or vertically. `ion-Scroll` Can be used in places were you may not need a full page scroller, but a highly customized one, such as image scubber or comment scroller.
+ * @usage
+ * ```html
+ * <ion-scroll scroll-x="true">
+ * </ion-scroll>
+ *
+ * <ion-scroll scroll-y="true">
+ * </ion-scroll>
+ *
+ * <ion-scroll scroll-x="true" scroll-y="true">
+ * </ion-scroll>
+ * ```
+ *@property {boolean} [scroll-x] - whether to enable scrolling along the X axis
+ *@property {boolean} [scroll-y] - whether to enable scrolling along the Y axis
+ *@property {boolean} [zoom] - whether to enable zooming
+ *@property {number} [max-zoom] - set the max zoom amount for ion-scroll
  */
 @Component({
   selector: 'ion-scroll',
