@@ -44,14 +44,32 @@ ion-navbar-section {
   background-color: transparent;
 }
 
-.bar-button.icon-only {
-  padding-right: 0;
-  padding-left: 0;
+.bar-button-icon-left icon {
+  margin-left: -0.1em;
+  padding-right: 0.3em;
+  font-size: 1.4em;
+  line-height: 0.67;
+  pointer-events: none;
 }
 
-.bar-button icon {
+.bar-button-icon-right icon {
+  margin-right: -0.2em;
+  padding-left: 0.4em;
+  font-size: 1.4em;
+  line-height: 0.67;
+  pointer-events: none;
+}
+
+.bar-button-icon-only {
   padding: 0;
-  min-width: 28px;
+  min-width: 0.9em;
+
+  icon {
+    padding: 0 0.1em;
+    font-size: 1.8em;
+    line-height: 0.67;
+    pointer-events: none;
+  }
 }
 
 
