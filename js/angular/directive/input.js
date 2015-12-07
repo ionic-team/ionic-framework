@@ -88,7 +88,7 @@ IonicModule
             });
           });
         }
-      }
+      };
     }
   };
 }]);
@@ -101,7 +101,7 @@ IonicModule
   return {
     restrict: 'C',
     require: '?^ionInput',
-    compile: function($element) {
+    compile: function() {
 
       return function link($scope, $element, $attrs, ionInputCtrl) {
         var element = $element[0];
@@ -117,7 +117,7 @@ IonicModule
           ionInputCtrl.input.setAttribute('aria-labelledby', id);
         }
 
-      }
+      };
     }
   };
 }]);
