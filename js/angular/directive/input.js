@@ -68,3 +68,31 @@ IonicModule
     }
   };
 }]);
+
+IonicModule
+.directive('ionLabel', ['$$rAF', function($$rAF) {
+  return {
+    restrict: 'E',
+    scope: true,
+    require: '?^ionInput',
+    compile: function($element, $attrs) {
+
+      return function link($scope, $element, $attrs, ionInputCtrl) {
+        var element = $element[0];
+
+        $element.addClass('input-label');
+
+        $element.attr('aria-label', $element.text());
+        var id = element.id || '_label-' + ++labelIds;
+
+        if(!element.id) {
+          $element.attr('id', id);
+        }
+
+        if(ionInputCtrl && ionInputCtrl.input) {
+          ionInputCtrl.input.setAttribute('aria-labelledby', id);
+        }
+      }
+    }
+  };
+}]);
