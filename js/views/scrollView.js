@@ -905,7 +905,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
       document.addEventListener("MSPointerCancel", self.touchEnd, false);
       document.addEventListener("wheel", self.mouseWheel, false);
 
-    } else {
+    }
+
+    if ('onmousewheel' in window || 'onwheel' in window) {
       // Mouse Events
       var mousedown = false;
 
