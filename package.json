@@ -61,7 +61,6 @@
     "sauce-connect-launcher": "^0.2.2",
     "semver": "^2.2.1",
     "through": "^2.3.4",
-    "webpack": "^1.10.1",
     "winston": "^0.7.2"
   },
   "licenses": [
