@@ -35,6 +35,17 @@
             Cancel
           </button>
         </div>
+        <div class="list">
+  <label class="item item-input">
+    <input type="text" placeholder="First Name">
+  </label>
+  <label class="item item-input">
+    <input type="text" placeholder="Last Name">
+  </label>
+  <label class="item item-input">
+    <textarea placeholder="Comments"></textarea>
+  </label>
+</div>
         <div ng-controller="TestCtrl"></div>
         <button ng-click="add()">Click</button>
         <ul class="list" ng-controller="AppCtrl">
@@ -74,7 +85,7 @@
         var fadeAmt;
 
         var shrink = function(header, amt, max) {
-          console.log('Translating up', amt);
+          //console.log('Translating up', amt);
           amt = Math.min(max - 20, amt);
           fadeAmt = 1 - amt / (max - 20);
           ionic.requestAnimationFrame(function() {
@@ -139,7 +150,7 @@
           }, 1000);
         };
         $scope.onScroll = function(event, scrollTop, scrollLeft) {
-          console.log('Scroll', scrollTop, scrollLeft);
+          //console.log('Scroll', scrollTop, scrollLeft);
         /*
           if(scrollTop > startTop) {
             var diff = scrollTop - startTop;
