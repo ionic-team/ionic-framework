@@ -163,6 +163,7 @@ $button-md-small-padding:                  0.9em !default;
   opacity: 1;
   box-shadow: none;
   background-color: transparent;
+  color: color-shade($button-md-color);
 
   &.activated {
     opacity: 0.4;
@@ -217,32 +218,6 @@ $button-md-small-padding:                  0.9em !default;
 
 .button-icon-only {
   padding: 0;
-}
-
-// Material Design Button Color Mixin
-// --------------------------------------------------
-
-@mixin button-theme-md($color-name, $color-value) {
-
-  .button-#{$color-name}.activated {
-    opacity: 1;
-  }
-
-  .button-outline {
-
-    md-ripple {
-      background-color: rgba( red($color-value), green($color-value), blue($color-value), 0.2);
-    }
-
-    &.activated {
-      opacity: 1;
-
-      md-ripple {
-        background: rgba(0, 0, 0, 0.1);
-      }
-    }
-  }
-
 }
 
 
