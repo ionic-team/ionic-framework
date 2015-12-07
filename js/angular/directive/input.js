@@ -86,8 +86,7 @@ IonicModule
             $timeout(function() {
               ionInputCtrl.input.focus();
             });
-          })
-
+          });
         }
       }
     }
