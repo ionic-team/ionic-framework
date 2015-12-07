@@ -144,8 +144,8 @@ export class Button {
       this._setClass(this._icon, assignCssClass); // button-icon-left
 
       let colorStyle = (this._style && this._style !== 'solid' ? this._style + '-' : '');
-      this._colors.forEach(color => {
-        this._setClass(colorStyle + color, assignCssClass); // button-secondary
+      this._colors.forEach(colorName => {
+        this._setClass(colorStyle + colorName, assignCssClass); // button-secondary, button-clear-secondary
       });
     }
   }
@@ -169,7 +169,7 @@ const BUTTON_SIZE_ATTRS = ['large', 'small'];
 const BUTTON_STYLE_ATTRS = ['clear', 'outline', 'solid'];
 const BUTTON_SHAPE_ATTRS = ['round', 'fab'];
 const BUTTON_DISPLAY_ATTRS = ['block', 'full'];
-const IGNORE_ATTRS = /_ng/;
+const IGNORE_ATTRS = /_ng|button/;
 
 const TEXT = 1;
 const ICON = 2;

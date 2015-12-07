@@ -24,9 +24,17 @@ export function run() {
     return button.elementRef.nativeElement.classList.contains(className);
   }
 
+  it('should ignore certain attributes', () => {
+    let b = mockButton(['_ngcontent', 'button']);
+    b._assignCss(true);
+    expect(hasClass(b, 'button')).toEqual(true);
+    expect(hasClass(b, 'button-_ngcontent')).toEqual(false);
+    expect(hasClass(b, 'button-button')).toEqual(false);
+  });
+
   it('should set a different button role', () => {
     let b = mockButton(['outline', 'small', 'full', 'primary']);
-    b.setRole('bar-button')
+    b.setRole('bar-button');
     b._assignCss(true);
     expect(hasClass(b, 'bar-button-outline')).toEqual(true);
     expect(hasClass(b, 'bar-button-small')).toEqual(true);
