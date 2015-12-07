@@ -95,7 +95,7 @@ $button-ios-small-icon-font-size:     1.3em !default;
 .button-block {
   // This fixes an issue with flexbox and button on iOS Safari. See #225
   display: block;
-  line-height: 2.8em;
+  line-height: $button-ios-height;
 }
 
 
