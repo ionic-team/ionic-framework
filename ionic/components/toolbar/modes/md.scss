@@ -60,6 +60,19 @@ ion-title {
   font-weight: 500;
 }
 
+@mixin md-toolbar-theme($color-name, $color-value) {
+  .toolbar[#{$color-name}] {
+
+    .toolbar-background {
+      background-color: $color-value;
+    }
+
+    .toolbar-title {
+      color: inverse($color-value);
+    }
+  }
+}
+
 
 // Material Design Toolbar Buttons
 // --------------------------------------------------
@@ -128,31 +141,9 @@ ion-buttons[right] {
 }
 
 
-// Material Design Navbar
-// --------------------------------------------------
-
-$navbar-md-height:                  5.6rem !default;
-
-
-ion-navbar-section {
-  min-height: $navbar-md-height;
-}
-
-
 // Material Design Toolbar Color Generation
 // --------------------------------------------------
 
 @each $color-name, $color-value in $colors-md {
-
-  .toolbar[#{$color-name}] {
-
-    .toolbar-background {
-      background-color: $color-value;
-    }
-
-    .toolbar-title {
-      color: inverse($color-value);
-    }
-  }
-
+  @include md-toolbar-theme($color-name, $color-value);
 }

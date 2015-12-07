@@ -75,6 +75,20 @@ ion-title {
   transform: translateZ(0px);
 }
 
+@mixin ios-toolbar-theme($color-name, $color-value) {
+  .toolbar[#{$color-name}] {
+
+    .toolbar-background {
+      background-color: $color-value;
+      border-color: darken($color-value, 10%);
+    }
+
+    .toolbar-title {
+      color: inverse($color-value);
+    }
+  }
+}
+
 
 // iOS Toolbar Buttons
 // --------------------------------------------------
@@ -183,17 +197,5 @@ ion-segment-button[button] {
 // --------------------------------------------------
 
 @each $color-name, $color-value in $colors-ios {
-
-  .toolbar[#{$color-name}] {
-
-    .toolbar-background {
-      background-color: $color-value;
-      border-color: darken($color-value, 10%);
-    }
-
-    .toolbar-title {
-      color: inverse($color-value);
-    }
-  }
-
+  @include ios-toolbar-theme($color-name, $color-value);
 }
