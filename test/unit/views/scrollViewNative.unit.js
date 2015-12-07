@@ -28,14 +28,19 @@ describe('Scroll View', function() {
 
   it('Should remove event listeners on cleanup', function() {
     spyOn(sc,'removeEventListener');
+    spyOn(document,'removeEventListener');
     var sv = new ionic.views.ScrollNative({
       el: sc
     });
     sv.__cleanup();
 
     expect(sc.removeEventListener).toHaveBeenCalled();
-    expect(sc.removeEventListener.callCount).toBe(4);
-    expect(sc.removeEventListener.mostRecentCall.args[0]).toBe('resetScrollView');
+    expect(sc.removeEventListener.callCount).toBe(2);
+    expect(sc.removeEventListener.mostRecentCall.args[0]).toBe('scrollChildIntoView');
+
+    expect(document.removeEventListener).toHaveBeenCalled();
+    expect(document.removeEventListener.callCount).toBe(1);
+    expect(document.removeEventListener.mostRecentCall.args[0]).toBe('resetScrollView');
   });
 
 });
