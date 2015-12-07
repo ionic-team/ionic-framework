@@ -100,6 +100,10 @@
 @mixin item-active-style($active-bg-color, $active-border-color) {
   border-color: $active-border-color;
   background-color: $active-bg-color;
+  &.item-complex > .item-content {
+    border-color: $active-border-color;
+    background-color: $active-bg-color;
+  }
 }
 
 
