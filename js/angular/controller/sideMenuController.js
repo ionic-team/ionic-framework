@@ -398,7 +398,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
     var menuEnabled = enableMenuWithBackViews ? true : !backView;
     if (!menuEnabled) {
       var currentView = $ionicHistory.currentView() || {};
-      return backView.historyId !== currentView.historyId;
+      return (dragIsWithinBounds && (backView.historyId !== currentView.historyId));
     }
 
     return ($scope.dragContent || self.isOpen()) &&
