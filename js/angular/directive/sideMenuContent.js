@@ -167,6 +167,24 @@ function($timeout, $ionicGesture, $window) {
             // reset incase left gets grabby
             $element[0].style[ionic.CSS.TRANSFORM] = 'translate3d(0,0,0)';
           }),
+          setMarginLeftAndRight: ionic.animationFrameThrottle(function(amountLeft, amountRight) {
+            amountLeft = amountLeft && parseInt(amountLeft, 10) || 0;
+            amountRight = amountRight && parseInt(amountRight, 10) || 0;
+
+            var amount = amountLeft + amountRight;
+
+            if(amount > 0) {
+              $element[0].style[ionic.CSS.TRANSFORM] = 'translate3d(' + amountLeft + 'px,0,0)';
+              $element[0].style.width = ($window.innerWidth - amount) + 'px';
+              content.offsetX = amountLeft;
+            } else {
+              $element[0].style[ionic.CSS.TRANSFORM] = 'translate3d(0,0,0)';
+              $element[0].style.width = '';
+              content.offsetX = 0;
+            }
+            // reset incase left gets grabby
+            //$element[0].style[ionic.CSS.TRANSFORM] = 'translate3d(0,0,0)';
+          }),
           enableAnimation: function() {
             $scope.animationEnabled = true;
             $element[0].classList.add('menu-animated');
