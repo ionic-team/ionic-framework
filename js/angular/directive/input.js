@@ -65,7 +65,7 @@ IonicModule
   return {
     restrict: 'E',
     require: '?^ionInput',
-    compile: function($element) {
+    compile: function() {
 
       return function link($scope, $element, $attrs, ionInputCtrl) {
         var element = $element[0];
