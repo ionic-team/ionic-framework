@@ -85,7 +85,7 @@ IonicModule
           $element.on('click', function() {
             $timeout(function() {
               ionInputCtrl.input.focus();
-            })
+            });
           })
 
         }
