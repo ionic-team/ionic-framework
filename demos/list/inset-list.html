@@ -1,8 +1,19 @@
-<ion-toolbar><ion-title>List Headers</ion-title></ion-toolbar>
+
+<ion-navbar *navbar class="show-navbar">
+
+  <a menu-toggle="leftMenu">
+    <icon menu></icon>
+  </a>
+
+  <ion-title>
+    Inset List
+  </ion-title>
+
+</ion-navbar>
 
 <ion-content class="outer-content">
 
-  <ion-list>
+  <ion-list inset>
 
     <ion-list-header>
       List Header
@@ -29,15 +40,6 @@
       </ion-note>
     </ion-item>
 
-  </ion-list>
-
-
-  <ion-list>
-
-    <ion-list-header>
-      List Header
-    </ion-list-header>
-
     <ion-switch checked="true">
       <icon color-wand item-left></icon>
       Magic
@@ -50,15 +52,6 @@
         Super
       </ion-note>
     </ion-item>
-
-  </ion-list>
-
-
-  <ion-list>
-
-    <ion-list-header>
-      List Header with text that is too long to fit inside the list header
-    </ion-list-header>
 
     <ion-item>
       <icon pizza item-left></icon>
@@ -86,19 +79,5 @@
 
   </ion-list>
 
-
-  <ion-list>
-
-    <ion-item>
-      <icon chatboxes item-left></icon>
-      New List, no header, Item 1
-    </ion-item>
-
-    <ion-item>
-      <icon chatboxes item-left></icon>
-      New List, no header, Item 2
-    </ion-item>
-
-  </ion-list>
 
 </ion-content>

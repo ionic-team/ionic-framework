@@ -1,0 +1,24 @@
+<ion-menu [content]="content" id="leftMenu" side="left">
+
+  <ion-toolbar primary>
+    <ion-title>Menu</ion-title>
+  </ion-toolbar>
+
+  <ion-content>
+
+    <ion-list>
+
+      <button ion-item *ng-for="#p of pages" (click)="openPage(p)">
+        {{p.title}}
+      </button>
+
+      <button ion-item menu-close="leftMenu" detail-none>
+        Close Menu
+      </button>
+
+    </ion-list>
+  </ion-content>
+
+</ion-menu>
+
+<ion-nav id="nav" [root]="rootPage" #content></ion-nav>
