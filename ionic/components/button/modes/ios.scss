@@ -118,8 +118,9 @@ $button-ios-small-icon-font-size:     1.3em !default;
   border-width: 1px;
   border-style: solid;
   border-color: $button-ios-color;
-  background-color: transparent;
   color: $button-ios-color;
+  background-color: transparent;
+  border-radius: 4px;
 
   &.activated {
     opacity: 1;
@@ -137,8 +138,8 @@ $button-ios-small-icon-font-size:     1.3em !default;
   .button-outline-#{$color-name} {
     $fg-color: color-shade($color-value, 5%);
     border-color: $fg-color;
-    background-color: transparent;
     color: $fg-color;
+    background-color: transparent;
 
     &.activated {
       color: $background-ios-color;
@@ -182,13 +183,13 @@ $button-ios-small-icon-font-size:     1.3em !default;
 
     &.activated {
       opacity: 0.4;
-      background-color: transparent;
     }
 
     &:hover:not(.disable-hover) {
       color: color-shade($fg-color);
     }
   }
+
 }
 
 // iOS Round Button

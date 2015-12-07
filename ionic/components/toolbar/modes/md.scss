@@ -22,6 +22,9 @@ $toolbar-md-title-font-size:             2rem !default;
 $toolbar-md-button-font-size:            1.4rem !default;
 $navbar-md-height:                       $toolbar-md-height !default;
 
+$bar-button-md-color:                    $toolbar-md-active-color !default;
+$bar-button-md-border-radius:            2px !default;
+
 
 .toolbar {
   padding: $toolbar-md-padding;
@@ -74,11 +77,10 @@ ion-title {
 }
 
 
-// Material Design Toolbar Buttons
+// Material Design Toolbar Button Placement
 // --------------------------------------------------
 
 ion-buttons {
-  flex: 1;
   order: map-get($toolbar-order-md, buttons-start);
   transform: translateZ(0px);
 }
@@ -99,6 +101,140 @@ ion-buttons[end] {
 ion-buttons[right] {
   text-align: right;
   order: map-get($toolbar-order-md, buttons-right);
+}
+
+
+// Material Design Toolbar Button Default
+// --------------------------------------------------
+
+.bar-button {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 0 5px;
+  min-height: 32px;
+  border: 0;
+  font-size: $toolbar-md-button-font-size;
+  border-radius: $bar-button-md-border-radius;
+}
+
+@mixin md-bar-button-default($color-name, $color-value) {
+
+  .bar-button-#{$color-name} {
+    $fg-color: color-shade($color-value);
+    color: $fg-color;
+    background-color: transparent;
+
+    &:hover:not(.disable-hover) {
+      color: color-shade($fg-color);
+    }
+
+    &.activated {
+      opacity: 0.4;
+    }
+  }
+
+}
+
+
+// Material Design Toolbar Button Outline
+// --------------------------------------------------
+
+.bar-button-outline {
+  border-width: 1px;
+  border-style: solid;
+  border-color: $bar-button-md-color;
+  color: $bar-button-md-color;
+  background-color: transparent;
+
+  &:hover:not(.disable-hover) {
+    opacity: 0.4;
+  }
+
+  &.activated {
+    color: inverse($bar-button-md-color);
+    background-color: $bar-button-md-color;
+  }
+}
+
+@mixin md-bar-button-outline($color-name, $color-value) {
+
+  .bar-button-outline-#{$color-name} {
+    $fg-color: color-shade($color-value);
+    border-color: $fg-color;
+    color: $fg-color;
+    background-color: transparent;
+
+    &.activated {
+      color: inverse($fg-color);
+      background-color: $fg-color;
+    }
+  }
+
+}
+
+
+// Material Design Toolbar Button Solid
+// --------------------------------------------------
+
+.bar-button-solid {
+  color: inverse($bar-button-md-color);
+  background-color: $bar-button-md-color;
+
+  &:hover:not(.disable-hover) {
+    opacity: 0.4;
+    color: inverse($bar-button-md-color);
+  }
+
+  &.activated {
+    opacity: 0.4;
+    color: inverse($bar-button-md-color);
+    background-color: color-shade($bar-button-md-color);
+  }
+}
+
+@mixin md-bar-button-solid($color-name, $color-value) {
+
+  .bar-button-solid-#{$color-name} {
+    color: inverse($color-value);
+    background-color: $color-value;
+
+    &.activated {
+      background-color: color-shade($color-value);
+    }
+  }
+
+}
+
+
+// Material Design Toolbar Button Icon
+// --------------------------------------------------
+
+.bar-button-icon-left icon {
+  margin-left: -0.1em;
+  padding-right: 0.3em;
+  font-size: 1.4em;
+  line-height: 0.67;
+  pointer-events: none;
+}
+
+.bar-button-icon-right icon {
+  margin-right: -0.2em;
+  padding-left: 0.4em;
+  font-size: 1.4em;
+  line-height: 0.67;
+  pointer-events: none;
+}
+
+.bar-button-icon-only {
+  padding: 0;
+  min-width: 0.9em;
+
+  icon {
+    padding: 0 0.1em;
+    font-size: 1.8em;
+    line-height: 0.67;
+    pointer-events: none;
+  }
 }
 
 
@@ -144,6 +280,11 @@ ion-buttons[right] {
 // Material Design Toolbar Color Generation
 // --------------------------------------------------
 
+@include md-bar-button-default(default, $bar-button-md-color);
+
 @each $color-name, $color-value in $colors-md {
   @include md-toolbar-theme($color-name, $color-value);
+  @include md-bar-button-default($color-name, $color-value);
+  @include md-bar-button-outline($color-name, $color-value);
+  @include md-bar-button-solid($color-name, $color-value);
 }

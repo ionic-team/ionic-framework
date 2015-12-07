@@ -82,8 +82,21 @@ export function run() {
     b._assignCss(true);
     expect(hasClass(b, 'button')).toEqual(true);
     expect(hasClass(b, 'button-solid')).toEqual(true);
-    expect(hasClass(b, 'button-primary')).toEqual(true);
-    expect(hasClass(b, 'button-secondary')).toEqual(true);
+    expect(hasClass(b, 'button-solid-primary')).toEqual(true);
+    expect(hasClass(b, 'button-solid-secondary')).toEqual(true);
+  });
+
+  it('should auto add the default style', () => {
+    let b = mockButton();
+    b._assignCss(true);
+    expect(hasClass(b, 'button')).toEqual(true);
+    expect(hasClass(b, 'button-default')).toEqual(true);
+
+    b = mockButton(['clear']);
+    b._assignCss(true);
+    expect(hasClass(b, 'button')).toEqual(true);
+    expect(hasClass(b, 'button-default')).toEqual(false);
+    expect(hasClass(b, 'button-clear')).toEqual(true);
   });
 
   it('should read button color attributes', () => {
@@ -180,7 +193,7 @@ export function run() {
     expect(b._role).toEqual('button');
     expect(b._size).toEqual(null);
     expect(b._colors.length).toEqual(0);
-    expect(b._style).toEqual(null);
+    expect(b._style).toEqual('default');
     expect(b._display).toEqual(null);
   });
 
