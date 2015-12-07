@@ -14,7 +14,9 @@ Ionic currently best supports iOS 7+ and Android 4.1+.
 
 We built Ionic because we wanted a framework that focused on building hybrid native apps using open web technologies we loved. The same technology the world has been using for decades to build websites, desktop applications, and now mobile and tablet apps. We wanted this framework to be obsessive about great design and performance.
 
-Above all, we built Ionic to be the easiest way for the next generation of developers to get into mobile and start building apps that compete with the best on the app store, all without breaking the bank.
+Above all, we built Ionic to be the easiest way for the next generation of developers to get into mobile and start building apps that compete with the best on the app store, and do it affordably. 
+
+Today, Ionic powers over 1.5 million mobile apps, built by small startups up to Fortune 50 companies. Ionic developers come from hundreds of countries around the world, and have helped build a community that boasts hundreds of monthly meetings, conference talks, and workshops, and an incredibly active [forum](http://forum.ionicframework.com), [Theme and Plugin Marketplace](https://market.ionic.io), and [amazing apps](http://showcase.ionicframework.com/).
 
 ## Quick Start
 
