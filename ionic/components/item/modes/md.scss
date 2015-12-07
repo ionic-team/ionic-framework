@@ -20,16 +20,6 @@ $item-md-sliding-content-bg:         $background-md-color !default;
 $item-md-sliding-transition:         transform 250ms ease-in-out !default;
 
 
-ion-item-divider {
-  padding: $item-md-padding-top $item-md-padding-right $item-md-padding-bottom $item-md-padding-left;
-  background-color: $item-md-divider-bg;
-  color: $item-md-divider-color;
-}
-
-ion-note {
-  color: $item-md-note-color;
-}
-
 .item {
   position: relative;
   padding-right: 0;
@@ -37,10 +27,11 @@ ion-note {
   font-size: $item-md-font-size;
   text-transform: none;
   font-weight: normal;
-  box-shadow: none;
 
-  background-color: $list-md-background-color;
   color: $list-md-text-color;
+  background-color: $list-md-background-color;
+  box-shadow: none;
+  transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1), transform 300ms;
 
   h1 {
     margin: 0 0 2px;
@@ -72,18 +63,26 @@ ion-note {
   }
 }
 
+.item.activated {
+  background-color: $list-md-activated-background-color;
+}
+
+.item[no-lines] {
+  border-width: 0;
+}
+
 .item-inner {
-  border-bottom: 1px solid $list-md-border-color;
   padding-right: ($item-md-padding-right / 2);
+  border-bottom: 1px solid $list-md-border-color;
 }
 
 ion-item-content {
   margin: $item-md-padding-top ($item-md-padding-right / 2) $item-md-padding-bottom 0;
 }
 
-button.item.activated {
-  box-shadow: none;
-}
+
+// Material Design Item Media
+// --------------------------------------------------
 
 [item-left],
 [item-right] {
@@ -93,8 +92,8 @@ button.item.activated {
 icon[item-left],
 icon[item-right] {
   margin-top: $item-md-padding-icon-top;
-  margin-left: 0;
   margin-bottom: $item-md-padding-icon-bottom;
+  margin-left: 0;
 }
 
 button[item-left],
@@ -120,8 +119,8 @@ button[item-right],
 
 [item-left].icon-left icon,
 [item-right].icon-left icon {
-  margin-left: 0;
   margin-bottom: 1px;
+  margin-left: 0;
   padding-right: 0.3em;
 }
 
@@ -172,19 +171,16 @@ ion-thumbnail {
   }
 }
 
-.item,
-a.item,
-button.item {
-  transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1), transform 300ms;
+ion-note {
+  color: $item-md-note-color;
 }
 
-.item.activated,
-a.item.activated,
-button.item.activated {
-  background-color: $list-md-activated-background-color;
-  box-shadow: none;
-}
 
-.item[no-lines] {
-  border-width: 0;
+// Material Design Item Divider
+// --------------------------------------------------
+
+ion-item-divider {
+  padding: $item-md-padding-top $item-md-padding-right $item-md-padding-bottom $item-md-padding-left;
+  background-color: $item-md-divider-bg;
+  color: $item-md-divider-color;
 }

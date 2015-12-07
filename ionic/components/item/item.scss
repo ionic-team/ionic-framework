@@ -18,14 +18,6 @@
   overflow: hidden;
 
   box-sizing: border-box;
-
-  &[no-lines] {
-    border: none;
-
-    .item-inner {
-      border: none;
-    }
-  }
 }
 
 .item-inner {
@@ -40,6 +32,14 @@
   flex-direction: inherit;
   align-items: inherit;
   align-self: stretch;
+}
+
+.item[no-lines] {
+  border: none;
+
+  .item-inner {
+    border: none;
+  }
 }
 
 ion-item-group {
@@ -64,6 +64,7 @@ a.item,
 button.item {
   margin: 0;
   padding: 0;
+  border: 0;
   width: 100%;
   justify-content: inherit;
   min-height: 4.4rem;
@@ -74,7 +75,6 @@ button.item {
   color: inherit;
   border-radius: 0;
   box-shadow: none;
-  will-change: initial;
 }
 
 ion-item-content {
@@ -93,52 +93,6 @@ ion-item-content {
 
 [text-wrap] ion-item-content {
   white-space: normal;
-}
-
-.item {
-
-  h1 {
-    margin: 0 0 2px;
-    font-size: 2.4rem;
-    font-weight: normal;
-  }
-
-  h2 {
-    margin: 0 0 2px;
-    font-size: 1.6rem;
-    font-weight: normal;
-  }
-
-  h3,
-  h4,
-  h5,
-  h6 {
-    line-height: normal;
-    margin: 0 0 3px 0;
-    font-size: 1.4rem;
-    font-weight: normal;
-  }
-
-  p {
-    line-height: normal;
-    color: #666;
-    font-size: 1.2rem;
-    margin: 0 0 2px;
-  }
-
-  h2:last-child,
-  h3:last-child,
-  h4:last-child,
-  h5:last-child,
-  h6:last-child,
-  p:last-child {
-    margin-bottom: 0;
-  }
-
-  a {
-    text-decoration: none;
-  }
-
 }
 
 .vertical-align-top,

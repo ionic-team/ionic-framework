@@ -18,52 +18,63 @@ $item-ios-sliding-content-bg:         $background-ios-color !default;
 $item-ios-sliding-transition:         transform 250ms ease-in-out !default;
 
 
-.item {
-  background-color: $list-ios-background-color;
-  color: $list-ios-text-color;
-}
-
-
-ion-item-group {
-  .item:first-child {
-    .item-inner {
-      border-top-width: 0;
-    }
-  }
-
-  .item:last-child .item-inner,
-  ion-item-sliding:last-child .item .item-inner {
-    border: none;
-  }
-}
-
-ion-item-divider {
-  padding: $item-ios-padding-top $item-ios-padding-right $item-ios-padding-bottom $item-ios-padding-left;
-  background-color: $item-ios-divider-bg;
-  color: $item-ios-divider-color;
-}
-
-ion-note {
-  color: $item-ios-note-color;
-}
+// iOS Item
+// --------------------------------------------------
 
 .item {
-  border-radius: 0;
   padding-left: $item-ios-padding-left;
   font-size: $item-ios-font-size;
+  border-radius: 0;
+  color: $list-ios-text-color;
+  background-color: $list-ios-background-color;
+  transition-duration: 200ms;
+
+  h1 {
+    margin: 0 0 2px;
+    font-size: 2.4rem;
+    font-weight: normal;
+  }
+
+  h2 {
+    margin: 0 0 2px;
+    font-size: 1.6rem;
+    font-weight: normal;
+  }
+
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: normal;
+    margin: 0 0 3px 0;
+    font-size: 1.4rem;
+    font-weight: normal;
+  }
+
+  p {
+    line-height: normal;
+    color: #666;
+    font-size: 1.2rem;
+    margin: 0 0 2px;
+  }
+
+  h2:last-child,
+  h3:last-child,
+  h4:last-child,
+  h5:last-child,
+  h6:last-child,
+  p:last-child {
+    margin-bottom: 0;
+  }
+
+  a {
+    text-decoration: none;
+  }
 }
 
-.item.activated,
-a.item.activated,
-button.item.activated {
+.item.activated {
   background-color: $list-ios-activated-background-color;
   transition-duration: 0ms;
-}
-
-.item,
-a.item,
-button.item {
-  transition-duration: 200ms;
 }
 
 .item-inner {
@@ -74,6 +85,10 @@ button.item {
 ion-item-content {
   margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom 0;
 }
+
+
+// iOS Item Media
+// --------------------------------------------------
 
 [item-left] {
   margin: ($item-ios-padding-top / 2) $item-ios-padding-right ($item-ios-padding-bottom / 2) 0;
@@ -152,6 +167,10 @@ ion-thumbnail {
   }
 }
 
+ion-note {
+  color: $item-ios-note-color;
+}
+
 button.item:not([detail-none]) .item-inner,
 a.item:not([detail-none]) .item-inner,
 .item[detail-push] .item-inner {
@@ -161,6 +180,34 @@ a.item:not([detail-none]) .item-inner,
   background-size: 14px 14px;
   padding-right: 32px;
 }
+
+
+// iOS Item Group
+// --------------------------------------------------
+
+ion-item-group {
+  .item:first-child {
+    .item-inner {
+      border-top-width: 0;
+    }
+  }
+
+  .item:last-child .item-inner,
+  ion-item-sliding:last-child .item .item-inner {
+    border: none;
+  }
+}
+
+
+// iOS Item Divider
+// --------------------------------------------------
+
+ion-item-divider {
+  padding: $item-ios-padding-top $item-ios-padding-right $item-ios-padding-bottom $item-ios-padding-left;
+  color: $item-ios-divider-color;
+  background-color: $item-ios-divider-bg;
+}
+
 
 &.hairlines {
   .item-inner {
