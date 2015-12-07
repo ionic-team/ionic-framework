@@ -4,41 +4,30 @@
 // --------------------------------------------------
 
 
-button,
-[button] {
+.button-icon-left icon {
+  margin-left: -0.3em;
+  padding-right: 0.3em;
+  font-size: 1.4em;
+  line-height: 0.67;
+  pointer-events: none;
+}
+
+.button-icon-right icon {
+  margin-right: -0.2em;
+  padding-left: 0.4em;
+  font-size: 1.4em;
+  line-height: 0.67;
+  pointer-events: none;
+}
+
+.button-icon-only {
+  padding: 0;
+  min-width: 0.9em;
 
   icon {
-    font-size: 1.4em;
-    background: none;
-    border: none;
-    pointer-events: none;
+    padding: 0 0.5em;
+    font-size: 1.8em;
     line-height: 0.67;
+    pointer-events: none;
   }
-
-  &.icon-left icon {
-    margin-left: -0.3em;
-    padding-right: 0.3em;
-  }
-
-  &.icon-right icon {
-    margin-right: -0.2em;
-    padding-left: 0.4em;
-  }
-
-  &.icon-only {
-    padding: 0;
-    min-width: 0.9em;
-
-    icon {
-      padding: 0 0.5em;
-      font-size: 1.8em;
-    }
-  }
-
-  &[small] icon {
-    margin-left: 0;
-    margin-right: 0;
-    font-size: 1.4em;
-  }
-
 }

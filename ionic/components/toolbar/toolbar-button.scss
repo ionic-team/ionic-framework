@@ -1,0 +1,68 @@
+@import "../../globals.core";
+
+// Toolbar Buttons
+// --------------------------------------------------
+
+.bar-button {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  text-align: center;
+  text-transform: none;
+
+  vertical-align: top; // the better option for most scenarios
+  vertical-align: -webkit-baseline-middle; // the best for those that support it
+
+  cursor: pointer;
+  @include user-select-none();
+  @include appearance(none);
+}
+
+
+// Menu Toggle
+// --------------------------------------------------
+
+.toolbar [menu-toggle] {
+  display: flex;
+  align-items: center;
+  margin: 0 6px;
+  padding: 0;
+  min-width: 36px;
+  order: map-get($toolbar-order, menu-toggle-primary);
+  box-shadow: none;
+}
+
+.toolbar [menu-toggle][secondary] {
+  order: map-get($toolbar-order, menu-toggle-secondary);
+}
+
+.toolbar [menu-toggle] icon {
+  padding: 0 6px;
+  font-size: 2.8rem;
+}
+
+
+// Back Button
+// --------------------------------------------------
+
+.back-button {
+  order: map-get($toolbar-order, backButton);
+
+  display: none;
+  &.show-back-button {
+    display: flex;
+  }
+}
+
+.back-button-text {
+  display: flex;
+  align-items: center;
+}

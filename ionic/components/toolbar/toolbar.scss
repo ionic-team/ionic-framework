@@ -5,11 +5,11 @@
 
 $toolbar-order: (
   backButton: 10,
-  menu-toggle-primary: 20,
+  menu-toggle-left: 20,
   content: 30,
-  primary: 40,
-  secondary: 50,
-  menu-toggle-secondary: 60,
+  left: 40,
+  right: 50,
+  menu-toggle-right: 60,
 );
 
 
@@ -37,7 +37,6 @@ $toolbar-order: (
   z-index: $z-index-toolbar-background;
 
   border: 0;
-
   pointer-events: none;
 }
 
@@ -65,34 +64,15 @@ ion-title {
   overflow: hidden;
 }
 
-.toolbar [menu-toggle] {
-  display: flex;
-  align-items: center;
-  margin: 0 6px;
-  padding: 0;
-  min-width: 36px;
-  order: map-get($toolbar-order, menu-toggle-primary);
-  box-shadow: none;
-}
-
-.toolbar [menu-toggle][secondary] {
-  order: map-get($toolbar-order, menu-toggle-secondary);
-}
-
-.toolbar [menu-toggle] icon {
-  padding: 0 6px;
-  font-size: 2.8rem;
-}
-
 ion-nav-items {
   display: block;
   margin: 0 0.2rem;
   pointer-events: none;
-  order: map-get($toolbar-order, primary);
+  order: map-get($toolbar-order, left);
 }
 
 ion-nav-items[secondary] {
-  order: map-get($toolbar-order, secondary);
+  order: map-get($toolbar-order, right);
 }
 
 ion-nav-items button,
@@ -114,44 +94,4 @@ ion-nav-items,
 
 ion-navbar.toolbar {
   display: flex;
-}
-
-.back-button {
-  order: map-get($toolbar-order, backButton);
-
-  display: none;
-  &.show-back-button {
-    display: flex;
-  }
-}
-
-.back-button-text {
-  display: flex;
-  align-items: center;
-}
-
-
-
-// Toolbar Color Generation
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors {
-
-  .toolbar[#{$color-name}] {
-
-    .toolbar-background {
-      background-color: $color-value;
-      border-color: darken($color-value, 10%);
-    }
-
-    .toolbar-title,
-    button,
-    [button],
-    button:hover:not(.disable-hover),
-    [button]:hover:not(.disable-hover),
-    a {
-      color: inverse($color-value);
-    }
-  }
-
 }

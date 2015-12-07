@@ -35,11 +35,12 @@ export class Button {
     private elementRef: ElementRef,
     private renderer: Renderer
   ) {
-    this._role = 'button'; // bar-button
-    this._size = null; // large
-    this._style = null; // outline
-    this._display = null; // block
-    this._colors = []; // primary
+    this._role = 'button'; // bar-button/item-button
+    this._size = null; // large/small
+    this._style = null; // outline/clear
+    this._display = null; // block/full
+    this._colors = []; // primary/secondary
+    this._icon = null; // left/right/only
 
     let element = elementRef.nativeElement;
 
@@ -54,7 +55,18 @@ export class Button {
     }
 
     this._readAttrs(element);
+    this._readIcon(element);
+  }
 
+  afterContentInit() {
+    this._assignCss(true);
+  }
+
+  setRole(val) {
+    this._role = val;
+  }
+
+  _readIcon(element) {
     // figure out if and where the icon lives in the button
     let childNodes = element.childNodes;
     let childNode;
@@ -82,23 +94,14 @@ export class Button {
 
     if (nodes.length > 1) {
       if (nodes[0] === ICON && nodes[1] === TEXT) {
-        renderer.setElementClass(elementRef, 'icon-left', true);
+        this._icon = 'icon-left';
 
       } else if (nodes[0] === TEXT && nodes[1] === ICON) {
-        renderer.setElementClass(elementRef, 'icon-right', true);
+        this._icon = 'icon-right';
       }
     } else if (nodes.length === 1 && nodes[0] === ICON) {
-      renderer.setElementClass(elementRef, 'icon-only', true);
+      this._icon = 'icon-only';
     }
-
-  }
-
-  afterContentInit() {
-    this._assignCss(true);
-  }
-
-  setRole(val) {
-    this._role = val;
   }
 
   _readAttrs(element) {
@@ -125,17 +128,22 @@ export class Button {
   }
 
   _assignCss(assignCssClass) {
-    let setElementClass = this.renderer.setElementClass;
-    let elementRef = this.elementRef;
     let role = this._role;
     if (role) {
-      setElementClass(elementRef, role, assignCssClass); // button
-      if (this._style) setElementClass(elementRef, role + '-' + this._style, assignCssClass); // button-clear
-      if (this._display) setElementClass(elementRef, role + '-' + this._display, assignCssClass); // button-full
-      if (this._size) setElementClass(elementRef, role + '-' + this._size, assignCssClass); // button-small
+      this.renderer.setElementClass(this.elementRef, role, assignCssClass); // button
+      this._setClass(this._style, assignCssClass); // button-clear
+      this._setClass(this._display, assignCssClass); // button-full
+      this._setClass(this._size, assignCssClass); // button-small
+      this._setClass(this._icon, assignCssClass); // button-icon-left
       this._colors.forEach(color => {
-        setElementClass(elementRef, role + '-' + color, assignCssClass); // button-secondary
-      });  
+        this._setClass(color, assignCssClass); // button-secondary
+      });
+    }
+  }
+
+  _setClass(type, assignCssClass) {
+    if (type) {
+      this.renderer.setElementClass(this.elementRef, this._role + '-' + type, assignCssClass);
     }
   }
 
@@ -149,7 +157,7 @@ export class Button {
 }
 
 const BUTTON_SIZE_ATTRS = ['large', 'small'];
-const BUTTON_STYLE_ATTRS = ['round', 'clear', 'outline', 'fab'];
+const BUTTON_STYLE_ATTRS = ['round', 'clear', 'outline', 'fab', 'solid'];
 const BUTTON_DISPLAY_ATTRS = ['block', 'full'];
 const IGNORE_ATTRS = /_ng/;
 

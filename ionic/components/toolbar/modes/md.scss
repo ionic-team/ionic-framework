@@ -1,5 +1,6 @@
 @import "../../../globals.md";
 @import "../toolbar";
+@import "../toolbar-button";
 
 // Material Design Toolbar
 // --------------------------------------------------
@@ -106,4 +107,24 @@ ion-navbar-section {
   font-size: 2.4rem;
   font-weight: normal;
   text-align: left;
+}
+
+
+
+// Material Design Toolbar Color Generation
+// --------------------------------------------------
+
+@each $color-name, $color-value in $colors-md {
+
+  .toolbar[#{$color-name}] {
+
+    .toolbar-background {
+      background-color: $color-value;
+    }
+
+    .toolbar-title {
+      color: inverse($color-value);
+    }
+  }
+
 }

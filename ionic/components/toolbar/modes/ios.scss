@@ -1,5 +1,6 @@
 @import "../../../globals.ios";
 @import "../toolbar";
+@import "../toolbar-button";
 
 // iOS Toolbar
 // --------------------------------------------------
@@ -17,71 +18,84 @@ $toolbar-ios-height:                        4.4rem !default;
 $toolbar-ios-button-font-size:              1.7rem !default;
 $toolbar-ios-title-font-size:               1.7rem !default;
 
+$navbar-ios-height:                         $toolbar-ios-height !default;
+
 
 .toolbar {
   padding: $toolbar-ios-padding;
   min-height: $toolbar-ios-height;
-
-  [menu-toggle] {
-    order: map-get($toolbar-order-ios, menu-toggle-primary);
-    cursor: pointer;
-  }
-
-  [menu-toggle][secondary] {
-    order: map-get($toolbar-order-ios, menu-toggle-secondary);
-  }
-
-  ion-segment-button[button] {
-    line-height: 2.4rem;
-    min-height: 2.4rem;
-    font-size: 1.2rem;
-  }
-
-  button,
-  [button] {
-    margin-top: 0;
-    margin-bottom: 0;
-    padding: 0 5px;
-    min-height: 32px;
-    color: $toolbar-ios-active-color;
-  }
-
-  button.icon-only,
-  [button].icon-only {
-    padding-right: 0;
-    padding-left: 0;
-  }
-
-  button icon,
-  [button] icon {
-    padding: 0;
-    min-width: 28px;
-  }
-
-  .back-button {
-    margin: 0;
-    min-height: 3.2rem;
-    line-height: 1;
-    order: map-get($toolbar-order-ios, 'back-button');
-    overflow: visible;
-  }
-
-  .back-button-icon {
-    display: inherit;
-    margin: 0;
-    min-width: 18px;
-    font-size: 3.2rem;
-  }
-
 }
 
-.toolbar button:hover:not(.disable-hover),
-.toolbar [button]:hover:not(.disable-hover),
-.toolbar button.activated,
-.toolbar [button].activated {
+ion-navbar-section {
+  min-height: $navbar-ios-height;
+}
+
+// iOS Toolbar Buttons
+// --------------------------------------------------
+
+.bar-button {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 0 5px;
+  min-height: 32px;
+  border: 0;
+  font-size: $toolbar-ios-button-font-size;
   color: $toolbar-ios-active-color;
   background-color: transparent;
 }
+
+.bar-button.icon-only {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.bar-button icon {
+  padding: 0;
+  min-width: 28px;
+}
+
+
+// iOS Back Button
+// --------------------------------------------------
+
+.back-button {
+  margin: 0;
+  min-height: 3.2rem;
+  line-height: 1;
+  order: map-get($toolbar-order-ios, 'back-button');
+  overflow: visible;
+  transform: translateZ(0px);
+}
+
+.back-button-icon {
+  display: inherit;
+  margin: 0;
+  min-width: 18px;
+  font-size: 3.2rem;
+}
+
+
+// iOS Menu Toggle
+// --------------------------------------------------
+
+[menu-toggle] {
+  order: map-get($toolbar-order-ios, menu-toggle-primary);
+  cursor: pointer;
+}
+
+[menu-toggle][secondary] {
+  order: map-get($toolbar-order-ios, menu-toggle-secondary);
+}
+
+ion-segment-button[button] {
+  line-height: 2.4rem;
+  min-height: 2.4rem;
+  font-size: 1.2rem;
+}
+
+
+// iOS Toolbar Background
+// --------------------------------------------------
 
 .toolbar-background {
   border-bottom-width: 1px;
@@ -89,6 +103,14 @@ $toolbar-ios-title-font-size:               1.7rem !default;
   border-color: $toolbar-ios-border-color;
   background-color: $toolbar-ios-background-color;
 }
+
+&.hairlines .toolbar-background {
+  border-bottom-width: 0.55px;
+}
+
+
+// iOS Toolbar Content
+// --------------------------------------------------
 
 ion-title {
   position: absolute;
@@ -120,21 +142,22 @@ ion-nav-items[secondary] {
   order: map-get($toolbar-order-ios, secondary);
 }
 
-&.hairlines .toolbar-background {
-  border-bottom-width: 0.55px;
-}
 
-
-// iOS Navbar
+// iOS Toolbar Color Generation
 // --------------------------------------------------
 
-$navbar-ios-height:                        4.4rem !default;
+@each $color-name, $color-value in $colors-ios {
 
+  .toolbar[#{$color-name}] {
 
-ion-navbar-section {
-  min-height: $navbar-ios-height;
-}
+    .toolbar-background {
+      background-color: $color-value;
+      border-color: darken($color-value, 10%);
+    }
 
-.back-button {
-  transform: translateZ(0px);
+    .toolbar-title {
+      color: inverse($color-value);
+    }
+  }
+
 }
