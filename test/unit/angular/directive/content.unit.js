@@ -120,14 +120,15 @@ describe('Ionic Content directive', function() {
     expect(element.hasClass('padding')).toEqual(true);
   });
 
-  xit('Should set start x and y', function() {
+  it('Should set start x and y', inject(function($ionicConfig) {
+    $ionicConfig.scrolling.jsScrolling(true);
     var element = compile('<ion-content start-x="100" start-y="300"></ion-content>')(scope);
     scope.$apply();
     var scrollView = element.controller('$ionicScroll').scrollView;
     var vals = scrollView.getValues();
     expect(vals.left).toBe(100);
     expect(vals.top).toBe(300);
-  });
+  }));
 
   it('Should allow native scrolling to be set by $ionicConfig ', function() {
     ionicConfig.scrolling.jsScrolling(false);
