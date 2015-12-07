@@ -189,14 +189,14 @@ export class ViewController {
   }
 
   /**
-   * You can find out of the current view has a Navbar or not. Be sure to wrap this in an `onPageLoaded` method in order to make sure the view has rendered fully.
+   * You can find out of the current view has a Navbar or not. Be sure to wrap this in an `onPageWillEnter` method in order to make sure the view has rendered fully.
    *
    * ```typescript
    * export class Page1 {
    *  constructor(view: ViewController) {
    *    this.view = view
    *  }
-   *  onPageLoaded(){
+   *  onPageWillEnter(){
    *    console.log('Do we have a Navbar?', this.view.hasNavbar());
    *  }
    *}
@@ -257,7 +257,21 @@ export class ViewController {
   }
 
   /**
-   * @param {string} Set the back button text.
+   * You can change the text of the back button on a view-by-view basis.
+   *
+   * ```ts
+   * export class MyClass{
+   *  constructor(viewCtrl: ViewController){
+   *    this.viewCtrl = viewCtrl
+   *  }
+   *  onPageWillEnter() {
+   *    this.viewCtrl.setBackButtonText('Previous');
+   *  }
+   * }
+   * ```
+   * Make sure you use the view events when calling this method, otherwise the back-button will not have been created
+   *
+   * @param {string} backButtonText Set the back button text.
    */
   setBackButtonText(val) {
     let navbar = this.getNavbar();
@@ -267,7 +281,7 @@ export class ViewController {
   }
 
   /**
-   * Set if the back button for the current view is visible or not. Be sure to wrap this in `onPageLoaded` to make sure the has been compleltly rendered.
+   * Set if the back button for the current view is visible or not. Be sure to wrap this in `onPageWillEnter` to make sure the has been compleltly rendered.
    * @param {boolean} Set if this Page's back button should show or not.
    */
   showBackButton(shouldShow) {
