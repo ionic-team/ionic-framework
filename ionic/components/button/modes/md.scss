@@ -41,11 +41,7 @@ $button-md-small-icon-font-size:           1.4em !default;
 .button {
   margin: $button-md-margin;
   padding: $button-md-padding;
-
   min-height: $button-md-height;
-  font-size: $button-md-font-size;
-
-  border: 0;
   border-radius: $button-md-border-radius;
 
   font-weight: 500;
@@ -129,7 +125,9 @@ $button-md-small-icon-font-size:           1.4em !default;
 // --------------------------------------------------
 
 .button-outline {
-  border: 1px solid $button-md-color;
+  border-width: 1px;
+  border-style: solid;
+  border-color: $button-md-color;
   background-color: transparent;
   color: $button-md-color;
   box-shadow: none;

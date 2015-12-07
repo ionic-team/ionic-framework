@@ -115,7 +115,9 @@ $button-ios-small-icon-font-size:     1.3em !default;
 // --------------------------------------------------
 
 .button-outline {
-  border: 1px solid $button-ios-color;
+  border-width: 1px;
+  border-style: solid;
+  border-color: $button-ios-color;
   background-color: transparent;
   color: $button-ios-color;
 
