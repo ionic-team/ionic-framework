@@ -113,7 +113,7 @@ function($scope, $attrs, $ionicListDelegate, $ionicHistory) {
     return isSwipeable;
   };
 
-  self.closeOptionButtons = function() {
-    self.listView && self.listView.clearDragEffects();
+  self.closeOptionButtons = function(isInstant) {
+    self.listView && self.listView.clearDragEffects(isInstant);
   };
 }]);
