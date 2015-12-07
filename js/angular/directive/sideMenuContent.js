@@ -173,7 +173,7 @@ function($timeout, $ionicGesture, $window) {
 
             var amount = amountLeft + amountRight;
 
-            if(amount > 0) {
+            if (amount > 0) {
               $element[0].style[ionic.CSS.TRANSFORM] = 'translate3d(' + amountLeft + 'px,0,0)';
               $element[0].style.width = ($window.innerWidth - amount) + 'px';
               content.offsetX = amountLeft;
