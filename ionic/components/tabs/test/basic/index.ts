@@ -71,9 +71,9 @@ class Tab2 {
 @Page({
   template: `
     <ion-navbar *navbar>
-      <a menu-toggle>
+      <button menu-toggle>
         <icon menu></icon>
-      </a>
+      </button>
       <ion-title>Stopwatch</ion-title>
     </ion-navbar>
     <ion-content padding>

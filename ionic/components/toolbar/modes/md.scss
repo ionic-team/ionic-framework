@@ -5,41 +5,111 @@
 // Material Design Toolbar
 // --------------------------------------------------
 
-$toolbar-md-padding:                 4px !default;
-$toolbar-md-height:                  5.6rem !default;
-$toolbar-md-title-font-size:         2rem !default;
-$toolbar-md-button-font-size:        1.4rem !default;
+$toolbar-order-md: (
+  back-button: 0,
+  menu-toggle-start: 1,
+  buttons-left: 2,
+  content: 3,
+  buttons-start: 4,
+  buttons-end: 5,
+  buttons-right: 6,
+  menu-toggle-end: 7,
+);
+
+$toolbar-md-padding:                     4px !default;
+$toolbar-md-height:                      5.6rem !default;
+$toolbar-md-title-font-size:             2rem !default;
+$toolbar-md-button-font-size:            1.4rem !default;
+$navbar-md-height:                       $toolbar-md-height !default;
 
 
 .toolbar {
   padding: $toolbar-md-padding;
   min-height: $toolbar-md-height;
+}
 
-  button,
-  [button],
-  button.activated,
-  [button].activated {
-    margin-top: 0;
-    margin-bottom: 0;
-    padding: 0 5px;
-    min-height: 32px;
-    box-shadow: none;
-    overflow: visible;
-    color: $toolbar-md-active-color;
-  }
+ion-navbar-section {
+  min-height: $navbar-md-height;
+}
 
-  button.icon-only,
-  [button].icon-only {
-    padding-right: 0;
-    padding-left: 0;
-  }
 
-  button icon,
-  [button] icon {
-    padding: 0;
-    min-width: 28px;
-  }
+// Material Design Toolbar Background
+// --------------------------------------------------
 
+.toolbar-background {
+  border-color: $toolbar-md-border-color;
+  background-color: $toolbar-md-background-color;
+}
+
+
+// Material Design Toolbar Content
+// --------------------------------------------------
+
+.toolbar-content {
+  flex: 1;
+  order: map-get($toolbar-order-md, content);
+}
+
+.toolbar-title {
+  color: $toolbar-md-text-color;
+}
+
+ion-title {
+  padding: 0 12px;
+  font-size: $toolbar-md-title-font-size;
+  font-weight: 500;
+}
+
+
+// Material Design Toolbar Buttons
+// --------------------------------------------------
+
+ion-buttons {
+  flex: 1;
+  order: map-get($toolbar-order-md, buttons-start);
+  transform: translateZ(0px);
+}
+
+ion-buttons[left] {
+  order: map-get($toolbar-order-md, buttons-left);
+}
+
+ion-buttons[left] .bar-button:first-child {
+  margin-left: 0;
+}
+
+ion-buttons[end] {
+  text-align: right;
+  order: map-get($toolbar-order-md, buttons-end);
+}
+
+ion-buttons[right] {
+  text-align: right;
+  order: map-get($toolbar-order-md, buttons-right);
+}
+
+
+// Material Design Toolbar Back Button
+// --------------------------------------------------
+
+.back-button {
+  margin: 0 0 0 12px;
+  box-shadow: none;
+}
+
+.back-button-icon {
+  margin: 0;
+  min-width: 44px;
+  font-size: 2.4rem;
+  font-weight: normal;
+  text-align: left;
+}
+
+
+// Material Design Toolbar Menu Toggle
+// --------------------------------------------------
+
+.toolbar {
   [menu-toggle],
   [menu-toggle].activated {
     padding: 0 2px;
@@ -55,34 +125,6 @@ $toolbar-md-button-font-size:        1.4rem !default;
     margin: 0 2px;
     min-width: 28px;
   }
-
-}
-
-.toolbar button:hover:not(.disable-hover),
-.toolbar [button]:hover:not(.disable-hover),
-.toolbar button.activated,
-.toolbar [button].activated {
-  color: $toolbar-md-active-color;
-  background-color: transparent;
-}
-
-.toolbar-background {
-  border-color: $toolbar-md-border-color;
-  background-color: $toolbar-md-background-color;
-}
-
-ion-title {
-  padding: 0 12px;
-  font-size: $toolbar-md-title-font-size;
-  font-weight: 500;
-}
-
-.toolbar-title {
-  color: $toolbar-md-text-color;
-}
-
-ion-nav-items[primary] button:first-child {
-  margin-left: 0;
 }
 
 
@@ -95,20 +137,6 @@ $navbar-md-height:                  5.6rem !default;
 ion-navbar-section {
   min-height: $navbar-md-height;
 }
-
-.back-button {
-  margin: 0 0 0 12px;
-  box-shadow: none;
-}
-
-.back-button-icon {
-  margin: 0;
-  min-width: 44px;
-  font-size: 2.4rem;
-  font-weight: normal;
-  text-align: left;
-}
-
 
 
 // Material Design Toolbar Color Generation

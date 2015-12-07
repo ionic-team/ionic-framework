@@ -44,7 +44,7 @@ export class ToolbarBase extends Ion  {
 
   /**
    * @private
-   * A toolbar items include the left and right side `ion-nav-items`,
+   * A toolbar items include the left and right side `ion-buttons`,
    * and every `menu-toggle`. It does not include the `ion-title`.
    * @returns {TODO} Array of this toolbar's item ElementRefs.
    */
@@ -79,9 +79,9 @@ export class ToolbarBase extends Ion  {
   selector: 'ion-toolbar',
   template:
     '<div class="toolbar-background"></div>' +
-    '<ng-content select="[menu-toggle]"></ng-content>' +
-    '<ng-content select="ion-nav-items[primary]"></ng-content>' +
-    '<ng-content select="ion-nav-items[secondary]"></ng-content>' +
+    '<ng-content select="[menu-toggle],ion-buttons[left]"></ng-content>' +
+    '<ng-content select="ion-buttons[start]"></ng-content>' +
+    '<ng-content select="ion-buttons[end],ion-buttons[right]"></ng-content>' +
     '<div class="toolbar-content">' +
       '<ng-content></ng-content>' +
     '</div>',
@@ -149,7 +149,7 @@ export class ToolbarTitle extends Ion {
  * @private
  */
 @Directive({
-  selector: 'ion-nav-items,[menu-toggle]'
+  selector: 'ion-buttons,[menu-toggle]'
 })
 export class ToolbarItem extends Ion {
   constructor(

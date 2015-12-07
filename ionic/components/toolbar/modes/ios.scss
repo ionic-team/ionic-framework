@@ -6,18 +6,20 @@
 // --------------------------------------------------
 
 $toolbar-order-ios: (
-  back-button: 10,
-  menu-toggle-primary: 20,
-  primary: 30,
-  secondary: 50,
-  menu-toggle-secondary: 60,
+  back-button: 0,
+  menu-toggle-start: 1,
+  buttons-left: 2,
+  buttons-start: 3,
+  content: 4,
+  buttons-end: 5,
+  buttons-right: 6,
+  menu-toggle-end: 7,
 );
 
 $toolbar-ios-padding:                       4px !default;
 $toolbar-ios-height:                        4.4rem !default;
 $toolbar-ios-button-font-size:              1.7rem !default;
 $toolbar-ios-title-font-size:               1.7rem !default;
-
 $navbar-ios-height:                         $toolbar-ios-height !default;
 
 
@@ -30,8 +32,72 @@ ion-navbar-section {
   min-height: $navbar-ios-height;
 }
 
+
+// iOS Toolbar Background
+// --------------------------------------------------
+
+.toolbar-background {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-color: $toolbar-ios-border-color;
+  background-color: $toolbar-ios-background-color;
+}
+
+&.hairlines .toolbar-background {
+  border-bottom-width: 0.55px;
+}
+
+
+// iOS Toolbar Content
+// --------------------------------------------------
+
+.toolbar-content {
+  flex: 1;
+  order: map-get($toolbar-order-ios, content);
+}
+
+.toolbar-title {
+  font-size: $toolbar-ios-title-font-size;
+  font-weight: 500;
+  text-align: center;
+  pointer-events: auto;
+  color: $toolbar-ios-text-color;
+}
+
+ion-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0px 90px 1px 90px;
+  pointer-events: none;
+  transform: translateZ(0px);
+}
+
+
 // iOS Toolbar Buttons
 // --------------------------------------------------
+
+ion-buttons {
+  flex: 1;
+  order: map-get($toolbar-order-ios, buttons-start);
+  transform: translateZ(0px);
+}
+
+ion-buttons[left] {
+  order: map-get($toolbar-order-ios, buttons-left);
+}
+
+ion-buttons[end] {
+  text-align: right;
+  order: map-get($toolbar-order-ios, buttons-end);
+}
+
+ion-buttons[right] {
+  text-align: right;
+  order: map-get($toolbar-order-ios, buttons-right);
+}
 
 .bar-button {
   margin-top: 0;
@@ -73,14 +139,14 @@ ion-navbar-section {
 }
 
 
-// iOS Back Button
+// iOS Toolbar  Back Button
 // --------------------------------------------------
 
 .back-button {
   margin: 0;
   min-height: 3.2rem;
   line-height: 1;
-  order: map-get($toolbar-order-ios, 'back-button');
+  order: map-get($toolbar-order-ios, back-button);
   overflow: visible;
   transform: translateZ(0px);
 }
@@ -93,71 +159,23 @@ ion-navbar-section {
 }
 
 
-// iOS Menu Toggle
+// iOS Toolbar Menu Toggle
 // --------------------------------------------------
 
 [menu-toggle] {
-  order: map-get($toolbar-order-ios, menu-toggle-primary);
+  order: map-get($toolbar-order-ios, menu-toggle-start);
   cursor: pointer;
 }
 
-[menu-toggle][secondary] {
-  order: map-get($toolbar-order-ios, menu-toggle-secondary);
+[menu-toggle][end],
+[menu-toggle][right] {
+  order: map-get($toolbar-order-ios, menu-toggle-end);
 }
 
 ion-segment-button[button] {
   line-height: 2.4rem;
   min-height: 2.4rem;
   font-size: 1.2rem;
-}
-
-
-// iOS Toolbar Background
-// --------------------------------------------------
-
-.toolbar-background {
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  border-color: $toolbar-ios-border-color;
-  background-color: $toolbar-ios-background-color;
-}
-
-&.hairlines .toolbar-background {
-  border-bottom-width: 0.55px;
-}
-
-
-// iOS Toolbar Content
-// --------------------------------------------------
-
-ion-title {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  padding: 0px 90px 1px 90px;
-  pointer-events: none;
-  transform: translateZ(0px);
-}
-
-.toolbar-title {
-  font-size: $toolbar-ios-title-font-size;
-  font-weight: 500;
-  text-align: center;
-  pointer-events: auto;
-  color: $toolbar-ios-text-color;
-}
-
-ion-nav-items {
-  flex: 1;
-  order: map-get($toolbar-order-ios, primary);
-  transform: translateZ(0px);
-}
-
-ion-nav-items[secondary] {
-  text-align: right;
-  order: map-get($toolbar-order-ios, secondary);
 }
 
 

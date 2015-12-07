@@ -39,12 +39,7 @@
   margin: 0 6px;
   padding: 0;
   min-width: 36px;
-  order: map-get($toolbar-order, menu-toggle-primary);
   box-shadow: none;
-}
-
-.toolbar [menu-toggle][secondary] {
-  order: map-get($toolbar-order, menu-toggle-secondary);
 }
 
 .toolbar [menu-toggle] icon {
@@ -57,8 +52,6 @@
 // --------------------------------------------------
 
 .back-button {
-  order: map-get($toolbar-order, backButton);
-
   display: none;
   &.show-back-button {
     display: flex;

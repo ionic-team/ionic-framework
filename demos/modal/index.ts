@@ -73,7 +73,7 @@ export class ContactModal {
 
 @Page({
   template: `
-    <ion-navbar *navbar><ion-title>First Page Header</ion-title><ion-nav-items primary><button (click)="closeModal()">Close</button></ion-nav-items></ion-navbar>
+    <ion-navbar *navbar><ion-title>First Page Header</ion-title><ion-buttons start><button (click)="closeModal()">Close</button></ion-buttons></ion-navbar>
     <ion-content padding>
       <p>
         <button (click)="push()">Push (Go to 2nd)</button>

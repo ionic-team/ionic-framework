@@ -141,9 +141,9 @@ class ContactUs {
   template: `
     <ion-navbar *navbar>
       <ion-title>First Page Header</ion-title>
-      <ion-nav-items primary>
+      <ion-buttons start>
         <button class="e2eCloseMenu" (click)="closeModal()">Close</button>
-      </ion-nav-items>
+      </ion-buttons>
     </ion-navbar>
     <ion-content padding>
       <p>

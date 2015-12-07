@@ -3,15 +3,6 @@
 // Toolbar
 // --------------------------------------------------
 
-$toolbar-order: (
-  backButton: 10,
-  menu-toggle-left: 20,
-  content: 30,
-  left: 40,
-  right: 50,
-  menu-toggle-right: 60,
-);
-
 
 .toolbar {
   position: relative;
@@ -40,12 +31,6 @@ $toolbar-order: (
   pointer-events: none;
 }
 
-.toolbar-content {
-  display: block;
-  flex: 1;
-  order: map-get($toolbar-order, content);
-}
-
 .toolbar[position=bottom] {
   order: $flex-order-toolbar-bottom;
 }
@@ -64,27 +49,22 @@ ion-title {
   overflow: hidden;
 }
 
-ion-nav-items {
+ion-buttons {
   display: block;
   margin: 0 0.2rem;
   pointer-events: none;
-  order: map-get($toolbar-order, left);
 }
 
-ion-nav-items[secondary] {
-  order: map-get($toolbar-order, right);
-}
-
-ion-nav-items button,
-ion-nav-items a,
-ion-nav-items input,
-ion-nav-items textarea,
-ion-nav-items div {
+ion-buttons button,
+ion-buttons a,
+ion-buttons input,
+ion-buttons textarea,
+ion-buttons div {
   pointer-events: auto;
 }
 
 // TODO this is a temp hack to fix segment overlapping ion-nav-item
-ion-nav-items,
+ion-buttons,
 [menu-toggle] {
   z-index: 99;
 }
