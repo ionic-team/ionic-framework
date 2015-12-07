@@ -74,7 +74,7 @@ ion-title {
 }
 
 
-// Material Design Toolbar Buttons
+// Material Design Toolbar Button Placement
 // --------------------------------------------------
 
 ion-buttons {
@@ -100,6 +100,12 @@ ion-buttons[right] {
   text-align: right;
   order: map-get($toolbar-order-md, buttons-right);
 }
+
+
+// Material Design Toolbar Buttons
+// --------------------------------------------------
+
+// HI!
 
 
 // Material Design Toolbar Back Button
