@@ -20,7 +20,7 @@
 var labelIds = -1;
 
 IonicModule
-.directive('ionInput', ['$$rAF', function($$rAF) {
+.directive('ionInput', [function() {
   return {
     restrict: 'E',
     controller: ['$scope', '$element', function($scope, $element) {
@@ -44,7 +44,7 @@ IonicModule
  * Input label adds accessibility to <span class="input-label">.
  */
 IonicModule
-.directive('inputLabel', ['$$rAF', function($$rAF) {
+.directive('inputLabel', [function() {
   return {
     restrict: 'C',
     scope: true,
@@ -70,7 +70,7 @@ IonicModule
 }]);
 
 IonicModule
-.directive('ionLabel', ['$$rAF', function($$rAF) {
+.directive('ionLabel', [function() {
   return {
     restrict: 'E',
     scope: true,
