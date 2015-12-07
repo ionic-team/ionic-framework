@@ -5,10 +5,12 @@ import {Config} from '../../config/config';
 
 
 /**
+ * @name Segment
  * @description
  * A Segment is a group of buttons, sometimes known as Segmented Controls, that allow the user to interact with a compact group of a number of controls.
- *
  * Segments provide functionality similar to tabs, selecting one will unselect all others. You should use a tab bar instead of a segmented control when you want to let the user move back and forth between distinct pages in your app.
+ * You could use Angular 2's `ng-model` or `FormBuilder` API. For an overview on how `FormBuilder` works, checkout [Angular 2 Forms](http://learnangular2.com/forms/), or [Angular FormBuilder](https://angular.io/docs/ts/latest/api/common/FormBuilder-class.html)
+ *
  *
  * @usage
  * ```html
@@ -20,8 +22,11 @@ import {Config} from '../../config/config';
  *     Enemies
  *   </ion-segment-button>
  * </ion-segment>
+ *```
  *
+ * Or with `FormBuilder`
  *
+ *```html
  * <form [ng-form-model]="myForm">
  *   <ion-segment ng-control="mapStyle" danger>
  *     <ion-segment-button value="standard">
@@ -38,6 +43,7 @@ import {Config} from '../../config/config';
  * ```
  *
  * @see {@link /docs/v2/components#segment Segment Component Docs}
+ * @see [Angular 2 Forms](http://learnangular2.com/forms/)
  */
 @Directive({
   selector: 'ion-segment'
@@ -127,6 +133,43 @@ export class Segment extends Ion {
 }
 
 
+/**
+ * @name SegmentButton
+ * @description
+ * The child buttons of the `ion-segment` component. Each `ion-segment-button` must have a value.
+ * @property {string} [value] - the value of the segment-button.
+ * @usage
+ * ```html
+ * <ion-segment [(ng-model)]="relationship" danger>
+ *   <ion-segment-button value="friends">
+ *     Friends
+ *   </ion-segment-button>
+ *   <ion-segment-button value="enemies">
+ *     Enemies
+ *   </ion-segment-button>
+ * </ion-segment>
+ *```
+ *
+ * Or with `FormBuilder`
+ *
+ *```html
+ * <form [ng-form-model]="myForm">
+ *   <ion-segment ng-control="mapStyle" danger>
+ *     <ion-segment-button value="standard">
+ *       Standard
+ *     </ion-segment-button>
+ *     <ion-segment-button value="hybrid">
+ *       Hybrid
+ *     </ion-segment-button>
+ *     <ion-segment-button value="sat">
+ *       Satellite
+ *     </ion-segment-button>
+ *   </ion-segment>
+ * </form>
+ * ```
+ * @see {@link /docs/v2/components#segment Segment Component Docs}
+ * @see {@link /docs/v2/api/components/segment/Segment/ Segment API Docs}
+ */
 @Directive({
   selector: 'ion-segment-button',
   inputs: [
