@@ -48,11 +48,11 @@ IonicModule
         $element.attr('aria-label', $element.text());
         var id = element.id || '_label-' + ++labelIds;
 
-        if(!element.id) {
+        if (!element.id) {
           $element.attr('id', id);
         }
 
-        if(ionInputCtrl && ionInputCtrl.input) {
+        if (ionInputCtrl && ionInputCtrl.input) {
           ionInputCtrl.input.setAttribute('aria-labelledby', id);
         }
       }
@@ -75,11 +75,11 @@ IonicModule
         $element.attr('aria-label', $element.text());
         var id = element.id || '_label-' + ++labelIds;
 
-        if(!element.id) {
+        if (!element.id) {
           $element.attr('id', id);
         }
 
-        if(ionInputCtrl && ionInputCtrl.input) {
+        if (ionInputCtrl && ionInputCtrl.input) {
           ionInputCtrl.input.setAttribute('aria-labelledby', id);
         }
       }
