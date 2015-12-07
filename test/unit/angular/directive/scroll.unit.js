@@ -50,8 +50,9 @@ describe('Ionic Scroll Directive', function() {
     expect(scrollElement.hasClass('padding')).toEqual(true);
   });
 
+
   it('Should set start x and y', function() {
-    element = compile('<ion-content start-x="100" start-y="300" has-header="true"></ion-content>')(scope);
+    element = compile('<ion-content overflow-scroll="false" start-x="100" start-y="300" has-header="true"></ion-content>')(scope);
     scope.$apply();
     var scrollView = element.controller('$ionicScroll').scrollView;
     var vals = scrollView.getValues();

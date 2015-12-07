@@ -148,7 +148,7 @@ describe('collectionRepeat', function() {
 
   it('should error without proper collection-repeat expression', inject(function($compile, $rootScope) {
     expect(function() {
-      $compile('<ion-content>' +
+      $compile('<ion-content overflow-scroll="false">' +
                '<div collection-repeat="bad"></div>' +
                '</ion-content>')($rootScope);
     }).toThrow();
@@ -156,7 +156,7 @@ describe('collectionRepeat', function() {
 
   it('should destroy and restore normal scrollView behavior', inject(function($compile, $rootScope) {
     var scope = $rootScope.$new();
-    var content = $compile('<ion-content>')(scope);
+    var content = $compile('<ion-content overflow-scroll="false">')(scope);
     var scrollView = content.data('$$ionicScrollController').scrollView;
 
     var originalCallback = scrollView.__callback;

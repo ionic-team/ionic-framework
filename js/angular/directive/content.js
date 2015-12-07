@@ -77,7 +77,6 @@ function($timeout, $controller, $ionicBind, $ionicConfig) {
       if (nativeScrolling) {
         nativeScrolling = !element[0].querySelector('[collection-repeat]');
       }
-
       return { pre: prelink };
       function prelink($scope, $element, $attr) {
         var parentScope = $scope.$parent;
