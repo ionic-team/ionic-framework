@@ -82,7 +82,7 @@ IonicModule
         if (ionInputCtrl && ionInputCtrl.input) {
           ionInputCtrl.input.setAttribute('aria-labelledby', id);
 
-          $element.on('click', function(e) {
+          $element.on('click', function() {
             $timeout(function() {
               ionInputCtrl.input.focus();
             })
