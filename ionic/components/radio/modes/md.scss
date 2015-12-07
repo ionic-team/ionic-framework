@@ -16,6 +16,8 @@ $radio-md-icon-border-radius:     50% !default;
 $radio-md-transition-duration:    280ms !default;
 $radio-md-transition-easing:      cubic-bezier(.4, 0, .2, 1) !default;
 
+$radio-md-disabled-text-color:    $subdued-text-md-color !default;
+
 
 ion-radio {
 
@@ -31,6 +33,10 @@ ion-radio {
     }
   }
 
+}
+
+ion-radio[aria-disabled=true] {
+  color: $radio-md-disabled-text-color;
 }
 
 .radio-icon {

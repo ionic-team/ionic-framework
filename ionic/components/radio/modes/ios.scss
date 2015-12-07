@@ -11,6 +11,9 @@ $radio-ios-icon-height:            21px !default;
 $radio-ios-icon-border-width:      2px !default;
 $radio-ios-icon-border-style:      solid !default;
 
+$radio-ios-disabled-text-color:    $subdued-text-ios-color !default;
+
+
 ion-radio {
 
   &[aria-checked=true] {
@@ -36,6 +39,10 @@ ion-radio {
     background-color: $list-ios-background-color;
   }
 
+}
+
+ion-radio[aria-disabled=true] {
+  color: $radio-ios-disabled-text-color;
 }
 
 .radio-media {
