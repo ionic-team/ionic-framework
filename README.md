@@ -10,33 +10,34 @@ Ionic currently best supports iOS 7+ and Android 4.1+.
 
 # What is Ionic?
 
-Ionic is the open source HTML5 Mobile Framework for building amazing, cross-platform hybrid native apps with HTML, JavaScript, and CSS.
+Ionic is the open source HTML5 Mobile Framework for building amazing, cross-platform hybrid native apps with HTML, JavaScript, and CSS. If you know how to build or design websites, you will be able to build a real mobile app with Ionic!
 
 ![Ionic GUI](http://ionicframework.com/img/gui_screen.jpg)
 
-We built Ionic because we wanted a framework that focused on building hybrid native apps, rather than mobile websites. We wanted this framework to be obsessive about great design and performance. A framework that left the past behind and focused on the future where mobile devices could make HTML5 feel native.
-
-It's important to realize that Ionic is not a replacement for frameworks used for building mobile web apps. There are a lot
-of great solutions that work well for websites, like [jQuery Mobile](http://jquerymobile.com/).
-
-Ionic is also not a good solution if you need to support older generation devices. Our compatibility *starts* at iOS 6 and Android 4.1. We will never support versions earlier than those. This is a framework for the future. Learn more: [Where does the Ionic Framework fit in?](http://blog.ionic.io/where-does-the-ionic-framework-fit-in/)
+We built Ionic because we wanted a framework that focused on building hybrid native apps using open web technologies we loved. The same technology the world has been using for decades to build websites, desktop applications, and now mobile and tablet apps. We wanted this framework to be obsessive about great design and performance. Above all, we built Ionic to help the next generation of developers get into mobile and start building apps that compete with the best on the app store.
 
 ## Quick Start
 
 To start using ionic, you have two options: copy over the built JS and CSS files, or
-use the `ionic` tool ([ionic-cli](https://github.com/driftyco/ionic-cli)) which can be installed through npm: _(You may need to prefix the command with `sudo` depending on your OS and setup.)_
+use the `ionic` tool ([ionic-cli](https://github.com/driftyco/ionic-cli)) which can be installed through npm (recommended): _(You may need to prefix the command with `sudo` depending on your OS and setup.)_
+
+Additionally, we have a desktop GUI tool that we recently released called [Ionic Lab](http://lab.ionic.io). If you try it, let us know what you think!
+
+To get started with the CLI flow, fire up your terminal and run:
 
 ```bash
-$ npm install -g ionic
+npm install -g ionic
 ```
 
 Then, you can start a new ionic project by running:
 
 ```bash
-$ ionic start myproject
+ionic start myproject
 ```
 
 ### Manual Start
+
+If you'd rather do everything by hand, you can grab all the files for Ionic below:
 
 - Download the latest **stable** release from:
   * The `release` folder of this repository
