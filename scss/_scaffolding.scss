@@ -185,6 +185,10 @@ ion-infinite-scroll {
   overflow-x: hidden;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+
+  // Make sure the scrollbar doesn't take up layout space on edge
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+
   top: 0;
   right: 0;
   bottom: 0;
