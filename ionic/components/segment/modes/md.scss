@@ -13,28 +13,24 @@ $segment-button-md-border-color-activated:     map-get($colors-md, primary) !def
 $segment-button-md-border-bottom:              2px solid rgba(#000000, 0.10) !default;
 
 
-ion-segment {
+.segment-button {
+  border-width: 0;
+  transition: 100ms all linear;
+  font-size: $segment-button-md-font-size;
+  opacity: 0.7;
 
-  button,
-  [button] {
-    border-width: 0;
-    transition: 100ms all linear;
-    font-size: $segment-button-md-font-size;
-    opacity: 0.7;
+  min-height: $segment-button-md-min-height;
+  line-height: $segment-button-md-line-height;
 
-    min-height: $segment-button-md-min-height;
-    line-height: $segment-button-md-line-height;
-
-    &.activated, &.segment-activated {
-      color: $segment-button-md-text-color-activated;
-      background-color: transparent;
-      border-color: $segment-button-md-border-color-activated;
-    }
-
-    border-radius: 0;
-    border-bottom: $segment-button-md-border-bottom;
+  &.activated,
+  &.segment-activated {
+    color: $segment-button-md-text-color-activated;
+    background-color: transparent;
+    border-color: $segment-button-md-border-color-activated;
   }
 
+  border-radius: 0;
+  border-bottom: $segment-button-md-border-bottom;
 }
 
 .toolbar {
@@ -42,8 +38,8 @@ ion-segment {
   ion-segment {
     margin: 0 auto;
 
-    ion-segment-button[button][outline].activated,
-    ion-segment-button[button][outline].segment-activated {
+    .segment-button.activated,
+    .segment-button.segment-activated {
       background-color: transparent;
       opacity: 1;
     }
@@ -57,15 +53,13 @@ ion-segment {
 @mixin segment-button($button-color) {
   background-color: transparent;
 
-  &[outline] {
-    color: $button-color;
+  color: $button-color;
 
-    &.activated, &.segment-activated {
-      background-color: transparent;
-      color: $button-color;
-      border-color: $button-color;
-      opacity: 1;
-    }
+  &.activated, &.segment-activated {
+    background-color: transparent;
+    color: $button-color;
+    border-color: $button-color;
+    opacity: 1;
   }
 }
 
@@ -78,7 +72,7 @@ ion-segment {
   .toolbar[#{$color-name}] {
 
     ion-segment {
-      ion-segment-button[button] {
+      .segment-button {
         @include segment-button($inverse-color-value);
       }
     }
@@ -88,7 +82,7 @@ ion-segment {
     // this will take priority over the default toolbar colors
     @each $color-name, $color-value in $colors-md {
       ion-segment[#{$color-name}] {
-        ion-segment-button[button] {
+        .segment-button {
           @include segment-button($color-value);
         }
       }
@@ -97,7 +91,7 @@ ion-segment {
   }
 
   ion-segment[#{$color-name}] {
-    ion-segment-button[button] {
+    .segment-button {
       @include segment-button($color-value);
     }
 

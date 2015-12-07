@@ -177,7 +177,7 @@ export class Segment extends Ion {
   ],
   host: {
     '(click)': 'click($event)',
-    '[class.segment-activated]': 'isActive',
+    '[class.segment-activated]': 'isActive'
   }
 })
 export class SegmentButton {
@@ -189,8 +189,8 @@ export class SegmentButton {
   ) {
     this.segment = segment;
 
-    renderer.setElementAttribute(elementRef, 'button', '');
-    renderer.setElementAttribute(elementRef, 'outline', '');
+    renderer.setElementClass(elementRef, 'segment-button', true);
+    renderer.setElementAttribute(elementRef, 'tappable', '');
   }
 
   /**

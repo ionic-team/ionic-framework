@@ -274,14 +274,16 @@ ion-buttons[right] {
 // iOS Toolbar Menu Toggle
 // --------------------------------------------------
 
-[menu-toggle] {
-  order: map-get($toolbar-order-ios, menu-toggle-start);
-  cursor: pointer;
-}
+.toolbar {
+  [menu-toggle] {
+    order: map-get($toolbar-order-ios, menu-toggle-start);
+    cursor: pointer;
+  }
 
-[menu-toggle][end],
-[menu-toggle][right] {
-  order: map-get($toolbar-order-ios, menu-toggle-end);
+  [menu-toggle][end],
+  [menu-toggle][right] {
+    order: map-get($toolbar-order-ios, menu-toggle-end);
+  }
 }
 
 ion-segment-button[button] {
