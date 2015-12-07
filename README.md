@@ -2,8 +2,6 @@
 
 [![NPM](https://nodei.co/npm/ionic.png?stars&downloads)](https://nodei.co/npm/ionic/)
 
-[![Issues Ready](https://badge.waffle.io/driftyco/ionic.png?label=ready&title=Ready)](https://waffle.io/driftyco/ionic)
-
 The best place to start with Ionic is our [documentation page](http://ionicframework.com/docs/).
 
 Ionic currently best supports iOS 7+ and Android 4.1+.
