@@ -39,7 +39,10 @@ class MediaSwitch {
  * Switches can also have colors assigned to them, by adding any color attribute to them.
  *
  * See the [Angular 2 Docs](https://angular.io/docs/js/latest/api/forms/) for more info on forms and input.
- *
+ * @property {any} [value] - the inital value of the switch
+ * @property {boolean} [checked] - whether the switch it toggled or not
+ * @property {boolean} [disabled] - whether the switch is disabled or not
+ * @property {string} [id] - a unique ID for a switch
  * @usage
  * ```html
  * // Create a single switch
