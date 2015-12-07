@@ -2,9 +2,7 @@
 
 [![NPM](https://nodei.co/npm/ionic.png?stars&downloads)](https://nodei.co/npm/ionic/)
 
-The best place to start with Ionic is our [documentation page](http://ionicframework.com/docs/).
-
-Ionic currently best supports iOS 7+ and Android 4.1+.
+Looking for our [documentation?](http://ionicframework.com/docs/).
 
 # What is Ionic?
 
