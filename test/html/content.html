@@ -110,6 +110,7 @@
             var headerHeight = header.offsetHeight;
 
             $element.bind('scroll', function(e) {
+
               if(e.detail && e.detail.scrollTop > starty) {
                 // Start shrinking
                 shrinkAmt = headerHeight - Math.max(0, (starty + headerHeight) - e.detail.scrollTop);
