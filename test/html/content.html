@@ -36,16 +36,20 @@
           </button>
         </div>
         <div class="list">
-  <label class="item item-input">
-    <input type="text" placeholder="First Name">
-  </label>
-  <label class="item item-input">
-    <input type="text" placeholder="Last Name">
-  </label>
-  <label class="item item-input">
-    <textarea placeholder="Comments"></textarea>
-  </label>
-</div>
+          <ion-input class="item item-input">
+            <input type="text" placeholder="First Name">
+          </ion-input>
+          <ion-input class="item item-input">
+            <input type="text" placeholder="Last Name">
+          </ion-input>
+          <ion-input class="item item-input">
+            <textarea placeholder="Comments"></textarea>
+          </ion-input>
+          <ion-input class="item item-input">
+            <span class="input-label">Username</span>
+            <input type="text">
+          </ion-input>
+        </div>
         <div ng-controller="TestCtrl"></div>
         <button ng-click="add()">Click</button>
         <ul class="list" ng-controller="AppCtrl">

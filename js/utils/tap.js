@@ -431,6 +431,7 @@ function tapTouchStart(e) {
     var textInput = tapTargetElement(tapContainingElement(e.target));
     if (textInput !== tapActiveEle) {
       // don't preventDefault on an already focused input or else iOS's text caret isn't usable
+      console.log('Would prevent default here');
       e.preventDefault();
     }
   }
