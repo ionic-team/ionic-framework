@@ -4,7 +4,6 @@
 // --------------------------------------------------
 
 $popup-min-width:                 250px !default;
-$popup-max-width:                 100% !default;
 $popup-max-height:                90% !default;
 
 $popup-button-line-height:        20px !default;
@@ -24,22 +23,21 @@ ion-popup {
   justify-content: center;
   align-items: center;
 
-  popup-wrapper {
-    z-index: $z-index-overlay-wrapper;
-    min-width: $popup-min-width;
-    max-width: $popup-max-width;
-    max-height: $popup-max-height;
-
-    display: flex;
-    flex-direction: column;
-
-    opacity: 0;
-  }
-
   input,
   textarea {
     width: 100%;
   }
+}
+
+.popup-wrapper {
+  z-index: $z-index-overlay-wrapper;
+  min-width: $popup-min-width;
+  max-height: $popup-max-height;
+
+  display: flex;
+  flex-direction: column;
+
+  opacity: 0;
 }
 
 .popup-title {
@@ -56,7 +54,6 @@ ion-popup {
 .popup-body {
   overflow: auto;
 
-  // TODO is this needed, it is never empty
   &:empty {
     padding: 0;
   }
@@ -73,12 +70,12 @@ ion-popup {
 .popup-buttons {
   display: flex;
   flex-direction: row;
+}
 
-  button {
-    display: block;
-    margin: 0;
-    line-height: $popup-button-line-height;
-    font-size: $popup-button-font-size;
-    margin-right: $popup-button-margin-right;
-  }
+.popup-button {
+  display: block;
+  margin: 0;
+  line-height: $popup-button-line-height;
+  font-size: $popup-button-font-size;
+  margin-right: $popup-button-margin-right;
 }

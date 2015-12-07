@@ -270,8 +270,8 @@ const OVERLAY_TYPE = 'popup';
 @Component({
   selector: 'ion-popup',
   template:
-    '<backdrop (click)="cancel($event)" tappable disable-activated></backdrop>' +
-    '<popup-wrapper>' +
+    '<div (click)="cancel($event)" tappable disable-activated class="backdrop"></div>' +
+    '<div class="popup-wrapper">' +
       '<div class="popup-head">' +
         '<h2 class="popup-title" [inner-html]="d.title" *ng-if="d.title"></h2>' +
         '<h3 class="popup-sub-title" [inner-html]="d.subTitle" *ng-if="d.subTitle"></h3>' +
@@ -281,9 +281,9 @@ const OVERLAY_TYPE = 'popup';
         '<input type="{{d.inputType || \'text\'}}" placeholder="{{d.inputPlaceholder}}" *ng-if="d.showPrompt" class="prompt-input">' +
       '</div>' +
       '<div class="popup-buttons" *ng-if="d.buttons.length">' +
-        '<button *ng-for="#btn of d.buttons" (click)="buttonTapped(btn, $event)" [inner-html]="btn.text"></button>' +
+        '<button clear *ng-for="#btn of d.buttons" (click)="buttonTapped(btn, $event)" [inner-html]="btn.text" class="popup-button"></button>' +
       '</div>' +
-    '</popup-wrapper>',
+    '</div>',
   host: {
     'role': 'dialog'
   },
@@ -352,8 +352,8 @@ class PopupPopIn extends Animation {
     super(null, opts);
 
     let ele = enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('backdrop'));
-    let wrapper = new Animation(ele.querySelector('popup-wrapper'));
+    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let wrapper = new Animation(ele.querySelector('.popup-wrapper'));
 
     wrapper.fromTo('opacity', '0.01', '1').fromTo('scale', '1.1', '1');
     backdrop.fromTo('opacity', '0.01', '0.3');
@@ -372,8 +372,8 @@ class PopupPopOut extends Animation {
     super(null, opts);
 
     let ele = leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('backdrop'));
-    let wrapper = new Animation(ele.querySelector('popup-wrapper'));
+    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let wrapper = new Animation(ele.querySelector('.popup-wrapper'));
 
     wrapper.fromTo('opacity', '1', '0').fromTo('scale', '1', '0.9');
     backdrop.fromTo('opacity', '0.3', '0');
@@ -392,8 +392,8 @@ class PopupMdPopIn extends Animation {
     super(null, opts);
 
     let ele = enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('backdrop'));
-    let wrapper = new Animation(ele.querySelector('popup-wrapper'));
+    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let wrapper = new Animation(ele.querySelector('.popup-wrapper'));
 
     wrapper.fromTo('opacity', '0.01', '1').fromTo('scale', '1.1', '1');
     backdrop.fromTo('opacity', '0.01', '0.5');
@@ -412,8 +412,8 @@ class PopupMdPopOut extends Animation {
     super(null, opts);
 
     let ele = leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('backdrop'));
-    let wrapper = new Animation(ele.querySelector('popup-wrapper'));
+    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let wrapper = new Animation(ele.querySelector('.popup-wrapper'));
 
     wrapper.fromTo('opacity', '1', '0').fromTo('scale', '1', '0.9');
     backdrop.fromTo('opacity', '0.5', '0');
