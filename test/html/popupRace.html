@@ -1,0 +1,35 @@
+<html ng-app="myApp">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+  <title>Ionic Pull to Refresh</title>
+
+  <link rel="stylesheet" href="../../dist/css/ionic.css">
+  <script src="../../../../dist/js/ionic.bundle.js"></script>
+</head>
+    <ion-content ng-controller="HomeCtrl as homeCtrl">
+      <button class="button button-positive"
+              ng-click="homeCtrl.showAlerts()">Click Me</button>
+    </ion-content>
+    <script>
+    var app = angular.module('myApp', ['ionic']);
+    app.controller('HomeCtrl', function($scope, $ionicPopup, $state, $timeout) {
+      this.showAlerts = function() {
+        /* show first popup */
+        var alertPopup = $ionicPopup.alert({
+          title: 'First Popup',
+          template: 'You don\'t see me'
+        });
+        /* something changed - close immediately and show different popup */
+        alertPopup.close();
+        /*
+        var newPopup = $ionicPopup.alert({
+          title: 'Second Popup',
+          buttons: [{text: 'You can\'t close me', type: 'button-assertive'}],
+          template: 'Ouch, stuck with new message'
+        });*/
+      };
+    });
+    </script>
+</html>

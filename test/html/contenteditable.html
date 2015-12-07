@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html ng-app="navTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Content</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+  </head>
+  <body>
+    <ion-pane>
+      <ion-header-bar id="header" class="bar-positive">
+        <h1 class="title">Video Test</h1>
+      </ion-header-bar>
+
+      <ion-content id="container">
+        <div contenteditable="true" data-tap-disabled="true">
+          <h1>Test for &lt;video /&gt; native controls.</h1>
+          <h2>Confirmed by the behavior of the browser Internet Explorer 11.</h2>
+
+          <p>default: (working)</p>
+          <video id="without" controls="controls">
+              <source src="http://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
+          </video>
+
+          <p>with stopPropagation on mousedown: (working)</p>
+          <video id="with-propagation" controls="controls">
+              <source src="http://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
+          </video>
+
+          <p>with preventDefault on mousedown: (<strong>doesn't working</strong>)</p>
+          <video id="with-prevent" controls="controls">
+              <source src="http://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </ion-content>
+    </ion-pane>
+
+    <script>
+      angular.module('navTest', ['ionic'])
+    </script>
+  </body>
+</html>

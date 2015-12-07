@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html ng-app="sideMenuTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Side Menus</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+  </head>
+  <body>
+    <div>
+<ion-side-menus>
+
+ <ion-side-menu side="left">
+    <header class="bar bar-header bar-stable">
+      <h1 class="title">Left</h1>
+    </header>
+    <ion-content class="has-header">
+      <ion-list>
+        <ion-item nav-clear menu-close href="#/app/search">
+          Search
+        </ion-item>
+        <ion-item nav-clear menu-close href="#/app/browse">
+          Browse
+        </ion-item>
+        <ion-item nav-clear menu-close href="#/app/playlists">
+          Playlists
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-side-menu>
+
+  <ion-pane ion-side-menu-content>
+    <ion-nav-bar class="bar-stable">
+      <ion-nav-back-button class="button-clear"><i class="icon ion-chevron-left"></i> Back</ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
+    <ion-nav-buttons side="right">
+            <button menu-toggle="right" class="button button-icon icon ion-navicon"></button>
+        </ion-nav-buttons>
+  </ion-pane>
+
+  <ion-side-menu side="right" expose-aside-when="large">
+    <header class="bar bar-header bar-stable">
+      <h1>Right</h1>
+    </header>
+    <ion-content class="has-header">
+      test
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>
+</div>
+
+    <script>
+      angular.module('sideMenuTest', ['ionic'])
+
+      .controller('MenuCtrl', function($scope, $ionicSideMenuDelegate) {
+
+        $scope.list = [];
+        for(var i = 0; i < 20; i++) {
+          $scope.list.push({
+            text: 'Item ' + i
+          });
+        }
+      })
+
+      .controller('LeftCtrl', function($scope) {
+        $scope.value = true;
+        $scope.list = [{text:1},{text:2},{text:3}];
+      });
+
+    </script>
+  </body>
+</html>

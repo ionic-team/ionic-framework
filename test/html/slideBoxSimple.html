@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html ng-app="slideBoxTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Slide Box</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+    <style>
+      .slider-slide {
+        padding-top: 80px;
+        color: #000;
+        background-color: #fff;
+        text-align: center;
+
+        font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+        font-weight: 300;
+      }
+      .slider-pager .slider-pager-page {
+        color: #000;
+      }
+
+      #logo {
+        margin: 30px 0px;
+      }
+
+      #list {
+        width: 170px;
+        margin: 30px auto;
+        font-size: 20px;
+      }
+      #list ol {
+        margin-top: 30px;
+      }
+      #list ol li {
+        text-align: left;
+        list-style: decimal;
+        margin: 10px 0px;
+      }
+    </style>
+  </head>
+  <body ng-init="$root.showPager = true">
+
+    <div ng-controller="SlideCtrl">
+      <ion-slide-box ng-if="!$root.hideSlideBox"
+                     on-slide-changed="slideChanged(index)"
+                     show-pager="{{$root.showPager}}"
+                     pager-click="pagerClick(index)">
+
+
+        <ion-slide>
+          <h3>Thank you for choosing the Awesome App!</h3>
+          <div id="logo">
+            <img src="app_icon.png">
+          </div>
+          <p>
+            We've worked super hard to make you happy.
+          </p>
+          <p>
+            But if you are angry, too bad.
+          </p>
+          <p>
+            <button class="button button-dark" ng-click="toLast()">Skip to last</button>
+          </p>
+          <p>
+            <button class="button button-dark" ng-click="clickTest()">Click Test</button>
+          </p>
+        </ion-slide>
+        <ion-slide>
+          <h3>Using Awesome</h3>
+
+          <div id="list">
+            <h5>Just three steps:</h5>
+            <ol>
+              <li>Be awesome</li>
+              <li>Stay awesome</li>
+              <li>There is no step 3</li>
+            </ol>
+          </div>
+        </ion-slide>
+        <ion-slide>
+          <ion-content class="has-header">
+            <div style="width: 300px; height: 2000px; background: url('tree_bark.png') repeat"></div>
+          </ion-content>
+        </ion-slide>
+      </ion-slide-box>
+    </div>
+    <script>
+      angular.module('slideBoxTest', ['ionic'])
+
+      .controller('SlideCtrl', function($scope, $timeout) {});
+    </script>
+  </body>
+</html>

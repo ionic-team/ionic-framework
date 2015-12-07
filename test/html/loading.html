@@ -23,6 +23,14 @@
             delay: 100,
             duration: 3000
           });
+          $ionicLoading.hide();
+          $ionicLoading.show({
+            //template: '<div>Connection problem.</div><br/><div>Please check your internet connection!</div>',
+            delay: 100,
+            duration: 3000
+          });
+
+          console.log('Loading', l);
         };
       });
     </script>

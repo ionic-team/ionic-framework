@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+    <title>Maps</title>
+
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3.15&sensor=true&region=PL&language=pl"></script>
+    <script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/tags/markerwithlabel/1.1.9/src/markerwithlabel.js"></script>
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <link rel="stylesheet" href="http://openlayers.org/en/v3.11.2/css/ol.css">
+    <script src="http://openlayers.org/en/v3.11.2/build/ol.js"></script>
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+    <style>
+    .map:-moz-full-screen {
+  height: 100%;
+}
+.map:-webkit-full-screen {
+  height: 100%;
+}
+.map:fullscreen {
+  height: 100%;
+}
+/* position the rotate control lower than usual */
+.ol-rotate {
+  top: 3em;
+}
+
+    </style>
+  </head>
+  <body ng-controller="mainCtrl">
+    <div class="row-fluid">
+      <div class="span12">
+        <div id="map" class="map" data-tap-disabled="true"></div>
+      </div>
+    </div>
+  <script>
+    var map = new ol.Map({
+      interactions: ol.interaction.defaults().extend([
+        new ol.interaction.DragRotateAndZoom()
+      ]),
+      layers: [
+        new ol.layer.Tile({
+          source: new ol.source.OSM({})
+        })
+      ],
+      // Use the canvas renderer because it's currently the fastest
+      target: 'map',
+      view: new ol.View({
+        center: [-33519607, 5616436],
+        rotation: -Math.PI / 8,
+        zoom: 8
+      })
+    });
+
+  </script>
+</body>
+</html>

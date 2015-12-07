@@ -1,0 +1,34 @@
+<html ng-app="ionicApp">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+  <title>Radio Buttons</title>
+
+  <link rel="stylesheet" href="../../dist/css/ionic.css">
+  <script src="../../../../dist/js/ionic.bundle.js"></script>
+</head>
+
+<body ng-controller="MainCtrl">
+
+<ion-header-bar class="bar-positive">
+  <h1 class="title">Radio Buttons</h1>
+</ion-header-bar>
+
+<ion-content>
+<div class="list">
+  <div class="item range range-positive">
+    <i class="icon ion-ios-sunny-outline"></i>
+    <input type="range" name="volume" min="0" max="100" value="33">
+    <i class="icon ion-ios-sunny"></i>
+  </div>
+</div>
+</ion-content>
+<script>
+angular.module('ionicApp', ['ionic'])
+.controller('MainCtrl', function($scope) {
+  $scope.formData = {};
+});
+</script>
+</body>
+</html>
