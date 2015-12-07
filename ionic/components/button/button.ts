@@ -37,7 +37,8 @@ export class Button {
   ) {
     this._role = 'button'; // bar-button/item-button
     this._size = null; // large/small
-    this._style = null; // outline/clear
+    this._style = null; // outline/clear/solid
+    this._shape = null; // round/fab
     this._display = null; // block/full
     this._colors = []; // primary/secondary
     this._icon = null; // left/right/only
@@ -118,6 +119,9 @@ export class Button {
       } else if (BUTTON_DISPLAY_ATTRS.indexOf(attrName) > -1) {
         this._display = attrName;
 
+      } else if (BUTTON_SHAPE_ATTRS.indexOf(attrName) > -1) {
+        this._shape = attrName;
+
       } else if (BUTTON_SIZE_ATTRS.indexOf(attrName) > -1) {
         this._size = attrName;
 
@@ -131,12 +135,17 @@ export class Button {
     let role = this._role;
     if (role) {
       this.renderer.setElementClass(this.elementRef, role, assignCssClass); // button
+
       this._setClass(this._style, assignCssClass); // button-clear
+      this._setClass(this._style, assignCssClass); // button-clear
+      this._setClass(this._shape, assignCssClass); // button-round
       this._setClass(this._display, assignCssClass); // button-full
       this._setClass(this._size, assignCssClass); // button-small
       this._setClass(this._icon, assignCssClass); // button-icon-left
+
+      let colorStyle = (this._style && this._style !== 'solid' ? this._style + '-' : '');
       this._colors.forEach(color => {
-        this._setClass(color, assignCssClass); // button-secondary
+        this._setClass(colorStyle + color, assignCssClass); // button-secondary
       });
     }
   }
@@ -157,7 +166,8 @@ export class Button {
 }
 
 const BUTTON_SIZE_ATTRS = ['large', 'small'];
-const BUTTON_STYLE_ATTRS = ['round', 'clear', 'outline', 'fab', 'solid'];
+const BUTTON_STYLE_ATTRS = ['clear', 'outline', 'solid'];
+const BUTTON_SHAPE_ATTRS = ['round', 'fab'];
 const BUTTON_DISPLAY_ATTRS = ['block', 'full'];
 const IGNORE_ATTRS = /_ng/;
 
