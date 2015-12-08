@@ -1,5 +1,4 @@
 @import "../../../globals.md";
-@import "../radio";
 
 // Material Design Radio
 // --------------------------------------------------
@@ -17,9 +16,12 @@ $radio-md-transition-duration:    280ms !default;
 $radio-md-transition-easing:      cubic-bezier(.4, 0, .2, 1) !default;
 
 $radio-md-disabled-text-color:    $subdued-text-md-color !default;
+$radio-md-disabled-opacity:       0.5 !default;
 
 
 ion-radio {
+  cursor: pointer;
+  @include user-select-none();
 
   &[aria-checked=true] {
     color: $radio-md-color-on;
@@ -37,6 +39,8 @@ ion-radio {
 
 ion-radio[aria-disabled=true] {
   color: $radio-md-disabled-text-color;
+  opacity: $radio-md-disabled-opacity;
+  pointer-events: none;
 }
 
 .radio-icon {

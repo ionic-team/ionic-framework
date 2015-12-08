@@ -1,5 +1,4 @@
 @import "../../../globals.ios";
-@import "../radio";
 
 // iOS Radio
 // --------------------------------------------------
@@ -12,9 +11,12 @@ $radio-ios-icon-border-width:      2px !default;
 $radio-ios-icon-border-style:      solid !default;
 
 $radio-ios-disabled-text-color:    $subdued-text-ios-color !default;
+$radio-ios-disabled-opacity:       0.5 !default;
 
 
 ion-radio {
+  cursor: pointer;
+  @include user-select-none();
 
   &[aria-checked=true] {
     color: $radio-ios-color-on;
@@ -43,6 +45,8 @@ ion-radio {
 
 ion-radio[aria-disabled=true] {
   color: $radio-ios-disabled-text-color;
+  opacity: $radio-ios-disabled-opacity;
+  pointer-events: none;
 }
 
 .radio-media {
