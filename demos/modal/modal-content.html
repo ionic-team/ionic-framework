@@ -1,0 +1,8 @@
+<ion-navbar *navbar>
+  <ion-title>Modals</ion-title>
+</ion-navbar>
+
+<ion-content padding>
+  <div [class.hide]="!myParam">Parameters entered: {{myParam}}</div>
+  <button danger full (click)="closeModal()">Close Modal</button>
+</ion-content>
