@@ -1,4 +1,4 @@
-import {Component, Directive, NgIf, forwardRef, Host, Optional, ElementRef, Renderer, Attribute} from 'angular2/angular2';
+import {Component, Directive, Attribute, NgIf, forwardRef, Host, Optional, ElementRef, Renderer, Attribute} from 'angular2/angular2';
 
 import {NavController} from '../nav/nav-controller';
 import {Config} from '../../config/config';
@@ -73,7 +73,9 @@ export class TextInput {
     app: IonicApp,
     platform: Platform,
     @Optional() @Host() scrollView: Content,
-    @Optional() navCtrl: NavController
+    @Optional() navCtrl: NavController,
+    @Attribute('floating-label') isFloating: string,
+    @Attribute('stacked-label') isStacked: string
   ) {
     this.renderer = renderer;
 
@@ -82,6 +84,7 @@ export class TextInput {
 
     this.type = 'text';
     this.lastTouch = 0;
+    this.displayType = (isFloating === '' ? 'floating' : (isStacked === '' ? 'stacked' : null));
 
     this.app = app;
     this.elementRef = elementRef;
@@ -105,6 +108,9 @@ export class TextInput {
    * @private
    */
   registerInput(textInputElement) {
+    if (this.displayType) {
+      textInputElement.addClass(this.displayType + '-input');
+    }
     this.input = textInputElement;
     this.type = textInputElement.type || 'text';
   }
@@ -113,6 +119,9 @@ export class TextInput {
    * @private
    */
   registerLabel(label) {
+    if (this.displayType) {
+      label.addClass(this.displayType + '-label');
+    }
     this.label = label;
   }
 
@@ -541,6 +550,10 @@ export class TextInputElement {
 
   get hasFocus() {
     return dom.hasFocus(this.getNativeElement());
+  }
+
+  addClass(className) {
+    this.renderer.setElementClass(this.elementRef, className, true);
   }
 
   getNativeElement() {

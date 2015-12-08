@@ -1,4 +1,4 @@
-import {Directive, Optional} from 'angular2/angular2';
+import {Directive, Optional, ElementRef, Renderer} from 'angular2/angular2';
 
 import {Config} from '../../config/config';
 import {TextInput} from './text-input';
@@ -35,7 +35,12 @@ import {pointerCoord, hasPointerMoved} from '../../util/dom';
 })
 export class Label {
 
-  constructor(config: Config, @Optional() container: TextInput) {
+  constructor(
+    config: Config,
+    @Optional() container: TextInput,
+    private elementRef: ElementRef,
+    private renderer: Renderer
+  ) {
     this.scrollAssist = config.get('scrollAssist');
     if (!this.id) {
       this.id = 'lbl-' + (++labelIds);
@@ -72,6 +77,10 @@ export class Label {
 
       this.startCoord = null;
     }
+  }
+
+  addClass(className) {
+    this.renderer.setElementClass(this.elementRef, className, true);
   }
 
 }
