@@ -31,23 +31,23 @@ $button-fab-size:           56px !default;
 
 }
 
-.button-fab-center {
+[fab-center] {
   left: 50%;
   margin-left: -$button-fab-size / 2;
 }
 
-.button-fab-top {
+[fab-top] {
   top: 16px;
 }
 
-.button-fab-right {
+[fab-right] {
   right: 16px;
 }
 
-.button-fab-bottom {
+[fab-bottom] {
   bottom: 16px;
 }
 
-.button-fab-left {
+[fab-left] {
   left: 16px;
 }
