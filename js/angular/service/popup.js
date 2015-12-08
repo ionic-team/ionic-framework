@@ -450,7 +450,23 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
   }
 
   function showAlert(opts) {
+    var keyPressHandlers = {
+        "13": function (popup) { // 13 = Enter = OK
+            var button = popup.scope.buttons[0];
+            var tapper = popup.scope.$buttonTapped;
+            var fclick = new MouseEvent('click', { 'view':window, 'bubbles':true, 'cancelable':true });
+            tapper(button,fclick);
+        },
+        "27": function (popup) { // 27 = Esc = Cancel
+            var button = popup.scope.buttons[0];
+            var tapper = popup.scope.$buttonTapped;
+            var fclick = new MouseEvent('click', { 'view':window, 'bubbles':true, 'cancelable':true });
+            tapper(button,fclick);
+        }
+    };
+
     return showPopup(extend({
+      keyPressHandlers: keyPressHandlers,
       buttons: [{
         text: opts.okText || 'OK',
         type: opts.okType || 'button-positive',
@@ -462,7 +478,23 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
   }
 
   function showConfirm(opts) {
+      var keyPressHandlers = {
+        "13": function (popup) { // 13 = Enter = OK
+            var button = popup.scope.buttons[1];
+            var tapper = popup.scope.$buttonTapped;
+            var fclick = new MouseEvent('click', { 'view':window, 'bubbles':true, 'cancelable':true });
+            tapper(button,fclick);
+        },
+        "27": function (popup) { // 27 = Esc = Cancel
+            var button = popup.scope.buttons[0];
+            var tapper = popup.scope.$buttonTapped;
+            var fclick = new MouseEvent('click', { 'view':window, 'bubbles':true, 'cancelable':true });
+            tapper(button,fclick);
+        }
+    };
+
     return showPopup(extend({
+      keyPressHandlers: keyPressHandlers,
       buttons: [{
         text: opts.cancelText || 'Cancel',
         type: opts.cancelType || 'button-default',
