@@ -10,6 +10,8 @@ import {StorageEngine} from './storage';
  * by the operating system (iOS).
  *
  * For guaranteed, long-term storage, use the SqlStorage engine which stores data in a file.
+ * @demo /docs/v2/demos/local-storage/
+ * @see {@link /docs/v2/platform/storage/ Storage Platform Docs}
  */
 export class LocalStorage extends StorageEngine {
   constructor() {

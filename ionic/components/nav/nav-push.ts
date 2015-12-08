@@ -36,7 +36,9 @@ import {NavRegistry} from './nav-registry';
  * ```html
  * <button [nav-push]="[pushPage, params]"></button>
  * ```
+ * @demo /docs/v2/demos/nav-push-pop/
  * @see {@link /docs/v2/components#navigation Navigation Component Docs}
+ * @see {@link ../NavPop NavPop API Docs}
  */
 @Directive({
   selector: '[nav-push]',
@@ -87,6 +89,9 @@ export class NavPush {
 
 /**
  * TODO
+ * @demo /docs/v2/demos/nav-push-pop/
+ * @see {@link /docs/v2/components#navigation Navigation Component Docs}
+ * @see {@link ../NavPush NavPush API Docs}
  */
 @Directive({
   selector: '[nav-pop]',
