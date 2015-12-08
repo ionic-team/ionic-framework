@@ -461,12 +461,14 @@ export class TextInputElement {
     this.type = type;
     this.elementRef = elementRef;
     this.wrapper = wrapper;
-
     this.renderer = renderer;
-    renderer.setElementAttribute(this.elementRef, 'text-input', '');
+
+    // all text inputs (textarea, input[type=text],input[type=password], etc)
+    renderer.setElementClass(elementRef, 'text-input', true);
 
     if (wrapper) {
       // it's within ionic's ion-input, let ion-input handle what's up
+      renderer.setElementClass(elementRef, 'item-input', true);
       wrapper.registerInput(this);
     }
   }

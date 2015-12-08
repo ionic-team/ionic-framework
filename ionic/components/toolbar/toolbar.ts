@@ -151,19 +151,21 @@ export class ToolbarTitle extends Ion {
 @Directive({
   selector: 'ion-buttons,[menu-toggle]'
 })
-export class ToolbarItem extends Ion {
+export class ToolbarItem {
   constructor(
     elementRef: ElementRef,
     @Optional() toolbar: Toolbar,
     @Optional() @Inject(forwardRef(() => Navbar)) navbar: Navbar
   ) {
-    super(elementRef, null);
     toolbar && toolbar.addItemRef(elementRef);
     navbar && navbar.addItemRef(elementRef);
+    this.inToolbar = !!(toolbar || navbar);
   }
 
   @ContentChildren(Button)
   set _buttons(buttons) {
-    Button.setRoles(buttons, 'bar-button');
+    if (this.inToolbar) {
+      Button.setRoles(buttons, 'bar-button');
+    }
   }
 }

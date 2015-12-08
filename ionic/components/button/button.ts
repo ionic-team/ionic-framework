@@ -169,7 +169,7 @@ const BUTTON_SIZE_ATTRS = ['large', 'small'];
 const BUTTON_STYLE_ATTRS = ['clear', 'outline', 'solid'];
 const BUTTON_SHAPE_ATTRS = ['round', 'fab'];
 const BUTTON_DISPLAY_ATTRS = ['block', 'full'];
-const IGNORE_ATTRS = /_ng|button/;
+const IGNORE_ATTRS = /_ng|button|left|right/;
 
 const TEXT = 1;
 const ICON = 2;

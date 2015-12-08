@@ -33,18 +33,9 @@
 // Menu Toggle
 // --------------------------------------------------
 
-.toolbar [menu-toggle] {
+.bar-button-menu-toggle {
   display: flex;
   align-items: center;
-  margin: 0 6px;
-  padding: 0;
-  min-width: 36px;
-  box-shadow: none;
-}
-
-.toolbar [menu-toggle] icon {
-  padding: 0 6px;
-  font-size: 2.8rem;
 }
 
 
