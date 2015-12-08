@@ -111,4 +111,8 @@ ion-segment {
 
 @each $color-name, $color-value in $colors-ios {
   @include ios-segment-button($color-name, $color-value);
+
+  .toolbar[#{$color-name}] .segment-button.segment-activated {
+    color: $color-value;
+  }
 }
