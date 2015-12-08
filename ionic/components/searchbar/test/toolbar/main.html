@@ -5,17 +5,17 @@
 <ion-content>
   <h5 padding-left padding-top> Search - Default Toolbar </h5>
   <ion-toolbar>
-    <ion-searchbar [(ng-model)]="toolbarSearch" show-cancel="true"></ion-searchbar>
+    <ion-searchbar [(ng-model)]="defaultToolbarSearch" show-cancel="true" class="e2eDefaultToolbarSearchbar"></ion-searchbar>
   </ion-toolbar>
 
   <h5 padding-left padding-top> Search - Primary Toolbar </h5>
   <ion-toolbar primary>
-    <ion-searchbar [(ng-model)]="toolbarSearch" show-cancel="true"></ion-searchbar>
+    <ion-searchbar [(ng-model)]="primaryToolbarSearch" show-cancel="true" class="e2ePrimaryToolbarSearchbar"></ion-searchbar>
   </ion-toolbar>
 
   <h5 padding-left padding-top> Search - Danger Toolbar </h5>
   <ion-toolbar danger>
-    <ion-searchbar [(ng-model)]="toolbarSearch" show-cancel="true"></ion-searchbar>
+    <ion-searchbar [(ng-model)]="dangerToolbarSearch" show-cancel="true" class="e2eDangerToolbarSearchbar"></ion-searchbar>
   </ion-toolbar>
 
 </ion-content>
