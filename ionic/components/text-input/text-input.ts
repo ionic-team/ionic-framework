@@ -75,7 +75,8 @@ export class TextInput {
     @Optional() @Host() scrollView: Content,
     @Optional() navCtrl: NavController,
     @Attribute('floating-label') isFloating: string,
-    @Attribute('stacked-label') isStacked: string
+    @Attribute('stacked-label') isStacked: string,
+    @Attribute('fixed-label') isFixed: string
   ) {
     this.renderer = renderer;
 
@@ -84,7 +85,9 @@ export class TextInput {
 
     this.type = 'text';
     this.lastTouch = 0;
-    this.displayType = (isFloating === '' ? 'floating' : (isStacked === '' ? 'stacked' : null));
+
+    // make more gud with pending @Attributes API
+    this.displayType = (isFloating === '' ? 'floating' : (isStacked === '' ? 'stacked' : (isFixed === '' ? 'fixed' : null)));
 
     this.app = app;
     this.elementRef = elementRef;
