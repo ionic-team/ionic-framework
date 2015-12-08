@@ -16,8 +16,7 @@ $item-md-divider-bg:                 #fff !default;
 $item-md-divider-color:              #222 !default;
 $item-md-divider-padding:            5px 15px !default;
 
-$item-md-sliding-content-bg:         $background-md-color !default;
-$item-md-sliding-transition:         transform 250ms ease-in-out !default;
+$item-md-sliding-content-bg:         $list-md-background-color !default;
 
 
 .item {
@@ -183,4 +182,12 @@ ion-item-divider {
   padding: $item-md-padding-top $item-md-padding-right $item-md-padding-bottom $item-md-padding-left;
   background-color: $item-md-divider-bg;
   color: $item-md-divider-color;
+}
+
+
+// Material Design Item Sliding
+// --------------------------------------------------
+
+ion-item-sliding {
+  background-color: $item-md-sliding-content-bg;
 }

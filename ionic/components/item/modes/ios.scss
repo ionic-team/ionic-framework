@@ -14,8 +14,7 @@ $item-ios-divider-bg:                 #f7f7f7 !default;
 $item-ios-divider-color:              #222 !default;
 $item-ios-divider-padding:            5px 15px !default;
 
-$item-ios-sliding-content-bg:         $background-ios-color !default;
-$item-ios-sliding-transition:         transform 250ms ease-in-out !default;
+$item-ios-sliding-content-bg:         $list-ios-background-color !default;
 
 
 // iOS Item
@@ -80,6 +79,10 @@ $item-ios-sliding-transition:         transform 250ms ease-in-out !default;
 .item-inner {
   padding-right: ($item-ios-padding-right / 2);
   border-bottom: 1px solid $list-ios-border-color;
+}
+
+&.hairlines .item-inner {
+  border-bottom-width: 0.55px;
 }
 
 ion-item-content {
@@ -209,6 +212,9 @@ ion-item-divider {
 }
 
 
-&.hairlines .item-inner {
-  border-bottom-width: 0.55px;
+// iOS Item Sliding
+// --------------------------------------------------
+
+ion-item-sliding {
+  background-color: $item-ios-sliding-content-bg;
 }
