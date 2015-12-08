@@ -12,7 +12,7 @@ import {NavController} from '../nav/nav-controller';
  */
 @Component({
   selector: 'ion-overlay',
-  template: '<template #contents></template>'
+  template: ''
 })
 export class OverlayNav extends NavController {
 
@@ -28,12 +28,13 @@ export class OverlayNav extends NavController {
     renderer: Renderer,
     cd: ChangeDetectorRef
   ) {
-    super(null, app, config, keyboard, elementRef, compiler, viewManager, zone, renderer, cd);
+    super(null, app, config, keyboard, elementRef, null, compiler, viewManager, zone, renderer, cd);
 
     if (overlayCtrl.anchor) {
       throw ('An app should only have one <ion-overlay></ion-overlay>');
     }
 
+    this.initZIndex = 1000;
     overlayCtrl.nav = this;
   }
 

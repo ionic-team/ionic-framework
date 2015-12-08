@@ -107,6 +107,7 @@ export class NavController extends Ion {
     config: Config,
     keyboard: Keyboard,
     elementRef: ElementRef,
+    anchorName: string,
     compiler: Compiler,
     viewManager: AppViewManager,
     zone: NgZone,
@@ -119,6 +120,7 @@ export class NavController extends Ion {
     this.app = app;
     this.config = config;
     this.keyboard = keyboard;
+    this._anchorName = anchorName;
 
     this._compiler = compiler;
     this._viewManager = viewManager;
@@ -134,6 +136,7 @@ export class NavController extends Ion {
     this._sbEnabled = config.get('swipeBackEnabled') || false;
     this._sbThreshold = config.get('swipeBackThreshold') || 40;
 
+    this.initZIndex = 10;
     this.id = ++ctrlIds;
     this._ids = -1;
 
@@ -484,7 +487,7 @@ export class NavController extends Ion {
    */
   setViews(components, opts = {}) {
     console.warn('setViews() deprecated, use setPages() instead');
-    this.setPages(components, opts);
+    return this.setPages(components, opts);
   }
 
   /**
@@ -906,7 +909,10 @@ export class NavController extends Ion {
         provide(NavParams, {useValue: viewCtrl.params})
       ]));
 
-      let location = this._viewManager.getNamedElementInComponentView(this.elementRef, 'contents');
+      let location = this.elementRef;
+      if (this._anchorName) {
+        location = this._viewManager.getNamedElementInComponentView(location, this._anchorName);
+      }
 
       let viewContainer = this._viewManager.getViewContainer(location);
       let hostViewRef =
@@ -973,7 +979,7 @@ export class NavController extends Ion {
     let enteringPageRef = enteringView && enteringView.pageRef();
     if (enteringPageRef) {
       if (!leavingView || !leavingView.isLoaded()) {
-        enteringView.zIndex = 10;
+        enteringView.zIndex = this.initZIndex;
 
       } else if (direction === 'back') {
         // moving back

@@ -123,7 +123,7 @@ export class Nav extends NavController {
     renderer: Renderer,
     cd: ChangeDetectorRef
   ) {
-    super(hostNavCtrl, app, config, keyboard, elementRef, compiler, viewManager, zone, renderer, cd);
+    super(hostNavCtrl, app, config, keyboard, elementRef, 'contents', compiler, viewManager, zone, renderer, cd);
 
     if (viewCtrl) {
       // an ion-nav can also act as an ion-page within a parent ion-nav
