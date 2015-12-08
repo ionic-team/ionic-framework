@@ -134,6 +134,10 @@ ion-list[inset] {
   margin: $list-inset-ios-margin-top $list-inset-ios-margin-right $list-inset-ios-margin-bottom $list-inset-ios-margin-left;
   border-radius: $list-inset-ios-border-radius;
 
+  ion-list-header {
+    background-color: $list-ios-background-color;
+  }
+
   .item {
     border-bottom: 1px solid $list-ios-border-color;
 
