@@ -115,6 +115,8 @@ ion-buttons[right] {
   border: 0;
   font-size: $toolbar-md-button-font-size;
   border-radius: $bar-button-md-border-radius;
+  text-transform: uppercase;
+  font-weight: 500;
 }
 
 @mixin md-bar-button-default($color-name, $color-value) {

@@ -18,12 +18,7 @@ $segment-button-ios-font-size:                1.3rem !default;
 $segment-button-ios-border-radius:            4px !default;
 
 $segment-button-ios-toolbar-button-max-width: 100px !default;
-$segment-button-ios-padding:                  0 16px !default;
 
-
-ion-segment {
-  padding: $segment-button-ios-padding;
-}
 
 .segment-button {
   min-height: $segment-button-ios-min-height;
