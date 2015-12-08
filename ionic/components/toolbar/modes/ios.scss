@@ -274,15 +274,21 @@ ion-buttons[right] {
 // iOS Toolbar Menu Toggle
 // --------------------------------------------------
 
-.toolbar {
-  [menu-toggle] {
-    order: map-get($toolbar-order-ios, menu-toggle-start);
-  }
+.bar-button-menu-toggle {
+  margin: 0 6px;
+  padding: 0;
+  min-width: 36px;
+  order: map-get($toolbar-order-ios, menu-toggle-start);
 
-  [menu-toggle][end],
-  [menu-toggle][right] {
-    order: map-get($toolbar-order-ios, menu-toggle-end);
+  icon {
+    padding: 0 6px;
+    font-size: 2.8rem;
   }
+}
+
+.bar-button-menu-toggle[end],
+.bar-button-menu-toggle[right] {
+  order: map-get($toolbar-order-ios, menu-toggle-end);
 }
 
 
