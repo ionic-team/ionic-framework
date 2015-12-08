@@ -396,8 +396,8 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
     // popup.keyPressHandlers is a list of event-listener handles returned by addEventListener()
     // and is used to unbind these event listeners when the popup is closing ("then" block below)
     popup.element[0].keyPressHandlers = options.keyPressHandlers || {};
-    popup.keylistener = popup.element[0].addEventListener('keypress', function (keyEvent) {
-        var userfunc = this.keyPressHandlers[keyEvent.keyCode];
+    popup.keylistener = window.addEventListener('keypress', function (keyEvent) {
+        var userfunc = popup.element[0].keyPressHandlers[keyEvent.keyCode];
         if (userfunc) userfunc(popup);
     });
 
@@ -415,7 +415,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
           popupStack.splice(index, 1);
         }
 
-        popup.element[0].removeEventListener('keypress', popup.keylistener);
+        window.removeEventListener('keypress', popup.keylistener);
 
         popup.remove();
 
