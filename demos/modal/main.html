@@ -3,7 +3,21 @@
 </ion-navbar>
 
 <ion-content padding>
-  <button (click)="openModal()">Open Modal</button>
+  <ion-row>
+    <button secondary clear (click)="openBasicModal()">Open Basic Modal</button>    
+  </ion-row>
+  <ion-row>
+    <button secondary outline (click)="openCustomAnimationModal()">Open With Custom Animation</button>    
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <button secondary (click)="openModalWithParams()">Pass Params</button>
+    </ion-col>
+    <ion-col>
+      <ion-input floating-label style="margin-top: -10px">
+        <ion-label>Params</ion-label>
+        <input [(ng-model)]="myParam" type="text" value="">
+      </ion-input>
+    </ion-col>
+  </ion-row>
 </ion-content>
-
-<ion-overlay></ion-overlay>
