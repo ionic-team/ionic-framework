@@ -35,7 +35,7 @@ ion-badge {
 
 @each $color-name, $color-value in $colors {
 
-  .badge-#{$color-name} {
+  ion-badge[#{$color-name}] {
     background-color: $color-value;
     color: inverse($color-value);
   }
