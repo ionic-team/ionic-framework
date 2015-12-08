@@ -10,6 +10,7 @@
   var IOS = 'ios';
   var ANDROID = 'android';
   var WINDOWS_PHONE = 'windowsphone';
+  var EDGE = 'edge';
   var requestAnimationFrame = ionic.requestAnimationFrame;
 
   /**
@@ -229,6 +230,14 @@
     isWindowsPhone: function() {
       return self.is(WINDOWS_PHONE);
     },
+    /**
+     * @ngdoc method
+     * @name ionic.Platform#isEdge
+     * @returns {boolean} Whether we are running on MS Edge/Windows 10 (inc. Phone)
+     */
+    isEdge: function() {
+      return self.is(EDGE);
+    },
 
     /**
      * @ngdoc method
@@ -249,6 +258,8 @@
         platformName = n.toLowerCase();
       } else if (getParameterByName('ionicplatform')) {
         platformName = getParameterByName('ionicplatform');
+      } else if (self.ua.indexOf('Edge') > -1) {
+        platformName = EDGE;
       } else if (self.ua.indexOf('Windows Phone') > -1) {
         platformName = WINDOWS_PHONE;
       } else if (self.ua.indexOf('Android') > 0) {
