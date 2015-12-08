@@ -120,7 +120,7 @@ ionic.tap = {
     if (window.navigator.pointerEnabled) {
       tapEventListener('pointerdown');
       tapEventListener('pointerup');
-      tapEventListener('pointcancel');
+      tapEventListener('pointercancel');
       tapTouchMoveListener = 'pointermove';
 
     } else if (window.navigator.msPointerEnabled) {
