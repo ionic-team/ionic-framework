@@ -1,0 +1,50 @@
+<ion-navbar *navbar>
+  <ion-title>Local Storage</ion-title>
+</ion-navbar>
+
+<ion-content padding>
+
+  <ion-row>
+    <ion-col width-33>
+      <ion-input>
+        <input type="text" placeholder="Key" [(ng-model)]="myItem.key">
+      </ion-input>
+    </ion-col>
+
+    <ion-col width-33>
+      <ion-input>
+        <input type="text" placeholder="Value" [(ng-model)]="myItem.value">
+      </ion-input>
+    </ion-col>
+
+    <ion-col width-34>
+      <button full secondary (click)="set()">
+        <icon add></icon>
+        set()
+      </button>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+
+    <ion-col width-33>
+      <ion-input>
+        <input type="text" placeholder="Key" [(ng-model)]="delKey">
+      </ion-input>
+    </ion-col>
+
+    <ion-col width-34 offset-33>
+      <button full danger (click)="remove()">
+        <icon remove></icon>
+        remove()
+      </button>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <b>Local Storage:</b>
+    <ion-col>
+    {{localStorageDemo}}
+    </ion-col>
+  </ion-row>
+<ion-content>
