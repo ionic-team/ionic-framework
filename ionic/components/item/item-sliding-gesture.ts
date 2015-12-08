@@ -30,7 +30,9 @@ export class ItemSlidingGesture extends DragGesture {
     };
 
     this.mouseOut = (ev) => {
-      this.onDragEnd(ev);
+      if (ev.target.tagName === 'ION-ITEM-SLIDING') {
+        this.onDragEnd(ev);
+      }
     };
   }
 
@@ -53,10 +55,6 @@ export class ItemSlidingGesture extends DragGesture {
 
     this.set(itemContainerEle, 'offsetX', openAmout);
     this.set(itemContainerEle, 'startX', ev.center[this.direction]);
-
-    if (ev.srcEvent.type.indexOf('mouse') > -1) {
-      ev.target.addEventListener('mouseout', this.mouseOut);
-    }
 
     this.dragEnded = false;
   }
@@ -85,6 +83,11 @@ export class ItemSlidingGesture extends DragGesture {
     if (newX > itemData.optsWidth) {
       // Calculate the new X position, capped at the top of the buttons
       newX = -Math.min(-itemData.optsWidth, -itemData.optsWidth + (((delta + itemData.optsWidth) * 0.4)));
+    }
+
+    if (newX > 5 && ev.srcEvent.type.indexOf('mouse') > -1 && !itemData.hasMouseOut) {
+      itemContainerEle.addEventListener('mouseout', this.mouseOut);
+      itemData.hasMouseOut = true;
     }
 
     raf(() => {
@@ -119,7 +122,8 @@ export class ItemSlidingGesture extends DragGesture {
       }
     }
 
-    ev.target.removeEventListener('mouseout', this.mouseOut);
+    itemContainerEle.removeEventListener('mouseout', this.mouseOut);
+    itemData.hasMouseOut = false;
 
     raf(() => {
       this.open(itemContainerEle, restingPoint, true);
