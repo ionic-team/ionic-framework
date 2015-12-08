@@ -52,11 +52,10 @@ figure {
   margin: 1em 40px;
 }
 
-// Address differences between Firefox and other browsers.
 hr {
-  -moz-box-sizing: content-box;
   box-sizing: content-box;
-  height: 0;
+  height: 1px;
+  border-width: 0;
 }
 
 // Contain overflow in all browsers.

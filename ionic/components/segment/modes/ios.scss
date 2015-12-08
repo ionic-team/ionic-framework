@@ -18,11 +18,15 @@ $segment-button-ios-hover-opacity:            0.16 !default;
 
 $segment-button-ios-toolbar-button-max-width: 100px !default;
 
+$segment-button-ios-padding:    0 16px !default;
+
 
 ion-segment {
+  padding: $segment-button-ios-padding;
 
   button,
   [button] {
+    border-width: 1px 0px 1px 1px;
     border-width: $segment-button-ios-border-width;
     border-style: solid;
 
@@ -66,6 +70,12 @@ ion-segment {
     }
   }
 
+}
+
+ion-segment-button[button] {
+  line-height: 2.4rem;
+  min-height: 2.4rem;
+  font-size: 1.2rem;
 }
 
 .toolbar {

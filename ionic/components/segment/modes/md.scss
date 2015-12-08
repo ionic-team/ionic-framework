@@ -1,99 +1,80 @@
 @import "../../../globals.md";
 @import "../segment";
 
-// iOS Segment
+// Material Design Segment
 // --------------------------------------------------
 
-$segment-button-md-font-size:                  1.2rem !default;
+$segment-button-md-padding:                    0 6px !default;
 $segment-button-md-min-height:                 4.0rem !default;
 $segment-button-md-line-height:                4.0rem !default;
+$segment-button-md-font-size:                  1.2rem !default;
 
-$segment-button-md-text-color-activated:       map-get($colors-md, primary) !default;
-$segment-button-md-border-color-activated:     map-get($colors-md, primary) !default;
-$segment-button-md-border-bottom:              2px solid rgba(#000000, 0.10) !default;
+$segment-button-md-text-color-activated:       $toolbar-md-active-color !default;
+$segment-button-md-border-color-activated:     $toolbar-md-active-color !default;
+$segment-button-md-border-bottom-width:        2px !default;
+$segment-button-md-border-bottom-color:        rgba(#000000, 0.10) !default;
 
 
 .segment-button {
-  border-width: 0;
-  transition: 100ms all linear;
-  font-size: $segment-button-md-font-size;
-  opacity: 0.7;
+  padding: $segment-button-md-padding;
+  border-bottom-width: $segment-button-md-border-bottom-width;
+  border-bottom-style: solid;
+  border-bottom-color: $segment-button-md-border-bottom-color;
 
   min-height: $segment-button-md-min-height;
   line-height: $segment-button-md-line-height;
 
+  font-size: $segment-button-md-font-size;
+  text-transform: uppercase;
+  font-weight: 500;
+
+  opacity: 0.7;
+  color: $segment-button-md-text-color-activated;
+  background-color: transparent;
+  transition: 100ms all linear;
+
   &.activated,
   &.segment-activated {
-    color: $segment-button-md-text-color-activated;
-    background-color: transparent;
     border-color: $segment-button-md-border-color-activated;
   }
-
-  border-radius: 0;
-  border-bottom: $segment-button-md-border-bottom;
 }
 
 .toolbar {
 
   ion-segment {
     margin: 0 auto;
-
-    .segment-button.activated,
-    .segment-button.segment-activated {
-      background-color: transparent;
-      opacity: 1;
-    }
   }
 
-}
-
-// Generate Default Segment Colors
-// --------------------------------------------------
-
-@mixin segment-button($button-color) {
-  background-color: transparent;
-
-  color: $button-color;
-
-  &.activated, &.segment-activated {
-    background-color: transparent;
-    color: $button-color;
-    border-color: $button-color;
+  .segment-button.activated,
+  .segment-button.segment-activated {
     opacity: 1;
   }
+
 }
 
-// Loop through all of the colors to change the segment colors
-// based on the toolbar color or if it isn't in a toolbar then based on
-// the segment color value
+
+// Material Design Segment Button Mixin
+// --------------------------------------------------
+
+@mixin md-segment-button($color-name, $color-value) {
+
+  ion-segment[#{$color-name}] .segment-button {
+    color: $color-value;
+
+    &.activated,
+    &.segment-activated {
+      opacity: 1;
+      border-color: $color-value;
+      color: $color-value;
+    }
+  }
+
+}
+
+
+// Material Design Segment Color Generation
+// --------------------------------------------------
+
 @each $color-name, $color-value in $colors-md {
-  $inverse-color-value: inverse($color-value);
-
-  .toolbar[#{$color-name}] {
-
-    ion-segment {
-      .segment-button {
-        @include segment-button($inverse-color-value);
-      }
-    }
-
-    // Loop through all of the colors again to change the segment colors
-    // for each toolbar based on the segment color
-    // this will take priority over the default toolbar colors
-    @each $color-name, $color-value in $colors-md {
-      ion-segment[#{$color-name}] {
-        .segment-button {
-          @include segment-button($color-value);
-        }
-      }
-    }
-
-  }
-
-  ion-segment[#{$color-name}] {
-    .segment-button {
-      @include segment-button($color-value);
-    }
-
-  }
+  @include md-segment-button($color-name, $color-value);
 }

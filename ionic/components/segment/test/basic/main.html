@@ -25,8 +25,8 @@
   </ion-segment>
 </ion-toolbar>
 
-<ion-content padding>
-  <p>Are we friends or enemies? <b>{{ relationship }}</b></p>
+<div padding>
+  <div>Are we friends or enemies? <b>{{ relationship }}</b></div>
 
   <h4>Map mode: NgControl</h4>
 
@@ -80,10 +80,10 @@
   </ion-segment>
 
   <p>Model Style: <b>Model {{ modelStyle }}</b></p>
-</ion-content>
+</div>
 
 <ion-toolbar position="bottom" primary>
-  <ion-segment [(ng-model)]="appType">
+  <ion-segment [(ng-model)]="appType" light>
     <ion-segment-button value="paid">
       Primary
     </ion-segment-button>
@@ -96,8 +96,8 @@
   </ion-segment>
 </ion-toolbar>
 
-<ion-toolbar position="bottom" light>
-  <ion-segment [(ng-model)]="appType" primary>
+<ion-toolbar position="bottom">
+  <ion-segment [(ng-model)]="appType" danger>
     <ion-segment-button value="paid">
       Light
     </ion-segment-button>
@@ -110,8 +110,8 @@
   </ion-segment>
 </ion-toolbar>
 
-<ion-toolbar position="bottom" light>
-  <ion-segment [(ng-model)]="appType">
+<ion-toolbar position="bottom">
+  <ion-segment [(ng-model)]="appType" dark>
     <ion-segment-button value="paid">
       Light
     </ion-segment-button>

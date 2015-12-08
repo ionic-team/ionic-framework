@@ -277,19 +277,12 @@ ion-buttons[right] {
 .toolbar {
   [menu-toggle] {
     order: map-get($toolbar-order-ios, menu-toggle-start);
-    cursor: pointer;
   }
 
   [menu-toggle][end],
   [menu-toggle][right] {
     order: map-get($toolbar-order-ios, menu-toggle-end);
   }
-}
-
-ion-segment-button[button] {
-  line-height: 2.4rem;
-  min-height: 2.4rem;
-  font-size: 1.2rem;
 }
 
 
