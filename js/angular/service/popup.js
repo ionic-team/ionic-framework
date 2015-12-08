@@ -395,7 +395,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
     // options.keyPressHandlers is the user-generated assoc:   keycode => function()
     // popup.keyPressHandlers is a list of event-listener handles returned by addEventListener()
     // and is used to unbind these event listeners when the popup is closing ("then" block below)
-    popup.element[0].keyPressHandlers = options.keyPressHandlers || {};
+    popup.element[0].keyPressHandlers = options.keyPressHandlers ? options.keyPressHandlers : {};
     popup.keylistener = window.addEventListener('keypress', function (keyEvent) {
         var userfunc = popup.element[0].keyPressHandlers[keyEvent.keyCode];
         if (userfunc) userfunc(popup);
