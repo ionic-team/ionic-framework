@@ -454,14 +454,14 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
         "13": function (popup) { // 13 = Enter = OK
             var button = popup.scope.buttons[0];
             var tapper = popup.scope.$buttonTapped;
-            var fclick = new MouseEvent('click', { 'view':window, 'bubbles':true, 'cancelable':true });
-            tapper(button,fclick);
+            var fclick = new MouseEvent('click', { 'view': window, 'bubbles': true, 'cancelable': true });
+            tapper(button, fclick);
         },
         "27": function (popup) { // 27 = Esc = Cancel
             var button = popup.scope.buttons[0];
             var tapper = popup.scope.$buttonTapped;
-            var fclick = new MouseEvent('click', { 'view':window, 'bubbles':true, 'cancelable':true });
-            tapper(button,fclick);
+            var fclick = new MouseEvent('click', { 'view': window, 'bubbles': true, 'cancelable': true });
+            tapper(button, fclick);
         }
     };
 
@@ -482,14 +482,14 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
         "13": function (popup) { // 13 = Enter = OK
             var button = popup.scope.buttons[1];
             var tapper = popup.scope.$buttonTapped;
-            var fclick = new MouseEvent('click', { 'view':window, 'bubbles':true, 'cancelable':true });
-            tapper(button,fclick);
+            var fclick = new MouseEvent('click', { 'view': window, 'bubbles': true, 'cancelable': true });
+            tapper(button, fclick);
         },
         "27": function (popup) { // 27 = Esc = Cancel
             var button = popup.scope.buttons[0];
             var tapper = popup.scope.$buttonTapped;
-            var fclick = new MouseEvent('click', { 'view':window, 'bubbles':true, 'cancelable':true });
-            tapper(button,fclick);
+            var fclick = new MouseEvent('click', { 'view': window, 'bubbles': true, 'cancelable': true });
+            tapper(button, fclick);
         }
     };
 
@@ -525,14 +525,14 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
         "13": function (popup) { // 13 = Enter = OK
             var button = popup.scope.buttons[1];
             var tapper = popup.scope.$buttonTapped;
-            var fclick = new MouseEvent('click', { 'view':window, 'bubbles':true, 'cancelable':true });
-            tapper(button,fclick);
+            var fclick = new MouseEvent('click', { 'view': window, 'bubbles': true, 'cancelable': true });
+            tapper(button, fclick);
         },
         "27": function (popup) { // 27 = Esc = Cancel
             var button = popup.scope.buttons[0];
             var tapper = popup.scope.$buttonTapped;
-            var fclick = new MouseEvent('click', { 'view':window, 'bubbles':true, 'cancelable':true });
-            tapper(button,fclick);
+            var fclick = new MouseEvent('click', { 'view': window, 'bubbles': true, 'cancelable': true });
+            tapper(button, fclick);
         }
     };
 
