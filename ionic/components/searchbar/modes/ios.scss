@@ -177,9 +177,14 @@ ion-searchbar {
 @each $color-name, $color-value in $colors-ios {
 
   ion-searchbar[#{$color-name}] {
-
     .searchbar-ios-cancel {
       color: $color-value;
+    }
+  }
+
+  .toolbar[#{$color-name}] ion-searchbar {
+    .searchbar-ios-cancel {
+      color: inverse($color-value);
     }
   }
 

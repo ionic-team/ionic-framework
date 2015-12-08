@@ -7,9 +7,6 @@ import {SearchPipe} from 'ionic/components/searchbar/searchbar';
   templateUrl: 'main.html'
 })
 class E2EApp {
-  DefaultToolbarSearch: string;
-  PrimaryToolbarSearch: string;
-  DangerToolbarSearch: string;
 
   constructor() {
 
