@@ -209,8 +209,6 @@ ion-item-divider {
 }
 
 
-&.hairlines {
-  .item-inner {
-    border-bottom-width: 0.55px;
-  }
+&.hairlines .item-inner {
+  border-bottom-width: 0.55px;
 }

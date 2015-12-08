@@ -13,11 +13,15 @@
   margin: 0;
   padding: 0;
   border: 0;
+  width: 100%;
   min-height: 4.4rem;
-  text-align: initial;
   overflow: hidden;
 
-  box-sizing: border-box;
+  text-align: initial;
+  font-weight: normal;
+  line-height: normal;
+  text-decoration: none;
+  color: inherit;
 }
 
 .item-inner {
@@ -26,7 +30,6 @@
   padding: 0;
   border: 0;
   overflow: hidden;
-  box-sizing: border-box;
 
   flex: 1;
   flex-direction: inherit;
@@ -34,12 +37,9 @@
   align-self: stretch;
 }
 
-.item[no-lines] {
+.item[no-lines],
+.item[no-lines] .item-inner {
   border: none;
-
-  .item-inner {
-    border: none;
-  }
 }
 
 ion-item-group {
@@ -49,32 +49,15 @@ ion-item-group {
 ion-item-divider {
   display: block;
   min-height: 30px;
-  font-weight: 500;
   width: 100%;
   z-index: 1000;
+  font-weight: 500;
 
   &[sticky] {
     position: -webkit-sticky;
     position: sticky;
   	top: 0px;
   }
-}
-
-a.item,
-button.item {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  width: 100%;
-  justify-content: inherit;
-  min-height: 4.4rem;
-  font-weight: normal;
-  line-height: normal;
-  text-decoration: none;
-  text-transform: none;
-  color: inherit;
-  border-radius: 0;
-  box-shadow: none;
 }
 
 ion-item-content {
@@ -86,7 +69,8 @@ ion-item-content {
   pointer-events: none;
 
   a,
-  button {
+  button,
+  [tappable] {
     pointer-events: auto;
   }
 }
@@ -103,3 +87,6 @@ ion-input.item {
 ion-item-content + ion-item-content[cnt] {
   display: none;
 }
+
+@import "item-media";
+@import "item-sliding";
