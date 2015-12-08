@@ -505,6 +505,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
     };
 
     return showPopup(extend({
+      keyPressHandlers: keyPressHandlers,
       template: text + '<input ng-model="data.response" '
         + 'type="{{ data.fieldtype }}"'
         + 'maxlength="{{ data.maxlength }}"'
