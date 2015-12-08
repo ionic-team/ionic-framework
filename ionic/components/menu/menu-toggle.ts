@@ -34,6 +34,11 @@ export class MenuToggle extends Ion {
     this.app = app;
     this.viewCtrl = viewCtrl;
     this.withinNavbar = !!navbar;
+
+    // Deprecation warning
+    if (this.withinNavbar && elementRef.nativeElement.tagName === 'A') {
+      console.warn('Menu toggles within a navbar should use <button menu-toggle> instead of <a toggle>')
+    }
   }
 
   /**

@@ -85,8 +85,9 @@ ion-title {
       background-color: $color-value;
       border-color: darken($color-value, 10%);
     }
-
-    .toolbar-title {
+    
+    .toolbar-title,
+    .bar-button-default {
       color: inverse($color-value);
     }
   }

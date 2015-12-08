@@ -149,7 +149,7 @@ export class ToolbarTitle extends Ion {
  * @private
  */
 @Directive({
-  selector: 'ion-buttons,[menu-toggle]'
+  selector: 'ion-buttons,[menu-toggle],ion-nav-items'
 })
 export class ToolbarItem {
   constructor(
@@ -160,6 +160,23 @@ export class ToolbarItem {
     toolbar && toolbar.addItemRef(elementRef);
     navbar && navbar.addItemRef(elementRef);
     this.inToolbar = !!(toolbar || navbar);
+
+    // Deprecation warning
+    if (elementRef.nativeElement.tagName === 'ION-NAV-ITEMS') {
+
+      if (elementRef.nativeElement.hasAttribute('primary')) {
+        console.warn('<ion-nav-items primary> has been renamed to <ion-buttons start>, please update your HTML');
+        elementRef.nativeElement.setAttribute('start', '');
+
+      } else if (elementRef.nativeElement.hasAttribute('secondary')) {
+        console.warn('<ion-nav-items secondary> has been renamed to <ion-buttons end>, please update your HTML');
+        elementRef.nativeElement.setAttribute('end', '');
+
+      } else {
+        console.warn('<ion-nav-items> has been renamed to <ion-buttons>, please update your HTML');
+      }
+    }
+
   }
 
   @ContentChildren(Button)

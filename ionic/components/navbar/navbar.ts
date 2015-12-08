@@ -65,7 +65,7 @@ class ToolbarBackground {
   selector: 'ion-navbar',
   template:
     '<div class="toolbar-background"></div>' +
-    '<button class="back-button" [hidden]="hideBackButton">' +
+    '<button class="back-button bar-button bar-button-default" [hidden]="hideBackButton">' +
       '<icon class="back-button-icon" [name]="bbIcon"></icon>' +
       '<span class="back-button-text">' +
         '<span class="back-default">{{bbText}}</span>' +

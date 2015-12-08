@@ -4,7 +4,7 @@
 
 ### Breaking Changes
 
-#### CSS Refactor
+##### CSS Refactor
 
 * Attributes are now used by Ionic to add the correct CSS classes to elements
 * Drastically reduced the depth of CSS selectors
@@ -19,7 +19,9 @@
     * ie: Gray navbars in iOS, blue navbars in MD. Identical HTML/JS
 
 
-####  `<ion-nav-items>` renamed to `<ion-buttons>`
+#####  `<ion-nav-items>` renamed to `<ion-buttons>`
 
 * `primary` attribute `<ion-nav-items primary>` now `<ion-buttons start>`
 * `secondary` attribute `<ion-nav-items secondary>` now `<ion-buttons end>`
+
+##### <a menu-toggle> should now be <button menu-toggle>

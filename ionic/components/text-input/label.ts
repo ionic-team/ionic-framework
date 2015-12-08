@@ -79,6 +79,9 @@ export class Label {
     }
   }
 
+  /**
+   * @private
+   */
   addClass(className) {
     this.renderer.setElementClass(this.elementRef, className, true);
   }
