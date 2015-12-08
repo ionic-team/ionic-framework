@@ -140,7 +140,7 @@ export class Segment extends Ion {
  * @property {string} [value] - the value of the segment-button.
  * @usage
  * ```html
- * <ion-segment [(ng-model)]="relationship" danger>
+ * <ion-segment [(ng-model)]="relationship" primary>
  *   <ion-segment-button value="friends">
  *     Friends
  *   </ion-segment-button>

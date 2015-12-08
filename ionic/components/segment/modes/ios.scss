@@ -4,154 +4,111 @@
 // iOS Segment
 // --------------------------------------------------
 
-$segment-button-ios-border-width:             1px !default;
-$segment-button-ios-min-height:               3.0rem !default;
-$segment-button-ios-line-height:              3.0rem !default;
 $segment-button-ios-bg-color:                 transparent !default;
-$segment-button-ios-font-size:                1.3rem !default;
-$segment-button-ios-border-radius:            4px !default;
+$segment-button-ios-bg-color-activated:       $toolbar-ios-active-color !default;
 
-$segment-button-ios-bg-color-activated:       map-get($colors-ios, primary) !default;
 $segment-button-ios-text-color:               inverse($segment-button-ios-bg-color-activated) !default;
 $segment-button-ios-activated-transition:     100ms all linear !default;
 $segment-button-ios-hover-opacity:            0.16 !default;
 
-$segment-button-ios-toolbar-button-max-width: 100px !default;
+$segment-button-ios-border-width:             1px !default;
+$segment-button-ios-min-height:               3.0rem !default;
+$segment-button-ios-line-height:              3.0rem !default;
+$segment-button-ios-font-size:                1.3rem !default;
+$segment-button-ios-border-radius:            4px !default;
 
-$segment-button-ios-padding:    0 16px !default;
+$segment-button-ios-toolbar-button-max-width: 100px !default;
+$segment-button-ios-padding:                  0 16px !default;
 
 
 ion-segment {
   padding: $segment-button-ios-padding;
-
-  button,
-  [button] {
-    border-width: 1px 0px 1px 1px;
-    border-width: $segment-button-ios-border-width;
-    border-style: solid;
-
-    min-height: $segment-button-ios-min-height;
-    line-height: $segment-button-ios-line-height;
-
-    background-color: $segment-button-ios-bg-color;
-    color: $segment-button-ios-text-color;
-    font-size: $segment-button-ios-font-size;
-
-    &[outline] {
-      border: 1px solid $segment-button-ios-bg-color-activated;
-      background: $segment-button-ios-bg-color;
-      color: $segment-button-ios-bg-color-activated;
-
-      &.segment-activated {
-        opacity: 1;
-        color: $segment-button-ios-text-color;
-        background-color: $segment-button-ios-bg-color-activated;
-        transition: $segment-button-ios-activated-transition;
-      }
-
-      &:hover:not(.segment-activated) {
-        background-color: rgba($segment-button-ios-bg-color-activated, $segment-button-ios-hover-opacity);
-      }
-    }
-
-    &:first-of-type {
-      border-radius: $segment-button-ios-border-radius 0 0 $segment-button-ios-border-radius;
-      margin-right: 0;
-    }
-
-    &:not(:first-of-type) {
-      border-left-width: 0;
-    }
-
-    &:last-of-type {
-      border-left-width: 0;
-      border-radius: 0 $segment-button-ios-border-radius $segment-button-ios-border-radius 0;
-      margin-left: 0;
-    }
-  }
-
 }
 
-ion-segment-button[button] {
-  line-height: 2.4rem;
-  min-height: 2.4rem;
-  font-size: 1.2rem;
+.segment-button {
+  min-height: $segment-button-ios-min-height;
+  line-height: $segment-button-ios-line-height;
+  font-size: $segment-button-ios-font-size;
+
+  border-width: $segment-button-ios-border-width;
+  border-style: solid;
+  border-color: $segment-button-ios-bg-color-activated;
+
+  color: $segment-button-ios-bg-color-activated;
+  background-color: $segment-button-ios-bg-color;
+
+  &.segment-activated {
+    opacity: 1;
+    color: $segment-button-ios-text-color;
+    background-color: $segment-button-ios-bg-color-activated;
+    transition: $segment-button-ios-activated-transition;
+  }
+
+  &:hover:not(.segment-activated) {
+    background-color: rgba($segment-button-ios-bg-color-activated, $segment-button-ios-hover-opacity);
+  }
+
+  &:first-of-type {
+    border-radius: $segment-button-ios-border-radius 0 0 $segment-button-ios-border-radius;
+    margin-right: 0;
+  }
+
+  &:not(:first-of-type) {
+    border-left-width: 0;
+  }
+
+  &:last-of-type {
+    border-left-width: 0;
+    border-radius: 0 $segment-button-ios-border-radius $segment-button-ios-border-radius 0;
+    margin-left: 0;
+  }
 }
 
 .toolbar {
 
-  // TODO this is to get the segment centered with nav-items, but like ion-title it will need to be fixed
   ion-segment {
     position: absolute;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
-
-    button,
-    [button] {
-      max-width: $segment-button-ios-toolbar-button-max-width;
-    }
   }
 
+  .segment-button {
+    max-width: $segment-button-ios-toolbar-button-max-width;
+    min-height: 2.4rem;
+    line-height: 2.4rem;
+    font-size: 1.2rem;
+  }
 }
 
-// Generate Default Segment Colors
+
+// iOS Segment Button Mixin
 // --------------------------------------------------
 
-@mixin segment-button($button-color, $activated-text-color) {
-  background-color: transparent;
+@mixin ios-segment-button($color-name, $color-value) {
 
-  &[outline] {
-    border-color: $button-color;
-    background: $segment-button-ios-bg-color;
-    color: $button-color;
-
-    &.segment-activated {
-      opacity: 1;
-      color: $activated-text-color;
-      background-color: $button-color;
-    }
+  ion-segment[#{$color-name}] .segment-button {
+    border-color: $color-value;
+    color: $color-value;
 
     &:hover:not(.segment-activated) {
-      background-color: rgba($button-color, $segment-button-ios-hover-opacity);
+      background-color: rgba($color-value, $segment-button-ios-hover-opacity);
+    }
+
+    &.activated,
+    &.segment-activated {
+      color: inverse($color-value);
+      background-color: $color-value;
     }
   }
+
 }
 
-// Loop through all of the colors to change the segment colors
-// based on the toolbar color or if it isn't in a toolbar then based on
-// the segment color value
+
+// iOS Segment Color Generation
+// --------------------------------------------------
+
 @each $color-name, $color-value in $colors-ios {
-  $inverse-color-value: inverse($color-value);
-
-  .toolbar[#{$color-name}] {
-
-    ion-segment {
-      ion-segment-button[button] {
-        @include segment-button($inverse-color-value, $color-value);
-      }
-    }
-
-    // Loop through all of the colors again to change the segment colors
-    // for each toolbar based on the segment color
-    // this will take priority over the default toolbar colors
-    @each $color-name, $color-value in $colors-ios {
-      $inverse-color-value: inverse($color-value);
-
-      ion-segment[#{$color-name}] {
-        ion-segment-button[button] {
-          @include segment-button($color-value, $inverse-color-value);
-        }
-      }
-    }
-
-  }
-
-  ion-segment[#{$color-name}] {
-    ion-segment-button[button] {
-      @include segment-button($color-value, $inverse-color-value);
-    }
-
-  }
+  @include ios-segment-button($color-name, $color-value);
 }

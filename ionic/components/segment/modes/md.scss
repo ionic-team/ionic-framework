@@ -4,15 +4,16 @@
 // Material Design Segment
 // --------------------------------------------------
 
+$segment-button-md-text-color-activated:       $toolbar-md-active-color !default;
+$segment-button-md-border-color-activated:     $toolbar-md-active-color !default;
+
+$segment-button-md-border-bottom-width:        2px !default;
+$segment-button-md-border-bottom-color:        rgba(#000000, 0.10) !default;
+
 $segment-button-md-padding:                    0 6px !default;
 $segment-button-md-min-height:                 4.0rem !default;
 $segment-button-md-line-height:                4.0rem !default;
 $segment-button-md-font-size:                  1.2rem !default;
-
-$segment-button-md-text-color-activated:       $toolbar-md-active-color !default;
-$segment-button-md-border-color-activated:     $toolbar-md-active-color !default;
-$segment-button-md-border-bottom-width:        2px !default;
-$segment-button-md-border-bottom-color:        rgba(#000000, 0.10) !default;
 
 
 .segment-button {
