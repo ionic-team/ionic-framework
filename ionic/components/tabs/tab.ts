@@ -68,7 +68,7 @@ export class Tab extends NavController {
     cd: ChangeDetectorRef
   ) {
     // A Tab is a NavController for its child pages
-    super(parentTabs, app, config, keyboard, elementRef, compiler, viewManager, zone, renderer, cd);
+    super(parentTabs, app, config, keyboard, elementRef, 'contents', compiler, viewManager, zone, renderer, cd);
 
     this._isInitial = parentTabs.add(this);
 
