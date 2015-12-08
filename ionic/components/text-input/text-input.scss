@@ -3,57 +3,45 @@
 // Text Input
 // --------------------------------------------------
 
+$text-input-textarea-resize:          none !default;
 
-ion-input {
 
-  // text inputs
-  textarea,
-  input[type="text"],
-  input[type="password"],
-  input[type="datetime"],
-  input[type="datetime-local"],
-  input[type="date"],
-  input[type="month"],
-  input[type="time"],
-  input[type="week"],
-  input[type="number"],
-  input[type="email"],
-  input[type="url"],
-  input[type="search"],
-  input[type="tel"],
-  input[type="color"] {
-    display: block;
-    background: transparent;
-    border: 0;
-    width: 100%;
-  }
-}
+// All Inputs in ion-input
+// --------------------------------------------------
 
-ion-input [text-input] {
+.item-input {
+  display: block;
+  background: transparent;
+  border: 0;
   flex: 1;
   pointer-events: none;
 }
 
-.input-focused [text-input] {
-  pointer-events: auto;
-}
 
-ion-input input[scroll-assist] {
-  display: inline-block;
-  padding: 0;
-  margin: 0;
+// Scroll Assist
+// --------------------------------------------------
+
+[scroll-assist] {
   width: 1px;
   height: 1px;
+  background: transparent;
+  border: 0;
   pointer-events: none;
 }
 
-ion-input textarea {
-  padding-top: 9px;
+
+// Input focused
+// --------------------------------------------------
+
+.input-focused .item-input {
+  pointer-events: auto;
 }
 
+
+// Input textarea
+// --------------------------------------------------
+
 textarea {
-  margin: 0;
-  padding: 0;
   height: auto;
   overflow: auto;
   font: inherit;
@@ -61,7 +49,7 @@ textarea {
 }
 
 .platform-mobile textarea {
-  resize: none;
+  resize: $text-input-textarea-resize;
 }
 
 input,

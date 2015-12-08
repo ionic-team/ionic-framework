@@ -9,13 +9,13 @@ $text-input-ios-background-color:    $list-ios-background-color !default;
 $text-input-ios-label-color:         #7f7f7f !default;
 
 
-[text-input] {
+.item-input {
   margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom 0;
   padding: 0;
   background-color: $text-input-ios-background-color;
 }
 
-ion-input[inset] [text-input] {
+ion-input[inset] .item-input {
   margin: ($item-ios-padding-top / 2) $item-ios-padding-right ($item-ios-padding-bottom / 2) $item-ios-padding-left;
   padding: ($item-ios-padding-top / 2) ($item-ios-padding-right / 2) ($item-ios-padding-bottom / 2) ($item-ios-padding-left / 2);
 }
@@ -25,7 +25,7 @@ ion-label {
   color: $text-input-ios-label-color;
 }
 
-ion-label + [text-input] {
+ion-label + .item-input {
   margin-left: $item-ios-padding-left;
 }
 
@@ -34,8 +34,8 @@ ion-label + [text-input] {
   margin-bottom: 4px;
 }
 
-[stacked-label] [text-input],
-[floating-label] [text-input] {
+[stacked-label] .item-input,
+[floating-label] .item-input {
   margin-left: 0;
   margin-top: 8px;
   margin-bottom: 8px;
