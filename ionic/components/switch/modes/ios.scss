@@ -15,7 +15,7 @@ $switch-ios-background-color-on:       map-get($colors-ios, primary) !default;
 
 $switch-ios-handle-width:              $switch-ios-height - ($switch-ios-border-width * 2) !default;
 $switch-ios-handle-height:             $switch-ios-handle-width !default;
-$switch-ios-handle-radius:             $switch-ios-handle-height / 2 !default;
+$switch-ios-handle-border-radius:      $switch-ios-handle-height / 2 !default;
 $switch-ios-handle-box-shadow:         0 3px 12px rgba(0, 0, 0, 0.16), 0 3px 1px rgba(0, 0, 0, 0.1) !default;
 
 $switch-ios-handle-background-color:   $switch-ios-background-color-off !default;
@@ -26,8 +26,11 @@ $switch-ios-media-padding:             6px ($item-ios-padding-right / 2) 5px ($i
 $switch-ios-transition-duration:       300ms !default;
 
 $switch-ios-disabled-opacity:          0.5 !default;
-$switch-ios-disabled-text-color:       $subdued-text-color !default;
+$switch-ios-disabled-text-color:       $subdued-text-ios-color !default;
 
+
+// Switch
+// -----------------------------------------
 
 ion-switch {
   display: block;
@@ -37,6 +40,78 @@ ion-switch {
     background: $list-ios-background-color;
   }
 }
+
+
+// Switch Wrapper
+// -----------------------------------------
+
+.switch-media {
+  margin: $switch-ios-media-margin;
+  padding: $switch-ios-media-padding;
+  cursor: pointer;
+}
+
+
+// Switch Background Track
+// -----------------------------------------
+
+.switch-icon {
+  // bg track, when not checked
+  position: relative;
+  display: block;
+  width: $switch-ios-width;
+  height: $switch-ios-height;
+  border-radius: $switch-ios-border-radius;
+  pointer-events: none;
+
+  background-color: $switch-ios-border-color-off;
+  transition: background-color $switch-ios-transition-duration;
+}
+
+
+// Switch Background Track, Inner Oval
+// -----------------------------------------
+
+.switch-icon:before {
+  // inner bg track's oval, when not checked
+  content: '';
+  position: absolute;
+  top: $switch-ios-border-width;
+  right: $switch-ios-border-width;
+  left: $switch-ios-border-width;
+  bottom: $switch-ios-border-width;
+
+  border-radius: $switch-ios-border-radius;
+  background-color: $switch-ios-background-color-off;
+
+  transform: scale3d(1, 1, 1);
+  transition: transform $switch-ios-transition-duration;
+}
+
+
+// Switch Knob
+// -----------------------------------------
+
+.switch-icon:after {
+  // knob, when not checked
+  content: '';
+  position: absolute;
+  top: $switch-ios-border-width;
+  left: $switch-ios-border-width;
+
+  width: $switch-ios-handle-width;
+  height: $switch-ios-handle-height;
+
+  border-radius: $switch-ios-handle-border-radius;
+  background-color: $switch-ios-handle-background-color;
+  box-shadow: $switch-ios-handle-box-shadow;
+
+  transition: transform $switch-ios-transition-duration, width 120ms ease-in-out 80ms, left 110ms ease-in-out 80ms;
+}
+
+
+// Switch Checked
+// -----------------------------------------
 
 ion-switch[aria-checked=true] {
   .switch-icon {
@@ -72,6 +147,7 @@ ion-switch[aria-checked=true] {
   }
 }
 
+
 // Switch Disabled
 // -----------------------------------------
 
@@ -79,70 +155,6 @@ ion-switch[aria-disabled=true] {
   opacity: $switch-ios-disabled-opacity;
   color: $switch-ios-disabled-text-color;
   pointer-events: none;
-}
-
-// Switch Wrapper
-// -----------------------------------------
-
-.switch-media {
-  margin: $switch-ios-media-margin;
-  cursor: pointer;
-  padding: $switch-ios-media-padding;
-}
-
-// Switch Background Track
-// -----------------------------------------
-
-.switch-icon {
-  // bg track, when not checked
-  position: relative;
-  display: block;
-  width: $switch-ios-width;
-  height: $switch-ios-height;
-  border-radius: $switch-ios-border-radius;
-  pointer-events: none;
-
-  background-color: $switch-ios-border-color-off;
-  transition: background-color $switch-ios-transition-duration;
-}
-
-// Switch Background Track, Inner Oval
-// -----------------------------------------
-
-.switch-icon:before {
-  // inner bg track's oval, when not checked
-  content: '';
-  position: absolute;
-  top: $switch-ios-border-width;
-  right: $switch-ios-border-width;
-  left: $switch-ios-border-width;
-  bottom: $switch-ios-border-width;
-
-  border-radius: $switch-ios-border-radius;
-  background-color: $switch-ios-background-color-off;
-
-  transform: scale3d(1, 1, 1);
-  transition: transform $switch-ios-transition-duration;
-}
-
-// Switch Knob
-// -----------------------------------------
-
-.switch-icon:after {
-  // knob, when not checked
-  content: '';
-  position: absolute;
-  top: $switch-ios-border-width;
-  left: $switch-ios-border-width;
-
-  width: $switch-ios-handle-width;
-  height: $switch-ios-handle-height;
-
-  border-radius: $switch-ios-handle-radius;
-  background-color: $switch-ios-handle-background-color;
-  box-shadow: $switch-ios-handle-box-shadow;
-
-  transition: transform $switch-ios-transition-duration, width 120ms ease-in-out 80ms, left 110ms ease-in-out 80ms;
 }
 
 

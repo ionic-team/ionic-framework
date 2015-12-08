@@ -1,5 +1,4 @@
 @import "../../../globals.md";
-@import "../switch";
 
 // Material Design Switch
 // --------------------------------------------------
@@ -16,69 +15,98 @@ $switch-md-handle-height:                20px !default;
 $switch-md-handle-background-color-off:  $background-md-color !default;
 $switch-md-handle-background-color-on:   $switch-md-active-color !default;
 $switch-md-handle-box-shadow:            0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12) !default;
+$switch-md-handle-border-radius:         50% !default;
+
+$switch-md-media-margin:                 0 !default;
+$switch-md-media-padding:                12px ($item-md-padding-right / 2) 12px $item-md-padding-left !default;
 
 $switch-md-transition-duration:          300ms !default;
 
+$switch-md-disabled-opacity:             0.5 !default;
+$switch-md-disabled-text-color:          $subdued-text-md-color !default;
+
+
+// Switch
+// -----------------------------------------
 
 ion-switch {
-
-  media-switch {
-    padding: 12px ($item-md-padding-right / 2) 12px $item-md-padding-left;
-  }
-
-
-  // Switch Background Track
-  // -----------------------------------------
-
-  switch-icon {
-    // bg track, when not checked
-    position: relative;
-    display: block;
-    width: $switch-md-track-width;
-    height: $switch-md-track-height;
-    pointer-events: none;
-    border-radius: $switch-md-track-height;
-
-    background-color: $switch-md-track-background-color-off;
-    will-change: background-color;
-    transition: background-color $switch-md-transition-duration
-  }
-
-  &[aria-checked=true] switch-icon {
-    // bg track, when not checked
-    background-color: $switch-md-track-background-color-on;
-  }
+  display: block;
+  @include user-select-none();
+}
 
 
-  // Switch Knob
-  // -----------------------------------------
+// Switch Wrapper
+// -----------------------------------------
 
-  switch-icon:after {
-    // knob, when not checked
-    content: '';
-    position: absolute;
-    top: ($switch-md-handle-height - $switch-md-track-height) / -2;
-    left: 0;
+.switch-media {
+  margin: $switch-md-media-margin;
+  padding: $switch-md-media-padding;
+  cursor: pointer;
+}
 
-    width: $switch-md-handle-width;
-    height: $switch-md-handle-height;
 
-    border-radius: 50%;
-    box-shadow: $switch-md-handle-box-shadow;
+// Switch Background Track
+// -----------------------------------------
 
-    background-color: $switch-md-handle-background-color-off;
+.switch-icon {
+  // bg track, when not checked
+  position: relative;
+  display: block;
+  width: $switch-md-track-width;
+  height: $switch-md-track-height;
+  pointer-events: none;
+  border-radius: $switch-md-track-height;
 
-    will-change: transform, background-color;
-    transition-property: transform, background-color;
-    transition-duration: $switch-md-transition-duration;
-  }
+  background-color: $switch-md-track-background-color-off;
+  transition: background-color $switch-md-transition-duration
+}
 
-  &[aria-checked=true] switch-icon:after {
+
+// Switch Knob
+// -----------------------------------------
+
+.switch-icon:after {
+  // knob, when not checked
+  content: '';
+  position: absolute;
+  top: ($switch-md-handle-height - $switch-md-track-height) / -2;
+  left: 0;
+
+  width: $switch-md-handle-width;
+  height: $switch-md-handle-height;
+
+  border-radius: $switch-md-handle-border-radius;
+  box-shadow: $switch-md-handle-box-shadow;
+
+  background-color: $switch-md-handle-background-color-off;
+
+  transition-property: transform, background-color;
+  transition-duration: $switch-md-transition-duration;
+}
+
+
+// Switch Checked
+// -----------------------------------------
+
+ion-switch[aria-checked=true] .switch-icon {
+  // bg track, when not checked
+  background-color: $switch-md-track-background-color-on;
+
+  &:after {
     // knob, when not checked
     background-color: $switch-md-handle-background-color-on;
     transform: translate3d($switch-md-track-width - $switch-md-handle-width, 0, 0);
   }
+}
 
+
+// Switch Disabled
+// -----------------------------------------
+
+ion-switch[aria-disabled=true] {
+  opacity: $switch-md-disabled-opacity;
+  color: $switch-md-disabled-text-color;
+  pointer-events: none;
 }
 
 
@@ -89,11 +117,11 @@ ion-switch {
 
   ion-switch[#{$color-name}] {
 
-    &[aria-checked=true] switch-icon {
+    &[aria-checked=true] .switch-icon {
       background-color: lighten($bg-on, 25%);
     }
 
-    &[aria-checked=true] switch-icon:after {
+    &[aria-checked=true] .switch-icon:after {
       background-color: $bg-on;
     }
 
