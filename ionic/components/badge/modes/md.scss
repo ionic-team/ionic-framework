@@ -1,0 +1,11 @@
+@import "../badge";
+
+// Material Design Badge
+// --------------------------------------------------
+
+$badge-md-border-radius:             4px !default;
+
+
+ion-badge {
+  border-radius: $badge-md-border-radius;
+}

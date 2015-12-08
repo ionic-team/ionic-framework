@@ -5,7 +5,6 @@
 
 $badge-font-size:                 1.3rem !default;
 $badge-font-weight:               bold !default;
-$badge-border-radius:             10px !default;
 
 
 ion-badge {
@@ -13,7 +12,6 @@ ion-badge {
 
   padding: 3px 8px;
   min-width: 10px;
-  border-radius: $badge-border-radius;
 
   vertical-align: baseline;
   text-align: center;
