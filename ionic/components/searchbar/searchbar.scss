@@ -23,17 +23,16 @@ ion-searchbar {
   width: 100%;
 }
 
-input[type="search"].searchbar-input {
+.searchbar-input {
   display: block;
   width: 100%;
-  height: 100%;
   border: none;
   font-family: inherit;
   line-height: 3rem;
   @include appearance(none);
 }
 
-.searchbar-close-icon {
+.searchbar-clear-icon {
   min-height: 0;
   padding: 0;
   margin: 0;

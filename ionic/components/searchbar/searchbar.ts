@@ -4,6 +4,7 @@ import {Ion} from '../ion';
 import {Config} from '../../config/config';
 import {ConfigComponent} from '../../config/decorators';
 import {Icon} from '../icon/icon';
+import {Button} from '../button/button';
 
 /**
  * @name Searchbar
@@ -31,19 +32,19 @@ import {Icon} from '../icon/icon';
   },
   inputs: ['cancelAction'],
   host: {
-   '[class.left-align]': 'shouldLeftAlign',
-   '[class.focused]': 'isFocused',
+   '[class.searchbar-left-aligned]': 'shouldLeftAlign',
+   '[class.searchbar-focused]': 'isFocused',
   },
   template:
     '<div class="searchbar-input-container">' +
-      '<button (click)="cancelSearchbar($event, query)" clear dark class="searchbar-cancel-icon"><icon arrow-back></icon></button>' +
+      '<button (click)="cancelSearchbar($event, query)" clear dark class="searchbar-md-cancel"><icon arrow-back></icon></button>' +
       '<div class="searchbar-search-icon"></div>' +
       '<input [(value)]="query" (focus)="inputFocused()" (blur)="inputBlurred()" ' +
       '(input)="inputChanged($event)" class="searchbar-input" type="search" [attr.placeholder]="placeholder">' +
-      '<button clear *ng-if="query" class="searchbar-close-icon" (click)="clearInput($event)"></button>' +
+      '<button clear *ng-if="query" class="searchbar-clear-icon" (click)="clearInput($event)"></button>' +
     '</div>' +
-    '<button *ng-if="showCancel" (click)="cancelSearchbar($event, query)" class="searchbar-cancel">{{cancelText}}</button>',
-  directives: [FORM_DIRECTIVES, NgIf, NgClass, Icon]
+    '<button clear *ng-if="showCancel" (click)="cancelSearchbar($event, query)" class="searchbar-ios-cancel">{{cancelText}}</button>',
+  directives: [FORM_DIRECTIVES, NgIf, NgClass, Icon, Button]
 })
 export class Searchbar extends Ion {
   /**

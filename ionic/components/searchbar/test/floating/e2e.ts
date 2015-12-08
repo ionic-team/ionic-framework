@@ -21,5 +21,5 @@ it('custom cancel action should focus', function() {
 
 // TODO - this test will work on iOS but fail on Android
 // it('custom cancel action should alert', function() {
-//   element(by.css('.e2eCustomCancelActionFloatingSearchbar .searchbar-cancel')).click();
+//   element(by.css('.e2eCustomCancelActionFloatingSearchbar .searchbar-ios-cancel')).click();
 // });
