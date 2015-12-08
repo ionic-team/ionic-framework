@@ -34,7 +34,7 @@ ion-input [text-input] {
   pointer-events: none;
 }
 
-ion-input.has-focus [text-input] {
+.input-focused [text-input] {
   pointer-events: auto;
 }
 

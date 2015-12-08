@@ -372,7 +372,7 @@ export class TextInput {
    * @private
    */
   focusChange(hasFocus) {
-    this.renderer.setElementClass(this.elementRef, 'has-focus', hasFocus);
+    this.renderer.setElementClass(this.elementRef, 'input-focused', hasFocus);
     if (!hasFocus) {
       this.deregMove();
       this.input.hideFocus(false);
@@ -383,7 +383,7 @@ export class TextInput {
    * @private
    */
   hasValue(inputValue) {
-    this.renderer.setElementClass(this.elementRef, 'has-value', inputValue && inputValue !== '');
+    this.renderer.setElementClass(this.elementRef, 'input-has-value', inputValue && inputValue !== '');
   }
 
   /**

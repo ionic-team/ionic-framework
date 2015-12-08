@@ -48,8 +48,8 @@ ion-label + [text-input] {
   transition: transform 150ms ease-in-out;
 }
 
-[floating-label].has-focus ion-label,
-[floating-label].has-value ion-label  {
+[floating-label].input-focused ion-label,
+[floating-label].input-has-value ion-label  {
   transform: translate3d(0, 0, 0) scale(0.8);
 }
 

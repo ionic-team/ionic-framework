@@ -18,14 +18,10 @@ ion-label {
   max-width: 200px;
 }
 
-ion-input[stacked-label],
-ion-input[floating-label] {
-  flex-direction: column;
-  align-items: flex-start;
-}
-
 [stacked-label],
 [floating-label] {
+  flex-direction: column;
+  align-items: flex-start;
 
   ion-label {
     align-self: stretch;

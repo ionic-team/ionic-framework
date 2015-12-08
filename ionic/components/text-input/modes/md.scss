@@ -37,11 +37,11 @@ ion-input:after {
   content: '';
 }
 
-ion-input.has-focus:after {
+.input-focused:after {
   border-bottom: 2px solid $text-input-md-highlight-color;
 }
 
-ion-input.ng-valid.has-value:after {
+ion-input.ng-valid.input-has-value:after {
   border-bottom: 2px solid $text-input-md-hightlight-color-valid;
 }
 
@@ -59,8 +59,8 @@ ion-input.ng-invalid.ng-touched:after {
   margin-left: 0;
 }
 
-[stacked-label].has-focus ion-label,
-[floating-label].has-focus ion-label {
+[stacked-label].input-focused ion-label,
+[floating-label].input-focused ion-label {
   color: $text-input-md-highlight-color;
 }
 
@@ -78,8 +78,8 @@ ion-input.ng-invalid.ng-touched:after {
   transition: transform 150ms ease-in-out;
 }
 
-[floating-label].has-focus ion-label,
-[floating-label].has-value ion-label  {
+[floating-label].input-focused ion-label,
+[floating-label].input-has-value ion-label  {
   transform: translate3d(0, 0, 0) scale(0.8);
 }
 
