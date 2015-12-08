@@ -1,0 +1,12 @@
+<ion-navbar *navbar>
+  <ion-title>Page {{pageNum}}</ion-title>
+</ion-navbar>
+
+<ion-content padding>
+  <ion-row>
+    <button full block (click)="push()">.push() another page</button>    
+  </ion-row>
+  <ion-row>
+    <button secondary full block (click)="pop()">.pop()</button>    
+  </ion-row>
+</ion-content>
