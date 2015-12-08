@@ -76,7 +76,8 @@ export class TextInput {
     @Optional() navCtrl: NavController,
     @Attribute('floating-label') isFloating: string,
     @Attribute('stacked-label') isStacked: string,
-    @Attribute('fixed-label') isFixed: string
+    @Attribute('fixed-label') isFixed: string,
+    @Attribute('inset') isInset: string
   ) {
     this.renderer = renderer;
 
@@ -87,7 +88,7 @@ export class TextInput {
     this.lastTouch = 0;
 
     // make more gud with pending @Attributes API
-    this.displayType = (isFloating === '' ? 'floating' : (isStacked === '' ? 'stacked' : (isFixed === '' ? 'fixed' : null)));
+    this.displayType = (isFloating === '' ? 'floating' : (isStacked === '' ? 'stacked' : (isFixed === '' ? 'fixed' : (isInset === '' ? 'inset' : null))));
 
     this.app = app;
     this.elementRef = elementRef;

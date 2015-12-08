@@ -12,15 +12,13 @@ $text-input-md-hightlight-color-valid:      map-get($colors-md, secondary) !defa
 $text-input-md-hightlight-color-invalid:    map-get($colors-md, danger) !default;
 
 
+// Default Input
+// --------------------------------------------------
+
 .item-input {
   margin: $item-md-padding-top ($item-md-padding-right / 2) $item-md-padding-bottom ($item-md-padding-left / 2);
   padding: 0;
   background-color: $text-input-md-background-color;
-}
-
-ion-input[inset] .item-input {
-  margin: ($item-md-padding-top / 2) $item-md-padding-right ($item-md-padding-bottom / 2) $item-md-padding-left;
-  padding: ($item-md-padding-top / 2) ($item-md-padding-right / 2) ($item-md-padding-bottom / 2) ($item-md-padding-left / 2);
 }
 
 ion-label {
@@ -28,60 +26,82 @@ ion-label {
   color: $text-input-md-label-color;
 }
 
+
+// Inset Input
+// --------------------------------------------------
+
+.inset-input {
+  margin: ($item-md-padding-top / 2) $item-md-padding-right ($item-md-padding-bottom / 2) $item-md-padding-left;
+  padding: ($item-md-padding-top / 2) ($item-md-padding-right / 2) ($item-md-padding-bottom / 2) ($item-md-padding-left / 2);
+}
+
+
+// Highlighted Input
+// --------------------------------------------------
+
 ion-input:after {
   position: absolute;
   bottom: 0;
   right: 0;
   left: $item-md-padding-left;
-  border-bottom: 2px solid transparent;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  border-bottom-color: transparent;
   content: '';
 }
 
 .input-focused:after {
-  border-bottom: 2px solid $text-input-md-highlight-color;
+  border-bottom-color: $text-input-md-highlight-color;
 }
 
 ion-input.ng-valid.input-has-value:after {
-  border-bottom: 2px solid $text-input-md-hightlight-color-valid;
+  border-bottom-color: $text-input-md-hightlight-color-valid;
 }
 
 ion-input.ng-invalid.ng-touched:after {
-  border-bottom: 2px solid $text-input-md-hightlight-color-invalid;
+  border-bottom-color: $text-input-md-hightlight-color-invalid;
 }
 
-[stacked-label] ion-label {
+
+// Stacked & Floating Inputs
+// --------------------------------------------------
+
+.stacked-label {
   font-size: 1.2rem;
-  margin-bottom: 0;
 }
 
-[stacked-label] ion-label,
-[floating-label] ion-label {
-  margin-left: 0;
-}
-
-[stacked-label].input-focused ion-label,
-[floating-label].input-focused ion-label {
-  color: $text-input-md-highlight-color;
-}
-
-[stacked-label] .item-input,
-[floating-label] .item-input {
-  margin-bottom: 8px;
-  margin-top: 8px;
-  margin-left: 0;
-}
-
-[floating-label] ion-label {
-  margin-bottom: 0;
+.floating-label {
   transform-origin: left top;
   transform: translate3d(0, 27px, 0);
   transition: transform 150ms ease-in-out;
 }
 
-[floating-label].input-focused ion-label,
-[floating-label].input-has-value ion-label  {
+.stacked-label,
+.floating-label {
+  margin-left: 0;
+  margin-bottom: 0;
+}
+
+.stacked-input,
+.floating-input {
+  margin-left: 0;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.input-focused .stacked-label,
+.input-focused .floating-label {
+  color: $text-input-md-highlight-color;
+}
+
+.input-focused .floating-label,
+.input-has-value .floating-label  {
   transform: translate3d(0, 0, 0) scale(0.8);
 }
+
+
+// Generate Material Design label colors
+// --------------------------------------------------
 
 @each $color-name, $color-value in $colors-md {
   ion-label[#{$color-name}] {
