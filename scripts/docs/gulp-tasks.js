@@ -174,12 +174,13 @@ module.exports = function(gulp, flags) {
     var fs = require('fs');
     var gutil = require('gulp-util');
     var es = require('event-stream');
+    var mkdirp = require('mkdirp');
     var path = require('path');
     var Entities = require('html-entities').AllHtmlEntities;
     entities = new Entities();
 
     var variables = [];
-    var outputFile = config.docsDest + '/data/sass.json';
+    var outputFile = 'tmp/sass.json';
 
     // Add the variable to the array, encode the html and remove !default from the value
     function addVariable(variableName, defaultValue, file) {
@@ -226,6 +227,7 @@ module.exports = function(gulp, flags) {
       }).on('end', function() {
         gutil.log("Writing to file at", gutil.colors.cyan("/driftyco/ionic2/" + outputFile));
         gutil.log("Place this file in", gutil.colors.cyan("/driftyco/ionic-site/" + config.v2DocsDir + "/theming/overriding-ionic-variables/"), "in order to update the docs");
+        mkdirp.sync('tmp');
         fs.writeFileSync(outputFile, JSON.stringify(variables));
       }));
   });
