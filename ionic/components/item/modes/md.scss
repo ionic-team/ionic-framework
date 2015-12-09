@@ -104,10 +104,10 @@ button[item-right],
   font-size: 1.2rem;
 }
 
-[item-left].icon-only,
-[item-right].icon-only,
-[item-left].icon-only icon,
-[item-right].icon-only icon {
+[item-left].button-icon-only,
+[item-right].button-icon-only,
+[item-left].button-icon-only icon,
+[item-right].button-icon-only icon {
   padding: 0 1px;
 }
 
@@ -135,7 +135,7 @@ button[item-right],
 }
 
 icon[item-left] + .item-inner,
-icon[item-left] + [text-input] {
+icon[item-left] + .item-input {
   margin-left: $item-md-padding-left + ($item-md-padding-left / 2);
 }
 

@@ -127,10 +127,10 @@ button[item-right],
   margin-top: 9px;
 }
 
-[item-left].icon-only,
-[item-right].icon-only,
-[item-left].icon-only icon,
-[item-right].icon-only icon,
+[item-left].button-icon-only,
+[item-right].button-icon-only,
+[item-left].button-icon-only icon,
+[item-right].button-icon-only icon,
 [item-left][clear],
 [item-right][clear] {
   padding: 0 1px;
