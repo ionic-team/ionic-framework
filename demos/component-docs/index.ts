@@ -8,7 +8,11 @@ import * as helpers from './helpers';
 @App({
   templateUrl: 'app.html',
   config: {
-    activator: 'ripple'
+    platforms: {
+      android: {
+        activator: 'ripple'        
+      }
+    }
   }
 })
 class DemoApp {
