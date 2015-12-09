@@ -877,7 +877,6 @@
         s.updateClasses = function () {
             s.slides.removeClass(s.params.slideActiveClass + ' ' + s.params.slideNextClass + ' ' + s.params.slidePrevClass);
             var activeSlide = s.slides.eq(s.activeIndex);
-            console.log('Update classes', activeSlide);
             // Active classes
             activeSlide.addClass(s.params.slideActiveClass);
             activeSlide.next('.' + s.params.slideClass).addClass(s.params.slideNextClass);
@@ -2049,7 +2048,6 @@
           ===========================*/
         // Create looped slides
         s.createLoop = function () {
-          console.log("CREATE LOOP");
             // Remove duplicated slides
             s.wrapper.children('.' + s.params.slideClass + '.' + s.params.slideDuplicateClass).remove();
 
