@@ -16,19 +16,36 @@
       <ion-title>Hello</ion-title>
     </ion-header-bar>
     <ion-content class="padding">
-      <ion-slides options="options">
+      <ion-slides options="options" slider="data.slider">
         <ion-slide-page>
-          <h2>Journey to HD 219134 b</h2>
-          <p>
-            This app will prepare you for your journey through the galaxy
-            to HD 219134 b, an exoplanet 21 lightyears away from our home on Earth.
-          </p>
-          <p>
-            <img src="exoplanet.jpg" style="max-width: 100%" />
-          </p>
-          <div style="text-align: center">
-            <small style="font-style: italic">An artist's rendering of your new home.</small>
-          </div>
+          <ion-content>
+            <h2>Journey to HD 219134 b</h2>
+            <p>
+              This app will prepare you for your journey through the galaxy
+              to HD 219134 b, an exoplanet 21 lightyears away from our home on Earth.
+            </p>
+            <p>
+              <img src="exoplanet.jpg" style="max-width: 100%" />
+            </p>
+            <p>
+              <img src="exoplanet.jpg" style="max-width: 100%" />
+            </p>
+            <p>
+              <img src="exoplanet.jpg" style="max-width: 100%" />
+            </p>
+            <p>
+              <img src="exoplanet.jpg" style="max-width: 100%" />
+            </p>
+            <p>
+              <img src="exoplanet.jpg" style="max-width: 100%" />
+            </p>
+            <p>
+              <img src="exoplanet.jpg" style="max-width: 100%" />
+            </p>
+            <div style="text-align: center">
+              <small style="font-style: italic">An artist's rendering of your new home.</small>
+            </div>
+          </ion-content>
         </ion-slide-page>
         <ion-slide-page>
           <h2>Before launch</h2>
@@ -98,10 +115,21 @@
   </ion-pane>
   <script>
     angular.module('slidesTest', ['ionic'])
-    .controller('MyCtrl', ['$scope', '$interval', function($scope, $interval) {
+    .controller('MyCtrl', ['$scope', '$interval', '$timeout', function($scope, $interval, $timeout) {
       $scope.options = {
         loop: true
       }
+
+      $scope.data = {};
+
+      $scope.$watch('data.slider', function(nv, ov) {
+        $scope.slider = $scope.data.slider;
+      })
+
+      $timeout(function() {
+        //$scope.slider.slideNext();
+      }, 1000)
+
       /*
       $scope.extraSlides = [];
       var i = 0;
