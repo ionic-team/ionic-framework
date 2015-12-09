@@ -14,29 +14,31 @@
   </head>
   <body>
 
-    <header class="bar bar-header bar-dark">
+    <ion-header-bar>
       <h1 class="title">Radio Buttons</h1>
-    </header>
+    </ion-header-bar>
 
-    <div class="content has-header">
+    <ion-content>
 
-      <div class="list">
+      <ion-list>
+        <ion-radio ng-model="choice" ng-value="'A'">Choose A</ion-radio>
+        <ion-radio ng-model="choice" ng-value="'B'">Choose B</ion-radio>
 
-        <label class="item item-radio">
+        <ion-input class="item item-radio">
           <input type="radio" name="group" value="go" checked="checked">
           <div class="item-content">
             Go
           </div>
           <i class="radio-icon icon ion-checkmark"></i>
-        </label>
+        </ion-input>
 
-        <label class="item item-radio">
+        <ion-input class="item item-radio">
           <input type="radio" name="group" value="python">
           <div class="item-content">
             Python
           </div>
           <i class="radio-icon icon ion-checkmark"></i>
-        </label>
+        </ion-input>
 
         <label class="item item-radio">
           <input type="radio" name="group" value="ruby">
@@ -70,7 +72,7 @@
           <i class="radio-icon icon ion-checkmark"></i>
         </label>
 
-      </div>
+      </ion-list>
 
     </div>
 
