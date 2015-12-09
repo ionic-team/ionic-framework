@@ -61,6 +61,7 @@ import {extend} from '../../util/util';
  *   }
  * }
  * ```
+ * @demo /docs/v2/demos/popup/
  * @see {@link /docs/v2/components#popups Popup Component Docs}
  */
 @Injectable()
