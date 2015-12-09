@@ -1,41 +1,51 @@
-import {App, ActionSheet} from 'ionic/ionic';
-
+import {App, Page, IonicApp, Config, Platform} from 'ionic/ionic';
+import {ActionSheet} from 'ionic/ionic';
 
 @App({
+  templateUrl: 'app.html'
+})
+class ApiDemoApp {
+
+  constructor() {
+    this.rootPage = InitialPage;
+  }
+}
+
+@Page({
   templateUrl: 'main.html'
 })
-class IonicApp {
-
-  constructor(actionSheet: ActionSheet) {
+export class InitialPage {
+  constructor(actionSheet: ActionSheet, platform: Platform) {
     this.actionSheet = actionSheet;
+    this.platform = platform;
   }
 
-  openMenu() {
+  open() {
 
     this.actionSheet.open({
       buttons: [
-        { text: 'Share This' },
-        { text: 'Move' }
+        { text: 'Share'},
+        { text: 'Play'},
+        { text: 'Favorite'}
       ],
       destructiveText: 'Delete',
-      titleText: 'Modify your album',
+      titleText: 'Albums',
       cancelText: 'Cancel',
-      cancel: function() {
+      cancel: () => {
         console.log('Canceled');
       },
       destructiveButtonClicked: () => {
         console.log('Destructive clicked');
       },
-      buttonClicked: function(index) {
+      buttonClicked: (index) => {
         console.log('Button clicked', index);
-        if(index == 1) { return false; }
+        if (index == 1) { return false; }
         return true;
       }
 
     }).then(actionSheetRef => {
       this.actionSheetRef = actionSheetRef;
     });
-
   }
-
 }
+
