@@ -17,6 +17,12 @@
 * Different Sass color maps for iOS and Material Design
     * Allows colors to be different per platform
     * ie: Gray navbars in iOS, blue navbars in MD. Identical HTML/JS
+* config: `tabbarStyle` has been removed, should now use different Sass color maps instead of setting it in the config
+* text-input: class `has-value` has become `input-has-value`  
+* text-input: class `has-focus` has become `input-focused`  
+* searchbar: class `left-align` has become `searchbar-left-aligned`
+* searchbar: class `focused` has become `searchbar-focused`
+
 
 
 #####  `<ion-nav-items>` renamed to `<ion-buttons>`
