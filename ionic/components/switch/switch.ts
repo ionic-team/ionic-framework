@@ -167,6 +167,7 @@ export class Switch {
   /**
    * Set checked state of this switch.
    * @param {boolean} value  Boolean to set this switch's checked state to.
+   * @private
    */
   check(value) {
     this.checked = !!value;
@@ -175,6 +176,7 @@ export class Switch {
 
   /**
    * Toggle the checked state of this switch.
+   * @private
    */
   toggle(ev) {
     this.check(!this.checked);
