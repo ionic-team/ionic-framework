@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html ng-app="slidesTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Slide Box</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+  </head>
+  <body ng-controller="MyCtrl">
+  <ion-pane>
+
+    <ion-header-bar class="bar-assertive">
+      <ion-title>Hello</ion-title>
+    </ion-header-bar>
+    <ion-content class="padding">
+<!--
+      <ks-swiper-container override-parameters="{'loop':true}">
+    <ks-swiper-slide class="swiper-slide" ng-repeat="s in [1,2,3,4]">
+      <img ng-src="http://api.randomuser.me/portraits/thumb/men/{{s}}.jpg">
+    </ks-swiper-slide>
+</ks-swiper-container>
+-->
+      <ion-slides options="options">
+        <ion-slide-page>
+          <h2>Journey to HD 219134 b</h2>
+          <p>
+            This app will prepare you for your journey through the galaxy
+            to HD 219134 b, an exoplanet 21 lightyears away from our home on Earth.
+          </p>
+          <p>
+            <img src="exoplanet.jpg" style="max-width: 100%" />
+          </p>
+          <div style="text-align: center">
+            <small style="font-style: italic">An artist's rendering of your new home.</small>
+          </div>
+        </ion-slide-page>
+        <ion-slide-page>
+          <h2>Before launch</h2>
+          <p>
+            Before entering the space capsule, please prepare accordingly:
+          </p>
+          <ul>
+            <li>Say "good bye" to your loved ones. You will not see them again.</li>
+            <li>Turn off any gas sources and lights in your home.</li>
+            <li>Pets cannot make the journey to distant planets. Please arrange for their safe keeping.</li>
+          </ul>
+        </ion-slide-page>
+        <ion-slide-page>
+          <h2>During launch</h2>
+          <p>
+            Hang on and enjoy the ride. Your input is not needed (and, in fact, is protected against) during the
+            launch and minutes after reacing the proper altitude needed to utilize the ion propulsion engines
+            that will carry you to HD 219134 b.
+          </p>
+        </ion-slide-page>
+        <ion-slide-page>
+          <h2>After launch and years ahead</h2>
+          <p>
+            Thus begins the long journey to HD 219134 b. To pass the time, we've supplied
+            you with a variety of pharmaceuticals along with a pamphlet to understand the benefits and drawbacks of each.
+          </p>
+          <p>
+            Whether you choose to utilize your full Vitality Buffer of four earth-years by experiencing the mystery and excitement
+             of traveling through the vast universe, you must transition to the Cryo Pad for preservation for the rest of the voyage.
+          </p>
+          <p>
+            During your long nap, the engines will fire the experimental Worm Slip engines to reduce the journey by several hundreds of thousands of years.
+            The status of the experiment will not be known until your planned Cryo Wake in 4000 earth-years.
+          </p>
+        </ion-slide-page>
+        <ion-slide-page>
+          <h2>Approaching HD 219134 b</h2>
+          <p>
+            If you are lucky enough to be able to see HD 219134 b with your own eyes, congratulations! No
+            space pioneer has ever made it this far. Take a minute and celebrate this monumental accomplishment.
+          </p>
+          <p>
+            Next, review the Approach checklist for a detailed list of instructions on preparing the capsule for
+            entry into a possible atmosphere.
+          </p>
+          <p>
+            If the Worm Slip experiment failed and you have only partially progressed on your journey to HD 219134 b, please review the
+            Contingency Plan for ideas on how to make the most of the rest of your life in space.
+          </p>
+        </ion-slide-page>
+        <ion-slide-page>
+          <h2>Life on HD 219134 b</h2>
+          <p>
+            Scientists aren't quite sure what life on HD 219134 b will be like!
+            In order to help you adapt to a set of predicted atmospheric, pressure, and temperature environments,
+            we've provided three Life Support Configurations.
+          </p>
+          <p>
+            Your Personal Pioneer Pad will help you determine which Life Support Configuration to use. In the event
+            that none of the provided Life Support Configurations adaquately protects you from the HD 219134 b environment,
+            we regret to inform you that the experiment is ended and we hope to one day retrieve your valuable data.
+          </p>
+        </ion-slide-page>
+      </ion-slides>
+    </ion-content>
+  </ion-pane>
+  <script>
+    angular.module('slidesTest', ['ionic'])
+    .controller('MyCtrl', ['$scope', function($scope) {
+      $scope.options = {
+        loop: true
+      }
+    }]);
+    </script>
+  </body>
+</html>

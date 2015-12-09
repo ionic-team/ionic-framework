@@ -60,6 +60,7 @@ module.exports = {
     'js/views/modalView.js',
     'js/views/sideMenuView.js',
     'js/views/sliderView.js',
+    'js/views/slidesView.js',
     'js/views/toggleView.js'
   ],
 

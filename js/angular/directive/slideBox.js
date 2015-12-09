@@ -3,6 +3,8 @@
  * @ngdoc directive
  * @name ionSlideBox
  * @module ionic
+ * @deprecated will be removed in the next Ionic release in favor of the new ion-slides component.
+ * Don't depend on the internal behavior of this widget.
  * @delegate ionic.service:$ionicSlideBoxDelegate
  * @restrict E
  * @description
@@ -187,7 +189,7 @@ function($animate, $timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory, $i
 .directive('ionSlide', function() {
   return {
     restrict: 'E',
-    require: '^ionSlideBox',
+    require: '?^ionSlideBox',
     compile: function(element) {
       element.addClass('slider-slide');
     }

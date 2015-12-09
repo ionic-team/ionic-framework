@@ -141,7 +141,7 @@ gulp.task('eslint', function() {
   return gulp.src(['js/**/*.js'])
     .pipe(eslint())
     .pipe(eslint.format())
-    .pipe(eslint.failOnError());
+    .pipe(eslint.failAfterError());
 });
 
 gulp.task('ddescribe-iit', function() {

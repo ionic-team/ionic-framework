@@ -1,0 +1,102 @@
+
+/**
+ * @ngdoc directive
+ * @name ionSlides
+ * @module ionic
+ * @delegate ionic.service:$ionicSlideBoxDelegate
+ * @restrict E
+ * @description
+ * The Slides component is a powerful multi-page container where each page can be swiped or dragged between.
+ *
+ * Note: this is a new version of the Ionic Slide Box based on the [Swiper](http://www.idangero.us/swiper/#.Vmc1J-ODFBc) widget from
+ * [idangerous](http://www.idangero.us/).
+ *
+ * ![SlideBox](http://ionicframework.com.s3.amazonaws.com/docs/controllers/slideBox.gif)
+ *
+ * @usage
+ * ```html
+ * <ion-slides on-slide-changed="slideHasChanged($index)">
+ *   <ion-slide>
+ *     <div class="box blue"><h1>BLUE</h1></div>
+ *   </ion-slide>
+ *   <ion-slide>
+ *     <div class="box yellow"><h1>YELLOW</h1></div>
+ *   </ion-slide>
+ *   <ion-slide>
+ *     <div class="box pink"><h1>PINK</h1></div>
+ *   </ion-slide>
+ * </ion-slides>
+ * ```
+ *
+ * @param {string=} delegate-handle The handle used to identify this slideBox
+ * with {@link ionic.service:$ionicSlideBoxDelegate}.
+ * @param {object=} options to pass to the widget. See the full ist here: [http://www.idangero.us/swiper/api/](http://www.idangero.us/swiper/api/)
+ */
+IonicModule
+.directive('ionSlides', [
+  '$animate',
+  '$timeout',
+function($animate, $timeout) {
+  return {
+    restrict: 'E',
+    transclude: true,
+    scope: {
+      options: '='
+    },
+    template: '<div class="swiper-container">' +
+      '<div class="swiper-wrapper" ng-transclude>' +
+      '</div>' +
+        '<div ng-hide="!showPager" class="swiper-pagination"></div>' +
+      '</div>',
+    controller: ['$scope', '$element', function($scope, $element) {
+      var _this = this;
+
+      this.update = function() {
+        $timeout(function() {
+          _this.__slider.update();
+
+          // Don't allow pager to show with > 10 slides
+          if (_this.__slider.slides.length > 10) {
+            $scope.showPager = false;
+          }
+        });
+      };
+
+      var options = $scope.options || {};
+
+      var newOptions = angular.extend({
+        pagination: '.swiper-pagination',
+        paginationClickable: true,
+        lazyLoading: true,
+        preloadImages: false
+      }, options);
+
+      $timeout(function() {
+        var slider = new ionic.views.Swiper($element.children()[0], newOptions);
+
+        _this.__slider = slider;
+
+        $scope.$on('$destroy', function() {
+          slider.destroy();
+        });
+      });
+
+    }],
+
+
+    link: function($scope, $element) {
+      $scope.showPager = true;
+      // Disable ngAnimate for slidebox and its children
+      $animate.enabled(false, $element);
+    }
+  };
+}])
+.directive('ionSlidePage', [function() {
+  return {
+    restrict: 'E',
+    require: '?^ionSlides',
+    transclude: true,
+    replace: true,
+    template: '<div class="swiper-slide" ng-transclude></div>'
+  };
+}]);
