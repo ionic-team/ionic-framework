@@ -84,8 +84,8 @@ export class NavRouter extends RouterOutlet {
       // generate a componentInstruction from the view's PathRecognizer and params
       let componentInstruction = pathRecognizer.generate(viewCtrl.params.data);
 
-      // create an Instruction from the componentInstruction
-      let instruction = new Instruction(componentInstruction, null);
+      // create a ResolvedInstruction from the componentInstruction
+      let instruction = new ResolvedInstruction(componentInstruction, null);
 
       this._parentRouter.navigateByInstruction(instruction);
     }
@@ -112,4 +112,17 @@ export class NavRouter extends RouterOutlet {
     return pathRecognizer;
   }
 
+}
+
+// TODO: hacked from
+// https://github.com/angular/angular/blob/6ddfff5cd59aac9099aa6da5118c5598eea7ea11/modules/angular2/src/router/instruction.ts#L207
+class ResolvedInstruction extends Instruction {
+  constructor(public component: ComponentInstruction, public child: Instruction,
+              public auxInstruction: {[key: string]: Instruction}) {
+    super();
+  }
+
+  resolveComponent(): Promise<ComponentInstruction> {
+    return Promise.resolve(this.component);
+  }
 }
