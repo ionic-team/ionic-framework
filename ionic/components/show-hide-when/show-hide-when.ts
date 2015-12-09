@@ -61,6 +61,7 @@ class DisplayWhen {
  * <div show-when="ios">I am only visible on iOS!</div>
  * ```
  * @demo /docs/v2/demos/show-when/
+ * @see {@link ../HideWhen HideWhen API Docs}
  */
 @Directive({
   selector: '[show-when]',
@@ -97,6 +98,7 @@ export class ShowWhen extends DisplayWhen {
  * <div hide-when="android">I am hidden on Android!</div>
  * ```
  * @demo /docs/v2/demos/hide-when/
+ * @see {@link ../ShowWhen ShowWhen API Docs}
  */
 @Directive({
   selector: '[hide-when]',
