@@ -202,6 +202,10 @@ ion-infinite-scroll {
   }
 }
 
+.overflow-scroll-freeze {
+  -webkit-overflow-scrolling: auto !important;
+  overflow-y: hidden !important;
+}
 
 // Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
 // Note: For these to work, content must come after both bars in the markup

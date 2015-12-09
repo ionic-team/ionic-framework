@@ -60,7 +60,17 @@
         }, 80);
       };
 
-      self.freeze = NOOP;
+      self.freeze = function(shouldFreeze) {
+        if (arguments.length) {
+          self.options.freeze = shouldFreeze;
+          if (shouldFreeze) {
+            self.el.classList.add("overflow-scroll-freeze");
+          } else {
+            self.el.classList.remove("overflow-scroll-freeze");
+          }
+        }
+        return self.options.freeze;
+      };
 
       self.__initEventHandlers();
     },
@@ -203,10 +213,21 @@
      */
     scrollTo: function(left, top, animate) {
       var self = this;
+
+      var didFreeze = false;
+
+      // toggle freeze in order to stop momentum scrolling if one is in progress
+      // but respect a freeze if one is already active
+      if (!self.freeze()) {
+        self.freeze(true);
+        didFreeze = true; // remember if we frozen scroll so we can unfreeze
+      }
+
       if (!animate) {
         self.el.scrollTop = top;
         self.el.scrollLeft = left;
         self.resize();
+        if (didFreeze) self.freeze(false);
         return;
       }
 
@@ -230,6 +251,7 @@
           self.el.style.overflowX = oldOverflowX;
           self.el.style.overflowY = oldOverflowY;
           self.resize();
+          if (didFreeze) self.freeze(false);
           return; /* Prevent scrolling to the Y point if already there */
         }
 
@@ -262,6 +284,7 @@
             self.el.style.overflowX = oldOverflowX;
             self.el.style.overflowY = oldOverflowY;
             self.resize();
+            if (didFreeze) self.freeze(false);
           }
         }
 
