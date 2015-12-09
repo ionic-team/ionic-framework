@@ -412,7 +412,7 @@
   // Warn the user if deviceready did not fire in a reasonable amount of time, and how to fix it.
   function verifyPlatformReady() {
     setTimeout(function() {
-      if(!self.isReady) {
+      if(!self.isReady && self.isWebView()) {
         console.warn('Possible issue: deviceready did not fire in a reasonable amount of time. ' +
         'This can be caused by plugins in an inconsistent state. One possible solution: uninstall/remove all ' +
         'plugins and reinstall them. Additionally, one or more plugins might be faulty or out of date.');
