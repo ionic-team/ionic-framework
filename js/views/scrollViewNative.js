@@ -209,6 +209,13 @@
         self.resize();
         return;
       }
+
+      var oldOverflowX = self.el.style.overflowX;
+      var oldOverflowY = self.el.style.overflowY;
+
+      self.el.style.overflowY = 'hidden';
+      self.el.style.overflowX = 'hidden';
+
       animateScroll(top, left);
 
       function animateScroll(Y, X) {
@@ -220,6 +227,8 @@
           fromX = self.el.scrollLeft;
 
         if (fromY === Y && fromX === X) {
+          self.el.style.overflowX = oldOverflowX;
+          self.el.style.overflowY = oldOverflowY;
           self.resize();
           return; /* Prevent scrolling to the Y point if already there */
         }
@@ -250,6 +259,8 @@
           } else {
             // done
             ionic.tap.removeClonedInputs(self.__container, self);
+            self.el.style.overflowX = oldOverflowX;
+            self.el.style.overflowY = oldOverflowY;
             self.resize();
           }
         }
