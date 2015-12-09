@@ -60,7 +60,7 @@ export class Button {
     this._readIcon(element);
   }
 
-  afterContentInit() {
+  ngAfterContentInit() {
     this._assignCss(true);
   }
 
