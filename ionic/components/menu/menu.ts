@@ -66,7 +66,7 @@ import * as gestures from  './menu-gestures';
     '[attr.side]': 'side',
     '[attr.type]': 'type'
   },
-  template: '<ng-content></ng-content><backdrop tappable disable-activated></backdrop>',
+  template: '<ng-content></ng-content><div tappable disable-activated class="backdrop"></div>',
   directives: [forwardRef(() => MenuBackdrop)]
 })
 export class Menu extends Ion {
@@ -366,7 +366,7 @@ let menuTypes = {};
 
 
 @Directive({
-  selector: 'backdrop',
+  selector: '.backdrop',
   host: {
     '(click)': 'clicked($event)'
   }
