@@ -85,7 +85,7 @@ ion-title {
       background-color: $color-value;
       border-color: darken($color-value, 10%);
     }
-    
+
     .toolbar-title,
     .bar-button-default {
       color: inverse($color-value);
@@ -232,7 +232,6 @@ ion-buttons[right] {
 }
 
 .bar-button-icon-right icon {
-  margin-right: -0.2em;
   padding-left: 0.4em;
   font-size: 1.4em;
   line-height: 0.67;

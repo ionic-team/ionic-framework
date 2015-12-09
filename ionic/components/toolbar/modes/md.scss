@@ -111,6 +111,8 @@ ion-buttons[right] {
 .bar-button {
   margin-top: 0;
   margin-bottom: 0;
+  margin-left: 0.2rem;
+  margin-right: 0.2rem;  
   padding: 0 5px;
   min-height: 32px;
   border: 0;
@@ -221,7 +223,6 @@ ion-buttons[right] {
 }
 
 .bar-button-icon-right icon {
-  margin-right: -0.2em;
   padding-left: 0.4em;
   font-size: 1.4em;
   line-height: 0.67;
@@ -230,12 +231,12 @@ ion-buttons[right] {
 
 .bar-button-icon-only {
   padding: 0;
-  min-width: 0.9em;
 
   icon {
     padding: 0 0.1em;
     font-size: 1.8em;
     line-height: 0.67;
+    min-width: 28px;
     pointer-events: none;
   }
 }
