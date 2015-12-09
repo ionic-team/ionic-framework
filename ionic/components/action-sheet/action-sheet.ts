@@ -17,26 +17,28 @@ import {extend} from '../../util/util';
 @Component({
   selector: 'ion-action-sheet',
   template:
-    '<backdrop (click)="cancel()" tappable disable-activated></backdrop>' +
-    '<action-sheet-wrapper>' +
+    '<div (click)="cancel()" tappable disable-activated class="backdrop"></div>' +
+    '<div class="action-sheet-wrapper">' +
       '<div class="action-sheet-container">' +
         '<div class="action-sheet-group action-sheet-options">' +
           '<div class="action-sheet-title" *ng-if="d.titleText">{{d.titleText}}</div>' +
-          '<button (click)="buttonClicked(i)" *ng-for="#b of d.buttons; #i=index" class="action-sheet-option disable-hover">' +
-            '<icon [name]="b.icon" *ng-if="b.icon"></icon> ' +
+          '<button (click)="buttonClicked(i)" *ng-for="#b of d.buttons; #i=index" class="action-sheet-button action-sheet-option disable-hover">' +
+            '<icon [name]="b.icon" *ng-if="b.icon" class="action-sheet-icon"></icon> ' +
             '{{b.text}}' +
           '</button>' +
-          '<button *ng-if="d.destructiveText" (click)="destructive()" class="action-sheet-destructive disable-hover">' +
-            '<icon [name]="d.destructiveIcon" *ng-if="d.destructiveIcon"></icon> ' +
-            '{{d.destructiveText}}</button>' +
+          '<button *ng-if="d.destructiveText" (click)="destructive()" class="action-sheet-button action-sheet-destructive disable-hover">' +
+            '<icon [name]="d.destructiveIcon" *ng-if="d.destructiveIcon" class="action-sheet-icon"></icon> ' +
+            '{{d.destructiveText}}' +
+          '</button>' +
         '</div>' +
-        '<div class="action-sheet-group action-sheet-cancel" *ng-if="d.cancelText">' +
-          '<button (click)="cancel()" class="disable-hover">' +
-            '<icon [name]="d.cancelIcon" *ng-if="d.cancelIcon"></icon> ' +
-            '{{d.cancelText}}</button>' +
+        '<div class="action-sheet-group" *ng-if="d.cancelText">' +
+          '<button (click)="cancel()" class="action-sheet-button action-sheet-cancel disable-hover">' +
+            '<icon [name]="d.cancelIcon" *ng-if="d.cancelIcon" class="action-sheet-icon"></icon> ' +
+            '{{d.cancelText}}' +
+          '</button>' +
         '</div>' +
       '</div>' +
-    '</action-sheet-wrapper>',
+    '</div>',
   host: {
     'role': 'dialog'
   },
@@ -174,8 +176,8 @@ class ActionSheetSlideIn extends Animation {
     super(null, opts);
 
     let ele = enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('backdrop'));
-    let wrapper = new Animation(ele.querySelector('action-sheet-wrapper'));
+    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let wrapper = new Animation(ele.querySelector('.action-sheet-wrapper'));
 
     backdrop.fromTo('opacity', 0.01, 0.4);
     wrapper.fromTo('translateY', '100%', '0%');
@@ -191,8 +193,8 @@ class ActionSheetSlideOut extends Animation {
     super(null, opts);
 
     let ele = leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('backdrop'));
-    let wrapper = new Animation(ele.querySelector('action-sheet-wrapper'));
+    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let wrapper = new Animation(ele.querySelector('.action-sheet-wrapper'));
 
     backdrop.fromTo('opacity', 0.4, 0);
     wrapper.fromTo('translateY', '0%', '100%');
@@ -208,8 +210,8 @@ class ActionSheetMdSlideIn extends Animation {
     super(null, opts);
 
     let ele = enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('backdrop'));
-    let wrapper = new Animation(ele.querySelector('action-sheet-wrapper'));
+    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let wrapper = new Animation(ele.querySelector('.action-sheet-wrapper'));
 
     backdrop.fromTo('opacity', 0.01, 0.26);
     wrapper.fromTo('translateY', '100%', '0%');
@@ -225,8 +227,8 @@ class ActionSheetMdSlideOut extends Animation {
     super(null, opts);
 
     let ele = leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('backdrop'));
-    let wrapper = new Animation(ele.querySelector('action-sheet-wrapper'));
+    let backdrop = new Animation(ele.querySelector('.backdrop'));
+    let wrapper = new Animation(ele.querySelector('.action-sheet-wrapper'));
 
     backdrop.fromTo('opacity', 0.26, 0);
     wrapper.fromTo('translateY', '0%', '100%');

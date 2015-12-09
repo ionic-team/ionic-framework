@@ -49,7 +49,7 @@ class BackButtonText {
 
 
 @Directive({
-  selector: 'toolbar-background'
+  selector: '.toolbar-background'
 })
 class ToolbarBackground {
   constructor(
@@ -64,26 +64,25 @@ class ToolbarBackground {
 @Component({
   selector: 'ion-navbar',
   template:
-    '<toolbar-background></toolbar-background>' +
-    '<button class="back-button" [hidden]="hideBackButton">' +
+    '<div class="toolbar-background"></div>' +
+    '<button class="back-button bar-button bar-button-default" [hidden]="hideBackButton">' +
       '<icon class="back-button-icon" [name]="bbIcon"></icon>' +
       '<span class="back-button-text">' +
         '<span class="back-default">{{bbText}}</span>' +
       '</span>' +
     '</button>' +
-    '<ng-content select="[menu-toggle]"></ng-content>' +
-    '<ng-content select="ion-nav-items[primary]"></ng-content>' +
-    '<ng-content select="ion-nav-items[secondary]"></ng-content>' +
-    '<toolbar-content>' +
+    '<ng-content select="[menu-toggle],ion-buttons[left]"></ng-content>' +
+    '<ng-content select="ion-buttons[start]"></ng-content>' +
+    '<ng-content select="ion-buttons[end],ion-buttons[right]"></ng-content>' +
+    '<div class="toolbar-content">' +
       '<ng-content></ng-content>' +
-    '</toolbar-content>',
+    '</div>',
   host: {
     '[hidden]': '_hidden',
     'class': 'toolbar'
   },
   inputs: [
-    'hideBackButton',
-    'navbarStyle'
+    'hideBackButton'
   ],
   directives: [BackButton, BackButtonText, Icon, ToolbarBackground]
 })
@@ -100,11 +99,6 @@ export class Navbar extends ToolbarBase {
     this.app = app;
     this.renderer = renderer;
 
-    let navbarStyle = config.get('navbarStyle');
-    if (navbarStyle) {
-      renderer.setElementAttribute(elementRef, navbarStyle, '');
-    }
-
     viewCtrl && viewCtrl.setNavbar(this);
 
     this.bbIcon = config.get('backButtonIcon');
@@ -114,15 +108,11 @@ export class Navbar extends ToolbarBase {
   /**
    * @private
    */
-  onInit() {
-    super.onInit();
+  ngOnInit() {
+    super.ngOnInit();
     let hideBackButton = this.hideBackButton;
     if (typeof hideBackButton === 'string') {
       this.hideBackButton = (hideBackButton === '' || hideBackButton === 'true');
-    }
-
-    if (this.navbarStyle) {
-      this.renderer.setElementAttribute(this.elementRef, this.navbarStyle, '');
     }
   }
 

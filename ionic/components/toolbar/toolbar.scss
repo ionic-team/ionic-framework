@@ -1,18 +1,7 @@
-@import "../../ionic.globals";
+@import "../../globals.core";
 
 // Toolbar
 // --------------------------------------------------
-
-$toolbar-padding:        4px !default;
-
-$toolbar-order: (
-  backButton: 10,
-  menu-toggle-primary: 20,
-  content: 30,
-  primary: 40,
-  secondary: 50,
-  menu-toggle-secondary: 60,
-);
 
 
 .toolbar {
@@ -26,19 +15,11 @@ $toolbar-order: (
   order: $flex-order-toolbar-top;
   flex: 0;
 
-  padding: $toolbar-padding;
   width: 100%;
   overflow: hidden;
-
-  button,
-  [button] {
-    background-color: transparent;
-    color: $toolbar-active-color;
-    box-shadow: none;
-  }
 }
 
-.toolbar toolbar-background {
+.toolbar-background {
   position: absolute;
   left: 0;
   top: 0;
@@ -47,24 +28,7 @@ $toolbar-order: (
   z-index: $z-index-toolbar-background;
 
   border: 0;
-  border-color: $toolbar-border-color;
-  background-color: $toolbar-background-color;
-
   pointer-events: none;
-}
-
-toolbar-content {
-  display: block;
-  flex: 1;
-  order: map-get($toolbar-order, content);
-}
-
-.toolbar button:hover:not(.disable-hover),
-.toolbar [button]:hover:not(.disable-hover),
-.toolbar button.activated,
-.toolbar [button].activated {
-  color: $toolbar-active-color;
-  background-color: transparent;
 }
 
 .toolbar[position=bottom] {
@@ -83,74 +47,31 @@ ion-title {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  color: $toolbar-text-color;
 }
 
-.toolbar [menu-toggle] {
-  display: flex;
-  align-items: center;
-  margin: 0 6px;
-  padding: 0;
-  min-width: 36px;
-  order: map-get($toolbar-order, menu-toggle-primary);
-  box-shadow: none;
-}
-
-.toolbar [menu-toggle][secondary] {
-  order: map-get($toolbar-order, menu-toggle-secondary);
-}
-
-.toolbar [menu-toggle] icon {
-  padding: 0 6px;
-  font-size: 2.8rem;
-}
-
-ion-nav-items {
+ion-buttons {
   display: block;
   margin: 0 0.2rem;
   pointer-events: none;
-  order: map-get($toolbar-order, primary);
 }
 
-ion-nav-items[secondary] {
-  order: map-get($toolbar-order, secondary);
-}
-
-ion-nav-items button,
-ion-nav-items a,
-ion-nav-items input,
-ion-nav-items textarea,
-ion-nav-items div {
+ion-buttons button,
+ion-buttons a,
+ion-buttons input,
+ion-buttons textarea,
+ion-buttons div {
   pointer-events: auto;
 }
 
 // TODO this is a temp hack to fix segment overlapping ion-nav-item
-ion-nav-items,
-[menu-toggle] {
+ion-buttons,
+.bar-button-menu-toggle {
   z-index: 99;
 }
 
-
-// Toolbar Color Generation
+// Navbar
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors {
-
-  .toolbar[#{$color-name}] {
-
-    toolbar-background {
-      background-color: $color-value;
-      border-color: darken($color-value, 10%);
-    }
-
-    .toolbar-title,
-    button,
-    [button],
-    button:hover:not(.disable-hover),
-    [button]:hover:not(.disable-hover),
-    a {
-      color: inverse($color-value);
-    }
-  }
-
+ion-navbar.toolbar {
+  display: flex;
 }

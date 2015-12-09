@@ -5,13 +5,13 @@ import {App, ActionSheet, IonicApp, IonicView, Register} from 'ionic/ionic';
 @IonicView({
   template: '<ion-navbar *navbar primary>' +
     '<ion-title>Heading</ion-title>' +
-    '<a menu-toggle="menu">' +
+    '<button menu-toggle="menu">' +
       '<icon menu></icon>' +
-    '</a>' +
-    '<ion-nav-items secondary>' +
+    '</button>' +
+    '<ion-buttons end>' +
       '<button><ion-icon md="ion-android-search" ios="ion-ios-search-strong"></i></button>' +
       '<button (click)="showMoreMenu()"><i class="icon ion-android-more-vertical"></i></button>' +
-    '</ion-nav-items>' +
+    '</ion-buttons>' +
   '</ion-navbar>' +
   '<ion-content>' +
     `

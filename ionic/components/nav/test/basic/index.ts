@@ -16,12 +16,12 @@ class MyCmpTest{}
   template: `
     <ion-navbar *navbar>
       <ion-title>{{title}}</ion-title>
-      <ion-nav-items primary>
+      <ion-buttons start>
         <button><icon star></icon></button>
-      </ion-nav-items>
-      <ion-nav-items secondary>
+      </ion-buttons>
+      <ion-buttons end>
         <button>S1</button>
-      </ion-nav-items>
+      </ion-buttons>
     </ion-navbar>
     <ion-content>
       <ion-list>

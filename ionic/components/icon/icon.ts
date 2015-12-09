@@ -6,8 +6,8 @@ import {Config} from '../../config/config';
 /**
  * @name Icon
  * @description
- * Icons can be used on their own, or inside of a number of Ionic components. For a full list of available icons, 
- * check out the [Ionicons resource docs](../../../../../resources/ionicons). 
+ * Icons can be used on their own, or inside of a number of Ionic components. For a full list of available icons,
+ * check out the [Ionicons resource docs](../../../../../resources/ionicons).
  *
  * @property {boolean} [is-active] - Whether or not the icon is active. Icons that are not active will use an outlined version of the icon.
  * If there is not an outlined version for the particular icon, it will use the default (full) version.
@@ -42,7 +42,7 @@ export class Icon {
   /**
    * @private
    */
-  onInit() {
+  ngOnInit() {
     let ele = this.elementRef.nativeElement;
 
     if (this.mode == 'ios' && this.ios) {
@@ -53,7 +53,7 @@ export class Icon {
 
     } else if (!this.name) {
       // looping through native dom attributes, eww
-      // https://github.com/angular/angular/issues/3961
+      // https://github.com/angular/angular/issues/1818
       for (let i = 0, l = ele.attributes.length; i < l; i++) {
         if (ele.attributes[i].value === '' && /_|item-|is-active|large|small|class/.test(ele.attributes[i].name) !== true) {
           this.name = ele.attributes[i].name;

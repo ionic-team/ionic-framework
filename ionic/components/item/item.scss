@@ -1,4 +1,4 @@
-@import "../../ionic.globals";
+@import "../../globals.core";
 
 // Item
 // --------------------------------------------------
@@ -13,22 +13,15 @@
   margin: 0;
   padding: 0;
   border: 0;
+  width: 100%;
   min-height: 4.4rem;
-  text-align: initial;
   overflow: hidden;
 
-  background-color: $list-background-color;
-  color: $list-text-color;
-
-  box-sizing: border-box;
-
-  &[no-lines] {
-    border: none;
-
-    .item-inner {
-      border: none;
-    }
-  }
+  text-align: initial;
+  font-weight: normal;
+  line-height: normal;
+  text-decoration: none;
+  color: inherit;
 }
 
 .item-inner {
@@ -37,12 +30,16 @@
   padding: 0;
   border: 0;
   overflow: hidden;
-  box-sizing: border-box;
 
   flex: 1;
   flex-direction: inherit;
   align-items: inherit;
   align-self: stretch;
+}
+
+.item[no-lines],
+.item[no-lines] .item-inner {
+  border: none;
 }
 
 ion-item-group {
@@ -52,32 +49,15 @@ ion-item-group {
 ion-item-divider {
   display: block;
   min-height: 30px;
-  font-weight: 500;
   width: 100%;
   z-index: 1000;
+  font-weight: 500;
 
   &[sticky] {
     position: -webkit-sticky;
     position: sticky;
   	top: 0px;
   }
-}
-
-a.item,
-button.item {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  justify-content: inherit;
-  min-height: 4.4rem;
-  font-weight: normal;
-  line-height: normal;
-  text-decoration: none;
-  text-transform: none;
-  color: inherit;
-  border-radius: 0;
-  box-shadow: none;
-  will-change: initial;
 }
 
 ion-item-content {
@@ -89,7 +69,8 @@ ion-item-content {
   pointer-events: none;
 
   a,
-  button {
+  button,
+  [tappable] {
     pointer-events: auto;
   }
 }
@@ -98,53 +79,7 @@ ion-item-content {
   white-space: normal;
 }
 
-.item {
-
-  h1 {
-    margin: 0 0 2px;
-    font-size: 2.4rem;
-    font-weight: normal;
-  }
-
-  h2 {
-    margin: 0 0 2px;
-    font-size: 1.6rem;
-    font-weight: normal;
-  }
-
-  h3,
-  h4,
-  h5,
-  h6 {
-    line-height: normal;
-    margin: 0 0 3px 0;
-    font-size: 1.4rem;
-    font-weight: normal;
-  }
-
-  p {
-    line-height: normal;
-    color: #666;
-    font-size: 1.2rem;
-    margin: 0 0 2px;
-  }
-
-  h2:last-child,
-  h3:last-child,
-  h4:last-child,
-  h5:last-child,
-  h6:last-child,
-  p:last-child {
-    margin-bottom: 0;
-  }
-
-  a {
-    text-decoration: none;
-  }
-
-}
-
-.vertical-align-top,
+[vertical-align-top],
 ion-input.item {
   align-items: flex-start;
 }
@@ -152,3 +87,6 @@ ion-input.item {
 ion-item-content + ion-item-content[cnt] {
   display: none;
 }
+
+@import "item-media";
+@import "item-sliding";

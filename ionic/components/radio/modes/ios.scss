@@ -1,16 +1,32 @@
-@import "../../../ionic.globals";
+@import "../../../globals.ios";
 
 // iOS Radio
 // --------------------------------------------------
 
-$radio-ios-color-on:       color(primary) !default;
+$radio-ios-color-on:               map-get($colors-ios, primary) !default;
+
+$radio-ios-icon-width:             16px !default;
+$radio-ios-icon-height:            21px !default;
+$radio-ios-icon-border-width:      2px !default;
+$radio-ios-icon-border-style:      solid !default;
+
+$radio-ios-disabled-text-color:    $subdued-text-ios-color !default;
+$radio-ios-disabled-opacity:       0.5 !default;
 
 
 ion-radio {
+  cursor: pointer;
+  @include user-select-none();
 
-  &[aria-checked=true] radio-icon:after {
+  &[aria-checked=true] {
+    color: $radio-ios-color-on;
+  }
+
+  &[aria-checked=true] .radio-icon:after {
     position: absolute;
-    border: 2px solid $radio-ios-color-on;
+    border-width: $radio-ios-icon-border-width;
+    border-style: $radio-ios-icon-border-style;
+    border-color: $radio-ios-color-on;
     top: 3px;
     left: 7px;
     width: 4px;
@@ -21,26 +37,28 @@ ion-radio {
     transform: rotate(45deg);
   }
 
-  &[aria-checked=true] {
-    color: $radio-ios-color-on;
-  }
-
   &.item.activated {
-    background-color: $list-background-color;
+    background-color: $list-ios-background-color;
   }
 
 }
 
-media-radio {
+ion-radio[aria-disabled=true] {
+  color: $radio-ios-disabled-text-color;
+  opacity: $radio-ios-disabled-opacity;
+  pointer-events: none;
+}
+
+.radio-media {
   display: block;
   margin: $item-ios-padding-media-top ($item-ios-padding-right / 2) $item-ios-padding-media-bottom ($item-ios-padding-left / 2);
 }
 
-radio-icon {
+.radio-icon {
   position: relative;
   display: block;
-  width: 16px;
-  height: 21px;
+  width: $radio-ios-icon-width;
+  height: $radio-ios-icon-height;
 }
 
 
@@ -51,7 +69,7 @@ radio-icon {
 
   ion-radio[#{$color-name}] {
 
-    &[aria-checked=true] radio-icon:after {
+    &[aria-checked=true] .radio-icon:after {
       border-color: $color-value;
     }
 
@@ -67,7 +85,7 @@ radio-icon {
 // Generate iOS Radio Auxiliary Colors
 // --------------------------------------------------
 
-@each $color-name, $color-value in auxiliary-colors() {
+@each $color-name, $color-value in $colors-ios {
 
   @include radio-theme-ios($color-name, $color-value);
 

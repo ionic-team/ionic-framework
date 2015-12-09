@@ -5,83 +5,83 @@
 
 
 <ion-toolbar>
-  <ion-nav-items primary>
+  <ion-buttons start>
     <button>
       <icon ios=contact></icon>
     </button>
     <button>
       <icon search></icon>
     </button>
-  </ion-nav-items>
-  <ion-nav-items secondary>
-    <button>
+  </ion-buttons>
+  <ion-buttons end>
+    <button secondary>
       <icon more></icon>
     </button>
-  </ion-nav-items>
+  </ion-buttons>
   <ion-title>Defaults</ion-title>
 </ion-toolbar>
 
 
 <ion-toolbar>
-  <ion-nav-items primary>
+  <ion-buttons start>
     <button class="activated">
       <icon ios="contact"></icon>
     </button>
     <button class="activated">
       <icon search></icon>
     </button>
-  </ion-nav-items>
-  <ion-nav-items secondary>
-    <button class="activated">
+  </ion-buttons>
+  <ion-buttons end>
+    <button secondary class="activated">
       <icon more></icon>
     </button>
-  </ion-nav-items>
+  </ion-buttons>
   <ion-title>Defaults.activated</ion-title>
 </ion-toolbar>
 
 
 <ion-toolbar>
-  <ion-nav-items primary>
-    <button clear>
+  <ion-buttons start>
+    <button solid>
       <icon contact></icon>
     </button>
-    <button clear>
+    <button solid>
       <icon contact></icon>
-      Clear
+      Solid
     </button>
-  </ion-nav-items>
-  <ion-title>Clear</ion-title>
-  <ion-nav-items secondary>
-    <button clear secondary>
+  </ion-buttons>
+  <ion-title>Solid</ion-title>
+  <ion-buttons end>
+    <button solid secondary>
       Help
       <icon help-circle></icon>
     </button>
-  </ion-nav-items>
+  </ion-buttons>
 </ion-toolbar>
 
 
 <ion-toolbar>
-  <ion-nav-items primary>
-    <button clear class="activated">
+  <ion-buttons start>
+    <button solid class="activated">
       <icon contact></icon>
     </button>
-    <button clear class="activated">
+    <button solid class="activated">
       <icon contact></icon>
-      Clear
+      Solid
     </button>
-  </ion-nav-items>
-  <ion-title>Clear</ion-title>
-  <ion-nav-items secondary>
-    <button clear secondary class="activated">
+  </ion-buttons>
+  <ion-title>Solid Activated</ion-title>
+  <ion-buttons end>
+    <button solid secondary class="activated">
       Help
       <icon help-circle></icon>
     </button>
-  </ion-nav-items>
+  </ion-buttons>
 </ion-toolbar>
 
 
 <ion-toolbar>
-  <ion-nav-items primary>
+  <ion-buttons start>
     <button outline>
       <icon contact></icon>
     </button>
@@ -89,18 +89,18 @@
       <icon star></icon>
       Star
     </button>
-  </ion-nav-items>
-  <ion-nav-items secondary>
+  </ion-buttons>
+  <ion-buttons end>
     <button secondary outline>
       <icon contact></icon>
     </button>
-  </ion-nav-items>
+  </ion-buttons>
   <ion-title>Outline</ion-title>
 </ion-toolbar>
 
 
 <ion-toolbar>
-  <ion-nav-items primary>
+  <ion-buttons start>
     <button outline class="activated">
       <icon contact></icon>
     </button>
@@ -108,94 +108,64 @@
       <icon star></icon>
       Star
     </button>
-  </ion-nav-items>
-  <ion-nav-items secondary>
+  </ion-buttons>
+  <ion-buttons end>
     <button secondary outline class="activated">
       <icon contact></icon>
     </button>
-  </ion-nav-items>
+  </ion-buttons>
   <ion-title>Outline.activated</ion-title>
 </ion-toolbar>
 
 
 <ion-toolbar>
-  <ion-nav-items primary>
-    <button>
-      Btn
-    </button>
-  </ion-nav-items>
-  <ion-nav-items secondary>
-    <button secondary>
-      Btn
-    </button>
-  </ion-nav-items>
-  <ion-title>ColorAttr</ion-title>
-</ion-toolbar>
-
-
-<ion-toolbar>
-  <ion-nav-items primary>
-    <button class="activated">
-      Btn
-    </button>
-  </ion-nav-items>
-  <ion-nav-items secondary>
-    <button secondary class="activated">
-      Btn
-    </button>
-  </ion-nav-items>
-  <ion-title>ColorAttr.activated</ion-title>
-</ion-toolbar>
-
-
-<ion-toolbar>
-  <ion-nav-items primary>
+  <ion-buttons start>
     <button>
       <icon contact></icon>
       Clear
     </button>
-  </ion-nav-items>
-  <ion-nav-items secondary>
+  </ion-buttons>
+  <ion-buttons end>
     <button>
       Edit
       <icon create></icon>
     </button>
-  </ion-nav-items>
+  </ion-buttons>
   <ion-title>Icon/Color Attr</ion-title>
 </ion-toolbar>
 
 
 <ion-toolbar>
-  <a menu-toggle>
+  <button menu-toggle>
     <icon menu></icon>
-  </a>
-  <ion-nav-items primary>
+  </button>
+  <ion-buttons start>
     <button>
       <icon star></icon>
     </button>
-  </ion-nav-items>
+  </ion-buttons>
   <ion-title>Left side menu toggle</ion-title>
 </ion-toolbar>
 
 
 <ion-toolbar>
-<ion-nav-items secondary>
+<ion-buttons end>
   <button #button1 (click)="buttonClick(button1)">
     <icon star></icon>
   </button>
-</ion-nav-items>
+</ion-buttons>
   <ion-title>Right side menu toggle</ion-title>
-  <a menu-toggle secondary>
+  <button menu-toggle right>
     <icon menu></icon>
-  </a>
+  </button>
 </ion-toolbar>
 
 <ion-toolbar>
-  <ion-nav-items secondary>
+  <ion-buttons end>
     <button #button2 (click)="buttonClick(button2)">
       <icon search></icon>
     </button>
-  </ion-nav-items>
+  </ion-buttons>
   <ion-segment secondary>
     <ion-segment-button>
       Something

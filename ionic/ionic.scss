@@ -1,27 +1,16 @@
 @charset "UTF-8";
 
-
 // Core Components
-@import "ionic.core";
-
+@import "components.core";
 
 // iOS Components
 .ios {
-  @import "ionic.ios";
+  @import "components.ios";
+  @include ios-body();
 }
-
 
 // Material Design Components
 .md {
-  @import "ionic.md";
-}
-
-
-// Roboto Font
-$roboto: true !default;
-@if ($roboto) {
-  @import "fonts/roboto";
-  .md {
-    font-family: "Roboto", "Helvetica Neue", sans-serif;
-  }
+  @import "components.md";
+  @include md-body();
 }

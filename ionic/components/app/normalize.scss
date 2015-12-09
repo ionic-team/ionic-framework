@@ -52,11 +52,10 @@ figure {
   margin: 1em 40px;
 }
 
-// Address differences between Firefox and other browsers.
 hr {
-  -moz-box-sizing: content-box;
   box-sizing: content-box;
-  height: 0;
+  height: 1px;
+  border-width: 0;
 }
 
 // Contain overflow in all browsers.
@@ -113,6 +112,17 @@ input[type="reset"],
 input[type="submit"] {
   -webkit-appearance: button; // 2
   cursor: pointer; // 3
+}
+
+button {
+  border: 0;
+  line-height: 1;
+  font-family: inherit;
+  font-variant: inherit;
+  font-style: inherit;
+  text-transform: none;
+  -webkit-appearance: button;
+  cursor: pointer;
 }
 
 // Re-set default cursor for disabled elements.

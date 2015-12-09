@@ -1,4 +1,4 @@
-@import "../ionic.globals";
+@import "../globals.core";
 
 .align-left {
   text-align: left;
@@ -88,7 +88,7 @@ $focus-outline-box-shadow:     0px 0px 8px 0px $focus-outline-border-color !defa
     outline: thin solid $focus-outline-border-color;
   }
 
-  ion-input.has-focus,
+  ion-input.input-focused,
   button[ion-item]:focus,
   a[ion-item]:focus {
     border-color: $focus-outline-border-color;
@@ -141,7 +141,7 @@ focus-ctrl {
 
 $backdrop-color:      #000 !default;
 
-backdrop {
+.backdrop {
   position: absolute;
   z-index: $z-index-backdrop;
   top: 0;

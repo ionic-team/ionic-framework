@@ -136,8 +136,8 @@ export class Nav extends NavController {
   /**
    * @private
    */
-  onInit() {
-    super.onInit();
+  ngOnInit() {
+    super.ngOnInit();
 
     if (this.root) {
       if (typeof this.root !== 'function') {

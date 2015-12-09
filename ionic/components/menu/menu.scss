@@ -1,13 +1,10 @@
-@import "../../ionic.globals";
+@import "../../globals.core";
 
 // Menu
 // --------------------------------------------------
 
 $menu-width:                 304px !default;
 $menu-small-width:           $menu-width - 40px !default;
-
-$menu-background:            $background-color !default;
-$menu-shadow:                0px 0px 10px rgba(0, 0, 0, 0.25) !default;
 
 
 ion-menu {
@@ -22,8 +19,6 @@ ion-menu {
   display: flex;
   flex-direction: column;
 
-  background: $menu-background;
-
   transform: translate3d(-9999px, 0px, 0px);
 }
 
@@ -32,7 +27,7 @@ ion-menu[side=right] {
   left: auto;
 }
 
-ion-menu backdrop {
+ion-menu .backdrop {
   z-index: -1;
   display: none;
 }
@@ -56,4 +51,45 @@ ion-menu backdrop {
     width: $menu-small-width;
   }
 
+}
+
+
+// Menu Reveal
+// --------------------------------------------------
+// The content slides over to reveal the menu underneath.
+// The menu itself, which is under the content, does not move.
+
+ion-menu[type=reveal].show-menu {
+  transform: translate3d(0px, 0px, 0px);
+}
+
+
+// Menu Overlay
+// --------------------------------------------------
+// The menu slides over the content. The content
+// itself, which is under the menu, does not move.
+
+ion-menu[type=overlay] {
+  z-index: $z-index-menu-overlay;
+  left: -8px; // make up for the box-shadow hanging over on the left
+
+  .backdrop {
+    display: block;
+    transform: translate3d(-9999px, 0px, 0px);
+    opacity: 0.01;
+    left: -3000px;
+    width: 6000px;
+
+    &.show-backdrop {
+      transform: translate3d(0px, 0px, 0px);
+    }
+  }
+}
+
+ion-menu[type=overlay][side=right] {
+  left: 8px;
+}
+
+ion-menu[type=push][side=right] {
+  left: 0px;
 }

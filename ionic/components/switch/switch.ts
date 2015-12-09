@@ -9,7 +9,7 @@ import {pointerCoord} from '../../util/dom';
  * @private
  */
 @Directive({
-  selector: 'media-switch',
+  selector: '.switch-media',
   host: {
     '[class.switch-activated]': 'swtch.isActivated'
   }
@@ -97,9 +97,9 @@ class MediaSwitch {
       '<ion-item-content id="{{labelId}}">' +
         '<ng-content></ng-content>' +
       '</ion-item-content>' +
-      '<media-switch disable-activated>' +
-        '<switch-icon></switch-icon>' +
-      '</media-switch>' +
+      '<div disable-activated class="switch-media">' +
+        '<div class="switch-icon"></div>' +
+      '</div>' +
     `</div>`,
   directives: [MediaSwitch]
 })
@@ -160,7 +160,7 @@ export class Switch {
   /**
    * @private
    */
-  onInit() {
+  ngOnInit() {
     this.labelId = 'label-' + this.inputId;
   }
 
@@ -238,7 +238,7 @@ export class Switch {
   /**
    * @private
    */
-  onDestroy() {
+  ngOnDestroy() {
     this.removeMoveListener();
     this.switchEle = this.addMoveListener = this.removeMoveListener = null;
     this.form.deregister(this);

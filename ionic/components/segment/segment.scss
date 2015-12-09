@@ -1,39 +1,29 @@
-@import "../../ionic.globals";
+@import "../../globals.core";
 
 // Segment
 // --------------------------------------------------
 
-$segment-button-padding:    0 16px !default;
-
 
 ion-segment {
-
   display: flex;
   align-items: center;
   justify-content: center;
   flex: 1;
   width: 100%;
+}
 
-  button,
-  [button] {
+.segment-button {
+  position: relative;
+  display: block;
 
-    margin-left: 0;
-    margin-right: 0;
+  margin-left: 0;
+  margin-right: 0;
 
-    flex: 1;
-    display: block;
-    overflow: hidden;
+  flex: 1;
+  width: 0;
 
-    padding: $segment-button-padding;
-    width: 0;
-
-    border-width: 1px 0px 1px 1px;
-    border-radius: 0;
-
-    text-align: center;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
-    background: none;
-  }
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

@@ -1,4 +1,4 @@
-@import "../../ionic.globals";
+@import "../../globals.core";
 
 // Z-Index
 // --------------------------------------------------
@@ -76,7 +76,6 @@ body {
   text-size-adjust: none;
 
   @include user-select-none();
-  background-color: $background-color;
 }
 
 ion-app,
@@ -127,7 +126,6 @@ ion-content {
   width: 100%;
   height: 100%;
   flex: 1;
-  background-color: $background-color;
 }
 
 scroll-content {
@@ -184,7 +182,6 @@ ion-navbar-section ion-navbar.toolbar {
 ion-toolbar {
   display: block;
   width: 100%;
-  height: 50px;
 }
 
 ion-toolbar[position=bottom] {

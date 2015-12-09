@@ -71,9 +71,9 @@ class Tab2 {
 @Page({
   template: `
     <ion-navbar *navbar>
-      <a menu-toggle>
+      <button menu-toggle>
         <icon menu></icon>
-      </a>
+      </button>
       <ion-title>Stopwatch</ion-title>
     </ion-navbar>
     <ion-content padding>
@@ -104,11 +104,7 @@ class Tab3 {}
       <ion-tab tab-title="Schedule" tab-icon="globe" [root]="root2"></ion-tab>
       <ion-tab tab-title="Stopwatch" tab-icon="stopwatch" [root]="root3"></ion-tab>
     </ion-tabs>
-  `,
-  config: {
-    navbarStyle: 'secondary',
-    tabbarStyle: 'secondary'
-  }
+  `
 })
 export class TabsPage {
   constructor() {

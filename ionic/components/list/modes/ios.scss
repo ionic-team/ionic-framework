@@ -1,4 +1,5 @@
-@import "../../../ionic.globals";
+@import "../../../globals.ios";
+@import "../list";
 
 // iOS List
 // --------------------------------------------------
@@ -19,8 +20,6 @@ $list-ios-header-font-size:           1.2rem !default;
 $list-ios-header-font-weight:         500 !default;
 $list-ios-header-letter-spacing:      0.1rem !default;
 $list-ios-header-color:               #333 !default;
-
-$list-ios-border-color:               $list-border-color !default;
 
 
 /****************/
@@ -134,6 +133,10 @@ ion-list + ion-list {
 ion-list[inset] {
   margin: $list-inset-ios-margin-top $list-inset-ios-margin-right $list-inset-ios-margin-bottom $list-inset-ios-margin-left;
   border-radius: $list-inset-ios-border-radius;
+
+  ion-list-header {
+    background-color: $list-ios-background-color;
+  }
 
   .item {
     border-bottom: 1px solid $list-ios-border-color;

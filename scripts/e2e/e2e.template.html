@@ -4,7 +4,9 @@
   <title>Ionic E2E</title>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <link href="../../../css/ionic.css" rel="stylesheet">
+
+  <link ios-href="../../../css/ionic.ios.css" rel="stylesheet">
+  <link md-href="../../../css/ionic.md.css" rel="stylesheet">
 
   <script>
     if (!console.time) {
@@ -84,7 +86,7 @@
         "*": "*.js",
         "ionic/*": "ionic/*",
         "angular2/*": "angular2/*",
-        "rx": "rx"
+        "rxjs/*": "rxjs/*"
       }
     })
     System.import("index").then(function(m) {}, console.error.bind(console));

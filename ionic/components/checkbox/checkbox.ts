@@ -39,9 +39,9 @@ import {Form} from '../../util/form';
   },
   template:
     '<div class="item-inner">' +
-      '<media-checkbox disable-activated>' +
-        '<checkbox-icon></checkbox-icon>' +
-      '</media-checkbox>' +
+      '<div class="checkbox-media" disable-activated>' +
+        '<div class="checkbox-icon"></div>' +
+      '</div>' +
       '<ion-item-content id="{{labelId}}">' +
         '<ng-content></ng-content>' +
       '</ion-item-content>' +
@@ -65,7 +65,7 @@ export class Checkbox {
     if (ngControl) ngControl.valueAccessor = this;
   }
 
-  onInit() {
+  ngOnInit() {
     this.labelId = 'label-' + this.inputId;
   }
 
@@ -118,7 +118,7 @@ export class Checkbox {
   /**
    * @private
    */
-  onDestroy() {
+  ngOnDestroy() {
     this.form.deregister(this);
   }
 }

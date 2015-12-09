@@ -1,4 +1,5 @@
-@import "../../../ionic.globals";
+@import "../../../globals.md";
+@import "../popup";
 
 // Material Design Popups
 // --------------------------------------------------
@@ -9,33 +10,35 @@ $popup-md-background-color:               #fafafa !default;
 $popup-md-box-shadow:                     0px 16px 20px rgba(0, 0, 0, 0.4) !default;
 
 $popup-md-head-text-align:                left !default;
+$popup-md-head-padding:                   24px 24px 10px 24px !default;
+
 $popup-md-title-font-size:                20px !default;
 $popup-md-sub-title-font-size:            15px !default;
-$popup-md-body-text-color:                rgba(0,0,0,.5) !default;
 
-$popup-md-button-min-height:              36px !default;
+$popup-md-body-padding:                   10px 24px 24px 24px !default;
+$popup-md-body-text-color:                rgba(0,0,0,.5) !default;
 
 $popup-md-prompt-input-border-color:      #dedede !default;
 $popup-md-prompt-input-text-color:        #000000 !default;
-$popup-md-prompt-input-highlight-color:   map-get($colors, primary) !default;
-$popup-md-prompt-input-placeholder-color: #b9b9b9 !default;
+$popup-md-prompt-input-highlight-color:   map-get($colors-md, primary) !default;
 $popup-md-prompt-input-margin-top:        5px !default;
 $popup-md-prompt-input-margin-bottom:     5px !default;
 
+$popup-md-buttons-padding:                8px 8px 8px 24px !default;
+$popup-md-buttons-justify-content:        flex-end !default;
 
-ion-popup {
-  popup-wrapper {
-    max-width: $popup-md-max-width;
-    border-radius: $popup-md-border-radius;
-    background-color: $popup-md-background-color;
 
-    box-shadow: $popup-md-box-shadow;
-  }
+.popup-wrapper {
+  max-width: $popup-md-max-width;
+  border-radius: $popup-md-border-radius;
+  background-color: $popup-md-background-color;
+
+  box-shadow: $popup-md-box-shadow;
 }
 
 .popup-head {
   text-align: $popup-md-head-text-align;
-  padding: 24px 24px 10px 24px;
+  padding: $popup-md-head-padding;
 }
 
 .popup-title {
@@ -47,7 +50,7 @@ ion-popup {
 }
 
 .popup-body {
-  padding: 10px 24px 24px 24px;
+  padding: $popup-md-body-padding;
   color: $popup-md-body-text-color;
 }
 
@@ -63,16 +66,10 @@ ion-popup {
 }
 
 .popup-buttons {
-  padding: 8px 8px 8px 24px;
-  justify-content: flex-end;
+  padding: $popup-md-buttons-padding;
+  justify-content: $popup-md-buttons-justify-content;
+}
 
-  button {
-    @extend button[clear];
-
-    min-height: $popup-md-button-min-height;
-
-    &.activated {
-      opacity: 1;
-    }
-  }
+.popup-button.activated {
+  opacity: 1;
 }

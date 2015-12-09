@@ -1,4 +1,5 @@
-@import "../../../ionic.globals";
+@import "../../../globals.ios";
+@import "../action-sheet";
 
 // iOS Action Sheet
 // --------------------------------------------------
@@ -7,9 +8,9 @@ $action-sheet-ios-group-margin:                   10px !default;
 $action-sheet-ios-background-color:               rgba(243,243,243,.95) !default;
 
 $action-sheet-ios-height:                         5.6rem !default;
-$action-sheet-ios-padding:                        1.8rem !default;
+$action-sheet-ios-padding:                        18px !default;
 $action-sheet-ios-border-color:                   #d6d6da !default;
-$action-sheet-ios-border-radius:                  1.3rem !default;
+$action-sheet-ios-border-radius:                  13px !default;
 
 $action-sheet-ios-title-color:                    #5f5f5f !default;
 $action-sheet-ios-title-font-size:                1.2rem !default;
@@ -19,7 +20,6 @@ $action-sheet-ios-button-font-size:               2rem !default;
 $action-sheet-ios-background-active-color:        #e9e9e9 !default;
 
 $action-sheet-ios-destructive-button-text-color:  #f53d3d !default;
-$action-sheet-ios-icon-font-size:                 1.4em !default;
 
 
 ion-action-sheet {
@@ -28,50 +28,15 @@ ion-action-sheet {
 
 .action-sheet-container {
   padding: 0 $action-sheet-ios-group-margin;
-
-  button.activated {
-    box-shadow: none;
-    border-color: $action-sheet-options-border-color;
-    color: $action-sheet-options-text-color;
-    background: $action-sheet-options-background-active-color;
-  }
-}
-
-ion-action-sheet button {
-  min-height: $action-sheet-ios-height;
-  padding: $action-sheet-ios-padding;
-
-  margin: 0;
-  border: 0;
-
-  background: transparent;
-
-  &.activated {
-    background: $action-sheet-ios-background-active-color;
-  }
 }
 
 .action-sheet-group {
   margin-bottom: $action-sheet-ios-group-margin - 2;
   border-radius: $action-sheet-ios-border-radius;
-}
 
-.action-sheet-group:last-child {
-  margin-bottom: $action-sheet-ios-group-margin;
-}
-
-.action-sheet-title,
-.action-sheet-option {
-  min-height: $action-sheet-ios-height;
-
-  background: $action-sheet-ios-background-color;
-  font-weight: 400;
-
-  border-bottom: 1px solid $action-sheet-ios-border-color;
-}
-
-.action-sheet-cancel button {
-  font-weight: bold;
+  &:last-child {
+    margin-bottom: $action-sheet-ios-group-margin;
+  }
 }
 
 .action-sheet-title {
@@ -80,36 +45,42 @@ ion-action-sheet button {
   font-weight: 500;
   color: $action-sheet-ios-title-color;
   border-radius: 0;
+  text-align: center;
 }
 
+.action-sheet-title,
 .action-sheet-option {
-  font-size: $action-sheet-ios-button-font-size;
+  border-bottom: 1px solid $action-sheet-ios-border-color;
+}
+
+.action-sheet-button {
   color: $action-sheet-ios-button-text-color;
-  border-radius: 0;
+  min-height: $action-sheet-ios-height;
+  padding: $action-sheet-ios-padding;
+  font-size: $action-sheet-ios-button-font-size;
+
+  background: transparent;
+
+  &.activated {
+    background: $action-sheet-ios-background-active-color;
+    box-shadow: none;
+    border-color: $action-sheet-options-border-color;
+    color: $action-sheet-options-text-color;
+    background: $action-sheet-options-background-active-color;
+  }
 }
 
-.action-sheet-title:first-child,
-.action-sheet-button:first-child,
-.action-sheet-group button:first-child {
-  border-top-left-radius: $action-sheet-ios-border-radius;
-  border-top-right-radius: $action-sheet-ios-border-radius;
+.action-sheet-destructive {
+  color: $action-sheet-ios-destructive-button-text-color;
 }
 
-.action-sheet-title:last-child,
-.action-sheet-button:last-child,
-.action-sheet-group button:last-child {
-  border-bottom-left-radius: $action-sheet-ios-border-radius;
-  border-bottom-right-radius: $action-sheet-ios-border-radius;
+.action-sheet-cancel {
+  font-weight: bold;
 }
 
-
-&.hairlines .action-sheet {
+&.hairlines {
   .action-sheet-title,
   .action-sheet-option {
     border-bottom-width: 0.55px;
   }
-}
-
-.action-sheet-destructive{
-  color: $action-sheet-ios-destructive-button-text-color;
 }

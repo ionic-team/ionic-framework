@@ -1,50 +1,20 @@
-@import "../../ionic.globals";
+@import "../../globals.core";
 
-// Button Variables
+// Buttons
 // --------------------------------------------------
-
-$button-font-size:                1.6rem !default;
-$button-margin:                   0.4rem 0.2rem !default;
-$button-padding:                  0 1em !default;
-$button-height:                   2.8em !default;
-$button-border-radius:            4px !default;
 
 $button-round-padding:            0 2.6rem !default;
 $button-round-border-radius:      64px !default;
 
-$button-color:                    color(primary) !default;
-$button-color-activated:          color-shade($button-color) !default;
-$button-text-color:               inverse($button-color) !default;
-$button-hover-opacity:            0.8 !default;
 
-
-// Default Button
-// --------------------------------------------------
-
-button,
-[button] {
+.button {
   position: relative;
   display: inline-flex;
   flex-shrink: 0;
   flex-flow: row nowrap;
   align-items: center;
   justify-content: center;
-
   transition: background-color, opacity 100ms linear;
-
-  margin: $button-margin;
-  padding: $button-padding;
-  min-height: $button-height;
-  line-height: 1;
-
-  border: 1px solid #ccc;
-  border: transparent;
-  border-radius: $button-border-radius;
-
-  font-size: $button-font-size;
-  font-family: inherit;
-  font-variant: inherit;
-  font-style: inherit;
 
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -59,100 +29,53 @@ button,
   cursor: pointer;
   @include user-select-none();
   @include appearance(none);
-
-  background: $button-color;
-  color: $button-text-color;
-
-  &:hover:not(.disable-hover) {
-    opacity: $button-hover-opacity;
-    text-decoration: none;
-  }
-
-  &.activated {
-    opacity: 1;
-    background-color: $button-color-activated;
-  }
-
-
-  // Button Types
-  // --------------------------------------------------
-
-  &[block] {
-    display: flex;
-    clear: both;
-    margin-right: 0;
-    margin-left: 0;
-    width: 100%;
-
-    &:after {
-      clear: both;
-    }
-  }
-
-  &[full] {
-    width: 100%;
-    margin-right: 0;
-    margin-left: 0;
-    border-radius: 0;
-    border-right-width: 0;
-    border-left-width: 0;
-
-    &[outline] {
-      border-radius: 0;
-      border-right-width: 0;
-      border-left-width: 0;
-    }
-  }
-
-  &[round] {
-    border-radius: $button-round-border-radius;
-    padding: $button-round-padding;
-  }
-
-  &[disabled] {
-    opacity: 0.4;
-    cursor: default !important;
-    pointer-events: none;
-  }
-
 }
 
-a[button] {
+a.button {
   text-decoration: none;
 }
 
-[padding] > button[block]:first-child,
-[padding] > [button][block]:first-child {
-  margin-top: 0;
+.button-disabled {
+  opacity: 0.4;
+  cursor: default !important;
+  pointer-events: none;
 }
 
 
-// Default Button Color Mixin
+// Block Button
 // --------------------------------------------------
 
-@mixin button-default($bg-color, $bg-color-activated, $text-color) {
-  background-color: $bg-color;
-  color: $text-color;
+.button-block {
+  display: flex;
+  clear: both;
+  width: 100%;
 
-  &.activated {
-    background-color: $bg-color-activated;
+  &:after {
+    clear: both;
   }
 }
 
 
-// Generate Default Button Colors
+// Full Button
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors {
+.button-full {
+  width: 100%;
+}
 
-  button[#{$color-name}],
-  [button][#{$color-name}] {
 
-    $bg-color: $color-value;
-    $bg-color-activated: color-shade($bg-color);
-    $text-color: inverse($bg-color);
-    @include button-default($bg-color, $bg-color-activated, $text-color);
+// Round Button
+// --------------------------------------------------
 
-  }
+.button-round {
+  padding: $button-round-padding;
+  border-radius: $button-round-border-radius;
+}
 
+// Full Outline Button
+// --------------------------------------------------
+
+.button-full.button-outline {
+  border-left-width: 0;
+  border-right-width: 0;
 }

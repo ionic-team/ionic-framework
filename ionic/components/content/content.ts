@@ -49,8 +49,8 @@ export class Content extends Ion {
   /**
    * @private
    */
-  onInit() {
-    super.onInit();
+  ngOnInit() {
+    super.ngOnInit();
     this.scrollElement = this.getNativeElement().children[0];
   }
 

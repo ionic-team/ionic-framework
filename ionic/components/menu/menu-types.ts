@@ -67,7 +67,7 @@ export class MenuType {
     return promise;
   }
 
-  onDestroy() {
+  ngOnDestroy() {
     this.open && this.open.dispose();
     this.close && this.close.dispose();
     this.seek && this.seek.dispose();

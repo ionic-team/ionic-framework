@@ -1,4 +1,4 @@
-@import "../../ionic.globals";
+@import "../../globals.core";
 
 // Label
 // --------------------------------------------------
@@ -12,30 +12,31 @@ ion-label {
   pointer-events: none;
 }
 
-[fixed-label] ion-label {
+
+// Stacked & Floating Inputs
+// --------------------------------------------------
+
+.fixed-label {
   width: 30%;
   min-width: 100px;
   max-width: 200px;
 }
 
-ion-input[stacked-label],
-ion-input[floating-label] {
+[stacked-label],
+[floating-label] {
   flex-direction: column;
   align-items: flex-start;
 }
 
-[stacked-label],
-[floating-label] {
+.stacked-label,
+.floating-label {
+  align-self: stretch;
+  margin-bottom: 0;
+  max-width: 100%;
+}
 
-  ion-label {
-    align-self: stretch;
-    margin-bottom: 0;
-    max-width: 100%;
-  }
-
-  [text-input] {
-    align-self: stretch;
-    width: auto;
-  }
-
+.stacked-input,
+.floating-input {
+  align-self: stretch;
+  width: auto;
 }

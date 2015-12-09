@@ -33,11 +33,9 @@ export class TapClick {
     zone.runOutsideAngular(() => {
       addListener('click', self.click.bind(self), true);
 
-      if (self.usePolyfill) {
-        addListener('touchstart', self.touchStart.bind(self));
-        addListener('touchend', self.touchEnd.bind(self));
-        addListener('touchcancel', self.pointerCancel.bind(self));
-      }
+      addListener('touchstart', self.touchStart.bind(self));
+      addListener('touchend', self.touchEnd.bind(self));
+      addListener('touchcancel', self.pointerCancel.bind(self));
 
       addListener('mousedown', self.mouseDown.bind(self), true);
       addListener('mouseup', self.mouseUp.bind(self), true);

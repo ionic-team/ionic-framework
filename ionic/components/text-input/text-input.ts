@@ -1,4 +1,4 @@
-import {Component, Directive, NgIf, forwardRef, Host, Optional, ElementRef, Renderer, Attribute} from 'angular2/angular2';
+import {Component, Directive, Attribute, NgIf, forwardRef, Host, Optional, ElementRef, Renderer, Attribute} from 'angular2/angular2';
 
 import {NavController} from '../nav/nav-controller';
 import {Config} from '../../config/config';
@@ -73,7 +73,11 @@ export class TextInput {
     app: IonicApp,
     platform: Platform,
     @Optional() @Host() scrollView: Content,
-    @Optional() navCtrl: NavController
+    @Optional() navCtrl: NavController,
+    @Attribute('floating-label') isFloating: string,
+    @Attribute('stacked-label') isStacked: string,
+    @Attribute('fixed-label') isFixed: string,
+    @Attribute('inset') isInset: string
   ) {
     this.renderer = renderer;
 
@@ -82,6 +86,9 @@ export class TextInput {
 
     this.type = 'text';
     this.lastTouch = 0;
+
+    // make more gud with pending @Attributes API
+    this.displayType = (isFloating === '' ? 'floating' : (isStacked === '' ? 'stacked' : (isFixed === '' ? 'fixed' : (isInset === '' ? 'inset' : null))));
 
     this.app = app;
     this.elementRef = elementRef;
@@ -105,6 +112,9 @@ export class TextInput {
    * @private
    */
   registerInput(textInputElement) {
+    if (this.displayType) {
+      textInputElement.addClass(this.displayType + '-input');
+    }
     this.input = textInputElement;
     this.type = textInputElement.type || 'text';
   }
@@ -113,13 +123,16 @@ export class TextInput {
    * @private
    */
   registerLabel(label) {
+    if (this.displayType) {
+      label.addClass(this.displayType + '-label');
+    }
     this.label = label;
   }
 
   /**
    * @private
    */
-  onInit() {
+  ngOnInit() {
     if (this.input && this.label) {
       // if there is an input and an label
       // then give the label an ID
@@ -372,7 +385,7 @@ export class TextInput {
    * @private
    */
   focusChange(hasFocus) {
-    this.renderer.setElementClass(this.elementRef, 'has-focus', hasFocus);
+    this.renderer.setElementClass(this.elementRef, 'input-focused', hasFocus);
     if (!hasFocus) {
       this.deregMove();
       this.input.hideFocus(false);
@@ -383,7 +396,7 @@ export class TextInput {
    * @private
    */
   hasValue(inputValue) {
-    this.renderer.setElementClass(this.elementRef, 'has-value', inputValue && inputValue !== '');
+    this.renderer.setElementClass(this.elementRef, 'input-has-value', inputValue && inputValue !== '');
   }
 
   /**
@@ -430,7 +443,7 @@ export class TextInput {
   /**
    * @private
    */
-  onDestroy() {
+  ngOnDestroy() {
     this.deregMove();
     this.form.deregister(this);
   }
@@ -461,17 +474,19 @@ export class TextInputElement {
     this.type = type;
     this.elementRef = elementRef;
     this.wrapper = wrapper;
-
     this.renderer = renderer;
-    renderer.setElementAttribute(this.elementRef, 'text-input', '');
+
+    // all text inputs (textarea, input[type=text],input[type=password], etc)
+    renderer.setElementClass(elementRef, 'text-input', true);
 
     if (wrapper) {
       // it's within ionic's ion-input, let ion-input handle what's up
+      renderer.setElementClass(elementRef, 'item-input', true);
       wrapper.registerInput(this);
     }
   }
 
-  onInit() {
+  ngOnInit() {
     this.wrapper && this.wrapper.hasValue(this.value);
   }
 
@@ -539,6 +554,10 @@ export class TextInputElement {
 
   get hasFocus() {
     return dom.hasFocus(this.getNativeElement());
+  }
+
+  addClass(className) {
+    this.renderer.setElementClass(this.elementRef, className, true);
   }
 
   getNativeElement() {

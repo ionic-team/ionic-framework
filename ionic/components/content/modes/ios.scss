@@ -1,13 +1,17 @@
-@import "../../../ionic.globals";
+@import "../../../globals.ios";
 
 // iOS Content
 // --------------------------------------------------
 
-$outer-content-md-background-color:         #efeff4 !default;
+$outer-content-ios-background-color:         #efeff4 !default;
 
+
+ion-content {
+  background-color: $background-ios-color;
+}
 
 .outer-content {
-  background: $outer-content-md-background-color;
+  background: $outer-content-ios-background-color;
 }
 
 ion-nav.has-views,

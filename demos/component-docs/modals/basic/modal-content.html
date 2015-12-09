@@ -2,14 +2,14 @@
   <ion-title>
     Description
   </ion-title>
-  <ion-nav-items primary>
+  <ion-buttons start>
     <button (click)="close()" *ng-if=" currentPlatform === 'ios' ">
       Cancel
     </button>
     <button (click)="close()" *ng-if=" currentPlatform === 'android' ">
       <icon close></icon>
     </button>
-  </ion-nav-items>
+  </ion-buttons>
 </ion-toolbar>
 
 

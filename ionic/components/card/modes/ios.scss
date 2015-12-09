@@ -1,4 +1,5 @@
-@import "../../../ionic.globals";
+@import "../../../globals.ios";
+@import "../card";
 
 // iOS Card
 // --------------------------------------------------
@@ -16,7 +17,7 @@ $card-ios-padding-left:                16px !default;
 $card-ios-padding-media-top:           10px !default;
 $card-ios-padding-media-bottom:        9px !default;
 
-$card-ios-background-color:            $list-background-color !default;
+$card-ios-background-color:            $list-ios-background-color !default;
 $card-ios-box-shadow:                  0 1px 2px rgba(0,0,0,.3) !default;
 $card-ios-border-radius:               2px !default;
 $card-ios-font-size:                   1.4rem !default;

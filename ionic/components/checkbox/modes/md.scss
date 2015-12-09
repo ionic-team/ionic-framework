@@ -1,38 +1,59 @@
-@import "../../../ionic.globals";
+@import "../../../globals.md";
 
 // Material Design Checkbox
 // --------------------------------------------------
 
-$checkbox-md-icon-size:             16px !default;
-$checkbox-md-background-color-off:  $list-background-color !default;
-$checkbox-md-border-width:          2px !default;
-$checkbox-md-border-radius:         2px !default;
-$checkbox-md-border-color-off:      darken($item-md-border-color, 40%) !default;
-$checkbox-md-background-color-on:   color(primary) !default;
-$checkbox-md-border-color-on:       color(primary) !default;
-$checkbox-md-checkmark-color-on:    $background-color !default;
+$checkbox-md-border-bottom-width:        1px !default;
+$checkbox-md-border-bottom-style:        solid !default;
+$checkbox-md-border-bottom-color:        $list-md-border-color !default;
+$checkbox-md-padding:                    $item-md-padding-top ($item-md-padding-right / 2) $item-md-padding-bottom 0 !default;
+$checkbox-md-margin:                     0 !default;
+$checkbox-md-media-margin:               $item-md-padding-media-top 36px $item-md-padding-media-bottom 4px !default;
+$checkbox-md-disabled-opacity:           0.5 !default;
+$checkbox-md-disabled-text-color:        $subdued-text-md-color !default;
+
+$checkbox-md-icon-background-color-off:  $list-md-background-color !default;
+$checkbox-md-icon-background-color-on:   map-get($colors-md, primary) !default;
+$checkbox-md-icon-size:                  16px !default;
+
+$checkbox-md-icon-checkmark-width:       2px !default;
+$checkbox-md-icon-checkmark-style:       solid !default;
+$checkbox-md-icon-checkmark-color:       $background-md-color !default;
+
+$checkbox-md-icon-border-width:          2px !default;
+$checkbox-md-icon-border-style:          solid !default;
+$checkbox-md-icon-border-radius:         2px !default;
+$checkbox-md-icon-border-color-off:      darken($list-md-border-color, 40%) !default;
+$checkbox-md-icon-border-color-on:       map-get($colors-md, primary) !default;
 
 
 ion-checkbox {
+  cursor: pointer;
+  @include user-select-none();
+
   &.item .item-inner {
     border: none;
     padding-right: 0;
   }
 
   ion-item-content {
-    border-bottom: 1px solid $item-md-border-color;
-    margin: 0;
-    padding: $item-md-padding-top ($item-md-padding-right / 2) $item-md-padding-bottom 0;
+    border-bottom-width: $checkbox-md-border-bottom-width;
+    border-bottom-style: $checkbox-md-border-bottom-style;
+    border-bottom-color: $checkbox-md-border-bottom-color;
+    margin: $checkbox-md-margin;
+    padding: $checkbox-md-padding;
   }
 
-  &[aria-checked=true] checkbox-icon {
-    background-color: $checkbox-md-background-color-on;
-    border-color: $checkbox-md-border-color-on;
+  &[aria-checked=true] .checkbox-icon {
+    background-color: $checkbox-md-icon-background-color-on;
+    border-color: $checkbox-md-icon-border-color-on;
   }
 
-  &[aria-checked=true] checkbox-icon:after {
+  &[aria-checked=true] .checkbox-icon:after {
     position: absolute;
-    border: 2px solid $checkbox-md-checkmark-color-on;
+    border-width: $checkbox-md-icon-checkmark-width;
+    border-style: $checkbox-md-icon-checkmark-style;
+    border-color: $checkbox-md-icon-checkmark-color;
     top: 0;
     left: 3px;
     width: 4px;
@@ -45,20 +66,25 @@ ion-checkbox {
 
 }
 
-media-checkbox {
-  display: block;
-  // TODO convert these to sass variables
-  margin: $item-md-padding-media-top 36px $item-md-padding-media-bottom 4px;
+ion-checkbox[aria-disabled=true] {
+  opacity: $checkbox-md-disabled-opacity;
+  color: $checkbox-md-disabled-text-color;
+  pointer-events: none;
 }
 
-checkbox-icon {
+.checkbox-media {
+  margin: $checkbox-md-media-margin;
+}
+
+.checkbox-icon {
   position: relative;
-  display: block;
   width: $checkbox-md-icon-size;
   height: $checkbox-md-icon-size;
-  border-radius: $checkbox-md-border-radius;
-  border: $checkbox-md-border-width solid $checkbox-md-border-color-off;
-  background-color: $checkbox-md-background-color-off;
+  border-radius: $checkbox-md-icon-border-radius;
+  border-width: $checkbox-md-icon-border-width;
+  border-style: $checkbox-md-icon-border-style;
+  border-color: $checkbox-md-icon-border-color-off;
+  background-color: $checkbox-md-icon-background-color-off;
 }
 
 
@@ -67,19 +93,21 @@ checkbox-icon {
 
 @mixin checkbox-theme-md($color-name, $bg-on) {
 
-  ion-checkbox[#{$color-name}][aria-checked=true] checkbox-icon {
+  ion-checkbox[#{$color-name}][aria-checked=true] .checkbox-icon {
     background-color: $bg-on;
     border-color: $bg-on;
+
+    &:after {
+      border-color: inverse($bg-on);
+    }
   }
 
 }
 
 
-// Generate Material Design Checkbox Auxiliary Colors
+// Generate Material Design Checkbox Colors
 // --------------------------------------------------
 
-@each $color-name, $color-value in auxiliary-colors() {
-
+@each $color-name, $color-value in $colors-md {
   @include checkbox-theme-md($color-name, $color-value);
-
 }

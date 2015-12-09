@@ -1,4 +1,4 @@
-@import "../../ionic.globals";
+@import "../../globals.md";
 
 // Material Design Ripple Effect
 // --------------------------------------------------
@@ -12,7 +12,7 @@ md-ripple {
   display: block;
   border-radius: 50%;
 
-  background: $ripple-background-color;
+  background-color: ripple-background-color($ripple-background-color);
 
   overflow: hidden;
   pointer-events: none;

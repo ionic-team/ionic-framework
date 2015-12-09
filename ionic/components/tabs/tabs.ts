@@ -39,7 +39,6 @@ import {rafFrames} from '../../util/dom';
   defaultInputs: {
     'tabbarPlacement': 'bottom',
     'tabbarIcons': 'top',
-    'tabbarStyle': 'default',
     'preloadTabs': false
   },
   template:
@@ -47,7 +46,7 @@ import {rafFrames} from '../../util/dom';
       '<template navbar-anchor></template>' +
     '</ion-navbar-section>' +
     '<ion-tabbar-section>' +
-      '<tabbar role="tablist" [attr]="tabbarStyle">' +
+      '<tabbar role="tablist">' +
         '<a *ng-for="#t of _tabs" [tab]="t" class="tab-button" role="tab">' +
           '<icon [name]="t.tabIcon" [is-active]="t.isSelected" class="tab-button-icon"></icon>' +
           '<span class="tab-button-text">{{t.tabTitle}}</span>' +
@@ -110,8 +109,8 @@ export class Tabs extends Ion {
   /**
    * @private
    */
-  onInit() {
-    super.onInit();
+  ngOnInit() {
+    super.ngOnInit();
     this.preloadTabs = (this.preloadTabs !== "false" && this.preloadTabs !== false);
 
     if (this._highlight) {
@@ -277,7 +276,7 @@ class TabButton extends Ion {
     this.disHover = (config.get('hoverCSS') === false);
   }
 
-  onInit() {
+  ngOnInit() {
     this.tab.btn = this;
     this.hasTitle = !!this.tab.tabTitle;
     this.hasIcon = !!this.tab.tabIcon;

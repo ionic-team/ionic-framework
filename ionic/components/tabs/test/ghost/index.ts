@@ -46,9 +46,9 @@ class Tab2 {
 @Page({
   template: `
     <ion-navbar *navbar>
-      <a menu-toggle>
+      <button menu-toggle>
         <icon menu></icon>
-      </a>
+      </button>
       <ion-title>Stopwatch</ion-title>
     </ion-navbar>
     <ion-content padding>
@@ -68,9 +68,9 @@ class Tab3 {
 @Page({
   template: `
     <ion-navbar *navbar>
-      <a menu-toggle>
+      <button menu-toggle>
         <icon menu></icon>
-      </a>
+      </button>
       <ion-title>Quesarito</ion-title>
     </ion-navbar>
     <ion-content padding>
@@ -109,7 +109,7 @@ class QuesaritoPage {
 export class TabsPage {
   @ViewChildren(Tab) tab : QueryList<Tab>;
 
-  afterViewInit() {
+  ngAfterViewInit() {
     console.log('Tab', this.tab);
     console.log(this.tab.first.setRoot);
   }
@@ -128,6 +128,6 @@ export class TabsPage {
     this.root2 = Tab2;
     this.root3 = Tab3;
   }
-  onInit() {
+  ngOnInit() {
   }
 }

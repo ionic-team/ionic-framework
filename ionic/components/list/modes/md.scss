@@ -1,4 +1,5 @@
-@import "../../../ionic.globals";
+@import "../../../globals.md";
+@import "../list";
 
 // Material Design List
 // --------------------------------------------------
@@ -17,8 +18,6 @@ $list-inset-md-border-radius:    2px !default;
 $list-md-header-padding:         16px $item-md-padding-right 16px $item-md-padding-left !default;
 $list-md-header-font-size:       1.4rem !default;
 $list-md-header-color:           #858585 !default;
-
-$list-md-border-color:          $item-md-border-color !default;
 
 
 /****************/
@@ -128,6 +127,10 @@ ion-list[inset] {
 
   + ion-list[inset] {
     margin-top: 0;
+  }
+
+  ion-list-header {
+    background-color: $list-md-background-color;
   }
 }
 

@@ -1,19 +1,17 @@
-@import "../../ionic.globals";
+@import "../../globals.core";
 
 // Badge
 // --------------------------------------------------
 
 $badge-font-size:                 1.3rem !default;
 $badge-font-weight:               bold !default;
-$badge-border-radius:             10px !default;
 
 
-item-badge {
+ion-badge {
   display: inline-block;
 
   padding: 3px 8px;
   min-width: 10px;
-  border-radius: $badge-border-radius;
 
   vertical-align: baseline;
   text-align: center;
@@ -28,4 +26,16 @@ item-badge {
   &:empty {
     display: none;
   }
+}
+
+// Generate Default Badge Colors
+// --------------------------------------------------
+
+@each $color-name, $color-value in $colors {
+
+  ion-badge[#{$color-name}] {
+    background-color: $color-value;
+    color: inverse($color-value);
+  }
+
 }

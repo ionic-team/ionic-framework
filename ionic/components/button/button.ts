@@ -1,16 +1,12 @@
-import {Directive, ElementRef, Renderer, Attribute} from 'angular2/angular2';
+import {Directive, ElementRef, Renderer, Attribute, Optional} from 'angular2/angular2';
 
 import {Config} from '../../config/config';
+import {Toolbar} from '../toolbar/toolbar';
 
 
 /**
   * @name Button
   * @module ionic
-  * @property [primary] - sets button color to default primary
-  * @property [secondary] - sets button color to default secondary
-  * @property [danger] - sets button color to default danger
-  * @property [light] - sets button color to default light
-  * @property [dark] - sets button color to default dark
   * @property [outline] - for an unfilled outline button
   * @property [clear] - for a transparent button that only shows text and icons
   * @property [round] - for a button with rounded corners
@@ -37,10 +33,17 @@ export class Button {
 
   constructor(
     config: Config,
-    elementRef: ElementRef,
-    renderer: Renderer,
-    @Attribute('type') type: string
+    private elementRef: ElementRef,
+    private renderer: Renderer
   ) {
+    this._role = 'button'; // bar-button/item-button
+    this._size = null; // large/small
+    this._style = 'default'; // outline/clear/solid
+    this._shape = null; // round/fab
+    this._display = null; // block/full
+    this._colors = []; // primary/secondary
+    this._icon = null; // left/right/only
+
     let element = elementRef.nativeElement;
 
     if (config.get('hoverCSS') === false) {
@@ -48,14 +51,24 @@ export class Button {
     }
 
     if (element.hasAttribute('ion-item')) {
-      // no need to put on these icon classes for an ion-item
+      // no need to put on these classes for an ion-item
+      this._role = null;
       return;
     }
 
-    if (type) {
-      renderer.setElementAttribute(elementRef, type, '');
-    }
+    this._readAttrs(element);
+    this._readIcon(element);
+  }
 
+  ngAfterContentInit() {
+    this._assignCss(true);
+  }
+
+  setRole(val) {
+    this._role = val;
+  }
+
+  _readIcon(element) {
     // figure out if and where the icon lives in the button
     let childNodes = element.childNodes;
     let childNode;
@@ -83,18 +96,80 @@ export class Button {
 
     if (nodes.length > 1) {
       if (nodes[0] === ICON && nodes[1] === TEXT) {
-        element.classList.add('icon-left');
+        this._icon = 'icon-left';
 
       } else if (nodes[0] === TEXT && nodes[1] === ICON) {
-        element.classList.add('icon-right');
+        this._icon = 'icon-right';
       }
     } else if (nodes.length === 1 && nodes[0] === ICON) {
-      element.classList.add('icon-only');
+      this._icon = 'icon-only';
     }
+  }
 
+  _readAttrs(element) {
+    let elementAttrs = element.attributes;
+    let attrName;
+    for (let i = 0, l = elementAttrs.length; i < l; i++) {
+      if (elementAttrs[i].value !== '') continue;
+
+      attrName = elementAttrs[i].name;
+
+      if (BUTTON_STYLE_ATTRS.indexOf(attrName) > -1) {
+        this._style = attrName;
+
+      } else if (BUTTON_DISPLAY_ATTRS.indexOf(attrName) > -1) {
+        this._display = attrName;
+
+      } else if (BUTTON_SHAPE_ATTRS.indexOf(attrName) > -1) {
+        this._shape = attrName;
+
+      } else if (BUTTON_SIZE_ATTRS.indexOf(attrName) > -1) {
+        this._size = attrName;
+
+      } else if (!(IGNORE_ATTRS.test(attrName))) {
+        this._colors.push(attrName);
+      }
+    }
+  }
+
+  _assignCss(assignCssClass) {
+    let role = this._role;
+    if (role) {
+      this.renderer.setElementClass(this.elementRef, role, assignCssClass); // button
+
+      this._setClass(this._style, assignCssClass); // button-clear
+      this._setClass(this._shape, assignCssClass); // button-round
+      this._setClass(this._display, assignCssClass); // button-full
+      this._setClass(this._size, assignCssClass); // button-small
+      this._setClass(this._icon, assignCssClass); // button-icon-left
+
+      let colorStyle = (this._style !== 'default' ? this._style + '-' : '');
+      this._colors.forEach(colorName => {
+        this._setClass(colorStyle + colorName, assignCssClass); // button-secondary, button-clear-secondary
+      });
+    }
+  }
+
+  _setClass(type, assignCssClass) {
+    if (type) {
+      this.renderer.setElementClass(this.elementRef, this._role + '-' + type, assignCssClass);
+    }
+  }
+
+  static setRoles(contentButtonChildren, role) {
+    let buttons = contentButtonChildren.toArray();
+    buttons.forEach(button => {
+      button.setRole(role);
+    });
   }
 
 }
+
+const BUTTON_SIZE_ATTRS = ['large', 'small'];
+const BUTTON_STYLE_ATTRS = ['clear', 'outline', 'solid'];
+const BUTTON_SHAPE_ATTRS = ['round', 'fab'];
+const BUTTON_DISPLAY_ATTRS = ['block', 'full'];
+const IGNORE_ATTRS = /_ng|button|left|right/;
 
 const TEXT = 1;
 const ICON = 2;

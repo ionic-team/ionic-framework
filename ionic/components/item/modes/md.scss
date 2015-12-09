@@ -1,47 +1,23 @@
-@import "../../../ionic.globals";
+@import "../../../globals.md";
+@import "../item";
 
 // Material Design Item
 // --------------------------------------------------
 
-$item-md-border-color:                grayscale(lighten($list-border-color, 8%)) !default;
-$item-md-activated-background-color:  #f1f1f1 !default;
-$item-md-font-size:                   1.6rem !default;
-
-$item-md-padding-top:                 13px !default;
-$item-md-padding-right:               16px !default;
-$item-md-padding-bottom:              13px !default;
-$item-md-padding-left:                16px !default;
-
-$item-md-padding-media-top:           9px !default;
-$item-md-padding-media-bottom:        9px !default;
-
-$item-md-padding-icon-top:            11px !default;
-$item-md-padding-icon-bottom:         10px !default;
-
 $item-md-body-text-font-size:         1.4rem !default;
 $item-md-body-text-line-height:       1.5 !default;
 
+$item-md-font-size:                   1.6rem !default;
 $item-md-avatar-size:                 4rem !default;
 $item-md-thumbnail-size:              8rem !default;
-$item-md-note-color:                  darken($item-md-border-color, 10%) !default;
+$item-md-note-color:                  darken($list-md-border-color, 10%) !default;
 
 $item-md-divider-bg:                 #fff !default;
 $item-md-divider-color:              #222 !default;
 $item-md-divider-padding:            5px 15px !default;
 
-$item-md-sliding-content-bg:         $background-color !default;
-$item-md-sliding-transition:         transform 250ms ease-in-out !default;
+$item-md-sliding-content-bg:         $list-md-background-color !default;
 
-
-ion-item-divider {
-  padding: $item-md-padding-top $item-md-padding-right $item-md-padding-bottom $item-md-padding-left;
-  background-color: $item-md-divider-bg;
-  color: $item-md-divider-color;
-}
-
-ion-note {
-  color: $item-md-note-color;
-}
 
 .item {
   position: relative;
@@ -50,7 +26,11 @@ ion-note {
   font-size: $item-md-font-size;
   text-transform: none;
   font-weight: normal;
+
+  color: $list-md-text-color;
+  background-color: $list-md-background-color;
   box-shadow: none;
+  transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1), transform 300ms;
 
   h1 {
     margin: 0 0 2px;
@@ -82,18 +62,26 @@ ion-note {
   }
 }
 
+.item.activated {
+  background-color: $list-md-activated-background-color;
+}
+
+.item[no-lines] {
+  border-width: 0;
+}
+
 .item-inner {
-  border-bottom: 1px solid $item-md-border-color;
   padding-right: ($item-md-padding-right / 2);
+  border-bottom: 1px solid $list-md-border-color;
 }
 
 ion-item-content {
   margin: $item-md-padding-top ($item-md-padding-right / 2) $item-md-padding-bottom 0;
 }
 
-button.item.activated {
-  box-shadow: none;
-}
+
+// Material Design Item Media
+// --------------------------------------------------
 
 [item-left],
 [item-right] {
@@ -103,8 +91,8 @@ button.item.activated {
 icon[item-left],
 icon[item-right] {
   margin-top: $item-md-padding-icon-top;
-  margin-left: 0;
   margin-bottom: $item-md-padding-icon-bottom;
+  margin-left: 0;
 }
 
 button[item-left],
@@ -116,10 +104,10 @@ button[item-right],
   font-size: 1.2rem;
 }
 
-[item-left].icon-only,
-[item-right].icon-only,
-[item-left].icon-only icon,
-[item-right].icon-only icon {
+[item-left].button-icon-only,
+[item-right].button-icon-only,
+[item-left].button-icon-only icon,
+[item-right].button-icon-only icon {
   padding: 0 1px;
 }
 
@@ -130,8 +118,8 @@ button[item-right],
 
 [item-left].icon-left icon,
 [item-right].icon-left icon {
-  margin-left: 0;
   margin-bottom: 1px;
+  margin-left: 0;
   padding-right: 0.3em;
 }
 
@@ -147,7 +135,7 @@ button[item-right],
 }
 
 icon[item-left] + .item-inner,
-icon[item-left] + [text-input] {
+icon[item-left] + .item-input {
   margin-left: $item-md-padding-left + ($item-md-padding-left / 2);
 }
 
@@ -182,19 +170,24 @@ ion-thumbnail {
   }
 }
 
-.item,
-a.item,
-button.item {
-  transition: background-color $button-md-transition-duration $button-md-animation-curve, transform 300ms;
+ion-note {
+  color: $item-md-note-color;
 }
 
-.item.activated,
-a.item.activated,
-button.item.activated {
-  background-color: $item-md-activated-background-color;
-  box-shadow: none;
+
+// Material Design Item Divider
+// --------------------------------------------------
+
+ion-item-divider {
+  padding: $item-md-padding-top $item-md-padding-right $item-md-padding-bottom $item-md-padding-left;
+  background-color: $item-md-divider-bg;
+  color: $item-md-divider-color;
 }
 
-.item[no-lines] {
-  border-width: 0;
+
+// Material Design Item Sliding
+// --------------------------------------------------
+
+ion-item-sliding {
+  background-color: $item-md-sliding-content-bg;
 }

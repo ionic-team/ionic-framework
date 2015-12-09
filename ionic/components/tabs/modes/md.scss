@@ -1,13 +1,23 @@
-@import "../../../ionic.globals";
+@import "../../../globals.md";
+@import "../tabs";
 
 // Material Design Tabs
 // --------------------------------------------------
 
+$tabbar-md-background-color:         $toolbar-md-background-color !default;
 $tabbar-md-item-padding:             12px 10px 5px 10px !default;
 $tabbar-md-item-font-size:           1.4rem !default;
 $tabbar-md-item-font-weight:         500 !default;
 $tabbar-md-item-icon-size:           2.4rem !default;
 $tabbar-md-item-height:              4.8rem !default;
+
+$tab-button-md-active-color:         $toolbar-md-active-color !default;
+$tab-button-md-inactive-color:       $toolbar-md-inactive-color !default;
+
+
+tabbar {
+  background: $tabbar-md-background-color;
+}
 
 
 .tab-button {
@@ -20,9 +30,11 @@ $tabbar-md-item-height:              4.8rem !default;
   box-shadow: none;
   border-radius: 0;
   border-bottom: 2px solid transparent;
+  color: $tab-button-md-inactive-color;
 
   &[aria-selected=true] {
     opacity: 1.0;
+    color: $tab-button-md-active-color;
   }
 }
 
@@ -63,7 +75,7 @@ tab-highlight {
   width: 1px;
   bottom: 0;
   left: 0;
-  background: $tab-button-active-color;
+  background: $tab-button-md-active-color;
   transform-origin: 0 0;
   transform: translateZ(0);
 
@@ -77,14 +89,34 @@ tab-highlight {
 }
 
 
-@each $color-name, $color-value in $colors {
+// Material Design  Tabbar Color Mixin
+// --------------------------------------------------
+
+@mixin tabbar-md($color-name, $color-value) {
 
   tabbar[#{$color-name}] {
+    background-color: $color-value;
+
+    .tab-button {
+      color: inverse($color-value);
+    }
+
+    .tab-button:hover:not(.disable-hover),
+    .tab-button[aria-selected=true] {
+      color: inverse($color-value);
+    }
 
     tab-highlight {
       background: inverse($color-value);
     }
-
   }
 
+}
+
+
+// Material Design Tabbar Color Generation
+// --------------------------------------------------
+
+@each $color-name, $color-value in $colors-md {
+  @include tabbar-md($color-name, $color-value);
 }

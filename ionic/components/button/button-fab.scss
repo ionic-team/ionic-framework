@@ -1,4 +1,4 @@
-@import "../../ionic.globals";
+@import "../../globals.core";
 
 // FABulous Buttons (Floating Action Button from material)
 // --------------------------------------------------
@@ -6,53 +6,48 @@
 $button-fab-size:           56px !default;
 
 
-button,
-[button] {
+.button-fab {
+  position: absolute;
+  width: $button-fab-size;
+  height: $button-fab-size;
+  line-height: $button-fab-size;
+  min-width: 0;
+  vertical-align: middle;
 
-  &[fab] {
-    position: absolute;
-    width: $button-fab-size;
-    height: $button-fab-size;
-    line-height: $button-fab-size;
-    min-width: 0;
-    vertical-align: middle;
+  border-radius: 50%;
+  background-clip: padding-box;
 
-    border-radius: 50%;
-    background-clip: padding-box;
+  overflow: hidden;
 
-    overflow: hidden;
+  transition: .2s linear;
+  transition-property: background-color;
 
-    transition: .2s linear;
-    transition-property: background-color;
+  font-size: 14px;
 
-    font-size: 14px;
-
-    &[fab-center] {
-      left: 50%;
-      margin-left: -$button-fab-size / 2;
-    }
-
-    &[fab-top] {
-      top: 16px;
-    }
-
-    &[fab-right] {
-      right: 16px;
-    }
-
-    &[fab-bottom] {
-      bottom: 16px;
-    }
-
-    &[fab-left] {
-      left: 16px;
-    }
-
-    icon {
-      flex: 1;
-      font-size: 2.8rem;
-    }
-
+  icon {
+    flex: 1;
+    font-size: 2.8rem;
   }
 
+}
+
+[fab-center] {
+  left: 50%;
+  margin-left: -$button-fab-size / 2;
+}
+
+[fab-top] {
+  top: 16px;
+}
+
+[fab-right] {
+  right: 16px;
+}
+
+[fab-bottom] {
+  bottom: 16px;
+}
+
+[fab-left] {
+  left: 16px;
 }

@@ -28,14 +28,11 @@
 }
 
 
-@function color($color-name) {
-  @return map-get($colors, $color-name);
-}
+// Copy Colors Map
+// --------------------------------------------------
 
-
-@function auxiliary-colors() {
-  // get a map of all the colors, except "primary"
-  @return map-remove($colors, primary);
+@function copy-colors($colors-map) {
+  @return map-merge($colors-map, ());
 }
 
 

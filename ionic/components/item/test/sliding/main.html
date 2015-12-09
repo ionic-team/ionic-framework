@@ -1,8 +1,8 @@
 <ion-toolbar>
   <ion-title>Sliding Items</ion-title>
-  <ion-nav-items secondary>
+  <ion-buttons end>
     <button (click)="reload()">Reload</button>
-  </ion-nav-items>
+  </ion-buttons>
 </ion-toolbar>
 
 <ion-content>
@@ -35,8 +35,8 @@
       </ion-item-options>
     </ion-item-sliding>
 
-    <ion-item-sliding text-wrap detail-push *ng-if="shouldShow" #item>
-      <ion-item>
+    <ion-item-sliding *ng-if="shouldShow" #item>
+      <ion-item text-wrap detail-push>
         <h3>Ben Sperry</h3>
         <p>
           I like paper

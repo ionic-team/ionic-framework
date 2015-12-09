@@ -1,10 +1,14 @@
-@import "../../../ionic.globals";
+@import "../../../globals.md";
 
 // Material Design Content Padding
 // --------------------------------------------------
 
 $content-padding-md:    16px !default;
 
+
+ion-content {
+  background-color: $background-md-color;
+}
 
 [padding],
 [padding] > scroll-content {
