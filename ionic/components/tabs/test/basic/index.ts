@@ -104,11 +104,7 @@ class Tab3 {}
       <ion-tab tab-title="Schedule" tab-icon="globe" [root]="root2"></ion-tab>
       <ion-tab tab-title="Stopwatch" tab-icon="stopwatch" [root]="root3"></ion-tab>
     </ion-tabs>
-  `,
-  config: {
-    navbarStyle: 'secondary',
-    tabbarStyle: 'secondary'
-  }
+  `
 })
 export class TabsPage {
   constructor() {
