@@ -16,13 +16,6 @@
       <ion-title>Hello</ion-title>
     </ion-header-bar>
     <ion-content class="padding">
-<!--
-      <ks-swiper-container override-parameters="{'loop':true}">
-    <ks-swiper-slide class="swiper-slide" ng-repeat="s in [1,2,3,4]">
-      <img ng-src="http://api.randomuser.me/portraits/thumb/men/{{s}}.jpg">
-    </ks-swiper-slide>
-</ks-swiper-container>
--->
       <ion-slides options="options">
         <ion-slide-page>
           <h2>Journey to HD 219134 b</h2>
@@ -105,10 +98,22 @@
   </ion-pane>
   <script>
     angular.module('slidesTest', ['ionic'])
-    .controller('MyCtrl', ['$scope', function($scope) {
+    .controller('MyCtrl', ['$scope', '$interval', function($scope, $interval) {
       $scope.options = {
         loop: true
       }
+      /*
+      $scope.extraSlides = [];
+      var i = 0;
+      var c = $interval(function() {
+        $scope.extraSlides.push({
+          id: ++i
+        })
+        if(i > 2) {
+          $interval.cancel(c);
+        }
+      }, 2000)
+      */
     }]);
     </script>
   </body>
