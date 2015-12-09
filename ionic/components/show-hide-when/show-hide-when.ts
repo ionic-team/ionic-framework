@@ -53,12 +53,15 @@ class DisplayWhen {
 
 /**
  *
- * The `show-when` attribute takes a value or expression, and only shows the element it has been added to when
- * the value or expression is true. Complements the [hide-when attribute](../HideWhen).
+ * The `show-when` attribute takes a string that represents a plaform or screen orientation.
+ * The element the attribute is added to will only be shown when that platform or screen orientation is active.
+ * Complements the [hide-when attribute](../HideWhen).
  * @usage
  * ```html
- * <div show-when="false">I am hidden!</div>
+ * <div show-when="ios">I am only visible on iOS!</div>
  * ```
+ * @demo /docs/v2/demos/show-when/
+ * @see {@link ../HideWhen HideWhen API Docs}
  */
 @Directive({
   selector: '[show-when]',
@@ -87,12 +90,15 @@ export class ShowWhen extends DisplayWhen {
 
 /**
  *
- * The `hide-when` attribute takes a value or expression, and hides the element it has been added to when
- * the value or expression is true. Complements the [show-when attribute](../ShowWhen).
+ * The `hide-when` attribute takes a string that represents a plaform or screen orientation.
+ * The element the attribute is added to will only be hidden when that platform or screen orientation is active.
+ * Complements the [show-when attribute](../ShowWhen).
  * @usage
  * ```html
- * <div hide-when="true">I am hidden!</div>
+ * <div hide-when="android">I am hidden on Android!</div>
  * ```
+ * @demo /docs/v2/demos/hide-when/
+ * @see {@link ../ShowWhen ShowWhen API Docs}
  */
 @Directive({
   selector: '[hide-when]',
