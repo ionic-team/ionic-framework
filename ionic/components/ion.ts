@@ -14,7 +14,7 @@ export class Ion {
     this.config = config;
   }
 
-  onInit() {
+  ngOnInit() {
     let cls = this.constructor;
 
     if (cls.defaultInputs && this.config) {

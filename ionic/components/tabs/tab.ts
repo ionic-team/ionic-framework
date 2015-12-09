@@ -79,7 +79,7 @@ export class Tab extends NavController {
   /**
    * @private
    */
-  onInit() {
+  ngOnInit() {
     if (this._isInitial) {
       this.parent.select(this);
 
@@ -173,7 +173,7 @@ export class Tab extends NavController {
   /**
    * @private
    */
-  onDestroy() {
+  ngOnDestroy() {
     clearTimeout(this._loadTimer);
   }
 

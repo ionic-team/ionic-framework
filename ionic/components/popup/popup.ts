@@ -300,7 +300,7 @@ class PopupCmp {
     }
   }
 
-  onInit() {
+  ngOnInit() {
     setTimeout(() => {
       // TODO: make more better, no DOM BS
       this.promptInput = this.elementRef.nativeElement.querySelector('input');

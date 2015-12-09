@@ -114,8 +114,8 @@ export class Navbar extends ToolbarBase {
   /**
    * @private
    */
-  onInit() {
-    super.onInit();
+  ngOnInit() {
+    super.ngOnInit();
     let hideBackButton = this.hideBackButton;
     if (typeof hideBackButton === 'string') {
       this.hideBackButton = (hideBackButton === '' || hideBackButton === 'true');

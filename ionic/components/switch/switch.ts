@@ -160,7 +160,7 @@ export class Switch {
   /**
    * @private
    */
-  onInit() {
+  ngOnInit() {
     this.labelId = 'label-' + this.inputId;
   }
 
@@ -238,7 +238,7 @@ export class Switch {
   /**
    * @private
    */
-  onDestroy() {
+  ngOnDestroy() {
     this.removeMoveListener();
     this.switchEle = this.addMoveListener = this.removeMoveListener = null;
     this.form.deregister(this);

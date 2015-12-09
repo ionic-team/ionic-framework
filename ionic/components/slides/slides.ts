@@ -110,7 +110,7 @@ export class Slides extends Ion {
   /**
    * @private
    */
-  onInit() {
+  ngOnInit() {
     if(!this.options) {
       this.options = {};
     }

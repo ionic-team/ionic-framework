@@ -74,7 +74,7 @@ export class Searchbar extends Ion {
    * After the view has initialized check if the searchbar has a value
    * and then store that value in query
    */
-  afterViewInit() {
+  ngAfterViewInit() {
     // If the user passes in a value to the model we should left align
     this.shouldLeftAlign = this.ngControl.value && this.ngControl.value.trim() != '';
     this.query = this.ngControl.value || '';

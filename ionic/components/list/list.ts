@@ -39,8 +39,8 @@ export class List extends Ion {
   /**
    * @private
    */
-  onInit() {
-    super.onInit();
+  ngOnInit() {
+    super.ngOnInit();
 
     if (util.isDefined(this.virtual)) {
       console.log('Content', this.content);
@@ -53,7 +53,7 @@ export class List extends Ion {
   /**
    * @private
    */
-  onDestroy() {
+  ngOnDestroy() {
     this.ele = null;
     this.slidingGesture && this.slidingGesture.unlisten();
   }
@@ -104,7 +104,7 @@ export class List extends Ion {
   /**
    * @private
    */
-  afterViewInit() {
+  ngAfterViewInit() {
     this._init = true;
     if (this._enableSliding) {
       this.enableSlidingItems(true);
