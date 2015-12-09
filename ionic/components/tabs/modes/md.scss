@@ -34,6 +34,7 @@ tabbar {
 
   &[aria-selected=true] {
     opacity: 1.0;
+    color: $tab-button-md-active-color;
   }
 }
 
