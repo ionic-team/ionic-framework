@@ -110,8 +110,8 @@ export class Tabs extends Ion {
   /**
    * @private
    */
-  onInit() {
-    super.onInit();
+  ngOnInit() {
+    super.ngOnInit();
     this.preloadTabs = (this.preloadTabs !== "false" && this.preloadTabs !== false);
 
     if (this._highlight) {
@@ -277,7 +277,7 @@ class TabButton extends Ion {
     this.disHover = (config.get('hoverCSS') === false);
   }
 
-  onInit() {
+  ngOnInit() {
     this.tab.btn = this;
     this.hasTitle = !!this.tab.tabTitle;
     this.hasIcon = !!this.tab.tabIcon;

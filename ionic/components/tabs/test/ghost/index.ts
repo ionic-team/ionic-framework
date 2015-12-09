@@ -109,7 +109,7 @@ class QuesaritoPage {
 export class TabsPage {
   @ViewChildren(Tab) tab : QueryList<Tab>;
 
-  afterViewInit() {
+  ngAfterViewInit() {
     console.log('Tab', this.tab);
     console.log(this.tab.first.setRoot);
   }
@@ -128,6 +128,6 @@ export class TabsPage {
     this.root2 = Tab2;
     this.root3 = Tab3;
   }
-  onInit() {
+  ngOnInit() {
   }
 }

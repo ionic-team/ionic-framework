@@ -72,7 +72,7 @@ export class RadioGroup extends Ion {
   /**
    * @private
    */
-  onInit() {
+  ngOnInit() {
     let header = this.headerQuery.first;
     if (header) {
       if (!header.id) {
@@ -210,8 +210,8 @@ export class RadioButton extends Ion {
   /**
    * @private
    */
-  onInit() {
-    super.onInit();
+  ngOnInit() {
+    super.ngOnInit();
     this.group.registerRadio(this);
     this.labelId = 'label-' + this.id;
   }

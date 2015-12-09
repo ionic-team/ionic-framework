@@ -65,7 +65,7 @@ export class Checkbox {
     if (ngControl) ngControl.valueAccessor = this;
   }
 
-  onInit() {
+  ngOnInit() {
     this.labelId = 'label-' + this.inputId;
   }
 
@@ -118,7 +118,7 @@ export class Checkbox {
   /**
    * @private
    */
-  onDestroy() {
+  ngOnDestroy() {
     this.form.deregister(this);
   }
 }

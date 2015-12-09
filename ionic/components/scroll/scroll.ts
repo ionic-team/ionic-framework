@@ -56,7 +56,7 @@ export class Scroll extends Ion {
   /**
    * @private
    */
-  onInit() {
+  ngOnInit() {
     this.scrollElement = this.getNativeElement().children[0];
   }
 

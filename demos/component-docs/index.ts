@@ -7,11 +7,19 @@ import * as helpers from './helpers';
 
 @App({
   templateUrl: 'app.html',
+  config: {
+    platforms: {
+      android: {
+        activator: 'ripple'        
+      }
+    }
+  }
 })
 class DemoApp {
 
   rootPage: any;
   androidAttribute: any;
+
 
   constructor(app: IonicApp, platform: Platform) {
     this.app = app;

@@ -196,7 +196,7 @@ export class SegmentButton {
   /**
    * @private
    */
-  onInit() {
+  ngOnInit() {
     this.segment.register(this);
   }
 

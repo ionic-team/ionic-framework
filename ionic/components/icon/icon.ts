@@ -42,7 +42,7 @@ export class Icon {
   /**
    * @private
    */
-  onInit() {
+  ngOnInit() {
     let ele = this.elementRef.nativeElement;
 
     if (this.mode == 'ios' && this.ios) {

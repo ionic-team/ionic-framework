@@ -132,7 +132,7 @@ export class TextInput {
   /**
    * @private
    */
-  onInit() {
+  ngOnInit() {
     if (this.input && this.label) {
       // if there is an input and an label
       // then give the label an ID
@@ -443,7 +443,7 @@ export class TextInput {
   /**
    * @private
    */
-  onDestroy() {
+  ngOnDestroy() {
     this.deregMove();
     this.form.deregister(this);
   }
@@ -486,7 +486,7 @@ export class TextInputElement {
     }
   }
 
-  onInit() {
+  ngOnInit() {
     this.wrapper && this.wrapper.hasValue(this.value);
   }
 

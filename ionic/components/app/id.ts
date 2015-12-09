@@ -42,14 +42,14 @@ export class IdRef {
   /**
    * @private
    */
-  onInit() {
+  ngOnInit() {
     this.app.register(this.id, this.component);
   }
 
   /**
    * @private
    */
-  onDestroy() {
+  ngOnDestroy() {
     this.app.unregister(this.id);
   }
 }
@@ -75,7 +75,7 @@ export class Attr {
   /**
    * @private
    */
-  onInit() {
+  ngOnInit() {
     this.renderer.setElementAttribute(this.elementRef, this.attr, '');
   }
 }

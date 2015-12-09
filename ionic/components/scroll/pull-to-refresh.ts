@@ -84,7 +84,7 @@ export class Refresher {
     this.pulling = new EventEmitter('pulling');
   }
 
-  onInit() {
+  ngOnInit() {
     this.initEvents();
   }
 
