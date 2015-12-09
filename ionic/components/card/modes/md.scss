@@ -23,7 +23,7 @@ $card-md-thumbnail-size:              8rem !default;
 $card-md-background-color:            $list-md-background-color !default;
 $card-md-box-shadow:                  0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12) !default;
 $card-md-border-radius:               2px !default;
-$card-md-font-size:                   1.6rem !default;
+$card-md-font-size:                   1.4rem !default;
 $card-md-line-height:                 1.5 !default;
 
 $card-md-text-color:                  #222 !default;
@@ -59,10 +59,6 @@ ion-card {
     > ion-item-sliding:last-child .item {
       border-bottom: none;
     }
-  }
-
-  .item {
-    font-size: $card-md-font-size;
   }
 
   .item-inner {
