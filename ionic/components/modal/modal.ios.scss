@@ -1,0 +1,11 @@
+@import "../../globals.ios";
+
+// iOS Modals
+// --------------------------------------------------
+
+$modal-ios-background-color:          $background-ios-color !default;
+
+
+ion-page.modal {
+  background-color: $modal-ios-background-color;
+}

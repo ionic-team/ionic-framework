@@ -1,0 +1,102 @@
+@import "../../globals.ios";
+
+// iOS Checkbox Structure
+// --------------------------------------------------
+
+
+$checkbox-ios-background-color-off:       $list-ios-background-color !default;
+$checkbox-ios-background-color-on:        map-get($colors-ios, primary) !default;
+
+$checkbox-ios-icon-size:                  21px !default;
+$checkbox-ios-icon-border-color-on:       map-get($colors-ios, primary) !default;
+$checkbox-ios-icon-border-color-off:      $list-ios-border-color !default;
+$checkbox-ios-icon-border-width:          1px !default;
+$checkbox-ios-icon-border-style:          solid !default;
+$checkbox-ios-icon-border-radius:         50% !default;
+
+$checkbox-ios-icon-checkmark-width:       1px !default;
+$checkbox-ios-icon-checkmark-style:       solid !default;
+$checkbox-ios-icon-checkmark-color:       $background-ios-color !default;
+
+$checkbox-ios-media-margin:               $item-ios-padding-media-top $item-ios-padding-right $item-ios-padding-media-bottom 2px !default;
+
+$checkbox-ios-disabled-opacity:           0.5 !default;
+$checkbox-ios-disabled-text-color:        $subdued-text-ios-color !default;
+
+
+ion-checkbox {
+  cursor: pointer;
+  @include user-select-none();
+
+  &[aria-checked=true] .checkbox-icon {
+    background-color: $checkbox-ios-background-color-on;
+    border-color: $checkbox-ios-icon-border-color-on;
+  }
+
+  &[aria-checked=true] .checkbox-icon:after {
+    position: absolute;
+    border-width: $checkbox-ios-icon-checkmark-width;
+    border-style: $checkbox-ios-icon-checkmark-style;
+    border-color: $checkbox-ios-icon-checkmark-color;
+    top: 3px;
+    left: 7px;
+    width: 4px;
+    height: 9px;
+    border-left: none;
+    border-top: none;
+    content: '';
+    transform: rotate(45deg);
+  }
+
+  &.item.activated {
+    background-color: $checkbox-ios-background-color-off;
+  }
+
+}
+
+ion-checkbox[aria-disabled=true] {
+  opacity: $checkbox-ios-disabled-opacity;
+  color: $checkbox-ios-disabled-text-color;
+  pointer-events: none;
+}
+
+.checkbox-media {
+  margin: $checkbox-ios-media-margin;
+}
+
+.checkbox-icon {
+  position: relative;
+  display: block;
+  width: $checkbox-ios-icon-size;
+  height: $checkbox-ios-icon-size;
+  border-radius: $checkbox-ios-icon-border-radius;
+  border-width: $checkbox-ios-icon-border-width;
+  border-style: $checkbox-ios-icon-border-style;
+  border-color: $checkbox-ios-icon-border-color-off;
+  background-color: $checkbox-ios-background-color-off;
+}
+
+
+// iOS Checkbox Color Mixin
+// --------------------------------------------------
+
+@mixin checkbox-theme-ios($color-name, $bg-on) {
+
+  ion-checkbox[#{$color-name}][aria-checked=true] .checkbox-icon {
+    background-color: $bg-on;
+    border-color: $bg-on;
+
+    &:after {
+      border-color: inverse($bg-on);
+    }
+  }
+
+}
+
+
+// Generate iOS Checkbox Colors
+// --------------------------------------------------
+
+@each $color-name, $color-value in $colors-ios {
+  @include checkbox-theme-ios($color-name, $color-value);
+}

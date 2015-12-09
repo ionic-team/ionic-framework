@@ -1,0 +1,184 @@
+@import "../../globals.ios";
+
+// iOS Switch
+// --------------------------------------------------
+
+$switch-ios-width:                     51px !default;
+$switch-ios-height:                    32px !default;
+$switch-ios-border-width:              2px !default;
+$switch-ios-border-radius:             $switch-ios-height / 2 !default;
+
+$switch-ios-background-color-off:      $list-ios-background-color !default;
+$switch-ios-border-color-off:          grayscale(lighten($list-ios-border-color, 11%)) !default;
+
+$switch-ios-background-color-on:       map-get($colors-ios, primary) !default;
+
+$switch-ios-handle-width:              $switch-ios-height - ($switch-ios-border-width * 2) !default;
+$switch-ios-handle-height:             $switch-ios-handle-width !default;
+$switch-ios-handle-border-radius:      $switch-ios-handle-height / 2 !default;
+$switch-ios-handle-box-shadow:         0 3px 12px rgba(0, 0, 0, 0.16), 0 3px 1px rgba(0, 0, 0, 0.1) !default;
+
+$switch-ios-handle-background-color:   $switch-ios-background-color-off !default;
+
+$switch-ios-media-margin:              0 !default;
+$switch-ios-media-padding:             6px ($item-ios-padding-right / 2) 5px ($item-ios-padding-left) !default;
+
+$switch-ios-transition-duration:       300ms !default;
+
+$switch-ios-disabled-opacity:          0.5 !default;
+$switch-ios-disabled-text-color:       $subdued-text-ios-color !default;
+
+
+// Switch
+// -----------------------------------------
+
+ion-switch {
+  display: block;
+  @include user-select-none();
+
+  &.item.activated {
+    background: $list-ios-background-color;
+  }
+}
+
+
+// Switch Wrapper
+// -----------------------------------------
+
+.switch-media {
+  margin: $switch-ios-media-margin;
+  padding: $switch-ios-media-padding;
+  cursor: pointer;
+}
+
+
+// Switch Background Track
+// -----------------------------------------
+
+.switch-icon {
+  // bg track, when not checked
+  position: relative;
+  display: block;
+  width: $switch-ios-width;
+  height: $switch-ios-height;
+  border-radius: $switch-ios-border-radius;
+  pointer-events: none;
+
+  background-color: $switch-ios-border-color-off;
+  transition: background-color $switch-ios-transition-duration;
+}
+
+
+// Switch Background Track, Inner Oval
+// -----------------------------------------
+
+.switch-icon:before {
+  // inner bg track's oval, when not checked
+  content: '';
+  position: absolute;
+  top: $switch-ios-border-width;
+  right: $switch-ios-border-width;
+  left: $switch-ios-border-width;
+  bottom: $switch-ios-border-width;
+
+  border-radius: $switch-ios-border-radius;
+  background-color: $switch-ios-background-color-off;
+
+  transform: scale3d(1, 1, 1);
+  transition: transform $switch-ios-transition-duration;
+}
+
+
+// Switch Knob
+// -----------------------------------------
+
+.switch-icon:after {
+  // knob, when not checked
+  content: '';
+  position: absolute;
+  top: $switch-ios-border-width;
+  left: $switch-ios-border-width;
+
+  width: $switch-ios-handle-width;
+  height: $switch-ios-handle-height;
+
+  border-radius: $switch-ios-handle-border-radius;
+  background-color: $switch-ios-handle-background-color;
+  box-shadow: $switch-ios-handle-box-shadow;
+
+  transition: transform $switch-ios-transition-duration, width 120ms ease-in-out 80ms, left 110ms ease-in-out 80ms;
+}
+
+
+// Switch Checked
+// -----------------------------------------
+
+ion-switch[aria-checked=true] {
+  .switch-icon {
+    // bg track, when checked
+    background-color: $switch-ios-background-color-on;
+
+    &:before {
+      // inner bg track's oval, when checked
+      transform: scale3d(0, 0, 0);
+    }
+
+    &:after {
+      // knob, when checked
+      transform: translate3d($switch-ios-width - $switch-ios-handle-width - ($switch-ios-border-width * 2), 0, 0);
+    }
+  }
+
+  .switch-activated .switch-icon {
+    &:before {
+      // inner bg track's oval, when checked
+      transform: scale3d(0, 0, 0);
+    }
+
+    &:after {
+      // when pressing down on the switch and IS checked
+      // make the knob wider and move it left a bit
+      left: $switch-ios-border-width - 6;
+
+      // when pressing down on the switch and NOT checked
+      // then make the knob wider
+      width: $switch-ios-handle-width + 6;
+    }
+  }
+}
+
+
+// Switch Disabled
+// -----------------------------------------
+
+ion-switch[aria-disabled=true] {
+  opacity: $switch-ios-disabled-opacity;
+  color: $switch-ios-disabled-text-color;
+  pointer-events: none;
+}
+
+
+// iOS Switch Color Mixin
+// --------------------------------------------------
+
+@mixin switch-theme-ios($color-name, $bg-on) {
+
+  ion-switch[#{$color-name}] {
+
+    &[aria-checked=true] .switch-icon {
+      background-color: $bg-on;
+    }
+
+  }
+
+}
+
+
+// Generate iOS Switch Auxiliary Colors
+// --------------------------------------------------
+
+@each $color-name, $value in $colors-ios {
+
+  @include switch-theme-ios($color-name, $value);
+
+}
