@@ -1,0 +1,132 @@
+@import "../../globals.md";
+@import "./card";
+
+// Material Design Card
+// --------------------------------------------------
+
+$card-md-margin-top:                  10px !default;
+$card-md-margin-right:                10px !default;
+$card-md-margin-bottom:               10px !default;
+$card-md-margin-left:                 10px !default;
+
+$card-md-padding-top:                 13px !default;
+$card-md-padding-right:               16px !default;
+$card-md-padding-bottom:              13px !default;
+$card-md-padding-left:                16px !default;
+
+$card-md-padding-media-top:           10px !default;
+$card-md-padding-media-bottom:        10px !default;
+
+$card-md-avatar-size:                 4rem !default;
+$card-md-thumbnail-size:              8rem !default;
+
+$card-md-background-color:            $list-md-background-color !default;
+$card-md-box-shadow:                  0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12) !default;
+$card-md-border-radius:               2px !default;
+$card-md-font-size:                   1.4rem !default;
+$card-md-line-height:                 1.5 !default;
+
+$card-md-text-color:                  #222 !default;
+$card-md-title-font-size:             2.4rem !default;
+$card-md-title-padding:               8px 0 8px 0 !default;
+$card-md-title-text-color:            #222 !default;
+
+$card-md-header-font-size:            1.6rem !default;
+$card-md-header-padding:              16px !default;
+$card-md-header-color:                #222 !default;
+
+
+ion-card {
+  margin: $card-md-margin-top $card-md-margin-right $card-md-margin-bottom $card-md-margin-left;
+  font-size: $card-md-font-size;
+
+  background: $card-md-background-color;
+  box-shadow: $card-md-box-shadow;
+  border-radius: $card-md-border-radius;
+
+  ion-list {
+    margin-bottom: 0;
+
+    ion-item-content {
+      padding: 0;
+    }
+
+    .item-inner {
+      border-bottom: 1px solid $list-md-border-color;
+    }
+
+    > .item:last-child,
+    > ion-item-sliding:last-child .item {
+      border-bottom: none;
+    }
+  }
+
+  .item-inner {
+    border: none;
+  }
+
+  ion-card-content {
+    padding: $card-md-padding-top $card-md-padding-right $card-md-padding-bottom $card-md-padding-left;
+    font-size: $card-md-font-size;
+    line-height: $card-md-line-height;
+  }
+
+  ion-card-header {
+    padding: $card-md-header-padding;
+    font-size: $card-md-header-font-size;
+    color: $card-md-header-color;
+  }
+
+  ion-card-header + ion-card-content,
+  .item + ion-card-content {
+    padding-top: 0;
+  }
+
+  ion-note[item-left],
+  ion-note[item-right], {
+    font-size: 1.3rem;
+  }
+
+  .card-title {
+    padding: $card-md-title-padding;
+    font-size: $card-md-title-font-size;
+    color: $card-md-title-text-color;
+  }
+
+  h1 {
+    margin: 0 0 2px;
+    font-size: 2.4rem;
+    font-weight: normal;
+    color: $card-md-text-color;
+  }
+
+  h2 {
+    margin: 2px 0 2px;
+    font-size: 1.6rem;
+    font-weight: normal;
+    color: $card-md-text-color;
+  }
+
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 2px 0 2px;
+    font-size: 1.4rem;
+    font-weight: normal;
+    color: $card-md-text-color;
+  }
+
+  p {
+    font-size: 1.4rem;
+    margin: 0 0 2px;
+    line-height: 1.5;
+    font-weight: normal;
+    color: $card-md-text-color;
+  }
+
+}
+
+ion-card + ion-card {
+  margin-top: 0;
+}

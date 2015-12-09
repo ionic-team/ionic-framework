@@ -1,0 +1,81 @@
+@import "../../globals.md";
+@import "./segment";
+
+// Material Design Segment
+// --------------------------------------------------
+
+$segment-button-md-text-color-activated:       $toolbar-md-active-color !default;
+$segment-button-md-border-color-activated:     $toolbar-md-active-color !default;
+
+$segment-button-md-border-bottom-width:        2px !default;
+$segment-button-md-border-bottom-color:        rgba(#000000, 0.10) !default;
+
+$segment-button-md-padding:                    0 6px !default;
+$segment-button-md-min-height:                 4.0rem !default;
+$segment-button-md-line-height:                4.0rem !default;
+$segment-button-md-font-size:                  1.2rem !default;
+
+
+.segment-button {
+  padding: $segment-button-md-padding;
+  border-bottom-width: $segment-button-md-border-bottom-width;
+  border-bottom-style: solid;
+  border-bottom-color: $segment-button-md-border-bottom-color;
+
+  min-height: $segment-button-md-min-height;
+  line-height: $segment-button-md-line-height;
+
+  font-size: $segment-button-md-font-size;
+  text-transform: uppercase;
+  font-weight: 500;
+
+  opacity: 0.7;
+  color: $segment-button-md-text-color-activated;
+  background-color: transparent;
+  transition: 100ms all linear;
+
+  &.activated,
+  &.segment-activated {
+    border-color: $segment-button-md-border-color-activated;
+  }
+}
+
+.toolbar {
+
+  ion-segment {
+    margin: 0 auto;
+  }
+
+  .segment-button.activated,
+  .segment-button.segment-activated {
+    opacity: 1;
+  }
+
+}
+
+
+// Material Design Segment Button Mixin
+// --------------------------------------------------
+
+@mixin md-segment-button($color-name, $color-value) {
+
+  ion-segment[#{$color-name}] .segment-button {
+    color: $color-value;
+
+    &.activated,
+    &.segment-activated {
+      opacity: 1;
+      border-color: $color-value;
+      color: $color-value;
+    }
+  }
+
+}
+
+
+// Material Design Segment Color Generation
+// --------------------------------------------------
+
+@each $color-name, $color-value in $colors-md {
+  @include md-segment-button($color-name, $color-value);
+}

@@ -1,0 +1,110 @@
+@import "../../globals.md";
+
+// Material Design Radio
+// --------------------------------------------------
+
+$radio-md-color-on:               map-get($colors-md, primary) !default;
+$radio-md-color-off:              darken($list-md-border-color, 40%) !default;
+
+$radio-md-icon-width:             16px !default;
+$radio-md-icon-height:            16px !default;
+$radio-md-icon-border-width:      2px !default;
+$radio-md-icon-border-style:      solid !default;
+$radio-md-icon-border-radius:     50% !default;
+
+$radio-md-transition-duration:    280ms !default;
+$radio-md-transition-easing:      cubic-bezier(.4, 0, .2, 1) !default;
+
+$radio-md-disabled-text-color:    $subdued-text-md-color !default;
+$radio-md-disabled-opacity:       0.5 !default;
+
+
+ion-radio {
+  cursor: pointer;
+  @include user-select-none();
+
+  &[aria-checked=true] {
+    color: $radio-md-color-on;
+  }
+
+  &[aria-checked=true] .radio-icon {
+    border-color: $radio-md-color-on;
+
+    &:after {
+      transform: scale3d(1, 1, 1);
+    }
+  }
+
+}
+
+ion-radio[aria-disabled=true] {
+  color: $radio-md-disabled-text-color;
+  opacity: $radio-md-disabled-opacity;
+  pointer-events: none;
+}
+
+.radio-icon {
+  position: relative;
+  top: 0;
+  left: 0;
+  display: block;
+  width: $radio-md-icon-width;
+  height: $radio-md-icon-height;
+  margin: 0;
+  border-width: $radio-md-icon-border-width;
+  border-style: $radio-md-icon-border-style;
+  border-color: $radio-md-color-off;
+  border-radius: $radio-md-icon-border-radius;
+
+  &:after {
+    position: absolute;
+    top: $radio-md-icon-border-width;
+    left: $radio-md-icon-border-width;
+    width: $radio-md-icon-width / 2;
+    height: $radio-md-icon-height / 2;
+    background-color: $radio-md-color-on;
+    border-radius: 50%;
+    content: '';
+    transition: transform $radio-md-transition-duration $radio-md-transition-easing;
+    transform: scale3d(0, 0, 0);
+  }
+}
+
+.radio-media {
+  display: block;
+  margin: $item-md-padding-media-top ($item-md-padding-right / 2) $item-md-padding-media-bottom ($item-md-padding-left / 2);
+}
+
+
+// Material Design Radio Color Mixin
+// --------------------------------------------------
+
+@mixin radio-theme-md($color-name, $color-value) {
+
+  ion-radio[#{$color-name}] {
+
+    &[aria-checked=true] {
+      color: $color-value;
+    }
+
+    &[aria-checked=true] .radio-icon {
+      border-color: $color-value;
+
+      &:after {
+        background-color: $color-value;
+      }
+    }
+
+  }
+
+}
+
+
+// Generate Material Design Radio Colors
+// --------------------------------------------------
+
+@each $color-name, $color-value in $colors-md {
+
+  @include radio-theme-md($color-name, $color-value);
+
+}

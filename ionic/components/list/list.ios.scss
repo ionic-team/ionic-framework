@@ -1,0 +1,182 @@
+@import "../../globals.ios";
+@import "./list";
+
+// iOS List
+// --------------------------------------------------
+
+$list-ios-margin-top:                 10px !default;
+$list-ios-margin-right:               0 !default;
+$list-ios-margin-bottom:              32px !default;
+$list-ios-margin-left:                0 !default;
+
+$list-inset-ios-margin-top:           16px !default;
+$list-inset-ios-margin-right:         16px !default;
+$list-inset-ios-margin-bottom:        16px !default;
+$list-inset-ios-margin-left:          16px !default;
+$list-inset-ios-border-radius:        4px !default;
+
+$list-ios-header-padding:             10px $item-ios-padding-right 10px $item-ios-padding-left !default;
+$list-ios-header-font-size:           1.2rem !default;
+$list-ios-header-font-weight:         500 !default;
+$list-ios-header-letter-spacing:      0.1rem !default;
+$list-ios-header-color:               #333 !default;
+
+
+/****************/
+/* DEFAULT LIST */
+/****************/
+
+ion-list-header {
+  position: relative;
+  padding: $list-ios-header-padding;
+  font-size: $list-ios-header-font-size;
+  font-weight: $list-ios-header-font-weight;
+  letter-spacing: $list-ios-header-letter-spacing;
+  text-transform: uppercase;
+  color: $list-ios-header-color;
+  border-bottom: 1px solid $list-ios-border-color;
+}
+
+ion-list {
+  margin: -1px $list-ios-margin-right $list-ios-margin-bottom $list-ios-margin-left;
+
+  > .item:first-child {
+    border-top: 1px solid $list-ios-border-color;
+  }
+
+  > .item:last-child,
+  > ion-item-sliding:last-child .item {
+    border-bottom: 1px solid $list-ios-border-color;
+
+    .item-inner {
+      border-bottom: none;
+    }
+  }
+
+  .item-inner {
+    border-bottom: 1px solid $list-ios-border-color;
+  }
+
+  // If the item has the no-lines attribute remove the bottom border from:
+  // the item itself (for last-child items)
+  // the item-inner class (if it is not last)
+  .item[no-lines],
+  .item[no-lines] .item-inner, {
+    border-width: 0;
+  }
+
+  ion-item-options {
+    border-bottom: 1px solid $list-ios-border-color;
+
+    button, [button] {
+      min-height: 100%;
+      height: 100%;
+      margin: 0;
+
+      border: none;
+      border-radius: 0;
+      display: inline-flex;
+      align-items: center;
+      box-sizing: border-box;
+
+      &:before{
+        margin: 0 auto;
+      }
+    }
+  }
+}
+
+ion-list + ion-list {
+  margin-top: $list-ios-margin-top + $list-ios-margin-bottom;
+
+  ion-list-header {
+    margin-top: -$list-ios-margin-top;
+    padding-top: 0;
+  }
+}
+
+&.hairlines {
+
+  ion-list-header {
+    border-bottom-width: 0.55px;
+  }
+
+  ion-list {
+
+    ion-item-options {
+      border-width: 0.55px;
+    }
+
+    .item {
+      .item-inner {
+        border-width: 0.55px;
+      }
+    }
+
+    > .item:first-child {
+      border-top-width: 0.55px;
+    }
+
+    > .item:last-child,
+    > ion-item-sliding:last-child .item {
+      border-bottom-width: 0.55px;
+    }
+  }
+
+}
+
+
+/**************/
+/* INSET LIST */
+/**************/
+
+ion-list[inset] {
+  margin: $list-inset-ios-margin-top $list-inset-ios-margin-right $list-inset-ios-margin-bottom $list-inset-ios-margin-left;
+  border-radius: $list-inset-ios-border-radius;
+
+  ion-list-header {
+    background-color: $list-ios-background-color;
+  }
+
+  .item {
+    border-bottom: 1px solid $list-ios-border-color;
+
+    .item-inner {
+      border-bottom: none;
+    }
+  }
+
+  > .item:first-child,
+  > ion-item-sliding:first-child .item {
+    border-top: none;
+  }
+
+  > .item:last-child,
+  > ion-item-sliding:last-child .item {
+    border-bottom: none;
+  }
+}
+
+ion-list[inset] + ion-list[inset] {
+  margin-top: 0;
+}
+
+&.hairlines ion-list[inset] {
+  .item {
+    border-width: 0.55px;
+  }
+}
+
+
+/*****************/
+/* NO LINES LIST */
+/*****************/
+
+ion-list[no-lines],
+&.hairlines ion-list[no-lines] {
+  ion-list-header,
+  .item,
+  .item .item-inner {
+    border-width: 0;
+  }
+}

@@ -1,0 +1,92 @@
+@import "../../globals.ios";
+
+// iOS Radio
+// --------------------------------------------------
+
+$radio-ios-color-on:               map-get($colors-ios, primary) !default;
+
+$radio-ios-icon-width:             16px !default;
+$radio-ios-icon-height:            21px !default;
+$radio-ios-icon-border-width:      2px !default;
+$radio-ios-icon-border-style:      solid !default;
+
+$radio-ios-disabled-text-color:    $subdued-text-ios-color !default;
+$radio-ios-disabled-opacity:       0.5 !default;
+
+
+ion-radio {
+  cursor: pointer;
+  @include user-select-none();
+
+  &[aria-checked=true] {
+    color: $radio-ios-color-on;
+  }
+
+  &[aria-checked=true] .radio-icon:after {
+    position: absolute;
+    border-width: $radio-ios-icon-border-width;
+    border-style: $radio-ios-icon-border-style;
+    border-color: $radio-ios-color-on;
+    top: 3px;
+    left: 7px;
+    width: 4px;
+    height: 10px;
+    border-left: none;
+    border-top: none;
+    content: '';
+    transform: rotate(45deg);
+  }
+
+  &.item.activated {
+    background-color: $list-ios-background-color;
+  }
+
+}
+
+ion-radio[aria-disabled=true] {
+  color: $radio-ios-disabled-text-color;
+  opacity: $radio-ios-disabled-opacity;
+  pointer-events: none;
+}
+
+.radio-media {
+  display: block;
+  margin: $item-ios-padding-media-top ($item-ios-padding-right / 2) $item-ios-padding-media-bottom ($item-ios-padding-left / 2);
+}
+
+.radio-icon {
+  position: relative;
+  display: block;
+  width: $radio-ios-icon-width;
+  height: $radio-ios-icon-height;
+}
+
+
+// iOS Radio Color Mixin
+// --------------------------------------------------
+
+@mixin radio-theme-ios($color-name, $color-value) {
+
+  ion-radio[#{$color-name}] {
+
+    &[aria-checked=true] .radio-icon:after {
+      border-color: $color-value;
+    }
+
+    &[aria-checked=true] {
+      color: $color-value;
+    }
+
+  }
+
+}
+
+
+// Generate iOS Radio Auxiliary Colors
+// --------------------------------------------------
+
+@each $color-name, $color-value in $colors-ios {
+
+  @include radio-theme-ios($color-name, $color-value);
+
+}

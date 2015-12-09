@@ -1,0 +1,31 @@
+@import "../../globals.md";
+
+// Material Design App
+// --------------------------------------------------
+
+
+a {
+  color: $link-md-color;
+}
+
+hr {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+@each $color-name, $color-value in $colors-md {
+  h1, h2, h3, h4, h5, h6,
+  p,
+  span,
+  a:not([button]),
+  small,
+  b,
+  i,
+  strong,
+  em,
+  sub,
+  sup {
+    &[#{$color-name}] {
+      color: $color-value !important;
+    }
+  }
+}
