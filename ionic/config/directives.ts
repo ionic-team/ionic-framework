@@ -23,7 +23,7 @@ import {TextInput, TextInputElement} from '../components/text-input/text-input';
 import {Label} from '../components/text-input/label';
 import {Segment, SegmentButton} from '../components/segment/segment';
 import {RadioGroup, RadioButton} from '../components/radio/radio';
-import {Searchbar} from '../components/searchbar/searchbar';
+import {Searchbar, SearchbarInput} from '../components/searchbar/searchbar';
 import {Nav} from '../components/nav/nav';
 import {NavPush, NavPop} from '../components/nav/nav-push';
 import {NavRouter} from '../components/nav/nav-router';
@@ -77,6 +77,7 @@ export const IONIC_DIRECTIVES = [
 
   // Forms
   Searchbar,
+  SearchbarInput,
   Segment,
   SegmentButton,
   Checkbox,

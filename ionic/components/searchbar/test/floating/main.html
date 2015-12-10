@@ -2,6 +2,10 @@
   <h5 padding-left padding-top> Search - Default </h5>
   <ion-searchbar [(ng-model)]="defaultSearch" (input)="triggerInput()" class="e2eDefaultFloatingSearchbar"></ion-searchbar>
 
+  <p padding-left>
+      Default Search: <b>{{ defaultSearch }}</b>
+  </p>
+
   <h5 padding-left> Search - Custom Placeholder </h5>
   <ion-searchbar [(ng-model)]="customPlaceholder" placeholder="Filter Schedules" class="e2eCustomPlaceholderFloatingSearchbar"></ion-searchbar>
 
