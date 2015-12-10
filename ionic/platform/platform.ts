@@ -13,6 +13,7 @@ import {ready, windowDimensions, flushDimensionCache} from '../util/dom';
 
 /**
  * TODO
+ * @demo /docs/v2/demos/platform/
  */
 export class Platform {
 
