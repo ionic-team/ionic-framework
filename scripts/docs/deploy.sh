@@ -23,7 +23,9 @@ function run {
 
   gulp docs --doc-version="$VERSION_NAME"
 
-  sassvars()
+  # compile sass vars json for ionic-site docs
+  gulp docs.sass-variables
+  cp tmp/sass.json $SITE_DIR/docs/v2/theming/overriding-ionic-variables/
 
   cd $SITE_DIR
 
@@ -41,11 +43,6 @@ function run {
     echo "-- Updated docs for $VERSION_NAME succesfully!"
   fi
 
-}
-
-function sassvars {
-  gulp docs.sass-variables
-  cp tmp/sass.json $SITE_DIR/docs/v2/theming/overriding-ionic-variables/
 }
 
 source $(dirname $0)/../utils.sh.inc
