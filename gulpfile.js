@@ -108,7 +108,9 @@ gulp.task('watch', function(done) {
 gulp.task('serve', function() {
   connect.server({
     port: flags.port,
-    livereload: true
+    livereload: {
+      port: 35700
+    }
   });
 });
 
