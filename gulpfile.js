@@ -11,6 +11,7 @@ var babel = require('gulp-babel');
 var tsc = require('gulp-typescript');
 var cache = require('gulp-cached');
 var minimist = require('minimist');
+var connect = require('gulp-connect');
 
 var flagConfig = {
   string: ['port', 'version', 'ngVersion', 'animations'],
@@ -105,10 +106,9 @@ gulp.task('watch', function(done) {
 });
 
 gulp.task('serve', function() {
-  var connect = require('gulp-connect');
   connect.server({
     port: flags.port,
-    livereload: false
+    livereload: true
   });
 });
 
@@ -158,9 +158,16 @@ gulp.task('bundle', ['transpile'], function(done){
   var config = require('./scripts/npm/ionic.webpack.config.js');
   bundle({
     config: config,
-    cb: done,
+    cb: finished,
     stats: true
   });
+
+  function finished(){
+    var outputPath = config.output.path + path.sep + config.output.filename;
+    gulp.src(outputPath)
+      .pipe(connect.reload())
+      .on('end', done)
+  }
 })
 
 function bundle(args) {
