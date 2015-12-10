@@ -203,22 +203,9 @@ gulp.task('bundle', ['transpile', 'copy.web-animations'], function(done){
   //     prepend.push('window.Element.prototype.animate=undefined;');
   //   }
 
-  var numTasks = 2;
-  var ionicConfig = require('./scripts/npm/ionic.webpack.config.js');
-  var bundleConfig = require('./scripts/npm/bundle.webpack.config.js');
-
-  bundle(ionicConfig, finished);
-  bundle(bundleConfig, finished);
-
-  function finished(){
-    numTasks--;
-    if (numTasks == 0) done();
-  }
-})
-
-function bundle(config, cb){
   var webpack = require('webpack');
   var path = require('path');
+  var config = require('./scripts/npm/ionic.webpack.config.js');
 
   webpack(config, function(err, stats){
     var statsOptions = {
@@ -231,7 +218,7 @@ function bundle(config, cb){
     console.log(stats.toString(statsOptions));
     cb();
   })
-}
+})
 
 gulp.task('temp.hack', function(){
   var fs = require('fs');

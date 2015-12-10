@@ -1,16 +1,32 @@
 module.exports = {
   entry: [
-    "es6-shim/es6-shim.min.js",
     "./dist/ionic.js"
   ],
   output: {
     path: 'dist/bundles',
     filename: 'ionic.js',
-    libraryTarget: 'umd'
+    libraryTarget: 'commonjs2'
   },
   externals: [
-    'angular2/angular2',
-    'angular2/router',
-    'angular2/http'
+    {
+      'angular2/core': {
+        commonjs2: ['angular2', 'core']
+      },
+      'angular2/common': {
+        commonjs2: ['angular2', 'common']
+      },
+      'angular2/router' : {
+        commonjs2: ['angular2', 'router']
+      },
+      'angular2/http': {
+        commonjs2: ['angular2', 'http']
+      },
+      'angular2/platform/browser': {
+        commonjs2: ['angular2', 'platform', 'browser']
+      },
+      'angular2/instrumentation': {
+        commonjs2: ['angular2', 'instrumentation']
+      },
+    }
   ]
 };
