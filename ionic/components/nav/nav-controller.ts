@@ -8,7 +8,7 @@ import {Keyboard} from '../../util/keyboard';
 import {ViewController} from './view-controller';
 import {Animation} from '../../animations/animation';
 import {SwipeBackGesture} from './swipe-back';
-import {isBoolean, array} from '../../util/util';
+import {isBoolean, array, pascalCaseToDashCase} from '../../util/util';
 import {raf, rafFrames} from '../../util/dom';
 
 /**
@@ -919,6 +919,10 @@ export class NavController extends Ion {
           viewContainer.createHostView(hostProtoViewRef, viewContainer.length, providers);
       let pageElementRef = this._viewManager.getHostElement(hostViewRef);
       let component = this._viewManager.getComponent(pageElementRef);
+
+      // auto-add page css className created from component JS class name
+      let cssClassName = pascalCaseToDashCase(viewCtrl.componentType.name);
+      this._renderer.setElementClass(pageElementRef, cssClassName, true);
 
       viewCtrl.addDestroy(() => {
         // ensure the element is cleaned up for when the view pool reuses this element
