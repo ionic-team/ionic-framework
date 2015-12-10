@@ -43,7 +43,9 @@ export class OverlayController {
       } else {
         reject();
       }
-    })
+    }, rejectReason => {
+      console.error(rejectReason);
+    });
 
     return promise;
   }

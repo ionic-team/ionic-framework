@@ -232,7 +232,9 @@ export class NavController extends Ion {
    */
   push(componentType, params = {}, opts = {}, callback) {
     if (!componentType) {
-      return Promise.reject('invalid componentType to push');
+      let errMsg = 'invalid componentType to push';
+      console.error(errMsg)
+      return Promise.reject(errMsg);
     }
 
     if (typeof componentType !== 'function') {
