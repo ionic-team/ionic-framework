@@ -257,6 +257,6 @@ export class Toggle {
    * @private
    */
   isDisabled(ev) {
-    return (this.lastTouch + 999 > Date.now() && /mouse/.test(ev.type)) || (this.mode == 'ios' && ev.target.tagName == 'ion-toggle');
+    return (this.lastTouch + 999 > Date.now() && /mouse/.test(ev.type)) || (this.mode == 'ios' && ev.target.tagName == 'ION-TOGGLE');
   }
 }
