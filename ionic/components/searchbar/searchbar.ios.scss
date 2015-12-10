@@ -121,6 +121,12 @@ ion-searchbar {
   .searchbar-input {
     padding-left: 30px;
   }
+}
+
+// Searchbar Focused
+// -----------------------------------------
+
+.searchbar-focused {
   .searchbar-ios-cancel {
     transform: translateX(0);
     flex: 0 0 auto;
@@ -128,7 +134,6 @@ ion-searchbar {
     visibility: visible;
   }
 }
-
 
 // Searchbar in Toolbar
 // -----------------------------------------
@@ -148,7 +153,7 @@ ion-searchbar {
     }
   }
 
-  .searchbar-left-aligned .searchbar-ios-cancel {
+  .searchbar-focused .searchbar-ios-cancel {
     padding-left: 8px;
   }
 
