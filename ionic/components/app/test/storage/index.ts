@@ -1,5 +1,5 @@
 import {Component} from 'angular2/core';
-import {Control, ControlGroup} 'angular2/common';
+import {Control, ControlGroup} from 'angular2/common';
 
 import {App, Storage, LocalStorage, SqlStorage} from 'ionic/ionic';
 
