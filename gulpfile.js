@@ -142,11 +142,9 @@ gulp.task('watch', function(done) {
   );
 });
 
-
 gulp.task('serve', function() {
   var connect = require('gulp-connect');
   connect.server({
-    root: 'dist',
     port: flags.port,
     livereload: false
   });
