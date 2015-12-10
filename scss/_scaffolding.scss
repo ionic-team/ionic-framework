@@ -83,6 +83,14 @@ body.grade-c {
   display: block;
   overflow: hidden;
 
+  &.overflow-scroll {
+    position: relative;
+  }
+
+  &.scroll-x { overflow-x: scroll; overflow-y: hidden; }
+  &.scroll-y { overflow-x: hidden; overflow-y: scroll; }
+  &.scroll-xy { overflow-x: scroll; overflow-y: scroll; }
+
   // Hide the top border if any
   margin-top: -1px;
 }
