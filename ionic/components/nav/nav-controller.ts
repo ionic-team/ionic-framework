@@ -1,5 +1,5 @@
-import {ChangeDetectorRef, Compiler, ElementRef, Injector, provide, NgZone, AppViewManager, Renderer} from 'angular2/angular2';
-import {wtfLeave, wtfCreateScope, WtfScopeFn, wtfStartTimeRange, wtfEndTimeRange} from 'angular2/angular2';
+import {ChangeDetectorRef, Compiler, ElementRef, Injector, provide, NgZone, AppViewManager, Renderer} from 'angular2/core';
+import {wtfLeave, wtfCreateScope, WtfScopeFn, wtfStartTimeRange, wtfEndTimeRange} from 'angular2/instrumentation';
 
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';

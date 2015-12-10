@@ -1,4 +1,4 @@
-import {Component, Directive, Optional, ElementRef, Renderer, TemplateRef, forwardRef, Inject, ViewContainerRef} from 'angular2/angular2';
+import {Component, Directive, Optional, ElementRef, Renderer, TemplateRef, forwardRef, Inject, ViewContainerRef} from 'angular2/core';
 
 import {Ion} from '../ion';
 import {Icon} from '../icon/icon';

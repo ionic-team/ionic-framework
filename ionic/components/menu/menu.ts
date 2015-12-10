@@ -1,4 +1,4 @@
-import {Component, forwardRef, Directive, Host, EventEmitter, ElementRef} from 'angular2/angular2';
+import {Component, forwardRef, Directive, Host, EventEmitter, ElementRef} from 'angular2/core';
 
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';

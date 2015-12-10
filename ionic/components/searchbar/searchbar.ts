@@ -1,4 +1,5 @@
-import {ElementRef, Pipe, NgControl, Renderer, FORM_DIRECTIVES, NgIf, NgClass, Directive, Host, forwardRef, ViewChild} from 'angular2/angular2';
+import {ElementRef, Renderer, Directive, Host, forwardRef, ViewChild} from 'angular2/core';
+import {NgIf, NgClass, NgControl, FORM_DIRECTIVES} from 'angular2/common';
 
 import {Ion} from '../ion';
 import {Config} from '../../config/config';

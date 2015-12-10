@@ -1,4 +1,4 @@
-import {Component, ElementRef, onInit} from 'angular2/angular2';
+import {Component, ElementRef, onInit} from 'angular2/core';
 
 import {Ion} from '../ion';
 import {Config} from '../../config/config';
@@ -6,7 +6,7 @@ import {Gesture} from '../../gestures/gesture';
 import {CSS} from '../../util/dom';
 import {Animation} from '../../animations/animation';
 
-import * as util from 'ionic/util';
+import * as util from '../../util';
 
 /**
  * @name Scroll

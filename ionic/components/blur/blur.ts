@@ -1,4 +1,4 @@
-import {Directive, Renderer, ElementRef} from 'angular2/angular2';
+import {Directive, Renderer, ElementRef} from 'angular2/core';
 
 
 /**

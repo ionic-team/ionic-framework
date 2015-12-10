@@ -1,4 +1,4 @@
-import {Injectable, NgZone} from 'angular2/angular2';
+import {Injectable, NgZone} from 'angular2/core';
 
 import {Config} from '../config/config';
 import {Form} from './form';

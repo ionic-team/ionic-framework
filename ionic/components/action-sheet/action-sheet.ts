@@ -5,7 +5,8 @@
 * @description
 * The ActionSheet is a modal menu with options to select based on an action.
 */
-import {Component, Injectable, Renderer, NgFor, NgIf} from 'angular2/angular2';
+import {Component, Injectable, Renderer} from 'angular2/core';
+import {NgFor, NgIf} from 'angular2/common';
 
 import {OverlayController} from '../overlay/overlay-controller';
 import {Config} from '../../config/config';

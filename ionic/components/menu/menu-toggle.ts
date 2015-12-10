@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Optional} from 'angular2/angular2';
+import {Directive, ElementRef, Optional} from 'angular2/core';
 
 import {IonicApp} from '../app/app';
 import {ViewController} from '../nav/view-controller';

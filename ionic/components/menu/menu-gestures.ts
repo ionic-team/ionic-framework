@@ -1,9 +1,9 @@
 import {Menu} from './menu';
 import {SlideEdgeGesture} from '../../gestures/slide-edge-gesture';
 
-import * as util from 'ionic/util';
+import * as util from '../../util';
 
-class MenuContentGesture extends SlideEdgeGesture {
+export class MenuContentGesture extends SlideEdgeGesture {
   constructor(menu: Menu, targetEl: Element, options = {}) {
 
     super(targetEl, util.extend({

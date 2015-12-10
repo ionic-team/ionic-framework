@@ -1,4 +1,4 @@
-import {Component, ElementRef, Optional, NgZone} from 'angular2/angular2';
+import {Component, ElementRef, Optional, NgZone} from 'angular2/core';
 
 import {Ion} from '../ion';
 import {Config} from '../../config/config';
