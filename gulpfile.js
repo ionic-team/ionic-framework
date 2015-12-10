@@ -12,57 +12,6 @@ var tsc = require('gulp-typescript');
 var cache = require('gulp-cached');
 var minimist = require('minimist');
 
-function buildDemoBundle(opts, done) {
-  var glob = require('glob');
-  var webpack = require('webpack');
-  var path = require('path');
-  var _ = require('lodash');
-
-  var fp = 'dist/demos/'+opts.demo+'/index.js';
-  if (opts.demo == 'api') {
-    fp = "dist/demos/**/index.js";
-  }
-
-  return glob(fp, function(err, files){
-    var numTasks = files.length;
-    files.forEach(function(file){
-      var config = require('./scripts/demos/webpack.config.js');
-
-      // add our bundle entry, removing previous if necessary
-      // since config is cached
-      if (config.entry.length > 4) {
-        config.entry.pop();
-      }
-      config.entry.push('./' + file);
-      config.output = {
-        filename: path.dirname(file) + '/bundle.js'
-      }
-
-      webpack(config, function(err, stats){
-      //   var statsOptions = {
-      //    'colors': true,
-      //     'modules': true,
-      //     'chunks': false,
-      //     'exclude': ['node_modules'],
-      //     'errorDetails': true
-      //  }
-      // console.log(stats.toString(statsOptions));
-        if (--numTasks === 0) done();
-      })
-    })
-
-  });
-}
-
-var tscOptions = require('./tsconfig.json').compilerOptions;
-var tscReporter = {
-  error: function (error) {
-    // TODO
-    // suppress type errors until we convert everything to TS
-    // console.error(error.message);
-  }
-};
-
 var flagConfig = {
   string: ['port', 'version', 'ngVersion', 'animations'],
   boolean: ['dry-run'],
@@ -70,6 +19,31 @@ var flagConfig = {
   default: { port: 8000 }
 };
 var flags = minimist(process.argv.slice(2), flagConfig);
+
+var tscOptions = {
+  emitDecoratorMetadata: true,
+  experimentalDecorators: true,
+  target: "es5",
+  module: "commonjs",
+  declaration: true,
+  outDir: "dist"
+}
+
+var tscOptionsNoTypeCheck = {
+  emitDecoratorMetadata: true,
+  experimentalDecorators: true,
+  target: "es5",
+  module: "commonjs",
+  isolatedModules: true
+}
+
+var tscReporter = {
+  error: function (error) {
+    // TODO
+    // suppress type errors until we convert everything to TS
+    // console.error(error.message);
+  }
+};
 
 gulp.task('build', function(done) {
   runSequence(
@@ -154,26 +128,40 @@ gulp.task('clean', function(done) {
   del(['dist/**', '!dist'], done);
 });
 
-gulp.task('transpile', function(){
-  var merge = require('merge2');
-
-  var tsResult = gulp.src([
+function tsResult(options){
+  return gulp.src([
       'ionic/**/*.ts',
       '!ionic/components/*/test/**/*',
       '!ionic/util/test/*'
     ])
     .pipe(cache('transpile', { optimizeMemory: true }))
-    .pipe(tsc(tscOptions, undefined, tscReporter));
+    .pipe(tsc(options, undefined, tscReporter))
+    .on('error', function(error) {
+      console.log(error.message);
+      this.emit('end');
+    });
+}
+gulp.task('transpile.no-typecheck', function(){
+  return tsResult(tscOptionsNoTypeCheck)
+    .pipe(gulp.dest('dist'));
+});
+
+gulp.task('transpile.typecheck', function(){
+  var merge = require('merge2');
+
+  var result = tsResult(tscOptions);
 
   // merge definition and source streams
   return merge([
-    tsResult.dts,
-    tsResult.js
+    result.dts,
+    result.js
   ])
   .pipe(gulp.dest('dist'));
-});
+})
 
-gulp.task('bundle', ['transpile', 'copy.web-animations'], function(done){
+gulp.task('transpile', ['transpile.no-typecheck']);
+
+gulp.task('bundle', ['transpile'], function(done){
   //TODO
   //   if (flags.animations == 'polyfill') {
   //     prepend.push('window.Element.prototype.animate=undefined;');
@@ -272,7 +260,11 @@ gulp.task('e2e.build', function() {
       '!ionic/components/*/test/*/**/*.spec.ts'
     ])
     .pipe(cache('e2e.ts'))
-    .pipe(tsc(tscOptions, undefined, tscReporter))
+    .pipe(tsc(tscOptionsNoTypeCheck, undefined, tscReporter))
+    .on('error', function(error) {
+      console.log(error.message);
+      this.emit('end');
+    })
     .pipe(gulpif(/index.js$/, createIndexHTML()))
     .pipe(gulpif(/e2e.js$/, createPlatformTests()))
 
@@ -514,3 +506,45 @@ gulp.task('watch:demos', function() {
     gulp.start('demos');
   });
 });
+
+function buildDemoBundle(opts, done) {
+  var glob = require('glob');
+  var webpack = require('webpack');
+  var path = require('path');
+  var _ = require('lodash');
+
+  var fp = 'dist/demos/'+opts.demo+'/index.js';
+  if (opts.demo == 'api') {
+    fp = "dist/demos/**/index.js";
+  }
+
+  return glob(fp, function(err, files){
+    var numTasks = files.length;
+    files.forEach(function(file){
+      var config = require('./scripts/demos/webpack.config.js');
+
+      // add our bundle entry, removing previous if necessary
+      // since config is cached
+      if (config.entry.length > 4) {
+        config.entry.pop();
+      }
+      config.entry.push('./' + file);
+      config.output = {
+        filename: path.dirname(file) + '/bundle.js'
+      }
+
+      webpack(config, function(err, stats){
+      //   var statsOptions = {
+      //    'colors': true,
+      //     'modules': true,
+      //     'chunks': false,
+      //     'exclude': ['node_modules'],
+      //     'errorDetails': true
+      //  }
+      // console.log(stats.toString(statsOptions));
+        if (--numTasks === 0) done();
+      })
+    })
+
+  });
+}
