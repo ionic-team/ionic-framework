@@ -1,4 +1,4 @@
-@import "themes/default";
+@import "./default";
 
 // Material Design Default Theme
 // ----------------------------------
@@ -75,5 +75,5 @@ $item-md-padding-icon-bottom:         10px !default;
 
 // Roboto Font
 @at-root {
-  @import "fonts/roboto";
+  @import "../fonts/roboto";
 }
