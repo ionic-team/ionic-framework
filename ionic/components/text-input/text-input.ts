@@ -1,4 +1,4 @@
-import {Component, Directive, Attribute, NgIf, forwardRef, Host, Optional, ElementRef, Renderer, Attribute} from 'angular2/angular2';
+import {Component, Directive, Attribute, NgIf, forwardRef, Host, Optional, ElementRef, Renderer, Attribute, NgControl} from 'angular2/angular2';
 
 import {NavController} from '../nav/nav-controller';
 import {Config} from '../../config/config';
@@ -469,7 +469,8 @@ export class TextInputElement {
     @Attribute('type') type: string,
     elementRef: ElementRef,
     renderer: Renderer,
-    @Optional() wrapper: TextInput
+    @Optional() wrapper: TextInput,
+    @Optional() ngControl: NgControl
   ) {
     this.type = type;
     this.elementRef = elementRef;
@@ -484,9 +485,12 @@ export class TextInputElement {
       renderer.setElementClass(elementRef, 'item-input', true);
       wrapper.registerInput(this);
     }
+
+    if (ngControl) this.ngControl = ngControl;
   }
 
   ngOnInit() {
+    if (this.ngControl) this.value = this.ngControl.value;
     this.wrapper && this.wrapper.hasValue(this.value);
   }
 
