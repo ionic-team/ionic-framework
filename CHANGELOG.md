@@ -1,5 +1,5 @@
 <a name"1.2.0"></a>
-## 1.2.0 "zirconium-zebra" (2015-12-09)
+## 1.2.0 "zirconium-zeren" (2015-12-09)
 
 
 #### Bug Fixes
