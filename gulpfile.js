@@ -47,10 +47,9 @@ var tscReporter = {
 
 gulp.task('build', function(done) {
   runSequence(
+    'copy.web-animations',
     'bundle',
-    'e2e',
-    'sass',
-    'fonts',
+    ['e2e', 'sass', 'fonts'],
     done
   );
 })
