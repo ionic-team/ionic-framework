@@ -364,26 +364,16 @@ gulp.task('sass', function() {
   var sass = require('gulp-sass');
   var autoprefixer = require('gulp-autoprefixer');
 
-  gulp.src('ionic/ionic.ios.scss')
-    .pipe(sass()
-      .on('error', sass.logError)
-    )
-    .pipe(autoprefixer(buildConfig.autoprefixer))
-    .pipe(gulp.dest('dist/css/'));
-
-  gulp.src('ionic/ionic.md.scss')
-    .pipe(sass()
-      .on('error', sass.logError)
-    )
-    .pipe(autoprefixer(buildConfig.autoprefixer))
-    .pipe(gulp.dest('dist/css/'));
-
-  return gulp.src('ionic/ionic.scss')
-    .pipe(sass()
-      .on('error', sass.logError)
-    )
-    .pipe(autoprefixer(buildConfig.autoprefixer))
-    .pipe(gulp.dest('dist/css/'));
+  gulp.src([
+    'ionic/ionic.ios.scss',
+    'ionic/ionic.md.scss',
+    'ionic/ionic.scss'
+  ])
+  .pipe(sass()
+    .on('error', sass.logError)
+  )
+  .pipe(autoprefixer(buildConfig.autoprefixer))
+  .pipe(gulp.dest('dist/bundles/'));
 });
 
 gulp.task('fonts', function() {
