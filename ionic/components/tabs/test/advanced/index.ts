@@ -73,9 +73,7 @@ class Tab1Page1 {
   }
 
   logout() {
-    let tabs = this.nav.parent;
-    let rootNav = tabs.parent;
-    rootNav.setRoot(SignIn, null, { animate: true, direction: 'back' });
+    this.nav.rootNav.setRoot(SignIn, null, { animate: true, direction: 'back' });
   }
 }
 
