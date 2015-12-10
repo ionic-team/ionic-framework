@@ -43,7 +43,7 @@ ion-navbar-section {
   border-bottom-width: 1px;
   border-bottom-style: solid;
   border-color: $toolbar-ios-border-color;
-  background-color: $toolbar-ios-background-color;
+  background: $toolbar-ios-background;
 }
 
 &.hairlines .toolbar-background {
@@ -82,7 +82,7 @@ ion-title {
   .toolbar[#{$color-name}] {
 
     .toolbar-background {
-      background-color: $color-value;
+      background: $color-value;
       border-color: darken($color-value, 10%);
     }
 

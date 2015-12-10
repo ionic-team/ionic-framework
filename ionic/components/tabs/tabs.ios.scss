@@ -4,7 +4,7 @@
 // iOS Tabs
 // --------------------------------------------------
 
-$tabbar-ios-background-color:         $toolbar-ios-background-color !default;
+$tabbar-ios-background:               $toolbar-ios-background !default;
 $tabbar-ios-item-padding:             0px 10px !default;
 $tabbar-ios-item-font-size:           10px !default;
 $tabbar-ios-item-icon-size:           32px !default;
@@ -18,7 +18,7 @@ $tab-button-ios-inactive-color:       $toolbar-ios-inactive-color !default;
 
 tabbar {
   border-top: 1px solid $toolbar-ios-border-color;
-  background: $tabbar-ios-background-color;
+  background: $tabbar-ios-background;
 }
 
 ion-tabs[tabbar-placement=top] tabbar {

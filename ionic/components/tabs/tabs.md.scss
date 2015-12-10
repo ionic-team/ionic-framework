@@ -4,7 +4,7 @@
 // Material Design Tabs
 // --------------------------------------------------
 
-$tabbar-md-background-color:         $toolbar-md-background-color !default;
+$tabbar-md-background:               $toolbar-md-background !default;
 $tabbar-md-item-padding:             12px 10px 5px 10px !default;
 $tabbar-md-item-font-size:           1.4rem !default;
 $tabbar-md-item-font-weight:         500 !default;
@@ -16,7 +16,7 @@ $tab-button-md-inactive-color:       $toolbar-md-inactive-color !default;
 
 
 tabbar {
-  background: $tabbar-md-background-color;
+  background: $tabbar-md-background;
 }
 
 

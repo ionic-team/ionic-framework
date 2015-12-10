@@ -41,7 +41,7 @@ ion-navbar-section {
 
 .toolbar-background {
   border-color: $toolbar-md-border-color;
-  background-color: $toolbar-md-background-color;
+  background: $toolbar-md-background;
 }
 
 
@@ -67,7 +67,7 @@ ion-title {
   .toolbar[#{$color-name}] {
 
     .toolbar-background {
-      background-color: $color-value;
+      background: $color-value;
     }
 
     .toolbar-title,
@@ -112,7 +112,7 @@ ion-buttons[right] {
   margin-top: 0;
   margin-bottom: 0;
   margin-left: 0.2rem;
-  margin-right: 0.2rem;  
+  margin-right: 0.2rem;
   padding: 0 5px;
   min-height: 32px;
   border: 0;
