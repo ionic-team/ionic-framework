@@ -1,4 +1,5 @@
-import {Component, Directive, ElementRef, Host, Optional, NgControl, Query, QueryList} from 'angular2/angular2';
+import {Component, Directive, ElementRef, Host, Optional, Query, QueryList} from 'angular2/core';
+import {NgControl} from 'angular2/common';
 
 import {Config} from '../../config/config';
 import {Ion} from '../ion';

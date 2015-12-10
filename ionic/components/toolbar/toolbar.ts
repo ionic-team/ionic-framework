@@ -1,4 +1,4 @@
-import {Component, Directive, Host, ElementRef, Optional, forwardRef, Inject, ContentChildren, ContentChild, QueryList} from 'angular2/angular2';
+import {Component, Directive, Host, ElementRef, Optional, forwardRef, Inject, ContentChildren, ContentChild, QueryList} from 'angular2/core';
 
 import {Ion} from '../ion';
 import {Config} from '../../config/config';

@@ -1,4 +1,5 @@
-import {Component, NgIf, NgClass, ElementRef, EventEmitter, Host} from 'angular2/angular2'
+import {Component, ElementRef, EventEmitter, Host} from 'angular2/core'
+import {NgIf, NgClass} from 'angular2/common';
 
 import {Content} from '../content/content';
 import * as util from '../../util';

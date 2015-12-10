@@ -1,5 +1,5 @@
-import {FORM_DIRECTIVES, NgControl, NgControlGroup,
-  Component, ElementRef, Injectable, NgClass, NgIf, NgFor, Renderer} from 'angular2/angular2';
+import {Component, ElementRef, Injectable, Renderer} from 'angular2/core';
+import {NgClass, NgIf, NgFor, FORM_DIRECTIVES} from 'angular2/common';
 
 import {OverlayController} from '../overlay/overlay-controller';
 import {Config} from '../../config/config';

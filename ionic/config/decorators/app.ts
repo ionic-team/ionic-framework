@@ -1,4 +1,5 @@
-import {Component, bootstrap} from 'angular2/angular2'
+import {Component} from 'angular2/core';
+import {bootstrap} from 'angular2/platform/browser';
 import {TapClick} from '../../components/tap-click/tap-click';
 import {ionicProviders} from '../bootstrap';
 import {IONIC_DIRECTIVES} from '../directives';

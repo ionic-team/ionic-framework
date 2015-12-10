@@ -1,4 +1,5 @@
-import {Directive, Component, ElementRef, Host, NgClass, EventEmitter} from 'angular2/angular2';
+import {Directive, Component, ElementRef, Host, EventEmitter} from 'angular2/core';
+import {NgClass} from 'angular2/common';
 
 import {Ion} from '../ion';
 import {Animation} from '../../animations/animation';

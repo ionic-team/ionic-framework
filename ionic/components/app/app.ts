@@ -1,4 +1,5 @@
-import {Injectable, NgZone, Title} from 'angular2/angular2';
+import {Injectable, NgZone} from 'angular2/core';
+import {Title} from 'angular2/platform/browser';
 
 import {Config} from '../../config/config';
 import {ClickBlock} from '../../util/click-block';

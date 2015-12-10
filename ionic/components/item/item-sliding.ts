@@ -1,4 +1,4 @@
-import {Component, ElementRef, Optional} from 'angular2/angular2';
+import {Component, ElementRef, Optional} from 'angular2/core';
 
 import {List} from '../list/list';
 

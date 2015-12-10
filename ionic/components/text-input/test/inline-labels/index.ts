@@ -7,7 +7,6 @@ import {App} from 'ionic/ionic';
 class E2EApp {
 
   submit(ev) {
-    debugger
   }
 
 }

@@ -9,7 +9,8 @@ import {
   NgControlName,
   NgFormModel,
   FormBuilder
-} from 'angular2/angular2';
+} from 'angular2/common';
+
 
 @App({
   templateUrl: 'main.html'

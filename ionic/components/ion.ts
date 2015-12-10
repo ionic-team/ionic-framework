@@ -1,4 +1,4 @@
-import {ElementRef} from 'angular2/angular2';
+import {ElementRef} from 'angular2/core';
 import {Config} from '../config/config';
 import {isArray} from '../util';
 import * as dom from '../util/dom';

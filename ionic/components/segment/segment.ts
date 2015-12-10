@@ -1,4 +1,5 @@
-import {Directive, Renderer, ElementRef, Host, Optional, NgControl} from 'angular2/angular2';
+import {Directive, Renderer, ElementRef, Host, Optional} from 'angular2/core';
+import {NgControl} from 'angular2/common';
 
 import {Ion} from '../ion';
 import {Config} from '../../config/config';

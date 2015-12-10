@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Directive, ElementRef, Host, Optional, forwardRef, Inject, NgZone, Compiler, AppViewManager, Renderer, ViewContainerRef} from 'angular2/angular2';
+import {ChangeDetectorRef, Component, Directive, ElementRef, Host, Optional, forwardRef, Inject, NgZone, Compiler, AppViewManager, Renderer, ViewContainerRef} from 'angular2/core';
 
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';

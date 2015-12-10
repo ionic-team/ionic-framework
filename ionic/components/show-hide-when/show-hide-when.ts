@@ -1,4 +1,4 @@
-import {Directive, Attribute, NgZone} from 'angular2/angular2'
+import {Directive, Attribute, NgZone} from 'angular2/core'
 
 import {Platform} from '../../platform/platform';
 

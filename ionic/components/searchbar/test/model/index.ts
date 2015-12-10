@@ -1,4 +1,4 @@
-import {NgControl, FORM_DIRECTIVES, FormBuilder, Validators, Control, ControlGroup} from 'angular2/angular2';
+import {NgControl, FORM_DIRECTIVES, FormBuilder, Validators, Control, ControlGroup} from 'angular2/common';
 
 import {App} from 'ionic/ionic';
 import {SearchPipe} from 'ionic/components/searchbar/searchbar';

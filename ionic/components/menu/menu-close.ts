@@ -1,4 +1,4 @@
-import {Directive} from 'angular2/angular2';
+import {Directive} from 'angular2/core';
 
 import {IonicApp} from '../app/app';
 import {Menu} from './menu';

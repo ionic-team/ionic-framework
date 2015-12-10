@@ -1,4 +1,4 @@
-import {Directive, Optional, ElementRef, Renderer} from 'angular2/angular2';
+import {Directive, Optional, ElementRef, Renderer} from 'angular2/core';
 
 import {Config} from '../../config/config';
 import {TextInput} from './text-input';

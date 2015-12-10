@@ -1,4 +1,5 @@
-import {Component, Directive, ElementRef, Host, Optional, NgControl, Inject, forwardRef} from 'angular2/angular2';
+import {Component, Directive, ElementRef, Host, Optional, Inject, forwardRef} from 'angular2/core';
+import {NgControl} from 'angular2/common';
 
 import {Form} from '../../util/form';
 import {Config} from '../../config/config';

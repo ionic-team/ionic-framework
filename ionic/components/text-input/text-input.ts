@@ -1,4 +1,5 @@
-import {Component, Directive, Attribute, NgIf, forwardRef, Host, Optional, ElementRef, Renderer, Attribute, NgControl} from 'angular2/angular2';
+import {Component, Directive, Attribute, forwardRef, Host, Optional, ElementRef, Renderer} from 'angular2/core';
+import {NgIf, NgControl} from 'angular2/common';
 
 import {NavController} from '../nav/nav-controller';
 import {Config} from '../../config/config';

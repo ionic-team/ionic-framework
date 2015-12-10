@@ -1,4 +1,4 @@
-import {AppViewManager, ElementRef, Directive, Renderer} from 'angular2/angular2';
+import {AppViewManager, ElementRef, Directive, Renderer} from 'angular2/core';
 
 import {IonicApp} from './app';
 
