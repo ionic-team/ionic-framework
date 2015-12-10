@@ -72,6 +72,9 @@ export class Segment extends Ion {
    */
   writeValue(value) {
     this.value = !value ? '' : value;
+    for (let button of this.buttons) {
+      button.isActive = (button.value === value);
+    }
   }
 
   /**
@@ -109,11 +112,9 @@ export class Segment extends Ion {
     if (this.buttons.length == 0) {
       return;
     }
-    this.buttons.forEach(function(button) {
-      if (button.value === value) {
-        button.isActive = true;
-      }
-    });
+    for (let button of this.buttons) {
+      button.isActive = (button.value === value);
+    }
   }
 
   /**

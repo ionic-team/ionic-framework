@@ -10,7 +10,7 @@ import {App, Page} from 'ionic/ionic';
 })
 class SegmentPage {
   constructor(fb: FormBuilder) {
-    this.relationship = 'enemies';
+    this.signInType = 'new';
   }
 }
 

@@ -5,18 +5,43 @@
 </ion-navbar>
 
 <ion-toolbar>
-  <ion-segment [(ng-model)]="relationship">
-    <ion-segment-button value="friends" class="e2eSegmentFriends">
-      Friends
+  <ion-segment [(ng-model)]="signInType">
+    <ion-segment-button value="new">
+      New
     </ion-segment-button>
-    <ion-segment-button value="enemies">
-      Enemies
+    <ion-segment-button value="existing" class="e2eSegmentExistingSegment">
+      Existing
+    </ion-segment-button>
+    <ion-segment-button value="test">
+      Test
     </ion-segment-button>
   </ion-segment>
 </ion-toolbar>
 
 <ion-content padding>
-  <p>Are we friends or enemies? <b>{{ relationship }}</b></p>
 
+  <ion-row>
+    <ion-col>
+      <button type="button" block (click)="signInType='new'">New</button>
+    </ion-col>
+    <ion-col>
+      <button type="button" light block (click)="signInType='existing'">Existing</button>
+    </ion-col>
+    <ion-col>
+      <button type="button" dark block (click)="signInType='test'" class="e2eSegmentTestButton">Test</button>
+    </ion-col>
+  </ion-row>
+
+  <div [ng-switch]="signInType">
+    <div *ng-switch-when="'existing'">
+      Signing up as an <b>Existing User</b>.
+    </div>
+    <div *ng-switch-when="'new'">
+      Signing up as a <b>New User</b>.
+    </div>
+    <div *ng-switch-when="'test'">
+      Signing up as a <b>Test User</b>.
+    </div>
+ </div>
 
 </ion-content>
