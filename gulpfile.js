@@ -11,6 +11,7 @@ var babel = require('gulp-babel');
 var tsc = require('gulp-typescript');
 var cache = require('gulp-cached');
 var minimist = require('minimist');
+var connect = require('gulp-connect');
 
 var flagConfig = {
   string: ['port', 'version', 'ngVersion', 'animations'],
@@ -105,10 +106,9 @@ gulp.task('watch', function(done) {
 });
 
 gulp.task('serve', function() {
-  var connect = require('gulp-connect');
   connect.server({
     port: flags.port,
-    livereload: false
+    livereload: true
   });
 });
 
@@ -136,6 +136,7 @@ gulp.task('transpile.no-typecheck', function(){
 
 gulp.task('transpile.typecheck', function(){
   var merge = require('merge2');
+<<<<<<< HEAD
 
   var result = tsResult(tscOptions);
 
@@ -163,6 +164,42 @@ gulp.task('bundle', ['transpile'], function(done){
   });
 })
 
+=======
+
+  var result = tsResult(tscOptions);
+
+  // merge definition and source streams
+  return merge([
+    result.dts,
+    result.js
+  ])
+  .pipe(gulp.dest('dist'));
+})
+
+gulp.task('transpile', ['transpile.no-typecheck']);
+
+gulp.task('bundle', ['transpile'], function(done){
+  //TODO
+  //   if (flags.animations == 'polyfill') {
+  //     prepend.push('window.Element.prototype.animate=undefined;');
+  //   }
+
+  var config = require('./scripts/npm/ionic.webpack.config.js');
+  bundle({
+    config: config,
+    cb: finished,
+    stats: true
+  });
+
+  function finished(){
+    var outputPath = config.output.path + path.sep + config.output.filename;
+    gulp.src(outputPath)
+      .pipe(connect.reload())
+      .on('end', done)
+  }
+})
+
+>>>>>>> master
 function bundle(args) {
   var webpack = require('webpack');
   var path = require('path');
