@@ -136,35 +136,6 @@ gulp.task('transpile.no-typecheck', function(){
 
 gulp.task('transpile.typecheck', function(){
   var merge = require('merge2');
-<<<<<<< HEAD
-
-  var result = tsResult(tscOptions);
-
-  // merge definition and source streams
-  return merge([
-    result.dts,
-    result.js
-  ])
-  .pipe(gulp.dest('dist'));
-})
-
-gulp.task('transpile', ['transpile.no-typecheck']);
-
-gulp.task('bundle', ['transpile'], function(done){
-  //TODO
-  //   if (flags.animations == 'polyfill') {
-  //     prepend.push('window.Element.prototype.animate=undefined;');
-  //   }
-
-  var config = require('./scripts/npm/ionic.webpack.config.js');
-  bundle({
-    config: config,
-    cb: done,
-    stats: true
-  });
-})
-
-=======
 
   var result = tsResult(tscOptions);
 
@@ -199,7 +170,6 @@ gulp.task('bundle', ['transpile'], function(done){
   }
 })
 
->>>>>>> master
 function bundle(args) {
   var webpack = require('webpack');
   var path = require('path');
