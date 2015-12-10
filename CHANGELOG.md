@@ -43,3 +43,12 @@
 ##### Features
 
 * Upgraded to Angular alpha.50
+  * Life cycle hooks are now prefixed with `ng`
+    * ngOnChanges
+    * ngOnInit
+    * ngDoCheck
+    * ngAfterContentInit
+    * ngAfterContentChecked
+    * ngAfterViewInit
+    * ngAfterViewChecked
+    * ngOnDestroy
