@@ -67,7 +67,7 @@ class MediaSwitch {
  *
  *  </ion-list>
  * ```
- *
+ * @demo /docs/v2/demos/switch/
  * @see {@link /docs/v2/components#switch Switch Component Docs}
  */
 @Component({
