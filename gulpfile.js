@@ -70,18 +70,7 @@ gulp.task('watch', function(done) {
         ],
         function(file) {
           if (file.event === "unlink") {
-            var basePath = file.base.substring(0, file.base.lastIndexOf("ionic/"));
-            var relPath = file.history[0].replace(basePath, "").replace(".ts", ".js");
-
-            var es6Path = basePath + "dist/src/es6/" + relPath;
-            var commonPath = basePath + "dist/src/es5/common/" + relPath;
-            var systemPath = basePath + "dist/src/es5/system/" + relPath;
-
-            delete cache.caches.transpile[file.history[0]];
-
-            del([es6Path, commonPath, systemPath], function(){
-              gulp.start('bundle');
-            });
+            deleteFile(file);
           } else {
             gulp.start('bundle');
           }
@@ -89,21 +78,7 @@ gulp.task('watch', function(done) {
       );
 
       watch('ionic/components/*/test/**/*', function(file) {
-        if (file.event === "unlink") {
-          var paths = file.history[0].split("ionic/components/");
-          var basePath = paths[0],
-              relPath = paths[1].split("/test").join("").replace(".ts", ".js");
-
-          var distPath = basePath + "dist/e2e/" + relPath;
-
-          delete cache.caches.e2e[file.history[0]];
-
-          del([distPath], function(){
-            gulp.start('e2e');
-          });
-        } else {
-          gulp.start('e2e');
-        }
+        gulp.start('e2e');
       });
 
       watch('ionic/**/*.scss', function() {
@@ -113,6 +88,20 @@ gulp.task('watch', function(done) {
       done();
     }
   );
+
+  function deleteFile(file) {
+    var basePath = file.base.substring(0, file.base.lastIndexOf("ionic/"));
+    var relativePath = file.history[0].replace(file.base, '').replace('.ts', '.js');
+
+    var filePath = basePath + 'dist/' + relativePath;
+    var typingPath = filePath.replace('.js', '.d.ts');
+
+    delete cache.caches.transpile[file.history[0]];
+
+    del([filePath, typingPath], function(){
+      gulp.start('bundle');
+    });
+  }
 });
 
 gulp.task('serve', function() {
