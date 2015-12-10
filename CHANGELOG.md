@@ -24,7 +24,6 @@
 * searchbar: class `focused` has become `searchbar-focused`
 
 
-
 #####  `<ion-nav-items>` renamed to `<ion-buttons>`
 
 * `primary` attribute `<ion-nav-items primary>` now `<ion-buttons start>`
@@ -34,6 +33,12 @@
 
 * If a menu is not given an `id`, then it is automatically assigned an id, such as `leftMenu` or `rightMenu`.
 * If the menu toggle/close directives are not given a value then it tries the menu ids of `leftMenu` then `rightMenu`.
+
+#####  `<ion-switch>` renamed to `<ion-toggle>`
+
+* Consistent naming with Ionic v1
+* Reduce potential confusion with `ng-switch`
+
 
 ##### Bug Fixes
 

@@ -1,5 +1,5 @@
 
-<ion-toolbar><ion-title>Switches</ion-title></ion-toolbar>
+<ion-toolbar><ion-title>Toggles</ion-title></ion-toolbar>
 
 
 <ion-content>
@@ -8,29 +8,29 @@
 
     <ion-list>
 
-      <ion-switch value="apple" checked="true" ng-control="appleCtrl">
+      <ion-toggle value="apple" checked="true" ng-control="appleCtrl">
         Apple, value=apple, init checked
-      </ion-switch>
+      </ion-toggle>
 
-      <ion-switch ng-control="bananaCtrl">
+      <ion-toggle ng-control="bananaCtrl">
         Banana, init no checked/value attributes
-      </ion-switch>
+      </ion-toggle>
 
-      <ion-switch value="cherry" disabled="true" ng-control="cherryCtrl">
+      <ion-toggle value="cherry" disabled="true" ng-control="cherryCtrl">
         Cherry, value=cherry, init disabled
-      </ion-switch>
+      </ion-toggle>
 
-      <ion-switch value="grape" [checked]="grapeChecked" [disabled]="grapeDisabled" ng-control="grapeCtrl">
+      <ion-toggle value="grape" [checked]="grapeChecked" [disabled]="grapeDisabled" ng-control="grapeCtrl">
         Grape, value=grape, init checked, disabled
-      </ion-switch>
+      </ion-toggle>
 
-      <ion-switch secondary checked="true">
+      <ion-toggle secondary checked="true">
         Secondary color
-      </ion-switch>
+      </ion-toggle>
 
-      <ion-switch value="apple" checked="true" [(ng-model)]="myModel">
+      <ion-toggle value="apple" checked="true" [(ng-model)]="myModel">
         I'm an NgModel
-      </ion-switch>
+      </ion-toggle>
 
     </ion-list>
 

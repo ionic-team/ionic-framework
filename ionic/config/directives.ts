@@ -18,7 +18,7 @@ import {ItemSliding} from '../components/item/item-sliding';
 import {Toolbar, ToolbarTitle, ToolbarItem} from '../components/toolbar/toolbar';
 import {Icon} from '../components/icon/icon';
 import {Checkbox} from '../components/checkbox/checkbox';
-import {Switch} from '../components/switch/switch';
+import {Toggle} from '../components/toggle/toggle';
 import {TextInput, TextInputElement} from '../components/text-input/text-input';
 import {Label} from '../components/text-input/label';
 import {Segment, SegmentButton} from '../components/segment/segment';
@@ -82,7 +82,7 @@ export const IONIC_DIRECTIVES = [
   Checkbox,
   RadioGroup,
   RadioButton,
-  Switch,
+  Toggle,
   TextInput,
   TextInputElement,
   Label,

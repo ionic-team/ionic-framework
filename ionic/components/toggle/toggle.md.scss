@@ -1,0 +1,140 @@
+@import "../../globals.md";
+
+// Material Design Toggle
+// --------------------------------------------------
+
+$toggle-md-active-color:                 map-get($colors-md, primary) !default;
+
+$toggle-md-track-width:                  36px !default;
+$toggle-md-track-height:                 14px !default;
+$toggle-md-track-background-color-off:   $list-md-border-color !default;
+$toggle-md-track-background-color-on:    lighten($toggle-md-active-color, 25%) !default;
+
+$toggle-md-handle-width:                 20px !default;
+$toggle-md-handle-height:                20px !default;
+$toggle-md-handle-background-color-off:  $background-md-color !default;
+$toggle-md-handle-background-color-on:   $toggle-md-active-color !default;
+$toggle-md-handle-box-shadow:            0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12) !default;
+$toggle-md-handle-border-radius:         50% !default;
+
+$toggle-md-media-margin:                 0 !default;
+$toggle-md-media-padding:                12px ($item-md-padding-right / 2) 12px $item-md-padding-left !default;
+
+$toggle-md-transition-duration:          300ms !default;
+
+$toggle-md-disabled-opacity:             0.5 !default;
+$toggle-md-disabled-text-color:          $subdued-text-md-color !default;
+
+
+// Toggle
+// -----------------------------------------
+
+ion-toggle {
+  display: block;
+  @include user-select-none();
+}
+
+
+// Toggle Wrapper
+// -----------------------------------------
+
+.toggle-media {
+  margin: $toggle-md-media-margin;
+  padding: $toggle-md-media-padding;
+  cursor: pointer;
+}
+
+
+// Toggle Background Track
+// -----------------------------------------
+
+.toggle-icon {
+  // bg track, when not checked
+  position: relative;
+  display: block;
+  width: $toggle-md-track-width;
+  height: $toggle-md-track-height;
+  pointer-events: none;
+  border-radius: $toggle-md-track-height;
+
+  background-color: $toggle-md-track-background-color-off;
+  transition: background-color $toggle-md-transition-duration
+}
+
+
+// Toggle Knob
+// -----------------------------------------
+
+.toggle-icon:after {
+  // knob, when not checked
+  content: '';
+  position: absolute;
+  top: ($toggle-md-handle-height - $toggle-md-track-height) / -2;
+  left: 0;
+
+  width: $toggle-md-handle-width;
+  height: $toggle-md-handle-height;
+
+  border-radius: $toggle-md-handle-border-radius;
+  box-shadow: $toggle-md-handle-box-shadow;
+
+  background-color: $toggle-md-handle-background-color-off;
+
+  transition-property: transform, background-color;
+  transition-duration: $toggle-md-transition-duration;
+}
+
+
+// Toggle Checked
+// -----------------------------------------
+
+ion-toggle[aria-checked=true] .toggle-icon {
+  // bg track, when not checked
+  background-color: $toggle-md-track-background-color-on;
+
+  &:after {
+    // knob, when not checked
+    background-color: $toggle-md-handle-background-color-on;
+    transform: translate3d($toggle-md-track-width - $toggle-md-handle-width, 0, 0);
+  }
+}
+
+
+// Toggle Disabled
+// -----------------------------------------
+
+ion-toggle[aria-disabled=true] {
+  opacity: $toggle-md-disabled-opacity;
+  color: $toggle-md-disabled-text-color;
+  pointer-events: none;
+}
+
+
+// Material Design Color Mixin
+// --------------------------------------------------
+
+@mixin toggle-theme-md($color-name, $bg-on) {
+
+  ion-toggle[#{$color-name}] {
+
+    &[aria-checked=true] .toggle-icon {
+      background-color: lighten($bg-on, 25%);
+    }
+
+    &[aria-checked=true] .toggle-icon:after {
+      background-color: $bg-on;
+    }
+
+  }
+
+}
+
+
+// Generate Material Design Toggle Auxiliary Colors
+// --------------------------------------------------
+
+@each $color-name, $value in $colors-md {
+
+  @include toggle-theme-md($color-name, $value);
+
+}
