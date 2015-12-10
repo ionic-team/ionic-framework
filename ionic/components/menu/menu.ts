@@ -35,6 +35,14 @@ import * as gestures from  './menu-gestures';
  * <ion-menu [content]="contentRef" side="right"></ion-menu>
  * ```
  *
+ * Menus can optionally be given an `id` attribute which allows the app to
+ * to get ahold of menu references. If no `id` is given then the menu
+ * automatically receives an `id` created from the side it is on, such as
+ * `leftMenu` or `rightMenu`. When using more than one menu it is always
+ * recommended to give each menu a unique `id`. Additionally menu-toggle and
+ * menu-close directives should be given menu id values of their respective
+ * menu.
+ *
  * Menu supports two display styles: overlay, and reveal. Overlay
  * is the traditional Android drawer style, and Reveal is the traditional iOS
  * style. By default, Menu will adjust to the correct style for the platform,
@@ -109,7 +117,11 @@ export class Menu extends Ion {
 
     if (!self.id) {
       // Auto register
-      self.id = 'menu';
+      self.id = self.side + 'Menu';
+      if (self.app.getComponent(self.id)) {
+        // id already exists, make sure this one is unique
+        self.id += (++menuIds);
+      }
       self.app.register(self.id, self);
     }
 
@@ -360,9 +372,34 @@ export class Menu extends Ion {
     this._cntEle = null;
   }
 
+  static getById(app, menuId) {
+    let menu = null;
+
+    if (menuId) {
+      menu = app.getComponent(menuId);
+      if (!menu) {
+        console.error('Menu with id "' + menuId + '" cannot be found for menu-toggle');
+        return;
+      }
+
+    } else {
+      menu = app.getComponent('leftMenu');
+      if (!menu) {
+        menu = app.getComponent('rightMenu');
+      }
+      if (!menu) {
+        console.error('Menu with id "leftMenu" or "rightMenu" cannot be found for menu-toggle');
+        return;
+      }
+    }
+
+    return menu;
+  }
+
 }
 
 let menuTypes = {};
+let menuIds = 0;
 
 
 @Directive({

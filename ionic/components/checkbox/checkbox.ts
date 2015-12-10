@@ -70,6 +70,7 @@ export class Checkbox {
   }
 
   /**
+   * @private
    * Toggle the checked state of the checkbox. Calls onChange to pass the updated checked state to the model (Control).
    */
   toggle() {

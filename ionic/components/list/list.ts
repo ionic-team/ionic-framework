@@ -77,22 +77,19 @@ export class List extends Ion {
   }
 
   enableSlidingItems(shouldEnable) {
-    if (this._init) {
+    if (this._enableSliding !== shouldEnable) {
+      this._enableSliding = shouldEnable;
 
-      if (this._enableSliding !== shouldEnable) {
-        this._enableSliding = shouldEnable;
-
-        if (shouldEnable) {
-          console.debug('enableSlidingItems');
-          this.zone.runOutsideAngular(() => {
-            setTimeout(() => {
-              this.slidingGesture = new ItemSlidingGesture(this, this.ele);
-            });
+      if (shouldEnable) {
+        console.debug('enableSlidingItems');
+        this.zone.runOutsideAngular(() => {
+          setTimeout(() => {
+            this.slidingGesture = new ItemSlidingGesture(this, this.ele);
           });
+        });
 
-        } else {
-          this.slidingGesture && this.slidingGesture.unlisten();
-        }
+      } else {
+        this.slidingGesture && this.slidingGesture.unlisten();
       }
     }
   }
@@ -101,15 +98,6 @@ export class List extends Ion {
     this.slidingGesture && this.slidingGesture.closeOpened();
   }
 
-  /**
-   * @private
-   */
-  ngAfterViewInit() {
-    this._init = true;
-    if (this._enableSliding) {
-      this.enableSlidingItems(true);
-    }
-  }
 }
 
 

@@ -1,0 +1,20 @@
+@import "../../globals.ios";
+
+// iOS Content
+// --------------------------------------------------
+
+$outer-content-ios-background-color:         #efeff4 !default;
+
+
+ion-content {
+  background-color: $background-ios-color;
+}
+
+.outer-content {
+  background: $outer-content-ios-background-color;
+}
+
+ion-nav.has-views,
+ion-tab.has-views {
+  background: #000;
+}

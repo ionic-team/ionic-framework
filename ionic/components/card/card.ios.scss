@@ -1,0 +1,125 @@
+@import "../../globals.ios";
+@import "./card";
+
+// iOS Card
+// --------------------------------------------------
+
+$card-ios-margin-top:                  12px !default;
+$card-ios-margin-right:                12px !default;
+$card-ios-margin-bottom:               12px !default;
+$card-ios-margin-left:                 12px !default;
+
+$card-ios-padding-top:                 13px !default;
+$card-ios-padding-right:               16px !default;
+$card-ios-padding-bottom:              14px !default;
+$card-ios-padding-left:                16px !default;
+
+$card-ios-padding-media-top:           10px !default;
+$card-ios-padding-media-bottom:        9px !default;
+
+$card-ios-background-color:            $list-ios-background-color !default;
+$card-ios-box-shadow:                  0 1px 2px rgba(0,0,0,.3) !default;
+$card-ios-border-radius:               2px !default;
+$card-ios-font-size:                   1.4rem !default;
+
+$card-ios-text-color:                  #666 !default;
+$card-ios-title-font-size:             1.8rem !default;
+$card-ios-title-padding:               8px 0 8px 0 !default;
+$card-ios-title-text-color:            #222 !default;
+
+$card-ios-header-font-size:            1.6rem !default;
+$card-ios-header-font-weight:          500 !default;
+$card-ios-header-padding:              16px !default;
+$card-ios-header-color:                #333 !default;
+
+
+ion-card {
+  margin: $card-ios-margin-top $card-ios-margin-right $card-ios-margin-bottom $card-ios-margin-left;
+  font-size: $card-ios-font-size;
+
+  background: $card-ios-background-color;
+  box-shadow: $card-ios-box-shadow;
+  border-radius: $card-ios-border-radius;
+
+  ion-list {
+    margin-bottom: 0;
+
+    .item {
+      padding-right: 0;
+    }
+
+    ion-item-content {
+      padding: 0;
+    }
+
+    > .item:last-child,
+    > ion-item-sliding:last-child .item {
+      border-bottom: none;
+    }
+  }
+
+  .item-inner {
+    border: none;
+  }
+
+  ion-card-content {
+    padding: $card-ios-padding-top $card-ios-padding-right $card-ios-padding-bottom $card-ios-padding-left;
+    font-size: $card-ios-font-size;
+    line-height: 1.4;
+  }
+
+  ion-card-header {
+    padding: $card-ios-header-padding;
+    font-size: $card-ios-header-font-size;
+    font-weight: $card-ios-header-font-weight;
+    color: $card-ios-header-color;
+  }
+
+  ion-card-header + ion-card-content,
+  .item + ion-card-content {
+    padding-top: 0;
+  }
+
+  ion-note[item-left],
+  ion-note[item-right], {
+    font-size: 1.3rem;
+  }
+
+  .card-title {
+    padding: $card-ios-title-padding;
+    font-size: $card-ios-title-font-size;
+    color: $card-ios-title-text-color;
+  }
+
+  h1 {
+    margin: 0 0 2px;
+    font-size: 2.4rem;
+    font-weight: normal;
+  }
+
+  h2 {
+    margin: 2px 0 2px;
+    font-size: 1.6rem;
+    font-weight: normal;
+  }
+
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 2px 0 2px;
+    font-size: 1.4rem;
+    font-weight: normal;
+  }
+
+  p {
+    font-size: 1.4rem;
+    margin: 0 0 2px;
+    color: $card-ios-text-color;
+  }
+
+}
+
+ion-card + ion-card {
+  margin-top: 0;
+}

@@ -1,0 +1,11 @@
+@import "./badge";
+
+// iOS Badge
+// --------------------------------------------------
+
+$badge-ios-border-radius:             10px !default;
+
+
+ion-badge {
+  border-radius: $badge-ios-border-radius;
+}

@@ -1,0 +1,11 @@
+@import "../../globals.md";
+
+// Material Design Modals
+// --------------------------------------------------
+
+$modal-md-background-color:          $background-md-color !default;
+
+
+ion-page.modal {
+  background-color: $modal-md-background-color;
+}

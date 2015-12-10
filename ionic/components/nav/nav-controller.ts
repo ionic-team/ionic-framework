@@ -441,7 +441,7 @@ export class NavController extends Ion {
     viewCtrl.shouldDestroy = false;
     viewCtrl.shouldCache = false;
 
-    this._incrementId(viewCtrl);
+    this._incId(viewCtrl);
     this._views.splice(index, 0, viewCtrl);
 
     this._cleanup();
@@ -1271,14 +1271,14 @@ export class NavController extends Ion {
    * @private
    */
   _add(viewCtrl) {
-    this._incrementId(viewCtrl);
+    this._incId(viewCtrl);
     this._views.push(viewCtrl);
   }
 
   /**
    * @private
    */
-  _incrementId(viewCtrl) {
+  _incId(viewCtrl) {
     viewCtrl.id = this.id + '-' + (++this._ids);
   }
 
@@ -1435,12 +1435,23 @@ export class NavController extends Ion {
 
   /**
    * @private
-   * IS RETURNING UNDEFIND
    * @param {TODO} view  TODO
-   * @returns {TODO} TODO
+   * @returns {boolean}
    */
   isActive(viewCtrl) {
-    return (viewCtrl && viewCtrl.state === ACTIVE_STATE);
+    return !!(viewCtrl && viewCtrl.state === ACTIVE_STATE);
+  }
+
+  /**
+   * Returns the root NavController.
+   * @returns {NavController}
+   */
+  get rootNav() {
+    let nav = this;
+    while (nav.parent) {
+      nav = nav.parent;
+    }
+    return nav;
   }
 
   /**

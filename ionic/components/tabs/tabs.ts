@@ -246,6 +246,19 @@ export class Tabs extends Ion {
     return Promise.resolve();
   }
 
+  /**
+   * Returns the root NavController. Returns `null` if Tabs is not
+   * within a NavController.
+   * @returns {NavController}
+   */
+  get rootNav() {
+    let nav = this.parent;
+    while (nav.parent) {
+      nav = nav.parent;
+    }
+    return nav;
+  }
+
 }
 
 let tabIds = -1;

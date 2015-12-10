@@ -1,0 +1,113 @@
+@import "../../globals.ios";
+@import "./segment";
+
+// iOS Segment
+// --------------------------------------------------
+
+$segment-button-ios-bg-color:                 transparent !default;
+$segment-button-ios-bg-color-activated:       $toolbar-ios-active-color !default;
+
+$segment-button-ios-text-color:               inverse($segment-button-ios-bg-color-activated) !default;
+$segment-button-ios-activated-transition:     100ms all linear !default;
+$segment-button-ios-hover-opacity:            0.16 !default;
+
+$segment-button-ios-border-width:             1px !default;
+$segment-button-ios-min-height:               3.0rem !default;
+$segment-button-ios-line-height:              3.0rem !default;
+$segment-button-ios-font-size:                1.3rem !default;
+$segment-button-ios-border-radius:            4px !default;
+
+$segment-button-ios-toolbar-button-max-width: 100px !default;
+
+
+.segment-button {
+  min-height: $segment-button-ios-min-height;
+  line-height: $segment-button-ios-line-height;
+  font-size: $segment-button-ios-font-size;
+
+  border-width: $segment-button-ios-border-width;
+  border-style: solid;
+  border-color: $segment-button-ios-bg-color-activated;
+
+  color: $segment-button-ios-bg-color-activated;
+  background-color: $segment-button-ios-bg-color;
+
+  &.segment-activated {
+    opacity: 1;
+    color: $segment-button-ios-text-color;
+    background-color: $segment-button-ios-bg-color-activated;
+    transition: $segment-button-ios-activated-transition;
+  }
+
+  &:hover:not(.segment-activated) {
+    background-color: rgba($segment-button-ios-bg-color-activated, $segment-button-ios-hover-opacity);
+  }
+
+  &:first-of-type {
+    border-radius: $segment-button-ios-border-radius 0 0 $segment-button-ios-border-radius;
+    margin-right: 0;
+  }
+
+  &:not(:first-of-type) {
+    border-left-width: 0;
+  }
+
+  &:last-of-type {
+    border-left-width: 0;
+    border-radius: 0 $segment-button-ios-border-radius $segment-button-ios-border-radius 0;
+    margin-left: 0;
+  }
+}
+
+.toolbar {
+
+  ion-segment {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+
+  .segment-button {
+    max-width: $segment-button-ios-toolbar-button-max-width;
+    min-height: 2.4rem;
+    line-height: 2.4rem;
+    font-size: 1.2rem;
+  }
+}
+
+
+// iOS Segment Button Mixin
+// --------------------------------------------------
+
+@mixin ios-segment-button($color-name, $color-value) {
+
+  ion-segment[#{$color-name}] .segment-button {
+    border-color: $color-value;
+    color: $color-value;
+
+    &:hover:not(.segment-activated) {
+      background-color: rgba($color-value, $segment-button-ios-hover-opacity);
+    }
+
+    &.activated,
+    &.segment-activated {
+      color: inverse($color-value);
+      background-color: $color-value;
+    }
+  }
+
+}
+
+
+// iOS Segment Color Generation
+// --------------------------------------------------
+
+@each $color-name, $color-value in $colors-ios {
+  @include ios-segment-button($color-name, $color-value);
+
+  .toolbar[#{$color-name}] .segment-button.segment-activated {
+    color: $color-value;
+  }
+}
