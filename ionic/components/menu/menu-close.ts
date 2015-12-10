@@ -1,7 +1,7 @@
-import {Directive, ElementRef} from 'angular2/angular2';
+import {Directive} from 'angular2/angular2';
 
-import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
+import {Menu} from './menu';
 
 
 /**
@@ -18,18 +18,15 @@ import {IonicApp} from '../app/app';
     '(click)': 'close()'
   }
 })
-export class MenuClose extends Ion {
+export class MenuClose {
 
-  constructor(
-    app: IonicApp,
-    elementRef: ElementRef
-  ) {
-    super(elementRef, null);
-    this.app = app;
-  }
+  constructor(private app: IonicApp) {}
 
+  /**
+  * @private
+  */
   close() {
-    let menu = this.app.getComponent(this.menuClose || 'menu');
+    let menu = Menu.getById(this.app, this.menuClose);
     menu && menu.close();
   }
 

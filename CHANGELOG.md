@@ -32,7 +32,8 @@
 
 ##### `<a menu-toggle>` should now be `<button menu-toggle>`
 
-
+* If a menu is not given an `id`, then it is automatically assigned an id, such as `leftMenu` or `rightMenu`.
+* If the menu toggle/close directives are not given a value then it tries the menu ids of `leftMenu` then `rightMenu`.
 
 ##### Bug Fixes
 
