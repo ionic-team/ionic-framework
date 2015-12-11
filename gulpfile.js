@@ -413,8 +413,7 @@ gulp.task('src.link', function(done) {
 gulp.task('src', function(done){
   runSequence(
     'clean',
-    ['bundle', 'sass', 'fonts', 'copy.ts', 'copy.scss', 'copy.web-animations'],
-    'transpile.common',
+    ['bundle', 'sass', 'copy.scss', 'copy.web-animations'],
     done
   );
 })
