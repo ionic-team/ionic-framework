@@ -7,34 +7,56 @@ import {raf, ready, CSS} from '../../util/dom';
 
 
 /**
+ * @name Refresher
+ * @description
  * Allows you to add pull-to-refresh to an Content component.
- *
  * Place it as the first child of your Content or Scroll element.
  *
  * When refreshing is complete, call `refresher.complete()` from your controller.
  *
  *  @usage
+ *  ```html
+ *  <ion-content>
+ *    <ion-refresher (starting)="doStarting()"
+ *                   (refresh)="doRefresh($event, refresher)"
+ *                   (pulling)="doPulling($event, amt)">
+ *    </ion-refresher>
+ *
+ *  </ion-content>
+
+ *  ```
+ *
  *  ```ts
- *  <ion-refresher (starting)="doStarting()" (refresh)="doRefresh($event, refresher)" (pulling)="doPulling($event, amt)">
+ *  export class MyClass {
+ *  constructor(){}
+ *    doRefresh(refresher) {
+ *      console.log('Refreshing!', refresher);
  *
+ *      setTimeout(() => {
+ *        console.log('Pull to refresh complete!', refresher);
+ *        refresher.complete();
+ *      })
+ *    }
  *
- *  doRefresh(refresher) {
- *    console.log('Refreshing!', refresher);
+ *    doStarting() {
+ *      console.log('Pull started!');
+ *    }
  *
- *    setTimeout(() => {
- *      console.log('Pull to refresh complete!', refresher);
- *      refresher.complete();
- *    })
- *  }
- *
- *  doStarting() {
- *    console.log('Pull started!');
- *  }
- *
- *  doPulling(amt) {
- *    console.log('You have pulled', amt);
+ *    doPulling(amt) {
+ *      console.log('You have pulled', amt);
+ *    }
  *  }
  *  ```
+ *
+ *  @property {string} [pulling-icon] - the icon you want to display when you begin to pull down
+ *  @property {string} [pulling-text] - the text you want to display when you begin to pull down
+ *  @property {string} [refreshing-icon] - the icon you want to display when performing a refresh
+ *  @property {string} [refreshing-text] - the text you want to display when performing a refresh
+ *
+ *  @property {any} (refresh) - the methond on your class you want to perform when you refreshing
+ *  @property {any} (starting) - the methond on your class you want to perform when you start pulling down
+ *  @property {any} (pulling) - the methond on your class you want to perform when you are pulling down
+ *
  */
 @Component({
   selector: 'ion-refresher',
@@ -67,7 +89,7 @@ import {raf, ready, CSS} from '../../util/dom';
 })
 export class Refresher {
   /**
-   * TODO
+   * @private
    * @param {Content} content  TODO
    * @param {ElementRef} elementRef  TODO
    */
@@ -85,11 +107,15 @@ export class Refresher {
     this.pulling = new EventEmitter('pulling');
   }
 
+  /**
+   * @private
+   */
   ngOnInit() {
     this.initEvents();
   }
 
   /**
+   * @private
    * Initialize touch and scroll event listeners.
    */
   initEvents() {
@@ -128,6 +154,9 @@ export class Refresher {
     sc.addEventListener('scroll', this._handleScrollListener);
   }
 
+  /**
+   * @private
+   */
   onDehydrate() {
     console.log('DEHYDRATION');
     let sc = this.content.scrollElement;
@@ -137,7 +166,7 @@ export class Refresher {
   }
 
   /**
-   * TODO
+   * @private
    * @param {TODO} val  TODO
    */
   overscroll(val) {
@@ -146,7 +175,7 @@ export class Refresher {
   }
 
   /**
-   * TODO
+   * @private
    * @param {TODO} target  TODO
    * @param {TODO} newScrollTop  TODO
    */
@@ -160,7 +189,7 @@ export class Refresher {
   }
 
   /**
-   * TODO
+   * @private
    * @param {TODO} enabled  TODO
    */
   setScrollLock(enabled) {
@@ -182,7 +211,7 @@ export class Refresher {
   }
 
   /**
-   * TODO
+   * @private
    */
   activate() {
     //this.ele.classList.add('active');
@@ -191,7 +220,7 @@ export class Refresher {
   }
 
   /**
-   * TODO
+   * @private
    */
   deactivate() {
     // give tail 150ms to finish
@@ -204,6 +233,9 @@ export class Refresher {
     }, 150);
   }
 
+  /**
+   * @private
+   */
   start() {
     // startCallback
     this.isRefreshing = true;
@@ -212,7 +244,7 @@ export class Refresher {
   }
 
   /**
-   * TODO
+   * @private
    */
   show() {
     // showCallback
@@ -220,7 +252,7 @@ export class Refresher {
   }
 
   /**
-   * TODO
+   * @private
    */
   hide() {
     // showCallback
@@ -228,7 +260,7 @@ export class Refresher {
   }
 
   /**
-   * TODO
+   * @private
    */
   tail() {
     // tailCallback
@@ -236,7 +268,7 @@ export class Refresher {
   }
 
   /**
-   * TODO
+   * @private
    */
   complete() {
     setTimeout(() => {
@@ -257,7 +289,7 @@ export class Refresher {
   }
 
 /**
- * TODO
+ * @private
  * @param {TODO} Y  TODO
  * @param {TODO} duration  TODO
  * @param {Function} callback  TODO
