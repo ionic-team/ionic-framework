@@ -1,0 +1,61 @@
+<ion-navbar *navbar>
+  <ion-title>Config</ion-title>
+</ion-navbar>
+
+<ion-content padding>
+
+  <ion-row>
+  @App({
+  </ion-row>
+
+  <ion-row>
+
+    <ion-col>
+      config: {
+
+        <ion-row>
+          <ion-col>
+          backButtonIcon: 
+            <select [(ng-model)]="config.backButtonIcon">
+              <option value="ion-ios-arrow-back">ion-ios-arrow-back</option>
+              <option value="ion-md-arrow-back">ion-md-arrow-back</option>
+            </select>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+          iconMode: 
+            <select [(ng-model)]="config.iconMode">
+              <option value="ios">ios</option>
+              <option value="md">md</option>
+            </select>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+          tabbarPlacement: 
+            <select [(ng-model)]="config.tabbarPlacement">
+              <option value="bottom">bottom</option>
+              <option value="top">top</option>
+            </select>
+          </ion-col>
+        </ion-row>
+
+
+
+      }
+    </ion-col>
+
+  </ion-row>
+
+  <ion-row>
+  })
+  </ion-row>
+
+  <ion-row>
+    <button full (click)="load()">Reload Config</button>
+  </ion-row>
+
+<ion-content>

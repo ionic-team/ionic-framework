@@ -99,7 +99,7 @@ import {isObject, isDefined, isFunction, isArray, extend} from '../util/util';
  * tabbarPlacement: 'top',
  * tabSubPages: true,
  * ```
- *
+ * @demo /docs/v2/demos/config/
  *
 **/
 export class Config {
