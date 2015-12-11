@@ -15,13 +15,13 @@ import {Button} from '../button/button';
  *
  * @usage
  * ```html
- * <ion-searchbar [(ng-model)]="defaultSearch"></ion-searchbar>
+ * <ion-searchbar [(ngModel)]="defaultSearch"></ion-searchbar>
  * ```
  *
  * @property [placeholder] - sets input placeholder to value passed in
- * @property [show-cancel] - shows the cancel button based on boolean value passed in
- * @property [cancel-text] - sets the cancel button text to the value passed in
- * @property [cancel-action] - the function that gets called by clicking the cancel button
+ * @property [showCancel] - shows the cancel button based on boolean value passed in
+ * @property [cancelText] - sets the cancel button text to the value passed in
+ * @property [cancelAction] - the function that gets called by clicking the cancel button
  * @see {@link /docs/v2/components#search Search Component Docs}
  */
 @ConfigComponent({
@@ -42,9 +42,9 @@ import {Button} from '../button/button';
       '<div class="searchbar-search-icon"></div>' +
       '<input [(value)]="query" (focus)="inputFocused()" (blur)="inputBlurred()" ' +
       '(input)="inputChanged($event)" class="searchbar-input" type="search" [attr.placeholder]="placeholder">' +
-      '<button clear *ng-if="query" class="searchbar-clear-icon" (click)="clearInput($event)"></button>' +
+      '<button clear *ngIf="query" class="searchbar-clear-icon" (click)="clearInput($event)"></button>' +
     '</div>' +
-    '<button clear *ng-if="showCancel" (click)="cancelSearchbar($event, query)" class="searchbar-ios-cancel">{{cancelText}}</button>',
+    '<button clear *ngIf="showCancel" (click)="cancelSearchbar($event, query)" class="searchbar-ios-cancel">{{cancelText}}</button>',
   directives: [FORM_DIRECTIVES, NgIf, NgClass, Icon, Button]
 })
 export class Searchbar extends Ion {

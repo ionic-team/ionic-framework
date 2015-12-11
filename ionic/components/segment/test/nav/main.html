@@ -5,7 +5,7 @@
 </ion-navbar>
 
 <ion-toolbar>
-  <ion-segment [(ng-model)]="signInType">
+  <ion-segment [(ngModel)]="signInType">
     <ion-segment-button value="new">
       New
     </ion-segment-button>
@@ -32,14 +32,14 @@
     </ion-col>
   </ion-row>
 
-  <div [ng-switch]="signInType">
-    <div *ng-switch-when="'existing'">
+  <div [ngSwitch]="signInType">
+    <div *ngSwitchWhen="'existing'">
       Signing up as an <b>Existing User</b>.
     </div>
-    <div *ng-switch-when="'new'">
+    <div *ngSwitchWhen="'new'">
       Signing up as a <b>New User</b>.
     </div>
-    <div *ng-switch-when="'test'">
+    <div *ngSwitchWhen="'test'">
       Signing up as a <b>Test User</b>.
     </div>
  </div>

@@ -11,7 +11,7 @@ import {List} from '../list/list';
  * @usage
  * ```html
  * <ion-list>
- *   <ion-item-sliding *ng-for="#item of items">
+ *   <ion-item-sliding *ngFor="#item of items">
  *     <ion-item (click)="itemTapped(item)">
  *       {{item.title}}
  *     </ion-item>

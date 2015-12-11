@@ -103,9 +103,9 @@ import {ViewController} from './view-controller';
   inputs: [
     'root'
   ],
-  defaultInputs: {
-    'swipeBackEnabled': true
-  },
+  // defaultInputs: {
+  //   'swipeBackEnabled': true
+  // },
   template: '<template #contents></template>'
 })
 export class Nav extends NavController {

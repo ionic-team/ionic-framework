@@ -14,7 +14,7 @@ import {Form} from '../../util/form';
  *
  * @usage
  * ```html
- * <ion-checkbox checked="true" value="isChecked" ng-control="htmlCtrl">
+ * <ion-checkbox checked="true" value="isChecked" ngControl="htmlCtrl">
  *   HTML5
  * </ion-checkbox>
  * ```

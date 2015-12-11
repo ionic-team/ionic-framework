@@ -55,13 +55,13 @@ import {raf, ready, CSS} from '../../util/dom';
   template:
     '<div class="refresher-content" [class.refresher-with-text]="pullingText || refreshingText">' +
       '<div class="icon-pulling">' +
-        '<i class="icon" [ng-class]="pullingIcon"></i>' +
+        '<i class="icon" [ngClass]="pullingIcon"></i>' +
       '</div>' +
-      '<div class="text-pulling" [inner-html]="pullingText" *ng-if="pullingText"></div>' +
+      '<div class="text-pulling" [innerHTML]="pullingText" *ngIf="pullingText"></div>' +
       '<div class="icon-refreshing">' +
-        '<i class="icon" [ng-class]="refreshingIcon"></i>' +
+        '<i class="icon" [ngClass]="refreshingIcon"></i>' +
       '</div>' +
-      '<div class="text-refreshing" [inner-html]="refreshingText" *ng-if="refreshingText"></div>' +
+      '<div class="text-refreshing" [innerHTML]="refreshingText" *ngIf="refreshingText"></div>' +
     '</div>',
   directives: [NgIf, NgClass]
 })

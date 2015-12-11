@@ -2,11 +2,11 @@
 
 <ion-content class="outer-content">
   
-  <ion-list class="outer-content" *ng-for="#person of people">
+  <ion-list class="outer-content" *ngFor="#person of people">
     <ion-list-header>
       {{person.name}}
     </ion-list-header>
-    <ion-item *ng-for="#component of person.components">
+    <ion-item *ngFor="#component of person.components">
       {{component}}
       <div item-right>
         <icon pin></icon>

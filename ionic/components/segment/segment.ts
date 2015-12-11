@@ -10,12 +10,12 @@ import {Config} from '../../config/config';
  * @description
  * A Segment is a group of buttons, sometimes known as Segmented Controls, that allow the user to interact with a compact group of a number of controls.
  * Segments provide functionality similar to tabs, selecting one will unselect all others. You should use a tab bar instead of a segmented control when you want to let the user move back and forth between distinct pages in your app.
- * You could use Angular 2's `ng-model` or `FormBuilder` API. For an overview on how `FormBuilder` works, checkout [Angular 2 Forms](http://learnangular2.com/forms/), or [Angular FormBuilder](https://angular.io/docs/ts/latest/api/common/FormBuilder-class.html)
+ * You could use Angular 2's `ngModel` or `FormBuilder` API. For an overview on how `FormBuilder` works, checkout [Angular 2 Forms](http://learnangular2.com/forms/), or [Angular FormBuilder](https://angular.io/docs/ts/latest/api/common/FormBuilder-class.html)
  *
  *
  * @usage
  * ```html
- * <ion-segment [(ng-model)]="relationship" danger>
+ * <ion-segment [(ngModel)]="relationship" danger>
  *   <ion-segment-button value="friends">
  *     Friends
  *   </ion-segment-button>
@@ -28,8 +28,8 @@ import {Config} from '../../config/config';
  * Or with `FormBuilder`
  *
  *```html
- * <form [ng-form-model]="myForm">
- *   <ion-segment ng-control="mapStyle" danger>
+ * <form [ngFormModel]="myForm">
+ *   <ion-segment ngControl="mapStyle" danger>
  *     <ion-segment-button value="standard">
  *       Standard
  *     </ion-segment-button>
@@ -142,7 +142,7 @@ export class Segment extends Ion {
  * @property {string} [value] - the value of the segment-button.
  * @usage
  * ```html
- * <ion-segment [(ng-model)]="relationship" primary>
+ * <ion-segment [(ngModel)]="relationship" primary>
  *   <ion-segment-button value="friends">
  *     Friends
  *   </ion-segment-button>
@@ -155,8 +155,8 @@ export class Segment extends Ion {
  * Or with `FormBuilder`
  *
  *```html
- * <form [ng-form-model]="myForm">
- *   <ion-segment ng-control="mapStyle" danger>
+ * <form [ngFormModel]="myForm">
+ *   <ion-segment ngControl="mapStyle" danger>
  *     <ion-segment-button value="standard">
  *       Standard
  *     </ion-segment-button>

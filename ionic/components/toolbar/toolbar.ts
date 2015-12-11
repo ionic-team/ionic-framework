@@ -79,7 +79,7 @@ export class ToolbarBase extends Ion  {
   selector: 'ion-toolbar',
   template:
     '<div class="toolbar-background"></div>' +
-    '<ng-content select="[menu-toggle],ion-buttons[left]"></ng-content>' +
+    '<ng-content select="[menuToggle],ion-buttons[left]"></ng-content>' +
     '<ng-content select="ion-buttons[start]"></ng-content>' +
     '<ng-content select="ion-buttons[end],ion-buttons[right]"></ng-content>' +
     '<div class="toolbar-content">' +
@@ -149,7 +149,7 @@ export class ToolbarTitle extends Ion {
  * @private
  */
 @Directive({
-  selector: 'ion-buttons,[menu-toggle],ion-nav-items'
+  selector: 'ion-buttons,[menuToggle],ion-nav-items'
 })
 export class ToolbarItem {
   constructor(

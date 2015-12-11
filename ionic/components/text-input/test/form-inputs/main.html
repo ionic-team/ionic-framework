@@ -4,12 +4,12 @@
 
 <ion-content>
 
-  <form (ng-submit)="submit($event)" [ng-form-model]="loginForm" #mf="ngForm" novalidate>
+  <form (ng-submit)="submit($event)" [ngFormModel]="loginForm" #mf="ngForm" novalidate>
 
     <ion-list>
       <ion-input>
         <ion-label>Email:</ion-label>
-        <input [(ng-model)]="login.email" ng-control="email" type="email" placeholder="Required" required>
+        <input [(ngModel)]="login.email" ngControl="email" type="email" placeholder="Required" required>
         <button clear item-right>
           <icon mail></icon>
         </button>
@@ -17,7 +17,7 @@
 
       <ion-input>
         <ion-label>Username:</ion-label>
-        <input [(ng-model)]="login.username" ng-control="username" type="text" placeholder="Optional">
+        <input [(ngModel)]="login.username" ngControl="username" type="text" placeholder="Optional">
         <button clear item-right>
           <icon person></icon>
         </button>
@@ -25,7 +25,7 @@
 
       <ion-input>
         <ion-label>Password:</ion-label>
-        <input [(ng-model)]="login.password" ng-control="password" type="password" placeholder="Required" required>
+        <input [(ngModel)]="login.password" ngControl="password" type="password" placeholder="Required" required>
         <button clear item-right>
           <icon lock></icon>
         </button>
@@ -33,7 +33,7 @@
 
       <ion-input>
         <ion-label>Comments:</ion-label>
-        <textarea [(ng-model)]="login.comments" ng-control="comments" placeholder="Required" required>Comment value</textarea>
+        <textarea [(ngModel)]="login.comments" ngControl="comments" placeholder="Required" required>Comment value</textarea>
       </ion-input>
 
       <ion-item [hidden]="submitted == false || mf.form.valid">

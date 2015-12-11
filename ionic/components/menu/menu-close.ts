@@ -10,7 +10,7 @@ import {Menu} from './menu';
 * @see {@link ../../menu/Menu Menu API Docs}
 */
 @Directive({
-  selector: '[menu-close]',
+  selector: '[menuClose]',
   inputs: [
     'menuClose'
   ],

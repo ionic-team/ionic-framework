@@ -9,7 +9,7 @@ import {Config} from '../../config/config';
  * Icons can be used on their own, or inside of a number of Ionic components. For a full list of available icons,
  * check out the [Ionicons resource docs](../../../../../resources/ionicons).
  *
- * @property {boolean} [is-active] - Whether or not the icon is active. Icons that are not active will use an outlined version of the icon.
+ * @property {boolean} [isActive] - Whether or not the icon is active. Icons that are not active will use an outlined version of the icon.
  * If there is not an outlined version for the particular icon, it will use the default (full) version.
  * @property {string} [ios] - Explicitly set the icon to use on iOS.
  * @property {string} [md] - Explicitly set the icon to use on Android.
@@ -55,7 +55,7 @@ export class Icon {
       // looping through native dom attributes, eww
       // https://github.com/angular/angular/issues/1818
       for (let i = 0, l = ele.attributes.length; i < l; i++) {
-        if (ele.attributes[i].value === '' && /_|item-|is-active|large|small|class/.test(ele.attributes[i].name) !== true) {
+        if (ele.attributes[i].value === '' && /_|item-|isActive|large|small|class/.test(ele.attributes[i].name) !== true) {
           this.name = ele.attributes[i].name;
           break;
         }

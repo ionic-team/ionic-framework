@@ -71,7 +71,7 @@ class ToolbarBackground {
         '<span class="back-default">{{bbText}}</span>' +
       '</span>' +
     '</button>' +
-    '<ng-content select="[menu-toggle],ion-buttons[left]"></ng-content>' +
+    '<ng-content select="[menuToggle],ion-buttons[left]"></ng-content>' +
     '<ng-content select="ion-buttons[start]"></ng-content>' +
     '<ng-content select="ion-buttons[end],ion-buttons[right]"></ng-content>' +
     '<div class="toolbar-content">' +

@@ -34,7 +34,7 @@ import {Scroll} from '../scroll/scroll';
  * ```ts
  * @Page({
  *  template: `
- *     <ion-slides pager (slide-changed)="onSlideChanged($event)" loop="true" autoplay="true">
+ *     <ion-slides pager (slideChanged)="onSlideChanged($event)" loop="true" autoplay="true">
  *      <ion-slide>
  *        <h3>Thank you for choosing the Awesome App!</h3>
  *        <p>

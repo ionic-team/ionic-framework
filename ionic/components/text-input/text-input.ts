@@ -60,7 +60,7 @@ import {Platform} from '../../platform/platform';
   template:
     '<div class="item-inner">' +
       '<ng-content></ng-content>' +
-      '<input [type]="type" aria-hidden="true" scroll-assist *ng-if="scrollAssist">' +
+      '<input [type]="type" aria-hidden="true" scroll-assist *ngIf="scrollAssist">' +
     '</div>',
   directives: [NgIf, forwardRef(() => InputScrollAssist)]
 })

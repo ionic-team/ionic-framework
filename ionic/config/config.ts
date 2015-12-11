@@ -44,8 +44,8 @@ import {isObject, isDefined, isFunction, isArray, extend} from '../util/util';
  * We could also configure these values at a component level. Take `tabbarPlacement`, we can configure this as a property on our `ion-tabs`.
  *
  * ```html
- * <ion-tabs tabbar-placement="top">
- *    <ion-tab tab-title="Dash" tab-icon="pulse" [root]="tabRoot"></ion-tab>
+ * <ion-tabs tabbarPlacement="top">
+ *    <ion-tab tabTitle="Dash" tabIcon="pulse" [root]="tabRoot"></ion-tab>
  *  </ion-tabs>
  * ```
  *
