@@ -75,6 +75,7 @@ export class ToolbarBase extends Ion  {
  *  <ion-content></ion-content>
  *  ```
  * @demo /docs/v2/demos/toolbar/
+ * @see {@link ../../navbar/Navbar/ Navbar API Docs}
  */
 @Component({
   selector: 'ion-toolbar',
