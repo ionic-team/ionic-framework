@@ -27,7 +27,7 @@ export class TabPage {
 export class InitialPage {
   constructor(platform: Platform) {
     this.platform = platform;
-    if (window.localStorage.getItem('configDemo') !== "{}") {
+    if (window.localStorage.getItem('configDemo') !== null) {
       debugger;
       this.config = JSON.parse(window.localStorage.getItem('configDemo')); 
     }
@@ -48,6 +48,7 @@ export class InitialPage {
 
   load() {
     window.localStorage.setItem('configDemo', JSON.stringify(this.config));
+    console.log('saving', this.config);
     window.location.reload();
   } 
 }
