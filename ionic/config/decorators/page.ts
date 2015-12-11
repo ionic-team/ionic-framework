@@ -10,7 +10,7 @@ import {IONIC_DIRECTIVES} from '../directives';
  * The Page decorator indicates that the decorated class is an Ionic
  * navigation component, meaning it can be navigated to using a NavController.
  *
- * Pages have all IONIC_DIRECTIVES, which include all Ionic components and directives,
+ * Pages have all `IONIC_DIRECTIVES`, which include all Ionic components and directives,
  * as well as Angular's [CORE_DIRECTIVES](https://angular.io/docs/js/latest/api/core/CORE_DIRECTIVES-const.html)
  * and [FORM_DIRECTIVES](https://angular.io/docs/js/latest/api/core/FORM_DIRECTIVES-const.html),
  * already provided to them, so you only need to supply custom components and directives to your pages:

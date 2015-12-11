@@ -48,10 +48,10 @@ import {raf, ready, CSS} from '../../util/dom';
  *  }
  *  ```
  *
- *  @property {string} [pulling-icon] - the icon you want to display when you begin to pull down
- *  @property {string} [pulling-text] - the text you want to display when you begin to pull down
- *  @property {string} [refreshing-icon] - the icon you want to display when performing a refresh
- *  @property {string} [refreshing-text] - the text you want to display when performing a refresh
+ *  @property {string} [pullingIcon] - the icon you want to display when you begin to pull down
+ *  @property {string} [pullingText] - the text you want to display when you begin to pull down
+ *  @property {string} [refreshingIcon] - the icon you want to display when performing a refresh
+ *  @property {string} [refreshingText] - the text you want to display when performing a refresh
  *
  *  @property {any} (refresh) - the methond on your class you want to perform when you refreshing
  *  @property {any} (starting) - the methond on your class you want to perform when you start pulling down
