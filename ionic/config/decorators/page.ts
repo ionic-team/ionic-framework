@@ -3,33 +3,37 @@ import {IONIC_DIRECTIVES} from '../directives';
 
 
 /**
- * _For more information on how pages are created, see the [NavController API
- * reference](../../components/nav/NavController/#creating_pages)._
+ * @name Page
+ * @description
+ *For more information on how pages are created, see the [NavController API reference](../../components/nav/NavController/#creating_pages)
  *
  * The Page decorator indicates that the decorated class is an Ionic
  * navigation component, meaning it can be navigated to using a NavController.
  *
- * Pages have all [IONIC_DIRECTIVES](../IONIC_DIRECTIVES/), which include
- * all Ionic components and directives, as well as Angular's [CORE_DIRECTIVES](https://angular.io/docs/js/latest/api/core/CORE_DIRECTIVES-const.html)
+ * Pages have all IONIC_DIRECTIVES, which include all Ionic components and directives,
+ * as well as Angular's [CORE_DIRECTIVES](https://angular.io/docs/js/latest/api/core/CORE_DIRECTIVES-const.html)
  * and [FORM_DIRECTIVES](https://angular.io/docs/js/latest/api/core/FORM_DIRECTIVES-const.html),
- * already provided to them, so you only need to supply custom components and
- * directives to your pages:
+ * already provided to them, so you only need to supply custom components and directives to your pages:
+ *
+ * @usage
  *
  * ```ts
  * @Page({
  *   template: `
- *     <ion-checkbox my-custom-dir>
- *     </ion-checkbox>`
- *   directives: [MyCustomDirective]
+ *    <ion-content>
+ *      I am a page!
+ *    </ion-content>
+ *   `
  * })
  * class MyPage {}
  * ```
- * Here [Checkbox](../../../components/checkbox/Checkbox/) will load because
- * it is in IONIC_DIRECTIVES, so there is no need to add it to the `directives`
- * array.
  *
- * For custom components that use Ionic components, you will need to include
- * IONIC_DIRECTIVES in the `directives` array:
+ * Here [Content](../../../components/content/Content/) will load because
+ * it is in `IONIC_DIRECTIVES`, so there is no need to add a `directives` array.
+ *
+ *
+ * Say you built a custom component that uses the an already exsiting Ionic component.
+ * In this case, you would add `IONIC_DIRECTIVES` to your directives array.
  *
  * ```ts
  * import {IONIC_DIRECTIVES} from 'ionic/ionic';
@@ -42,17 +46,22 @@ import {IONIC_DIRECTIVES} from '../directives';
  * })
  * class MyCustomCheckbox {}
  *```
+
  * Alternatively, you could:
+ *
  * ```ts
  * import {Checkbox, Icon} from 'ionic/ionic'
  * ```
+ *
  * along with any other components and add them individually:
+ *
  * ```
  * @Component({
  *   ...
  *   directives: [Checkbox, Icon]
  * })
  * ```
+ *
  * However, using IONIC_DIRECTIVES will always *Just Work* with no
  * performance overhead, so there is really no reason to not always use it.
  *
