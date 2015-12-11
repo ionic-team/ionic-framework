@@ -1,5 +1,5 @@
-<a name="2.0.0-alpha.41"></a>
-# 2.0.0-alpha.41 (2015-12-8)
+<a name="2.0.0-alpha.42"></a>
+# 2.0.0-alpha.42 (2015-12-11)
 
 
 ### Breaking Changes
@@ -57,3 +57,29 @@
     * ngAfterViewInit
     * ngAfterViewChecked
     * ngOnDestroy
+
+### Steps to Upgrade to alpha.42
+
+
+1. Update to latest beta CLI: `sudo npm install -g ionic@beta`
+2. Convert Javascript (.js) files to Typescript (.ts) files
+3. Convert dash attributes to camelCase (see [Angular Changelog](https://github.com/angular/angular/blob/master/CHANGELOG.md))
+4. Rename imports from `ionic/ionic` to `ionic-framework/ionic`
+5. Remove sass imports in JS files
+6. Update css reference in index.html (remove build/css/app.css if it exists)
+
+  ```
+  <link ios-href="build/css/app.ios.css" rel="stylesheet">
+  <link md-href="build/css/app.md.css" rel="stylesheet">
+  ```
+  
+7. Add core stylesheets (copy from a starter or conf app) and remove app.scss:
+  
+  ```
+  app.core.scss
+  app.ios.scss
+  app.md.scss
+  app.variables.scss
+  ```
+  
+8. Update `app.core.scss` to reflect your Sass files
