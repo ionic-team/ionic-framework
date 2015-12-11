@@ -539,11 +539,10 @@ export class Animation {
   }
 
   static createTransition(enteringView, leavingView, opts = {}) {
-    const name = opts.animation || 'ios-transition';
-
-    let TransitionClass = AnimationRegistry[name];
+    let TransitionClass = AnimationRegistry[opts.animation];
     if (!TransitionClass) {
-      TransitionClass = Animation;
+      // didn't find a transition animation, default to ios-transition
+      TransitionClass = AnimationRegistry['ios-transition'];
     }
 
     return new TransitionClass(enteringView, leavingView, opts);
