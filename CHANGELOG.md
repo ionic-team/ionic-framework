@@ -83,3 +83,4 @@
   ```
   
 8. Update `app.core.scss` to reflect your Sass files
+9. See the conference app for run steps: [Getting Started](https://github.com/driftyco/ionic-conference-app#getting-started)
