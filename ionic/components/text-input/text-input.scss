@@ -57,3 +57,7 @@ input,
 textarea {
   @include placeholder();
 }
+
+input:-webkit-autofill {
+  background-color: transparent;
+}
