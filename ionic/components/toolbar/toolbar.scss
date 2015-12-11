@@ -74,4 +74,9 @@ ion-buttons,
 
 ion-navbar.toolbar {
   display: flex;
+
+  opacity: 0;
+  &.show-navbar {
+    opacity: 1;
+  }
 }
