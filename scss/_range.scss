@@ -174,10 +174,11 @@
 }
 
 @-moz-document url-prefix() {
-// Prevents thumb from being clipped in Firefox
-// Can't be set generally, would cause (hacky) webkit fill to overflow
+// Hidden overflow clips the thumb on Firefox, but causes (hacky) Webkit
+// filling to overflow. Background unneeded for FF and can become misaligned.
   .range input {
     overflow: visible;
+    background: none;
   }
 }
 
