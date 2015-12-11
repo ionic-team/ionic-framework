@@ -126,6 +126,9 @@
   &::-ms-fill-lower{
     background: $track-bg-color;
   }
+  &::-moz-range-progress {
+    background: $track-bg-color;
+  }
 }
 
 

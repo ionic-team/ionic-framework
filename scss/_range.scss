@@ -26,6 +26,27 @@
     border: 0;
   }
 
+  &::-moz-range-thumb {
+    width: $range-slider-width;
+    height: $range-slider-height;
+    border-radius: $range-slider-border-radius;
+    background-color: $toggle-handle-off-bg-color;
+    box-shadow: $range-slider-box-shadow;
+    cursor: pointer;
+    -moz-appearance: none;
+    border: 0;
+  }
+
+  &::-moz-range-track {
+    height: $range-track-height;
+    background: $range-default-track-bg;
+  }
+
+  &::-moz-range-progress {
+    height: $range-track-height;
+    background: $dark;
+  }
+
   &::-webkit-slider-thumb {
     position: relative;
     width: $range-slider-width;
@@ -150,6 +171,14 @@
 .range input + .range-label {
   padding-right: 5px;
   padding-left: 0;
+}
+
+@-moz-document url-prefix() {
+// Prevents thumb from being clipped in Firefox
+// Can't be set generally, would cause (hacky) webkit fill to overflow
+  .range input {
+    overflow: visible;
+  }
 }
 
 // WP range height must be auto
