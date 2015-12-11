@@ -14,10 +14,6 @@ To try Ionic 2 today, visit the [Ionic 2 Docs](http://ionicframework.com/docs/v2
 
 There are a few real Ionic 2 apps in the wild. The most complete is the [Ionic Conference App](https://github.com/driftyco/ionic-conference-app), a perfect starting point for building your own conference app.
 
-We are also building out a number of starter projects, including the Ionic 2 starter:
-
-[https://github.com/driftyco/ionic2-starter](https://github.com/driftyco/ionic2-starter)
-
 ## Distribution
 
  - [npm: ionic-framework](https://www.npmjs.com/package/ionic-framework)
