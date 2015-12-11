@@ -365,11 +365,6 @@ gulp.task('sass', function() {
   .pipe(gulp.dest('dist/bundles/'));
 });
 
-gulp.task('fonts', function() {
-  return gulp.src(['ionic/fonts/**/*.ttf', 'ionic/fonts/**/*.woff'])
-    .pipe(gulp.dest('dist/fonts'));
-});
-
 require('./scripts/snapshot/snapshot.task')(gulp, argv, buildConfig);
 
 gulp.task('karma', ['tests'], function() {
@@ -394,10 +389,12 @@ gulp.task('copy.ts', function() {
 gulp.task('copy.scss', function() {
   return gulp.src([
       'ionic/**/*.scss',
+      'ionic/**/*.ttf',
+      'ionic/**/*.woff',
       '!ionic/components/*/test/**/*',
       '!ionic/util/test/*'
     ])
-    .pipe(gulp.dest('dist/src/scss'));
+    .pipe(gulp.dest('dist'));
 })
 
 gulp.task('copy.web-animations', function() {
