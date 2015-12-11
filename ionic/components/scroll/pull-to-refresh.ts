@@ -34,6 +34,8 @@ import {raf, ready, CSS} from 'ionic/util/dom';
  *    console.log('You have pulled', amt);
  *  }
  *  ```
+ * @demo /docs/v2/demos/refresher/
+ *
  */
 @Component({
   selector: 'ion-refresher',
