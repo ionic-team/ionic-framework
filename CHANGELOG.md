@@ -82,3 +82,6 @@
   
 6. Update `app.core.scss` to reflect your Sass files
 7. See the conference app for run steps: [Getting Started](https://github.com/driftyco/ionic-conference-app#getting-started)
+8. Add the new gulp packages and gulp file found in the [ionic2-app-base](https://github.com/driftyco/ionic2-app-base) or any of the starter
+9. Add the contents from the [ionic2-app-base](https://github.com/driftyco/ionic2-app-base) ionic.config.js file
+10. Run `gulp sass watch` to watch and compile the sass (will be part of ionic serve in later release)
