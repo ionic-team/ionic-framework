@@ -62,7 +62,7 @@
 
 
 1. Update to latest beta CLI: `sudo npm install -g ionic@beta`
-2. Convert dash attributes to camelCase (see [Angular Changelog](https://github.com/angular/angular/blob/master/CHANGELOG.md))
+2. Convert dash attributes to camelCase (see [Angular Changelog](https://github.com/angular/angular/blob/master/CHANGELOG.md#200-alpha52-2015-12-10))
 3. Rename imports from `ionic/ionic` to `ionic-framework/ionic`
 4. Remove sass imports in JS files
 5. Update css reference in index.html (remove build/css/app.css if it exists)
