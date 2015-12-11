@@ -62,18 +62,17 @@
 
 
 1. Update to latest beta CLI: `sudo npm install -g ionic@beta`
-2. Convert Javascript (.js) files to Typescript (.ts) files
-3. Convert dash attributes to camelCase (see [Angular Changelog](https://github.com/angular/angular/blob/master/CHANGELOG.md))
-4. Rename imports from `ionic/ionic` to `ionic-framework/ionic`
-5. Remove sass imports in JS files
-6. Update css reference in index.html (remove build/css/app.css if it exists)
+2. Convert dash attributes to camelCase (see [Angular Changelog](https://github.com/angular/angular/blob/master/CHANGELOG.md))
+3. Rename imports from `ionic/ionic` to `ionic-framework/ionic`
+4. Remove sass imports in JS files
+5. Update css reference in index.html (remove build/css/app.css if it exists)
 
   ```
   <link ios-href="build/css/app.ios.css" rel="stylesheet">
   <link md-href="build/css/app.md.css" rel="stylesheet">
   ```
   
-7. Add core stylesheets (copy from a starter or conf app) and remove app.scss:
+6. Add core stylesheets (copy from a starter or conf app) and remove app.scss:
   
   ```
   app.core.scss
@@ -82,5 +81,5 @@
   app.variables.scss
   ```
   
-8. Update `app.core.scss` to reflect your Sass files
-9. See the conference app for run steps: [Getting Started](https://github.com/driftyco/ionic-conference-app#getting-started)
+7. Update `app.core.scss` to reflect your Sass files
+8. See the conference app for run steps: [Getting Started](https://github.com/driftyco/ionic-conference-app#getting-started)
