@@ -25,11 +25,11 @@ class E2EApp {
     this.clickedCustomAction = true;
   }
 
-  triggerInput() {
+  triggerInput(ev) {
     // The defaultSearch doesn't get updated before this function is called
     // so we have to wrap it in a timeout
     setTimeout(() => {
-      console.log(this.defaultSearch);
+      console.log("Triggered input", this.defaultSearch);
     });
   }
 }

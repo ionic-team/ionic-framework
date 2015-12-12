@@ -32,6 +32,7 @@ import {Button} from '../button/button';
     'cancelButtonText',
     'placeholder'
   ],
+  outputs: ['input'],
   host: {
    '[class.searchbar-left-aligned]': 'shouldLeftAlign',
    '[class.searchbar-focused]': 'isFocused',
@@ -59,6 +60,8 @@ export class Searchbar extends Ion {
     super(elementRef, config);
     this.renderer = renderer;
     this.elementRef = elementRef;
+
+    this.input = new EventEmitter('input');
 
     // If there is no control then we shouldn't do anything
     if (!ngControl) return;
@@ -134,10 +137,11 @@ export class Searchbar extends Ion {
 
     /**
     * @private
-    * Clears the input field and triggers the control change.
+    * Updates the value of query
     */
    updateQuery(value) {
      this.query = value;
+     this.input.next(value);
    }
 }
 
@@ -150,8 +154,6 @@ export class Searchbar extends Ion {
   }
 })
 export class SearchbarInput {
-  @Output() input: EventEmitter<any> = new EventEmitter();
-
   constructor(
     @Host() searchbar: Searchbar,
     elementRef: ElementRef,
@@ -168,10 +170,6 @@ export class SearchbarInput {
 
     this.ngControl = searchbar.ngControl;
     this.ngControl.valueAccessor = this;
-  }
-
-  ngOnInit() {
-
   }
 
   /**
@@ -209,14 +207,21 @@ export class SearchbarInput {
     this.searchbar.inputFocused();
   }
 
+  /**
+   * @private
+   * Calls the Searchbar function to blur
+   */
   inputBlurred() {
     this.searchbar.inputBlurred();
   }
 
+  /**
+   * @private
+   * Update the Searchbar input value
+   */
   inputChanged(event) {
     this.writeValue(event.target.value);
     this.onChange(event.target.value);
-    this.input.emit(null);
   }
 
 }
