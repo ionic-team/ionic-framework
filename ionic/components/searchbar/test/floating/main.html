@@ -1,18 +1,22 @@
 <ion-content>
   <h5 padding-left padding-top> Search - Default </h5>
-  <ion-searchbar [(ngModel)]="defaultSearch" (input)="triggerInput()" class="e2eDefaultFloatingSearchbar"></ion-searchbar>
+  <ion-searchbar [(ngModel)]="defaultSearch" (input)="triggerInput($event)" class="e2eDefaultFloatingSearchbar"></ion-searchbar>
+
+  <p padding-left>
+      Default Search: <b>{{ defaultSearch }}</b>
+  </p>
 
   <h5 padding-left> Search - Custom Placeholder </h5>
   <ion-searchbar [(ngModel)]="customPlaceholder" placeholder="Filter Schedules" class="e2eCustomPlaceholderFloatingSearchbar"></ion-searchbar>
 
-  <h5 padding-left> Search - Default Cancel Button </h5>
-  <ion-searchbar [(ngModel)]="defaultCancel" showCancel="true" class="e2eDefaultCancelButtonFloatingSearchbar"></ion-searchbar>
+  <h5 padding-left> Search - Hide Cancel Button </h5>
+  <ion-searchbar [(ngModel)]="defaultCancel" hideCancelButton class="e2eDefaultCancelButtonFloatingSearchbar"></ion-searchbar>
 
   <h5 padding-left> Search - Custom Cancel Button Danger </h5>
-  <ion-searchbar [(ngModel)]="customCancel" showCancel="true" cancelText="Really Long Cancel" class="e2eCustomCancelButtonFloatingSearchbar" danger></ion-searchbar>
+  <ion-searchbar [(ngModel)]="customCancel" cancelButtonText="Really Long Cancel" class="e2eCustomCancelButtonFloatingSearchbar" danger></ion-searchbar>
 
   <h5 padding-left> Search - Custom Cancel Action</h5>
-  <ion-searchbar [(ngModel)]="customCancelAction" showCancel="true" cancelText="Done" [cancelAction]="myCancelAction" class="e2eCustomCancelActionFloatingSearchbar"></ion-searchbar>
+  <ion-searchbar [(ngModel)]="customCancelAction" cancelButtonText="Done" [cancelAction]="myCancelAction" class="e2eCustomCancelActionFloatingSearchbar"></ion-searchbar>
 
   <div *ngIf="clickedCustomAction">
     Clicked custom action with input = {{customCancelAction}}
