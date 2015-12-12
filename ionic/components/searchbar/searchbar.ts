@@ -18,9 +18,9 @@ import {Button} from '../button/button';
  * <ion-searchbar [(ngModel)]="defaultSearch"></ion-searchbar>
  * ```
  *
- * @property [placeholder] - sets input placeholder to value passed in
- * @property [hideCancelButton] - hides the cancel button
- * @property [cancelButtonText] - sets the cancel button text to the value passed in
+ * @property [placeholder] - (default: 'Search') Sets input placeholder to value passed in
+ * @property [hideCancelButton] - (default: false) Hides the cancel button
+ * @property [cancelButtonText] - (default: 'Cancel') sets the cancel button text to the value passed in
  * @property [cancelAction] - the function that gets called by clicking the cancel button
  * @see {@link /docs/v2/components#search Search Component Docs}
  */
