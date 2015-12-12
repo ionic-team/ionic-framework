@@ -1,8 +1,8 @@
 <ion-content>
   <ion-list>
-    <ion-item-group *ng-for="#group of groups">
+    <ion-item-group *ngFor="#group of groups">
       <ion-item-divider sticky>{{group.title}}</ion-item-divider>
-      <ion-item *ng-for="#item of group.items">
+      <ion-item *ngFor="#item of group.items">
         {{item.title}}
       </ion-item>
     </ion-item-group>

@@ -43,7 +43,7 @@ ion-tabbar-section {
   order: $flex-order-tabbar-bottom;
 }
 
-[tabbar-placement=top] ion-tabbar-section {
+[tabbarPlacement=top] ion-tabbar-section {
   order: $flex-order-tabbar-top;
 }
 
@@ -108,13 +108,13 @@ tab-highlight {
   display: none;
 }
 
-[tabbar-icons=bottom] .tab-button {
+[tabbarIcons=bottom] .tab-button {
   .tab-button-icon {
     order: 10;
   }
 }
 
-[tabbar-icons=left] .tab-button {
+[tabbarIcons=left] .tab-button {
   flex-direction: row;
 
   .tab-button-icon {
@@ -123,7 +123,7 @@ tab-highlight {
   }
 }
 
-[tabbar-icons=right] .tab-button {
+[tabbarIcons=right] .tab-button {
   flex-direction: row;
 
   .tab-button-icon {
@@ -133,6 +133,6 @@ tab-highlight {
   }
 }
 
-[tabbar-icons=hide] .tab-button-icon {
+[tabbarIcons=hide] .tab-button-icon {
   display: none;
 }

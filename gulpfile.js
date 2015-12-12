@@ -108,7 +108,9 @@ gulp.task('watch', function(done) {
 gulp.task('serve', function() {
   connect.server({
     port: flags.port,
-    livereload: true
+    livereload: {
+      port: 35700
+    }
   });
 });
 
@@ -364,8 +366,8 @@ gulp.task('sass', function() {
 });
 
 gulp.task('fonts', function() {
-  return gulp.src(['ionic/fonts/**/*.ttf', 'ionic/fonts/**/*.woff'])
-    .pipe(gulp.dest('dist/fonts'));
+  return gulp.src(['ionic/**/*.ttf', 'ionic/**/*.woff'])
+    .pipe(gulp.dest('dist'));
 });
 
 require('./scripts/snapshot/snapshot.task')(gulp, argv, buildConfig);
@@ -395,7 +397,7 @@ gulp.task('copy.scss', function() {
       '!ionic/components/*/test/**/*',
       '!ionic/util/test/*'
     ])
-    .pipe(gulp.dest('dist/src/scss'));
+    .pipe(gulp.dest('dist'));
 })
 
 gulp.task('copy.web-animations', function() {
@@ -414,8 +416,7 @@ gulp.task('src.link', function(done) {
 gulp.task('src', function(done){
   runSequence(
     'clean',
-    ['bundle', 'sass', 'fonts', 'copy.ts', 'copy.scss', 'copy.web-animations'],
-    'transpile.common',
+    ['bundle', 'sass', 'copy.scss', 'copy.web-animations'],
     done
   );
 })

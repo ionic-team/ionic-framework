@@ -274,7 +274,7 @@ ion-buttons[right] {
 // iOS Toolbar Menu Toggle
 // --------------------------------------------------
 
-.bar-button-menu-toggle {
+.bar-button-menutoggle {
   margin: 0 6px;
   padding: 0;
   min-width: 36px;
@@ -286,8 +286,8 @@ ion-buttons[right] {
   }
 }
 
-.bar-button-menu-toggle[end],
-.bar-button-menu-toggle[right] {
+.bar-button-menutoggle[end],
+.bar-button-menutoggle[right] {
   order: map-get($toolbar-order-ios, menu-toggle-end);
 }
 

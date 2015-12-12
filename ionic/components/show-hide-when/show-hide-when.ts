@@ -3,7 +3,10 @@ import {Directive, Attribute, NgZone} from 'angular2/core'
 import {Platform} from '../../platform/platform';
 
 
-export class DisplayWhen {
+/**
+ * @private
+ */
+class DisplayWhen {
 
   constructor(conditions, platform, ngZone) {
     this.isMatch = false;
@@ -58,13 +61,13 @@ export class DisplayWhen {
  * Complements the [hide-when attribute](../HideWhen).
  * @usage
  * ```html
- * <div show-when="ios">I am only visible on iOS!</div>
+ * <div showWhen="ios">I am only visible on iOS!</div>
  * ```
  * @demo /docs/v2/demos/show-when/
  * @see {@link ../HideWhen HideWhen API Docs}
  */
 @Directive({
-  selector: '[show-when]',
+  selector: '[showWhen]',
   host: {
     '[hidden]': 'hidden'
   }
@@ -72,7 +75,7 @@ export class DisplayWhen {
 export class ShowWhen extends DisplayWhen {
 
   constructor(
-    @Attribute('show-when') showWhen: string,
+    @Attribute('showWhen') showWhen: string,
     platform: Platform,
     ngZone: NgZone
   ) {
@@ -95,13 +98,13 @@ export class ShowWhen extends DisplayWhen {
  * Complements the [show-when attribute](../ShowWhen).
  * @usage
  * ```html
- * <div hide-when="android">I am hidden on Android!</div>
+ * <div hideWhen="android">I am hidden on Android!</div>
  * ```
  * @demo /docs/v2/demos/hide-when/
  * @see {@link ../ShowWhen ShowWhen API Docs}
  */
 @Directive({
-  selector: '[hide-when]',
+  selector: '[hideWhen]',
   host: {
     '[hidden]': 'hidden'
   }
@@ -109,7 +112,7 @@ export class ShowWhen extends DisplayWhen {
 export class HideWhen extends DisplayWhen {
 
   constructor(
-    @Attribute('hide-when') hideWhen: string,
+    @Attribute('hideWhen') hideWhen: string,
     platform: Platform,
     ngZone: NgZone
   ) {

@@ -15,13 +15,13 @@ import {Button} from '../button/button';
  *
  * @usage
  * ```html
- * <ion-searchbar [(ng-model)]="defaultSearch"></ion-searchbar>
+ * <ion-searchbar [(ngModel)]="defaultSearch"></ion-searchbar>
  * ```
  *
  * @property [placeholder] - sets input placeholder to value passed in
- * @property [hide-cancel-button] - hides the cancel button
- * @property [cancel-button-text] - sets the cancel button text to the value passed in
- * @property [cancel-action] - the function that gets called by clicking the cancel button
+ * @property [hideCancelButton] - hides the cancel button
+ * @property [cancelButtonText] - sets the cancel button text to the value passed in
+ * @property [cancelAction] - the function that gets called by clicking the cancel button
  * @see {@link /docs/v2/components#search Search Component Docs}
  */
 @ConfigComponent({
@@ -43,7 +43,7 @@ import {Button} from '../button/button';
       '<button (click)="cancelSearchbar($event, query)" clear dark class="searchbar-md-cancel"><icon arrow-back></icon></button>' +
       '<div class="searchbar-search-icon"></div>' +
       '<input [value]="query" class="searchbar-input" type="search" [attr.placeholder]="placeholder">' +
-      '<button clear *ng-if="query" class="searchbar-clear-icon" (click)="clearInput()"></button>' +
+      '<button clear *ngIf="query" class="searchbar-clear-icon" (click)="clearInput()"></button>' +
     '</div>' +
     '<button clear (click)="cancelSearchbar($event)" [hidden]="hideCancelButton" class="searchbar-ios-cancel">{{cancelButtonText || "Cancel"}}</button>',
   directives: [FORM_DIRECTIVES, NgIf, NgClass, Icon, Button, forwardRef(() => SearchbarInput)]

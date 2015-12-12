@@ -35,7 +35,7 @@
       </ion-item-options>
     </ion-item-sliding>
 
-    <ion-item-sliding *ng-if="shouldShow" #item>
+    <ion-item-sliding *ngIf="shouldShow" #item>
       <ion-item text-wrap detail-push>
         <h3>Ben Sperry</h3>
         <p>
@@ -83,7 +83,7 @@
       </ion-item-options>
     </ion-item-sliding>
 
-    <ion-item-sliding *ng-for="#data of getItems()" #item>
+    <ion-item-sliding *ngFor="#data of getItems()" #item>
       <ion-item text-wrap detail-push>
         <h3>ng-for {{data}}</h3>
       </ion-item>

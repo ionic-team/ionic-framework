@@ -22,19 +22,19 @@ import {extend} from '../../util/util';
     '<div class="action-sheet-wrapper">' +
       '<div class="action-sheet-container">' +
         '<div class="action-sheet-group action-sheet-options">' +
-          '<div class="action-sheet-title" *ng-if="d.titleText">{{d.titleText}}</div>' +
-          '<button (click)="buttonClicked(i)" *ng-for="#b of d.buttons; #i=index" class="action-sheet-button action-sheet-option disable-hover">' +
-            '<icon [name]="b.icon" *ng-if="b.icon" class="action-sheet-icon"></icon> ' +
+          '<div class="action-sheet-title" *ngIf="d.titleText">{{d.titleText}}</div>' +
+          '<button (click)="buttonClicked(i)" *ngFor="#b of d.buttons; #i=index" class="action-sheet-button action-sheet-option disable-hover">' +
+            '<icon [name]="b.icon" *ngIf="b.icon" class="action-sheet-icon"></icon> ' +
             '{{b.text}}' +
           '</button>' +
-          '<button *ng-if="d.destructiveText" (click)="destructive()" class="action-sheet-button action-sheet-destructive disable-hover">' +
-            '<icon [name]="d.destructiveIcon" *ng-if="d.destructiveIcon" class="action-sheet-icon"></icon> ' +
+          '<button *ngIf="d.destructiveText" (click)="destructive()" class="action-sheet-button action-sheet-destructive disable-hover">' +
+            '<icon [name]="d.destructiveIcon" *ngIf="d.destructiveIcon" class="action-sheet-icon"></icon> ' +
             '{{d.destructiveText}}' +
           '</button>' +
         '</div>' +
-        '<div class="action-sheet-group" *ng-if="d.cancelText">' +
+        '<div class="action-sheet-group" *ngIf="d.cancelText">' +
           '<button (click)="cancel()" class="action-sheet-button action-sheet-cancel disable-hover">' +
-            '<icon [name]="d.cancelIcon" *ng-if="d.cancelIcon" class="action-sheet-icon"></icon> ' +
+            '<icon [name]="d.cancelIcon" *ngIf="d.cancelIcon" class="action-sheet-icon"></icon> ' +
             '{{d.cancelText}}' +
           '</button>' +
         '</div>' +

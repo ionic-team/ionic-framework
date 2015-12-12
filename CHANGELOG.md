@@ -1,5 +1,5 @@
-<a name="2.0.0-alpha.41"></a>
-# 2.0.0-alpha.41 (2015-12-8)
+<a name="2.0.0-alpha.42"></a>
+# 2.0.0-alpha.42 (2015-12-11)
 
 
 ### Breaking Changes
@@ -29,7 +29,7 @@
 * `primary` attribute `<ion-nav-items primary>` now `<ion-buttons start>`
 * `secondary` attribute `<ion-nav-items secondary>` now `<ion-buttons end>`
 
-##### `<a menu-toggle>` should now be `<button menu-toggle>`
+##### `<a menu-toggle>` should now be `<button menuToggle>`
 
 * If a menu is not given an `id`, then it is automatically assigned an id, such as `leftMenu` or `rightMenu`.
 * If the menu toggle/close directives are not given a value then it tries the menu ids of `leftMenu` then `rightMenu`.
@@ -57,3 +57,31 @@
     * ngAfterViewInit
     * ngAfterViewChecked
     * ngOnDestroy
+
+### Steps to Upgrade to alpha.42
+
+
+1. Update to latest beta CLI: `npm install -g ionic@beta`
+2. Convert dash attributes to camelCase (see [Angular Changelog](https://github.com/angular/angular/blob/master/CHANGELOG.md#200-alpha52-2015-12-10))
+3. Remove sass imports in JS files
+4. Update css reference in index.html (remove build/css/app.css if it exists)
+
+  ```
+  <link ios-href="build/css/app.ios.css" rel="stylesheet">
+  <link md-href="build/css/app.md.css" rel="stylesheet">
+  ```
+  
+5. Add core stylesheets (copy from a starter or conf app) and remove app.scss:
+  
+  ```
+  app.core.scss
+  app.ios.scss
+  app.md.scss
+  app.variables.scss
+  ```
+  
+6. Update `app.core.scss` to reflect your Sass files
+7. See the conference app for run steps: [Getting Started](https://github.com/driftyco/ionic-conference-app#getting-started)
+8. Add the new gulp packages and gulp file found in the [ionic2-app-base](https://github.com/driftyco/ionic2-app-base) or any of the starter
+9. Add the contents from the [ionic2-app-base](https://github.com/driftyco/ionic2-app-base) ionic.config.js file
+10. Run `gulp sass watch` to watch and compile the sass (will be part of ionic serve in later release)

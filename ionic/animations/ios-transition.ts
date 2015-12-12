@@ -1,6 +1,6 @@
 import {Animation} from './animation';
 
-const DURATION = 550;
+const DURATION = 400;
 const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
 const OPACITY = 'opacity';
 const TRANSLATEX = 'translateX';
@@ -50,6 +50,7 @@ class IOSTransition extends Animation {
     if (enteringHasNavbar) {
       // entering page has a navbar
       let enteringNavBar = new Animation(enteringView.navbarRef());
+      enteringNavBar.before.addClass('show-navbar');
       this.add(enteringNavBar);
 
       let enteringTitle = new Animation(enteringView.titleRef());

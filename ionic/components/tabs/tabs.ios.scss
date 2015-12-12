@@ -21,7 +21,7 @@ tabbar {
   background: $tabbar-ios-background;
 }
 
-ion-tabs[tabbar-placement=top] tabbar {
+ion-tabs[tabbarPlacement=top] tabbar {
   border-top: none;
   border-bottom: 1px solid $toolbar-ios-border-color;
 }
@@ -60,8 +60,8 @@ ion-tabs[tabbar-placement=top] tabbar {
   }
 }
 
-[tabbar-icons=right] .tab-button,
-[tabbar-icons=left] .tab-button {
+[tabbarIcons=right] .tab-button,
+[tabbarIcons=left] .tab-button {
 
   .tab-button-text {
     font-size: 1.4rem;
@@ -77,7 +77,7 @@ ion-tabs[tabbar-placement=top] tabbar {
   }
 }
 
-[tabbar-icons=hide] .tab-button-text {
+[tabbarIcons=hide] .tab-button-text {
   font-size: 1.4rem;
   line-height: 1.1;
 }
@@ -101,7 +101,7 @@ ion-tabs[tabbar-placement=top] tabbar {
     border-top-width: 0.55px;
   }
 
-  &[tabbar-placement="top"] tabbar {
+  &[tabbarPlacement="top"] tabbar {
     border-bottom-width: 0.55px;
   }
 

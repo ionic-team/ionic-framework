@@ -14,10 +14,10 @@ import {rafFrames} from '../../util/dom';
 
 /**
  * @name Tabs
- * @property {any} [tabbar-placement] - set position of the tabbar, top or bottom
- * @property {any} [tabbar-icons] - set the position of the tabbar's icons: top, bottom, left, right, hide
+ * @property {any} [tabbarPlacement] - set position of the tabbar, top or bottom
+ * @property {any} [tabbarIcons] - set the position of the tabbar's icons: top, bottom, left, right, hide
  * @property {any} [tabbar-style] - sets tabbar's style (primary, secondary, etc)
- * @property {any} [preload-tabs] - sets whether to preload all the tabs, true or false
+ * @property {any} [preloadTabs] - sets whether to preload all the tabs, true or false
  * @usage
 * ```html
  * <ion-tabs>
@@ -48,8 +48,8 @@ import {rafFrames} from '../../util/dom';
     '</ion-navbar-section>' +
     '<ion-tabbar-section>' +
       '<tabbar role="tablist">' +
-        '<a *ng-for="#t of _tabs" [tab]="t" class="tab-button" role="tab">' +
-          '<icon [name]="t.tabIcon" [is-active]="t.isSelected" class="tab-button-icon"></icon>' +
+        '<a *ngFor="#t of _tabs" [tab]="t" class="tab-button" role="tab">' +
+          '<icon [name]="t.tabIcon" [isActive]="t.isSelected" class="tab-button-icon"></icon>' +
           '<span class="tab-button-text">{{t.tabTitle}}</span>' +
         '</a>' +
         '<tab-highlight></tab-highlight>' +

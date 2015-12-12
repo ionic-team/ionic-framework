@@ -17,7 +17,7 @@ import {ListHeader} from '../list/list';
  *
  * @usage
  * ```html
- * <ion-list radio-group ng-control="clientside">
+ * <ion-list radio-group ngControl="clientside">
  *
  *   <ion-list-header>
  *     Clientside

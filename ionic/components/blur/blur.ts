@@ -8,7 +8,7 @@ import {Directive, Renderer, ElementRef} from 'angular2/core';
  * @demo /docs/v2/demos/blur/
  */
 @Directive({
-  selector: '[ion-blur]'
+  selector: '[blur]'
 })
 export class Blur {
   constructor(private elementRef: ElementRef, private renderer: Renderer) {

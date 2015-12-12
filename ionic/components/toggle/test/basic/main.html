@@ -4,23 +4,23 @@
 
 <ion-content>
 
-  <form (submit)="doSubmit($event)" [ng-form-model]="fruitsForm">
+  <form (submit)="doSubmit($event)" [ngFormModel]="fruitsForm">
 
     <ion-list>
 
-      <ion-toggle value="apple" checked="true" ng-control="appleCtrl">
+      <ion-toggle value="apple" checked="true" ngControl="appleCtrl">
         Apple, value=apple, init checked
       </ion-toggle>
 
-      <ion-toggle ng-control="bananaCtrl">
+      <ion-toggle ngControl="bananaCtrl">
         Banana, init no checked/value attributes
       </ion-toggle>
 
-      <ion-toggle value="cherry" disabled="true" ng-control="cherryCtrl">
+      <ion-toggle value="cherry" disabled="true" ngControl="cherryCtrl">
         Cherry, value=cherry, init disabled
       </ion-toggle>
 
-      <ion-toggle value="grape" [checked]="grapeChecked" [disabled]="grapeDisabled" ng-control="grapeCtrl">
+      <ion-toggle value="grape" [checked]="grapeChecked" [disabled]="grapeDisabled" ngControl="grapeCtrl">
         Grape, value=grape, init checked, disabled
       </ion-toggle>
 
@@ -28,7 +28,7 @@
         Secondary color
       </ion-toggle>
 
-      <ion-toggle value="apple" checked="true" [(ng-model)]="myModel">
+      <ion-toggle value="apple" checked="true" [(ngModel)]="myModel">
         I'm an NgModel
       </ion-toggle>
 

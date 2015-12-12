@@ -33,8 +33,74 @@ import {IdRef} from '../components/app/id';
 import {ShowWhen, HideWhen} from '../components/show-hide-when/show-hide-when';
 
 /**
+ * @name IONIC_DIRECTIVES
+ * @description
  * The core Ionic directives as well as Angular's CORE_DIRECTIVES and
  * FORM_DIRECTIVES.  Automatically available in every [@Page](../Page/) template.
+ *
+ * **Angular**
+ * - CORE_DIRECTIVES
+ * - FORM_DIRECTIVES
+ *
+ * **Content**
+ * -  OverlayNav
+ * -  Menu
+ * -  MenuToggle
+ * -  MenuClose
+ *
+ * -  Button
+ * -  Blur
+ * -  Content
+ * -  Scroll
+ * -  Refresher
+ *
+ * **Lists**
+ * -  List
+ * -  ListHeader
+ * -  Item
+ * -  ItemSliding
+ *
+ * **Slides**
+ * -  Slides
+ * -  Slide
+ * -  SlideLazy
+ *
+ * **Tabs**
+ * -  Tabs
+ * -  Tab
+ *
+ * **Toolbar**
+ * -  Toolbar
+ * -  ToolbarTitle
+ * -  ToolbarItem
+ *
+ * **Media**
+ * -  Icon
+ *
+ * **Forms**
+ * -  Searchbar
+ * -  Segment
+ * -  SegmentButton
+ * -  Checkbox
+ * -  RadioGroup
+ * -  RadioButton
+ * -  Toggle
+ * -  TextInput
+ * -  TextInputElement
+ * -  Label
+ *
+ * **Nav**
+ * -  Nav
+ * -  NavbarTemplate
+ * -  Navbar
+ * -  NavPush
+ * -  NavPop
+ * -  NavRouter
+ * -  IdRef
+ *
+ * -  ShowWhen
+ * -  HideWhen
+
  */
 export const IONIC_DIRECTIVES = [
   // Angular

@@ -1,5 +1,5 @@
 <ion-toolbar>
-  <ion-segment [(ng-model)]="relationship">
+  <ion-segment [(ngModel)]="relationship">
     <ion-segment-button value="friends" class="e2eSegmentFriends">
       Friends
     </ion-segment-button>
@@ -30,8 +30,8 @@
 
   <h4>Map mode: NgControl</h4>
 
-  <form (submit)="doSubmit($event)" [ng-form-model]="myForm">
-    <ion-segment ng-control="mapStyle" danger>
+  <form (submit)="doSubmit($event)" [ngFormModel]="myForm">
+    <ion-segment ngControl="mapStyle" danger>
       <ion-segment-button value="standard" class="e2eSegmentStandard">
         Standard
       </ion-segment-button>
@@ -47,14 +47,14 @@
   <p>
     Map mode: <b>{{myForm.controls.mapStyle.value}}</b> -
 
-    <span [ng-switch]="myForm.controls.mapStyle.value">
-      <span *ng-switch-when="'standard'">
+    <span [ngSwitch]="myForm.controls.mapStyle.value">
+      <span *ngSwitchWhen="'standard'">
         <b>Standard</b>
       </span>
-      <span *ng-switch-when="'hybrid'">
+      <span *ngSwitchWhen="'hybrid'">
         <b>Hybrid</b>
       </span>
-      <span *ng-switch-when="'sat'">
+      <span *ngSwitchWhen="'sat'">
         <b>Satellite</b>
       </span>
     </span>
@@ -64,7 +64,7 @@
 
   <h4>Model style: NgModel</h4>
 
-  <ion-segment [(ng-model)]="modelStyle" dark>
+  <ion-segment [(ngModel)]="modelStyle" dark>
     <ion-segment-button value="A">
       Model A
     </ion-segment-button>
@@ -83,7 +83,7 @@
 </ion-content>
 
 <ion-toolbar position="bottom" primary>
-  <ion-segment [(ng-model)]="appType" light>
+  <ion-segment [(ngModel)]="appType" light>
     <ion-segment-button value="paid">
       Primary
     </ion-segment-button>
@@ -97,7 +97,7 @@
 </ion-toolbar>
 
 <ion-toolbar position="bottom">
-  <ion-segment [(ng-model)]="appType" danger>
+  <ion-segment [(ngModel)]="appType" danger>
     <ion-segment-button value="paid">
       Light
     </ion-segment-button>
@@ -111,7 +111,7 @@
 </ion-toolbar>
 
 <ion-toolbar position="bottom">
-  <ion-segment [(ng-model)]="appType" dark>
+  <ion-segment [(ngModel)]="appType" dark>
     <ion-segment-button value="paid">
       Light
     </ion-segment-button>

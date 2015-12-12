@@ -8,11 +8,11 @@ import {NavRegistry} from './nav-registry';
  *
  * Basic usage:
  * ```html
- * <button [nav-push]="pushPage"></button>
+ * <button [navPush]="pushPage"></button>
  * ```
  * To specify parameters you can use array syntax or the `nav-params` property:
  * ```html
- * <button [nav-push]="pushPage" [nav-params]="params"></button>
+ * <button [navPush]="pushPage" [navParams]="params"></button>
  * ```
  * Where `pushPage` and `params` are specified in your component, and `pushPage`
  * contains a reference to a [@Page component](../../../config/Page/):
@@ -20,7 +20,7 @@ import {NavRegistry} from './nav-registry';
  * ```ts
  * import {LoginPage} from 'login';
  * @Page({
- *   template: `<button [nav-push]="pushPage" [nav-params]="params"></button>`
+ *   template: `<button [navPush]="pushPage" [navParams]="params"></button>`
  * })
  * class MyPage {
  *   constructor(){
@@ -34,14 +34,14 @@ import {NavRegistry} from './nav-registry';
  * You can also use syntax similar to Angular2's router, passing an array to
  * NavPush:
  * ```html
- * <button [nav-push]="[pushPage, params]"></button>
+ * <button [navPush]="[pushPage, params]"></button>
  * ```
  * @demo /docs/v2/demos/nav-push-pop/
  * @see {@link /docs/v2/components#navigation Navigation Component Docs}
  * @see {@link ../NavPop NavPop API Docs}
  */
 @Directive({
-  selector: '[nav-push]',
+  selector: '[navPush]',
   inputs: [
     'instruction: navPush',
     'params: navParams'
@@ -69,7 +69,7 @@ export class NavPush {
 
     if (this.instruction instanceof Array) {
       if (this.instruction.length > 2) {
-        throw 'Too many [nav-push] arguments, expects [View, { params }]'
+        throw 'Too many [navPush] arguments, expects [View, { params }]'
       }
       destination = this.instruction[0];
       params = this.instruction[1] || this.params;
