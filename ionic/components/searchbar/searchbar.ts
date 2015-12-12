@@ -1,4 +1,4 @@
-import {ElementRef, Renderer, Directive, Host, forwardRef, ViewChild} from 'angular2/core';
+import {ElementRef, Renderer, Directive, Host, forwardRef, ViewChild, Output, EventEmitter} from 'angular2/core';
 import {NgIf, NgClass, NgControl, FORM_DIRECTIVES} from 'angular2/common';
 
 import {Ion} from '../ion';
@@ -40,16 +40,17 @@ import {Button} from '../button/button';
   },
   template:
     '<div class="searchbar-input-container">' +
-      '<button (click)="cancelSearchbar($event, ngControl.value)" clear dark class="searchbar-md-cancel"><icon arrow-back></icon></button>' +
+      '<button (click)="cancelSearchbar($event, query)" clear dark class="searchbar-md-cancel"><icon arrow-back></icon></button>' +
       '<div class="searchbar-search-icon"></div>' +
-      '<input [value]="ngControl.value" class="searchbar-input" type="search" [attr.placeholder]="placeholder">' +
-      '<button clear *ng-if="ngControl.value" class="searchbar-clear-icon" (click)="clearInput()"></button>' +
+      '<input [value]="query" class="searchbar-input" type="search" [attr.placeholder]="placeholder">' +
+      '<button clear *ng-if="query" class="searchbar-clear-icon" (click)="clearInput()"></button>' +
     '</div>' +
     '<button clear (click)="cancelSearchbar($event)" [hidden]="hideCancelButton" class="searchbar-ios-cancel">{{cancelButtonText || "Cancel"}}</button>',
   directives: [FORM_DIRECTIVES, NgIf, NgClass, Icon, Button, forwardRef(() => SearchbarInput)]
 })
 export class Searchbar extends Ion {
   @ViewChild(forwardRef(() => SearchbarInput)) searchbarInput;
+  query: string;
 
   constructor(
     elementRef: ElementRef,
@@ -67,7 +68,7 @@ export class Searchbar extends Ion {
     this.ngControl = ngControl;
     this.ngControl.valueAccessor = this;
 
-    this.ngControl.value = this.ngControl.value || '';
+    this.query = '';
   }
 
   /**
@@ -79,8 +80,6 @@ export class Searchbar extends Ion {
     if (typeof hideCancelButton === 'string') {
       this.hideCancelButton = (hideCancelButton === '' || hideCancelButton === 'true');
     }
-    console.log(this.cancelButtonText);
-    console.log(this.hideCancelButton);
   }
 
   /**
@@ -88,9 +87,7 @@ export class Searchbar extends Ion {
    * After the view has initialized check if the searchbar has a value
    */
   ngAfterViewInit() {
-    console.log("testing");
-    // If the user passes in a value to the model we should left align
-    this.shouldLeftAlign = this.ngControl.value && this.ngControl.value.trim() != '';
+    this.shouldLeftAlign = this.searchbarInput.value && this.searchbarInput.value.trim() != '';
   }
 
   /**
@@ -133,6 +130,14 @@ export class Searchbar extends Ion {
 
     this.cancelAction && this.cancelAction(event, value);
   }
+
+    /**
+    * @private
+    * Clears the input field and triggers the control change.
+    */
+   updateQuery(value) {
+     this.query = value;
+   }
 }
 
 @Directive({
@@ -144,6 +149,8 @@ export class Searchbar extends Ion {
   }
 })
 export class SearchbarInput {
+  @Output() input: EventEmitter<any> = new EventEmitter();
+
   constructor(
     @Host() searchbar: Searchbar,
     elementRef: ElementRef,
@@ -163,8 +170,7 @@ export class SearchbarInput {
   }
 
   ngOnInit() {
-    if (this.ngControl) this.value = this.ngControl.value;
-    console.log(this.value);
+
   }
 
   /**
@@ -173,6 +179,9 @@ export class SearchbarInput {
    */
   writeValue(value) {
     this.value = value;
+    if (typeof value === 'string') {
+      this.searchbar.updateQuery(value);
+    }
   }
 
   /**
@@ -206,6 +215,7 @@ export class SearchbarInput {
   inputChanged(event) {
     this.writeValue(event.target.value);
     this.onChange(event.target.value);
+    this.input.emit(null);
   }
 
 }
