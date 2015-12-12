@@ -29,11 +29,9 @@ import {Button} from '../button/button';
   inputs: [
     'cancelAction',
     'hideCancelButton',
-    'cancelButtonText'
+    'cancelButtonText',
+    'placeholder'
   ],
-  defaultInputs: {
-    'placeholder': 'Search'
-  },
   host: {
    '[class.searchbar-left-aligned]': 'shouldLeftAlign',
    '[class.searchbar-focused]': 'isFocused',
@@ -45,7 +43,7 @@ import {Button} from '../button/button';
       '<input [value]="query" class="searchbar-input" type="search" [attr.placeholder]="placeholder">' +
       '<button clear *ngIf="query" class="searchbar-clear-icon" (click)="clearInput()"></button>' +
     '</div>' +
-    '<button clear (click)="cancelSearchbar($event)" [hidden]="hideCancelButton" class="searchbar-ios-cancel">{{cancelButtonText || "Cancel"}}</button>',
+    '<button clear (click)="cancelSearchbar($event)" [hidden]="hideCancelButton" class="searchbar-ios-cancel">{{cancelButtonText}}</button>',
   directives: [FORM_DIRECTIVES, NgIf, NgClass, Icon, Button, forwardRef(() => SearchbarInput)]
 })
 export class Searchbar extends Ion {
@@ -73,13 +71,16 @@ export class Searchbar extends Ion {
 
   /**
    * @private
-   * On Initialization check for hideCancelButton
+   * On Initialization check for attributes
    */
   ngOnInit() {
     let hideCancelButton = this.hideCancelButton;
     if (typeof hideCancelButton === 'string') {
       this.hideCancelButton = (hideCancelButton === '' || hideCancelButton === 'true');
     }
+
+    this.cancelButtonText = this.cancelButtonText || 'Cancel';
+    this.placeholder = this.placeholder || 'Search';
   }
 
   /**
