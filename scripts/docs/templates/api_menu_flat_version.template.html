@@ -1,4 +1,4 @@
 <@ for doc in docs @><@ if doc.URL and doc.private != true @>
-<li class="{% if page.id == '{{<$ doc.name $> | slugify}}' %}active{% endif %}">
+<li class="capitalize {% if page.id == '{{<$ doc.name $> | slugify}}' %}active{% endif %}">
   <a href="/<$ doc.URL $>"><$ doc.name $></a>
 </li><@ endif @><@ endfor @>
