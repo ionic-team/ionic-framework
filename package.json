@@ -43,7 +43,6 @@
     "glob": "^5.0.14",
     "gulp": "~3.8.10",
     "gulp-autoprefixer": "^2.3.0",
-    "gulp-babel": "^5.1.0",
     "gulp-cached": "^1.1.0",
     "gulp-concat": "~2.5.0",
     "gulp-connect": "^2.2.0",

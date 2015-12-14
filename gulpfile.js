@@ -7,7 +7,6 @@ var rename = require('gulp-rename');
 var through2 = require('through2');
 var runSequence = require('run-sequence');
 var watch = require('gulp-watch');
-var babel = require('gulp-babel');
 var tsc = require('gulp-typescript');
 var cache = require('gulp-cached');
 var minimist = require('minimist');
