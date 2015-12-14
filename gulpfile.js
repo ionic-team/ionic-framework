@@ -346,7 +346,8 @@ gulp.task('sass', function() {
 
 gulp.task('fonts', function() {
   return gulp.src(['ionic/**/*.ttf', 'ionic/**/*.woff'])
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('dist'))
+    .pipe(gulp.dest('dist/bundles'));
 });
 
 require('./scripts/snapshot/snapshot.task')(gulp, argv, buildConfig);
