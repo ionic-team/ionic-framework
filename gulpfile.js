@@ -250,7 +250,7 @@ gulp.task('e2e.build', function() {
   ])
   .pipe(rename(function(file) {
     var sep = path.sep;
-    file.dirname = file.dirname.replace(sep + 'test' + sep, sep)
+    file.dirname = file.dirname.replace(sep + 'test' + sep, sep);
   }))
   .pipe(gulp.dest('dist/e2e/'));
 
@@ -269,6 +269,7 @@ gulp.task('e2e.build', function() {
     return through2.obj(function(file, enc, next) {
       var self = this;
       var relativePath = path.dirname(file.path.replace(/^.*?ionic(\/|\\)components(\/|\\)/, ''));
+      relativePath = relativePath.replace('/test/', '/');
       var contents = file.contents.toString();
       platforms.forEach(function(platform) {
         var platformContents = testTemplate({
