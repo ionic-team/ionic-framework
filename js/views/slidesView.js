@@ -2053,7 +2053,8 @@
         // Create looped slides
         s.createLoop = function () {
 
-            s.wrapper.children('.' + s.params.slideClass + '.' + s.params.slideDuplicateClass).remove();
+            var toRemove = s.wrapper.children('.' + s.params.slideClass + '.' + s.params.slideDuplicateClass);
+            angular.element(toRemove).remove();
 
             var slides = s.wrapper.children('.' + s.params.slideClass);
 

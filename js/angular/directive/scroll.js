@@ -87,7 +87,7 @@ function($timeout, $controller, $ionicBind, $ionicConfig) {
         if (!$scope.direction) { $scope.direction = 'y'; }
         var isPaging = $scope.$eval($scope.paging) === true;
 
-        if(nativeScrolling) {
+        if (nativeScrolling) {
           $element.addClass('overflow-scroll');
         }
 

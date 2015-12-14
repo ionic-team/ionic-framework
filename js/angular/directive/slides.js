@@ -55,7 +55,7 @@ function($animate, $timeout) {
       this.update = function() {
         $timeout(function() {
           _this.__slider.update();
-          if(_this._options.loop) {
+          if (_this._options.loop) {
             _this.__slider.createLoop();
           }
 
@@ -106,7 +106,7 @@ function($animate, $timeout) {
     }
   };
 }])
-.directive('ionSlidePage', ['$timeout', function($timeout) {
+.directive('ionSlidePage', [function() {
   return {
     restrict: 'E',
     require: '?^ionSlides',
@@ -114,10 +114,7 @@ function($animate, $timeout) {
     replace: true,
     template: '<div class="swiper-slide" ng-transclude></div>',
     link: function($scope, $element, $attr, ionSlidesCtrl) {
-      $timeout(function() {
-        ionSlidesCtrl.rapidUpdate();
-      })
-
+      ionSlidesCtrl.rapidUpdate();
     }
   };
 }]);
