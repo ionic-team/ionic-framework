@@ -176,8 +176,6 @@ function bundle(args) {
   var webpack = require('webpack');
   var path = require('path');
 
-  var numTasks = args.numTasks ? args.numTasks : 0;
-
   webpack(args.config, function(err, stats){
     if (args.stats) {
       var statsOptions = {
@@ -190,7 +188,7 @@ function bundle(args) {
       console.log(stats.toString(statsOptions));
     }
 
-    if (numTasks === 0 && args.cb) args.cb();
+    args.cb && args.cb();
   })
 }
 
@@ -297,6 +295,7 @@ gulp.task('e2e.bundle', ['e2e.build', 'bundle', 'copy.web-animations', 'sass', '
 
   return glob("dist/e2e/**/index.js", function(err, files){
     var numTasks = files.length;
+    var callback = null;
     files.forEach(function(file){
       var config = require('./scripts/e2e/webpack.config.js');
 
@@ -310,12 +309,11 @@ gulp.task('e2e.bundle', ['e2e.build', 'bundle', 'copy.web-animations', 'sass', '
         libraryTarget: 'commonjs2',
         filename: path.dirname(file) + '/bundle.js'
       }
-
+      if (--numTasks === 0) callback = done;
       bundle({
         config: config,
-        numTasks: --numTasks,
         stats: false,
-        cb: done
+        cb: callback
       });
     })
   })
