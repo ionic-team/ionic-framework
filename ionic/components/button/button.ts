@@ -14,6 +14,7 @@ import {Toolbar} from '../toolbar/toolbar';
   * @property [full] - for a full width button
   * @property [small] - sets button size to small
   * @property [large] - sets button size to large
+  * @property [disabled] - disables the button
   * @property [fab] - for a floating action button
   * @property [fab-left] - position a fab button to the left
   * @property [fab-right] - position a fab button to the right
@@ -43,6 +44,7 @@ export class Button {
     this._display = null; // block/full
     this._colors = []; // primary/secondary
     this._icon = null; // left/right/only
+    this._disabled = false; // disabled
 
     let element = elementRef.nativeElement;
 
@@ -54,6 +56,10 @@ export class Button {
       // no need to put on these classes for an ion-item
       this._role = null;
       return;
+    }
+
+    if (element.hasAttribute('disabled')) {
+      this._disabled = true;
     }
 
     this._readAttrs(element);

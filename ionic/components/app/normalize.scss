@@ -127,7 +127,7 @@ button {
 }
 
 // Re-set default cursor for disabled elements.
-button[disabled],
+.button-disabled,
 html input[disabled] {
   cursor: default;
 }
