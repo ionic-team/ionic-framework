@@ -1,6 +1,6 @@
 {
   "name": "ionic-framework",
-  "version": "2.0.0-alpha.40",
+  "version": "2.0.0-alpha.42",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -20,7 +20,7 @@
     "tooling"
   ],
   "dependencies": {
-    "angular2": "2.0.0-alpha.52",
+    "angular2": "2.0.0-alpha.53",
     "colors": "^1.1.2",
     "es6-promise": "^3.0.2",
     "es6-shim": "0.33.6",
