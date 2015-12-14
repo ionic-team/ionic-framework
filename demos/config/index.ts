@@ -28,7 +28,6 @@ export class InitialPage {
   constructor(platform: Platform) {
     this.platform = platform;
     if (window.localStorage.getItem('configDemo') !== null) {
-      debugger;
       this.config = JSON.parse(window.localStorage.getItem('configDemo')); 
     }
     else if (platform.is('ios')) {
@@ -48,7 +47,6 @@ export class InitialPage {
 
   load() {
     window.localStorage.setItem('configDemo', JSON.stringify(this.config));
-    console.log('saving', this.config);
     window.location.reload();
   } 
 }
