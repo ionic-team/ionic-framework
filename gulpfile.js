@@ -117,13 +117,13 @@ gulp.task('clean', function(done) {
   del(['dist/**', '!dist'], done);
 });
 
-function tsResult(options){
+function tsResult(options, cacheName){
   return gulp.src([
       'ionic/**/*.ts',
       '!ionic/components/*/test/**/*',
       '!ionic/util/test/*'
     ])
-    .pipe(cache('transpile', { optimizeMemory: true }))
+    .pipe(cache(cacheName, { optimizeMemory: true }))
     .pipe(tsc(options, undefined, tscReporter))
     .on('error', function(error) {
       console.log(error.message);
@@ -131,14 +131,14 @@ function tsResult(options){
     });
 }
 gulp.task('transpile.no-typecheck', function(){
-  return tsResult(tscOptionsNoTypeCheck)
+  return tsResult(tscOptionsNoTypeCheck, 'no-typecheck')
     .pipe(gulp.dest('dist'));
 });
 
 gulp.task('transpile.typecheck', function(){
   var merge = require('merge2');
 
-  var result = tsResult(tscOptions);
+  var result = tsResult(tscOptions, 'typecheck');
 
   // merge definition and source streams
   return merge([
