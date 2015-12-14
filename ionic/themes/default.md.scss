@@ -3,15 +3,7 @@
 // Material Design Default Theme
 // ----------------------------------
 
-$colors-md: (
-
-  primary:    #387ef5,
-  secondary:  #32db64,
-  danger:     #f53d3d,
-  light:      #f4f4f4,
-  dark:       #222,
-
-) !default;
+$colors-md: copy-colors($colors) !default;
 
 
 $text-md-color:                       $text-color !default;
