@@ -55,7 +55,9 @@ function($animate, $timeout) {
       this.update = function() {
         $timeout(function() {
           _this.__slider.update();
-          _this.__slider.createLoop();
+          if(_this._options.loop) {
+            _this.__slider.createLoop();
+          }
 
           // Don't allow pager to show with > 10 slides
           if (_this.__slider.slides.length > 10) {
@@ -81,8 +83,10 @@ function($animate, $timeout) {
         preloadImages: false
       }, options);
 
+      this._options = newOptions;
+
       $timeout(function() {
-        var slider = new ionic.views.Swiper($element.children()[0], newOptions);
+        var slider = new ionic.views.Swiper($element.children()[0], newOptions, $scope);
 
         _this.__slider = slider;
         $scope.slider = _this.__slider;
@@ -102,7 +106,7 @@ function($animate, $timeout) {
     }
   };
 }])
-.directive('ionSlidePage', [function() {
+.directive('ionSlidePage', ['$timeout', function($timeout) {
   return {
     restrict: 'E',
     require: '?^ionSlides',
@@ -110,7 +114,10 @@ function($animate, $timeout) {
     replace: true,
     template: '<div class="swiper-slide" ng-transclude></div>',
     link: function($scope, $element, $attr, ionSlidesCtrl) {
-      ionSlidesCtrl.rapidUpdate();
+      $timeout(function() {
+        ionSlidesCtrl.rapidUpdate();
+      })
+
     }
   };
 }]);

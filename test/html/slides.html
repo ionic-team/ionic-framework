@@ -27,23 +27,11 @@
             <p>
               <img src="exoplanet.jpg" style="max-width: 100%" />
             </p>
-            <p>
-              <img src="exoplanet.jpg" style="max-width: 100%" />
-            </p>
-            <p>
-              <img src="exoplanet.jpg" style="max-width: 100%" />
-            </p>
-            <p>
-              <img src="exoplanet.jpg" style="max-width: 100%" />
-            </p>
-            <p>
-              <img src="exoplanet.jpg" style="max-width: 100%" />
-            </p>
-            <p>
-              <img src="exoplanet.jpg" style="max-width: 100%" />
-            </p>
             <div style="text-align: center">
               <small style="font-style: italic">An artist's rendering of your new home.</small>
+            </div>
+            <div>
+              <button class="button button-assertive" ng-click="doClick()">Tap</button>
             </div>
           </ion-content>
         </ion-slide-page>
@@ -130,6 +118,10 @@
       $timeout(function() {
         //$scope.slider.slideNext();
       }, 1000)
+
+      $scope.doClick = function() {
+        console.log('CLICK');
+      }
 
       /*
       $scope.extraSlides = [];
