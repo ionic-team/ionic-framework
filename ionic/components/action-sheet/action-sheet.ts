@@ -1,10 +1,3 @@
-/**
-* @ngdoc service
-* @name ActionSheet
-* @module ionic
-* @description
-* The ActionSheet is a modal menu with options to select based on an action.
-*/
 import {Component, Injectable, Renderer} from 'angular2/core';
 import {NgFor, NgIf} from 'angular2/common';
 
