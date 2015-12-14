@@ -11,25 +11,26 @@ import {Button} from '../button/button';
  * @name Searchbar
  * @module ionic
  * @description
- * Manages the display of a search bar which can be used to search or filter items.
+ * Manages the display of a Searchbar which can be used to search or filter items.
  *
  * @usage
  * ```html
  * <ion-searchbar [(ngModel)]="defaultSearch"></ion-searchbar>
  * ```
  *
- * @property [placeholder] - (default: 'Search') Sets input placeholder to value passed in
- * @property [hideCancelButton] - (default: false) Hides the cancel button
- * @property [cancelButtonText] - (default: 'Cancel') sets the cancel button text to the value passed in
- * @property [cancelAction] - the function that gets called by clicking the cancel button
+ * @property {function} [cancelButtonAction] - the function that gets called by clicking the cancel button
+ * @property {string} [cancelButtonText=Cancel] - sets the cancel button text to the value passed in
+ * @property {boolean} [hideCancelButton=false] - Hides the cancel button
+ * @property {string} [placeholder=Search] - Sets input placeholder to the value passed in
+ *
  * @see {@link /docs/v2/components#search Search Component Docs}
  */
 @ConfigComponent({
   selector: 'ion-searchbar',
   inputs: [
-    'cancelAction',
-    'hideCancelButton',
+    'cancelButtonAction',
     'cancelButtonText',
+    'hideCancelButton',
     'placeholder'
   ],
   outputs: ['input'],
@@ -41,7 +42,7 @@ import {Button} from '../button/button';
     '<div class="searchbar-input-container">' +
       '<button (click)="cancelSearchbar($event, query)" clear dark class="searchbar-md-cancel"><icon arrow-back></icon></button>' +
       '<div class="searchbar-search-icon"></div>' +
-      '<input [value]="query" class="searchbar-input" type="search" [attr.placeholder]="placeholder">' +
+      '<input [value]="query" (blur)="inputBlurred($event)" (focus)="inputFocused()" class="searchbar-input" type="search" [attr.placeholder]="placeholder">' +
       '<button clear *ngIf="query" class="searchbar-clear-icon" (click)="clearInput()"></button>' +
     '</div>' +
     '<button clear (click)="cancelSearchbar($event)" [hidden]="hideCancelButton" class="searchbar-ios-cancel">{{cancelButtonText}}</button>',
@@ -88,7 +89,7 @@ export class Searchbar extends Ion {
 
   /**
    * @private
-   * After the view has initialized check if the searchbar has a value
+   * After the view has initialized check if the Searchbar has a value
    */
   ngAfterViewInit() {
     this.shouldLeftAlign = this.searchbarInput.value && this.searchbarInput.value.trim() != '';
@@ -96,7 +97,7 @@ export class Searchbar extends Ion {
 
   /**
    * @private
-   * Sets the searchbar to focused and aligned left on input focus.
+   * Sets the Searchbar to focused and aligned left on input focus.
    */
   inputFocused() {
     this.isFocused = true;
@@ -105,10 +106,11 @@ export class Searchbar extends Ion {
 
   /**
    * @private
-   * Sets the searchbar to not focused and checks if it should align left
-   * based on whether there is a value in the searchbar or not on input blur.
+   * Sets the Searchbar to not focused and checks if it should align left
+   * based on whether there is a value in the searchbar or not.
    */
   inputBlurred() {
+    console.log("Input Blurred");
     this.isFocused = false;
     this.shouldLeftAlign = this.searchbarInput.value && this.searchbarInput.value.trim() != '';
   }
@@ -128,11 +130,13 @@ export class Searchbar extends Ion {
    * then calls the custom cancel function if the user passed one in.
    */
   cancelSearchbar(event, value) {
+    console.log("Clicked Cancel");
     this.searchbarInput.elementRef.nativeElement.blur();
     this.clearInput();
+    this.isFocused = false;
     this.shouldLeftAlign = false;
 
-    this.cancelAction && this.cancelAction(event, value);
+    this.cancelButtonAction && this.cancelButtonAction(event, value);
   }
 
     /**
@@ -148,8 +152,6 @@ export class Searchbar extends Ion {
 @Directive({
   selector: '.searchbar-input',
   host: {
-    '(focus)': 'inputFocused()',
-    '(blur)': 'inputBlurred()',
     '(keyup)': 'inputChanged($event)'
   }
 })
@@ -201,23 +203,7 @@ export class SearchbarInput {
 
   /**
    * @private
-   * Sets the Searchbar input to focused and aligned left on input focus.
-   */
-  inputFocused() {
-    this.searchbar.inputFocused();
-  }
-
-  /**
-   * @private
-   * Calls the Searchbar function to blur
-   */
-  inputBlurred() {
-    this.searchbar.inputBlurred();
-  }
-
-  /**
-   * @private
-   * Update the Searchbar input value
+   * Update the Searchbar input value when the input changes
    */
   inputChanged(event) {
     this.writeValue(event.target.value);
