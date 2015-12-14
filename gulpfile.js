@@ -396,10 +396,19 @@ gulp.task('src.link', function(done) {
 gulp.task('src', function(done){
   runSequence(
     'clean',
-    ['bundle', 'sass', 'copy.scss', 'copy.web-animations'],
+    ['bundle', 'sass', 'fonts', 'copy.scss', 'copy.web-animations'],
+    'transpile.typecheck',
     done
   );
 })
+
+gulp.task('package', ['src'], function(){
+  return gulp.src([
+      'scripts/npm/.npmignore',
+      'scripts/npm/package.json'
+    ])
+    .pipe(gulp.dest('dist'));
+});
 
 require('./scripts/docs/gulp-tasks')(gulp, flags)
 
