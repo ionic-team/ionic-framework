@@ -40,12 +40,14 @@ import {Button} from '../button/button';
   },
   template:
     '<div class="searchbar-input-container">' +
-      '<button (mousedown)="cancelSearchbar($event, query)" clear dark class="searchbar-md-cancel"><icon arrow-back></icon></button>' +
+      '<button (click)="cancelSearchbar($event, query)" (mousedown)="cancelSearchbar($event, query)" clear dark class="searchbar-md-cancel">' +
+        '<icon arrow-back></icon>' +
+      '</button>' +
       '<div class="searchbar-search-icon"></div>' +
       '<input [value]="query" (blur)="inputBlurred($event)" (focus)="inputFocused()" class="searchbar-input" type="search" [attr.placeholder]="placeholder">' +
-      '<button clear *ngIf="query" class="searchbar-clear-icon" (mousedown)="clearInput()"></button>' +
+      '<button clear *ngIf="query" class="searchbar-clear-icon" (click)="clearInput()" (mousedown)="clearInput()"></button>' +
     '</div>' +
-    '<button clear (mousedown)="cancelSearchbar($event)" [hidden]="hideCancelButton" class="searchbar-ios-cancel">{{cancelButtonText}}</button>',
+    '<button clear (click)="cancelSearchbar($event)" (mousedown)="cancelSearchbar($event)" [hidden]="hideCancelButton" class="searchbar-ios-cancel">{{cancelButtonText}}</button>',
   directives: [FORM_DIRECTIVES, NgIf, NgClass, Icon, Button, forwardRef(() => SearchbarInput)]
 })
 export class Searchbar extends Ion {
@@ -118,6 +120,7 @@ export class Searchbar extends Ion {
       this.blurInput = true;
       return;
     }
+    //console.log("Blurring input");
     this.isFocused = false;
     this.shouldLeftAlign = this.searchbarInput.value && this.searchbarInput.value.trim() != '';
   }
@@ -127,6 +130,7 @@ export class Searchbar extends Ion {
    * Clears the input field and triggers the control change.
    */
   clearInput() {
+    //console.log("Clearing input");
     this.searchbarInput.writeValue('');
     this.searchbarInput.onChange('');
     this.blurInput = false;
@@ -139,6 +143,7 @@ export class Searchbar extends Ion {
    * then calls the custom cancel function if the user passed one in.
    */
   cancelSearchbar(event, value) {
+    //console.log("Cancel searchbar");
     this.clearInput();
     this.blurInput = true;
 
