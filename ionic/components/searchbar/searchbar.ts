@@ -40,17 +40,18 @@ import {Button} from '../button/button';
   },
   template:
     '<div class="searchbar-input-container">' +
-      '<button (click)="cancelSearchbar($event, query)" clear dark class="searchbar-md-cancel"><icon arrow-back></icon></button>' +
+      '<button (mousedown)="cancelSearchbar($event, query)" clear dark class="searchbar-md-cancel"><icon arrow-back></icon></button>' +
       '<div class="searchbar-search-icon"></div>' +
       '<input [value]="query" (blur)="inputBlurred($event)" (focus)="inputFocused()" class="searchbar-input" type="search" [attr.placeholder]="placeholder">' +
-      '<button clear *ngIf="query" class="searchbar-clear-icon" (click)="clearInput()"></button>' +
+      '<button clear *ngIf="query" class="searchbar-clear-icon" (mousedown)="clearInput()"></button>' +
     '</div>' +
-    '<button clear (click)="cancelSearchbar($event)" [hidden]="hideCancelButton" class="searchbar-ios-cancel">{{cancelButtonText}}</button>',
+    '<button clear (mousedown)="cancelSearchbar($event)" [hidden]="hideCancelButton" class="searchbar-ios-cancel">{{cancelButtonText}}</button>',
   directives: [FORM_DIRECTIVES, NgIf, NgClass, Icon, Button, forwardRef(() => SearchbarInput)]
 })
 export class Searchbar extends Ion {
   @ViewChild(forwardRef(() => SearchbarInput)) searchbarInput;
   query: string;
+  blurInput = true;
 
   constructor(
     elementRef: ElementRef,
@@ -110,7 +111,13 @@ export class Searchbar extends Ion {
    * based on whether there is a value in the searchbar or not.
    */
   inputBlurred() {
-    console.log("Input Blurred");
+    // blurInput determines if it should blur
+    // if we are clearing the input we still want to stay focused in the input
+    if (this.blurInput == false) {
+      this.searchbarInput.elementRef.nativeElement.focus();
+      this.blurInput = true;
+      return;
+    }
     this.isFocused = false;
     this.shouldLeftAlign = this.searchbarInput.value && this.searchbarInput.value.trim() != '';
   }
@@ -122,19 +129,18 @@ export class Searchbar extends Ion {
   clearInput() {
     this.searchbarInput.writeValue('');
     this.searchbarInput.onChange('');
+    this.blurInput = false;
   }
 
   /**
    * @private
-   * Blurs the input field, clears the input field and removes the left align
+   * Clears the input field and tells the input to blur since
+   * the clearInput function doesn't want the input to blur
    * then calls the custom cancel function if the user passed one in.
    */
   cancelSearchbar(event, value) {
-    console.log("Clicked Cancel");
-    this.searchbarInput.elementRef.nativeElement.blur();
     this.clearInput();
-    this.isFocused = false;
-    this.shouldLeftAlign = false;
+    this.blurInput = true;
 
     this.cancelButtonAction && this.cancelButtonAction(event, value);
   }
