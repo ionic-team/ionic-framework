@@ -327,6 +327,7 @@ gulp.task('e2e', ['e2e.bundle']);
 gulp.task('sass', function() {
   var sass = require('gulp-sass');
   var autoprefixer = require('gulp-autoprefixer');
+  var minifyCss = require('gulp-minify-css');
 
   gulp.src([
     'ionic/ionic.ios.scss',
@@ -337,6 +338,9 @@ gulp.task('sass', function() {
     .on('error', sass.logError)
   )
   .pipe(autoprefixer(buildConfig.autoprefixer))
+  .pipe(gulp.dest('dist/bundles/'))
+  .pipe(minifyCss())
+  .pipe(rename({ extname: '.min.css' }))
   .pipe(gulp.dest('dist/bundles/'));
 });
 

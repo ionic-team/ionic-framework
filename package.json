@@ -48,6 +48,7 @@
     "gulp-connect": "^2.2.0",
     "gulp-if": "^1.2.5",
     "gulp-insert": "^0.5.0",
+    "gulp-minify-css": "^1.2.2",
     "gulp-rename": "~1.2.0",
     "gulp-sass": "^2.0.4",
     "gulp-shell": "^0.4.0",
