@@ -69,12 +69,13 @@ export class IdRef {
   selector: '[attr]',
   inputs: ['attr']
 })
+
 export class Attr {
   constructor(private renderer: Renderer, private elementRef: ElementRef) {}
 
-  /**
-   * @private
-   */
+/**
+ * @private
+ */
   ngOnInit() {
     this.renderer.setElementAttribute(this.elementRef, this.attr, '');
   }

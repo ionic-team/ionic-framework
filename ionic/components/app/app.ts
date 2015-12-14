@@ -8,6 +8,7 @@ import {ScrollTo} from '../../animations/scroll-to';
 
 
 /**
+ * @private
  * Component registry service.  For more information on registering
  * components see the [IdRef API reference](../id/IdRef/).
  */
@@ -27,6 +28,7 @@ export class IonicApp {
   }
 
   /**
+   * @private
    * Sets the document title.
    * @param {string} val  Value to set the document title to.
    */
@@ -44,6 +46,7 @@ export class IonicApp {
   }
 
   /**
+   * @private
    * Sets if the app is currently enabled or not, meaning if it's
    * available to accept new user commands. For example, this is set to `false`
    * while views transition, a modal slides up, an action-sheet
@@ -64,6 +67,7 @@ export class IonicApp {
   }
 
   /**
+   * @private
    * Boolean if the app is actively enabled or not.
    * @return {bool}
    */
@@ -72,6 +76,7 @@ export class IonicApp {
   }
 
   /**
+   * @private
    * Register a known component with a key, for easy lookups later.
    * @param {TODO} id  The id to use to register the component
    * @param {TODO} component  The component to register
@@ -84,6 +89,7 @@ export class IonicApp {
   }
 
   /**
+   * @private
    * Unregister a known component with a key.
    * @param {TODO} id  The id to use to unregister
    */
@@ -92,6 +98,7 @@ export class IonicApp {
   }
 
   /**
+   * @private
    * Get a registered component with the given type (returns the first)
    * @param {Object} cls the type to search for
    * @return the matching component, or undefined if none was found
@@ -105,6 +112,7 @@ export class IonicApp {
   }
 
   /**
+   * @private
    * Get the component for the given key.
    * @param {TODO} key  TODO
    * @return {TODO} TODO

@@ -19,7 +19,7 @@ import {IONIC_DIRECTIVES} from '../directives';
 * })
 *
 * export class MyApp{
-*
+*   // Anything we would want to do at the root of our app
 * }
 * ```
 *

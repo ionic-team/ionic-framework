@@ -11,6 +11,7 @@ import {Form} from '../../util/form';
  *
  * @property [checked] - whether or not the checkbox is checked (defaults to false)
  * @property [value] - the value of the checkbox component
+ * @property [disabled] - whether or not the checkbox is disabled or not.
  *
  * @usage
  * ```html
@@ -67,6 +68,9 @@ export class Checkbox {
     if (ngControl) ngControl.valueAccessor = this;
   }
 
+  /**
+   * @private
+   */
   ngOnInit() {
     this.labelId = 'label-' + this.inputId;
   }

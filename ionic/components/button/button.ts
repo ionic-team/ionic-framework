@@ -66,10 +66,16 @@ export class Button {
     this._readIcon(element);
   }
 
+/**
+ * @private
+ */
   ngAfterContentInit() {
     this._assignCss(true);
   }
 
+/**
+ * @private
+ */
   setRole(val) {
     this._role = val;
   }
@@ -162,6 +168,9 @@ export class Button {
     }
   }
 
+/**
+ * @private
+ */
   static setRoles(contentButtonChildren, role) {
     let buttons = contentButtonChildren.toArray();
     buttons.forEach(button => {
