@@ -39,6 +39,15 @@ IonicModule
       $onPulling: '&onPulling'
     });
 
+    function handleMousedown(e) {
+      e.touches = e.touches || [{
+        screenX: e.screenX,
+        screenY: e.screenY
+      }];
+      // Mouse needs this
+      startY = parseInt(e.touches[0].screenY, 10);
+    }
+
     function handleTouchend() {
       // if this wasn't an overscroll, get out immediately
       if (!canOverscroll && !isDragging) {
@@ -69,6 +78,11 @@ IonicModule
     }
 
     function handleTouchmove(e) {
+      e.touches = e.touches || [{
+        screenX: e.screenX,
+        screenY: e.screenY
+      }];
+
       // if multitouch or regular scroll event, get out immediately
       if (!canOverscroll || e.touches.length > 1) {
         return;
@@ -249,6 +263,9 @@ IonicModule
 
       ionic.on('touchmove', handleTouchmove, scrollChild);
       ionic.on('touchend', handleTouchend, scrollChild);
+      ionic.on('mousedown', handleMousedown, scrollChild);
+      ionic.on('mousemove', handleTouchmove, scrollChild);
+      ionic.on('mouseup', handleTouchend, scrollChild);
       ionic.on('scroll', handleScroll, scrollParent);
 
       // cleanup when done
@@ -258,6 +275,9 @@ IonicModule
     function destroy() {
       ionic.off('touchmove', handleTouchmove, scrollChild);
       ionic.off('touchend', handleTouchend, scrollChild);
+      ionic.off('mousedown', handleMousedown, scrollChild);
+      ionic.off('mousemove', handleTouchmove, scrollChild);
+      ionic.off('mouseup', handleTouchend, scrollChild);
       ionic.off('scroll', handleScroll, scrollParent);
       scrollParent = null;
       scrollChild = null;
