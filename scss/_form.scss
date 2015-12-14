@@ -157,10 +157,10 @@ textarea {
 }
 
 .item-select.item-stacked-label select {
-  position: relative; 
-  padding: 0px; 
-  max-width: 90%; 
-  direction:ltr; 
+  position: relative;
+  padding: 0px;
+  max-width: 90%;
+  direction:ltr;
   white-space: pre-wrap;
   margin: -3px;
 }
@@ -224,6 +224,8 @@ input[type="color"] {
   input[type="week"] {
     padding-top: 8px;
   }
+}
+.platform-ios {
   textarea {
     text-indent: -3px;
   }
