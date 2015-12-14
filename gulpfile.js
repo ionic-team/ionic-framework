@@ -288,7 +288,7 @@ gulp.task('e2e.build', function() {
   }
 });
 
-gulp.task('e2e.bundle', ['e2e.build'], function(done) {
+gulp.task('e2e.bundle', ['e2e.build', 'bundle', 'copy.web-animations', 'sass', 'fonts'], function(done) {
   var glob = require('glob');
   var webpack = require('webpack');
   var path = require('path');
