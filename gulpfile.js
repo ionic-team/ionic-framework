@@ -158,17 +158,21 @@ gulp.task('bundle', ['transpile'], function(done){
   //   }
 
   var config = require('./scripts/npm/ionic.webpack.config.js');
-  bundle({
-    config: config,
-    cb: finished,
-    stats: true
-  });
+  bundle({ config: config, stats: true });
+
+  // build minified bundle
+  var minConfig = require('./scripts/npm/ionic.min.webpack.config.js');
+  bundle({ config: minConfig, cb: finished, stats: true });
+
+  var outputPaths = [
+    config.output.path + path.sep + config.output.filename,
+    minConfig.output.path + path.sep + minConfig.output.filename
+  ];
 
   function finished(){
-    var outputPath = config.output.path + path.sep + config.output.filename;
-    gulp.src(outputPath)
+    gulp.src(outputPaths)
       .pipe(connect.reload())
-      .on('end', done)
+      .on('end', done);
   }
 })
 
