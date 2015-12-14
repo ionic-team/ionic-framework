@@ -1,0 +1,30 @@
+
+<ion-toolbar>
+  <ion-title>attr</ion-title>
+</ion-toolbar>
+
+<ion-content padding style="text-align:center">
+
+
+
+  <ion-row>
+    <ion-col>
+      <b>[attr.hidden]="isHidden ? '' : null"</b>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <b>isHidden:</b> {{isHidden}}
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <icon ionic [attr.hidden]="isHidden ? '' : null" style="font-size: 52px; text-align: center;"></icon>
+    </ion-col>
+  </ion-row>
+
+  <button (click)="toggle()">Toggle Icon</button>
+
+</ion-content>
