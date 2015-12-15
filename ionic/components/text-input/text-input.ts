@@ -106,7 +106,7 @@ export class TextInput {
    * This function is used to add the Angular css classes associated with inputs in forms
    */
    addNgClass(className) {
-     return this.input.elementRef.nativeElement.classList.contains(className);
+     this.input && this.input.elementRef.nativeElement.classList.contains(className);
    }
 
   /**
@@ -456,7 +456,7 @@ export class TextInput {
  * @private
  */
 @Directive({
-  selector: 'textarea,input[type=text],input[type=password],input[type=number],input[type=search],input[type=email],input[type=url],input[type=tel]',
+  selector: 'textarea,input[type=text],input[type=password],input[type=number],input[type=search],input[type=email],input[type=url],input[type=tel],input[type=date],input[type=datetime],input[type=datetime-local],input[type=week],input[type=time]',
   inputs: ['value'],
   host: {
     '(focus)': 'focusChange(true)',
