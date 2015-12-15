@@ -168,6 +168,7 @@ export class Segment extends Ion {
  *   </ion-segment>
  * </form>
  * ```
+ * @demo /docs/v2/demos/segment/
  * @see {@link /docs/v2/components#segment Segment Component Docs}
  * @see {@link /docs/v2/api/components/segment/Segment/ Segment API Docs}
  */
