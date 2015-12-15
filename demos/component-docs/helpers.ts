@@ -2,6 +2,7 @@ import {Directive, ElementRef, Renderer} from 'angular2/angular2';
 import {Platform, Navbar} from 'ionic/ionic';
 
 import * as actionSheets from './action-sheets/action-sheets';
+import * as badges from './badge/badge';
 import * as buttons from './buttons/buttons';
 import * as cards from './cards/cards';
 import * as grid from './grid/grid';
@@ -71,6 +72,7 @@ export function getPageFor(hash) {
     return {
         'overview': actionSheets.BasicPage,
         'action-sheets': actionSheets.BasicPage,
+        'badges': badges.BasicPage,
 
         'buttons': buttons.BasicPage,
         'block-buttons': buttons.BlockPage,
