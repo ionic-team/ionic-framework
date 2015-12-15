@@ -61,17 +61,23 @@
 ### Steps to Upgrade to alpha.42
 
 
-1. Update to latest beta CLI: `npm install -g ionic@beta`
-2. Convert dash attributes to camelCase (see [Angular Changelog](https://github.com/angular/angular/blob/master/CHANGELOG.md#200-alpha52-2015-12-10))
-3. Remove sass imports in JS files
-4. Update css reference in index.html (remove build/css/app.css if it exists)
+1. Update to the latest beta CLI: `npm install -g ionic@beta`
+2. Update `ionic-framework` in your `package.json` and then run `npm install` in the project directory: 
+
+   ```
+   "ionic-framework": "2.0.0-alpha.42",
+   ```
+
+3. Convert dash attributes to camelCase (see [Angular Changelog](https://github.com/angular/angular/blob/master/CHANGELOG.md#200-alpha52-2015-12-10))
+4. Remove the Sass imports in JS files
+5. Update css reference in index.html (remove build/css/app.css if it exists)
 
   ```
   <link ios-href="build/css/app.ios.css" rel="stylesheet">
   <link md-href="build/css/app.md.css" rel="stylesheet">
   ```
   
-5. Add core stylesheets (copy from a starter or conf app) and remove app.scss:
+6. Add core stylesheets (copy from a [starter](https://github.com/driftyco/ionic2-starter-tabs) or [conference app](https://github.com/driftyco/ionic-conference-app)) and remove app.scss:
   
   ```
   app.core.scss
@@ -80,8 +86,8 @@
   app.variables.scss
   ```
   
-6. Update `app.core.scss` to reflect your Sass files
-7. See the conference app for run steps: [Getting Started](https://github.com/driftyco/ionic-conference-app#getting-started)
-8. Add the new gulp packages and gulp file found in the [ionic2-app-base](https://github.com/driftyco/ionic2-app-base) or any of the starter
+7. Update `app.core.scss` to reflect your Sass files
+8. Add the new gulp packages and gulp file found in the [ionic2-app-base](https://github.com/driftyco/ionic2-app-base) or any of the starters
 9. Add the contents from the [ionic2-app-base](https://github.com/driftyco/ionic2-app-base) ionic.config.js file
-10. Run `gulp sass watch` to watch and compile the sass (will be part of ionic serve in later release)
+10. Run `ionic serve` to watch and compile the sass, and run the app in a browser
+11. When in doubt, reference the [conference app](https://github.com/driftyco/ionic-conference-app) or any [starter](https://github.com/driftyco/ionic2-starter-tabs).
