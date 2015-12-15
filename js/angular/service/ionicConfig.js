@@ -260,7 +260,8 @@ IonicModule
       toggle: PLATFORM
     },
     scrolling: {
-      jsScrolling: PLATFORM
+      jsScrolling: PLATFORM,
+      disableBodyBounce: PLATFORM
     },
     spinner: {
       icon: PLATFORM
@@ -309,7 +310,8 @@ IonicModule
     },
 
     scrolling: {
-      jsScrolling: false
+      jsScrolling: false,
+      disableBodyBounce: false
     },
 
     spinner: {
@@ -324,14 +326,18 @@ IonicModule
     templates: {
       maxPrefetch: 30
     }
-
   });
 
 
 
   // iOS (it is the default already)
   // -------------------------
-  setPlatformConfig('ios', {});
+  setPlatformConfig('ios', {
+    scrolling: {
+      jsScrolling: false,
+      disableBodyBounce: true
+    }
+  });
 
 
 
