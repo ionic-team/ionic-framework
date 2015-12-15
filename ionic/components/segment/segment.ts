@@ -41,7 +41,7 @@ import {Config} from '../../config/config';
  *   </ion-segment>
  * </form>
  * ```
- *
+ * @demo /docs/v2/demos/segment/
  * @see {@link /docs/v2/components#segment Segment Component Docs}
  * @see [Angular 2 Forms](http://learnangular2.com/forms/)
  */
