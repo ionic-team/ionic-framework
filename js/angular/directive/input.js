@@ -32,7 +32,15 @@ IonicModule
       this.$scope = $scope;
       this.$element = $element;
 
-      this.input = $element[0].querySelector('input,textarea');
+      this.setInputAriaLabeledBy = function(id) {
+        var inputs = $element[0].querySelectorAll('input,textarea');
+        inputs.length && inputs[0].setAttribute('aria-labelledby', id);
+      };
+
+      this.focus = function() {
+        var inputs = $element[0].querySelectorAll('input,textarea');
+        inputs.length && inputs[0].focus();
+      };
     }]
   };
 }]);
@@ -79,12 +87,13 @@ IonicModule
           $element.attr('id', id);
         }
 
-        if (ionInputCtrl && ionInputCtrl.input) {
-          ionInputCtrl.input.setAttribute('aria-labelledby', id);
+        if (ionInputCtrl) {
+
+          ionInputCtrl.setInputAriaLabeledBy(id);
 
           $element.on('click', function() {
             $timeout(function() {
-              ionInputCtrl.input.focus();
+              ionInputCtrl.focus();
             });
           });
         }
@@ -113,8 +122,8 @@ IonicModule
           $element.attr('id', id);
         }
 
-        if (ionInputCtrl && ionInputCtrl.input) {
-          ionInputCtrl.input.setAttribute('aria-labelledby', id);
+        if (ionInputCtrl) {
+          ionInputCtrl.setInputAriaLabeledBy(id);
         }
 
       };
