@@ -22,7 +22,7 @@ $toolbar-md-title-font-size:             2rem !default;
 $toolbar-md-button-font-size:            1.4rem !default;
 $navbar-md-height:                       $toolbar-md-height !default;
 
-$bar-button-md-color:                    $toolbar-md-active-color !default;
+$bar-button-md-color:                    $toolbar-md-button-color !default;
 $bar-button-md-border-radius:            2px !default;
 
 
@@ -71,8 +71,19 @@ ion-title {
     }
 
     .toolbar-title,
-    .bar-button-default {
-      color: inverse($color-value);
+    .bar-button-default,
+    .bar-button-outline {
+      color: toolbar-button-inverse($color-value);
+    }
+
+    .bar-button-outline {
+      border-color: toolbar-button-inverse($color-value);
+    }
+
+    @each $color-name, $color-value in $colors-md {
+      @include md-bar-button-default($color-name, $color-value);
+      @include md-bar-button-outline($color-name, $color-value);
+      @include md-bar-button-solid($color-name, $color-value);
     }
   }
 }
@@ -186,12 +197,10 @@ ion-buttons[right] {
   background-color: $bar-button-md-color;
 
   &:hover:not(.disable-hover) {
-    opacity: 0.4;
     color: inverse($bar-button-md-color);
   }
 
   &.activated {
-    opacity: 0.4;
     color: inverse($bar-button-md-color);
     background-color: color-shade($bar-button-md-color);
   }

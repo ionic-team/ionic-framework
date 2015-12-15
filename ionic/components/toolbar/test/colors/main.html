@@ -1,0 +1,199 @@
+
+<ion-toolbar>
+  <ion-title>This is the title that never ends. It just goes on and on my friend.</ion-title>
+</ion-toolbar>
+
+
+<ion-toolbar primary>
+  <ion-buttons start>
+    <button>
+      <icon ios=contact></icon>
+    </button>
+    <button>
+      <icon search></icon>
+    </button>
+  </ion-buttons>
+  <ion-buttons end>
+    <button secondary>
+      <icon more></icon>
+    </button>
+  </ion-buttons>
+  <ion-title>Primary</ion-title>
+</ion-toolbar>
+
+
+<ion-toolbar primary>
+  <ion-buttons start>
+    <button class="activated">
+      <icon ios="contact"></icon>
+    </button>
+    <button class="activated">
+      <icon search></icon>
+    </button>
+  </ion-buttons>
+  <ion-buttons end>
+    <button secondary class="activated">
+      <icon more></icon>
+    </button>
+  </ion-buttons>
+  <ion-title>Primary.activated</ion-title>
+</ion-toolbar>
+
+
+<ion-toolbar secondary>
+  <ion-buttons start>
+    <button solid>
+      <icon contact></icon>
+    </button>
+    <button solid>
+      <icon contact></icon>
+      Solid
+    </button>
+  </ion-buttons>
+  <ion-title>Secondary</ion-title>
+  <ion-buttons end>
+    <button solid danger>
+      Help
+      <icon help-circle></icon>
+    </button>
+  </ion-buttons>
+</ion-toolbar>
+
+
+<ion-toolbar secondary>
+  <ion-buttons start>
+    <button solid class="activated">
+      <icon contact></icon>
+    </button>
+    <button solid class="activated">
+      <icon contact></icon>
+      Solid
+    </button>
+  </ion-buttons>
+  <ion-title>Secondary Activated</ion-title>
+  <ion-buttons end>
+    <button solid danger class="activated">
+      Help
+      <icon help-circle></icon>
+    </button>
+  </ion-buttons>
+</ion-toolbar>
+
+
+<ion-toolbar dark>
+  <ion-buttons start>
+    <button outline>
+      <icon contact></icon>
+    </button>
+    <button outline>
+      <icon star></icon>
+      Star
+    </button>
+  </ion-buttons>
+  <ion-buttons end>
+    <button secondary outline>
+      <icon contact></icon>
+    </button>
+  </ion-buttons>
+  <ion-title>Dark</ion-title>
+</ion-toolbar>
+
+
+<ion-toolbar dark>
+  <ion-buttons start>
+    <button outline class="activated">
+      <icon contact></icon>
+    </button>
+    <button outline class="activated">
+      <icon star></icon>
+      Star
+    </button>
+  </ion-buttons>
+  <ion-buttons end>
+    <button secondary outline class="activated">
+      <icon contact></icon>
+    </button>
+  </ion-buttons>
+  <ion-title>Dark.activated</ion-title>
+</ion-toolbar>
+
+
+<ion-toolbar danger>
+  <ion-buttons start>
+    <button>
+      <icon contact></icon>
+      Clear
+    </button>
+  </ion-buttons>
+  <ion-buttons end>
+    <button>
+      Edit
+      <icon create></icon>
+    </button>
+  </ion-buttons>
+  <ion-title>Danger</ion-title>
+</ion-toolbar>
+
+
+<ion-toolbar danger>
+  <button menuToggle>
+    <icon menu></icon>
+  </button>
+  <ion-buttons start>
+    <button>
+      <icon star></icon>
+    </button>
+  </ion-buttons>
+  <ion-title>Danger</ion-title>
+</ion-toolbar>
+
+
+<ion-toolbar>
+<ion-buttons end>
+  <button #button1 (click)="buttonClick(button1)">
+    <icon star></icon>
+  </button>
+</ion-buttons>
+  <ion-title>Right side menu toggle</ion-title>
+  <button menuToggle right>
+    <icon menu></icon>
+  </button>
+</ion-toolbar>
+
+<ion-toolbar>
+  <ion-buttons end>
+    <button #button2 (click)="buttonClick(button2)">
+      <icon search></icon>
+    </button>
+  </ion-buttons>
+  <ion-segment secondary>
+    <ion-segment-button>
+      Something
+    </ion-segment-button>
+    <ion-segment-button>
+      Else
+    </ion-segment-button>
+  </ion-segment>
+</ion-toolbar>
+
+<ion-toolbar>
+  <ion-segment>
+    <ion-segment-button>
+      Light
+    </ion-segment-button>
+    <ion-segment-button>
+      Toolbar
+    </ion-segment-button>
+    <ion-segment-button>
+      Default Segment
+    </ion-segment-button>
+  </ion-segment>
+</ion-toolbar>
+
+
+<style>
+  .toolbar {
+    border-bottom: 1px solid black;
+    background: #eee !important;
+  }
+</style>
