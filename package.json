@@ -20,7 +20,7 @@
     "tooling"
   ],
   "dependencies": {
-    "angular2": "2.0.0-alpha.53",
+    "angular2": "2.0.0-alpha.54",
     "colors": "^1.1.2",
     "es6-promise": "^3.0.2",
     "es6-shim": "0.33.6",
@@ -28,9 +28,9 @@
     "lodash": "3.10.1",
     "q": "1.4.1",
     "reflect-metadata": "0.1.2",
-    "rxjs": "5.0.0-alpha.14",
+    "rxjs": "5.0.0-beta.0",
     "shelljs": "0.5.3",
-    "zone.js": "0.5.8"
+    "zone.js": "0.5.10"
   },
   "devDependencies": {
     "canonical-path": "0.0.2",
