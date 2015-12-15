@@ -11,6 +11,17 @@
   <script src="/node_modules/systemjs/node_modules/es6-module-loader/dist/es6-module-loader.src.js"></script>
   <script src="/node_modules/systemjs/dist/system.src.js"></script>
   <script src="/node_modules/angular2/bundles/angular2-polyfills.js"></script>
+  <script>
+    System.config({
+      map: {
+        'Rx': '/node_modules/rxjs/Rx.js',
+        'rxjs': '/node_modules/rxjs',
+        'angular2': '/node_modules/angular2/bundles/angular2-all.umd.js',
+        'ionic/ionic': '/dist/bundles/ionic.js'
+      }
+    })
+  </script>
+  <script src="/node_modules/rxjs/bundles/Rx.js"></script>
 
   <script>
     if (!console.time) {
@@ -83,15 +94,6 @@
   </ion-app>
 
   <script>
-    System.config({
-      defaultJSExtensions: true,
-      map: {
-        'Rx': '/node_modules/rxjs/Rx.js',
-        'rxjs': '/node_modules/rxjs',
-        'angular2': '/node_modules/angular2/bundles/angular2-all.umd.js',
-        'ionic/ionic': '/dist/bundles/ionic.js'
-      }
-    })
     System.import('bundle.js').then(function(m) {}, console.error.bind(console));
     console.timeEnd('script init');
   </script>
