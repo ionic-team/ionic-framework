@@ -43,7 +43,7 @@ ion-tabbar-section {
   order: $flex-order-tabbar-bottom;
 }
 
-[tabbar-placement=top] ion-tabbar-section {
+[tabbarPlacement=top] ion-tabbar-section {
   order: $flex-order-tabbar-top;
 }
 

@@ -30,7 +30,7 @@ function appendConfig(cls, config) {
 
     // set the component "hostProperties", so the instance's
     // input value will be used to set the element's attribute
-    config.host['[attr.' + pascalCaseToDashCase(prop) + ']'] = prop;
+    config.host['[attr.' + prop + ']'] = prop;
   }
 
   cls.delegates = config.delegates;
