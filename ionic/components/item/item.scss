@@ -88,5 +88,12 @@ ion-item-content + ion-item-content[cnt] {
   display: none;
 }
 
+@each $color-name, $color-value in $colors {
+  ion-item-divider[#{$color-name}] {
+    background-color: $color-value;
+    color: inverse($color-value);
+  }
+}
+
 @import "item-media";
 @import "item-sliding";
