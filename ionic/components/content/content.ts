@@ -19,7 +19,7 @@ import {ScrollTo} from '../../animations/scroll-to';
  *
  * @usage
  * ```html
- * <ion-content>
+ * <ion-content id="myContent">
  *   Add your content here!
  * </ion-content>
  * ```
@@ -58,7 +58,27 @@ export class Content extends Ion {
 
   /**
    * Adds the specified scroll handler to the content' scroll element.
-   * @param {Function} handler  The scroll event handler.
+   *
+   * ```ts
+   * @Page({
+   *   template: `<ion-content id="my-content"></ion-content>`
+   * )}
+   * export class MyPage{
+   *    constructor(app: IonicApp){
+   *        this.app = app;
+   *    }
+   *   // Need to wait until the component has been initialized
+   *   ngAfterViewInit() {
+   *     // Here 'my-content' is the ID of my ion-content
+   *     this.content = this.app.getComponent('my-content');
+   *     this.content.addScrollEventListener(this.myScroll);
+   *   }
+   *     myScroll() {
+   *      console.info('They see me scrolling...');
+   *    }
+   * }
+   * ```
+   * @param {Function} handler  The method you want perform when scrolling
    * @returns {Function} A function that removes the scroll handler.
    */
   addScrollEventListener(handler) {
@@ -106,7 +126,27 @@ export class Content extends Ion {
 
   /**
    * Adds the specified touchmove handler to the content's scroll element.
-   * @param {Function} handler  The touchmove handler.
+   *
+   * ```ts
+   * @Page({
+   *   template: `<ion-content id="my-content"></ion-content>`
+   * )}
+   * export class MyPage{
+   *    constructor(app: IonicApp){
+   *        this.app = app;
+   *    }
+   *   // Need to wait until the component has been initialized
+   *   ngAfterViewInit() {
+   *     // Here 'my-content' is the ID of my ion-content
+   *     this.content = this.app.getComponent('my-content');
+   *     this.content.addTouchMoveListener(this.touchHandler);
+   *   }
+   *    touchHandler() {
+   *      console.log("I'm touching all the magazines!!");
+   *    }
+   * }
+   * ```
+   * @param {Function} handler  The method you want to perform when touchmove is firing
    * @returns {Function} A function that removes the touchmove handler.
    */
   addTouchMoveListener(handler) {
@@ -124,11 +164,32 @@ export class Content extends Ion {
 
   /**
    * Scroll to the specified position.
-   * @param {TODO} x  The x-value to scroll to.
-   * @param {TODO} y  The y-value to scroll to.
-   * @param {Number} duration  Duration of the scroll animation.
+   *
+   * ```ts
+   * @Page({
+   *   template: `<ion-content id="my-content">
+   *      <button (click)="scrollTo()"> Down 500px</button>
+   *   </ion-content>`
+   * )}
+   * export class MyPage{
+   *    constructor(app: IonicApp){
+   *        this.app = app;
+   *    }
+   *   // Need to wait until the component has been initialized
+   *   ngAfterViewInit() {
+   *     // Here 'my-content' is the ID of my ion-content
+   *     this.content = this.app.getComponent('my-content');
+   *   }
+   *    scrollTo() {
+   *      this.content.scrollTo(0, 500, 200);
+   *    }
+   * }
+   * ```
+   * @param {Number} x  The x-value to scroll to.
+   * @param {Number} y  The y-value to scroll to.
+   * @param {Number} duration  Duration of the scroll animation in ms.
    * @param {TODO} tolerance  TODO
-   * @returns {TODO} TODO
+   * @returns {Promise} Returns a promise when done
    */
   scrollTo(x, y, duration, tolerance) {
     if (this._scrollTo) {
@@ -140,6 +201,31 @@ export class Content extends Ion {
     return this._scrollTo.start(x, y, duration, tolerance);
   }
 
+  /**
+   * Scroll to the specified position.
+   *
+   * ```ts
+   * @Page({
+   *   template: `<ion-content id="my-content">
+   *      <button (click)="scrollTop()"> Down 500px</button>
+   *   </ion-content>`
+   * )}
+   * export class MyPage{
+   *    constructor(app: IonicApp){
+   *        this.app = app;
+   *    }
+   *   // Need to wait until the component has been initialized
+   *   ngAfterViewInit() {
+   *     // Here 'my-content' is the ID of my ion-content
+   *     this.content = this.app.getComponent('my-content');
+   *   }
+   *    scrollTop() {
+   *      this.content.scrollTop();
+   *    }
+   * }
+   * ```
+   * @returns {Promise} Returns a promise when done
+   */
   scrollToTop() {
     if (this._scrollTo) {
       this._scrollTo.dispose();

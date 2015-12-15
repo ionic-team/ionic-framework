@@ -21,6 +21,9 @@ import {ClickBlock} from '../util/click-block';
 import {ready, closest} from '../util/dom';
 
 
+/**
+ * @private
+ */
 export function ionicProviders(args={}) {
   let platform = new Platform();
   let navRegistry = new NavRegistry(args.pages);

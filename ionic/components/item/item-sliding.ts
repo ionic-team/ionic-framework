@@ -4,9 +4,10 @@ import {List} from '../list/list';
 
 
 /**
+ * @name ItemSliding
+ *
  * @description
- * Creates a list-item that can easily be swiped,
- * deleted, reordered, edited, and more.
+ * Creates a list-item that can easily be swiped, deleted, reordered, edited, and more.
  *
  * @usage
  * ```html
