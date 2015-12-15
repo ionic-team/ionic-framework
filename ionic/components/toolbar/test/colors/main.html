@@ -148,52 +148,21 @@
 </ion-toolbar>
 
 
-<ion-toolbar>
-<ion-buttons end>
-  <button #button1 (click)="buttonClick(button1)">
-    <icon star></icon>
-  </button>
-</ion-buttons>
-  <ion-title>Right side menu toggle</ion-title>
+<ion-toolbar transparent>
+  <ion-buttons end>
+    <button #button1 (click)="buttonClick(button1)">
+      <icon star></icon>
+    </button>
+  </ion-buttons>
+  <ion-title>Transparent</ion-title>
   <button menuToggle right>
     <icon menu></icon>
   </button>
-</ion-toolbar>
-
-<ion-toolbar>
-  <ion-buttons end>
-    <button #button2 (click)="buttonClick(button2)">
-      <icon search></icon>
-    </button>
-  </ion-buttons>
-  <ion-segment secondary>
-    <ion-segment-button>
-      Something
-    </ion-segment-button>
-    <ion-segment-button>
-      Else
-    </ion-segment-button>
-  </ion-segment>
-</ion-toolbar>
-
-<ion-toolbar>
-  <ion-segment>
-    <ion-segment-button>
-      Light
-    </ion-segment-button>
-    <ion-segment-button>
-      Toolbar
-    </ion-segment-button>
-    <ion-segment-button>
-      Default Segment
-    </ion-segment-button>
-  </ion-segment>
 </ion-toolbar>
 
 
 <style>
   .toolbar {
     border-bottom: 1px solid black;
-    background: #eee !important;
   }
 </style>
