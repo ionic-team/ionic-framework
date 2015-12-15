@@ -6,7 +6,7 @@ import {Platform} from '../../platform/platform';
 /**
  * @private
  */
-class DisplayWhen {
+export class DisplayWhen {
 
   constructor(conditions, platform, ngZone) {
     this.isMatch = false;
