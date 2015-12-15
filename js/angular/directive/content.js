@@ -132,8 +132,7 @@ function($timeout, $controller, $ionicBind, $ionicConfig) {
               delegateHandle: attr.delegateHandle,
               startX: $scope.$eval($scope.startX) || 0,
               startY: $scope.$eval($scope.startY) || 0,
-              nativeScrolling: true,
-              disableBodyBounce: $ionicConfig.scrolling.disableBodyBounce()
+              nativeScrolling: true
             };
 
           } else {

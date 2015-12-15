@@ -441,26 +441,6 @@
         self.resize();
       };
 
-      var startY = 0;
-      var curY = 0;
-      var height = 0;
-      self.handleWindowTouchStart = function(e) {
-        startY = e.touches ? e.touches[0].screenY : e.screenY;
-        height = self.el.offsetHeight;
-      };
-
-      self.handleWindowTouchMove = function(e) {
-        curY = e.touches ? e.touches[0].screenY : e.screenY;
-
-				var atTop = (startY <= curY && self.el.scrollTop === 0);
-				var atBottom = (startY >= curY && self.el.scrollHeight - self.el.scrollTop === height);
-
-        if(atTop || atBottom) {
-          // Disable body bounce
-          e.preventDefault();
-        }
-      };
-
       container.addEventListener('scroll', self.onScroll);
 
       //Broadcasted when keyboard is shown on some platforms.
@@ -473,12 +453,6 @@
       // Since we can only resize scroll views that are currently visible, just resize
       // the current scroll view when the keyboard is closed.
       document.addEventListener('resetScrollView', self.resetScrollView);
-
-      if(self.options.disableBodyBounce && !ionic.Platform.isWebView()) {
-        window.addEventListener('touchstart', self.handleWindowTouchStart);
-        window.addEventListener('touchmove', self.handleWindowTouchMove);
-      }
-
     },
 
     __cleanup: function() {
@@ -490,11 +464,6 @@
 
       container.removeEventListener('scrollChildIntoView', self.scrollChildIntoView);
       container.removeEventListener('resetScrollView', self.resetScrollView);
-
-      if(self.options.disableBodyBounce && !ionic.Platform.isWebView()) {
-        window.removeEventListener('touchstart', self.handleWindowTouchStart);
-        window.removeEventListener('touchmove', self.handleWindowTouchMove);
-      }
 
       ionic.tap.removeClonedInputs(container, self);
 
