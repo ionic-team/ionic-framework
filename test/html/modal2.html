@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html ng-app="ionicApp">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+    <title>Ionic Modal</title>
+
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+
+  </head>
+  <body ng-controller="AppCtrl">
+
+    <ion-header-bar class="bar-positive">
+      <h1 class="title">Contacts</h1>
+      <div class="buttons">
+        <button class="button button-icon ion-compose" ng-click="modal.show()">
+        </button>
+      </div>
+    </ion-header-bar>
+    <ion-content>
+      <ion-list>
+        <ion-item ng-repeat="contact in contacts">
+          {{contact.name}}
+        </ion-item>
+      </ion-list>
+    </ion-content>
+    <script>
+    angular.module('ionicApp', ['ionic'])
+
+    .controller('AppCtrl', function($scope, $ionicModal) {
+
+      $scope.contacts = [
+        { name: 'Gordon Freeman' },
+        { name: 'Barney Calhoun' },
+        { name: 'Lamarr the Headcrab' },
+      ];
+
+      $ionicModal.fromTemplateUrl('templates/modal.html', {
+        scope: $scope
+      }).then(function(modal) {
+        $scope.modal = modal;
+      });
+
+      $scope.createContact = function(u) {
+        $scope.contacts.push({ name: u.firstName + ' ' + u.lastName });
+        $scope.modal.hide();
+      };
+
+    });
+    </script>
+
+    <script id="templates/modal.html" type="text/ng-template">
+      <ion-modal-view>
+        <ion-header-bar class="bar bar-header bar-positive">
+          <h1 class="title">New Contact</h1>
+          <button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
+        </ion-header-bar>
+        <ion-content class="padding">
+          <div class="list">
+            <label class="item item-input">
+              <span class="input-label">First Name</span>
+              <input ng-model="newUser.firstName" type="text">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Last Name</span>
+              <input ng-model="newUser.lastName" type="text">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Email</span>
+              <input ng-model="newUser.email" type="text">
+            </label>
+            <button class="button button-full button-positive" ng-click="createContact(newUser)">Create</button>
+          </div>
+        </ion-content>
+      </ion-modal-view>
+    </script>
+
+  </body>
+</html>

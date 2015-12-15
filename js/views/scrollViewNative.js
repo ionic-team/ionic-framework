@@ -205,7 +205,7 @@
         // scroll animation loop w/ easing
         // credit https://gist.github.com/dezinezync/5487119
         var start = Date.now(),
-          duration = 1000, //milliseconds
+          duration = 250, //milliseconds
           fromY = self.el.scrollTop,
           fromX = self.el.scrollLeft;
 
@@ -239,6 +239,7 @@
 
           } else {
             // done
+            ionic.tap.removeClonedInputs(self.__container, self);
             self.resize();
           }
         }
@@ -293,28 +294,144 @@
 
       // Event Handler
       var container = self.__container;
+      // save height when scroll view is shrunk so we don't need to reflow
+      var scrollViewOffsetHeight;
 
-      // should be unnecessary in native scrolling, but keep in case bugs show up
-      self.scrollChildIntoView = NOOP;
+      /**
+       * Shrink the scroll view when the keyboard is up if necessary and if the
+       * focused input is below the bottom of the shrunk scroll view, scroll it
+       * into view.
+       */
+      self.scrollChildIntoView = function(e) {
+        //console.log("scrollChildIntoView at: " + Date.now());
+
+        // D
+        var scrollBottomOffsetToTop = container.getBoundingClientRect().bottom;
+        // D - A
+        scrollViewOffsetHeight = container.offsetHeight;
+        var alreadyShrunk = self.isShrunkForKeyboard;
+
+        var isModal = container.parentNode.classList.contains('modal');
+        // 680px is when the media query for 60% modal width kicks in
+        var isInsetModal = isModal && window.innerWidth >= 680;
+
+       /*
+        *  _______
+        * |---A---| <- top of scroll view
+        * |       |
+        * |---B---| <- keyboard
+        * |   C   | <- input
+        * |---D---| <- initial bottom of scroll view
+        * |___E___| <- bottom of viewport
+        *
+        *  All commented calculations relative to the top of the viewport (ie E
+        *  is the viewport height, not 0)
+        */
+        if (!alreadyShrunk) {
+          // shrink scrollview so we can actually scroll if the input is hidden
+          // if it isn't shrink so we can scroll to inputs under the keyboard
+          // inset modals won't shrink on Android on their own when the keyboard appears
+          if ( ionic.Platform.isIOS() || ionic.Platform.isFullScreen || isInsetModal ) {
+            // if there are things below the scroll view account for them and
+            // subtract them from the keyboard height when resizing
+            // E - D                         E                         D
+            var scrollBottomOffsetToBottom = e.detail.viewportHeight - scrollBottomOffsetToTop;
+
+            // 0 or D - B if D > B           E - B                     E - D
+            var keyboardOffset = Math.max(0, e.detail.keyboardHeight - scrollBottomOffsetToBottom);
+
+            ionic.requestAnimationFrame(function(){
+              // D - A or B - A if D > B       D - A             max(0, D - B)
+              scrollViewOffsetHeight = scrollViewOffsetHeight - keyboardOffset;
+              container.style.height = scrollViewOffsetHeight + "px";
+
+              //update scroll view
+              self.resize();
+            });
+          }
+
+          self.isShrunkForKeyboard = true;
+        }
+
+        /*
+         *  _______
+         * |---A---| <- top of scroll view
+         * |   *   | <- where we want to scroll to
+         * |--B-D--| <- keyboard, bottom of scroll view
+         * |   C   | <- input
+         * |       |
+         * |___E___| <- bottom of viewport
+         *
+         *  All commented calculations relative to the top of the viewport (ie E
+         *  is the viewport height, not 0)
+         */
+        // if the element is positioned under the keyboard scroll it into view
+        if (e.detail.isElementUnderKeyboard) {
+
+          ionic.requestAnimationFrame(function(){
+            // update D if we shrunk
+            if (self.isShrunkForKeyboard && !alreadyShrunk) {
+              scrollBottomOffsetToTop = container.getBoundingClientRect().bottom;
+            }
+
+            // middle of the scrollview, this is where we want to scroll to
+            // (D - A) / 2
+            var scrollMidpointOffset = scrollViewOffsetHeight * 0.5;
+            //console.log("container.offsetHeight: " + scrollViewOffsetHeight);
+
+            // middle of the input we want to scroll into view
+            // C
+            var inputMidpoint = ((e.detail.elementBottom + e.detail.elementTop) / 2);
+
+            // distance from middle of input to the bottom of the scroll view
+            // C - D                                C               D
+            var inputMidpointOffsetToScrollBottom = inputMidpoint - scrollBottomOffsetToTop;
+
+            //C - D + (D - A)/2          C - D                     (D - A)/ 2
+            var scrollTop = inputMidpointOffsetToScrollBottom + scrollMidpointOffset;
+
+            if ( scrollTop > 0) {
+              if (ionic.Platform.isIOS()) {
+                //just shrank scroll view, give it some breathing room before scrolling
+                setTimeout(function(){
+                  ionic.tap.cloneFocusedInput(container, self);
+                  self.scrollBy(0, scrollTop, true);
+                  self.onScroll();
+                }, 32);
+              } else {
+                self.scrollBy(0, scrollTop, true);
+                self.onScroll();
+              }
+            }
+          });
+        }
+
+        // Only the first scrollView parent of the element that broadcasted this event
+        // (the active element that needs to be shown) should receive this event
+        e.stopPropagation();
+      };
 
       self.resetScrollView = function() {
         //return scrollview to original height once keyboard has hidden
-        if (self.isScrolledIntoView) {
-          self.isScrolledIntoView = false;
+        if (self.isShrunkForKeyboard) {
+          self.isShrunkForKeyboard = false;
           container.style.height = "";
-          container.style.overflow = "";
-          self.resize();
-          ionic.scroll.isScrolling = false;
         }
+        self.resize();
       };
 
-      container.addEventListener('resetScrollView', self.resetScrollView);
       container.addEventListener('scroll', self.onScroll);
 
       //Broadcasted when keyboard is shown on some platforms.
       //See js/utils/keyboard.js
       container.addEventListener('scrollChildIntoView', self.scrollChildIntoView);
-      container.addEventListener('resetScrollView', self.resetScrollView);
+
+      // Listen on document because container may not have had the last
+      // keyboardActiveElement, for example after closing a modal with a focused
+      // input and returning to a previously resized scroll view in an ion-content.
+      // Since we can only resize scroll views that are currently visible, just resize
+      // the current scroll view when the keyboard is closed.
+      document.addEventListener('resetScrollView', self.resetScrollView);
     },
 
     __cleanup: function() {
@@ -336,6 +453,7 @@
       delete self.options.el;
 
       self.resize = self.scrollTo = self.onScroll = self.resetScrollView = NOOP;
+      self.scrollChildIntoView = NOOP;
       container = null;
     }
   });

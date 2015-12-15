@@ -41,6 +41,7 @@ $ ionic start myproject
   * The `release` folder of this repository
   * Ionic CDN: [Latest Release](http://code.ionicframework.com/)
   * Using bower: `bower install ionic`
+  * For [Meteor](https://www.meteor.com/) applications: `meteor add driftyco:ionic` 
 - Download the **bleeding edge just-from-master release** from:
   * Ionic CDN: [Nightly Build](http://code.ionicframework.com/#nightly)
   * Using bower: `bower install driftyco/ionic-bower#master`
@@ -66,7 +67,7 @@ For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/`
 
 ## Authors
 
-Originally created by [Adam Bradley](http://twitter.com/adamdbradley), [Ben Sperry](http://twitter.com/benjsperry), and [Max Lynch](http://twitter.com/maxlynch), Ionic has seen hundreds of great [contributors](https://github.com/driftyco/ionic/graphs/contributors) from around the world, including Ionic Team Members [Perry Govier](http://twitter.com/perrygovier), [Mike Hartington](http://twitter.com/mhartington), and [Tim Lanacia](http://twitter.com/dopernicus).
+Originally created by [Adam Bradley](http://twitter.com/adamdbradley), [Ben Sperry](http://twitter.com/benjsperry), and [Max Lynch](http://twitter.com/maxlynch), Ionic has seen hundreds of great [contributors](https://github.com/driftyco/ionic/graphs/contributors) from around the world, including Ionic Team Members [Perry Govier](http://twitter.com/perrygovier), [Mike Hartington](http://twitter.com/mhartington), and [Tim Lancina](http://twitter.com/dopernicus).
 
 ## Development
 

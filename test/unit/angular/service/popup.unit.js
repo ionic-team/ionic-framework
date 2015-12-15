@@ -158,6 +158,7 @@ describe('$ionicPopup service', function() {
         spyOn(popup, 'hide').andCallFake(function(cb) {
           cb();
         });
+        popup.show();
         spyOn(popup.element, 'remove');
         spyOn(popup.scope, '$destroy');
         popup.remove();

@@ -44,21 +44,18 @@ IonicModule
  *
  * ```html
  * <ion-side-menus>
- *   <!-- Center content -->
- *   <ion-side-menu-content ng-controller="ContentController">
- *   </ion-side-menu-content>
- *
  *   <!-- Left menu -->
  *   <ion-side-menu side="left">
- *   </ion-side-menu>
- *
- *   <!-- Right menu -->
- *   <ion-side-menu side="right">
  *   </ion-side-menu>
  *
  *   <ion-side-menu-content>
  *   <!-- Main content, usually <ion-nav-view> -->
  *   </ion-side-menu-content>
+ *
+ *   <!-- Right menu -->
+ *   <ion-side-menu side="right">
+ *   </ion-side-menu>
+ *
  * </ion-side-menus>
  * ```
  * ```js

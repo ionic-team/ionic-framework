@@ -26,7 +26,7 @@
 .button-bar > .button {
   @include flex(1);
   display: block;
-  
+
   overflow: hidden;
 
   padding: 0 16px;
@@ -50,5 +50,12 @@
   &:last-child {
     border-right-width: 1px;
     border-radius: 0px $button-border-radius $button-border-radius 0px;
+  }
+}
+
+.button-bar > .button-small {
+  &:before,
+  .icon:before {
+    line-height: 28px;
   }
 }
