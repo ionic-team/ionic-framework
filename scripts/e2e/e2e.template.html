@@ -84,9 +84,11 @@
 
   <script>
     System.config({
+      defaultJSExtensions: true,
       map: {
+        'Rx': '/node_modules/rxjs/Rx.js',
         'rxjs': '/node_modules/rxjs',
-        'angular2': '/node_modules/angular2/bundles/angular2.umd.dev.js',
+        'angular2': '/node_modules/angular2/bundles/angular2-all.umd.js',
         'ionic/ionic': '/dist/bundles/ionic.js'
       }
     })
