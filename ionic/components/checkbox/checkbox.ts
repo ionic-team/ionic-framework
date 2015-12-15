@@ -33,6 +33,7 @@ import {Form} from '../../util/form';
   host: {
     'role': 'checkbox',
     'tappable': 'true',
+    '[attr.id]': 'id',
     '[attr.tab-index]': 'tabIndex',
     '[attr.aria-checked]': 'checked',
     '[attr.aria-disabled]': 'disabled',
@@ -53,7 +54,7 @@ import {Form} from '../../util/form';
 export class Checkbox {
 
   constructor(
-    form: Form,
+    private form: Form,
     @Optional() ngControl: NgControl,
     elementRef: ElementRef
   ) {
@@ -72,7 +73,11 @@ export class Checkbox {
    * @private
    */
   ngOnInit() {
-    this.labelId = 'label-' + this.inputId;
+    if (!this.id) {
+      this.id = 'chk-' + this.form.nextId();
+    }
+
+    this.labelId = 'lbl-' + this.id;
   }
 
   /**

@@ -17,6 +17,7 @@ export class Form {
 
   constructor() {
     this._inputs = [];
+    this._ids = -1;
     this._focused = null;
 
     this.focusCtrl(document);
@@ -78,6 +79,10 @@ export class Form {
         previousInput.initFocus();
       }
     }
+  }
+
+  nextId() {
+    return ++this._ids;
   }
 
 }

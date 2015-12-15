@@ -82,6 +82,7 @@ class MediaToggle {
   host: {
     'role': 'checkbox',
     'tappable': 'true',
+    '[attr.id]': 'id',
     '[attr.tab-index]': 'tabIndex',
     '[attr.aria-checked]': 'checked',
     '[attr.aria-disabled]': 'disabled',
@@ -169,7 +170,11 @@ export class Toggle {
    * @private
    */
   ngOnInit() {
-    this.labelId = 'label-' + this.inputId;
+    if (!this.id) {
+      this.id = 'tgl-' + this.form.nextId();
+    }
+
+    this.labelId = 'lbl-' + this.id;
   }
 
   /**
@@ -259,5 +264,12 @@ export class Toggle {
    */
   isDisabled(ev) {
     return (this.lastTouch + 999 > Date.now() && /mouse/.test(ev.type)) || (this.mode == 'ios' && ev.target.tagName == 'ION-TOGGLE');
+  }
+
+  /**
+   * @private
+   */
+  initFocus() {
+
   }
 }

@@ -133,7 +133,7 @@ export class TextInput {
   /**
    * @private
    */
-  ngOnInit() {
+  ngAfterViewInit() {
     if (this.input && this.label) {
       // if there is an input and an label
       // then give the label an ID
