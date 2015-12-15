@@ -93,6 +93,9 @@ function($scope,
   });
 
   self.getScrollView = function() {
+    if (self.isNative()) {
+      scrollView.resize();
+    }
     return scrollView;
   };
 
