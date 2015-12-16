@@ -51,6 +51,7 @@ export class Form {
 
   focusOut() {
     console.debug('focusOut');
+    document.activeElement && document.activeElement.blur();
     this._blur.focus();
   }
 
