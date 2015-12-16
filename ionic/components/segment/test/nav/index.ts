@@ -1,18 +1,42 @@
-import {FORM_DIRECTIVES, FormBuilder, Validators, Control, ControlGroup} from 'angular2/common';
-
-import {App, Page} from 'ionic/ionic';
+import {Validators, Control, ControlGroup} from 'angular2/common';
+import {App, Page, NavController} from 'ionic/ionic';
 
 
 @Page({
   templateUrl: 'main.html',
-  providers: [FormBuilder],
-  directives: [FORM_DIRECTIVES]
 })
 class SegmentPage {
-  constructor(fb: FormBuilder) {
+  constructor(nav: NavController) {
+    this.nav = nav;
     this.signInType = 'new';
   }
+
+  goToPage2() {
+    this.nav.push(SegmentPage2);
+  }
 }
+
+@Page({
+  template: `
+    <ion-navbar *navbar hideBackButton>
+      <button menuToggle>
+        <icon menu></icon>
+      </button>
+      <ion-title>
+        Second Page
+      </ion-title>
+    </ion-navbar>
+
+    <ion-content>
+      <h1>Page 2</h1>
+    </ion-content>
+  `
+})
+class SegmentPage2 {
+  constructor() {
+  }
+}
+
 
 @App({
   pages: [SegmentPage],
