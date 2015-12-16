@@ -20,7 +20,7 @@
     "tooling"
   ],
   "dependencies": {
-    "angular2": "2.0.0-alpha.54",
+    "angular2": "2.0.0-beta.0",
     "colors": "^1.1.2",
     "es6-promise": "^3.0.2",
     "es6-shim": "0.33.6",
