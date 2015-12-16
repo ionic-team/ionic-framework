@@ -11,14 +11,15 @@ import {Button} from '../button/button';
  * @private
  */
 export class ToolbarBase extends Ion  {
+  itemRefs = [];
+  titleRef = null;
+  titleCmp: any;
 
   constructor(
     elementRef: ElementRef,
     config: Config
   ) {
     super(elementRef, config);
-    this.itemRefs = [];
-    this.titleRef = null;
   }
 
   /**
@@ -30,6 +31,7 @@ export class ToolbarBase extends Ion  {
 
   /**
    * @private
+   * Returns the toolbar title text if it exists or an empty string
    */
   getTitleText() {
     return (this.titleCmp && this.titleCmp.getTitleText()) || '';
@@ -152,6 +154,8 @@ export class ToolbarTitle extends Ion {
   selector: 'ion-buttons,[menuToggle],ion-nav-items'
 })
 export class ToolbarItem {
+  inToolbar: boolean;
+
   constructor(
     elementRef: ElementRef,
     @Optional() toolbar: Toolbar,
