@@ -17,6 +17,10 @@ $text-input-textarea-resize:          none !default;
   pointer-events: none;
 }
 
+input.item-input:-webkit-autofill {
+  background-color: transparent;
+}
+
 
 // Scroll Assist
 // --------------------------------------------------

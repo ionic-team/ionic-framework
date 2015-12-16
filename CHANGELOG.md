@@ -1,5 +1,5 @@
-<a name="2.0.0-alpha.41"></a>
-# 2.0.0-alpha.41 (2015-12-8)
+<a name="2.0.0-alpha.42"></a>
+# 2.0.0-alpha.42 (2015-12-11)
 
 
 ### Breaking Changes
@@ -24,16 +24,21 @@
 * searchbar: class `focused` has become `searchbar-focused`
 
 
-
 #####  `<ion-nav-items>` renamed to `<ion-buttons>`
 
 * `primary` attribute `<ion-nav-items primary>` now `<ion-buttons start>`
 * `secondary` attribute `<ion-nav-items secondary>` now `<ion-buttons end>`
 
-##### `<a menu-toggle>` should now be `<button menu-toggle>`
+##### `<a menu-toggle>` should now be `<button menuToggle>`
 
 * If a menu is not given an `id`, then it is automatically assigned an id, such as `leftMenu` or `rightMenu`.
 * If the menu toggle/close directives are not given a value then it tries the menu ids of `leftMenu` then `rightMenu`.
+
+#####  `<ion-switch>` renamed to `<ion-toggle>`
+
+* Consistent naming with Ionic v1
+* Reduce potential confusion with `ng-switch`
+
 
 ##### Bug Fixes
 
@@ -43,3 +48,46 @@
 ##### Features
 
 * Upgraded to Angular alpha.50
+  * Life cycle hooks are now prefixed with `ng`
+    * ngOnChanges
+    * ngOnInit
+    * ngDoCheck
+    * ngAfterContentInit
+    * ngAfterContentChecked
+    * ngAfterViewInit
+    * ngAfterViewChecked
+    * ngOnDestroy
+
+### Steps to Upgrade to alpha.42
+
+
+1. Update to the latest beta CLI: `npm install -g ionic@beta`
+2. Update `ionic-framework` in your `package.json` and then run `npm install` in the project directory: 
+
+   ```
+   "ionic-framework": "2.0.0-alpha.42",
+   ```
+
+3. Convert dash attributes to camelCase (see [Angular Changelog](https://github.com/angular/angular/blob/master/CHANGELOG.md#200-alpha52-2015-12-10))
+4. Remove the Sass imports in JS files
+5. Update css reference in index.html (remove build/css/app.css if it exists)
+
+  ```
+  <link ios-href="build/css/app.ios.css" rel="stylesheet">
+  <link md-href="build/css/app.md.css" rel="stylesheet">
+  ```
+  
+6. Add core stylesheets (copy from a [starter](https://github.com/driftyco/ionic2-starter-tabs) or [conference app](https://github.com/driftyco/ionic-conference-app)) and remove app.scss:
+  
+  ```
+  app.core.scss
+  app.ios.scss
+  app.md.scss
+  app.variables.scss
+  ```
+  
+7. Update `app.core.scss` to reflect your Sass files
+8. Add the new gulp packages and gulp file found in the [ionic2-app-base](https://github.com/driftyco/ionic2-app-base) or any of the starters
+9. Add the contents from the [ionic2-app-base](https://github.com/driftyco/ionic2-app-base) ionic.config.js file
+10. Run `ionic serve` to watch and compile the sass, and run the app in a browser
+11. When in doubt, reference the [conference app](https://github.com/driftyco/ionic-conference-app) or any [starter](https://github.com/driftyco/ionic2-starter-tabs).

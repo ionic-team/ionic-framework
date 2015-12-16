@@ -27,7 +27,7 @@ angular_controller: APIDemoCtrl <@ endif @>
   <a href="https://github.com/<$ versionInfo.gitRepoInfo.owner $>/<$ versionInfo.gitRepoInfo.repo $>/tree/master/<$ doc.fileInfo.relativePath $>#L<$ doc.location.start.line+1 $>-L<$ doc.location.end.line+1 $>"><$ doc.fileInfo.relativePath $> (line <$ doc.location.start.line+1 $>)</a>
 <@- endmacro -@>
 
-<@ macro paramTable(params, isDirective) @>
+<@ macro paramTable(params, isDirective) -@>
 <table class="table" style="margin:0;">
   <thead>
     <tr>
@@ -55,16 +55,17 @@ angular_controller: APIDemoCtrl <@ endif @>
     <@ endfor @>
   </tbody>
 </table>
-<@ endmacro @>
+<@- endmacro -@>
 
 
 <@- macro functionSyntax(fn) @>
-<@- set sep = joiner(', ') -@>
-<code><$ fn.name $>(<@- for param in fn.params @><$ sep() $>
+  <@- set sep = joiner(',&nbsp;') -@>
+  <code><$ fn.name $>(<@- for param in fn.params @><$ sep() $>
   <@- if param.type.optional @>[<@ endif -@>
   <$ param.name $>
   <@- if param.type.optional @>]<@ endif -@>
-  <@ endfor @>)</code><@ if fn.alias @><small>(alias: <$ fn.alias $>)</small><@ endif @>
+  <@ endfor @>)</code>
+  <@ if fn.alias @><small>(alias: <$ fn.alias $>)</small><@ endif @>
 <@ endmacro -@>
 
 <@ macro typeList(types) -@>
@@ -73,30 +74,29 @@ angular_controller: APIDemoCtrl <@ endif @>
 <@- endmacro -@>
 
 <@- macro typeInfo(fn) -@>
-<$ typeList(fn.typeList) $> <$ fn.description $>
+  <$ typeList(fn.typeList) $> <$ fn.description $>
 <@- endmacro -@>
 
 <@ block body @>
 
 <div class="improve-docs">
-  <a href='http://github.com/driftyco/ionic2/tree/master/<$ doc.fileInfo.relativePath $>#L<$ doc.location.start.line $>'>
-    View Source
-  </a>
-  &nbsp;
-  <a href='http://github.com/driftyco/ionic2/edit/master/<$ doc.fileInfo.relativePath $>#L<$ doc.location.start.line $>'>
-    Improve this doc
-  </a>
-
+<a href='http://github.com/driftyco/ionic2/tree/master/<$ doc.fileInfo.relativePath $>#L<$ doc.location.start.line $>'>
+View Source
+</a>
+&nbsp;
+<a href='http://github.com/driftyco/ionic2/edit/master/<$ doc.fileInfo.relativePath $>#L<$ doc.location.start.line $>'>
+Improve this doc
+</a>
 </div>
 
 <@ block content @>
 
 <@ block header @>
+
 <h1 class="api-title">
 
 <@ if doc.docType == "directive" @>
 <$ doc.name | dashCase $>
-
 <@ else @>
 <$ doc.name $>
 <@ endif @>
@@ -124,6 +124,7 @@ Delegate: <$ doc.delegate $>
 <@ endblock @>
 
 
+<!-- description -->
 <h2>Description</h2>
 <@ block description @>
 <$ doc.description | marked $>
@@ -135,7 +136,7 @@ Delegate: <$ doc.delegate $>
 <h3><$ doc.directiveInfo.properties[0].name $>: <code><$ doc.directiveInfo.properties[0].values $></code></h3>
 <@ endif -@>
 
-
+<!-- @usage tag -->
 <@ if doc.usage @>
 <h2>Usage</h2>
 <@ block usage @>
@@ -143,7 +144,7 @@ Delegate: <$ doc.delegate $>
 <@ endblock @>
 <@ endif @>
 
-
+<!-- @property tags -->
 <@ if doc.properties @>
 <h2>Attributes:</h2>
 <table class="table" style="margin:0;">
@@ -186,6 +187,7 @@ Delegate: <$ doc.delegate $>
 </table>
 <@ endif @>
 
+<!-- methods on the class -->
 <@- if doc.members and doc.members.length @>
 
 <h2>Methods</h2>
@@ -217,10 +219,7 @@ Delegate: <$ doc.delegate $>
 
 <@- endif -@>
 
-
-
-
-
+<!-- related link -->
 <@- if doc.see @>
 
 <h2>Related</h2>

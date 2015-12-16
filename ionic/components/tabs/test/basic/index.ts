@@ -13,7 +13,7 @@
         <ion-list-header>
           Tab 1
         </ion-list-header>
-        <ion-item *ng-for="#i of items">Item {{i}} {{i}} {{i}} {{i}}</ion-item>
+        <ion-item *ngFor="#i of items">Item {{i}} {{i}} {{i}} {{i}}</ion-item>
       </ion-list>
     </ion-content>
     `
@@ -39,7 +39,7 @@ class Tab1 {
     </ion-navbar>
     <ion-content>
       <ion-list>
-        <ion-item-sliding *ng-for="#session of sessions" #sliding-item>
+        <ion-item-sliding *ngFor="#session of sessions" #slidingItem>
           <ion-item>
             <h3>{{session.name}} {{session.name}} {{session.name}}</h3>
             <p>{{session.location}} {{session.location}} {{session.location}}</p>
@@ -71,7 +71,7 @@ class Tab2 {
 @Page({
   template: `
     <ion-navbar *navbar>
-      <button menu-toggle>
+      <button menuToggle>
         <icon menu></icon>
       </button>
       <ion-title>Stopwatch</ion-title>
@@ -92,7 +92,7 @@ class Tab3 {}
       </ion-toolbar>
       <ion-content>
         <ion-list>
-          <button ion-item menu-close detail-none>
+          <button ion-item menuClose detail-none>
             Close Menu
           </button>
         </ion-list>
@@ -100,9 +100,9 @@ class Tab3 {}
     </ion-menu>
 
     <ion-tabs #content>
-      <ion-tab tab-title="Plain List" tab-icon="star" [root]="root1"></ion-tab>
-      <ion-tab tab-title="Schedule" tab-icon="globe" [root]="root2"></ion-tab>
-      <ion-tab tab-title="Stopwatch" tab-icon="stopwatch" [root]="root3"></ion-tab>
+      <ion-tab tabTitle="Plain List" tabIcon="star" [root]="root1"></ion-tab>
+      <ion-tab tabTitle="Schedule" tabIcon="globe" [root]="root2"></ion-tab>
+      <ion-tab tabTitle="Stopwatch" tabIcon="stopwatch" [root]="root3"></ion-tab>
     </ion-tabs>
   `
 })

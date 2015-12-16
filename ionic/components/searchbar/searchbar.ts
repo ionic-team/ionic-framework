@@ -1,4 +1,5 @@
-import {ElementRef, Pipe, NgControl, Renderer, FORM_DIRECTIVES, NgIf, NgClass} from 'angular2/angular2';
+import {ElementRef, Renderer, Directive, Host, forwardRef, ViewChild, Output, EventEmitter} from 'angular2/core';
+import {NgIf, NgClass, NgControl, FORM_DIRECTIVES} from 'angular2/common';
 
 import {Ion} from '../ion';
 import {Config} from '../../config/config';
@@ -10,48 +11,49 @@ import {Button} from '../button/button';
  * @name Searchbar
  * @module ionic
  * @description
- * Manages the display of a search bar which can be used to search or filter items.
+ * Manages the display of a Searchbar which can be used to search or filter items.
  *
  * @usage
  * ```html
- * <ion-searchbar [(ng-model)]="defaultSearch"></ion-searchbar>
+ * <ion-searchbar [(ngModel)]="defaultSearch"></ion-searchbar>
  * ```
  *
- * @property [placeholder] - sets input placeholder to value passed in
- * @property [show-cancel] - shows the cancel button based on boolean value passed in
- * @property [cancel-text] - sets the cancel button text to the value passed in
- * @property [cancel-action] - the function that gets called by clicking the cancel button
+ * @property {function} [cancelButtonAction] - the function that gets called by clicking the cancel button
+ * @property {string} [cancelButtonText=Cancel] - sets the cancel button text to the value passed in
+ * @property {boolean} [hideCancelButton=false] - Hides the cancel button
+ * @property {string} [placeholder=Search] - Sets input placeholder to the value passed in
+ *
  * @see {@link /docs/v2/components#search Search Component Docs}
  */
 @ConfigComponent({
   selector: 'ion-searchbar',
-  defaultInputs: {
-    'showCancel': false,
-    'cancelText': 'Cancel',
-    'placeholder': 'Search'
-  },
-  inputs: ['cancelAction'],
+  inputs: [
+    'cancelButtonAction',
+    'cancelButtonText',
+    'hideCancelButton',
+    'placeholder'
+  ],
+  outputs: ['input'],
   host: {
    '[class.searchbar-left-aligned]': 'shouldLeftAlign',
    '[class.searchbar-focused]': 'isFocused',
   },
   template:
     '<div class="searchbar-input-container">' +
-      '<button (click)="cancelSearchbar($event, query)" clear dark class="searchbar-md-cancel"><icon arrow-back></icon></button>' +
+      '<button (click)="cancelSearchbar($event, query)" (mousedown)="cancelSearchbar($event, query)" clear dark class="searchbar-md-cancel">' +
+        '<icon arrow-back></icon>' +
+      '</button>' +
       '<div class="searchbar-search-icon"></div>' +
-      '<input [(value)]="query" (focus)="inputFocused()" (blur)="inputBlurred()" ' +
-      '(input)="inputChanged($event)" class="searchbar-input" type="search" [attr.placeholder]="placeholder">' +
-      '<button clear *ng-if="query" class="searchbar-clear-icon" (click)="clearInput($event)"></button>' +
+      '<input [value]="query" (blur)="inputBlurred($event)" (focus)="inputFocused()" class="searchbar-input" type="search" [attr.placeholder]="placeholder">' +
+      '<button clear *ngIf="query" class="searchbar-clear-icon" (click)="clearInput()" (mousedown)="clearInput()"></button>' +
     '</div>' +
-    '<button clear *ng-if="showCancel" (click)="cancelSearchbar($event, query)" class="searchbar-ios-cancel">{{cancelText}}</button>',
-  directives: [FORM_DIRECTIVES, NgIf, NgClass, Icon, Button]
+    '<button clear (click)="cancelSearchbar($event)" (mousedown)="cancelSearchbar($event)" [hidden]="hideCancelButton" class="searchbar-ios-cancel">{{cancelButtonText}}</button>',
+  directives: [FORM_DIRECTIVES, NgIf, NgClass, Icon, Button, forwardRef(() => SearchbarInput)]
 })
 export class Searchbar extends Ion {
-  /**
-   * @private
-   * This holds the searchbar input value used for querying
-   */
+  @ViewChild(forwardRef(() => SearchbarInput)) searchbarInput;
   query: string;
+  blurInput = true;
 
   constructor(
     elementRef: ElementRef,
@@ -63,22 +65,124 @@ export class Searchbar extends Ion {
     this.renderer = renderer;
     this.elementRef = elementRef;
 
+    this.input = new EventEmitter('input');
+
     // If there is no control then we shouldn't do anything
     if (!ngControl) return;
 
     this.ngControl = ngControl;
     this.ngControl.valueAccessor = this;
+
+    this.query = '';
   }
 
   /**
    * @private
-   * After the view has initialized check if the searchbar has a value
-   * and then store that value in query
+   * On Initialization check for attributes
+   */
+  ngOnInit() {
+    let hideCancelButton = this.hideCancelButton;
+    if (typeof hideCancelButton === 'string') {
+      this.hideCancelButton = (hideCancelButton === '' || hideCancelButton === 'true');
+    }
+
+    this.cancelButtonText = this.cancelButtonText || 'Cancel';
+    this.placeholder = this.placeholder || 'Search';
+  }
+
+  /**
+   * @private
+   * After the view has initialized check if the Searchbar has a value
    */
   ngAfterViewInit() {
-    // If the user passes in a value to the model we should left align
-    this.shouldLeftAlign = this.ngControl.value && this.ngControl.value.trim() != '';
-    this.query = this.ngControl.value || '';
+    this.shouldLeftAlign = this.searchbarInput.value && this.searchbarInput.value.trim() != '';
+  }
+
+  /**
+   * @private
+   * Sets the Searchbar to focused and aligned left on input focus.
+   */
+  inputFocused() {
+    this.isFocused = true;
+    this.shouldLeftAlign = true;
+  }
+
+  /**
+   * @private
+   * Sets the Searchbar to not focused and checks if it should align left
+   * based on whether there is a value in the searchbar or not.
+   */
+  inputBlurred() {
+    // blurInput determines if it should blur
+    // if we are clearing the input we still want to stay focused in the input
+    if (this.blurInput == false) {
+      this.searchbarInput.elementRef.nativeElement.focus();
+      this.blurInput = true;
+      return;
+    }
+    //console.log("Blurring input");
+    this.isFocused = false;
+    this.shouldLeftAlign = this.searchbarInput.value && this.searchbarInput.value.trim() != '';
+  }
+
+  /**
+   * @private
+   * Clears the input field and triggers the control change.
+   */
+  clearInput() {
+    //console.log("Clearing input");
+    this.searchbarInput.writeValue('');
+    this.searchbarInput.onChange('');
+    this.blurInput = false;
+  }
+
+  /**
+   * @private
+   * Clears the input field and tells the input to blur since
+   * the clearInput function doesn't want the input to blur
+   * then calls the custom cancel function if the user passed one in.
+   */
+  cancelSearchbar(event, value) {
+    //console.log("Cancel searchbar");
+    this.clearInput();
+    this.blurInput = true;
+
+    this.cancelButtonAction && this.cancelButtonAction(event, value);
+  }
+
+    /**
+    * @private
+    * Updates the value of query
+    */
+   updateQuery(value) {
+     this.query = value;
+     this.input.next(value);
+   }
+}
+
+@Directive({
+  selector: '.searchbar-input',
+  host: {
+    '(keyup)': 'inputChanged($event)'
+  }
+})
+export class SearchbarInput {
+  constructor(
+    @Host() searchbar: Searchbar,
+    elementRef: ElementRef,
+    renderer: Renderer
+  ) {
+    this.searchbar = searchbar;
+    this.renderer = renderer;
+    this.elementRef = elementRef;
+
+    if (!searchbar.ngControl) return;
+
+    this.onChange = (_) => {};
+    this.onTouched = (_) => {};
+
+    this.ngControl = searchbar.ngControl;
+    this.ngControl.valueAccessor = this;
   }
 
   /**
@@ -86,7 +190,10 @@ export class Searchbar extends Ion {
    * Write a new value to the element.
    */
   writeValue(value) {
-    this.query = value;
+    this.value = value;
+    if (typeof value === 'string') {
+      this.searchbar.updateQuery(value);
+    }
   }
 
   /**
@@ -107,52 +214,11 @@ export class Searchbar extends Ion {
 
   /**
    * @private
-   * Updates the value of the control when the searchbar input changes.
+   * Update the Searchbar input value when the input changes
    */
   inputChanged(event) {
     this.writeValue(event.target.value);
     this.onChange(event.target.value);
   }
 
-  /**
-   * @private
-   * Sets the searchbar to focused and aligned left on input focus.
-   */
-  inputFocused() {
-    this.isFocused = true;
-    this.shouldLeftAlign = true;
-  }
-
-  /**
-   * @private
-   * Sets the searchbar to not focused and checks if it should align left
-   * based on whether there is a value in the searchbar or not on input blur.
-   */
-  inputBlurred() {
-    this.isFocused = false;
-    this.shouldLeftAlign = this.ngControl.value && this.ngControl.value.trim() != '';
-  }
-
-  /**
-   * @private
-   * Clears the input field and triggers the control change.
-   */
-  clearInput(event) {
-    this.writeValue('');
-    this.onChange('');
-  }
-
-  /**
-   * @private
-   * Blurs the input field, clears the input field and removes the left align
-   * then calls the custom cancel function if the user passed one in.
-   */
-  cancelSearchbar(event, query) {
-    this.element = this.elementRef.nativeElement.querySelector('input');
-    this.element.blur();
-    this.clearInput();
-    this.shouldLeftAlign = false;
-
-    this.cancelAction && this.cancelAction(event, query);
-  }
 }

@@ -1,59 +1,76 @@
 <ion-toolbar><ion-title>Item Divider</ion-title></ion-toolbar>
 
 <ion-content class="outer-content">
+  <ion-item-group>
+    <ion-item>
+      Plain Ol' div with some text
+    </ion-item>
 
-  <ion-item>
-    Plain Ol' div with some text
-  </ion-item>
+    <ion-item>
+      Single line text that should have ellipses when it doesn't all fit in the item
+    </ion-item>
+  </ion-item-group>
 
-  <ion-item>
-    Single line text that should have ellipses when it doesn't all fit in the item
-  </ion-item>
+  <ion-item-group>
+    <ion-item-divider>
+      Item Divider
+    </ion-item-divider>
 
-  <ion-item-divider>
-    Item Divider
-  </ion-item-divider>
+    <ion-item text-wrap>
+      Multiline text that should wrap when it is too long
+      to fit on one line in the item. Attribute on .item
+    </ion-item>
+  </ion-item-group>
 
-  <ion-item text-wrap>
-    Multiline text that should wrap when it is too long
-    to fit on one line in the item. Attribute on .item
-  </ion-item>
+  <ion-item-group>
+    <ion-item-divider dark>Dark</ion-item-divider>
 
-  <ion-item text-wrap>
-    <h1>H1 Title Text</h1>
-    <p>Paragraph line 1</p>
-  </ion-item>
+    <ion-item text-wrap>
+      <h1>H1 Title Text</h1>
+      <p>Paragraph line 1</p>
+    </ion-item>
 
-  <ion-item text-wrap>
-    <h2>H2 Title Text</h2>
-    <p>Paragraph line 1</p>
-  </ion-item>
+    <ion-item text-wrap>
+      <h2>H2 Title Text</h2>
+      <p>Paragraph line 1</p>
+    </ion-item>
+  </ion-item-group>
 
-  <ion-item-divider></ion-item-divider>
+  <ion-item-group>
+    <ion-item-divider light>Light</ion-item-divider>
 
-  <ion-item text-wrap>
-    <h3>H3 Title Text</h3>
-    <p>Paragraph line 1</p>
-    <p>Paragraph line 2</p>
-  </ion-item>
+    <ion-item text-wrap>
+      <h3>H3 Title Text</h3>
+      <p>Paragraph line 1</p>
+      <p>Paragraph line 2</p>
+    </ion-item>
+  </ion-item-group>
 
-  <ion-item text-wrap>
-    <h4>H4 Title Text</h4>
-    <p>Paragraph line 1</p>
-    <p>Paragraph line 2</p>
-    <p>Paragraph line 3</p>
-  </ion-item>
+  <ion-item-group>
+    <ion-item-divider primary>Primary</ion-item-divider>
 
-  <ion-item>
-    <ion-item-content>
-      Column 1
-    </ion-item-content>
-    <ion-item-content>
-      Column 2
-    </ion-item-content>
-    <ion-item-content>
-      Column 3
-    </ion-item-content>
-  </ion-item>
+    <ion-item text-wrap>
+      <h4>H4 Title Text</h4>
+      <p>Paragraph line 1</p>
+      <p>Paragraph line 2</p>
+      <p>Paragraph line 3</p>
+    </ion-item>
+  </ion-item-group>
+
+  <ion-item-group>
+    <ion-item-divider secondary>Secondary</ion-item-divider>
+
+    <ion-item>
+      <ion-item-content>
+        Column 1
+      </ion-item-content>
+      <ion-item-content>
+        Column 2
+      </ion-item-content>
+      <ion-item-content>
+        Column 3
+      </ion-item-content>
+    </ion-item>
+  </ion-item-group>
 
 </ion-content>

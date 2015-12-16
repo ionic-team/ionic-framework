@@ -5,23 +5,27 @@ import {extend} from '../util/util';
 /**
   Animation Steps/Process
   -----------------------
-  1) Construct animation (doesn't start)
-  2) Client play()'s animation, returns promise
-  3) Add before classes to elements
-  4) Remove before classes from elements
-  5) Elements staged in "from" effect w/ inline styles
-  6) Call onReady()
-  7) Wait for RENDER_DELAY milliseconds (give browser time to render)
-  8) Call onPlay()
-  8) Run from/to animation on elements
-  9) Animations finish async
- 10) Set inline styles w/ the "to" effects on elements
- 11) Add after classes to elements
- 12) Remove after classes from elements
- 13) Call onFinish()
- 14) Resolve play()'s promise
+
+ - Construct animation (doesn't start)
+ - Client play()'s animation, returns promise
+ - Add before classes to elements
+ - Remove before classes from elements
+ - Elements staged in "from" effect w/ inline styles
+ - Call onReady()
+ - Wait for RENDER_DELAY milliseconds (give browser time to render)
+ - Call onPlay()
+ - Run from/to animation on elements
+ - Animations finish async
+ - Set inline styles w/ the "to" effects on elements
+ - Add after classes to elements
+ - Remove after classes from elements
+ - Call onFinish()
+ - Resolve play()'s promise
 **/
 
+/**
+ * @private
+**/
 export class Animation {
 
   constructor(ele, opts={}) {
@@ -539,11 +543,10 @@ export class Animation {
   }
 
   static createTransition(enteringView, leavingView, opts = {}) {
-    const name = opts.animation || 'ios-transition';
-
-    let TransitionClass = AnimationRegistry[name];
+    let TransitionClass = AnimationRegistry[opts.animation];
     if (!TransitionClass) {
-      TransitionClass = Animation;
+      // didn't find a transition animation, default to ios-transition
+      TransitionClass = AnimationRegistry['ios-transition'];
     }
 
     return new TransitionClass(enteringView, leavingView, opts);
@@ -555,6 +558,9 @@ export class Animation {
 
 }
 
+/**
+ * @private
+**/
 class Animate {
 
   constructor(ele, fromEffect, toEffect, duration, easingConfig, playbackRate) {
@@ -766,6 +772,8 @@ function inlineStyle(ele, effect) {
     if (transforms.length) {
       transforms.push('translateZ(0px)');
       ele.style[CSS.transform] = transforms.join(' ');
+    } else {
+      ele.style[CSS.transform] = 'translateZ(0px)';
     }
   }
 }

@@ -1,4 +1,4 @@
-import * as domUtil from 'ionic/util/dom'
+import * as domUtil from './util/dom'
 export const dom = domUtil
 
-export * from 'ionic/util/util'
+export * from './util/util'

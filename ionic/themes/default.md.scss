@@ -3,15 +3,7 @@
 // Material Design Default Theme
 // ----------------------------------
 
-$colors-md: (
-
-  primary:    #387ef5,
-  secondary:  #32db64,
-  danger:     #f53d3d,
-  light:      #f4f4f4,
-  dark:       #222,
-
-) !default;
+$colors-md: copy-colors($colors) !default;
 
 
 $text-md-color:                       $text-color !default;
@@ -28,9 +20,10 @@ $font-size-md-base:                   $font-size-base !default;
 
 $toolbar-md-background:               $toolbar-background !default;
 $toolbar-md-border-color:             $toolbar-border-color !default;
-$toolbar-md-text-color:               $toolbar-text-color !default;
+$toolbar-md-text-color:               #424242 !default;
 $toolbar-md-active-color:             $toolbar-active-color !default;
 $toolbar-md-inactive-color:           $toolbar-inactive-color !default;
+$toolbar-md-button-color:             #424242 !default;
 
 
 // Material Design List

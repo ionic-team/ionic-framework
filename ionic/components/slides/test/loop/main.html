@@ -1,0 +1,19 @@
+<ion-slides loop="true" id="loopSlider" (slideChanged)="onSlideChanged($event)" pager>
+  <ion-slide *ngFor="#slide of slides" [ngClass]="slide.class">
+    {{ slide.name }}
+  </ion-slide>
+</ion-slides>
+
+<style>
+  .yellow {
+    background-color: #fbeb14;
+  }
+
+  .red {
+    background-color: #ED4337;
+  }
+
+  .blue {
+    background-color: #89cff0;
+  }
+</style>

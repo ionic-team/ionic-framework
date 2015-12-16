@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Optional} from 'angular2/angular2';
+import {Directive, ElementRef, Optional} from 'angular2/core';
 
 import {IonicApp} from '../app/app';
 import {ViewController} from '../nav/view-controller';
@@ -13,14 +13,14 @@ import {Menu} from './menu';
 * @see {@link ../../menu/Menu Menu API Docs}
 */
 @Directive({
-  selector: '[menu-toggle]',
+  selector: '[menuToggle]',
   inputs: [
     'menuToggle'
   ],
   host: {
     '(click)': 'toggle()',
     '[hidden]': 'isHidden',
-    'menu-toggle': '' //ensures the attr is there for css when using [menu-toggle]
+    'menuToggle': '' //ensures the attr is there for css when using [menuToggle]
   }
 })
 export class MenuToggle {
@@ -37,7 +37,7 @@ export class MenuToggle {
 
     // Deprecation warning
     if (this.withinNavbar && elementRef.nativeElement.tagName === 'A') {
-      console.warn('Menu toggles within a navbar should use <button menu-toggle> instead of <a toggle>')
+      console.warn('Menu toggles within a navbar should use <button menuToggle> instead of <a menu-toggle>')
     }
   }
 

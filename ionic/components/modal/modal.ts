@@ -1,9 +1,9 @@
-import {Injectable} from 'angular2/angular2';
+import {Injectable, Type} from 'angular2/core';
 
 import {OverlayController} from '../overlay/overlay-controller';
 import {Config} from '../../config/config';
 import {Animation} from '../../animations/animation';
-import {extend} from 'ionic/util';
+import {extend} from '../../util';
 
 /**
  * The Modal is a content pane that can go over the user's current page.

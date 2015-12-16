@@ -11,6 +11,13 @@ $font-size-root:               62.5% !default;
 $headings-font-weight:         500 !default;
 $headings-line-height:         1.2 !default;
 
+$h1-font-size:                 2.6rem !default;
+$h2-font-size:                 2.4rem !default;
+$h3-font-size:                 2.2rem !default;
+$h4-font-size:                 2.0rem !default;
+$h5-font-size:                 1.8rem !default;
+$h6-font-size:                 1.6rem !default;
+
 
 html {
   font-size: $font-size-root;
@@ -42,29 +49,29 @@ h2 + h3 {
 }
 
 h1 {
-  font-size: 3.6rem;
+  font-size: $h1-font-size;
   margin-top: 2rem;
 }
 
 h2 {
-  font-size: 3rem;
+  font-size: $h2-font-size;
   margin-top: 1.8rem;
 }
 
 h3 {
-  font-size: 2.4rem;
+  font-size: $h3-font-size;
 }
 
 h4 {
-  font-size: 2rem;
+  font-size: $h4-font-size;
 }
 
 h5 {
-  font-size: 1.6rem;
+  font-size: $h5-font-size;
 }
 
 h6 {
-  font-size: 1.4rem;
+  font-size: $h6-font-size;
 }
 
 small {

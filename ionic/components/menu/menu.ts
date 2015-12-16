@@ -1,4 +1,4 @@
-import {Component, forwardRef, Directive, Host, EventEmitter, ElementRef} from 'angular2/angular2';
+import {Component, forwardRef, Directive, Host, EventEmitter, ElementRef} from 'angular2/core';
 
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
@@ -39,8 +39,8 @@ import * as gestures from  './menu-gestures';
  * to get ahold of menu references. If no `id` is given then the menu
  * automatically receives an `id` created from the side it is on, such as
  * `leftMenu` or `rightMenu`. When using more than one menu it is always
- * recommended to give each menu a unique `id`. Additionally menu-toggle and
- * menu-close directives should be given menu id values of their respective
+ * recommended to give each menu a unique `id`. Additionally menuToggle and
+ * menuClose directives should be given menu id values of their respective
  * menu.
  *
  * Menu supports two display styles: overlay, and reveal. Overlay
@@ -62,7 +62,6 @@ import * as gestures from  './menu-gestures';
   selector: 'ion-menu',
   inputs: [
     'content',
-    'dragThreshold',
     'id',
     'side',
     'type'
@@ -192,7 +191,7 @@ export class Menu extends Ion {
    */
   setOpen(shouldOpen) {
     // _isPrevented is used to prevent unwanted opening/closing after swiping open/close
-    // or swiping open the menu while pressing down on the menu-toggle button
+    // or swiping open the menu while pressing down on the menuToggle button
     if (shouldOpen === this.isOpen || this._isPrevented()) {
       return Promise.resolve();
     }
@@ -287,7 +286,7 @@ export class Menu extends Ion {
    */
   _prevent() {
     // used to prevent unwanted opening/closing after swiping open/close
-    // or swiping open the menu while pressing down on the menu-toggle
+    // or swiping open the menu while pressing down on the menuToggle
     this._preventTime = Date.now() + 20;
   }
 
@@ -381,7 +380,7 @@ export class Menu extends Ion {
     if (menuId) {
       menu = app.getComponent(menuId);
       if (!menu) {
-        console.error('Menu with id "' + menuId + '" cannot be found for menu-toggle');
+        console.error('Menu with id "' + menuId + '" cannot be found for menuToggle');
         return;
       }
 
@@ -391,7 +390,7 @@ export class Menu extends Ion {
         menu = app.getComponent('rightMenu');
       }
       if (!menu) {
-        console.error('Menu with id "leftMenu" or "rightMenu" cannot be found for menu-toggle');
+        console.error('Menu with id "leftMenu" or "rightMenu" cannot be found for menuToggle');
         return;
       }
     }

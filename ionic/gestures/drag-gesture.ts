@@ -1,5 +1,5 @@
-import {Gesture} from 'ionic/gestures/gesture';
-import * as util from 'ionic/util';
+import {Gesture} from './gesture';
+import * as util from '../util';
 
 
 export class DragGesture extends Gesture {

@@ -1,4 +1,5 @@
-import {Component, Directive, ElementRef, Host, Optional, NgControl, Inject, forwardRef} from 'angular2/angular2';
+import {Component, Directive, ElementRef, Host, Optional, Inject, forwardRef} from 'angular2/core';
+import {NgControl} from 'angular2/common';
 
 import {Form} from '../../util/form';
 import {Config} from '../../config/config';
@@ -9,69 +10,69 @@ import {pointerCoord} from '../../util/dom';
  * @private
  */
 @Directive({
-  selector: '.switch-media',
+  selector: '.toggle-media',
   host: {
-    '[class.switch-activated]': 'swtch.isActivated'
+    '[class.toggle-activated]': 'toggle.isActivated'
   }
 })
-class MediaSwitch {
+class MediaToggle {
   /**
    * TODO
-   * @param {Switch} swtch  TODO
+   * @param {Toggle} toggle  TODO
    * @param {} elementRef  TODO
    * @param {Config} config  TODO
    */
   constructor(
-    @Host() @Inject(forwardRef(() => Switch)) swtch: Switch,
+    @Host() @Inject(forwardRef(() => Toggle)) toggle: Toggle,
     elementRef: ElementRef
   ) {
-    swtch.switchEle = elementRef.nativeElement;
-    this.swtch = swtch;
+    toggle.toggleEle = elementRef.nativeElement;
+    this.toggle = toggle;
   }
 
 }
 
 
 /**
- * @name Switch
+ * @name Toggle
  * @description
- * A switch technically is the same thing as an HTML checkbox input, except it looks different and is easier to use on a touch device. Ionic prefers to wrap the checkbox input with the `<label>` in order to make the entire toggle easy to tap or drag.
- * Switches can also have colors assigned to them, by adding any color attribute to them.
+ * A toggle technically is the same thing as an HTML checkbox input, except it looks different and is easier to use on a touch device. Ionic prefers to wrap the checkbox input with the `<label>` in order to make the entire toggle easy to tap or drag.
+ * Togglees can also have colors assigned to them, by adding any color attribute to them.
  *
  * See the [Angular 2 Docs](https://angular.io/docs/js/latest/api/forms/) for more info on forms and input.
- * @property {any} [value] - the inital value of the switch
- * @property {boolean} [checked] - whether the switch it toggled or not
- * @property {boolean} [disabled] - whether the switch is disabled or not
- * @property {string} [id] - a unique ID for a switch
+ * @property {any} [value] - the inital value of the toggle
+ * @property {boolean} [checked] - whether the toggle it toggled or not
+ * @property {boolean} [disabled] - whether the toggle is disabled or not
+ * @property {string} [id] - a unique ID for a toggle
  * @usage
  * ```html
- * // Create a single switch
- *  <ion-switch checked="true">
+ * // Create a single toggle
+ *  <ion-toggle checked="true">
  *    Pineapple
- *  </ion-switch>
+ *  </ion-toggle>
  *
- * // Create a list of switches:
+ * // Create a list of togglees:
  *  <ion-list>
  *
- *    <ion-switch checked="true">
+ *    <ion-toggle checked="true">
  *      Apple
- *    </ion-switch>
+ *    </ion-toggle>
  *
- *     <ion-switch checked="false">
+ *     <ion-toggle checked="false">
  *       Banana
- *     </ion-switch>
+ *     </ion-toggle>
  *
- *     <ion-switch disabled="true">
+ *     <ion-toggle disabled="true">
  *       Cherry
- *     </ion-switch>
+ *     </ion-toggle>
  *
  *  </ion-list>
  * ```
- * @demo /docs/v2/demos/switch/
- * @see {@link /docs/v2/components#switch Switch Component Docs}
+ * @demo /docs/v2/demos/toggle/
+ * @see {@link /docs/v2/components#toggle Toggle Component Docs}
  */
 @Component({
-  selector: 'ion-switch',
+  selector: 'ion-toggle,ion-switch',
   inputs: [
     'value',
     'checked',
@@ -81,6 +82,7 @@ class MediaSwitch {
   host: {
     'role': 'checkbox',
     'tappable': 'true',
+    '[attr.id]': 'id',
     '[attr.tab-index]': 'tabIndex',
     '[attr.aria-checked]': 'checked',
     '[attr.aria-disabled]': 'disabled',
@@ -97,13 +99,13 @@ class MediaSwitch {
       '<ion-item-content id="{{labelId}}">' +
         '<ng-content></ng-content>' +
       '</ion-item-content>' +
-      '<div disable-activated class="switch-media">' +
-        '<div class="switch-icon"></div>' +
+      '<div disable-activated class="toggle-media">' +
+        '<div class="toggle-icon"></div>' +
       '</div>' +
     `</div>`,
-  directives: [MediaSwitch]
+  directives: [MediaToggle]
 })
-export class Switch {
+export class Toggle {
 
   constructor(
     form: Form,
@@ -111,6 +113,12 @@ export class Switch {
     config: Config,
     @Optional() private ngControl: NgControl
   ) {
+    // deprecated warning
+    if (elementRef.nativeElement.tagName == 'ION-SWITCH') {
+      console.warn('<ion-switch> has been renamed to <ion-toggle>, please update your HTML');
+    }
+
+
     this.form = form;
     form.register(this);
 
@@ -120,8 +128,9 @@ export class Switch {
     this.onChange = (_) => {};
     this.onTouched = (_) => {};
 
-    if (ngControl) ngControl.valueAccessor = this;
-
+    if (ngControl) {
+      ngControl.valueAccessor = this;
+    }
 
     let self = this;
     function pointerMove(ev) {
@@ -145,14 +154,14 @@ export class Switch {
     }
 
     this.addMoveListener = function() {
-      self.switchEle.addEventListener('touchmove', pointerMove);
-      self.switchEle.addEventListener('mousemove', pointerMove);
+      self.toggleEle.addEventListener('touchmove', pointerMove);
+      self.toggleEle.addEventListener('mousemove', pointerMove);
       elementRef.nativeElement.addEventListener('mouseout', pointerOut);
     };
 
     this.removeMoveListener = function() {
-      self.switchEle.removeEventListener('touchmove', pointerMove);
-      self.switchEle.removeEventListener('mousemove', pointerMove);
+      self.toggleEle.removeEventListener('touchmove', pointerMove);
+      self.toggleEle.removeEventListener('mousemove', pointerMove);
       elementRef.nativeElement.removeEventListener('mouseout', pointerOut);
     };
   }
@@ -161,12 +170,16 @@ export class Switch {
    * @private
    */
   ngOnInit() {
-    this.labelId = 'label-' + this.inputId;
+    if (!this.id) {
+      this.id = 'tgl-' + this.form.nextId();
+    }
+
+    this.labelId = 'lbl-' + this.id;
   }
 
   /**
-   * Set checked state of this switch.
-   * @param {boolean} value  Boolean to set this switch's checked state to.
+   * Set checked state of this toggle.
+   * @param {boolean} value  Boolean to set this toggle's checked state to.
    * @private
    */
   check(value) {
@@ -175,7 +188,7 @@ export class Switch {
   }
 
   /**
-   * Toggle the checked state of this switch.
+   * Toggle the checked state of this toggle.
    * @private
    */
   toggle(ev) {
@@ -242,7 +255,7 @@ export class Switch {
    */
   ngOnDestroy() {
     this.removeMoveListener();
-    this.switchEle = this.addMoveListener = this.removeMoveListener = null;
+    this.toggleEle = this.addMoveListener = this.removeMoveListener = null;
     this.form.deregister(this);
   }
 
@@ -250,6 +263,13 @@ export class Switch {
    * @private
    */
   isDisabled(ev) {
-    return (this.lastTouch + 999 > Date.now() && /mouse/.test(ev.type)) || (this.mode == 'ios' && ev.target.tagName == 'ION-SWITCH');
+    return (this.lastTouch + 999 > Date.now() && /mouse/.test(ev.type)) || (this.mode == 'ios' && ev.target.tagName == 'ION-TOGGLE');
+  }
+
+  /**
+   * @private
+   */
+  initFocus() {
+
   }
 }

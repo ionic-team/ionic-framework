@@ -1,4 +1,4 @@
-import {Injectable} from 'angular2/angular2';
+import {Injectable} from 'angular2/core';
 
 
 /**
@@ -17,6 +17,7 @@ export class Form {
 
   constructor() {
     this._inputs = [];
+    this._ids = -1;
     this._focused = null;
 
     this.focusCtrl(document);
@@ -50,6 +51,7 @@ export class Form {
 
   focusOut() {
     console.debug('focusOut');
+    document.activeElement && document.activeElement.blur();
     this._blur.focus();
   }
 
@@ -78,6 +80,10 @@ export class Form {
         previousInput.initFocus();
       }
     }
+  }
+
+  nextId() {
+    return ++this._ids;
   }
 
 }

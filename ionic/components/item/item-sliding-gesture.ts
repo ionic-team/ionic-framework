@@ -1,8 +1,8 @@
-import {Hammer} from 'ionic/gestures/hammer';
-import {DragGesture} from 'ionic/gestures/drag-gesture';
+import {Hammer} from '../../gestures/hammer';
+import {DragGesture} from '../../gestures/drag-gesture';
 import {List} from '../list/list';
 
-import {CSS, raf, closest} from 'ionic/util/dom';
+import {CSS, raf, closest} from '../../util/dom';
 
 
 export class ItemSlidingGesture extends DragGesture {

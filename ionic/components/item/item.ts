@@ -1,7 +1,9 @@
-import {Component} from 'angular2/angular2';
+import {Component} from 'angular2/core';
 
 
 /**
+ * @name Item
+ * @description
  * Creates a list-item that can easily be swiped, deleted, reordered, edited, and more.
  *
  * There are three common ways to use an item:

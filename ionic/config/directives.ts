@@ -1,4 +1,5 @@
-import {CORE_DIRECTIVES, FORM_DIRECTIVES, forwardRef} from 'angular2/angular2'
+import {forwardRef, Type} from 'angular2/core';
+import {CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/common';
 
 import {OverlayNav} from '../components/overlay/overlay';
 import {Menu} from '../components/menu/menu';
@@ -18,12 +19,12 @@ import {ItemSliding} from '../components/item/item-sliding';
 import {Toolbar, ToolbarTitle, ToolbarItem} from '../components/toolbar/toolbar';
 import {Icon} from '../components/icon/icon';
 import {Checkbox} from '../components/checkbox/checkbox';
-import {Switch} from '../components/switch/switch';
+import {Toggle} from '../components/toggle/toggle';
 import {TextInput, TextInputElement} from '../components/text-input/text-input';
 import {Label} from '../components/text-input/label';
 import {Segment, SegmentButton} from '../components/segment/segment';
 import {RadioGroup, RadioButton} from '../components/radio/radio';
-import {Searchbar} from '../components/searchbar/searchbar';
+import {Searchbar, SearchbarInput} from '../components/searchbar/searchbar';
 import {Nav} from '../components/nav/nav';
 import {NavPush, NavPop} from '../components/nav/nav-push';
 import {NavRouter} from '../components/nav/nav-router';
@@ -32,9 +33,74 @@ import {IdRef} from '../components/app/id';
 import {ShowWhen, HideWhen} from '../components/show-hide-when/show-hide-when';
 
 /**
+ * @name IONIC_DIRECTIVES
+ * @private
+ * @description
  * The core Ionic directives as well as Angular's CORE_DIRECTIVES and
  * FORM_DIRECTIVES.  Automatically available in every [@Page](../Page/) template.
- * @private
+ *
+ * **Angular**
+ * - CORE_DIRECTIVES
+ * - FORM_DIRECTIVES
+ *
+ * **Content**
+ * -  OverlayNav
+ * -  Menu
+ * -  MenuToggle
+ * -  MenuClose
+ *
+ * -  Button
+ * -  Blur
+ * -  Content
+ * -  Scroll
+ * -  Refresher
+ *
+ * **Lists**
+ * -  List
+ * -  ListHeader
+ * -  Item
+ * -  ItemSliding
+ *
+ * **Slides**
+ * -  Slides
+ * -  Slide
+ * -  SlideLazy
+ *
+ * **Tabs**
+ * -  Tabs
+ * -  Tab
+ *
+ * **Toolbar**
+ * -  Toolbar
+ * -  ToolbarTitle
+ * -  ToolbarItem
+ *
+ * **Media**
+ * -  Icon
+ *
+ * **Forms**
+ * -  Searchbar
+ * -  Segment
+ * -  SegmentButton
+ * -  Checkbox
+ * -  RadioGroup
+ * -  RadioButton
+ * -  Toggle
+ * -  TextInput
+ * -  TextInputElement
+ * -  Label
+ *
+ * **Nav**
+ * -  Nav
+ * -  NavbarTemplate
+ * -  Navbar
+ * -  NavPush
+ * -  NavPop
+ * -  NavRouter
+ * -  IdRef
+ *
+ * -  ShowWhen
+ * -  HideWhen
  */
 export const IONIC_DIRECTIVES = [
   // Angular
@@ -78,12 +144,13 @@ export const IONIC_DIRECTIVES = [
 
   // Forms
   Searchbar,
+  SearchbarInput,
   Segment,
   SegmentButton,
   Checkbox,
   RadioGroup,
   RadioButton,
-  Switch,
+  Toggle,
   TextInput,
   TextInputElement,
   Label,

@@ -5,8 +5,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-  <link ios-href="../../../css/ionic.ios.css" rel="stylesheet">
-  <link md-href="../../../css/ionic.md.css" rel="stylesheet">
+  <link ios-href="/dist/bundles/ionic.ios.css" rel="stylesheet">
+  <link md-href="/dist/bundles/ionic.md.css" rel="stylesheet">
+
+  <script src="/node_modules/systemjs/node_modules/es6-module-loader/dist/es6-module-loader.src.js"></script>
+  <script src="/node_modules/systemjs/dist/system.src.js"></script>
+  <script src="/node_modules/angular2/bundles/angular2-polyfills.js"></script>
+  <script>
+    System.config({
+      map: {
+        'Rx': '/node_modules/rxjs/Rx.js',
+        'rxjs': '/node_modules/rxjs',
+        'angular2': '/node_modules/angular2/bundles/angular2-all.umd.js',
+        'ionic/ionic': '/dist/bundles/ionic.js'
+      }
+    })
+  </script>
+  <script src="/node_modules/rxjs/bundles/Rx.js"></script>
 
   <script>
     if (!console.time) {
@@ -78,19 +93,8 @@
     <ion-loading-icon></ion-loading-icon>
   </ion-app>
 
-  <script src="../../../js/ionic.bundle.js"></script>
-
   <script>
-    System.config({
-      "paths": {
-        "*": "*.js",
-        "ionic/*": "ionic/*",
-        "angular2/*": "angular2/*",
-        "rxjs/*": "rxjs/*"
-      }
-    })
-    System.import("index").then(function(m) {}, console.error.bind(console));
-
+    System.import('bundle.js').then(function(m) {}, console.error.bind(console));
     console.timeEnd('script init');
   </script>
 

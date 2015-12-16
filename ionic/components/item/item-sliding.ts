@@ -1,17 +1,18 @@
-import {Component, ElementRef, Optional} from 'angular2/angular2';
+import {Component, ElementRef, Optional} from 'angular2/core';
 
 import {List} from '../list/list';
 
 
 /**
+ * @name ItemSliding
+ *
  * @description
- * Creates a list-item that can easily be swiped,
- * deleted, reordered, edited, and more.
+ * Creates a list-item that can easily be swiped, deleted, reordered, edited, and more.
  *
  * @usage
  * ```html
  * <ion-list>
- *   <ion-item-sliding *ng-for="#item of items">
+ *   <ion-item-sliding *ngFor="#item of items">
  *     <ion-item (click)="itemTapped(item)">
  *       {{item.title}}
  *     </ion-item>

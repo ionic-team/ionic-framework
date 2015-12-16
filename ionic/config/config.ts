@@ -10,6 +10,7 @@ import {Platform} from '../platform/platform';
 import {isObject, isDefined, isFunction, isArray, extend} from '../util/util';
 
 /**
+ * @demo /docs/v2/demos/config/
  * Config lets you change multiple or a single value in an apps mode configuration. Things such as tab placement, icon changes, and view animations can be set here.
  *
  * ```ts
@@ -44,8 +45,8 @@ import {isObject, isDefined, isFunction, isArray, extend} from '../util/util';
  * We could also configure these values at a component level. Take `tabbarPlacement`, we can configure this as a property on our `ion-tabs`.
  *
  * ```html
- * <ion-tabs tabbar-placement="top">
- *    <ion-tab tab-title="Dash" tab-icon="pulse" [root]="tabRoot"></ion-tab>
+ * <ion-tabs tabbarPlacement="top">
+ *    <ion-tab tabTitle="Dash" tabIcon="pulse" [root]="tabRoot"></ion-tab>
  *  </ion-tabs>
  * ```
  *
@@ -99,7 +100,27 @@ import {isObject, isDefined, isFunction, isArray, extend} from '../util/util';
  * tabbarPlacement: 'top',
  * tabSubPages: true,
  * ```
- * @demo /docs/v2/demos/config/
+ *
+ * | Config property            | Default iOS Value      | Default MD Value          |
+ * |----------------------------|------------------------|---------------------------|
+ * | activator                  | highlight              | ripple                    |
+ * | actionSheetEnter           | action-sheet-slide-in  | action-sheet-md-slide-in  |
+ * | actionSheetLeave           | action-sheet-slide-out | action-sheet-md-slide-out |
+ * | actionSheetCancelIcon      |                        | ion-md-close              |
+ * | actionSheetDestructiveIcon |                        | ion-md-trash              |
+ * | backButtonText             | Back                   |                           |
+ * | backButtonIcon             | ion-ios-arrow-back     | ion-md-arrow-back         |
+ * | iconMode                   | ios                    | md                        |
+ * | menuType                   | reveal                 | overlay                   |
+ * | modalEnter                 | modal-slide-in         | modal-md-slide-in         |
+ * | modalLeave                 | modal-slide-out        | modal-md-slide-out        |
+ * | pageTransition             | ios-transition         | md-transition             |
+ * | pageTransitionDelay        | 16                     | 120                       |
+ * | popupEnter                 | popup-pop-in           | popup-md-pop-in           |
+ * | popupLeave                 | popup-pop-out          | popup-md-pop-out          |
+ * | tabbarPlacement            | bottom                 | true                      |
+ * | tabbarHighlight            |                        | top                       |
+ * | tabSubPage                 |                        | true                      |
  *
 **/
 export class Config {

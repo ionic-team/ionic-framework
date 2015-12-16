@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Renderer, Attribute, Optional} from 'angular2/angular2';
+import {Directive, ElementRef, Renderer, Attribute, Optional} from 'angular2/core';
 
 import {Config} from '../../config/config';
 import {Toolbar} from '../toolbar/toolbar';
@@ -14,6 +14,7 @@ import {Toolbar} from '../toolbar/toolbar';
   * @property [full] - for a full width button
   * @property [small] - sets button size to small
   * @property [large] - sets button size to large
+  * @property [disabled] - disables the button
   * @property [fab] - for a floating action button
   * @property [fab-left] - position a fab button to the left
   * @property [fab-right] - position a fab button to the right
@@ -43,6 +44,7 @@ export class Button {
     this._display = null; // block/full
     this._colors = []; // primary/secondary
     this._icon = null; // left/right/only
+    this._disabled = false; // disabled
 
     let element = elementRef.nativeElement;
 
@@ -56,14 +58,24 @@ export class Button {
       return;
     }
 
+    if (element.hasAttribute('disabled')) {
+      this._disabled = true;
+    }
+
     this._readAttrs(element);
     this._readIcon(element);
   }
 
+/**
+ * @private
+ */
   ngAfterContentInit() {
     this._assignCss(true);
   }
 
+/**
+ * @private
+ */
   setRole(val) {
     this._role = val;
   }
@@ -156,6 +168,9 @@ export class Button {
     }
   }
 
+/**
+ * @private
+ */
   static setRoles(contentButtonChildren, role) {
     let buttons = contentButtonChildren.toArray();
     buttons.forEach(button => {

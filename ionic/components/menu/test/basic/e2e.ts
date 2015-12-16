@@ -5,5 +5,5 @@ it('should toggle open menu', function() {
 
 
 it('should close menu', function() {
-  element(by.css('[menu-close=leftMenu]')).click();
+  element(by.css('[menuClose=leftMenu]')).click();
 });

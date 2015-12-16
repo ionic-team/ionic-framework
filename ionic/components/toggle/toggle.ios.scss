@@ -1,0 +1,182 @@
+@import "../../globals.ios";
+
+// iOS Toggle
+// --------------------------------------------------
+
+$toggle-ios-width:                     51px !default;
+$toggle-ios-height:                    32px !default;
+$toggle-ios-border-width:              2px !default;
+$toggle-ios-border-radius:             $toggle-ios-height / 2 !default;
+
+$toggle-ios-background-color-off:      $list-ios-background-color !default;
+$toggle-ios-border-color-off:          grayscale(lighten($list-ios-border-color, 11%)) !default;
+
+$toggle-ios-background-color-on:       map-get($colors-ios, primary) !default;
+
+$toggle-ios-handle-width:              $toggle-ios-height - ($toggle-ios-border-width * 2) !default;
+$toggle-ios-handle-height:             $toggle-ios-handle-width !default;
+$toggle-ios-handle-border-radius:      $toggle-ios-handle-height / 2 !default;
+$toggle-ios-handle-box-shadow:         0 3px 12px rgba(0, 0, 0, 0.16), 0 3px 1px rgba(0, 0, 0, 0.1) !default;
+
+$toggle-ios-handle-background-color:   $toggle-ios-background-color-off !default;
+
+$toggle-ios-media-margin:              0 !default;
+$toggle-ios-media-padding:             6px ($item-ios-padding-right / 2) 5px ($item-ios-padding-left) !default;
+
+$toggle-ios-transition-duration:       300ms !default;
+
+$toggle-ios-disabled-opacity:          0.5 !default;
+$toggle-ios-disabled-text-color:       $subdued-text-ios-color !default;
+
+
+// Toggle
+// -----------------------------------------
+
+ion-toggle {
+  display: block;
+  @include user-select-none();
+
+  &.item.activated {
+    background: $list-ios-background-color;
+  }
+}
+
+
+// Toggle Wrapper
+// -----------------------------------------
+
+.toggle-media {
+  margin: $toggle-ios-media-margin;
+  padding: $toggle-ios-media-padding;
+  cursor: pointer;
+}
+
+
+// Toggle Background Track
+// -----------------------------------------
+
+.toggle-icon {
+  // bg track, when not checked
+  position: relative;
+  display: block;
+  width: $toggle-ios-width;
+  height: $toggle-ios-height;
+  border-radius: $toggle-ios-border-radius;
+  pointer-events: none;
+
+  background-color: $toggle-ios-border-color-off;
+  transition: background-color $toggle-ios-transition-duration;
+}
+
+
+// Toggle Background Track, Inner Oval
+// -----------------------------------------
+
+.toggle-icon:before {
+  // inner bg track's oval, when not checked
+  content: '';
+  position: absolute;
+  top: $toggle-ios-border-width;
+  right: $toggle-ios-border-width;
+  left: $toggle-ios-border-width;
+  bottom: $toggle-ios-border-width;
+
+  border-radius: $toggle-ios-border-radius;
+  background-color: $toggle-ios-background-color-off;
+
+  transform: scale3d(1, 1, 1);
+  transition: transform $toggle-ios-transition-duration;
+}
+
+
+// Toggle Knob
+// -----------------------------------------
+
+.toggle-icon:after {
+  // knob, when not checked
+  content: '';
+  position: absolute;
+  top: $toggle-ios-border-width;
+  left: $toggle-ios-border-width;
+
+  width: $toggle-ios-handle-width;
+  height: $toggle-ios-handle-height;
+
+  border-radius: $toggle-ios-handle-border-radius;
+  background-color: $toggle-ios-handle-background-color;
+  box-shadow: $toggle-ios-handle-box-shadow;
+
+  transition: transform $toggle-ios-transition-duration, width 120ms ease-in-out 80ms, left 110ms ease-in-out 80ms;
+}
+
+
+// Toggle Checked
+// -----------------------------------------
+
+ion-toggle[aria-checked=true] {
+  .toggle-icon {
+    // bg track, when checked
+    background-color: $toggle-ios-background-color-on;
+
+    &:before {
+      // inner bg track's oval, when checked
+      transform: scale3d(0, 0, 0);
+    }
+
+    &:after {
+      // knob, when checked
+      transform: translate3d($toggle-ios-width - $toggle-ios-handle-width - ($toggle-ios-border-width * 2), 0, 0);
+    }
+  }
+
+  .toggle-activated .toggle-icon {
+    &:before {
+      // inner bg track's oval, when checked
+      transform: scale3d(0, 0, 0);
+    }
+
+    &:after {
+      // when pressing down on the toggle and IS checked
+      // make the knob wider and move it left a bit
+      left: $toggle-ios-border-width - 6;
+
+      // when pressing down on the toggle and NOT checked
+      // then make the knob wider
+      width: $toggle-ios-handle-width + 6;
+    }
+  }
+}
+
+
+// Toggle Disabled
+// -----------------------------------------
+
+ion-toggle[aria-disabled=true] {
+  opacity: $toggle-ios-disabled-opacity;
+  color: $toggle-ios-disabled-text-color;
+  pointer-events: none;
+}
+
+
+// iOS Toggle Color Mixin
+// --------------------------------------------------
+
+@mixin ios-toggle-theme($color-name, $bg-on) {
+
+  ion-toggle[#{$color-name}] {
+
+    &[aria-checked=true] .toggle-icon {
+      background-color: $bg-on;
+    }
+
+  }
+
+}
+
+
+// Generate iOS Toggle Colors
+// --------------------------------------------------
+
+@each $color-name, $value in $colors-ios {
+  @include ios-toggle-theme($color-name, $value);
+}

@@ -32,6 +32,7 @@ $searchbar-ios-input-clear-icon-size:     18px !default;
 ion-searchbar {
   padding: $searchbar-ios-padding-top-bottom $searchbar-ios-padding-left-right;
   background: $searchbar-ios-background-color;
+  border-top: 1px solid transparent;
   border-bottom: 1px solid $searchbar-ios-border-color;
   min-height: $searchbar-ios-min-height;
 }
@@ -103,6 +104,7 @@ ion-searchbar {
   min-height: 30px;
 
   margin-left: 0;
+  margin-right: 0;
   padding: 0;
 
   visibility: hidden;
@@ -121,6 +123,12 @@ ion-searchbar {
   .searchbar-input {
     padding-left: 30px;
   }
+}
+
+// Searchbar Focused
+// -----------------------------------------
+
+.searchbar-focused {
   .searchbar-ios-cancel {
     transform: translateX(0);
     flex: 0 0 auto;
@@ -128,7 +136,6 @@ ion-searchbar {
     visibility: visible;
   }
 }
-
 
 // Searchbar in Toolbar
 // -----------------------------------------
@@ -148,7 +155,7 @@ ion-searchbar {
     }
   }
 
-  .searchbar-left-aligned .searchbar-ios-cancel {
+  .searchbar-focused .searchbar-ios-cancel {
     padding-left: 8px;
   }
 

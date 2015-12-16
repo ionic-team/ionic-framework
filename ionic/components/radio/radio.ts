@@ -1,8 +1,10 @@
-import {Component, Directive, ElementRef, Host, Optional, NgControl, Query, QueryList} from 'angular2/angular2';
+import {Component, Directive, ElementRef, Host, Optional, Query, QueryList} from 'angular2/core';
+import {NgControl} from 'angular2/common';
 
 import {Config} from '../../config/config';
 import {Ion} from '../ion';
 import {ListHeader} from '../list/list';
+import {Form} from '../../util/form';
 
 
 /**
@@ -16,7 +18,7 @@ import {ListHeader} from '../list/list';
  *
  * @usage
  * ```html
- * <ion-list radio-group ng-control="clientside">
+ * <ion-list radio-group ngControl="clientside">
  *
  *   <ion-list-header>
  *     Clientside
@@ -200,7 +202,8 @@ export class RadioButton extends Ion {
   constructor(
     @Host() @Optional() group: RadioGroup,
     elementRef: ElementRef,
-    config: Config
+    config: Config,
+    private form: Form
   ) {
     super(elementRef, config);
 
@@ -213,16 +216,24 @@ export class RadioButton extends Ion {
    */
   ngOnInit() {
     super.ngOnInit();
-    this.group.registerRadio(this);
-    this.labelId = 'label-' + this.id;
+    if (!this.id) {
+      this.id = 'rb-' + this.form.nextId();
+    }
+    this.labelId = 'lbl-' + this.id;
+
+    if (this.group) {
+      this.group.registerRadio(this);
+    } else {
+      console.error('<ion-radio> must be within a <ion-list radio-group>');
+    }
   }
 
   /**
    * @private
    */
-  click(event) {
-    event.preventDefault();
-    event.stopPropagation();
+  click(ev) {
+    ev.preventDefault();
+    ev.stopPropagation();
     this.check();
   }
 

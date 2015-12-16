@@ -1,5 +1,5 @@
 import {App} from 'ionic/ionic';
-import {FormBuilder, Validators} from 'angular2/angular2';
+import {FormBuilder, Validators} from 'angular2/common';
 
 
 @App({

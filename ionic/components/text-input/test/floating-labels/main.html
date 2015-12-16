@@ -8,10 +8,11 @@
 
     <ion-input floating-label>
       <ion-label>Floating Label 1</ion-label>
-      <input type="text">
+      <input [(ngModel)]='myValues.value1' type="text">
     </ion-input>
+    Value: {{ myValues.value1 }}
 
-    <ion-input floating-label class="input-has-value">
+    <ion-input floating-label>
       <ion-label>Floating Label 2</ion-label>
       <input value="Has Value" type="text">
     </ion-input>
@@ -23,8 +24,9 @@
 
     <ion-input floating-label>
       <ion-label primary>Floating Label 4</ion-label>
-      <textarea></textarea>
+      <textarea [(ngModel)]='myValues.value2'></textarea>
     </ion-input>
+    Value: {{ myValues.value2 }}
 
     <ion-input floating-label>
       <ion-label secondary>Floating Label 5</ion-label>

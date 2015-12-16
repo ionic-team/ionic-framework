@@ -1,5 +1,5 @@
-import {ProtoViewRef, ViewContainerRef} from 'angular2/angular2'
-import {Directive, Host, forwardRef} from 'angular2/angular2';
+import {ProtoViewRef, ViewContainerRef} from 'angular2/core'
+import {Directive, Host, forwardRef} from 'angular2/core';
 
 import {App, List} from 'ionic/ionic';
 

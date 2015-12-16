@@ -1,4 +1,4 @@
-import {Directive} from 'angular2/angular2';
+import {Directive} from 'angular2/core';
 
 import {IonicApp} from '../app/app';
 import {Menu} from './menu';
@@ -11,7 +11,7 @@ import {Menu} from './menu';
 * @see {@link ../../menu/Menu Menu API Docs}
 */
 @Directive({
-  selector: '[menu-close]',
+  selector: '[menuClose]',
   inputs: [
     'menuClose'
   ],

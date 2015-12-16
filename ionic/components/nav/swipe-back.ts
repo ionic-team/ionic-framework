@@ -1,4 +1,4 @@
-import {SlideEdgeGesture} from 'ionic/gestures/slide-edge-gesture';
+import {SlideEdgeGesture} from '../../gestures/slide-edge-gesture';
 
 
 export class SwipeBackGesture extends SlideEdgeGesture {

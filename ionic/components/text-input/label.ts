@@ -1,8 +1,11 @@
-import {Directive, Optional, ElementRef, Renderer} from 'angular2/angular2';
+import {Directive, Optional, ElementRef, Renderer} from 'angular2/core';
 
 import {Config} from '../../config/config';
 import {TextInput} from './text-input';
 import {pointerCoord, hasPointerMoved} from '../../util/dom';
+import {Form} from '../../util/form';
+
+
 /**
  * @name Label
  * @description
@@ -39,15 +42,19 @@ export class Label {
   constructor(
     config: Config,
     @Optional() container: TextInput,
+    private form: Form,
     private elementRef: ElementRef,
     private renderer: Renderer
   ) {
     this.scrollAssist = config.get('scrollAssist');
-    if (!this.id) {
-      this.id = 'lbl-' + (++labelIds);
-    }
     this.container = container;
-    container && container.registerLabel(this);
+  }
+
+  ngOnInit() {
+    if (!this.id) {
+      this.id = 'lbl-' + this.form.nextId();
+    }
+    this.container && this.container.registerLabel(this);
   }
 
   /**
@@ -88,5 +95,3 @@ export class Label {
   }
 
 }
-
-let labelIds = -1;

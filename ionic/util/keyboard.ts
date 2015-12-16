@@ -1,4 +1,4 @@
-import {Injectable, NgZone} from 'angular2/angular2';
+import {Injectable, NgZone} from 'angular2/core';
 
 import {Config} from '../config/config';
 import {Form} from './form';
@@ -22,7 +22,9 @@ export class Keyboard {
   }
 
   onClose(callback, pollingInternval=KEYBOARD_CLOSE_POLLING) {
+    console.debug('keyboard onClose');
     const self = this;
+    let checks = 0;
 
     let promise = null;
 
@@ -34,7 +36,8 @@ export class Keyboard {
     self.zone.runOutsideAngular(() => {
 
       function checkKeyboard() {
-        if (!self.isOpen()) {
+        console.debug('keyboard isOpen', self.isOpen(), checks);
+        if (!self.isOpen() || checks > 100) {
           rafFrames(30, () => {
             self.zone.run(() => {
               console.debug('keyboard closed');
@@ -45,6 +48,7 @@ export class Keyboard {
         } else {
           setTimeout(checkKeyboard, pollingInternval);
         }
+        checks++;
       }
 
       setTimeout(checkKeyboard, pollingInternval);
@@ -54,6 +58,7 @@ export class Keyboard {
   }
 
   close() {
+    console.debug('keyboard close()');
     raf(() => {
       if (hasFocusedTextInput()) {
         // only focus out when a text input has focus

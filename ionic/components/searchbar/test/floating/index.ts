@@ -1,4 +1,4 @@
-import {FORM_DIRECTIVES, FormBuilder, Validators, Control, ControlGroup} from 'angular2/angular2';
+import {FORM_DIRECTIVES, FormBuilder, Validators, Control, ControlGroup} from 'angular2/common';
 
 import {App} from 'ionic/ionic';
 import {SearchPipe} from 'ionic/components/searchbar/searchbar';
@@ -8,7 +8,7 @@ import {SearchPipe} from 'ionic/components/searchbar/searchbar';
   directives: [FORM_DIRECTIVES]
 })
 class E2EApp {
-  defaultSearch: string;
+  defaultSearch: string = 'filter';
   customPlaceholder: string;
   defaultCancel: string;
   customCancel: string;
@@ -25,11 +25,11 @@ class E2EApp {
     this.clickedCustomAction = true;
   }
 
-  triggerInput() {
+  triggerInput(ev) {
     // The defaultSearch doesn't get updated before this function is called
     // so we have to wrap it in a timeout
     setTimeout(() => {
-      console.log(this.defaultSearch);
+      console.log("Triggered input", this.defaultSearch);
     });
   }
 }

@@ -174,7 +174,7 @@ class ModalFirstPage {
   push() {
     let page = ModalSecondPage;
     let params = { id: 8675309, myData: [1,2,3,4] };
-    let opts = { animation: 'ios' };
+    let opts = { animation: 'ios-transition' };
 
     this.nav.push(page, params, opts);
   }

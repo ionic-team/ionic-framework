@@ -1,6 +1,6 @@
   import {App, Page, NavController, Tab} from 'ionic/ionic';
 
-import {ContentChild, QueryList, ViewChildren} from 'angular2/angular2';
+import {ContentChild, QueryList, ViewChildren} from 'angular2/core';
 
 //
 // Tab 1
@@ -46,7 +46,7 @@ class Tab2 {
 @Page({
   template: `
     <ion-navbar *navbar>
-      <button menu-toggle>
+      <button menuToggle>
         <icon menu></icon>
       </button>
       <ion-title>Stopwatch</ion-title>
@@ -68,7 +68,7 @@ class Tab3 {
 @Page({
   template: `
     <ion-navbar *navbar>
-      <button menu-toggle>
+      <button menuToggle>
         <icon menu></icon>
       </button>
       <ion-title>Quesarito</ion-title>
@@ -92,7 +92,7 @@ class QuesaritoPage {
       </ion-toolbar>
       <ion-content>
         <ion-list>
-          <button ion-item menu-close detail-none (click)="openPage('quesarito')">
+          <button ion-item menuClose detail-none (click)="openPage('quesarito')">
             Quesarito
           </button>
         </ion-list>
@@ -100,9 +100,9 @@ class QuesaritoPage {
     </ion-menu>
 
     <ion-tabs #content>
-      <ion-tab tab-title="Heart" tab-icon="heart" [root]="root1" #tab1></ion-tab>
-      <ion-tab tab-title="Star" tab-icon="star" [root]="root2"></ion-tab>
-      <ion-tab tab-title="Stopwatch" tab-icon="stopwatch" [root]="root3"></ion-tab>
+      <ion-tab tabTitle="Heart" tabIcon="heart" [root]="root1" #tab1></ion-tab>
+      <ion-tab tabTitle="Star" tabIcon="star" [root]="root2"></ion-tab>
+      <ion-tab tabTitle="Stopwatch" tabIcon="stopwatch" [root]="root3"></ion-tab>
     </ion-tabs>
   `
 })

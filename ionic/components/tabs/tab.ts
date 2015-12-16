@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Directive, Host, ElementRef, Compiler, AppViewManager, NgZone, Renderer} from 'angular2/angular2';
+import {ChangeDetectorRef, Component, Directive, Host, ElementRef, Compiler, AppViewManager, NgZone, Renderer} from 'angular2/core';
 
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
@@ -13,8 +13,8 @@ import {Tabs} from './tabs';
  * @usage
  * ```html
  * <ion-tabs>
- * 	 <ion-tab tab-title="Home" tab-icon="home" [root]="tabOneRoot"></ion-tab>
- * 	 <ion-tab tab-title="Login" tab-icon="star" [root]="tabTwoRoot"></ion-tab>
+ * 	 <ion-tab tabTitle="Home" tabIcon="home" [root]="tabOneRoot"></ion-tab>
+ * 	 <ion-tab tabTitle="Login" tabIcon="star" [root]="tabTwoRoot"></ion-tab>
  * </ion-tabs>
  * ```
  *
@@ -34,8 +34,8 @@ import {Tabs} from './tabs';
 
  *
  * @property {any} [root] - set the root page for this tab
- * @property {any} [tab-title] - set the title of this tab
- * @property {any} [tab-icon] - set the icon for this tab
+ * @property {any} [tabTitle] - set the title of this tab
+ * @property {any} [tabIcon] - set the icon for this tab
 
  */
 @Component({

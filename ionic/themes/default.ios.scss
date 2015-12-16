@@ -3,15 +3,7 @@
 // iOS Default Theme
 // ----------------------------------
 
-$colors-ios: (
-
-  primary:    #387ef5,
-  secondary:  #32db64,
-  danger:     #f53d3d,
-  light:      #f4f4f4,
-  dark:       #222,
-
-) !default;
+$colors-ios: copy-colors($colors) !default;
 
 
 $text-ios-color:                       $text-color !default;

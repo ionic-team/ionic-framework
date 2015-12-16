@@ -1,4 +1,5 @@
-import {Component, Directive, Optional, NgControl, ElementRef} from 'angular2/angular2';
+import {Component, Directive, Optional, ElementRef} from 'angular2/core';
+import {NgControl} from 'angular2/common';
 
 import {Ion} from '../ion';
 import {Form} from '../../util/form';
@@ -10,10 +11,11 @@ import {Form} from '../../util/form';
  *
  * @property [checked] - whether or not the checkbox is checked (defaults to false)
  * @property [value] - the value of the checkbox component
+ * @property [disabled] - whether or not the checkbox is disabled or not.
  *
  * @usage
  * ```html
- * <ion-checkbox checked="true" value="isChecked" ng-control="htmlCtrl">
+ * <ion-checkbox checked="true" value="isChecked" ngControl="htmlCtrl">
  *   HTML5
  * </ion-checkbox>
  * ```
@@ -31,6 +33,7 @@ import {Form} from '../../util/form';
   host: {
     'role': 'checkbox',
     'tappable': 'true',
+    '[attr.id]': 'id',
     '[attr.tab-index]': 'tabIndex',
     '[attr.aria-checked]': 'checked',
     '[attr.aria-disabled]': 'disabled',
@@ -51,7 +54,7 @@ import {Form} from '../../util/form';
 export class Checkbox {
 
   constructor(
-    form: Form,
+    private form: Form,
     @Optional() ngControl: NgControl,
     elementRef: ElementRef
   ) {
@@ -66,8 +69,15 @@ export class Checkbox {
     if (ngControl) ngControl.valueAccessor = this;
   }
 
+  /**
+   * @private
+   */
   ngOnInit() {
-    this.labelId = 'label-' + this.inputId;
+    if (!this.id) {
+      this.id = 'chk-' + this.form.nextId();
+    }
+
+    this.labelId = 'lbl-' + this.id;
   }
 
   /**

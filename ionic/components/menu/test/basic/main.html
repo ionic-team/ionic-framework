@@ -8,11 +8,11 @@
 
     <ion-list>
 
-      <button ion-item *ng-for="#p of pages" (click)="openPage(p)">
+      <button ion-item *ngFor="#p of pages" (click)="openPage(p)">
         {{p.title}}
       </button>
 
-      <button ion-item menu-close="leftMenu" detail-none>
+      <button ion-item menuClose="leftMenu" detail-none>
         Close Menu
       </button>
 
@@ -32,11 +32,11 @@
 
     <ion-list>
 
-      <button ion-item *ng-for="#p of pages" (click)="openPage(p)">
+      <button ion-item *ngFor="#p of pages" (click)="openPage(p)">
         {{p.title}}
       </button>
 
-      <button ion-item menu-close="rightMenu" detail-none>
+      <button ion-item menuClose="rightMenu" detail-none>
         Close Menu
       </button>
 

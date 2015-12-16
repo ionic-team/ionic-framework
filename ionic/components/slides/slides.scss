@@ -251,7 +251,7 @@ button.swiper-pagination-bullet {
 .swiper-container-3d .swiper-slide-shadow-bottom {
   position: absolute;
   left: 0;
-  bottom: 0;  
+  bottom: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
@@ -483,11 +483,6 @@ ion-slides {
   height: 100%;
   padding: 0;
   display: flex;
-}
-
-.swiper-container {
-  width: 100%;
-  height: 100%;
 }
 
 .swiper-slide {

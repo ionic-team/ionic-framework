@@ -1,4 +1,4 @@
-import {Injectable} from 'angular2/angular2';
+import {Injectable} from 'angular2/core';
 
 /**
  * Events is a pub/sub style event system for sending and responding to application-level

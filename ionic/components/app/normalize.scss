@@ -36,6 +36,7 @@ strong {
 // Remove border when inside `a` element in IE 8/9/10.
 img {
   border: 0;
+  max-width: 100%;
 }
 
 // Correct overflow not hidden in IE 9/10/11.
@@ -126,7 +127,8 @@ button {
 }
 
 // Re-set default cursor for disabled elements.
-button[disabled],
+a[disabled],
+button[disabled]
 html input[disabled] {
   cursor: default;
 }

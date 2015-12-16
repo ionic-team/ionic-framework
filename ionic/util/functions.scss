@@ -15,6 +15,19 @@
 }
 
 
+@function toolbar-button-inverse($color-value) {
+  $lightness: lightness($color-value);
+  $red: red($color-value);
+  $green: green($color-value);
+
+  @if ($lightness > 65 or $green > 220 or ($red > 240 and $green > 180)) {
+    @return $toolbar-md-button-color;
+  }
+
+  @return white;
+}
+
+
 @function color-shade($color-value, $amount:8%) {
   $lightness: lightness($color-value);
 

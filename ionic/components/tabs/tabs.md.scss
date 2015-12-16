@@ -49,13 +49,13 @@ tabbar {
   min-width: $tabbar-md-item-icon-size + 5;
 }
 
-[tabbar-icons=bottom] .tab-button {
+[tabbarIcons=bottom] .tab-button {
   padding-top: 8px;
   padding-bottom: 8px;
 }
 
-[tabbar-icons=right] .tab-button,
-[tabbar-icons=left] .tab-button {
+[tabbarIcons=right] .tab-button,
+[tabbarIcons=left] .tab-button {
   padding-bottom: 10px;
 
   icon {
@@ -84,7 +84,7 @@ tab-highlight {
   }
 }
 
-[tabbar-placement=bottom] tab-highlight {
+[tabbarPlacement=bottom] tab-highlight {
   top: 0;
 }
 

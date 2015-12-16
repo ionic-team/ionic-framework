@@ -2,11 +2,11 @@
 <!-- <ion-view nav-title="Search Bar"> -->
 
   <ion-content>
-    <!-- <form [ng-form-model]="form"> -->
+    <!-- <form [ngFormModel]="form"> -->
 
-      <ion-searchbar [(ng-model)]="searchQuery"></ion-searchbar>
+      <ion-searchbar [(ngModel)]="searchQuery"></ion-searchbar>
       <ion-list inset #list>
-        <ion-item *ng-for="#item of getItems()">
+        <ion-item *ngFor="#item of getItems()">
           {{item.title}}
         </ion-item>
       </ion-list>

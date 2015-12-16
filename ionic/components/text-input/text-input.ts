@@ -1,4 +1,5 @@
-import {Component, Directive, Attribute, NgIf, forwardRef, Host, Optional, ElementRef, Renderer, Attribute} from 'angular2/angular2';
+import {Component, Directive, Attribute, forwardRef, Host, Optional, ElementRef, Renderer} from 'angular2/core';
+import {NgIf, NgControl} from 'angular2/common';
 
 import {NavController} from '../nav/nav-controller';
 import {Config} from '../../config/config';
@@ -59,7 +60,7 @@ import {Platform} from '../../platform/platform';
   template:
     '<div class="item-inner">' +
       '<ng-content></ng-content>' +
-      '<input [type]="type" aria-hidden="true" scroll-assist *ng-if="scrollAssist">' +
+      '<input [type]="type" aria-hidden="true" scroll-assist *ngIf="scrollAssist">' +
     '</div>',
   directives: [NgIf, forwardRef(() => InputScrollAssist)]
 })
@@ -105,7 +106,7 @@ export class TextInput {
    * This function is used to add the Angular css classes associated with inputs in forms
    */
    addNgClass(className) {
-     return this.input.elementRef.nativeElement.classList.contains(className);
+     this.input && this.input.elementRef.nativeElement.classList.contains(className);
    }
 
   /**
@@ -132,7 +133,7 @@ export class TextInput {
   /**
    * @private
    */
-  ngOnInit() {
+  ngAfterViewInit() {
     if (this.input && this.label) {
       // if there is an input and an label
       // then give the label an ID
@@ -455,7 +456,7 @@ export class TextInput {
  * @private
  */
 @Directive({
-  selector: 'textarea,input[type=text],input[type=password],input[type=number],input[type=search],input[type=email],input[type=url],input[type=tel]',
+  selector: 'textarea,input[type=text],input[type=password],input[type=number],input[type=search],input[type=email],input[type=url],input[type=tel],input[type=date],input[type=datetime],input[type=datetime-local],input[type=week],input[type=time]',
   inputs: ['value'],
   host: {
     '(focus)': 'focusChange(true)',
@@ -469,7 +470,8 @@ export class TextInputElement {
     @Attribute('type') type: string,
     elementRef: ElementRef,
     renderer: Renderer,
-    @Optional() wrapper: TextInput
+    @Optional() wrapper: TextInput,
+    @Optional() ngControl: NgControl
   ) {
     this.type = type;
     this.elementRef = elementRef;
@@ -484,9 +486,12 @@ export class TextInputElement {
       renderer.setElementClass(elementRef, 'item-input', true);
       wrapper.registerInput(this);
     }
+
+    if (ngControl) this.ngControl = ngControl;
   }
 
   ngOnInit() {
+    if (this.ngControl) this.value = this.ngControl.value;
     this.wrapper && this.wrapper.hasValue(this.value);
   }
 

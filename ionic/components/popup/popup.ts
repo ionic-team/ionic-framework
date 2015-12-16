@@ -1,5 +1,5 @@
-import {FORM_DIRECTIVES, NgControl, NgControlGroup,
-  Component, ElementRef, Injectable, NgClass, NgIf, NgFor, Renderer} from 'angular2/angular2';
+import {Component, ElementRef, Injectable, Renderer} from 'angular2/core';
+import {NgClass, NgIf, NgFor, FORM_DIRECTIVES} from 'angular2/common';
 
 import {OverlayController} from '../overlay/overlay-controller';
 import {Config} from '../../config/config';
@@ -274,15 +274,15 @@ const OVERLAY_TYPE = 'popup';
     '<div (click)="cancel($event)" tappable disable-activated class="backdrop"></div>' +
     '<div class="popup-wrapper">' +
       '<div class="popup-head">' +
-        '<h2 class="popup-title" [inner-html]="d.title" *ng-if="d.title"></h2>' +
-        '<h3 class="popup-sub-title" [inner-html]="d.subTitle" *ng-if="d.subTitle"></h3>' +
+        '<h2 class="popup-title" [innerHTML]="d.title" *ngIf="d.title"></h2>' +
+        '<h3 class="popup-sub-title" [innerHTML]="d.subTitle" *ngIf="d.subTitle"></h3>' +
       '</div>' +
       '<div class="popup-body">' +
-        '<div [inner-html]="d.template" *ng-if="d.template"></div>' +
-        '<input type="{{d.inputType || \'text\'}}" placeholder="{{d.inputPlaceholder}}" *ng-if="d.showPrompt" class="prompt-input">' +
+        '<div [innerHTML]="d.template" *ngIf="d.template"></div>' +
+        '<input type="{{d.inputType || \'text\'}}" placeholder="{{d.inputPlaceholder}}" *ngIf="d.showPrompt" class="prompt-input">' +
       '</div>' +
-      '<div class="popup-buttons" *ng-if="d.buttons.length">' +
-        '<button clear *ng-for="#btn of d.buttons" (click)="buttonTapped(btn, $event)" [inner-html]="btn.text" class="popup-button"></button>' +
+      '<div class="popup-buttons" *ngIf="d.buttons.length">' +
+        '<button clear *ngFor="#btn of d.buttons" (click)="buttonTapped(btn, $event)" [innerHTML]="btn.text" class="popup-button"></button>' +
       '</div>' +
     '</div>',
   host: {

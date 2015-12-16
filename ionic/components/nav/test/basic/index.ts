@@ -1,4 +1,4 @@
-import {Component} from 'angular2/angular2';
+import {Component} from 'angular2/core';
 import {App, NavController} from 'ionic/ionic';
 import {Page, Config, IonicApp} from 'ionic/ionic';
 import {NavParams, NavController, ViewController, IONIC_DIRECTIVES} from 'ionic/ionic';
@@ -32,16 +32,22 @@ class MyCmpTest{}
         <button ion-item class="e2eFrom1To2" (click)="pushFullPage()">Push to FullPage</button>
         <button ion-item (click)="pushPrimaryHeaderPage()">Push to PrimaryHeaderPage</button>
         <button ion-item (click)="pushAnother()">Push to AnotherPage</button>
-        <button ion-item [nav-push]="[pushPage, {id: 42}]">Push FullPage w/ [nav-push] array</button>
-        <button ion-item [nav-push]="pushPage" [nav-params]="{id:40}">Push w/ [nav-push] and [nav-params]</button>
-        <button ion-item [nav-push]="[\'FirstPage\', {id: 22}]">Push w/ [nav-push] array and string view name</button>
-        <button ion-item nav-push="FirstPage" [nav-params]="{id: 23}">Push w/ nav-push and [nav-params]</button>
+
+        <ion-input>
+          <ion-label>Text Input</ion-label>
+          <textarea></textarea>
+        </ion-input>
+        
+        <button ion-item [navPush]="[pushPage, {id: 42}]">Push FullPage w/ [navPush] array</button>
+        <button ion-item [navPush]="pushPage" [navParams]="{id:40}">Push w/ [navPush] and [navParams]</button>
+        <button ion-item [navPush]="[\'FirstPage\', {id: 22}]">Push w/ [navPush] array and string view name</button>
+        <button ion-item [navPush]="FirstPage" [navParams]="{id: 23}">Push w/ [navPush] and [navParams]</button>
         <button ion-item (click)="setPages()">setPages() (Go to PrimaryHeaderPage)</button>
         <button ion-item (click)="setRoot()">setRoot(PrimaryHeaderPage) (Go to PrimaryHeaderPage)</button>
         <button ion-item (click)="nav.pop()">Pop</button>
         <button ion-item (click)="reload()">Reload</button>
 
-        <button *ng-for="#i of pages" ion-item (click)="pushPrimaryHeaderPage()">Page {{i}}</button>
+        <button *ngFor="#i of pages" ion-item (click)="pushPrimaryHeaderPage()">Page {{i}}</button>
       </ion-list>
       <my-cmp></my-cmp>
     </ion-content>`,
@@ -195,18 +201,26 @@ class PrimaryHeaderPage {
 
 @Page({
   template: `
-    <ion-navbar *navbar hide-back-button>
+    <ion-navbar *navbar hideBackButton>
       <ion-title>Another Page Header</ion-title>
     </ion-navbar>
-    <ion-content padding>
-      <p>Back button hidden w/ <code>ion-navbar hide-back-button</code></p>
-      <p><button (click)="nav.pop()">Pop</button></p>
-      <p><button (click)="pushFullPage()">Push to FullPage</button></p>
-      <p><button (click)="pushPrimaryHeaderPage()">Push to PrimaryHeaderPage</button></p>
-      <p><button (click)="pushFirstPage()">Push to FirstPage</button></p>
-      <p><button (click)="setRoot()">setRoot(FirstPage)</button></p>
-      <p><button (click)="toggleBackButton()">Toggle hide-back-button</button></p>
-      <p><button (click)="setBackButtonText()">Set Back Button Text</button></p>
+    <ion-content>
+      <ion-list>
+
+        <ion-input>
+          <ion-label>Text Input</ion-label>
+          <textarea></textarea>
+        </ion-input>
+
+        <ion-item>Back button hidden w/ <code>ion-navbar hideBackButton</code></ion-item>
+        <button ion-item (click)="nav.pop()">Pop</button>
+        <button ion-item (click)="pushFullPage()">Push to FullPage</button>
+        <button ion-item (click)="pushPrimaryHeaderPage()">Push to PrimaryHeaderPage</button>
+        <button ion-item (click)="pushFirstPage()">Push to FirstPage</button>
+        <button ion-item (click)="setRoot()">setRoot(FirstPage)</button>
+        <button ion-item (click)="toggleBackButton()">Toggle hideBackButton</button>
+        <button ion-item (click)="setBackButtonText()">Set Back Button Text</button>
+      </ion-list>
     </ion-content>
   `
 })

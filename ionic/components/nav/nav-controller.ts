@@ -1,5 +1,5 @@
-import {ChangeDetectorRef, Compiler, ElementRef, Injector, provide, NgZone, AppViewManager, Renderer} from 'angular2/angular2';
-import {wtfLeave, wtfCreateScope, WtfScopeFn, wtfStartTimeRange, wtfEndTimeRange} from 'angular2/angular2';
+import {ChangeDetectorRef, Compiler, ElementRef, Injector, provide, NgZone, AppViewManager, Renderer} from 'angular2/core';
+import {wtfLeave, wtfCreateScope, WtfScopeFn, wtfStartTimeRange, wtfEndTimeRange} from 'angular2/instrumentation';
 
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
@@ -56,7 +56,7 @@ import {raf, rafFrames} from '../../util/dom';
  *
  * <h2 id="creating_pages">Page creation</h2>
  * _For more information on the `@Page` decorator see the [@Page API
- * reference](../../../config/Page/)._
+ * reference](../../../config/decorators/Page/)._
  *
  * Pages are created when they are added to the navigation stack.  For methods
  * like [push()](#push), the NavController takes any component class that is
@@ -232,7 +232,9 @@ export class NavController extends Ion {
    */
   push(componentType, params = {}, opts = {}, callback) {
     if (!componentType) {
-      return Promise.reject('invalid componentType to push');
+      let errMsg = 'invalid componentType to push';
+      console.error(errMsg)
+      return Promise.reject(errMsg);
     }
 
     if (typeof componentType !== 'function') {
@@ -849,6 +851,7 @@ export class NavController extends Ion {
       if (this.keyboard.isOpen()) {
         // the keyboard is still open!
         // no problem, let's just close for them
+        this.keyboard.close();
         this.keyboard.onClose(() => {
           // keyboard has finished closing, transition complete
           this._transComplete();
