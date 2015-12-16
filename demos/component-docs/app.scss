@@ -8,6 +8,8 @@ $colors: (
   royal:      #7e60ff,
 );
 $font-path: '../../dist/fonts';
+$checkbox-md-icon-checkmark-color: #fff !important;
+$checkbox-ios-icon-checkmark-color: #fff !important;
 
 @import "../../ionic/ionic";
 @import "action-sheets/basic/styles";
