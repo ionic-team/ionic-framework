@@ -27,6 +27,7 @@ import * as util from '../../util';
  *@property {boolean} [scroll-y] - whether to enable scrolling along the Y axis
  *@property {boolean} [zoom] - whether to enable zooming
  *@property {number} [max-zoom] - set the max zoom amount for ion-scroll
+ * @demo /docs/v2/demos/scroll/
  */
 @Component({
   selector: 'ion-scroll',

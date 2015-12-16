@@ -45,6 +45,7 @@ import {Config} from '../../config/config';
  *
  * @property {Any} [change] - expression to evaluate when a segment button has been changed
  *
+ * @demo /docs/v2/demos/segment/
  * @see {@link /docs/v2/components#segment Segment Component Docs}
  * @see [Angular 2 Forms](http://learnangular2.com/forms/)
  */
@@ -168,6 +169,7 @@ export class Segment extends Ion {
  *
  * @property {Any} [click] - expression to evaluate when a segment button has been clicked
  *
+ * @demo /docs/v2/demos/segment/
  * @see {@link /docs/v2/components#segment Segment Component Docs}
  * @see {@link /docs/v2/api/components/segment/Segment/ Segment API Docs}
  */

@@ -2,8 +2,6 @@
 +* @ngdoc service
 +* @name platform
 +* @module ionic
-+* @description
-+* Platform returns the availble information about your current platform
 +*/
 
 
@@ -12,7 +10,10 @@ import {ready, windowDimensions, flushDimensionCache} from '../util/dom';
 
 
 /**
- * TODO
+ * @name Platform
+ * @description
+ * Platform returns the availble information about your current platform.
+ * @demo /docs/v2/demos/platform/
  */
 export class Platform {
 

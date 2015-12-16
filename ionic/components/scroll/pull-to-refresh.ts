@@ -47,6 +47,7 @@ import {raf, ready, CSS} from '../../util/dom';
  *    }
  *  }
  *  ```
+ *  @demo /docs/v2/demos/refresher/
  *
  *  @property {string} [pullingIcon] - the icon you want to display when you begin to pull down
  *  @property {string} [pullingText] - the text you want to display when you begin to pull down

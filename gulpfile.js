@@ -441,8 +441,11 @@ gulp.task('build.demos', function(){
   function createIndexHTML() {
     return through2.obj(function(file, enc, next) {
       var indexTemplate = baseIndexTemplate;
+      var customTemplateFp = file.path.split('/').slice(0, -1).join('/') + '/index.html';
       if (file.path.indexOf('component-docs') > -1) {
         indexTemplate = docsIndexTemplate;
+      } else if (fs.existsSync(customTemplateFp)) {
+        indexTemplate = _.template(fs.readFileSync(customTemplateFp))();
       }
       this.push(new VinylFile({
         base: file.base,

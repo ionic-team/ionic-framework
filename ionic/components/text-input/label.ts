@@ -18,6 +18,7 @@ import {Form} from '../../util/form';
  * </ion-input>
  * ```
  *
+ * @demo /docs/v2/demos/label/
  * @see {@link ../../../../components#inputs Input Component Docs}
  * @see {@link ../Input Input API Docs}
  *
@@ -49,6 +50,9 @@ export class Label {
     this.container = container;
   }
 
+/**
+ * @private
+ */
   ngOnInit() {
     if (!this.id) {
       this.id = 'lbl-' + this.form.nextId();

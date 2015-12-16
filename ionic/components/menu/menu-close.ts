@@ -6,6 +6,7 @@ import {Menu} from './menu';
 
 /**
 * TODO
+* @demo /docs/v2/demos/menu/
 * @see {@link /docs/v2/components#menus Menu Component Docs}
 * @see {@link ../../menu/Menu Menu API Docs}
 */

@@ -42,6 +42,7 @@ import {Form} from '../../util/form';
  *
  * </ion-list>
  * ```
+ * @demo /docs/v2/demos/radio/
  * @see {@link /docs/v2/components#radio Radio Component Docs}
 */
 @Directive({
@@ -164,7 +165,7 @@ export class RadioGroup extends Ion {
  *   Radio Label
  * </ion-radio>
  * ```
- *
+ * @demo /docs/v2/demos/radio/
  * @see {@link /docs/v2/components#radio Radio Component Docs}
  */
 @Component({

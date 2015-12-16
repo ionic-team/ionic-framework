@@ -72,6 +72,7 @@ export class IdRef {
  * // toggle the no-lines attributes based on whether isAndroid is true or false
  * <ion-list [attr.no-lines]="isAndroid ? '' : null">
  * ```
+ * @demo /docs/v2/demos/attr/
  */
 @Directive({
   selector: '[attr]',

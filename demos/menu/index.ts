@@ -1,11 +1,11 @@
-import {App, IonicApp, IonicView} from 'ionic/ionic';
+import {App, IonicApp, Page} from 'ionic/ionic';
 
 
-@IonicView({templateUrl: 'page1.html'})
+@Page({templateUrl: 'page1.html'})
 class Page1 {}
 
 
-@IonicView({templateUrl: 'page2.html'})
+@Page({templateUrl: 'page2.html'})
 class Page2 {}
 
 

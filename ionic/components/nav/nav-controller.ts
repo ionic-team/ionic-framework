@@ -851,6 +851,7 @@ export class NavController extends Ion {
       if (this.keyboard.isOpen()) {
         // the keyboard is still open!
         // no problem, let's just close for them
+        this.keyboard.close();
         this.keyboard.onClose(() => {
           // keyboard has finished closing, transition complete
           this._transComplete();

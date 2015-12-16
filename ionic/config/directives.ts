@@ -34,6 +34,7 @@ import {ShowWhen, HideWhen} from '../components/show-hide-when/show-hide-when';
 
 /**
  * @name IONIC_DIRECTIVES
+ * @private
  * @description
  * The core Ionic directives as well as Angular's CORE_DIRECTIVES and
  * FORM_DIRECTIVES.  Automatically available in every [@Page](../Page/) template.
@@ -100,7 +101,6 @@ import {ShowWhen, HideWhen} from '../components/show-hide-when/show-hide-when';
  *
  * -  ShowWhen
  * -  HideWhen
-
  */
 export const IONIC_DIRECTIVES = [
   // Angular

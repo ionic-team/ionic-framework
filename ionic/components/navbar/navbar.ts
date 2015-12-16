@@ -60,7 +60,10 @@ class ToolbarBackground {
   }
 }
 
-
+/**
+ * @name Navbar
+ * @see {@link ../../toolbar/Toolbar/ Toolbar API Docs}
+ */
 @Component({
   selector: 'ion-navbar',
   template:

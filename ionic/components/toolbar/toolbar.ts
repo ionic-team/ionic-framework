@@ -76,6 +76,8 @@ export class ToolbarBase extends Ion  {
  *
  *  <ion-content></ion-content>
  *  ```
+ * @demo /docs/v2/demos/toolbar/
+ * @see {@link ../../navbar/Navbar/ Navbar API Docs}
  */
 @Component({
   selector: 'ion-toolbar',
@@ -120,6 +122,7 @@ export class Toolbar extends ToolbarBase {
  *   <ion-title>SubHeader</ion-title>
  * </ion-toolbar>
  *  ```
+ * @demo /docs/v2/demos/toolbar/
  */
 @Component({
   selector: 'ion-title',

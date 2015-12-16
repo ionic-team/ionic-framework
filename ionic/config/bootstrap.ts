@@ -20,7 +20,6 @@ import {TapClick} from '../components/tap-click/tap-click';
 import {ClickBlock} from '../util/click-block';
 import {ready, closest} from '../util/dom';
 
-
 /**
  * @private
  */

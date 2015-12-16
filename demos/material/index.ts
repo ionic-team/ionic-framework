@@ -5,7 +5,7 @@ import {App, ActionSheet, IonicApp, IonicView, Register} from 'ionic/ionic';
 @IonicView({
   template: '<ion-navbar *navbar primary>' +
     '<ion-title>Heading</ion-title>' +
-    '<button menu-toggle="menu">' +
+    '<button menuToggle="menu">' +
       '<icon menu></icon>' +
     '</button>' +
     '<ion-buttons end>' +

@@ -101,7 +101,7 @@ export function getPageFor(hash) {
         'segment': inputs.SegmentPage,
         'select': inputs.SelectPage,
         'switch': inputs.SwitchPage,
-        'search': inputs.SearchPage,
+        'searchbar': inputs.SearchPage,
 
         'inputs': labels.BasicPage,
         'fixed-inline-labels': labels.FixedInlinePage,

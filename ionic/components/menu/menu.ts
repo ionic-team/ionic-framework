@@ -50,6 +50,9 @@ import * as gestures from  './menu-gestures';
  * ```html
  * <ion-menu [content]="contentRef" type="overlay"></ion-menu>
  * ```
+ *
+ * @demo /docs/v2/demos/menu/
+ *
  * @see {@link /docs/v2/components#menus Menu Component Docs}
  * @see {@link /docs/v2/components#navigation Navigation Component Docs}
  * @see {@link ../../nav/Nav Nav API Docs}
