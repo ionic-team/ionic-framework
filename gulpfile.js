@@ -9,6 +9,7 @@ var runSequence = require('run-sequence');
 var watch = require('gulp-watch');
 var tsc = require('gulp-typescript');
 var cache = require('gulp-cached');
+var remember = require('gulp-remember');
 var minimist = require('minimist');
 var connect = require('gulp-connect');
 
@@ -113,7 +114,8 @@ gulp.task('watch', function(done) {
     var filePath = basePath + 'dist/' + relativePath;
     var typingPath = filePath.replace('.js', '.d.ts');
 
-    delete cache.caches.transpile[file.history[0]];
+    delete cache.caches['no-typecheck'][file.history[0]];
+    remember.forget('no-typecheck', file.history[0]);
 
     del([filePath, typingPath], function(){
       gulp.start('bundle');
@@ -170,8 +172,9 @@ gulp.task('bundle.system', function(){
   var babel = require('gulp-babel');
   var concat = require('gulp-concat');
 
-  return tsCompile(tscOptionsEs6, 'babel')
+  return tsCompile(tscOptionsEs6, 'system')
     .pipe(babel(babelOptions))
+    .pipe(remember('system'))
     .pipe(concat('ionic.system.js'))
     .pipe(gulp.dest('dist/bundles'))
 })
