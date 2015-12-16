@@ -9,16 +9,19 @@ import * as gestures from  './menu-gestures';
 
 
 /**
+ * @name Menu
+ * @description
  * _For basic Menu usage, see the [Menu section](../../../../components/#menus)
  * of the Component docs._
  *
  * Menu is a side-menu navigation that can be dragged out or toggled to show.
  *
+ * @usage
  * In order to use Menu, you must specify a [reference](https://angular.io/docs/ts/latest/guide/user-input.html#local-variables)
- * to the content element that Menu should listen on for drag events, using the
- * `content` property:
+ * to the content element that Menu should listen on for drag events, using the `content` property:
+ *
  * ```html
- * <ion-menu [content]="contentRef">
+ * <ion-menu [content]="mycontent">
  *   <ion-content>
  *     <ion-list>
  *     ...
@@ -26,13 +29,13 @@ import * as gestures from  './menu-gestures';
  *   </ion-content>
  * </ion-menu>
  *
- * <ion-nav #content-ref [root]="rootPage"></ion-nav>
+ * <ion-nav #mycontent [root]="rootPage"></ion-nav>
  * ```
  *
  * By default, Menus are on the left, but this can be overriden with the `side`
  * property:
  * ```html
- * <ion-menu [content]="contentRef" side="right"></ion-menu>
+ * <ion-menu [content]="mycontent" side="right"></ion-menu>
  * ```
  *
  * Menus can optionally be given an `id` attribute which allows the app to
@@ -48,8 +51,36 @@ import * as gestures from  './menu-gestures';
  * style. By default, Menu will adjust to the correct style for the platform,
  * but this can be overriden using the `type` property:
  * ```html
- * <ion-menu [content]="contentRef" type="overlay"></ion-menu>
+ * <ion-menu [content]="mycontent" type="overlay"></ion-menu>
  * ```
+ *
+ * To programatically interact with the menu, you first get the menu component.
+ *
+ * ```ts
+ * @Page({
+ * `<ion-menu [content]="mycontent" id="leftMenu"></ion-menu>
+ * <ion-nav #mycontent [root]="rootPage"></ion-nav>`
+ * )}
+ * export class MyClass{
+ *  constructor(app: IonicApp){
+ *    this.app = app;
+ *    this.menu;
+ *  }
+ *
+ *  // Wait until the page is ready
+ *  ngAfterViewInit(){
+ *    this.menu = this.app.getComponent('leftMenu');
+ *  }
+ *
+ *  // Open the menu programatically
+ *  openMenu(){
+ *    this.menu.open();
+ *  }
+ *
+ * }
+ * ```
+ *
+ * If you want to use any of the APIs down below, make sure to grabe the menu component by it's ID
  *
  * @demo /docs/v2/demos/menu/
  *
@@ -187,7 +218,7 @@ export class Menu extends Ion {
   /**
    * Sets the state of the Menu to open or not.
    * @param {boolean} isOpen  If the Menu is open or not.
-   * @return {Promise} TODO
+   * @return {Promise} returns a promise once set
    */
   setOpen(shouldOpen) {
     // _isPrevented is used to prevent unwanted opening/closing after swiping open/close
@@ -298,24 +329,24 @@ export class Menu extends Ion {
   }
 
   /**
-   * TODO
-   * @return {TODO} TODO
+   * Progamatically open the Menu
+   * @return {Promise} returns a promise when the menu is fully opened
    */
   open() {
     return this.setOpen(true);
   }
 
   /**
-   * TODO
-   * @return {TODO} TODO
+   * Progamatically close the Menu
+   * @return {Promise} returns a promise when the menu is fully closed
    */
   close() {
     return this.setOpen(false);
   }
 
   /**
-   * TODO
-   * @return {TODO} TODO
+   * Toggle the menu. If it's closed, it will open, and if opened, it will close
+   * @return {Promise} returns a promise when the menu has been toggled
    */
   toggle() {
     return this.setOpen(!this.isOpen);

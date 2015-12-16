@@ -5,7 +5,23 @@ import {Menu} from './menu';
 
 
 /**
-* TODO
+* @name MenuClose
+* @description
+* Place `menuClose` on a button to automatically close an open menu. Note that the menu's id must be either
+* `leftMenu` or `rightMenu`
+*
+* @usage
+ * ```html
+ * <ion-menu [content]="mycontent" id="leftMenu">
+ *   <ion-content>
+ *     <ion-list>
+ *     <ion-item menuClose>Close the menu</ion-item>
+ *     </ion-list>
+ *   </ion-content>
+ * </ion-menu>
+ *
+ * <ion-nav #mycontent [root]="rootPage"></ion-nav>
+ * ```
 * @demo /docs/v2/demos/menu/
 * @see {@link /docs/v2/components#menus Menu Component Docs}
 * @see {@link ../../menu/Menu Menu API Docs}
