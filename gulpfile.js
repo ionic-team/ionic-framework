@@ -318,39 +318,7 @@ gulp.task('e2e.build', function() {
   }
 });
 
-gulp.task('e2e.bundle', ['e2e.build', 'bundle', 'copy.web-animations', 'sass', 'fonts'], function(done) {
-  var glob = require('glob');
-  var webpack = require('webpack');
-  var path = require('path');
-  var _ = require('lodash');
-
-  return glob("dist/e2e/**/index.js", function(err, files){
-    var numTasks = files.length;
-    var callback = null;
-    files.forEach(function(file){
-      var config = require('./scripts/e2e/webpack.config.js');
-
-      // add our bundle entry, removing previous if necessary
-      // since config is cached
-      if (config.entry.length > 1) {
-        config.entry.pop();
-      }
-      config.entry.push('./' + file);
-      config.output = {
-        libraryTarget: 'commonjs2',
-        filename: path.dirname(file) + '/bundle.js'
-      }
-      if (--numTasks === 0) callback = done;
-      bundle({
-        config: config,
-        stats: false,
-        cb: callback
-      });
-    })
-  })
-});
-
-gulp.task('e2e', ['e2e.bundle']);
+gulp.task('e2e', ['e2e.build', 'bundle.system', 'copy.web-animations', 'sass', 'fonts']);
 
 gulp.task('sass', function() {
   var sass = require('gulp-sass');
