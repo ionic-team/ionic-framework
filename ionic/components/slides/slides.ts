@@ -91,7 +91,7 @@ import {Scroll} from '../scroll/scroll';
   directives: [NgClass]
 })
 export class Slides extends Ion {
-  @Output() change:EventEmitter = new EventEmitter();
+  @Output() change: EventEmitter<any> = new EventEmitter();
 
   /**
    * @private
@@ -150,7 +150,7 @@ export class Slides extends Ion {
       return this.options.onSlideChangeStart && this.options.onSlideChangeStart(swiper);
     };
     options.onSlideChangeEnd = (swiper) => {
-      this.change.next(swiper);
+      this.change.emit(swiper);
       return this.options.onSlideChangeEnd && this.options.onSlideChangeEnd(swiper);
     };
     options.onLazyImageLoad = (swiper, slide, img) => {
