@@ -50,6 +50,9 @@ export class Label {
     this.container = container;
   }
 
+/**
+ * @private
+ */
   ngOnInit() {
     if (!this.id) {
       this.id = 'lbl-' + this.form.nextId();
