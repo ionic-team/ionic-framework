@@ -56,9 +56,9 @@ export class DisplayWhen {
 
 /**
  *
- * The `show-when` attribute takes a string that represents a plaform or screen orientation.
+ * The `showWhen` attribute takes a string that represents a plaform or screen orientation.
  * The element the attribute is added to will only be shown when that platform or screen orientation is active.
- * Complements the [hide-when attribute](../HideWhen).
+ * Complements the [hideWhen attribute](../HideWhen).
  * @usage
  * ```html
  * <div showWhen="ios">I am only visible on iOS!</div>
@@ -93,9 +93,9 @@ export class ShowWhen extends DisplayWhen {
 
 /**
  *
- * The `hide-when` attribute takes a string that represents a plaform or screen orientation.
+ * The `hideWhen` attribute takes a string that represents a plaform or screen orientation.
  * The element the attribute is added to will only be hidden when that platform or screen orientation is active.
- * Complements the [show-when attribute](../ShowWhen).
+ * Complements the [showWhen attribute](../ShowWhen).
  * @usage
  * ```html
  * <div hideWhen="android">I am hidden on Android!</div>
