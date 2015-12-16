@@ -25,8 +25,7 @@ var tscOptions = {
   experimentalDecorators: true,
   target: "es5",
   module: "commonjs",
-  declaration: true,
-  outDir: "dist"
+  declaration: true
 }
 
 var tscOptionsNoTypeCheck = {
@@ -37,6 +36,13 @@ var tscOptionsNoTypeCheck = {
   isolatedModules: true
 }
 
+var tscOptionsEs6 = {
+  emitDecoratorMetadata: true,
+  experimentalDecorators: true,
+  target: 'ES6',
+  isolatedModules: true
+}
+
 var tscReporter = {
   error: function (error) {
     // TODO
@@ -44,6 +50,17 @@ var tscReporter = {
     // console.error(error.message);
   }
 };
+
+// We use Babel to easily create named System.register modules
+// See: https://github.com/Microsoft/TypeScript/issues/4801
+// and https://github.com/ivogabe/gulp-typescript/issues/211
+var babelOptions = {
+  modules: 'system',
+  moduleIds: true,
+  getModuleId: function(name) {
+    return 'ionic/' + name;
+  }
+}
 
 gulp.task('build', function(done) {
   runSequence(
@@ -147,6 +164,16 @@ gulp.task('transpile.typecheck', function(){
     result.js
   ])
   .pipe(gulp.dest('dist'));
+})
+
+gulp.task('bundle.system', function(){
+  var babel = require('gulp-babel');
+  var concat = require('gulp-concat');
+
+  return tsCompile(tscOptionsEs6, 'babel')
+    .pipe(babel(babelOptions))
+    .pipe(concat('ionic.system.js'))
+    .pipe(gulp.dest('dist/bundles'))
 })
 
 gulp.task('transpile', ['transpile.no-typecheck']);
