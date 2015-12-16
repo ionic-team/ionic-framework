@@ -83,13 +83,13 @@ gulp.task('watch', function(done) {
           if (file.event === "unlink") {
             deleteFile(file);
           } else {
-            gulp.start('bundle');
+            gulp.start('bundle.system');
           }
         }
       );
 
       watch('ionic/components/*/test/**/*', function(file) {
-        gulp.start('e2e');
+        gulp.start('e2e.build');
       });
 
       watch('ionic/**/*.scss', function() {
@@ -111,7 +111,7 @@ gulp.task('watch', function(done) {
     remember.forget('no-typecheck', file.history[0]);
 
     del([filePath, typingPath], function(){
-      gulp.start('bundle');
+      gulp.start('bundle.system');
     });
   }
 });
@@ -174,7 +174,9 @@ gulp.task('bundle.system', function(){
 
 gulp.task('transpile', ['transpile.no-typecheck']);
 
-gulp.task('bundle', ['transpile'], function(done){
+gulp.task('bundle', ['bundle.cjs', 'bundle.system']);
+
+gulp.task('bundle.cjs', ['transpile'], function(done){
   //TODO
   //   if (flags.animations == 'polyfill') {
   //     prepend.push('window.Element.prototype.animate=undefined;');
@@ -277,7 +279,7 @@ gulp.task('e2e.build', function() {
     var sep = path.sep;
     file.dirname = file.dirname.replace(sep + 'test' + sep, sep);
   }))
-  .pipe(gulp.dest('dist/e2e/'));
+  .pipe(gulp.dest('dist/e2e/'))
 
   function createIndexHTML() {
     return through2.obj(function(file, enc, next) {
