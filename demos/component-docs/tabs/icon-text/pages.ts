@@ -18,13 +18,10 @@ class TabIconTextPage {
     this.platform = platform;
     this.isAndroid = platform.is('android');
   }
-  onInit() {
+  onPageWillEnter() {
+    console.log('enter');
     document.getElementById('md-tabs-icon-text').style.display = "block";
     document.getElementById('md-only').style.display = "none";
-  }
-  onDestroy() {
-    document.getElementById('md-tabs-icon-text').style.display = "none";
-    document.getElementById('md-only').style.display = "block";
   }
 }
 
@@ -44,4 +41,10 @@ export class IconTextPage {
     this.tabThree = TabIconTextPage;
     this.tabFour = TabIconTextPage;
   }
+
+  onPageWillLeave() {
+    document.getElementById('md-tabs-icon-text').style.display = "none";
+    document.getElementById('md-only').style.display = "block";
+  }
+
 }

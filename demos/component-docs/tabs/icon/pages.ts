@@ -18,13 +18,9 @@ class TabIconPage {
     this.platform = platform;
     this.isAndroid = platform.is('android');
   }
-  onInit() {
+  onPageWillEnter() {
     document.getElementById('md-tabs-icon').style.display = "block";
     document.getElementById('md-only').style.display = "none";
-  }
-  onDestroy() {
-    document.getElementById('md-tabs-icon').style.display = "none";
-    document.getElementById('md-only').style.display = "block";
   }
 }
 
@@ -44,4 +40,10 @@ export class IconPage {
     this.tabThree = TabIconPage;
     this.tabFour = TabIconPage;
   }
+
+  onPageWillLeave() {
+    document.getElementById('md-tabs-icon').style.display = "none";
+    document.getElementById('md-only').style.display = "block";
+  }
+
 }
