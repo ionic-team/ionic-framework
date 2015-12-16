@@ -1,9 +1,9 @@
 <ion-toolbar>
-  <ion-segment [(ngModel)]="relationship">
-    <ion-segment-button value="friends" class="e2eSegmentFriends">
+  <ion-segment id="segment" [(ngModel)]="relationship" (change)="onSegmentChanged($event)">
+    <ion-segment-button value="friends" (click)="onSegmentClicked('friends')" class="e2eSegmentFriends">
       Friends
     </ion-segment-button>
-    <ion-segment-button value="enemies">
+    <ion-segment-button value="enemies" (click)="onSegmentClicked('enemies')">
       Enemies
     </ion-segment-button>
   </ion-segment>

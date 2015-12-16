@@ -1,4 +1,4 @@
-import {Directive, Renderer, ElementRef, Host, Optional} from 'angular2/core';
+import {Directive, Renderer, ElementRef, Host, Optional, EventEmitter, Output} from 'angular2/core';
 import {NgControl} from 'angular2/common';
 
 import {Ion} from '../ion';
@@ -15,7 +15,7 @@ import {Config} from '../../config/config';
  *
  * @usage
  * ```html
- * <ion-segment [(ngModel)]="relationship" danger>
+ * <ion-segment [(ngModel)]="relationship" (change)="onSegmentChanged($event)" danger>
  *   <ion-segment-button value="friends">
  *     Friends
  *   </ion-segment-button>
@@ -43,6 +43,8 @@ import {Config} from '../../config/config';
  * </form>
  * ```
  *
+ * @property {Any} [change] - expression to evaluate when a segment button has been changed
+ *
  * @see {@link /docs/v2/components#segment Segment Component Docs}
  * @see [Angular 2 Forms](http://learnangular2.com/forms/)
  */
@@ -50,10 +52,14 @@ import {Config} from '../../config/config';
   selector: 'ion-segment'
 })
 export class Segment extends Ion {
+  @Output() change: EventEmitter<any> = new EventEmitter();
+
   /**
    * @private
+   * {Array<SegmentButton>} buttons  The children SegmentButton's
    */
   buttons: Array<SegmentButton> = [];
+  value: any;
 
   constructor(
     @Optional() ngControl: NgControl,
@@ -70,6 +76,7 @@ export class Segment extends Ion {
 
   /**
    * @private
+   * Write a new value to the element.
    */
   writeValue(value) {
     this.value = !value ? '' : value;
@@ -80,11 +87,13 @@ export class Segment extends Ion {
 
   /**
    * @private
+   * Set the function to be called when the control receives a change event.
    */
   registerOnChange(fn) { this.onChange = fn; }
 
   /**
    * @private
+   * Set the function to be called when the control receives a touch event.
    */
   registerOnTouched(fn) { this.onTouched = fn; }
 
@@ -106,20 +115,6 @@ export class Segment extends Ion {
 
   /**
    * @private
-   * Select the button with the given value.
-   * @param {string} value  Value of the button to select.
-   */
-  selectFromValue(value) {
-    if (this.buttons.length == 0) {
-      return;
-    }
-    for (let button of this.buttons) {
-      button.isActive = (button.value === value);
-    }
-  }
-
-  /**
-   * @private
    * Indicate a button should be selected.
    * @param {SegmentButton} segmentButton  The button to select.
    */
@@ -131,6 +126,7 @@ export class Segment extends Ion {
 
     this.value = segmentButton.value;
     this.onChange(segmentButton.value);
+    this.change.emit(this.value);
   }
 }
 
@@ -143,10 +139,10 @@ export class Segment extends Ion {
  * @usage
  * ```html
  * <ion-segment [(ngModel)]="relationship" primary>
- *   <ion-segment-button value="friends">
+ *   <ion-segment-button value="friends" (click)="clickedFriends()">
  *     Friends
  *   </ion-segment-button>
- *   <ion-segment-button value="enemies">
+ *   <ion-segment-button value="enemies" (click)="clickedEnemies()">
  *     Enemies
  *   </ion-segment-button>
  * </ion-segment>
@@ -169,6 +165,9 @@ export class Segment extends Ion {
  *   </ion-segment>
  * </form>
  * ```
+ *
+ * @property {Any} [click] - expression to evaluate when a segment button has been clicked
+ *
  * @see {@link /docs/v2/components#segment Segment Component Docs}
  * @see {@link /docs/v2/api/components/segment/Segment/ Segment API Docs}
  */
@@ -183,7 +182,6 @@ export class Segment extends Ion {
   }
 })
 export class SegmentButton {
-
   constructor(
     @Host() segment: Segment,
     elementRef: ElementRef,
@@ -197,6 +195,7 @@ export class SegmentButton {
 
   /**
    * @private
+   * Runs after the first check only
    */
   ngOnInit() {
     this.segment.register(this);
@@ -204,6 +203,8 @@ export class SegmentButton {
 
   /**
    * @private
+   * On click of a SegmentButton
+   * @param {MouseEvent} event  The event that happens on click.
    */
   click(event) {
     this.segment.selected(this, event);

@@ -1,6 +1,6 @@
 import {FORM_DIRECTIVES, FormBuilder, Validators, Control, ControlGroup} from 'angular2/common';
 
-import {App} from 'ionic/ionic';
+import {App, IonicApp} from 'ionic/ionic';
 
 
 @App({
@@ -9,7 +9,8 @@ import {App} from 'ionic/ionic';
   directives: [FORM_DIRECTIVES]
 })
 class MyApp {
-  constructor(fb: FormBuilder) {
+  constructor(fb: FormBuilder, app: IonicApp) {
+    this.app = app;
     this.myForm = fb.group({
       mapStyle: ['hybrid', Validators.required]
     });
@@ -17,6 +18,14 @@ class MyApp {
     this.relationship = 'enemies';
     this.modelStyle = 'B';
     this.appType = 'free';
+  }
+
+  onSegmentChanged(value) {
+    console.log("Segment changed to", value);
+  }
+
+  onSegmentClicked(value) {
+    console.log("Segment clicked", value);
   }
 
   doSubmit(event) {
