@@ -10,7 +10,9 @@ import {Platform} from '../platform/platform';
 import {isObject, isDefined, isFunction, isArray, extend} from '../util/util';
 
 /**
+ * @name Config
  * @demo /docs/v2/demos/config/
+ * @description
  * Config lets you change multiple or a single value in an apps mode configuration. Things such as tab placement, icon changes, and view animations can be set here.
  *
  * ```ts
