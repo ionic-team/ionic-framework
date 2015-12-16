@@ -117,7 +117,7 @@ gulp.task('clean', function(done) {
   del(['dist/**', '!dist'], done);
 });
 
-function tsResult(options, cacheName){
+function tsCompile(options, cacheName){
   return gulp.src([
       'ionic/**/*.ts',
       '!ionic/components/*/test/**/*',
@@ -130,15 +130,16 @@ function tsResult(options, cacheName){
       this.emit('end');
     });
 }
+
 gulp.task('transpile.no-typecheck', function(){
-  return tsResult(tscOptionsNoTypeCheck, 'no-typecheck')
+  return tsCompile(tscOptionsNoTypeCheck, 'no-typecheck')
     .pipe(gulp.dest('dist'));
 });
 
 gulp.task('transpile.typecheck', function(){
   var merge = require('merge2');
 
-  var result = tsResult(tscOptions, 'typecheck');
+  var result = tsCompile(tscOptions, 'typecheck');
 
   // merge definition and source streams
   return merge([
