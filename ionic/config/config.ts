@@ -61,6 +61,15 @@ import {isObject, isDefined, isFunction, isArray, extend} from '../util/util';
  * http://localhost:8100/?ionicTabbarPlacement=bottom
  * ```
  *
+ * Custom values can be added to config, and looked up at a later point in time.
+ *
+ * ``` javascript
+ * config.set('ios', 'favoriteColor', 'green');
+ * // from any page in your app:
+ * config.get('favoriteColor'); // 'green'
+ * ```
+ *
+ *
  * A config value can come from anywhere and be anything, but there are a default set of values.
  *
  *
@@ -127,13 +136,15 @@ export class Config {
     return this;
   }
 
+
 /**
-* For setting a single config values
-*/
-/**
- * @private
- * @name set()
+ * @name set
  * @description
+ * Sets a single config value.
+ *
+ * @param {String} [platform] - The platform (either 'ios' or 'android') that the config value should apply to. Leaving this blank will apply the config value to all platforms.
+ * @param {String} [key] - The key used to look up the value at a later point in time.
+ * @param {String} [value] - The config value being stored.
  */
   set() {
     const args = arguments;
@@ -164,13 +175,13 @@ export class Config {
     return this;
   }
 
- /**
-  * For getting a single config values
-  */
+
 /**
- * @private
- * @name get()
+ * @name get
  * @description
+ * Returns a single config value, given a key.
+ *
+ * @param {String} [key] - the key for the config value
  */
   get(key) {
 
