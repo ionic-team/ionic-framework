@@ -140,12 +140,8 @@ body.ios img#ios-only {
   position: absolute;
   background-color: #F8F8F8;
   padding: 5px 0;
-  top: -20px;
+  top: 0px;
   width: 100%;
   height: auto;
   z-index: 999;
-}
-
-body.ios {
-  margin-top: 20px;
 }
