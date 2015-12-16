@@ -4,7 +4,7 @@ import {IonicView, Dialogs} from 'ionic/ionic';
 @IonicView({
   template: `
   <ion-navbar *navbar>
-    <button menu-toggle>
+    <button menuToggle>
       <icon menu></icon>
     </button>
     <ion-title>Dialogs</ion-title>
