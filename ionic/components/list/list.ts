@@ -76,6 +76,22 @@ export class List extends Ion {
     this.itemTemplate = item;
   }
 
+  /**
+   * Enable sliding items if your page has them
+   *
+   * ```ts
+   * export class MyClass {
+   *    constructor(app: IonicApp){
+   *      this.app = app;
+   *      this.list = this.app.getComponent('my-list');
+   *    }
+   *    stopSliding(){
+   *      this.list.enableSlidingItems(false);
+   *    }
+   * }
+   * ```
+   * @param {Boolean} shouldEnable whether the item-sliding should be enabled or not
+   */
   enableSlidingItems(shouldEnable) {
     if (this._enableSliding !== shouldEnable) {
       this._enableSliding = shouldEnable;
@@ -94,6 +110,23 @@ export class List extends Ion {
     }
   }
 
+  /**
+   * Enable sliding items if your page has
+   *
+   * ```ts
+   * export class MyClass {
+   *    constructor(app: IonicApp){
+   *      this.app = app;
+   *      this.list = this.app.getComponent('my-list');
+   *    }
+   *    // Here we have some method that will close the items
+   *    // when called
+   *    closeItmes(){
+   *      this.list.closeSlidingItems();
+   *    }
+   * }
+   * ```
+   */
   closeSlidingItems() {
     this.slidingGesture && this.slidingGesture.closeOpened();
   }

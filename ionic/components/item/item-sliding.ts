@@ -23,6 +23,8 @@ import {List} from '../list/list';
  *   </ion-item>
  * </ion-list>
  * ```
+ * @see {@link /docs/v2/components#lists List Component Docs}
+ * @see {@link ../../list/List List API Docs}
  */
 @Component({
   selector: 'ion-item-sliding',
@@ -37,6 +39,9 @@ export class ItemSliding {
     elementRef.nativeElement.$ionSlide = ++slideIds;
   }
 
+/**
+ * @private
+ */
   close() {
     this.list.closeSlidingItems();
   }
