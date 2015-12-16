@@ -1,4 +1,4 @@
-import {Directive, Component, ElementRef, Host, EventEmitter} from 'angular2/core';
+import {Directive, Component, ElementRef, Host, EventEmitter, Output} from 'angular2/core';
 import {NgClass} from 'angular2/common';
 
 import {Ion} from '../ion';
@@ -34,7 +34,7 @@ import {Scroll} from '../scroll/scroll';
  * ```ts
  * @Page({
  *  template: `
- *     <ion-slides pager (slideChanged)="onSlideChanged($event)" loop="true" autoplay="true">
+ *     <ion-slides pager (change)="onSlideChanged($event)" loop="true" autoplay="true">
  *      <ion-slide>
  *        <h3>Thank you for choosing the Awesome App!</h3>
  *        <p>
@@ -65,7 +65,7 @@ import {Scroll} from '../scroll/scroll';
  * @property {Boolean} [bounce] - whether the slides should bounce
  * @property {Number} [index] - The slide index to start on
  * @property [pager] - add this property to enable the slide pager
- * @property {Any} [slideChanged] - expression to evaluate when a slide has been changed
+ * @property {Any} [change] - expression to evaluate when a slide has been changed
  * @see {@link /docs/v2/components#slides Slides Component Docs}
  */
 @Component({
@@ -81,9 +81,6 @@ import {Scroll} from '../scroll/scroll';
     'zoomDuration',
     'zoomMax'
   ],
-  outputs: [
-    'slideChanged'
-  ],
   template:
     '<div class="swiper-container">' +
       '<div class="swiper-wrapper">' +
@@ -94,18 +91,20 @@ import {Scroll} from '../scroll/scroll';
   directives: [NgClass]
 })
 export class Slides extends Ion {
+  @Output() change:EventEmitter = new EventEmitter();
 
   /**
    * @private
    * @param {ElementRef} elementRef  TODO
    */
   constructor(elementRef: ElementRef, config: Config) {
+
     super(elementRef, config);
     this.rapidUpdate = util.debounce(() => {
       this.update();
     }, 10);
 
-    this.slideChanged = new EventEmitter('slideChanged');
+    console.warn("(slideChanged) deprecated. Use (change) to track slide changes.");
   }
 
   /**
@@ -151,7 +150,7 @@ export class Slides extends Ion {
       return this.options.onSlideChangeStart && this.options.onSlideChangeStart(swiper);
     };
     options.onSlideChangeEnd = (swiper) => {
-      this.slideChanged.next(swiper);
+      this.change.next(swiper);
       return this.options.onSlideChangeEnd && this.options.onSlideChangeEnd(swiper);
     };
     options.onLazyImageLoad = (swiper, slide, img) => {

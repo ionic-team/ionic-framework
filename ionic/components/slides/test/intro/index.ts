@@ -6,6 +6,6 @@ import {App} from 'ionic/ionic';
 })
 class MyApp {
   onSlideChanged(slider) {
-    console.log('Slide chnaged', slider);
+    console.log('Slide changed', slider);
   }
 }
