@@ -170,6 +170,7 @@ gulp.task('bundle.system', function(){
     .pipe(remember('system'))
     .pipe(concat('ionic.system.js'))
     .pipe(gulp.dest('dist/bundles'))
+    .pipe(connect.reload())
 })
 
 gulp.task('transpile', ['transpile.no-typecheck']);
@@ -280,6 +281,7 @@ gulp.task('e2e.build', function() {
     file.dirname = file.dirname.replace(sep + 'test' + sep, sep);
   }))
   .pipe(gulp.dest('dist/e2e/'))
+  .pipe(connect.reload());
 
   function createIndexHTML() {
     return through2.obj(function(file, enc, next) {
