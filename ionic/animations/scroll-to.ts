@@ -64,7 +64,7 @@ export class ScrollTo {
         if (!self._el) {
           return resolve();
         }
-        
+
         let time = Math.min(1, ((Date.now() - start) / duration));
 
         // where .5 would be 50% of time on a linear scale easedT gives a
@@ -72,10 +72,10 @@ export class ScrollTo {
         let easedT = easeOutCubic(time);
 
         if (fromY != y) {
-          self._el.scrollTop = parseInt((easedT * (y - fromY)) + fromY, 10);
+          self._el.scrollTop = Math.round((easedT * (y - fromY)) + fromY);
         }
         if (fromX != x) {
-          self._el.scrollLeft = parseInt((easedT * (x - fromX)) + fromX, 10);
+          self._el.scrollLeft = Math.round((easedT * (x - fromX)) + fromX);
         }
 
         if (time < 1 && self.isPlaying) {
