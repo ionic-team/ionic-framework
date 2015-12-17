@@ -3,7 +3,7 @@
  * Copyright 2015 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v1.2.0
+ * Ionic, v1.2.1
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -7241,9 +7241,6 @@ ion-slides {
   text-align: center; }
 
 .swiper-container {
-  position: absolute;
-  left: 0;
-  top: 0;
   width: 100%;
   height: 100%;
   padding: 0;
@@ -7256,10 +7253,6 @@ ion-slides {
   width: 100%;
   height: 100%;
   padding: 0; }
-
-.swiper-container {
-  width: 100%;
-  height: 100%; }
 
 .swiper-slide {
   width: 100%;
@@ -7694,10 +7687,6 @@ input[type="color"] {
 .platform-android input[type="time"],
 .platform-android input[type="week"] {
   padding-top: 8px; }
-
-.platform-ios textarea,
-.platform-android textarea {
-  text-indent: -3px; }
 
 .item-input input,
 .item-input textarea {
