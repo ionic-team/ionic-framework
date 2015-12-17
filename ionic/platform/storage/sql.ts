@@ -96,7 +96,7 @@ export class SqlStorage extends StorageEngine {
    * @param {array} params the additional params to use for query placeholders
    * @return {Promise} that resolves or rejects with an object of the form { tx: Transaction, res: Result (or err)}
    */
-  query(query, ...params) {
+  query(query, params=[]) {
     return new Promise((resolve, reject) => {
       try {
         this._db.transaction((tx) => {
