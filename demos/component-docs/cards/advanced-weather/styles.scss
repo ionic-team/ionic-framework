@@ -18,8 +18,18 @@ body.ios ion-card p.advanced-background-title-large span {
 
 .preview-weather-cards {
 
-  ion-content ion-card ion-item.advanced-trans p {
-    color: #fff;
+  ion-card ion-item.advanced-trans.item p {
+    font-size: 12px;
+    letter-spacing: 1.7px;
+    font-weight: 500;
+    opacity: 0.7;
+  }
+  ion-card ion-item.advanced-trans.item p {
+    font-size: 12px;
+    letter-spacing: 1.7px;
+    font-weight: 500;
+    opacity: 0.7;
+    color: #fff !important;
   }
 
   ion-card p.advanced-background-subtitle {
@@ -42,12 +52,7 @@ body.ios ion-card p.advanced-background-title-large span {
     padding: 12px 20px !important;
     background: transparent;
   }
-  ion-card ion-item.advanced-trans.item p {
-    font-size: 12px;
-    letter-spacing: 1.7px;
-    font-weight: 500;
-    opacity: 0.7;
-  }
+
 
   ion-card p.advanced-background-title {
     position: absolute;
@@ -108,17 +113,8 @@ body.ios ion-card p.advanced-background-title-large span {
     width: 100%;
     padding: 12px 20px !important;
     background: transparent;
+    color: #fff !important;
   }
-  ion-card ion-item.advanced-trans.item p {
-    font-size: 12px;
-    letter-spacing: 1.7px;
-    font-weight: 500;
-    opacity: 0.7;
-  }
-  ion-content ion-card ion-item.advanced-trans p {
-    color: #fff;
-  }
-
 }
 
 ion-card .advanced-weather-tabs {
