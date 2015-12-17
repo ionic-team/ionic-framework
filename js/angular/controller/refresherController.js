@@ -104,8 +104,6 @@ IonicModule
       // if we've dragged up and back down in to native scroll territory
       if (deltaY - dragOffset <= 0 || scrollParent.scrollTop !== 0) {
 
-        console.log('NOT PULLING', deltaY, dragOffset, scrollParent.scrollTop);
-
         if (isOverscrolling) {
           isOverscrolling = false;
           setScrollLock(false);
@@ -122,7 +120,6 @@ IonicModule
         return;
 
       } else if (deltaY > 0 && scrollParent.scrollTop === 0 && !isOverscrolling) {
-        console.log('PULLING', deltaY, dragOffset, scrollParent.scrollTop, isOverscrolling);
         // starting overscroll, but drag started below scrollTop 0, so we need to offset the position
         dragOffset = deltaY;
       }
