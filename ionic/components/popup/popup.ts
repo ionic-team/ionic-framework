@@ -10,6 +10,8 @@ import {extend} from '../../util/util';
 
 
 /**
+ * @name Popup
+ * @description
  * The Ionic Popup service allows the creation of popup windows that require the user to respond in order to continue.
  *
  * The popup service has support for more flexible versions of the built in `alert()`, `prompt()`, and `confirm()` functions that users are used to, in addition to allowing popups with completely custom content and look.
@@ -73,7 +75,7 @@ export class Popup {
   }
 
   /**
-   * TODO
+   * @private
    * @param {TODO} opts  TODO
    * @returns {object} A promise
    */
@@ -95,20 +97,12 @@ export class Popup {
   /**
    * Show a simple alert popup with a message and one button
    * that the user can tap to close the popup.
-   *
    * @param {object} opts The options for showing the alert, of the form:
-   *
-   * ```
-   * {
-   *   title: '', // String. The title of the popup.
-   *   cssClass: '', // String (optional). The custom CSS class name.
-   *   subTitle: '', // String (optional). The sub-title of the popup.
-   *   template: '', // String (optional). The html template to place in the popup body.
-   *   okText: '', // String (default: 'OK'). The text of the OK button.
-   *   okType: '', // String (default: ''). The type of the OK button.
-   * }
-   * ```
-   *
+   *  - `{String}` `title` The title of the popup.
+   *  - `{String}` `cssClass`  (optional). The custom CSS class name.
+   *  - `{String}` `subTitle`  (optional). The sub-title of the popup.
+   *  - `{String}` `template`  (optional). The html template to place in the popup body.
+   *  - `{String}` `okText` (default: 'OK'). The text of the OK button.
    * @returns {object} A promise which is resolved when the popup is closed.
    */
   alert(opts={}) {
@@ -143,20 +137,12 @@ export class Popup {
    * Resolves the promise with true if the user presses the OK button, and false if the user presses the Cancel button.
    *
    * @param {object} opts The options for showing the confirm, of the form:
-   *
-   * ```
-   * {
-   *   title: '', // String. The title of the popup.
-   *   cssClass: '', // String (optional). The custom CSS class name.
-   *   subTitle: '', // String (optional). The sub-title of the popup.
-   *   template: '', // String (optional). The html template to place in the popup body.
-   *   cancelText: '', // String (default: 'Cancel'). The text of the Cancel button.
-   *   cancelType: '', // String (default: ''). The type of the Cancel button.
-   *   okText: '', // String (default: 'OK'). The text of the OK button.
-   *   okType: '', // String (default: ''). The type of the OK button.
-   * }
-   * ```
-   *
+   *  - `{String}` `title` The title of the popup.
+   *  - `{String}` `cssClass`  (optional). The custom CSS class name.
+   *  - `{String}` `subTitle`  (optional). The sub-title of the popup.
+   *  - `{String}` `template`  (optional). The html template to place in the popup body.
+   *  - `{String}` `okText` (default: 'OK'). The text of the OK button.
+   *  - `{String}` `cancelText` (default: 'Cancel'). The text of the OK button.
    * @returns {object} A promise which is resolved when the popup is closed.
    */
   confirm(opts={}) {
@@ -197,22 +183,14 @@ export class Popup {
    * Resolves the promise with the value of the input if the user presses OK, and with undefined if the user presses Cancel.
    *
    * @param {object} opts The options for showing the prompt, of the form:
-   *
-   * ```
-   * {
-   *   title: '', // String. The title of the popup.
-   *   cssClass: '', // String (optional). The custom CSS class name.
-   *   subTitle: '', // String (optional). The sub-title of the popup.
-   *   template: '', // String (optional). The html template to place in the popup body.
-   *   inputType: // String (default: 'text'). The type of input to use.
-   *   inputPlaceholder: // String (default: ''). A placeholder to use for the input.
-   *   cancelText: '', // String (default: 'Cancel'). The text of the Cancel button.
-   *   cancelType: '', // String (default: ''). The type of the Cancel button.
-   *   okText: '', // String (default: 'OK'). The text of the OK button.
-   *   okType: '', // String (default: ''). The type of the OK button.
-   * }
-   * ```
-   *
+   *  - `{String}` `title` The title of the popup.
+   *  - `{String}` `cssClass`  (optional). The custom CSS class name.
+   *  - `{String}` `subTitle`  (optional). The sub-title of the popup.
+   *  - `{String}` `template`  (optional). The html template to place in the popup body.
+   *  - `{String}` `inputType` (default: 'text'). The type of input to use.
+   *  - `{String} `inputPlaceholder` (default: ''). A placeholder to use for the input.
+   *  - `{String}` `okText` (default: 'OK'). The text of the OK button.
+   *  - `{String}` `cancelText` (default: 'Cancel'). The text of the OK button.
    * @returns {object} A promise which is resolved when the popup is closed.
    */
   prompt(opts={}) {
@@ -251,7 +229,7 @@ export class Popup {
   }
 
   /**
-   * TODO
+   * @private
    * @param {TODO} handle  TODO
    * @returns {TODO} TODO
    */
