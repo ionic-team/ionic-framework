@@ -1,24 +1,17 @@
 {
-  "name": "ionic-framework",
+  "private": "true",
+  "name": "ionic2",
   "version": "2.0.0-alpha.44",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/driftyco/ionic2.git"
   },
-  "main": "tooling/index.js",
   "scripts": {
     "test": "gulp karma",
     "test:generators": "jasmine-node ./tooling/spec",
     "link": "npm install && gulp src && npm link"
   },
-  "files": [
-    "dist/css",
-    "dist/fonts",
-    "dist/js",
-    "dist/src",
-    "tooling"
-  ],
   "dependencies": {
     "angular2": "^2.0.0-beta.0",
     "colors": "^1.1.2",
