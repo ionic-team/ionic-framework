@@ -3,6 +3,8 @@
 
   // Ionic CSS polyfills
   ionic.CSS = {};
+  ionic.CSS.TRANSITION = [];
+  ionic.CSS.TRANSFORM = [];
 
   (function() {
 
