@@ -5,6 +5,7 @@
 // --------------------------------------------------
 
 $label-md-text-color:                 #999 !default;
+$label-md-text-color-focused:         map-get($colors-md, primary) !default;
 
 
 // Default Label
@@ -37,7 +38,7 @@ ion-label {
 
 .input-focused .stacked-label,
 .input-focused .floating-label {
-  color: $text-input-md-highlight-color;
+  color: $label-md-text-color-focused;
 }
 
 .input-focused .floating-label,
