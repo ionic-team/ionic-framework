@@ -1,6 +1,6 @@
 (function(ionic) {
   var NOOP = function() {};
-  var depreciated = function(name) {
+  var deprecated = function(name) {
     console.error('Method not available in native scrolling: ' + name);
   };
   ionic.views.ScrollNative = ionic.views.View.inherit({
@@ -66,10 +66,10 @@
     },
 
     /**  Methods not used in native scrolling */
-    __callback: function() { depreciated('__callback'); },
-    zoomTo: function() { depreciated('zoomTo'); },
-    zoomBy: function() { depreciated('zoomBy'); },
-    activatePullToRefresh: function() { depreciated('activatePullToRefresh'); },
+    __callback: function() { deprecated('__callback'); },
+    zoomTo: function() { deprecated('zoomTo'); },
+    zoomBy: function() { deprecated('zoomBy'); },
+    activatePullToRefresh: function() { deprecated('activatePullToRefresh'); },
 
     /**
      * Returns the scroll position and zooming values
