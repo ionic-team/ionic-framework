@@ -6,6 +6,9 @@ body.md {
     a {
       color: #fff;
     }
+    a[aria-selected="true"] {
+      color: #fff !important;
+    }
   }
   .tabs-icon tab-highlight {
     color: #fff;
@@ -15,8 +18,11 @@ body.md {
 
 body.ios {
   .tabs-icon tabbar {
-    a {
-      color: #f53d3d;
+    a[aria-selected="false"] {
+      color: #8c8c8c !important;
+    }
+    a[aria-selected="true"] {
+      color: #f53d3d !important;
     }
   }
 }
