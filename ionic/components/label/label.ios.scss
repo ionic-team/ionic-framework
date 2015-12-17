@@ -1,0 +1,55 @@
+@import "../../globals.ios";
+@import "./label";
+
+// iOS Label
+// --------------------------------------------------
+
+$label-ios-text-color:         #7f7f7f !default;
+
+// Default Label
+// --------------------------------------------------
+
+ion-label {
+  margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom 0;
+  color: $label-ios-text-color;
+}
+
+ion-label + .item-input {
+  margin-left: $item-ios-padding-left;
+}
+
+
+// Stacked & Floating Labels
+// --------------------------------------------------
+
+.stacked-label {
+  font-size: 1.2rem;
+  margin-bottom: 4px;
+}
+
+.floating-label {
+  margin-bottom: 0;
+  transform-origin: left top;
+  transform: translate3d(0, 27px, 0);
+  transition: transform 150ms ease-in-out;
+}
+
+.input-focused .floating-label,
+.input-has-value .floating-label {
+  transform: translate3d(0, 0, 0) scale(0.8);
+}
+
+ion-label + .stacked-input,
+ion-label + .floating-input {
+  margin-left: 0;
+}
+
+
+// Generate iOS Label colors
+// --------------------------------------------------
+
+@each $color-name, $color-value in $colors-ios {
+  ion-label[#{$color-name}] {
+    color: $color-value !important;
+  }
+}

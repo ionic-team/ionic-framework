@@ -1,7 +1,7 @@
 import {Directive, Optional, ElementRef, Renderer} from 'angular2/core';
 
 import {Config} from '../../config/config';
-import {TextInput} from './text-input';
+import {TextInput} from '../text-input/text-input';
 import {pointerCoord, hasPointerMoved} from '../../util/dom';
 import {Form} from '../../util/form';
 

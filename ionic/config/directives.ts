@@ -21,7 +21,7 @@ import {Icon} from '../components/icon/icon';
 import {Checkbox} from '../components/checkbox/checkbox';
 import {Toggle} from '../components/toggle/toggle';
 import {TextInput, TextInputElement} from '../components/text-input/text-input';
-import {Label} from '../components/text-input/label';
+import {Label} from '../components/label/label';
 import {Segment, SegmentButton} from '../components/segment/segment';
 import {RadioGroup, RadioButton} from '../components/radio/radio';
 import {Searchbar, SearchbarInput} from '../components/searchbar/searchbar';

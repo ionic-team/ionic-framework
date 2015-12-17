@@ -1,0 +1,56 @@
+@import "../../globals.md";
+@import "./label";
+
+// Material Design Label
+// --------------------------------------------------
+
+$label-md-text-color:                 #999 !default;
+
+
+// Default Label
+// --------------------------------------------------
+
+ion-label {
+  margin: $item-md-padding-top ($item-md-padding-right / 2) $item-md-padding-bottom ($item-md-padding-left / 2);
+  color: $label-md-text-color;
+}
+
+
+// Stacked & Floating Labela
+// --------------------------------------------------
+
+.stacked-label {
+  font-size: 1.2rem;
+}
+
+.floating-label {
+  transform-origin: left top;
+  transform: translate3d(0, 27px, 0);
+  transition: transform 150ms ease-in-out;
+}
+
+.stacked-label,
+.floating-label {
+  margin-left: 0;
+  margin-bottom: 0;
+}
+
+.input-focused .stacked-label,
+.input-focused .floating-label {
+  color: $text-input-md-highlight-color;
+}
+
+.input-focused .floating-label,
+.input-has-value .floating-label  {
+  transform: translate3d(0, 0, 0) scale(0.8);
+}
+
+
+// Generate Material Design Label colors
+// --------------------------------------------------
+
+@each $color-name, $color-value in $colors-md {
+  ion-label[#{$color-name}] {
+    color: $color-value !important;
+  }
+}
