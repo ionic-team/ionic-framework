@@ -8,12 +8,11 @@ import {SearchPipe} from 'ionic/components/searchbar/searchbar';
   directives: [FORM_DIRECTIVES]
 })
 class E2EApp {
-  defaultSearch: string = 'filter';
-  customPlaceholder: string;
-  defaultCancel: string;
-  customCancel: string;
-  customCancelLong: string;
-  customCancelAction: string;
+  defaultSearch: string = '';
+  customPlaceholder: string = '';
+  defaultCancel: string = '';
+  customCancel: string = '';
+  customCancelAction: string = '';
   clickedCustomAction: boolean = false;
 
   constructor() {
