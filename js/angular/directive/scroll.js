@@ -36,6 +36,7 @@
  * @param {boolean=} zooming Whether to support pinch-to-zoom
  * @param {integer=} min-zoom The smallest zoom amount allowed (default is 0.5)
  * @param {integer=} max-zoom The largest zoom amount allowed (default is 3)
+ * @param {integer=} initial-zoom The initial zoom (default is 1)
  * @param {boolean=} has-bouncing Whether to allow scrolling to bounce past the edges
  * of the content.  Defaults to true on iOS, false on Android.
  */
@@ -71,7 +72,8 @@ function($timeout, $controller, $ionicBind, $ionicConfig) {
           scrollbarY: '@',
           zooming: '@',
           minZoom: '@',
-          maxZoom: '@'
+          maxZoom: '@',
+          initialZoom: '@'
         });
         $scope.direction = $scope.direction || 'y';
 
@@ -106,6 +108,7 @@ function($timeout, $controller, $ionicBind, $ionicConfig) {
           zooming: $scope.$eval($scope.zooming) === true,
           maxZoom: $scope.$eval($scope.maxZoom) || 3,
           minZoom: $scope.$eval($scope.minZoom) || 0.5,
+          initialZoom: $scope.$eval($scope.initialZoom) || 1,
           preventDefault: true,
           nativeScrolling: nativeScrolling
         };
