@@ -135,7 +135,7 @@ IonicModule
 
       isDragging = true;
       // overscroll according to the user's drag so far
-      overscroll((deltaY - dragOffset) / 3));
+      overscroll((deltaY - dragOffset) / 3);
 
       // update the icon accordingly
       if (!activated && lastOverscroll > ptrThreshold) {
