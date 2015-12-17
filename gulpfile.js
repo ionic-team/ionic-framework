@@ -224,8 +224,7 @@ function bundle(args) {
 
 gulp.task('tests', function() {
   return gulp.src('ionic/**/test/**/*.spec.ts')
-    .pipe(tsc(tscOptions, undefined, tscReporter))
-    .pipe(babel(getBabelOptions('dist/tests')))
+    .pipe(tsc(tscOptionsNoTypeCheck, undefined, tscReporter))
     .pipe(rename(function(file) {
       var regex = new RegExp(path.sep + 'test(' + path.sep + '|$)');
       file.dirname = file.dirname.replace(regex, path.sep);
@@ -495,7 +494,6 @@ function buildDemoBundle(opts, done) {
   var glob = require('glob');
   var webpack = require('webpack');
   var path = require('path');
-  var _ = require('lodash');
 
   var fp = 'dist/demos/'+opts.demo+'/index.js';
   if (opts.demo == 'api') {

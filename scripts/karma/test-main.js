@@ -4,7 +4,7 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 50;
 // we will call `__karma__.start()` later, once all the specs are loaded.
 __karma__.loaded = function() {};
 
-System.import('angular2/src/core/dom/browser_adapter').then(function(browser_adapter) {
+System.import('angular2/src/platform/browser/browser_adapter').then(function(browser_adapter) {
   browser_adapter.BrowserDomAdapter.makeCurrent();
 }).then(function() {
   return Promise.all(
@@ -33,12 +33,4 @@ function onlySpecFiles(path) {
 }
 function file2moduleName(filePath) {
   return filePath.replace(/\\/g, '/')
-    .replace(/^.*?base\//, '')
-    // module name should be relative to `modules` and `tools` folder
-    // .replace(/.*\/modules\//, '')
-    // .replace(/.*\/tools\//, '')
-    // module name should not include `lib`, `web` folders
-    // module name should not have a suffix
-    // .split('.').pop().join('');
-    .replace(/\.js$/, '');
 }

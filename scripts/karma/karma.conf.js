@@ -7,18 +7,23 @@ module.exports = function(config) {
 
     frameworks: ['jasmine'],
 
-    files: buildConfig.scripts.concat([
-      'node_modules/angular2/bundles/test_lib.js',
-      'dist/tests/**/*.spec.js',
+    files: [
+      'node_modules/systemjs/node_modules/es6-module-loader/dist/es6-module-loader.js',
+      'node_modules/systemjs/dist/system.js',
+      'node_modules/angular2/bundles/angular2-polyfills.min.js',
+      'node_modules/angular2/bundles/angular2.min.js',
+      'node_modules/angular2/bundles/router.min.js',
+      'node_modules/angular2/bundles/http.min.js',
+      'node_modules/rxjs/bundles/Rx.min.js',
+      'dist/bundles/ionic.system.js',
+      //'node_modules/angular2/bundles/test_lib.js',
+      { pattern: 'dist/tests/**/*.spec.js', included: false },
       'scripts/karma/test-main.js'
-    ]),
+    ],
 
-    exclude: buildConfig.src.e2e,
+    exclude: ['ionic/components/*/test/*/**/*'],
 
     logLevel: 'warn',
-
-    preprocessors: {
-    },
 
     browsers: ['Chrome'],
     port: 9876
