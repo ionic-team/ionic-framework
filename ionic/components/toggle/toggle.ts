@@ -46,12 +46,12 @@ class MediaToggle {
  * @property {string} [id] - a unique ID for a toggle
  * @usage
  * ```html
- * // Create a single toggle
+ * <!-- Create a single toggle -->
  *  <ion-toggle checked="true">
  *    Pineapple
  *  </ion-toggle>
  *
- * // Create a list of togglees:
+ * <!-- Create a list of togglees -->
  *  <ion-list>
  *
  *    <ion-toggle checked="true">

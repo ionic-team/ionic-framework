@@ -160,6 +160,10 @@ export class Searchbar extends Ion {
    }
 }
 
+/**
+* @private
+* Updates the value of query
+*/
 @Directive({
   selector: '.searchbar-input',
   host: {

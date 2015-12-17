@@ -105,7 +105,7 @@ export class Toolbar extends ToolbarBase {
 }
 
 /**
- * @name ToolbarTitle
+ * @name Title
  * @description
  * `ion-title` is a component that sets the title of the `Toolbar` or `Navbar`
  * @usage
