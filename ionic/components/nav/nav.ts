@@ -8,6 +8,8 @@ import {NavController} from './nav-controller';
 import {ViewController} from './view-controller';
 
 /**
+ * @name Nav
+ * @description
  * _For a quick walkthrough of navigation in Ionic, check out the
  * [Navigation section](../../../../components/#navigation) of the Component
  * docs._
