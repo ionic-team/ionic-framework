@@ -352,6 +352,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
       /** Maximum zoom level */
       maxZoom: 3,
+      
+      /** Initial zoom level */
+      initialZoom: 1,
 
       /** Multiply or decrease scrolling speed **/
       speedMultiplier: 1,
@@ -441,6 +444,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
     self.__scrollLeft = self.options.startX;
     self.__scrollTop = self.options.startY;
+
+    self.__zoomLevel = self.options.initialZoom;
 
     // Get the render update function, initialize event handlers,
     // and calculate the size of the scroll container
@@ -1741,7 +1746,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     self.__initialTouches = touches;
 
     // Store current zoom level
-    self.__zoomLevelStart = self.__zoomLevel;
+    self.__zoomLevelStart = self.options.initialZoom;
 
     // Store initial touch positions
     self.__lastTouchLeft = currentTouchLeft;
