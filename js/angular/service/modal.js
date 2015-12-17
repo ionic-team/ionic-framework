@@ -185,6 +185,13 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
 
       return $timeout(function() {
         if (!self._isShown) return;
+        self.$el.on('touchmove', function(e) {
+          //Don't allow scrolling while open by dragging on backdrop
+          var isInScroll = ionic.DomUtil.getParentOrSelfWithClass(e.target, 'scroll');
+          if(!isInScroll) {
+            e.preventDefault();
+          }
+        })
         //After animating in, allow hide on backdrop click
         self.$el.on('click', function(e) {
           if (self.backdropClickToClose && e.target === self.el && stack.isHighest(self)) {

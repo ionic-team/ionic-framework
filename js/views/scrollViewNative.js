@@ -333,6 +333,7 @@
         var alreadyShrunk = self.isShrunkForKeyboard;
 
         var isModal = container.parentNode.classList.contains('modal');
+        var isPopover = container.parentNode.classList.contains('popover');
         // 680px is when the media query for 60% modal width kicks in
         var isInsetModal = isModal && window.innerWidth >= 680;
 
@@ -352,7 +353,7 @@
           // shrink scrollview so we can actually scroll if the input is hidden
           // if it isn't shrink so we can scroll to inputs under the keyboard
           // inset modals won't shrink on Android on their own when the keyboard appears
-          if ( ionic.Platform.isIOS() || ionic.Platform.isFullScreen || isInsetModal ) {
+          if ( !isPopover && (ionic.Platform.isIOS() || ionic.Platform.isFullScreen || isInsetModal) ) {
             // if there are things below the scroll view account for them and
             // subtract them from the keyboard height when resizing
             // E - D                         E                         D
