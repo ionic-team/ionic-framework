@@ -4,7 +4,9 @@
 // iOS Item
 // --------------------------------------------------
 
-$item-ios-font-size:                  1.6rem !default;
+$item-ios-body-text-font-size:        1.6rem !default;
+$item-ios-paragraph-text-color:       #666 !default;
+
 $item-ios-avatar-size:                3.6rem !default;
 $item-ios-thumbnail-size:             5.6rem !default;
 $item-ios-note-color:                 darken($list-ios-border-color, 10%) !default;
@@ -22,7 +24,7 @@ $item-ios-sliding-content-bg:         $list-ios-background-color !default;
 
 .item {
   padding-left: $item-ios-padding-left;
-  font-size: $item-ios-font-size;
+  font-size: $item-ios-body-text-font-size;
   border-radius: 0;
   color: $list-ios-text-color;
   background-color: $list-ios-background-color;
@@ -52,7 +54,7 @@ $item-ios-sliding-content-bg:         $list-ios-background-color !default;
 
   p {
     line-height: normal;
-    color: #666;
+    color: $item-ios-paragraph-text-color;
     font-size: 1.2rem;
     margin: 0 0 2px;
   }

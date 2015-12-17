@@ -7,6 +7,7 @@ $colors-md: copy-colors($colors) !default;
 
 
 $text-md-color:                       $text-color !default;
+$paragraph-md-color:                  $paragraph-color !default;
 $link-md-color:                       map-get($colors-md, primary) !default;
 $background-md-color:                 $background-color !default;
 $subdued-text-md-color:               $subdued-text-color !default;

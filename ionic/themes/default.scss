@@ -14,6 +14,7 @@ $colors: (
 
 
 $text-color:                 #000 !default;
+$paragraph-color:            $text-color !default;
 $link-color:                 map-get($colors, primary) !default;
 $background-color:           #fff !default;
 $subdued-text-color:         #666 !default;

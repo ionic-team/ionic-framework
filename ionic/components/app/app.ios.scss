@@ -3,6 +3,14 @@
 // iOS App
 // --------------------------------------------------
 
+body {
+  color: $text-ios-color;
+}
+
+p {
+  color: $paragraph-ios-color;
+}
+
 
 a {
   color: $link-ios-color;

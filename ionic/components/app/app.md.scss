@@ -3,6 +3,13 @@
 // Material Design App
 // --------------------------------------------------
 
+body {
+  color: $text-md-color;
+}
+
+p {
+  color: $paragraph-md-color;
+}
 
 a {
   color: $link-md-color;
