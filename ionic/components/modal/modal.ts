@@ -6,10 +6,13 @@ import {Animation} from '../../animations/animation';
 import {extend} from '../../util';
 
 /**
+ * @name Modal
+ * @description
  * The Modal is a content pane that can go over the user's current page.
  * Usually used for making a choice or editing an item. A modal can be opened
- * similar to how NavController#push works, where it is passed a Page component,
- * along with optional Page params, and options for presenting the modal.
+ * similar to how {@link /docs/v2/api/components/nav/NavController/#push NavController.push}  works,
+ * where it is passed a Page component, along with optional Page params,
+ * and options for presenting the modal.
  *
  * @usage
  * ```ts
@@ -47,9 +50,10 @@ export class Modal {
   /**
    * Opens a new modal using the page component is was pass as the first
    * argument. This is similar to how NavController's `push` method works.
-   * Currently you must have `<ion-overlay>` in the @App component's template
+   * Currently you must have `<ion-overlay>` in the `@App` component's template
    * for the modal to work correctly. (This is something that will
    * be hopefully be removed in the near future.)
+   *
    * @param pageComponent  The Page component to load in the modal.
    * @param {Object} [params={}]  Optional data which can be passed to the page
    * component, which can be read from the constructor's `NavParams`.
