@@ -36,9 +36,13 @@ h1, h2, h3, h4, h5, h6 {
   line-height: $headings-line-height;
   margin-top: 1.6rem;
   margin-bottom: 1rem;
+}
 
-  &:first-child {
-    margin-top: -0.3rem;
+[padding] {
+  h1, h2, h3, h4, h5, h6 {
+    &:first-child {
+      margin-top: -0.3rem;
+    }
   }
 }
 
