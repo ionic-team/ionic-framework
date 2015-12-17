@@ -257,17 +257,17 @@ IonicModule
     }
 
 
-    var touchStartEvent, touchMoveEvent, touchEndEvent;
+    var touchMoveEvent, touchEndEvent;
     if (window.navigator.pointerEnabled) {
-      touchStartEvent = 'pointerdown';
+      //touchStartEvent = 'pointerdown';
       touchMoveEvent = 'pointermove';
       touchEndEvent = 'pointerup';
     } else if (window.navigator.msPointerEnabled) {
-      touchStartEvent = 'MSPointerDown';
+      //touchStartEvent = 'MSPointerDown';
       touchMoveEvent = 'MSPointerMove';
       touchEndEvent = 'MSPointerUp';
     } else {
-      touchStartEvent = 'touchstart';
+      //touchStartEvent = 'touchstart';
       touchMoveEvent = 'touchmove';
       touchEndEvent = 'touchend';
     }
