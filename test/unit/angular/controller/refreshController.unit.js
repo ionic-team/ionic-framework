@@ -43,13 +43,17 @@ describe('$ionicRefresh Controller', function() {
     }).toThrow();
   });
 
-  it('should oversroll using CSS transforms', function() {
+  it('should overscroll using CSS transforms', function() {
     setup();
+
+    function getTy(el) {
+      return parseInt(el.style[ionic.CSS.TRANSFORM].replace('translateY(', ''));
+    }
 
     ctrl.__handleTouchmove(evt(0));
     ctrl.__handleTouchmove(evt(10));
     ctrl.__handleTouchmove(evt(20));
-    expect(ctrl.__getScrollChild().style[ionic.CSS.TRANSFORM]).toBe('translateY(3px)');
+    expect(getTy(ctrl.__getScrollChild())).toBe(3);
     expect(ctrl.__getScrollChild().classList.contains('overscroll')).toBe(true);
     expect(refresher.classList.contains('invisible')).toBe(false);
   });
@@ -70,6 +74,9 @@ describe('$ionicRefresh Controller', function() {
   });
 
   it('should activate and deactivate when dragging past activation threshold', function() {
+    function getTy(el) {
+      return parseInt(el.style[ionic.CSS.TRANSFORM].replace('translateY(', ''));
+    }
     setup();
     var domMethods = ctrl.getRefresherDomMethods();
     spyOn(domMethods, 'activate');
@@ -78,7 +85,7 @@ describe('$ionicRefresh Controller', function() {
     ctrl.__handleTouchmove(evt(0));
     ctrl.__handleTouchmove(evt(10));
     ctrl.__handleTouchmove(evt(300));
-    expect(ctrl.__getScrollChild().style[ionic.CSS.TRANSFORM]).toBe('translateY(96px)');
+    expect(getTy(ctrl.__getScrollChild())).toBe(96);
     expect(ctrl.__getScrollChild().classList.contains('overscroll')).toBe(true);
     expect(refresher.classList.contains('invisible')).toBe(false);
     expect(refresher.classList.contains('active')).toBe(true);
