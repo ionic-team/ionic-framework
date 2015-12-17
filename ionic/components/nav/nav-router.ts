@@ -9,7 +9,7 @@ import {
 import {Nav} from './nav';
 
 /**
- * TODO
+ * @private
  */
 @Directive({
   selector: 'ion-nav'
