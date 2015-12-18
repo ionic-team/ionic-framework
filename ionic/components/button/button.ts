@@ -21,6 +21,7 @@ import {Toolbar} from '../toolbar/toolbar';
   * @property [fab-center] - position a fab button towards the center
   * @property [fab-top] - position a fab button towards the top
   * @property [fab-bottom] - position a fab button towards the bottom
+  * @property [color] - Dynamically set which color attribute this button should use.
   * @description
   * Buttons are simple components in Ionic, can consist of text, an icon, or both, and can be enhanced with a wide range of attributes.
   * @demo /docs/v2/demos/buttons/
@@ -28,28 +29,30 @@ import {Toolbar} from '../toolbar/toolbar';
 
  */
 @Directive({
-  selector: 'button,[button]'
+  selector: 'button,[button]',
+  inputs: ['color']
 })
 export class Button {
 
   constructor(
     config: Config,
-    private elementRef: ElementRef,
-    private renderer: Renderer
+    private _elementRef: ElementRef,
+    private _renderer: Renderer
   ) {
     this._role = 'button'; // bar-button/item-button
     this._size = null; // large/small
     this._style = 'default'; // outline/clear/solid
     this._shape = null; // round/fab
     this._display = null; // block/full
+    this._lastColor = null;
     this._colors = []; // primary/secondary
     this._icon = null; // left/right/only
     this._disabled = false; // disabled
 
-    let element = elementRef.nativeElement;
+    let element = _elementRef.nativeElement;
 
     if (config.get('hoverCSS') === false) {
-      renderer.setElementClass(elementRef, 'disable-hover', true);
+      _renderer.setElementClass(_elementRef, 'disable-hover', true);
     }
 
     if (element.hasAttribute('ion-item')) {
@@ -66,16 +69,32 @@ export class Button {
     this._readIcon(element);
   }
 
-/**
- * @private
- */
+  /**
+   * @private
+   */
   ngAfterContentInit() {
+    this._lastColor = this.color;
+    if (this.color) {
+      this._colors = [this.color];
+    }
     this._assignCss(true);
   }
 
-/**
- * @private
- */
+  /**
+   * @private
+   */
+  ngAfterContentChecked() {
+    if (this._lastColor !== this.color) {
+      this._assignCss(false);
+      this._lastColor = this.color;
+      this._colors = [this.color];
+      this._assignCss(true);
+    }
+  }
+
+  /**
+   * @private
+   */
   setRole(val) {
     this._role = val;
   }
@@ -147,7 +166,7 @@ export class Button {
   _assignCss(assignCssClass) {
     let role = this._role;
     if (role) {
-      this.renderer.setElementClass(this.elementRef, role, assignCssClass); // button
+      this._renderer.setElementClass(this._elementRef, role, assignCssClass); // button
 
       this._setClass(this._style, assignCssClass); // button-clear
       this._setClass(this._shape, assignCssClass); // button-round
@@ -164,7 +183,7 @@ export class Button {
 
   _setClass(type, assignCssClass) {
     if (type) {
-      this.renderer.setElementClass(this.elementRef, this._role + '-' + type, assignCssClass);
+      this._renderer.setElementClass(this._elementRef, this._role + '-' + type, assignCssClass);
     }
   }
 
