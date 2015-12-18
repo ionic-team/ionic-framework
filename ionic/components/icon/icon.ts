@@ -40,9 +40,9 @@ import {Config} from '../../config/config';
 export class Icon {
 
   constructor(
-    private elementRef: ElementRef,
+    private _elementRef: ElementRef,
     config: Config,
-    private renderer: Renderer
+    private _renderer: Renderer
   ) {
     this.config = config;
     this.mode = config.get('iconMode');
@@ -52,7 +52,7 @@ export class Icon {
    * @private
    */
   ngOnInit() {
-    let ele = this.elementRef.nativeElement;
+    let ele = this._elementRef.nativeElement;
 
     if (this.mode == 'ios' && this.ios) {
       this.name = this.ios;
@@ -113,12 +113,12 @@ export class Icon {
 
     if (this._name !== this.name) {
       if (this._name) {
-        this.renderer.setElementClass(this.elementRef, this._name, false);
+        this._renderer.setElementClass(this._elementRef, this._name, false);
       }
       this._name = this.name;
-      this.renderer.setElementClass(this.elementRef, this.name, true);
+      this._renderer.setElementClass(this._elementRef, this.name, true);
 
-      this.renderer.setElementAttribute(this.elementRef, 'aria-label',
+      this._renderer.setElementAttribute(this._elementRef, 'aria-label',
           this.name.replace('ion-', '').replace('ios-', '').replace('md-', '').replace('-', ' '));
     }
   }

@@ -42,23 +42,23 @@ import {IonicApp} from './app';
 })
 export class IdRef {
 
-  constructor(private app: IonicApp, private elementRef: ElementRef, private appViewManager: AppViewManager) {
+  constructor(private _app: IonicApp, private _elementRef: ElementRef, private _appViewManager: AppViewManager) {
     // Grab the component this directive is attached to
-    this.component = appViewManager.getComponent(elementRef);
+    this.component = _appViewManager.getComponent(_elementRef);
   }
 
   /**
    * @private
    */
   ngOnInit() {
-    this.app.register(this.id, this.component);
+    this._app.register(this.id, this.component);
   }
 
   /**
    * @private
    */
   ngOnDestroy() {
-    this.app.unregister(this.id);
+    this._app.unregister(this.id);
   }
 }
 
@@ -80,12 +80,12 @@ export class IdRef {
 })
 
 export class Attr {
-  constructor(private renderer: Renderer, private elementRef: ElementRef) {}
+  constructor(private _renderer: Renderer, private _elementRef: ElementRef) {}
 
 /**
  * @private
  */
   ngOnInit() {
-    this.renderer.setElementAttribute(this.elementRef, this.attr, '');
+    this._renderer.setElementAttribute(this._elementRef, this.attr, '');
   }
 }

@@ -60,7 +60,7 @@ export class RadioGroup extends Ion {
     elementRef: ElementRef,
     config: Config,
     @Optional() ngControl: NgControl,
-    @Query(ListHeader) private headerQuery: QueryList<ListHeader>
+    @Query(ListHeader) private _headerQuery: QueryList<ListHeader>
   ) {
     super(elementRef, config);
     this.ngControl = ngControl;
@@ -76,7 +76,7 @@ export class RadioGroup extends Ion {
    * @private
    */
   ngOnInit() {
-    let header = this.headerQuery.first;
+    let header = this._headerQuery.first;
     if (header) {
       if (!header.id) {
         header.id = 'radio-header-' + this.id;
@@ -203,7 +203,7 @@ export class RadioButton extends Ion {
     @Host() @Optional() group: RadioGroup,
     elementRef: ElementRef,
     config: Config,
-    private form: Form
+    private _form: Form
   ) {
     super(elementRef, config);
 
@@ -217,7 +217,7 @@ export class RadioButton extends Ion {
   ngOnInit() {
     super.ngOnInit();
     if (!this.id) {
-      this.id = 'rb-' + this.form.nextId();
+      this.id = 'rb-' + this._form.nextId();
     }
     this.labelId = 'lbl-' + this.id;
 

@@ -42,9 +42,9 @@ export class Label {
   constructor(
     config: Config,
     @Optional() container: TextInput,
-    private form: Form,
-    private elementRef: ElementRef,
-    private renderer: Renderer
+    private _form: Form,
+    private _elementRef: ElementRef,
+    private _renderer: Renderer
   ) {
     this.scrollAssist = config.get('scrollAssist');
     this.container = container;
@@ -55,7 +55,7 @@ export class Label {
  */
   ngOnInit() {
     if (!this.id) {
-      this.id = 'lbl-' + this.form.nextId();
+      this.id = 'lbl-' + this._form.nextId();
     }
     this.container && this.container.registerLabel(this);
   }
@@ -94,7 +94,7 @@ export class Label {
    * @private
    */
   addClass(className) {
-    this.renderer.setElementClass(this.elementRef, className, true);
+    this._renderer.setElementClass(this._elementRef, className, true);
   }
 
 }
