@@ -489,10 +489,8 @@ export class TextInputElement {
   }
 
   ngOnInit() {
-    if (this.ngModel) console.log("Value", this.ngModel);
     if (this.ngModel) this.value = this.ngModel;
     this.wrapper && this.wrapper.hasValue(this.value);
-    console.log(this.value);
   }
 
   focusChange(changed) {

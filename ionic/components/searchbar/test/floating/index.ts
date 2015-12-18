@@ -18,15 +18,15 @@ class E2EApp {
 
   }
 
-  onCancelSearchbar(ev) {
-    console.log("Clicked cancel action with", ev);
+  onClearSearchbar(searchbar) {
+    // console.log("Clicked clear input on", searchbar.value);
   }
 
-  triggerInput(ev) {
-    // The defaultSearch doesn't get updated before this function is called
-    // so we have to wrap it in a timeout
-    setTimeout(() => {
-      console.log("Triggered input", ev);
-    });
+  onCancelSearchbar(searchbar) {
+    console.log("Clicked cancel button with", searchbar.value);
+  }
+
+  triggerInput(searchbar) {
+    // console.log("Triggered input", searchbar.value);
   }
 }
