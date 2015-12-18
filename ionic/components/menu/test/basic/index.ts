@@ -40,6 +40,7 @@ class E2EApp {
   constructor(app: IonicApp) {
     this.app = app;
     this.rootView = Page1;
+    this.changeDectionCount = 0;
 
     this.pages = [
       { title: 'Page 1', component: Page1 },
@@ -61,5 +62,10 @@ class E2EApp {
 
   onMenuOpening(ev) {
     console.log('onMenuOpening', ev);
+  }
+
+  isHidden() {
+    console.log('Change detection', ++this.changeDectionCount);
+    return false;
   }
 }

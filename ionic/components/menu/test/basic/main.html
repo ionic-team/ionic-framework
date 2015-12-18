@@ -12,7 +12,7 @@
         {{p.title}}
       </button>
 
-      <button ion-item menuClose="leftMenu" detail-none>
+      <button ion-item menuClose="leftMenu" detail-none [hidden]="isHidden()">
         Close Menu
       </button>
 

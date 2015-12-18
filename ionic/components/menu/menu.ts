@@ -1,4 +1,4 @@
-import {Component, forwardRef, Directive, Host, EventEmitter, ElementRef} from 'angular2/core';
+import {Component, forwardRef, Directive, Host, EventEmitter, ElementRef, NgZone} from 'angular2/core';
 
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
@@ -113,16 +113,14 @@ import * as gestures from  './menu-gestures';
 export class Menu extends Ion {
 
   constructor(
-    app: IonicApp,
     elementRef: ElementRef,
     config: Config,
-    platform: Platform,
-    keyboard: Keyboard
+    private app: IonicApp,
+    private platform: Platform,
+    private keyboard: Keyboard,
+    private zone: NgZone
   ) {
     super(elementRef, config);
-    this.app = app;
-    this.platform = platform;
-    this.keyboard = keyboard;
 
     this.opening = new EventEmitter('opening');
     this.isOpen = false;
@@ -177,16 +175,18 @@ export class Menu extends Ion {
    * @private
    */
   _initGesture() {
-    switch(this.side) {
-      case 'right':
-        this._gesture = new gestures.RightMenuGesture(this);
-        break;
+    this.zone.runOutsideAngular(() => {
+      switch(this.side) {
+        case 'right':
+          this._gesture = new gestures.RightMenuGesture(this);
+          break;
 
-      case 'left':
-        this._gesture = new gestures.LeftMenuGesture(this);
-        break;
-    }
-    this._targetGesture = new gestures.TargetGesture(this);
+        case 'left':
+          this._gesture = new gestures.LeftMenuGesture(this);
+          break;
+      }
+      this._targetGesture = new gestures.TargetGesture(this);
+    });
   }
 
   /**
