@@ -40,7 +40,7 @@ class E2EApp {
   constructor(app: IonicApp) {
     this.app = app;
     this.rootView = Page1;
-    this.changeDectionCount = 0;
+    this.changeDetectionCount = 0;
 
     this.pages = [
       { title: 'Page 1', component: Page1 },
@@ -65,7 +65,7 @@ class E2EApp {
   }
 
   isHidden() {
-    console.log('Change detection', ++this.changeDectionCount);
+    console.log('Change detection', ++this.changeDetectionCount);
     return false;
   }
 }
