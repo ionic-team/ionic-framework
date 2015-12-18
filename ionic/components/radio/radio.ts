@@ -180,7 +180,7 @@ export class RadioGroup extends Ion {
     'role': 'radio',
     'tappable': 'true',
     '[attr.id]': 'id',
-    '[attr.tab-index]': 'tabIndex',
+    '[tabindex]': 'tabIndex',
     '[attr.aria-checked]': 'checked',
     '[attr.aria-disabled]': 'disabled',
     '[attr.aria-labelledby]': 'labelId',

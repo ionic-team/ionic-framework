@@ -83,7 +83,7 @@ class MediaToggle {
     'role': 'checkbox',
     'tappable': 'true',
     '[attr.id]': 'id',
-    '[attr.tab-index]': 'tabIndex',
+    '[tabindex]': 'tabIndex',
     '[attr.aria-checked]': 'checked',
     '[attr.aria-disabled]': 'disabled',
     '[attr.aria-labelledby]': 'labelId',
@@ -118,6 +118,7 @@ export class Toggle {
       console.warn('<ion-switch> has been renamed to <ion-toggle>, please update your HTML');
     }
 
+    this.tabIndex = 0;
 
     this.form = form;
     form.register(this);

@@ -34,7 +34,7 @@ import {Form} from '../../util/form';
     'role': 'checkbox',
     'tappable': 'true',
     '[attr.id]': 'id',
-    '[attr.tab-index]': 'tabIndex',
+    '[tabindex]': 'tabIndex',
     '[attr.aria-checked]': 'checked',
     '[attr.aria-disabled]': 'disabled',
     '[attr.aria-labelledby]': 'labelId',
@@ -64,6 +64,7 @@ export class Checkbox {
     this.onChange = (_) => {};
     this.onTouched = (_) => {};
 
+    this.tabIndex = 0;
     this.ngControl = ngControl;
 
     if (ngControl) ngControl.valueAccessor = this;
