@@ -401,7 +401,7 @@ gulp.task('package', ['src'], function(){
   return gulp.src([
       'scripts/npm/.npmignore',
       'scripts/npm/package.json',
-      'README.md'
+      'scripts/npm/README.md'
     ])
     .pipe(gulp.dest('dist'));
 });
