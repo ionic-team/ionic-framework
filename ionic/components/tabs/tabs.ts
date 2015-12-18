@@ -16,7 +16,6 @@ import {rafFrames} from '../../util/dom';
  * @name Tabs
  * @property {any} [tabbarPlacement] - set position of the tabbar, top or bottom
  * @property {any} [tabbarIcons] - set the position of the tabbar's icons: top, bottom, left, right, hide
- * @property {any} [tabbar-style] - sets tabbar's style (primary, secondary, etc)
  * @property {any} [preloadTabs] - sets whether to preload all the tabs, true or false
  * @usage
 * ```html

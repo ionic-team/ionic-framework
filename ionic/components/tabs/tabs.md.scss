@@ -94,7 +94,7 @@ tab-highlight {
 
 @mixin tabbar-md($color-name, $color-value) {
 
-  tabbar[#{$color-name}] {
+  ion-tabs[#{$color-name}] tabbar {
     background-color: $color-value;
 
     .tab-button {
