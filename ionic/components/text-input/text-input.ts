@@ -490,7 +490,8 @@ export class TextInputElement {
     if (ngControl) this.ngControl = ngControl;
   }
 
-  ngOnInit() {
+  ngAfterContentChecked() {
+    console.log("Value", this.ngControl.value);
     if (this.ngControl) this.value = this.ngControl.value;
     this.wrapper && this.wrapper.hasValue(this.value);
   }

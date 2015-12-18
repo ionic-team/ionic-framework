@@ -16,11 +16,16 @@ class E2EApp {
 
     this.login = {};
 
+    this.user = {
+      username: 'asdf',
+      password: '82'
+    };
+
     this.submitted = false;
   }
 
-  submit(ev) {
-    console.log("Submitted", this.loginForm.value);
+  submit(ev, value) {
+    console.log("Submitted", value);
     this.submitted = true;
   }
 

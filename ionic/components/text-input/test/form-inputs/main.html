@@ -4,7 +4,7 @@
 
 <ion-content>
 
-  <form (ng-submit)="submit($event)" [ngFormModel]="loginForm" #mf="ngForm" novalidate>
+  <form [ngFormModel]="loginForm" #mf="ngForm" novalidate>
 
     <ion-list>
       <ion-input>
@@ -36,24 +36,40 @@
         <textarea [(ngModel)]="login.comments" ngControl="comments" placeholder="Required" required>Comment value</textarea>
       </ion-input>
 
-      <ion-item [hidden]="submitted == false || mf.form.valid">
-        <p danger>Form is Invalid</p>
-      </ion-item>
+      <div padding-left padding-right>
+        <button block (click)="submit($event, login)">Login</button>
+      </div>
+      <div padding-left>
+        <b>Valid form?:</b> {{ mf.form.valid }}<br>
+        <b>Submitted form?:</b> {{ submitted }}<br>
+        <b>Email:</b> {{ login.email }}<br>
+        <b>Username:</b> {{ login.username }}<br>
+        <b>Password:</b> {{ login.password }}<br>
+        <b>Comments:</b> {{ login.comments }}
+      </div>
     </ion-list>
+  </form>
 
-    <div padding>
-      <button block type="submit">Login</button>
-    </div>
-
-    <div [hidden]="submitted == false" padding-left>
-      <b>Valid form?:</b> {{ mf.form.valid }}<br>
-      <b>Submitted form?:</b> {{ submitted }}<br>
-      <b>Email:</b> {{ login.email }}<br>
-      <b>Username:</b> {{ login.username }}<br>
-      <b>Password:</b> {{ login.password }}<br>
-      <b>Comments:</b> {{ login.comments }}
-    </div>
-
+  <form (ngSubmit)="submit($event, user)" #lf="ngForm">
+    <ion-list>
+      <ion-input floating-label>
+        <ion-label>Username</ion-label>
+        <input type="text" [(ngModel)]="user.username" ngControl="username" required>
+      </ion-input>
+      <ion-input floating-label>
+        <ion-label>Password</ion-label>
+        <input type="password" [(ngModel)]="user.password" ngControl="password" required>
+      </ion-input>
+      <div padding-left padding-right>
+        <button block type="submit">Login</button>
+      </div>
+      <div padding-left>
+        <b>Valid form?:</b> {{ lf.form.valid }}<br>
+        <b>Submitted form?:</b> {{ submitted }}<br>
+        <b>Username:</b> {{ user.username }}<br>
+        <b>Password:</b> {{ user.password }}<br>
+      </div>
+    </ion-list>
   </form>
 
 </ion-content>
