@@ -8,27 +8,25 @@ import {SearchPipe} from 'ionic/components/searchbar/searchbar';
   directives: [FORM_DIRECTIVES]
 })
 class E2EApp {
-  defaultSearch: string = '';
+  defaultSearch: string = 'test';
   customPlaceholder: string = '';
   defaultCancel: string = '';
   customCancel: string = '';
   customCancelAction: string = '';
-  clickedCustomAction: boolean = false;
 
   constructor() {
 
   }
 
-  myCancelAction(event, query) {
-    console.log("Clicked cancel action with", query);
-    this.clickedCustomAction = true;
+  onCancelSearchbar(ev) {
+    console.log("Clicked cancel action with", ev);
   }
 
   triggerInput(ev) {
     // The defaultSearch doesn't get updated before this function is called
     // so we have to wrap it in a timeout
     setTimeout(() => {
-      console.log("Triggered input", this.defaultSearch);
+      console.log("Triggered input", ev);
     });
   }
 }

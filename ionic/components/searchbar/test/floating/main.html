@@ -1,6 +1,6 @@
 <ion-content>
   <h5 padding-left> Search - Default </h5>
-  <ion-searchbar [(ngModel)]="defaultSearch" (input)="triggerInput($event)" class="e2eDefaultFloatingSearchbar"></ion-searchbar>
+  <ion-searchbar [(ngModel)]="defaultSearch" (input)="triggerInput($event)" (cancel)="onCancelSearchbar($event)" class="e2eDefaultFloatingSearchbar"></ion-searchbar>
 
   <p padding-left>
       Default Search: <b>{{ defaultSearch }}</b>
@@ -14,11 +14,4 @@
 
   <h5 padding-left> Search - Custom Cancel Button Danger </h5>
   <ion-searchbar [(ngModel)]="customCancel" cancelButtonText="Really Long Cancel" class="e2eCustomCancelButtonFloatingSearchbar" danger></ion-searchbar>
-
-  <h5 padding-left> Search - Custom Cancel Action</h5>
-  <ion-searchbar [(ngModel)]="customCancelAction" cancelButtonText="Done" [cancelAction]="myCancelAction" class="e2eCustomCancelActionFloatingSearchbar"></ion-searchbar>
-
-  <div *ngIf="clickedCustomAction">
-    Clicked custom action with input = {{customCancelAction}}
-  </div>
 </ion-content>
