@@ -66,6 +66,7 @@ import {Scroll} from '../scroll/scroll';
  * @property {Number} [index] - The slide index to start on
  * @property [pager] - add this property to enable the slide pager
  * @property {Any} [change] - expression to evaluate when a slide has been changed
+ * @demo /docs/v2/demos/slides/
  * @see {@link /docs/v2/components#slides Slides Component Docs}
  */
 @Component({
