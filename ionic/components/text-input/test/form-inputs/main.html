@@ -7,33 +7,24 @@
   <form [ngFormModel]="loginForm" #mf="ngForm" novalidate>
 
     <ion-list>
-      <ion-input>
-        <ion-label>Email:</ion-label>
-        <input [(ngModel)]="login.email" ngControl="email" type="email" placeholder="Required" required>
-        <button clear item-right>
-          <icon mail></icon>
-        </button>
+      <ion-input floating-label>
+        <ion-label>Email</ion-label>
+        <input [(ngModel)]="login.email" ngControl="email" type="email" required>
       </ion-input>
 
-      <ion-input>
-        <ion-label>Username:</ion-label>
-        <input [(ngModel)]="login.username" ngControl="username" type="text" placeholder="Optional">
-        <button clear item-right>
-          <icon person></icon>
-        </button>
+      <ion-input floating-label>
+        <ion-label>Username</ion-label>
+        <input [(ngModel)]="login.username" ngControl="username" type="text">
       </ion-input>
 
-      <ion-input>
-        <ion-label>Password:</ion-label>
-        <input [(ngModel)]="login.password" ngControl="password" type="password" placeholder="Required" required>
-        <button clear item-right>
-          <icon lock></icon>
-        </button>
+      <ion-input floating-label>
+        <ion-label>Password</ion-label>
+        <input [(ngModel)]="login.password" ngControl="password" type="password" required>
       </ion-input>
 
-      <ion-input>
-        <ion-label>Comments:</ion-label>
-        <textarea [(ngModel)]="login.comments" ngControl="comments" placeholder="Required" required>Comment value</textarea>
+      <ion-input floating-label>
+        <ion-label>Comments</ion-label>
+        <textarea [(ngModel)]="login.comments" ngControl="comments" required>Comment value</textarea>
       </ion-input>
 
       <div padding-left padding-right>

@@ -14,7 +14,10 @@ class E2EApp {
       comments: ["", Validators.required]
     });
 
-    this.login = {};
+    this.login = {
+      email: 'help@ionic.io',
+      username: 'admin'
+    };
 
     this.user = {
       username: 'asdf',

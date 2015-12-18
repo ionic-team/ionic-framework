@@ -1,5 +1,5 @@
 import {Component, Directive, Attribute, forwardRef, Host, Optional, ElementRef, Renderer} from 'angular2/core';
-import {NgIf, NgControl} from 'angular2/common';
+import {NgIf} from 'angular2/common';
 
 import {NavController} from '../nav/nav-controller';
 import {Config} from '../../config/config';
@@ -457,7 +457,7 @@ export class TextInput {
  */
 @Directive({
   selector: 'textarea,input[type=text],input[type=password],input[type=number],input[type=search],input[type=email],input[type=url],input[type=tel],input[type=date],input[type=datetime],input[type=datetime-local],input[type=week],input[type=time]',
-  inputs: ['value'],
+  inputs: ['value', 'ngModel'],
   host: {
     '(focus)': 'focusChange(true)',
     '(blur)': 'focusChange(false)',
@@ -471,7 +471,6 @@ export class TextInputElement {
     elementRef: ElementRef,
     renderer: Renderer,
     @Optional() wrapper: TextInput,
-    @Optional() ngControl: NgControl
   ) {
     this.type = type;
     this.elementRef = elementRef;
@@ -487,13 +486,13 @@ export class TextInputElement {
       wrapper.registerInput(this);
     }
 
-    if (ngControl) this.ngControl = ngControl;
   }
 
-  ngAfterContentChecked() {
-    if (this.ngControl) console.log("Value", this.ngControl.value);
-    if (this.ngControl) this.value = this.ngControl.value;
+  ngOnInit() {
+    if (this.ngModel) console.log("Value", this.ngModel);
+    if (this.ngModel) this.value = this.ngModel;
     this.wrapper && this.wrapper.hasValue(this.value);
+    console.log(this.value);
   }
 
   focusChange(changed) {
