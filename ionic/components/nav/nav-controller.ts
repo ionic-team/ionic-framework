@@ -56,7 +56,7 @@ import {raf, rafFrames} from '../../util/dom';
  *
  * <h2 id="creating_pages">Page creation</h2>
  * _For more information on the `@Page` decorator see the [@Page API
- * reference](../../../config/decorators/Page/)._
+ * reference](../../../decorators/Page/)._
  *
  * Pages are created when they are added to the navigation stack.  For methods
  * like [push()](#push), the NavController takes any component class that is

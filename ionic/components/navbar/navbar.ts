@@ -4,7 +4,6 @@ import {Ion} from '../ion';
 import {Icon} from '../icon/icon';
 import {ToolbarBase} from '../toolbar/toolbar';
 import {Config} from '../../config/config';
-import {Page} from '../../config/decorators';
 import {IonicApp} from '../app/app';
 import {ViewController} from '../nav/view-controller';
 import {NavController} from '../nav/nav-controller';

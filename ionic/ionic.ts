@@ -1,8 +1,11 @@
 
 export * from './config/bootstrap'
 export * from './config/config'
-export * from './config/decorators'
 export * from './config/directives'
+
+export * from './decorators/config-component'
+export * from './decorators/app'
+export * from './decorators/page'
 
 export * from './components'
 
@@ -25,4 +28,3 @@ import './platform/registry'
 import './animations/builtins'
 import './animations/ios-transition'
 import './animations/md-transition'
-

@@ -3,7 +3,7 @@ import {NgIf, NgClass, NgControl, FORM_DIRECTIVES} from 'angular2/common';
 
 import {Ion} from '../ion';
 import {Config} from '../../config/config';
-import {ConfigComponent} from '../../config/decorators';
+import {ConfigComponent} from '../../decorators/config-component';
 import {Icon} from '../icon/icon';
 import {Button} from '../button/button';
 

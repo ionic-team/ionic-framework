@@ -1,5 +1,5 @@
 import {Component} from 'angular2/core'
-import {IONIC_DIRECTIVES} from '../directives';
+import {IONIC_DIRECTIVES} from '../config/directives';
 
 
 /**

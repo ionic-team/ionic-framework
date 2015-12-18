@@ -7,7 +7,7 @@ import {Config} from '../../config/config';
 import {Platform} from '../../platform/platform';
 import {NavController} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
-import {ConfigComponent} from '../../config/decorators';
+import {ConfigComponent} from '../../decorators/config-component';
 import {Icon} from '../icon/icon';
 import {rafFrames} from '../../util/dom';
 

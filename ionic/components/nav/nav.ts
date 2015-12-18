@@ -3,7 +3,7 @@ import {ChangeDetectorRef, Component, Directive, ElementRef, Host, Optional, for
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
 import {Keyboard} from '../../util/keyboard';
-import {ConfigComponent} from '../../config/decorators';
+import {ConfigComponent} from '../../decorators/config-component';
 import {NavController} from './nav-controller';
 import {ViewController} from './view-controller';
 
