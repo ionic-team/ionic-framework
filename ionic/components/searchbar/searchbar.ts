@@ -24,7 +24,9 @@ export class SearchbarInput {
     this.onChange(ev.target.value);
   }
 
-  constructor(ngControl: NgControl) {
+  constructor(ngControl: NgControl, elementRef: ElementRef) {
+    this.elementRef = elementRef;
+    
     if (!ngControl) return;
 
     this.ngControl = ngControl;
@@ -90,8 +92,8 @@ export class SearchbarInput {
         '<icon arrow-back></icon>' +
       '</button>' +
       '<div class="searchbar-search-icon"></div>' +
-      '<input (blur)="inputBlurred()" (focus)="inputFocused()" class="searchbar-input" type="search" [attr.placeholder]="placeholder">' +
-      '<button clear *ngIf="query" class="searchbar-clear-icon" (click)="clearInput()" (mousedown)="clearInput()"></button>' +
+      '<input [value]="value" (blur)="inputBlurred()" (focus)="inputFocused()" class="searchbar-input" type="search" [attr.placeholder]="placeholder">' +
+      '<button clear *ngIf="value" class="searchbar-clear-icon" (click)="clearInput()" (mousedown)="clearInput()"></button>' +
     '</div>' +
     '<button clear (click)="cancelSearchbar()" (mousedown)="cancelSearchbar()" [hidden]="hideCancelButton" class="searchbar-ios-cancel">{{cancelButtonText}}</button>',
   directives: [FORM_DIRECTIVES, NgIf, NgClass, Icon, Button, SearchbarInput]
@@ -110,14 +112,7 @@ export class Searchbar extends Ion {
 
   @HostBinding('class.searchbar-focused') isFocused;
 
-  @HostBinding('class.searchbar-left-aligned')
-  /**
-   * @private
-   * Check if the Searchbar has a value and left align if so
-   */
-  private get shouldLeftAlign() {
-    return this.value && this.value.trim() != '';
-  };
+  @HostBinding('class.searchbar-left-aligned') shouldLeftAlign;
 
   value: string = '';
   blurInput = true;
@@ -127,7 +122,6 @@ export class Searchbar extends Ion {
     config: Config,
   ) {
     super(elementRef, config);
-    this.elementRef = elementRef;
   }
 
   /**
@@ -144,7 +138,7 @@ export class Searchbar extends Ion {
     this.placeholder = this.placeholder || 'Search';
 
     if (this.ngModel) this.value = this.ngModel;
-    console.log(this.value);
+    this.shouldLeftAlign = this.value && this.value.trim() != '';
   }
 
   /**
@@ -153,6 +147,7 @@ export class Searchbar extends Ion {
    */
   inputFocused() {
     this.isFocused = true;
+    this.shouldLeftAlign = true;
   }
 
   /**
@@ -164,11 +159,13 @@ export class Searchbar extends Ion {
     // blurInput determines if it should blur
     // if we are clearing the input we still want to stay focused in the input
     if (this.blurInput == false) {
+      console.log(this.searchbarInput);
       this.searchbarInput.elementRef.nativeElement.focus();
       this.blurInput = true;
       return;
     }
     this.isFocused = false;
+    this.shouldLeftAlign = this.value && this.value.trim() != '';
   }
 
   /**
