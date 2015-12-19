@@ -186,6 +186,10 @@ ion-searchbar {
   ion-searchbar[#{$color-name}] {
     .searchbar-ios-cancel {
       color: $color-value;
+
+      &:hover:not(.disable-hover) {
+        color: color-shade($color-value);
+      }
     }
   }
 
