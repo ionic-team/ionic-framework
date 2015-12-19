@@ -19,14 +19,14 @@ class E2EApp {
   }
 
   onClearSearchbar(searchbar) {
-    // console.log("Clicked clear input on", searchbar.value);
+    console.log("Clicked clear input on", searchbar);
   }
 
   onCancelSearchbar(searchbar) {
-    console.log("Clicked cancel button with", searchbar.value);
+    console.log("Clicked cancel button with", searchbar);
   }
 
   triggerInput(searchbar) {
-    // console.log("Triggered input", searchbar.value);
+    console.log("Triggered input", searchbar);
   }
 }

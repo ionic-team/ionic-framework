@@ -14,52 +14,18 @@ import {Button} from '../button/button';
   selector: '.searchbar-input',
 })
 export class SearchbarInput {
-  @HostListener('keyup', ['$event'])
+  @HostListener('input', ['$event'])
   /**
    * @private
    * Update the Searchbar input value when the input changes
    */
   private inputChanged(ev) {
-    this.writeValue(ev.target.value);
-    this.onChange(ev.target.value);
+    ev.preventDefault();
   }
 
-  constructor(ngControl: NgControl, elementRef: ElementRef) {
+  constructor(elementRef: ElementRef) {
     this.elementRef = elementRef;
-    
-    if (!ngControl) return;
-
-    this.ngControl = ngControl;
-    this.ngControl.valueAccessor = this;
   }
-
-  /**
-   * @private
-   * Write a new value to the element.
-   */
-  public writeValue(value: any) {
-    this.value = value;
-  }
-
-  public onChange = (_:any) => {};
-  public onTouched = () => {};
-
-  /**
-   * @private
-   * Set the function to be called when the control receives a change event.
-   */
-  public registerOnChange(fn:(_:any) => {}):void {
-    this.onChange = fn;
-  }
-
-  /**
-   * @private
-   * Set the function to be called when the control receives a touch event.
-   */
-  public registerOnTouched(fn:() => {}):void {
-    this.onTouched = fn;
-  }
-
 }
 
 
@@ -92,7 +58,7 @@ export class SearchbarInput {
         '<icon arrow-back></icon>' +
       '</button>' +
       '<div class="searchbar-search-icon"></div>' +
-      '<input [value]="value" (blur)="inputBlurred()" (focus)="inputFocused()" class="searchbar-input" type="search" [attr.placeholder]="placeholder">' +
+      '<input [value]="value" (keyup)="inputChanged($event)" (blur)="inputBlurred()" (focus)="inputFocused()" class="searchbar-input" type="search" [attr.placeholder]="placeholder">' +
       '<button clear *ngIf="value" class="searchbar-clear-icon" (click)="clearInput()" (mousedown)="clearInput()"></button>' +
     '</div>' +
     '<button clear (click)="cancelSearchbar()" (mousedown)="cancelSearchbar()" [hidden]="hideCancelButton" class="searchbar-ios-cancel">{{cancelButtonText}}</button>',
@@ -110,18 +76,62 @@ export class Searchbar extends Ion {
   @Output() cancel: EventEmitter<Searchbar> = new EventEmitter();
   @Output() clear: EventEmitter<Searchbar> = new EventEmitter();
 
+  value: string = '';
+  blurInput = true;
+
   @HostBinding('class.searchbar-focused') isFocused;
 
   @HostBinding('class.searchbar-left-aligned') shouldLeftAlign;
 
-  value: string = '';
-  blurInput = true;
+  @HostListener('keyup', ['$event'])
+  /**
+   * @private
+   * Update the Searchbar input value when the input changes
+   */
+  private inputChanged(ev) {
+    this.value = ev.target.value;
+    this.onChange(this.value);
+    this.input.emit(this.value);
+  }
 
   constructor(
     elementRef: ElementRef,
     config: Config,
+    ngControl: NgControl
   ) {
     super(elementRef, config);
+
+    if (ngControl) {
+      this.ngControl = ngControl;
+      this.ngControl.valueAccessor = this;
+    }
+  }
+
+  /**
+   * @private
+   * Write a new value to the element.
+   */
+  public writeValue(value: any) {
+    this.value = value;
+  }
+
+  public onChange = (_:any) => {};
+  public onTouched = () => {};
+
+  /**
+   * @private
+   * Set the function to be called when the control receives a change event.
+   */
+  public registerOnChange(fn:(_:any) => {}):void {
+    this.onChange = fn;
+  }
+
+  /**
+   * @private
+   * Set the function to be called when the control receives a touch event.
+   */
+  public registerOnTouched(fn:() => {}):void {
+    this.onTouched = fn;
   }
 
   /**
@@ -159,7 +169,6 @@ export class Searchbar extends Ion {
     // blurInput determines if it should blur
     // if we are clearing the input we still want to stay focused in the input
     if (this.blurInput == false) {
-      console.log(this.searchbarInput);
       this.searchbarInput.elementRef.nativeElement.focus();
       this.blurInput = true;
       return;
@@ -174,6 +183,7 @@ export class Searchbar extends Ion {
    */
   clearInput() {
     this.value = '';
+    this.onChange(this.value);
     this.blurInput = false;
     this.clear.emit(this);
   }
