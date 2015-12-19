@@ -17,10 +17,11 @@ export class SearchbarInput {
   @HostListener('input', ['$event'])
   /**
    * @private
-   * Update the Searchbar input value when the input changes
+   * Don't send the input's input event
    */
-  private inputChanged(ev) {
-    ev.preventDefault();
+  private stopInput(ev) {
+    event.preventDefault();
+    event.stopPropagation();
   }
 
   constructor(elementRef: ElementRef) {
@@ -91,7 +92,7 @@ export class Searchbar extends Ion {
   private inputChanged(ev) {
     this.value = ev.target.value;
     this.onChange(this.value);
-    this.input.emit(this.value);
+    this.input.emit(this);
   }
 
   constructor(
@@ -182,10 +183,11 @@ export class Searchbar extends Ion {
    * Clears the input field and triggers the control change.
    */
   clearInput() {
+    this.clear.emit(this);
+
     this.value = '';
     this.onChange(this.value);
     this.blurInput = false;
-    this.clear.emit(this);
   }
 
   /**
@@ -195,8 +197,9 @@ export class Searchbar extends Ion {
    * then calls the custom cancel function if the user passed one in.
    */
   cancelSearchbar() {
+    this.cancel.emit(this);
+
     this.clearInput();
     this.blurInput = true;
-    this.cancel.emit(this);
   }
 }
