@@ -178,7 +178,7 @@ export class RadioGroup extends Ion {
   ],
   host: {
     'role': 'radio',
-    'tappable': 'true',
+    'tappable': '',
     '[attr.id]': 'id',
     '[tabindex]': 'tabIndex',
     '[attr.aria-checked]': 'checked',
