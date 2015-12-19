@@ -1,7 +1,6 @@
-import {Directive, Renderer, ElementRef, Host, Optional, EventEmitter, HostBinding, Input, Output, ContentChildren, HostListener} from 'angular2/core';
+import {Directive, ElementRef, Renderer, Optional, EventEmitter, Input, Output, HostListener, ContentChildren} from 'angular2/core';
 import {NgControl} from 'angular2/common';
 
-import {Config} from '../../config/config';
 import {isDefined} from '../../util/util';
 
 
@@ -55,7 +54,7 @@ import {isDefined} from '../../util/util';
   }
 })
 export class SegmentButton {
-  @Input() value: string
+  @Input() value: string;
   @Output() select: EventEmitter<any> = new EventEmitter();
 
   constructor(private _renderer: Renderer, private _elementRef: ElementRef) {}
@@ -133,9 +132,7 @@ export class SegmentButton {
 })
 export class Segment {
   @Output() change: EventEmitter<any> = new EventEmitter();
-
-  @ContentChildren(SegmentButton) buttons;
-
+  @ContentChildren(SegmentButton) _buttons;
   value: any;
 
   constructor(
@@ -154,9 +151,9 @@ export class Segment {
    * Write a new value to the element.
    */
   writeValue(value) {
-    this.value = !value ? '' : value;
-    if (this.buttons) {
-      let buttons = this.buttons.toArray();
+    this.value = isDefined(value) ? value : '';
+    if (this._buttons) {
+      let buttons = this._buttons.toArray();
       for (let button of buttons) {
         button.isActive = (button.value === this.value);
       }
@@ -167,7 +164,7 @@ export class Segment {
    * @private
    */
   ngAfterViewInit() {
-   let buttons = this.buttons.toArray();
+   let buttons = this._buttons.toArray();
    for (let button of buttons) {
      button.select.subscribe(() => {
        this.writeValue(button.value);

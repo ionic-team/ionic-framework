@@ -1,10 +1,84 @@
-import {Component, Directive, ElementRef, Host, Optional, Query, QueryList} from 'angular2/core';
+import {Component, Directive, ElementRef, Renderer, Optional, Input, Output, HostListener, ContentChildren, ContentChild, EventEmitter} from 'angular2/core';
 import {NgControl} from 'angular2/common';
 
-import {Config} from '../../config/config';
-import {Ion} from '../ion';
 import {ListHeader} from '../list/list';
 import {Form} from '../../util/form';
+import {isDefined} from '../../util/util';
+
+
+/**
+ * @description
+ * A radio button with a unique value. Note that all `<ion-radio>` components
+ * must be wrapped within a `<ion-list radio-group>`, and there must be at 
+ * least two `<ion-radio>` components within the radio group.
+ *
+ * See the [Angular 2 Docs](https://angular.io/docs/js/latest/api/forms/) for more info on forms and input.
+ *
+ * @usage
+ * ```html
+ * <ion-radio value="my-value" checked="true">
+ *   Radio Label
+ * </ion-radio>
+ * ```
+ * @demo /docs/v2/demos/radio/
+ * @see {@link /docs/v2/components#radio Radio Component Docs}
+ */
+@Component({
+  selector: 'ion-radio',
+  host: {
+    '[attr.id]': 'id',
+    '[attr.aria-disabled]': 'disabled',
+    '[attr.aria-labelledby]': 'labelId',
+    'class': 'item',
+    'role': 'radio',
+    'tappable': '',
+    'tabindex': '0'
+  },
+  template:
+    '<div class="item-inner">' +
+      '<ion-item-content id="{{labelId}}">' +
+        '<ng-content></ng-content>' +
+      '</ion-item-content>' +
+      '<div class="radio-media">' +
+        '<div class="radio-icon"></div>' +
+      '</div>' +
+    '</div>'
+})
+export class RadioButton {
+  @Input() value: string = '';
+  @Input() checked: boolean = false;
+  @Input() disabled: boolean = false;
+  @Input() id: string;
+  @Output() select: EventEmitter<any> = new EventEmitter();
+
+  constructor(private _form: Form, private _renderer: Renderer, private _elementRef: ElementRef) {
+    this.isChecked = this.checked;
+    _renderer.setElementAttribute(_elementRef, 'checked', null);
+  }
+
+  /**
+   * @private
+   */
+  ngOnInit() {
+    if (!this.id) {
+      this.id = 'rb-' + this._form.nextId();
+    }
+    this.labelId = 'lbl-' + this.id;
+  }
+
+  /**
+   * @private
+   */
+  @HostListener('click', ['$event'])
+  private onClick(ev) {
+    console.debug('RadioButton, select', this.value);
+    this.select.emit(ev, this.value);
+  }
+
+  public set isChecked(isChecked) {
+    this._renderer.setElementAttribute(this._elementRef, 'aria-checked', isChecked);
+  }
+}
 
 
 /**
@@ -18,26 +92,34 @@ import {Form} from '../../util/form';
  *
  * @usage
  * ```html
- * <ion-list radio-group ngControl="clientside">
+ * <ion-list radio-group ngControl="autoManufactures">
  *
  *   <ion-list-header>
- *     Clientside
+ *     Auto Manufactures
  *   </ion-list-header>
  *
- *   <ion-radio value="ember">
- *     Ember
+ *   <ion-radio value="cord">
+ *     Cord
  *   </ion-radio>
  *
- *   <ion-radio value="angular1">
- *     Angular 1
+ *   <ion-radio value="duesenberg" checked="true">
+ *     Duesenberg
  *   </ion-radio>
  *
- *   <ion-radio value="angular2" checked="true">
- *     Angular 2
+ *   <ion-radio value="hudson">
+ *     Hudson
  *   </ion-radio>
  *
- *   <ion-radio value="react">
- *     React
+ *   <ion-radio value="packard">
+ *     Packard
+ *   </ion-radio>
+ *
+ *   <ion-radio value="studebaker">
+ *     Studebaker
+ *   </ion-radio>
+ *
+ *   <ion-radio value="tucker">
+ *     Tucker
  *   </ion-radio>
  *
  * </ion-list>
@@ -48,77 +130,25 @@ import {Form} from '../../util/form';
 @Directive({
   selector: '[radio-group]',
   host: {
-    'role': 'radiogroup',
     '[attr.aria-activedescendant]': 'activeId',
-    '[attr.aria-describedby]': 'describedById',
+    'role': 'radiogroup'
   }
 })
-export class RadioGroup extends Ion {
-  radios: Array<RadioButton> = [];
+export class RadioGroup {
+  @Output() change: EventEmitter<any> = new EventEmitter();
+  @ContentChildren(RadioButton) private _buttons;
+  @ContentChild(ListHeader) private _header;
 
-  constructor(
-    elementRef: ElementRef,
-    config: Config,
-    @Optional() ngControl: NgControl,
-    @Query(ListHeader) private _headerQuery: QueryList<ListHeader>
-  ) {
-    super(elementRef, config);
+  constructor(@Optional() ngControl: NgControl, private _renderer: Renderer, private _elementRef: ElementRef) {
     this.ngControl = ngControl;
     this.id = ++radioGroupIds;
     this.radioIds = -1;
     this.onChange = (_) => {};
     this.onTouched = (_) => {};
 
-    if (ngControl) this.ngControl.valueAccessor = this;
-  }
-
-  /**
-   * @private
-   */
-  ngOnInit() {
-    let header = this._headerQuery.first;
-    if (header) {
-      if (!header.id) {
-        header.id = 'radio-header-' + this.id;
-      }
-      this.describedById = header.id;
+    if (ngControl) {
+      this.ngControl.valueAccessor = this;
     }
-  }
-
-  /**
-   * @private
-   * Register the specified radio button with the radio group.
-   * @param {RadioButton} radio  The radio button to register.
-   */
-  registerRadio(radio) {
-    radio.id = radio.id || ('radio-' + this.id + '-' + (++this.radioIds));
-    this.radios.push(radio);
-
-    if (this.value == radio.value) {
-      radio.check(this.value);
-    }
-
-    if (radio.checked) {
-      this.value = radio.value;
-      this.onChange(this.value);
-      this.activeId = radio.id;
-    }
-  }
-
-  /**
-   * @private
-   * Update which radio button in the group is checked, unchecking all others.
-   * @param {RadioButton} checkedRadio  The radio button to check.
-   */
-  update(checkedRadio) {
-    this.value = checkedRadio.value;
-    this.activeId = checkedRadio.id;
-
-    for (let radio of this.radios) {
-      radio.checked = (radio === checkedRadio);
-    }
-
-    this.onChange(this.value);
   }
 
   /**
@@ -128,9 +158,46 @@ export class RadioGroup extends Ion {
    * https://github.com/angular/angular/blob/master/modules/angular2/src/forms/directives/shared.ts#L34
    */
   writeValue(value) {
-    this.value = value;
-    for (let radio of this.radios) {
-      radio.checked = (radio.value == value);
+    this.value = isDefined(value) ? value : '';
+    if (this._buttons) {
+      let buttons = this._buttons.toArray();
+      for (let button of buttons) {
+        let isChecked = (button.value === this.value);
+        button.isChecked = isChecked;
+        if (isChecked) {
+          this._renderer.setElementAttribute(this._elementRef, 'aria-activedescendant', button.id);
+        }
+      }
+    }
+  }
+
+  /**
+   * @private
+   */
+  ngAfterContentInit() {
+    let header = this._header;
+    if (header) {
+      if (!header.id) {
+        header.id = 'rg-hdr-' + this.id;
+      }
+      this._renderer.setElementAttribute(this._elementRef, 'aria-describedby', header.id);
+    }
+
+    let buttons = this._buttons.toArray();
+    for (let button of buttons) {
+      button.select.subscribe(() => {
+        this.writeValue(button.value);
+        this.onChange(button.value);
+        this.change.emit(this.value);
+      });
+
+      if (isDefined(this.value)) {
+        let isChecked = (button.value === this.value) || button.checked;
+        button.isChecked = isChecked;
+        if (isChecked) {
+          this._renderer.setElementAttribute(this._elementRef, 'aria-activedescendant', button.id);
+        }
+      }
     }
   }
 
@@ -150,102 +217,6 @@ export class RadioGroup extends Ion {
    * @param {Function} fn  onTouched event handler.
    */
   registerOnTouched(fn) { this.onTouched = fn; }
-}
-
-
-/**
- * @description
- * A single radio component.
- *
- * See the [Angular 2 Docs](https://angular.io/docs/js/latest/api/forms/) for more info on forms and input.
- *
- * @usage
- * ```html
- * <ion-radio value="isChecked" checked="true">
- *   Radio Label
- * </ion-radio>
- * ```
- * @demo /docs/v2/demos/radio/
- * @see {@link /docs/v2/components#radio Radio Component Docs}
- */
-@Component({
-  selector: 'ion-radio',
-  inputs: [
-    'value',
-    'checked',
-    'disabled',
-    'id'
-  ],
-  host: {
-    'role': 'radio',
-    'tappable': '',
-    '[attr.id]': 'id',
-    '[tabindex]': 'tabIndex',
-    '[attr.aria-checked]': 'checked',
-    '[attr.aria-disabled]': 'disabled',
-    '[attr.aria-labelledby]': 'labelId',
-    '(click)': 'click($event)',
-    'class': 'item'
-  },
-  template:
-    '<div class="item-inner">' +
-      '<ion-item-content id="{{labelId}}">' +
-        '<ng-content></ng-content>' +
-      '</ion-item-content>' +
-      '<div class="radio-media">' +
-        '<div class="radio-icon"></div>' +
-      '</div>' +
-    '</div>'
-})
-export class RadioButton extends Ion {
-
-  constructor(
-    @Host() @Optional() group: RadioGroup,
-    elementRef: ElementRef,
-    config: Config,
-    private _form: Form
-  ) {
-    super(elementRef, config);
-
-    this.group = group;
-    this.tabIndex = 0;
-  }
-
-  /**
-   * @private
-   */
-  ngOnInit() {
-    super.ngOnInit();
-    if (!this.id) {
-      this.id = 'rb-' + this._form.nextId();
-    }
-    this.labelId = 'lbl-' + this.id;
-
-    if (this.group) {
-      this.group.registerRadio(this);
-    } else {
-      console.error('<ion-radio> must be within a <ion-list radio-group>');
-    }
-  }
-
-  /**
-   * @private
-   */
-  click(ev) {
-    ev.preventDefault();
-    ev.stopPropagation();
-    this.check();
-  }
-
-  /**
-   * Update the checked state of this radio button.
-   * TODO: Call this toggle? Since unchecks as well
-   */
-  check() {
-    this.checked = !this.checked;
-    this.group.update(this);
-  }
-
 }
 
 let radioGroupIds = -1;
