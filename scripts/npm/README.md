@@ -1,13 +1,19 @@
 ## Ionic Framework Package
- The ionic-framework package comes with both Javascript and Sass frontend dependencies, located in `dist/`, and a Node API, located in `tooling/`.
+ The ionic-framework package comes with both Javascript and Sass frontend dependencies, located in the root of the package, and a Node API, located in `tooling/`.
 
 ### Source files:
 
-ES5 sources in the CommonJS module format, their associated Typescript type definition files, and the Ionic Sass entry files are located in `dist/`. The Javascript sources are meant to be used by a bundler such as Webpack, SystemJS Builder, or Browserify. The type definitions provide support to Typescript tooling for things like type checking and code completion.
+In the root of the package are ES5 sources in the CommonJS module format, their associated Typescript type definition files, and the Ionic Sass entry files. The Javascript sources are meant to be used by a bundler such as Webpack, SystemJS Builder, or Browserify. The type definitions provide support to Typescript tooling for things like type checking and code completion.
+
+Usually, the only Javascript file required by the user is `ionic.js`, as everything from Ionic can be imported from this file:
+
+```
+  import {App, Page} from 'ionic-framework/ionic';
+```
 
 ### Bundles:
 
-Minified and unminified CommonJS and System.register module format bundles, as well as compiled CSS stylesheets for both Ionic iOS and Material Design are located `dist/bundles/`. These can also be used with bundlers to a certain extent, for example, using Webpack's [`externals option`](https://webpack.github.io/docs/configuration.html#externals).  The SystemJS bundle is  primarily meant to be included in a `<script>` tag for demos, tests and Javascript playgrounds like [Plunker](http://plnkr.co/).
+Minified and unminified CommonJS and System.register module format bundles, as well as compiled CSS stylesheets for both Ionic iOS and Material Design are located `bundles/`. These can also be used with bundlers to a certain extent, for example, using Webpack's [`externals option`](https://webpack.github.io/docs/configuration.html#externals).  The SystemJS bundle is  primarily meant to be included in a `<script>` tag for demos, tests and Javascript playgrounds like [Plunker](http://plnkr.co/).
 
 ---------
 
