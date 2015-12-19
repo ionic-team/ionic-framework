@@ -1,10 +1,11 @@
-import {ElementRef, Component, Directive, Host, HostBinding, HostListener, ViewChild, Input, Output, EventEmitter} from 'angular2/core';
+import {ElementRef, Component, Directive, Host, HostBinding, HostListener, ViewChild, Input, Output, EventEmitter, Optional} from 'angular2/core';
 import {NgIf, NgClass, NgControl, FORM_DIRECTIVES} from 'angular2/common';
 
 import {Ion} from '../ion';
 import {Config} from '../../config/config';
 import {Icon} from '../icon/icon';
 import {Button} from '../button/button';
+import {isDefined} from '../../util/util';
 
 
 /**
@@ -78,7 +79,7 @@ export class Searchbar extends Ion {
   @Output() clear: EventEmitter<Searchbar> = new EventEmitter();
 
   value: string = '';
-  blurInput = true;
+  blurInput: boolean = true;
 
   @HostBinding('class.searchbar-focused') isFocused;
 
@@ -98,41 +99,14 @@ export class Searchbar extends Ion {
   constructor(
     elementRef: ElementRef,
     config: Config,
-    ngControl: NgControl
+    @Optional() ngControl: NgControl
   ) {
     super(elementRef, config);
 
+    // If the user passed a ngControl we need to set the valueAccessor
     if (ngControl) {
-      this.ngControl = ngControl;
-      this.ngControl.valueAccessor = this;
+      ngControl.valueAccessor = this;
     }
-  }
-
-  /**
-   * @private
-   * Write a new value to the element.
-   */
-  public writeValue(value: any) {
-    this.value = value;
-  }
-
-  public onChange = (_:any) => {};
-  public onTouched = () => {};
-
-  /**
-   * @private
-   * Set the function to be called when the control receives a change event.
-   */
-  public registerOnChange(fn:(_:any) => {}):void {
-    this.onChange = fn;
-  }
-
-  /**
-   * @private
-   * Set the function to be called when the control receives a touch event.
-   */
-  public registerOnTouched(fn:() => {}):void {
-    this.onTouched = fn;
   }
 
   /**
@@ -149,7 +123,23 @@ export class Searchbar extends Ion {
     this.placeholder = this.placeholder || 'Search';
 
     if (this.ngModel) this.value = this.ngModel;
+    this.onChange(this.value);
+
     this.shouldLeftAlign = this.value && this.value.trim() != '';
+  }
+
+  /**
+   * @private
+   * After View Initialization check the value
+   */
+  ngAfterViewInit() {
+    // If the user passes an undefined variable to ngModel this will warn
+    // and set the value to an empty string
+    if (!isDefined(this.value)) {
+      console.warn('Searchbar was passed an undefined value in ngModel. Please make sure the variable is defined.');
+      this.value = '';
+      this.onChange(this.value);
+    }
   }
 
   /**
@@ -201,5 +191,32 @@ export class Searchbar extends Ion {
 
     this.clearInput();
     this.blurInput = true;
+  }
+
+  /**
+   * @private
+   * Write a new value to the element.
+   */
+  public writeValue(value: any) {
+    this.value = value;
+  }
+
+  public onChange = (_:any) => {};
+  public onTouched = () => {};
+
+  /**
+   * @private
+   * Set the function to be called when the control receives a change event.
+   */
+  public registerOnChange(fn:(_:any) => {}):void {
+    this.onChange = fn;
+  }
+
+  /**
+   * @private
+   * Set the function to be called when the control receives a touch event.
+   */
+  public registerOnTouched(fn:() => {}):void {
+    this.onTouched = fn;
   }
 }

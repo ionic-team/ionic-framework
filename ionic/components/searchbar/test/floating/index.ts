@@ -11,8 +11,6 @@ class E2EApp {
   defaultSearch: string = 'test';
   customPlaceholder: string = '';
   defaultCancel: string = '';
-  customCancel: string = '';
-  customCancelAction: string = '';
 
   constructor() {
 
