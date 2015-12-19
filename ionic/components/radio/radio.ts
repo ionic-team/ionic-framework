@@ -142,7 +142,6 @@ export class RadioGroup {
   constructor(@Optional() ngControl: NgControl, private _renderer: Renderer, private _elementRef: ElementRef) {
     this.ngControl = ngControl;
     this.id = ++radioGroupIds;
-    this.radioIds = -1;
     this.onChange = (_) => {};
     this.onTouched = (_) => {};
 
