@@ -9,7 +9,7 @@ import {isDefined} from '../../util/util';
 /**
  * @description
  * A radio button with a unique value. Note that all `<ion-radio>` components
- * must be wrapped within a `<ion-list radio-group>`, and there must be at 
+ * must be wrapped within a `<ion-list radio-group>`, and there must be at
  * least two `<ion-radio>` components within the radio group.
  *
  * See the [Angular 2 Docs](https://angular.io/docs/js/latest/api/forms/) for more info on forms and input.
@@ -92,10 +92,10 @@ export class RadioButton {
  *
  * @usage
  * ```html
- * <ion-list radio-group ngControl="autoManufactures">
+ * <ion-list radio-group ngControl="autoManufacturers">
  *
  *   <ion-list-header>
- *     Auto Manufactures
+ *     Auto Manufacturers
  *   </ion-list-header>
  *
  *   <ion-radio value="cord">
