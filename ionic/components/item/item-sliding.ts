@@ -34,8 +34,8 @@ import {List} from '../list/list';
 })
 export class ItemSliding {
 
-  constructor(@Optional() private list: List, elementRef: ElementRef) {
-    list.enableSlidingItems(true);
+  constructor(@Optional() private _list: List, elementRef: ElementRef) {
+    _list.enableSlidingItems(true);
     elementRef.nativeElement.$ionSlide = ++slideIds;
   }
 
@@ -43,7 +43,7 @@ export class ItemSliding {
  * @private
  */
   close() {
-    this.list.closeSlidingItems();
+    this._list.closeSlidingItems();
   }
 
 }

@@ -45,7 +45,7 @@
 
   <form (submit)="doSubmit($event)" [ngFormModel]="currencyForm">
     <ion-list radio-group ngControl="currenciesControl">
-      <ion-list-header>
+      <ion-list-header id="currencies">
         Currencies
       </ion-list-header>
       <ion-radio *ngFor="#currency of currencies" [checked]="currency==selectedCurrency" [value]="currency">{{currency}}</ion-radio>

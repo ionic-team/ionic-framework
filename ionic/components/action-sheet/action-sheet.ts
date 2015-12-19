@@ -130,8 +130,8 @@ export class ActionSheet {
    *     the action sheet, or false to keep it opened.
    *  - `{function=}` `destructiveButtonClicked` Called when the destructive button is clicked.
    *     Return true to close the action sheet, or false to keep it opened.
-   * @param {String} [opts.enterAnimation='action-sheet-slide-in'] The class used to animate an actionSheet that is entering.
-   * @param {String} [opts.leaveAnimation='action-sheet-slide-out'] The class used to animate an actionSheet that is leaving.
+   *  - `{String}` `enterAnimation` The class used to animate an actionSheet that is entering.
+   *  - `{String}` `leaveAnimation` The class used to animate an actionSheet that is leaving.
    * @return {Promise} Promise that resolves when the action sheet is open.
    */
   open(opts={}) {

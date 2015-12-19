@@ -20,7 +20,7 @@ import {Directive, Renderer, ElementRef} from 'angular2/core';
   selector: '[blur]'
 })
 export class Blur {
-  constructor(private elementRef: ElementRef, private renderer: Renderer) {
-    renderer.setElementStyle(elementRef, '-webkit-backdrop-filter', 'blur(10px)');
+  constructor(private _elementRef: ElementRef, private _renderer: Renderer) {
+    _renderer.setElementStyle(_elementRef, '-webkit-backdrop-filter', 'blur(10px)');
   }
 }

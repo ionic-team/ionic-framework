@@ -37,13 +37,13 @@ import {Menu} from './menu';
 })
 export class MenuClose {
 
-  constructor(private app: IonicApp) {}
+  constructor(private _app: IonicApp) {}
 
   /**
   * @private
   */
   close() {
-    let menu = Menu.getById(this.app, this.menuClose);
+    let menu = Menu.getById(this._app, this.menuClose);
     menu && menu.close();
   }
 

@@ -1,10 +1,10 @@
-import {Directive, ElementRef, NgZone} from 'angular2/core';
+import {Directive, ElementRef, Renderer, Attribute, NgZone} from 'angular2/core';
 
 import {Ion} from '../ion';
 import {Config} from '../../config/config';
 import {ListVirtualScroll} from './virtual';
 import {ItemSlidingGesture} from '../item/item-sliding-gesture';
-import * as util from '../../util';
+import {isDefined} from '../../util';
 
 /**
  * The List is a widely used interface element in almost any mobile app, and can include
@@ -42,7 +42,7 @@ export class List extends Ion {
   ngOnInit() {
     super.ngOnInit();
 
-    if (util.isDefined(this.virtual)) {
+    if (isDefined(this.virtual)) {
       console.log('Content', this.content);
       console.log('Virtual?', this.virtual);
       console.log('Items?', this.items.length, 'of \'em');
@@ -138,12 +138,21 @@ export class List extends Ion {
  * @private
  */
 @Directive({
-  selector: 'ion-list-header',
-  inputs: [
-    'id'
-  ],
-  host: {
-    '[attr.id]': 'id'
-  }
+  selector: 'ion-list-header'
 })
-export class ListHeader {}
+export class ListHeader {
+
+  constructor(private _renderer: Renderer, private _elementRef: ElementRef, @Attribute('id') id:string){
+    this._id = id;
+  }
+
+  public get id() {
+    return this._id;
+  }
+
+  public set id(val) {
+    this._id = val;
+    this._renderer.setElementAttribute(this._elementRef, 'id', val);
+  }
+
+}

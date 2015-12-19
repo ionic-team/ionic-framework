@@ -111,7 +111,7 @@ export class Toggle {
     form: Form,
     elementRef: ElementRef,
     config: Config,
-    @Optional() private ngControl: NgControl
+    @Optional() private _ngControl: NgControl
   ) {
     // deprecated warning
     if (elementRef.nativeElement.tagName == 'ION-SWITCH') {
@@ -129,8 +129,8 @@ export class Toggle {
     this.onChange = (_) => {};
     this.onTouched = (_) => {};
 
-    if (ngControl) {
-      ngControl.valueAccessor = this;
+    if (_ngControl) {
+      _ngControl.valueAccessor = this;
     }
 
     let self = this;
