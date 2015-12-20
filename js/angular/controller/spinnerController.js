@@ -332,7 +332,10 @@
     android: function(ele) {
       var self = this;
 
-      this.stop = false;
+      var stop = false;
+      this.stop = function() {
+        stop = true;
+      };
 
       var rIndex = 0;
       var rotateCircle = 0;
@@ -341,7 +344,7 @@
       var circleEle = ele.querySelector('circle');
 
       function run() {
-        if (self.stop) return;
+        if (stop) return;
 
         var v = easeInOutCubic(Date.now() - startTime, 650);
         var scaleX = 1;
@@ -426,7 +429,7 @@
     };
 
     this.stop = function() {
-      animations[spinnerName] && (anim.stop = true);
+      animations[spinnerName] && (anim.stop());
     };
 
   }]);
