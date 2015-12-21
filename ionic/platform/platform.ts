@@ -1,10 +1,3 @@
-/**
-+* @ngdoc service
-+* @name platform
-+* @module ionic
-+*/
-
-
 import {getQuerystring, extend} from '../util/util';
 import {ready, windowDimensions, flushDimensionCache} from '../util/dom';
 
@@ -13,6 +6,19 @@ import {ready, windowDimensions, flushDimensionCache} from '../util/dom';
  * @name Platform
  * @description
  * Platform returns the availble information about your current platform.
+ * Platforms in Ionic 2 are much more complex then in V1, returns not just a single platform,
+ * but a hierarchy of information, such as a devices OS, phone vs tablet, or mobile vs browser.
+ * With this information you can completely custimize your app to fit any device and platform.
+ *
+ * @usage
+ * ```ts
+ * import {Platform} 'ionic/ionic';
+ * export MyClass {
+ *    constructor(platform: Platform){
+ *      this.platform = platform;
+ *    }
+ * }
+ * ```
  * @demo /docs/v2/demos/platform/
  */
 export class Platform {
@@ -79,14 +85,7 @@ export class Platform {
 
 
   /**
-   * @param {string} optional platformName
-   * @returns {object} An object with various platform info
-   * - `{object=} `cordova`
-   * - `{object=}` `platformOS` {str: "9.1", num: 9.1, major: 9, minor: 1}
-   * - `{object=} `deviceName` Returns the name of the device
-   * - `{object=}` `device platform` R
-   * @description
-   * Returns an object conta
+   * Returns an object containing information about the paltform
    *
    * ```
    * import {Platform} 'ionic/ionic';
@@ -94,11 +93,12 @@ export class Platform {
    *    constructor(platform: Platform){
    *      this.platform = platform;
    *      console.log(this.platform.versions());
-   *      // or pass in a platform name
-   *      console.log(this.platform.versions('ios'));
    *    }
    * }
    * ```
+
+   * @param {string} [platformName] optional platformName
+   * @returns {object} An object with various platform info
    *
    */
   versions(platformName) {
@@ -112,6 +112,9 @@ export class Platform {
   }
 
 
+  /**
+   * @private
+   */
   version() {
     for (let platformName in this._versions) {
       if (this._versions[platformName]) {
@@ -122,8 +125,6 @@ export class Platform {
   }
 
   /**
-   * @returns {promise}
-   * @description
    * Returns a promise when the platform is ready and native functionality can be called
    *
    * ```
@@ -138,6 +139,7 @@ export class Platform {
    *    }
    * }
    * ```
+   * @returns {promise} Returns a promsie when device ready has fired
    */
   ready() {
     return this._readyPromise;
@@ -145,7 +147,6 @@ export class Platform {
 
   /**
    * @private
-   * TODO
    * @param {TODO} config  TODO
    * @returns {TODO} TODO
    */
@@ -172,18 +173,38 @@ export class Platform {
   // **********************************************
   // Provided NOOP methods so they do not error when
   // called by engines (the browser) doesn't provide them
+  /**
+  * @private
+  */
   on() {}
+  /**
+  * @private
+  */
   onHardwareBackButton() {}
+  /**
+  * @private
+  */
   registerBackButtonAction() {}
+  /**
+  * @private
+  */
   exitApp() {}
+  /**
+  * @private
+  */
   fullScreen() {}
+  /**
+  * @private
+  */
   showStatusBar() {}
-
 
 
   // Getter/Setter Methods
   // **********************************************
 
+  /**
+  * @private
+  */
   url(val) {
     if (arguments.length) {
       this._url = val;
@@ -192,10 +213,16 @@ export class Platform {
     return this._url;
   }
 
+  /**
+  * @private
+  */
   query(key) {
     return (this._qs || {})[key];
   }
 
+  /**
+  * @private
+  */
   userAgent(val) {
     if (arguments.length) {
       this._ua = val;
@@ -203,6 +230,9 @@ export class Platform {
     return this._ua || '';
   }
 
+  /**
+  * @private
+  */
   navigatorPlatform(val) {
     if (arguments.length) {
       this._bPlt = val;
@@ -210,22 +240,37 @@ export class Platform {
     return this._bPlt || '';
   }
 
+  /**
+  * @private
+  */
   width() {
     return windowDimensions().width;
   }
 
+  /**
+  * @private
+  */
   height() {
     return windowDimensions().height;
   }
 
+  /**
+  * @private
+  */
   isPortrait() {
     return this.width() < this.height();
   }
 
+  /**
+  * @private
+  */
   isLandscape() {
     return !this.isPortrait();
   }
 
+  /**
+  * @private
+  */
   windowResize() {
     let self = this;
     clearTimeout(self._resizeTimer);
@@ -243,6 +288,9 @@ export class Platform {
     }, 500);
   }
 
+  /**
+  * @private
+  */
   onResize(cb) {
     this._onResizes.push(cb);
   }
@@ -252,19 +300,22 @@ export class Platform {
   // **********************************************
 
   /**
-   * TODO
+   * @private
    * @param {TODO} platformConfig  TODO
    */
   static register(platformConfig) {
     platformRegistry[platformConfig.name] = platformConfig;
   }
 
+  /**
+  * @private
+  */
   static registry() {
     return platformRegistry;
   }
 
   /**
-   * TODO
+   * @private
    * @param {TODO} platformName  TODO
    * @returns {string} TODO
    */
@@ -277,7 +328,7 @@ export class Platform {
   }
 
   /**
-   * TODO
+   * @private
    * @param {TODO} queryValue  TODO
    * @returns {boolean} TODO
    */
@@ -287,7 +338,7 @@ export class Platform {
   }
 
   /**
-   * TODO
+   * @private
    * @param {TODO} userAgentExpression  TODO
    * @returns {boolean} TODO
    */
@@ -297,7 +348,7 @@ export class Platform {
   }
 
   /**
-   * TODO
+   * @private
    * @param {TODO} navigatorPlatformExpression  TODO
    * @returns {boolean} TODO
    */
@@ -307,7 +358,7 @@ export class Platform {
   }
 
   /**
-   * TODO
+   * @private
    * @param {TODO} userAgentExpression  TODO
    * @returns {Object} TODO
    */
@@ -324,7 +375,7 @@ export class Platform {
   }
 
   /**
-   * TODO
+   * @private
    * @param {TODO} queryValue  TODO
    * @param {TODO} userAgentExpression  TODO
    * @returns {boolean} TODO
@@ -343,7 +394,7 @@ export class Platform {
   }
 
   /**
-   * TODO
+   * @private
    * @param {TODO} config  TODO
    */
   load(platformOverride) {
@@ -432,7 +483,7 @@ export class Platform {
   }
 
   /**
-   * TODO
+   * @private
    * @param {TODO} platformName  TODO
    * @returns {TODO} TODO
    */
