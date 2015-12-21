@@ -9,7 +9,7 @@ export class OverlayController {
 
   open(componentType, params = {}, opts = {}) {
     if (!this.nav) {
-      console.error('<ion-overlay></ion-overlay> required in root template (app.html) to use: ' + overlayType);
+      console.error('<ion-overlay></ion-overlay> required in root template (app.html) to use: ' + opts.pageType);
       return Promise.reject();
     }
 

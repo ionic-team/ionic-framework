@@ -24,6 +24,7 @@ export class ItemSlidingGesture extends DragGesture {
       if (!isFromOptionButtons(ev.target)) {
         let didClose = this.closeOpened();
         if (didClose) {
+          console.debug('tap close sliding item');
           preventDefault(ev);
         }
       }
@@ -31,6 +32,7 @@ export class ItemSlidingGesture extends DragGesture {
 
     this.mouseOut = (ev) => {
       if (ev.target.tagName === 'ION-ITEM-SLIDING') {
+        console.debug('tap close sliding item');
         this.onDragEnd(ev);
       }
     };
@@ -38,7 +40,10 @@ export class ItemSlidingGesture extends DragGesture {
 
   onDragStart(ev) {
     let itemContainerEle = getItemConatiner(ev.target);
-    if (!itemContainerEle) return;
+    if (!itemContainerEle) {
+      console.debug('onDragStart, no itemContainerEle');
+      return;
+    }
 
     this.closeOpened(itemContainerEle);
 
@@ -48,6 +53,7 @@ export class ItemSlidingGesture extends DragGesture {
 
     if (this.preventDrag) {
       this.closeOpened();
+      console.debug('onDragStart, preventDefault');
       return preventDefault(ev);
     }
 
@@ -61,18 +67,25 @@ export class ItemSlidingGesture extends DragGesture {
 
   onDrag(ev) {
     if (this.dragEnded || this.preventDrag || Math.abs(ev.deltaY) > 30) {
+      console.debug('onDrag preventDrag, dragEnded:', this.dragEnded, 'preventDrag:', this.preventDrag, 'ev.deltaY:', Math.abs(ev.deltaY));
       this.preventDrag = true;
       return;
     }
 
     let itemContainerEle = getItemConatiner(ev.target);
-    if (!itemContainerEle || !isActive(itemContainerEle)) return;
+    if (!itemContainerEle || !isActive(itemContainerEle)) {
+      console.debug('onDrag, no itemContainerEle');
+      return;
+    }
 
     let itemData = this.get(itemContainerEle);
 
     if (!itemData.optsWidth) {
       itemData.optsWidth = getOptionsWidth(itemContainerEle);
-      if (!itemData.optsWidth) return;
+      if (!itemData.optsWidth) {
+        console.debug('onDrag, no optsWidth');
+        return;
+      }
     }
 
     let x = ev.center[this.direction];
@@ -103,7 +116,10 @@ export class ItemSlidingGesture extends DragGesture {
     this.dragEnded = true;
 
     let itemContainerEle = getItemConatiner(ev.target);
-    if (!itemContainerEle || !isActive(itemContainerEle)) return;
+    if (!itemContainerEle || !isActive(itemContainerEle)) {
+      console.debug('onDragEnd, no itemContainerEle');
+      return;
+    }
 
     // If we are currently dragging, we want to snap back into place
     // The final resting point X will be the width of the exposed buttons
@@ -146,7 +162,10 @@ export class ItemSlidingGesture extends DragGesture {
 
   open(itemContainerEle, openAmount, isFinal) {
     let slidingEle = itemContainerEle.querySelector('ion-item,[ion-item]');
-    if (!slidingEle) return;
+    if (!slidingEle) {
+      console.debug('open, no slidingEle, openAmount:', openAmount);
+      return;
+    }
 
     this.set(itemContainerEle, 'openAmount', openAmount);
 
@@ -175,7 +194,6 @@ export class ItemSlidingGesture extends DragGesture {
       } else {
         this.off('tap', this.tap);
       }
-      this.enableScroll(!openAmount);
     }
   }
 
@@ -194,13 +212,6 @@ export class ItemSlidingGesture extends DragGesture {
     this.data[itemContainerEle.$ionSlide][key] = value;
   }
 
-  enableScroll(shouldEnable) {
-    let scrollContentEle = closest(this.listEle, 'scroll-content');
-    if (scrollContentEle) {
-      scrollContentEle[shouldEnable ? 'removeEventListener' : 'addEventListener']('touchstart', preventDefault);
-    }
-  }
-
   unlisten() {
     super.unlisten();
     this.listEle = null;
@@ -213,6 +224,7 @@ function isItemActive(ele, isActive) {
 }
 
 function preventDefault(ev) {
+  console.debug('sliding item preventDefault', ev.type);
   ev.preventDefault();
 }
 
