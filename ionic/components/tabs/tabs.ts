@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Optional, Host, forwardRef, ViewContainerRef} from 'angular2/core';
+import {Directive, ElementRef, Optional, Host, forwardRef, ViewContainerRef, HostListener} from 'angular2/core';
 import {NgFor, NgIf} from 'angular2/common';
 
 import {Ion} from '../ion';
@@ -68,7 +68,6 @@ import {rafFrames} from '../../util/dom';
   ]
 })
 export class Tabs extends Ion {
-
   /**
    * Hi, I'm "Tabs". I'm really just another Page, with a few special features.
    * "Tabs" can be a sibling to other pages that can be navigated to, which those
@@ -163,9 +162,17 @@ export class Tabs extends Ion {
 
     selectedTab.load(opts, () => {
 
-      this._tabs.forEach(tab => {
-        tab.setSelected(tab === selectedTab);
-      });
+      selectedTab.emitSelect();
+
+      if (selectedTab.root) {
+        // only show the selectedTab if it has a root
+        // it's possible the tab is only for opening modal's or signing out
+        // and doesn't actually have content. In the case there's no content
+        // for a tab then do nothing and leave the current view as is
+        this._tabs.forEach(tab => {
+          tab.setSelected(tab === selectedTab);
+        });
+      }
 
       this._highlight && this._highlight.select(selectedTab);
 
@@ -278,8 +285,7 @@ let tabIds = -1;
     '[class.has-icon]': 'hasIcon',
     '[class.has-title-only]': 'hasTitleOnly',
     '[class.icon-only]': 'hasIconOnly',
-    '[class.disable-hover]': 'disHover',
-    '(click)': 'onClick()',
+    '[class.disable-hover]': 'disHover'
   }
 })
 class TabButton extends Ion {
@@ -297,7 +303,8 @@ class TabButton extends Ion {
     this.hasIconOnly = (this.hasIcon && !this.hasTitle);
   }
 
-  onClick() {
+  @HostListener('click')
+  private onClick() {
     this.tabs.select(this.tab);
   }
 }

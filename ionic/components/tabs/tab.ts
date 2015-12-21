@@ -1,4 +1,5 @@
 import {ChangeDetectorRef, Component, Directive, Host, ElementRef, Compiler, AppViewManager, NgZone, Renderer} from 'angular2/core';
+import {EventEmitter, Output} from 'angular2/core';
 
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
@@ -54,6 +55,7 @@ import {Tabs} from './tabs';
   template: '<template #contents></template>'
 })
 export class Tab extends NavController {
+  @Output() select: EventEmitter<any> = new EventEmitter();
 
   constructor(
     @Host() parentTabs: Tabs,
@@ -140,6 +142,13 @@ export class Tab extends NavController {
   setSelected(isSelected) {
     this.isSelected = isSelected;
     this.hideNavbars(!isSelected);
+  }
+
+  /**
+   * @private
+   */
+  emitSelect() {
+    this.select.emit();
   }
 
   /**
