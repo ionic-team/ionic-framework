@@ -84,7 +84,7 @@ export class Tabs extends Ion {
     elementRef: ElementRef,
     @Optional() viewCtrl: ViewController,
     @Optional() navCtrl: NavController,
-    private platform: Platform
+    private _platform: Platform
   ) {
     super(elementRef, config);
     this.parent = navCtrl;
@@ -116,7 +116,7 @@ export class Tabs extends Ion {
     this.preloadTabs = (this.preloadTabs !== "false" && this.preloadTabs !== false);
 
     if (this._highlight) {
-      this.platform.onResize(() => {
+      this._platform.onResize(() => {
         this._highlight.select(this.getSelected());
       });
     }

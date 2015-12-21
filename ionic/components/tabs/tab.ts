@@ -32,12 +32,53 @@ import {Tabs} from './tabs';
  *
  * See the [Tabs API reference](../Tabs/) for more details on configuring Tabs
  * and the TabBar.
-
+ *
+ * For most cases, you can give tab a `[root]` property along with the component you want to load.
+ *
+ * ```html
+ * <ion-tabs>
+ *  <ion-tab [root]="chatRoot"><ion-tab>
+ * </ion-tabs>
+ * ```
+ *
+ * ```ts
+ * import {Chat} from '../chat/chat';
+ * export class Tabs {
+ *    constructor(){
+ *      // here we'll set the property of chatRoot to
+ *      // the imported class of Chat
+ *      this.chatRoot = Chat
+ *    }
+ * }
+ * ```
+ *
+ * In other cases, you may not want to navigate to a new component, but just call a method.
+ * You can use the `(select)` event to call a method on your class.
+ *
+ * ```html
+ * <ion-tabs preloadTabs="false">
+ *   <ion-tab (select)="chat()"></ion-tab>
+ * </ion-tabs>
+ * ```
+ *
+ * ```ts
+ * export class Tabs {
+ *   constructor(modal: Modal){
+ *     this.modal = modal;
+ *   }
+ *   chat() {
+ *      this.modal.open(ChatPage);
+ *   }
+ * }
+ * ```
+ * In this case, when we tap on the tab, we'll open a modal instead of loading a new component.
+ *
  *
  * @property {any} [root] - set the root page for this tab
  * @property {any} [tabTitle] - set the title of this tab
  * @property {any} [tabIcon] - set the icon for this tab
-
+ * @property {any} [select] - method to call when the current tab is selected
+ *
  */
 @Component({
   selector: 'ion-tab',
