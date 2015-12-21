@@ -1,5 +1,5 @@
 
-<ion-tabs preloadTabs="false">
+<ion-tabs preloadTabs="false" (change)="onTabChange()">
   <ion-tab tabTitle="Recents" tabIcon="call" [root]="tab1Root"></ion-tab>
   <ion-tab tabTitle="Favorites" tabIcon="star" [root]="tab2Root"></ion-tab>
   <ion-tab tabTitle="Settings" tabIcon="settings" [root]="tab3Root"></ion-tab>

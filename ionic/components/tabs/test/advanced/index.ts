@@ -63,6 +63,10 @@ class TabsPage {
     console.log('Chat clicked!');
     this.modal.open(ChatPage);
   }
+
+  onTabChange() {
+    console.log('onTabChange');
+  }
 }
 
 

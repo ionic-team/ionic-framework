@@ -1,4 +1,5 @@
 import {Directive, ElementRef, Optional, Host, forwardRef, ViewContainerRef, HostListener} from 'angular2/core';
+import {EventEmitter, Output} from 'angular2/core';
 import {NgFor, NgIf} from 'angular2/common';
 
 import {Ion} from '../ion';
@@ -68,6 +69,8 @@ import {rafFrames} from '../../util/dom';
   ]
 })
 export class Tabs extends Ion {
+  @Output() change: EventEmitter<any> = new EventEmitter();
+
   /**
    * Hi, I'm "Tabs". I'm really just another Page, with a few special features.
    * "Tabs" can be a sibling to other pages that can be navigated to, which those
@@ -163,6 +166,7 @@ export class Tabs extends Ion {
     selectedTab.load(opts, () => {
 
       selectedTab.emitSelect();
+      this.change.emit(selectedTab);
 
       if (selectedTab.root) {
         // only show the selectedTab if it has a root
