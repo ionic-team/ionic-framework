@@ -243,7 +243,7 @@ gulp.task('e2e.build', function() {
    fs.readFileSync('scripts/e2e/e2e.template.html')
   )({
     buildConfig: buildConfig
-  })
+  });
   var testTemplate = _.template(fs.readFileSync('scripts/e2e/e2e.template.js'));
 
   var platforms = [
@@ -397,14 +397,49 @@ gulp.task('src', function(done){
   );
 })
 
-gulp.task('package', ['src'], function(){
-  return gulp.src([
+gulp.task('publish', ['src'], function(done){
+  var _ = require('lodash');
+  var fs = require('fs');
+  var distDir = 'dist';
+
+  gulp.src([
       'scripts/npm/.npmignore',
-      'scripts/npm/package.json',
       'scripts/npm/README.md',
       '*tooling/**/*'
     ])
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest(distDir));
+
+  var inquirer = require('inquirer');
+  inquirer.prompt([
+    {
+      type: 'input',
+      name: 'ionicVersion',
+      message: '\n\n\nWhat ionic-framework alpha version number will this be?'
+    },
+    {
+      type: 'input',
+      name: 'angularVersion',
+      message: '\nWhat angular2 beta version number is a peer dependency?'
+    }
+  ], function(answers) {
+  	var packageTemplate = _.template(fs.readFileSync('scripts/npm/package.json'));
+    fs.writeFileSync(distDir + '/package.json', packageTemplate(answers));
+
+    var spawn = require('child_process').spawn;
+    var npmCmd = spawn('npm', ['publish', './' + distDir]);
+
+    npmCmd.stdout.on('data', function (data) {
+      console.log(data);
+    });
+
+    npmCmd.stderr.on('data', function (data) {
+      console.log('npm err: ' + data);
+    });
+
+    npmCmd.on('close', function() {
+      done();
+    });
+  });
 });
 
 require('./scripts/docs/gulp-tasks')(gulp, flags)
