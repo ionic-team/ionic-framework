@@ -429,11 +429,11 @@ gulp.task('publish', ['src'], function(done){
     var npmCmd = spawn('npm', ['publish', './' + distDir]);
 
     npmCmd.stdout.on('data', function (data) {
-      console.log(data);
+      console.log(data.toString());
     });
 
     npmCmd.stderr.on('data', function (data) {
-      console.log('npm err: ' + data);
+      console.log('npm err: ' + data.toString());
     });
 
     npmCmd.on('close', function() {
