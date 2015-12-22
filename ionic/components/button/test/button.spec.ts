@@ -21,7 +21,7 @@ export function run() {
   }
 
   function hasClass(button, className) {
-    return button.elementRef.nativeElement.classList.contains(className);
+    return button._elementRef.nativeElement.classList.contains(className);
   }
 
   it('should ignore certain attributes', () => {
