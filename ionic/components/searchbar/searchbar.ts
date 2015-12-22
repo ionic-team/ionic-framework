@@ -47,6 +47,8 @@ export class SearchbarInput {
  * @property {string} [placeholder=Search] - Sets input placeholder to the value passed in
  *
  * @property {Any} [input] - Expression to evaluate when the Searchbar input has changed
+ * @property {Any} [blur] - Expression to evaluate when the Searchbar input has blurred
+ * @property {Any} [focus] - Expression to evaluate when the Searchbar input has focused
  * @property {Any} [cancel] - Expression to evaluate when the cancel button is clicked.
  * @property {Any} [clear] - Expression to evaluate when the clear input button is clicked.
  *
@@ -75,6 +77,8 @@ export class Searchbar extends Ion {
   @Input() ngModel: any;
 
   @Output() input: EventEmitter<Searchbar> = new EventEmitter();
+  @Output() blur: EventEmitter<Searchbar> = new EventEmitter();
+  @Output() focus: EventEmitter<Searchbar> = new EventEmitter();
   @Output() cancel: EventEmitter<Searchbar> = new EventEmitter();
   @Output() clear: EventEmitter<Searchbar> = new EventEmitter();
 
@@ -147,6 +151,8 @@ export class Searchbar extends Ion {
    * Sets the Searchbar to focused and aligned left on input focus.
    */
   inputFocused() {
+    this.focus.emit(this);
+
     this.isFocused = true;
     this.shouldLeftAlign = true;
   }
@@ -164,6 +170,8 @@ export class Searchbar extends Ion {
       this.blurInput = true;
       return;
     }
+    this.blur.emit(this);
+    
     this.isFocused = false;
     this.shouldLeftAlign = this.value && this.value.trim() != '';
   }
