@@ -49,8 +49,11 @@ export function App(args={}) {
 
     // redefine with added annotations
     Reflect.defineMetadata('annotations', annotations, cls);
+    
+    // define array of bootstrap providers
+    let providers = ionicProviders(args).concat(args.providers || []);
 
-    bootstrap(cls, ionicProviders(args)).then(appRef => {
+    bootstrap(cls, providers).then(appRef => {
       appRef.injector.get(TapClick);
     });
 
