@@ -2,15 +2,14 @@
 <ion-content padding>
 
   <button class="e2eOpenAlert" (click)="doAlert()">Alert</button>
-  <button class="e2eOpenPrompt" (click)="doPrompt()">Prompt</button>
   <button class="e2eOpenConfirm" (click)="doConfirm()">Confirm</button>
+  <button class="e2eOpenPrompt" (click)="doPrompt()">Prompt</button>
 
   <pre>
     Alert Opened: {{alertOpen}}
+    Confirm Opened: {{confirmOpen}}
     Prompt Opened: {{promptOpen}}
     Prompt Result: {{promptResult}}
-    Confirm Opened: {{confirmOpen}}
-    Confirm Result: {{confirmResult}}
   </pre>
 
 </ion-content>

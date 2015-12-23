@@ -9,7 +9,6 @@ class E2EApp {
   constructor(private overlay: OverlayController) {
     this.alertOpen = false;
     this.confirmOpen = false;
-    this.confirmResult = '';
     this.promptOpen = false;
     this.promptResult = '';
   }
@@ -17,17 +16,36 @@ class E2EApp {
   doAlert() {
     let alert = Alert.create({
       title: 'Alert!',
-      subTitle: 'My alert subtitle',
-      bodyText: 'My alert body text',
-      buttons: ['Ok']
+      subTitle: 'Subtitle!!!',
+      buttons: ['Ok'],
+      onClose: () => {
+        this.alertOpen = false;
+      }
     });
 
-    alert.onClose(() => {
-      this.alertOpen = false;
+    this.overlay.push(alert);
+
+    this.alertOpen = true;
+  }
+
+  doConfirm() {
+    let alert = Alert.create();
+    alert.setTitle('Confirm!');
+    alert.setBody('Body text!!!');
+    alert.addButton('Cancel');
+    alert.addButton({
+      text: 'Ok',
+      handler: () => {
+        console.log('Confirm Ok');
+      }
+    });
+
+    alert.onClose(data => {
+      this.confirmOpen = false;
     });
 
     this.overlay.push(alert).then(() => {
-      this.alertOpen = true;
+      this.confirmOpen = true;
     });
   }
 
@@ -40,12 +58,12 @@ class E2EApp {
     });
     alert.addButton({
       text: 'Cancel',
-      handler: () => {
+      handler: data => {
         console.log('500ms delayed prompt close');
 
         setTimeout(() => {
           console.log('Prompt close');
-          alert.close();
+          alert.close(data);
         }, 500);
 
         return false;
@@ -53,21 +71,18 @@ class E2EApp {
     });
     alert.addButton({
       text: 'Ok',
-      handler: () => {
-        console.log('Prompt Ok');
+      handler: data => {
+        console.log('Prompt data:', data);
       }
     });
 
     alert.onClose(data => {
       this.promptOpen = false;
+      this.promptResult = data;
     });
 
     this.overlay.push(alert).then(() => {
       this.promptOpen = true;
     });
-  }
-
-  doConfirm() {
-
   }
 }

@@ -32,8 +32,8 @@ export class Alert extends ViewController {
     this.data.subTitle = subTitle;
   }
 
-  setBodyText(text) {
-    this.data.text = text;
+  setBody(body) {
+    this.data.body = body;
   }
 
   addInput(input) {
@@ -75,11 +75,11 @@ export class Alert extends ViewController {
         '<h2 class="alert-title" *ngIf="d.title">{{d.title}}</h2>' +
         '<h3 class="alert-sub-title" *ngIf="d.subTitle">{{d.subTitle}}</h3>' +
       '</div>' +
-      '<div class="alert-body" *ngIf="d.text">{{d.text}}</div>' +
+      '<div class="alert-body" *ngIf="d.body">{{d.body}}</div>' +
       '<div class="alert-body alert-inputs" *ngIf="d.inputs.length">' +
         '<div class="alert-input-wrapper" *ngFor="#i of d.inputs">' +
           '<div class="alert-input-title" *ngIf="i.title">{{i.title}}</div>' +
-          '<input [placeholder]="i.placeholder" [type]="i.input" [value]="i.value" class="alert-input">' +
+          '<input [placeholder]="i.placeholder" [(ngModel)]="i.input" [value]="i.value" class="alert-input">' +
         '</div>' +
       '</div>' +
       '<div class="alert-buttons">' +
@@ -112,7 +112,7 @@ class AlertCmp {
 
     if (button.handler) {
       // a handler has been provided, run it
-      if (button.handler() === false) {
+      if (button.handler(this.getValue()) === false) {
         // if the return value is a false then do not close
         shouldClose = false;
       }
@@ -127,9 +127,24 @@ class AlertCmp {
     this._viewCtrl.close();
   }
 
+  getValue() {
+    let inputs = this.d.inputs;
+    if (inputs) {
+      if (inputs.length > 1) {
+        // array of values for each input
+        return inputs.map(i => i.input);
+
+      } else if (inputs.length === 1) {
+        // single value of the one input
+        return inputs[0].input;
+      }
+    }
+    // there are no inputs
+    return null;
+  }
+
   onPageDidLeave() {
-    let values = this.d.inputs.map(i => i.value);
-    this.d.onClose && this.d.onClose(values);
+    this.d.onClose && this.d.onClose(this.getValue());
   }
 }
 
