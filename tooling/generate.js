@@ -68,7 +68,7 @@ Generate.generate = function generate(options) {
 Generate.defaultTemplates = function defaultTemplates(options) {
   var template = options.template ? options.template : 'page';
 
-  options.rootDirectory = options.rootDirectory || path.join('www', 'app');
+  options.rootDirectory = options.rootDirectory || path.join('app');
   var savePath = path.join(options.appDirectory, options.rootDirectory, options.fileName);
 
   var templates = Generate.loadGeneratorTemplates(path.join(__dirname, 'generators', options.template));
