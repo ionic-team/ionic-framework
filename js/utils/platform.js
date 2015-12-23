@@ -75,6 +75,11 @@
      * @returns {string} What grade the current platform is.
      */
     grade: null,
+    /**
+     * @ngdoc property
+     * @name ionic.Platform#ua
+     * @returns {string} What User Agent is.
+     */
     ua: navigator.userAgent,
 
     /**
