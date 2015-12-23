@@ -397,7 +397,7 @@ gulp.task('src', function(done){
   );
 })
 
-gulp.task('publish', ['src'], function(done){
+gulp.task('package', ['src'], function(done){
   var _ = require('lodash');
   var fs = require('fs');
   var distDir = 'dist';
@@ -414,7 +414,7 @@ gulp.task('publish', ['src'], function(done){
     {
       type: 'input',
       name: 'ionicVersion',
-      message: '\n\n\nWhat ionic-framework alpha version number will this be?'
+      message: '\n\nWhat ionic-framework alpha version number will this be?'
     },
     {
       type: 'input',
@@ -425,21 +425,27 @@ gulp.task('publish', ['src'], function(done){
   	var packageTemplate = _.template(fs.readFileSync('scripts/npm/package.json'));
     fs.writeFileSync(distDir + '/package.json', packageTemplate(answers));
 
-    var spawn = require('child_process').spawn;
-    var npmCmd = spawn('npm', ['publish', './' + distDir]);
-
-    npmCmd.stdout.on('data', function (data) {
-      console.log(data);
-    });
-
-    npmCmd.stderr.on('data', function (data) {
-      console.log('npm err: ' + data);
-    });
-
-    npmCmd.on('close', function() {
-      done();
-    });
+    done();
   });
+});
+
+gulp.task('publish', ['package'], function(done){
+
+  var spawn = require('child_process').spawn;
+  var npmCmd = spawn('npm', ['publish', './dist']);
+
+  npmCmd.stdout.on('data', function (data) {
+    console.log(data.toString());
+  });
+
+  npmCmd.stderr.on('data', function (data) {
+    console.log('npm err: ' + data.toString());
+  });
+
+  npmCmd.on('close', function() {
+    done();
+  });
+
 });
 
 require('./scripts/docs/gulp-tasks')(gulp, flags)

@@ -27,4 +27,12 @@ class E2EApp {
   triggerInput(searchbar) {
     console.log("Triggered input", searchbar);
   }
+
+  inputBlurred(searchbar) {
+    console.log("Blurred input", searchbar);
+  }
+
+  inputFocused(searchbar) {
+    console.log("Focused input", searchbar);
+  }
 }
