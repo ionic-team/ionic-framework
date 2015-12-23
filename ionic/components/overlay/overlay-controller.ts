@@ -1,63 +1,31 @@
-import {Animation} from '../../animations/animation';
-import {extend} from '../../util';
+import {Injectable} from 'angular2/core';
+
+import {ViewController} from '../nav/view-controller';
+import {Config} from '../../config/config';
+import {IonicApp} from '../app/app';
 
 
-/**
- * @private
- */
+@Injectable()
 export class OverlayController {
 
-  open(componentType, params = {}, opts = {}) {
-    if (!this.nav) {
-      console.error('<ion-overlay></ion-overlay> required in root template (app.html) to use: ' + opts.pageType);
-      return Promise.reject();
-    }
+  constructor(private _config: Config) {}
 
-    let resolve, reject;
-    let promise = new Promise((res, rej) => { resolve = res; reject = rej; });
-
-    opts.animation = opts.enterAnimation;
+  push(overlayView, opts={}) {
+    overlayView.setNav(this._nav);
     opts.animateFirst = true;
 
-    this.nav.push(componentType, params, opts).then(viewCtrl => {
-      if (viewCtrl && viewCtrl.instance) {
-
-        let self = this;
-        function escape(ev) {
-          if (ev.keyCode == 27 && self.nav.last() === viewCtrl) {
-            viewCtrl.instance.close();
-          }
-        }
-
-        viewCtrl.instance.close = (data, closeOpts={}) => {
-          extend(opts, closeOpts);
-          opts.animation = opts.leaveAnimation;
-          viewCtrl.instance.onClose && viewCtrl.instance.onClose(data);
-          this.nav.pop(opts);
-          document.removeEventListener('keyup', escape, true);
-        };
-
-        document.addEventListener('keyup', escape, true);
-        resolve(viewCtrl.instance);
-
-      } else {
-        reject();
-      }
-    }, rejectReason => {
-      console.error(rejectReason);
+    return new Promise(resolve => {
+      this._nav.pushView(overlayView, opts, resolve);
     });
-
-    return promise;
   }
 
-  getByType(overlayType) {
-    let overlay = this.nav.getByType(overlayType);
-    return overlay && overlay.instance;
+  pop(opts={}) {
+    opts.animateFirst = true;
+    return this._nav.pop(opts);
   }
 
-  getByHandle(handle, overlayType) {
-    let overlay = this.nav.getByHandle(handle);
-    return overlay && overlay.instance;
+  setNav(nav) {
+    this._nav = nav;
   }
 
 }

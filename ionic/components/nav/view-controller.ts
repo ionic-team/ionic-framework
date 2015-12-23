@@ -1,6 +1,5 @@
 import {NavParams} from './nav-controller';
 
-
 /**
  * @name ViewController
  * @description
@@ -18,14 +17,26 @@ import {NavParams} from './nav-controller';
  */
 export class ViewController {
 
-  constructor(navCtrl, componentType, params = {}) {
-    this.navCtrl = navCtrl;
+  constructor(navCtrl, componentType, data={}) {
+    this.setNav(navCtrl);
     this.componentType = componentType;
-    this.params = new NavParams(params);
+    this.data = data;
     this.instance = {};
     this.state = 0;
     this._destroys = [];
     this._loaded = false;
+    this.shouldDestroy = false;
+    this.shouldCache = false;
+    this.enterAnimationKey = 'pageTransition';
+    this.leaveAnimationKey = 'pageTransition';
+  }
+
+  setNav(navCtrl) {
+    this._nav = navCtrl;
+  }
+
+  getNavParams() {
+    return new NavParams(this.data);
   }
 
   /**
@@ -35,8 +46,8 @@ export class ViewController {
    */
   enableBack() {
     // update if it's possible to go back from this nav item
-    if (this.navCtrl) {
-      let previousItem = this.navCtrl.getPrevious(this);
+    if (this._nav) {
+      let previousItem = this._nav.getPrevious(this);
       // the previous view may exist, but if it's about to be destroyed
       // it shouldn't be able to go back to
       return !!(previousItem && !previousItem.shouldDestroy);
@@ -74,7 +85,7 @@ export class ViewController {
    * @returns {Number} Returns the index of this page within its NavController.
    */
   get index() {
-    return (this.navCtrl ? this.navCtrl.indexOf(this) : -1);
+    return (this._nav ? this._nav.indexOf(this) : -1);
   }
 
   /**

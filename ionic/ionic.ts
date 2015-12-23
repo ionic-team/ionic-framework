@@ -18,7 +18,6 @@ export * from './util/keyboard'
 
 export * from './animations/animation'
 
-
 export * from './translation/translate'
 export * from './translation/translate_pipe'
 

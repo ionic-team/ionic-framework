@@ -35,7 +35,7 @@ export class OverlayNav extends NavController {
     }
 
     this.initZIndex = 1000;
-    overlayCtrl.nav = this;
+    overlayCtrl.setNav(this);
   }
 
 }

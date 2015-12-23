@@ -1,0 +1,80 @@
+@import "../../globals.core";
+
+// Alerts
+// --------------------------------------------------
+
+$alert-min-width:                 250px !default;
+$alert-max-height:                90% !default;
+
+$alert-button-line-height:        20px !default;
+$alert-button-font-size:          14px !default;
+$alert-button-margin-right:       8px !default;
+
+
+ion-alert {
+  position: absolute;
+  z-index: $z-index-overlay;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  input {
+    width: 100%;
+  }
+}
+
+.alert-wrapper {
+  z-index: $z-index-overlay-wrapper;
+  min-width: $alert-min-width;
+  max-height: $alert-max-height;
+
+  display: flex;
+  flex-direction: column;
+
+  opacity: 0;
+}
+
+.alert-title {
+  margin: 0;
+  padding: 0;
+}
+
+.alert-sub-title {
+  margin: 5px 0 0 0;
+  padding: 0;
+  font-weight: normal;
+}
+
+.alert-body {
+  overflow: auto;
+
+  &:empty {
+    padding: 0;
+  }
+}
+
+.alert-input {
+  @include placeholder();
+
+  border: 0;
+  background: inherit;
+  padding: 10px 0;
+}
+
+.alert-buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+.alert-button {
+  display: block;
+  margin: 0;
+  line-height: $alert-button-line-height;
+  font-size: $alert-button-font-size;
+  margin-right: $alert-button-margin-right;
+}
