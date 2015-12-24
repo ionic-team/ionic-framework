@@ -1,16 +1,18 @@
-import {App, Alert, OverlayController} from 'ionic/ionic';
+import {App, Page, Alert, NavController} from 'ionic/ionic';
 
 
-@App({
+@Page({
   templateUrl: 'main.html'
 })
-class E2EApp {
+class E2EPage {
 
-  constructor(private overlay: OverlayController) {
-    this.alertOpen = false;
-    this.confirmOpen = false;
-    this.promptOpen = false;
-    this.promptResult = '';
+  constructor(nav: NavController) {
+    this.nav = nav;
+    this.testAlertOpen = false;
+    this.testConfirmOpen = false;
+    this.testPromptOpen = false;
+    this.testConfirmResult = '';
+    this.testPromptResult = '';
   }
 
   doAlert() {
@@ -18,34 +20,41 @@ class E2EApp {
       title: 'Alert!',
       subTitle: 'Subtitle!!!',
       buttons: ['Ok'],
-      onClose: () => {
-        this.alertOpen = false;
+      onDismiss: () => {
+        this.testAlertOpen = false;
       }
     });
 
-    this.overlay.push(alert);
+    this.nav.present(alert);
 
-    this.alertOpen = true;
+    this.testAlertOpen = true;
   }
 
   doConfirm() {
     let alert = Alert.create();
     alert.setTitle('Confirm!');
     alert.setBody('Body text!!!');
-    alert.addButton('Cancel');
+    alert.addButton({
+      text: 'Cancel',
+      handler: () => {
+        console.log('Confirm Cancel');
+        this.testConfirmResult = 'Cancel';
+      }
+    });
     alert.addButton({
       text: 'Ok',
       handler: () => {
         console.log('Confirm Ok');
+        this.testConfirmResult = 'Ok';
       }
     });
 
-    alert.onClose(data => {
-      this.confirmOpen = false;
+    alert.onDismiss(data => {
+      this.testConfirmOpen = false;
     });
 
-    this.overlay.push(alert).then(() => {
-      this.confirmOpen = true;
+    this.nav.present(alert).then(() => {
+      this.testConfirmOpen = true;
     });
   }
 
@@ -53,8 +62,13 @@ class E2EApp {
     let alert = Alert.create();
     alert.setTitle('Prompt!');
     alert.addInput({
-      label: 'Input Label',
-      placeholder: 'Placeholder'
+      placeholder: 'Placeholder 1'
+    });
+    alert.addInput({
+      name: 'name2',
+      value: 'hello',
+      label: 'Input Label 2',
+      placeholder: 'Placeholder 2'
     });
     alert.addButton({
       text: 'Cancel',
@@ -76,13 +90,24 @@ class E2EApp {
       }
     });
 
-    alert.onClose(data => {
-      this.promptOpen = false;
-      this.promptResult = data;
+    alert.onDismiss(data => {
+      this.testPromptOpen = false;
+      this.testPromptResult = data;
     });
 
-    this.overlay.push(alert).then(() => {
-      this.promptOpen = true;
+    this.nav.present(alert).then(() => {
+      this.testPromptOpen = true;
     });
+  }
+
+}
+
+
+@App({
+  template: '<ion-nav [root]="root"></ion-nav>'
+})
+class E2EApp {
+  constructor() {
+    this.root = E2EPage;
   }
 }

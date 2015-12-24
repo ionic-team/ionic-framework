@@ -245,37 +245,16 @@ export class NavController extends Ion {
       return Promise.reject('nav controller actively transitioning');
     }
 
+    this.setTransitioning(true, 500);
+
     let promise = null;
     if (!callback) {
       promise = new Promise(res => { callback = res; });
     }
 
-    // create a new ViewController
-    let enteringView = new ViewController(this, componentType, params);
-    enteringView.pageType = opts.pageType;
-    enteringView.handle = opts.handle || null;
-
-    this.pushView(enteringView, opts, callback);
-
-    return promise;
-  }
-
-  /**
-   * @private
-   */
-  pushView(enteringView, opts, callback) {
-    this.setTransitioning(true, 500);
-
     // do not animate if this is the first in the stack
     if (!this._views.length && !opts.animateFirst) {
       opts.animate = false;
-    }
-
-    // default the direction to "forward"
-    opts.direction = opts.direction || 'forward';
-
-    if (!opts.animation) {
-      opts.animation = this.config.get(enteringView.enterAnimationKey);
     }
 
     // the active view is going to be the leaving one (if one exists)
@@ -286,16 +265,78 @@ export class NavController extends Ion {
       leavingView.willUnload();
     }
 
+    // create a new ViewController
+    let enteringView = new ViewController(componentType, params);
+    enteringView.setNav(this);
+    enteringView.pageType = opts.pageType;
+    enteringView.handle = opts.handle || null;
+
+    // default the direction to "forward"
+    opts.direction = opts.direction || 'forward';
+
+    if (!opts.animation) {
+      opts.animation = enteringView.getTransitionName(opts.direction);
+    }
+
     // add the view to the stack
     this._add(enteringView);
 
     if (this.router) {
       // notify router of the state change
-      this.router.stateChange('push', enteringView, enteringView.params);
+      this.router.stateChange('push', enteringView, params);
     }
 
     // start the transition
     this._transition(enteringView, leavingView, opts, callback);
+
+    return promise;
+  }
+
+  present(enteringView, opts={}) {
+    enteringView.setNav(this);
+
+    let resolve;
+    let promise = new Promise(res => { resolve = res; });
+
+    opts.keyboardClose = false;
+    opts.skipCache = true;
+    opts.direction = 'forward';
+
+    if (!opts.animation) {
+      opts.animation = enteringView.getTransitionName(opts.direction);
+    }
+
+    // the active view is going to be the leaving one (if one exists)
+    let leavingView = this.getActive() || new ViewController();
+    leavingView.shouldCache = (isBoolean(opts.cacheLeavingView) ? opts.cacheLeavingView : true);
+    leavingView.shouldDestroy = !leavingView.shouldCache;
+    if (leavingView.shouldDestroy) {
+      leavingView.willUnload();
+    }
+
+    let rootNav = this.rootNav;
+
+    // add the view to the stack
+    rootNav._add(enteringView);
+
+    // start the transition
+    rootNav._transition(enteringView, leavingView, opts, resolve);
+
+    return promise;
+  }
+
+  dismiss(leavingView, opts={}) {
+    opts.skipCache = true;
+    opts.direction ='back';
+
+    if (!opts.animation) {
+      opts.animation = leavingView.getTransitionName(opts.direction);
+    }
+
+    let rootNav = this.rootNav;
+
+    let index = rootNav.indexOf(leavingView);
+    return rootNav.remove(index, opts);
   }
 
   /**
@@ -330,9 +371,6 @@ export class NavController extends Ion {
     let resolve = null;
     let promise = new Promise(res => { resolve = res; });
 
-    // default the direction to "back"
-    opts.direction = opts.direction || 'back';
-
     // get the active view and set that it is staged to be leaving
     // was probably the one popped from the stack
     let leavingView = this.getActive() || new ViewController();
@@ -342,10 +380,6 @@ export class NavController extends Ion {
       leavingView.willUnload();
     }
 
-    if (!opts.animation) {
-      opts.animation = this.config.get(leavingView.leaveAnimationKey);
-    }
-
     // the entering view is now the new last view
     // Note: we might not have an entering view if this is the
     // only view on the history stack.
@@ -353,6 +387,13 @@ export class NavController extends Ion {
     if (this.router) {
       // notify router of the state change
       this.router.stateChange('pop', enteringView);
+    }
+
+    // default the direction to "back"
+    opts.direction = opts.direction || 'back';
+
+    if (!opts.animation) {
+      opts.animation = leavingView.getTransitionName(opts.direction);
     }
 
     // start the transition
@@ -382,7 +423,11 @@ export class NavController extends Ion {
 
     let resolve = null;
     let promise = new Promise(res => { resolve = res; });
+
     opts.direction = opts.direction || 'back';
+    if (!opts.animation) {
+      opts.animation = viewCtrl.getTransitionName(opts.direction);
+    }
 
     let leavingView = this.getActive() || new ViewController();
 
@@ -451,7 +496,8 @@ export class NavController extends Ion {
     }
 
     // create new ViewController, but don't render yet
-    let viewCtrl = new ViewController(this, componentType, params);
+    let viewCtrl = new ViewController(componentType, params);
+    viewCtrl.setNav(this);
     viewCtrl.state = CACHED_STATE;
     viewCtrl.shouldDestroy = false;
     viewCtrl.shouldCache = false;
@@ -625,7 +671,8 @@ export class NavController extends Ion {
           // could be an object with a componentType property, or it is a componentType
           componentType = componentObj.componentType || componentObj;
 
-          viewCtrl = new ViewController(this, componentType, componentObj.params);
+          viewCtrl = new ViewController(componentType, componentObj.params);
+          viewCtrl.setNav(this);
           viewCtrl.state = CACHED_STATE;
           viewCtrl.shouldDestroy = false;
           viewCtrl.shouldCache = false;
@@ -760,7 +807,7 @@ export class NavController extends Ion {
       // make sure the entering and leaving views are showing
       // and all others are hidden, but don't remove the leaving view yet
       // DOM WRITE
-      this._cleanup(enteringView, leavingView, true);
+      this._cleanup(enteringView, leavingView, true, opts.skipCache);
 
       // lifecycle events may have updated some data
       // wait one frame and allow the raf to do a change detection
@@ -858,7 +905,7 @@ export class NavController extends Ion {
         leavingView.didLeave();
       }
 
-      if (this.keyboard.isOpen()) {
+      if (opts.keyboardClose !== false && this.keyboard.isOpen()) {
         // the keyboard is still open!
         // no problem, let's just close for them
         this.keyboard.close();
@@ -1038,7 +1085,7 @@ export class NavController extends Ion {
   /**
    * @private
    */
-  _cleanup(activeView, previousView, skipDestroy) {
+  _cleanup(activeView, previousView, skipDestroy, skipCache) {
     // the active page, and the previous page, should be rendered in dom and ready to go
     // all others, like a cached page 2 back, should be display: none and not rendered
     let destroys = [];
@@ -1050,7 +1097,7 @@ export class NavController extends Ion {
         if (view.shouldDestroy && !skipDestroy) {
           destroys.push(view);
 
-        } else if (view.isLoaded()) {
+        } else if (view.isLoaded() && !skipCache) {
           let shouldShow = (view === activeView) || (view === previousView);
           this._cachePage(view, shouldShow);
         }

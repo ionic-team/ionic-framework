@@ -1,7 +1,7 @@
 import {Component, ElementRef, Renderer} from 'angular2/core';
 import {NgClass, NgIf, NgFor, FORM_DIRECTIVES} from 'angular2/common';
 
-import {NavParams} from '../nav/nav-controller';
+import {NavController, NavParams} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
 import {Animation} from '../../animations/animation';
 import {Button} from '../button/button';
@@ -11,17 +11,15 @@ import {extend, isDefined} from '../../util/util';
 export class Alert extends ViewController {
 
   constructor(opts={}) {
-    super(null, AlertCmp, opts);
+    super(AlertCmp, opts);
 
     this.data.inputs = this.data.inputs || [];
-    let buttons = this.data.buttons || [];
-    this.data.buttons = [];
-    for (let button of buttons) {
-      this.addButton(button);
-    }
+    this.data.buttons = this.data.buttons || [];
+  }
 
-    this.enterAnimationKey = 'alertEnter';
-    this.leaveAnimationKey = 'alertLeave';
+  getTransitionName(direction) {
+    let key = (direction === 'back' ? 'alertLeave' : 'alertEnter');
+    return this._nav.config.get(key);
   }
 
   setTitle(title) {
@@ -37,26 +35,19 @@ export class Alert extends ViewController {
   }
 
   addInput(input) {
-    input.value = isDefined(input.value) ? input.value : '';
     this.data.inputs.push(input);
   }
 
   addButton(button) {
-    if (typeof button === 'string') {
-      button = {
-        text: button
-      };
-    }
     this.data.buttons.push(button);
   }
 
-  close() {
-    let index = this._nav.indexOf(this);
-    this._nav.remove(index, { animateFirst: true });
+  onDismiss(handler) {
+    this.data.onDismiss = handler;
   }
 
-  onClose(handler) {
-    this.data.onClose = handler;
+  dismiss() {
+    this._nav.dismiss(this);
   }
 
   static create(opts={}) {
@@ -69,7 +60,7 @@ export class Alert extends ViewController {
 @Component({
   selector: 'ion-alert',
   template:
-    '<div (click)="close()" tappable disable-activated class="backdrop" role="presentation"></div>' +
+    '<div (click)="dismiss()" tappable disable-activated class="backdrop" role="presentation"></div>' +
     '<div class="alert-wrapper">' +
       '<div class="alert-head">' +
         '<h2 class="alert-title" *ngIf="d.title">{{d.title}}</h2>' +
@@ -78,8 +69,8 @@ export class Alert extends ViewController {
       '<div class="alert-body" *ngIf="d.body">{{d.body}}</div>' +
       '<div class="alert-body alert-inputs" *ngIf="d.inputs.length">' +
         '<div class="alert-input-wrapper" *ngFor="#i of d.inputs">' +
-          '<div class="alert-input-title" *ngIf="i.title">{{i.title}}</div>' +
-          '<input [placeholder]="i.placeholder" [(ngModel)]="i.input" [value]="i.value" class="alert-input">' +
+          '<div class="alert-input-label" *ngIf="i.label">{{i.label}}</div>' +
+          '<input [placeholder]="i.placeholder" [(ngModel)]="i.value" [type]="i.type" class="alert-input">' +
         '</div>' +
       '</div>' +
       '<div class="alert-buttons">' +
@@ -97,54 +88,93 @@ class AlertCmp {
 
   constructor(
     private _viewCtrl: ViewController,
-    elementRef: ElementRef,
+    private _elementRef: ElementRef,
     params: NavParams,
     renderer: Renderer
   ) {
     this.d = params.data;
     if (this.d.cssClass) {
-      renderer.setElementClass(elementRef, this.d.cssClass, true);
+      renderer.setElementClass(_elementRef, this.d.cssClass, true);
     }
   }
 
-  click(button, ev) {
-    let shouldClose = true;
+  click(button) {
+    let shouldDismiss = true;
 
     if (button.handler) {
       // a handler has been provided, run it
-      if (button.handler(this.getValue()) === false) {
+      if (button.handler(this.getValues()) === false) {
         // if the return value is a false then do not close
-        shouldClose = false;
+        shouldDismiss = false;
       }
     }
 
-    if (shouldClose) {
-      this.close();
+    if (shouldDismiss) {
+      this.dismiss();
     }
   }
 
-  close() {
-    this._viewCtrl.close();
+  dismiss() {
+    this._viewCtrl.dismiss(this);
   }
 
-  getValue() {
-    let inputs = this.d.inputs;
-    if (inputs) {
-      if (inputs.length > 1) {
-        // array of values for each input
-        return inputs.map(i => i.input);
+  getValues() {
+    let values = {};
+    this.d.inputs.forEach(input => {
+      values[input.name] = input.value;
+    });
+    return values;
+  }
 
-      } else if (inputs.length === 1) {
-        // single value of the one input
-        return inputs[0].input;
+  onPageWillEnter() {
+    // normalize the data
+    this.d.buttons = this.d.buttons.map(button => {
+      if (typeof button === 'string') {
+        return { text: button };
+      }
+      return button;
+    });
+
+    this.d.inputs = this.d.inputs.map((input, index) => {
+      return {
+        name: input.name || index,
+        label: input.label,
+        placeholder: input.placeholder || '',
+        type: input.type || 'text',
+        value: isDefined(input.value) ? input.value : ''
+      }
+    });
+
+    let self = this;
+    self.keyUp = function(ev) {
+      if (ev.keyCode === 13) {
+        // enter
+        console.debug('alert enter');
+        let button = self.d.buttons[self.d.buttons.length - 1];
+        self.click(button);
+
+      } else if (ev.keyCode === 27) {
+        console.debug('alert escape');
+        self.dismiss();
+      }
+    };
+
+    document.addEventListener('keyup', this.keyUp);
+  }
+
+  onPageDidEnter() {
+    document.activeElement && document.activeElement.blur();
+    if (this.d.inputs.length) {
+      let firstInput = this._elementRef.nativeElement.querySelector('input');
+      if (firstInput) {
+        firstInput.focus();
       }
     }
-    // there are no inputs
-    return null;
   }
 
   onPageDidLeave() {
-    this.d.onClose && this.d.onClose(this.getValue());
+    this.d.onDismiss && this.d.onDismiss(this.getValues());
+    document.removeEventListener('keyup', this.keyUp);
   }
 }
 

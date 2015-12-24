@@ -1,7 +1,6 @@
 import {Component, Injectable, Renderer} from 'angular2/core';
 import {NgFor, NgIf} from 'angular2/common';
 
-import {OverlayController} from '../overlay/overlay-controller';
 import {Config} from '../../config/config';
 import {Icon} from '../icon/icon';
 import {Animation} from '../../animations/animation';
@@ -109,8 +108,8 @@ class ActionSheetCmp {
 @Injectable()
 export class ActionSheet {
 
-  constructor(ctrl: OverlayController, config: Config) {
-    this.ctrl = ctrl;
+  constructor(config: Config) {
+    //this.ctrl = ctrl;
     this.config = config;
   }
 

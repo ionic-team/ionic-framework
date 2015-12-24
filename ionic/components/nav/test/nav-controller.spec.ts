@@ -222,8 +222,8 @@ export function run() {
     describe("first", () => {
       it('should get the first item', () => {
         let vc1 = new ViewController(),
-            vc2 = new ViewController(null, FirstPage),
-            vc3 = new ViewController(null, SecondPage);
+            vc2 = new ViewController(FirstPage),
+            vc3 = new ViewController(SecondPage);
         nav._views = [vc1, vc2, vc3];
 
         expect(nav.first()).toBe(vc1);
@@ -241,9 +241,9 @@ export function run() {
 
     describe("popTo", () => {
       it('should popTo 1st view', () => {
-        let vc1 = new ViewController(null, FirstPage),
-            vc2 = new ViewController(null, SecondPage),
-            vc3 = new ViewController(null, ThirdPage);
+        let vc1 = new ViewController(FirstPage),
+            vc2 = new ViewController(SecondPage),
+            vc3 = new ViewController(ThirdPage);
         nav._views = [vc1, vc2, vc3];
 
         nav._transition = mockTransitionFn;
@@ -257,8 +257,8 @@ export function run() {
     describe("remove", () => {
       it('should remove the view at the specified index', () => {
         let vc1 = new ViewController(),
-            vc2 = new ViewController(null, FirstPage),
-            vc3 = new ViewController(null, SecondPage);
+            vc2 = new ViewController(FirstPage),
+            vc3 = new ViewController(SecondPage);
         nav._views = [vc1, vc2, vc3];
         expect(nav._views.length).toBe(3);
         expect(nav._views[1].componentType).toBe(FirstPage);
@@ -271,8 +271,8 @@ export function run() {
 
       it('should pop if index is of active view', () => {
         let vc1 = new ViewController(),
-            vc2 = new ViewController(null, FirstPage),
-            vc3 = new ViewController(null, SecondPage);
+            vc2 = new ViewController(FirstPage),
+            vc3 = new ViewController(SecondPage);
 
         vc3.state = 1; //ACTIVE_STATE
         nav._views = [vc1, vc2, vc3];

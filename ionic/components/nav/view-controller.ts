@@ -17,8 +17,7 @@ import {NavParams} from './nav-controller';
  */
 export class ViewController {
 
-  constructor(navCtrl, componentType, data={}) {
-    this.setNav(navCtrl);
+  constructor(componentType, data={}) {
     this.componentType = componentType;
     this.data = data;
     this.instance = {};
@@ -27,12 +26,14 @@ export class ViewController {
     this._loaded = false;
     this.shouldDestroy = false;
     this.shouldCache = false;
-    this.enterAnimationKey = 'pageTransition';
-    this.leaveAnimationKey = 'pageTransition';
   }
 
   setNav(navCtrl) {
     this._nav = navCtrl;
+  }
+
+  getTransitionName(direction) {
+    return this._nav && this._nav.config.get('pageTransition');
   }
 
   getNavParams() {
