@@ -46,11 +46,14 @@ export class SearchbarInput {
  * @property {boolean} [hideCancelButton=false] - Hides the cancel button
  * @property {string} [placeholder=Search] - Sets input placeholder to the value passed in
  *
- * @property {Any} [input] - Expression to evaluate when the Searchbar input has changed
+ * @property {Any} [input] - Expression to evaluate when the Searchbar input has changed including cleared
+ * @property {Any} [keydown] - Expression to evaluate when a key is pushed down in the Searchbar input
+ * @property {Any} [keypress] - Expression to evaluate when a character is inserted in the Searchbar input
+ * @property {Any} [keyup] - Expression to evaluate when a key is released in the Searchbar input
  * @property {Any} [blur] - Expression to evaluate when the Searchbar input has blurred
  * @property {Any} [focus] - Expression to evaluate when the Searchbar input has focused
- * @property {Any} [cancel] - Expression to evaluate when the cancel button is clicked.
- * @property {Any} [clear] - Expression to evaluate when the clear input button is clicked.
+ * @property {Any} [cancel] - Expression to evaluate when the cancel button is clicked
+ * @property {Any} [clear] - Expression to evaluate when the clear input button is clicked
  *
  * @see {@link /docs/v2/components#search Search Component Docs}
  */
@@ -86,19 +89,7 @@ export class Searchbar extends Ion {
   blurInput: boolean = true;
 
   @HostBinding('class.searchbar-focused') isFocused;
-
   @HostBinding('class.searchbar-left-aligned') shouldLeftAlign;
-
-  @HostListener('keyup', ['$event'])
-  /**
-   * @private
-   * Update the Searchbar input value when the input changes
-   */
-  private inputChanged(ev) {
-    this.value = ev.target.value;
-    this.onChange(this.value);
-    this.input.emit(this);
-  }
 
   constructor(
     elementRef: ElementRef,
@@ -148,6 +139,16 @@ export class Searchbar extends Ion {
 
   /**
    * @private
+   * Update the Searchbar input value when the input changes
+   */
+  inputChanged(ev) {
+    this.value = ev.target.value;
+    this.onChange(this.value);
+    this.input.emit(this);
+  }
+
+  /**
+   * @private
    * Sets the Searchbar to focused and aligned left on input focus.
    */
   inputFocused() {
@@ -171,7 +172,7 @@ export class Searchbar extends Ion {
       return;
     }
     this.blur.emit(this);
-    
+
     this.isFocused = false;
     this.shouldLeftAlign = this.value && this.value.trim() != '';
   }
@@ -185,6 +186,8 @@ export class Searchbar extends Ion {
 
     this.value = '';
     this.onChange(this.value);
+    this.input.emit(this);
+    
     this.blurInput = false;
   }
 
