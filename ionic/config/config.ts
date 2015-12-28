@@ -90,7 +90,7 @@ import {isObject, isDefined, isFunction, isArray, extend} from '../util/util';
  * | pageTransitionDelay        | 16                     | 120                       |
  * | popupEnter                 | popup-pop-in           | popup-md-pop-in           |
  * | popupLeave                 | popup-pop-out          | popup-md-pop-out          |
- * | tabbarPlacement            | bottom                 | true                      |
+ * | tabbarPlacement            | bottom                 | top                       |
  * | tabbarHighlight            |                        | top                       |
  * | tabSubPage                 |                        | true                      |
  *
