@@ -772,8 +772,6 @@ function inlineStyle(ele, effect) {
     if (transforms.length) {
       transforms.push('translateZ(0px)');
       ele.style[CSS.transform] = transforms.join(' ');
-    } else {
-      ele.style[CSS.transform] = 'translateZ(0px)';
     }
   }
 }
