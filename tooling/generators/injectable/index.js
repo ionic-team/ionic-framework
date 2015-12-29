@@ -1,27 +1,23 @@
-// var fs = require('fs'),
-//     Generator = module.exports,
-//     Generate = require('../../generate'),
-//     path = require('path'),
-//     Q = require('q');
-// /*
-//     @options
-//       name: Page name
-//       appDirectory: App directory of where to save file
-// */
-// Generator.run = function run(options) {
+var fs = require('fs'),
+    Generator = module.exports,
+    Generate = require('../../generate'),
+    path = require('path'),
+    Q = require('q');
 
-//   options.rootDirectory = options.rootDirectory || path.join('www', 'app');
-//   var savePath = path.join(options.appDirectory, options.rootDirectory, options.fileAndClassName);
+Generator.run = function run(options) {
+  Generate.createScaffoldDirectories({appDirectory: options.appDirectory, componentDirectory: 'injectables', fileName: options.fileName});
 
-//   var templates = Generate.loadGeneratorTemplates(__dirname);
+  options.rootDirectory = options.rootDirectory || path.join('app', 'injectables');
+  var savePath = path.join(options.appDirectory, options.rootDirectory, options.fileName);
 
-//   templates.forEach(function(template) {
-//     var templatePath = path.join(__dirname, template.file);
-//     options.templatePath = templatePath;
-//     var renderedTemplate = Generate.renderTemplateFromFile(options);
-//     var saveFilePath = path.join(savePath, [options.fileAndClassName, template.type].join(''));
-//     // console.log('renderedTemplate', renderedTemplate, 'saving to', saveFilePath);
-//     console.log('√ Create'.blue, path.relative(options.appDirectory, saveFilePath));
-//     fs.writeFileSync(saveFilePath, renderedTemplate);
-//   });
-// };
+  var templates = Generate.loadGeneratorTemplates(__dirname);
+
+  templates.forEach(function(template) {
+    options.templatePath = template.file;
+    var renderedTemplate = Generate.renderTemplateFromFile(options);
+    var saveFilePath = path.join(savePath, [options.fileName, template.type].join(''));
+    // console.log('renderedTemplate', renderedTemplate, 'saving to', saveFilePath);
+    console.log('√ Create'.blue, path.relative(options.appDirectory, saveFilePath));
+    fs.writeFileSync(saveFilePath, renderedTemplate);
+  });
+};
