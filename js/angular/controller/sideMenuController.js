@@ -304,7 +304,6 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
 
     isAsideExposed = shouldExposeAside;
     if ((self.left && self.left.isEnabled) && (self.right && self.right.isEnabled)) {
-      console.log('Setting left and right');
       self.content.setMarginLeftAndRight(isAsideExposed ? self.left.width : 0, isAsideExposed ? self.right.width : 0);
     } else if (self.left && self.left.isEnabled) {
       // set the left marget width if it should be exposed
@@ -359,7 +358,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
 
     if (isDragging) {
       self.openAmount(offsetX + (lastX - startX));
-      self.content.setCanScroll(false);
+      //self.content.setCanScroll(false);
     }
   };
 

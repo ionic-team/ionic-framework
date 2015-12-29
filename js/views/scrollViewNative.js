@@ -451,7 +451,7 @@
       };
 
       self.handleTouchMove = function(e) {
-        if(self.__frozen || self.__frozenShut) {
+        if(self.__frozenShut) {
           e.preventDefault();
           e.stopPropagation();
           return false;
