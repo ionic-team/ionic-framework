@@ -54,6 +54,10 @@ function($animate, $timeout) {
 
       this.update = function() {
         $timeout(function() {
+          if(!_this.__slider) {
+            return;
+          }
+          
           _this.__slider.update();
           if (_this._options.loop) {
             _this.__slider.createLoop();
