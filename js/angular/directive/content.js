@@ -159,6 +159,8 @@ function($timeout, $controller, $ionicBind, $ionicConfig) {
             scrollViewOptions: scrollViewOptions
           });
 
+          $scope.scrollCtrl = scrollCtrl;
+
           $scope.$on('$destroy', function() {
             if (scrollViewOptions) {
               scrollViewOptions.scrollingComplete = noop;

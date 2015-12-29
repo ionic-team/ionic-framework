@@ -133,6 +133,22 @@ function($timeout, $ionicGesture, $window) {
           element: element[0],
           onDrag: function() {},
           endDrag: function() {},
+          setCanScroll: function(canScroll) {
+            var c = $element[0].querySelector('.scroll');
+
+            if(!c) {
+              return;
+            }
+
+            var content = angular.element(c.parentElement);
+            if(!content) {
+              return;
+            }
+
+            // freeze our scroll container if we have one
+            var scrollScope = content.scope();
+            scrollScope.scrollCtrl && scrollScope.scrollCtrl.freezeScrollShut(!canScroll);
+          },
           getTranslateX: function() {
             return $scope.sideMenuContentTranslateX || 0;
           },

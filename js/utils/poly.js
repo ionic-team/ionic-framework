@@ -6,6 +6,8 @@
   ionic.CSS.TRANSITION = [];
   ionic.CSS.TRANSFORM = [];
 
+  ionic.EVENTS = {};
+
   (function() {
 
     // transform
@@ -39,6 +41,29 @@
 
     // To be sure transitionend works everywhere, include *both* the webkit and non-webkit events
     ionic.CSS.TRANSITIONEND = (isWebkit ? 'webkitTransitionEnd ' : '') + 'transitionend';
+  })();
+
+  (function() {
+      var touchStartEvent = 'touchstart'
+      var touchMoveEvent = 'touchmove'
+      var touchEndEvent = 'touchend'
+      var touchCancelEvent = 'touchcancel'
+      if (window.navigator.pointerEnabled) {
+        touchStartEvent = 'pointerdown';
+        touchMoveEvent = 'pointermove';
+        touchEndEvent = 'pointerup';
+        touchCancelEvent = 'pointercancel';
+      } else if (window.navigator.msPointerEnabled) {
+        touchStartEvent = 'MSPointerDown';
+        touchMoveEvent = 'MSPointerMove';
+        touchEndEvent = 'MSPointerUp';
+        touchCancelEvent = 'MSPointerCancel';
+      }
+
+      ionic.EVENTS.touchstart = touchStartEvent;
+      ionic.EVENTS.touchmove = touchMoveEvent;
+      ionic.EVENTS.touchend = touchEndEvent;
+      ionic.EVENTS.touchcancel = touchCancelEvent;
   })();
 
   // classList polyfill for them older Androids

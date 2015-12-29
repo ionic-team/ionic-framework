@@ -9,6 +9,8 @@
       var self = this;
       self.__container = self.el = options.el;
       self.__content = options.el.firstElementChild;
+      // Whether scrolling is frozen or not
+      self.__frozen = false;
       self.isNative = true;
 
       self.__scrollTop = self.el.scrollTop;
@@ -60,7 +62,13 @@
         }, 80);
       };
 
-      self.freeze = NOOP;
+      self.freeze = function(shouldFreeze) {
+        self.__frozen = shouldFreeze;
+      };
+      // A more powerful freeze pop that dominates all other freeze pops
+      self.freezeShut = function(shouldFreezeShut) {
+        self.__frozenShut = shouldFreezeShut;
+      };
 
       self.__initEventHandlers();
     },
@@ -442,11 +450,22 @@
         self.resize();
       };
 
+      self.handleTouchMove = function(e) {
+        if(self.__frozen || self.__frozenShut) {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
+      }
+
       container.addEventListener('scroll', self.onScroll);
 
       //Broadcasted when keyboard is shown on some platforms.
       //See js/utils/keyboard.js
       container.addEventListener('scrollChildIntoView', self.scrollChildIntoView);
+
+      container.addEventListener(ionic.EVENTS.touchstart, self.handleTouchMove);
+      container.addEventListener(ionic.EVENTS.touchmove, self.handleTouchMove);
 
       // Listen on document because container may not have had the last
       // keyboardActiveElement, for example after closing a modal with a focused
@@ -465,6 +484,9 @@
 
       container.removeEventListener('scrollChildIntoView', self.scrollChildIntoView);
       container.removeEventListener('resetScrollView', self.resetScrollView);
+
+      container.removeEventListener(ionic.EVENTS.touchstart, self.handleTouchMove);
+      container.removeEventListener(ionic.EVENTS.touchmove, self.handleTouchMove);
 
       ionic.tap.removeClonedInputs(container, self);
 

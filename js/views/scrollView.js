@@ -411,6 +411,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
       return self.options.freeze;
     };
 
+    // We can just use the standard freeze pop in our mouth
+    self.freezeShut = self.freeze;
+
     self.setScrollStart = function() {
       ionic.scroll.isScrolling = Math.abs(ionic.scroll.lastTop - self.__scrollTop) > 1;
       clearTimeout(self.scrollTimer);

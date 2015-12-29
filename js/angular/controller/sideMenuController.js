@@ -157,9 +157,10 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
     // equal 0, otherwise remove the class from the body element
     $ionicBody.enableClass((percentage !== 0), 'menu-open');
 
-    freezeAllScrolls(false);
+    self.content.setCanScroll(percentage == 0);
   };
 
+  /*
   function freezeAllScrolls(shouldFreeze) {
     if (shouldFreeze && !self.isScrollFreeze) {
       $ionicScrollDelegate.freezeAllScrolls(shouldFreeze);
@@ -169,6 +170,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
     }
     self.isScrollFreeze = shouldFreeze;
   }
+  */
 
   /**
    * Open the menu the given pixel amount.
@@ -320,8 +322,6 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
 
   // End a drag with the given event
   self._endDrag = function(e) {
-    freezeAllScrolls(false);
-
     if (isAsideExposed) return;
 
     if (isDragging) {
@@ -359,7 +359,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
 
     if (isDragging) {
       self.openAmount(offsetX + (lastX - startX));
-      freezeAllScrolls(true);
+      self.content.setCanScroll(false);
     }
   };
 
@@ -443,7 +443,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
     }
 
     // ensure scrolls are unfrozen
-    freezeAllScrolls(false);
+    self.content.setCanScroll(true);
   });
 
   self.initialize({
