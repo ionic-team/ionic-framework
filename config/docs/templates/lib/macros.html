@@ -41,7 +41,7 @@
 <@ endmacro -@>
 
 <@- macro functionSyntax(fn) @>
-<@- set sep = joiner(', ') -@>
+<@- set sep = joiner(',&nbsp;') -@>
 <code><$ fn.name $>(<@- for param in fn.params @><$ sep() $>
   <@- if param.type.optional @>[<@ endif -@>
   <$ param.name $>
