@@ -20,12 +20,12 @@ class MyApp {
     this.appType = 'free';
   }
 
-  onSegmentChanged(value) {
-    console.log("Segment changed to", value);
+  onSegmentChanged(segmentButton) {
+    console.log("Segment changed to", segmentButton.value);
   }
 
-  onSegmentClicked(value) {
-    console.log("Segment clicked", value);
+  onSegmentSelected(segmentButton) {
+    console.log("Segment selected", segmentButton.value);
   }
 
   doSubmit(event) {

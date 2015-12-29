@@ -55,7 +55,7 @@ import {isDefined} from '../../util/util';
 })
 export class SegmentButton {
   @Input() value: string;
-  @Output() select: EventEmitter<any> = new EventEmitter();
+  @Output() select: EventEmitter<SegmentButton> = new EventEmitter();
 
   constructor(private _renderer: Renderer, private _elementRef: ElementRef) {}
 
@@ -131,8 +131,8 @@ export class SegmentButton {
   selector: 'ion-segment'
 })
 export class Segment {
-  @Output() change: EventEmitter<any> = new EventEmitter();
   @ContentChildren(SegmentButton) _buttons;
+  @Output() change: EventEmitter<SegmentButton> = new EventEmitter();
   value: any;
 
   constructor(
@@ -169,7 +169,7 @@ export class Segment {
      button.select.subscribe((selectedButton) => {
        this.writeValue(selectedButton.value);
        this.onChange(selectedButton.value);
-       this.change.emit(selectedButton.value);
+       this.change.emit(selectedButton);
      });
 
      if (isDefined(this.value)) {
