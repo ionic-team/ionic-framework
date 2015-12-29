@@ -48,7 +48,7 @@
       var touchMoveEvent = 'touchmove';
       var touchEndEvent = 'touchend';
       var touchCancelEvent = 'touchcancel';
-      
+
       if (window.navigator.pointerEnabled) {
         touchStartEvent = 'pointerdown';
         touchMoveEvent = 'pointermove';
