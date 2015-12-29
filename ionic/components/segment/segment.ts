@@ -66,7 +66,7 @@ export class SegmentButton {
   @HostListener('click', ['$event'])
   private onClick(ev) {
     console.debug('SegmentButton, select', this.value);
-    this.select.emit(ev, this.value);
+    this.select.emit(this);
   }
 
   ngOnInit() {
@@ -166,10 +166,10 @@ export class Segment {
   ngAfterViewInit() {
    let buttons = this._buttons.toArray();
    for (let button of buttons) {
-     button.select.subscribe(() => {
-       this.writeValue(button.value);
-       this.onChange(button.value);
-       this.change.emit(this.value);
+     button.select.subscribe((selectedButton) => {
+       this.writeValue(selectedButton.value);
+       this.onChange(selectedButton.value);
+       this.change.emit(selectedButton.value);
      });
 
      if (isDefined(this.value)) {
