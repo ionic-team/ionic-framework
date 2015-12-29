@@ -55,7 +55,7 @@ export class SearchbarInput {
  * @property {Any} [cancel] - Expression to evaluate when the cancel button is clicked
  * @property {Any} [clear] - Expression to evaluate when the clear input button is clicked
  *
- * @see {@link /docs/v2/components#search Search Component Docs}
+ * @see {@link /docs/v2/components#searchbar Searchbar Component Docs}
  */
 @Component({
   selector: 'ion-searchbar',
@@ -148,6 +148,11 @@ export class Searchbar extends Ion {
     this.onChange(this.value);
 
     this.shouldLeftAlign = this.value && this.value.trim() != '';
+
+    // Using querySelector instead of searchbarInput because at this point it doesn't exist
+    this.inputElement = this.elementRef.nativeElement.querySelector('.searchbar-input');
+    this.searchIconElement = this.elementRef.nativeElement.querySelector('.searchbar-search-icon');
+    this.setElementLeft();
   }
 
   /**
@@ -162,6 +167,44 @@ export class Searchbar extends Ion {
       this.value = '';
       this.onChange(this.value);
     }
+  }
+
+  /**
+   * @private
+   * Determines whether or not to add style to the element
+   * to center it properly
+   */
+  setElementLeft() {
+    if (this.shouldLeftAlign) {
+      this.inputElement.removeAttribute("style");
+      this.searchIconElement.removeAttribute("style");
+    } else {
+      this.addElementLeft();
+    }
+  }
+
+  /**
+   * @private
+   * Calculates the amount of padding/margin left for the elements
+   * in order to center them based on the placeholder width
+   */
+  addElementLeft() {
+    // Create a dummy span to get the placeholder width
+    let tempSpan = document.createElement('span');
+    tempSpan.innerHTML = this.placeholder;
+    document.body.appendChild(tempSpan);
+
+    // Get the width of the span then remove it
+    let textWidth = tempSpan.offsetWidth;
+    tempSpan.remove();
+
+    // Set the input padding left
+    let inputLeft = "calc(50% - " + (textWidth / 2) + "px)";
+    this.inputElement.style.paddingLeft = inputLeft;
+
+    // Set the icon margin left
+    let iconLeft = "calc(50% - " + ((textWidth / 2) + this.searchIconElement.offsetWidth + 15) + "px)";
+    this.searchIconElement.style.marginLeft = iconLeft;
   }
 
   /**
@@ -183,6 +226,7 @@ export class Searchbar extends Ion {
 
     this.isFocused = true;
     this.shouldLeftAlign = true;
+    this.setElementLeft();
   }
 
   /**
@@ -202,6 +246,7 @@ export class Searchbar extends Ion {
 
     this.isFocused = false;
     this.shouldLeftAlign = this.value && this.value.trim() != '';
+    this.setElementLeft();
   }
 
   /**
