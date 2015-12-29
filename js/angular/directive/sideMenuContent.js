@@ -136,12 +136,12 @@ function($timeout, $ionicGesture, $window) {
           setCanScroll: function(canScroll) {
             var c = $element[0].querySelector('.scroll');
 
-            if(!c) {
+            if (!c) {
               return;
             }
 
             var content = angular.element(c.parentElement);
-            if(!content) {
+            if (!content) {
               return;
             }
 

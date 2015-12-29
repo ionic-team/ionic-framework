@@ -188,7 +188,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
         self.$el.on('touchmove', function(e) {
           //Don't allow scrolling while open by dragging on backdrop
           var isInScroll = ionic.DomUtil.getParentOrSelfWithClass(e.target, 'scroll');
-          if(!isInScroll) {
+          if (!isInScroll) {
             e.preventDefault();
           }
         });

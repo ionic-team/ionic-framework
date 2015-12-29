@@ -84,7 +84,7 @@ IonicModule
       }];
 
       // Force mouse events to have had a down event first
-      if(!startY && e.type == 'mousemove') {
+      if (!startY && e.type == 'mousemove') {
         return;
       }
 

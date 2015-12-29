@@ -456,7 +456,7 @@
           e.stopPropagation();
           return false;
         }
-      }
+      };
 
       container.addEventListener('scroll', self.onScroll);
 
