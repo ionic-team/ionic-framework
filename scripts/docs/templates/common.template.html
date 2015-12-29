@@ -79,15 +79,6 @@ angular_controller: APIDemoCtrl <@ endif @>
 
 <@ block body @>
 
-<div class="improve-docs">
-<a href='http://github.com/driftyco/ionic2/tree/master/<$ doc.fileInfo.relativePath $>#L<$ doc.location.start.line $>'>
-View Source
-</a>
-&nbsp;
-<a href='http://github.com/driftyco/ionic2/edit/master/<$ doc.fileInfo.relativePath $>#L<$ doc.location.start.line $>'>
-Improve this doc
-</a>
-</div>
 
 <@ block content @>
 
@@ -116,6 +107,10 @@ Delegate: <$ doc.delegate $>
 <@ endif @>
 
 </h1>
+
+<a class="improve-component-docs" href='http://github.com/driftyco/ionic2/edit/master/<$ doc.fileInfo.relativePath $>#L<$ doc.location.start.line $>'>
+Improve this doc
+</a> 
 
 <@ if doc.codepen @>
 {% include codepen.html id="<$ doc.codepen $>" %}
