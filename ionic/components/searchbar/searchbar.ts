@@ -74,15 +74,42 @@ export class SearchbarInput {
 export class Searchbar extends Ion {
   @ViewChild(SearchbarInput) searchbarInput;
 
+  /**
+   * @private
+   */
   @Input() cancelButtonText: string;
+  /**
+   * @private
+   */
   @Input() hideCancelButton: any;
+  /**
+   * @private
+   */
   @Input() placeholder: string;
+  /**
+   * @private
+   */
   @Input() ngModel: any;
 
+  /**
+   * @private
+   */
   @Output() input: EventEmitter<Searchbar> = new EventEmitter();
+  /**
+   * @private
+   */
   @Output() blur: EventEmitter<Searchbar> = new EventEmitter();
+  /**
+   * @private
+   */
   @Output() focus: EventEmitter<Searchbar> = new EventEmitter();
+  /**
+   * @private
+   */
   @Output() cancel: EventEmitter<Searchbar> = new EventEmitter();
+  /**
+   * @private
+   */
   @Output() clear: EventEmitter<Searchbar> = new EventEmitter();
 
   value: string = '';
@@ -187,7 +214,7 @@ export class Searchbar extends Ion {
     this.value = '';
     this.onChange(this.value);
     this.input.emit(this);
-    
+
     this.blurInput = false;
   }
 
