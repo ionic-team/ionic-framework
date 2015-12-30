@@ -65,4 +65,14 @@
     <code><b>relationship:</b> {{relationship}}</code>
   </div>
 
+  <ion-list radio-group [(ngModel)]="pet">
+    <ion-radio value="dogs" checked>Dogs</ion-radio>
+    <ion-radio value="cats">Cats</ion-radio>
+    <ion-radio value="turtles">Turtles</ion-radio>
+  </ion-list>
+
+  <div padding>
+    <code><b>pet:</b> {{pet}}</code>
+  </div>
+
 </ion-content>
