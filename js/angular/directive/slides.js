@@ -107,7 +107,7 @@ function($animate, $timeout, $compile) {
     link: function($scope, $element) {
       $scope.showPager = true;
       // Disable ngAnimate for slidebox and its children
-      $animate.enabled(false, $element);
+      //$animate.enabled(false, $element);
     }
   };
 }])
