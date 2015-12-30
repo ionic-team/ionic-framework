@@ -1,24 +1,30 @@
-import {Component, Directive, Attribute, forwardRef, Host, Optional, ElementRef, Renderer} from 'angular2/core';
+import {Component, Directive, Attribute, forwardRef, Host, Optional, ElementRef, Renderer, Input} from 'angular2/core';
 import {NgIf} from 'angular2/common';
 
 import {NavController} from '../nav/nav-controller';
 import {Config} from '../../config/config';
 import {Form} from '../../util/form';
-import {Label} from './label';
+import {Label} from '../label/label';
 import {IonicApp} from '../app/app';
 import {Content} from '../content/content';
 import * as dom  from '../../util/dom';
 import {Platform} from '../../platform/platform';
+import {Button} from '../button/button';
 
 
 /**
  * @name Input
  * @module ionic
  * @description
- * `ionInput` is a generic wrapper for both inputs and textareas. You can give `ion-input` to tell it how to handle a chile `ion-label` component
- * @property [fixed-labels] - a persistant label that sits next the the input
- * @property [floating-labels] - a label that will float about the input if the input is empty of looses focus
- * @property [stacked-labels] - A stacked label will always appear on top of the input
+ *
+ * `ion-input` is a generic wrapper for both inputs and textareas. You can give `ion-input` attributes to tell it how to handle a child `ion-label` component.
+ *
+ * @property [fixed-label] - a persistant label that sits next the the input
+ * @property [floating-label] - a label that will float about the input if the input is empty of looses focus
+ * @property [stacked-label] - A stacked label will always appear on top of the input
+ * @property [inset] - The input will be inset
+ * @property [clearInput] - A clear icon will appear in the input which clears it
+ *
  * @usage
  * ```html
  *  <ion-input>
@@ -26,7 +32,7 @@ import {Platform} from '../../platform/platform';
  *    <input type="text" value="">
  *  </ion-input>
  *
- *  <ion-input>
+ *  <ion-input clearInput>
  *    <input type="text" placeholder="Username">
  *  </ion-input>
  *
@@ -61,10 +67,15 @@ import {Platform} from '../../platform/platform';
     '<div class="item-inner">' +
       '<ng-content></ng-content>' +
       '<input [type]="type" aria-hidden="true" scroll-assist *ngIf="scrollAssist">' +
+      '<button clear *ngIf="clearInput" class="text-input-clear-icon" (click)="clearTextInput()" (mousedown)="clearTextInput()"></button>' +
     '</div>',
-  directives: [NgIf, forwardRef(() => InputScrollAssist)]
+  directives: [NgIf, forwardRef(() => InputScrollAssist), Button]
 })
 export class TextInput {
+  /**
+   * @private
+   */
+  @Input() clearInput: any;
 
   constructor(
     form: Form,
@@ -109,6 +120,13 @@ export class TextInput {
      this.input && this.input.elementRef.nativeElement.classList.contains(className);
    }
 
+   /**
+    * @private
+    */
+   clearTextInput() {
+     console.log("Should clear input");
+   }
+
   /**
    * @private
    */
@@ -128,6 +146,17 @@ export class TextInput {
       label.addClass(this.displayType + '-label');
     }
     this.label = label;
+  }
+
+  /**
+   * @private
+   * On Initialization check for attributes
+   */
+  ngOnInit() {
+    let clearInput = this.clearInput;
+    if (typeof clearInput === 'string') {
+      this.clearInput = (clearInput === '' || clearInput === 'true');
+    }
   }
 
   /**
