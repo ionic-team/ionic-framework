@@ -1,4 +1,4 @@
-import {Component, Directive, Attribute, forwardRef, Host, Optional, ElementRef, Renderer, Input} from 'angular2/core';
+import {Component, Directive, Attribute, forwardRef, Host, Optional, ElementRef, Renderer, Input, ContentChild} from 'angular2/core';
 import {NgIf} from 'angular2/common';
 
 import {NavController} from '../nav/nav-controller';
@@ -67,15 +67,19 @@ import {Button} from '../button/button';
     '<div class="item-inner">' +
       '<ng-content></ng-content>' +
       '<input [type]="type" aria-hidden="true" scroll-assist *ngIf="scrollAssist">' +
-      '<button clear *ngIf="clearInput" class="text-input-clear-icon" (click)="clearTextInput()" (mousedown)="clearTextInput()"></button>' +
+      '<button clear *ngIf="clearInput && value" class="text-input-clear-icon" (click)="clearTextInput()" (mousedown)="clearTextInput()"></button>' +
     '</div>',
-  directives: [NgIf, forwardRef(() => InputScrollAssist), Button]
+  directives: [NgIf, forwardRef(() => InputScrollAssist), forwardRef(() => TextInputElement), Button]
 })
 export class TextInput {
+  @ContentChild(forwardRef(() => TextInputElement)) textInputElement;
+
   /**
    * @private
    */
   @Input() clearInput: any;
+
+  value: any = '';
 
   constructor(
     form: Form,
@@ -120,13 +124,6 @@ export class TextInput {
      this.input && this.input.elementRef.nativeElement.classList.contains(className);
    }
 
-   /**
-    * @private
-    */
-   clearTextInput() {
-     console.log("Should clear input");
-   }
-
   /**
    * @private
    */
@@ -164,7 +161,7 @@ export class TextInput {
    */
   ngAfterViewInit() {
     if (this.input && this.label) {
-      // if there is an input and an label
+      // if there is an input and a label
       // then give the label an ID
       // and tell the input the ID of who it's labelled by
       this.input.labelledBy(this.label.id);
@@ -187,6 +184,14 @@ export class TextInput {
         }
       }
     };
+  }
+
+  /**
+    * @private
+   */
+  clearTextInput() {
+    console.log("Should clear input");
+    console.log(this.textInputElement.value);
   }
 
   /**
@@ -427,6 +432,7 @@ export class TextInput {
    */
   hasValue(inputValue) {
     this.renderer.setElementClass(this.elementRef, 'input-has-value', inputValue && inputValue !== '');
+    this.value = inputValue;
   }
 
   /**
@@ -499,7 +505,7 @@ export class TextInputElement {
     @Attribute('type') type: string,
     elementRef: ElementRef,
     renderer: Renderer,
-    @Optional() wrapper: TextInput,
+    @Optional() wrapper: TextInput
   ) {
     this.type = type;
     this.elementRef = elementRef;
