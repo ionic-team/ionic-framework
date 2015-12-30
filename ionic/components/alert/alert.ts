@@ -24,23 +24,23 @@ export class Alert extends ViewController {
   }
 
   setTitle(title) {
-    this._data.title = title;
+    this.data.title = title;
   }
 
   setSubTitle(subTitle) {
-    this._data.subTitle = subTitle;
+    this.data.subTitle = subTitle;
   }
 
   setBody(body) {
-    this._data.body = body;
+    this.data.body = body;
   }
 
   addInput(input) {
-    this._data.inputs.push(input);
+    this.data.inputs.push(input);
   }
 
   addButton(button) {
-    this._data.buttons.push(button);
+    this.data.buttons.push(button);
   }
 
   static create(data={}) {

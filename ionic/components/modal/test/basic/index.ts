@@ -32,8 +32,8 @@ class E2EPage {
     let modal = Modal.create(ModalPassData, { userId: 8675309 });
     this.nav.present(modal);
 
-    modal.data.subscribe(data => {
-      console.log('data', data);
+    modal.onDismiss(data => {
+      console.log('modal data', data);
     });
   }
 
@@ -45,6 +45,10 @@ class E2EPage {
   presentToolbarModal() {
     let modal = Modal.create(ToolbarModal);
     this.nav.present(modal);
+
+    modal.subscribe(data => {
+      console.log('modal data', data);
+    });
   }
 
   presentModalCustomAnimation() {
@@ -86,8 +90,7 @@ class ModalPassData {
   }
 
   submit() {
-    this.viewCtrl.data.emit(this.data);
-    this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss(this.data);
   }
 }
 
@@ -116,6 +119,9 @@ class ToolbarModal {
   }
 
   dismiss() {
+    this.viewCtrl.emit({
+      toolbar: 'data'
+    });
     this.viewCtrl.dismiss();
   }
 

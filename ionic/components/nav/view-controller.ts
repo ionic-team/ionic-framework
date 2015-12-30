@@ -17,20 +17,32 @@ import {NavParams} from './nav-controller';
  *  ```
  */
 export class ViewController {
-  @Output() data: EventEmitter<any> = new EventEmitter();
+  @Output() _emitter: EventEmitter<any> = new EventEmitter();
 
   constructor(componentType, data={}) {
     this.componentType = componentType;
-    this._data = data;
+    this.data = data;
     this.instance = {};
     this.state = 0;
     this._destroys = [];
     this._loaded = false;
-    this._outputData = null;
     this.shouldDestroy = false;
     this.shouldCache = false;
     this.viewType = '';
     this._leavingOpts = null;
+    this._onDismiss = null;
+  }
+
+  subscribe(callback) {
+    this._emitter.subscribe(callback);
+  }
+
+  emit(data) {
+    this._emitter.emit(data);
+  }
+
+  onDismiss(callback) {
+    this._onDismiss = callback;
   }
 
   setNav(navCtrl) {
@@ -42,10 +54,11 @@ export class ViewController {
   }
 
   getNavParams() {
-    return new NavParams(this._data);
+    return new NavParams(this.data);
   }
 
-  dismiss() {
+  dismiss(data) {
+    this._onDismiss && this._onDismiss(data);
     return this._nav.remove(this._nav.indexOf(this), this._leavingOpts);
   }
 

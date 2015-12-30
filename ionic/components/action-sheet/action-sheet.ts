@@ -38,15 +38,15 @@ import {Animation} from '../../animations/animation';
    }
 
    setTitle(title) {
-     this._data.title = title;
+     this.data.title = title;
    }
 
    setSubTitle(subTitle) {
-     this._data.subTitle = subTitle;
+     this.data.subTitle = subTitle;
    }
 
    addButton(button) {
-     this._data.buttons.push(button);
+     this.data.buttons.push(button);
    }
 
    static create(data={}) {
