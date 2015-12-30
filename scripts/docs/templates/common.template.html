@@ -28,7 +28,7 @@ angular_controller: APIDemoCtrl <@ endif @>
 <@- endmacro -@>
 
 <@ macro paramTable(params, isDirective) -@>
-<table class="table" style="margin:0;">
+<table class="table param-table" style="margin:0;">
   <thead>
     <tr>
       <th><@ if isDirective @>Attr<@ else @>Param<@ endif @></th>
@@ -207,7 +207,10 @@ Improve this doc
 <@ endif @>
 
 <@ if method.returns @>
-* Returns: <$ typeInfo(method.returns) $>
+<div class="return-value">
+<i class="icon ion-arrow-return-left"></i>
+<b>Returns:</b> <$ typeInfo(method.returns) $>  
+</div>
 <@ endif @>
 
 <@ endfor -@>
