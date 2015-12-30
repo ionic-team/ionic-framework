@@ -25,8 +25,8 @@ export class SearchbarInput {
     event.stopPropagation();
   }
 
-  constructor(elementRef: ElementRef) {
-    this.elementRef = elementRef;
+  constructor(public elementRef: ElementRef) {
+
   }
 }
 
@@ -114,12 +114,14 @@ export class Searchbar extends Ion {
 
   value: string = '';
   blurInput: boolean = true;
+  inputElement: any;
+  searchIconElement: any;
 
   @HostBinding('class.searchbar-focused') isFocused;
   @HostBinding('class.searchbar-left-aligned') shouldLeftAlign;
 
   constructor(
-    elementRef: ElementRef,
+    public elementRef: ElementRef,
     config: Config,
     @Optional() ngControl: NgControl
   ) {
