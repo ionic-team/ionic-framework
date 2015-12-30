@@ -437,12 +437,10 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
     deregisterBackButtonAction();
     self.$scope = null;
     if (self.content) {
+      self.content.setCanScroll(true);
       self.content.element = null;
       self.content = null;
     }
-
-    // ensure scrolls are unfrozen
-    self.content.setCanScroll(true);
   });
 
   self.initialize({
