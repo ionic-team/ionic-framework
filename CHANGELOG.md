@@ -12,6 +12,10 @@
 * `Alert` is more generic and you can mix and match any number of buttons/inputs
 * `Alert` and `ActionSheet` can take an array of buttons with `handlers`
 * Returning `false` from button handlers prevent the overlay from closing
+* `ActionSheet` buttons no longer use an index and only one handler
+* `ActionSheet` cancel and destructive buttons go within the `buttons` array, but with an added `style` property
+* An actionsheet's desctructive button renders in the order it was added to the array (we recommend it always goes first)
+* An actionsheet's cancel button will always be last, no matter where it is in the array
 * All overlays use `NavController` `present()`, similar to `push()`
 * A `Modal` uses an injected `ViewController` to dismiss itself
   and optionally pass data to modal's `onDismss()`
@@ -98,19 +102,20 @@ constructor(nav: NavController) {
 }
 doConfirm() {
   let alert = Alert.create({
-    title: "New Friend!",
-    body: "Obi wan Kenobi just accepted your friend request!",
+    title: "Use this lightsaber?",
+    subTitle: "You can't exchange lightsabers",
+    body: "Do you agree to use this lightsaber to do good across the intergalactic galaxy?",
     buttons: [
-      {
-        text: 'Agree',
-        handler: () => {
-          console.log('Agreed!');
-        }
-      },
       {
         text: 'Disagree',
         handler: () => {
           console.log('Disagreed :(');
+        }
+      },
+      {
+        text: 'Agree',
+        handler: () => {
+          console.log('Agreed!');
         }
       }
     ]
@@ -183,6 +188,87 @@ doConfirm() {
   });
 
   this.nav.present(alert);
+}
+```
+
+##### ActionSheet Refactor
+
+Was:
+
+```
+import {ActionSheet} from 'ionic/ionic';
+
+@Page(...)
+class MyPage {
+constructor(actionSheet: ActionSheet) {
+  this.actionSheet = actionSheet;
+}
+doActionMenu() {
+  this.actionSheet.open({
+    buttons: [
+      { text: 'Archive' }
+    ],
+    titleText: 'Modify your album',
+    cancelText: 'Cancel',
+    cancel: function() {
+      console.log('Canceled clicked');
+    },
+    destructiveText: 'Delete',
+    destructiveButtonClicked: () => {
+      console.log('Delete clicked');
+    },
+    buttonClicked: function(index) {
+      if (index == 0) {
+        console.log('Archive clicked');
+      }
+      return true;
+    }
+
+  }).then(actionSheetRef => {
+    this.actionSheetRef = actionSheetRef;
+  });
+
+}
+```
+
+Now:
+
+```
+import {Alert, NavController} from 'ionic/ionic';
+
+@Page(...)
+class MyPage {
+constructor(nav: NavController) {
+  this.nav = nav;
+}
+doActionMenu(ev) {
+  let actionSheet = ActionSheet.create({
+    title: 'Modify your album',
+    buttons: [
+      {
+        text: 'Delete',
+        style: 'destructive',
+        handler: () => {
+          console.log('Delete clicked');
+        }
+      },
+      {
+        text: 'Archive',
+        handler: () => {
+          console.log('Archive clicked');
+        }
+      },
+      {
+        text: 'Cancel',
+        style: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      },
+    ]
+  });
+
+  this.nav.present(actionSheet);
 }
 ```
 
