@@ -268,8 +268,6 @@ export class NavController extends Ion {
     // create a new ViewController
     let enteringView = new ViewController(componentType, params);
     enteringView.setNav(this);
-    enteringView.pageType = opts.pageType;
-    enteringView.handle = opts.handle || null;
 
     // default the direction to "forward"
     opts.direction = opts.direction || 'forward';
@@ -293,7 +291,9 @@ export class NavController extends Ion {
   }
 
   present(enteringView, opts={}) {
-    enteringView.setNav(this);
+    let rootNav = this.rootNav;
+
+    enteringView.setNav(rootNav);
 
     let resolve;
     let promise = new Promise(res => { resolve = res; });
@@ -303,18 +303,23 @@ export class NavController extends Ion {
     opts.direction = 'forward';
 
     if (!opts.animation) {
-      opts.animation = enteringView.getTransitionName(opts.direction);
+      opts.animation = enteringView.getTransitionName('forward');
     }
 
+    enteringView.setLeavingOpts({
+      keyboardClose: false,
+      skipCache: true,
+      direction: 'back',
+      animation: enteringView.getTransitionName('back')
+    });
+
     // the active view is going to be the leaving one (if one exists)
-    let leavingView = this.getActive() || new ViewController();
+    let leavingView = rootNav.getActive() || new ViewController();
     leavingView.shouldCache = (isBoolean(opts.cacheLeavingView) ? opts.cacheLeavingView : true);
     leavingView.shouldDestroy = !leavingView.shouldCache;
     if (leavingView.shouldDestroy) {
       leavingView.willUnload();
     }
-
-    let rootNav = this.rootNav;
 
     // add the view to the stack
     rootNav._add(enteringView);
@@ -323,20 +328,6 @@ export class NavController extends Ion {
     rootNav._transition(enteringView, leavingView, opts, resolve);
 
     return promise;
-  }
-
-  dismiss(leavingView, opts={}) {
-    opts.skipCache = true;
-    opts.direction ='back';
-
-    if (!opts.animation) {
-      opts.animation = leavingView.getTransitionName(opts.direction);
-    }
-
-    let rootNav = this.rootNav;
-
-    let index = rootNav.indexOf(leavingView);
-    return rootNav.remove(index, opts);
   }
 
   /**
@@ -528,7 +519,7 @@ export class NavController extends Ion {
    * @param {Object} [opts={}] Any options you want to use pass to transtion
    * @returns {Promise} Returns a promise when the view has been removed
    */
-  remove(index, opts = {}) {
+  remove(index, opts={}) {
     if (index < 0 || index >= this._views.length) {
       return Promise.reject("index out of range");
     }
@@ -854,6 +845,7 @@ export class NavController extends Ion {
       let transAnimation = Animation.createTransition(enteringView,
                                                       leavingView,
                                                       opts);
+
       if (opts.animate === false) {
         // force it to not animate the elements, just apply the "to" styles
         transAnimation.clearDuration();
@@ -867,8 +859,8 @@ export class NavController extends Ion {
       this.app.setEnabled(enableApp, duration);
       this.setTransitioning(!enableApp, duration);
 
-      if (opts.pageType) {
-        transAnimation.before.addClass(opts.pageType);
+      if (enteringView.viewType) {
+        transAnimation.before.addClass(enteringView.viewType);
       }
 
       wtfEndTimeRange(wtfScope);
@@ -1397,34 +1389,6 @@ export class NavController extends Ion {
   getByIndex(index) {
     if (index < this._views.length && index > -1) {
       return this._views[index];
-    }
-    return null;
-  }
-
-  /**
-   * @private
-   * @param {Handle} The handle of the page you want to get
-   * @returns {Component} Returns the component that matches the handle given
-   */
-  getByHandle(handle) {
-    for (let i = 0, ii = this._views.length; i < ii; i++) {
-      if (this._views[i].handle === handle) {
-        return this._views[i];
-      }
-    }
-    return null;
-  }
-
-  /**
-   * @private
-   * @param {TODO} pageType  TODO
-   * @returns {TODO} TODO
-   */
-  getByType(pageType) {
-    for (let i = 0, ii = this._views.length; i < ii; i++) {
-      if (this._views[i].pageType === pageType) {
-        return this._views[i];
-      }
     }
     return null;
   }

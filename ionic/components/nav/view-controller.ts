@@ -1,3 +1,4 @@
+import {Output, EventEmitter} from 'angular2/core';
 import {NavParams} from './nav-controller';
 
 /**
@@ -16,16 +17,20 @@ import {NavParams} from './nav-controller';
  *  ```
  */
 export class ViewController {
+  @Output() data: EventEmitter<any> = new EventEmitter();
 
   constructor(componentType, data={}) {
     this.componentType = componentType;
-    this.data = data;
+    this._data = data;
     this.instance = {};
     this.state = 0;
     this._destroys = [];
     this._loaded = false;
+    this._outputData = null;
     this.shouldDestroy = false;
     this.shouldCache = false;
+    this.viewType = '';
+    this._leavingOpts = null;
   }
 
   setNav(navCtrl) {
@@ -37,7 +42,15 @@ export class ViewController {
   }
 
   getNavParams() {
-    return new NavParams(this.data);
+    return new NavParams(this._data);
+  }
+
+  dismiss() {
+    return this._nav.remove(this._nav.indexOf(this), this._leavingOpts);
+  }
+
+  setLeavingOpts(opts) {
+    this._leavingOpts = opts;
   }
 
   /**

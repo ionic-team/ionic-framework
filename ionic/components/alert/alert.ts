@@ -1,57 +1,50 @@
 import {Component, ElementRef, Renderer} from 'angular2/core';
 import {NgClass, NgIf, NgFor, FORM_DIRECTIVES} from 'angular2/common';
 
-import {NavController, NavParams} from '../nav/nav-controller';
+import {NavParams} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
 import {Animation} from '../../animations/animation';
 import {Button} from '../button/button';
-import {extend, isDefined} from '../../util/util';
+import {isDefined} from '../../util/util';
 
 
 export class Alert extends ViewController {
 
-  constructor(opts={}) {
-    super(AlertCmp, opts);
+  constructor(data={}) {
+    data.inputs = data.inputs || [];
+    data.buttons = data.buttons || [];
 
-    this.data.inputs = this.data.inputs || [];
-    this.data.buttons = this.data.buttons || [];
+    super(AlertCmp, data);
+    this.viewType = 'alert';
   }
 
   getTransitionName(direction) {
     let key = (direction === 'back' ? 'alertLeave' : 'alertEnter');
-    return this._nav.config.get(key);
+    return this._nav && this._nav.config.get(key);
   }
 
   setTitle(title) {
-    this.data.title = title;
+    this._data.title = title;
   }
 
   setSubTitle(subTitle) {
-    this.data.subTitle = subTitle;
+    this._data.subTitle = subTitle;
   }
 
   setBody(body) {
-    this.data.body = body;
+    this._data.body = body;
   }
 
   addInput(input) {
-    this.data.inputs.push(input);
+    this._data.inputs.push(input);
   }
 
   addButton(button) {
-    this.data.buttons.push(button);
+    this._data.buttons.push(button);
   }
 
-  onDismiss(handler) {
-    this.data.onDismiss = handler;
-  }
-
-  dismiss() {
-    this._nav.dismiss(this);
-  }
-
-  static create(opts={}) {
-    return new Alert(opts);
+  static create(data={}) {
+    return new Alert(data);
   }
 
 }
@@ -102,9 +95,10 @@ class AlertCmp {
     let shouldDismiss = true;
 
     if (button.handler) {
-      // a handler has been provided, run it
+      // a handler has been provided, execute it
+      // pass the handler the values from the inputs
       if (button.handler(this.getValues()) === false) {
-        // if the return value is a false then do not close
+        // if the return value of the handler is false then do not dismiss
         shouldDismiss = false;
       }
     }
@@ -126,7 +120,7 @@ class AlertCmp {
     return values;
   }
 
-  onPageWillEnter() {
+  onPageLoaded() {
     // normalize the data
     this.d.buttons = this.d.buttons.map(button => {
       if (typeof button === 'string') {
@@ -137,9 +131,9 @@ class AlertCmp {
 
     this.d.inputs = this.d.inputs.map((input, index) => {
       return {
-        name: input.name || index,
+        name: isDefined(input.name) ? input.name : index,
         label: input.label,
-        placeholder: input.placeholder || '',
+        placeholder: isDefined(input.placeholder) ? input.placeholder : '',
         type: input.type || 'text',
         value: isDefined(input.value) ? input.value : ''
       }
@@ -173,7 +167,6 @@ class AlertCmp {
   }
 
   onPageDidLeave() {
-    this.d.onDismiss && this.d.onDismiss(this.getValues());
     document.removeEventListener('keyup', this.keyUp);
   }
 }

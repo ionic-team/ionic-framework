@@ -8,7 +8,6 @@ class E2EPage {
 
   constructor(nav: NavController) {
     this.nav = nav;
-    this.testAlertOpen = false;
     this.testConfirmOpen = false;
     this.testPromptOpen = false;
     this.testConfirmResult = '';
@@ -19,15 +18,10 @@ class E2EPage {
     let alert = Alert.create({
       title: 'Alert!',
       subTitle: 'Subtitle!!!',
-      buttons: ['Ok'],
-      onDismiss: () => {
-        this.testAlertOpen = false;
-      }
+      buttons: ['Ok']
     });
 
     this.nav.present(alert);
-
-    this.testAlertOpen = true;
   }
 
   doConfirm() {
@@ -39,6 +33,7 @@ class E2EPage {
       handler: () => {
         console.log('Confirm Cancel');
         this.testConfirmResult = 'Cancel';
+        this.testConfirmOpen = false;
       }
     });
     alert.addButton({
@@ -46,11 +41,8 @@ class E2EPage {
       handler: () => {
         console.log('Confirm Ok');
         this.testConfirmResult = 'Ok';
+        this.testConfirmOpen = false;
       }
-    });
-
-    alert.onDismiss(data => {
-      this.testConfirmOpen = false;
     });
 
     this.nav.present(alert).then(() => {
@@ -87,12 +79,9 @@ class E2EPage {
       text: 'Ok',
       handler: data => {
         console.log('Prompt data:', data);
+        this.testPromptOpen = false;
+        this.testPromptResult = data;
       }
-    });
-
-    alert.onDismiss(data => {
-      this.testPromptOpen = false;
-      this.testPromptResult = data;
     });
 
     this.nav.present(alert).then(() => {

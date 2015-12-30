@@ -1,41 +1,66 @@
-import {App, ActionSheet} from 'ionic/ionic';
+import {App, Page, ActionSheet, NavController} from 'ionic/ionic';
+
+
+@Page({
+  templateUrl: 'main.html'
+})
+class E2EPage {
+
+  constructor(nav: NavController) {
+    this.nav = nav;
+  }
+
+  openActionSheet(ev) {
+    this.result = '';
+
+    let actionSheet = ActionSheet.create({
+      buttons: [
+        {
+          text: 'Cancel',
+          style: 'cancel', // will always sort to be on the bottom
+          handler: () => {
+            console.log('cancel this clicked');
+            this.result = 'Canceled';
+          }
+        },
+        {
+          text: 'Archive',
+          handler: () => {
+            console.log('Archive clicked');
+            this.result = 'Archived';
+          }
+        },
+        {
+          text: 'No close',
+          handler: () => {
+            console.log('do not close clicked');
+
+            // returning false does not allow the actionsheet to be closed
+            return false;
+          }
+        },
+        {
+          text: 'Destructive',
+          style: 'destructive',
+          handler: () => {
+            console.log('Destructive clicked');
+            this.result = 'Destructive';
+          }
+        }
+      ]
+    });
+
+    this.nav.present(actionSheet);
+  }
+
+}
 
 
 @App({
-  templateUrl: 'main.html'
+  template: '<ion-nav [root]="root"></ion-nav>'
 })
 class E2EApp {
-
-  constructor(actionSheet: ActionSheet) {
-    this.actionSheet = actionSheet;
+  constructor() {
+    this.root = E2EPage;
   }
-
-  openActionSheet() {
-
-    this.actionSheet.open({
-      buttons: [
-        { text: 'Share This' },
-        { text: 'Move' }
-      ],
-      destructiveText: 'Delete',
-      titleText: 'Modify your album',
-      cancelText: 'Cancel',
-      cancel: function() {
-        console.log('Canceled');
-      },
-      destructiveButtonClicked: () => {
-        console.log('Destructive clicked');
-      },
-      buttonClicked: function(index) {
-        console.log('Button clicked', index);
-        if(index == 1) { return false; }
-        return true;
-      }
-
-    }).then(actionSheetRef => {
-      this.actionSheetRef = actionSheetRef;
-    });
-
-  }
-
 }
