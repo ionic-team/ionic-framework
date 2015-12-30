@@ -4,7 +4,12 @@
 // iOS Text Input
 // --------------------------------------------------
 
-$text-input-ios-background-color:    $list-ios-background-color !default;
+$text-input-ios-background-color:          $list-ios-background-color !default;
+
+$text-input-ios-input-clear-icon-width:    30px !default;
+$text-input-ios-input-clear-icon-color:    rgba(0, 0, 0, 0.5) !default;
+$text-input-ios-input-clear-icon-svg:      "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path fill='" + $text-input-ios-input-clear-icon-color + "' d='M403.1,108.9c-81.2-81.2-212.9-81.2-294.2,0s-81.2,212.9,0,294.2c81.2,81.2,212.9,81.2,294.2,0S484.3,190.1,403.1,108.9z M352,340.2L340.2,352l-84.4-84.2l-84,83.8L160,339.8l84-83.8l-84-83.8l11.8-11.8l84,83.8l84.4-84.2l11.8,11.8L267.6,256L352,340.2z'/></svg>" !default;
+$text-input-ios-input-clear-icon-size:     18px !default;
 
 
 // Default Input
@@ -33,4 +38,24 @@ $text-input-ios-background-color:    $list-ios-background-color !default;
 .floating-input {
   margin-top: 8px;
   margin-bottom: 8px;
+}
+
+// Clear Input Icon
+// --------------------------------------------------
+
+ion-input[clearInput] {
+  position: relative;
+
+  .text-input {
+    padding-right: $text-input-ios-input-clear-icon-width;
+  }
+}
+
+.text-input-clear-icon {
+  width: $text-input-ios-input-clear-icon-width;
+
+  @include svg-background-image($text-input-ios-input-clear-icon-svg);
+  background-size: $text-input-ios-input-clear-icon-size;
+  right: ($item-ios-padding-right / 2);
+  bottom: 0;  
 }

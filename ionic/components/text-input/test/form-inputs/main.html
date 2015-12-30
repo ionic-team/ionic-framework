@@ -7,22 +7,22 @@
   <form [ngFormModel]="loginForm" #mf="ngForm" novalidate>
 
     <ion-list>
-      <ion-input floating-label>
+      <ion-input floating-label clearInput>
         <ion-label>Email</ion-label>
         <input [(ngModel)]="login.email" ngControl="email" type="email" required>
       </ion-input>
 
-      <ion-input floating-label>
+      <ion-input floating-label clearInput>
         <ion-label>Username</ion-label>
         <input [(ngModel)]="login.username" ngControl="username" type="text">
       </ion-input>
 
-      <ion-input floating-label>
+      <ion-input floating-label clearInput>
         <ion-label>Password</ion-label>
         <input [(ngModel)]="login.password" ngControl="password" type="password" required>
       </ion-input>
 
-      <ion-input floating-label>
+      <ion-input floating-label clearInput>
         <ion-label>Comments</ion-label>
         <textarea [(ngModel)]="login.comments" ngControl="comments" required>Comment value</textarea>
       </ion-input>
@@ -43,15 +43,15 @@
 
   <form (ngSubmit)="submit($event, user)" #lf="ngForm">
     <ion-list>
-      <ion-input floating-label>
+      <ion-input floating-label clearInput>
         <ion-label>Username</ion-label>
         <input type="text" [(ngModel)]="user.username" ngControl="username" required>
       </ion-input>
-      <ion-input floating-label>
+      <ion-input floating-label clearInput>
         <ion-label>Password</ion-label>
         <input type="password" [(ngModel)]="user.password" ngControl="password" required>
       </ion-input>
-      <div padding-left padding-right>
+      <div padding-left padding-right clearInput>
         <button block type="submit">Login</button>
       </div>
       <div padding-left>
@@ -62,5 +62,27 @@
       </div>
     </ion-list>
   </form>
+
+  <ion-list>
+    <ion-input clearInput>
+      <ion-label>Email</ion-label>
+      <input type="email" required>
+    </ion-input>
+
+    <ion-input clearInput>
+      <ion-label>Username</ion-label>
+      <input type="text">
+    </ion-input>
+
+    <ion-input clearInput>
+      <ion-label>Password</ion-label>
+      <input type="password" required>
+    </ion-input>
+
+    <ion-input clearInput>
+      <ion-label>Comments</ion-label>
+      <textarea required>Comment value</textarea>
+    </ion-input>
+  </ion-list>
 
 </ion-content>

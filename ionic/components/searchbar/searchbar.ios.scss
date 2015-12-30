@@ -70,7 +70,6 @@ ion-searchbar {
   border-radius: 5px;
   color: $searchbar-ios-input-text-color;
   background-color: $searchbar-ios-input-background-color;
-  background-position: 8px center;
 
   @include placeholder($searchbar-ios-input-placeholder-color);
 

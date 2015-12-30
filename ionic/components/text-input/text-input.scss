@@ -61,3 +61,15 @@ input,
 textarea {
   @include placeholder();
 }
+
+// Clear Input Icon
+// --------------------------------------------------
+
+.text-input-clear-icon {
+  margin: 0;
+  padding: 0;
+
+  background-repeat: no-repeat;
+  background-position: center;
+  position: absolute;
+}
