@@ -17,22 +17,22 @@ class E2EApp {
   }
 
   onClearSearchbar(searchbar) {
-    console.log("Clicked clear input on", searchbar);
+    console.log("Clicked clear input on", searchbar.value);
   }
 
   onCancelSearchbar(searchbar) {
-    console.log("Clicked cancel button with", searchbar);
+    console.log("Clicked cancel button with", searchbar.value);
   }
 
   triggerInput(searchbar) {
-    console.log("Triggered input", searchbar);
+    console.log("Triggered input", searchbar.value);
   }
 
   inputBlurred(searchbar) {
-    console.log("Blurred input", searchbar);
+    console.log("Blurred input", searchbar.value);
   }
 
   inputFocused(searchbar) {
-    console.log("Focused input", searchbar);
+    console.log("Focused input", searchbar.value);
   }
 }
