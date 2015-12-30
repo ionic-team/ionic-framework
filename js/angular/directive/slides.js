@@ -36,7 +36,8 @@ IonicModule
 .directive('ionSlides', [
   '$animate',
   '$timeout',
-function($animate, $timeout) {
+  '$compile',
+function($animate, $timeout, $compile) {
   return {
     restrict: 'E',
     transclude: true,
@@ -90,7 +91,7 @@ function($animate, $timeout) {
       this._options = newOptions;
 
       $timeout(function() {
-        var slider = new ionic.views.Swiper($element.children()[0], newOptions, $scope);
+        var slider = new ionic.views.Swiper($element.children()[0], newOptions, $scope, $compile);
 
         _this.__slider = slider;
         $scope.slider = _this.__slider;

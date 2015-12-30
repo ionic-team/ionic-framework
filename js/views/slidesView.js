@@ -20,7 +20,7 @@
     /*===========================
     Swiper
     ===========================*/
-    var Swiper = function (container, params) {
+    var Swiper = function (container, params, _scope, $compile) {
 
         if (!(this instanceof Swiper)) return new Swiper(container, params);
 
@@ -418,9 +418,6 @@
 
         // Velocity
         s.velocity = 0;
-
-        // Remove duplicated slides
-        var $compile = angular.element(s.wrapper).injector().get('$compile');
 
         /*=========================
           Locks, unlocks
