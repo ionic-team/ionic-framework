@@ -95,57 +95,57 @@ $button-bar-button-icon-size:     20px !default;
 
 $button-light-bg:                 $light !default;
 $button-light-text:               #444 !default;
-$button-light-border:             #ddd !default;
+$button-light-border:             transparent !default;
 $button-light-active-bg:          #fafafa !default;
-$button-light-active-border:      #ccc !default;
+$button-light-active-border:      transparent !default;
 
 $button-stable-bg:                $stable !default;
 $button-stable-text:              #444 !default;
-$button-stable-border:            #b2b2b2 !default;
+$button-stable-border:            transparent !default;
 $button-stable-active-bg:         #e5e5e5 !default;
-$button-stable-active-border:     #a2a2a2 !default;
+$button-stable-active-border:     transparent !default;
 
 $button-positive-bg:              $positive !default;
 $button-positive-text:            #fff !default;
-$button-positive-border:          darken($positive, 10%) !default;
+$button-positive-border:          transparent !default;
 $button-positive-active-bg:       darken($positive, 10%) !default;
-$button-positive-active-border:   darken($positive, 10%) !default;
+$button-positive-active-border:   transparent !default;
 
 $button-calm-bg:                  $calm !default;
 $button-calm-text:                #fff !default;
-$button-calm-border:              darken($calm, 10%) !default;
+$button-calm-border:              transparent !default;
 $button-calm-active-bg:           darken($calm, 10%) !default;
-$button-calm-active-border:       darken($calm, 10%) !default;
+$button-calm-active-border:       transparent !default;
 
 $button-assertive-bg:             $assertive !default;
 $button-assertive-text:           #fff !default;
-$button-assertive-border:         darken($assertive, 10%) !default;
+$button-assertive-border:         transparent !default;
 $button-assertive-active-bg:      darken($assertive, 10%) !default;
-$button-assertive-active-border:  darken($assertive, 10%) !default;
+$button-assertive-active-border:  transparent !default;
 
 $button-balanced-bg:              $balanced !default;
 $button-balanced-text:            #fff !default;
-$button-balanced-border:          darken($balanced, 10%) !default;
+$button-balanced-border:          transparent !default;
 $button-balanced-active-bg:       darken($balanced, 10%) !default;
-$button-balanced-active-border:   darken($balanced, 10%) !default;
+$button-balanced-active-border:   transparent !default;
 
 $button-energized-bg:             $energized !default;
 $button-energized-text:           #fff !default;
-$button-energized-border:         darken($energized, 5%) !default;
+$button-energized-border:         transparent !default;
 $button-energized-active-bg:      darken($energized, 5%) !default;
-$button-energized-active-border:  darken($energized, 5%) !default;
+$button-energized-active-border:  transparent !default;
 
 $button-royal-bg:                 $royal !default;
 $button-royal-text:               #fff !default;
-$button-royal-border:             darken($royal, 8%) !default;
+$button-royal-border:             transparent !default;
 $button-royal-active-bg:          darken($royal, 8%) !default;
-$button-royal-active-border:      darken($royal, 8%) !default;
+$button-royal-active-border:      transparent !default;
 
 $button-dark-bg:                  $dark !default;
 $button-dark-text:                #fff !default;
-$button-dark-border:              #111 !default;
+$button-dark-border:              transparent !default;
 $button-dark-active-bg:           #262626 !default;
-$button-dark-active-border:       #000 !default;
+$button-dark-active-border:       transparent !default;
 
 $button-default-bg:               $button-stable-bg !default;
 $button-default-text:             $button-stable-text !default;
