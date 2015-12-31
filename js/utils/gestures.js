@@ -262,20 +262,20 @@
 
         // onmouseup, but when touchend has been fired we do nothing.
         // this is for touchdevices which also fire a mouseup on touchend
-        if(sourceEventType.match(/mouse/) && touch_triggered) {
+        if(sourceEventType.indexOf("mouse") > -1 && touch_triggered) {
           return;
         }
 
         // mousebutton must be down or a touch event
-        else if( sourceEventType.match(/touch/) ||   // touch events are always on screen
-          sourceEventType.match(/pointerdown/) || // pointerevents touch
-          (sourceEventType.match(/mouse/) && ev.which === 1)   // mouse is pressed
+        else if( sourceEventType.indexOf('touch') > -1 ||   // touch events are always on screen
+          sourceEventType.indexOf('pointerdown') > -1 || // pointerevents touch
+          (sourceEventType.indexOf('mouse') > -1 && ev.which === 1)   // mouse is pressed
           ){
             enable_detect = true;
           }
 
         // mouse isn't pressed
-        else if(sourceEventType.match(/mouse/) && ev.which !== 1) {
+        else if(sourceEventType.indexOf('mouse') > -1 && ev.which !== 1) {
           enable_detect = false;
         }
 
@@ -297,12 +297,12 @@
             count_touches = ionic.Gestures.PointerEvent.updatePointer(eventType, ev);
           }
           // touch
-          else if(sourceEventType.match(/touch/)) {
+          else if(sourceEventType.indexOf('touch') > -1) {
             count_touches = ev.touches.length;
           }
           // mouse
           else if(!touch_triggered) {
-            count_touches = sourceEventType.match(/up/) ? 0 : 1;
+            count_touches = sourceEventType.indexOf('up') > -1 ? 0 : 1;
           }
 
           // if we are in a end event, but when we remove one touch and
@@ -408,7 +408,7 @@
 
       // find out pointerType
       var pointerType = ionic.Gestures.POINTER_TOUCH;
-      if(ev.type.match(/mouse/) || ionic.Gestures.PointerEvent.matchType(ionic.Gestures.POINTER_MOUSE, ev)) {
+      if(ev.type.indexOf('mouse') > -1 || ionic.Gestures.PointerEvent.matchType(ionic.Gestures.POINTER_MOUSE, ev)) {
         pointerType = ionic.Gestures.POINTER_MOUSE;
       }
 
