@@ -179,9 +179,10 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
             }
             self.element.removeClass('active');
             $ionicBody.removeClass('loading-active');
-            setTimeout(function() {
+            self.element.removeClass('visible');
+            ionic.requestAnimationFrame(function() {
               !self.isShown && self.element.removeClass('visible');
-            }, 200);
+            });
           }
           $timeout.cancel(self.durationTimeout);
           self.isShown = false;
