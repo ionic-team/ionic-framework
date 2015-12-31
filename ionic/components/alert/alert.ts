@@ -3,8 +3,8 @@ import {NgClass, NgIf, NgFor, FORM_DIRECTIVES} from 'angular2/common';
 
 import {NavParams} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
+import {Config} from '../../config/config';
 import {Animation} from '../../animations/animation';
-import {Button} from '../button/button';
 import {isDefined} from '../../util/util';
 
 
@@ -81,6 +81,7 @@ class AlertCmp {
   constructor(
     private _viewCtrl: ViewController,
     private _elementRef: ElementRef,
+    private _config: Config,
     params: NavParams,
     renderer: Renderer
   ) {
@@ -103,7 +104,9 @@ class AlertCmp {
     }
 
     if (shouldDismiss) {
-      this.dismiss();
+      setTimeout(() => {
+        this.dismiss();
+      }, this._config.get('pageTransitionDelay'));
     }
   }
 

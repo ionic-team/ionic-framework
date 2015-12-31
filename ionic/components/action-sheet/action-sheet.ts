@@ -87,6 +87,7 @@ class ActionSheetCmp {
 
   constructor(
     private _viewCtrl: ViewController,
+    private _config: Config,
     params: NavParams, renderer: Renderer
   ) {
     this.d = params.data;
@@ -108,7 +109,9 @@ class ActionSheetCmp {
     }
 
     if (shouldDismiss) {
-      this.dismiss();
+      setTimeout(() => {
+        this.dismiss();
+      }, this._config.get('pageTransitionDelay'));
     }
   }
 

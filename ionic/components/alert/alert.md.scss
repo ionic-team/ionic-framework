@@ -75,6 +75,7 @@ $alert-md-buttons-justify-content:        flex-end !default;
 .alert-button {
   position: relative;
   overflow: hidden;
+  padding: 10px;
   font-weight: 500;
   color: $alert-md-button-text-color;
   background-color: $alert-md-button-background-color;
