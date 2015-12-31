@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html ng-app="ionic">
+  <head>
+    <meta charset="utf-8">
+    <title>Text Inputs</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <link href="../../dist/css/ionic.css" rel="stylesheet">
+    <script src="../../dist/js/ionic.bundle.js"></script>
+  </head>
+  <body>
+
+    <header class="bar bar-header bar-dark">
+      <h1 class="title">Text Inputs</h1>
+    </header>
+
+    <ion-content class="has-header">
+
+
+      <form ng-submit="vm.loginFormAction(vm.loginFormData)" novalidate>
+        <div class="list">
+          <ion-input class="item item-input item-floating-label">
+            <ion-label>Username</ion-label>
+            <input ng-model="vm.loginFormData.username" type="text" placeholder="Email or Phone number">
+          </ion-input>
+          <ion-input class="item item-input item-floating-label">
+            <ion-label>Password</ion-label>
+            <input ng-model="vm.loginFormData.password" type="password" placeholder="Password">
+          </ion-input>
+        </div>
+        <div class="padding">
+          <button class="button button-block button-positive" type="submit">Log In</button>
+        </div>
+      </form>
+
+    </ion-content>
+
+  </body>
+</html>

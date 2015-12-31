@@ -1,0 +1,71 @@
+<html ng-app="ionicApp">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+    <title>Aborted drag gesture on Android 4.4.2</title>
+
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+
+<style>
+body {
+  cursor: url('http://ionicframework.com/img/finger.png'), auto;
+}
+#dragElement {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  background: red;
+}
+</style>
+
+  </head>
+  <body ng-controller="MyCtrl">
+    <ion-header-bar class="bar-positive">
+      <h1 class="title">Aborted drag gesture on Android 4.4.2</h1>
+    </ion-header-bar>
+
+    <ion-content class="has-header" scroll="false">
+      <div id="dragElement"></div>
+    </ion-content>
+<script>
+angular.module('ionicApp', ['ionic'])
+  .controller('MyCtrl', function ($scope, $ionicGesture) {
+    'use strict';
+    var onDrag, onRelease, dragElement, dragGesture, release, x, y;
+
+    x = 0;
+    y = 0;
+
+    dragElement = document.getElementById("dragElement");
+    var dragEl = angular.element(dragElement);
+
+    onDrag = function (event) {
+      var deltaX, deltaY;
+
+      deltaX = event.gesture.deltaX;
+      deltaY = event.gesture.deltaY;
+
+      console.log(deltaX, deltaY, 'translate3d(' + (x + deltaX) + 'px, ' + (y + deltaY) + 'px, 0)');
+
+      dragElement.style[ionic.CSS.TRANSFORM] = 'translate3d(' + (x + deltaX) + 'px, ' + (y + deltaY) + 'px, 0)';
+    };
+
+    onRelease = function (event) {
+      x = x + event.gesture.deltaX;
+      y = y + event.gesture.deltaY;
+    };
+
+    dragGesture = $ionicGesture.on('drag', onDrag, dragEl);
+    release = $ionicGesture.on('release', onRelease, dragEl);
+
+    $scope.$on('$destroy', function () {
+      $ionicGesture.off(dragGesture, 'drag', onDrag);
+      $ionicGesture.off(release, 'release', onRelease);
+    });
+  });
+</script>
+  </body>
+</html>

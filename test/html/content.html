@@ -18,7 +18,7 @@
 
       <ion-content id="container"
         start-y="55"
-        class="has-tabs has-header">
+        class="has-tabs has-header" delegate-handle="myScroll">
         <ion-refresher></ion-refresher>
         <div id="search-box" class="bar bar-header item-input-inset">
           <label class="item-input-wrapper">
@@ -29,6 +29,7 @@
             Cancel
           </button>
         </div>
+        <button ng-click="doIt()" class="button button-assertive">Do et</button>
         <div class="list">
           <ion-input class="item item-input">
             <input type="text" placeholder="First Name">
@@ -133,10 +134,15 @@
         });
       })
 
-      .controller('ThisCtrl', function($scope, $timeout) {
+      .controller('ThisCtrl', function($scope, $timeout, $ionicScrollDelegate) {
         var header = document.getElementById('header');
         var content = document.getElementById('container');
         var startTop = header.offsetTop;
+
+        $scope.doIt = function() {
+          $ionicScrollDelegate.$getByHandle('myScroll').scrollTo(0, 400, true);
+        };
+
         $scope.onScrollComplete = function(event, scrollTop, scrollLeft) {
         }
         $scope.add = function() {

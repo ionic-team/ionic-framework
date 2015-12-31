@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html ng-app="slidesTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Slide Box</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+  </head>
+  <body ng-controller="MyCtrl">
+  <ion-pane>
+
+    <ion-header-bar class="bar-assertive">
+      <ion-title>Hello</ion-title>
+    </ion-header-bar>
+    <ion-content class="padding">
+      <h2>Just cat things</h2>
+      <ion-slides options="options" slider="data.slider" style="height: 300px">
+        <ion-slide-page ng-repeat="product in products">
+          <img ng-src="{{product.img}}">
+        </ion-slide-page>
+      </ion-slides>
+    </ion-content>
+  </ion-pane>
+  <script>
+    angular.module('slidesTest', ['ionic'])
+    .controller('MyCtrl', ['$scope', '$interval', '$timeout', function($scope, $interval, $timeout) {
+      $scope.options = {
+        slidesPerView: 3
+      }
+      $scope.products = [
+        { img: 'cat1.png' },
+        { img: 'cat2.png' },
+        { img: 'cat3.png' },
+        { img: 'cat4.png' }
+      ];
+    }]);
+    </script>
+  </body>
+</html>

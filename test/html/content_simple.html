@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html ng-app="navTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Content</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+    <style>
+    f { display: block; height: 400px; width: 100%; background-color: #387ef5; margin-bottom: 15px;
+      display: block;
+    margin: 15px auto;
+    max-width: 150px;
+     }
+    </style>
+
+  </head>
+  <body>
+    <ion-pane>
+      <ion-header-bar align-title="left" class="bar-assertive">
+  <div class="buttons">
+    <button class="button" ng-click="doSomething()">Left Button</button>
+  </div>
+  <h1 class="title">Title!</h1>
+  <div class="buttons">
+    <button class="button">Right Button</button>
+  </div>
+</ion-header-bar>
+
+      <ion-content>
+        <f></f>
+        <f></f>
+        <f></f>
+        <f></f>
+        <f></f>
+        <f></f>
+        <f></f>
+      </ion-content>
+    </ion-pane>
+
+    <script>
+      angular.module('navTest', ['ionic']);
+    </script>
+  </body>
+</html>

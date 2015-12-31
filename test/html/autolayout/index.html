@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="stylesheet" href="../../../dist/css/ionic.css">
+  <script src="../../../dist/js/ionic.bundle.js"></script>
+  <script src="ng-auto.js"></script>
+	<style>
+		html, body {
+			margin: 0;
+			font-family: 'Lato', sans-serif;
+		}
+		/* You don't want to CSS this way but when you do, do it for HTML readability sake */
+		body > header,
+		body > section {
+			padding: 15px;
+		}
+		body > header > *,
+		body > section > * {
+			max-width: 980px;
+			margin: 0 auto;
+		}
+		body > section:nth-child(even) {
+			background: #f6f6f6;
+		}
+		body > section > footer > p:before {
+			content: 'note: ';
+			font-weight: bold;
+		}
+		h2 {
+			margin-top: 30px;
+		}
+		code {
+			font-family: monospace;
+			font-style: normal;
+			border: 1px solid #ddd;
+			background-color: #f8f8f8;
+			border-radius: 3px;
+			padding: 0;
+		}
+		.inline-list {
+			list-style: none;
+			padding: 0;
+		}
+		.inline-list > li {
+			float: left;
+			margin-right: 15px;
+			margin-bottom: 15px;
+		}
+		.inline-list:after {
+			content: " ";
+			display: table;
+			clear: both;
+		}
+		.demo-container {
+			width: 100%;
+			height: 300px;
+			background: #fbfbfb;
+			border-radius: 5px;
+			margin-bottom: 30px;
+		}
+		.demo-container button {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+		.demo-container img {
+      display: block;
+      max-height: 100%;
+      margin: auto;
+    }
+		.demo-container.inline {
+			display: inline-block;
+			height: 30px;
+			width: 200px;
+			margin-bottom: 0;
+		}
+		.demo-box {
+			background: rgb(67, 135, 253);
+			background-image: -webkit-linear-gradient(top, rgb(67, 135, 253), rgb(70, 131, 234));
+			border-radius: 5px;
+			padding: 15px;
+			box-sizing: border-box;
+			color: rgba(255, 255, 255, 0.6);
+			font-weight: bold;
+			font-size: 3em;
+		}
+
+    #demo2 {
+      background-color: rgb(200,0,0);
+    }
+	</style>
+
+</head>
+<body ng-app="autolayout-example">
+
+  <ion-header-bar class="bar-positive">
+    <h1 class="title">Auto Layout</h1>
+  </ion-header-bar>
+  <ion-content>
+		<div id="demo1" class="demo-container" al-update-on-resize>
+      <div id="A">
+        <img src="https://ionic-apps.s3.amazonaws.com/img/ionitron-twitter.png">
+      </div>
+      <div id="B">
+        <button class="button button-positive">B</button>
+      </div>
+      <div id="C">
+			  <button class="button button-assertive">C</button>
+      </div>
+
+      <al-constraint visual-format="|-[A(==200)]-[B]-|" align="top"></al-constraint>
+			<al-constraint>|-[C]-|</al-constraint>
+			<al-constraint>V:|-[A(==B,==C)]-[C]-|</al-constraint>
+		</div>
+    <div id="demo2" class="demo-container">
+      <div id="A2">
+        <button class="button button-positive">button</button>
+      </div>
+			<al-constraint>|-20-[A2]-20-|</al-constraint>
+			<al-constraint>V:|-20-[A2]-20-|</al-constraint>
+    </div>
+  </ion-content>
+  <script>
+    angular.module('autolayout-example', ['autolayout', 'ionic'])
+
+    .config(function($stateProvider, $urlRouterProvider) {
+    });
+  </script>
+</body>
+</html>
