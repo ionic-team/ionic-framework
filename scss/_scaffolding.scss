@@ -210,7 +210,7 @@ ion-infinite-scroll {
     -webkit-transform: translate3d(0, 0, 0);   // fix iOS bug where relative children of scroller disapear while scrolling.  see: http://stackoverflow.com/questions/9807620/ipad-safari-scrolling-causes-html-elements-to-disappear-and-reappear-with-a-dela
   }
 
-  &.keyboard-up {
+  &.keyboard-up:not(.keyboard-up-confirm) {
     overflow: hidden;
   }
 }

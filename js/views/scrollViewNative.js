@@ -340,10 +340,17 @@
        * into view.
        */
       self.scrollChildIntoView = function(e) {
+        var rect = container.getBoundingClientRect();
+        if(!self.__originalContainerHeight) {
+          self.__originalContainerHeight = rect.height;
+        }
+
         // D
-        var scrollBottomOffsetToTop = container.getBoundingClientRect().bottom;
+        var scrollBottomOffsetToTop = rect.bottom;
         // D - A
-        scrollViewOffsetHeight = container.offsetHeight;
+        scrollViewOffsetHeight = self.__originalContainerHeight;
+        //console.log('Scroll view offset height', scrollViewOffsetHeight);
+        //console.dir(container);
         var alreadyShrunk = self.isShrunkForKeyboard;
 
         var isModal = container.parentNode.classList.contains('modal');
@@ -378,14 +385,25 @@
             var scrollBottomOffsetToBottom = e.detail.viewportHeight - scrollBottomOffsetToTop;
 
             // 0 or D - B if D > B           E - B                     E - D
-            var keyboardOffset = e.detail.keyboardHeight - scrollBottomOffsetToBottom;
+            //var keyboardOffset = e.detail.keyboardHeight - scrollBottomOffsetToBottom;
 
             ionic.requestAnimationFrame(function(){
               // D - A or B - A if D > B       D - A             max(0, D - B)
-              scrollViewOffsetHeight = keyboardOffset >= 0 ? scrollViewOffsetHeight + keyboardOffset : scrollViewOffsetHeight - keyboardOffset;
+              scrollViewOffsetHeight = Math.max(0, Math.min(self.__originalContainerHeight, self.__originalContainerHeight - (e.detail.keyboardHeight - 43)));//keyboardOffset >= 0 ? scrollViewOffsetHeight - keyboardOffset : scrollViewOffsetHeight + keyboardOffset;
+
+              //console.log('Old container height', self.__originalContainerHeight, 'New container height', scrollViewOffsetHeight, 'Keyboard height', e.detail.keyboardHeight);
 
               container.style.height = scrollViewOffsetHeight + "px";
 
+              /*
+              if (ionic.Platform.isIOS()) {
+                // Force redraw to avoid disappearing content
+                var disp = container.style.display;
+                container.style.display = 'none';
+                var trick = container.offsetHeight;
+                container.style.display = disp;
+              }
+              */
               container.classList.add('keyboard-up');
               //update scroll view
               self.resize();
@@ -413,26 +431,42 @@
         if (e.detail.isElementUnderKeyboard) {
 
           ionic.requestAnimationFrame(function(){
+            var pos = ionic.DomUtil.getOffsetTop(e.detail.target);
+            setTimeout(function() {
+              if (ionic.Platform.isIOS()) {
+                ionic.tap.cloneFocusedInput(container, self);
+              }
+              // Scroll the input into view, with a 100px buffer
+              self.scrollTo(0, pos - (rect.top + 100), true);
+              self.onScroll();
+            }, 32);
+
+            /*
             // update D if we shrunk
             if (self.isShrunkForKeyboard && !alreadyShrunk) {
               scrollBottomOffsetToTop = container.getBoundingClientRect().bottom;
+              console.log('Scroll bottom', scrollBottomOffsetToTop);
             }
 
             // middle of the scrollview, this is where we want to scroll to
             // (D - A) / 2
             var scrollMidpointOffset = scrollViewOffsetHeight * 0.5;
+            console.log('Midpoint', scrollMidpointOffset);
             //console.log("container.offsetHeight: " + scrollViewOffsetHeight);
 
             // middle of the input we want to scroll into view
             // C
             var inputMidpoint = ((e.detail.elementBottom + e.detail.elementTop) / 2);
+            console.log('Input midpoint');
 
             // distance from middle of input to the bottom of the scroll view
             // C - D                                C               D
             var inputMidpointOffsetToScrollBottom = inputMidpoint - scrollBottomOffsetToTop;
+            console.log('Input midpoint offset', inputMidpointOffsetToScrollBottom);
 
             //C - D + (D - A)/2          C - D                     (D - A)/ 2
             var scrollTop = inputMidpointOffsetToScrollBottom + scrollMidpointOffset;
+            console.log('Scroll top', scrollTop);
 
             if ( scrollTop > 0) {
               if (ionic.Platform.isIOS()) {
@@ -447,6 +481,7 @@
                 self.onScroll();
               }
             }
+            */
           });
         }
 
@@ -461,10 +496,23 @@
           self.isShrunkForKeyboard = false;
           container.style.height = "";
 
-          // Read after setting this to avoid rendering issues like white boxes.
-          ionic.requestAnimationFrame(function() {
-            container.classList.remove('keyboard-up');
-          });
+          /*
+          if (ionic.Platform.isIOS()) {
+            // Force redraw to avoid disappearing content
+            var disp = container.style.display;
+            container.style.display = 'none';
+            var trick = container.offsetHeight;
+            container.style.display = disp;
+          }
+          */
+
+          self.__originalContainerHeight = container.getBoundingClientRect().height;
+
+          if (ionic.Platform.isIOS()) {
+            ionic.requestAnimationFrame(function() {
+              container.classList.remove('keyboard-up');
+            });
+          }
 
         }
         self.resize();
