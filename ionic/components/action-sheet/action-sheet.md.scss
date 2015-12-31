@@ -29,6 +29,8 @@ $action-sheet-md-icon-margin:              0 28px 0 0 !default;
 }
 
 .action-sheet-button {
+  position: relative;
+  overflow: hidden;
   padding: $action-sheet-md-button-padding;
   min-height: $action-sheet-md-height;
   font-size: $action-sheet-md-button-font-size;
