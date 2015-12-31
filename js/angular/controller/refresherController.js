@@ -48,6 +48,15 @@ IonicModule
       startY = Math.floor(e.touches[0].screenY);
     }
 
+    function handleTouchstart(e) {
+      e.touches = e.touches || [{
+        screenX: e.screenX,
+        screenY: e.screenY
+      }];
+
+      startY = e.touches[0].screenY;
+    }
+
     function handleTouchend() {
       // reset Y
       startY = null;
@@ -97,14 +106,16 @@ IonicModule
         startY = e.touches[0].screenY;
       }
 
+      deltaY = e.touches[0].screenY - startY;
+
+      // how far have we dragged so far?
       // kitkat fix for touchcancel events http://updates.html5rocks.com/2014/05/A-More-Compatible-Smoother-Touch
-      if (ionic.Platform.isAndroid() && ionic.Platform.version() === 4.4 && scrollParent.scrollTop === 0) {
+      // Only do this if we're not on crosswalk
+      if (ionic.Platform.isAndroid() && ionic.Platform.version() === 4.4 && !ionic.Platform.isCrosswalk() && scrollParent.scrollTop === 0 && deltaY > 0) {
         isDragging = true;
         e.preventDefault();
       }
 
-      // how far have we dragged so far?
-      deltaY = e.touches[0].screenY - startY;
 
       // if we've dragged up and back down in to native scroll territory
       if (deltaY - dragOffset <= 0 || scrollParent.scrollTop !== 0) {
@@ -257,17 +268,17 @@ IonicModule
     }
 
 
-    var touchMoveEvent, touchEndEvent;
+    var touchStartEvent, touchMoveEvent, touchEndEvent;
     if (window.navigator.pointerEnabled) {
-      //touchStartEvent = 'pointerdown';
+      touchStartEvent = 'pointerdown';
       touchMoveEvent = 'pointermove';
       touchEndEvent = 'pointerup';
     } else if (window.navigator.msPointerEnabled) {
-      //touchStartEvent = 'MSPointerDown';
+      touchStartEvent = 'MSPointerDown';
       touchMoveEvent = 'MSPointerMove';
       touchEndEvent = 'MSPointerUp';
     } else {
-      //touchStartEvent = 'touchstart';
+      touchStartEvent = 'touchstart';
       touchMoveEvent = 'touchmove';
       touchEndEvent = 'touchend';
     }
@@ -282,6 +293,7 @@ IonicModule
       }
 
 
+      ionic.on(touchStartEvent, handleTouchstart, scrollChild);
       ionic.on(touchMoveEvent, handleTouchmove, scrollChild);
       ionic.on(touchEndEvent, handleTouchend, scrollChild);
       ionic.on('mousedown', handleMousedown, scrollChild);
@@ -294,6 +306,7 @@ IonicModule
     };
 
     function destroy() {
+      ionic.off(touchStartEvent, handleTouchstart, scrollChild);
       ionic.off(touchMoveEvent, handleTouchmove, scrollChild);
       ionic.off(touchEndEvent, handleTouchend, scrollChild);
       ionic.off('mousedown', handleMousedown, scrollChild);
