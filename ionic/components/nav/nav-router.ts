@@ -82,7 +82,7 @@ export class NavRouter extends RouterOutlet {
     if (pathRecognizer) {
 
       // generate a componentInstruction from the view's PathRecognizer and params
-      let componentInstruction = pathRecognizer.generate(viewCtrl.params.data);
+      let componentInstruction = pathRecognizer.generate(viewCtrl.data);
 
       // create a ResolvedInstruction from the componentInstruction
       let instruction = new ResolvedInstruction(componentInstruction, null);

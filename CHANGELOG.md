@@ -72,21 +72,22 @@ import {Popup} from 'ionic/ionic';
 
 @Page(...)
 class MyPage {
-constructor(popup: Popup) {
-  this.popup = popup;
-}
-doConfirm() {
-  this.popup.confirm({
-    title: "Use this lightsaber?",
-    subTitle: "You can't exchange lightsabers",
-    template: "Do you agree to use this lightsaber to do good across the intergalactic galaxy?",
-    cancelText: "Disagree",
-    okText: "Agree"
-  }).then((result, ev) => {
-    console.log('Confirmed!', result);
-  }, () => {
-    console.error('Not confirmed!');
-  });
+  constructor(popup: Popup) {
+    this.popup = popup;
+  }
+  doConfirm() {
+    this.popup.confirm({
+      title: "Use this lightsaber?",
+      subTitle: "You can't exchange lightsabers",
+      template: "Do you agree to use this lightsaber to do good across the intergalactic galaxy?",
+      cancelText: "Disagree",
+      okText: "Agree"
+    }).then((result, ev) => {
+      console.log('Confirmed!', result);
+    }, () => {
+      console.error('Not confirmed!');
+    });
+  }
 }
 ```
 
@@ -97,31 +98,32 @@ import {Alert, NavController} from 'ionic/ionic';
 
 @Page(...)
 class MyPage {
-constructor(nav: NavController) {
-  this.nav = nav;
-}
-doConfirm() {
-  let alert = Alert.create({
-    title: "Use this lightsaber?",
-    subTitle: "You can't exchange lightsabers",
-    body: "Do you agree to use this lightsaber to do good across the intergalactic galaxy?",
-    buttons: [
-      {
-        text: 'Disagree',
-        handler: () => {
-          console.log('Disagreed :(');
+  constructor(nav: NavController) {
+    this.nav = nav;
+  }
+  doConfirm() {
+    let alert = Alert.create({
+      title: "Use this lightsaber?",
+      subTitle: "You can't exchange lightsabers",
+      body: "Do you agree to use this lightsaber to do good across the intergalactic galaxy?",
+      buttons: [
+        {
+          text: 'Disagree',
+          handler: () => {
+            console.log('Disagreed :(');
+          }
+        },
+        {
+          text: 'Agree',
+          handler: () => {
+            console.log('Agreed!');
+          }
         }
-      },
-      {
-        text: 'Agree',
-        handler: () => {
-          console.log('Agreed!');
-        }
-      }
-    ]
-  });
+      ]
+    });
 
-  this.nav.present(alert);
+    this.nav.present(alert);
+  }
 }
 ```
 
@@ -134,21 +136,23 @@ import {Popup} from 'ionic/ionic';
 
 @Page(...)
 class MyPage {
-constructor(popup: Popup) {
-  this.popup = popup;
+  constructor(popup: Popup) {
+    this.popup = popup;
+  }
+  doPrompt() {
+    this.popup.prompt({
+      title: "New Album",
+      template: "Enter a name for this new album you're so keen on adding",
+      inputPlaceholder: "Album Name",
+      okText: "Save",
+      okType: "secondary"
+    }).then((name) => {
+      console.log('Name entered:', name);
+    }, () => {
+      console.error('Prompt closed');
+    });
+  }
 }
-doPrompt() {
-  this.popup.prompt({
-    title: "New Album",
-    template: "Enter a name for this new album you're so keen on adding",
-    inputPlaceholder: "Album Name",
-    okText: "Save",
-    okType: "secondary"
-  }).then((name) => {
-    console.log('Name entered:', name);
-  }, () => {
-    console.error('Prompt closed');
-  });
 ```
 
 Now:
@@ -158,36 +162,37 @@ import {Alert, NavController} from 'ionic/ionic';
 
 @Page(...)
 class MyPage {
-constructor(nav: NavController) {
-  this.nav = nav;
-}
-doConfirm() {
-  let alert = Alert.create({
-    title: "New Album",
-    body: "Enter a name for this new album you're so keen on adding",
-    inputs: [
-      {
-        name: 'album',
-        placeholder: 'Album Name'
-      }
-    ],
-    buttons: [
-      {
-        text: 'Cancel',
-        handler: data => {
-          console.log('Canceled!', data);
+  constructor(nav: NavController) {
+    this.nav = nav;
+  }
+  doConfirm() {
+    let alert = Alert.create({
+      title: "New Album",
+      body: "Enter a name for this new album you're so keen on adding",
+      inputs: [
+        {
+          name: 'album',
+          placeholder: 'Album Name'
         }
-      },
-      {
-        text: 'Ok',
-        handler: data => {
-          console.log('Submitted', data);
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+            console.log('Canceled!', data);
+          }
+        },
+        {
+          text: 'Ok',
+          handler: data => {
+            console.log('Submitted', data);
+          }
         }
-      }
-    ]
-  });
+      ]
+    });
 
-  this.nav.present(alert);
+    this.nav.present(alert);
+  }
 }
 ```
 
@@ -200,33 +205,96 @@ import {ActionSheet} from 'ionic/ionic';
 
 @Page(...)
 class MyPage {
-constructor(actionSheet: ActionSheet) {
-  this.actionSheet = actionSheet;
-}
-doActionMenu() {
-  this.actionSheet.open({
-    buttons: [
-      { text: 'Archive' }
-    ],
-    titleText: 'Modify your album',
-    cancelText: 'Cancel',
-    cancel: function() {
-      console.log('Canceled clicked');
-    },
-    destructiveText: 'Delete',
-    destructiveButtonClicked: () => {
-      console.log('Delete clicked');
-    },
-    buttonClicked: function(index) {
-      if (index == 0) {
-        console.log('Archive clicked');
+  constructor(actionSheet: ActionSheet) {
+    this.actionSheet = actionSheet;
+  }
+  doActionSheet() {
+    this.actionSheet.open({
+      buttons: [
+        { text: 'Archive' }
+      ],
+      titleText: 'Modify your album',
+      cancelText: 'Cancel',
+      cancel: function() {
+        console.log('Canceled clicked');
+      },
+      destructiveText: 'Delete',
+      destructiveButtonClicked: () => {
+        console.log('Delete clicked');
+      },
+      buttonClicked: function(index) {
+        if (index == 0) {
+          console.log('Archive clicked');
+        }
+        return true;
       }
-      return true;
-    }
 
-  }).then(actionSheetRef => {
-    this.actionSheetRef = actionSheetRef;
-  });
+    }).then(actionSheetRef => {
+      this.actionSheetRef = actionSheetRef;
+    });
+  }
+}
+```
+
+Now:
+
+```
+import {ActionSheet, NavController} from 'ionic/ionic';
+
+@Page(...)
+class MyPage {
+  constructor(nav: NavController) {
+    this.nav = nav;
+  }
+  doActionSheet(ev) {
+    let actionSheet = ActionSheet.create({
+      title: 'Modify your album',
+      buttons: [
+        {
+          text: 'Delete',
+          style: 'destructive',
+          handler: () => {
+            console.log('Delete clicked');
+          }
+        },
+        {
+          text: 'Archive',
+          handler: () => {
+            console.log('Archive clicked');
+          }
+        },
+        {
+          text: 'Cancel',
+          style: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+      ]
+    });
+
+    this.nav.present(actionSheet);
+  }
+}
+```
+
+##### Modal Refactor
+
+Was:
+
+```
+import {Modal} from 'ionic/ionic';
+
+@Page(...)
+class MyApp {
+
+ constructor(modal: Modal) {
+   this.modal = modal;
+ }
+
+ openContactModal() {
+   this.modal.open(EditUser, { userId: 8675309 });
+ }
 
 }
 ```
@@ -234,41 +302,17 @@ doActionMenu() {
 Now:
 
 ```
-import {Alert, NavController} from 'ionic/ionic';
+import {Modal, NavController} from 'ionic/ionic';
 
 @Page(...)
 class MyPage {
-constructor(nav: NavController) {
-  this.nav = nav;
-}
-doActionMenu(ev) {
-  let actionSheet = ActionSheet.create({
-    title: 'Modify your album',
-    buttons: [
-      {
-        text: 'Delete',
-        style: 'destructive',
-        handler: () => {
-          console.log('Delete clicked');
-        }
-      },
-      {
-        text: 'Archive',
-        handler: () => {
-          console.log('Archive clicked');
-        }
-      },
-      {
-        text: 'Cancel',
-        style: 'cancel',
-        handler: () => {
-          console.log('Cancel clicked');
-        }
-      },
-    ]
-  });
-
-  this.nav.present(actionSheet);
+  constructor(nav: NavController) {
+    this.nav = nav;
+  }
+  presentModal() {
+    let modal = Modal.create(EditUser, { userId: 8675309 });
+    this.nav.present(modal);
+  }
 }
 ```
 

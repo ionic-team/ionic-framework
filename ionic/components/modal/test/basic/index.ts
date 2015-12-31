@@ -198,28 +198,32 @@ class ModalFirstPage {
   }
 
   openActionSheet() {
-    this.actionSheet.open({
+    let actionSheet = ActionSheet.create({
       buttons: [
-        { text: 'Share This' },
-        { text: 'Move' }
-      ],
-      destructiveText: 'Delete',
-      titleText: 'Modify your album',
-      cancelText: 'Cancel',
-      cancel: function() {
-        console.log('Canceled');
-      },
-      destructiveButtonClicked: () => {
-        console.log('Destructive clicked');
-      },
-      buttonClicked: function(index) {
-        console.log('Button clicked', index);
-        if(index == 1) { return false; }
-        return true;
-      }
-    }).then(actionSheetRef => {
-      this.actionSheetRef = actionSheetRef;
+        {
+          text: 'Destructive',
+          style: 'destructive',
+          handler: () => {
+            console.log('Destructive clicked');
+          }
+        },
+        {
+          text: 'Archive',
+          handler: () => {
+            console.log('Archive clicked');
+          }
+        },
+        {
+          text: 'Cancel',
+          style: 'cancel',
+          handler: () => {
+            console.log('cancel this clicked');
+          }
+        }
+      ]
     });
+
+    this.nav.present(actionSheet);
   }
 }
 
