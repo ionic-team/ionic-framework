@@ -24,6 +24,8 @@ $alert-md-input-highlight-color:          map-get($colors-md, primary) !default;
 $alert-md-input-margin-top:               5px !default;
 $alert-md-input-margin-bottom:            5px !default;
 
+$alert-md-button-text-color:              map-get($colors-md, primary) !default;
+$alert-md-button-background-color:        transparent !default;
 $alert-md-buttons-padding:                8px 8px 8px 24px !default;
 $alert-md-buttons-justify-content:        flex-end !default;
 
@@ -70,6 +72,14 @@ $alert-md-buttons-justify-content:        flex-end !default;
   justify-content: $alert-md-buttons-justify-content;
 }
 
-.alert-button.activated {
-  opacity: 1;
+.alert-button {
+  position: relative;
+  overflow: hidden;
+  font-weight: 500;
+  color: $alert-md-button-text-color;
+  background-color: $alert-md-button-background-color;
+
+  &.activated {
+    opacity: 1;
+  }
 }
