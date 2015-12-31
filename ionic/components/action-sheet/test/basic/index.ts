@@ -10,7 +10,7 @@ class E2EPage {
     this.nav = nav;
   }
 
-  openActionSheet(ev) {
+  openActionSheet1(ev) {
     this.result = '';
 
     let actionSheet = ActionSheet.create({
@@ -45,6 +45,40 @@ class E2EPage {
           handler: () => {
             console.log('Destructive clicked');
             this.result = 'Destructive';
+          }
+        }
+      ]
+    });
+
+    this.nav.present(actionSheet);
+  }
+
+  openActionSheet2(ev) {
+    this.result = '';
+
+    let actionSheet = ActionSheet.create({
+      buttons: [
+        {
+          text: 'Destructive',
+          style: 'destructive',
+          handler: () => {
+            console.log('Destructive clicked');
+            this.result = 'Destructive';
+          }
+        },
+        {
+          text: 'Archive',
+          handler: () => {
+            console.log('Archive clicked');
+            this.result = 'Archived';
+          }
+        },
+        {
+          text: 'Cancel',
+          style: 'cancel',
+          handler: () => {
+            console.log('cancel this clicked');
+            this.result = 'Canceled';
           }
         }
       ]
