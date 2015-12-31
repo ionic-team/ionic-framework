@@ -62,7 +62,6 @@ export class Alert extends ViewController {
       '<div class="alert-body" *ngIf="d.body">{{d.body}}</div>' +
       '<div class="alert-body alert-inputs" *ngIf="d.inputs.length">' +
         '<div class="alert-input-wrapper" *ngFor="#i of d.inputs">' +
-          '<div class="alert-input-label" *ngIf="i.label">{{i.label}}</div>' +
           '<input [placeholder]="i.placeholder" [(ngModel)]="i.value" [type]="i.type" class="alert-input">' +
         '</div>' +
       '</div>' +
@@ -132,7 +131,6 @@ class AlertCmp {
     this.d.inputs = this.d.inputs.map((input, index) => {
       return {
         name: isDefined(input.name) ? input.name : index,
-        label: input.label,
         placeholder: isDefined(input.placeholder) ? input.placeholder : '',
         type: input.type || 'text',
         value: isDefined(input.value) ? input.value : ''

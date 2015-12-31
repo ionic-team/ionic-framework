@@ -59,7 +59,6 @@ class E2EPage {
     alert.addInput({
       name: 'name2',
       value: 'hello',
-      label: 'Input Label 2',
       placeholder: 'Placeholder 2'
     });
     alert.addButton({
