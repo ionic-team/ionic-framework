@@ -346,7 +346,7 @@
         }
 
         // D
-        var scrollBottomOffsetToTop = rect.bottom;
+        //var scrollBottomOffsetToTop = rect.bottom;
         // D - A
         scrollViewOffsetHeight = self.__originalContainerHeight;
         //console.log('Scroll view offset height', scrollViewOffsetHeight);
@@ -382,7 +382,7 @@
             // if there are things below the scroll view account for them and
             // subtract them from the keyboard height when resizing
             // E - D                         E                         D
-            var scrollBottomOffsetToBottom = e.detail.viewportHeight - scrollBottomOffsetToTop;
+            //var scrollBottomOffsetToBottom = e.detail.viewportHeight - scrollBottomOffsetToTop;
 
             // 0 or D - B if D > B           E - B                     E - D
             //var keyboardOffset = e.detail.keyboardHeight - scrollBottomOffsetToBottom;

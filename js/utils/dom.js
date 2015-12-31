@@ -117,7 +117,8 @@
       if (el.offsetParent) {
         do {
           curtop += el.offsetTop;
-        } while (el = el.offsetParent);
+          el = el.offsetParent;
+        } while (el)
         return curtop;
       }
     },
