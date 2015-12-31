@@ -46,14 +46,16 @@ import {isDefined} from '../../util/util';
 })
 export class RadioButton {
   @Input() value: string = '';
-  @Input() checked: boolean = false;
+  @Input() public checked: any = false;
   @Input() disabled: boolean = false;
   @Input() id: string;
-  @Output() select: EventEmitter<any> = new EventEmitter();
+  @Output() select: EventEmitter<RadioButton> = new EventEmitter();
+
+  labelId: any;
 
   constructor(private _form: Form, private _renderer: Renderer, private _elementRef: ElementRef) {
-    this.isChecked = this.checked;
-    _renderer.setElementAttribute(_elementRef, 'checked', null);
+    this._renderer = _renderer;
+    this._elementRef = _elementRef;
   }
 
   /**
@@ -64,6 +66,13 @@ export class RadioButton {
       this.id = 'rb-' + this._form.nextId();
     }
     this.labelId = 'lbl-' + this.id;
+
+    let checked = this.checked;
+    if (typeof checked === 'string') {
+      this.checked = (checked === '' || checked === 'true');
+    }
+    this.isChecked = this.checked;
+    this._renderer.setElementAttribute(this._elementRef, 'checked', null);
   }
 
   /**
@@ -72,7 +81,7 @@ export class RadioButton {
   @HostListener('click', ['$event'])
   private onClick(ev) {
     console.debug('RadioButton, select', this.value);
-    this.select.emit(ev, this.value);
+    this.select.emit(this);
   }
 
   public set isChecked(isChecked) {
@@ -135,15 +144,16 @@ export class RadioButton {
   }
 })
 export class RadioGroup {
-  @Output() change: EventEmitter<any> = new EventEmitter();
+  @Output() change: EventEmitter<RadioGroup> = new EventEmitter();
   @ContentChildren(RadioButton) private _buttons;
   @ContentChild(ListHeader) private _header;
 
-  constructor(@Optional() ngControl: NgControl, private _renderer: Renderer, private _elementRef: ElementRef) {
+  id: any;
+  value: any;
+
+  constructor(@Optional() private ngControl: NgControl, private _renderer: Renderer, private _elementRef: ElementRef) {
     this.ngControl = ngControl;
     this.id = ++radioGroupIds;
-    this.onChange = (_) => {};
-    this.onTouched = (_) => {};
 
     if (ngControl) {
       this.ngControl.valueAccessor = this;
@@ -156,7 +166,7 @@ export class RadioGroup {
    * the checked value.
    * https://github.com/angular/angular/blob/master/modules/angular2/src/forms/directives/shared.ts#L34
    */
-  writeValue(value) {
+  public writeValue(value) {
     this.value = isDefined(value) ? value : '';
     if (this._buttons) {
       let buttons = this._buttons.toArray();
@@ -169,6 +179,26 @@ export class RadioGroup {
       }
     }
   }
+
+  public onChange = (_:any) => {};
+  public onTouched = () => {};
+
+  /**
+   * @private
+   * Angular2 Forms API method called by the view (NgControl) to register the
+   * onChange event handler that updates the model (Control).
+   * https://github.com/angular/angular/blob/master/modules/angular2/src/forms/directives/shared.ts#L27
+   * @param {Function} fn  the onChange event handler.
+   */
+  public registerOnChange(fn) { this.onChange = fn; }
+
+  /**
+   * @private
+   * Angular2 Forms API method called by the the view (NgControl) to register
+   * the onTouched event handler that marks the model (Control) as touched.
+   * @param {Function} fn  onTouched event handler.
+   */
+  public registerOnTouched(fn) { this.onTouched = fn; }
 
   /**
    * @private
@@ -187,35 +217,21 @@ export class RadioGroup {
       button.select.subscribe(() => {
         this.writeValue(button.value);
         this.onChange(button.value);
-        this.change.emit(this.value);
+        this.change.emit(this);
       });
 
       if (isDefined(this.value)) {
         let isChecked = (button.value === this.value) || button.checked;
         button.isChecked = isChecked;
         if (isChecked) {
+          this.writeValue(button.value);
+          this.onChange(button.value);
           this._renderer.setElementAttribute(this._elementRef, 'aria-activedescendant', button.id);
         }
       }
     }
   }
 
-  /**
-   * @private
-   * Angular2 Forms API method called by the view (NgControl) to register the
-   * onChange event handler that updates the model (Control).
-   * https://github.com/angular/angular/blob/master/modules/angular2/src/forms/directives/shared.ts#L27
-   * @param {Function} fn  the onChange event handler.
-   */
-  registerOnChange(fn) { this.onChange = fn; }
-
-  /**
-   * @private
-   * Angular2 Forms API method called by the the view (NgControl) to register
-   * the onTouched event handler that marks the model (Control) as touched.
-   * @param {Function} fn  onTouched event handler.
-   */
-  registerOnTouched(fn) { this.onTouched = fn; }
 }
 
 let radioGroupIds = -1;
