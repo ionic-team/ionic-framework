@@ -18,6 +18,40 @@ import {Animation} from '../../animations/animation';
  *
  * @usage
  * ```ts
+ *
+ * constructor(nav: NavController) {
+ *   this.nav = nav;
+ * }
+ *
+ * presentActionSheet() {
+ *   let actionSheet = ActionSheet.create({
+ *     title: 'Modify your album',
+ *     buttons: [
+ *       {
+ *         text: 'Destructive',
+ *         style: 'destructive',
+ *         handler: () => {
+ *           console.log('Destructive clicked');
+ *         }
+ *       },
+ *       {
+ *         text: 'Archive',
+ *         handler: () => {
+ *           console.log('Archive clicked');
+ *         }
+ *       },
+ *       {
+ *         text: 'Cancel',
+ *         style: 'cancel',
+ *         handler: () => {
+ *           console.log('Cancel clicked');
+ *         }
+ *       }
+ *     ]
+ *   });
+ *
+ *   this.nav.present(actionSheet);
+ * }
  * ```
  *
  * @demo /docs/v2/demos/action-sheet/
@@ -32,30 +66,47 @@ import {Animation} from '../../animations/animation';
      this.viewType = 'action-sheet';
    }
 
+   /**
+   * @private
+   */
    getTransitionName(direction) {
      let key = 'actionSheet' + (direction === 'back' ? 'Leave' : 'Enter');
      return this._nav && this._nav.config.get(key);
    }
 
+   /**
+    * @param {string} title Action sheet title
+    */
    setTitle(title) {
      this.data.title = title;
    }
 
+   /**
+    * @param {string} subTitle Action sheet subtitle
+    */
    setSubTitle(subTitle) {
      this.data.subTitle = subTitle;
    }
 
+   /**
+    * @param {Object} button Action sheet button
+    */
    addButton(button) {
      this.data.buttons.push(button);
    }
 
+   /**
+    * @param {Object} button Action sheet options
+    */
    static create(data={}) {
      return new ActionSheet(data);
    }
 
  }
 
-
+/**
+* @private
+*/
 @Component({
   selector: 'ion-action-sheet',
   template:

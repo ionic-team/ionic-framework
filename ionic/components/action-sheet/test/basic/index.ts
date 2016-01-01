@@ -10,7 +10,7 @@ class E2EPage {
     this.nav = nav;
   }
 
-  openActionSheet1(ev) {
+  presentActionSheet1() {
     this.result = '';
 
     let actionSheet = ActionSheet.create({
@@ -44,7 +44,7 @@ class E2EPage {
           text: 'Cancel',
           style: 'cancel', // will always sort to be on the bottom
           handler: () => {
-            console.log('cancel this clicked');
+            console.log('Cancel clicked');
             this.result = 'Canceled';
           }
         }
@@ -54,7 +54,7 @@ class E2EPage {
     this.nav.present(actionSheet);
   }
 
-  openActionSheet2(ev) {
+  presentActionSheet2(ev) {
     this.result = '';
 
     let actionSheet = ActionSheet.create({

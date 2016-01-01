@@ -206,7 +206,7 @@ export class NavController extends Ion {
    *
    * ```typescript
    * class MyClass{
-   *    constructor(nav:NavController){
+   *    constructor(nav: NavController){
    *      this.nav = nav;
    *    }
    *
@@ -225,10 +225,10 @@ export class NavController extends Ion {
    *    }
    * }
    * ```
-   * @param {Any} component The name of the component you want to push on the navigation stack
+   * @param {Any} component The page component class you want to push on to the navigation stack
    * @param {Object} [params={}] Any nav-params you want to pass along to the next view
    * @param {Object} [opts={}] Any options you want to use pass to transtion
-   * @returns {Promise} Returns a promise when the transition is completed
+   * @returns {Promise} Returns a promise, which resolves when the transition has completed
    */
   push(componentType, params={}, opts={}, callback) {
     if (!componentType) {
@@ -290,6 +290,31 @@ export class NavController extends Ion {
     return promise;
   }
 
+  /**
+   * Present is how we display overlays on top of the content, from within the
+   * root level `NavController`. The `present` method is used by overlays, such
+   * as `ActionSheet`, `Alert`, and `Modal`. The main difference between `push`
+   * and `present`, is that `present` takes a `ViewController` instance, whereas
+   * `push` takes a `Page` component class. Additionally, `present` will place
+   * the overlay in the root NavController's stack.
+   *
+   * ```typescript
+   * class MyClass{
+   *    constructor(nav: NavController) {
+   *      this.nav = nav;
+   *    }
+   *
+   *    presentModal() {
+   *      let modal = Modal.create(ProfilePage);
+   *      this.nav.present(modal);
+   *    }
+   * }
+   * ```
+   *
+   * @param {ViewController} enteringView The name of the component you want to push on the navigation stack
+   * @param {Object} [opts={}] Any options you want to use pass to transtion
+   * @returns {Promise} Returns a promise, which resolves when the transition has completed
+   */
   present(enteringView, opts={}) {
     let rootNav = this.rootNav;
 
