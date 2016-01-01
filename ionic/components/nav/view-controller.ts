@@ -45,6 +45,11 @@ export class ViewController {
     this._onDismiss = callback;
   }
 
+  dismiss(data) {
+    this._onDismiss && this._onDismiss(data);
+    return this._nav.remove(this._nav.indexOf(this), this._leavingOpts);
+  }
+
   setNav(navCtrl) {
     this._nav = navCtrl;
   }
@@ -55,11 +60,6 @@ export class ViewController {
 
   getNavParams() {
     return new NavParams(this.data);
-  }
-
-  dismiss(data) {
-    this._onDismiss && this._onDismiss(data);
-    return this._nav.remove(this._nav.indexOf(this), this._leavingOpts);
   }
 
   setLeavingOpts(opts) {

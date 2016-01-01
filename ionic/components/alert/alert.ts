@@ -111,7 +111,7 @@ class AlertCmp {
   }
 
   dismiss() {
-    this._viewCtrl.dismiss(this);
+    this._viewCtrl.dismiss(this.getValues());
   }
 
   getValues() {

@@ -12,9 +12,9 @@ import {Animation} from '../../animations/animation';
  * @name ActionSheet
  * @description
  * The Action Sheet is a slide-up dialog that lets the user choose from a set
- * of options. Dangerous options are made obvious. There are easy ways to
- * cancel out of the action sheet, such as tapping the backdrop or even hitting
- * escape key on desktop.
+ * of options. Dangerous (destructive) options are made obvious. There are easy
+ * ways to cancel out of the action sheet, such as tapping the backdrop or
+ * hitting the escape key on desktop.
  *
  * @usage
  * ```ts
@@ -116,7 +116,7 @@ class ActionSheetCmp {
   }
 
   dismiss() {
-    this._viewCtrl.dismiss(this);
+    this._viewCtrl.dismiss();
   }
 
   onPageLoaded() {
@@ -129,10 +129,16 @@ class ActionSheetCmp {
       }
 
       if (button.style === 'cancel') {
+        if (!button.icon) {
+          button.icon = this._config.get('actionSheetCancelIcon');
+        }
         this.d.cancelButton = button;
 
       } else {
         if (button.style === 'destructive') {
+          if (!button.icon) {
+            button.icon = this._config.get('actionSheetDestructiveIcon');
+          }
           button.cssClass = (button.cssClass + ' ' || '') + 'action-sheet-destructive';
         }
         buttons.push(button);

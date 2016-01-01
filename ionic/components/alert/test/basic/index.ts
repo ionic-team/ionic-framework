@@ -86,6 +86,10 @@ class E2EPage {
     this.nav.present(alert).then(() => {
       this.testPromptOpen = true;
     });
+
+    alert.onDismiss(data => {
+      console.log('onDismiss data', data);
+    });
   }
 
 }

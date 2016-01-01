@@ -14,13 +14,14 @@ class E2EPage {
     this.result = '';
 
     let actionSheet = ActionSheet.create({
+      title: 'Modify your album',
       buttons: [
         {
-          text: 'Cancel',
-          style: 'cancel', // will always sort to be on the bottom
+          text: 'Destructive',
+          style: 'destructive',
           handler: () => {
-            console.log('cancel this clicked');
-            this.result = 'Canceled';
+            console.log('Destructive clicked');
+            this.result = 'Destructive';
           }
         },
         {
@@ -40,11 +41,11 @@ class E2EPage {
           }
         },
         {
-          text: 'Destructive',
-          style: 'destructive',
+          text: 'Cancel',
+          style: 'cancel', // will always sort to be on the bottom
           handler: () => {
-            console.log('Destructive clicked');
-            this.result = 'Destructive';
+            console.log('cancel this clicked');
+            this.result = 'Canceled';
           }
         }
       ]
@@ -59,14 +60,6 @@ class E2EPage {
     let actionSheet = ActionSheet.create({
       buttons: [
         {
-          text: 'Destructive',
-          style: 'destructive',
-          handler: () => {
-            console.log('Destructive clicked');
-            this.result = 'Destructive';
-          }
-        },
-        {
           text: 'Archive',
           handler: () => {
             console.log('Archive clicked');
@@ -79,6 +72,14 @@ class E2EPage {
           handler: () => {
             console.log('cancel this clicked');
             this.result = 'Canceled';
+          }
+        },
+        {
+          text: 'Destructive',
+          style: 'destructive',
+          handler: () => {
+            console.log('Destructive clicked');
+            this.result = 'Destructive';
           }
         }
       ]
