@@ -247,6 +247,7 @@ var zyngaCore = { effect: {} };
  */
 
 (function(ionic) {
+  var docBody = document.body;
   var NOOP = function(){};
 
   // Easing Equations (c) 2003 Robert Penner, all rights reserved.
@@ -885,27 +886,27 @@ ionic.views.Scroll = ionic.views.View.inherit({
       // Touch Events
       container.addEventListener("touchstart", self.touchStart, false);
       if(self.options.preventDefault) container.addEventListener("touchmove", self.touchMoveBubble, false);
-      document.addEventListener("touchmove", self.touchMove, false);
-      document.addEventListener("touchend", self.touchEnd, false);
-      document.addEventListener("touchcancel", self.touchEnd, false);
+      docBody.addEventListener("touchmove", self.touchMove, false);
+      docBody.addEventListener("touchend", self.touchEnd, false);
+      docBody.addEventListener("touchcancel", self.touchEnd, false);
       document.addEventListener("wheel", self.mouseWheel, false);
 
     } else if (window.navigator.pointerEnabled) {
       // Pointer Events
       container.addEventListener("pointerdown", self.touchStart, false);
       if(self.options.preventDefault) container.addEventListener("pointermove", self.touchMoveBubble, false);
-      document.addEventListener("pointermove", self.touchMove, false);
-      document.addEventListener("pointerup", self.touchEnd, false);
-      document.addEventListener("pointercancel", self.touchEnd, false);
+      docBody.addEventListener("pointermove", self.touchMove, false);
+      docBody.addEventListener("pointerup", self.touchEnd, false);
+      docBody.addEventListener("pointercancel", self.touchEnd, false);
       document.addEventListener("wheel", self.mouseWheel, false);
 
     } else if (window.navigator.msPointerEnabled) {
       // IE10, WP8 (Pointer Events)
       container.addEventListener("MSPointerDown", self.touchStart, false);
       if(self.options.preventDefault) container.addEventListener("MSPointerMove", self.touchMoveBubble, false);
-      document.addEventListener("MSPointerMove", self.touchMove, false);
-      document.addEventListener("MSPointerUp", self.touchEnd, false);
-      document.addEventListener("MSPointerCancel", self.touchEnd, false);
+      docBody.addEventListener("MSPointerMove", self.touchMove, false);
+      docBody.addEventListener("MSPointerUp", self.touchEnd, false);
+      docBody.addEventListener("MSPointerCancel", self.touchEnd, false);
       document.addEventListener("wheel", self.mouseWheel, false);
 
     } else {
@@ -952,8 +953,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
       container.addEventListener("mousedown", self.mouseDown, false);
       if(self.options.preventDefault) container.addEventListener("mousemove", self.mouseMoveBubble, false);
-      document.addEventListener("mousemove", self.mouseMove, false);
-      document.addEventListener("mouseup", self.mouseUp, false);
+      docBody.addEventListener("mousemove", self.mouseMove, false);
+      docBody.addEventListener("mouseup", self.mouseUp, false);
       document.addEventListener('mousewheel', self.mouseWheel, false);
       document.addEventListener('wheel', self.mouseWheel, false);
     }
@@ -965,26 +966,26 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
     container.removeEventListener('touchstart', self.touchStart);
     container.removeEventListener('touchmove', self.touchMoveBubble);
-    document.removeEventListener('touchmove', self.touchMove);
-    document.removeEventListener('touchend', self.touchEnd);
-    document.removeEventListener('touchcancel', self.touchEnd);
+    docBody.removeEventListener('touchmove', self.touchMove);
+    docBody.removeEventListener('touchend', self.touchEnd);
+    docBody.removeEventListener('touchcancel', self.touchEnd);
 
     container.removeEventListener("pointerdown", self.touchStart);
     container.removeEventListener("pointermove", self.touchMoveBubble);
-    document.removeEventListener("pointermove", self.touchMove);
-    document.removeEventListener("pointerup", self.touchEnd);
-    document.removeEventListener("pointercancel", self.touchEnd);
+    docBody.removeEventListener("pointermove", self.touchMove);
+    docBody.removeEventListener("pointerup", self.touchEnd);
+    docBody.removeEventListener("pointercancel", self.touchEnd);
 
     container.removeEventListener("MSPointerDown", self.touchStart);
     container.removeEventListener("MSPointerMove", self.touchMoveBubble);
-    document.removeEventListener("MSPointerMove", self.touchMove);
-    document.removeEventListener("MSPointerUp", self.touchEnd);
-    document.removeEventListener("MSPointerCancel", self.touchEnd);
+    docBody.removeEventListener("MSPointerMove", self.touchMove);
+    docBody.removeEventListener("MSPointerUp", self.touchEnd);
+    docBody.removeEventListener("MSPointerCancel", self.touchEnd);
 
     container.removeEventListener("mousedown", self.mouseDown);
     container.removeEventListener("mousemove", self.mouseMoveBubble);
-    document.removeEventListener("mousemove", self.mouseMove);
-    document.removeEventListener("mouseup", self.mouseUp);
+    docBody.removeEventListener("mousemove", self.mouseMove);
+    docBody.removeEventListener("mouseup", self.mouseUp);
     document.removeEventListener('mousewheel', self.mouseWheel);
     document.removeEventListener('wheel', self.mouseWheel);
 
