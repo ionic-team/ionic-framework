@@ -1,17 +1,16 @@
-import {NavController, NavParams} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
-import {Config} from '../../config/config';
 import {Animation} from '../../animations/animation';
 
 /**
  * @name Modal
  * @description
- * The Modal is a content pane that can go over the user's current page.
+ * A Modal is a content pane that goes over the user's current page.
  * Usually it is used for making a choice or editing an item. A modal uses the
- * `NavController` to "present" itself in the root nav stack. It is added to the
- * stack similar to how
+ * `NavController` to
+ * {@link /docs/v2/api/components/nav/NavController/#present NavController.present}
+ * itself in the root nav stack. It is added to the stack similar to how
  * {@link /docs/v2/api/components/nav/NavController/#push NavController.push}
- * works, where it is passed a Page component, along with optional Page params
+ * works.
  *
  * When a modal (or any other overlay such as an alert or actionsheet) is
  * "presented" to a nav controller, the overlay is added to the app's root nav.
@@ -22,15 +21,15 @@ import {Animation} from '../../animations/animation';
  *
  * A modal can also emit data, which is useful when it is used to add or edit
  * data. For example, a profile page could slide up in a modal, and on submit,
- * the submit button could emit the updated profile data, then dismiss the modal.
- * From that point, anything which is subscribed to the modal's `data` event
- * would receive the modal's data.
+ * the submit button could pass the updated profile data, then dismiss the
+ * modal.
  *
  * @usage
  * ```ts
  * import {Modal, NavController} from 'ionic/ionic';
  *
- * class MyApp {
+ * @Page(...)
+ * class HomePage {
  *
  *  constructor(nav: NavController) {
  *    this.nav = nav;
@@ -43,12 +42,24 @@ import {Animation} from '../../animations/animation';
  *
  *  presentProfileModal() {
  *    let profileModal = Modal.create(Profile, { userId: 8675309 });
- *    this.nav.present(profileModal, {
- *      animation: 'my-fade-in'
- *    });
- *    profileModal.data.subscribe(data => {
+ *    profileModal.onDismiss(data => {
  *      console.log(data);
  *    });
+ *    this.nav.present(profileModal);
+ *  }
+ *
+ * }
+ *
+ * @Page(...)
+ * class Profile {
+ *
+ *  constructor(viewCtrl: ViewController) {
+ *    this.viewCtrl = viewCtrl;
+ *  }
+ *
+ *  dismiss() {
+ *    let data = { 'foo': 'bar' };
+ *    this.viewCtrl.dismiss(data);
  *  }
  *
  * }
@@ -63,11 +74,18 @@ export class Modal extends ViewController {
     this.viewType = 'modal';
   }
 
+  /**
+  * @private
+  */
   getTransitionName(direction) {
     let key = (direction === 'back' ? 'modalLeave' : 'modalEnter');
     return this._nav && this._nav.config.get(key);
   }
 
+  /**
+   * @param {Any} componentType Modal
+   * @param {Object} data Modal options
+   */
   static create(componentType, data={}) {
     return new Modal(componentType, data);
   }
