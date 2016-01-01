@@ -12,7 +12,9 @@ import {Animation} from '../../animations/animation';
  * @name ActionSheet
  * @description
  * An Action Sheet is a dialog that lets the user choose from a set of
- * options. Dangerous (destructive) options are made obvious. There are easy
+ * options. It appears on top of the app's content, and must be manually
+ * dismissed by the user before they can resume interaction with the app.
+ * Dangerous (destructive) options are made obvious. There are easy
  * ways to cancel out of the action sheet, such as tapping the backdrop or
  * hitting the escape key on desktop.
  *
@@ -74,10 +76,10 @@ import {Animation} from '../../animations/animation';
  */
  export class ActionSheet extends ViewController {
 
-   constructor(data={}) {
-     data.buttons = data.buttons || [];
+   constructor(opts={}) {
+     opts.buttons = opts.buttons || [];
 
-     super(ActionSheetCmp, data);
+     super(ActionSheetCmp, opts);
      this.viewType = 'action-sheet';
    }
 
@@ -111,10 +113,10 @@ import {Animation} from '../../animations/animation';
    }
 
    /**
-    * @param {Object} button Action sheet options
+    * @param {Object} opts Action sheet options
     */
-   static create(data={}) {
-     return new ActionSheet(data);
+   static create(opts={}) {
+     return new ActionSheet(opts);
    }
 
  }

@@ -1,5 +1,5 @@
 import {Component, ElementRef, Renderer} from 'angular2/core';
-import {NgClass, NgIf, NgFor, FORM_DIRECTIVES} from 'angular2/common';
+import {NgClass, NgIf, NgFor} from 'angular2/common';
 
 import {NavParams} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
@@ -8,48 +8,171 @@ import {Animation} from '../../animations/animation';
 import {isDefined} from '../../util/util';
 
 
+/**
+ * @name Alert
+ * @description
+ * An Alert is a dialog that presents users with either information, or used
+ * to receive information from the user using inputs. An alert appears on top
+ * of the app's content, and must be manually dismissed by the user before
+ * they can resume interaction with the app.
+ *
+ * An alert is created from an array of `buttons` and optionally an array of
+ * `inputs`. Each button includes properties for its `text`, and optionally a
+ * `handler`. If a handler returns `false` then the alert will not be dismissed.
+ * An alert can also optionally have a `title`, `subTitle` and `body`.
+ *
+ * All buttons will show up in the order they have been added to the `buttons`
+ * array, from left to right. Note: The right most button (the last one in the
+ * array) is the main button.
+ *
+ * Alerts can also include inputs whos data can be passed back to the app.
+ * Inputs can be used to prompt users for information.
+ *
+ * Its shorthand is to add all the alert's options from within the
+ * `Alert.create(opts)` first argument. Otherwise the alert's
+ * instance has methods to add options, such as `setTitle()` or `addButton()`.
+ *
+ * @usage
+ * ```ts
+ * constructor(nav: NavController) {
+ *   this.nav = nav;
+ * }
+ *
+ * presentAlert() {
+ *   let alert = Alert.create({
+ *     title: 'Low battery',
+ *     subTitle: '10% of battery remaining',
+ *     buttons: ['Dismiss']
+ *   });
+ *   this.nav.present(alert);
+ * }
+ *
+ * presentConfirm() {
+ *   let alert = Alert.create({
+ *     title: 'Confirm purchase',
+ *     body: 'Do you want to buy this book?',
+ *     buttons: [
+ *       {
+ *         text: 'Cancel',
+ *         handler: () => {
+ *           console.log('Cancel clicked');
+ *         }
+ *       },
+ *       {
+ *         text: 'Buy',
+ *         handler: () => {
+ *           console.log('Buy clicked');
+ *         }
+ *       }
+ *     ]
+ *   });
+ *   this.nav.present(alert);
+ * }
+ *
+ * presentPrompt() {
+ *   let alert = Alert.create({
+ *     title: 'Login',
+ *     inputs: [
+ *       {
+ *         name: 'username',
+ *         placeholder: 'Username'
+ *       },
+ *       {
+ *         name: 'password',
+ *         placeholder: 'Password',
+ *         type: 'password'
+ *       }
+ *     ],
+ *     buttons: [
+ *       {
+ *         text: 'Cancel',
+ *         handler: data => {
+ *           console.log('Cancel clicked');
+ *         }
+ *       },
+ *       {
+ *         text: 'Login',
+ *         handler: data => {
+ *           if (User.isValid(data.username, data.password)) {
+ *             // logged in!
+ *           } else {
+ *             // invalid login
+ *             return false;
+ *           }
+ *         }
+ *       }
+ *     ]
+ *   });
+ *   this.nav.present(alert);
+ * }
+ * ```
+ *
+ */
 export class Alert extends ViewController {
 
-  constructor(data={}) {
-    data.inputs = data.inputs || [];
-    data.buttons = data.buttons || [];
+  constructor(opts={}) {
+    opts.inputs = opts.inputs || [];
+    opts.buttons = opts.buttons || [];
 
-    super(AlertCmp, data);
+    super(AlertCmp, opts);
     this.viewType = 'alert';
   }
 
+  /**
+  * @private
+  */
   getTransitionName(direction) {
     let key = (direction === 'back' ? 'alertLeave' : 'alertEnter');
     return this._nav && this._nav.config.get(key);
   }
 
+  /**
+   * @param {string} title Alert title
+   */
   setTitle(title) {
     this.data.title = title;
   }
 
+  /**
+   * @param {string} subTitle Alert subtitle
+   */
   setSubTitle(subTitle) {
     this.data.subTitle = subTitle;
   }
 
+  /**
+   * @param {string} body Alert body content
+   */
   setBody(body) {
     this.data.body = body;
   }
 
+  /**
+   * @param {Object} input Alert input
+   */
   addInput(input) {
     this.data.inputs.push(input);
   }
 
+  /**
+   * @param {Object} button Alert button
+   */
   addButton(button) {
     this.data.buttons.push(button);
   }
 
-  static create(data={}) {
-    return new Alert(data);
+  /**
+   * @param {Object} opts Alert options
+   */
+  static create(opts={}) {
+    return new Alert(opts);
   }
 
 }
 
-
+/**
+* @private
+*/
 @Component({
   selector: 'ion-alert',
   template:
