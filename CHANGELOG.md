@@ -1,5 +1,5 @@
-<a name"1.2.2"></a>
-### 1.2.2 "copenhagen" (2016-01-02)
+<a name"1.2.3"></a>
+### 1.2.3 "copenhagen" (2016-01-02)
 
 
 #### Bug Fixes
