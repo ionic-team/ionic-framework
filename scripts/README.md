@@ -4,7 +4,7 @@
 
 1. `npm install`
 2. `gulp watch`
-3. Go to [http://localhost:8000/e2e/](http://localhost:8000/e2e/)
+3. Go to [http://localhost:8000/dist/e2e/](http://localhost:8000/dist/e2e/)
 4. Stay cool
 
 ### Building & Running Component Demos
