@@ -26,6 +26,7 @@ export class Platform {
   constructor(platforms=[]) {
     this._platforms = platforms;
     this._versions = {};
+    this._dir = 'ltr';
     this._onResizes = [];
 
     this._readyPromise = new Promise(res => { this._readyResolve = res; } );
@@ -147,8 +148,6 @@ export class Platform {
 
   /**
    * @private
-   * @param {TODO} config  TODO
-   * @returns {TODO} TODO
    */
   prepareReady(config) {
     let self = this;
@@ -168,6 +167,21 @@ export class Platform {
     }
   }
 
+  /**
+   * Returns if this app is using right-to-left language direction or not.
+   * http://www.w3.org/International/questions/qa-html-dir
+   * @returns {boolean}
+   */
+  isRTL() {
+    return (this._dir === 'rtl');
+  }
+
+  /**
+  * @private
+  */
+  setDir(dir) {
+    this._dir = dir.toLowerCase();
+  }
 
   // Methods meant to be overridden by the engine
   // **********************************************

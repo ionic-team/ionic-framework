@@ -13,16 +13,17 @@ class E2EApp {
     console.log('platforms', platform.platforms());
     console.log('mode', config.get('mode'));
 
-    console.log('core', platform.is('core'))
-    console.log('cordova', platform.is('cordova'))
-    console.log('mobile', platform.is('mobile'))
-    console.log('ipad', platform.is('ipad'))
-    console.log('iphone', platform.is('iphone'))
-    console.log('phablet', platform.is('phablet'))
-    console.log('tablet', platform.is('tablet'))
-    console.log('ios', platform.is('ios'))
-    console.log('android', platform.is('android'))
-    console.log('windows phone', platform.is('windowsphone'))
+    console.log('isRTL', platform.isRTL());
+    console.log('core', platform.is('core'));
+    console.log('cordova', platform.is('cordova'));
+    console.log('mobile', platform.is('mobile'));
+    console.log('ipad', platform.is('ipad'));
+    console.log('iphone', platform.is('iphone'));
+    console.log('phablet', platform.is('phablet'));
+    console.log('tablet', platform.is('tablet'));
+    console.log('ios', platform.is('ios'));
+    console.log('android', platform.is('android'));
+    console.log('windows phone', platform.is('windowsphone'));
 
     platform.ready().then(() => {
       console.log('platform.ready');
