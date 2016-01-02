@@ -69,7 +69,7 @@ IonicModule
 * ```
 */
 IonicModule
-.directive('ionLabel', ['$timeout', function($timeout) {
+.directive('ionLabel', [function() {
   return {
     restrict: 'E',
     require: '?^ionInput',
