@@ -309,7 +309,7 @@ IonicModule
     },
 
     scrolling: {
-      jsScrolling: false
+      jsScrolling: true
     },
 
     spinner: {
@@ -368,8 +368,11 @@ IonicModule
     tabs: {
       style: 'striped',
       position: 'top'
-    }
+    },
 
+    scrolling: {
+      jsScrolling: false
+    }
   });
 
   // Windows Phone
