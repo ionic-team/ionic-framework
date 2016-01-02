@@ -1,3 +1,13 @@
+<a name"1.2.3"></a>
+### 1.2.3 "copenhagen" (2016-01-02)
+
+
+#### Bug Fixes
+
+* **input:** focus on iOS ([aef490b1](https://github.com/driftyco/ionic/commit/aef490b1))
+* **scroll:** js scrolling for iOS for now ([d9b35f4d](https://github.com/driftyco/ionic/commit/d9b35f4d))
+
+
 <a name"1.2.2"></a>
 ### 1.2.2 "barcelona" (2015-12-31)
 
