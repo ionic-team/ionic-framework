@@ -220,3 +220,17 @@ ion-item-divider {
 ion-item-sliding {
   background-color: $item-ios-sliding-content-bg;
 }
+
+// iOS item right-to-left
+// --------------------------------------------------
+@if $include-rtl {
+  @at-root {
+
+    .rtl.ios {
+
+      // todo
+
+    }
+    
+  }
+}

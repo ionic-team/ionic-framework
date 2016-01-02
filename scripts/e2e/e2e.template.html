@@ -34,6 +34,11 @@
     if (location.href.indexOf('cordova=true') > -1) {
       window.cordova = {};
     }
+    if (location.href.indexOf('rtl=true') > -1) {
+      document.dir = 'rtl';
+    } else {
+      document.dir = 'ltr';
+    }
   </script>
 
   <style>
@@ -88,6 +93,12 @@
   </ion-app>
 
   <script>
+    if (document.dir === 'rtl') {
+      document.body.classList.add('rtl');
+    } else {
+      document.body.classList.remove('rtl');
+    }
+
     System.import('index.js').then(function(m) {}, console.error.bind(console));
     console.timeEnd('script init');
   </script>
