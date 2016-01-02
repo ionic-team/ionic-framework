@@ -1780,7 +1780,7 @@ IonicModule
     },
 
     scrolling: {
-      jsScrolling: false
+      jsScrolling: true
     },
 
     spinner: {
@@ -1839,8 +1839,11 @@ IonicModule
     tabs: {
       style: 'striped',
       position: 'top'
-    }
+    },
 
+    scrolling: {
+      jsScrolling: false
+    }
   });
 
   // Windows Phone
@@ -10564,7 +10567,7 @@ IonicModule
 * ```
 */
 IonicModule
-.directive('ionLabel', ['$timeout', function($timeout) {
+.directive('ionLabel', [function() {
   return {
     restrict: 'E',
     require: '?^ionInput',
@@ -10587,9 +10590,7 @@ IonicModule
           ionInputCtrl.setInputAriaLabeledBy(id);
 
           $element.on('click', function() {
-            $timeout(function() {
-              ionInputCtrl.focus();
-            });
+            ionInputCtrl.focus();
           });
         }
       };
