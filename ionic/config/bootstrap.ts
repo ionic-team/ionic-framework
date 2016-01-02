@@ -91,8 +91,8 @@ function setupDom(window, document, config, platform, clickBlock, featureDetect)
   bodyEle.classList.add(mode);
 
   // right-to-left language direction
-  platform.setDir(document.dir);
-  if (platform.isRTL()) {
+  if (document.dir === 'rtl') {
+    platform.setIsRTL(true);
     bodyEle.classList.add('rtl');
   }
 

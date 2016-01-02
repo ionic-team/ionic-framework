@@ -200,8 +200,8 @@ export class Config {
       let platformModeValue = undefined;
       let configObj = null;
 
-      if (this._platform) {
-        let queryStringValue = this._platform.query('ionic' + key.toLowerCase());
+      if (this.platform) {
+        let queryStringValue = this.platform.query('ionic' + key.toLowerCase());
         if (isDefined(queryStringValue)) {
           return this._c[key] = (queryStringValue === 'true' ? true : queryStringValue === 'false' ? false : queryStringValue);
         }
@@ -211,7 +211,7 @@ export class Config {
 
         // array of active platforms, which also knows the hierarchy,
         // with the last one the most important
-        let activePlatformKeys = this._platform.platforms();
+        let activePlatformKeys = this.platform.platforms();
 
         // loop through all of the active platforms we're on
         for (let i = 0, l = activePlatformKeys.length; i < l; i++) {
@@ -272,7 +272,7 @@ export class Config {
     // or it was from the default platform configs
     // in that order
     if (isFunction(this._c[key])) {
-      return this._c[key](this._platform);
+      return this._c[key](this.platform);
     }
 
     return this._c[key];
@@ -282,7 +282,7 @@ export class Config {
    * @private
    */
   setPlatform(platform) {
-    this._platform = platform;
+    this.platform = platform;
   }
 
   static setModeConfig(mode, config) {

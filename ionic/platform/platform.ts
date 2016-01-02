@@ -26,7 +26,7 @@ export class Platform {
   constructor(platforms=[]) {
     this._platforms = platforms;
     this._versions = {};
-    this._dir = 'ltr';
+    this._isRTL = false;
     this._onResizes = [];
 
     this._readyPromise = new Promise(res => { this._readyResolve = res; } );
@@ -173,14 +173,14 @@ export class Platform {
    * @returns {boolean}
    */
   isRTL() {
-    return (this._dir === 'rtl');
+    return this._isRTL;
   }
 
   /**
   * @private
   */
-  setDir(dir) {
-    this._dir = dir.toLowerCase();
+  setIsRTL(val) {
+    this._isRTL = val;
   }
 
   // Methods meant to be overridden by the engine

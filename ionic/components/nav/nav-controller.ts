@@ -794,6 +794,9 @@ export class NavController extends Ion {
       // init the transition animation
       opts.renderDelay = opts.transitionDelay || self._trnsDelay;
 
+      // set if this app is right-to-left or not
+      opts.isRTL = this.config.platform.isRTL();
+
       let transAnimation = Animation.createTransition(enteringView,
                                                       leavingView,
                                                       opts);
