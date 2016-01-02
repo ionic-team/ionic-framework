@@ -1,8 +1,8 @@
 {
   "name": "ionic-sdk",
   "private": false,
-  "version": "1.2.2",
-  "codename": "barcelona",
+  "version": "1.2.3",
+  "codename": "copenhagen",
   "repository": {
     "url": "git://github.com/driftyco/ionic.git"
   },
