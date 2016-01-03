@@ -1,3 +1,12 @@
+<a name"1.2.4"></a>
+### 1.2.4 "" (2016-01-03)
+
+
+#### Bug Fixes
+
+* **tabs:** overflow scroll with child not view. ([1f2178f3](https://github.com/driftyco/ionic/commit/1f2178f3), closes [#4891](https://github.com/driftyco/ionic/issues/4891))
+
+
 <a name"1.2.3"></a>
 ### 1.2.3 "" (2016-01-02)
 
