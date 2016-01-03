@@ -204,6 +204,11 @@ ion-infinite-scroll {
   left: 0;
   position: absolute;
 
+  &.pane {
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+
   .scroll {
     position: static;
     height: 100%;
