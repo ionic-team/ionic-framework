@@ -315,7 +315,6 @@ export class Platform {
 
   /**
    * @private
-   * @param {TODO} platformConfig  TODO
    */
   static register(platformConfig) {
     platformRegistry[platformConfig.name] = platformConfig;
@@ -330,21 +329,20 @@ export class Platform {
 
   /**
    * @private
-   * @param {TODO} platformName  TODO
-   * @returns {string} TODO
    */
   static get(platformName) {
     return platformRegistry[platformName] || {};
   }
 
+  /**
+   * @private
+   */
   static setDefault(platformName) {
     platformDefault = platformName;
   }
 
   /**
    * @private
-   * @param {TODO} queryValue  TODO
-   * @returns {boolean} TODO
    */
   testQuery(queryValue, queryTestValue) {
     let valueSplit = queryValue.toLowerCase().split(';');
@@ -353,8 +351,6 @@ export class Platform {
 
   /**
    * @private
-   * @param {TODO} userAgentExpression  TODO
-   * @returns {boolean} TODO
    */
   testUserAgent(userAgentExpression) {
     let rgx = new RegExp(userAgentExpression, 'i');
@@ -363,8 +359,6 @@ export class Platform {
 
   /**
    * @private
-   * @param {TODO} navigatorPlatformExpression  TODO
-   * @returns {boolean} TODO
    */
   testNavigatorPlatform(navigatorPlatformExpression) {
     let rgx = new RegExp(navigatorPlatformExpression, 'i');
@@ -373,8 +367,6 @@ export class Platform {
 
   /**
    * @private
-   * @param {TODO} userAgentExpression  TODO
-   * @returns {Object} TODO
    */
   matchUserAgentVersion(userAgentExpression) {
     if (this._ua && userAgentExpression) {
@@ -390,9 +382,6 @@ export class Platform {
 
   /**
    * @private
-   * @param {TODO} queryValue  TODO
-   * @param {TODO} userAgentExpression  TODO
-   * @returns {boolean} TODO
    */
   isPlatform(queryTestValue, userAgentExpression) {
     if (!userAgentExpression) {
@@ -409,7 +398,6 @@ export class Platform {
 
   /**
    * @private
-   * @param {TODO} config  TODO
    */
   load(platformOverride) {
     let rootPlatformNode = null;
@@ -494,12 +482,14 @@ export class Platform {
         platformNode = platformNode.child();
       }
     }
+
+    if (this._platforms.indexOf('mobile') > -1 && this._platforms.indexOf('cordova') === -1) {
+      this._platforms.push('mobileweb');
+    }
   }
 
   /**
    * @private
-   * @param {TODO} platformName  TODO
-   * @returns {TODO} TODO
    */
   matchPlatform(platformName) {
     // build a PlatformNode and assign config data to it

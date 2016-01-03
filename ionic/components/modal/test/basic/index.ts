@@ -17,6 +17,7 @@ class E2EApp {
     console.log('core', platform.is('core'));
     console.log('cordova', platform.is('cordova'));
     console.log('mobile', platform.is('mobile'));
+    console.log('mobileweb', platform.is('mobileweb'));
     console.log('ipad', platform.is('ipad'));
     console.log('iphone', platform.is('iphone'));
     console.log('phablet', platform.is('phablet'));
@@ -28,6 +29,8 @@ class E2EApp {
     platform.ready().then(() => {
       console.log('platform.ready');
     });
+
+    this.platforms = platform.platforms();
   }
 
   openModal() {
