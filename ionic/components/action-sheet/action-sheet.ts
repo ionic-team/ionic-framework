@@ -130,10 +130,10 @@ import {Animation} from '../../animations/animation';
     '<div (click)="dismiss()" tappable disable-activated class="backdrop" role="presentation"></div>' +
     '<div class="action-sheet-wrapper">' +
       '<div class="action-sheet-container">' +
-        '<div class="action-sheet-group action-sheet-options">' +
+        '<div class="action-sheet-group">' +
           '<div class="action-sheet-title" *ngIf="d.title">{{d.title}}</div>' +
           '<div class="action-sheet-sub-title" *ngIf="d.subTitle">{{d.subTitle}}</div>' +
-          '<button (click)="click(b)" *ngFor="#b of d.buttons" class="action-sheet-button action-sheet-option disable-hover" [ngClass]="b.cssClass">' +
+          '<button (click)="click(b)" *ngFor="#b of d.buttons" class="action-sheet-button disable-hover" [ngClass]="b.cssClass">' +
             '<icon [name]="b.icon" *ngIf="b.icon" class="action-sheet-icon"></icon> ' +
             '{{b.text}}' +
           '</button>' +
@@ -194,6 +194,9 @@ class ActionSheetCmp {
     this.d.buttons.forEach(button => {
       if (typeof button === 'string') {
         button = { text: button };
+      }
+      if (!button.cssClass) {
+        button.cssClass = '';
       }
 
       if (button.style === 'cancel') {

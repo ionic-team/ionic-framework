@@ -5,13 +5,6 @@
 
 $action-sheet-width:                             100% !default;
 $action-sheet-max-width:                         520px !default;
-$action-sheet-background-color:                  rgba(243,243,243,.95) !default;
-$action-sheet-button-text-color:                 #007aff !default;
-
-$action-sheet-options-background-color:          #f1f2f3 !default;
-$action-sheet-options-background-active-color:   #e4e5e7 !default;
-$action-sheet-options-text-color:                #007aff !default;
-$action-sheet-options-border-color:              #d1d3d6 !default;
 
 
 ion-action-sheet {
@@ -48,20 +41,8 @@ ion-action-sheet {
   width: 100%;
   margin: 0;
   border-radius: 0;
-  border-color: $action-sheet-options-border-color;
 
   &.activated {
     box-shadow: none;
-    border-color: $action-sheet-options-border-color;
-    background: $action-sheet-options-background-active-color;
   }
-}
-
-.action-sheet-group {
-  background-color: #fff;
-  overflow: hidden;
-}
-
-.action-sheet-options {
-  background: $action-sheet-options-background-color;
 }

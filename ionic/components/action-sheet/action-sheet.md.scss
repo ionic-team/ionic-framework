@@ -4,21 +4,20 @@
 // Material Design Action Sheet
 // --------------------------------------------------
 
-$action-sheet-md-background-color:         #fafafa !default;
+$action-sheet-md-background-color:                #fafafa !default;
 
-$action-sheet-md-height:                   4.8rem !default;
+$action-sheet-md-title-color:                     #757575 !default;
+$action-sheet-md-title-font-size:                 1.6rem !default;
+$action-sheet-md-title-padding:                   19px 16px 17px !default;
 
-$action-sheet-md-title-color:              #757575 !default;
-$action-sheet-md-title-font-size:          1.6rem !default;
-$action-sheet-md-title-padding:            19px 16px 17px !default;
+$action-sheet-md-button-height:                   4.8rem !default;
+$action-sheet-md-button-text-color:               #222 !default;
+$action-sheet-md-button-font-size:                1.6rem !default;
+$action-sheet-md-button-padding:                  0 16px !default;
+$action-sheet-md-button-background-active-color:  #f1f1f1 !default;
 
-$action-sheet-md-button-text-color:        #222 !default;
-$action-sheet-md-button-font-size:         1.6rem !default;
-$action-sheet-md-button-padding:           0 16px !default;
-$action-sheet-md-background-active-color:  #f1f1f1 !default;
-
-$action-sheet-md-icon-font-size:           2.4rem !default;
-$action-sheet-md-icon-margin:              0 28px 0 0 !default;
+$action-sheet-md-icon-font-size:                  2.4rem !default;
+$action-sheet-md-icon-margin:                     0 28px 0 0 !default;
 
 
 .action-sheet-title {
@@ -32,7 +31,7 @@ $action-sheet-md-icon-margin:              0 28px 0 0 !default;
   position: relative;
   overflow: hidden;
   padding: $action-sheet-md-button-padding;
-  min-height: $action-sheet-md-height;
+  min-height: $action-sheet-md-button-height;
   font-size: $action-sheet-md-button-font-size;
   font-weight: normal;
   color: $action-sheet-md-button-text-color;
@@ -40,7 +39,7 @@ $action-sheet-md-icon-margin:              0 28px 0 0 !default;
   text-align: left;
 
   &.activated {
-    background: $action-sheet-md-background-active-color;
+    background: $action-sheet-md-button-background-active-color;
     border-radius: 0;
     box-shadow: none;
   }
@@ -56,6 +55,7 @@ $action-sheet-md-icon-margin:              0 28px 0 0 !default;
 }
 
 .action-sheet-group {
+  overflow: hidden;
   margin: 0;
   border-radius: 0;
   background-color: $action-sheet-md-background-color;
@@ -67,6 +67,5 @@ $action-sheet-md-icon-margin:              0 28px 0 0 !default;
 
 .action-sheet-cancel {
   background-color: $action-sheet-md-background-color;
-  width: auto;
   border: none;
 }
