@@ -8,8 +8,6 @@ Config.setModeConfig('ios', {
 
   actionSheetEnter: 'action-sheet-slide-in',
   actionSheetLeave: 'action-sheet-slide-out',
-  actionSheetCancelIcon: '',
-  actionSheetDestructiveIcon: '',
 
   alertEnter: 'alert-pop-in',
   alertLeave: 'alert-pop-out',
@@ -37,8 +35,6 @@ Config.setModeConfig('md', {
 
   actionSheetEnter: 'action-sheet-md-slide-in',
   actionSheetLeave: 'action-sheet-md-slide-out',
-  actionSheetCancelIcon: 'ion-md-close',
-  actionSheetDestructiveIcon: 'ion-md-trash',
 
   alertEnter: 'alert-md-pop-in',
   alertLeave: 'alert-md-pop-out',

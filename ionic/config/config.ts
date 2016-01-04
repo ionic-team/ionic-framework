@@ -78,8 +78,8 @@ import {isObject, isDefined, isFunction, isArray, extend} from '../util/util';
  * | activator                  | highlight              | ripple                    |
  * | actionSheetEnter           | action-sheet-slide-in  | action-sheet-md-slide-in  |
  * | actionSheetLeave           | action-sheet-slide-out | action-sheet-md-slide-out |
- * | actionSheetCancelIcon      |                        | ion-md-close              |
- * | actionSheetDestructiveIcon |                        | ion-md-trash              |
+ * | alertEnter                 | alert-pop-in           | alert-md-pop-in           |
+ * | alertLeave                 | alert-pop-out          | alert-md-pop-out          |
  * | backButtonText             | Back                   |                           |
  * | backButtonIcon             | ion-ios-arrow-back     | ion-md-arrow-back         |
  * | iconMode                   | ios                    | md                        |
@@ -88,8 +88,6 @@ import {isObject, isDefined, isFunction, isArray, extend} from '../util/util';
  * | modalLeave                 | modal-slide-out        | modal-md-slide-out        |
  * | pageTransition             | ios-transition         | md-transition             |
  * | pageTransitionDelay        | 16                     | 120                       |
- * | popupEnter                 | popup-pop-in           | popup-md-pop-in           |
- * | popupLeave                 | popup-pop-out          | popup-md-pop-out          |
  * | tabbarPlacement            | bottom                 | top                       |
  * | tabbarHighlight            |                        | top                       |
  * | tabSubPage                 |                        | true                      |

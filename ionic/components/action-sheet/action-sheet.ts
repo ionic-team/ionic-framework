@@ -197,16 +197,10 @@ class ActionSheetCmp {
       }
 
       if (button.style === 'cancel') {
-        if (!button.icon) {
-          button.icon = this._config.get('actionSheetCancelIcon');
-        }
         this.d.cancelButton = button;
 
       } else {
         if (button.style === 'destructive') {
-          if (!button.icon) {
-            button.icon = this._config.get('actionSheetDestructiveIcon');
-          }
           button.cssClass = (button.cssClass + ' ' || '') + 'action-sheet-destructive';
         }
         buttons.push(button);
