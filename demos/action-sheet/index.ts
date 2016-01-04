@@ -1,51 +1,50 @@
-import {App, Page, IonicApp, Config, Platform} from 'ionic/ionic';
-import {ActionSheet} from 'ionic/ionic';
+import {App, Page, ActionSheet, NavController} from 'ionic/ionic';
+
 
 @App({
   templateUrl: 'app.html'
 })
 class ApiDemoApp {
-
   constructor() {
     this.rootPage = InitialPage;
   }
 }
 
+
 @Page({
   templateUrl: 'main.html'
 })
 export class InitialPage {
-  constructor(actionSheet: ActionSheet, platform: Platform) {
-    this.actionSheet = actionSheet;
-    this.platform = platform;
+  constructor(nav: NavController) {
+    this.nav = nav;
   }
 
-  open() {
-
-    this.actionSheet.open({
+  present() {
+    let actionSheet = ActionSheet.create({
       buttons: [
-        { text: 'Share'},
-        { text: 'Play'},
-        { text: 'Favorite'}
-      ],
-      destructiveText: 'Delete',
-      titleText: 'Albums',
-      cancelText: 'Cancel',
-      cancel: () => {
-        console.log('Canceled');
-      },
-      destructiveButtonClicked: () => {
-        console.log('Destructive clicked');
-      },
-      buttonClicked: (index) => {
-        console.log('Button clicked', index);
-        if (index == 1) { return false; }
-        return true;
-      }
-
-    }).then(actionSheetRef => {
-      this.actionSheetRef = actionSheetRef;
+        {
+          text: 'Destructive',
+          style: 'destructive',
+          handler: () => {
+            console.log('Destructive clicked');
+          }
+        },
+        {
+          text: 'Archive',
+          handler: () => {
+            console.log('Archive clicked');
+          }
+        },
+        {
+          text: 'Cancel',
+          style: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
     });
+
+    this.nav.present(actionSheet);
   }
 }
-

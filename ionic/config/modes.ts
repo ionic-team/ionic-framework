@@ -11,6 +11,9 @@ Config.setModeConfig('ios', {
   actionSheetCancelIcon: '',
   actionSheetDestructiveIcon: '',
 
+  alertEnter: 'alert-pop-in',
+  alertLeave: 'alert-pop-out',
+
   backButtonText: 'Back',
   backButtonIcon: 'ion-ios-arrow-back',
 
@@ -23,9 +26,6 @@ Config.setModeConfig('ios', {
 
   pageTransition: 'ios-transition',
   pageTransitionDelay: 16,
-
-  popupEnter: 'popup-pop-in',
-  popupLeave: 'popup-pop-out',
 
   tabbarPlacement: 'bottom',
 });
@@ -40,6 +40,9 @@ Config.setModeConfig('md', {
   actionSheetCancelIcon: 'ion-md-close',
   actionSheetDestructiveIcon: 'ion-md-trash',
 
+  alertEnter: 'alert-md-pop-in',
+  alertLeave: 'alert-md-pop-out',
+
   backButtonText: '',
   backButtonIcon: 'ion-md-arrow-back',
 
@@ -52,9 +55,6 @@ Config.setModeConfig('md', {
 
   pageTransition: 'md-transition',
   pageTransitionDelay: 120,
-
-  popupEnter: 'popup-md-pop-in',
-  popupLeave: 'popup-md-pop-out',
 
   tabbarHighlight: true,
   tabbarPlacement: 'top',

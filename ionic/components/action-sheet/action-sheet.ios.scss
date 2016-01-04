@@ -51,6 +51,10 @@ ion-action-sheet {
 .action-sheet-title,
 .action-sheet-option {
   border-bottom: 1px solid $action-sheet-ios-border-color;
+
+  &:last-child {
+    border-bottom: 0;
+  }
 }
 
 .action-sheet-button {

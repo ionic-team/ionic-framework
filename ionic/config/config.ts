@@ -186,6 +186,9 @@ export class Config {
   get(key) {
 
     if (!isDefined(this._c[key])) {
+      if (!isDefined(key)) {
+        throw 'config key is not defined';
+      }
 
       // if the value was already set this will all be skipped
       // if there was no user config then it'll check each of

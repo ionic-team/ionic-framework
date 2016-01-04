@@ -1,6 +1,6 @@
 import {RouteConfig, Location} from 'angular2/router';
 
-import {App, Page, NavController, Modal} from 'ionic/ionic';
+import {App, Page, NavController, Modal, ViewController} from 'ionic/ionic';
 
 
 @Page({
@@ -42,18 +42,22 @@ class SignIn {
       <ion-title>Chat Modal</ion-title>
     </ion-toolbar>
     <ion-content padding>
-      <p><button (click)="close()">Close Modal</button></p>
+      <p><button (click)="viewCtrl.dismiss()">Close Modal</button></p>
     </ion-content>
   `
 })
-class ChatPage {}
+class ChatPage {
+  constructor(viewCtrl: ViewController) {
+    this.viewCtrl = viewCtrl;
+  }
+}
 
 
 @Page({
   templateUrl: './tabs.html'
 })
 class TabsPage {
-  constructor(private modal: Modal) {
+  constructor(private nav: NavController) {
     this.tab1Root = Tab1Page1
     this.tab2Root = Tab2Page1
     this.tab3Root = Tab3Page1
@@ -61,7 +65,8 @@ class TabsPage {
 
   chat() {
     console.log('Chat clicked!');
-    this.modal.open(ChatPage);
+    let modal = Modal.create(ChatPage);
+    this.nav.present(modal);
   }
 
   onTabChange() {

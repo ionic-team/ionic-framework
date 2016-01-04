@@ -5,12 +5,9 @@ import {HTTP_PROVIDERS} from 'angular2/http';
 import {IonicApp} from '../components/app/app';
 import {Config} from './config';
 import {Platform} from '../platform/platform';
-import {OverlayController} from '../components/overlay/overlay-controller';
 import {Form} from '../util/form';
 import {Keyboard} from '../util/keyboard';
 import {ActionSheet} from '../components/action-sheet/action-sheet';
-import {Modal} from '../components/modal/modal';
-import {Popup} from '../components/popup/popup';
 import {Events} from '../util/events';
 import {NavRegistry} from '../components/nav/nav-registry';
 import {Translate} from '../translation/translate';
@@ -61,10 +58,7 @@ export function ionicProviders(args={}) {
     TapClick,
     Form,
     Keyboard,
-    OverlayController,
     ActionSheet,
-    Modal,
-    Popup,
     Translate,
     ROUTER_PROVIDERS,
     provide(LocationStrategy, {useClass: HashLocationStrategy}),

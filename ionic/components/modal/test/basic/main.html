@@ -1,20 +1,22 @@
 
+<ion-navbar *navbar>
+  <ion-title>Modals</ion-title>
+</ion-navbar>
+
 <ion-content padding>
   <p>
-    <button class="e2eOpenModal" (click)="openModalChildNav()">Open modal w/ child ion-nav</button>
+    <button (click)="presentModal()">Present modal, pass params</button>
   </p>
   <p>
-    <button (click)="openModal()">Open modal, pass params</button>
+    <button class="e2eOpenModal" (click)="presentModalChildNav()">Present modal w/ child ion-nav</button>
   </p>
   <p>
-    <button class="e2eOpenToolbarModal" (click)="openToolbarModal()">Open modal w/ toolbar</button>
+    <button class="e2eOpenToolbarModal" (click)="presentToolbarModal()">Present modal w/ toolbar</button>
   </p>
   <p>
-    <button (click)="openModalCustomAnimation()">Modal: Custom Animation</button>
+    <button (click)="presentModalCustomAnimation()">Modal: Custom Animation</button>
   </p>
   <p>
     {{platforms | json}}
   </p>
 </ion-content>
-
-<ion-overlay></ion-overlay>

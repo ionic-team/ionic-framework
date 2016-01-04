@@ -1,15 +1,14 @@
 import {App, Page, Config, Platform} from 'ionic/ionic';
-import {Modal, ActionSheet, NavController, NavParams, Animation} from 'ionic/ionic';
+import {Modal, ActionSheet, NavController, NavParams, Animation, ViewController} from 'ionic/ionic';
 
 
-@App({
+@Page({
   templateUrl: 'main.html'
 })
-class E2EApp {
+class E2EPage {
 
-  constructor(modal: Modal, config: Config, platform: Platform) {
-    this.modal = modal;
-
+  constructor(nav: NavController, config: Config, platform: Platform) {
+    this.nav = nav;
     console.log('platforms', platform.platforms());
     console.log('mode', config.get('mode'));
 
@@ -33,32 +32,33 @@ class E2EApp {
     this.platforms = platform.platforms();
   }
 
-  openModal() {
-    this.modal.open(ModalPassParams, { userId: 3141209 });
-  }
+  presentModal() {
+    let modal = Modal.create(ModalPassData, { userId: 8675309 });
+    this.nav.present(modal);
 
-  openToolbarModal() {
-    this.modal.open(ToolbarModal).then(modalRef => {
-      // modal has finished opening
-      // modalRef is a reference to the modal instance
-      modalRef.onClose = (modalData) => {
-        // somehow modalRef.close(modalData) was called w/ modalData
-        console.log('modalRef.onClose', modalData)
-      }
+    modal.onDismiss(data => {
+      console.log('modal data', data);
     });
   }
 
-  openModalChildNav() {
-    this.modal.open(ContactUs, null, {
-      handle: 'my-awesome-modal'
+  presentModalChildNav() {
+    let modal = Modal.create(ContactUs);
+    this.nav.present(modal);
+  }
+
+  presentToolbarModal() {
+    let modal = Modal.create(ToolbarModal);
+    this.nav.present(modal);
+
+    modal.subscribe(data => {
+      console.log('modal data', data);
     });
   }
 
-  openModalCustomAnimation() {
-    this.modal.open(ContactUs, null, {
-      handle: 'my-awesome-modal',
-      enterAnimation: 'my-fade-in',
-      leaveAnimation: 'my-fade-out'
+  presentModalCustomAnimation() {
+    let modal = Modal.create(ContactUs);
+    this.nav.present(modal, {
+      animation: 'my-fade-in'
     });
   }
 }
@@ -66,44 +66,67 @@ class E2EApp {
 
 @Page({
   template: `
-    <h3>Pass Params</h3>
-    <p>User Id: {{userId}}</p>
-    <p><button (click)="close()">Close Modal</button></p>
+    <ion-navbar *navbar>
+      <ion-title>Data in/out</ion-title>
+    </ion-navbar>
+    <ion-content>
+      <ion-list>
+        <ion-input>
+          <ion-label>UserId</ion-label>
+          <input type="number" [(ngModel)]="data.userId">
+        </ion-input>
+        <ion-input>
+          <ion-label>Name</ion-label>
+          <input type="text" [(ngModel)]="data.name">
+        </ion-input>
+      </ion-list>
+      <button full (click)="submit()">Submit</button>
+    </ion-content>
   `
 })
-class ModalPassParams {
-  constructor(private modal: Modal, params: NavParams) {
-    this.userId = params.get('userId');
+class ModalPassData {
+  constructor(params: NavParams, viewCtrl: ViewController) {
+    this.data = {
+      userId: params.get('userId'),
+      name: 'Jenny'
+    };
+    this.viewCtrl = viewCtrl;
+  }
+
+  submit() {
+    this.viewCtrl.dismiss(this.data);
   }
 }
 
 
 @Page({
   template: `
-    <ion-toolbar>
-      <ion-title>Modals</ion-title>
+    <ion-toolbar primary>
+      <ion-title>Toolbar 1</ion-title>
     </ion-toolbar>
 
-    <ion-toolbar primary>
-      <ion-title>Another toolbar</ion-title>
+    <ion-toolbar>
+      <ion-title>Toolbar 2</ion-title>
     </ion-toolbar>
 
     <ion-content padding>
-      <button block danger (click)="closeModal()" class="e2eCloseToolbarModal">
-        <icon close></icon>
-        Close Modal
+      <button block danger (click)="dismiss()" class="e2eCloseToolbarModal">
+        Dismission Modal
       </button>
     </ion-content>
   `
 })
 class ToolbarModal {
-  constructor(private modal: Modal) {}
 
-  closeModal() {
-    this.close({
-      adel: 'hello',
-      lionel: 'hello'
+  constructor(viewCtrl: ViewController) {
+    this.viewCtrl = viewCtrl;
+  }
+
+  dismiss() {
+    this.viewCtrl.emit({
+      toolbar: 'data'
     });
+    this.viewCtrl.dismiss();
   }
 
 }
@@ -146,7 +169,7 @@ class ContactUs {
     <ion-navbar *navbar>
       <ion-title>First Page Header</ion-title>
       <ion-buttons start>
-        <button class="e2eCloseMenu" (click)="closeModal()">Close</button>
+        <button class="e2eCloseMenu" (click)="dismiss()">Close</button>
       </ion-buttons>
     </ion-navbar>
     <ion-content padding>
@@ -156,23 +179,14 @@ class ContactUs {
       <p>
         <button (click)="openActionSheet()">Open Action Sheet</button>
       </p>
-      <p>
-        <button (click)="closeByHandeModal()">Close By Handle</button>
-      </p>
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
       <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>
     </ion-content>
   `
 })
 class ModalFirstPage {
-  constructor(
-    nav: NavController,
-    modal: Modal,
-    actionSheet: ActionSheet
-  ) {
+  constructor(nav: NavController) {
     this.nav = nav;
-    this.modal = modal;
-    this.actionSheet = actionSheet;
   }
 
   push() {
@@ -183,37 +197,37 @@ class ModalFirstPage {
     this.nav.push(page, params, opts);
   }
 
-  closeModal() {
-    this.modal.get().close();
-  }
-
-  closeByHandeModal() {
-    this.modal.get('my-awesome-modal').close();
+  dismiss() {
+    this.nav.rootNav.pop();
   }
 
   openActionSheet() {
-    this.actionSheet.open({
+    let actionSheet = ActionSheet.create({
       buttons: [
-        { text: 'Share This' },
-        { text: 'Move' }
-      ],
-      destructiveText: 'Delete',
-      titleText: 'Modify your album',
-      cancelText: 'Cancel',
-      cancel: function() {
-        console.log('Canceled');
-      },
-      destructiveButtonClicked: () => {
-        console.log('Destructive clicked');
-      },
-      buttonClicked: function(index) {
-        console.log('Button clicked', index);
-        if(index == 1) { return false; }
-        return true;
-      }
-    }).then(actionSheetRef => {
-      this.actionSheetRef = actionSheetRef;
+        {
+          text: 'Destructive',
+          style: 'destructive',
+          handler: () => {
+            console.log('Destructive clicked');
+          }
+        },
+        {
+          text: 'Archive',
+          handler: () => {
+            console.log('Archive clicked');
+          }
+        },
+        {
+          text: 'Cancel',
+          style: 'cancel',
+          handler: () => {
+            console.log('cancel this clicked');
+          }
+        }
+      ]
     });
+
+    this.nav.present(actionSheet);
   }
 }
 
@@ -239,6 +253,16 @@ class ModalSecondPage {
   ) {
     this.nav = nav;
     console.log('Second page params:', params);
+  }
+}
+
+
+@App({
+  template: '<ion-nav [root]="root"></ion-nav>'
+})
+class E2EApp {
+  constructor() {
+    this.root = E2EPage;
   }
 }
 

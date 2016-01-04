@@ -1,17 +1,17 @@
 @import "../../globals.core";
 
-// Popups
+// Alerts
 // --------------------------------------------------
 
-$popup-min-width:                 250px !default;
-$popup-max-height:                90% !default;
+$alert-min-width:                 250px !default;
+$alert-max-height:                90% !default;
 
-$popup-button-line-height:        20px !default;
-$popup-button-font-size:          14px !default;
-$popup-button-margin-right:       8px !default;
+$alert-button-line-height:        20px !default;
+$alert-button-font-size:          14px !default;
+$alert-button-margin-right:       8px !default;
 
 
-ion-popup {
+ion-alert {
   position: absolute;
   z-index: $z-index-overlay;
   top: 0;
@@ -23,16 +23,15 @@ ion-popup {
   justify-content: center;
   align-items: center;
 
-  input,
-  textarea {
+  input {
     width: 100%;
   }
 }
 
-.popup-wrapper {
+.alert-wrapper {
   z-index: $z-index-overlay-wrapper;
-  min-width: $popup-min-width;
-  max-height: $popup-max-height;
+  min-width: $alert-min-width;
+  max-height: $alert-max-height;
 
   display: flex;
   flex-direction: column;
@@ -40,18 +39,18 @@ ion-popup {
   opacity: 0;
 }
 
-.popup-title {
+.alert-title {
   margin: 0;
   padding: 0;
 }
 
-.popup-sub-title {
+.alert-sub-title {
   margin: 5px 0 0 0;
   padding: 0;
   font-weight: normal;
 }
 
-.popup-body {
+.alert-body {
   overflow: auto;
 
   &:empty {
@@ -59,7 +58,7 @@ ion-popup {
   }
 }
 
-.prompt-input {
+.alert-input {
   @include placeholder();
 
   border: 0;
@@ -67,15 +66,15 @@ ion-popup {
   padding: 10px 0;
 }
 
-.popup-buttons {
+.alert-buttons {
   display: flex;
   flex-direction: row;
 }
 
-.popup-button {
+.alert-button {
   display: block;
   margin: 0;
-  line-height: $popup-button-line-height;
-  font-size: $popup-button-font-size;
-  margin-right: $popup-button-margin-right;
+  line-height: $alert-button-line-height;
+  font-size: $alert-button-font-size;
+  margin-right: $alert-button-margin-right;
 }

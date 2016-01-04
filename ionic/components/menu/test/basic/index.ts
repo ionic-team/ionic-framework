@@ -1,18 +1,21 @@
-import {App, IonicApp, Page, NavController, Popup} from 'ionic/ionic';
+import {App, IonicApp, Page, NavController, Alert} from 'ionic/ionic';
 
 
-@Page({templateUrl: 'page1.html'})
+@Page({
+  templateUrl: 'page1.html'
+})
 class Page1 {
-  constructor(popup: Popup) {
-    this.popup = popup;
+  constructor(nav: NavController) {
+    this.nav = nav;
   }
-  openPopup() {
-    this.popup.alert({
+  presentAlert() {
+    let alert = Alert.create({
       title: "New Friend!",
-      template: "Your friend, Obi wan Kenobi, just accepted your friend request!",
-      cssClass: 'my-alert'
+      body: "Your friend, Obi wan Kenobi, just accepted your friend request!",
+      cssClass: 'my-alert',
+      buttons: ['Ok']
     });
-    console.log('openPopup');
+    this.nav.present(alert);
   }
 }
 

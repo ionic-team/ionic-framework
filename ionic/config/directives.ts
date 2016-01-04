@@ -44,7 +44,6 @@ import {ShowWhen, HideWhen} from '../components/show-hide-when/show-hide-when';
  * - FORM_DIRECTIVES
  *
  * **Content**
- * -  OverlayNav
  * -  Menu
  * -  MenuToggle
  * -  MenuClose

@@ -52,8 +52,9 @@ import {Tabs} from './tabs';
  * }
  * ```
  *
- * In other cases, you may not want to navigate to a new component, but just call a method.
- * You can use the `(select)` event to call a method on your class.
+ * In other cases, you may not want to navigate to a new component, but just
+ * call a method. You can use the `(select)` event to call a method on your
+ * class. Below is an example of presenting a modal from one of the tabs.
  *
  * ```html
  * <ion-tabs preloadTabs="false">
@@ -63,15 +64,15 @@ import {Tabs} from './tabs';
  *
  * ```ts
  * export class Tabs {
- *   constructor(modal: Modal){
- *     this.modal = modal;
+ *   constructor(nav: NavController){
+ *     this.nav = nav;
  *   }
  *   chat() {
- *      this.modal.open(ChatPage);
+ *     let modal = Modal.create(ChatPage);
+ *     this.nav.present(modal);
  *   }
  * }
  * ```
- * In this case, when we tap on the tab, we'll open a modal instead of loading a new component.
  *
  *
  * @property {any} [root] - set the root page for this tab

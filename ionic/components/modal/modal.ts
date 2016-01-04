@@ -1,37 +1,65 @@
-import {Injectable, Type} from 'angular2/core';
-
-import {OverlayController} from '../overlay/overlay-controller';
-import {Config} from '../../config/config';
+import {ViewController} from '../nav/view-controller';
 import {Animation} from '../../animations/animation';
-import {extend} from '../../util';
 
 /**
  * @name Modal
  * @description
- * The Modal is a content pane that can go over the user's current page.
- * Usually used for making a choice or editing an item. A modal can be opened
- * similar to how {@link /docs/v2/api/components/nav/NavController/#push NavController.push}  works,
- * where it is passed a Page component, along with optional Page params,
- * and options for presenting the modal.
+ * A Modal is a content pane that goes over the user's current page.
+ * Usually it is used for making a choice or editing an item. A modal uses the
+ * `NavController` to
+ * {@link /docs/v2/api/components/nav/NavController/#present NavController.present}
+ * itself in the root nav stack. It is added to the stack similar to how
+ * {@link /docs/v2/api/components/nav/NavController/#push NavController.push}
+ * works.
+ *
+ * When a modal (or any other overlay such as an alert or actionsheet) is
+ * "presented" to a nav controller, the overlay is added to the app's root nav.
+ * After the modal has been presented, from within the component instance The
+ * modal can later be closed or "dimsissed" by using the ViewController's
+ * `dismiss` method. Additinoally, you can dismiss any overlay by using `pop`
+ * on the root nav controller.
+ *
+ * A modal can also emit data, which is useful when it is used to add or edit
+ * data. For example, a profile page could slide up in a modal, and on submit,
+ * the submit button could pass the updated profile data, then dismiss the
+ * modal.
  *
  * @usage
  * ```ts
- * class MyApp {
+ * import {Modal, NavController} from 'ionic/ionic';
  *
- *  constructor(modal: Modal) {
- *    this.modal = modal;
+ * @Page(...)
+ * class HomePage {
+ *
+ *  constructor(nav: NavController) {
+ *    this.nav = nav;
  *  }
  *
- *  openContactModal() {
- *    this.modal.open(ContactUs);
+ *  presentContactModal() {
+ *    let contactModal = Modal.create(ContactUs);
+ *    this.nav.present(contactModal);
  *  }
  *
- *  openProfileModal() {
- *    this.modal.open(Profile, { userId: 8675309 }, {
- *      enterAnimation: 'my-fade-in',
- *      leaveAnimation: 'my-fade-out',
- *      handle: 'profile-modal'
+ *  presentProfileModal() {
+ *    let profileModal = Modal.create(Profile, { userId: 8675309 });
+ *    profileModal.onDismiss(data => {
+ *      console.log(data);
  *    });
+ *    this.nav.present(profileModal);
+ *  }
+ *
+ * }
+ *
+ * @Page(...)
+ * class Profile {
+ *
+ *  constructor(viewCtrl: ViewController) {
+ *    this.viewCtrl = viewCtrl;
+ *  }
+ *
+ *  dismiss() {
+ *    let data = { 'foo': 'bar' };
+ *    this.viewCtrl.dismiss(data);
  *  }
  *
  * }
@@ -39,63 +67,30 @@ import {extend} from '../../util';
  * @demo /docs/v2/demos/modal/
  * @see {@link /docs/v2/components#modals Modal Component Docs}
  */
-@Injectable()
-export class Modal {
+export class Modal extends ViewController {
 
-  constructor(ctrl: OverlayController, config: Config) {
-    this.ctrl = ctrl;
-    this.config = config;
+  constructor(componentType, data={}) {
+    super(componentType, data);
+    this.viewType = 'modal';
   }
 
   /**
-   * Opens a new modal using the page component is was pass as the first
-   * argument. This is similar to how NavController's `push` method works.
-   * Currently you must have `<ion-overlay>` in the `@App` component's template
-   * for the modal to work correctly. (This is something that will
-   * be hopefully be removed in the near future.)
-   *
-   * @param pageComponent  The Page component to load in the modal.
-   * @param {Object} [params={}]  Optional data which can be passed to the page
-   * component, which can be read from the constructor's `NavParams`.
-   * @param {Object} [opts={}]  Additional options for this one modal instance of.
-   * Options include `enterAnimation` and `leaveAnimation`, which
-   * allows customization of which animation to use.
-   * @returns {Promise} Returns a promise which resolves when the modal has
-   * loaded and its entering animation has completed. The resolved promise's
-   * value is the instance of the newly created modal.
-   */
-  open(pageComponent: Type, params={}, opts={}) {
-    opts = extend({
-      pageType: OVERLAY_TYPE,
-      enterAnimation: this.config.get('modalEnter'),
-      leaveAnimation: this.config.get('modalLeave'),
-    }, opts);
-
-    return this.ctrl.open(pageComponent, params, opts);
+  * @private
+  */
+  getTransitionName(direction) {
+    let key = (direction === 'back' ? 'modalLeave' : 'modalEnter');
+    return this._nav && this._nav.config.get(key);
   }
 
   /**
-   * Get the instance of a modal. This is usually helpful to getting ahold of a
-   * certain modal, from anywhere within the app, and closing it. By calling
-   * just `get()` without a `handle` argument, it'll return the active modal
-   * on top (it is possible to have multipe modals opened at the same time).
-   * If getting just the active modal isn't enough, when creating
-   * a modal, it's options can be given a `handle`, which is simply a string-based
-   * name for the modal instance. You can later get a reference to that modal's
-   * instance by calling this method with the same handle name.
-   * @param  [handle]  Optional string name given in the modal's options when it was opened.
-   * @returns Returns the instance of the modal if it is found, otherwise `null`.
+   * @param {Any} componentType Modal
+   * @param {Object} data Modal options
    */
-  get(handle) {
-    if (handle) {
-      return this.ctrl.getByHandle(handle);
-    }
-    return this.ctrl.getByType(OVERLAY_TYPE);
+  static create(componentType, data={}) {
+    return new Modal(componentType, data);
   }
 
 }
-
-const OVERLAY_TYPE = 'modal';
 
 
 /**
@@ -109,6 +104,13 @@ class ModalSlideIn extends Animation {
       .duration(400)
       .fromTo('translateY', '100%', '0%')
       .before.addClass('show-page');
+
+    if (enteringView.hasNavbar()) {
+      // entering page has a navbar
+      let enteringNavBar = new Animation(enteringView.navbarRef());
+      enteringNavBar.before.addClass('show-navbar');
+      this.add(enteringNavBar);
+    }
   }
 }
 Animation.register('modal-slide-in', ModalSlideIn);
@@ -135,6 +137,13 @@ class ModalMDSlideIn extends Animation {
       .fromTo('translateY', '40px', '0px')
       .fadeIn()
       .before.addClass('show-page');
+
+    if (enteringView.hasNavbar()) {
+      // entering page has a navbar
+      let enteringNavBar = new Animation(enteringView.navbarRef());
+      enteringNavBar.before.addClass('show-navbar');
+      this.add(enteringNavBar);
+    }
   }
 }
 Animation.register('modal-md-slide-in', ModalMDSlideIn);

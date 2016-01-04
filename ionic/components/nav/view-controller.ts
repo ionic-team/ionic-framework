@@ -1,5 +1,5 @@
+import {Output, EventEmitter} from 'angular2/core';
 import {NavParams} from './nav-controller';
-
 
 /**
  * @name ViewController
@@ -17,15 +17,53 @@ import {NavParams} from './nav-controller';
  *  ```
  */
 export class ViewController {
+  @Output() _emitter: EventEmitter<any> = new EventEmitter();
 
-  constructor(navCtrl, componentType, params = {}) {
-    this.navCtrl = navCtrl;
+  constructor(componentType, data={}) {
     this.componentType = componentType;
-    this.params = new NavParams(params);
+    this.data = data;
     this.instance = {};
     this.state = 0;
     this._destroys = [];
     this._loaded = false;
+    this.shouldDestroy = false;
+    this.shouldCache = false;
+    this.viewType = '';
+    this._leavingOpts = null;
+    this._onDismiss = null;
+  }
+
+  subscribe(callback) {
+    this._emitter.subscribe(callback);
+  }
+
+  emit(data) {
+    this._emitter.emit(data);
+  }
+
+  onDismiss(callback) {
+    this._onDismiss = callback;
+  }
+
+  dismiss(data) {
+    this._onDismiss && this._onDismiss(data);
+    return this._nav.remove(this._nav.indexOf(this), this._leavingOpts);
+  }
+
+  setNav(navCtrl) {
+    this._nav = navCtrl;
+  }
+
+  getTransitionName(direction) {
+    return this._nav && this._nav.config.get('pageTransition');
+  }
+
+  getNavParams() {
+    return new NavParams(this.data);
+  }
+
+  setLeavingOpts(opts) {
+    this._leavingOpts = opts;
   }
 
   /**
@@ -35,8 +73,8 @@ export class ViewController {
    */
   enableBack() {
     // update if it's possible to go back from this nav item
-    if (this.navCtrl) {
-      let previousItem = this.navCtrl.getPrevious(this);
+    if (this._nav) {
+      let previousItem = this._nav.getPrevious(this);
       // the previous view may exist, but if it's about to be destroyed
       // it shouldn't be able to go back to
       return !!(previousItem && !previousItem.shouldDestroy);
@@ -74,7 +112,7 @@ export class ViewController {
    * @returns {Number} Returns the index of this page within its NavController.
    */
   get index() {
-    return (this.navCtrl ? this.navCtrl.indexOf(this) : -1);
+    return (this._nav ? this._nav.indexOf(this) : -1);
   }
 
   /**

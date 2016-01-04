@@ -1,0 +1,19 @@
+
+<ion-navbar *navbar>
+  <ion-title>Alerts</ion-title>
+</ion-navbar>
+
+<ion-content padding>
+
+  <button class="e2eOpenAlert" (click)="doAlert()">Alert</button>
+  <button class="e2eOpenConfirm" (click)="doConfirm()">Confirm</button>
+  <button class="e2eOpenPrompt" (click)="doPrompt()">Prompt</button>
+
+  <pre>
+    Confirm Opened: {{testConfirmOpen}}
+    Confirm Result: {{testConfirmResult}}
+    Prompt Opened: {{testPromptOpen}}
+    Prompt Result: {{testPromptResult | json}}
+  </pre>
+
+</ion-content>
