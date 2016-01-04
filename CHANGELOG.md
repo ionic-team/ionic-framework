@@ -1,5 +1,5 @@
 <a name="2.0.0-alpha.46"></a>
-# 2.0.0-alpha.46 (2016-1-4)
+# 2.0.0-alpha.47 (2016-1-4)
 
 
 ### Breaking Changes
