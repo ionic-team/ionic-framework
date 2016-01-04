@@ -25,7 +25,7 @@ export class SearchbarInput {
     event.stopPropagation();
   }
 
-  constructor(public elementRef: ElementRef) {
+  constructor(private _elementRef: ElementRef) {
 
   }
 }
@@ -116,16 +116,17 @@ export class Searchbar extends Ion {
   blurInput: boolean = true;
   inputElement: any;
   searchIconElement: any;
+  mode: string;
 
   @HostBinding('class.searchbar-focused') isFocused;
   @HostBinding('class.searchbar-left-aligned') shouldLeftAlign;
 
   constructor(
-    public elementRef: ElementRef,
-    config: Config,
+    private _elementRef: ElementRef,
+    private _config: Config,
     @Optional() ngControl: NgControl
   ) {
-    super(elementRef, config);
+    super(_elementRef, _config);
 
     // If the user passed a ngControl we need to set the valueAccessor
     if (ngControl) {
@@ -138,6 +139,8 @@ export class Searchbar extends Ion {
    * On Initialization check for attributes
    */
   ngOnInit() {
+    this.mode = this._config.get('mode');
+
     let hideCancelButton = this.hideCancelButton;
     if (typeof hideCancelButton === 'string') {
       this.hideCancelButton = (hideCancelButton === '' || hideCancelButton === 'true');
@@ -152,8 +155,8 @@ export class Searchbar extends Ion {
     this.shouldLeftAlign = this.value && this.value.trim() != '';
 
     // Using querySelector instead of searchbarInput because at this point it doesn't exist
-    this.inputElement = this.elementRef.nativeElement.querySelector('.searchbar-input');
-    this.searchIconElement = this.elementRef.nativeElement.querySelector('.searchbar-search-icon');
+    this.inputElement = this._elementRef.nativeElement.querySelector('.searchbar-input');
+    this.searchIconElement = this._elementRef.nativeElement.querySelector('.searchbar-search-icon');
     this.setElementLeft();
   }
 
@@ -174,9 +177,11 @@ export class Searchbar extends Ion {
   /**
    * @private
    * Determines whether or not to add style to the element
-   * to center it properly
+   * to center it properly (ios only)
    */
   setElementLeft() {
+    if (this.mode !== 'ios') return;
+
     if (this.shouldLeftAlign) {
       this.inputElement.removeAttribute("style");
       this.searchIconElement.removeAttribute("style");
@@ -240,7 +245,7 @@ export class Searchbar extends Ion {
     // blurInput determines if it should blur
     // if we are clearing the input we still want to stay focused in the input
     if (this.blurInput == false) {
-      this.searchbarInput.elementRef.nativeElement.focus();
+      this.searchbarInput._elementRef.nativeElement.focus();
       this.blurInput = true;
       return;
     }
