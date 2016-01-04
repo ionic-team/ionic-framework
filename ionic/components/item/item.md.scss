@@ -96,38 +96,15 @@ icon[item-right] {
   margin-left: 0;
 }
 
-button[item-left],
-button[item-right],
-[button][item-left],
-[button][item-right] {
+.item-button {
   padding: 0 0.6em;
   min-height: 26px;
   font-size: 1.2rem;
 }
 
-[item-left].button-icon-only,
-[item-right].button-icon-only,
-[item-left].button-icon-only icon,
-[item-right].button-icon-only icon {
+.button-icon-only icon,
+.button-icon-only {
   padding: 0 1px;
-}
-
-[item-left][clear],
-[item-right][clear] {
-  padding: 0 8px;
-}
-
-[item-left].icon-left icon,
-[item-right].icon-left icon {
-  margin-bottom: 1px;
-  margin-left: 0;
-  padding-right: 0.3em;
-}
-
-[item-left].icon-right icon,
-[item-right].icon-right icon {
-  margin-right: 0;
-  margin-bottom: 1px;
 }
 
 [text-wrap] ion-item-content {

@@ -49,6 +49,13 @@
   </ion-item>
 
   <ion-item>
+    <button item-left (click)="testClick($event)">Button 1</button>
+    <button item-content (click)="testClick($event)">Button 2</button>
+    <button item-content (click)="testClick($event)">Button 3</button>
+    <button item-right (click)="testClick($event)">Button 4</button>
+  </ion-item>
+
+  <ion-item>
     <button clear item-left (click)="testClick($event)">
       <icon navigate></icon>
     </button>
@@ -87,5 +94,5 @@
     and a <a href="#" (click)="testClick($event)">link</a>.
     <button outline item-right (click)="testClick($event)">View</button>
   </ion-item>
-  
+
 </ion-content>

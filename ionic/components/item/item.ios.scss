@@ -103,8 +103,7 @@ ion-item-content {
   margin: ($item-ios-padding-top / 2) ($item-ios-padding-right / 2) ($item-ios-padding-bottom / 2) ($item-ios-padding-left / 2);
 }
 
-icon[item-left],
-icon[item-right] {
+.item-icon {
   margin-top: $item-ios-padding-icon-top;
   margin-bottom: $item-ios-padding-icon-bottom;
 }
@@ -119,36 +118,16 @@ ion-thumbnail[item-right] {
   margin: ($item-ios-padding-right / 2);
 }
 
-button[item-left],
-button[item-right],
-[button][item-left],
-[button][item-right] {
+.item-button {
   padding: 0 0.5em;
   font-size: 1.3rem;
   min-height: 25px;
   margin-top: 9px;
 }
 
-[item-left].button-icon-only,
-[item-right].button-icon-only,
-[item-left].button-icon-only icon,
-[item-right].button-icon-only icon,
-[item-left][clear],
-[item-right][clear] {
+.button-icon-only icon,
+.button-icon-only {
   padding: 0 1px;
-}
-
-[item-left].icon-left icon,
-[item-right].icon-left icon {
-  margin-left: 0;
-  margin-bottom: 1px;
-  padding-right: 0.3em;
-}
-
-[item-left].icon-right icon,
-[item-right].icon-right icon {
-  margin-right: 0;
-  margin-bottom: 1px;
 }
 
 ion-avatar {
@@ -231,6 +210,6 @@ ion-item-sliding {
       // todo
 
     }
-    
+
   }
 }

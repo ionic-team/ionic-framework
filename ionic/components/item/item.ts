@@ -50,7 +50,7 @@ import {Icon} from '../icon/icon';
   template:
     '<ng-content select="[item-left]"></ng-content>' +
     '<div class="item-inner">' +
-      '<ng-content select="ion-item-content"></ng-content>' +
+      '<ng-content select="ion-item-content,[item-content]"></ng-content>' +
       '<ion-item-content cnt>' +
         '<ng-content></ng-content>'+
       '</ion-item-content>' +
