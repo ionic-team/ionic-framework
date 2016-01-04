@@ -37,7 +37,8 @@ export class Button {
   constructor(
     config: Config,
     private _elementRef: ElementRef,
-    private _renderer: Renderer
+    private _renderer: Renderer,
+    @Attribute('ion-item') ionItem: string
   ) {
     this._role = 'button'; // bar-button/item-button
     this._size = null; // large/small
@@ -48,6 +49,7 @@ export class Button {
     this._colors = []; // primary/secondary
     this._icon = null; // left/right/only
     this._disabled = false; // disabled
+    this.isItem = (ionItem === '');
 
     let element = _elementRef.nativeElement;
 

@@ -65,7 +65,9 @@ export class Item {
   @ContentChildren(Button)
   set _buttons(buttons) {
     buttons.toArray().forEach(button => {
-      button.addClass('item-button');
+      if (!button.isItem) {
+        button.addClass('item-button');
+      }
     });
   }
 
