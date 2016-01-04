@@ -1,6 +1,7 @@
 import {Component, ContentChildren} from 'angular2/core';
 
 import {Button} from '../button/button';
+import {Icon} from '../icon/icon';
 
 
 /**
@@ -64,5 +65,12 @@ export class Item {
   @ContentChildren(Button)
   set _buttons(buttons) {
     Button.setRoles(buttons, 'item-button');
+  }
+
+  @ContentChildren(Icon)
+  set _icons(icons) {
+    icons.toArray().forEach(icon => {
+      icon.addClass('item-icon');
+    });
   }
 }
