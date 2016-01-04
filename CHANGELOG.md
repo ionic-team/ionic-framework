@@ -1,15 +1,37 @@
 <a name"1.2.4"></a>
-### 1.2.4 "" (2016-01-03)
+### 1.2.4 "Copenhagen" (2016-01-03)
 
 
 #### Bug Fixes
 
-* **tabs:** overflow scroll with child not view. ([1f2178f3](https://github.com/driftyco/ionic/commit/1f2178f3), closes [#4891](https://github.com/driftyco/ionic/issues/4891))
+* **tabs** overflow scroll with child not view. Fixes #4891 ([1f2178f](https://github.com/driftyco/ionic/commit/1f2178f))
 
 
 <a name"1.2.3"></a>
-### 1.2.3 "" (2016-01-02)
+### 1.2.3 "Barcelona" (2016-01-02)
 
+
+#### Changes
+
+* **drag:** fix #4022 and #3695 ([d3d2c14](https://github.com/driftyco/ionic/commit/d3d2c14))
+* **fonts:** iOS 9 fonts now for safari ([760b70d](https://github.com/driftyco/ionic/commit/760b70d))
+* **gestures:** revert fix for dragging. Fixes #3695 ([1b0d3dd](https://github.com/driftyco/ionic/commit/1b0d3dd))  
+* **input:** focus on iOS ([aef490b](https://github.com/driftyco/ionic/commit/aef490b))
+* **keyboard:**
+  * check for slide first before update. Fixes #4870 ([074976f](https://github.com/driftyco/ionic/commit/074976f))
+  * fix blank spot. Fixes #4849 and #4645 ([4ad6021](https://github.com/driftyco/ionic/commit/4ad6021))
+  * better scroll to. #4849 #4645 ([29a33d7](https://github.com/driftyco/ionic/commit/29a33d7))
+* **loading:** don't delay visible hide. #4858 ([f69b94d](https://github.com/driftyco/ionic/commit/f69b94d))
+* **menu:**
+  * remove flicker on native scroll. Fixes #4869 ([1ec38ac](https://github.com/driftyco/ionic/commit/1ec38ac))
+  * better scroll restrict. Fixes #4869 ([fe3aeac](https://github.com/driftyco/ionic/commit/fe3aeac))
+  * change scroll restriction. #4869 ([ebd76d5](https://github.com/driftyco/ionic/commit/ebd76d5))
+* **ptr:** fix for kitkat. Fixes #4850 ([67ef9eb](https://github.com/driftyco/ionic/commit/67ef9eb))
+* **sass:** add border support to mixin. Fixes #4886 ([129cc97](https://github.com/driftyco/ionic/commit/129cc97))
+* **scroll:** js scrolling for iOS for now ([d9b35f4](https://github.com/driftyco/ionic/commit/d9b35f4))
+* **slides:**
+  * Fixes #4855 and #4857 ([13d0fbe](https://github.com/driftyco/ionic/commit/13d0fbe))
+  * allow ngAnimate. Fixes #4868 ([cb7d8a5](https://github.com/driftyco/ionic/commit/cb7d8a5))
 
 
 <a name"1.2.1"></a>
@@ -457,7 +479,7 @@
 * **scrollView:** higher velocity threshold for sliding ([93643c41](https://github.com/driftyco/ionic/commit/93643c4127e342fca9547796eeaf8ad096e5c028))
 * **sideMenu:** check whether drag is enabled before dragging ([acd0ff8f](https://github.com/driftyco/ionic/commit/acd0ff8f8cb01d778781a81621fb90521e496a23))
 * **sidemenu:** prevent scroll during menu drag ([51ed1824](https://github.com/driftyco/ionic/commit/51ed1824d5320ac788c9d27561338a61cbf844bc), closes [#2808](https://github.com/driftyco/ionic/issues/2808))
-* **styles:** fix to tables in _variable.scss #2949 ([9d676b0d](https://github.com/driftyco/ionic/commit/9d676b0d3025959c6854415d9ff22cbb45c1cd10))
+* **styles:** fix to tables in \_variable.scss #2949 ([9d676b0d](https://github.com/driftyco/ionic/commit/9d676b0d3025959c6854415d9ff22cbb45c1cd10))
 * **tabs:**
   * fire leaving life cycle events ([9cc61ecd](https://github.com/driftyco/ionic/commit/9cc61ecdced8d33a138cdd5f6cdbd8f90e33484a), closes [#2869](https://github.com/driftyco/ionic/issues/2869))
   * reload tab after previous clearHistory() ([3628ebac](https://github.com/driftyco/ionic/commit/3628ebac16e5d2924c158c18d748403f4ff12b8b), closes [#2664](https://github.com/driftyco/ionic/issues/2664))
@@ -677,7 +699,7 @@
 * **sideMenu:** remove .menu-open on destroy ([f246c5aa](https://github.com/driftyco/ionic/commit/f246c5aa2094ec74865ce149b3f1a1183dc4950a))
 * **tabs:**
   * vertically center text and icons on tabs-icon-left/right ([93d586de](https://github.com/driftyco/ionic/commit/93d586dea4e9c6253fbdfd01a166456e0a1fd4da), closes [#1827](https://github.com/driftyco/ionic/issues/1827))
-  * remove important flag from `.tabs{border-bottom:none;} Fixes: 1652 ([bf1c1bc9](https://github.com/driftyco/ionic/commit/bf1c1bc97151e3c25345b5ba9024015ef9865879))
+  * remove important flag from `.tabs{border-bottom:none;}` Fixes: 1652 ([bf1c1bc9](https://github.com/driftyco/ionic/commit/bf1c1bc97151e3c25345b5ba9024015ef9865879))
 * **toggle:** fix toggle-class attribute ([6fbd1a43](https://github.com/driftyco/ionic/commit/6fbd1a43067fbaf9a2d9c2f4098220e6dd1d7605), closes [#1851](https://github.com/driftyco/ionic/issues/1851))
 * **viewService:** No error on clearHistory for empty history ([64641b1b](https://github.com/driftyco/ionic/commit/64641b1be0aa93281223f6c2baae3941835c49e9))
 
@@ -1565,7 +1587,7 @@ New Code:
   * Do not apply the same modal animation to all of its children, closes #683 ([9cff5d03](https://github.com/driftyco/ionic/commit/9cff5d030ce4b25abd0cfe1c68425b82761063d4))
   * Fix removing modal from DOM on .remove(), closes #755 ([c4ca7a85](https://github.com/driftyco/ionic/commit/c4ca7a85e0014cadd047065522b13b6eae4788f8))
   * Improve slide-up/down animations, remove flickers ([b593cf1b](https://github.com/driftyco/ionic/commit/b593cf1be67a98e95ba0d71c0997da0a9bda4bf7))
-* **navView:** _getView renamed to _getViewById, closes #736 ([78206d0e](https://github.com/driftyco/ionic/commit/78206d0e7caee2212b13b75044681cdd534e9822))
+* **navView:** \_getView renamed to \_getViewById, closes #736 ([78206d0e](https://github.com/driftyco/ionic/commit/78206d0e7caee2212b13b75044681cdd534e9822))
 * **platform:** Fix Platform.showStatusBar so it can be used multiple times, closes #702 ([a6c47cd3](https://github.com/driftyco/ionic/commit/a6c47cd3bfb5d441d906f18d85e39d10d90326ec))
 * **sideMenu:**
   * Not snapping on close on certain conditions #795 ([a5899918](https://github.com/driftyco/ionic/commit/a58999180b9dbf4d07823dfef9cc67b8babc25ac))
