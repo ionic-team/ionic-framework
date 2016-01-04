@@ -1,4 +1,6 @@
-import {Component} from 'angular2/core';
+import {Component, ContentChildren} from 'angular2/core';
+
+import {Button} from '../button/button';
 
 
 /**
@@ -57,4 +59,10 @@ import {Component} from 'angular2/core';
     'class': 'item'
   }
 })
-export class Item {}
+export class Item {
+
+  @ContentChildren(Button)
+  set _buttons(buttons) {
+    Button.setRoles(buttons, 'item-button');
+  }
+}
