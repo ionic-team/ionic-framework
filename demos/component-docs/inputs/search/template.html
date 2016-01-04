@@ -7,8 +7,8 @@
 <ion-content>
   <ion-searchbar [(ng-model)]="searchQuery"></ion-searchbar>
   <ion-list #list>
-    <ion-item *ng-for="#item of getItems()">
+    <ion-item *ngFor="#item of getItems()">
       {{item}}
     </ion-item>
   </ion-list>
-</ion-content> 
+</ion-content>

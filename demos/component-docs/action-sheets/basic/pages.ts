@@ -1,5 +1,5 @@
-import {Platform, Page, ActionSheet} from 'ionic/ionic';
-import {forwardRef} from 'angular2/angular2';
+import {Platform, Page, ActionSheet, NavController} from 'ionic/ionic';
+import {forwardRef} from 'angular2/core';
 import {AndroidAttribute} from '../../helpers';
 
 @Page({
@@ -9,12 +9,18 @@ import {AndroidAttribute} from '../../helpers';
 })
 export class BasicPage {
 
-  constructor(actionSheet: ActionSheet, platform: Platform) {
-    this.actionSheet = actionSheet;
+  constructor(platform: Platform, nav: NavController) {
+    this.nav = nav;
     this.platform = platform;
   }
 
   openMenu() {
+    let buttonHandler = (index) => {
+      console.log('Button clicked', index);
+      if (index == 1) { return false; }
+      return true;
+    }
+
     if (this.platform.is('android')) {
       var androidSheet = {
 
@@ -40,38 +46,44 @@ export class BasicPage {
       };
     }
 
-    this.actionSheet.open(androidSheet || {
+    this.actionSheet = ActionSheet.create(androidSheet || {
+      title: 'Albums',
       buttons: [
-        { text: 'Share'},
-        { text: 'Play'},
-        { text: 'Favorite'}
+        {
+          text: 'Share',
+          handler: buttonHandler
+        },
+        {
+          text: 'Play',
+          handler: buttonHandler
+        },
+        {
+          text: 'Favorite',
+          handler: buttonHandler
+        },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          handler: () => {
+            console.log('Destructive clicked');
+          }
+        },
+        {
+          text: 'Cancel',
+          style: 'cancel',
+          handler: () => {
+            console.log('Canceled');
+          }
+        }
       ],
-      destructiveText: 'Delete',
-      titleText: 'Albums',
-      cancelText: 'Cancel',
-      cancel: () => {
-        console.log('Canceled');
-      },
-      destructiveButtonClicked: () => {
-        console.log('Destructive clicked');
-      },
-      buttonClicked: (index) => {
-        console.log('Button clicked', index);
-        if (index == 1) { return false; }
-        return true;
-      }
 
-    }).then(actionSheetRef => {
-      console.log(actionSheetRef);
-      this.actionSheetRef = actionSheetRef;
     });
+
+    this.nav.present(this.actionSheet);
   }
 
   onPageWillLeave() {
-    let actionSheet = this.actionSheet.get();
-    if (actionSheet) {
-      actionSheet.close();
-    }
+    this.actionSheet && this.actionSheet.dismiss();
   }
 
 }

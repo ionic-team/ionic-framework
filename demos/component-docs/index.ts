@@ -10,7 +10,7 @@ import * as helpers from './helpers';
   config: {
     platforms: {
       android: {
-        activator: 'ripple'        
+        activator: 'ripple'
       }
     }
   }
@@ -35,10 +35,17 @@ class DemoApp {
     this.platform.ready().then(() => {
 
       window.addEventListener('message', (e) => {
-
+        //TODO(@drewrygh)
+        e = {};
+        e.data = '{}';
         zone.run(() => {
           if (e.data) {
-            var data = JSON.parse(e.data);
+            var data;
+            try {
+              data = JSON.parse(e.data);
+            } catch (e) {
+              console.error(e);
+            }
             if (data.hash) {
               this.nextPage = helpers.getPageFor(data.hash.replace('#', ''));
               if (data.hash !== 'menus') {

@@ -1,5 +1,5 @@
 import {App, IonicApp, Page} from 'ionic/ionic';
-import {forwardRef} from 'angular2/angular2';
+import {forwardRef} from 'angular2/core';
 import * as helpers from '../../helpers';
 
 @Page({

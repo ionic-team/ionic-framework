@@ -1,4 +1,4 @@
-import {Component, Directive} from 'angular2/angular2';
+import {Component, Directive} from 'angular2/core';
 
 import {App, ActionSheet, IonicApp, IonicView, Register} from 'ionic/ionic';
 

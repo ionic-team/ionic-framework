@@ -1,6 +1,6 @@
 import {NavController, NavParams} from 'ionic/ionic';
 import {Page, ViewController, Platform} from 'ionic/ionic';
-import {forwardRef} from 'angular2/angular2';
+import {forwardRef} from 'angular2/core';
 import * as helpers from '../../helpers';
 
 

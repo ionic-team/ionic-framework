@@ -272,15 +272,15 @@ gulp.task('e2e.build', function() {
     .pipe(cache('e2e.files'))
 
   return merge([
-    tsResult,
-    testFiles
-  ])
-  .pipe(rename(function(file) {
-    var sep = path.sep;
-    file.dirname = file.dirname.replace(sep + 'test' + sep, sep);
-  }))
-  .pipe(gulp.dest('dist/e2e/'))
-  .pipe(connect.reload());
+      tsResult,
+      testFiles
+    ])
+    .pipe(rename(function(file) {
+      var sep = path.sep;
+      file.dirname = file.dirname.replace(sep + 'test' + sep, sep);
+    }))
+    .pipe(gulp.dest('dist/e2e/'))
+    .pipe(connect.reload());
 
   function createIndexHTML() {
     return through2.obj(function(file, enc, next) {
@@ -457,32 +457,40 @@ require('./scripts/docs/gulp-tasks')(gulp, flags)
 
 gulp.task('build.demos', function(){
   var gulpif = require('gulp-if');
-  var lazypipe = require('lazypipe');
+  var merge = require('merge2');
   var _ = require('lodash');
   var fs = require('fs');
   var VinylFile = require('vinyl');
 
-  var buildTest = lazypipe()
-    .pipe(tsc, tscOptions, undefined, tscReporter)
-    .pipe(babel, getBabelOptions('demos', 'common'))
-    // .pipe(babel, getBabelOptions('demos'))
-
   var baseIndexTemplate = _.template(fs.readFileSync('scripts/demos/index.template.html'))();
-  var docsIndexTemplate = _.template(fs.readFileSync('scripts/demos/docs.index.template.html'))();
 
-  return gulp.src(['demos/**/*'])
-    .pipe(cache('demos', { optimizeMemory: true }))
-    .pipe(gulpif(/.ts$/, buildTest()))
+  var tsResult = gulp.src(['demos/**/*.ts'])
+    .pipe(cache('demos.ts'))
+    .pipe(tsc(tscOptionsNoTypeCheck, undefined, tscReporter))
+    .on('error', function(error) {
+      console.log(error.message);
+      this.emit('end');
+    })
     .pipe(gulpif(/index.js$/, createIndexHTML())) //TSC changes .ts to .js
+
+  var demoFiles = gulp.src([
+      'demos/**/*',
+      '!demos/**/*.ts'
+    ])
+    .pipe(cache('demos.files'));
+
+  return merge([
+      tsResult,
+      demoFiles
+    ])
     .pipe(gulp.dest('dist/demos'))
+    .pipe(connect.reload());
 
   function createIndexHTML() {
     return through2.obj(function(file, enc, next) {
       var indexTemplate = baseIndexTemplate;
       var customTemplateFp = file.path.split('/').slice(0, -1).join('/') + '/index.html';
-      if (file.path.indexOf('component-docs') > -1) {
-        indexTemplate = docsIndexTemplate;
-      } else if (fs.existsSync(customTemplateFp)) {
+      if (fs.existsSync(customTemplateFp)) {
         indexTemplate = _.template(fs.readFileSync(customTemplateFp))();
       }
       this.push(new VinylFile({
@@ -510,7 +518,7 @@ gulp.task('sass.demos:components', function() {
     .pipe(gulp.dest('../ionic-site/docs/v2/demos/component-docs/'));
 });
 
-gulp.task('bundle.demos:api', ['build.demos'], function(done) {
+gulp.task('bundle.demos:api', ['build.demos', 'transpile.no-typecheck', 'copy.web-animations', 'sass', 'fonts'], function(done) {
   return buildDemoBundle({demo: 'api'}, done);
 });
 
@@ -559,14 +567,14 @@ function buildDemoBundle(opts, done) {
       }
 
       webpack(config, function(err, stats){
-      //   var statsOptions = {
-      //    'colors': true,
-      //     'modules': true,
-      //     'chunks': false,
-      //     'exclude': ['node_modules'],
-      //     'errorDetails': true
-      //  }
-      // console.log(stats.toString(statsOptions));
+        var statsOptions = {
+         'colors': true,
+          'modules': false,
+          'chunks': false,
+          'exclude': ['node_modules'],
+          'errorDetails': true
+       }
+      console.log(stats.toString(statsOptions));
         if (--numTasks === 0) done();
       })
     })

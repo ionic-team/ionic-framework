@@ -1,5 +1,5 @@
 import {Page, Platform} from 'ionic/ionic';
-import {forwardRef} from 'angular2/angular2';
+import {forwardRef} from 'angular2/core';
 import {AndroidAttribute} from '../../helpers';
 
 @Page({

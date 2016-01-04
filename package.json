@@ -69,6 +69,7 @@
     "semver": "^5.0.1",
     "serve-static": "^1.9.2",
     "source-map-support": "^0.2.10",
+    "strip-sourcemap-loader": "0.0.1",
     "systemjs": "0.19.6",
     "through2": "^0.6.3",
     "typescript": "^1.7.3",
