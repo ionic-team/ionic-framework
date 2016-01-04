@@ -1,33 +1,7 @@
 
-const nativeRaf = window.requestAnimationFrame ||
-   window.webkitRequestAnimationFrame ||
-   window.mozRequestAnimationFrame;
-
-const nativeCancelRaf = window.cancelAnimationFrame ||
-  window.webkitCancelAnimationFrame ||
-  window.webkitCancelRequestAnimationFrame;
-
-export function raf(callback) {
-  //console.log('raf', callback.toString().replace(/\s/g, '').replace('function', '').substring(0, 50));
-  //console.log('raf, isRootZone()', zone.isRootZone(), '$id', zone.$id);
-  _raf(callback);
-}
-
-const _raf = nativeRaf || function(callback) {
-  let timeCurrent = (new Date()).getTime(),
-      timeDelta;
-
-  /* Dynamically set delay on a per-tick basis to match 60fps. */
-  /* Technique by Erik Moller. MIT license: https://gist.github.com/paulirish/1579671 */
-  timeDelta = Math.max(0, 16 - (timeCurrent - timeLast));
-  timeLast = timeCurrent + timeDelta;
-
-  return setTimeout(function() { callback(timeCurrent + timeDelta); }, timeDelta);
-}
-
-export const rafCancel = nativeRaf ? nativeCancelRaf : function(id) {
-  return window.cancelTimeout(id);
-}
+// requestAnimationFrame is polyfilled for old Android
+// within the web-animations polyfill
+export const raf = window.requestAnimationFrame;
 
 export function rafFrames(framesToWait, callback) {
   framesToWait = Math.ceil(framesToWait);
