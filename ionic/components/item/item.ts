@@ -64,7 +64,9 @@ export class Item {
 
   @ContentChildren(Button)
   set _buttons(buttons) {
-    Button.setRoles(buttons, 'item-button');
+    buttons.toArray().forEach(button => {
+      button.addClass('item-button');
+    });
   }
 
   @ContentChildren(Icon)

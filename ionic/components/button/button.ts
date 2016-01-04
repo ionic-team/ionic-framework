@@ -95,6 +95,13 @@ export class Button {
   /**
    * @private
    */
+  addClass(className) {
+    this._renderer.setElementClass(this._elementRef, className, true);
+  }
+
+  /**
+   * @private
+   */
   setRole(val) {
     this._role = val;
   }
