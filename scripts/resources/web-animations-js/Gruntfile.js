@@ -87,6 +87,21 @@ module.exports = function(grunt) {
     config.wrap[target] = {
       source: source,
       preamble: '(function() {\n' +
+                '  // RequestAnimationFrame Polyfill (Android 4.1, 4.2, 4.3)\n' +
+                '  /*! @author Paul Irish */\n' +
+                '  /*! @source https://gist.github.com/paulirish/1579671 */\n' +
+                '  var rafLastTime = 0;\n' +
+                '  if (!window.requestAnimationFrame)\n' +
+                '    window.requestAnimationFrame = function(callback, element) {\n' +
+                '      var currTime = Date.now();\n' +
+                '      var timeToCall = Math.max(0, 16 - (currTime - rafLastTime));\n' +
+                '      var id = window.setTimeout(function() { callback(currTime + timeToCall); }, timeToCall);\n' +
+                '      rafLastTime = currTime + timeToCall;\n' +
+                '      return id;\n' +
+                '    };\n' +
+                '  if (!window.cancelAnimationFrame) window.cancelAnimationFrame = function(id) { clearTimeout(id); };\n' +
+                '  \n' +
+                '  // Web Animations Polyfill\n' +
                 '  if (document.documentElement.animate) {\n' +
                 '    var player = document.documentElement.animate([], 0);\n' +
                 '    var load = true;\n' +
