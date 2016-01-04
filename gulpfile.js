@@ -63,7 +63,7 @@ var babelOptions = {
   }
 }
 
-gulp.task('build', ['bundle.system', 'e2e.build', 'copy.web-animations', 'sass', 'fonts']);
+gulp.task('build', ['bundle.system', 'e2e.build', 'sass', 'fonts']);
 
 gulp.task('clean.build', function(done) {
   runSequence('clean', 'build', done);
