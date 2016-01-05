@@ -23,7 +23,6 @@ export class BasicPage {
   }
 
   doPrompt() {
-    Baasbox Javascript SDK
     let prompt = Alert.create({
       title: 'Login',
       body: "Enter a name for this new album you're so keen on adding",
