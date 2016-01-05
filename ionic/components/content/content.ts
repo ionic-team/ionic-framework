@@ -1,9 +1,9 @@
 import {Component, ElementRef, Optional, NgZone} from 'angular2/core';
 
 import {Ion} from '../ion';
+import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
 import {raf}  from '../../util/dom';
-import {Keyboard} from '../../util/keyboard';
 import {ViewController} from '../nav/view-controller';
 import {Animation} from '../../animations/animation';
 import {ScrollTo} from '../../animations/scroll-to';
@@ -37,10 +37,15 @@ export class Content extends Ion {
    * @param {ElementRef} elementRef  A reference to the component's DOM element.
    * @param {Config} config  The config object to change content's default settings.
    */
-  constructor(elementRef: ElementRef, config: Config, keyboard: Keyboard, @Optional() viewCtrl: ViewController, private _zone: NgZone) {
-    super(elementRef, config);
+  constructor(
+    elementRef: ElementRef,
+    private _config: Config,
+    @Optional() viewCtrl: ViewController,
+    private _app: IonicApp,
+    private _zone: NgZone
+  ) {
+    super(elementRef, _config);
     this.scrollPadding = 0;
-    this.keyboard = keyboard;
 
     if (viewCtrl) {
       viewCtrl.setContent(this);
@@ -53,7 +58,23 @@ export class Content extends Ion {
    */
   ngOnInit() {
     super.ngOnInit();
-    this.scrollElement = this.getNativeElement().children[0];
+
+    let self = this;
+    self.scrollElement = self.getNativeElement().children[0];
+
+    self._scroll = function(ev) {
+      self._app.setScrolling();
+    };
+
+    if (self._config.get('tapPolyfill') === true) {
+      self._zone.runOutsideAngular(function() {
+        self.scrollElement.addEventListener('scroll', self._scroll);
+      });  
+    }
+  }
+
+  ngOnDestroy() {
+    this.scrollElement.removeEventListener('scroll', this._scroll);
   }
 
   /**
@@ -287,28 +308,6 @@ export class Content extends Ion {
 
       this.scrollPadding = newScrollPadding;
       this.scrollElement.style.paddingBottom = newScrollPadding + 'px';
-
-      // if (!this.keyboardPromise) {
-      //   console.debug('add scroll keyboard close callback', newScrollPadding);
-      //
-      //   this.keyboardPromise = this.keyboard.onClose(() => {
-      //     console.debug('scroll keyboard closed', newScrollPadding);
-      //
-      //     if (this) {
-      //       if (this.scrollPadding && this.scrollElement) {
-      //         let close = new Animation(this.scrollElement);
-      //         close
-      //           .duration(250)
-      //           .fromTo('paddingBottom', this.scrollPadding + 'px', '0px')
-      //           .play();
-      //       }
-      //
-      //       this.scrollPadding = 0;
-      //       this.keyboardPromise = null;
-      //     }
-      //   });
-      //
-      // }
     }
   }
 

@@ -1,6 +1,6 @@
 import {Page, Popup} from 'ionic/ionic';
 import {AndroidAttribute} from '../../helpers';
-import {forwardRef} from 'angular2/angular2';
+import {forwardRef} from 'angular2/core';
 
 
 @Page({

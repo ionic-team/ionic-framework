@@ -1,4 +1,5 @@
-import {Component, Control, ControlGroup} from 'angular2/angular2';
+import {Component} from 'angular2/core';
+import {Control, ControlGroup} from 'angular2/common';
 
 import {IonicApp, App} from 'ionic/ionic';
 

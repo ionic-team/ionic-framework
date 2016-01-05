@@ -7,7 +7,6 @@ import {Config} from './config';
 import {Platform} from '../platform/platform';
 import {Form} from '../util/form';
 import {Keyboard} from '../util/keyboard';
-import {ActionSheet} from '../components/action-sheet/action-sheet';
 import {Events} from '../util/events';
 import {NavRegistry} from '../components/nav/nav-registry';
 import {Translate} from '../translation/translate';
@@ -58,7 +57,6 @@ export function ionicProviders(args={}) {
     TapClick,
     Form,
     Keyboard,
-    ActionSheet,
     Translate,
     ROUTER_PROVIDERS,
     provide(LocationStrategy, {useClass: HashLocationStrategy}),

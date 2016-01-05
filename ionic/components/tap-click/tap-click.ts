@@ -58,20 +58,28 @@ export class TapClick {
     this.lastTouch = Date.now();
 
     if (this.usePolyfill && this.startCoord && this.app.isEnabled()) {
+      // only dispatch mouse click events from a touchend event
+      // when tapPolyfill config is true, and the startCoordand endCoord
+      // are not too far off from each other
       let endCoord = pointerCoord(ev);
 
-
       if (!hasPointerMoved(POINTER_TOLERANCE, this.startCoord, endCoord)) {
-        console.debug('create click from touch ' + Date.now());
-
         // prevent native mouse click events for XX amount of time
         this.disableClick = this.lastTouch + DISABLE_NATIVE_CLICK_AMOUNT;
 
-        // manually dispatch the mouse click event
-        let clickEvent = document.createEvent('MouseEvents');
-        clickEvent.initMouseEvent('click', true, true, window, 1, 0, 0, endCoord.x, endCoord.y, false, false, false, false, 0, null);
-        clickEvent.isIonicTap = true;
-        ev.target.dispatchEvent(clickEvent);
+        if (this.app.isScrolling()) {
+          // do not fire off a click event while the app was scrolling
+          console.debug('click from touch prevented by scrolling ' + Date.now());
+
+        } else {
+          // dispatch a mouse click event
+          console.debug('create click from touch ' + Date.now());
+
+          let clickEvent = document.createEvent('MouseEvents');
+          clickEvent.initMouseEvent('click', true, true, window, 1, 0, 0, endCoord.x, endCoord.y, false, false, false, false, 0, null);
+          clickEvent.isIonicTap = true;
+          ev.target.dispatchEvent(clickEvent);
+        }
       }
     }
 

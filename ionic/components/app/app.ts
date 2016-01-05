@@ -4,7 +4,6 @@ import {Title} from 'angular2/platform/browser';
 import {Config} from '../../config/config';
 import {ClickBlock} from '../../util/click-block';
 import {rafFrames} from '../../util/dom';
-import {ScrollTo} from '../../animations/scroll-to';
 
 
 /**
@@ -15,20 +14,21 @@ import {ScrollTo} from '../../animations/scroll-to';
 @Injectable()
 export class IonicApp {
 
-  constructor(config: Config, clickBlock: ClickBlock, zone: NgZone) {
-    this._config = config;
-    this._zone = zone;
+  constructor(
+    private _config: Config,
+    private _clickBlock: ClickBlock,
+    private _zone: NgZone
+  ) {
     this._titleSrv = new Title();
     this._title = '';
     this._disTime = 0;
-    this._clickBlock = clickBlock;
+    this._scrollTime = 0;
 
     // Our component registry map
     this.components = {};
   }
 
   /**
-   * @private
    * Sets the document title.
    * @param {string} val  Value to set the document title to.
    */
@@ -73,6 +73,22 @@ export class IonicApp {
    */
   isEnabled() {
     return (this._disTime < Date.now());
+  }
+
+  /**
+   * @private
+   */
+  setScrolling() {
+    this._scrollTime = Date.now();
+  }
+
+  /**
+   * @private
+   * Boolean if the app is actively scrolling or not.
+   * @return {bool}
+   */
+  isScrolling() {
+    return (this._scrollTime + 64 > Date.now());
   }
 
   /**

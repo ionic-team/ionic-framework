@@ -1,26 +1,42 @@
+var path = require('path');
+
 module.exports = {
   entry: [
-    "es6-shim",
-    "zone.js",
-    "reflect-metadata",
-    "web-animations.min",
+    path.normalize('es6-shim/es6-shim.min'),
+    'reflect-metadata',
+    'web-animations.min',
+    path.normalize('zone.js/dist/zone-microtask'),
   ],
   module: {
     loaders: [
       {
         test: /\.ts$/,
         loader: "awesome-typescript-loader",
+        query: {
+          'doTypeCheck': false
+        },
         include: /\/demos\//,
         exclude: /node_modules/
-       }
+      },
+      {
+        test: /\.js$/,
+        include: path.resolve('node_modules/angular2'),
+        loader: 'strip-sourcemap'
+      }
+    ],
+    noParse: [
+      /es6-shim/,
+      /reflect-metadata/,
+      /web-animations/,
+      /zone\.js(\/|\\)dist(\/|\\)zone-microtask/
     ]
   },
   resolve: {
-    modulesDirectories: [
-      "node_modules",
-      "dist/src/es5/common", // ionic-framework npm package (stable)
-      "dist/js" // for web-animations polyfill
-    ],
+    alias: {
+      'ionic': path.normalize(process.cwd() + '/dist'),
+      'web-animations.min': path.normalize(process.cwd() + '/dist/js/web-animations.min')
+    },
     extensions: ["", ".js", ".ts"]
   }
 };
+
