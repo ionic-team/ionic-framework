@@ -19,16 +19,20 @@
       </p>
     </ion-card-content>
 
-    <ion-item>
-      <button clear item-left>
-        <icon star></icon>
-        Star
-      </button>
-      <button clear item-right class="activated">
-        <icon share></icon>
-        Share.activated
-      </button>
-    </ion-item>
+    <ion-row no-padding>
+      <ion-col>
+        <button clear small>
+          <icon star></icon>
+          Star
+        </button>
+      </ion-col>
+      <ion-col text-right>
+        <button clear small class="activated">
+          <icon share></icon>
+          Share.activated
+        </button>
+      </ion-col>
+    </ion-row>
 
   </ion-card>
 
@@ -51,19 +55,24 @@
       <p>Hello. I am a paragraph.</p>
     </ion-card-content>
 
-    <ion-item>
-      <button clear item-left danger class="activated">
-        <icon star></icon>
-        Favorite.activated
-      </button>
-      <button clear item-left danger>
-        <icon musical-notes></icon>
-        Listen
-      </button>
-      <ion-note item-right>
-        Right Note
-      </ion-note>
-    </ion-item>
+    <ion-row center no-padding>
+      <ion-col width-75>
+        <button clear small danger class="activated">
+          <icon star></icon>
+          Favorite.activated
+        </button>
+        <button clear small danger>
+          <icon musical-notes></icon>
+          Listen
+        </button>
+      </ion-col>
+      <ion-col text-right>
+        <button clear small>
+          <icon share></icon>
+          Share
+        </button>
+      </ion-col>
+    </ion-row>
   </ion-card>
 
   <ion-card>
@@ -76,20 +85,27 @@
       This card was breaking the border radius.
     </ion-card-content>
 
-    <ion-item>
-      <button clear item-left dark>
-        <icon star></icon>
-        Favorite
-      </button>
-      <button clear item-right dark>
-        <icon musical-notes></icon>
-        Listen
-      </button>
-      <button clear item-right dark>
-        <icon share-alt></icon>
-        Share
-      </button>
-    </ion-item>
+    <ion-row text-center no-padding>
+      <ion-col>
+        <button clear small dark>
+          <icon star></icon>
+          Favorite
+        </button>
+      </ion-col>
+
+      <ion-col>
+        <button clear small dark>
+          <icon musical-notes></icon>
+          Listen
+        </button>
+      </ion-col>
+      <ion-col>
+        <button clear small dark>
+          <icon share-alt></icon>
+          Share
+        </button>
+      </ion-col>
+    </ion-row>
 
   </ion-card>
 

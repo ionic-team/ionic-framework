@@ -1,4 +1,7 @@
-import {Component} from 'angular2/core';
+import {Component, ContentChildren} from 'angular2/core';
+
+import {Button} from '../button/button';
+import {Icon} from '../icon/icon';
 
 
 /**
@@ -47,7 +50,7 @@ import {Component} from 'angular2/core';
   template:
     '<ng-content select="[item-left]"></ng-content>' +
     '<div class="item-inner">' +
-      '<ng-content select="ion-item-content"></ng-content>' +
+      '<ng-content select="ion-item-content,[item-content]"></ng-content>' +
       '<ion-item-content cnt>' +
         '<ng-content></ng-content>'+
       '</ion-item-content>' +
@@ -57,4 +60,21 @@ import {Component} from 'angular2/core';
     'class': 'item'
   }
 })
-export class Item {}
+export class Item {
+
+  @ContentChildren(Button)
+  set _buttons(buttons) {
+    buttons.toArray().forEach(button => {
+      if (!button.isItem) {
+        button.addClass('item-button');
+      }
+    });
+  }
+
+  @ContentChildren(Icon)
+  set _icons(icons) {
+    icons.toArray().forEach(icon => {
+      icon.addClass('item-icon');
+    });
+  }
+}

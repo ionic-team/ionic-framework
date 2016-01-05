@@ -51,6 +51,13 @@ export class Icon {
   /**
    * @private
    */
+  addClass(className) {
+    this._renderer.setElementClass(this._elementRef, className, true);
+  }
+
+  /**
+   * @private
+   */
   ngOnInit() {
     let ele = this._elementRef.nativeElement;
 

@@ -1,17 +1,5 @@
 @import "../globals.core";
 
-.align-left {
-  text-align: left;
-}
-
-.align-center {
-  text-align: center;
-}
-
-.align-right {
-  text-align: right;
-}
-
 .no-transition {
   transition: none !important;
 }
@@ -61,6 +49,9 @@ $content-padding:    16px !default;
   padding-left: $content-padding;
 }
 
+[no-padding] {
+  padding: 0;
+}
 
 // Focus Outline
 // --------------------------------------------------
