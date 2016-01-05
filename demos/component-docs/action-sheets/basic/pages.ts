@@ -23,43 +23,57 @@ export class BasicPage {
 
     if (this.platform.is('android')) {
       var androidSheet = {
-
+        title: 'Albums',
         buttons: [
-          { text: 'Share', icon: 'share' },
-          { text: 'Play', icon: 'arrow-dropright-circle'},
-          { text: 'Favorite', icon: 'ion-md-heart-outline'}
+          { text: 'Share',
+            handler: buttonHandler,
+            icon: 'share'
+          },
+          { text: 'Play',
+            handler: buttonHandler,
+            icon: 'arrow-dropright-circle'
+          },
+          { text: 'Favorite',
+            handler: buttonHandler,
+            icon: 'ion-md-heart-outline'
+          },
+          {
+            text: 'Delete',
+            style: 'destructive',
+            handler: () => {
+              console.log('Destructive clicked');
+            }
+          },
+          {
+            text: 'Cancel',
+            style: 'cancel',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
+          }
         ],
-        destructiveText: 'Delete',
-        titleText: 'Albums',
-        cancelText: 'Cancel',
-        cancel: function() {
-          console.log('Canceled');
-        },
-        destructiveButtonClicked: () => {
-          console.log('Destructive clicked');
-        },
-        buttonClicked: function(index) {
-          console.log('Button clicked', index);
-          if (index == 1) { return false; }
-          return true;
-        }
       };
     }
 
-    this.actionSheet = ActionSheet.create(androidSheet || {
-      title: 'Albums',
+    let actionSheet = ActionSheet.create( androidSheet || {
       buttons: [
         {
           text: 'Share',
-          handler: buttonHandler
+          handler: () => {
+            console.log('Share clicked');
+          }
         },
         {
           text: 'Play',
-          handler: buttonHandler
+          handler: () => {
+            console.log('Play clicked');
+          }
         },
         {
           text: 'Favorite',
-          handler: buttonHandler
+          handler: () => {
+            console.log('Favorite clicked');
+          }
         },
         {
           text: 'Delete',
@@ -72,18 +86,17 @@ export class BasicPage {
           text: 'Cancel',
           style: 'cancel',
           handler: () => {
-            console.log('Canceled');
+            console.log('Cancel clicked');
           }
         }
-      ],
-
+      ]
     });
 
-    this.nav.present(this.actionSheet);
+    this.nav.present(actionSheet);
   }
 
   onPageWillLeave() {
-    this.actionSheet && this.actionSheet.dismiss();
+    actionSheet && actionSheet.dismiss();
   }
 
 }
