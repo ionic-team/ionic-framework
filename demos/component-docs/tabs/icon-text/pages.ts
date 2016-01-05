@@ -6,7 +6,7 @@ import * as helpers from '../../helpers';
 
 @Page({
   template: '' +
-  '<ion-navbar *navbar hide-back-button [attr.royal]="isAndroid ? \'\' : null">' +
+  '<ion-navbar *navbar hideBackButton [attr.royal]="isAndroid ? \'\' : null">' +
     '<ion-title>Tabs</ion-title>' +
   '</ion-navbar>' +
   '<ion-content>' +
