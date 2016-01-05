@@ -1,8 +1,5 @@
-import {Directive, Optional, ElementRef, Renderer} from 'angular2/core';
+import {Directive, ElementRef, Renderer} from 'angular2/core';
 
-import {Config} from '../../config/config';
-import {TextInput} from '../text-input/text-input';
-import {pointerCoord, hasPointerMoved} from '../../util/dom';
 import {Form} from '../../util/form';
 
 
@@ -30,25 +27,16 @@ import {Form} from '../../util/form';
     'id'
   ],
   host: {
-    '[attr.id]': 'id',
-    '(touchstart)': 'pointerStart($event)',
-    '(touchend)': 'pointerEnd($event)',
-    '(mousedown)': 'pointerStart($event)',
-    '(mouseup)': 'pointerEnd($event)'
+    '[attr.id]': 'id'
   }
 })
 export class Label {
 
   constructor(
-    config: Config,
-    @Optional() container: TextInput,
     private _form: Form,
     private _elementRef: ElementRef,
     private _renderer: Renderer
-  ) {
-    this.scrollAssist = config.get('scrollAssist');
-    this.container = container;
-  }
+  ) {}
 
 /**
  * @private
@@ -56,37 +44,6 @@ export class Label {
   ngOnInit() {
     if (!this.id) {
       this.id = 'lbl-' + this._form.nextId();
-    }
-    this.container && this.container.registerLabel(this);
-  }
-
-  /**
-   * @private
-   */
-  pointerStart(ev) {
-    if (this.scrollAssist) {
-      // remember where the touchstart/mousedown started
-      this.startCoord = pointerCoord(ev);
-    }
-  }
-
-  /**
-   * @private
-   */
-  pointerEnd(ev) {
-    if (this.container) {
-
-      // get where the touchend/mouseup ended
-      let endCoord = pointerCoord(ev);
-
-      // focus this input if the pointer hasn't moved XX pixels
-      if (!hasPointerMoved(20, this.startCoord, endCoord)) {
-        ev.preventDefault();
-        ev.stopPropagation();
-        this.container.initFocus();
-      }
-
-      this.startCoord = null;
     }
   }
 

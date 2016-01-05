@@ -4,4 +4,4 @@ export * from './range/pages';
 export * from './search/pages';
 export * from './segment/pages';
 export * from './select/pages';
-export * from './switch/pages';
+export * from './toggle/pages';

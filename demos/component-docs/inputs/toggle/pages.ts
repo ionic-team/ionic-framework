@@ -3,10 +3,10 @@ import {forwardRef} from 'angular2/core';
 import {AndroidAttribute} from '../../helpers';
 
 @Page({
-  templateUrl: 'inputs/switch/template.html',
+  templateUrl: 'inputs/toggle/template.html',
   directives: [forwardRef(() => AndroidAttribute)]
 })
-export class SwitchPage{
+export class TogglePage{
   constructor() {
   }
 }

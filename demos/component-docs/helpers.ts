@@ -13,7 +13,7 @@ import * as lists from './lists/lists';
 import * as menus from './menus/menus';
 import * as modals from './modals/modals';
 import * as navigation from './navigation/navigation';
-import * as popups from './popups/popups';
+import * as alerts from './alerts/alerts';
 import * as slides from './slides/slides';
 import * as tabs from './tabs/tabs';
 
@@ -72,6 +72,8 @@ export function getPageFor(hash) {
     return {
         'overview': actionSheets.BasicPage,
         'action-sheets': actionSheets.BasicPage,
+        'alert': alerts.BasicPage,
+
         'badges': badges.BasicPage,
 
         'buttons': buttons.BasicPage,
@@ -100,8 +102,9 @@ export function getPageFor(hash) {
         'range': inputs.RangePage,
         'segment': inputs.SegmentPage,
         'select': inputs.SelectPage,
-        'switch': inputs.SwitchPage,
         'searchbar': inputs.SearchPage,
+        'toggle': inputs.TogglePage,
+
 
         'inputs': labels.BasicPage,
         'fixed-inline-labels': labels.FixedInlinePage,
@@ -127,7 +130,6 @@ export function getPageFor(hash) {
         'menus': menus.BasicPage,
         'modals': modals.BasicPage,
         'navigation': navigation.BasicPage,
-        'popups': popups.BasicPage,
         'slides': slides.BasicPage,
 
         'tabs': tabs.BasicPage,

@@ -36,8 +36,6 @@ class DemoApp {
 
       window.addEventListener('message', (e) => {
         //TODO(@drewrygh)
-        e = {};
-        e.data = '{}';
         zone.run(() => {
           if (e.data) {
             var data;
