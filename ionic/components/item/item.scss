@@ -75,6 +75,12 @@ ion-item-content {
   }
 }
 
+.item[actions] {
+  ion-item-content {
+    text-align: center;
+  }
+}
+
 [text-wrap] ion-item-content {
   white-space: normal;
 }
