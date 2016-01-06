@@ -1,4 +1,4 @@
-import {App, IonicApp, Animation, Modal, Platform, NavController, NavParams, Page, Events} from 'ionic/ionic';
+import {App, IonicApp, Animation, Modal, Platform, NavController, NavParams, Page, Events, ViewController} from 'ionic/ionic';
 import {forwardRef} from 'angular2/core';
 import {NgFor} from 'angular2/common';
 import * as helpers from '../../helpers';
@@ -12,17 +12,14 @@ class ModalsInitialPage {
 
   constructor(
     nav: NavController,
-    modal: Modal,
   ) {
     this.nav = nav;
-    this.modal = modal;
   }
 
   openModal(characterNum) {
-    this.modal.open(ModalsContentPage, characterNum);
+    let myModal = Modal.create(ModalsContentPage, characterNum);
+    this.nav.present(myModal);
   }
-
-
 }
 
 @Page({
@@ -33,11 +30,11 @@ class ModalsInitialPage {
 class ModalsContentPage {
 
     constructor(
-        modal: Modal,
         platform: Platform,
-        params: NavParams
+        params: NavParams,
+        viewCtrl: ViewController
     ) {
-        this.modal = modal;
+        this.viewCtrl = viewCtrl;
         this.params = params;
         if (platform.is('android')) {
             this.currentPlatform = 'android';
@@ -81,11 +78,8 @@ class ModalsContentPage {
 
   }
 
-  closeModal() {
-    let modal = this.modal.get();
-    if (modal) {
-      modal.close();
-    }
+  dismiss() {
+    this.viewCtrl.dismiss();
   }
 }
 
@@ -93,15 +87,13 @@ class ModalsContentPage {
   template: '<ion-nav [root]="rootView"></ion-nav>'
 })
 export class BasicPage {
-  constructor(modal: Modal) {
+  constructor(viewCtrl: ViewController) {
+    this.viewCtrl = viewCtrl;
     this.rootView = ModalsInitialPage;
-    this.modal = modal;
   }
   onPageWillLeave() {
-    let modal = this.modal.get();
-    if (modal) {
-      modal.close();
-    }
+    this.viewCtrl.dismiss();
+
   }
 }
 
