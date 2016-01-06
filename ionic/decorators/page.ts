@@ -32,7 +32,7 @@ import {IONIC_DIRECTIVES} from '../config/directives';
  * it is in `IONIC_DIRECTIVES`, so there is no need to add a `directives` array.
  *
  *
- * Say you built a custom component that uses the an already exsiting Ionic component.
+ * Say you built a custom component that uses the already existing Ionic component.
  * In this case, you would add `IONIC_DIRECTIVES` to your directives array.
  *
  * ```ts
