@@ -72,7 +72,7 @@ class Tab2 {
   template: `
     <ion-navbar *navbar>
       <button menuToggle>
-        <icon menu></icon>
+        <ion-icon name="menu"></ion-icon>
       </button>
       <ion-title>Stopwatch</ion-title>
     </ion-navbar>

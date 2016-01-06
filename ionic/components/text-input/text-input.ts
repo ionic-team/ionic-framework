@@ -1,4 +1,4 @@
-import {Component, Directive, Attribute, forwardRef, Host, Optional, ElementRef, Renderer, Input, Output, EventEmitter, ContentChild, HostListener} from 'angular2/core';
+import {Component, Directive, Attribute, forwardRef, Host, Optional, ElementRef, Renderer, Input, Output, EventEmitter, ContentChild, ContentChildren, HostListener} from 'angular2/core';
 import {NgIf} from 'angular2/common';
 
 import {NavController} from '../nav/nav-controller';
@@ -10,6 +10,7 @@ import {Content} from '../content/content';
 import {CSS, hasFocus, pointerCoord, hasPointerMoved}  from '../../util/dom';
 import {Platform} from '../../platform/platform';
 import {Button} from '../button/button';
+import {Icon} from '../icon/icon';
 
 
 /**
@@ -261,6 +262,28 @@ export class TextInput {
       label.addClass(this.displayType + '-label');
     }
     this.label = label;
+  }
+
+  /**
+   * @private
+   */
+  @ContentChildren(Button)
+  set _buttons(buttons) {
+    buttons.toArray().forEach(button => {
+      if (!button.isItem) {
+        button.addClass('item-button');
+      }
+    });
+  }
+
+  /**
+   * @private
+   */
+  @ContentChildren(Icon)
+  set _icons(icons) {
+    icons.toArray().forEach(icon => {
+      icon.addClass('item-icon');
+    });
   }
 
   /**

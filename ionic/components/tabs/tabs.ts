@@ -49,7 +49,7 @@ import {rafFrames} from '../../util/dom';
     '<ion-tabbar-section>' +
       '<tabbar role="tablist">' +
         '<a *ngFor="#t of _tabs" [tab]="t" class="tab-button" role="tab">' +
-          '<icon [name]="t.tabIcon" [isActive]="t.isSelected" class="tab-button-icon"></icon>' +
+          '<ion-icon [name]="t.tabIcon" [isActive]="t.isSelected" class="tab-button-icon"></ion-icon>' +
           '<span class="tab-button-text">{{t.tabTitle}}</span>' +
         '</a>' +
         '<tab-highlight></tab-highlight>' +

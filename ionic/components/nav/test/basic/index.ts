@@ -6,7 +6,7 @@ import {NavParams, NavController, ViewController, IONIC_DIRECTIVES} from 'ionic/
 
 @Component({
   selector: 'my-cmp',
-  template: `<p>My Custom Component Test <icon star></icon></p>`,
+  template: `<p>My Custom Component Test <ion-icon name="star"></ion-icon></p>`,
   directives: [IONIC_DIRECTIVES]
 })
 class MyCmpTest{}
@@ -17,7 +17,7 @@ class MyCmpTest{}
     <ion-navbar *navbar>
       <ion-title>{{title}}</ion-title>
       <ion-buttons start>
-        <button><icon star></icon></button>
+        <button><ion-icon name="star"></ion-icon></button>
       </ion-buttons>
       <ion-buttons end>
         <button>S1</button>

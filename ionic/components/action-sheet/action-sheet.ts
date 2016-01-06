@@ -134,13 +134,13 @@ import {Animation} from '../../animations/animation';
           '<div class="action-sheet-title" *ngIf="d.title">{{d.title}}</div>' +
           '<div class="action-sheet-sub-title" *ngIf="d.subTitle">{{d.subTitle}}</div>' +
           '<button (click)="click(b)" *ngFor="#b of d.buttons" class="action-sheet-button disable-hover" [ngClass]="b.cssClass">' +
-            '<icon [name]="b.icon" *ngIf="b.icon" class="action-sheet-icon"></icon> ' +
+            '<ion-icon [name]="b.icon" *ngIf="b.icon" class="action-sheet-icon"></ion-icon> ' +
             '{{b.text}}' +
           '</button>' +
         '</div>' +
         '<div class="action-sheet-group" *ngIf="d.cancelButton">' +
           '<button (click)="click(d.cancelButton)" class="action-sheet-button action-sheet-cancel disable-hover" [ngClass]="d.cancelButton.cssClass">' +
-            '<icon [name]="d.cancelButton.icon" *ngIf="d.cancelButton.icon" class="action-sheet-icon"></icon> ' +
+            '<ion-icon [name]="d.cancelButton.icon" *ngIf="d.cancelButton.icon" class="action-sheet-icon"></ion-icon> ' +
             '{{d.cancelButton.text}}' +
           '</button>' +
         '</div>' +

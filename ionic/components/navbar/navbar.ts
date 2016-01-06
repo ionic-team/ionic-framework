@@ -94,7 +94,7 @@ class ToolbarBackground {
   template:
     '<div class="toolbar-background"></div>' +
     '<button class="back-button bar-button bar-button-default" [hidden]="hideBackButton">' +
-      '<icon class="back-button-icon" [name]="bbIcon"></icon>' +
+      '<ion-icon class="back-button-icon" [name]="bbIcon"></ion-icon>' +
       '<span class="back-button-text">' +
         '<span class="back-default">{{bbText}}</span>' +
       '</span>' +

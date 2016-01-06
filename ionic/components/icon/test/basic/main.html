@@ -8,72 +8,51 @@
   <ion-list>
 
     <ion-item>
-      <icon home item-left></icon>
+      <ion-icon name="home" item-left></ion-icon>
       <code>
-        &lt;icon home>&lt;/icon>
+        &lt;ion-icon name="home">&lt;/ion-icon>
       </code>
     </ion-item>
 
     <ion-item>
-      <icon home isActive="true" item-left></icon>
+      <ion-icon [name]="homeIcon" item-left></ion-icon>
       <code>
-        &lt;icon home isActive="true">&lt;/icon>
+        &lt;ion-icon [name]="homeIcon">&lt;/ion-icon>
       </code>
     </ion-item>
 
     <ion-item>
-      <icon home isActive="false" item-left></icon>
+      <ion-icon name="ion-social-twitter" item-left></ion-icon>
       <code>
-        &lt;icon home isActive="false">&lt;/icon>
+        &lt;ion-icon name="ion-social-twitter">&lt;/ion-icon>
       </code>
     </ion-item>
 
     <ion-item>
-      <icon name="home" item-left></icon>
+      <ion-icon ios="ion-social-apple" md="ion-social-android" item-left></ion-icon>
       <code>
-        &lt;icon name="home">&lt;/icon>
+        &lt;ion-icon ios="ion-social-apple" md="ion-social-android">&lt;/ion-icon>
       </code>
     </ion-item>
 
     <ion-item>
-      <icon [name]="homeIcon" item-left></icon>
+      <ion-icon [isActive]="isActive" ios="ion-social-apple" md="ion-social-android" item-left></ion-icon>
       <code>
-        &lt;icon [name]="homeIcon">&lt;/icon>
+        &lt;ion-icon [isActive]="isActive" ios="ion-social-apple" md="ion-social-android">&lt;/ion-icon>
       </code>
     </ion-item>
 
     <ion-item>
-      <icon ion-social-twitter item-left></icon>
+      <ion-icon ios="ion-social-apple" item-left></ion-icon>
       <code>
-        &lt;icon ion-social-twitter>&lt;/icon>
+        &lt;ion-icon ios="ion-social-apple">&lt;/ion-icon>
       </code>
     </ion-item>
 
     <ion-item>
-      <icon ios="ion-social-apple" md="ion-social-android" item-left></icon>
+      <ion-icon md="ion-social-android" item-left></ion-icon>
       <code>
-        &lt;icon ios="ion-social-apple" md="ion-social-android">&lt;/icon>
-      </code>
-    </ion-item>
-
-    <ion-item>
-      <icon [isActive]="isActive" ios="ion-social-apple" md="ion-social-android" item-left></icon>
-      <code>
-        &lt;icon [isActive]="isActive" ios="ion-social-apple" md="ion-social-android">&lt;/icon>
-      </code>
-    </ion-item>
-
-    <ion-item>
-      <icon ios="ion-social-apple" item-left></icon>
-      <code>
-        &lt;icon ios="ion-social-apple">&lt;/icon>
-      </code>
-    </ion-item>
-
-    <ion-item>
-      <icon md="ion-social-android" item-left></icon>
-      <code>
-        &lt;icon md="ion-social-android">&lt;/icon>
+        &lt;ion-icon md="ion-social-android">&lt;/ion-icon>
       </code>
     </ion-item>
 

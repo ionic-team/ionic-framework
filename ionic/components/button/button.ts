@@ -123,12 +123,12 @@ export class Button {
         }
 
       } else if (childNode.nodeType === 1) {
-        if (childNode.nodeName === 'ICON') {
+        if (childNode.nodeName === 'ION-ICON') {
           // icon element node
           nodes.push(ICON);
 
         } else {
-          // element other than an <icon>
+          // element other than an <ion-icon>
           nodes.push(TEXT);
         }
       }

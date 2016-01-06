@@ -62,7 +62,7 @@ export class SearchbarInput {
   template:
     '<div class="searchbar-input-container">' +
       '<button (click)="cancelSearchbar()" (mousedown)="cancelSearchbar()" clear dark class="searchbar-md-cancel">' +
-        '<icon arrow-back></icon>' +
+        '<ion-icon name="arrow-back"></ion-icon>' +
       '</button>' +
       '<div class="searchbar-search-icon"></div>' +
       '<input [value]="value" (keyup)="inputChanged($event)" (blur)="inputBlurred()" (focus)="inputFocused()" class="searchbar-input" type="search" [attr.placeholder]="placeholder">' +

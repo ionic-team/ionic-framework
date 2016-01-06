@@ -20,7 +20,7 @@ class SegmentPage {
   template: `
     <ion-navbar *navbar hideBackButton>
       <button menuToggle>
-        <icon menu></icon>
+        <ion-icon name="menu"></ion-icon>
       </button>
       <ion-title>
         Second Page

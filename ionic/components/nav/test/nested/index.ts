@@ -76,7 +76,7 @@ export class Account {
   template: `
     <ion-navbar *navbar primary>
       <button menuToggle>
-        <icon menu></icon>
+        <ion-icon name="menu"></ion-icon>
       </button>
       <ion-title>Account Dashboard</ion-title>
     </ion-navbar>
@@ -107,7 +107,7 @@ export class Dashboard {
   template: `
     <ion-navbar *navbar danger>
       <button menuToggle>
-        <icon menu></icon>
+        <ion-icon name="menu"></ion-icon>
       </button>
       <ion-title>Account Profile</ion-title>
     </ion-navbar>

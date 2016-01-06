@@ -89,8 +89,8 @@ ion-item-content {
   margin: $item-md-padding-media-top ($item-md-padding-right / 2) $item-md-padding-media-bottom 0;
 }
 
-icon[item-left],
-icon[item-right] {
+ion-icon[item-left],
+ion-icon[item-right] {
   margin-top: $item-md-padding-icon-top;
   margin-bottom: $item-md-padding-icon-bottom;
   margin-left: 0;
@@ -102,7 +102,7 @@ icon[item-right] {
   font-size: 1.2rem;
 }
 
-.button-icon-only icon,
+.button-icon-only ion-icon,
 .button-icon-only {
   padding: 0 1px;
 }
@@ -112,8 +112,8 @@ icon[item-right] {
   line-height: $item-md-body-text-line-height;
 }
 
-icon[item-left] + .item-inner,
-icon[item-left] + .item-input {
+ion-icon[item-left] + .item-inner,
+ion-icon[item-left] + .item-input {
   margin-left: $item-md-padding-left + ($item-md-padding-left / 2);
 }
 

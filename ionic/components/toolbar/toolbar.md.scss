@@ -223,7 +223,7 @@ ion-buttons[right] {
 // Material Design Toolbar Button Icon
 // --------------------------------------------------
 
-.bar-button-icon-left icon {
+.bar-button-icon-left ion-icon {
   margin-left: -0.1em;
   padding-right: 0.3em;
   font-size: 1.4em;
@@ -231,7 +231,7 @@ ion-buttons[right] {
   pointer-events: none;
 }
 
-.bar-button-icon-right icon {
+.bar-button-icon-right ion-icon {
   padding-left: 0.4em;
   font-size: 1.4em;
   line-height: 0.67;
@@ -241,7 +241,7 @@ ion-buttons[right] {
 .bar-button-icon-only {
   padding: 0;
 
-  icon {
+  ion-icon {
     padding: 0 0.1em;
     font-size: 1.8em;
     line-height: 0.67;
@@ -277,7 +277,7 @@ ion-buttons[right] {
   min-width: 44px;
   order: map-get($toolbar-order-md, menu-toggle-start);
 
-  icon {
+  ion-icon {
     padding: 0 6px;
     font-size: 2.4rem;
   }
