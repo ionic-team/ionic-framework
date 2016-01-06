@@ -8,6 +8,10 @@
 </ion-toolbar>
 
 <ion-content>
-  <ion-searchbar primary placeholder="Filter Schedules">
-  </ion-searchbar>
+  <ion-searchbar [(ngModel)]="searchQuery" (input)="getItems($event)"></ion-searchbar>
+  <ion-list>
+    <ion-item *ngFor="#item of items">
+      {{ item }}
+    </ion-item>
+  </ion-list>
 </ion-content>
