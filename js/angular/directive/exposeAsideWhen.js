@@ -45,13 +45,17 @@ IonicModule.directive('exposeAsideWhen', ['$window', function($window) {
     require: '^ionSideMenus',
     link: function($scope, $element, $attr, sideMenuCtrl) {
 
-      // Setup a match media query listener that triggers a ui change only when a change
-      // in media matching status occurs
-      var mq = $attr.exposeAsideWhen == 'large' ? '(min-width:768px)' : $attr.exposeAsideWhen;
-      var mql = $window.matchMedia(mq);
-      mql.addListener(function() {
+      var prevInnerWidth = $window.innerWidth;
+      var prevInnerHeight = $window.innerHeight;
+
+      ionic.on('resize', function() {
+        if (prevInnerWidth === $window.innerWidth && prevInnerHeight === $window.innerHeight) {
+          return;
+        }
+        prevInnerWidth = $window.innerWidth;
+        prevInnerHeight = $window.innerHeight;
         onResize();
-      });
+      }, $window);
 
       function checkAsideExpose() {
         var mq = $attr.exposeAsideWhen == 'large' ? '(min-width:768px)' : $attr.exposeAsideWhen;
