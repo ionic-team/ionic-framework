@@ -299,7 +299,7 @@ export class Platform {
           console.error(e);
         }
       }
-    }, 500);
+    }, 250);
   }
 
   /**
