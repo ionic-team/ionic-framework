@@ -1,4 +1,4 @@
-import {Component, Directive, Optional, ElementRef, Renderer, HostListener} from 'angular2/core';
+import {Component, Directive, Optional, ElementRef, Input, Renderer, HostListener} from 'angular2/core';
 import {NgControl} from 'angular2/common';
 
 import {Ion} from '../ion';
@@ -24,16 +24,10 @@ import {Form} from '../../util/form';
  */
 @Component({
   selector: 'ion-checkbox',
-  inputs: [
-    'value',
-    'checked',
-    'disabled',
-    'id'
-  ],
   host: {
     'role': 'checkbox',
-    'tappable': '',
     'class': 'item',
+    'tappable': '',
     'tabindex': 0,
     '[attr.aria-disabled]': 'disabled'
   },
@@ -48,6 +42,10 @@ import {Form} from '../../util/form';
     '</div>'
 })
 export class Checkbox {
+  @Input() value: string = '';
+  @Input() public checked: any = false;
+  @Input() disabled: boolean = false;
+  @Input() id: string;
 
   constructor(
     private _form: Form,
@@ -98,8 +96,6 @@ export class Checkbox {
 
   /**
    * @private
-   * Click event handler to toggle the checkbox checked state.
-   * @param {MouseEvent} ev  The click event.
    */
   @HostListener('click', ['$event'])
   _click(ev) {

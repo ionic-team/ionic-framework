@@ -26,13 +26,11 @@ import {isDefined} from '../../util/util';
 @Component({
   selector: 'ion-radio',
   host: {
-    '[attr.id]': 'id',
-    '[attr.aria-disabled]': 'disabled',
-    '[attr.aria-labelledby]': 'labelId',
-    'class': 'item',
     'role': 'radio',
+    'class': 'item',
     'tappable': '',
-    'tabindex': '0'
+    'tabindex': 0,
+    '[attr.aria-disabled]': 'disabled'
   },
   template:
     '<div class="item-inner">' +
@@ -53,10 +51,11 @@ export class RadioButton {
 
   labelId: any;
 
-  constructor(private _form: Form, private _renderer: Renderer, private _elementRef: ElementRef) {
-    this._renderer = _renderer;
-    this._elementRef = _elementRef;
-  }
+  constructor(
+    private _form: Form,
+    private _renderer: Renderer,
+    private _elementRef: ElementRef
+  ) {}
 
   /**
    * @private
@@ -64,8 +63,10 @@ export class RadioButton {
   ngOnInit() {
     if (!this.id) {
       this.id = 'rb-' + this._form.nextId();
+      this._renderer.setElementAttribute(this._elementRef, 'id', this.id);
     }
     this.labelId = 'lbl-' + this.id;
+    this._renderer.setElementAttribute(this._elementRef, 'aria-labelledby', this.labelId);
 
     let checked = this.checked;
     if (typeof checked === 'string') {
@@ -78,8 +79,8 @@ export class RadioButton {
   /**
    * @private
    */
-  @HostListener('click', ['$event'])
-  private onClick(ev) {
+  @HostListener('click')
+  private _click() {
     console.debug('RadioButton, select', this.value);
     this.select.emit(this);
   }
@@ -151,12 +152,15 @@ export class RadioGroup {
   id: any;
   value: any;
 
-  constructor(@Optional() private ngControl: NgControl, private _renderer: Renderer, private _elementRef: ElementRef) {
-    this.ngControl = ngControl;
+  constructor(
+    @Optional() ngControl: NgControl,
+    private _renderer: Renderer,
+    private _elementRef: ElementRef
+  ) {
     this.id = ++radioGroupIds;
 
     if (ngControl) {
-      this.ngControl.valueAccessor = this;
+      ngControl.valueAccessor = this;
     }
   }
 
@@ -225,7 +229,7 @@ export class RadioGroup {
         button.isChecked = isChecked;
         if (isChecked) {
           this.writeValue(button.value);
-          this.onChange(button.value);
+          //this.onChange(button.value);
           this._renderer.setElementAttribute(this._elementRef, 'aria-activedescendant', button.id);
         }
       }

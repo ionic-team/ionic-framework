@@ -1,4 +1,4 @@
-import {Component, ElementRef, Renderer, HostListener, Optional} from 'angular2/core';
+import {Component, ElementRef, Renderer, Input, HostListener, Optional} from 'angular2/core';
 import {NgControl} from 'angular2/common';
 
 import {Form} from '../../util/form';
@@ -46,16 +46,10 @@ import {pointerCoord} from '../../util/dom';
  */
 @Component({
   selector: 'ion-toggle,ion-switch',
-  inputs: [
-    'value',
-    'checked',
-    'disabled',
-    'id'
-  ],
   host: {
     'role': 'checkbox',
-    'tappable': '',
     'class': 'item',
+    'tappable': '',
     'tabindex': 0,
     '[attr.aria-disabled]': 'disabled',
     '(touchstart)': 'pointerDown($event)',
@@ -75,6 +69,10 @@ import {pointerCoord} from '../../util/dom';
     `</div>`
 })
 export class Toggle {
+  @Input() value: string = '';
+  @Input() public checked: any = false;
+  @Input() disabled: boolean = false;
+  @Input() id: string;
 
   constructor(
     private _form: Form,
