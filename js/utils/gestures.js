@@ -836,6 +836,10 @@
           delta_y = ev.center.pageY - startEv.center.pageY,
           velocity = ionic.Gestures.utils.getVelocity(delta_time, delta_x, delta_y);
 
+      // Store orginal start point in event object.
+      ev.center.originalX = startEv.center.originalX;
+      ev.center.originalY = startEv.center.originalY;
+
       ionic.Gestures.utils.extend(ev, {
         deltaTime: delta_time,
         deltaX: delta_x,
@@ -1211,7 +1215,11 @@
             if (inst.options.correct_for_drag_min_distance) {
               // When a drag is triggered, set the event center to drag_min_distance pixels from the original event center.
               // Without this correction, the dragged distance would jumpstart at drag_min_distance pixels instead of at 0.
+
               // It might be useful to save the original start point somewhere
+              ionic.Gestures.detection.current.startEvent.center.originalX = ionic.Gestures.detection.current.startEvent.center.pageX;
+              ionic.Gestures.detection.current.startEvent.center.originalY = ionic.Gestures.detection.current.startEvent.center.pageY;
+
               var factor = Math.abs(inst.options.drag_min_distance / ev.distance);
               ionic.Gestures.detection.current.startEvent.center.pageX += ev.deltaX * factor;
               ionic.Gestures.detection.current.startEvent.center.pageY += ev.deltaY * factor;
