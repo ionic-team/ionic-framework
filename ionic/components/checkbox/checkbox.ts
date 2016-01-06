@@ -1,4 +1,4 @@
-import {Component, Directive, Optional, ElementRef} from 'angular2/core';
+import {Component, Directive, Optional, ElementRef, Renderer, HostListener} from 'angular2/core';
 import {NgControl} from 'angular2/common';
 
 import {Ion} from '../ion';
@@ -33,13 +33,9 @@ import {Form} from '../../util/form';
   host: {
     'role': 'checkbox',
     'tappable': 'true',
-    '[attr.id]': 'id',
-    '[tabindex]': 'tabIndex',
-    '[attr.aria-checked]': 'checked',
-    '[attr.aria-disabled]': 'disabled',
-    '[attr.aria-labelledby]': 'labelId',
-    '(click)': 'click($event)',
-    'class': 'item'
+    'class': 'item',
+    'tabindex': 0,
+    '[attr.aria-disabled]': 'disabled'
   },
   template:
     '<div class="item-inner">' +
@@ -55,18 +51,19 @@ export class Checkbox {
 
   constructor(
     private _form: Form,
-    @Optional() ngControl: NgControl,
-    elementRef: ElementRef
+    private _elementRef: ElementRef,
+    private _renderer: Renderer,
+    @Optional() ngControl: NgControl
   ) {
     _form.register(this);
 
     this.onChange = (_) => {};
     this.onTouched = (_) => {};
 
-    this.tabIndex = 0;
     this.ngControl = ngControl;
-
-    if (ngControl) ngControl.valueAccessor = this;
+    if (ngControl) {
+      ngControl.valueAccessor = this;
+    }
   }
 
   /**
@@ -75,9 +72,11 @@ export class Checkbox {
   ngOnInit() {
     if (!this.id) {
       this.id = 'chk-' + this._form.nextId();
+      this._renderer.setElementAttribute(this._elementRef, 'id', this.id);
     }
 
     this.labelId = 'lbl-' + this.id;
+    this._renderer.setElementAttribute(this._elementRef, 'aria-labelledby', this.labelId);
   }
 
   /**
@@ -89,12 +88,22 @@ export class Checkbox {
     this.onChange(this.checked);
   }
 
+  get checked() {
+    return !!this._checked;
+  }
+
+  set checked(val) {
+    this._checked = val;
+    this._renderer.setElementAttribute(this._elementRef, 'aria-checked', !!val);
+  }
+
   /**
    * @private
    * Click event handler to toggle the checkbox checked state.
    * @param {MouseEvent} ev  The click event.
    */
-  click(ev) {
+  @HostListener('click', ['$event'])
+  _click(ev) {
     ev.preventDefault();
     ev.stopPropagation();
     this.toggle();
