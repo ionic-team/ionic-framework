@@ -32,7 +32,7 @@ import {Form} from '../../util/form';
   ],
   host: {
     'role': 'checkbox',
-    'tappable': 'true',
+    'tappable': '',
     'class': 'item',
     'tabindex': 0,
     '[attr.aria-disabled]': 'disabled'
@@ -60,7 +60,6 @@ export class Checkbox {
     this.onChange = (_) => {};
     this.onTouched = (_) => {};
 
-    this.ngControl = ngControl;
     if (ngControl) {
       ngControl.valueAccessor = this;
     }
@@ -85,7 +84,6 @@ export class Checkbox {
    */
   toggle() {
     this.checked = !this.checked;
-    this.onChange(this.checked);
   }
 
   get checked() {
@@ -93,8 +91,9 @@ export class Checkbox {
   }
 
   set checked(val) {
-    this._checked = val;
-    this._renderer.setElementAttribute(this._elementRef, 'aria-checked', !!val);
+    this._checked = !!val;
+    this._renderer.setElementAttribute(this._elementRef, 'aria-checked', this._checked);
+    this.onChange(this._checked);
   }
 
   /**

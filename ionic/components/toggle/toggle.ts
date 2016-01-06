@@ -1,36 +1,9 @@
-import {Component, Directive, ElementRef, Host, Optional, Inject, forwardRef} from 'angular2/core';
+import {Component, ElementRef, Renderer, HostListener, Optional} from 'angular2/core';
 import {NgControl} from 'angular2/common';
 
 import {Form} from '../../util/form';
 import {Config} from '../../config/config';
 import {pointerCoord} from '../../util/dom';
-
-
-/**
- * @private
- */
-@Directive({
-  selector: '.toggle-media',
-  host: {
-    '[class.toggle-activated]': 'toggle.isActivated'
-  }
-})
-class MediaToggle {
-  /**
-   * TODO
-   * @param {Toggle} toggle  TODO
-   * @param {} elementRef  TODO
-   * @param {Config} config  TODO
-   */
-  constructor(
-    @Host() @Inject(forwardRef(() => Toggle)) toggle: Toggle,
-    elementRef: ElementRef
-  ) {
-    toggle.toggleEle = elementRef.nativeElement;
-    this.toggle = toggle;
-  }
-
-}
 
 
 /**
@@ -81,17 +54,14 @@ class MediaToggle {
   ],
   host: {
     'role': 'checkbox',
-    'tappable': 'true',
-    '[attr.id]': 'id',
-    '[tabindex]': 'tabIndex',
-    '[attr.aria-checked]': 'checked',
+    'tappable': '',
+    'class': 'item',
+    'tabindex': 0,
     '[attr.aria-disabled]': 'disabled',
-    '[attr.aria-labelledby]': 'labelId',
     '(touchstart)': 'pointerDown($event)',
     '(mousedown)': 'pointerDown($event)',
     '(touchend)': 'pointerUp($event)',
-    '(mouseup)': 'pointerUp($event)',
-    'class': 'item'
+    '(mouseup)': 'pointerUp($event)'
   },
   template:
     '<ng-content select="[item-left]"></ng-content>' +
@@ -99,29 +69,26 @@ class MediaToggle {
       '<ion-item-content id="{{labelId}}">' +
         '<ng-content></ng-content>' +
       '</ion-item-content>' +
-      '<div disable-activated class="toggle-media">' +
+      '<div class="toggle-media" [class.toggle-activated]="isActivated" disable-activated>' +
         '<div class="toggle-icon"></div>' +
       '</div>' +
-    `</div>`,
-  directives: [MediaToggle]
+    `</div>`
 })
 export class Toggle {
 
   constructor(
-    form: Form,
-    elementRef: ElementRef,
+    private _form: Form,
+    private _elementRef: ElementRef,
+    private _renderer: Renderer,
     config: Config,
-    @Optional() private _ngControl: NgControl
+    @Optional() ngControl: NgControl
   ) {
     // deprecated warning
-    if (elementRef.nativeElement.tagName == 'ION-SWITCH') {
+    if (_elementRef.nativeElement.tagName == 'ION-SWITCH') {
       console.warn('<ion-switch> has been renamed to <ion-toggle>, please update your HTML');
     }
 
-    this.tabIndex = 0;
-
-    this.form = form;
-    form.register(this);
+    _form.register(this);
 
     this.lastTouch = 0;
     this.mode = config.get('mode');
@@ -129,8 +96,8 @@ export class Toggle {
     this.onChange = (_) => {};
     this.onTouched = (_) => {};
 
-    if (_ngControl) {
-      _ngControl.valueAccessor = this;
+    if (ngControl) {
+      ngControl.valueAccessor = this;
     }
 
     let self = this;
@@ -139,11 +106,11 @@ export class Toggle {
 
       if (self.checked) {
         if (currentX + 15 < self.startX) {
-          self.toggle(ev);
+          self.toggle();
           self.startX = currentX;
         }
       } else if (currentX - 15 > self.startX) {
-        self.toggle(ev);
+        self.toggle();
         self.startX = currentX;
       }
     }
@@ -154,16 +121,18 @@ export class Toggle {
       }
     }
 
+    let toggleEle = _elementRef.nativeElement.querySelector('.toggle-media');
+
     this.addMoveListener = function() {
-      self.toggleEle.addEventListener('touchmove', pointerMove);
-      self.toggleEle.addEventListener('mousemove', pointerMove);
-      elementRef.nativeElement.addEventListener('mouseout', pointerOut);
+      toggleEle.addEventListener('touchmove', pointerMove);
+      toggleEle.addEventListener('mousemove', pointerMove);
+      _elementRef.nativeElement.addEventListener('mouseout', pointerOut);
     };
 
     this.removeMoveListener = function() {
-      self.toggleEle.removeEventListener('touchmove', pointerMove);
-      self.toggleEle.removeEventListener('mousemove', pointerMove);
-      elementRef.nativeElement.removeEventListener('mouseout', pointerOut);
+      toggleEle.removeEventListener('touchmove', pointerMove);
+      toggleEle.removeEventListener('mousemove', pointerMove);
+      _elementRef.nativeElement.removeEventListener('mouseout', pointerOut);
     };
   }
 
@@ -172,28 +141,29 @@ export class Toggle {
    */
   ngOnInit() {
     if (!this.id) {
-      this.id = 'tgl-' + this.form.nextId();
+      this.id = 'tgl-' + this._form.nextId();
+      this._renderer.setElementAttribute(this._elementRef, 'id', this.id);
     }
 
     this.labelId = 'lbl-' + this.id;
-  }
-
-  /**
-   * Set checked state of this toggle.
-   * @param {boolean} value  Boolean to set this toggle's checked state to.
-   * @private
-   */
-  check(value) {
-    this.checked = !!value;
-    this.onChange(this.checked);
+    this._renderer.setElementAttribute(this._elementRef, 'aria-labelledby', this.labelId);
   }
 
   /**
    * Toggle the checked state of this toggle.
-   * @private
    */
-  toggle(ev) {
-    this.check(!this.checked);
+  toggle() {
+    this.checked = !this.checked;
+  }
+
+  get checked() {
+    return !!this._checked;
+  }
+
+  set checked(val) {
+    this._checked = !!val;
+    this._renderer.setElementAttribute(this._elementRef, 'aria-checked', this._checked);
+    this.onChange(this._checked);
   }
 
   /**
