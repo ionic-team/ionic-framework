@@ -28,10 +28,10 @@ class TabIconTextPage {
 @Page({
   template:
   '<ion-tabs class="tabs-icon-text">' +
-    '<ion-tab tab-icon="water" tab-title="Water" [root]="tabOne"></ion-tab>' +
-    '<ion-tab tab-icon="leaf" tab-title="Life" [root]="tabTwo"></ion-tab>' +
-    '<ion-tab tab-icon="flame" tab-title="Fire" [root]="tabThree"></ion-tab>' +
-    '<ion-tab tab-icon="magnet" tab-title="Force" [root]="tabFour"></ion-tab>' +
+    '<ion-tab tabIcon="water" tabTitle="Water" [root]="tabOne"></ion-tab>' +
+    '<ion-tab tabIcon="leaf" tabTitle="Life" [root]="tabTwo"></ion-tab>' +
+    '<ion-tab tabIcon="flame" tabTitle="Fire" [root]="tabThree"></ion-tab>' +
+    '<ion-tab tabIcon="magnet" tabTitle="Force" [root]="tabFour"></ion-tab>' +
   '</ion-tabs>',
 })
 export class IconTextPage {

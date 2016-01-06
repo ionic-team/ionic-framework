@@ -23,9 +23,9 @@ class TabTextPage {
 @Page({
   template: 
     '<ion-tabs class="tabs-basic">' +
-      '<ion-tab tab-title="Music" [root]="tabOne"></ion-tab>' +
-      '<ion-tab tab-title="Movies" [root]="tabTwo"></ion-tab>' +
-      '<ion-tab tab-title="Games" [root]="tabThree"></ion-tab>' +
+      '<ion-tab tabTitle="Music" [root]="tabOne"></ion-tab>' +
+      '<ion-tab tabTitle="Movies" [root]="tabTwo"></ion-tab>' +
+      '<ion-tab tabTitle="Games" [root]="tabThree"></ion-tab>' +
     '</ion-tabs>',
 })
 export class BasicPage {
