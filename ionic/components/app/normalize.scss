@@ -94,6 +94,13 @@ textarea {
   font-family: inherit;
 }
 
+textarea {
+  height: auto;
+  overflow: auto;
+  font: inherit;
+  color: inherit;
+}
+
 form,
 input,
 optgroup,

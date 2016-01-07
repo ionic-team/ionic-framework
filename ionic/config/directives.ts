@@ -15,12 +15,13 @@ import {Tabs} from '../components/tabs/tabs';
 import {Tab} from '../components/tabs/tab';
 import {List, ListHeader} from '../components/list/list';
 import {Item} from '../components/item/item';
+import {ItemInput} from '../components/item-input/item-input';
 import {ItemSliding} from '../components/item/item-sliding';
 import {Toolbar, ToolbarTitle, ToolbarItem} from '../components/toolbar/toolbar';
 import {Icon} from '../components/icon/icon';
 import {Checkbox} from '../components/checkbox/checkbox';
 import {Toggle} from '../components/toggle/toggle';
-import {TextInput, TextInputElement} from '../components/text-input/text-input';
+import {TextInput} from '../components/text-input/text-input';
 import {Label} from '../components/label/label';
 import {Segment, SegmentButton} from '../components/segment/segment';
 import {RadioGroup, RadioButton} from '../components/radio/radio';
@@ -85,8 +86,8 @@ import {ShowWhen, HideWhen} from '../components/show-hide-when/show-hide-when';
  * -  RadioGroup
  * -  RadioButton
  * -  Toggle
+ * -  ItemInput
  * -  TextInput
- * -  TextInputElement
  * -  Label
  *
  * **Nav**
@@ -150,8 +151,8 @@ export const IONIC_DIRECTIVES = [
   RadioGroup,
   RadioButton,
   Toggle,
+  ItemInput,
   TextInput,
-  TextInputElement,
   Label,
 
   // Nav

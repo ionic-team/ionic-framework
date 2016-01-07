@@ -1,12 +1,6 @@
 @import "../../globals.core";
 
-// Text Input
-// --------------------------------------------------
-
-$text-input-textarea-resize:          none !default;
-
-
-// All Inputs in ion-input
+// Input
 // --------------------------------------------------
 
 .item-input {
@@ -19,6 +13,15 @@ $text-input-textarea-resize:          none !default;
 
 input.item-input:-webkit-autofill {
   background-color: transparent;
+}
+
+input,
+textarea {
+  @include placeholder();
+}
+
+.platform-mobile textarea {
+  resize: none;
 }
 
 
@@ -42,25 +45,6 @@ input.item-input:-webkit-autofill {
   pointer-events: auto;
 }
 
-
-// Input textarea
-// --------------------------------------------------
-
-textarea {
-  height: auto;
-  overflow: auto;
-  font: inherit;
-  color: inherit;
-}
-
-.platform-mobile textarea {
-  resize: $text-input-textarea-resize;
-}
-
-input,
-textarea {
-  @include placeholder();
-}
 
 // Clear Input Icon
 // --------------------------------------------------
