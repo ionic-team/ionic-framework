@@ -1,6 +1,6 @@
 import {NavController, Page} from 'ionic/ionic';
 
-<% _.forEach(tabs, function(tab) { %>import {<%= tab.jsClassName %>} from '../<%= tab.fileName %>/<%= tab.fileName %>';
+<% _.forEach(tabs, function(tab) { %>import {<%= tab.jsClassName %>} from '../../<%= tab.fileName %>/<%= tab.fileName %>';
 <% }); %>
 @Page({
   templateUrl: 'app/<%= fileName %>/<%= fileName %>.html'

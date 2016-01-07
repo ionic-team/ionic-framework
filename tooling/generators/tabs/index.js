@@ -41,8 +41,10 @@ Generator.promptForTabName = function promptForTabName(tabIndex, options) {
 }
 
 Generator.run = function run(options) {
+  Generate.createScaffoldDirectories({appDirectory: options.appDirectory, componentDirectory: 'tabs', fileName: options.fileName});
+
   //Need to query user for tabs:
-  options.rootDirectory = options.rootDirectory || path.join('www', 'app');
+  options.rootDirectory = options.rootDirectory || path.join('app', 'tabs');
   var savePath = path.join(options.appDirectory, options.rootDirectory, options.fileName);
 
   Generator.tabs = [];
