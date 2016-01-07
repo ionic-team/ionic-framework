@@ -1,6 +1,28 @@
-<a name="2.0.0-alpha.46"></a>
-# 2.0.0-alpha.47 (2016-1-4)
+<a name="2.0.0-alpha.48"></a>
+# 2.0.0-alpha.48 (2016-1-7)
 
+### Breaking Changes
+
+##### Icon Refactor
+
+* `<icon>` has been renamed to `<ion-icon>`
+* `<ion-icon>` requires the `name` attribute with a value
+* Icon names with a `ion-` prefix is no longer needed
+* Icons with `social-` prefix have been changed to a `-logo` suffix
+
+Was:
+
+`<icon home></icon>`
+`<icon ion-social-twitter></icon>`
+
+Now:
+
+`<ion-icon name="home"></ion-icon>`
+`<ion-icon name="twitter-logo"></ion-icon>`
+
+
+<a name="2.0.0-alpha.47"></a>
+# 2.0.0-alpha.47 (2016-1-4)
 
 ### Breaking Changes
 
