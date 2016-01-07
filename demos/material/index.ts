@@ -6,7 +6,7 @@ import {App, ActionSheet, IonicApp, IonicView, Register} from 'ionic/ionic';
   template: '<ion-navbar *navbar primary>' +
     '<ion-title>Heading</ion-title>' +
     '<button menuToggle="menu">' +
-      '<icon menu></icon>' +
+      '<ion-icon name="menu"></ion-icon>' +
     '</button>' +
     '<ion-buttons end>' +
       '<button><ion-icon md="ion-android-search" ios="ion-ios-search-strong"></i></button>' +

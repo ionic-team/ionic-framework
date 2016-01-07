@@ -6,7 +6,7 @@ import {StatusBar} from 'ionic/ionic';
   template: `
   <ion-navbar *navbar>
     <button menuToggle>
-      <icon menu></icon>
+      <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>StatusBar</ion-title>
   </ion-navbar>
@@ -20,7 +20,7 @@ import {StatusBar} from 'ionic/ionic';
     </div>
     <div>
       <div>
-        <input [(ng-model)]="colorHex">
+        <input [(ngModel)]="colorHex">
       </div>
       <button primary outline (click)="setColor()">Set Color</button>
     </div>

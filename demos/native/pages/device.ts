@@ -5,7 +5,7 @@ import {IonicView, Device} from 'ionic/ionic';
   template: `
   <ion-navbar *navbar>
     <button menuToggle>
-      <icon menu></icon>
+      <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Device</ion-title>
   </ion-navbar>

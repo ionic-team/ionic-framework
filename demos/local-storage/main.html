@@ -7,19 +7,19 @@
   <ion-row>
     <ion-col width-33>
       <ion-input>
-        <input type="text" placeholder="Key" [(ng-model)]="myItem.key">
+        <input type="text" placeholder="Key" [(ngModel)]="myItem.key">
       </ion-input>
     </ion-col>
 
     <ion-col width-33>
       <ion-input>
-        <input type="text" placeholder="Value" [(ng-model)]="myItem.value">
+        <input type="text" placeholder="Value" [(ngModel)]="myItem.value">
       </ion-input>
     </ion-col>
 
     <ion-col width-34>
       <button full secondary (click)="set()">
-        <icon add></icon>
+        <ion-icon name="add"></ion-icon>
         set()
       </button>
     </ion-col>
@@ -29,13 +29,13 @@
 
     <ion-col width-33>
       <ion-input>
-        <input type="text" placeholder="Key" [(ng-model)]="delKey">
+        <input type="text" placeholder="Key" [(ngModel)]="delKey">
       </ion-input>
     </ion-col>
 
     <ion-col width-34 offset-33>
       <button full danger (click)="remove()">
-        <icon remove></icon>
+        <ion-icon name="remove"></ion-icon>
         remove()
       </button>
     </ion-col>

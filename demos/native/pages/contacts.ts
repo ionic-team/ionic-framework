@@ -6,7 +6,7 @@ import {Contacts} from 'ionic/ionic';
   template: `
   <ion-navbar *navbar>
     <button menuToggle>
-      <icon menu></icon>
+      <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Contacts</ion-title>
   </ion-navbar>

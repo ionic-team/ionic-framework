@@ -6,7 +6,7 @@ import {Geolocation} from 'ionic/ionic';
   template: `
   <ion-navbar *navbar>
     <button menuToggle>
-      <icon menu></icon>
+      <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Geolocation</ion-title>
   </ion-navbar>
