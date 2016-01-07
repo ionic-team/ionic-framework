@@ -3,6 +3,7 @@
  * @ngdoc directive
  * @name ionSlideBox
  * @module ionic
+ * @codepen AjgEB
  * @deprecated will be removed in the next Ionic release in favor of the new ion-slides component.
  * Don't depend on the internal behavior of this widget.
  * @delegate ionic.service:$ionicSlideBoxDelegate
@@ -10,7 +11,6 @@
  * @description
  * The Slide Box is a multi-page container where each page can be swiped or dragged between:
  *
- * ![SlideBox](http://ionicframework.com.s3.amazonaws.com/docs/controllers/slideBox.gif)
  *
  * @usage
  * ```html

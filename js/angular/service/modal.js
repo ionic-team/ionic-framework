@@ -2,6 +2,7 @@
  * @ngdoc service
  * @name $ionicModal
  * @module ionic
+ * @codepen gblny
  * @description
  *
  * Related: {@link ionic.controller:ionicModal ionicModal controller}.
