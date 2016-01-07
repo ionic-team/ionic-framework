@@ -189,6 +189,17 @@ ion-item-divider {
 }
 
 
+// Generate iOS Item Divider Colors
+// --------------------------------------------------
+
+@each $color-name, $color-value in $colors-ios {
+  ion-item-divider[#{$color-name}] {
+    background-color: $color-value;
+    color: inverse($color-value);
+  }
+}
+
+
 // iOS Item Sliding
 // --------------------------------------------------
 

@@ -163,6 +163,17 @@ ion-item-divider {
 }
 
 
+// Generate Material Design Item Divider Colors
+// --------------------------------------------------
+
+@each $color-name, $color-value in $colors-md {
+  ion-item-divider[#{$color-name}] {
+    background-color: $color-value;
+    color: inverse($color-value);
+  }
+}
+
+
 // Material Design Item Sliding
 // --------------------------------------------------
 
