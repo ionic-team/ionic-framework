@@ -18,10 +18,10 @@ class NavigationDetailsPage {
         'Sass': "Syntactically Awesome Stylesheets - a mature, stable, and powerful professional grade CSS extension."
     };
     var navIcons = {
-        'Angular': 'ion-social-angular',
-        'CSS3': 'ion-social-css3',
-        'HTML5': 'ion-social-html5',
-        'Sass': 'ion-social-sass'
+        'Angular': 'angular-logo',
+        'CSS3': 'css3-logo',
+        'HTML5': 'html5-logo',
+        'Sass': 'sass-logo'
     };
     this.selection['content'] = navData[this.selection.title];
     this.selection['icon'] = navIcons[this.selection.title];
