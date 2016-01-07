@@ -1,6 +1,4 @@
 var path = require('path'),
-    _ = require('lodash'),
-    fs = require('fs'),
     Generator = require('../../generator');
 
 module.exports = ProviderGenerator;
