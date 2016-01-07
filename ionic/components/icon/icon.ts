@@ -70,7 +70,7 @@ export class Icon {
       // deprecated warning
       console.warn('<icon> has been renamed to <ion-icon>');
       console.warn('<ion-icon> requires the "name" attribute w/ a value');
-      console.warn('<ion home></icon> should now be <ion-icon name="home"></ion-icon>');
+      console.warn('<icon home></icon> should now be <ion-icon name="home"></ion-icon>');
     }
   }
 

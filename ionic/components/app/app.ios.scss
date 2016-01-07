@@ -35,7 +35,8 @@ hr {
   strong,
   em,
   sub,
-  sup {
+  sup,
+  ion-icon {
     &[#{$color-name}] {
       color: $color-value !important;
     }
