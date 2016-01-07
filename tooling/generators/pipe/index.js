@@ -1,27 +1,30 @@
-var fs = require('fs'),
-    Generator = module.exports,
-    Generate = require('../../generate'),
-    path = require('path'),
-    Q = require('q');
-/*
-    @options
-      name: Page name
-      appDirectory: App directory of where to save file
-*/
-Generator.run = function run(options) {
-  Generate.createScaffoldDirectories({appDirectory: options.appDirectory, componentDirectory: 'pipes', fileName: options.fileName});
 
-  options.rootDirectory = options.rootDirectory || path.join('app', 'pipes');
-  var savePath = path.join(options.appDirectory, options.rootDirectory, options.fileName);
+var path = require('path'),
+    fs = require('fs'),
+    shell = require('shelljs'),
+    Generator = require('../../generator');
 
-  var templates = Generate.loadGeneratorTemplates(__dirname);
+module.exports = PipeGenerator;
+
+function PipeGenerator(options) {
+  Generator.call(this, options);
+  this.directory = path.join('app', 'pipes');
+}
+
+PipeGenerator.prototype = Object.create(Generator.prototype);
+
+PipeGenerator.prototype.makeDirectories = function(){
+  shell.mkdir('-p', path.join(this.appDirectory, this.directory));
+}
+
+PipeGenerator.prototype.renderTemplates = function renderTemplates() {
+  var templates = this.loadTemplates();
 
   templates.forEach(function(template) {
-    options.templatePath = template.file;
-    var renderedTemplate = Generate.renderTemplateFromFile(options);
-    var saveFilePath = path.join(savePath, [options.fileName, template.type].join(''));
-    // console.log('renderedTemplate', renderedTemplate, 'saving to', saveFilePath);
-    console.log('√ Create'.blue, path.relative(options.appDirectory, saveFilePath));
-    fs.writeFileSync(saveFilePath, renderedTemplate);
-  });
-};
+    var renderedTemplate = this.renderTemplate(template);
+    var renderedTemplateDest = path.join(this.appDirectory, this.directory, this.name + template.extension);
+    console.log('√ Create'.blue, path.relative(this.appDirectory, renderedTemplateDest));
+    fs.writeFileSync(renderedTemplateDest, renderedTemplate);
+  }, this);
+}
+
