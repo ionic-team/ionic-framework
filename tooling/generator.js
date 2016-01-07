@@ -6,7 +6,7 @@ var _ = require('lodash'),
 module.exports = Generator;
 
 function Generator(options) {
-  this.name = options.name;
+  this.name = _.kebabCase(options.name);
   this.type = options.generator;
   this.appDirectory = options.appDirectory;
 }
