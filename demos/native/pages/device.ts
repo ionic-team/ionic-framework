@@ -12,7 +12,7 @@ import {IonicView, Device} from 'ionic/ionic';
   <ion-content padding>
     <h2>Device</h2>
     <button primary outline (click)="doDevice()">Get Device</button>
-    <div *ng-if="device">
+    <div *ngIf="device">
       Device name: {{device.name}}
     </div>
   </ion-content>

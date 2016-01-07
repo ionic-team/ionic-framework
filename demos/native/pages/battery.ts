@@ -12,7 +12,7 @@ import {IonicView, Battery} from 'ionic/ionic';
   <ion-content padding>
     <h2>Battery</h2>
     <button primary outline (click)="doBatteryStatus()">Get Status</button>
-    <div *ng-if="battery">
+    <div *ngIf="battery">
       Battery charging: <b>{{battery.charging}}</b><br>
       Battery level: <b>{{battery.level * 100}}</b>%<br>
       Battery charging time: <b>{{battery.chargingTime}}</b>s<br>

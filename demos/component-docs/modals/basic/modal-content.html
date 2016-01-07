@@ -3,8 +3,8 @@
     Description
   </ion-title>
   <ion-buttons start>
-    <button (click)="dismiss()" *ngIf=" currentPlatform === 'ios' ">
-      Cancel
+    <button (click)="dismiss()" clear *ngIf=" currentPlatform === 'ios' ">
+      <span primary>Cancel</span>
     </button>
     <button (click)="dismiss()" *ngIf=" currentPlatform === 'android' ">
       <ion-icon name='close'></ion-icon>

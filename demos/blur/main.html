@@ -7,7 +7,7 @@
 
   <button (click)="showBlur=true" primary>Blur</button>
 
-  <div ion-blur (click)="showBlur=false" *ng-if="showBlur" style="display: flex; justify-content: center; align-items: center; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255,255,255,0.8);">
+  <div ion-blur (click)="showBlur=false" *ngIf="showBlur" style="display: flex; justify-content: center; align-items: center; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255,255,255,0.8);">
     <h2>Blurred!</h2>
   </div>
 </ion-content>

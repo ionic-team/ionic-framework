@@ -14,13 +14,13 @@ import {Geolocation} from 'ionic/ionic';
     <h2>Geolocation</h2>
     <button primary outline (click)="doGetLocation()">Get Location</button>
     <div>
-      <b *ng-if="gettingLocation">Fetching location...</b>
-      <b *ng-if="location">{{location.coords.latitude}}, {{location.coords.longitude}}</b>
+      <b *ngIf="gettingLocation">Fetching location...</b>
+      <b *ngIf="location">{{location.coords.latitude}}, {{location.coords.longitude}}</b>
     </div>
     <button primary outline (click)="doTrackLocation()">Track Location</button>
     <div>
-      <b *ng-if="gettingTrackLocation">Fetching location...</b>
-      <b *ng-if="trackLocation">{{trackLocation.coords.latitude}}, {{trackLocation.coords.longitude}}</b>
+      <b *ngIf="gettingTrackLocation">Fetching location...</b>
+      <b *ngIf="trackLocation">{{trackLocation.coords.latitude}}, {{trackLocation.coords.longitude}}</b>
     </div>
   </ion-content>
   `
