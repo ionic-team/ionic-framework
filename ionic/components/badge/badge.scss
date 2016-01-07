@@ -27,15 +27,3 @@ ion-badge {
     display: none;
   }
 }
-
-// Generate Default Badge Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors {
-
-  ion-badge[#{$color-name}] {
-    background-color: $color-value;
-    color: inverse($color-value);
-  }
-
-}

@@ -9,3 +9,16 @@ $badge-md-border-radius:             4px !default;
 ion-badge {
   border-radius: $badge-md-border-radius;
 }
+
+
+// Generate Material Design Badge Colors
+// --------------------------------------------------
+
+@each $color-name, $color-value in $colors-md {
+
+  ion-badge[#{$color-name}] {
+    background-color: $color-value;
+    color: inverse($color-value);
+  }
+
+}

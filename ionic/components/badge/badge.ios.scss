@@ -9,3 +9,16 @@ $badge-ios-border-radius:             10px !default;
 ion-badge {
   border-radius: $badge-ios-border-radius;
 }
+
+
+// Generate iOS Badge Colors
+// --------------------------------------------------
+
+@each $color-name, $color-value in $colors-ios {
+
+  ion-badge[#{$color-name}] {
+    background-color: $color-value;
+    color: inverse($color-value);
+  }
+
+}
