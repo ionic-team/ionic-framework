@@ -60,9 +60,6 @@ export class Icon {
     }
   }
 
-  /**
-   * @private
-   */
   get name() {
     return this._name;
   }
@@ -80,9 +77,6 @@ export class Icon {
     this.update();
   }
 
-  /**
-   * @private
-   */
   get ios() {
     return this._ios;
   }
@@ -95,9 +89,6 @@ export class Icon {
     this.update();
   }
 
-  /**
-   * @private
-   */
   get md() {
     return this._md;
   }
