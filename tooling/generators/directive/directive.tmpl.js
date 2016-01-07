@@ -1,11 +1,16 @@
-import {Directive, ElementRef} from 'angular2/angular2';
+import {Directive} from 'angular2/core';
 
+/*
+  Generated class for the <%= jsClassName %> directive.
+
+  See https://angular.io/docs/ts/latest/api/core/DirectiveMetadata-class.html
+  for more info on Angular 2 Directives.
+*/
 @Directive({
-  properties: ['<%= fileName %>'], //Change to be whatever properties you want, ex: <<%= fileName %> value="5">
-  inputs: ['<%= fileName %>']
+  selector: '[<%= fileName %>]' // Attribute selector
 })
 export class <%= jsClassName %> {
-  constructor(elementRef: ElementRef) {
-    this.ele = elementRef;
+  constructor() {
+    console.log('Hello World');
   }
 }
