@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Attribute, Renderer} from 'angular2/core';
+import {Directive, Input, ElementRef, Renderer} from 'angular2/core';
 
 import {Config} from '../../config/config';
 
@@ -16,7 +16,7 @@ import {Config} from '../../config/config';
  * <ion-icon name="star"></ion-icon>
  *
  * <!-- explicity set the icon for each platform -->
- * <ion-icon ios="ion-ios-home" md="ion-md-home"></ion-icon>
+ * <ion-icon ios="ios-home" md="md-home"></ion-icon>
  * ```
  *
  * @property {string} [name] - Use the appropriate icon for the mode.
@@ -47,6 +47,10 @@ export class Icon {
     private _renderer: Renderer
   ) {
     this.mode = config.get('iconMode');
+    this._name = '';
+    this._ios = '';
+    this._md = '';
+    this._css = '';
 
     if (_elementRef.nativeElement.tagName === 'ICON') {
       // deprecated warning
@@ -59,30 +63,51 @@ export class Icon {
   /**
    * @private
    */
-  ngOnInit() {
-    if (this.mode == 'ios' && this.ios) {
-      this.name = this.ios;
+  get name() {
+    return this._name;
+  }
 
-    } else if (this.mode == 'md' && this.md) {
-      this.name = this.md;
+  /**
+   * @private
+   */
+  set name(val) {
+    if (!(/md-|ios-|-logo/.test(val))) {
+      // this does not have one of the defaults
+      // so lets auto add in the mode prefix for them
+      val = this.mode + '-' + val;
     }
-
-    if (!this.name) return;
-
-    if (!(/^ion-/.test(this.name))) {
-      // not an exact icon being used
-      // add mode specific prefix
-      this.name = 'ion-' + this.mode + '-' + this.name;
-    }
-
+    this._name = val;
     this.update();
   }
 
   /**
    * @private
    */
-  addClass(className) {
-    this._renderer.setElementClass(this._elementRef, className, true);
+  get ios() {
+    return this._ios;
+  }
+
+  /**
+   * @private
+   */
+  set ios(val) {
+    this._ios = val;
+    this.update();
+  }
+
+  /**
+   * @private
+   */
+  get md() {
+    return this._md;
+  }
+
+  /**
+   * @private
+   */
+  set md(val) {
+    this._md = val;
+    this.update();
   }
 
   get isActive() {
@@ -101,29 +126,39 @@ export class Icon {
    * @private
    */
   update() {
-    if (this.name && this.mode == 'ios') {
+    let css = 'ion-';
 
-      if (this.isActive) {
-        if (/-outline/.test(this.name)) {
-          this.name = this.name.replace('-outline', '');
-        }
+    if (this._ios && this.mode === 'ios') {
+      css += this._ios;
 
-      } else if (!(/-outline/.test(this.name))) {
-        this.name += '-outline';
-      }
+    } else if (this._md && this.mode === 'md') {
+      css += this._md;
 
+    } else {
+      css += this._name;
     }
 
-    if (this._name !== this.name) {
-      if (this._name) {
-        this._renderer.setElementClass(this._elementRef, this._name, false);
+    if (this.mode == 'ios' && !this.isActive) {
+      css += '-outline';
+    }
+
+    if (this._css !== css) {
+      if (this._css) {
+        this._renderer.setElementClass(this._elementRef, this._css, false);
       }
-      this._name = this.name;
-      this._renderer.setElementClass(this._elementRef, this.name, true);
+      this._css = css;
+      this._renderer.setElementClass(this._elementRef, css, true);
 
       this._renderer.setElementAttribute(this._elementRef, 'aria-label',
-          this.name.replace('ion-', '').replace('ios-', '').replace('md-', '').replace('-', ' '));
+          css.replace('ion-', '').replace('ios-', '').replace('md-', '').replace('-', ' '));
     }
+  }
+
+  /**
+   * @private
+   */
+  addClass(className) {
+    this._renderer.setElementClass(this._elementRef, className, true);
   }
 
 }

@@ -8,10 +8,24 @@ class E2EApp {
   constructor() {
     this.homeIcon = 'home';
     this.isActive = false;
-    this.btnIcon = 'home';
+
+    this.iconIndex = 0;
+    this.icons = [
+      'home',
+      'star',
+      'ios-alert',
+      'ios-alert-outline',
+      'md-alert',
+      'apple-logo'
+    ];
+    this.btnIcon = this.icons[0];
   }
 
   updateIcon() {
-    this.btnIcon = (this.btnIcon === 'home' ? 'star' : 'home');
+    this.iconIndex++;
+    if (this.iconIndex >= this.icons.length) {
+      this.iconIndex = 0;
+    }
+    this.btnIcon = this.icons[this.iconIndex];
   }
 }

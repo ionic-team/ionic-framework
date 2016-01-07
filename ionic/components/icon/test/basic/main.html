@@ -10,49 +10,63 @@
     <ion-item>
       <ion-icon name="home" item-left></ion-icon>
       <code>
-        &lt;ion-icon name="home">&lt;/ion-icon>
+        name="home"
       </code>
     </ion-item>
 
     <ion-item>
       <ion-icon [name]="homeIcon" item-left></ion-icon>
       <code>
-        &lt;ion-icon [name]="homeIcon">&lt;/ion-icon>
+        [name]="homeIcon"
       </code>
     </ion-item>
 
     <ion-item>
-      <ion-icon name="ion-social-twitter" item-left></ion-icon>
+      <ion-icon name="home" isActive="true" item-left></ion-icon>
       <code>
-        &lt;ion-icon name="ion-social-twitter">&lt;/ion-icon>
+        name="home" isActive="true"
       </code>
     </ion-item>
 
     <ion-item>
-      <ion-icon ios="ion-social-apple" md="ion-social-android" item-left></ion-icon>
+      <ion-icon name="home" [isActive]="isActive" item-left></ion-icon>
       <code>
-        &lt;ion-icon ios="ion-social-apple" md="ion-social-android">&lt;/ion-icon>
+        name="home" [isActive]="isActive"
       </code>
     </ion-item>
 
     <ion-item>
-      <ion-icon [isActive]="isActive" ios="ion-social-apple" md="ion-social-android" item-left></ion-icon>
+      <ion-icon name="ios-home" item-left></ion-icon>
       <code>
-        &lt;ion-icon [isActive]="isActive" ios="ion-social-apple" md="ion-social-android">&lt;/ion-icon>
+        name="ios-home"
       </code>
     </ion-item>
 
     <ion-item>
-      <ion-icon ios="ion-social-apple" item-left></ion-icon>
+      <ion-icon name="ios-home-outline" item-left></ion-icon>
       <code>
-        &lt;ion-icon ios="ion-social-apple">&lt;/ion-icon>
+        name="ios-home-outline"
       </code>
     </ion-item>
 
     <ion-item>
-      <ion-icon md="ion-social-android" item-left></ion-icon>
+      <ion-icon name="md-home" item-left></ion-icon>
       <code>
-        &lt;ion-icon md="ion-social-android">&lt;/ion-icon>
+        name="md-home"
+      </code>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="twitter-logo" item-left></ion-icon>
+      <code>
+        name="twitter-logo"
+      </code>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon ios="apple-logo" md="android-logo" item-left></ion-icon>
+      <code>
+        ios="apple-logo" md="android-logo"
       </code>
     </ion-item>
 
