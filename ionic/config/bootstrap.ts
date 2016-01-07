@@ -82,11 +82,9 @@ function setupDom(window, document, config, platform, clickBlock, featureDetect)
   // ios/md
   bodyEle.classList.add(mode);
 
-  // right-to-left language direction
-  if (document.dir === 'rtl') {
-    platform.setIsRTL(true);
-    bodyEle.classList.add('rtl');
-  }
+  // language and direction
+  platform.setDir(document.documentElement.dir, false);
+  platform.setLang(document.documentElement.lang, false);
 
   let versions = platform.versions();
   platform.platforms().forEach(platformName => {

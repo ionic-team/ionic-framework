@@ -26,7 +26,8 @@ export class Platform {
   constructor(platforms=[]) {
     this._platforms = platforms;
     this._versions = {};
-    this._isRTL = false;
+    this._dir = null;
+    this._lang = null;
     this._onResizes = [];
 
     this._readyPromise = new Promise(res => { this._readyResolve = res; } );
@@ -168,19 +169,56 @@ export class Platform {
   }
 
   /**
-   * Returns if this app is using right-to-left language direction or not.
-   * http://www.w3.org/International/questions/qa-html-dir
-   * @returns {boolean}
-   */
-  isRTL() {
-    return this._isRTL;
+  * Set the app's language direction, which will update the `dir` attribute
+  * on the app's root `<html>` element.
+  * [W3C: Structural markup and right-to-left text in HTML](http://www.w3.org/International/questions/qa-html-dir)
+  * @param {string} languageDirection  Examples: `rtl`, `ltr`
+  */
+  setDir(languageDirection, updateDocument) {
+    this._dir = (languageDirection || '').toLowerCase();
+    if (updateDocument !== false) {
+      document.documentElement.setAttribute('dir', languageDirection);
+    }
   }
 
   /**
-  * @private
+   * Returns app's language direction.
+   * [W3C: Structural markup and right-to-left text in HTML](http://www.w3.org/International/questions/qa-html-dir)
+   * @returns {string}
+   */
+  dir() {
+    return this._dir;
+  }
+
+  /**
+   * Returns if this app is using right-to-left language direction or not.
+   * [W3C: Structural markup and right-to-left text in HTML](http://www.w3.org/International/questions/qa-html-dir)
+   * @returns {boolean}
+   */
+  isRTL() {
+    return (this._dir === 'rtl');
+  }
+
+  /**
+  * Set the app's language and optionally the country code, which will update
+  * the `lang` attribute on the app's root `<html>` element.
+  * [W3C: Declaring language in HTML](http://www.w3.org/International/questions/qa-html-language-declarations)
+  * @param {string} language  Examples: `en-US`, `en-GB`, `ar`, `de`, `zh`, `es-MX`
   */
-  setIsRTL(val) {
-    this._isRTL = val;
+  setLang(language, updateDocument) {
+    this._lang = language;
+    if (updateDocument !== false) {
+      document.documentElement.setAttribute('lang', language);
+    }
+  }
+
+  /**
+   * Returns app's language and optional country code.
+   * [W3C: Declaring language in HTML](http://www.w3.org/International/questions/qa-html-language-declarations)
+   * @returns {string}
+   */
+  lang() {
+    return this._lang;
   }
 
   // Methods meant to be overridden by the engine
