@@ -96,13 +96,18 @@ ion-item-content {
 // --------------------------------------------------
 
 [item-left] {
-  margin-left: 0;
-  margin-right: $item-ios-padding-right;
+  margin: $item-ios-padding-media-top $item-ios-padding-left $item-ios-padding-media-bottom 0;
 }
 
 [item-right] {
-  margin-left: ($item-ios-padding-left / 2);
-  margin-right: ($item-ios-padding-right / 2);
+  margin: $item-ios-padding-media-top ($item-ios-padding-left / 2) $item-ios-padding-media-bottom ($item-ios-padding-right / 2);
+}
+
+ion-icon[item-left],
+ion-icon[item-right] {
+  margin-top: $item-ios-padding-icon-top;
+  margin-bottom: $item-ios-padding-icon-bottom;
+  margin-left: 0;
 }
 
 ion-avatar[item-left],
