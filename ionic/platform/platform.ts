@@ -170,19 +170,24 @@ export class Platform {
 
   /**
   * Set the app's language direction, which will update the `dir` attribute
-  * on the app's root `<html>` element.
+  * on the app's root `<html>` element. We recommend the app's `index.html`
+  * file already has the correct `dir` attribute value set, such as
+  * `<html dir="ltr">` or `<html dir="rtl">`. This method is useful if the
+  * direction needs to be dynamically changed per user/session.
   * [W3C: Structural markup and right-to-left text in HTML](http://www.w3.org/International/questions/qa-html-dir)
-  * @param {string} languageDirection  Examples: `rtl`, `ltr`
+  * @param {string} dir  Examples: `rtl`, `ltr`
   */
-  setDir(languageDirection, updateDocument) {
-    this._dir = (languageDirection || '').toLowerCase();
+  setDir(dir, updateDocument) {
+    this._dir = (dir || '').toLowerCase();
     if (updateDocument !== false) {
-      document.documentElement.setAttribute('dir', languageDirection);
+      document.documentElement.setAttribute('dir', dir);
     }
   }
 
   /**
    * Returns app's language direction.
+   * We recommend the app's `index.html` file already has the correct `dir`
+   * attribute value set, such as `<html dir="ltr">` or `<html dir="rtl">`.
    * [W3C: Structural markup and right-to-left text in HTML](http://www.w3.org/International/questions/qa-html-dir)
    * @returns {string}
    */
@@ -192,6 +197,8 @@ export class Platform {
 
   /**
    * Returns if this app is using right-to-left language direction or not.
+   * We recommend the app's `index.html` file already has the correct `dir`
+   * attribute value set, such as `<html dir="ltr">` or `<html dir="rtl">`.
    * [W3C: Structural markup and right-to-left text in HTML](http://www.w3.org/International/questions/qa-html-dir)
    * @returns {boolean}
    */
@@ -202,6 +209,9 @@ export class Platform {
   /**
   * Set the app's language and optionally the country code, which will update
   * the `lang` attribute on the app's root `<html>` element.
+  * We recommend the app's `index.html` file already has the correct `lang`
+  * attribute value set, such as `<html lang="en">`. This method is useful if
+  * the language needs to be dynamically changed per user/session.
   * [W3C: Declaring language in HTML](http://www.w3.org/International/questions/qa-html-language-declarations)
   * @param {string} language  Examples: `en-US`, `en-GB`, `ar`, `de`, `zh`, `es-MX`
   */
@@ -214,6 +224,8 @@ export class Platform {
 
   /**
    * Returns app's language and optional country code.
+   * We recommend the app's `index.html` file already has the correct `lang`
+   * attribute value set, such as `<html lang="en">`.
    * [W3C: Declaring language in HTML](http://www.w3.org/International/questions/qa-html-language-declarations)
    * @returns {string}
    */
