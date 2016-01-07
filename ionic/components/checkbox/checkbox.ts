@@ -55,9 +55,6 @@ export class Checkbox {
   ) {
     _form.register(this);
 
-    this.onChange = (_) => {};
-    this.onTouched = (_) => {};
-
     if (ngControl) {
       ngControl.valueAccessor = this;
     }
@@ -112,6 +109,20 @@ export class Checkbox {
    */
   writeValue(value) {
     this.checked = value;
+  }
+
+  /**
+   * @private
+   */
+  onChange(val) {
+    // TODO: figure the whys and the becauses
+  }
+
+  /**
+   * @private
+   */
+  onTouched(val) {
+    // TODO: figure the whys and the becauses
   }
 
   /**

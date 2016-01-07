@@ -91,9 +91,6 @@ export class Toggle {
     this.lastTouch = 0;
     this.mode = config.get('mode');
 
-    this.onChange = (_) => {};
-    this.onTouched = (_) => {};
-
     if (ngControl) {
       ngControl.valueAccessor = this;
     }
@@ -167,13 +164,6 @@ export class Toggle {
   /**
    * @private
    */
-  writeValue(value) {
-    this.checked = value;
-  }
-
-  /**
-   * @private
-   */
   pointerDown(ev) {
     if (/touch/.test(ev.type)) {
       this.lastTouch = Date.now();
@@ -212,6 +202,27 @@ export class Toggle {
   /**
    * @private
    */
+  writeValue(value) {
+    this.checked = value;
+  }
+
+  /**
+   * @private
+   */
+  onChange(val) {
+    // TODO: figure the whys and the becauses
+  }
+
+  /**
+   * @private
+   */
+  onTouched(val) {
+    // TODO: figure the whys and the becauses
+  }
+
+  /**
+   * @private
+   */
   registerOnChange(fn) { this.onChange = fn; }
 
   /**
@@ -225,7 +236,7 @@ export class Toggle {
   ngOnDestroy() {
     this.removeMoveListener();
     this.toggleEle = this.addMoveListener = this.removeMoveListener = null;
-    this.form.deregister(this);
+    this._form.deregister(this);
   }
 
   /**

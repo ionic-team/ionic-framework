@@ -55,7 +55,9 @@ export class RadioButton {
     private _form: Form,
     private _renderer: Renderer,
     private _elementRef: ElementRef
-  ) {}
+  ) {
+    _form.register(this);
+  }
 
   /**
    * @private
@@ -87,6 +89,13 @@ export class RadioButton {
 
   public set isChecked(isChecked) {
     this._renderer.setElementAttribute(this._elementRef, 'aria-checked', isChecked);
+  }
+
+  /**
+   * @private
+   */
+  ngOnDestroy() {
+    this._form.deregister(this);
   }
 }
 
@@ -184,8 +193,19 @@ export class RadioGroup {
     }
   }
 
-  public onChange = (_:any) => {};
-  public onTouched = () => {};
+  /**
+   * @private
+   */
+  onChange(val) {
+    // TODO: figure the whys and the becauses
+  }
+
+  /**
+   * @private
+   */
+  onTouched(val) {
+    // TODO: figure the whys and the becauses
+  }
 
   /**
    * @private
