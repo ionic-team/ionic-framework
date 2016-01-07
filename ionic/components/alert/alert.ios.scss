@@ -81,6 +81,46 @@ ion-alert {
   -webkit-appearance: none;
 }
 
+.alert-radio {
+  display: flex;
+  min-height: $alert-ios-button-min-height;
+  border-top: 1px solid $alert-ios-button-border-color;
+  cursor: pointer;
+
+  &[aria-checked=true] {
+    color: $alert-ios-button-text-color;
+
+    .alert-radio-icon:after {
+      position: absolute;
+      border-width: 2px;
+      border-style: solid;
+      border-color: $alert-ios-button-text-color;
+      top: 13px;
+      left: 7px;
+      width: 4px;
+      height: 10px;
+      border-left: none;
+      border-top: none;
+      content: '';
+      transform: rotate(45deg);
+    }
+  }
+
+}
+
+.alert-radio-label {
+  flex: 1;
+  order: 0;
+  text-align: auto;
+  padding: 13px;
+}
+
+.alert-radio-icon {
+  position: relative;
+  order: 1;
+  min-width: 30px;
+}
+
 .alert-button {
   margin: 0;
   flex: 1;

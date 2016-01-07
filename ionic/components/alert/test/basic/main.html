@@ -5,15 +5,18 @@
 
 <ion-content padding>
 
-  <button class="e2eOpenAlert" (click)="doAlert()">Alert</button>
-  <button class="e2eOpenConfirm" (click)="doConfirm()">Confirm</button>
-  <button class="e2eOpenPrompt" (click)="doPrompt()">Prompt</button>
+  <button block class="e2eOpenAlert" (click)="doAlert()">Alert</button>
+  <button block class="e2eOpenConfirm" (click)="doConfirm()">Confirm</button>
+  <button block class="e2eOpenPrompt" (click)="doPrompt()">Prompt</button>
+  <button block class="e2eOpenRadio" (click)="doRadio()">Radio</button>
 
   <pre>
     Confirm Opened: {{testConfirmOpen}}
     Confirm Result: {{testConfirmResult}}
     Prompt Opened: {{testPromptOpen}}
     Prompt Result: {{testPromptResult | json}}
+    Radio Opened: {{testRadioOpen}}
+    Radio Result: {{testRadioResult}}
   </pre>
 
 </ion-content>

@@ -1,5 +1,5 @@
 import {Component, ElementRef, Renderer} from 'angular2/core';
-import {NgClass, NgIf, NgFor} from 'angular2/common';
+import {NgClass, NgSwitch, NgIf, NgFor} from 'angular2/common';
 
 import {NavParams} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
@@ -183,13 +183,30 @@ export class Alert extends ViewController {
         '<h3 class="alert-sub-title" *ngIf="d.subTitle">{{d.subTitle}}</h3>' +
       '</div>' +
       '<div class="alert-body" *ngIf="d.body">{{d.body}}</div>' +
-      '<div class="alert-body alert-inputs" *ngIf="d.inputs.length">' +
-        '<div class="alert-input-wrapper" *ngFor="#i of d.inputs">' +
-          '<input [placeholder]="i.placeholder" [(ngModel)]="i.value" [type]="i.type" class="alert-input">' +
-        '</div>' +
+      '<div *ngIf="d.inputs.length" [ngSwitch]="inputType">' +
+
+        '<template ngSwitchWhen="radio">' +
+          '<div class="alert-radio-group">' +
+            '<div *ngFor="#i of d.inputs" (click)="rbClick(i)" [attr.aria-checked]="i.checked" class="alert-radio" tappable role="radio">' +
+              '<div class="alert-radio-icon"></div>' +
+              '<div class="alert-radio-label">' +
+                '{{i.label}}' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</template>' +
+
+        '<template ngSwitchDefault>' +
+          '<div class="alert-body alert-inputs">' +
+            '<div *ngFor="#i of d.inputs" class="alert-input-wrapper">' +
+              '<input [placeholder]="i.placeholder" [(ngModel)]="i.value" [type]="i.type" class="alert-input">' +
+            '</div>' +
+          '</div>' +
+        '</template>' +
+
       '</div>' +
       '<div class="alert-buttons">' +
-        '<button *ngFor="#b of d.buttons" (click)="click(b)" [ngClass]="b.cssClass" class="alert-button">' +
+        '<button *ngFor="#b of d.buttons" (click)="btnClick(b)" [ngClass]="b.cssClass" class="alert-button">' +
           '{{b.text}}' +
         '</button>' +
       '</div>' +
@@ -197,7 +214,7 @@ export class Alert extends ViewController {
   host: {
     'role': 'dialog'
   },
-  directives: [NgClass, NgIf, NgFor]
+  directives: [NgClass, NgSwitch, NgIf, NgFor]
 })
 class AlertCmp {
 
@@ -214,7 +231,7 @@ class AlertCmp {
     }
   }
 
-  click(button) {
+  btnClick(button) {
     let shouldDismiss = true;
 
     if (button.handler) {
@@ -233,11 +250,32 @@ class AlertCmp {
     }
   }
 
+  rbClick(checkedInput) {
+    this.d.inputs.forEach(input => {
+      input.checked = (checkedInput === input);
+    });
+
+    if (!this.d.buttons.length) {
+      // auto dismiss if no buttons
+      setTimeout(() => {
+        this.dismiss();
+      }, this._config.get('pageTransitionDelay'));
+    }
+  }
+
   dismiss() {
     this._viewCtrl.dismiss(this.getValues());
   }
 
   getValues() {
+    if (this.inputType === 'radio') {
+      // this is a radio button alert
+      // return the one radio button value which is checked
+      let checkedInput = this.d.inputs.find(input => input.checked);
+      return checkedInput ? checkedInput.value : undefined;
+    }
+
+    // return an object of all the values with the name as the key
     let values = {};
     this.d.inputs.forEach(input => {
       values[input.name] = input.value;
@@ -247,21 +285,27 @@ class AlertCmp {
 
   onPageLoaded() {
     // normalize the data
-    this.d.buttons = this.d.buttons.map(button => {
+    let data = this.d;
+
+    data.buttons = data.buttons.map(button => {
       if (typeof button === 'string') {
         return { text: button };
       }
       return button;
     });
 
-    this.d.inputs = this.d.inputs.map((input, index) => {
+    data.inputs = data.inputs.map((input, index) => {
       return {
+        type: input.type || 'text',
         name: isDefined(input.name) ? input.name : index,
         placeholder: isDefined(input.placeholder) ? input.placeholder : '',
-        type: input.type || 'text',
-        value: isDefined(input.value) ? input.value : ''
-      }
+        value: isDefined(input.value) ? input.value : '',
+        label: input.label,
+        checked: !!input.checked,
+      };
     });
+
+    this.inputType = (data.inputs.length ? data.inputs[0].type : null);
 
     let self = this;
     self.keyUp = function(ev) {

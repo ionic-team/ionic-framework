@@ -68,7 +68,7 @@ class E2EPage {
 
         setTimeout(() => {
           console.log('Prompt close');
-          alert.close(data);
+          alert.dismiss(data);
         }, 500);
 
         return false;
@@ -89,6 +89,44 @@ class E2EPage {
 
     alert.onDismiss(data => {
       console.log('onDismiss data', data);
+    });
+  }
+
+  doRadio() {
+    let alert = Alert.create();
+    alert.setTitle('Radio!');
+
+    alert.addInput({
+      type: 'radio',
+      label: 'Radio 1',
+      value: 'value1',
+      checked: true
+    });
+
+    alert.addInput({
+      type: 'radio',
+      label: 'Radio 2',
+      value: 'value2'
+    });
+
+    alert.addInput({
+      type: 'radio',
+      label: 'Radio 3',
+      value: 'value3'
+    });
+
+    alert.addButton('Cancel');
+    alert.addButton({
+      text: 'Ok',
+      handler: data => {
+        console.log('Select data:', data);
+        this.testRadioOpen = false;
+        this.testRadioResult = data;
+      }
+    });
+
+    this.nav.present(alert).then(() => {
+      this.testRadioOpen = true;
     });
   }
 
