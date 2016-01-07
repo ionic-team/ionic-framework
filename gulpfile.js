@@ -581,3 +581,13 @@ function buildDemoBundle(opts, done) {
 
   });
 }
+
+gulp.task('tooling', function(){
+  gulp.src('*tooling/**/*')
+    .pipe(gulp.dest('dist'));
+    
+  watch('tooling/**/*', function(){
+    gulp.src('*tooling/**/*')
+      .pipe(gulp.dest('dist'));
+  })
+})
