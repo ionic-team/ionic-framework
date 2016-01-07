@@ -56,7 +56,6 @@ Generator.prototype.renderTemplate = function(template) {
   var templateVars = {
     fileName: _.kebabCase(this.name),
     directory: this.directory,
-    cssClassName: _.kebabCase(this.name),
     jsClassName: _.capitalize(_.camelCase(this.name))
   }
 
