@@ -1,6 +1,12 @@
-import {Injectable} from 'angular2/angular2';
+import {Injectable} from 'angular2/core';
 import {Http} from 'angular2/http';
 
+/*
+  Generated class for the <%= jsClassName %> provider.
+
+  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
+  for more info on providers and Angular 2 DI.
+*/
 @Injectable()
 export class <%= jsClassName %> {
   constructor(http: Http) {
@@ -30,3 +36,4 @@ export class <%= jsClassName %> {
     });
   }
 }
+
