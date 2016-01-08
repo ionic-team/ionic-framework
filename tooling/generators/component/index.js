@@ -5,7 +5,7 @@ module.exports = ComponentGenerator;
 
 function ComponentGenerator(options) {
   Generator.call(this, options);
-  this.directory = path.join('app', 'components');
+  this.directory = 'components';
 }
 
 ComponentGenerator.prototype = Object.create(Generator.prototype);

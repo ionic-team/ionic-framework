@@ -5,7 +5,10 @@ module.exports = PageGenerator;
 
 function PageGenerator(options) {
   Generator.call(this, options);
-  this.directory = path.join('app', 'pages');
+  this.directory = 'pages';
+  this.jsClassName += 'Page';
 }
 
 PageGenerator.prototype = Object.create(Generator.prototype);
+
+

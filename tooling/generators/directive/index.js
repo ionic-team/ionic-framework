@@ -5,7 +5,7 @@ module.exports = DirectiveGenerator;
 
 function DirectiveGenerator(options) {
   Generator.call(this, options);
-  this.directory = path.join('app', 'components');
+  this.directory = 'components';
 }
 
 DirectiveGenerator.prototype = Object.create(Generator.prototype);

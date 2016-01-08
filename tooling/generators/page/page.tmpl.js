@@ -7,7 +7,7 @@ import {Page, NavController} from 'ionic/ionic';
   Ionic pages and navigation.
 */
 @Page({
-  templateUrl: '<%= directory %>/<%= fileName %>/<%= fileName %>.html',
+  templateUrl: 'build/<%= directory %>/<%= fileName %>/<%= fileName %>.html',
 })
 export class <%= jsClassName %> {
   constructor(nav: NavController) {

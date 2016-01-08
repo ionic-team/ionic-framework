@@ -18,9 +18,9 @@ Generator.prototype.run = function(){
 
 Generator.prototype.makeDirectories = function(){
   if (!this.directory) {
-    throw new Error('Generators must define their directory in their constructor');
+    throw new Error('Generators must define their directory in their constructor.\nEx: \'pages\', \'components\', etc.');
   }
-  shell.mkdir('-p', path.join(this.appDirectory, this.directory, this.name));
+  shell.mkdir('-p', path.join(this.appDirectory, 'app', this.directory, this.fileName));
 }
 
 Generator.prototype.renderTemplates = function renderTemplates() {
@@ -28,7 +28,7 @@ Generator.prototype.renderTemplates = function renderTemplates() {
 
   templates.forEach(function(template) {
     var renderedTemplate = this.renderTemplate(template);
-    var renderedTemplateDest = path.join(this.appDirectory, this.directory, this.name, this.name + template.extension);
+    var renderedTemplateDest = path.join(this.appDirectory, 'app', this.directory, this.fileName, this.fileName + template.extension);
     console.log('√ Create'.blue, path.relative(this.appDirectory, renderedTemplateDest));
     fs.writeFileSync(renderedTemplateDest, renderedTemplate);
   }, this);

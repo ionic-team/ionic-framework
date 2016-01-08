@@ -5,7 +5,7 @@ module.exports = ProviderGenerator;
 
 function ProviderGenerator(options) {
   Generator.call(this, options);
-  this.directory = path.join('app', 'providers');
+  this.directory = 'providers';
 }
 
 ProviderGenerator.prototype = Object.create(Generator.prototype);
