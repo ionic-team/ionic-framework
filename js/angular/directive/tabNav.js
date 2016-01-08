@@ -43,8 +43,7 @@ IonicModule
       }
 
       $scope.isHidden = function() {
-        if ($attrs.hidden === 'true' || $attrs.hidden === true) return true;
-        return false;
+        return $attrs.hidden === 'true' || $attrs.hidden === true || $scope.$eval($attrs.hidden) === true;
       };
 
       $scope.getIconOn = function() {
