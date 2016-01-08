@@ -18,10 +18,10 @@ $alert-ios-title-font-size:                     17px !default;
 $alert-ios-sub-title-font-size:                 14px !default;
 $alert-ios-sub-title-text-color:                #666 !default;
 
-$alert-ios-body-padding:                        0px 16px 24px !default;
-$alert-ios-body-text-color:                     inherit !default;
-$alert-ios-body-text-align:                     center !default;
-$alert-ios-body-font-size:                      13px !default;
+$alert-ios-message-padding:                     0px 16px 24px !default;
+$alert-ios-message-text-color:                  inherit !default;
+$alert-ios-message-text-align:                  center !default;
+$alert-ios-message-font-size:                   13px !default;
 
 $alert-ios-input-padding:                       6px !default;
 $alert-ios-input-margin-top:                    10px !default;
@@ -64,11 +64,12 @@ ion-alert {
   color: $alert-ios-sub-title-text-color;
 }
 
-.alert-body {
-  padding: $alert-ios-body-padding;
-  color: $alert-ios-body-text-color;
-  text-align: $alert-ios-body-text-align;
-  font-size: $alert-ios-body-font-size;
+.alert-message,
+.alert-inputs {
+  padding: $alert-ios-message-padding;
+  color: $alert-ios-message-text-color;
+  text-align: $alert-ios-message-text-align;
+  font-size: $alert-ios-message-font-size;
 }
 
 .alert-input {

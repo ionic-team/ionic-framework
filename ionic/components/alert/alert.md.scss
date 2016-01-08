@@ -15,8 +15,8 @@ $alert-md-head-padding:                   24px 24px 10px 24px !default;
 $alert-md-title-font-size:                20px !default;
 $alert-md-sub-title-font-size:            15px !default;
 
-$alert-md-body-padding:                   10px 24px 24px 24px !default;
-$alert-md-body-text-color:                rgba(0,0,0,.5) !default;
+$alert-md-message-padding:                10px 24px 24px 24px !default;
+$alert-md-message-text-color:             rgba(0,0,0,.5) !default;
 
 $alert-md-input-border-color:             #dedede !default;
 $alert-md-input-text-color:               #000000 !default;
@@ -51,9 +51,10 @@ $alert-md-buttons-justify-content:        flex-end !default;
   font-size: $alert-md-sub-title-font-size;
 }
 
-.alert-body {
-  padding: $alert-md-body-padding;
-  color: $alert-md-body-text-color;
+.alert-message,
+.alert-inputs {
+  padding: $alert-md-message-padding;
+  color: $alert-md-message-text-color;
 }
 
 .alert-input {

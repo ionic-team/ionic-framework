@@ -19,7 +19,7 @@ import {isDefined} from '../../util/util';
  * An alert is created from an array of `buttons` and optionally an array of
  * `inputs`. Each button includes properties for its `text`, and optionally a
  * `handler`. If a handler returns `false` then the alert will not be dismissed.
- * An alert can also optionally have a `title`, `subTitle` and `body`.
+ * An alert can also optionally have a `title`, `subTitle` and `message`.
  *
  * All buttons will show up in the order they have been added to the `buttons`
  * array, from left to right. Note: The right most button (the last one in the
@@ -50,7 +50,7 @@ import {isDefined} from '../../util/util';
  * presentConfirm() {
  *   let alert = Alert.create({
  *     title: 'Confirm purchase',
- *     body: 'Do you want to buy this book?',
+ *     message: 'Do you want to buy this book?',
  *     buttons: [
  *       {
  *         text: 'Cancel',
@@ -141,10 +141,20 @@ export class Alert extends ViewController {
   }
 
   /**
-   * @param {string} body Alert body content
+   * @private
    */
-  setBody(body) {
-    this.data.body = body;
+  setBody(message) {
+    // deprecated warning
+    console.warn('Alert setBody() has been renamed to setMessage()');
+
+    this.setMessage(message);
+  }
+
+  /**
+   * @param {string} message  Alert message content
+   */
+  setMessage(message) {
+    this.data.message = message;
   }
 
   /**
@@ -182,7 +192,7 @@ export class Alert extends ViewController {
         '<h2 id="{{hdrId}}" class="alert-title" *ngIf="d.title">{{d.title}}</h2>' +
         '<h3 id="{{subHdrId}}" class="alert-sub-title" *ngIf="d.subTitle">{{d.subTitle}}</h3>' +
       '</div>' +
-      '<div id="{{bodyId}}" class="alert-body" *ngIf="d.body">{{d.body}}</div>' +
+      '<div id="{{msgId}}" class="alert-message" *ngIf="d.message">{{d.message}}</div>' +
       '<div *ngIf="d.inputs.length" [ngSwitch]="inputType">' +
 
         '<template ngSwitchWhen="radio">' +
@@ -197,7 +207,7 @@ export class Alert extends ViewController {
         '</template>' +
 
         '<template ngSwitchDefault>' +
-          '<div class="alert-body alert-inputs">' +
+          '<div class="alert-inputs">' +
             '<div *ngFor="#i of d.inputs" class="alert-input-wrapper">' +
               '<input [placeholder]="i.placeholder" [(ngModel)]="i.value" [type]="i.type" class="alert-input">' +
             '</div>' +
@@ -236,11 +246,11 @@ class AlertCmp {
     this.descId = '';
     this.hdrId = 'alert-hdr-' + this.id;
     this.subHdrId = 'alert-subhdr-' + this.id;
-    this.bodyId = 'alert-body-' + this.id;
+    this.msgId = 'alert-msg-' + this.id;
     this.activeId = '';
 
-    if (this.d.body) {
-      this.descId = this.bodyId;
+    if (this.d.message) {
+      this.descId = this.msgId;
     } else if (this.d.subTitle) {
       this.descId = this.subHdrId;
     }
@@ -302,6 +312,12 @@ class AlertCmp {
   onPageLoaded() {
     // normalize the data
     let data = this.d;
+
+    if (data.body) {
+      // deprecated warning
+      console.warn('Alert `body` property has been renamed to `message`');
+      data.message = data.body;
+    }
 
     data.buttons = data.buttons.map(button => {
       if (typeof button === 'string') {
