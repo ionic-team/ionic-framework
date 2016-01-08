@@ -115,11 +115,29 @@ class E2EPage {
       value: 'value3'
     });
 
+    alert.addInput({
+      type: 'radio',
+      label: 'Radio 4',
+      value: 'value4'
+    });
+
+    alert.addInput({
+      type: 'radio',
+      label: 'Radio 5',
+      value: 'value5'
+    });
+
+    alert.addInput({
+      type: 'radio',
+      label: 'Radio 6',
+      value: 'value6'
+    });
+
     alert.addButton('Cancel');
     alert.addButton({
       text: 'Ok',
       handler: data => {
-        console.log('Select data:', data);
+        console.log('Radio data:', data);
         this.testRadioOpen = false;
         this.testRadioResult = data;
       }

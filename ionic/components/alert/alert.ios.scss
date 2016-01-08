@@ -106,6 +106,16 @@ ion-alert {
     }
   }
 
+  &:first-child {
+    border-top: 0;
+  }
+
+}
+
+.alert-radio-group {
+  border-top: 1px solid $alert-ios-button-border-color;
+  max-height: 200px;
+  overflow: scroll;
 }
 
 .alert-radio-label {

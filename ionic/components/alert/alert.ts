@@ -179,15 +179,15 @@ export class Alert extends ViewController {
     '<div (click)="dismiss()" tappable disable-activated class="backdrop" role="presentation"></div>' +
     '<div class="alert-wrapper">' +
       '<div class="alert-head">' +
-        '<h2 class="alert-title" *ngIf="d.title">{{d.title}}</h2>' +
-        '<h3 class="alert-sub-title" *ngIf="d.subTitle">{{d.subTitle}}</h3>' +
+        '<h2 id="{{hdrId}}" class="alert-title" *ngIf="d.title">{{d.title}}</h2>' +
+        '<h3 id="{{subHdrId}}" class="alert-sub-title" *ngIf="d.subTitle">{{d.subTitle}}</h3>' +
       '</div>' +
-      '<div class="alert-body" *ngIf="d.body">{{d.body}}</div>' +
+      '<div id="{{bodyId}}" class="alert-body" *ngIf="d.body">{{d.body}}</div>' +
       '<div *ngIf="d.inputs.length" [ngSwitch]="inputType">' +
 
         '<template ngSwitchWhen="radio">' +
-          '<div class="alert-radio-group">' +
-            '<div *ngFor="#i of d.inputs" (click)="rbClick(i)" [attr.aria-checked]="i.checked" class="alert-radio" tappable role="radio">' +
+          '<div class="alert-radio-group" role="radiogroup" [attr.aria-labelledby]="hdrId" [attr.aria-activedescendant]="activeId">' +
+            '<div *ngFor="#i of d.inputs" (click)="rbClick(i)" [attr.aria-checked]="i.checked" [attr.id]="i.id" class="alert-radio" tappable role="radio">' +
               '<div class="alert-radio-icon"></div>' +
               '<div class="alert-radio-label">' +
                 '{{i.label}}' +
@@ -212,7 +212,9 @@ export class Alert extends ViewController {
       '</div>' +
     '</div>',
   host: {
-    'role': 'dialog'
+    'role': 'dialog',
+    '[attr.aria-labelledby]': 'hdrId',
+    '[attr.aria-describedby]': 'descId'
   },
   directives: [NgClass, NgSwitch, NgIf, NgFor]
 })
@@ -228,6 +230,19 @@ class AlertCmp {
     this.d = params.data;
     if (this.d.cssClass) {
       renderer.setElementClass(_elementRef, this.d.cssClass, true);
+    }
+
+    this.id = (++alertIds);
+    this.descId = '';
+    this.hdrId = 'alert-hdr-' + this.id;
+    this.subHdrId = 'alert-subhdr-' + this.id;
+    this.bodyId = 'alert-body-' + this.id;
+    this.activeId = '';
+
+    if (this.d.body) {
+      this.descId = this.bodyId;
+    } else if (this.d.subTitle) {
+      this.descId = this.subHdrId;
     }
   }
 
@@ -254,6 +269,7 @@ class AlertCmp {
     this.d.inputs.forEach(input => {
       input.checked = (checkedInput === input);
     });
+    this.activeId = checkedInput.id;
 
     if (!this.d.buttons.length) {
       // auto dismiss if no buttons
@@ -302,10 +318,16 @@ class AlertCmp {
         value: isDefined(input.value) ? input.value : '',
         label: input.label,
         checked: !!input.checked,
+        id: 'alert-input-' + this.id + '-' + index
       };
     });
 
     this.inputType = (data.inputs.length ? data.inputs[0].type : null);
+
+    let checkedInput = this.d.inputs.find(input => input.checked);
+    if (checkedInput) {
+      this.activeId = checkedInput.id;
+    }
 
     let self = this;
     self.keyUp = function(ev) {
@@ -421,3 +443,5 @@ class AlertMdPopOut extends Animation {
   }
 }
 Animation.register('alert-md-pop-out', AlertMdPopOut);
+
+let alertIds = -1;
