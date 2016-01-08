@@ -6,9 +6,13 @@ var _ = require('lodash'),
 module.exports = Generator;
 
 function Generator(options) {
-  this.name = _.kebabCase(options.name);
+  this.name = options.name;
   this.type = options.generator;
   this.appDirectory = options.appDirectory;
+
+  //templateVars
+  this.fileName = _.kebabCase(this.name);
+  this.jsClassName = _.capitalize(_.camelCase(this.name));
 }
 
 Generator.prototype.run = function(){
@@ -53,14 +57,8 @@ Generator.prototype.loadTemplates = function() {
 };
 
 Generator.prototype.renderTemplate = function(template) {
-  var templateVars = {
-    fileName: _.kebabCase(this.name),
-    directory: this.directory,
-    jsClassName: _.capitalize(_.camelCase(this.name))
-  }
-
   var templateContents = fs.readFileSync(template.path, 'utf8');
   var templateCompiler = _.template(templateContents);
-  var result = templateCompiler(templateVars);
+  var result = templateCompiler(this);
   return result;
 };
