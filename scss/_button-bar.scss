@@ -21,6 +21,34 @@
       float: left;
     }
   }
+
+  &.bar-light > .button {
+    border-color: $button-light-border;
+  }
+  &.bar-stable > .button {
+    border-color: $button-stable-border;
+  }
+  &.bar-positive > .button {
+    border-color: $button-positive-border;
+  }
+  &.bar-calm > .button {
+    border-color: $button-calm-border;
+  }
+  &.bar-assertive > .button {
+    border-color: $button-assertive-border;
+  }
+  &.bar-balanced > .button {
+    border-color: $button-balanced-border;
+  }
+  &.bar-energized > .button {
+    border-color: $button-energized-border;
+  }
+  &.bar-royal > .button {
+    border-color: $button-royal-border;
+  }
+  &.bar-dark > .button {
+    border-color: $button-dark-border;
+  }
 }
 
 .button-bar > .button {
