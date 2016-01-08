@@ -1,94 +1,95 @@
-var colors = require('colors'),
-    fs = require('fs'),
-    path = require('path'),
+var path = require('path'),
     inquirer = require('inquirer'),
     Q = require('q'),
-    Generator = module.exports,
-    Generate = require('../../generate'),
-    path = require('path'),
-    Q = require('q');
+    Generator = require('../../generator'),
+    Generate = require('../../generate');
 
-Generator.validate = function(input) {
-  // console.log(typeof parseInt(input));
-  if (isNaN(parseInt(input))) {
-    // Pass the return value in the done callback
-    return 'You need to provide a number';
-  }
-  return true;
-};
+module.exports = TabsGenerator;
 
-Generator.numberNames = ['first', 'second', 'third', 'fourth', 'fifth'];
+function TabsGenerator(options) {
+  Generator.call(this, options);
+  this.directory = 'pages';
+  this.jsClassName += 'Page';
+  this.tabs = [];
+  this.tabNames = [];
+}
 
-Generator.promptForTabCount = function promptForTabCount() {
+TabsGenerator.prototype = Object.create(Generator.prototype);
+
+TabsGenerator.prototype.run = function(){
+  return tabCountPrompt()
+
+    .then(function(numTabs){
+      var promise = Q();
+
+      for (var i = 0, j = parseInt(numTabs); i < j; i++) {
+        promise = promise.then(function(index) {
+          return tabNamePrompt.bind(this)(index);
+        }.bind(this, i));
+      }
+      return promise;
+    }.bind(this))
+
+    .then(function(){
+      var PageGenerator = Generate.loadGenerator('page');
+
+      this.tabNames.forEach(function(tabName){
+        var pageGenerator = new PageGenerator({
+          name: tabName,
+          generator: 'page',
+          appDirectory: this.appDirectory
+        });
+
+        pageGenerator.run();
+        this.tabs.push(pageGenerator);
+      }.bind(this));
+
+      this.makeDirectories();
+      this.renderTemplates();
+    }.bind(this))
+
+    .catch(function(err){
+      console.error(err.stack);
+    })
+}
+
+function tabCountPrompt(){
   var q = Q.defer();
 
-  inquirer.prompt({choices: ['1', '2', '3', '4', '5'], message: 'How many tabs will you have?', name: 'count', type: 'list', validate: Generator.validate}, function(result) {
+  inquirer.prompt({
+    choices: ['1', '2', '3', '4', '5'],
+    message: 'How many tabs would you like?',
+    name: 'count',
+    type: 'list',
+    validate: validate
+  }, function(result) {
     q.resolve(result.count);
-  });
-
-  return q.promise;
-};
-
-Generator.promptForTabName = function promptForTabName(tabIndex, options) {
-  var q = Q.defer();
-
-  inquirer.prompt({message: 'Enter the ' + Generator.numberNames[tabIndex] + ' tab name:', name: 'name', type: 'input'}, function(nameResult) {
-    Generator.tabs.push({ appDirectory: options.appDirectory, cssClassName: Generate.cssClassName(nameResult.name), fileName: Generate.fileName(nameResult.name), jsClassName: Generate.jsClassName(nameResult.name), name: nameResult.name });
-    q.resolve();
   });
 
   return q.promise;
 }
 
-Generator.run = function run(options) {
-  Generate.createScaffoldDirectories({appDirectory: options.appDirectory, componentDirectory: 'tabs', fileName: options.fileName});
+function tabNamePrompt(index){
+  var q = Q.defer();
+  var numberNames = ['first', 'second', 'third', 'fourth', 'fifth'];
 
-  //Need to query user for tabs:
-  options.rootDirectory = options.rootDirectory || path.join('app', 'tabs');
-  var savePath = path.join(options.appDirectory, options.rootDirectory, options.fileName);
+  inquirer.prompt({
+    message: 'Enter the ' + numberNames[index] + ' tab name:',
+    name: 'name',
+    type: 'input'
+  }, function(response) {
+    this.tabNames.push(response.name);
+    q.resolve();
+  }.bind(this));
 
-  Generator.tabs = [];
+  return q.promise;
+}
 
-  return Generator.promptForTabCount()
-  .then(function(count) {
-    var promise = Q();
-    for(var i = 0, j = parseInt(count); i < j; i++) {
-      (function(index) {
-        promise = promise.then(function() {
-          return Generator.promptForTabName(index, options);
-        });
-      })(i);//avoid closure loop var
-    }
+function validate(){
+  if (isNaN(parseInt(input))) {
+    // Pass the return value in the done callback
+    return 'You need to provide a number';
+  }
+  return true;
+}
 
-    return promise;
-  })
-  .then(function() {
-    var templates = Generate.loadGeneratorTemplates(__dirname);
-
-    //Generate the tabs container page templates
-    templates.forEach(function(template) {
-      options.templatePath = template.file;
-      options.tabs = Generator.tabs;
-      var renderedTemplate = Generate.renderTemplateFromFile(options);
-      var saveFilePath = path.join(savePath, [options.fileName, template.type].join(''));
-      // console.log('renderedTemplate', renderedTemplate, 'saving to', saveFilePath);
-      console.log('√ Create'.blue, path.relative(options.appDirectory, saveFilePath));
-      fs.writeFileSync(saveFilePath, renderedTemplate);
-    });
-
-    //Now render the individual tab pages
-    Generator.tabs.forEach(function(tab) {
-      tab.generatorName = 'page';
-      tab.appDirectory = tab.appDirectory;
-      Generate.generate(tab);
-    });
-  })
-  .catch(function(ex) {
-    console.log('Something went wrong', ex);
-    console.log(ex.stack);
-    throw ex;
-  })
-  .fin(function() {
-    console.log('√ Done'.green);
-  });
-};
