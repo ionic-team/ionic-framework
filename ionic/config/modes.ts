@@ -13,7 +13,7 @@ Config.setModeConfig('ios', {
   alertLeave: 'alert-pop-out',
 
   backButtonText: 'Back',
-  backButtonIcon: 'ion-ios-arrow-back',
+  backButtonIcon: 'ios-arrow-back',
 
   iconMode: 'ios',
 
@@ -40,7 +40,7 @@ Config.setModeConfig('md', {
   alertLeave: 'alert-md-pop-out',
 
   backButtonText: '',
-  backButtonIcon: 'ion-md-arrow-back',
+  backButtonIcon: 'md-arrow-back',
 
   iconMode: 'md',
 
