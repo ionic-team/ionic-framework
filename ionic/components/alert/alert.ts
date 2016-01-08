@@ -172,6 +172,13 @@ export class Alert extends ViewController {
   }
 
   /**
+   * @param {string} className CSS class name to add to the alert's outer wrapper
+   */
+  setCssClass(className) {
+    this.data.cssClass = className;
+  }
+
+  /**
    * @param {Object} opts Alert options
    */
   static create(opts={}) {
@@ -197,7 +204,7 @@ export class Alert extends ViewController {
 
         '<template ngSwitchWhen="radio">' +
           '<div class="alert-radio-group" role="radiogroup" [attr.aria-labelledby]="hdrId" [attr.aria-activedescendant]="activeId">' +
-            '<div *ngFor="#i of d.inputs" (click)="rbClick(i)" [attr.aria-checked]="i.checked" [attr.id]="i.id" class="alert-radio" tappable role="radio">' +
+            '<div *ngFor="#i of d.inputs" (click)="rbClick(i)" [attr.aria-checked]="i.checked" [attr.id]="i.id" class="alert-tappable alert-radio" tappable role="radio">' +
               '<div class="alert-radio-icon"></div>' +
               '<div class="alert-radio-label">' +
                 '{{i.label}}' +
@@ -206,8 +213,19 @@ export class Alert extends ViewController {
           '</div>' +
         '</template>' +
 
+        '<template ngSwitchWhen="checkbox">' +
+          '<div class="alert-checkbox-group">' +
+            '<div *ngFor="#i of d.inputs" (click)="cbClick(i)" [attr.aria-checked]="i.checked" class="alert-tappable alert-checkbox" tappable role="checkbox">' +
+              '<div class="alert-checkbox-icon"></div>' +
+              '<div class="alert-checkbox-label">' +
+                '{{i.label}}' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</template>' +
+
         '<template ngSwitchDefault>' +
-          '<div class="alert-inputs">' +
+          '<div class="alert-input-group">' +
             '<div *ngFor="#i of d.inputs" class="alert-input-wrapper">' +
               '<input [placeholder]="i.placeholder" [(ngModel)]="i.value" [type]="i.type" class="alert-input">' +
             '</div>' +
@@ -215,7 +233,7 @@ export class Alert extends ViewController {
         '</template>' +
 
       '</div>' +
-      '<div class="alert-buttons">' +
+      '<div class="alert-button-group">' +
         '<button *ngFor="#b of d.buttons" (click)="btnClick(b)" [ngClass]="b.cssClass" class="alert-button">' +
           '{{b.text}}' +
         '</button>' +
@@ -224,7 +242,8 @@ export class Alert extends ViewController {
   host: {
     'role': 'dialog',
     '[attr.aria-labelledby]': 'hdrId',
-    '[attr.aria-describedby]': 'descId'
+    '[attr.aria-describedby]': 'descId',
+    '[class]': 'cssClass'
   },
   directives: [NgClass, NgSwitch, NgIf, NgFor]
 })
@@ -238,9 +257,7 @@ class AlertCmp {
     renderer: Renderer
   ) {
     this.d = params.data;
-    if (this.d.cssClass) {
-      renderer.setElementClass(_elementRef, this.d.cssClass, true);
-    }
+    this.cssClass = this.d.cssClass || '';
 
     this.id = (++alertIds);
     this.descId = '';
@@ -280,13 +297,10 @@ class AlertCmp {
       input.checked = (checkedInput === input);
     });
     this.activeId = checkedInput.id;
+  }
 
-    if (!this.d.buttons.length) {
-      // auto dismiss if no buttons
-      setTimeout(() => {
-        this.dismiss();
-      }, this._config.get('pageTransitionDelay'));
-    }
+  cbClick(checkedInput) {
+    checkedInput.checked = !checkedInput.checked;
   }
 
   dismiss() {
@@ -295,16 +309,23 @@ class AlertCmp {
 
   getValues() {
     if (this.inputType === 'radio') {
-      // this is a radio button alert
-      // return the one radio button value which is checked
-      let checkedInput = this.d.inputs.find(input => input.checked);
+      // this is an alert with radio buttons (single value select)
+      // return the one value which is checked, otherwise undefined
+      let checkedInput = this.d.inputs.find(i => i.checked);
       return checkedInput ? checkedInput.value : undefined;
     }
 
-    // return an object of all the values with the name as the key
+    if (this.inputType === 'checkbox') {
+      // this is an alert with checkboxes (multiple value select)
+      // return an array of all the checked values
+      return this.d.inputs.filter(i => i.checked).map(i => i.value);
+    }
+
+    // this is an alert with text inputs
+    // return an object of all the values with the input name as the key
     let values = {};
-    this.d.inputs.forEach(input => {
-      values[input.name] = input.value;
+    this.d.inputs.forEach(i => {
+      values[i.name] = i.value;
     });
     return values;
   }

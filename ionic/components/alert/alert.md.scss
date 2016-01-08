@@ -38,6 +38,9 @@ $alert-md-buttons-justify-content:        flex-end !default;
   box-shadow: $alert-md-box-shadow;
 }
 
+// Material Design Alert Header
+// --------------------------------------------------
+
 .alert-head {
   text-align: $alert-md-head-text-align;
   padding: $alert-md-head-padding;
@@ -51,11 +54,19 @@ $alert-md-buttons-justify-content:        flex-end !default;
   font-size: $alert-md-sub-title-font-size;
 }
 
+
+// Material Design Alert Message
+// --------------------------------------------------
+
 .alert-message,
-.alert-inputs {
+.alert-input-group {
   padding: $alert-md-message-padding;
   color: $alert-md-message-text-color;
 }
+
+
+// Material Design Alert Input
+// --------------------------------------------------
 
 .alert-input {
   border-bottom: 1px solid $alert-md-input-border-color;
@@ -68,15 +79,20 @@ $alert-md-buttons-justify-content:        flex-end !default;
   }
 }
 
-.alert-radio-group {
+
+// Material Design Alert Radio/Checkbox Group
+// --------------------------------------------------
+
+.alert-radio-group,
+.alert-checkbox-group {
   position: relative;
   border-top: 1px solid $alert-md-input-border-color;
   border-bottom: 1px solid $alert-md-input-border-color;
-  max-height: 200px;
-  overflow: scroll;
+  max-height: 240px;
+  overflow: auto;
 }
 
-.alert-radio {
+.alert-tappable {
   position: relative;
   overflow: hidden;
   display: flex;
@@ -84,23 +100,14 @@ $alert-md-buttons-justify-content:        flex-end !default;
   border-top: 1px solid $alert-md-input-border-color;
   cursor: pointer;
 
-  &[aria-checked=true] {
-    color: $alert-md-button-text-color;
-
-    .alert-radio-icon {
-      border-color: $alert-md-button-text-color;
-    }
-
-    .alert-radio-icon:after {
-      transform: scale3d(1, 1, 1);
-    }
-  }
-
   &:first-child {
     border-top: 0;
   }
-
 }
+
+
+// Material Design Alert Radio
+// --------------------------------------------------
 
 .alert-radio-label {
   flex: 1;
@@ -138,7 +145,69 @@ $alert-md-buttons-justify-content:        flex-end !default;
   }
 }
 
-.alert-buttons {
+.alert-radio[aria-checked=true] {
+  color: $alert-md-button-text-color;
+
+  .alert-radio-icon {
+    border-color: $alert-md-button-text-color;
+  }
+
+  .alert-radio-icon:after {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+
+// Material Design Alert Checkbox
+// --------------------------------------------------
+
+.alert-checkbox-label {
+  flex: 1;
+  text-align: auto;
+  padding: 13px 26px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.alert-checkbox-icon {
+  position: relative;
+  top: 13px;
+  left: 13px;
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: darken($list-md-border-color, 40%);
+  background-color: transparent;
+}
+
+.alert-checkbox[aria-checked=true] .alert-checkbox-icon {
+  background-color: $alert-md-button-text-color;
+  border-color: $alert-md-button-text-color;
+
+  &:after {
+    position: absolute;
+    border-width: 2px;
+    border-style: solid;
+    border-color: $alert-md-background-color;
+    top: 0;
+    left: 3px;
+    width: 4px;
+    height: 8px;
+    border-left: none;
+    border-top: none;
+    content: '';
+    transform: rotate(45deg);
+  }
+}
+
+
+// Material Design Alert Button
+// --------------------------------------------------
+
+.alert-button-group {
   padding: $alert-md-buttons-padding;
   justify-content: $alert-md-buttons-justify-content;
 }

@@ -38,13 +38,17 @@ export class Label {
     private _renderer: Renderer
   ) {}
 
-/**
- * @private
- */
+  /**
+   * @private
+   */
   ngOnInit() {
     if (!this.id) {
       this.id = 'lbl-' + this._form.nextId();
     }
+  }
+
+  get text() {
+    return this._elementRef.nativeElement.textContent;
   }
 
   /**

@@ -18,7 +18,7 @@ class E2EPage {
     let alert = Alert.create({
       title: 'Alert!',
       subTitle: 'Subtitle!!!',
-      buttons: ['Ok']
+      buttons: ['OK']
     });
 
     this.nav.present(alert);

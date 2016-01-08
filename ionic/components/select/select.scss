@@ -1,0 +1,35 @@
+@import "../../globals.core";
+
+// Select
+// --------------------------------------------------
+
+.select-icon {
+  position: relative;
+  min-width: 16px;
+}
+
+.select-icon:after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -3px;
+  width: 0;
+  height: 0;
+  border-top: 5px solid;
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+  color: #999;
+  content: "";
+  pointer-events: none;
+}
+
+.select-text-value {
+  max-width: 120px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+ion-select ion-label {
+  margin: 0;
+}

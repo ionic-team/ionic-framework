@@ -1,7 +1,6 @@
 import {Component, Directive, Optional, ElementRef, Input, Renderer, HostListener} from 'angular2/core';
 import {NgControl} from 'angular2/common';
 
-import {Ion} from '../ion';
 import {Form} from '../../util/form';
 
 /**

@@ -20,6 +20,8 @@ import {ItemSliding} from '../components/item/item-sliding';
 import {Toolbar, ToolbarTitle, ToolbarItem} from '../components/toolbar/toolbar';
 import {Icon} from '../components/icon/icon';
 import {Checkbox} from '../components/checkbox/checkbox';
+import {Select} from '../components/select/select';
+import {Option} from '../components/option/option';
 import {Toggle} from '../components/toggle/toggle';
 import {TextInput} from '../components/text-input/text-input';
 import {Label} from '../components/label/label';
@@ -85,6 +87,8 @@ import {ShowWhen, HideWhen} from '../components/show-hide-when/show-hide-when';
  * -  Checkbox
  * -  RadioGroup
  * -  RadioButton
+ * -  Select
+ * -  Option
  * -  Toggle
  * -  ItemInput
  * -  TextInput
@@ -150,6 +154,8 @@ export const IONIC_DIRECTIVES = [
   Checkbox,
   RadioGroup,
   RadioButton,
+  Select,
+  Option,
   Toggle,
   ItemInput,
   TextInput,
