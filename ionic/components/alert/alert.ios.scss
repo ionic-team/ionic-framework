@@ -81,6 +81,12 @@ ion-alert {
   -webkit-appearance: none;
 }
 
+.alert-radio-group {
+  border-top: 1px solid $alert-ios-button-border-color;
+  max-height: 200px;
+  overflow: scroll;
+}
+
 .alert-radio {
   display: flex;
   min-height: $alert-ios-button-min-height;
@@ -112,17 +118,14 @@ ion-alert {
 
 }
 
-.alert-radio-group {
-  border-top: 1px solid $alert-ios-button-border-color;
-  max-height: 200px;
-  overflow: scroll;
-}
-
 .alert-radio-label {
   flex: 1;
   order: 0;
   text-align: auto;
   padding: 13px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .alert-radio-icon {

@@ -129,7 +129,7 @@ class E2EPage {
 
     alert.addInput({
       type: 'radio',
-      label: 'Radio 6',
+      label: 'Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 ',
       value: 'value6'
     });
 
