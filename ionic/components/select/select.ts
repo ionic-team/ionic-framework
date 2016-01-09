@@ -155,7 +155,16 @@ export class Select {
    * @private
    */
   ngAfterContentInit() {
-    let selectedOption = this.options.toArray().find(o => o.checked);
+    var selectedOption = this.options.toArray().find(o => o.checked);
+
+    if(!selectedOption) {
+      this.options.toArray().forEach(o => {
+	o.checked = o.value === this.value + '';
+	if(o.checked) {
+	  selectedOption = o;
+	}
+      });
+    }
     if (selectedOption) {
       this.value = selectedOption.value;
       this.selectedText = selectedOption.text;
