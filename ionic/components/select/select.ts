@@ -47,8 +47,8 @@ import {Option} from '../option/option';
  * selected option values.
  *
  * ```html
- * <ion-select [(ngModel)]="topings" multiple="true">
- *   <ion-label>Topings</ion-label>
+ * <ion-select [(ngModel)]="toppings" multiple="true">
+ *   <ion-label>Toppings</ion-label>
  *   <ion-option value="bacon">Bacon</ion-option>
  *   <ion-option value="olives">Black Olives</ion-option>
  *   <ion-option value="xcheese">Extra Cheese</ion-option>
@@ -83,8 +83,8 @@ import {Option} from '../option/option';
  *
  * ```ts
  * this.alertOptions = {
- *   title: 'Pizza Topings',
- *   subTitle: 'Select your topings'
+ *   title: 'Pizza Toppings',
+ *   subTitle: 'Select your toppings'
  * };
  * ```
  *
