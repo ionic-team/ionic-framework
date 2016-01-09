@@ -29,7 +29,7 @@
     <ion-option value="win98">Windows 98</ion-option>
   </ion-select>
 
-  <ion-select [(ngModel)]="music">
+  <ion-select [(ngModel)]="music" [alertOptions]="musicAlertOpts">
     <ion-label>Music</ion-label>
     <ion-option value="aliceinchains">Alice in Chains</ion-option>
     <ion-option value="greenday">Green Day</ion-option>

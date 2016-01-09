@@ -15,8 +15,8 @@ import {Animation} from '../../animations/animation';
  * When a modal (or any other overlay such as an alert or actionsheet) is
  * "presented" to a nav controller, the overlay is added to the app's root nav.
  * After the modal has been presented, from within the component instance The
- * modal can later be closed or "dimsissed" by using the ViewController's
- * `dismiss` method. Additinoally, you can dismiss any overlay by using `pop`
+ * modal can later be closed or "dismissed" by using the ViewController's
+ * `dismiss` method. Additionally, you can dismiss any overlay by using `pop`
  * on the root nav controller.
  *
  * A modal can also emit data, which is useful when it is used to add or edit

@@ -4,20 +4,90 @@ import {NgControl} from 'angular2/common';
 import {Alert} from '../alert/alert';
 import {Form} from '../../util/form';
 import {Label} from '../label/label';
+import {merge} from '../../util/util';
 import {NavController} from '../nav/nav-controller';
 import {Option} from '../option/option';
-import {Form} from '../../util/form';
-import {merge} from '../../util/util';
 
 /**
- * @usage
+ * @name Select
+ * @description
+ * The `ion-select` component is similar to an HTML `<select>` element, however,
+ * Ionic's select component makes it easier for users to sort through and select
+ * the preferred option or options. When users tap the select component, a
+ * dialog will appear with all of the options in a large, easy to select list
+ * for users.
+ *
+ * Under-the-hood the `ion-select` actually uses the
+ * {@link ../../alert/Alert Alert API} to open up the overlay of options
+ * which the user is presented with. Select takes one child `ion-label`
+ * component, and numerous child `ion-option` components. Each `ion-option`
+ * should be given a `value` attribute.
+ *
+ * ### Single Value: Radio Buttons
+ *
+ * The standard `ion-select` component allows the user to select only one
+ * option. When selecting only one option the alert overlay presents users with
+ * a radio button styled list of options. The `ion-select` component's value
+ * receives the value of the selected option's value.
+ *
  * ```html
  * <ion-select [(ngModel)]="gender">
  *   <ion-label>Gender</ion-label>
- *   <ion-option value="f">Female</ion-option>
+ *   <ion-option value="f" checked="true">Female</ion-option>
  *   <ion-option value="m">Male</ion-option>
  * </ion-select>
  * ```
+ *
+ * ### Multiple Value: Checkboxes
+ *
+ * By adding the `multiple="true"` attribute to `ion-select`, users are able
+ * to select multiple options. When multiple options can be selected, the alert
+ * overlay presents users with a checkbox styled list of options. The
+ * `ion-select multiple="true"` component's value receives an array of all the
+ * selected option values.
+ *
+ * ```html
+ * <ion-select [(ngModel)]="topings" multiple="true">
+ *   <ion-label>Topings</ion-label>
+ *   <ion-option value="bacon">Bacon</ion-option>
+ *   <ion-option value="olives">Black Olives</ion-option>
+ *   <ion-option value="xcheese">Extra Cheese</ion-option>
+ *   <ion-option value="mushrooms">Mushrooms</ion-option>
+ *   <ion-option value="pepperoni">Pepperoni</ion-option>
+ *   <ion-option value="sausage">Sausage</ion-option>
+ * </ion-select>
+ * ```
+ *
+ * ### Alert Buttons
+ * By default, the two buttons read `Cancel` and `OK`. The each button's text
+ * can be customized using the `cancelText` and `okText` attributes:
+ *
+ * ```html
+ * <ion-select okText="Okay" cancelText="Dismiss">
+ *   ...
+ * </ion-select>
+ * ```
+ *
+ * ### Alert Options
+ *
+ * Remember how `ion-select` is really just a wrapper to `Alert`? By using
+ * the `alertOptions` property you can pass custom options to the alert
+ * overlay. This would be useful if there is a custom alert title,
+ * subtitle or message. {@link ../../alert/Alert Alert API}
+ *
+ * ```html
+ * <ion-select [alertOptions]="alertOptions">
+ *   ...
+ * </ion-select>
+ * ```
+ *
+ * ```ts
+ * this.alertOptions = {
+ *   title: 'Pizza Topings',
+ *   subTitle: 'Select your topings'
+ * };
+ * ```
+ *
  */
 @Component({
   selector: 'ion-select',
@@ -38,6 +108,8 @@ import {merge} from '../../util/util';
     '</div>'
 })
 export class Select {
+  @Input() public cancelText: string = 'Cancel';
+  @Input() public okText: string = 'OK';
   @Input() public value: string = '';
   @Input() public alertOptions: any = {};
   @Input() public checked: any = false;
@@ -98,24 +170,14 @@ export class Select {
    */
   @HostListener('click')
   _click() {
-    let cancelText = 'Cancel';
-    let submitText = 'OK';
-
     let isMulti = (this.multiple === true || this.multiple === 'true');
 
     // the user may have assigned some options specifically for the alert
     let alertOptions = merge({}, this.alertOptions);
 
-    // user can provide buttons, but only two of them, and only as text
-    // index 0 becomes the cancel text, index 1 becomes the submit (ok) text
-    if (alertOptions.buttons && alertOptions.buttons.length === 2) {
-      cancelText = alertOptions.buttons[0];
-      submitText = alertOptions.buttons[1];
-    }
-
     // make sure their buttons array is removed from the options
     // and we create a new array for the alert's two buttons
-    alertOptions.buttons = [cancelText];
+    alertOptions.buttons = [this.cancelText];
 
     // if the alertOptions didn't provide an title then use the label's text
     if (!alertOptions.title) {
@@ -141,7 +203,7 @@ export class Select {
       alert.setCssClass('select-alert multiple-select-alert');
 
       alert.addButton({
-        text: submitText,
+        text: this.okText,
         handler: selectedValues => {
           // passed an array of all the values which were checked
           this.value = selectedValues;
@@ -172,7 +234,7 @@ export class Select {
       alert.setCssClass('select-alert single-select-alert');
 
       alert.addButton({
-        text: submitText,
+        text: this.okText,
         handler: selectedValue => {
           // passed the single value that was checked
           // or undefined if nothing was checked
