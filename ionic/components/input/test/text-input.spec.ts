@@ -41,7 +41,7 @@ export function run() {
   });
 
   it('should scroll, top above safe', () => {
-    // Input top within safe area, bottom below safe area, room to scroll
+    // ItemInput top within safe area, bottom below safe area, room to scroll
     let inputOffsetTop = 100;
     let inputOffsetHeight = 33;
     let scrollViewDimensions = {
@@ -61,7 +61,7 @@ export function run() {
   });
 
   it('should scroll, top in safe, bottom below safe, below more than top in, not enough padding', () => {
-    // Input top within safe area, bottom below safe area, room to scroll
+    // ItemInput top within safe area, bottom below safe area, room to scroll
     let inputOffsetTop = 100;
     let inputOffsetHeight = 320;
     let scrollViewDimensions = {
@@ -81,7 +81,7 @@ export function run() {
   });
 
   it('should scroll, top in safe, bottom below safe, below more than top in, enough padding', () => {
-    // Input top within safe area, bottom below safe area, room to scroll
+    // ItemInput top within safe area, bottom below safe area, room to scroll
     let inputOffsetTop = 20;
     let inputOffsetHeight = 330;
     let scrollViewDimensions = {
@@ -99,7 +99,7 @@ export function run() {
   });
 
   it('should scroll, top in safe, bottom below safe, below less than top in, enough padding', () => {
-    // Input top within safe area, bottom below safe area, room to scroll
+    // ItemInput top within safe area, bottom below safe area, room to scroll
     let inputOffsetTop = 250;
     let inputOffsetHeight = 80; // goes 30px below safe area
     let scrollViewDimensions = {
@@ -117,7 +117,7 @@ export function run() {
   });
 
   it('should not scroll, top in safe, bottom in safe', () => {
-    // Input top within safe area, bottom within safe area
+    // ItemInput top within safe area, bottom within safe area
     let inputOffsetTop = 100;
     let inputOffsetHeight = 50;
     let scrollViewDimensions = {
