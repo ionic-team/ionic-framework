@@ -95,7 +95,8 @@ import * as gestures from  './menu-gestures';
     'content',
     'id',
     'side',
-    'type'
+    'type',
+    'threshold'
   ],
   defaultInputs: {
     'side': 'left',
