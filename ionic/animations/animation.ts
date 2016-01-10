@@ -1,6 +1,7 @@
 import {CSS, rafFrames} from '../util/dom';
 import {extend} from '../util/util';
 
+const doc: any = document;
 
 /**
   Animation Steps/Process
@@ -27,6 +28,27 @@ import {extend} from '../util/util';
  * @private
 **/
 export class Animation {
+  private _parent: Animation;
+  private _isStaged: boolean;
+  private _isFinished: boolean;
+  private _duration: number;
+  private _easing: any;
+  private _from: any;
+  private _to: any;
+  private _rate: any;
+  private _opts: any;
+  private _el: Array<any>;
+  private _chld: Array<Animation>;
+  private _ani: Array<Animate>;
+  private _bfSty: any;
+  private _bfAdd: Array<string>;
+  private _bfRmv: Array<string>;
+  private _afAdd: Array<string>;
+  private _afRmv: Array<string>;
+  private _readys: Array<any>;
+  private _plays: Array<any>;
+  private _finishes: Array<any>;
+  public isProgress: boolean;
 
   constructor(ele, opts={}) {
     this.reset();
@@ -37,7 +59,7 @@ export class Animation {
 
     this.elements(ele);
 
-    if (!document.documentElement.animate) {
+    if (!doc.documentElement.animate) {
       console.error('Web Animations polyfill missing');
     }
   }
@@ -47,8 +69,8 @@ export class Animation {
     this._chld = [];
     this._ani = [];
 
-    this._bfAdd = [];
     this._bfSty = {};
+    this._bfAdd = [];
     this._bfRmv = [];
     this._afAdd = [];
     this._afRmv = [];
@@ -62,7 +84,7 @@ export class Animation {
     if (ele) {
       if (typeof ele === 'string') {
         // string query selector
-        ele = document.querySelectorAll(ele);
+        ele = doc.querySelectorAll(ele);
       }
 
       if (ele.length) {
@@ -562,6 +584,15 @@ export class Animation {
  * @private
 **/
 class Animate {
+  private toEffect: any;
+  private fromEffect: any;
+  private duration: any;
+  private rate: any;
+  private easing: any;
+  private effects: any;
+  private ani: any;
+  private shouldAnimate: boolean;
+  private ele: any;
 
   constructor(ele, fromEffect, toEffect, duration, easingConfig, playbackRate) {
     // https://w3c.github.io/web-animations/
