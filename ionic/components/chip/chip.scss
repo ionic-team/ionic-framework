@@ -1,0 +1,69 @@
+@import "../../globals.core";
+
+// Chip
+// --------------------------------------------------
+
+
+ion-chip {
+  font-size: 13px;
+  font-weight: normal;
+  background: rgba(0,0,0,0.12);
+  display: inline-block;
+  height: 32px;
+  line-height: 32px;
+  border-radius: 16px;
+  padding: 0 12px;
+  box-sizing: border-box;
+  vertical-align: middle;
+  display: inline-flex;
+  align-self: center;
+
+  margin: 2px 0;
+
+  ion-label {
+    margin: 0;
+    color: rgba(0,0,0,0.87);
+  }
+
+  > ion-icon, > ion-avatar {
+    width: 32px;
+    height: 32px;
+    margin-left: -12px;
+    vertical-align: top;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 32px;
+    color: rgba(0,0,0,0.87);
+    // .flex-shrink(0);
+    font-size: 18px;
+    // .flexbox();
+    // .align-items(center);
+    // .justify-content(center);
+    img {
+        max-width: 100%;
+        max-height: 100%;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        display: block;
+    }
+    + ion-label {
+      margin-left: 8px;
+    }
+  }
+
+  ion-avatar {
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .button {
+    min-height: inherit;
+    margin-right: -4px;
+    margin-left: 8px;
+  }
+
+  ion-icon[name="close-circle"] {
+    font-size: 1.2em;
+  }
+}
