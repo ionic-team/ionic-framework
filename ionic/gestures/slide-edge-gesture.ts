@@ -7,12 +7,12 @@ export class SlideEdgeGesture extends SlideGesture {
   constructor(element: Element, opts: Object = {}) {
     defaults(opts, {
       edge: 'left',
-      threshold: 50
+      maxEdgeStart: 50
     });
     super(element, opts);
     // Can check corners through use of eg 'left top'
     this.edges = opts.edge.split(' ');
-    this.threshold = opts.threshold;
+    this.maxEdgeStart = opts.maxEdgeStart;
   }
 
   canStart(ev) {
@@ -31,10 +31,10 @@ export class SlideEdgeGesture extends SlideGesture {
 
   _checkEdge(edge, pos) {
     switch (edge) {
-      case 'left': return pos.x <= this._d.left + this.threshold;
-      case 'right': return pos.x >= this._d.width - this.threshold;
-      case 'top': return pos.y <= this._d.top + this.threshold;
-      case 'bottom': return pos.y >= this._d.height - this.threshold;
+      case 'left': return pos.x <= this._d.left + this.maxEdgeStart;
+      case 'right': return pos.x >= this._d.width - this.maxEdgeStart;
+      case 'top': return pos.y <= this._d.top + this.maxEdgeStart;
+      case 'bottom': return pos.y >= this._d.height - this.maxEdgeStart;
     }
   }
 
