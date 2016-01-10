@@ -316,9 +316,16 @@ export class NavController extends Ion {
    * @returns {Promise} Returns a promise, which resolves when the transition has completed
    */
   present(enteringView, opts={}) {
-    let rootNav = this.rootNav;
+    let nav = this.rootNav;
 
-    enteringView.setNav(rootNav);
+    if (nav._tabs) {
+      // TODO: must have until this goes in
+      // https://github.com/angular/angular/issues/5481
+      console.error('A parent <ion-nav> is required for ActionSheet/Alert/Modal');
+      return;
+    }
+
+    enteringView.setNav(nav);
 
     let resolve;
     let promise = new Promise(res => { resolve = res; });
@@ -339,7 +346,7 @@ export class NavController extends Ion {
     });
 
     // the active view is going to be the leaving one (if one exists)
-    let leavingView = rootNav.getActive() || new ViewController();
+    let leavingView = nav.getActive() || new ViewController();
     leavingView.shouldCache = (isBoolean(opts.cacheLeavingView) ? opts.cacheLeavingView : true);
     leavingView.shouldDestroy = !leavingView.shouldCache;
     if (leavingView.shouldDestroy) {
@@ -347,10 +354,10 @@ export class NavController extends Ion {
     }
 
     // add the view to the stack
-    rootNav._add(enteringView);
+    nav._add(enteringView);
 
     // start the transition
-    rootNav._transition(enteringView, leavingView, opts, resolve);
+    nav._transition(enteringView, leavingView, opts, resolve);
 
     return promise;
   }

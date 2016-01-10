@@ -1,4 +1,4 @@
-  import {App, Page, NavController} from 'ionic/ionic';
+  import {App, Page, NavController, Alert} from 'ionic/ionic';
 
 //
 // Tab 1
@@ -78,10 +78,25 @@ class Tab2 {
     </ion-navbar>
     <ion-content padding>
       <h2>Tab 3</h2>
+      <p>
+        <button (click)="presentAlert()">Present Alert</button>
+      </p>
     </ion-content>
     `
 })
-class Tab3 {}
+class Tab3 {
+  constructor(nav: NavController) {
+    this.nav = nav;
+  }
+
+  presentAlert() {
+    let alert = Alert.create({
+      title: 'Alert Title!',
+      buttons: ['Dismiss']
+    });
+    this.nav.present(alert);
+  }
+}
 
 
 @App({
