@@ -27,7 +27,7 @@ class E2EPage {
   doConfirm() {
     let alert = Alert.create();
     alert.setTitle('Confirm!');
-    alert.setMessage('Message text!!!');
+    alert.setMessage('Message <strong>text</strong>!!!');
     alert.addButton({
       text: 'Cancel',
       handler: () => {
@@ -37,7 +37,7 @@ class E2EPage {
       }
     });
     alert.addButton({
-      text: 'Ok',
+      text: 'Okay',
       handler: () => {
         console.log('Confirm Ok');
         this.testConfirmResult = 'Ok';

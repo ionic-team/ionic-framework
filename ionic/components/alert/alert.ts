@@ -196,10 +196,10 @@ export class Alert extends ViewController {
     '<div (click)="dismiss()" tappable disable-activated class="backdrop" role="presentation"></div>' +
     '<div class="alert-wrapper">' +
       '<div class="alert-head">' +
-        '<h2 id="{{hdrId}}" class="alert-title" *ngIf="d.title">{{d.title}}</h2>' +
-        '<h3 id="{{subHdrId}}" class="alert-sub-title" *ngIf="d.subTitle">{{d.subTitle}}</h3>' +
+        '<h2 id="{{hdrId}}" class="alert-title" *ngIf="d.title" [innerHTML]="d.title"></h2>' +
+        '<h3 id="{{subHdrId}}" class="alert-sub-title" *ngIf="d.subTitle" [innerHTML]="d.subTitle"></h3>' +
       '</div>' +
-      '<div id="{{msgId}}" class="alert-message" *ngIf="d.message">{{d.message}}</div>' +
+      '<div id="{{msgId}}" class="alert-message" *ngIf="d.message" [innerHTML]="d.message"></div>' +
       '<div *ngIf="d.inputs.length" [ngSwitch]="inputType">' +
 
         '<template ngSwitchWhen="radio">' +
