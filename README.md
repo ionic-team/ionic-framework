@@ -52,6 +52,9 @@ Once you have a release, use `js/ionic.js`, `js/ionic-angular.js`, and `css/ioni
 
 For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/` and `js/angular-ui-router/`.
 
+## Platform Support
+
+Ionic currently supports Android 4.1 and above, iOS 8 and above, and Windows 10. We continue to monitor market share and adjust our support based on worldwide usage.
 
 ## Demos
 
