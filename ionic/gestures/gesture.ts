@@ -1,4 +1,4 @@
-import * as util from '../util';
+import {defaults, extend} from '../util';
 import {Hammer} from './hammer';
 
 /**
@@ -8,8 +8,10 @@ import {Hammer} from './hammer';
  */
 
 export class Gesture {
+  public element: HTMLElement;
+
   constructor(element, opts = {}) {
-    util.defaults(opts, {
+    defaults(opts, {
       domEvents: true
     });
     this.element = element;
@@ -26,7 +28,7 @@ export class Gesture {
   }
 
   options(opts = {}) {
-    util.extend(this._options, opts);
+    extend(this._options, opts);
   }
 
   on(type, cb) {

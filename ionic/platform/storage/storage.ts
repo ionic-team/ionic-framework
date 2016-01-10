@@ -11,6 +11,8 @@
  * @private
 */
 export class Storage {
+  private _strategy: any = {};
+
   constructor(strategyCls: StorageEngine, options) {
     this._strategy = new strategyCls(options);
   }

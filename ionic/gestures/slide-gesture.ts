@@ -1,7 +1,10 @@
 import {DragGesture} from './drag-gesture';
-import * as util from '../util';
+import {clamp} from '../util';
+
 
 export class SlideGesture extends DragGesture {
+  public slide: any = null;
+
   constructor(element, opts = {}) {
     super(element, opts);
     this.element = element;
@@ -51,7 +54,7 @@ export class SlideGesture extends DragGesture {
   onDrag(ev) {
     if (!this.slide || !this.slide.started) return;
     this.slide.pos = ev.center[this.direction];
-    this.slide.distance = util.clamp(
+    this.slide.distance = clamp(
       this.slide.min,
       this.slide.pos - this.slide.pointerStartPos + this.slide.elementStartPos,
       this.slide.max

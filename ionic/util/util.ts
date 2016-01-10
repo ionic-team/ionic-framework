@@ -17,7 +17,7 @@ export function clamp(min, n, max) {
  * @param dst the destination
  * @param ... the param objects
  */
-export function extend(dst) {
+export function extend(dst: any) {
   return _baseExtend(dst, [].slice.call(arguments, 1), false);
 }
 
@@ -26,7 +26,7 @@ export function extend(dst) {
  * @param dst the destination
  * @param ... the param objects
  */
-export function merge(dst) {
+export function merge(dst: any) {
   return _baseExtend(dst, [].slice.call(arguments, 1), true);
 }
 

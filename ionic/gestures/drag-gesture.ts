@@ -1,10 +1,10 @@
 import {Gesture} from './gesture';
-import * as util from '../util';
+import {defaults} from '../util';
 
 
 export class DragGesture extends Gesture {
   constructor(element, opts = {}) {
-    util.defaults(opts, {});
+    defaults(opts, {});
     super(element, opts);
   }
 

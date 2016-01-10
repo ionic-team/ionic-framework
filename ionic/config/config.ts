@@ -94,10 +94,12 @@ import {isObject, isDefined, isFunction, isArray, extend} from '../util/util';
  *
 **/
 export class Config {
+  private _c: any = {};
+  private _s: any = {};
+  public platform: Platform;
 
   constructor(config) {
     this._s = config && isObject(config) && !isArray(config) ? config : {};
-    this._c = {}; // cached values
   }
 
  /**

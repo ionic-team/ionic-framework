@@ -22,14 +22,23 @@ import {ready, windowDimensions, flushDimensionCache} from '../util/dom';
  * @demo /docs/v2/demos/platform/
  */
 export class Platform {
+  private _platforms: Array<string>;
+  private _versions: any={};
+  private _dir: string;
+  private _lang: string;
+  private _url: string;
+  private _qs: string;
+  private _ua: string;
+  private _bPlt: string;
+  private _onResizes: Array<any>=[];
+  private _readyPromise: any;
+  private _readyResolve: any;
+  private _engineReady: any;
+  private _resizeTimer: any;
+  public platformOverride: string;
 
   constructor(platforms=[]) {
     this._platforms = platforms;
-    this._versions = {};
-    this._dir = null;
-    this._lang = null;
-    this._onResizes = [];
-
     this._readyPromise = new Promise(res => { this._readyResolve = res; } );
   }
 
@@ -112,7 +121,6 @@ export class Platform {
     // get all the platforms that have a valid parsed version
     return this._versions;
   }
-
 
   /**
    * @private
@@ -578,13 +586,17 @@ function insertSuperset(platformNode) {
 
 
 class PlatformNode {
+  private c: any;
+  private _parent: PlatformNode;
+  private _child: PlatformNode;
+  public isEngine: boolean;
 
   constructor(platformName) {
     this.c = Platform.get(platformName);
     this.isEngine = this.c.isEngine;
   }
 
-  name() {
+  name(): string {
     return this.c.name;
   }
 
@@ -614,7 +626,7 @@ class PlatformNode {
     return this._child;
   }
 
-  isMatch(p) {
+  isMatch(p): boolean {
     if (p.platformOverride && !this.isEngine) {
       return (p.platformOverride === this.c.name);
 
@@ -685,7 +697,6 @@ class PlatformNode {
   }
 
 }
-
 
 let platformRegistry = {};
 let platformDefault = null;

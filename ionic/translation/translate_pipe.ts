@@ -16,6 +16,8 @@ import {Translate} from './translate';
 @Pipe({name: 'translate'})
 @Injectable()
 export class TranslatePipe implements PipeTransform {
+  private translate :any = {};
+
   constructor(translate: Translate) {
     this.translate = translate;
   }

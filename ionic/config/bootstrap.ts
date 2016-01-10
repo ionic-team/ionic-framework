@@ -13,7 +13,6 @@ import {Translate} from '../translation/translate';
 import {ClickBlock} from '../util/click-block';
 import {FeatureDetect} from '../util/feature-detect';
 import {TapClick} from '../components/tap-click/tap-click';
-import {ClickBlock} from '../util/click-block';
 import {ready, closest} from '../util/dom';
 
 /**

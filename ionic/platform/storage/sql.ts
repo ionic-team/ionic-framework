@@ -1,8 +1,9 @@
 import {StorageEngine} from './storage';
 
-import * as util from '../../util';
+import {defaults, extend} from '../../util';
 
-const DB_NAME = '__ionicstorage';
+const DB_NAME :string = '__ionicstorage';
+const win :any = window;
 
 /**
  * SqlStorage uses SQLite or WebSQL (development only!) to store data in a
@@ -35,31 +36,34 @@ const DB_NAME = '__ionicstorage';
  *
  */
 export class SqlStorage extends StorageEngine {
-  static BACKUP_LOCAL =  2
-  static BACKUP_LIBRARY = 1
-  static BACKUP_DOCUMENTS = 0
+  static BACKUP_LOCAL =  2;
+  static BACKUP_LIBRARY = 1;
+  static BACKUP_DOCUMENTS = 0;
+
+  private _db: any;
 
   constructor(options={}) {
     super();
 
-    let dbOptions = util.defaults(options, {
+    let dbOptions = defaults(options, {
       name: DB_NAME,
       backupFlag: SqlStorage.BACKUP_LOCAL,
       existingDatabase: false
     });
 
-    if(window.sqlitePlugin) {
+    if (win.sqlitePlugin) {
       let location = this._getBackupLocation(dbOptions.backupFlag);
 
-      this._db = window.sqlitePlugin.openDatabase(util.extend({
+      this._db = win.sqlitePlugin.openDatabase(extend({
         name: dbOptions.name,
         location: location,
         createFromLocation: dbOptions.existingDatabase ? 1 : 0
       }, dbOptions));
+
     } else {
       console.warn('Storage: SQLite plugin not installed, falling back to WebSQL. Make sure to install cordova-sqlite-storage in production!');
 
-      this._db = window.openDatabase(dbOptions.name, '1.0', 'database', 5 * 1024 * 1024);
+      this._db = win.openDatabase(dbOptions.name, '1.0', 'database', 5 * 1024 * 1024);
     }
     this._tryInit();
   }
@@ -131,7 +135,7 @@ export class SqlStorage extends StorageEngine {
 
         this._db.transaction(tx => {
           tx.executeSql("select key, value from kv where key = ? limit 1", [key], (tx, res) => {
-            if(res.rows.length > 0) {
+            if (res.rows.length > 0) {
               let item = res.rows.item(0);
               resolve(item.value);
             }

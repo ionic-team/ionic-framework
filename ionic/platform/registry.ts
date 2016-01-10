@@ -1,6 +1,9 @@
 import {Platform} from './platform';
 import {windowLoad} from '../util/dom';
 
+const win: any = window;
+const doc: any = document;
+
 
 Platform.register({
   name: 'core',
@@ -156,16 +159,16 @@ Platform.register({
   methods: {
     ready: function(resolve) {
       function isReady() {
-        document.removeEventListener('deviceready', isReady);
+        doc.removeEventListener('deviceready', isReady);
         resolve();
       }
       windowLoad(function() {
-        document.addEventListener('deviceready', isReady);
+        doc.addEventListener('deviceready', isReady);
       });
     }
   },
   isMatch() {
-    return !!(window.cordova || window.PhoneGap || window.phonegap);
+    return !!(win.cordova || win.PhoneGap || win.phonegap);
   }
 });
 
