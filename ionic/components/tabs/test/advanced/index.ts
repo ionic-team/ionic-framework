@@ -1,6 +1,7 @@
+import {ViewChild} from 'angular2/core';
 import {RouteConfig, Location} from 'angular2/router';
 
-import {App, Page, NavController, Modal, ViewController} from 'ionic/ionic';
+import {App, Page, NavController, Modal, ViewController, Tabs} from 'ionic/ionic';
 
 
 @Page({
@@ -57,20 +58,30 @@ class ChatPage {
   templateUrl: './tabs.html'
 })
 class TabsPage {
+  @ViewChild(Tabs) tabs: Tabs;
+
   constructor(private nav: NavController) {
-    this.tab1Root = Tab1Page1
-    this.tab2Root = Tab2Page1
-    this.tab3Root = Tab3Page1
+    this.tab1Root = Tab1Page1;
+    this.tab2Root = Tab2Page1;
+    this.tab3Root = Tab3Page1;
+  }
+
+  ngAfterViewInit() {
+    this.tabs.change.subscribe(tab => {
+      console.log('tabs.change.subscribe', tab.index);
+    });
+  }
+
+  onTabChange() {
+    // wired up through the template
+    // <ion-tabs (change)="onTabChange()">
+    console.log('onTabChange');
   }
 
   chat() {
     console.log('Chat clicked!');
     let modal = Modal.create(ChatPage);
     this.nav.present(modal);
-  }
-
-  onTabChange() {
-    console.log('onTabChange');
   }
 }
 
@@ -86,17 +97,23 @@ class TabsPage {
     '<ion-content padding>' +
       '<p><button id="goToTab1Page2" (click)="push()">Go to Tab 1, Page 2</button></p>' +
       '<p><button (click)="logout()">Logout</button></p>' +
+      '<p><button (click)="favoritesTab()">Favorites Tab</button></p>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
       '<f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>' +
     '</ion-content>'
 })
 class Tab1Page1 {
-  constructor(nav: NavController) {
+  constructor(nav: NavController, tabs: Tabs) {
     this.nav = nav;
+    this.tabs = tabs;
   }
 
   push() {
     this.nav.push(Tab1Page2)
+  }
+
+  favoritesTab() {
+    this.tabs.select(1);
   }
 
   logout() {
