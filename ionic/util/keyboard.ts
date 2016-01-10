@@ -23,11 +23,8 @@ import {hasFocusedTextInput, raf, rafFrames} from './dom';
 @Injectable()
 export class Keyboard {
 
-  constructor(config: Config, form: Form, zone: NgZone) {
-    this.form = form;
-    this.zone = zone;
-
-    zone.runOutsideAngular(() => {
+  constructor(config: Config, private _form: Form, private _zone: NgZone) {
+    _zone.runOutsideAngular(() => {
       this.focusOutline(config.get('focusOutline'), document);
     });
   }
@@ -85,13 +82,13 @@ export class Keyboard {
       promise = new Promise(resolve => { callback = resolve; });
     }
 
-    self.zone.runOutsideAngular(() => {
+    self._zone.runOutsideAngular(() => {
 
       function checkKeyboard() {
         console.debug('keyboard isOpen', self.isOpen(), checks);
         if (!self.isOpen() || checks > 100) {
           rafFrames(30, () => {
-            self.zone.run(() => {
+            self._zone.run(() => {
               console.debug('keyboard closed');
               callback();
             });
@@ -118,7 +115,7 @@ export class Keyboard {
     raf(() => {
       if (hasFocusedTextInput()) {
         // only focus out when a text input has focus
-        this.form.focusOut();
+        this._form.focusOut();
       }
     });
   }
@@ -172,7 +169,7 @@ export class Keyboard {
     function enableKeyInput() {
       cssClass();
 
-      self.zone.runOutsideAngular(() => {
+      self._zone.runOutsideAngular(() => {
         document.removeEventListener('mousedown', pointerDown);
         document.removeEventListener('touchstart', pointerDown);
 

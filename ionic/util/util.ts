@@ -51,14 +51,14 @@ function _baseExtend(dst, objs, deep) {
   return dst;
 }
 
-export function debounce(func, wait, immediate) {
- var timeout, args, context, timestamp, result;
+export function debounce(func: any, wait: number, immediate: boolean) {
+ var timeout, args, context, timestamp: number, result;
  return function() {
    context = this;
    args = arguments;
-   timestamp = new Date();
-   var later = function() {
-     var last = (new Date()) - timestamp;
+   timestamp = Date.now();
+   var later: any = function() {
+     var last: any = Date.now() - timestamp;
      if (last < wait) {
        timeout = setTimeout(later, wait - last);
      } else {

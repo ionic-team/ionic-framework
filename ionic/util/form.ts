@@ -14,12 +14,12 @@ import {Injectable} from 'angular2/core';
  */
  @Injectable()
 export class Form {
+  private _blur: HTMLElement;
+  private _focused: any = null;
+  private _ids: number = -1;
+  private _inputs: Array<any> = [];
 
   constructor() {
-    this._inputs = [];
-    this._ids = -1;
-    this._focused = null;
-
     this.focusCtrl(document);
   }
 
@@ -51,7 +51,10 @@ export class Form {
 
   focusOut() {
     console.debug('focusOut');
-    document.activeElement && document.activeElement.blur();
+    let activeElement: any = document.activeElement;
+    if (activeElement) {
+      activeElement.blur();
+    }
     this._blur.focus();
   }
 
