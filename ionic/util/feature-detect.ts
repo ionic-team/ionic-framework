@@ -1,8 +1,8 @@
 
 export class FeatureDetect {
+  private _results: any = {};
 
   run(window, document) {
-    this._results = {};
     for (let name in featureDetects) {
       this._results[name] = featureDetects[name](window, document, document.body);
     }

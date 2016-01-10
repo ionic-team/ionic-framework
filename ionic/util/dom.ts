@@ -1,7 +1,11 @@
 
+let win: any = window;
+let doc: any = document;
+let docEle: any = doc.documentElement;
+
 // requestAnimationFrame is polyfilled for old Android
 // within the web-animations polyfill
-export const raf = window.requestAnimationFrame;
+export const raf = win.requestAnimationFrame;
 
 export function rafFrames(framesToWait, callback) {
   framesToWait = Math.ceil(framesToWait);
@@ -16,14 +20,23 @@ export function rafFrames(framesToWait, callback) {
   }
 }
 
-export let CSS = {};
+export let CSS: {
+  animationStart?: string,
+  animationEnd?: string,
+  transform?: string,
+  transition?: string,
+  transitionDuration?: string,
+  transitionStart?: string,
+  transitionEnd?: string,
+} = {};
+
 (function() {
   // transform
   var i, keys = ['webkitTransform', 'transform', '-webkit-transform', 'webkit-transform',
                  '-moz-transform', 'moz-transform', 'MozTransform', 'mozTransform', 'msTransform'];
 
   for (i = 0; i < keys.length; i++) {
-    if (document.documentElement.style[keys[i]] !== undefined) {
+    if (docEle.style[keys[i]] !== undefined) {
       CSS.transform = keys[i];
       break;
     }
@@ -32,7 +45,7 @@ export let CSS = {};
   // transition
   keys = ['webkitTransition', 'mozTransition', 'msTransition', 'transition'];
   for (i = 0; i < keys.length; i++) {
-    if (document.documentElement.style[keys[i]] !== undefined) {
+    if (docEle.style[keys[i]] !== undefined) {
       CSS.transition = keys[i];
       break;
     }
@@ -41,8 +54,6 @@ export let CSS = {};
   // The only prefix we care about is webkit for transitions.
   var isWebkit = CSS.transition.indexOf('webkit') > -1;
 
-  CSS.prefix = isWebkit ? '-webkit-' : '';
-
   // transition duration
   CSS.transitionDuration = (isWebkit ? '-webkit-' : '') + 'transition-duration';
 
@@ -50,29 +61,27 @@ export let CSS = {};
   CSS.transitionEnd = (isWebkit ? 'webkitTransitionEnd ' : '') + 'transitionend';
 })();
 
-if (window.onanimationend === undefined && window.onwebkitanimationend !== undefined) {
-  CSS.animation = 'WebkitAnimation';
+if (win.onanimationend === undefined && win.onwebkitanimationend !== undefined) {
   CSS.animationStart = 'webkitAnimationStart animationstart';
   CSS.animationEnd = 'webkitAnimationEnd animationend';
 } else {
-  CSS.animation = 'animation';
   CSS.animationStart = 'animationstart';
   CSS.animationEnd = 'animationend';
 }
 
-export function transitionEnd(el:Element) {
+export function transitionEnd(el: HTMLElement) {
   return cssPromise(el, CSS.transitionEnd);
 }
 
-export function animationStart(el:Element, animationName) {
+export function animationStart(el: HTMLElement, animationName: string) {
   return cssPromise(el, CSS.animationStart, animationName);
 }
 
-export function animationEnd(el:Element, animationName) {
+export function animationEnd(el: HTMLElement, animationName: string) {
   return cssPromise(el, CSS.animationEnd, animationName);
 }
 
-function cssPromise(el:Element, eventNames, animationName) {
+function cssPromise(el: HTMLElement, eventNames: string, animationName?: string) {
   return new Promise(resolve => {
     eventNames.split(' ').forEach(eventName => {
       el.addEventListener(eventName, onEvent);
@@ -106,18 +115,18 @@ export function ready(callback) {
     promise = new Promise(resolve => { callback = resolve; });
   }
 
-  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  if (doc.readyState === 'complete' || doc.readyState === 'interactive') {
     callback();
 
   } else {
     function completed() {
-      document.removeEventListener('DOMContentLoaded', completed, false);
-      window.removeEventListener('load', completed, false);
+      doc.removeEventListener('DOMContentLoaded', completed, false);
+      win.removeEventListener('load', completed, false);
       callback();
     }
 
-    document.addEventListener('DOMContentLoaded', completed, false);
-    window.addEventListener('load', completed, false);
+    doc.addEventListener('DOMContentLoaded', completed, false);
+    win.addEventListener('load', completed, false);
   }
 
   return promise;
@@ -131,16 +140,16 @@ export function windowLoad(callback) {
     promise = new Promise(resolve => { callback = resolve; });
   }
 
-  if (document.readyState === 'complete') {
+  if (doc.readyState === 'complete') {
     callback();
 
   } else {
     function completed() {
-      window.removeEventListener('load', completed, false);
+      win.removeEventListener('load', completed, false);
       callback();
     }
 
-    window.addEventListener('load', completed, false);
+    win.addEventListener('load', completed, false);
   }
 
   return promise;
@@ -167,7 +176,7 @@ export function hasPointerMoved(threshold, startCoord, endCoord) {
 }
 
 export function isActive(ele) {
-  return !!(ele && (document.activeElement === ele));
+  return !!(ele && (doc.activeElement === ele));
 }
 
 export function hasFocus(ele) {
@@ -182,17 +191,19 @@ export function isTextInput(ele) {
 }
 
 export function hasFocusedTextInput() {
-  let ele = document.activeElement;
+  let ele = doc.activeElement;
   if (isTextInput(ele)) {
     return (ele.parentElement.querySelector(':focus') === ele);
   }
   return false;
 }
 
-let matchesFn;
-['matches','webkitMatchesSelector','mozMatchesSelector','msMatchesSelector'].some(fn => {
-  if (typeof document.documentElement[fn] == 'function') {
+let matchesFn: string;
+let matchesMethods: Array<string> = ['matches','webkitMatchesSelector','mozMatchesSelector','msMatchesSelector'];
+matchesMethods.some((fn: string) => {
+  if (typeof docEle[fn] == 'function') {
     matchesFn = fn;
+    return true;
   }
 });
 
@@ -256,10 +267,10 @@ export function getDimensions(ion, ele) {
 export function windowDimensions() {
   if (!dimensionCache.win) {
     // make sure we got good values before caching
-    if (window.innerWidth && window.innerHeight) {
+    if (win.innerWidth && win.innerHeight) {
       dimensionCache.win = {
-        width: window.innerWidth,
-        height: window.innerHeight
+        width: win.innerWidth,
+        height: win.innerHeight
       };
     } else {
       // do not cache bad values
@@ -273,7 +284,7 @@ export function flushDimensionCache() {
   dimensionCache = {};
 }
 
-let dimensionCache = {};
+let dimensionCache:any = {};
 let dimensionIds = 0;
 
 function isStaticPositioned(element) {
@@ -285,11 +296,11 @@ function isStaticPositioned(element) {
  * @param element
  */
 export function parentOffsetEl(element) {
-  var offsetParent = element.offsetParent || document;
-  while (offsetParent && offsetParent !== document && isStaticPositioned(offsetParent)) {
+  var offsetParent = element.offsetParent || doc;
+  while (offsetParent && offsetParent !== doc && isStaticPositioned(offsetParent)) {
     offsetParent = offsetParent.offsetParent;
   }
-  return offsetParent || document;
+  return offsetParent || doc;
 };
 
 /**
@@ -302,7 +313,7 @@ export function position(element) {
   var elBCR = offset(element);
   var offsetParentBCR = { top: 0, left: 0 };
   var offsetParentEl = parentOffsetEl(element);
-  if (offsetParentEl != document) {
+  if (offsetParentEl != doc) {
     offsetParentBCR = offset(offsetParentEl);
     offsetParentBCR.top += offsetParentEl.clientTop - offsetParentEl.scrollTop;
     offsetParentBCR.left += offsetParentEl.clientLeft - offsetParentEl.scrollLeft;
@@ -318,7 +329,7 @@ export function position(element) {
 }
 
 /**
-* Get the current coordinates of the element, relative to the document.
+* Get the current coordinates of the element, relative to the doc.
 * Read-only equivalent of [jQuery's offset function](http://api.jquery.com/offset/).
 * @param {element} element The element to get the offset of.
 * @returns {object} Returns an object containing the properties top, left, width and height.
@@ -328,7 +339,7 @@ export function offset(element) {
  return {
    width: boundingClientRect.width || element.offsetWidth,
    height: boundingClientRect.height || element.offsetHeight,
-   top: boundingClientRect.top + (window.pageYOffset || document.documentElement.scrollTop),
-   left: boundingClientRect.left + (window.pageXOffset || document.documentElement.scrollLeft)
+   top: boundingClientRect.top + (win.pageYOffset || docEle.scrollTop),
+   left: boundingClientRect.left + (win.pageXOffset || docEle.scrollLeft)
  };
 }

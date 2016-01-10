@@ -1,5 +1,3 @@
-import {Injectable} from 'angular2/core';
-
 /**
  * Events is a pub/sub style event system for sending and responding to application-level
  * events across your app.
@@ -13,16 +11,13 @@ import {Injectable} from 'angular2/core';
  *
  * // second page (listen for the user created event)
  * events.subscribe('user:created', (user) => {
- *   console.log('Welcome', user); 
+ *   console.log('Welcome', user);
  * });
  *
  * ```
  */
-@Injectable()
 export class Events {
-  constructor() {
-    this.channels = [];
-  }
+  private _channels: Array<any>;
 
   /**
    * Subscribe to an event topic. Events that get posted to that topic
@@ -32,11 +27,11 @@ export class Events {
    * @param handler the event handler
    */
   subscribe(topic, ...handlers) {
-    if(!this.channels[topic]) {
-      this.channels[topic] = [];
+    if (!this._channels[topic]) {
+      this._channels[topic] = [];
     }
     handlers.forEach((handler) => {
-      this.channels[topic].push(handler);
+      this._channels[topic].push(handler);
     });
   }
 
@@ -50,22 +45,22 @@ export class Events {
    * @return true if a handler was removed
    */
   unsubscribe(topic, handler) {
-    let t = this.channels[topic];
-    if(!t) {
+    let t = this._channels[topic];
+    if (!t) {
       // Wasn't found, wasn't removed
       return false;
     }
 
-    if(!handler) {
+    if (!handler) {
       // Remove all handlers for this topic
-      delete this.channels[topic];
+      delete this._channels[topic];
       return true;
     }
 
     // We need to find and remove a specific handler
     let i = t.indexOf(handler);
 
-    if(i < 0) {
+    if (i < 0) {
       // Wasn't found, wasn't removed
       return false;
     }
@@ -73,8 +68,8 @@ export class Events {
     t.splice(i, 1);
 
     // If the channel is empty now, remove it from the channel map
-    if(!t.length) {
-      delete this.channels[topic];
+    if (!t.length) {
+      delete this._channels[topic];
     }
 
     return true;
@@ -87,8 +82,8 @@ export class Events {
    * @param eventData the data to send as the event
    */
   publish(topic, ...args) {
-    var t = this.channels[topic];
-    if(!t) {
+    var t = this._channels[topic];
+    if (!t) {
       return null;
     }
 

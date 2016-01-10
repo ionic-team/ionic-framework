@@ -7,6 +7,7 @@ let isShowing = false;
  * @private
  */
 export class ClickBlock {
+  private _enabled: boolean = false;
 
   enable() {
     cbEle = document.createElement('click-block');
