@@ -12,13 +12,26 @@ export function clamp(min, n, max) {
   return Math.max(min, Math.min(n, max));
 }
 
+// polyfill for Object.assign
+var _assign: any;
+if (typeof Object.assign !== 'function') {
+  // use the old-school shallow extend method
+  _assign = _baseExtend;
+} else {
+  // use the built in ES6 Object.assign method
+  _assign = Object.assign;
+}
+
 /**
- * Extend the destination with an arbitrary number of other objects.
- * @param dst the destination
- * @param ... the param objects
+ * The assign() method is used to copy the values of all enumerable own
+ * properties from one or more source objects to a target object. It will
+ * return the target object. When available, this method will use
+ * `Object.assign()` under-the-hood.
+ * @param target  The target object
+ * @param source  The source object
  */
-export function extend(dst: any, ...args: any[]) {
-  return _baseExtend(dst, [].slice.call(arguments, 1), false);
+export function assign(target: any, source: any): any {
+  return _assign(target, source);
 }
 
 /**
@@ -30,7 +43,7 @@ export function merge(dst: any, ...args: any[]) {
   return _baseExtend(dst, [].slice.call(arguments, 1), true);
 }
 
-function _baseExtend(dst, objs, deep) {
+function _baseExtend(dst, objs, deep = false) {
   for (var i = 0, ii = objs.length; i < ii; ++i) {
     var obj = objs[i];
     if (!obj || !isObject(obj) && !isFunction(obj)) continue;

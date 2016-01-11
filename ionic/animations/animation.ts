@@ -1,5 +1,5 @@
 import {CSS, rafFrames} from '../util/dom';
-import {extend} from '../util/util';
+import {assign} from '../util/util';
 
 const doc: any = document;
 
@@ -53,7 +53,7 @@ export class Animation {
   constructor(ele, opts={}) {
     this.reset();
 
-    this._opts = extend({
+    this._opts = assign({
       renderDelay: 16
     }, opts);
 
@@ -516,7 +516,7 @@ export class Animation {
 
     function copy(dest, src) {
       // undo what stage() may have already done
-      extend(dest, src);
+      assign(dest, src);
 
       dest._isFinished = dest._isStaged = dest.isProgress = false;
       dest._chld = [];

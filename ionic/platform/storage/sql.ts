@@ -1,6 +1,6 @@
 import {StorageEngine} from './storage';
 
-import {defaults, extend} from '../../util';
+import {defaults, assign} from '../../util/util';
 
 const DB_NAME :string = '__ionicstorage';
 const win :any = window;
@@ -54,7 +54,7 @@ export class SqlStorage extends StorageEngine {
     if (win.sqlitePlugin) {
       let location = this._getBackupLocation(dbOptions.backupFlag);
 
-      this._db = win.sqlitePlugin.openDatabase(extend({
+      this._db = win.sqlitePlugin.openDatabase(assign({
         name: dbOptions.name,
         location: location,
         createFromLocation: dbOptions.existingDatabase ? 1 : 0

@@ -7,7 +7,7 @@
 */
 
 import {Platform} from '../platform/platform';
-import {isObject, isDefined, isFunction, isArray, extend} from '../util/util';
+import {isObject, isDefined, isFunction, isArray} from '../util/util';
 
 /**
  * @name Config

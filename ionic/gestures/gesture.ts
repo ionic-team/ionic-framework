@@ -1,4 +1,4 @@
-import {defaults, extend} from '../util';
+import {defaults, assign} from '../util';
 import {Hammer} from './hammer';
 
 /**
@@ -28,7 +28,7 @@ export class Gesture {
   }
 
   options(opts = {}) {
-    extend(this._options, opts);
+    assign(this._options, opts);
   }
 
   on(type, cb) {

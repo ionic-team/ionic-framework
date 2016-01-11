@@ -30,7 +30,7 @@ export class DragGesture extends Gesture {
       this.dragging = false;
     });
 
-    this.hammertime.get('pan').set(this._options);
+    //this.hammertime.get('pan').set(this._options);
   }
 
   onDrag() {}
