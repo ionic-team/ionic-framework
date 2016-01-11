@@ -1,5 +1,5 @@
-import {App, Page, IonicApp, Config, Platform} from 'ionic/ionic';
-import {Modal, ActionSheet, NavController, NavParams, Animation} from 'ionic/ionic';
+import {App, Page, IonicApp, Config, Platform, ViewController} from 'ionic/ionic';
+import {Modal, NavController, NavParams, Animation} from 'ionic/ionic';
 
 
 @App({
@@ -16,23 +16,24 @@ class ApiDemoApp {
   templateUrl: 'main.html'
 })
 export class ModalFirstPage {
-  constructor(modal: Modal) {
-    this.modal = modal;
+  constructor(nav: NavController) {
+    this.nav = nav;
     this.myParam = '';
   }
 
   openBasicModal() {
-    this.modal.open(ModalContentPage);
+    let myModal = Modal.create(ModalContentPage);
+    this.nav.present(myModal);
   }
   openModalWithParams() {
-    this.modal.open(ModalContentPage, { 'myParam': this.myParam });
+    let myModal = Modal.create(ModalContentPage, { 'myParam': this.myParam });
+    this.nav.present(myModal);
   }
   openCustomAnimationModal() {
-    this.modal.open(ModalContentPage, {}, {
-      enterAnimation: 'my-fade-in',
-      leaveAnimation: 'my-fade-out',
-      handle: 'my-awesome-modal'
+    let myModal = Modal.create(ModalContentPage, {
+      animation: 'my-fade-in',
     });
+    this.nav.present(myModal);
   }
 }
 
@@ -42,46 +43,16 @@ export class ModalFirstPage {
 export class ModalContentPage {
     constructor(
         nav: NavController,
-        modal: Modal,
-        actionSheet: ActionSheet,
-        params: NavParams
+        params: NavParams,
+        viewCtrl: ViewController
     ) {
         this.nav = nav;
-        this.modal = modal;
-        this.actionSheet = actionSheet;
+        this.viewCtrl = viewCtrl;
         this.myParam = params.get('myParam');
     }
 
     closeModal() {
-      let modal = this.modal.get();
-      if (modal) {
-        modal.close();
-      }
-    }
-
-    openActionSheet() {
-        this.actionSheet.open({
-            buttons: [
-                { text: 'Share This' },
-                { text: 'Move' }
-            ],
-            destructiveText: 'Delete',
-            titleText: 'Modify your album',
-            cancelText: 'Cancel',
-            cancel: function() {
-                console.log('Canceled');
-            },
-            destructiveButtonClicked: () => {
-                console.log('Destructive clicked');
-            },
-            buttonClicked: function(index) {
-                console.log('Button clicked', index);
-                if (index == 1) { return false; }
-                return true;
-            }
-        }).then(actionSheetRef => {
-            this.actionSheetRef = actionSheetRef;
-        });
+      this.viewCtrl.dismiss();
     }
 }
 
