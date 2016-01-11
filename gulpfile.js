@@ -340,7 +340,7 @@ gulp.task('sass', function() {
 });
 
 gulp.task('fonts', function() {
-  return gulp.src(['ionic/**/*.ttf', 'ionic/**/*.woff'])
+  return gulp.src(['ionic/**/*.ttf', 'ionic/**/*.woff', 'ionic/**/*.woff2'])
     .pipe(gulp.dest('dist'))
     .pipe(gulp.dest('dist/bundles'));
 });
@@ -585,7 +585,7 @@ function buildDemoBundle(opts, done) {
 gulp.task('tooling', function(){
   gulp.src('*tooling/**/*')
     .pipe(gulp.dest('dist'));
-    
+
   watch('tooling/**/*', function(){
     gulp.src('*tooling/**/*')
       .pipe(gulp.dest('dist'));

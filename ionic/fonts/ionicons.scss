@@ -10,7 +10,8 @@ $ionicons-version: "3.0.0" !default;
 
 @font-face {
  font-family: "Ionicons";
- src: url("#{$ionicons-font-path}/ionicons.woff?v=#{$ionicons-version}") format("woff"),
+ src: url("#{$ionicons-font-path}/ionicons.woff2?v=#{$ionicons-version}") format("woff2"),
+      url("#{$ionicons-font-path}/ionicons.woff?v=#{$ionicons-version}") format("woff"),
       url("#{$ionicons-font-path}/ionicons.ttf?v=#{$ionicons-version}") format("truetype");
  font-weight: normal;
  font-style: normal;
