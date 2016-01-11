@@ -44,7 +44,7 @@ export class Gesture {
   }
 
   listen() {
-    this.hammertime = Hammer(this.element, this._options);
+    this.hammertime = new Hammer(this.element, this._options);
   }
 
   unlisten() {

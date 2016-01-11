@@ -9,7 +9,8 @@ export class MenuContentGesture extends SlideEdgeGesture {
     super(targetEl, util.extend({
       direction: (menu.side === 'left' || menu.side === 'right') ? 'x' : 'y',
       edge: menu.side,
-      threshold: menu.threshold || 75
+      threshold: 0,
+      maxEdgeStart: menu.maxEdgeStart || 75
     }, options));
 
     this.menu = menu;
@@ -53,7 +54,7 @@ export class MenuContentGesture extends SlideEdgeGesture {
 export class TargetGesture extends MenuContentGesture {
   constructor(menu: Menu) {
     super(menu, menu.getNativeElement(), {
-      threshold: 0
+      maxEdgeStart: 0
     });
   }
 }

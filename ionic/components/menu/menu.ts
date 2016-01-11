@@ -96,7 +96,7 @@ import * as gestures from  './menu-gestures';
     'id',
     'side',
     'type',
-    'threshold'
+    'maxEdgeStart'
   ],
   defaultInputs: {
     'side': 'left',
