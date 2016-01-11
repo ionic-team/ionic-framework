@@ -16,7 +16,7 @@ class E2EApp {
       'ios-alert',
       'ios-alert-outline',
       'md-alert',
-      'apple-logo'
+      'logo-apple'
     ];
     this.btnIcon = this.icons[0];
   }

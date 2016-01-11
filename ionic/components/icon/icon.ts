@@ -27,7 +27,7 @@ import {Config} from '../../config/config';
  *
  * <!-- always use the same icon, no matter what the mode -->
  * <ion-icon name="ios-clock"></ion-icon>
- * <ion-icon name="twitter-logo"></ion-icon>
+ * <ion-icon name="logo-twitter"></ion-icon>
  * ```
  *
  * @property {string} [name] - Use the appropriate icon for the mode.
@@ -82,7 +82,7 @@ export class Icon {
    * @private
    */
   set name(val) {
-    if (!(/^md-|^ios-|-logo$/.test(val))) {
+    if (!(/^md-|^ios-|^logo-/.test(val))) {
       // this does not have one of the defaults
       // so lets auto add in the mode prefix for them
       val = this.mode + '-' + val;
