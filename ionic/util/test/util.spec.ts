@@ -9,6 +9,19 @@ export function run() {
       expect(obj).toEqual({ a: '1', b: '2', c: '0' });
     });
 
+    it('should extend complex', () => {
+      expect(util.assign(
+        { a: '0', b: '0' },
+        { b: '1', c: '1' },
+        { c: '2', d: '2' }
+      )).toEqual({
+        a: '0',
+        b: '1',
+        c: '2',
+        d: '2'
+      });
+    });
+
   });
 
   describe('defaults', function() {
