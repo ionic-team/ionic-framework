@@ -28,9 +28,9 @@ export function ionicProviders(args={}) {
     config = new Config(config);
   }
 
-  platform.url(window.location.href);
-  platform.userAgent(window.navigator.userAgent);
-  platform.navigatorPlatform(window.navigator.platform);
+  platform.setUrl(window.location.href);
+  platform.setUserAgent(window.navigator.userAgent);
+  platform.setNavigatorPlatform(window.navigator.platform);
   platform.load();
   config.setPlatform(platform);
 

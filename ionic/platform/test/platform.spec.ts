@@ -4,7 +4,7 @@ export function run() {
 
   it('should set core as the fallback', () => {
     let platform = new Platform();
-    platform.userAgent('idk');
+    platform.setUserAgent('idk');
     platform.load();
 
     expect(platform.is('android')).toEqual(false);
@@ -14,7 +14,7 @@ export function run() {
 
   it('should set android via platformOverride, despite ios user agent', () => {
     let platform = new Platform();
-    platform.userAgent(IPAD_UA);
+    platform.setUserAgent(IPAD_UA);
     platform.load('android');
 
     expect(platform.is('android')).toEqual(true);
@@ -23,21 +23,21 @@ export function run() {
 
   it('should get case insensitive querystring value', () => {
     let platform = new Platform();
-    platform.url('/?KEY=value');
+    platform.setUrl('/?KEY=value');
 
     expect(platform.query('key')).toEqual('value');
   });
 
   it('should get querystring value', () => {
     let platform = new Platform();
-    platform.url('/?key=value');
+    platform.setUrl('/?key=value');
 
     expect(platform.query('key')).toEqual('value');
   });
 
   it('should set ios via platformOverride, despite android querystring', () => {
     let platform = new Platform();
-    platform.url('/?ionicplatform=android');
+    platform.setUrl('/?ionicplatform=android');
     platform.load('ios');
 
     expect(platform.is('android')).toEqual(false);
@@ -62,7 +62,7 @@ export function run() {
 
   it('should set ios via querystring', () => {
     let platform = new Platform();
-    platform.url('/?ionicplatform=ios');
+    platform.setUrl('/?ionicplatform=ios');
     platform.load();
 
     expect(platform.is('mobile')).toEqual(true);
@@ -73,8 +73,8 @@ export function run() {
 
   it('should set ios via querystring, even with android user agent', () => {
     let platform = new Platform();
-    platform.url('/?ionicplatform=ios');
-    platform.userAgent(ANDROID_UA);
+    platform.setUrl('/?ionicplatform=ios');
+    platform.setUserAgent(ANDROID_UA);
     platform.load();
 
     expect(platform.is('android')).toEqual(false);
@@ -83,7 +83,7 @@ export function run() {
 
   it('should set android via querystring', () => {
     let platform = new Platform();
-    platform.url('/?ionicplatform=android');
+    platform.setUrl('/?ionicplatform=android');
     platform.load();
 
     expect(platform.is('android')).toEqual(true);
@@ -92,8 +92,8 @@ export function run() {
 
   it('should set android via querystring, even with ios user agent', () => {
     let platform = new Platform();
-    platform.url('/?ionicplatform=android');
-    platform.userAgent(IPHONE_UA);
+    platform.setUrl('/?ionicplatform=android');
+    platform.setUserAgent(IPHONE_UA);
     platform.load();
 
     expect(platform.is('android')).toEqual(true);
@@ -102,7 +102,7 @@ export function run() {
 
   it('should set android via user agent', () => {
     let platform = new Platform();
-    platform.userAgent(ANDROID_UA);
+    platform.setUserAgent(ANDROID_UA);
     platform.load();
 
     expect(platform.is('mobile')).toEqual(true);
@@ -112,7 +112,7 @@ export function run() {
 
   it('should set iphone via user agent', () => {
     let platform = new Platform();
-    platform.userAgent(IPHONE_UA);
+    platform.setUserAgent(IPHONE_UA);
     platform.load();
 
     expect(platform.is('mobile')).toEqual(true);
@@ -124,7 +124,7 @@ export function run() {
 
   it('should set ipad via user agent', () => {
     let platform = new Platform();
-    platform.userAgent(IPAD_UA);
+    platform.setUserAgent(IPAD_UA);
     platform.load();
 
     expect(platform.is('mobile')).toEqual(true);

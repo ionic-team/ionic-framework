@@ -17,7 +17,7 @@ export function clamp(min, n, max) {
  * @param dst the destination
  * @param ... the param objects
  */
-export function extend(dst: any) {
+export function extend(dst: any, ...args: any[]) {
   return _baseExtend(dst, [].slice.call(arguments, 1), false);
 }
 
@@ -26,7 +26,7 @@ export function extend(dst: any) {
  * @param dst the destination
  * @param ... the param objects
  */
-export function merge(dst: any) {
+export function merge(dst: any, ...args: any[]) {
   return _baseExtend(dst, [].slice.call(arguments, 1), true);
 }
 
@@ -81,7 +81,7 @@ export function debounce(func: any, wait: number, immediate: boolean) {
  * the first object.
  * @param the destination to apply defaults to.
  */
-export function defaults(dest) {
+export function defaults(dest, ...args: any[]) {
   for (let i = arguments.length - 1; i >= 1; i--) {
     let source = arguments[i] || {};
     for (let key in source) {
@@ -140,10 +140,10 @@ export const array = {
 }
 
 /**
- * Grab the query string param value for the given key.
- * @param key the key to look for
+ * Grab all query strings keys and values.
+ * @param url
  */
-export function getQuerystring(url, key) {
+export function getQuerystring(url: string): any {
   var queryParams = {};
   if (url) {
     const startIndex = url.indexOf('?');
@@ -153,9 +153,6 @@ export function getQuerystring(url, key) {
         var split = param.split('=');
         queryParams[split[0].toLowerCase()] = split[1].split('#')[0];
       });
-    }
-    if (key) {
-      return queryParams[key] || '';
     }
   }
   return queryParams;

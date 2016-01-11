@@ -27,7 +27,7 @@ export class Platform {
   private _dir: string;
   private _lang: string;
   private _url: string;
-  private _qs: string;
+  private _qs: any;
   private _ua: string;
   private _bPlt: string;
   private _onResizes: Array<any>=[];
@@ -277,11 +277,15 @@ export class Platform {
   /**
   * @private
   */
+  setUrl(url) {
+    this._url = url;
+    this._qs = getQuerystring(url);
+  }
+
+  /**
+  * @private
+  */
   url(val) {
-    if (arguments.length) {
-      this._url = val;
-      this._qs = getQuerystring(val);
-    }
     return this._url;
   }
 
@@ -295,20 +299,28 @@ export class Platform {
   /**
   * @private
   */
+  setUserAgent(userAgent) {
+    this._ua = userAgent;
+  }
+
+  /**
+  * @private
+  */
   userAgent(val) {
-    if (arguments.length) {
-      this._ua = val;
-    }
     return this._ua || '';
   }
 
   /**
   * @private
   */
+  setNavigatorPlatform(navigatorPlatform) {
+    this._bPlt = navigatorPlatform;
+  }
+
+  /**
+  * @private
+  */
   navigatorPlatform(val) {
-    if (arguments.length) {
-      this._bPlt = val;
-    }
     return this._bPlt || '';
   }
 
