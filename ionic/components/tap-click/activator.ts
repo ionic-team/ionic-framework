@@ -2,24 +2,23 @@ import {raf, rafFrames} from '../../util/dom';
 
 
 export class Activator {
+  public activatedClass: any;
+  public queue: Array<any> = [];
+  public active: Array<any> = [];
+  public x: number = 0;
+  public y: number = 0;
 
-  constructor(app, config, zone) {
-    this.app = app;
-    this.zone = zone;
-    this.queue = [];
-    this.active = [];
-    this.clearStateDefers = 5;
-    this.clearAttempt = 0;
+  constructor(public app, config, public zone) {
     this.activatedClass = config.get('activatedClass') || 'activated';
-    this.x = 0;
-    this.y = 0;
   }
 
-  downAction(ev, activatableEle, pointerX, pointerY, callback) {
+  downAction(ev, activatableEle, pointerX, pointerY) {
     // the user just pressed down
 
     let self = this;
-    if (self.disableActivated(ev)) return false;
+    if (self.disableActivated(ev)) {
+      return false;
+    }
 
     // remember where they pressed
     self.x = pointerX;
@@ -54,7 +53,7 @@ export class Activator {
       self.clearState();
     }
     this.zone.runOutsideAngular(() => {
-      rafFrames(self.clearStateDefers, activateUp);
+      rafFrames(CLEAR_STATE_DEFERS, activateUp);
     });
   }
 
@@ -103,3 +102,5 @@ export class Activator {
   }
 
 }
+
+const CLEAR_STATE_DEFERS = 5;

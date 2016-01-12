@@ -4,13 +4,12 @@ import {raf, rafFrames} from '../../util/dom';
 
 
 export class RippleActivator extends Activator {
+  private expands: any = {};
+  private fades: any = {};
+  private expandSpeed: number;
 
   constructor(app, config, zone) {
     super(app, config, zone);
-
-    this.expands = {};
-    this.fades = {};
-    this.expandSpeed = null;
   }
 
   downAction(ev, activatableEle, pointerX, pointerY) {
@@ -28,6 +27,7 @@ export class RippleActivator extends Activator {
         });
       });
     }
+    return true;
   }
 
   createRipple(activatableEle, pointerX, pointerY, clientRect) {
