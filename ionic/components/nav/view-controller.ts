@@ -1,5 +1,5 @@
-import {Output, EventEmitter} from 'angular2/core';
-import {NavParams} from './nav-controller';
+import {Output, EventEmitter, Type} from 'angular2/core';
+import {NavController, NavParams} from './nav-controller';
 
 /**
  * @name ViewController
@@ -17,21 +17,19 @@ import {NavParams} from './nav-controller';
  *  ```
  */
 export class ViewController {
-  @Output() _emitter: EventEmitter<any> = new EventEmitter();
+  public instance: any = {};
+  public state: number = 0;
+  private _destroys: Array<Function> = [];
+  private _loaded: boolean = false;
+  public shouldDestroy: boolean = false;
+  public shouldCache: boolean = false;
+  public viewType: string = '';
+  private _leavingOpts: any = null;
+  private _onDismiss: Function = null;
+  private _nav: NavController;
+  @Output() private _emitter: EventEmitter<any> = new EventEmitter();
 
-  constructor(componentType, data={}) {
-    this.componentType = componentType;
-    this.data = data;
-    this.instance = {};
-    this.state = 0;
-    this._destroys = [];
-    this._loaded = false;
-    this.shouldDestroy = false;
-    this.shouldCache = false;
-    this.viewType = '';
-    this._leavingOpts = null;
-    this._onDismiss = null;
-  }
+  constructor(public componentType?: Type, public data: any = {}) {}
 
   subscribe(callback) {
     this._emitter.subscribe(callback);
@@ -109,23 +107,23 @@ export class ViewController {
    *  }
    * ```
    *
-   * @returns {Number} Returns the index of this page within its NavController.
+   * @returns {number} Returns the index of this page within its NavController.
    */
-  get index() {
+  get index(): number {
     return (this._nav ? this._nav.indexOf(this) : -1);
   }
 
   /**
    * @returns {boolean} Returns if this Page is the root page of the NavController.
    */
-  isRoot() {
+  isRoot(): boolean {
     return (this.index === 0);
   }
 
   /**
    * @private
    */
-  addDestroy(destroyFn) {
+  addDestroy(destroyFn: Function) {
     this._destroys.push(destroyFn);
   }
 
@@ -332,7 +330,7 @@ export class ViewController {
   /**
    * @private
    */
-  isLoaded() {
+  isLoaded(): boolean {
     return this._loaded;
   }
 
