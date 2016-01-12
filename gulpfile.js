@@ -135,7 +135,8 @@ function tsCompile(options, cacheName){
       '!ionic/components/*/test/**/*',
       '!ionic/util/test/*',
       '!ionic/config/test/*',
-      '!ionic/platform/test/*'
+      '!ionic/platform/test/*',
+      '!ionic/**/*.spec.ts'
     ])
     .pipe(cache(cacheName, { optimizeMemory: true }))
     .pipe(tsc(options, undefined, tscReporter))
