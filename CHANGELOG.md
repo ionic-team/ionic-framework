@@ -1610,7 +1610,7 @@ To this HTML:
 
 #### Bug Fixes
 
-* **modal** fix(modal): remove unnecessarily calls ionicClickBlock . Fixes #4383 ([a550db4](https://github.com/ceoaliongroo/ionic/commit/a550db4))
+* **modal** fix(modal): remove unnecessarily calls ionicClickBlock causing hide vew and modal itself. Fixes #4383 ([a550db4](https://github.com/ceoaliongroo/ionic/commit/a550db4))
 
 
 <a name"1.2.4"></a>
