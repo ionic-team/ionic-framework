@@ -38,11 +38,11 @@ export class ItemSlidingGesture extends DragGesture {
     };
   }
 
-  onDragStart(ev) {
+  onDragStart(ev): boolean {
     let itemContainerEle = getItemConatiner(ev.target);
     if (!itemContainerEle) {
       console.debug('onDragStart, no itemContainerEle');
-      return;
+      return false;
     }
 
     this.closeOpened(itemContainerEle);
@@ -63,6 +63,8 @@ export class ItemSlidingGesture extends DragGesture {
     this.set(itemContainerEle, 'startX', ev.center[this.direction]);
 
     this.dragEnded = false;
+
+    return true;
   }
 
   onDrag(ev) {

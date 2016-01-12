@@ -1,14 +1,17 @@
 import {assign} from '../util/util';
 
+const win: any = window;
+const doc: any = document;
+
 /*! Hammer.JS - v2.0.6 - 2015-12-23
  * http://hammerjs.github.io/
  *
  * Copyright (c) 2015 Jorik Tangelder;
  * Licensed under the  license */
- 
+
 
 var VENDOR_PREFIXES = ['', 'webkit', 'Moz', 'MS', 'ms', 'o'];
-var TEST_ELEMENT = document.createElement('div');
+var TEST_ELEMENT = doc.createElement('div');
 
 var TYPE_FUNCTION = 'function';
 
@@ -50,7 +53,7 @@ function invokeArrayArg(arg, fn, context) {
  * @param {Function} iterator
  * @param {Object} context
  */
-function each(obj, iterator, context) {
+function each(obj, iterator, context?) {
     var i;
 
     if (!obj) {
@@ -194,7 +197,7 @@ function splitStr(str) {
  * @param {String} [findByKey]
  * @return {Boolean|Number} false when not found, or the index
  */
-function inArray(src, find, findByKey) {
+function inArray(src, find, findByKey?) {
     if (src.indexOf && !findByKey) {
         return src.indexOf(find);
     } else {
@@ -244,7 +247,7 @@ function uniqueArray(src, key, sort) {
             results = results.sort();
         } else {
             results = results.sort(function sortUniqueArray(a, b) {
-                return a[key] > b[key];
+                return a[key] > b[key] ? 1 : 0;
             });
         }
     }
@@ -318,8 +321,8 @@ var DIRECTION_RIGHT = 4;
 var DIRECTION_UP = 8;
 var DIRECTION_DOWN = 16;
 
-var DIRECTION_HORIZONTAL = DIRECTION_LEFT | DIRECTION_RIGHT;
-var DIRECTION_VERTICAL = DIRECTION_UP | DIRECTION_DOWN;
+export var DIRECTION_HORIZONTAL = DIRECTION_LEFT | DIRECTION_RIGHT;
+export var DIRECTION_VERTICAL = DIRECTION_UP | DIRECTION_DOWN;
 var DIRECTION_ALL = DIRECTION_HORIZONTAL | DIRECTION_VERTICAL;
 
 var PROPS_XY = ['x', 'y'];
@@ -642,7 +645,7 @@ function getDirection(x, y) {
  * @param {Array} [props] containing x and y keys
  * @return {Number} distance
  */
-function getDistance(p1, p2, props) {
+function getDistance(p1, p2, props?) {
     if (!props) {
         props = PROPS_XY;
     }
@@ -659,7 +662,7 @@ function getDistance(p1, p2, props) {
  * @param {Array} [props] containing x and y keys
  * @return {Number} angle
  */
-function getAngle(p1, p2, props) {
+function getAngle(p1, p2, props?) {
     if (!props) {
         props = PROPS_XY;
     }
@@ -703,7 +706,7 @@ var MOUSE_WINDOW_EVENTS = 'mousemove mouseup';
  * @constructor
  * @extends Input
  */
-function MouseInput() {
+function MouseInput(manager: any, handler: any) {
     this.evEl = MOUSE_ELEMENT_EVENTS;
     this.evWin = MOUSE_WINDOW_EVENTS;
 
@@ -768,7 +771,7 @@ var POINTER_ELEMENT_EVENTS = 'pointerdown';
 var POINTER_WINDOW_EVENTS = 'pointermove pointerup pointercancel';
 
 // IE10 has prefixed support, and case-sensitive
-if (window.MSPointerEvent && !window.PointerEvent) {
+if (win.MSPointerEvent && !win.PointerEvent) {
     POINTER_ELEMENT_EVENTS = 'MSPointerDown';
     POINTER_WINDOW_EVENTS = 'MSPointerMove MSPointerUp MSPointerCancel';
 }
@@ -920,7 +923,7 @@ var TOUCH_TARGET_EVENTS = 'touchstart touchmove touchend touchcancel';
  * @constructor
  * @extends Input
  */
-function TouchInput() {
+function TouchInput(manager: any, handler: any) {
     this.evTarget = TOUCH_TARGET_EVENTS;
     this.targetIds = {};
 
@@ -2001,20 +2004,20 @@ inherit(TapRecognizer, Recognizer, {
  */
 function Hammer(element, options) {
     options = options || {};
-    options.recognizers = ifUndefined(options.recognizers, Hammer.defaults.preset);
+    options.recognizers = ifUndefined(options.recognizers, _defaults.preset);
     return new Manager(element, options);
 }
 
 /**
  * @const {string}
  */
-Hammer.VERSION = '2.0.6';
+var VERSION = '2.0.6';
 
 /**
  * default settings
  * @namespace
  */
-Hammer.defaults = {
+var _defaults = {
     /**
      * set if DOM events are being triggered.
      * But this is slower and unused by simple implementations, so disabled by default.
@@ -2132,7 +2135,7 @@ var FORCED_STOP = 2;
  * @constructor
  */
 function Manager(element, options) {
-    this.options = assign({}, Hammer.defaults, options || {});
+    this.options = assign({}, _defaults, options || {});
 
     this.options.inputTarget = this.options.inputTarget || element;
 
@@ -2407,7 +2410,7 @@ function toggleCssProps(manager, add) {
  * @param {Object} data
  */
 function triggerDomEvent(event, data) {
-    var gestureEvent = document.createEvent('Event');
+    var gestureEvent: any = doc.createEvent('Event');
     gestureEvent.initEvent(event, true, true);
     gestureEvent.gesture = data;
     data.target.dispatchEvent(gestureEvent);
@@ -2463,6 +2466,6 @@ assign(Hammer, {
     prefixed: prefixed
 });
 
-window.Hammer = Hammer;
+win.Hammer = Hammer;
 
 export {Hammer};

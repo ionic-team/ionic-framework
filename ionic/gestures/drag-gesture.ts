@@ -3,6 +3,8 @@ import {defaults} from '../util';
 
 
 export class DragGesture extends Gesture {
+  public dragging: boolean;
+
   constructor(element, opts = {}) {
     defaults(opts, {});
     super(element, opts);
@@ -29,11 +31,9 @@ export class DragGesture extends Gesture {
       this.onDragEnd(ev);
       this.dragging = false;
     });
-
-    //this.hammertime.get('pan').set(this._options);
   }
 
-  onDrag() {}
-  onDragStart() {}
-  onDragEnd() {}
+  onDrag(ev: any): boolean { return true; }
+  onDragStart(ev: any): boolean { return true; }
+  onDragEnd(ev: any): void {}
 }

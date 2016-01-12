@@ -4,7 +4,11 @@ import {windowDimensions} from '../util/dom';
 
 
 export class SlideEdgeGesture extends SlideGesture {
-  constructor(element: Element, opts: Object = {}) {
+  public edges: Array<string>;
+  public maxEdgeStart: any;
+  private _d: any;
+
+  constructor(element: Element, opts: any = {}) {
     defaults(opts, {
       edge: 'left',
       maxEdgeStart: 50
@@ -15,7 +19,7 @@ export class SlideEdgeGesture extends SlideGesture {
     this.maxEdgeStart = opts.maxEdgeStart;
   }
 
-  canStart(ev) {
+  canStart(ev: any): boolean {
     this._d = this.getContainerDimensions();
     return this.edges.every(edge => this._checkEdge(edge, ev.center));
   }

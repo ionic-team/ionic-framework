@@ -30,29 +30,34 @@ export class SlideGesture extends DragGesture {
     return 0;
   }
 
-  canStart() {
+  canStart(ev: any): boolean {
     return true;
   }
 
-  onDragStart(ev) {
-    if (!this.canStart(ev)) return false;
+  onDragStart(ev): boolean {
+    if (!this.canStart(ev)) {
+      return false;
+    }
+
     this.slide = {};
-    var promise = this.onSlideBeforeStart(this.slide, ev) || Promise.resolve();
-    promise.then(() => {
-      var {min, max} = this.getSlideBoundaries(this.slide, ev);
-      this.slide.min = min;
-      this.slide.max = max;
-      this.slide.elementStartPos = this.getElementStartPos(this.slide, ev);
-      this.slide.pointerStartPos = ev.center[this.direction];
-      this.slide.started = true;
-      this.onSlideStart(this.slide, ev);
-    }).catch(() => {
-      this.slide = null;
-    });
+    this.onSlideBeforeStart(this.slide, ev);
+
+    var {min, max} = this.getSlideBoundaries(this.slide, ev);
+    this.slide.min = min;
+    this.slide.max = max;
+    this.slide.elementStartPos = this.getElementStartPos(this.slide, ev);
+    this.slide.pointerStartPos = ev.center[this.direction];
+    this.slide.started = true;
+    this.onSlideStart(this.slide, ev);
+
+    return true;
   }
 
-  onDrag(ev) {
-    if (!this.slide || !this.slide.started) return;
+  onDrag(ev: any): boolean {
+    if (!this.slide || !this.slide.started) {
+      return false;
+    }
+
     this.slide.pos = ev.center[this.direction];
     this.slide.distance = clamp(
       this.slide.min,
@@ -61,6 +66,8 @@ export class SlideGesture extends DragGesture {
     );
     this.slide.delta = this.slide.pos - this.slide.pointerStartPos;
     this.onSlide(this.slide, ev);
+
+    return true;
   }
 
   onDragEnd(ev) {
@@ -69,8 +76,8 @@ export class SlideGesture extends DragGesture {
     this.slide = null;
   }
 
-  onSlideBeforeStart() {}
-  onSlideStart() {}
-  onSlide() {}
-  onSlideEnd() {}
+  onSlideBeforeStart(slide?: any, ev?: any): void {}
+  onSlideStart(slide?: any, ev?: any): void {}
+  onSlide(slide?: any, ev?: any): void {}
+  onSlideEnd(slide?: any, ev?: any): void {}
 }

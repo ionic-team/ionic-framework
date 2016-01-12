@@ -1,5 +1,5 @@
 import {defaults, assign} from '../util';
-import {Hammer} from './hammer';
+import {Hammer, DIRECTION_HORIZONTAL, DIRECTION_VERTICAL} from './hammer';
 
 /**
  * A gesture recognizer class.
@@ -9,8 +9,12 @@ import {Hammer} from './hammer';
 
 export class Gesture {
   public element: HTMLElement;
+  public direction: any;
+  private _hammer: any;
+  private _options: any;
+  private _callbacks: any = {};
 
-  constructor(element, opts = {}) {
+  constructor(element, opts: any = {}) {
     defaults(opts, {
       domEvents: true
     });
@@ -19,12 +23,10 @@ export class Gesture {
     // Map 'x' or 'y' string to hammerjs opts
     this.direction = opts.direction || 'x';
     opts.direction = this.direction === 'x' ?
-      Hammer.DIRECTION_HORIZONTAL :
-      Hammer.DIRECTION_VERTICAL;
+      DIRECTION_HORIZONTAL :
+      DIRECTION_VERTICAL;
 
     this._options = opts;
-    this._callbacks = {};
-
   }
 
   options(opts = {}) {
@@ -33,30 +35,30 @@ export class Gesture {
 
   on(type, cb) {
     if(type == 'pinch' || type == 'rotate') {
-      this.hammertime.get('pinch').set({enable: true});
+      this._hammer.get('pinch').set({enable: true});
     }
-    this.hammertime.on(type, cb);
+    this._hammer.on(type, cb);
     (this._callbacks[type] || (this._callbacks[type] = [])).push(cb);
   }
 
   off(type, cb) {
-    this.hammertime.off(type, this._callbacks[type] ? cb : null);
+    this._hammer.off(type, this._callbacks[type] ? cb : null);
   }
 
   listen() {
-    this.hammertime = new Hammer(this.element, this._options);
+    this._hammer = Hammer(this.element, this._options);
   }
 
   unlisten() {
-    if (this.hammertime) {
+    if (this._hammer) {
       for (let type in this._callbacks) {
         for (let i = 0; i < this._callbacks[type].length; i++) {
-          this.hammertime.off(type, this._callbacks[type]);
+          this._hammer.off(type, this._callbacks[type]);
         }
       }
-      this.hammertime.destroy();
-      this.hammertime = null;
-      this._callbacks = {}
+      this._hammer.destroy();
+      this._hammer = null;
+      this._callbacks = {};
     }
   }
 
