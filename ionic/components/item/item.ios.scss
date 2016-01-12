@@ -123,8 +123,13 @@ ion-thumbnail[item-right] {
 .item-button {
   padding: 0 0.5em;
   font-size: 1.3rem;
-  min-height: 25px;
+  min-height: 24px;
 }
+
+.item-button.button-icon-only ion-icon,
+.item-button.button-icon-only {
+   padding: 0 1px;
+ }
 
 ion-avatar {
   min-width: $item-ios-avatar-size;

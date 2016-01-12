@@ -98,9 +98,14 @@ ion-icon[item-right] {
 
 .item-button {
   padding: 0 0.6em;
-  min-height: 26px;
+  min-height: 25px;
   font-size: 1.2rem;
 }
+
+.item-button.button-icon-only ion-icon,
+.item-button.button-icon-only {
+   padding: 0 1px;
+ }
 
 [text-wrap] ion-item-content {
   font-size: $item-md-body-text-font-size;
