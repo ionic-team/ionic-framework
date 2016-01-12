@@ -60,7 +60,7 @@ function _baseExtend(dst, objs, deep) {
   return dst;
 }
 
-export function debounce(func: any, wait: number, immediate: boolean) {
+export function debounce(func: any, wait: number, immediate = false) {
  var timeout, args, context, timestamp: number, result;
  return function() {
    context = this;

@@ -1,4 +1,4 @@
-import {Directive, Component, ElementRef, Host, EventEmitter, Output} from 'angular2/core';
+import {Directive, Component, ElementRef, Host, EventEmitter, Input, Output} from 'angular2/core';
 import {NgClass} from 'angular2/common';
 
 import {Ion} from '../ion';
@@ -7,7 +7,7 @@ import {Gesture} from '../../gestures/gesture';
 import {DragGesture} from '../../gestures/drag-gesture';
 import {dom} from '../../util';
 import {CSS} from '../../util/dom';
-import * as util from '../../util';
+import {debounce, isTrueProperty, defaults} from '../../util/util'
 
 import {Swiper} from './swiper-widget';
 import {Scroll} from '../scroll/scroll';
@@ -70,17 +70,6 @@ import {Scroll} from '../scroll/scroll';
  */
 @Component({
   selector: 'ion-slides',
-  inputs: [
-    'autoplay',
-    'loop',
-    'index',
-    'bounce',
-    'pager',
-    'options',
-    'zoom',
-    'zoomDuration',
-    'zoomMax'
-  ],
   template:
     '<div class="swiper-container">' +
       '<div class="swiper-wrapper">' +
@@ -91,6 +80,44 @@ import {Scroll} from '../scroll/scroll';
   directives: [NgClass]
 })
 export class Slides extends Ion {
+
+  public rapidUpdate: Function;
+  private showPager: boolean;
+  private slider: typeof Swiper;
+  private maxScale: number;
+  private zoomElement: HTMLElement;
+  private zoomGesture: Gesture;
+  private scale: number;
+  private zoomLastPosX: number;
+  private zoomLastPosY: number;
+  private viewportWidth: number;
+  private viewportHeight: number;
+  private enableZoom: boolean;
+  private touch: {
+    x: number,
+    y: number,
+    startX: number,
+    startY: number,
+    deltaX: number,
+    deltaY: number,
+    lastX: number,
+    lastY: number,
+    target: HTMLElement,
+    zoomable: HTMLElement,
+    zoomableWidth: number,
+    zoomableHeight: number
+  }
+
+  @Input() autoplay: any;
+  @Input() loop: any;
+  @Input() index: any;
+  @Input() bounce: any;
+  @Input() pager: any;
+  @Input() options: any;
+  @Input() zoom: any;
+  @Input() zoomDuration: any;
+  @Input() zoomMax: any;
+
   @Output() change: EventEmitter<any> = new EventEmitter();
 
   /**
@@ -98,9 +125,8 @@ export class Slides extends Ion {
    * @param {ElementRef} elementRef  TODO
    */
   constructor(elementRef: ElementRef) {
-
     super(elementRef);
-    this.rapidUpdate = util.debounce(() => {
+    this.rapidUpdate = debounce(() => {
       this.update();
     }, 10);
 
@@ -111,14 +137,14 @@ export class Slides extends Ion {
    * @private
    */
   ngOnInit() {
-    if(!this.options) {
+    if (!this.options) {
       this.options = {};
     }
 
-    this.showPager = util.isTrueProperty(this.pager);
+    this.showPager = isTrueProperty(this.pager);
 
 
-    var options = util.defaults({
+    var options = defaults({
       loop: this.loop,
       pagination: '.swiper-pagination',
       paginationClickable: true,
@@ -239,7 +265,6 @@ export class Slides extends Ion {
     this.viewportHeight = this.getNativeElement().offsetHeight;
 
     this.zoomElement.addEventListener('touchstart', (e) => {
-
       this.onTouchStart(e);
     });
 
@@ -376,12 +401,12 @@ export class Slides extends Ion {
   /**
    * @private
    */
-  onTransitionStart(swiper) {
+  onTransitionStart(swiper, e) {
   }
   /**
    * @private
    */
-  onTransitionEnd(swiper) {
+  onTransitionEnd(swiper, e) {
   }
 
   /**
@@ -392,9 +417,11 @@ export class Slides extends Ion {
 
     //TODO: Support mice as well
 
-    let target = dom.closest(e.target, '.slide').children[0].children[0];
+    let target = ((dom.closest(e.target, '.slide').children[0] as HTMLElement).children[0] as HTMLElement);
 
     this.touch = {
+      x: null,
+      y: null,
       startX: e.touches[0].clientX,
       startY: e.touches[0].clientY,
       deltaX: 0,
@@ -474,6 +501,7 @@ export class Slides extends Ion {
     if(this.scale > 1) {
 
       if(Math.abs(this.touch.x) > this.viewportWidth) {
+        //TODO what is posX?
         posX = posX > 0 ? this.viewportWidth - 1 : -(this.viewportWidth - 1);
         console.log('Setting on posx', this.touch.x);
       }
@@ -570,6 +598,7 @@ export class Slides extends Ion {
   template: '<div class="slide-zoom"><ng-content></ng-content></div>'
 })
 export class Slide {
+  private ele: HTMLElement;
   /**
    * TODO
    * @param {Slides} slides  The containing slidebox.
@@ -594,6 +623,6 @@ export class Slide {
 })
 export class SlideLazy {
   constructor(elementRef: ElementRef) {
-    elementRef.getNativeElement().classList.add('swiper-lazy');
+    elementRef.nativeElement.classList.add('swiper-lazy');
   }
 }
