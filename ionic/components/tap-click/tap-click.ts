@@ -12,14 +12,20 @@ import {RippleActivator} from './ripple';
  */
 @Injectable()
 export class TapClick {
-  constructor(app: IonicApp, config: Config, zone: NgZone) {
-    let self = this;
-    self.app = app;
-    self.zone = zone;
+  private lastTouch: number = 0;
+  private disableClick: number = 0;
+  private lastActivated: number = 0;
+  private usePolyfill: boolean;
+  private activator: any;
+  private startCoord: any;
+  private pointerMove: any;
 
-    self.lastTouch = 0;
-    self.disableClick = 0;
-    self.lastActivated = 0;
+  constructor(
+    config: Config,
+    private app: IonicApp,
+    private zone: NgZone
+  ) {
+    let self = this;
 
     if (config.get('activator') == 'ripple') {
       self.activator = new RippleActivator(app, config, zone);
@@ -75,7 +81,7 @@ export class TapClick {
           // dispatch a mouse click event
           console.debug('create click from touch ' + Date.now());
 
-          let clickEvent = document.createEvent('MouseEvents');
+          let clickEvent: any = document.createEvent('MouseEvents');
           clickEvent.initMouseEvent('click', true, true, window, 1, 0, 0, endCoord.x, endCoord.y, false, false, false, false, 0, null);
           clickEvent.isIonicTap = true;
           ev.target.dispatchEvent(clickEvent);
@@ -143,16 +149,12 @@ export class TapClick {
   moveListeners(shouldAdd) {
     removeListener(this.usePolyfill ? 'touchmove' : 'mousemove', this.pointerMove);
 
-    //this.zone.runOutsideAngular(() => {
-      if (shouldAdd) {
-        addListener(this.usePolyfill ? 'touchmove' : 'mousemove', this.pointerMove);
-      } else {
-
-      }
-    //});
+    if (shouldAdd) {
+      addListener(this.usePolyfill ? 'touchmove' : 'mousemove', this.pointerMove);
+    }
   }
 
-  click(ev) {
+  click(ev: any) {
     let preventReason = null;
 
     if (!this.app.isEnabled()) {
@@ -204,7 +206,7 @@ export function isActivatable(ele) {
   return false;
 }
 
-function addListener(type, listener, useCapture) {
+function addListener(type, listener, useCapture?) {
   document.addEventListener(type, listener, useCapture);
 }
 
