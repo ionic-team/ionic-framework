@@ -66,13 +66,6 @@ ion-item-content {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  pointer-events: none;
-
-  a,
-  button,
-  [tappable] {
-    pointer-events: auto;
-  }
 }
 
 [text-wrap] ion-item-content {
