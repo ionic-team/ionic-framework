@@ -50,7 +50,7 @@ import {pointerCoord} from '../../util/dom';
     'role': 'checkbox',
     'class': 'item',
     'tappable': '',
-    'tabindex': 0,
+    'tabindex': '0',
     '[attr.aria-disabled]': 'disabled',
     '(touchstart)': 'pointerDown($event)',
     '(mousedown)': 'pointerDown($event)',
@@ -70,9 +70,16 @@ import {pointerCoord} from '../../util/dom';
 })
 export class Toggle {
   @Input() value: string = '';
-  @Input() public checked: any = false;
   @Input() disabled: boolean = false;
   @Input() id: string;
+  private _checked: boolean;
+  private _touched: number = 0;
+  private _mode: string;
+  private _startX: any;
+  private addMoveListener: any;
+  private removeMoveListener: any;
+  public labelId: string;
+  public isActivated: boolean;
 
   constructor(
     private _form: Form,
@@ -88,8 +95,7 @@ export class Toggle {
 
     _form.register(this);
 
-    this.lastTouch = 0;
-    this.mode = config.get('mode');
+    this._mode = config.get('mode');
 
     if (ngControl) {
       ngControl.valueAccessor = this;
@@ -100,13 +106,13 @@ export class Toggle {
       let currentX = pointerCoord(ev).x;
 
       if (self.checked) {
-        if (currentX + 15 < self.startX) {
+        if (currentX + 15 < self._startX) {
           self.toggle();
-          self.startX = currentX;
+          self._startX = currentX;
         }
-      } else if (currentX - 15 > self.startX) {
+      } else if (currentX - 15 > self._startX) {
         self.toggle();
-        self.startX = currentX;
+        self._startX = currentX;
       }
     }
 
@@ -151,13 +157,14 @@ export class Toggle {
     this.checked = !this.checked;
   }
 
-  get checked() {
+  get checked(): boolean {
     return !!this._checked;
   }
 
-  set checked(val) {
+  @Input()
+  set checked(val: boolean) {
     this._checked = !!val;
-    this._renderer.setElementAttribute(this._elementRef, 'aria-checked', this._checked);
+    this._renderer.setElementAttribute(this._elementRef, 'aria-checked', this._checked.toString());
     this.onChange(this._checked);
   }
 
@@ -166,12 +173,12 @@ export class Toggle {
    */
   pointerDown(ev) {
     if (/touch/.test(ev.type)) {
-      this.lastTouch = Date.now();
+      this._touched = Date.now();
     }
 
     if (this.isDisabled(ev)) return;
 
-    this.startX = pointerCoord(ev).x;
+    this._startX = pointerCoord(ev).x;
 
     this.removeMoveListener();
     this.addMoveListener();
@@ -188,11 +195,11 @@ export class Toggle {
     let endX = pointerCoord(ev).x;
 
     if (this.checked) {
-      if (this.startX + 4 > endX) {
-        this.toggle(ev);
+      if (this._startX + 4 > endX) {
+        this.toggle();
       }
-    } else if (this.startX - 4 < endX) {
-      this.toggle(ev);
+    } else if (this._startX - 4 < endX) {
+      this.toggle();
     }
 
     this.removeMoveListener();
@@ -235,7 +242,7 @@ export class Toggle {
    */
   ngOnDestroy() {
     this.removeMoveListener();
-    this.toggleEle = this.addMoveListener = this.removeMoveListener = null;
+    this.addMoveListener = this.removeMoveListener = null;
     this._form.deregister(this);
   }
 
@@ -243,7 +250,7 @@ export class Toggle {
    * @private
    */
   isDisabled(ev) {
-    return (this.lastTouch + 999 > Date.now() && /mouse/.test(ev.type)) || (this.mode == 'ios' && ev.target.tagName == 'ION-TOGGLE');
+    return (this._touched + 999 > Date.now() && /mouse/.test(ev.type)) || (this._mode == 'ios' && ev.target.tagName == 'ION-TOGGLE');
   }
 
   /**

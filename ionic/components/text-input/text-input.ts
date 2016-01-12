@@ -17,6 +17,8 @@ export class TextInput {
   @Input() ngModel: any;
   @Output() valueChange: EventEmitter<string> = new EventEmitter();
   @Output() focusChange: EventEmitter<boolean> = new EventEmitter();
+  public type: string;
+  private _relocated: boolean;
 
   constructor(
     @Attribute('type') type: string,

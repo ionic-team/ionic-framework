@@ -1,7 +1,6 @@
 import {Component, Directive, Host, ElementRef, Optional, forwardRef, Inject, ContentChildren, ContentChild, QueryList} from 'angular2/core';
 
 import {Ion} from '../ion';
-import {Config} from '../../config/config';
 import {MenuToggle} from '../menu/menu-toggle';
 import {Navbar} from '../navbar/navbar';
 import {Button} from '../button/button';
@@ -15,11 +14,8 @@ export class ToolbarBase extends Ion  {
   titleRef = null;
   titleCmp: any;
 
-  constructor(
-    elementRef: ElementRef,
-    config: Config
-  ) {
-    super(elementRef, config);
+  constructor(elementRef: ElementRef) {
+    super(elementRef);
   }
 
   /**
@@ -95,11 +91,8 @@ export class ToolbarBase extends Ion  {
 })
 export class Toolbar extends ToolbarBase {
 
-  constructor(
-    elementRef: ElementRef,
-    config: Config
-  ) {
-    super(elementRef, config);
+  constructor(elementRef: ElementRef) {
+    super(elementRef);
   }
 
 }
@@ -137,7 +130,7 @@ export class ToolbarTitle extends Ion {
     @Optional() toolbar: Toolbar,
     @Optional() @Inject(forwardRef(() => Navbar)) navbar: Navbar
   ) {
-    super(elementRef, null);
+    super(elementRef);
     toolbar && toolbar.setTitleCmp(this);
     navbar && navbar.setTitleCmp(this);
   }
