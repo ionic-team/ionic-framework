@@ -1,6 +1,7 @@
 import {Component} from 'angular2/core'
 import {IONIC_DIRECTIVES} from '../config/directives';
 
+const _reflect: any=Reflect;
 
 /**
  * @name Page
@@ -69,16 +70,16 @@ import {IONIC_DIRECTIVES} from '../config/directives';
  * you may see these tags if you inspect your markup, you don't need to include
  * them in your templates.
  */
-export function Page(config={}) {
+export function Page(config: any={}) {
   return function(cls) {
     config.selector = 'ion-page';
     config.directives = config.directives ? config.directives.concat(IONIC_DIRECTIVES) : IONIC_DIRECTIVES;
     config.host = config.host || {};
     config.host['[hidden]'] = '_hidden';
     config.host['[class.tab-subpage]'] = '_tabSubPage';
-    var annotations = Reflect.getMetadata('annotations', cls) || [];
+    var annotations = _reflect.getMetadata('annotations', cls) || [];
     annotations.push(new Component(config));
-    Reflect.defineMetadata('annotations', annotations, cls);
+    _reflect.defineMetadata('annotations', annotations, cls);
     return cls;
   }
 }

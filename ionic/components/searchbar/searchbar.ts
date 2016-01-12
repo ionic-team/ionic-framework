@@ -126,7 +126,7 @@ export class Searchbar extends Ion {
     private _config: Config,
     @Optional() ngControl: NgControl
   ) {
-    super(_elementRef, _config);
+    super(_elementRef);
 
     // If the user passed a ngControl we need to set the valueAccessor
     if (ngControl) {

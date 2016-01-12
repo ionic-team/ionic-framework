@@ -207,7 +207,7 @@ matchesMethods.some((fn: string) => {
   }
 });
 
-export function closest(ele, selector, checkSelf) {
+export function closest(ele: HTMLElement, selector: string, checkSelf?: boolean) {
   if (ele && matchesFn) {
 
     // traverse parents

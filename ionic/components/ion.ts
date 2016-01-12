@@ -10,42 +10,8 @@ import * as dom from '../util/dom';
  * sending/receiving app-level events.
  */
 export class Ion {
-  constructor(elementRef: ElementRef, config: Config) {
+  constructor(elementRef: ElementRef) {
     this.elementRef = elementRef;
-    this.config = config;
-  }
-
-  ngOnInit() {
-    let cls = this.constructor;
-
-    if (cls.defaultInputs && this.config) {
-      for (let prop in cls.defaultInputs) {
-        // Priority:
-        // ---------
-        // 1) Value set from within constructor
-        // 2) Value set from the host element's attribute
-        // 3) Value set by the users global config
-        // 4) Value set by the default mode/platform config
-        // 5) Value set from the component's default
-
-        if (this[prop]) {
-          // this property has already been set on the instance
-          // could be from the user setting the element's attribute
-          // or from the user setting it within the constructor
-          continue;
-        }
-
-        // get the property values from a global user/platform config
-        let configVal = this.config.get(prop);
-        if (configVal) {
-          this[prop] = configVal;
-          continue;
-        }
-
-        // wasn't set yet, so go with property's default value
-        this[prop] = cls.defaultInputs[prop];
-      }
-    }
   }
 
   getElementRef() {

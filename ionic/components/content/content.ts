@@ -44,7 +44,7 @@ export class Content extends Ion {
     private _app: IonicApp,
     private _zone: NgZone
   ) {
-    super(elementRef, _config);
+    super(elementRef);
     this.scrollPadding = 0;
 
     if (viewCtrl) {
@@ -57,8 +57,6 @@ export class Content extends Ion {
    * @private
    */
   ngOnInit() {
-    super.ngOnInit();
-
     let self = this;
     self.scrollElement = self.getNativeElement().children[0];
 
@@ -69,7 +67,7 @@ export class Content extends Ion {
     if (self._config.get('tapPolyfill') === true) {
       self._zone.runOutsideAngular(function() {
         self.scrollElement.addEventListener('scroll', self._scroll);
-      });  
+      });
     }
   }
 

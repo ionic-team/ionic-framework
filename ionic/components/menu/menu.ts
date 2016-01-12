@@ -115,13 +115,13 @@ export class Menu extends Ion {
 
   constructor(
     elementRef: ElementRef,
-    config: Config,
+    private _config: Config,
     private app: IonicApp,
     private platform: Platform,
     private keyboard: Keyboard,
     private zone: NgZone
   ) {
-    super(elementRef, config);
+    super(elementRef);
 
     this.opening = new EventEmitter('opening');
     this.isOpen = false;
@@ -133,7 +133,6 @@ export class Menu extends Ion {
    * @private
    */
   ngOnInit() {
-    super.ngOnInit();
     let self = this;
 
     let content = self.content;
@@ -196,7 +195,7 @@ export class Menu extends Ion {
   _initType(type) {
     type = type && type.trim().toLowerCase();
     if (!type) {
-      type = this.config.get('menuType');
+      type = this._config.get('menuType');
     }
     this.type = type;
   }
@@ -208,7 +207,7 @@ export class Menu extends Ion {
     if (!this._type) {
       this._type = new menuTypes[this.type](this);
 
-      if (this.config.get('animate') === false) {
+      if (this._config.get('animate') === false) {
         this._type.open.duration(33);
         this._type.close.duration(33);
       }

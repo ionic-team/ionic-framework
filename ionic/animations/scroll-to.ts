@@ -2,8 +2,10 @@ import {raf} from '../util/dom';
 
 
 export class ScrollTo {
+  public isPlaying: boolean;
+  private _el: HTMLElement;
 
-  constructor(ele, x, y, duration) {
+  constructor(ele: any) {
     if (typeof ele === 'string') {
       // string query selector
       ele = document.querySelector(ele);
@@ -21,7 +23,7 @@ export class ScrollTo {
     }
   }
 
-  start(x, y, duration, tolerance) {
+  start(x, y, duration, tolerance): Promise<any> {
     // scroll animation loop w/ easing
     // credit https://gist.github.com/dezinezync/5487119
     let self = this;

@@ -5,7 +5,6 @@ import {Ion} from '../ion';
 import {Animation} from '../../animations/animation';
 import {Gesture} from '../../gestures/gesture';
 import {DragGesture} from '../../gestures/drag-gesture';
-import {Config} from '../../config/config';
 import {dom} from '../../util';
 import {CSS} from '../../util/dom';
 import * as util from '../../util';
@@ -98,9 +97,9 @@ export class Slides extends Ion {
    * @private
    * @param {ElementRef} elementRef  TODO
    */
-  constructor(elementRef: ElementRef, config: Config) {
+  constructor(elementRef: ElementRef) {
 
-    super(elementRef, config);
+    super(elementRef);
     this.rapidUpdate = util.debounce(() => {
       this.update();
     }, 10);

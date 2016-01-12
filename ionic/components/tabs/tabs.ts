@@ -1,5 +1,4 @@
-import {Directive, ElementRef, Optional, Host, forwardRef, ViewContainerRef, HostListener} from 'angular2/core';
-import {EventEmitter, Output} from 'angular2/core';
+import {Component, Directive, ElementRef, Optional, Host, forwardRef, ViewContainerRef, HostListener, EventEmitter, Output, Input, Renderer} from 'angular2/core';
 import {NgFor, NgIf} from 'angular2/common';
 
 import {Ion} from '../ion';
@@ -8,9 +7,9 @@ import {Config} from '../../config/config';
 import {Platform} from '../../platform/platform';
 import {NavController} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
-import {ConfigComponent} from '../../decorators/config-component';
 import {Icon} from '../icon/icon';
 import {rafFrames} from '../../util/dom';
+import {isUndefined} from '../../util/util';
 
 
 /**
@@ -35,13 +34,8 @@ import {rafFrames} from '../../util/dom';
  * @see {@link /docs/v2/components#tabs Tabs Component Docs}
  * @see {@link ../Tab Tab API Docs}
  */
-@ConfigComponent({
+@Component({
   selector: 'ion-tabs',
-  defaultInputs: {
-    'tabbarPlacement': 'bottom',
-    'tabbarIcons': 'top',
-    'preloadTabs': false
-  },
   template:
     '<ion-navbar-section>' +
       '<template navbar-anchor></template>' +
@@ -69,26 +63,23 @@ import {rafFrames} from '../../util/dom';
   ]
 })
 export class Tabs extends Ion {
+  private tabs: Array<any>;
+  @Input() tabbarPlacement: string;
+  @Input() tabbarIcons: string;
+  @Input() preloadTabs: boolean;
   @Output() change: EventEmitter<any> = new EventEmitter();
 
-  /**
-   * Hi, I'm "Tabs". I'm really just another Page, with a few special features.
-   * "Tabs" can be a sibling to other pages that can be navigated to, which those
-   * sibling pages may or may not have their own tab bars (doesn't matter). The fact
-   * that "Tabs" can happen to have children "Tab" classes, and each "Tab" can have
-   * children pages with their own "ViewController" instance, as nothing to do with the
-   * point that "Tabs" is itself is just a page with its own instance of ViewController.
-   */
  constructor(
-    config: Config,
     elementRef: ElementRef,
     @Optional() viewCtrl: ViewController,
     @Optional() navCtrl: NavController,
-    private _platform: Platform
+    private _config: Config,
+    private _platform: Platform,
+    private _renderer: Renderer
   ) {
-    super(elementRef, config);
+    super(elementRef);
     this.parent = navCtrl;
-    this.subPages = config.get('tabSubPages');
+    this.subPages = _config.get('tabSubPages');
 
     this._tabs = [];
     this._id = ++tabIds;
@@ -112,14 +103,25 @@ export class Tabs extends Ion {
    * @private
    */
   ngOnInit() {
-    super.ngOnInit();
     this.preloadTabs = (this.preloadTabs !== "false" && this.preloadTabs !== false);
+
+    this._setConfig('tabbarPlacement', 'bottom');
+    this._setConfig('tabbarIcons', 'top');
+    this._setConfig('preloadTabs', false);
 
     if (this._highlight) {
       this._platform.onResize(() => {
         this._highlight.select(this.getSelected());
       });
     }
+  }
+
+  _setConfig(attrKey, fallback) {
+    var val = this[attrKey];
+    if (isUndefined(val)) {
+      val = this._config.get(attrKey);
+    }
+    this._renderer.setElementAttribute(this.elementRef, attrKey, val);
   }
 
   /**
@@ -294,7 +296,7 @@ let tabIds = -1;
 })
 class TabButton extends Ion {
   constructor(@Host() tabs: Tabs, config: Config, elementRef: ElementRef) {
-    super(elementRef, config);
+    super(elementRef);
     this.tabs = tabs;
     this.disHover = (config.get('hoverCSS') === false);
   }

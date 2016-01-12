@@ -21,7 +21,7 @@ class BackButton extends Ion {
     elementRef: ElementRef,
     @Optional() @Inject(forwardRef(() => Navbar)) navbar: Navbar
   ) {
-    super(elementRef, null);
+    super(elementRef);
     this.navCtrl = navCtrl;
     navbar && navbar.setBackButtonRef(elementRef);
   }
@@ -137,7 +137,6 @@ export class Navbar extends ToolbarBase {
    * @private
    */
   ngOnInit() {
-    super.ngOnInit();
     let hideBackButton = this.hideBackButton;
     if (typeof hideBackButton === 'string') {
       this.hideBackButton = (hideBackButton === '' || hideBackButton === 'true');

@@ -1,9 +1,8 @@
-import {ChangeDetectorRef, Component, Directive, ElementRef, Host, Optional, forwardRef, Inject, NgZone, Compiler, AppViewManager, Renderer, ViewContainerRef} from 'angular2/core';
+import {ChangeDetectorRef, Component, Directive, ElementRef, Host, Input, Optional, forwardRef, Inject, NgZone, Compiler, AppViewManager, Renderer, ViewContainerRef} from 'angular2/core';
 
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
 import {Keyboard} from '../../util/keyboard';
-import {ConfigComponent} from '../../decorators/config-component';
 import {NavController} from './nav-controller';
 import {ViewController} from './view-controller';
 
@@ -100,17 +99,12 @@ import {ViewController} from './view-controller';
  *
  * @see {@link /docs/v2/components#navigation Navigation Component Docs}
  */
-@ConfigComponent({
+@Component({
   selector: 'ion-nav',
-  inputs: [
-    'root'
-  ],
-  // defaultInputs: {
-  //   'swipeBackEnabled': true
-  // },
   template: '<template #contents></template>'
 })
 export class Nav extends NavController {
+  @Input() root: any;
 
   constructor(
     @Optional() hostNavCtrl: NavController,
@@ -139,8 +133,6 @@ export class Nav extends NavController {
    * @private
    */
   ngOnInit() {
-    super.ngOnInit();
-
     if (this.root) {
       if (typeof this.root !== 'function') {
         throw 'The [root] property in <ion-nav> must be given a reference to a component class from within the constructor.';

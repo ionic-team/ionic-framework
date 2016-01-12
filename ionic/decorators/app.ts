@@ -4,6 +4,8 @@ import {TapClick} from '../components/tap-click/tap-click';
 import {ionicProviders} from '../config/bootstrap';
 import {IONIC_DIRECTIVES} from '../config/directives';
 
+const _reflect: any=Reflect;
+
 /**
 * @name App
 * @description
@@ -28,11 +30,11 @@ import {IONIC_DIRECTIVES} from '../config/directives';
 * @param {String} [templateUrl] - a relative URL pointing to the template to use for the app root
 *
 */
-export function App(args={}) {
+export function App(args: any={}) {
 
   return function(cls) {
     // get current annotations
-    let annotations = Reflect.getMetadata('annotations', cls) || [];
+    let annotations = _reflect.getMetadata('annotations', cls) || [];
 
     args.selector = 'ion-app';
 
@@ -48,8 +50,8 @@ export function App(args={}) {
     annotations.push(new Component(args));
 
     // redefine with added annotations
-    Reflect.defineMetadata('annotations', annotations, cls);
-    
+    _reflect.defineMetadata('annotations', annotations, cls);
+
     // define array of bootstrap providers
     let providers = ionicProviders(args).concat(args.providers || []);
 

@@ -7,6 +7,7 @@ import {Config} from './config';
 import {Platform} from '../platform/platform';
 import {Form} from '../util/form';
 import {Keyboard} from '../util/keyboard';
+import {ScrollTo} from '../animations/scroll-to';
 import {Events} from '../util/events';
 import {NavRegistry} from '../components/nav/nav-registry';
 import {Translate} from '../translation/translate';
@@ -18,7 +19,7 @@ import {ready, closest} from '../util/dom';
 /**
  * @private
  */
-export function ionicProviders(args={}) {
+export function ionicProviders(args: any={}) {
   let platform = new Platform();
   let navRegistry = new NavRegistry(args.pages);
 
@@ -34,7 +35,7 @@ export function ionicProviders(args={}) {
   platform.load();
   config.setPlatform(platform);
 
-  let clickBlock = new ClickBlock(config.get('clickBlock'));
+  let clickBlock = new ClickBlock();
 
   let events = new Events();
   let featureDetect = new FeatureDetect();
@@ -137,10 +138,10 @@ function bindEvents(window, document, platform, events) {
   window.addEventListener('statusTap', (ev) => {
     // TODO: Make this more better
     var el = document.elementFromPoint(platform.width() / 2, platform.height() / 2);
-    if(!el) { return; }
+    if (!el) { return; }
 
     var content = closest(el, 'scroll-content');
-    if(content) {
+    if (content) {
       var scrollTo = new ScrollTo(content);
       scrollTo.start(0, 0, 300, 0);
     }

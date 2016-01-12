@@ -1,7 +1,6 @@
 import {Directive, ElementRef, Renderer, Attribute, NgZone} from 'angular2/core';
 
 import {Ion} from '../ion';
-import {Config} from '../../config/config';
 import {ListVirtualScroll} from './virtual';
 import {ItemSlidingGesture} from '../item/item-sliding-gesture';
 import {isDefined} from '../../util';
@@ -30,8 +29,8 @@ import {isDefined} from '../../util';
 })
 export class List extends Ion {
 
-  constructor(elementRef: ElementRef, config: Config, private zone: NgZone) {
-    super(elementRef, config);
+  constructor(elementRef: ElementRef, private zone: NgZone) {
+    super(elementRef);
     this.ele = elementRef.nativeElement;
     this._enableSliding = false;
   }
@@ -40,8 +39,6 @@ export class List extends Ion {
    * @private
    */
   ngOnInit() {
-    super.ngOnInit();
-
     if (isDefined(this.virtual)) {
       console.log('Content', this.content);
       console.log('Virtual?', this.virtual);

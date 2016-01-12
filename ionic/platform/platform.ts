@@ -469,7 +469,7 @@ export class Platform {
   /**
    * @private
    */
-  load(platformOverride) {
+  load(platformOverride?) {
     let rootPlatformNode = null;
     let engineNode = null;
     let self = this;
