@@ -17,7 +17,7 @@
  * ```
  */
 export class Events {
-  private _channels: Array<any>;
+  private _channels: Array<any> = [];
 
   /**
    * Subscribe to an event topic. Events that get posted to that topic
