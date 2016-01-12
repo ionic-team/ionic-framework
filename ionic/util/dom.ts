@@ -234,21 +234,14 @@ export function removeElement(ele) {
  * to reduce DOM reads. Cache is cleared on a window resize.
  * @param {TODO} ele  TODO
  */
-export function getDimensions(ion, ele) {
-  if (!ion._dimId) {
-    ion._dimId = ++dimensionIds;
-    if (ion._dimId % 1000 === 0) {
-      // periodically flush dimensions
-      flushDimensionCache();
-    }
-  }
-
-  let dimensions = dimensionCache[ion._dimId];
+export function getDimensions(ele: HTMLElement, id: string): {
+  width: number, height: number, left: number, top: number
+} {
+  let dimensions = dimensionCache[id];
   if (!dimensions) {
-    let ele = ion.getNativeElement();
     // make sure we got good values before caching
     if (ele.offsetWidth && ele.offsetHeight) {
-      dimensions = dimensionCache[ion._dimId] = {
+      dimensions = dimensionCache[id] = {
         width: ele.offsetWidth,
         height: ele.offsetHeight,
         left: ele.offsetLeft,
@@ -285,7 +278,6 @@ export function flushDimensionCache() {
 }
 
 let dimensionCache:any = {};
-let dimensionIds = 0;
 
 function isStaticPositioned(element) {
   return (element.style.position || 'static') === 'static';

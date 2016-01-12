@@ -3,6 +3,7 @@ import {Config} from '../config/config';
 import {isArray} from '../util';
 import * as dom from '../util/dom';
 
+let ids:number = 0;
 
 /**
  * Base class for all Ionic components. Exposes some common functionality
@@ -10,8 +11,10 @@ import * as dom from '../util/dom';
  * sending/receiving app-level events.
  */
 export class Ion {
-  constructor(elementRef: ElementRef) {
-    this.elementRef = elementRef;
+  private _id: string;
+
+  constructor(protected elementRef: ElementRef) {
+    this._id = 'i-' + ids++;
   }
 
   getElementRef() {
@@ -23,15 +26,15 @@ export class Ion {
   }
 
   getDimensions() {
-    return dom.getDimensions(this);
+    return dom.getDimensions(this.elementRef.nativeElement, this._id);
   }
 
   width() {
-    return dom.getDimensions(this).width;
+    return dom.getDimensions(this.elementRef.nativeElement, this._id).width;
   }
 
   height() {
-    return dom.getDimensions(this).height;
+    return dom.getDimensions(this.elementRef.nativeElement, this._id).height;
   }
 
 }
