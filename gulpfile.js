@@ -133,7 +133,9 @@ function tsCompile(options, cacheName){
   return gulp.src([
       'ionic/**/*.ts',
       '!ionic/components/*/test/**/*',
-      '!ionic/util/test/*'
+      '!ionic/util/test/*',
+      '!ionic/config/test/*',
+      '!ionic/platform/test/*'
     ])
     .pipe(cache(cacheName, { optimizeMemory: true }))
     .pipe(tsc(options, undefined, tscReporter))
