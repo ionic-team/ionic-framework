@@ -7,20 +7,22 @@ import {Platform} from '../../platform/platform';
  * @private
  */
 export class DisplayWhen {
+  protected _isMatch: boolean = false;
+  private _platform: Platform;
+  private _conditions: string[];
 
-  constructor(conditions, platform, ngZone) {
-    this.isMatch = false;
-    this.platform = platform;
+  constructor(conditions: string, platform: Platform, ngZone: NgZone) {
+    this._platform = platform;
 
     if (!conditions) return;
 
-    this.conditions = conditions.split(',');
+    this._conditions = conditions.split(',');
 
     // check if its one of the matching platforms first
     // a platform does not change during the life of an app
-    for (let i = 0; i < this.conditions.length; i++) {
-      if (this.conditions[i] && platform.is(this.conditions[i])) {
-        this.isMatch = true;
+    for (let i = 0; i < this._conditions.length; i++) {
+      if (this._conditions[i] && platform.is(this._conditions[i])) {
+        this._isMatch = true;
         return;
       }
     }
@@ -38,15 +40,15 @@ export class DisplayWhen {
   }
 
   orientation() {
-    for (let i = 0; i < this.conditions.length; i++) {
+    for (let i = 0; i < this._conditions.length; i++) {
 
-      if (this.conditions[i] == 'portrait') {
-        this.isMatch = this.platform.isPortrait();
+      if (this._conditions[i] == 'portrait') {
+        this._isMatch = this._platform.isPortrait();
         return true;
       }
 
-      if (this.conditions[i] == 'landscape') {
-        this.isMatch = this.platform.isLandscape();
+      if (this._conditions[i] == 'landscape') {
+        this._isMatch = this._platform.isLandscape();
         return true;
       }
     }
@@ -86,7 +88,7 @@ export class ShowWhen extends DisplayWhen {
    * @private
    */
   get hidden() {
-    return !this.isMatch;
+    return !this._isMatch;
   }
 
 }
@@ -123,7 +125,7 @@ export class HideWhen extends DisplayWhen {
    * @private
    */
   get hidden() {
-    return this.isMatch;
+    return this._isMatch;
   }
 
 }
