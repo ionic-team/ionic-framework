@@ -1,4 +1,4 @@
-import {Component, Directive, Optional, ElementRef, Input, Renderer, HostListener, ContentChild, ContentChildren} from 'angular2/core';
+import {Component, Directive, Optional, ElementRef, Input, Renderer, HostListener, ContentChild, ContentChildren, QueryList} from 'angular2/core';
 import {NgControl} from 'angular2/common';
 
 import {Alert} from '../alert/alert';
@@ -94,7 +94,7 @@ import {Option} from '../option/option';
   host: {
     'class': 'item',
     'tappable': '',
-    'tabindex': 0,
+    'tabindex': '0',
     '[attr.aria-disabled]': 'disabled'
   },
   template:
@@ -108,32 +108,35 @@ import {Option} from '../option/option';
     '</div>'
 })
 export class Select {
-  @Input() public cancelText: string = 'Cancel';
-  @Input() public okText: string = 'OK';
-  @Input() public value: string = '';
-  @Input() public alertOptions: any = {};
-  @Input() public checked: any = false;
+  private selectedText: string = '';
+  private labelId: string;
+
+  @Input() cancelText: string = 'Cancel';
+  @Input() okText: string = 'OK';
+  @Input() value: string = '';
+  @Input() alertOptions: any = {};
+  @Input() checked: any = false;
   @Input() disabled: boolean = false;
   @Input() id: string = '';
   @Input() multiple: string = '';
+
   @ContentChild(Label) label: Label;
-  @ContentChildren(Option) options;
+  @ContentChildren(Option) options: QueryList<Option>;
 
   constructor(
-    private _form: Form,
-    private _elementRef: ElementRef,
-    private _renderer: Renderer,
-    @Optional() private _navCtrl: NavController,
+    private form: Form,
+    private elementRef: ElementRef,
+    private renderer: Renderer,
+    @Optional() private navCtrl: NavController,
     @Optional() ngControl: NgControl
   ) {
-    _form.register(this);
-    this.selectedText = '';
+    this.form.register(this);
 
     if (ngControl) {
       ngControl.valueAccessor = this;
     }
 
-    if (!_navCtrl) {
+    if (!navCtrl) {
       console.error('parent <ion-nav> required for <ion-select>');
     }
   }
@@ -143,12 +146,12 @@ export class Select {
    */
   ngOnInit() {
     if (!this.id) {
-      this.id = 'sel-' + this._form.nextId();
-      this._renderer.setElementAttribute(this._elementRef, 'id', this.id);
+      this.id = 'sel-' + this.form.nextId();
+      this.renderer.setElementAttribute(this.elementRef, 'id', this.id);
     }
 
     this.labelId = 'lbl-' + this.id;
-    this._renderer.setElementAttribute(this._elementRef, 'aria-labelledby', this.labelId);
+    this.renderer.setElementAttribute(this.elementRef, 'aria-labelledby', this.labelId);
   }
 
   /**
@@ -157,15 +160,14 @@ export class Select {
   ngAfterContentInit() {
     var selectedOption = this.options.toArray().find(o => o.checked);
 
-    if(!selectedOption) {
+    if (!selectedOption) {
       this.options.toArray().forEach(o => {
-	o.checked = o.value === this.value + '';
-	if(o.checked) {
-	  selectedOption = o;
-	}
+        o.checked = o.value === this.value + '';
+        if (o.checked) {
+          selectedOption = o;
+        }
       });
-    }
-    if (selectedOption) {
+    } else {
       this.value = selectedOption.value;
       this.selectedText = selectedOption.text;
       setTimeout(()=> {
@@ -267,7 +269,7 @@ export class Select {
       });
     }
 
-    this._navCtrl.present(alert);
+    this.navCtrl.present(alert);
   }
 
   /**
@@ -315,6 +317,6 @@ export class Select {
    * @private
    */
   ngOnDestroy() {
-    this._form.deregister(this);
+    this.form.deregister(this);
   }
 }
