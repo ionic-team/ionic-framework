@@ -2,7 +2,7 @@
 
 [![NPM](https://nodei.co/npm/ionic.png?stars&downloads)](https://nodei.co/npm/ionic/)
 
-Looking for our [documentation?](http://ionicframework.com/docs/).
+Looking for our [documentation](http://ionicframework.com/docs/)?
 
 # What is Ionic?
 
@@ -10,7 +10,7 @@ Looking for our [documentation?](http://ionicframework.com/docs/).
 
 We built Ionic because we wanted a framework that focused on building high quality hybrid native apps and mobile web apps using open web technologies we loved. The same technology the world has been using for decades to build websites, desktop applications, and now mobile and tablet apps. We wanted this framework to be obsessive about great design and performance, and work on multiple platforms without changing a thing.
 
-We rejected the idea that web mobile apps had to be clunky, slow, and non-native. We believed that we could bring the best of the web together with the best of the native platforms without sacricificing the power, accessibility, and portability of the open web.
+We rejected the idea that web mobile apps had to be clunky, slow, and non-native. We believed that we could bring the best of the web together with the best of the native platforms without sacrificing the power, accessibility, and portability of the open web.
 
 Above all, we built Ionic to be the easiest way for the next generation of developers to get into mobile and start building apps that compete with the best on the app store, and do it affordably. 
 
