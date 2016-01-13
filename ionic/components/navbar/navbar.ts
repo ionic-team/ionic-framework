@@ -1,4 +1,4 @@
-import {Component, Directive, Optional, ElementRef, Renderer, TemplateRef, forwardRef, Inject, ViewContainerRef} from 'angular2/core';
+import {Component, Directive, Optional, ElementRef, Renderer, TemplateRef, forwardRef, Inject, ViewContainerRef, Input} from 'angular2/core';
 
 import {Ion} from '../ion';
 import {Icon} from '../icon/icon';
@@ -17,19 +17,18 @@ import {NavController} from '../nav/nav-controller';
 })
 class BackButton extends Ion {
   constructor(
-    @Optional() navCtrl: NavController,
+    @Optional() private _nav: NavController,
     elementRef: ElementRef,
     @Optional() @Inject(forwardRef(() => Navbar)) navbar: Navbar
   ) {
     super(elementRef);
-    this.navCtrl = navCtrl;
     navbar && navbar.setBackButtonRef(elementRef);
   }
 
   goBack(ev) {
     ev.stopPropagation();
     ev.preventDefault();
-    this.navCtrl && this.navCtrl.pop();
+    this._nav && this._nav.pop();
   }
 }
 
@@ -94,9 +93,9 @@ class ToolbarBackground {
   template:
     '<div class="toolbar-background"></div>' +
     '<button class="back-button bar-button bar-button-default" [hidden]="hideBackButton">' +
-      '<ion-icon class="back-button-icon" [name]="bbIcon"></ion-icon>' +
+      '<ion-icon class="back-button-icon" [name]="_bbIcon"></ion-icon>' +
       '<span class="back-button-text">' +
-        '<span class="back-default">{{bbText}}</span>' +
+        '<span class="back-default">{{_bbText}}</span>' +
       '</span>' +
     '</button>' +
     '<ng-content select="[menuToggle],ion-buttons[left]"></ng-content>' +
@@ -109,28 +108,30 @@ class ToolbarBackground {
     '[hidden]': '_hidden',
     'class': 'toolbar'
   },
-  inputs: [
-    'hideBackButton'
-  ],
   directives: [BackButton, BackButtonText, Icon, ToolbarBackground]
 })
 export class Navbar extends ToolbarBase {
+  private _bbIcon: string;
+  private _bbText: string;
+  private _hidden: boolean;
+  private _bbRef: ElementRef;
+  private _bbtRef: ElementRef;
+  private _bgRef: ElementRef;
+  @Input() hideBackButton: any;
 
   constructor(
-    app: IonicApp,
+    private _app: IonicApp,
     @Optional() viewCtrl: ViewController,
     elementRef: ElementRef,
     config: Config,
-    renderer: Renderer
+    private _renderer: Renderer
   ) {
-    super(elementRef, config);
-    this.app = app;
-    this.renderer = renderer;
+    super(elementRef);
 
     viewCtrl && viewCtrl.setNavbar(this);
 
-    this.bbIcon = config.get('backButtonIcon');
-    this.bbText = config.get('backButtonText');
+    this._bbIcon = config.get('backButtonIcon');
+    this._bbText = config.get('backButtonText');
   }
 
   /**
@@ -143,46 +144,50 @@ export class Navbar extends ToolbarBase {
     }
   }
 
-  /**
-   * @private
-   */
-  getBackButtonRef() {
-    return this.bbRef;
+  setBackButtonText(text: string) {
+    this._bbText = text;
   }
 
   /**
    * @private
    */
-  setBackButtonRef(backButtonElementRef) {
-    this.bbRef = backButtonElementRef;
+  getBackButtonRef() {
+    return this._bbRef;
+  }
+
+  /**
+   * @private
+   */
+  setBackButtonRef(backButtonElementRef: ElementRef) {
+    this._bbRef = backButtonElementRef;
   }
 
   /**
    * @private
    */
   getBackButtonTextRef() {
-    return this.bbtRef;
+    return this._bbtRef;
   }
 
   /**
    * @private
    */
-  setBackButtonTextRef(backButtonTextElementRef) {
-    this.bbtRef = backButtonTextElementRef;
+  setBackButtonTextRef(backButtonTextElementRef: ElementRef) {
+    this._bbtRef = backButtonTextElementRef;
   }
 
   /**
    * @private
    */
-  setBackgroundRef(backgrouneElementRef) {
-    this.bgRef = backgrouneElementRef;
+  setBackgroundRef(backgrouneElementRef: ElementRef) {
+    this._bgRef = backgrouneElementRef;
   }
 
   /**
    * @private
    */
   getBackgroundRef() {
-    return this.bgRef;
+    return this._bgRef;
   }
 
   /**
@@ -190,7 +195,7 @@ export class Navbar extends ToolbarBase {
    */
   didEnter() {
     try {
-      this.app.setTitle(this.getTitleText());
+      this._app.setTitle(this.getTitleText());
     } catch(e) {
       console.error(e);
     }

@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Directive, ElementRef, Host, Input, Optional, forwardRef, Inject, NgZone, Compiler, AppViewManager, Renderer, ViewContainerRef} from 'angular2/core';
+import {Component, Directive, ElementRef, Host, Input, Optional, forwardRef, Inject, NgZone, Compiler, AppViewManager, Renderer, ViewContainerRef, Type} from 'angular2/core';
 
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
@@ -104,7 +104,8 @@ import {ViewController} from './view-controller';
   template: '<template #contents></template>'
 })
 export class Nav extends NavController {
-  @Input() root: any;
+  @Input() root: Type;
+  @Input() swipeBackEnabled: any;
 
   constructor(
     @Optional() hostNavCtrl: NavController,
@@ -116,10 +117,9 @@ export class Nav extends NavController {
     compiler: Compiler,
     viewManager: AppViewManager,
     zone: NgZone,
-    renderer: Renderer,
-    cd: ChangeDetectorRef
+    renderer: Renderer
   ) {
-    super(hostNavCtrl, app, config, keyboard, elementRef, 'contents', compiler, viewManager, zone, renderer, cd);
+    super(hostNavCtrl, app, config, keyboard, elementRef, 'contents', compiler, viewManager, zone, renderer);
 
     if (viewCtrl) {
       // an ion-nav can also act as an ion-page within a parent ion-nav

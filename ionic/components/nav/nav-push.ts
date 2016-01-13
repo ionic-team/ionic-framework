@@ -1,4 +1,4 @@
-import {Directive, Optional} from 'angular2/core';
+import {Directive, Optional, Input} from 'angular2/core';
 import {NavController} from './nav-controller';
 import {NavRegistry} from './nav-registry';
 
@@ -44,24 +44,20 @@ import {NavRegistry} from './nav-registry';
  */
 @Directive({
   selector: '[navPush]',
-  inputs: [
-    'instruction: navPush',
-    'params: navParams'
-  ],
   host: {
     '(click)': 'onClick()',
     'role': 'link'
   }
 })
 export class NavPush {
-  /**
-   * TODO
-   * @param {NavController} nav  TODO
-   */
-  constructor(@Optional() nav: NavController, registry: NavRegistry) {
-    this.nav = nav;
-    this.registry = registry;
-    if (!nav) {
+  @Input() navPush;
+  @Input() navParams;
+  
+  constructor(
+    @Optional() private _nav: NavController, 
+    private registry: NavRegistry
+   ) {
+    if (!_nav) {
       console.error('nav-push must be within a NavController');
     }
   }
@@ -72,22 +68,23 @@ export class NavPush {
   onClick() {
     let destination, params;
 
-    if (this.instruction instanceof Array) {
-      if (this.instruction.length > 2) {
+    if (this.navPush instanceof Array) {
+      if (this.navPush.length > 2) {
         throw 'Too many [navPush] arguments, expects [View, { params }]'
       }
-      destination = this.instruction[0];
-      params = this.instruction[1] || this.params;
+      destination = this.navPush[0];
+      params = this.navPush[1] || this.navParams;
+      
     } else {
-      destination = this.instruction;
-      params = this.params;
+      destination = this.navPush;
+      params = this.navParams;
     }
 
     if (typeof destination === "string") {
       destination = this.registry.get(destination);
     }
 
-    this.nav && this.nav.push(destination, params);
+    this._nav && this._nav.push(destination, params);
   }
 }
 
@@ -122,9 +119,8 @@ export class NavPop {
    * TODO
    * @param {NavController} nav  TODO
    */
-  constructor(@Optional() nav: NavController) {
-    this.nav = nav;
-    if (!nav) {
+  constructor(@Optional() private _nav: NavController) {
+    if (!_nav) {
       console.error('nav-pop must be within a NavController');
     }
   }
@@ -132,6 +128,6 @@ export class NavPop {
    * @private
    */
   onClick() {
-    this.nav && this.nav.pop();
+    this._nav && this._nav.pop();
   }
 }

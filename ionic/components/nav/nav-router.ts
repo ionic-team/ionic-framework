@@ -15,27 +15,21 @@ import {Nav} from './nav';
   selector: 'ion-nav'
 })
 export class NavRouter extends RouterOutlet {
-
-  /**
-   * TODO
-   * @param {ElementRef} _elementRef  TODO
-   * @param {DynamicComponentLoader} _loader  TODO
-   * @param {Router} _parentRouter  TODO
-   * @param {string} nameAttr  Value of the element's 'name' attribute
-   * @param {Nav} nav  TODO
-   */
-  constructor(_elementRef: ElementRef, _loader: DynamicComponentLoader,
-              _parentRouter: Router, @Attribute('name') nameAttr: string,
-              nav: Nav) {
+  private _activeViewId;
+  
+  constructor(
+    _elementRef: ElementRef, 
+    _loader: DynamicComponentLoader,
+    _parentRouter: Router, 
+    @Attribute('name') nameAttr: string,
+    private _nav: Nav
+  ) {
     super(_elementRef, _loader, _parentRouter, nameAttr);
-
-    // Nav is Ionic's NavController, which we injected into this class
-    this.nav = nav;
 
     // register this router with Ionic's NavController
     // Ionic's NavController will call this NavRouter's "stateChange"
     // method when the NavController has...changed its state
-    nav.registerRouter(this);
+    _nav.registerRouter(this);
   }
 
   /**
@@ -50,13 +44,13 @@ export class NavRouter extends RouterOutlet {
     var childRouter = this._parentRouter.childRouter(componentType);
 
     // prevent double navigations to the same view
-    var lastView = this.nav.last();
-    if (this.nav.isTransitioning() || lastView && lastView.componentType === componentType && lastView.params.data === nextInstruction.params) {
+    var lastView = this._nav.last();
+    if (this._nav.isTransitioning() || lastView && lastView.componentType === componentType && lastView.params.data === nextInstruction.params) {
       return Promise.resolve();
     }
 
     // tell the NavController which componentType, and it's params, to navigate to
-    return this.nav.push(componentType, nextInstruction.params);
+    return this._nav.push(componentType, nextInstruction.params);
   }
 
   reuse(nextInstruction: ComponentInstruction) {

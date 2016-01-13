@@ -108,7 +108,7 @@ export class NavController extends Ion {
   private _sbThreshold: any;
   public sbGesture: any;
   private initZIndex: number = 10;
-  private id: number;
+  public id: number;
   private _ids: number = -1;
   public providers: ResolvedProvider[];
   public router: any;
@@ -317,10 +317,10 @@ export class NavController extends Ion {
    * @param {Object} [opts={}] Any options you want to use pass to transtion
    * @returns {Promise} Returns a promise, which resolves when the transition has completed
    */
-  present(enteringView: ViewController, opts = {}): Promise<any> {
+  present(enteringView: ViewController, opts: any = {}): Promise<any> {
     let nav = this.rootNav;
 
-    if (nav._tabs) {
+    if (nav['_tabs']) {
       // TODO: must have until this goes in
       // https://github.com/angular/angular/issues/5481
       console.error('A parent <ion-nav> is required for ActionSheet/Alert/Modal');
@@ -382,7 +382,7 @@ export class NavController extends Ion {
    * @param {Object} [opts={}] Any options you want to use pass to transtion
    * @returns {Promise} Returns a promise when the transition is completed
    */
-  pop(opts = {}): Promise<any> {
+  pop(opts: any = {}): Promise<any> {
     if (!opts.animateFirst && !this.canGoBack()) {
       return Promise.reject('pop cannot go back');
     }
@@ -433,7 +433,7 @@ export class NavController extends Ion {
    * @param view {ViewController} to pop to
    * @param {Object} [opts={}] Any options you want to use pass to transtion
    */
-  popTo(viewCtrl: ViewController, opts = {}): Promise<any> {
+  popTo(viewCtrl: ViewController, opts: any = {}): Promise<any> {
     // Get the target index of the view to pop to
     let viewIndex = this._views.indexOf(viewCtrl);
     let targetIndex = viewIndex + 1;
@@ -656,8 +656,8 @@ export class NavController extends Ion {
    * @param {Object} [opts={}] Any options you want to use pass
    * @returns {Promise} Returns a promise when the pages are set
    */
-  setPages(componentTypes: Array<Type>, opts = {}): Promise<any> {
-    if (!componentTypes || !componentTypes.length) {
+  setPages(components: Array<{componentType: Type, params?: any}>, opts: any = {}): Promise<any> {
+    if (!components || !components.length) {
       return Promise.resolve();
     }
 
@@ -684,22 +684,18 @@ export class NavController extends Ion {
       }
     }
 
-    let componentObj = null;
-    let componentType = null;
-    let viewCtrl = null;
+    let componentType: Type = null;
+    let viewCtrl: ViewController = null;
 
     // create the ViewControllers that go before the new active ViewController
     // in the stack, but the previous views shouldn't render yet
     if (components.length > 1) {
-      let newBeforeItems = components.slice(0, components.length - 1);
-      for (let j = 0; j < newBeforeItems.length; j++) {
-        componentObj = newBeforeItems[j];
+      let newBeforeComponents: Array<{componentType: Type, params?: any}> = components.slice(0, components.length - 1);
+      for (let j = 0; j < newBeforeComponents.length; j++) {
+        componentType = newBeforeComponents[j].componentType;
 
-        if (componentObj) {
-          // could be an object with a componentType property, or it is a componentType
-          componentType = componentObj.componentType || componentObj;
-
-          viewCtrl = new ViewController(componentType, componentObj.params);
+        if (componentType) {
+          viewCtrl = new ViewController(componentType, newBeforeComponents[j].params);
           viewCtrl.setNav(this);
           viewCtrl.state = CACHED_STATE;
           viewCtrl.shouldDestroy = false;
@@ -711,13 +707,10 @@ export class NavController extends Ion {
       }
     }
 
-    // get the component that will become the active item
-    // it'll be the last one in the given components array
-    componentObj = components[ components.length - 1 ];
-    componentType = componentObj.componentType || componentObj;
-
     // transition the leaving and entering
-    return this.push(componentType, componentObj.params, opts);
+    return this.push(components[ components.length - 1 ].componentType, 
+                     components[ components.length - 1 ].params, 
+                     opts);
   }
 
   /**
@@ -727,11 +720,8 @@ export class NavController extends Ion {
    * @param {Object} [opts={}] Any options you want to use pass to transtion
    * @returns {Promise} Returns a promise when done
    */
-  setRoot(componentType: ViewController, params: any = {}, opts: any = {}): Promise<any> {
-    return this.setPages([{
-             componentType,
-             params
-           }], opts);
+  setRoot(componentType: Type, params: any = {}, opts: any = {}): Promise<any> {
+    return this.setPages([ { componentType, params } ], opts);
   }
 
   /**
@@ -1015,7 +1005,7 @@ export class NavController extends Ion {
       let component = this._viewManager.getComponent(pageElementRef);
 
       // auto-add page css className created from component JS class name
-      let cssClassName = pascalCaseToDashCase(viewCtrl.componentType.name);
+      let cssClassName = pascalCaseToDashCase(viewCtrl.componentType['name']);
       this._renderer.setElementClass(pageElementRef, cssClassName, true);
 
       viewCtrl.addDestroy(() => {
@@ -1187,7 +1177,7 @@ export class NavController extends Ion {
         leavingView.state = STAGED_LEAVING_STATE;
 
         // init the swipe back transition animation
-        this._sbTrans = Transition.create(this, opts);
+        this._sbTrans = Animation.createTransition(enteringView, leavingView, opts);
         this._sbTrans.easing('linear').progressStart();
 
       });
@@ -1341,33 +1331,7 @@ export class NavController extends Ion {
   /**
    * @private
    */
-  navbarViewContainer(nbContainer) {
-    if (nbContainer) {
-      this._nbContainer = nbContainer;
-    }
-    if (this._nbContainer) {
-      return this._nbContainer;
-    }
-    if (this.parent) {
-      return this.parent.navbarViewContainer();
-    }
-  }
-
-  /**
-   * @private
-   * @returns {TODO} TODO
-   */
-  anchorElementRef() {
-    if (arguments.length) {
-      this._anchorER = arguments[0];
-    }
-    return this._anchorER;
-  }
-
-  /**
-   * @private
-   */
-  _add(viewCtrl) {
+  _add(viewCtrl: ViewController) {
     this._incId(viewCtrl);
     this._views.push(viewCtrl);
   }
@@ -1375,7 +1339,7 @@ export class NavController extends Ion {
   /**
    * @private
    */
-  _incId(viewCtrl) {
+  _incId(viewCtrl: ViewController) {
     viewCtrl.id = this.id + '-' + (++this._ids);
   }
 
@@ -1389,7 +1353,7 @@ export class NavController extends Ion {
   /**
    * @private
    */
-  _getStagedEntering() {
+  _getStagedEntering(): ViewController {
     for (let i = 0, ii = this._views.length; i < ii; i++) {
       if (this._views[i].state === STAGED_ENTERING_STATE) {
         return this._views[i];
@@ -1401,7 +1365,7 @@ export class NavController extends Ion {
   /**
    * @private
    */
-  _getStagedLeaving() {
+  _getStagedLeaving(): ViewController {
     for (let i = 0, ii = this._views.length; i < ii; i++) {
       if (this._views[i].state === STAGED_LEAVING_STATE) {
         return this._views[i];
@@ -1427,7 +1391,7 @@ export class NavController extends Ion {
    * @param {Index} The index of the page you want to get
    * @returns {Component} Returns the component that matches the index given
    */
-  getByIndex(index): ViewController {
+  getByIndex(index: number): ViewController {
     if (index < this._views.length && index > -1) {
       return this._views[index];
     }
@@ -1439,7 +1403,7 @@ export class NavController extends Ion {
    * @param {TODO} view  TODO
    * @returns {TODO} TODO
    */
-  getPrevious(viewCtrl): ViewController {
+  getPrevious(viewCtrl: ViewController): ViewController {
     if (viewCtrl) {
       let viewIndex = this._views.indexOf(viewCtrl);
 

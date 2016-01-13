@@ -1,3 +1,4 @@
+import {ViewController} from '../components/nav/view-controller';
 import {CSS, rafFrames} from '../util/dom';
 import {assign} from '../util/util';
 
@@ -564,7 +565,7 @@ export class Animation {
     return new AnimationClass(element);
   }
 
-  static createTransition(enteringView, leavingView, opts = {}) {
+  static createTransition(enteringView: ViewController, leavingView: ViewController, opts: any = {}) {
     let TransitionClass = AnimationRegistry[opts.animation];
     if (!TransitionClass) {
       // didn't find a transition animation, default to ios-transition
@@ -574,7 +575,7 @@ export class Animation {
     return new TransitionClass(enteringView, leavingView, opts);
   }
 
-  static register(name, AnimationClass) {
+  static register(name: string, AnimationClass) {
     AnimationRegistry[name] = AnimationClass;
   }
 
@@ -601,7 +602,8 @@ class Animate {
     // and correct API methods under the hood, so really doesn't matter
 
     if (!fromEffect) {
-      return console.error(ele.tagName, 'animation fromEffect required, toEffect:', toEffect);
+      console.error(ele.tagName, 'animation fromEffect required, toEffect:', toEffect);
+      return;
     }
 
     this.toEffect = parseEffect(toEffect);
@@ -609,7 +611,8 @@ class Animate {
     this.shouldAnimate = (duration > 32);
 
     if (!this.shouldAnimate) {
-      return inlineStyle(ele, this.toEffect);
+      inlineStyle(ele, this.toEffect);
+      return;
     }
 
     this.ele = ele;
@@ -635,7 +638,7 @@ class Animate {
     this.effects.push( convertProperties(this.toEffect) );
   }
 
-  play(done) {
+  play(done?: Function) {
     const self = this;
 
     if (self.ani) {
@@ -761,7 +764,7 @@ function parseEffect(inputEffect) {
 }
 
 function convertProperties(inputEffect) {
-  let outputEffect = {};
+  let outputEffect: any = {};
   let transforms = [];
   let value, property;
 

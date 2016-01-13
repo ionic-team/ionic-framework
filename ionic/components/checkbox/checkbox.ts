@@ -27,7 +27,7 @@ import {Form} from '../../util/form';
     'role': 'checkbox',
     'class': 'item',
     'tappable': '',
-    'tabindex': 0,
+    'tabindex': '0',
     '[attr.aria-disabled]': 'disabled'
   },
   template:
@@ -41,8 +41,9 @@ import {Form} from '../../util/form';
     '</div>'
 })
 export class Checkbox {
+  private _checked: boolean;
+  private labelId: string;
   @Input() value: string = '';
-  @Input() public checked: any = false;
   @Input() disabled: boolean = false;
   @Input() id: string;
 
@@ -84,9 +85,10 @@ export class Checkbox {
     return !!this._checked;
   }
 
+  @Input() 
   set checked(val) {
     this._checked = !!val;
-    this._renderer.setElementAttribute(this._elementRef, 'aria-checked', this._checked);
+    this._renderer.setElementAttribute(this._elementRef, 'aria-checked', this._checked.toString());
     this.onChange(this._checked);
   }
 

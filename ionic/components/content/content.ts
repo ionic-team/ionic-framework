@@ -1,6 +1,5 @@
 import {Component, ElementRef, Optional, NgZone} from 'angular2/core';
 
-import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
 import {raf}  from '../../util/dom';
@@ -32,24 +31,26 @@ import {ScrollTo} from '../../animations/scroll-to';
       '<ng-content></ng-content>' +
     '</scroll-content>'
 })
-export class Content extends Ion {
+export class Content {
+  private _padding: number = 0;
+  private _scrollEle: HTMLElement;
+  private _onScroll: any;
+  private _scrollTo: ScrollTo;
+  
   /**
    * @param {ElementRef} elementRef  A reference to the component's DOM element.
    * @param {Config} config  The config object to change content's default settings.
    */
   constructor(
-    elementRef: ElementRef,
+    private _elementRef: ElementRef,
     private _config: Config,
-    @Optional() viewCtrl: ViewController,
     private _app: IonicApp,
-    private _zone: NgZone
+    private _zone: NgZone,
+    @Optional() viewCtrl: ViewController
   ) {
-    super(elementRef);
-    this.scrollPadding = 0;
-
     if (viewCtrl) {
       viewCtrl.setContent(this);
-      viewCtrl.setContentRef(elementRef);
+      viewCtrl.setContentRef(_elementRef);
     }
   }
 
@@ -58,21 +59,21 @@ export class Content extends Ion {
    */
   ngOnInit() {
     let self = this;
-    self.scrollElement = self.getNativeElement().children[0];
+    self._scrollEle = self._elementRef.nativeElement.children[0];
 
-    self._scroll = function(ev) {
+    self._onScroll = function(ev) {
       self._app.setScrolling();
     };
 
     if (self._config.get('tapPolyfill') === true) {
       self._zone.runOutsideAngular(function() {
-        self.scrollElement.addEventListener('scroll', self._scroll);
+        self._scrollEle.addEventListener('scroll', self._onScroll);
       });
     }
   }
 
   ngOnDestroy() {
-    this.scrollElement.removeEventListener('scroll', this._scroll);
+    this._scrollEle.removeEventListener('scroll', this._onScroll);
   }
 
   /**
@@ -101,25 +102,27 @@ export class Content extends Ion {
    * @returns {Function} A function that removes the scroll handler.
    */
   addScrollEventListener(handler) {
-    if (!this.scrollElement) { return; }
+    if (!this._scrollEle) { 
+      return; 
+    }
 
     // ensure we're not creating duplicates
-    this.scrollElement.removeEventListener('scroll', handler);
+    this._scrollEle.removeEventListener('scroll', handler);
 
-    this.scrollElement.addEventListener('scroll', handler);
+    this._scrollEle.addEventListener('scroll', handler);
 
     return () => {
-      this.scrollElement.removeEventListener('scroll', handler);
+      this._scrollEle.removeEventListener('scroll', handler);
     }
   }
 
   onScrollEnd(callback) {
     let lastScrollTop = null;
     let framesUnchanged = 0;
-    let scrollElement = this.scrollElement;
+    let _scrollEle = this._scrollEle;
 
     function next() {
-      let currentScrollTop = scrollElement.scrollTop;
+      let currentScrollTop = _scrollEle.scrollTop;
       if (lastScrollTop !== null) {
 
         if (Math.round(lastScrollTop) === Math.round(currentScrollTop)) {
@@ -169,15 +172,15 @@ export class Content extends Ion {
    * @returns {Function} A function that removes the touchmove handler.
    */
   addTouchMoveListener(handler) {
-    if (!this.scrollElement) { return; }
+    if (!this._scrollEle) { return; }
 
     // ensure we're not creating duplicates
-    this.scrollElement.removeEventListener('touchmove', handler);
+    this._scrollEle.removeEventListener('touchmove', handler);
 
-    this.scrollElement.addEventListener('touchmove', handler);
+    this._scrollEle.addEventListener('touchmove', handler);
 
     return () => {
-      this.scrollElement.removeEventListener('touchmove', handler);
+      this._scrollEle.removeEventListener('touchmove', handler);
     }
   }
 
@@ -215,7 +218,7 @@ export class Content extends Ion {
       this._scrollTo.dispose();
     }
 
-    this._scrollTo = new ScrollTo(this.scrollElement);
+    this._scrollTo = new ScrollTo(this._scrollEle);
 
     return this._scrollTo.start(x, y, duration, tolerance);
   }
@@ -250,7 +253,7 @@ export class Content extends Ion {
       this._scrollTo.dispose();
     }
 
-    this._scrollTo = new ScrollTo(this.scrollElement);
+    this._scrollTo = new ScrollTo(this._scrollEle);
 
     return this._scrollTo.start(0, 0, 300, 0);
   }
@@ -273,8 +276,8 @@ export class Content extends Ion {
    * {Number} dimensions.scrollRight  scroll scrollLeft + scrollWidth
    */
   getDimensions() {
-    let scrollElement = this.scrollElement;
-    let parentElement = scrollElement.parentElement;
+    let _scrollEle = this._scrollEle;
+    let parentElement = _scrollEle.parentElement;
 
     return {
       contentHeight: parentElement.offsetHeight,
@@ -285,13 +288,13 @@ export class Content extends Ion {
       contentLeft: parentElement.offsetLeft,
       contentRight: parentElement.offsetLeft + parentElement.offsetWidth,
 
-      scrollHeight: scrollElement.scrollHeight,
-      scrollTop: scrollElement.scrollTop,
-      scrollBottom: scrollElement.scrollTop + scrollElement.scrollHeight,
+      scrollHeight: _scrollEle.scrollHeight,
+      scrollTop: _scrollEle.scrollTop,
+      scrollBottom: _scrollEle.scrollTop + _scrollEle.scrollHeight,
 
-      scrollWidth: scrollElement.scrollWidth,
-      scrollLeft: scrollElement.scrollLeft,
-      scrollRight: scrollElement.scrollLeft + scrollElement.scrollWidth,
+      scrollWidth: _scrollEle.scrollWidth,
+      scrollLeft: _scrollEle.scrollLeft,
+      scrollRight: _scrollEle.scrollLeft + _scrollEle.scrollWidth,
     }
   }
 
@@ -300,12 +303,12 @@ export class Content extends Ion {
    * Adds padding to the bottom of the scroll element when the keyboard is open
    * so content below the keyboard can be scrolled into view.
    */
-  addScrollPadding(newScrollPadding) {
-    if (newScrollPadding > this.scrollPadding) {
-      console.debug('addScrollPadding', newScrollPadding);
+  add_padding(newPadding) {
+    if (newPadding > this._padding) {
+      console.debug('add_padding', newPadding);
 
-      this.scrollPadding = newScrollPadding;
-      this.scrollElement.style.paddingBottom = newScrollPadding + 'px';
+      this._padding = newPadding;
+      this._scrollEle.style.paddingBottom = newPadding + 'px';
     }
   }
 

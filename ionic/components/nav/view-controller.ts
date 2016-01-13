@@ -1,5 +1,6 @@
-import {Output, EventEmitter, Type} from 'angular2/core';
+import {Output, EventEmitter, Type, TemplateRef, ViewContainerRef, ElementRef} from 'angular2/core';
 import {NavController, NavParams} from './nav-controller';
+import {Navbar} from '../navbar/navbar';
 
 /**
  * @name ViewController
@@ -24,9 +25,16 @@ export class ViewController {
   public shouldDestroy: boolean = false;
   public shouldCache: boolean = false;
   public viewType: string = '';
+  public id: string;
   private _leavingOpts: any = null;
   private _onDismiss: Function = null;
   private _nav: NavController;
+  private _nbTmpRef: TemplateRef;
+  private _nbVwRef: ViewContainerRef;
+  private _pgRef: ElementRef;
+  private _cntRef: ElementRef;
+  private _nbDir: Navbar;
+  private _cntDir: any;
   @Output() private _emitter: EventEmitter<any> = new EventEmitter();
 
   constructor(public componentType?: Type, public data: any = {}) {}
@@ -91,7 +99,7 @@ export class ViewController {
    * @private
    */
   get name() {
-    return this.componentType ? this.componentType.name : '';
+    return this.componentType ? this.componentType['name'] : '';
   }
 
   /**
@@ -140,14 +148,14 @@ export class ViewController {
   /**
    * @private
    */
-  setNavbarTemplateRef(templateRef) {
+  setNavbarTemplateRef(templateRef: TemplateRef) {
     this._nbTmpRef = templateRef;
   }
 
   /**
    * @private
    */
-  getNavbarTemplateRef() {
+  getNavbarTemplateRef(): TemplateRef {
     return this._nbTmpRef;
   }
 
@@ -161,14 +169,14 @@ export class ViewController {
   /**
    * @private
    */
-  setNavbarViewRef(viewContainerRef) {
+  setNavbarViewRef(viewContainerRef: ViewContainerRef) {
     this._nbVwRef = viewContainerRef;
   }
 
   /**
    * @private
    */
-  setPageRef(elementRef) {
+  setPageRef(elementRef: ElementRef) {
     this._pgRef = elementRef;
   }
 
@@ -176,14 +184,14 @@ export class ViewController {
    * @private
    * @returns {ElementRef} Returns the Page's ElementRef
    */
-  pageRef() {
+  pageRef(): ElementRef {
     return this._pgRef;
   }
 
   /**
    * @private
    */
-  setContentRef(elementRef) {
+  setContentRef(elementRef: ElementRef) {
     this._cntRef = elementRef;
   }
 
@@ -191,7 +199,7 @@ export class ViewController {
    * @private
    * @returns {ElementRef} Returns the Page's Content ElementRef
    */
-  contentRef() {
+  contentRef(): ElementRef {
     return this._cntRef;
   }
 
@@ -213,7 +221,7 @@ export class ViewController {
   /**
    * @private
    */
-  setNavbar(directive) {
+  setNavbar(directive: Navbar) {
     this._nbDir = directive;
   }
 
@@ -312,7 +320,7 @@ export class ViewController {
   setBackButtonText(val) {
     let navbar = this.getNavbar();
     if (navbar) {
-      navbar.bbText = val;
+      navbar.setBackButtonText(val);
     }
   }
 
