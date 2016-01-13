@@ -181,7 +181,7 @@ export class Select {
    */
   @HostListener('click')
   _click() {
-    let isMulti = (this.multiple === true || this.multiple === 'true');
+    let isMulti = this.multiple === 'true';
 
     // the user may have assigned some options specifically for the alert
     let alertOptions = merge({}, this.alertOptions);

@@ -29,7 +29,7 @@ import {isDefined} from '../../util/util';
     'role': 'radio',
     'class': 'item',
     'tappable': '',
-    'tabindex': 0,
+    'tabindex': '0',
     '[attr.aria-disabled]': 'disabled'
   },
   template:
@@ -44,7 +44,7 @@ import {isDefined} from '../../util/util';
 })
 export class RadioButton {
   @Input() value: string = '';
-  @Input() public checked: any = false;
+  @Input() checked: any = false;
   @Input() disabled: boolean = false;
   @Input() id: string;
   @Output() select: EventEmitter<RadioButton> = new EventEmitter();

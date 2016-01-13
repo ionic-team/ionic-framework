@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Renderer, Optional, EventEmitter, Input, Output, HostListener, ContentChildren} from 'angular2/core';
+import {Directive, ElementRef, Renderer, Optional, EventEmitter, Input, Output, HostListener, ContentChildren, QueryList} from 'angular2/core';
 import {NgControl} from 'angular2/common';
 
 import {isDefined} from '../../util/util';
@@ -131,16 +131,15 @@ export class SegmentButton {
   selector: 'ion-segment'
 })
 export class Segment {
-  @ContentChildren(SegmentButton) _buttons;
+  value: string;
+  onChange = (_) => {};
+  onTouched = (_) => {};
+
   @Output() change: EventEmitter<SegmentButton> = new EventEmitter();
-  value: any;
 
-  constructor(
-    @Optional() ngControl: NgControl
-  ) {
-    this.onChange = (_) => {};
-    this.onTouched = (_) => {};
+  @ContentChildren(SegmentButton) _buttons: QueryList<SegmentButton>;
 
+  constructor(@Optional() ngControl: NgControl) {
     if (ngControl) {
       ngControl.valueAccessor = this;
     }

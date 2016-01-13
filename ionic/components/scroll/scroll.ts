@@ -1,4 +1,4 @@
-import {Component, ElementRef, onInit} from 'angular2/core';
+import {Component, ElementRef} from 'angular2/core';
 
 import {Ion} from '../ion';
 import {Gesture} from '../../gestures/gesture';
@@ -45,12 +45,12 @@ import * as util from '../../util';
     '</scroll-content>'
 })
 export class Scroll extends Ion {
+  private maxScale: number = 3;
+  private zoomDuration: number = 250;
+  private scrollElement: HTMLElement;
 
   constructor(elementRef: ElementRef) {
     super(elementRef);
-
-    this.maxScale = 3;
-    this.zoomDuration = 250;
   }
 
   /**
