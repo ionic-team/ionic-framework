@@ -15,7 +15,7 @@
  *
  * @usage
  * ```html
- * <ion-slides on-slide-changed="slideHasChanged($index)">
+ * <ion-slides  options="options" slider="data.slider">
  *   <ion-slide-page>
  *     <div class="box blue"><h1>BLUE</h1></div>
  *   </ion-slide-page>
@@ -28,9 +28,18 @@
  * </ion-slides>
  * ```
  *
- * @param {string=} delegate-handle The handle used to identify this slideBox
- * with {@link ionic.service:$ionicSlideBoxDelegate}.
- * @param {object=} options to pass to the widget. See the full ist here: [http://www.idangero.us/swiper/api/](http://www.idangero.us/swiper/api/)
+ * ```js
+ * $scope.options = {
+ *   loop: false,
+ *   effect: fade,
+ *   speed: 500,
+ * }
+ * $scope.data = {};
+ * $scope.$watch('data.slider', function(nv, ov) {
+ *   $scope.slider = $scope.data.slider;
+ * })
+ * ```
+ *
  */
 IonicModule
 .directive('ionSlides', [
