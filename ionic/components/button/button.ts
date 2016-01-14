@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Renderer, Attribute, Optional} from 'angular2/core';
+import {Directive, ElementRef, Renderer, Attribute, Optional, Input} from 'angular2/core';
 
 import {Config} from '../../config/config';
 import {Toolbar} from '../toolbar/toolbar';
@@ -29,10 +29,21 @@ import {Toolbar} from '../toolbar/toolbar';
 
  */
 @Directive({
-  selector: 'button,[button]',
-  inputs: ['color']
+  selector: 'button,[button]'
 })
 export class Button {
+  private _role: string = 'button'; // bar-button/item-button
+  private _size: string = null; // large/small
+  private _style: string = 'default'; // outline/clear/solid
+  private _shape: string = null; // round/fab
+  private _display: string = null; // block/full
+  private _lastColor: string = null;
+  private _colors: Array<string> = []; // primary/secondary
+  private _icon: string = null; // left/right/only
+  private _disabled: boolean = false; // disabled
+  isItem: boolean;
+
+  @Input() color: string;
 
   constructor(
     config: Config,
@@ -40,15 +51,7 @@ export class Button {
     private _renderer: Renderer,
     @Attribute('ion-item') ionItem: string
   ) {
-    this._role = 'button'; // bar-button/item-button
-    this._size = null; // large/small
-    this._style = 'default'; // outline/clear/solid
-    this._shape = null; // round/fab
-    this._display = null; // block/full
-    this._lastColor = null;
-    this._colors = []; // primary/secondary
-    this._icon = null; // left/right/only
-    this._disabled = false; // disabled
+
     this.isItem = (ionItem === '');
 
     let element = _elementRef.nativeElement;
