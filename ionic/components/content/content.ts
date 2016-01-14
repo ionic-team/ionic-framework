@@ -213,7 +213,7 @@ export class Content {
    * @param {TODO} tolerance  TODO
    * @returns {Promise} Returns a promise when done
    */
-  scrollTo(x, y, duration, tolerance) {
+  scrollTo(x: number, y: number, duration: number, tolerance?: number): Promise<any> {
     if (this._scrollTo) {
       this._scrollTo.dispose();
     }

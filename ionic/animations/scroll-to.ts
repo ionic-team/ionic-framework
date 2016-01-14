@@ -23,7 +23,7 @@ export class ScrollTo {
     }
   }
 
-  start(x, y, duration, tolerance): Promise<any> {
+  start(x: number, y: number, duration: number, tolerance?: number): Promise<any> {
     // scroll animation loop w/ easing
     // credit https://gist.github.com/dezinezync/5487119
     let self = this;

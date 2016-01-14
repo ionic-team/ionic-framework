@@ -74,11 +74,20 @@ import {Icon} from '../icon/icon';
   directives: [NgIf, forwardRef(() => InputScrollAssist), TextInput, Button]
 })
 export class ItemInput {
-  /**
-   * @private
-   */
-  @Input() clearInput: any;
+  private _assist: boolean;
+  private input: TextInput;
+  private label: Label;
+  private scrollMove: EventListener;
+  private startCoord: {x: number, y: number};
+  private deregScroll: () => void;
+
+  keyboardHeight: number;
   value: string = '';
+  type: string = null;
+  lastTouch: number = 0;
+  displayType: string;
+
+  @Input() clearInput: any;
 
   constructor(
     config: Config,
@@ -96,10 +105,7 @@ export class ItemInput {
   ) {
     _form.register(this);
 
-    this.type = null;
-    this.lastTouch = 0;
-
-    // make more gud with pending @Attributes API
+    //TODO make more gud with pending @Attributes API
     this.displayType = (isFloating === '' ? 'floating' : (isStacked === '' ? 'stacked' : (isFixed === '' ? 'fixed' : (isInset === '' ? 'inset' : null))));
 
     this._assist = config.get('scrollAssist');
@@ -110,7 +116,7 @@ export class ItemInput {
    * @private
    */
   @ContentChild(TextInput)
-  set _setInput(textInput) {
+  set _setInput(textInput: TextInput) {
     if (textInput) {
       textInput.addClass('item-input');
       if (this.displayType) {
@@ -135,7 +141,7 @@ export class ItemInput {
    * @private
    */
   @ContentChild(Label)
-  set _setLabel(label) {
+  set _setLabel(label: Label) {
     if (label && this.displayType) {
       label.addClass(this.displayType + '-label');
     }
@@ -187,7 +193,7 @@ export class ItemInput {
       self.input.labelledBy(self.label.id);
     }
 
-    self.scrollMove = function(ev) {
+    self.scrollMove = function(ev: UIEvent) {
       if (!(self._nav && self._nav.isTransitioning())) {
         self.deregMove();
 

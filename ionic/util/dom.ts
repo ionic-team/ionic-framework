@@ -155,7 +155,7 @@ export function windowLoad(callback) {
   return promise;
 }
 
-export function pointerCoord(ev) {
+export function pointerCoord(ev): {x: number, y: number} {
   // get coordinates for either a mouse click
   // or a touch depending on the given event
   let c = { x: 0, y: 0 };

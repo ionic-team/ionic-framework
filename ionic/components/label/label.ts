@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Renderer} from 'angular2/core';
+import {Directive, ElementRef, Renderer, Input} from 'angular2/core';
 
 import {Form} from '../../util/form';
 
@@ -23,14 +23,12 @@ import {Form} from '../../util/form';
 
 @Directive({
   selector: 'ion-label',
-  inputs: [
-    'id'
-  ],
   host: {
     '[attr.id]': 'id'
   }
 })
 export class Label {
+  @Input() id: string;
 
   constructor(
     private _form: Form,
