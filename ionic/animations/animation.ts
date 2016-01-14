@@ -130,7 +130,7 @@ export class Animation {
     return this;
   }
 
-  duration(value) {
+  duration(value?: number) {
     if (arguments.length) {
       this._duration = value;
       return this;
@@ -145,7 +145,7 @@ export class Animation {
     }
   }
 
-  easing(name, opts) {
+  easing(name?: string, opts?: {}) {
     if (arguments.length) {
       this._easing = {
         name: name,
@@ -156,7 +156,7 @@ export class Animation {
     return this._easing || (this._parent && this._parent.easing());
   }
 
-  playbackRate(value) {
+  playbackRate(value?: number) {
     if (arguments.length) {
       this._rate = value;
       let i;
@@ -237,7 +237,7 @@ export class Animation {
     }
   }
 
-  play(done) {
+  play(done?: Function) {
     const self = this;
 
     // the actual play() method which may or may not start async
@@ -513,9 +513,9 @@ export class Animation {
     return this;
   }
 
-  clone() {
+  clone(): Animation {
 
-    function copy(dest, src) {
+    function copy(dest, src): Animation {
       // undo what stage() may have already done
       assign(dest, src);
 
@@ -540,7 +540,7 @@ export class Animation {
       this._chld[i].dispose(removeElement);
     }
     for (i = 0; i < this._ani.length; i++) {
-      this._ani[i].dispose(removeElement);
+      this._ani[i].dispose();
     }
     if (removeElement) {
       for (i = 0; i < this._el.length; i++) {

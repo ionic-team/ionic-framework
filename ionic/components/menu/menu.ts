@@ -1,4 +1,4 @@
-import {Component, forwardRef, Directive, Host, EventEmitter, ElementRef, NgZone} from 'angular2/core';
+import {Component, forwardRef, Directive, Host, EventEmitter, ElementRef, NgZone, Input} from 'angular2/core';
 
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
@@ -6,6 +6,8 @@ import {Config} from '../../config/config';
 import {Platform} from '../../platform/platform';
 import {Keyboard} from '../../util/keyboard';
 import * as gestures from  './menu-gestures';
+import {Gesture} from '../../gestures/gesture';
+import {MenuType} from './menu-types';
 
 
 /**
@@ -91,13 +93,6 @@ import * as gestures from  './menu-gestures';
  */
 @Component({
   selector: 'ion-menu',
-  inputs: [
-    'content',
-    'id',
-    'side',
-    'type',
-    'maxEdgeStart'
-  ],
   defaultInputs: {
     'side': 'left',
     'menuType': 'reveal'
@@ -112,6 +107,22 @@ import * as gestures from  './menu-gestures';
   directives: [forwardRef(() => MenuBackdrop)]
 })
 export class Menu extends Ion {
+  private _preventTime: number = 0;
+  private _cntEle: HTMLElement;
+  private _gesture: Gesture;
+  private _targetGesture: Gesture;
+  private _type: MenuType;
+  opening: EventEmitter<Menu> = new EventEmitter();
+  isOpen: boolean = false;
+  isEnabled: boolean = true;
+  backdrop: MenuBackdrop;
+  onContentClick: Function;
+
+  @Input() content: any;
+  @Input() id: string;
+  @Input() side: string;
+  @Input() type: string;
+  @Input() maxEdgeStart;
 
   constructor(
     elementRef: ElementRef,
@@ -122,11 +133,6 @@ export class Menu extends Ion {
     private zone: NgZone
   ) {
     super(elementRef);
-
-    this.opening = new EventEmitter('opening');
-    this.isOpen = false;
-    this._preventTime = 0;
-    this.isEnabled = true;
   }
 
   /**
@@ -134,7 +140,6 @@ export class Menu extends Ion {
    */
   ngOnInit() {
     let self = this;
-
     let content = self.content;
     self._cntEle = (content instanceof Node) ? content : content && content.getNativeElement && content.getNativeElement();
 
@@ -390,9 +395,10 @@ export class Menu extends Ion {
   /**
    * @private
    */
-  static register(name, cls) {
+  static register(name: string, cls: new(...args: any[]) => MenuType) {
     menuTypes[name] = cls;
   }
+  //static register(name:string , cls: typeof MenuType) {
 
   /**
    * @private
@@ -431,8 +437,8 @@ export class Menu extends Ion {
 
 }
 
-let menuTypes = {};
-let menuIds = 0;
+let menuTypes:{ [name: string]: new(...args: any[]) => MenuType } = {};
+let menuIds:number = 0;
 
 
 @Directive({
@@ -441,11 +447,9 @@ let menuIds = 0;
     '(click)': 'clicked($event)'
   }
 })
-class MenuBackdrop {
+export class MenuBackdrop {
 
-  constructor(@Host() menu: Menu, elementRef: ElementRef) {
-    this.menu = menu;
-    this.elementRef = elementRef;
+  constructor(@Host() private menu: Menu, public elementRef: ElementRef) {
     menu.backdrop = this;
   }
 

@@ -10,11 +10,10 @@ import {Animation} from '../../animations/animation';
  * @private
  */
 export class MenuType {
-
-  constructor() {
-    this.open = new Animation();
-    this.close = new Animation();
-  }
+  open: Animation = new Animation();
+  close: Animation = new Animation();
+  isOpening: boolean;
+  seek: Animation;
 
   setOpen(shouldOpen) {
     return new Promise(resolve => {

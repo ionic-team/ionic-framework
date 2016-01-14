@@ -28,7 +28,7 @@ export class ViewController {
   public id: string;
   private _leavingOpts: any = null;
   private _onDismiss: Function = null;
-  private _nav: NavController;
+  protected _nav: NavController;
   private _nbTmpRef: TemplateRef;
   private _nbVwRef: ViewContainerRef;
   private _pgRef: ElementRef;
