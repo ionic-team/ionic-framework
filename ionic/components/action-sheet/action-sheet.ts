@@ -1,4 +1,4 @@
-import {Component, Renderer} from 'angular2/core';
+import {Component, Renderer, ElementRef} from 'angular2/core';
 import {NgFor, NgIf} from 'angular2/common';
 
 import {NavParams} from '../nav/nav-controller';
@@ -76,7 +76,7 @@ import {Animation} from '../../animations/animation';
  */
  export class ActionSheet extends ViewController {
 
-   constructor(opts={}) {
+   constructor(opts: any = {}) {
      opts.buttons = opts.buttons || [];
 
      super(ActionSheetCmp, opts);
@@ -152,11 +152,15 @@ import {Animation} from '../../animations/animation';
   directives: [NgFor, NgIf, Icon]
 })
 class ActionSheetCmp {
+  private d: any;
+  private keyUp: EventListener;
 
   constructor(
     private _viewCtrl: ViewController,
     private _config: Config,
-    params: NavParams, renderer: Renderer
+    private elementRef: ElementRef,
+    params: NavParams,
+    renderer: Renderer
   ) {
     this.d = params.data;
 
@@ -213,7 +217,7 @@ class ActionSheetCmp {
     this.d.buttons = buttons;
 
     let self = this;
-    self.keyUp = function(ev) {
+    self.keyUp = function(ev: KeyboardEvent) {
       if (ev.keyCode === 27) {
         console.debug('actionsheet escape');
         self.dismiss();
