@@ -1,4 +1,4 @@
-import {AppViewManager, ElementRef, Directive, Renderer} from 'angular2/core';
+import {AppViewManager, ElementRef, Directive, Renderer, Input} from 'angular2/core';
 
 import {IonicApp} from './app';
 
@@ -41,6 +41,8 @@ import {IonicApp} from './app';
   inputs: ['id']
 })
 export class IdRef {
+  component: any;
+  id: string;
 
   constructor(private _app: IonicApp, private _elementRef: ElementRef, private _appViewManager: AppViewManager) {
     // Grab the component this directive is attached to
@@ -75,11 +77,11 @@ export class IdRef {
  * @demo /docs/v2/demos/attr/
  */
 @Directive({
-  selector: '[attr]',
-  inputs: ['attr']
+  selector: '[attr]'
 })
 
 export class Attr {
+  @Input() attr: string;
   constructor(private _renderer: Renderer, private _elementRef: ElementRef) {}
 
 /**

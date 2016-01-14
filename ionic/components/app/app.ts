@@ -13,20 +13,19 @@ import {rafFrames} from '../../util/dom';
  */
 @Injectable()
 export class IonicApp {
+  private _titleSrv: Title = new Title();
+  private _title: string = '';
+  private _disTime: number = 0;
+  private _scrollTime: number = 0;
+
+  // Our component registry map
+  private components: any = {};
 
   constructor(
     private _config: Config,
     private _clickBlock: ClickBlock,
     private _zone: NgZone
-  ) {
-    this._titleSrv = new Title();
-    this._title = '';
-    this._disTime = 0;
-    this._scrollTime = 0;
-
-    // Our component registry map
-    this.components = {};
-  }
+  ) {}
 
   /**
    * Sets the document title.
