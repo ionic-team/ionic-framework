@@ -890,7 +890,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       document.addEventListener("touchcancel", self.touchEnd, false);
       document.addEventListener("wheel", self.mouseWheel, false);
 
-    } else if (window.navigator.pointerEnabled) {
+    } if (window.navigator.pointerEnabled) {
       // Pointer Events
       container.addEventListener("pointerdown", self.touchStart, false);
       if(self.options.preventDefault) container.addEventListener("pointermove", self.touchMoveBubble, false);
