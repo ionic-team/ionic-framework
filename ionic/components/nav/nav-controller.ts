@@ -100,30 +100,31 @@ import {raf, rafFrames} from '../../util/dom';
  * @see {@link /docs/v2/components#navigation Navigation Component Docs}
  */
 export class NavController extends Ion {
-  private _views: Array<ViewController> = [];
-  private _trnsTime: number = 0;
-  private _trnsDelay: any;
-  private _sbTrans: any = null;
-  private _sbEnabled: any;
-  private _sbThreshold: any;
-  public sbGesture: any;
-  private initZIndex: number = 10;
+  protected _ids: number = -1;
+  protected _sbEnabled: any;
+  protected _sbThreshold: any;
+  protected _sbTrans: any = null;
+  protected _trnsDelay: any;
+  protected _trnsTime: number = 0;
+  protected _views: Array<ViewController> = [];
+  protected _zIndex: number = 10;
+  
   public id: number;
-  private _ids: number = -1;
   public providers: ResolvedProvider[];
   public router: any;
+  public sbGesture: any;
   
   constructor(
-    public parent: NavController,
+    public parent: any,
     public app: IonicApp,
     public config: Config,
     public keyboard: Keyboard,
     elementRef: ElementRef,
-    private _anchorName: string,
-    private _compiler: Compiler,
-    private _viewManager: AppViewManager,
-    private _zone: NgZone,
-    private _renderer: Renderer
+    protected _anchorName: string,
+    protected _compiler: Compiler,
+    protected _viewManager: AppViewManager,
+    protected _zone: NgZone,
+    protected _renderer: Renderer
   ) {
     super(elementRef);
 
@@ -555,7 +556,7 @@ export class NavController extends Ion {
    * @param {Object} [opts={}] Any options you want to use pass to transtion
    * @returns {Promise} Returns a promise when the view has been removed
    */
-  remove(index: number, opts = {}): Promise<any> {
+  remove(index: number, opts: any = {}): Promise<any> {
     if (index < 0 || index >= this._views.length) {
       return Promise.reject("index out of range");
     }
@@ -1067,7 +1068,7 @@ export class NavController extends Ion {
     let enteringPageRef = enteringView && enteringView.pageRef();
     if (enteringPageRef) {
       if (!leavingView || !leavingView.isLoaded()) {
-        enteringView.zIndex = this.initZIndex;
+        enteringView.zIndex = this._zIndex;
 
       } else if (direction === 'back') {
         // moving back
@@ -1391,7 +1392,7 @@ export class NavController extends Ion {
    * @param {Index} The index of the page you want to get
    * @returns {Component} Returns the component that matches the index given
    */
-  getByIndex(index: number): ViewController {
+  getByIndex(index: number): any {
     if (index < this._views.length && index > -1) {
       return this._views[index];
     }

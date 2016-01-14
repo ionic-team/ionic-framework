@@ -1,5 +1,5 @@
-import {ChangeDetectorRef, Component, Directive, Host, ElementRef, Compiler, AppViewManager, NgZone, Renderer} from 'angular2/core';
-import {EventEmitter, Output} from 'angular2/core';
+import {Component, Directive, Host, Inject, forwardRef, ElementRef, Compiler, AppViewManager, NgZone, Renderer, Type} from 'angular2/core';
+import {EventEmitter, Input, Output} from 'angular2/core';
 
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
@@ -7,6 +7,7 @@ import {Keyboard} from '../../util/keyboard';
 import {NavController} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
 import {Tabs} from './tabs';
+import {TabButton} from './tab-button';
 
 
 /**
@@ -83,11 +84,6 @@ import {Tabs} from './tabs';
  */
 @Component({
   selector: 'ion-tab',
-  inputs: [
-    'root',
-    'tabTitle',
-    'tabIcon'
-  ],
   host: {
     '[class.show-tab]': 'isSelected',
     '[attr.id]': '_panelId',
@@ -97,10 +93,20 @@ import {Tabs} from './tabs';
   template: '<template #contents></template>'
 })
 export class Tab extends NavController {
+  public isSelected: boolean;
+  private _isInitial: boolean;
+  private _panelId: string;
+  private _btnId: string;
+  private _loaded: boolean;
+  private _loadTimer: any;
+  btn: TabButton;
+  @Input() root: Type;
+  @Input() tabTitle: string;
+  @Input() tabIcon: string;
   @Output() select: EventEmitter<any> = new EventEmitter();
 
   constructor(
-    @Host() parentTabs: Tabs,
+    @Inject(forwardRef(() => Tabs)) parentTabs: Tabs,
     app: IonicApp,
     config: Config,
     keyboard: Keyboard,
@@ -108,11 +114,10 @@ export class Tab extends NavController {
     compiler: Compiler,
     viewManager: AppViewManager,
     zone: NgZone,
-    renderer: Renderer,
-    cd: ChangeDetectorRef
+    renderer: Renderer
   ) {
     // A Tab is a NavController for its child pages
-    super(parentTabs, app, config, keyboard, elementRef, 'contents', compiler, viewManager, zone, renderer, cd);
+    super(parentTabs, app, config, keyboard, elementRef, 'contents', compiler, viewManager, zone, renderer);
 
     this._isInitial = parentTabs.add(this);
 
@@ -146,7 +151,7 @@ export class Tab extends NavController {
   /**
    * @private
    */
-  load(opts, done) {
+  load(opts, done?: Function) {
     if (!this._loaded && this.root) {
       this.push(this.root, null, opts, done);
       this._loaded = true;
@@ -189,13 +194,6 @@ export class Tab extends NavController {
   /**
    * @private
    */
-  emitSelect() {
-    this.select.emit();
-  }
-
-  /**
-   * @private
-   */
   hideNavbars(shouldHideNavbars) {
     this._views.forEach(viewCtrl => {
       let navbar = viewCtrl.getNavbar();
@@ -214,7 +212,7 @@ export class Tab extends NavController {
    * }
    * ```
    *
-   * @returns {Number} Returns the index of this page within its NavController.
+   * @returns {number} Returns the index of this page within its NavController.
    *
    */
   get index() {

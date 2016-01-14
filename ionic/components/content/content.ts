@@ -305,7 +305,7 @@ export class Content {
    */
   add_padding(newPadding) {
     if (newPadding > this._padding) {
-      console.debug('add_padding', newPadding);
+      console.debug('content add padding', newPadding);
 
       this._padding = newPadding;
       this._scrollEle.style.paddingBottom = newPadding + 'px';

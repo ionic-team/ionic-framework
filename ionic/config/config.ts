@@ -183,7 +183,7 @@ export class Config {
  *
  * @param {String} [key] - the key for the config value
  */
-  get(key) {
+  get(key: string): any {
 
     if (!isDefined(this._c[key])) {
       if (!isDefined(key)) {
@@ -279,6 +279,11 @@ export class Config {
     }
 
     return this._c[key];
+  }
+  
+  getBoolean(key: string): boolean {
+    let val = this.get(key);
+    return (val || val === 'true') ? true : false;
   }
 
   /**

@@ -18,23 +18,26 @@ import {Navbar} from '../navbar/navbar';
  *  ```
  */
 export class ViewController {
-  public instance: any = {};
-  public state: number = 0;
+  private _cntDir: any;
+  private _cntRef: ElementRef;
   private _destroys: Array<Function> = [];
   private _loaded: boolean = false;
-  public shouldDestroy: boolean = false;
-  public shouldCache: boolean = false;
-  public viewType: string = '';
-  public id: string;
   private _leavingOpts: any = null;
-  private _onDismiss: Function = null;
-  protected _nav: NavController;
+  private _nbDir: Navbar;
   private _nbTmpRef: TemplateRef;
   private _nbVwRef: ViewContainerRef;
+  private _onDismiss: Function = null;
   private _pgRef: ElementRef;
-  private _cntRef: ElementRef;
-  private _nbDir: Navbar;
-  private _cntDir: any;
+  protected _nav: NavController;
+  
+  id: string;
+  instance: any = {};
+  state: number = 0;
+  shouldDestroy: boolean = false;
+  shouldCache: boolean = false;
+  viewType: string = '';
+  onReady: any;
+  
   @Output() private _emitter: EventEmitter<any> = new EventEmitter();
 
   constructor(public componentType?: Type, public data: any = {}) {}
