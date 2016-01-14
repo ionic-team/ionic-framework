@@ -31,7 +31,7 @@
             eleToActivate = ele;
             break;
           }
-          if (ele.classList.contains('button')) {
+          if (ele.classList && ele.classList.contains('button')) {
             eleToActivate = ele;
             break;
           }
