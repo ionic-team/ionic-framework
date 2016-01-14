@@ -19,7 +19,7 @@ Today, Ionic powers over 1.5 million mobile apps and websites (and even some des
 ## Quick Start
 
 To start using ionic, you have two options: copy over the built JS and CSS files, or
-use the `ionic` tool ([ionic-cli](https://github.com/driftyco/ionic-cli)) which can be installed through npm (recommended): _(You may need to prefix the command with `sudo` depending on your OS and setup.)_
+use the `ionic` tool ([ionic-cli](https://github.com/driftyco/ionic-cli)) which can be installed through npm (recommended): _(On MacOS and Linux, see [this article on using npm without sudo](http://www.johnpapa.net/how-to-use-npm-global-without-sudo-on-osx/).)_
 
 Additionally, we have a desktop GUI tool that we recently released called [Ionic Lab](http://lab.ionic.io). If you try it, let us know what you think!
 
