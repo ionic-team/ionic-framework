@@ -1,5 +1,6 @@
 import {Component, ElementRef, Optional, NgZone} from 'angular2/core';
 
+import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
 import {raf}  from '../../util/dom';
@@ -31,7 +32,7 @@ import {ScrollTo} from '../../animations/scroll-to';
       '<ng-content></ng-content>' +
     '</scroll-content>'
 })
-export class Content {
+export class Content extends Ion {
   private _padding: number = 0;
   private _scrollEle: HTMLElement;
   private _onScroll: any;
@@ -48,6 +49,8 @@ export class Content {
     private _zone: NgZone,
     @Optional() viewCtrl: ViewController
   ) {
+    super(_elementRef);
+    
     if (viewCtrl) {
       viewCtrl.setContent(this);
       viewCtrl.setContentRef(_elementRef);
@@ -275,7 +278,7 @@ export class Content {
    * {Number} dimensions.scrollLeft  scroll scrollLeft
    * {Number} dimensions.scrollRight  scroll scrollLeft + scrollWidth
    */
-  getDimensions() {
+  getContentDimensions() {
     let _scrollEle = this._scrollEle;
     let parentElement = _scrollEle.parentElement;
 
@@ -303,9 +306,9 @@ export class Content {
    * Adds padding to the bottom of the scroll element when the keyboard is open
    * so content below the keyboard can be scrolled into view.
    */
-  add_padding(newPadding) {
+  addScrollPadding(newPadding) {
     if (newPadding > this._padding) {
-      console.debug('content add padding', newPadding);
+      console.debug('content addScrollPadding', newPadding);
 
       this._padding = newPadding;
       this._scrollEle.style.paddingBottom = newPadding + 'px';

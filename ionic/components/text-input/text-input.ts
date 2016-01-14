@@ -60,7 +60,7 @@ export class TextInput {
     this.element().focus();
   }
 
-  relocate(shouldRelocate, inputRelativeY) {
+  relocate(shouldRelocate: boolean, inputRelativeY?) {
     if (this._relocated !== shouldRelocate) {
 
       let focusedInputEle = this.element();

@@ -276,7 +276,7 @@ export class ItemInput {
       // find out if text input should be manually scrolled into view
       let ele = this._elementRef.nativeElement;
 
-      let scrollData = ItemInput.getScrollData(ele.offsetTop, ele.offsetHeight, scrollView.getDimensions(), this.keyboardHeight, this._platform.height());
+      let scrollData = ItemInput.getScrollData(ele.offsetTop, ele.offsetHeight, scrollView.getContentDimensions(), this.keyboardHeight, this._platform.height());
       if (scrollData.scrollAmount > -3 && scrollData.scrollAmount < 3) {
         // the text input is in a safe position that doesn't require
         // it to be scrolled into view, just set focus now

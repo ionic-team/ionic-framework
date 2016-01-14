@@ -1,8 +1,9 @@
-import {Component, ElementRef, EventEmitter, Host} from 'angular2/core'
+import {Component, ElementRef, EventEmitter, Host, Input, Output} from 'angular2/core'
 import {NgIf, NgClass} from 'angular2/common';
 
 import {Content} from '../content/content';
-import * as util from '../../util';
+import {Icon} from '../icon/icon';
+import {isDefined, defaults} from '../../util/util';
 import {raf, ready, CSS} from '../../util/dom';
 
 
@@ -61,15 +62,6 @@ import {raf, ready, CSS} from '../../util/dom';
  */
 @Component({
   selector: 'ion-refresher',
-  inputs: [
-    'pullingIcon',
-    'pullingText',
-    'refreshingIcon',
-    'refreshingText',
-    'spinner',
-    'disablePullingRotation'
-  ],
-  outputs: ['refresh', 'starting', 'pulling'],
   host: {
     '[class.active]': 'isActive',
     '[class.refreshing]': 'isRefreshing',
@@ -78,74 +70,67 @@ import {raf, ready, CSS} from '../../util/dom';
   template:
     '<div class="refresher-content" [class.refresher-with-text]="pullingText || refreshingText">' +
       '<div class="icon-pulling">' +
-        '<i class="icon" [ngClass]="pullingIcon"></i>' +
+        '<ion-icon [name]="pullingIcon"></ion-icon>' +
       '</div>' +
       '<div class="text-pulling" [innerHTML]="pullingText" *ngIf="pullingText"></div>' +
       '<div class="icon-refreshing">' +
-        '<i class="icon" [ngClass]="refreshingIcon"></i>' +
+        '<ion-icon [name]="refreshingIcon"></ion-icon>' +
       '</div>' +
       '<div class="text-refreshing" [innerHTML]="refreshingText" *ngIf="refreshingText"></div>' +
     '</div>',
-  directives: [NgIf, NgClass]
+  directives: [NgIf, NgClass, Icon]
 })
 export class Refresher {
-  /**
-   * @private
-   * @param {Content} content  TODO
-   * @param {ElementRef} elementRef  TODO
-   */
+  private ele: HTMLElement;
+  
+  isDragging: boolean = false;
+  isOverscrolling: boolean = false;
+  dragOffset: number = 0;
+  lastOverscroll: number = 0;
+  ptrThreshold: number = 0;
+  activated: boolean = false;
+  scrollTime: number = 500;
+  canOverscroll: boolean = false;
+  
+  @Input() pullingIcon: string;
+  @Input() pullingText: string;
+  @Input() refreshingIcon: string;
+  @Input() refreshingText: string;
+  @Input() spinner: string;
+  
+  @Output() pulling: EventEmitter<any> = new EventEmitter();
+  @Output() refresh: EventEmitter<any> = new EventEmitter();
+  @Output() starting: EventEmitter<any> = new EventEmitter();
+  
+  
   constructor(
-    @Host() content: Content,
+    @Host() private content: Content,
     element: ElementRef
   ) {
     this.ele = element.nativeElement;
     this.ele.classList.add('content');
-
-    this.content = content;
-
-    this.refresh = new EventEmitter('refresh');
-    this.starting = new EventEmitter('starting');
-    this.pulling = new EventEmitter('pulling');
   }
 
   /**
    * @private
    */
   ngOnInit() {
-    this.initEvents();
-  }
-
-  /**
-   * @private
-   * Initialize touch and scroll event listeners.
-   */
-  initEvents() {
-
     let sp = this.content.getNativeElement();
     let sc = this.content.scrollElement;
 
-    this.isDragging = false;
-    this.isOverscrolling = false;
-    this.dragOffset = 0;
-    this.lastOverscroll = 0;
-    this.ptrThreshold = 60;
-    this.activated = false;
-    this.scrollTime = 500;
     this.startY = null;
     this.deltaY = null;
-    this.canOverscroll = true;
     this.scrollHost = sp;
     this.scrollChild = sc;
 
-    util.defaults(this, {
-      pullingIcon: 'ion-android-arrow-down',
-      refreshingIcon: 'ion-ionic'
-      //refreshingText: 'Updating'
+    defaults(this, {
+      pullingIcon: 'md-arrow-down',
+      refreshingIcon: 'ionic'
     })
 
-    this.showSpinner = !util.isDefined(this.refreshingIcon) && this.spinner != 'none';
+    this.showSpinner = !isDefined(this.refreshingIcon) && this.spinner != 'none';
 
-    this.showIcon = util.isDefined(this.refreshingIcon);
+    this.showIcon = isDefined(this.refreshingIcon);
 
     this._touchMoveListener = this._handleTouchMove.bind(this);
     this._touchEndListener = this._handleTouchEnd.bind(this);
@@ -280,7 +265,7 @@ export class Refresher {
 
       // return to native scrolling after tail animation has time to finish
       setTimeout(() => {
-        if(this.isOverscrolling) {
+        if (this.isOverscrolling) {
           this.isOverscrolling = false;
           this.setScrollLock(false);
         }
