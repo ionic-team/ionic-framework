@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Renderer} from 'angular2/core';
+import {Directive, ElementRef, Renderer, Input} from 'angular2/core';
 
 import {Config} from '../../config/config';
 
@@ -43,28 +43,24 @@ import {Config} from '../../config/config';
  */
 @Directive({
   selector: 'ion-icon,icon',
-  inputs: [
-    'name',
-    'ios',
-    'md',
-    'isActive'
-  ],
   host: {
     'role': 'img'
   }
 })
 export class Icon {
-
+  private _isActive: any;
+  private _name: string = '';
+  private _ios: string = '';
+  private _md: string = '';
+  private _css: string = '';
+  mode: string;
+  
   constructor(
     config: Config,
     private _elementRef: ElementRef,
     private _renderer: Renderer
   ) {
     this.mode = config.get('iconMode');
-    this._name = '';
-    this._ios = '';
-    this._md = '';
-    this._css = '';
 
     if (_elementRef.nativeElement.tagName === 'ICON') {
       // deprecated warning
@@ -74,14 +70,12 @@ export class Icon {
     }
   }
 
-  get name() {
+  get name(): string {
     return this._name;
   }
 
-  /**
-   * @private
-   */
-  set name(val) {
+  @Input() 
+  set name(val: string) {
     if (!(/^md-|^ios-|^logo-/.test(val))) {
       // this does not have one of the defaults
       // so lets auto add in the mode prefix for them
@@ -91,26 +85,22 @@ export class Icon {
     this.update();
   }
 
-  get ios() {
+  get ios(): string {
     return this._ios;
   }
 
-  /**
-   * @private
-   */
-  set ios(val) {
+  @Input() 
+  set ios(val: string) {
     this._ios = val;
     this.update();
   }
 
-  get md() {
+  get md(): string {
     return this._md;
   }
 
-  /**
-   * @private
-   */
-  set md(val) {
+  @Input()
+  set md(val: string) {
     this._md = val;
     this.update();
   }
@@ -119,9 +109,7 @@ export class Icon {
     return (this._isActive === undefined || this._isActive === true || this._isActive === 'true');
   }
 
-  /**
-   * @private
-   */
+  @Input()
   set isActive(val) {
     this._isActive = val;
     this.update();
