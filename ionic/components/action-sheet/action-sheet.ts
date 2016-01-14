@@ -76,7 +76,12 @@ import {Animation} from '../../animations/animation';
  */
  export class ActionSheet extends ViewController {
 
-   constructor(opts: any = {}) {
+   constructor(opts: {
+     title?: string,
+     subTitle?: string,
+     cssClass?: string,
+     buttons?: Array<any>
+   } = {}) {
      opts.buttons = opts.buttons || [];
 
      super(ActionSheetCmp, opts);
@@ -94,28 +99,33 @@ import {Animation} from '../../animations/animation';
    /**
     * @param {string} title Action sheet title
     */
-   setTitle(title) {
+   setTitle(title: string) {
      this.data.title = title;
    }
 
    /**
     * @param {string} subTitle Action sheet subtitle
     */
-   setSubTitle(subTitle) {
+   setSubTitle(subTitle: string) {
      this.data.subTitle = subTitle;
    }
 
    /**
-    * @param {Object} button Action sheet button
+    * @param {object} button Action sheet button
     */
    addButton(button) {
      this.data.buttons.push(button);
    }
 
    /**
-    * @param {Object} opts Action sheet options
+    * @param {object} opts Action sheet options
     */
-   static create(opts={}) {
+   static create(opts: {
+     title?: string,
+     subTitle?: string,
+     cssClass?: string,
+     buttons?: Array<any>
+   } = {}) {
      return new ActionSheet(opts);
    }
 
@@ -158,7 +168,7 @@ class ActionSheetCmp {
   constructor(
     private _viewCtrl: ViewController,
     private _config: Config,
-    private elementRef: ElementRef,
+    elementRef: ElementRef,
     params: NavParams,
     renderer: Renderer
   ) {
@@ -188,7 +198,7 @@ class ActionSheetCmp {
   }
 
   dismiss() {
-    this._viewCtrl.dismiss();
+    this._viewCtrl.dismiss(null);
   }
 
   onPageLoaded() {
