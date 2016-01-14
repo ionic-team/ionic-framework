@@ -116,7 +116,7 @@ export class Menu extends Ion {
   isOpen: boolean = false;
   isEnabled: boolean = true;
   backdrop: MenuBackdrop;
-  onContentClick: Function;
+  onContentClick: EventListener;
 
   @Input() content: any;
   @Input() id: string;
@@ -167,7 +167,7 @@ export class Menu extends Ion {
     self._cntEle.classList.add('menu-content');
     self._cntEle.classList.add('menu-content-' + self.type);
 
-    self.onContentClick = function(ev) {
+    self.onContentClick = function(ev: UIEvent) {
       if (self.isEnabled) {
         ev.preventDefault();
         ev.stopPropagation();
