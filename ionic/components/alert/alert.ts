@@ -110,7 +110,22 @@ import {isDefined} from '../../util/util';
  */
 export class Alert extends ViewController {
 
-  constructor(opts={}) {
+  constructor(opts: {
+    title?: string,
+    subTitle?: string,
+    message?: string,
+    cssClass?: string,
+    inputs?: Array<{
+      type?: string,
+      name?: string,
+      placeholder?: string,
+      value?: string,
+      label?: string,
+      checked?: boolean,
+      id?: string
+    }>,
+    buttons?: Array<any>
+  } = {}) {
     opts.inputs = opts.inputs || [];
     opts.buttons = opts.buttons || [];
 
@@ -129,59 +144,81 @@ export class Alert extends ViewController {
   /**
    * @param {string} title Alert title
    */
-  setTitle(title) {
+  setTitle(title: string) {
     this.data.title = title;
   }
 
   /**
    * @param {string} subTitle Alert subtitle
    */
-  setSubTitle(subTitle) {
+  setSubTitle(subTitle: string) {
     this.data.subTitle = subTitle;
   }
 
   /**
    * @private
    */
-  setBody(message) {
+  private setBody(message: string) {
     // deprecated warning
     console.warn('Alert setBody() has been renamed to setMessage()');
-
     this.setMessage(message);
   }
 
   /**
    * @param {string} message  Alert message content
    */
-  setMessage(message) {
+  setMessage(message: string) {
     this.data.message = message;
   }
 
   /**
-   * @param {Object} input Alert input
+   * @param {object} input Alert input
    */
-  addInput(input) {
+  addInput(input: {
+    type?: string,
+    name?: string,
+    placeholder?: string,
+    value?: string,
+    label?: string,
+    checked?: boolean,
+    id?: string
+  }) {
     this.data.inputs.push(input);
   }
 
   /**
-   * @param {Object} button Alert button
+   * @param {object} button Alert button
    */
-  addButton(button) {
+  addButton(button: any) {
     this.data.buttons.push(button);
   }
 
   /**
-   * @param {string} className CSS class name to add to the alert's outer wrapper
+   * @param {string} cssClass CSS class name to add to the alert's outer wrapper
    */
-  setCssClass(className) {
-    this.data.cssClass = className;
+  setCssClass(cssClass: string) {
+    this.data.cssClass = cssClass;
   }
 
   /**
    * @param {Object} opts Alert options
    */
-  static create(opts={}) {
+  static create(opts: {
+    title?: string,
+    subTitle?: string,
+    message?: string,
+    cssClass?: string,
+    inputs?: Array<{
+      type?: string,
+      name?: string,
+      placeholder?: string,
+      value?: string,
+      label?: string,
+      checked?: boolean,
+      id?: string
+    }>,
+    buttons?: Array<any>
+  } = {}) {
     return new Alert(opts);
   }
 
@@ -248,6 +285,16 @@ export class Alert extends ViewController {
   directives: [NgClass, NgSwitch, NgIf, NgFor]
 })
 class AlertCmp {
+  activeId: string;
+  cssClass: string;
+  descId: string;
+  d: any;
+  hdrId: string;
+  id: number;
+  subHdrId: string;
+  msgId: string;
+  inputType: string;
+  keyUp: any;
 
   constructor(
     private _viewCtrl: ViewController,
@@ -268,8 +315,76 @@ class AlertCmp {
 
     if (this.d.message) {
       this.descId = this.msgId;
+      
     } else if (this.d.subTitle) {
       this.descId = this.subHdrId;
+    }
+  }
+
+  onPageLoaded() {
+    // normalize the data
+    let data = this.d;
+
+    if (data.body) {
+      // deprecated warning
+      console.warn('Alert `body` property has been renamed to `message`');
+      data.message = data.body;
+    }
+
+    data.buttons = data.buttons.map(button => {
+      if (typeof button === 'string') {
+        return { text: button };
+      }
+      return button;
+    });
+
+    data.inputs = data.inputs.map((input, index) => {
+      return {
+        type: input.type || 'text',
+        name: isDefined(input.name) ? input.name : index,
+        placeholder: isDefined(input.placeholder) ? input.placeholder : '',
+        value: isDefined(input.value) ? input.value : '',
+        label: input.label,
+        checked: !!input.checked,
+        id: 'alert-input-' + this.id + '-' + index
+      };
+    });
+
+    this.inputType = (data.inputs.length ? data.inputs[0].type : null);
+
+    let checkedInput = this.d.inputs.find(input => input.checked);
+    if (checkedInput) {
+      this.activeId = checkedInput.id;
+    }
+
+    let self = this;
+    self.keyUp = function(ev) {
+      if (ev.keyCode === 13) {
+        // enter
+        console.debug('alert enter');
+        let button = self.d.buttons[self.d.buttons.length - 1];
+        self.btnClick(button);
+
+      } else if (ev.keyCode === 27) {
+        console.debug('alert escape');
+        self.dismiss();
+      }
+    };
+
+    document.addEventListener('keyup', this.keyUp);
+  }
+
+  onPageDidEnter() {
+    let activeElement: any = document.activeElement;
+    if (activeElement) {
+      activeElement.blur();
+    }
+    
+    if (this.d.inputs.length) {
+      let firstInput = this._elementRef.nativeElement.querySelector('input');
+      if (firstInput) {
+        firstInput.focus();
+      }
     }
   }
 
@@ -328,69 +443,6 @@ class AlertCmp {
       values[i.name] = i.value;
     });
     return values;
-  }
-
-  onPageLoaded() {
-    // normalize the data
-    let data = this.d;
-
-    if (data.body) {
-      // deprecated warning
-      console.warn('Alert `body` property has been renamed to `message`');
-      data.message = data.body;
-    }
-
-    data.buttons = data.buttons.map(button => {
-      if (typeof button === 'string') {
-        return { text: button };
-      }
-      return button;
-    });
-
-    data.inputs = data.inputs.map((input, index) => {
-      return {
-        type: input.type || 'text',
-        name: isDefined(input.name) ? input.name : index,
-        placeholder: isDefined(input.placeholder) ? input.placeholder : '',
-        value: isDefined(input.value) ? input.value : '',
-        label: input.label,
-        checked: !!input.checked,
-        id: 'alert-input-' + this.id + '-' + index
-      };
-    });
-
-    this.inputType = (data.inputs.length ? data.inputs[0].type : null);
-
-    let checkedInput = this.d.inputs.find(input => input.checked);
-    if (checkedInput) {
-      this.activeId = checkedInput.id;
-    }
-
-    let self = this;
-    self.keyUp = function(ev) {
-      if (ev.keyCode === 13) {
-        // enter
-        console.debug('alert enter');
-        let button = self.d.buttons[self.d.buttons.length - 1];
-        self.click(button);
-
-      } else if (ev.keyCode === 27) {
-        console.debug('alert escape');
-        self.dismiss();
-      }
-    };
-
-    document.addEventListener('keyup', this.keyUp);
-  }
-
-  onPageDidEnter() {
-    document.activeElement && document.activeElement.blur();
-    if (this.d.inputs.length) {
-      let firstInput = this._elementRef.nativeElement.querySelector('input');
-      if (firstInput) {
-        firstInput.focus();
-      }
-    }
   }
 
   onPageDidLeave() {
