@@ -418,8 +418,8 @@ class AlertCmp {
     checkedInput.checked = !checkedInput.checked;
   }
 
-  dismiss() {
-    this._viewCtrl.dismiss(this.getValues());
+  dismiss(): Promise<any> {
+    return this._viewCtrl.dismiss(this.getValues());
   }
 
   getValues() {

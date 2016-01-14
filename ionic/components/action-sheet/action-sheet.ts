@@ -197,8 +197,8 @@ class ActionSheetCmp {
     }
   }
 
-  dismiss() {
-    this._viewCtrl.dismiss(null);
+  dismiss(): Promise<any> {
+    return this._viewCtrl.dismiss(null);
   }
 
   onPageLoaded() {
