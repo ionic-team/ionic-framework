@@ -332,8 +332,9 @@ gulp.task('sass', function() {
     'ionic/ionic.md.scss',
     'ionic/ionic.scss'
   ])
-  .pipe(sass()
-    .on('error', sass.logError)
+  .pipe(sass({
+      includePaths: [__dirname + '/node_modules/ionicons/dist/scss/'],
+    }).on('error', sass.logError)
   )
   .pipe(autoprefixer(buildConfig.autoprefixer))
   .pipe(gulp.dest('dist/bundles/'))
@@ -343,9 +344,11 @@ gulp.task('sass', function() {
 });
 
 gulp.task('fonts', function() {
-  return gulp.src(['ionic/**/*.ttf', 'ionic/**/*.woff', 'ionic/**/*.woff2'])
-    .pipe(gulp.dest('dist'))
-    .pipe(gulp.dest('dist/bundles'));
+  gulp.src([
+    'ionic/fonts/*.+(ttf|woff|woff2)',
+    'node_modules/ionicons/dist/fonts/*.+(ttf|woff|woff2)'
+   ])
+    .pipe(gulp.dest('dist/fonts'));
 });
 
 require('./scripts/snapshot/snapshot.task')(gulp, argv, buildConfig);

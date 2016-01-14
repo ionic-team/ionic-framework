@@ -5,7 +5,9 @@
 // ionicons-icons.scss has the icons and their unicode characters
 
 $ionicons-font-path: $font-path !default;
-$ionicons-version: "3.0.0" !default;
+
+@import "ionicons-icons";
+@import "ionicons-variables";
 
 
 @font-face {
@@ -30,5 +32,3 @@ ion-icon {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-@import "ionicons-icons";

@@ -18,6 +18,7 @@
     "es6-promise": "^3.0.2",
     "es6-shim": "0.33.6",
     "inquirer": "0.11.0",
+    "ionicons": "3.0.0-alpha.3",
     "lodash": "3.10.1",
     "q": "1.4.1",
     "reflect-metadata": "0.1.2",
