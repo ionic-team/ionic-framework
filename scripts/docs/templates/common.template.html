@@ -108,9 +108,9 @@ Delegate: <$ doc.delegate $>
 
 </h1>
 
-<a class="improve-v2-docs" href='http://github.com/driftyco/ionic2/edit/master/<$ doc.fileInfo.relativePath $>#L<$ doc.location.start.line $>'>
+<a class="improve-v2-docs" href='http://github.com/driftyco/ionic/edit/2.0/<$ doc.fileInfo.relativePath $>#L<$ doc.location.start.line $>'>
 Improve this doc
-</a> 
+</a>
 
 <@ if doc.codepen @>
 {% include codepen.html id="<$ doc.codepen $>" %}
@@ -209,7 +209,7 @@ Improve this doc
 <@ if method.returns @>
 <div class="return-value">
 <i class="icon ion-arrow-return-left"></i>
-<b>Returns:</b> <$ typeInfo(method.returns) $>  
+<b>Returns:</b> <$ typeInfo(method.returns) $>
 </div>
 <@ endif @>
 
