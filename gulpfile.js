@@ -363,15 +363,6 @@ gulp.task('karma-watch', function() {
   return karma.start({ configFile: __dirname + '/scripts/karma/karma-watch.conf.js' })
 });
 
-gulp.task('copy.ts', function() {
-  return gulp.src([
-      'ionic/**/*.ts',
-      '!ionic/components/*/test/**/*',
-      '!ionic/util/test/*'
-    ])
-    .pipe(gulp.dest('dist/src/typescript'));
-})
-
 gulp.task('copy.scss', function() {
   return gulp.src([
       'ionic/**/*.scss',
