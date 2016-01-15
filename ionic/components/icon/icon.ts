@@ -54,7 +54,7 @@ export class Icon {
   private _md: string = '';
   private _css: string = '';
   mode: string;
-  
+
   constructor(
     config: Config,
     private _elementRef: ElementRef,
@@ -70,11 +70,20 @@ export class Icon {
     }
   }
 
+  /**
+   * @private
+   */
+  ngOnDestroy() {
+    if (this._css) {
+      this._renderer.setElementClass(this._elementRef, this._css, false);
+    }
+  }
+
   @Input()
   get name() {
     return this._name;
   }
- 
+
   set name(val) {
     if (!(/^md-|^ios-|^logo-/.test(val))) {
       // this does not have one of the defaults
@@ -85,7 +94,7 @@ export class Icon {
     this.update();
   }
 
-  @Input() 
+  @Input()
   get ios(): string {
     return this._ios;
   }
