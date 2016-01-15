@@ -39,9 +39,8 @@ export function run() {
       return true;
     }
 
-    // beforeEach(inject([Compiler], compiler => {
     beforeEach(() => {
-      nav = new NavController(null, null, new Config(), null, null, null, null, null);
+      nav = new NavController(null, null, new Config(), null, null, null, null, null, null, null);
       nav._renderer = {
         setElementAttribute: function(){},
         setElementStyle: function(){}
@@ -87,7 +86,7 @@ export function run() {
     });
 
     describe("push", () => {
-      it('should return a rejected Promise if componentType is falsy', done => {
+      it('should return a rejected Promise if page is falsy', done => {
         let s = jasmine.createSpy('success');
         let f = jasmine.createSpy('fail');
 
@@ -100,7 +99,7 @@ export function run() {
         });
       });
 
-      it('should throw an error if componentType truthy, but is not a function', () => {
+      it('should throw an error if page truthy, but is not a function', () => {
         let push = () => nav.push({}, {}, {});
         expect(push).toThrow();
 
@@ -148,7 +147,7 @@ export function run() {
             vc2 = new ViewController(),
             vc3 = new ViewController();
         nav._views = [vc1, vc2, vc3];
-        let arr = [FirstPage, SecondPage, ThirdPage];
+        let arr = [{page: FirstPage}, {page:SecondPage}, {page:ThirdPage}];
 
         nav._transition = mockTransitionFn;
         nav.setPages(arr);
@@ -198,7 +197,6 @@ export function run() {
 
         nav.insert(10, FirstPage);
         expect(nav._views[5].componentType).toBe(FirstPage);
-        expect(nav.push.calls.count()).toBe(2);
       });
 
     });

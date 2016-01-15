@@ -98,7 +98,7 @@ export class Config {
   private _s: any = {};
   public platform: Platform;
 
-  constructor(config) {
+  constructor(config?) {
     this._s = config && isObject(config) && !isArray(config) ? config : {};
   }
 
