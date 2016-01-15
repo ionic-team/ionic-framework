@@ -1,4 +1,4 @@
-import {Component, forwardRef, Directive, Host, EventEmitter, ElementRef, NgZone, Input} from 'angular2/core';
+import {Component, forwardRef, Directive, Host, EventEmitter, ElementRef, NgZone, Input, Output, Renderer} from 'angular2/core';
 
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
@@ -93,11 +93,6 @@ import {MenuType} from './menu-types';
  */
 @Component({
   selector: 'ion-menu',
-  defaultInputs: {
-    'side': 'left',
-    'menuType': 'reveal'
-  },
-  outputs: ['opening'],
   host: {
     'role': 'navigation',
     '[attr.side]': 'side',
@@ -112,7 +107,7 @@ export class Menu extends Ion {
   private _gesture: Gesture;
   private _targetGesture: Gesture;
   private _type: MenuType;
-  opening: EventEmitter<Menu> = new EventEmitter();
+  
   isOpen: boolean = false;
   isEnabled: boolean = true;
   backdrop: MenuBackdrop;
@@ -123,16 +118,19 @@ export class Menu extends Ion {
   @Input() side: string;
   @Input() type: string;
   @Input() maxEdgeStart;
+  
+  @Output() opening: EventEmitter<any> = new EventEmitter();
 
   constructor(
-    elementRef: ElementRef,
+    private _elementRef: ElementRef,
     private _config: Config,
-    private app: IonicApp,
-    private platform: Platform,
-    private keyboard: Keyboard,
-    private zone: NgZone
+    private _app: IonicApp,
+    private _platform: Platform,
+    private _renderer: Renderer,
+    private _keyboard: Keyboard,
+    private _zone: NgZone
   ) {
-    super(elementRef);
+    super(_elementRef);
   }
 
   /**
@@ -150,15 +148,16 @@ export class Menu extends Ion {
     if (self.side !== 'left' && self.side !== 'right') {
       self.side = 'left';
     }
+    self._renderer.setElementAttribute(self._elementRef, 'side', self.side);
 
     if (!self.id) {
       // Auto register
       self.id = self.side + 'Menu';
-      if (self.app.getComponent(self.id)) {
+      if (self._app.getComponent(self.id)) {
         // id already exists, make sure this one is unique
         self.id += (++menuIds);
       }
-      self.app.register(self.id, self);
+      self._app.register(self.id, self);
     }
 
     self._initGesture();
@@ -180,7 +179,7 @@ export class Menu extends Ion {
    * @private
    */
   _initGesture() {
-    this.zone.runOutsideAngular(() => {
+    this._zone.runOutsideAngular(() => {
       switch(this.side) {
         case 'right':
           this._gesture = new gestures.RightMenuGesture(this);
@@ -203,6 +202,7 @@ export class Menu extends Ion {
       type = this._config.get('menuType');
     }
     this.type = type;
+    this._renderer.setElementAttribute(this._elementRef, 'menuType', type);
   }
 
   /**
@@ -287,7 +287,7 @@ export class Menu extends Ion {
       this.getBackdropElement().classList.add('show-backdrop');
 
       this._prevent();
-      this.keyboard.close();
+      this._keyboard.close();
     }
   }
 
@@ -404,7 +404,7 @@ export class Menu extends Ion {
    * @private
    */
   ngOnDestroy() {
-    this.app.unregister(this.id);
+    this._app.unregister(this.id);
     this._gesture && this._gesture.destroy();
     this._targetGesture && this._targetGesture.destroy();
     this._type && this._type.ngOnDestroy();

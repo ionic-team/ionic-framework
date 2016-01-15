@@ -34,9 +34,10 @@ import {ScrollTo} from '../../animations/scroll-to';
 })
 export class Content extends Ion {
   private _padding: number = 0;
-  private _scrollEle: HTMLElement;
   private _onScroll: any;
   private _scrollTo: ScrollTo;
+  
+  scrollElement: HTMLElement;
   
   /**
    * @param {ElementRef} elementRef  A reference to the component's DOM element.
@@ -62,7 +63,7 @@ export class Content extends Ion {
    */
   ngOnInit() {
     let self = this;
-    self._scrollEle = self._elementRef.nativeElement.children[0];
+    self.scrollElement = self._elementRef.nativeElement.children[0];
 
     self._onScroll = function(ev) {
       self._app.setScrolling();
@@ -70,13 +71,13 @@ export class Content extends Ion {
 
     if (self._config.get('tapPolyfill') === true) {
       self._zone.runOutsideAngular(function() {
-        self._scrollEle.addEventListener('scroll', self._onScroll);
+        self.scrollElement.addEventListener('scroll', self._onScroll);
       });
     }
   }
 
   ngOnDestroy() {
-    this._scrollEle.removeEventListener('scroll', this._onScroll);
+    this.scrollElement.removeEventListener('scroll', this._onScroll);
   }
 
   /**
@@ -105,24 +106,24 @@ export class Content extends Ion {
    * @returns {Function} A function that removes the scroll handler.
    */
   addScrollEventListener(handler) {
-    if (!this._scrollEle) { 
+    if (!this.scrollElement) { 
       return; 
     }
 
     // ensure we're not creating duplicates
-    this._scrollEle.removeEventListener('scroll', handler);
+    this.scrollElement.removeEventListener('scroll', handler);
 
-    this._scrollEle.addEventListener('scroll', handler);
+    this.scrollElement.addEventListener('scroll', handler);
 
     return () => {
-      this._scrollEle.removeEventListener('scroll', handler);
+      this.scrollElement.removeEventListener('scroll', handler);
     }
   }
 
   onScrollEnd(callback) {
     let lastScrollTop = null;
     let framesUnchanged = 0;
-    let _scrollEle = this._scrollEle;
+    let _scrollEle = this.scrollElement;
 
     function next() {
       let currentScrollTop = _scrollEle.scrollTop;
@@ -175,15 +176,15 @@ export class Content extends Ion {
    * @returns {Function} A function that removes the touchmove handler.
    */
   addTouchMoveListener(handler) {
-    if (!this._scrollEle) { return; }
+    if (!this.scrollElement) { return; }
 
     // ensure we're not creating duplicates
-    this._scrollEle.removeEventListener('touchmove', handler);
+    this.scrollElement.removeEventListener('touchmove', handler);
 
-    this._scrollEle.addEventListener('touchmove', handler);
+    this.scrollElement.addEventListener('touchmove', handler);
 
     return () => {
-      this._scrollEle.removeEventListener('touchmove', handler);
+      this.scrollElement.removeEventListener('touchmove', handler);
     }
   }
 
@@ -221,7 +222,7 @@ export class Content extends Ion {
       this._scrollTo.dispose();
     }
 
-    this._scrollTo = new ScrollTo(this._scrollEle);
+    this._scrollTo = new ScrollTo(this.scrollElement);
 
     return this._scrollTo.start(x, y, duration, tolerance);
   }
@@ -256,7 +257,7 @@ export class Content extends Ion {
       this._scrollTo.dispose();
     }
 
-    this._scrollTo = new ScrollTo(this._scrollEle);
+    this._scrollTo = new ScrollTo(this.scrollElement);
 
     return this._scrollTo.start(0, 0, 300, 0);
   }
@@ -279,7 +280,7 @@ export class Content extends Ion {
    * {Number} dimensions.scrollRight  scroll scrollLeft + scrollWidth
    */
   getContentDimensions() {
-    let _scrollEle = this._scrollEle;
+    let _scrollEle = this.scrollElement;
     let parentElement = _scrollEle.parentElement;
 
     return {
@@ -311,7 +312,7 @@ export class Content extends Ion {
       console.debug('content addScrollPadding', newPadding);
 
       this._padding = newPadding;
-      this._scrollEle.style.paddingBottom = newPadding + 'px';
+      this.scrollElement.style.paddingBottom = newPadding + 'px';
     }
   }
 

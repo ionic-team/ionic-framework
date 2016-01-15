@@ -1000,7 +1000,7 @@ export class NavController extends Ion {
       }
 
       let viewContainer = this._viewManager.getViewContainer(location);
-      let hostViewRef =
+      let hostViewRef: any =
           viewContainer.createHostView(hostProtoViewRef, viewContainer.length, providers);
       let pageElementRef = this._viewManager.getHostElement(hostViewRef);
       let component = this._viewManager.getComponent(pageElementRef);

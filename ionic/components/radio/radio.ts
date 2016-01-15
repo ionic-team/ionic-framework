@@ -43,13 +43,14 @@ import {isDefined} from '../../util/util';
     '</div>'
 })
 export class RadioButton {
-  @Input() value: string = '';
+  labelId: any;
+  
   @Input() checked: any = false;
   @Input() disabled: boolean = false;
   @Input() id: string;
+  @Input() value: string = '';
+  
   @Output() select: EventEmitter<RadioButton> = new EventEmitter();
-
-  labelId: any;
 
   constructor(
     private _form: Form,
@@ -236,8 +237,7 @@ export class RadioGroup {
       this._renderer.setElementAttribute(this._elementRef, 'aria-describedby', header.id);
     }
 
-    let buttons = this._buttons.toArray();
-    for (let button of buttons) {
+    this._buttons.toArray().forEach(button => {
       button.select.subscribe(() => {
         this.writeValue(button.value);
         this.onChange(button.value);
@@ -253,7 +253,7 @@ export class RadioGroup {
           this._renderer.setElementAttribute(this._elementRef, 'aria-activedescendant', button.id);
         }
       }
-    }
+    });
   }
 
 }

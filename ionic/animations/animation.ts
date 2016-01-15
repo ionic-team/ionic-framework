@@ -51,7 +51,7 @@ export class Animation {
   private _finishes: Array<any>;
   public isProgress: boolean;
 
-  constructor(ele, opts={}) {
+  constructor(ele?, opts={}) {
     this.reset();
 
     this._opts = assign({
@@ -524,16 +524,16 @@ export class Animation {
       dest._ani = [];
 
       for (let i = 0; i < src._chld.length; i++) {
-        dest.add( copy(new Animation(null), src._chld[i]) );
+        dest.add( copy(new Animation(), src._chld[i]) );
       }
 
       return dest;
     }
 
-    return copy(new Animation(null), this);
+    return copy(new Animation(), this);
   }
 
-  dispose(removeElement) {
+  dispose(removeElement?) {
     let i;
 
     for (i = 0; i < this._chld.length; i++) {

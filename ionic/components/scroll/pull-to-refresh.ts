@@ -82,7 +82,11 @@ import {raf, ready, CSS} from '../../util/dom';
 })
 export class Refresher {
   private ele: HTMLElement;
+  private _touchMoveListener;
+  private _touchEndListener;
+  private _handleScrollListener;
   
+  isActive: boolean;
   isDragging: boolean = false;
   isOverscrolling: boolean = false;
   dragOffset: number = 0;
@@ -91,6 +95,14 @@ export class Refresher {
   activated: boolean = false;
   scrollTime: number = 500;
   canOverscroll: boolean = false;
+  startY;
+  deltaY;
+  scrollHost;
+  scrollChild;
+  showIcon: boolean;
+  showSpinner: boolean;
+  isRefreshing: boolean;
+  isRefreshingTail: boolean;
   
   @Input() pullingIcon: string;
   @Input() pullingText: string;
@@ -129,12 +141,12 @@ export class Refresher {
     })
 
     this.showSpinner = !isDefined(this.refreshingIcon) && this.spinner != 'none';
-
     this.showIcon = isDefined(this.refreshingIcon);
 
     this._touchMoveListener = this._handleTouchMove.bind(this);
     this._touchEndListener = this._handleTouchEnd.bind(this);
     this._handleScrollListener = this._handleScroll.bind(this);
+    
     sc.addEventListener('touchmove', this._touchMoveListener);
     sc.addEventListener('touchend', this._touchEndListener);
     sc.addEventListener('scroll', this._handleScrollListener);
@@ -143,8 +155,7 @@ export class Refresher {
   /**
    * @private
    */
-  onDehydrate() {
-    console.log('DEHYDRATION');
+  ngOnDestroy() {
     let sc = this.content.scrollElement;
     sc.removeEventListener('touchmove', this._touchMoveListener);
     sc.removeEventListener('touchend', this._touchEndListener);
@@ -280,14 +291,14 @@ export class Refresher {
  * @param {TODO} duration  TODO
  * @param {Function} callback  TODO
  */
-  scrollTo(Y, duration, callback) {
+  scrollTo(Y, duration, callback?) {
     // scroll animation loop w/ easing
     // credit https://gist.github.com/dezinezync/5487119
     var start = Date.now(),
         from = this.lastOverscroll;
 
     if (from === Y) {
-      callback();
+      callback && callback();
       return; /* Prevent scrolling to the Y point if already there */
     }
 
@@ -304,7 +315,7 @@ export class Refresher {
         // fraction based on the easing method
         easedT = easeOutCubic(time);
 
-      this.overscroll(parseInt((easedT * (Y - from)) + from, 10));
+      this.overscroll( Math.round((easedT * (Y - from)) + from) );
 
       if (time < 1) {
         raf(scroll.bind(this));
@@ -354,7 +365,7 @@ export class Refresher {
       }
 
       if (this.isDragging) {
-        this.nativescroll(this.scrollHost, parseInt(this.deltaY - this.dragOffset, 10) * -1);
+        this.nativescroll(this.scrollHost, Math.round(this.deltaY - this.dragOffset) * -1);
       }
 
       // if we're not at overscroll 0 yet, 0 out
@@ -378,8 +389,9 @@ export class Refresher {
     }
 
     this.isDragging = true;
+    
     // overscroll according to the user's drag so far
-    this.overscroll(parseInt((this.deltaY - this.dragOffset) / 3, 10));
+    this.overscroll( Math.round((this.deltaY - this.dragOffset) / 3) );
 
     // Pass an incremental pull amount to the EventEmitter
     this.pulling.next(this.lastOverscroll);
@@ -388,6 +400,7 @@ export class Refresher {
     if (!this.activated && this.lastOverscroll > this.ptrThreshold) {
       this.activated = true;
       raf(this.activate.bind(this));
+      
     } else if (this.activated && this.lastOverscroll < this.ptrThreshold) {
       this.activated = false;
       raf(this.deactivate.bind(this));
