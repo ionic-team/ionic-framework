@@ -70,12 +70,12 @@ export class Icon {
     }
   }
 
-  get name(): string {
+  @Input()
+  get name() {
     return this._name;
   }
-
-  @Input() 
-  set name(val: string) {
+ 
+  set name(val) {
     if (!(/^md-|^ios-|^logo-/.test(val))) {
       // this does not have one of the defaults
       // so lets auto add in the mode prefix for them
@@ -85,31 +85,31 @@ export class Icon {
     this.update();
   }
 
+  @Input() 
   get ios(): string {
     return this._ios;
   }
 
-  @Input() 
   set ios(val: string) {
     this._ios = val;
     this.update();
   }
 
+  @Input()
   get md(): string {
     return this._md;
   }
 
-  @Input()
   set md(val: string) {
     this._md = val;
     this.update();
   }
 
+  @Input()
   get isActive() {
     return (this._isActive === undefined || this._isActive === true || this._isActive === 'true');
   }
 
-  @Input()
   set isActive(val) {
     this._isActive = val;
     this.update();

@@ -157,11 +157,11 @@ export class Toggle {
     this.checked = !this.checked;
   }
 
+  @Input()
   get checked(): boolean {
     return !!this._checked;
   }
 
-  @Input()
   set checked(val: boolean) {
     this._checked = !!val;
     this._renderer.setElementAttribute(this._elementRef, 'aria-checked', this._checked.toString());

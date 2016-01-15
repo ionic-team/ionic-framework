@@ -81,11 +81,11 @@ export class Checkbox {
     this.checked = !this.checked;
   }
 
+  @Input() 
   get checked() {
     return !!this._checked;
   }
 
-  @Input() 
   set checked(val) {
     this._checked = !!val;
     this._renderer.setElementAttribute(this._elementRef, 'aria-checked', this._checked.toString());

@@ -10,17 +10,17 @@ import {Directive, ElementRef, Input} from 'angular2/core';
 export class Option {
   private _checked: boolean = false;
   
+  @Input() value: string;
+  
   constructor(private _elementRef: ElementRef) {
     this._checked = false;
   }
 
-  @Input() value: string;
-
+  @Input()
   get checked() {
     return this._checked;
   }
   
-  @Input()
   set checked(val: any) {
     this._checked = (val === 'true' || val === true || val === '');
   }
