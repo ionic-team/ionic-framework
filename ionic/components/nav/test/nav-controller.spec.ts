@@ -199,6 +199,15 @@ export function run() {
         expect(nav._views[5].componentType).toBe(FirstPage);
       });
 
+      it('another insert happened before last insert rendered, abort previous insert enter', () => {
+        let view1 = new ViewController();
+        view1._loaded = true;
+        view1.state = NavController.STATE_ABORT;
+        let view2 = new ViewController();
+        view2._loaded = true;
+        nav._views = [view1, view2];
+      });
+
     });
 
     describe("setRoot", () => {

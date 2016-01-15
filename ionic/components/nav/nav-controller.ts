@@ -1,15 +1,16 @@
 import {Compiler, ElementRef, Injector, provide, NgZone, AppViewManager, Renderer, ResolvedProvider, Type} from 'angular2/core';
 import {wtfLeave, wtfCreateScope, WtfScopeFn, wtfStartTimeRange, wtfEndTimeRange} from 'angular2/instrumentation';
 
+import {Animation} from '../../animations/animation';
+import {Config} from '../../config/config';
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
-import {Config} from '../../config/config';
-import {Keyboard} from '../../util/keyboard';
-import {ViewController} from './view-controller';
-import {Animation} from '../../animations/animation';
-import {SwipeBackGesture} from './swipe-back';
 import {isBoolean, array, pascalCaseToDashCase} from '../../util/util';
+import {Keyboard} from '../../util/keyboard';
+import {NavParams} from './nav-params';
 import {raf, rafFrames} from '../../util/dom';
+import {SwipeBackGesture} from './swipe-back';
+import {ViewController} from './view-controller';
 
 /**
  * _For examples on the basic usage of NavController, check out the
@@ -1496,70 +1497,18 @@ export class NavController extends Ion {
 
 }
 
-const STATE_ACTIVE = 1;
-const STATE_INACTIVE = 2;
-const STATE_INIT_ENTER = 3;
-const STATE_INIT_LEAVE = 4;
-const STATE_RENDER_ENTER = 5;
-const STATE_RENDER_LEAVE = 6;
-const STATE_POST_RENDER_ENTER = 7;
-const STATE_POST_RENDER_LEAVE = 8;
-const STATE_BEFORE_TRANS_ENTER = 9;
-const STATE_BEFORE_TRANS_LEAVE = 10;
-const STATE_AFTER_TRANS_ENTER = 11;
-const STATE_AFTER_TRANS_LEAVE = 12;
+export const STATE_ABORT = -1;
+export const STATE_ACTIVE = 1;
+export const STATE_INACTIVE = 2;
+export const STATE_INIT_ENTER = 3;
+export const STATE_INIT_LEAVE = 4;
+export const STATE_RENDER_ENTER = 5;
+export const STATE_RENDER_LEAVE = 6;
+export const STATE_POST_RENDER_ENTER = 7;
+export const STATE_POST_RENDER_LEAVE = 8;
+export const STATE_BEFORE_TRANS_ENTER = 9;
+export const STATE_BEFORE_TRANS_LEAVE = 10;
+export const STATE_AFTER_TRANS_ENTER = 11;
+export const STATE_AFTER_TRANS_LEAVE = 12;
 
 let ctrlIds = -1;
-
-
-/**
- * @name NavParams
- * @description
- * NavParams are an object that exists on a page and can contain data for that particular view.
- * Similar to how data was pass to a view in V1 with `$stateParams`, NavParams offer a much more flexible
- * option with a simple `get` method.
- *
- * @usage
- * ```ts
- * export class MyClass{
- *  constructor(params: NavParams){
- *    this.params = params;
- *    // userParams is an object we have in our nav-parameters
- *    this.params.get('userParams');
- *  }
- * }
- * ```
- * @demo /docs/v2/demos/nav-params/
- * @see {@link /docs/v2/components#navigation Navigation Component Docs}
- * @see {@link ../NavController/ NavController API Docs}
- * @see {@link ../Nav/ Nav API Docs}
- * @see {@link ../NavPush/ NavPush API Docs}
- */
-export class NavParams {
-  
-  /**
-   * @private
-   * @param {TODO} data  TODO
-   */
-  constructor(public data: any = {}) {}
-
-  /**
-   * Get the value of a nav-parameter for the current view
-   *
-   * ```ts
-   * export class MyClass{
-   *  constructor(params: NavParams){
-   *    this.params = params;
-   *    // userParams is an object we have in our nav-parameters
-   *    this.params.get('userParams');
-   *  }
-   * }
-   * ```
-   *
-   *
-   * @param {string} parameter Which param you want to look up
-   */
-  get(param: string): any {
-    return this.data[param];
-  }
-}

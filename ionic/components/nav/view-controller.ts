@@ -1,6 +1,9 @@
 import {Output, EventEmitter, Type, TemplateRef, ViewContainerRef, ElementRef} from 'angular2/core';
-import {NavController, NavParams} from './nav-controller';
+
 import {Navbar} from '../navbar/navbar';
+import {NavController} from './nav-controller';
+import {NavParams} from './nav-params';
+
 
 /**
  * @name ViewController

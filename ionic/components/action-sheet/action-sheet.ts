@@ -1,11 +1,11 @@
 import {Component, Renderer, ElementRef} from 'angular2/core';
 import {NgFor, NgIf} from 'angular2/common';
 
-import {NavParams} from '../nav/nav-controller';
-import {ViewController} from '../nav/view-controller';
+import {Animation} from '../../animations/animation';
 import {Config} from '../../config/config';
 import {Icon} from '../icon/icon';
-import {Animation} from '../../animations/animation';
+import {NavParams} from '../nav/nav-params';
+import {ViewController} from '../nav/view-controller';
 
 
 /**
