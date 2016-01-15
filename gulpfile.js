@@ -21,6 +21,8 @@ var flagConfig = {
 };
 var flags = minimist(process.argv.slice(2), flagConfig);
 
+var IS_RELEASE = true;
+
 var tscOptions = {
   emitDecoratorMetadata: true,
   experimentalDecorators: true,
@@ -147,30 +149,41 @@ function tsCompile(options, cacheName){
 }
 
 gulp.task('transpile.no-typecheck', function(){
+  var gulpif = require('gulp-if');
+  var stripDebug = require('gulp-strip-debug');
+
   return tsCompile(tscOptionsNoTypeCheck, 'no-typecheck')
+    .pipe(gulpif(IS_RELEASE, stripDebug()))
     .pipe(gulp.dest('dist'));
 });
 
 gulp.task('transpile.typecheck', function(){
   var merge = require('merge2');
+  var stripDebug = require('gulp-strip-debug');
 
   var result = tsCompile(tscOptions, 'typecheck');
 
+  var js = result.js;
+  var dts = result.dts;
+  if (IS_RELEASE) {
+    js = js.pipe(stripDebug());
+  }
+
   // merge definition and source streams
-  return merge([
-    result.dts,
-    result.js
-  ])
-  .pipe(gulp.dest('dist'));
+  return merge([js, dts])
+    .pipe(gulp.dest('dist'));
 })
 
 gulp.task('bundle.system', function(){
   var babel = require('gulp-babel');
   var concat = require('gulp-concat');
+  var gulpif = require('gulp-if');
+  var stripDebug = require('gulp-strip-debug');
 
   return tsCompile(tscOptionsEs6, 'system')
     .pipe(babel(babelOptions))
     .pipe(remember('system'))
+    .pipe(gulpif(IS_RELEASE, stripDebug()))
     .pipe(concat('ionic.system.js'))
     .pipe(gulp.dest('dist/bundles'))
     .pipe(connect.reload())
@@ -392,9 +405,14 @@ gulp.task('src', function(done){
     'transpile.typecheck',
     done
   );
-})
+});
 
-gulp.task('package', ['src'], function(done){
+gulp.task('src.release', function(done) {
+  IS_RELEASE = true;
+  gulp.start('src', done);
+});
+
+gulp.task('package', ['src.release'], function(done){
   var _ = require('lodash');
   var fs = require('fs');
   var distDir = 'dist';

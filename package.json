@@ -48,6 +48,7 @@
     "gulp-rename": "~1.2.0",
     "gulp-sass": "^2.0.4",
     "gulp-shell": "^0.4.0",
+    "gulp-strip-debug": "^1.1.0",
     "gulp-typescript": "^2.9.2",
     "gulp-util": "^3.0.6",
     "gulp-watch": "^4.2.4",
