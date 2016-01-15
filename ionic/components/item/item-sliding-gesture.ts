@@ -1,4 +1,4 @@
-import {Hammer} from '../../gestures/hammer';
+import {DIRECTION_RIGHT} from '../../gestures/hammer';
 import {DragGesture} from '../../gestures/drag-gesture';
 import {List} from '../list/list';
 
@@ -6,21 +6,23 @@ import {CSS, raf, closest} from '../../util/dom';
 
 
 export class ItemSlidingGesture extends DragGesture {
-  constructor(list: List, listEle) {
+  canDrag: boolean = true;
+  data = {};
+  openItems: number = 0;
+  onTap;
+  onMouseOut;
+  preventDrag: boolean = false;
+  dragEnded: boolean = true;
+  
+  constructor(public list: List, public listEle: HTMLElement) {
     super(listEle, {
       direction: 'x',
       threshold: DRAG_THRESHOLD
     });
 
-    this.data = {};
-    this.openItems = 0;
-
-    this.list = list;
-    this.listEle = listEle;
-    this.canDrag = true;
     this.listen();
 
-    this.tap = (ev) => {
+    this.onTap = (ev) => {
       if (!isFromOptionButtons(ev.target)) {
         let didClose = this.closeOpened();
         if (didClose) {
@@ -30,7 +32,7 @@ export class ItemSlidingGesture extends DragGesture {
       }
     };
 
-    this.mouseOut = (ev) => {
+    this.onMouseOut = (ev) => {
       if (ev.target.tagName === 'ION-ITEM-SLIDING') {
         console.debug('tap close sliding item');
         this.onDragEnd(ev);
@@ -54,7 +56,8 @@ export class ItemSlidingGesture extends DragGesture {
     if (this.preventDrag) {
       this.closeOpened();
       console.debug('onDragStart, preventDefault');
-      return preventDefault(ev);
+      preventDefault(ev);
+      return;
     }
 
     itemContainerEle.classList.add('active-slide');
@@ -67,7 +70,7 @@ export class ItemSlidingGesture extends DragGesture {
     return true;
   }
 
-  onDrag(ev) {
+  onDrag(ev): boolean {
     if (this.dragEnded || this.preventDrag || Math.abs(ev.deltaY) > 30) {
       console.debug('onDrag preventDrag, dragEnded:', this.dragEnded, 'preventDrag:', this.preventDrag, 'ev.deltaY:', Math.abs(ev.deltaY));
       this.preventDrag = true;
@@ -101,7 +104,7 @@ export class ItemSlidingGesture extends DragGesture {
     }
 
     if (newX > 5 && ev.srcEvent.type.indexOf('mouse') > -1 && !itemData.hasMouseOut) {
-      itemContainerEle.addEventListener('mouseout', this.mouseOut);
+      itemContainerEle.addEventListener('mouseout', this.onMouseOut);
       itemData.hasMouseOut = true;
     }
 
@@ -140,7 +143,7 @@ export class ItemSlidingGesture extends DragGesture {
       }
     }
 
-    itemContainerEle.removeEventListener('mouseout', this.mouseOut);
+    itemContainerEle.removeEventListener('mouseout', this.onMouseOut);
     itemData.hasMouseOut = false;
 
     raf(() => {
@@ -192,9 +195,10 @@ export class ItemSlidingGesture extends DragGesture {
     if (isFinal) {
       if (openAmount) {
         isItemActive(itemContainerEle, true);
-        this.on('tap', this.tap);
+        this.on('tap', this.onTap);
+        
       } else {
-        this.off('tap', this.tap);
+        this.off('tap', this.onTap);
       }
     }
   }

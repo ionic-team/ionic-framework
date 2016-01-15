@@ -316,8 +316,8 @@ var INPUT_END = 4;
 var INPUT_CANCEL = 8;
 
 var DIRECTION_NONE = 1;
-var DIRECTION_LEFT = 2;
-var DIRECTION_RIGHT = 4;
+export var DIRECTION_LEFT = 2;
+export var DIRECTION_RIGHT = 4;
 var DIRECTION_UP = 8;
 var DIRECTION_DOWN = 16;
 
