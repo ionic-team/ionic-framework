@@ -192,7 +192,7 @@ export class Slides extends Ion {
 
     /*
     * TODO: Finish this
-    if(util.isTrueProperty(this.zoom)) {
+    if (util.isTrueProperty(this.zoom)) {
       this.enableZoom = true;
       setTimeout(() => {
         this.initZoom();
@@ -291,7 +291,7 @@ export class Slides extends Ion {
 
     this.zoomGesture.on('pinchend', (e) => {
       //last_scale = Math.max(1, Math.min(last_scale * e.scale, 10));
-      if(this.scale > this.maxScale) {
+      if (this.scale > this.maxScale) {
         let za = new Animation(this.zoomElement)
           .duration(this.zoomDuration)
           .easing('linear')
@@ -309,7 +309,7 @@ export class Slides extends Ion {
    */
   resetZoom() {
 
-    if(this.zoomElement) {
+    if (this.zoomElement) {
 
       this.zoomElement.parentElement.style[CSS.transform] = '';
       this.zoomElement.style[CSS.transform] = 'scale(1)';
@@ -325,7 +325,7 @@ export class Slides extends Ion {
    */
   toggleZoom(swiper, e) {
     console.log('Try toggle zoom');
-    if(!this.enableZoom) { return; }
+    if (!this.enableZoom) { return; }
 
     console.log('Toggling zoom', e);
 
@@ -338,14 +338,14 @@ export class Slides extends Ion {
 
     let tx, ty;
 
-    if(x > mx) {
+    if (x > mx) {
       // Greater than half
       tx = -x;
     } else {
       // Less than or equal to half
       tx = (this.viewportWidth - x);
     }
-    if(y > my) {
+    if (y > my) {
       ty = -y;
     } else {
       ty = y-my;
@@ -364,10 +364,9 @@ export class Slides extends Ion {
       .easing('linear');
 
     let za = new Animation();
-    za.fill('none');
-    za.add(zi);//, zw);
+    za.add(zi);
 
-    if(this.scale > 1) {
+    if (this.scale > 1) {
       // Zoom out
 
       //zw.fromTo('translateX', posX + 'px', '0px');
@@ -458,7 +457,7 @@ export class Slides extends Ion {
 
     console.log('BOUNDS', x1, x2, y1, y2);
 
-    if(this.scale <= 1) {
+    if (this.scale <= 1) {
       return;
     }
 
@@ -470,16 +469,16 @@ export class Slides extends Ion {
 
     console.log(this.touch.x, this.touch.y);
 
-    if(this.touch.x < x1) {
+    if (this.touch.x < x1) {
       console.log('OUT ON LEFT');
     }
-    if(this.touch.x > x2 ){
+    if (this.touch.x > x2 ){
       console.log('OUT ON RIGHT');
     }
 
-    if(this.touch.x > this.viewportWidth) {
+    if (this.touch.x > this.viewportWidth) {
       // Too far on the left side, let the event bubble up (to enable slider on edges, for example)
-    } else if(-this.touch.x > this.viewportWidth) {
+    } else if (-this.touch.x > this.viewportWidth) {
       // Too far on the right side, let the event bubble up (to enable slider on edges, for example)
     } else {
       console.log('TRANSFORM', this.touch.x, this.touch.y, this.touch.target);
@@ -498,16 +497,16 @@ export class Slides extends Ion {
   onTouchEnd(e) {
     console.log('PANEND', e);
 
-    if(this.scale > 1) {
+    if (this.scale > 1) {
 
-      if(Math.abs(this.touch.x) > this.viewportWidth) {
-        //TODO what is posX?
-        posX = posX > 0 ? this.viewportWidth - 1 : -(this.viewportWidth - 1);
+      if (Math.abs(this.touch.x) > this.viewportWidth) {
+        // TODO what is posX?
+        var posX = posX > 0 ? this.viewportWidth - 1 : -(this.viewportWidth - 1);
         console.log('Setting on posx', this.touch.x);
       }
 
       /*
-      if(posY > this.viewportHeight/2) {
+      if (posY > this.viewportHeight/2) {
         let z = new Animation(this.zoomElement.parentElement);
         z.fromTo('translateY', posY + 'px', Math.min(this.viewportHeight/2 + 30, posY));
         z.play();
@@ -533,7 +532,7 @@ export class Slides extends Ion {
       this.slider.update();
 
       // Don't allow pager to show with > 10 slides
-      if(this.slider.slides.length > 10) {
+      if (this.slider.slides.length > 10) {
         this.showPager = false;
       }
     });
@@ -594,16 +593,13 @@ export class Slides extends Ion {
   */
 @Component({
   selector: 'ion-slide',
-  inputs: ['zoom'],
   template: '<div class="slide-zoom"><ng-content></ng-content></div>'
 })
 export class Slide {
   private ele: HTMLElement;
-  /**
-   * TODO
-   * @param {Slides} slides  The containing slidebox.
-   * @param {ElementRef} elementRef  TODO
-   */
+  
+  @Input() zoom;
+  
   constructor(
     elementRef: ElementRef,
     @Host() slides: Slides
@@ -620,9 +616,8 @@ export class Slide {
   */
 @Directive({
   selector: 'slide-lazy',
-})
-export class SlideLazy {
-  constructor(elementRef: ElementRef) {
-    elementRef.nativeElement.classList.add('swiper-lazy');
+  host: {
+    'class': 'swiper-lazy'
   }
-}
+})
+export class SlideLazy {}

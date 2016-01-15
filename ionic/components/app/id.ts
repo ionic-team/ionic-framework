@@ -37,23 +37,23 @@ import {IonicApp} from './app';
  * has been navigated away from.
  */
 @Directive({
-  selector: '[id]',
-  inputs: ['id']
+  selector: '[id]'
 })
 export class IdRef {
-  component: any;
-  id: string;
+  private _component: any;
+  
+  @Input() id: string;
 
-  constructor(private _app: IonicApp, private _elementRef: ElementRef, private _appViewManager: AppViewManager) {
+  constructor(private _app: IonicApp, elementRef: ElementRef, appViewManager: AppViewManager) {
     // Grab the component this directive is attached to
-    this.component = _appViewManager.getComponent(_elementRef);
+    this._component = appViewManager.getComponent(elementRef);
   }
 
   /**
    * @private
    */
   ngOnInit() {
-    this._app.register(this.id, this.component);
+    this._app.register(this.id, this._component);
   }
 
   /**
