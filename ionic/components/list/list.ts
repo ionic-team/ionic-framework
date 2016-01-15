@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Renderer, Attribute, NgZone} from 'angular2/core';
+import {Directive, ElementRef, Renderer, Attribute, NgZone, Input} from 'angular2/core';
 
 import {Ion} from '../ion';
 import {ListVirtualScroll} from './virtual';
@@ -17,22 +17,25 @@ import {isDefined} from '../../util';
  * @demo /docs/v2/demos/list/
  * @see {@link /docs/v2/components#lists List Component Docs}
  *
- *
  */
 @Directive({
-  selector: 'ion-list',
-  inputs: [
-    'items',
-    'virtual',
-    'content'
-  ]
+  selector: 'ion-list'
 })
 export class List extends Ion {
+  private _enableSliding: boolean = false;
+  private _virtualScrollingManager: ListVirtualScroll;
+  
+  ele: HTMLElement;
+  itemTemplate;
+  slidingGesture: ItemSlidingGesture;
+  
+  @Input() items;
+  @Input() virtual;
+  @Input() content;
 
   constructor(elementRef: ElementRef, private zone: NgZone) {
     super(elementRef);
     this.ele = elementRef.nativeElement;
-    this._enableSliding = false;
   }
 
   /**
@@ -138,8 +141,9 @@ export class List extends Ion {
   selector: 'ion-list-header'
 })
 export class ListHeader {
+  private _id: string;
 
-  constructor(private _renderer: Renderer, private _elementRef: ElementRef, @Attribute('id') id:string){
+  constructor(private _renderer: Renderer, private _elementRef: ElementRef, @Attribute('id') id:string) {
     this._id = id;
   }
 

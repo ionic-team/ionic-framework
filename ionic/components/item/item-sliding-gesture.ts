@@ -148,7 +148,7 @@ export class ItemSlidingGesture extends DragGesture {
     });
   }
 
-  closeOpened(doNotCloseEle) {
+  closeOpened(doNotCloseEle?: HTMLElement) {
     let didClose = false;
     if (this.openItems) {
       let openItemElements = this.listEle.querySelectorAll('.active-slide');

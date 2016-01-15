@@ -524,13 +524,13 @@ export class Animation {
       dest._ani = [];
 
       for (let i = 0; i < src._chld.length; i++) {
-        dest.add( copy(new Animation(), src._chld[i]) );
+        dest.add( copy(new Animation(null), src._chld[i]) );
       }
 
       return dest;
     }
 
-    return copy(new Animation(), this);
+    return copy(new Animation(null), this);
   }
 
   dispose(removeElement) {

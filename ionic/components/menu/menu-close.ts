@@ -1,4 +1,4 @@
-import {Directive} from 'angular2/core';
+import {Directive, Input, HostListener} from 'angular2/core';
 
 import {IonicApp} from '../app/app';
 import {Menu} from './menu';
@@ -27,21 +27,17 @@ import {Menu} from './menu';
 * @see {@link ../../menu/Menu Menu API Docs}
 */
 @Directive({
-  selector: '[menuClose]',
-  inputs: [
-    'menuClose'
-  ],
-  host: {
-    '(click)': 'close()'
-  }
+  selector: '[menuClose]'
 })
 export class MenuClose {
+  @Input() menuClose;
 
   constructor(private _app: IonicApp) {}
 
   /**
   * @private
   */
+  @HostListener('click')
   close() {
     let menu = Menu.getById(this._app, this.menuClose);
     menu && menu.close();

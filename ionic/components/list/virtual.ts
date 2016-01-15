@@ -1,19 +1,26 @@
+import {List} from './list';
 
 
 export class ListVirtualScroll {
-  constructor(list) {
+  content;
+  viewContainer;
+  viewportHeight;
+  virtualHeight;
+  viewportScrollHeight;
+  itemsPerScreen;
+  list: List;
+  itemHeight: number = 60;
+  shownItems = {};
+  enteringItems = [];
+  leavingItems = [];
+  
+  constructor(list: List) {
     this.list = list;
     this.content = this.list.content;
 
     this.viewportHeight = this.content.height();
 
     this.viewContainer = this.list.itemTemplate.viewContainer;
-
-    this.itemHeight = 60;
-
-    this.shownItems = {};
-    this.enteringItems = [];
-    this.leavingItems = [];
 
     // Compute the initial sizes
     setTimeout(() => {
@@ -58,8 +65,8 @@ export class ListVirtualScroll {
     // and compare the index to our index range,
     // pushing the items to remove to our leaving
     // list if they're ouside this range.
-    for(let i in this.shownItems) {
-      if(i < topIndex || i > bottomIndex) {
+    for (let i in this.shownItems) {
+      if (i < topIndex || i > bottomIndex) {
         this.leavingItems.push(this.shownItems[i]);
         delete this.shownItems[i];
       }
@@ -69,14 +76,14 @@ export class ListVirtualScroll {
     // Iterate the set of items that will be rendered, using the
     // index from the actual items list as the map for the
     // virtual items we draw
-    for(let i = topIndex, realIndex = 0; i < bottomIndex && i < items.length; i++, realIndex++) {
+    for (let i = topIndex, realIndex = 0; i < bottomIndex && i < items.length; i++, realIndex++) {
       item = items[i];
       console.log('Drawing item', i, item.title);
 
       shownItemRef = this.shownItems[i];
 
       // Is this a new item?
-      if(!shownItemRef) {
+      if (!shownItemRef) {
         let itemView = this.viewContainer.create(this.list.itemTemplate.protoViewRef, realIndex);
 
         itemView.setLocal('\$implicit', item);
@@ -88,12 +95,10 @@ export class ListVirtualScroll {
         this.enteringItems.push(shownItemRef);
       }
 
-
       //tuple.view = viewContainer.create(protoViewRef, tuple.record.currentIndex);
-
     }
 
-    while(this.leavingItems.length) {
+    while (this.leavingItems.length) {
       let itemRef = this.leavingItems.pop();
       console.log('Removing item', itemRef.item, itemRef.realIndex);
       this.viewContainer.remove(itemRef.realIndex);
@@ -110,10 +115,5 @@ export class ListVirtualScroll {
 }
 
 class VirtualItemRef {
-  constructor(item, index, realIndex, view) {
-    this.item = item;
-    this.index = index;
-    this.realIndex = realIndex;
-    this.view = view;
-  }
+  constructor(public item, public index, public realIndex, public view) {}
 }
