@@ -21,7 +21,7 @@ var flagConfig = {
 };
 var flags = minimist(process.argv.slice(2), flagConfig);
 
-var IS_RELEASE = true;
+var IS_RELEASE = false;
 
 var tscOptions = {
   emitDecoratorMetadata: true,
