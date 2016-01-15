@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Optional} from 'angular2/core';
+import {Directive, ElementRef, Optional, Input, HostListener} from 'angular2/core';
 
 import {IonicApp} from '../app/app';
 import {ViewController} from '../nav/view-controller';
@@ -26,25 +26,21 @@ import {Menu} from './menu';
 */
 @Directive({
   selector: '[menuToggle]',
-  inputs: [
-    'menuToggle'
-  ],
   host: {
-    '(click)': 'toggle()',
     '[hidden]': 'isHidden',
     'menuToggle': '' //ensures the attr is there for css when using [menuToggle]
   }
 })
 export class MenuToggle {
+  @Input() menuToggle;
+  withinNavbar: boolean;
 
   constructor(
-    app: IonicApp,
+    private app: IonicApp,
     elementRef: ElementRef,
-    @Optional() viewCtrl: ViewController,
-    @Optional() navbar: Navbar
+    @Optional() private viewCtrl: ViewController,
+    @Optional() private navbar: Navbar
   ) {
-    this.app = app;
-    this.viewCtrl = viewCtrl;
     this.withinNavbar = !!navbar;
 
     // Deprecation warning
@@ -56,6 +52,7 @@ export class MenuToggle {
   /**
   * @private
   */
+  @HostListener('click')
   toggle() {
     let menu = Menu.getById(this.app, this.menuToggle);
     menu && menu.toggle();
