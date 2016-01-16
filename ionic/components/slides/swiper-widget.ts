@@ -1,3 +1,14 @@
+//http://stackoverflow.com/questions/30960386/how-to-extend-the-window-typescript-interface
+interface IWindow extends Window {
+  Date: DateConstructor,
+  Image: new(width?: number, height?: number) => HTMLImageElement,
+  WebKitCSSMatrix: new(text?: string) => WebKitCSSMatrix,
+  MutationObserver: new(callback: MutationCallback) => MutationObserver,
+  WebkitMutationObserver: new(callback: MutationCallback) => MutationObserver,
+  WheelEvent: new(typeArg: string, eventInitDict?: WheelEventInit) => WheelEvent,
+  CustomEvent: new(typeArg: string, eventInitDict?: CustomEventInit) => CustomEvent
+}
+
 /**
  * Swiper 3.1.2
  * Most modern mobile touch slider and framework with hardware accelerated transitions
@@ -229,7 +240,7 @@ export function Swiper(container, params): void {
       }
       if (typeof $ === 'undefined') {
           if (typeof Dom7 === 'undefined') {
-              $ = window.Dom7 || window.Zepto || window.jQuery;
+              //$ = window.Dom7 || window.Zepto || window.jQuery;
           }
           else {
               $ = Dom7;
@@ -406,7 +417,7 @@ export function Swiper(container, params): void {
           }
           if (!imgElement.complete || !checkForComplete) {
               if (src) {
-                  image = new window.Image();
+                  image = new (<IWindow>window).Image();
                   image.onload = onReady;
                   image.onerror = onReady;
                   image.src = src;
@@ -1206,7 +1217,7 @@ export function Swiper(container, params): void {
               var preventDefault = true;
               if ($(e.target).is(formElements)) preventDefault = false;
               if (document.activeElement && $(document.activeElement).is(formElements)) {
-                  document.activeElement.blur();
+                  (<HTMLElement>document.activeElement).blur();
               }
               if (preventDefault) {
                   e.preventDefault();
@@ -1362,7 +1373,7 @@ export function Swiper(container, params): void {
               }
               velocities.push({
                   position: s.touches[isH() ? 'currentX' : 'currentY'],
-                  time: (new window.Date()).getTime()
+                  time: (new (<IWindow>window).Date()).getTime()
               });
           }
           // Update progress
@@ -1453,7 +1464,7 @@ export function Swiper(container, params): void {
                       }
                       // this implies that the user stopped moving a finger then released.
                       // There would be no events with distance zero, so the last event is stale.
-                      if (time > 150 || (new window.Date().getTime() - lastMoveEvent.time) > 300) {
+                      if (time > 150 || (new (<IWindow>window).Date().getTime() - lastMoveEvent.time) > 300) {
                           s.velocity = 0;
                       }
                   } else {
@@ -1812,10 +1823,10 @@ export function Swiper(container, params): void {
           }
 
           curStyle = window.getComputedStyle(el, null);
-          if (window.WebKitCSSMatrix) {
+          if ((<IWindow>window).WebKitCSSMatrix) {
               // Some old versions of Webkit choke when 'none' is passed; pass
               // empty string instead in this case
-              transformMatrix = new window.WebKitCSSMatrix(curStyle.webkitTransform === 'none' ? '' : curStyle.webkitTransform);
+              transformMatrix = new (<IWindow>window).WebKitCSSMatrix(curStyle.webkitTransform === 'none' ? '' : curStyle.webkitTransform);
           }
           else {
               transformMatrix = curStyle.MozTransform || curStyle.OTransform || curStyle.MsTransform || curStyle.msTransform  || curStyle.transform || curStyle.getPropertyValue('transform').replace('translate(', 'matrix(1, 0, 0, 1,');
@@ -1824,7 +1835,7 @@ export function Swiper(container, params): void {
 
           if (axis === 'x') {
               //Latest Chrome and webkits Fix
-              if (window.WebKitCSSMatrix)
+              if ((<IWindow>window).WebKitCSSMatrix)
                   curTransform = transformMatrix.m41;
               //Crazy IE10 Matrix
               else if (matrix.length === 16)
@@ -1835,7 +1846,7 @@ export function Swiper(container, params): void {
           }
           if (axis === 'y') {
               //Latest Chrome and webkits Fix
-              if (window.WebKitCSSMatrix)
+              if ((<IWindow>window).WebKitCSSMatrix)
                   curTransform = transformMatrix.m42;
               //Crazy IE10 Matrix
               else if (matrix.length === 16)
@@ -1858,10 +1869,10 @@ export function Swiper(container, params): void {
         Observer
         ===========================*/
       s.observers = [];
-      function initObserver(target, options) {
+      function initObserver(target, options?: any) {
           options = options || {};
           // create an observer instance
-          var ObserverFunc = window.MutationObserver || window.WebkitMutationObserver;
+          var ObserverFunc = (<IWindow>window).MutationObserver || (<IWindow>window).WebkitMutationObserver;
           var observer = new ObserverFunc(function (mutations) {
               mutations.forEach(function (mutation) {
                   s.onResize(true);
@@ -2678,11 +2689,11 @@ export function Swiper(container, params): void {
         ===========================*/
       s.mousewheel = {
           event: false,
-          lastScrollTime: (new window.Date()).getTime()
+          lastScrollTime: (new (<IWindow>window).Date()).getTime()
       };
       if (s.params.mousewheelControl) {
           try {
-              new window.WheelEvent('wheel');
+              new (<IWindow>window).WheelEvent('wheel');
               s.mousewheel.event = 'wheel';
           } catch (e) {}
 
@@ -2737,7 +2748,7 @@ export function Swiper(container, params): void {
           if (s.params.mousewheelInvert) delta = -delta;
 
           if (!s.params.freeMode) {
-              if ((new window.Date()).getTime() - s.mousewheel.lastScrollTime > 60) {
+              if ((new (<IWindow>window).Date()).getTime() - s.mousewheel.lastScrollTime > 60) {
                   if (delta < 0) {
                       if ((!s.isEnd || s.params.loop) && !s.animating) s.slideNext();
                       else if (s.params.mousewheelReleaseOnEdges) return true;
@@ -2747,7 +2758,7 @@ export function Swiper(container, params): void {
                       else if (s.params.mousewheelReleaseOnEdges) return true;
                   }
               }
-              s.mousewheel.lastScrollTime = (new window.Date()).getTime();
+              s.mousewheel.lastScrollTime = (new (<IWindow>window).Date()).getTime();
 
           }
           else {
@@ -3195,11 +3206,11 @@ export function Swiper(container, params): void {
       Feature Detection
       ====================================================*/
       support: {
-          touch : (window.Modernizr && Modernizr.touch === true) || (function () {
-              return !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
+          touch : /*(window.Modernizr && Modernizr.touch === true) ||*/ (function () {
+              return !!(('ontouchstart' in window) /*|| window.DocumentTouch && document instanceof DocumentTouch*/);
           })(),
 
-          transforms3d : (window.Modernizr && Modernizr.csstransforms3d === true) || (function () {
+          transforms3d : /*(window.Modernizr && Modernizr.csstransforms3d === true) ||*/ (function () {
               var div = document.createElement('div').style;
               return ('webkitPerspective' in div || 'MozPerspective' in div || 'OPerspective' in div || 'MsPerspective' in div || 'perspective' in div);
           })(),
@@ -3226,8 +3237,8 @@ export function Swiper(container, params): void {
   /*===========================
   Dom7 Library
   ===========================*/
-  var Dom7 = (function () {
-      var Dom7 = function (arr) {
+  var Dom7  = (function () {
+      var Dom7: (arr: any) => void = function (arr) {
           var _this = this, i = 0;
           // Create array-like object
           for (i = 0; i < arr.length; i++) {
@@ -3237,7 +3248,7 @@ export function Swiper(container, params): void {
           // Return collection with methods
           return this;
       };
-      var $ = function (selector, context) {
+      var $: any = function (selector, context?: any) {
           var arr = [], i = 0;
           if (selector && !context) {
               if (selector instanceof Dom7) {
@@ -3473,7 +3484,7 @@ export function Swiper(container, params): void {
               for (var i = 0; i < this.length; i++) {
                   var evt;
                   try {
-                      evt = new window.CustomEvent(eventName, {detail: eventData, bubbles: true, cancelable: true});
+                      evt = new (<IWindow>window).CustomEvent(eventName, {detail: eventData, bubbles: true, cancelable: true});
                   }
                   catch (e) {
                       evt = document.createEvent('Event');
@@ -3612,8 +3623,8 @@ export function Swiper(container, params): void {
               var compareWith, i;
               if (typeof selector === 'string') {
                   var el = this[0];
-                  if (el === document) return selector === document;
-                  if (el === window) return selector === window;
+                  if (el === document) return selector === 'document';
+                  if (el === window) return selector === 'window';
 
                   if (el.matches) return el.matches(selector);
                   else if (el.webkitMatchesSelector) return el.webkitMatchesSelector(selector);
@@ -3887,7 +3898,7 @@ export function Swiper(container, params): void {
   // Required DOM Plugins
   var domLib;
   if (typeof Dom7 === 'undefined') {
-  	domLib = window.Dom7 || window.Zepto || window.jQuery;
+    //domLib = window.Dom7 || window.Zepto || window.jQuery;
   }
   else {
   	domLib = Dom7;
