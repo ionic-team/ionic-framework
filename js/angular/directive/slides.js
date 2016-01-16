@@ -28,6 +28,8 @@
  * </ion-slides>
  * ```
  *
+ * Pager (pagination) can be disabled by setting `show-pager` attribute to `"false"` (default `"true"`).
+ *
  * ```js
  * $scope.options = {
  *   loop: false,
@@ -59,8 +61,10 @@ function($animate, $timeout, $compile) {
       '</div>' +
         '<div ng-hide="!showPager" class="swiper-pagination"></div>' +
       '</div>',
-    controller: ['$scope', '$element', function($scope, $element) {
+    controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
       var _this = this;
+
+      $scope.showPager = !($attrs.hasOwnProperty('showPager') && $attrs['showPager'] === 'false');
 
       this.update = function() {
         $timeout(function() {
@@ -114,7 +118,6 @@ function($animate, $timeout, $compile) {
 
 
     link: function($scope) {
-      $scope.showPager = true;
       // Disable ngAnimate for slidebox and its children
       //$animate.enabled(false, $element);
     }
