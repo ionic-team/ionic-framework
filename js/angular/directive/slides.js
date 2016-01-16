@@ -64,7 +64,7 @@ function($animate, $timeout, $compile) {
     controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
       var _this = this;
 
-      $scope.showPager = !($attrs.hasOwnProperty('showPager') && $attrs['showPager'] === 'false');
+      $scope.showPager = !($attrs.hasOwnProperty('showPager') && $attrs.showPager === 'false');
 
       this.update = function() {
         $timeout(function() {
@@ -117,7 +117,7 @@ function($animate, $timeout, $compile) {
     }],
 
 
-    link: function($scope) {
+    link: function() {
       // Disable ngAnimate for slidebox and its children
       //$animate.enabled(false, $element);
     }
