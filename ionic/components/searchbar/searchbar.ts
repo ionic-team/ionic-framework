@@ -20,7 +20,7 @@ export class SearchbarInput {
    * @private
    * Don't send the input's input event
    */
-  private stopInput(ev) {
+  private stopInput(event) {
     event.preventDefault();
     event.stopPropagation();
   }
