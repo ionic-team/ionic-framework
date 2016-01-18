@@ -36,7 +36,7 @@ const win :any = window;
  *
  */
 export class SqlStorage extends StorageEngine {
-  static BACKUP_LOCAL =  2;
+  static BACKUP_LOCAL = 2;
   static BACKUP_LIBRARY = 1;
   static BACKUP_DOCUMENTS = 0;
 
@@ -100,7 +100,7 @@ export class SqlStorage extends StorageEngine {
    * @param {array} params the additional params to use for query placeholders
    * @return {Promise} that resolves or rejects with an object of the form { tx: Transaction, res: Result (or err)}
    */
-  query(query, params=[]) {
+  query(query: string, params: any[] = []): Promise<any> {
     return new Promise((resolve, reject) => {
       try {
         this._db.transaction((tx) => {
@@ -129,7 +129,7 @@ export class SqlStorage extends StorageEngine {
    * @param {string} key the key
    * @return {Promise} that resolves or rejects with an object of the form { tx: Transaction, res: Result (or err)}
    */
-  get(key) {
+  get(key: string): Promise<string> {
     return new Promise((resolve, reject) => {
       try {
 
@@ -162,7 +162,7 @@ export class SqlStorage extends StorageEngine {
   * @param {string} value The value (as a string)
   * @return {Promise} that resolves or rejects with an object of the form { tx: Transaction, res: Result (or err)}
   */
-  set(key, value) {
+  set(key: string, value: string): Promise<any> {
     return new Promise((resolve, reject) => {
       try {
         this._db.transaction(tx => {
@@ -189,7 +189,7 @@ export class SqlStorage extends StorageEngine {
   * @param {string} value The value (as a string)
   * @return {Promise} that resolves or rejects with an object of the form { tx: Transaction, res: Result (or err)}
   */
-  remove(key) {
+  remove(key: string): Promise<any> {
     return new Promise((resolve, reject) => {
       try {
         this._db.transaction(tx => {

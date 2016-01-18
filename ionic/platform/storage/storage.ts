@@ -16,10 +16,10 @@ export class Storage {
   constructor(strategyCls: any, options) {
     this._strategy = new strategyCls(options);
   }
-  get(key) {
+  get(key: string): Promise<string> {
     return this._strategy.get(key);
   }
-  getJson(key) {
+  getJson(key: string): Promise<any> {
     try {
       return JSON.parse(this._strategy.get(key));
     } catch(e) {
@@ -27,13 +27,13 @@ export class Storage {
       return null;
     }
   }
-  set(key, value) {
+  set(key: string, value: string): Promise<any> {
     return this._strategy.set(key, value);
   }
-  remove(key) {
+  remove(key: string): Promise<any> {
     return this._strategy.remove(key);
   }
-  query(query, params) {
+  query(query: string, params?: any[]): Promise<any> {
     return this._strategy.query(query, params);
   }
 }
@@ -42,16 +42,16 @@ export class Storage {
  * @private
 */
 export class StorageEngine {
-  get(key, value) {
+  get(key: string) {
     throw Error("get() not implemented for this storage engine");
   }
-  set(key, value) {
+  set(key: string, value: string) {
     throw Error("set() not implemented for this storage engine");
   }
-  remove(key) {
+  remove(key: string) {
     throw Error("remove() not implemented for this storage engine");
   }
-  query(query, params) {
+  query(query: string, params?: any[]) {
     throw Error("query() not implemented for this storage engine");
   }
 }
