@@ -24,11 +24,14 @@ Package.onUse(function(api) {
 
   api.addFiles([
     'release/css/ionic.css',
-    'release/fonts/ionicons.eot',
-    'release/fonts/ionicons.svg',
-    'release/fonts/ionicons.ttf',
-    'release/fonts/ionicons.woff',
     'release/js/ionic.js',
     'release/js/ionic-angular.js'
   ], where);
+
+  api.addAssets([
+    'release/fonts/ionicons.eot',
+    'release/fonts/ionicons.svg',
+    'release/fonts/ionicons.ttf',
+    'release/fonts/ionicons.woff'
+  ], where)
 });
