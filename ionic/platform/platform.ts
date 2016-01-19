@@ -1,6 +1,6 @@
 import {getQuerystring, assign} from '../util/util';
 import {ready, windowDimensions, flushDimensionCache} from '../util/dom';
-
+import {Config} from '../config/config';
 
 /**
  * @name Platform
@@ -31,7 +31,7 @@ export class Platform {
   private _ua: string;
   private _bPlt: string;
   private _onResizes: Array<any>=[];
-  private _readyPromise: any;
+  private _readyPromise: Promise<any>;
   private _readyResolve: any;
   private _engineReady: any;
   private _resizeTimer: any;
@@ -65,7 +65,7 @@ export class Platform {
    * }
    * ```
    */
-  is(platformName) {
+  is(platformName: string): boolean {
     return (this._platforms.indexOf(platformName) > -1);
   }
 
@@ -88,7 +88,7 @@ export class Platform {
    * }
    * ```
    */
-  platforms() {
+  platforms(): Array<string> {
     // get the array of active platforms, which also knows the hierarchy,
     // with the last one the most important
     return this._platforms;
@@ -112,7 +112,7 @@ export class Platform {
    * @returns {object} An object with various platform info
    *
    */
-  versions(platformName) {
+  versions(platformName: string): any {
     if (arguments.length) {
       // get a specific platform's version
       return this._versions[platformName];
@@ -125,7 +125,7 @@ export class Platform {
   /**
    * @private
    */
-  version() {
+  version(): any {
     for (let platformName in this._versions) {
       if (this._versions[platformName]) {
         return this._versions[platformName];
@@ -151,14 +151,14 @@ export class Platform {
    * ```
    * @returns {promise} Returns a promsie when device ready has fired
    */
-  ready() {
+  ready(): Promise<any> {
     return this._readyPromise;
   }
 
   /**
    * @private
    */
-  prepareReady(config) {
+  prepareReady(config: Config) {
     let self = this;
 
     function resolve() {
@@ -185,7 +185,7 @@ export class Platform {
   * [W3C: Structural markup and right-to-left text in HTML](http://www.w3.org/International/questions/qa-html-dir)
   * @param {string} dir  Examples: `rtl`, `ltr`
   */
-  setDir(dir, updateDocument) {
+  setDir(dir: string, updateDocument: boolean) {
     this._dir = (dir || '').toLowerCase();
     if (updateDocument !== false) {
       document.documentElement.setAttribute('dir', dir);
@@ -199,7 +199,7 @@ export class Platform {
    * [W3C: Structural markup and right-to-left text in HTML](http://www.w3.org/International/questions/qa-html-dir)
    * @returns {string}
    */
-  dir() {
+  dir(): string {
     return this._dir;
   }
 
@@ -210,7 +210,7 @@ export class Platform {
    * [W3C: Structural markup and right-to-left text in HTML](http://www.w3.org/International/questions/qa-html-dir)
    * @returns {boolean}
    */
-  isRTL() {
+  isRTL(): boolean {
     return (this._dir === 'rtl');
   }
 
@@ -223,7 +223,7 @@ export class Platform {
   * [W3C: Declaring language in HTML](http://www.w3.org/International/questions/qa-html-language-declarations)
   * @param {string} language  Examples: `en-US`, `en-GB`, `ar`, `de`, `zh`, `es-MX`
   */
-  setLang(language, updateDocument) {
+  setLang(language: string, updateDocument: boolean) {
     this._lang = language;
     if (updateDocument !== false) {
       document.documentElement.setAttribute('lang', language);
@@ -237,7 +237,7 @@ export class Platform {
    * [W3C: Declaring language in HTML](http://www.w3.org/International/questions/qa-html-language-declarations)
    * @returns {string}
    */
-  lang() {
+  lang(): string {
     return this._lang;
   }
 
@@ -277,7 +277,7 @@ export class Platform {
   /**
   * @private
   */
-  setUrl(url) {
+  setUrl(url: string) {
     this._url = url;
     this._qs = getQuerystring(url);
   }
@@ -285,70 +285,70 @@ export class Platform {
   /**
   * @private
   */
-  url(val) {
+  url(): string {
     return this._url;
   }
 
   /**
   * @private
   */
-  query(key) {
+  query(key: string): string {
     return (this._qs || {})[key];
   }
 
   /**
   * @private
   */
-  setUserAgent(userAgent) {
+  setUserAgent(userAgent: string) {
     this._ua = userAgent;
   }
 
   /**
   * @private
   */
-  userAgent(val) {
+  userAgent(): string {
     return this._ua || '';
   }
 
   /**
   * @private
   */
-  setNavigatorPlatform(navigatorPlatform) {
+  setNavigatorPlatform(navigatorPlatform: string) {
     this._bPlt = navigatorPlatform;
   }
 
   /**
   * @private
   */
-  navigatorPlatform(val) {
+  navigatorPlatform(): string {
     return this._bPlt || '';
   }
 
   /**
   * @private
   */
-  width() {
+  width(): number {
     return windowDimensions().width;
   }
 
   /**
   * @private
   */
-  height() {
+  height(): number {
     return windowDimensions().height;
   }
 
   /**
   * @private
   */
-  isPortrait() {
+  isPortrait(): boolean {
     return this.width() < this.height();
   }
 
   /**
   * @private
   */
-  isLandscape() {
+  isLandscape(): boolean {
     return !this.isPortrait();
   }
 
@@ -375,7 +375,7 @@ export class Platform {
   /**
   * @private
   */
-  onResize(cb) {
+  onResize(cb: Function) {
     this._onResizes.push(cb);
   }
 
@@ -393,28 +393,28 @@ export class Platform {
   /**
   * @private
   */
-  static registry() {
+  static registry(): any {
     return platformRegistry;
   }
 
   /**
    * @private
    */
-  static get(platformName) {
+  static get(platformName: string): any {
     return platformRegistry[platformName] || {};
   }
 
   /**
    * @private
    */
-  static setDefault(platformName) {
+  static setDefault(platformName: string) {
     platformDefault = platformName;
   }
 
   /**
    * @private
    */
-  testQuery(queryValue, queryTestValue) {
+  testQuery(queryValue: string, queryTestValue: string): boolean {
     let valueSplit = queryValue.toLowerCase().split(';');
     return valueSplit.indexOf(queryTestValue) > -1;
   }
@@ -422,7 +422,7 @@ export class Platform {
   /**
    * @private
    */
-  testUserAgent(userAgentExpression) {
+  testUserAgent(userAgentExpression): boolean {
     let rgx = new RegExp(userAgentExpression, 'i');
     return rgx.test(this._ua || '');
   }
@@ -430,7 +430,7 @@ export class Platform {
   /**
    * @private
    */
-  testNavigatorPlatform(navigatorPlatformExpression) {
+  testNavigatorPlatform(navigatorPlatformExpression: string): boolean {
     let rgx = new RegExp(navigatorPlatformExpression, 'i');
     return rgx.test(this._bPlt);
   }
@@ -438,7 +438,7 @@ export class Platform {
   /**
    * @private
    */
-  matchUserAgentVersion(userAgentExpression) {
+  matchUserAgentVersion(userAgentExpression: RegExp): any {
     if (this._ua && userAgentExpression) {
       let val = this._ua.match(userAgentExpression);
       if (val) {
@@ -453,7 +453,7 @@ export class Platform {
   /**
    * @private
    */
-  isPlatform(queryTestValue, userAgentExpression) {
+  isPlatform(queryTestValue: string, userAgentExpression: string): boolean {
     if (!userAgentExpression) {
       userAgentExpression = queryTestValue;
     }
@@ -469,7 +469,7 @@ export class Platform {
   /**
    * @private
    */
-  load(platformOverride?) {
+  load(platformOverride?: string) {
     let rootPlatformNode = null;
     let engineNode = null;
     let self = this;
@@ -561,7 +561,7 @@ export class Platform {
   /**
    * @private
    */
-  matchPlatform(platformName) {
+  matchPlatform(platformName: string): any {
     // build a PlatformNode and assign config data to it
     // use it's getRoot method to build up its hierarchy
     // depending on which platforms match
@@ -581,7 +581,7 @@ export class Platform {
 
 }
 
-function insertSuperset(platformNode) {
+function insertSuperset(platformNode: PlatformNode) {
   let supersetPlaformName = platformNode.superset();
   if (supersetPlaformName) {
     // add a platform in between two exist platforms
@@ -602,8 +602,9 @@ class PlatformNode {
   public parent: PlatformNode;
   public child: PlatformNode;
   public isEngine: boolean;
+  public depth: number;
 
-  constructor(platformName) {
+  constructor(platformName: string) {
     this.c = Platform.get(platformName);
     this.isEngine = this.c.isEngine;
   }
@@ -612,19 +613,19 @@ class PlatformNode {
     return this.c.name;
   }
 
-  settings() {
+  settings(): any {
     return this.c.settings || {};
   }
 
-  superset() {
+  superset(): any {
     return this.c.superset;
   }
 
-  methods() {
+  methods(): any {
     return this.c.methods || {};
   }
 
-  isMatch(p): boolean {
+  isMatch(p: Platform): boolean {
     if (p.platformOverride && !this.isEngine) {
       return (p.platformOverride === this.c.name);
 
@@ -635,7 +636,7 @@ class PlatformNode {
     return this.c.isMatch(p);
   }
 
-  version(p) {
+  version(p: Platform): any {
     if (this.c.versionParser) {
       let v = this.c.versionParser(p);
       if (v) {
@@ -650,7 +651,7 @@ class PlatformNode {
     }
   }
 
-  getRoot(p) {
+  getRoot(p: Platform): PlatformNode {
     if (this.isMatch(p)) {
 
       let parents = this.getSubsetParents(this.name());
@@ -677,7 +678,7 @@ class PlatformNode {
     return null;
   }
 
-  getSubsetParents(subsetPlatformName) {
+  getSubsetParents(subsetPlatformName: string): Array<string> {
     let platformRegistry = Platform.registry();
 
     let parentPlatformNames = [];

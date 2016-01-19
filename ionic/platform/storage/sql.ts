@@ -68,7 +68,7 @@ export class SqlStorage extends StorageEngine {
     this._tryInit();
   }
 
-  _getBackupLocation(dbFlag) {
+  _getBackupLocation(dbFlag: number) {
     switch(dbFlag) {
       case SqlStorage.BACKUP_LOCAL:
         return 2;
@@ -100,7 +100,7 @@ export class SqlStorage extends StorageEngine {
    * @param {array} params the additional params to use for query placeholders
    * @return {Promise} that resolves or rejects with an object of the form { tx: Transaction, res: Result (or err)}
    */
-  query(query, params=[]) {
+  query(query, params=[]): Promise<any> {
     return new Promise((resolve, reject) => {
       try {
         this._db.transaction((tx) => {
@@ -129,7 +129,7 @@ export class SqlStorage extends StorageEngine {
    * @param {string} key the key
    * @return {Promise} that resolves or rejects with an object of the form { tx: Transaction, res: Result (or err)}
    */
-  get(key) {
+  get(key: string): Promise<any> {
     return new Promise((resolve, reject) => {
       try {
 
@@ -162,7 +162,7 @@ export class SqlStorage extends StorageEngine {
   * @param {string} value The value (as a string)
   * @return {Promise} that resolves or rejects with an object of the form { tx: Transaction, res: Result (or err)}
   */
-  set(key, value) {
+  set(key: string, value: string): Promise<any> {
     return new Promise((resolve, reject) => {
       try {
         this._db.transaction(tx => {
@@ -189,7 +189,7 @@ export class SqlStorage extends StorageEngine {
   * @param {string} value The value (as a string)
   * @return {Promise} that resolves or rejects with an object of the form { tx: Transaction, res: Result (or err)}
   */
-  remove(key) {
+  remove(key: string): Promise<any> {
     return new Promise((resolve, reject) => {
       try {
         this._db.transaction(tx => {

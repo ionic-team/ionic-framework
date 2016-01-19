@@ -39,7 +39,7 @@ export class DisplayWhen {
 
   }
 
-  orientation() {
+  orientation(): boolean {
     for (let i = 0; i < this.conditions.length; i++) {
 
       if (this.conditions[i] == 'portrait') {
@@ -87,7 +87,7 @@ export class ShowWhen extends DisplayWhen {
   /**
    * @private
    */
-  get hidden() {
+  get hidden(): boolean {
     return !this.isMatch;
   }
 
@@ -124,7 +124,7 @@ export class HideWhen extends DisplayWhen {
   /**
    * @private
    */
-  get hidden() {
+  get hidden(): boolean {
     return this.isMatch;
   }
 

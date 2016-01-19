@@ -13,13 +13,13 @@
 export class Storage {
   private _strategy: any;
 
-  constructor(strategyCls: any, options) {
+  constructor(strategyCls: IStorageEngine, options: any) {
     this._strategy = new strategyCls(options);
   }
-  get(key) {
+  get(key: string): any {
     return this._strategy.get(key);
   }
-  getJson(key) {
+  getJson(key: string): any {
     try {
       return JSON.parse(this._strategy.get(key));
     } catch(e) {
@@ -27,21 +27,28 @@ export class Storage {
       return null;
     }
   }
-  set(key, value) {
+  set(key: string, value: any) {
     return this._strategy.set(key, value);
   }
-  remove(key) {
+  remove(key: string) {
     return this._strategy.remove(key);
   }
-  query(query, params) {
+  query(query: string, params: any) {
     return this._strategy.query(query, params);
   }
+}
+
+export interface IStorageEngine {
+  new(options: any): StorageEngine;
 }
 
 /**
  * @private
 */
 export class StorageEngine {
+  constructor(options={}) {
+    throw Error("constructor(options={}) not implemented for this storage engine");
+  }
   get(key, value) {
     throw Error("get() not implemented for this storage engine");
   }
