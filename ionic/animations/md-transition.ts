@@ -24,11 +24,11 @@ class MDTransition extends Animation {
     this.add(enteringPage);
 
     if (backDirection) {
-      this.duration(200).easing('cubic-bezier(0.47,0,0.745,0.715)');
+      this.duration(opts.duration || 200).easing('cubic-bezier(0.47,0,0.745,0.715)');
       enteringPage.fromTo(TRANSLATEY, CENTER, CENTER);
 
     } else {
-      this.duration(280).easing('cubic-bezier(0.36,0.66,0.04,1)');
+      this.duration(opts.duration || 280).easing('cubic-bezier(0.36,0.66,0.04,1)');
       enteringPage
         .fromTo(TRANSLATEY, OFF_BOTTOM, CENTER)
         .fadeIn();
@@ -51,7 +51,7 @@ class MDTransition extends Animation {
     // setup leaving view
     if (leavingView && backDirection) {
       // leaving content
-      this.duration(200).easing('cubic-bezier(0.47,0,0.745,0.715)');
+      this.duration(opts.duration || 200).easing('cubic-bezier(0.47,0,0.745,0.715)');
       let leavingPage = new Animation(leavingView.pageRef());
       this.add(leavingPage.fromTo(TRANSLATEY, CENTER, OFF_BOTTOM).fadeOut());
     }

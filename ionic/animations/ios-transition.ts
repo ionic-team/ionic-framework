@@ -16,8 +16,8 @@ class IOSTransition extends Animation {
   constructor(enteringView, leavingView, opts) {
     super(null, opts);
 
-    this.duration(DURATION);
-    this.easing(EASING);
+    this.duration(opts.duration || DURATION);
+    this.easing(opts.easing || EASING);
 
     // what direction is the transition going
     let backDirection = (opts.direction === 'back');

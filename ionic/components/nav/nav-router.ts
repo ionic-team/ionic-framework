@@ -7,6 +7,7 @@ import {
   Location} from 'angular2/router';
 
 import {Nav} from './nav';
+import {ViewController} from './view-controller';
 
 /**
  * @private
@@ -16,11 +17,11 @@ import {Nav} from './nav';
 })
 export class NavRouter extends RouterOutlet {
   private _activeViewId;
-  
+
   constructor(
-    _elementRef: ElementRef, 
+    _elementRef: ElementRef,
     _loader: DynamicComponentLoader,
-    _parentRouter: Router, 
+    _parentRouter: Router,
     @Attribute('name') nameAttr: string,
     private _nav: Nav
   ) {
@@ -38,10 +39,10 @@ export class NavRouter extends RouterOutlet {
    * @param {ComponentInstruction} instruction  TODO
    */
   activate(nextInstruction: ComponentInstruction): Promise<any> {
-    var previousInstruction = this._currentInstruction;
-    this._currentInstruction = nextInstruction;
+    var previousInstruction = this['_currentInstruction'];
+    this['_currentInstruction'] = nextInstruction;
     var componentType = nextInstruction.componentType;
-    var childRouter = this._parentRouter.childRouter(componentType);
+    var childRouter = this['_parentRouter'].childRouter(componentType);
 
     // prevent double navigations to the same view
     var lastView = this._nav.last();
@@ -58,11 +59,11 @@ export class NavRouter extends RouterOutlet {
   }
 
   /**
-   * TODO
-   * @param {TODO} type  TODO
-   * @param {TODO} viewCtrl  TODO
+   * Called by Ionic after a transition has completed.
+   * @param {string} direction  The direction of the state change
+   * @param {ViewController} viewCtrl  The entering ViewController
    */
-  stateChange(type, viewCtrl) {
+  stateChange(direction: string, viewCtrl: ViewController) {
     // stateChange is called by Ionic's NavController
     // type could be "push" or "pop"
     // viewCtrl is Ionic's ViewController class, which has the properties "componentType" and "params"
@@ -79,9 +80,9 @@ export class NavRouter extends RouterOutlet {
       let componentInstruction = pathRecognizer.generate(viewCtrl.data);
 
       // create a ResolvedInstruction from the componentInstruction
-      let instruction = new ResolvedInstruction(componentInstruction, null);
+      let instruction = new ResolvedInstruction(componentInstruction, null, null);
 
-      this._parentRouter.navigateByInstruction(instruction);
+      this['_parentRouter'].navigateByInstruction(instruction);
     }
   }
 
@@ -92,7 +93,7 @@ export class NavRouter extends RouterOutlet {
    */
   getPathRecognizerByComponent(componentType) {
     // given a componentType, figure out the best PathRecognizer to use
-    let rules = this._parentRouter.registry._rules;
+    let rules = this['_parentRouter'].registry._rules;
 
     let pathRecognizer = null;
     rules.forEach((rule) => {

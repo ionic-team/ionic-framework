@@ -1,4 +1,4 @@
-import {Output, EventEmitter, Type, TemplateRef, ViewContainerRef, ElementRef} from 'angular2/core';
+import {Output, EventEmitter, Type, TemplateRef, ViewContainerRef, ElementRef, Renderer} from 'angular2/core';
 
 import {Navbar} from '../navbar/navbar';
 import {NavController} from './nav-controller';
@@ -21,26 +21,26 @@ import {NavParams} from './nav-params';
  *  ```
  */
 export class ViewController {
-  private _cntDir: any;
+  private _cntDir;
   private _cntRef: ElementRef;
   private _destroys: Array<Function> = [];
+  private _hdAttr = null;
+  private _leavingOpts = null;
   private _loaded: boolean = false;
-  private _leavingOpts: any = null;
   private _nbDir: Navbar;
   private _nbTmpRef: TemplateRef;
   private _nbVwRef: ViewContainerRef;
   private _onDismiss: Function = null;
   private _pgRef: ElementRef;
   protected _nav: NavController;
-  
+
   id: string;
   instance: any = {};
-  state: number = 0;
-  shouldDestroy: boolean = false;
-  shouldCache: boolean = false;
+  state: string = '';
   viewType: string = '';
   onReady: any;
-  
+  zIndex: number;
+
   @Output() private _emitter: EventEmitter<any> = new EventEmitter();
 
   constructor(public componentType?: Type, public data: any = {}) {}
@@ -59,7 +59,7 @@ export class ViewController {
 
   dismiss(data) {
     this._onDismiss && this._onDismiss(data);
-    return this._nav.remove(this._nav.indexOf(this), this._leavingOpts);
+    return this._nav.remove(this._nav.indexOf(this), 1, this._leavingOpts);
   }
 
   setNav(navCtrl) {
@@ -89,7 +89,7 @@ export class ViewController {
       let previousItem = this._nav.getPrevious(this);
       // the previous view may exist, but if it's about to be destroyed
       // it shouldn't be able to go back to
-      return !!(previousItem && !previousItem.shouldDestroy);
+      return !!(previousItem);
     }
     return false;
   }
@@ -149,6 +149,36 @@ export class ViewController {
       this._destroys[i]();
     }
     this._destroys = [];
+  }
+
+  /**
+   * @private
+   */
+  domCache(shouldShow: boolean, renderer: Renderer) {
+    // using hidden element attribute to display:none and not render views
+    // renderAttr of '' means the hidden attribute will be added
+    // renderAttr of null means the hidden attribute will be removed
+    // doing checks to make sure we only make an update to the element when needed
+    if (this._pgRef &&
+        (shouldShow && this._hdAttr === '' ||
+        !shouldShow && this._hdAttr !== '')) {
+
+      this._hdAttr = (shouldShow ? null : '');
+
+      renderer.setElementAttribute(this._pgRef, 'hidden', this._hdAttr);
+
+      let navbarRef = this.navbarRef();
+      if (navbarRef) {
+        renderer.setElementAttribute(navbarRef, 'hidden', this._hdAttr);
+      }
+    }
+  }
+
+  setZIndex(zIndex: number, renderer: Renderer) {
+    if (this._pgRef && zIndex !== this.zIndex) {
+      this.zIndex = zIndex;
+      renderer.setElementStyle(this._pgRef, 'z-index', zIndex.toString());
+    }
   }
 
   /**
@@ -358,9 +388,7 @@ export class ViewController {
    */
   loaded() {
     this._loaded = true;
-    if (!this.shouldDestroy) {
-      ctrlFn(this, 'onPageLoaded');
-    }
+    ctrlFn(this, 'onPageLoaded');
   }
 
   /**
@@ -368,9 +396,7 @@ export class ViewController {
    * The view is about to enter and become the active view.
    */
   willEnter() {
-    if (!this.shouldDestroy) {
-      ctrlFn(this, 'onPageWillEnter');
-    }
+    ctrlFn(this, 'onPageWillEnter');
   }
 
   /**

@@ -554,7 +554,7 @@ export class Animation {
   /*
    STATIC CLASSES
    */
-  static create(element, name) {
+  static create(name) {
     let AnimationClass = AnimationRegistry[name];
 
     if (!AnimationClass) {
@@ -562,7 +562,7 @@ export class Animation {
       // fallback to just the base Animation class
       AnimationClass = Animation;
     }
-    return new AnimationClass(element);
+    return new AnimationClass();
   }
 
   static createTransition(enteringView: ViewController, leavingView: ViewController, opts: any = {}) {

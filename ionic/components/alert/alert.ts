@@ -315,7 +315,7 @@ class AlertCmp {
 
     if (this.d.message) {
       this.descId = this.msgId;
-      
+
     } else if (this.d.subTitle) {
       this.descId = this.subHdrId;
     }
@@ -379,7 +379,7 @@ class AlertCmp {
     if (activeElement) {
       activeElement.blur();
     }
-    
+
     if (this.d.inputs.length) {
       let firstInput = this._elementRef.nativeElement.querySelector('input');
       if (firstInput) {
