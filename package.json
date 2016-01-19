@@ -30,7 +30,6 @@
     "canonical-path": "0.0.2",
     "connect": "^3.3.4",
     "cpr": "^0.4.1",
-    "cz-conventional-changelog": "^1.1.5",
     "del": "~1.1.1",
     "dgeni": "^0.4.1",
     "dgeni-packages": "^0.10.18",
@@ -55,6 +54,7 @@
     "gulp-watch": "^4.2.4",
     "html-entities": "^1.1.3",
     "htmlparser2": "^3.8.3",
+    "ionic-cz-conventional-changelog": "^0.1.0",
     "jasmine-node": "^1.14.5",
     "js-yaml": "^3.4.2",
     "karma": "^0.12.31",
@@ -82,7 +82,7 @@
   },
   "config": {
     "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
+      "path": "node_modules/ionic-cz-conventional-changelog"
     }
   }
 }

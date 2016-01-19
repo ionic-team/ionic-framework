@@ -12,6 +12,10 @@ See [Adam Bradley](http://twitter.com/adamdbradley)'s [Building apps with Ionic 
 
 To try Ionic 2 today, visit the [Ionic 2 Docs](http://ionicframework.com/docs/v2/). We would love any feedback you have or to know when you encounter issues, by filing an issue report on this repo.
 
+### Contributing to Ionic 2
+
+See [CONTRIBUTING.md](https://github.com/driftyco/ionic/blob/2.0/CONTRIBUTING.md)
+
 ### Ionic 2 Examples
 
 There are a few real Ionic 2 apps in the wild. The most complete is the [Ionic Conference App](https://github.com/driftyco/ionic-conference-app), a perfect starting point for building your own conference app.
