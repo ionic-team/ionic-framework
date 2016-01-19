@@ -555,28 +555,28 @@ export class Slides extends Ion {
   /**
    * @private
    */
-  getIndex() {
+  getIndex(): number {
     return this.slider.activeIndex;
   }
 
   /**
    * @private
    */
-  getNumSlides() {
+  getNumSlides(): number {
     return this.slider.slides.length;
   }
 
   /**
    * @private
    */
-  isAtEnd() {
+  isAtEnd(): boolean {
     return this.slider.isEnd;
   }
 
   /**
    * @private
    */
-  isAtBeginning() {
+  isAtBeginning(): boolean {
     return this.slider.isBeginning;
   }
 
@@ -597,9 +597,9 @@ export class Slides extends Ion {
 })
 export class Slide {
   private ele: HTMLElement;
-  
+
   @Input() zoom;
-  
+
   constructor(
     elementRef: ElementRef,
     @Host() slides: Slides

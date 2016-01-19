@@ -50,7 +50,7 @@ Platform.register({
     'tablet'
   ],
   settings: {
-    activator: function(p) {
+    activator: function(p: Platform): string {
       // md mode defaults to use ripple activator
       // however, under-powered devices shouldn't use ripple
       // if this a linux device, and is using Android Chrome v36 (Android 5.0)
@@ -75,10 +75,10 @@ Platform.register({
     mode: 'md',
     scrollAssist: true,
   },
-  isMatch(p) {
+  isMatch(p: Platform): boolean {
     return p.isPlatform('android', 'android|silk');
   },
-  versionParser(p) {
+  versionParser(p: Platform): any {
     return p.matchUserAgentVersion(/Android (\d+).(\d+)?/);
   }
 });
@@ -102,10 +102,10 @@ Platform.register({
     swipeBackThreshold: 40,
     tapPolyfill: isIOSDevice,
   },
-  isMatch(p) {
+  isMatch(p: Platform): boolean {
     return p.isPlatform('ios', 'iphone|ipad|ipod');
   },
-  versionParser(p) {
+  versionParser(p: Platform): any {
     return p.matchUserAgentVersion(/OS (\d+)_(\d+)?/);
   }
 });
@@ -117,8 +117,8 @@ Platform.register({
   settings: {
     keyboardHeight: 500,
   },
-  isMatch(p) {
-    return p.isPlatform('ipad');
+  isMatch(p: Platform): boolean {
+    return p.isPlatform('ios', 'ipad');
   }
 });
 
@@ -128,8 +128,8 @@ Platform.register({
   subsets: [
     'phablet'
   ],
-  isMatch(p) {
-    return p.isPlatform('iphone');
+  isMatch(p: Platform): boolean {
+    return p.isPlatform('ios', 'iphone');
   }
 });
 
@@ -144,10 +144,10 @@ Platform.register({
   settings: {
     mode: 'md',
   },
-  isMatch(p) {
+  isMatch(p: Platform): boolean {
     return p.isPlatform('windowsphone', 'windows phone');
   },
-  versionParser(p) {
+  versionParser(p: Platform): any {
     return p.matchUserAgentVersion(/Windows Phone (\d+).(\d+)?/);
   }
 });
@@ -167,13 +167,13 @@ Platform.register({
       });
     }
   },
-  isMatch() {
+  isMatch(): boolean {
     return !!(win.cordova || win.PhoneGap || win.phonegap);
   }
 });
 
 
-function isIOSDevice(p) {
+function isIOSDevice(p: Platform) {
   // shortcut function to be reused internally
   // checks navigator.platform to see if it's an actual iOS device
   // this does not use the user-agent string because it is often spoofed

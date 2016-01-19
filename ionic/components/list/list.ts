@@ -24,11 +24,11 @@ import {isDefined} from '../../util';
 export class List extends Ion {
   private _enableSliding: boolean = false;
   private _virtualScrollingManager: ListVirtualScroll;
-  
+
   ele: HTMLElement;
-  itemTemplate;
+  itemTemplate: any;
   slidingGesture: ItemSlidingGesture;
-  
+
   @Input() items;
   @Input() virtual;
   @Input() content;
@@ -72,7 +72,7 @@ export class List extends Ion {
   /**
    * @private
    */
-  setItemTemplate(item) {
+  setItemTemplate(item: any) {
     this.itemTemplate = item;
   }
 
@@ -92,7 +92,7 @@ export class List extends Ion {
    * ```
    * @param {Boolean} shouldEnable whether the item-sliding should be enabled or not
    */
-  enableSlidingItems(shouldEnable) {
+  enableSlidingItems(shouldEnable: boolean) {
     if (this._enableSliding !== shouldEnable) {
       this._enableSliding = shouldEnable;
 
@@ -147,11 +147,11 @@ export class ListHeader {
     this._id = id;
   }
 
-  public get id() {
+  public get id(): string {
     return this._id;
   }
 
-  public set id(val) {
+  public set id(val: string) {
     this._id = val;
     this._renderer.setElementAttribute(this._elementRef, 'id', val);
   }

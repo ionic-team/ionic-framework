@@ -45,14 +45,15 @@ export class Label {
     }
   }
 
-  get text() {
+  get text(): string {
     return this._elementRef.nativeElement.textContent;
   }
 
   /**
    * @private
+   * @param {string} add class name
    */
-  addClass(className) {
+  addClass(className: string) {
     this._renderer.setElementClass(this._elementRef, className, true);
   }
 

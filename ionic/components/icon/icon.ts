@@ -80,11 +80,11 @@ export class Icon {
   }
 
   @Input()
-  get name() {
+  get name(): string {
     return this._name;
   }
 
-  set name(val) {
+  set name(val: string) {
     if (!(/^md-|^ios-|^logo-/.test(val))) {
       // this does not have one of the defaults
       // so lets auto add in the mode prefix for them
@@ -115,11 +115,11 @@ export class Icon {
   }
 
   @Input()
-  get isActive() {
+  get isActive(): boolean {
     return (this._isActive === undefined || this._isActive === true || this._isActive === 'true');
   }
 
-  set isActive(val) {
+  set isActive(val: boolean) {
     this._isActive = val;
     this.update();
   }
@@ -158,8 +158,9 @@ export class Icon {
 
   /**
    * @private
+   * @param {string} add class name
    */
-  addClass(className) {
+  addClass(className: string) {
     this._renderer.setElementClass(this._elementRef, className, true);
   }
 
