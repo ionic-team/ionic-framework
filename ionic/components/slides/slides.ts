@@ -186,9 +186,10 @@ export class Slides extends Ion {
       return this.options.onLazyImageReady && this.options.onLazyImageReady(swiper, slide, img);
     };
 
-    var swiper = new Swiper(this.getNativeElement().children[0], options);
-
-    this.slider = swiper;
+    setTimeout(() => {
+      var swiper = new Swiper(this.getNativeElement().children[0], options);
+      this.slider = swiper;
+    });
 
     /*
     * TODO: Finish this
@@ -597,9 +598,9 @@ export class Slides extends Ion {
 })
 export class Slide {
   private ele: HTMLElement;
-  
+
   @Input() zoom;
-  
+
   constructor(
     elementRef: ElementRef,
     @Host() slides: Slides
