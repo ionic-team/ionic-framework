@@ -12,7 +12,7 @@ import {debounce, isTrueProperty, defaults} from '../../util/util'
 import {Swiper} from './swiper-widget';
 import {Scroll} from '../scroll/scroll';
 
-
+ 
 /**
  * @name Slides
  * @description
@@ -83,7 +83,7 @@ export class Slides extends Ion {
 
   public rapidUpdate: Function;
   private showPager: boolean;
-  private slider: typeof Swiper;
+  private slider: Swiper;
   private maxScale: number;
   private zoomElement: HTMLElement;
   private zoomGesture: Gesture;
@@ -187,6 +187,7 @@ export class Slides extends Ion {
     };
 
     setTimeout(() => {
+      debugger;
       var swiper = new Swiper(this.getNativeElement().children[0], options);
       this.slider = swiper;
     });

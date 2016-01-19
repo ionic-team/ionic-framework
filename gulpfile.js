@@ -73,6 +73,7 @@ gulp.task('clean.build', function(done) {
 
 gulp.task('watch', function(done) {
   runSequence(
+    'copy.libs',
     'build',
     'serve',
     function() {
@@ -134,6 +135,7 @@ gulp.task('clean', function(done) {
 function tsCompile(options, cacheName){
   return gulp.src([
       'ionic/**/*.ts',
+      '!ionic/**/*.d.ts',
       '!ionic/components/*/test/**/*',
       '!ionic/util/test/*',
       '!ionic/config/test/*',
@@ -179,9 +181,14 @@ gulp.task('bundle.system', function(){
   var concat = require('gulp-concat');
   var gulpif = require('gulp-if');
   var stripDebug = require('gulp-strip-debug');
+  var merge = require('merge2');
 
-  return tsCompile(tscOptionsEs6, 'system')
-    .pipe(babel(babelOptions))
+  var tsResult = tsCompile(tscOptionsEs6, 'system')
+    .pipe(babel(babelOptions));
+
+  var swiper = gulp.src('ionic/components/slides/swiper-widget.system.js');
+
+  return merge([tsResult, swiper])
     .pipe(remember('system'))
     .pipe(gulpif(IS_RELEASE, stripDebug()))
     .pipe(concat('ionic.system.js'))
@@ -333,7 +340,7 @@ gulp.task('e2e.build', function() {
   }
 });
 
-gulp.task('e2e', ['e2e.build', 'bundle.system', 'copy.web-animations', 'sass', 'fonts']);
+gulp.task('e2e', ['e2e.build', 'bundle.system', 'copy.libs', 'sass', 'fonts']);
 
 gulp.task('sass', function() {
   var sass = require('gulp-sass');
@@ -385,11 +392,18 @@ gulp.task('copy.scss', function() {
     .pipe(gulp.dest('dist'));
 })
 
-gulp.task('copy.web-animations', function() {
-  return gulp.src([
-      'scripts/resources/web-animations-js/web-animations.min.js'
-    ])
+gulp.task('copy.libs', function() {
+  var merge = require('merge2');
+  var webAnimations = gulp.src('scripts/resources/web-animations-js/web-animations.min.js')
     .pipe(gulp.dest('dist/js'));
+
+  var libs = gulp.src([
+      'ionic/**/*.js',
+      'ionic/**/*.d.ts'
+    ])
+    .pipe(gulp.dest('dist'));
+
+  return merge([webAnimations, libs]);
 })
 
 gulp.task('src.link', function(done) {
@@ -401,7 +415,8 @@ gulp.task('src.link', function(done) {
 gulp.task('src', function(done){
   runSequence(
     'clean',
-    ['bundle', 'sass', 'fonts', 'copy.scss', 'copy.web-animations'],
+    'copy.libs',
+    ['bundle', 'sass', 'fonts', 'copy.scss'],
     'transpile.typecheck',
     done
   );
@@ -533,7 +548,7 @@ gulp.task('sass.demos:components', function() {
     .pipe(gulp.dest('../ionic-site/docs/v2/demos/component-docs/'));
 });
 
-gulp.task('bundle.demos:api', ['build.demos', 'transpile.no-typecheck', 'copy.web-animations', 'sass', 'fonts'], function(done) {
+gulp.task('bundle.demos:api', ['build.demos', 'transpile.no-typecheck', 'copy.libs', 'sass', 'fonts'], function(done) {
   return buildDemoBundle({demo: 'api'}, done);
 });
 
