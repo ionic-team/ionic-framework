@@ -424,7 +424,13 @@ gulp.task('src', function(done){
 
 gulp.task('src.release', function(done) {
   IS_RELEASE = true;
-  gulp.start('src', done);
+  runSequence(
+    'clean',
+    'copy.libs',
+    ['bundle', 'sass', 'fonts', 'copy.scss'],
+    'transpile.typecheck',
+    done
+  );
 });
 
 gulp.task('package', ['src.release'], function(done){
