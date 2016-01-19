@@ -455,6 +455,16 @@ button.item.item-button-right {
   }
 }
 
+.item-button-left.item-button-right{
+   .button{
+     &:first-child {
+      right: auto;
+    }
+     &:last-child {
+      left: auto;
+    }
+   }
+}
 
 // Item Avatar
 // -------------------------------
