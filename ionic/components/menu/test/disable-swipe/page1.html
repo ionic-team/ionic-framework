@@ -1,0 +1,33 @@
+<ion-navbar *navbar>
+
+  <button menuToggle="leftMenu">
+    <ion-icon name="menu"></ion-icon>
+  </button>
+
+  <ion-title>
+    Main
+  </ion-title>
+
+  <button menuToggle="rightMenu" right secondary>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+</ion-navbar>
+
+
+<ion-content padding>
+
+  <h3>Page 1</h3>
+
+  <p>Left Menu Swipe Enabled: {{ leftMenuSwipeEnabled }}</p>
+
+  <p>
+    <button (click)="toggleLeftMenuSwipeable()">Toggle Left Menu Swipeable</button>
+  </p>
+
+  <p>Right Menu Swipe Enabled: {{ rightMenuSwipeEnabled }}</p>
+
+  <p>
+    <button (click)="toggleRightMenuSwipeable()">Toggle Right Menu Swipeable</button>
+  </p>
+
+</ion-content>
