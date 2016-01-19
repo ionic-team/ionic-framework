@@ -1,3 +1,5 @@
+## Ionic 1.x
+
 Please read the contributing guide on the ionic website: http://ionicframework.com/contribute/
 
 Please do not manually create issues on GitHub.
@@ -32,3 +34,7 @@ Always use two spaces, no tabs. This goes for any HTML, CSS, or Javascript.
 ### License
 
 By contributing your code to the driftyco/ionic GitHub Repository, you agree to license your contribution under the MIT license.
+
+## Ionic 2.x
+
+See the Ionic 2 [CONTRIBUTING](https://github.com/driftyco/ionic/blob/2.0/CONTRIBUTING.md) file.
