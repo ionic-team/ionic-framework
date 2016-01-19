@@ -209,15 +209,15 @@ export class Animation {
 
   get before() {
     return {
-      addClass: (className) => {
+      addClass: (className): Animation => {
         this._bfAdd.push(className);
         return this;
       },
-      removeClass: (className) => {
+      removeClass: (className): Animation => {
         this._bfRmv.push(className);
         return this;
       },
-      setStyles: (styles) => {
+      setStyles: (styles): Animation => {
         this._bfSty = styles;
         return this;
       }
@@ -226,11 +226,11 @@ export class Animation {
 
   get after() {
     return {
-      addClass: (className) => {
+      addClass: (className: string): Animation => {
         this._afAdd.push(className);
         return this;
       },
-      removeClass: (className) => {
+      removeClass: (className: string): Animation => {
         this._afRmv.push(className);
         return this;
       }
