@@ -69,17 +69,19 @@ import {pointerCoord} from '../../util/dom';
     `</div>`
 })
 export class Toggle {
+  private _checked: boolean;
+  private _mode: string;
+  private _startX;
+  private _touched: number = 0;
+  private addMoveListener;
+  private removeMoveListener;
+
+  public isActivated: boolean;
+  public labelId: string;
+
   @Input() value: string = '';
   @Input() disabled: boolean = false;
   @Input() id: string;
-  private _checked: boolean;
-  private _touched: number = 0;
-  private _mode: string;
-  private _startX: any;
-  private addMoveListener: any;
-  private removeMoveListener: any;
-  public labelId: string;
-  public isActivated: boolean;
 
   constructor(
     private _form: Form,
@@ -143,11 +145,11 @@ export class Toggle {
   ngOnInit() {
     if (!this.id) {
       this.id = 'tgl-' + this._form.nextId();
-      this._renderer.setElementAttribute(this._elementRef, 'id', this.id);
+      this._renderer.setElementAttribute(this._elementRef.nativeElement, 'id', this.id);
     }
 
     this.labelId = 'lbl-' + this.id;
-    this._renderer.setElementAttribute(this._elementRef, 'aria-labelledby', this.labelId);
+    this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-labelledby', this.labelId);
   }
 
   /**
@@ -164,14 +166,14 @@ export class Toggle {
 
   set checked(val: boolean) {
     this._checked = !!val;
-    this._renderer.setElementAttribute(this._elementRef, 'aria-checked', this._checked.toString());
+    this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-checked', this._checked.toString());
     this.onChange(this._checked);
   }
 
   /**
    * @private
    */
-  pointerDown(ev) {
+  private pointerDown(ev) {
     if (/touch/.test(ev.type)) {
       this._touched = Date.now();
     }
@@ -189,7 +191,7 @@ export class Toggle {
   /**
    * @private
    */
-  pointerUp(ev) {
+  private pointerUp(ev) {
     if (this.isDisabled(ev)) return;
 
     let endX = pointerCoord(ev).x;

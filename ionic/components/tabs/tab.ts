@@ -90,7 +90,7 @@ import {TabButton} from './tab-button';
     '[attr.aria-labelledby]': '_btnId',
     'role': 'tabpanel'
   },
-  template: '<template #contents></template>'
+  template: '<div #contents></div>'
 })
 export class Tab extends NavController {
   public isSelected: boolean;

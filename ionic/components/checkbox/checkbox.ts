@@ -35,14 +35,15 @@ import {Form} from '../../util/form';
       '<div class="checkbox-media" disable-activated>' +
         '<div class="checkbox-icon"></div>' +
       '</div>' +
-      '<ion-item-content id="{{labelId}}">' +
+      '<ion-item-content id="{{_labelId}}">' +
         '<ng-content></ng-content>' +
       '</ion-item-content>' +
     '</div>'
 })
 export class Checkbox {
   private _checked: boolean;
-  private labelId: string;
+  private _labelId: string;
+
   @Input() value: string = '';
   @Input() disabled: boolean = false;
   @Input() id: string;
@@ -66,11 +67,11 @@ export class Checkbox {
   ngOnInit() {
     if (!this.id) {
       this.id = 'chk-' + this._form.nextId();
-      this._renderer.setElementAttribute(this._elementRef, 'id', this.id);
+      this._renderer.setElementAttribute(this._elementRef.nativeElement, 'id', this.id);
     }
 
-    this.labelId = 'lbl-' + this.id;
-    this._renderer.setElementAttribute(this._elementRef, 'aria-labelledby', this.labelId);
+    this._labelId = 'lbl-' + this.id;
+    this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-labelledby', this._labelId);
   }
 
   /**
@@ -81,14 +82,14 @@ export class Checkbox {
     this.checked = !this.checked;
   }
 
-  @Input() 
-  get checked() {
+  @Input()
+  get checked(): boolean {
     return !!this._checked;
   }
 
   set checked(val) {
     this._checked = !!val;
-    this._renderer.setElementAttribute(this._elementRef, 'aria-checked', this._checked.toString());
+    this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-checked', this._checked.toString());
     this.onChange(this._checked);
   }
 

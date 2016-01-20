@@ -147,11 +147,11 @@ export class Select {
   ngOnInit() {
     if (!this.id) {
       this.id = 'sel-' + this.form.nextId();
-      this.renderer.setElementAttribute(this.elementRef, 'id', this.id);
+      this.renderer.setElementAttribute(this.elementRef.nativeElement, 'id', this.id);
     }
 
     this.labelId = 'lbl-' + this.id;
-    this.renderer.setElementAttribute(this.elementRef, 'aria-labelledby', this.labelId);
+    this.renderer.setElementAttribute(this.elementRef.nativeElement, 'aria-labelledby', this.labelId);
   }
 
   /**

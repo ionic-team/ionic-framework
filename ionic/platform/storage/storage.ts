@@ -13,18 +13,27 @@
 export class Storage {
   private _strategy: any;
 
-  constructor(strategyCls: IStorageEngine, options: any) {
+  constructor(strategyCls: IStorageEngine, options?: any) {
     this._strategy = new strategyCls(options);
   }
   get(key: string): any {
     return this._strategy.get(key);
   }
   getJson(key: string): any {
+    return this.get(key).then(value => {
+      try {
+        return JSON.parse(value);
+      } catch (e) {
+        console.warn('Storage getJson(): unable to parse value for key', key, ' as JSON');
+        throw e; // rethrowing exception so it can be handled with .catch()
+      }
+    });
+  }
+  setJson(key: string, value: any): Promise<any> {
     try {
-      return JSON.parse(this._strategy.get(key));
-    } catch(e) {
-      console.warn('Storage getJson(): unable to parse value for key', key,' as JSON')
-      return null;
+      return this.set(key, JSON.stringify(value));
+    } catch (e) {
+      return Promise.reject(e);
     }
   }
   set(key: string, value: any) {
@@ -33,7 +42,7 @@ export class Storage {
   remove(key: string) {
     return this._strategy.remove(key);
   }
-  query(query: string, params: any) {
+  query(query: string, params?: any) {
     return this._strategy.query(query, params);
   }
 }

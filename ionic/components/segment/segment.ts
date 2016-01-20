@@ -69,15 +69,21 @@ export class SegmentButton {
     this.select.emit(this);
   }
 
+  /**
+   * @private
+   */
   ngOnInit() {
     if (!isDefined(this.value)) {
       console.warn('<ion-segment-button> requires a "value" attribute');
     }
   }
 
-  public set isActive(isActive) {
-    this._renderer.setElementClass(this._elementRef, 'segment-activated', isActive);
-    this._renderer.setElementAttribute(this._elementRef, 'aria-pressed', isActive);
+  /**
+   * @private
+   */
+  set isActive(isActive) {
+    this._renderer.setElementClass(this._elementRef.nativeElement, 'segment-activated', isActive);
+    this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-pressed', isActive);
   }
 
 }

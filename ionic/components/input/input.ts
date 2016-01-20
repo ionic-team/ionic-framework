@@ -357,7 +357,7 @@ export class ItemInput {
    * @private
    */
   focusChange(inputHasFocus) {
-    this._renderer.setElementClass(this._elementRef, 'input-focused', inputHasFocus);
+    this._renderer.setElementClass(this._elementRef.nativeElement, 'input-focused', inputHasFocus);
     if (!inputHasFocus) {
       this.deregMove();
     }
@@ -375,7 +375,7 @@ export class ItemInput {
    */
   hasValue(inputValue) {
     let inputHasValue = !!(inputValue && inputValue !== '');
-    this._renderer.setElementClass(this._elementRef, 'input-has-value', inputHasValue);
+    this._renderer.setElementClass(this._elementRef.nativeElement, 'input-has-value', inputHasValue);
   }
 
   /**

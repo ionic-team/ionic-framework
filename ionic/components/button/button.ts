@@ -57,7 +57,7 @@ export class Button {
     let element = _elementRef.nativeElement;
 
     if (config.get('hoverCSS') === false) {
-      _renderer.setElementClass(_elementRef, 'disable-hover', true);
+      _renderer.setElementClass(_elementRef.nativeElement, 'disable-hover', true);
     }
 
     if (element.hasAttribute('ion-item')) {
@@ -100,18 +100,21 @@ export class Button {
   /**
    * @private
    */
-  addClass(className) {
-    this._renderer.setElementClass(this._elementRef, className, true);
+  addClass(className: string) {
+    this._renderer.setElementClass(this._elementRef.nativeElement, className, true);
   }
 
   /**
    * @private
    */
-  setRole(val) {
+  setRole(val: string) {
     this._role = val;
   }
 
-  _readIcon(element) {
+  /**
+   * @private
+   */
+  private _readIcon(element: HTMLElement) {
     // figure out if and where the icon lives in the button
     let childNodes = element.childNodes;
     let childNode;
@@ -149,7 +152,10 @@ export class Button {
     }
   }
 
-  _readAttrs(element) {
+  /**
+   * @private
+   */
+  private _readAttrs(element: HTMLElement) {
     let elementAttrs = element.attributes;
     let attrName;
     for (let i = 0, l = elementAttrs.length; i < l; i++) {
@@ -175,10 +181,13 @@ export class Button {
     }
   }
 
-  _assignCss(assignCssClass) {
+  /**
+   * @private
+   */
+  private _assignCss(assignCssClass: boolean) {
     let role = this._role;
     if (role) {
-      this._renderer.setElementClass(this._elementRef, role, assignCssClass); // button
+      this._renderer.setElementClass(this._elementRef.nativeElement, role, assignCssClass); // button
 
       this._setClass(this._style, assignCssClass); // button-clear
       this._setClass(this._shape, assignCssClass); // button-round
@@ -193,16 +202,19 @@ export class Button {
     }
   }
 
-  _setClass(type, assignCssClass) {
+  /**
+   * @private
+   */
+  private _setClass(type: string, assignCssClass: boolean) {
     if (type) {
-      this._renderer.setElementClass(this._elementRef, this._role + '-' + type, assignCssClass);
+      this._renderer.setElementClass(this._elementRef.nativeElement, this._role + '-' + type, assignCssClass);
     }
   }
 
 /**
  * @private
  */
-  static setRoles(contentButtonChildren, role) {
+  static setRoles(contentButtonChildren, role: string) {
     let buttons = contentButtonChildren.toArray();
     buttons.forEach(button => {
       button.setRole(role);
