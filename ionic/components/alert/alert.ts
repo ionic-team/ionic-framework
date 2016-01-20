@@ -304,7 +304,9 @@ class AlertCmp {
     this.d = params.data;
 
     if (this.d.cssClass) {
-      renderer.setElementClass(elementRef.nativeElement, this.d.cssClass, true);
+      this.d.cssClass.split(' ').forEach(cssClass => {
+        renderer.setElementClass(_elementRef.nativeElement, cssClass, true);
+      });
     }
 
     this.id = (++alertIds);
