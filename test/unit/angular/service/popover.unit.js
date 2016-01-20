@@ -21,6 +21,38 @@ describe('Ionic Popover', function() {
     expect(instance.animation).toEqual('none');
   });
 
+  it('Should set the top of the popover', function() {
+    var template = '<ion-popover-view top="10"></ion-popover-view>';
+    var instance = popover.fromTemplate(template);
+    var target = document.createElement('button');
+    instance.show(target);
+    expect(instance.modalEl.style.top).toEqual("10px");
+  })
+
+  it('Should set the left of the popover', function() {
+    var template = '<ion-popover-view left="10"></ion-popover-view>';
+    var instance = popover.fromTemplate(template);
+    var target = document.createElement('button');
+    instance.show(target);
+    expect(instance.modalEl.style.left).toEqual("10px");
+  })
+
+  it('Should set the width of the popover', function() {
+    var template = '<ion-popover-view width="100"></ion-popover-view>';
+    var instance = popover.fromTemplate(template);
+    var target = document.createElement('button');
+    instance.show(target);
+    expect(instance.modalEl.style.width).toEqual("100px");
+  })
+
+  it('Should set the height of the popover', function() {
+    var template = '<ion-popover-view height="100"></ion-popover-view>';
+    var instance = popover.fromTemplate(template);
+    var target = document.createElement('button');
+    instance.show(target);
+    expect(instance.modalEl.style.height).toEqual("100px");
+  })
+
   it('Should show for static template', function() {
     var template = '<ion-popover-view></ion-popover-view>';
     var instance = popover.fromTemplate(template);

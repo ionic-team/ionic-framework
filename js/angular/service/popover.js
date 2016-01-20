@@ -91,27 +91,45 @@ function($ionicModal, $ionicPosition, $document, $window) {
   function positionView(target, popoverEle) {
     var targetEle = jqLite(target.target || target);
     var buttonOffset = $ionicPosition.offset(targetEle);
-    var popoverWidth = popoverEle.prop('offsetWidth');
-    var popoverHeight = popoverEle.prop('offsetHeight');
+
+    var popoverTop = +popoverEle.attr('top');
+    var popoverLeft = +popoverEle.attr('left');
+    var popoverWidth = popoverEle.attr('width');
+    var popoverHeight = popoverEle.attr('height');
+
+    if (popoverWidth === undefined) {
+      popoverWidth = popoverEle.prop('offsetWidth');
+    }
+
+    if (popoverHeight === undefined) {
+      popoverHeight = popoverEle.prop('offsetHeight');
+    }
     // Use innerWidth and innerHeight, because clientWidth and clientHeight
     // doesn't work consistently for body on all platforms
     var bodyWidth = $window.innerWidth;
     var bodyHeight = $window.innerHeight;
 
-    var popoverCSS = {
-      left: buttonOffset.left + buttonOffset.width / 2 - popoverWidth / 2
-    };
-    var arrowEle = jqLite(popoverEle[0].querySelector('.popover-arrow'));
+    var popoverCSS = {width: popoverWidth, height: popoverHeight};
 
-    if (popoverCSS.left < POPOVER_BODY_PADDING) {
-      popoverCSS.left = POPOVER_BODY_PADDING;
-    } else if (popoverCSS.left + popoverWidth + POPOVER_BODY_PADDING > bodyWidth) {
-      popoverCSS.left = bodyWidth - popoverWidth - POPOVER_BODY_PADDING;
+    if (popoverLeft === undefined) {
+      popoverCSS.left = buttonOffset.left + buttonOffset.width / 2 - popoverWidth / 2
+      if (popoverCSS.left < POPOVER_BODY_PADDING) {
+        popoverCSS.left = POPOVER_BODY_PADDING;
+      } else if (popoverCSS.left + popoverWidth + POPOVER_BODY_PADDING > bodyWidth) {
+        popoverCSS.left = bodyWidth - popoverWidth - POPOVER_BODY_PADDING;
+      }
+    } else {
+      popoverCSS.left = buttonOffset.left + popoverLeft;
     }
+
+    var arrowEle = jqLite(popoverEle[0].querySelector('.popover-arrow'));
 
     // If the popover when popped down stretches past bottom of screen,
     // make it pop up if there's room above
-    if (buttonOffset.top + buttonOffset.height + popoverHeight > bodyHeight &&
+    if (popoverTop !== undefined) {
+      popoverCSS.top = buttonOffset.top + popoverTop;
+      popoverEle.removeClass('popover-bottom');
+    } else if (buttonOffset.top + buttonOffset.height + popoverHeight > bodyHeight &&
         buttonOffset.top - popoverHeight > 0) {
       popoverCSS.top = buttonOffset.top - popoverHeight;
       popoverEle.addClass('popover-bottom');
@@ -128,6 +146,8 @@ function($ionicModal, $ionicPosition, $document, $window) {
     popoverEle.css({
       top: popoverCSS.top + 'px',
       left: popoverCSS.left + 'px',
+      width: popoverCSS.width,
+      height: popoverCSS.height,
       marginLeft: '0',
       opacity: '1'
     });
