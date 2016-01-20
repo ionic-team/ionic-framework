@@ -153,7 +153,7 @@ export class ListHeader {
 
   public set id(val: string) {
     this._id = val;
-    this._renderer.setElementAttribute(this._elementRef, 'id', val);
+    this._renderer.setElementAttribute(this._elementRef.nativeElement, 'id', val);
   }
 
 }

@@ -69,16 +69,16 @@ export class Tabs extends Ion {
   private _tabs: Array<Tab> = [];
   private _onReady = null;
   private _useHighlight: boolean;
-  
+
   id: number;
   navbarContainerRef: ViewContainerRef;
   subPages: boolean;
-  
+
   @Input() preloadTabs: any;
   @Input() tabbarIcons: string;
   @Input() tabbarPlacement: string;
   @Output() change: EventEmitter<Tab> = new EventEmitter();
-  
+
   @ViewChild(TabHighlight) private _highlight: TabHighlight;
   @ViewChildren(TabButton) private _btns;
 
@@ -92,7 +92,7 @@ export class Tabs extends Ion {
     private _renderer: Renderer
   ) {
     super(_elementRef);
-    
+
     this.id = ++tabIds;
     this.subPages = _config.getBoolean('tabSubPages');
     this._useHighlight = _config.getBoolean('tabbarHighlight');
@@ -125,7 +125,7 @@ export class Tabs extends Ion {
         this._highlight.select(this.getSelected());
       });
     }
-    
+
     this._btns.toArray().forEach((tabButton: TabButton) => {
       tabButton.select.subscribe((tab: Tab) => {
         this.select(tab);
@@ -133,12 +133,15 @@ export class Tabs extends Ion {
     });
   }
 
-  _setConfig(attrKey, fallback) {
+  /**
+   * @private
+   */
+  private _setConfig(attrKey, fallback) {
     var val = this[attrKey];
     if (isUndefined(val)) {
       val = this._config.get(attrKey);
     }
-    this._renderer.setElementAttribute(this._elementRef, attrKey, val);
+    this._renderer.setElementAttribute(this._elementRef.nativeElement, attrKey, val);
   }
 
   /**
@@ -248,7 +251,7 @@ export class Tabs extends Ion {
    * "Touch" the active tab, going back to the root view of the tab
    * or optionally letting the tab handle the event
    */
-  _touchActive(tab) {
+  private _touchActive(tab) {
     let active = tab.getActive();
 
     if (!active) {

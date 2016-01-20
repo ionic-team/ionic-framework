@@ -151,7 +151,7 @@ export class Menu extends Ion {
     if (self.side !== 'left' && self.side !== 'right') {
       self.side = 'left';
     }
-    self._renderer.setElementAttribute(self._elementRef, 'side', self.side);
+    self._renderer.setElementAttribute(self._elementRef.nativeElement, 'side', self.side);
 
     if (self.swipeEnabled === 'false') {
       self.isSwipeEnabled = false;
@@ -209,7 +209,7 @@ export class Menu extends Ion {
       type = this._config.get('menuType');
     }
     this.type = type;
-    this._renderer.setElementAttribute(this._elementRef, 'menuType', type);
+    this._renderer.setElementAttribute(this._elementRef.nativeElement, 'menuType', type);
   }
 
   /**

@@ -165,11 +165,11 @@ export class ViewController {
 
       this._hdAttr = (shouldShow ? null : '');
 
-      renderer.setElementAttribute(this._pgRef, 'hidden', this._hdAttr);
+      renderer.setElementAttribute(this._pgRef.nativeElement, 'hidden', this._hdAttr);
 
       let navbarRef = this.navbarRef();
       if (navbarRef) {
-        renderer.setElementAttribute(navbarRef, 'hidden', this._hdAttr);
+        renderer.setElementAttribute(navbarRef.nativeElement, 'hidden', this._hdAttr);
       }
     }
   }
@@ -177,7 +177,7 @@ export class ViewController {
   setZIndex(zIndex: number, renderer: Renderer) {
     if (this._pgRef && zIndex !== this.zIndex) {
       this.zIndex = zIndex;
-      renderer.setElementStyle(this._pgRef, 'z-index', zIndex.toString());
+      renderer.setElementStyle(this._pgRef.nativeElement, 'z-index', zIndex.toString());
     }
   }
 

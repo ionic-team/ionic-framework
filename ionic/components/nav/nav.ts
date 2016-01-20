@@ -101,7 +101,7 @@ import {ViewController} from './view-controller';
  */
 @Component({
   selector: 'ion-nav',
-  template: '<template #contents></template>'
+  template: '<div #contents></div>'
 })
 export class Nav extends NavController {
   @Input() root: Type;

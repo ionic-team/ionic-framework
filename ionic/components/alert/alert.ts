@@ -279,14 +279,12 @@ export class Alert extends ViewController {
   host: {
     'role': 'dialog',
     '[attr.aria-labelledby]': 'hdrId',
-    '[attr.aria-describedby]': 'descId',
-    '[class]': 'cssClass'
+    '[attr.aria-describedby]': 'descId'
   },
   directives: [NgClass, NgSwitch, NgIf, NgFor]
 })
 class AlertCmp {
   activeId: string;
-  cssClass: string;
   descId: string;
   d: any;
   hdrId: string;
@@ -304,7 +302,10 @@ class AlertCmp {
     renderer: Renderer
   ) {
     this.d = params.data;
-    this.cssClass = this.d.cssClass || '';
+
+    if (this.d.cssClass) {
+      renderer.setElementClass(elementRef.nativeElement, this.d.cssClass, true);
+    }
 
     this.id = (++alertIds);
     this.descId = '';

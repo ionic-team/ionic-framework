@@ -44,12 +44,12 @@ import {isDefined} from '../../util/util';
 })
 export class RadioButton {
   labelId: any;
-  
+
   @Input() checked: any = false;
   @Input() disabled: boolean = false;
   @Input() id: string;
   @Input() value: string = '';
-  
+
   @Output() select: EventEmitter<RadioButton> = new EventEmitter();
 
   constructor(
@@ -66,17 +66,17 @@ export class RadioButton {
   ngOnInit() {
     if (!this.id) {
       this.id = 'rb-' + this._form.nextId();
-      this._renderer.setElementAttribute(this._elementRef, 'id', this.id);
+      this._renderer.setElementAttribute(this._elementRef.nativeElement, 'id', this.id);
     }
     this.labelId = 'lbl-' + this.id;
-    this._renderer.setElementAttribute(this._elementRef, 'aria-labelledby', this.labelId);
+    this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-labelledby', this.labelId);
 
     let checked = this.checked;
     if (typeof checked === 'string') {
       this.checked = (checked === '' || checked === 'true');
     }
     this.isChecked = this.checked;
-    this._renderer.setElementAttribute(this._elementRef, 'checked', null);
+    this._renderer.setElementAttribute(this._elementRef.nativeElement, 'checked', null);
   }
 
   /**
@@ -89,7 +89,7 @@ export class RadioButton {
   }
 
   public set isChecked(isChecked) {
-    this._renderer.setElementAttribute(this._elementRef, 'aria-checked', isChecked);
+    this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-checked', isChecked);
   }
 
   /**
@@ -155,12 +155,12 @@ export class RadioButton {
   }
 })
 export class RadioGroup {
+  id;
+  value;
+
   @Output() change: EventEmitter<RadioGroup> = new EventEmitter();
   @ContentChildren(RadioButton) private _buttons;
   @ContentChild(ListHeader) private _header;
-
-  id: any;
-  value: any;
 
   constructor(
     @Optional() ngControl: NgControl,
@@ -180,7 +180,7 @@ export class RadioGroup {
    * the checked value.
    * https://github.com/angular/angular/blob/master/modules/angular2/src/forms/directives/shared.ts#L34
    */
-  public writeValue(value) {
+  writeValue(value) {
     this.value = isDefined(value) ? value : '';
     if (this._buttons) {
       let buttons = this._buttons.toArray();
@@ -188,7 +188,7 @@ export class RadioGroup {
         let isChecked = (button.value === this.value);
         button.isChecked = isChecked;
         if (isChecked) {
-          this._renderer.setElementAttribute(this._elementRef, 'aria-activedescendant', button.id);
+          this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-activedescendant', button.id);
         }
       }
     }
@@ -215,7 +215,7 @@ export class RadioGroup {
    * https://github.com/angular/angular/blob/master/modules/angular2/src/forms/directives/shared.ts#L27
    * @param {Function} fn  the onChange event handler.
    */
-  public registerOnChange(fn) { this.onChange = fn; }
+  registerOnChange(fn) { this.onChange = fn; }
 
   /**
    * @private
@@ -223,7 +223,7 @@ export class RadioGroup {
    * the onTouched event handler that marks the model (Control) as touched.
    * @param {Function} fn  onTouched event handler.
    */
-  public registerOnTouched(fn) { this.onTouched = fn; }
+  registerOnTouched(fn) { this.onTouched = fn; }
 
   /**
    * @private
@@ -234,7 +234,7 @@ export class RadioGroup {
       if (!header.id) {
         header.id = 'rg-hdr-' + this.id;
       }
-      this._renderer.setElementAttribute(this._elementRef, 'aria-describedby', header.id);
+      this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-describedby', header.id);
     }
 
     this._buttons.toArray().forEach(button => {
@@ -250,7 +250,7 @@ export class RadioGroup {
         if (isChecked) {
           this.writeValue(button.value);
           //this.onChange(button.value);
-          this._renderer.setElementAttribute(this._elementRef, 'aria-activedescendant', button.id);
+          this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-activedescendant', button.id);
         }
       }
     });

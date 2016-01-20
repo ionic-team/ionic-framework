@@ -1102,7 +1102,7 @@ export class NavController extends Ion {
       // class to the nav when it's finished its first transition
       if (!this._init) {
         this._init = true;
-        this._renderer.setElementClass(this.elementRef, 'has-views', true);
+        this._renderer.setElementClass(this.elementRef.nativeElement, 'has-views', true);
       }
 
       // allow clicks and enable the app again
@@ -1178,12 +1178,12 @@ export class NavController extends Ion {
 
       // auto-add page css className created from component JS class name
       let cssClassName = pascalCaseToDashCase(view.componentType['name']);
-      this._renderer.setElementClass(pageElementRef, cssClassName, true);
+      this._renderer.setElementClass(pageElementRef.nativeElement, cssClassName, true);
 
       view.addDestroy(() => {
         // ensure the element is cleaned up for when the view pool reuses this element
-        this._renderer.setElementAttribute(pageElementRef, 'class', null);
-        this._renderer.setElementAttribute(pageElementRef, 'style', null);
+        this._renderer.setElementAttribute(pageElementRef.nativeElement, 'class', null);
+        this._renderer.setElementAttribute(pageElementRef.nativeElement, 'style', null);
 
         // remove the page from its container
         let index = viewContainer.indexOf(hostViewRef);

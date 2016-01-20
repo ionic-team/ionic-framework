@@ -159,6 +159,8 @@ gulp.task('transpile.no-typecheck', function(){
     .pipe(gulp.dest('dist'));
 });
 
+gulp.task('typecheck', ['transpile.typecheck']);
+
 gulp.task('transpile.typecheck', function(){
   var merge = require('merge2');
   var stripDebug = require('gulp-strip-debug');

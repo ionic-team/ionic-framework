@@ -41,7 +41,7 @@ import {IonicApp} from './app';
 })
 export class IdRef {
   private _component: any;
-  
+
   @Input() id: string;
 
   constructor(private _app: IonicApp, elementRef: ElementRef, appViewManager: AppViewManager) {
@@ -88,6 +88,6 @@ export class Attr {
  * @private
  */
   ngOnInit() {
-    this._renderer.setElementAttribute(this._elementRef, this.attr, '');
+    this._renderer.setElementAttribute(this._elementRef.nativeElement, this.attr, '');
   }
 }

@@ -54,7 +54,7 @@ export class Label {
    * @param {string} add class name
    */
   addClass(className: string) {
-    this._renderer.setElementClass(this._elementRef, className, true);
+    this._renderer.setElementClass(this._elementRef.nativeElement, className, true);
   }
 
 }

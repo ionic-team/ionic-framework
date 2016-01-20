@@ -75,7 +75,7 @@ export class Icon {
    */
   ngOnDestroy() {
     if (this._css) {
-      this._renderer.setElementClass(this._elementRef, this._css, false);
+      this._renderer.setElementClass(this._elementRef.nativeElement, this._css, false);
     }
   }
 
@@ -146,12 +146,12 @@ export class Icon {
 
     if (this._css !== css) {
       if (this._css) {
-        this._renderer.setElementClass(this._elementRef, this._css, false);
+        this._renderer.setElementClass(this._elementRef.nativeElement, this._css, false);
       }
       this._css = css;
-      this._renderer.setElementClass(this._elementRef, css, true);
+      this._renderer.setElementClass(this._elementRef.nativeElement, css, true);
 
-      this._renderer.setElementAttribute(this._elementRef, 'aria-label',
+      this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-label',
           css.replace('ion-', '').replace('ios-', '').replace('md-', '').replace('-', ' '));
     }
   }
@@ -161,7 +161,7 @@ export class Icon {
    * @param {string} add class name
    */
   addClass(className: string) {
-    this._renderer.setElementClass(this._elementRef, className, true);
+    this._renderer.setElementClass(this._elementRef.nativeElement, className, true);
   }
 
 }

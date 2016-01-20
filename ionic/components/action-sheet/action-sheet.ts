@@ -175,7 +175,7 @@ class ActionSheetCmp {
     this.d = params.data;
 
     if (this.d.cssClass) {
-      renderer.setElementClass(elementRef, this.d.cssClass, true);
+      renderer.setElementClass(elementRef.nativeElement, this.d.cssClass, true);
     }
   }
 

@@ -13,12 +13,14 @@ import {CSS, hasFocus}  from '../../util/dom';
   }
 })
 export class TextInput {
-  @Input() value: string;
-  @Input() ngModel: any;
-  @Output() valueChange: EventEmitter<string> = new EventEmitter();
-  @Output() focusChange: EventEmitter<boolean> = new EventEmitter();
-  public type: string;
   private _relocated: boolean;
+
+  type: string;
+
+  @Input() ngModel;
+  @Input() value: string;
+  @Output() focusChange: EventEmitter<boolean> = new EventEmitter();
+  @Output() valueChange: EventEmitter<string> = new EventEmitter();
 
   constructor(
     @Attribute('type') type: string,
@@ -28,6 +30,9 @@ export class TextInput {
     this.type = type || 'text';
   }
 
+  /**
+   * @private
+   */
   ngOnInit() {
     if (this.ngModel) {
       this.value = this.ngModel;
@@ -36,30 +41,45 @@ export class TextInput {
     }
   }
 
+  /**
+   * @private
+   */
   @HostListener('keyup', ['$event'])
-  _keyup(ev) {
+  private _keyup(ev) {
     this.valueChange.emit(ev.target.value);
   }
 
+  /**
+   * @private
+   */
   @HostListener('focus')
-  _focus() {
+  private _focus() {
     this.focusChange.emit(true);
   }
 
+  /**
+   * @private
+   */
   @HostListener('blur')
-  _blur() {
+  private _blur() {
     this.focusChange.emit(false);
     this.hideFocus(false);
   }
 
-  labelledBy(val) {
-    this._renderer.setElementAttribute(this._elementRef, 'aria-labelledby', val);
+  labelledBy(val: string) {
+    this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-labelledby', val);
   }
 
+  /**
+   * @private
+   */
   setFocus() {
     this.element().focus();
   }
 
+  /**
+   * @private
+   */
   relocate(shouldRelocate: boolean, inputRelativeY?) {
     if (this._relocated !== shouldRelocate) {
 
@@ -76,7 +96,7 @@ export class TextInput {
       } else {
         focusedInputEle.classList.remove('hide-focused-input');
         focusedInputEle.style[CSS.transform] = '';
-        let clonedInputEle = focusedInputEle.parentNode.querySelector('.cloned-input');
+        let clonedInputEle = focusedInputEle.parentElement.querySelector('.cloned-input');
         if (clonedInputEle) {
           clonedInputEle.parentNode.removeChild(clonedInputEle);
         }
@@ -86,7 +106,10 @@ export class TextInput {
     }
   }
 
-  hideFocus(shouldHideFocus) {
+  /**
+   * @private
+   */
+  hideFocus(shouldHideFocus: boolean) {
     let focusedInputEle = this.element();
 
     if (shouldHideFocus) {
@@ -99,32 +122,38 @@ export class TextInput {
     } else {
       focusedInputEle.classList.remove('hide-focused-input');
       focusedInputEle.style[CSS.transform] = '';
-      let clonedInputEle = focusedInputEle.parentNode.querySelector('.cloned-hidden');
+      let clonedInputEle = focusedInputEle.parentElement.querySelector('.cloned-hidden');
       if (clonedInputEle) {
         clonedInputEle.parentNode.removeChild(clonedInputEle);
       }
     }
   }
 
-  hasFocus() {
+  hasFocus(): boolean {
     return hasFocus(this.element());
   }
 
-  addClass(className) {
-    this._renderer.setElementClass(this._elementRef, className, true);
+  /**
+   * @private
+   */
+  addClass(className: string) {
+    this._renderer.setElementClass(this._elementRef.nativeElement, className, true);
   }
 
-  hasClass(className) {
-    this._elementRef.nativeElement.classList.contains(className);
+  hasClass(className): boolean {
+    return this._elementRef.nativeElement.classList.contains(className);
   }
 
-  element() {
+  /**
+   * @private
+   */
+  element(): HTMLElement {
     return this._elementRef.nativeElement;
   }
 
 }
 
-function cloneInput(srcInput, addCssClass) {
+function cloneInput(srcInput, addCssClass: string) {
   let clonedInputEle = srcInput.cloneNode(true);
   clonedInputEle.classList.add(addCssClass);
   clonedInputEle.classList.remove('hide-focused-input');
