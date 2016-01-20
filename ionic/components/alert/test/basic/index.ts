@@ -148,6 +148,75 @@ class E2EPage {
     });
   }
 
+  doCheckbox() {
+    let alert = Alert.create();
+    alert.setTitle('Checkbox!');
+
+    alert.addInput({
+      type: 'checkbox',
+      label: 'Checkbox 1',
+      value: 'value1',
+      checked: true
+    });
+
+    alert.addInput({
+      type: 'checkbox',
+      label: 'Checkbox 2',
+      value: 'value2'
+    });
+
+    alert.addInput({
+      type: 'checkbox',
+      label: 'Checkbox 3',
+      value: 'value3'
+    });
+
+    alert.addInput({
+      type: 'checkbox',
+      label: 'Checkbox 4',
+      value: 'value4'
+    });
+
+    alert.addInput({
+      type: 'checkbox',
+      label: 'Checkbox 5',
+      value: 'value5'
+    });
+
+    alert.addInput({
+      type: 'checkbox',
+      label: 'Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6',
+      value: 'value6'
+    });
+
+    alert.addButton('Cancel');
+    alert.addButton({
+      text: 'Ok',
+      handler: data => {
+        console.log('Checkbox data:', data);
+        this.testCheckboxOpen = false;
+        this.testCheckboxResult = data;
+      }
+    });
+
+    this.nav.present(alert).then(() => {
+      this.testCheckboxOpen = true;
+    });
+  }
+
+  doFastClose() {
+    let alert = Alert.create({
+      title: 'Alert!',
+      buttons: ['OK']
+    });
+
+    this.nav.present(alert);
+
+    setTimeout(() => {
+      alert.dismiss();
+    }, 100);
+  }
+
 }
 
 

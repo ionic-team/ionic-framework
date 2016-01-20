@@ -9,6 +9,8 @@
   <button block class="e2eOpenConfirm" (click)="doConfirm()">Confirm</button>
   <button block class="e2eOpenPrompt" (click)="doPrompt()">Prompt</button>
   <button block class="e2eOpenRadio" (click)="doRadio()">Radio</button>
+  <button block class="e2eOpenCheckbox" (click)="doCheckbox()">Checkbox</button>
+  <button block class="e2eFastClose" (click)="doFastClose()">Fast Close</button>
 
   <pre>
     Confirm Opened: {{testConfirmOpen}}
@@ -17,6 +19,8 @@
     Prompt Result: {{testPromptResult | json}}
     Radio Opened: {{testRadioOpen}}
     Radio Result: {{testRadioResult}}
+    Checkbox Opened: {{testCheckboxOpen}}
+    Checkbox Result: {{testCheckboxResult}}
   </pre>
 
 </ion-content>
