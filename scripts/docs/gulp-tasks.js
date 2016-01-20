@@ -164,7 +164,7 @@ module.exports = function(gulp, flags) {
         // Write out as one json file
         mkdirp.sync(docPath + '/data');
         fs.writeFileSync(
-          docPath + '/data/index.json',
+          docPath + '/data/v2-index.json',
           JSON.stringify({'ref': ref, 'index': idx.toJSON()})
         );
       });
