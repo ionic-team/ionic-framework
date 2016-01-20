@@ -1,10 +1,7 @@
-## Ionic 1.x
-
-Please read the contributing guide on the ionic website: http://ionicframework.com/contribute/
-
-Please do not manually create issues on GitHub.
 
 ### Creating an Issue
+
+##### [Create a new issue form](http://ionicframework.com/submit-issue/) <-- please use this form for new issues
 
 If you have a question on how something works, or its expected functionality, you might want to visit the [Ionic Forum](http://forum.ionicframework.com/) first.
 
@@ -34,6 +31,10 @@ Always use two spaces, no tabs. This goes for any HTML, CSS, or Javascript.
 ### License
 
 By contributing your code to the driftyco/ionic GitHub Repository, you agree to license your contribution under the MIT license.
+
+## Ionic 1.x
+
+Please read the contributing guide on the ionic website: http://ionicframework.com/contribute/
 
 ## Ionic 2.x
 
