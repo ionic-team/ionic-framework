@@ -637,6 +637,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
         scope.$last = (i === (data.length - 1));
         scope.$middle = !(scope.$first || scope.$last);
         scope.$odd = !(scope.$even = (i & 1) === 0);
+        scope.$repeatReorder = {keyExpression : keyExpression, toItem: null, fromItem: null };
 
         if (scope.$$disconnected) ionic.Utils.reconnectScope(item.scope);
 
