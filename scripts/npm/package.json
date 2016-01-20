@@ -16,6 +16,6 @@
     "shelljs": "0.5.3"
   },
   "peerDependencies": {
-    "angular2": "2.0.0-beta.<%= angularVersion %>"
+    "angular2": "^2.0.0-beta.<%= angularVersion %>"
   }
 }
