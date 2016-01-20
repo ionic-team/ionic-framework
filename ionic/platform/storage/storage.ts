@@ -13,7 +13,7 @@
 export class Storage {
   private _strategy: any;
 
-  constructor(strategyCls: IStorageEngine, options: any) {
+  constructor(strategyCls: IStorageEngine, options?: any) {
     this._strategy = new strategyCls(options);
   }
   get(key: string): any {
@@ -33,7 +33,7 @@ export class Storage {
   remove(key: string) {
     return this._strategy.remove(key);
   }
-  query(query: string, params: any) {
+  query(query: string, params?: any) {
     return this._strategy.query(query, params);
   }
 }
