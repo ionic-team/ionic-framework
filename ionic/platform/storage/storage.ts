@@ -20,12 +20,14 @@ export class Storage {
     return this._strategy.get(key);
   }
   getJson(key: string): any {
-    try {
-      return JSON.parse(this._strategy.get(key));
-    } catch(e) {
-      console.warn('Storage getJson(): unable to parse value for key', key,' as JSON')
-      return null;
-    }
+    return this.get(key).then(value => {
+      try {
+        return JSON.parse(value);
+      } catch (e) {
+        console.warn('Storage getJson(): unable to parse value for key', key, ' as JSON');
+        throw e; // rethrowing exception so it can be handled with .catch()
+      }
+    });
   }
   set(key: string, value: any) {
     return this._strategy.set(key, value);
