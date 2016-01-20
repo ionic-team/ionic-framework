@@ -29,6 +29,13 @@ export class Storage {
       }
     });
   }
+  setJson(key: string, value: any): Promise<any> {
+    try {
+      return this.set(key, JSON.stringify(value));
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  }
   set(key: string, value: any) {
     return this._strategy.set(key, value);
   }
