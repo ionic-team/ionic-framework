@@ -239,6 +239,10 @@ $button-md-small-icon-font-size:           1.4em !default;
   border-radius: 50%;
   box-shadow: $button-md-fab-box-shadow;
 
+  transition: box-shadow $button-md-transition-duration $button-md-animation-curve,
+              background-color $button-md-transition-duration $button-md-animation-curve,
+              color $button-md-transition-duration $button-md-animation-curve;
+
   &.activated {
     box-shadow: $button-md-fab-box-shadow-active;
   }
