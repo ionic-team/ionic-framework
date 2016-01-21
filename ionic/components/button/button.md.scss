@@ -18,6 +18,8 @@ $button-md-transition-duration:            300ms !default;
 $button-md-clear-hover-background-color:   rgba(158, 158, 158, 0.1) !default;
 $button-md-clear-active-background-color:  rgba(158, 158, 158, 0.2) !default;
 
+$button-md-outline-ripple-opacity:         0.25 !default;
+
 $button-md-fab-box-shadow:                 0 4px 6px 0 rgba(0, 0, 0, 0.14), 0 4px 5px rgba(0, 0, 0, 0.1) !default;
 $button-md-fab-box-shadow-active:          0 5px 15px 0 rgba(0, 0, 0, 0.4), 0 4px 7px 0 rgba(0, 0, 0, 0.1) !default;
 
@@ -143,13 +145,12 @@ $button-md-small-icon-font-size:           1.4em !default;
 
   &.activated {
     opacity: 1;
-    color: $background-md-color;
-    background-color: $button-md-color;
     box-shadow: none;
+    background-color: transparent;
   }
 
   md-ripple {
-    background-color: ripple-background-color($button-md-color);
+    background-color: rgba($button-md-color, $button-md-outline-ripple-opacity);
   }
 }
 
@@ -166,8 +167,11 @@ $button-md-small-icon-font-size:           1.4em !default;
     color: $fg-color;
 
     &.activated {
-      color: $background-md-color;
-      background-color: $fg-color;
+      background-color: transparent;
+    }
+
+    md-ripple {
+      background-color: rgba($fg-color, $button-md-outline-ripple-opacity);
     }
   }
 
