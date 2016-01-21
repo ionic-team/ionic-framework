@@ -254,6 +254,11 @@ export class NavController extends Ion {
     let views = pages.map(p => new ViewController(p.page, p.params));
     let enteringView = this._insert(0, views);
 
+    // if animation wasn't set to true then default it to NOT animate
+    if (opts.animate !== true) {
+      opts.animate = false;
+    }
+
     // set the nav direction to "back" if it wasn't set
     opts.direction = opts.direction || 'back';
 
