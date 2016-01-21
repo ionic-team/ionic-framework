@@ -1187,7 +1187,7 @@ export class NavController extends Ion {
 
         // remove the page from its container
         let index = viewContainer.indexOf(hostViewRef);
-        if (index !== -1) {
+        if (!hostViewRef.destroyed && index !== -1) {
           viewContainer.remove(index);
         }
       });
@@ -1205,11 +1205,11 @@ export class NavController extends Ion {
 
       let navbarTemplateRef = view.getNavbarTemplateRef();
       if (navbarContainerRef && navbarTemplateRef) {
-        let navbarView = navbarContainerRef.createEmbeddedView(navbarTemplateRef);
+        let navbarViewRef = navbarContainerRef.createEmbeddedView(navbarTemplateRef);
 
         view.addDestroy(() => {
-          let index = navbarContainerRef.indexOf(navbarView);
-          if (index > -1) {
+          let index = navbarContainerRef.indexOf(navbarViewRef);
+          if (!navbarViewRef.destroyed && index > -1) {
             navbarContainerRef.remove(index);
           }
         });
