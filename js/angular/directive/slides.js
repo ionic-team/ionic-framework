@@ -82,7 +82,7 @@ function($animate, $timeout, $compile) {
 
           // When slide index is greater than total then slide to last index
           if (_this.__slider.activeIndex > slidesLength - 1) {
-            _this.__slider.slideTo(slidesLength - 1)
+            _this.__slider.slideTo(slidesLength - 1);
           }
         });
       };
