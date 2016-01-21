@@ -1,3 +1,33 @@
+<a name="2.0.0-alpha.51"></a>
+# 2.0.0-alpha.51 (2016-1-21)
+
+### Breaking Changes
+
+##### Angular was updated to Beta 1
+
+* Update the version of Angular in your `package.json` file:
+
+  ```
+  "angular2": "2.0.0-beta.1",
+  ```
+
+##### Ionicons were moved
+
+* Install ionicons (this will be added in the starters): `npm install --save ionicons`
+* Modify the sass `include` in your `ionic.config.js` file:
+
+  ```
+    sass: {
+      src: ['app/theme/app.+(ios|md).scss'],
+      dest: 'www/build/css',
+      include: [
+        'node_modules/ionic-framework',
+        'node_modules/ionicons/dist/scss'
+      ]
+    },
+  ```
+
+
 <a name="2.0.0-alpha.48"></a>
 # 2.0.0-alpha.48 (2016-1-7)
 
