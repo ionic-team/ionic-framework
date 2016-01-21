@@ -1,6 +1,7 @@
 import {Component, Directive, ElementRef, Optional, Host, forwardRef, ViewContainerRef, HostListener, EventEmitter, Output, Input, Renderer} from 'angular2/core';
 
 import {Tab} from './tab';
+import {Ion} from '../ion';
 import {Config} from '../../config/config';
 
 
@@ -20,17 +21,18 @@ import {Config} from '../../config/config';
     '[class.disable-hover]': 'disHover'
   }
 })
-export class TabButton {
+export class TabButton extends Ion {
   private disHover: boolean;
   private hasTitle: boolean;
   private hasIcon: boolean;
   private hasTitleOnly: boolean;
   private hasIconOnly: boolean;
-  
+
   @Input() tab: Tab;
   @Output() select: EventEmitter<Tab> = new EventEmitter();
-  
-  constructor(config: Config) {
+
+  constructor(config: Config, elementRef: ElementRef) {
+    super(elementRef);
     this.disHover = (config.get('hoverCSS') === false);
   }
 
