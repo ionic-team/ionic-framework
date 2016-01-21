@@ -3,33 +3,41 @@
 // Select
 // --------------------------------------------------
 
-.select-icon {
-  position: relative;
-  min-width: 16px;
+ion-select {
+  display: flex;
+  overflow: hidden;
 }
 
-.select-icon:after {
+.select-text {
+  flex: 1;
+  min-width: 16px;
+  max-width: 120px;
+  font-size: inherit;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.select-icon {
+  position: relative;
+  width: 16px;
+  height: 16px;
+}
+
+.select-icon .select-icon-inner {
   position: absolute;
   top: 50%;
-  left: 50%;
-  margin-top: -3px;
+  left: 5px;
+  margin-top: -2px;
   width: 0;
   height: 0;
   border-top: 5px solid;
   border-right: 5px solid transparent;
   border-left: 5px solid transparent;
   color: #999;
-  content: "";
   pointer-events: none;
 }
 
-.select-text-value {
-  max-width: 120px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-ion-select ion-label {
-  margin: 0;
+.item-multiple-inputs ion-select {
+  position: relative;
 }

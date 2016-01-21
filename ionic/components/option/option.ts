@@ -1,5 +1,6 @@
 import {Directive, ElementRef, Input} from 'angular2/core';
 
+import {isDefined} from '../../util/util';
 
 /**
  * @name Option
@@ -9,12 +10,9 @@ import {Directive, ElementRef, Input} from 'angular2/core';
 })
 export class Option {
   private _checked: boolean = false;
+  private _value;
 
-  @Input() value: string;
-
-  constructor(private _elementRef: ElementRef) {
-    this._checked = false;
-  }
+  constructor(private _elementRef: ElementRef) {}
 
   @Input()
   get checked() {
@@ -23,6 +21,18 @@ export class Option {
 
   set checked(val: any) {
     this._checked = (val === 'true' || val === true || val === '');
+  }
+
+  @Input()
+  get value() {
+    if (isDefined(this._value)) {
+      return this._value;
+    }
+    return this.text;
+  }
+
+  set value(val) {
+    this._value = val;
   }
 
   get text() {

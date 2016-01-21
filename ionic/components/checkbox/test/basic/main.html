@@ -8,29 +8,35 @@
 
     <ion-list>
 
-      <ion-checkbox value="apple" checked="true" ngControl="appleCtrl">
-        Apple, value=apple, init checked
-      </ion-checkbox>
+      <ion-item>
+        <ion-label>Apple, value=apple, init checked</ion-label>
+        <ion-checkbox value="apple" checked="true" ngControl="appleCtrl"></ion-checkbox>
+      </ion-item>
 
-      <ion-checkbox ngControl="bananaCtrl">
-        Banana, init no checked/value attributes
-      </ion-checkbox>
+      <ion-item>
+        <ion-label>Banana, init no checked/value attributes</ion-label>
+        <ion-checkbox ngControl="bananaCtrl"></ion-checkbox>
+      </ion-item>
 
-      <ion-checkbox value="cherry" disabled="true" ngControl="cherryCtrl">
-        Cherry, value=cherry, init disabled
-      </ion-checkbox>
+      <ion-item>
+        <ion-label>Cherry, value=cherry, init disabled</ion-label>
+        <ion-checkbox value="cherry" disabled="true" ngControl="cherryCtrl"></ion-checkbox>
+      </ion-item>
 
-      <ion-checkbox value="grape" [checked]="grapeChecked" [disabled]="grapeDisabled" ngControl="grapeCtrl">
-        Grape, value=grape, init checked, disabled
-      </ion-checkbox>
+      <ion-item>
+        <ion-label>Grape, value=grape, init checked, disabled</ion-label>
+        <ion-checkbox value="grape" [checked]="grapeChecked" [disabled]="grapeDisabled" ngControl="grapeCtrl"></ion-checkbox>
+      </ion-item>
 
-      <ion-checkbox secondary checked="true">
-        secondary color
-      </ion-checkbox>
+      <ion-item>
+        <ion-label>secondary color</ion-label>
+        <ion-checkbox secondary checked="true"></ion-checkbox>
+      </ion-item>
 
-      <ion-checkbox light checked="true">
-        light color
-      </ion-checkbox>
+      <ion-item>
+        <ion-label>light color</ion-label>
+        <ion-checkbox light checked="true"></ion-checkbox>
+      </ion-item>
 
     </ion-list>
 

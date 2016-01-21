@@ -1,9 +1,9 @@
-import {Component, Directive, Optional, ElementRef, Input, Renderer, HostListener, ContentChild, ContentChildren, QueryList} from 'angular2/core';
+import {Component, Optional, ElementRef, Renderer, Input, HostListener, ContentChildren, QueryList} from 'angular2/core';
 import {NgControl} from 'angular2/common';
 
 import {Alert} from '../alert/alert';
 import {Form} from '../../util/form';
-import {Label} from '../label/label';
+import {Item} from '../item/item';
 import {merge} from '../../util/util';
 import {NavController} from '../nav/nav-controller';
 import {Option} from '../option/option';
@@ -19,9 +19,9 @@ import {Option} from '../option/option';
  *
  * Under-the-hood the `ion-select` actually uses the
  * {@link ../../alert/Alert Alert API} to open up the overlay of options
- * which the user is presented with. Select takes one child `ion-label`
- * component, and numerous child `ion-option` components. Each `ion-option`
- * should be given a `value` attribute.
+ * which the user is presented with. Select can take numerous child
+ * `ion-option` components. If `ion-option` is not given a `value` attribute
+ * then it will use its text as the value.
  *
  * ### Single Value: Radio Buttons
  *
@@ -31,11 +31,13 @@ import {Option} from '../option/option';
  * receives the value of the selected option's value.
  *
  * ```html
- * <ion-select [(ngModel)]="gender">
+ * <ion-item>
  *   <ion-label>Gender</ion-label>
- *   <ion-option value="f" checked="true">Female</ion-option>
- *   <ion-option value="m">Male</ion-option>
- * </ion-select>
+ *   <ion-select [(ngModel)]="gender">
+ *     <ion-option value="f" checked="true">Female</ion-option>
+ *     <ion-option value="m">Male</ion-option>
+ *   </ion-select>
+ * </ion-item>
  * ```
  *
  * ### Multiple Value: Checkboxes
@@ -44,18 +46,21 @@ import {Option} from '../option/option';
  * to select multiple options. When multiple options can be selected, the alert
  * overlay presents users with a checkbox styled list of options. The
  * `ion-select multiple="true"` component's value receives an array of all the
- * selected option values.
+ * selected option values. In the example below, because each option is not given
+ * a `value`, then it'll use its text as the value instead.
  *
  * ```html
- * <ion-select [(ngModel)]="toppings" multiple="true">
+ * <ion-item>
  *   <ion-label>Toppings</ion-label>
- *   <ion-option value="bacon">Bacon</ion-option>
- *   <ion-option value="olives">Black Olives</ion-option>
- *   <ion-option value="xcheese">Extra Cheese</ion-option>
- *   <ion-option value="mushrooms">Mushrooms</ion-option>
- *   <ion-option value="pepperoni">Pepperoni</ion-option>
- *   <ion-option value="sausage">Sausage</ion-option>
- * </ion-select>
+ *   <ion-select [(ngModel)]="toppings" multiple="true">
+ *     <ion-option>Bacon</ion-option>
+ *     <ion-option>Black Olives</ion-option>
+ *     <ion-option>Extra Cheese</ion-option>
+ *     <ion-option>Mushrooms</ion-option>
+ *     <ion-option>Pepperoni</ion-option>
+ *     <ion-option>Sausage</ion-option>
+ *   </ion-select>
+ * <ion-item>
  * ```
  *
  * ### Alert Buttons
@@ -91,25 +96,25 @@ import {Option} from '../option/option';
  */
 @Component({
   selector: 'ion-select',
-  host: {
-    'class': 'item',
-    'tappable': '',
-    'tabindex': '0',
-    '[attr.aria-disabled]': 'disabled'
-  },
   template:
-    '<ng-content select="[item-left]"></ng-content>' +
-    '<div class="item-inner">' +
-      '<ion-item-content id="{{labelId}}">' +
-        '<ng-content select="ion-label"></ng-content>' +
-      '</ion-item-content>' +
-      '<div class="select-text-value" item-right>{{selectedText}}</div>' +
-      '<div class="select-icon" item-right></div>' +
-    '</div>'
+    '<div class="select-text">{{_selectedText}}</div>' +
+    '<div class="select-icon">' +
+      '<div class="select-icon-inner"></div>' +
+    '</div>' +
+    '<button [id]="id" ' +
+            '[attr.aria-disabled]="_disabled" ' +
+            'class="item-cover">' +
+    '</button>',
+  host: {
+    '[class.select-disabled]': '_disabled'
+  }
 })
 export class Select {
-  private selectedText: string = '';
-  private labelId: string;
+  private _selectedText: string = '';
+  private _disabled: any = false;
+  private _labelId: string;
+
+  id: string;
 
   @Input() cancelText: string = 'Cancel';
   @Input() okText: string = 'OK';
@@ -117,41 +122,32 @@ export class Select {
   @Input() alertOptions: any = {};
   @Input() checked: any = false;
   @Input() disabled: boolean = false;
-  @Input() id: string = '';
   @Input() multiple: string = '';
 
-  @ContentChild(Label) label: Label;
   @ContentChildren(Option) options: QueryList<Option>;
 
   constructor(
-    private form: Form,
-    private elementRef: ElementRef,
-    private renderer: Renderer,
-    @Optional() private navCtrl: NavController,
+    private _form: Form,
+    private _elementRef: ElementRef,
+    private _renderer: Renderer,
+    @Optional() private _item: Item,
+    @Optional() private _nav: NavController,
     @Optional() ngControl: NgControl
   ) {
-    this.form.register(this);
+    this._form.register(this);
 
     if (ngControl) {
       ngControl.valueAccessor = this;
     }
 
-    if (!navCtrl) {
+    if (_item) {
+      this.id = 'sel-' + _item.registerInput('select');
+      this._labelId = 'lbl-' + _item.id;
+    }
+
+    if (!_nav) {
       console.error('parent <ion-nav> required for <ion-select>');
     }
-  }
-
-  /**
-   * @private
-   */
-  ngOnInit() {
-    if (!this.id) {
-      this.id = 'sel-' + this.form.nextId();
-      this.renderer.setElementAttribute(this.elementRef.nativeElement, 'id', this.id);
-    }
-
-    this.labelId = 'lbl-' + this.id;
-    this.renderer.setElementAttribute(this.elementRef.nativeElement, 'aria-labelledby', this.labelId);
   }
 
   /**
@@ -167,9 +163,11 @@ export class Select {
           selectedOption = o;
         }
       });
+
     } else {
       this.value = selectedOption.value;
-      this.selectedText = selectedOption.text;
+      this._selectedText = selectedOption.text;
+
       setTimeout(()=> {
         this.onChange(this.value);
       });
@@ -179,8 +177,12 @@ export class Select {
   /**
    * @private
    */
-  @HostListener('click')
-  _click() {
+  @HostListener('click', ['$event'])
+  private _click(ev) {
+    console.debug('select, open alert');
+    ev.preventDefault();
+    ev.stopPropagation();
+
     let isMulti = this.multiple === 'true';
 
     // the user may have assigned some options specifically for the alert
@@ -191,8 +193,8 @@ export class Select {
     alertOptions.buttons = [this.cancelText];
 
     // if the alertOptions didn't provide an title then use the label's text
-    if (!alertOptions.title) {
-      alertOptions.title = this.label.text;
+    if (!alertOptions.title && this._item) {
+      alertOptions.title = this._item.getLabelText();
     }
 
     // user cannot provide inputs from alertOptions
@@ -234,7 +236,7 @@ export class Select {
             }
           });
 
-          this.selectedText = selectedTexts.join(', ');
+          this._selectedText = selectedTexts.join(', ');
 
           this.onChange(selectedValues);
         }
@@ -251,12 +253,12 @@ export class Select {
           // or undefined if nothing was checked
           this.value = selectedValue;
 
-          this.selectedText = '';
+          this._selectedText = '';
           this.options.toArray().forEach(option => {
             if (option.value === selectedValue) {
               // this option was the one that was checked
               option.checked = true;
-              this.selectedText = option.text;
+              this._selectedText = option.text;
 
             } else {
               // this option was not checked
@@ -269,7 +271,7 @@ export class Select {
       });
     }
 
-    this.navCtrl.present(alert);
+    this._nav.present(alert, alertOptions);
   }
 
   /**
@@ -317,6 +319,6 @@ export class Select {
    * @private
    */
   ngOnDestroy() {
-    this.form.deregister(this);
+    this._form.deregister(this);
   }
 }

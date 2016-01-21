@@ -1,0 +1,140 @@
+import {Directive, Attribute, ElementRef, Renderer, Input, Output, EventEmitter, HostListener} from 'angular2/core';
+import {NgControl} from 'angular2/common';
+
+import {CSS, hasFocus, raf}  from '../../util/dom';
+
+
+/**
+ * @private
+ */
+@Directive({
+  selector: '.text-input'
+})
+export class NativeInput {
+  private _relocated: boolean;
+
+  @Output() focusChange: EventEmitter<boolean> = new EventEmitter();
+  @Output() valueChange: EventEmitter<string> = new EventEmitter();
+
+  constructor(
+    private _elementRef: ElementRef,
+    private _renderer: Renderer,
+    public ngControl: NgControl
+  ) {}
+
+  /**
+   * @private
+   */
+  @HostListener('input', ['$event'])
+  private _change(ev) {
+    this.valueChange.emit(ev.target.value);
+  }
+
+  /**
+   * @private
+   */
+  @HostListener('focus')
+  private _focus() {
+    this.focusChange.emit(true);
+  }
+
+  /**
+   * @private
+   */
+  @HostListener('blur')
+  private _blur() {
+    this.focusChange.emit(false);
+    this.hideFocus(false);
+  }
+
+  labelledBy(val: string) {
+    this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-labelledby', val);
+  }
+
+  /**
+   * @private
+   */
+  setFocus() {
+    this.element().focus();
+  }
+
+  /**
+   * @private
+   */
+  relocate(shouldRelocate: boolean, inputRelativeY: number) {
+    if (this._relocated !== shouldRelocate) {
+
+      let focusedInputEle = this.element();
+      if (shouldRelocate) {
+        let clonedInputEle = cloneInput(focusedInputEle, 'cloned-input');
+
+        focusedInputEle.parentNode.insertBefore(clonedInputEle, focusedInputEle);
+        focusedInputEle.style[CSS.transform] = `translate3d(-9999px,${inputRelativeY}px,0)`;
+        focusedInputEle.style.opacity = '0';
+
+        this.setFocus();
+
+        raf(() => {
+          focusedInputEle.style.display = 'none';
+        });
+
+      } else {
+        focusedInputEle.style[CSS.transform] = '';
+        focusedInputEle.style.display = '';
+        focusedInputEle.style.opacity = '';
+
+        removeClone(focusedInputEle, 'cloned-input');
+      }
+
+      this._relocated = shouldRelocate;
+    }
+  }
+
+  /**
+   * @private
+   */
+  hideFocus(shouldHideFocus: boolean) {
+    let focusedInputEle = this.element();
+
+    if (shouldHideFocus) {
+      let clonedInputEle = cloneInput(focusedInputEle, 'cloned-hidden');
+
+      focusedInputEle.style.display = 'none';
+      focusedInputEle.parentNode.insertBefore(clonedInputEle, focusedInputEle);
+
+    } else {
+      focusedInputEle.style.display = '';
+
+      removeClone(focusedInputEle, 'cloned-hidden');
+    }
+  }
+
+  hasFocus(): boolean {
+    return hasFocus(this.element());
+  }
+
+  /**
+   * @private
+   */
+  element(): HTMLElement {
+    return this._elementRef.nativeElement;
+  }
+
+}
+
+function cloneInput(focusedInputEle, addCssClass) {
+  let clonedInputEle = focusedInputEle.cloneNode(true);
+  clonedInputEle.classList.add(addCssClass);
+  clonedInputEle.setAttribute('aria-hidden', true);
+  clonedInputEle.removeAttribute('aria-labelledby');
+  clonedInputEle.tabIndex = -1;
+  clonedInputEle.style.width = (focusedInputEle.offsetWidth + 10) + 'px';
+  return clonedInputEle;
+}
+
+function removeClone(focusedInputEle, queryCssClass) {
+  let clonedInputEle = focusedInputEle.parentElement.querySelector('.' + queryCssClass);
+  if (clonedInputEle) {
+    clonedInputEle.parentNode.removeChild(clonedInputEle);
+  }
+}

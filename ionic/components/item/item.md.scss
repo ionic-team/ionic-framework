@@ -76,10 +76,6 @@ $item-md-sliding-content-bg:         $list-md-background-color !default;
   border-bottom: 1px solid $list-md-border-color;
 }
 
-ion-item-content {
-  margin: $item-md-padding-top ($item-md-padding-right / 2) $item-md-padding-bottom 0;
-}
-
 
 // Material Design Item Media
 // --------------------------------------------------
@@ -107,7 +103,7 @@ ion-icon[item-right] {
    padding: 0 1px;
  }
 
-[text-wrap] ion-item-content {
+[text-wrap] ion-label {
   font-size: $item-md-body-text-font-size;
   line-height: $item-md-body-text-line-height;
 }

@@ -1,10 +1,13 @@
-import {Component, Directive, Optional, ElementRef, Input, Renderer, HostListener} from 'angular2/core';
+import {Component, Optional, Input, HostListener} from 'angular2/core';
 import {NgControl} from 'angular2/common';
 
 import {Form} from '../../util/form';
+import {Item} from '../item/item';
 
 /**
- * The checkbox is no different than the HTML checkbox input, except it's styled differently.
+ * The checkbox is no different than the HTML checkbox input, except
+ * it's styled accordingly to the the platform and design mode, such
+ * as iOS or Material Design.
  *
  * See the [Angular 2 Docs](https://angular.io/docs/js/latest/api/core/Form-interface.html) for more info on forms and input.
  *
@@ -14,44 +17,58 @@ import {Form} from '../../util/form';
  *
  * @usage
  * ```html
- * <ion-checkbox checked="true" value="isChecked" ngControl="htmlCtrl">
- *   HTML5
- * </ion-checkbox>
+ *
+ *  <ion-list>
+ *
+ *    <ion-item>
+ *      <ion-label>Pepperoni</ion-label>
+ *      <ion-checkbox value="pepperoni" checked="true"></ion-checkbox>
+ *    </ion-item>
+ *
+ *    <ion-item>
+ *      <ion-label>Sausage</ion-label>
+ *      <ion-checkbox value="sausage"></ion-checkbox>
+ *    </ion-item>
+ *
+ *    <ion-item>
+ *      <ion-label>Mushrooms</ion-label>
+ *      <ion-checkbox value="mushrooms"></ion-checkbox>
+ *    </ion-item>
+ *
+ *  </ion-list>
  * ```
  * @demo /docs/v2/demos/checkbox/
  * @see {@link /docs/v2/components#checkbox Checkbox Component Docs}
  */
 @Component({
   selector: 'ion-checkbox',
-  host: {
-    'role': 'checkbox',
-    'class': 'item',
-    'tappable': '',
-    'tabindex': '0',
-    '[attr.aria-disabled]': 'disabled'
-  },
   template:
-    '<div class="item-inner">' +
-      '<div class="checkbox-media" disable-activated>' +
-        '<div class="checkbox-icon"></div>' +
-      '</div>' +
-      '<ion-item-content id="{{_labelId}}">' +
-        '<ng-content></ng-content>' +
-      '</ion-item-content>' +
-    '</div>'
+    '<div class="checkbox-icon" [class.checkbox-checked]="_checked">' +
+      '<div class="checkbox-inner"></div>' +
+    '</div>' +
+    '<button role="checkbox" ' +
+            '[id]="id" ' +
+            '[attr.aria-checked]="_checked" ' +
+            '[attr.aria-labelledby]="_labelId" ' +
+            '[attr.aria-disabled]="_disabled" ' +
+            'class="item-cover">' +
+    '</button>',
+  host: {
+    '[class.checkbox-disabled]': '_disabled'
+  }
 })
 export class Checkbox {
-  private _checked: boolean;
+  private _checked: any = false;
+  private _disabled: any = false;
   private _labelId: string;
 
+  id: string;
+
   @Input() value: string = '';
-  @Input() disabled: boolean = false;
-  @Input() id: string;
 
   constructor(
     private _form: Form,
-    private _elementRef: ElementRef,
-    private _renderer: Renderer,
+    @Optional() private _item: Item,
     @Optional() ngControl: NgControl
   ) {
     _form.register(this);
@@ -59,19 +76,11 @@ export class Checkbox {
     if (ngControl) {
       ngControl.valueAccessor = this;
     }
-  }
 
-  /**
-   * @private
-   */
-  ngOnInit() {
-    if (!this.id) {
-      this.id = 'chk-' + this._form.nextId();
-      this._renderer.setElementAttribute(this._elementRef.nativeElement, 'id', this.id);
+    if (_item) {
+      this.id = 'chk-' + _item.registerInput('checkbox');
+      this._labelId = 'lbl-' + _item.id;
     }
-
-    this._labelId = 'lbl-' + this.id;
-    this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-labelledby', this._labelId);
   }
 
   /**
@@ -82,22 +91,35 @@ export class Checkbox {
     this.checked = !this.checked;
   }
 
-  @Input()
-  get checked(): boolean {
-    return !!this._checked;
+  get checked() {
+    return this._checked;
   }
 
+  @Input()
   set checked(val) {
-    this._checked = !!val;
-    this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-checked', this._checked.toString());
-    this.onChange(this._checked);
+    if (!this._disabled) {
+      this._checked = (val === true || val === 'true');
+      this.onChange(this._checked);
+      this._item && this._item.setCssClass('item-checkbox-checked', this._checked);
+    }
+  }
+
+  get disabled() {
+    return this._disabled;
+  }
+
+  @Input()
+  set disabled(val) {
+    this._disabled = (val === true || val === 'true');
+    this._item && this._item.setCssClass('item-checkbox-disabled', this._disabled);
   }
 
   /**
    * @private
    */
   @HostListener('click', ['$event'])
-  _click(ev) {
+  private _click(ev) {
+    console.debug('checkbox, checked', this.value);
     ev.preventDefault();
     ev.stopPropagation();
     this.toggle();

@@ -7,25 +7,25 @@
   <form [ngFormModel]="loginForm" #mf="ngForm" novalidate>
 
     <ion-list>
-      <ion-input floating-label clearInput>
-        <ion-label>Email</ion-label>
-        <input [(ngModel)]="login.email" ngControl="email" type="email" required>
-      </ion-input>
+      <ion-item clearInput>
+        <ion-label floating>Email</ion-label>
+        <ion-input [(ngModel)]="login.email" ngControl="email" type="email" required></ion-input>
+      </ion-item>
 
-      <ion-input floating-label clearInput>
-        <ion-label>Username</ion-label>
-        <input [(ngModel)]="login.username" ngControl="username" type="text">
-      </ion-input>
+      <ion-item clearInput>
+        <ion-label floating>Username</ion-label>
+        <ion-input [(ngModel)]="login.username" ngControl="username"></ion-input>
+      </ion-item>
 
-      <ion-input floating-label clearInput>
-        <ion-label>Password</ion-label>
-        <input [(ngModel)]="login.password" ngControl="password" type="password" required>
-      </ion-input>
+      <ion-item clearInput>
+        <ion-label floating>Password</ion-label>
+        <ion-input [(ngModel)]="login.password" ngControl="password" type="password" required></ion-input>
+      </ion-item>
 
-      <ion-input floating-label clearInput>
-        <ion-label>Comments</ion-label>
-        <textarea [(ngModel)]="login.comments" ngControl="comments" required>Comment value</textarea>
-      </ion-input>
+      <ion-item clearInput>
+        <ion-label floating>Comments</ion-label>
+        <ion-textarea [(ngModel)]="login.comments" ngControl="comments" required>Comment value</ion-textarea>
+      </ion-item>
 
       <div padding-left padding-right>
         <button block (click)="submit($event, login)">Login</button>
@@ -43,14 +43,14 @@
 
   <form (ngSubmit)="submit($event, user)" #lf="ngForm">
     <ion-list>
-      <ion-input floating-label clearInput>
-        <ion-label>Username</ion-label>
-        <input type="text" [(ngModel)]="user.username" ngControl="username" required>
-      </ion-input>
-      <ion-input floating-label clearInput>
-        <ion-label>Password</ion-label>
-        <input type="password" [(ngModel)]="user.password" ngControl="password" required>
-      </ion-input>
+      <ion-item clearInput>
+        <ion-label floating>Username</ion-label>
+        <ion-input [(ngModel)]="user.username" ngControl="username" required></ion-input>
+      </ion-item>
+      <ion-item clearInput>
+        <ion-label floating>Password</ion-label>
+        <ion-input type="password" [(ngModel)]="user.password" ngControl="password" required></ion-input>
+      </ion-item>
       <div padding-left padding-right clearInput>
         <button block type="submit">Login</button>
       </div>
@@ -64,25 +64,25 @@
   </form>
 
   <ion-list>
-    <ion-input clearInput>
+    <ion-item clearInput>
       <ion-label>Email</ion-label>
-      <input type="email" required>
-    </ion-input>
+      <ion-input type="email" required></ion-input>
+    </ion-item>
 
-    <ion-input clearInput>
+    <ion-item clearInput>
       <ion-label>Username</ion-label>
-      <input type="text">
-    </ion-input>
+      <ion-input></ion-input>
+    </ion-item>
 
-    <ion-input clearInput>
+    <ion-item clearInput>
       <ion-label>Password</ion-label>
-      <input type="password" required>
-    </ion-input>
+      <ion-input type="password" required></ion-input>
+    </ion-item>
 
-    <ion-input clearInput>
+    <ion-item clearInput>
       <ion-label>Comments</ion-label>
-      <textarea required>Comment value</textarea>
-    </ion-input>
+      <ion-textarea required>Comment value</ion-textarea>
+    </ion-item>
   </ion-list>
 
 </ion-content>

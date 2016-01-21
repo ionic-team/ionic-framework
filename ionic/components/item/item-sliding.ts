@@ -39,9 +39,9 @@ export class ItemSliding {
     elementRef.nativeElement.$ionSlide = ++slideIds;
   }
 
-/**
- * @private
- */
+  /**
+   * @private
+   */
   close() {
     this._list.closeSlidingItems();
   }

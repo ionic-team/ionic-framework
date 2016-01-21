@@ -3,3 +3,13 @@
 
 // iOS Select
 // --------------------------------------------------
+
+$select-ios-padding-top:         $item-ios-padding-top !default;
+$select-ios-padding-right:       ($item-ios-padding-right / 2) !default;
+$select-ios-padding-bottom:      $item-ios-padding-bottom !default;
+$select-ios-padding-left:        $item-ios-padding-left !default;
+
+
+ion-select {
+  padding: $select-ios-padding-top $select-ios-padding-right  $select-ios-padding-bottom $select-ios-padding-left;
+}

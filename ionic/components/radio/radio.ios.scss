@@ -10,49 +10,11 @@ $radio-ios-icon-height:            21px !default;
 $radio-ios-icon-border-width:      2px !default;
 $radio-ios-icon-border-style:      solid !default;
 
-$radio-ios-disabled-text-color:    $subdued-text-ios-color !default;
 $radio-ios-disabled-opacity:       0.5 !default;
 
 
-ion-radio {
-  cursor: pointer;
-  @include user-select-none();
-
-  &[aria-checked=true] {
-    color: $radio-ios-color-on;
-  }
-
-  &[aria-checked=true] .radio-icon:after {
-    position: absolute;
-    border-width: $radio-ios-icon-border-width;
-    border-style: $radio-ios-icon-border-style;
-    border-color: $radio-ios-color-on;
-    top: 3px;
-    left: 7px;
-    width: 4px;
-    height: 10px;
-    border-left: none;
-    border-top: none;
-    content: '';
-    transform: rotate(45deg);
-  }
-
-  &.item.activated {
-    background-color: $list-ios-background-color;
-  }
-
-}
-
-ion-radio[aria-disabled=true] {
-  color: $radio-ios-disabled-text-color;
-  opacity: $radio-ios-disabled-opacity;
-  pointer-events: none;
-}
-
-.radio-media {
-  display: block;
-  margin: $item-ios-padding-media-top ($item-ios-padding-right / 2) $item-ios-padding-media-bottom ($item-ios-padding-left / 2);
-}
+// iOS Radio Circle: Unchecked
+// -----------------------------------------
 
 .radio-icon {
   position: relative;
@@ -62,19 +24,61 @@ ion-radio[aria-disabled=true] {
 }
 
 
+// iOS Radio Checkmark: Checked
+// -----------------------------------------
+
+.radio-checked .radio-inner {
+  position: absolute;
+  border-width: $radio-ios-icon-border-width;
+  border-style: $radio-ios-icon-border-style;
+  border-color: $radio-ios-color-on;
+  top: 3px;
+  left: 7px;
+  width: 4px;
+  height: 10px;
+  border-left: none;
+  border-top: none;
+  transform: rotate(45deg);
+}
+
+
+// iOS Radio: Disabled
+// -----------------------------------------
+
+.radio-disabled,
+.item-radio-disabled ion-label {
+  opacity: $radio-ios-disabled-opacity;
+  pointer-events: none;
+}
+
+
+// iOS Radio Within An Item
+// -----------------------------------------
+
+.item ion-radio {
+  display: block;
+  margin: $item-ios-padding-media-top ($item-ios-padding-right / 2) $item-ios-padding-media-bottom ($item-ios-padding-left / 2);
+}
+
+
+// iOS Radio Item Label: Checked
+// -----------------------------------------
+
+.item-radio-checked ion-label {
+  color: $radio-ios-color-on;
+}
+
+
 // iOS Radio Color Mixin
 // --------------------------------------------------
 
 @mixin radio-theme-ios($color-name, $color-value) {
 
-  ion-radio[#{$color-name}] {
+  ion-radio[#{$color-name}] .radio-checked {
+    color: $color-value;
 
-    &[aria-checked=true] .radio-icon:after {
+    .radio-inner {
       border-color: $color-value;
-    }
-
-    &[aria-checked=true] {
-      color: $color-value;
     }
 
   }
@@ -82,7 +86,7 @@ ion-radio[aria-disabled=true] {
 }
 
 
-// Generate iOS Radio Auxiliary Colors
+// Generate iOS Radio Colors
 // --------------------------------------------------
 
 @each $color-name, $color-value in $colors-ios {

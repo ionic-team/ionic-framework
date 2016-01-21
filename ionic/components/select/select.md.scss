@@ -3,3 +3,13 @@
 
 // Material Design Select
 // --------------------------------------------------
+
+$select-md-padding-top:         $item-md-padding-top !default;
+$select-md-padding-right:       ($item-md-padding-right / 2) !default;
+$select-md-padding-bottom:      $item-md-padding-bottom !default;
+$select-md-padding-left:        $item-md-padding-left !default;
+
+
+ion-select {
+  padding: $select-md-padding-top $select-md-padding-right $select-md-padding-bottom $select-md-padding-left;
+}

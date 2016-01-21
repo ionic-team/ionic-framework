@@ -79,7 +79,7 @@ $focus-outline-box-shadow:     0px 0px 8px 0px $focus-outline-border-color !defa
     outline: thin solid $focus-outline-border-color;
   }
 
-  ion-input.input-focused,
+  ion-input.input-has-focus,
   button[ion-item]:focus,
   a[ion-item]:focus {
     border-color: $focus-outline-border-color;
@@ -108,22 +108,6 @@ focus-ctrl {
     z-index: 9999;
     pointer-events: none;
   }
-}
-
-.hide-focused-input {
-  flex: 0 0 8px !important;
-  margin: 0 !important;
-  transform: translate3d(-9999px,0,0);
-  pointer-events: none;
-}
-
-[floating-label] .hide-focused-input,
-[stacked-label] .hide-focused-input {
-  margin-top: -8px !important;
-}
-
-.cloned-input {
-  pointer-events: none;
 }
 
 

@@ -8,16 +8,24 @@ $label-md-text-color:                 #999 !default;
 $label-md-text-color-focused:         map-get($colors-md, primary) !default;
 
 
-// Default Label
+// Material Design Default Label
 // --------------------------------------------------
 
 ion-label {
+  margin: $item-md-padding-top ($item-md-padding-right / 2) $item-md-padding-bottom ($item-md-padding-left / 2);
+}
+
+
+// Material Design Default Label Inside An Input Item
+// --------------------------------------------------
+
+.item-input ion-label {
   margin: $item-md-padding-top ($item-md-padding-right / 2) $item-md-padding-bottom ($item-md-padding-left / 2);
   color: $label-md-text-color;
 }
 
 
-// Stacked & Floating Labela
+// Material Design Stacked & Floating Labela
 // --------------------------------------------------
 
 .stacked-label {
@@ -36,12 +44,12 @@ ion-label {
   margin-bottom: 0;
 }
 
-.input-focused .stacked-label,
-.input-focused .floating-label {
+.input-has-focus .stacked-label,
+.input-has-focus .floating-label {
   color: $label-md-text-color-focused;
 }
 
-.input-focused .floating-label,
+.input-has-focus .floating-label,
 .input-has-value .floating-label  {
   transform: translate3d(0, 0, 0) scale(0.8);
 }
@@ -51,7 +59,9 @@ ion-label {
 // --------------------------------------------------
 
 @each $color-name, $color-value in $colors-md {
+
   ion-label[#{$color-name}] {
     color: $color-value !important;
   }
+
 }

@@ -1,17 +1,18 @@
-import {Component, Directive, Attribute, forwardRef, Host, Optional, ElementRef, Renderer, Input, ContentChild, ContentChildren, HostListener} from 'angular2/core';
-import {NgIf} from 'angular2/common';
+import {Component, Directive, Attribute, forwardRef, QueryList, Host, Optional, ElementRef, Renderer, Input, Output, EventEmitter, ViewChild, ViewChildren, ContentChild, ContentChildren, HostListener} from 'angular2/core';
+import {NgIf, NgControl} from 'angular2/common';
 
 import {NavController} from '../nav/nav-controller';
 import {Config} from '../../config/config';
 import {Form} from '../../util/form';
+import {Item} from '../item/item';
 import {Label} from '../label/label';
-import {TextInput} from '../text-input/text-input';
 import {IonicApp} from '../app/app';
 import {Content} from '../content/content';
-import {pointerCoord, hasPointerMoved}  from '../../util/dom';
+import {pointerCoord, hasPointerMoved, closest}  from '../../util/dom';
 import {Platform} from '../../platform/platform';
 import {Button} from '../button/button';
 import {Icon} from '../icon/icon';
+import {NativeInput} from './native-input';
 
 
 /**
@@ -19,247 +20,313 @@ import {Icon} from '../icon/icon';
  * @module ionic
  * @description
  *
- * `ion-input` is a generic wrapper for both inputs and textareas. You can give `ion-input` attributes to tell it how to handle a child `ion-label` component.
+ * `ion-input` is a wrapper for text inputs and textareas. An
+ * `ion-input` is for text input types only, such as `text`,
+ * `password`, `email`, `number`, `search`, `tel`, `url` and `textarea`.
+
+ * An `ion-input` is **not** used for non-text type inputs, such as a
+ * `checkbox`, `radio`, `toggle`, `range`, `select`, etc.
  *
- * @property [fixed-label] - a persistant label that sits next the the input
- * @property [floating-label] - a label that will float about the input if the input is empty of looses focus
- * @property [stacked-label] - A stacked label will always appear on top of the input
  * @property [inset] - The input will be inset
  * @property [clearInput] - A clear icon will appear in the input which clears it
  *
  * @usage
  * ```html
- *  <ion-input>
+ *  <ion-item>
  *    <ion-label>Username</ion-label>
- *    <input type="text" value="">
- *  </ion-input>
+ *    <ion-input></ion-input>
+ *  </ion-item>
  *
- *  <ion-input clearInput>
- *    <input type="text" placeholder="Username">
- *  </ion-input>
+ *  <ion-item>
+ *    <ion-labe fixed>Website</ion-label>
+ *    <ion-input type="url"></ion-input>
+ *  </ion-item>
  *
- *  <ion-input fixed-label>
- *    <ion-label>Username</ion-label>
- *    <input type="text" value="">
- *  </ion-input>
+ *  <ion-item>
+ *    <ion-label floating>Email</ion-label>
+ *    <ion-input type="email"></ion-input>
+ *  </ion-item>
  *
- *  <ion-input floating-label>
- *    <ion-label>Username</ion-label>
- *    <input type="text" value="">
- *  </ion-input>
+ *  <ion-item>
+ *    <ion-label stacked>Phone</ion-label>
+ *    <ion-input type="tel"></ion-input>
+ *  </ion-item>
+ *
+ *  <ion-item clearInput>
+ *    <ion-input placeholder="Username"></ion-input>
+ *  </ion-item>
  * ```
  *
  */
 
-@Component({
-  selector: 'ion-input',
-  host: {
-    '(touchstart)': 'pointerStart($event)',
-    '(touchend)': 'pointerEnd($event)',
-    '(mouseup)': 'pointerEnd($event)',
-    'class': 'item',
-    '[class.ng-untouched]': 'hasClass("ng-untouched")',
-    '[class.ng-touched]': 'hasClass("ng-touched")',
-    '[class.ng-pristine]': 'hasClass("ng-pristine")',
-    '[class.ng-dirty]': 'hasClass("ng-dirty")',
-    '[class.ng-valid]': 'hasClass("ng-valid")',
-    '[class.ng-invalid]': 'hasClass("ng-invalid")'
-  },
-  template:
-    '<div class="item-inner">' +
-      '<ng-content></ng-content>' +
-      '<input [type]="type" aria-hidden="true" scroll-assist *ngIf="_assist">' +
-      '<button clear *ngIf="clearInput && value" class="text-input-clear-icon" (click)="clearTextInput()" (mousedown)="clearTextInput()"></button>' +
-    '</div>',
-  directives: [NgIf, forwardRef(() => InputScrollAssist), TextInput, Button]
+
+/**
+ * @private
+ */
+@Directive({
+  selector: '[next-input]'
 })
-export class ItemInput {
-  private _assist: boolean;
-  private input: TextInput;
-  private label: Label;
-  private scrollMove: EventListener;
-  private startCoord: {x: number, y: number};
-  private deregScroll: () => void;
+class NextInput {
 
-  keyboardHeight: number;
-  value: string = '';
-  type: string = null;
-  lastTouch: number = 0;
-  displayType: string;
+  @Output() focused: EventEmitter<boolean> = new EventEmitter();
 
-  @Input() clearInput: any;
+  @HostListener('focus')
+  receivedFocus() {
+    this.focused.emit(true);
+  }
+
+}
+
+export class TextInputBase {
+  protected _coord;
+  protected _deregScroll;
+  protected _keyboardHeight;
+  protected _scrollMove: EventListener;
+  protected _type: string = 'text';
+  protected _useAssist: boolean = true;
+  protected _value = '';
+  protected _isTouch: boolean;
+
+  inputControl: NgControl;
+
+  @Input() clearInput;
+  @Input() placeholder: string = '';
+  @ViewChild(NativeInput) protected _native: NativeInput;
 
   constructor(
     config: Config,
-    private _form: Form,
-    private _renderer: Renderer,
-    private _elementRef: ElementRef,
-    private _app: IonicApp,
-    private _platform: Platform,
-    @Optional() @Host() private _scrollView: Content,
-    @Optional() private _nav: NavController,
-    @Attribute('floating-label') isFloating: string,
-    @Attribute('stacked-label') isStacked: string,
-    @Attribute('fixed-label') isFixed: string,
-    @Attribute('inset') isInset: string
+    protected _form: Form,
+    protected _item: Item,
+    protected _app: IonicApp,
+    protected _platform: Platform,
+    protected _elementRef: ElementRef,
+    protected _scrollView: Content,
+    protected _nav: NavController,
+    ngControl: NgControl
   ) {
+    this._useAssist = true;// config.get('scrollAssist');
+    this._keyboardHeight = config.get('keyboardHeight');
+
+    if (ngControl) {
+      ngControl.valueAccessor = this;
+    }
+
     _form.register(this);
-
-    //TODO make more gud with pending @Attributes API
-    this.displayType = (isFloating === '' ? 'floating' : (isStacked === '' ? 'stacked' : (isFixed === '' ? 'fixed' : (isInset === '' ? 'inset' : null))));
-
-    this._assist = config.get('scrollAssist');
-    this.keyboardHeight = config.get('keyboardHeight');
   }
 
-  /**
-   * @private
-   */
-  @ContentChild(TextInput)
-  set _setInput(textInput: TextInput) {
-    if (textInput) {
-      textInput.addClass('item-input');
-      if (this.displayType) {
-        textInput.addClass(this.displayType + '-input');
-      }
-      this.input = textInput;
-      this.type = textInput.type;
-
-      this.hasValue(this.input.value);
-      textInput.valueChange.subscribe(inputValue => {
-        this.hasValue(inputValue);
-      });
-
-      this.focusChange(this.hasFocus());
-      textInput.focusChange.subscribe(textInputHasFocus => {
-        this.focusChange(textInputHasFocus);
-      });
-    }
-  }
-
-  /**
-   * @private
-   */
-  @ContentChild(Label)
-  set _setLabel(label: Label) {
-    if (label && this.displayType) {
-      label.addClass(this.displayType + '-label');
-    }
-    this.label = label;
-  }
-
-  /**
-   * @private
-   */
-  @ContentChildren(Button)
-  set _buttons(buttons) {
-    buttons.toArray().forEach(button => {
-      if (!button.isItem) {
-        button.addClass('item-button');
-      }
-    });
-  }
-
-  /**
-   * @private
-   */
-  @ContentChildren(Icon)
-  set _icons(icons) {
-    icons.toArray().forEach(icon => {
-      icon.addClass('item-icon');
-    });
-  }
-
-  /**
-   * @private
-   * On Initialization check for attributes
-   */
   ngOnInit() {
+    if (this._item) {
+      this._item.setCssClass('item-input', true);
+      this._item.registerInput(this._type);
+    }
+
     let clearInput = this.clearInput;
     if (typeof clearInput === 'string') {
       this.clearInput = (clearInput === '' || clearInput === 'true');
     }
   }
 
-  /**
-   * @private
-   */
-  ngAfterViewInit() {
+  ngAfterContentInit() {
     let self = this;
-    if (self.input && self.label) {
-      // if there is an input and a label
-      // then give the label an ID
-      // and tell the input the ID of who it's labelled by
-      self.input.labelledBy(self.label.id);
-    }
 
-    self.scrollMove = function(ev: UIEvent) {
+    self._scrollMove = function(ev: UIEvent) {
+      // scroll move event listener this instance can reuse
       if (!(self._nav && self._nav.isTransitioning())) {
-        self.deregMove();
+        self.deregScrollMove();
 
         if (self.hasFocus()) {
-          self.input.hideFocus(true);
+          self._native.hideFocus(true);
+
           self._scrollView.onScrollEnd(function() {
-            self.input.hideFocus(false);
+            self._native.hideFocus(false);
 
             if (self.hasFocus()) {
-              self.regMove();
+              // if it still has focus then keep listening
+              self.regScrollMove();
             }
           });
         }
       }
     };
+
+    this.setItemControlCss();
   }
 
-  /**
-    * @private
-   */
-  clearTextInput() {
-    console.log("Should clear input");
-    //console.log(this.textInput.value);
+  ngAfterContentChecked() {
+    this.setItemControlCss();
   }
 
-  /**
-   * @private
-   */
-  pointerStart(ev) {
-    if (this._assist && this._app.isEnabled()) {
-      // remember where the touchstart/mousedown started
-      this.startCoord = pointerCoord(ev);
+  private setItemControlCss() {
+    let item = this._item;
+    let nativeControl = this._native && this._native.ngControl;
+
+    if (item && nativeControl) {
+      item.setCssClass('ng-untouched', nativeControl.untouched);
+      item.setCssClass('ng-touched', nativeControl.touched);
+      item.setCssClass('ng-pristine', nativeControl.pristine);
+      item.setCssClass('ng-dirty', nativeControl.dirty);
+      item.setCssClass('ng-valid', nativeControl.valid);
+      item.setCssClass('ng-invalid', !nativeControl.valid);
+    }
+  }
+
+  ngOnDestroy() {
+    this._form.deregister(this);
+  }
+
+  @Input()
+  get value() {
+    return this._value;
+  }
+
+  set value(val) {
+    this._value = val;
+  }
+
+  @Input()
+  get type() {
+    return this._type;
+  }
+
+  set type(val) {
+    this._type = 'text';
+
+    if (val) {
+      val = val.toLowerCase();
+
+      if (/password|email|number|search|tel|url|date|datetime|datetime-local|month/.test(val)) {
+        this._type = val;
+      }
     }
   }
 
   /**
    * @private
    */
-  pointerEnd(ev) {
-    if (!this._app.isEnabled()) {
+  @ViewChild(NativeInput)
+  private set _nativeInput(nativeInput: NativeInput) {
+    this._native = nativeInput;
+
+    if (this._item && this._item.labelId !== null) {
+      nativeInput.labelledBy(this._item.labelId);
+    }
+
+    nativeInput.valueChange.subscribe(inputValue => {
+      this.onChange(inputValue);
+    });
+
+    this.focusChange(this.hasFocus());
+    nativeInput.focusChange.subscribe(textInputHasFocus => {
+      this.focusChange(textInputHasFocus);
+      if (!textInputHasFocus) {
+        this.onTouched(textInputHasFocus);
+      }
+    });
+  }
+
+  /**
+   * @private
+   */
+  @ViewChild(NextInput)
+  private set _nextInput(nextInput: NextInput) {
+    nextInput.focused.subscribe(() => {
+      this._form.tabFocus(this);
+    });
+  }
+
+  /**
+   * @private
+   * Angular2 Forms API method called by the model (Control) on change to update
+   * the checked value.
+   * https://github.com/angular/angular/blob/master/modules/angular2/src/forms/directives/shared.ts#L34
+   */
+  writeValue(value) {
+    this._value = value;
+  }
+
+  /**
+   * @private
+   */
+  onChange(val) {
+    this.checkHasValue(val);
+  }
+
+  /**
+   * @private
+   */
+  onTouched(val) {}
+
+  /**
+   * @private
+   */
+  hasFocus(): boolean {
+    // check if an input has focus or not
+    return this._native.hasFocus();
+  }
+
+  /**
+   * @private
+   */
+  checkHasValue(inputValue) {
+    if (this._item) {
+      this._item.setCssClass('input-has-value', !!(inputValue && inputValue !== ''));
+    }
+  }
+
+  /**
+   * @private
+   */
+  focusChange(inputHasFocus: boolean) {
+    if (this._item) {
+      this._item.setCssClass('input-has-focus', inputHasFocus);
+    }
+    if (!inputHasFocus) {
+      this.deregScrollMove();
+    }
+  }
+
+  private pointerStart(ev) {
+    // input cover touchstart
+    console.debug('scroll assist pointerStart', ev.type);
+
+    if (ev.type === 'touchstart') {
+      this._isTouch = true;
+    }
+
+    if ((this._isTouch || (!this._isTouch && ev.type === 'mousedown')) && this._app.isEnabled()) {
+      // remember where the touchstart/mousedown started
+      this._coord = pointerCoord(ev);
+    }
+  }
+
+  private pointerEnd(ev) {
+    // input cover touchend/mouseup
+    console.debug('scroll assist pointerEnd', ev.type);
+
+    if ((this._isTouch && ev.type === 'mouseup') || !this._app.isEnabled()) {
+      // the app is actively doing something right now
+      // don't try to scroll in the input
       ev.preventDefault();
       ev.stopPropagation();
 
-    } else if (this._assist && ev.type === 'touchend') {
+    } else if (this._coord) {
       // get where the touchend/mouseup ended
       let endCoord = pointerCoord(ev);
 
       // focus this input if the pointer hasn't moved XX pixels
       // and the input doesn't already have focus
-      if (!hasPointerMoved(8, this.startCoord, endCoord) && !this.hasFocus()) {
+      if (!hasPointerMoved(8, this._coord, endCoord) && !this.hasFocus()) {
         ev.preventDefault();
         ev.stopPropagation();
 
+        // begin the input focus process
+        console.debug('initFocus', ev.type);
         this.initFocus();
-
-        // temporarily prevent mouseup's from focusing
-        this.lastTouch = Date.now();
       }
 
-    } else if (this.lastTouch + 999 < Date.now()) {
-      ev.preventDefault();
-      ev.stopPropagation();
-
-      this.setFocus();
-      this.regMove();
     }
+
+    this._coord = null;
   }
 
   /**
@@ -267,21 +334,24 @@ export class ItemInput {
    */
   initFocus() {
     // begin the process of setting focus to the inner input element
-
     let scrollView = this._scrollView;
 
-    if (scrollView && this._assist) {
+    if (scrollView) {
       // this input is inside of a scroll view
 
       // find out if text input should be manually scrolled into view
       let ele = this._elementRef.nativeElement;
+      let itemEle = closest(ele, 'ion-item');
+      if (itemEle) {
+        ele = itemEle;
+      }
 
-      let scrollData = ItemInput.getScrollData(ele.offsetTop, ele.offsetHeight, scrollView.getContentDimensions(), this.keyboardHeight, this._platform.height());
+      let scrollData = TextInput.getScrollData(ele.offsetTop, ele.offsetHeight, scrollView.getContentDimensions(), this._keyboardHeight, this._platform.height());
       if (scrollData.scrollAmount > -3 && scrollData.scrollAmount < 3) {
-        // the text input is in a safe position that doesn't require
-        // it to be scrolled into view, just set focus now
+        // the text input is in a safe position that doesn't
+        // require it to be scrolled into view, just set focus now
         this.setFocus();
-        this.regMove();
+        this.regScrollMove();
         return;
       }
 
@@ -297,51 +367,77 @@ export class ItemInput {
       // temporarily move the focus to the focus holder so the browser
       // doesn't freak out while it's trying to get the input in place
       // at this point the native text input still does not have focus
-      this.input.relocate(true, scrollData.inputSafeY);
+      this._native.relocate(true, scrollData.inputSafeY);
 
       // scroll the input into place
       scrollView.scrollTo(0, scrollData.scrollTo, scrollDuration).then(() => {
         // the scroll view is in the correct position now
         // give the native text input focus
-        this.input.relocate(false);
+        this._native.relocate(false, 0);
+
+        this.setFocus();
 
         // all good, allow clicks again
         this._app.setEnabled(true);
         this._nav && this._nav.setTransitioning(false);
-        this.regMove();
+        this.regScrollMove();
       });
 
     } else {
       // not inside of a scroll view, just focus it
       this.setFocus();
-      this.regMove();
+      this.regScrollMove();
     }
+  }
 
+  /**
+    * @private
+   */
+  clearTextInput() {
+    console.log("Should clear input");
+    //console.log(this.textInput.value);
   }
 
   /**
    * @private
    */
-  setFocus() {
-    if (this.input) {
-      this._form.setAsFocused(this);
+  private setFocus() {
+    // immediately set focus
+    this._form.setAsFocused(this);
 
-      // set focus on the actual input element
-      this.input.setFocus();
+    // set focus on the actual input element
+    this._native.setFocus();
 
-      // ensure the body hasn't scrolled down
-      document.body.scrollTop = 0;
-    }
+    // ensure the body hasn't scrolled down
+    document.body.scrollTop = 0;
   }
 
   /**
    * @private
+   * Angular2 Forms API method called by the view (NgControl) to register the
+   * onChange event handler that updates the model (Control).
+   * https://github.com/angular/angular/blob/master/modules/angular2/src/forms/directives/shared.ts#L27
+   * @param {Function} fn  the onChange event handler.
    */
-  regMove() {
-    if (this._assist && this._scrollView) {
+  registerOnChange(fn) { this.onChange = fn; }
+
+  /**
+   * @private
+   * Angular2 Forms API method called by the the view (NgControl) to register
+   * the onTouched event handler that marks model (Control) as touched.
+   * @param {Function} fn  onTouched event handler.
+   */
+  registerOnTouched(fn) { this.onTouched = fn; }
+
+  /**
+   * @private
+   */
+  private regScrollMove() {
+    // register scroll move listener
+    if (this._useAssist && this._scrollView) {
       setTimeout(() => {
-        this.deregMove();
-        this.deregScroll = this._scrollView.addScrollEventListener(this.scrollMove);
+        this.deregScrollMove();
+        this._deregScroll = this._scrollView.addScrollEventListener(this._scrollMove);
       }, 80);
     }
   }
@@ -349,49 +445,13 @@ export class ItemInput {
   /**
    * @private
    */
-  deregMove() {
-    this.deregScroll && this.deregScroll();
+  private deregScrollMove() {
+    // deregister the scroll move listener
+    this._deregScroll && this._deregScroll();
   }
 
-  /**
-   * @private
-   */
-  focusChange(inputHasFocus) {
-    this._renderer.setElementClass(this._elementRef.nativeElement, 'input-focused', inputHasFocus);
-    if (!inputHasFocus) {
-      this.deregMove();
-    }
-  }
-
-  /**
-   * @private
-   */
-  hasFocus() {
-    return !!this.input && this.input.hasFocus();
-  }
-
-  /**
-   * @private
-   */
-  hasValue(inputValue) {
-    let inputHasValue = !!(inputValue && inputValue !== '');
-    this._renderer.setElementClass(this._elementRef.nativeElement, 'input-has-value', inputHasValue);
-  }
-
-  /**
-   * @private
-   * This function is used to add the Angular css classes associated with inputs in forms
-   */
-  hasClass(className) {
-    this.input && this.input.hasClass(className);
-  }
-
-  /**
-   * @private
-   */
-  ngOnDestroy() {
-    this.deregMove();
-    this._form.deregister(this);
+  focusNext() {
+    this._form.tabFocus(this);
   }
 
   /**
@@ -510,31 +570,79 @@ export class ItemInput {
 
     return scrollData;
   }
-
 }
 
-/**
- * @private
- */
-@Directive({
-  selector: '[scroll-assist]'
+@Component({
+  selector: 'ion-input',
+  template:
+    '<input [type]="type" [(ngModel)]="_value" [placeholder]="placeholder" class="text-input">' +
+    '<input [type]="type" aria-hidden="true" next-input *ngIf="_useAssist">' +
+    '<button clear *ngIf="clearInput && value" class="text-input-clear-icon" (click)="clearTextInput()" (mousedown)="clearTextInput()"></button>' +
+    '<div (touchstart)="pointerStart($event)" (touchend)="pointerEnd($event)" (mousedown)="pointerStart($event)" (mouseup)="pointerEnd($event)" class="input-cover" *ngIf="_useAssist"></div>',
+  directives: [
+    NgIf,
+    forwardRef(() => NextInput),
+    NativeInput,
+    Button
+  ]
 })
-class InputScrollAssist {
+export class TextInput extends TextInputBase {
+  constructor(
+    config: Config,
+    form: Form,
+    item: Item,
+    app: IonicApp,
+    platform: Platform,
+    elementRef: ElementRef,
+    @Optional() scrollView: Content,
+    @Optional() nav: NavController,
+    @Optional() ngControl: NgControl
+  ) {
+    super(config, form, item, app, platform, elementRef, scrollView, nav, ngControl);
+  }
+}
 
-  constructor(private _form: Form, private _input: ItemInput) {}
 
-  @HostListener('focus')
-  receivedFocus() {
-    this._form.focusNext(this._input);
+@Component({
+  selector: 'ion-textarea',
+  template:
+    '<textarea [(ngModel)]="_value" [placeholder]="placeholder" class="text-input"></textarea>' +
+    '<input type="text" aria-hidden="true" next-input *ngIf="_useAssist">' +
+    '<div (touchstart)="pointerStart($event)" (touchend)="pointerEnd($event)" (mousedown)="pointerStart($event)" (mouseup)="pointerEnd($event)" class="input-cover" *ngIf="_useAssist"></div>',
+  directives: [
+    NgIf,
+    forwardRef(() => NextInput),
+    NativeInput
+  ]
+})
+export class TextArea extends TextInputBase {
+  constructor(
+    config: Config,
+    form: Form,
+    item: Item,
+    app: IonicApp,
+    platform: Platform,
+    elementRef: ElementRef,
+    @Optional() scrollView: Content,
+    @Optional() nav: NavController,
+    @Optional() ngControl: NgControl
+  ) {
+    super(config, form, item, app, platform, elementRef, scrollView, nav, ngControl);
   }
 
+  ngOnInit() {
+    super.ngOnInit();
+    if (this._item) {
+      this._item.setCssClass('item-textarea', true);
+    }
+  }
 }
 
-const SCROLL_ASSIST_SPEED = 0.4;
+const SCROLL_ASSIST_SPEED = 0.3;
 
 function getScrollAssistDuration(distanceToScroll) {
   //return 3000;
   distanceToScroll = Math.abs(distanceToScroll);
   let duration = distanceToScroll / SCROLL_ASSIST_SPEED;
-  return Math.min(400, Math.max(100, duration));
+  return Math.min(400, Math.max(150, duration));
 }

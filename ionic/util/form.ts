@@ -15,7 +15,7 @@ import {Injectable} from 'angular2/core';
  @Injectable()
 export class Form {
   private _blur: HTMLElement;
-  private _focused: any = null;
+  private _focused = null;
   private _ids: number = -1;
   private _inputs: Array<any> = [];
 
@@ -65,13 +65,12 @@ export class Form {
   /**
    * Focuses the next input element, if it exists.
    */
-  focusNext(currentInput) {
-    console.debug('focusNext');
-
+  tabFocus(currentInput) {
     let index = this._inputs.indexOf(currentInput);
     if (index > -1 && (index + 1) < this._inputs.length) {
       let nextInput = this._inputs[index + 1];
       if (nextInput !== this._focused) {
+        console.debug('tabFocus, next');
         return nextInput.initFocus();
       }
     }
@@ -80,6 +79,7 @@ export class Form {
     if (index > 0) {
       let previousInput = this._inputs[index - 1];
       if (previousInput) {
+        console.debug('tabFocus, previous');
         previousInput.initFocus();
       }
     }
