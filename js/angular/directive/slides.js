@@ -129,6 +129,10 @@ function($animate, $timeout, $compile) {
     template: '<div class="swiper-slide" ng-transclude></div>',
     link: function($scope, $element, $attr, ionSlidesCtrl) {
       ionSlidesCtrl.rapidUpdate();
+
+      $scope.$on('$destroy', function() {
+        ionSlidesCtrl.rapidUpdate();
+      });
     }
   };
 }]);
