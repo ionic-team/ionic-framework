@@ -456,40 +456,39 @@ gulp.task('package', ['src.release'], function(done){
     ])
     .pipe(gulp.dest(distDir));
 
-  var inquirer = require('inquirer');
-  inquirer.prompt([
-    {
-      type: 'input',
-      name: 'ionicVersion',
-      message: '\n\nWhat ionic-framework alpha version number will this be?'
-    },
-    {
-      type: 'input',
-      name: 'angularVersion',
-      message: '\nWhat angular2 beta version number is a peer dependency?'
-    }
-  ], function(answers) {
-  	var packageTemplate = _.template(fs.readFileSync('scripts/npm/package.json'));
-    fs.writeFileSync(distDir + '/package.json', packageTemplate(answers));
-
-    done();
-  });
+  var templateVars = {};
+  var packageJSON = require('./package.json');
+  templateVars.ionicVersion = packageJSON.version;
+  templateVars.angularVersion = packageJSON.dependencies.angular2;
+	var packageTemplate = _.template(fs.readFileSync('scripts/npm/package.json'));
+  fs.writeFileSync(distDir + '/package.json', packageTemplate(templateVars));
+  done();
 });
 
 gulp.task('publish', ['package'], function(done){
-
   var spawn = require('child_process').spawn;
-  var npmCmd = spawn('npm', ['publish', './dist']);
+  var semver = require('semver');
+  var fs = require('fs');
+  var err = false;
+
+  var npmCmd = spawn('npm', ['pack', './dist']);
 
   npmCmd.stdout.on('data', function (data) {
     console.log(data.toString());
   });
 
   npmCmd.stderr.on('data', function (data) {
+    err = true;
     console.log('npm err: ' + data.toString());
   });
 
   npmCmd.on('close', function() {
+    // update package.json
+    if (!err) {
+      var packageJSON = require('./package.json');
+      packageJSON.version = semver.inc(packageJSON.version, 'prerelease', 'alpha');
+      fs.writeFileSync('package.json', JSON.stringify(packageJSON, null, 2));
+    }
     done();
   });
 

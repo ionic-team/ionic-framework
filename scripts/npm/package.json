@@ -1,6 +1,6 @@
 {
   "name": "ionic-framework",
-  "version": "2.0.0-alpha.<%= ionicVersion %>",
+  "version": "<%= ionicVersion %>",
   "license": "Apache-2.0",
   "keywords": ["ionic", "framework", "mobile", "app", "hybrid", "webapp"],
   "repository": {
@@ -16,6 +16,6 @@
     "shelljs": "0.5.3"
   },
   "peerDependencies": {
-    "angular2": "^2.0.0-beta.<%= angularVersion %>"
+    "angular2": "^<%= angularVersion %>"
   }
 }
