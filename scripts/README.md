@@ -32,3 +32,10 @@
 ### Running Tests
 
 1. `gulp karma`
+
+
+# Releasing
+
+1. Pull latest code
+2. `gulp publish`
+3. Sit back and have a beer :beer: (or wine :wine_glass:)
