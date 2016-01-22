@@ -107,12 +107,7 @@ ion-alert {
 .alert-tappable {
   display: flex;
   min-height: $alert-ios-button-min-height;
-  border-top: 1px solid $alert-ios-button-border-color;
   cursor: pointer;
-
-  &:first-child {
-    border-top: 0;
-  }
 }
 
 
@@ -199,6 +194,11 @@ ion-alert {
 }
 
 &.hairlines {
+  .alert-radio-group,
+  .alert-checkbox-group {
+    border-width: 0.55px;
+  }
+
   .alert-input {
     border-width: 0.55px;
   }

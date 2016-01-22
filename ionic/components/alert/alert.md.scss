@@ -87,7 +87,7 @@ $alert-md-buttons-justify-content:        flex-end !default;
 .alert-checkbox-group {
   position: relative;
   border-top: 1px solid $alert-md-input-border-color;
-  border-bottom: 1px solid $alert-md-input-border-color;
+  border-bottom: 1px solid $alert-md-input-border-color;  
   max-height: 240px;
   overflow: auto;
 }
@@ -97,12 +97,7 @@ $alert-md-buttons-justify-content:        flex-end !default;
   overflow: hidden;
   display: flex;
   min-height: 44px;
-  border-top: 1px solid $alert-md-input-border-color;
   cursor: pointer;
-
-  &:first-child {
-    border-top: 0;
-  }
 }
 
 
