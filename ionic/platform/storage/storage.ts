@@ -56,7 +56,6 @@ export interface IStorageEngine {
 */
 export class StorageEngine {
   constructor(options={}) {
-    throw Error("constructor(options={}) not implemented for this storage engine");
   }
   get(key, value) {
     throw Error("get() not implemented for this storage engine");

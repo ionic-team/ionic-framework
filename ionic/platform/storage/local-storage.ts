@@ -30,7 +30,7 @@ import {StorageEngine} from './storage';
  * @see {@link /docs/v2/platform/storage/ Storage Platform Docs}
  */
 export class LocalStorage extends StorageEngine {
-  constructor() {
+  constructor(options={}) {
     super();
   }
 
