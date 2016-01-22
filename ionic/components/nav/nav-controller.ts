@@ -254,6 +254,11 @@ export class NavController extends Ion {
     let views = pages.map(p => new ViewController(p.page, p.params));
     let enteringView = this._insert(0, views);
 
+    // if animation wasn't set to true then default it to NOT animate
+    if (opts.animate !== true) {
+      opts.animate = false;
+    }
+
     // set the nav direction to "back" if it wasn't set
     opts.direction = opts.direction || 'back';
 
@@ -458,7 +463,7 @@ export class NavController extends Ion {
    * in and become the active page.
    *
    * @param {number} insertIndex  The index where you want to insert the page
-   * @param {Array<{page: Type, params?: any}>} insertPages  An array of objects, each with a `page` and optionally `params` property
+   * @param {Array<{page: Type, params=: any}>} insertPages  An array of objects, each with a `page` and optionally `params` property
    * @param {object} [opts={}] Any options you want to use pass to transtion
    * @returns {Promise} Returns a promise when the pages have been inserted into the navigation stack
    */
@@ -1187,7 +1192,7 @@ export class NavController extends Ion {
 
         // remove the page from its container
         let index = viewContainer.indexOf(hostViewRef);
-        if (index !== -1) {
+        if (!hostViewRef.destroyed && index !== -1) {
           viewContainer.remove(index);
         }
       });
@@ -1205,11 +1210,11 @@ export class NavController extends Ion {
 
       let navbarTemplateRef = view.getNavbarTemplateRef();
       if (navbarContainerRef && navbarTemplateRef) {
-        let navbarView = navbarContainerRef.createEmbeddedView(navbarTemplateRef);
+        let navbarViewRef = navbarContainerRef.createEmbeddedView(navbarTemplateRef);
 
         view.addDestroy(() => {
-          let index = navbarContainerRef.indexOf(navbarView);
-          if (index > -1) {
+          let index = navbarContainerRef.indexOf(navbarViewRef);
+          if (!navbarViewRef.destroyed && index > -1) {
             navbarContainerRef.remove(index);
           }
         });

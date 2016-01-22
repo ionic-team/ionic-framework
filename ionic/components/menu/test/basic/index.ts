@@ -5,13 +5,12 @@ import {App, IonicApp, Page, NavController, Alert} from 'ionic/ionic';
   templateUrl: 'page1.html'
 })
 class Page1 {
-  constructor(nav: NavController) {
-    this.nav = nav;
-  }
+  constructor(private nav: NavController) {}
+
   presentAlert() {
     let alert = Alert.create({
       title: "New Friend!",
-      body: "Your friend, Obi wan Kenobi, just accepted your friend request!",
+      message: "Your friend, Obi wan Kenobi, just accepted your friend request!",
       cssClass: 'my-alert',
       buttons: ['Ok']
     });
@@ -26,9 +25,8 @@ class Page3 {}
 
 @Page({templateUrl: 'page2.html'})
 class Page2 {
-  constructor(nav: NavController) {
-    this.nav = nav;
-  }
+  constructor(private nav: NavController) {}
+
   page3() {
     this.nav.push(Page3);
   }
@@ -40,8 +38,7 @@ class Page2 {
 })
 class E2EApp {
 
-  constructor(app: IonicApp) {
-    this.app = app;
+  constructor(private app: IonicApp) {
     this.rootView = Page1;
     this.changeDetectionCount = 0;
 

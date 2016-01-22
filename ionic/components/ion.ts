@@ -14,7 +14,7 @@ export class Ion {
   private _id: string;
 
   constructor(protected elementRef: ElementRef) {
-    this._id = 'i-' + ids++;
+    this._id = 'i' + ids++;
   }
 
   getElementRef() {
