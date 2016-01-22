@@ -16,8 +16,9 @@ class E2EPage {
 
   doAlert() {
     let alert = Alert.create({
-      title: 'Alert!',
-      subTitle: 'Subtitle!!!',
+      title: 'Alert',
+      subTitle: 'Subtitle',
+      message: 'This is an alert message.',
       buttons: ['OK']
     });
 
