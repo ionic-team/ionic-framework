@@ -130,6 +130,8 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
         return $$q.when();
       }
 
+      ionic.Utils.reconnectScope(self.scope);
+
       // on iOS, clicks will sometimes bleed through/ghost click on underlying
       // elements
       $ionicClickBlock.show(600);
@@ -241,6 +243,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
       return $timeout(function() {
         $ionicBody.removeClass(self.viewType + '-open');
         self.el.classList.add('hide');
+        ionic.Utils.disconnectScope(self.scope);
       }, self.hideDelay || 320);
     },
 
@@ -300,6 +303,8 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
     if (!options.scope) {
       scope[ options.viewType ] = modal;
     }
+
+    ionic.Utils.disconnectScope(scope);
 
     return modal;
   };
