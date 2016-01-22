@@ -12,6 +12,7 @@ var cache = require('gulp-cached');
 var remember = require('gulp-remember');
 var minimist = require('minimist');
 var connect = require('gulp-connect');
+var docsConfig = require('./scripts/config.json');
 
 var flagConfig = {
   string: ['port', 'version', 'ngVersion', 'animations'],
@@ -561,7 +562,7 @@ gulp.task('sass.demos:components', function() {
     )
     .pipe(concat('app.css'))
     .pipe(autoprefixer(buildConfig.autoprefixer))
-    .pipe(gulp.dest('../ionic-site/docs/v2/demos/component-docs/'));
+    .pipe(gulp.dest(docsConfig.docsDest + '/demos/component-docs/'));
 });
 
 gulp.task('bundle.demos:api', ['build.demos', 'transpile.no-typecheck', 'copy.libs', 'sass', 'fonts'], function(done) {
@@ -578,7 +579,7 @@ gulp.task('demos', ['bundle.demos:api', 'bundle.demos:components'], function() {
       'dist/demos/**/*',
       '!dist/demos/**/*.scss',
       ])
-    .pipe(gulp.dest('../ionic-site/docs/v2/demos/'))
+    .pipe(gulp.dest(docsConfig.docsDest + '/demos/'))
 });
 
 gulp.task('watch:demos', function() {
