@@ -24,13 +24,9 @@
 // Scale from hero (1 in this case) to zero
 // -------------------------------
 
-@-webkit-keyframes scaleOut {
-  from { -webkit-transform: scale(1); opacity: 1; }
-  to { -webkit-transform: scale(0.8); opacity: 0; }
-}
-@keyframes scaleOut {
-  from { transform: scale(1); opacity: 1; }
-  to { transform: scale(0.8); opacity: 0; }
+@include keyframes(scaleOut) {
+  from { @include transform(scale(1)); opacity: 1; }
+  to { @include transform(scale(0.8)); opacity: 0; }
 }
 
 
@@ -38,11 +34,7 @@
 // Scale from super (1.x) to duper (1 in this case)
 // -------------------------------
 
-@-webkit-keyframes superScaleIn {
-  from { -webkit-transform: scale(1.2); opacity: 0; }
-  to { -webkit-transform: scale(1); opacity: 1 }
-}
-@keyframes superScaleIn {
-  from { transform: scale(1.2); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+@include keyframes(superScaleIn) {
+  from { @include transform(scale(1.2)); opacity: 0; }
+  to { @include transform(scale(1)); opacity: 1; }
 }
