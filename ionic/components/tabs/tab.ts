@@ -103,6 +103,7 @@ export class Tab extends NavController {
   @Input() root: Type;
   @Input() tabTitle: string;
   @Input() tabIcon: string;
+  @Input() tabBadge: string;
   @Output() select: EventEmitter<any> = new EventEmitter();
 
   constructor(

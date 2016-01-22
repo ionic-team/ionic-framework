@@ -18,6 +18,7 @@ import {Config} from '../../config/config';
     '[class.has-icon]': 'hasIcon',
     '[class.has-title-only]': 'hasTitleOnly',
     '[class.icon-only]': 'hasIconOnly',
+    '[class.has-badge]': 'hasBadge',
     '[class.disable-hover]': 'disHover'
   }
 })
@@ -27,6 +28,7 @@ export class TabButton extends Ion {
   private hasIcon: boolean;
   private hasTitleOnly: boolean;
   private hasIconOnly: boolean;
+  private hasBadge: boolean;
 
   @Input() tab: Tab;
   @Output() select: EventEmitter<Tab> = new EventEmitter();
@@ -42,6 +44,7 @@ export class TabButton extends Ion {
     this.hasIcon = !!this.tab.tabIcon;
     this.hasTitleOnly = (this.hasTitle && !this.hasIcon);
     this.hasIconOnly = (this.hasIcon && !this.hasTitle);
+    this.hasBadge = !!this.tab.tabBadge;
   }
 
   @HostListener('click')
