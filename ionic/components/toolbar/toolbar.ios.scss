@@ -284,6 +284,12 @@ ion-buttons[right] {
     padding: 0 6px;
     font-size: 2.8rem;
   }
+
+  // TODO remove the !important flag - temporary hack until we can remove the element style
+  // on transition
+  &.activated {
+    opacity: 0.4 !important;
+  }
 }
 
 .bar-button-menutoggle[end],
