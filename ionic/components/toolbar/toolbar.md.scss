@@ -143,10 +143,6 @@ ion-buttons[right] {
     &:hover:not(.disable-hover) {
       color: color-shade($fg-color);
     }
-
-    &.activated {
-      opacity: 0.4;
-    }
   }
 
 }
