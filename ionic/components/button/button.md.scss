@@ -186,7 +186,7 @@ $button-md-small-icon-font-size:           1.4em !default;
   opacity: 1;
   box-shadow: none;
   background-color: transparent;
-  color: color-shade($button-md-color);
+  color: $button-md-color;
 
   &.activated {
     background-color: $button-md-clear-active-background-color;
@@ -194,7 +194,8 @@ $button-md-small-icon-font-size:           1.4em !default;
   }
 
   &:hover:not(.disable-hover) {
-    color: color-shade($button-md-color);
+
+    color: $button-md-color;
   }
 }
 
@@ -205,7 +206,7 @@ $button-md-small-icon-font-size:           1.4em !default;
 @mixin md-button-clear($color-name, $color-value) {
 
   .button-clear-#{$color-name} {
-    $fg-color: color-shade($color-value);
+    $fg-color: $color-value;
     border-color: transparent;
     background-color: transparent;
     color: $fg-color;
@@ -217,7 +218,7 @@ $button-md-small-icon-font-size:           1.4em !default;
     }
 
     &:hover:not(.disable-hover) {
-      color: color-shade($fg-color);
+      color: $fg-color;
     }
   }
 }
