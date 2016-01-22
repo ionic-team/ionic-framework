@@ -159,7 +159,7 @@ function($animate, $timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory, $i
 
     link: function($scope, $element, $attr) {
       // Disable ngAnimate for slidebox and its children
-      $animate.enabled(false, $element);
+      $animate.enabled($element, false);
 
       // if showPager is undefined, show the pager
       if (!isDefined($attr.showPager)) {
