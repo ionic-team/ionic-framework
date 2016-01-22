@@ -73,9 +73,16 @@ function($animate, $timeout, $compile) {
             _this.__slider.createLoop();
           }
 
+          var slidesLength = _this.__slider.slides.length;
+
           // Don't allow pager to show with > 10 slides
-          if (_this.__slider.slides.length > 10) {
+          if (slidesLength > 10) {
             $scope.showPager = false;
+          }
+
+          // When slide index is greater than total then slide to last index
+          if (_this.__slider.activeIndex > slidesLength - 1) {
+            _this.__slider.slideTo(slidesLength - 1);
           }
         });
       };
@@ -129,6 +136,10 @@ function($animate, $timeout, $compile) {
     template: '<div class="swiper-slide" ng-transclude></div>',
     link: function($scope, $element, $attr, ionSlidesCtrl) {
       ionSlidesCtrl.rapidUpdate();
+
+      $scope.$on('$destroy', function() {
+        ionSlidesCtrl.rapidUpdate();
+      });
     }
   };
 }]);
