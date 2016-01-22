@@ -136,12 +136,12 @@ ion-buttons[right] {
 @mixin md-bar-button-default($color-name, $color-value) {
 
   .bar-button-#{$color-name} {
-    $fg-color: color-shade($color-value);
+    $fg-color: $color-value;
     color: $fg-color;
     background-color: transparent;
 
     &:hover:not(.disable-hover) {
-      color: color-shade($fg-color);
+      color: $fg-color;
     }
   }
 
