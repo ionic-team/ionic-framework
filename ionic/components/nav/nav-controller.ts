@@ -463,7 +463,7 @@ export class NavController extends Ion {
    * in and become the active page.
    *
    * @param {number} insertIndex  The index where you want to insert the page
-   * @param {Array<{page: Type, params?: any}>} insertPages  An array of objects, each with a `page` and optionally `params` property
+   * @param {Array<{page: Type, params=: any}>} insertPages  An array of objects, each with a `page` and optionally `params` property
    * @param {object} [opts={}] Any options you want to use pass to transtion
    * @returns {Promise} Returns a promise when the pages have been inserted into the navigation stack
    */
