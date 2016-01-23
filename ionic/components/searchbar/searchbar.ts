@@ -210,7 +210,7 @@ export class Searchbar extends Ion {
     this.inputElement.style.paddingLeft = inputLeft;
 
     // Set the icon margin left
-    let iconLeft = "calc(50% - " + ((textWidth / 2) + this.searchIconElement.offsetWidth + 15) + "px)";
+    let iconLeft = "calc(50% - " + ((textWidth / 2) + 30) + "px)";
     this.searchIconElement.style.marginLeft = iconLeft;
   }
 
