@@ -5,6 +5,7 @@ import {OverlayNav} from '../components/overlay/overlay';
 import {Menu} from '../components/menu/menu';
 import {MenuToggle} from '../components/menu/menu-toggle';
 import {MenuClose} from '../components/menu/menu-close';
+import {Badge} from '../components/badge/badge';
 import {Button} from '../components/button/button';
 import {Blur} from '../components/blur/blur';
 import {Content} from '../components/content/content';
@@ -117,6 +118,7 @@ export const IONIC_DIRECTIVES = [
   MenuToggle,
   MenuClose,
 
+  Badge,
   Button,
   Blur,
   Content,
