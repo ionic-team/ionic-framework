@@ -79,6 +79,8 @@ import {TabButton} from './tab-button';
  * @property {any} [root] - set the root page for this tab
  * @property {any} [tabTitle] - set the title of this tab
  * @property {any} [tabIcon] - set the icon for this tab
+ * @property {any} [tabBadge] - set the badge for this tab
+ * @property {any} [tabBadgeStyle] - set the badge color for this tab
  * @property {any} [select] - method to call when the current tab is selected
  *
  */
@@ -104,6 +106,7 @@ export class Tab extends NavController {
   @Input() tabTitle: string;
   @Input() tabIcon: string;
   @Input() tabBadge: string;
+  @Input() tabBadgeStyle: string;
   @Output() select: EventEmitter<any> = new EventEmitter();
 
   constructor(
@@ -130,6 +133,8 @@ export class Tab extends NavController {
    * @private
    */
   ngOnInit() {
+    this.tabBadgeStyle = this.tabBadgeStyle ? this.tabBadgeStyle : 'default';
+
     if (this._isInitial) {
       this.parent.select(this);
 

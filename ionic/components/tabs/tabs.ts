@@ -48,7 +48,7 @@ import {isUndefined} from '../../util/util';
         '<a *ngFor="#t of _tabs" [tab]="t" class="tab-button" role="tab">' +
           '<ion-icon [name]="t.tabIcon" [isActive]="t.isSelected" class="tab-button-icon"></ion-icon>' +
           '<span class="tab-button-text">{{t.tabTitle}}</span>' +
-          '<ion-badge *ngIf="t.tabBadge" class="tab-badge">{{t.tabBadge}}</ion-badge>' +
+          '<ion-badge *ngIf="t.tabBadge" class="tab-badge" [ngClass]="\'badge-\' + t.tabBadgeStyle">{{t.tabBadge}}</ion-badge>' +
         '</a>' +
         '<tab-highlight></tab-highlight>' +
       '</tabbar>' +
