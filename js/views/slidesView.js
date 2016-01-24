@@ -578,8 +578,14 @@
           ===========================*/
         s.updateAutoHeight = function () {
             // Update Height
-            var newHeight = s.slides.eq(s.activeIndex)[0].offsetHeight;
-            if (newHeight) s.wrapper.css('height', s.slides.eq(s.activeIndex)[0].offsetHeight + 'px');
+            var slide = s.slides.eq(s.activeIndex)[0];
+            if (typeof slide !== 'undefined') {
+                var newHeight = slide.offsetHeight;
+                if (newHeight) {
+                    s.wrapper.css('height', newHeight + 'px');
+                    s.container.css('height', newHeight + 'px');
+                }
+            }
         };
         s.updateContainerSize = function () {
             var width, height;
