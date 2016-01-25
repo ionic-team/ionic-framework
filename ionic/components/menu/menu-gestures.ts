@@ -5,7 +5,7 @@ import {assign} from '../../util/util';
 
 
 export class MenuContentGesture extends SlideEdgeGesture {
-  
+
   constructor(public menu: Menu, targetEl: Element, options = {}) {
 
     super(targetEl, assign({
@@ -19,7 +19,8 @@ export class MenuContentGesture extends SlideEdgeGesture {
   }
 
   canStart(ev) {
-    return this.menu.isOpen && this.menu.isEnabled ? true : super.canStart(ev);
+    let validAngle = ((-35 <= ev.angle && ev.angle <= 35) || (180 >= ev.angle && ev.angle >= 145) || (-180 <= ev.angle && ev.angle <= -145));
+    return this.menu.isOpen && this.menu.isEnabled && validAngle ? true : super.canStart(ev);
   }
 
   // Set CSS, then wait one frame for it to apply before sliding starts
