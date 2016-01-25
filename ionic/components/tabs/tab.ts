@@ -101,7 +101,9 @@ export class Tab extends NavController {
   private _btnId: string;
   private _loaded: boolean;
   private _loadTimer: any;
+
   btn: TabButton;
+
   @Input() root: Type;
   @Input() tabTitle: string;
   @Input() tabIcon: string;
@@ -123,7 +125,7 @@ export class Tab extends NavController {
     // A Tab is a NavController for its child pages
     super(parentTabs, app, config, keyboard, elementRef, 'contents', compiler, viewManager, zone, renderer);
 
-    this._isInitial = parentTabs.add(this);
+    parentTabs.add(this);
 
     this._panelId = 'tabpanel-' + this.id;
     this._btnId = 'tab-' + this.id;
@@ -134,24 +136,6 @@ export class Tab extends NavController {
    */
   ngOnInit() {
     this.tabBadgeStyle = this.tabBadgeStyle ? this.tabBadgeStyle : 'default';
-
-    if (this._isInitial) {
-      this.parent.select(this);
-
-    } else if (this.parent.preloadTabs) {
-      this._loadTimer = setTimeout(() => {
-        if (!this._loaded) {
-          this.load({
-            animate: false,
-            preload: true,
-            postLoad: (viewCtrl) => {
-              let navbar = viewCtrl.getNavbar();
-              navbar && navbar.setHidden(true);
-            }
-          }, function(){});
-        }
-      }, 1000 * this.index);
-    }
   }
 
   /**
@@ -167,6 +151,21 @@ export class Tab extends NavController {
     } else {
       done();
     }
+  }
+
+  preload(wait) {
+    this._loadTimer = setTimeout(() => {
+      if (!this._loaded) {
+        this.load({
+          animate: false,
+          preload: true,
+          postLoad: (viewCtrl) => {
+            let navbar = viewCtrl.getNavbar();
+            navbar && navbar.setHidden(true);
+          }
+        }, function(){});
+      }
+    }, wait);
   }
 
   /**

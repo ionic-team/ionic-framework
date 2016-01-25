@@ -132,6 +132,15 @@ export class Tabs extends Ion {
         this.select(tab);
       });
     });
+
+    this._tabs.forEach((tab, index) => {
+      if (index === 0) {
+        this.select(tab);
+
+      } else if (this.preloadTabs) {
+        tab.preload(1000 * index);
+      }
+    });
   }
 
   /**
@@ -151,8 +160,6 @@ export class Tabs extends Ion {
   add(tab) {
     tab.id = this.id + '-' + (++this._ids);
     this._tabs.push(tab);
-
-    return (this._tabs.length === 1);
   }
 
   /**
