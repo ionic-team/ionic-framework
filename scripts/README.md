@@ -37,5 +37,6 @@
 # Releasing
 
 1. Pull latest code
-2. `gulp publish`
-3. Sit back and have a beer :beer: (or wine :wine_glass:)
+2. Bump version in package.json
+3. `gulp publish`
+4. Sit back and have a beer :beer: (or wine :wine_glass:)
