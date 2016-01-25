@@ -26,7 +26,15 @@
       ]
     },
   ```
+  
+* Modify the fonts `src` in your `ionic.config.js` file:
 
+  ```
+    fonts: {
+      src: ['node_modules/ionic-framework/fonts/**/*.+(ttf|woff|woff2)'],
+      dest: "www/build/fonts"
+    },
+  ```
 
 <a name="2.0.0-alpha.48"></a>
 # 2.0.0-alpha.48 (2016-1-7)
