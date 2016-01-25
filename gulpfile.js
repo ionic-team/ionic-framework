@@ -399,6 +399,7 @@ gulp.task('copy.libs', function() {
   var merge = require('merge2');
   var webAnimations = gulp.src([
       'scripts/resources/web-animations-js/web-animations.min.js',
+      'node_modules/es6-shim/es6-shim.min.js',
       'node_modules/systemjs/node_modules/es6-module-loader/dist/es6-module-loader.src.js',
       'node_modules/systemjs/dist/system.src.js',
       'node_modules/angular2/bundles/angular2-polyfills.js',
