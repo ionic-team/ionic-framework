@@ -21,6 +21,8 @@ class MyApp {
         class: "blue"
       }
     ];
+
+    this.startingIndex = 2;
   }
 
   onSlideChanged(slider) {

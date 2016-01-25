@@ -142,10 +142,15 @@ export class Slides extends Ion {
     }
 
     this.showPager = isTrueProperty(this.pager);
+    this.loop = isTrueProperty(this.loop);
 
+    if (typeof(this.index) != 'undefined') {
+      this.index = parseInt(this.index);
+    }
 
     var options = defaults({
       loop: this.loop,
+      initialSlide: this.index,
       pagination: '.swiper-pagination',
       paginationClickable: true,
       lazyLoading: true,
