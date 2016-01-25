@@ -37,8 +37,8 @@
 
 * `<icon>` has been renamed to `<ion-icon>`
 * `<ion-icon>` requires the `name` attribute with a value
-* Icon names with a `ion-` prefix is no longer needed
-* Icons with `social-` prefix have been changed to a `-logo` suffix
+* Icon names with an `ion-` prefix are no longer needed
+* Icons with `social-` prefix have been changed to a `logo-` prefix
 
 Was:
 
@@ -48,7 +48,7 @@ Was:
 Now:
 
 `<ion-icon name="home"></ion-icon>`
-`<ion-icon name="twitter-logo"></ion-icon>`
+`<ion-icon name="logo-twitter"></ion-icon>`
 
 
 <a name="2.0.0-alpha.47"></a>
