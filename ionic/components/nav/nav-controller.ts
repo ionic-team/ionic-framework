@@ -384,9 +384,9 @@ export class NavController extends Ion {
    * @returns {Promise} Returns a promise, which resolves when the transition has completed
    */
   present(enteringView: ViewController, opts: any = {}): Promise<any> {
-    let nav = this.rootNav;
+    let rootNav = this.rootNav;
 
-    if (nav['_tabs']) {
+    if (rootNav['_tabs']) {
       // TODO: must have until this goes in
       // https://github.com/angular/angular/issues/5481
       console.error('A parent <ion-nav> is required for ActionSheet/Alert/Modal');
@@ -409,7 +409,7 @@ export class NavController extends Ion {
     });
 
     // start the transition
-    return this._insertViews(-1, [enteringView], opts);
+    return rootNav._insertViews(-1, [enteringView], opts);
   }
 
   /**
