@@ -472,7 +472,7 @@ gulp.task('publish', ['package'], function(done){
   var fs = require('fs');
   var err = false;
 
-  var npmCmd = spawn('npm', ['pack', './dist']);
+  var npmCmd = spawn('npm', ['publish', './dist']);
 
   npmCmd.stdout.on('data', function (data) {
     console.log(data.toString());
