@@ -120,7 +120,7 @@ export class NativeInput {
   /**
    * @private
    */
-  element(): HTMLElement {
+  private element(): HTMLInputElement {
     return this._elementRef.nativeElement;
   }
 

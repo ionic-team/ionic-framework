@@ -7,10 +7,9 @@
   <ion-list inset>
 
     <ion-item>
-      <ion-label floating>Floating Label 1</ion-label>
+      <ion-label floating>Floating Label 1: {{ myValues.value1 }}</ion-label>
       <ion-input [(ngModel)]='myValues.value1'></ion-input>
     </ion-item>
-    Value: {{ myValues.value1 }}
 
     <ion-item>
       <ion-label floating>Floating Label 2</ion-label>
@@ -23,10 +22,9 @@
     </ion-item>
 
     <ion-item>
-      <ion-label floating primary>Floating Label 4</ion-label>
+      <ion-label floating primary>Floating Label 4: {{ myValues.value2 }}</ion-label>
       <ion-textarea [(ngModel)]='myValues.value2'></ion-textarea>
     </ion-item>
-    Value: {{ myValues.value2 }}
 
     <ion-item>
       <ion-label floating secondary>Floating Label 5</ion-label>
