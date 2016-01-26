@@ -8,14 +8,14 @@ import {isDefined} from '../../util/util';
 
 /**
  * A radio group is a group of radio components, and its value comes
- * fr0m the selected radio button's value. Selecting a radio button
+ * from the selected radio button's value. Selecting a radio button
  * in the group unselects all others in the group.
  *
  * See the [Angular 2 Docs](https://angular.io/docs/js/latest/api/forms/) for more info on forms and input.
  *
  * @usage
  * ```html
- * <ion-list radio-group ngControl="autoManufacturers">
+ * <ion-list radio-group [(ngModel)]="autoManufacturers">
  *
  *   <ion-list-header>
  *     Auto Manufacturers

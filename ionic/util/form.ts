@@ -2,17 +2,9 @@ import {Injectable} from 'angular2/core';
 
 
 /**
- * The Input component is used to focus text input elements.
- *
- * @usage
- * ```html
- * <ion-input>
- *   <ion-label>Name</ion-label>
- *   <input value="Name" type="text">
- * </ion-input>
- * ```
+ * @private
  */
- @Injectable()
+@Injectable()
 export class Form {
   private _blur: HTMLElement;
   private _focused = null;

@@ -11,14 +11,14 @@ import {App, Page, NavController, Modal, ViewController, Tabs} from 'ionic/ionic
     </ion-navbar>
     <ion-content padding>
       <ion-card>
-        <ion-input>
+        <ion-item>
           <ion-label>Username:</ion-label>
-          <input type="text">
-        </ion-input>
-        <ion-input>
+          <ion-input></ion-input>
+        </ion-item>
+        <ion-item>
           <ion-label>Password:</ion-label>
-          <input type="password">
-        </ion-input>
+          <ion-input type="password"></ion-input>
+        </ion-item>
         <ion-item>
           <button block id="signIn" (click)="push()">Sign In</button>
         </ion-item>

@@ -80,6 +80,7 @@ export class Checkbox {
     if (_item) {
       this.id = 'chk-' + _item.registerInput('checkbox');
       this._labelId = 'lbl-' + _item.id;
+      this._item.setCssClass('item-checkbox', true);
     }
   }
 
@@ -91,11 +92,11 @@ export class Checkbox {
     this.checked = !this.checked;
   }
 
+  @Input()
   get checked() {
     return this._checked;
   }
 
-  @Input()
   set checked(val) {
     if (!this._disabled) {
       this._checked = (val === true || val === 'true');
@@ -104,11 +105,11 @@ export class Checkbox {
     }
   }
 
+  @Input()
   get disabled() {
     return this._disabled;
   }
 
-  @Input()
   set disabled(val) {
     this._disabled = (val === true || val === 'true');
     this._item && this._item.setCssClass('item-checkbox-disabled', this._disabled);

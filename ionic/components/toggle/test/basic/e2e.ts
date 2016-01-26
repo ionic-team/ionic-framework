@@ -1,6 +1,6 @@
 
 it('should check apple via switch element click', function() {
-  element(by.css('[ngControl=appleCtrl] .toggle-media')).click();
+  element(by.css('[value="apple"] button')).click();
 });
 
 

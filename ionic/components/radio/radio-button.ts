@@ -9,17 +9,22 @@ import {RadioGroup} from './radio-group';
 
 /**
  * @description
- * A radio button with a unique value. Note that all `<ion-radio>` components
- * must be wrapped within a `<ion-list radio-group>`, and there must be at
- * least two `<ion-radio>` components within the radio group.
+ * A radio button with a unique value. Note that all `<ion-radio>`
+ * components must be wrapped within a `<ion-list radio-group>`,
+ * and there must be at least two `<ion-radio>` components within
+ * the radio group.
  *
- * See the [Angular 2 Docs](https://angular.io/docs/js/latest/api/forms/) for more info on forms and input.
+ * See the [Angular 2 Docs](https://angular.io/docs/js/latest/api/forms/) for
+ * more info on forms and input.
  *
  * @usage
  * ```html
- * <ion-radio value="my-value" checked="true">
- *   Radio Label
- * </ion-radio>
+ *
+ * <ion-item>
+ *   <ion-label>Radio Label</ion-label>
+ *   <ion-radio value="radio-value"></ion-radio>
+ * </ion-item>
+ *
  * ```
  * @demo /docs/v2/demos/radio/
  * @see {@link /docs/v2/components#radio Radio Component Docs}
@@ -61,6 +66,7 @@ export class RadioButton {
     if (_item) {
       this.id = 'rb-' + _item.registerInput('radio');
       this._labelId = 'lbl-' + _item.id;
+      this._item.setCssClass('item-radio', true);
     }
 
     if (_group) {
@@ -78,16 +84,11 @@ export class RadioButton {
   }
 
   set checked(val) {
-<<<<<<< HEAD
     if (!this._disabled) {
       this._checked = (val === true || val === 'true');
       this.select.emit(this);
       this._item && this._item.setCssClass('item-radio-checked', this._checked);
     }
-=======
-    this._checked = (val === true || val === 'true');
-    this.select.emit(this);
->>>>>>> 581c666... refactor(radio): place ion-radio insde of ion-item
   }
 
   @Input()
@@ -97,11 +98,7 @@ export class RadioButton {
 
   set disabled(val) {
     this._disabled = (val === true || val === 'true');
-<<<<<<< HEAD
     this._item && this._item.setCssClass('item-radio-disabled', this._disabled);
-=======
-    this._item && this._item.setCssClass('radio-disabled', val);
->>>>>>> 581c666... refactor(radio): place ion-radio insde of ion-item
   }
 
   /**
@@ -109,11 +106,7 @@ export class RadioButton {
    */
   setChecked(val: boolean) {
     this._checked = val;
-<<<<<<< HEAD
     this._item && this._item.setCssClass('item-radio-checked', val);
-=======
-    this._item && this._item.setCssClass('radio-checked', val);
->>>>>>> 581c666... refactor(radio): place ion-radio insde of ion-item
   }
 
   /**
@@ -121,11 +114,7 @@ export class RadioButton {
    */
   @HostListener('click', ['$event'])
   private _click(ev) {
-<<<<<<< HEAD
     console.debug('radio, select', this.value);
-=======
-    console.debug('RadioButton, select', this.value);
->>>>>>> 581c666... refactor(radio): place ion-radio insde of ion-item
     ev.preventDefault();
     ev.stopPropagation();
     this.toggle();

@@ -106,6 +106,7 @@ export class Toggle {
     if (_item) {
       this.id = 'tgl-' + _item.registerInput('toggle');
       this._labelId = 'lbl-' + _item.id;
+      this._item.setCssClass('item-toggle', true);
     }
   }
 

@@ -15,7 +15,7 @@ $radio-md-icon-border-radius:     50% !default;
 $radio-md-transition-duration:    280ms !default;
 $radio-md-transition-easing:      cubic-bezier(.4, 0, .2, 1) !default;
 
-$radio-md-disabled-opacity:       0.5 !default;
+$radio-md-disabled-opacity:       0.4 !default;
 
 
 // Material Design Radio Outer Circle: Unchecked
@@ -83,7 +83,11 @@ $radio-md-disabled-opacity:       0.5 !default;
 
 .item ion-radio {
   display: block;
-  margin: $item-md-padding-media-top ($item-md-padding-right / 2) $item-md-padding-media-bottom ($item-md-padding-left / 2);
+  margin: $item-md-padding-media-top ($item-md-padding-right / 2) $item-md-padding-media-bottom 0;
+}
+
+.item-radio ion-label {
+  margin-left: 0;
 }
 
 
@@ -100,10 +104,13 @@ $radio-md-disabled-opacity:       0.5 !default;
 
 @mixin radio-theme-md($color-name, $color-value) {
 
-  ion-radio[#{$color-name}] .radio-checked {
-    border-color: $color-value;
+  ion-radio[#{$color-name}] {
 
-    .radio-icon {
+    .radio-checked {
+      border-color: $color-value;
+    }
+
+    .radio-inner {
       background-color: $color-value;
     }
 

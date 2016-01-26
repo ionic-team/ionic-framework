@@ -8,6 +8,6 @@ class E2EApp {
   url;
 
   constructor() {
-    this.url = 'hello';
+    this.input1 = 'Text 1';
   }
 }

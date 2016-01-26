@@ -1,11 +1,22 @@
 @import "../../globals.core";
 
-// Input Wrapper
+// Input/Textarea Wrapper
 // --------------------------------------------------
 
-ion-input {
+ion-input,
+ion-textarea {
   display: block;
   flex: 1;
+}
+
+
+
+
+// Textarea Within An Item
+// --------------------------------------------------
+
+.item.item-textarea {
+  align-items: stretch;
 }
 
 

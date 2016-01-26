@@ -71,14 +71,14 @@ class E2EPage {
     </ion-navbar>
     <ion-content>
       <ion-list>
-        <ion-input>
+        <ion-item>
           <ion-label>UserId</ion-label>
-          <input type="number" [(ngModel)]="data.userId">
-        </ion-input>
-        <ion-input>
+          <ion-input type="number" [(ngModel)]="data.userId"></ion-input>
+        </ion-item>
+        <ion-item>
           <ion-label>Name</ion-label>
-          <input type="text" [(ngModel)]="data.name">
-        </ion-input>
+          <ion-input [(ngModel)]="data.name"></ion-input>
+        </ion-item>
       </ion-list>
       <button full (click)="submit()">Submit</button>
     </ion-content>

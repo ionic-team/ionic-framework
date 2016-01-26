@@ -22,7 +22,7 @@ $toggle-md-media-padding:                12px ($item-md-padding-right / 2) 12px 
 
 $toggle-md-transition-duration:          300ms !default;
 
-$toggle-md-disabled-opacity:             0.5 !default;
+$toggle-md-disabled-opacity:             0.4 !default;
 
 
 // Material Design Toggle
@@ -101,7 +101,7 @@ ion-toggle {
 }
 
 
-// Material Design Toggle within an item
+// Material Design Toggle Within An Item
 // -----------------------------------------
 
 .item ion-toggle {
@@ -110,14 +110,8 @@ ion-toggle {
   cursor: pointer;
 }
 
-
-// Material Design Toggle Within An Item
-// -----------------------------------------
-
-.item ion-toggle {
-  margin: $toggle-md-media-margin;
-  padding: $toggle-md-media-padding;
-  cursor: pointer;
+.item-toggle ion-label {
+  margin-left: 0;
 }
 
 

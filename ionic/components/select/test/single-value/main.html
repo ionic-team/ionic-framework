@@ -1,10 +1,12 @@
-<ion-toolbar><ion-title>Select Item: Single Value</ion-title></ion-toolbar>
+<ion-toolbar>
+  <ion-title>Select Item: Single Value</ion-title>
+</ion-toolbar>
 
 <ion-content class="outer-content">
 
   <ion-item>
     <ion-label>Gender</ion-label>
-    <ion-select [(ngModel)]="gender">
+    <ion-select [(ngModel)]="gender" class="e2eSelectGender">
       <ion-option value="f" checked="true">Female</ion-option>
       <ion-option value="m">Male</ion-option>
     </ion-select>
@@ -38,15 +40,13 @@
   <ion-item>
     <ion-label>Music</ion-label>
     <ion-select [(ngModel)]="music" [alertOptions]="musicAlertOpts">
-      <ion-option value="aliceinchains">Alice in Chains</ion-option>
-      <ion-option value="greenday">Green Day</ion-option>
-      <ion-option value="hole">Hole</ion-option>
-      <ion-option value="korn">Korn</ion-option>
-      <ion-option value="nirvana">Nirvana</ion-option>
-      <ion-option value="pearljam">Pearl Jam</ion-option>
-      <ion-option value="smashingpumpkins">Smashing Pumpkins</ion-option>
-      <ion-option value="soundgarden">Soundgarden</ion-option>
-      <ion-option value="stp">Stone Temple Pilots</ion-option>
+      <ion-option>Alice in Chains</ion-option>
+      <ion-option>Green Day</ion-option>
+      <ion-option>Nirvana</ion-option>
+      <ion-option>Pearl Jam</ion-option>
+      <ion-option>Smashing Pumpkins</ion-option>
+      <ion-option>Soundgarden</ion-option>
+      <ion-option>Stone Temple Pilots</ion-option>
     </ion-select>
   </ion-item>
 
@@ -60,11 +60,11 @@
       <ion-option value="05">May</ion-option>
       <ion-option value="06">June</ion-option>
       <ion-option value="07">July</ion-option>
-      <ion-option value="08" checked="true">August</ion-option>
+      <ion-option value="08">August</ion-option>
       <ion-option value="09">September</ion-option>
       <ion-option value="10">October</ion-option>
       <ion-option value="11">November</ion-option>
-      <ion-option value="12">December</ion-option>
+      <ion-option value="12" checked="true">December</ion-option>
     </ion-select>
     <ion-select [(ngModel)]="year">
       <ion-option>1989</ion-option>
@@ -86,6 +86,7 @@
     <code>gaming: {{gaming}}</code><br>
     <code>os: {{os}}</code><br>
     <code>music: {{music}}</code><br>
+    <code>date: {{month}}/{{year}}</code><br>
   </p>
 
 </ion-content>

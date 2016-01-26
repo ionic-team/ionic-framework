@@ -18,26 +18,6 @@ ion-select {
   text-overflow: ellipsis;
 }
 
-.select-icon {
-  position: relative;
-  width: 16px;
-  height: 16px;
-}
-
-.select-icon .select-icon-inner {
-  position: absolute;
-  top: 50%;
-  left: 5px;
-  margin-top: -2px;
-  width: 0;
-  height: 0;
-  border-top: 5px solid;
-  border-right: 5px solid transparent;
-  border-left: 5px solid transparent;
-  color: #999;
-  pointer-events: none;
-}
-
 .item-multiple-inputs ion-select {
   position: relative;
 }

@@ -9,7 +9,7 @@ exports.config = {
   //domain: 'localhost:8080',
 
   //specs: 'dist/e2e/**/*e2e.js',
-  specs: 'dist/e2e/checkbox/**/*e2e.js',
+  specs: 'dist/e2e/input/**/*e2e.js',
 
   sleepBetweenSpecs: 350,
 

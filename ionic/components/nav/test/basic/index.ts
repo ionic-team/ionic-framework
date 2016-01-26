@@ -33,10 +33,10 @@ class MyCmpTest{}
         <button ion-item (click)="pushPrimaryHeaderPage()">Push to PrimaryHeaderPage</button>
         <button ion-item (click)="pushAnother()">Push to AnotherPage</button>
 
-        <ion-input>
+        <ion-item>
           <ion-label>Text Input</ion-label>
-          <textarea></textarea>
-        </ion-input>
+          <ion-textarea></ion-textarea>
+        </ion-item>
 
         <button ion-item [navPush]="[pushPage, {id: 42}]">Push FullPage w/ [navPush] array</button>
         <button ion-item [navPush]="pushPage" [navParams]="{id:40}">Push w/ [navPush] and [navParams]</button>
@@ -218,10 +218,10 @@ class PrimaryHeaderPage {
     <ion-content>
       <ion-list>
 
-        <ion-input>
+        <ion-item>
           <ion-label>Text Input</ion-label>
-          <textarea></textarea>
-        </ion-input>
+          <ion-textarea></ion-textarea>
+        </ion-item>
 
         <ion-item>Back button hidden w/ <code>ion-navbar hideBackButton</code></ion-item>
         <button ion-item (click)="nav.pop()">Pop</button>

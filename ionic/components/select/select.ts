@@ -4,7 +4,7 @@ import {NgControl} from 'angular2/common';
 import {Alert} from '../alert/alert';
 import {Form} from '../../util/form';
 import {Item} from '../item/item';
-import {merge} from '../../util/util';
+import {merge, isDefined} from '../../util/util';
 import {NavController} from '../nav/nav-controller';
 import {Option} from '../option/option';
 
@@ -143,6 +143,7 @@ export class Select {
     if (_item) {
       this.id = 'sel-' + _item.registerInput('select');
       this._labelId = 'lbl-' + _item.id;
+      this._item.setCssClass('item-select', true);
     }
 
     if (!_nav) {
@@ -154,24 +155,22 @@ export class Select {
    * @private
    */
   ngAfterContentInit() {
-    var selectedOption = this.options.toArray().find(o => o.checked);
+    let values = [];
+    let selectedTexts = [];
 
-    if (!selectedOption) {
-      this.options.toArray().forEach(o => {
-        o.checked = o.value === this.value + '';
-        if (o.checked) {
-          selectedOption = o;
-        }
-      });
+    this.options.toArray().forEach(option => {
+      if (option.checked) {
+        values.push( isDefined(option.value) ? option.value : option.text );
+        selectedTexts.push(option.text);
+      }
+    });
 
-    } else {
-      this.value = selectedOption.value;
-      this._selectedText = selectedOption.text;
+    this.value = values.join(',');
+    this._selectedText = selectedTexts.join(', ');
 
-      setTimeout(()=> {
-        this.onChange(this.value);
-      });
-    }
+    setTimeout(()=> {
+      this.onChange(this.value);
+    });
   }
 
   /**

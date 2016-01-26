@@ -10,7 +10,7 @@ $radio-ios-icon-height:            21px !default;
 $radio-ios-icon-border-width:      2px !default;
 $radio-ios-icon-border-style:      solid !default;
 
-$radio-ios-disabled-opacity:       0.5 !default;
+$radio-ios-disabled-opacity:       0.4 !default;
 
 
 // iOS Radio Circle: Unchecked
@@ -32,10 +32,10 @@ $radio-ios-disabled-opacity:       0.5 !default;
   border-width: $radio-ios-icon-border-width;
   border-style: $radio-ios-icon-border-style;
   border-color: $radio-ios-color-on;
-  top: 3px;
+  top: 4px;
   left: 7px;
-  width: 4px;
-  height: 10px;
+  width: 5px;
+  height: 12px;
   border-left: none;
   border-top: none;
   transform: rotate(45deg);
@@ -58,6 +58,10 @@ $radio-ios-disabled-opacity:       0.5 !default;
 .item ion-radio {
   display: block;
   margin: $item-ios-padding-media-top ($item-ios-padding-right / 2) $item-ios-padding-media-bottom ($item-ios-padding-left / 2);
+}
+
+.item-radio ion-label {
+  margin-left: 0;
 }
 
 

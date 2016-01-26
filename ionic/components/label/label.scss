@@ -9,10 +9,6 @@ ion-label {
   white-space: nowrap;
 }
 
-ion-label:empty {
-  display: none;
-}
-
 
 .item-input ion-label {
   max-width: 200px;
@@ -24,6 +20,7 @@ ion-label:empty {
 // --------------------------------------------------
 
 ion-label[fixed] {
+  flex: 0;
   width: 30%;
   min-width: 100px;
   max-width: 200px;
