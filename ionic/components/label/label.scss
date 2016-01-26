@@ -12,6 +12,7 @@ ion-label {
 
 .item-input ion-label {
   max-width: 200px;
+  flex: initial;
   pointer-events: none;
 }
 
