@@ -85,7 +85,7 @@ export class Refresher {
   private _touchMoveListener;
   private _touchEndListener;
   private _handleScrollListener;
-  
+
   isActive: boolean;
   isDragging: boolean = false;
   isOverscrolling: boolean = false;
@@ -94,7 +94,7 @@ export class Refresher {
   ptrThreshold: number = 0;
   activated: boolean = false;
   scrollTime: number = 500;
-  canOverscroll: boolean = false;
+  canOverscroll: boolean = true;
   startY;
   deltaY;
   scrollHost;
@@ -103,18 +103,18 @@ export class Refresher {
   showSpinner: boolean;
   isRefreshing: boolean;
   isRefreshingTail: boolean;
-  
+
   @Input() pullingIcon: string;
   @Input() pullingText: string;
   @Input() refreshingIcon: string;
   @Input() refreshingText: string;
   @Input() spinner: string;
-  
+
   @Output() pulling: EventEmitter<any> = new EventEmitter();
   @Output() refresh: EventEmitter<any> = new EventEmitter();
   @Output() starting: EventEmitter<any> = new EventEmitter();
-  
-  
+
+
   constructor(
     @Host() private content: Content,
     element: ElementRef
@@ -146,7 +146,7 @@ export class Refresher {
     this._touchMoveListener = this._handleTouchMove.bind(this);
     this._touchEndListener = this._handleTouchEnd.bind(this);
     this._handleScrollListener = this._handleScroll.bind(this);
-    
+
     sc.addEventListener('touchmove', this._touchMoveListener);
     sc.addEventListener('touchend', this._touchEndListener);
     sc.addEventListener('scroll', this._handleScrollListener);
@@ -389,7 +389,7 @@ export class Refresher {
     }
 
     this.isDragging = true;
-    
+
     // overscroll according to the user's drag so far
     this.overscroll( Math.round((this.deltaY - this.dragOffset) / 3) );
 
@@ -400,7 +400,7 @@ export class Refresher {
     if (!this.activated && this.lastOverscroll > this.ptrThreshold) {
       this.activated = true;
       raf(this.activate.bind(this));
-      
+
     } else if (this.activated && this.lastOverscroll < this.ptrThreshold) {
       this.activated = false;
       raf(this.deactivate.bind(this));
