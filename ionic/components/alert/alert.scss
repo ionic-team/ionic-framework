@@ -74,6 +74,7 @@ ion-alert {
 .alert-button {
   display: block;
   margin: 0;
+  z-index: 0;
   line-height: $alert-button-line-height;
   font-size: $alert-button-font-size;
   margin-right: $alert-button-margin-right;

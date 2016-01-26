@@ -33,6 +33,7 @@ $alert-ios-button-min-height:                   44px !default;
 $alert-ios-button-font-size:                    17px !default;
 $alert-ios-button-text-color:                   map-get($colors-ios, primary) !default;
 $alert-ios-button-background-color:             transparent !default;
+$alert-ios-button-border-radius:                0 !default;
 $alert-ios-button-border-color:                 #c8c7cc !default;
 $alert-ios-button-activated-background-color:   #e9e9e9 !default;
 
@@ -172,7 +173,7 @@ ion-alert {
   flex: 1;
   font-size: $alert-ios-button-font-size;
   min-height: $alert-ios-button-min-height;
-  border-radius: 0;
+  border-radius: $alert-ios-button-border-radius;
   border-top: 1px solid $alert-ios-button-border-color;
   border-right: 1px solid $alert-ios-button-border-color;
   color: $alert-ios-button-text-color;
