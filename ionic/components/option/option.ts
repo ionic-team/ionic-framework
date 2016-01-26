@@ -1,6 +1,6 @@
 import {Directive, ElementRef, Input} from 'angular2/core';
 
-import {isDefined} from '../../util/util';
+import {isDefined, isTrueProperty} from '../../util/util';
 
 /**
  * @name Option
@@ -9,7 +9,7 @@ import {isDefined} from '../../util/util';
   selector: 'ion-option'
 })
 export class Option {
-  private _checked: boolean = false;
+  private _checked: any = false;
   private _value;
 
   constructor(private _elementRef: ElementRef) {}
@@ -19,8 +19,8 @@ export class Option {
     return this._checked;
   }
 
-  set checked(val: any) {
-    this._checked = (val === 'true' || val === true || val === '');
+  set checked(val) {
+    this._checked = isTrueProperty(val);
   }
 
   @Input()

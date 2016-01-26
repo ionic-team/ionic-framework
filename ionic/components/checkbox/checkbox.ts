@@ -3,6 +3,7 @@ import {NgControl} from 'angular2/common';
 
 import {Form} from '../../util/form';
 import {Item} from '../item/item';
+import {isTrueProperty} from '../../util/util';
 
 /**
  * The checkbox is no different than the HTML checkbox input, except
@@ -99,7 +100,7 @@ export class Checkbox {
 
   set checked(val) {
     if (!this._disabled) {
-      this._checked = (val === true || val === 'true');
+      this._checked = isTrueProperty(val);
       this.onChange(this._checked);
       this._item && this._item.setCssClass('item-checkbox-checked', this._checked);
     }
@@ -111,7 +112,7 @@ export class Checkbox {
   }
 
   set disabled(val) {
-    this._disabled = (val === true || val === 'true');
+    this._disabled = isTrueProperty(val);
     this._item && this._item.setCssClass('item-checkbox-disabled', this._disabled);
   }
 
@@ -132,8 +133,10 @@ export class Checkbox {
    * the checked value.
    * https://github.com/angular/angular/blob/master/modules/angular2/src/forms/directives/shared.ts#L34
    */
-  writeValue(value) {
-    this.checked = value;
+  writeValue(val) {
+    if (val !== null) {
+      this.checked = val;
+    }
   }
 
   /**

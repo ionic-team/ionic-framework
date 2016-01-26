@@ -1,9 +1,9 @@
 import {Component, Optional, Input, Output, HostListener, EventEmitter} from 'angular2/core';
 
+import {Form} from '../../util/form';
+import {isTrueProperty} from '../../util/util';
 import {Item} from '../item/item';
 import {ListHeader} from '../list/list';
-import {Form} from '../../util/form';
-import {isDefined} from '../../util/util';
 import {RadioGroup} from './radio-group';
 
 
@@ -85,7 +85,7 @@ export class RadioButton {
 
   set checked(val) {
     if (!this._disabled) {
-      this._checked = (val === true || val === 'true');
+      this._checked = isTrueProperty(val);
       this.select.emit(this);
       this._item && this._item.setCssClass('item-radio-checked', this._checked);
     }
@@ -97,7 +97,7 @@ export class RadioButton {
   }
 
   set disabled(val) {
-    this._disabled = (val === true || val === 'true');
+    this._disabled = isTrueProperty(val);
     this._item && this._item.setCssClass('item-radio-disabled', this._disabled);
   }
 

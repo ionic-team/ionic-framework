@@ -1,8 +1,9 @@
 import {Component, ElementRef, Renderer, Input, Optional} from 'angular2/core';
 import {NgControl} from 'angular2/common';
 
-import {Config} from '../../config/config';
 import {Form} from '../../util/form';
+import {Config} from '../../config/config';
+import {isTrueProperty} from '../../util/util';
 import {Item} from '../item/item';
 import {pointerCoord} from '../../util/dom';
 
@@ -125,7 +126,7 @@ export class Toggle {
 
   set checked(val) {
     if (!this._disabled) {
-      this._checked = (val === true || val === 'true');
+      this._checked = isTrueProperty(val);
       this.onChange(this._checked);
       this._item && this._item.setCssClass('item-toggle-checked', this._checked);
     }
@@ -137,7 +138,7 @@ export class Toggle {
   }
 
   set disabled(val) {
-    this._disabled = (val === true || val === 'true');
+    this._disabled = isTrueProperty(val);
     this._item && this._item.setCssClass('item-toggle-disabled', this._disabled);
   }
 
@@ -145,7 +146,7 @@ export class Toggle {
    * @private
    */
   private pointerDown(ev) {
-    if (/touch/.test(ev.type)) {
+    if (ev.type.indexOf('touch') > -1) {
       this._touched = Date.now();
     }
 

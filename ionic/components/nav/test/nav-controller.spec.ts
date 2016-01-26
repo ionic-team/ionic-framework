@@ -628,7 +628,10 @@ export function run() {
     class Page5 {}
 
     beforeEach(() => {
-      nav = new NavController(null, null, config, null, null, null, null, null, null, null);
+      let elementRef = {
+        nativeElement: document.createElement('div')
+      };
+      nav = new NavController(null, null, config, null, elementRef, null, null, null, null, null);
       nav._renderer = {
         setElementAttribute: function(){},
         setElementClass: function(){},

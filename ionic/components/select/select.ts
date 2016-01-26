@@ -4,7 +4,7 @@ import {NgControl} from 'angular2/common';
 import {Alert} from '../alert/alert';
 import {Form} from '../../util/form';
 import {Item} from '../item/item';
-import {merge, isDefined} from '../../util/util';
+import {merge, isDefined, isTrueProperty} from '../../util/util';
 import {NavController} from '../nav/nav-controller';
 import {Option} from '../option/option';
 
@@ -97,7 +97,7 @@ import {Option} from '../option/option';
 @Component({
   selector: 'ion-select',
   template:
-    '<div class="select-text">{{_selectedText}}</div>' +
+    '<div class="select-text">{{text}}</div>' +
     '<div class="select-icon">' +
       '<div class="select-icon-inner"></div>' +
     '</div>' +
@@ -110,11 +110,11 @@ import {Option} from '../option/option';
   }
 })
 export class Select {
-  private _selectedText: string = '';
   private _disabled: any = false;
   private _labelId: string;
 
   id: string;
+  text: string = '';
 
   @Input() cancelText: string = 'Cancel';
   @Input() okText: string = 'OK';
@@ -155,18 +155,18 @@ export class Select {
    * @private
    */
   ngAfterContentInit() {
-    let values = [];
+    let selectedValues = [];
     let selectedTexts = [];
 
     this.options.toArray().forEach(option => {
       if (option.checked) {
-        values.push( isDefined(option.value) ? option.value : option.text );
+        selectedValues.push( isDefined(option.value) ? option.value : option.text );
         selectedTexts.push(option.text);
       }
     });
 
-    this.value = values.join(',');
-    this._selectedText = selectedTexts.join(', ');
+    this.value = selectedValues.join(',');
+    this.text = selectedTexts.join(', ');
 
     setTimeout(()=> {
       this.onChange(this.value);
@@ -203,7 +203,7 @@ export class Select {
         type: (isMulti ? 'checkbox' : 'radio'),
         label: input.text,
         value: input.value,
-        checked: !!input.checked
+        checked: input.checked
       }
     });
 
@@ -235,7 +235,7 @@ export class Select {
             }
           });
 
-          this._selectedText = selectedTexts.join(', ');
+          this.text = selectedTexts.join(', ');
 
           this.onChange(selectedValues);
         }
@@ -252,12 +252,12 @@ export class Select {
           // or undefined if nothing was checked
           this.value = selectedValue;
 
-          this._selectedText = '';
+          this.text = '';
           this.options.toArray().forEach(option => {
             if (option.value === selectedValue) {
               // this option was the one that was checked
               option.checked = true;
-              this._selectedText = option.text;
+              this.text = option.text;
 
             } else {
               // this option was not checked
@@ -280,7 +280,9 @@ export class Select {
    * https://github.com/angular/angular/blob/master/modules/angular2/src/forms/directives/shared.ts#L34
    */
   writeValue(value) {
-    this.value = value;
+    if (value !== null) {
+      this.value = value;
+    }
   }
 
   /**
