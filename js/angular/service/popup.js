@@ -1,15 +1,15 @@
 
 var POPUP_TPL =
-  '<div class="popup-container" ng-class="cssClass">' +
+  '<div class="popup-container" ng-class="options.cssClass">' +
     '<div class="popup">' +
       '<div class="popup-head">' +
-        '<h3 class="popup-title" ng-bind-html="title"></h3>' +
-        '<h5 class="popup-sub-title" ng-bind-html="subTitle" ng-if="subTitle"></h5>' +
+        '<h3 class="popup-title" ng-bind-html="options.title"></h3>' +
+        '<h5 class="popup-sub-title" ng-bind-html="options.subTitle" ng-if="options.subTitle"></h5>' +
       '</div>' +
       '<div class="popup-body">' +
       '</div>' +
-      '<div class="popup-buttons" ng-show="buttons.length">' +
-        '<button ng-repeat="button in buttons" ng-click="$buttonTapped(button, $event)" class="button" ng-class="button.type || \'button-default\'" ng-bind-html="button.text"></button>' +
+      '<div class="popup-buttons" ng-show="options.buttons.length">' +
+        '<button ng-repeat="button in options.buttons" ng-click="$buttonTapped(button, $event)" class="button" ng-class="button.type || \'button-default\'" ng-bind-html="button.text"></button>' +
       '</div>' +
     '</div>' +
   '</div>';
@@ -283,34 +283,27 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
   return $ionicPopup;
 
   function createPopup(options) {
-    options = extend({
-      scope: null,
-      title: '',
-      buttons: []
-    }, options || {});
+
+    options = options || {};
+    options.scope = options.scope || $rootScope;
 
     var self = {};
-    self.scope = (options.scope || $rootScope).$new();
+    self.scope = options.scope.$new();
     self.element = jqLite(POPUP_TPL);
     self.responseDeferred = $q.defer();
 
     $ionicBody.get().appendChild(self.element[0]);
     $compile(self.element)(self.scope);
 
-    extend(self.scope, {
-      title: options.title,
-      buttons: options.buttons,
-      subTitle: options.subTitle,
-      cssClass: options.cssClass,
-      $buttonTapped: function(button, event) {
-        var result = (button.onTap || noop).apply(self, [event]);
-        event = event.originalEvent || event; //jquery events
+    self.scope.options = options;
+    self.scope.$buttonTapped = function(button, event) {
+      var result = (button.onTap || noop).apply(self, [event]);
+      event = event.originalEvent || event; //jquery events
 
-        if (!event.defaultPrevented) {
-          self.responseDeferred.resolve(result);
-        }
+      if (!event.defaultPrevented) {
+        self.responseDeferred.resolve(result);
       }
-    });
+    };
 
     $q.when(
       options.templateUrl ?

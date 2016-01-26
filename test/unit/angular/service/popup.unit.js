@@ -168,6 +168,53 @@ describe('$ionicPopup service', function() {
       });
     });
 
+    describe('change', function() {
+      it('should change title after dialog was initialized', inject(function($rootScope) {
+        var popupOptions = {
+              title: 'initial title'
+            },
+            popup = TestUtil.unwrapPromise($ionicPopup._createPopup(popupOptions));
+            expect(popup.element[0].querySelector('.popup-title').innerHTML).toEqual(popupOptions.title);
+            popupOptions.title = 'new title';
+            $rootScope.$apply();
+            expect(popup.element[0].querySelector('.popup-title').innerHTML).toEqual(popupOptions.title);
+      }));
+      it('should change sub title after dialog was initialized', inject(function($rootScope) {
+        var popupOptions = {
+              subTitle: 'initial sub title'
+            },
+            popup = TestUtil.unwrapPromise($ionicPopup._createPopup(popupOptions));
+        expect(popup.element[0].querySelector('.popup-sub-title').innerHTML).toEqual(popupOptions.subTitle);
+        popupOptions.subTitle = 'new sub title';
+        $rootScope.$apply();
+        expect(popup.element[0].querySelector('.popup-sub-title').innerHTML).toEqual(popupOptions.subTitle);
+      }));
+      it('should change CSS class after dialog was initialized', inject(function($rootScope) {
+        var popupOptions = {
+              cssClass: 'initclass'
+            },
+            popup = TestUtil.unwrapPromise($ionicPopup._createPopup(popupOptions));
+        expect(popup.element.hasClass('initclass')).toBe(true);
+        popupOptions.cssClass = 'newclass';
+        $rootScope.$apply();
+        expect(popup.element.hasClass('newclass')).toBe(true);
+      }));
+      it('should replace buttons after dialog was initialized', inject(function($rootScope) {
+        var popupOptions = {
+              buttons: [
+                { text: 'Cancel' },
+                { text: 'Ok' }
+              ]
+            },
+            popup = TestUtil.unwrapPromise($ionicPopup._createPopup(popupOptions));
+        expect(popup.element[0].querySelectorAll('.popup-buttons .button').length).toEqual(2);
+        popupOptions.buttons = [{text: 'Close'}];
+        $rootScope.$apply();
+        expect(popup.element[0].querySelectorAll('.popup-buttons .button').length).toEqual(1);
+        expect(popup.element[0].querySelector('.popup-buttons .button').innerText).toEqual('Close');
+      }));
+    });
+
   });
 
   describe('$ionicPopup.showPopup()', function() {
