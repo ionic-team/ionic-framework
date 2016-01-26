@@ -71,6 +71,14 @@ ion-input.ng-invalid.ng-touched:after {
   margin-bottom: 8px;
 }
 
+.item-label-floating .text-input.cloned-input {
+  top: 32px;
+}
+
+.item-label-stacked .text-input.cloned-input {
+  top: 27px;
+}
+
 
 // Material Design Clear Input Icon
 // --------------------------------------------------

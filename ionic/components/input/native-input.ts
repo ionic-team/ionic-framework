@@ -62,11 +62,13 @@ export class NativeInput {
    * @private
    */
   relocate(shouldRelocate: boolean, inputRelativeY: number) {
+    console.debug('native input relocate', shouldRelocate, inputRelativeY);
+
     if (this._relocated !== shouldRelocate) {
 
       let focusedInputEle = this.element();
       if (shouldRelocate) {
-        let clonedInputEle = cloneInput(focusedInputEle, 'cloned-input');
+        let clonedInputEle = cloneInput(focusedInputEle, 'cloned-focus');
 
         focusedInputEle.parentNode.insertBefore(clonedInputEle, focusedInputEle);
         focusedInputEle.style[CSS.transform] = `translate3d(-9999px,${inputRelativeY}px,0)`;
@@ -75,15 +77,15 @@ export class NativeInput {
         this.setFocus();
 
         raf(() => {
-          focusedInputEle.style.display = 'none';
+          focusedInputEle.classList.add('cloned-active');
         });
 
       } else {
+        focusedInputEle.classList.remove('cloned-active');
         focusedInputEle.style[CSS.transform] = '';
-        focusedInputEle.style.display = '';
         focusedInputEle.style.opacity = '';
 
-        removeClone(focusedInputEle, 'cloned-input');
+        removeClone(focusedInputEle, 'cloned-focus');
       }
 
       this._relocated = shouldRelocate;
@@ -94,18 +96,19 @@ export class NativeInput {
    * @private
    */
   hideFocus(shouldHideFocus: boolean) {
+    console.debug('native input hideFocus', shouldHideFocus);
+
     let focusedInputEle = this.element();
 
     if (shouldHideFocus) {
-      let clonedInputEle = cloneInput(focusedInputEle, 'cloned-hidden');
+      let clonedInputEle = cloneInput(focusedInputEle, 'cloned-move');
 
-      focusedInputEle.style.display = 'none';
+      focusedInputEle.classList.add('cloned-active');
       focusedInputEle.parentNode.insertBefore(clonedInputEle, focusedInputEle);
 
     } else {
-      focusedInputEle.style.display = '';
-
-      removeClone(focusedInputEle, 'cloned-hidden');
+      focusedInputEle.classList.remove('cloned-active');
+      removeClone(focusedInputEle, 'cloned-move');
     }
   }
 
@@ -128,6 +131,7 @@ export class NativeInput {
 
 function cloneInput(focusedInputEle, addCssClass) {
   let clonedInputEle = focusedInputEle.cloneNode(true);
+  clonedInputEle.classList.add('cloned-input');
   clonedInputEle.classList.add(addCssClass);
   clonedInputEle.setAttribute('aria-hidden', true);
   clonedInputEle.removeAttribute('aria-labelledby');

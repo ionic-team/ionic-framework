@@ -7,9 +7,8 @@ ion-input,
 ion-textarea {
   display: block;
   flex: 1;
+  width: 100%;
 }
-
-
 
 
 // Textarea Within An Item
@@ -108,9 +107,12 @@ input.text-input:-webkit-autofill {
 // Cloned Input
 // --------------------------------------------------
 
-.text-input.cloned-input,
-.text-input.cloned-hidden {
+.text-input.cloned-input {
   position: absolute;
   top: 0;
   pointer-events: none;
+}
+
+.item-input:not(.item-label-floating) .text-input.cloned-active {
+  display: none;
 }

@@ -40,7 +40,7 @@ export class InputBase {
     protected _nav: NavController,
     ngControl: NgControl
   ) {
-    this._useAssist = true;// config.get('scrollAssist');
+    this._useAssist = config.get('scrollAssist');
     this._keyboardHeight = config.get('keyboardHeight');
 
     if (ngControl) {
@@ -67,6 +67,7 @@ export class InputBase {
 
     self._scrollMove = function(ev: UIEvent) {
       // scroll move event listener this instance can reuse
+      console.log('scrollmove', ev)
       if (!(self._nav && self._nav.isTransitioning())) {
         self.deregScrollMove();
 
@@ -130,7 +131,7 @@ export class InputBase {
     if (val) {
       val = val.toLowerCase();
 
-      if (/password|email|number|search|tel|url|date|datetime|datetime-local|month/.test(val)) {
+      if (/password|email|number|search|tel|url|date|datetime|datetime-local|month|time|week/.test(val)) {
         this._type = val;
       }
     }
