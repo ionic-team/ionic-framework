@@ -124,7 +124,7 @@ export class Toggle {
       }
     }
 
-    let toggleEle = _elementRef.nativeElement.querySelector('.toggle-media');
+    let toggleEle = _elementRef.nativeElement;
 
     this.addMoveListener = function() {
       toggleEle.addEventListener('touchmove', pointerMove);
