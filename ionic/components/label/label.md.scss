@@ -20,7 +20,7 @@ ion-label {
 // --------------------------------------------------
 
 .item-input ion-label {
-  margin: $item-md-padding-top ($item-md-padding-right / 2) $item-md-padding-bottom ($item-md-padding-left / 2);
+  margin: $item-md-padding-top ($item-md-padding-right / 2) $item-md-padding-bottom 0;
   color: $label-md-text-color;
 }
 
