@@ -33,8 +33,9 @@ $text-input-ios-input-clear-icon-size:     18px !default;
 // iOS Stacked & Floating Inputs
 // --------------------------------------------------
 
-.stacked-input,
-.floating-input {
+.item-label-stacked .text-input,
+.item-label-floating .text-input {
+  margin-left: 0;
   margin-top: 8px;
   margin-bottom: 8px;
 }

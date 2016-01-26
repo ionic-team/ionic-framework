@@ -35,6 +35,10 @@ ion-textarea {
   @include placeholder();
 }
 
+textarea.text-input {
+  display: block;
+}
+
 
 input.text-input:-webkit-autofill {
   background-color: transparent;

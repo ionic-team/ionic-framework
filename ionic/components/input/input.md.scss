@@ -64,8 +64,8 @@ ion-input.ng-invalid.ng-touched:after {
 // Material Design Stacked & Floating Inputs
 // --------------------------------------------------
 
-.stacked-input,
-.floating-input {
+.item-label-stacked .text-input,
+.item-label-floating .text-input {
   margin-left: 0;
   margin-top: 8px;
   margin-bottom: 8px;

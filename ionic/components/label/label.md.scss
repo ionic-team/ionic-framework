@@ -25,32 +25,32 @@ ion-label {
 }
 
 
-// Material Design Stacked & Floating Labela
+// Material Design Stacked & Floating Labels
 // --------------------------------------------------
 
-.stacked-label {
+ion-label[stacked] {
   font-size: 1.2rem;
 }
 
-.floating-label {
+ion-label[floating] {
   transform-origin: left top;
   transform: translate3d(0, 27px, 0);
   transition: transform 150ms ease-in-out;
 }
 
-.stacked-label,
-.floating-label {
+ion-label[stacked],
+ion-label[floating] {
   margin-left: 0;
   margin-bottom: 0;
 }
 
-.input-has-focus .stacked-label,
-.input-has-focus .floating-label {
+.input-has-focus ion-label[stacked],
+.input-has-focus ion-label[floating] {
   color: $label-md-text-color-focused;
 }
 
-.input-has-focus .floating-label,
-.input-has-value .floating-label  {
+.input-has-focus ion-label[floating],
+.input-has-value ion-label[floating]  {
   transform: translate3d(0, 0, 0) scale(0.8);
 }
 

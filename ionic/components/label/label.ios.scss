@@ -22,7 +22,7 @@ ion-label {
   color: $label-ios-text-color;
 }
 
-.item-input ion-label + .item-input {
+ion-label + ion-input .text-input {
   margin-left: $item-ios-padding-left;
 }
 
@@ -30,26 +30,21 @@ ion-label {
 // iOS Stacked & Floating Labels
 // --------------------------------------------------
 
-.stacked-label {
+ion-label[stacked] {
   font-size: 1.2rem;
   margin-bottom: 4px;
 }
 
-.floating-label {
+ion-label[floating] {
   margin-bottom: 0;
   transform-origin: left top;
   transform: translate3d(0, 27px, 0);
   transition: transform 150ms ease-in-out;
 }
 
-.input-has-focus .floating-label,
-.input-has-value .floating-label {
+.input-has-focus ion-label[floating],
+.input-has-value ion-label[floating] {
   transform: translate3d(0, 0, 0) scale(0.8);
-}
-
-.item-input ion-label + .stacked-input,
-.item-input ion-label + .floating-input {
-  margin-left: 0;
 }
 
 

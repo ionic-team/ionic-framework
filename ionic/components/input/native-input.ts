@@ -113,6 +113,10 @@ export class NativeInput {
     return hasFocus(this.element());
   }
 
+  getValue(): string {
+    return this.element().value;
+  }
+
   /**
    * @private
    */

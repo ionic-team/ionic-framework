@@ -222,6 +222,8 @@ export class TextInputBase {
         this.onTouched(textInputHasFocus);
       }
     });
+
+    this.checkHasValue(nativeInput.getValue());
   }
 
   /**
