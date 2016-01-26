@@ -5,11 +5,11 @@ import {Button} from '../button/button';
 import {Config} from '../../config/config';
 import {Content} from '../content/content';
 import {Form} from '../../util/form';
-import {InputBase, NextInput} from './input-base';
+import {InputBase} from './input-base';
 import {IonicApp} from '../app/app';
 import {Item} from '../item/item';
 import {Label} from '../label/label';
-import {NativeInput} from './native-input';
+import {NativeInput, NextInput} from './native-input';
 import {NavController} from '../nav/nav-controller';
 import {Platform} from '../../platform/platform';
 

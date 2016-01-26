@@ -142,3 +142,21 @@ function removeClone(focusedInputEle, queryCssClass) {
     clonedInputEle.parentNode.removeChild(clonedInputEle);
   }
 }
+
+
+
+/**
+ * @private
+ */
+@Directive({
+  selector: '[next-input]'
+})
+export class NextInput {
+  @Output() focused: EventEmitter<boolean> = new EventEmitter();
+
+  @HostListener('focus')
+  receivedFocus() {
+    this.focused.emit(true);
+  }
+
+}

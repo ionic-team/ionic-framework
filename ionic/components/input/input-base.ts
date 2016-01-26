@@ -9,7 +9,7 @@ import {IonicApp} from '../app/app';
 import {Label} from '../label/label';
 import {pointerCoord, hasPointerMoved, closest}  from '../../util/dom';
 import {NavController} from '../nav/nav-controller';
-import {NativeInput} from './native-input';
+import {NativeInput, NextInput} from './native-input';
 import {Platform} from '../../platform/platform';
 
 
@@ -167,9 +167,11 @@ export class InputBase {
    */
   @ViewChild(NextInput)
   private set _nextInput(nextInput: NextInput) {
-    nextInput.focused.subscribe(() => {
-      this._form.tabFocus(this);
-    });
+    if (nextInput) {
+      nextInput.focused.subscribe(() => {
+        this._form.tabFocus(this);
+      });
+    }
   }
 
   /**
@@ -333,7 +335,6 @@ export class InputBase {
    */
   clearTextInput() {
     console.log("Should clear input");
-    //console.log(this.textInput.value);
   }
 
   /**
@@ -517,22 +518,4 @@ function getScrollAssistDuration(distanceToScroll) {
   distanceToScroll = Math.abs(distanceToScroll);
   let duration = distanceToScroll / SCROLL_ASSIST_SPEED;
   return Math.min(400, Math.max(150, duration));
-}
-
-
-
-/**
- * @private
- */
-@Directive({
-  selector: '[next-input]'
-})
-export class NextInput {
-  @Output() focused: EventEmitter<boolean> = new EventEmitter();
-
-  @HostListener('focus')
-  receivedFocus() {
-    this.focused.emit(true);
-  }
-
 }
