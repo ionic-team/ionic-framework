@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Input} from 'angular2/core';
+import {Directive, ElementRef, Input, Output, EventEmitter} from 'angular2/core';
 
 import {isDefined, isTrueProperty} from '../../util/util';
 
@@ -11,6 +11,8 @@ import {isDefined, isTrueProperty} from '../../util/util';
 export class Option {
   private _checked: any = false;
   private _value;
+
+  @Output() select: EventEmitter<any> = new EventEmitter();
 
   constructor(private _elementRef: ElementRef) {}
 

@@ -1,4 +1,4 @@
-import {Component, Optional, ElementRef, Renderer, Input, HostListener, ContentChildren, QueryList} from 'angular2/core';
+import {Component, Optional, ElementRef, Renderer, Input, Output, EventEmitter, HostListener, ContentChildren, QueryList} from 'angular2/core';
 import {NgControl} from 'angular2/common';
 
 import {Alert} from '../alert/alert';
@@ -124,6 +124,8 @@ export class Select {
   @Input() disabled: boolean = false;
   @Input() multiple: string = '';
 
+  @Output() change: EventEmitter<any> = new EventEmitter();
+
   @ContentChildren(Option) options: QueryList<Option>;
 
   constructor(
@@ -162,6 +164,7 @@ export class Select {
       if (option.checked) {
         selectedValues.push( isDefined(option.value) ? option.value : option.text );
         selectedTexts.push(option.text);
+        option.select.emit(option.value);
       }
     });
 
@@ -227,6 +230,7 @@ export class Select {
             if (selectedValues.indexOf(option.value) > -1) {
               // this option is one that was checked
               option.checked = true;
+              option.select.emit(option.value);
               selectedTexts.push(option.text);
 
             } else {
@@ -238,6 +242,7 @@ export class Select {
           this.text = selectedTexts.join(', ');
 
           this.onChange(selectedValues);
+          this.change.emit(selectedValues);
         }
       });
 
@@ -257,6 +262,7 @@ export class Select {
             if (option.value === selectedValue) {
               // this option was the one that was checked
               option.checked = true;
+              option.select.emit(option.value);
               this.text = option.text;
 
             } else {
@@ -266,6 +272,7 @@ export class Select {
           });
 
           this.onChange(selectedValue);
+          this.change.emit(selectedValue);
         }
       });
     }
@@ -288,16 +295,12 @@ export class Select {
   /**
    * @private
    */
-  onChange(val) {
-    // TODO: figure the whys and the becauses
-  }
+  onChange(val) {}
 
   /**
    * @private
    */
-  onTouched(val) {
-    // TODO: figure the whys and the becauses
-  }
+  onTouched(val) {}
 
   /**
    * @private

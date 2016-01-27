@@ -22,7 +22,7 @@
 
   <ion-item>
     <ion-label>Car Options</ion-label>
-    <ion-select [(ngModel)]="carOptions" multiple="true">
+    <ion-select [(ngModel)]="carOptions" multiple="true" (change)="carChange($event)">
       <ion-option value="backupcamera">Backup Camera</ion-option>
       <ion-option value="heatedseats">Headted Seats</ion-option>
       <ion-option value="keyless">Keyless Entry</ion-option>

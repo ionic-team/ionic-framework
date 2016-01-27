@@ -11,6 +11,10 @@ class E2EPage {
       subTitle: 'Select your favorite'
     };
   }
+
+  stpSelect() {
+    console.log('STP selected')
+  }
 }
 
 
