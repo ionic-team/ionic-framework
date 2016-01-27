@@ -7,7 +7,7 @@
 </ion-navbar>
 
 <ion-toolbar [attr.primary]="isAndroid ? '' : null">
-  <ion-segment [(ngModel)]="pet">
+  <ion-segment [(ngModel)]="pet" [attr.light]="isAndroid ? '' : null">
     <ion-segment-button value="puppies">
       Puppies
     </ion-segment-button>
@@ -17,7 +17,7 @@
     <ion-segment-button value="ducklings">
       Ducklings
     </ion-segment-button>
-  </ion-segment> 
+  </ion-segment>
 </ion-toolbar>
 
 
@@ -110,6 +110,6 @@
     </ion-list>
   </div>
 
-  
-</ion-content> 
+
+</ion-content>
 
