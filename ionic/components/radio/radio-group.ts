@@ -87,7 +87,7 @@ export class RadioGroup {
   writeValue(value) {
     this.value = isDefined(value) ? value : '';
     this._buttons.forEach(button => {
-      let isChecked = (button.value === this.value);
+      let isChecked = button.checked;
       button.setChecked(isChecked);
       if (isChecked) {
         this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-activedescendant', button.id);
