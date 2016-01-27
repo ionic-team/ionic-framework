@@ -225,7 +225,7 @@ Now:
 * Install ionicons (this will be added in the starters): `npm install --save ionicons`
 * Modify the sass `include` in your `ionic.config.js` file:
 
-  ```json
+  ```js
     sass: {
       src: ['app/theme/app.+(ios|md).scss'],
       dest: 'www/build/css',
@@ -238,7 +238,7 @@ Now:
 
 * Modify the fonts `src` in your `ionic.config.js` file:
 
-  ```json
+  ```js
     fonts: {
       src: ['node_modules/ionic-framework/fonts/**/*.+(ttf|woff|woff2)'],
       dest: "www/build/fonts"
