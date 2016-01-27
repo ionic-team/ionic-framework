@@ -67,7 +67,6 @@ export class InputBase {
 
     self._scrollMove = function(ev: UIEvent) {
       // scroll move event listener this instance can reuse
-      console.log('scrollmove', ev)
       if (!(self._nav && self._nav.isTransitioning())) {
         self.deregScrollMove();
 

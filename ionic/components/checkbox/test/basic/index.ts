@@ -26,6 +26,7 @@ class E2EApp {
 
     this.grapeDisabled = true;
     this.grapeChecked = true;
+    this.standAloneChecked = true;
   }
 
   toggleGrapeChecked() {

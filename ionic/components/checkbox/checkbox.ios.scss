@@ -22,6 +22,12 @@ $checkbox-ios-media-margin:               $item-ios-padding-media-top $item-ios-
 $checkbox-ios-disabled-opacity:           0.4 !default;
 
 
+ion-checkbox {
+  position: relative;
+  display: inline-block;
+}
+
+
 // iOS Checkbox Outer Circle: Unchecked
 // -----------------------------------------
 
@@ -78,6 +84,7 @@ $checkbox-ios-disabled-opacity:           0.4 !default;
 // -----------------------------------------
 
 .item ion-checkbox {
+  position: static;
   display: block;
   margin: $checkbox-ios-media-margin;
 }

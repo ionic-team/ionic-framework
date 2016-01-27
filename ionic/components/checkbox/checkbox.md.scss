@@ -26,6 +26,12 @@ $checkbox-md-icon-border-color-off:      darken($list-md-border-color, 40%) !def
 $checkbox-md-icon-border-color-on:       map-get($colors-md, primary) !default;
 
 
+ion-checkbox {
+  position: relative;
+  display: inline-block;
+}
+
+
 // Material Design Checkbox Outer Square: Unchecked
 // -----------------------------------------
 
@@ -82,6 +88,8 @@ $checkbox-md-icon-border-color-on:       map-get($colors-md, primary) !default;
 // -----------------------------------------
 
 .item ion-checkbox {
+  position: static;
+  display: block;
   margin: $checkbox-md-media-margin;
 }
 

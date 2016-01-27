@@ -48,6 +48,11 @@
     <button (click)="doSubmit($event)" outline small class="e2eSubmit">Submit</button>
   </p>
 
+  <p>
+    <ion-checkbox [(ngModel)]="standAloneChecked"></ion-checkbox>
+    Stand-alone checkbox: {{standAloneChecked}}
+  </p>
+
   <p aria-hidden="true" padding>
     <code>appleCtrl.dirty: {{fruitsForm.controls.appleCtrl.dirty}}</code><br>
     <code>appleCtrl.value: {{fruitsForm.controls.appleCtrl.value}}</code><br>
