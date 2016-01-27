@@ -154,6 +154,7 @@ export class InputBase {
     this.focusChange(this.hasFocus());
     nativeInput.focusChange.subscribe(textInputHasFocus => {
       this.focusChange(textInputHasFocus);
+      this.checkHasValue(nativeInput.getValue());
       if (!textInputHasFocus) {
         this.onTouched(textInputHasFocus);
       }
