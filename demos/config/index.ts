@@ -28,7 +28,7 @@ export class InitialPage {
   constructor(platform: Platform) {
     this.platform = platform;
     if (window.localStorage.getItem('configDemo') !== null) {
-      this.config = JSON.parse(window.localStorage.getItem('configDemo')); 
+      this.config = JSON.parse(window.localStorage.getItem('configDemo'));
     }
     else if (platform.is('ios')) {
       this.config = {
@@ -43,11 +43,12 @@ export class InitialPage {
         'tabbarPlacement': 'top'
       };
     }
+
+    this.initialConfig = JSON.parse(JSON.stringify(this.config));
   }
 
   load() {
     window.localStorage.setItem('configDemo', JSON.stringify(this.config));
     window.location.reload();
-  } 
+  }
 }
-
