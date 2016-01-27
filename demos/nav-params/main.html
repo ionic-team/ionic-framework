@@ -2,13 +2,13 @@
   <ion-title>Nav Params</ion-title>
 </ion-navbar>
 
-<ion-content padding>
-  <ion-row>
-    <ion-input style="width: 100%">
-      <input type="text" placeholder="Params" [(ngModel)]="myParam">
-    </ion-input>
-  </ion-row>
-  <ion-row>
-    <button secondary full block (click)="pushParams()">Push Params</button>    
-  </ion-row>
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-input placeholder="Enter Parameters" [(ngModel)]="myParam" style="width: 100%"></ion-input>
+    </ion-item>
+  </ion-list>
+  <div padding>
+    <button secondary block (click)="pushParams()">Push Parameters</button>
+  </div>
 </ion-content>

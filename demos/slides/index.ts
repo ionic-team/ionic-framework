@@ -29,7 +29,7 @@ class MyApp {
     );
   }
 
-  onInit() {
+  ngOnInit() {
     setTimeout(() => {
       this.slider = this.app.getComponent('slider');
       console.log('Got slider', this.slider);
