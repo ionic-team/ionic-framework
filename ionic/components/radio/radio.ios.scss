@@ -13,6 +13,12 @@ $radio-ios-icon-border-style:      solid !default;
 $radio-ios-disabled-opacity:       0.4 !default;
 
 
+ion-radio {
+  position: relative;
+  display: inline-block;
+}
+
+
 // iOS Radio Circle: Unchecked
 // -----------------------------------------
 
@@ -56,6 +62,7 @@ $radio-ios-disabled-opacity:       0.4 !default;
 // -----------------------------------------
 
 .item ion-radio {
+  position: static;
   display: block;
   margin: $item-ios-padding-media-top ($item-ios-padding-right / 2) $item-ios-padding-media-bottom ($item-ios-padding-left / 2);
 }

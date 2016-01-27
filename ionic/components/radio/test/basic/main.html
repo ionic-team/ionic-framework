@@ -1,5 +1,7 @@
 
-<ion-toolbar><ion-title>Radio Group</ion-title></ion-toolbar>
+<ion-toolbar>
+  <ion-title>Radio Group</ion-title>
+</ion-toolbar>
 
 
 <ion-content>
@@ -78,20 +80,20 @@
     <code><b>relationship:</b> {{relationship}}</code>
   </div>
 
-  <ion-list radio-group>
-    <ion-item>
-      <ion-label>Dogs</ion-label>
-      <ion-radio checked></ion-radio>
-    </ion-item>
-    <ion-item>
-      <ion-label>Cats</ion-label>
-      <ion-radio></ion-radio>
-    </ion-item>
-    <ion-item>
-      <ion-label>Turtles</ion-label>
-      <ion-radio></ion-radio>
-    </ion-item>
-  </ion-list>
+  <div radio-group [(ngModel)]="pet" (change)="petChange($event)">
+    <p>
+      <ion-radio checked (select)="dogSelect($event)"></ion-radio>
+      Dogs
+    </p>
+    <p>
+      <ion-radio (select)="catSelect($event)"></ion-radio>
+      Cats
+    </p>
+    <p>
+      <ion-radio (select)="turtleSelect($event)"></ion-radio>
+      Turtles
+    </p>
+  </div>
 
   <div padding>
     <code><b>pet:</b> {{pet}}</code>

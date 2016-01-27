@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Renderer, Optional, Input, Output, ContentChild, EventEmitter} from 'angular2/core';
+import {Directive, ElementRef, Renderer, Optional, Input, Output, HostListener, ContentChild, EventEmitter} from 'angular2/core';
 import {NgControl} from 'angular2/common';
 
 import {RadioButton} from './radio-button';
@@ -60,6 +60,8 @@ import {isDefined} from '../../util/util';
 })
 export class RadioGroup {
   private _buttons: Array<RadioButton> = [];
+  private _ids: number = -1;
+  private _init: boolean = false;
 
   id;
   value;
@@ -84,41 +86,65 @@ export class RadioGroup {
    * the checked value.
    * https://github.com/angular/angular/blob/master/modules/angular2/src/forms/directives/shared.ts#L34
    */
-  writeValue(value) {
-    this.value = isDefined(value) ? value : '';
-    this._buttons.forEach(button => {
-      let isChecked = button.checked;
-      button.setChecked(isChecked);
-      if (isChecked) {
-        this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-activedescendant', button.id);
+  writeValue(val) {
+    if (val !== null) {
+      let oldVal = this.value;
+
+      // set the radiogroup's value
+      this.value = val || '';
+
+      this.updateValue();
+
+      // only emit change when it...changed
+      if (this.value !== oldVal && this._init) {
+        this.change.emit(this.value);
       }
-    });
-  }
 
-  register(button: RadioButton) {
-    this._buttons.push(button);
-
-    button.select.subscribe(() => {
-      this.writeValue(button.value);
-      this.onChange(button.value);
-      this.change.emit(this);
-    });
+      this._init = true;
+    }
   }
 
   ngAfterContentInit() {
-    this._buttons.forEach(button => {
-
-      if (isDefined(this.value)) {
-        let isChecked = (button.value === this.value) || button.checked;
-        button.setChecked(isChecked);
-        if (isChecked) {
-          this.writeValue(button.value);
-          //this.onChange(button.value);
-          this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-activedescendant', button.id);
-        }
-      }
-
+    // in a setTimeout to prevent
+    // Expression '_checked in RadioButton@0:24' has changed after
+    // it was checked. Previous value: 'true'. Current value: 'false'
+    // should be available in future versions of ng2
+    setTimeout(() => {
+      this.updateValue();
     });
+  }
+
+  private updateValue() {
+    if (isDefined(this.value)) {
+      // loop through each of the radiobuttons
+      this._buttons.forEach(radioButton => {
+
+        // check this radiobutton if its value is
+        // the same as the radiogroups value
+        let isChecked = (radioButton.value === this.value);
+
+        radioButton.updateAsChecked(isChecked);
+
+        if (isChecked) {
+          // if this button is checked, then set it as
+          // the radiogroup's active descendant
+          this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-activedescendant', radioButton.id);
+        }
+      });
+    }
+  }
+
+  register(button: RadioButton): string {
+    this._buttons.push(button);
+
+    // listen for radiobutton select events
+    button.select.subscribe(() => {
+      // this radiobutton has been selected
+      this.writeValue(button.value);
+      this.onChange(button.value);
+    });
+
+    return this.id + '-' + (++this._ids);
   }
 
   @ContentChild(ListHeader)
@@ -134,16 +160,12 @@ export class RadioGroup {
   /**
    * @private
    */
-  onChange(val) {
-    // TODO: figure the whys and the becauses
-  }
+  onChange(val) {}
 
   /**
    * @private
    */
-  onTouched(val) {
-    // TODO: figure the whys and the becauses
-  }
+  onTouched(val) {}
 
   /**
    * @private

@@ -32,7 +32,7 @@ class E2EApp {
     this.currencies = ['USD', 'EUR'];
     this.selectedCurrency = 'EUR';
 
-    this.relationship = 'friends';
+    this.relationship = 'enemies';
 
   }
 
@@ -51,5 +51,21 @@ class E2EApp {
   doSubmit(event) {
     console.log('Submitting form', this.fruitsForm.value);
     event.preventDefault();
+  }
+
+  petChange(ev) {
+    console.log('petChange', ev);
+  }
+
+  dogSelect(ev) {
+    console.log('dogSelect', ev);
+  }
+
+  catSelect(ev) {
+    console.log('catSelect', ev);
+  }
+
+  turtleSelect(ev) {
+    console.log('turtleSelect', ev);
   }
 }

@@ -18,6 +18,12 @@ $radio-md-transition-easing:      cubic-bezier(.4, 0, .2, 1) !default;
 $radio-md-disabled-opacity:       0.4 !default;
 
 
+ion-radio {
+  position: relative;
+  display: inline-block;
+}
+
+
 // Material Design Radio Outer Circle: Unchecked
 // -----------------------------------------
 
@@ -82,6 +88,7 @@ $radio-md-disabled-opacity:       0.4 !default;
 // -----------------------------------------
 
 .item ion-radio {
+  position: static;
   display: block;
   margin: $item-md-padding-media-top ($item-md-padding-right / 2) $item-md-padding-media-bottom 0;
 }
