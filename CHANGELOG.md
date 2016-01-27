@@ -1,5 +1,182 @@
+<a name="2.0.0-alpha.53"></a>
+# 2.0.0-alpha.53 (2016-01-27)
+
+### Features
+
+* Normalize how `ion-item` and inner inputs/avatars/icons/etc are written
+* Only one type of `ion-item`, rather than every input also having a similar structure
+* Multiple inputs can be placed inside of an `ion-item`
+* Allow avatars/thumbnails/icons next to checkbox/radio/toggle/select/input
+* Inputs can be stand-alone components, and not required within an `ion-item`
+
+
+### Breaking Changes
+
+* Inputs are now placed inside of `ion-item`
+* Inputs do not come with their own label
+* `ion-item-content` has been replaced with `ion-label`
+* Native HTML `<input>` and `<textarea>` should not be used in items, but instead `<ion-input>` and `<ion-textarea>`
+
+
+##### Text Input Refactor
+
+Was:
+
+```
+<ion-input>
+  <ion-label>Email</ion-label>
+  <input type="email">
+</ion-input>
+
+<ion-input>
+  <ion-label>Comments</ion-label>
+  <textarea></textarea>
+</ion-input>
+```
+
+Now:
+
+```
+<ion-item>
+  <ion-label>Email</ion-label>
+  <ion-input type="email"></ion-input>
+</ion-item>
+
+<ion-item>
+  <ion-label>Comments</ion-label>
+  <ion-textarea></ion-textarea>
+</ion-item>
+
+```
+
+
+##### Checkbox Refactor
+
+Was:
+
+```
+  <ion-checkbox [(ngModel)]="data">
+    My Checkbox
+  </ion-checkbox>
+```
+
+Now:
+
+```
+  <ion-item>
+    <ion-label>My Checkbox</ion-label>
+    <ion-checkbox [(ngModel)]="data"></ion-checkbox>
+  </ion-item>
+```
+
+
+##### Radio Button Refactor
+
+Was:
+
+```
+<ion-list radio-group [(ngModel)]="data">
+
+  <ion-list-header>
+    Auto Manufacturers
+  </ion-list-header>
+
+  <ion-radio value="cord">
+    Cord
+  </ion-radio>
+
+  <ion-radio value="duesenberg" checked="true">
+    Duesenberg
+  </ion-radio>
+
+  <ion-radio value="hudson">
+    Hudson
+  </ion-radio>
+
+</ion-list>
+```
+
+Now:
+
+```
+<ion-list radio-group [(ngModel)]="data">
+
+  <ion-list-header>
+    Auto Manufacturers
+  </ion-list-header>
+
+  <ion-item>
+    <ion-label>Cord</ion-label>
+    <ion-radio value="cord"></ion-radio>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Duesenberg</ion-label>
+    <ion-radio value="duesenberg" checked="true"></ion-radio>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Hudson</ion-label>
+    <ion-radio value="hudson"></ion-radio>
+  </ion-item>
+
+</ion-list>
+```
+
+
+##### Select Refactor
+
+Was:
+
+```
+  <ion-select [(ngModel)]="gender">
+    <ion-label>Gender</ion-label>
+    <ion-option value="f" checked="true">Female</ion-option>
+    <ion-option value="m">Male</ion-option>
+  </ion-select>
+```
+
+Now:
+
+```
+  <ion-item>
+    <ion-label>Gender</ion-label>
+    <ion-select [(ngModel)]="gender">
+      <ion-option value="f" checked="true">Female</ion-option>
+      <ion-option value="m">Male</ion-option>
+    </ion-select>
+  <ion-item>
+```
+
+
+##### Toggle Refactor
+
+Was:
+
+```
+  <ion-toggle [(ngModel)]="data">
+    My Toggle
+  </ion-toggle>
+```
+
+Now:
+
+```
+  <ion-item>
+    <ion-label>My Toggle</ion-label>
+    <ion-toggle [(ngModel)]="data"></ion-toggle>
+  </ion-item>
+```
+
+
+<a name="2.0.0-alpha.52"></a>
+# 2.0.0-alpha.52 (2016-01-25)
+
+- Bug fixes
+
+
 <a name="2.0.0-alpha.51"></a>
-# 2.0.0-alpha.51 (2016-1-21)
+# 2.0.0-alpha.51 (2016-01-21)
 
 ### Breaking Changes
 
@@ -26,7 +203,7 @@
       ]
     },
   ```
-  
+
 * Modify the fonts `src` in your `ionic.config.js` file:
 
   ```
@@ -37,7 +214,7 @@
   ```
 
 <a name="2.0.0-alpha.48"></a>
-# 2.0.0-alpha.48 (2016-1-7)
+# 2.0.0-alpha.48 (2016-01-07)
 
 ### Breaking Changes
 
@@ -60,7 +237,7 @@ Now:
 
 
 <a name="2.0.0-alpha.47"></a>
-# 2.0.0-alpha.47 (2016-1-4)
+# 2.0.0-alpha.47 (2016-01-04)
 
 ### Breaking Changes
 
@@ -397,8 +574,8 @@ class MyPage {
     * Allows colors to be different per platform
     * ie: Gray navbars in iOS, blue navbars in MD. Identical HTML/JS
 * config: `tabbarStyle`, `navbarStyle` has been removed, should now use different Sass color maps instead of setting it in the config
-* text-input: class `has-value` has become `input-has-value`  
-* text-input: class `has-focus` has become `input-focused`  
+* text-input: class `has-value` has become `input-has-value`
+* text-input: class `has-focus` has become `input-focused`
 * searchbar: class `left-align` has become `searchbar-left-aligned`
 * searchbar: class `focused` has become `searchbar-focused`
 
