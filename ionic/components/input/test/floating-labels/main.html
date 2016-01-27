@@ -3,6 +3,15 @@
 
 
 <ion-content>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label floating>Params</ion-label>
+        <ion-input [(ngModel)]="myParam" type="text"></ion-input>
+        {{ myParam }}
+      </ion-item>
+    </ion-col>
+  </ion-row>
 
   <ion-list inset>
 
