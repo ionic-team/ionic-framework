@@ -222,7 +222,7 @@ Now:
 
 ##### Ionicons were moved
 
-* Install ionicons (this will be added in the starters): `npm install --save ionicons`
+* Install ionicons (this will be added in the starters): `npm install --save ionicons@latest`
 * Modify the sass `include` in your `ionic.config.js` file:
 
   ```js
