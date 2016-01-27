@@ -458,6 +458,9 @@ let menuTypes:{ [name: string]: new(...args: any[]) => MenuType } = {};
 let menuIds:number = 0;
 
 
+/**
+ * @private
+ */
 @Directive({
   selector: '.backdrop',
   host: {

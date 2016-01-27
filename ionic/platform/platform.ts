@@ -35,7 +35,11 @@ export class Platform {
   private _readyResolve: any;
   private _engineReady: any;
   private _resizeTimer: any;
-  public platformOverride: string;
+
+  /**
+   * @private
+   */
+  platformOverride: string;
 
   constructor(platforms=[]) {
     this._platforms = platforms;

@@ -41,6 +41,10 @@ export class Button {
   private _colors: Array<string> = []; // primary/secondary
   private _icon: string = null; // left/right/only
   private _disabled: boolean = false; // disabled
+
+  /**
+   * @private
+   */
   isItem: boolean;
 
   @Input() color: string;

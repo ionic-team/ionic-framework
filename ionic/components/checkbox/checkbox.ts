@@ -63,6 +63,9 @@ export class Checkbox {
   private _disabled: any = false;
   private _labelId: string;
 
+  /**
+   * @private
+   */
   id: string;
 
   @Input() value: string = '';

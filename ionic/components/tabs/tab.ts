@@ -102,6 +102,9 @@ export class Tab extends NavController {
   private _loaded: boolean;
   private _loadTimer: any;
 
+  /**
+   * @private
+   */
   btn: TabButton;
 
   @Input() root: Type;

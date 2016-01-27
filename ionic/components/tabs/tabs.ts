@@ -71,7 +71,14 @@ export class Tabs extends Ion {
   private _onReady = null;
   private _useHighlight: boolean;
 
+  /**
+   * @private
+   */
   id: number;
+
+  /**
+   * @private
+   */
   navbarContainerRef: ViewContainerRef;
   subPages: boolean;
 

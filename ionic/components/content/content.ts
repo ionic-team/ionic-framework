@@ -36,9 +36,9 @@ export class Content extends Ion {
   private _padding: number = 0;
   private _onScroll: any;
   private _scrollTo: ScrollTo;
-  
+
   scrollElement: HTMLElement;
-  
+
   /**
    * @param {ElementRef} elementRef  A reference to the component's DOM element.
    * @param {Config} config  The config object to change content's default settings.
@@ -51,7 +51,7 @@ export class Content extends Ion {
     @Optional() viewCtrl: ViewController
   ) {
     super(_elementRef);
-    
+
     if (viewCtrl) {
       viewCtrl.setContent(this);
       viewCtrl.setContentRef(_elementRef);
@@ -76,6 +76,9 @@ export class Content extends Ion {
     }
   }
 
+  /**
+   * @private
+   */
   ngOnDestroy() {
     this.scrollElement.removeEventListener('scroll', this._onScroll);
   }
@@ -106,8 +109,8 @@ export class Content extends Ion {
    * @returns {Function} A function that removes the scroll handler.
    */
   addScrollEventListener(handler) {
-    if (!this.scrollElement) { 
-      return; 
+    if (!this.scrollElement) {
+      return;
     }
 
     // ensure we're not creating duplicates
@@ -151,6 +154,7 @@ export class Content extends Ion {
   }
 
   /**
+   * @private
    * Adds the specified touchmove handler to the content's scroll element.
    *
    * ```ts

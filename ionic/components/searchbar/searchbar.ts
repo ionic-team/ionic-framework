@@ -287,18 +287,25 @@ export class Searchbar extends Ion {
    * @private
    * Write a new value to the element.
    */
-  public writeValue(value: any) {
+  writeValue(value: any) {
     this.value = value;
   }
 
-  public onChange = (_:any) => {};
-  public onTouched = () => {};
+  /**
+   * @private
+   */
+  onChange = (_:any) => {};
+
+  /**
+   * @private
+   */
+  onTouched = () => {};
 
   /**
    * @private
    * Set the function to be called when the control receives a change event.
    */
-  public registerOnChange(fn:(_:any) => {}):void {
+  registerOnChange(fn:(_:any) => {}):void {
     this.onChange = fn;
   }
 
@@ -306,7 +313,7 @@ export class Searchbar extends Ion {
    * @private
    * Set the function to be called when the control receives a touch event.
    */
-  public registerOnTouched(fn:() => {}):void {
+  registerOnTouched(fn:() => {}):void {
     this.onTouched = fn;
   }
 }

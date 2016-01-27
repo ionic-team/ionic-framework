@@ -96,7 +96,11 @@ import {isObject, isDefined, isFunction, isArray} from '../util/util';
 export class Config {
   private _c: any = {};
   private _s: any = {};
-  public platform: Platform;
+
+  /**
+   * @private
+   */
+  platform: Platform;
 
   constructor(config?) {
     this._s = config && isObject(config) && !isArray(config) ? config : {};
@@ -280,7 +284,14 @@ export class Config {
 
     return this._c[key];
   }
-  
+
+  /**
+   * @name getBoolean
+   * @description
+   * Same as `get()`, however always returns a boolean value.
+   *
+   * @param {String} [key] - the key for the config value
+   */
   getBoolean(key: string): boolean {
     let val = this.get(key);
     return (val || val === 'true') ? true : false;

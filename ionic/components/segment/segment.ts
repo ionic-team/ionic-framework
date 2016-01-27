@@ -138,8 +138,6 @@ export class SegmentButton {
 })
 export class Segment {
   value: string;
-  onChange = (_) => {};
-  onTouched = (_) => {};
 
   @Output() change: EventEmitter<SegmentButton> = new EventEmitter();
 
@@ -183,6 +181,14 @@ export class Segment {
    }
   }
 
+  /**
+   * @private
+   */
+  onChange = (_) => {};
+  /**
+   * @private
+   */
+  onTouched = (_) => {};
 
   /**
    * @private

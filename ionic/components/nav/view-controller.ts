@@ -34,11 +34,34 @@ export class ViewController {
   private _pgRef: ElementRef;
   protected _nav: NavController;
 
+  /**
+   * @private
+   */
   id: string;
+
+  /**
+   * @private
+   */
   instance: any = {};
+
+  /**
+   * @private
+   */
   state: string = '';
+
+  /**
+   * @private
+   */
   viewType: string = '';
+
+  /**
+   * @private
+   */
   onReady: any;
+
+  /**
+   * @private
+   */
   zIndex: number;
 
   @Output() private _emitter: EventEmitter<any> = new EventEmitter();
@@ -49,6 +72,9 @@ export class ViewController {
     this._emitter.subscribe(callback);
   }
 
+  /**
+   * @private
+   */
   emit(data) {
     this._emitter.emit(data);
   }
@@ -62,18 +88,30 @@ export class ViewController {
     return this._nav.remove(this._nav.indexOf(this), 1, this._leavingOpts);
   }
 
+  /**
+   * @private
+   */
   setNav(navCtrl) {
     this._nav = navCtrl;
   }
 
+  /**
+   * @private
+   */
   getTransitionName(direction) {
     return this._nav && this._nav.config.get('pageTransition');
   }
 
+  /**
+   * @private
+   */
   getNavParams() {
     return new NavParams(this.data);
   }
 
+  /**
+   * @private
+   */
   setLeavingOpts(opts) {
     this._leavingOpts = opts;
   }
@@ -174,6 +212,9 @@ export class ViewController {
     }
   }
 
+  /**
+   * @private
+   */
   setZIndex(zIndex: number, renderer: Renderer) {
     if (this._pgRef && zIndex !== this.zIndex) {
       this.zIndex = zIndex;
