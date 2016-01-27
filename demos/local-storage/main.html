@@ -2,49 +2,54 @@
   <ion-title>Local Storage</ion-title>
 </ion-navbar>
 
-<ion-content padding>
+<ion-content class="local-storage-demo outer-content">
 
-  <ion-row>
-    <ion-col width-33>
-      <ion-item>
-        <ion-input type="text" placeholder="Key" [(ngModel)]="myItem.key"></ion-input>
-      </ion-item>
-    </ion-col>
+  <ion-list no-margin>
+    <ion-list-header>Add to Local Storage</ion-list-header>
 
-    <ion-col width-33>
-      <ion-item>
-        <ion-input type="text" placeholder="Value" [(ngModel)]="myItem.value"></ion-input>
-      </ion-item>
-    </ion-col>
+    <ion-item>
+      <ion-label>Key</ion-label>
+      <ion-input type="text" placeholder="Enter a key" [(ngModel)]="myItem.key"></ion-input>
+    </ion-item>
 
-    <ion-col width-34>
-      <button full secondary (click)="set()">
-        <ion-icon name="add"></ion-icon>
-        set()
-      </button>
-    </ion-col>
-  </ion-row>
+    <ion-item>
+      <ion-label>Value</ion-label>
+      <ion-input type="text" placeholder="Enter a Value" [(ngModel)]="myItem.value"></ion-input>
+    </ion-item>
 
-  <ion-row>
+  </ion-list>
 
-    <ion-col width-33>
-      <ion-item>
-        <ion-input type="text" placeholder="Key" [(ngModel)]="delKey"></ion-input>
-      </ion-item>
-    </ion-col>
+  <div padding>
+    <button block secondary (click)="set()">
+      <ion-icon name="add"></ion-icon>
+      Add
+    </button>
+  </div>
 
-    <ion-col width-34 offset-33>
-      <button full danger (click)="remove()">
-        <ion-icon name="remove"></ion-icon>
-        remove()
-      </button>
-    </ion-col>
-  </ion-row>
+  <ion-list no-margin>
+    <ion-list-header>Delete from Local Storage</ion-list-header>
 
-  <ion-row>
-    <b>Local Storage:</b>
-    <ion-col>
-    {{localStorageDemo}}
-    </ion-col>
-  </ion-row>
+    <ion-item>
+      <ion-label>Key</ion-label>
+      <ion-input type="text" placeholder="Enter a Key" [(ngModel)]="delKey"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <div padding>
+    <button block danger (click)="remove()">
+      <ion-icon name="remove"></ion-icon>
+      Delete
+    </button>
+  </div>
+
+  <div padding>
+    <h2>Local Storage:</h2>
+    <pre>local: {{ localStorageDemo }}</pre>
+  </div>
 </ion-content>
+
+<style>
+  .local-storage-demo pre {
+    background: #f8f8f8;
+  }
+</style>
