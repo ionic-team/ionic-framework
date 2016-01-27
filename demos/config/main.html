@@ -7,8 +7,11 @@
     <ion-item>
       <ion-label>Back Button Icon</ion-label>
       <ion-select [(ngModel)]="config.backButtonIcon">
-        <ion-option value="ion-ios-arrow-back">ion-ios-arrow-back</ion-option>
-        <ion-option value="ion-md-arrow-back">ion-md-arrow-back</ion-option>
+        <ion-option value="ios-arrow-back">ios-arrow-back</ion-option>
+        <ion-option value="md-arrow-back">md-arrow-back</ion-option>
+        <ion-option value="close">close</ion-option>
+        <ion-option value="heart">heart</ion-option>
+        <ion-option value="globe">globe</ion-option>
       </ion-select>
     </ion-item>
 
@@ -45,6 +48,12 @@
     tabbarPlacement: {{initialConfig.tabbarPlacement}}
   }
 })</pre>
+
+  <div padding>
+    <button block light (click)="push()">
+      Go to Another Page
+    </button>
+  </div>
 
 </ion-content>
 
