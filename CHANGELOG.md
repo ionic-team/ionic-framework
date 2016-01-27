@@ -23,7 +23,7 @@
 
 Was:
 
-```
+```html
 <ion-input>
   <ion-label>Email</ion-label>
   <input type="email">
@@ -37,7 +37,7 @@ Was:
 
 Now:
 
-```
+```html
 <ion-item>
   <ion-label>Email</ion-label>
   <ion-input type="email"></ion-input>
@@ -55,7 +55,7 @@ Now:
 
 Was:
 
-```
+```html
   <ion-checkbox [(ngModel)]="data">
     My Checkbox
   </ion-checkbox>
@@ -63,7 +63,7 @@ Was:
 
 Now:
 
-```
+```html
   <ion-item>
     <ion-label>My Checkbox</ion-label>
     <ion-checkbox [(ngModel)]="data"></ion-checkbox>
@@ -75,7 +75,7 @@ Now:
 
 Was:
 
-```
+```html
 <ion-list radio-group [(ngModel)]="data">
 
   <ion-list-header>
@@ -99,7 +99,7 @@ Was:
 
 Now:
 
-```
+```html
 <ion-list radio-group [(ngModel)]="data">
 
   <ion-list-header>
@@ -129,7 +129,7 @@ Now:
 
 Was:
 
-```
+```html
   <ion-select [(ngModel)]="gender">
     <ion-label>Gender</ion-label>
     <ion-option value="f" checked="true">Female</ion-option>
@@ -139,7 +139,7 @@ Was:
 
 Now:
 
-```
+```html
   <ion-item>
     <ion-label>Gender</ion-label>
     <ion-select [(ngModel)]="gender">
@@ -154,7 +154,7 @@ Now:
 
 Was:
 
-```
+```html
   <ion-toggle [(ngModel)]="data">
     My Toggle
   </ion-toggle>
@@ -162,7 +162,7 @@ Was:
 
 Now:
 
-```
+```html
   <ion-item>
     <ion-label>My Toggle</ion-label>
     <ion-toggle [(ngModel)]="data"></ion-toggle>
@@ -174,7 +174,7 @@ Now:
 
 Was:
 
-```
+```html
 <ion-input fixed-label>
   <ion-label>Username</ion-label>
   <input type="text">
@@ -188,7 +188,7 @@ Was:
 
 Now:
 
-```
+```html
 <ion-input>
   <ion-label fixed>Username</ion-label>
   <ion-input></ion-input>
@@ -225,7 +225,7 @@ Now:
 * Install ionicons (this will be added in the starters): `npm install --save ionicons`
 * Modify the sass `include` in your `ionic.config.js` file:
 
-  ```
+  ```js
     sass: {
       src: ['app/theme/app.+(ios|md).scss'],
       dest: 'www/build/css',
@@ -238,7 +238,7 @@ Now:
 
 * Modify the fonts `src` in your `ionic.config.js` file:
 
-  ```
+  ```js
     fonts: {
       src: ['node_modules/ionic-framework/fonts/**/*.+(ttf|woff|woff2)'],
       dest: "www/build/fonts"
@@ -293,7 +293,7 @@ Now:
 
 Was:
 
-```
+```js
 import {Popup} from 'ionic/ionic';
 
 @Page(...)
@@ -312,7 +312,7 @@ class MyPage {
 
 Now:
 
-```
+```js
 import {Alert, NavController} from 'ionic/ionic';
 
 @Page(...)
@@ -336,7 +336,7 @@ class MyPage {
 
 Was:
 
-```
+```js
 import {Popup} from 'ionic/ionic';
 
 @Page(...)
@@ -362,7 +362,7 @@ class MyPage {
 
 Now:
 
-```
+```js
 import {Alert, NavController} from 'ionic/ionic';
 
 @Page(...)
@@ -400,7 +400,7 @@ class MyPage {
 
 Was:
 
-```
+```js
 import {Popup} from 'ionic/ionic';
 
 @Page(...)
@@ -426,7 +426,7 @@ class MyPage {
 
 Now:
 
-```
+```js
 import {Alert, NavController} from 'ionic/ionic';
 
 @Page(...)
@@ -469,7 +469,7 @@ class MyPage {
 
 Was:
 
-```
+```js
 import {ActionSheet} from 'ionic/ionic';
 
 @Page(...)
@@ -507,7 +507,7 @@ class MyPage {
 
 Now:
 
-```
+```js
 import {ActionSheet, NavController} from 'ionic/ionic';
 
 @Page(...)
@@ -551,7 +551,7 @@ class MyPage {
 
 Was:
 
-```
+```js
 import {Modal} from 'ionic/ionic';
 
 @Page(...)
@@ -570,7 +570,7 @@ class MyApp {
 
 Now:
 
-```
+```js
 import {Modal, NavController} from 'ionic/ionic';
 
 @Page(...)
@@ -660,7 +660,7 @@ class MyPage {
 4. Remove the Sass imports in JS files
 5. Update css reference in index.html (remove build/css/app.css if it exists)
 
-  ```
+  ```html
   <link ios-href="build/css/app.ios.css" rel="stylesheet">
   <link md-href="build/css/app.md.css" rel="stylesheet">
   ```
