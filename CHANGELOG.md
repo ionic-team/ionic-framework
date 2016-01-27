@@ -15,6 +15,7 @@
 * Inputs are now placed inside of `ion-item`
 * Inputs do not come with their own label
 * `ion-item-content` has been replaced with `ion-label`
+* Label attributes are placed on `ion-label` rather than `ion-input`
 * Native HTML `<input>` and `<textarea>` should not be used in items, but instead `<ion-input>` and `<ion-textarea>`
 
 
@@ -166,6 +167,37 @@ Now:
     <ion-label>My Toggle</ion-label>
     <ion-toggle [(ngModel)]="data"></ion-toggle>
   </ion-item>
+```
+
+
+##### Label Attribute Refactor
+
+Was:
+
+```
+<ion-input fixed-label>
+  <ion-label>Username</ion-label>
+  <input type="text">
+</ion-input>
+
+<ion-input floating-label>
+  <ion-label>Email</ion-label>
+  <input type="email">
+</ion-input>
+```
+
+Now:
+
+```
+<ion-input>
+  <ion-label fixed>Username</ion-label>
+  <ion-input></ion-input>
+</ion-input>
+
+<ion-input>
+  <ion-label floating>Email</ion-label>
+  <ion-input type="email"></ion-input>
+</ion-input>
 ```
 
 
