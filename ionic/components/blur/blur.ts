@@ -14,6 +14,7 @@ import {Directive, Renderer, ElementRef} from 'angular2/core';
  * ```
  *
  * @demo /docs/v2/demos/blur/
+ * @private
  */
 @Directive({
   selector: '[blur]'
