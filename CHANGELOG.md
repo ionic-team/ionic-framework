@@ -1,5 +1,5 @@
 <a name="2.0.0-alpha.53"></a>
-# 2.0.0-alpha.53 (2016-01-27)
+# 2.0.0-alpha.53 (2016-01-28)
 
 ### Features
 
@@ -199,6 +199,93 @@ Now:
   <ion-input type="email"></ion-input>
 </ion-input>
 ```
+
+* Code and syntax highlighting in markdown ([8cb2b4d](https://github.com/driftyco/ionic2/commit/8cb2b4d))
+* Merge pull request #5217 from manucorporat/2.0 ([e1b514d](https://github.com/driftyco/ionic2/commit/e1b514d))
+* Update CHANGELOG.md ([6855514](https://github.com/driftyco/ionic2/commit/6855514))
+* Update README.md ([f602795](https://github.com/driftyco/ionic2/commit/f602795))
+* Update README.md ([bc45ca1](https://github.com/driftyco/ionic2/commit/bc45ca1))
+* Update README.md ([603d1c6](https://github.com/driftyco/ionic2/commit/603d1c6))
+* Update README.md ([464ed5f](https://github.com/driftyco/ionic2/commit/464ed5f))
+* Using js instead of json ([e454279](https://github.com/driftyco/ionic2/commit/e454279))
+
+### chore
+
+* chore(changelog): label attr refactor ([ca6eef9](https://github.com/driftyco/ionic2/commit/ca6eef9))
+* chore(changelog): updates for alpha.53 ([47806dc](https://github.com/driftyco/ionic2/commit/47806dc))
+* chore(package): don't increment version in `gulp package` ([ab4c7c3](https://github.com/driftyco/ionic2/commit/ab4c7c3))
+* chore(snapshot): update snapshot to run all tests ([cb7a358](https://github.com/driftyco/ionic2/commit/cb7a358))
+
+### docs
+
+* docs(): hide methods not requiring docs ([dbc681f](https://github.com/driftyco/ionic2/commit/dbc681f))
+* docs(): update for alpha52 ([cefc305](https://github.com/driftyco/ionic2/commit/cefc305))
+* docs(blur): hide docs for blur ([4435451](https://github.com/driftyco/ionic2/commit/4435451))
+* docs(demos): clean up blur demo ([779a494](https://github.com/driftyco/ionic2/commit/779a494))
+* docs(demos): clean up nav-push-pop ([4eadc78](https://github.com/driftyco/ionic2/commit/4eadc78))
+* docs(demos): fix scroll demo to use correct attributes ([4df4afd](https://github.com/driftyco/ionic2/commit/4df4afd))
+* docs(demos): prettify ShowWhen demo ([aca9ea6](https://github.com/driftyco/ionic2/commit/aca9ea6))
+* docs(demos): prettify config some more and add another page - fix back button icon ([e982c69](https://github.com/driftyco/ionic2/commit/e982c69))
+* docs(demos): prettify nav params demo ([58dfa3d](https://github.com/driftyco/ionic2/commit/58dfa3d))
+* docs(demos): prettify the config demo ([a8bc0d2](https://github.com/driftyco/ionic2/commit/a8bc0d2))
+* docs(demos): prettify the hide-when demo ([a676d7d](https://github.com/driftyco/ionic2/commit/a676d7d))
+* docs(demos): prettify the platform demo ([b933029](https://github.com/driftyco/ionic2/commit/b933029))
+* docs(demos): prettifying local-storage demo ([8bc853f](https://github.com/driftyco/ionic2/commit/8bc853f))
+* docs(demos): prettifying modal demo ([95d03ca](https://github.com/driftyco/ionic2/commit/95d03ca))
+* docs(demos): prettifying some more local-storage ([2d691b0](https://github.com/driftyco/ionic2/commit/2d691b0))
+* docs(demos): remove attr from docs ([047a939](https://github.com/driftyco/ionic2/commit/047a939))
+* docs(demos): remove unused demos ([c68da33](https://github.com/driftyco/ionic2/commit/c68da33)), closes [#5216](https://github.com/driftyco/ionic2/issues/5216)
+* docs(demos): remove unused demos ([e50eb89](https://github.com/driftyco/ionic2/commit/e50eb89)), closes [#5216](https://github.com/driftyco/ionic2/issues/5216)
+* docs(demos): update demos to latest alpha ([59c62a0](https://github.com/driftyco/ionic2/commit/59c62a0))
+* docs(demos): update demos with item-refactor ([d7dec0a](https://github.com/driftyco/ionic2/commit/d7dec0a))
+* docs(demos): update menu demo to use menuClose attribute ([e7fe7e4](https://github.com/driftyco/ionic2/commit/e7fe7e4))
+* docs(toolbar): add subheader and footer examples ([d971f3e](https://github.com/driftyco/ionic2/commit/d971f3e)), closes [#5174](https://github.com/driftyco/ionic2/issues/5174) [#5063](https://github.com/driftyco/ionic2/issues/5063)
+* docs(toolbar): clean up docs ([18eb967](https://github.com/driftyco/ionic2/commit/18eb967))
+
+### feat
+
+* feat(checkbox): stand-alone checkbox components ([6890532](https://github.com/driftyco/ionic2/commit/6890532))
+* feat(select): emit change and select events ([e19d4e3](https://github.com/driftyco/ionic2/commit/e19d4e3)), closes [#5219](https://github.com/driftyco/ionic2/issues/5219)
+* feat(util): add margin attributes ([e22ccf4](https://github.com/driftyco/ionic2/commit/e22ccf4))
+
+### fix
+
+* fix(alert): add z-index and border-radius to fix ripple ([5b0d60d](https://github.com/driftyco/ionic2/commit/5b0d60d)), closes [#5203](https://github.com/driftyco/ionic2/issues/5203)
+* fix(blur): fix blur directive so it adds the filter and add a test ([4af0e41](https://github.com/driftyco/ionic2/commit/4af0e41))
+* fix(input): change next input imports ([70a9eb3](https://github.com/driftyco/ionic2/commit/70a9eb3))
+* fix(input): checked attr can be an empty string or no value ([e76b559](https://github.com/driftyco/ionic2/commit/e76b559))
+* fix(input): clean up CSS on inputs and labels ([2fc9753](https://github.com/driftyco/ionic2/commit/2fc9753))
+* fix(input): fix floating label on blur w/ value ([5d4a8fe](https://github.com/driftyco/ionic2/commit/5d4a8fe))
+* fix(input): fix floating/stacked label relocate ([ad7885f](https://github.com/driftyco/ionic2/commit/ad7885f))
+* fix(input): update input css/tests ([42f6b10](https://github.com/driftyco/ionic2/commit/42f6b10))
+* fix(label): fix label for item and inputs by adding flex back ([3cbbfdc](https://github.com/driftyco/ionic2/commit/3cbbfdc))
+* fix(label): remove left margin for md labels in items ([3be8952](https://github.com/driftyco/ionic2/commit/3be8952))
+* fix(menu): fix right side menu - platform becomes \_platform ([0b0500d](https://github.com/driftyco/ionic2/commit/0b0500d)), closes [#5147](https://github.com/driftyco/ionic2/issues/5147)
+* fix(radio): allow radios to check even without values ([f20ae8f](https://github.com/driftyco/ionic2/commit/f20ae8f))
+* fix(radio): prevent multiple radio buttons from being checked ([334fb3c](https://github.com/driftyco/ionic2/commit/334fb3c))
+* fix(scroll): add pull to refresh Sass back to core component ([adce1e5](https://github.com/driftyco/ionic2/commit/adce1e5))
+* fix(scroll): canOverscroll was set to false which prevented PTR from ever working ([e4b2006](https://github.com/driftyco/ionic2/commit/e4b2006))
+* fix(searchbar): modify height on the input to fix it on Canary ([e672de5](https://github.com/driftyco/ionic2/commit/e672de5)), closes [#5176](https://github.com/driftyco/ionic2/issues/5176)
+* fix(select): fix select disabled state ([eb03159](https://github.com/driftyco/ionic2/commit/eb03159))
+* fix(select): update text on ngModel change ([0a04522](https://github.com/driftyco/ionic2/commit/0a04522))
+* fix(slides): convert loop attribute to a boolean and index to a number before passing to slides ([de9a986](https://github.com/driftyco/ionic2/commit/de9a986)), closes [#5189](https://github.com/driftyco/ionic2/issues/5189)
+
+### refactor
+
+* refactor(input): break apart input source files ([aea2217](https://github.com/driftyco/ionic2/commit/aea2217))
+* refactor(input): place inputs inside of ion-item ([b3a7298](https://github.com/driftyco/ionic2/commit/b3a7298))
+
+### release
+
+* release: 2.0.0-alpha.53 ([9a78d68](https://github.com/driftyco/ionic2/commit/9a78d68))
+
+### test
+
+* test(input): add test to reproduce a floating label bug ([c1fbbb1](https://github.com/driftyco/ionic2/commit/c1fbbb1))
+* test(list): add some markup for checkboxes and avatars ([e568eb9](https://github.com/driftyco/ionic2/commit/e568eb9))
+* test(list): fix toggle to represent new ion-item ([58d994b](https://github.com/driftyco/ionic2/commit/58d994b))
+* test(radio): add e2e test for radios with no value ([f79a121](https://github.com/driftyco/ionic2/commit/f79a121))
+
 
 
 <a name="2.0.0-alpha.52"></a>
