@@ -50,7 +50,7 @@ If you'd rather do everything by hand, you can grab all the files for Ionic belo
 
 Once you have a release, use `js/ionic.js`, `js/ionic-angular.js`, and `css/ionic.css`.
 
-For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/` and `js/angular-ui-router/`.
+For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/` and `js/angular-ui/`.
 
 ## Platform Support
 
