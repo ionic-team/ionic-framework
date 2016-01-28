@@ -50,9 +50,10 @@
 ### Releasing Ionic Source
 
 1. Pull latest code
-2. Bump version in package.json
-3. `gulp publish`
-4. Sit back and have a beer :beer: (or wine :wine_glass:)
+2. Run [snapshot](#running-snapshot) & update if necessary
+3. Bump version in package.json
+4. `gulp publish`
+5. Sit back and have a beer :beer: (or wine :wine_glass:)
 
 ### Releasing Component Demos
 See [ionic-preview-app](https://github.com/driftyco/ionic-preview-app#updating-ionic-site)
