@@ -25,9 +25,6 @@ class E2EApp {
   }
 
   openPage(menu, page) {
-    // close the menu when clicking a link from the menu
-    menu.close();
-
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     let nav = this.app.getComponent('nav');
