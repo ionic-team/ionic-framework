@@ -101,7 +101,9 @@ import {Option} from '../option/option';
     '<div class="select-icon">' +
       '<div class="select-icon-inner"></div>' +
     '</div>' +
-    '<button [id]="id" ' +
+    '<button aria-haspopup="true" ' +
+            '[id]="id" ' +
+            '[attr.aria-labelledby]="_labelId" ' +
             '[attr.aria-disabled]="_disabled" ' +
             'class="item-cover">' +
     '</button>',
@@ -127,7 +129,6 @@ export class Select {
   @Input() okText: string = 'OK';
   @Input() alertOptions: any = {};
   @Input() checked: any = false;
-  @Input() disabled: boolean = false;
 
   @Output() change: EventEmitter<any> = new EventEmitter();
 
@@ -161,9 +162,11 @@ export class Select {
    */
   @HostListener('click', ['$event'])
   private _click(ev) {
-    console.debug('select, open alert');
     ev.preventDefault();
     ev.stopPropagation();
+
+    if (this._disabled) return;
+    console.debug('select, open alert');
 
     // the user may have assigned some options specifically for the alert
     let alertOptions = merge({}, this.alertOptions);
@@ -228,8 +231,10 @@ export class Select {
 
   set value(val: any) {
     // passed in value could be either an array, undefined or a string
-    this._values = (Array.isArray(val) ? val : isBlank(val) ? [] : [val]);
-    this.updateOptions();
+    if (this._disabled) {
+      this._values = (Array.isArray(val) ? val : isBlank(val) ? [] : [val]);
+      this.updateOptions();
+    }
   }
 
   get text() {
@@ -272,6 +277,16 @@ export class Select {
     setTimeout(()=> {
       this.onChange(this._values);
     });
+  }
+
+  @Input()
+  get disabled() {
+    return this._disabled;
+  }
+
+  set disabled(val) {
+    this._disabled = isTrueProperty(val);
+    this._item && this._item.setCssClass('item-select-disabled', this._disabled);
   }
 
   /**

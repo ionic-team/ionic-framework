@@ -21,3 +21,9 @@ ion-select {
 .item-multiple-inputs ion-select {
   position: relative;
 }
+
+.select-disabled,
+.item-select-disabled ion-label {
+  opacity: 0.4;
+  pointer-events: none;
+}
