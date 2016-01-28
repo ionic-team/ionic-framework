@@ -51,7 +51,7 @@ export class ModalContentPage {
         this.myParam = params.get('myParam');
     }
 
-    closeModal() {
+    dismiss() {
       this.viewCtrl.dismiss();
     }
 }
