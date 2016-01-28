@@ -3,12 +3,16 @@
 </ion-navbar>
 
 <ion-content>
-  <ion-list>
+  <ion-list no-margin>
+    <ion-list-header>
+      Enter Parameters to Pass to the Next Page
+    </ion-list-header>
     <ion-item>
-      <ion-input placeholder="Enter Parameters" [(ngModel)]="myParam" style="width: 100%"></ion-input>
+      <ion-label>Parameters</ion-label>
+      <ion-input placeholder="Enter Parameters" [(ngModel)]="myParam"></ion-input>
     </ion-item>
   </ion-list>
   <div padding>
-    <button secondary block (click)="pushParams()">Push Parameters</button>
+    <button secondary block (click)="pushParams()">Navigate with Parameters</button>
   </div>
 </ion-content>

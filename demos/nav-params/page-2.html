@@ -1,7 +1,13 @@
 <ion-navbar *navbar>
-  <ion-title>Modals</ion-title>
+  <ion-title>Nav Params</ion-title>
 </ion-navbar>
 
 <ion-content padding>
-  <div>Parameters entered: {{myParam}}</div>
+  <div [hidden]="!myParam">
+    <h5>Parameters passed:</h5>
+    <p>{{myParam}}</p>
+  </div>
+  <div [hidden]="myParam">
+    <p>No parameters passed.</p>
+  </div>
 </ion-content>
