@@ -47,6 +47,8 @@
 
 # Releasing
 
+### Releasing Ionic Source
+
 1. Pull latest code
 2. Bump version in package.json
 3. `gulp publish`
