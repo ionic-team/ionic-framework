@@ -2,8 +2,29 @@
   <ion-title>ShowWhen</ion-title>
 </ion-navbar>
 
-<ion-content padding>
-  <p showWhen="ios">
-    <b>(showWhen="ios")</b> This text is shown on iOS only. Click the Android tab to hide this text.
-  </p>
+<ion-content padding class="show-when-demo">
+  <h5>If the platform is Android, it will show the Android logo. If the platform is iOS, it will show the Apple logo.</h5>
+
+  <div class="icon-div" showWhen="android">
+    <ion-icon name="logo-android"></ion-icon><br>
+    <code>&lt;div showWhen="android"&gt;</code>
+  </div>
+  <div class="icon-div" showWhen="ios">
+    <ion-icon name="logo-apple"></ion-icon><br>
+    <code>&lt;div showWhen="ios"&gt;</code>
+  </div>
 </ion-content>
+
+<style>
+  .show-when-demo .icon-div {
+    text-align: center;
+  }
+
+  .show-when-demo .icon-div ion-icon {
+    font-size: 200px;
+  }
+
+  .show-when-demo .icon-div code {
+    background: #f8f8f8;
+  }
+</style>
