@@ -6,6 +6,16 @@ import {App, Page} from 'ionic/ionic';
 })
 class E2EPage {
 
+  constructor() {
+    this.petOptions = [
+      { text: 'Bird', value: 'bird' },
+      { text: 'Cat', value: 'cat', checked: true },
+      { text: 'Dog', value: 'dog', checked: true },
+      { text: 'Honey Badger', value: 'honeybadger' },
+      { text: 'Pig', value: 'pig' },
+    ];
+  }
+
   carChange(selectedValues) {
     console.log('carChange', selectedValues);
   }

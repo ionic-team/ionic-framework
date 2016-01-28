@@ -6,12 +6,12 @@
 ion-select {
   display: flex;
   overflow: hidden;
+  max-width: 45%;
 }
 
 .select-text {
   flex: 1;
   min-width: 16px;
-  max-width: 120px;
   font-size: inherit;
   white-space: nowrap;
   overflow: hidden;

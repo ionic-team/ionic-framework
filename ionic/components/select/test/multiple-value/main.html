@@ -21,8 +21,8 @@
   </ion-item>
 
   <ion-item>
-    <ion-label>Car Options</ion-label>
-    <ion-select [(ngModel)]="carOptions" multiple="true" (change)="carChange($event)">
+    <ion-label>Car Features</ion-label>
+    <ion-select [(ngModel)]="carFeatures" [multiple]="true" (change)="carChange($event)">
       <ion-option value="backupcamera">Backup Camera</ion-option>
       <ion-option value="heatedseats">Headted Seats</ion-option>
       <ion-option value="keyless">Keyless Entry</ion-option>
@@ -32,9 +32,17 @@
     </ion-select>
   </ion-item>
 
+  <ion-item>
+    <ion-label>Pets</ion-label>
+    <ion-select [(ngModel)]="pets" multiple>
+      <ion-option *ngFor="#o of petOptions" [value]="o.value" [checked]="o.checked">{{o.text}}</ion-option>
+    </ion-select>
+  </ion-item>
+
   <p aria-hidden="true" padding>
     <code>toppings: {{toppings}}</code><br>
-    <code>carOptions: {{carOptions}}</code><br>
+    <code>carFeatures: {{carFeatures}}</code><br>
+    <code>pets: {{pets}}</code><br>
   </p>
 
 </ion-content>

@@ -4,7 +4,7 @@ import {NgControl} from 'angular2/common';
 import {Alert} from '../alert/alert';
 import {Form} from '../../util/form';
 import {Item} from '../item/item';
-import {merge, isDefined, isTrueProperty} from '../../util/util';
+import {merge, isTrueProperty, isBlank} from '../../util/util';
 import {NavController} from '../nav/nav-controller';
 import {Option} from '../option/option';
 
@@ -97,7 +97,7 @@ import {Option} from '../option/option';
 @Component({
   selector: 'ion-select',
   template:
-    '<div class="select-text">{{text}}</div>' +
+    '<div class="select-text">{{_text}}</div>' +
     '<div class="select-icon">' +
       '<div class="select-icon-inner"></div>' +
     '</div>' +
@@ -112,21 +112,24 @@ import {Option} from '../option/option';
 export class Select {
   private _disabled: any = false;
   private _labelId: string;
+  private _multi: boolean = false;
+  private _options: QueryList<Option>;
+  private _values: Array<string> = [];
+  private _texts: Array<string> = [];
+  private _text: string = '';
 
+  /**
+   * @private
+   */
   id: string;
-  text: string = '';
 
   @Input() cancelText: string = 'Cancel';
   @Input() okText: string = 'OK';
-  @Input() value: string = '';
   @Input() alertOptions: any = {};
   @Input() checked: any = false;
   @Input() disabled: boolean = false;
-  @Input() multiple: string = '';
 
   @Output() change: EventEmitter<any> = new EventEmitter();
-
-  @ContentChildren(Option) options: QueryList<Option>;
 
   constructor(
     private _form: Form,
@@ -156,36 +159,11 @@ export class Select {
   /**
    * @private
    */
-  ngAfterContentInit() {
-    let selectedValues = [];
-    let selectedTexts = [];
-
-    this.options.toArray().forEach(option => {
-      if (option.checked) {
-        selectedValues.push( isDefined(option.value) ? option.value : option.text );
-        selectedTexts.push(option.text);
-        option.select.emit(option.value);
-      }
-    });
-
-    this.value = selectedValues.join(',');
-    this.text = selectedTexts.join(', ');
-
-    setTimeout(()=> {
-      this.onChange(this.value);
-    });
-  }
-
-  /**
-   * @private
-   */
   @HostListener('click', ['$event'])
   private _click(ev) {
     console.debug('select, open alert');
     ev.preventDefault();
     ev.stopPropagation();
-
-    let isMulti = this.multiple === 'true';
 
     // the user may have assigned some options specifically for the alert
     let alertOptions = merge({}, this.alertOptions);
@@ -201,9 +179,9 @@ export class Select {
 
     // user cannot provide inputs from alertOptions
     // alert inputs must be created by ionic from ion-options
-    alertOptions.inputs = this.options.toArray().map(input => {
+    alertOptions.inputs = this._options.toArray().map(input => {
       return {
-        type: (isMulti ? 'checkbox' : 'radio'),
+        type: (this._multi ? 'checkbox' : 'radio'),
         label: input.text,
         value: input.value,
         checked: input.checked
@@ -213,71 +191,87 @@ export class Select {
     // create the alert instance from our built up alertOptions
     let alert = Alert.create(alertOptions);
 
-    if (isMulti) {
+    if (this._multi) {
       // use checkboxes
       alert.setCssClass('select-alert multiple-select-alert');
-
-      alert.addButton({
-        text: this.okText,
-        handler: selectedValues => {
-          // passed an array of all the values which were checked
-          this.value = selectedValues;
-
-          // keep a list of all the selected texts
-          let selectedTexts = [];
-
-          this.options.toArray().forEach(option => {
-            if (selectedValues.indexOf(option.value) > -1) {
-              // this option is one that was checked
-              option.checked = true;
-              option.select.emit(option.value);
-              selectedTexts.push(option.text);
-
-            } else {
-              // this option was not checked
-              option.checked = false;
-            }
-          });
-
-          this.text = selectedTexts.join(', ');
-
-          this.onChange(selectedValues);
-          this.change.emit(selectedValues);
-        }
-      });
 
     } else {
       // use radio buttons
       alert.setCssClass('select-alert single-select-alert');
+    }
 
-      alert.addButton({
-        text: this.okText,
-        handler: selectedValue => {
-          // passed the single value that was checked
-          // or undefined if nothing was checked
-          this.value = selectedValue;
+    alert.addButton({
+      text: this.okText,
+      handler: selectedValues => {
+        this.value = selectedValues;
+        this.onChange(selectedValues);
+        this.change.emit(selectedValues);
+      }
+    });
 
-          this.text = '';
-          this.options.toArray().forEach(option => {
-            if (option.value === selectedValue) {
-              // this option was the one that was checked
-              option.checked = true;
-              option.select.emit(option.value);
-              this.text = option.text;
+    this._nav.present(alert, alertOptions);
+  }
 
-            } else {
-              // this option was not checked
-              option.checked = false;
-            }
-          });
+  @Input()
+  get multiple() {
+    return this._multi;
+  }
 
-          this.onChange(selectedValue);
-          this.change.emit(selectedValue);
+  set multiple(val) {
+    this._multi = isTrueProperty(val);
+  }
+
+  @Input()
+  get value(): any {
+    return (this._multi ? this._values : this._values.join());
+  }
+
+  set value(val: any) {
+    // passed in value could be either an array, undefined or a string
+    this._values = (Array.isArray(val) ? val : isBlank(val) ? [] : [val]);
+    this.updateOptions();
+  }
+
+  get text() {
+    return (this._multi ? this._texts : this._texts.join());
+  }
+
+  @ContentChildren(Option)
+  private set options(val: QueryList<Option>) {
+    this._options = val;
+
+    if (!this._values.length) {
+      // there are no values set at this point
+      // so check to see who should be checked
+      this._values = val.toArray().filter(o => o.checked).map(o => o.value);
+    }
+
+    this.updateOptions();
+  }
+
+  private updateOptions() {
+    this._texts = [];
+
+    if (this._options) {
+      this._options.toArray().forEach(option => {
+        // check this option if the option's value is in the values array
+        option.checked = (this._values.indexOf(option.value) > -1);
+        if (option.checked) {
+          this._texts.push(option.text);
         }
       });
     }
 
-    this._nav.present(alert, alertOptions);
+    this._text = this._texts.join(', ');
+  }
+
+  ngAfterContentInit() {
+    // using a setTimeout here to prevent
+    // "has changed after it was checked" error
+    // this will be fixed in future ng2 versions
+    setTimeout(()=> {
+      this.onChange(this._values);
+    });
   }
 
   /**
@@ -286,9 +280,9 @@ export class Select {
    * the checked value.
    * https://github.com/angular/angular/blob/master/modules/angular2/src/forms/directives/shared.ts#L34
    */
-  writeValue(value) {
-    if (value !== null) {
-      this.value = value;
+  writeValue(val) {
+    if (!isBlank(val)) {
+      this.value = val;
     }
   }
 
