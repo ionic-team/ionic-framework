@@ -199,15 +199,10 @@ Now:
   <ion-input type="email"></ion-input>
 </ion-input>
 ```
+### misc
 
 * Code and syntax highlighting in markdown ([8cb2b4d](https://github.com/driftyco/ionic2/commit/8cb2b4d))
 * Merge pull request #5217 from manucorporat/2.0 ([e1b514d](https://github.com/driftyco/ionic2/commit/e1b514d))
-* Update CHANGELOG.md ([6855514](https://github.com/driftyco/ionic2/commit/6855514))
-* Update README.md ([f602795](https://github.com/driftyco/ionic2/commit/f602795))
-* Update README.md ([bc45ca1](https://github.com/driftyco/ionic2/commit/bc45ca1))
-* Update README.md ([603d1c6](https://github.com/driftyco/ionic2/commit/603d1c6))
-* Update README.md ([464ed5f](https://github.com/driftyco/ionic2/commit/464ed5f))
-* Using js instead of json ([e454279](https://github.com/driftyco/ionic2/commit/e454279))
 
 ### chore
 
