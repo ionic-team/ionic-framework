@@ -120,6 +120,10 @@
   box-shadow: none;
 }
 
+.item-toggle.activated {
+  @include item-style($item-default-bg, $item-default-border, $item-default-text);
+}
+
 .item-toggle,
 .item-toggle.item-complex .item-content {
   // make sure list item content have enough padding on right to fit the toggle
