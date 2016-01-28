@@ -53,3 +53,9 @@
 2. Bump version in package.json
 3. `gulp publish`
 4. Sit back and have a beer :beer: (or wine :wine_glass:)
+
+### Releasing Component Demos
+See [ionic-preview-app](https://github.com/driftyco/ionic-preview-app#updating-ionic-site)
+
+### Releasing API Demos
+TODO
