@@ -1,3 +1,6 @@
+machine:
+  node:
+    version: 4.1.0
 test:
   override:
     - echo "Automatically marking tests as passing for now"
