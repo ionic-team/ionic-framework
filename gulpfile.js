@@ -486,11 +486,11 @@ gulp.task('publish', ['package'], function(done){
 
   npmCmd.on('close', function() {
     // update package.json
-    if (!err) {
-      var packageJSON = require('./package.json');
-      packageJSON.version = semver.inc(packageJSON.version, 'prerelease', 'alpha');
-      fs.writeFileSync('package.json', JSON.stringify(packageJSON, null, 2));
-    }
+    // if (!err) {
+    //   var packageJSON = require('./package.json');
+    //   packageJSON.version = semver.inc(packageJSON.version, 'prerelease', 'alpha');
+    //   fs.writeFileSync('package.json', JSON.stringify(packageJSON, null, 2));
+    // }
     done();
   });
 
