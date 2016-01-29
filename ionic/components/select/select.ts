@@ -231,10 +231,8 @@ export class Select {
 
   set value(val: any) {
     // passed in value could be either an array, undefined or a string
-    if (this._disabled) {
-      this._values = (Array.isArray(val) ? val : isBlank(val) ? [] : [val]);
-      this.updateOptions();
-    }
+    this._values = (Array.isArray(val) ? val : isBlank(val) ? [] : [val]);
+    this.updateOptions();
   }
 
   get text() {
