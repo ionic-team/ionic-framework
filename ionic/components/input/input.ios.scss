@@ -25,7 +25,7 @@ $text-input-ios-input-clear-icon-size:     18px !default;
 // --------------------------------------------------
 
 .inset-input {
-  margin: ($item-ios-padding-top / 2) $item-ios-padding-right ($item-ios-padding-bottom / 2) $item-ios-padding-left;
+  margin: ($item-ios-padding-top / 2) $item-ios-padding-right ($item-ios-padding-bottom / 2) 0;
   padding: ($item-ios-padding-top / 2) ($item-ios-padding-right / 2) ($item-ios-padding-bottom / 2) ($item-ios-padding-left / 2);
 }
 

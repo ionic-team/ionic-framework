@@ -22,7 +22,8 @@ ion-label {
   color: $label-ios-text-color;
 }
 
-ion-label + ion-input .text-input {
+ion-label + ion-input .text-input,
+ion-label + ion-textarea .text-input {
   margin-left: $item-ios-padding-left;
 }
 
