@@ -25,6 +25,9 @@ $checkbox-md-icon-border-radius:         2px !default;
 $checkbox-md-icon-border-color-off:      darken($list-md-border-color, 40%) !default;
 $checkbox-md-icon-border-color-on:       map-get($colors-md, primary) !default;
 
+$checkbox-md-transition-duration:        280ms !default;
+$checkbox-md-transition-easing:          cubic-bezier(.4,0,.2,1) !default;
+
 
 ion-checkbox {
   position: relative;
@@ -44,6 +47,10 @@ ion-checkbox {
   border-style: $checkbox-md-icon-border-style;
   border-color: $checkbox-md-icon-border-color-off;
   background-color: $checkbox-md-icon-background-color-off;
+
+  transition-property: background;
+  transition-duration: $checkbox-md-transition-duration;
+  transition-timing-function: $checkbox-md-transition-easing;
 }
 
 
