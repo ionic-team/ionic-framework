@@ -181,8 +181,9 @@ export class InputBase {
    * the checked value.
    * https://github.com/angular/angular/blob/master/modules/angular2/src/forms/directives/shared.ts#L34
    */
-  writeValue(value) {
-    this._value = value;
+  writeValue(val) {
+    this._value = val;
+    this.checkHasValue(val);
   }
 
   /**
