@@ -12,6 +12,30 @@
 
 ### Breaking Changes
 
+* CSS may not get updated if your `ionic.config` file is not correct:
+
+  If you have the following directory structure:
+
+  ```
+  │   ├── theme/                         * App theme files
+  │   │   ├── app.core.scss              * App Shared Sass Imports
+  │   │   ├── app.ios.scss               * iOS Sass Imports & iOS Variables
+  │   │   ├── app.md.scss                * MD Sass Imports & MD Variables
+  │   │   └── app.variables.scss         * App Shared Sass Variables
+  ```
+
+  Make sure the `ionic.config` file looks like this:
+
+  ```
+  sass: {
+    src: ['app/theme/app.+(ios|md).scss'],
+    dest: 'www/build/css',
+    include: [
+      'node_modules/ionic-framework',
+      'node_modules/ionicons/dist/scss'
+    ]
+  },
+  ```
 * Inputs are now placed inside of `ion-item`
 * Inputs do not come with their own label
 * `ion-item-content` has been replaced with `ion-label`
