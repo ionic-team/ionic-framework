@@ -4,7 +4,7 @@ version: "<$ version.current.name $>"
 versionHref: "<$ version.current.href $>"
 path: "<$ doc.path $>"
 category: api
-id: "{{<$ doc.name $> | slugify}}"
+id: "<$ doc.name|lower|replace(' ','-') $>"
 title: "<@ if doc.docType == "directive" @><$ doc.name | dashCase $><@ else @><$ doc.name $><@ endif @>"
 header_sub_title: "<$ doc.docType | capital $> in module <$ doc.module $>"
 doc: "<$ doc.name $>"
