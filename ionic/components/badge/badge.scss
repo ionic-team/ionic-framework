@@ -5,6 +5,7 @@
 
 $badge-font-size:                 1.3rem !default;
 $badge-font-weight:               bold !default;
+$badge-background-color:          map-get($colors, primary);
 
 
 ion-badge {
@@ -21,7 +22,8 @@ ion-badge {
   font-weight: $badge-font-weight;
   line-height: 1;
 
-  background: #ccc;
+  background-color: $badge-background-color;
+  color: inverse($badge-background-color);
 
   &:empty {
     display: none;
