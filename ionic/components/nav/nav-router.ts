@@ -114,7 +114,7 @@ export class NavRouter extends RouterOutlet {
 class ResolvedInstruction extends Instruction {
   constructor(public component: ComponentInstruction, public child: Instruction,
               public auxInstruction: {[key: string]: Instruction}) {
-    super();
+    super(component, child, auxInstruction);
   }
 
   resolveComponent(): Promise<ComponentInstruction> {

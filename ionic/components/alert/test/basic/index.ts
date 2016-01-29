@@ -6,8 +6,7 @@ import {App, Page, Alert, NavController} from 'ionic/ionic';
 })
 class E2EPage {
 
-  constructor(nav: NavController) {
-    this.nav = nav;
+  constructor(private nav: NavController) {
     this.testConfirmOpen = false;
     this.testPromptOpen = false;
     this.testConfirmResult = '';
@@ -31,6 +30,7 @@ class E2EPage {
     alert.setMessage('Message <strong>text</strong>!!!');
     alert.addButton({
       text: 'Cancel',
+      role: 'cancel',
       handler: () => {
         console.log('Confirm Cancel');
         this.testConfirmResult = 'Cancel';
@@ -88,8 +88,8 @@ class E2EPage {
       this.testPromptOpen = true;
     });
 
-    alert.onDismiss(data => {
-      console.log('onDismiss data', data);
+    alert.onDismiss((data, role) => {
+      console.log('onDismiss, data:', data, 'role:', role);
     });
   }
 

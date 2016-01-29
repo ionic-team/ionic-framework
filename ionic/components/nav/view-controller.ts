@@ -83,8 +83,8 @@ export class ViewController {
     this._onDismiss = callback;
   }
 
-  dismiss(data) {
-    this._onDismiss && this._onDismiss(data);
+  dismiss(data, role?) {
+    this._onDismiss && this._onDismiss(data, role);
     return this._nav.remove(this._nav.indexOf(this), 1, this._leavingOpts);
   }
 
