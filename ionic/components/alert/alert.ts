@@ -260,7 +260,7 @@ export class Alert extends ViewController {
         '<template ngSwitchWhen="checkbox">' +
           '<div class="alert-checkbox-group">' +
             '<div *ngFor="#i of d.inputs" (click)="cbClick(i)" [attr.aria-checked]="i.checked" class="alert-tappable alert-checkbox" tappable role="checkbox">' +
-              '<div class="alert-checkbox-icon"></div>' +
+              '<div class="alert-checkbox-icon"><div class="alert-checkbox-inner"></div></div>' +
               '<div class="alert-checkbox-label">' +
                 '{{i.label}}' +
               '</div>' +
