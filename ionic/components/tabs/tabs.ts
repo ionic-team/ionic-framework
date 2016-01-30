@@ -17,6 +17,7 @@ import {isUndefined} from '../../util/util';
 
 /**
  * @name Tabs
+ * @property {any} [selectedIndex] - The default selected tab index when first loaded. If a selected index wasn't provided then it'll use `0`, the first tab.
  * @property {any} [tabbarPlacement] - set position of the tabbar, top or bottom
  * @property {any} [tabbarIcons] - set the position of the tabbar's icons: top, bottom, left, right, hide
  * @property {any} [preloadTabs] - sets whether to preload all the tabs, true or false
