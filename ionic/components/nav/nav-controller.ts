@@ -643,13 +643,16 @@ export class NavController extends Ion {
    *  }
    * ```
    *
-   * @param {number} startIndex  The starting index to remove views from the nav stack
-   * @param {removeCount} [opts={}]  The number of views to remove, defaults to remove `1`.
-   * @param {object} [opts={}] Any options you want to use pass to transtion
-   * @returns {Promise} Returns a promise when the view has been removed
+   * @param {number} [startIndex]  The starting index to remove pages from the stack. Default is the index of the last page.
+   * @param {number} [removeCount]  The number of pages to remove, defaults to remove `1`.
+   * @param {object} [opts={}] Any options you want to use pass to transtion.
+   * @returns {Promise} Returns a promise when the page has been removed.
    */
-  remove(startIndex: number, removeCount: number = 1, opts: any = {}): Promise<any> {
-    if (startIndex < 0 || startIndex >= this._views.length) {
+  remove(startIndex: number = -1, removeCount: number = 1, opts: any = {}): Promise<any> {
+    if (startIndex === -1) {
+      startIndex = this._views.length - 1;
+
+    } else if (startIndex < 0 || startIndex >= this._views.length) {
       return Promise.reject("remove index out of range");
     }
 
