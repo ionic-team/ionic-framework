@@ -212,9 +212,15 @@ ion-alert {
 // iOS Alert Button
 // --------------------------------------------------
 
+.alert-button-group {
+  flex-wrap: wrap;
+  margin-right: -1px;
+}
+
 .alert-button {
   margin: 0;
-  flex: 1;
+  flex: 1 1 auto;
+  min-width: 50%:
   font-size: $alert-ios-button-font-size;
   min-height: $alert-ios-button-min-height;
   border-radius: $alert-ios-button-border-radius;
