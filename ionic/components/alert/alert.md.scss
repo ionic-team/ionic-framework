@@ -211,6 +211,7 @@ $alert-md-buttons-justify-content:        flex-end !default;
 .alert-button-group {
   padding: $alert-md-buttons-padding;
   justify-content: $alert-md-buttons-justify-content;
+  flex-wrap: wrap-reverse;
 }
 
 .alert-button {
