@@ -133,6 +133,12 @@ ion-buttons[right] {
   font-weight: 500;
 }
 
+.bar-button-solid,
+.bar-button-outline {
+  // restrict the ripple to button size
+  overflow: hidden;
+}
+
 @mixin md-bar-button-default($color-name, $color-value) {
 
   .bar-button-#{$color-name} {
