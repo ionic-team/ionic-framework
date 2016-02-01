@@ -32,16 +32,24 @@ import {Menu} from './menu';
   }
 })
 export class MenuToggle {
+
+  /**
+   * @private
+   */
   @Input() menuToggle;
+
+  /**
+   * @private
+   */
   withinNavbar: boolean;
 
   constructor(
-    private app: IonicApp,
+    private _app: IonicApp,
     elementRef: ElementRef,
-    @Optional() private viewCtrl: ViewController,
-    @Optional() private navbar: Navbar
+    @Optional() private _viewCtrl: ViewController,
+    @Optional() private _navbar: Navbar
   ) {
-    this.withinNavbar = !!navbar;
+    this.withinNavbar = !!_navbar;
 
     // Deprecation warning
     if (this.withinNavbar && elementRef.nativeElement.tagName === 'A') {
@@ -54,7 +62,7 @@ export class MenuToggle {
   */
   @HostListener('click')
   toggle() {
-    let menu = Menu.getById(this.app, this.menuToggle);
+    let menu = Menu.getById(this._app, this.menuToggle);
     menu && menu.toggle();
   }
 
@@ -62,8 +70,8 @@ export class MenuToggle {
   * @private
   */
   get isHidden() {
-    if (this.withinNavbar && this.viewCtrl) {
-      return !this.viewCtrl.isRoot();
+    if (this.withinNavbar && this._viewCtrl) {
+      return !this._viewCtrl.isRoot();
     }
     return false;
   }

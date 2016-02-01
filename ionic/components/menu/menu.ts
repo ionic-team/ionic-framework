@@ -109,19 +109,66 @@ export class Menu extends Ion {
   private _targetGesture: Gesture;
   private _type: MenuType;
 
+
+  /**
+   * @private
+   */
   isOpen: boolean = false;
+
+  /**
+   * @private
+   */
   isEnabled: boolean = true;
+
+  /**
+   * @private
+   */
   isSwipeEnabled: boolean = true;
+
+  /**
+   * @private
+   */
   backdrop: MenuBackdrop;
+
+  /**
+   * @private
+   */
   onContentClick: EventListener;
 
+
+  /**
+   * @private
+   */
   @Input() content: any;
+
+  /**
+   * @private
+   */
   @Input() id: string;
+
+  /**
+   * @private
+   */
   @Input() side: string;
+
+  /**
+   * @private
+   */
   @Input() type: string;
+
+  /**
+   * @private
+   */
   @Input() swipeEnabled: string;
+
+  /**
+   * @private
+   */
   @Input() maxEdgeStart;
 
+  /**
+   * @private
+   */
   @Output() opening: EventEmitter<any> = new EventEmitter();
 
   constructor(
@@ -229,7 +276,7 @@ export class Menu extends Ion {
 
   /**
    * Sets the state of the Menu to open or not.
-   * @param {boolean} isOpen  If the Menu is open or not.
+   * @param {boolean} shouldOpen  If the Menu is open or not.
    * @return {Promise} returns a promise once set
    */
   setOpen(shouldOpen) {

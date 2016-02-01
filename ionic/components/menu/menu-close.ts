@@ -30,6 +30,10 @@ import {Menu} from './menu';
   selector: '[menuClose]'
 })
 export class MenuClose {
+
+  /**
+   * @private
+   */
   @Input() menuClose;
 
   constructor(private _app: IonicApp) {}
