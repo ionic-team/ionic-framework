@@ -47,6 +47,9 @@ export class Button {
    */
   isItem: boolean;
 
+  /**
+   * @private
+   */
   @Input() color: string;
 
   constructor(
