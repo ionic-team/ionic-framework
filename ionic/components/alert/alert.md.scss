@@ -211,6 +211,7 @@ $alert-md-buttons-justify-content:        flex-end !default;
 .alert-button-group {
   padding: $alert-md-buttons-padding;
   justify-content: $alert-md-buttons-justify-content;
+  flex-wrap: wrap-reverse;
 }
 
 .alert-button {
@@ -222,6 +223,7 @@ $alert-md-buttons-justify-content:        flex-end !default;
   background-color: $alert-md-button-background-color;
   border-radius: $alert-md-button-border-radius;
   text-transform: uppercase;
+  text-align: right;
 
   &.activated {
     opacity: 1;

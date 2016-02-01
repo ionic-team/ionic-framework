@@ -69,6 +69,11 @@ ion-alert {
 .alert-button-group {
   display: flex;
   flex-direction: row;
+
+  &.vertical {
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
 }
 
 .alert-button {

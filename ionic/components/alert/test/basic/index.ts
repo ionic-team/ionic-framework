@@ -51,6 +51,25 @@ class E2EPage {
     });
   }
 
+  doAlertLongMessage() {
+    let alert = Alert.create({
+      title: 'Alert',
+      message: 'Message <strong>text</strong>!!!',
+      buttons: ['Cancel', 'Continue to grant access']
+    });
+    this.nav.present(alert);
+  }
+
+  doMultipleButtons() {
+    let alert = Alert.create({
+      title: 'Alert',
+      subTitle: 'Subtitle',
+      message: 'This is an alert message.',
+      buttons: ['Cancel', 'Continue', 'Delete']
+    });
+    this.nav.present(alert);
+  }
+
   doPrompt() {
     let alert = Alert.create();
     alert.setTitle('Prompt!');
