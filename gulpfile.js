@@ -467,11 +467,53 @@ gulp.task('package', ['src.release'], function(done){
   done();
 });
 
-gulp.task('publish', ['package'], function(done){
-  var spawn = require('child_process').spawn;
+
+gulp.task('!prepare', function(){
+  var execSync = require('child_process').execSync;
+  var spawnSync = require('child_process').spawnSync;
   var semver = require('semver');
+  var changelog = require('gulp-conventional-changelog');
+  var self = this;
+
+  //Check for uncommitted changes
+  var gitStatusResult = execSync('git status --porcelain');
+  if (gitStatusResult.toString().length > 0) {
+    return fail('You have uncommitted changes, please stash or commit them before running prepare');
+  }
+
+  //Pull latest
+  var gitPullResult = spawnSync('git', ['pull', 'origin', '2.0']);
+  if (gitPullResult.status !== 0) {
+    fail('There was an error running \'git pull\':\n' + gitPullResult.stderr.toString());
+  }
+
+  //Update package.json version
+  var packageJSON = require('./package.json');
+  packageJSON.version = semver.inc(packageJSON.version, 'prerelease', 'alpha');
+  fs.writeFileSync('package.json', JSON.stringify(packageJSON, null, 2));
+
+  //Update changelog
+  return gulp.src('./CHANGELOG.md')
+    .pipe(changelog({
+      preset: 'angular'
+    }))
+    .pipe(gulp.dest('./'));
+
+
+  function fail(msg) {
+    // remove gulp's 'Finished 'task' after 10ms' message
+    self.removeAllListeners('task_stop');
+    console.error('Prepare aborted.');
+    console.error(msg);
+  }
+
+});
+
+gulp.task('prepare', ['package', '!prepare']);
+
+gulp.task('publish', function(done){
+  var spawn = require('child_process').spawn;
   var fs = require('fs');
-  var err = false;
 
   var npmCmd = spawn('npm', ['publish', './dist']);
 
@@ -480,17 +522,10 @@ gulp.task('publish', ['package'], function(done){
   });
 
   npmCmd.stderr.on('data', function (data) {
-    err = true;
     console.log('npm err: ' + data.toString());
   });
 
   npmCmd.on('close', function() {
-    // update package.json
-    // if (!err) {
-    //   var packageJSON = require('./package.json');
-    //   packageJSON.version = semver.inc(packageJSON.version, 'prerelease', 'alpha');
-    //   fs.writeFileSync('package.json', JSON.stringify(packageJSON, null, 2));
-    // }
     done();
   });
 
