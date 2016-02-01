@@ -12,12 +12,13 @@ function init {
   cd ..
   SITE_PATH=$(readJsonProp "config.json" "sitePath")
   SITE_DIR=$IONIC_DIR/$SITE_PATH
-}
 
-function run {
   ./git/clone.sh --repository="driftyco/ionic-site" \
     --directory="$SITE_DIR" \
     --branch="master"
+}
+
+function run {
   cd ..
   VERSION=$(readJsonProp "package.json" "version")
 
