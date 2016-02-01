@@ -294,9 +294,7 @@ export class Select {
    * https://github.com/angular/angular/blob/master/modules/angular2/src/forms/directives/shared.ts#L34
    */
   writeValue(val) {
-    if (!isBlank(val)) {
-      this.value = val;
-    }
+    this.value = val;
   }
 
   /**
