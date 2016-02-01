@@ -53,6 +53,10 @@ export class Icon {
   private _ios: string = '';
   private _md: string = '';
   private _css: string = '';
+
+  /**
+   * @private
+   */
   mode: string;
 
   constructor(
@@ -79,6 +83,9 @@ export class Icon {
     }
   }
 
+  /**
+   * @private
+   */
   @Input()
   get name(): string {
     return this._name;
@@ -94,6 +101,9 @@ export class Icon {
     this.update();
   }
 
+  /**
+   * @private
+   */
   @Input()
   get ios(): string {
     return this._ios;
@@ -104,6 +114,9 @@ export class Icon {
     this.update();
   }
 
+  /**
+   * @private
+   */
   @Input()
   get md(): string {
     return this._md;
@@ -114,6 +127,9 @@ export class Icon {
     this.update();
   }
 
+  /**
+   * @private
+   */
   @Input()
   get isActive(): boolean {
     return (this._isActive === undefined || this._isActive === true || this._isActive === 'true');
