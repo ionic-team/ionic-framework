@@ -472,6 +472,7 @@ gulp.task('!prepare', function(){
   var execSync = require('child_process').execSync;
   var spawnSync = require('child_process').spawnSync;
   var semver = require('semver');
+  var fs = require('fs');
   var changelog = require('gulp-conventional-changelog');
   var self = this;
 
