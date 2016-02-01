@@ -37,6 +37,10 @@ function run {
 
   # Update docs
   ./scripts/docs/deploy.sh --version-name="$VERSION_NAME"
+
+  # Update API Demos
+  gulp demos
+  
 }
 
 source $(dirname $0)/../utils.sh.inc
