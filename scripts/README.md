@@ -50,7 +50,11 @@
 ### Releasing Ionic Source
 
 1. Run `gulp prepublish`
-  - Pulls latest, updates package.json minor version, updates changelog
+  - Pulls latest
+  - updates package.json minor version
+  - updates changelog
+  - builds npm package files into dist
+
 2. Verify that changelog changes and package.json update are correct (`git status` && `git diff`)
 3. Run [snapshot](#running-snapshot) & update if necessary
 4. Publish to npm: `npm publish ./dist`
