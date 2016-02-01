@@ -25,15 +25,38 @@ export class List extends Ion {
   private _enableSliding: boolean = false;
   private _virtualScrollingManager: ListVirtualScroll;
 
+  /**
+   * @private
+   */
   ele: HTMLElement;
+
+  /**
+   * @private
+   */
   itemTemplate: any;
+
+  /**
+   * @private
+   */
   slidingGesture: ItemSlidingGesture;
 
+
+  /**
+   * @private
+   */
   @Input() items;
+
+  /**
+   * @private
+   */
   @Input() virtual;
+
+  /**
+   * @private
+   */
   @Input() content;
 
-  constructor(elementRef: ElementRef, private zone: NgZone) {
+  constructor(elementRef: ElementRef, private _zone: NgZone) {
     super(elementRef);
     this.ele = elementRef.nativeElement;
   }
@@ -98,7 +121,7 @@ export class List extends Ion {
 
       if (shouldEnable) {
         console.debug('enableSlidingItems');
-        this.zone.runOutsideAngular(() => {
+        this._zone.runOutsideAngular(() => {
           setTimeout(() => {
             this.slidingGesture = new ItemSlidingGesture(this, this.ele);
           });
