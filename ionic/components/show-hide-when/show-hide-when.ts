@@ -58,6 +58,8 @@ export class DisplayWhen {
 
 /**
  *
+ * @name ShowWhen
+ * @description
  * The `showWhen` attribute takes a string that represents a plaform or screen orientation.
  * The element the attribute is added to will only be shown when that platform or screen orientation is active.
  * Complements the [hideWhen attribute](../HideWhen).
@@ -94,7 +96,8 @@ export class ShowWhen extends DisplayWhen {
 }
 
 /**
- *
+ * @name HideWhen
+ * @description
  * The `hideWhen` attribute takes a string that represents a plaform or screen orientation.
  * The element the attribute is added to will only be hidden when that platform or screen orientation is active.
  * Complements the [showWhen attribute](../ShowWhen).
