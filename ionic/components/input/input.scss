@@ -38,6 +38,10 @@ textarea.text-input {
   display: block;
 }
 
+.text-input[disabled] {
+  opacity: 0.4;
+}
+
 
 input.text-input:-webkit-autofill {
   background-color: transparent;

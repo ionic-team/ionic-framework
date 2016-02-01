@@ -89,4 +89,18 @@
 
   <ion-input placeholder="Stand-alone textarea"></ion-input>
 
+  <ion-list>
+    <ion-item>
+      <ion-label>Disabled Input</ion-label>
+      <ion-input disabled value="Value"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Disabled TextArea</ion-label>
+      <ion-textarea [disabled]="isTextAreaDisabled" value="Value"></ion-textarea>
+    </ion-item>
+  </ion-list>
+
+  <button (click)="disable()">Disable</button>
+
 </ion-content>

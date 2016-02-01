@@ -32,4 +32,8 @@ class E2EApp {
     this.submitted = true;
   }
 
+  disable() {
+    this.isTextAreaDisabled = !this.isTextAreaDisabled;
+  }
+
 }

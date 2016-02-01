@@ -51,6 +51,10 @@ export class NativeInput {
     this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-labelledby', val);
   }
 
+  isDisabled(val: boolean) {
+    this._renderer.setElementAttribute(this._elementRef.nativeElement, 'disabled', val ? '' : null);
+  }
+
   /**
    * @private
    */

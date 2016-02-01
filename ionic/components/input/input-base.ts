@@ -6,6 +6,7 @@ import {Content} from '../content/content';
 import {Form} from '../../util/form';
 import {Item} from '../item/item';
 import {IonicApp} from '../app/app';
+import {isTrueProperty} from '../../util/util';
 import {Label} from '../label/label';
 import {pointerCoord, hasPointerMoved, closest}  from '../../util/dom';
 import {NavController} from '../nav/nav-controller';
@@ -16,6 +17,7 @@ import {Platform} from '../../platform/platform';
 export class InputBase {
   protected _coord;
   protected _deregScroll;
+  protected _disabled: boolean = false;
   protected _keyboardHeight;
   protected _scrollMove: EventListener;
   protected _type: string = 'text';
@@ -136,6 +138,17 @@ export class InputBase {
     }
   }
 
+  @Input()
+  get disabled() {
+    return this._disabled;
+  }
+
+  set disabled(val) {
+    this._disabled = isTrueProperty(val);
+    this._item && this._item.setCssClass('item-input-disabled', this._disabled);
+    this._native && this._native.isDisabled(this._disabled);
+  }
+
   /**
    * @private
    */
@@ -161,6 +174,7 @@ export class InputBase {
     });
 
     this.checkHasValue(nativeInput.getValue());
+    this.disabled = this._disabled;
   }
 
   /**
