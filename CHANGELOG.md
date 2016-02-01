@@ -213,15 +213,15 @@ Was:
 Now:
 
 ```html
-<ion-input>
+<ion-item>
   <ion-label fixed>Username</ion-label>
   <ion-input></ion-input>
-</ion-input>
+</ion-item>
 
-<ion-input>
+<ion-item>
   <ion-label floating>Email</ion-label>
   <ion-input type="email"></ion-input>
-</ion-input>
+</ion-item>
 ```
 ### misc
 
