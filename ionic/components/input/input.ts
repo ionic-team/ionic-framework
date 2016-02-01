@@ -79,7 +79,7 @@ export class TextInput extends InputBase {
   constructor(
     config: Config,
     form: Form,
-    item: Item,
+    @Optional() item: Item,
     app: IonicApp,
     platform: Platform,
     elementRef: ElementRef,
@@ -147,7 +147,7 @@ export class TextArea extends InputBase {
   constructor(
     config: Config,
     form: Form,
-    item: Item,
+    @Optional() item: Item,
     app: IonicApp,
     platform: Platform,
     elementRef: ElementRef,
