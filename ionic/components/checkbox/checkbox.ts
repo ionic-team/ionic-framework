@@ -28,7 +28,7 @@ import {isTrueProperty} from '../../util/util';
  *
  *    <ion-item>
  *      <ion-label>Sausage</ion-label>
- *      <ion-checkbox value="sausage"></ion-checkbox>
+ *      <ion-checkbox value="sausage" disabled="true"></ion-checkbox>
  *    </ion-item>
  *
  *    <ion-item>
@@ -68,6 +68,9 @@ export class Checkbox {
    */
   id: string;
 
+  /**
+   * @private
+   */
   @Input() value: string = '';
 
   constructor(
@@ -96,6 +99,9 @@ export class Checkbox {
     this.checked = !this.checked;
   }
 
+  /**
+   * @private
+   */
   @Input()
   get checked() {
     return this._checked;
@@ -109,6 +115,9 @@ export class Checkbox {
     }
   }
 
+  /**
+   * @private
+   */
   @Input()
   get disabled() {
     return this._disabled;
