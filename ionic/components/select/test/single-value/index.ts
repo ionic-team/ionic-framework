@@ -19,6 +19,10 @@ class E2EPage {
   stpSelect() {
     console.log('STP selected')
   }
+
+  resetGender() {
+    this.gender = null;
+  }
 }
 
 
