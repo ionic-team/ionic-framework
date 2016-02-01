@@ -60,7 +60,14 @@ export class Item {
   private _label: Label;
   private _viewLabel: boolean = true;
 
+  /**
+   * @private
+   */
   id: string;
+
+    /**
+   * @private
+   */
   labelId: string = null;
 
   constructor(form: Form, private _renderer: Renderer, private _elementRef: ElementRef) {
@@ -103,6 +110,9 @@ export class Item {
     return this._label ? this._label.text : '';
   }
 
+  /**
+   * @private
+   */
   @ContentChild(Label)
   private set contentLabel(label: Label) {
     if (label) {
@@ -115,6 +125,9 @@ export class Item {
     }
   }
 
+  /**
+   * @private
+   */
   @ViewChild(Label)
   private set viewLabel(label: Label) {
     if (!this._label) {
