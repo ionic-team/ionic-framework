@@ -569,30 +569,11 @@ gulp.task('build.demos', function(){
   }
 });
 
-gulp.task('sass.demos:components', function() {
-  var sass = require('gulp-sass');
-  var autoprefixer = require('gulp-autoprefixer');
-  var concat = require('gulp-concat');
-  return gulp.src([
-      'demos/component-docs/app.scss',
-    ])
-    .pipe(sass()
-      .on('error', sass.logError)
-    )
-    .pipe(concat('app.css'))
-    .pipe(autoprefixer(buildConfig.autoprefixer))
-    .pipe(gulp.dest(docsConfig.docsDest + '/demos/component-docs/'));
+gulp.task('bundle.demos', ['build.demos', 'transpile.no-typecheck', 'copy.libs', 'sass', 'fonts'], function(done) {
+  buildDemoBundle(done);
 });
 
-gulp.task('bundle.demos:api', ['build.demos', 'transpile.no-typecheck', 'copy.libs', 'sass', 'fonts'], function(done) {
-  return buildDemoBundle({demo: 'api'}, done);
-});
-
-gulp.task('bundle.demos:components', ['sass.demos:components', 'build.demos'], function(done) {
-  buildDemoBundle({demo: 'component-docs'}, done);
-});
-
-gulp.task('demos', ['bundle.demos:api', 'bundle.demos:components'], function() {
+gulp.task('demos', ['bundle.demos'], function() {
   var merge = require('merge2');
 
   var demosStream = gulp.src([
@@ -613,17 +594,12 @@ gulp.task('watch:demos', function() {
   });
 });
 
-function buildDemoBundle(opts, done) {
+function buildDemoBundle(done) {
   var glob = require('glob');
   var webpack = require('webpack');
   var path = require('path');
 
-  var fp = 'dist/demos/'+opts.demo+'/index.js';
-  if (opts.demo == 'api') {
-    fp = "dist/demos/**/index.js";
-  }
-
-  return glob(fp, function(err, files){
+  return glob('dist/demos/**/index.js', function(err, files){
     var numTasks = files.length;
     files.forEach(function(file){
       var config = require('./scripts/demos/webpack.config.js');
