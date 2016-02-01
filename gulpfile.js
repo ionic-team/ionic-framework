@@ -593,12 +593,18 @@ gulp.task('bundle.demos:components', ['sass.demos:components', 'build.demos'], f
 });
 
 gulp.task('demos', ['bundle.demos:api', 'bundle.demos:components'], function() {
-  return gulp
-    .src([
+  var merge = require('merge2');
+
+  var demosStream = gulp.src([
       'dist/demos/**/*',
       '!dist/demos/**/*.scss',
-      ])
-    .pipe(gulp.dest(docsConfig.docsDest + '/demos/'))
+    ])
+    .pipe(gulp.dest(docsConfig.docsDest + '/demos/'));
+
+  var cssStream = gulp.src('dist/bundles/**/*.css')
+    .pipe(gulp.dest(docsConfig.sitePath + '/dist/bundles'));
+
+  return merge([demosStream, cssStream]);
 });
 
 gulp.task('watch:demos', function() {
