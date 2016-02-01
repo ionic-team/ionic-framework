@@ -50,6 +50,9 @@ import {Directive, ElementRef, Renderer, Input, Optional, Attribute} from 'angul
 export class Label {
   private _id: string;
 
+  /**
+   * @private
+   */
   type: string;
 
   constructor(
@@ -63,6 +66,9 @@ export class Label {
     this.type = (isFloating === '' ? 'floating' : (isStacked === '' ? 'stacked' : (isFixed === '' ? 'fixed' : (isInset === '' ? 'inset' : null))));
   }
 
+  /**
+   * @private
+   */
   @Input()
   get id(): string {
     return this._id;
@@ -75,6 +81,9 @@ export class Label {
     }
   }
 
+  /**
+   * @private
+   */
   get text(): string {
     return this._elementRef.nativeElement.textContent || '';
   }
