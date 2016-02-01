@@ -37,6 +37,9 @@ export class Content extends Ion {
   private _onScroll: any;
   private _scrollTo: ScrollTo;
 
+  /**
+   * @private
+   */
   scrollElement: HTMLElement;
 
   /**
@@ -123,6 +126,12 @@ export class Content extends Ion {
     }
   }
 
+
+  /**
+   * Call a method when scrolling has stopped
+   *
+   * @param {Function} callback The method you want perform when scrolling has ended
+   */
   onScrollEnd(callback) {
     let lastScrollTop = null;
     let framesUnchanged = 0;
