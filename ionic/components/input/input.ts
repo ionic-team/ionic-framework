@@ -156,6 +156,9 @@ export class TextArea extends InputBase {
     super(config, form, item, app, platform, elementRef, scrollView, nav, ngControl);
   }
 
+  /**
+   * @private
+   */
   ngOnInit() {
     super.ngOnInit();
     if (this._item) {
