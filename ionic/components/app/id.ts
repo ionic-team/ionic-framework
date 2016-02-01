@@ -42,6 +42,9 @@ import {IonicApp} from './app';
 export class IdRef {
   private _component: any;
 
+  /**
+   * @private
+   */
   @Input() id: string;
 
   constructor(private _app: IonicApp, elementRef: ElementRef, appViewManager: AppViewManager) {
