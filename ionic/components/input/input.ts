@@ -30,7 +30,7 @@ import {Platform} from '../../platform/platform';
  * An `ion-input` is **not** used for non-text type inputs, such as a
  * `checkbox`, `radio`, `toggle`, `range`, `select`, etc.
  *
- * @property [inset] - The input will be inset
+ * @property [type] - The HTML input type (text, password, email, number, search, tel, or url)
  * @property [clearInput] - A clear icon will appear in the input which clears it
  *
  * @usage
@@ -110,8 +110,6 @@ export class TextInput extends InputBase {
  * When requiring only a single-line text input it's recommended
  * to use `<ion-input>` instead.
  *
- * @property [inset] - The textarea will be inset
- *
  * @usage
  * ```html
  *  <ion-item>
@@ -120,12 +118,12 @@ export class TextInput extends InputBase {
  *  </ion-item>
  *
  *  <ion-item>
- *    <ion-labe stacked>Message</ion-label>
+ *    <ion-label stacked>Message</ion-label>
  *    <ion-textarea [(ngModel)]="msg"></ion-textarea>
  *  </ion-item>
  *
  *  <ion-item>
- *    <ion-labe floating>Description</ion-label>
+ *    <ion-label floating>Description</ion-label>
  *    <ion-textarea></ion-textarea>
  *  </ion-item>
  * ```
