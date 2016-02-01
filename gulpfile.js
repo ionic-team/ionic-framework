@@ -468,7 +468,7 @@ gulp.task('package', ['src.release'], function(done){
 });
 
 
-gulp.task('!prepare', function(){
+gulp.task('prepare', function(){
   var execSync = require('child_process').execSync;
   var spawnSync = require('child_process').spawnSync;
   var semver = require('semver');
@@ -510,26 +510,8 @@ gulp.task('!prepare', function(){
 
 });
 
-gulp.task('prepare', ['package', '!prepare']);
-
-gulp.task('publish', function(done){
-  var spawn = require('child_process').spawn;
-  var fs = require('fs');
-
-  var npmCmd = spawn('npm', ['publish', './dist']);
-
-  npmCmd.stdout.on('data', function (data) {
-    console.log(data.toString());
-  });
-
-  npmCmd.stderr.on('data', function (data) {
-    console.log('npm err: ' + data.toString());
-  });
-
-  npmCmd.on('close', function() {
-    done();
-  });
-
+gulp.task('prepublish', ['prepare'], function(done){
+  runSequence('package', done);
 });
 
 require('./scripts/docs/gulp-tasks')(gulp, flags)

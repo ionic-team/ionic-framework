@@ -29,7 +29,7 @@
 
 ### Building API Docs
 
-1. `gulp docs` to build the nightly version 
+1. `gulp docs` to build the nightly version
 2. `gulp docs --doc-version=2.0.0` to build a specific API version
 
 
@@ -49,11 +49,13 @@
 
 ### Releasing Ionic Source
 
-1. Pull latest code
-2. Run [snapshot](#running-snapshot) & update if necessary
-3. Bump version in package.json
-4. `gulp publish`
-5. Sit back and have a beer :beer: (or wine :wine_glass:)
+1. Run `gulp prepublish`
+  - Pulls latest, updates package.json minor version, updates changelog
+2. Verify that changelog changes and package.json update are correct (`git status` && `git diff`)
+3. Run [snapshot](#running-snapshot) & update if necessary
+4. Publish to npm: `npm publish ./dist`
+5. Commit and push
+6. Sit back and have a beer :beer: (or wine :wine_glass:)
 
 ### Releasing Component Demos
 See [ionic-preview-app](https://github.com/driftyco/ionic-preview-app#updating-ionic-site)
