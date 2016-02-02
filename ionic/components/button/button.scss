@@ -62,13 +62,6 @@ a.button {
 
 .button-full {
   width: 100%;
-
-  // Full Outline Button
-  &.button-outline {
-    border-left-width: 0;
-    border-right-width: 0;
-    border-radius: 0;
-  }
 }
 
 
@@ -78,4 +71,13 @@ a.button {
 .button-round {
   padding: $button-round-padding;
   border-radius: $button-round-border-radius;
+}
+
+// Full Outline Button
+// --------------------------------------------------
+
+.button-full.button-outline {
+  border-left-width: 0;
+  border-right-width: 0;
+  border-radius: 0;
 }
