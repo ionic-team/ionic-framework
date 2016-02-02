@@ -12,14 +12,6 @@ import {TabButton} from './tab-button';
 
 /**
  * @name Tab
- * @usage
- * ```html
- * <ion-tabs>
- * 	 <ion-tab tabTitle="Home" tabIcon="home" [root]="tabOneRoot"></ion-tab>
- * 	 <ion-tab tabTitle="Login" tabIcon="star" [root]="tabTwoRoot"></ion-tab>
- * </ion-tabs>
- * ```
- *
  * @description
  * _For basic Tabs usage, see the [Tabs section](../../../../components/#tabs)
  * of the Component docs._
@@ -34,11 +26,12 @@ import {TabButton} from './tab-button';
  * See the [Tabs API reference](../Tabs/) for more details on configuring Tabs
  * and the TabBar.
  *
+ * @usage
  * For most cases, you can give tab a `[root]` property along with the component you want to load.
  *
  * ```html
  * <ion-tabs>
- *  <ion-tab [root]="chatRoot"><ion-tab>
+ *  <ion-tab [root]="chatRoot" tabTitle="Chat" tabIcon="chat"><ion-tab>
  * </ion-tabs>
  * ```
  *
@@ -76,12 +69,12 @@ import {TabButton} from './tab-button';
  * ```
  *
  *
- * @property {any} [root] - set the root page for this tab
- * @property {any} [tabTitle] - set the title of this tab
- * @property {any} [tabIcon] - set the icon for this tab
- * @property {any} [tabBadge] - set the badge for this tab
- * @property {any} [tabBadgeStyle] - set the badge color for this tab
- * @property {any} [select] - method to call when the current tab is selected
+ * @property {Page} [root] - set the root page for this tab
+ * @property {String} [tabTitle] - set the title of this tab
+ * @property {String} [tabIcon] - set the icon for this tab
+ * @property {Any} [tabBadge] - set the badge for this tab
+ * @property {String} [tabBadgeStyle] - set the badge color for this tab
+ * @property {Any} (select) - method to call when the current tab is selected
  *
  */
 @Component({
@@ -95,6 +88,10 @@ import {TabButton} from './tab-button';
   template: '<div #contents></div>'
 })
 export class Tab extends NavController {
+
+  /**
+   * @private
+   */
   public isSelected: boolean;
   private _isInitial: boolean;
   private _panelId: string;
@@ -107,11 +104,35 @@ export class Tab extends NavController {
    */
   btn: TabButton;
 
+
+  /**
+   * @private
+   */
   @Input() root: Type;
+
+  /**
+   * @private
+   */
   @Input() tabTitle: string;
+
+  /**
+   * @private
+   */
   @Input() tabIcon: string;
+
+  /**
+   * @private
+   */
   @Input() tabBadge: string;
+
+  /**
+   * @private
+   */
   @Input() tabBadgeStyle: string;
+
+  /**
+   * @private
+   */
   @Output() select: EventEmitter<any> = new EventEmitter();
 
   constructor(
@@ -156,6 +177,10 @@ export class Tab extends NavController {
     }
   }
 
+
+  /**
+   * @private
+   */
   preload(wait) {
     this._loadTimer = setTimeout(() => {
       if (!this._loaded) {
@@ -212,18 +237,7 @@ export class Tab extends NavController {
   }
 
   /**
-   *
-   * ```ts
-   * export class MyClass{
-   *  constructor(tab: Tab){
-   *    this.tab = tab;
-   *    console.log(this.tab.index);
-   *  }
-   * }
-   * ```
-   *
-   * @returns {number} Returns the index of this page within its NavController.
-   *
+   * @private
    */
   get index() {
     return this.parent.getIndex(this);
