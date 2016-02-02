@@ -65,7 +65,14 @@
 6. Sit back and have a beer :beer: (or wine :wine_glass:)
 
 ### Releasing Component Demos
-See [ionic-preview-app](https://github.com/driftyco/ionic-preview-app#updating-ionic-site)
+
+(Copied from [ionic-preview-app](https://github.com/driftyco/ionic-preview-app#updating-ionic-site), check there for updates)
+
+- Set [production mode](https://github.com/driftyco/ionic-preview-app/blob/master/app/app.ts#L11) to true
+- Rebuild app
+- Copy the contents of this entire repo to `ionic-site/dist/preview-app/` (`cp -R * ../path/to/ionic-site/dist/preview-app/`)
+
+
 
 ### Releasing API Demos
 Ionic API demos are automatically compiled and deployed to the [ionic staging site](http://ionic-site-staging.herokuapp.com/) on every commit. No action is necessary. 
