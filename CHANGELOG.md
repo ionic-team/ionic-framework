@@ -23,6 +23,9 @@
 * **overlay:** fire the cancel handler when dismissing from backdrop ([1c618b5](https://github.com/driftyco/ionic/commit/1c618b5))
 * **scrollbars:** webkit scrollbar styling for desktop ([c7f2268](https://github.com/driftyco/ionic/commit/c7f2268))
 
+### Breaking Changes
+
+* **action-sheet:** Button `style` property renamed to `role` ([1c618b5](https://github.com/driftyco/ionic/commit/1c618b51eb0a31013f7d3509d34c796d65689836#diff-f61014c4fb6e166fa1b5645d126dd4f6L26))
 
 
 <a name="2.0.0-alpha.53"></a>
