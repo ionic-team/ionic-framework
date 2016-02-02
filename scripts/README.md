@@ -57,12 +57,12 @@
 
 2. Verify that changelog changes and package.json update are correct (`git status` && `git diff`)
 3. Run [snapshot](#running-snapshot) & update if necessary
-5. Commit and push
-6. Run `gulp release`
+4. Commit and push
+5. Run `gulp release`
   - publishes to npm
   - Creates a new tag and release on Github
 
-7. Sit back and have a beer :beer: (or wine :wine_glass:)
+6. Sit back and have a beer :beer: (or wine :wine_glass:)
 
 ### Releasing Component Demos
 See [ionic-preview-app](https://github.com/driftyco/ionic-preview-app#updating-ionic-site)
