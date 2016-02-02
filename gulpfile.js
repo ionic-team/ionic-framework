@@ -537,7 +537,8 @@ gulp.task('publish.github', function(done){
       repo: 'ionic',
       tag_name: 'v' + packageJSON.version,
       name: packageJSON.version,
-      body: file.toString()
+      body: file.toString(),
+      prerelease: true
     }, done);
   }));
 });
