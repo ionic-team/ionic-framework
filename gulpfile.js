@@ -366,6 +366,26 @@ gulp.task('sass', function() {
   .pipe(gulp.dest('dist/bundles/'));
 });
 
+gulp.task('sass.themes', function() {
+  var sass = require('gulp-sass');
+  var autoprefixer = require('gulp-autoprefixer');
+
+  function buildTheme(mode) {
+    gulp.src([
+      'scripts/e2e/ionic.' + mode + '.dark.scss'
+    ])
+    .pipe(sass({
+        includePaths: [__dirname + '/node_modules/ionicons/dist/scss/'],
+      }).on('error', sass.logError)
+    )
+    .pipe(autoprefixer(buildConfig.autoprefixer))
+    .pipe(gulp.dest('dist/bundles/'));
+  }
+
+  buildTheme('ios');
+  buildTheme('md');
+});
+
 gulp.task('fonts', function() {
   gulp.src([
     'ionic/fonts/*.+(ttf|woff|woff2)',
