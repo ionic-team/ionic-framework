@@ -1,3 +1,30 @@
+<a name="2.0.0-alpha.54"></a>
+# [2.0.0-alpha.54](https://github.com/driftyco/ionic/compare/v2.0.0-alpha.53...v2.0.0-alpha.54) (2016-02-02)
+
+
+### Bug Fixes
+
+* **alert:** add checkbox icon for iOS using Sass variables from regular checkbox ([68819f0](https://github.com/driftyco/ionic/commit/68819f0)), closes [#5253](https://github.com/driftyco/ionic/issues/5253)
+* **badge:** change default badge color to primary ([93b9891](https://github.com/driftyco/ionic/commit/93b9891)), closes [#5222](https://github.com/driftyco/ionic/issues/5222)
+* **badge:** split badge color into separate modes ([b472c6c](https://github.com/driftyco/ionic/commit/b472c6c))
+* **css:** minor updates to match previous snapshots ([9749b06](https://github.com/driftyco/ionic/commit/9749b06))
+* **input:** add/remove disabled on native text input ([11b8e08](https://github.com/driftyco/ionic/commit/11b8e08)), closes [#5280](https://github.com/driftyco/ionic/issues/5280)
+* **input:** check has value on writeValue ([181a070](https://github.com/driftyco/ionic/commit/181a070))
+* **input:** parent Item is optional ([db6f4bc](https://github.com/driftyco/ionic/commit/db6f4bc))
+* **prepare:** add missing require to prepare task ([b2f7278](https://github.com/driftyco/ionic/commit/b2f7278))
+* **scrollbars:** do not apply css scrollbars ([f3fb182](https://github.com/driftyco/ionic/commit/f3fb182))
+* **select:** always update value and text ([58443f0](https://github.com/driftyco/ionic/commit/58443f0))
+* **select:** null value clears select text ([c264e31](https://github.com/driftyco/ionic/commit/c264e31)), closes [#5288](https://github.com/driftyco/ionic/issues/5288)
+
+### Features
+
+* **button:** increase hit area of toolbar buttons ([cad9e49](https://github.com/driftyco/ionic/commit/cad9e49))
+* **checkbox:** add bg transition to md checkbox ([8466d39](https://github.com/driftyco/ionic/commit/8466d39))
+* **overlay:** fire the cancel handler when dismissing from backdrop ([1c618b5](https://github.com/driftyco/ionic/commit/1c618b5))
+* **scrollbars:** webkit scrollbar styling for desktop ([c7f2268](https://github.com/driftyco/ionic/commit/c7f2268))
+
+
+
 <a name="2.0.0-alpha.53"></a>
 # 2.0.0-alpha.53 (2016-01-28)
 
