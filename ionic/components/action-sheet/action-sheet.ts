@@ -194,22 +194,15 @@ class ActionSheetCmp {
       }
 
       // deprecated warning
-      if (button.style === 'cancel') {
+      if (button.style) {
         console.warn('Alert "style" property has been renamed to "role"');
-        button.role = 'cancel';
-        this.d.cancelButton = button;
+        button.role = button.style;
       }
 
       if (button.role === 'cancel') {
         this.d.cancelButton = button;
 
       } else {
-        // deprecated warning
-        if (button.style === 'destructive') {
-          button.role = 'destructive';
-          button.cssClass = (button.cssClass + ' ' || '') + 'action-sheet-destructive';
-        }
-
         if (button.role === 'destructive') {
           button.cssClass = (button.cssClass + ' ' || '') + 'action-sheet-destructive';
         }
