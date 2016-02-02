@@ -64,8 +64,8 @@ class E2EApp {
     console.log('onMenuOpening', ev);
   }
 
-  isHidden() {
+  isChangeDetecting() {
     console.log('Change detection', ++this.changeDetectionCount);
-    return false;
+    return true;
   }
 }

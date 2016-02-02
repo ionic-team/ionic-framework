@@ -282,7 +282,7 @@ export class Menu extends Ion {
   setOpen(shouldOpen) {
     // _isPrevented is used to prevent unwanted opening/closing after swiping open/close
     // or swiping open the menu while pressing down on the menuToggle button
-    if (shouldOpen === this.isOpen || this._isPrevented()) {
+    if ((shouldOpen && this.isOpen) || this._isPrevented()) {
       return Promise.resolve();
     }
 
