@@ -133,11 +133,21 @@ export class NavController extends Ion {
    */
   sbGesture: any;
 
+  /**
+   * @private
+   */
+  parent;
+
+  /**
+   * @private
+   */
+  config: Config;
+
   constructor(
-    public parent: any,
-    public app: IonicApp,
-    public config: Config,
-    public keyboard: Keyboard,
+    parent: any,
+    protected _app: IonicApp,
+    config: Config,
+    protected _keyboard: Keyboard,
     elementRef: ElementRef,
     protected _anchorName: string,
     protected _compiler: Compiler,
@@ -146,6 +156,9 @@ export class NavController extends Ion {
     protected _renderer: Renderer
   ) {
     super(elementRef);
+
+    this.parent = parent;
+    this.config = config;
 
     this._trnsDelay = config.get('pageTransitionDelay');
 
@@ -1031,7 +1044,7 @@ export class NavController extends Ion {
       let enableApp = (duration < 64);
       // block any clicks during the transition and provide a
       // fallback to remove the clickblock if something goes wrong
-      this.app.setEnabled(enableApp, duration);
+      this._app.setEnabled(enableApp, duration);
       this.setTransitioning(!enableApp, duration);
 
       if (enteringView.viewType) {
@@ -1072,11 +1085,11 @@ export class NavController extends Ion {
         return done();
       }
 
-      if (opts.keyboardClose !== false && this.keyboard.isOpen()) {
+      if (opts.keyboardClose !== false && this._keyboard.isOpen()) {
         // the keyboard is still open!
         // no problem, let's just close for them
-        this.keyboard.close();
-        this.keyboard.onClose(() => {
+        this._keyboard.close();
+        this._keyboard.onClose(() => {
 
           // keyboard has finished closing, transition complete
           done();
@@ -1129,7 +1142,7 @@ export class NavController extends Ion {
       }
 
       // allow clicks and enable the app again
-      this.app && this.app.setEnabled(true);
+      this._app && this._app.setEnabled(true);
       this.setTransitioning(false);
 
       if (this.router && direction !== null) {
@@ -1252,12 +1265,12 @@ export class NavController extends Ion {
    */
   swipeBackStart() {
     return;
-    if (!this.app.isEnabled() || !this.canSwipeBack()) {
+    if (!this._app.isEnabled() || !this.canSwipeBack()) {
       return;
     }
 
     // disables the app during the transition
-    this.app.setEnabled(false);
+    this._app.setEnabled(false);
     this.setTransitioning(true);
 
     // default the direction to "back"
@@ -1300,7 +1313,7 @@ export class NavController extends Ion {
     return;
     if (this._sbTrans) {
       // continue to disable the app while actively dragging
-      this.app.setEnabled(false, 4000);
+      this._app.setEnabled(false, 4000);
       this.setTransitioning(true, 4000);
 
       // set the transition animation's progress
@@ -1316,7 +1329,7 @@ export class NavController extends Ion {
     if (!this._sbTrans) return;
 
     // disables the app during the transition
-    this.app.setEnabled(false);
+    this._app.setEnabled(false);
     this.setTransitioning(true);
 
     this._sbTrans.progressEnd(completeSwipeBack, rate).then(() => {
