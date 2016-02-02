@@ -8,7 +8,6 @@ import {isDefined} from '../../util/util';
  * @name SegmentButton
  * @description
  * The child buttons of the `ion-segment` component. Each `ion-segment-button` must have a value.
- * @property {string} [value] - the value of the segment-button. Required.
  * @usage
  * ```html
  * <ion-segment [(ngModel)]="relationship" primary>
@@ -39,7 +38,9 @@ import {isDefined} from '../../util/util';
  * </form>
  * ```
  *
+ * @property {string} [value] - the value of the segment-button. Required.
  * @property {Any} [click] - expression to evaluate when a segment button has been clicked
+ * @property {Any} (select) - expression to evaluate when a segment selection has been changed
  *
  * @demo /docs/v2/demos/segment/
  * @see {@link /docs/v2/components#segment Segment Component Docs}
@@ -54,7 +55,15 @@ import {isDefined} from '../../util/util';
   }
 })
 export class SegmentButton {
+
+  /**
+   * @private
+   */
   @Input() value: string;
+
+  /**
+   * @private
+   */
   @Output() select: EventEmitter<SegmentButton> = new EventEmitter();
 
   constructor(private _renderer: Renderer, private _elementRef: ElementRef) {}
@@ -137,10 +146,22 @@ export class SegmentButton {
   selector: 'ion-segment'
 })
 export class Segment {
+
+  /**
+   * @private
+   */
   value: string;
 
+
+  /**
+   * @private
+   */
   @Output() change: EventEmitter<SegmentButton> = new EventEmitter();
 
+
+  /**
+   * @private
+   */
   @ContentChildren(SegmentButton) _buttons: QueryList<SegmentButton>;
 
   constructor(@Optional() ngControl: NgControl) {
