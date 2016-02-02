@@ -535,6 +535,7 @@ gulp.task('publish.github', function(done){
     github.releases.createRelease({
       owner: 'driftyco',
       repo: 'ionic',
+      target_commitish: '2.0',
       tag_name: 'v' + packageJSON.version,
       name: packageJSON.version,
       body: file.toString(),
