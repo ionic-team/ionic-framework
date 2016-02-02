@@ -24,6 +24,7 @@ import {ViewController} from './view-controller';
  * component) to be loaded initially by any Nav you create, using
  * the 'root' property:
  *
+ * @usage
  * ```ts
  * import {GettingStartedPage} from 'getting-started';
  * @App({
@@ -104,7 +105,15 @@ import {ViewController} from './view-controller';
   template: '<div #contents></div>'
 })
 export class Nav extends NavController {
+
+  /**
+   * @private
+   */
   @Input() root: Type;
+
+  /**
+   * @private
+   */
   @Input() swipeBackEnabled: any;
 
   constructor(
