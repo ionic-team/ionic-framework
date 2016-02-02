@@ -8,7 +8,7 @@ import {Item} from '../item/item';
 import {IonicApp} from '../app/app';
 import {isTrueProperty} from '../../util/util';
 import {Label} from '../label/label';
-import {pointerCoord, hasPointerMoved, closest}  from '../../util/dom';
+import {pointerCoord, hasPointerMoved, closest, copyInputAttributes}  from '../../util/dom';
 import {NavController} from '../nav/nav-controller';
 import {NativeInput, NextInput} from './native-input';
 import {Platform} from '../../platform/platform';
@@ -132,7 +132,7 @@ export class InputBase {
     if (val) {
       val = val.toLowerCase();
 
-      if (/password|email|number|search|tel|url|date|datetime|datetime-local|month|time|week/.test(val)) {
+      if (/password|email|number|search|tel|url|date|month|time|week/.test(val)) {
         this._type = val;
       }
     }
@@ -175,6 +175,9 @@ export class InputBase {
 
     this.checkHasValue(nativeInput.getValue());
     this.disabled = this._disabled;
+
+    // copy ion-input attributes to the native input element
+    copyInputAttributes(this._elementRef.nativeElement, nativeInput.element());
   }
 
   /**
