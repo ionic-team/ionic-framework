@@ -52,8 +52,14 @@ export class RadioButton {
   private _labelId: string;
   private _value = null;
 
+  /**
+   * @private
+   */
   id: string;
 
+  /**
+   * @private
+   */
   @Output() select: EventEmitter<RadioButton> = new EventEmitter();
 
   constructor(
@@ -77,6 +83,9 @@ export class RadioButton {
     }
   }
 
+  /**
+   * @private
+   */
   @Input()
   get value() {
     // if the value is not defined then use it's unique id
@@ -87,6 +96,9 @@ export class RadioButton {
     this._value = val;
   }
 
+  /**
+   * @private
+   */
   @Input()
   get checked() {
     return this._checked;
@@ -117,6 +129,9 @@ export class RadioButton {
     }
   }
 
+  /**
+   * @private
+   */
   @Input()
   get disabled() {
     return this._disabled;
