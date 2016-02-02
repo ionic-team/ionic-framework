@@ -92,7 +92,13 @@ import {Option} from '../option/option';
  *   subTitle: 'Select your toppings'
  * };
  * ```
- *
+ * @property [cancelText] - The text of the cancel button. Defatuls to 'cancel'
+ * @property [okText] - The text of the ok button. Defatuls to 'OK'
+ * @property [alertOptions] - Any addition options that an alert can take. Title, Subtitle, etc.
+ * @property [multiple] - Whether or not the select component can accept multipl selections
+ * @property [disabled] - Whether or not the select component is disabled or not
+ * @property (change) - Any expression you want to evaluate when the selection has changed
+
  */
 @Component({
   selector: 'ion-select',
@@ -125,11 +131,29 @@ export class Select {
    */
   id: string;
 
+  /**
+   * @private
+   */
   @Input() cancelText: string = 'Cancel';
+
+  /**
+   * @private
+   */
   @Input() okText: string = 'OK';
+
+  /**
+   * @private
+   */
   @Input() alertOptions: any = {};
+
+  /**
+   * @private
+   */
   @Input() checked: any = false;
 
+  /**
+   * @private
+   */
   @Output() change: EventEmitter<any> = new EventEmitter();
 
   constructor(
@@ -215,6 +239,10 @@ export class Select {
     this._nav.present(alert, alertOptions);
   }
 
+
+  /**
+   * @private
+   */
   @Input()
   get multiple() {
     return this._multi;
@@ -224,6 +252,10 @@ export class Select {
     this._multi = isTrueProperty(val);
   }
 
+
+  /**
+   * @private
+   */
   @Input()
   get value(): any {
     return (this._multi ? this._values : this._values.join());
@@ -235,10 +267,17 @@ export class Select {
     this.updateOptions();
   }
 
+
+  /**
+   * @private
+   */
   get text() {
     return (this._multi ? this._texts : this._texts.join());
   }
 
+  /**
+   * @private
+   */
   @ContentChildren(Option)
   private set options(val: QueryList<Option>) {
     this._options = val;
@@ -252,6 +291,9 @@ export class Select {
     this.updateOptions();
   }
 
+  /**
+   * @private
+   */
   private updateOptions() {
     this._texts = [];
 
@@ -268,6 +310,10 @@ export class Select {
     this._text = this._texts.join(', ');
   }
 
+
+  /**
+   * @private
+   */
   ngAfterContentInit() {
     // using a setTimeout here to prevent
     // "has changed after it was checked" error
@@ -277,6 +323,10 @@ export class Select {
     });
   }
 
+
+  /**
+   * @private
+   */
   @Input()
   get disabled() {
     return this._disabled;
