@@ -33,6 +33,26 @@
 2. `gulp docs --doc-version=2.0.0` to build a specific API version
 
 
+### Building NPM Module for Local Testing
+
+From `ionic` repo root directory:
+
+1. `gulp package --strip-debug false`
+2. `cd dist`
+3. `sudo npm link`
+4. After ionic changes: `gulp transpile.no-typecheck --strip-debug false`
+
+From Testing App root directory:
+
+1. `npm link ionic-framework`
+2. `ionic serve` or `ionic run` or whatever
+
+When done:
+
+1. In testing app, `npm uninstall ionic-framework`
+2. In ionic repo, `sudo gulp clean`
+
+
 ### Running Snapshot
 
 1. Install [Protractor](https://angular.github.io/protractor/#/): `npm install -g protractor`
@@ -75,6 +95,6 @@
 
 
 ### Releasing API Demos
-Ionic API demos are automatically compiled and deployed to the [ionic staging site](http://ionic-site-staging.herokuapp.com/) on every commit. No action is necessary. 
+Ionic API demos are automatically compiled and deployed to the [ionic staging site](http://ionic-site-staging.herokuapp.com/) on every commit. No action is necessary.
 
-If you'd like to manually update the demos, clone the [`ionic-site`](https://github.com/driftyco/ionic-site) repo as a sibling of `ionic`. From `ionic` run gulp docs, and it'll compile and copy the demos to the `ionic-site` repo, ready for testing or committing. 
+If you'd like to manually update the demos, clone the [`ionic-site`](https://github.com/driftyco/ionic-site) repo as a sibling of `ionic`. From `ionic` run gulp docs, and it'll compile and copy the demos to the `ionic-site` repo, ready for testing or committing.

@@ -15,7 +15,7 @@ var connect = require('gulp-connect');
 var docsConfig = require('./scripts/config.json');
 
 var flagConfig = {
-  string: ['port', 'version', 'ngVersion', 'animations'],
+  string: ['port', 'version', 'ngVersion', 'animations', 'strip-debug'],
   boolean: ['dry-run'],
   alias: {'p': 'port', 'v': 'version', 'a': 'ngVersion'},
   default: { port: 8000 }
@@ -154,9 +154,10 @@ function tsCompile(options, cacheName){
 gulp.task('transpile.no-typecheck', function(){
   var gulpif = require('gulp-if');
   var stripDebug = require('gulp-strip-debug');
+  var shouldStripDebug = (IS_RELEASE && flags['strip-debug'] !== 'false');
 
   return tsCompile(tscOptionsNoTypeCheck, 'no-typecheck')
-    .pipe(gulpif(IS_RELEASE, stripDebug()))
+    .pipe(gulpif(shouldStripDebug, stripDebug()))
     .pipe(gulp.dest('dist'));
 });
 
@@ -165,12 +166,13 @@ gulp.task('typecheck', ['transpile.typecheck']);
 gulp.task('transpile.typecheck', function(){
   var merge = require('merge2');
   var stripDebug = require('gulp-strip-debug');
+  var shouldStripDebug = (IS_RELEASE && flags['strip-debug'] !== 'false');
 
   var result = tsCompile(tscOptions, 'typecheck');
 
   var js = result.js;
   var dts = result.dts;
-  if (IS_RELEASE) {
+  if (shouldStripDebug) {
     js = js.pipe(stripDebug());
   }
 
