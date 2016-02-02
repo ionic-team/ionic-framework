@@ -510,9 +510,57 @@ gulp.task('prepare', function(){
 
 });
 
-gulp.task('prepublish', ['prepare'], function(done){
+gulp.task('prerelease', ['prepare'], function(done){
   runSequence('package', done);
 });
+
+gulp.task('publish.github', function(done){
+  var changelog = require('conventional-changelog');
+  var GithubApi = require('github');
+  var packageJSON = require('./package.json');
+
+  var github = new GithubApi({
+    version: '3.0.0'
+  });
+
+  github.authenticate({
+    type: 'oauth',
+    token: process.env.GH_TOKEN
+  });
+
+  return changelog({
+    preset: 'angular'
+  })
+  .pipe(through2.obj(function(file, enc, cb){
+    github.releases.createRelease({
+      owner: 'driftyco',
+      repo: 'ionic',
+      tag_name: 'v' + packageJSON.version,
+      name: packageJSON.version,
+      body: file.toString()
+    }, done);
+  }));
+});
+
+gulp.task('publish.npm', function(done) {
+  var spawn = require('child_process').spawn;
+
+  var npmCmd = spawn('npm', ['publish', './dist']);
+
+  npmCmd.stdout.on('data', function (data) {
+    console.log(data.toString());
+  });
+
+  npmCmd.stderr.on('data', function (data) {
+    console.log('npm err: ' + data.toString());
+  });
+
+  npmCmd.on('close', function() {
+    done();
+  });
+});
+
+gulp.task('release', ['publish.npm', 'publish.github']);
 
 require('./scripts/docs/gulp-tasks')(gulp, flags)
 

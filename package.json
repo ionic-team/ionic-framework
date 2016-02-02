@@ -5,7 +5,7 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/driftyco/ionic2.git"
+    "url": "https://github.com/driftyco/ionic.git"
   },
   "scripts": {
     "test": "gulp karma",
@@ -29,11 +29,13 @@
   "devDependencies": {
     "canonical-path": "0.0.2",
     "connect": "^3.3.4",
+    "conventional-changelog": "^0.5.3",
     "cpr": "^0.4.1",
     "del": "~1.1.1",
     "dgeni": "^0.4.1",
     "dgeni-packages": "^0.10.18",
     "event-stream": "^3.3.1",
+    "github": "^0.2.4",
     "glob": "^5.0.14",
     "gulp": "~3.8.10",
     "gulp-autoprefixer": "^2.3.0",
