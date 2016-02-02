@@ -35,9 +35,6 @@ function run {
     # TODO bump version number, github release, changelog, CDN, docs nav update
   fi
 
-  # Update API Demos
-  gulp demos
-
   # Update docs
   ./scripts/docs/deploy.sh --version-name="$VERSION_NAME"
 
