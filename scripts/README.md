@@ -68,4 +68,6 @@
 See [ionic-preview-app](https://github.com/driftyco/ionic-preview-app#updating-ionic-site)
 
 ### Releasing API Demos
-TODO
+Ionic API demos are automatically compiled and deployed to the [ionic staging site](http://ionic-site-staging.herokuapp.com/) on every commit. No action is necessary. 
+
+If you'd like to manually update the demos, clone the [`ionic-site`](https://github.com/driftyco/ionic-site) repo as a sibling of `ionic`. From `ionic` run gulp docs, and it'll compile and copy the demos to the `ionic-site` repo, ready for testing or committing. 
