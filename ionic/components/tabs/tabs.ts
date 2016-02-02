@@ -21,6 +21,7 @@ import {isUndefined} from '../../util/util';
  * @property {any} [tabbarPlacement] - set position of the tabbar, top or bottom
  * @property {any} [tabbarIcons] - set the position of the tabbar's icons: top, bottom, left, right, hide
  * @property {any} [preloadTabs] - sets whether to preload all the tabs, true or false
+ * @property {any} (change) - expression you want to evaluate when the tabs chage
  * @usage
 * ```html
  * <ion-tabs>
@@ -81,15 +82,40 @@ export class Tabs extends Ion {
    * @private
    */
   navbarContainerRef: ViewContainerRef;
+
+  /**
+   * @private
+   */
   subPages: boolean;
 
+  /**
+   * @private
+   */
   @Input() selectedIndex: any;
+  /**
+   * @private
+   */
   @Input() preloadTabs: any;
+  /**
+   * @private
+   */
   @Input() tabbarIcons: string;
+  /**
+   * @private
+   */
   @Input() tabbarPlacement: string;
+  /**
+   * @private
+   */
   @Output() change: EventEmitter<Tab> = new EventEmitter();
 
+  /**
+   * @private
+   */
   @ViewChild(TabHighlight) private _highlight: TabHighlight;
+  /**
+   * @private
+   */
   @ViewChildren(TabButton) private _btns;
 
   constructor(
