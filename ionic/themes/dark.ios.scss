@@ -33,6 +33,12 @@ $list-ios-border-color:                $list-border-color !default;
 $list-ios-background-color:            $list-background-color !default;
 $list-ios-activated-background-color:  #d9d9d9 !default;
 
+// iOS List header
+// --------------------------------------------------
+$list-ios-header-color:               $text-color !default;
+ion-list-header {
+  background-color: $background-ios-color;
+}
 
 // iOS Item
 // --------------------------------------------------
