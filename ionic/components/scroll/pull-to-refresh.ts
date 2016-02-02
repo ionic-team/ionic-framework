@@ -31,20 +31,20 @@ import {raf, ready, CSS} from '../../util/dom';
  *  export class MyClass {
  *  constructor(){}
  *    doRefresh(refresher) {
- *      console.log('Refreshing!', refresher);
+ *      console.debug('Refreshing!', refresher);
  *
  *      setTimeout(() => {
- *        console.log('Pull to refresh complete!', refresher);
+ *        console.debug('Pull to refresh complete!', refresher);
  *        refresher.complete();
  *      })
  *    }
  *
  *    doStarting() {
- *      console.log('Pull started!');
+ *      console.debug('Pull started!');
  *    }
  *
  *    doPulling(amt) {
- *      console.log('You have pulled', amt);
+ *      console.debug('You have pulled', amt);
  *    }
  *  }
  *  ```
@@ -441,7 +441,7 @@ export class Refresher {
    * @param {Event} e  TODO
    */
   _handleTouchMove(e) {
-    //console.log('TOUCHMOVE', e);
+    //console.debug('TOUCHMOVE', e);
 
     // if multitouch or regular scroll event, get out immediately
     if (!this.canOverscroll || e.touches.length > 1) {
@@ -513,7 +513,7 @@ export class Refresher {
    * @param {Event} e  TODO
    */
   _handleTouchEnd(e) {
-    console.log('TOUCHEND', e);
+    console.debug('TOUCHEND', e);
     // if this wasn't an overscroll, get out immediately
     if (!this.canOverscroll && !this.isDragging) {
       return;
@@ -548,6 +548,6 @@ export class Refresher {
    * @param {Event} e  TODO
    */
   _handleScroll(e) {
-    console.log('SCROLL', e.target.scrollTop);
+    console.debug('SCROLL', e.target.scrollTop);
   }
 }

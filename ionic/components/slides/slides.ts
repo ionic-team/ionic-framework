@@ -378,12 +378,12 @@ export class Slides extends Ion {
 
     this.zoomGesture.on('pinchstart', (e) => {
       last_scale = this.scale;
-      console.log('Last scale', e.scale);
+      console.debug('Last scale', e.scale);
     });
 
     this.zoomGesture.on('pinch', (e) => {
       this.scale = Math.max(1, Math.min(last_scale * e.scale, 10));
-      console.log('Scaling', this.scale);
+      console.debug('Scaling', this.scale);
       this.zoomElement.style[CSS.transform] = 'scale(' + this.scale + ')'
 
       zoomRect = this.zoomElement.getBoundingClientRect();
@@ -424,10 +424,10 @@ export class Slides extends Ion {
    * @private
    */
   toggleZoom(swiper, e) {
-    console.log('Try toggle zoom');
+    console.debug('Try toggle zoom');
     if (!this.enableZoom) { return; }
 
-    console.log('Toggling zoom', e);
+    console.debug('Toggling zoom', e);
 
     /*
     let x = e.pointers[0].clientX;
@@ -451,7 +451,7 @@ export class Slides extends Ion {
       ty = y-my;
     }
 
-    console.log(y);
+    console.debug(y);
     */
 
     let zi = new Animation(this.touch.target.children[0])
@@ -512,7 +512,7 @@ export class Slides extends Ion {
    * @private
    */
   onTouchStart(e) {
-    console.log('Touch start', e);
+    console.debug('Touch start', e);
 
     //TODO: Support mice as well
 
@@ -532,7 +532,7 @@ export class Slides extends Ion {
       zoomableWidth: target.offsetWidth,
       zoomableHeight: target.offsetHeight
     }
-    console.log('Target', this.touch.target);
+    console.debug('Target', this.touch.target);
 
     //TODO: android prevent default
 
@@ -555,25 +555,25 @@ export class Slides extends Ion {
     let y1 = Math.min((this.viewportHeight / 2) - zoomableScaledHeight/2, 0)
     let y2 = -y1;
 
-    console.log('BOUNDS', x1, x2, y1, y2);
+    console.debug('BOUNDS', x1, x2, y1, y2);
 
     if (this.scale <= 1) {
       return;
     }
 
-    console.log('PAN', e);
+    console.debug('PAN', e);
 
     // Move image
     this.touch.x = this.touch.deltaX + this.touch.lastX;
     this.touch.y = this.touch.deltaY + this.touch.lastY;
 
-    console.log(this.touch.x, this.touch.y);
+    console.debug(this.touch.x, this.touch.y);
 
     if (this.touch.x < x1) {
-      console.log('OUT ON LEFT');
+      console.debug('OUT ON LEFT');
     }
     if (this.touch.x > x2 ){
-      console.log('OUT ON RIGHT');
+      console.debug('OUT ON RIGHT');
     }
 
     if (this.touch.x > this.viewportWidth) {
@@ -581,7 +581,7 @@ export class Slides extends Ion {
     } else if (-this.touch.x > this.viewportWidth) {
       // Too far on the right side, let the event bubble up (to enable slider on edges, for example)
     } else {
-      console.log('TRANSFORM', this.touch.x, this.touch.y, this.touch.target);
+      console.debug('TRANSFORM', this.touch.x, this.touch.y, this.touch.target);
       //this.touch.target.style[CSS.transform] = 'translateX(' + this.touch.x + 'px) translateY(' + this.touch.y + 'px)';
       this.touch.target.style[CSS.transform] = 'translateX(' + this.touch.x + 'px) translateY(' + this.touch.y + 'px)';
       e.preventDefault();
@@ -595,14 +595,14 @@ export class Slides extends Ion {
    * @private
    */
   onTouchEnd(e) {
-    console.log('PANEND', e);
+    console.debug('PANEND', e);
 
     if (this.scale > 1) {
 
       if (Math.abs(this.touch.x) > this.viewportWidth) {
         // TODO what is posX?
         var posX = posX > 0 ? this.viewportWidth - 1 : -(this.viewportWidth - 1);
-        console.log('Setting on posx', this.touch.x);
+        console.debug('Setting on posx', this.touch.x);
       }
 
       /*
