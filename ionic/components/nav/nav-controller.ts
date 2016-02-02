@@ -113,9 +113,24 @@ export class NavController extends Ion {
   protected _trnsTime: number = 0;
   protected _views: Array<ViewController> = [];
 
+  /**
+   * @private
+   */
   id: number;
+
+  /**
+   * @private
+   */
   providers: ResolvedProvider[];
+
+  /**
+   * @private
+   */
   router: NavRouter;
+
+  /**
+   * @private
+   */
   sbGesture: any;
 
   constructor(
