@@ -7,6 +7,8 @@ import {isDefined} from '../../util/util';
 
 
 /**
+ * @name RadioGroup
+ * @description
  * A radio group is a group of radio components, and its value comes
  * from the selected radio button's value. Selecting a radio button
  * in the group unselects all others in the group.
@@ -63,9 +65,19 @@ export class RadioGroup {
   private _ids: number = -1;
   private _init: boolean = false;
 
+  /**
+   * @private
+   */
   id;
+
+  /**
+   * @private
+   */
   value;
 
+  /**
+   * @private
+   */
   @Output() change: EventEmitter<RadioGroup> = new EventEmitter();
 
   constructor(
@@ -104,6 +116,9 @@ export class RadioGroup {
     }
   }
 
+  /**
+   * @private
+   */
   ngAfterContentInit() {
     // in a setTimeout to prevent
     // Expression '_checked in RadioButton@0:24' has changed after
@@ -114,6 +129,9 @@ export class RadioGroup {
     });
   }
 
+  /**
+   * @private
+   */
   private updateValue() {
     if (isDefined(this.value)) {
       // loop through each of the radiobuttons
@@ -134,6 +152,9 @@ export class RadioGroup {
     }
   }
 
+  /**
+   * @private
+   */
   register(button: RadioButton): string {
     this._buttons.push(button);
 
