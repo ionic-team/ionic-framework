@@ -7,13 +7,17 @@ module.exports = function(options) {
   var inputDir = path.join(__dirname, '../../dist');
   var uploadQueue = [];
 
+  var ignoreFiles = /(\/test\/|\/ts\/|\/q\/|\/ionic-site\/|\/docs\/|\/examples\/|\/inquirer\/|\/lodash\/|\/tooling\/|\/colors\/|\/bin\/|\.ts$|\.bin|\.map$|\.md$|\.git|\.scss$|\.yml$|\.yaml$|\.dart$|\.txt|\.npm|bower|DS_Store|LICENSE)/i;
+
   function uploadFiles(dir, urlPath) {
     fs.readdir(dir, function(err, list) {
 
       list.forEach(function(file) {
         var url = urlPath + '/' + file
 
-        if (url.indexOf('/test/') > -1 || url.indexOf('/ionic-site/') > -1 || url.indexOf('/docs/') > -1) return;
+        if (ignoreFiles.test(url)) {
+          return;
+        }
 
         fs.stat(dir + '/' + file, function(err, stat) {
           if (stat && stat.isDirectory()) {
@@ -75,7 +79,7 @@ module.exports = function(options) {
       function(err, httpResponse, body) {
         if (err) {
           uploadData.status = 'failed';
-          console.error('Get upload failed:', err);
+          console.error('Get upload failed:', uploadData.url_path, err);
 
         } else {
           if (httpResponse.statusCode == 200) {
@@ -101,7 +105,7 @@ module.exports = function(options) {
         setTimeout(postNextUpload, 100);
 
         if (err) {
-          console.error('Upload failed:', err);
+          console.error('Upload failed:', uploadUrl, err);
           uploadData.status = 'failed';
 
         } else {

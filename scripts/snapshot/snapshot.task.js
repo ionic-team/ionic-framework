@@ -90,7 +90,7 @@ module.exports = function(gulp, argv, buildConfig) {
     var chars = 'abcdefghijklmnopqrstuvwxyz';
     var id = chars.charAt(Math.floor(Math.random() * chars.length));
     chars += '0123456789';
-    while (id.length < 4) {
+    while (id.length < 3) {
       id += chars.charAt(Math.floor(Math.random() * chars.length));
     }
     return id;
