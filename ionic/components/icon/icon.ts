@@ -38,6 +38,7 @@ import {Config} from '../../config/config';
  * inactive icon on iOS will use an outlined version of the icon same icon.
  * Material Design icons do not change appearance depending if they're active
  * or not. The `isActive` property is largely used by the tabbar.
+ * @demo /docs/v2/demos/icon/ 
  * @see {@link /docs/v2/components#icons Icon Component Docs}
  *
  */
