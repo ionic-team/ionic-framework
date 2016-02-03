@@ -3,19 +3,9 @@ import {Storage, LocalStorage} from 'ionic/ionic';
 
 
 @App({
-  templateUrl: 'app.html'
-})
-class ApiDemoApp {
-
-  constructor() {
-    this.rootPage = InitialPage;
-  }
-}
-
-@Page({
   templateUrl: 'main.html'
 })
-export class InitialPage {
+class ApiDemoApp {
   constructor() {
     this.local = new Storage(LocalStorage);
     this.myItem = {};

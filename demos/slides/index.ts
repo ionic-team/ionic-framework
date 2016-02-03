@@ -4,7 +4,7 @@ import {Http} from 'angular2/http';
 @App({
   templateUrl: 'main.html',
 })
-class MyApp {
+class ApiDemoApp {
   constructor(private app: IonicApp, http: Http) {
     this.http = http;
     this.extraOptions = {

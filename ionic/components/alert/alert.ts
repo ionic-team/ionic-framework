@@ -114,6 +114,7 @@ import {ViewController} from '../nav/view-controller';
  * }
  * ```
  *
+ * @demo /docs/v2/demos/alert/ 
  */
 export class Alert extends ViewController {
 

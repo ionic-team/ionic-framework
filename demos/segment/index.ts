@@ -3,8 +3,7 @@ import {App, Platform} from 'ionic/ionic';
 @App({
   templateUrl: 'main.html'
 })
-
-class DemoApp {
+class ApiDemoApp {
   constructor(platform: Platform) {
     this.platform = platform;
     this.pet = "puppies";

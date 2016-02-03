@@ -8,12 +8,10 @@ class Page1 {}
 @Page({templateUrl: 'page2.html'})
 class Page2 {}
 
-
 @App({
   templateUrl: 'main.html'
 })
-class E2EApp {
-
+class ApiDemoApp {
   constructor(app: IonicApp) {
     this.app = app;
     this.rootView = Page1;
