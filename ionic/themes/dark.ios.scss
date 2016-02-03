@@ -55,6 +55,10 @@ $item-ios-padding-media-bottom:       10px !default;
 $item-ios-padding-icon-top:           10px !default;
 $item-ios-padding-icon-bottom:        9px !default;
 
+// iOS Toggle
+// --------------------------------------------------
+
+$toggle-ios-handle-background-color:  map-get($colors-ios, light) !default;
 
 // iOS Icon
 // --------------------------------------------------
