@@ -1,6 +1,7 @@
-<ion-navbar *navbar>
+<ion-toolbar>
   <ion-title>Refresher</ion-title>
-</ion-navbar>
+</ion-toolbar>
+
 
 <ion-content>
   <ion-refresher (starting)="doStarting()" (refresh)="doRefresh($event, refresher)" (pulling)="doPulling($event, amt)">
