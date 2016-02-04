@@ -38,9 +38,8 @@ import {isDefined} from '../../util/util';
  * </form>
  * ```
  *
- * @property {string} [value] - the value of the segment-button. Required.
- * @property {Any} [click] - expression to evaluate when a segment button has been clicked
- * @property {Any} (select) - expression to evaluate when a segment selection has been changed
+ * @property {string} [value] - the value of the segment button. Required.
+ * @property {Any} (select) - expression to evaluate when a segment button has been clicked
  *
  * @demo /docs/v2/demos/segment/
  * @see {@link /docs/v2/components#segment Segment Component Docs}
@@ -136,7 +135,7 @@ export class SegmentButton {
  * </form>
  * ```
  *
- * @property {Any} [change] - expression to evaluate when a segment button has been changed
+ * @property {Any} (change) - expression to evaluate when a segment button has been changed
  *
  * @demo /docs/v2/demos/segment/
  * @see {@link /docs/v2/components#segment Segment Component Docs}
