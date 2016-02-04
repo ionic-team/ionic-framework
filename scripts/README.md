@@ -40,7 +40,7 @@ From `ionic` repo root directory:
 1. `gulp package --strip-debug false`
 2. `cd dist`
 3. `sudo npm link`
-4. After ionic changes: `gulp transpile.no-typecheck --strip-debug false`
+4. After ionic changes: `gulp transpile.no-typecheck --strip-debug false && gulp copy.scss`
 
 From Testing App root directory:
 
