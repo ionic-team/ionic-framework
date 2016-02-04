@@ -95,6 +95,8 @@ function watchTask(task){
     gulp.start('sass');
   });
 
+  gulp.start('serve');
+
   function deleteFile(file) {
     //TODO
     // var basePath = file.base.substring(0, file.base.lastIndexOf("ionic/"));
