@@ -20,10 +20,10 @@
     "inquirer": "0.11.0",
     "ionicons": "3.0.0-alpha.3",
     "lodash": "3.10.1",
+    "mkdirp-no-bin": "0.5.1",
     "q": "1.4.1",
     "reflect-metadata": "0.1.2",
     "rxjs": "5.0.0-beta.0",
-    "shelljs": "0.5.3",
     "zone.js": "0.5.10"
   },
   "devDependencies": {
