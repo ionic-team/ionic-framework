@@ -420,16 +420,7 @@ gulp.task('copy.libs', function() {
   return merge([webAnimations, libs]);
 })
 
-gulp.task('src', function(done){
-  runSequence(
-    'clean',
-    'copy.libs',
-    ['bundle', 'sass', 'fonts', 'copy.scss'],
-    done
-  );
-});
-
-gulp.task('src.release', function(done) {
+gulp.task('src', function(done) {
   IS_RELEASE = true;
   runSequence(
     'clean',
@@ -439,7 +430,7 @@ gulp.task('src.release', function(done) {
   );
 });
 
-gulp.task('package', ['src.release'], function(done){
+gulp.task('package', function(done){
   var _ = require('lodash');
   var fs = require('fs');
   var distDir = 'dist';
@@ -502,7 +493,7 @@ gulp.task('prepare', function(){
 
 });
 
-gulp.task('prerelease', ['prepare'], function(done){
+gulp.task('prerelease', ['prepare', 'src'], function(done){
   runSequence('package', done);
 });
 
