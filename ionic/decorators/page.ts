@@ -6,7 +6,6 @@ const _reflect: any=Reflect;
 /**
  * @name Page
  * @description
- *For more information on how pages are created, see the [NavController API reference](../../components/nav/NavController/#creating_pages)
  *
  * The Page decorator indicates that the decorated class is an Ionic
  * navigation component, meaning it can be navigated to using a NavController.
@@ -69,6 +68,8 @@ const _reflect: any=Reflect;
  * Pages have their content automatically wrapped in `<ion-view>`, so although
  * you may see these tags if you inspect your markup, you don't need to include
  * them in your templates.
+ *
+ * For more information on how pages are created, see the [NavController API reference](../../components/nav/NavController/#creating_pages)
  */
 export function Page(config: any={}) {
   return function(cls) {

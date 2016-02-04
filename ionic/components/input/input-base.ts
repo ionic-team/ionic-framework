@@ -353,7 +353,7 @@ export class InputBase {
     * @private
    */
   clearTextInput() {
-    console.log("Should clear input");
+    console.debug("Should clear input");
   }
 
   /**

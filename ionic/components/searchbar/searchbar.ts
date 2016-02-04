@@ -72,6 +72,9 @@ export class SearchbarInput {
   directives: [FORM_DIRECTIVES, NgIf, NgClass, Icon, Button, SearchbarInput]
 })
 export class Searchbar extends Ion {
+  /**
+   * @private
+   */
   @ViewChild(SearchbarInput) searchbarInput;
 
   /**
@@ -112,13 +115,40 @@ export class Searchbar extends Ion {
    */
   @Output() clear: EventEmitter<Searchbar> = new EventEmitter();
 
+  /**
+   * @private
+   */
   value: string = '';
+
+  /**
+   * @private
+   */
   blurInput: boolean = true;
+
+  /**
+   * @private
+   */
   inputElement: any;
+
+  /**
+   * @private
+   */
   searchIconElement: any;
+
+  /**
+   * @private
+   */
   mode: string;
 
+
+  /**
+   * @private
+   */
   @HostBinding('class.searchbar-focused') isFocused;
+
+  /**
+   * @private
+   */
   @HostBinding('class.searchbar-left-aligned') shouldLeftAlign;
 
   constructor(

@@ -1,9 +1,9 @@
-<ion-navbar *navbar>
+<ion-toolbar>
   <ion-title>Platform</ion-title>
-</ion-navbar>
+</ion-toolbar>
 
 <ion-content class="platform-demo">
-  <p margin class="note">Change Devices to Update the Platform Values</p>
+  <p margin class="note">Change devices to see the platform values change.</p>
 
   <ion-row>
     <ion-col><b>Name</b></ion-col>
@@ -37,6 +37,11 @@
 </ion-content>
 
 <style>
+  .platform-demo ion-col {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+
   .platform-demo pre {
     background: #f8f8f8;
     font-size: 13px;

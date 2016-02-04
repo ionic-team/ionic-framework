@@ -79,8 +79,14 @@ export class Toggle {
   private _startX;
   private _touched: number = 0;
 
+  /**
+   * @private
+   */
   id: string;
 
+  /**
+   * @private
+   */
   @Input() value: string = '';
 
   constructor(
@@ -119,6 +125,9 @@ export class Toggle {
     this.checked = !this.checked;
   }
 
+  /**
+   * @private
+   */
   @Input()
   get checked() {
     return this._checked;
@@ -132,6 +141,9 @@ export class Toggle {
     }
   }
 
+  /**
+   * @private
+   */
   @Input()
   get disabled() {
     return this._disabled;

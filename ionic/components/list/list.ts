@@ -66,9 +66,9 @@ export class List extends Ion {
    */
   ngOnInit() {
     if (isDefined(this.virtual)) {
-      console.log('Content', this.content);
-      console.log('Virtual?', this.virtual);
-      console.log('Items?', this.items.length, 'of \'em');
+      console.debug('Content', this.content);
+      console.debug('Virtual?', this.virtual);
+      console.debug('Items?', this.items.length, 'of \'em');
       this._initVirtualScrolling();
     }
   }

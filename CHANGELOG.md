@@ -27,6 +27,14 @@
 
 * **action-sheet:** Button `style` property renamed to `role` ([1c618b5](https://github.com/driftyco/ionic/commit/1c618b51eb0a31013f7d3509d34c796d65689836#diff-f61014c4fb6e166fa1b5645d126dd4f6L26))
 
+##### Angular was updated to Beta 2
+
+* Update the version of Angular in your `package.json` file:
+
+  ```
+  "angular2": "2.0.0-beta.2",
+  ```
+
 
 <a name="2.0.0-alpha.53"></a>
 # 2.0.0-alpha.53 (2016-01-28)

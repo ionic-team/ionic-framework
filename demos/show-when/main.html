@@ -1,30 +1,33 @@
-<ion-navbar *navbar>
+<ion-toolbar>
   <ion-title>ShowWhen</ion-title>
-</ion-navbar>
+</ion-toolbar>
 
-<ion-content padding class="show-when-demo">
-  <h5>If the platform is Android, it will show the Android logo. If the platform is iOS, it will show the Apple logo.</h5>
+<ion-content class="show-when-demo">
+  <h5 margin>Show Icon Per Platform</h5>
+  <p margin>In this example we're using the <code>showWhen</code> directive to decide whether to show an icon based on the platform.</p>
 
-  <div class="icon-div" showWhen="android">
-    <ion-icon name="logo-android"></ion-icon><br>
-    <code>&lt;div showWhen="android"&gt;</code>
-  </div>
-  <div class="icon-div" showWhen="ios">
-    <ion-icon name="logo-apple"></ion-icon><br>
-    <code>&lt;div showWhen="ios"&gt;</code>
-  </div>
+  <ion-row text-center>
+    <ion-col>
+      <ion-icon name="logo-android" showWhen="android"></ion-icon>
+    </ion-col>
+    <ion-col>
+      <ion-icon name="logo-apple" showWhen="ios"></ion-icon>
+    </ion-col>
+  </ion-row>
 </ion-content>
 
 <style>
-  .show-when-demo .icon-div {
-    text-align: center;
-  }
-
-  .show-when-demo .icon-div ion-icon {
-    font-size: 200px;
-  }
-
-  .show-when-demo .icon-div code {
+  .show-when-demo ion-col {
     background: #f8f8f8;
+    border: 1px solid #ddd;
+    margin: 5px;
+  }
+
+  .show-when-demo code {
+    background: #f8f8f8;
+  }
+
+  .show-when-demo ion-icon {
+    font-size: 200px;
   }
 </style>

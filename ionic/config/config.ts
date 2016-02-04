@@ -29,6 +29,17 @@ import {isObject, isDefined, isFunction, isArray} from '../util/util';
  * })
  * ```
  *
+ * Or change the whole mode
+ *
+ * ```ts
+ * @App({
+ *   template: `<ion-nav [root]="root"></ion-nav>`
+ *   config: {
+ *     mode: md
+ *   }
+ * })
+ * ```
+ *
  * Config can be overwritting at multiple levels, allowing deeper configuration. Taking the example from earlier, we can override any setting we want based on a platform.
  * ```ts
  * @App({

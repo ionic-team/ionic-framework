@@ -1,4 +1,4 @@
-<ion-menu [content]="content" id="leftMenu" side="left" (opening)="onMenuOpening($event)">
+<ion-menu [content]="content" id="leftMenu" side="left">
 
   <ion-toolbar secondary>
     <ion-title>Left Menu</ion-title>
@@ -12,7 +12,51 @@
         {{p.title}}
       </button>
 
-      <button ion-item menuClose="leftMenu" detail-none [hidden]="isHidden()">
+      <button ion-item menuClose="leftMenu" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="leftMenu" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="leftMenu" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="leftMenu" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="leftMenu" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="leftMenu" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="leftMenu" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="leftMenu" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="leftMenu" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="leftMenu" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="leftMenu" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="leftMenu" detail-none>
         Close Menu
       </button>
 
@@ -40,9 +84,60 @@
         Close Menu
       </button>
 
+      <button ion-item menuClose="rightMenu" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="rightMenu" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="rightMenu" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="rightMenu" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="rightMenu" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="rightMenu" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="rightMenu" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="rightMenu" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="rightMenu" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="rightMenu" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="rightMenu" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="rightMenu" detail-none>
+        Close Menu
+      </button>
+
     </ion-list>
+
   </ion-content>
 
 </ion-menu>
 
 <ion-nav id="nav" [root]="rootView" #content swipe-back-enabled="false"></ion-nav>
+
+<div [hidden]="isChangeDetecting()"></div>

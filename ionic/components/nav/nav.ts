@@ -98,6 +98,7 @@ import {ViewController} from './view-controller';
  *   </pre>
  * </div>
  *
+ * @demo /docs/v2/demos/navigation/ 
  * @see {@link /docs/v2/components#navigation Navigation Component Docs}
  */
 @Component({
