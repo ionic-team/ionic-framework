@@ -16,12 +16,14 @@ var docsConfig = require('./scripts/config.json');
 
 var flagConfig = {
   string: ['port', 'animations'],
+  boolean: ['debug', 'typecheck'],
   alias: {'p': 'port'},
-  default: { 'port': 8000 }
+  default: { 'port': 8000, 'debug': true, 'typecheck': false }
 };
 var flags = minimist(process.argv.slice(2), flagConfig);
 
-var IS_RELEASE = false;
+var DEBUG = flags.debug;
+var TYPECHECK = flags.typecheck;
 
 function getTscOptions(name) {
   var opts = {
@@ -192,7 +194,7 @@ gulp.task('bundle.system', function(){
 
   return merge([tsResult, swiper])
     .pipe(remember('system'))
-    .pipe(gulpif(IS_RELEASE, stripDebug()))
+    .pipe(gulpif(!DEBUG, stripDebug()))
     .pipe(concat('ionic.system.js'))
     .pipe(gulp.dest('dist/bundles'))
     .pipe(connect.reload())
@@ -202,18 +204,20 @@ gulp.task('transpile', function(){
   var gulpif = require('gulp-if');
   var stripDebug = require('gulp-strip-debug');
 
-  var tscOpts = getTscOptions(IS_RELEASE ? 'typecheck' : undefined);
+  var tscOpts = getTscOptions(TYPECHECK ? 'typecheck' : undefined);
   var tsResult = tsCompile(tscOpts, 'transpile')
 
-  if (IS_RELEASE) {
+  if (TYPECHECK) {
     var merge = require('merge2');
-    var js = tsResult.js.pipe(stripDebug());
+    var js = tsResult.js;
     var dts = tsResult.dts;
+    if (!DEBUG) js = js.pipe(stripDebug());
     // merge definition and source streams
     return merge([js, dts])
       .pipe(gulp.dest('dist'));
   }
 
+  if (!DEBUG) tsResult = tsResult.pipe(stripDebug());
   return tsResult.pipe(gulp.dest('dist'));
 });
 
@@ -677,7 +681,8 @@ gulp.task('publish.npm', function(done) {
  * Build Ionic sources, with typechecking and debug statements removed
  */
 gulp.task('build.release', function(done){
-  IS_RELEASE = true;
+  DEBUG = false;
+  TYPECHECK = true;
   runSequence(
     'clean',
     'copy.libs',
