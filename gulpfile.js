@@ -15,10 +15,9 @@ var connect = require('gulp-connect');
 var docsConfig = require('./scripts/config.json');
 
 var flagConfig = {
-  string: ['port', 'version', 'ngVersion', 'animations', 'strip-debug'],
-  boolean: ['dry-run'],
-  alias: {'p': 'port', 'v': 'version', 'a': 'ngVersion'},
-  default: { port: 8000 }
+  string: ['port', 'animations', 'strip-debug'],
+  alias: {'p': 'port'},
+  default: { 'port': 8000 }
 };
 var flags = minimist(process.argv.slice(2), flagConfig);
 
@@ -439,12 +438,6 @@ gulp.task('copy.libs', function() {
     .pipe(gulp.dest('dist'));
 
   return merge([webAnimations, libs]);
-})
-
-gulp.task('src.link', function(done) {
-  watch(['/ionic/**/*.ts', 'ionic/**/*.scss'], function(file) {
-    gulp.start('src');
-  });
 })
 
 gulp.task('src', function(done){
