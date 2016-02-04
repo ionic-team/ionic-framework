@@ -23,27 +23,23 @@ var flags = minimist(process.argv.slice(2), flagConfig);
 
 var IS_RELEASE = false;
 
-var tscOptions = {
-  emitDecoratorMetadata: true,
-  experimentalDecorators: true,
-  target: "es5",
-  module: "commonjs",
-  declaration: true
-}
+function getTscOptions(name) {
+  var opts = {
+    emitDecoratorMetadata: true,
+    experimentalDecorators: true,
+    target: "es5",
+    module: "commonjs",
+    isolatedModules: true
+  }
 
-var tscOptionsNoTypeCheck = {
-  emitDecoratorMetadata: true,
-  experimentalDecorators: true,
-  target: "es5",
-  module: "commonjs",
-  isolatedModules: true
-}
-
-var tscOptionsEs6 = {
-  emitDecoratorMetadata: true,
-  experimentalDecorators: true,
-  target: 'ES6',
-  isolatedModules: true
+  if (name === "typecheck") {
+    opts.declaration = true;
+    delete opts.isolatedModules;
+  } else if (name === "es6") {
+    opts.target = "es6";
+    delete opts.module;
+  }
+  return opts;
 }
 
 var tscReporter = {
@@ -150,33 +146,24 @@ function tsCompile(options, cacheName){
     });
 }
 
-gulp.task('transpile.no-typecheck', function(){
+gulp.task('transpile', function(){
   var gulpif = require('gulp-if');
   var stripDebug = require('gulp-strip-debug');
 
-  return tsCompile(tscOptionsNoTypeCheck, 'no-typecheck')
-    .pipe(gulpif(IS_RELEASE, stripDebug()))
-    .pipe(gulp.dest('dist'));
-});
+  var tscOpts = getTscOptions(IS_RELEASE ? 'typecheck' : undefined);
+  var tsResult = tsCompile(tscOpts, 'transpile')
 
-gulp.task('typecheck', ['transpile.typecheck']);
-
-gulp.task('transpile.typecheck', function(){
-  var merge = require('merge2');
-  var stripDebug = require('gulp-strip-debug');
-
-  var result = tsCompile(tscOptions, 'typecheck');
-
-  var js = result.js;
-  var dts = result.dts;
   if (IS_RELEASE) {
-    js = js.pipe(stripDebug());
+    var merge = require('merge2');
+    var js = tsResult.js.pipe(stripDebug());
+    var dts = tsResult.dts;
+    // merge definition and source streams
+    return merge([js, dts])
+      .pipe(gulp.dest('dist'));
   }
 
-  // merge definition and source streams
-  return merge([js, dts])
-    .pipe(gulp.dest('dist'));
-})
+  return tsResult.pipe(gulp.dest('dist'));
+});
 
 gulp.task('bundle.system', function(){
   var babel = require('gulp-babel');
@@ -185,7 +172,7 @@ gulp.task('bundle.system', function(){
   var stripDebug = require('gulp-strip-debug');
   var merge = require('merge2');
 
-  var tsResult = tsCompile(tscOptionsEs6, 'system')
+  var tsResult = tsCompile(getTscOptions('es6'), 'system')
     .pipe(babel(babelOptions));
 
   var swiper = gulp.src('ionic/components/slides/swiper-widget.system.js');
@@ -197,8 +184,6 @@ gulp.task('bundle.system', function(){
     .pipe(gulp.dest('dist/bundles'))
     .pipe(connect.reload())
 })
-
-gulp.task('transpile', ['transpile.no-typecheck']);
 
 gulp.task('bundle', ['bundle.cjs', 'bundle.system']);
 
@@ -249,7 +234,7 @@ function bundle(args) {
 
 gulp.task('tests', function() {
   return gulp.src('ionic/**/test/**/*.spec.ts')
-    .pipe(tsc(tscOptionsNoTypeCheck, undefined, tscReporter))
+    .pipe(tsc(getTscOptions(), undefined, tscReporter))
     .pipe(rename(function(file) {
       var regex = new RegExp(path.sep + 'test(' + path.sep + '|$)');
       file.dirname = file.dirname.replace(regex, path.sep);
@@ -282,7 +267,7 @@ gulp.task('e2e.build', function() {
       '!ionic/components/*/test/*/**/*.spec.ts'
     ])
     .pipe(cache('e2e.ts'))
-    .pipe(tsc(tscOptionsNoTypeCheck, undefined, tscReporter))
+    .pipe(tsc(getTscOptions(), undefined, tscReporter))
     .on('error', function(error) {
       console.log(error.message);
       this.emit('end');
@@ -443,7 +428,6 @@ gulp.task('src', function(done){
     'clean',
     'copy.libs',
     ['bundle', 'sass', 'fonts', 'copy.scss'],
-    'transpile.typecheck',
     done
   );
 });
@@ -454,7 +438,6 @@ gulp.task('src.release', function(done) {
     'clean',
     'copy.libs',
     ['bundle', 'sass', 'fonts', 'copy.scss'],
-    'transpile.typecheck',
     done
   );
 });
@@ -595,7 +578,7 @@ gulp.task('build.demos', function(){
 
   var tsResult = gulp.src(['demos/**/*.ts'])
     .pipe(cache('demos.ts'))
-    .pipe(tsc(tscOptionsNoTypeCheck, undefined, tscReporter))
+    .pipe(tsc(getTscOptions(), undefined, tscReporter))
     .on('error', function(error) {
       console.log(error.message);
       this.emit('end');
@@ -632,7 +615,7 @@ gulp.task('build.demos', function(){
   }
 });
 
-gulp.task('bundle.demos', ['build.demos', 'transpile.no-typecheck', 'copy.libs', 'sass', 'fonts'], function(done) {
+gulp.task('bundle.demos', ['build.demos', 'transpile', 'copy.libs', 'sass', 'fonts'], function(done) {
   buildDemoBundle(done);
 });
 
