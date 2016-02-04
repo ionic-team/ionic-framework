@@ -35,6 +35,8 @@ import {IonicApp} from './app';
  * *NOTE:* It is not recommended to use ID's across Pages, as there is often no
  * guarantee that the registered component has not been destroyed if its Page
  * has been navigated away from.
+ *
+ * @demo /docs/v2/demos/id/
  */
 @Directive({
   selector: '[id]'
