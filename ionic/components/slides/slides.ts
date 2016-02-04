@@ -567,8 +567,6 @@ export class Slides extends Ion {
     this.touch.x = this.touch.deltaX + this.touch.lastX;
     this.touch.y = this.touch.deltaY + this.touch.lastY;
 
-    console.debug(this.touch.x, this.touch.y);
-
     if (this.touch.x < x1) {
       console.debug('OUT ON LEFT');
     }
