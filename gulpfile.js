@@ -72,49 +72,28 @@ gulp.task('build', function(done){
   );
 });
 
-/**
- * Build Ionic sources, with typechecking and debug statements removed
- */
-gulp.task('build.release', function(done){
-  IS_RELEASE = true;
-  runSequence(
-    'clean',
-    'copy.libs',
-    ['bundle', 'sass', 'fonts', 'copy.scss']
-  );
+gulp.task('watch', ['build'], function() {
+  watchTask('transpile');
 });
 
-gulp.task('watch', function(done) {
-  runSequence(
-    'copy.libs',
-    'build',
-    'serve',
-    function() {
-      watch([
-          'ionic/**/*.ts',
-          '!ionic/components/*/test/**/*',
-          '!ionic/util/test/*'
-        ],
-        function(file) {
-          if (file.event === "unlink") {
-            deleteFile(file);
-          } else {
-            gulp.start('bundle.system');
-          }
-        }
-      );
-
-      watch('ionic/components/*/test/**/*', function(file) {
-        gulp.start('e2e.build');
-      });
-
-      watch('ionic/**/*.scss', function() {
-        gulp.start('sass');
-      });
-
-      done();
+function watchTask(task){
+  watch([
+      'ionic/**/*.ts',
+      '!ionic/components/*/test/**/*',
+      '!ionic/util/test/*'
+    ],
+    function(file) {
+      if (file.event === "unlink") {
+        deleteFile(file);
+      } else {
+        gulp.start(task);
+      }
     }
   );
+
+  watch('ionic/**/*.scss', function() {
+    gulp.start('sass');
+  });
 
   function deleteFile(file) {
     //TODO
@@ -131,7 +110,7 @@ gulp.task('watch', function(done) {
     //   gulp.start('bundle.system');
     // });
   }
-});
+}
 
 gulp.task('serve', function() {
   connect.server({
@@ -145,6 +124,7 @@ gulp.task('serve', function() {
 gulp.task('clean', function(done) {
   del(['dist/**', '!dist'], done);
 });
+
 
 /**
  * Source build tasks
@@ -336,9 +316,18 @@ gulp.task('copy.libs', function() {
   return merge([webAnimations, libs]);
 });
 
+
 /**
  * Test build tasks
  */
+gulp.task('watch.e2e', ['e2e'], function() {
+  watchTask('bundle.system');
+
+  watch('ionic/components/*/test/**/*', function(file) {
+    gulp.start('e2e.build');
+  });
+});
+
 gulp.task('e2e', ['e2e.build', 'bundle.system', 'copy.libs', 'sass', 'fonts']);
 
 gulp.task('e2e.build', function() {
@@ -435,6 +424,7 @@ gulp.task('tests', function() {
     }))
     .pipe(gulp.dest('dist/tests'))
 })
+
 
 /**
  * Demos
@@ -544,6 +534,7 @@ gulp.task('build.demos', function() {
   }
 });
 
+
 /**
  * Tests
  */
@@ -558,6 +549,7 @@ gulp.task('karma-watch', function() {
   var karma = require('karma').server;
   return karma.start({ configFile: __dirname + '/scripts/karma/karma-watch.conf.js' })
 });
+
 
 /**
  * Release
@@ -680,6 +672,19 @@ gulp.task('publish.npm', function(done) {
 });
 
 /**
+ * Build Ionic sources, with typechecking and debug statements removed
+ */
+gulp.task('build.release', function(done){
+  IS_RELEASE = true;
+  runSequence(
+    'clean',
+    'copy.libs',
+    ['bundle', 'sass', 'fonts', 'copy.scss']
+  );
+});
+
+
+/**
  * Docs
  */
 require('./scripts/docs/gulp-tasks')(gulp, flags)
@@ -695,4 +700,4 @@ gulp.task('tooling', function(){
     gulp.src('*tooling/**/*')
       .pipe(gulp.dest('dist'));
   })
-})
+});
