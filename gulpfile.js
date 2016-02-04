@@ -63,10 +63,6 @@ var babelOptions = {
 
 gulp.task('build', ['bundle.system', 'e2e.build', 'sass', 'fonts']);
 
-gulp.task('clean.build', function(done) {
-  runSequence('clean', 'build', done);
-});
-
 gulp.task('watch', function(done) {
   runSequence(
     'copy.libs',
@@ -100,18 +96,19 @@ gulp.task('watch', function(done) {
   );
 
   function deleteFile(file) {
-    var basePath = file.base.substring(0, file.base.lastIndexOf("ionic/"));
-    var relativePath = file.history[0].replace(file.base, '').replace('.ts', '.js');
-
-    var filePath = basePath + 'dist/' + relativePath;
-    var typingPath = filePath.replace('.js', '.d.ts');
-
-    delete cache.caches['no-typecheck'][file.history[0]];
-    remember.forget('no-typecheck', file.history[0]);
-
-    del([filePath, typingPath], function(){
-      gulp.start('bundle.system');
-    });
+    //TODO
+    // var basePath = file.base.substring(0, file.base.lastIndexOf("ionic/"));
+    // var relativePath = file.history[0].replace(file.base, '').replace('.ts', '.js');
+    //
+    // var filePath = basePath + 'dist/' + relativePath;
+    // var typingPath = filePath.replace('.js', '.d.ts');
+    //
+    // delete cache.caches['no-typecheck'][file.history[0]];
+    // remember.forget('no-typecheck', file.history[0]);
+    //
+    // del([filePath, typingPath], function(){
+    //   gulp.start('bundle.system');
+    // });
   }
 });
 
@@ -458,11 +455,10 @@ gulp.task('package', ['src.release'], function(done){
   var packageJSON = require('./package.json');
   templateVars.ionicVersion = packageJSON.version;
   templateVars.angularVersion = packageJSON.dependencies.angular2;
-	var packageTemplate = _.template(fs.readFileSync('scripts/npm/package.json'));
+  var packageTemplate = _.template(fs.readFileSync('scripts/npm/package.json'));
   fs.writeFileSync(distDir + '/package.json', packageTemplate(templateVars));
   done();
 });
-
 
 gulp.task('prepare', function(){
   var execSync = require('child_process').execSync;
@@ -634,7 +630,7 @@ gulp.task('demos', ['bundle.demos'], function() {
   return merge([demosStream, cssStream]);
 });
 
-gulp.task('watch:demos', function() {
+gulp.task('watch.demos', function() {
   watch('demos/**/*', function() {
     gulp.start('demos');
   });
