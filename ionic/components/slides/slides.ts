@@ -223,8 +223,6 @@ export class Slides extends Ion {
     this.rapidUpdate = debounce(() => {
       this.update();
     }, 10);
-
-    console.warn("(slideChanged) deprecated. Use (change) to track slide changes.");
   }
 
   /**
