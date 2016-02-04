@@ -419,7 +419,7 @@ export class Menu extends Ion {
    */
   enable(shouldEnable) {
     this.isEnabled = shouldEnable;
-    if (!shouldEnable) {
+    if (!shouldEnable && this.isOpen) {
       this.close();
     }
     return this;
