@@ -1,18 +1,16 @@
 import {Directive, Input, HostListener} from 'angular2/core';
 
-import {IonicApp} from '../app/app';
-import {Menu} from './menu';
+import {MenuController} from './menu-controller';
 
 
 /**
 * @name MenuClose
 * @description
-* Place `menuClose` on a button to automatically close an open menu. Note that the menu's id must be either
-* `leftMenu` or `rightMenu`
+* Place `menuClose` on a button to automatically close an open menu.
 *
 * @usage
  * ```html
- * <ion-menu [content]="mycontent" id="leftMenu">
+ * <ion-menu [content]="mycontent">
  *   <ion-content>
  *     <ion-list>
  *     <ion-item menuClose>Close the menu</ion-item>
@@ -36,14 +34,14 @@ export class MenuClose {
    */
   @Input() menuClose;
 
-  constructor(private _app: IonicApp) {}
+  constructor(private _menu: MenuController) {}
 
   /**
   * @private
   */
   @HostListener('click')
   close() {
-    let menu = Menu.getById(this._app, this.menuClose);
+    let menu = this._menu.get(this.menuClose);
     menu && menu.close();
   }
 

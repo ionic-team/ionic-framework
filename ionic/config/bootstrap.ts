@@ -2,19 +2,20 @@ import {provide, Provider} from 'angular2/core';
 import {ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy} from 'angular2/router';
 import {HTTP_PROVIDERS} from 'angular2/http';
 
-import {IonicApp} from '../components/app/app';
-import {Config} from './config';
-import {Platform} from '../platform/platform';
-import {Form} from '../util/form';
-import {Keyboard} from '../util/keyboard';
-import {ScrollTo} from '../animations/scroll-to';
-import {Events} from '../util/events';
-import {NavRegistry} from '../components/nav/nav-registry';
-import {Translate} from '../translation/translate';
 import {ClickBlock} from '../util/click-block';
+import {Config} from './config';
+import {Events} from '../util/events';
 import {FeatureDetect} from '../util/feature-detect';
-import {TapClick} from '../components/tap-click/tap-click';
+import {Form} from '../util/form';
+import {IonicApp} from '../components/app/app';
+import {Keyboard} from '../util/keyboard';
+import {MenuController} from '../components/menu/menu-controller';
+import {NavRegistry} from '../components/nav/nav-registry';
+import {Platform} from '../platform/platform';
 import {ready, closest} from '../util/dom';
+import {ScrollTo} from '../animations/scroll-to';
+import {TapClick} from '../components/tap-click/tap-click';
+import {Translate} from '../translation/translate';
 
 /**
  * @private
@@ -57,6 +58,7 @@ export function ionicProviders(args: any={}) {
     TapClick,
     Form,
     Keyboard,
+    MenuController,
     Translate,
     ROUTER_PROVIDERS,
     provide(LocationStrategy, {useClass: HashLocationStrategy}),

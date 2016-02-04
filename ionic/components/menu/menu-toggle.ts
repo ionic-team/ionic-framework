@@ -1,9 +1,8 @@
 import {Directive, ElementRef, Optional, Input, HostListener} from 'angular2/core';
 
-import {IonicApp} from '../app/app';
 import {ViewController} from '../nav/view-controller';
 import {Navbar} from '../navbar/navbar';
-import {Menu} from './menu';
+import {MenuController} from './menu-controller';
 
 
 /**
@@ -41,18 +40,18 @@ export class MenuToggle {
   /**
    * @private
    */
-  withinNavbar: boolean;
+  private _inNavbar: boolean;
 
   constructor(
-    private _app: IonicApp,
+    private _menu: MenuController,
     elementRef: ElementRef,
     @Optional() private _viewCtrl: ViewController,
     @Optional() private _navbar: Navbar
   ) {
-    this.withinNavbar = !!_navbar;
+    this._inNavbar = !!_navbar;
 
     // Deprecation warning
-    if (this.withinNavbar && elementRef.nativeElement.tagName === 'A') {
+    if (this._inNavbar && elementRef.nativeElement.tagName === 'A') {
       console.warn('Menu toggles within a navbar should use <button menuToggle> instead of <a menu-toggle>')
     }
   }
@@ -62,7 +61,7 @@ export class MenuToggle {
   */
   @HostListener('click')
   toggle() {
-    let menu = Menu.getById(this._app, this.menuToggle);
+    let menu = this._menu.get(this.menuToggle);
     menu && menu.toggle();
   }
 
@@ -70,7 +69,7 @@ export class MenuToggle {
   * @private
   */
   get isHidden() {
-    if (this.withinNavbar && this._viewCtrl) {
+    if (this._inNavbar && this._viewCtrl) {
       return !this._viewCtrl.isRoot();
     }
     return false;

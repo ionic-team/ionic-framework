@@ -1,4 +1,4 @@
-import {Menu} from './menu';
+import {MenuController} from './menu-controller';
 import {Animation} from '../../animations/animation';
 
 
@@ -102,7 +102,7 @@ class MenuRevealType extends MenuType {
     this.close.add(contentClose);
   }
 }
-Menu.register('reveal', MenuRevealType);
+MenuController.registerType('reveal', MenuRevealType);
 
 /**
  * Menu Push Type
@@ -149,7 +149,7 @@ class MenuPushType extends MenuType {
     this.close.add(contentClose);
   }
 }
-Menu.register('push', MenuPushType);
+MenuController.registerType('push', MenuPushType);
 
 /**
  * Menu Overlay Type
@@ -196,7 +196,7 @@ class MenuOverlayType extends MenuType {
     this.close.add(backdropClose);
   }
 }
-Menu.register('overlay', MenuOverlayType);
+MenuController.registerType('overlay', MenuOverlayType);
 
 
 const OPACITY = 'opacity';
