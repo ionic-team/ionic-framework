@@ -18,6 +18,10 @@ $font-size-ios-base:                   $font-size-base !default;
 // --------------------------------------------------
 $outer-content-ios-background-color:  $background-color !default;
 
+// iOS Note
+// --------------------------------------------------
+
+$item-ios-note-color:                  map-get($colors-ios, light) !default;
 
 // iOS Toolbar
 // --------------------------------------------------
