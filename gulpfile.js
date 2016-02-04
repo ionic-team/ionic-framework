@@ -68,7 +68,6 @@ var babelOptions = {
  */
 gulp.task('build', function(done){
   runSequence(
-    'clean',
     'copy.libs',
     ['bundle', 'sass', 'fonts', 'copy.scss']
   );
