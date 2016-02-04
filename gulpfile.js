@@ -431,7 +431,7 @@ gulp.task('tests', function() {
 /**
  * Demos
  */
-gulp.task('watch.demos', function() {
+gulp.task('watch.demos', ['demos'], function() {
   watch('demos/**/*', function() {
     gulp.start('demos');
   });
