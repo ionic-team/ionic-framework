@@ -133,10 +133,11 @@ export class Alert extends ViewController {
       id?: string
     }>,
     buttons?: Array<any>,
-    disableClickBackdropToDismiss?: boolean
+    enableBackdropDismiss?: boolean
   } = {}) {
     opts.inputs = opts.inputs || [];
     opts.buttons = opts.buttons || [];
+    opts.enableBackdropDismiss = (opts.enableBackdropDismiss === false ? false : true);
 
     super(AlertCmp, opts);
     this.viewType = 'alert';
@@ -227,7 +228,7 @@ export class Alert extends ViewController {
       id?: string
     }>,
     buttons?: Array<any>,
-    disableClickBackdropToDismiss?: boolean
+    enableBackdropDismiss?: boolean
   } = {}) {
     return new Alert(opts);
   }
@@ -373,13 +374,12 @@ class AlertCmp {
     let self = this;
     self.keyUp = function(ev) {
       if (ev.keyCode === 13) {
-        // enter
-        console.debug('alert enter');
+        console.debug('alert, enter button');
         let button = self.d.buttons[self.d.buttons.length - 1];
         self.btnClick(button);
 
       } else if (ev.keyCode === 27) {
-        console.debug('alert escape');
+        console.debug('alert, escape button');
         self.bdClick();
       }
     };
@@ -432,7 +432,7 @@ class AlertCmp {
   }
 
   bdClick() {
-    if (!this.d.disableClickBackdropToDismiss) {
+    if (this.d.enableBackdropDismiss) {
       let cancelBtn = this.d.buttons.find(b => b.role === 'cancel');
       if (cancelBtn) {
         this.btnClick(cancelBtn, 1);
@@ -470,7 +470,7 @@ class AlertCmp {
     return values;
   }
 
-  onPageDidLeave() {
+  onPageWillLeave() {
     document.removeEventListener('keyup', this.keyUp);
   }
 }

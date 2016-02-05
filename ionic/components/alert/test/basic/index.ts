@@ -239,11 +239,10 @@ class E2EPage {
 
   doDisabledBackdropAlert() {
     let alert = Alert.create({
-      disableClickBackdropToDismiss: true
+      enableBackdropDismiss: false
     });
     alert.setTitle('Disabled Backdrop Click'),
-    alert.setSubTitle('Subtitle'),
-    alert.setMessage('This is an alert message.'),
+    alert.setMessage('Cannot dismiss alert from clickings the backdrop'),
     alert.addButton({
       text: 'Cancel',
       role: 'cancel',
