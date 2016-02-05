@@ -284,8 +284,7 @@ gulp.task('sass', function() {
 });
 
 /**
- * I'm not quite sure what this is for, people tell me we use it internally to
- * test themes.
+ * Creates Ionic themes for testing.
  */
 gulp.task('sass.themes', function() {
   var sass = require('gulp-sass');
@@ -776,7 +775,8 @@ gulp.task('build.release', function(done){
   runSequence(
     'clean',
     'copy.libs',
-    ['bundle', 'sass', 'fonts', 'copy.scss']
+    ['bundle', 'sass', 'fonts', 'copy.scss'],
+    done
   );
 });
 
