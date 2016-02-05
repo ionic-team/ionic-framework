@@ -45,9 +45,12 @@ To remove the linked version of `ionic-framework` do `npm rm ionic-framework`, a
 
 ### Running Snapshot
 
-1. Install [Protractor](https://angular.github.io/protractor/#/): `npm install -g protractor`
-2. Export `IONIC_SNAPSHOT_KEY` (get from someone)
-3. Run `gulp snapshot`
+1. Install [Protractor](https://angular.github.io/protractor/#/): `npm install -g protractor@2.5.1`
+2. Run `webdriver-manager update`
+3. Export `IONIC_SNAPSHOT_KEY` (get from someone)
+4. Run `gulp snapshot`
+
+For more information on protractor, see https://angular.github.io/protractor/#/.
 
 
 ### Running Tests
