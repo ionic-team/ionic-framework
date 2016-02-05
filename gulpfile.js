@@ -566,7 +566,14 @@ gulp.task('build.demos', function() {
   var VinylFile = require('vinyl');
 
   var baseIndexTemplate = _.template(fs.readFileSync('scripts/demos/index.template.html'))();
+  var flags = minimist(process.argv.slice(2), flagConfig);
 
+  if ("production" in flags) {
+    buildDemoSass(true);
+  } else {
+    buildDemoSass(false);
+  }
+  
   var tsResult = gulp.src(['demos/**/*.ts'])
     .pipe(cache('demos.ts'))
     .pipe(tsc(getTscOptions(), undefined, tscReporter))
@@ -605,6 +612,47 @@ gulp.task('build.demos', function() {
     });
   }
 });
+
+function buildDemoSass(isProductionMode) {
+  var sass = require('gulp-sass');
+  var autoprefixer = require('gulp-autoprefixer');
+  var minifyCss = require('gulp-minify-css');
+  var concat = require('gulp-concat');
+
+  var sassVars = isProductionMode ? 'demos/app.variables.production.scss': 'demos/app.variables.local.scss';
+
+  (function combineSass() {
+    gulp.src([
+        sassVars,
+        'demos/app.ios.scss'
+      ])
+    .pipe(concat('output.ios.scss'))
+    .pipe(gulp.dest('demos/'))
+
+    gulp.src([
+        sassVars,
+        'demos/app.md.scss'
+      ])
+    .pipe(concat('output.md.scss'))
+    .pipe(gulp.dest('demos/'))
+
+  })();
+
+  gulp.src([
+    'demos/output.ios.scss',
+    'demos/output.md.scss'
+  ])
+
+  .pipe(sass({
+      includePaths: [__dirname + '/node_modules/ionicons/dist/scss/'],
+    }).on('error', sass.logError)
+  )
+  .pipe(autoprefixer(buildConfig.autoprefixer))
+  .pipe(gulp.dest('dist/demos/'))
+  .pipe(minifyCss())
+  .pipe(rename({ extname: '.min.css' }))
+  .pipe(gulp.dest('dist/bundles/'));
+}
 
 
 /**
