@@ -19,6 +19,40 @@ import {Animation} from '../../animations/animation';
  * `dismiss` method. Additionally, you can dismiss any overlay by using `pop`
  * on the root nav controller.
  *
+ * Data can be passed to a new modal through `Modal.create()` as the second
+ * argument. The data can gen be accessed from the opened page by injecting
+ * `NavParams`. Note that the page, which opened as a modal, has no special
+ * "modal" logic within it, but uses `NavParams` no differently than a
+ * standard page.
+ *
+ *  * @usage
+ * ```ts
+ * import {Modal, NavController, NavParams} from 'ionic/ionic';
+ *
+ * @Page(...)
+ * class HomePage {
+ *
+ *  constructor(nav: NavController) {
+ *    this.nav = nav;
+ *  }
+ *
+ *  presentProfileModal() {
+ *    let profileModal = Modal.create(Profile, { userId: 8675309 });
+ *    this.nav.present(profileModal);
+ *  }
+ *
+ * }
+ *
+ * @Page(...)
+ * class Profile {
+ *
+ *  constructor(params: NavParams) {
+ *    console.log('UserId', params.get('userId'));
+ *  }
+ *
+ * }
+ * ```
+ *
  * A modal can also emit data, which is useful when it is used to add or edit
  * data. For example, a profile page could slide up in a modal, and on submit,
  * the submit button could pass the updated profile data, then dismiss the
