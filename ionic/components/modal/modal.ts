@@ -18,6 +18,48 @@ import {Animation} from '../../animations/animation';
  * modal can later be closed or "dismissed" by using the ViewController's
  * `dismiss` method. Additionally, you can dismiss any overlay by using `pop`
  * on the root nav controller.
+ * 
+ * Data can be passed in through the Modal.Create() function as a second argument.
+ * This data is available in the modal on the ViewController object as the parameter
+ * "data".
+ * 
+ *  * @usage
+ * ```ts
+ * import {Modal, NavController, ViewController} from 'ionic/ionic';
+ *
+ * @Page(...)
+ * class HomePage {
+ *
+ *  constructor(nav: NavController) {
+ *    this.nav = nav;
+ *  }
+ *
+ *  presentProfileModal() {
+ *    let profileModal = Modal.create(Profile, { userId: 8675309 });
+ *    this.nav.present(profileModal);
+ *  }
+ *
+ * }
+ *
+ * @Page(...)
+ * class Profile {
+ *
+ *  constructor(viewCtrl: ViewController) {
+ *    this.viewCtrl = viewCtrl;
+ *  }
+ * 
+ *  grabData() {
+ *    let passedData = this.viewCtrl.data;
+ *  }
+ *
+ *  dismiss() {
+ *    this.viewCtrl.dismiss();
+ *  }
+ *
+ * }
+ * ```
+ * 
+ * 
  *
  * A modal can also emit data, which is useful when it is used to add or edit
  * data. For example, a profile page could slide up in a modal, and on submit,
