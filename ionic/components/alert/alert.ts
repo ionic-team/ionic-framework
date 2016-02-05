@@ -114,7 +114,7 @@ import {ViewController} from '../nav/view-controller';
  * }
  * ```
  *
- * @demo /docs/v2/demos/alert/ 
+ * @demo /docs/v2/demos/alert/
  */
 export class Alert extends ViewController {
 
@@ -132,7 +132,8 @@ export class Alert extends ViewController {
       checked?: boolean,
       id?: string
     }>,
-    buttons?: Array<any>
+    buttons?: Array<any>,
+    disableClickBackdropToDismiss?: boolean
   } = {}) {
     opts.inputs = opts.inputs || [];
     opts.buttons = opts.buttons || [];
@@ -225,7 +226,8 @@ export class Alert extends ViewController {
       checked?: boolean,
       id?: string
     }>,
-    buttons?: Array<any>
+    buttons?: Array<any>,
+    disableClickBackdropToDismiss?: boolean
   } = {}) {
     return new Alert(opts);
   }
@@ -430,12 +432,14 @@ class AlertCmp {
   }
 
   bdClick() {
-    let cancelBtn = this.d.buttons.find(b => b.role === 'cancel');
-    if (cancelBtn) {
-      this.btnClick(cancelBtn, 1);
+    if (!this.d.disableClickBackdropToDismiss) {
+      let cancelBtn = this.d.buttons.find(b => b.role === 'cancel');
+      if (cancelBtn) {
+        this.btnClick(cancelBtn, 1);
 
-    } else {
-      this.dismiss('backdrop');
+      } else {
+        this.dismiss('backdrop');
+      }
     }
   }
 
