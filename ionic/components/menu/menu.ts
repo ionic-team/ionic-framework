@@ -10,6 +10,9 @@ import {MenuController} from './menu-controller';
 import {MenuType} from './menu-types';
 
 
+/**
+ * @private
+ */
 @Component({
   selector: 'ion-menu',
   host: {
