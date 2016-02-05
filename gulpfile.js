@@ -64,7 +64,8 @@ var babelOptions = {
 }
 
 /**
- * Build Ionic sources to dist
+ * Builds Ionic sources to dist. When the '--typecheck' flag is specified,
+ * generates .d.ts definitions and does typechecking.
  */
 gulp.task('build', function(done){
   runSequence(
@@ -74,6 +75,10 @@ gulp.task('build', function(done){
   );
 });
 
+/**
+ * Builds sources to dist and watches for changes.  Runs 'transpile' for .ts
+ * changes and 'sass' for .scss changes.
+ */
 gulp.task('watch', ['build'], function() {
   watchTask('transpile');
 });
@@ -133,8 +138,15 @@ gulp.task('clean', function(done) {
 /**
  * Source build tasks
  */
+
+/**
+ * Creates CommonJS and SystemJS bundles from Ionic source files.
+ */
 gulp.task('bundle', ['bundle.cjs', 'bundle.system']);
 
+/**
+ * Creates CommonJS bundle from Ionic source files.
+ */
 gulp.task('bundle.cjs', ['transpile'], function(done){
   //TODO
   //   if (flags.animations == 'polyfill') {
@@ -180,6 +192,9 @@ gulp.task('bundle.cjs', ['transpile'], function(done){
   }
 });
 
+/**
+ * Creates SystemJS bundle from Ionic source files.
+ */
 gulp.task('bundle.system', function(){
   var babel = require('gulp-babel');
   var concat = require('gulp-concat');
@@ -200,6 +215,11 @@ gulp.task('bundle.system', function(){
     .pipe(connect.reload())
 });
 
+/**
+ * Transpiles TypeScript sources to ES5 in the CommonJS module format and outputs
+ * them to dist. When the '--typecheck' flag is specified, generates .d.ts
+ * definitions and does typechecking.
+ */
 gulp.task('transpile', function(){
   var gulpif = require('gulp-if');
   var stripDebug = require('gulp-strip-debug');
@@ -239,6 +259,9 @@ function tsCompile(options, cacheName){
     });
 }
 
+/**
+ * Compiles Ionic Sass sources to stylesheets and outputs them to dist/bundles.
+ */
 gulp.task('sass', function() {
   var sass = require('gulp-sass');
   var autoprefixer = require('gulp-autoprefixer');
@@ -260,6 +283,10 @@ gulp.task('sass', function() {
   .pipe(gulp.dest('dist/bundles/'));
 });
 
+/**
+ * I'm not quite sure what this is for, people tell me we use it internally to
+ * test themes.
+ */
 gulp.task('sass.themes', function() {
   var sass = require('gulp-sass');
   var autoprefixer = require('gulp-autoprefixer');
@@ -280,6 +307,9 @@ gulp.task('sass.themes', function() {
   buildTheme('md');
 });
 
+/**
+ * Copies fonts and Ionicons to dist/fonts
+ */
 gulp.task('fonts', function() {
   gulp.src([
     'ionic/fonts/*.+(ttf|woff|woff2)',
@@ -288,6 +318,9 @@ gulp.task('fonts', function() {
     .pipe(gulp.dest('dist/fonts'));
 });
 
+/**
+ * Copies Ionic Sass sources to dist
+ */
 gulp.task('copy.scss', function() {
   return gulp.src([
       'ionic/**/*.scss',
@@ -297,6 +330,9 @@ gulp.task('copy.scss', function() {
     .pipe(gulp.dest('dist'));
 });
 
+/**
+ * Copies miscellaneous scripts to dist.
+ */
 gulp.task('copy.libs', function() {
   var merge = require('merge2');
   var webAnimations = gulp.src([
@@ -326,6 +362,11 @@ gulp.task('copy.libs', function() {
 /**
  * Test build tasks
  */
+
+ /**
+  * Builds e2e tests to dist/e2e and watches for changes.  Runs 'bundle.system' or
+  * 'sass' on Ionic source changes and 'e2e.build' for e2e test changes.
+  */
 gulp.task('watch.e2e', ['e2e'], function() {
   watchTask('bundle.system');
 
@@ -334,8 +375,15 @@ gulp.task('watch.e2e', ['e2e'], function() {
   });
 });
 
+/**
+ * Builds Ionic e2e tests to dist/e2e and creates the necessary files for tests
+ * to run.
+ */
 gulp.task('e2e', ['e2e.build', 'bundle.system', 'copy.libs', 'sass', 'fonts']);
 
+/**
+ * Builds Ionic e2e tests to dist/e2e.
+ */
 gulp.task('e2e.build', function() {
   var gulpif = require('gulp-if');
   var merge = require('merge2');
@@ -421,6 +469,9 @@ gulp.task('e2e.build', function() {
   }
 });
 
+/**
+ * Builds Ionic unit tests to dist/tests.
+ */
 gulp.task('tests', function() {
   return gulp.src('ionic/**/test/**/*.spec.ts')
     .pipe(tsc(getTscOptions(), undefined, tscReporter))
@@ -435,12 +486,21 @@ gulp.task('tests', function() {
 /**
  * Demos
  */
+
+ /**
+  * Builds Ionic demos to dist/demos, copies them to ../ionic-site and watches
+  * for changes.
+  */
 gulp.task('watch.demos', ['demos'], function() {
   watch('demos/**/*', function() {
     gulp.start('demos');
   });
 });
 
+/**
+ * Copies bundled demos from dist/demos to ../ionic-site/docs/v2 (assumes there is a
+ * sibling repo to this one named 'ionic-site')
+ */
 gulp.task('demos', ['bundle.demos'], function() {
   var merge = require('merge2');
 
@@ -456,6 +516,10 @@ gulp.task('demos', ['bundle.demos'], function() {
   return merge([demosStream, cssStream]);
  });
 
+ /**
+  * Builds necessary files for each demo then bundles them using webpack. Unlike
+  * e2e tests, demos are bundled for performance (but have a slower build).
+  */
 gulp.task('bundle.demos', ['build.demos', 'transpile', 'copy.libs', 'sass', 'fonts'], function(done) {
   var glob = require('glob');
   var webpack = require('webpack');
@@ -492,6 +556,9 @@ gulp.task('bundle.demos', ['build.demos', 'transpile', 'copy.libs', 'sass', 'fon
   });
 });
 
+/**
+ * Transpiles and copies Ionic demo sources to dist/demos.
+ */
 gulp.task('build.demos', function() {
   var gulpif = require('gulp-if');
   var merge = require('merge2');
@@ -560,12 +627,25 @@ gulp.task('karma-watch', function() {
 /**
  * Release
  */
+
+ /**
+  * Builds Ionic sources to dist with typechecking and d.ts definitions, does
+  * some prerelease magic (see 'prepare') and copies npm package and tooling
+  * files to dist.
+  */
 gulp.task('prerelease', ['prepare', 'build.release'], function(done){
   runSequence('package', done);
 });
 
+/**
+ * Publishes to npm and creates a new tag and release on GitHub.
+ */
 gulp.task('release', ['publish.npm', 'publish.github']);
 
+/**
+ * Pulls latest, ensures there are no unstaged/uncommitted changes, updates
+ * package.json minor version and generates CHANGELOG for release.
+ */
 gulp.task('prepare', function(){
   var execSync = require('child_process').execSync;
   var spawnSync = require('child_process').spawnSync;
@@ -608,6 +688,9 @@ gulp.task('prepare', function(){
 
 });
 
+/**
+ * Copies npm package and tooling files to dist.
+ */
 gulp.task('package', function(done){
   var _ = require('lodash');
   var fs = require('fs');
@@ -629,6 +712,9 @@ gulp.task('package', function(done){
   done();
 });
 
+/**
+ * Creates a new tag and release on GitHub.
+ */
 gulp.task('publish.github', function(done){
   var changelog = require('conventional-changelog');
   var GithubApi = require('github');
@@ -659,6 +745,9 @@ gulp.task('publish.github', function(done){
   }));
 });
 
+/**
+ * Publishes to npm.
+ */
 gulp.task('publish.npm', function(done) {
   var spawn = require('child_process').spawn;
 
@@ -678,7 +767,8 @@ gulp.task('publish.npm', function(done) {
 });
 
 /**
- * Build Ionic sources, with typechecking and debug statements removed
+ * Build Ionic sources, with typechecking, .d.ts definition generation and debug
+ * statements removed.
  */
 gulp.task('build.release', function(done){
   DEBUG = false;
