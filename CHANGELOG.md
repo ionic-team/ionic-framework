@@ -1,3 +1,29 @@
+<a name="2.0.0-alpha.55"></a>
+# [2.0.0-alpha.55](https://github.com/driftyco/ionic/compare/v2.0.0-alpha.54...v2.0.0-alpha.55) (2016-02-05)
+
+
+### Bug Fixes
+
+* **alert:** ensure keyup listener has been removed ([2710e34](https://github.com/driftyco/ionic/commit/2710e34))
+* **build:** tell gulp when finished building ([60e1278](https://github.com/driftyco/ionic/commit/60e1278))
+* **generators:** use mkdirp-no-bin ([dcc20fa](https://github.com/driftyco/ionic/commit/dcc20fa))
+* **input:** copy custom attrs from ion-input to native input ([4cfe210](https://github.com/driftyco/ionic/commit/4cfe210))
+* **menu:** fix scrolling page w/ side menus ([72699db](https://github.com/driftyco/ionic/commit/72699db)), closes [#5272](https://github.com/driftyco/ionic/issues/5272)
+* **menu:** only close when open on enable change ([a428363](https://github.com/driftyco/ionic/commit/a428363))
+* **searcher:** add autocomplete="off" to native input ([f47c3c3](https://github.com/driftyco/ionic/commit/f47c3c3))
+
+### Features
+
+* **actionsheet:** disable clicking backdrop to dismiss ([7686767](https://github.com/driftyco/ionic/commit/7686767))
+* **alert:** disable clicking backdrop to dismiss ([53e014f](https://github.com/driftyco/ionic/commit/53e014f))
+
+### Performance Improvements
+
+* **cards:** remove translateZ from ion-card ([60fdc5c](https://github.com/driftyco/ionic/commit/60fdc5c))
+* **tabs:** render tab navbar at same time of tab content ([687a17b](https://github.com/driftyco/ionic/commit/687a17b))
+
+
+
 <a name="2.0.0-alpha.54"></a>
 # [2.0.0-alpha.54](https://github.com/driftyco/ionic/compare/v2.0.0-alpha.53...v2.0.0-alpha.54) (2016-02-02)
 
