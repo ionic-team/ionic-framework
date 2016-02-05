@@ -1,3 +1,13 @@
+<a name="2.0.0-alpha.56"></a>
+# [2.0.0-alpha.56](https://github.com/driftyco/ionic/compare/v2.0.0-alpha.55...v2.0.0-alpha.56) (2016-02-05)
+
+
+### Bug Fixes
+
+* **tabs:** show navbar on second page in tab ([f2db74b](https://github.com/driftyco/ionic/commit/f2db74b))
+
+
+
 <a name="2.0.0-alpha.55"></a>
 # [2.0.0-alpha.55](https://github.com/driftyco/ionic/compare/v2.0.0-alpha.54...v2.0.0-alpha.55) (2016-02-05)
 
