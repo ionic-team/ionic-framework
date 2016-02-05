@@ -284,7 +284,8 @@ gulp.task('sass', function() {
 });
 
 /**
- * Creates Ionic themes for testing.
+ * I'm not quite sure what this is for, people tell me we use it internally to
+ * test themes.
  */
 gulp.task('sass.themes', function() {
   var sass = require('gulp-sass');
@@ -335,7 +336,15 @@ gulp.task('copy.scss', function() {
 gulp.task('copy.libs', function() {
   var merge = require('merge2');
   var webAnimations = gulp.src([
-      'scripts/resources/web-animations-js/web-animations.min.js'
+      'scripts/resources/web-animations-js/web-animations.min.js',
+      'node_modules/es6-shim/es6-shim.min.js',
+      'node_modules/systemjs/node_modules/es6-module-loader/dist/es6-module-loader.src.js',
+      'node_modules/systemjs/dist/system.src.js',
+      'node_modules/angular2/bundles/angular2-polyfills.js',
+      'node_modules/angular2/bundles/angular2.dev.js',
+      'node_modules/angular2/bundles/router.dev.js',
+      'node_modules/angular2/bundles/http.dev.js',
+      'node_modules/rxjs/bundles/Rx.js'
     ])
     .pipe(gulp.dest('dist/js'));
 
