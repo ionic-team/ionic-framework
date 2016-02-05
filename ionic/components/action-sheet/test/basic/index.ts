@@ -57,6 +57,7 @@ class E2EPage {
     this.result = '';
 
     let actionSheet = ActionSheet.create({
+      enableBackdropDismiss: false,
       buttons: [
         {
           text: 'Archive',

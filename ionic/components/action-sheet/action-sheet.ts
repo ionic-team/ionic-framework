@@ -4,6 +4,7 @@ import {NgFor, NgIf} from 'angular2/common';
 import {Animation} from '../../animations/animation';
 import {Config} from '../../config/config';
 import {Icon} from '../icon/icon';
+import {isDefined} from '../../util/util';
 import {NavParams} from '../nav/nav-params';
 import {ViewController} from '../nav/view-controller';
 
@@ -82,9 +83,11 @@ import {ViewController} from '../nav/view-controller';
      title?: string,
      subTitle?: string,
      cssClass?: string,
+     enableBackdropDismiss?: boolean,
      buttons?: Array<any>
    } = {}) {
      opts.buttons = opts.buttons || [];
+     opts.enableBackdropDismiss = isDefined(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
 
      super(ActionSheetCmp, opts);
      this.viewType = 'action-sheet';
@@ -242,11 +245,13 @@ class ActionSheetCmp {
   }
 
   bdClick() {
-    if (this.d.cancelButton) {
-      this.click(this.d.cancelButton, 1);
+    if (this.d.enableBackdropDismiss) {
+      if (this.d.cancelButton) {
+        this.click(this.d.cancelButton, 1);
 
-    } else {
-      this.dismiss('backdrop');
+      } else {
+        this.dismiss('backdrop');
+      }
     }
   }
 
@@ -254,7 +259,11 @@ class ActionSheetCmp {
     return this._viewCtrl.dismiss(null, role);
   }
 
-  onPageDidLeave() {
+  onPageWillLeave() {
+    document.removeEventListener('keyup', this.keyUp);
+  }
+
+  ngOnDestroy() {
     document.removeEventListener('keyup', this.keyUp);
   }
 }

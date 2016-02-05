@@ -137,7 +137,7 @@ export class Alert extends ViewController {
   } = {}) {
     opts.inputs = opts.inputs || [];
     opts.buttons = opts.buttons || [];
-    opts.enableBackdropDismiss = (opts.enableBackdropDismiss === false ? false : true);
+    opts.enableBackdropDismiss = isDefined(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
 
     super(AlertCmp, opts);
     this.viewType = 'alert';
