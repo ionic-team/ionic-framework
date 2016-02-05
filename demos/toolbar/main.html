@@ -93,7 +93,7 @@
     </button>
   </ion-toolbar>
 
-  <ion-toolbar>
+  <ion-toolbar *ngIf="demo != 'Title'">
     <ion-buttons end>
       <button #button2 (click)="buttonClick(button2)">
         <ion-icon name="search"></ion-icon>
@@ -109,7 +109,7 @@
     </ion-segment>
   </ion-toolbar>
 
-  <ion-toolbar>
+  <ion-toolbar *ngIf="demo != 'Title'">
     <ion-segment [(ngModel)]="apps">
       <ion-segment-button value="paid">
         Paid
@@ -123,11 +123,11 @@
     </ion-segment>
   </ion-toolbar>
 
-  <ion-toolbar>
+  <ion-toolbar *ngIf="demo != 'Title'">
     <ion-searchbar></ion-searchbar>
   </ion-toolbar>
 
-  <ion-toolbar primary>
+  <ion-toolbar primary *ngIf="demo != 'Title'">
     <ion-searchbar></ion-searchbar>
   </ion-toolbar>
 

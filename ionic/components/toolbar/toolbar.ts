@@ -136,7 +136,7 @@ export class Toolbar extends ToolbarBase {
  *   <ion-title>SubHeader</ion-title>
  * </ion-toolbar>
  *  ```
- * @demo /docs/v2/demos/toolbar/
+ * @demo /docs/v2/demos/title/
  */
 @Component({
   selector: 'ion-title',
