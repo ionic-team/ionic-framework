@@ -237,6 +237,23 @@ class E2EPage {
     }, 100);
   }
 
+  doDisabledBackdropAlert() {
+    let alert = Alert.create({
+      disableClickBackdropToDismiss: true
+    });
+    alert.setTitle('Disabled Backdrop Click'),
+    alert.setSubTitle('Subtitle'),
+    alert.setMessage('This is an alert message.'),
+    alert.addButton({
+      text: 'Cancel',
+      role: 'cancel',
+      handler: () => {
+        console.log('Confirm Cancel');
+      }
+    });
+
+    this.nav.present(alert);
+  }
 }
 
 
