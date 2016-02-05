@@ -4,25 +4,28 @@ import {ViewController} from '../nav/view-controller';
 import {Navbar} from '../navbar/navbar';
 import {MenuController} from './menu-controller';
 
-
 /**
-* @name MenuToggle
-* @description
-* Toggle a menu by placing this directive on any item.
-* Note that the menu's id must be either `leftMenu` or `rightMenu`
-*
-* @usage
- * ```html
- *<ion-content>
- *  <h3>Page 1</h3>
- *  <button menuToggle>Toggle Menu</button>
- *</ion-content>
+ * @name MenuToggle
+ * @description
+ * The `menuToggle` directive can be placed on any button to
+ * automatically close an open menu.
  *
+ * @usage
+ * ```html
+ * <button menuToggle>Toggle Menu</button>
  * ```
-* @demo /docs/v2/demos/menu/
-* @see {@link /docs/v2/components#menus Menu Component Docs}
-* @see {@link ../../menu/Menu Menu API Docs}
-*/
+ *
+ * To toggle a certain menu by its id or side, give the `menuToggle`
+ * directive a value.
+ *
+ * ```html
+ * <button menuToggle="right">Toggle Right Menu</button>
+ * ```
+ *
+ * @demo /docs/v2/demos/menu/
+ * @see {@link /docs/v2/components#menus Menu Component Docs}
+ * @see {@link ../../menu/Menu Menu API Docs}
+ */
 @Directive({
   selector: '[menuToggle]',
   host: {
@@ -49,11 +52,6 @@ export class MenuToggle {
     @Optional() private _navbar: Navbar
   ) {
     this._inNavbar = !!_navbar;
-
-    // Deprecation warning
-    if (this._inNavbar && elementRef.nativeElement.tagName === 'A') {
-      console.warn('Menu toggles within a navbar should use <button menuToggle> instead of <a menu-toggle>')
-    }
   }
 
   /**

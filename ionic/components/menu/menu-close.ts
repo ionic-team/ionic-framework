@@ -4,26 +4,27 @@ import {MenuController} from './menu-controller';
 
 
 /**
-* @name MenuClose
-* @description
-* Place `menuClose` on a button to automatically close an open menu.
-*
-* @usage
- * ```html
- * <ion-menu [content]="mycontent">
- *   <ion-content>
- *     <ion-list>
- *     <ion-item menuClose>Close the menu</ion-item>
- *     </ion-list>
- *   </ion-content>
- * </ion-menu>
+ * @name MenuClose
+ * @description
+ * The `menuClose` directive can be placed on any button to
+ * automatically close an open menu.
  *
- * <ion-nav #mycontent [root]="rootPage"></ion-nav>
+ * @usage
+ * ```html
+ * <button menuClose>Close Menu</button>
  * ```
-* @demo /docs/v2/demos/menu/
-* @see {@link /docs/v2/components#menus Menu Component Docs}
-* @see {@link ../../menu/Menu Menu API Docs}
-*/
+ *
+ * To close a certain menu by its id or side, give the `menuClose`
+ * directive a value.
+ *
+ * ```html
+ * <button menuClose="left">Close Left Menu</button>
+ * ```
+ *
+ * @demo /docs/v2/demos/menu/
+ * @see {@link /docs/v2/components#menus Menu Component Docs}
+ * @see {@link ../../menu/Menu Menu API Docs}
+ */
 @Directive({
   selector: '[menuClose]'
 })
