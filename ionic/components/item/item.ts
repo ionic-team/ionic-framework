@@ -35,6 +35,7 @@ import {Label} from '../label/label';
  * </ion-list>
  *
  *  ```
+ * @demo /docs/v2/demos/item/ 
  * @see {@link /docs/v2/components#lists List Component Docs}
  * @see {@link ../../list/List List API Docs}
  */
@@ -157,4 +158,3 @@ export class Item {
     });
   }
 }
-
