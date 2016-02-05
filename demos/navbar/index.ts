@@ -1,11 +1,12 @@
 import {App} from 'ionic/ionic';
 
+// Use the toolbar demo but pass in the demo name to change the title
 @App({
-  templateUrl: 'main.html'
+  templateUrl: '../toolbar/main.html'
 })
 class ApiDemoApp {
   constructor() {
-    this.demo = "Toolbar";
+    this.demo = "Navbar";
 
     this.favorites = "recent";
     this.apps = "free";
