@@ -473,6 +473,10 @@ class AlertCmp {
   onPageWillLeave() {
     document.removeEventListener('keyup', this.keyUp);
   }
+
+  ngOnDestroy() {
+    document.removeEventListener('keyup', this.keyUp);
+  }
 }
 
 
