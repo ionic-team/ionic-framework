@@ -36,6 +36,7 @@ import {isUndefined, isTrueProperty} from '../../util/util';
  * individual Tab components. On iOS, the TabBar is placed on the bottom of
  * the screen, while on Android it is at the top.
  *
+ * @demo /docs/v2/demos/tabs/
  * @see {@link /docs/v2/components#tabs Tabs Component Docs}
  * @see {@link ../Tab Tab API Docs}
  */

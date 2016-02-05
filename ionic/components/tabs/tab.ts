@@ -76,6 +76,7 @@ import {TabButton} from './tab-button';
  * @property {String} [tabBadgeStyle] - set the badge color for this tab
  * @property {Any} (select) - method to call when the current tab is selected
  *
+ * @demo /docs/v2/demos/tabs/ 
  */
 @Component({
   selector: 'ion-tab',
