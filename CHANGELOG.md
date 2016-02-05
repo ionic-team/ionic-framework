@@ -22,6 +22,62 @@
 * **cards:** remove translateZ from ion-card ([60fdc5c](https://github.com/driftyco/ionic/commit/60fdc5c))
 * **tabs:** render tab navbar at same time of tab content ([687a17b](https://github.com/driftyco/ionic/commit/687a17b))
 
+### Breaking Changes
+
+Menu has been improved to make it easier to open, close, toggle and enable menus.
+Instead of injecting `IonicApp` to find the menu component, you now inject
+`MenuController`.
+
+Was:
+
+```
+constructor(app: IonicApp) {
+  this.app = app;
+}
+openMenu() {
+  this.app.getComponent('leftMenu').close();
+}
+```
+
+Now:
+
+To programmatically interact with any menu, you can inject the `MenuController`
+provider into any component or directive. This makes it easy get ahold
+of and control the correct menu instance. By default Ionic will find the app's
+menu without requiring a menu ID. An id attribute on an `<ion-menu>` is only
+required if there are multiple menus on the same side. If there are multiple
+menus, but on different sides, you can use the name of the side to get the correct
+menu
+
+If there's only one menu:
+
+```
+constructor(menu: MenuController) {
+  this.menu = menu;
+}
+openMenu() {
+  this.menu.close();
+}
+```
+
+If there is a menu on the left and right side:
+
+```
+toggleMenu() {
+  this.menu.toggle('left');
+}
+```
+
+If there are multiple menus on the same side:
+
+```
+<ion-menu id="myMenuId" side="left">...</ion-menu>
+<ion-menu id="otherMenuId" side="left">...</ion-menu>
+
+closeMenu() {
+  this.menu.close('myMenuId');
+}
+```
 
 
 <a name="2.0.0-alpha.54"></a>
