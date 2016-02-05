@@ -106,6 +106,7 @@ class ToolbarBackground {
     '</div>',
   host: {
     '[hidden]': '_hidden',
+    '[class.show-tab-navbar]': '_showNavbar',
     'class': 'toolbar'
   },
   directives: [BackButton, BackButtonText, Icon, ToolbarBackground]
@@ -117,6 +118,7 @@ export class Navbar extends ToolbarBase {
   private _bbRef: ElementRef;
   private _bbtRef: ElementRef;
   private _bgRef: ElementRef;
+  private _showNavbar: boolean;
 
   /**
    * @private
@@ -211,8 +213,14 @@ export class Navbar extends ToolbarBase {
   /**
    * @private
    */
-  setHidden(isHidden) {
-    this._hidden = isHidden
+  setHidden(isHidden: boolean) {
+    // used to display none/block the navbar
+    this._hidden = isHidden;
+
+    // on the very first load, the navbar may load quicker than
+    // the tab content, which looks weird. This makes sure that
+    // the tab's navbar doesn't show before the tab has fully loaded
+    this._showNavbar = !isHidden;
   }
 
 }

@@ -12,7 +12,7 @@ import {NavController} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
 import {Icon} from '../icon/icon';
 import {rafFrames} from '../../util/dom';
-import {isUndefined} from '../../util/util';
+import {isUndefined, isTrueProperty} from '../../util/util';
 
 
 /**
@@ -69,6 +69,7 @@ import {isUndefined} from '../../util/util';
 })
 export class Tabs extends Ion {
   private _ids: number = -1;
+  private _preloadTabs: boolean = null;
   private _tabs: Array<Tab> = [];
   private _onReady = null;
   private _useHighlight: boolean;
@@ -150,11 +151,8 @@ export class Tabs extends Ion {
    * @private
    */
   ngAfterViewInit() {
-    this.preloadTabs = (this.preloadTabs !== "false" && this.preloadTabs !== false);
-
     this._setConfig('tabbarPlacement', 'bottom');
     this._setConfig('tabbarIcons', 'top');
-    this._setConfig('preloadTabs', false);
 
     if (this._useHighlight) {
       this._platform.onResize(() => {
@@ -167,14 +165,18 @@ export class Tabs extends Ion {
         this.select(tab);
       });
     });
+  }
 
+  ngAfterContentInit() {
     let selectedIndex = this.selectedIndex ? parseInt(this.selectedIndex, 10) : 0;
+
+    let preloadTabs = (isUndefined(this.preloadTabs) ? this._config.getBoolean('preloadTabs') : isTrueProperty(this.preloadTabs));
 
     this._tabs.forEach((tab, index) => {
       if (index === selectedIndex) {
         this.select(tab);
 
-      } else if (this.preloadTabs) {
+      } else if (preloadTabs) {
         tab.preload(1000 * index);
       }
     });
@@ -215,7 +217,7 @@ export class Tabs extends Ion {
       return this._touchActive(selectedTab);
     }
 
-    console.time('Tabs#select ' + selectedTab.id);
+    console.debug('Tabs, select', selectedTab.id);
 
     let opts = {
       animate: false
@@ -257,7 +259,6 @@ export class Tabs extends Ion {
         this._onReady = null;
       }
 
-      console.time('Tabs#select ' + selectedTab.id);
     });
   }
 

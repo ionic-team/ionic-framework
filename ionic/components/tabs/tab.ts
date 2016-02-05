@@ -184,6 +184,7 @@ export class Tab extends NavController {
   preload(wait) {
     this._loadTimer = setTimeout(() => {
       if (!this._loaded) {
+        console.debug('Tabs, preload', this.id);
         this.load({
           animate: false,
           preload: true,

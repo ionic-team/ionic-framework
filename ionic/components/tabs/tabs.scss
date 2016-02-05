@@ -38,6 +38,16 @@ ion-tabs > ion-navbar-section {
   order: $flex-order-tabbar-navbar;
 }
 
+ion-tabs > ion-navbar-section ion-navbar.toolbar.show-navbar {
+  // by default, do not show tab navbars when they render
+  opacity: 0;
+}
+
+ion-tabs > ion-navbar-section ion-navbar.toolbar.show-navbar.show-tab-navbar {
+  // only when the tab content has loaded should it be rendered
+  opacity: 1;
+}
+
 ion-tabbar-section {
   position: relative;
   order: $flex-order-tabbar-bottom;
