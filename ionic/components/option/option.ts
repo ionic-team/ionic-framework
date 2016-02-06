@@ -10,6 +10,7 @@ import {isDefined, isTrueProperty} from '../../util/util';
  * @property [value] - the value of the option
  * @property [checked] - whether or not the option is already checked and selected
  *
+ * @demo /docs/v2/demos/item-sliding/
  */
 @Directive({
   selector: 'ion-option'
