@@ -23,6 +23,8 @@ $item-ios-sliding-content-bg:         $list-ios-background-color !default;
 // --------------------------------------------------
 
 .item {
+  position: relative;
+
   padding-left: $item-ios-padding-left;
   font-size: $item-ios-body-text-font-size;
   border-radius: 0;
@@ -81,10 +83,6 @@ $item-ios-sliding-content-bg:         $list-ios-background-color !default;
 .item-inner {
   padding-right: ($item-ios-padding-right / 2);
   border-bottom: 1px solid $list-ios-border-color;
-}
-
-ion-item-content {
-  margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom 0;
 }
 
 &.hairlines .item-inner {

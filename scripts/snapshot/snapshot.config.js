@@ -9,9 +9,9 @@ exports.config = {
   //domain: 'localhost:8080',
 
   specs: 'dist/e2e/**/*e2e.js',
-  //specs: 'dist/e2e/action-sheet/**/*e2e.js',
+  // specs: 'dist/e2e/button/**/*e2e.js',
 
-  sleepBetweenSpecs: 350,
+  sleepBetweenSpecs: 380,
 
   platformDefauls: {
     browser: 'chrome',

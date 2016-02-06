@@ -20,7 +20,7 @@ export class SearchbarInput {
    * @private
    * Don't send the input's input event
    */
-  private stopInput(ev) {
+  private stopInput(event) {
     event.preventDefault();
     event.stopPropagation();
   }
@@ -55,6 +55,7 @@ export class SearchbarInput {
  * @property {Any} [cancel] - Expression to evaluate when the cancel button is clicked
  * @property {Any} [clear] - Expression to evaluate when the clear input button is clicked
  *
+ * @demo /docs/v2/demos/searchbar/
  * @see {@link /docs/v2/components#searchbar Searchbar Component Docs}
  */
 @Component({
@@ -65,13 +66,16 @@ export class SearchbarInput {
         '<ion-icon name="arrow-back"></ion-icon>' +
       '</button>' +
       '<div class="searchbar-search-icon"></div>' +
-      '<input [value]="value" (keyup)="inputChanged($event)" (blur)="inputBlurred()" (focus)="inputFocused()" class="searchbar-input" type="search" [attr.placeholder]="placeholder">' +
+      '<input [value]="value" (keyup)="inputChanged($event)" (blur)="inputBlurred()" (focus)="inputFocused()" class="searchbar-input" type="search" [attr.placeholder]="placeholder" autocomplete="off">' +
       '<button clear *ngIf="value" class="searchbar-clear-icon" (click)="clearInput()" (mousedown)="clearInput()"></button>' +
     '</div>' +
     '<button clear (click)="cancelSearchbar()" (mousedown)="cancelSearchbar()" [hidden]="hideCancelButton" class="searchbar-ios-cancel">{{cancelButtonText}}</button>',
   directives: [FORM_DIRECTIVES, NgIf, NgClass, Icon, Button, SearchbarInput]
 })
 export class Searchbar extends Ion {
+  /**
+   * @private
+   */
   @ViewChild(SearchbarInput) searchbarInput;
 
   /**
@@ -112,13 +116,40 @@ export class Searchbar extends Ion {
    */
   @Output() clear: EventEmitter<Searchbar> = new EventEmitter();
 
+  /**
+   * @private
+   */
   value: string = '';
+
+  /**
+   * @private
+   */
   blurInput: boolean = true;
+
+  /**
+   * @private
+   */
   inputElement: any;
+
+  /**
+   * @private
+   */
   searchIconElement: any;
+
+  /**
+   * @private
+   */
   mode: string;
 
+
+  /**
+   * @private
+   */
   @HostBinding('class.searchbar-focused') isFocused;
+
+  /**
+   * @private
+   */
   @HostBinding('class.searchbar-left-aligned') shouldLeftAlign;
 
   constructor(
@@ -210,7 +241,7 @@ export class Searchbar extends Ion {
     this.inputElement.style.paddingLeft = inputLeft;
 
     // Set the icon margin left
-    let iconLeft = "calc(50% - " + ((textWidth / 2) + this.searchIconElement.offsetWidth + 15) + "px)";
+    let iconLeft = "calc(50% - " + ((textWidth / 2) + 30) + "px)";
     this.searchIconElement.style.marginLeft = iconLeft;
   }
 
@@ -287,18 +318,25 @@ export class Searchbar extends Ion {
    * @private
    * Write a new value to the element.
    */
-  public writeValue(value: any) {
+  writeValue(value: any) {
     this.value = value;
   }
 
-  public onChange = (_:any) => {};
-  public onTouched = () => {};
+  /**
+   * @private
+   */
+  onChange = (_:any) => {};
+
+  /**
+   * @private
+   */
+  onTouched = () => {};
 
   /**
    * @private
    * Set the function to be called when the control receives a change event.
    */
-  public registerOnChange(fn:(_:any) => {}):void {
+  registerOnChange(fn:(_:any) => {}):void {
     this.onChange = fn;
   }
 
@@ -306,7 +344,7 @@ export class Searchbar extends Ion {
    * @private
    * Set the function to be called when the control receives a touch event.
    */
-  public registerOnTouched(fn:() => {}):void {
+  registerOnTouched(fn:() => {}):void {
     this.onTouched = fn;
   }
 }

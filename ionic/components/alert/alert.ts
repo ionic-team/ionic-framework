@@ -25,12 +25,17 @@ import {ViewController} from '../nav/view-controller';
  * array, from left to right. Note: The right most button (the last one in the
  * array) is the main button.
  *
+ * Optionally, a `role` property can be added to a button, such as `cancel`.
+ * If a `cancel` role is on one of the buttons, then if the alert is dismissed
+ * by tapping the backdrop, then it will fire the handler from the button
+ * with a cancel role.
+ *
  * Alerts can also include inputs whos data can be passed back to the app.
  * Inputs can be used to prompt users for information.
  *
  * Its shorthand is to add all the alert's options from within the
- * `Alert.create(opts)` first argument. Otherwise the alert's
- * instance has methods to add options, such as `setTitle()` or `addButton()`.
+ * `Alert.create(opts)` first argument. Otherwise the alert's instance
+ * has methods to add options, such as `setTitle()` or `addButton()`.
  *
  * @usage
  * ```ts
@@ -54,6 +59,7 @@ import {ViewController} from '../nav/view-controller';
  *     buttons: [
  *       {
  *         text: 'Cancel',
+ *         role: 'cancel',
  *         handler: () => {
  *           console.log('Cancel clicked');
  *         }
@@ -86,6 +92,7 @@ import {ViewController} from '../nav/view-controller';
  *     buttons: [
  *       {
  *         text: 'Cancel',
+ *         role: 'cancel',
  *         handler: data => {
  *           console.log('Cancel clicked');
  *         }
@@ -107,6 +114,7 @@ import {ViewController} from '../nav/view-controller';
  * }
  * ```
  *
+ * @demo /docs/v2/demos/alert/
  */
 export class Alert extends ViewController {
 
@@ -124,10 +132,12 @@ export class Alert extends ViewController {
       checked?: boolean,
       id?: string
     }>,
-    buttons?: Array<any>
+    buttons?: Array<any>,
+    enableBackdropDismiss?: boolean
   } = {}) {
     opts.inputs = opts.inputs || [];
     opts.buttons = opts.buttons || [];
+    opts.enableBackdropDismiss = isDefined(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
 
     super(AlertCmp, opts);
     this.viewType = 'alert';
@@ -217,7 +227,8 @@ export class Alert extends ViewController {
       checked?: boolean,
       id?: string
     }>,
-    buttons?: Array<any>
+    buttons?: Array<any>,
+    enableBackdropDismiss?: boolean
   } = {}) {
     return new Alert(opts);
   }
@@ -230,7 +241,7 @@ export class Alert extends ViewController {
 @Component({
   selector: 'ion-alert',
   template:
-    '<div (click)="dismiss()" tappable disable-activated class="backdrop" role="presentation"></div>' +
+    '<div (click)="bdClick()" tappable disable-activated class="backdrop" role="presentation"></div>' +
     '<div class="alert-wrapper">' +
       '<div class="alert-head">' +
         '<h2 id="{{hdrId}}" class="alert-title" *ngIf="d.title" [innerHTML]="d.title"></h2>' +
@@ -253,7 +264,7 @@ export class Alert extends ViewController {
         '<template ngSwitchWhen="checkbox">' +
           '<div class="alert-checkbox-group">' +
             '<div *ngFor="#i of d.inputs" (click)="cbClick(i)" [attr.aria-checked]="i.checked" class="alert-tappable alert-checkbox" tappable role="checkbox">' +
-              '<div class="alert-checkbox-icon"></div>' +
+              '<div class="alert-checkbox-icon"><div class="alert-checkbox-inner"></div></div>' +
               '<div class="alert-checkbox-label">' +
                 '{{i.label}}' +
               '</div>' +
@@ -270,7 +281,7 @@ export class Alert extends ViewController {
         '</template>' +
 
       '</div>' +
-      '<div class="alert-button-group">' +
+      '<div class="alert-button-group" [ngClass]="{vertical: d.buttons.length>2}">' +
         '<button *ngFor="#b of d.buttons" (click)="btnClick(b)" [ngClass]="b.cssClass" class="alert-button">' +
           '{{b.text}}' +
         '</button>' +
@@ -279,14 +290,12 @@ export class Alert extends ViewController {
   host: {
     'role': 'dialog',
     '[attr.aria-labelledby]': 'hdrId',
-    '[attr.aria-describedby]': 'descId',
-    '[class]': 'cssClass'
+    '[attr.aria-describedby]': 'descId'
   },
   directives: [NgClass, NgSwitch, NgIf, NgFor]
 })
 class AlertCmp {
   activeId: string;
-  cssClass: string;
   descId: string;
   d: any;
   hdrId: string;
@@ -304,7 +313,12 @@ class AlertCmp {
     renderer: Renderer
   ) {
     this.d = params.data;
-    this.cssClass = this.d.cssClass || '';
+
+    if (this.d.cssClass) {
+      this.d.cssClass.split(' ').forEach(cssClass => {
+        renderer.setElementClass(_elementRef.nativeElement, cssClass, true);
+      });
+    }
 
     this.id = (++alertIds);
     this.descId = '';
@@ -315,7 +329,7 @@ class AlertCmp {
 
     if (this.d.message) {
       this.descId = this.msgId;
-      
+
     } else if (this.d.subTitle) {
       this.descId = this.subHdrId;
     }
@@ -360,14 +374,13 @@ class AlertCmp {
     let self = this;
     self.keyUp = function(ev) {
       if (ev.keyCode === 13) {
-        // enter
-        console.debug('alert enter');
+        console.debug('alert, enter button');
         let button = self.d.buttons[self.d.buttons.length - 1];
         self.btnClick(button);
 
       } else if (ev.keyCode === 27) {
-        console.debug('alert escape');
-        self.dismiss();
+        console.debug('alert, escape button');
+        self.bdClick();
       }
     };
 
@@ -379,7 +392,7 @@ class AlertCmp {
     if (activeElement) {
       activeElement.blur();
     }
-    
+
     if (this.d.inputs.length) {
       let firstInput = this._elementRef.nativeElement.querySelector('input');
       if (firstInput) {
@@ -388,7 +401,7 @@ class AlertCmp {
     }
   }
 
-  btnClick(button) {
+  btnClick(button, dismissDelay?) {
     let shouldDismiss = true;
 
     if (button.handler) {
@@ -402,8 +415,8 @@ class AlertCmp {
 
     if (shouldDismiss) {
       setTimeout(() => {
-        this.dismiss();
-      }, this._config.get('pageTransitionDelay'));
+        this.dismiss(button.role);
+      }, dismissDelay || this._config.get('pageTransitionDelay'));
     }
   }
 
@@ -418,8 +431,20 @@ class AlertCmp {
     checkedInput.checked = !checkedInput.checked;
   }
 
-  dismiss(): Promise<any> {
-    return this._viewCtrl.dismiss(this.getValues());
+  bdClick() {
+    if (this.d.enableBackdropDismiss) {
+      let cancelBtn = this.d.buttons.find(b => b.role === 'cancel');
+      if (cancelBtn) {
+        this.btnClick(cancelBtn, 1);
+
+      } else {
+        this.dismiss('backdrop');
+      }
+    }
+  }
+
+  dismiss(role): Promise<any> {
+    return this._viewCtrl.dismiss(this.getValues(), role);
   }
 
   getValues() {
@@ -445,7 +470,11 @@ class AlertCmp {
     return values;
   }
 
-  onPageDidLeave() {
+  onPageWillLeave() {
+    document.removeEventListener('keyup', this.keyUp);
+  }
+
+  ngOnDestroy() {
     document.removeEventListener('keyup', this.keyUp);
   }
 }

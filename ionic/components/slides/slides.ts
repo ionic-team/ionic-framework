@@ -18,17 +18,6 @@ import {Scroll} from '../scroll/scroll';
  * @description
  * Slides is a slide box implementation based on Swiper.js
  *
- * Swiper.js:
- * The most modern mobile touch slider and framework with hardware accelerated transitions
- *
- * http://www.idangero.us/swiper/
- *
- * Copyright 2015, Vladimir Kharlampidi
- * The iDangero.us
- * http://www.idangero.us/
- *
- * Licensed under MIT
- *
  * @usage
  * ```ts
  * @Page({
@@ -61,12 +50,27 @@ import {Scroll} from '../scroll/scroll';
  *```
  * @property {Boolean} [autoplay] - whether or not the slides should automatically change
  * @property {Boolean} [loop] - whether the slides should loop from the last slide back to the first
- * @property {Boolean} [bounce] - whether the slides should bounce
  * @property {Number} [index] - The slide index to start on
- * @property [pager] - add this property to enable the slide pager
- * @property {Any} [change] - expression to evaluate when a slide has been changed
+ * @property {Boolean} [bounce] - whether the slides should bounce
+ * @property {Boolean} [pager] - Whether the slide should show the page or not
+ * @property {Any} [options] - Any additional slider options you want to pass
+ * @property {Number} [zoom] - Whether or not the slider can zoom in or out
+ * @property {Number} [zoomDuration] - how long it should take to zoom a slide
+ * @property {Number} [zoomMax] - the max scale an slide can be zoomed
+ * @property {Any} (change) - expression to evaluate when a slide has been changed
  * @demo /docs/v2/demos/slides/
  * @see {@link /docs/v2/components#slides Slides Component Docs}
+ *
+ * Swiper.js:
+ * The most modern mobile touch slider and framework with hardware accelerated transitions
+ *
+ * http://www.idangero.us/swiper/
+ *
+ * Copyright 2015, Vladimir Kharlampidi
+ * The iDangero.us
+ * http://www.idangero.us/
+ *
+ * Licensed under MIT
  */
 @Component({
   selector: 'ion-slides',
@@ -81,18 +85,69 @@ import {Scroll} from '../scroll/scroll';
 })
 export class Slides extends Ion {
 
+  /**
+   * @private
+   */
   public rapidUpdate: Function;
+
+  /**
+   * @private
+   */
   private showPager: boolean;
-  private slider: typeof Swiper;
+
+  /**
+   * @private
+   */
+  private slider: Swiper;
+
+  /**
+   * @private
+   */
   private maxScale: number;
+
+  /**
+   * @private
+   */
   private zoomElement: HTMLElement;
+
+  /**
+   * @private
+   */
   private zoomGesture: Gesture;
+
+  /**
+   * @private
+   */
   private scale: number;
+
+  /**
+   * @private
+   */
   private zoomLastPosX: number;
+
+  /**
+   * @private
+   */
   private zoomLastPosY: number;
+
+  /**
+   * @private
+   */
   private viewportWidth: number;
+
+  /**
+   * @private
+   */
   private viewportHeight: number;
+
+  /**
+   * @private
+   */
   private enableZoom: boolean;
+
+  /**
+   * @private
+   */
   private touch: {
     x: number,
     y: number,
@@ -108,16 +163,55 @@ export class Slides extends Ion {
     zoomableHeight: number
   }
 
+
+  /**
+   * @private
+   */
   @Input() autoplay: any;
+
+  /**
+   * @private
+   */
   @Input() loop: any;
+
+  /**
+   * @private
+   */
   @Input() index: any;
+
+  /**
+   * @private
+   */
   @Input() bounce: any;
+
+  /**
+   * @private
+   */
   @Input() pager: any;
+
+  /**
+   * @private
+   */
   @Input() options: any;
+
+  /**
+   * @private
+   */
   @Input() zoom: any;
+
+  /**
+   * @private
+   */
   @Input() zoomDuration: any;
+
+  /**
+   * @private
+   */
   @Input() zoomMax: any;
 
+  /**
+   * @private
+   */
   @Output() change: EventEmitter<any> = new EventEmitter();
 
   /**
@@ -129,8 +223,6 @@ export class Slides extends Ion {
     this.rapidUpdate = debounce(() => {
       this.update();
     }, 10);
-
-    console.warn("(slideChanged) deprecated. Use (change) to track slide changes.");
   }
 
   /**
@@ -142,10 +234,15 @@ export class Slides extends Ion {
     }
 
     this.showPager = isTrueProperty(this.pager);
+    this.loop = isTrueProperty(this.loop);
 
+    if (typeof(this.index) != 'undefined') {
+      this.index = parseInt(this.index);
+    }
 
     var options = defaults({
       loop: this.loop,
+      initialSlide: this.index,
       pagination: '.swiper-pagination',
       paginationClickable: true,
       lazyLoading: true,
@@ -186,9 +283,10 @@ export class Slides extends Ion {
       return this.options.onLazyImageReady && this.options.onLazyImageReady(swiper, slide, img);
     };
 
-    var swiper = new Swiper(this.getNativeElement().children[0], options);
-
-    this.slider = swiper;
+    setTimeout(() => {
+      var swiper = new Swiper(this.getNativeElement().children[0], options);
+      this.slider = swiper;
+    });
 
     /*
     * TODO: Finish this
@@ -278,12 +376,12 @@ export class Slides extends Ion {
 
     this.zoomGesture.on('pinchstart', (e) => {
       last_scale = this.scale;
-      console.log('Last scale', e.scale);
+      console.debug('Last scale', e.scale);
     });
 
     this.zoomGesture.on('pinch', (e) => {
       this.scale = Math.max(1, Math.min(last_scale * e.scale, 10));
-      console.log('Scaling', this.scale);
+      console.debug('Scaling', this.scale);
       this.zoomElement.style[CSS.transform] = 'scale(' + this.scale + ')'
 
       zoomRect = this.zoomElement.getBoundingClientRect();
@@ -324,10 +422,10 @@ export class Slides extends Ion {
    * @private
    */
   toggleZoom(swiper, e) {
-    console.log('Try toggle zoom');
+    console.debug('Try toggle zoom');
     if (!this.enableZoom) { return; }
 
-    console.log('Toggling zoom', e);
+    console.debug('Toggling zoom', e);
 
     /*
     let x = e.pointers[0].clientX;
@@ -351,7 +449,7 @@ export class Slides extends Ion {
       ty = y-my;
     }
 
-    console.log(y);
+    console.debug(y);
     */
 
     let zi = new Animation(this.touch.target.children[0])
@@ -412,7 +510,7 @@ export class Slides extends Ion {
    * @private
    */
   onTouchStart(e) {
-    console.log('Touch start', e);
+    console.debug('Touch start', e);
 
     //TODO: Support mice as well
 
@@ -432,7 +530,7 @@ export class Slides extends Ion {
       zoomableWidth: target.offsetWidth,
       zoomableHeight: target.offsetHeight
     }
-    console.log('Target', this.touch.target);
+    console.debug('Target', this.touch.target);
 
     //TODO: android prevent default
 
@@ -455,25 +553,23 @@ export class Slides extends Ion {
     let y1 = Math.min((this.viewportHeight / 2) - zoomableScaledHeight/2, 0)
     let y2 = -y1;
 
-    console.log('BOUNDS', x1, x2, y1, y2);
+    console.debug('BOUNDS', x1, x2, y1, y2);
 
     if (this.scale <= 1) {
       return;
     }
 
-    console.log('PAN', e);
+    console.debug('PAN', e);
 
     // Move image
     this.touch.x = this.touch.deltaX + this.touch.lastX;
     this.touch.y = this.touch.deltaY + this.touch.lastY;
 
-    console.log(this.touch.x, this.touch.y);
-
     if (this.touch.x < x1) {
-      console.log('OUT ON LEFT');
+      console.debug('OUT ON LEFT');
     }
     if (this.touch.x > x2 ){
-      console.log('OUT ON RIGHT');
+      console.debug('OUT ON RIGHT');
     }
 
     if (this.touch.x > this.viewportWidth) {
@@ -481,7 +577,7 @@ export class Slides extends Ion {
     } else if (-this.touch.x > this.viewportWidth) {
       // Too far on the right side, let the event bubble up (to enable slider on edges, for example)
     } else {
-      console.log('TRANSFORM', this.touch.x, this.touch.y, this.touch.target);
+      console.debug('TRANSFORM', this.touch.x, this.touch.y, this.touch.target);
       //this.touch.target.style[CSS.transform] = 'translateX(' + this.touch.x + 'px) translateY(' + this.touch.y + 'px)';
       this.touch.target.style[CSS.transform] = 'translateX(' + this.touch.x + 'px) translateY(' + this.touch.y + 'px)';
       e.preventDefault();
@@ -495,14 +591,14 @@ export class Slides extends Ion {
    * @private
    */
   onTouchEnd(e) {
-    console.log('PANEND', e);
+    console.debug('PANEND', e);
 
     if (this.scale > 1) {
 
       if (Math.abs(this.touch.x) > this.viewportWidth) {
         // TODO what is posX?
         var posX = posX > 0 ? this.viewportWidth - 1 : -(this.viewportWidth - 1);
-        console.log('Setting on posx', this.touch.x);
+        console.debug('Setting on posx', this.touch.x);
       }
 
       /*
@@ -555,28 +651,28 @@ export class Slides extends Ion {
   /**
    * @private
    */
-  getIndex() {
+  getIndex(): number {
     return this.slider.activeIndex;
   }
 
   /**
    * @private
    */
-  getNumSlides() {
+  getNumSlides(): number {
     return this.slider.slides.length;
   }
 
   /**
    * @private
    */
-  isAtEnd() {
+  isAtEnd(): boolean {
     return this.slider.isEnd;
   }
 
   /**
    * @private
    */
-  isAtBeginning() {
+  isAtBeginning(): boolean {
     return this.slider.isBeginning;
   }
 
@@ -589,17 +685,30 @@ export class Slides extends Ion {
 }
 
  /**
-  * @private
+  * @name Slide
+  * @description
+  * `ion-slide` is a child component of `ion-slides` and is where all your individule slide content will be rendered too.
+  *
+  * @demo /docs/v2/demos/slides/
+  * @see {@link /docs/v2/api/components/slides/Slides/ Slides API Docs}
   */
 @Component({
   selector: 'ion-slide',
   template: '<div class="slide-zoom"><ng-content></ng-content></div>'
 })
 export class Slide {
+
+  /**
+   * @private
+   */
   private ele: HTMLElement;
-  
+
+
+  /**
+   * @private
+   */
   @Input() zoom;
-  
+
   constructor(
     elementRef: ElementRef,
     @Host() slides: Slides

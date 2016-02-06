@@ -1,6 +1,5 @@
-import {App, NavController} from 'ionic/ionic';
+import {App, NavParams, NavController, ViewController, MenuController} from 'ionic/ionic';
 import {Page, Config, IonicApp} from 'ionic/ionic';
-import {NavParams, NavController, ViewController} from 'ionic/ionic';
 
 
 @Page({
@@ -49,20 +48,21 @@ export class Login {
   `
 })
 export class Account {
-  constructor(app: IonicApp) {
+  constructor(app: IonicApp, menu: MenuController) {
     this.app = app;
+    this.menu = menu;
     this.rootPage = Dashboard;
   }
 
   goToProfile() {
     this.app.getComponent('account-nav').setRoot(Profile).then(() => {
-      this.app.getComponent('menu').close();
+      this.menu.close();
     });
   }
 
   goToDashboard() {
     this.app.getComponent('account-nav').setRoot(Dashboard).then(() => {
-      this.app.getComponent('menu').close();
+      this.menu.close();
     });
   }
 

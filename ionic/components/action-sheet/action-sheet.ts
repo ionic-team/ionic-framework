@@ -4,6 +4,7 @@ import {NgFor, NgIf} from 'angular2/common';
 import {Animation} from '../../animations/animation';
 import {Config} from '../../config/config';
 import {Icon} from '../icon/icon';
+import {isDefined} from '../../util/util';
 import {NavParams} from '../nav/nav-params';
 import {ViewController} from '../nav/view-controller';
 
@@ -19,16 +20,18 @@ import {ViewController} from '../nav/view-controller';
  * hitting the escape key on desktop.
  *
  * An action sheet is created from an array of `buttons`, with each button
- * including properties for its `text`, and optionally a `style` and `handler`.
+ * including properties for its `text`, and optionally a `handler` and `role`.
  * If a handler returns `false` then the action sheet will not be dismissed. An
  * action sheet can also optionally have a `title` and a `subTitle`.
  *
- * A button's `style` property can either be `destructive` or `cancel`. Buttons
- * without a style property will have a default style for its platform. Buttons
- * with the `cancel` style will always load as the bottom button, no matter where
+ * A button's `role` property can either be `destructive` or `cancel`. Buttons
+ * without a role property will have a default look for its platform. Buttons
+ * with the `cancel` role will always load as the bottom button, no matter where
  * it shows up in the array. All other buttons will show up in the order they
  * have been added to the `buttons` array. Note: We recommend that `destructive`
  * buttons show be the first button in the array, making it the button on top.
+ * Additionally, if the action sheet is dismissed by tapping the backdrop, then
+ * it will fire the handler from the button with the cancel role.
  *
  * Its shorthand is to add all the action sheet's options from within the
  * `ActionSheet.create(opts)` first argument. Otherwise the action sheet's
@@ -46,7 +49,7 @@ import {ViewController} from '../nav/view-controller';
  *     buttons: [
  *       {
  *         text: 'Destructive',
- *         style: 'destructive',
+ *         role: 'destructive',
  *         handler: () => {
  *           console.log('Destructive clicked');
  *         }
@@ -59,7 +62,7 @@ import {ViewController} from '../nav/view-controller';
  *       },
  *       {
  *         text: 'Cancel',
- *         style: 'cancel',
+ *         role: 'cancel',
  *         handler: () => {
  *           console.log('Cancel clicked');
  *         }
@@ -80,9 +83,11 @@ import {ViewController} from '../nav/view-controller';
      title?: string,
      subTitle?: string,
      cssClass?: string,
+     enableBackdropDismiss?: boolean,
      buttons?: Array<any>
    } = {}) {
      opts.buttons = opts.buttons || [];
+     opts.enableBackdropDismiss = isDefined(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
 
      super(ActionSheetCmp, opts);
      this.viewType = 'action-sheet';
@@ -137,7 +142,7 @@ import {ViewController} from '../nav/view-controller';
 @Component({
   selector: 'ion-action-sheet',
   template:
-    '<div (click)="dismiss()" tappable disable-activated class="backdrop" role="presentation"></div>' +
+    '<div (click)="bdClick()" tappable disable-activated class="backdrop" role="presentation"></div>' +
     '<div class="action-sheet-wrapper">' +
       '<div class="action-sheet-container">' +
         '<div class="action-sheet-group">' +
@@ -175,30 +180,8 @@ class ActionSheetCmp {
     this.d = params.data;
 
     if (this.d.cssClass) {
-      renderer.setElementClass(elementRef, this.d.cssClass, true);
+      renderer.setElementClass(elementRef.nativeElement, this.d.cssClass, true);
     }
-  }
-
-  click(button) {
-    let shouldDismiss = true;
-
-    if (button.handler) {
-      // a handler has been provided, execute it
-      if (button.handler() === false) {
-        // if the return value of the handler is false then do not dismiss
-        shouldDismiss = false;
-      }
-    }
-
-    if (shouldDismiss) {
-      setTimeout(() => {
-        this.dismiss();
-      }, this._config.get('pageTransitionDelay'));
-    }
-  }
-
-  dismiss(): Promise<any> {
-    return this._viewCtrl.dismiss(null);
   }
 
   onPageLoaded() {
@@ -213,11 +196,17 @@ class ActionSheetCmp {
         button.cssClass = '';
       }
 
-      if (button.style === 'cancel') {
+      // deprecated warning
+      if (button.style) {
+        console.warn('Alert "style" property has been renamed to "role"');
+        button.role = button.style;
+      }
+
+      if (button.role === 'cancel') {
         this.d.cancelButton = button;
 
       } else {
-        if (button.style === 'destructive') {
+        if (button.role === 'destructive') {
           button.cssClass = (button.cssClass + ' ' || '') + 'action-sheet-destructive';
         }
         buttons.push(button);
@@ -230,14 +219,51 @@ class ActionSheetCmp {
     self.keyUp = function(ev: KeyboardEvent) {
       if (ev.keyCode === 27) {
         console.debug('actionsheet escape');
-        self.dismiss();
+        self.bdClick();
       }
     };
 
     document.addEventListener('keyup', this.keyUp);
   }
 
-  onPageDidLeave() {
+  click(button, dismissDelay?) {
+    let shouldDismiss = true;
+
+    if (button.handler) {
+      // a handler has been provided, execute it
+      if (button.handler() === false) {
+        // if the return value of the handler is false then do not dismiss
+        shouldDismiss = false;
+      }
+    }
+
+    if (shouldDismiss) {
+      setTimeout(() => {
+        this.dismiss(button.role);
+      }, dismissDelay || this._config.get('pageTransitionDelay'));
+    }
+  }
+
+  bdClick() {
+    if (this.d.enableBackdropDismiss) {
+      if (this.d.cancelButton) {
+        this.click(this.d.cancelButton, 1);
+
+      } else {
+        this.dismiss('backdrop');
+      }
+    }
+  }
+
+  dismiss(role): Promise<any> {
+    return this._viewCtrl.dismiss(null, role);
+  }
+
+  onPageWillLeave() {
+    document.removeEventListener('keyup', this.keyUp);
+  }
+
+  ngOnDestroy() {
     document.removeEventListener('keyup', this.keyUp);
   }
 }

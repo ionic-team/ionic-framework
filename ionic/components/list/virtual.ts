@@ -13,7 +13,7 @@ export class ListVirtualScroll {
   shownItems = {};
   enteringItems = [];
   leavingItems = [];
-  
+
   constructor(list: List) {
     this.list = list;
     this.content = this.list.content;
@@ -44,7 +44,7 @@ export class ListVirtualScroll {
     this.virtualHeight = this.list.items.length * this.itemHeight;
     this.itemsPerScreen = this.viewportHeight / this.itemHeight;
 
-    console.log('VIRTUAL: resize(viewportHeight:', this.viewportHeight,
+    console.debug('VIRTUAL: resize(viewportHeight:', this.viewportHeight,
       'viewportScrollHeight:', this.viewportScrollHeight, 'virtualHeight:', this.virtualHeight,
       ', itemsPerScreen:', this.itemsPerScreen, ')');
   }
@@ -78,7 +78,7 @@ export class ListVirtualScroll {
     // virtual items we draw
     for (let i = topIndex, realIndex = 0; i < bottomIndex && i < items.length; i++, realIndex++) {
       item = items[i];
-      console.log('Drawing item', i, item.title);
+      console.debug('Drawing item', i, item.title);
 
       shownItemRef = this.shownItems[i];
 
@@ -100,12 +100,12 @@ export class ListVirtualScroll {
 
     while (this.leavingItems.length) {
       let itemRef = this.leavingItems.pop();
-      console.log('Removing item', itemRef.item, itemRef.realIndex);
+      console.debug('Removing item', itemRef.item, itemRef.realIndex);
       this.viewContainer.remove(itemRef.realIndex);
     }
 
-    console.log('VIRTUAL SCROLL: scroll(scrollTop:', st, 'topIndex:', topIndex, 'bottomIndex:', bottomIndex, ')');
-    console.log('Container has', this.list.getNativeElement().children.length, 'children');
+    console.debug('VIRTUAL SCROLL: scroll(scrollTop:', st, 'topIndex:', topIndex, 'bottomIndex:', bottomIndex, ')');
+    console.debug('Container has', this.list.getNativeElement().children.length, 'children');
   }
 
   cellAtIndex(index) {

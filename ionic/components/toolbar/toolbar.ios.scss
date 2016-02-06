@@ -61,7 +61,8 @@ ion-navbar-section {
 
 .toolbar-title {
   font-size: $toolbar-ios-title-font-size;
-  font-weight: 500;
+  font-weight: 600;
+  margin-top: 1px;
   text-align: center;
   pointer-events: auto;
   color: $toolbar-ios-text-color;
@@ -134,12 +135,12 @@ ion-buttons[right] {
 @mixin ios-bar-button-default($color-name, $color-value) {
 
   .bar-button-#{$color-name} {
-    $fg-color: color-shade($color-value);
+    $fg-color: $color-value;
     color: $fg-color;
     background-color: transparent;
 
     &:hover:not(.disable-hover) {
-      color: color-shade($fg-color);
+      color: $fg-color;
     }
 
     &.activated {
@@ -256,6 +257,7 @@ ion-buttons[right] {
 
 .back-button {
   margin: 0;
+  margin-top: 2px;
   min-height: 3.2rem;
   line-height: 1;
   order: map-get($toolbar-order-ios, back-button);
@@ -267,7 +269,11 @@ ion-buttons[right] {
   display: inherit;
   margin: 0;
   min-width: 18px;
-  font-size: 3.2rem;
+  font-size: 3.3rem;
+}
+
+.back-button-text {
+  letter-spacing: -0.01em;
 }
 
 
@@ -283,6 +289,12 @@ ion-buttons[right] {
   ion-icon {
     padding: 0 6px;
     font-size: 2.8rem;
+  }
+
+  // TODO remove the !important flag - temporary hack until we can remove the element style
+  // on transition
+  &.activated {
+    opacity: 0.4 !important;
   }
 }
 

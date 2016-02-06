@@ -1,4 +1,57 @@
-  import {App, Page, NavController, Alert} from 'ionic/ionic';
+  import {App, Page, NavController, Alert, Modal, ViewController} from 'ionic/ionic';
+
+//
+// Modal
+//
+@Page({
+  template: `
+  <ion-toolbar>
+    <ion-buttons start>
+      <button (click)="dismiss()">Cancel</button>
+    </ion-buttons>
+
+    <ion-title>
+      Filter Sessions
+    </ion-title>
+
+    <ion-buttons end>
+      <button (click)="dismiss()">Done</button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-content class="outer-content">
+    <ion-list>
+      <ion-list-header>Tracks</ion-list-header>
+
+      <ion-toggle *ngFor="#i of items" secondary>
+        Toggle {{i}}
+      </ion-toggle>
+    </ion-list>
+
+    <ion-list>
+      <button ion-item danger detail-none>
+        Reset All Filters
+      </button>
+    </ion-list>
+  </ion-content>
+  `
+})
+class MyModal {
+  constructor(viewCtrl: ViewController) {
+    this.viewCtrl = viewCtrl;
+
+    this.items = [];
+    for(var i = 1; i <= 10; i++) {
+      this.items.push(i);
+    }
+  }
+
+  dismiss() {
+    // using the injected ViewController this page
+    // can "dismiss" itself and pass back data
+    this.viewCtrl.dismiss();
+  }
+}
 
 //
 // Tab 1
@@ -80,6 +133,7 @@ class Tab2 {
       <h2>Tab 3</h2>
       <p>
         <button (click)="presentAlert()">Present Alert</button>
+        <button (click)="presentModal()">Present Modal</button>
       </p>
     </ion-content>
     `
@@ -96,10 +150,15 @@ class Tab3 {
     });
     this.nav.present(alert);
   }
+
+  presentModal() {
+    let modal = Modal.create(MyModal);
+    this.nav.present(modal);
+  }
 }
 
 
-@App({
+@Page({
   template: `
     <ion-menu [content]="content">
       <ion-toolbar secondary>
@@ -126,5 +185,14 @@ export class TabsPage {
     this.root1 = Tab1;
     this.root2 = Tab2;
     this.root3 = Tab3;
+  }
+}
+
+@App({
+  template: `<ion-nav id="nav" [root]="root"></ion-nav>`
+})
+export class e2eApp {
+  constructor() {
+    this.root = TabsPage;
   }
 }

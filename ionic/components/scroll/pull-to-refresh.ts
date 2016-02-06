@@ -31,20 +31,20 @@ import {raf, ready, CSS} from '../../util/dom';
  *  export class MyClass {
  *  constructor(){}
  *    doRefresh(refresher) {
- *      console.log('Refreshing!', refresher);
+ *      console.debug('Refreshing!', refresher);
  *
  *      setTimeout(() => {
- *        console.log('Pull to refresh complete!', refresher);
+ *        console.debug('Pull to refresh complete!', refresher);
  *        refresher.complete();
  *      })
  *    }
  *
  *    doStarting() {
- *      console.log('Pull started!');
+ *      console.debug('Pull started!');
  *    }
  *
  *    doPulling(amt) {
- *      console.log('You have pulled', amt);
+ *      console.debug('You have pulled', amt);
  *    }
  *  }
  *  ```
@@ -81,54 +81,154 @@ import {raf, ready, CSS} from '../../util/dom';
   directives: [NgIf, NgClass, Icon]
 })
 export class Refresher {
-  private ele: HTMLElement;
+  private _ele: HTMLElement;
   private _touchMoveListener;
   private _touchEndListener;
   private _handleScrollListener;
-  
+
+
+  /**
+   * @private
+   */
   isActive: boolean;
+
+  /**
+   * @private
+   */
   isDragging: boolean = false;
+
+  /**
+   * @private
+   */
   isOverscrolling: boolean = false;
+
+  /**
+   * @private
+   */
   dragOffset: number = 0;
+
+  /**
+   * @private
+   */
   lastOverscroll: number = 0;
+
+  /**
+   * @private
+   */
   ptrThreshold: number = 0;
+
+  /**
+   * @private
+   */
   activated: boolean = false;
+
+  /**
+   * @private
+   */
   scrollTime: number = 500;
-  canOverscroll: boolean = false;
+
+  /**
+   * @private
+   */
+  canOverscroll: boolean = true;
+
+  /**
+   * @private
+   */
   startY;
+
+  /**
+   * @private
+   */
   deltaY;
+
+  /**
+   * @private
+   */
   scrollHost;
+
+  /**
+   * @private
+   */
   scrollChild;
+
+  /**
+   * @private
+   */
   showIcon: boolean;
+
+  /**
+   * @private
+   */
   showSpinner: boolean;
+
+  /**
+   * @private
+   */
   isRefreshing: boolean;
+
+  /**
+   * @private
+   */
   isRefreshingTail: boolean;
-  
+
+
+  /**
+   * @private
+   */
   @Input() pullingIcon: string;
+
+  /**
+   * @private
+   */
   @Input() pullingText: string;
+
+  /**
+   * @private
+   */
   @Input() refreshingIcon: string;
+
+  /**
+   * @private
+   */
   @Input() refreshingText: string;
+
+  /**
+   * @private
+   */
   @Input() spinner: string;
-  
+
+
+  /**
+   * @private
+   */
   @Output() pulling: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * @private
+   */
   @Output() refresh: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * @private
+   */
   @Output() starting: EventEmitter<any> = new EventEmitter();
-  
-  
+
+
   constructor(
-    @Host() private content: Content,
-    element: ElementRef
+    @Host() private _content: Content,
+    _element: ElementRef
   ) {
-    this.ele = element.nativeElement;
-    this.ele.classList.add('content');
+    this._ele = _element.nativeElement;
+    this._ele.classList.add('content');
   }
 
   /**
    * @private
    */
   ngOnInit() {
-    let sp = this.content.getNativeElement();
-    let sc = this.content.scrollElement;
+    let sp = this._content.getNativeElement();
+    let sc = this._content.scrollElement;
 
     this.startY = null;
     this.deltaY = null;
@@ -146,7 +246,7 @@ export class Refresher {
     this._touchMoveListener = this._handleTouchMove.bind(this);
     this._touchEndListener = this._handleTouchEnd.bind(this);
     this._handleScrollListener = this._handleScroll.bind(this);
-    
+
     sc.addEventListener('touchmove', this._touchMoveListener);
     sc.addEventListener('touchend', this._touchEndListener);
     sc.addEventListener('scroll', this._handleScrollListener);
@@ -156,7 +256,7 @@ export class Refresher {
    * @private
    */
   ngOnDestroy() {
-    let sc = this.content.scrollElement;
+    let sc = this._content.scrollElement;
     sc.removeEventListener('touchmove', this._touchMoveListener);
     sc.removeEventListener('touchend', this._touchEndListener);
     sc.removeEventListener('scroll', this._handleScrollListener);
@@ -245,7 +345,7 @@ export class Refresher {
    */
   show() {
     // showCallback
-    this.ele.classList.remove('invisible');
+    this._ele.classList.remove('invisible');
   }
 
   /**
@@ -253,7 +353,7 @@ export class Refresher {
    */
   hide() {
     // showCallback
-    this.ele.classList.add('invisible');
+    this._ele.classList.add('invisible');
   }
 
   /**
@@ -261,7 +361,7 @@ export class Refresher {
    */
   tail() {
     // tailCallback
-    this.ele.classList.add('refreshing-tail');
+    this._ele.classList.add('refreshing-tail');
   }
 
   /**
@@ -341,7 +441,7 @@ export class Refresher {
    * @param {Event} e  TODO
    */
   _handleTouchMove(e) {
-    //console.log('TOUCHMOVE', e);
+    //console.debug('TOUCHMOVE', e);
 
     // if multitouch or regular scroll event, get out immediately
     if (!this.canOverscroll || e.touches.length > 1) {
@@ -389,7 +489,7 @@ export class Refresher {
     }
 
     this.isDragging = true;
-    
+
     // overscroll according to the user's drag so far
     this.overscroll( Math.round((this.deltaY - this.dragOffset) / 3) );
 
@@ -400,7 +500,7 @@ export class Refresher {
     if (!this.activated && this.lastOverscroll > this.ptrThreshold) {
       this.activated = true;
       raf(this.activate.bind(this));
-      
+
     } else if (this.activated && this.lastOverscroll < this.ptrThreshold) {
       this.activated = false;
       raf(this.deactivate.bind(this));
@@ -413,7 +513,7 @@ export class Refresher {
    * @param {Event} e  TODO
    */
   _handleTouchEnd(e) {
-    console.log('TOUCHEND', e);
+    console.debug('TOUCHEND', e);
     // if this wasn't an overscroll, get out immediately
     if (!this.canOverscroll && !this.isDragging) {
       return;
@@ -448,6 +548,6 @@ export class Refresher {
    * @param {Event} e  TODO
    */
   _handleScroll(e) {
-    console.log('SCROLL', e.target.scrollTop);
+    console.debug('SCROLL', e.target.scrollTop);
   }
 }

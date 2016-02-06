@@ -1,48 +1,97 @@
 @import "../../globals.core";
 
-// Input
+// Input/Textarea Wrapper
 // --------------------------------------------------
 
-.item-input {
+ion-input,
+ion-textarea {
   display: block;
+  flex: 1;
+  width: 100%;
+}
+
+
+// Textarea Within An Item
+// --------------------------------------------------
+
+.item.item-textarea {
+  align-items: stretch;
+}
+
+
+// Native Text Input
+// --------------------------------------------------
+
+.text-input {
+  display: inline-block;
   background: transparent;
   border: 0;
+  border-radius: 0;
   flex: 1;
-  pointer-events: none;
-}
-
-input.item-input:-webkit-autofill {
-  background-color: transparent;
-}
-
-input,
-textarea {
+  width: 92%;
+  width: calc(100% - 10px);
+  -webkit-appearance: none;
   @include placeholder();
 }
 
-.platform-mobile textarea {
+textarea.text-input {
+  display: block;
+}
+
+.text-input[disabled] {
+  opacity: 0.4;
+}
+
+
+input.text-input:-webkit-autofill {
+  background-color: transparent;
+}
+
+.platform-mobile textarea.text-input {
   resize: none;
 }
 
 
-// Scroll Assist
+// Input Cover: Unfocused
 // --------------------------------------------------
+// The input cover is the div that actually receives the
+// tap/click event when scroll assist is configured to true.
+// This make it so the native input element is not clickable.
+// This will only show when the scroll assist is configured
+// otherwise the .input-cover will not be rendered at all
 
-[scroll-assist] {
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  background: transparent;
-  border: 0;
-  pointer-events: none;
+.input-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 
-// Input focused
+// Input Cover: Focused
 // --------------------------------------------------
+// When the input has focus, then the input cover should be hidden
 
-.input-focused .item-input {
-  pointer-events: auto;
+.input-has-focus .input-cover {
+  display: none;
+}
+
+
+// Scroll Assist Input
+// --------------------------------------------------
+// This input is used to help the app handle
+// Next and Previous input tabbing
+
+[next-input] {
+  position: absolute;
+  bottom: 1px;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  pointer-events: none;
 }
 
 
@@ -50,10 +99,24 @@ textarea {
 // --------------------------------------------------
 
 .text-input-clear-icon {
+  position: absolute;
   margin: 0;
   padding: 0;
 
   background-repeat: no-repeat;
   background-position: center;
+}
+
+
+// Cloned Input
+// --------------------------------------------------
+
+.text-input.cloned-input {
   position: absolute;
+  top: 0;
+  pointer-events: none;
+}
+
+.item-input:not(.item-label-floating) .text-input.cloned-active {
+  display: none;
 }

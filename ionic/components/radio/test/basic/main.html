@@ -1,5 +1,7 @@
 
-<ion-toolbar><ion-title>Radio Group</ion-title></ion-toolbar>
+<ion-toolbar>
+  <ion-title>Radio Group</ion-title>
+</ion-toolbar>
 
 
 <ion-content>
@@ -12,21 +14,25 @@
         Fruits
       </ion-list-header>
 
-      <ion-radio value="apple" checked="true">
-        Apple
-      </ion-radio>
+      <ion-item>
+        <ion-label>Apple</ion-label>
+        <ion-radio value="apple" checked="true"></ion-radio>
+      </ion-item>
 
-      <ion-radio value="banana">
-        Banana
-      </ion-radio>
+      <ion-item>
+        <ion-label>Banana</ion-label>
+        <ion-radio value="banana"></ion-radio>
+      </ion-item>
 
-      <ion-radio value="cherry" secondary>
-        Cherry (secondary color)
-      </ion-radio>
+      <ion-item>
+        <ion-label>Cherry (secondary color)</ion-label>
+        <ion-radio value="cherry" secondary></ion-radio>
+      </ion-item>
 
-      <ion-radio value="disabled" disabled="true">
-        Disabled
-      </ion-radio>
+      <ion-item>
+        <ion-label>Disabled</ion-label>
+        <ion-radio value="disabled" disabled="true"></ion-radio>
+      </ion-item>
 
     </ion-list>
 
@@ -48,7 +54,10 @@
       <ion-list-header id="currencies">
         Currencies
       </ion-list-header>
-      <ion-radio *ngFor="#currency of currencies" [checked]="currency==selectedCurrency" [value]="currency">{{currency}}</ion-radio>
+      <ion-item *ngFor="#currency of currencies">
+        <ion-label>{{currency}}</ion-label>
+        <ion-radio [checked]="currency==selectedCurrency" [value]="currency"></ion-radio>
+      </ion-item>
     </ion-list>
   </form>
 
@@ -57,19 +66,34 @@
   </div>
 
   <ion-list radio-group [(ngModel)]="relationship">
-    <ion-radio value="friends">Friends</ion-radio>
-    <ion-radio value="enemies">Enemies</ion-radio>
+    <ion-item>
+      <ion-label>Friends</ion-label>
+      <ion-radio value="friends"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>Enemies</ion-label>
+      <ion-radio value="enemies"></ion-radio>
+    </ion-item>
   </ion-list>
 
   <div padding>
     <code><b>relationship:</b> {{relationship}}</code>
   </div>
 
-  <ion-list radio-group [(ngModel)]="pet">
-    <ion-radio value="dogs" checked>Dogs</ion-radio>
-    <ion-radio value="cats">Cats</ion-radio>
-    <ion-radio value="turtles">Turtles</ion-radio>
-  </ion-list>
+  <div radio-group [(ngModel)]="pet" (change)="petChange($event)">
+    <p>
+      <ion-radio checked (select)="dogSelect($event)"></ion-radio>
+      Dogs
+    </p>
+    <p>
+      <ion-radio (select)="catSelect($event)"></ion-radio>
+      Cats
+    </p>
+    <p>
+      <ion-radio (select)="turtleSelect($event)"></ion-radio>
+      Turtles
+    </p>
+  </div>
 
   <div padding>
     <code><b>pet:</b> {{pet}}</code>

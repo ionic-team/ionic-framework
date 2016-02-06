@@ -1,16 +1,59 @@
-<ion-navbar *navbar>
+<ion-toolbar>
   <ion-title>Platform</ion-title>
-</ion-navbar>
+</ion-toolbar>
 
-<ion-content padding>
+<ion-content class="platform-demo">
+  <p margin class="note">Change devices to see the platform values change.</p>
 
   <ion-row>
-    <b>.is('android'):</b> {{isAndroid}}
+    <ion-col><b>Name</b></ion-col>
+    <ion-col><b>Value</b></ion-col>
   </ion-row>
   <ion-row>
-    <b>.is('ios'):</b> {{isIos}}
+    <ion-col>
+      <pre>platform.is('android')</pre>
+    </ion-col>
+    <ion-col>
+      <pre>{{isAndroid}}</pre>
+    </ion-col>
   </ion-row>
   <ion-row>
-    <b>.userAgent():</b> {{userAgent}}
+    <ion-col>
+      <pre>platform.is('ios')</pre>
+    </ion-col>
+    <ion-col>
+      <pre>{{isIos}}</pre>
+    </ion-col>
   </ion-row>
+  <ion-row>
+    <ion-col>
+      <pre>platform.userAgent()</pre>
+    </ion-col>
+    <ion-col>
+      <pre>{{userAgent}}</pre>
+    </ion-col>
+  </ion-row>
+
 </ion-content>
+
+<style>
+  .platform-demo ion-col {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  .platform-demo pre {
+    background: #f8f8f8;
+    font-size: 13px;
+    min-height: 40px;
+    padding: 4px;
+    margin-top: 0;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+  }
+
+  .platform-demo .note {
+    color: #444;
+    font-style: italic;
+  }
+</style>

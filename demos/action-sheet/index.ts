@@ -1,4 +1,4 @@
-import {App, Page, ActionSheet, NavController} from 'ionic/ionic';
+import {App, Page, ActionSheet, NavController, Platform} from 'ionic/ionic';
 
 
 @App({
@@ -15,24 +15,79 @@ class ApiDemoApp {
   templateUrl: 'main.html'
 })
 export class InitialPage {
-  constructor(nav: NavController) {
+  constructor(nav: NavController, platform: Platform) {
     this.nav = nav;
+    this.platform = platform;
   }
 
   present() {
-    let actionSheet = ActionSheet.create({
+    if (this.platform.is('android')) {
+      var androidSheet = {
+        title: 'Albums',
+        buttons: [
+          { text: 'Share',
+            icon: 'share',
+            handler: () => {
+              console.log('Share clicked');
+            }
+          },
+          { text: 'Play',
+            icon: 'arrow-dropright-circle',
+            handler: () => {
+              console.log('Play clicked');
+            }
+          },
+          { text: 'Favorite',
+            icon: 'md-heart-outline',
+            handler: () => {
+              console.log('Favorite clicked');
+            }
+          },
+          {
+            text: 'Delete',
+            style: 'destructive',
+            icon: 'md-trash',
+            handler: () => {
+              console.log('Destructive clicked');
+            }
+          },
+          {
+            text: 'Cancel',
+            style: 'cancel',
+            icon: 'md-close',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
+          }
+        ],
+      };
+    }
+
+    let actionSheet = ActionSheet.create( androidSheet || {
       buttons: [
         {
-          text: 'Destructive',
-          style: 'destructive',
+          text: 'Share',
           handler: () => {
-            console.log('Destructive clicked');
+            console.log('Share clicked');
           }
         },
         {
-          text: 'Archive',
+          text: 'Play',
           handler: () => {
-            console.log('Archive clicked');
+            console.log('Play clicked');
+          }
+        },
+        {
+          text: 'Favorite',
+          handler: () => {
+            console.log('Favorite clicked');
+          }
+        },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          handler: () => {
+            console.log('Destructive clicked');
           }
         },
         {

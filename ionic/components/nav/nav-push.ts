@@ -38,7 +38,7 @@ import {NavRegistry} from './nav-registry';
  * ```html
  * <button [navPush]="[pushPage, params]"></button>
  * ```
- * @demo /docs/v2/demos/nav-push-pop/
+ * @demo /docs/v2/demos/navigation/
  * @see {@link /docs/v2/components#navigation Navigation Component Docs}
  * @see {@link ../NavPop NavPop API Docs}
  */
@@ -52,9 +52,9 @@ import {NavRegistry} from './nav-registry';
 export class NavPush {
   @Input() navPush;
   @Input() navParams;
-  
+
   constructor(
-    @Optional() private _nav: NavController, 
+    @Optional() private _nav: NavController,
     private registry: NavRegistry
    ) {
     if (!_nav) {
@@ -74,7 +74,7 @@ export class NavPush {
       }
       destination = this.navPush[0];
       params = this.navPush[1] || this.navParams;
-      
+
     } else {
       destination = this.navPush;
       params = this.navParams;
@@ -103,7 +103,7 @@ export class NavPush {
  * This will go back one page in the navigation stack
  *
  * Similar to {@link /docs/v2/api/components/nav/NavPush/ `NavPush` }
- * @demo /docs/v2/demos/nav-push-pop/
+ * @demo /docs/v2/demos/navigation/
  * @see {@link /docs/v2/components#navigation Navigation Component Docs}
  * @see {@link ../NavPush NavPush API Docs}
  */

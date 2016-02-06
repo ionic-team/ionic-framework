@@ -19,7 +19,7 @@ export class IonicApp {
   private _scrollTime: number = 0;
 
   // Our component registry map
-  private components: any = {};
+  private components: {[id: string] : any} = {};
 
   constructor(
     private _config: Config,
@@ -31,7 +31,7 @@ export class IonicApp {
    * Sets the document title.
    * @param {string} val  Value to set the document title to.
    */
-  setTitle(val) {
+  setTitle(val: string) {
     let self = this;
     if (val !== self._title) {
       self._title = val;
@@ -56,7 +56,7 @@ export class IonicApp {
    * it will automatically enable the app again. It's basically a fallback incase
    * something goes wrong during a transition and the app wasn't re-enabled correctly.
    */
-  setEnabled(isEnabled, duration=700) {
+  setEnabled(isEnabled: boolean, duration: number=700) {
     this._disTime = (isEnabled ? 0 : Date.now() + duration);
 
     if (duration > 32 || isEnabled) {
@@ -70,7 +70,7 @@ export class IonicApp {
    * Boolean if the app is actively enabled or not.
    * @return {bool}
    */
-  isEnabled() {
+  isEnabled(): boolean {
     return (this._disTime < Date.now());
   }
 
@@ -86,29 +86,26 @@ export class IonicApp {
    * Boolean if the app is actively scrolling or not.
    * @return {bool}
    */
-  isScrolling() {
+  isScrolling(): boolean {
     return (this._scrollTime + 64 > Date.now());
   }
 
   /**
    * @private
    * Register a known component with a key, for easy lookups later.
-   * @param {TODO} id  The id to use to register the component
-   * @param {TODO} component  The component to register
+   * @param {string} id  The id to use to register the component
+   * @param {Object} component  The component to register
    */
-  register(id, component) {
-    if (this.components[id] && this.components[id] !== component) {
-      //console.error('Component id "' + id + '" already registered.');
-    }
+  register(id: string, component: any) {
     this.components[id] = component;
   }
 
   /**
    * @private
    * Unregister a known component with a key.
-   * @param {TODO} id  The id to use to unregister
+   * @param {string} id  The id to use to unregister
    */
-  unregister(id) {
+  unregister(id: string) {
     delete this.components[id];
   }
 
@@ -116,11 +113,12 @@ export class IonicApp {
    * @private
    * Get a registered component with the given type (returns the first)
    * @param {Object} cls the type to search for
-   * @return the matching component, or undefined if none was found
+   * @return {Object} the matching component, or undefined if none was found
    */
-  getRegisteredComponent(cls) {
-    for(let component of this.components) {
-      if(component instanceof cls) {
+  getRegisteredComponent(cls: any): any {
+    for (let key in this.components) {
+      const component = this.components[key];
+      if (component instanceof cls) {
         return component;
       }
     }
@@ -129,10 +127,26 @@ export class IonicApp {
   /**
    * @private
    * Get the component for the given key.
-   * @param {TODO} key  TODO
-   * @return {TODO} TODO
+   * @param {string} id  TODO
+   * @return {Object} TODO
    */
-  getComponent(id) {
+  getComponent(id: string): any {
+    // deprecated warning
+    if (/menu/i.test(id)) {
+      console.warn('Using app.getComponent(menuId) to control menus has been deprecated as of alpha55.\n' +
+                   'Instead inject MenuController, for example:\n\n' +
+                   'constructor(menu: MenuController) {\n' +
+                   '  this.menu = menu;\n' +
+                   '}\n' +
+                   'toggleMenu() {\n' +
+                   '  this.menu.toggle();\n' +
+                   '}\n' +
+                   'openRightMenu() {\n' +
+                   '  this.menu.open("right");\n' +
+                   '}'
+      );
+    }
+
     return this.components[id];
   }
 

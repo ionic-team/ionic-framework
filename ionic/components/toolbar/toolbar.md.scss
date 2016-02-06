@@ -133,19 +133,21 @@ ion-buttons[right] {
   font-weight: 500;
 }
 
+.bar-button-solid,
+.bar-button-outline {
+  // restrict the ripple to button size
+  overflow: hidden;
+}
+
 @mixin md-bar-button-default($color-name, $color-value) {
 
   .bar-button-#{$color-name} {
-    $fg-color: color-shade($color-value);
+    $fg-color: $color-value;
     color: $fg-color;
     background-color: transparent;
 
     &:hover:not(.disable-hover) {
-      color: color-shade($fg-color);
-    }
-
-    &.activated {
-      opacity: 0.4;
+      color: $fg-color;
     }
   }
 

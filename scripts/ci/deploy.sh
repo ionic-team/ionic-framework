@@ -37,6 +37,8 @@ function run {
 
   # Update docs
   ./scripts/docs/deploy.sh --version-name="$VERSION_NAME"
+
+
 }
 
 source $(dirname $0)/../utils.sh.inc

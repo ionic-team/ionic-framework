@@ -24,7 +24,7 @@ import {Toolbar} from '../toolbar/toolbar';
   * @property [color] - Dynamically set which color attribute this button should use.
   * @description
   * Buttons are simple components in Ionic, can consist of text, an icon, or both, and can be enhanced with a wide range of attributes.
-  * @demo /docs/v2/demos/buttons/
+  * @demo /docs/v2/demos/button/
   * @see {@link /docs/v2/components#buttons Button Component Docs}
 
  */
@@ -41,8 +41,15 @@ export class Button {
   private _colors: Array<string> = []; // primary/secondary
   private _icon: string = null; // left/right/only
   private _disabled: boolean = false; // disabled
+
+  /**
+   * @private
+   */
   isItem: boolean;
 
+  /**
+   * @private
+   */
   @Input() color: string;
 
   constructor(
@@ -57,7 +64,7 @@ export class Button {
     let element = _elementRef.nativeElement;
 
     if (config.get('hoverCSS') === false) {
-      _renderer.setElementClass(_elementRef, 'disable-hover', true);
+      _renderer.setElementClass(_elementRef.nativeElement, 'disable-hover', true);
     }
 
     if (element.hasAttribute('ion-item')) {
@@ -100,18 +107,21 @@ export class Button {
   /**
    * @private
    */
-  addClass(className) {
-    this._renderer.setElementClass(this._elementRef, className, true);
+  addClass(className: string) {
+    this._renderer.setElementClass(this._elementRef.nativeElement, className, true);
   }
 
   /**
    * @private
    */
-  setRole(val) {
+  setRole(val: string) {
     this._role = val;
   }
 
-  _readIcon(element) {
+  /**
+   * @private
+   */
+  private _readIcon(element: HTMLElement) {
     // figure out if and where the icon lives in the button
     let childNodes = element.childNodes;
     let childNode;
@@ -149,7 +159,10 @@ export class Button {
     }
   }
 
-  _readAttrs(element) {
+  /**
+   * @private
+   */
+  private _readAttrs(element: HTMLElement) {
     let elementAttrs = element.attributes;
     let attrName;
     for (let i = 0, l = elementAttrs.length; i < l; i++) {
@@ -175,10 +188,13 @@ export class Button {
     }
   }
 
-  _assignCss(assignCssClass) {
+  /**
+   * @private
+   */
+  private _assignCss(assignCssClass: boolean) {
     let role = this._role;
     if (role) {
-      this._renderer.setElementClass(this._elementRef, role, assignCssClass); // button
+      this._renderer.setElementClass(this._elementRef.nativeElement, role, assignCssClass); // button
 
       this._setClass(this._style, assignCssClass); // button-clear
       this._setClass(this._shape, assignCssClass); // button-round
@@ -193,16 +209,19 @@ export class Button {
     }
   }
 
-  _setClass(type, assignCssClass) {
+  /**
+   * @private
+   */
+  private _setClass(type: string, assignCssClass: boolean) {
     if (type) {
-      this._renderer.setElementClass(this._elementRef, this._role + '-' + type, assignCssClass);
+      this._renderer.setElementClass(this._elementRef.nativeElement, this._role + '-' + type, assignCssClass);
     }
   }
 
 /**
  * @private
  */
-  static setRoles(contentButtonChildren, role) {
+  static setRoles(contentButtonChildren, role: string) {
     let buttons = contentButtonChildren.toArray();
     buttons.forEach(button => {
       button.setRole(role);

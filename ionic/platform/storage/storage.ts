@@ -13,35 +13,50 @@
 export class Storage {
   private _strategy: any;
 
-  constructor(strategyCls: any, options) {
+  constructor(strategyCls: IStorageEngine, options?: any) {
     this._strategy = new strategyCls(options);
   }
-  get(key) {
+  get(key: string): any {
     return this._strategy.get(key);
   }
-  getJson(key) {
+  getJson(key: string): any {
+    return this.get(key).then(value => {
+      try {
+        return JSON.parse(value);
+      } catch (e) {
+        console.warn('Storage getJson(): unable to parse value for key', key, ' as JSON');
+        throw e; // rethrowing exception so it can be handled with .catch()
+      }
+    });
+  }
+  setJson(key: string, value: any): Promise<any> {
     try {
-      return JSON.parse(this._strategy.get(key));
-    } catch(e) {
-      console.warn('Storage getJson(): unable to parse value for key', key,' as JSON')
-      return null;
+      return this.set(key, JSON.stringify(value));
+    } catch (e) {
+      return Promise.reject(e);
     }
   }
-  set(key, value) {
+  set(key: string, value: any) {
     return this._strategy.set(key, value);
   }
-  remove(key) {
+  remove(key: string) {
     return this._strategy.remove(key);
   }
-  query(query, params) {
+  query(query: string, params?: any) {
     return this._strategy.query(query, params);
   }
+}
+
+export interface IStorageEngine {
+  new(options: any): StorageEngine;
 }
 
 /**
  * @private
 */
 export class StorageEngine {
+  constructor(options={}) {
+  }
   get(key, value) {
     throw Error("get() not implemented for this storage engine");
   }

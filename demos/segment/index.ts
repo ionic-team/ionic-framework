@@ -1,13 +1,21 @@
-import {App, Platform} from 'ionic/ionic';
+import {App} from 'ionic/ionic';
 
 @App({
   templateUrl: 'main.html'
 })
+class ApiDemoApp {
+  constructor() {
+    this.appType = "paid";
+    this.safari = "links";
+    this.news = "local";
+    this.favorites = "recent";
 
-class DemoApp {
-  constructor(platform: Platform) {
-    this.platform = platform;
+    this.purchased = "all";
+    this.mapStyle = "sat";
+    this.teslaModels = "X";
+
     this.pet = "puppies";
-    this.isAndroid = platform.is('android');
+    this.calendar = "day";
+    this.proxy = "auto";
   }
 }

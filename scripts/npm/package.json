@@ -1,7 +1,8 @@
 {
   "name": "ionic-framework",
-  "version": "2.0.0-alpha.<%= ionicVersion %>",
+  "version": "<%= ionicVersion %>",
   "license": "Apache-2.0",
+  "keywords": ["ionic", "framework", "mobile", "app", "hybrid", "webapp"],
   "repository": {
     "type": "git",
     "url": "https://github.com/driftyco/ionic2.git"
@@ -11,10 +12,10 @@
     "colors": "^1.1.2",
     "inquirer": "0.11.0",
     "lodash": "3.10.1",
-    "q": "1.4.1",
-    "shelljs": "0.5.3"
+    "mkdirp-no-bin": "0.5.1",
+    "q": "1.4.1"
   },
   "peerDependencies": {
-    "angular2": "2.0.0-beta.<%= angularVersion %>"
+    "angular2": "^<%= angularVersion %>"
   }
 }

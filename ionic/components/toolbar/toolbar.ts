@@ -64,14 +64,35 @@ export class ToolbarBase extends Ion  {
  * @description
  * The toolbar is generic bar that sits above or below content.
  * Unlike an `Navbar`, `Toolbar` can be used for a subheader as well.
+ * Since it's based on flexbox, you can place the toolbar where you
+ * need it and flexbox will handle everything else. Toolbars will automatically
+ * assume they should be placed before an `ion-content`, so to specify that you want it
+ * below, you can add the property `position="bottom"`. This will change the flex order
+ * property.
+ *
  * @usage
  * ```html
  * <ion-toolbar>
  *   <ion-title>My Toolbar Title</ion-title>
  * </ion-toolbar>
  *
+ * <ion-toolbar>
+ *   <ion-title>I'm a subheader</ion-title>
+ * </ion-toolbar>
+ *
  *  <ion-content></ion-content>
+ *
+ * <ion-toolbar position="bottom">
+ *   <ion-title>I'm a subfooter</ion-title>
+ * </ion-toolbar>
+ *
+ * <ion-toolbar position="bottom">
+ *   <ion-title>I'm a footer</ion-title>
+ * </ion-toolbar>
+ *
  *  ```
+ *
+ * @property {any} [position] - set position of the toolbar, top or bottom. If not set, defautls to top.
  * @demo /docs/v2/demos/toolbar/
  * @see {@link ../../navbar/Navbar/ Navbar API Docs}
  */
@@ -115,7 +136,7 @@ export class Toolbar extends ToolbarBase {
  *   <ion-title>SubHeader</ion-title>
  * </ion-toolbar>
  *  ```
- * @demo /docs/v2/demos/toolbar/
+ * @demo /docs/v2/demos/title/
  */
 @Component({
   selector: 'ion-title',

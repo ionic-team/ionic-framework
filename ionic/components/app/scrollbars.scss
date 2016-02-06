@@ -1,0 +1,29 @@
+
+// Scrollbars
+// --------------------------------------------------
+// Styling for dekstop webkit browsers
+// These do not apply for mobile browsers
+
+.css-scrollbars {
+
+  ::-webkit-scrollbar {
+    width: 9px;
+  }
+
+  ::-webkit-scrollbar-thumb:vertical {
+    background: rgba(0, 0, 0, 0.4);
+    border: 2px solid transparent;
+    border-radius: 20px;
+    background-clip: padding-box;
+    min-height: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:vertical:active {
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid transparent;
+    border-radius: 20px;
+    background-clip: padding-box;
+    min-height: 10px;
+  }
+
+}

@@ -6,10 +6,11 @@
       List With No Lines
     </ion-list-header>
 
-    <ion-toggle>
+    <ion-item>
       <ion-icon name="wifi" item-left></ion-icon>
-      Wifi
-    </ion-toggle>
+      <ion-label>Wifi</ion-label>
+      <ion-toggle></ion-toggle>
+    </ion-item>
 
     <ion-item>
       <ion-icon name="heart" item-left></ion-icon>
@@ -25,6 +26,36 @@
       <ion-note item-right>
         Where the heart is
       </ion-note>
+    </ion-item>
+  </ion-list>
+
+  <ion-list no-lines>
+    <ion-list-header>
+      List With Checkboxes No Lines
+    </ion-list-header>
+
+    <ion-item>
+      <ion-checkbox item-left></ion-checkbox>
+      <ion-avatar item-left>
+        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+      </ion-avatar>
+      <ion-label>Wifi</ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-checkbox item-left></ion-checkbox>
+      <ion-avatar item-left>
+        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+      </ion-avatar>
+      <ion-label>Affection</ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-checkbox item-left></ion-checkbox>
+      <ion-avatar item-left>
+        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+      </ion-avatar>
+      <ion-label>Home</ion-label>
     </ion-item>
   </ion-list>
 
@@ -118,3 +149,9 @@
     </ion-item>
   </ion-list>
 </ion-content>
+
+<style>
+  img {
+    height: 100px;
+  }
+</style>

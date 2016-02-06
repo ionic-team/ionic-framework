@@ -5,10 +5,9 @@ import {App, Page, ActionSheet, NavController} from 'ionic/ionic';
   templateUrl: 'main.html'
 })
 class E2EPage {
+  result: string = '';
 
-  constructor(nav: NavController) {
-    this.nav = nav;
-  }
+  constructor(private nav: NavController) {}
 
   presentActionSheet1() {
     this.result = '';
@@ -18,7 +17,7 @@ class E2EPage {
       buttons: [
         {
           text: 'Destructive',
-          style: 'destructive',
+          role: 'destructive',
           handler: () => {
             console.log('Destructive clicked');
             this.result = 'Destructive';
@@ -42,7 +41,7 @@ class E2EPage {
         },
         {
           text: 'Cancel',
-          style: 'cancel', // will always sort to be on the bottom
+          role: 'cancel', // will always sort to be on the bottom
           handler: () => {
             console.log('Cancel clicked');
             this.result = 'Canceled';
@@ -58,6 +57,7 @@ class E2EPage {
     this.result = '';
 
     let actionSheet = ActionSheet.create({
+      enableBackdropDismiss: false,
       buttons: [
         {
           text: 'Archive',
@@ -68,7 +68,7 @@ class E2EPage {
         },
         {
           text: 'Cancel',
-          style: 'cancel',
+          role: 'cancel',
           handler: () => {
             console.log('cancel this clicked');
             this.result = 'Canceled';
@@ -76,7 +76,7 @@ class E2EPage {
         },
         {
           text: 'Destructive',
-          style: 'destructive',
+          role: 'destructive',
           handler: () => {
             console.log('Destructive clicked');
             this.result = 'Destructive';

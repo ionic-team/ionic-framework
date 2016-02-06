@@ -5,6 +5,7 @@ import {OverlayNav} from '../components/overlay/overlay';
 import {Menu} from '../components/menu/menu';
 import {MenuToggle} from '../components/menu/menu-toggle';
 import {MenuClose} from '../components/menu/menu-close';
+import {Badge} from '../components/badge/badge';
 import {Button} from '../components/button/button';
 import {Blur} from '../components/blur/blur';
 import {Content} from '../components/content/content';
@@ -14,7 +15,6 @@ import {Slides, Slide, SlideLazy} from '../components/slides/slides';
 import {Tabs} from '../components/tabs/tabs';
 import {Tab} from '../components/tabs/tab';
 import {List, ListHeader} from '../components/list/list';
-import {ItemInput} from '../components/input/input';
 import {Item} from '../components/item/item';
 import {ItemSliding} from '../components/item/item-sliding';
 import {Toolbar, ToolbarTitle, ToolbarItem} from '../components/toolbar/toolbar';
@@ -23,10 +23,11 @@ import {Checkbox} from '../components/checkbox/checkbox';
 import {Select} from '../components/select/select';
 import {Option} from '../components/option/option';
 import {Toggle} from '../components/toggle/toggle';
-import {TextInput} from '../components/text-input/text-input';
+import {TextInput, TextArea} from '../components/input/input';
 import {Label} from '../components/label/label';
 import {Segment, SegmentButton} from '../components/segment/segment';
-import {RadioGroup, RadioButton} from '../components/radio/radio';
+import {RadioButton} from '../components/radio/radio-button';
+import {RadioGroup} from '../components/radio/radio-group';
 import {Searchbar, SearchbarInput} from '../components/searchbar/searchbar';
 import {Nav} from '../components/nav/nav';
 import {NavPush, NavPop} from '../components/nav/nav-push';
@@ -90,7 +91,6 @@ import {ShowWhen, HideWhen} from '../components/show-hide-when/show-hide-when';
  * -  Select
  * -  Option
  * -  Toggle
- * -  ItemInput
  * -  TextInput
  * -  Label
  *
@@ -117,6 +117,7 @@ export const IONIC_DIRECTIVES = [
   MenuToggle,
   MenuClose,
 
+  Badge,
   Button,
   Blur,
   Content,
@@ -157,7 +158,7 @@ export const IONIC_DIRECTIVES = [
   Select,
   Option,
   Toggle,
-  ItemInput,
+  TextArea,
   TextInput,
   Label,
 

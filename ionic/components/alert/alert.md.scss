@@ -10,12 +10,13 @@ $alert-md-background-color:               #fafafa !default;
 $alert-md-box-shadow:                     0px 16px 20px rgba(0, 0, 0, 0.4) !default;
 
 $alert-md-head-text-align:                left !default;
-$alert-md-head-padding:                   24px 24px 10px 24px !default;
+$alert-md-head-padding:                   24px 24px 20px 24px !default;
 
-$alert-md-title-font-size:                20px !default;
-$alert-md-sub-title-font-size:            15px !default;
+$alert-md-title-font-size:                22px !default;
+$alert-md-sub-title-font-size:            16px !default;
 
-$alert-md-message-padding:                10px 24px 24px 24px !default;
+$alert-md-message-font-size:              15px !default;
+$alert-md-message-padding:                0 24px 24px 24px !default;
 $alert-md-message-text-color:             rgba(0,0,0,.5) !default;
 
 $alert-md-input-border-color:             #dedede !default;
@@ -26,6 +27,7 @@ $alert-md-input-margin-bottom:            5px !default;
 
 $alert-md-button-text-color:              map-get($colors-md, primary) !default;
 $alert-md-button-background-color:        transparent !default;
+$alert-md-button-border-radius:           2px !default;
 $alert-md-buttons-padding:                8px 8px 8px 24px !default;
 $alert-md-buttons-justify-content:        flex-end !default;
 
@@ -64,6 +66,10 @@ $alert-md-buttons-justify-content:        flex-end !default;
   color: $alert-md-message-text-color;
 }
 
+.alert-message {
+  font-size: $alert-md-message-font-size;
+}
+
 
 // Material Design Alert Input
 // --------------------------------------------------
@@ -97,12 +103,7 @@ $alert-md-buttons-justify-content:        flex-end !default;
   overflow: hidden;
   display: flex;
   min-height: 44px;
-  border-top: 1px solid $alert-md-input-border-color;
   cursor: pointer;
-
-  &:first-child {
-    border-top: 0;
-  }
 }
 
 
@@ -210,6 +211,7 @@ $alert-md-buttons-justify-content:        flex-end !default;
 .alert-button-group {
   padding: $alert-md-buttons-padding;
   justify-content: $alert-md-buttons-justify-content;
+  flex-wrap: wrap-reverse;
 }
 
 .alert-button {
@@ -219,6 +221,9 @@ $alert-md-buttons-justify-content:        flex-end !default;
   font-weight: 500;
   color: $alert-md-button-text-color;
   background-color: $alert-md-button-background-color;
+  border-radius: $alert-md-button-border-radius;
+  text-transform: uppercase;
+  text-align: right;
 
   &.activated {
     opacity: 1;

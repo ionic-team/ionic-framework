@@ -38,6 +38,7 @@ import {Config} from '../../config/config';
  * inactive icon on iOS will use an outlined version of the icon same icon.
  * Material Design icons do not change appearance depending if they're active
  * or not. The `isActive` property is largely used by the tabbar.
+ * @demo /docs/v2/demos/icon/ 
  * @see {@link /docs/v2/components#icons Icon Component Docs}
  *
  */
@@ -53,6 +54,10 @@ export class Icon {
   private _ios: string = '';
   private _md: string = '';
   private _css: string = '';
+
+  /**
+   * @private
+   */
   mode: string;
 
   constructor(
@@ -75,16 +80,19 @@ export class Icon {
    */
   ngOnDestroy() {
     if (this._css) {
-      this._renderer.setElementClass(this._elementRef, this._css, false);
+      this._renderer.setElementClass(this._elementRef.nativeElement, this._css, false);
     }
   }
 
+  /**
+   * @private
+   */
   @Input()
-  get name() {
+  get name(): string {
     return this._name;
   }
 
-  set name(val) {
+  set name(val: string) {
     if (!(/^md-|^ios-|^logo-/.test(val))) {
       // this does not have one of the defaults
       // so lets auto add in the mode prefix for them
@@ -94,6 +102,9 @@ export class Icon {
     this.update();
   }
 
+  /**
+   * @private
+   */
   @Input()
   get ios(): string {
     return this._ios;
@@ -104,6 +115,9 @@ export class Icon {
     this.update();
   }
 
+  /**
+   * @private
+   */
   @Input()
   get md(): string {
     return this._md;
@@ -114,12 +128,15 @@ export class Icon {
     this.update();
   }
 
+  /**
+   * @private
+   */
   @Input()
-  get isActive() {
+  get isActive(): boolean {
     return (this._isActive === undefined || this._isActive === true || this._isActive === 'true');
   }
 
-  set isActive(val) {
+  set isActive(val: boolean) {
     this._isActive = val;
     this.update();
   }
@@ -146,21 +163,22 @@ export class Icon {
 
     if (this._css !== css) {
       if (this._css) {
-        this._renderer.setElementClass(this._elementRef, this._css, false);
+        this._renderer.setElementClass(this._elementRef.nativeElement, this._css, false);
       }
       this._css = css;
-      this._renderer.setElementClass(this._elementRef, css, true);
+      this._renderer.setElementClass(this._elementRef.nativeElement, css, true);
 
-      this._renderer.setElementAttribute(this._elementRef, 'aria-label',
+      this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-label',
           css.replace('ion-', '').replace('ios-', '').replace('md-', '').replace('-', ' '));
     }
   }
 
   /**
    * @private
+   * @param {string} add class name
    */
-  addClass(className) {
-    this._renderer.setElementClass(this._elementRef, className, true);
+  addClass(className: string) {
+    this._renderer.setElementClass(this._elementRef.nativeElement, className, true);
   }
 
 }

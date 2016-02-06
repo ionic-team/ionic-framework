@@ -12,35 +12,41 @@ $text-input-ios-input-clear-icon-svg:      "<svg xmlns='http://www.w3.org/2000/s
 $text-input-ios-input-clear-icon-size:     18px !default;
 
 
-// Default Input
+// iOS Default Input
 // --------------------------------------------------
 
-.item-input {
+.text-input {
   margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom 0;
   padding: 0;
-  background-color: $text-input-ios-background-color;
 }
 
 
-// Inset Input
+// iOS Inset Input
 // --------------------------------------------------
 
 .inset-input {
-  margin: ($item-ios-padding-top / 2) $item-ios-padding-right ($item-ios-padding-bottom / 2) $item-ios-padding-left;
+  margin: ($item-ios-padding-top / 2) $item-ios-padding-right ($item-ios-padding-bottom / 2) 0;
   padding: ($item-ios-padding-top / 2) ($item-ios-padding-right / 2) ($item-ios-padding-bottom / 2) ($item-ios-padding-left / 2);
 }
 
 
-// Stacked & Floating Inputs
+// iOS Stacked & Floating Inputs
 // --------------------------------------------------
 
-.stacked-input,
-.floating-input {
+.item-label-stacked .text-input,
+.item-label-floating .text-input {
+  margin-left: 0;
   margin-top: 8px;
   margin-bottom: 8px;
 }
 
-// Clear Input Icon
+.item-label-floating .text-input.cloned-input,
+.item-label-stacked .text-input.cloned-input {
+  top: 30px;
+}
+
+
+// iOS Clear Input Icon
 // --------------------------------------------------
 
 ion-input[clearInput] {

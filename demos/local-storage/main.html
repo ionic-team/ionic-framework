@@ -1,50 +1,63 @@
-<ion-navbar *navbar>
+<ion-toolbar>
   <ion-title>Local Storage</ion-title>
-</ion-navbar>
+</ion-toolbar>
 
-<ion-content padding>
 
-  <ion-row>
-    <ion-col width-33>
-      <ion-input>
-        <input type="text" placeholder="Key" [(ngModel)]="myItem.key">
-      </ion-input>
-    </ion-col>
+<ion-content class="local-storage-demo outer-content">
 
-    <ion-col width-33>
-      <ion-input>
-        <input type="text" placeholder="Value" [(ngModel)]="myItem.value">
-      </ion-input>
-    </ion-col>
+  <ion-list no-margin>
+    <ion-list-header>Add to Local Storage</ion-list-header>
 
-    <ion-col width-34>
-      <button full secondary (click)="set()">
-        <ion-icon name="add"></ion-icon>
-        set()
-      </button>
-    </ion-col>
-  </ion-row>
+    <ion-item>
+      <ion-label>Key</ion-label>
+      <ion-select [(ngModel)]="myItem.key">
+        <ion-option *ngFor="#key of keys" [value]="key">
+          {{ key }}
+        </ion-option>
+      </ion-select>
+    </ion-item>
 
-  <ion-row>
+    <ion-item>
+      <ion-label>Value</ion-label>
+      <ion-select [(ngModel)]="myItem.value">
+        <ion-option *ngFor="#value of values" [value]="value">
+          {{ value }}
+        </ion-option>
+      </ion-select>
+    </ion-item>
 
-    <ion-col width-33>
-      <ion-input>
-        <input type="text" placeholder="Key" [(ngModel)]="delKey">
-      </ion-input>
-    </ion-col>
+  </ion-list>
 
-    <ion-col width-34 offset-33>
-      <button full danger (click)="remove()">
-        <ion-icon name="remove"></ion-icon>
-        remove()
-      </button>
-    </ion-col>
-  </ion-row>
+  <div padding>
+    <button block secondary (click)="set()">
+      <ion-icon name="add"></ion-icon>
+      Add
+    </button>
+  </div>
 
-  <ion-row>
-    <b>Local Storage:</b>
-    <ion-col>
-    {{localStorageDemo}}
-    </ion-col>
-  </ion-row>
+  <ion-list no-margin>
+    <ion-list-header>Delete from Local Storage</ion-list-header>
+
+    <ion-item>
+      <ion-label>Key</ion-label>
+      <ion-select [(ngModel)]="delKey">
+        <ion-option checked>Select a Key</ion-option>
+        <ion-option *ngFor="#key of addedKeys" [value]="key">
+          {{ key }}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <div padding>
+    <button block danger (click)="remove()">
+      <ion-icon name="remove"></ion-icon>
+      Delete
+    </button>
+  </div>
+
+  <div padding>
+    <h5>Local Storage:</h5>
+    <pre>local: {{ localStorageDemo }}</pre>
+  </div>
 </ion-content>

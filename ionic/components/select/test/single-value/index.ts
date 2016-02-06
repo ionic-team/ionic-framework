@@ -10,6 +10,18 @@ class E2EPage {
       title: '1994 Music',
       subTitle: 'Select your favorite'
     };
+
+    setTimeout(() => {
+      this.gender = 'm';
+    }, 1500);
+  }
+
+  stpSelect() {
+    console.log('STP selected')
+  }
+
+  resetGender() {
+    this.gender = null;
   }
 }
 

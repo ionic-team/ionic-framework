@@ -21,8 +21,6 @@ ion-badge {
   font-weight: $badge-font-weight;
   line-height: 1;
 
-  background: #ccc;
-
   &:empty {
     display: none;
   }

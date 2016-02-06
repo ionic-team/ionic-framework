@@ -157,7 +157,7 @@ $button-ios-small-icon-font-size:     1.3em !default;
 
 .button-clear {
   border-color: transparent;
-  color: color-shade($button-ios-color);
+  color: $button-ios-color;
   background-color: transparent;
 
   &.activated {
@@ -167,7 +167,7 @@ $button-ios-small-icon-font-size:     1.3em !default;
 
   &:hover:not(.disable-hover) {
     opacity: 0.6;
-    color: color-shade($button-ios-color);
+    color: $button-ios-color;
   }
 }
 
@@ -178,7 +178,7 @@ $button-ios-small-icon-font-size:     1.3em !default;
 @mixin ios-button-clear($color-name, $color-value) {
 
   .button-clear-#{$color-name} {
-    $fg-color: color-shade($color-value);
+    $fg-color: $color-value;
     border-color: transparent;
     background-color: transparent;
     color: $fg-color;
@@ -188,7 +188,7 @@ $button-ios-small-icon-font-size:     1.3em !default;
     }
 
     &:hover:not(.disable-hover) {
-      color: color-shade($fg-color);
+      color: $fg-color;
     }
   }
 

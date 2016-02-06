@@ -3,60 +3,67 @@
 
 
 <ion-content>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label floating>Params</ion-label>
+        <ion-input [(ngModel)]="myParam" type="text"></ion-input>
+        {{ myParam }}
+      </ion-item>
+    </ion-col>
+  </ion-row>
 
   <ion-list inset>
 
-    <ion-input floating-label>
-      <ion-label>Floating Label 1</ion-label>
-      <input [(ngModel)]='myValues.value1' type="text">
-    </ion-input>
-    Value: {{ myValues.value1 }}
+    <ion-item>
+      <ion-label floating>Floating Label 1: {{ myValues.value1 }}</ion-label>
+      <ion-input [(ngModel)]='myValues.value1'></ion-input>
+    </ion-item>
 
-    <ion-input floating-label>
-      <ion-label>Floating Label 2</ion-label>
-      <input value="Has Value" type="text">
-    </ion-input>
+    <ion-item>
+      <ion-label floating>Floating Label 2</ion-label>
+      <ion-input value="Has Value"></ion-input>
+    </ion-item>
 
-    <ion-input floating-label>
-      <ion-label>Floating Label 3</ion-label>
-      <input type="number">
-    </ion-input>
+    <ion-item>
+      <ion-label floating>Floating Label 3</ion-label>
+      <ion-input type="number"></ion-input>
+    </ion-item>
 
-    <ion-input floating-label>
-      <ion-label primary>Floating Label 4</ion-label>
-      <textarea [(ngModel)]='myValues.value2'></textarea>
-    </ion-input>
-    Value: {{ myValues.value2 }}
+    <ion-item>
+      <ion-label floating primary>Floating Label 4: {{ myValues.value2 }}</ion-label>
+      <ion-textarea [(ngModel)]='myValues.value2'></ion-textarea>
+    </ion-item>
 
-    <ion-input floating-label>
-      <ion-label secondary>Floating Label 5</ion-label>
-      <input type="url">
-    </ion-input>
+    <ion-item>
+      <ion-label floating secondary>Floating Label 5</ion-label>
+      <ion-input type="url"></ion-input>
+    </ion-item>
 
-    <ion-input floating-label>
-      <ion-label danger>Floating Label 6</ion-label>
-      <input type="email">
-    </ion-input>
+    <ion-item>
+      <ion-label floating danger>Floating Label 6</ion-label>
+      <ion-input type="email"></ion-input>
+    </ion-item>
 
-    <ion-input floating-label>
-      <ion-label>Floating Label 7</ion-label>
-      <textarea></textarea>
-    </ion-input>
+    <ion-item>
+      <ion-label floating>Floating Label 7</ion-label>
+      <ion-textarea></ion-textarea>
+    </ion-item>
 
-    <ion-input floating-label>
-      <ion-label>Floating Label 8</ion-label>
-      <input type="text">
-    </ion-input>
+    <ion-item>
+      <ion-label floating>Floating Label 8</ion-label>
+      <ion-input></ion-input>
+    </ion-item>
 
-    <ion-input floating-label>
-      <ion-label>Floating Label 9</ion-label>
-      <input type="number">
-    </ion-input>
+    <ion-item>
+      <ion-label floating>Floating Label 9</ion-label>
+      <ion-input type="number"></ion-input>
+    </ion-item>
 
-    <ion-input floating-label>
-      <ion-label>Floating Label 10</ion-label>
-      <textarea></textarea>
-    </ion-input>
+    <ion-item>
+      <ion-label floating>Floating Label 10</ion-label>
+      <ion-textarea></ion-textarea>
+    </ion-item>
 
   </ion-list>
 

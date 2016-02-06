@@ -1,8 +1,13 @@
 
+// Core Globals
+@import "globals.core";
+
+
 // Core App
 @import
   "components/app/normalize",
   "components/app/structure",
+  "components/app/scrollbars",
   "components/app/typography",
   "util/util";
 
@@ -14,12 +19,11 @@
   "components/menu/menu",
   "components/modal/modal",
   "components/scroll/scroll",
+  "components/scroll/pull-to-refresh",
   "components/slides/slides";
 
 
-// Ionicons
-// soon to be replaced with SVGs
-$font-path: "../fonts" !default;
+// Ionicons (to be replaced with SVGs)
 $ionicons: true !default;
 @if ($ionicons) {
   @import "fonts/ionicons";

@@ -136,3 +136,27 @@ tab-highlight {
 [tabbarIcons=hide] .tab-button-icon {
   display: none;
 }
+
+// Tab Badges
+// --------------------------------------------------
+
+.tab-badge {
+  position: absolute;
+  top: 4%;
+  right: 4%;
+  right: calc(50% - 50px);
+  padding: 1px 6px;
+  height: auto;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.has-icon .tab-badge {
+  right: calc(50% - 30px);
+}
+
+[tabbarIcons=bottom] .tab-badge,
+[tabbarIcons=left] .tab-badge,
+[tabbarIcons=right] .tab-badge {
+  right: calc(50% - 50px);
+}

@@ -1,4 +1,4 @@
-import {Component, Directive, ElementRef, Host, Input, Optional, forwardRef, Inject, NgZone, Compiler, AppViewManager, Renderer, ViewContainerRef, Type} from 'angular2/core';
+import {Component, ElementRef, Input, Optional, NgZone, Compiler, AppViewManager, Renderer, Type, ViewChild} from 'angular2/core';
 
 import {IonicApp} from '../app/app';
 import {Config} from '../../config/config';
@@ -24,6 +24,7 @@ import {ViewController} from './view-controller';
  * component) to be loaded initially by any Nav you create, using
  * the 'root' property:
  *
+ * @usage
  * ```ts
  * import {GettingStartedPage} from 'getting-started';
  * @App({
@@ -97,14 +98,23 @@ import {ViewController} from './view-controller';
  *   </pre>
  * </div>
  *
+ * @demo /docs/v2/demos/navigation/ 
  * @see {@link /docs/v2/components#navigation Navigation Component Docs}
  */
 @Component({
   selector: 'ion-nav',
-  template: '<template #contents></template>'
+  template: '<div #contents></div>'
 })
 export class Nav extends NavController {
+
+  /**
+   * @private
+   */
   @Input() root: Type;
+
+  /**
+   * @private
+   */
   @Input() swipeBackEnabled: any;
 
   constructor(

@@ -1,20 +1,13 @@
-import {App, Page, IonicApp} from 'ionic/ionic';
+import {App} from 'ionic/ionic';
 
 @App({
-  templateUrl: 'app.html'
-})
-class ApiDemoApp {
-
-  constructor() {
-    this.rootPage = InitialPage;
-  }
-}
-
-@Page({
   templateUrl: 'main.html'
 })
-export class InitialPage {
+class ApiDemoApp {
   constructor() {
+    this.demo = "Toolbar";
+
+    this.favorites = "recent";
+    this.apps = "free";
   }
 }
-

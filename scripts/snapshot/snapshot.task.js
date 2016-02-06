@@ -19,7 +19,7 @@ module.exports = function(gulp, argv, buildConfig) {
     console.log('Serving `dist` on http://localhost:' + buildConfig.protractorPort);
   });
 
-  gulp.task('snapshot', ['clean.build', 'protractor-server'], function(done) {
+  gulp.task('snapshot', ['protractor-server'], function(done) {
     snapshot(done);
   });
 
@@ -64,13 +64,18 @@ module.exports = function(gulp, argv, buildConfig) {
   }
 
   function protractor(done, args) {
+    var errored = false;
     var child = cp.spawn('protractor', args, {
       stdio: [process.stdin, process.stdout, 'pipe']
     });
 
     child.stderr.on('data', function(data) {
       protractorHttpServer.close();
-      done('Protractor tests failed. Error:', data.toString());
+      console.error(data.toString());
+      if (!errored) {
+        errored = true;
+        done('Protractor tests failed.');
+      }
     });
 
     child.on('exit', function() {
@@ -90,7 +95,7 @@ module.exports = function(gulp, argv, buildConfig) {
     var chars = 'abcdefghijklmnopqrstuvwxyz';
     var id = chars.charAt(Math.floor(Math.random() * chars.length));
     chars += '0123456789';
-    while (id.length < 4) {
+    while (id.length < 3) {
       id += chars.charAt(Math.floor(Math.random() * chars.length));
     }
     return id;

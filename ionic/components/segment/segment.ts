@@ -8,7 +8,6 @@ import {isDefined} from '../../util/util';
  * @name SegmentButton
  * @description
  * The child buttons of the `ion-segment` component. Each `ion-segment-button` must have a value.
- * @property {string} [value] - the value of the segment-button. Required.
  * @usage
  * ```html
  * <ion-segment [(ngModel)]="relationship" primary>
@@ -39,7 +38,8 @@ import {isDefined} from '../../util/util';
  * </form>
  * ```
  *
- * @property {Any} [click] - expression to evaluate when a segment button has been clicked
+ * @property {string} [value] - the value of the segment button. Required.
+ * @property {Any} (select) - expression to evaluate when a segment button has been clicked
  *
  * @demo /docs/v2/demos/segment/
  * @see {@link /docs/v2/components#segment Segment Component Docs}
@@ -54,7 +54,15 @@ import {isDefined} from '../../util/util';
   }
 })
 export class SegmentButton {
+
+  /**
+   * @private
+   */
   @Input() value: string;
+
+  /**
+   * @private
+   */
   @Output() select: EventEmitter<SegmentButton> = new EventEmitter();
 
   constructor(private _renderer: Renderer, private _elementRef: ElementRef) {}
@@ -69,15 +77,21 @@ export class SegmentButton {
     this.select.emit(this);
   }
 
+  /**
+   * @private
+   */
   ngOnInit() {
     if (!isDefined(this.value)) {
       console.warn('<ion-segment-button> requires a "value" attribute');
     }
   }
 
-  public set isActive(isActive) {
-    this._renderer.setElementClass(this._elementRef, 'segment-activated', isActive);
-    this._renderer.setElementAttribute(this._elementRef, 'aria-pressed', isActive);
+  /**
+   * @private
+   */
+  set isActive(isActive) {
+    this._renderer.setElementClass(this._elementRef.nativeElement, 'segment-activated', isActive);
+    this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-pressed', isActive);
   }
 
 }
@@ -121,7 +135,7 @@ export class SegmentButton {
  * </form>
  * ```
  *
- * @property {Any} [change] - expression to evaluate when a segment button has been changed
+ * @property {Any} (change) - expression to evaluate when a segment button has been changed
  *
  * @demo /docs/v2/demos/segment/
  * @see {@link /docs/v2/components#segment Segment Component Docs}
@@ -131,12 +145,22 @@ export class SegmentButton {
   selector: 'ion-segment'
 })
 export class Segment {
-  value: string;
-  onChange = (_) => {};
-  onTouched = (_) => {};
 
+  /**
+   * @private
+   */
+  value: string;
+
+
+  /**
+   * @private
+   */
   @Output() change: EventEmitter<SegmentButton> = new EventEmitter();
 
+
+  /**
+   * @private
+   */
   @ContentChildren(SegmentButton) _buttons: QueryList<SegmentButton>;
 
   constructor(@Optional() ngControl: NgControl) {
@@ -177,6 +201,14 @@ export class Segment {
    }
   }
 
+  /**
+   * @private
+   */
+  onChange = (_) => {};
+  /**
+   * @private
+   */
+  onTouched = (_) => {};
 
   /**
    * @private

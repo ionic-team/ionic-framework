@@ -35,13 +35,18 @@ import {IonicApp} from './app';
  * *NOTE:* It is not recommended to use ID's across Pages, as there is often no
  * guarantee that the registered component has not been destroyed if its Page
  * has been navigated away from.
+ *
+ * @demo /docs/v2/demos/id/
  */
 @Directive({
   selector: '[id]'
 })
 export class IdRef {
   private _component: any;
-  
+
+  /**
+   * @private
+   */
   @Input() id: string;
 
   constructor(private _app: IonicApp, elementRef: ElementRef, appViewManager: AppViewManager) {
@@ -66,15 +71,7 @@ export class IdRef {
 
 
 /**
- * @name Attr
- * @description
- * Attr allows you to dynamically add or remove an attribute based on the value of an expression or variable.
- * @usage
- * ```html
- * // toggle the no-lines attributes based on whether isAndroid is true or false
- * <ion-list [attr.no-lines]="isAndroid ? '' : null">
- * ```
- * @demo /docs/v2/demos/attr/
+ * @private
  */
 @Directive({
   selector: '[attr]'
@@ -88,6 +85,6 @@ export class Attr {
  * @private
  */
   ngOnInit() {
-    this._renderer.setElementAttribute(this._elementRef, this.attr, '');
+    this._renderer.setElementAttribute(this._elementRef.nativeElement, this.attr, '');
   }
 }

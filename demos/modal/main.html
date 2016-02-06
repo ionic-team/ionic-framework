@@ -2,24 +2,23 @@
   <ion-title>Modals</ion-title>
 </ion-navbar>
 
-<ion-content padding>
-  <ion-row>
-    <button secondary clear (click)="openBasicModal()">Open Basic Modal</button>    
-  </ion-row>
+<ion-content>
+  <div padding>
+    <button block (click)="openBasicModal()">Open Basic Modal</button>
+    <!-- <button block secondary (click)="openCustomAnimationModal()">Open with Custom Animation</button> -->
+  </div>
 
-<!--   <ion-row>
-    <button secondary outline (click)="openCustomAnimationModal()">Open With Custom Animation</button>    
-  </ion-row> -->
-  
-  <ion-row>
-    <ion-col>
-      <button secondary (click)="openModalWithParams()">Pass Params</button>
-    </ion-col>
-    <ion-col>
-      <ion-input floating-label style="margin-top: -10px">
-        <ion-label>Params</ion-label>
-        <input [(ngModel)]="myParam" type="text" value="">
-      </ion-input>
-    </ion-col>
-  </ion-row>
+  <ion-list no-margin>
+    <ion-list-header>
+      Enter Parameters to Pass to the Modal
+    </ion-list-header>
+    <ion-item>
+      <ion-label>Parameters</ion-label>
+      <ion-input [(ngModel)]="myParam" type="text" placeholder="Enter Parameters"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <div padding>
+    <button block danger (click)="openModalWithParams()">Open with Parameters</button>
+  </div>
 </ion-content>

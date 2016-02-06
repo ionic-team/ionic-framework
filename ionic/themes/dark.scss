@@ -1,0 +1,35 @@
+@import '../globals.core';
+
+
+// Dark Theme
+// ----------------------------------
+
+$colors: (
+
+  primary:    #327eff,
+  secondary:  #32db64,
+  danger:     #f53d3d,
+  light:      #f4f4f4,
+  dark:       #222,
+
+) !default;
+
+
+$text-color:                 #fff !default;
+$paragraph-color:            $text-color !default;
+$link-color:                 map-get($colors, primary) !default;
+$background-color:           #000 !default;
+$subdued-text-color:         #666 !default;
+
+$font-family-base:           -apple-system, "Helvetica Neue", "Roboto", sans-serif !default;
+$font-size-base:             1.4rem !default; // 1.4rem == 14px
+
+$toolbar-background:         #000 !default;
+$toolbar-border-color:       #b2b2b2 !default;
+$toolbar-text-color:         $text-color !default;
+$toolbar-active-color:       $link-color !default;
+$toolbar-inactive-color:     #8c8c8c !default;
+
+$list-text-color:            $text-color !default;
+$list-background-color:      $background-color !default;
+$list-border-color:          #c8c7cc !default;

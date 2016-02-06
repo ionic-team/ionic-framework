@@ -12,21 +12,27 @@ function init {
   cd ..
   SITE_PATH=$(readJsonProp "config.json" "sitePath")
   SITE_DIR=$IONIC_DIR/$SITE_PATH
-}
 
-function run {
   ./git/clone.sh --repository="driftyco/ionic-site" \
     --directory="$SITE_DIR" \
     --branch="master"
+}
+
+function run {
   cd ..
   VERSION=$(readJsonProp "package.json" "version")
 
+  # process new docs
   gulp docs --doc-version="$VERSION_NAME"
 
   # compile sass vars json for ionic-site docs
   gulp docs.sass-variables
   cp tmp/sass.json $SITE_DIR/docs/v2/theming/overriding-ionic-variables/
 
+  #compile API Demos
+  gulp demos --production
+
+  # CD in to the site dir to commit updated docs
   cd $SITE_DIR
 
   CHANGES=$(git status --porcelain)

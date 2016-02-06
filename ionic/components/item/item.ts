@@ -1,7 +1,10 @@
-import {Component, ContentChildren} from 'angular2/core';
+import {Component, ContentChildren, forwardRef, ViewChild, ContentChild, Renderer, ElementRef} from 'angular2/core';
+import {NgIf} from 'angular2/common';
 
 import {Button} from '../button/button';
+import {Form} from '../../util/form';
 import {Icon} from '../icon/icon';
+import {Label} from '../label/label';
 
 
 /**
@@ -18,9 +21,6 @@ import {Icon} from '../icon/icon';
  * To hide this icon, add the `detail-none` attribute to the item (eg: `<button ion-item detail-none>`). To add the icon when it is not displayed by default,
  * add the `detail-push` attribute (eg: `<ion-item detail-push>`).
  *
- * To break an item up into multiple columns, add multiple `<ion-item-content>` components inside of the item. By default,
- * this component will automatically be added inside of an `<ion-item>`, giving it a single column.
- *
  *
  * @usage
  * ```html
@@ -32,38 +32,115 @@ import {Icon} from '../icon/icon';
  *     {{item.title}}
  *   </ion-item>
  *
- *   // multiple item-content containers
- *   <ion-item>
- *     <ion-item-content>First Column</ion-item-content>
- *     <ion-item-content>Second Column</ion-item-content>
- *     <ion-item-content>Third Column</ion-item-content>
- *   </ion-item>
- *
  * </ion-list>
  *
  *  ```
+ * @demo /docs/v2/demos/item/ 
  * @see {@link /docs/v2/components#lists List Component Docs}
  * @see {@link ../../list/List List API Docs}
  */
 @Component({
   selector: 'ion-item,[ion-item]',
   template:
-    '<ng-content select="[item-left]"></ng-content>' +
+    '<ng-content select="[item-left],ion-checkbox"></ng-content>' +
     '<div class="item-inner">' +
-      '<ng-content select="ion-item-content,[item-content]"></ng-content>' +
-      '<ion-item-content cnt>' +
+      '<ng-content select="ion-label"></ng-content>' +
+      '<ion-label *ngIf="_viewLabel">' +
         '<ng-content></ng-content>'+
-      '</ion-item-content>' +
-      '<ng-content select="[item-right]"></ng-content>' +
+      '</ion-label>' +
+      '<ng-content select="[item-right],ion-radio,ion-toggle,ion-select,ion-input,ion-textarea"></ng-content>' +
     '</div>',
   host: {
     'class': 'item'
-  }
+  },
+  directives: [NgIf, Label]
 })
 export class Item {
+  private _ids: number = -1;
+  private _inputs: Array<string> = [];
+  private _label: Label;
+  private _viewLabel: boolean = true;
 
+  /**
+   * @private
+   */
+  id: string;
+
+    /**
+   * @private
+   */
+  labelId: string = null;
+
+  constructor(form: Form, private _renderer: Renderer, private _elementRef: ElementRef) {
+    this.id = form.nextId().toString();
+  }
+
+  /**
+   * @private
+   */
+  registerInput(type: string) {
+    this._inputs.push(type);
+    return this.id + '-' + (++this._ids);
+  }
+
+  /**
+   * @private
+   */
+  ngAfterContentInit() {
+    if (this._viewLabel && this._inputs.length) {
+      let labelText = this.getLabelText().trim();
+      this._viewLabel = (labelText.length > 0);
+    }
+
+    if (this._inputs.length > 1) {
+      this.setCssClass('item-multiple-inputs', true);
+    }
+  }
+
+  /**
+   * @private
+   */
+  setCssClass(cssClass: string, shouldAdd: boolean) {
+    this._renderer.setElementClass(this._elementRef.nativeElement, cssClass, shouldAdd);
+  }
+
+  /**
+   * @private
+   */
+  getLabelText(): string {
+    return this._label ? this._label.text : '';
+  }
+
+  /**
+   * @private
+   */
+  @ContentChild(Label)
+  private set contentLabel(label: Label) {
+    if (label) {
+      this._label = label;
+      this.labelId = label.id = ('lbl-' + this.id);
+      if (label.type) {
+        this.setCssClass('item-label-' + label.type, true);
+      }
+      this._viewLabel = false;
+    }
+  }
+
+  /**
+   * @private
+   */
+  @ViewChild(Label)
+  private set viewLabel(label: Label) {
+    if (!this._label) {
+      this._label = label;
+    }
+  }
+
+  /**
+   * @private
+   */
   @ContentChildren(Button)
-  set _buttons(buttons) {
+  private set _buttons(buttons) {
     buttons.toArray().forEach(button => {
       if (!button.isItem) {
         button.addClass('item-button');
@@ -71,8 +148,11 @@ export class Item {
     });
   }
 
+  /**
+   * @private
+   */
   @ContentChildren(Icon)
-  set _icons(icons) {
+  private set _icons(icons) {
     icons.toArray().forEach(icon => {
       icon.addClass('item-icon');
     });

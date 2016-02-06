@@ -5,28 +5,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-  <link ios-href="/dist/bundles/ionic.ios.css" rel="stylesheet">
-  <link md-href="/dist/bundles/ionic.md.css" rel="stylesheet">
-
-  <script src="/node_modules/systemjs/node_modules/es6-module-loader/dist/es6-module-loader.src.js"></script>
-  <script src="/node_modules/systemjs/dist/system.src.js"></script>
-  <script src="/node_modules/angular2/bundles/angular2-polyfills.js"></script>
-  <script src="/node_modules/angular2/bundles/angular2.dev.js"></script>
-  <script src="/node_modules/angular2/bundles/router.dev.js"></script>
-  <script src="/node_modules/angular2/bundles/http.dev.js"></script>
-  <script src="/scripts/resources/web-animations-js/web-animations.min.js"></script>
-  <script src="/dist/bundles/ionic.system.js"></script>
-  <script src="/node_modules/rxjs/bundles/Rx.js"></script>
+  <!-- using relative paths in order for snapshot e2e tests to also work -->
+  <link id="iosLink" ios-href="../../../bundles/ionic.ios.css" rel="stylesheet">
+  <link id="mdLink" md-href="../../../bundles/ionic.md.css" rel="stylesheet">
 
   <script>
-    if (!console.time) {
-      console.time = console.log;
-    }
-    if (!console.timeEnd) {
-      console.timeEnd = console.log;
-    }
-    console.time('script init');
-
     if (location.href.indexOf('snapshot=true') > -1) {
       document.documentElement.classList.add('snapshot');
     } else {
@@ -40,7 +23,26 @@
     } else {
       document.dir = 'ltr';
     }
+
+    // dynamically change the <link>s href so the e2e tests can use dark themes via querystring
+    if (location.href.indexOf('theme=dark') > -1) {
+      var link = document.getElementById('iosLink');
+      link.setAttribute('ios-href', link.getAttribute('ios-href').replace('.css', '.dark.css'));
+      link = document.getElementById('mdLink');
+      link.setAttribute('md-href', link.getAttribute('md-href').replace('.css', '.dark.css'));
+    }
   </script>
+
+  <script src="../../../js/es6-shim.min.js"></script>
+  <script src="../../../js/es6-module-loader.src.js"></script>
+  <script src="../../../js/system.src.js"></script>
+  <script src="../../../js/angular2-polyfills.js"></script>
+  <script src="../../../js/angular2.dev.js"></script>
+  <script src="../../../js/router.dev.js"></script>
+  <script src="../../../js/http.dev.js"></script>
+  <script src="../../../js/web-animations.min.js"></script>
+  <script src="../../../bundles/ionic.system.js"></script>
+  <script src="../../../js/Rx.js"></script>
 
   <style>
     .snapshot body {
@@ -101,7 +103,6 @@
     }
 
     System.import('index.js').then(function(m) {}, console.error.bind(console));
-    console.timeEnd('script init');
   </script>
 
 </body>

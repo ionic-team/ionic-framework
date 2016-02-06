@@ -68,7 +68,7 @@ class ToolbarBackground {
  * ```html
  * <ion-navbar *navbar>
  *
- *   <ion-buttons>
+ *   <ion-buttons start>
  *     <button (click)="toggleItems()">
  *       toggle
  *     </button>
@@ -78,7 +78,7 @@ class ToolbarBackground {
  *     Page Title
  *   </ion-title>
  *
- *   <ion-buttons>
+ *   <ion-buttons end>
  *     <button (click)="openModal()">
  *       Modal
  *     </button>
@@ -86,6 +86,7 @@ class ToolbarBackground {
  * </ion-navbar>
  * ```
  *
+ * @demo /docs/v2/demos/navbar/
  * @see {@link ../../toolbar/Toolbar/ Toolbar API Docs}
  */
 @Component({
@@ -117,6 +118,10 @@ export class Navbar extends ToolbarBase {
   private _bbRef: ElementRef;
   private _bbtRef: ElementRef;
   private _bgRef: ElementRef;
+
+  /**
+   * @private
+   */
   @Input() hideBackButton: any;
 
   constructor(
@@ -144,6 +149,9 @@ export class Navbar extends ToolbarBase {
     }
   }
 
+  /**
+   * @private
+   */
   setBackButtonText(text: string) {
     this._bbText = text;
   }
@@ -204,8 +212,9 @@ export class Navbar extends ToolbarBase {
   /**
    * @private
    */
-  setHidden(isHidden) {
-    this._hidden = isHidden
+  setHidden(isHidden: boolean) {
+    // used to display none/block the navbar
+    this._hidden = isHidden;
   }
 
 }

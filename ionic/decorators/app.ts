@@ -17,7 +17,8 @@ const _reflect: any=Reflect;
 * import {App} from 'ionic/ionic';
 *
 * @App({
-*   templateUrl: 'app/app.html'
+*   templateUrl: 'app/app.html',
+*   providers: [DataService]
 * })
 *
 * export class MyApp{
@@ -25,9 +26,10 @@ const _reflect: any=Reflect;
 * }
 * ```
 *
-* @param {Object} [config] - the app's [../Config](Config) object
-* @param {String} [template] - the template to use for the app root
-* @param {String} [templateUrl] - a relative URL pointing to the template to use for the app root
+* @property {Object} [config] - the app's {@link docs/v2/api/config/Config/ Config} object
+* @property {Array}  [providers] - any providers for your app
+* @property {String} [template] - the template to use for the app root
+* @property {String} [templateUrl] - a relative URL pointing to the template to use for the app root
 *
 */
 export function App(args: any={}) {

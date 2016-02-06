@@ -111,7 +111,16 @@ export const isUndefined = val => typeof val === 'undefined';
 export const isBlank = val => val === undefined || val === null;
 export const isObject = val => typeof val === 'object';
 export const isArray = Array.isArray;
-export const isTrueProperty = val => typeof val !== 'undefined' && val !== "false";
+
+export const isTrueProperty = function(val) {
+  if (typeof val === 'boolean') return val;
+  if (typeof val === 'string') {
+    val = val.toLowerCase().trim();
+    return (val === 'true' || val === '');
+  }
+  if (typeof val === 'number') return (val > 0);
+  return !!val;
+};
 
 /**
  * Convert a string in the format thisIsAString to a slug format this-is-a-string

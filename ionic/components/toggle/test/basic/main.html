@@ -8,29 +8,35 @@
 
     <ion-list>
 
-      <ion-toggle value="apple" checked="true" ngControl="appleCtrl">
-        Apple, value=apple, init checked
-      </ion-toggle>
+      <ion-item>
+        <ion-label>Apple, value=apple, init checked</ion-label>
+        <ion-toggle value="apple" checked="true" ngControl="appleCtrl"></ion-toggle>
+      </ion-item>
 
-      <ion-toggle ngControl="bananaCtrl">
-        Banana, init no checked/value attributes
-      </ion-toggle>
+      <ion-item>
+        <ion-label>Banana, init no checked/value attributes</ion-label>
+        <ion-toggle ngControl="bananaCtrl"></ion-toggle>
+      </ion-item>
 
-      <ion-toggle value="cherry" disabled="true" ngControl="cherryCtrl">
-        Cherry, value=cherry, init disabled
-      </ion-toggle>
+      <ion-item>
+        <ion-label>Cherry, value=cherry, init disabled</ion-label>
+        <ion-toggle value="cherry" disabled="true" ngControl="cherryCtrl"></ion-toggle>
+      </ion-item>
 
-      <ion-toggle value="grape" [checked]="grapeChecked" [disabled]="grapeDisabled" ngControl="grapeCtrl">
-        Grape, value=grape, init checked, disabled
-      </ion-toggle>
+      <ion-item>
+        <ion-label>Grape, value=grape, init checked, disabled</ion-label>
+        <ion-toggle value="grape" [checked]="grapeChecked" [disabled]="grapeDisabled" ngControl="grapeCtrl"></ion-toggle>
+      </ion-item>
 
-      <ion-toggle secondary checked="true">
-        Secondary color
-      </ion-toggle>
+      <ion-item>
+        <ion-label>Secondary color</ion-label>
+        <ion-toggle secondary checked="true"></ion-toggle>
+      </ion-item>
 
-      <ion-toggle value="apple" checked="true" [(ngModel)]="myModel">
-        I'm an NgModel
-      </ion-toggle>
+      <ion-item>
+        <ion-label>I'm an NgModel</ion-label>
+        <ion-toggle value="apple" checked="true" [(ngModel)]="myModel"></ion-toggle>
+      </ion-item>
 
     </ion-list>
 

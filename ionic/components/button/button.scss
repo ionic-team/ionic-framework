@@ -15,6 +15,7 @@ $button-round-border-radius:      64px !default;
   align-items: center;
   justify-content: center;
   transition: background-color, opacity 100ms linear;
+  z-index: 0;
 
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -78,4 +79,5 @@ a.button {
 .button-full.button-outline {
   border-left-width: 0;
   border-right-width: 0;
+  border-radius: 0;
 }

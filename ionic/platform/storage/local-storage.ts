@@ -30,7 +30,7 @@ import {StorageEngine} from './storage';
  * @see {@link /docs/v2/platform/storage/ Storage Platform Docs}
  */
 export class LocalStorage extends StorageEngine {
-  constructor() {
+  constructor(options={}) {
     super();
   }
 
@@ -38,7 +38,7 @@ export class LocalStorage extends StorageEngine {
  * Get the value of a key in LocalStorage
  * @param {String} key the key you want to lookup in LocalStorage
  */
-  get(key) {
+  get(key: string): Promise<string> {
     return new Promise((resolve, reject) => {
       try {
         let value = window.localStorage.getItem(key);
@@ -54,7 +54,7 @@ export class LocalStorage extends StorageEngine {
  * @param {String} key the key you want to save to LocalStorage
  * @param {Any} value the value of the key you're saving
  */
-  set(key, value) {
+  set(key: string, value: string): Promise<any> {
     return new Promise((resolve, reject) => {
       try {
         window.localStorage.setItem(key, value);
@@ -69,7 +69,7 @@ export class LocalStorage extends StorageEngine {
  * Remove a key from LocalStorage
  * @param {String} key the key you want to remove from LocalStorage
  */
-  remove(key) {
+  remove(key: string): Promise<any> {
     return new Promise((resolve, reject) => {
       try {
         window.localStorage.removeItem(key);

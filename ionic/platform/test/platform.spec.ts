@@ -68,7 +68,6 @@ export function run() {
     expect(platform.is('mobile')).toEqual(true);
     expect(platform.is('android')).toEqual(false);
     expect(platform.is('ios')).toEqual(true);
-    expect(platform.is('tablet')).toEqual(false);
   });
 
   it('should set ios via querystring, even with android user agent', () => {

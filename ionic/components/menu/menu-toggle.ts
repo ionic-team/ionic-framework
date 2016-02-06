@@ -1,29 +1,31 @@
 import {Directive, ElementRef, Optional, Input, HostListener} from 'angular2/core';
 
-import {IonicApp} from '../app/app';
 import {ViewController} from '../nav/view-controller';
 import {Navbar} from '../navbar/navbar';
-import {Menu} from './menu';
-
+import {MenuController} from './menu-controller';
 
 /**
-* @name MenuToggle
-* @description
-* Toggle a menu by placing this directive on any item.
-* Note that the menu's id must be either `leftMenu` or `rightMenu`
-*
-* @usage
- * ```html
- *<ion-content>
- *  <h3>Page 1</h3>
- *  <button menuToggle>Toggle Menu</button>
- *</ion-content>
+ * @name MenuToggle
+ * @description
+ * The `menuToggle` directive can be placed on any button to
+ * automatically close an open menu.
  *
+ * @usage
+ * ```html
+ * <button menuToggle>Toggle Menu</button>
  * ```
-* @demo /docs/v2/demos/menu/
-* @see {@link /docs/v2/components#menus Menu Component Docs}
-* @see {@link ../../menu/Menu Menu API Docs}
-*/
+ *
+ * To toggle a certain menu by its id or side, give the `menuToggle`
+ * directive a value.
+ *
+ * ```html
+ * <button menuToggle="right">Toggle Right Menu</button>
+ * ```
+ *
+ * @demo /docs/v2/demos/menu/
+ * @see {@link /docs/v2/components#menus Menu Component Docs}
+ * @see {@link ../../menu/Menu Menu API Docs}
+ */
 @Directive({
   selector: '[menuToggle]',
   host: {
@@ -32,21 +34,24 @@ import {Menu} from './menu';
   }
 })
 export class MenuToggle {
+
+  /**
+   * @private
+   */
   @Input() menuToggle;
-  withinNavbar: boolean;
+
+  /**
+   * @private
+   */
+  private _inNavbar: boolean;
 
   constructor(
-    private app: IonicApp,
+    private _menu: MenuController,
     elementRef: ElementRef,
-    @Optional() private viewCtrl: ViewController,
-    @Optional() private navbar: Navbar
+    @Optional() private _viewCtrl: ViewController,
+    @Optional() private _navbar: Navbar
   ) {
-    this.withinNavbar = !!navbar;
-
-    // Deprecation warning
-    if (this.withinNavbar && elementRef.nativeElement.tagName === 'A') {
-      console.warn('Menu toggles within a navbar should use <button menuToggle> instead of <a menu-toggle>')
-    }
+    this._inNavbar = !!_navbar;
   }
 
   /**
@@ -54,7 +59,7 @@ export class MenuToggle {
   */
   @HostListener('click')
   toggle() {
-    let menu = Menu.getById(this.app, this.menuToggle);
+    let menu = this._menu.get(this.menuToggle);
     menu && menu.toggle();
   }
 
@@ -62,8 +67,8 @@ export class MenuToggle {
   * @private
   */
   get isHidden() {
-    if (this.withinNavbar && this.viewCtrl) {
-      return !this.viewCtrl.isRoot();
+    if (this._inNavbar && this._viewCtrl) {
+      return !this._viewCtrl.isRoot();
     }
     return false;
   }

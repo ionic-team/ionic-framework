@@ -1,23 +1,23 @@
-import {App, IonicApp, Page, NavController} from 'ionic/ionic';
+import {App, Page, MenuController} from 'ionic/ionic';
 
 
 @Page({
   templateUrl: 'page1.html'
 })
 class Page1 {
-  constructor(app: IonicApp) {
-    this.app = app;
+  constructor(menu: MenuController) {
+    this.menu = menu;
     this.menu1Active();
   }
   menu1Active() {
     this.activeMenu = 'menu1';
-    this.app.getComponent('menu1').enable(true);
-    this.app.getComponent('menu2').enable(false);
+    this.menu.enable(true, 'menu1');
+    this.menu.enable(false, 'menu2');
   }
   menu2Active() {
     this.activeMenu = 'menu2';
-    this.app.getComponent('menu1').enable(false);
-    this.app.getComponent('menu2').enable(true);
+    this.menu.enable(false, 'menu1');
+    this.menu.enable(true, 'menu2');
   }
 }
 
@@ -26,8 +26,7 @@ class Page1 {
   templateUrl: 'main.html'
 })
 class E2EApp {
-  constructor(app: IonicApp) {
-    this.app = app;
+  constructor() {
     this.rootPage = Page1;
   }
 }

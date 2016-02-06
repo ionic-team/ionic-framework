@@ -1,9 +1,33 @@
-<ion-navbar *navbar>
+<ion-toolbar>
   <ion-title>HideWhen</ion-title>
-</ion-navbar>
+</ion-toolbar>
 
-<ion-content padding>
-  <p hideWhen="android">
-    <b>(hideWhen="android")</b> This text is hidden on Android only. Click the Android tab to hide this text.
-  </p>
+<ion-content class="hide-when-demo">
+  <h5 margin>Hide Icon Per Platform</h5>
+  <p margin>In this example we're using the <code>hideWhen</code> directive to decide whether to hide an icon based on the platform.</p>
+
+  <ion-row text-center>
+    <ion-col>
+      <ion-icon name="logo-android" hideWhen="ios"></ion-icon>
+    </ion-col>
+    <ion-col>
+      <ion-icon name="logo-apple" hideWhen="android"></ion-icon>
+    </ion-col>
+  </ion-row>
 </ion-content>
+
+<style>
+  .hide-when-demo ion-col {
+    background: #f8f8f8;
+    border: 1px solid #ddd;
+    margin: 5px;
+  }
+
+  .hide-when-demo code {
+    background: #f8f8f8;
+  }
+
+  .hide-when-demo ion-icon {
+    font-size: 200px;
+  }
+</style>

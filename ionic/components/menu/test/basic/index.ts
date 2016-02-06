@@ -1,17 +1,16 @@
-import {App, IonicApp, Page, NavController, Alert} from 'ionic/ionic';
+import {App, IonicApp, MenuController, Page, NavController, Alert} from 'ionic/ionic';
 
 
 @Page({
   templateUrl: 'page1.html'
 })
 class Page1 {
-  constructor(nav: NavController) {
-    this.nav = nav;
-  }
+  constructor(private nav: NavController) {}
+
   presentAlert() {
     let alert = Alert.create({
       title: "New Friend!",
-      body: "Your friend, Obi wan Kenobi, just accepted your friend request!",
+      message: "Your friend, Obi wan Kenobi, just accepted your friend request!",
       cssClass: 'my-alert',
       buttons: ['Ok']
     });
@@ -26,9 +25,8 @@ class Page3 {}
 
 @Page({templateUrl: 'page2.html'})
 class Page2 {
-  constructor(nav: NavController) {
-    this.nav = nav;
-  }
+  constructor(private nav: NavController) {}
+
   page3() {
     this.nav.push(Page3);
   }
@@ -40,8 +38,7 @@ class Page2 {
 })
 class E2EApp {
 
-  constructor(app: IonicApp) {
-    this.app = app;
+  constructor(private app: IonicApp, private menu: MenuController) {
     this.rootView = Page1;
     this.changeDetectionCount = 0;
 
@@ -59,7 +56,7 @@ class E2EApp {
     nav.setRoot(page.component).then(() => {
       // wait for the root page to be completely loaded
       // then close the menu
-      this.app.getComponent('leftMenu').close();
+      this.menu.close('left');
     });
   }
 
@@ -67,8 +64,8 @@ class E2EApp {
     console.log('onMenuOpening', ev);
   }
 
-  isHidden() {
+  isChangeDetecting() {
     console.log('Change detection', ++this.changeDetectionCount);
-    return false;
+    return true;
   }
 }

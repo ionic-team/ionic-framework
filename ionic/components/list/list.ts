@@ -24,16 +24,39 @@ import {isDefined} from '../../util';
 export class List extends Ion {
   private _enableSliding: boolean = false;
   private _virtualScrollingManager: ListVirtualScroll;
-  
+
+  /**
+   * @private
+   */
   ele: HTMLElement;
-  itemTemplate;
+
+  /**
+   * @private
+   */
+  itemTemplate: any;
+
+  /**
+   * @private
+   */
   slidingGesture: ItemSlidingGesture;
-  
+
+
+  /**
+   * @private
+   */
   @Input() items;
+
+  /**
+   * @private
+   */
   @Input() virtual;
+
+  /**
+   * @private
+   */
   @Input() content;
 
-  constructor(elementRef: ElementRef, private zone: NgZone) {
+  constructor(elementRef: ElementRef, private _zone: NgZone) {
     super(elementRef);
     this.ele = elementRef.nativeElement;
   }
@@ -43,9 +66,9 @@ export class List extends Ion {
    */
   ngOnInit() {
     if (isDefined(this.virtual)) {
-      console.log('Content', this.content);
-      console.log('Virtual?', this.virtual);
-      console.log('Items?', this.items.length, 'of \'em');
+      console.debug('Content', this.content);
+      console.debug('Virtual?', this.virtual);
+      console.debug('Items?', this.items.length, 'of \'em');
       this._initVirtualScrolling();
     }
   }
@@ -72,7 +95,7 @@ export class List extends Ion {
   /**
    * @private
    */
-  setItemTemplate(item) {
+  setItemTemplate(item: any) {
     this.itemTemplate = item;
   }
 
@@ -92,13 +115,13 @@ export class List extends Ion {
    * ```
    * @param {Boolean} shouldEnable whether the item-sliding should be enabled or not
    */
-  enableSlidingItems(shouldEnable) {
+  enableSlidingItems(shouldEnable: boolean) {
     if (this._enableSliding !== shouldEnable) {
       this._enableSliding = shouldEnable;
 
       if (shouldEnable) {
         console.debug('enableSlidingItems');
-        this.zone.runOutsideAngular(() => {
+        this._zone.runOutsideAngular(() => {
           setTimeout(() => {
             this.slidingGesture = new ItemSlidingGesture(this, this.ele);
           });
@@ -147,13 +170,13 @@ export class ListHeader {
     this._id = id;
   }
 
-  public get id() {
+  public get id(): string {
     return this._id;
   }
 
-  public set id(val) {
+  public set id(val: string) {
     this._id = val;
-    this._renderer.setElementAttribute(this._elementRef, 'id', val);
+    this._renderer.setElementAttribute(this._elementRef.nativeElement, 'id', val);
   }
 
 }

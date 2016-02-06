@@ -6,8 +6,7 @@ import {App, Page, Alert, NavController} from 'ionic/ionic';
 })
 class E2EPage {
 
-  constructor(nav: NavController) {
-    this.nav = nav;
+  constructor(private nav: NavController) {
     this.testConfirmOpen = false;
     this.testPromptOpen = false;
     this.testConfirmResult = '';
@@ -16,8 +15,9 @@ class E2EPage {
 
   doAlert() {
     let alert = Alert.create({
-      title: 'Alert!',
-      subTitle: 'Subtitle!!!',
+      title: 'Alert',
+      subTitle: 'Subtitle',
+      message: 'This is an alert message.',
       buttons: ['OK']
     });
 
@@ -30,6 +30,7 @@ class E2EPage {
     alert.setMessage('Message <strong>text</strong>!!!');
     alert.addButton({
       text: 'Cancel',
+      role: 'cancel',
       handler: () => {
         console.log('Confirm Cancel');
         this.testConfirmResult = 'Cancel';
@@ -48,6 +49,25 @@ class E2EPage {
     this.nav.present(alert).then(() => {
       this.testConfirmOpen = true;
     });
+  }
+
+  doAlertLongMessage() {
+    let alert = Alert.create({
+      title: 'Alert',
+      message: 'Message <strong>text</strong>!!!',
+      buttons: ['Cancel', 'Continue to grant access']
+    });
+    this.nav.present(alert);
+  }
+
+  doMultipleButtons() {
+    let alert = Alert.create({
+      title: 'Alert',
+      subTitle: 'Subtitle',
+      message: 'This is an alert message.',
+      buttons: ['Cancel', 'Continue', 'Delete']
+    });
+    this.nav.present(alert);
   }
 
   doPrompt() {
@@ -87,8 +107,8 @@ class E2EPage {
       this.testPromptOpen = true;
     });
 
-    alert.onDismiss(data => {
-      console.log('onDismiss data', data);
+    alert.onDismiss((data, role) => {
+      console.log('onDismiss, data:', data, 'role:', role);
     });
   }
 
@@ -148,6 +168,91 @@ class E2EPage {
     });
   }
 
+  doCheckbox() {
+    let alert = Alert.create();
+    alert.setTitle('Checkbox!');
+
+    alert.addInput({
+      type: 'checkbox',
+      label: 'Checkbox 1',
+      value: 'value1',
+      checked: true
+    });
+
+    alert.addInput({
+      type: 'checkbox',
+      label: 'Checkbox 2',
+      value: 'value2'
+    });
+
+    alert.addInput({
+      type: 'checkbox',
+      label: 'Checkbox 3',
+      value: 'value3'
+    });
+
+    alert.addInput({
+      type: 'checkbox',
+      label: 'Checkbox 4',
+      value: 'value4'
+    });
+
+    alert.addInput({
+      type: 'checkbox',
+      label: 'Checkbox 5',
+      value: 'value5'
+    });
+
+    alert.addInput({
+      type: 'checkbox',
+      label: 'Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6',
+      value: 'value6'
+    });
+
+    alert.addButton('Cancel');
+    alert.addButton({
+      text: 'Ok',
+      handler: data => {
+        console.log('Checkbox data:', data);
+        this.testCheckboxOpen = false;
+        this.testCheckboxResult = data;
+      }
+    });
+
+    this.nav.present(alert).then(() => {
+      this.testCheckboxOpen = true;
+    });
+  }
+
+  doFastClose() {
+    let alert = Alert.create({
+      title: 'Alert!',
+      buttons: ['OK']
+    });
+
+    this.nav.present(alert);
+
+    setTimeout(() => {
+      alert.dismiss();
+    }, 100);
+  }
+
+  doDisabledBackdropAlert() {
+    let alert = Alert.create({
+      enableBackdropDismiss: false
+    });
+    alert.setTitle('Disabled Backdrop Click'),
+    alert.setMessage('Cannot dismiss alert from clickings the backdrop'),
+    alert.addButton({
+      text: 'Cancel',
+      role: 'cancel',
+      handler: () => {
+        console.log('Confirm Cancel');
+      }
+    });
+
+    this.nav.present(alert);
+  }
 }
 
 

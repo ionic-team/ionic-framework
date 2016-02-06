@@ -39,7 +39,7 @@ export class DisplayWhen {
 
   }
 
-  orientation() {
+  orientation(): boolean {
     for (let i = 0; i < this.conditions.length; i++) {
 
       if (this.conditions[i] == 'portrait') {
@@ -58,6 +58,8 @@ export class DisplayWhen {
 
 /**
  *
+ * @name ShowWhen
+ * @description
  * The `showWhen` attribute takes a string that represents a plaform or screen orientation.
  * The element the attribute is added to will only be shown when that platform or screen orientation is active.
  * Complements the [hideWhen attribute](../HideWhen).
@@ -87,14 +89,15 @@ export class ShowWhen extends DisplayWhen {
   /**
    * @private
    */
-  get hidden() {
+  get hidden(): boolean {
     return !this.isMatch;
   }
 
 }
 
 /**
- *
+ * @name HideWhen
+ * @description
  * The `hideWhen` attribute takes a string that represents a plaform or screen orientation.
  * The element the attribute is added to will only be hidden when that platform or screen orientation is active.
  * Complements the [showWhen attribute](../ShowWhen).
@@ -124,7 +127,7 @@ export class HideWhen extends DisplayWhen {
   /**
    * @private
    */
-  get hidden() {
+  get hidden(): boolean {
     return this.isMatch;
   }
 

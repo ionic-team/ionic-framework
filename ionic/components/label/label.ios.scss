@@ -6,42 +6,46 @@
 
 $label-ios-text-color:         #7f7f7f !default;
 
-// Default Label
+
+// iOS Default Label
 // --------------------------------------------------
 
 ion-label {
   margin: $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom 0;
+}
+
+
+// iOS Default Label Inside An Input Item
+// --------------------------------------------------
+
+.item-input ion-label {
   color: $label-ios-text-color;
 }
 
-ion-label + .item-input {
+ion-label + ion-input .text-input,
+ion-label + ion-textarea .text-input {
   margin-left: $item-ios-padding-left;
 }
 
 
-// Stacked & Floating Labels
+// iOS Stacked & Floating Labels
 // --------------------------------------------------
 
-.stacked-label {
+ion-label[stacked] {
   font-size: 1.2rem;
   margin-bottom: 4px;
 }
 
-.floating-label {
+ion-label[floating] {
   margin-bottom: 0;
   transform-origin: left top;
   transform: translate3d(0, 27px, 0);
   transition: transform 150ms ease-in-out;
 }
 
-.input-focused .floating-label,
-.input-has-value .floating-label {
+.input-has-focus ion-label[floating],
+.input-has-value ion-label[floating] {
   transform: translate3d(0, 0, 0) scale(0.8);
-}
-
-ion-label + .stacked-input,
-ion-label + .floating-input {
-  margin-left: 0;
 }
 
 
@@ -49,7 +53,9 @@ ion-label + .floating-input {
 // --------------------------------------------------
 
 @each $color-name, $color-value in $colors-ios {
+
   ion-label[#{$color-name}] {
     color: $color-value !important;
   }
+
 }

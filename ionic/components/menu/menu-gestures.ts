@@ -3,9 +3,8 @@ import {SlideEdgeGesture} from '../../gestures/slide-edge-gesture';
 
 import {assign} from '../../util/util';
 
-
 export class MenuContentGesture extends SlideEdgeGesture {
-  
+
   constructor(public menu: Menu, targetEl: Element, options = {}) {
 
     super(targetEl, assign({
@@ -19,7 +18,51 @@ export class MenuContentGesture extends SlideEdgeGesture {
   }
 
   canStart(ev) {
-    return this.menu.isOpen && this.menu.isEnabled ? true : super.canStart(ev);
+    let menu = this.menu;
+
+    console.debug('menu canStart,', menu.side, 'isOpen', menu.isOpen, 'angle', ev.angle, 'distance', ev.distance);
+
+    if (!menu.isEnabled || !menu.isSwipeEnabled) {
+      console.debug('menu canStart, isEnabled', menu.isEnabled, 'isSwipeEnabled', menu.isSwipeEnabled, 'side', menu.side);
+      return false;
+    }
+
+    if (ev.distance > 50) {
+      // the distance is longer than you'd expect a side menu swipe to be
+      console.debug('menu canStart, distance too far', ev.distance, 'side', menu.side);
+      return false;
+    }
+
+
+    if (menu.side === 'left') {
+      // left side
+      if (menu.isOpen) {
+        // left side, opened
+        return true;
+
+      } else {
+        // left side, closed
+        if (ev.angle > -40 && ev.angle < 40) {
+          return super.canStart(ev);
+        }
+      }
+
+    } else if (menu.side === 'right') {
+      // right side
+      if (menu.isOpen) {
+        // right side, opened
+        return true;
+
+      } else {
+        // right side, closed
+        if ((ev.angle > 140 && ev.angle <= 180) || (ev.angle > -140 && ev.angle <= -180)) {
+          return super.canStart(ev);
+        }
+      }
+    }
+
+    // didn't pass the test, don't open this menu
+    return false;
   }
 
   // Set CSS, then wait one frame for it to apply before sliding starts

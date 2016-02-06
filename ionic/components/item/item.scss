@@ -60,7 +60,7 @@ ion-item-divider {
   }
 }
 
-ion-item-content {
+ion-label {
   margin: 0;
   flex: 1;
   white-space: nowrap;
@@ -68,17 +68,13 @@ ion-item-content {
   text-overflow: ellipsis;
 }
 
-[text-wrap] ion-item-content {
+[text-wrap] ion-label {
   white-space: normal;
 }
 
 [vertical-align-top],
 ion-input.item {
   align-items: flex-start;
-}
-
-ion-item-content + ion-item-content[cnt] {
-  display: none;
 }
 
 @import "item-media";

@@ -1,10 +1,26 @@
-<ion-slides loop="true" id="loopSlider" (change)="onSlideChanged($event)" pager>
-  <ion-slide *ngFor="#slide of slides" [ngClass]="slide.class">
-    {{ slide.name }}
-  </ion-slide>
-</ion-slides>
+<div class="slides-div">
+  <ion-slides [index]="startingIndex" loop="true" id="loopSlider" (change)="onSlideChanged($event)" pager>
+    <ion-slide *ngFor="#slide of slides" [ngClass]="slide.class">
+      Loop {{ slide.name }}
+    </ion-slide>
+  </ion-slides>
+</div>
+
+
+<div class="slides-div">
+  <ion-slides loop="false" id="loopSlider" (change)="onSlideChanged($event)" pager>
+    <ion-slide *ngFor="#slide of slides" [ngClass]="slide.class">
+      Don't Loop {{ slide.name }}
+    </ion-slide>
+  </ion-slides>
+</div>
 
 <style>
+  .slides-div {
+    height: 50%;
+    border-bottom: 1px solid #ccc;
+  }
+
   .yellow {
     background-color: #fbeb14;
   }

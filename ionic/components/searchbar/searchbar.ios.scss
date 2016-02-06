@@ -14,7 +14,8 @@ $searchbar-ios-input-search-icon-color:   rgba(0, 0, 0, 0.5) !default;
 $searchbar-ios-input-search-icon-svg:     "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 13'><path fill='" + $searchbar-ios-input-search-icon-color + "' d='M5,1c2.2,0,4,1.8,4,4S7.2,9,5,9S1,7.2,1,5S2.8,1,5,1 M5,0C2.2,0,0,2.2,0,5s2.2,5,5,5s5-2.2,5-5S7.8,0,5,0 L5,0z'/><line stroke='" + $searchbar-ios-input-search-icon-color + "' stroke-miterlimit='10' x1='12.6' y1='12.6' x2='8.2' y2='8.2'/></svg>" !default;
 $searchbar-ios-input-search-icon-size:    13px !default;
 
-$searchbar-ios-input-height:              100% !default;
+$searchbar-ios-input-height:              3rem !default;
+$searchbar-ios-input-line-height:         $searchbar-ios-input-height !default;
 $searchbar-ios-input-placeholder-color:   rgba(0, 0, 0, 0.5) !default;
 $searchbar-ios-input-text-color:          #000 !default;
 $searchbar-ios-input-background-color:    #FFFFFF !default;
@@ -62,6 +63,7 @@ ion-searchbar {
 
 .searchbar-input {
   height: $searchbar-ios-input-height;
+  line-height: $searchbar-ios-input-line-height;
   padding: 0 28px;
 
   font-size: 1.4rem;

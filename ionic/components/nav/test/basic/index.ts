@@ -1,7 +1,7 @@
-import {Component} from 'angular2/core';
-import {App, NavController} from 'ionic/ionic';
+import {Component, Type} from 'angular2/core';
+import {App, NavController, Alert} from 'ionic/ionic';
 import {Page, Config, IonicApp} from 'ionic/ionic';
-import {NavParams, NavController, ViewController, IONIC_DIRECTIVES} from 'ionic/ionic';
+import {NavParams, ViewController, IONIC_DIRECTIVES} from 'ionic/ionic';
 
 
 @Component({
@@ -33,11 +33,11 @@ class MyCmpTest{}
         <button ion-item (click)="pushPrimaryHeaderPage()">Push to PrimaryHeaderPage</button>
         <button ion-item (click)="pushAnother()">Push to AnotherPage</button>
 
-        <ion-input>
+        <ion-item>
           <ion-label>Text Input</ion-label>
-          <textarea></textarea>
-        </ion-input>
-        
+          <ion-textarea></ion-textarea>
+        </ion-item>
+
         <button ion-item [navPush]="[pushPage, {id: 42}]">Push FullPage w/ [navPush] array</button>
         <button ion-item [navPush]="pushPage" [navParams]="{id:40}">Push w/ [navPush] and [navParams]</button>
         <button ion-item [navPush]="[\'FirstPage\', {id: 22}]">Push w/ [navPush] array and string view name</button>
@@ -45,6 +45,8 @@ class MyCmpTest{}
         <button ion-item (click)="setPages()">setPages() (Go to PrimaryHeaderPage)</button>
         <button ion-item (click)="setRoot()">setRoot(PrimaryHeaderPage) (Go to PrimaryHeaderPage)</button>
         <button ion-item (click)="nav.pop()">Pop</button>
+        <button ion-item (click)="quickPush()">New push during transition</button>
+        <button ion-item (click)="quickPop()">New pop during transition</button>
         <button ion-item (click)="reload()">Reload</button>
 
         <button *ngFor="#i of pages" ion-item (click)="pushPrimaryHeaderPage()">Page {{i}}</button>
@@ -54,17 +56,17 @@ class MyCmpTest{}
   directives: [MyCmpTest]
 })
 class FirstPage {
+  pushPage;
+  title = 'First Page';
+  pages: Array<number> = [];
+
   constructor(
-    nav: NavController,
+    private nav: NavController,
     app: IonicApp,
     config: Config
   ) {
-    this.nav = nav;
-    this.title = 'First Page';
-
     this.pushPage = FullPage;
 
-    this.pages = [];
     for (var i = 1; i <= 50; i++) {
       this.pages.push(i);
     }
@@ -72,7 +74,7 @@ class FirstPage {
 
   setPages() {
     let items = [
-      PrimaryHeaderPage
+      {page: PrimaryHeaderPage}
     ];
 
     this.nav.setPages(items);
@@ -94,6 +96,20 @@ class FirstPage {
     this.nav.push(AnotherPage);
   }
 
+  quickPush() {
+    this.nav.push(AnotherPage);
+    setTimeout(() => {
+      this.nav.push(PrimaryHeaderPage);
+    }, 150);
+  }
+
+  quickPop() {
+    this.nav.push(AnotherPage);
+    setTimeout(() => {
+      this.nav.remove(1, 1);
+    }, 250);
+  }
+
   reload() {
     window.location.reload();
   }
@@ -111,22 +127,20 @@ class FirstPage {
       <p><button (click)="pushFirstPage()">Push to FirstPage</button></p>
       <p><button class="e2eFrom2To1" nav-pop>Pop with NavPop (Go back to 1st)</button></p>
       <p><button (click)="setPages()">setPages() (Go to PrimaryHeaderPage, FirstPage 1st in history)</button></p>
+      <p><button (click)="presentAlert()">Present Alert</button></p>
     </ion-content>
   `
 })
 class FullPage {
   constructor(
-    nav: NavController,
-    params: NavParams
-  ) {
-    this.nav = nav;
-    this.params = params;
-  }
+    private nav: NavController,
+    private params: NavParams
+  ) {}
 
   setPages() {
     let items = [
-      FirstPage,
-      PrimaryHeaderPage
+      {page: FirstPage},
+      {page: PrimaryHeaderPage}
     ];
 
     this.nav.setPages(items);
@@ -144,6 +158,31 @@ class FullPage {
     this.nav.push(FirstPage);
   }
 
+  presentAlert() {
+    let alert = Alert.create();
+    alert.setTitle('Hello Alert');
+    alert.setMessage('Dismiss this alert, then pop one page');
+    alert.addButton({
+      text: 'Dismiss',
+      role: 'cancel',
+      handler: () => {
+        // overlays are added and removed from the root navigation
+        // ensure you using the root navigation, and pop this alert
+        // when the alert is done animating out, then pop off the active page
+        this.nav.rootNav.pop().then(() => {
+          this.nav.rootNav.pop();
+        });
+
+        // by default an alert will dismiss itself
+        // however, we don't want to use the default
+        // but rather fire off our own pop navigation
+        // return false so it doesn't pop automatically
+        return false;
+      }
+    });
+    this.nav.present(alert);
+  }
+
 }
 
 
@@ -157,6 +196,7 @@ class FullPage {
       <p><button (click)="pushAnother()">Push to AnotherPage</button></p>
       <p><button (click)="pushFullPage()">Push to FullPage</button></p>
       <p><button (click)="setRoot()">setRoot(AnotherPage)</button></p>
+      <p><button (click)="nav.popToRoot()">Pop to root</button></p>
       <p><button id="insert" (click)="insert()">Insert first page into history before this</button></p>
       <p><button id="remove" (click)="removeSecond()">Remove second page in history</button></p>
       <div class="yellow"><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f></div>
@@ -165,12 +205,9 @@ class FullPage {
 })
 class PrimaryHeaderPage {
   constructor(
-    nav: NavController,
-    viewCtrl: ViewController
-  ) {
-    this.nav = nav;
-    this.viewCtrl = viewCtrl;
-  }
+    private nav: NavController,
+    private viewCtrl: ViewController
+  ) {}
 
   onPageWillEnter() {
     this.viewCtrl.setBackButtonText('Previous');
@@ -207,10 +244,10 @@ class PrimaryHeaderPage {
     <ion-content>
       <ion-list>
 
-        <ion-input>
+        <ion-item>
           <ion-label>Text Input</ion-label>
-          <textarea></textarea>
-        </ion-input>
+          <ion-textarea></ion-textarea>
+        </ion-item>
 
         <ion-item>Back button hidden w/ <code>ion-navbar hideBackButton</code></ion-item>
         <button ion-item (click)="nav.pop()">Pop</button>
@@ -225,15 +262,13 @@ class PrimaryHeaderPage {
   `
 })
 class AnotherPage {
+  bbHideToggleVal = false;
+  bbCount = 0;
+
   constructor(
-    nav: NavController,
-    viewCtrl: ViewController
-  ) {
-    this.nav = nav;
-    this.viewCtrl = viewCtrl;
-    this.bbHideToggleVal = false;
-    this._bbCount = 0;
-  }
+    private nav: NavController,
+    private viewCtrl: ViewController
+  ) {}
 
   pushFullPage() {
     this.nav.push(FullPage);
@@ -259,12 +294,12 @@ class AnotherPage {
   setBackButtonText() {
     let backButtonText = 'Messages';
 
-    if (this._bbCount > 0) {
-      backButtonText += ` (${this._bbCount})`;
+    if (this.bbCount > 0) {
+      backButtonText += ` (${this.bbCount})`;
     }
 
     this.viewCtrl.setBackButtonText(backButtonText);
-    ++this._bbCount;
+    ++this.bbCount;
   }
 }
 
@@ -277,6 +312,8 @@ class AnotherPage {
   }
 })
 class E2EApp {
+  root;
+
   constructor() {
     this.root = FirstPage;
   }

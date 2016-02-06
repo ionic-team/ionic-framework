@@ -1,0 +1,12 @@
+
+ion-tabs {
+  position: relative;
+  top: auto;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+ion-navbar-section,
+ion-content-section {
+  display: none !important;
+}

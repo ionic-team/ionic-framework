@@ -12,14 +12,6 @@ import {TabButton} from './tab-button';
 
 /**
  * @name Tab
- * @usage
- * ```html
- * <ion-tabs>
- * 	 <ion-tab tabTitle="Home" tabIcon="home" [root]="tabOneRoot"></ion-tab>
- * 	 <ion-tab tabTitle="Login" tabIcon="star" [root]="tabTwoRoot"></ion-tab>
- * </ion-tabs>
- * ```
- *
  * @description
  * _For basic Tabs usage, see the [Tabs section](../../../../components/#tabs)
  * of the Component docs._
@@ -34,11 +26,12 @@ import {TabButton} from './tab-button';
  * See the [Tabs API reference](../Tabs/) for more details on configuring Tabs
  * and the TabBar.
  *
+ * @usage
  * For most cases, you can give tab a `[root]` property along with the component you want to load.
  *
  * ```html
  * <ion-tabs>
- *  <ion-tab [root]="chatRoot"><ion-tab>
+ *  <ion-tab [root]="chatRoot" tabTitle="Chat" tabIcon="chat"><ion-tab>
  * </ion-tabs>
  * ```
  *
@@ -76,11 +69,14 @@ import {TabButton} from './tab-button';
  * ```
  *
  *
- * @property {any} [root] - set the root page for this tab
- * @property {any} [tabTitle] - set the title of this tab
- * @property {any} [tabIcon] - set the icon for this tab
- * @property {any} [select] - method to call when the current tab is selected
+ * @property {Page} [root] - set the root page for this tab
+ * @property {String} [tabTitle] - set the title of this tab
+ * @property {String} [tabIcon] - set the icon for this tab
+ * @property {Any} [tabBadge] - set the badge for this tab
+ * @property {String} [tabBadgeStyle] - set the badge color for this tab
+ * @property {Any} (select) - method to call when the current tab is selected
  *
+ * @demo /docs/v2/demos/tabs/ 
  */
 @Component({
   selector: 'ion-tab',
@@ -90,19 +86,54 @@ import {TabButton} from './tab-button';
     '[attr.aria-labelledby]': '_btnId',
     'role': 'tabpanel'
   },
-  template: '<template #contents></template>'
+  template: '<div #contents></div>'
 })
 export class Tab extends NavController {
+
+  /**
+   * @private
+   */
   public isSelected: boolean;
   private _isInitial: boolean;
   private _panelId: string;
   private _btnId: string;
   private _loaded: boolean;
   private _loadTimer: any;
+
+  /**
+   * @private
+   */
   btn: TabButton;
+
+
+  /**
+   * @private
+   */
   @Input() root: Type;
+
+  /**
+   * @private
+   */
   @Input() tabTitle: string;
+
+  /**
+   * @private
+   */
   @Input() tabIcon: string;
+
+  /**
+   * @private
+   */
+  @Input() tabBadge: string;
+
+  /**
+   * @private
+   */
+  @Input() tabBadgeStyle: string;
+
+  /**
+   * @private
+   */
   @Output() select: EventEmitter<any> = new EventEmitter();
 
   constructor(
@@ -119,7 +150,7 @@ export class Tab extends NavController {
     // A Tab is a NavController for its child pages
     super(parentTabs, app, config, keyboard, elementRef, 'contents', compiler, viewManager, zone, renderer);
 
-    this._isInitial = parentTabs.add(this);
+    parentTabs.add(this);
 
     this._panelId = 'tabpanel-' + this.id;
     this._btnId = 'tab-' + this.id;
@@ -129,23 +160,7 @@ export class Tab extends NavController {
    * @private
    */
   ngOnInit() {
-    if (this._isInitial) {
-      this.parent.select(this);
-
-    } else if (this.parent.preloadTabs) {
-      this._loadTimer = setTimeout(() => {
-        if (!this._loaded) {
-          this.load({
-            animate: false,
-            preload: true,
-            postLoad: (viewCtrl) => {
-              let navbar = viewCtrl.getNavbar();
-              navbar && navbar.setHidden(true);
-            }
-          }, function(){});
-        }
-      }, 1000 * this.index);
-    }
+    this.tabBadgeStyle = this.tabBadgeStyle ? this.tabBadgeStyle : 'default';
   }
 
   /**
@@ -153,12 +168,34 @@ export class Tab extends NavController {
    */
   load(opts, done?: Function) {
     if (!this._loaded && this.root) {
-      this.push(this.root, null, opts, done);
+      this.push(this.root, null, opts).then(() => {
+        done();
+      });
       this._loaded = true;
 
     } else {
       done();
     }
+  }
+
+
+  /**
+   * @private
+   */
+  preload(wait) {
+    this._loadTimer = setTimeout(() => {
+      if (!this._loaded) {
+        console.debug('Tabs, preload', this.id);
+        this.load({
+          animate: false,
+          preload: true,
+          postLoad: (viewCtrl) => {
+            let navbar = viewCtrl.getNavbar();
+            navbar && navbar.setHidden(true);
+          }
+        }, function(){});
+      }
+    }, wait);
   }
 
   /**
@@ -202,18 +239,7 @@ export class Tab extends NavController {
   }
 
   /**
-   *
-   * ```ts
-   * export class MyClass{
-   *  constructor(tab: Tab){
-   *    this.tab = tab;
-   *    console.log(this.tab.index);
-   *  }
-   * }
-   * ```
-   *
-   * @returns {number} Returns the index of this page within its NavController.
-   *
+   * @private
    */
   get index() {
     return this.parent.getIndex(this);

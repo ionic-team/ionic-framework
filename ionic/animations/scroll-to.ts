@@ -43,6 +43,8 @@ export class ScrollTo {
     let xDistance = Math.abs(x - fromX);
     let yDistance = Math.abs(y - fromY);
 
+    console.debug(`scrollTo start, y: ${y}, fromY: ${fromY}, yDistance: ${yDistance}, duration: ${duration}, tolerance: ${tolerance}`);
+
     if (yDistance <= tolerance && xDistance <= tolerance) {
       // prevent scrolling if already close to there
       self._el = null;
@@ -50,16 +52,7 @@ export class ScrollTo {
     }
 
     return new Promise((resolve, reject) => {
-      let start;
-
-      // start scroll loop
-      self.isPlaying = true;
-
-      // chill out for a frame first
-      raf(() => {
-        start = Date.now();
-        raf(step);
-      });
+      let startTime: number;
 
       // scroll loop
       function step() {
@@ -67,18 +60,21 @@ export class ScrollTo {
           return resolve();
         }
 
-        let time = Math.min(1, ((Date.now() - start) / duration));
+        let time = Math.min(1, ((Date.now() - startTime) / duration));
 
         // where .5 would be 50% of time on a linear scale easedT gives a
         // fraction based on the easing method
         let easedT = easeOutCubic(time);
 
         if (fromY != y) {
-          self._el.scrollTop = Math.round((easedT * (y - fromY)) + fromY);
+          self._el.scrollTop = (easedT * (y - fromY)) + fromY;
         }
+
         if (fromX != x) {
           self._el.scrollLeft = Math.round((easedT * (x - fromX)) + fromX);
         }
+
+        console.debug(`scrollTo step, easedT: ${easedT}, scrollTop: ${self._el.scrollTop}`);
 
         if (time < 1 && self.isPlaying) {
           raf(step);
@@ -91,9 +87,19 @@ export class ScrollTo {
         } else {
           // done
           self._el = null;
+          console.debug(`scrollTo done`);
           resolve();
         }
       }
+
+      // start scroll loop
+      self.isPlaying = true;
+
+      // chill out for a frame first
+      raf(() => {
+        startTime = Date.now();
+        raf(step);
+      });
 
     });
   }

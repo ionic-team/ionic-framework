@@ -16,7 +16,6 @@
 
   white-space: nowrap;
   text-overflow: ellipsis;
-  overflow: hidden;
 
   text-align: center;
   text-transform: none;
@@ -27,6 +26,16 @@
   cursor: pointer;
   @include user-select-none();
   @include appearance(none);
+}
+
+.bar-button:after {
+  // used to make the button's hit area larger
+  position: absolute;
+  content: '';
+  top: -7px;
+  right: -2px;
+  bottom: -6px;
+  left: -2px;
 }
 
 

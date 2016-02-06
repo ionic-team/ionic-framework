@@ -1,0 +1,27 @@
+<ion-menu #menu [content]="content">
+
+  <ion-toolbar secondary>
+    <ion-title>Left Menu</ion-title>
+  </ion-toolbar>
+
+  <ion-content>
+
+    <ion-list>
+      <ion-item *ngIf="loggedIn">
+        Welcome, Administrator!
+      </ion-item>
+      <button ion-item menuClose *ngFor="#p of pages" (click)="openPage(menu, p)" [hidden]="(loggedIn == true && p.showLoggedIn == false) || (loggedIn == false && p.showLoggedIn == true)">
+        <ion-label primary>{{p.title}}</ion-label>
+      </button>
+
+      <button ion-item menuToggle>
+        Close Menu
+      </button>
+
+    </ion-list>
+  </ion-content>
+
+</ion-menu>
+
+
+<ion-nav id="nav" [root]="rootView" #content swipe-back-enabled="false"></ion-nav>

@@ -1,65 +1,74 @@
-<ion-navbar *navbar>
+<ion-toolbar>
+  <ion-title>Radio</ion-title>
+</ion-toolbar>
 
-  <ion-title>
-    Radio
-  </ion-title>
-
-</ion-navbar>
-
-<ion-content>
+<ion-content class="outer-content">
   <ion-list radio-group>
-
     <ion-list-header>
       Language
     </ion-list-header>
 
-    <ion-radio checked="true">
-      Go
-    </ion-radio>
+    <ion-item>
+      <ion-label>Python</ion-label>
+      <ion-radio checked="true"></ion-radio>
+    </ion-item>
 
-    <ion-radio>
-      Rust
-    </ion-radio>
+    <ion-item>
+      <ion-label>Ruby</ion-label>
+      <ion-radio></ion-radio>
+    </ion-item>
 
-    <ion-radio>
-      Python
-    </ion-radio>
+    <ion-item>
+      <ion-label>Java</ion-label>
+      <ion-radio></ion-radio>
+    </ion-item>
 
-    <ion-radio>
-      Ruby
-    </ion-radio>
-
-    <ion-radio>
-      Clojure
-    </ion-radio>
-
-    <ion-radio>
-      Java
-    </ion-radio>
-
-    <ion-radio>
-      PHP
-    </ion-radio>
-
-    <ion-radio>
-      .NET
-    </ion-radio>
-
-    <ion-radio>
-      C++
-    </ion-radio>
-
-    <ion-radio>
-      Scala
-    </ion-radio>
-
-    <ion-radio>
-      Haskell
-    </ion-radio>
-
-    <ion-radio>
-      Erlang
-    </ion-radio>
-
+    <ion-item>
+      <ion-label>PHP</ion-label>
+      <ion-radio></ion-radio>
+    </ion-item>
   </ion-list>
+
+  <ion-list radio-group>
+    <ion-list-header>
+      Auto-Lock
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label>1 Minute</ion-label>
+      <ion-radio></ion-radio>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>2 Minutes</ion-label>
+      <ion-radio checked="true"></ion-radio>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>5 Minutes</ion-label>
+      <ion-radio></ion-radio>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Never</ion-label>
+      <ion-radio></ion-radio>
+    </ion-item>
+  </ion-list>
+
+  <ion-list radio-group>
+    <ion-list-header>
+      Silence
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label>Always</ion-label>
+      <ion-radio></ion-radio>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Only while phone is locked</ion-label>
+      <ion-radio checked="true"></ion-radio>
+    </ion-item>
+  </ion-list>
+
 </ion-content>

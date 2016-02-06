@@ -13,19 +13,19 @@ import * as util from '../../util';
  * Scroll is a non-flexboxed scroll area that can scroll horizontally or vertically. `ion-Scroll` Can be used in places were you may not need a full page scroller, but a highly customized one, such as image scubber or comment scroller.
  * @usage
  * ```html
- * <ion-scroll scroll-x="true">
+ * <ion-scroll scrollX="true">
  * </ion-scroll>
  *
- * <ion-scroll scroll-y="true">
+ * <ion-scroll scrollY="true">
  * </ion-scroll>
  *
- * <ion-scroll scroll-x="true" scroll-y="true">
+ * <ion-scroll scrollX="true" scrollY="true">
  * </ion-scroll>
  * ```
- *@property {boolean} [scroll-x] - whether to enable scrolling along the X axis
- *@property {boolean} [scroll-y] - whether to enable scrolling along the Y axis
+ *@property {boolean} [scrollX] - whether to enable scrolling along the X axis
+ *@property {boolean} [scrollY] - whether to enable scrolling along the Y axis
  *@property {boolean} [zoom] - whether to enable zooming
- *@property {number} [max-zoom] - set the max zoom amount for ion-scroll
+ *@property {number} [maxZoom] - set the max zoom amount for ion-scroll
  * @demo /docs/v2/demos/scroll/
  */
 @Component({
@@ -45,8 +45,17 @@ import * as util from '../../util';
     '</scroll-content>'
 })
 export class Scroll extends Ion {
+  /**
+   * @private
+   */
   private maxScale: number = 3;
+  /**
+   * @private
+   */
   private zoomDuration: number = 250;
+  /**
+   * @private
+   */
   private scrollElement: HTMLElement;
 
   constructor(elementRef: ElementRef) {

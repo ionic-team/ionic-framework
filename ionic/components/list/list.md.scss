@@ -50,7 +50,7 @@ ion-list {
     border-bottom: 1px solid $list-md-border-color;
 
     .item-inner,
-    ion-item-content {
+    ion-label {
       border-bottom: none;
     }
   }
@@ -116,13 +116,9 @@ ion-list[inset] {
     border-bottom-left-radius: $list-inset-md-border-radius;
   }
 
-  ion-input.item {
+  .item-input {
     padding-right: 0;
     padding-left: 0;
-
-    &:after {
-      left: 0;
-    }
   }
 
   + ion-list[inset] {

@@ -16,17 +16,16 @@ $text-input-md-input-clear-icon-size:       22px !default;
 
 
 
-// Default Input
+// Material Design Default Input
 // --------------------------------------------------
 
-.item-input {
+.text-input {
   margin: $item-md-padding-top ($item-md-padding-right / 2) $item-md-padding-bottom ($item-md-padding-left / 2);
   padding: 0;
-  background-color: $text-input-md-background-color;
 }
 
 
-// Inset Input
+// Material Design Inset Input
 // --------------------------------------------------
 
 .inset-input {
@@ -35,7 +34,7 @@ $text-input-md-input-clear-icon-size:       22px !default;
 }
 
 
-// Highlighted Input
+// Material Design Highlighted Input
 // --------------------------------------------------
 
 ion-input:after {
@@ -49,7 +48,7 @@ ion-input:after {
   content: '';
 }
 
-.input-focused:after {
+.input-has-focus:after {
   border-bottom-color: $text-input-md-highlight-color;
 }
 
@@ -62,18 +61,26 @@ ion-input.ng-invalid.ng-touched:after {
 }
 
 
-// Stacked & Floating Inputs
+// Material Design Stacked & Floating Inputs
 // --------------------------------------------------
 
-.stacked-input,
-.floating-input {
+.item-label-stacked .text-input,
+.item-label-floating .text-input {
   margin-left: 0;
   margin-top: 8px;
   margin-bottom: 8px;
 }
 
+.item-label-floating .text-input.cloned-input {
+  top: 32px;
+}
 
-// Clear Input Icon
+.item-label-stacked .text-input.cloned-input {
+  top: 27px;
+}
+
+
+// Material Design Clear Input Icon
 // --------------------------------------------------
 
 ion-input[clearInput] {

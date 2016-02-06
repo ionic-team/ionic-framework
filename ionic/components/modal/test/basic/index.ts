@@ -71,14 +71,14 @@ class E2EPage {
     </ion-navbar>
     <ion-content>
       <ion-list>
-        <ion-input>
+        <ion-item>
           <ion-label>UserId</ion-label>
-          <input type="number" [(ngModel)]="data.userId">
-        </ion-input>
-        <ion-input>
+          <ion-input type="number" [(ngModel)]="data.userId"></ion-input>
+        </ion-item>
+        <ion-item>
           <ion-label>Name</ion-label>
-          <input type="text" [(ngModel)]="data.name">
-        </ion-input>
+          <ion-input [(ngModel)]="data.name"></ion-input>
+        </ion-item>
       </ion-list>
       <button full (click)="submit()">Submit</button>
     </ion-content>
@@ -206,7 +206,7 @@ class ModalFirstPage {
       buttons: [
         {
           text: 'Destructive',
-          style: 'destructive',
+          role: 'destructive',
           handler: () => {
             console.log('Destructive clicked');
           }
@@ -218,8 +218,25 @@ class ModalFirstPage {
           }
         },
         {
+          text: 'Go To Root',
+          handler: () => {
+            // overlays are added and removed from the root navigation
+            // find the root navigation, and pop this alert
+            // when the alert is done animating out, then pop off the modal
+            this.nav.rootNav.pop().then(() => {
+              this.nav.rootNav.pop();
+            });
+
+            // by default an alert will dismiss itself
+            // however, we don't want to use the default
+            // but rather fire off our own pop navigation
+            // return false so it doesn't pop automatically
+            return false;
+          }
+        },
+        {
           text: 'Cancel',
-          style: 'cancel',
+          role: 'cancel',
           handler: () => {
             console.log('cancel this clicked');
           }
