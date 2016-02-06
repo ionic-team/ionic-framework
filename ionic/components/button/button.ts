@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Renderer, Attribute, Optional, Input} from 'angular2/core';
+import {Component, ElementRef, Renderer, Attribute, Optional, Input} from 'angular2/core';
 
 import {Config} from '../../config/config';
 import {Toolbar} from '../toolbar/toolbar';
@@ -28,8 +28,9 @@ import {Toolbar} from '../toolbar/toolbar';
   * @see {@link /docs/v2/components#buttons Button Component Docs}
 
  */
-@Directive({
-  selector: 'button,[button]'
+@Component({
+  selector: 'button:not([ion-item]),[button]',
+  template: '<span class="button-inner"><ng-content></ng-content></span>'
 })
 export class Button {
   private _role: string = 'button'; // bar-button/item-button
@@ -78,7 +79,6 @@ export class Button {
     }
 
     this._readAttrs(element);
-    this._readIcon(element);
   }
 
   /**
@@ -89,6 +89,7 @@ export class Button {
     if (this.color) {
       this._colors = [this.color];
     }
+    this._readIcon(this._elementRef.nativeElement);
     this._assignCss(true);
   }
 
@@ -124,6 +125,9 @@ export class Button {
   private _readIcon(element: HTMLElement) {
     // figure out if and where the icon lives in the button
     let childNodes = element.childNodes;
+    if (childNodes.length == 1) {
+      childNodes = childNodes[0].childNodes;
+    }
     let childNode;
     let nodes = [];
     for (let i = 0, l = childNodes.length; i < l; i++) {
@@ -218,9 +222,9 @@ export class Button {
     }
   }
 
-/**
- * @private
- */
+  /**
+   * @private
+   */
   static setRoles(contentButtonChildren, role: string) {
     let buttons = contentButtonChildren.toArray();
     buttons.forEach(button => {

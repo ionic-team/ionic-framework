@@ -43,7 +43,7 @@ $button-md-small-icon-font-size:           1.4em !default;
 .button {
   margin: $button-md-margin;
   padding: $button-md-padding;
-  min-height: $button-md-height;
+  height: $button-md-height;
   border-radius: $button-md-border-radius;
 
   font-weight: 500;
@@ -96,13 +96,13 @@ $button-md-small-icon-font-size:           1.4em !default;
 
 .button-large {
   padding: 0 $button-md-large-padding;
-  min-height: $button-md-large-height;
+  height: $button-md-large-height;
   font-size: $button-md-large-font-size;
 }
 
 .button-small {
   padding: 0 $button-md-small-padding;
-  min-height: $button-md-small-height;
+  height: $button-md-small-height;
   font-size: $button-md-small-font-size;
 }
 
