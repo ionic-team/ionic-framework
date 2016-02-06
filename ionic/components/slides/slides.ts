@@ -689,6 +689,7 @@ export class Slides extends Ion {
   * @description
   * `ion-slide` is a child component of `ion-slides` and is where all your individule slide content will be rendered too.
   *
+  * @demo /docs/v2/demos/slides/
   * @see {@link /docs/v2/api/components/slides/Slides/ Slides API Docs}
   */
 @Component({
