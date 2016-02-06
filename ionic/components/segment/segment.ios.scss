@@ -9,7 +9,10 @@ $segment-button-ios-bg-color-activated:       $toolbar-ios-active-color !default
 
 $segment-button-ios-text-color:               inverse($segment-button-ios-bg-color-activated) !default;
 $segment-button-ios-activated-transition:     100ms all linear !default;
-$segment-button-ios-hover-opacity:            0.16 !default;
+$segment-button-ios-hover-transition:         100ms all linear !default;
+$segment-button-ios-active-transition:        100ms all linear !default;
+$segment-button-ios-hover-opacity:            0.1 !default;
+$segment-button-ios-active-opacity:           0.16 !default;
 
 $segment-button-ios-border-width:             1px !default;
 $segment-button-ios-min-height:               3.0rem !default;
@@ -41,6 +44,12 @@ $segment-button-ios-toolbar-button-max-width: 100px !default;
 
   &:hover:not(.segment-activated) {
     background-color: rgba($segment-button-ios-bg-color-activated, $segment-button-ios-hover-opacity);
+    transition: $segment-button-ios-hover-transition;
+  }
+  
+  &:active:not(.segment-activated) {
+      background-color: rgba($segment-button-ios-bg-color-activated, $segment-button-ios-active-opacity);
+      transition: $segment-button-ios-active-transition;
   }
 
   &:first-of-type {
