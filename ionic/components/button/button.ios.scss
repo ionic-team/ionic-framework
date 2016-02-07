@@ -30,7 +30,7 @@ $button-ios-small-icon-font-size:     1.3em !default;
   margin: $button-ios-margin;
   padding: $button-ios-padding;
 
-  min-height: $button-ios-height;
+  height: $button-ios-height;
   font-size: $button-ios-font-size;
 
   border-radius: $button-ios-border-radius;
@@ -75,13 +75,13 @@ $button-ios-small-icon-font-size:     1.3em !default;
 
 .button-large {
   padding: 0 $button-ios-large-padding;
-  min-height: $button-ios-large-height;
+  height: $button-ios-large-height;
   font-size: $button-ios-large-font-size;
 }
 
 .button-small {
   padding: 0 $button-ios-small-padding;
-  min-height: $button-ios-small-height;
+  height: $button-ios-small-height;
   font-size: $button-ios-small-font-size;
 }
 
@@ -93,9 +93,6 @@ $button-ios-small-icon-font-size:     1.3em !default;
 // --------------------------------------------------
 
 .button-block {
-  // This fixes an issue with flexbox and button on iOS Safari. See #225
-  display: block;
-  line-height: $button-ios-height;
   margin-left: 0;
   margin-right: 0;
 }
