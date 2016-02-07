@@ -21,7 +21,7 @@ hr {
 }
 
 &.hairlines hr {
-  height: 0.55px;
+  height: $hairlines-width;
 }
 
 @each $color-name, $color-value in $colors-ios {

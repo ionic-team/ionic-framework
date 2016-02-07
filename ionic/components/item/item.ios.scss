@@ -86,7 +86,7 @@ $item-ios-sliding-content-bg:         $list-ios-background-color !default;
 }
 
 &.hairlines .item-inner {
-  border-bottom-width: 0.55px;
+  border-bottom-width: $hairlines-width;
 }
 
 
