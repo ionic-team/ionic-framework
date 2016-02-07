@@ -88,6 +88,6 @@ ion-action-sheet {
 &.hairlines {
   .action-sheet-title,
   .action-sheet-button {
-    border-bottom-width: 0.55px;
+    border-bottom-width: $hairlines-width;
   }
 }

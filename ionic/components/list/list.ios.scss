@@ -98,28 +98,28 @@ ion-list + ion-list {
 &.hairlines {
 
   ion-list-header {
-    border-bottom-width: 0.55px;
+    border-bottom-width: $hairlines-width;
   }
 
   ion-list {
 
     ion-item-options {
-      border-width: 0.55px;
+      border-width: $hairlines-width;
     }
 
     .item {
       .item-inner {
-        border-width: 0.55px;
+        border-width: $hairlines-width;
       }
     }
 
     > .item:first-child {
-      border-top-width: 0.55px;
+      border-top-width: $hairlines-width;
     }
 
     > .item:last-child,
     > ion-item-sliding:last-child .item {
-      border-bottom-width: 0.55px;
+      border-bottom-width: $hairlines-width;
     }
   }
 
@@ -163,7 +163,7 @@ ion-list[inset] + ion-list[inset] {
 
 &.hairlines ion-list[inset] {
   .item {
-    border-width: 0.55px;
+    border-width: $hairlines-width;
   }
 }
 
