@@ -11,11 +11,13 @@ header_sub_title: Extend Ionic even further with the power of AngularJS
 searchable: false
 ---
 
-# AngularJS Extensions
+# Ionic 2 Components
 
-Ionic is both a CSS framework and a Javascript UI library. Many components need Javascript in order to produce magic, though often components
-can easily be used without coding through framework extensions such as our AngularIonic extensions.
+<img class="section-header" src="/img/docs/api-intro-header.png" />
 
-Ionic follows the View Controller pattern popularized in such frameworks as Cocoa Touch. In the View Controller pattern, we treat different sections of the interface as child Views or even child View Controllers that contain other views. View Controllers then "power" the Views inside of them to provide interaction and UI functionality. A great example is the Tab Bar View Controller which processes taps on a Tab Bar to switch between a set of viewable panes.
 
-Explore our API docs for detailed information on the View Controllers and Javascript utilities available in Ionic.
+Ionic 2 takes everything you know and loved about Ionic 1, and builds on top of it to provide a much more flexible framework. Moving from Angular 1's controllers and services to ES6 classes provides a much more powerful way to work with an API, as well as being driven by standards.
+
+You'll find two kin of doc pages, Components and Class APIs. The components include things like `ion-toggle`, `ion-radio`, `ion-tabs` and show you how to use them as well as all the available properties and events then have. The class APIs include our `NavController`, `NavParams`, `ViewController`, or `Storage`. These are the programmatic parts of Ionic 2 that you can call from your own classes.
+
+Explore our API docs for detailed information on the components and their classes
