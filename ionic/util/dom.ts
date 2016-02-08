@@ -5,7 +5,7 @@ let docEle: any = doc.documentElement;
 
 // requestAnimationFrame is polyfilled for old Android
 // within the web-animations polyfill
-export const raf = win.requestAnimationFrame;
+export const raf = win.requestAnimationFrame.bind(win);
 
 export function rafFrames(framesToWait, callback) {
   framesToWait = Math.ceil(framesToWait);
