@@ -32,7 +32,7 @@ ion-item-options .button {
   height: 100%;
 }
 
-ion-item-options:not([icon-left]) > .button-icon-left  {
+ion-item-options:not([icon-left]) .button-icon-left {
   font-size: 14px;
 
   .button-inner {
