@@ -179,10 +179,40 @@ Improve this doc
 </table>
 <@ endif @>
 
-<!-- methods on the class -->
+
+<@- if doc.statics.length -@>
+<h2>Static Methods</h2>
+<@- for method in doc.statics @><@ if not method.internal @>
+<div id="<$ method.name $>"></div>
+<h3><$ functionSyntax(method) $></h3>
+
+<$ method.description $>
+
+<@ if method.params @>
+<$ paramTable(method.params) $>
+<@ endif @>
+
+<@ if method.this @>
+<h4> Method's `this`
+<$ method.this $>
+</h4>
+<@ endif @>
+
+<@ if method.returns @>
+<div class="return-value">
+<i class="icon ion-arrow-return-left"></i>
+<b>Returns:</b> <$ typeInfo(method.returns) $>
+</div>
+<@ endif @>
+<@ endif @>
+<@ endfor -@>
+<@ endif @>
+
+
+<!-- instance methods on the class -->
 <@- if doc.members and doc.members.length @>
 
-<h2>Methods</h2>
+<h2>Instance Methods</h2>
 <@- for method in doc.members @>
 
 <div id="<$ method.name $>"></div>
