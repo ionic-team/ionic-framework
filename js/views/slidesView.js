@@ -442,6 +442,16 @@
         };
 
         /*=========================
+          Enable, disable Touch
+          ===========================*/
+        s.disableTouch = function() {
+            s.params.disableTouch = true;
+        };
+        s.enableTouch = function() {
+            s.params.disableTouch = false;
+        };
+
+        /*=========================
           Round helper
           ===========================*/
         function round(a) {
@@ -1268,6 +1278,7 @@
         // Touch handlers
         var isTouchEvent, startMoving;
         s.onTouchStart = function (e) {
+            if (s.params.disableTouch) return;
             if (e.originalEvent) e = e.originalEvent;
             isTouchEvent = e.type === 'touchstart';
             if (!isTouchEvent && 'which' in e && e.which === 3) return;
