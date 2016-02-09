@@ -311,6 +311,10 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
       navBarTransition.run(1);
 
       queuedTransitionEnd = function() {
+        if (leavingHeaderBar) {
+          leavingHeaderBar.afterLeave();
+        }
+
         if (latestTransitionId == transitionId || !navBarTransition.shouldAnimate) {
           transitionEnd();
         }
