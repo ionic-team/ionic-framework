@@ -14,6 +14,8 @@ import {SwipeBackGesture} from './swipe-back';
 import {ViewController} from './view-controller';
 
 /**
+ * @name NavController
+ * @description
  * _For examples on the basic usage of NavController, check out the
  * [Navigation section](../../../../components/#navigation) of the Component
  * docs._
