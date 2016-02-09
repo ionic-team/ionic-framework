@@ -1,6 +1,6 @@
 import {Animation} from './animation';
 
-const DURATION = 400;
+const DURATION = 500;
 const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
 const OPACITY = 'opacity';
 const TRANSLATEX = 'translateX';

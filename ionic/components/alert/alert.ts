@@ -236,8 +236,8 @@ export class Alert extends ViewController {
 }
 
 /**
-* @private
-*/
+ * @private
+ */
 @Component({
   selector: 'ion-alert',
   template:
@@ -284,6 +284,7 @@ export class Alert extends ViewController {
       '<div class="alert-button-group" [ngClass]="{vertical: d.buttons.length>2}">' +
         '<button *ngFor="#b of d.buttons" (click)="btnClick(b)" [ngClass]="b.cssClass" class="alert-button">' +
           '{{b.text}}' +
+          '<ion-button-effect></ion-button-effect>' +
         '</button>' +
       '</div>' +
     '</div>',
@@ -497,7 +498,8 @@ class AlertPopIn extends Animation {
     this
       .easing('ease-in-out')
       .duration(200)
-      .add(backdrop, wrapper);
+      .add(backdrop)
+      .add(wrapper);
   }
 }
 Animation.register('alert-pop-in', AlertPopIn);
@@ -517,7 +519,8 @@ class AlertPopOut extends Animation {
     this
       .easing('ease-in-out')
       .duration(200)
-      .add(backdrop, wrapper);
+      .add(backdrop)
+      .add(wrapper);
   }
 }
 Animation.register('alert-pop-out', AlertPopOut);
@@ -537,7 +540,8 @@ class AlertMdPopIn extends Animation {
     this
       .easing('ease-in-out')
       .duration(200)
-      .add(backdrop, wrapper);
+      .add(backdrop)
+      .add(wrapper);
   }
 }
 Animation.register('alert-md-pop-in', AlertMdPopIn);
@@ -557,7 +561,8 @@ class AlertMdPopOut extends Animation {
     this
       .easing('ease-in-out')
       .duration(200)
-      .add(backdrop, wrapper);
+      .add(backdrop)
+      .add(wrapper);
   }
 }
 Animation.register('alert-md-pop-out', AlertMdPopOut);

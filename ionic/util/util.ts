@@ -113,12 +113,17 @@ export const isObject = val => typeof val === 'object';
 export const isArray = Array.isArray;
 
 export const isTrueProperty = function(val) {
-  if (typeof val === 'boolean') return val;
   if (typeof val === 'string') {
     val = val.toLowerCase().trim();
     return (val === 'true' || val === '');
   }
-  if (typeof val === 'number') return (val > 0);
+  return !!val;
+};
+
+export const isFalseProperty = function(val) {
+  if (typeof val === 'string') {
+    return (val.toLowerCase().trim() === 'false');
+  }
   return !!val;
 };
 

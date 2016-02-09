@@ -1038,11 +1038,10 @@ export class NavController extends Ion {
 
       if (opts.animate === false) {
         // force it to not animate the elements, just apply the "to" styles
-        transAnimation.clearDuration();
         transAnimation.duration(0);
       }
 
-      let duration = transAnimation.duration();
+      let duration = transAnimation.getDuration();
       let enableApp = (duration < 64);
       // block any clicks during the transition and provide a
       // fallback to remove the clickblock if something goes wrong
@@ -1053,15 +1052,18 @@ export class NavController extends Ion {
         transAnimation.before.addClass(enteringView.viewType);
       }
 
-      // start the transition
-      transAnimation.play(() => {
+      // create a callback for when the animation is done
+      transAnimation.onFinish(() => {
         // transition animation has ended
 
         // dispose the animation and it's element references
-        transAnimation.dispose();
+        transAnimation.destroy();
 
         this._afterTrans(enteringView, leavingView, opts, done);
       });
+
+      // cool, let's do this, start the transition
+      transAnimation.play();
     });
   }
 

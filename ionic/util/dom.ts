@@ -3,9 +3,34 @@ let win: any = window;
 let doc: any = document;
 let docEle: any = doc.documentElement;
 
-// requestAnimationFrame is polyfilled for old Android
-// within the web-animations polyfill
+
+// RequestAnimationFrame Polyfill (Android 4.3 and below)
+/*! @author Paul Irish */
+/*! @source https://gist.github.com/paulirish/1579671 */
+(function() {
+  var rafLastTime = 0;
+  if (!win.requestAnimationFrame) {
+    win.requestAnimationFrame = function(callback, element) {
+      var currTime = Date.now();
+      var timeToCall = Math.max(0, 16 - (currTime - rafLastTime));
+
+      var id = window.setTimeout(function() {
+        callback(currTime + timeToCall);
+      }, timeToCall);
+
+      rafLastTime = currTime + timeToCall;
+      return id;
+    };
+  }
+
+  if (!win.cancelAnimationFrame) {
+    win.cancelAnimationFrame = function(id) { clearTimeout(id); };
+  }
+})();
+
 export const raf = win.requestAnimationFrame.bind(win);
+export const cancelRaf = win.cancelAnimationFrame.bind(win);
+
 
 export function rafFrames(framesToWait, callback) {
   framesToWait = Math.ceil(framesToWait);
@@ -21,11 +46,10 @@ export function rafFrames(framesToWait, callback) {
 }
 
 export let CSS: {
-  animationStart?: string,
-  animationEnd?: string,
   transform?: string,
   transition?: string,
   transitionDuration?: string,
+  transitionTimingFn?: string,
   transitionStart?: string,
   transitionEnd?: string,
 } = {};
@@ -57,57 +81,38 @@ export let CSS: {
   // transition duration
   CSS.transitionDuration = (isWebkit ? '-webkit-' : '') + 'transition-duration';
 
+  // transition timing function
+  CSS.transitionTimingFn = (isWebkit ? '-webkit-' : '') + 'transition-timing-function';
+
   // To be sure transitionend works everywhere, include *both* the webkit and non-webkit events
   CSS.transitionEnd = (isWebkit ? 'webkitTransitionEnd ' : '') + 'transitionend';
 })();
 
-if (win.onanimationend === undefined && win.onwebkitanimationend !== undefined) {
-  CSS.animationStart = 'webkitAnimationStart animationstart';
-  CSS.animationEnd = 'webkitAnimationEnd animationend';
-} else {
-  CSS.animationStart = 'animationstart';
-  CSS.animationEnd = 'animationend';
-}
 
-export function transitionEnd(el: HTMLElement) {
-  return cssPromise(el, CSS.transitionEnd);
-}
-
-export function animationStart(el: HTMLElement, animationName: string) {
-  return cssPromise(el, CSS.animationStart, animationName);
-}
-
-export function animationEnd(el: HTMLElement, animationName: string) {
-  return cssPromise(el, CSS.animationEnd, animationName);
-}
-
-function cssPromise(el: HTMLElement, eventNames: string, animationName?: string) {
-  return new Promise(resolve => {
-    eventNames.split(' ').forEach(eventName => {
-      el.addEventListener(eventName, onEvent);
-    })
-    function onEvent(ev) {
-      if (ev.animationName && animationName) {
-        // do not resolve if a bubbled up ev.animationName
-        // is not the same as the passed in animationName arg
-        if (ev.animationName !== animationName) {
-          return;
-        }
-      } else if (ev.target !== el) {
-        // do not resolve if the event's target element is not
-        // the same as the element the listener was added to
-        return;
-      }
-      ev.stopPropagation();
-      eventNames.split(' ').forEach(eventName => {
+export function transitionEnd(el: HTMLElement, callback: Function) {
+  if (el) {
+    function deregister() {
+      CSS.transitionEnd.split(' ').forEach(eventName => {
         el.removeEventListener(eventName, onEvent);
-      })
-      resolve(ev);
+      });
     }
-  });
+
+    function onEvent(ev) {
+      if (el === ev.target) {
+        deregister();
+        callback(ev);
+      }
+    }
+
+    CSS.transitionEnd.split(' ').forEach(eventName => {
+      el.addEventListener(eventName, onEvent);
+    });
+
+    return deregister;
+  }
 }
 
-export function ready(callback) {
+export function ready(callback?: Function) {
   let promise = null;
 
   if (!callback) {
@@ -132,7 +137,7 @@ export function ready(callback) {
   return promise;
 }
 
-export function windowLoad(callback) {
+export function windowLoad(callback?: Function) {
   let promise = null;
 
   if (!callback) {
@@ -238,10 +243,6 @@ export function closest(ele: HTMLElement, selector: string, checkSelf?: boolean)
   return null;
 }
 
-export function removeElement(ele) {
-  ele && ele.parentNode && ele.parentNode.removeChild(ele);
-}
-
 
 /**
  * Get the element offsetWidth and offsetHeight. Values are cached
@@ -271,7 +272,7 @@ export function getDimensions(ele: HTMLElement, id: string): {
   return dimensions;
 }
 
-export function windowDimensions() {
+export function windowDimensions(): {width: number, height: number} {
   if (!dimensionCache.win) {
     // make sure we got good values before caching
     if (win.innerWidth && win.innerHeight) {
@@ -292,60 +293,3 @@ export function flushDimensionCache() {
 }
 
 let dimensionCache:any = {};
-
-function isStaticPositioned(element) {
-  return (element.style.position || 'static') === 'static';
-}
-
-/**
- * returns the closest, non-statically positioned parentOffset of a given element
- * @param element
- */
-export function parentOffsetEl(element) {
-  var offsetParent = element.offsetParent || doc;
-  while (offsetParent && offsetParent !== doc && isStaticPositioned(offsetParent)) {
-    offsetParent = offsetParent.offsetParent;
-  }
-  return offsetParent || doc;
-};
-
-/**
- * Get the current coordinates of the element, relative to the offset parent.
- * Read-only equivalent of [jQuery's position function](http://api.jquery.com/position/).
- * @param {element} element The element to get the position of.
- * @returns {object} Returns an object containing the properties top, left, width and height.
- */
-export function position(element) {
-  var elBCR = offset(element);
-  var offsetParentBCR = { top: 0, left: 0 };
-  var offsetParentEl = parentOffsetEl(element);
-  if (offsetParentEl != doc) {
-    offsetParentBCR = offset(offsetParentEl);
-    offsetParentBCR.top += offsetParentEl.clientTop - offsetParentEl.scrollTop;
-    offsetParentBCR.left += offsetParentEl.clientLeft - offsetParentEl.scrollLeft;
-  }
-
-  var boundingClientRect = element.getBoundingClientRect();
-  return {
-    width: boundingClientRect.width || element.offsetWidth,
-    height: boundingClientRect.height || element.offsetHeight,
-    top: elBCR.top - offsetParentBCR.top,
-    left: elBCR.left - offsetParentBCR.left
-  };
-}
-
-/**
-* Get the current coordinates of the element, relative to the doc.
-* Read-only equivalent of [jQuery's offset function](http://api.jquery.com/offset/).
-* @param {element} element The element to get the offset of.
-* @returns {object} Returns an object containing the properties top, left, width and height.
-*/
-export function offset(element) {
- var boundingClientRect = element.getBoundingClientRect();
- return {
-   width: boundingClientRect.width || element.offsetWidth,
-   height: boundingClientRect.height || element.offsetHeight,
-   top: boundingClientRect.top + (win.pageYOffset || docEle.scrollTop),
-   left: boundingClientRect.left + (win.pageXOffset || docEle.scrollLeft)
- };
-}

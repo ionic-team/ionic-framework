@@ -15,7 +15,7 @@ var connect = require('gulp-connect');
 var docsConfig = require('./scripts/config.json');
 
 var flagConfig = {
-  string: ['port', 'animations'],
+  string: ['port'],
   boolean: ['debug', 'typecheck'],
   alias: {'p': 'port'},
   default: { 'port': 8000, 'debug': true, 'typecheck': false }
@@ -148,11 +148,6 @@ gulp.task('bundle', ['bundle.cjs', 'bundle.system']);
  * Creates CommonJS bundle from Ionic source files.
  */
 gulp.task('bundle.cjs', ['transpile'], function(done){
-  //TODO
-  //   if (flags.animations == 'polyfill') {
-  //     prepend.push('window.Element.prototype.animate=undefined;');
-  //   }
-
   var config = require('./scripts/npm/ionic.webpack.config.js');
   bundle({ config: config, stats: true });
 
@@ -334,8 +329,7 @@ gulp.task('copy.scss', function() {
  */
 gulp.task('copy.libs', function() {
   var merge = require('merge2');
-  var webAnimations = gulp.src([
-      'scripts/resources/web-animations-js/web-animations.min.js',
+  var extModules = gulp.src([
       'node_modules/es6-shim/es6-shim.min.js',
       'node_modules/systemjs/node_modules/es6-module-loader/dist/es6-module-loader.src.js',
       'node_modules/systemjs/dist/system.src.js',
@@ -354,7 +348,7 @@ gulp.task('copy.libs', function() {
     ])
     .pipe(gulp.dest('dist'));
 
-  return merge([webAnimations, libs]);
+  return merge([extModules, libs]);
 });
 
 
@@ -573,7 +567,7 @@ gulp.task('build.demos', function() {
   } else {
     buildDemoSass(false);
   }
-  
+
   var tsResult = gulp.src(['demos/**/*.ts'])
     .pipe(cache('demos.ts'))
     .pipe(tsc(getTscOptions(), undefined, tscReporter))

@@ -1,7 +1,4 @@
 module.exports = {
-  entry: [
-    "web-animations.min"
-  ],
   externals: [
     {
       'ionic/ionic': {
@@ -31,7 +28,6 @@ module.exports = {
     loaders: [{ test: /\.ts$/, loader: "awesome-typescript-loader" }]
   },
   resolve: {
-    alias: {'web-animations.min': './dist/js/web-animations.min'},
     extensions: ["", ".js", ".ts"]
   }
 };

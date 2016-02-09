@@ -52,6 +52,7 @@ import {isUndefined, isTrueProperty} from '../../util/util';
           '<ion-icon *ngIf="t.tabIcon" [name]="t.tabIcon" [isActive]="t.isSelected" class="tab-button-icon"></ion-icon>' +
           '<span *ngIf="t.tabTitle" class="tab-button-text">{{t.tabTitle}}</span>' +
           '<ion-badge *ngIf="t.tabBadge" class="tab-badge" [ngClass]="\'badge-\' + t.tabBadgeStyle">{{t.tabBadge}}</ion-badge>' +
+          '<ion-button-effect></ion-button-effect>' +
         '</a>' +
         '<tab-highlight></tab-highlight>' +
       '</tabbar>' +

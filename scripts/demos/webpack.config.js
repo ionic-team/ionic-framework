@@ -4,7 +4,6 @@ module.exports = {
   entry: [
     path.normalize('es6-shim/es6-shim.min'),
     'reflect-metadata',
-    'web-animations.min',
     path.normalize('zone.js/dist/zone-microtask'),
   ],
   module: {
@@ -27,14 +26,12 @@ module.exports = {
     noParse: [
       /es6-shim/,
       /reflect-metadata/,
-      /web-animations/,
       /zone\.js(\/|\\)dist(\/|\\)zone-microtask/
     ]
   },
   resolve: {
     alias: {
-      'ionic': path.normalize(process.cwd() + '/dist'),
-      'web-animations.min': path.normalize(process.cwd() + '/dist/js/web-animations.min')
+      'ionic': path.normalize(process.cwd() + '/dist')
     },
     extensions: ["", ".js", ".ts"]
   }

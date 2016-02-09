@@ -8,7 +8,7 @@ export class SlideEdgeGesture extends SlideGesture {
   public maxEdgeStart: any;
   private _d: any;
 
-  constructor(element: Element, opts: any = {}) {
+  constructor(element: HTMLElement, opts: any = {}) {
     defaults(opts, {
       edge: 'left',
       maxEdgeStart: 50

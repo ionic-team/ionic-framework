@@ -203,6 +203,12 @@ $button-ios-small-icon-font-size:     1.3em !default;
 }
 
 
+ion-button-effect {
+  // iOS does not use the button effect
+  display: none;
+}
+
+
 // Generate iOS Button Colors
 // --------------------------------------------------
 

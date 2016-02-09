@@ -65,19 +65,27 @@ ion-title {
 
 @mixin md-toolbar-theme($color-name, $color-value) {
   .toolbar[#{$color-name}] {
+    $fg-color: toolbar-button-inverse($color-value);
 
     .toolbar-background {
       background: $color-value;
     }
 
-    .toolbar-title,
+    .bar-button-default,
+    .bar-button-outline,
+    .toolbar-title {
+      color: $fg-color;
+    }
+
     .bar-button-default,
     .bar-button-outline {
-      color: toolbar-button-inverse($color-value);
+      ion-button-effect {
+        background-color: $fg-color;
+      }
     }
 
     .bar-button-outline {
-      border-color: toolbar-button-inverse($color-value);
+      border-color: $fg-color;
     }
 
     @each $color-name, $color-value in $colors-md {
@@ -142,12 +150,11 @@ ion-buttons[right] {
 @mixin md-bar-button-default($color-name, $color-value) {
 
   .bar-button-#{$color-name} {
-    $fg-color: $color-value;
-    color: $fg-color;
+    color: $color-value;
     background-color: transparent;
 
     &:hover:not(.disable-hover) {
-      color: $fg-color;
+      color: $color-value;
     }
   }
 

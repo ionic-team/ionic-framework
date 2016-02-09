@@ -151,12 +151,14 @@ import {ViewController} from '../nav/view-controller';
           '<button (click)="click(b)" *ngFor="#b of d.buttons" class="action-sheet-button disable-hover" [ngClass]="b.cssClass">' +
             '<ion-icon [name]="b.icon" *ngIf="b.icon" class="action-sheet-icon"></ion-icon> ' +
             '{{b.text}}' +
+            '<ion-button-effect></ion-button-effect>' +
           '</button>' +
         '</div>' +
         '<div class="action-sheet-group" *ngIf="d.cancelButton">' +
           '<button (click)="click(d.cancelButton)" class="action-sheet-button action-sheet-cancel disable-hover" [ngClass]="d.cancelButton.cssClass">' +
             '<ion-icon [name]="d.cancelButton.icon" *ngIf="d.cancelButton.icon" class="action-sheet-icon"></ion-icon> ' +
             '{{d.cancelButton.text}}' +
+            '<ion-button-effect></ion-button-effect>' +
           '</button>' +
         '</div>' +
       '</div>' +
@@ -281,7 +283,7 @@ class ActionSheetSlideIn extends Animation {
     backdrop.fromTo('opacity', 0.01, 0.4);
     wrapper.fromTo('translateY', '100%', '0%');
 
-    this.easing('cubic-bezier(.36,.66,.04,1)').duration(400).add([backdrop, wrapper]);
+    this.easing('cubic-bezier(.36,.66,.04,1)').duration(400).add(backdrop).add(wrapper);
   }
 }
 Animation.register('action-sheet-slide-in', ActionSheetSlideIn);
@@ -298,7 +300,7 @@ class ActionSheetSlideOut extends Animation {
     backdrop.fromTo('opacity', 0.4, 0);
     wrapper.fromTo('translateY', '0%', '100%');
 
-    this.easing('cubic-bezier(.36,.66,.04,1)').duration(300).add([backdrop, wrapper]);
+    this.easing('cubic-bezier(.36,.66,.04,1)').duration(300).add(backdrop).add(wrapper);
   }
 }
 Animation.register('action-sheet-slide-out', ActionSheetSlideOut);
@@ -315,7 +317,7 @@ class ActionSheetMdSlideIn extends Animation {
     backdrop.fromTo('opacity', 0.01, 0.26);
     wrapper.fromTo('translateY', '100%', '0%');
 
-    this.easing('cubic-bezier(.36,.66,.04,1)').duration(450).add([backdrop, wrapper]);
+    this.easing('cubic-bezier(.36,.66,.04,1)').duration(450).add(backdrop).add(wrapper);
   }
 }
 Animation.register('action-sheet-md-slide-in', ActionSheetMdSlideIn);
@@ -332,7 +334,7 @@ class ActionSheetMdSlideOut extends Animation {
     backdrop.fromTo('opacity', 0.26, 0);
     wrapper.fromTo('translateY', '0%', '100%');
 
-    this.easing('cubic-bezier(.36,.66,.04,1)').duration(450).add([backdrop, wrapper]);
+    this.easing('cubic-bezier(.36,.66,.04,1)').duration(450).add(backdrop).add(wrapper);
   }
 }
 Animation.register('action-sheet-md-slide-out', ActionSheetMdSlideOut);

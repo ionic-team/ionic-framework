@@ -16,7 +16,7 @@ export class TapClick {
   private disableClick: number = 0;
   private lastActivated: number = 0;
   private usePolyfill: boolean;
-  private activator: any;
+  private activator: Activator;
   private startCoord: any;
   private pointerMove: any;
 
@@ -136,8 +136,11 @@ export class TapClick {
   }
 
   pointerEnd(ev) {
+    let activatableEle = getActivatableTarget(ev.target);
+    if (activatableEle) {
+      this.activator && this.activator.upAction(ev, activatableEle, this.startCoord.x, this.startCoord.y);
+    }
     this.moveListeners(false);
-    this.activator && this.activator.upAction();
   }
 
   pointerCancel(ev) {

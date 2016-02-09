@@ -35,7 +35,7 @@ import {Label} from '../label/label';
  * </ion-list>
  *
  *  ```
- * @demo /docs/v2/demos/item/ 
+ * @demo /docs/v2/demos/item/
  * @see {@link /docs/v2/components#lists List Component Docs}
  * @see {@link ../../list/List List API Docs}
  */
@@ -49,7 +49,8 @@ import {Label} from '../label/label';
         '<ng-content></ng-content>'+
       '</ion-label>' +
       '<ng-content select="[item-right],ion-radio,ion-toggle,ion-select,ion-input,ion-textarea"></ng-content>' +
-    '</div>',
+    '</div>' +
+    '<ion-button-effect></ion-button-effect>',
   host: {
     'class': 'item'
   },
@@ -66,7 +67,7 @@ export class Item {
    */
   id: string;
 
-    /**
+  /**
    * @private
    */
   labelId: string = null;

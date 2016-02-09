@@ -18,8 +18,6 @@ $button-md-transition-duration:            300ms !default;
 $button-md-clear-hover-background-color:   rgba(158, 158, 158, 0.1) !default;
 $button-md-clear-active-background-color:  rgba(158, 158, 158, 0.2) !default;
 
-$button-md-outline-ripple-opacity:         0.25 !default;
-
 $button-md-fab-box-shadow:                 0 4px 6px 0 rgba(0, 0, 0, 0.14), 0 4px 5px rgba(0, 0, 0, 0.1) !default;
 $button-md-fab-box-shadow-active:          0 5px 15px 0 rgba(0, 0, 0, 0.4), 0 4px 7px 0 rgba(0, 0, 0, 0.1) !default;
 
@@ -67,7 +65,12 @@ $button-md-small-icon-font-size:           1.4em !default;
     box-shadow: $button-md-box-shadow-active;
     background-color: $button-md-color-activated;
   }
+
+  ion-button-effect {
+    background-color: $button-md-text-color;
+  }
 }
+
 
 // Material Design Default Button Color Mixin
 // --------------------------------------------------
@@ -85,6 +88,10 @@ $button-md-small-icon-font-size:           1.4em !default;
     &.activated {
       opacity: 1;
       background-color: $bg-color-activated;
+    }
+
+    ion-button-effect {
+      background-color: $fg-color;
     }
   }
 
@@ -149,8 +156,8 @@ $button-md-small-icon-font-size:           1.4em !default;
     background-color: transparent;
   }
 
-  md-ripple {
-    background-color: rgba($button-md-color, $button-md-outline-ripple-opacity);
+  ion-button-effect {
+    background-color: $button-md-color;
   }
 }
 
@@ -170,8 +177,8 @@ $button-md-small-icon-font-size:           1.4em !default;
       background-color: transparent;
     }
 
-    md-ripple {
-      background-color: rgba($fg-color, $button-md-outline-ripple-opacity);
+    ion-button-effect {
+      background-color: $fg-color;
     }
   }
 
@@ -194,8 +201,11 @@ $button-md-small-icon-font-size:           1.4em !default;
   }
 
   &:hover:not(.disable-hover) {
-
     color: $button-md-color;
+  }
+
+  ion-button-effect {
+    background-color: #999;
   }
 }
 
@@ -210,7 +220,6 @@ $button-md-small-icon-font-size:           1.4em !default;
     border-color: transparent;
     background-color: transparent;
     color: $fg-color;
-
 
     &.activated {
       background-color: $button-md-clear-active-background-color;
@@ -251,6 +260,25 @@ $button-md-small-icon-font-size:           1.4em !default;
 
 .button-icon-only {
   padding: 0;
+}
+
+
+// Material Design Ripple Effect
+// --------------------------------------------------
+
+$ripple-background-color:       #555 !default;
+
+ion-button-effect {
+  position: absolute;
+  z-index: 0;
+  display: block;
+  border-radius: 50%;
+
+  background-color: $ripple-background-color;
+  opacity: 0.2;
+
+  pointer-events: none;
+  transition-timing-function: ease-in-out;
 }
 
 
