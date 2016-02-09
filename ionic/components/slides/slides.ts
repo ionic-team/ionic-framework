@@ -22,7 +22,7 @@ import {Scroll} from '../scroll/scroll';
  * ```ts
  * @Page({
  *  template: `
- *     <ion-slides pager (change)="onSlideChanged($event)" loop="true" autoplay="true">
+ *     <ion-slides pager (change)="onSlideChanged($event)" (move)="onSlideMove($event)" loop="true" autoplay="true">
  *      <ion-slide>
  *        <h3>Thank you for choosing the Awesome App!</h3>
  *        <p>
@@ -58,6 +58,7 @@ import {Scroll} from '../scroll/scroll';
  * @property {Number} [zoomDuration] - how long it should take to zoom a slide
  * @property {Number} [zoomMax] - the max scale an slide can be zoomed
  * @property {Any} (change) - expression to evaluate when a slide has been changed
+ * @property {Any} (move) - expression to evaluate when a slide is moving
  * @demo /docs/v2/demos/slides/
  * @see {@link /docs/v2/components#slides Slides Component Docs}
  *
@@ -216,6 +217,11 @@ export class Slides extends Ion {
 
   /**
    * @private
+   */
+  @Output() move: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * @private
    * @param {ElementRef} elementRef  TODO
    */
   constructor(elementRef: ElementRef) {
@@ -281,6 +287,10 @@ export class Slides extends Ion {
     };
     options.onLazyImageReady = (swiper, slide, img) => {
       return this.options.onLazyImageReady && this.options.onLazyImageReady(swiper, slide, img);
+    };
+    options.onSliderMove = (swiper, e) => {
+      this.move.emit(swiper, e);
+      return this.options.onSliderMove && this.options.onSliderMove(swiper, e);
     };
 
     setTimeout(() => {
