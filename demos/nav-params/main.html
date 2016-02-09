@@ -9,7 +9,12 @@
     </ion-list-header>
     <ion-item>
       <ion-label>Parameters</ion-label>
-      <ion-input placeholder="Enter Parameters" [(ngModel)]="myParam"></ion-input>
+      <ion-select [(ngModel)]="myParam" multiple="true">
+        <ion-option value="Bangkok">Bangkok</ion-option>
+        <ion-option value="Nonthaburi">Nonthaburi</ion-option>
+        <ion-option value="Nakhon Ratchasima">Nakhon Ratchasima</ion-option>
+        <ion-option value="Chiang Mai">Chiang Mai</ion-option>
+      </ion-select>
     </ion-item>
   </ion-list>
   <div padding>

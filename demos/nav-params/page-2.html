@@ -3,11 +3,12 @@
 </ion-navbar>
 
 <ion-content padding>
-  <div [hidden]="!myParam">
+  <div>
     <h5>Parameters passed:</h5>
-    <p>{{myParam}}</p>
-  </div>
-  <div [hidden]="myParam">
-    <p>No parameters passed.</p>
+    <pre margin style="background-color: #f8f8f8">
+    selections: [
+      {{myParam}}
+    ]
+    </pre>
   </div>
 </ion-content>
