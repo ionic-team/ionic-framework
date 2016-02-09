@@ -97,7 +97,6 @@ $button-ios-small-icon-font-size:     1.3em !default;
   margin-right: 0;
 }
 
-
 // iOS Full Button
 // --------------------------------------------------
 
@@ -105,10 +104,9 @@ $button-ios-small-icon-font-size:     1.3em !default;
   margin-right: 0;
   margin-left: 0;
   border-radius: 0;
-  border-left: none;
-  border-right: none;
+  border-right-width: 0;
+  border-left-width: 0;
 }
-
 
 // iOS Outline Button
 // --------------------------------------------------
