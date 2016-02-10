@@ -48,16 +48,6 @@ import {Scroll} from '../scroll/scroll';
  *})
  *
  *```
- * @property {Boolean} [autoplay] - whether or not the slides should automatically change
- * @property {Boolean} [loop] - whether the slides should loop from the last slide back to the first
- * @property {Number} [index] - The slide index to start on
- * @property {Boolean} [bounce] - whether the slides should bounce
- * @property {Boolean} [pager] - Whether the slide should show the page or not
- * @property {Any} [options] - Any additional slider options you want to pass
- * @property {Number} [zoom] - Whether or not the slider can zoom in or out
- * @property {Number} [zoomDuration] - how long it should take to zoom a slide
- * @property {Number} [zoomMax] - the max scale an slide can be zoomed
- * @property {Any} (change) - expression to evaluate when a slide has been changed
  * @demo /docs/v2/demos/slides/
  * @see {@link /docs/v2/components#slides Slides Component Docs}
  *
@@ -165,52 +155,52 @@ export class Slides extends Ion {
 
 
   /**
-   * @private
+   * @input {Bool} whether or not the slides should automatically change
    */
   @Input() autoplay: any;
 
   /**
-   * @private
+   * @input {Boolean} whether or not the slides should automatically change
    */
   @Input() loop: any;
 
   /**
-   * @private
+   * @input {Number} The slide index to start on
    */
   @Input() index: any;
 
   /**
-   * @private
+   * @input {Boolean} whether the slides should bounce
    */
   @Input() bounce: any;
 
   /**
-   * @private
+   * @input {Boolean} Whether the slide should show the page or not
    */
   @Input() pager: any;
 
   /**
-   * @private
+   * @input {Any} Any additional slider options you want to pass
    */
   @Input() options: any;
 
   /**
-   * @private
+   * @input {Number} Whether or not the slider can zoom in or out
    */
   @Input() zoom: any;
 
   /**
-   * @private
+   * @input {Number} how long it should take to zoom a slide
    */
   @Input() zoomDuration: any;
 
   /**
-   * @private
+   * @input {Number} the max scale an slide can be zoomed
    */
   @Input() zoomMax: any;
 
   /**
-   * @private
+   * @output {Any} expression to evaluate when a slide has been changed
    */
   @Output() change: EventEmitter<any> = new EventEmitter();
 
