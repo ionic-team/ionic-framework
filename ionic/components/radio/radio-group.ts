@@ -76,7 +76,7 @@ export class RadioGroup {
   value;
 
   /**
-   * @private
+   * @output {Any} expression to be evaluated when selection has been changed
    */
   @Output() change: EventEmitter<RadioGroup> = new EventEmitter();
 
