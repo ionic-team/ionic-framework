@@ -1,3 +1,7 @@
+general:
+  branches:
+    ignore:
+      - ins_n_outs
 machine:
   node:
     version: 4.1.0
