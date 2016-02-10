@@ -133,7 +133,7 @@ ion-buttons[right] {
   margin-left: 0.2rem;
   margin-right: 0.2rem;
   padding: 0 5px;
-  min-height: 32px;
+  height: 32px;
   border: 0;
   font-size: $toolbar-md-button-font-size;
   border-radius: $bar-button-md-border-radius;
@@ -233,7 +233,6 @@ ion-buttons[right] {
 // --------------------------------------------------
 
 .bar-button-icon-left ion-icon {
-  margin-left: -0.1em;
   padding-right: 0.3em;
   font-size: 1.4em;
   line-height: 0.67;

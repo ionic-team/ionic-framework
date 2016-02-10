@@ -62,7 +62,6 @@ ion-navbar-section {
 .toolbar-title {
   font-size: $toolbar-ios-title-font-size;
   font-weight: 600;
-  margin-top: 1px;
   text-align: center;
   pointer-events: auto;
   color: $toolbar-ios-text-color;
@@ -123,10 +122,8 @@ ion-buttons[right] {
 // --------------------------------------------------
 
 .bar-button {
-  margin-top: 0;
-  margin-bottom: 0;
   padding: 0 5px;
-  min-height: 32px;
+  height: 32px;
   border: 0;
   font-size: $toolbar-ios-button-font-size;
   border-radius: $bar-button-ios-border-radius;
@@ -225,7 +222,6 @@ ion-buttons[right] {
 // --------------------------------------------------
 
 .bar-button-icon-left ion-icon {
-  margin-left: -0.1em;
   padding-right: 0.3em;
   font-size: 1.4em;
   line-height: 0.67;
@@ -257,7 +253,6 @@ ion-buttons[right] {
 
 .back-button {
   margin: 0;
-  margin-top: 2px;
   min-height: 3.2rem;
   line-height: 1;
   order: map-get($toolbar-order-ios, back-button);
@@ -268,8 +263,9 @@ ion-buttons[right] {
 .back-button-icon {
   display: inherit;
   margin: 0;
+  margin-top: -1px;
   min-width: 18px;
-  font-size: 3.3rem;
+  font-size: 3.4rem;
 }
 
 .back-button-text {

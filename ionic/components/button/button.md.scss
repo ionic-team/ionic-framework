@@ -117,27 +117,24 @@ $button-md-small-icon-font-size:           1.4em !default;
   font-size: $button-md-small-icon-font-size;
 }
 
+// Material Design Block Button
+// --------------------------------------------------
+
+.button-block {
+  margin-left: 0;
+  margin-right: 0;
+}
 
 // Material Design Full Button
 // --------------------------------------------------
 
 .button-full {
-  border-radius: 0;
   margin-right: 0;
   margin-left: 0;
+  border-radius: 0;
   border-right-width: 0;
   border-left-width: 0;
 }
-
-
-// Material Design Block Button
-// --------------------------------------------------
-
-.button-block {
-  margin-right: 0;
-  margin-left: 0;
-}
-
 
 // Material Design Outline Button
 // --------------------------------------------------
