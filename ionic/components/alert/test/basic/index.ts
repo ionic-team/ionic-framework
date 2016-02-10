@@ -234,7 +234,7 @@ class E2EPage {
 
     setTimeout(() => {
       alert.dismiss();
-    }, 100);
+    }, 200);
   }
 
   doDisabledBackdropAlert() {

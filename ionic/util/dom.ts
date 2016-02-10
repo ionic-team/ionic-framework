@@ -91,7 +91,7 @@ export let CSS: {
 
 export function transitionEnd(el: HTMLElement, callback: Function) {
   if (el) {
-    function deregister() {
+    function unregister() {
       CSS.transitionEnd.split(' ').forEach(eventName => {
         el.removeEventListener(eventName, onEvent);
       });
@@ -99,7 +99,7 @@ export function transitionEnd(el: HTMLElement, callback: Function) {
 
     function onEvent(ev) {
       if (el === ev.target) {
-        deregister();
+        unregister();
         callback(ev);
       }
     }
@@ -108,7 +108,7 @@ export function transitionEnd(el: HTMLElement, callback: Function) {
       el.addEventListener(eventName, onEvent);
     });
 
-    return deregister;
+    return unregister;
   }
 }
 

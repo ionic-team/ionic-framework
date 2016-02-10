@@ -454,8 +454,7 @@ export class Slides extends Ion {
 
     let zi = new Animation(this.touch.target.children[0])
       .duration(this.zoomDuration)
-      .easing('linear')
-      .fill('none');
+      .easing('linear');
 
     let zw = new Animation(this.touch.target.children[0])
       .duration(this.zoomDuration)
