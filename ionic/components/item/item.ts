@@ -43,13 +43,13 @@ import {Label} from '../label/label';
   selector: 'ion-item,[ion-item]',
   template:
     '<ng-content select="[item-left],ion-checkbox"></ng-content>' +
-    '<div class="item-inner">' +
+    '<label class="item-inner">' +
       '<ng-content select="ion-label"></ng-content>' +
       '<ion-label *ngIf="_viewLabel">' +
         '<ng-content></ng-content>'+
       '</ion-label>' +
       '<ng-content select="[item-right],ion-radio,ion-toggle,ion-select,ion-input,ion-textarea"></ng-content>' +
-    '</div>' +
+    '</label>' +
     '<ion-button-effect></ion-button-effect>',
   host: {
     'class': 'item'
