@@ -17,17 +17,6 @@ import {isUndefined, isTrueProperty} from '../../util/util';
 
 /**
  * @name Tabs
- * @property {any} [selectedIndex] - The default selected tab index when first loaded. If a selected index wasn't provided then it'll use `0`, the first tab.
- * @property {any} [tabbarPlacement] - set position of the tabbar, top or bottom
- * @property {any} [tabbarIcons] - set the position of the tabbar's icons: top, bottom, left, right, hide
- * @property {any} [preloadTabs] - sets whether to preload all the tabs, true or false
- * @property {any} (change) - expression you want to evaluate when the tabs chage
- * @usage
-* ```html
- * <ion-tabs>
- *   <ion-tab [root]="tabRoot"></ion-tab>
- * </ion-tabs>
- * ```
  * @description
  * _For basic Tabs usage, see the [Tabs section](../../../../components/#tabs)
  * of the Component docs._
@@ -36,9 +25,18 @@ import {isUndefined, isTrueProperty} from '../../util/util';
  * individual Tab components. On iOS, the TabBar is placed on the bottom of
  * the screen, while on Android it is at the top.
  *
+ * @usage
+ * ```html
+ * <ion-tabs>
+ *   <ion-tab [root]="tabRoot"></ion-tab>
+ * </ion-tabs>
+ * ```
+ *
  * @demo /docs/v2/demos/tabs/
+ *
  * @see {@link /docs/v2/components#tabs Tabs Component Docs}
  * @see {@link ../Tab Tab API Docs}
+ *
  */
 @Component({
   selector: 'ion-tabs',
@@ -92,23 +90,27 @@ export class Tabs extends Ion {
   subPages: boolean;
 
   /**
-   * @private
+   * @input {Any} The default selected tab index when first loaded. If a selected index wasn't provided then it'll use `0`, the first tab.
    */
   @Input() selectedIndex: any;
+
   /**
-   * @private
+   * @input {Any} Sets whether to preload all the tabs, true or false
    */
   @Input() preloadTabs: any;
+
   /**
-   * @private
+   * @input {String} set the position of the tabbar's icons: top, bottom, left, right, hide
    */
   @Input() tabbarIcons: string;
+
   /**
-   * @private
+   * @input {String} Set position of the tabbar, top or bottom
    */
   @Input() tabbarPlacement: string;
+
   /**
-   * @private
+   * @input {any} expression you want to evaluate when the tabs change
    */
   @Output() change: EventEmitter<Tab> = new EventEmitter();
 
@@ -116,6 +118,7 @@ export class Tabs extends Ion {
    * @private
    */
   @ViewChild(TabHighlight) private _highlight: TabHighlight;
+
   /**
    * @private
    */
