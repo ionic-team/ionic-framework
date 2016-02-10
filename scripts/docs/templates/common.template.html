@@ -57,6 +57,26 @@ angular_controller: APIDemoCtrl <@ endif @>
 </table>
 <@- endmacro -@>
 
+<@ macro inputTable(params, isDirective) -@>
+<table class="table param-table" style="margin:0;">
+  <thead>
+    <tr>
+      <th>Attr</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    <@ for param in params @>
+    <tr>
+      <td><$ param.name $></td>
+      <td><code><$ param.type $></code></td>
+      <td><$ param.description | marked $></td>
+    </tr>
+    <@ endfor @>
+  </tbody>
+</table>
+<@- endmacro -@>
 
 <@- macro functionSyntax(fn) @>
   <@- set sep = joiner(',&nbsp;') -@>
@@ -243,6 +263,20 @@ Improve this doc
 <@ endfor -@>
 
 <@- endif -@>
+
+
+<@- if doc.inputs and doc.inputs.length @>
+<!-- input methods on the class -->
+<h2>Element Input Attributes</h2>
+<$ inputTable(doc.inputs) $>
+<@- endif -@>
+
+<@- if doc.inputs and doc.inputs.length @>
+<!-- output events on the class -->
+<h2>Element Output Attributes</h2>
+<$ inputTable(doc.outputs) $>
+<@- endif -@>
+
 
 <!-- related link -->
 <@- if doc.see @>
