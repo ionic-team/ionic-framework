@@ -1,3 +1,12 @@
+<a name="2.0.0-beta.0"></a>
+# 2.0.0-beta.0
+
+Enjoy!
+
+<3 The Ionic Team
+
+
+
 <a name="2.0.0-alpha.57"></a>
 # [2.0.0-alpha.57](https://github.com/driftyco/ionic/compare/v2.0.0-alpha.56...v2.0.0-alpha.57) (2016-02-10)
 
