@@ -1,5 +1,5 @@
 import {App, Page, Config, Platform} from 'ionic/ionic';
-import {Modal, ActionSheet, NavController, NavParams, Animation, ViewController} from 'ionic/ionic';
+import {Modal, ActionSheet, NavController, NavParams, Transition, ViewController} from 'ionic/ionic';
 
 
 @Page({
@@ -284,8 +284,8 @@ class E2EApp {
 }
 
 
-class FadeIn extends Animation {
-  constructor(enteringView, leavingView) {
+class FadeIn extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController) {
     super(enteringView.pageRef());
     this
       .easing('ease')
@@ -295,10 +295,10 @@ class FadeIn extends Animation {
       .before.addClass('show-page');
   }
 }
-Animation.register('my-fade-in', FadeIn);
+Transition.register('my-fade-in', FadeIn);
 
-class FadeOut extends Animation {
-  constructor(enteringView, leavingView) {
+class FadeOut extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController) {
     super(leavingView.pageRef());
     this
       .easing('ease')
@@ -307,4 +307,4 @@ class FadeOut extends Animation {
       .before.addClass('show-page');
   }
 }
-Animation.register('my-fade-out', FadeOut);
+Transition.register('my-fade-out', FadeOut);

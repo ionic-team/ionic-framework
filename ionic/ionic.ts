@@ -16,6 +16,7 @@ export * from './util/events'
 export * from './util/keyboard'
 
 export * from './animations/animation'
+export * from './transitions/transition'
 
 export * from './translation/translate'
 export * from './translation/translate_pipe'
