@@ -38,8 +38,6 @@ import {isDefined} from '../../util/util';
  * </form>
  * ```
  *
- * @property {string} [value] - the value of the segment button. Required.
- * @property {Any} (select) - expression to evaluate when a segment button has been clicked
  *
  * @demo /docs/v2/demos/segment/
  * @see {@link /docs/v2/components#segment Segment Component Docs}
@@ -59,12 +57,12 @@ import {isDefined} from '../../util/util';
 export class SegmentButton {
 
   /**
-   * @private
+   * @input {String} the value of the segment button. Required.
    */
   @Input() value: string;
 
   /**
-   * @private
+   * @output {Any} expression to evaluate when a segment button has been clicked
    */
   @Output() select: EventEmitter<SegmentButton> = new EventEmitter();
 
@@ -138,7 +136,6 @@ export class SegmentButton {
  * </form>
  * ```
  *
- * @property {Any} (change) - expression to evaluate when a segment button has been changed
  *
  * @demo /docs/v2/demos/segment/
  * @see {@link /docs/v2/components#segment Segment Component Docs}
@@ -156,7 +153,7 @@ export class Segment {
 
 
   /**
-   * @private
+   * @output {Any}  expression to evaluate when a segment button has been changed
    */
   @Output() change: EventEmitter<SegmentButton> = new EventEmitter();
 
