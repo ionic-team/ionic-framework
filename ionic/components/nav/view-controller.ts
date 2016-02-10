@@ -1,7 +1,7 @@
 import {Output, EventEmitter, Type, TemplateRef, ViewContainerRef, ElementRef, Renderer} from 'angular2/core';
 
 import {Navbar} from '../navbar/navbar';
-import {NavController} from './nav-controller';
+import {NavController, NavOptions} from './nav-controller';
 import {NavParams} from './nav-params';
 
 
@@ -112,7 +112,7 @@ export class ViewController {
   /**
    * @private
    */
-  setLeavingOpts(opts) {
+  setLeavingOpts(opts: NavOptions) {
     this._leavingOpts = opts;
   }
 
@@ -183,7 +183,7 @@ export class ViewController {
    * @private
    */
   destroy() {
-    for (let i = 0; i < this._destroys.length; i++) {
+    for (var i = 0; i < this._destroys.length; i++) {
       this._destroys[i]();
     }
     this._destroys = [];

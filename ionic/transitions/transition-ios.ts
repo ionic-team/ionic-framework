@@ -1,4 +1,6 @@
-import {Animation} from './animation';
+import {Animation} from '../animations/animation';
+import {Transition, TransitionOptions} from './transition';
+import {ViewController} from '../components/nav/view-controller';
 
 const DURATION = 500;
 const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
@@ -11,10 +13,10 @@ const OFF_OPACITY = 0.8;
 const SHOW_BACK_BTN_CSS = 'show-back-button';
 
 
-class IOSTransition extends Animation {
+class IOSTransition extends Transition {
 
-  constructor(enteringView, leavingView, opts) {
-    super(null, opts);
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
 
     this.duration(opts.duration || DURATION);
     this.easing(opts.easing || EASING);
@@ -187,4 +189,4 @@ class IOSTransition extends Animation {
 
 }
 
-Animation.register('ios-transition', IOSTransition);
+Transition.register('ios-transition', IOSTransition);

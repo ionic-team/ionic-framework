@@ -2,6 +2,7 @@ import {Component, ElementRef, Renderer} from 'angular2/core';
 import {NgClass, NgSwitch, NgIf, NgFor} from 'angular2/common';
 
 import {Animation} from '../../animations/animation';
+import {Transition, TransitionOptions} from '../../transitions/transition';
 import {Config} from '../../config/config';
 import {isDefined} from '../../util/util';
 import {NavParams} from '../nav/nav-params';
@@ -484,9 +485,9 @@ class AlertCmp {
 /**
  * Animations for alerts
  */
-class AlertPopIn extends Animation {
-  constructor(enteringView, leavingView, opts) {
-    super(null, opts);
+class AlertPopIn extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('.backdrop'));
@@ -502,12 +503,12 @@ class AlertPopIn extends Animation {
       .add(wrapper);
   }
 }
-Animation.register('alert-pop-in', AlertPopIn);
+Transition.register('alert-pop-in', AlertPopIn);
 
 
-class AlertPopOut extends Animation {
-  constructor(enteringView, leavingView, opts) {
-    super(null, opts);
+class AlertPopOut extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('.backdrop'));
@@ -523,12 +524,12 @@ class AlertPopOut extends Animation {
       .add(wrapper);
   }
 }
-Animation.register('alert-pop-out', AlertPopOut);
+Transition.register('alert-pop-out', AlertPopOut);
 
 
-class AlertMdPopIn extends Animation {
-  constructor(enteringView, leavingView, opts) {
-    super(null, opts);
+class AlertMdPopIn extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('.backdrop'));
@@ -544,12 +545,12 @@ class AlertMdPopIn extends Animation {
       .add(wrapper);
   }
 }
-Animation.register('alert-md-pop-in', AlertMdPopIn);
+Transition.register('alert-md-pop-in', AlertMdPopIn);
 
 
-class AlertMdPopOut extends Animation {
-  constructor(enteringView, leavingView, opts) {
-    super(null, opts);
+class AlertMdPopOut extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('.backdrop'));
@@ -565,6 +566,6 @@ class AlertMdPopOut extends Animation {
       .add(wrapper);
   }
 }
-Animation.register('alert-md-pop-out', AlertMdPopOut);
+Transition.register('alert-md-pop-out', AlertMdPopOut);
 
 let alertIds = -1;

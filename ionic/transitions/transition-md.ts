@@ -1,4 +1,6 @@
-import {Animation} from './animation';
+import {Animation} from '../animations/animation';
+import {Transition, TransitionOptions} from './transition';
+import {ViewController} from '../components/nav/view-controller';
 
 const TRANSLATEY = 'translateY';
 const OFF_BOTTOM = '40px';
@@ -6,10 +8,10 @@ const CENTER = '0px'
 const SHOW_BACK_BTN_CSS = 'show-back-button';
 
 
-class MDTransition extends Animation {
+class MDTransition extends Transition {
 
-  constructor(enteringView, leavingView, opts) {
-    super(null, opts);
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
 
     // what direction is the transition going
     let backDirection = (opts.direction === 'back');
@@ -60,4 +62,4 @@ class MDTransition extends Animation {
 
 }
 
-Animation.register('md-transition', MDTransition);
+Transition.register('md-transition', MDTransition);

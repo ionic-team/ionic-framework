@@ -2,6 +2,7 @@ import {Component, Renderer, ElementRef} from 'angular2/core';
 import {NgFor, NgIf} from 'angular2/common';
 
 import {Animation} from '../../animations/animation';
+import {Transition, TransitionOptions} from '../../transitions/transition';
 import {Config} from '../../config/config';
 import {Icon} from '../icon/icon';
 import {isDefined} from '../../util/util';
@@ -272,9 +273,9 @@ class ActionSheetCmp {
 
 
 
-class ActionSheetSlideIn extends Animation {
-  constructor(enteringView, leavingView, opts) {
-    super(null, opts);
+class ActionSheetSlideIn extends Transition {
+  constructor(enteringView, leavingView, opts: TransitionOptions) {
+    super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('.backdrop'));
@@ -286,12 +287,12 @@ class ActionSheetSlideIn extends Animation {
     this.easing('cubic-bezier(.36,.66,.04,1)').duration(400).add(backdrop).add(wrapper);
   }
 }
-Animation.register('action-sheet-slide-in', ActionSheetSlideIn);
+Transition.register('action-sheet-slide-in', ActionSheetSlideIn);
 
 
-class ActionSheetSlideOut extends Animation {
-  constructor(enteringView, leavingView, opts) {
-    super(null, opts);
+class ActionSheetSlideOut extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('.backdrop'));
@@ -303,12 +304,12 @@ class ActionSheetSlideOut extends Animation {
     this.easing('cubic-bezier(.36,.66,.04,1)').duration(300).add(backdrop).add(wrapper);
   }
 }
-Animation.register('action-sheet-slide-out', ActionSheetSlideOut);
+Transition.register('action-sheet-slide-out', ActionSheetSlideOut);
 
 
-class ActionSheetMdSlideIn extends Animation {
-  constructor(enteringView, leavingView, opts) {
-    super(null, opts);
+class ActionSheetMdSlideIn extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('.backdrop'));
@@ -320,12 +321,12 @@ class ActionSheetMdSlideIn extends Animation {
     this.easing('cubic-bezier(.36,.66,.04,1)').duration(450).add(backdrop).add(wrapper);
   }
 }
-Animation.register('action-sheet-md-slide-in', ActionSheetMdSlideIn);
+Transition.register('action-sheet-md-slide-in', ActionSheetMdSlideIn);
 
 
-class ActionSheetMdSlideOut extends Animation {
-  constructor(enteringView, leavingView, opts) {
-    super(null, opts);
+class ActionSheetMdSlideOut extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('.backdrop'));
@@ -337,4 +338,4 @@ class ActionSheetMdSlideOut extends Animation {
     this.easing('cubic-bezier(.36,.66,.04,1)').duration(450).add(backdrop).add(wrapper);
   }
 }
-Animation.register('action-sheet-md-slide-out', ActionSheetMdSlideOut);
+Transition.register('action-sheet-md-slide-out', ActionSheetMdSlideOut);
