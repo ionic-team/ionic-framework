@@ -7,9 +7,6 @@ import {isDefined, isTrueProperty} from '../../util/util';
  * @description
  * `ion-option` is a child component of `ion-select`. Similar to the native option element, `ion-option` can take a value and a checked property.
  *
- * @property [value] - the value of the option
- * @property [checked] - whether or not the option is already checked and selected
- *
  * @demo /docs/v2/demos/item-sliding/
  */
 @Directive({
@@ -20,14 +17,14 @@ export class Option {
   private _value;
 
   /**
-   * @private
+   * @input {Any} Event to evaluate when option has changed
    */
   @Output() select: EventEmitter<any> = new EventEmitter();
 
   constructor(private _elementRef: ElementRef) {}
 
   /**
-   * @private
+   * @input {Bool} Whether or not the option is already checked and selected
    */
   @Input()
   get checked() {
@@ -39,7 +36,7 @@ export class Option {
   }
 
   /**
-   * @private
+   * @input {Any} The value of the option
    */
   @Input()
   get value() {
