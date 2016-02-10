@@ -3,7 +3,7 @@
 // iOS Cordova
 // --------------------------------------------------
 
-$cordova-ios-toolbar-padding:    2rem   !default;
+$cordova-ios-toolbar-padding:    20px   !default;
 
 
 &.platform-cordova.platform-ios {
@@ -15,7 +15,7 @@ $cordova-ios-toolbar-padding:    2rem   !default;
 
   ion-navbar ion-title,
   ion-navbar ion-segment, {
-    padding-top: $cordova-ios-toolbar-padding;
+    padding-top: $cordova-ios-toolbar-padding - $toolbar-ios-padding;
   }
 
   ion-navbar,
