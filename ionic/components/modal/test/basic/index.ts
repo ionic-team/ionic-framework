@@ -1,5 +1,5 @@
 import {App, Page, Config, Platform} from 'ionic/ionic';
-import {Modal, ActionSheet, NavController, NavParams, Transition, ViewController} from 'ionic/ionic';
+import {Modal, ActionSheet, NavController, NavParams, Transition, TransitionOptions, ViewController} from 'ionic/ionic';
 
 
 @Page({
@@ -285,9 +285,10 @@ class E2EApp {
 
 
 class FadeIn extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController) {
-    super(enteringView.pageRef());
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
     this
+      .element(enteringView.pageRef())
       .easing('ease')
       .duration(1000)
       .fromTo('translateY', '0%', '0%')
@@ -298,9 +299,10 @@ class FadeIn extends Transition {
 Transition.register('my-fade-in', FadeIn);
 
 class FadeOut extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController) {
-    super(leavingView.pageRef());
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
     this
+      .element(leavingView.pageRef())
       .easing('ease')
       .duration(500)
       .fadeOut()
