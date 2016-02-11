@@ -30,6 +30,12 @@ $toolbar-md-active-color:             $toolbar-active-color !default;
 $toolbar-md-inactive-color:           $toolbar-inactive-color !default;
 $toolbar-md-button-color:             #424242 !default;
 
+// Material Design Card
+// --------------------------------------------------
+
+$card-md-header-color:                #ddd !default;
+$card-md-title-text-color:            #fff !default;
+$card-md-text-color:                  #ddd !default;
 
 // Material Design List
 // --------------------------------------------------
@@ -37,7 +43,7 @@ $toolbar-md-button-color:             #424242 !default;
 $list-md-text-color:                  $list-text-color !default;
 $list-md-border-color:                #dedede !default;
 $list-md-background-color:            $list-background-color !default;
-$list-md-activated-background-color:  #f1f1f1 !default;
+$list-md-activated-background-color:  #d9d9d9 !default;
 
 
 // Material Design Item
