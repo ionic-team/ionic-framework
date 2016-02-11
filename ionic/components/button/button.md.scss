@@ -58,7 +58,7 @@ $button-md-small-icon-font-size:           1.4em !default;
               color $button-md-transition-duration $button-md-animation-curve;
 
   &:hover:not(.disable-hover) {
-    background-color: $button-md-clear-hover-background-color;
+    background-color: $button-md-color;
   }
 
   &.activated {
@@ -198,7 +198,7 @@ $button-md-small-icon-font-size:           1.4em !default;
   }
 
   &:hover:not(.disable-hover) {
-    color: $button-md-color;
+    background-color: $button-md-clear-hover-background-color;
   }
 
   ion-button-effect {
