@@ -4,14 +4,6 @@ module.exports = function collectInputsOutputs() {
     $runBefore: ['rendering-docs'],
     $process: function(docs) {
       docs.forEach(function(doc) {
-        // if (doc.members && doc.name == "Searchbar"){
-        //   console.log(doc.exportSymbol.members.hideCancelButton.valueDeclaration.decorators[0].expression.expression);
-        //   doc.members.forEach(function(method){
-        //     if (method.name === "load") {
-        //       console.log(method);
-        //     }
-        //   })
-        // }
 
         if (doc.members && doc.members.length) {
           var members = [];
@@ -35,6 +27,8 @@ module.exports = function collectInputsOutputs() {
                 }
               }
               // not an input or output, must be a plain member
+              members.push(doc.members[i]);
+            } else {
               members.push(doc.members[i]);
             };
           }
