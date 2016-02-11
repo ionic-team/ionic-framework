@@ -48,6 +48,10 @@ $item-md-padding-media-bottom:        9px !default;
 $item-md-padding-icon-top:            11px !default;
 $item-md-padding-icon-bottom:         10px !default;
 
+// Material Design Toggle
+// ---------------------------------------------------
+$toggle-md-handle-background-color-off: map-get($colors-md, light) !default;
+
 
 // Ripple Color
 // --------------------------------------------------
