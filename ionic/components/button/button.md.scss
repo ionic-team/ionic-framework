@@ -85,6 +85,10 @@ $button-md-small-icon-font-size:           1.4em !default;
     color: $fg-color;
     background-color: $bg-color;
 
+    &:hover:not(.disable-hover) {
+      background-color: $bg-color;
+    }
+
     &.activated {
       opacity: 1;
       background-color: $bg-color-activated;
@@ -147,6 +151,10 @@ $button-md-small-icon-font-size:           1.4em !default;
   color: $button-md-color;
   box-shadow: none;
 
+  &:hover:not(.disable-hover) {
+    background-color: $button-md-clear-hover-background-color;
+  }
+
   &.activated {
     opacity: 1;
     box-shadow: none;
@@ -169,6 +177,10 @@ $button-md-small-icon-font-size:           1.4em !default;
     border-color: $fg-color;
     background-color: transparent;
     color: $fg-color;
+
+    &:hover:not(.disable-hover) {
+      background-color: $button-md-clear-hover-background-color;
+    }
 
     &.activated {
       background-color: transparent;
