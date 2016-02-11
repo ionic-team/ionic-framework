@@ -9,14 +9,14 @@ import {App, Page, NavController} from 'ionic/ionic';
     </ion-navbar>
 
     <ion-content padding>
-    <button block (click)="pushPage()">Push Page</block>
+    <button block (click)="pushPage()">Push Page</button>
     </ion-content>`,
 })
 class FirstPage {
   constructor(nav: NavController) {
     this.nav = nav;
   }
-  pushPage(){
+  pushPage() {
     this.nav.push(SecondPage)
   }
 }
@@ -30,7 +30,7 @@ class FirstPage {
 
     <ion-content padding>
       <h1>Second page</h1>
-    <button block (click)="insertPage()">Insert Page</block>
+    <button block (click)="insertPage()">Insert Page</button>
     </ion-content>
   `
 })
@@ -38,7 +38,7 @@ class SecondPage {
   constructor(nav: NavController) {
     this.nav = nav;
   }
-  insertPage(){
+  insertPage() {
     this.nav.insert(1, InsertPage)
   }
 }
@@ -55,7 +55,7 @@ class SecondPage {
   `
 })
 class InsertPage {
-  constructor() {}
+  constructor() { }
 }
 
 

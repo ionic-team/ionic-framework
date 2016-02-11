@@ -11,7 +11,7 @@ header_sub_title: Extend Ionic even further with the power of AngularJS
 searchable: false
 ---
 
-# Ionic 2 Components
+# Ionic 2 API Docs
 
 <img class="section-header" src="/img/docs/api-intro-header.png" />
 

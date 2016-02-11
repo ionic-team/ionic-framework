@@ -9,7 +9,7 @@ import {Button} from '../button/button';
 /**
  * @private
  */
-export class ToolbarBase extends Ion  {
+export class ToolbarBase extends Ion {
   itemRefs = [];
   titleRef = null;
   titleCmp: any;
@@ -155,9 +155,9 @@ export class ToolbarTitle extends Ion {
     toolbar && toolbar.setTitleCmp(this);
     navbar && navbar.setTitleCmp(this);
   }
-/**
- * @private
- */
+  /**
+   * @private
+   */
   getTitleText() {
     return this.getNativeElement().textContent;
   }

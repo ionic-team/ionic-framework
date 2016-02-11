@@ -416,6 +416,8 @@ export class NavController extends Ion {
       return;
     }
 
+    enteringView.setNav(rootNav);
+
     opts.keyboardClose = false;
     opts.direction = 'forward';
 
