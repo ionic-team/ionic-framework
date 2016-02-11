@@ -186,7 +186,6 @@ export class SqlStorage extends StorageEngine {
   /**
   * Remove the value in the database for the given key.
   * @param {string} key the key
-  * @param {string} value The value (as a string)
   * @return {Promise} that resolves or rejects with an object of the form { tx: Transaction, res: Result (or err)}
   */
   remove(key: string): Promise<any> {
