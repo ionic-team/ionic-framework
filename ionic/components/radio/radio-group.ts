@@ -103,7 +103,7 @@ export class RadioGroup {
       let oldVal = this.value;
 
       // set the radiogroup's value
-      this.value = val || '';
+      this.value = isDefined(val) ? val : '';
 
       this.updateValue();
 

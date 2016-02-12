@@ -99,4 +99,18 @@
     <code><b>pet:</b> {{pet}}</code>
   </div>
 
+  <ion-list radio-group [(ngModel)]="someNumber">
+    <ion-item *ngFor="#item of items">
+      <ion-label>
+        {{ item.description }}
+      </ion-label>
+​
+      <ion-radio [value]="item.value"></ion-radio>
+    </ion-item>
+  </ion-list>
+
+  <div padding>
+    <code><b>someNumber:</b> {{someNumber}}</code>
+  </div>
+
 </ion-content>

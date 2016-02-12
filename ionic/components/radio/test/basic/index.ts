@@ -34,6 +34,13 @@ class E2EApp {
 
     this.relationship = 'enemies';
 
+
+    this.items = [
+      { description: 'value undefined', value: undefined },
+      { description: 'value false string', value: 'false' },
+      { description: 'value false boolean', value: false },
+      { description: 'value 0', value: 0 },
+    ];
   }
 
   setApple() {
