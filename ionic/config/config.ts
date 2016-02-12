@@ -157,9 +157,9 @@ export class Config {
  * @description
  * Sets a single config value.
  *
- * @param {String} [platform] - The platform (either 'ios' or 'android') that the config value should apply to. Leaving this blank will apply the config value to all platforms.
- * @param {String} [key] - The key used to look up the value at a later point in time.
- * @param {String} [value] - The config value being stored.
+ * @param {string} [platform] - The platform (either 'ios' or 'android') that the config value should apply to. Leaving this blank will apply the config value to all platforms.
+ * @param {string} [key] - The key used to look up the value at a later point in time.
+ * @param {string} [value] - The config value being stored.
  */
   set() {
     const args = arguments;
@@ -196,7 +196,7 @@ export class Config {
  * @description
  * Returns a single config value, given a key.
  *
- * @param {String} [key] - the key for the config value
+ * @param {string} [key] - the key for the config value
  */
   get(key: string): any {
 
@@ -301,7 +301,7 @@ export class Config {
    * @description
    * Same as `get()`, however always returns a boolean value.
    *
-   * @param {String} [key] - the key for the config value
+   * @param {string} [key] - the key for the config value
    */
   getBoolean(key: string): boolean {
     let val = this.get(key);

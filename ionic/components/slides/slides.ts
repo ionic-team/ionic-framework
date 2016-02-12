@@ -155,52 +155,52 @@ export class Slides extends Ion {
 
 
   /**
-   * @input {Bool} whether or not the slides should automatically change
+   * @input {boolean} whether or not the slides should automatically change
    */
   @Input() autoplay: any;
 
   /**
-   * @input {Boolean} whether or not the slides should automatically change
+   * @input {boolean} whether or not the slides should automatically change
    */
   @Input() loop: any;
 
   /**
-   * @input {Number} The slide index to start on
+   * @input {number} The slide index to start on
    */
   @Input() index: any;
 
   /**
-   * @input {Boolean} whether the slides should bounce
+   * @input {boolean} whether the slides should bounce
    */
   @Input() bounce: any;
 
   /**
-   * @input {Boolean} Whether the slide should show the page or not
+   * @input {boolean} Whether the slide should show the page or not
    */
   @Input() pager: any;
 
   /**
-   * @input {Any} Any additional slider options you want to pass
+   * @input {any} Any additional slider options you want to pass
    */
   @Input() options: any;
 
   /**
-   * @input {Number} Whether or not the slider can zoom in or out
+   * @input {number} Whether or not the slider can zoom in or out
    */
   @Input() zoom: any;
 
   /**
-   * @input {Number} how long it should take to zoom a slide
+   * @input {number} how long it should take to zoom a slide
    */
   @Input() zoomDuration: any;
 
   /**
-   * @input {Number} the max scale an slide can be zoomed
+   * @input {number} the max scale an slide can be zoomed
    */
   @Input() zoomMax: any;
 
   /**
-   * @output {Any} expression to evaluate when a slide has been changed
+   * @output {any} expression to evaluate when a slide has been changed
    */
   @Output() change: EventEmitter<any> = new EventEmitter();
 

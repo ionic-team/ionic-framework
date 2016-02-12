@@ -45,7 +45,7 @@ export class Keyboard {
  *
  * ```
  *
- * @return {Bool} returns a true or flase value if the keyboard is open or not
+ * @return {boolean} returns a true or flase value if the keyboard is open or not
  */
   isOpen() {
     return hasFocusedTextInput();
@@ -67,8 +67,8 @@ export class Keyboard {
  * }
  *
  * ```
- * @param {Function} callback method you want to call when the keyboard has been closed
- * @return {Function} returns a callback that gets fired when the keyboard is closed
+ * @param {function} callback method you want to call when the keyboard has been closed
+ * @return {function} returns a callback that gets fired when the keyboard is closed
  */
   onClose(callback, pollingInternval=KEYBOARD_CLOSE_POLLING) {
     console.debug('keyboard onClose');

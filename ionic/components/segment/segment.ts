@@ -57,12 +57,12 @@ import {isDefined} from '../../util/util';
 export class SegmentButton {
 
   /**
-   * @input {String} the value of the segment button. Required.
+   * @input {string} the value of the segment button. Required.
    */
   @Input() value: string;
 
   /**
-   * @output {Any} expression to evaluate when a segment button has been clicked
+   * @output {any} expression to evaluate when a segment button has been clicked
    */
   @Output() select: EventEmitter<SegmentButton> = new EventEmitter();
 

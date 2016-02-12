@@ -66,7 +66,7 @@ export class Checkbox {
   id: string;
 
   /**
-   * @input {String} the value of the checkbox component
+   * @input {string} the value of the checkbox component
    */
   @Input() value: string = '';
 
@@ -97,7 +97,7 @@ export class Checkbox {
   }
 
   /**
-   * @input {Bool} whether or not the checkbox is checked (defaults to false)
+   * @input {boolean} whether or not the checkbox is checked (defaults to false)
    */
   @Input()
   get checked() {
@@ -113,7 +113,7 @@ export class Checkbox {
   }
 
   /**
-   * @input {Bool} whether or not the checkbox is disabled or not.
+   * @input {boolean} whether or not the checkbox is disabled or not.
    */
   @Input()
   get disabled() {

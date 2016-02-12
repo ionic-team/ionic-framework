@@ -113,7 +113,7 @@ export class List extends Ion {
    *    }
    * }
    * ```
-   * @param {Boolean} shouldEnable whether the item-sliding should be enabled or not
+   * @param {boolean} shouldEnable whether the item-sliding should be enabled or not
    */
   enableSlidingItems(shouldEnable: boolean) {
     if (this._enableSliding !== shouldEnable) {

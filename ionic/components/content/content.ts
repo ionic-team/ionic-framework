@@ -43,8 +43,8 @@ export class Content extends Ion {
   scrollElement: HTMLElement;
 
   /**
-   * @param {ElementRef} elementRef  A reference to the component's DOM element.
-   * @param {Config} config  The config object to change content's default settings.
+   * @param {elementRef} elementRef  A reference to the component's DOM element.
+   * @param {config} config  The config object to change content's default settings.
    */
   constructor(
     private _elementRef: ElementRef,
@@ -87,6 +87,7 @@ export class Content extends Ion {
   }
 
   /**
+   * @private
    * Adds the specified scroll handler to the content' scroll element.
    *
    * ```ts
@@ -108,8 +109,8 @@ export class Content extends Ion {
    *    }
    * }
    * ```
-   * @param {Function} handler  The method you want perform when scrolling
-   * @returns {Function} A function that removes the scroll handler.
+   * @param {function} handler  The method you want perform when scrolling
+   * @returns {function} A function that removes the scroll handler.
    */
   addScrollEventListener(handler) {
     if (!this.scrollElement) {
@@ -130,7 +131,7 @@ export class Content extends Ion {
   /**
    * Call a method when scrolling has stopped
    *
-   * @param {Function} callback The method you want perform when scrolling has ended
+   * @param {function} callback The method you want perform when scrolling has ended
    */
   onScrollEnd(callback) {
     let lastScrollTop = null;
@@ -185,8 +186,8 @@ export class Content extends Ion {
    *    }
    * }
    * ```
-   * @param {Function} handler  The method you want to perform when touchmove is firing
-   * @returns {Function} A function that removes the touchmove handler.
+   * @param {function} handler  The method you want to perform when touchmove is firing
+   * @returns {function} A function that removes the touchmove handler.
    */
   addTouchMoveListener(handler) {
     if (!this.scrollElement) { return; }
@@ -224,11 +225,11 @@ export class Content extends Ion {
    *    }
    * }
    * ```
-   * @param {Number} x  The x-value to scroll to.
-   * @param {Number} y  The y-value to scroll to.
-   * @param {Number} duration  Duration of the scroll animation in ms.
+   * @param {number} x  The x-value to scroll to.
+   * @param {number} y  The y-value to scroll to.
+   * @param {number} duration  Duration of the scroll animation in ms.
    * @param {TODO} tolerance  TODO
-   * @returns {Promise} Returns a promise when done
+   * @returns {promise} Returns a promise when done
    */
   scrollTo(x: number, y: number, duration: number, tolerance?: number): Promise<any> {
     if (this._scrollTo) {
@@ -263,7 +264,7 @@ export class Content extends Ion {
    *    }
    * }
    * ```
-   * @returns {Promise} Returns a promise when done
+   * @returns {promise} Returns a promise when done
    */
   scrollToTop() {
     if (this._scrollTo) {
@@ -278,19 +279,19 @@ export class Content extends Ion {
   /**
    * @private
    * Returns the content and scroll elements' dimensions.
-   * @returns {Object} dimensions  The content and scroll elements' dimensions
-   * {Number} dimensions.contentHeight  content offsetHeight
-   * {Number} dimensions.contentTop  content offsetTop
-   * {Number} dimensions.contentBottom  content offsetTop+offsetHeight
-   * {Number} dimensions.contentWidth  content offsetWidth
-   * {Number} dimensions.contentLeft  content offsetLeft
-   * {Number} dimensions.contentRight  content offsetLeft + offsetWidth
-   * {Number} dimensions.scrollHeight  scroll scrollHeight
-   * {Number} dimensions.scrollTop  scroll scrollTop
-   * {Number} dimensions.scrollBottom  scroll scrollTop + scrollHeight
-   * {Number} dimensions.scrollWidth  scroll scrollWidth
-   * {Number} dimensions.scrollLeft  scroll scrollLeft
-   * {Number} dimensions.scrollRight  scroll scrollLeft + scrollWidth
+   * @returns {object} dimensions  The content and scroll elements' dimensions
+   * {number} dimensions.contentHeight  content offsetHeight
+   * {number} dimensions.contentTop  content offsetTop
+   * {number} dimensions.contentBottom  content offsetTop+offsetHeight
+   * {number} dimensions.contentWidth  content offsetWidth
+   * {number} dimensions.contentLeft  content offsetLeft
+   * {number} dimensions.contentRight  content offsetLeft + offsetWidth
+   * {number} dimensions.scrollHeight  scroll scrollHeight
+   * {number} dimensions.scrollTop  scroll scrollTop
+   * {number} dimensions.scrollBottom  scroll scrollTop + scrollHeight
+   * {number} dimensions.scrollWidth  scroll scrollWidth
+   * {number} dimensions.scrollLeft  scroll scrollLeft
+   * {number} dimensions.scrollRight  scroll scrollLeft + scrollWidth
    */
   getContentDimensions() {
     let _scrollEle = this.scrollElement;

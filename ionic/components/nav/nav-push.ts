@@ -52,12 +52,12 @@ import {NavRegistry} from './nav-registry';
 export class NavPush {
 
   /**
-  * @input {Page} the page you want to push
+  * @input {page} the page you want to push
   */
   @Input() navPush;
 
   /**
-  * @input {Any} Any parameters you want to pass along
+  * @input {any} Any parameters you want to pass along
   */
   @Input() navParams;
 

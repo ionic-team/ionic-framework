@@ -117,8 +117,8 @@ export class Modal extends ViewController {
   }
 
   /**
-   * @param {Any} componentType Modal
-   * @param {Object} data Modal options
+   * @param {any} componentType Modal
+   * @param {object} data Modal options
    */
   static create(componentType, data={}) {
     return new Modal(componentType, data);

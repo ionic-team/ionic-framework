@@ -24,7 +24,7 @@ export class Option {
   constructor(private _elementRef: ElementRef) {}
 
   /**
-   * @input {Bool} Whether or not the option is already checked and selected
+   * @input {boolean} Whether or not the option is already checked and selected
    */
   @Input()
   get checked() {
@@ -36,7 +36,7 @@ export class Option {
   }
 
   /**
-   * @input {Any} The value of the option
+   * @input {any} The value of the option
    */
   @Input()
   get value() {

@@ -259,7 +259,7 @@ export class ViewController {
 
   /**
    * @private
-   * @returns {ElementRef} Returns the Page's ElementRef
+   * @returns {elementRef} Returns the Page's ElementRef
    */
   pageRef(): ElementRef {
     return this._pgRef;
@@ -274,7 +274,7 @@ export class ViewController {
 
   /**
    * @private
-   * @returns {ElementRef} Returns the Page's Content ElementRef
+   * @returns {elementRef} Returns the Page's Content ElementRef
    */
   contentRef(): ElementRef {
     return this._cntRef;
@@ -289,7 +289,7 @@ export class ViewController {
 
   /**
    * @private
-   * @returns {Component} Returns the Page's Content component reference.
+   * @returns {component} Returns the Page's Content component reference.
    */
   getContent() {
     return this._cntDir;

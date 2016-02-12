@@ -212,7 +212,7 @@ export class Alert extends ViewController {
   }
 
   /**
-   * @param {Object} opts Alert options
+   * @param {object} opts Alert options
    */
   static create(opts: {
     title?: string,

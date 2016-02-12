@@ -101,32 +101,32 @@ export class Tab extends NavController {
 
 
   /**
-   * @input {Page} Set the root page for this tab
+   * @input {page} Set the root page for this tab
    */
   @Input() root: Type;
 
   /**
-   * @input {String} Set the title of this tab
+   * @input {string} Set the title of this tab
    */
   @Input() tabTitle: string;
 
   /**
-   * @input {String} Set the icon for this tab
+   * @input {string} Set the icon for this tab
    */
   @Input() tabIcon: string;
 
   /**
-   * @input {String} Set the badge for this tab
+   * @input {string} Set the badge for this tab
    */
   @Input() tabBadge: string;
 
   /**
-   * @input {String} Set the badge color for this tab
+   * @input {string} Set the badge color for this tab
    */
   @Input() tabBadgeStyle: string;
 
   /**
-   * @pinput {Any} Method to call when the current tab is selected
+   * @pinput {any} Method to call when the current tab is selected
    */
   @Output() select: EventEmitter<any> = new EventEmitter();
 

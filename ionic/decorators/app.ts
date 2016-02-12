@@ -26,10 +26,10 @@ const _reflect: any=Reflect;
 * }
 * ```
 *
-* @property {Object} [config] - the app's {@link docs/v2/api/config/Config/ Config} object
-* @property {Array}  [providers] - any providers for your app
-* @property {String} [template] - the template to use for the app root
-* @property {String} [templateUrl] - a relative URL pointing to the template to use for the app root
+* @property {object} [config] - the app's {@link docs/v2/api/config/Config/ Config} object
+* @property {array}  [providers] - any providers for your app
+* @property {string} [template] - the template to use for the app root
+* @property {string} [templateUrl] - a relative URL pointing to the template to use for the app root
 *
 */
 export function App(args: any={}) {

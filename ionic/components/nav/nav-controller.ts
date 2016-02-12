@@ -177,10 +177,10 @@ export class NavController extends Ion {
 
   /**
    * Set the root for the current navigation stack
-   * @param {Type} page  The name of the component you want to push on the navigation stack
+   * @param {type} page  The name of the component you want to push on the navigation stack
    * @param {object} [params={}] Any nav-params you want to pass along to the next view
    * @param {object} [opts={}] Any options you want to use pass to transtion
-   * @returns {Promise} Returns a promise when done
+   * @returns {promise} Returns a promise when done
    */
   setRoot(page: Type, params: any = {}, opts: NavOptions = {}): Promise<any> {
     return this.setPages([{page, params}], opts);
@@ -255,9 +255,9 @@ export class NavController extends Ion {
    *  }
    *```
    *
-   * @param {Array<Type>} pages  An arry of page components and their params to load in the stack
+   * @param {array<type>} pages  An arry of page components and their params to load in the stack
    * @param {object} [opts={}] Any options you want to use pass
-   * @returns {Promise} Returns a promise when the pages are set
+   * @returns {promise} Returns a promise when the pages are set
    */
   setPages(pages: Array<{page: Type, params?: any}>, opts: NavOptions = {}): Promise<any> {
     if (!pages || !pages.length) {
@@ -372,10 +372,10 @@ export class NavController extends Ion {
    *    }
    * }
    * ```
-   * @param {Type} page  The page component class you want to push on to the navigation stack
+   * @param {type} page  The page component class you want to push on to the navigation stack
    * @param {object} [params={}] Any nav-params you want to pass along to the next view
    * @param {object} [opts={}] Any options you want to use pass to transtion
-   * @returns {Promise} Returns a promise, which resolves when the transition has completed
+   * @returns {promise} Returns a promise, which resolves when the transition has completed
    */
   push(page: Type, params: any = {}, opts: NavOptions = {}) {
     return this.insertPages(-1, [{page: page, params: params}], opts);
@@ -402,9 +402,9 @@ export class NavController extends Ion {
    * }
    * ```
    *
-   * @param {ViewController} enteringView The name of the component you want to push on the navigation stack
+   * @param {viewController} enteringView The name of the component you want to push on the navigation stack
    * @param {object} [opts={}] Any options you want to use pass to transtion
-   * @returns {Promise} Returns a promise, which resolves when the transition has completed
+   * @returns {promise} Returns a promise, which resolves when the transition has completed
    */
   present(enteringView: ViewController, opts: NavOptions = {}): Promise<any> {
     let rootNav = this.rootNav;
@@ -456,7 +456,7 @@ export class NavController extends Ion {
    * @param {Type} page  The name of the component you want to insert into the nav stack
    * @param {object} [params={}] Any nav-params you want to pass along to the next page
    * @param {object} [opts={}] Any options you want to use pass to transtion
-   * @returns {Promise} Returns a promise when the page has been inserted into the navigation stack
+   * @returns {promise} Returns a promise when the page has been inserted into the navigation stack
    */
   insert(insertIndex: number, page: Type, params: any = {}, opts: NavOptions = {}): Promise<any> {
     return this.insertPages(insertIndex, [{page: page, params: params}], opts);
@@ -488,7 +488,7 @@ export class NavController extends Ion {
    * @param {number} insertIndex  The index where you want to insert the page
    * @param {Array<{page: Type, params=: any}>} insertPages  An array of objects, each with a `page` and optionally `params` property
    * @param {object} [opts={}] Any options you want to use pass to transtion
-   * @returns {Promise} Returns a promise when the pages have been inserted into the navigation stack
+   * @returns {promise} Returns a promise when the pages have been inserted into the navigation stack
    */
   insertPages(insertIndex: number, insertPages: Array<{page: Type, params?: any}>, opts: NavOptions = {}): Promise<any> {
     let views = insertPages.map(p => new ViewController(p.page, p.params));
@@ -618,7 +618,7 @@ export class NavController extends Ion {
    * ```
    *
    * @param {object} [opts={}] Any options you want to use pass to transtion
-   * @returns {Promise} Returns a promise when the transition is completed
+   * @returns {promise} Returns a promise when the transition is completed
    */
   pop(opts: NavOptions = {}): Promise<any> {
     // get the index of the active view
@@ -639,7 +639,7 @@ export class NavController extends Ion {
 
   /**
    * Pop to a specific view in the history stack
-   * @param {ViewController} view  to pop to
+   * @param {viewController} view  to pop to
    * @param {object} [opts={}]  Any options you want to use pass to transtion
    */
   popTo(view: ViewController, opts: NavOptions = {}): Promise<any> {
@@ -669,7 +669,7 @@ export class NavController extends Ion {
    * @param {number} [startIndex]  The starting index to remove pages from the stack. Default is the index of the last page.
    * @param {number} [removeCount]  The number of pages to remove, defaults to remove `1`.
    * @param {object} [opts={}] Any options you want to use pass to transtion.
-   * @returns {Promise} Returns a promise when the page has been removed.
+   * @returns {promise} Returns a promise when the page has been removed.
    */
   remove(startIndex: number = -1, removeCount: number = 1, opts: NavOptions = {}): Promise<any> {
     if (startIndex === -1) {
@@ -1462,7 +1462,7 @@ export class NavController extends Ion {
 
   /**
    * @private
-   * @returns {ViewController}
+   * @returns {viewController}
    */
   getByState(state: string): ViewController {
     for (var i = this._views.length - 1; i >= 0; i--) {
@@ -1475,21 +1475,21 @@ export class NavController extends Ion {
 
   /**
    * @param {number} index  The index of the page you want to get
-   * @returns {ViewController} Returns the component that matches the index given
+   * @returns {viewController} Returns the component that matches the index given
    */
   getByIndex(index: number): ViewController {
     return (index < this._views.length && index > -1 ? this._views[index] : null);
   }
 
   /**
-   * @returns {ViewController} Returns the active page's view controller.
+   * @returns {viewController} Returns the active page's view controller.
    */
   getActive(): ViewController {
     return this.getByState(STATE_ACTIVE);
   }
 
   /**
-   * @param {ViewController} view
+   * @param {viewController} view
    * @returns {boolean}
    */
   isActive(view: ViewController): boolean {
@@ -1497,8 +1497,8 @@ export class NavController extends Ion {
   }
 
   /**
-   * @param {ViewController} view  The ViewController to get the previous view to
-   * @returns {ViewController}
+   * @param {viewController} view  The ViewController to get the previous view to
+   * @returns {viewController}
    */
   getPrevious(view: ViewController): ViewController {
     return this.getByIndex( this.indexOf(view) - 1 );
@@ -1506,7 +1506,7 @@ export class NavController extends Ion {
 
   /**
    * First page in this nav controller's stack.
-   * @returns {ViewController} Returns the first component page in the current stack
+   * @returns {viewController} Returns the first component page in the current stack
    */
   first(): ViewController {
     return (this._views.length ? this._views[0] : null);
@@ -1514,14 +1514,14 @@ export class NavController extends Ion {
 
   /**
    * Last page in this nav controller's stack. This would not return a page which is about to be destroyed.
-   * @returns {ViewController} Returns the last component page in the current stack
+   * @returns {viewController} Returns the last component page in the current stack
    */
   last(): ViewController {
     return (this._views.length ? this._views[this._views.length - 1] : null);
   }
 
   /**
-   * @param {ViewController} view
+   * @param {viewController} view
    * @returns {number} Returns the index number of the view
    */
   indexOf(view: ViewController): number {
@@ -1538,7 +1538,7 @@ export class NavController extends Ion {
 
   /**
    * Returns the root NavController.
-   * @returns {NavController}
+   * @returns {navController}
    */
   get rootNav(): NavController {
     let nav = this;

@@ -77,7 +77,7 @@ export class Icon {
   }
 
   /**
-   * @input {String} Icon to use. Will load the appropriate icon for each mode
+   * @input {string} Icon to use. Will load the appropriate icon for each mode
    */
   @Input()
   get name(): string {
@@ -95,7 +95,7 @@ export class Icon {
   }
 
   /**
-   * @input {String} Explicitly set the icon to use on iOS
+   * @input {string} Explicitly set the icon to use on iOS
    */
   @Input()
   get ios(): string {
@@ -108,7 +108,7 @@ export class Icon {
   }
 
   /**
-   * @input {String} Explicitly set the icon to use on MD
+   * @input {string} Explicitly set the icon to use on MD
    */
   @Input()
   get md(): string {
@@ -122,7 +122,7 @@ export class Icon {
 
 
   /**
-   * @input {Bool} Whether or not the icon has an "active" appearance. On iOS an active icon is filled in or full appearance, and an inactive icon on iOS will use an outlined version of the icon same icon. Material Design icons do not change appearance depending if they're active or not. The `isActive` property is largely used by the tabbar.
+   * @input {bool} Whether or not the icon has an "active" appearance. On iOS an active icon is filled in or full appearance, and an inactive icon on iOS will use an outlined version of the icon same icon. Material Design icons do not change appearance depending if they're active or not. The `isActive` property is largely used by the tabbar.
    */
   @Input()
   get isActive(): boolean {

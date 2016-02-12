@@ -81,7 +81,7 @@ export class Searchbar extends Ion {
   @Input() placeholder: string;
 
   /**
-   * @input {Any} Expression to evaluate when the Searchbar input has changed including cleared
+   * @input {any} Expression to evaluate when the Searchbar input has changed including cleared
    */
   @Input() ngModel: any;
 

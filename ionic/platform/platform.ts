@@ -52,7 +52,7 @@ export class Platform {
 
   /**
    * @param {string} platformName
-   * @returns {bool} returns true/false based on platform you place
+   * @returns {boolean} returns true/false based on platform you place
    * @description
    * Depending on the platform name, isPlatform will return true or flase
    *

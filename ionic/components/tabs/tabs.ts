@@ -90,22 +90,22 @@ export class Tabs extends Ion {
   subPages: boolean;
 
   /**
-   * @input {Any} The default selected tab index when first loaded. If a selected index wasn't provided then it'll use `0`, the first tab.
+   * @input {any} The default selected tab index when first loaded. If a selected index wasn't provided then it'll use `0`, the first tab.
    */
   @Input() selectedIndex: any;
 
   /**
-   * @input {Any} Sets whether to preload all the tabs, true or false
+   * @input {any} Sets whether to preload all the tabs, true or false
    */
   @Input() preloadTabs: any;
 
   /**
-   * @input {String} set the position of the tabbar's icons: top, bottom, left, right, hide
+   * @input {string} set the position of the tabbar's icons: top, bottom, left, right, hide
    */
   @Input() tabbarIcons: string;
 
   /**
-   * @input {String} Set position of the tabbar, top or bottom
+   * @input {string} Set position of the tabbar, top or bottom
    */
   @Input() tabbarPlacement: string;
 

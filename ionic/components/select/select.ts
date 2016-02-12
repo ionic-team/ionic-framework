@@ -92,12 +92,6 @@ import {Option} from '../option/option';
  *   subTitle: 'Select your toppings'
  * };
  * ```
- * @property [cancelText] - The text of the cancel button. Defatuls to 'cancel'
- * @property [okText] - The text of the ok button. Defatuls to 'OK'
- * @property [alertOptions] - Any addition options that an alert can take. Title, Subtitle, etc.
- * @property [multiple] - Whether or not the select component can accept multipl selections
- * @property [disabled] - Whether or not the select component is disabled or not
- * @property (change) - Any expression you want to evaluate when the selection has changed
  *
  * @demo /docs/v2/demos/select/
  */
@@ -134,16 +128,19 @@ export class Select {
 
   /**
    * @private
+   * @input {string}  The text of the cancel button. Defatuls to 'cancel'
    */
   @Input() cancelText: string = 'Cancel';
 
   /**
    * @private
+   * @input {string} The text of the ok button. Defatuls to 'OK'
    */
   @Input() okText: string = 'OK';
 
   /**
    * @private
+   * @input {any} Any addition options that an alert can take. Title, Subtitle, etc.
    */
   @Input() alertOptions: any = {};
 
@@ -154,6 +151,7 @@ export class Select {
 
   /**
    * @private
+   * @output {any} Any expression you want to evaluate when the selection has changed
    */
   @Output() change: EventEmitter<any> = new EventEmitter();
 
@@ -242,7 +240,7 @@ export class Select {
 
 
   /**
-   * @private
+   * @input {boolean} Whether or not the select component can accept multipl selections
    */
   @Input()
   get multiple() {
@@ -326,7 +324,7 @@ export class Select {
 
 
   /**
-   * @private
+   * @input {boolean} Whether or not the select component is disabled or not
    */
   @Input()
   get disabled() {
