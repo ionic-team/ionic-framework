@@ -46,10 +46,10 @@ $segment-button-ios-toolbar-button-max-width: 100px !default;
     background-color: rgba($segment-button-ios-bg-color-activated, $segment-button-ios-hover-opacity);
     transition: $segment-button-ios-hover-transition;
   }
-  
+
   &:active:not(.segment-activated) {
-      background-color: rgba($segment-button-ios-bg-color-activated, $segment-button-ios-active-opacity);
-      transition: $segment-button-ios-active-transition;
+    background-color: rgba($segment-button-ios-bg-color-activated, $segment-button-ios-active-opacity);
+    transition: $segment-button-ios-active-transition;
   }
 
   &:first-of-type {
@@ -100,7 +100,10 @@ $segment-button-ios-toolbar-button-max-width: 100px !default;
       background-color: rgba($color-value, $segment-button-ios-hover-opacity);
     }
 
-    &.activated,
+    &:active:not(.segment-activated) {
+      background-color: rgba($color-value, $segment-button-ios-active-opacity);
+    }
+
     &.segment-activated {
       color: inverse($color-value);
       background-color: $color-value;
