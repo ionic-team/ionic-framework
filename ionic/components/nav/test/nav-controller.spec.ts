@@ -1,4 +1,6 @@
-import {NavController, Config, ViewController} from 'ionic/ionic';
+/// <reference path="../../../../node_modules/angular2/typings/jasmine/jasmine.d.ts"/>
+
+import {NavController, Config, ViewController} from '../../../../ionic/ionic';
 
 export function run() {
   describe('NavController', () => {

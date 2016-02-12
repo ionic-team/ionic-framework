@@ -1,4 +1,6 @@
-import * as util from 'ionic/util';
+/// <reference path="../../../node_modules/angular2/typings/jasmine/jasmine.d.ts"/>
+
+import * as util from '../../../ionic/util';
 
 export function run() {
   describe('extend', function() {
