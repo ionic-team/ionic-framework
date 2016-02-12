@@ -1,4 +1,4 @@
-import {App, Page, Animation} from 'ionic/ionic';
+import {App, Page, Animation} from '../../../../../ionic/ionic';
 
 
 @Page({

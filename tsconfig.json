@@ -7,9 +7,6 @@
     "declaration": true,
     "outDir": "dist"
   },
-  "files": [
-    "ionic/ionic.ts"
-  ],
   "compileOnSave" : false,
   "buildOnSave": false,
   "exclude": [

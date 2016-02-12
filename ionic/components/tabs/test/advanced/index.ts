@@ -1,7 +1,7 @@
 import {ViewChild} from 'angular2/core';
 import {RouteConfig, Location} from 'angular2/router';
 
-import {App, Page, NavController, Modal, ViewController, Tabs} from 'ionic/ionic';
+import {App, Page, NavController, Modal, ViewController, Tabs} from '../../../../../ionic/ionic';
 
 
 @Page({
