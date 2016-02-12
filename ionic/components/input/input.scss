@@ -5,11 +5,17 @@
 
 ion-input,
 ion-textarea {
+  position: relative;
   display: block;
   flex: 1;
   width: 100%;
 }
 
+
+.item-input ion-input,
+.item-input ion-textarea {
+  position: static;
+}
 
 // Textarea Within An Item
 // --------------------------------------------------
