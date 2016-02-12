@@ -234,9 +234,25 @@ class E2EPage {
 
     setTimeout(() => {
       alert.dismiss();
-    }, 100);
+    }, 200);
   }
 
+  doDisabledBackdropAlert() {
+    let alert = Alert.create({
+      enableBackdropDismiss: false
+    });
+    alert.setTitle('Disabled Backdrop Click'),
+    alert.setMessage('Cannot dismiss alert from clickings the backdrop'),
+    alert.addButton({
+      text: 'Cancel',
+      role: 'cancel',
+      handler: () => {
+        console.log('Confirm Cancel');
+      }
+    });
+
+    this.nav.present(alert);
+  }
 }
 
 

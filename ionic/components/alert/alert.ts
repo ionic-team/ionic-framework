@@ -2,6 +2,7 @@ import {Component, ElementRef, Renderer} from 'angular2/core';
 import {NgClass, NgSwitch, NgIf, NgFor} from 'angular2/common';
 
 import {Animation} from '../../animations/animation';
+import {Transition, TransitionOptions} from '../../transitions/transition';
 import {Config} from '../../config/config';
 import {isDefined} from '../../util/util';
 import {NavParams} from '../nav/nav-params';
@@ -114,7 +115,7 @@ import {ViewController} from '../nav/view-controller';
  * }
  * ```
  *
- * @demo /docs/v2/demos/alert/ 
+ * @demo /docs/v2/demos/alert/
  */
 export class Alert extends ViewController {
 
@@ -132,10 +133,12 @@ export class Alert extends ViewController {
       checked?: boolean,
       id?: string
     }>,
-    buttons?: Array<any>
+    buttons?: Array<any>,
+    enableBackdropDismiss?: boolean
   } = {}) {
     opts.inputs = opts.inputs || [];
     opts.buttons = opts.buttons || [];
+    opts.enableBackdropDismiss = isDefined(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
 
     super(AlertCmp, opts);
     this.viewType = 'alert';
@@ -225,7 +228,8 @@ export class Alert extends ViewController {
       checked?: boolean,
       id?: string
     }>,
-    buttons?: Array<any>
+    buttons?: Array<any>,
+    enableBackdropDismiss?: boolean
   } = {}) {
     return new Alert(opts);
   }
@@ -233,8 +237,8 @@ export class Alert extends ViewController {
 }
 
 /**
-* @private
-*/
+ * @private
+ */
 @Component({
   selector: 'ion-alert',
   template:
@@ -281,6 +285,7 @@ export class Alert extends ViewController {
       '<div class="alert-button-group" [ngClass]="{vertical: d.buttons.length>2}">' +
         '<button *ngFor="#b of d.buttons" (click)="btnClick(b)" [ngClass]="b.cssClass" class="alert-button">' +
           '{{b.text}}' +
+          '<ion-button-effect></ion-button-effect>' +
         '</button>' +
       '</div>' +
     '</div>',
@@ -371,13 +376,12 @@ class AlertCmp {
     let self = this;
     self.keyUp = function(ev) {
       if (ev.keyCode === 13) {
-        // enter
-        console.debug('alert enter');
+        console.debug('alert, enter button');
         let button = self.d.buttons[self.d.buttons.length - 1];
         self.btnClick(button);
 
       } else if (ev.keyCode === 27) {
-        console.debug('alert escape');
+        console.debug('alert, escape button');
         self.bdClick();
       }
     };
@@ -430,12 +434,14 @@ class AlertCmp {
   }
 
   bdClick() {
-    let cancelBtn = this.d.buttons.find(b => b.role === 'cancel');
-    if (cancelBtn) {
-      this.btnClick(cancelBtn, 1);
+    if (this.d.enableBackdropDismiss) {
+      let cancelBtn = this.d.buttons.find(b => b.role === 'cancel');
+      if (cancelBtn) {
+        this.btnClick(cancelBtn, 1);
 
-    } else {
-      this.dismiss('backdrop');
+      } else {
+        this.dismiss('backdrop');
+      }
     }
   }
 
@@ -466,7 +472,11 @@ class AlertCmp {
     return values;
   }
 
-  onPageDidLeave() {
+  onPageWillLeave() {
+    document.removeEventListener('keyup', this.keyUp);
+  }
+
+  ngOnDestroy() {
     document.removeEventListener('keyup', this.keyUp);
   }
 }
@@ -475,9 +485,9 @@ class AlertCmp {
 /**
  * Animations for alerts
  */
-class AlertPopIn extends Animation {
-  constructor(enteringView, leavingView, opts) {
-    super(null, opts);
+class AlertPopIn extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('.backdrop'));
@@ -489,15 +499,16 @@ class AlertPopIn extends Animation {
     this
       .easing('ease-in-out')
       .duration(200)
-      .add(backdrop, wrapper);
+      .add(backdrop)
+      .add(wrapper);
   }
 }
-Animation.register('alert-pop-in', AlertPopIn);
+Transition.register('alert-pop-in', AlertPopIn);
 
 
-class AlertPopOut extends Animation {
-  constructor(enteringView, leavingView, opts) {
-    super(null, opts);
+class AlertPopOut extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('.backdrop'));
@@ -509,15 +520,16 @@ class AlertPopOut extends Animation {
     this
       .easing('ease-in-out')
       .duration(200)
-      .add(backdrop, wrapper);
+      .add(backdrop)
+      .add(wrapper);
   }
 }
-Animation.register('alert-pop-out', AlertPopOut);
+Transition.register('alert-pop-out', AlertPopOut);
 
 
-class AlertMdPopIn extends Animation {
-  constructor(enteringView, leavingView, opts) {
-    super(null, opts);
+class AlertMdPopIn extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('.backdrop'));
@@ -529,15 +541,16 @@ class AlertMdPopIn extends Animation {
     this
       .easing('ease-in-out')
       .duration(200)
-      .add(backdrop, wrapper);
+      .add(backdrop)
+      .add(wrapper);
   }
 }
-Animation.register('alert-md-pop-in', AlertMdPopIn);
+Transition.register('alert-md-pop-in', AlertMdPopIn);
 
 
-class AlertMdPopOut extends Animation {
-  constructor(enteringView, leavingView, opts) {
-    super(null, opts);
+class AlertMdPopOut extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('.backdrop'));
@@ -549,9 +562,10 @@ class AlertMdPopOut extends Animation {
     this
       .easing('ease-in-out')
       .duration(200)
-      .add(backdrop, wrapper);
+      .add(backdrop)
+      .add(wrapper);
   }
 }
-Animation.register('alert-md-pop-out', AlertMdPopOut);
+Transition.register('alert-md-pop-out', AlertMdPopOut);
 
 let alertIds = -1;

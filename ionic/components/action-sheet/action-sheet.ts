@@ -2,8 +2,10 @@ import {Component, Renderer, ElementRef} from 'angular2/core';
 import {NgFor, NgIf} from 'angular2/common';
 
 import {Animation} from '../../animations/animation';
+import {Transition, TransitionOptions} from '../../transitions/transition';
 import {Config} from '../../config/config';
 import {Icon} from '../icon/icon';
+import {isDefined} from '../../util/util';
 import {NavParams} from '../nav/nav-params';
 import {ViewController} from '../nav/view-controller';
 
@@ -82,9 +84,11 @@ import {ViewController} from '../nav/view-controller';
      title?: string,
      subTitle?: string,
      cssClass?: string,
+     enableBackdropDismiss?: boolean,
      buttons?: Array<any>
    } = {}) {
      opts.buttons = opts.buttons || [];
+     opts.enableBackdropDismiss = isDefined(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
 
      super(ActionSheetCmp, opts);
      this.viewType = 'action-sheet';
@@ -148,12 +152,14 @@ import {ViewController} from '../nav/view-controller';
           '<button (click)="click(b)" *ngFor="#b of d.buttons" class="action-sheet-button disable-hover" [ngClass]="b.cssClass">' +
             '<ion-icon [name]="b.icon" *ngIf="b.icon" class="action-sheet-icon"></ion-icon> ' +
             '{{b.text}}' +
+            '<ion-button-effect></ion-button-effect>' +
           '</button>' +
         '</div>' +
         '<div class="action-sheet-group" *ngIf="d.cancelButton">' +
           '<button (click)="click(d.cancelButton)" class="action-sheet-button action-sheet-cancel disable-hover" [ngClass]="d.cancelButton.cssClass">' +
             '<ion-icon [name]="d.cancelButton.icon" *ngIf="d.cancelButton.icon" class="action-sheet-icon"></ion-icon> ' +
             '{{d.cancelButton.text}}' +
+            '<ion-button-effect></ion-button-effect>' +
           '</button>' +
         '</div>' +
       '</div>' +
@@ -242,11 +248,13 @@ class ActionSheetCmp {
   }
 
   bdClick() {
-    if (this.d.cancelButton) {
-      this.click(this.d.cancelButton, 1);
+    if (this.d.enableBackdropDismiss) {
+      if (this.d.cancelButton) {
+        this.click(this.d.cancelButton, 1);
 
-    } else {
-      this.dismiss('backdrop');
+      } else {
+        this.dismiss('backdrop');
+      }
     }
   }
 
@@ -254,16 +262,20 @@ class ActionSheetCmp {
     return this._viewCtrl.dismiss(null, role);
   }
 
-  onPageDidLeave() {
+  onPageWillLeave() {
+    document.removeEventListener('keyup', this.keyUp);
+  }
+
+  ngOnDestroy() {
     document.removeEventListener('keyup', this.keyUp);
   }
 }
 
 
 
-class ActionSheetSlideIn extends Animation {
-  constructor(enteringView, leavingView, opts) {
-    super(null, opts);
+class ActionSheetSlideIn extends Transition {
+  constructor(enteringView, leavingView, opts: TransitionOptions) {
+    super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('.backdrop'));
@@ -272,15 +284,15 @@ class ActionSheetSlideIn extends Animation {
     backdrop.fromTo('opacity', 0.01, 0.4);
     wrapper.fromTo('translateY', '100%', '0%');
 
-    this.easing('cubic-bezier(.36,.66,.04,1)').duration(400).add([backdrop, wrapper]);
+    this.easing('cubic-bezier(.36,.66,.04,1)').duration(400).add(backdrop).add(wrapper);
   }
 }
-Animation.register('action-sheet-slide-in', ActionSheetSlideIn);
+Transition.register('action-sheet-slide-in', ActionSheetSlideIn);
 
 
-class ActionSheetSlideOut extends Animation {
-  constructor(enteringView, leavingView, opts) {
-    super(null, opts);
+class ActionSheetSlideOut extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('.backdrop'));
@@ -289,15 +301,15 @@ class ActionSheetSlideOut extends Animation {
     backdrop.fromTo('opacity', 0.4, 0);
     wrapper.fromTo('translateY', '0%', '100%');
 
-    this.easing('cubic-bezier(.36,.66,.04,1)').duration(300).add([backdrop, wrapper]);
+    this.easing('cubic-bezier(.36,.66,.04,1)').duration(300).add(backdrop).add(wrapper);
   }
 }
-Animation.register('action-sheet-slide-out', ActionSheetSlideOut);
+Transition.register('action-sheet-slide-out', ActionSheetSlideOut);
 
 
-class ActionSheetMdSlideIn extends Animation {
-  constructor(enteringView, leavingView, opts) {
-    super(null, opts);
+class ActionSheetMdSlideIn extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
 
     let ele = enteringView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('.backdrop'));
@@ -306,15 +318,15 @@ class ActionSheetMdSlideIn extends Animation {
     backdrop.fromTo('opacity', 0.01, 0.26);
     wrapper.fromTo('translateY', '100%', '0%');
 
-    this.easing('cubic-bezier(.36,.66,.04,1)').duration(450).add([backdrop, wrapper]);
+    this.easing('cubic-bezier(.36,.66,.04,1)').duration(450).add(backdrop).add(wrapper);
   }
 }
-Animation.register('action-sheet-md-slide-in', ActionSheetMdSlideIn);
+Transition.register('action-sheet-md-slide-in', ActionSheetMdSlideIn);
 
 
-class ActionSheetMdSlideOut extends Animation {
-  constructor(enteringView, leavingView, opts) {
-    super(null, opts);
+class ActionSheetMdSlideOut extends Transition {
+  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
+    super(opts);
 
     let ele = leavingView.pageRef().nativeElement;
     let backdrop = new Animation(ele.querySelector('.backdrop'));
@@ -323,7 +335,7 @@ class ActionSheetMdSlideOut extends Animation {
     backdrop.fromTo('opacity', 0.26, 0);
     wrapper.fromTo('translateY', '0%', '100%');
 
-    this.easing('cubic-bezier(.36,.66,.04,1)').duration(450).add([backdrop, wrapper]);
+    this.easing('cubic-bezier(.36,.66,.04,1)').duration(450).add(backdrop).add(wrapper);
   }
 }
-Animation.register('action-sheet-md-slide-out', ActionSheetMdSlideOut);
+Transition.register('action-sheet-md-slide-out', ActionSheetMdSlideOut);

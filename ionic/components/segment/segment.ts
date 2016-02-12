@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Renderer, Optional, EventEmitter, Input, Output, HostListener, ContentChildren, QueryList} from 'angular2/core';
+import {Directive, Component, ElementRef, Renderer, Optional, EventEmitter, Input, Output, HostListener, ContentChildren, QueryList} from 'angular2/core';
 import {NgControl} from 'angular2/common';
 
 import {isDefined} from '../../util/util';
@@ -38,16 +38,16 @@ import {isDefined} from '../../util/util';
  * </form>
  * ```
  *
- * @property {string} [value] - the value of the segment-button. Required.
- * @property {Any} [click] - expression to evaluate when a segment button has been clicked
- * @property {Any} (select) - expression to evaluate when a segment selection has been changed
  *
  * @demo /docs/v2/demos/segment/
  * @see {@link /docs/v2/components#segment Segment Component Docs}
  * @see {@link /docs/v2/api/components/segment/Segment/ Segment API Docs}
  */
-@Directive({
+@Component({
   selector: 'ion-segment-button',
+  template:
+    '<ng-content></ng-content>' +
+    '<ion-button-effect></ion-button-effect>',
   host: {
     'tappable': '',
     'class': 'segment-button',
@@ -57,12 +57,12 @@ import {isDefined} from '../../util/util';
 export class SegmentButton {
 
   /**
-   * @private
+   * @input {String} the value of the segment button. Required.
    */
   @Input() value: string;
 
   /**
-   * @private
+   * @output {Any} expression to evaluate when a segment button has been clicked
    */
   @Output() select: EventEmitter<SegmentButton> = new EventEmitter();
 
@@ -136,7 +136,6 @@ export class SegmentButton {
  * </form>
  * ```
  *
- * @property {Any} [change] - expression to evaluate when a segment button has been changed
  *
  * @demo /docs/v2/demos/segment/
  * @see {@link /docs/v2/components#segment Segment Component Docs}
@@ -154,7 +153,7 @@ export class Segment {
 
 
   /**
-   * @private
+   * @output {Any}  expression to evaluate when a segment button has been changed
    */
   @Output() change: EventEmitter<SegmentButton> = new EventEmitter();
 

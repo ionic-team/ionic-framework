@@ -1,7 +1,7 @@
 
 var path = require('path'),
     fs = require('fs'),
-    shell = require('shelljs'),
+    mkdirp = require('mkdirp-no-bin'),
     Generator = require('../../generator');
 
 module.exports = PipeGenerator;
@@ -14,7 +14,7 @@ function PipeGenerator(options) {
 PipeGenerator.prototype = Object.create(Generator.prototype);
 
 PipeGenerator.prototype.makeDirectories = function(){
-  shell.mkdir('-p', path.join(this.appDirectory, 'app', this.directory));
+  mkdirp.sync(path.join(this.appDirectory, 'app', this.directory));
 }
 
 PipeGenerator.prototype.renderTemplates = function renderTemplates() {

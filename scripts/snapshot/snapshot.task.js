@@ -64,13 +64,18 @@ module.exports = function(gulp, argv, buildConfig) {
   }
 
   function protractor(done, args) {
+    var errored = false;
     var child = cp.spawn('protractor', args, {
       stdio: [process.stdin, process.stdout, 'pipe']
     });
 
     child.stderr.on('data', function(data) {
       protractorHttpServer.close();
-      done('Protractor tests failed. Error:', data.toString());
+      console.error(data.toString());
+      if (!errored) {
+        errored = true;
+        done('Protractor tests failed.');
+      }
     });
 
     child.on('exit', function() {

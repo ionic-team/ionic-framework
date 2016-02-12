@@ -9,7 +9,7 @@ import {Button} from '../button/button';
 /**
  * @private
  */
-export class ToolbarBase extends Ion  {
+export class ToolbarBase extends Ion {
   itemRefs = [];
   titleRef = null;
   titleCmp: any;
@@ -67,7 +67,7 @@ export class ToolbarBase extends Ion  {
  * Since it's based on flexbox, you can place the toolbar where you
  * need it and flexbox will handle everything else. Toolbars will automatically
  * assume they should be placed before an `ion-content`, so to specify that you want it
- * below, you can add the property `placement="bottom"`. This will change the flex order
+ * below, you can add the property `position="bottom"`. This will change the flex order
  * property.
  *
  * @usage
@@ -82,17 +82,17 @@ export class ToolbarBase extends Ion  {
  *
  *  <ion-content></ion-content>
  *
- * <ion-toolbar position="bottom>
+ * <ion-toolbar position="bottom">
  *   <ion-title>I'm a subfooter</ion-title>
  * </ion-toolbar>
  *
- * <ion-toolbar position="bottom>
+ * <ion-toolbar position="bottom">
  *   <ion-title>I'm a footer</ion-title>
  * </ion-toolbar>
  *
  *  ```
  *
- * @property {any} [placement] - set position of the toolbar, top or bottom. If not set, defautls to top.
+ * @property {any} [position] - set position of the toolbar, top or bottom. If not set, defautls to top.
  * @demo /docs/v2/demos/toolbar/
  * @see {@link ../../navbar/Navbar/ Navbar API Docs}
  */
@@ -136,7 +136,7 @@ export class Toolbar extends ToolbarBase {
  *   <ion-title>SubHeader</ion-title>
  * </ion-toolbar>
  *  ```
- * @demo /docs/v2/demos/toolbar/
+ * @demo /docs/v2/demos/title/
  */
 @Component({
   selector: 'ion-title',
@@ -155,9 +155,9 @@ export class ToolbarTitle extends Ion {
     toolbar && toolbar.setTitleCmp(this);
     navbar && navbar.setTitleCmp(this);
   }
-/**
- * @private
- */
+  /**
+   * @private
+   */
   getTitleText() {
     return this.getNativeElement().textContent;
   }

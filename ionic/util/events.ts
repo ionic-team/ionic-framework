@@ -17,6 +17,7 @@
  * });
  *
  * ```
+ * @demo /docs/v2/demos/events/
  */
 export class Events {
   private _channels: Array<any> = [];

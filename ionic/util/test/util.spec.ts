@@ -43,11 +43,6 @@ export function run() {
         expect(util.isTrueProperty('doesnt actually matter')).toBe(false);
       });
 
-      it('should be false from number less than 1', () => {
-        expect(util.isTrueProperty(0)).toBe(false);
-        expect(util.isTrueProperty(-1)).toBe(false);
-      });
-
     });
 
     it('should extend simple', () => {

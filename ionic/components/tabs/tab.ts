@@ -69,13 +69,8 @@ import {TabButton} from './tab-button';
  * ```
  *
  *
- * @property {Page} [root] - set the root page for this tab
- * @property {String} [tabTitle] - set the title of this tab
- * @property {String} [tabIcon] - set the icon for this tab
- * @property {Any} [tabBadge] - set the badge for this tab
- * @property {String} [tabBadgeStyle] - set the badge color for this tab
- * @property {Any} (select) - method to call when the current tab is selected
  *
+ * @demo /docs/v2/demos/tabs/
  */
 @Component({
   selector: 'ion-tab',
@@ -106,32 +101,32 @@ export class Tab extends NavController {
 
 
   /**
-   * @private
+   * @input {Page} Set the root page for this tab
    */
   @Input() root: Type;
 
   /**
-   * @private
+   * @input {String} Set the title of this tab
    */
   @Input() tabTitle: string;
 
   /**
-   * @private
+   * @input {String} Set the icon for this tab
    */
   @Input() tabIcon: string;
 
   /**
-   * @private
+   * @input {String} Set the badge for this tab
    */
   @Input() tabBadge: string;
 
   /**
-   * @private
+   * @input {String} Set the badge color for this tab
    */
   @Input() tabBadgeStyle: string;
 
   /**
-   * @private
+   * @pinput {Any} Method to call when the current tab is selected
    */
   @Output() select: EventEmitter<any> = new EventEmitter();
 
@@ -184,6 +179,7 @@ export class Tab extends NavController {
   preload(wait) {
     this._loadTimer = setTimeout(() => {
       if (!this._loaded) {
+        console.debug('Tabs, preload', this.id);
         this.load({
           animate: false,
           preload: true,

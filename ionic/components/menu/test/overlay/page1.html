@@ -1,7 +1,7 @@
 
 <ion-navbar *navbar>
 
-  <button menuToggle="leftMenu">
+  <button menuToggle="myMenuId">
     <ion-icon name="menu"></ion-icon>
   </button>
 
@@ -9,19 +9,21 @@
     Overlay Menu
   </ion-title>
 
+  <button menuToggle="myMenuId2" end>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+
 </ion-navbar>
 
 
 <ion-content #content padding>
 
-  <h3>Content</h3>
-
   <p>
-    <button menuToggle="leftMenu">Toggle Left Menu</button>
+    <button menuToggle="myMenuId">Toggle Left Overlay Menu</button>
   </p>
 
   <p>
-    <button menuToggle="rightMenu">Toggle Right Menu</button>
+    <button menuToggle="myMenuId2">Toggle Right Overlay Menu</button>
   </p>
 
   <f></f><f></f><f></f><f></f><f></f><f></f><f></f><f></f>

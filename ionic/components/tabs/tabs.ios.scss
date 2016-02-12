@@ -97,11 +97,11 @@ ion-tabs[tabbarPlacement=top] tabbar {
 &.hairlines ion-tabs {
 
   tabbar {
-    border-top-width: 0.55px;
+    border-top-width: $hairlines-width;
   }
 
   &[tabbarPlacement="top"] tabbar {
-    border-bottom-width: 0.55px;
+    border-bottom-width: $hairlines-width;
   }
 
 }

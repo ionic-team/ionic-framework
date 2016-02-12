@@ -65,19 +65,27 @@ ion-title {
 
 @mixin md-toolbar-theme($color-name, $color-value) {
   .toolbar[#{$color-name}] {
+    $fg-color: toolbar-button-inverse($color-value);
 
     .toolbar-background {
       background: $color-value;
     }
 
-    .toolbar-title,
+    .bar-button-default,
+    .bar-button-outline,
+    .toolbar-title {
+      color: $fg-color;
+    }
+
     .bar-button-default,
     .bar-button-outline {
-      color: toolbar-button-inverse($color-value);
+      ion-button-effect {
+        background-color: $fg-color;
+      }
     }
 
     .bar-button-outline {
-      border-color: toolbar-button-inverse($color-value);
+      border-color: $fg-color;
     }
 
     @each $color-name, $color-value in $colors-md {
@@ -125,7 +133,7 @@ ion-buttons[right] {
   margin-left: 0.2rem;
   margin-right: 0.2rem;
   padding: 0 5px;
-  min-height: 32px;
+  height: 32px;
   border: 0;
   font-size: $toolbar-md-button-font-size;
   border-radius: $bar-button-md-border-radius;
@@ -142,12 +150,11 @@ ion-buttons[right] {
 @mixin md-bar-button-default($color-name, $color-value) {
 
   .bar-button-#{$color-name} {
-    $fg-color: $color-value;
-    color: $fg-color;
+    color: $color-value;
     background-color: transparent;
 
     &:hover:not(.disable-hover) {
-      color: $fg-color;
+      color: $color-value;
     }
   }
 
@@ -226,7 +233,6 @@ ion-buttons[right] {
 // --------------------------------------------------
 
 .bar-button-icon-left ion-icon {
-  margin-left: -0.1em;
   padding-right: 0.3em;
   font-size: 1.4em;
   line-height: 0.67;

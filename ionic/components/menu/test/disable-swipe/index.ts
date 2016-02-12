@@ -1,4 +1,4 @@
-import {App, IonicApp, Page, NavController} from 'ionic/ionic';
+import {App, Page, NavController, MenuController} from 'ionic/ionic';
 
 @Page({
   templateUrl: 'page1.html'
@@ -7,20 +7,20 @@ class Page1 {
   leftMenuSwipeEnabled: boolean = true;
   rightMenuSwipeEnabled: boolean = false;
 
-  constructor(app: IonicApp) {
-    this.app = app;
+  constructor(menu: MenuController) {
+    this.menu = menu;
   }
 
   toggleLeftMenuSwipeable() {
     this.leftMenuSwipeEnabled = !this.leftMenuSwipeEnabled;
 
-    this.app.getComponent('leftMenu').swipeEnable(this.leftMenuSwipeEnabled);
+    this.menu.swipeEnable(this.leftMenuSwipeEnabled, 'left');
   }
 
   toggleRightMenuSwipeable() {
     this.rightMenuSwipeEnabled = !this.rightMenuSwipeEnabled;
 
-    this.app.getComponent('rightMenu').swipeEnable(this.rightMenuSwipeEnabled);
+    this.menu.swipeEnable(this.rightMenuSwipeEnabled, 'right');
   }
 }
 

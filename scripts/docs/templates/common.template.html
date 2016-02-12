@@ -57,6 +57,45 @@ angular_controller: APIDemoCtrl <@ endif @>
 </table>
 <@- endmacro -@>
 
+<@ macro inputTable(params, isDirective) -@>
+<table class="table param-table" style="margin:0;">
+  <thead>
+    <tr>
+      <th>Attr</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    <@ for param in params @>
+    <tr>
+      <td><$ param.name $></td>
+      <td><code><$ param.type $></code></td>
+      <td><$ param.description | marked $></td>
+    </tr>
+    <@ endfor @>
+  </tbody>
+</table>
+<@- endmacro -@>
+
+<@ macro outputTable(params, isDirective) -@>
+<table class="table param-table" style="margin:0;">
+  <thead>
+    <tr>
+      <th>Attr</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    <@ for param in params @>
+    <tr>
+      <td><$ param.name $></td>
+      <td><$ param.description | marked $></td>
+    </tr>
+    <@ endfor @>
+  </tbody>
+</table>
+<@- endmacro -@>
 
 <@- macro functionSyntax(fn) @>
   <@- set sep = joiner(',&nbsp;') -@>
@@ -179,10 +218,40 @@ Improve this doc
 </table>
 <@ endif @>
 
-<!-- methods on the class -->
+
+<@- if doc.statics.length -@>
+<h2>Static Methods</h2>
+<@- for method in doc.statics @><@ if not method.internal @>
+<div id="<$ method.name $>"></div>
+<h3><$ functionSyntax(method) $></h3>
+
+<$ method.description $>
+
+<@ if method.params @>
+<$ paramTable(method.params) $>
+<@ endif @>
+
+<@ if method.this @>
+<h4> Method's `this`
+<$ method.this $>
+</h4>
+<@ endif @>
+
+<@ if method.returns @>
+<div class="return-value">
+<i class="icon ion-arrow-return-left"></i>
+<b>Returns:</b> <$ typeInfo(method.returns) $>
+</div>
+<@ endif @>
+<@ endif @>
+<@ endfor -@>
+<@ endif @>
+
+
+<!-- instance methods on the class -->
 <@- if doc.members and doc.members.length @>
 
-<h2>Methods</h2>
+<h2>Instance Methods</h2>
 <@- for method in doc.members @>
 
 <div id="<$ method.name $>"></div>
@@ -213,6 +282,20 @@ Improve this doc
 <@ endfor -@>
 
 <@- endif -@>
+
+
+<@- if doc.inputs and doc.inputs.length @>
+<!-- input methods on the class -->
+<h2>Input Properties</h2>
+<$ inputTable(doc.inputs) $>
+<@- endif -@>
+
+<@- if doc.outputs and doc.outputs.length @>
+<!-- output events on the class -->
+<h2>Output Events</h2>
+<$ outputTable(doc.outputs) $>
+<@- endif -@>
+
 
 <!-- related link -->
 <@- if doc.see @>

@@ -222,7 +222,7 @@ ion-alert {
   flex: 1 1 auto;
   min-width: 50%;
   font-size: $alert-ios-button-font-size;
-  min-height: $alert-ios-button-min-height;
+  height: $alert-ios-button-min-height;
   border-radius: $alert-ios-button-border-radius;
   border-top: 1px solid $alert-ios-button-border-color;
   border-right: 1px solid $alert-ios-button-border-color;
@@ -247,15 +247,15 @@ ion-alert {
 &.hairlines {
   .alert-radio-group,
   .alert-checkbox-group {
-    border-width: 0.55px;
+    border-width: $hairlines-width;
   }
 
   .alert-input {
-    border-width: 0.55px;
+    border-width: $hairlines-width;
   }
 
   .alert-button {
-    border-top-width: 0.55px;
-    border-right-width: 0.55px;
+    border-top-width: $hairlines-width;
+    border-right-width: $hairlines-width;
   }
 }

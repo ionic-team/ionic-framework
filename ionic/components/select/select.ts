@@ -98,7 +98,8 @@ import {Option} from '../option/option';
  * @property [multiple] - Whether or not the select component can accept multipl selections
  * @property [disabled] - Whether or not the select component is disabled or not
  * @property (change) - Any expression you want to evaluate when the selection has changed
-
+ *
+ * @demo /docs/v2/demos/select/
  */
 @Component({
   selector: 'ion-select',

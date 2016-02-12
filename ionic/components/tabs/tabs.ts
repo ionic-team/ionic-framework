@@ -12,22 +12,11 @@ import {NavController} from '../nav/nav-controller';
 import {ViewController} from '../nav/view-controller';
 import {Icon} from '../icon/icon';
 import {rafFrames} from '../../util/dom';
-import {isUndefined} from '../../util/util';
+import {isUndefined, isTrueProperty} from '../../util/util';
 
 
 /**
  * @name Tabs
- * @property {any} [selectedIndex] - The default selected tab index when first loaded. If a selected index wasn't provided then it'll use `0`, the first tab.
- * @property {any} [tabbarPlacement] - set position of the tabbar, top or bottom
- * @property {any} [tabbarIcons] - set the position of the tabbar's icons: top, bottom, left, right, hide
- * @property {any} [preloadTabs] - sets whether to preload all the tabs, true or false
- * @property {any} (change) - expression you want to evaluate when the tabs chage
- * @usage
-* ```html
- * <ion-tabs>
- *   <ion-tab [root]="tabRoot"></ion-tab>
- * </ion-tabs>
- * ```
  * @description
  * _For basic Tabs usage, see the [Tabs section](../../../../components/#tabs)
  * of the Component docs._
@@ -36,8 +25,18 @@ import {isUndefined} from '../../util/util';
  * individual Tab components. On iOS, the TabBar is placed on the bottom of
  * the screen, while on Android it is at the top.
  *
+ * @usage
+ * ```html
+ * <ion-tabs>
+ *   <ion-tab [root]="tabRoot"></ion-tab>
+ * </ion-tabs>
+ * ```
+ *
+ * @demo /docs/v2/demos/tabs/
+ *
  * @see {@link /docs/v2/components#tabs Tabs Component Docs}
  * @see {@link ../Tab Tab API Docs}
+ *
  */
 @Component({
   selector: 'ion-tabs',
@@ -51,6 +50,7 @@ import {isUndefined} from '../../util/util';
           '<ion-icon *ngIf="t.tabIcon" [name]="t.tabIcon" [isActive]="t.isSelected" class="tab-button-icon"></ion-icon>' +
           '<span *ngIf="t.tabTitle" class="tab-button-text">{{t.tabTitle}}</span>' +
           '<ion-badge *ngIf="t.tabBadge" class="tab-badge" [ngClass]="\'badge-\' + t.tabBadgeStyle">{{t.tabBadge}}</ion-badge>' +
+          '<ion-button-effect></ion-button-effect>' +
         '</a>' +
         '<tab-highlight></tab-highlight>' +
       '</tabbar>' +
@@ -69,6 +69,7 @@ import {isUndefined} from '../../util/util';
 })
 export class Tabs extends Ion {
   private _ids: number = -1;
+  private _preloadTabs: boolean = null;
   private _tabs: Array<Tab> = [];
   private _onReady = null;
   private _useHighlight: boolean;
@@ -89,23 +90,27 @@ export class Tabs extends Ion {
   subPages: boolean;
 
   /**
-   * @private
+   * @input {Any} The default selected tab index when first loaded. If a selected index wasn't provided then it'll use `0`, the first tab.
    */
   @Input() selectedIndex: any;
+
   /**
-   * @private
+   * @input {Any} Sets whether to preload all the tabs, true or false
    */
   @Input() preloadTabs: any;
+
   /**
-   * @private
+   * @input {String} set the position of the tabbar's icons: top, bottom, left, right, hide
    */
   @Input() tabbarIcons: string;
+
   /**
-   * @private
+   * @input {String} Set position of the tabbar, top or bottom
    */
   @Input() tabbarPlacement: string;
+
   /**
-   * @private
+   * @input {any} expression you want to evaluate when the tabs change
    */
   @Output() change: EventEmitter<Tab> = new EventEmitter();
 
@@ -113,6 +118,7 @@ export class Tabs extends Ion {
    * @private
    */
   @ViewChild(TabHighlight) private _highlight: TabHighlight;
+
   /**
    * @private
    */
@@ -150,11 +156,8 @@ export class Tabs extends Ion {
    * @private
    */
   ngAfterViewInit() {
-    this.preloadTabs = (this.preloadTabs !== "false" && this.preloadTabs !== false);
-
     this._setConfig('tabbarPlacement', 'bottom');
     this._setConfig('tabbarIcons', 'top');
-    this._setConfig('preloadTabs', false);
 
     if (this._useHighlight) {
       this._platform.onResize(() => {
@@ -167,14 +170,18 @@ export class Tabs extends Ion {
         this.select(tab);
       });
     });
+  }
 
+  ngAfterContentInit() {
     let selectedIndex = this.selectedIndex ? parseInt(this.selectedIndex, 10) : 0;
+
+    let preloadTabs = (isUndefined(this.preloadTabs) ? this._config.getBoolean('preloadTabs') : isTrueProperty(this.preloadTabs));
 
     this._tabs.forEach((tab, index) => {
       if (index === selectedIndex) {
         this.select(tab);
 
-      } else if (this.preloadTabs) {
+      } else if (preloadTabs) {
         tab.preload(1000 * index);
       }
     });
@@ -215,7 +222,7 @@ export class Tabs extends Ion {
       return this._touchActive(selectedTab);
     }
 
-    console.time('Tabs#select ' + selectedTab.id);
+    console.debug('Tabs, select', selectedTab.id);
 
     let opts = {
       animate: false
@@ -257,7 +264,6 @@ export class Tabs extends Ion {
         this._onReady = null;
       }
 
-      console.time('Tabs#select ' + selectedTab.id);
     });
   }
 
@@ -327,6 +333,7 @@ export class Tabs extends Ion {
   }
 
   /**
+   * @private
    * Returns the root NavController. Returns `null` if Tabs is not
    * within a NavController.
    * @returns {NavController}

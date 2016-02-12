@@ -76,7 +76,7 @@ export class RadioGroup {
   value;
 
   /**
-   * @private
+   * @output {Any} expression to be evaluated when selection has been changed
    */
   @Output() change: EventEmitter<RadioGroup> = new EventEmitter();
 
@@ -103,7 +103,7 @@ export class RadioGroup {
       let oldVal = this.value;
 
       // set the radiogroup's value
-      this.value = val || '';
+      this.value = isDefined(val) ? val : '';
 
       this.updateValue();
 

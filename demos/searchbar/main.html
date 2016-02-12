@@ -1,0 +1,41 @@
+<ion-toolbar>
+  <ion-title>Searchbar</ion-title>
+</ion-toolbar>
+
+<ion-toolbar>
+  <ion-searchbar placeholder="Default Toolbar"></ion-searchbar>
+</ion-toolbar>
+
+<ion-toolbar primary>
+  <ion-searchbar placeholder="Primary Toolbar"></ion-searchbar>
+</ion-toolbar>
+
+<ion-toolbar secondary>
+  <ion-searchbar placeholder="Secondary Toolbar"></ion-searchbar>
+</ion-toolbar>
+
+<ion-content class="searchbar-demo">
+  <p padding-left padding-right>Searchbars can be placed in a toolbar or anywhere in the content.</p>
+
+  <ion-searchbar placeholder="Default Searchbar"></ion-searchbar>
+  <hr>
+
+  <ion-searchbar placeholder="Primary Searchbar" primary></ion-searchbar>
+  <hr>
+
+  <ion-searchbar placeholder="Secondary Searchbar" secondary></ion-searchbar>
+  <hr>
+
+  <ion-searchbar placeholder="Danger Searchbar" danger></ion-searchbar>
+
+</ion-content>
+
+<ion-toolbar danger position="bottom">
+  <ion-searchbar placeholder="Danger Toolbar"></ion-searchbar>
+</ion-toolbar>
+
+<style>
+  .searchbar-demo hr {
+    background-color: transparent;
+  }
+</style>

@@ -1,7 +1,7 @@
 var _ = require('lodash'),
     fs = require('fs'),
     path = require('path'),
-    shell = require('shelljs');
+    mkdirp = require('mkdirp-no-bin');
 
 module.exports = Generator;
 
@@ -24,7 +24,7 @@ Generator.prototype.makeDirectories = function(){
   if (!this.directory) {
     throw new Error('Generators must define their directory in their constructor.\nEx: \'pages\', \'components\', etc.');
   }
-  shell.mkdir('-p', path.join(this.appDirectory, 'app', this.directory, this.fileName));
+  mkdirp.sync(path.join(this.appDirectory, 'app', this.directory, this.fileName));
 }
 
 Generator.prototype.renderTemplates = function renderTemplates() {

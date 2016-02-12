@@ -12,9 +12,6 @@ import {isTrueProperty} from '../../util/util';
  *
  * See the [Angular 2 Docs](https://angular.io/docs/js/latest/api/core/Form-interface.html) for more info on forms and input.
  *
- * @property [checked] - whether or not the checkbox is checked (defaults to false)
- * @property [value] - the value of the checkbox component
- * @property [disabled] - whether or not the checkbox is disabled or not.
  *
  * @usage
  * ```html
@@ -69,7 +66,7 @@ export class Checkbox {
   id: string;
 
   /**
-   * @private
+   * @input {String} the value of the checkbox component
    */
   @Input() value: string = '';
 
@@ -100,7 +97,7 @@ export class Checkbox {
   }
 
   /**
-   * @private
+   * @input {Bool} whether or not the checkbox is checked (defaults to false)
    */
   @Input()
   get checked() {
@@ -116,7 +113,7 @@ export class Checkbox {
   }
 
   /**
-   * @private
+   * @input {Bool} whether or not the checkbox is disabled or not.
    */
   @Input()
   get disabled() {

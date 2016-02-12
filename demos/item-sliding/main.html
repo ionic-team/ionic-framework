@@ -1,0 +1,194 @@
+<ion-toolbar>
+  <ion-title>Item Sliding</ion-title>
+</ion-toolbar>
+
+<ion-content class="outer-content">
+  <ion-list class="chat-sliding-demo">
+    <ion-list-header>
+      Chats
+    </ion-list-header>
+
+    <ion-item-sliding>
+      <ion-item>
+        <ion-avatar item-left>
+          <img src="./avatar-cher.png">
+        </ion-avatar>
+        <h2>Cher</h2>
+        <p>Ugh. As if.</p>
+        <ion-note item-right>
+          9:38 pm
+        </ion-note>
+      </ion-item>
+      <ion-item-options>
+        <button secondary>
+          <ion-icon name="menu"></ion-icon>
+          More
+        </button>
+        <button dark>
+          <ion-icon name="volume-off"></ion-icon>
+          Mute
+        </button>
+        <button danger>
+          <ion-icon name="trash"></ion-icon>
+          Delete
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item-sliding>
+      <ion-item>
+        <ion-avatar item-left>
+          <img src="./avatar-dionne.png">
+        </ion-avatar>
+        <h2>Dionne</h2>
+        <p>Mr. Hall was way harsh.</p>
+        <ion-note item-right>
+          8:59 pm
+        </ion-note>
+      </ion-item>
+      <ion-item-options>
+        <button secondary>
+          <ion-icon name="menu"></ion-icon>
+          More
+        </button>
+        <button dark>
+          <ion-icon name="volume-off"></ion-icon>
+          Mute
+        </button>
+        <button danger>
+          <ion-icon name="trash"></ion-icon>
+          Delete
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item-sliding>
+      <ion-item>
+        <ion-avatar item-left>
+          <img src="./avatar-murray.png">
+        </ion-avatar>
+        <h2>Murray</h2>
+        <p>Excuse me, "Ms. Dione."</p>
+        <ion-note item-right>
+          Wed
+        </ion-note>
+      </ion-item>
+      <ion-item-options>
+        <button secondary>
+          <ion-icon name="menu"></ion-icon>
+          More
+        </button>
+        <button dark>
+          <ion-icon name="volume-off"></ion-icon>
+          Mute
+        </button>
+        <button danger>
+          <ion-icon name="trash"></ion-icon>
+          Delete
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <ion-list class="login-sliding-demo">
+    <ion-list-header>
+      Logins
+    </ion-list-header>
+
+    <ion-item-sliding>
+      <ion-item>
+        <ion-icon name="logo-twitter" item-left></ion-icon>
+        <h2>Twitter</h2>
+        <p>admin</p>
+      </ion-item>
+      <ion-item-options>
+        <button>
+         edit
+        </button>
+        <button danger>
+          <ion-icon name="trash"></ion-icon>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item-sliding>
+      <ion-item>
+        <ion-icon name="logo-github" item-left></ion-icon>
+        <h2>GitHub</h2>
+        <p>admin37</p>
+      </ion-item>
+      <ion-item-options>
+        <button>
+         edit
+        </button>
+        <button danger>
+          <ion-icon name="trash"></ion-icon>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item-sliding>
+      <ion-item>
+        <ion-icon name="logo-instagram" item-left></ion-icon>
+        <h2>Instagram</h2>
+        <p>imanadmin</p>
+      </ion-item>
+      <ion-item-options>
+        <button>
+         edit
+        </button>
+        <button danger>
+          <ion-icon name="trash"></ion-icon>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item-sliding>
+      <ion-item>
+        <ion-icon name="logo-codepen" item-left dark></ion-icon>
+        <h2>Codepen</h2>
+        <p>administrator</p>
+      </ion-item>
+      <ion-item-options>
+        <button>
+         edit
+        </button>
+        <button danger>
+          <ion-icon name="trash"></ion-icon>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+  </ion-list>
+
+</ion-content>
+
+<style>
+  .chat-sliding-demo ion-note {
+    font-size: 13px;
+    margin-top: -8px;
+  }
+
+  .chat-sliding-demo ion-item-options .button-inner {
+    font-size: 14px;
+    flex-direction: column;
+  }
+
+  .chat-sliding-demo ion-item-options ion-icon {
+    padding-right: 0;
+    padding-bottom: 0.3em;
+  }
+
+  .login-sliding-demo .ion-logo-twitter {
+    color: #53ACEB;
+  }
+
+  .login-sliding-demo .ion-logo-github {
+    color: #000000;
+  }
+
+  .login-sliding-demo .ion-logo-instagram {
+    color: #235D8D;
+  }
+
+</style>

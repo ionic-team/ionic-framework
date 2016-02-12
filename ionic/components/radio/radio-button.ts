@@ -58,7 +58,7 @@ export class RadioButton {
   id: string;
 
   /**
-   * @private
+   * @output {Any} expression to be evaluated when clicked
    */
   @Output() select: EventEmitter<RadioButton> = new EventEmitter();
 

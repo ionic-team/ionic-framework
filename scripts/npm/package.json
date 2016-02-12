@@ -12,8 +12,8 @@
     "colors": "^1.1.2",
     "inquirer": "0.11.0",
     "lodash": "3.10.1",
-    "q": "1.4.1",
-    "shelljs": "0.5.3"
+    "mkdirp-no-bin": "0.5.1",
+    "q": "1.4.1"
   },
   "peerDependencies": {
     "angular2": "^<%= angularVersion %>"

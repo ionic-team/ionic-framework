@@ -1,6 +1,8 @@
-**Please do not manually create issues on GitHub.**
+**Please do not manually create issues on GitHub, instead use [this form](http://ionicframework.com/submit-issue/).**
 
 ### Creating an Issue
+
+#### [Create a new issue form](http://ionicframework.com/submit-issue/) <-- please use this form for new issues
 
 If you have a question on how something works, or its expected functionality, you might want to visit the [Ionic Forum](http://forum.ionicframework.com/) first.
 
@@ -12,7 +14,9 @@ Next, [create a new issue](http://ionicframework.com/submit-issue/) that briefly
 
 Poor  attitude, ranting, name-calling, bullying, being a jerk, complaining, or spamming are fruitless and unacceptable. Issues that violate the open source spirit of this community, or  any of the guidelines listed here, may result in your Issue being deleted or reposted to our Forum, a better place for debate and discussion. If you wish to contribute, either make your response respectful or do not bother to respond. You’ll find it’s pretty ineffective.
 
-Simply put: be respectful and act like an adult. Critiques are better made on the Forum. If you can’t do that, this isn’t a community  for you.
+Simply put: be respectful and act like an adult. Critiques are better made on the Forum. If you can’t do that, this isn’t a community for you.
+
+See our [Code of Conduct](./CODE_OF_CONDUCT.md) for more info.
 
 
 ### Pull Request Guidelines

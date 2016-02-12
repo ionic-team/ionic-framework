@@ -86,6 +86,7 @@ class ToolbarBackground {
  * </ion-navbar>
  * ```
  *
+ * @demo /docs/v2/demos/navbar/
  * @see {@link ../../toolbar/Toolbar/ Toolbar API Docs}
  */
 @Component({
@@ -93,10 +94,13 @@ class ToolbarBackground {
   template:
     '<div class="toolbar-background"></div>' +
     '<button class="back-button bar-button bar-button-default" [hidden]="hideBackButton">' +
-      '<ion-icon class="back-button-icon" [name]="_bbIcon"></ion-icon>' +
-      '<span class="back-button-text">' +
-        '<span class="back-default">{{_bbText}}</span>' +
+      '<span class="button-inner">' +
+        '<ion-icon class="back-button-icon" [name]="_bbIcon"></ion-icon>' +
+        '<span class="back-button-text">' +
+          '<span class="back-default">{{_bbText}}</span>' +
+        '</span>' +
       '</span>' +
+      '<ion-button-effect></ion-button-effect>' +
     '</button>' +
     '<ng-content select="[menuToggle],ion-buttons[left]"></ng-content>' +
     '<ng-content select="ion-buttons[start]"></ng-content>' +
@@ -211,8 +215,9 @@ export class Navbar extends ToolbarBase {
   /**
    * @private
    */
-  setHidden(isHidden) {
-    this._hidden = isHidden
+  setHidden(isHidden: boolean) {
+    // used to display none/block the navbar
+    this._hidden = isHidden;
   }
 
 }

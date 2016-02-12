@@ -15,36 +15,33 @@ var connect = require('gulp-connect');
 var docsConfig = require('./scripts/config.json');
 
 var flagConfig = {
-  string: ['port', 'version', 'ngVersion', 'animations', 'strip-debug'],
-  boolean: ['dry-run'],
-  alias: {'p': 'port', 'v': 'version', 'a': 'ngVersion'},
-  default: { port: 8000 }
+  string: ['port'],
+  boolean: ['debug', 'typecheck'],
+  alias: {'p': 'port'},
+  default: { 'port': 8000, 'debug': true, 'typecheck': false }
 };
 var flags = minimist(process.argv.slice(2), flagConfig);
 
-var IS_RELEASE = false;
+var DEBUG = flags.debug;
+var TYPECHECK = flags.typecheck;
 
-var tscOptions = {
-  emitDecoratorMetadata: true,
-  experimentalDecorators: true,
-  target: "es5",
-  module: "commonjs",
-  declaration: true
-}
+function getTscOptions(name) {
+  var opts = {
+    emitDecoratorMetadata: true,
+    experimentalDecorators: true,
+    target: "es5",
+    module: "commonjs",
+    isolatedModules: true
+  }
 
-var tscOptionsNoTypeCheck = {
-  emitDecoratorMetadata: true,
-  experimentalDecorators: true,
-  target: "es5",
-  module: "commonjs",
-  isolatedModules: true
-}
-
-var tscOptionsEs6 = {
-  emitDecoratorMetadata: true,
-  experimentalDecorators: true,
-  target: 'ES6',
-  isolatedModules: true
+  if (name === "typecheck") {
+    opts.declaration = true;
+    delete opts.isolatedModules;
+  } else if (name === "es6") {
+    opts.target = "es6";
+    delete opts.module;
+  }
+  return opts;
 }
 
 var tscReporter = {
@@ -66,59 +63,63 @@ var babelOptions = {
   }
 }
 
-gulp.task('build', ['bundle.system', 'e2e.build', 'sass', 'fonts']);
-
-gulp.task('clean.build', function(done) {
-  runSequence('clean', 'build', done);
-});
-
-gulp.task('watch', function(done) {
+/**
+ * Builds Ionic sources to dist. When the '--typecheck' flag is specified,
+ * generates .d.ts definitions and does typechecking.
+ */
+gulp.task('build', function(done){
   runSequence(
     'copy.libs',
-    'build',
-    'serve',
-    function() {
-      watch([
-          'ionic/**/*.ts',
-          '!ionic/components/*/test/**/*',
-          '!ionic/util/test/*'
-        ],
-        function(file) {
-          if (file.event === "unlink") {
-            deleteFile(file);
-          } else {
-            gulp.start('bundle.system');
-          }
-        }
-      );
+    ['bundle', 'sass', 'fonts', 'copy.scss'],
+    done
+  );
+});
 
-      watch('ionic/components/*/test/**/*', function(file) {
-        gulp.start('e2e.build');
-      });
+/**
+ * Builds sources to dist and watches for changes.  Runs 'transpile' for .ts
+ * changes and 'sass' for .scss changes.
+ */
+gulp.task('watch', ['build'], function() {
+  watchTask('transpile');
+});
 
-      watch('ionic/**/*.scss', function() {
-        gulp.start('sass');
-      });
-
-      done();
+function watchTask(task){
+  watch([
+      'ionic/**/*.ts',
+      '!ionic/components/*/test/**/*',
+      '!ionic/util/test/*'
+    ],
+    function(file) {
+      if (file.event === "unlink") {
+        deleteFile(file);
+      } else {
+        gulp.start(task);
+      }
     }
   );
 
+  watch('ionic/**/*.scss', function() {
+    gulp.start('sass');
+  });
+
+  gulp.start('serve');
+
   function deleteFile(file) {
-    var basePath = file.base.substring(0, file.base.lastIndexOf("ionic/"));
-    var relativePath = file.history[0].replace(file.base, '').replace('.ts', '.js');
-
-    var filePath = basePath + 'dist/' + relativePath;
-    var typingPath = filePath.replace('.js', '.d.ts');
-
-    delete cache.caches['no-typecheck'][file.history[0]];
-    remember.forget('no-typecheck', file.history[0]);
-
-    del([filePath, typingPath], function(){
-      gulp.start('bundle.system');
-    });
+    //TODO
+    // var basePath = file.base.substring(0, file.base.lastIndexOf("ionic/"));
+    // var relativePath = file.history[0].replace(file.base, '').replace('.ts', '.js');
+    //
+    // var filePath = basePath + 'dist/' + relativePath;
+    // var typingPath = filePath.replace('.js', '.d.ts');
+    //
+    // delete cache.caches['no-typecheck'][file.history[0]];
+    // remember.forget('no-typecheck', file.history[0]);
+    //
+    // del([filePath, typingPath], function(){
+    //   gulp.start('bundle.system');
+    // });
   }
-});
+}
 
 gulp.task('serve', function() {
   connect.server({
@@ -131,6 +132,108 @@ gulp.task('serve', function() {
 
 gulp.task('clean', function(done) {
   del(['dist/**', '!dist'], done);
+});
+
+
+/**
+ * Source build tasks
+ */
+
+/**
+ * Creates CommonJS and SystemJS bundles from Ionic source files.
+ */
+gulp.task('bundle', ['bundle.cjs', 'bundle.system']);
+
+/**
+ * Creates CommonJS bundle from Ionic source files.
+ */
+gulp.task('bundle.cjs', ['transpile'], function(done){
+  var config = require('./scripts/npm/ionic.webpack.config.js');
+  bundle({ config: config, stats: true });
+
+  // build minified bundle
+  var minConfig = require('./scripts/npm/ionic.min.webpack.config.js');
+  bundle({ config: minConfig, cb: finished, stats: true });
+
+  var outputPaths = [
+    config.output.path + path.sep + config.output.filename,
+    minConfig.output.path + path.sep + minConfig.output.filename
+  ];
+
+  function bundle(args) {
+    var webpack = require('webpack');
+    var path = require('path');
+
+    webpack(args.config, function(err, stats){
+      if (args.stats) {
+        var statsOptions = {
+          'colors': true,
+          'modules': false,
+          'chunks': false,
+          'exclude': ['node_module'],
+          'errorDetails': true
+        }
+        console.log(stats.toString(statsOptions));
+      }
+
+      args.cb && args.cb();
+    })
+  }
+
+  function finished(){
+    gulp.src(outputPaths)
+      .pipe(connect.reload())
+      .on('end', done);
+  }
+});
+
+/**
+ * Creates SystemJS bundle from Ionic source files.
+ */
+gulp.task('bundle.system', function(){
+  var babel = require('gulp-babel');
+  var concat = require('gulp-concat');
+  var gulpif = require('gulp-if');
+  var stripDebug = require('gulp-strip-debug');
+  var merge = require('merge2');
+
+  var tsResult = tsCompile(getTscOptions('es6'), 'system')
+    .pipe(babel(babelOptions));
+
+  var swiper = gulp.src('ionic/components/slides/swiper-widget.system.js');
+
+  return merge([tsResult, swiper])
+    .pipe(remember('system'))
+    .pipe(gulpif(!DEBUG, stripDebug()))
+    .pipe(concat('ionic.system.js'))
+    .pipe(gulp.dest('dist/bundles'))
+    .pipe(connect.reload())
+});
+
+/**
+ * Transpiles TypeScript sources to ES5 in the CommonJS module format and outputs
+ * them to dist. When the '--typecheck' flag is specified, generates .d.ts
+ * definitions and does typechecking.
+ */
+gulp.task('transpile', function(){
+  var gulpif = require('gulp-if');
+  var stripDebug = require('gulp-strip-debug');
+
+  var tscOpts = getTscOptions(TYPECHECK ? 'typecheck' : undefined);
+  var tsResult = tsCompile(tscOpts, 'transpile')
+
+  if (TYPECHECK) {
+    var merge = require('merge2');
+    var js = tsResult.js;
+    var dts = tsResult.dts;
+    if (!DEBUG) js = js.pipe(stripDebug());
+    // merge definition and source streams
+    return merge([js, dts])
+      .pipe(gulp.dest('dist'));
+  }
+
+  if (!DEBUG) tsResult = tsResult.pipe(stripDebug());
+  return tsResult.pipe(gulp.dest('dist'));
 });
 
 function tsCompile(options, cacheName){
@@ -151,115 +254,129 @@ function tsCompile(options, cacheName){
     });
 }
 
-gulp.task('transpile.no-typecheck', function(){
-  var gulpif = require('gulp-if');
-  var stripDebug = require('gulp-strip-debug');
-  var shouldStripDebug = (IS_RELEASE && flags['strip-debug'] !== 'false');
+/**
+ * Compiles Ionic Sass sources to stylesheets and outputs them to dist/bundles.
+ */
+gulp.task('sass', function() {
+  var sass = require('gulp-sass');
+  var autoprefixer = require('gulp-autoprefixer');
+  var minifyCss = require('gulp-minify-css');
 
-  return tsCompile(tscOptionsNoTypeCheck, 'no-typecheck')
-    .pipe(gulpif(shouldStripDebug, stripDebug()))
+  gulp.src([
+    'ionic/ionic.ios.scss',
+    'ionic/ionic.md.scss',
+    'ionic/ionic.scss'
+  ])
+  .pipe(sass({
+      includePaths: [__dirname + '/node_modules/ionicons/dist/scss/'],
+    }).on('error', sass.logError)
+  )
+  .pipe(autoprefixer(buildConfig.autoprefixer))
+  .pipe(gulp.dest('dist/bundles/'))
+  .pipe(minifyCss())
+  .pipe(rename({ extname: '.min.css' }))
+  .pipe(gulp.dest('dist/bundles/'));
+});
+
+/**
+ * Creates Ionic themes for testing.
+ */
+gulp.task('sass.themes', function() {
+  var sass = require('gulp-sass');
+  var autoprefixer = require('gulp-autoprefixer');
+
+  function buildTheme(mode) {
+    gulp.src([
+      'scripts/e2e/ionic.' + mode + '.dark.scss'
+    ])
+    .pipe(sass({
+        includePaths: [__dirname + '/node_modules/ionicons/dist/scss/'],
+      }).on('error', sass.logError)
+    )
+    .pipe(autoprefixer(buildConfig.autoprefixer))
+    .pipe(gulp.dest('dist/bundles/'));
+  }
+
+  buildTheme('ios');
+  buildTheme('md');
+});
+
+/**
+ * Copies fonts and Ionicons to dist/fonts
+ */
+gulp.task('fonts', function() {
+  gulp.src([
+    'ionic/fonts/*.+(ttf|woff|woff2)',
+    'node_modules/ionicons/dist/fonts/*.+(ttf|woff|woff2)'
+   ])
+    .pipe(gulp.dest('dist/fonts'));
+});
+
+/**
+ * Copies Ionic Sass sources to dist
+ */
+gulp.task('copy.scss', function() {
+  return gulp.src([
+      'ionic/**/*.scss',
+      '!ionic/components/*/test/**/*',
+      '!ionic/util/test/*'
+    ])
     .pipe(gulp.dest('dist'));
 });
 
-gulp.task('typecheck', ['transpile.typecheck']);
-
-gulp.task('transpile.typecheck', function(){
+/**
+ * Copies miscellaneous scripts to dist.
+ */
+gulp.task('copy.libs', function() {
   var merge = require('merge2');
-  var stripDebug = require('gulp-strip-debug');
-  var shouldStripDebug = (IS_RELEASE && flags['strip-debug'] !== 'false');
+  var extModules = gulp.src([
+      'node_modules/es6-shim/es6-shim.min.js',
+      'node_modules/systemjs/node_modules/es6-module-loader/dist/es6-module-loader.src.js',
+      'node_modules/systemjs/dist/system.src.js',
+      'node_modules/angular2/bundles/angular2-polyfills.js',
+      'node_modules/angular2/bundles/angular2.dev.js',
+      'node_modules/angular2/bundles/router.dev.js',
+      'node_modules/angular2/bundles/http.dev.js',
+      'node_modules/rxjs/bundles/Rx.js'
+    ])
+    .pipe(gulp.dest('dist/js'));
 
-  var result = tsCompile(tscOptions, 'typecheck');
-
-  var js = result.js;
-  var dts = result.dts;
-  if (shouldStripDebug) {
-    js = js.pipe(stripDebug());
-  }
-
-  // merge definition and source streams
-  return merge([js, dts])
+  // for swiper-widget
+  var libs = gulp.src([
+      'ionic/**/*.js',
+      'ionic/**/*.d.ts'
+    ])
     .pipe(gulp.dest('dist'));
-})
 
-gulp.task('bundle.system', function(){
-  var babel = require('gulp-babel');
-  var concat = require('gulp-concat');
-  var gulpif = require('gulp-if');
-  var stripDebug = require('gulp-strip-debug');
-  var merge = require('merge2');
+  return merge([extModules, libs]);
+});
 
-  var tsResult = tsCompile(tscOptionsEs6, 'system')
-    .pipe(babel(babelOptions));
 
-  var swiper = gulp.src('ionic/components/slides/swiper-widget.system.js');
+/**
+ * Test build tasks
+ */
 
-  return merge([tsResult, swiper])
-    .pipe(remember('system'))
-    .pipe(gulpif(IS_RELEASE, stripDebug()))
-    .pipe(concat('ionic.system.js'))
-    .pipe(gulp.dest('dist/bundles'))
-    .pipe(connect.reload())
-})
+ /**
+  * Builds e2e tests to dist/e2e and watches for changes.  Runs 'bundle.system' or
+  * 'sass' on Ionic source changes and 'e2e.build' for e2e test changes.
+  */
+gulp.task('watch.e2e', ['e2e'], function() {
+  watchTask('bundle.system');
 
-gulp.task('transpile', ['transpile.no-typecheck']);
+  watch('ionic/components/*/test/**/*', function(file) {
+    gulp.start('e2e.build');
+  });
+});
 
-gulp.task('bundle', ['bundle.cjs', 'bundle.system']);
+/**
+ * Builds Ionic e2e tests to dist/e2e and creates the necessary files for tests
+ * to run.
+ */
+gulp.task('e2e', ['e2e.build', 'bundle.system', 'copy.libs', 'sass', 'fonts']);
 
-gulp.task('bundle.cjs', ['transpile'], function(done){
-  //TODO
-  //   if (flags.animations == 'polyfill') {
-  //     prepend.push('window.Element.prototype.animate=undefined;');
-  //   }
-
-  var config = require('./scripts/npm/ionic.webpack.config.js');
-  bundle({ config: config, stats: true });
-
-  // build minified bundle
-  var minConfig = require('./scripts/npm/ionic.min.webpack.config.js');
-  bundle({ config: minConfig, cb: finished, stats: true });
-
-  var outputPaths = [
-    config.output.path + path.sep + config.output.filename,
-    minConfig.output.path + path.sep + minConfig.output.filename
-  ];
-
-  function finished(){
-    gulp.src(outputPaths)
-      .pipe(connect.reload())
-      .on('end', done);
-  }
-})
-
-function bundle(args) {
-  var webpack = require('webpack');
-  var path = require('path');
-
-  webpack(args.config, function(err, stats){
-    if (args.stats) {
-      var statsOptions = {
-        'colors': true,
-        'modules': false,
-        'chunks': false,
-        'exclude': ['node_module'],
-        'errorDetails': true
-      }
-      console.log(stats.toString(statsOptions));
-    }
-
-    args.cb && args.cb();
-  })
-}
-
-gulp.task('tests', function() {
-  return gulp.src('ionic/**/test/**/*.spec.ts')
-    .pipe(tsc(tscOptionsNoTypeCheck, undefined, tscReporter))
-    .pipe(rename(function(file) {
-      var regex = new RegExp(path.sep + 'test(' + path.sep + '|$)');
-      file.dirname = file.dirname.replace(regex, path.sep);
-    }))
-    .pipe(gulp.dest('dist/tests'))
-})
-
+/**
+ * Builds Ionic e2e tests to dist/e2e.
+ */
 gulp.task('e2e.build', function() {
   var gulpif = require('gulp-if');
   var merge = require('merge2');
@@ -285,7 +402,7 @@ gulp.task('e2e.build', function() {
       '!ionic/components/*/test/*/**/*.spec.ts'
     ])
     .pipe(cache('e2e.ts'))
-    .pipe(tsc(tscOptionsNoTypeCheck, undefined, tscReporter))
+    .pipe(tsc(getTscOptions(), undefined, tscReporter))
     .on('error', function(error) {
       console.log(error.message);
       this.emit('end');
@@ -345,57 +462,196 @@ gulp.task('e2e.build', function() {
   }
 });
 
-gulp.task('e2e', ['e2e.build', 'bundle.system', 'copy.libs', 'sass', 'fonts']);
+/**
+ * Builds Ionic unit tests to dist/tests.
+ */
+gulp.task('tests', function() {
+  return gulp.src('ionic/**/test/**/*.spec.ts')
+    .pipe(tsc(getTscOptions(), undefined, tscReporter))
+    .pipe(rename(function(file) {
+      var regex = new RegExp(path.sep + 'test(' + path.sep + '|$)');
+      file.dirname = file.dirname.replace(regex, path.sep);
+    }))
+    .pipe(gulp.dest('dist/tests'))
+})
 
-gulp.task('sass', function() {
+
+/**
+ * Demos
+ */
+
+ /**
+  * Builds Ionic demos to dist/demos, copies them to ../ionic-site and watches
+  * for changes.
+  */
+gulp.task('watch.demos', ['demos'], function() {
+  watch('demos/**/*', function() {
+    gulp.start('demos');
+  });
+});
+
+/**
+ * Copies bundled demos from dist/demos to ../ionic-site/docs/v2 (assumes there is a
+ * sibling repo to this one named 'ionic-site')
+ */
+gulp.task('demos', ['bundle.demos'], function() {
+  var merge = require('merge2');
+
+  var demosStream = gulp.src([
+    'dist/demos/**/*',
+    '!dist/demos/**/*.scss',
+  ])
+    .pipe(gulp.dest(docsConfig.docsDest + '/demos/'));
+
+  var cssStream = gulp.src('dist/bundles/**/*.css')
+    .pipe(gulp.dest(docsConfig.sitePath + '/dist/bundles'));
+
+  return merge([demosStream, cssStream]);
+ });
+
+ /**
+  * Builds necessary files for each demo then bundles them using webpack. Unlike
+  * e2e tests, demos are bundled for performance (but have a slower build).
+  */
+gulp.task('bundle.demos', ['build.demos', 'transpile', 'copy.libs', 'sass', 'fonts'], function(done) {
+  var glob = require('glob');
+  var webpack = require('webpack');
+  var path = require('path');
+
+  return glob('dist/demos/**/index.js', function(err, files){
+    var numTasks = files.length;
+    files.forEach(function(file){
+      var config = require('./scripts/demos/webpack.config.js');
+
+      // add our bundle entry, removing previous if necessary
+      // since config is cached
+      if (config.entry.length > 4) {
+        config.entry.pop();
+      }
+      config.entry.push('./' + file);
+      config.output = {
+        filename: path.dirname(file) + '/bundle.js'
+      }
+
+      webpack(config, function(err, stats){
+        var statsOptions = {
+         'colors': true,
+          'modules': false,
+          'chunks': false,
+          'exclude': ['node_modules'],
+          'errorDetails': true
+        }
+        console.log(stats.toString(statsOptions));
+        if (--numTasks === 0) done();
+      })
+    })
+
+  });
+});
+
+/**
+ * Transpiles and copies Ionic demo sources to dist/demos.
+ */
+gulp.task('build.demos', function() {
+  var gulpif = require('gulp-if');
+  var merge = require('merge2');
+  var _ = require('lodash');
+  var fs = require('fs');
+  var VinylFile = require('vinyl');
+
+  var baseIndexTemplate = _.template(fs.readFileSync('scripts/demos/index.template.html'))();
+  var flags = minimist(process.argv.slice(2), flagConfig);
+
+  if ("production" in flags) {
+    buildDemoSass(true);
+  } else {
+    buildDemoSass(false);
+  }
+
+  var tsResult = gulp.src(['demos/**/*.ts'])
+    .pipe(cache('demos.ts'))
+    .pipe(tsc(getTscOptions(), undefined, tscReporter))
+    .on('error', function(error) {
+      console.log(error.message);
+      this.emit('end');
+    })
+    .pipe(gulpif(/index.js$/, createIndexHTML())) //TSC changes .ts to .js
+
+  var demoFiles = gulp.src([
+      'demos/**/*',
+      '!demos/**/*.ts'
+    ])
+    .pipe(cache('demos.files'));
+
+  return merge([
+      tsResult,
+      demoFiles
+    ])
+    .pipe(gulp.dest('dist/demos'))
+    .pipe(connect.reload());
+
+  function createIndexHTML() {
+    return through2.obj(function(file, enc, next) {
+      var indexTemplate = baseIndexTemplate;
+      var customTemplateFp = file.path.split('/').slice(0, -1).join('/') + '/index.html';
+      if (fs.existsSync(customTemplateFp)) {
+        indexTemplate = _.template(fs.readFileSync(customTemplateFp))();
+      }
+      this.push(new VinylFile({
+        base: file.base,
+        contents: new Buffer(indexTemplate),
+        path: path.join(path.dirname(file.path), 'index.html'),
+      }));
+      next(null, file);
+    });
+  }
+});
+
+function buildDemoSass(isProductionMode) {
   var sass = require('gulp-sass');
   var autoprefixer = require('gulp-autoprefixer');
   var minifyCss = require('gulp-minify-css');
+  var concat = require('gulp-concat');
+
+  var sassVars = isProductionMode ? 'demos/app.variables.production.scss': 'demos/app.variables.local.scss';
+
+  (function combineSass() {
+    gulp.src([
+        sassVars,
+        'demos/app.ios.scss'
+      ])
+    .pipe(concat('output.ios.scss'))
+    .pipe(gulp.dest('demos/'))
+
+    gulp.src([
+        sassVars,
+        'demos/app.md.scss'
+      ])
+    .pipe(concat('output.md.scss'))
+    .pipe(gulp.dest('demos/'))
+
+  })();
 
   gulp.src([
-    'ionic/ionic.ios.scss',
-    'ionic/ionic.md.scss',
-    'ionic/ionic.scss'
+    'demos/output.ios.scss',
+    'demos/output.md.scss'
   ])
+
   .pipe(sass({
       includePaths: [__dirname + '/node_modules/ionicons/dist/scss/'],
     }).on('error', sass.logError)
   )
   .pipe(autoprefixer(buildConfig.autoprefixer))
-  .pipe(gulp.dest('dist/bundles/'))
+  .pipe(gulp.dest('dist/demos/'))
   .pipe(minifyCss())
   .pipe(rename({ extname: '.min.css' }))
   .pipe(gulp.dest('dist/bundles/'));
-});
+}
 
-gulp.task('sass.themes', function() {
-  var sass = require('gulp-sass');
-  var autoprefixer = require('gulp-autoprefixer');
 
-  function buildTheme(mode) {
-    gulp.src([
-      'scripts/e2e/ionic.' + mode + '.dark.scss'
-    ])
-    .pipe(sass({
-        includePaths: [__dirname + '/node_modules/ionicons/dist/scss/'],
-      }).on('error', sass.logError)
-    )
-    .pipe(autoprefixer(buildConfig.autoprefixer))
-    .pipe(gulp.dest('dist/bundles/'));
-  }
-
-  buildTheme('ios');
-  buildTheme('md');
-});
-
-gulp.task('fonts', function() {
-  gulp.src([
-    'ionic/fonts/*.+(ttf|woff|woff2)',
-    'node_modules/ionicons/dist/fonts/*.+(ttf|woff|woff2)'
-   ])
-    .pipe(gulp.dest('dist/fonts'));
-});
-
+/**
+ * Tests
+ */
 require('./scripts/snapshot/snapshot.task')(gulp, argv, buildConfig);
 
 gulp.task('karma', ['tests'], function() {
@@ -408,88 +664,29 @@ gulp.task('karma-watch', function() {
   return karma.start({ configFile: __dirname + '/scripts/karma/karma-watch.conf.js' })
 });
 
-gulp.task('copy.scss', function() {
-  return gulp.src([
-      'ionic/**/*.scss',
-      '!ionic/components/*/test/**/*',
-      '!ionic/util/test/*'
-    ])
-    .pipe(gulp.dest('dist'));
-})
 
-gulp.task('copy.libs', function() {
-  var merge = require('merge2');
-  var webAnimations = gulp.src([
-      'scripts/resources/web-animations-js/web-animations.min.js',
-      'node_modules/es6-shim/es6-shim.min.js',
-      'node_modules/systemjs/node_modules/es6-module-loader/dist/es6-module-loader.src.js',
-      'node_modules/systemjs/dist/system.src.js',
-      'node_modules/angular2/bundles/angular2-polyfills.js',
-      'node_modules/angular2/bundles/angular2.dev.js',
-      'node_modules/angular2/bundles/router.dev.js',
-      'node_modules/angular2/bundles/http.dev.js',
-      'node_modules/rxjs/bundles/Rx.js'
-    ])
-    .pipe(gulp.dest('dist/js'));
+/**
+ * Release
+ */
 
-  var libs = gulp.src([
-      'ionic/**/*.js',
-      'ionic/**/*.d.ts'
-    ])
-    .pipe(gulp.dest('dist'));
-
-  return merge([webAnimations, libs]);
-})
-
-gulp.task('src.link', function(done) {
-  watch(['/ionic/**/*.ts', 'ionic/**/*.scss'], function(file) {
-    gulp.start('src');
-  });
-})
-
-gulp.task('src', function(done){
-  runSequence(
-    'clean',
-    'copy.libs',
-    ['bundle', 'sass', 'fonts', 'copy.scss'],
-    'transpile.typecheck',
-    done
-  );
+ /**
+  * Builds Ionic sources to dist with typechecking and d.ts definitions, does
+  * some prerelease magic (see 'prepare') and copies npm package and tooling
+  * files to dist.
+  */
+gulp.task('prerelease', ['prepare', 'build.release'], function(done){
+  runSequence('package', done);
 });
 
-gulp.task('src.release', function(done) {
-  IS_RELEASE = true;
-  runSequence(
-    'clean',
-    'copy.libs',
-    ['bundle', 'sass', 'fonts', 'copy.scss'],
-    'transpile.typecheck',
-    done
-  );
-});
+/**
+ * Publishes to npm and creates a new tag and release on GitHub.
+ */
+gulp.task('release', ['publish.npm', 'publish.github']);
 
-gulp.task('package', ['src.release'], function(done){
-  var _ = require('lodash');
-  var fs = require('fs');
-  var distDir = 'dist';
-
-  gulp.src([
-      'scripts/npm/.npmignore',
-      'scripts/npm/README.md',
-      '*tooling/**/*'
-    ])
-    .pipe(gulp.dest(distDir));
-
-  var templateVars = {};
-  var packageJSON = require('./package.json');
-  templateVars.ionicVersion = packageJSON.version;
-  templateVars.angularVersion = packageJSON.dependencies.angular2;
-	var packageTemplate = _.template(fs.readFileSync('scripts/npm/package.json'));
-  fs.writeFileSync(distDir + '/package.json', packageTemplate(templateVars));
-  done();
-});
-
-
+/**
+ * Pulls latest, ensures there are no unstaged/uncommitted changes, updates
+ * package.json minor version and generates CHANGELOG for release.
+ */
 gulp.task('prepare', function(){
   var execSync = require('child_process').execSync;
   var spawnSync = require('child_process').spawnSync;
@@ -532,10 +729,33 @@ gulp.task('prepare', function(){
 
 });
 
-gulp.task('prerelease', ['prepare'], function(done){
-  runSequence('package', done);
+/**
+ * Copies npm package and tooling files to dist.
+ */
+gulp.task('package', function(done){
+  var _ = require('lodash');
+  var fs = require('fs');
+  var distDir = 'dist';
+
+  gulp.src([
+      'scripts/npm/.npmignore',
+      'scripts/npm/README.md',
+      '*tooling/**/*'
+    ])
+    .pipe(gulp.dest(distDir));
+
+  var templateVars = {};
+  var packageJSON = require('./package.json');
+  templateVars.ionicVersion = packageJSON.version;
+  templateVars.angularVersion = packageJSON.dependencies.angular2;
+  var packageTemplate = _.template(fs.readFileSync('scripts/npm/package.json'));
+  fs.writeFileSync(distDir + '/package.json', packageTemplate(templateVars));
+  done();
 });
 
+/**
+ * Creates a new tag and release on GitHub.
+ */
 gulp.task('publish.github', function(done){
   var changelog = require('conventional-changelog');
   var GithubApi = require('github');
@@ -566,6 +786,9 @@ gulp.task('publish.github', function(done){
   }));
 });
 
+/**
+ * Publishes to npm.
+ */
 gulp.task('publish.npm', function(done) {
   var spawn = require('child_process').spawn;
 
@@ -584,124 +807,30 @@ gulp.task('publish.npm', function(done) {
   });
 });
 
-gulp.task('release', ['publish.npm', 'publish.github']);
+/**
+ * Build Ionic sources, with typechecking, .d.ts definition generation and debug
+ * statements removed.
+ */
+gulp.task('build.release', function(done){
+  DEBUG = false;
+  TYPECHECK = true;
+  runSequence(
+    'clean',
+    'copy.libs',
+    ['bundle', 'sass', 'fonts', 'copy.scss'],
+    done
+  );
+});
 
+
+/**
+ * Docs
+ */
 require('./scripts/docs/gulp-tasks')(gulp, flags)
 
-////////////////////////////////////////////////////
-// Demos
-// todo: move these to scripts/docs/gulp-tasks
-////////////////////////////////////////////////////
-
-gulp.task('build.demos', function(){
-  var gulpif = require('gulp-if');
-  var merge = require('merge2');
-  var _ = require('lodash');
-  var fs = require('fs');
-  var VinylFile = require('vinyl');
-
-  var baseIndexTemplate = _.template(fs.readFileSync('scripts/demos/index.template.html'))();
-
-  var tsResult = gulp.src(['demos/**/*.ts'])
-    .pipe(cache('demos.ts'))
-    .pipe(tsc(tscOptionsNoTypeCheck, undefined, tscReporter))
-    .on('error', function(error) {
-      console.log(error.message);
-      this.emit('end');
-    })
-    .pipe(gulpif(/index.js$/, createIndexHTML())) //TSC changes .ts to .js
-
-  var demoFiles = gulp.src([
-      'demos/**/*',
-      '!demos/**/*.ts'
-    ])
-    .pipe(cache('demos.files'));
-
-  return merge([
-      tsResult,
-      demoFiles
-    ])
-    .pipe(gulp.dest('dist/demos'))
-    .pipe(connect.reload());
-
-  function createIndexHTML() {
-    return through2.obj(function(file, enc, next) {
-      var indexTemplate = baseIndexTemplate;
-      var customTemplateFp = file.path.split('/').slice(0, -1).join('/') + '/index.html';
-      if (fs.existsSync(customTemplateFp)) {
-        indexTemplate = _.template(fs.readFileSync(customTemplateFp))();
-      }
-      this.push(new VinylFile({
-        base: file.base,
-        contents: new Buffer(indexTemplate),
-        path: path.join(path.dirname(file.path), 'index.html'),
-      }));
-      next(null, file);
-    });
-  }
-});
-
-gulp.task('bundle.demos', ['build.demos', 'transpile.no-typecheck', 'copy.libs', 'sass', 'fonts'], function(done) {
-  buildDemoBundle(done);
-});
-
-gulp.task('demos', ['bundle.demos'], function() {
-  var merge = require('merge2');
-
-  var demosStream = gulp.src([
-      'dist/demos/**/*',
-      '!dist/demos/**/*.scss',
-    ])
-    .pipe(gulp.dest(docsConfig.docsDest + '/demos/'));
-
-  var cssStream = gulp.src('dist/bundles/**/*.css')
-    .pipe(gulp.dest(docsConfig.sitePath + '/dist/bundles'));
-
-  return merge([demosStream, cssStream]);
-});
-
-gulp.task('watch:demos', function() {
-  watch('demos/**/*', function() {
-    gulp.start('demos');
-  });
-});
-
-function buildDemoBundle(done) {
-  var glob = require('glob');
-  var webpack = require('webpack');
-  var path = require('path');
-
-  return glob('dist/demos/**/index.js', function(err, files){
-    var numTasks = files.length;
-    files.forEach(function(file){
-      var config = require('./scripts/demos/webpack.config.js');
-
-      // add our bundle entry, removing previous if necessary
-      // since config is cached
-      if (config.entry.length > 4) {
-        config.entry.pop();
-      }
-      config.entry.push('./' + file);
-      config.output = {
-        filename: path.dirname(file) + '/bundle.js'
-      }
-
-      webpack(config, function(err, stats){
-        var statsOptions = {
-         'colors': true,
-          'modules': false,
-          'chunks': false,
-          'exclude': ['node_modules'],
-          'errorDetails': true
-       }
-      console.log(stats.toString(statsOptions));
-        if (--numTasks === 0) done();
-      })
-    })
-
-  });
-}
-
+/**
+ * Tooling
+ */
 gulp.task('tooling', function(){
   gulp.src('*tooling/**/*')
     .pipe(gulp.dest('dist'));
@@ -710,4 +839,4 @@ gulp.task('tooling', function(){
     gulp.src('*tooling/**/*')
       .pipe(gulp.dest('dist'));
   })
-})
+});

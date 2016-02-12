@@ -1,3 +1,128 @@
+<a name="2.0.0-beta.0"></a>
+# 2.0.0-beta.0
+
+Enjoy!
+
+<3 The Ionic Team
+
+
+
+<a name="2.0.0-alpha.57"></a>
+# [2.0.0-alpha.57](https://github.com/driftyco/ionic/compare/v2.0.0-alpha.56...v2.0.0-alpha.57) (2016-02-10)
+
+
+### Bug Fixes
+
+* **button:** bar-button uses inner span as flexbox ([38a3be4](https://github.com/driftyco/ionic/commit/38a3be4))
+
+### Features
+
+* Improved transitions and animations
+* hairlines width can be configured with a sass variable ([06b3a5b](https://github.com/driftyco/ionic/commit/06b3a5b))
+* **ion-item-sliding:** style icons on top of text in an option button ([4e57fcf](https://github.com/driftyco/ionic/commit/4e57fcf)), closes [#5352](https://github.com/driftyco/ionic/issues/5352)
+
+### Refactor
+
+* **animations:** no longer using Web Animations polyfill ([da18868](https://github.com/driftyco/ionic/commit/da18868))
+
+### Breaking Changes
+
+The Web Animations polyfill is no longer shipped with the framework and may cause build errors.  
+
+Projects will need to be [updated accordingly](https://github.com/driftyco/ionic-conference-app/commit/2ed59e6fd275c4616792c7b2e5aa9da4a20fb188).
+
+<a name="2.0.0-alpha.56"></a>
+# [2.0.0-alpha.56](https://github.com/driftyco/ionic/compare/v2.0.0-alpha.55...v2.0.0-alpha.56) (2016-02-05)
+
+
+### Bug Fixes
+
+* **tabs:** show navbar on second page in tab ([f2db74b](https://github.com/driftyco/ionic/commit/f2db74b))
+
+
+
+<a name="2.0.0-alpha.55"></a>
+# [2.0.0-alpha.55](https://github.com/driftyco/ionic/compare/v2.0.0-alpha.54...v2.0.0-alpha.55) (2016-02-05)
+
+
+### Bug Fixes
+
+* **alert:** ensure keyup listener has been removed ([2710e34](https://github.com/driftyco/ionic/commit/2710e34))
+* **build:** tell gulp when finished building ([60e1278](https://github.com/driftyco/ionic/commit/60e1278))
+* **generators:** use mkdirp-no-bin ([dcc20fa](https://github.com/driftyco/ionic/commit/dcc20fa))
+* **input:** copy custom attrs from ion-input to native input ([4cfe210](https://github.com/driftyco/ionic/commit/4cfe210))
+* **menu:** fix scrolling page w/ side menus ([72699db](https://github.com/driftyco/ionic/commit/72699db)), closes [#5272](https://github.com/driftyco/ionic/issues/5272)
+* **menu:** only close when open on enable change ([a428363](https://github.com/driftyco/ionic/commit/a428363))
+* **searcher:** add autocomplete="off" to native input ([f47c3c3](https://github.com/driftyco/ionic/commit/f47c3c3))
+
+### Features
+
+* **actionsheet:** disable clicking backdrop to dismiss ([7686767](https://github.com/driftyco/ionic/commit/7686767))
+* **alert:** disable clicking backdrop to dismiss ([53e014f](https://github.com/driftyco/ionic/commit/53e014f))
+
+### Performance Improvements
+
+* **cards:** remove translateZ from ion-card ([60fdc5c](https://github.com/driftyco/ionic/commit/60fdc5c))
+* **tabs:** render tab navbar at same time of tab content ([687a17b](https://github.com/driftyco/ionic/commit/687a17b))
+
+### Breaking Changes
+
+Menu has been improved to make it easier to open, close, toggle and enable menus.
+Instead of injecting `IonicApp` to find the menu component, you now inject
+`MenuController`.
+
+Was:
+
+```
+constructor(app: IonicApp) {
+  this.app = app;
+}
+openMenu() {
+  this.app.getComponent('leftMenu').close();
+}
+```
+
+Now:
+
+To programmatically interact with any menu, you can inject the `MenuController`
+provider into any component or directive. This makes it easy get ahold
+of and control the correct menu instance. By default Ionic will find the app's
+menu without requiring a menu ID. An id attribute on an `<ion-menu>` is only
+required if there are multiple menus on the same side. If there are multiple
+menus, but on different sides, you can use the name of the side to get the correct
+menu
+
+If there's only one menu:
+
+```
+constructor(menu: MenuController) {
+  this.menu = menu;
+}
+openMenu() {
+  this.menu.close();
+}
+```
+
+If there is a menu on the left and right side:
+
+```
+toggleMenu() {
+  this.menu.toggle('left');
+}
+```
+
+If there are multiple menus on the same side:
+
+```
+<ion-menu id="myMenuId" side="left">...</ion-menu>
+<ion-menu id="otherMenuId" side="left">...</ion-menu>
+
+closeMenu() {
+  this.menu.close('myMenuId');
+}
+```
+
+
 <a name="2.0.0-alpha.54"></a>
 # [2.0.0-alpha.54](https://github.com/driftyco/ionic/compare/v2.0.0-alpha.53...v2.0.0-alpha.54) (2016-02-02)
 

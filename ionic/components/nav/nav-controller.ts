@@ -1,19 +1,21 @@
 import {Compiler, ElementRef, Injector, provide, NgZone, AppViewManager, Renderer, ResolvedProvider, Type} from 'angular2/core';
 import {wtfLeave, wtfCreateScope, WtfScopeFn, wtfStartTimeRange, wtfEndTimeRange} from 'angular2/instrumentation';
 
-import {Animation} from '../../animations/animation';
 import {Config} from '../../config/config';
 import {Ion} from '../ion';
 import {IonicApp} from '../app/app';
-import {isBoolean, array, pascalCaseToDashCase} from '../../util/util';
 import {Keyboard} from '../../util/keyboard';
 import {NavParams} from './nav-params';
 import {NavRouter} from './nav-router';
-import {raf, rafFrames} from '../../util/dom';
+import {pascalCaseToDashCase} from '../../util/util';
+import {raf} from '../../util/dom';
 import {SwipeBackGesture} from './swipe-back';
+import {Transition} from '../../transitions/transition';
 import {ViewController} from './view-controller';
 
 /**
+ * @name NavController
+ * @description
  * _For examples on the basic usage of NavController, check out the
  * [Navigation section](../../../../components/#navigation) of the Component
  * docs._
@@ -104,11 +106,11 @@ import {ViewController} from './view-controller';
 export class NavController extends Ion {
   private _transIds = 0;
   private _init = false;
-  private _lastTrans;
+  private _lastTrans: Transition;
   protected _ids: number = -1;
   protected _sbEnabled: any;
   protected _sbThreshold: any;
-  protected _sbTrans: any = null;
+  protected _sbTrans: Transition = null;
   protected _trnsDelay: any;
   protected _trnsTime: number = 0;
   protected _views: Array<ViewController> = [];
@@ -180,7 +182,7 @@ export class NavController extends Ion {
    * @param {object} [opts={}] Any options you want to use pass to transtion
    * @returns {Promise} Returns a promise when done
    */
-  setRoot(page: Type, params: any = {}, opts: any = {}): Promise<any> {
+  setRoot(page: Type, params: any = {}, opts: NavOptions = {}): Promise<any> {
     return this.setPages([{page, params}], opts);
   }
 
@@ -257,7 +259,7 @@ export class NavController extends Ion {
    * @param {object} [opts={}] Any options you want to use pass
    * @returns {Promise} Returns a promise when the pages are set
    */
-  setPages(pages: Array<{page: Type, params?: any}>, opts: any = {}): Promise<any> {
+  setPages(pages: Array<{page: Type, params?: any}>, opts: NavOptions = {}): Promise<any> {
     if (!pages || !pages.length) {
       return Promise.resolve();
     }
@@ -305,7 +307,7 @@ export class NavController extends Ion {
   /**
    * @private
    */
-  private setViews(components, opts = {}) {
+  private setViews(components, opts: NavOptions = {}) {
     console.warn('setViews() deprecated, use setPages() instead');
     return this.setPages(components, opts);
   }
@@ -375,14 +377,7 @@ export class NavController extends Ion {
    * @param {object} [opts={}] Any options you want to use pass to transtion
    * @returns {Promise} Returns a promise, which resolves when the transition has completed
    */
-  push(page: Type,
-       params: any={},
-       opts: {
-         animate?: boolean,
-         animation?: string
-         direction?: string
-       }={}
-  ) {
+  push(page: Type, params: any = {}, opts: NavOptions = {}) {
     return this.insertPages(-1, [{page: page, params: params}], opts);
   }
 
@@ -411,7 +406,7 @@ export class NavController extends Ion {
    * @param {object} [opts={}] Any options you want to use pass to transtion
    * @returns {Promise} Returns a promise, which resolves when the transition has completed
    */
-  present(enteringView: ViewController, opts: any = {}): Promise<any> {
+  present(enteringView: ViewController, opts: NavOptions = {}): Promise<any> {
     let rootNav = this.rootNav;
 
     if (rootNav['_tabs']) {
@@ -421,8 +416,9 @@ export class NavController extends Ion {
       return;
     }
 
+    enteringView.setNav(rootNav);
+
     opts.keyboardClose = false;
-    opts.skipCache = true;
     opts.direction = 'forward';
 
     if (!opts.animation) {
@@ -431,7 +427,6 @@ export class NavController extends Ion {
 
     enteringView.setLeavingOpts({
       keyboardClose: false,
-      skipCache: true,
       direction: 'back',
       animation: enteringView.getTransitionName('back')
     });
@@ -463,7 +458,7 @@ export class NavController extends Ion {
    * @param {object} [opts={}] Any options you want to use pass to transtion
    * @returns {Promise} Returns a promise when the page has been inserted into the navigation stack
    */
-  insert(insertIndex: number, page: Type, params: any = {}, opts: any = {}): Promise<any> {
+  insert(insertIndex: number, page: Type, params: any = {}, opts: NavOptions = {}): Promise<any> {
     return this.insertPages(insertIndex, [{page: page, params: params}], opts);
   }
 
@@ -495,12 +490,12 @@ export class NavController extends Ion {
    * @param {object} [opts={}] Any options you want to use pass to transtion
    * @returns {Promise} Returns a promise when the pages have been inserted into the navigation stack
    */
-  insertPages(insertIndex: number, insertPages: Array<{page: Type, params?: any}>, opts: any = {}): Promise<any> {
+  insertPages(insertIndex: number, insertPages: Array<{page: Type, params?: any}>, opts: NavOptions = {}): Promise<any> {
     let views = insertPages.map(p => new ViewController(p.page, p.params));
     return this._insertViews(insertIndex, views, opts);
   }
 
-  private _insertViews(insertIndex: number, insertViews: Array<ViewController>, opts: any = {}): Promise<any> {
+  private _insertViews(insertIndex: number, insertViews: Array<ViewController>, opts: NavOptions = {}): Promise<any> {
     if (!insertViews || !insertViews.length) {
       return Promise.reject('invalid pages');
     }
@@ -524,7 +519,7 @@ export class NavController extends Ion {
     // transition in, but was simply inserted somewhere in the stack
     // go backwards through the stack and find the first active view
     // which could be active or one ready to enter
-    for (let i = this._views.length - 1; i >= 0; i--) {
+    for (var i = this._views.length - 1; i >= 0; i--) {
       if (this._views[i].state === STATE_ACTIVE || this._views[i].state === STATE_INIT_ENTER) {
         // found the view at the end of the stack that's either
         // already active or it is about to enter
@@ -625,7 +620,7 @@ export class NavController extends Ion {
    * @param {object} [opts={}] Any options you want to use pass to transtion
    * @returns {Promise} Returns a promise when the transition is completed
    */
-  pop(opts: any = {}): Promise<any> {
+  pop(opts: NavOptions = {}): Promise<any> {
     // get the index of the active view
     // which will become the view to be leaving
     let activeView = this.getByState(STATE_TRANS_ENTER) ||
@@ -638,7 +633,7 @@ export class NavController extends Ion {
    * Similar to `pop()`, this method let's you navigate back to the root of the stack, no matter how many views that is
    * @param {object} [opts={}] Any options you want to use pass to transtion
    */
-  popToRoot(opts = {}): Promise<any> {
+  popToRoot(opts: NavOptions = {}): Promise<any> {
     return this.popTo(this.first(), opts);
   }
 
@@ -647,7 +642,7 @@ export class NavController extends Ion {
    * @param {ViewController} view  to pop to
    * @param {object} [opts={}]  Any options you want to use pass to transtion
    */
-  popTo(view: ViewController, opts: any = {}): Promise<any> {
+  popTo(view: ViewController, opts: NavOptions = {}): Promise<any> {
     let startIndex = this.indexOf(view);
     let activeView = this.getByState(STATE_TRANS_ENTER) ||
                      this.getByState(STATE_INIT_ENTER) ||
@@ -676,7 +671,7 @@ export class NavController extends Ion {
    * @param {object} [opts={}] Any options you want to use pass to transtion.
    * @returns {Promise} Returns a promise when the page has been removed.
    */
-  remove(startIndex: number = -1, removeCount: number = 1, opts: any = {}): Promise<any> {
+  remove(startIndex: number = -1, removeCount: number = 1, opts: NavOptions = {}): Promise<any> {
     if (startIndex === -1) {
       startIndex = this._views.length - 1;
 
@@ -703,13 +698,16 @@ export class NavController extends Ion {
         }
 
         if (this._lastTrans) {
-          this._lastTrans.playbackRate(100).onFinish(() => {
-            opts.animate = false;
-            this._transition(forcedActive, null, opts, () => {
-              // transition has completed!!
-              resolve();
-            });
-          });
+          this._lastTrans
+            .onFinish(() => {
+              opts.animate = false;
+              this._transition(forcedActive, null, opts, () => {
+                // transition has completed!!
+                resolve();
+              });
+            }, false, true)
+            .stop();
+          this._lastTrans.destroy();
           this._lastTrans = null;
 
         } else {
@@ -759,7 +757,7 @@ export class NavController extends Ion {
     let view: ViewController = null;
 
     // loop through each view that is set to be removed
-    for (let i = startIndex, ii = removeCount + startIndex; i < ii; i++) {
+    for (var i = startIndex, ii = removeCount + startIndex; i < ii; i++) {
       view = this.getByIndex(i);
       if (!view) break;
 
@@ -790,7 +788,7 @@ export class NavController extends Ion {
 
       // from the index of the leaving view, go backwards and
       // find the first view that is inactive
-      for (let i = this.indexOf(view) - 1; i >= 0; i--) {
+      for (var i = this.indexOf(view) - 1; i >= 0; i--) {
         if (this._views[i].state === STATE_INACTIVE) {
           this._views[i].state = STATE_INIT_ENTER;
           break;
@@ -811,7 +809,7 @@ export class NavController extends Ion {
 
       // from the index of the leaving view, go backwards and
       // find the first view that is inactive so it can be the entering
-      for (let i = this.indexOf(view) - 1; i >= 0; i--) {
+      for (var i = this.indexOf(view) - 1; i >= 0; i--) {
         if (this._views[i].state === STATE_INACTIVE) {
           this._views[i].state = STATE_INIT_ENTER;
           break;
@@ -853,7 +851,7 @@ export class NavController extends Ion {
   /**
    * @private
    */
-  private _transition(enteringView: ViewController, leavingView: ViewController, opts, done: Function) {
+  private _transition(enteringView: ViewController, leavingView: ViewController, opts: NavOptions, done: Function) {
     let transId = ++this._transIds;
 
     if (enteringView === leavingView) {
@@ -900,7 +898,7 @@ export class NavController extends Ion {
   /**
    * @private
    */
-  private _render(transId, enteringView: ViewController, leavingView: ViewController, opts: any, done: Function) {
+  private _render(transId, enteringView: ViewController, leavingView: ViewController, opts: NavOptions, done: Function) {
     // compile/load the view into the DOM
 
     if (enteringView.state === STATE_INACTIVE) {
@@ -946,7 +944,7 @@ export class NavController extends Ion {
   /**
    * @private
    */
-  private _postRender(transId, enteringView: ViewController, leavingView: ViewController, isAlreadyTransitioning: boolean, opts: any, done: Function) {
+  private _postRender(transId, enteringView: ViewController, leavingView: ViewController, isAlreadyTransitioning: boolean, opts: NavOptions, done: Function) {
     // called after _render has completed and the view is compiled/loaded
 
     if (enteringView.state === STATE_INACTIVE) {
@@ -1005,7 +1003,7 @@ export class NavController extends Ion {
   /**
    * @private
    */
-  private _beforeTrans(enteringView: ViewController, leavingView: ViewController, opts: any, done: Function) {
+  private _beforeTrans(enteringView: ViewController, leavingView: ViewController, opts: NavOptions, done: Function) {
     // called after one raf from postRender()
     // create the transitions animation, play the animation
     // when the transition ends call wait for it to end
@@ -1023,24 +1021,28 @@ export class NavController extends Ion {
     this._zone.runOutsideAngular(() => {
 
       // init the transition animation
-      opts.renderDelay = opts.transitionDelay || this._trnsDelay;
+      let transitionOpts = {
+        animation: opts.animation,
+        direction: opts.direction,
+        duration: opts.duration,
+        easing: opts.easing,
+        renderDelay: opts.transitionDelay || this._trnsDelay,
+        isRTL: this.config.platform.isRTL()
+      };
 
-      // set if this app is right-to-left or not
-      opts.isRTL = this.config.platform.isRTL();
+      let transAnimation = Transition.createTransition(enteringView,
+                                                       leavingView,
+                                                       transitionOpts);
 
-      let transAnimation = Animation.createTransition(enteringView,
-                                                      leavingView,
-                                                      opts);
-
+      this._lastTrans && this._lastTrans.destroy();
       this._lastTrans = transAnimation;
 
       if (opts.animate === false) {
         // force it to not animate the elements, just apply the "to" styles
-        transAnimation.clearDuration();
         transAnimation.duration(0);
       }
 
-      let duration = transAnimation.duration();
+      let duration = transAnimation.getDuration();
       let enableApp = (duration < 64);
       // block any clicks during the transition and provide a
       // fallback to remove the clickblock if something goes wrong
@@ -1051,22 +1053,25 @@ export class NavController extends Ion {
         transAnimation.before.addClass(enteringView.viewType);
       }
 
-      // start the transition
-      transAnimation.play(() => {
+      // create a callback for when the animation is done
+      transAnimation.onFinish(() => {
         // transition animation has ended
 
         // dispose the animation and it's element references
-        transAnimation.dispose();
+        transAnimation.destroy();
 
         this._afterTrans(enteringView, leavingView, opts, done);
       });
+
+      // cool, let's do this, start the transition
+      transAnimation.play();
     });
   }
 
   /**
    * @private
    */
-  private _afterTrans(enteringView: ViewController, leavingView: ViewController, opts: any, done: Function) {
+  private _afterTrans(enteringView: ViewController, leavingView: ViewController, opts: NavOptions, done: Function) {
     // transition has completed, update each view's state
     // place back into the zone, run didEnter/didLeave
     // call the final callback when done
@@ -1172,7 +1177,7 @@ export class NavController extends Ion {
     let activeViewIndex = this.indexOf(this.getActive());
     let destroys = this._views.filter(v => v.state === STATE_REMOVE_AFTER_TRANS);
 
-    for (let i = activeViewIndex + 1; i < this._views.length; i++) {
+    for (var i = activeViewIndex + 1; i < this._views.length; i++) {
       if (this._views[i].state === STATE_INACTIVE) {
         destroys.push(this._views[i]);
       }
@@ -1189,7 +1194,7 @@ export class NavController extends Ion {
   /**
    * @private
    */
-  loadPage(view: ViewController, navbarContainerRef, opts: any, done: Function) {
+  loadPage(view: ViewController, navbarContainerRef, opts: NavOptions, done: Function) {
     let wtfTimeRangeScope = wtfStartTimeRange('NavController#loadPage', view.name);
 
     // guts of DynamicComponentLoader#loadIntoLocation
@@ -1291,19 +1296,8 @@ export class NavController extends Ion {
     // wait for the new view to complete setup
     this._render(0, enteringView, leavingView, {}, () => {
 
-      this._zone.runOutsideAngular(() => {
-        // set that the new view pushed on the stack is staged to be entering/leaving
-        // staged state is important for the transition to find the correct view
-        // enteringView.state = STATE_RENDERED_ENTER;
-        // leavingView.state = STATE_RENDERED_LEAVE;
 
-        // init the swipe back transition animation
-        this._sbTrans = Animation.createTransition(enteringView, leavingView, opts);
-        this._sbTrans.easing('linear').progressStart();
-
-      });
     });
-
   }
 
   /**
@@ -1317,7 +1311,7 @@ export class NavController extends Ion {
       this.setTransitioning(true, 4000);
 
       // set the transition animation's progress
-      this._sbTrans.progress(value);
+      this._sbTrans.progressStep(value);
     }
   }
 
@@ -1332,8 +1326,7 @@ export class NavController extends Ion {
     this._app.setEnabled(false);
     this.setTransitioning(true);
 
-    this._sbTrans.progressEnd(completeSwipeBack, rate).then(() => {
-
+    this._sbTrans.onFinish(() => {
       this._zone.run(() => {
         // find the views that were entering and leaving
         let enteringView = null;// this._getStagedEntering();
@@ -1372,14 +1365,15 @@ export class NavController extends Ion {
         }
 
         // empty out and dispose the swipe back transition animation
-        this._sbTrans && this._sbTrans.dispose();
+        this._sbTrans && this._sbTrans.destroy();
         this._sbTrans = null;
 
         // all done!
         //this._transComplete();
       });
-    });
+    }, true);
 
+    this._sbTrans.progressEnd(completeSwipeBack, 0.5);
   }
 
   /**
@@ -1471,7 +1465,7 @@ export class NavController extends Ion {
    * @returns {ViewController}
    */
   getByState(state: string): ViewController {
-    for (let i = this._views.length - 1; i >= 0; i--) {
+    for (var i = this._views.length - 1; i >= 0; i--) {
       if (this._views[i].state === state) {
         return this._views[i];
       }
@@ -1589,6 +1583,18 @@ export class NavController extends Ion {
     }
   }
 
+}
+
+export interface NavOptions {
+  animate?: boolean;
+  animation?: string;
+  direction?: string;
+  duration?: number;
+  easing?: string;
+  keyboardClose?: boolean;
+  preload?: boolean;
+  transitionDelay?: number;
+  postLoad?: Function
 }
 
 const STATE_ACTIVE = 'active';

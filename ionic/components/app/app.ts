@@ -97,9 +97,6 @@ export class IonicApp {
    * @param {Object} component  The component to register
    */
   register(id: string, component: any) {
-    if (this.components[id] && this.components[id] !== component) {
-      //console.error('Component id "' + id + '" already registered.');
-    }
     this.components[id] = component;
   }
 
@@ -134,6 +131,22 @@ export class IonicApp {
    * @return {Object} TODO
    */
   getComponent(id: string): any {
+    // deprecated warning
+    if (/menu/i.test(id)) {
+      console.warn('Using app.getComponent(menuId) to control menus has been deprecated as of alpha55.\n' +
+                   'Instead inject MenuController, for example:\n\n' +
+                   'constructor(menu: MenuController) {\n' +
+                   '  this.menu = menu;\n' +
+                   '}\n' +
+                   'toggleMenu() {\n' +
+                   '  this.menu.toggle();\n' +
+                   '}\n' +
+                   'openRightMenu() {\n' +
+                   '  this.menu.open("right");\n' +
+                   '}'
+      );
+    }
+
     return this.components[id];
   }
 

@@ -42,19 +42,7 @@ export class SearchbarInput {
  * <ion-searchbar [(ngModel)]="defaultSearch" (input)="triggerInput($event)" (cancel)="onCancelSearchbar($event)" (clear)="onClearSearchbar($event)"></ion-searchbar>
  * ```
  *
- * @property {string} [cancelButtonText=Cancel] - Sets the cancel button text to the value passed in
- * @property {boolean} [hideCancelButton=false] - Hides the cancel button
- * @property {string} [placeholder=Search] - Sets input placeholder to the value passed in
- *
- * @property {Any} [input] - Expression to evaluate when the Searchbar input has changed including cleared
- * @property {Any} [keydown] - Expression to evaluate when a key is pushed down in the Searchbar input
- * @property {Any} [keypress] - Expression to evaluate when a character is inserted in the Searchbar input
- * @property {Any} [keyup] - Expression to evaluate when a key is released in the Searchbar input
- * @property {Any} [blur] - Expression to evaluate when the Searchbar input has blurred
- * @property {Any} [focus] - Expression to evaluate when the Searchbar input has focused
- * @property {Any} [cancel] - Expression to evaluate when the cancel button is clicked
- * @property {Any} [clear] - Expression to evaluate when the clear input button is clicked
- *
+ * @demo /docs/v2/demos/searchbar/
  * @see {@link /docs/v2/components#searchbar Searchbar Component Docs}
  */
 @Component({
@@ -78,40 +66,47 @@ export class Searchbar extends Ion {
   @ViewChild(SearchbarInput) searchbarInput;
 
   /**
-   * @private
+   * @input {string} Sets the cancel button text to the value passed in
    */
   @Input() cancelButtonText: string;
+
   /**
-   * @private
+   * @input {boolean} Hides the cancel button
    */
   @Input() hideCancelButton: any;
+
   /**
-   * @private
+   * @input {string} Sets input placeholder to the value passed in
    */
   @Input() placeholder: string;
+
   /**
-   * @private
+   * @input {Any} Expression to evaluate when the Searchbar input has changed including cleared
    */
   @Input() ngModel: any;
 
   /**
-   * @private
+   * @output {event} When the Searchbar input has changed including cleared
    */
   @Output() input: EventEmitter<Searchbar> = new EventEmitter();
+
   /**
-   * @private
+   * @output {event} When the Searchbar input has blurred
    */
   @Output() blur: EventEmitter<Searchbar> = new EventEmitter();
+
   /**
-   * @private
+   * @output {event} When the Searchbar input has focused
    */
   @Output() focus: EventEmitter<Searchbar> = new EventEmitter();
+
   /**
-   * @private
+   * @output {event} When the cancel button is clicked
    */
   @Output() cancel: EventEmitter<Searchbar> = new EventEmitter();
+
   /**
-   * @private
+   * @output {event} When the clear input button is clicked
    */
   @Output() clear: EventEmitter<Searchbar> = new EventEmitter();
 
