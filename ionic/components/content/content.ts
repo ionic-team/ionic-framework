@@ -109,8 +109,8 @@ export class Content extends Ion {
    *    }
    * }
    * ```
-   * @param {function} handler  The method you want perform when scrolling
-   * @returns {function} A function that removes the scroll handler.
+   * @param {Function} handler  The method you want perform when scrolling
+   * @returns {Function} A function that removes the scroll handler.
    */
   addScrollEventListener(handler) {
     if (!this.scrollElement) {
@@ -131,7 +131,7 @@ export class Content extends Ion {
   /**
    * Call a method when scrolling has stopped
    *
-   * @param {function} callback The method you want perform when scrolling has ended
+   * @param {Function} callback The method you want perform when scrolling has ended
    */
   onScrollEnd(callback) {
     let lastScrollTop = null;
@@ -186,8 +186,8 @@ export class Content extends Ion {
    *    }
    * }
    * ```
-   * @param {function} handler  The method you want to perform when touchmove is firing
-   * @returns {function} A function that removes the touchmove handler.
+   * @param {Function} handler  The method you want to perform when touchmove is firing
+   * @returns {Function} A function that removes the touchmove handler.
    */
   addTouchMoveListener(handler) {
     if (!this.scrollElement) { return; }
@@ -229,7 +229,7 @@ export class Content extends Ion {
    * @param {number} y  The y-value to scroll to.
    * @param {number} duration  Duration of the scroll animation in ms.
    * @param {TODO} tolerance  TODO
-   * @returns {promise} Returns a promise when done
+   * @returns {Promise} Returns a promise when done
    */
   scrollTo(x: number, y: number, duration: number, tolerance?: number): Promise<any> {
     if (this._scrollTo) {
@@ -264,7 +264,7 @@ export class Content extends Ion {
    *    }
    * }
    * ```
-   * @returns {promise} Returns a promise when done
+   * @returns {Promise} Returns a promise when done
    */
   scrollToTop() {
     if (this._scrollTo) {

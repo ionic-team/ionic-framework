@@ -50,15 +50,6 @@ import {raf, ready, CSS} from '../../util/dom';
  *  ```
  *  @demo /docs/v2/demos/refresher/
  *
- *  @property {string} [pullingIcon] - the icon you want to display when you begin to pull down
- *  @property {string} [pullingText] - the text you want to display when you begin to pull down
- *  @property {string} [refreshingIcon] - the icon you want to display when performing a refresh
- *  @property {string} [refreshingText] - the text you want to display when performing a refresh
- *
- *  @property {any} (refresh) - the methond on your class you want to perform when you refreshing
- *  @property {any} (starting) - the methond on your class you want to perform when you start pulling down
- *  @property {any} (pulling) - the methond on your class you want to perform when you are pulling down
- *
  */
 @Component({
   selector: 'ion-refresher',
@@ -174,22 +165,22 @@ export class Refresher {
 
 
   /**
-   * @private
+   * @input {string} the icon you want to display when you begin to pull down
    */
   @Input() pullingIcon: string;
 
   /**
-   * @private
+   * @input {string} the text you want to display when you begin to pull down
    */
   @Input() pullingText: string;
 
   /**
-   * @private
+   * @input {string} the icon you want to display when performing a refresh
    */
   @Input() refreshingIcon: string;
 
   /**
-   * @private
+   * @input {string} the text you want to display when performing a refresh
    */
   @Input() refreshingText: string;
 
@@ -200,17 +191,17 @@ export class Refresher {
 
 
   /**
-   * @private
+   * @output {any} the methond on your class you want to perform when you are pulling down
    */
   @Output() pulling: EventEmitter<any> = new EventEmitter();
 
   /**
-   * @private
+   * @output {any} the methond on your class you want to perform when you refreshing
    */
   @Output() refresh: EventEmitter<any> = new EventEmitter();
 
   /**
-   * @private
+   * @output {any} the methond on your class you want to perform when you start pulling down
    */
   @Output() starting: EventEmitter<any> = new EventEmitter();
 

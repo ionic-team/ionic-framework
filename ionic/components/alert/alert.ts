@@ -198,7 +198,7 @@ export class Alert extends ViewController {
   }
 
   /**
-   * @param {object} button Alert button
+   * @param {any} button Alert button
    */
   addButton(button: any) {
     this.data.buttons.push(button);

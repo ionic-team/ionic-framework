@@ -167,7 +167,7 @@ export class Checkbox {
    * Angular2 Forms API method called by the view (NgControl) to register the
    * onChange event handler that updates the model (Control).
    * https://github.com/angular/angular/blob/master/modules/angular2/src/forms/directives/shared.ts#L27
-   * @param {Function} fn  the onChange event handler.
+   * @param {function} fn  the onChange event handler.
    */
   registerOnChange(fn) { this.onChange = fn; }
 
@@ -175,7 +175,7 @@ export class Checkbox {
    * @private
    * Angular2 Forms API method called by the the view (NgControl) to register
    * the onTouched event handler that marks model (Control) as touched.
-   * @param {Function} fn  onTouched event handler.
+   * @param {function} fn  onTouched event handler.
    */
   registerOnTouched(fn) { this.onTouched = fn; }
 

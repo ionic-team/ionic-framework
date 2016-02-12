@@ -17,7 +17,7 @@ export class Option {
   private _value;
 
   /**
-   * @input {Any} Event to evaluate when option has changed
+   * @input {any} Event to evaluate when option has changed
    */
   @Output() select: EventEmitter<any> = new EventEmitter();
 

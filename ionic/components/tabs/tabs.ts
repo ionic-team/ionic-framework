@@ -269,7 +269,7 @@ export class Tabs extends Ion {
 
   /**
    * @param {number} index Index of the tab you want to get
-   * @returns {Any} Tab Returs the tab who's index matches the one passed
+   * @returns {any} Tab Returs the tab who's index matches the one passed
    */
   getByIndex(index: number): any {
     if (index < this._tabs.length && index > -1) {
@@ -279,7 +279,7 @@ export class Tabs extends Ion {
   }
 
   /**
-   * @return {Any} Tab Returns the currently selected tab
+   * @return {any} Tab Returns the currently selected tab
    */
   getSelected(): Tab {
     for (let i = 0; i < this._tabs.length; i++) {
