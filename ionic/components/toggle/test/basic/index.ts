@@ -17,6 +17,7 @@ import {
 class E2EApp {
   fruitsForm: ControlGroup;
   grapeDisabled: boolean;
+  grapeChecked: boolean;
   kiwiModel: boolean;
   strawberryModel: boolean;
   formResults: string;
@@ -29,6 +30,7 @@ class E2EApp {
       "grapeCtrl": new Control(true)
     });
 
+    this.grapeChecked = true;
     this.grapeDisabled = true;
 
     this.kiwiModel = false;
@@ -36,7 +38,7 @@ class E2EApp {
   }
 
   toggleGrapeChecked() {
-    this.fruitsForm.controls['grapeCtrl'].updateValue( !this.fruitsForm.controls['grapeCtrl'].value )
+    this.grapeChecked = !this.grapeChecked;
   }
 
   toggleGrapeDisabled() {

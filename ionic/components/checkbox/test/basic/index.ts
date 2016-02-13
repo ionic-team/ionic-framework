@@ -16,6 +16,14 @@ import {
   templateUrl: 'main.html'
 })
 class E2EApp {
+  fruitsForm: ControlGroup;
+  grapeDisabled: boolean;
+  grapeChecked: boolean;
+  kiwiModel: boolean;
+  strawberryModel: boolean;
+  standAloneChecked: boolean;
+  formResults: string;
+
   constructor() {
     this.fruitsForm = new ControlGroup({
       "appleCtrl": new Control(),
@@ -27,6 +35,9 @@ class E2EApp {
     this.grapeDisabled = true;
     this.grapeChecked = true;
     this.standAloneChecked = true;
+
+    this.kiwiModel = false;
+    this.strawberryModel = true;
   }
 
   toggleGrapeChecked() {

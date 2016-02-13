@@ -20,7 +20,7 @@ const TOGGLE_VALUE_ACCESSOR = new Provider(
  * attribute.
  *
  * See the [Angular 2 Docs](https://angular.io/docs/ts/latest/guide/forms.html)
- * for more info on forms and input.
+ * for more info on forms and inputs.
  * @property {boolean} [checked] - whether the toggle it toggled or not
  * @property {boolean} [disabled] - whether the toggle is disabled or not
  *
@@ -36,7 +36,7 @@ const TOGGLE_VALUE_ACCESSOR = new Provider(
  *
  *    <ion-item>
  *      <ion-label>Sausage</ion-label>
- *      <ion-toggle [(ngModel)]="sausage"></ion-toggle>
+ *      <ion-toggle [(ngModel)]="sausage" disabled="true"></ion-toggle>
  *    </ion-item>
  *
  *    <ion-item>
@@ -183,6 +183,14 @@ export class Toggle implements ControlValueAccessor  {
   /**
    * @private
    */
+  private _setChecked(isChecked: boolean) {
+    this._checked = isChecked;
+    this._item && this._item.setCssClass('item-toggle-checked', isChecked);
+  }
+
+  /**
+   * @private
+   */
   writeValue(val: any) {
     this._setChecked( isTrueProperty(val) );
   }
@@ -202,10 +210,7 @@ export class Toggle implements ControlValueAccessor  {
   /**
    * @private
    */
-  private _setChecked(isChecked: boolean) {
-    this._checked = isChecked;
-    this._item && this._item.setCssClass('item-toggle-checked', isChecked);
-  }
+  registerOnTouched(fn) { this.onTouched = fn; }
 
   @Input()
   get disabled(): any {
@@ -216,11 +221,6 @@ export class Toggle implements ControlValueAccessor  {
     this._disabled = isTrueProperty(val);
     this._item && this._item.setCssClass('item-toggle-disabled', this._disabled);
   }
-
-  /**
-   * @private
-   */
-  registerOnTouched(fn) { this.onTouched = fn; }
 
   /**
    * @private
