@@ -5,13 +5,12 @@ import {App, Page, Alert, NavController} from '../../../../../ionic/ionic';
   templateUrl: 'main.html'
 })
 class E2EPage {
+  testConfirmOpen: boolean = false;
+  testPromptOpen: boolean = false;
+  testConfirmResult: string = '';
+  testPromptResult: string = '';
 
-  constructor(private nav: NavController) {
-    this.testConfirmOpen = false;
-    this.testPromptOpen = false;
-    this.testConfirmResult = '';
-    this.testPromptResult = '';
-  }
+  constructor(private nav: NavController) { }
 
   doAlert() {
     let alert = Alert.create({
@@ -56,6 +55,14 @@ class E2EPage {
       title: 'Alert',
       message: 'Message <strong>text</strong>!!!',
       buttons: ['Cancel', 'Continue to grant access']
+    });
+    this.nav.present(alert);
+  }
+
+  doAlertNoBody() {
+    let alert = Alert.create({
+      title: 'Alert',
+      buttons: ['OK']
     });
     this.nav.present(alert);
   }
