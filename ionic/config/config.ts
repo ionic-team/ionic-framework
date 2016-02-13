@@ -35,7 +35,7 @@ import {isObject, isDefined, isFunction, isArray} from '../util/util';
  * @App({
  *   template: `<ion-nav [root]="root"></ion-nav>`
  *   config: {
- *     mode: md
+ *     mode: 'md'
  *   }
  * })
  * ```
