@@ -26,7 +26,7 @@ const _reflect: any=Reflect;
 * }
 * ```
 *
-* @property {object} [config] - the app's {@link docs/v2/api/config/Config/ Config} object
+* @property {object} [config] - the app's {@link /docs/v2/api/config/Config/ Config} object
 * @property {array}  [providers] - any providers for your app
 * @property {string} [template] - the template to use for the app root
 * @property {string} [templateUrl] - a relative URL pointing to the template to use for the app root
