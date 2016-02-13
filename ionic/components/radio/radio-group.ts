@@ -13,7 +13,7 @@ import {isDefined} from '../../util/util';
  * from the selected radio button's value. Selecting a radio button
  * in the group unselects all others in the group.
  *
- * See the [Angular 2 Docs](https://angular.io/docs/js/latest/api/forms/) for more info on forms and input.
+ * See the [Angular 2 Docs](https://angular.io/docs/ts/latest/guide/forms.html) for more info on forms and input.
  *
  * @usage
  * ```html

@@ -14,7 +14,7 @@ import {RadioGroup} from './radio-group';
  * and there must be at least two `<ion-radio>` components within
  * the radio group.
  *
- * See the [Angular 2 Docs](https://angular.io/docs/js/latest/api/forms/) for
+ * See the [Angular 2 Docs](https://angular.io/docs/ts/latest/guide/forms.html) for
  * more info on forms and input.
  *
  * @usage
