@@ -1,6 +1,6 @@
 
 it('should check apple via switch element click', function() {
-  element(by.css('[value="apple"] button')).click();
+  element(by.css('[ngControl="appleCtrl"]')).click();
 });
 
 
