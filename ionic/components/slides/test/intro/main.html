@@ -1,14 +1,14 @@
 <ion-navbar *navbar>
   <ion-buttons end>
     <button (click)="skip()">
-      Skip
+      {{continueText}}
     </button>
   </ion-buttons>
   <ion-title>Slides</ion-title>
 </ion-navbar>
 
 <ion-content>
-  <ion-slides pager (change)="onSlideChanged($event)" loop="true">
+  <ion-slides pager (change)="onSlideChanged($event)" (slideChangeStart)="onSlideChangeStart($event)" loop="true">
     <ion-slide>
       <h3>Thank you for choosing the Awesome App!</h3>
       <div id="logo">

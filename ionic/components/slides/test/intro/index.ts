@@ -14,12 +14,19 @@ class MyApp {
   templateUrl: 'main.html'
 })
 class IntroPage {
-  constructor(nav: NavController) {
-    this.nav = nav;
+  continueText: string = "Skip";
+
+  constructor(public nav: NavController) {
+
   }
 
   onSlideChanged(slider) {
-    console.log('Slide changed', slider);
+    console.log("Slide changed", slider);
+  }
+
+  onSlideChangeStart(slider) {
+    console.log("Slide change start", slider);
+    slider.isEnd ? this.continueText = "Continue" : this.continueText = "Skip";
   }
 
   skip() {
