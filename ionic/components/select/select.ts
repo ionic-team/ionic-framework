@@ -150,10 +150,14 @@ export class Select {
   @Input() checked: any = false;
 
   /**
-   * @private
    * @output {any} Any expression you want to evaluate when the selection has changed
    */
   @Output() change: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * @output {any} Any expression you want to evaluate when the selection was cancelled
+   */
+  @Output() cancel: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private _form: Form,
@@ -196,7 +200,12 @@ export class Select {
 
     // make sure their buttons array is removed from the options
     // and we create a new array for the alert's two buttons
-    alertOptions.buttons = [this.cancelText];
+    alertOptions.buttons = [{
+      text: this.cancelText,
+      handler: () => {
+        this.cancel.emit(null);
+      }
+    }];
 
     // if the alertOptions didn't provide an title then use the label's text
     if (!alertOptions.title && this._item) {
