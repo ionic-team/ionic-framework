@@ -205,6 +205,11 @@ export class Slides extends Ion {
   @Output() change: EventEmitter<any> = new EventEmitter();
 
   /**
+   * @output {any} expression to evaluate when a slide change starts
+   */
+  @Output() slideChangeStart: EventEmitter<any> = new EventEmitter();
+
+  /**
    * @private
    * @param {ElementRef} elementRef  TODO
    */
@@ -260,6 +265,7 @@ export class Slides extends Ion {
       return this.options.onTransitionEnd && this.options.onTransitionEnd(swiper, e);
     };
     options.onSlideChangeStart = (swiper) => {
+      this.slideChangeStart.emit(swiper);
       return this.options.onSlideChangeStart && this.options.onSlideChangeStart(swiper);
     };
     options.onSlideChangeEnd = (swiper) => {
