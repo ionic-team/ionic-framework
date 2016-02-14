@@ -1,4 +1,4 @@
-import {Component, Optional, Input, HostListener, Provider, forwardRef, Injector} from 'angular2/core';
+import {Component, Optional, Input, HostListener, Provider, forwardRef} from 'angular2/core';
 import {NgControl, NG_VALUE_ACCESSOR} from 'angular2/common';
 
 import {Form} from '../../util/form';
@@ -74,8 +74,7 @@ export class Checkbox {
 
   constructor(
     private _form: Form,
-    @Optional() private _item: Item,
-    private _injector: Injector
+    @Optional() private _item: Item
   ) {
     _form.register(this);
 

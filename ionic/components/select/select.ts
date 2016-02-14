@@ -1,5 +1,5 @@
-import {Component, Optional, ElementRef, Renderer, Input, Output, EventEmitter, HostListener, ContentChildren, QueryList} from 'angular2/core';
-import {NgControl} from 'angular2/common';
+import {Component, Optional, ElementRef, Renderer, Input, Output, Provider, forwardRef, EventEmitter, HostListener, ContentChildren, QueryList} from 'angular2/core';
+import {NgControl, NG_VALUE_ACCESSOR} from 'angular2/common';
 
 import {Alert} from '../alert/alert';
 import {Form} from '../../util/form';
@@ -7,6 +7,10 @@ import {Item} from '../item/item';
 import {merge, isTrueProperty, isBlank} from '../../util/util';
 import {NavController} from '../nav/nav-controller';
 import {Option} from '../option/option';
+
+const SELECT_VALUE_ACCESSOR = new Provider(
+    NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => Select), multi: true});
+
 
 /**
  * @name Select
@@ -110,7 +114,8 @@ import {Option} from '../option/option';
     '</button>',
   host: {
     '[class.select-disabled]': '_disabled'
-  }
+  },
+  providers: [SELECT_VALUE_ACCESSOR]
 })
 export class Select {
   private _disabled: any = false;
@@ -120,6 +125,7 @@ export class Select {
   private _values: Array<string> = [];
   private _texts: Array<string> = [];
   private _text: string = '';
+  private _fn: Function;
 
   /**
    * @private
@@ -128,13 +134,13 @@ export class Select {
 
   /**
    * @private
-   * @input {string}  The text of the cancel button. Defatuls to 'cancel'
+   * @input {string}  The text of the cancel button. Defatuls to `Cancel`
    */
   @Input() cancelText: string = 'Cancel';
 
   /**
    * @private
-   * @input {string} The text of the ok button. Defatuls to 'OK'
+   * @input {string} The text of the ok button. Defatuls to `OK`
    */
   @Input() okText: string = 'OK';
 
@@ -164,14 +170,9 @@ export class Select {
     private _elementRef: ElementRef,
     private _renderer: Renderer,
     @Optional() private _item: Item,
-    @Optional() private _nav: NavController,
-    @Optional() ngControl: NgControl
+    @Optional() private _nav: NavController
   ) {
     this._form.register(this);
-
-    if (ngControl) {
-      ngControl.valueAccessor = this;
-    }
 
     if (_item) {
       this.id = 'sel-' + _item.registerInput('select');
@@ -238,7 +239,6 @@ export class Select {
     alert.addButton({
       text: this.okText,
       handler: selectedValues => {
-        this.value = selectedValues;
         this.onChange(selectedValues);
         this.change.emit(selectedValues);
       }
@@ -252,27 +252,12 @@ export class Select {
    * @input {boolean} Whether or not the select component can accept multipl selections
    */
   @Input()
-  get multiple() {
+  get multiple(): any {
     return this._multi;
   }
 
-  set multiple(val) {
+  set multiple(val: any) {
     this._multi = isTrueProperty(val);
-  }
-
-
-  /**
-   * @private
-   */
-  @Input()
-  get value(): any {
-    return (this._multi ? this._values : this._values.join());
-  }
-
-  set value(val: any) {
-    // passed in value could be either an array, undefined or a string
-    this._values = (Array.isArray(val) ? val : isBlank(val) ? [] : [val]);
-    this.updateOptions();
   }
 
 
@@ -296,13 +281,13 @@ export class Select {
       this._values = val.toArray().filter(o => o.checked).map(o => o.value);
     }
 
-    this.updateOptions();
+    this._updOpts();
   }
 
   /**
    * @private
    */
-  private updateOptions() {
+  private _updOpts() {
     this._texts = [];
 
     if (this._options) {
@@ -317,20 +302,6 @@ export class Select {
 
     this._text = this._texts.join(', ');
   }
-
-
-  /**
-   * @private
-   */
-  ngAfterContentInit() {
-    // using a setTimeout here to prevent
-    // "has changed after it was checked" error
-    // this will be fixed in future ng2 versions
-    setTimeout(()=> {
-      this.onChange(this._values);
-    });
-  }
-
 
   /**
    * @input {boolean} Whether or not the select component is disabled or not
@@ -347,40 +318,39 @@ export class Select {
 
   /**
    * @private
-   * Angular2 Forms API method called by the model (Control) on change to update
-   * the checked value.
-   * https://github.com/angular/angular/blob/master/modules/angular2/src/forms/directives/shared.ts#L34
    */
-  writeValue(val) {
-    this.value = val;
+  writeValue(val: any) {
+    this._values = (Array.isArray(val) ? val : isBlank(val) ? [] : [val]);
+    this._updOpts();
   }
 
   /**
    * @private
    */
-  onChange(val) {}
+  registerOnChange(fn: Function): void {
+    this._fn = fn;
+    this.onChange = (val: any) => {
+      console.debug('select, onChange', val);
+      fn(val);
+      this._values = (Array.isArray(val) ? val : isBlank(val) ? [] : [val]);
+      this._updOpts();
+    };
+  }
 
   /**
    * @private
-   */
-  onTouched(val) {}
-
-  /**
-   * @private
-   * Angular2 Forms API method called by the view (NgControl) to register the
-   * onChange event handler that updates the model (Control).
-   * https://github.com/angular/angular/blob/master/modules/angular2/src/forms/directives/shared.ts#L27
-   * @param {Function} fn  the onChange event handler.
-   */
-  registerOnChange(fn) { this.onChange = fn; }
-
-  /**
-   * @private
-   * Angular2 Forms API method called by the the view (NgControl) to register
-   * the onTouched event handler that marks model (Control) as touched.
-   * @param {Function} fn  onTouched event handler.
    */
   registerOnTouched(fn) { this.onTouched = fn; }
+
+  /**
+   * @private
+   */
+  onChange(_) {}
+
+  /**
+   * @private
+   */
+  onTouched() {}
 
   /**
    * @private

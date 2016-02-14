@@ -1,4 +1,4 @@
-import {Component, ElementRef, Renderer, Input, Optional, Provider, Injector, forwardRef} from 'angular2/core';
+import {Component, ElementRef, Renderer, Input, Optional, Provider, forwardRef} from 'angular2/core';
 import {NgControl, ControlValueAccessor, NG_VALUE_ACCESSOR} from 'angular2/common';
 
 import {Form} from '../../util/form';
@@ -93,8 +93,7 @@ export class Toggle implements ControlValueAccessor  {
     private _form: Form,
     private _elementRef: ElementRef,
     private _renderer: Renderer,
-    @Optional() private _item: Item,
-    private _injector: Injector
+    @Optional() private _item: Item
   ) {
     this._form.register(this);
 
