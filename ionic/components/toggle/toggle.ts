@@ -203,6 +203,7 @@ export class Toggle implements ControlValueAccessor  {
       console.debug('toggle, onChange', isChecked);
       fn(isChecked);
       this._setChecked(isChecked);
+      this.onTouched();
     };
   }
 

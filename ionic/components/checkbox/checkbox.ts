@@ -133,6 +133,7 @@ export class Checkbox {
       console.debug('checkbox, onChange', isChecked);
       fn(isChecked);
       this._setChecked(isChecked);
+      this.onTouched();
     };
   }
 

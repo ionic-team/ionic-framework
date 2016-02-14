@@ -334,6 +334,7 @@ export class Select {
       fn(val);
       this._values = (Array.isArray(val) ? val : isBlank(val) ? [] : [val]);
       this._updOpts();
+      this.onTouched();
     };
   }
 
