@@ -71,7 +71,7 @@ export class RadioButton {
 
     if (_group) {
       // register with the radiogroup
-      this.id = 'rb-' + _group.register(this);
+      this.id = 'rb-' + _group.add(this);
     }
 
     if (_item) {
@@ -105,27 +105,10 @@ export class RadioButton {
   }
 
   set checked(isChecked) {
-    if (!this._disabled) {
-      // only check/uncheck if it's not disabled
+    this._checked = isTrueProperty(isChecked);
 
-      // emit the select event for the radiogroup to catch
-      this._checked = isTrueProperty(isChecked);
-      this.select.emit(this.value);
-
-      // if it's a stand-alone radiobutton nothing else happens
-      // if it was within a radiogroup then updateAsChecked will
-      // get called again
-      this.updateAsChecked(this._checked);
-    }
-  }
-
-  /**
-   * @private
-   */
-  updateAsChecked(val: boolean) {
-    this._checked = val;
     if (this._item) {
-      this._item.setCssClass('item-radio-checked', val);
+      this._item.setCssClass('item-radio-checked', this._checked);
     }
   }
 
@@ -150,7 +133,18 @@ export class RadioButton {
     console.debug('radio, select', this.id);
     ev.preventDefault();
     ev.stopPropagation();
+
     this.checked = true;
+    this.select.emit(this.value);
+  }
+
+  /**
+   * @private
+   */
+  ngOnInit() {
+    if (this._group && isDefined(this._group.value) && this._group.value === this.value) {
+      this.checked = true;
+    }
   }
 
   /**
@@ -158,5 +152,6 @@ export class RadioButton {
    */
   ngOnDestroy() {
     this._form.deregister(this);
+    this._group.remove(this);
   }
 }

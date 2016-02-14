@@ -1,39 +1,34 @@
 import {App} from '../../../../../ionic/ionic';
-import {
-  Control,
-  ControlGroup,
-  NgForm,
-  Validators,
-  NgControl,
-  ControlValueAccessor,
-  NgControlName,
-  NgFormModel,
-  FormBuilder
-} from 'angular2/common';
+import {Control, ControlGroup} from 'angular2/common';
 
 
 @App({
   templateUrl: 'main.html'
 })
 class E2EApp {
+  fruits: Control;
+  fruitsForm: ControlGroup;
+  currenciesControl: Control;
+  currencyForm: ControlGroup;
+  currencies: Array<string>;
+  items: Array<{description: string, value: any}>;
+  relationship: string;
+  pet: string;
+
   constructor() {
-    this.fruits = new Control("");
+    this.fruits = new Control('apple');
 
     this.fruitsForm = new ControlGroup({
-      "fruits": this.fruits
-    });
-
-    this.currenciesControl = new Control("");
-
-    this.currencyForm = new ControlGroup({
-      "currenciesControl": this.currenciesControl
+      'fruits': this.fruits
     });
 
     this.currencies = ['USD', 'EUR'];
-    this.selectedCurrency = 'EUR';
+    this.currenciesControl = new Control('EUR');
+    this.currencyForm = new ControlGroup({
+      'currenciesControl': this.currenciesControl
+    });
 
     this.relationship = 'enemies';
-
 
     this.items = [
       { description: 'value undefined', value: undefined },
@@ -44,15 +39,15 @@ class E2EApp {
   }
 
   setApple() {
-    this.fruits.updateValue("apple");
+    this.fruits.updateValue('apple');
   }
 
   setBanana() {
-    this.fruits.updateValue("banana");
+    this.fruits.updateValue('banana');
   }
 
   setCherry() {
-    this.fruits.updateValue("cherry");
+    this.fruits.updateValue('cherry');
   }
 
   doSubmit(event) {

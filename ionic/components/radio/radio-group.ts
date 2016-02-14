@@ -1,19 +1,22 @@
-import {Directive, ElementRef, Renderer, Optional, Input, Output, HostListener, ContentChild, EventEmitter} from 'angular2/core';
-import {NgControl} from 'angular2/common';
+import {Directive, ElementRef, Renderer, Optional, Input, Output, Provider, forwardRef, HostListener, ContentChild, EventEmitter} from 'angular2/core';
+import {NG_VALUE_ACCESSOR} from 'angular2/common';
 
 import {RadioButton} from './radio-button';
 import {ListHeader} from '../list/list';
 import {isDefined} from '../../util/util';
 
+const RADIO_VALUE_ACCESSOR = new Provider(
+    NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => RadioGroup), multi: true});
 
 /**
  * @name RadioGroup
  * @description
- * A radio group is a group of radio components, and its value comes
- * from the selected radio button's value. Selecting a radio button
- * in the group unselects all others in the group.
+ * A radio group is a group of radio button components, and its value
+ * comes from the checked radio button's value. Selecting a radio
+ * button in the group unchecks all others in the group.
  *
- * See the [Angular 2 Docs](https://angular.io/docs/ts/latest/guide/forms.html) for more info on forms and input.
+ * See the [Angular 2 Docs](https://angular.io/docs/ts/latest/guide/forms.html)
+ * for more info on forms and inputs.
  *
  * @usage
  * ```html
@@ -30,7 +33,7 @@ import {isDefined} from '../../util/util';
  *
  *   <ion-item>
  *     <ion-label>Duesenberg</ion-label>
- *     <ion-radio value="duesenberg" checked="true"></ion-radio>
+ *     <ion-radio value="duesenberg"></ion-radio>
  *   </ion-item>
  *
  *   <ion-item>
@@ -50,6 +53,7 @@ import {isDefined} from '../../util/util';
  *
  * </ion-list>
  * ```
+ *
  * @demo /docs/v2/demos/radio/
  * @see {@link /docs/v2/components#radio Radio Component Docs}
 */
@@ -58,22 +62,24 @@ import {isDefined} from '../../util/util';
   host: {
     '[attr.aria-activedescendant]': 'activeId',
     'role': 'radiogroup'
-  }
+  },
+  providers: [RADIO_VALUE_ACCESSOR]
 })
 export class RadioGroup {
-  private _buttons: Array<RadioButton> = [];
+  private _btns: Array<RadioButton> = [];
+  private _fn: Function;
   private _ids: number = -1;
   private _init: boolean = false;
 
   /**
    * @private
    */
-  id;
+  value: any;
 
   /**
    * @private
    */
-  value;
+  id: number;
 
   /**
    * @output {any} expression to be evaluated when selection has been changed
@@ -81,93 +87,112 @@ export class RadioGroup {
   @Output() change: EventEmitter<RadioGroup> = new EventEmitter();
 
   constructor(
-    @Optional() ngControl: NgControl,
     private _renderer: Renderer,
     private _elementRef: ElementRef
   ) {
     this.id = ++radioGroupIds;
-
-    if (ngControl) {
-      ngControl.valueAccessor = this;
-    }
   }
 
   /**
    * @private
-   * Angular2 Forms API method called by the model (Control) on change to update
-   * the checked value.
-   * https://github.com/angular/angular/blob/master/modules/angular2/src/forms/directives/shared.ts#L34
    */
-  writeValue(val) {
-    if (val !== null) {
-      let oldVal = this.value;
+  writeValue(val: any) {
+    console.debug('radio group, writeValue', val);
+    this.value = val;
 
-      // set the radiogroup's value
-      this.value = isDefined(val) ? val : '';
-
-      this.updateValue();
-
-      // only emit change when it...changed
-      if (this.value !== oldVal && this._init) {
-        this.change.emit(this.value);
-      }
-
-      this._init = true;
+    if (this._init) {
+      this._update();
+      this.onTouched();
+      this.change.emit(val);
     }
+
+    this._init = true;
   }
 
   /**
    * @private
    */
   ngAfterContentInit() {
-    // in a setTimeout to prevent
-    // Expression '_checked in RadioButton@0:24' has changed after
-    // it was checked. Previous value: 'true'. Current value: 'false'
-    // should be available in future versions of ng2
-    setTimeout(() => {
-      this.updateValue();
-    });
-  }
-
-  /**
-   * @private
-   */
-  private updateValue() {
-    if (isDefined(this.value)) {
-      // loop through each of the radiobuttons
-      this._buttons.forEach(radioButton => {
-
-        // check this radiobutton if its value is
-        // the same as the radiogroups value
-        let isChecked = (radioButton.value === this.value);
-
-        radioButton.updateAsChecked(isChecked);
-
-        if (isChecked) {
-          // if this button is checked, then set it as
-          // the radiogroup's active descendant
-          this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-activedescendant', radioButton.id);
-        }
-      });
+    let activeButton = this._btns.find(b => b.checked);
+    if (activeButton) {
+      this._setActive(activeButton);
     }
   }
 
   /**
    * @private
    */
-  register(button: RadioButton): string {
-    this._buttons.push(button);
+  registerOnChange(fn: Function): void {
+    this._fn = fn;
+    this.onChange = (val: any) => {
+      console.debug('radio group, onChange', val);
+      fn(val);
+      this.value = val;
+      this._update();
+      this.onTouched();
+      this.change.emit(val);
+    };
+  }
+
+  /**
+   * @private
+   */
+  registerOnTouched(fn) { this.onTouched = fn; }
+
+  /**
+   * @private
+   */
+  private _update() {
+    // loop through each of the radiobuttons
+    this._btns.forEach(radioButton => {
+
+      // check this radiobutton if its value is
+      // the same as the radiogroups value
+      radioButton.checked = (radioButton.value === this.value);
+
+      if (radioButton.checked) {
+        // if this button is checked, then set it as
+        // the radiogroup's active descendant
+        this._setActive(radioButton);
+      }
+    });
+  }
+
+  private _setActive(radioButton: RadioButton) {
+    this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-activedescendant', radioButton.id);
+  }
+
+  /**
+   * @private
+   */
+  add(button: RadioButton): string {
+    this._btns.push(button);
 
     // listen for radiobutton select events
-    button.select.subscribe(() => {
+    button.select.subscribe((val) => {
       // this radiobutton has been selected
-      this.writeValue(button.value);
-      this.onChange(button.value);
+      this.onChange(val);
     });
 
     return this.id + '-' + (++this._ids);
   }
 
+  /**
+   * @private
+   */
+  remove(button: RadioButton) {
+    let index = this._btns.indexOf(button);
+    if (index > -1) {
+      if (button.value === this.value) {
+        this.value = null;
+      }
+      this._btns.splice(index, 1);
+    }
+  }
+
+  /**
+   * @private
+   */
   @ContentChild(ListHeader)
   private set _header(header) {
     if (header) {
@@ -181,29 +206,12 @@ export class RadioGroup {
   /**
    * @private
    */
-  onChange(val) {}
+  onChange(_) {}
 
   /**
    * @private
    */
-  onTouched(val) {}
-
-  /**
-   * @private
-   * Angular2 Forms API method called by the view (NgControl) to register the
-   * onChange event handler that updates the model (Control).
-   * https://github.com/angular/angular/blob/master/modules/angular2/src/forms/directives/shared.ts#L27
-   * @param {Function} fn  the onChange event handler.
-   */
-  registerOnChange(fn) { this.onChange = fn; }
-
-  /**
-   * @private
-   * Angular2 Forms API method called by the the view (NgControl) to register
-   * the onTouched event handler that marks the model (Control) as touched.
-   * @param {Function} fn  onTouched event handler.
-   */
-  registerOnTouched(fn) { this.onTouched = fn; }
+  onTouched() {}
 
 }
 

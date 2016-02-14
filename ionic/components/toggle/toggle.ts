@@ -1,5 +1,5 @@
 import {Component, ElementRef, Renderer, Input, Optional, Provider, forwardRef} from 'angular2/core';
-import {NgControl, ControlValueAccessor, NG_VALUE_ACCESSOR} from 'angular2/common';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from 'angular2/common';
 
 import {Form} from '../../util/form';
 import {isTrueProperty} from '../../util/util';

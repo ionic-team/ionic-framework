@@ -1,5 +1,5 @@
 import {Component, Optional, Input, HostListener, Provider, forwardRef} from 'angular2/core';
-import {NgControl, NG_VALUE_ACCESSOR} from 'angular2/common';
+import {NG_VALUE_ACCESSOR} from 'angular2/common';
 
 import {Form} from '../../util/form';
 import {Item} from '../item/item';

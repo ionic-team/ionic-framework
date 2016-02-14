@@ -1,5 +1,5 @@
 import {Component, Optional, ElementRef, Renderer, Input, Output, Provider, forwardRef, EventEmitter, HostListener, ContentChildren, QueryList} from 'angular2/core';
-import {NgControl, NG_VALUE_ACCESSOR} from 'angular2/common';
+import {NG_VALUE_ACCESSOR} from 'angular2/common';
 
 import {Alert} from '../alert/alert';
 import {Form} from '../../util/form';
