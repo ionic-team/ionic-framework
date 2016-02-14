@@ -24,7 +24,7 @@ class E2EApp {
 
   constructor() {
     this.fruitsForm = new ControlGroup({
-      "appleCtrl": new Control(),
+      "appleCtrl": new Control(false),
       "bananaCtrl": new Control(true),
       "cherryCtrl": new Control(false),
       "grapeCtrl": new Control(true)
@@ -33,8 +33,8 @@ class E2EApp {
     this.grapeChecked = true;
     this.grapeDisabled = true;
 
-    this.kiwiModel = false;
-    this.strawberryModel = true;
+    this.kiwiModel = true;
+    this.strawberryModel = false;
   }
 
   toggleGrapeChecked() {

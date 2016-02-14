@@ -320,7 +320,15 @@ export class Select {
    * @private
    */
   writeValue(val: any) {
+    console.debug('select, writeValue', val);
     this._values = (Array.isArray(val) ? val : isBlank(val) ? [] : [val]);
+    this._updOpts();
+  }
+
+  /**
+   * @private
+   */
+  ngAfterContentInit() {
     this._updOpts();
   }
 

@@ -7,8 +7,19 @@ import {App, Page} from '../../../../../ionic/ionic';
 class E2EPage {
   musicAlertOpts;
   gender: string;
+  gaming: string;
+  os: string;
+  music: string;
+  month: string;
+  year: string;
 
   constructor() {
+    this.gaming = '';
+    this.os = 'win3.1';
+    this.music = null;
+    this.month = '12';
+    this.year = '1994';
+
     this.musicAlertOpts = {
       title: '1994 Music',
       subTitle: 'Select your favorite'

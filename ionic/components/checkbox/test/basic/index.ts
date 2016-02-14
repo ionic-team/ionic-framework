@@ -26,7 +26,7 @@ class E2EApp {
 
   constructor() {
     this.fruitsForm = new ControlGroup({
-      "appleCtrl": new Control(),
+      "appleCtrl": new Control(true),
       "bananaCtrl": new Control(true),
       "cherryCtrl": new Control(false),
       "grapeCtrl": new Control(true)

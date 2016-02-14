@@ -31,7 +31,7 @@ const TOGGLE_VALUE_ACCESSOR = new Provider(
  *
  *    <ion-item>
  *      <ion-label>Pepperoni</ion-label>
- *      <ion-toggle [(ngModel)]="pepperoni" checked="true"></ion-toggle>
+ *      <ion-toggle [(ngModel)]="pepperoni"></ion-toggle>
  *    </ion-item>
  *
  *    <ion-item>

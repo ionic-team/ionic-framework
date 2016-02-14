@@ -25,7 +25,7 @@ const CHECKBOX_VALUE_ACCESSOR = new Provider(
  *
  *    <ion-item>
  *      <ion-label>Pepperoni</ion-label>
- *      <ion-checkbox [(ngModel)]="pepperoni" checked="true"></ion-checkbox>
+ *      <ion-checkbox [(ngModel)]="pepperoni"></ion-checkbox>
  *    </ion-item>
  *
  *    <ion-item>
