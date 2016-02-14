@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core';
+import {Component, enableProdMode} from 'angular2/core';
 import {bootstrap} from 'angular2/platform/browser';
 import {TapClick} from '../components/tap-click/tap-click';
 import {ionicProviders} from '../config/bootstrap';
@@ -56,6 +56,10 @@ export function App(args: any={}) {
 
     // define array of bootstrap providers
     let providers = ionicProviders(args).concat(args.providers || []);
+
+    if (args.prodMode) {
+        enableProdMode();
+    }
 
     bootstrap(cls, providers).then(appRef => {
       appRef.injector.get(TapClick);
