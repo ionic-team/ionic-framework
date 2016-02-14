@@ -2,29 +2,34 @@
 // Color Functions
 // --------------------------------------------------
 
-@function inverse($color-value) {
-  $lightness: lightness($color-value);
+@function brightness($color-value) {
+  @return (red($color-value) * 0.299 + green($color-value) * 0.587 + blue($color-value) * 0.114) / 255 * 100%;
+}
+
+
+@function inverse($color-value, $dark: black, $light: white) {
+  $brightness: brightness($color-value);
   $red: red($color-value);
   $green: green($color-value);
 
-  @if ($lightness > 65 or $green > 220 or ($red > 240 and $green > 180)) {
-    @return black;
+  @if ($brightness > 79) {
+    @return $dark;
   }
 
-  @return white;
+  @if ($green > 240) {
+    @return $dark;
+  }
+
+  @if ($red > 220 and $green > 180) {
+    @return $dark;
+  }
+
+  @return $light;
 }
 
 
 @function toolbar-button-inverse($color-value) {
-  $lightness: lightness($color-value);
-  $red: red($color-value);
-  $green: green($color-value);
-
-  @if ($lightness > 65 or $green > 220 or ($red > 240 and $green > 180)) {
-    @return $toolbar-md-button-color;
-  }
-
-  @return white;
+  @return inverse($color-value, $dark: $toolbar-md-button-color, $light: white);
 }
 
 
