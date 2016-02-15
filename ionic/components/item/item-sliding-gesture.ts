@@ -138,7 +138,7 @@ export class ItemSlidingGesture extends DragGesture {
     if (this.getOpenAmount(itemContainerEle) < (restingPoint / 2)) {
 
       // If we are going left but too slow, or going right, go back to resting
-      if (ev.direction & Hammer.DIRECTION_RIGHT || Math.abs(ev.velocityX) < 0.3) {
+      if (ev.direction & DIRECTION_RIGHT || Math.abs(ev.velocityX) < 0.3) {
         restingPoint = 0;
       }
     }
