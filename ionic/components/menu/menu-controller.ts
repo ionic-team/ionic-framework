@@ -209,7 +209,7 @@ export class MenuController {
    */
   isEnabled(menuId?: string): boolean {
     let menu = this.get(menuId);
-    return menu && menu.isEnabled || false;
+    return menu && menu.enabled || false;
   }
 
   /**
@@ -233,6 +233,14 @@ export class MenuController {
 
     // get the first menu in the array, if one exists
     return (this._menus.length ? this._menus[0] : null);
+  }
+
+
+  /**
+   * @return {Array<Menu>}  Returns an array of all menu instances.
+   */
+  getMenus(): Array<Menu> {
+    return this._menus;
   }
 
   /**

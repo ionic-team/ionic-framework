@@ -33,7 +33,7 @@ export class Gesture {
     assign(this._options, opts);
   }
 
-  on(type, cb) {
+  on(type: string, cb: Function) {
     if(type == 'pinch' || type == 'rotate') {
       this._hammer.get('pinch').set({enable: true});
     }
@@ -41,7 +41,7 @@ export class Gesture {
     (this._callbacks[type] || (this._callbacks[type] = [])).push(cb);
   }
 
-  off(type, cb) {
+  off(type: string, cb: Function) {
     this._hammer.off(type, this._callbacks[type] ? cb : null);
   }
 
@@ -50,19 +50,20 @@ export class Gesture {
   }
 
   unlisten() {
+    var type, i;
     if (this._hammer) {
-      for (let type in this._callbacks) {
-        for (let i = 0; i < this._callbacks[type].length; i++) {
+      for (type in this._callbacks) {
+        for (i = 0; i < this._callbacks[type].length; i++) {
           this._hammer.off(type, this._callbacks[type]);
         }
       }
-      this._hammer.destroy();
-      this._hammer = null;
       this._callbacks = {};
+      this._hammer.destroy();
     }
   }
 
   destroy() {
-    this.unlisten()
+    this.unlisten();
+    this._hammer = this.element = this._options = null;
   }
 }

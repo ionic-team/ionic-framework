@@ -17,15 +17,13 @@ export class MenuContentGesture extends SlideEdgeGesture {
       threshold: 0,
       maxEdgeStart: menu.maxEdgeStart || 75
     }, options));
-
-    this.listen();
   }
 
   canStart(ev) {
     let menu = this.menu;
 
-    if (!menu.isEnabled || !menu.isSwipeEnabled) {
-      console.debug('menu can not start, isEnabled:', menu.isEnabled, 'isSwipeEnabled:', menu.isSwipeEnabled, 'side:', menu.side);
+    if (!menu.enabled || !menu.swipeEnabled) {
+      console.debug('menu can not start, isEnabled:', menu.enabled, 'isSwipeEnabled:', menu.swipeEnabled, 'side:', menu.side);
       return false;
     }
 
