@@ -30,6 +30,7 @@ export interface AppMetadata {
   styles?: string[];
   changeDetection?: ChangeDetectionStrategy;
   encapsulation?: ViewEncapsulation;
+  config?: any;
 }
 
 /**
