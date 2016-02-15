@@ -37,6 +37,11 @@ export class ViewController {
   /**
    * @private
    */
+  data: any;
+
+  /**
+   * @private
+   */
   id: string;
 
   /**
@@ -57,16 +62,22 @@ export class ViewController {
   /**
    * @private
    */
-  onReady: any;
+  onReady: Function;
 
   /**
    * @private
    */
   zIndex: number;
 
+  /**
+   * @private
+   */
   @Output() private _emitter: EventEmitter<any> = new EventEmitter();
 
-  constructor(public componentType?: Type, public data: any = {}) {}
+  constructor(public componentType?: Type, data: any = {}) {
+    // passed in data could be NavParams, but all we care about is its data object
+	  this.data = (data instanceof NavParams ? data.data : data);
+  }
 
   subscribe(callback) {
     this._emitter.subscribe(callback);

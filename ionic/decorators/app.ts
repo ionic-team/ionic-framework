@@ -62,7 +62,7 @@ export interface AppMetadata {
 * @property {string} [template] - the template to use for the app root.
 * @property {string} [templateUrl] - a relative URL pointing to the template to use for the app root.
 */
-export function App(args: AppMetadata) {
+export function App(args: AppMetadata={}) {
 
   return function(cls) {
     // get current annotations

@@ -1,4 +1,4 @@
-import {Component, Directive, ElementRef, Optional, Host, forwardRef, ViewContainerRef, ViewChild, ViewChildren, EventEmitter, Output, Input, Renderer} from 'angular2/core';
+import {Component, Directive, ElementRef, Optional, Host, forwardRef, ViewContainerRef, ViewChild, ViewChildren, EventEmitter, Output, Input, Renderer, Type} from 'angular2/core';
 import {NgFor, NgIf} from 'angular2/common';
 
 import {IonicApp} from '../app/app';
@@ -90,12 +90,12 @@ export class Tabs extends Ion {
   subPages: boolean;
 
   /**
-   * @input {any} The default selected tab index when first loaded. If a selected index wasn't provided then it'll use `0`, the first tab.
+   * @input {number} The default selected tab index when first loaded. If a selected index wasn't provided then it'll use `0`, the first tab.
    */
   @Input() selectedIndex: any;
 
   /**
-   * @input {any} Sets whether to preload all the tabs, true or false
+   * @input {boolean} Sets whether to preload all the tabs, true or false
    */
   @Input() preloadTabs: any;
 
@@ -269,9 +269,9 @@ export class Tabs extends Ion {
 
   /**
    * @param {number} index Index of the tab you want to get
-   * @returns {any} Tab Returs the tab who's index matches the one passed
+   * @returns {Tab} Returns the tab who's index matches the one passed
    */
-  getByIndex(index: number): any {
+  getByIndex(index: number): Tab {
     if (index < this._tabs.length && index > -1) {
       return this._tabs[index];
     }
@@ -279,7 +279,7 @@ export class Tabs extends Ion {
   }
 
   /**
-   * @return {any} Tab Returns the currently selected tab
+   * @return {Tab} Returns the currently selected tab
    */
   getSelected(): Tab {
     for (let i = 0; i < this._tabs.length; i++) {
@@ -302,7 +302,7 @@ export class Tabs extends Ion {
    * "Touch" the active tab, going back to the root view of the tab
    * or optionally letting the tab handle the event
    */
-  private _touchActive(tab) {
+  private _touchActive(tab: Tab) {
     let active = tab.getActive();
 
     if (!active) {
@@ -338,7 +338,7 @@ export class Tabs extends Ion {
    * within a NavController.
    * @returns {NavController}
    */
-  get rootNav() {
+  get rootNav(): NavController {
     let nav = this.parent;
     while (nav.parent) {
       nav = nav.parent;
