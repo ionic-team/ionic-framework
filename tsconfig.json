@@ -7,9 +7,10 @@
     "declaration": true,
     "outDir": "dist"
   },
+  "include": [
+    "ionic/ionic.ts",
+    "typings/main.d.ts"
+  ],
   "compileOnSave" : false,
-  "buildOnSave": false,
-  "exclude": [
-    "node_modules"
-  ]
+  "buildOnSave": false
 }

@@ -238,6 +238,7 @@ gulp.task('transpile', function(){
 
 function tsCompile(options, cacheName){
   return gulp.src([
+      'typings/main.d.ts',
       'ionic/**/*.ts',
       '!ionic/**/*.d.ts',
       '!ionic/components/*/test/**/*',
