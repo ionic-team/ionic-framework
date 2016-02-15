@@ -1,4 +1,4 @@
-import {Component, enableProdMode} from 'angular2/core';
+import {Component, ChangeDetectionStrategy, ViewEncapsulation, enableProdMode, Type} from 'angular2/core';
 import {bootstrap} from 'angular2/platform/browser';
 import {TapClick} from '../components/tap-click/tap-click';
 import {ionicProviders} from '../config/bootstrap';
@@ -6,11 +6,40 @@ import {IONIC_DIRECTIVES} from '../config/directives';
 
 const _reflect: any=Reflect;
 
+export interface AppMetadata {
+  prodMode?: boolean;
+  selector?: string;
+  inputs?: string[];
+  outputs?: string[];
+  properties?: string[];
+  events?: string[];
+  host?: {
+      [key: string]: string;
+  };
+  providers?: any[];
+  directives?: Array<Type | any[]>;
+  pipes?: Array<Type | any[]>;
+  exportAs?: string;
+  queries?: {
+      [key: string]: any;
+  };
+  template?: string;
+  templateUrl?: string;
+  moduleId?: string;
+  styleUrls?: string[];
+  styles?: string[];
+  changeDetection?: ChangeDetectionStrategy;
+  encapsulation?: ViewEncapsulation;
+}
+
 /**
 * @name App
 * @description
-* App is an Ionic decorator that bootstraps an application. It can be passed a number of arguments, that act as global config variables for the app.
-* App can accept a `template` property that has an inline template or a `templateUrl` property that points to an external html template.
+* App is an Ionic decorator that bootstraps an application. It can be passed a
+* number of arguments that act as global config variables for the app.
+* `@App` is similar to Angular's `@Component` in which it can accept a `template`
+* property that has an inline template, or a `templateUrl` property that points
+* to an external html template.
 *
 * @usage
 * ```ts
@@ -26,13 +55,14 @@ const _reflect: any=Reflect;
 * }
 * ```
 *
-* @property {object} [config] - the app's {@link /docs/v2/api/config/Config/ Config} object
-* @property {array}  [providers] - any providers for your app
-* @property {string} [template] - the template to use for the app root
-* @property {string} [templateUrl] - a relative URL pointing to the template to use for the app root
-*
+* @property {object} [config] - the app's {@link /docs/v2/api/config/Config/ Config} object.
+* @property {boolean} [prodMode] - Enable Angular's production mode, which turns off assertions and other checks within the framework. Defaults to `false`.
+* @property {array}  [pipes] - any pipes for your app.
+* @property {array}  [providers] - any providers for your app.
+* @property {string} [template] - the template to use for the app root.
+* @property {string} [templateUrl] - a relative URL pointing to the template to use for the app root.
 */
-export function App(args: any={}) {
+export function App(args: AppMetadata) {
 
   return function(cls) {
     // get current annotations
@@ -58,7 +88,7 @@ export function App(args: any={}) {
     let providers = ionicProviders(args).concat(args.providers || []);
 
     if (args.prodMode) {
-        enableProdMode();
+      enableProdMode();
     }
 
     bootstrap(cls, providers).then(appRef => {

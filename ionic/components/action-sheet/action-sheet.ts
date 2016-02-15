@@ -130,7 +130,8 @@ import {ViewController} from '../nav/view-controller';
      title?: string,
      subTitle?: string,
      cssClass?: string,
-     buttons?: Array<any>
+     buttons?: Array<any>,
+     enableBackdropDismiss?: boolean
    } = {}) {
      return new ActionSheet(opts);
    }
