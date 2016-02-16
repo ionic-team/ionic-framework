@@ -95,6 +95,10 @@ function($animate, $timeout, $compile) {
         return _this.__slider;
       };
 
+      this.removeSlide = function(slideIdx) {
+        _this.__slider.removeSlide(slideIdx);
+      };
+
       var options = $scope.options || {};
 
       var newOptions = angular.extend({
@@ -139,7 +143,7 @@ function($animate, $timeout, $compile) {
       ionSlidesCtrl.rapidUpdate();
 
       $scope.$on('$destroy', function() {
-        ionSlidesCtrl.rapidUpdate();
+        ionSlidesCtrl.removeSlide($element.data('swiper-slide-index'));
       });
     }
   };
