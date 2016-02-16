@@ -8,7 +8,17 @@
 
 
 <a name"1.2.3"></a>
-### 1.2.3 "Barcelona" (2016-01-02)
+### 1.2.3 "Copenhagen" (2016-01-02)
+
+
+#### Changes
+
+* **input:** focus on iOS ([aef490b](https://github.com/driftyco/ionic/commit/aef490b))
+* **scroll:** js scrolling for iOS for now ([d9b35f4](https://github.com/driftyco/ionic/commit/d9b35f4))
+
+
+<a name"1.2.2"></a>
+###1.2.2 "Barcelona" (2015-12-31)
 
 
 #### Changes
@@ -16,7 +26,6 @@
 * **drag:** fix #4022 and #3695 ([d3d2c14](https://github.com/driftyco/ionic/commit/d3d2c14))
 * **fonts:** iOS 9 fonts now for safari ([760b70d](https://github.com/driftyco/ionic/commit/760b70d))
 * **gestures:** revert fix for dragging. Fixes #3695 ([1b0d3dd](https://github.com/driftyco/ionic/commit/1b0d3dd))  
-* **input:** focus on iOS ([aef490b](https://github.com/driftyco/ionic/commit/aef490b))
 * **keyboard:**
   * check for slide first before update. Fixes #4870 ([074976f](https://github.com/driftyco/ionic/commit/074976f))
   * fix blank spot. Fixes #4849 and #4645 ([4ad6021](https://github.com/driftyco/ionic/commit/4ad6021))
@@ -26,9 +35,7 @@
   * remove flicker on native scroll. Fixes #4869 ([1ec38ac](https://github.com/driftyco/ionic/commit/1ec38ac))
   * better scroll restrict. Fixes #4869 ([fe3aeac](https://github.com/driftyco/ionic/commit/fe3aeac))
   * change scroll restriction. #4869 ([ebd76d5](https://github.com/driftyco/ionic/commit/ebd76d5))
-* **ptr:** fix for kitkat. Fixes #4850 ([67ef9eb](https://github.com/driftyco/ionic/commit/67ef9eb))
 * **sass:** add border support to mixin. Fixes #4886 ([129cc97](https://github.com/driftyco/ionic/commit/129cc97))
-* **scroll:** js scrolling for iOS for now ([d9b35f4](https://github.com/driftyco/ionic/commit/d9b35f4))
 * **slides:**
   * Fixes #4855 and #4857 ([13d0fbe](https://github.com/driftyco/ionic/commit/13d0fbe))
   * allow ngAnimate. Fixes #4868 ([cb7d8a5](https://github.com/driftyco/ionic/commit/cb7d8a5))
