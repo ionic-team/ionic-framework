@@ -5,7 +5,6 @@ import {Config} from '../../config/config';
 import {Platform} from '../../platform/platform';
 import {Keyboard} from '../../util/keyboard';
 import {MenuContentGesture, MenuTargetGesture} from  './menu-gestures';
-import {Gesture} from '../../gestures/gesture';
 import {MenuController} from './menu-controller';
 import {MenuType} from './menu-types';
 import {isTrueProperty} from '../../util/util';
@@ -27,13 +26,14 @@ import {isTrueProperty} from '../../util/util';
 export class Menu extends Ion {
   private _preventTime: number = 0;
   private _cntEle: HTMLElement;
-  private _cntGesture: Gesture;
-  private _menuGesture: Gesture;
+  private _cntGesture: MenuTargetGesture;
+  private _menuGesture: MenuContentGesture;
   private _type: MenuType;
   private _resizeUnreg: Function;
   private _isEnabled: boolean = true;
   private _isSwipeEnabled: boolean = true;
   private _isListening: boolean = false;
+  private _isPers: boolean = false;
   private _init: boolean = false;
 
   /**
@@ -50,7 +50,6 @@ export class Menu extends Ion {
    * @private
    */
   onContentClick: EventListener;
-
 
   /**
    * @private
@@ -101,12 +100,24 @@ export class Menu extends Ion {
   /**
    * @private
    */
-  @Input() maxEdgeStart;
+  @Input()
+  get persistent(): boolean {
+    return this._isPers;
+  }
+
+  set persistent(val: boolean) {
+    this._isPers = isTrueProperty(val);
+  }
 
   /**
    * @private
    */
-  @Output() opening: EventEmitter<any> = new EventEmitter();
+  @Input() maxEdgeStart: number;
+
+  /**
+   * @private
+   */
+  @Output() opening: EventEmitter<number> = new EventEmitter();
 
   constructor(
     private _menuCtrl: MenuController,

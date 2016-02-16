@@ -120,7 +120,25 @@ import {MenuType} from './menu-types';
  * but this can be overriden using the `type` property:
  *
  * ```html
- * <ion-menu type="overlay" [content]="mycontent"></ion-menu>
+ * <ion-menu type="overlay" [content]="mycontent">...</ion-menu>
+ * ```
+ *
+ *
+ * ### Persistent Menus
+ *
+ * By default, menus, and specifically their menu toggle buttons in the navbar,
+ * only show on the root page within its `NavController`. For example, on Page 1
+ * the menu toggle will show in the navbar. However, when navigating to Page 2,
+ * because it is not the root Page for that `NavController`, the menu toggle
+ * will not show in the navbar.
+ *
+ * Not showing the menu toggle button in the navbar is commonly seen within
+ * native apps after navigating past the root Page. However, it is still possible
+ * to always show the menu toggle button in the navbar by setting
+ * `persistent="true"` on the `ion-menu` component.
+ *
+ * ```html
+ * <ion-menu persistent="true" [content]="content">...</ion-menu>
  * ```
  *
  * @demo /docs/v2/demos/menu/
