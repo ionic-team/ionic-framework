@@ -19,8 +19,8 @@ import {raf, ready, CSS} from '../../util/dom';
  *  ```html
  *  <ion-content>
  *    <ion-refresher (starting)="doStarting()"
- *                   (refresh)="doRefresh($event, refresher)"
- *                   (pulling)="doPulling($event, amt)">
+ *                   (refresh)="doRefresh($event)"
+ *                   (pulling)="doPulling($event)">
  *    </ion-refresher>
  *
  *  </ion-content>
@@ -29,23 +29,24 @@ import {raf, ready, CSS} from '../../util/dom';
  *
  *  ```ts
  *  export class MyClass {
- *  constructor(){}
+ *
  *    doRefresh(refresher) {
- *      console.debug('Refreshing!', refresher);
+ *      console.log('Refreshing', refresher)
  *
  *      setTimeout(() => {
- *        console.debug('Pull to refresh complete!', refresher);
  *        refresher.complete();
- *      })
+ *        console.log("Complete");
+ *      }, 5000);
  *    }
  *
- *    doStarting() {
- *      console.debug('Pull started!');
+ *    doStarting(refresher) {
+ *      console.log('Starting', refresher);
  *    }
  *
- *    doPulling(amt) {
- *      console.debug('You have pulled', amt);
+ *    doPulling(refresher) {
+ *      console.log('Pulling', refresher);
  *    }
+ *
  *  }
  *  ```
  *  @demo /docs/v2/demos/refresher/
@@ -191,19 +192,19 @@ export class Refresher {
 
 
   /**
-   * @output {any} the methond on your class you want to perform when you are pulling down
+   * @output {event} When you are pulling down
    */
-  @Output() pulling: EventEmitter<any> = new EventEmitter();
+  @Output() pulling: EventEmitter<Refresher> = new EventEmitter();
 
   /**
-   * @output {any} the methond on your class you want to perform when you refreshing
+   * @output {event} When you are refreshing
    */
-  @Output() refresh: EventEmitter<any> = new EventEmitter();
+  @Output() refresh: EventEmitter<Refresher> = new EventEmitter();
 
   /**
-   * @output {any} the methond on your class you want to perform when you start pulling down
+   * @output {event} When you start pulling down
    */
-  @Output() starting: EventEmitter<any> = new EventEmitter();
+  @Output() starting: EventEmitter<Refresher> = new EventEmitter();
 
 
   constructor(
@@ -304,7 +305,7 @@ export class Refresher {
   activate() {
     //this.ele.classList.add('active');
     this.isActive = true;
-    //this.starting.next();
+    this.starting.emit(this);
   }
 
   /**
@@ -327,7 +328,7 @@ export class Refresher {
   start() {
     // startCallback
     this.isRefreshing = true;
-    this.refresh.next(this);
+    this.refresh.emit(this);
     //$scope.$onRefresh();
   }
 
@@ -484,8 +485,8 @@ export class Refresher {
     // overscroll according to the user's drag so far
     this.overscroll( Math.round((this.deltaY - this.dragOffset) / 3) );
 
-    // Pass an incremental pull amount to the EventEmitter
-    this.pulling.next(this.lastOverscroll);
+    // Pass the refresher to the EventEmitter
+    this.pulling.emit(this);
 
     // update the icon accordingly
     if (!this.activated && this.lastOverscroll > this.ptrThreshold) {
