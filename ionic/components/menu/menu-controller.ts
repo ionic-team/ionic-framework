@@ -137,36 +137,54 @@ export class MenuController {
    * Progamatically open the Menu.
    * @return {Promise} returns a promise when the menu is fully opened
    */
-  open(menuId?: string) {
+  open(menuId?: string): Promise<boolean> {
     let menu = this.get(menuId);
     if (menu) {
       return menu.open();
     }
+
+    return Promise.resolve(false);
   }
 
   /**
-   * Progamatically close the Menu.
+   * Progamatically close the Menu. If no `menuId` is given as the first
+   * argument then it'll close any menu which is open. If a `menuId`
+   * is given then it'll close that exact menu.
    * @param {string} [menuId]  Optionally get the menu by its id, or side.
    * @return {Promise} returns a promise when the menu is fully closed
    */
-  close(menuId?: string) {
-    let menu = this.get(menuId);
+  close(menuId?: string): Promise<boolean> {
+    let menu: Menu;
+
+    if (menuId) {
+      // find the menu by its id
+      menu = this.get(menuId);
+
+    } else {
+      // find the menu that is open
+      menu = this._menus.find(m => m.isOpen);
+    }
+
     if (menu) {
+      // close the menu
       return menu.close();
     }
+
+    return Promise.resolve(false);
   }
 
   /**
-   * Toggle the menu. If it's closed, it will open, and if opened, it will
-   * close.
+   * Toggle the menu. If it's closed, it will open, and if opened, it
+   * will close.
    * @param {string} [menuId]  Optionally get the menu by its id, or side.
    * @return {Promise} returns a promise when the menu has been toggled
    */
-  toggle(menuId?: string) {
+  toggle(menuId?: string): Promise<boolean> {
     let menu = this.get(menuId);
     if (menu) {
       return menu.toggle();
     }
+    return Promise.resolve(false);
   }
 
   /**
@@ -176,7 +194,7 @@ export class MenuController {
    * @param {string} [menuId]  Optionally get the menu by its id, or side.
    * @return {Menu}  Returns the instance of the menu, which is useful for chaining.
    */
-  enable(shouldEnable: boolean, menuId?: string) {
+  enable(shouldEnable: boolean, menuId?: string): Menu {
     let menu = this.get(menuId);
     if (menu) {
       return menu.enable(shouldEnable);
@@ -189,7 +207,7 @@ export class MenuController {
    * @param {string} [menuId]  Optionally get the menu by its id, or side.
    * @return {Menu}  Returns the instance of the menu, which is useful for chaining.
    */
-  swipeEnable(shouldEnable: boolean, menuId?: string) {
+  swipeEnable(shouldEnable: boolean, menuId?: string): Menu {
     let menu = this.get(menuId);
     if (menu) {
       return menu.swipeEnable(shouldEnable);
