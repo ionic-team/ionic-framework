@@ -59,7 +59,7 @@ class E2EPage {
     this.nav.present(alert);
   }
 
-  doAlertNoBody() {
+  doAlertNoMessage() {
     let alert = Alert.create({
       title: 'Alert',
       buttons: ['OK']
